@@ -104,7 +104,7 @@ The search answer will be of the form:
                 "query":"jan"
             }
 }
-``
+```
 
 Add a new object in the Index
 -------------
