@@ -21,12 +21,12 @@ To setup your project, follow these steps:
  2. Initialize the client with your ApplicationID, API-Key and list of hostnames (you can find all of them on your Algolia account)
  3. When you use this API client for search on a website, we strongly recommand to use a key with an ACL restricted "search" that you can retrieve with `client.addUserKey(["search"])`.
 
-<pre><code>
+```javascript
   &lt;script src="algoliasearch-min.js"&gt;&lt;/script&gt;
   &lt;script&gt;
     client = new AlgoliaSearch('ApplicationID', 'API-Key', 
                               ['http://api-u1-1.algolia.io', 'http://api-u1-2.algolia.io', 'api-u1-3.algolia.io']),
-</code></pre>
+```
 
 Quick Start
 -------------
@@ -57,7 +57,7 @@ You can optionally use the following arguments :
  * **insideBoundingBox**: search entries inside a given area defined by the two extreme points of a rectangle (defined by 4 floats: p1Lat,p1Lng,p2Lat, p2Lng).<br/>For example `insideBoundingBox=47.3165,4.9665,47.3424,5.0201`).<br/>At indexing, you should specify geoloc of an object with _geoloc attribute (in the form `{"_geoloc":{"lat":48.853409, "lng":2.348800}}`)
  * **tags**: filter the query by a set of tags (contains a list of tags separated by a comma).<br/>At indexing, tags should be added in _tags attribute of objects (for example `{"_tags":["tag1","tag2"]}` )
 
-<pre><code>
+````javascript
 index = client.initIndex('MyIndexName');
 index.search('query string', function(success, content) {
     for (var h in content.hits) {
@@ -70,11 +70,11 @@ index.search('query string', function(success, content) {
         console.log('Hit(' + content.hits[h].objectID + '): ' + content.hits[h].toString());
     }
 }, {'attributes': 'population,name', 'hitsPerPage': 50});
-
-</code></pre>
+```
 
 The search answer will be of the form:
-<pre><code>
+
+```javascript
 {
     "hasError": false,
     "errorMsg": null,
@@ -104,7 +104,7 @@ The search answer will be of the form:
                 "query":"jan"
             }
 }
-</code></pre>
+``
 
 Add a new object in the Index
 -------------
@@ -118,20 +118,22 @@ You have no need to create an index, it will be automatically create the first t
 Objects are schema less, you have no configuration to start indexing. You can look at settings section to have more details on advanced settings.
 
 Example with automatic `objectID` assignement:
-<pre><code>
+
+```javascript
 index.addObject({'name': 'San Francisco', 
                  'population': 805235}, function(success, content) {
   console.log('objectID=' + content.objectID);
 });
-</code></pre>
+```
 
 Example with manual `objectID` assignement:
-<pre><code>
+```javascript
 index.addObject({'name': 'San Francisco', 
                  'population': 805235}, function(success, content) {
   console.log('objectID=' + content.objectID);
 }, 'myID');
-</code></pre>
+```
+
 
 Update an existing object in the Index
 -------------
@@ -143,23 +145,26 @@ You have two options to update an existing object:
  2. Replace only some attributes of an existing object.
 
 Example to replace content of an existing object:
-<pre><code>
+
+```javascript
 index.saveObject({'name': 'Los Angeles', 
                   'population': 3792621,
                   'objectID': 'myID'});
-</code></pre>
+```
 
 Example of code to update only the population attribute of an existing object:
-<pre><code>
+
+```javascript
 index.partialUpdateObject({'population': 3792621,
                            'objectID': 'myID'});
-</code></pre>
+```
 
 Get an object
 -------------
 
 You can easily retrieve an object using its `objectID` and optionnaly a list of attributes you want to retrieve (using comma as separator):
-<pre><code>
+
+```javascript
 // Retrieves all attributes
 idx.getObject('myID', function(success, content) {
   console.log(content.objectID + ": " + content.toString());
@@ -172,15 +177,16 @@ idx.getObject('myID', function(success, content) {
 idx.getObject('myID', function(success, content) {
   console.log(content.objectID + ": " + content.toString());
 }, "name");
-</code></pre>
+```
 
 Delete an object
 -------------
 
 You can delete an object using its `objectID`:
-<pre><code>
+
+```javascript
 index.deleteObject('myID');
-</code></pre>
+```
 
 Index Settings
 -------------
@@ -210,12 +216,12 @@ The syntax of this condition is an array of strings containing attributes prefix
 For example `"customRanking" => ["desc(population)", "asc(name)"]`
 
 You can easily retrieve settings and update them:
-<pre><code>
+
+```javascript
 index.getSettings(function(success, content) {
   if (success) {
     content.customRanking = ['desc(population)', 'asc(name)']
     index.setSettings(content);
   }
 });
-
-</code></pre>
+```
