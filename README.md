@@ -1,7 +1,15 @@
 Algolia Search API Client for Javascript
 ==================
 
-This Javascript client let you easily use the Algolia Search API in a browser, it is compatible with most browsers (Internet Explorer >= 8, Firefox >= 3.5, Google Chrome >= 3, Safari >= 4, Opera >= 12, Opera mobile >= 12, etc.)
+This Javascript client let you easily use the Algolia Search API in a browser, it is compatible with most browsers:
+
+ * Internet Explorer &ge; 8
+ * Firefox &ge; 3.5
+ * Google Chrome &ge; 3
+ * Safari &ge; 4
+ * Opera &ge; 12
+ * Opera mobile &ge; 12
+ * etc.
 
 See [this wikipedia page](http://en.wikipedia.org/wiki/Cross-Origin_Resource_Sharing#Browser_support) to have more details on supported browser (this library supports XDomainRequest extension and so supports IE8 and IE9).
 
