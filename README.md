@@ -1,9 +1,9 @@
 Algolia Search API Client for Javascript
 ==================
 
-This Javascript client let you easily use the Algolia Search API in a browser, it is compatible with most browsers (Internet Explorer >= 8, Firefox >= 3.5, Google Chrome >= 3, Safari >= 4, Opera >= 12, Opera mobile >= 12.
+This Javascript client let you easily use the Algolia Search API in a browser, it is compatible with most browsers (Internet Explorer >= 8, Firefox >= 3.5, Google Chrome >= 3, Safari >= 4, Opera >= 12, Opera mobile >= 12, etc.)
 
-See this wikipedia page on more details on supported browser (this implementation supports XDomainRequest extension to support IE8 and IE9): http://en.wikipedia.org/wiki/Cross-Origin_Resource_Sharing#Browser_support
+See [this wikipedia page](http://en.wikipedia.org/wiki/Cross-Origin_Resource_Sharing#Browser_support) to have more details on supported browser (this library supports XDomainRequest extension and so supports IE8 and IE9).
 
 Setup
 -------------
@@ -14,9 +14,10 @@ To setup your project, follow these steps:
  3. When you use this API client for search on a website, we strongly recommand to use a key with an ACL restricted "search" that you can retrieve with `client.addUserKey(["search"])`.
 
 <pre><code>
-  <script src="algoliasearch-min.js"></script>
-  <script>
-    client = new AlgoliaSearch('ApplicationID', 'API-Key', ['http://api-u1-1.algolia.io', 'http://api-u1-2.algolia.io', 'api-u1-3.algolia.io']),
+  &lt;script src="algoliasearch-min.js"&gt;&lt;/script&gt;
+  &lt;script&gt;
+    client = new AlgoliaSearch('ApplicationID', 'API-Key', 
+                              ['http://api-u1-1.algolia.io', 'http://api-u1-2.algolia.io', 'api-u1-3.algolia.io']),
 </code></pre>
 
 Quick Start
