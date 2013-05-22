@@ -25,7 +25,7 @@ To setup your project, follow these steps:
   <script src="algoliasearch-min.js"></script>
   <script>
     client = new AlgoliaSearch('ApplicationID', 'API-Key', 
-                              ['http://api-u1-1.algolia.io', 'http://api-u1-2.algolia.io', 'http://api-u1-3.algolia.io']);
+                              ['http://user-1.algolia.io', 'http://user-2.algolia.io', 'http://user-3.algolia.io']);
     ...
 ```
 
