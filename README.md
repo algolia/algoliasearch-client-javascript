@@ -214,7 +214,7 @@ You can easily retrieve settings or update them:
 ```javascript
 index.getSettings(function(success, content) {
   if (success) {
-    console.log(content.objectID + ": " + content.toString());
+    console.log(content);
   }
 });
 ```
