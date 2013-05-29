@@ -214,11 +214,11 @@ AlgoliaSearch.prototype = {
         window.clearTimeout(as.onDelayTrigger);
         if (!_.isUndefined(delay) && delay != null && delay > 0) {
             var onDelayTrigger = window.setTimeout( function() {
-                AlgoliaUtils_sendQueriesBatch(as, params, callback, classToDerive);
+                this._sendQueriesBatch(as, params, callback, classToDerive);
             }, delay);
             as.onDelayTrigger = onDelayTrigger;
         } else {
-            AlgoliaUtils_sendQueriesBatch(as, params, callback, classToDerive);
+            this._sendQueriesBatch(as, params, callback, classToDerive);
         }
     },
     /*
@@ -230,6 +230,26 @@ AlgoliaSearch.prototype = {
         this.as = algoliasearch;
     },
 
+    _sendQueriesBatch: function(as, params, callback, classToDerive) {
+        as._jsonRequest({ cache: as.cache,
+                               method: 'POST',
+                               url: '/1/indexes/*/queries',
+                               body: params,
+                               callback: function(success, res, body) {
+            if (success && !_.isUndefined(classToDerive) && classToDerive != null) {
+                for (var i in body.results) { 
+                    for (var j in body.results[i].hits) {
+                        var obj = new classToDerive();
+                        _.extend(obj, body.results[i].hits[j]);
+                        body.results[i].hits[j] = obj;
+                    }
+                }
+            }
+            if (!_.isUndefined(callback)) {
+                callback(success, body);
+            }
+        }});
+    },
     /*
      * Wrapper that try all hosts to maximize the quality of service
      */
@@ -268,9 +288,45 @@ AlgoliaSearch.prototype = {
                 }
             };
             opts.hostname = self.hosts[idx];
-            AlgoliaUtils_jsonRequest(opts, self.applicationID, self.apiKey)
+            self._jsonRequestByHost(opts)
         };
         impl();
+    },
+
+    _jsonRequestByHost: function(opts) {
+        var body = null;
+        if (!_.isUndefined(opts.body)) {
+            body = JSON.stringify(opts.body);
+        }
+        var url = opts.hostname + opts.url;
+        var xmlHttp = null;
+
+        xmlHttp = new XMLHttpRequest();
+        if ("withCredentials" in xmlHttp) {
+            xmlHttp.open(opts.method, url , true);
+            xmlHttp.setRequestHeader('X-Algolia-API-Key', this.apiKey);
+            xmlHttp.setRequestHeader('X-Algolia-Application-Id', this.applicationID);
+            if (body != null) {
+                xmlHttp.setRequestHeader("Content-type", "application/json");
+            }
+        } else if (typeof XDomainRequest != "undefined") {
+            // Handle IE8/IE9
+            // XDomainRequest only exists in IE, and is IE's way of making CORS requests.
+            xmlHttp = new XDomainRequest();
+            xmlHttp.open(opts.method, url);
+        } else {
+            // very old browser, not supported
+            console.log("your browser is too old to support CORS requests");
+        }
+        xmlHttp.send(body);
+        xmlHttp.onload = function(event) {
+            if (!_.isUndefined(event)) {
+                var success = (event.target.status === 200 || event.target.status === 201);
+                opts.callback(success, event.target, event.target.response != null ? JSON.parse(event.target.response) : null);
+            } else {
+                opts.callback(true, event, JSON.parse(xmlHttp.responseText));
+            }
+        };
     },
 
      /*
@@ -527,11 +583,11 @@ AlgoliaSearch.prototype.Index.prototype = {
             window.clearTimeout(indexObj.onDelayTrigger);
             if (!_.isUndefined(delay) && delay != null && delay > 0) {
                 var onDelayTrigger = window.setTimeout( function() {
-                    AlgoliaUtils_search(indexObj, params, callback, classToDerive);
+                    this._search(indexObj, params, callback, classToDerive);
                 }, delay);
                 indexObj.onDelayTrigger = onDelayTrigger;
             } else {
-                AlgoliaUtils_search(indexObj, params, callback, classToDerive);
+                this._search(indexObj, params, callback, classToDerive);
             }
         },
 
@@ -618,86 +674,28 @@ AlgoliaSearch.prototype.Index.prototype = {
             }});
         },
 
+        _search: function(indexObj, params, callback, classToDerive) {
+            indexObj.as._jsonRequest({ cache: indexObj.cache,
+                                   method: 'POST',
+                                   url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + "/query",
+                                   body: {params: params, apiKey: indexObj.as.apiKey, appID: indexObj.as.applicationID},
+                                   callback: function(success, res, body) {
+                if (success && !_.isUndefined(classToDerive) && classToDerive != null) {
+                    for (var i in body.hits) {
+                        var obj = new classToDerive();
+                        _.extend(obj, body.hits[i]);
+                        body.hits[i] = obj;
+                    }
+                }
+                if (!_.isUndefined(callback)) {
+                    callback(success, body);
+                }
+            }});
+        },
 
         // internal attributes
         as: null,
         indexName: null,
         cache: {},
         emptyConstructor: function() {}
-};
-
-AlgoliaUtils_jsonRequest = function(opts, appID, apiKey) {
-    var body = null;
-    if (!_.isUndefined(opts.body)) {
-        body = JSON.stringify(opts.body);
-    }
-    var url = opts.hostname + opts.url;
-    var xmlHttp = null;
-
-    xmlHttp = new XMLHttpRequest();
-    if ("withCredentials" in xmlHttp) {
-        xmlHttp.open(opts.method, url , true);
-        xmlHttp.setRequestHeader('X-Algolia-API-Key', apiKey);
-        xmlHttp.setRequestHeader('X-Algolia-Application-Id', appID);
-        if (body != null) {
-            xmlHttp.setRequestHeader("Content-type", "application/json");
-        }
-    } else if (typeof XDomainRequest != "undefined") {
-        // Handle IE8/IE9
-        // XDomainRequest only exists in IE, and is IE's way of making CORS requests.
-        xmlHttp = new XDomainRequest();
-        xmlHttp.open(opts.method, url);
-    } else {
-        // very old browser, not supported
-        console.log("your browser is too old to support CORS requests");
-    }
-    xmlHttp.send(body);
-    xmlHttp.onload = function(event) {
-        if (!_.isUndefined(event)) {
-            var success = (event.target.status === 200 || event.target.status === 201);
-            opts.callback(success, event.target, event.target.response != null ? JSON.parse(event.target.response) : null);
-        } else {
-            opts.callback(true, event, JSON.parse(xmlHttp.responseText));
-        }
-    };
-};
-
-AlgoliaUtils_search = function(indexObj, params, callback, classToDerive) {
-    indexObj.as._jsonRequest({ cache: indexObj.cache,
-                           method: 'POST',
-                           url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + "/query",
-                           body: {params: params, apiKey: indexObj.as.apiKey, appID: indexObj.as.applicationID},
-                           callback: function(success, res, body) {
-        if (success && !_.isUndefined(classToDerive) && classToDerive != null) {
-            for (var i in body.hits) {
-                var obj = new classToDerive();
-                _.extend(obj, body.hits[i]);
-                body.hits[i] = obj;
-            }
-        }
-        if (!_.isUndefined(callback)) {
-            callback(success, body);
-        }
-    }});
-};
-
-AlgoliaUtils_sendQueriesBatch = function(as, params, callback, classToDerive) {
-    as._jsonRequest({ cache: as.cache,
-                           method: 'POST',
-                           url: '/1/indexes/*/queries',
-                           body: params,
-                           callback: function(success, res, body) {
-        if (success && !_.isUndefined(classToDerive) && classToDerive != null) {
-            for (var i in body.results) { 
-                for (var j in body.results[i].hits) {
-                    var obj = new classToDerive();
-                    _.extend(obj, body.results[i].hits[j]);
-                    body.results[i].hits[j] = obj;
-                }
-            }
-        }
-        if (!_.isUndefined(callback)) {
-            callback(success, body);
-        }
-    }});
 };
