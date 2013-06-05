@@ -19,20 +19,22 @@ To setup your project, follow these steps:
 
  1. Add a script include of `algoliasearch-min.js`
  2. Initialize the client with your ApplicationID, API-Key and list of hostnames (you can find all of them on your Algolia account)
- 3. When you use this API client for search on a website, we strongly recommand to use a key with an ACL restricted to "search". You can retrieve with `client.addUserKey(["search"])`.
+ 3. When you use this API client for search on a website, we strongly recommand to use a key with an ACL restricted to "search". You can retrieve one with `client.addUserKey(["search"])`.
 
 ```javascript
   <script src="algoliasearch-min.js"></script>
   <script>
     client = new AlgoliaSearch('ApplicationID', 'API-Key', 
-                              ['http://user-1.algolia.io', 'http://user-2.algolia.io', 'http://user-3.algolia.io']);
+                               ['user-1.algolia.io', 'user-2.algolia.io', 'user-3.algolia.io']);
     ...
 ```
 
 Quick Start
 -------------
 
-You can replace your ApplicationID and API-Key in `simple-ui.html` to test the Javascript client on your account.
+First index some data. You can use the command line client [quick start](https://github.com/algolia/algoliasearch-client-cmd#quick-start) for example to index the 1000 world's biggest cities.
+
+You can then update the `simple-ui.html` file with your ApplicationID, API-Key, hostnames and index name to test the Javascript client in the browser.
 
 General Principle
 -------------
@@ -106,119 +108,20 @@ The server response will look like:
 }
 ```
 
-Add a new object in the Index
+Update the index
 -------------
 
-Each entry in an index has a unique identifier called `objectID`. You have two ways to add en entry in the index:
+The javascript client is dedicated to web apps searching directly from the browser. In some use-cases, it can however be interesting to perform updates to the index directly in javascript, for example in an HTML5 mobile app. Therefore, just as for other languages, the javascript client is able to add, update or delete objects, or to modify index settings.
 
- 1. Using automatic `objectID` assignement, you will be able to retrieve it in the answer.
- 2. Passing your own `objectID`.
+For more details about updating an index from javascript, have a look at the [algoliasearch.js](https://github.com/algolia/algoliasearch-client-js/blob/master/algoliasearch.js) source file to see details about each function.
 
-You don't need to explicitely create an index, it will be automatically created the first time you add an object.
-Objects are schema less, you don't need any configuration to start indexing. The settings section provide details about advanced settings.
-
-Example with automatic `objectID` assignement:
+**Note:** If you use the javascript client to update the index, you need to specify `https` as the protocol in the client initialization:
 
 ```javascript
-index.addObject({'name': 'San Francisco', 
-                 'population': 805235}, function(success, content) {
-  console.log('objectID=' + content.objectID);
-});
-```
-
-Example with manual `objectID` assignement:
-
-```javascript
-index.addObject({'name': 'San Francisco', 
-                 'population': 805235}, function(success, content) {
-  console.log('objectID=' + content.objectID);
-}, 'myID');
-```
-
-
-Update an existing object in the Index
--------------
-
-You have two options to update an existing object:
-
- 1. Replace all its attributes.
- 2. Replace only some attributes.
-
-Example to replace all the content of an existing object:
-
-```javascript
-index.saveObject({'name': 'Los Angeles', 
-                  'population': 3792621,
-                  'objectID': 'myID'});
-```
-
-Example to update only the population attribute of an existing object:
-
-```javascript
-index.partialUpdateObject({'population': 3792621,
-                           'objectID': 'myID'});
-```
-
-Get an object
--------------
-
-You can easily retrieve an object using its `objectID` and optionnaly a list of attributes you want to retrieve (using comma as separator):
-
-```javascript
-// Retrieves all attributes
-idx.getObject('myID', function(success, content) {
-  console.log(content.objectID + ": " + content.toString());
-});
-// Retrieves name and population attributes
-idx.getObject('myID', function(success, content) {
-  console.log(content.objectID + ": " + content.toString());
-}, "name,population");
-// Retrieves only the name attribute
-idx.getObject('myID', function(success, content) {
-  console.log(content.objectID + ": " + content.toString());
-}, "name");
-```
-
-Delete an object
--------------
-
-You can delete an object using its `objectID`:
-
-```javascript
-index.deleteObject('myID');
-```
-
-Index Settings
--------------
-
-You can retrieve all settings using the `getSettings` function. The result will contains the following attributes:
-
- * **minWordSizeForApprox1**: (integer) the minimum number of characters to accept one typo (default = 3).
- * **minWordSizeForApprox2**: (integer) the minimum number of characters to accept two typos (default = 7).
- * **hitsPerPage**: (integer) the number of hits per page (default = 10).
- * **attributesToRetrieve**: (array of strings) default list of attributes to retrieve in objects.
- * **attributesToHighlight**: (array of strings) default list of attributes to highlight
- * **attributesToIndex**: (array of strings) the list of fields you want to index.<br/>By default all textual attributes of your objects are indexed, but you should update it to get optimal results.<br/>This parameter has two important uses:
-  * *Limit the attributes to index*.<br/>For example if you store a binary image in base64, you want to store it and be able to retrieve it but you don't want to search in the base64 string.
-  * *Control part of the ranking*.<br/>Matches in attributes at the beginning of the list will be considered more important than matches in attributes further down the list.
- * **ranking**: (array of strings) controls the way results are sorted.<br/>We have four available criteria: 
-  * **typo**: sort according to number of typos,
-  * **geo**: sort according to decreassing distance when performing a geo-location based search,
-  * **position**: sort according to the matching attribute, 
-  * **custom**: sort according to a user defined formula.<br/>The standard order is ["typo", "geo", position", "custom"]
- * **customRanking**: (array of strings) lets you specify part of the ranking.<br/>The syntax of this condition is an array of strings containing attributes prefixed by asc (ascending order) or desc (descending order) operator.
-For example `"customRanking" => ["desc(population)", "asc(name)"]`
-
-You can easily retrieve settings or update them:
-
-```javascript
-index.getSettings(function(success, content) {
-  if (success) {
-    console.log(content);
-  }
-});
-```
-
-```javascript
-index.setSettings({'customRanking': ['desc(population)', 'asc(name)']});
+  <script src="algoliasearch-min.js"></script>
+  <script>
+    client = new AlgoliaSearch('ApplicationID', 'API-Key', 
+                               ['user-1.algolia.io', 'user-2.algolia.io', 'user-3.algolia.io'],
+                               'https');
+    ...
 ```
