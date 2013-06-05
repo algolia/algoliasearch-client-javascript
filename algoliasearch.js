@@ -32,14 +32,17 @@
  * @param apiKey a valid API key for the service
  * @param hostsArray the list of hosts that you have received for the service
  */
-var AlgoliaSearch = function(applicationID, apiKey, hostsArray) {
+var AlgoliaSearch = function(applicationID, apiKey, hostsArray, method) {
     this.applicationID = applicationID;
     this.apiKey = apiKey;
     // Add hosts in random order
     for (var i = 0; i < hostsArray.length; ++i) {
         if (Math.random() > 0.5)
             this.hosts.reverse();
-        this.hosts.push(hostsArray[i]);
+        if (!_.isUndefined(method) && (method === "https" || method === "HTTPS"))
+            this.hosts.push("https://" + hostsArray[i]);
+        else
+            this.hosts.push("http://" + hostsArray[i]);
     }
     if (Math.random() > 0.5)
         this.hosts.reverse();
