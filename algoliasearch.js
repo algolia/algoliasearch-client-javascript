@@ -217,11 +217,11 @@ AlgoliaSearch.prototype = {
         window.clearTimeout(as.onDelayTrigger);
         if (!_.isUndefined(delay) && delay != null && delay > 0) {
             var onDelayTrigger = window.setTimeout( function() {
-                this._sendQueriesBatch(as, params, callback, classToDerive);
+                as._sendQueriesBatch(params, callback, classToDerive);
             }, delay);
             as.onDelayTrigger = onDelayTrigger;
         } else {
-            this._sendQueriesBatch(as, params, callback, classToDerive);
+            this._sendQueriesBatch(params, callback, classToDerive);
         }
     },
     /*
@@ -233,8 +233,8 @@ AlgoliaSearch.prototype = {
         this.as = algoliasearch;
     },
 
-    _sendQueriesBatch: function(as, params, callback, classToDerive) {
-        as._jsonRequest({ cache: as.cache,
+    _sendQueriesBatch: function(params, callback, classToDerive) {
+        this._jsonRequest({ cache: this.cache,
                                method: 'POST',
                                url: '/1/indexes/*/queries',
                                body: params,
@@ -586,11 +586,11 @@ AlgoliaSearch.prototype.Index.prototype = {
             window.clearTimeout(indexObj.onDelayTrigger);
             if (!_.isUndefined(delay) && delay != null && delay > 0) {
                 var onDelayTrigger = window.setTimeout( function() {
-                    this._search(indexObj, params, callback, classToDerive);
+                    indexObj._search(params, callback, classToDerive);
                 }, delay);
                 indexObj.onDelayTrigger = onDelayTrigger;
             } else {
-                this._search(indexObj, params, callback, classToDerive);
+                this._search(params, callback, classToDerive);
             }
         },
 
@@ -677,11 +677,11 @@ AlgoliaSearch.prototype.Index.prototype = {
             }});
         },
 
-        _search: function(indexObj, params, callback, classToDerive) {
-            indexObj.as._jsonRequest({ cache: indexObj.cache,
+        _search: function(params, callback, classToDerive) {
+            this.as._jsonRequest({ cache: this.cache,
                                    method: 'POST',
-                                   url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + "/query",
-                                   body: {params: params, apiKey: indexObj.as.apiKey, appID: indexObj.as.applicationID},
+                                   url: '/1/indexes/' + encodeURIComponent(this.indexName) + "/query",
+                                   body: {params: params, apiKey: this.as.apiKey, appID: this.as.applicationID},
                                    callback: function(success, res, body) {
                 if (success && !_.isUndefined(classToDerive) && classToDerive != null) {
                     for (var i in body.hits) {
