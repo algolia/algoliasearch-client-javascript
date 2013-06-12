@@ -183,7 +183,7 @@ AlgoliaSearch.prototype = {
      *  - attributes: an array of object attribute names to retrieve
      *     (if not set all attributes are retrieve)
      *  - attributesToHighlight: an array of object attribute names to highlight 
-     *     (if not set all textual attributes are highlighted)
+     *     (if not set indexed attributes are highlighted)
      *  - minWordSizeForApprox1: the minimum number of characters to accept one typo.
      *     Defaults to 3.
      *  - minWordSizeForApprox2: the minimum number of characters to accept two typos.
@@ -339,7 +339,7 @@ AlgoliaSearch.prototype = {
      *  - attributes: an array of object attribute names to retrieve
      *     (if not set all attributes are retrieve)
      *  - attributesToHighlight: an array of object attribute names to highlight 
-     *     (if not set all textual attributes are highlighted)
+     *     (if not set indexed attributes are highlighted)
      *  - minWordSizeForApprox1: the minimum number of characters to accept one typo.
      *     Defaults to 3.
      *  - minWordSizeForApprox2: the minimum number of characters to accept two typos.
@@ -555,7 +555,7 @@ AlgoliaSearch.prototype.Index.prototype = {
          *  - attributes: a string that contains attribute names to retrieve separated by a comma. 
          *    By default all attributes are retrieved.
          *  - attributesToHighlight: a string that contains attribute names to highlight separated by a comma. 
-         *    By default all attributes are highlighted.
+         *    By default all indexed attributes are highlighted.
          *  - minWordSizeForApprox1: the minimum number of characters to accept one typo.
          *     Defaults to 3.
          *  - minWordSizeForApprox2: the minimum number of characters to accept two typos.
