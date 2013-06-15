@@ -572,8 +572,8 @@ AlgoliaSearch.prototype.Index.prototype = {
          *    a rectangle (defined by 4 floats: p1Lat,p1Lng,p2Lat, p2Lng.
          *    For example insideBoundingBox=47.3165,4.9665,47.3424,5.0201).
          *    At indexing, geoloc of an object should be set with _geoloc attribute containing lat and lng attributes (for example {"_geoloc":{"lat":48.853409, "lng":2.348800}})
-         *  - tags let you filter the query by a set of tags (contains a list of tags separated by ','). 
-         *    At indexing, tags should be added in _tags attribute of objects (for example {"_tags":["tag1","tag2"]} )
+         *  - tags filter the query by a set of tags. You can AND tags by separating them by commas. To OR tags, you must add parentheses. For example, tags=tag1,(tag2,tag3) means tag1 AND (tag2 OR tag3).
+         *    At indexing, tags should be added in the _tags attribute of objects (for example {"_tags":["tag1","tag2"]} )
          * @param delay (optional) if set, wait for this delay (in ms) and only send the query if there was no other in the meantime.
          * @param classToDerive (optional) if set, hits will be an instance of this class.
          */
