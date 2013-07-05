@@ -147,8 +147,7 @@ AlgoliaSearch.prototype = {
      * @param acls the list of ACL for this key. Defined by an array of strings that 
      * can contains the following values:
      *   - search: allow to search (https and http)
-     *   - addObject: allows to add a new object in the index (https only)
-     *   - updateObject : allows to change content of an existing object (https only)
+     *   - addObject: allows to add/update an object in the index (https only)
      *   - deleteObject : allows to delete an existing object (https only)
      *   - deleteIndex : allows to delete index content (https only)
      *   - settings : allows to get index settings (https only)
@@ -163,6 +162,34 @@ AlgoliaSearch.prototype = {
         aclsObject.acl = acls;
         this._jsonRequest({ method: 'POST',
                             url: '/1/keys', 
+                            body: aclsObject,
+                            callback: function(success, res, body) {
+            if (!_.isUndefined(callback))
+                callback(success, body);
+        }});
+    },
+    /*
+     * Add an existing user key
+     *
+     * @param acls the list of ACL for this key. Defined by an array of strings that 
+     * can contains the following values:
+     *   - search: allow to search (https and http)
+     *   - addObject: allows to add/update an object in the index (https only)
+     *   - deleteObject : allows to delete an existing object (https only)
+     *   - deleteIndex : allows to delete index content (https only)
+     *   - settings : allows to get index settings (https only)
+     *   - editSettings : allows to change index settings (https only)
+     * @param validity the number of seconds after which the key will be automatically removed (0 means no time limit for this key)
+     * @param callback the result callback with two arguments
+     *  success: boolean set to true if the request was successfull
+     *  content: the server answer with user keys list or error description if success is false.
+     */
+    addUserKeyWithValidity: function(acls, validity, callback) {
+        var indexObj = this;
+        var aclsObject = new Object();
+        aclsObject.acl = acls;
+        this._jsonRequest({ method: 'POST',
+                            url: '/1/indexes/' + indexObj.indexName + '/keys', 
                             body: aclsObject,
                             callback: function(success, res, body) {
             if (!_.isUndefined(callback))
@@ -689,7 +716,113 @@ AlgoliaSearch.prototype.Index.prototype = {
                     callback(success, body);
             }});
         },
-
+        /*
+         * List all existing user keys associated to this index
+         *
+         * @param callback the result callback with two arguments
+         *  success: boolean set to true if the request was successfull
+         *  content: the server answer with user keys list or error description if success is false.
+         */
+        listUserKeys: function(callback) {
+            var indexObj = this;
+            this.as._jsonRequest({ method: 'GET',
+                                   url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/keys',
+                                   callback: function(success, res, body) {
+                if (!_.isUndefined(callback))
+                    callback(success, body);
+            }});
+        },
+        /*
+         * Get ACL of a user key associated to this index
+         *
+         * @param callback the result callback with two arguments
+         *  success: boolean set to true if the request was successfull
+         *  content: the server answer with user keys list or error description if success is false.
+         */
+        getUserKeyACL: function(key, callback) {
+            var indexObj = this;
+            this.as._jsonRequest({ method: 'GET',
+                                   url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/keys/' + key,
+                                   callback: function(success, res, body) {
+                if (!_.isUndefined(callback))
+                    callback(success, body);
+            }});
+        },
+        /*
+         * Delete an existing user key associated to this index
+         *
+         * @param callback the result callback with two arguments
+         *  success: boolean set to true if the request was successfull
+         *  content: the server answer with user keys list or error description if success is false.
+         */
+        deleteUserKey: function(key, callback) {
+            var indexObj = this;
+            this.as._jsonRequest({ method: 'DELETE',
+                                   url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/keys/' + key,
+                                   callback: function(success, res, body) {
+                if (!_.isUndefined(callback))
+                    callback(success, body);
+            }});
+        },
+        /*
+         * Add an existing user key associated to this index
+         *
+         * @param acls the list of ACL for this key. Defined by an array of strings that
+         * can contains the following values:
+         *   - search: allow to search (https and http)
+         *   - addObject: allows to add/update an object in the index (https only)
+         *   - deleteObject : allows to delete an existing object (https only)
+         *   - deleteIndex : allows to delete index content (https only)
+         *   - settings : allows to get index settings (https only)
+         *   - editSettings : allows to change index settings (https only)
+         * @param callback the result callback with two arguments
+         *  success: boolean set to true if the request was successfull
+         *  content: the server answer with user keys list or error description if success is false.
+         */
+        addUserKey: function(acls, callback) {
+            var indexObj = this;
+            var aclsObject = new Object();
+            aclsObject.acl = acls;
+            this.as._jsonRequest({ method: 'POST',
+                                   url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/keys',
+                                   body: aclsObject,
+                                   callback: function(success, res, body) {
+                if (!_.isUndefined(callback))
+                    callback(success, body);
+            }});
+        },
+        /*
+         * Add an existing user key associated to this index
+         *
+         * @param acls the list of ACL for this key. Defined by an array of strings that
+         * can contains the following values:
+         *   - search: allow to search (https and http)
+         *   - addObject: allows to add/update an object in the index (https only)
+         *   - deleteObject : allows to delete an existing object (https only)
+         *   - deleteIndex : allows to delete index content (https only)
+         *   - settings : allows to get index settings (https only)
+         *   - editSettings : allows to change index settings (https only)
+         * @param validity the number of seconds after which the key will be automatically removed (0 means no time limit for this key)
+         * @param callback the result callback with two arguments
+         *  success: boolean set to true if the request was successfull
+         *  content: the server answer with user keys list or error description if success is false.
+         */
+        addUserKeyWithValidity: function(acls, validity, callback) {
+            var indexObj = this;
+            var aclsObject = new Object();
+            aclsObject.acl = acls;
+            aclsObject.validity = validity;
+            this.as._jsonRequest({ method: 'POST',
+                                   url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/keys',
+                                   body: aclsObject,
+                                   callback: function(success, res, body) {
+                if (!_.isUndefined(callback))
+                    callback(success, body);
+            }});
+        },
+        ///
+        /// Internal methods only after this line
+        ///
         _search: function(params, callback, classToDerive) {
             this.as._jsonRequest({ cache: this.cache,
                                    method: 'POST',
