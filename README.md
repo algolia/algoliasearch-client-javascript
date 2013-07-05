@@ -83,34 +83,33 @@ index.search('query string', function(success, content) {
 The server response will look like:
 
 ```javascript
-{   "hasError": false,
-    "errorMsg": null,
-    "answer":
-            { "hits":[
-                        { "name": "Betty Jane Mccamey",
-                          "company": "Vita Foods Inc.",
-                          "email": "betty@mccamey.com",
-                          "objectID": "6891Y2usk0",
-                          "_highlightResult": {"name": {"value": "Betty <em>Jan</em>e Mccamey", "matchLevel": "full"}, 
-                                               "company": {"value": "Vita Foods Inc.", "matchLevel": "none"},
-                                               "email": {"value": "betty@mccamey.com", "matchLevel": "none"} }
-                        },
-                        { "name": "Gayla Geimer Dan", 
-                          "company": "Ortman Mccain Co", 
-                          "email": "gayla@geimer.com", 
-                          "objectID": "ap78784310" 
-                          "_highlightResult": {"name": {"value": "Gayla Geimer <em>Dan</em>", "matchLevel": "full" },
-                                               "company": {"value": "Ortman Mccain Co", "matchLevel": "none" },
-                                               "email": {"highlighted": "gayla@geimer.com", "matchLevel": "none" } }
-                        }],
-                "page":0,
-                "nbHits":2,
-                "nbPages":1,
-                "hitsPerPage:":20,
-                "processingTimeMS":1,
-                "query":"jan"
+{ 
+  "hits": [
+            { "name": "Betty Jane Mccamey",
+              "company": "Vita Foods Inc.",
+              "email": "betty@mccamey.com",
+              "objectID": "6891Y2usk0",
+              "_highlightResult": {"name": {"value": "Betty <em>Jan</em>e Mccamey", "matchLevel": "full"}, 
+                                   "company": {"value": "Vita Foods Inc.", "matchLevel": "none"},
+                                   "email": {"value": "betty@mccamey.com", "matchLevel": "none"} }
+            },
+            { "name": "Gayla Geimer Dan", 
+              "company": "Ortman Mccain Co", 
+              "email": "gayla@geimer.com", 
+              "objectID": "ap78784310" 
+              "_highlightResult": {"name": {"value": "Gayla Geimer <em>Dan</em>", "matchLevel": "full" },
+                                   "company": {"value": "Ortman Mccain Co", "matchLevel": "none" },
+                                   "email": {"highlighted": "gayla@geimer.com", "matchLevel": "none" } }
             }
+          ],
+  "page":0,
+  "nbHits":2,
+  "nbPages":1,
+  "hitsPerPage:":20,
+  "processingTimeMS":1,
+  "query":"jan"
 }
+
 ```
 
 Update the index
