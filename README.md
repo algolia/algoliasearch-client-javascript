@@ -109,7 +109,6 @@ The server response will look like:
   "processingTimeMS":1,
   "query":"jan"
 }
-
 ```
 
 Update the index
