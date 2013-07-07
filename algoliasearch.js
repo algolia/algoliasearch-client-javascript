@@ -423,7 +423,7 @@ AlgoliaSearch.prototype.Index.prototype = {
                 }});
             } else {
                 this.as._jsonRequest({ method: 'PUT',
-                                       url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + "/" + objectID, 
+                                       url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + "/" + encodeURIComponent(objectID), 
                                        body: content,
                                        callback: function(success, res, body) {
                     if (!_.isUndefined(callback))
