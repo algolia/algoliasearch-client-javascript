@@ -692,9 +692,12 @@ AlgoliaSearch.prototype.Index.prototype = {
          *  - ranking: (array of strings) controls the way results are sorted. 
          *     We have three available criteria: 
          *       - typo (sort according to number of typos), 
-         *       - position (sort according to the matching attribute), 
+         *       - geo: (sort according to decreassing distance when performing a geo-location based search),
+         *       - proximity: sort according to the proximity of query words in hits, 
+         *       - attribute: sort according to the order of attributes defined by **attributesToIndex**,
+         *       - exact: sort according to the number of words that are matched identical to query word (and not as a prefix),
          *       - custom which is user defined
-         *     (the standard order is ["typo", "position", "custom"])
+         *     (the standard order is ["typo", "geo", "proximity", "attribute", "exact", "custom"])
          *  - customRanking: (array of strings) lets you specify part of the ranking. 
          *    The syntax of this condition is an array of strings containing attributes prefixed 
          *    by asc (ascending order) or desc (descending order) operator.

@@ -7,16 +7,18 @@
         <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
         <script src="algoliasearch-min.js"></script>
         <script>
-            page = 0, done = false, didScroll = true;
 
-            // Replace the following values with your ApplicationID, ApiKey, Hosts and IndexName
-            algolia = new AlgoliaSearch('ApplicationID', 'ApiKey', ['http://api-u1-1.algolia.io', 'http://api-u1-2.algolia.io', 'api-u1-3.algolia.io']),
-            idx = algolia.initIndex('YourIndexName');
+            function searchCallback(success, content) {
+                if (content.query != $("#inputField").val())
+                    return;
+                $("#servertime").html("server response time: " + content.processingTimeMS + "ms");
+                $("#results").html('');
+                for (var i = 0; i < content.hits.length; ++i) {
+                    var h = content.hits[i];
+                    $("#results").append("<li class='hit'>" + displayHit(h) + "</li>");
+                }
+            }
 
-            // auto launch query on load
-            idx.search("", searchCallback);
-
-            
             function displayHit(hit) {
                 var result = '';
 
@@ -39,69 +41,22 @@
                 return result;
             }
 
-            function searchCallback(success, content) {
-                if (content.query != $("#inputField").val())
-                    return;
-                $("#servertime").html("server response time: " + content.processingTimeMS + "ms");
-    
-                // content contains a json object like the following:
-                // {"hits":[{"query":"google",
-                //           "score":359501,
-                //           "objectID":"374389",
-                //           "_highlightResult":{"query":{"value":"google","matchLevel":"none"}}},
-                //          {"query":"free",
-                //           "score":348856,
-                //           "objectID":"374388",
-                //           "_highlightResult":{"query":{"value":"free","matchLevel":"none"}}},
-                // [...]
-
-                // render result
-                page = content.page;
-                var res = ""; 
-                for (var i = 0; i < content.hits.length; ++i) {
-                    var h = content.hits[i];
-                    res += "<li class='hit'>" + displayHit(h) + "</li>";
-                }
-                if (page == 0) {
-                    $("#results").html(res);
-                } else {
-                    $("#results").append(res);
-                }
-
-                // last page reached
-                if (page + 1 == content.nbPages) {
-                    done = true;
-                }
-            }
-
             $(document).ready(function(){
+                // Replace the following values with your ApplicationID, ApiKey, Hosts and IndexName
+                client = new AlgoliaSearch('ApplicationID', 'API-Key', 
+                            ['YourHostname-1.algolia.io', 'YourHostname-2.algolia.io', 'YourHostname-3.algolia.io']);
+
+                    //['tvshowtime-1.algolia.io', 'tvshowtime-2.algolia.io', 'tvshowtime-3.algolia.io']),
+                index = client.initIndex('YourIndex');
+
+                index.search("", searchCallback);
                 var inputField = $("#inputField");
-                var w = $(window);
                 inputField.focus();
 
                 // search after each keystroke
                 inputField.keyup(function() {
-                    done = false;
-                    idx.search(inputField.val(), searchCallback); 
-                });
-
-                // infinite scrolling
-                w.scroll(function (e) {
-                    didScroll = true;
-                });
-                setInterval(function() {
-                    if (didScroll) {
-                        didScroll = false;
-                        if (done) {
-                            return;
-                        }
-                        if (!done && ($("#results li:last-child").offset().top - 500 < w.scrollTop() + w.innerHeight())) {
-                            idx.search(inputField.val(), searchCallback, {"page": ++page});
-                        }
-                    }
-                }, 250);
-
-                
+                    index.search(inputField.val(), searchCallback); 
+                });                
             });
         </script>
     </head>
