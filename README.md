@@ -18,14 +18,13 @@ Setup
 To setup your project, follow these steps:
 
  1. Add a script include of `algoliasearch-min.js`
- 2. Initialize the client with your ApplicationID, API-Key and list of hostnames (you can find all of them on your Algolia account)
+ 2. Initialize the client with your ApplicationID and API-Key (you can find all of them on your Algolia account)
  3. When you use this API client for search on a website, we strongly recommand to use a key with an ACL restricted to "search". You can retrieve one with `client.addUserKey(["search"])`.
 
 ```javascript
   <script src="algoliasearch-min.js"></script>
   <script>
-    client = new AlgoliaSearch('ApplicationID', 'API-Key', 
-       ['YourHostname-1.algolia.io', 'YourHostname-2.algolia.io', 'YourHostname-3.algolia.io']);
+    client = new AlgoliaSearch('ApplicationID', 'API-Key');
     ...
 ```
 

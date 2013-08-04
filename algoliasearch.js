@@ -30,11 +30,15 @@
  * Algolia Search library initialization
  * @param applicationID the application ID you have in your admin interface
  * @param apiKey a valid API key for the service
- * @param hostsArray the list of hosts that you have received for the service
+ * @param hostsArray (optionnal) the list of hosts that you have received for the service
  */
 var AlgoliaSearch = function(applicationID, apiKey, hostsArray, method) {
     this.applicationID = applicationID;
     this.apiKey = apiKey;
+    if (_.isUndefined(hostsArray))
+        hostsArray = [applicationID + '-1.algolia.io', 
+                      applicationID + '-2.algolia.io',
+                      applicationID + '-3.algolia.io'];
     // Add hosts in random order
     for (var i = 0; i < hostsArray.length; ++i) {
         if (Math.random() > 0.5)
