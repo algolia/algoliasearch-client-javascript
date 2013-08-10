@@ -32,7 +32,7 @@
  * @param apiKey a valid API key for the service
  * @param hostsArray (optionnal) the list of hosts that you have received for the service
  */
-var AlgoliaSearch = function(applicationID, apiKey, hostsArray, method) {
+var AlgoliaSearch = function(applicationID, apiKey, method, hostsArray) {
     this.applicationID = applicationID;
     this.apiKey = apiKey;
     if (_.isUndefined(hostsArray))
