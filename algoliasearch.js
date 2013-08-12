@@ -39,6 +39,7 @@ var AlgoliaSearch = function(applicationID, apiKey, method, hostsArray) {
         hostsArray = [applicationID + '-1.algolia.io', 
                       applicationID + '-2.algolia.io',
                       applicationID + '-3.algolia.io'];
+    this.hosts = [];
     // Add hosts in random order
     for (var i = 0; i < hostsArray.length; ++i) {
         if (Math.random() > 0.5)
