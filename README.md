@@ -17,7 +17,7 @@ Setup
 -------------
 To setup your project, follow these steps:
 
- 1. Add a script include of `algoliasearch-min.js`
+ 1. Download an add a script include of [algoliasearch-min.js](https://raw.github.com/algolia/algoliasearch-client-js/master/algoliasearch-min.js)
  2. Initialize the client with your ApplicationID and API-Key (you can find all of them on your Algolia account)
  3. When you use this API client for search on a website, we strongly recommand to use a key with an ACL restricted to "search". You can retrieve one with `client.addUserKey(["search"])`.
 
