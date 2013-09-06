@@ -33,7 +33,7 @@ Quick Start
 
 First index some data. You can use the command line client [quick start](https://github.com/algolia/algoliasearch-client-cmd#quick-start) for example to index the 1000 world's biggest cities.
 
-You can then update the `simple-ui.html` file with your ApplicationID, API-Key, hostnames and index name to test the Javascript client in the browser.
+You can then update the `simple-ui.html` file with your ApplicationID, API-Key and index name to test the Javascript client in the browser.
 
 General Principle
 -------------
