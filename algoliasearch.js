@@ -313,10 +313,13 @@ AlgoliaSearch.prototype = {
                 callback(false, null, { message: "Cannot contact server"});
                 return;
             }
-            opts.callback = function(success, res, body) {
+            opts.callback = function(retry, success, res, body) {
+                if (!success && !_.isUndefined(body)) {
+                    console.log("Error: " + body.message);
+                }
                 if (!_.isUndefined(opts.cache))
                     cache[cacheID] = body;
-                if (!success && (idx + 1) < self.hosts.length) {
+                if (!success && retry && (idx + 1) < self.hosts.length) {
                     impl(idx + 1);
                 } else {
                     callback(success, res, body);
@@ -356,10 +359,11 @@ AlgoliaSearch.prototype = {
         xmlHttp.send(body);
         xmlHttp.onload = function(event) {
             if (!_.isUndefined(event)) {
+                var retry = (event.target.status == 0 || event.target.status == 503);
                 var success = (event.target.status === 200 || event.target.status === 201);
-                opts.callback(success, event.target, event.target.response != null ? JSON.parse(event.target.response) : null);
+                opts.callback(retry, success, event.target, event.target.response != null ? JSON.parse(event.target.response) : null);
             } else {
-                opts.callback(true, event, JSON.parse(xmlHttp.responseText));
+                opts.callback(false, true, event, JSON.parse(xmlHttp.responseText));
             }
         };
     },
