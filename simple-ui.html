@@ -1,79 +1,89 @@
-<html>
-    <head>
-        <meta charset="utf-8" />
-        <title>Algolia Search - Simple UI</title>
+<head>
+	<meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+	<link href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="simple-ui.css">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+</head>
+<body>
+	<section class="panel">
+        <header class="panel-heading">
+           	<div class="search_box">
+				<form accept-charset="UTF-8" action="#" id="formRecherche" method="get">
+					<input autocomplete="off" class="autocomplete" id="inputfield" name="address" placeholder="Start typing" type="text" spellcheck="false"/>
+					<div class='searchbutton'>
+						<i class="icon-search icon-large"></i>
+					</div>
+				</form>
+			</div>
+        </header>
+        <div class="queries line-bottom" style="display: none;">
+        </div>
+    </section>
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 
-        <link href="simple-ui.css" rel="stylesheet" type="text/css"/>
-        <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-        <script src="algoliasearch-min.js"></script>
-        <script>
 
-            function searchCallback(success, content) {
-                if (content.query != $("#inputField").val())
-                    return;
-                $("#servertime").html("server response time: " + content.processingTimeMS + "ms");
-                $("#results").html('');
-                for (var i = 0; i < content.hits.length; ++i) {
-                    var h = content.hits[i];
-                    $("#results").append("<li class='hit'>" + displayHit(h) + "</li>");
-                }
-            }
+	<script src="underscore-min.js"></script>
+	<script src="algoliasearch.js"></script>
 
-            function displayHit(hit) {
-                var result = '';
+	<script type="text/javascript">
 
-                found = false;
+		function searchCallback(success, content) {
+	        if (content.query != $("#inputfield").val())
+	            return;
+	        if (content.hits.length == 0) {
+	        	$('.queries').hide('');
+	        	return;
+	   	    }
+
+	        res = '';
+	        // Scan all hits and display them
+	        for (var i = 0; i < content.hits.length; ++i) {
+	        	hit = content.hits[i];
+
+	        	// For this hit, display all property that have a least one word highlighted (matchLevel = full or partial)
+	        	tmp = '';
                 for(var propertyName in hit._highlightResult) {
                     el = hit._highlightResult[propertyName];
-                    if (el.matchLevel !== 'none') {
-                        result += "<div class='secondline'>" + propertyName.substr(0,1).toUpperCase() +
-                                    propertyName.substr(1) + ": " + el.value + "</div>";
-                        found = true;
+                    if (!(el instanceof Array) && el.matchLevel !== 'none') {
+                        tmp += "<div class='grey'>" + propertyName.substr(0,1).toUpperCase() +
+                                    propertyName.substr(1) + ": </div>" + el.value + "</br>";
                     }
                 }
-                if (!found) {
-                    for(var propertyName in hit._highlightResult) {
-                        el = hit._highlightResult[propertyName];
-                        result += "<div class='secondline'>" + propertyName.substr(0,1).toUpperCase() +
-                                    propertyName.substr(1) + ": " + el.value + "</div>";
-                    }
-                }                
-                return result;
-            }
+                if (tmp.length > 0) {
+                	if ((i % 2) == 0)
+	                	res += "<div class='query'>" + tmp + "</div>";
+	               	else
+	               		res += "<div class='query bg'>" + tmp + "</div>";
+                }
 
-            $(document).ready(function(){
-                // Replace the following values with your ApplicationID, ApiKey, Hosts and IndexName
-                client = new AlgoliaSearch('ApplicationID', 'API-Key');
+            } 
+            $('.queries').html(res);
+	   	    $('.queries').show();
+        }
 
-                    //['tvshowtime-1.algolia.io', 'tvshowtime-2.algolia.io', 'tvshowtime-3.algolia.io']),
-                index = client.initIndex('YourIndex');
 
-                index.search("", searchCallback);
-                var inputField = $("#inputField");
-                inputField.focus();
+		$(document).ready(function() {
+		    inputfield = $("#inputfield");
+		    searchbutton = $("#searchbutton");
+		    // Replace the following values by your ApplicationID and ApiKey.
+			algolia = new AlgoliaSearch('YourApplicationID', 'YourAPIKey'),
+			// replace YourIndexName by the name of the index you want to query.
+    	    index = algolia.initIndex('YourIndexName');
 
-                // search after each keystroke
-                inputField.keyup(function() {
-                    index.search(inputField.val(), searchCallback); 
-                });                
-            });
-        </script>
-    </head>
+    	    function search() {
+    	    	query = inputfield.val();
+    	    	if (query.length == 0) {
+    	    		$('.queries').hide();
+    	    		return;
+    	    	}
+			    index.search(query, searchCallback);
+        	}
 
-    <body>
-        <div id="main" class="container">
-            <div class="searchfield">
-                <input type="search" id="inputField" placeholder="Search by any attribute" spellcheck="false"/>
-                <div class="servertime">&nbsp;<span style='color: #777;' id="servertime"></span></div>
-            </div>
-            <br/>
-            <div class="row-fluid">
-                    <div class="span3"></div>
-                    <div class="span6 spanResults">
-                        <ul id="results" class="result"></ul>
-                    </div>
-                    
-            </div>
-        </div>
-    </body>
-</html>
+    		inputfield.focus();
+			inputfield.keyup(function() {
+				search();
+			});
+		});
+	</script>
+
+</body>
