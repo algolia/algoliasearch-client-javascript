@@ -31,7 +31,7 @@ To setup your project, follow these steps:
 Quick Start
 -------------
 
-First index some data. You can use the command line client [quick start](https://github.com/algolia/algoliasearch-client-cmd#quick-start) for example to index the 1000 world's biggest cities.
+First index some data. You can use the command line client [quick start](https://github.com/algolia/algoliasearch-client-cmd#quick-start) for example to index the 500 contacts.
 
 You can then update the `simple-ui.html` file with your ApplicationID, API-Key and index name to test the Javascript client in the browser.
 
