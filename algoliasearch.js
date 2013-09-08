@@ -366,6 +366,9 @@ AlgoliaSearch.prototype = {
                 opts.callback(false, true, event, JSON.parse(xmlHttp.responseText));
             }
         };
+        xmlHttp.onerror = function(event) {
+            opts.callback(true, false, null, { 'message': 'Could not connect to Host'} );
+        }
     },
 
      /*
