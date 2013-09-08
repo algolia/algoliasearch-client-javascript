@@ -30,6 +30,8 @@
  * Algolia Search library initialization
  * @param applicationID the application ID you have in your admin interface
  * @param apiKey a valid API key for the service
+ * @param method specify if the protocol used is http or https (http by default to make the first search query faster). 
+ *        You need to use https is you are doing something else than just search queries.
  * @param hostsArray (optionnal) the list of hosts that you have received for the service
  */
 var AlgoliaSearch = function(applicationID, apiKey, method, hostsArray) {
