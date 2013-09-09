@@ -576,6 +576,9 @@ AlgoliaSearch.prototype.Index.prototype = {
          *  content: the server answer that contains 3 elements: createAt, taskId and objectID
          */
         deleteObject: function(objectID, callback) {
+            if (objectID == null || objectID.length == 0) {
+                callback(false, { message: "empty objectID"});
+            }
             var indexObj = this;
             this.as._jsonRequest({ method: 'DELETE',
                                    url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + "/" + encodeURIComponent(objectID), 
