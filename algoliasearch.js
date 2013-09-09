@@ -578,6 +578,7 @@ AlgoliaSearch.prototype.Index.prototype = {
         deleteObject: function(objectID, callback) {
             if (objectID == null || objectID.length == 0) {
                 callback(false, { message: "empty objectID"});
+                return;
             }
             var indexObj = this;
             this.as._jsonRequest({ method: 'DELETE',
