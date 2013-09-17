@@ -73,7 +73,67 @@ AlgoliaSearch.prototype = {
                 callback(success, body);
         }});
     },
+    /**
+     * Move an existing index.
+     * @param srcIndexName the name of index to copy.
+     * @param dstIndexName the new index name that will contains a copy of srcIndexName (destination will be overriten if it already exist).
+     * @param callback the result callback with two arguments
+     *  success: boolean set to true if the request was successfull
+     *  content: the server answer that contains the task ID
+     */
+    moveIndex: function(srcIndexName, dstIndexName, callback) {
+        var postObj = {operation: "move", destination: dstIndexName};
+        var indexObj = this;
+        this._jsonRequest({ method: 'POST',
+                            url: '/1/indexes/' + encodeURIComponent(indexName) + "/operation",
+                            body: postObj, 
+                            callback: function(success, res, body) {
+            if (!_.isUndefined(callback))
+                callback(success, body);
+        }});
 
+    }, 
+    /**
+     * Copy an existing index.
+     * @param srcIndexName the name of index to copy.
+     * @param dstIndexName the new index name that will contains a copy of srcIndexName (destination will be overriten if it already exist).
+     * @param callback the result callback with two arguments
+     *  success: boolean set to true if the request was successfull
+     *  content: the server answer that contains the task ID
+     */
+    copyIndex: function(srcIndexName, dstIndexName, callback) {
+        var postObj = {operation: "copy", destination: dstIndexName};
+        var indexObj = this;
+        this._jsonRequest({ method: 'POST',
+                            url: '/1/indexes/' + encodeURIComponent(indexName) + "/operation",
+                            body: postObj, 
+                            callback: function(success, res, body) {
+            if (!_.isUndefined(callback))
+                callback(success, body);
+        }});
+    },
+    /**
+     * Return last log entries.
+     * @param offset Specify the first entry to retrieve (0-based, 0 is the most recent log entry).
+     * @param length Specify the maximum number of entries to retrieve starting at offset. Maximum allowed value: 1000.
+     * @param callback the result callback with two arguments
+     *  success: boolean set to true if the request was successfull
+     *  content: the server answer that contains the task ID     
+     */
+    getLogs: function(callback, offset, length) {
+        var indexObj = this;
+        if (_.isUndefined(offset))
+            offset = 0;
+        if (_.isUndefined(length))
+            length = 10;
+        
+        this._jsonRequest({ method: 'GET',
+                            url: '/1/logs?offset=' + offset + "&length=" + length, 
+                            callback: function(success, res, body) {
+            if (!_.isUndefined(callback))
+                callback(success, body);
+        }});
+    },
     /*
      * List all existing indexes
      *
@@ -599,6 +659,10 @@ AlgoliaSearch.prototype.Index.prototype = {
          * @param args (optional) if set, contains an object with query parameters:
          *  - attributes: a string that contains attribute names to retrieve separated by a comma. 
          *    By default all attributes are retrieved.
+         *  - numerics: specify the list of numeric filters you want to apply separated by a comma. 
+         *    The syntax of one filter is `attributeName` followed by `operand` followed by `value`. 
+         *    Supported operands are `<`, `<=`, `=`, `>` and `>=`. 
+         *    You can have multiple conditions on one attribute like for example `numerics=price>100,price<1000`.
          *  - attributesToHighlight: a string that contains attribute names to highlight separated by a comma. 
          *    By default all indexed attributes are highlighted.
          *  - attributesToSnippet: a string that contains the names of attributes to snippet alongside 
@@ -699,7 +763,7 @@ AlgoliaSearch.prototype.Index.prototype = {
          *  - attributesToHighlight: (array of strings) default list of attributes to highlight.
          *  -  attributesToSnippet:  (array of strings) default list of attributes to snippet alongside the number of words to return (syntax is 'attributeName:nbWords'). Attributes are separated by a comma (Example: "attributesToSnippet=name:10,content:10").<br/>By default no snippet is computed.
          *  - attributesToIndex: (array of strings) the list of fields you want to index. 
-         *    By default all textual attributes of your objects are indexed, but you should update it to get optimal 
+         *    By default all textual and numerical attributes of your objects are indexed, but you should update it to get optimal 
          *    results. This parameter has two important uses:
          *       - Limit the attributes to index. 
          *         For example if you store a binary image in base64, you want to store it in the index but you 
