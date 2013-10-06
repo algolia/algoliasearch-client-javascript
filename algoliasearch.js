@@ -327,24 +327,24 @@ AlgoliaSearch.prototype = {
 
         var impl = function(position) {
             var idx = 0;
-            if (!this._isUndefined(position))
+            if (!self._isUndefined(position))
                 idx = position;
             if (self.hosts.length <= idx) {
-                if (!this._isUndefined(callback)) {
+                if (!self._isUndefined(callback)) {
                     callback(false, { message: "Cannot contact server"});
                 }
                 return;
             }
             opts.callback = function(retry, success, res, body) {
-                if (!success && !this._isUndefined(body)) {
+                if (!success && !self._isUndefined(body)) {
                     console.log("Error: " + body.message);
                 }
-                if (!this._isUndefined(opts.cache))
+                if (!self._isUndefined(opts.cache))
                     cache[cacheID] = body;
                 if (!success && retry && (idx + 1) < self.hosts.length) {
                     impl(idx + 1);
                 } else {
-                    if (!this._isUndefined(callback)) {
+                    if (!self._isUndefined(callback)) {
                         callback(success, body);
                     }
                 }
@@ -357,6 +357,7 @@ AlgoliaSearch.prototype = {
 
     _jsonRequestByHost: function(opts) {
         var body = null;
+        var self = this;
         if (!this._isUndefined(opts.body)) {
             body = JSON.stringify(opts.body);
         }
@@ -382,7 +383,7 @@ AlgoliaSearch.prototype = {
         }
         xmlHttp.send(body);
         xmlHttp.onload = function(event) {
-            if (!this._isUndefined(event)) {
+            if (!self._isUndefined(event)) {
                 var retry = (event.target.status == 0 || event.target.status == 503);
                 var success = (event.target.status === 200 || event.target.status === 201);
                 opts.callback(retry, success, event.target, event.target.response != null ? JSON.parse(event.target.response) : null);
@@ -424,7 +425,9 @@ AlgoliaSearch.prototype = {
         }
         return params;
     },
-    _isUndefined: function(obj) { return obj === void 0; },
+    _isUndefined: function(obj) { 
+        return obj === void 0; 
+    },
 
     /// internal attributes
     applicationID: null,
