@@ -37,7 +37,7 @@
 var AlgoliaSearch = function(applicationID, apiKey, method, hostsArray) {
     this.applicationID = applicationID;
     this.apiKey = apiKey;
-    if (_.isUndefined(hostsArray))
+    if (this._isUndefined(hostsArray))
         hostsArray = [applicationID + '-1.algolia.io', 
                       applicationID + '-2.algolia.io',
                       applicationID + '-3.algolia.io'];
@@ -46,7 +46,7 @@ var AlgoliaSearch = function(applicationID, apiKey, method, hostsArray) {
     for (var i = 0; i < hostsArray.length; ++i) {
         if (Math.random() > 0.5)
             this.hosts.reverse();
-        if (!_.isUndefined(method) && (method === "https" || method === "HTTPS"))
+        if (!this._isUndefined(method) && (method === "https" || method === "HTTPS"))
             this.hosts.push("https://" + hostsArray[i]);
         else
             this.hosts.push("http://" + hostsArray[i]);
@@ -68,10 +68,7 @@ AlgoliaSearch.prototype = {
         var indexObj = this;
         this._jsonRequest({ method: 'DELETE',
                             url: '/1/indexes/' + encodeURIComponent(indexName), 
-                            callback: function(success, res, body) {
-            if (!_.isUndefined(callback))
-                callback(success, body);
-        }});
+                            callback: callback });
     },
     /**
      * Move an existing index.
@@ -87,10 +84,7 @@ AlgoliaSearch.prototype = {
         this._jsonRequest({ method: 'POST',
                             url: '/1/indexes/' + encodeURIComponent(indexName) + "/operation",
                             body: postObj, 
-                            callback: function(success, res, body) {
-            if (!_.isUndefined(callback))
-                callback(success, body);
-        }});
+                            callback: callback });
 
     }, 
     /**
@@ -107,10 +101,7 @@ AlgoliaSearch.prototype = {
         this._jsonRequest({ method: 'POST',
                             url: '/1/indexes/' + encodeURIComponent(indexName) + "/operation",
                             body: postObj, 
-                            callback: function(success, res, body) {
-            if (!_.isUndefined(callback))
-                callback(success, body);
-        }});
+                            callback: callback });
     },
     /**
      * Return last log entries.
@@ -122,17 +113,14 @@ AlgoliaSearch.prototype = {
      */
     getLogs: function(callback, offset, length) {
         var indexObj = this;
-        if (_.isUndefined(offset))
+        if (this._isUndefined(offset))
             offset = 0;
-        if (_.isUndefined(length))
+        if (this._isUndefined(length))
             length = 10;
         
         this._jsonRequest({ method: 'GET',
                             url: '/1/logs?offset=' + offset + "&length=" + length, 
-                            callback: function(success, res, body) {
-            if (!_.isUndefined(callback))
-                callback(success, body);
-        }});
+                            callback: callback });
     },
     /*
      * List all existing indexes
@@ -145,10 +133,7 @@ AlgoliaSearch.prototype = {
         var indexObj = this;
         this._jsonRequest({ method: 'GET',
                             url: '/1/indexes/', 
-                            callback: function(success, res, body) {
-            if (!_.isUndefined(callback))
-                callback(success, body);
-        }});
+                            callback: callback });
     },
 
     /*
@@ -171,10 +156,7 @@ AlgoliaSearch.prototype = {
         var indexObj = this;
         this._jsonRequest({ method: 'GET',
                             url: '/1/keys', 
-                            callback: function(success, res, body) {
-            if (!_.isUndefined(callback))
-                callback(success, body);
-        }});
+                            callback: callback });
     },
     /*
      * Get ACL of a user key
@@ -187,10 +169,7 @@ AlgoliaSearch.prototype = {
         var indexObj = this;
         this._jsonRequest({ method: 'GET',
                             url: '/1/keys/' + key, 
-                            callback: function(success, res, body) {
-            if (!_.isUndefined(callback))
-                callback(success, body);
-        }});
+                            callback: callback });
     },
     /*
      * Delete an existing user key
@@ -203,10 +182,7 @@ AlgoliaSearch.prototype = {
         var indexObj = this;
         this._jsonRequest({ method: 'DELETE',
                             url: '/1/keys/' + key, 
-                            callback: function(success, res, body) {
-            if (!_.isUndefined(callback))
-                callback(success, body);
-        }});
+                            callback: callback });
     },
     /*
      * Add an existing user key
@@ -230,10 +206,7 @@ AlgoliaSearch.prototype = {
         this._jsonRequest({ method: 'POST',
                             url: '/1/keys', 
                             body: aclsObject,
-                            callback: function(success, res, body) {
-            if (!_.isUndefined(callback))
-                callback(success, body);
-        }});
+                            callback: callback });
     },
     /*
      * Add an existing user key
@@ -258,10 +231,7 @@ AlgoliaSearch.prototype = {
         this._jsonRequest({ method: 'POST',
                             url: '/1/indexes/' + indexObj.indexName + '/keys', 
                             body: aclsObject,
-                            callback: function(success, res, body) {
-            if (!_.isUndefined(callback))
-                callback(success, body);
-        }});
+                            callback: callback });
     },
     /*
      * Initialize a new batch of search queries
@@ -289,7 +259,7 @@ AlgoliaSearch.prototype = {
      */
     addQueryInBatch: function(indexName, query, args) {
         var params = "query=" + query;
-        if (!_.isUndefined(args) && args != null) {
+        if (!this._isUndefined(args) && args != null) {
             params = this._getSearchParams(args, params);
         }
         this.batch.push({ indexName: indexName, params: params });
@@ -300,22 +270,21 @@ AlgoliaSearch.prototype = {
      *
      * @param callback the function that will receive results
      * @param delay (optional) if set, wait for this delay (in ms) and only send the batch if there was no other in the meantime.
-     * @param classToDerive (optional) if set, hits will be an instance of this class
      */
-    sendQueriesBatch: function(callback, delay, classToDerive) {
+    sendQueriesBatch: function(callback, delay) {
         var as = this;
         var params = {requests: [], apiKey: this.apiKey, appID: this.applicationID};
         for (var i = 0; i < as.batch.length; ++i) {
             params.requests.push(as.batch[i]);
         }
         window.clearTimeout(as.onDelayTrigger);
-        if (!_.isUndefined(delay) && delay != null && delay > 0) {
+        if (!this._isUndefined(delay) && delay != null && delay > 0) {
             var onDelayTrigger = window.setTimeout( function() {
-                as._sendQueriesBatch(params, callback, classToDerive);
+                as._sendQueriesBatch(params, callback);
             }, delay);
             as.onDelayTrigger = onDelayTrigger;
         } else {
-            this._sendQueriesBatch(params, callback, classToDerive);
+            this._sendQueriesBatch(params, callback);
         }
     },
     /*
@@ -327,25 +296,12 @@ AlgoliaSearch.prototype = {
         this.as = algoliasearch;
     },
 
-    _sendQueriesBatch: function(params, callback, classToDerive) {
+    _sendQueriesBatch: function(params, callback) {
         this._jsonRequest({ cache: this.cache,
                                method: 'POST',
                                url: '/1/indexes/*/queries',
                                body: params,
-                               callback: function(success, res, body) {
-            if (success && !_.isUndefined(classToDerive) && classToDerive != null) {
-                for (var i in body.results) { 
-                    for (var j in body.results[i].hits) {
-                        var obj = new classToDerive();
-                        _.extend(obj, body.results[i].hits[j]);
-                        body.results[i].hits[j] = obj;
-                    }
-                }
-            }
-            if (!_.isUndefined(callback)) {
-                callback(success, body);
-            }
-        }});
+                               callback: callback });
     },
     /*
      * Wrapper that try all hosts to maximize the quality of service
@@ -355,36 +311,42 @@ AlgoliaSearch.prototype = {
         var callback = opts.callback;
         var cache = null;
         var cacheID = opts.url;
-        if (!_.isUndefined(opts.body)) {
+        if (!this._isUndefined(opts.body)) {
             cacheID = opts.url + "_body_" + JSON.stringify(opts.body);
         }
         //console.log(cacheID);
-        if (!_.isUndefined(opts.cache)) {
+        if (!this._isUndefined(opts.cache)) {
             cache = opts.cache;
-            if (!_.isUndefined(cache[cacheID])) {
-                callback(true, cache[cacheID], cache[cacheID]);
+            if (!this._isUndefined(cache[cacheID])) {
+                if (!this._isUndefined(callback)) {
+                    callback(true, cache[cacheID]);
+                }
                 return;
             }
         }
 
         var impl = function(position) {
             var idx = 0;
-            if (!_.isUndefined(position))
+            if (!this._isUndefined(position))
                 idx = position;
             if (self.hosts.length <= idx) {
-                callback(false, null, { message: "Cannot contact server"});
+                if (!this._isUndefined(callback)) {
+                    callback(false, { message: "Cannot contact server"});
+                }
                 return;
             }
             opts.callback = function(retry, success, res, body) {
-                if (!success && !_.isUndefined(body)) {
+                if (!success && !this._isUndefined(body)) {
                     console.log("Error: " + body.message);
                 }
-                if (!_.isUndefined(opts.cache))
+                if (!this._isUndefined(opts.cache))
                     cache[cacheID] = body;
                 if (!success && retry && (idx + 1) < self.hosts.length) {
                     impl(idx + 1);
                 } else {
-                    callback(success, res, body);
+                    if (!this._isUndefined(callback)) {
+                        callback(success, body);
+                    }
                 }
             };
             opts.hostname = self.hosts[idx];
@@ -395,7 +357,7 @@ AlgoliaSearch.prototype = {
 
     _jsonRequestByHost: function(opts) {
         var body = null;
-        if (!_.isUndefined(opts.body)) {
+        if (!this._isUndefined(opts.body)) {
             body = JSON.stringify(opts.body);
         }
         var url = opts.hostname + opts.url;
@@ -420,7 +382,7 @@ AlgoliaSearch.prototype = {
         }
         xmlHttp.send(body);
         xmlHttp.onload = function(event) {
-            if (!_.isUndefined(event)) {
+            if (!this._isUndefined(event)) {
                 var retry = (event.target.status == 0 || event.target.status == 503);
                 var success = (event.target.status === 200 || event.target.status === 201);
                 opts.callback(retry, success, event.target, event.target.response != null ? JSON.parse(event.target.response) : null);
@@ -451,7 +413,7 @@ AlgoliaSearch.prototype = {
      *  - hitsPerPage: (pagination parameter) number of hits per page. Defaults to 10.
      */
     _getSearchParams: function(args, params) {
-        if (_.isUndefined(args) || args == null) {
+        if (this._isUndefined(args) || args == null) {
             return params;
         }
         for (var key in args) {
@@ -462,6 +424,7 @@ AlgoliaSearch.prototype = {
         }
         return params;
     },
+    _isUndefined: function(obj) { return obj === void 0; },
 
     /// internal attributes
     applicationID: null,
@@ -487,22 +450,16 @@ AlgoliaSearch.prototype.Index.prototype = {
          */
         addObject: function(content, callback, objectID) {
             var indexObj = this;
-            if (_.isUndefined(objectID)) {
+            if (this.as._isUndefined(objectID)) {
                 this.as._jsonRequest({ action: 'addObject',
                                        url: '/1/indexes/' + encodeURIComponent(indexObj.indexName), 
                                        body: content,
-                                       callback: function(success, res, body) {
-                    if (!_.isUndefined(callback))
-                        callback(success, body);
-                }});
+                                       callback: callback });
             } else {
                 this.as._jsonRequest({ method: 'PUT',
                                        url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + "/" + encodeURIComponent(objectID), 
                                        body: content,
-                                       callback: function(success, res, body) {
-                    if (!_.isUndefined(callback))
-                        callback(success, body);
-                }});
+                                       callback: callback });
             }
 
         },
@@ -525,10 +482,7 @@ AlgoliaSearch.prototype.Index.prototype = {
             this.as._jsonRequest({ method: 'POST',
                                    url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + "/batch", 
                                    body: postObj,
-                                   callback: function(success, res, body) {
-                if (!_.isUndefined(callback))
-                    callback(success, body);
-            }});
+                                   callback: callback });
         },
         /*
          * Get an object from this index
@@ -537,13 +491,12 @@ AlgoliaSearch.prototype.Index.prototype = {
          * @param callback (optional) the result callback with two arguments
          *  success: boolean set to true if the request was successfull
          *  content: the object to retrieve or the error message if a failure occured
-         * @param classToDerive (optional) if set, hits will be an instance of this class
          * @param attributes (optional) if set, contains the array of attribute names to retrieve
          */
-        getObject: function(objectID, callback, attributes, classToDerive) {
+        getObject: function(objectID, callback, attributes) {
             var indexObj = this;
             var params = "";
-            if (!_.isUndefined(attributes)) {
+            if (!this.as._isUndefined(attributes)) {
                 params = "?attributes=";
                 for (var i = 0; i < attributes.length; ++i) {
                     if (i != 0)
@@ -553,15 +506,7 @@ AlgoliaSearch.prototype.Index.prototype = {
             }
             this.as._jsonRequest({ method: 'GET',
                                    url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + "/" + encodeURIComponent(objectID) + params, 
-                                   callback: function(success, res, body) {
-                if (!_.isUndefined(classToDerive) && classToDerive != null) {
-                    var obj = new classToDerive();
-                    _.extend(obj, body);
-                    body = obj;
-                }
-                if (!_.isUndefined(callback))
-                    callback(success, body);
-            }});
+                                   callback: callback });
         },
 
         /*
@@ -578,10 +523,7 @@ AlgoliaSearch.prototype.Index.prototype = {
             this.as._jsonRequest({ method: 'POST',
                                    url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + "/" + encodeURIComponent(partialObject.objectID) + "/partial", 
                                    body: partialObject,
-                                   callback: function(success, res, body) {
-                if (!_.isUndefined(callback))
-                    callback(success, body);
-            }});
+                                   callback:  callback });
         },
 
         /*
@@ -597,10 +539,7 @@ AlgoliaSearch.prototype.Index.prototype = {
             this.as._jsonRequest({ method: 'PUT',
                                    url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + "/" + encodeURIComponent(object.objectID), 
                                    body: object,
-                                   callback: function(success, res, body) {
-                if (!_.isUndefined(callback))
-                    callback(success, body);
-            }});
+                                   callback: callback });
         },
         /*
          * Override the content of several objects
@@ -622,10 +561,7 @@ AlgoliaSearch.prototype.Index.prototype = {
             this.as._jsonRequest({ method: 'POST',
                                    url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + "/batch", 
                                    body: postObj,
-                                   callback: function(success, res, body) {
-                if (!_.isUndefined(callback))
-                    callback(success, body);
-            }});
+                                   callback: callback });
         },
         /*
          * Delete an object from the index 
@@ -643,10 +579,7 @@ AlgoliaSearch.prototype.Index.prototype = {
             var indexObj = this;
             this.as._jsonRequest({ method: 'DELETE',
                                    url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + "/" + encodeURIComponent(objectID), 
-                                   callback: function(success, res, body) {
-                if (!_.isUndefined(callback))
-                    callback(success, body);
-            }});
+                                   callback: callback });
         },
         /*
          * Search inside the index using XMLHttpRequest request (Using a POST query to 
@@ -692,22 +625,21 @@ AlgoliaSearch.prototype.Index.prototype = {
          *  - tags filter the query by a set of tags. You can AND tags by separating them by commas. To OR tags, you must add parentheses. For example, tags=tag1,(tag2,tag3) means tag1 AND (tag2 OR tag3).
          *    At indexing, tags should be added in the _tags attribute of objects (for example {"_tags":["tag1","tag2"]} )
          * @param delay (optional) if set, wait for this delay (in ms) and only send the query if there was no other in the meantime.
-         * @param classToDerive (optional) if set, hits will be an instance of this class.
          */
-        search: function(query, callback, args, delay, classToDerive) {
+        search: function(query, callback, args, delay) {
             var indexObj = this;
             var params = "query=" + encodeURIComponent(query);
-            if (!_.isUndefined(args) && args != null) {
+            if (!this.as._isUndefined(args) && args != null) {
                 params = this.as._getSearchParams(args, params);
             }
             window.clearTimeout(indexObj.onDelayTrigger);
-            if (!_.isUndefined(delay) && delay != null && delay > 0) {
+            if (!this.as._isUndefined(delay) && delay != null && delay > 0) {
                 var onDelayTrigger = window.setTimeout( function() {
-                    indexObj._search(params, callback, classToDerive);
+                    indexObj._search(params, callback);
                 }, delay);
                 indexObj.onDelayTrigger = onDelayTrigger;
             } else {
-                this._search(params, callback, classToDerive);
+                this._search(params, callback);
             }
         },
 
@@ -724,7 +656,7 @@ AlgoliaSearch.prototype.Index.prototype = {
             var indexObj = this;
             this.as._jsonRequest({ method: 'GET',
                                    url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + "/task/" + taskID,
-                                   callback: function(success, res, body) {
+                                   callback: function(success, body) {
                 if (success && body.status === "published") {
                     callback(true, body);
                 } else if (success && body.pendingTask) {
@@ -746,10 +678,7 @@ AlgoliaSearch.prototype.Index.prototype = {
             var indexObj = this;
             this.as._jsonRequest({ method: 'GET',
                                    url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + "/settings", 
-                                   callback: function(success, res, body) {
-                if (!_.isUndefined(callback))
-                    callback(success, body);
-            }});
+                                   callback: callback });
         },
 
         /*
@@ -796,10 +725,7 @@ AlgoliaSearch.prototype.Index.prototype = {
             this.as._jsonRequest({ method: 'PUT',
                                    url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + "/settings",
                                    body: settings, 
-                                   callback: function(success, res, body) {
-                if (!_.isUndefined(callback))
-                    callback(success, body);
-            }});
+                                   callback: fcallback });
         },
         /*
          * List all existing user keys associated to this index
@@ -812,10 +738,7 @@ AlgoliaSearch.prototype.Index.prototype = {
             var indexObj = this;
             this.as._jsonRequest({ method: 'GET',
                                    url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/keys',
-                                   callback: function(success, res, body) {
-                if (!_.isUndefined(callback))
-                    callback(success, body);
-            }});
+                                   callback: callback });
         },
         /*
          * Get ACL of a user key associated to this index
@@ -828,10 +751,7 @@ AlgoliaSearch.prototype.Index.prototype = {
             var indexObj = this;
             this.as._jsonRequest({ method: 'GET',
                                    url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/keys/' + key,
-                                   callback: function(success, res, body) {
-                if (!_.isUndefined(callback))
-                    callback(success, body);
-            }});
+                                   callback: callback });
         },
         /*
          * Delete an existing user key associated to this index
@@ -844,10 +764,7 @@ AlgoliaSearch.prototype.Index.prototype = {
             var indexObj = this;
             this.as._jsonRequest({ method: 'DELETE',
                                    url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/keys/' + key,
-                                   callback: function(success, res, body) {
-                if (!_.isUndefined(callback))
-                    callback(success, body);
-            }});
+                                   callback: callback });
         },
         /*
          * Add an existing user key associated to this index
@@ -871,10 +788,7 @@ AlgoliaSearch.prototype.Index.prototype = {
             this.as._jsonRequest({ method: 'POST',
                                    url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/keys',
                                    body: aclsObject,
-                                   callback: function(success, res, body) {
-                if (!_.isUndefined(callback))
-                    callback(success, body);
-            }});
+                                   callback: callback });
         },
         /*
          * Add an existing user key associated to this index
@@ -900,31 +814,17 @@ AlgoliaSearch.prototype.Index.prototype = {
             this.as._jsonRequest({ method: 'POST',
                                    url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/keys',
                                    body: aclsObject,
-                                   callback: function(success, res, body) {
-                if (!_.isUndefined(callback))
-                    callback(success, body);
-            }});
+                                   callback: callback });
         },
         ///
         /// Internal methods only after this line
         ///
-        _search: function(params, callback, classToDerive) {
+        _search: function(params, callback) {
             this.as._jsonRequest({ cache: this.cache,
                                    method: 'POST',
                                    url: '/1/indexes/' + encodeURIComponent(this.indexName) + "/query",
                                    body: {params: params, apiKey: this.as.apiKey, appID: this.as.applicationID},
-                                   callback: function(success, res, body) {
-                if (success && !_.isUndefined(classToDerive) && classToDerive != null) {
-                    for (var i in body.hits) {
-                        var obj = new classToDerive();
-                        _.extend(obj, body.hits[i]);
-                        body.hits[i] = obj;
-                    }
-                }
-                if (!_.isUndefined(callback)) {
-                    callback(success, body);
-                }
-            }});
+                                   callback: callback });
         },
 
         // internal attributes
