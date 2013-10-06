@@ -294,6 +294,7 @@ AlgoliaSearch.prototype = {
     Index: function(algoliasearch, indexName) {
         this.indexName = indexName;
         this.as = algoliasearch;
+        this.typeAheadParams = null;
     },
 
     _sendQueriesBatch: function(params, callback) {
@@ -645,7 +646,38 @@ AlgoliaSearch.prototype.Index.prototype = {
                 this._search(params, callback);
             }
         },
-
+        /*
+         * Get transport layer for Typeahead.js
+         * @param args (optional) if set, contains an object with query parameters (see search for details)
+         */
+        getTypeaheadTransport: function(args) {
+            this.typeaheadArgs = args;
+            return this;
+        },
+        // Method used by Typeahead.js. 
+        get: function(query, processRemoteData, that, cb, suggestions) {
+            self = this;
+            this.search(query, function(success, content) {
+                if (success) {
+                  for (var i = 0; i < content.hits.length; ++i) {
+                    // Add an attribute value with the first string
+                    var obj = content.hits[i];
+                    var found = false;
+                    if (typeof obj.value === 'undefined') {
+                      for (var propertyName in obj) {
+                        if (!found && obj.hasOwnProperty(propertyName) && typeof obj[propertyName] === 'string') {
+                          obj.value = obj[propertyName];
+                          found = true;
+                        }
+                      }
+                    }
+                    suggestions.push(that._transformDatum(obj));
+                  }
+                  cb && cb(suggestions);
+                }
+              }, self.typeAheadParams);
+            return true;
+        },
         /*
          * Wait the publication of a task on the server. 
          * All server task are asynchronous and you can check with this method that the task is published.
@@ -834,5 +866,6 @@ AlgoliaSearch.prototype.Index.prototype = {
         as: null,
         indexName: null,
         cache: {},
+        typeAheadParams: null,
         emptyConstructor: function() {}
 };
