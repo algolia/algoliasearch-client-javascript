@@ -294,7 +294,7 @@ AlgoliaSearch.prototype = {
     Index: function(algoliasearch, indexName) {
         this.indexName = indexName;
         this.as = algoliasearch;
-        this.typeAheadParams = null;
+        this.typeAheadArgs = null;
     },
 
     _sendQueriesBatch: function(params, callback) {
@@ -675,7 +675,7 @@ AlgoliaSearch.prototype.Index.prototype = {
                   }
                   cb && cb(suggestions);
                 }
-              }, self.typeAheadParams);
+              }, self.typeAheadArgs);
             return true;
         },
         /*
@@ -866,6 +866,6 @@ AlgoliaSearch.prototype.Index.prototype = {
         as: null,
         indexName: null,
         cache: {},
-        typeAheadParams: null,
+        typeAheadArgs: null,
         emptyConstructor: function() {}
 };
