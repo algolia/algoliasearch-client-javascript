@@ -17,12 +17,12 @@ Setup
 -------------
 To setup your project, follow these steps:
 
- 1. Download the [client](https://github.com/algolia/algoliasearch-client-js/archive/master.zip) and add a script include of `algoliasearch-min.js`
+ 1. Download the [client](https://github.com/algolia/algoliasearch-client-js/archive/master.zip) and add a script include of `algoliasearch.min.js`
  2. Initialize the client with your ApplicationID and API-Key. You can find all of them on [your Algolia account](http://www.algolia.com/users/edit).
  3. When you use this API client for search on a website, we strongly recommand to use a key with an ACL restricted to "search". You can retrieve one with `client.addUserKey(["search"])`.
 
 ```javascript
-  <script src="algoliasearch-min.js"></script>
+  <script src="algoliasearch.min.js"></script>
   <script>
     client = new AlgoliaSearch('ApplicationID', 'API-Key');
     ...
@@ -150,7 +150,7 @@ For more details about updating an index from javascript, have a look at the [al
 **Note:** If you use the javascript client to update the index, you need to specify `https` as the protocol in the client initialization:
 
 ```javascript
-  <script src="algoliasearch-min.js"></script>
+  <script src="algoliasearch.min.js"></script>
   <script>
     client = new AlgoliaSearch('ApplicationID', 'API-Key', 'https');
     ...
