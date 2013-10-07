@@ -23,9 +23,6 @@
                 name: 'algolia',                                                          
                 remote: index.getTypeaheadTransport({"hitsPerPage": 10})
             });
-
-            // trigger an empty query at startup to resolve DNS (this avoid to solve DNS on first query)
-            index.search("", {"hitsPerPage": 1});
         });
     </script>
 

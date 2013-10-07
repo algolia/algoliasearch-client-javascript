@@ -32,9 +32,10 @@
  * @param apiKey a valid API key for the service
  * @param method specify if the protocol used is http or https (http by default to make the first search query faster). 
  *        You need to use https is you are doing something else than just search queries.
+ * @param resolveDNS let you disable first empty query that is launch to warmup the service
  * @param hostsArray (optionnal) the list of hosts that you have received for the service
  */
-var AlgoliaSearch = function(applicationID, apiKey, method, hostsArray) {
+var AlgoliaSearch = function(applicationID, apiKey, method, resolveDNS, hostsArray) {
     this.applicationID = applicationID;
     this.apiKey = apiKey;
     if (this._isUndefined(hostsArray))
@@ -53,6 +54,11 @@ var AlgoliaSearch = function(applicationID, apiKey, method, hostsArray) {
     }
     if (Math.random() > 0.5)
         this.hosts.reverse();
+    if (this._isUndefined(resolveDNS) || resolveDNS) {
+        // Perform a call to solve DNS (avoid to slow down the first user query)
+        this._jsonRequest({ method: 'GET',
+                            url: '/1/isalive' });
+    }
 };
 
 AlgoliaSearch.prototype = {
