@@ -34,6 +34,7 @@ Quick Start
 First index some data. You can use the command line client [quick start](https://github.com/algolia/algoliasearch-client-cmd#quick-start) for example to index the 500 contacts.
 
 You can then update the `simple-ui.html` file with your ApplicationID, API-Key and index name to test the Javascript client in the browser.
+This version is based on [typeahead.js](http://twitter.github.io/typeahead.js/) version 0.9.3 with a small [patch](https://github.com/algolia/typeahead.js/commit/4edb95e8beb390e92720196a29186d83b8dba9d9) to allow usage of Algolia JS client.
 
 General Principle
 -------------

@@ -651,7 +651,7 @@ AlgoliaSearch.prototype.Index.prototype = {
          * @param args (optional) if set, contains an object with query parameters (see search for details)
          */
         getTypeaheadTransport: function(args) {
-            this.typeaheadArgs = args;
+            this.typeAheadArgs = args;
             return this;
         },
         // Method used by Typeahead.js. 

@@ -1,89 +1,29 @@
 <head>
-	<meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
-	<link href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
-	<link rel="stylesheet" type="text/css" href="simple-ui.css">
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <link rel="stylesheet" type="text/css" href="simple-ui.css">
     <meta name="viewport" content="width=device-width,initial-scale=1">
 </head>
 <body>
-	<section class="panel">
-        <header class="panel-heading">
-           	<div class="search_box">
-				<form accept-charset="UTF-8" action="#" id="formRecherche" method="get">
-					<input autocomplete="off" class="autocomplete" id="inputfield" name="address" placeholder="Start typing" type="text" spellcheck="false"/>
-					<div class='searchbutton'>
-						<i class="icon-search icon-large"></i>
-					</div>
-				</form>
-			</div>
-        </header>
-        <div class="queries line-bottom" style="display: none;">
-        </div>
-    </section>
     <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script src="algoliasearch.min.js"></script>
+    <script src="typeahead-algolia.min.js"></script>
 
+    <div class="demo">
+        <input class="typeahead" type="text" placeholder="Start typing" id="typeahead-algolia"  spellcheck="false"/>
+    </div>
 
-	<script src="underscore-min.js"></script>
-	<script src="algoliasearch.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            // Replace the following values by your ApplicationID and ApiKey.
+            algolia = new AlgoliaSearch('YourApplicationID', 'YourAPIKey'), 
+            // replace YourIndexName by the name of the index you want to query.
+            index = algolia.initIndex('YourIndexName');
 
-	<script type="text/javascript">
-
-		function searchCallback(success, content) {
-	        if (content.query != $("#inputfield").val())
-	            return;
-	        if (content.hits.length == 0) {
-	        	$('.queries').hide('');
-	        	return;
-	   	    }
-
-	        res = '';
-	        // Scan all hits and display them
-	        for (var i = 0; i < content.hits.length; ++i) {
-	        	hit = content.hits[i];
-
-	        	// For this hit, display all property that have a least one word highlighted (matchLevel = full or partial)
-	        	tmp = '';
-                for(var propertyName in hit._highlightResult) {
-                    el = hit._highlightResult[propertyName];
-                    if (!(el instanceof Array) && el.matchLevel !== 'none') {
-                        tmp += "<div class='grey'>" + propertyName.substr(0,1).toUpperCase() +
-                                    propertyName.substr(1) + ": </div>" + el.value + "</br>";
-                    }
-                }
-                if (tmp.length > 0) {
-                	if ((i % 2) == 0)
-	                	res += "<div class='query'>" + tmp + "</div>";
-	               	else
-	               		res += "<div class='query bg'>" + tmp + "</div>";
-                }
-
-            } 
-            $('.queries').html(res);
-	   	    $('.queries').show();
-        }
-
-
-		$(document).ready(function() {
-		    inputfield = $("#inputfield");
-		    searchbutton = $("#searchbutton");
-		    // Replace the following values by your ApplicationID and ApiKey.
-			algolia = new AlgoliaSearch('YourApplicationID', 'YourAPIKey'),
-			// replace YourIndexName by the name of the index you want to query.
-    	    index = algolia.initIndex('YourIndexName');
-
-    	    function search() {
-    	    	query = inputfield.val();
-    	    	if (query.length == 0) {
-    	    		$('.queries').hide();
-    	    		return;
-    	    	}
-			    index.search(query, searchCallback);
-        	}
-
-    		inputfield.focus();
-			inputfield.keyup(function() {
-				search();
-			});
-		});
-	</script>
+            $('#typeahead-algolia').typeahead({                                
+                name: 'algolia',                                                          
+                remote: index.getTypeaheadTransport({"hitsPerPage": 10})
+            });
+        });
+    </script>
 
 </body>
