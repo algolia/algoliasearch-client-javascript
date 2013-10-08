@@ -254,9 +254,9 @@ AlgoliaSearch.prototype = {
      *     (if not set all attributes are retrieve)
      *  - attributesToHighlight: an array of object attribute names to highlight 
      *     (if not set indexed attributes are highlighted)
-     *  - minWordSizeForApprox1: the minimum number of characters to accept one typo.
+     *  - minWordSizefor1Typo: the minimum number of characters to accept one typo.
      *     Defaults to 3.
-     *  - minWordSizeForApprox2: the minimum number of characters to accept two typos.
+     *  - minWordSizefor2Typos: the minimum number of characters to accept two typos.
      *     Defaults to 7.
      *  - getRankingInfo: if set, the result hits will contain ranking information in 
      *     _rankingInfo attribute
@@ -405,20 +405,6 @@ AlgoliaSearch.prototype = {
 
      /*
      * Transform search param object in query string
-     *
-     * Attributes are:
-     *  - attributes: an array of object attribute names to retrieve
-     *     (if not set all attributes are retrieve)
-     *  - attributesToHighlight: an array of object attribute names to highlight 
-     *     (if not set indexed attributes are highlighted)
-     *  - minWordSizeForApprox1: the minimum number of characters to accept one typo.
-     *     Defaults to 3.
-     *  - minWordSizeForApprox2: the minimum number of characters to accept two typos.
-     *     Defaults to 7.
-     *  - getRankingInfo: if set, the result hits will contain ranking information in 
-     *     _rankingInfo attribute
-     *  - page: (pagination parameter) page to retrieve (zero base). Defaults to 0.
-     *  - hitsPerPage: (pagination parameter) number of hits per page. Defaults to 10.
      */
     _getSearchParams: function(args, params) {
         if (this._isUndefined(args) || args == null) {
@@ -612,9 +598,9 @@ AlgoliaSearch.prototype.Index.prototype = {
          *    the number of words to return (syntax is 'attributeName:nbWords'). 
          *    Attributes are separated by a comma (Example: "attributesToSnippet=name:10,content:10").
          *    By default no snippet is computed.
-         *  - minWordSizeForApprox1: the minimum number of characters to accept one typo.
+         *  - minWordSizefor1Typo: the minimum number of characters to accept one typo.
          *     Defaults to 3.
-         *  - minWordSizeForApprox2: the minimum number of characters to accept two typos.
+         *  - minWordSizefor2Typos: the minimum number of characters to accept two typos.
          *     Defaults to 7.
          *  - getRankingInfo: if set, the result hits will contain ranking information in 
          *     _rankingInfo attribute
@@ -726,8 +712,8 @@ AlgoliaSearch.prototype.Index.prototype = {
          * Set settings for this index
          * 
          * @param settigns the settings object that can contains :
-         *  - minWordSizeForApprox1 (integer) the minimum number of characters to accept one typo (default = 3)
-         *  - minWordSizeForApprox2: (integer) the minimum number of characters to accept two typos (default = 7)
+         *  - minWordSizefor1Typo (integer) the minimum number of characters to accept one typo (default = 3)
+         *  - minWordSizefor2Typos: (integer) the minimum number of characters to accept two typos (default = 7)
          *  - hitsPerPage: (integer) the number of hits per page (default = 10)
          *  - attributesToRetrieve: (array of strings) default list of attributes to retrieve for objects
          *  - attributesToHighlight: (array of strings) default list of attributes to highlight.
