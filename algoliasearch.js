@@ -628,8 +628,8 @@ AlgoliaSearch.prototype.Index.prototype = {
          *    a rectangle (defined by 4 floats: p1Lat,p1Lng,p2Lat, p2Lng.
          *    For example insideBoundingBox=47.3165,4.9665,47.3424,5.0201).
          *  - queryType: select how the query words are interpreted:
-         *      - prefixAll: all query words are interpreted as prefixes (default behavior).
-         *      - prefixLast: only the last word is interpreted as a prefix. This option is recommended if you have a lot of content to speedup the processing.
+         *      - prefixAll: all query words are interpreted as prefixes,
+         *      - prefixLast: only the last word is interpreted as a prefix (default behavior),
          *      - prefixNone: no query word is interpreted as a prefix. This option is not recommended.
          *    At indexing, geoloc of an object should be set with _geoloc attribute containing lat and lng attributes (for example {"_geoloc":{"lat":48.853409, "lng":2.348800}})
          *  - tags filter the query by a set of tags. You can AND tags by separating them by commas. To OR tags, you must add parentheses. For example, tags=tag1,(tag2,tag3) means tag1 AND (tag2 OR tag3).
@@ -741,6 +741,9 @@ AlgoliaSearch.prototype.Index.prototype = {
          *       - Control part of the ranking (see the ranking parameter for full explanation). 
          *         Matches in attributes at the beginning of the list will be considered more important than matches 
          *         in attributes further down the list.
+         *         In one attribute, matching text at the beginning of the attribute will be considered more important than text after, 
+         *         you can disable this behavior if you add your attribute inside `unordered(AttributeName)`, 
+         *         for example `attributesToIndex:["title", "unordered(text)"]`.
          *  - ranking: (array of strings) controls the way results are sorted. 
          *     We have three available criteria: 
          *       - typo (sort according to number of typos), 
@@ -754,8 +757,8 @@ AlgoliaSearch.prototype.Index.prototype = {
          *    The syntax of this condition is an array of strings containing attributes prefixed 
          *    by asc (ascending order) or desc (descending order) operator.
          *  - queryType: select how the query words are interpreted:
-         *      - prefixAll: all query words are interpreted as prefixes (default behavior).
-         *      - prefixLast: only the last word is interpreted as a prefix. This option is recommended if you have a lot of content to speedup the processing.
+         *      - prefixAll: all query words are interpreted as prefixes,
+         *      - prefixLast: only the last word is interpreted as a prefix (default behavior),
          *      - prefixNone: no query word is interpreted as a prefix. This option is not recommended.
          * @param callback (optional) the result callback with two arguments
          *  success: boolean set to true if the request was successfull
