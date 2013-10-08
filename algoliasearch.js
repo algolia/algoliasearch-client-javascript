@@ -447,7 +447,7 @@ AlgoliaSearch.prototype.Index.prototype = {
         addObject: function(content, callback, objectID) {
             var indexObj = this;
             if (this.as._isUndefined(objectID)) {
-                this.as._jsonRequest({ action: 'addObject',
+                this.as._jsonRequest({ method: 'POST',
                                        url: '/1/indexes/' + encodeURIComponent(indexObj.indexName), 
                                        body: content,
                                        callback: callback });
