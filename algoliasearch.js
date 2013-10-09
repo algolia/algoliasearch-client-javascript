@@ -755,7 +755,7 @@ AlgoliaSearch.prototype.Index.prototype = {
             this.as._jsonRequest({ method: 'PUT',
                                    url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + "/settings",
                                    body: settings, 
-                                   callback: fcallback });
+                                   callback: callback });
         },
         /*
          * List all existing user keys associated to this index
