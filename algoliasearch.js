@@ -346,7 +346,7 @@ AlgoliaSearch.prototype = {
                 if (!success && !self._isUndefined(body)) {
                     console.log("Error: " + body.message);
                 }
-                if (!self._isUndefined(opts.cache))
+                if (success && !self._isUndefined(opts.cache))
                     cache[cacheID] = body;
                 if (!success && retry && (idx + 1) < self.hosts.length) {
                     impl(idx + 1);
