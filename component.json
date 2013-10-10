@@ -1,0 +1,8 @@
+{
+  "name": "algoliasearch",
+  "main": [
+    "dist/algoliasearch.js"
+  ],
+  "dependencies": {},
+  "version": "2.0.1"
+}
