@@ -271,6 +271,12 @@ AlgoliaSearch.prototype = {
         this.batch.push({ indexName: indexName, params: params });
     },
     /*
+     * Clear all queries in cache
+     */
+    clearCache: function() {
+        this.cache = {};
+    },
+    /*
      * Launch the batch of queries using XMLHttpRequest.
      * (Optimized for browser using a POST query to minimize number of OPTIONS queries)
      *
@@ -434,6 +440,12 @@ AlgoliaSearch.prototype = {
  * You should use AlgoliaSearch.initIndex(indexName) to retrieve this object
  */
 AlgoliaSearch.prototype.Index.prototype = {
+        /*
+         * Clear all queries in cache
+         */
+        clearCache: function() {
+            this.cache = {};
+        },
         /*
          * Add an object in this index
          * 
