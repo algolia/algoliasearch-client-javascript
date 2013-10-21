@@ -44,7 +44,9 @@ var AlgoliaSearch = function(applicationID, apiKey, method, resolveDNS, hostsArr
         if (Math.random() > 0.5) {
             this.hosts.reverse();
         }
-        if (!this._isUndefined(method) && (method === 'https' || method === 'HTTPS')) {
+        if (this._isUndefined(method) || method == null) {
+            this.hosts.push(('https:' == document.location.protocol ? 'https' : 'http') + '://' + hostsArray[i]);
+        } else if (method === 'https' || method === 'HTTPS') {
             this.hosts.push('https://' + hostsArray[i]);
         } else {
             this.hosts.push('http://' + hostsArray[i]);
