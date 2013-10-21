@@ -1,0 +1,236 @@
+<html>
+  <head>
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script src="/dist/algoliasearch.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="http://fortawesome.github.io/Font-Awesome/assets/font-awesome/css/font-awesome.css" />
+    <style type="text/css">
+      form {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        outline: 0;
+        font-size: 100%;
+        vertical-align: baseline;
+        background: transparent;
+        display: block;
+        line-height: normal;
+        color: #333;
+      }
+      .search_box {
+        margin: 0px 0 0 0;
+        padding: 0 0 0 0;
+        position: relative;
+        height: 45px;
+      }
+      #inputfield {
+        width: 413px;
+        display: block;
+        border: 1px solid #cfcfcf;
+        color: #000;
+        border-top-left-radius: 4px;
+        border-bottom-left-radius: 4px;
+        -webkit-appearance: none;
+        padding: 10px 13px 10px 13px;
+        line-height: 23px;
+        float: left;
+        font-size: 1em;
+        background-color: white;
+        -webkit-rtl-ordering: logical;
+        -webkit-user-select: text;
+        cursor: auto;
+        margin: 0em;
+        border-radius: 4px 0px 0px 4px;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-weight: 300;
+      }
+      ::-webkit-input-placeholder { color: #9f9f9f; }
+      :-moz-placeholder { color: #9f9f9f; }
+      ::-moz-placeholder { color: #9f9f9f;}
+      :-ms-input-placeholder {color: #9f9f9f;}
+
+      .search_box #inputfield:focus {
+        outline-width: 0px;
+        border: 1px solid #999;
+      }
+      .search_box #inputfield:hover {
+        border: 1px solid #999;
+      }
+      .search_box_shadow {
+        -webkit-box-shadow: 0px 0px 2px 0px #2E61E4;
+          -moz-box-shadow: 0px 0px 2px 0px #2E61E4;
+          box-shadow: 0px 0px 2px 0px #2E61E4;
+      }
+
+      .search_box .searchbutton {
+        cursor: pointer;
+        display: inline-block;
+        padding: 0px;
+        width: 56px;
+        height: 43px;
+        margin: 0px 0 0 -1px;
+        border-top-right-radius: 4px;
+        border-bottom-right-radius: 4px;
+        background-color: #FFFFFF;
+        border: 1px solid #2182CD;
+        text-align: center;
+        color: #5588AA;
+      }
+
+      [class^="icon-"], [class*=" icon-"] {
+          display:inline-block;
+          margin-top: 10px;
+          vertical-align: middle;
+      }
+
+      .search_box .searchbutton:hover {
+        background-color: white;
+        background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, white), color-stop(100%, #9ad9ff));
+        background-image: -webkit-linear-gradient(top, white, #9ad9ff);
+        background-image: linear-gradient(to bottom,white, #9ad9ff);
+        box-shadow: inset 0 1px 0 #75C5E1
+      }
+      body {
+        background-color: #ffffff;
+      }
+
+      .panel {
+          width: 500px;
+        margin-top: 10px;
+        margin-left:auto;
+        margin-right:auto;
+          border: 1px solid #dddddd;
+          border-radius: 4px;
+          -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+                box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+      }
+      .panel-heading {
+        padding: 10px 15px;
+        font-size: 1em;
+        background-color: #00B3FF;
+        border-bottom: 1px solid #dddddd;
+        border-top-right-radius: 3px;
+        border-top-left-radius: 3px;
+      }
+      .bg {
+        background-color: #f3f3f3;
+      }
+      #hits {
+        padding:5px 0px;
+      }
+      .hit {
+        cursor: pointer;
+        padding: 5px 15px;
+      }
+      .hit:hover {
+        background-color: #e9f0ff;
+      }
+      em {
+        font-style: normal;
+        font-weight: bold;
+      }
+      .grey {
+        display: inline;
+        color: #888;
+      }
+      body {
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-weight: 300;
+      }
+
+      @media (max-width: 500px) {
+        body {
+          margin: 0px;
+        }
+        .panel {
+          margin-top: 0px;
+          width: 100%;
+        }
+        #inputfield {
+          width: -moz-calc(100% - 60px);
+            width: -webkit-calc(100% - 60px);
+            width: calc(100% - 60px);
+        }
+      }
+    </style>
+  </head>
+  <body>
+
+    <section class="panel">
+      <header class="panel-heading">
+      <div class="search_box">
+        <form accept-charset="UTF-8" action="#" id="formRecherche" method="get">
+          <input autocomplete="off" class="autocomplete" id="inputfield" name="address" placeholder="Start typing" type="text" spellcheck="false"/>
+          <div class='searchbutton'>
+            <i class="icon-search icon-large"></i>
+          </div>
+        </form>
+      </div>
+      </header>
+    </section>
+
+    <h1>Results</h1>
+    <div id="hits" class="line-bottom" style="display: none;">
+    </div>
+
+    <script type="text/javascript">
+      function searchCallback(success, content) {
+        if (content.query != $("#inputfield").val()) {
+          return;
+        }
+        if (content.hits.length == 0) {
+          $('#hits').hide();
+          return;
+        }
+
+        res = '';
+        // Scan all hits and display them
+        for (var i = 0; i < content.hits.length; ++i) {
+          hit = content.hits[i];
+
+          // For this hit, display all property that have a least one word highlighted (matchLevel = full or partial)
+          tmp = '';
+          for(var propertyName in hit._highlightResult) {
+            var el = hit._highlightResult[propertyName];
+            if (!(el instanceof Array) && el.matchLevel !== 'none') {
+              tmp += "<div class='grey'>" + propertyName.substr(0,1).toUpperCase() +
+                          propertyName.substr(1) + ": </div>" + el.value + "</br>";
+            }
+          }
+          if (tmp.length > 0) {
+            if ((i % 2) == 0) {
+              res += "<div class='hit'>" + tmp + "</div>";
+            } else {
+              res += "<div class='hit bg'>" + tmp + "</div>";
+            }
+          }
+
+        }
+
+        $('#hits').html(res);
+        $('#hits').show();
+      }
+
+
+      $(document).ready(function() {
+        var inputfield = $("#inputfield");
+        var searchbutton = $("#searchbutton");
+        // Replace the following values by your ApplicationID and ApiKey.
+        var algolia = new AlgoliaSearch('YourApplicationID', 'YourAPIKey');
+        // replace YourIndexName by the name of the index you want to query.
+        var index = algolia.initIndex('YourIndexName');
+
+        function search() {
+          index.search(inputfield.val(), searchCallback);
+        }
+
+        inputfield.focus();
+        inputfield.keyup(function() {
+          search();
+        });
+      });
+    </script>
+
+  </body>
+</html>
