@@ -40,6 +40,5 @@
   "scripts": {
     "test": "grunt test"
   },
-  "private": true,
   "version": "2.1.0"
 }
