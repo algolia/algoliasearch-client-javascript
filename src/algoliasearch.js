@@ -301,6 +301,7 @@ AlgoliaSearch.prototype = {
         this.indexName = indexName;
         this.as = algoliasearch;
         this.typeAheadArgs = null;
+        this.typeAheadPropertyName = null;
     },
 
     _sendQueriesBatch: function(params, callback) {
@@ -321,7 +322,6 @@ AlgoliaSearch.prototype = {
         if (!this._isUndefined(opts.body)) {
             cacheID = opts.url + '_body_' + JSON.stringify(opts.body);
         }
-        //console.log(cacheID);
         if (!this._isUndefined(opts.cache)) {
             cache = opts.cache;
             if (!this._isUndefined(cache[cacheID])) {
@@ -650,9 +650,13 @@ AlgoliaSearch.prototype.Index.prototype = {
         /*
          * Get transport layer for Typeahead.js
          * @param args (optional) if set, contains an object with query parameters (see search for details)
+         * @param propertyName(optional) if set, contains the name of property that will be used for 
          */
-        getTypeaheadTransport: function(args) {
+        getTypeaheadTransport: function(args, propertyName) {
             this.typeAheadArgs = args;
+            if (typeof propertyName !== 'undefined') {
+                this.typeAheadPropertyName = propertyName;
+            }
             return this;
         },
         // Method used by Typeahead.js.
@@ -663,14 +667,18 @@ AlgoliaSearch.prototype.Index.prototype = {
                   for (var i = 0; i < content.hits.length; ++i) {
                     // Add an attribute value with the first string
                     var obj = content.hits[i];
-                    var found = false;
                     if (typeof obj.value === 'undefined') {
-                      for (var propertyName in obj) {
-                        if (!found && obj.hasOwnProperty(propertyName) && typeof obj[propertyName] === 'string') {
-                          obj.value = obj[propertyName];
-                          found = true;
+                        if (self.typeAheadPropertyName != null && typeof obj[self.typeAheadPropertyName] !== 'undefined') {
+                            obj.value = obj[self.typeAheadPropertyName];
+                        } else {
+                            var found = false;
+                            for (var propertyName in obj) {
+                                if (!found && obj.hasOwnProperty(propertyName) && typeof obj[propertyName] === 'string') {
+                                    obj.value = obj[propertyName];
+                                    found = true;
+                                }
+                            }
                         }
-                      }
                     }
                     suggestions.push(that._transformDatum(obj));
                   }
@@ -871,5 +879,6 @@ AlgoliaSearch.prototype.Index.prototype = {
         indexName: null,
         cache: {},
         typeAheadArgs: null,
+        typeAheadPropertyName: null,
         emptyConstructor: function() {}
 };

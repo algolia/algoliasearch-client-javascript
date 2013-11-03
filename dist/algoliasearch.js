@@ -1,10 +1,10 @@
 /*!
- * algoliasearch 2.0.1
+ * algoliasearch 2.1.0
  * https://github.com/algolia/algoliasearch-client-js
  * Copyright 2013 Algolia SAS; Licensed MIT
  */
 
-var VERSION = "2.0.1";
+var VERSION = "2.1.0";
 
 var AlgoliaSearch = function(applicationID, apiKey, method, resolveDNS, hostsArray) {
     this.applicationID = applicationID;
@@ -173,6 +173,7 @@ AlgoliaSearch.prototype = {
         this.indexName = indexName;
         this.as = algoliasearch;
         this.typeAheadArgs = null;
+        this.typeAheadPropertyName = null;
     },
     _sendQueriesBatch: function(params, callback) {
         this._jsonRequest({
@@ -419,8 +420,12 @@ AlgoliaSearch.prototype.Index.prototype = {
             this._search(params, callback);
         }
     },
-    getTypeaheadTransport: function(args) {
+    getTypeaheadTransport: function(args, propertyName) {
         this.typeAheadArgs = args;
+        if (typeof propertyName !== "undefined") {
+            this.typeAheadPropertyName = propertyName;
+        }
+        console.log("Set property:" + propertyName);
         return this;
     },
     get: function(query, processRemoteData, that, cb, suggestions) {
@@ -429,12 +434,18 @@ AlgoliaSearch.prototype.Index.prototype = {
             if (success) {
                 for (var i = 0; i < content.hits.length; ++i) {
                     var obj = content.hits[i];
-                    var found = false;
                     if (typeof obj.value === "undefined") {
-                        for (var propertyName in obj) {
-                            if (!found && obj.hasOwnProperty(propertyName) && typeof obj[propertyName] === "string") {
-                                obj.value = obj[propertyName];
-                                found = true;
+                        console.log(self.typeAheadPropertyName);
+                        console.log(obj[self.typeAheadPropertyName]);
+                        if (self.typeAheadPropertyName != null && typeof obj[self.typeAheadPropertyName] !== "undefined") {
+                            obj.value = obj[self.typeAheadPropertyName];
+                        } else {
+                            var found = false;
+                            for (var propertyName in obj) {
+                                if (!found && obj.hasOwnProperty(propertyName) && typeof obj[propertyName] === "string") {
+                                    obj.value = obj[propertyName];
+                                    found = true;
+                                }
                             }
                         }
                     }
@@ -542,5 +553,6 @@ AlgoliaSearch.prototype.Index.prototype = {
     indexName: null,
     cache: {},
     typeAheadArgs: null,
+    typeAheadPropertyName: null,
     emptyConstructor: function() {}
 };
