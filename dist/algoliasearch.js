@@ -1,10 +1,10 @@
 /*!
- * algoliasearch 2.1.0
+ * algoliasearch 2.1.1
  * https://github.com/algolia/algoliasearch-client-js
  * Copyright 2013 Algolia SAS; Licensed MIT
  */
 
-var VERSION = "2.1.0";
+var VERSION = "2.1.1";
 
 var AlgoliaSearch = function(applicationID, apiKey, method, resolveDNS, hostsArray) {
     this.applicationID = applicationID;
@@ -425,7 +425,6 @@ AlgoliaSearch.prototype.Index.prototype = {
         if (typeof propertyName !== "undefined") {
             this.typeAheadPropertyName = propertyName;
         }
-        console.log("Set property:" + propertyName);
         return this;
     },
     get: function(query, processRemoteData, that, cb, suggestions) {
@@ -435,8 +434,6 @@ AlgoliaSearch.prototype.Index.prototype = {
                 for (var i = 0; i < content.hits.length; ++i) {
                     var obj = content.hits[i];
                     if (typeof obj.value === "undefined") {
-                        console.log(self.typeAheadPropertyName);
-                        console.log(obj[self.typeAheadPropertyName]);
                         if (self.typeAheadPropertyName != null && typeof obj[self.typeAheadPropertyName] !== "undefined") {
                             obj.value = obj[self.typeAheadPropertyName];
                         } else {
