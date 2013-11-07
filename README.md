@@ -51,23 +51,28 @@ Search
 To perform a search, you just need to initialize the index and perform a call to the search function.<br/>
 You can use the following optional arguments:
 
- * **attributes**: a string that contains the names of attributes to retrieve separated by a comma.<br/>By default all attributes are retrieved.
- * **attributesToHighlight**: a string that contains the names of attributes to highlight separated by a comma.<br/>By default indexed attributes are highlighted. Numerical attributes cannot be highlighted. A **matchLevel** is returned for each highlighted attribute and can contain: "full" if all the query terms were found in the attribute, "partial" if only some of the query terms were found, or "none" if none of the query terms were found.
- * **attributesToSnippet**: a string that contains the names of attributes to snippet alongside the number of words to return (syntax is 'attributeName:nbWords'). Attributes are separated by a comma (Example: "attributesToSnippet=name:10,content:10").<br/>By default no snippet is computed.
+ * **page**: (integer) Pagination parameter used to select the page to retrieve.<br/>Page is zero-based and defaults to 0. Thus, to retrieve the 10th page you need to set `page=9`
+ * **hitsPerPage**: (integer) Pagination parameter used to select the number of hits per page. Defaults to 20.
+ * **attributesToRetrieve**: a string that contains the list of object attributes you want to retrieve (let you minimize the answer size).<br/> Attributes are separated with a comma (for example `"name,address"`), you can also use a string array encoding (for example `["name","address"]` ). By default, all attributes are retrieved. You can also use `* to retrieve all values when an **attributesToRetrieve** setting is specified for your index.
+ * **attributesToHighlight**: a string that contains the list of attributes you want to highlight according to the query. Attributes are separated by a comma. You can also use a string array encoding (for example `["name","address"]`). If an attribute has no match for the query, the raw value is returned. By default all indexed text attributes are highlighted. You can use `*` if you want to highlight all textual attributes. Numerical attributes are not highlighted. A matchLevel is returned for each highlighted attribute and can contain:
+  * **full**: if all the query terms were found in the attribute,
+  * **partial**: if only some of the query terms were found,
+  * **none**: if none of the query terms were found.
+ * **attributesToSnippet**: a string that contains the list of attributes to snippet alongside the number of words to return (syntax is `attributeName:nbWords`). Attributes are separated by a comma (Example: `attributesToSnippet=name:10,content:10`). <br/>You can also use a string array encoding (Example: `attributesToSnippet: ["name:10","content:10"]`). By default no snippet is computed.
  * **minWordSizefor1Typo**: the minimum number of characters in a query word to accept one typo in this word.<br/>Defaults to 3.
  * **minWordSizefor2Typos**: the minimum number of characters in a query word to accept two typos in this word.<br/>Defaults to 7.
- * **getRankingInfo**: if set to 1, the result hits will contain ranking information in _rankingInfo attribute.
- * **page**: *(pagination parameter)* page to retrieve (zero base).<br/>Defaults to 0.
- * **hitsPerPage**: *(pagination parameter)* number of hits per page.<br/>Defaults to 10.
+ * **getRankingInfo**: if set to 1, the result hits will contain ranking information in **_rankingInfo** attribute.
  * **aroundLatLng**: search for entries around a given latitude/longitude (specified as two floats separated by a comma).<br/>For example `aroundLatLng=47.316669,5.016670`).<br/>You can specify the maximum distance in meters with the **aroundRadius** parameter (in meters) and the precision for ranking with **aroundPrecision** (for example if you set aroundPrecision=100, two objects that are distant of less than 100m will be considered as identical for "geo" ranking parameter).<br/>At indexing, you should specify geoloc of an object with the _geoloc attribute (in the form `{"_geoloc":{"lat":48.853409, "lng":2.348800}}`)
  * **insideBoundingBox**: search entries inside a given area defined by the two extreme points of a rectangle (defined by 4 floats: p1Lat,p1Lng,p2Lat,p2Lng).<br/>For example `insideBoundingBox=47.3165,4.9665,47.3424,5.0201`).<br/>At indexing, you should specify geoloc of an object with the _geoloc attribute (in the form `{"_geoloc":{"lat":48.853409, "lng":2.348800}}`)
- * **queryType**: select how the query words are interpreted:
+ * **numericFilters**: a string that contains the list of numeric filters you want to apply separated by a comma. The syntax of one filter is `attributeName` followed by `operand` followed by `value`. Supported operands are `<`, `<=`, `=`, `>` and `>=`. 
+ You can have multiple conditions on one attribute like for example `numerics=price>100,price<1000`. You can also use a string array encoding (for example `numericFilters: ["price>100","price<1000"]`).
+ * **tagFilters**: filter the query by a set of tags. You can AND tags by separating them by commas. To OR tags, you must add parentheses. For example, `tags=tag1,(tag2,tag3)` means *tag1 AND (tag2 OR tag3)*. You can also use a string array encoding, for example `tagFilters: ["tag1",["tag2","tag3"]]` means *tag1 AND (tag2 OR tag3)*.<br/>At indexing, tags should be added in the **_tags** attribute of objects (for example `{"_tags":["tag1","tag2"]}`). 
+ * **facets**: filter the query by a list of facets. Facets are separated by commas and each facet is encoded as `attributeName:value`. For example: `facetFilters=category:Book,author:John%20Doe`. You can also use a string array encoding (for example `["category:Book","author:John%20Doe"]`).
+  * **queryType**: select how the query words are interpreted, it can be one of the following value:
   * **prefixAll**: all query words are interpreted as prefixes,
   * **prefixLast**: only the last word is interpreted as a prefix (default behavior),
   * **prefixNone**: no query word is interpreted as a prefix. This option is not recommended.
- * **numerics**: specify the list of numeric filters you want to apply separated by a comma. The syntax of one filter is `attributeName` followed by `operand` followed by `value`. Supported operands are `<`, `<=`, `=`, `>` and `>=`. 
- You can have multiple conditions on one attribute like for example `numerics=price>100,price<1000`.
- * **tags**: filter the query by a set of tags. You can AND tags by separating them by commas. To OR tags, you must add parentheses. For example, `tags=tag1,(tag2,tag3)` means *tag1 AND (tag2 OR tag3)*.<br/>At indexing, tags should be added in the _tags attribute of objects (for example `{"_tags":["tag1","tag2"]}` )
+ * **optionalWords**: a string that contains the list of words that should be considered as optional when found in the query. The list of words is comma separated.
 
 ```javascript
 index = client.initIndex('contacts');
@@ -81,7 +86,7 @@ index.search('query string', function(success, content) {
     for (var h in content.hits) {
         console.log('Hit(' + content.hits[h].objectID + '): ' + content.hits[h].toString());
     }
-}, {'attributes': 'firstname,lastname', 'hitsPerPage': 50});
+}, {'attributesToRetrieve': 'firstname,lastname', 'hitsPerPage': 50});
 ```
 
 The server response will look like:
@@ -138,7 +143,7 @@ The server response will look like:
   "hitsPerPage": 20,
   "processingTimeMS": 1,
   "query": "jimmie paint",
-  "params": "query=jimmie+paint&"
+  "params": "query=jimmie+paint&atributesToRetrieve=firstname,lastname&hitsPerPage=50"
 }
 ```
 
