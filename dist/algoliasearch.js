@@ -1,10 +1,10 @@
 /*!
- * algoliasearch 2.2.0
+ * algoliasearch 2.3.0
  * https://github.com/algolia/algoliasearch-client-js
  * Copyright 2013 Algolia SAS; Licensed MIT
  */
 
-var VERSION = "2.2.0";
+var VERSION = "2.3.0";
 
 var AlgoliaSearch = function(applicationID, apiKey, method, resolveDNS, hostsArray) {
     this.applicationID = applicationID;
@@ -122,10 +122,13 @@ AlgoliaSearch.prototype = {
             callback: callback
         });
     },
-    addUserKeyWithValidity: function(acls, validity, callback) {
+    addUserKeyWithValidity: function(acls, validity, maxQueriesPerIPPerHour, maxHitsPerQuery, callback) {
         var indexObj = this;
         var aclsObject = {};
         aclsObject.acl = acls;
+        aclsObject.validity = validity;
+        aclsObject.maxQueriesPerIPPerHour = maxQueriesPerIPPerHour;
+        aclsObject.maxHitsPerQuery = maxHitsPerQuery;
         this._jsonRequest({
             method: "POST",
             url: "/1/indexes/" + indexObj.indexName + "/keys",
@@ -529,11 +532,13 @@ AlgoliaSearch.prototype.Index.prototype = {
             callback: callback
         });
     },
-    addUserKeyWithValidity: function(acls, validity, callback) {
+    addUserKeyWithValidity: function(acls, validity, maxQueriesPerIPPerHour, maxHitsPerQuery, callback) {
         var indexObj = this;
         var aclsObject = {};
         aclsObject.acl = acls;
         aclsObject.validity = validity;
+        aclsObject.maxQueriesPerIPPerHour = maxQueriesPerIPPerHour;
+        aclsObject.maxHitsPerQuery = maxHitsPerQuery;
         this.as._jsonRequest({
             method: "POST",
             url: "/1/indexes/" + encodeURIComponent(indexObj.indexName) + "/keys",
