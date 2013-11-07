@@ -1,7 +1,7 @@
 Algolia Search API Client for Javascript
 ==================
 
-This Javascript client let you easily use the Algolia Search API in a browser, it is compatible with most browsers:
+This Javascript client let you easily use the [Algolia Search API](http://www.algolia.com) in a browser, it is compatible with most browsers:
 
  * Internet Explorer &ge; 8
  * Firefox &ge; 3.5
@@ -12,6 +12,18 @@ This Javascript client let you easily use the Algolia Search API in a browser, i
  * etc.
 
 See [this wikipedia page](http://en.wikipedia.org/wiki/Cross-Origin_Resource_Sharing#Browser_support) to have more details on supported browsers (we use XDomainRequest for IE8 and IE9).
+
+Algolia Search is a search API that provides hosted full-text, numerical and faceted search.
+Algolia’s Search API makes it easy to deliver a great search experience in your apps & websites providing:
+
+ * REST and JSON-based API
+ * search among infinite attributes from a single searchbox
+ * instant-search after each keystroke
+ * relevance & popularity combination
+ * typo-tolerance in any language
+ * faceting
+ * 99.99% SLA
+ * first-class data security
 
 Setup
 -------------
