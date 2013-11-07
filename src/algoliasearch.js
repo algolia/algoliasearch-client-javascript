@@ -220,14 +220,19 @@ AlgoliaSearch.prototype = {
      *   - settings : allows to get index settings (https only)
      *   - editSettings : allows to change index settings (https only)
      * @param validity the number of seconds after which the key will be automatically removed (0 means no time limit for this key)
+     * @param maxQueriesPerIPPerHour Specify the maximum number of API calls allowed from an IP address per hour. 
+     * @param maxHitsPerQuery Specify the maximum number of hits this API key can retrieve in one call. 
      * @param callback the result callback with two arguments
      *  success: boolean set to true if the request was successfull
      *  content: the server answer with user keys list or error description if success is false.
      */
-    addUserKeyWithValidity: function(acls, validity, callback) {
+    addUserKeyWithValidity: function(acls, validity, maxQueriesPerIPPerHour, maxHitsPerQuery, callback) {
         var indexObj = this;
         var aclsObject = {};
         aclsObject.acl = acls;
+        aclsObject.validity = validity;
+        aclsObject.maxQueriesPerIPPerHour = maxQueriesPerIPPerHour;
+        aclsObject.maxHitsPerQuery = maxHitsPerQuery;
         this._jsonRequest({ method: 'POST',
                             url: '/1/indexes/' + indexObj.indexName + '/keys',
                             body: aclsObject,
@@ -879,15 +884,19 @@ AlgoliaSearch.prototype.Index.prototype = {
          *   - settings : allows to get index settings (https only)
          *   - editSettings : allows to change index settings (https only)
          * @param validity the number of seconds after which the key will be automatically removed (0 means no time limit for this key)
+         * @param maxQueriesPerIPPerHour Specify the maximum number of API calls allowed from an IP address per hour. 
+         * @param maxHitsPerQuery Specify the maximum number of hits this API key can retrieve in one call. 
          * @param callback the result callback with two arguments
          *  success: boolean set to true if the request was successfull
          *  content: the server answer with user keys list or error description if success is false.
          */
-        addUserKeyWithValidity: function(acls, validity, callback) {
+        addUserKeyWithValidity: function(acls, validity, maxQueriesPerIPPerHour, maxHitsPerQuery, callback) {
             var indexObj = this;
             var aclsObject = {};
             aclsObject.acl = acls;
-            aclsObject.validity = validity;
+            aclsObject.validity = validity;            
+            aclsObject.maxQueriesPerIPPerHour = maxQueriesPerIPPerHour;
+            aclsObject.maxHitsPerQuery = maxHitsPerQuery;
             this.as._jsonRequest({ method: 'POST',
                                    url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/keys',
                                    body: aclsObject,
