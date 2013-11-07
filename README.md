@@ -97,17 +97,6 @@ The server response will look like:
     {
       "firstname": "Jimmie",
       "lastname": "Barninger",
-      "company": "California Paint & Wlpaper Str",
-      "address": "Box #-4038",
-      "city": "Modesto",
-      "county": "Stanislaus",
-      "state": "CA",
-      "zip": "95352",
-      "phone": "209-525-7568",
-      "fax": "209-525-4389",
-      "email": "jimmie@barninger.com",
-      "web": "http://www.jimmiebarninger.com",
-      "followers": 3947,
       "objectID": "433",
       "_highlightResult": {
         "firstname": {
@@ -120,18 +109,6 @@ The server response will look like:
         },
         "company": {
           "value": "California <em>Paint</em> & Wlpaper Str",
-          "matchLevel": "partial"
-        },
-        "address": {
-          "value": "Box #-4038",
-          "matchLevel": "none"
-        },
-        "city": {
-          "value": "Modesto",
-          "matchLevel": "none"
-        },
-        "email": {
-          "value": "<em>jimmie</em>@barninger.com",
           "matchLevel": "partial"
         }
       }

@@ -1,10 +1,10 @@
 /*!
- * algoliasearch 2.1.1
+ * algoliasearch 2.2.0
  * https://github.com/algolia/algoliasearch-client-js
  * Copyright 2013 Algolia SAS; Licensed MIT
  */
 
-var VERSION = "2.1.1";
+var VERSION = "2.2.0";
 
 var AlgoliaSearch = function(applicationID, apiKey, method, resolveDNS, hostsArray) {
     this.applicationID = applicationID;
@@ -467,6 +467,14 @@ AlgoliaSearch.prototype.Index.prototype = {
                     callback(false, body);
                 }
             }
+        });
+    },
+    clearIndex: function(callback) {
+        var indexObj = this;
+        this.as._jsonRequest({
+            method: "POST",
+            url: "/1/indexes/" + encodeURIComponent(indexObj.indexName) + "/clear",
+            callback: callback
         });
     },
     getSettings: function(callback) {
