@@ -420,7 +420,7 @@ AlgoliaSearch.prototype = {
         for (var key in args) {
             if (key != null && args.hasOwnProperty(key)) {
                 params += (params.length === 0) ? '?' : '&';
-                params += key + '=' + encodeURIComponent(args[key]);
+                params += key + '=' + encodeURIComponent(Object.prototype.toString.call(args[key]) === '[object Array]' ? JSON.stringify(args[key]) : args[key]);
             }
         }
         return params;
