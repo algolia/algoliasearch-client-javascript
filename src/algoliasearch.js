@@ -631,15 +631,21 @@ AlgoliaSearch.prototype.Index.prototype = {
          *   At indexing, you should specify geoloc of an object with the _geoloc attribute (in the form {"_geoloc":{"lat":48.853409, "lng":2.348800}})
          * - numericFilters: a string that contains the list of numeric filters you want to apply separated by a comma. 
          *   The syntax of one filter is `attributeName` followed by `operand` followed by `value`. Supported operands are `<`, `<=`, `=`, `>` and `>=`. 
-         *   You can have multiple conditions on one attribute like for example numerics=price>100,price<1000. 
+         *   You can have multiple conditions on one attribute like for example numericFilters=price>100,price<1000. 
          *   You can also use a string array encoding (for example numericFilters: ["price>100","price<1000"]).
          * - tagFilters: filter the query by a set of tags. You can AND tags by separating them by commas. 
          *   To OR tags, you must add parentheses. For example, tags=tag1,(tag2,tag3) means tag1 AND (tag2 OR tag3).
          *   You can also use a string array encoding, for example tagFilters: ["tag1",["tag2","tag3"]] means tag1 AND (tag2 OR tag3).
          *   At indexing, tags should be added in the _tags** attribute of objects (for example {"_tags":["tag1","tag2"]}). 
-         * - facets: filter the query by a list of facets. Facets are separated by commas and each facet is encoded as attributeName:value. 
-         *   For example: facetFilters=category:Book,author:John%20Doe. 
-         *   You can also use a string array encoding (for example ["category:Book","author:John%20Doe"]).
+         * - facetFilters: filter the query by a list of facets. 
+         *   Facets are separated by commas and each facet is encoded as `attributeName:value`. 
+         *   For example: `facetFilters=category:Book,author:John%20Doe`. 
+         *   You can also use a string array encoding (for example `["category:Book","author:John%20Doe"]`).
+         * - facets: List of object attributes that you want to use for faceting. 
+         *   Attributes are separated with a comma (for example `"category,author"` ). 
+         *   You can also use a JSON string array encoding (for example ["category","author"]).
+         *   Only attributes that have been added in **attributesForFaceting** index setting can be used in this parameter. 
+         *   You can also use `*` to perform faceting on all attributes specified in **attributesForFaceting**.
          * - queryType: select how the query words are interpreted, it can be one of the following value:
          *    - prefixAll: all query words are interpreted as prefixes,
          *    - prefixLast: only the last word is interpreted as a prefix (default behavior),
