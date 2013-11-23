@@ -675,7 +675,7 @@ AlgoliaSearch.prototype.Index.prototype = {
          * @param args (optional) if set, contains an object with query parameters (see search for details)
          * @param propertyName(optional) if set, contains the name of property that will be used for 
          */
-        getTypeaheadTransport: function(args, propertyName) {
+        getTypeaheadTransport: function(args, valueOption) {
             this.typeAheadArgs = args;
             if (typeof valueOption !== 'undefined') {
                 this.typeAheadValueOption = valueOption;
