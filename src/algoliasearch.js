@@ -692,20 +692,22 @@ AlgoliaSearch.prototype.Index.prototype = {
                         var obj = content.hits[i],
                             found = false;
 
-                        if (typeof obj.value === 'undefined' && self.typeAheadValueOption != null) {
-                            if (typeof self.typeAheadValueOption === "function") {
-                                obj.value = self.typeAheadValueOption(obj);
-                                found = true;
-                            } else if (typeof obj[self.typeAheadValueOption] !== 'undefined') {
-                                obj.value = obj[self.typeAheadValueOption];
-                                found = true;
-                            }
-                        }
-                        if (! found) {
-                            for (var propertyName in obj) {
-                                if (!found && obj.hasOwnProperty(propertyName) && typeof obj[propertyName] === 'string') {
-                                    obj.value = obj[propertyName];
+                        if (typeof obj.value === 'undefined') {
+                            if (self.typeAheadValueOption != null) {
+                                if (typeof self.typeAheadValueOption === "function") {
+                                    obj.value = self.typeAheadValueOption(obj);
                                     found = true;
+                                } else if (typeof obj[self.typeAheadValueOption] !== 'undefined') {
+                                    obj.value = obj[self.typeAheadValueOption];
+                                    found = true;
+                                }
+                            }
+                            if (! found) {
+                                for (var propertyName in obj) {
+                                    if (!found && obj.hasOwnProperty(propertyName) && typeof obj[propertyName] === 'string') {
+                                        obj.value = obj[propertyName];
+                                        found = true;
+                                    }
                                 }
                             }
                         }
