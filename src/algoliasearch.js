@@ -306,7 +306,7 @@ AlgoliaSearch.prototype = {
         this.indexName = indexName;
         this.as = algoliasearch;
         this.typeAheadArgs = null;
-        this.typeAheadPropertyName = null;
+        this.typeAheadValueOption = null;
     },
 
     _sendQueriesBatch: function(params, callback) {
@@ -930,6 +930,6 @@ AlgoliaSearch.prototype.Index.prototype = {
         indexName: null,
         cache: {},
         typeAheadArgs: null,
-        typeAheadPropertyName: null,
+        typeAheadValueOption: null,
         emptyConstructor: function() {}
 };
