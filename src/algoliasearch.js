@@ -306,7 +306,7 @@ AlgoliaSearch.prototype = {
         this.indexName = indexName;
         this.as = algoliasearch;
         this.typeAheadArgs = null;
-        this.typeAheadPropertyName = null;
+        this.typeAheadValueOption = null;
     },
 
     _sendQueriesBatch: function(params, callback) {
@@ -675,10 +675,10 @@ AlgoliaSearch.prototype.Index.prototype = {
          * @param args (optional) if set, contains an object with query parameters (see search for details)
          * @param propertyName(optional) if set, contains the name of property that will be used for 
          */
-        getTypeaheadTransport: function(args, propertyName) {
+        getTypeaheadTransport: function(args, valueOption) {
             this.typeAheadArgs = args;
-            if (typeof propertyName !== 'undefined') {
-                this.typeAheadPropertyName = propertyName;
+            if (typeof valueOption !== 'undefined') {
+                this.typeAheadValueOption = valueOption;
             }
             return this;
         },
@@ -687,27 +687,35 @@ AlgoliaSearch.prototype.Index.prototype = {
             self = this;
             this.search(query, function(success, content) {
                 if (success) {
-                  for (var i = 0; i < content.hits.length; ++i) {
-                    // Add an attribute value with the first string
-                    var obj = content.hits[i];
-                    if (typeof obj.value === 'undefined') {
-                        if (self.typeAheadPropertyName != null && typeof obj[self.typeAheadPropertyName] !== 'undefined') {
-                            obj.value = obj[self.typeAheadPropertyName];
-                        } else {
-                            var found = false;
-                            for (var propertyName in obj) {
-                                if (!found && obj.hasOwnProperty(propertyName) && typeof obj[propertyName] === 'string') {
-                                    obj.value = obj[propertyName];
+                    for (var i = 0; i < content.hits.length; ++i) {
+                        // Add an attribute value with the first string
+                        var obj = content.hits[i],
+                            found = false;
+
+                        if (typeof obj.value === 'undefined') {
+                            if (self.typeAheadValueOption != null) {
+                                if (typeof self.typeAheadValueOption === "function") {
+                                    obj.value = self.typeAheadValueOption(obj);
+                                    found = true;
+                                } else if (typeof obj[self.typeAheadValueOption] !== 'undefined') {
+                                    obj.value = obj[self.typeAheadValueOption];
                                     found = true;
                                 }
                             }
+                            if (! found) {
+                                for (var propertyName in obj) {
+                                    if (!found && obj.hasOwnProperty(propertyName) && typeof obj[propertyName] === 'string') {
+                                        obj.value = obj[propertyName];
+                                        found = true;
+                                    }
+                                }
+                            }
                         }
+                        suggestions.push(that._transformDatum(obj));
                     }
-                    suggestions.push(that._transformDatum(obj));
-                  }
-                  cb && cb(suggestions);
+                    cb && cb(suggestions);
                 }
-              }, self.typeAheadArgs);
+            }, self.typeAheadArgs);
             return true;
         },
         /*
@@ -924,6 +932,6 @@ AlgoliaSearch.prototype.Index.prototype = {
         indexName: null,
         cache: {},
         typeAheadArgs: null,
-        typeAheadPropertyName: null,
+        typeAheadValueOption: null,
         emptyConstructor: function() {}
 };
