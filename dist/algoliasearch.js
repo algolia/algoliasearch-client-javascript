@@ -1,10 +1,10 @@
 /*!
- * algoliasearch 2.3.2
+ * algoliasearch 2.3.3
  * https://github.com/algolia/algoliasearch-client-js
  * Copyright 2013 Algolia SAS; Licensed MIT
  */
 
-var VERSION = "2.3.2";
+var VERSION = "2.3.3";
 
 var AlgoliaSearch = function(applicationID, apiKey, method, resolveDNS, hostsArray) {
     this.applicationID = applicationID;
@@ -34,6 +34,7 @@ var AlgoliaSearch = function(applicationID, apiKey, method, resolveDNS, hostsArr
             url: "/1/isalive"
         });
     }
+    this.extraHeaders = [];
 };
 
 AlgoliaSearch.prototype = {
@@ -179,7 +180,7 @@ AlgoliaSearch.prototype = {
         this.typeAheadValueOption = null;
     },
     setExtraHeader: function(key, value) {
-        extraHeaders.push({
+        this.extraHeaders.push({
             key: key,
             value: value
         });
@@ -256,8 +257,8 @@ AlgoliaSearch.prototype = {
             xmlHttp.open(opts.method, url, true);
             xmlHttp.setRequestHeader("X-Algolia-API-Key", this.apiKey);
             xmlHttp.setRequestHeader("X-Algolia-Application-Id", this.applicationID);
-            for (var i = 0; i < extraHeaders.length; ++i) {
-                xmlHttp.setRequestHeader(extraHeaders[i].key, extraHeaders[i].value);
+            for (var i = 0; i < this.extraHeaders.length; ++i) {
+                xmlHttp.setRequestHeader(this.extraHeaders[i].key, this.extraHeaders[i].value);
             }
             if (body != null) {
                 xmlHttp.setRequestHeader("Content-type", "application/json");
