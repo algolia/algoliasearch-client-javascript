@@ -309,6 +309,10 @@ AlgoliaSearch.prototype = {
         this.typeAheadPropertyName = null;
     },
 
+    setExtraHeader: function(key, value) {
+        extraHeaders.push({ key: key, value: value});
+    },
+
     _sendQueriesBatch: function(params, callback) {
         this._jsonRequest({ cache: this.cache,
                                method: 'POST',
@@ -383,6 +387,9 @@ AlgoliaSearch.prototype = {
             xmlHttp.open(opts.method, url , true);
             xmlHttp.setRequestHeader('X-Algolia-API-Key', this.apiKey);
             xmlHttp.setRequestHeader('X-Algolia-Application-Id', this.applicationID);
+            for (var i = 0; i < extraHeaders.length; ++i) {
+                xmlHttp.setRequestHeader(extraHeaders[i].key, extraHeaders[i].value);
+            }
             if (body != null) {
                 xmlHttp.setRequestHeader('Content-type', 'application/json');
             }
@@ -433,7 +440,8 @@ AlgoliaSearch.prototype = {
     applicationID: null,
     apiKey: null,
     hosts: [],
-    cache: {}
+    cache: {},
+    extraHeaders: []
 };
 
 /*
