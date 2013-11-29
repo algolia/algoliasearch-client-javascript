@@ -51,7 +51,7 @@ AlgoliaSearch.prototype = {
         };
         this._jsonRequest({
             method: "POST",
-            url: "/1/indexes/" + encodeURIComponent(indexName) + "/operation",
+            url: "/1/indexes/" + encodeURIComponent(srcIndexName) + "/operation",
             body: postObj,
             callback: callback
         });
@@ -63,7 +63,7 @@ AlgoliaSearch.prototype = {
         };
         this._jsonRequest({
             method: "POST",
-            url: "/1/indexes/" + encodeURIComponent(indexName) + "/operation",
+            url: "/1/indexes/" + encodeURIComponent(srcIndexName) + "/operation",
             body: postObj,
             callback: callback
         });
@@ -176,7 +176,7 @@ AlgoliaSearch.prototype = {
         this.indexName = indexName;
         this.as = algoliasearch;
         this.typeAheadArgs = null;
-        this.typeAheadPropertyName = null;
+        this.typeAheadValueOption = null;
     },
     setExtraHeader: function(key, value) {
         extraHeaders.push({
@@ -433,10 +433,10 @@ AlgoliaSearch.prototype.Index.prototype = {
             this._search(params, callback);
         }
     },
-    getTypeaheadTransport: function(args, propertyName) {
+    getTypeaheadTransport: function(args, valueOption) {
         this.typeAheadArgs = args;
-        if (typeof propertyName !== "undefined") {
-            this.typeAheadPropertyName = propertyName;
+        if (typeof valueOption !== "undefined") {
+            this.typeAheadValueOption = valueOption;
         }
         return this;
     },
@@ -445,12 +445,18 @@ AlgoliaSearch.prototype.Index.prototype = {
         this.search(query, function(success, content) {
             if (success) {
                 for (var i = 0; i < content.hits.length; ++i) {
-                    var obj = content.hits[i];
+                    var obj = content.hits[i], found = false;
                     if (typeof obj.value === "undefined") {
-                        if (self.typeAheadPropertyName != null && typeof obj[self.typeAheadPropertyName] !== "undefined") {
-                            obj.value = obj[self.typeAheadPropertyName];
-                        } else {
-                            var found = false;
+                        if (self.typeAheadValueOption != null) {
+                            if (typeof self.typeAheadValueOption === "function") {
+                                obj.value = self.typeAheadValueOption(obj);
+                                found = true;
+                            } else if (typeof obj[self.typeAheadValueOption] !== "undefined") {
+                                obj.value = obj[self.typeAheadValueOption];
+                                found = true;
+                            }
+                        }
+                        if (!found) {
                             for (var propertyName in obj) {
                                 if (!found && obj.hasOwnProperty(propertyName) && typeof obj[propertyName] === "string") {
                                     obj.value = obj[propertyName];
@@ -573,6 +579,6 @@ AlgoliaSearch.prototype.Index.prototype = {
     indexName: null,
     cache: {},
     typeAheadArgs: null,
-    typeAheadPropertyName: null,
+    typeAheadValueOption: null,
     emptyConstructor: function() {}
 };
