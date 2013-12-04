@@ -405,7 +405,7 @@ AlgoliaSearch.prototype = {
         }
         xmlHttp.send(body);
         xmlHttp.onload = function(event) {
-            if (!self._isUndefined(event)) {
+            if (!self._isUndefined(event) && event.target != null) {
                 var retry = (event.target.status === 0 || event.target.status === 503);
                 var success = (event.target.status === 200 || event.target.status === 201);
                 opts.callback(retry, success, event.target, event.target.response != null ? JSON.parse(event.target.response) : null);
