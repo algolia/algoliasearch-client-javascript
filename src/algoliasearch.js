@@ -544,7 +544,28 @@ AlgoliaSearch.prototype.Index.prototype = {
                                    body: partialObject,
                                    callback:  callback });
         },
-
+        /*
+         * Partially Override the content of several objects
+         *
+         * @param objects contains an array of objects to update (each object must contains a objectID attribute)
+         * @param callback (optional) the result callback with two arguments:
+         *  success: boolean set to true if the request was successfull
+         *  content: the server answer that updateAt and taskID
+         */
+        partialUpdateObjects: function(objects, callback) {
+            var indexObj = this;
+            var postObj = {requests:[]};
+            for (var i = 0; i < objects.length; ++i) {
+                var request = { action: 'partialUpdateObject',
+                                objectID: encodeURIComponent(objects[i].objectID),
+                                body: objects[i] };
+                postObj.requests.push(request);
+            }
+            this.as._jsonRequest({ method: 'POST',
+                                   url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/batch',
+                                   body: postObj,
+                                   callback: callback });
+        },
         /*
          * Override the content of object
          *
@@ -679,6 +700,25 @@ AlgoliaSearch.prototype.Index.prototype = {
                 this._search(params, callback);
             }
         },
+
+        /*
+         * Browse all index content
+         *
+         * @param page Pagination parameter used to select the page to retrieve.
+         *             Page is zero-based and defaults to 0. Thus, to retrieve the 10th page you need to set page=9
+         * @param hitsPerPage: Pagination parameter used to select the number of hits per page. Defaults to 1000.
+         */
+        browse: function(page, callback, hitsPerPage) {
+            var indexObj = this;
+            var params = "?page=" + page;
+            if (!_.isUndefined(hitsPerPage)) {
+                params += "&hitsPerPage=" + hitsPerPage;
+            }
+            this.as._jsonRequest({ method: 'GET',
+                                   url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/browse' + params,
+                                   callback: callback });
+        },
+
         /*
          * Get transport layer for Typeahead.js
          * @param args (optional) if set, contains an object with query parameters (see search for details)
