@@ -1,10 +1,10 @@
 /*!
- * algoliasearch 2.3.5
+ * algoliasearch 2.3.6
  * https://github.com/algolia/algoliasearch-client-js
  * Copyright 2013 Algolia SAS; Licensed MIT
  */
 
-var VERSION = "2.3.5";
+var VERSION = "2.3.6";
 
 var AlgoliaSearch = function(applicationID, apiKey, method, resolveDNS, hostsArray) {
     this.applicationID = applicationID;
@@ -141,7 +141,7 @@ AlgoliaSearch.prototype = {
         this.batch = [];
     },
     addQueryInBatch: function(indexName, query, args) {
-        var params = "query=" + query;
+        var params = "query=" + encodeURIComponent(query);
         if (!this._isUndefined(args) && args != null) {
             params = this._getSearchParams(args, params);
         }

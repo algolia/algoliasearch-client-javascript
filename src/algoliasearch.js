@@ -264,7 +264,7 @@ AlgoliaSearch.prototype = {
      *  - hitsPerPage: (pagination parameter) number of hits per page. Defaults to 10.
      */
     addQueryInBatch: function(indexName, query, args) {
-        var params = 'query=' + query;
+        var params = 'query=' + encodeURIComponent(query);
         if (!this._isUndefined(args) && args != null) {
             params = this._getSearchParams(args, params);
         }
