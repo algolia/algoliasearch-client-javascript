@@ -71,8 +71,11 @@ module.exports = function(grunt) {
         src: jsFiles,
         options: {
           specs: 'test/*_spec.js',
-          helpers: 'test/helpers/*',
-          vendor: 'test/vendor/*'
+          template: "SpecRunner.tmpl",
+          templateOptions: {
+            application_id: process.env.ALGOLIA_APPLICATION_ID,
+            api_key: process.env.ALGOLIA_API_KEY
+          }
         }
       }
     },
