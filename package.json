@@ -1,6 +1,10 @@
 {
   "name": "algoliasearch",
   "description": "Algolia Search API Client",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/algolia/algoliasearch-client-js.git"
+  },
   "keywords": [
     "algolia",
     "search",
