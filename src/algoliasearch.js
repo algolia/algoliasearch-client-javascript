@@ -557,7 +557,7 @@ AlgoliaSearch.prototype.Index.prototype = {
             var postObj = {requests:[]};
             for (var i = 0; i < objects.length; ++i) {
                 var request = { action: 'partialUpdateObject',
-                                objectID: encodeURIComponent(objects[i].objectID),
+                                objectID: objects[i].objectID,
                                 body: objects[i] };
                 postObj.requests.push(request);
             }
@@ -594,7 +594,7 @@ AlgoliaSearch.prototype.Index.prototype = {
             var postObj = {requests:[]};
             for (var i = 0; i < objects.length; ++i) {
                 var request = { action: 'updateObject',
-                                objectID: encodeURIComponent(objects[i].objectID),
+                                objectID: objects[i].objectID,
                                 body: objects[i] };
                 postObj.requests.push(request);
             }
