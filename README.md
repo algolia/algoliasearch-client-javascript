@@ -25,7 +25,7 @@ Algolia’s Search API makes it easy to deliver a great search experience in you
  * 99.99% SLA
  * first-class data security
 
- [![Build Status](https://travis-ci.org/algolia/algoliasearch-client-js.png?branch=master)](https://travis-ci.org/algolia/algoliasearch-client-js) [![NPM version](https://badge.fury.io/js/algoliasearch.png)](http://badge.fury.io/js/algoliasearch) [![Code Climate](https://codeclimate.com/github/algolia/algoliasearch-client-js.png)](https://codeclimate.com/github/algolia/algoliasearch-client-js)
+ [![Build Status](https://travis-ci.org/algolia/algoliasearch-client-js.png?branch=master)](https://travis-ci.org/algolia/algoliasearch-client-js) [![NPM version](https://badge.fury.io/js/algoliasearch.png)](http://badge.fury.io/js/algoliasearch)
 
 
 Setup
