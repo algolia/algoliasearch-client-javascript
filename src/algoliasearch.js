@@ -736,6 +736,17 @@ AlgoliaSearch.prototype.Index.prototype = {
             }
             return this;
         },
+        /*
+         * Update parameter of transport layer for Typeahead.js
+         * @param args contains an object with query parameters (see search for details)
+         * @param propertyName(optional) if set, contains the name of property that will be used for
+         */
+        setTypeaheadParams: function(args, valueOption) {
+            this.typeAHeadArgs = args
+            if (typeof valueOption !== 'undefined') {
+                this.typeAheadValueOption = valueOption;
+            }
+        },
         // Method used by Typeahead.js.
         get: function(query, processRemoteData, that, cb, suggestions) {
             self = this;

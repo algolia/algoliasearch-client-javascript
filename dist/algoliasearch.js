@@ -1,10 +1,10 @@
 /*!
- * algoliasearch 2.3.6
+ * algoliasearch 2.3.8
  * https://github.com/algolia/algoliasearch-client-js
  * Copyright 2013 Algolia SAS; Licensed MIT
  */
 
-var VERSION = "2.3.6";
+var VERSION = "2.3.8";
 
 var AlgoliaSearch = function(applicationID, apiKey, method, resolveDNS, hostsArray) {
     this.applicationID = applicationID;
@@ -383,7 +383,7 @@ AlgoliaSearch.prototype.Index.prototype = {
         for (var i = 0; i < objects.length; ++i) {
             var request = {
                 action: "partialUpdateObject",
-                objectID: encodeURIComponent(objects[i].objectID),
+                objectID: objects[i].objectID,
                 body: objects[i]
             };
             postObj.requests.push(request);
@@ -412,7 +412,7 @@ AlgoliaSearch.prototype.Index.prototype = {
         for (var i = 0; i < objects.length; ++i) {
             var request = {
                 action: "updateObject",
-                objectID: encodeURIComponent(objects[i].objectID),
+                objectID: objects[i].objectID,
                 body: objects[i]
             };
             postObj.requests.push(request);
@@ -472,6 +472,12 @@ AlgoliaSearch.prototype.Index.prototype = {
             this.typeAheadValueOption = valueOption;
         }
         return this;
+    },
+    setTypeaheadParams: function(args, valueOption) {
+        this.typeAHeadArgs = args;
+        if (typeof valueOption !== "undefined") {
+            this.typeAheadValueOption = valueOption;
+        }
     },
     get: function(query, processRemoteData, that, cb, suggestions) {
         self = this;
