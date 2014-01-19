@@ -15,22 +15,13 @@ module.exports = function(grunt) {
       '/*!',
       ' * algoliasearch <%= version %>',
       ' * https://github.com/algolia/algoliasearch-client-js',
-      ' * Copyright 2013 Algolia SAS; Licensed MIT',
+      ' * Copyright 2014 Algolia SAS; Licensed MIT',
       ' */\n\n'
     ].join('\n'),
 
     uglify: {
       options: {
         banner: '<%= banner %>'
-      },
-      js: {
-        options: {
-          mangle: false,
-          beautify: true,
-          compress: false
-        },
-        src: jsFiles,
-        dest: '<%= buildDir %>/algoliasearch.js'
       },
       jsmin: {
         options: {
@@ -42,11 +33,20 @@ module.exports = function(grunt) {
       }
     },
 
+    concat: {
+      options: {
+      },
+      dist: {
+        src: jsFiles,
+        dest: '<%= buildDir %>/algoliasearch.js'
+      }
+    },
+
     sed: {
       version: {
         pattern: '%VERSION%',
         replacement: '<%= version %>',
-        path: ['<%= uglify.js.dest %>', '<%= uglify.jsmin.dest %>']
+        path: ['<%= concat.dist.dest %>', '<%= uglify.jsmin.dest %>']
       }
     },
 
@@ -122,7 +122,7 @@ module.exports = function(grunt) {
   // -------
 
   grunt.registerTask('default', 'build');
-  grunt.registerTask('build', ['uglify', 'sed:version']);
+  grunt.registerTask('build', ['uglify', 'concat', 'sed:version']);
   grunt.registerTask('server', 'connect:server');
   grunt.registerTask('lint', 'jshint');
   grunt.registerTask('test', 'jasmine:js');
