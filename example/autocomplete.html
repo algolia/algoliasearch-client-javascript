@@ -3,6 +3,7 @@
     <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/hogan.js/2.0.0/hogan.js"></script>
     <script src="/dist/algoliasearch.min.js"></script>
     <script src="/vendor/typeahead-algolia.min.js"></script>
     <style type="text/css">
@@ -17,24 +18,54 @@
       .tt-suggestion.tt-is-under-cursor { color: #fff; background-color: #0097cf; }
       .tt-suggestion p { margin: 0; }
       .tt-suggestion a { color: #000; text-decoration: none; }
+      .tt-suggestion em { font-weight: bold; font-style: normal; }
     </style>
   </head>
   <body>
 
     <div class="demo">
+      <h3>Basic</h3>
       <input class="typeahead" type="text" placeholder="Start typing" id="typeahead-algolia"  spellcheck="false"/>
+    </div>
+
+    <div class="demo">
+      <h3>Specifying the attribute</h3>
+      <input class="typeahead" type="text" placeholder="Start typing" id="typeahead-algolia-email"  spellcheck="false"/>
+    </div>
+
+    <div class="demo">
+      <h3>Using Hogan templating engine</h3>
+      <input class="typeahead" type="text" placeholder="Start typing" id="typeahead-algolia-template"  spellcheck="false"/>
     </div>
 
     <script type="text/javascript">
       $(document).ready(function() {
         // Replace the following values by your ApplicationID and ApiKey.
-        algolia = new AlgoliaSearch('YourApplicationID', 'YourAPIKey'), 
+        algolia = new AlgoliaSearch('YourApplicationID', 'YourAPIKey'),
         // replace YourIndexName by the name of the index you want to query.
         index = algolia.initIndex('YourIndexName');
 
+        // basic typeahead
         $('#typeahead-algolia').typeahead({
-          name: 'algolia',                              
+          name: 'algolia',
           remote: index.getTypeaheadTransport({"hitsPerPage": 10})
+        });
+
+        // specifying the valueKey
+        $('#typeahead-algolia-email').typeahead({
+          name: 'algolia-email',
+          remote: index.getTypeaheadTransport({"hitsPerPage": 10}),
+          valueKey: 'email'
+        });
+
+        // with a template
+        $('#typeahead-algolia-template').typeahead({
+          name: 'algolia-template',
+          remote: index.getTypeaheadTransport({"hitsPerPage": 10}),
+          template: '<picture><img src="{{{image_url}}}" /></picture>' +
+            '<div>{{{_highlightResult.email.value}}}</div>' +
+            '<div class="text-right"><small>{{{_highlightResult.name.value}}}</span></div>',
+          engine: Hogan
         });
       });
     </script>
