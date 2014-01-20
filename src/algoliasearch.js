@@ -742,7 +742,7 @@ AlgoliaSearch.prototype.Index.prototype = {
          * @param propertyName(optional) if set, contains the name of property that will be used for
          */
         setTypeaheadParams: function(args, valueOption) {
-            this.typeAHeadArgs = args
+            this.typeAHeadArgs = args;
             if (typeof valueOption !== 'undefined') {
                 this.typeAheadValueOption = valueOption;
             }
