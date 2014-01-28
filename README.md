@@ -1,5 +1,6 @@
-Algolia Search API Client for Javascript
+Algolia Search API Client for JavaScript
 ==================
+
 
 This Javascript client let you easily use the [Algolia Search API](http://www.algolia.com) in a browser, it is compatible with most browsers:
 
@@ -13,7 +14,8 @@ This Javascript client let you easily use the [Algolia Search API](http://www.al
 
 See [this wikipedia page](http://en.wikipedia.org/wiki/Cross-Origin_Resource_Sharing#Browser_support) to have more details on supported browsers (we use XDomainRequest for IE8 and IE9).
 
-Algolia Search is a search API that provides hosted full-text, numerical and faceted search.
+
+[Algolia Search](http://www.algolia.com) is a search API that provides hosted full-text, numerical and faceted search.
 Algolia’s Search API makes it easy to deliver a great search experience in your apps & websites providing:
 
  * REST and JSON-based API
@@ -25,7 +27,21 @@ Algolia’s Search API makes it easy to deliver a great search experience in you
  * 99.99% SLA
  * first-class data security
 
- [![Build Status](https://travis-ci.org/algolia/algoliasearch-client-js.png?branch=master)](https://travis-ci.org/algolia/algoliasearch-client-js) [![NPM version](https://badge.fury.io/js/algoliasearch.png)](http://badge.fury.io/js/algoliasearch)
+
+
+[![Build Status](https://travis-ci.org/algolia/algoliasearch-client-js.png?branch=master)](https://travis-ci.org/algolia/algoliasearch-client-js) [![NPM version](https://badge.fury.io/js/algoliasearch.png)](http://badge.fury.io/js/algoliasearch)
+
+Table of Content
+-------------
+**Get started**
+
+1. [Setup](#setup)
+1. [Quick Start](#quick-start)
+1. [General Principle](#general-principle)"])
+
+**Commands reference**
+
+1. [Search](#search)
 
 
 Setup
@@ -53,17 +69,23 @@ You can then update the ```example/autocomplete.html``` file with your ```Applic
 You can also update the ```example/instantsearch.html``` file with your ```ApplicationID```, ```API-Key``` and ```index name``` to test an instant-search example.
 
 
+
 General Principle
 -------------
 
 All API calls will return the result in a callback that takes two arguments:
 
- 1. **sucess**: a boolean that is set to false when an error was found.
+ 1. **success**: a boolean that is set to false when an error was found.
  2. **content**: the object containing the answer (if an error was found, you can retrieve the error message in `content.message`)
 
-Search 
+
+
+Search
 -------------
-To perform a search, you just need to initialize the index and perform a call to the search function.<br/>
+
+
+To perform a search, you just need to initialize the index and perform a call to the search function.
+
 You can use the following optional arguments:
 
 ### Query parameters
@@ -111,7 +133,7 @@ You can use the following optional arguments:
 
 #### Distinct parameter
  * **distinct**: If set to 1, enable the distinct feature (disabled by default) if the `attributeForDistinct` index setting is set. This feature is similar to the SQL "distinct" keyword: when enabled in a query with the `distinct=1` parameter, all hits containing a duplicate value for the attributeForDistinct attribute are removed from results. For example, if the chosen attribute is `show_name` and several hits have the same value for `show_name`, then only the best one is kept and others are removed.
- 
+
 ```javascript
 index = client.initIndex('contacts');
 index.search('query string', function(success, content) {
@@ -158,9 +180,10 @@ The server response will look like:
   "hitsPerPage": 20,
   "processingTimeMS": 1,
   "query": "jimmie paint",
-  "params": "query=jimmie+paint&atributesToRetrieve=firstname,lastname&hitsPerPage=50"
+  "params": "query=jimmie+paint&attributesToRetrieve=firstname,lastname&hitsPerPage=50"
 }
 ```
+
 
 Update the index
 -------------
@@ -177,3 +200,6 @@ For more details about updating an index from javascript, have a look at the [al
     client = new AlgoliaSearch('ApplicationID', 'API-Key', 'https');
     ...
 ```
+
+
+
