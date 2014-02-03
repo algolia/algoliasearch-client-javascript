@@ -21,4 +21,4 @@
  * THE SOFTWARE.
  */
 
-var VERSION = '%VERSION%';
+var ALGOLIA_VERSION = '%VERSION%';

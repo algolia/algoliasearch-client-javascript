@@ -33,6 +33,7 @@
 var AlgoliaSearch = function(applicationID, apiKey, method, resolveDNS, hostsArray) {
     this.applicationID = applicationID;
     this.apiKey = apiKey;
+
     if (this._isUndefined(hostsArray)) {
         hostsArray = [applicationID + '-1.algolia.io',
                       applicationID + '-2.algolia.io',
@@ -62,6 +63,75 @@ var AlgoliaSearch = function(applicationID, apiKey, method, resolveDNS, hostsArr
     }
     this.extraHeaders = [];
 };
+
+function AlgoliaExplainResults(hit, titleAttribute, otherAttributes) {
+
+    function _getHitAxplainationForOneAttr_recurse(obj, foundWords) {
+        if (typeof obj === 'object' && 'matchedWords' in obj && 'value' in obj) {
+            var match = false;
+            for (var j = 0; j < obj.matchedWords.length; ++j) {
+                var word = obj.matchedWords[j];
+                if (!(word in foundWords)) {
+                    foundWords[word] = 1;
+                    match = true;
+                }
+            }
+            return match ? [obj.value] : [];
+        } else if (obj instanceof Array) {
+            var res = [];
+            for (var i = 0; i < obj.length; ++i) {
+                var array = _getHitAxplainationForOneAttr_recurse(obj[i], foundWords);
+                res = res.concat(array);
+            }
+            return res;
+        } else if (typeof obj === 'object') {
+            var res = [];
+            for (prop in obj) {
+                if (obj.hasOwnProperty(prop)){
+                    res = res.concat(_getHitAxplainationForOneAttr_recurse(obj[prop], foundWords));
+                }
+            }
+            return res;
+        }
+        return [];
+    }
+    
+    function _getHitAxplainationForOneAttr(hit, foundWords, attr) {
+        if (attr.indexOf('.') === -1) {
+            if (attr in hit._highlightResult) {
+                return _getHitAxplainationForOneAttr_recurse(hit._highlightResult[attr], foundWords);
+            }
+            return [];
+        }
+        var array = attr.split('.');
+        var obj = hit._highlightResult;
+        for (var i = 0; i < array.length; ++i) {
+            if (array[i] in obj) {
+                obj = obj[array[i]];
+            } else {
+                return [];
+            }
+        }
+        return _getHitAxplainationForOneAttr_recurse(obj, foundWords);
+    }
+
+    var res = {};
+    var foundWords = {};
+    var title = _getHitAxplainationForOneAttr(hit, foundWords, titleAttribute);
+    res.title = (title.length > 0) ? title[0] : "";
+    res.subtitles = [];
+
+    if (typeof otherAttributes !== 'undefined') {
+        for (var i = 0; i < otherAttributes.length; ++i) {
+            var attr = _getHitAxplainationForOneAttr(hit, foundWords, otherAttributes[i]);
+            for (var j = 0; j < attr.length; ++j) {
+                res.subtitles.push({ attr: otherAttributes[i], value: attr[j] });
+            }
+        }
+    }
+    return res;
+}
+
 
 AlgoliaSearch.prototype = {
     /*
