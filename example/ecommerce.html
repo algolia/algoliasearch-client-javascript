@@ -182,7 +182,7 @@
     <section class="panel">
       <header class="panel-heading">
       <div class="search_box">
-        <form accept-charset="UTF-8" action="#" id="formRecherche" method="get">
+        <form accept-charset="UTF-8" action="#" method="get">
           <input autocomplete="off" class="autocomplete" id="inputfield" name="address" placeholder="Start typing" type="text" spellcheck="false"/>
           <div class='searchbutton'>
             <i class="icon-search icon-large"></i>
@@ -208,13 +208,13 @@
       // Replace the following values by your ApplicationID and ApiKey.
       var client = new AlgoliaSearch('YourApplicationID', 'YourApiKey');
 
-      // sample code with index 'contacts':
+      // sample code with index 'hotels':
       //   - 10 hits per page
-      //   - 'firstname' and 'lastname' used as standard facets (refine using links)
-      //   - 'company' and 'country' used as disjunctive facets (refine using checkboxes)
-      var helper = new AlgoliaSearchHelper(client, 'contacts', {
-        facets: ['firstname', 'lastname'],
-        disjunctiveFacets: ['company', 'country'],
+      //   - 'facilities' and 'meals' used as standard/conjunctive facets (refine using links)
+      //   - 'stars' and 'price_ranges' used as disjunctive facets (refine using checkboxes)
+      var helper = new AlgoliaSearchHelper(client, 'hotels', {
+        facets: ['facilities', 'meals'],
+        disjunctiveFacets: ['stars', 'price_ranges'],
         hitsPerPage: 10
       });
 
