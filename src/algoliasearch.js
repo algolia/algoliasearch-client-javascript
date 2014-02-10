@@ -795,64 +795,20 @@ AlgoliaSearch.prototype.Index.prototype = {
         },
 
         /*
-         * Get transport layer for Typeahead.js
-         * @param args (optional) if set, contains an object with query parameters (see search for details)
-         * @param propertyName(optional) if set, contains the name of property that will be used for
+         * Get a Typeahead.js adapter
+         * @param searchParams contains an object with query parameters (see search for details)
          */
-        getTypeaheadTransport: function(args, valueOption) {
-            this.typeAheadArgs = args;
-            if (typeof valueOption !== 'undefined') {
-                this.typeAheadValueOption = valueOption;
-            }
-            return this;
-        },
-        /*
-         * Update parameter of transport layer for Typeahead.js
-         * @param args contains an object with query parameters (see search for details)
-         * @param propertyName(optional) if set, contains the name of property that will be used for
-         */
-        setTypeaheadParams: function(args, valueOption) {
-            this.typeAHeadArgs = args;
-            if (typeof valueOption !== 'undefined') {
-                this.typeAheadValueOption = valueOption;
-            }
-        },
-        // Method used by Typeahead.js.
-        get: function(query, processRemoteData, that, cb, suggestions) {
-            self = this;
-            this.search(query, function(success, content) {
-                if (success) {
-                    for (var i = 0; i < content.hits.length; ++i) {
-                        // Add an attribute value with the first string
-                        var obj = content.hits[i],
-                            found = false;
-
-                        if (typeof obj.value === 'undefined') {
-                            if (self.typeAheadValueOption != null) {
-                                if (typeof self.typeAheadValueOption === 'function') {
-                                    obj.value = self.typeAheadValueOption(obj);
-                                    found = true;
-                                } else if (typeof obj[self.typeAheadValueOption] !== 'undefined') {
-                                    obj.value = obj[self.typeAheadValueOption];
-                                    found = true;
-                                }
-                            }
-                            if (! found) {
-                                for (var propertyName in obj) {
-                                    if (!found && obj.hasOwnProperty(propertyName) && typeof obj[propertyName] === 'string') {
-                                        obj.value = obj[propertyName];
-                                        found = true;
-                                    }
-                                }
-                            }
-                        }
-                        suggestions.push(that._transformDatum(obj));
+        ttAdapter: function(params) {
+            var self = this;
+            return function(query, cb) {
+                self.search(query, function(success, content) {
+                    if (success) {
+                        cb(content.hits);
                     }
-                    cb && cb(suggestions);
-                }
-            }, self.typeAheadArgs);
-            return true;
+                }, params);
+            };
         },
+
         /*
          * Wait the publication of a task on the server.
          * All server task are asynchronous and you can check with this method that the task is published.
