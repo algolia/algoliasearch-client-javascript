@@ -77,7 +77,7 @@ Quick Start
 
 First, index some data. For example, you can use the command line client [quick start](https://github.com/algolia/algoliasearch-client-cmd#quick-start) to index the 500 contacts sample.
 
-You can then update the ```example/autocomplete.html``` file with your ```ApplicationID```, ```API-Key``` and ```index name``` to test the autocomplete feature. This version is based on [typeahead.js](http://twitter.github.io/typeahead.js/) version 0.9.3 with a small [patch](https://github.com/algolia/typeahead.js/commit/4edb95e8beb390e92720196a29186d83b8dba9d9) to allow usage of Algolia JS client.
+You can then update the ```example/autocomplete.html``` file with your ```ApplicationID```, ```API-Key``` and ```index name``` to test the autocomplete feature.
 
 You can also update the ```example/instantsearch.html``` file with your ```ApplicationID```, ```API-Key``` and ```index name``` to test an instant-search example.
 

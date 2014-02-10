@@ -1,0 +1,47 @@
+CHANGELOG
+
+2014-02-10  2.4.0
+
+      * Move to official Typeahead.js release (0.10.1)
+      * Remove getTypeAheadTransport* functions
+
+2014-01-16  2.3.8
+
+      * Ability to customize getTypeAheadTransport parameters once instantiated
+
+2014-01-08  2.3.7
+
+      * Remove extra encodeURI
+      * Travis integration
+
+2014-01-06  2.3.6
+
+      * Missing encodeURI
+      * Added "distinct" documentation
+
+2013-12-06  2.3.5
+
+      * Added browse methods
+
+2013-12-04 2.3.4-1
+
+      * Fixed IE9 bug while reading onload's event
+      * Here and there typos
+
+2013-11-07 2.3.0
+
+      * Added new ACL features (maxQueriesPerIPPerHour & maxHitsPerQuery)
+
+2013-11-07 2.2.0
+
+      * Added clearIndex method
+
+2013-11-03 2.1.0
+
+      * Auto-detect protocol to used based on current location
+      * Added auto-complete & instant-search examples
+
+2013-10-15 2.0.1
+
+      * Gruntification
+      * Embed typeahead.js
