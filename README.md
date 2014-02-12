@@ -41,7 +41,7 @@ Table of Content
 
 1. [Setup](#setup)
 1. [Quick Start](#quick-start)
-1. [General Principle](#general-principle)"])
+1. [General Principle](#general-principle)
 1. [Online documentation](#online-documentation)
 
 **Commands reference**
