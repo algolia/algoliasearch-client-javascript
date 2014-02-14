@@ -24,7 +24,7 @@
         position: relative;
         height: 45px;
       }
-      #inputfield {
+      #q {
         width: 413px;
         display: block;
         border: 1px solid #cfcfcf;
@@ -50,11 +50,11 @@
       ::-moz-placeholder { color: #9f9f9f;}
       :-ms-input-placeholder {color: #9f9f9f;}
 
-      .search_box #inputfield:focus {
+      .search_box #1:focus {
         outline-width: 0px;
         border: 1px solid #999;
       }
-      .search_box #inputfield:hover {
+      .search_box #q:hover {
         border: 1px solid #999;
       }
       .search_box_shadow {
@@ -157,7 +157,7 @@
           margin-top: 0px;
           width: 100%;
         }
-        #inputfield {
+        #q {
           width: -moz-calc(100% - 60px);
             width: -webkit-calc(100% - 60px);
             width: calc(100% - 60px);
@@ -169,14 +169,14 @@
 
     <section class="panel">
       <header class="panel-heading">
-      <div class="search_box">
-        <form accept-charset="UTF-8" action="#" id="formRecherche" method="get">
-          <input autocomplete="off" class="autocomplete" id="inputfield" name="address" placeholder="Start typing" type="text" spellcheck="false"/>
-          <div class='searchbutton'>
-            <i class="icon-search icon-large"></i>
-          </div>
-        </form>
-      </div>
+        <div class="search_box">
+          <form action="#" method="get">
+            <input autocomplete="off" class="autocomplete" id="q" placeholder="Start typing" type="text" spellcheck="false"/>
+            <div class='searchbutton'>
+              <i class="icon-search icon-large"></i>
+            </div>
+          </form>
+        </div>
       </header>
     </section>
 
@@ -186,86 +186,84 @@
     </div>
     <div class="hits-wrapper">
       <h1>Results</h1>
-      <div id="hits" class="line-bottom"></div>
+      <div id="hits"></div>
     </div>
 
     <script type="text/javascript">
-      var refinements = {};
-      var inputfield = $("#inputfield");
-      var searchbutton = $("#searchbutton");
-      // Replace the following values by your ApplicationID and ApiKey.
-      var algolia = new AlgoliaSearch('YourApplicationID', 'YourApiKey');
-      // replace YourIndexName by the name of the index you want to query.
-      var index = algolia.initIndex('YourIndexName');
+      $(document).ready(function() {
+        var refinements = {};
+        var $inputfield = $("#q");
+        // Replace the following values by your ApplicationID and ApiKey.
+        var algolia = new AlgoliaSearch('YourApplicationID', 'YourApiKey');
+        // replace YourIndexName by the name of the index you want to query.
+        var index = algolia.initIndex('YourIndexName');
 
-      inputfield.focus();
-      inputfield.keyup(function() {
-        search();
-      });
+        $inputfield.keyup(function() {
+          search();
+        }).focus();
 
-      function toggleRefine(refinement) {
-        refinements[refinement] = !refinements[refinement];
-        search();
-      }
-
-      function search() {
-        var filters = [];
-        for (var refinement in refinements) {
-          if (refinements[refinement]) {
-            filters.push(refinement);
-          }
-        }
-        index.search(inputfield.val(), searchCallback, { facets: '*', facetFilters: filters });
-      }
-
-      function searchCallback(success, content) {
-        if (content.query != $("#inputfield").val()) {
-          return;
-        }
-        if (content.hits.length == 0 || content.query.trim() === '') {
-          $('#hits').empty();
-          $('#facets').empty();
-          return;
+        function toggleRefine(refinement) {
+          refinements[refinement] = !refinements[refinement];
+          search();
         }
 
-        // Scan all hits and display them
-        var hits = '';
-        for (var i = 0; i < content.hits.length; ++i) {
-          var hit = content.hits[i];
-
-          // For this hit, display all property that have a least one word highlighted (matchLevel = full or partial)
-          var properties = '';
-          for (var propertyName in hit._highlightResult) {
-            var el = hit._highlightResult[propertyName];
-            if (!(el instanceof Array) && el.matchLevel !== 'none') {
-              properties += "<div class='grey'>" + propertyName.substr(0,1).toUpperCase() +
-                          propertyName.substr(1) + ": </div>" + el.value + "</br>";
+        function search() {
+          var filters = [];
+          for (var refinement in refinements) {
+            if (refinements[refinement]) {
+              filters.push(refinement);
             }
           }
-          if ((i % 2) == 0) {
-            hits += "<div class='hit'>" + properties + "</div>";
-          } else {
-            hits += "<div class='hit bg'>" + properties + "</div>";
-          }
+          index.search($inputfield.val(), searchCallback, { facets: '*', facetFilters: filters });
         }
-        $('#hits').html(hits);
 
-        var facets = '';
-        // Scan all facets and display them
-        for (var facet in content.facets) {
-          facets += '<h4>' + facet + '</h4>';
-          facets += '<ul>';
-          var values = content.facets[facet];
-          for (var value in values) {
-            var refinement = facet + ':' + value;
-            facets += '<li class="' + (refinements[refinement] ? 'refined' : '') + '">' +
-                '<a href="javascript:toggleRefine(\'' + refinement + '\')">' + value + '</a> (' + values[value] + ')' +
-              '</li>';
+        function searchCallback(success, content) {
+          if (content.query != $inputfield.val()) {
+            // do not consider out-dated queries
+            return;
           }
-          facets += '</ul>';
+          if (content.hits.length == 0 || content.query.trim() === '') {
+            // no results
+            $('#hits').empty();
+            $('#facets').empty();
+            return;
+          }
+
+          // Scan all hits and display them
+          var hits = '';
+          for (var i = 0; i < content.hits.length; ++i) {
+            var hit = content.hits[i];
+
+            // For this hit, display all property that have a least one word highlighted (matchLevel = full or partial)
+            hits += '<div class="hit">';
+            for (var propertyName in hit._highlightResult) {
+              var el = hit._highlightResult[propertyName];
+              if (Object.prototype.toString.call(el) !== '[object Array]' && el.matchLevel !== 'none') {
+                hits += '<div class="attribute"><span>' + propertyName.substr(0,1).toUpperCase() +
+                  propertyName.substr(1) + ": </span>" + el.value + "</div>";
+              }
+            }
+            hits += '</div>';
+          }
+          $('#hits').html(hits);
+
+          // Scan all facets and display them
+          var facets = '';
+          for (var facet in content.facets) {
+            facets += '<h4>' + facet + '</h4>';
+            facets += '<ul>';
+            var values = content.facets[facet];
+            for (var value in values) {
+              var refinement = facet + ':' + value;
+              facets += '<li class="' + (refinements[refinement] ? 'refined' : '') + '">' +
+                  '<a href="javascript:toggleRefine(\'' + refinement + '\')">' + value + '</a> (' + values[value] + ')' +
+                '</li>';
+            }
+            facets += '</ul>';
+          }
+          $('#facets').html(facets);
         }
-        $('#facets').html(facets);
-      }
+      });
     </script>
 
   </body>

@@ -24,7 +24,7 @@
         position: relative;
         height: 45px;
       }
-      #inputfield {
+      #q {
         width: 413px;
         display: block;
         border: 1px solid #cfcfcf;
@@ -50,11 +50,11 @@
       ::-moz-placeholder { color: #9f9f9f;}
       :-ms-input-placeholder {color: #9f9f9f;}
 
-      .search_box #inputfield:focus {
+      .search_box #q:focus {
         outline-width: 0px;
         border: 1px solid #999;
       }
-      .search_box #inputfield:hover {
+      .search_box #q:hover {
         border: 1px solid #999;
       }
       .search_box_shadow {
@@ -147,7 +147,7 @@
           margin-top: 0px;
           width: 100%;
         }
-        #inputfield {
+        #q {
           width: -moz-calc(100% - 60px);
             width: -webkit-calc(100% - 60px);
             width: calc(100% - 60px);
@@ -159,78 +159,66 @@
 
     <section class="panel">
       <header class="panel-heading">
-      <div class="search_box">
-        <form accept-charset="UTF-8" action="#" id="formRecherche" method="get">
-          <input autocomplete="off" class="autocomplete" id="inputfield" name="address" placeholder="Start typing" type="text" spellcheck="false"/>
-          <div class='searchbutton'>
-            <i class="icon-search icon-large"></i>
-          </div>
-        </form>
-      </div>
+        <div class="search_box">
+          <form action="#" method="get">
+            <input autocomplete="off" class="autocomplete" id="q" placeholder="Start typing" type="text" spellcheck="false" />
+            <div class='searchbutton'>
+              <i class="icon-search icon-large"></i>
+            </div>
+          </form>
+        </div>
       </header>
     </section>
 
     <h1>Results</h1>
-    <div id="hits" class="line-bottom" style="display: none;">
-    </div>
+    <div id="hits"></div>
 
     <script type="text/javascript">
       function searchCallback(success, content) {
-        if (content.query != $("#inputfield").val()) {
+        if (content.query != $("#q").val()) {
+          // do not take out-dated answers into account
           return;
         }
+
         if (content.hits.length == 0) {
-          $('#hits').hide();
+          // no results
+          $('#hits').empty();
           return;
         }
 
-        res = '';
         // Scan all hits and display them
+        var html = '';
         for (var i = 0; i < content.hits.length; ++i) {
-          hit = content.hits[i];
+          var hit = content.hits[i];
 
-          // For this hit, display all property that have a least one word highlighted (matchLevel = full or partial)
-          tmp = '';
-          for(var propertyName in hit._highlightResult) {
+          // For example, display all properties that have at least
+          // one highlighted word (matchLevel = full or partial)
+          html += '<div class="hit">';
+          for (var propertyName in hit._highlightResult) {
             var el = hit._highlightResult[propertyName];
-            if (!(el instanceof Array) && el.matchLevel !== 'none') {
-              tmp += "<div class='grey'>" + propertyName.substr(0,1).toUpperCase() +
-                          propertyName.substr(1) + ": </div>" + el.value + "</br>";
+            if (Object.prototype.toString.call(el) !== '[object Array]' && el.matchLevel !== 'none') {
+              html += '<div class="attribute"><span>' + propertyName.substr(0,1).toUpperCase() +
+                propertyName.substr(1) + ": </span>" + el.value + "</div>";
             }
           }
-          if (tmp.length > 0) {
-            if ((i % 2) == 0) {
-              res += "<div class='hit'>" + tmp + "</div>";
-            } else {
-              res += "<div class='hit bg'>" + tmp + "</div>";
-            }
-          }
-
+          html += '</div>';
         }
 
-        $('#hits').html(res);
-        $('#hits').show();
+        $('#hits').html(html);
       }
 
-
       $(document).ready(function() {
-        var inputfield = $("#inputfield");
-        var searchbutton = $("#searchbutton");
+        var $inputfield = $("#q");
+
         // Replace the following values by your ApplicationID and ApiKey.
         var algolia = new AlgoliaSearch('YourApplicationID', 'YourAPIKey');
         // replace YourIndexName by the name of the index you want to query.
         var index = algolia.initIndex('YourIndexName');
 
-        function search() {
-          index.search(inputfield.val(), searchCallback);
-        }
-
-        inputfield.focus();
-        inputfield.keyup(function() {
-          search();
-        });
+        $inputfield.keyup(function() {
+          index.search($inputfield.val(), searchCallback);
+        }).focus();
       });
     </script>
-
   </body>
 </html>
