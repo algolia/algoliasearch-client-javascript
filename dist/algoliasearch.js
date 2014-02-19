@@ -21,7 +21,7 @@
  * THE SOFTWARE.
  */
 
-var ALGOLIA_VERSION = '2.4.0';
+var ALGOLIA_VERSION = '2.4.1';
 
 /*
  * Copyright (c) 2013 Algolia
@@ -1084,6 +1084,21 @@ AlgoliaSearch.prototype.Index.prototype = {
 
 (function($) {
   var self;
+
+  var extend = function(out) {
+    out = out || {};
+    for (var i = 1; i < arguments.length; i++) {
+      if (!arguments[i]) {
+        continue;
+      }
+      for (var key in arguments[i]) {
+        if (arguments[i].hasOwnProperty(key)) {
+          out[key] = arguments[i][key];
+        }
+      }
+    }
+    return out;
+  };
   
   /**
    * Algolia Search Helper providing faceting and disjunctive faceting
@@ -1099,7 +1114,7 @@ AlgoliaSearch.prototype.Index.prototype = {
       hitsPerPage: 20        // number of hits per page
     };
 
-    this.init(client, index, $.extend({}, defaults, options));
+    this.init(client, index, extend({}, defaults, options));
     self = this;
   };
 
@@ -1295,4 +1310,4 @@ AlgoliaSearch.prototype.Index.prototype = {
       return facetFilters;
     }
   };
-})(jQuery);
+})();
