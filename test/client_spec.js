@@ -7,7 +7,7 @@ describe('Algolia', function () {
 
   var client = new AlgoliaSearch(ALGOLIA_APPLICATION_ID, ALGOLIA_API_KEY, 'https');
 
-  it('should be able to clear/add/search', function () {
+  it('should be able to clear/add/search', function() {
     var complete = false;
     runs(function() {
       var index = client.initIndex('cities_js');
@@ -34,6 +34,30 @@ describe('Algolia', function () {
     runs(function() {
       expect(complete).toBe(true);
     });
+  });
+
+  it('should encode the extra security tagFilters', function() {
+    var securedClient = new AlgoliaSearch(ALGOLIA_APPLICATION_ID, ALGOLIA_API_KEY, 'https');
+    securedClient.setSecurityTags('public');
+    expect(securedClient.extraHeaders.length).toBe(1);
+    expect(securedClient.extraHeaders[0].key).toBe('X-Algolia-TagFilters');
+    expect(securedClient.extraHeaders[0].value).toBe('public');
+  });
+
+  it('should encode the extra security tagFilters complex', function() {
+    var securedClient = new AlgoliaSearch(ALGOLIA_APPLICATION_ID, ALGOLIA_API_KEY, 'https');
+    securedClient.setSecurityTags(['public', ['user1', 'user2'], 'foo']);
+    expect(securedClient.extraHeaders.length).toBe(1);
+    expect(securedClient.extraHeaders[0].key).toBe('X-Algolia-TagFilters');
+    expect(securedClient.extraHeaders[0].value).toBe('public,(user1,user2),foo');
+  });
+
+  it('should set the UserToken header', function() {
+    var securedClient = new AlgoliaSearch(ALGOLIA_APPLICATION_ID, ALGOLIA_API_KEY, 'https');
+    securedClient.setUserToken('user_42');
+    expect(securedClient.extraHeaders.length).toBe(1);
+    expect(securedClient.extraHeaders[0].key).toBe('X-Algolia-UserToken');
+    expect(securedClient.extraHeaders[0].value).toBe('user_42');
   });
 
 });

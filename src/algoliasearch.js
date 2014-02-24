@@ -308,6 +308,38 @@ AlgoliaSearch.prototype = {
                             body: aclsObject,
                             callback: callback });
     },
+
+    /**
+     * Set the extra security tagFilters header
+     * @param {string|array} tags The list of tags defining the current security filters
+     */
+    setSecurityTags: function(tags) {
+        if (Object.prototype.toString.call(tags) === '[object Array]') {
+            var strTags = [];
+            for (var i = 0; i < tags.length; ++i) {
+                if (Object.prototype.toString.call(tags[i]) === '[object Array]') {
+                    var oredTags = [];
+                    for (var j = 0; j < tags[i].length; ++j) {
+                        oredTags.push(tags[i][j]);
+                    }
+                    strTags.push('(' + oredTags.join(',') + ')');
+                } else {
+                    strTags.push(tags[i]);
+                }
+            }
+            tags = strTags.join(',');
+        }
+        this.setExtraHeader('X-Algolia-TagFilters', tags);
+    },
+
+    /**
+     * Set the extra user token header
+     * @param {string} userToken The token identifying a uniq user (used to apply rate limits)
+     */
+    setUserToken: function(userToken) {
+      this.setExtraHeader('X-Algolia-UserToken', userToken);
+    },
+
     /*
      * Initialize a new batch of search queries
      */

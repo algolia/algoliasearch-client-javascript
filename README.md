@@ -48,6 +48,8 @@ Table of Content
 
 
 1. [Search](#search)
+1. [Multi-queries](#multi-queries)
+1. [Security](#security)
 
 
 
@@ -237,6 +239,63 @@ The server response will look like:
   "params": "query=jimmie+paint&attributesToRetrieve=firstname,lastname&hitsPerPage=50"
 }
 ```
+
+
+
+Multi-queries
+--------------
+
+You can send multiple queries with a single API call using a batch of queries:
+
+```javascript
+// perform 3 queries in a single API call: 
+//  - 1st query target index `categories`
+//  - 2nd and 3rd queries target index `products`
+client.startQueriesBatch();
+client.addQueryInBatch('categories', $('#q').val(), { hitsPerPage: 3 });
+client.addQueryInBatch('products', $('#q').val(), { hitsPerPage: 3, tagFilters: 'promotion' });
+client.addQueryInBatch('products', $('#q').val(), { hitsPerPage: 10 });
+client.sendQueriesBatch(searchMultiCallback);
+
+function searchMultiCallback(success, content) {
+  if (success) {
+    var categories = content.results[0];
+    for (var i = 0; i < categories.hits.length; ++i) {
+      console.log(categories.hits[i]);
+    }
+
+    var products_promotion = content.results[1];
+    for (var i = 0; i < products_promotion.hits.length; ++i) {
+      console.log(products_promotion.hits[i]);
+    }
+
+    var products = content.results[2];
+    for (var i = 0; i < products.hits.length; ++i) {
+      console.log(products.hits[i]);
+    }
+  }
+}
+```
+
+Security
+---------
+
+If you're using a secured API key (see backend client documentation), you need to set the associated `tags`:
+
+```javascript
+var algolia = new AlgoliaSearch('YourApplicationID', 'YourPublicSecuredAPIKey');
+algolia.setSecurityTags('(public,user_42)'); // must be same than those used at generation-time
+```
+
+If you've specified a `userToken` while generating your secured API key, you must also specified it at query-time:
+
+```javascript
+var algolia = new AlgoliaSearch('YourApplicationID', 'YourPublicSecuredAPIKey');
+algolia.setSecurityTags('(public,user_42)'); // must be same than those used at generation-time
+algolia.setUserToken('user_42')              // must be same than the one used at generation-time
+```
+
+
 
 
 
