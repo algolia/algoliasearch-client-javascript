@@ -1173,12 +1173,13 @@ AlgoliaSearch.prototype.Index.prototype = {
      *  success: boolean set to true if the request was successfull
      *  content: the query answer with an extra 'disjunctiveFacets' attribute
      */
-    search: function(q, searchCallback) {
+    search: function(q, searchCallback, searchParams) {
       this.q = q;
       this.searchCallback = searchCallback;
-      this.page = 0;
-      this.refinements = {};
-      this.disjunctiveRefinements = {};
+      this.searchParams = searchParams || {};
+      this.page = this.page || 0;
+      this.refinements = this.refinements || {};
+      this.disjunctiveRefinements = this.disjunctiveRefinements || {};
       this._search();
     },
 
@@ -1291,12 +1292,12 @@ AlgoliaSearch.prototype.Index.prototype = {
      * @return {hash}
      */
     _getHitsSearchParams: function() {
-      return {
+      return extend({}, this.searchParams, {
         hitsPerPage: this.options.hitsPerPage,
         page: this.page,
         facets: this.options.facets,
         facetFilters: this._getFacetFilters()
-      };
+      });
     },
 
     /**
@@ -1305,12 +1306,12 @@ AlgoliaSearch.prototype.Index.prototype = {
      * @return {hash}
      */
     _getDisjunctiveFacetSearchParams: function(facet) {
-      return {
+      return extend({}, this.searchParams, {
         hitsPerPage: 1,
         page: 0,
         facets: facet,
         facetFilters: this._getFacetFilters(facet)
-      };
+      });
     },
 
     /**
