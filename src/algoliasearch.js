@@ -47,7 +47,7 @@ var AlgoliaSearch = function(applicationID, apiKey, method, resolveDNS, hostsArr
         }
         if (this._isUndefined(method) || method == null) {
             this.hosts.push(('https:' == document.location.protocol ? 'https' : 'http') + '://' + hostsArray[i]);
-        } else if (method === 'https' || method === 'HTTPS') {
+        } else if (method === 'https' || method === 'HTTPS') {
             this.hosts.push('https://' + hostsArray[i]);
         } else {
             this.hosts.push('http://' + hostsArray[i]);
@@ -675,7 +675,7 @@ AlgoliaSearch.prototype.Index.prototype = {
          *  success: boolean set to true if the request was successfull
          *  content: the server answer that updateAt and taskID
          */
-        saveObject: function(object, callback) {
+        saveObject: function(object, callback) {
             var indexObj = this;
             this.as._jsonRequest({ method: 'PUT',
                                    url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/' + encodeURIComponent(object.objectID),
