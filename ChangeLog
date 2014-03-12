@@ -1,5 +1,14 @@
 CHANGELOG
 
+2014-03-12  2.4.3
+     * Removed invalid character from source code (could cause a parse error in IE8/9)
+
+2014-02-24  2.4.2
+     * Added support of secured API Key (SecurityTags & UserToken headers)
+
+2014-02-18  2.4.1
+     * Removed dependency on jquery
+	
 2014-02-10  2.4.0
 
       * Move to official Typeahead.js release (0.10.1)
