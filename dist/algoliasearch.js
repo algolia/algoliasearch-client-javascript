@@ -21,7 +21,7 @@
  * THE SOFTWARE.
  */
 
-var ALGOLIA_VERSION = '2.4.2';
+var ALGOLIA_VERSION = '2.4.4';
 
 /*
  * Copyright (c) 2013 Algolia
@@ -879,10 +879,12 @@ AlgoliaSearch.prototype.Index.prototype = {
             this.as._jsonRequest({ method: 'GET',
                                    url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/task/' + taskID,
                                    callback: function(success, body) {
-                if (success && body.status === 'published') {
-                    callback(true, body);
-                } else if (success && body.pendingTask) {
-                    return indexObj.waitTask(taskID, callback);
+                if (success) {
+                    if (body.status === 'published') {
+                        callback(true, body);
+                    } else {
+                        setTimeout(function() { indexObj.waitTask(taskID, callback); }, 100);
+                    }
                 } else {
                     callback(false, body);
                 }

@@ -1,5 +1,8 @@
 CHANGELOG
 
+2014-03-19  2.4.4
+     * Improved the `waitTask` method, ensuring it sleeps 100ms before recalling the API.
+
 2014-03-12  2.4.3
      * Removed invalid character from source code (could cause a parse error in IE8/9)
 
