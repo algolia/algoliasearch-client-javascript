@@ -202,7 +202,7 @@
           search();
         }).focus();
 
-        function toggleRefine(refinement) {
+        window.toggleRefine = function(refinement) {
           refinements[refinement] = !refinements[refinement];
           search();
         }
@@ -256,7 +256,7 @@
             for (var value in values) {
               var refinement = facet + ':' + value;
               facets += '<li class="' + (refinements[refinement] ? 'refined' : '') + '">' +
-                  '<a href="javascript:toggleRefine(\'' + refinement + '\')">' + value + '</a> (' + values[value] + ')' +
+                  '<a href="#" onclick="toggleRefine(\'' + refinement + '\'); return false">' + value + '</a> (' + values[value] + ')' +
                 '</li>';
             }
             facets += '</ul>';
