@@ -72,6 +72,13 @@ To setup your project, follow these steps:
     ...
 ```
 
+### Using Algoliasearch with `jsDelivr`:
+
+[jsDelivr](https://hacks.mozilla.org/2014/03/jsdelivr-the-advanced-open-source-public-cdn/) can offer a performance benefit by hosting `algoliasearch` on servers spread across the globe. This also offers an advantage that if the visitor to your webpage has already downloaded a copy of `algoliasearch` from jsDelivr, it won't have to be re-downloaded.
+
+```javascript
+  <script src="http://cdn.jsdelivr.net/algoliasearch/{VERSION}/algoliasearch.min.js"></script>
+```
 
 
 Quick Start
