@@ -337,7 +337,7 @@ AlgoliaSearch.prototype = {
             }
             tags = strTags.join(',');
         }
-        this.setExtraHeader('X-Algolia-TagFilters', tags);
+        this.tagFilters = tags;
     },
 
     /**
@@ -345,7 +345,7 @@ AlgoliaSearch.prototype = {
      * @param {string} userToken The token identifying a uniq user (used to apply rate limits)
      */
     setUserToken: function(userToken) {
-      this.setExtraHeader('X-Algolia-UserToken', userToken);
+        this.userToken = userToken;
     },
 
     /*
@@ -395,6 +395,10 @@ AlgoliaSearch.prototype = {
     sendQueriesBatch: function(callback, delay) {
         var as = this;
         var params = {requests: [], apiKey: this.apiKey, appID: this.applicationID};
+        if (this.userToken)
+            params['X-Algolia-UserToken'] = this.userToken;
+        if (this.tagFilters)
+            params['X-Algolia-TagFilters'] = this.tagFilters;
         for (var i = 0; i < as.batch.length; ++i) {
             params.requests.push(as.batch[i]);
         }
@@ -549,6 +553,8 @@ AlgoliaSearch.prototype = {
     /// internal attributes
     applicationID: null,
     apiKey: null,
+    tagFilters: null,
+    userToken: null,
     hosts: [],
     cache: {},
     extraHeaders: []
@@ -1059,10 +1065,15 @@ AlgoliaSearch.prototype.Index.prototype = {
         /// Internal methods only after this line
         ///
         _search: function(params, callback) {
+            var pObj = {params: params, apiKey: this.as.apiKey, appID: this.as.applicationID};
+            if (this.as.tagFilters)
+                pObj['X-Algolia-TagFilters'] = this.as.tagFilters;
+            if (this.as.userToken)
+                pObj['X-Algolia-UserToken'] = this.as.userToken;
             this.as._jsonRequest({ cache: this.cache,
                                    method: 'POST',
                                    url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/query',
-                                   body: {params: params, apiKey: this.as.apiKey, appID: this.as.applicationID},
+                                   body: pObj,
                                    callback: callback });
         },
 
