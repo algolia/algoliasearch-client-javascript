@@ -217,7 +217,17 @@
 
         $inputfield.keyup(function() {
           index.search($inputfield.val(), searchCallback);
-        }).focus();
+        }).focus().closest('form').on('submit', function() {
+          // on form submit, store the query string in the anchor
+          location.replace('#q=' + encodeURIComponent($inputfield.val()));
+          return false;
+        });
+
+        // check if there is a query in the anchor: http://example.org/#q=my+query
+        if (location.hash && location.hash.indexOf('#q=') === 0) {
+          var q = decodeURIComponent(location.hash.substring(3));
+          $inputfield.val(q).trigger('keyup');
+        }
       });
     </script>
   </body>
