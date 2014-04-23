@@ -1,5 +1,11 @@
 CHANGELOG
 
+2014-04-23  2.4.7
+     * Ability to instantiate multiple AlgoliaSearchHelper
+
+2014-04-05  2.4.6
+     * Fixed IE 8/9 support of secured API keys
+
 2014-03-30  2.4.5
      * Improved AlgoliaExplainResults helper handling array-based attributes as well.
 

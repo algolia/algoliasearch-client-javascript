@@ -22,8 +22,6 @@
  */
 
 (function($) {
-  var self;
-
   var extend = function(out) {
     out = out || {};
     for (var i = 1; i < arguments.length; i++) {
@@ -54,7 +52,6 @@
     };
 
     this.init(client, index, extend({}, defaults, options));
-    self = this;
   };
 
   AlgoliaSearchHelper.prototype = {
@@ -172,6 +169,7 @@
       for (var i = 0; i < this.options.disjunctiveFacets.length; ++i) {
         this.client.addQueryInBatch(this.index, this.q, this._getDisjunctiveFacetSearchParams(this.options.disjunctiveFacets[i]));
       }
+      var self = this;
       this.client.sendQueriesBatch(function(success, content) {
         if (!success) {
           self.searchCallback(false, content);

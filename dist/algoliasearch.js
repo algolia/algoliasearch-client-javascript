@@ -21,7 +21,7 @@
  * THE SOFTWARE.
  */
 
-var ALGOLIA_VERSION = '2.4.6';
+var ALGOLIA_VERSION = '2.4.7';
 
 /*
  * Copyright (c) 2013 Algolia
@@ -1135,8 +1135,6 @@ AlgoliaSearch.prototype.Index.prototype = {
  */
 
 (function($) {
-  var self;
-
   var extend = function(out) {
     out = out || {};
     for (var i = 1; i < arguments.length; i++) {
@@ -1167,7 +1165,6 @@ AlgoliaSearch.prototype.Index.prototype = {
     };
 
     this.init(client, index, extend({}, defaults, options));
-    self = this;
   };
 
   AlgoliaSearchHelper.prototype = {
@@ -1285,6 +1282,7 @@ AlgoliaSearch.prototype.Index.prototype = {
       for (var i = 0; i < this.options.disjunctiveFacets.length; ++i) {
         this.client.addQueryInBatch(this.index, this.q, this._getDisjunctiveFacetSearchParams(this.options.disjunctiveFacets[i]));
       }
+      var self = this;
       this.client.sendQueriesBatch(function(success, content) {
         if (!success) {
           self.searchCallback(false, content);
