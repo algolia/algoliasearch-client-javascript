@@ -164,6 +164,9 @@ You can use the following optional arguments:
  * **advancedSyntax**: Enable the advanced query syntax. Defaults to 0 (false).
     * **Phrase query**: a phrase query defines a particular sequence of terms. A phrase query is build by Algolia's query parser for words surrounded by `"`. For example, `"search engine"` will retrieve records having `search` next to `engine` only. Typo-tolerance is _disabled_ on phrase queries.
     * **Prohibit operator**: The prohibit operator excludes records that contain the term after the `-` symbol. For example `search -engine` will retrieve records containing `search` but not `engine`.
+ * **analytics**: If set to false, this query will not be taken into account in analytics feature. Default to true.
+ * **synonyms**: If set to false, this query will not use synonyms defined in configuration. Default to true.
+ * **replaceSynonymsInHighlight**: If set to false, words matched via synonyms expansion will not be replaced by the matched synonym in highlight result. Default to true.
 
 #### Pagination parameters
 
