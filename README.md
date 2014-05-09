@@ -4,17 +4,16 @@ Algolia Search API Client for JavaScript
 
 
 
-This Javascript client let you easily use the [Algolia Search API](http://www.algolia.com) in a browser, it is compatible with most browsers:
+This Javascript client let you easily use the [Algolia Search API](http://www.algolia.com) in a browser, it is compatible with major browsers:
 
- * Internet Explorer &ge; 8
- * Firefox &ge; 3.5
+ * Internet Explorer &ge; 6
+ * Firefox &ge; 3.0
  * Google Chrome &ge; 3
  * Safari &ge; 4
- * Opera &ge; 12
- * Opera mobile &ge; 12
+ * Opera &ge; 10
  * etc.
 
-See [this wikipedia page](http://en.wikipedia.org/wiki/Cross-Origin_Resource_Sharing#Browser_support) to have more details on supported browsers (we use XDomainRequest for IE8 and IE9).
+The JavaScript client is using CORS ([Cross Origin Resource Sharing](http://en.wikipedia.org/wiki/Cross-Origin_Resource_Sharing#Browser_support)) on recent browsers and has a fallback on JSONP ([JSON with padding](http://en.wikipedia.org/wiki/JSONP)) for old browsers.
 
 
 [Algolia Search](http://www.algolia.com) is a search API that provides hosted full-text, numerical and faceted search.
