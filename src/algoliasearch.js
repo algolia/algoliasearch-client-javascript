@@ -31,6 +31,7 @@
  * @param hostsArray (optionnal) the list of hosts that you have received for the service
  */
 var AlgoliaSearch = function(applicationID, apiKey, method, resolveDNS, hostsArray) {
+    var self = this;
     this.applicationID = applicationID;
     this.apiKey = apiKey;
 
@@ -56,11 +57,18 @@ var AlgoliaSearch = function(applicationID, apiKey, method, resolveDNS, hostsArr
     if (Math.random() > 0.5) {
         this.hosts.reverse();
     }
-    if (this._isUndefined(resolveDNS) || resolveDNS) {
-        // Perform a call to solve DNS (avoid to slow down the first user query)
-        this._jsonRequest({ method: 'GET',
-                            url: '/1/isalive' });
-    }
+
+    this.jsonp = false;
+    // resolve DNS + check CORS support (JSONP fallback)
+    this._jsonRequest({
+        method: 'GET',
+        url: '/1/isalive',
+        callback: function(success, content) {
+            if (!success) {
+                self.jsonp = true;
+            }
+        }
+    });
     this.extraHeaders = [];
 };
 
@@ -428,11 +436,24 @@ AlgoliaSearch.prototype = {
     },
 
     _sendQueriesBatch: function(params, callback) {
-        this._jsonRequest({ cache: this.cache,
-                               method: 'POST',
-                               url: '/1/indexes/*/queries',
-                               body: params,
-                               callback: callback });
+        if (this.jsonp) {
+            var jsonpParams = '';
+            for (var i = 0; i < params.requests.length; ++i) {
+                var q = '/1/indexes/' + encodeURIComponent(params.requests[i].indexName) + '?' + params.requests[i].params;
+                jsonpParams += i + '=' + encodeURIComponent(q) + '&';
+            }
+            this._jsonRequest({ cache: this.cache,
+                                   method: 'GET', jsonp: true,
+                                   url: '/1/indexes/*',
+                                   body: { params: jsonpParams },
+                                   callback: callback });
+        } else {
+            this._jsonRequest({ cache: this.cache,
+                                   method: 'POST',
+                                   url: '/1/indexes/*/queries',
+                                   body: params,
+                                   callback: callback });
+        }
     },
     /*
      * Wrapper that try all hosts to maximize the quality of service
@@ -468,7 +489,7 @@ AlgoliaSearch.prototype = {
             }
             opts.callback = function(retry, success, res, body) {
                 if (!success && !self._isUndefined(body)) {
-                    console.log('Error: ' + body.message);
+                    if (window.console) { console.log('Error: ' + body.message); }
                 }
                 if (success && !self._isUndefined(opts.cache)) {
                     cache[cacheID] = body;
@@ -488,47 +509,95 @@ AlgoliaSearch.prototype = {
     },
 
     _jsonRequestByHost: function(opts) {
-        var body = null;
         var self = this;
-        if (!this._isUndefined(opts.body)) {
-            body = JSON.stringify(opts.body);
-        }
         var url = opts.hostname + opts.url;
-        var xmlHttp = null;
 
-        xmlHttp = new XMLHttpRequest();
-        if ('withCredentials' in xmlHttp) {
-            xmlHttp.open(opts.method, url , true);
-            xmlHttp.setRequestHeader('X-Algolia-API-Key', this.apiKey);
-            xmlHttp.setRequestHeader('X-Algolia-Application-Id', this.applicationID);
-            for (var i = 0; i < this.extraHeaders.length; ++i) {
-                xmlHttp.setRequestHeader(this.extraHeaders[i].key, this.extraHeaders[i].value);
+        if (this.jsonp) {
+            if (!opts.jsonp) {
+                opts.callback(true, false, null, { 'message': 'Method ' + opts.method + ' ' + url + ' is not supported by JSONP.' });
+                return;
             }
-            if (body != null) {
-                xmlHttp.setRequestHeader('Content-type', 'application/json');
+            this.jsonpCounter = this.jsonpCounter || 0;
+            this.jsonpCounter += 1;
+            var cb = 'algoliaJSONP_' + this.jsonpCounter;
+            window[cb] = function(data) {
+                opts.callback(false, true, null, data);
+                try { delete window[cb]; } catch (e) { window[cb] = undefined; }
+            };
+            var script = document.createElement('script');
+            script.type = 'text/javascript';
+            script.src = url + '?callback=' + cb + ',' + this.applicationID + ',' + this.apiKey;
+            if (opts['X-Algolia-TagFilters']) {
+                script.src += '&X-Algolia-TagFilters=' + opts['X-Algolia-TagFilters'];
             }
-        } else if (typeof XDomainRequest != 'undefined') {
-            // Handle IE8/IE9
-            // XDomainRequest only exists in IE, and is IE's way of making CORS requests.
-            xmlHttp = new XDomainRequest();
-            xmlHttp.open(opts.method, url);
+            if (opts['X-Algolia-UserToken']) {
+                script.src += '&X-Algolia-UserToken=' + opts['X-Algolia-UserToken'];
+            }
+            if (opts.body && opts.body.params) {
+                script.src += '&' + opts.body.params;
+            }
+            var head = document.getElementsByTagName('head')[0];
+            script.onerror = function() {
+                opts.callback(true, false, null, { 'message': 'Failed to load JSONP script.' });
+                head.removeChild(script);
+                try { delete window[cb]; } catch (e) { window[cb] = undefined; }
+            };
+            var done = false;
+            script.onload = script.onreadystatechange = function() {
+                if (!done && (!this.readyState || this.readyState == 'loaded' || this.readyState == 'complete')) {
+                    done = true;
+                    if (typeof window[cb + '_loaded'] === 'undefined') {
+                        opts.callback(true, false, null, { 'message': 'Failed to load JSONP script.' });
+                        try { delete window[cb]; } catch (e) { window[cb] = undefined; }
+                    } else {
+                        try { delete window[cb + '_loaded']; } catch (e) { window[cb + '_loaded'] = undefined; }
+                    }
+                    script.onload = script.onreadystatechange = null; // Handle memory leak in IE
+                    head.removeChild(script);
+                }
+            };
+            head.appendChild(script);
         } else {
-            // very old browser, not supported
-            console.log('your browser is too old to support CORS requests');
-        }
-        xmlHttp.send(body);
-        xmlHttp.onload = function(event) {
-            if (!self._isUndefined(event) && event.target != null) {
-                var retry = (event.target.status === 0 || event.target.status === 503);
-                var success = (event.target.status === 200 || event.target.status === 201);
-                opts.callback(retry, success, event.target, event.target.response != null ? JSON.parse(event.target.response) : null);
-            } else {
-                opts.callback(false, true, event, JSON.parse(xmlHttp.responseText));
+            var body = null;
+            if (!this._isUndefined(opts.body)) {
+                body = JSON.stringify(opts.body);
             }
-        };
-        xmlHttp.onerror = function() {
-            opts.callback(true, false, null, { 'message': 'Could not connect to Host'} );
-        };
+            var xmlHttp = window.XMLHttpRequest ? new XMLHttpRequest() : {};
+            if ('withCredentials' in xmlHttp) {
+                xmlHttp.open(opts.method, url , true);
+                xmlHttp.setRequestHeader('X-Algolia-API-Key', this.apiKey);
+                xmlHttp.setRequestHeader('X-Algolia-Application-Id', this.applicationID);
+                for (var i = 0; i < this.extraHeaders.length; ++i) {
+                    xmlHttp.setRequestHeader(this.extraHeaders[i].key, this.extraHeaders[i].value);
+                }
+                if (body != null) {
+                    xmlHttp.setRequestHeader('Content-type', 'application/json');
+                }
+            } else if (typeof XDomainRequest != 'undefined') {
+                // Handle IE8/IE9
+                // XDomainRequest only exists in IE, and is IE's way of making CORS requests.
+                xmlHttp = new XDomainRequest();
+                xmlHttp.open(opts.method, url);
+            } else {
+                // very old browser, not supported
+                if (window.console) { console.log('Your browser is too old to support CORS requests'); }
+                opts.callback(false, false, null, { 'message': 'CORS not supported' });
+                return;
+            }
+            xmlHttp.send(body);
+            xmlHttp.onload = function(event) {
+                if (!self._isUndefined(event) && event.target != null) {
+                    var retry = (event.target.status === 0 || event.target.status === 503);
+                    var success = (event.target.status === 200 || event.target.status === 201);
+                    opts.callback(retry, success, event.target, event.target.response != null ? JSON.parse(event.target.response) : null);
+                } else {
+                    opts.callback(false, true, event, JSON.parse(xmlHttp.responseText));
+                }
+            };
+            xmlHttp.onerror = function(event) {
+                opts.callback(true, false, null, { 'message': 'Could not connect to host', 'error': event } );
+            };
+        }
     },
 
      /*
@@ -638,7 +707,7 @@ AlgoliaSearch.prototype.Index.prototype = {
                     params += attributes[i];
                 }
             }
-            this.as._jsonRequest({ method: 'GET',
+            this.as._jsonRequest({ method: 'GET', jsonp: true,
                                    url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/' + encodeURIComponent(objectID) + params,
                                    callback: callback });
         },
@@ -1070,11 +1139,19 @@ AlgoliaSearch.prototype.Index.prototype = {
                 pObj['X-Algolia-TagFilters'] = this.as.tagFilters;
             if (this.as.userToken)
                 pObj['X-Algolia-UserToken'] = this.as.userToken;
-            this.as._jsonRequest({ cache: this.cache,
-                                   method: 'POST',
-                                   url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/query',
-                                   body: pObj,
-                                   callback: callback });
+            if (this.as.jsonp) {
+                this.as._jsonRequest({ cache: this.cache,
+                                       method: 'GET', jsonp: true,
+                                       url: '/1/indexes/' + encodeURIComponent(this.indexName),
+                                       body: pObj,
+                                       callback: callback });
+            } else {
+                this.as._jsonRequest({ cache: this.cache,
+                                       method: 'POST',
+                                       url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/query',
+                                       body: pObj,
+                                       callback: callback });
+            }
         },
 
         // internal attributes

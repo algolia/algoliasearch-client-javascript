@@ -3,7 +3,8 @@ var semver = require('semver'),
     jsFiles = [
       'src/version.js',
       'src/algoliasearch.js',
-      'src/algoliasearch.helper.js'
+      'src/algoliasearch.helper.js',
+      'vendor/json2.js',
     ];
 
 module.exports = function(grunt) {
