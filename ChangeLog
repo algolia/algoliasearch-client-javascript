@@ -1,5 +1,8 @@
 CHANGELOG
 
+2014-05-09  2.5.0
+    * If CORS is not available, use JSONP
+
 2014-04-23  2.4.7
      * Ability to instantiate multiple AlgoliaSearchHelper
 
