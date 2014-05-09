@@ -83,15 +83,14 @@ var AlgoliaSearch = function(applicationID, apiKey, method, resolveDNS, hostsArr
         this.hosts.reverse();
     }
 
-    this.jsonp = false;
     // resolve DNS + check CORS support (JSONP fallback)
+    this.jsonp = null;
+    this.jsonpWait = 0;
     this._jsonRequest({
         method: 'GET',
         url: '/1/isalive',
         callback: function(success, content) {
-            if (!success) {
-                self.jsonp = true;
-            }
+            self.jsonp = !success;
         }
     });
     this.extraHeaders = [];
@@ -461,6 +460,11 @@ AlgoliaSearch.prototype = {
     },
 
     _sendQueriesBatch: function(params, callback) {
+        if (this.jsonp == null) {
+            var self = this;
+            this._waitReady(function() { self._sendQueriesBatch(params, callback); });
+            return;
+        }
         if (this.jsonp) {
             var jsonpParams = '';
             for (var i = 0; i < params.requests.length; ++i) {
@@ -625,6 +629,19 @@ AlgoliaSearch.prototype = {
         }
     },
 
+    /**
+     * Wait until JSONP flag has been set to perform the first query
+     */
+    _waitReady: function(cb) {
+        if (this.jsonp == null) {
+            this.jsonpWait += 100;
+            if (this.jsonpWait > 2000) {
+                this.jsonp = true;
+            }
+            setTimeout(cb, 100);
+        }
+    },
+
      /*
      * Transform search param object in query string
      */
@@ -721,6 +738,11 @@ AlgoliaSearch.prototype.Index.prototype = {
          * @param attributes (optional) if set, contains the array of attribute names to retrieve
          */
         getObject: function(objectID, callback, attributes) {
+            if (this.as.jsonp == null) {
+                var self = this;
+                this.as._waitReady(function() { self.getObject(objectID, callback, attributes); });
+                return;
+            }
             var indexObj = this;
             var params = '';
             if (!this.as._isUndefined(attributes)) {
@@ -1159,6 +1181,11 @@ AlgoliaSearch.prototype.Index.prototype = {
         /// Internal methods only after this line
         ///
         _search: function(params, callback) {
+            if (this.as.jsonp == null) {
+                var self = this;
+                this.as._waitReady(function() { self._search(params, callback); });
+                return;
+            }
             var pObj = {params: params, apiKey: this.as.apiKey, appID: this.as.applicationID};
             if (this.as.tagFilters)
                 pObj['X-Algolia-TagFilters'] = this.as.tagFilters;
