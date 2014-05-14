@@ -21,7 +21,7 @@
  * THE SOFTWARE.
  */
 
-var ALGOLIA_VERSION = '2.5.0';
+var ALGOLIA_VERSION = '2.5.1';
 
 /*
  * Copyright (c) 2013 Algolia
@@ -246,7 +246,7 @@ AlgoliaSearch.prototype = {
      */
     listIndexes: function(callback) {
         this._jsonRequest({ method: 'GET',
-                            url: '/1/indexes/',
+                            url: '/1/indexes',
                             callback: callback });
     },
 

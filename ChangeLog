@@ -1,5 +1,8 @@
 CHANGELOG
 
+2014-05-14  2.5.1
+    * Fixed listIndexes call (trailing slash not compatible with our API anymore)
+
 2014-05-09  2.5.0
     * If CORS is not available, use JSONP
 
