@@ -221,7 +221,7 @@ AlgoliaSearch.prototype = {
      */
     listIndexes: function(callback) {
         this._jsonRequest({ method: 'GET',
-                            url: '/1/indexes/',
+                            url: '/1/indexes',
                             callback: callback });
     },
 
