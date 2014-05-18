@@ -474,7 +474,7 @@ AlgoliaSearch.prototype = {
             cache = opts.cache;
             if (!this._isUndefined(cache[cacheID])) {
                 if (!this._isUndefined(callback)) {
-                    callback(true, cache[cacheID]);
+                    setTimeout(function () { callback(true, cache[cacheID]); }, 1);
                 }
                 return;
             }
