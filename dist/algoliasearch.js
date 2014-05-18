@@ -501,7 +501,7 @@ AlgoliaSearch.prototype = {
             cache = opts.cache;
             if (!this._isUndefined(cache[cacheID])) {
                 if (!this._isUndefined(callback)) {
-                    callback(true, cache[cacheID]);
+                    setTimeout(function () { callback(true, cache[cacheID]); }, 1);
                 }
                 return;
             }
@@ -1496,12 +1496,12 @@ AlgoliaSearch.prototype.Index.prototype = {
      * @return {hash}
      */
     _getHitsSearchParams: function() {
-      return extend({}, this.searchParams, {
+      return extend({}, {
         hitsPerPage: this.options.hitsPerPage,
         page: this.page,
         facets: this.options.facets,
         facetFilters: this._getFacetFilters()
-      });
+      }, this.searchParams);
     },
 
     /**
