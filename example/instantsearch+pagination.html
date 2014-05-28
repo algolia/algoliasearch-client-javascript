@@ -185,6 +185,7 @@
         // replace YourIndexName by the name of the index you want to query.
         var index = algolia.initIndex('YourIndexName');
         
+        // callback called on each query
         function searchCallback(success, content) {
           if (content.query != $("#q").val()) {
             // do not take out-dated answers into account
@@ -218,23 +219,29 @@
 
           $('#hits').html(html);
 
-          if (content.page == 0) {
-            $('#pagination').bootstrapPaginator({
-              currentPage: (content.page + 1),
-              totalPages: content.nbPages,
-              bootstrapMajorVersion: 3,
-              onPageClicked: function(event, originalEvent, type, page) {
-                search(content.query, { page: (page - 1) });
-              }
-            });
-          }
+          // initialize the paginator
+          $('#pagination').bootstrapPaginator({
+            currentPage: (content.page + 1), // Algolia's pagination starts at 0
+            totalPages: content.nbPages,
+            bootstrapMajorVersion: 3,
+            onPageClicked: function(event, originalEvent, type, page) {
+              // if a page is clicked, go to next page performing an additional query
+              search(content.query, { page: (page - 1) }); // Algolia's pagination starts at 0
+
+              // and update the location to embed the page number
+              location.replace('#q=' + encodeURIComponent(content.query) + '&page=' + page);
+            }
+          });
         }
 
+        // perform a search
         function search(q, params) {
           index.search(q, searchCallback, params);
         }
 
+        // events binding
         $inputfield.keyup(function() {
+          // on each keystroke, perform the query
           search($inputfield.val());
         }).focus().closest('form').on('submit', function() {
           // on form submit, store the query string in the anchor
@@ -242,10 +249,24 @@
           return false;
         });
 
-        // check if there is a query in the anchor: http://example.org/#q=my+query
+        // check if there is a query+page in the anchor: http://example.org/#q=my+query&page=42
         if (location.hash && location.hash.indexOf('#q=') === 0) {
-          var q = decodeURIComponent(location.hash.substring(3));
-          $inputfield.val(q).trigger('keyup');
+          var params = location.hash.substring(3);
+          var pageParamOffset = params.indexOf('&page=');
+          var q, page;
+          if (pageParamOffset > -1) {
+            q = decodeURIComponent(params.substring(0, pageParamOffset));
+            page = params.substring(pageParamOffset).split('=')[1];
+          } else {
+            q = decodeURIComponent(params);
+            page = 0;
+          }
+
+          // fill the form
+          $inputfield.val(q);
+
+          // perform the search
+          search(q, { page: (page - 1) });
         }
       });
     </script>
