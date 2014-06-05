@@ -402,10 +402,12 @@ AlgoliaSearch.prototype = {
     sendQueriesBatch: function(callback, delay) {
         var as = this;
         var params = {requests: [], apiKey: this.apiKey, appID: this.applicationID};
-        if (this.userToken)
+        if (this.userToken) {
             params['X-Algolia-UserToken'] = this.userToken;
-        if (this.tagFilters)
+        }
+        if (this.tagFilters) {
             params['X-Algolia-TagFilters'] = this.tagFilters;
+        }
         for (var i = 0; i < as.batch.length; ++i) {
             params.requests.push(as.batch[i]);
         }
@@ -1162,10 +1164,12 @@ AlgoliaSearch.prototype.Index.prototype = {
                 return;
             }
             var pObj = {params: params, apiKey: this.as.apiKey, appID: this.as.applicationID};
-            if (this.as.tagFilters)
+            if (this.as.tagFilters) {
                 pObj['X-Algolia-TagFilters'] = this.as.tagFilters;
-            if (this.as.userToken)
+            }
+            if (this.as.userToken) {
                 pObj['X-Algolia-UserToken'] = this.as.userToken;
+            }
             if (this.as.jsonp) {
                 this.as._jsonRequest({ cache: this.cache,
                                        method: 'GET', jsonp: true,

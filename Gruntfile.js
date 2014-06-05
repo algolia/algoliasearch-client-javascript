@@ -4,7 +4,7 @@ var semver = require('semver'),
       'src/version.js',
       'src/algoliasearch.js',
       'src/algoliasearch.helper.js',
-      'vendor/json2.js',
+      'vendor/json2.js'
     ];
 
 module.exports = function(grunt) {
@@ -56,7 +56,7 @@ module.exports = function(grunt) {
       options: {
         jshintrc: '.jshintrc'
       },
-      src: jsFiles,
+      src: ['src/*.js'],
       tests: ['test/*.js'],
       gruntfile: ['Gruntfile.js']
     },

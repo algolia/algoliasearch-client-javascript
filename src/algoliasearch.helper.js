@@ -260,7 +260,7 @@
                 }
               }
             }
-          }          
+          }
           for (var stats in content.results[i].facets_stats)
           {
             aggregatedAnswer.facetStats[stats] = content.results[i].facets_stats[stats];
