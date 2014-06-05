@@ -87,6 +87,38 @@
       this.disjunctiveRefinements = this.disjunctiveRefinements || {};
       this._search();
     },
+    
+    /**
+     * Remove all refinements
+     */
+    clearRefine: function()
+    { 
+      this.disjunctiveRefinements = {};
+    },
+
+    /**
+     * Ensure a facet refinement exists
+     * @param  {string} facet the facet to refine
+     * @param  {string} value the associated value
+     */
+    addRefine: function(facet, value)
+    {
+      this.disjunctiveRefinements = this.disjunctiveRefinements || {};
+      this.disjunctiveRefinements[facet] = this.disjunctiveRefinements[facet] || {};
+      this.disjunctiveRefinements[facet][value] = true;
+    },
+
+    /**
+     * Ensure a facet refinement does not exist
+     * @param  {string} facet the facet to refine
+     * @param  {string} value the associated value
+     */    
+    removeRefine: function(facet, value)
+    {
+      this.disjunctiveRefinements = this.disjunctiveRefinements || {};
+      this.disjunctiveRefinements[facet] = this.disjunctiveRefinements[facet] || {};
+      delete this.disjunctiveRefinements[facet][value];
+    },
 
     /**
      * Toggle refinement state of a facet
@@ -147,6 +179,22 @@
       if (this.page > 0) {
         this._gotoPage(this.page - 1);
       }
+    },
+
+    /**
+     * Goto a page
+     * @param  {integer} page The page number
+     */
+    gotoPage: function(page) {
+        this._gotoPage(page);
+    },
+
+    /**
+     * Configure the page but do not trigger a reload
+     * @param  {integer} page The page number
+     */
+    setPage: function(page) {
+      this.page = page;
     },
 
     ///////////// PRIVATE
