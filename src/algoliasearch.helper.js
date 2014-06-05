@@ -89,11 +89,11 @@
     },
     
     /**
-     * Remove all refinements
+     * Remove all refinements (disjunctive + conjunctive)
      */
-    clearRefine: function()
-    { 
+    clearRefinements: function() {
       this.disjunctiveRefinements = {};
+      this.refinements = {};
     },
 
     /**
@@ -101,8 +101,7 @@
      * @param  {string} facet the facet to refine
      * @param  {string} value the associated value
      */
-    addRefine: function(facet, value)
-    {
+    addDisjunctiveRefine: function(facet, value) {
       this.disjunctiveRefinements = this.disjunctiveRefinements || {};
       this.disjunctiveRefinements[facet] = this.disjunctiveRefinements[facet] || {};
       this.disjunctiveRefinements[facet][value] = true;
@@ -112,12 +111,37 @@
      * Ensure a facet refinement does not exist
      * @param  {string} facet the facet to refine
      * @param  {string} value the associated value
-     */    
-    removeRefine: function(facet, value)
-    {
+     */
+    removeDisjunctiveRefine: function(facet, value) {
       this.disjunctiveRefinements = this.disjunctiveRefinements || {};
       this.disjunctiveRefinements[facet] = this.disjunctiveRefinements[facet] || {};
-      delete this.disjunctiveRefinements[facet][value];
+      try {
+        delete this.disjunctiveRefinements[facet][value];
+      } catch (e) {
+        this.disjunctiveRefinements[facet][value] = undefined; // IE compat
+      }
+    },
+
+    /**
+     * Ensure a facet refinement exists
+     * @param  {string} facet the facet to refine
+     * @param  {string} value the associated value
+     */
+    addRefine: function(facet, value) {
+      var refinement = facet + ':' + value;
+      this.refinements = this.refinements || {};
+      this.refinements[refinement] = true;
+    },
+
+    /**
+     * Ensure a facet refinement does not exist
+     * @param  {string} facet the facet to refine
+     * @param  {string} value the associated value
+     */
+    removeRefine: function(facet, value) {
+      var refinement = facet + ':' + value;
+      this.refinements = this.refinements || {};
+      this.refinements[refinement] = false;
     },
 
     /**
