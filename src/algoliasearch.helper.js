@@ -177,6 +177,7 @@
         }
         var aggregatedAnswer = content.results[0];
         aggregatedAnswer.disjunctiveFacets = {};
+        aggregatedAnswer.facetStats = {};
         for (var i = 1; i < content.results.length; ++i) {
           for (var facet in content.results[i].facets) {
             aggregatedAnswer.disjunctiveFacets[facet] = content.results[i].facets[facet];
@@ -187,6 +188,10 @@
                 }
               }
             }
+          }          
+          for (var stats in content.results[i].facets_stats)
+          {
+            aggregatedAnswer.facetStats[stats] = content.results[i].facets_stats[stats];
           }
         }
         self.searchCallback(true, aggregatedAnswer);
