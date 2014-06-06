@@ -275,12 +275,12 @@
      * @return {hash}
      */
     _getHitsSearchParams: function() {
-      return extend({}, this.searchParams, {
+      return extend({}, {
         hitsPerPage: this.options.hitsPerPage,
         page: this.page,
         facets: this.options.facets,
         facetFilters: this._getFacetFilters()
-      });
+      }, this.searchParams);
     },
 
     /**
