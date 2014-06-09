@@ -157,15 +157,17 @@ You can use the following optional arguments:
   * **prefixAll**: all query words are interpreted as prefixes,
   * **prefixLast**: only the last word is interpreted as a prefix (default behavior),
   * **prefixNone**: no query word is interpreted as a prefix. This option is not recommended.
- * **optionalWords**: a string that contains the list of words that should be considered as optional when found in the query. The list of words is comma separated.
+ * **typoTolerance**: if set to false, disable the typo-tolerance. Defaults to true.
  * **minWordSizefor1Typo**: the minimum number of characters in a query word to accept one typo in this word.<br/>Defaults to 3.
  * **minWordSizefor2Typos**: the minimum number of characters in a query word to accept two typos in this word.<br/>Defaults to 7.
+ * **allowTyposOnNumericTokens**: if set to false, disable typo-tolerance on numeric tokens (numbers). Default to true.
  * **advancedSyntax**: Enable the advanced query syntax. Defaults to 0 (false).
     * **Phrase query**: a phrase query defines a particular sequence of terms. A phrase query is build by Algolia's query parser for words surrounded by `"`. For example, `"search engine"` will retrieve records having `search` next to `engine` only. Typo-tolerance is _disabled_ on phrase queries.
     * **Prohibit operator**: The prohibit operator excludes records that contain the term after the `-` symbol. For example `search -engine` will retrieve records containing `search` but not `engine`.
  * **analytics**: If set to false, this query will not be taken into account in analytics feature. Default to true.
  * **synonyms**: If set to false, this query will not use synonyms defined in configuration. Default to true.
  * **replaceSynonymsInHighlight**: If set to false, words matched via synonyms expansion will not be replaced by the matched synonym in highlight result. Default to true.
+ * **optionalWords**: a string that contains the list of words that should be considered as optional when found in the query. The list of words is comma separated.
 
 #### Pagination parameters
 
