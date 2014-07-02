@@ -219,7 +219,7 @@
       });
 
       function search() {
-        helper.search(inputfield.val(), searchCallback);
+        helper.search(inputfield.val(), searchCallback, { maxValuesPerFacet: 10 });
       }
 
       inputfield.keyup(function() {
