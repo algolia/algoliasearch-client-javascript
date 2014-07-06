@@ -213,15 +213,16 @@ AlgoliaSearch.prototype = {
                             callback: callback });
     },
     /*
-     * List all existing indexes
+     * List all existing indexes (paginated)
      *
      * @param callback the result callback with two arguments
      *  success: boolean set to true if the request was successfull
      *  content: the server answer with index list or error description if success is false.
+     * @param page The page to retrieve, starting at 0.
      */
-    listIndexes: function(callback) {
+    listIndexes: function(callback, page) {
         this._jsonRequest({ method: 'GET',
-                            url: '/1/indexes',
+                            url: '/1/indexes?page=' + (page || 0),
                             callback: callback });
     },
 
