@@ -221,8 +221,9 @@ AlgoliaSearch.prototype = {
      * @param page The page to retrieve, starting at 0.
      */
     listIndexes: function(callback, page) {
+        var params = page ? '?page=' + page : '';
         this._jsonRequest({ method: 'GET',
-                            url: '/1/indexes?page=' + (page || 0),
+                            url: '/1/indexes' + params,
                             callback: callback });
     },
 
