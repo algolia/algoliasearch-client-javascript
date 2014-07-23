@@ -1,5 +1,12 @@
 CHANGELOG
 
+2014-07-23  2.5.3
+    * AlgoliaSearchHelper: add missing getIndex/setIndex
+    * listIndexes is now paginable
+
+2014-06-05  2.5.2
+    * AlgoliaSearchHelper: add getter/setter methods
+
 2014-05-14  2.5.1
     * Fixed listIndexes call (trailing slash not compatible with our API anymore)
 
