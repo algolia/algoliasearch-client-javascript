@@ -221,6 +221,21 @@
       this.page = page;
     },
 
+    /**
+     * Configure the underlying index name
+     * @param {string} name the index name
+     */
+    setIndex: function(name) {
+      this.index = name;
+    },
+
+    /**
+     * Get the underlying configured index name
+     */
+    getIndex: function() {
+      return this.index;
+    },
+
     ///////////// PRIVATE
 
     /**

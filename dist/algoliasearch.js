@@ -238,15 +238,17 @@ AlgoliaSearch.prototype = {
                             callback: callback });
     },
     /*
-     * List all existing indexes
+     * List all existing indexes (paginated)
      *
      * @param callback the result callback with two arguments
      *  success: boolean set to true if the request was successfull
      *  content: the server answer with index list or error description if success is false.
+     * @param page The page to retrieve, starting at 0.
      */
-    listIndexes: function(callback) {
+    listIndexes: function(callback, page) {
+        var params = page ? '?page=' + page : '';
         this._jsonRequest({ method: 'GET',
-                            url: '/1/indexes',
+                            url: '/1/indexes' + params,
                             callback: callback });
     },
 
@@ -1440,6 +1442,21 @@ AlgoliaSearch.prototype.Index.prototype = {
      */
     setPage: function(page) {
       this.page = page;
+    },
+
+    /**
+     * Configure the underlying index name
+     * @param {string} name the index name
+     */
+    setIndex: function(name) {
+      this.index = name;
+    },
+
+    /**
+     * Get the underlying configured index name
+     */
+    getIndex: function() {
+      return this.index;
     },
 
     ///////////// PRIVATE
