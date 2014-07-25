@@ -1,13 +1,13 @@
 language: node_js
 node_js:
-  - 0.10
+- 0.1
 branches:
   only:
   - master
 env:
   global:
-  - secure: ZCrJySSbsKxDV2ps8xDlUA0HwOxPVXj/AkzJHi0oa6MznF0mac9rEtOt0MF+POPewhIrL62vwTVMGWGyHYJ6RvpyW3SVRpHsKlzHhNnDJ6TMFCqVM5yPZ8JZzR8O2+XjQXOmZVZ4P+4ahnr9UCba8gzhj5WNoAUnyQEXXRCklwc=
-  - secure: PLRpNq5nR8mckceDUB6AqpjuD2SQLHxlwZts1ApLJzcYlyx/nkjiRonpWjKQ1XPuXAJp87cVzlkDaR++KdG5XAcxJRypGsomoxznvVZ/PWgR1RYkliaSK8iVPMmLF0sSWnnoldFNcE2sO8QOqYME4q7F38uNR8EMeqsLJxtpLik=
+  - secure: GH4z2eJHdQ2rUA80LkPVaKnzWZwSIDXYSIYYyPOiSb4nG8zcXa34z3zkvsWist2uasmzDb5Bp3ZrY/mOTMWjgsQFaxDEdytCIWvk2Xr69vipzoWenMx5fgnouOg1rAmFacRVyYiNVu9ofJz8zEWx+KU5s7sxQcYWd1h2tTwzxkE=
+  - secure: PrD1fKSZ5yTv1msmaYLKSEpWSF1bB397xw3MFOfSBGVpRjDdKGwp1I9lfzVyI3JPsQo9KY8Xh07NdDbmM4sWVkFO4ciPD2OWz40m5S0XL1dI2nPHhX1yfsjEx3F2pS5YYN81uIh3K1xRIGlt0lZHEKLcqrTQbipbXdYmc/N7Ie4=
 before_script:
-  - npm update -g npm
-  - npm install -g grunt-cli
+- npm update -g npm
+- npm install -g grunt-cli
