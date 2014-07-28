@@ -3,19 +3,6 @@ Algolia Search API Client for JavaScript
 
 
 
-
-This Javascript client let you easily use the [Algolia Search API](http://www.algolia.com) in a browser, it is compatible with major browsers:
-
- * Internet Explorer &ge; 6
- * Firefox &ge; 3.0
- * Google Chrome &ge; 3
- * Safari &ge; 4
- * Opera &ge; 10
- * etc.
-
-The JavaScript client is using CORS ([Cross Origin Resource Sharing](http://en.wikipedia.org/wiki/Cross-Origin_Resource_Sharing#Browser_support)) on recent browsers and has a fallback on JSONP ([JSON with padding](http://en.wikipedia.org/wiki/JSONP)) for old browsers.
-
-
 [Algolia Search](http://www.algolia.com) is a search API that provides hosted full-text, numerical and faceted search.
 Algolia’s Search API makes it easy to deliver a great search experience in your apps & websites providing:
 
@@ -29,19 +16,30 @@ Algolia’s Search API makes it easy to deliver a great search experience in you
  * first-class data security
 
 
+This Javascript client let you easily use the [Algolia Search API](http://www.algolia.com) in a browser, it is compatible with major browsers:
+
+ * Internet Explorer &ge; 6
+ * Firefox &ge; 3.0
+ * Google Chrome &ge; 3
+ * Safari &ge; 4
+ * Opera &ge; 10
+ * etc.
+
+The JavaScript client is using CORS ([Cross Origin Resource Sharing](http://en.wikipedia.org/wiki/Cross-Origin_Resource_Sharing#Browser_support)) on recent browsers and has a fallback on JSONP ([JSON with padding](http://en.wikipedia.org/wiki/JSONP)) for old browsers.
 
 [![Build Status](https://travis-ci.org/algolia/algoliasearch-client-js.png?branch=master)](https://travis-ci.org/algolia/algoliasearch-client-js) [![NPM version](https://badge.fury.io/js/algoliasearch.png)](http://badge.fury.io/js/algoliasearch)
 
 
 
 Table of Content
--------------
+================
 **Get started**
 
 1. [Setup](#setup)
 1. [Quick Start](#quick-start)
 1. [General Principle](#general-principle)
-1. [Online documentation](#online-documentation)
+1. [Online documentation](#documentation)
+1. [Tutorials](#tutorials)
 
 **Commands reference**
 
@@ -106,35 +104,43 @@ All API calls will return the result in a callback that takes two arguments:
 
 
 
-Online Documentation
-----------------
+Documentation
+================
 
-Check our [online documentation](http://www.algolia.com/doc):
- * [Initial Import](http://www.algolia.com/doc#InitialImport)
- * [Ranking &amp; Relevance](http://www.algolia.com/doc#RankingRelevance)
- * [Settings](http://www.algolia.com/doc#Settings)
- * [Search](http://www.algolia.com/doc#Search)
- * [Incremental Updates](http://www.algolia.com/doc#IncrementalUpdates)
- * [Reindexing](http://www.algolia.com/doc#Reindexing)
- * [Numeric-Search](http://www.algolia.com/doc#Numeric-Search)
- * [Category-Search](http://www.algolia.com/doc#Category-Search)
- * [Faceting](http://www.algolia.com/doc#Faceting)
- * [Geo-Search](http://www.algolia.com/doc#Geo-Search)
- * [Security](http://www.algolia.com/doc#Security)
- * [Indexing Several Types](http://www.algolia.com/doc#IndexingSeveralTypes)
+Check our [online documentation](http://www.algolia.com/doc/guides/):
+ * [Initial Import](http://www.algolia.com/doc/guides/#InitialImport)
+ * [Ranking &amp; Relevance](http://www.algolia.com/doc/guides/#RankingRelevance)
+ * [Indexing](http://www.algolia.com/doc/guides/#Indexing)
+ * [Search](http://www.algolia.com/doc/guides/#Search)
+ * [Sorting](http://www.algolia.com/doc/guides/#Sorting)
+ * [Filtering](http://www.algolia.com/doc/guides/#Filtering)
+ * [Faceting](http://www.algolia.com/doc/guides/#Faceting)
+ * [Geo-Search](http://www.algolia.com/doc/guides/#Geo-Search)
+ * [Security](http://www.algolia.com/doc/guides/#Security)
  * [REST API](http://www.algolia.com/doc/rest)
 
+Tutorials
+================
 
+Check our [tutorials](http://www.algolia.com/doc/tutorials):
+ * [Searchbar with auto-completion](http://www.algolia.com/doc/tutorials/auto-complete)
+ * [Searchbar with multi-categories auto-completion](http://www.algolia.com/doc/tutorials/multi-auto-complete)
+ * [Instant-search](http://www.algolia.com/doc/tutorials/instant-search)
+
+
+
+Commands reference
+==================
 
 
 Update the index
 -------------
 
-The javascript client is dedicated to web apps searching directly from the browser. In some use-cases, it can however be interesting to perform updates to the index directly in javascript, for example in an HTML5 mobile app. Therefore, just as for other languages, the javascript client is able to add, update or delete objects, or to modify index settings.
+The JavaScript client is dedicated to web apps searching directly from the browser. In some use-cases, it can however be interesting to perform updates to the index directly in JavaScript, for example in an HTML5 mobile app. Therefore, just as for other languages, the JavaScript client is able to add, update or delete objects, or to modify index settings.
 
-For more details about updating an index from javascript, have a look at the [algoliasearch.js](https://github.com/algolia/algoliasearch-client-js/blob/master/src/algoliasearch.js) source file to see details about each function.
+For more details about updating an index from JavaScript, have a look at the [algoliasearch.js](https://github.com/algolia/algoliasearch-client-js/blob/master/src/algoliasearch.js) source file to see details about each function.
 
-**Note:** If you use the javascript client to update the index, you need to specify `https` as the protocol in the client initialization:
+**Note:** If you use the JavaScript client to update the index, you need to specify `https` as the protocol in the client initialization:
 
 ```javascript
   <script src="algoliasearch.min.js"></script>
