@@ -107,16 +107,16 @@ All API calls will return the result in a callback that takes two arguments:
 Documentation
 ================
 
-Check our [online documentation](http://www.algolia.com/doc/guides/):
- * [Initial Import](http://www.algolia.com/doc/guides/#InitialImport)
- * [Ranking &amp; Relevance](http://www.algolia.com/doc/guides/#RankingRelevance)
- * [Indexing](http://www.algolia.com/doc/guides/#Indexing)
- * [Search](http://www.algolia.com/doc/guides/#Search)
- * [Sorting](http://www.algolia.com/doc/guides/#Sorting)
- * [Filtering](http://www.algolia.com/doc/guides/#Filtering)
- * [Faceting](http://www.algolia.com/doc/guides/#Faceting)
- * [Geo-Search](http://www.algolia.com/doc/guides/#Geo-Search)
- * [Security](http://www.algolia.com/doc/guides/#Security)
+Check our [online documentation](http://www.algolia.com/doc/):
+ * [Initial Import](http://www.algolia.com/doc/#InitialImport)
+ * [Ranking &amp; Relevance](http://www.algolia.com/doc/#RankingRelevance)
+ * [Indexing](http://www.algolia.com/doc/#Indexing)
+ * [Search](http://www.algolia.com/doc/#Search)
+ * [Sorting](http://www.algolia.com/doc/#Sorting)
+ * [Filtering](http://www.algolia.com/doc/#Filtering)
+ * [Faceting](http://www.algolia.com/doc/#Faceting)
+ * [Geo-Search](http://www.algolia.com/doc/#Geo-Search)
+ * [Security](http://www.algolia.com/doc/#Security)
  * [REST API](http://www.algolia.com/doc/rest)
 
 Tutorials
