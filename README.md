@@ -168,6 +168,10 @@ You can use the following optional arguments:
   * **prefixAll**: all query words are interpreted as prefixes,
   * **prefixLast**: only the last word is interpreted as a prefix (default behavior),
   * **prefixNone**: no query word is interpreted as a prefix. This option is not recommended.
+ * **removeWordsIfNoResult**: This option to select a strategy to avoid having an empty result page. There is three different option:
+  * **LastWords**: when a query does not return any result, the final word will be removed until there is results,
+  * **FirstWords**: when a query does not return any result, the first word will be removed until there is results,
+  * **None**: No specific processing is done when a query does not return any result (default behavior).
  * **typoTolerance**: if set to false, disable the typo-tolerance. Defaults to true.
  * **minWordSizefor1Typo**: the minimum number of characters in a query word to accept one typo in this word.<br/>Defaults to 3.
  * **minWordSizefor2Typos**: the minimum number of characters in a query word to accept two typos in this word.<br/>Defaults to 7.
@@ -207,7 +211,7 @@ You can use the following optional arguments:
  
 
 #### Numeric search parameters
- * **numericFilters**: a string that contains the list of numeric filters you want to apply separated by a comma. The syntax of one filter is `attributeName` followed by `operand` followed by `value`. Supported operands are `<`, `<=`, `=`, `>` and `>=`. 
+ * **numericFilters**: a string that contains the list of numeric filters you want to apply separated by a comma. The syntax of one filter is `attributeName` followed by `operand` followed by `value`. Supported operands are `<`, `<=`, `=`, `>` and `>=`.
 
 You can easily perform range queries via the `:` operator (equivalent to combining a `>=` and `<=` operand), for example `numericFilters=price:10 to 1000`.
 
@@ -216,7 +220,7 @@ You can also mix OR and AND operators. The OR operator is defined with a parenth
 You can also use a string array encoding (for example `numericFilters: ["price>100","price<1000"]`).
 
 #### Category search parameters
- * **tagFilters**: filter the query by a set of tags. You can AND tags by separating them by commas. To OR tags, you must add parentheses. For example, `tags=tag1,(tag2,tag3)` means *tag1 AND (tag2 OR tag3)*. You can also use a string array encoding, for example `tagFilters: ["tag1",["tag2","tag3"]]` means *tag1 AND (tag2 OR tag3)*.<br/>At indexing, tags should be added in the **_tags** attribute of objects (for example `{"_tags":["tag1","tag2"]}`). 
+ * **tagFilters**: filter the query by a set of tags. You can AND tags by separating them by commas. To OR tags, you must add parentheses. For example, `tags=tag1,(tag2,tag3)` means *tag1 AND (tag2 OR tag3)*. You can also use a string array encoding, for example `tagFilters: ["tag1",["tag2","tag3"]]` means *tag1 AND (tag2 OR tag3)*.<br/>At indexing, tags should be added in the **_tags** attribute of objects (for example `{"_tags":["tag1","tag2"]}`).
 
 #### Faceting parameters
  * **facetFilters**: filter the query by a list of facets. Facets are separated by commas and each facet is encoded as `attributeName:value`. To OR facets, you must add parentheses. For example: `facetFilters=(category:Book,category:Movie),author:John%20Doe`. You can also use a string array encoding (for example `[["category:Book","category:Movie"],"author:John%20Doe"]`).
