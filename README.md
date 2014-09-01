@@ -169,12 +169,12 @@ You can use the following optional arguments:
   * **prefixLast**: only the last word is interpreted as a prefix (default behavior),
   * **prefixNone**: no query word is interpreted as a prefix. This option is not recommended.
  * **removeWordsIfNoResult**: This option to select a strategy to avoid having an empty result page. There is three different option:
-  * **LastWords**: when a query does not return any result, the final word will be removed until there is results,
-  * **FirstWords**: when a query does not return any result, the first word will be removed until there is results,
+  * **LastWords**: when a query does not return any result, the last word will be added as optional (the process is repeated with n-1 word, n-2 word, ... until there is results),
+  * **FirstWords**: when a query does not return any result, the first word will be added as optional (the process is repeated with second word, third word, ... until there is results),
   * **None**: No specific processing is done when a query does not return any result (default behavior).
  * **typoTolerance**: if set to false, disable the typo-tolerance. Defaults to true.
- * **minWordSizefor1Typo**: the minimum number of characters in a query word to accept one typo in this word.<br/>Defaults to 3.
- * **minWordSizefor2Typos**: the minimum number of characters in a query word to accept two typos in this word.<br/>Defaults to 7.
+ * **minWordSizefor1Typo**: the minimum number of characters in a query word to accept one typo in this word.<br/>Defaults to 4.
+ * **minWordSizefor2Typos**: the minimum number of characters in a query word to accept two typos in this word.<br/>Defaults to 8.
  * **allowTyposOnNumericTokens**: if set to false, disable typo-tolerance on numeric tokens (numbers). Default to true.
  * **restrictSearchableAttributes** List of attributes you want to use for textual search (must be a subset of the `attributesToIndex` index setting). Attributes are separated with a comma (for example `"name,address"`), you can also use a JSON string array encoding (for example encodeURIComponent("[\"name\",\"address\"]")). By default, all attributes specified in `attributesToIndex` settings are used to search.
  * **advancedSyntax**: Enable the advanced query syntax. Defaults to 0 (false).
