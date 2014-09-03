@@ -4,6 +4,7 @@ var semver = require('semver'),
       'src/version.js',
       'src/algoliasearch.js',
       'src/algoliasearch.helper.js',
+      'src/algoliasearch.place.js',
       'vendor/json2.js'
     ];
 
