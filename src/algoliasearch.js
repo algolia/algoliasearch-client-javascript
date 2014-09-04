@@ -460,7 +460,8 @@ AlgoliaSearch.prototype = {
                                    method: 'POST',
                                    url: '/1/indexes/*/queries',
                                    body: params,
-                                   callback: callback });
+       	                           callback: callback,
+                                   removeCustomHTTPHeaders: true});
         }
     },
     /*
@@ -573,8 +574,10 @@ AlgoliaSearch.prototype = {
             var xmlHttp = window.XMLHttpRequest ? new XMLHttpRequest() : {};
             if ('withCredentials' in xmlHttp) {
                 xmlHttp.open(opts.method, url , true);
-                xmlHttp.setRequestHeader('X-Algolia-API-Key', this.apiKey);
-                xmlHttp.setRequestHeader('X-Algolia-Application-Id', this.applicationID);
+		if (this._isUndefined(opts) && opts.!removeCustomHTTPHeaders) {
+                  xmlHttp.setRequestHeader('X-Algolia-API-Key', this.apiKey);
+                  xmlHttp.setRequestHeader('X-Algolia-Application-Id', this.applicationID);
+		}
                 for (var i = 0; i < this.extraHeaders.length; ++i) {
                     xmlHttp.setRequestHeader(this.extraHeaders[i].key, this.extraHeaders[i].value);
                 }
@@ -1183,7 +1186,8 @@ AlgoliaSearch.prototype.Index.prototype = {
                                        method: 'POST',
                                        url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/query',
                                        body: pObj,
-                                       callback: callback });
+                                       callback: callback,
+                                       removeCustomHTTPHeaders: true}):
             }
         },
 
