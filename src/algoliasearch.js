@@ -66,7 +66,8 @@ var AlgoliaSearch = function(applicationID, apiKey, method, resolveDNS, hostsArr
         url: '/1/isalive',
         callback: function(success, content) {
             self.jsonp = !success;
-        }
+        },
+        removeCustomHTTPHeaders: true
     });
     this.extraHeaders = [];
 };
