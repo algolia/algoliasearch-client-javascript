@@ -21,7 +21,7 @@
  * THE SOFTWARE.
  */
 
-var ALGOLIA_VERSION = '2.5.3';
+var ALGOLIA_VERSION = '2.5.4';
 
 /*
  * Copyright (c) 2013 Algolia
@@ -71,7 +71,7 @@ var AlgoliaSearch = function(applicationID, apiKey, method, resolveDNS, hostsArr
         if (Math.random() > 0.5) {
             this.hosts.reverse();
         }
-        if (this._isUndefined(method) || method == null) {
+        if (this._isUndefined(method) || method === null) {
             this.hosts.push(('https:' == document.location.protocol ? 'https' : 'http') + '://' + hostsArray[i]);
         } else if (method === 'https' || method === 'HTTPS') {
             this.hosts.push('https://' + hostsArray[i]);
@@ -91,7 +91,8 @@ var AlgoliaSearch = function(applicationID, apiKey, method, resolveDNS, hostsArr
         url: '/1/isalive',
         callback: function(success, content) {
             self.jsonp = !success;
-        }
+        },
+        removeCustomHTTPHeaders: true
     });
     this.extraHeaders = [];
 };
@@ -408,7 +409,7 @@ AlgoliaSearch.prototype = {
      */
     addQueryInBatch: function(indexName, query, args) {
         var params = 'query=' + encodeURIComponent(query);
-        if (!this._isUndefined(args) && args != null) {
+        if (!this._isUndefined(args) && args !== null) {
             params = this._getSearchParams(args, params);
         }
         this.batch.push({ indexName: indexName, params: params });
@@ -439,7 +440,7 @@ AlgoliaSearch.prototype = {
             params.requests.push(as.batch[i]);
         }
         window.clearTimeout(as.onDelayTrigger);
-        if (!this._isUndefined(delay) && delay != null && delay > 0) {
+        if (!this._isUndefined(delay) && delay !== null && delay > 0) {
             var onDelayTrigger = window.setTimeout( function() {
                 as._sendQueriesBatch(params, callback);
             }, delay);
@@ -464,7 +465,7 @@ AlgoliaSearch.prototype = {
     },
 
     _sendQueriesBatch: function(params, callback) {
-        if (this.jsonp == null) {
+        if (this.jsonp === null) {
             var self = this;
             this._waitReady(function() { self._sendQueriesBatch(params, callback); });
             return;
@@ -485,7 +486,8 @@ AlgoliaSearch.prototype = {
                                    method: 'POST',
                                    url: '/1/indexes/*/queries',
                                    body: params,
-                                   callback: callback });
+       	                           callback: callback,
+                                   removeCustomHTTPHeaders: true});
         }
     },
     /*
@@ -598,12 +600,14 @@ AlgoliaSearch.prototype = {
             var xmlHttp = window.XMLHttpRequest ? new XMLHttpRequest() : {};
             if ('withCredentials' in xmlHttp) {
                 xmlHttp.open(opts.method, url , true);
-                xmlHttp.setRequestHeader('X-Algolia-API-Key', this.apiKey);
-                xmlHttp.setRequestHeader('X-Algolia-Application-Id', this.applicationID);
+		if (this._isUndefined(opts.removeCustomHTTPHeaders) || !opts.removeCustomHTTPHeaders) {
+                  xmlHttp.setRequestHeader('X-Algolia-API-Key', this.apiKey);
+                  xmlHttp.setRequestHeader('X-Algolia-Application-Id', this.applicationID);
+		}
                 for (var i = 0; i < this.extraHeaders.length; ++i) {
                     xmlHttp.setRequestHeader(this.extraHeaders[i].key, this.extraHeaders[i].value);
                 }
-                if (body != null) {
+                if (body !== null) {
                     xmlHttp.setRequestHeader('Content-type', 'application/json');
                 }
             } else if (typeof XDomainRequest != 'undefined') {
@@ -619,10 +623,10 @@ AlgoliaSearch.prototype = {
             }
             xmlHttp.send(body);
             xmlHttp.onload = function(event) {
-                if (!self._isUndefined(event) && event.target != null) {
+                if (!self._isUndefined(event) && event.target !== null) {
                     var retry = (event.target.status === 0 || event.target.status === 503);
                     var success = (event.target.status === 200 || event.target.status === 201);
-                    opts.callback(retry, success, event.target, event.target.response != null ? JSON.parse(event.target.response) : null);
+                    opts.callback(retry, success, event.target, event.target.response !== null ? JSON.parse(event.target.response) : null);
                 } else {
                     opts.callback(false, true, event, JSON.parse(xmlHttp.responseText));
                 }
@@ -637,7 +641,7 @@ AlgoliaSearch.prototype = {
      * Wait until JSONP flag has been set to perform the first query
      */
     _waitReady: function(cb) {
-        if (this.jsonp == null) {
+        if (this.jsonp === null) {
             this.jsonpWait += 100;
             if (this.jsonpWait > 2000) {
                 this.jsonp = true;
@@ -650,11 +654,11 @@ AlgoliaSearch.prototype = {
      * Transform search param object in query string
      */
     _getSearchParams: function(args, params) {
-        if (this._isUndefined(args) || args == null) {
+        if (this._isUndefined(args) || args === null) {
             return params;
         }
         for (var key in args) {
-            if (key != null && args.hasOwnProperty(key)) {
+            if (key !== null && args.hasOwnProperty(key)) {
                 params += (params.length === 0) ? '?' : '&';
                 params += key + '=' + encodeURIComponent(Object.prototype.toString.call(args[key]) === '[object Array]' ? JSON.stringify(args[key]) : args[key]);
             }
@@ -742,7 +746,7 @@ AlgoliaSearch.prototype.Index.prototype = {
          * @param attributes (optional) if set, contains the array of attribute names to retrieve
          */
         getObject: function(objectID, callback, attributes) {
-            if (this.as.jsonp == null) {
+            if (this.as.jsonp === null) {
                 var self = this;
                 this.as._waitReady(function() { self.getObject(objectID, callback, attributes); });
                 return;
@@ -847,7 +851,7 @@ AlgoliaSearch.prototype.Index.prototype = {
          *  content: the server answer that contains 3 elements: createAt, taskId and objectID
          */
         deleteObject: function(objectID, callback) {
-            if (objectID == null || objectID.length === 0) {
+            if (objectID === null || objectID.length === 0) {
                 callback(false, { message: 'empty objectID'});
                 return;
             }
@@ -927,11 +931,11 @@ AlgoliaSearch.prototype.Index.prototype = {
         search: function(query, callback, args, delay) {
             var indexObj = this;
             var params = 'query=' + encodeURIComponent(query);
-            if (!this.as._isUndefined(args) && args != null) {
+            if (!this.as._isUndefined(args) && args !== null) {
                 params = this.as._getSearchParams(args, params);
             }
             window.clearTimeout(indexObj.onDelayTrigger);
-            if (!this.as._isUndefined(delay) && delay != null && delay > 0) {
+            if (!this.as._isUndefined(delay) && delay !== null && delay > 0) {
                 var onDelayTrigger = window.setTimeout( function() {
                     indexObj._search(params, callback);
                 }, delay);
@@ -1185,7 +1189,7 @@ AlgoliaSearch.prototype.Index.prototype = {
         /// Internal methods only after this line
         ///
         _search: function(params, callback) {
-            if (this.as.jsonp == null) {
+            if (this.as.jsonp === null) {
                 var self = this;
                 this.as._waitReady(function() { self._search(params, callback); });
                 return;
@@ -1208,7 +1212,8 @@ AlgoliaSearch.prototype.Index.prototype = {
                                        method: 'POST',
                                        url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/query',
                                        body: pObj,
-                                       callback: callback });
+                                       callback: callback,
+                                       removeCustomHTTPHeaders: true});
             }
         },
 
