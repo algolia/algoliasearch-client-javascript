@@ -59,11 +59,14 @@ var AlgoliaSearch = function(applicationID, apiKey, method, resolveDNS, hostsArr
     var self = this;
     this.applicationID = applicationID;
     this.apiKey = apiKey;
+    this.hosts = [];
 
     if (this._isUndefined(hostsArray)) {
-        hostsArray = [applicationID + '-1.algolia.io',
-                      applicationID + '-2.algolia.io',
-                      applicationID + '-3.algolia.io'];
+        hostsArray = [
+            applicationID + '-1.algolia.io',
+            applicationID + '-2.algolia.io',
+            applicationID + '-3.algolia.io'
+        ];
     }
     this.hosts = [];
     // Add hosts in random order
@@ -84,6 +87,8 @@ var AlgoliaSearch = function(applicationID, apiKey, method, resolveDNS, hostsArr
     }
 
     // resolve DNS + check CORS support (JSONP fallback)
+    this.requestTimeoutInMs = 2000;
+    this.currentHostIndex = 0;
     this.jsonp = null;
     this.jsonpWait = 0;
     this._jsonRequest({
@@ -449,6 +454,19 @@ AlgoliaSearch.prototype = {
             this._sendQueriesBatch(params, callback);
         }
     },
+
+   /**
+     * Set the number of milliseconds a request can take before automatically being terminated.
+     * 
+     * @param {Number} milliseconds
+     */
+    setRequestTimeout: function(milliseconds)
+    {
+        if (milliseconds) {
+            this.requestTimeoutInMs = parseInt(milliseconds, 10);
+        }
+    },
+
     /*
      * Index class constructor.
      * You should not use this method directly but use initIndex() function
@@ -459,7 +477,12 @@ AlgoliaSearch.prototype = {
         this.typeAheadArgs = null;
         this.typeAheadValueOption = null;
     },
-
+   /**
+     * Add an extra field to the HTTP request
+     * 
+     * @param key the header field name
+     * @param value the header field value
+     */
     setExtraHeader: function(key, value) {
         this.extraHeaders.push({ key: key, value: value});
     },
@@ -494,6 +517,7 @@ AlgoliaSearch.prototype = {
      * Wrapper that try all hosts to maximize the quality of service
      */
     _jsonRequest: function(opts) {
+        var successiveRetryCount = 0;
         var self = this;
         var callback = opts.callback;
         var cache = null;
@@ -511,33 +535,31 @@ AlgoliaSearch.prototype = {
             }
         }
 
-        var impl = function(position) {
-            var idx = 0;
-            if (!self._isUndefined(position)) {
-                idx = position;
-            }
-            if (self.hosts.length <= idx) {
-                if (!self._isUndefined(callback)) {
-                    callback(false, { message: 'Cannot contact server'});
-                }
+        var impl = function() {
+            if (successiveRetryCount >= self.hosts.length) {
+                console && console.log('Cannot connect the Algolia\'s InstantSearch API. Please send an email to support@algolia.com to report the issue.');
                 return;
             }
             opts.callback = function(retry, success, res, body) {
                 if (!success && !self._isUndefined(body)) {
-                    if (window.console) { console.log('Error: ' + body.message); }
+                    console && console.log('Error: ' + body.message);
                 }
                 if (success && !self._isUndefined(opts.cache)) {
                     cache[cacheID] = body;
                 }
-                if (!success && retry && (idx + 1) < self.hosts.length) {
-                    impl(idx + 1);
+                if (!success && retry && self.currentHostIndex <= self.hosts.length) {
+                    self.currentHostIndex = ++self.currentHostIndex % self.hosts.length;
+                    successiveRetryCount += 1;
+                    console && console.log('self.currentHostIndex', self.currentHostIndex, successiveRetryCount);
+                    impl();
                 } else {
                     if (!self._isUndefined(callback)) {
+                        successiveRetryCount = 0;
                         callback(success, body);
                     }
                 }
             };
-            opts.hostname = self.hosts[idx];
+            opts.hostname = self.hosts[self.currentHostIndex];
             self._jsonRequestByHost(opts);
         };
         impl();
@@ -548,93 +570,171 @@ AlgoliaSearch.prototype = {
         var url = opts.hostname + opts.url;
 
         if (this.jsonp) {
-            if (!opts.jsonp) {
-                opts.callback(true, false, null, { 'message': 'Method ' + opts.method + ' ' + url + ' is not supported by JSONP.' });
-                return;
-            }
-            this.jsonpCounter = this.jsonpCounter || 0;
-            this.jsonpCounter += 1;
-            var cb = 'algoliaJSONP_' + this.jsonpCounter;
-            window[cb] = function(data) {
-                opts.callback(false, true, null, data);
-                try { delete window[cb]; } catch (e) { window[cb] = undefined; }
-            };
-            var script = document.createElement('script');
-            script.type = 'text/javascript';
-            script.src = url + '?callback=' + cb + ',' + this.applicationID + ',' + this.apiKey;
-            if (opts['X-Algolia-TagFilters']) {
-                script.src += '&X-Algolia-TagFilters=' + opts['X-Algolia-TagFilters'];
-            }
-            if (opts['X-Algolia-UserToken']) {
-                script.src += '&X-Algolia-UserToken=' + opts['X-Algolia-UserToken'];
-            }
-            if (opts.body && opts.body.params) {
-                script.src += '&' + opts.body.params;
-            }
-            var head = document.getElementsByTagName('head')[0];
-            script.onerror = function() {
-                opts.callback(true, false, null, { 'message': 'Failed to load JSONP script.' });
-                head.removeChild(script);
-                try { delete window[cb]; } catch (e) { window[cb] = undefined; }
-            };
-            var done = false;
-            script.onload = script.onreadystatechange = function() {
-                if (!done && (!this.readyState || this.readyState == 'loaded' || this.readyState == 'complete')) {
-                    done = true;
-                    if (typeof window[cb + '_loaded'] === 'undefined') {
-                        opts.callback(true, false, null, { 'message': 'Failed to load JSONP script.' });
-                        try { delete window[cb]; } catch (e) { window[cb] = undefined; }
-                    } else {
-                        try { delete window[cb + '_loaded']; } catch (e) { window[cb + '_loaded'] = undefined; }
-                    }
-                    script.onload = script.onreadystatechange = null; // Handle memory leak in IE
-                    head.removeChild(script);
-                }
-            };
-            head.appendChild(script);
+            this._makeJsonpRequestByHost(url, opts);
         } else {
-            var body = null;
-            if (!this._isUndefined(opts.body)) {
-                body = JSON.stringify(opts.body);
-            }
-            var xmlHttp = window.XMLHttpRequest ? new XMLHttpRequest() : {};
-            if ('withCredentials' in xmlHttp) {
-                xmlHttp.open(opts.method, url , true);
-		if (this._isUndefined(opts.removeCustomHTTPHeaders) || !opts.removeCustomHTTPHeaders) {
-                  xmlHttp.setRequestHeader('X-Algolia-API-Key', this.apiKey);
-                  xmlHttp.setRequestHeader('X-Algolia-Application-Id', this.applicationID);
-		}
-                for (var i = 0; i < this.extraHeaders.length; ++i) {
-                    xmlHttp.setRequestHeader(this.extraHeaders[i].key, this.extraHeaders[i].value);
-                }
-                if (body !== null) {
-                    xmlHttp.setRequestHeader('Content-type', 'application/json');
-                }
-            } else if (typeof XDomainRequest != 'undefined') {
-                // Handle IE8/IE9
-                // XDomainRequest only exists in IE, and is IE's way of making CORS requests.
-                xmlHttp = new XDomainRequest();
-                xmlHttp.open(opts.method, url);
-            } else {
-                // very old browser, not supported
-                if (window.console) { console.log('Your browser is too old to support CORS requests'); }
-                opts.callback(false, false, null, { 'message': 'CORS not supported' });
-                return;
-            }
-            xmlHttp.send(body);
-            xmlHttp.onload = function(event) {
-                if (!self._isUndefined(event) && event.target !== null) {
-                    var retry = (event.target.status === 0 || event.target.status === 503);
-                    var success = (event.target.status === 200 || event.target.status === 201);
-                    opts.callback(retry, success, event.target, event.target.response !== null ? JSON.parse(event.target.response) : null);
-                } else {
-                    opts.callback(false, true, event, JSON.parse(xmlHttp.responseText));
-                }
-            };
-            xmlHttp.onerror = function(event) {
-                opts.callback(true, false, null, { 'message': 'Could not connect to host', 'error': event } );
-            };
+            this._makeXmlHttpRequestByHost(url, opts);
         }
+    },
+
+    /**
+     * Make a JSONP request
+     *
+     * @param url request url (includes endpoint and path)
+     * @param opts all request options
+     */
+    _makeJsonpRequestByHost: function(url, opts) {
+        if (!opts.jsonp) {
+            opts.callback(true, false, null, { 'message': 'Method ' + opts.method + ' ' + url + ' is not supported by JSONP.' });
+            return;
+        }
+
+        this.jsonpCounter = this.jsonpCounter || 0;
+        this.jsonpCounter += 1;
+        var head = document.getElementsByTagName('head')[0];
+        var script = document.createElement('script');
+        var cb = 'algoliaJSONP_' + this.jsonpCounter;
+        var done = false;
+        var ontimeout = null;
+
+        window[cb] = function(data) {
+            opts.callback(false, true, null, data);
+            try { delete window[cb]; } catch (e) { window[cb] = undefined; }
+        };
+        
+        script.type = 'text/javascript';
+        script.src = url + '?callback=' + cb + ',' + this.applicationID + ',' + this.apiKey;
+        
+        if (opts['X-Algolia-TagFilters']) {
+            script.src += '&X-Algolia-TagFilters=' + opts['X-Algolia-TagFilters'];
+        }
+        
+        if (opts['X-Algolia-UserToken']) {
+            script.src += '&X-Algolia-UserToken=' + opts['X-Algolia-UserToken'];
+        }
+        
+        if (opts.body && opts.body.params) {
+            script.src += '&' + opts.body.params;
+        }
+        
+        ontimeout = setTimeout(function() {
+            script.onload = script.onreadystatechange = script.onerror = null;
+            window[cb] = function(data) {
+                try { delete window[cb]; } catch (e) { window[cb] = undefined; }
+            };
+            
+            opts.callback(true, false, null, { 'message': 'Timeout - Failed to load JSONP script.' });
+            head.removeChild(script);
+            
+            clearTimeout(ontimeout);
+            ontimeout = null;
+
+        }, this.requestTimeoutInMs);
+
+        script.onload = script.onreadystatechange = function() {
+            clearTimeout(ontimeout);
+            ontimeout = null;
+
+            if (!done && (!this.readyState || this.readyState == 'loaded' || this.readyState == 'complete')) {
+                done = true;
+
+                if (typeof window[cb + '_loaded'] === 'undefined') {
+                    opts.callback(true, false, null, { 'message': 'Failed to load JSONP script.' });
+                    try { delete window[cb]; } catch (e) { window[cb] = undefined; }
+                } else {
+                    try { delete window[cb + '_loaded']; } catch (e) { window[cb + '_loaded'] = undefined; }
+                }
+                script.onload = script.onreadystatechange = null; // Handle memory leak in IE
+                head.removeChild(script);
+            }
+        };
+
+        script.onerror = function() {
+            clearTimeout(ontimeout);
+            ontimeout = null;
+
+            opts.callback(true, false, null, { 'message': 'Failed to load JSONP script.' });
+            head.removeChild(script);
+            try { delete window[cb]; } catch (e) { window[cb] = undefined; }
+        };
+
+        head.appendChild(script);
+    },
+
+    /**
+     * Make a XmlHttpRequest
+     * 
+     * @param url request url (includes endpoint and path)
+     * @param opts all request opts
+     */
+    _makeXmlHttpRequestByHost: function(url, opts) {
+        var self = this;
+        var xmlHttp = window.XMLHttpRequest ? new XMLHttpRequest() : {};
+        var body = null;
+        var ontimeout = null;
+
+        if (!this._isUndefined(opts.body)) {
+            body = JSON.stringify(opts.body);
+        }
+        
+        if ('withCredentials' in xmlHttp) {
+            xmlHttp.open(opts.method, url , true);
+            if (this._isUndefined(opts.removeCustomHTTPHeaders) || !opts.removeCustomHTTPHeaders) {
+                      xmlHttp.setRequestHeader('X-Algolia-API-Key', this.apiKey);
+                      xmlHttp.setRequestHeader('X-Algolia-Application-Id', this.applicationID);
+            }
+            for (var i = 0; i < this.extraHeaders.length; ++i) {
+                xmlHttp.setRequestHeader(this.extraHeaders[i].key, this.extraHeaders[i].value);
+            }
+            if (body !== null) {
+                xmlHttp.setRequestHeader('Content-type', 'application/json');
+            }
+        } else if (typeof XDomainRequest != 'undefined') {
+            // Handle IE8/IE9
+            // XDomainRequest only exists in IE, and is IE's way of making CORS requests.
+            xmlHttp = new XDomainRequest();
+            xmlHttp.open(opts.method, url);
+        } else {
+            // very old browser, not supported
+            console && console.log('Your browser is too old to support CORS requests');
+            opts.callback(false, false, null, { 'message': 'CORS not supported' });
+            return;
+        }
+
+        ontimeout = setTimeout(function() {
+            xmlHttp.abort();
+            // Prevent Internet Explorer 9, JScript Error c00c023f
+            if (xmlHttp.aborted === true) {
+              stopLoadAnimation();
+              return;
+            }
+            opts.callback(true, false, null, { 'message': 'Timeout - Could not connect to endpoint ' + url } );
+
+            clearTimeout(ontimeout);
+            ontimeout = null;
+
+        }, this.requestTimeoutInMs);
+
+        xmlHttp.onload = function(event) {
+            clearTimeout(ontimeout);
+            ontimeout = null;
+
+            if (!self._isUndefined(event) && event.target !== null) {
+                var retry = (event.target.status === 0 || event.target.status === 503);
+                var success = (event.target.status === 200 || event.target.status === 201);
+                opts.callback(retry, success, event.target, event.target.response !== null ? JSON.parse(event.target.response) : null);
+            } else {
+                opts.callback(false, true, event, JSON.parse(xmlHttp.responseText));
+            }
+        };
+
+        xmlHttp.onerror = function(event) {
+            clearTimeout(ontimeout);
+            ontimeout = null;
+
+            opts.callback(true, false, null, { 'message': 'Could not connect to host', 'error': event } );
+        };
+
+        xmlHttp.send(body);
     },
 
     /**
