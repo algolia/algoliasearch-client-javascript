@@ -492,6 +492,7 @@ AlgoliaSearch.prototype = {
      * Wrapper that try all hosts to maximize the quality of service
      */
     _jsonRequest: function(opts) {
+        var successiveRetryCount = 0;
         var self = this;
         var callback = opts.callback;
         var cache = null;
@@ -510,30 +511,30 @@ AlgoliaSearch.prototype = {
         }
 
         var impl = function() {
-            if (self.currentHostIndex >= self.hosts.length) {
-                if (!self._isUndefined(callback)) {
-                    callback(false, { message: 'Cannot contact any server'});
-                }
+            if (successiveRetryCount >= self.hosts.length) {
+                console && console.log('Cannot connect the Algolia\'s InstantSearch API. Please send an email to support@algolia.com to report the issue.');
                 return;
             }
             opts.callback = function(retry, success, res, body) {
                 if (!success && !self._isUndefined(body)) {
-                    if (window.console) { console.log('Error: ' + body.message); }
+                    console && console.log('Error: ' + body.message);
                 }
                 if (success && !self._isUndefined(opts.cache)) {
                     cache[cacheID] = body;
                 }
-                if (!success && retry && (self.currentHostIndex + 1) < self.hosts.length) {
-                    self.currentHostIndex += 1;
+                if (!success && retry && self.currentHostIndex <= self.hosts.length) {
+                    self.currentHostIndex = ++self.currentHostIndex % self.hosts.length;
+                    successiveRetryCount += 1;
+                    console && console.log('self.currentHostIndex', self.currentHostIndex, successiveRetryCount);
                     impl();
                 } else {
                     if (!self._isUndefined(callback)) {
+                        successiveRetryCount = 0;
                         callback(success, body);
                     }
                 }
             };
             opts.hostname = self.hosts[self.currentHostIndex];
-            console.log('Current server', opts.hostname);
             self._jsonRequestByHost(opts);
         };
         impl();
@@ -669,14 +670,19 @@ AlgoliaSearch.prototype = {
             xmlHttp.open(opts.method, url);
         } else {
             // very old browser, not supported
-            if (window.console) { console.log('Your browser is too old to support CORS requests'); }
+            console && console.log('Your browser is too old to support CORS requests');
             opts.callback(false, false, null, { 'message': 'CORS not supported' });
             return;
         }
 
         ontimeout = setTimeout(function() {
             xmlHttp.abort();
-            opts.callback(true, false, null, { 'message': 'Timeout - Could not connect to host' } );
+            // Prevent Internet Explorer 9, JScript Error c00c023f
+            if (xmlHttp.aborted === true) {
+              stopLoadAnimation();
+              return;
+            }
+            opts.callback(true, false, null, { 'message': 'Timeout - Could not connect to endpoint ' + url } );
 
             clearTimeout(ontimeout);
             ontimeout = null;
