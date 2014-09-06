@@ -56,10 +56,13 @@
       if (!this.client._isUndefined(searchParams) && searchParams != null) {
           params = this.client._getSearchParams(searchParams, params);
       }
+      var pObj = {params: params, apiKey: this.as.apiKey, appID: this.as.applicationID};
       this.client._jsonRequest({ cache: this.cache,
-                                 method: 'GET',
-                                 url: '/1/places?' + params,
-                                 callback: searchCallback });
+                                 method: 'POST',
+                                 url: '/1/places/query',
+                                 body: pObj,
+                                 callback: searchCallback,
+                                 removeCustomHTTPHeaders: true });
     }
   };
 })();
