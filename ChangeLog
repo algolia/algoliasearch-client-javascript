@@ -1,5 +1,12 @@
 CHANGELOG
 
+2014-09-06  2.6.0
+   * Improved retry strategy with implementation of a timeout on network call.
+     Upgrade to this version is highly recommended
+	
+2014-09-04  2.5.4
+    * Removed the OPTIONS request for the first isalive query of for all search queries
+
 2014-07-23  2.5.3
     * AlgoliaSearchHelper: add missing getIndex/setIndex
     * listIndexes is now paginable
