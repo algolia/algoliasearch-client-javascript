@@ -56,7 +56,7 @@
       if (!this.client._isUndefined(searchParams) && searchParams != null) {
           params = this.client._getSearchParams(searchParams, params);
       }
-      var pObj = {params: params, apiKey: this.as.apiKey, appID: this.as.applicationID};
+      var pObj = {params: params, apiKey: this.client.apiKey, appID: this.client.applicationID};
       this.client._jsonRequest({ cache: this.cache,
                                  method: 'POST',
                                  url: '/1/places/query',
