@@ -657,6 +657,7 @@ AlgoliaSearch.prototype = {
                       xmlHttp.setRequestHeader('X-Algolia-API-Key', this.apiKey);
                       xmlHttp.setRequestHeader('X-Algolia-Application-Id', this.applicationID);
             }
+            xmlHttp.timeout = this.requestTimeoutInMs;
             for (var i = 0; i < this.extraHeaders.length; ++i) {
                 xmlHttp.setRequestHeader(this.extraHeaders[i].key, this.extraHeaders[i].value);
             }
@@ -701,7 +702,8 @@ AlgoliaSearch.prototype = {
                 opts.callback(false, true, event, JSON.parse(xmlHttp.responseText));
             }
         };
-
+	xmlHttp.ontimeout = function(event) { // stop the network call but rely on ontimeout to call opt.callback
+        }
         xmlHttp.onerror = function(event) {
             clearTimeout(ontimeout);
             ontimeout = null;
