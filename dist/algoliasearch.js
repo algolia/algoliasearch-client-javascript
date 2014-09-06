@@ -21,7 +21,7 @@
  * THE SOFTWARE.
  */
 
-var ALGOLIA_VERSION = '2.5.4';
+var ALGOLIA_VERSION = '2.6.0';
 
 /*
  * Copyright (c) 2013 Algolia
@@ -682,6 +682,7 @@ AlgoliaSearch.prototype = {
                       xmlHttp.setRequestHeader('X-Algolia-API-Key', this.apiKey);
                       xmlHttp.setRequestHeader('X-Algolia-Application-Id', this.applicationID);
             }
+            xmlHttp.timeout = this.requestTimeoutInMs;
             for (var i = 0; i < this.extraHeaders.length; ++i) {
                 xmlHttp.setRequestHeader(this.extraHeaders[i].key, this.extraHeaders[i].value);
             }
@@ -726,7 +727,8 @@ AlgoliaSearch.prototype = {
                 opts.callback(false, true, event, JSON.parse(xmlHttp.responseText));
             }
         };
-
+	xmlHttp.ontimeout = function(event) { // stop the network call but rely on ontimeout to call opt.callback
+        }
         xmlHttp.onerror = function(event) {
             clearTimeout(ontimeout);
             ontimeout = null;
@@ -1728,10 +1730,13 @@ AlgoliaSearch.prototype.Index.prototype = {
       if (!this.client._isUndefined(searchParams) && searchParams != null) {
           params = this.client._getSearchParams(searchParams, params);
       }
+      var pObj = {params: params, apiKey: this.client.apiKey, appID: this.client.applicationID};
       this.client._jsonRequest({ cache: this.cache,
-                                 method: 'GET',
-                                 url: '/1/places?' + params,
-                                 callback: searchCallback });
+                                 method: 'POST',
+                                 url: '/1/places/query',
+                                 body: pObj,
+                                 callback: searchCallback,
+                                 removeCustomHTTPHeaders: true });
     }
   };
 })();
