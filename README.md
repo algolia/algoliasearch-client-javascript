@@ -58,7 +58,35 @@ To setup your project, follow these steps:
 
 
 
- 1. Download the [client](https://github.com/algolia/algoliasearch-client-js/archive/master.zip) and add a script include of `algoliasearch.min.js`
+### Download Algoliasearch with `bower`:
+
+[Bower](http://bower.io/) works by fetching and installing packages from all over, taking care of hunting, finding, downloading, and saving the stuff you’re looking for.
+
+```sh
+$ bower install algoliasearch
+```
+
+### Download Algoliasearch with the `jsDelivr` CDN:
+
+[jsDelivr](https://hacks.mozilla.org/2014/03/jsdelivr-the-advanced-open-source-public-cdn/) can offer a performance benefit by hosting `algoliasearch` on servers spread across the globe. This also offers an advantage that if the visitor to your webpage has already downloaded a copy of `algoliasearch` from jsDelivr, it won't have to be re-downloaded.
+
+```javascript
+  <script src="//cdn.jsdelivr.net/algoliasearch/{VERSION}/algoliasearch.min.js"></script>
+```
+
+or
+
+```javascript
+  <script src="//cdn.jsdelivr.net/algoliasearch/latest/algoliasearch.min.js"></script>
+```
+
+### Download Algoliasearch from `Github```:
+
+Download the [client](https://github.com/algolia/algoliasearch-client-js/archive/master.zip) from Github's archive.
+
+### Setup 
+
+ 1. Add an include of `algoliasearch.min.js`
  2. Initialize the client with your ApplicationID and API-Key. You can find all of them on [your Algolia account](http://www.algolia.com/users/edit).
  3. When you use this API client for search on a website, we strongly recommand to use a key with an ACL restricted to "search". You can retrieve one with `client.addUserKey(["search"])`.
 
@@ -67,14 +95,6 @@ To setup your project, follow these steps:
   <script>
     client = new AlgoliaSearch('ApplicationID', 'API-Key');
     ...
-```
-
-### Using Algoliasearch with `jsDelivr`:
-
-[jsDelivr](https://hacks.mozilla.org/2014/03/jsdelivr-the-advanced-open-source-public-cdn/) can offer a performance benefit by hosting `algoliasearch` on servers spread across the globe. This also offers an advantage that if the visitor to your webpage has already downloaded a copy of `algoliasearch` from jsDelivr, it won't have to be re-downloaded.
-
-```javascript
-  <script src="//cdn.jsdelivr.net/algoliasearch/{VERSION}/algoliasearch.min.js"></script>
 ```
 
 
