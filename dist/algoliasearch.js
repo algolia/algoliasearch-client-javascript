@@ -604,12 +604,12 @@ AlgoliaSearch.prototype = {
         script.type = 'text/javascript';
         script.src = url + '?callback=' + cb + ',' + this.applicationID + ',' + this.apiKey;
         
-        if (opts['X-Algolia-TagFilters']) {
-            script.src += '&X-Algolia-TagFilters=' + opts['X-Algolia-TagFilters'];
+        if (opts.body['X-Algolia-TagFilters']) {
+            script.src += '&X-Algolia-TagFilters=' + encodeURIComponent(opts.body['X-Algolia-TagFilters']);
         }
         
-        if (opts['X-Algolia-UserToken']) {
-            script.src += '&X-Algolia-UserToken=' + opts['X-Algolia-UserToken'];
+        if (opts.body['X-Algolia-UserToken']) {
+            script.src += '&X-Algolia-UserToken=' + encodeURIComponent(opts.body['X-Algolia-UserToken']);
         }
         
         if (opts.body && opts.body.params) {
