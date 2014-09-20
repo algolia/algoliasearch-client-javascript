@@ -1,5 +1,8 @@
 CHANGELOG
 
+2014-09-20  2.6.1
+   * Fixed JSONP call: 'X-Algolia-TagFilters' and 'X-Algolia-UserToken' were not included in the URL.
+  
 2014-09-06  2.6.0
    * Improved retry strategy with implementation of a timeout on network call.
      Upgrade to this version is highly recommended
