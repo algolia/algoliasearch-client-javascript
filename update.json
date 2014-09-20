@@ -1,8 +1,0 @@
-{
-  "packageManager": "bower",
-  "name": "algoliasearch",
-  "files": {
-    "basePath": "dist/",
-    "include": ["algoliasearch.js", "algoliasearch.min.js"]
-  }
-}
