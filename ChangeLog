@@ -1,5 +1,8 @@
 CHANGELOG
 
+2014-09-20  2.6.2
+   * Updated package manager description files: npm and jsdelivr
+
 2014-09-20  2.6.1
    * Fixed JSONP call: 'X-Algolia-TagFilters' and 'X-Algolia-UserToken' were not included in the URL.
   
