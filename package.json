@@ -8,6 +8,9 @@
   "keywords": [
     "algolia",
     "search",
+    "search api",
+    "instant search",
+    "realtime",
     "autocomplete"
   ],
   "homepage": "https://github.com/algolia/algoliasearch-client-js",
@@ -18,12 +21,8 @@
   },
   "contributors": [
     {
-      "name": "Julien Lemoine",
-      "url": "http://linkedin.com/in/julienlemoine"
-    },
-    {
-      "name": "Sylvain Utard",
-      "url": "http://linkedin.com/in/sylvainutard"
+      "name": "Algolia Team <support@algolia.com>",
+      "url": "http://www.algolia.com"
     }
   ],
   "devDependencies": {
