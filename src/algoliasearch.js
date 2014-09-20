@@ -525,7 +525,6 @@ AlgoliaSearch.prototype = {
                 if (!success && retry && self.currentHostIndex <= self.hosts.length) {
                     self.currentHostIndex = ++self.currentHostIndex % self.hosts.length;
                     successiveRetryCount += 1;
-                    console && console.log('self.currentHostIndex', self.currentHostIndex, successiveRetryCount);
                     impl();
                 } else {
                     if (!self._isUndefined(callback)) {
