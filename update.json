@@ -1,5 +1,5 @@
 {
-  "packageManager": "npm",
+  "packageManager": "bower",
   "name": "algoliasearch",
   "files": {
     "basePath": "dist/",
