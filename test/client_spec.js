@@ -30,7 +30,7 @@ describe('Algolia', function () {
     });
     waitsFor(function() {
       return complete;
-    }, 'ajax', 10000);
+    }, 'ajax', 30000);
     runs(function() {
       expect(complete).toBe(true);
     });
