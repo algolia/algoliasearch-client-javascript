@@ -701,12 +701,11 @@ AlgoliaSearch.prototype = {
                 opts.callback(false, true, event, JSON.parse(xmlHttp.responseText));
             }
         };
-	xmlHttp.ontimeout = function(event) { // stop the network call but rely on ontimeout to call opt.callback
-        }
+    	xmlHttp.ontimeout = function(event) { // stop the network call but rely on ontimeout to call opt.callback
+        };
         xmlHttp.onerror = function(event) {
             clearTimeout(ontimeout);
             ontimeout = null;
-
             opts.callback(true, false, null, { 'message': 'Could not connect to host', 'error': event } );
         };
 
