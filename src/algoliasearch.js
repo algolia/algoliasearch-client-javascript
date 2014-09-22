@@ -513,6 +513,7 @@ AlgoliaSearch.prototype = {
         var impl = function() {
             if (successiveRetryCount >= self.hosts.length) {
                 if (!self._isUndefined(callback)) {
+                    successiveRetryCount = 0;
                     callback(false, { message: 'Cannot connect the Algolia\'s Search API. Please send an email to support@algolia.com to report the issue.' });
                 }
                 return;
@@ -524,13 +525,13 @@ AlgoliaSearch.prototype = {
                 if (success && !self._isUndefined(opts.cache)) {
                     cache[cacheID] = body;
                 }
-                if (!success && retry && self.currentHostIndex <= self.hosts.length) {
+                if (!success && retry) {
                     self.currentHostIndex = ++self.currentHostIndex % self.hosts.length;
                     successiveRetryCount += 1;
                     impl();
                 } else {
+                    successiveRetryCount = 0;
                     if (!self._isUndefined(callback)) {
-                        successiveRetryCount = 0;
                         callback(success, body);
                     }
                 }
@@ -703,7 +704,7 @@ AlgoliaSearch.prototype = {
                 opts.callback(false, true, event, JSON.parse(xmlHttp.responseText));
             }
         };
-    	xmlHttp.ontimeout = function(event) { // stop the network call but rely on ontimeout to call opt.callback
+        xmlHttp.ontimeout = function(event) { // stop the network call but rely on ontimeout to call opt.callback
         };
         xmlHttp.onerror = function(event) {
             clearTimeout(ontimeout);
