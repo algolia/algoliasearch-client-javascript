@@ -512,7 +512,9 @@ AlgoliaSearch.prototype = {
 
         var impl = function() {
             if (successiveRetryCount >= self.hosts.length) {
-                console && console.log('Cannot connect the Algolia\'s InstantSearch API. Please send an email to support@algolia.com to report the issue.');
+                if (!self._isUndefined(callback)) {
+                    callback(false, { message: 'Cannot connect the Algolia\'s Search API. Please send an email to support@algolia.com to report the issue.' });
+                }
                 return;
             }
             opts.callback = function(retry, success, res, body) {
