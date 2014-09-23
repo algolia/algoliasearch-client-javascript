@@ -21,7 +21,7 @@
  * THE SOFTWARE.
  */
 
-var ALGOLIA_VERSION = '2.6.3';
+var ALGOLIA_VERSION = '2.6.4';
 
 /*
  * Copyright (c) 2013 Algolia
@@ -691,7 +691,7 @@ AlgoliaSearch.prototype = {
             if (body !== null) {
                 xmlHttp.setRequestHeader('Content-type', 'application/json');
             }
-        } else if (typeof XDomainRequest != 'undefined') {
+        } else if (typeof XDomainRequest !== 'undefined') {
             // Handle IE8/IE9
             // XDomainRequest only exists in IE, and is IE's way of making CORS requests.
             xmlHttp = new XDomainRequest();
@@ -723,8 +723,19 @@ AlgoliaSearch.prototype = {
 
             if (!self._isUndefined(event) && event.target !== null) {
                 var retry = (event.target.status === 0 || event.target.status === 503);
-                var success = (event.target.status === 200 || event.target.status === 201);
-                var response = event.target.response || event.target.responseText; // IE11 is using 'responseText'
+                var success = false;
+                var response = null;
+
+                if (typeof XDomainRequest !== 'undefined') {
+                    // Handle CORS requests IE8/IE9
+                    response = event.target.responseText;
+                    success = (response && response.length > 0);
+                }
+                else {
+                    response = event.target.response;
+                    success = (event.target.status === 200 || event.target.status === 201);
+                }
+
                 opts.callback(retry, success, event.target, response ? JSON.parse(response) : null);
             } else {
                 opts.callback(false, true, event, JSON.parse(xmlHttp.responseText));

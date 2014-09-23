@@ -1,6 +1,6 @@
 {
   "name": "algoliasearch",
-  "version": "2.6.3",
+  "version": "2.6.4",
   "homepage": "https://github.com/algolia/algoliasearch-client-js",
   "authors": [
     "Algolia Team <support@algolia.com>"
