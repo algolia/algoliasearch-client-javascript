@@ -699,7 +699,8 @@ AlgoliaSearch.prototype = {
             if (!self._isUndefined(event) && event.target !== null) {
                 var retry = (event.target.status === 0 || event.target.status === 503);
                 var success = (event.target.status === 200 || event.target.status === 201);
-                opts.callback(retry, success, event.target, event.target.response !== null ? JSON.parse(event.target.response) : null);
+                var response = event.target.response || event.target.responseText; // IE11 is using 'responseText'
+                opts.callback(retry, success, event.target, response ? JSON.parse(response) : null);
             } else {
                 opts.callback(false, true, event, JSON.parse(xmlHttp.responseText));
             }
