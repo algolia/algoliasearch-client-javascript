@@ -21,7 +21,7 @@
  * THE SOFTWARE.
  */
 
-var ALGOLIA_VERSION = '2.6.4';
+var ALGOLIA_VERSION = '2.6.5';
 
 /*
  * Copyright (c) 2013 Algolia
@@ -1650,6 +1650,9 @@ AlgoliaSearch.prototype.Index.prototype = {
       return extend({}, this.searchParams, {
         hitsPerPage: 1,
         page: 0,
+        attributesToRetrieve: [],
+        attributesToHighlight: [],
+        attributesToSnippet: [],
         facets: facet,
         facetFilters: this._getFacetFilters(facet)
       });
