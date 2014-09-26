@@ -1,5 +1,8 @@
 CHANGELOG
 
+2014-09-26  2.6.5
+  * Optimize disjunctive queries that were retrieving useless attributes
+
 2014-09-23  2.6.4
    * Fixed CORS handling issue on IE8/IE9
 
