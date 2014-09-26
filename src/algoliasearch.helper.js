@@ -307,6 +307,9 @@
       return extend({}, this.searchParams, {
         hitsPerPage: 1,
         page: 0,
+        attributesToRetrieve: [],
+        attributesToHighlight: [],
+        attributesToSnippet: [],
         facets: facet,
         facetFilters: this._getFacetFilters(facet)
       });
