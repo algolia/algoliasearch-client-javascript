@@ -80,7 +80,7 @@ or
   <script src="//cdn.jsdelivr.net/algoliasearch/latest/algoliasearch.min.js"></script>
 ```
 
-### Download Algoliasearch from `Github```:
+### Download Algoliasearch from `Github`:
 
 Download the [client](https://github.com/algolia/algoliasearch-client-js/archive/master.zip) from Github's archive.
 
@@ -122,6 +122,23 @@ All API calls will return the result in a callback that takes two arguments:
  1. **success**: a boolean that is set to false when an error was found.
  2. **content**: the object containing the answer (if an error was found, you can retrieve the error message in `content.message`)
 
+
+
+
+Cache
+-------------
+
+Queries will be stored in a ```cache``` inside your JavaScript ```Index``` object to avoid performing the same API calls twice. It's particularly useful when your users are deleting letters/words from the current query but may end in some outdated results if the page isn't refreshed for some time.
+
+Just clear the cache every X minutes to work-around 
+```js
+// clear the queries cache
+index.clearCache();
+
+// if you're performing multi-queries using the API client instead of the index
+// you'll need to use the following code
+algoliaClient.clearCache();
+```
 
 
 Documentation
@@ -188,10 +205,10 @@ You can use the following optional arguments:
   * **prefixAll**: all query words are interpreted as prefixes,
   * **prefixLast**: only the last word is interpreted as a prefix (default behavior),
   * **prefixNone**: no query word is interpreted as a prefix. This option is not recommended.
- * **removeWordsIfNoResult**: This option to select a strategy to avoid having an empty result page. There is three different option:
-  * **LastWords**: when a query does not return any result, the last word will be added as optional (the process is repeated with n-1 word, n-2 word, ... until there is results),
-  * **FirstWords**: when a query does not return any result, the first word will be added as optional (the process is repeated with second word, third word, ... until there is results),
-  * **None**: No specific processing is done when a query does not return any result (default behavior).
+ * **removeWordsIfNoResults**: This option to select a strategy to avoid having an empty result page. There is three different option:
+  * **lastWords**: when a query does not return any result, the last word will be added as optional (the process is repeated with n-1 word, n-2 word, ... until there is results),
+  * **firstWords**: when a query does not return any result, the first word will be added as optional (the process is repeated with second word, third word, ... until there is results),
+  * **none**: No specific processing is done when a query does not return any result (default behavior).
  * **typoTolerance**: if set to false, disable the typo-tolerance. Defaults to true.
  * **minWordSizefor1Typo**: the minimum number of characters in a query word to accept one typo in this word.<br/>Defaults to 4.
  * **minWordSizefor2Typos**: the minimum number of characters in a query word to accept two typos in this word.<br/>Defaults to 8.
