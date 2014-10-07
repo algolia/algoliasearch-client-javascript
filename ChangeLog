@@ -1,5 +1,8 @@
 CHANGELOG
 
+2014-10-07  2.6.6
+  * Fixed bower integration
+
 2014-09-26  2.6.5
   * Optimize disjunctive queries that were retrieving useless attributes
 
