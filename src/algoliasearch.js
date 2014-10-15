@@ -45,7 +45,7 @@ var AlgoliaSearch = function(applicationID, apiKey, methodOrOptions, resolveDNS,
         method = methodOrOptions;
     } else {
         // Take all option from the hash
-        var options = methodOrOptions;
+        var options = methodOrOptions || {};
         if (!this._isUndefined(options.method)) {
             method = options.method;
         }
