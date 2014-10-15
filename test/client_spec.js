@@ -41,7 +41,7 @@ describe('Algolia', function () {
     });
   });
   
-  client = new AlgoliaSearch({applicationID:ALGOLIA_APPLICATION_ID, apiKey: ALGOLIA_API_KEY, method: 'https', dsn: true});
+  client = new AlgoliaSearch(ALGOLIA_APPLICATION_ID, ALGOLIA_API_KEY, { method: 'https', dsn: true });
   it('should be able to clear/add/search 2', function() {
     var complete = false;
     runs(function() {
