@@ -21,7 +21,7 @@
  * THE SOFTWARE.
  */
 
-var ALGOLIA_VERSION = '2.6.6';
+var ALGOLIA_VERSION = '2.7.0';
 
 /*
  * Copyright (c) 2013 Algolia
@@ -53,11 +53,11 @@ var ALGOLIA_VERSION = '2.6.6';
  * @param methodOrOptions the hash of parameters for initialization. It can contains:
  *        - method (optional) specify if the protocol used is http or https (http by default to make the first search query faster).
  *          You need to use https is you are doing something else than just search queries.
- *        - hostsArray (optional) the list of hosts that you have received for the service
+ *        - hosts (optional) the list of hosts that you have received for the service
  *        - dsn (optional) set to true if your account has the Distributed Search Option
  *        - dsnHost (optional) override the automatic computation of dsn hostname
  */
-var AlgoliaSearch = function(applicationID, apiKey, methodOrOptions, resolveDNS, hostsArray) {
+var AlgoliaSearch = function(applicationID, apiKey, methodOrOptions, resolveDNS, hosts) {
     var self = this;
     this.applicationID = applicationID;
     this.apiKey = apiKey;
@@ -66,7 +66,7 @@ var AlgoliaSearch = function(applicationID, apiKey, methodOrOptions, resolveDNS,
     this.hosts = [];
 
     var method;
-    if (typeof methodOrOptions === "string") { // Old initialization
+    if (typeof methodOrOptions === 'string') { // Old initialization
         method = methodOrOptions;
     } else {
         // Take all option from the hash
@@ -77,44 +77,45 @@ var AlgoliaSearch = function(applicationID, apiKey, methodOrOptions, resolveDNS,
         if (!this._isUndefined(options.dsn)) {
             this.dsn = options.dsn;
         }
-        if (!this._isUndefined(options.hostsArray)) {
-            hostsArray = options.hostArray;
+        if (!this._isUndefined(options.hosts)) {
+            hosts = options.hosts;
         }
         if (!this._isUndefined(options.dsnHost)) {
             this.dsnHost = options.dsnHost;
         }
     }
-    // If hostsArray is undefined, initialize it with applicationID
-    if (this._isUndefined(hostsArray)) {
-        hostsArray = [
+    // If hosts is undefined, initialize it with applicationID
+    if (this._isUndefined(hosts)) {
+        hosts = [
             this.applicationID + '-1.algolia.io',
             this.applicationID + '-2.algolia.io',
             this.applicationID + '-3.algolia.io'
         ];
     }
     // detect is we use http or https
-    this.host_protocol = "http://";
+    this.host_protocol = 'http://';
     if (this._isUndefined(method) || method === null) {
         this.host_protocol = ('https:' == document.location.protocol ? 'https' : 'http') + '://';
     } else if (method === 'https' || method === 'HTTPS') {
         this.host_protocol = 'https://';
     }
     // Add hosts in random order
-    for (var i = 0; i < hostsArray.length; ++i) {
+    for (var i = 0; i < hosts.length; ++i) {
         if (Math.random() > 0.5) {
             this.hosts.reverse();
         }
-        this.hosts.push(this.host_protocol + hostsArray[i]);
+        this.hosts.push(this.host_protocol + hosts[i]);
     }
     if (Math.random() > 0.5) {
         this.hosts.reverse();
     }
     // then add Distributed Search Network host if there is one
     if (this.dsn || this.dsnHost != null) {
-        if (this.dsnHost)
+        if (this.dsnHost) {
             this.hosts.unshift(this.host_protocol + this.dsnHost);
-        else
-            this.hosts.unshift(this.host_protocol + this.applicationID + "-dsn.algolia.io");
+        } else {
+            this.hosts.unshift(this.host_protocol + this.applicationID + '-dsn.algolia.io');
+        }
     }
 
     // resolve DNS + check CORS support (JSONP fallback)
