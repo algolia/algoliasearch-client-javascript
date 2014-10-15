@@ -21,7 +21,7 @@
  * THE SOFTWARE.
  */
 
-var ALGOLIA_VERSION = '2.7.0';
+var ALGOLIA_VERSION = '2.7.1';
 
 /*
  * Copyright (c) 2013 Algolia
@@ -70,7 +70,7 @@ var AlgoliaSearch = function(applicationID, apiKey, methodOrOptions, resolveDNS,
         method = methodOrOptions;
     } else {
         // Take all option from the hash
-        var options = methodOrOptions;
+        var options = methodOrOptions || {};
         if (!this._isUndefined(options.method)) {
             method = options.method;
         }

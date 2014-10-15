@@ -1,6 +1,6 @@
 CHANGELOG
 
-2014-10-15  2.7.0
+2014-10-15  2.7.{0,1}
   * Refactor the AlgoliaSearch constructor to allows optional/named arguments
 
 2014-10-07  2.6.6
