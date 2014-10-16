@@ -79,10 +79,7 @@ module.exports = function(grunt) {
             application_id: process.env.ALGOLIA_APPLICATION_ID,
             api_key: process.env.ALGOLIA_API_KEY
           },
-          phantomjs: {
-            'ignore-ssl-errors' : true,
-            'ssl-protocol' : 'tlsv1'
-          }
+          '--ssl-protocol' : 'tlsv1'
         }
       }
     },
