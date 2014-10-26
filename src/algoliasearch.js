@@ -1077,7 +1077,7 @@ AlgoliaSearch.prototype.Index.prototype = {
         browse: function(page, callback, hitsPerPage) {
             var indexObj = this;
             var params = '?page=' + page;
-            if (!_.isUndefined(hitsPerPage)) {
+            if (!this.as._isUndefined(hitsPerPage)) {
                 params += '&hitsPerPage=' + hitsPerPage;
             }
             this.as._jsonRequest({ method: 'GET',
