@@ -10,20 +10,14 @@
 
     it('should be able to clear/add/search', function(done) {
       var index = client.initIndex('cities_js');
-      console.info("init index");
       index.clearIndex(function(success, content) {
-        console.info(JSON.stringify(content));
-        console.info("clear index");
         expect(success).toBe(true);
         index.addObject({ name: 'San Francisco' }, function(success, content) {
-          console.info("add object");
           expect(success).toBe(true);
           expect(content.taskID).toBeDefined();
           index.waitTask(content.taskID, function(success, content) {
-            console.info("wait");
             expect(success).toBe(true);
             index.search('san', function(success, content) {
-              console.info("search");
               expect(success).toBe(true);
               expect(content.hits.length).toBe(1);
               expect(content.hits[0].name).toBe('San Francisco');
@@ -37,19 +31,14 @@
     client = new AlgoliaSearch(ALGOLIA_APPLICATION_ID, ALGOLIA_API_KEY, { method: 'https', dsn: true });
     it('should be able to clear/add/search 2', function(done) {
       var index = client.initIndex('cities_js');
-      console.info("init index");
       index.clearIndex(function(success, content) {
-        console.info("clear index");
         expect(success).toBe(true);
         index.addObject({ name: 'San Francisco' }, function(success, content) {
-          console.info("add object");
           expect(success).toBe(true);
           expect(content.taskID).toBeDefined();
           index.waitTask(content.taskID, function(success, content) {
-            console.info("wait");
             expect(success).toBe(true);
             index.search('san', function(success, content) {
-              console.info("search");
               expect(success).toBe(true);
               expect(content.hits.length).toBe(1);
               expect(content.hits[0].name).toBe('San Francisco');
