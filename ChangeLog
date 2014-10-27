@@ -1,5 +1,8 @@
 CHANGELOG
 
+2014-10-27  2.7.2
+  * Fixed browse method (author @muertet)
+
 2014-10-15  2.7.{0,1}
   * Refactor the AlgoliaSearch constructor to allows optional/named arguments
 

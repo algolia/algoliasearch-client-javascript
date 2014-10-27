@@ -21,7 +21,7 @@
  * THE SOFTWARE.
  */
 
-var ALGOLIA_VERSION = '2.7.1';
+var ALGOLIA_VERSION = '2.7.2';
 
 /*
  * Copyright (c) 2013 Algolia
@@ -1102,7 +1102,7 @@ AlgoliaSearch.prototype.Index.prototype = {
         browse: function(page, callback, hitsPerPage) {
             var indexObj = this;
             var params = '?page=' + page;
-            if (!_.isUndefined(hitsPerPage)) {
+            if (!this.as._isUndefined(hitsPerPage)) {
                 params += '&hitsPerPage=' + hitsPerPage;
             }
             this.as._jsonRequest({ method: 'GET',
