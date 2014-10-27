@@ -49,6 +49,32 @@
       });
     });
 
+    it('should be able to browse', function(done) {
+      var securedClient = new AlgoliaSearch(ALGOLIA_APPLICATION_ID, ALGOLIA_API_KEY, 'https');
+      var index = client.initIndex('browsable_js');
+      index.clearIndex(function(success, content) {
+        expect(success).toBe(true);
+        index.addObject({ name: 'Foo' }, function(success, content) {
+          expect(success).toBe(true);
+          expect(content.taskID).toBeDefined();
+          index.waitTask(content.taskID, function(success, content) {
+            expect(success).toBe(true);
+            index.browse(0, function(success, content) {
+              expect(success).toBe(true);
+              expect(content.hits).toBeDefined();
+              expect(content.hits.length).toBe(1);
+              index.browse(0, function(success, content) {
+                expect(success).toBe(true);
+                expect(content.hits).toBeDefined();
+                expect(content.hits.length).toBe(1);
+                done();
+              }, 42);
+            });
+          });
+        });
+      });
+    });
+
     it('should encode the extra security tagFilters', function(done) {
       var securedClient = new AlgoliaSearch(ALGOLIA_APPLICATION_ID, ALGOLIA_API_KEY, 'https');
       securedClient.setSecurityTags('public');
