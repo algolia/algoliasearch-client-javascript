@@ -516,8 +516,7 @@ AlgoliaSearch.prototype = {
                                    method: 'POST',
                                    url: '/1/indexes/*/queries',
                                    body: params,
-       	                           callback: callback,
-                                   removeCustomHTTPHeaders: true});
+       	                           callback: callback});
         }
     },
     /*
@@ -1334,8 +1333,7 @@ AlgoliaSearch.prototype.Index.prototype = {
                                        method: 'POST',
                                        url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/query',
                                        body: pObj,
-                                       callback: callback,
-                                       removeCustomHTTPHeaders: true});
+                                       callback: callback});
             }
         },
 
