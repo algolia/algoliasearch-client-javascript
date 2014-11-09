@@ -42,6 +42,7 @@ var AlgoliaSearch = function(applicationID, apiKey, methodOrOptions, resolveDNS,
     this.currentHostIndex = 0;
     this.requestTimeoutInMs = 2000;
     this.extraHeaders = [];
+    this.jsonp = null;
 
     var method;
     if (typeof methodOrOptions === 'string') { // Old initialization
@@ -63,6 +64,9 @@ var AlgoliaSearch = function(applicationID, apiKey, methodOrOptions, resolveDNS,
         }
         if (!this._isUndefined(options.requestTimeoutInMs)) {
             this.requestTimeoutInMs = +options.requestTimeoutInMs;
+        }
+        if (!this._isUndefined(options.jsonp)) {
+            this.jsonp = options.jsonp;
         }
     }
     // If hosts is undefined, initialize it with applicationID
