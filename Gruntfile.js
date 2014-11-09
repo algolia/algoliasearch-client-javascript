@@ -97,10 +97,12 @@ module.exports = function(grunt) {
     },
 
     parallel: {
-      dev: [
-        { grunt: true, args: ['server'] },
-        { grunt: true, args: ['watch'] }
-      ]
+      dev: {
+        tasks: [
+          { grunt: true, args: ['server'] },
+          { grunt: true, args: ['watch'] }
+        ]
+      }
     }
   });
 
