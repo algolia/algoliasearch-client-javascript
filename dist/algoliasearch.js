@@ -64,6 +64,10 @@ var AlgoliaSearch = function(applicationID, apiKey, methodOrOptions, resolveDNS,
     this.dsn = false;
     this.dsnHost = null;
     this.hosts = [];
+    this.currentHostIndex = 0;
+    this.requestTimeoutInMs = 2000;
+    this.extraHeaders = [];
+    this.jsonp = null;
 
     var method;
     if (typeof methodOrOptions === 'string') { // Old initialization
@@ -82,6 +86,12 @@ var AlgoliaSearch = function(applicationID, apiKey, methodOrOptions, resolveDNS,
         }
         if (!this._isUndefined(options.dsnHost)) {
             this.dsnHost = options.dsnHost;
+        }
+        if (!this._isUndefined(options.requestTimeoutInMs)) {
+            this.requestTimeoutInMs = +options.requestTimeoutInMs;
+        }
+        if (!this._isUndefined(options.jsonp)) {
+            this.jsonp = options.jsonp;
         }
     }
     // If hosts is undefined, initialize it with applicationID
@@ -117,21 +127,6 @@ var AlgoliaSearch = function(applicationID, apiKey, methodOrOptions, resolveDNS,
             this.hosts.unshift(this.host_protocol + this.applicationID + '-dsn.algolia.io');
         }
     }
-
-    // resolve DNS + check CORS support (JSONP fallback)
-    this.requestTimeoutInMs = 2000;
-    this.currentHostIndex = 0;
-    this.jsonp = null;
-    this.jsonpWait = 0;
-    this._jsonRequest({
-        method: 'GET',
-        url: '/1/isalive',
-        callback: function(success, content) {
-            self.jsonp = !success;
-        },
-        removeCustomHTTPHeaders: true
-    });
-    this.extraHeaders = [];
 };
 
 function AlgoliaExplainResults(hit, titleAttribute, otherAttributes) {
@@ -522,17 +517,29 @@ AlgoliaSearch.prototype = {
     _sendQueriesBatch: function(params, callback) {
         if (this.jsonp === null) {
             var self = this;
-            this._waitReady(function() { self._sendQueriesBatch(params, callback); });
-            return;
-        }
-        if (this.jsonp) {
+            this._jsonRequest({ cache: this.cache,
+                method: 'POST',
+                url: '/1/indexes/*/queries',
+                body: params,
+                callback: function(success, content) {
+                    if (!success) {
+                        // retry first with JSONP
+                        self.jsonp = true;
+                        self._sendQueriesBatch(params, callback);
+                    } else {
+                        self.jsonp = false;
+                        callback && callback(success, content);
+                    }
+                }
+            });
+        } else if (this.jsonp) {
             var jsonpParams = '';
             for (var i = 0; i < params.requests.length; ++i) {
                 var q = '/1/indexes/' + encodeURIComponent(params.requests[i].indexName) + '?' + params.requests[i].params;
                 jsonpParams += i + '=' + encodeURIComponent(q) + '&';
             }
             this._jsonRequest({ cache: this.cache,
-                                   method: 'GET', jsonp: true,
+                                   method: 'GET',
                                    url: '/1/indexes/*',
                                    body: { params: jsonpParams },
                                    callback: callback });
@@ -616,7 +623,7 @@ AlgoliaSearch.prototype = {
      * @param opts all request options
      */
     _makeJsonpRequestByHost: function(url, opts) {
-        if (!opts.jsonp) {
+        if (opts.method !== 'GET') {
             opts.callback(true, false, null, { 'message': 'Method ' + opts.method + ' ' + url + ' is not supported by JSONP.' });
             return;
         }
@@ -633,31 +640,31 @@ AlgoliaSearch.prototype = {
             opts.callback(false, true, null, data);
             try { delete window[cb]; } catch (e) { window[cb] = undefined; }
         };
-        
+
         script.type = 'text/javascript';
         script.src = url + '?callback=' + cb + ',' + this.applicationID + ',' + this.apiKey;
-        
+
         if (opts.body['X-Algolia-TagFilters']) {
             script.src += '&X-Algolia-TagFilters=' + encodeURIComponent(opts.body['X-Algolia-TagFilters']);
         }
-        
+
         if (opts.body['X-Algolia-UserToken']) {
             script.src += '&X-Algolia-UserToken=' + encodeURIComponent(opts.body['X-Algolia-UserToken']);
         }
-        
+
         if (opts.body && opts.body.params) {
             script.src += '&' + opts.body.params;
         }
-        
+
         ontimeout = setTimeout(function() {
             script.onload = script.onreadystatechange = script.onerror = null;
             window[cb] = function(data) {
                 try { delete window[cb]; } catch (e) { window[cb] = undefined; }
             };
-            
+
             opts.callback(true, false, null, { 'message': 'Timeout - Failed to load JSONP script.' });
             head.removeChild(script);
-            
+
             clearTimeout(ontimeout);
             ontimeout = null;
 
@@ -783,19 +790,6 @@ AlgoliaSearch.prototype = {
         xmlHttp.send(body);
     },
 
-    /**
-     * Wait until JSONP flag has been set to perform the first query
-     */
-    _waitReady: function(cb) {
-        if (this.jsonp === null) {
-            this.jsonpWait += 100;
-            if (this.jsonpWait > 2000) {
-                this.jsonp = true;
-            }
-            setTimeout(cb, 100);
-        }
-    },
-
      /*
      * Transform search param object in query string
      */
@@ -892,11 +886,6 @@ AlgoliaSearch.prototype.Index.prototype = {
          * @param attributes (optional) if set, contains the array of attribute names to retrieve
          */
         getObject: function(objectID, callback, attributes) {
-            if (this.as.jsonp === null) {
-                var self = this;
-                this.as._waitReady(function() { self.getObject(objectID, callback, attributes); });
-                return;
-            }
             var indexObj = this;
             var params = '';
             if (!this.as._isUndefined(attributes)) {
@@ -908,7 +897,7 @@ AlgoliaSearch.prototype.Index.prototype = {
                     params += attributes[i];
                 }
             }
-            this.as._jsonRequest({ method: 'GET', jsonp: true,
+            this.as._jsonRequest({ method: 'GET',
                                    url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/' + encodeURIComponent(objectID) + params,
                                    callback: callback });
         },
@@ -1335,11 +1324,6 @@ AlgoliaSearch.prototype.Index.prototype = {
         /// Internal methods only after this line
         ///
         _search: function(params, callback) {
-            if (this.as.jsonp === null) {
-                var self = this;
-                this.as._waitReady(function() { self._search(params, callback); });
-                return;
-            }
             var pObj = {params: params, apiKey: this.as.apiKey, appID: this.as.applicationID};
             if (this.as.tagFilters) {
                 pObj['X-Algolia-TagFilters'] = this.as.tagFilters;
@@ -1347,9 +1331,26 @@ AlgoliaSearch.prototype.Index.prototype = {
             if (this.as.userToken) {
                 pObj['X-Algolia-UserToken'] = this.as.userToken;
             }
-            if (this.as.jsonp) {
+            if (this.as.jsonp === null) {
+                var self = this;
                 this.as._jsonRequest({ cache: this.cache,
-                                       method: 'GET', jsonp: true,
+                    method: 'POST',
+                    url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/query',
+                    body: pObj,
+                    callback: function(success, content) {
+                        if (!success) {
+                            // retry first with JSONP
+                            self.as.jsonp = true;
+                            self._search(params, callback);
+                        } else {
+                            self.as.jsonp = false;
+                            callback && callback(success, content);
+                        }
+                    }
+                });
+            } else if (this.as.jsonp) {
+                this.as._jsonRequest({ cache: this.cache,
+                                       method: 'GET',
                                        url: '/1/indexes/' + encodeURIComponent(this.indexName),
                                        body: pObj,
                                        callback: callback });
