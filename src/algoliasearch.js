@@ -39,6 +39,9 @@ var AlgoliaSearch = function(applicationID, apiKey, methodOrOptions, resolveDNS,
     this.dsn = false;
     this.dsnHost = null;
     this.hosts = [];
+    this.currentHostIndex = 0;
+    this.requestTimeoutInMs = 2000;
+    this.extraHeaders = [];
 
     var method;
     if (typeof methodOrOptions === 'string') { // Old initialization
@@ -57,6 +60,9 @@ var AlgoliaSearch = function(applicationID, apiKey, methodOrOptions, resolveDNS,
         }
         if (!this._isUndefined(options.dsnHost)) {
             this.dsnHost = options.dsnHost;
+        }
+        if (!this._isUndefined(options.requestTimeoutInMs)) {
+            this.requestTimeoutInMs = +options.requestTimeoutInMs;
         }
     }
     // If hosts is undefined, initialize it with applicationID
@@ -94,8 +100,6 @@ var AlgoliaSearch = function(applicationID, apiKey, methodOrOptions, resolveDNS,
     }
 
     // resolve DNS + check CORS support (JSONP fallback)
-    this.requestTimeoutInMs = 2000;
-    this.currentHostIndex = 0;
     this.jsonp = null;
     this.jsonpWait = 0;
     this._jsonRequest({
@@ -106,7 +110,6 @@ var AlgoliaSearch = function(applicationID, apiKey, methodOrOptions, resolveDNS,
         },
         removeCustomHTTPHeaders: true
     });
-    this.extraHeaders = [];
 };
 
 function AlgoliaExplainResults(hit, titleAttribute, otherAttributes) {
