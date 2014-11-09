@@ -615,31 +615,31 @@ AlgoliaSearch.prototype = {
             opts.callback(false, true, null, data);
             try { delete window[cb]; } catch (e) { window[cb] = undefined; }
         };
-        
+
         script.type = 'text/javascript';
         script.src = url + '?callback=' + cb + ',' + this.applicationID + ',' + this.apiKey;
-        
+
         if (opts.body['X-Algolia-TagFilters']) {
             script.src += '&X-Algolia-TagFilters=' + encodeURIComponent(opts.body['X-Algolia-TagFilters']);
         }
-        
+
         if (opts.body['X-Algolia-UserToken']) {
             script.src += '&X-Algolia-UserToken=' + encodeURIComponent(opts.body['X-Algolia-UserToken']);
         }
-        
+
         if (opts.body && opts.body.params) {
             script.src += '&' + opts.body.params;
         }
-        
+
         ontimeout = setTimeout(function() {
             script.onload = script.onreadystatechange = script.onerror = null;
             window[cb] = function(data) {
                 try { delete window[cb]; } catch (e) { window[cb] = undefined; }
             };
-            
+
             opts.callback(true, false, null, { 'message': 'Timeout - Failed to load JSONP script.' });
             head.removeChild(script);
-            
+
             clearTimeout(ontimeout);
             ontimeout = null;
 
