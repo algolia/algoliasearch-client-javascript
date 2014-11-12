@@ -582,9 +582,6 @@ AlgoliaSearch.prototype = {
                 return;
             }
             opts.callback = function(retry, success, res, body) {
-                if (!success && !self._isUndefined(body)) {
-                    console && console.log('Error: ' + body.message);
-                }
                 if (success && !self._isUndefined(opts.cache)) {
                     cache[cacheID] = body;
                 }
@@ -736,7 +733,6 @@ AlgoliaSearch.prototype = {
             xmlHttp.open(opts.method, url);
         } else {
             // very old browser, not supported
-            console && console.log('Your browser is too old to support CORS requests');
             opts.callback(false, false, null, { 'message': 'CORS not supported' });
             return;
         }
