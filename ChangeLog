@@ -1,5 +1,9 @@
 CHANGELOG
 
+2014-11-12  2.7.4
+    * Expose more options (jsonp & requestTimeoutInMs)
+    * Change the way the JSONP fallback works
+
 2014-10-29  2.7.3
   * Reintroduced Algolia Custom Headers (X-Algolia-*) on queries. It was removed to try to remove the CORS OPTIONS query but this has no impact because this is a POST action.
 

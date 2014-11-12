@@ -21,7 +21,7 @@
  * THE SOFTWARE.
  */
 
-var ALGOLIA_VERSION = '2.7.3';
+var ALGOLIA_VERSION = '2.7.4';
 
 /*
  * Copyright (c) 2013 Algolia
@@ -582,6 +582,9 @@ AlgoliaSearch.prototype = {
                 return;
             }
             opts.callback = function(retry, success, res, body) {
+                if (!success && !self._isUndefined(body)) {
+                    window.console && console.log('Error: ' + body.message);
+                }
                 if (success && !self._isUndefined(opts.cache)) {
                     cache[cacheID] = body;
                 }
