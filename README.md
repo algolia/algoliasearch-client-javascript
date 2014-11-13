@@ -273,12 +273,20 @@ You can also use a string array encoding (for example `numericFilters: ["price>1
 ```javascript
 index = client.initIndex('contacts');
 index.search('query string', function(success, content) {
+    if (!success) {
+        console.log('Error: ' + content.message);
+        return;
+    }
     for (var h in content.hits) {
         console.log('Hit(' + content.hits[h].objectID + '): ' + content.hits[h].toString());
     }
 });
 
 index.search('query string', function(success, content) {
+    if (!success) {
+        console.log('Error: ' + content.message);
+        return;
+    }
     for (var h in content.hits) {
         console.log('Hit(' + content.hits[h].objectID + '): ' + content.hits[h].toString());
     }
