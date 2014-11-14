@@ -1442,6 +1442,7 @@ AlgoliaSearch.prototype.Index.prototype = {
       this.page = 0;
       this.refinements = {};
       this.disjunctiveRefinements = {};
+      this.extraQueries = [];
     },
 
     /**
@@ -1609,6 +1610,22 @@ AlgoliaSearch.prototype.Index.prototype = {
       return this.index;
     },
 
+    /**
+     * Clear the extra queries added to the underlying batch of queries
+     */
+    clearExtraQueries: function() {
+      this.extraQueries = [];
+    },
+
+    /**
+     * Add an extra query to the underlying batch of queries. Once you add queries
+     * to the batch, the 2nd parameter of the searchCallback will be an object with a `results`
+     * attribute listing all search results.
+     */
+    addExtraQuery: function(index, query, params) {
+      this.extraQueries.push({ index: index, query: query, params: (params || {}) });
+    },
+
     ///////////// PRIVATE
 
     /**
@@ -1629,6 +1646,9 @@ AlgoliaSearch.prototype.Index.prototype = {
       for (var i = 0; i < this.options.disjunctiveFacets.length; ++i) {
         this.client.addQueryInBatch(this.index, this.q, this._getDisjunctiveFacetSearchParams(this.options.disjunctiveFacets[i]));
       }
+      for (var i = 0; i < this.extraQueries.length; ++i) {
+        this.client.addQueryInBatch(this.extraQueries[i].index, this.extraQueries[i].query, this.extraQueries[i].params);
+      }
       var self = this;
       this.client.sendQueriesBatch(function(success, content) {
         if (!success) {
@@ -1638,9 +1658,9 @@ AlgoliaSearch.prototype.Index.prototype = {
         var aggregatedAnswer = content.results[0];
         aggregatedAnswer.disjunctiveFacets = {};
         aggregatedAnswer.facetStats = {};
-        for (var i = 1; i < content.results.length; ++i) {
-          for (var facet in content.results[i].facets) {
-            aggregatedAnswer.disjunctiveFacets[facet] = content.results[i].facets[facet];
+        for (var i = 0; i < self.options.disjunctiveFacets.length; ++i) {
+          for (var facet in content.results[i + 1].facets) {
+            aggregatedAnswer.disjunctiveFacets[facet] = content.results[i + 1].facets[facet];
             if (self.disjunctiveRefinements[facet]) {
               for (var value in self.disjunctiveRefinements[facet]) {
                 if (!aggregatedAnswer.disjunctiveFacets[facet][value] && self.disjunctiveRefinements[facet][value]) {
@@ -1649,12 +1669,19 @@ AlgoliaSearch.prototype.Index.prototype = {
               }
             }
           }
-          for (var stats in content.results[i].facets_stats)
-          {
-            aggregatedAnswer.facetStats[stats] = content.results[i].facets_stats[stats];
+          for (var stats in content.results[i + 1].facets_stats) {
+            aggregatedAnswer.facetStats[stats] = content.results[i + 1].facets_stats[stats];
           }
         }
-        self.searchCallback(true, aggregatedAnswer);
+        if (self.extraQueries.length === 0) {
+          self.searchCallback(true, aggregatedAnswer);
+        } else {
+          var c = { results: [ aggregatedAnswer ] };
+          for (var i = 0; i < self.extraQueries.length; ++i) {
+            c.results.push(content.results[1 + self.options.disjunctiveFacets.length + i]);
+          }
+          self.searchCallback(true, c);
+        }
       });
     },
 
