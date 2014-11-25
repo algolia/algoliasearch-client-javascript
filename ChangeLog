@@ -1,5 +1,8 @@
 CHANGELOG
 
+2014-11-25  2.7.5
+    * Expose one option to select the TTL (prepare migration to .net, allow to gain some milliseconds compared to .io)
+
 2014-11-12  2.7.4
     * Expose more options (jsonp & requestTimeoutInMs)
     * Change the way the JSONP fallback works
