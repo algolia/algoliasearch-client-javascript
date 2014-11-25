@@ -45,6 +45,7 @@ var AlgoliaSearch = function(applicationID, apiKey, methodOrOptions, resolveDNS,
     this.jsonp = null;
 
     var method;
+    var tld = 'io';
     if (typeof methodOrOptions === 'string') { // Old initialization
         method = methodOrOptions;
     } else {
@@ -52,6 +53,9 @@ var AlgoliaSearch = function(applicationID, apiKey, methodOrOptions, resolveDNS,
         var options = methodOrOptions || {};
         if (!this._isUndefined(options.method)) {
             method = options.method;
+        }
+        if (!this._isUndefined(options.tld)) {
+            tld = options.tld;
         }
         if (!this._isUndefined(options.dsn)) {
             this.dsn = options.dsn;
@@ -72,9 +76,9 @@ var AlgoliaSearch = function(applicationID, apiKey, methodOrOptions, resolveDNS,
     // If hosts is undefined, initialize it with applicationID
     if (this._isUndefined(hosts)) {
         hosts = [
-            this.applicationID + '-1.algolia.io',
-            this.applicationID + '-2.algolia.io',
-            this.applicationID + '-3.algolia.io'
+            this.applicationID + '-1.algolia.' + tld,
+            this.applicationID + '-2.algolia.' + tld,
+            this.applicationID + '-3.algolia.' + tld
         ];
     }
     // detect is we use http or https
@@ -99,7 +103,7 @@ var AlgoliaSearch = function(applicationID, apiKey, methodOrOptions, resolveDNS,
         if (this.dsnHost) {
             this.hosts.unshift(this.host_protocol + this.dsnHost);
         } else {
-            this.hosts.unshift(this.host_protocol + this.applicationID + '-dsn.algolia.io');
+            this.hosts.unshift(this.host_protocol + this.applicationID + '-dsn.algolia.' + tld);
         }
     }
 };
