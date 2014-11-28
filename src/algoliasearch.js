@@ -77,9 +77,9 @@ var AlgoliaSearch = function(applicationID, apiKey, methodOrOptions, resolveDNS,
     if (this._isUndefined(hosts)) {
         if (tld === 'net') {
             hosts = [
-                '1.' + this.applicationID + '.algolia.net',
-                '2.' + this.applicationID + '.algolia.net',
-                '3.' + this.applicationID + '.algolia.net'
+                this.applicationID + '-1.algolia.net',
+                this.applicationID + '-2.algolia.net',
+                this.applicationID + '-3.algolia.net'
             ];
         } else {
             hosts = [
