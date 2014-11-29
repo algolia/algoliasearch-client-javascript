@@ -100,19 +100,11 @@ var AlgoliaSearch = function(applicationID, apiKey, methodOrOptions, resolveDNS,
     }
     // If hosts is undefined, initialize it with applicationID
     if (this._isUndefined(hosts)) {
-        if (tld === 'net') {
-            hosts = [
-                '1.' + this.applicationID + '.algolia.net',
-                '2.' + this.applicationID + '.algolia.net',
-                '3.' + this.applicationID + '.algolia.net'
-            ];
-        } else {
-            hosts = [
-                this.applicationID + '-1.algolia.' + tld,
-                this.applicationID + '-2.algolia.' + tld,
-                this.applicationID + '-3.algolia.' + tld
-            ];
-        }
+        hosts = [
+            this.applicationID + '-1.algolia.' + tld,
+            this.applicationID + '-2.algolia.' + tld,
+            this.applicationID + '-3.algolia.' + tld
+        ];
     }
     // detect is we use http or https
     this.host_protocol = 'http://';
