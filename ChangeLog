@@ -1,5 +1,8 @@
 CHANGELOG
 
+2014-11-28  2.8.0
+    * Move to algolia.net by default
+
 2014-11-25  2.7.5
     * Expose one option to select the TTL (prepare migration to .net, allow to gain some milliseconds compared to .io)
 
