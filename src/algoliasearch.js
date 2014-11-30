@@ -762,7 +762,7 @@ AlgoliaSearch.prototype = {
         xmlHttp.onerror = function(event) {
             clearTimeout(ontimeout);
             ontimeout = null;
-            opts.callback(true, false, null, { 'message': 'Could not connect to host: ' + String(this.status), 'error': event } );
+            opts.callback(true, false, null, { 'message': 'Could not connect to host, 'error': event } );
         };
 
         xmlHttp.send(body);
