@@ -74,6 +74,7 @@ module.exports = function(grunt) {
         src: jsFiles,
         options: {
           specs: 'test/*_spec.js',
+          timeout: 40000,
           template: 'SpecRunner.tmpl',
           templateOptions: {
             application_id: process.env.ALGOLIA_APPLICATION_ID,
