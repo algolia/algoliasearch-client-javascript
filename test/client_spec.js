@@ -4,7 +4,7 @@
     it('should found environment variables', function() {
       expect(ALGOLIA_APPLICATION_ID).toBeDefined();
       expect(ALGOLIA_API_KEY).toBeDefined();
-      jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
+      jasmine.DEFAULT_TIMEOUT_INTERVAL = 20000;
     });
 
     var client = new AlgoliaSearch(ALGOLIA_APPLICATION_ID, ALGOLIA_API_KEY, 'https');
