@@ -47,6 +47,7 @@
             index.search($scope.query).then(function(content) {
               if (content.query !== $scope.query) {
                 // do not take out-dated answers into account
+                return;
               }
               $scope.hits = content.hits;
             });
