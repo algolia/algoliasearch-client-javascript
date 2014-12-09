@@ -49,12 +49,12 @@ module.exports = function(grunt) {
       version: {
         pattern: '%VERSION%',
         replacement: '<%= version %>',
-        path: ['<%= concat.dist.dest %>', '<%= uglify.jsmin.dest %>', 'bower.json']
+        path: ['<%= concat.dist.dest %>', '<%= uglify.jsmin.dest %>']
       },
       bower: {
         pattern: /"version": "[0-9]+\.[0-9]+\.[0-9]+",/,
         replacement: '"version": "<%= version %>",',
-        path: ['<%= concat.dist.dest %>', '<%= uglify.jsmin.dest %>', 'bower.json']
+        path: ['bower.json']
       }
     },
 
