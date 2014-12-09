@@ -21,7 +21,7 @@
  * THE SOFTWARE.
  */
 
-var ALGOLIA_VERSION = '2.8.0';
+var ALGOLIA_VERSION = '2.8.1';
 
 /*
  * Copyright (c) 2013 Algolia
@@ -61,7 +61,7 @@ var AlgoliaSearch = function(applicationID, apiKey, methodOrOptions, resolveDNS,
     var self = this;
     this.applicationID = applicationID;
     this.apiKey = apiKey;
-    this.dsn = false;
+    this.dsn = true;
     this.dsnHost = null;
     this.hosts = [];
     this.currentHostIndex = 0;
