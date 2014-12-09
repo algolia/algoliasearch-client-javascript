@@ -49,7 +49,12 @@ module.exports = function(grunt) {
       version: {
         pattern: '%VERSION%',
         replacement: '<%= version %>',
-        path: ['<%= concat.dist.dest %>', '<%= uglify.jsmin.dest %>']
+        path: ['<%= concat.dist.dest %>', '<%= uglify.jsmin.dest %>', 'bower.json']
+      },
+      bower: {
+        pattern: /"version": "[0-9]+\.[0-9]+\.[0-9]+",/,
+        replacement: '"version": "<%= version %>",',
+        path: ['<%= concat.dist.dest %>', '<%= uglify.jsmin.dest %>', 'bower.json']
       }
     },
 
@@ -129,7 +134,7 @@ module.exports = function(grunt) {
   // -------
 
   grunt.registerTask('default', 'build');
-  grunt.registerTask('build', ['uglify', 'concat', 'sed:version']);
+  grunt.registerTask('build', ['uglify', 'concat', 'sed:version', 'sed:bower']);
   grunt.registerTask('server', 'connect:server');
   grunt.registerTask('lint', 'jshint');
   grunt.registerTask('test', 'jasmine:js');
