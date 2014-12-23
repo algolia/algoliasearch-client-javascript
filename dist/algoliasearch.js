@@ -21,7 +21,7 @@
  * THE SOFTWARE.
  */
 
-var ALGOLIA_VERSION = '2.8.1';
+var ALGOLIA_VERSION = '2.8.2';
 
 /*
  * Copyright (c) 2013 Algolia
