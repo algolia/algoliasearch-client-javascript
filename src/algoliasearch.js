@@ -534,7 +534,6 @@ AlgoliaSearch.prototype = {
      * Wrapper that try all hosts to maximize the quality of service
      */
     _jsonRequest: function(opts) {
-        var successiveRetryCount = 0;
         var self = this;
         var callback = opts.callback;
         var cache = null;
@@ -552,10 +551,11 @@ AlgoliaSearch.prototype = {
             }
         }
 
+        opts.successiveRetryCount = 0;
         var impl = function() {
-            if (successiveRetryCount >= self.hosts.length) {
+            if (opts.successiveRetryCount >= self.hosts.length) {
                 if (!self._isUndefined(callback)) {
-                    successiveRetryCount = 0;
+                    opts.successiveRetryCount = 0;
                     callback(false, { message: 'Cannot connect the Algolia\'s Search API. Please send an email to support@algolia.com to report the issue.' });
                 }
                 return;
@@ -569,10 +569,10 @@ AlgoliaSearch.prototype = {
                 }
                 if (!success && retry) {
                     self.currentHostIndex = ++self.currentHostIndex % self.hosts.length;
-                    successiveRetryCount += 1;
+                    opts.successiveRetryCount += 1;
                     impl();
                 } else {
-                    successiveRetryCount = 0;
+                    opts.successiveRetryCount = 0;
                     if (!self._isUndefined(callback)) {
                         callback(success, body);
                     }
@@ -694,14 +694,14 @@ AlgoliaSearch.prototype = {
         if (!this._isUndefined(opts.body)) {
             body = JSON.stringify(opts.body);
         }
-        
+
         if ('withCredentials' in xmlHttp) {
             xmlHttp.open(opts.method, url , true);
             if (this._isUndefined(opts.removeCustomHTTPHeaders) || !opts.removeCustomHTTPHeaders) {
                       xmlHttp.setRequestHeader('X-Algolia-API-Key', this.apiKey);
                       xmlHttp.setRequestHeader('X-Algolia-Application-Id', this.applicationID);
             }
-            xmlHttp.timeout = this.requestTimeoutInMs;
+            xmlHttp.timeout = this.requestTimeoutInMs * (opts.successiveRetryCount + 1);
             for (var i = 0; i < this.extraHeaders.length; ++i) {
                 xmlHttp.setRequestHeader(this.extraHeaders[i].key, this.extraHeaders[i].value);
             }
@@ -731,7 +731,7 @@ AlgoliaSearch.prototype = {
             clearTimeout(ontimeout);
             ontimeout = null;
 
-        }, this.requestTimeoutInMs);
+        }, this.requestTimeoutInMs * (opts.successiveRetryCount + 1));
 
         xmlHttp.onload = function(event) {
             clearTimeout(ontimeout);
