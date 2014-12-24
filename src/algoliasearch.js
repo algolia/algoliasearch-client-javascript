@@ -645,6 +645,7 @@ AlgoliaSearch.prototype = {
             method: opts.method,
             data: body,
             headers: headers,
+            cache: false,
             timeout: this.requestTimeoutInMs
         }).then(function(response) {
             opts.callback(false, true, null, response.data);
