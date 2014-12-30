@@ -494,12 +494,13 @@ AlgoliaSearch.prototype = {
     },
 
     _sendQueriesBatch: function(params, callback) {
-        if (this.jsonp === null) {
+
+       if (this.jsonp === null) {
             var self = this;
             this._jsonRequest({ cache: this.cache,
                 method: 'POST',
                 url: '/1/indexes/*/queries',
-                body: params,
+                body: pObj,
                 callback: function(success, content) {
                     if (!success) {
                         // retry first with JSONP
@@ -517,10 +518,18 @@ AlgoliaSearch.prototype = {
                 var q = '/1/indexes/' + encodeURIComponent(params.requests[i].indexName) + '?' + params.requests[i].params;
                 jsonpParams += i + '=' + encodeURIComponent(q) + '&';
             }
+            var pObj = {params: jsonpParams};
+            if (this.tagFilters) {
+               pObj['X-Algolia-TagFilters'] = this.tagFilters;
+            }
+            if (this.userToken) {
+               pObj['X-Algolia-UserToken'] = this.userToken;
+            }
+
             this._jsonRequest({ cache: this.cache,
                                    method: 'GET',
                                    url: '/1/indexes/*',
-                                   body: { params: jsonpParams },
+  				   body: pObj,
                                    callback: callback });
         } else {
             this._jsonRequest({ cache: this.cache,
@@ -875,9 +884,24 @@ AlgoliaSearch.prototype.Index.prototype = {
                     params += attributes[i];
                 }
             }
-            this.as._jsonRequest({ method: 'GET',
-                                   url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/' + encodeURIComponent(objectID) + params,
-                                   callback: callback });
+            if (this.as.jsonp === null) {
+                this.as._jsonRequest({ method: 'GET',
+                                       url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/' + encodeURIComponent(objectID) + params,
+                                       callback: callback });
+            } else {
+                var pObj = {params: params};
+                if (this.as.tagFilters) {
+                   pObj['X-Algolia-TagFilters'] = this.as.tagFilters;
+                }
+                if (this.as.userToken) {
+                   pObj['X-Algolia-UserToken'] = this.as.userToken;
+                }
+
+                this.as._jsonRequest({ method: 'GET',
+                                       url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/' + encodeURIComponent(objectID),
+       	                               callback: callback, 
+                                       body: pObj});
+            }
         },
 
         /*
