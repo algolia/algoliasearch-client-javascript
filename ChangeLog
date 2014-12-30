@@ -1,5 +1,8 @@
 CHANGELOG
 
+2014-12-30  2.8.3
+    * Helper optimization: number of nested queries is now driven by the number of refined disjunctive facets only
+
 2014-12-23  2.8.2
     * Increase the request timeout after each retry
 
