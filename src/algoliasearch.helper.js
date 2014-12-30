@@ -270,8 +270,18 @@
     _search: function() {
       this.client.startQueriesBatch();
       this.client.addQueryInBatch(this.index, this.q, this._getHitsSearchParams());
+      var disjunctiveFacets = [];
+      var unusedDisjunctiveFacets = {};
       for (var i = 0; i < this.options.disjunctiveFacets.length; ++i) {
-        this.client.addQueryInBatch(this.index, this.q, this._getDisjunctiveFacetSearchParams(this.options.disjunctiveFacets[i]));
+        var facet = this.options.disjunctiveFacets[i];
+        if (this._hasDisjunctiveRefinements(facet)) {
+          disjunctiveFacets.push(facet);
+        } else {
+          unusedDisjunctiveFacets[facet] = true;
+        }
+      }
+      for (var i = 0; i < disjunctiveFacets.length; ++i) {
+        this.client.addQueryInBatch(this.index, this.q, this._getDisjunctiveFacetSearchParams(disjunctiveFacets[i]));
       }
       for (var i = 0; i < this.extraQueries.length; ++i) {
         this.client.addQueryInBatch(this.extraQueries[i].index, this.extraQueries[i].query, this.extraQueries[i].params);
@@ -283,9 +293,19 @@
           return;
         }
         var aggregatedAnswer = content.results[0];
-        aggregatedAnswer.disjunctiveFacets = {};
-        aggregatedAnswer.facetStats = {};
-        for (var i = 0; i < self.options.disjunctiveFacets.length; ++i) {
+        aggregatedAnswer.disjunctiveFacets = aggregatedAnswer.disjunctiveFacets || {};
+        aggregatedAnswer.facetStats = aggregatedAnswer.facetStats || {};
+        for (var facet in unusedDisjunctiveFacets) {
+          if (aggregatedAnswer.facets[facet] && !aggregatedAnswer.disjunctiveFacets[facet]) {
+            aggregatedAnswer.disjunctiveFacets[facet] = aggregatedAnswer.facets[facet];
+            try {
+              delete aggregatedAnswer.facets[facet];
+            } catch (e) {
+              aggregatedAnswer.facets[facet] = undefined; // IE compat
+            }
+          }
+        }
+        for (var i = 0; i < disjunctiveFacets.length; ++i) {
           for (var facet in content.results[i + 1].facets) {
             aggregatedAnswer.disjunctiveFacets[facet] = content.results[i + 1].facets[facet];
             if (self.disjunctiveRefinements[facet]) {
@@ -305,7 +325,7 @@
         } else {
           var c = { results: [ aggregatedAnswer ] };
           for (var i = 0; i < self.extraQueries.length; ++i) {
-            c.results.push(content.results[1 + self.options.disjunctiveFacets.length + i]);
+            c.results.push(content.results[1 + disjunctiveFacets.length + i]);
           }
           self.searchCallback(true, c);
         }
@@ -317,10 +337,20 @@
      * @return {hash}
      */
     _getHitsSearchParams: function() {
+      var facets = [];
+      for (var i = 0; i < this.options.facets.length; ++i) {
+        facets.push(this.options.facets[i]);
+      }
+      for (var i = 0; i < this.options.disjunctiveFacets.length; ++i) {
+        var facet = this.options.disjunctiveFacets[i];
+        if (!this._hasDisjunctiveRefinements(facet)) {
+          facets.push(facet);
+        }
+      }
       return extend({}, {
         hitsPerPage: this.options.hitsPerPage,
         page: this.page,
-        facets: this.options.facets,
+        facets: facets,
         facetFilters: this._getFacetFilters()
       }, this.searchParams);
     },
@@ -340,6 +370,18 @@
         facets: facet,
         facetFilters: this._getFacetFilters(facet)
       });
+    },
+
+    /**
+     * Test if there are some disjunctive refinements on the facet
+     */
+    _hasDisjunctiveRefinements: function(facet) {
+      for (var value in this.disjunctiveRefinements[facet]) {
+        if (this.disjunctiveRefinements[facet][value]) {
+          return true;
+        }
+      }
+      return false;
     },
 
     /**
