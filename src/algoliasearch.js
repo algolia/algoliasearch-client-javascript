@@ -500,7 +500,7 @@ AlgoliaSearch.prototype = {
             this._jsonRequest({ cache: this.cache,
                 method: 'POST',
                 url: '/1/indexes/*/queries',
-                body: pObj,
+                body: params,
                 callback: function(success, content) {
                     if (!success) {
                         // retry first with JSONP
