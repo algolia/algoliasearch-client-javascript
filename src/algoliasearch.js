@@ -529,14 +529,14 @@ AlgoliaSearch.prototype = {
             this._jsonRequest({ cache: this.cache,
                                    method: 'GET',
                                    url: '/1/indexes/*',
-  				   body: pObj,
+                                          body: pObj,
                                    callback: callback });
         } else {
             this._jsonRequest({ cache: this.cache,
                                    method: 'POST',
                                    url: '/1/indexes/*/queries',
                                    body: params,
-       	                           callback: callback});
+                                          callback: callback});
         }
     },
     /*
@@ -899,7 +899,7 @@ AlgoliaSearch.prototype.Index.prototype = {
 
                 this.as._jsonRequest({ method: 'GET',
                                        url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/' + encodeURIComponent(objectID),
-       	                               callback: callback, 
+                                       callback: callback, 
                                        body: pObj});
             }
         },
