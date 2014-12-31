@@ -21,7 +21,7 @@
  * THE SOFTWARE.
  */
 
-var ALGOLIA_VERSION = '2.8.3';
+var ALGOLIA_VERSION = '2.8.4';
 
 /*
  * Copyright (c) 2013 Algolia
@@ -519,7 +519,8 @@ AlgoliaSearch.prototype = {
     },
 
     _sendQueriesBatch: function(params, callback) {
-        if (this.jsonp === null) {
+
+       if (this.jsonp === null) {
             var self = this;
             this._jsonRequest({ cache: this.cache,
                 method: 'POST',
@@ -542,17 +543,25 @@ AlgoliaSearch.prototype = {
                 var q = '/1/indexes/' + encodeURIComponent(params.requests[i].indexName) + '?' + params.requests[i].params;
                 jsonpParams += i + '=' + encodeURIComponent(q) + '&';
             }
+            var pObj = {params: jsonpParams};
+            if (this.tagFilters) {
+               pObj['X-Algolia-TagFilters'] = this.tagFilters;
+            }
+            if (this.userToken) {
+               pObj['X-Algolia-UserToken'] = this.userToken;
+            }
+
             this._jsonRequest({ cache: this.cache,
                                    method: 'GET',
                                    url: '/1/indexes/*',
-                                   body: { params: jsonpParams },
+                                          body: pObj,
                                    callback: callback });
         } else {
             this._jsonRequest({ cache: this.cache,
                                    method: 'POST',
                                    url: '/1/indexes/*/queries',
                                    body: params,
-       	                           callback: callback});
+                                          callback: callback});
         }
     },
     /*
@@ -900,9 +909,24 @@ AlgoliaSearch.prototype.Index.prototype = {
                     params += attributes[i];
                 }
             }
-            this.as._jsonRequest({ method: 'GET',
-                                   url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/' + encodeURIComponent(objectID) + params,
-                                   callback: callback });
+            if (this.as.jsonp === null) {
+                this.as._jsonRequest({ method: 'GET',
+                                       url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/' + encodeURIComponent(objectID) + params,
+                                       callback: callback });
+            } else {
+                var pObj = {params: params};
+                if (this.as.tagFilters) {
+                   pObj['X-Algolia-TagFilters'] = this.as.tagFilters;
+                }
+                if (this.as.userToken) {
+                   pObj['X-Algolia-UserToken'] = this.as.userToken;
+                }
+
+                this.as._jsonRequest({ method: 'GET',
+                                       url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/' + encodeURIComponent(objectID),
+                                       callback: callback, 
+                                       body: pObj});
+            }
         },
 
         /*
