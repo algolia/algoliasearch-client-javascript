@@ -64,7 +64,7 @@
         var index = algolia.initIndex('contacts');
 
         $inputfield.keyup(function() {
-          index.search($inputfield.val()).then(searchCallback);
+          index.search($inputfield.val(), { hitsPerPage: 5 }).then(searchCallback);
         }).focus().closest('form').on('submit', function() {
           // on form submit, store the query string in the anchor
           location.replace('#q=' + encodeURIComponent($inputfield.val()));
