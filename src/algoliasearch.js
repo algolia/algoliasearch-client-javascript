@@ -36,7 +36,7 @@ var AlgoliaSearch = function(applicationID, apiKey, methodOrOptions, resolveDNS,
     var self = this;
     this.applicationID = applicationID;
     this.apiKey = apiKey;
-    this.dsn = false;
+    this.dsn = true;
     this.dsnHost = null;
     this.hosts = [];
     this.currentHostIndex = 0;
@@ -503,7 +503,8 @@ AlgoliaSearch.prototype = {
     },
 
     _sendQueriesBatch: function(params, callback) {
-        if (this.jsonp === null) {
+
+       if (this.jsonp === null) {
             var self = this;
             return this._jsonRequest({ cache: this.cache,
                 method: 'POST',
@@ -526,24 +527,31 @@ AlgoliaSearch.prototype = {
                 var q = '/1/indexes/' + encodeURIComponent(params.requests[i].indexName) + '?' + params.requests[i].params;
                 jsonpParams += i + '=' + encodeURIComponent(q) + '&';
             }
+            var pObj = {params: jsonpParams};
+            if (this.tagFilters) {
+               pObj['X-Algolia-TagFilters'] = this.tagFilters;
+            }
+            if (this.userToken) {
+               pObj['X-Algolia-UserToken'] = this.userToken;
+            }
+
             return this._jsonRequest({ cache: this.cache,
                                    method: 'GET',
                                    url: '/1/indexes/*',
-                                   body: { params: jsonpParams },
+                                          body: pObj,
                                    callback: callback });
         } else {
             return this._jsonRequest({ cache: this.cache,
                                    method: 'POST',
                                    url: '/1/indexes/*/queries',
                                    body: params,
-       	                           callback: callback});
+                                          callback: callback});
         }
     },
     /*
      * Wrapper that try all hosts to maximize the quality of service
      */
     _jsonRequest: function(opts) {
-        var successiveRetryCount = 0;
         var self = this;
         var callback = opts.callback;
         var cache = null;
@@ -570,10 +578,11 @@ AlgoliaSearch.prototype = {
             }
         }
 
+        opts.successiveRetryCount = 0;
         var impl = function() {
-            if (successiveRetryCount >= self.hosts.length) {
+            if (opts.successiveRetryCount >= self.hosts.length) {
                 if (!self._isUndefined(callback)) {
-                    successiveRetryCount = 0;
+                    opts.successiveRetryCount = 0;
                     callback(false, { message: 'Cannot connect the Algolia\'s Search API. Please send an email to support@algolia.com to report the issue.' });
                 }
                 deferred && deferred.reject();
@@ -588,10 +597,10 @@ AlgoliaSearch.prototype = {
                 }
                 if (!success && retry) {
                     self.currentHostIndex = ++self.currentHostIndex % self.hosts.length;
-                    successiveRetryCount += 1;
+                    opts.successiveRetryCount += 1;
                     impl();
                 } else {
-                    successiveRetryCount = 0;
+                    opts.successiveRetryCount = 0;
                     deferred && deferred.resolve(body);
                     if (!self._isUndefined(callback)) {
                         callback(success, body);
@@ -791,14 +800,14 @@ AlgoliaSearch.prototype = {
         if (!this._isUndefined(opts.body)) {
             body = JSON.stringify(opts.body);
         }
-        
+
         if ('withCredentials' in xmlHttp) {
             xmlHttp.open(opts.method, url , true);
             if (this._isUndefined(opts.removeCustomHTTPHeaders) || !opts.removeCustomHTTPHeaders) {
                       xmlHttp.setRequestHeader('X-Algolia-API-Key', this.apiKey);
                       xmlHttp.setRequestHeader('X-Algolia-Application-Id', this.applicationID);
             }
-            xmlHttp.timeout = this.requestTimeoutInMs;
+            xmlHttp.timeout = this.requestTimeoutInMs * (opts.successiveRetryCount + 1);
             for (var i = 0; i < this.extraHeaders.length; ++i) {
                 xmlHttp.setRequestHeader(this.extraHeaders[i].key, this.extraHeaders[i].value);
             }
@@ -828,7 +837,7 @@ AlgoliaSearch.prototype = {
             clearTimeout(ontimeout);
             ontimeout = null;
 
-        }, this.requestTimeoutInMs);
+        }, this.requestTimeoutInMs * (opts.successiveRetryCount + 1));
 
         xmlHttp.onload = function(event) {
             clearTimeout(ontimeout);
@@ -972,9 +981,23 @@ AlgoliaSearch.prototype.Index.prototype = {
                     params += attributes[i];
                 }
             }
-            return this.as._jsonRequest({ method: 'GET',
-                                   url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/' + encodeURIComponent(objectID) + params,
-                                   callback: callback });
+            if (this.as.jsonp === null) {
+                return this.as._jsonRequest({ method: 'GET',
+                                       url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/' + encodeURIComponent(objectID) + params,
+                                       callback: callback });
+            } else {
+                var pObj = {params: params};
+                if (this.as.tagFilters) {
+                   pObj['X-Algolia-TagFilters'] = this.as.tagFilters;
+                }
+                if (this.as.userToken) {
+                   pObj['X-Algolia-UserToken'] = this.as.userToken;
+                }
+                return this.as._jsonRequest({ method: 'GET',
+                                       url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/' + encodeURIComponent(objectID),
+                                       callback: callback,
+                                       body: pObj});
+            }
         },
 
         /*

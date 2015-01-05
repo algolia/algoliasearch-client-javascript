@@ -1,5 +1,17 @@
 CHANGELOG
 
+2014-12-31  2.8.4
+    * Fixed a bug in JSONP fallback on multi-queries and getObject when a secured API Key was used (X-Algolia-TagFilters parameter was not set, resulting in a 403 permission denied error)
+	
+2014-12-30  2.8.3
+    * Helper optimization: number of nested queries is now driven by the number of refined disjunctive facets only
+
+2014-12-23  2.8.2
+    * Increase the request timeout after each retry
+
+2014-12-09  2.8.1
+    * Enabled DSN by default (is working even if only one datacenter is selected)
+
 2014-11-28  2.8.0
     * Move to algolia.net by default
 
