@@ -570,7 +570,7 @@ AlgoliaSearch.prototype = {
         if (!this._isUndefined(opts.cache)) {
             cache = opts.cache;
             if (!this._isUndefined(cache[cacheID])) {
-                if (!this._isUndefined(callback)) {
+                if (!this._isUndefined(callback) && callback) {
                     setTimeout(function () { callback(true, cache[cacheID]); }, 1);
                 }
                 deferred && deferred.resolve(cache[cacheID]);
@@ -581,7 +581,7 @@ AlgoliaSearch.prototype = {
         opts.successiveRetryCount = 0;
         var impl = function() {
             if (opts.successiveRetryCount >= self.hosts.length) {
-                if (!self._isUndefined(callback)) {
+                if (!self._isUndefined(callback) && callback) {
                     opts.successiveRetryCount = 0;
                     callback(false, { message: 'Cannot connect the Algolia\'s Search API. Please send an email to support@algolia.com to report the issue.' });
                 }
@@ -602,7 +602,7 @@ AlgoliaSearch.prototype = {
                 } else {
                     opts.successiveRetryCount = 0;
                     deferred && deferred.resolve(body);
-                    if (!self._isUndefined(callback)) {
+                    if (!self._isUndefined(callback) && callback) {
                         callback(success, body);
                     }
                 }
@@ -970,6 +970,10 @@ AlgoliaSearch.prototype.Index.prototype = {
          * @param attributes (optional) if set, contains the array of attribute names to retrieve
          */
         getObject: function(objectID, callback, attributes) {
+            if (Object.prototype.toString.call(callback) === '[object Array]' && !attributes) {
+                attributes = callback;
+                callback = null;
+            }
             var indexObj = this;
             var params = '';
             if (!this.as._isUndefined(attributes)) {
@@ -1162,6 +1166,10 @@ AlgoliaSearch.prototype.Index.prototype = {
          * @param delay (optional) if set, wait for this delay (in ms) and only send the query if there was no other in the meantime.
          */
         search: function(query, callback, args, delay) {
+            if (typeof callback === 'object' && (this.as._isUndefined(args) || !args)) {
+                args = callback;
+                callback = null;
+            }
             var indexObj = this;
             var params = 'query=' + encodeURIComponent(query);
             if (!this.as._isUndefined(args) && args !== null) {
@@ -1186,6 +1194,10 @@ AlgoliaSearch.prototype.Index.prototype = {
          * @param hitsPerPage: Pagination parameter used to select the number of hits per page. Defaults to 1000.
          */
         browse: function(page, callback, hitsPerPage) {
+            if (+callback > 0 && (this.as._isUndefined(hitsPerPage) || !hitsPerPage)) {
+                hitsPerPage = callback;
+                callback = null;
+            }
             var indexObj = this;
             var params = '?page=' + page;
             if (!this.as._isUndefined(hitsPerPage)) {

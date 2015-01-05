@@ -44,7 +44,7 @@
           var index = client.initIndex('contacts');
 
           $scope.$watch('query', function() {
-            index.search($scope.query).then(function(content) {
+            index.search($scope.query, { hitsPerPage: 5 }).then(function(content) {
               if (content.query !== $scope.query) {
                 // do not take out-dated answers into account
                 return;
