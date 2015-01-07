@@ -440,7 +440,7 @@ AlgoliaSearch.prototype = {
      */
     sendQueriesBatch: function(callback, delay) {
         var as = this;
-        var params = {requests: [], apiKey: this.apiKey, appID: this.applicationID};
+        var params = {requests: []};
         for (var i = 0; i < as.batch.length; ++i) {
             params.requests.push(as.batch[i]);
         }
@@ -626,6 +626,9 @@ AlgoliaSearch.prototype = {
         if (this.userToken) {
             script.src += '&X-Algolia-UserToken=' + encodeURIComponent(this.userToken);
         }
+        for (var i = 0; i < this.extraHeaders.length; ++i) {
+            script.src += '&' + this.extraHeaders[i].key + '=' + this.extraHeaders[i].value;
+        }
 
 
         if (opts.body && opts.body.params) {
@@ -703,7 +706,6 @@ AlgoliaSearch.prototype = {
         for (var i = 0; i < this.extraHeaders.length; ++i) {
             url += '&' + this.extraHeaders[i].key + '=' + this.extraHeaders[i].value;
         }
-        console.log(url);
         if ('withCredentials' in xmlHttp) {
             xmlHttp.open(opts.method, url, true);
             xmlHttp.timeout = this.requestTimeoutInMs * (opts.successiveRetryCount + 1);
@@ -1313,7 +1315,7 @@ AlgoliaSearch.prototype.Index.prototype = {
         /// Internal methods only after this line
         ///
         _search: function(params, callback) {
-            var pObj = {params: params, apiKey: this.as.apiKey, appID: this.as.applicationID};
+            var pObj = {params: params};
             if (this.as.jsonp === null) {
                 var self = this;
                 this.as._jsonRequest({ cache: this.cache,
