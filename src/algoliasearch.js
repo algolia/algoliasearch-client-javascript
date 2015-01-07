@@ -704,13 +704,13 @@ AlgoliaSearch.prototype = {
             body = JSON.stringify(opts.body);
         }
 
+        url += ((url.indexOf('?') == -1) ? '?' : '&') + 'X-Algolia-API-Key=' + this.apiKey;
+        url += '&X-Algolia-Application-Id' + this.applicationID;
+        for (var i = 0; i < this.extraHeaders.length; ++i) {
+            url += '&' + this.extraHeaders[i].key + '=' + this.extraHeaders[i].value;
+        }
+        console.log(url);
         if ('withCredentials' in xmlHttp) {
-            url += ((url.indexOf('?') == -1) ? '?' : '&') + 'X-Algolia-API-Key=' + this.apiKey;
-            url += 'X-Algolia-Application-Id' + this.applicationID;
-            for (var i = 0; i < this.extraHeaders.length; ++i) {
-                url += '&' + this.extraHeaders[i].key + '=' + this.extraHeaders[i].value;
-            }
-
             xmlHttp.open(opts.method, url, true);
             xmlHttp.timeout = this.requestTimeoutInMs * (opts.successiveRetryCount + 1);
             if (body !== null) {
