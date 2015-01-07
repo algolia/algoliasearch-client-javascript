@@ -21,7 +21,7 @@
  * THE SOFTWARE.
  */
 
-var ALGOLIA_VERSION = '2.8.4';
+var ALGOLIA_VERSION = '2.8.5';
 
 /*
  * Copyright (c) 2013 Algolia
@@ -655,7 +655,7 @@ AlgoliaSearch.prototype = {
         };
 
         script.type = 'text/javascript';
-        script.src = url + '?callback=' + cb + ',' + this.applicationID + ',' + this.apiKey;
+        script.src = url + '?callback=' + cb + '&X-Algolia-Application-Id=' + this.applicationID + '&X-Algolia-API-Key=' + this.apiKey;
 
         if (opts.body['X-Algolia-TagFilters']) {
             script.src += '&X-Algolia-TagFilters=' + encodeURIComponent(opts.body['X-Algolia-TagFilters']);
@@ -730,17 +730,17 @@ AlgoliaSearch.prototype = {
         }
 
         if ('withCredentials' in xmlHttp) {
-            xmlHttp.open(opts.method, url , true);
-            if (this._isUndefined(opts.removeCustomHTTPHeaders) || !opts.removeCustomHTTPHeaders) {
-                      xmlHttp.setRequestHeader('X-Algolia-API-Key', this.apiKey);
-                      xmlHttp.setRequestHeader('X-Algolia-Application-Id', this.applicationID);
-            }
-            xmlHttp.timeout = this.requestTimeoutInMs * (opts.successiveRetryCount + 1);
+            url += ((url.indexOf('?') == -1) ? '?' : '&') + 'X-Algolia-API-Key=' + this.apiKey;
+            url += 'X-Algolia-Application-Id' + this.applicationID;
             for (var i = 0; i < this.extraHeaders.length; ++i) {
-                xmlHttp.setRequestHeader(this.extraHeaders[i].key, this.extraHeaders[i].value);
+                url += '&' + this.extraHeaders[i].key + '=' + this.extraHeaders[i].value;
             }
+
+            xmlHttp.open(opts.method, url, true);
+            xmlHttp.timeout = this.requestTimeoutInMs * (opts.successiveRetryCount + 1);
             if (body !== null) {
-                xmlHttp.setRequestHeader('Content-type', 'application/json');
+                /* This content type is specified to follow CORS 'simple header' directive */
+                xmlHttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
             }
         } else if (typeof XDomainRequest !== 'undefined') {
             // Handle IE8/IE9
