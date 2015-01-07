@@ -704,7 +704,7 @@ AlgoliaSearch.prototype = {
             body = JSON.stringify(opts.body);
         }
 
-        url += ((url.indexOf('?') == -1) ? '?' : '&') + 'X-Algolia-API-Key=' + this.apiKey;
+        url += ((url.indexOf('?') === -1) ? '?' : '&') + 'X-Algolia-API-Key=' + this.apiKey;
         url += '&X-Algolia-Application-Id=' + this.applicationID;
         for (var i = 0; i < this.extraHeaders.length; ++i) {
             url += '&' + this.extraHeaders[i].key + '=' + this.extraHeaders[i].value;
@@ -899,7 +899,7 @@ AlgoliaSearch.prototype.Index.prototype = {
 
                 this.as._jsonRequest({ method: 'GET',
                                        url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/' + encodeURIComponent(objectID),
-                                       callback: callback, 
+                                       callback: callback,
                                        body: pObj});
             }
         },
