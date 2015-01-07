@@ -695,7 +695,7 @@ AlgoliaSearch.prototype = {
             body = JSON.stringify(opts.body);
         }
 
-        url += ((url.indexOf('?') == -1) ? '?' : '&') + 'X-Algolia-API-Key=' + this.apiKey;
+        url += ((url.indexOf('?') === -1) ? '?' : '&') + 'X-Algolia-API-Key=' + this.apiKey;
         url += '&X-Algolia-Application-Id=' + this.applicationID;
         if (this.userToken) {
             url += '&X-Algolia-UserToken=' + encodeURIComponent(this.userToken);
@@ -888,7 +888,7 @@ AlgoliaSearch.prototype.Index.prototype = {
                 var pObj = {params: params};
                 this.as._jsonRequest({ method: 'GET',
                                        url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/' + encodeURIComponent(objectID),
-                                       callback: callback, 
+                                       callback: callback,
                                        body: pObj});
             }
         },
