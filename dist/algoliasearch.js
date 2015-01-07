@@ -466,12 +466,6 @@ AlgoliaSearch.prototype = {
     sendQueriesBatch: function(callback, delay) {
         var as = this;
         var params = {requests: [], apiKey: this.apiKey, appID: this.applicationID};
-        if (this.userToken) {
-            params['X-Algolia-UserToken'] = this.userToken;
-        }
-        if (this.tagFilters) {
-            params['X-Algolia-TagFilters'] = this.tagFilters;
-        }
         for (var i = 0; i < as.batch.length; ++i) {
             params.requests.push(as.batch[i]);
         }
@@ -544,13 +538,6 @@ AlgoliaSearch.prototype = {
                 jsonpParams += i + '=' + encodeURIComponent(q) + '&';
             }
             var pObj = {params: jsonpParams};
-            if (this.tagFilters) {
-               pObj['X-Algolia-TagFilters'] = this.tagFilters;
-            }
-            if (this.userToken) {
-               pObj['X-Algolia-UserToken'] = this.userToken;
-            }
-
             this._jsonRequest({ cache: this.cache,
                                    method: 'GET',
                                    url: '/1/indexes/*',
@@ -657,13 +644,14 @@ AlgoliaSearch.prototype = {
         script.type = 'text/javascript';
         script.src = url + '?callback=' + cb + '&X-Algolia-Application-Id=' + this.applicationID + '&X-Algolia-API-Key=' + this.apiKey;
 
-        if (opts.body['X-Algolia-TagFilters']) {
-            script.src += '&X-Algolia-TagFilters=' + encodeURIComponent(opts.body['X-Algolia-TagFilters']);
+        if (this.tagFilters) {
+            script.src += '&X-Algolia-TagFilters=' + encodeURIComponent(this.tagFilters);
         }
 
-        if (opts.body['X-Algolia-UserToken']) {
-            script.src += '&X-Algolia-UserToken=' + encodeURIComponent(opts.body['X-Algolia-UserToken']);
+        if (this.userToken) {
+            script.src += '&X-Algolia-UserToken=' + encodeURIComponent(this.userToken);
         }
+
 
         if (opts.body && opts.body.params) {
             script.src += '&' + opts.body.params;
@@ -731,6 +719,12 @@ AlgoliaSearch.prototype = {
 
         url += ((url.indexOf('?') == -1) ? '?' : '&') + 'X-Algolia-API-Key=' + this.apiKey;
         url += '&X-Algolia-Application-Id=' + this.applicationID;
+        if (this.userToken) {
+            url += '&X-Algolia-UserToken=' + encodeURIComponent(this.userToken);
+        }
+        if (this.tagFilters) {
+            url += '&X-Algolia-TagFilters=' + encodeURIComponent(this.tagFilters);
+        }
         for (var i = 0; i < this.extraHeaders.length; ++i) {
             url += '&' + this.extraHeaders[i].key + '=' + this.extraHeaders[i].value;
         }
@@ -915,13 +909,6 @@ AlgoliaSearch.prototype.Index.prototype = {
                                        callback: callback });
             } else {
                 var pObj = {params: params};
-                if (this.as.tagFilters) {
-                   pObj['X-Algolia-TagFilters'] = this.as.tagFilters;
-                }
-                if (this.as.userToken) {
-                   pObj['X-Algolia-UserToken'] = this.as.userToken;
-                }
-
                 this.as._jsonRequest({ method: 'GET',
                                        url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/' + encodeURIComponent(objectID),
                                        callback: callback, 
@@ -1352,12 +1339,6 @@ AlgoliaSearch.prototype.Index.prototype = {
         ///
         _search: function(params, callback) {
             var pObj = {params: params, apiKey: this.as.apiKey, appID: this.as.applicationID};
-            if (this.as.tagFilters) {
-                pObj['X-Algolia-TagFilters'] = this.as.tagFilters;
-            }
-            if (this.as.userToken) {
-                pObj['X-Algolia-UserToken'] = this.as.userToken;
-            }
             if (this.as.jsonp === null) {
                 var self = this;
                 this.as._jsonRequest({ cache: this.cache,
