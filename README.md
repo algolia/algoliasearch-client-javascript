@@ -27,7 +27,7 @@ This Javascript client let you easily use the [Algolia Search API](http://www.al
 
 The JavaScript client is using CORS ([Cross Origin Resource Sharing](http://en.wikipedia.org/wiki/Cross-Origin_Resource_Sharing#Browser_support)) on recent browsers and has a fallback on JSONP ([JSON with padding](http://en.wikipedia.org/wiki/JSONP)) for old browsers.
 
-[![Build Status](https://travis-ci.org/algolia/algoliasearch-client-js.png?branch=master)](https://travis-ci.org/algolia/algoliasearch-client-js) [![NPM version](https://badge.fury.io/js/algoliasearch.png)](http://badge.fury.io/js/algoliasearch) [![Bower](https://badge.fury.io/bo/algoliasearch.png)](http://badge.fury.io/bo/algoliasearch) [![LibScore](http://107.170.240.125/badge/AlgoliaSearch.svg)](http://libscore.com/#AlgoliaSearch)
+[![Build Status](https://travis-ci.org/algolia/algoliasearch-client-js.svg?branch=master)](https://travis-ci.org/algolia/algoliasearch-client-js) [![NPM version](https://badge.fury.io/js/algoliasearch.svg)](http://badge.fury.io/js/algoliasearch) [![Bower](https://badge.fury.io/bo/algoliasearch.svg)](http://badge.fury.io/bo/algoliasearch) [![LibScore](http://107.170.240.125/badge/AlgoliaSearch.svg)](http://libscore.com/#AlgoliaSearch)
 
 
 
