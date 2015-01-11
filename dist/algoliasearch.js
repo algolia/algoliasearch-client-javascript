@@ -21,7 +21,7 @@
  * THE SOFTWARE.
  */
 
-var ALGOLIA_VERSION = '2.8.4';
+var ALGOLIA_VERSION = '2.8.5';
 
 /*
  * Copyright (c) 2013 Algolia
@@ -474,13 +474,7 @@ AlgoliaSearch.prototype = {
      */
     sendQueriesBatch: function(callback, delay) {
         var as = this;
-        var params = {requests: [], apiKey: this.apiKey, appID: this.applicationID};
-        if (this.userToken) {
-            params['X-Algolia-UserToken'] = this.userToken;
-        }
-        if (this.tagFilters) {
-            params['X-Algolia-TagFilters'] = this.tagFilters;
-        }
+        var params = {requests: []};
         for (var i = 0; i < as.batch.length; ++i) {
             params.requests.push(as.batch[i]);
         }
@@ -553,17 +547,10 @@ AlgoliaSearch.prototype = {
                 jsonpParams += i + '=' + encodeURIComponent(q) + '&';
             }
             var pObj = {params: jsonpParams};
-            if (this.tagFilters) {
-               pObj['X-Algolia-TagFilters'] = this.tagFilters;
-            }
-            if (this.userToken) {
-               pObj['X-Algolia-UserToken'] = this.userToken;
-            }
-
             return this._jsonRequest({ cache: this.cache,
                                    method: 'GET',
                                    url: '/1/indexes/*',
-                                          body: pObj,
+                                   body: pObj,
                                    callback: callback });
         } else {
             return this._jsonRequest({ cache: this.cache,
@@ -669,16 +656,21 @@ AlgoliaSearch.prototype = {
             body = JSON.stringify(opts.body);
         }
 
-        var headers = {};
-        if (this._isUndefined(opts.removeCustomHTTPHeaders) || !opts.removeCustomHTTPHeaders) {
-            headers['X-Algolia-API-Key'] = this.apiKey;
-            headers['X-Algolia-Application-Id'] = this.applicationID;
+        url += ((url.indexOf('?') === -1) ? '?' : '&') + 'X-Algolia-API-Key=' + this.apiKey;
+        url += '&X-Algolia-Application-Id=' + this.applicationID;
+        if (this.userToken) {
+            url += '&X-Algolia-UserToken=' + encodeURIComponent(this.userToken);
+        }
+        if (this.tagFilters) {
+            url += '&X-Algolia-TagFilters=' + encodeURIComponent(this.tagFilters);
+        }
+        for (var i = 0; i < this.extraHeaders.length; ++i) {
+            url += '&' + this.extraHeaders[i].key + '=' + this.extraHeaders[i].value;
         }
         this.options.angular.$http({
             url: url,
             method: opts.method,
             data: body,
-            headers: headers,
             cache: false,
             timeout: this.requestTimeoutInMs
         }).then(function(response) {
@@ -702,15 +694,20 @@ AlgoliaSearch.prototype = {
             body = JSON.stringify(opts.body);
         }
 
-        var headers = {};
-        if (this._isUndefined(opts.removeCustomHTTPHeaders) || !opts.removeCustomHTTPHeaders) {
-            headers['X-Algolia-API-Key'] = this.apiKey;
-            headers['X-Algolia-Application-Id'] = this.applicationID;
+        url += ((url.indexOf('?') === -1) ? '?' : '&') + 'X-Algolia-API-Key=' + this.apiKey;
+        url += '&X-Algolia-Application-Id=' + this.applicationID;
+        if (this.userToken) {
+            url += '&X-Algolia-UserToken=' + encodeURIComponent(this.userToken);
+        }
+        if (this.tagFilters) {
+            url += '&X-Algolia-TagFilters=' + encodeURIComponent(this.tagFilters);
+        }
+        for (var i = 0; i < this.extraHeaders.length; ++i) {
+            url += '&' + this.extraHeaders[i].key + '=' + this.extraHeaders[i].value;
         }
         this.options.jQuery.$.ajax(url, {
             type: opts.method,
             timeout: this.requestTimeoutInMs,
-            headers: headers,
             dataType: 'json',
             data: body,
             error: function(xhr, textStatus, error) {
@@ -752,15 +749,19 @@ AlgoliaSearch.prototype = {
         };
 
         script.type = 'text/javascript';
-        script.src = url + '?callback=' + cb + ',' + this.applicationID + ',' + this.apiKey;
+        script.src = url + '?callback=' + cb + '&X-Algolia-Application-Id=' + this.applicationID + '&X-Algolia-API-Key=' + this.apiKey;
 
-        if (opts.body['X-Algolia-TagFilters']) {
-            script.src += '&X-Algolia-TagFilters=' + encodeURIComponent(opts.body['X-Algolia-TagFilters']);
+        if (this.tagFilters) {
+            script.src += '&X-Algolia-TagFilters=' + encodeURIComponent(this.tagFilters);
         }
 
-        if (opts.body['X-Algolia-UserToken']) {
-            script.src += '&X-Algolia-UserToken=' + encodeURIComponent(opts.body['X-Algolia-UserToken']);
+        if (this.userToken) {
+            script.src += '&X-Algolia-UserToken=' + encodeURIComponent(this.userToken);
         }
+        for (var i = 0; i < this.extraHeaders.length; ++i) {
+            script.src += '&' + this.extraHeaders[i].key + '=' + this.extraHeaders[i].value;
+        }
+
 
         if (opts.body && opts.body.params) {
             script.src += '&' + opts.body.params;
@@ -826,18 +827,23 @@ AlgoliaSearch.prototype = {
             body = JSON.stringify(opts.body);
         }
 
+        url += ((url.indexOf('?') === -1) ? '?' : '&') + 'X-Algolia-API-Key=' + this.apiKey;
+        url += '&X-Algolia-Application-Id=' + this.applicationID;
+        if (this.userToken) {
+            url += '&X-Algolia-UserToken=' + encodeURIComponent(this.userToken);
+        }
+        if (this.tagFilters) {
+            url += '&X-Algolia-TagFilters=' + encodeURIComponent(this.tagFilters);
+        }
+        for (var i = 0; i < this.extraHeaders.length; ++i) {
+            url += '&' + this.extraHeaders[i].key + '=' + this.extraHeaders[i].value;
+        }
         if ('withCredentials' in xmlHttp) {
-            xmlHttp.open(opts.method, url , true);
-            if (this._isUndefined(opts.removeCustomHTTPHeaders) || !opts.removeCustomHTTPHeaders) {
-                      xmlHttp.setRequestHeader('X-Algolia-API-Key', this.apiKey);
-                      xmlHttp.setRequestHeader('X-Algolia-Application-Id', this.applicationID);
-            }
+            xmlHttp.open(opts.method, url, true);
             xmlHttp.timeout = this.requestTimeoutInMs * (opts.successiveRetryCount + 1);
-            for (var i = 0; i < this.extraHeaders.length; ++i) {
-                xmlHttp.setRequestHeader(this.extraHeaders[i].key, this.extraHeaders[i].value);
-            }
             if (body !== null) {
-                xmlHttp.setRequestHeader('Content-type', 'application/json');
+                /* This content type is specified to follow CORS 'simple header' directive */
+                xmlHttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
             }
         } else if (typeof XDomainRequest !== 'undefined') {
             // Handle IE8/IE9
@@ -1016,12 +1022,6 @@ AlgoliaSearch.prototype.Index.prototype = {
                                        callback: callback });
             } else {
                 var pObj = {params: params};
-                if (this.as.tagFilters) {
-                   pObj['X-Algolia-TagFilters'] = this.as.tagFilters;
-                }
-                if (this.as.userToken) {
-                   pObj['X-Algolia-UserToken'] = this.as.userToken;
-                }
                 return this.as._jsonRequest({ method: 'GET',
                                        url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/' + encodeURIComponent(objectID),
                                        callback: callback,
@@ -1191,7 +1191,7 @@ AlgoliaSearch.prototype.Index.prototype = {
          * @param delay (optional) if set, wait for this delay (in ms) and only send the query if there was no other in the meantime.
          */
         search: function(query, callback, args, delay) {
-            if (typeof callback === 'object' && ((typeof args === 'undefined') || args == null)) {
+            if (typeof callback === 'object' && (this.as._isUndefined(args) || !args)) {
                 args = callback;
                 callback = null;
             }
@@ -1219,7 +1219,7 @@ AlgoliaSearch.prototype.Index.prototype = {
          * @param hitsPerPage: Pagination parameter used to select the number of hits per page. Defaults to 1000.
          */
         browse: function(page, callback, hitsPerPage) {
-            if (+callback > 0 && ((typeof hitsPerPage === 'undefined') || hitsPerPage == null)) {
+            if (+callback > 0 && (this.as._isUndefined(hitsPerPage) || !hitsPerPage)) {
                 hitsPerPage = callback;
                 callback = null;
             }
@@ -1459,13 +1459,7 @@ AlgoliaSearch.prototype.Index.prototype = {
         /// Internal methods only after this line
         ///
         _search: function(params, callback) {
-            var pObj = {params: params, apiKey: this.as.apiKey, appID: this.as.applicationID};
-            if (this.as.tagFilters) {
-                pObj['X-Algolia-TagFilters'] = this.as.tagFilters;
-            }
-            if (this.as.userToken) {
-                pObj['X-Algolia-UserToken'] = this.as.userToken;
-            }
+            var pObj = {params: params};
             if (this.as.jsonp === null) {
                 var self = this;
                 return this.as._jsonRequest({ cache: this.cache,
