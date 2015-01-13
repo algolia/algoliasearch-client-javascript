@@ -41,14 +41,15 @@
    * Algolia Search Helper providing faceting and disjunctive faceting
    * @param {AlgoliaSearch} client an AlgoliaSearch client
    * @param {string} index the index name to query
-   * @param {hash} options an associative array defining the hitsPerPage, list of facets and list of disjunctive facets
+   * @param {hash} options an associative array defining the hitsPerPage, list of facets, the list of disjunctive facets and the default facet filters
    */
   window.AlgoliaSearchHelper = function(client, index, options) {
     /// Default options
     var defaults = {
       facets: [],            // list of facets to compute
       disjunctiveFacets: [], // list of disjunctive facets to compute
-      hitsPerPage: 20        // number of hits per page
+      hitsPerPage: 20,       // number of hits per page
+      defaultFacetFilters: [] // the default list of facetFilters
     };
 
     this.init(client, index, extend({}, defaults, options));
@@ -391,6 +392,11 @@
      */
     _getFacetFilters: function(facet) {
       var facetFilters = [];
+      if (this.options.defaultFacetFilters) {
+        for (var i = 0; i < this.options.defaultFacetFilters.length; ++i) {
+          facetFilters.push(this.options.defaultFacetFilters[i]);
+        }
+      }
       for (var refinement in this.refinements) {
         if (this.refinements[refinement]) {
           facetFilters.push(refinement);

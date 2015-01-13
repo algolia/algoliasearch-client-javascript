@@ -45,7 +45,9 @@
           // conjunctive facets (link)
           facets: ['type', 'shipping'],
           // disjunctive facets (checkbox)
-          disjunctiveFacets: ['category', 'manufacturer']
+          disjunctiveFacets: ['category', 'manufacturer'],
+          // (optional) default list of facet filters
+          //defaultFacetFilters: ['type:Game']
         });
 
         function search() {
