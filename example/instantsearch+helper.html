@@ -45,9 +45,9 @@
           // conjunctive facets (link)
           facets: ['type', 'shipping'],
           // disjunctive facets (checkbox)
-          disjunctiveFacets: ['category', 'manufacturer'],
+          disjunctiveFacets: ['category', 'manufacturer']
           // (optional) default list of facet filters
-          //defaultFacetFilters: ['type:Game']
+          //,defaultFacetFilters: ['type:Game']
         });
 
         function search() {
@@ -62,6 +62,13 @@
         $inputfield.keyup(function() {
           search();
         }).focus();
+
+        // IE 9 doesn't define trim()
+        if (typeof String.prototype.trim !== 'function') {
+          String.prototype.trim = function() {
+            return this.replace(/^\s+|\s+$/g, '');
+          }
+        }
 
         function searchCallback(success, content) {
           if (!success) {
