@@ -858,7 +858,7 @@ AlgoliaSearch.prototype = {
             ontimeout = null;
 
             if (!self._isUndefined(event) && event.target !== null) {
-                var retry = (event.target.status === 0 || event.target.status === 503);
+                var retry = event.target.status !== 400 && event.target.status !== 403 && event.target.status !== 404;
                 var success = false;
                 var response = null;
 
