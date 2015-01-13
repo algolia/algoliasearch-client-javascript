@@ -1,5 +1,8 @@
 CHANGELOG
 
+2015-01-13  2.9.0
+    * Angular.js & jQuery compatibility (returning promises)
+
 2015-01-13  2.8.6
     * Search helper: ability to set default facet filters
 

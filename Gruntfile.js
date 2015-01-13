@@ -26,22 +26,46 @@ module.exports = function(grunt) {
       options: {
         banner: '<%= banner %>'
       },
-      jsmin: {
+      main: {
         options: {
           mangle: true,
           compress: true
         },
         src: jsFiles,
         dest: '<%= buildDir %>/algoliasearch.min.js'
+      },
+      jquery: {
+        options: {
+          mangle: true,
+          compress: true
+        },
+        src: jsFiles.concat(['src/algoliasearch.jquery.js']),
+        dest: '<%= buildDir %>/algoliasearch.jquery.min.js'
+      },
+      angular: {
+        options: {
+          mangle: true,
+          compress: true
+        },
+        src: jsFiles.concat(['src/algoliasearch.angular.js']),
+        dest: '<%= buildDir %>/algoliasearch.angular.min.js'
       }
     },
 
     concat: {
       options: {
       },
-      dist: {
+      main: {
         src: jsFiles,
         dest: '<%= buildDir %>/algoliasearch.js'
+      },
+      jquery: {
+        src: jsFiles.concat(['src/algoliasearch.jquery.js']),
+        dest: '<%= buildDir %>/algoliasearch.jquery.js'
+      },
+      angular: {
+        src: jsFiles.concat(['src/algoliasearch.angular.js']),
+        dest: '<%= buildDir %>/algoliasearch.angular.js'
       }
     },
 
@@ -49,7 +73,7 @@ module.exports = function(grunt) {
       version: {
         pattern: '%VERSION%',
         replacement: '<%= version %>',
-        path: ['<%= concat.dist.dest %>', '<%= uglify.jsmin.dest %>']
+        path: ['<%= concat.main.dest %>', '<%= concat.jquery.dest %>', '<%= concat.angular.dest %>', '<%= uglify.main.dest %>', '<%= uglify.jquery.dest %>', '<%= uglify.angular.dest %>']
       },
       bower: {
         pattern: /"version": "[0-9]+\.[0-9]+\.[0-9]+",/,
