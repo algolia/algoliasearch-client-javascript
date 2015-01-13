@@ -648,8 +648,16 @@ AlgoliaSearch.prototype = {
             timeout: (this.requestTimeoutInMs * (opts.successiveRetryCount + 1))
         }).then(function(response) {
             opts.callback(false, true, null, response.data);
-        }, function(err) {
-            opts.callback(true, false, null, { 'message': err.data } );
+        }, function(response) {
+            if (response.status === 0) {
+                // xhr.timeout is not handled by Angular.js right now
+                // let's retry
+                opts.callback(true, false, null, response.data);
+            } else if (response.status >= 400 || response.status < 200) {
+                opts.callback(false, false, null, response.data);
+            } else {
+                opts.callback(true, false, null, response.data);
+            }
         });
     },
 
