@@ -568,11 +568,12 @@ AlgoliaSearch.prototype = {
         opts.successiveRetryCount = 0;
         var impl = function() {
             if (opts.successiveRetryCount >= self.hosts.length) {
+                var error = { message: 'Cannot connect the Algolia\'s Search API. Please send an email to support@algolia.com to report the issue.' };
                 if (!self._isUndefined(callback) && callback) {
                     opts.successiveRetryCount = 0;
-                    callback(false, { message: 'Cannot connect the Algolia\'s Search API. Please send an email to support@algolia.com to report the issue.' });
+                    callback(false, error);
                 }
-                deferred && deferred.reject();
+                deferred && deferred.reject(error);
                 return;
             }
             opts.callback = function(retry, success, obj, body) {
@@ -588,7 +589,7 @@ AlgoliaSearch.prototype = {
                     impl();
                 } else {
                     opts.successiveRetryCount = 0;
-                    deferred && deferred.resolve(body);
+                    deferred && (success ? deferred.resolve(body) : deferred.reject(body));
                     if (!self._isUndefined(callback) && callback) {
                         callback(success, body);
                     }
