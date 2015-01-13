@@ -689,6 +689,8 @@ AlgoliaSearch.prototype = {
             error: function(xhr, textStatus, error) {
                 if (textStatus === 'timeout') {
                     opts.callback(true, false, null, { 'message': 'Timeout - Could not connect to endpoint ' + url } );
+                } else if (xhr.status >= 400 || xhr.status < 200) {
+                    opts.callback(false, false, null, xhr.responseJSON );
                 } else {
                     opts.callback(true, false, null, { 'message': error } );
                 }
