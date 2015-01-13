@@ -60,7 +60,7 @@ To setup your project, follow these steps:
 
 
 
-### Download Algoliasearch with `bower`:
+### Download Algoliasearch from `bower`:
 
 [Bower](http://bower.io/) works by fetching and installing packages from all over, taking care of hunting, finding, downloading, and saving the stuff you’re looking for.
 
@@ -68,35 +68,72 @@ To setup your project, follow these steps:
 $ bower install algoliasearch
 ```
 
-### Download Algoliasearch with the `jsDelivr` CDN:
+### Download Algoliasearch from the `jsDelivr` CDN:
 
 [jsDelivr](https://hacks.mozilla.org/2014/03/jsdelivr-the-advanced-open-source-public-cdn/) can offer a performance benefit by hosting `algoliasearch` on servers spread across the globe. This also offers an advantage that if the visitor to your webpage has already downloaded a copy of `algoliasearch` from jsDelivr, it won't have to be re-downloaded.
 
+##### Default - Vanilla HTTP requests (`XMLHttpRequest()`)
+
 ```javascript
-  <script src="//cdn.jsdelivr.net/algoliasearch/{VERSION}/algoliasearch.min.js"></script>
+<script src="//cdn.jsdelivr.net/algoliasearch/{VERSION}/algoliasearch.min.js"></script>
 ```
 
-or
+##### jQuery HTTP requests (`$.ajax`)
 
 ```javascript
-  <script src="//cdn.jsdelivr.net/algoliasearch/latest/algoliasearch.min.js"></script>
+<script src="//cdn.jsdelivr.net/algoliasearch/{VERSION}/algoliasearch.jquery.min.js"></script>
+```
+
+##### Angular.js HTTP requests (`$http` and `$q`)
+
+```javascript
+<script src="//cdn.jsdelivr.net/algoliasearch/{VERSION}/algoliasearch.angular.min.js"></script>
 ```
 
 ### Download Algoliasearch from `Github`:
 
 Download the [client](https://github.com/algolia/algoliasearch-client-js/archive/master.zip) from Github's archive.
 
-### Setup 
+### Setup
 
- 1. Add an include of `algoliasearch.min.js`
- 2. Initialize the client with your ApplicationID and API-Key. You can find all of them on [your Algolia account](http://www.algolia.com/users/edit).
- 3. When you use this API client for search on a website, we strongly recommand to use a key with an ACL restricted to "search". You can retrieve one with `client.addUserKey(["search"])`.
+ 1. Ensure your page is including `algoliasearch.min.js` **OR** `algoliasearch.jquery.min.js` **OR** `algoliasearch.angular.min.js`
+ 2. Initialize the client with your ApplicationID and your Search-Only API-Key. You can find all of them on [your Algolia account](https://www.algolia.com/licensing).
+
+##### Default
 
 ```javascript
-  <script src="algoliasearch.min.js"></script>
-  <script>
-    client = new AlgoliaSearch('ApplicationID', 'API-Key');
-    ...
+<script src="algoliasearch.min.js"></script>
+<script>
+  var client = new AlgoliaSearch('ApplicationID', 'Search-Only-API-Key');
+  // ...
+```
+
+##### Using jQuery's HTTP requests (`$.ajax`)
+
+```javascript
+<script src="algoliasearch.jquery.min.js"></script>
+<script>
+  var client = $.algolia.Client('ApplicationID', 'Search-Only-API-Key');
+  // ...
+```
+
+##### Using Angular.js's HTTP requests (`$http` and `$q`)
+
+If your application is based on Angular.js, you need to use our Angular.js integration instead of the vanilla one to be able to render the hits with Angular.js once the engine answers.
+
+```javascript
+<script src="algoliasearch.angular.min.js"></script>
+<script>
+  angular
+    .module('myapp', ['algoliasearch'])
+    .controller('SearchCtrl', ['$scope', 'algolia', function($scope, algolia) {
+      $scope.query = '';
+      $scope.hits = [];
+      var client = algolia.Client('ApplicationID', 'Search-Only-API-Key');
+
+      // ...
+    }]);
+  ...
 ```
 
 
@@ -108,7 +145,7 @@ Download the [client](https://github.com/algolia/algoliasearch-client-js/archive
 Quick Start
 -------------
 
-First, index some data. For example, you can use the command line client [quick start](https://github.com/algolia/algoliasearch-client-cmd#quick-start) to index the 500 contacts sample.
+The JavaScript API client is dedicated to web apps searching directly from the browser. To add, remove or delete your objects please consider using a backend API client.
 
 You can then update the ```example/autocomplete.html``` file with your ```ApplicationID```, ```API-Key``` and ```index name``` to test the autocomplete feature.
 
@@ -130,9 +167,9 @@ All API calls will return the result in a callback that takes two arguments:
 Cache
 -------------
 
-Queries will be stored in a ```cache``` inside your JavaScript ```Index``` object to avoid performing the same API calls twice. It's particularly useful when your users are deleting letters/words from the current query but may end in some outdated results if the page isn't refreshed for some time.
+Queries will be stored in a ```cache``` inside your JavaScript ```Index``` and ```AlgoliaSearch``` objects to avoid performing the same API calls twice. It's particularly useful when your users are deleting letters/words from the current query but may end in some outdated results if the page isn't refreshed for some time.
 
-Just clear the cache every X minutes to work-around 
+Just clear the cache every X minutes to ensure you've always up-to-date results:
 ```js
 // clear the queries cache
 index.clearCache();
@@ -172,22 +209,6 @@ Check our [tutorials](http://www.algolia.com/doc/tutorials):
 Commands reference
 ==================
 
-
-Update the index
--------------
-
-The JavaScript client is dedicated to web apps searching directly from the browser. In some use-cases, it can however be interesting to perform updates to the index directly in JavaScript, for example in an HTML5 mobile app. Therefore, just as for other languages, the JavaScript client is able to add, update or delete objects, or to modify index settings.
-
-For more details about updating an index from JavaScript, have a look at the [algoliasearch.js](https://github.com/algolia/algoliasearch-client-js/blob/master/src/algoliasearch.js) source file to see details about each function.
-
-**Note:** If you use the JavaScript client to update the index, you need to specify `https` as the protocol in the client initialization:
-
-```javascript
-  <script src="algoliasearch.min.js"></script>
-  <script>
-    client = new AlgoliaSearch('ApplicationID', 'API-Key', 'https');
-    ...
-```
 
 
 Search
@@ -276,6 +297,8 @@ You can also use a string array encoding (for example `numericFilters: ["price>1
  * **distinct**: If set to 1, enable the distinct feature (disabled by default) if the `attributeForDistinct` index setting is set. This feature is similar to the SQL "distinct" keyword: when enabled in a query with the `distinct=1` parameter, all hits containing a duplicate value for the attributeForDistinct attribute are removed from results. For example, if the chosen attribute is `show_name` and several hits have the same value for `show_name`, then only the best one is kept and others are removed.
 **Note**: This feature is disabled if the query string is empty and there isn't any `tagFilters`, nor any `facetFilters`, nor any `numericFilters` parameters.
 
+##### Default
+
 ```javascript
 index = client.initIndex('contacts');
 index.search('query string', function(success, content) {
@@ -296,7 +319,51 @@ index.search('query string', function(success, content) {
     for (var h in content.hits) {
         console.log('Hit(' + content.hits[h].objectID + '): ' + content.hits[h].toString());
     }
-}, {'attributesToRetrieve': 'firstname,lastname', 'hitsPerPage': 50});
+}, {attributesToRetrieve: 'firstname,lastname', hitsPerPage: 50});
+```
+
+##### jQuery
+
+```javascript
+index = client.initIndex('contacts');
+index.search('query string')
+    .done(function(content) {
+        for (var h in content.hits) {
+            console.log('Hit(' + content.hits[h].objectID + '): ' + content.hits[h].toString());
+        }
+    })
+    .fail(function(content) {
+        console.log('Error: ' + content.message);
+    });
+
+index.search('query string', { attributesToRetrieve: 'firstname,lastname', hitsPerPage: 50})
+    .done(function(content) {
+        for (var h in content.hits) {
+            console.log('Hit(' + content.hits[h].objectID + '): ' + content.hits[h].toString());
+        }
+    })
+    .fail(function(content) {
+        console.log('Error: ' + content.message);
+    });
+```
+
+##### Angular.js
+
+```javascript
+index = client.initIndex('contacts');
+index.search('query string')
+    .then(function(content) {
+        $scope.hits = content.hits;
+    }, function(content) {
+        console.log('Error: ' + content.message);
+    });
+
+index.search('query string', { attributesToRetrieve: 'firstname,lastname', hitsPerPage: 50})
+    .then(function(content) {
+        $scope.hits = content.hits;
+    }, function(content) {
+        console.log('Error: ' + content.message);
+    });
 ```
 
 The server response will look like:
@@ -340,6 +407,8 @@ Multi-queries
 
 You can send multiple queries with a single API call using a batch of queries:
 
+#### Default
+
 ```javascript
 // perform 3 queries in a single API call:
 //  - 1st query targets index `categories`
@@ -370,12 +439,74 @@ function searchMultiCallback(success, content) {
 }
 ```
 
+#### jQuery
+
+```javascript
+// perform 3 queries in a single API call:
+//  - 1st query targets index `categories`
+//  - 2nd and 3rd queries target index `products`
+client.startQueriesBatch();
+client.addQueryInBatch('categories', $('#q').val(), { hitsPerPage: 3 });
+client.addQueryInBatch('products', $('#q').val(), { hitsPerPage: 3, tagFilters: 'promotion' });
+client.addQueryInBatch('products', $('#q').val(), { hitsPerPage: 10 });
+client.sendQueriesBatch().done(function(content) {
+  if (success) {
+    var categories = content.results[0];
+    for (var i = 0; i < categories.hits.length; ++i) {
+      console.log(categories.hits[i]);
+    }
+
+    var products_promotion = content.results[1];
+    for (var i = 0; i < products_promotion.hits.length; ++i) {
+      console.log(products_promotion.hits[i]);
+    }
+
+    var products = content.results[2];
+    for (var i = 0; i < products.hits.length; ++i) {
+      console.log(products.hits[i]);
+    }
+  }
+});
+```
+
+#### Angular.js
+
+```javascript
+// perform 3 queries in a single API call:
+//  - 1st query targets index `categories`
+//  - 2nd and 3rd queries target index `products`
+client.startQueriesBatch();
+client.addQueryInBatch('categories', $('#q').val(), { hitsPerPage: 3 });
+client.addQueryInBatch('products', $('#q').val(), { hitsPerPage: 3, tagFilters: 'promotion' });
+client.addQueryInBatch('products', $('#q').val(), { hitsPerPage: 10 });
+client.sendQueriesBatch().then(function(content) {
+  if (success) {
+    var categories = content.results[0];
+    for (var i = 0; i < categories.hits.length; ++i) {
+      console.log(categories.hits[i]);
+    }
+
+    var products_promotion = content.results[1];
+    for (var i = 0; i < products_promotion.hits.length; ++i) {
+      console.log(products_promotion.hits[i]);
+    }
+
+    var products = content.results[2];
+    for (var i = 0; i < products.hits.length; ++i) {
+      console.log(products.hits[i]);
+    }
+  }
+});
+```
+
 
 
 Get an object
 -------------
 
 You can easily retrieve an object using its `objectID` and optionnaly a list of attributes you want to retrieve (using comma as separator):
+
+##### Default
 
 ```javascript
 // Retrieves all attributes
@@ -392,10 +523,55 @@ index.getObject('myID', function(success, content) {
 }, "firstname");
 ```
 
+##### jQuery
+
+```javascript
+// Retrieves all attributes
+index.getObject('myID').done(function(content) {
+  console.log(content.objectID + ": ", content;
+});
+// Retrieves firstname and lastname attributes
+index.getObject('myID', "firstname,lastname").done(function(content) {
+  console.log(content.objectID + ": ", content);
+});
+```
+
+
+##### Angular.js
+
+```javascript
+// Retrieves all attributes
+index.getObject('myID').then(function(content) {
+  console.log(content.objectID + ": ", content;
+});
+// Retrieves firstname and lastname attributes
+index.getObject('myID', "firstname,lastname").then(function(content) {
+  console.log(content.objectID + ": ", content);
+});
+```
+
 You can also retrieve a set of objects:
+
+##### Default
 
 ```javascript
 index.getObjects(['myObj1', 'myObj2'], function(success, content) {
+ // iterate over content
+});
+```
+
+##### jQuery
+
+```javascript
+index.getObjects(['myObj1', 'myObj2']).done(function(content) {
+ // iterate over content
+});
+```
+
+##### Angular.js
+
+```javascript
+index.getObjects(['myObj1', 'myObj2']).then(function(content) {
  // iterate over content
 });
 ```
@@ -421,6 +597,20 @@ algolia.setUserToken('user_42')              // must be same than the one used a
 ```
 
 
+
+
+
+Updating the index
+-------------
+
+In some use-cases, it can however be interesting to perform updates to the index directly in JavaScript, for example in an HTML5 mobile app. Therefore, just as for other languages, the JavaScript client is able to add, update or delete objects, or to modify index settings. For more details about updating an index from JavaScript, have a look at the [algoliasearch.js](https://github.com/algolia/algoliasearch-client-js/blob/master/src/algoliasearch.js) source file to see details about each function. If you use the JavaScript client to update the index, you need to specify `https` as the protocol during the client initialization:
+
+```javascript
+  <script src="algoliasearch.min.js"></script>
+  <script>
+    client = new AlgoliaSearch('ApplicationID', 'API-Key', { method: 'https' });
+    ...
+```
 
 
 
