@@ -858,7 +858,6 @@ AlgoliaSearch.prototype = {
             ontimeout = null;
 
             if (!self._isUndefined(event) && event.target !== null) {
-                var retry = event.target.status !== 400 && event.target.status !== 403 && event.target.status !== 404;
                 var success = false;
                 var response = null;
 
@@ -866,12 +865,12 @@ AlgoliaSearch.prototype = {
                     // Handle CORS requests IE8/IE9
                     response = event.target.responseText;
                     success = (response && response.length > 0);
-                }
-                else {
+                } else {
                     response = event.target.response;
                     success = (event.target.status === 200 || event.target.status === 201);
                 }
 
+                var retry = !success && event.target.status !== 400 && event.target.status !== 403 && event.target.status !== 404;
                 opts.callback(retry, success, event.target, response ? JSON.parse(response) : null);
             } else {
                 opts.callback(false, true, event, JSON.parse(xmlHttp.responseText));
