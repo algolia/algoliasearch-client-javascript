@@ -50,6 +50,8 @@
                 return;
               }
               $scope.hits = content.hits;
+            }, function(content) {
+              console.log('Error: ' + content.message);
             });
           });
         }]);
