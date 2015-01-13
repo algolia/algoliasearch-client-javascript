@@ -577,9 +577,6 @@ AlgoliaSearch.prototype = {
                 return;
             }
             opts.callback = function(retry, success, obj, body) {
-                if (!success && !self._isUndefined(body)) {
-                    window.console && console.log('Error: ' + body.message);
-                }
                 if (success && !self._isUndefined(opts.cache)) {
                     cache[cacheID] = body;
                 }
