@@ -645,7 +645,7 @@ AlgoliaSearch.prototype = {
             method: opts.method,
             data: body,
             cache: false,
-            timeout: this.requestTimeoutInMs
+            timeout: (this.requestTimeoutInMs * (opts.successiveRetryCount + 1))
         }).then(function(response) {
             opts.callback(false, true, null, response.data);
         }, function(err) {
@@ -680,7 +680,7 @@ AlgoliaSearch.prototype = {
         }
         this.options.jQuery.$.ajax(url, {
             type: opts.method,
-            timeout: this.requestTimeoutInMs,
+            timeout: (this.requestTimeoutInMs * (opts.successiveRetryCount + 1)),
             dataType: 'json',
             data: body,
             error: function(xhr, textStatus, error) {
