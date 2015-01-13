@@ -653,7 +653,7 @@ AlgoliaSearch.prototype = {
                 // xhr.timeout is not handled by Angular.js right now
                 // let's retry
                 opts.callback(true, false, null, response.data);
-            } else if (response.status >= 400 || response.status < 200) {
+            } else if (response.status == 400 || response.status === 403 || response.status === 404) {
                 opts.callback(false, false, null, response.data);
             } else {
                 opts.callback(true, false, null, response.data);
@@ -694,7 +694,7 @@ AlgoliaSearch.prototype = {
             error: function(xhr, textStatus, error) {
                 if (textStatus === 'timeout') {
                     opts.callback(true, false, null, { 'message': 'Timeout - Could not connect to endpoint ' + url } );
-                } else if (xhr.status >= 400 || xhr.status < 200) {
+                } else if (xhr.status === 400 || xhr.status === 403 || xhr.status === 404) {
                     opts.callback(false, false, null, xhr.responseJSON );
                 } else {
                     opts.callback(true, false, null, { 'message': error } );
