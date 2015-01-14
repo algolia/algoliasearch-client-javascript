@@ -388,6 +388,7 @@
             var e = exclude.indexOf(':-');
             var facet = exclude.slice(0, e);
             var value = exclude.slice(e + 2);
+            aggregatedAnswer.facets[facet] = aggregatedAnswer.facets[facet] || {};
             if (!aggregatedAnswer.facets[facet][value]) {
               aggregatedAnswer.facets[facet][value] = 0;
             }
