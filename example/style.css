@@ -118,6 +118,12 @@ body {
 .hit:hover {
   background-color: #e9f0ff;
 }
+.refined {
+  font-weight: bold;
+}
+.excluded {
+  text-decoration: line-through;
+}
 em {
   font-style: normal;
   font-weight: bold;

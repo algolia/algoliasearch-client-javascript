@@ -1579,6 +1579,7 @@ AlgoliaSearch.prototype.Index.prototype = {
       this.options = options;
       this.page = 0;
       this.refinements = {};
+      this.excludes = {};
       this.disjunctiveRefinements = {};
       this.extraQueries = [];
     },
@@ -1657,6 +1658,47 @@ AlgoliaSearch.prototype.Index.prototype = {
     },
 
     /**
+     * Ensure a facet exclude exists
+     * @param  {string} facet the facet to refine
+     * @param  {string} value the associated value
+     */
+    addExclude: function(facet, value) {
+      var refinement = facet + ':-' + value;
+      this.excludes = this.excludes || {};
+      this.excludes[refinement] = true;
+    },
+
+    /**
+     * Ensure a facet exclude does not exist
+     * @param  {string} facet the facet to refine
+     * @param  {string} value the associated value
+     */
+    removeExclude: function(facet, value) {
+      var refinement = facet + ':-' + value;
+      this.excludes = this.excludes || {};
+      this.excludes[refinement] = false;
+    },
+
+    /**
+     * Toggle refinement state of an exclude
+     * @param  {string} facet the facet to refine
+     * @param  {string} value the associated value
+     * @return {boolean} true if the facet has been found
+     */
+    toggleExclude: function(facet, value) {
+      for (var i = 0; i < this.options.facets.length; ++i) {
+        if (this.options.facets[i] == facet) {
+          var refinement = facet + ':-' + value;
+          this.excludes[refinement] = !this.excludes[refinement];
+          this.page = 0;
+          this._search();
+          return true;
+        }
+      }
+      return false;
+    },
+
+    /**
      * Toggle refinement state of a facet
      * @param  {string} facet the facet to refine
      * @param  {string} value the associated value
@@ -1696,6 +1738,20 @@ AlgoliaSearch.prototype.Index.prototype = {
         return true;
       }
       if (this.disjunctiveRefinements[facet] && this.disjunctiveRefinements[facet][value]) {
+        return true;
+      }
+      return false;
+    },
+
+    /**
+     * Check the exclude state of a facet
+     * @param  {string}  facet the facet
+     * @param  {string}  value the associated value
+     * @return {boolean} true if refined
+     */
+    isExcluded: function(facet, value) {
+      var refinement = facet + ':-' + value;
+      if (this.excludes[refinement]) {
         return true;
       }
       return false;
@@ -1807,6 +1863,7 @@ AlgoliaSearch.prototype.Index.prototype = {
         var aggregatedAnswer = content.results[0];
         aggregatedAnswer.disjunctiveFacets = aggregatedAnswer.disjunctiveFacets || {};
         aggregatedAnswer.facetStats = aggregatedAnswer.facetStats || {};
+        // create disjunctive facets from facets (disjunctive facets without refinements)
         for (var facet in unusedDisjunctiveFacets) {
           if (aggregatedAnswer.facets[facet] && !aggregatedAnswer.disjunctiveFacets[facet]) {
             aggregatedAnswer.disjunctiveFacets[facet] = aggregatedAnswer.facets[facet];
@@ -1817,24 +1874,40 @@ AlgoliaSearch.prototype.Index.prototype = {
             }
           }
         }
+        // aggregate the disjunctive facets
         for (i = 0; i < disjunctiveFacets.length; ++i) {
           for (var dfacet in content.results[i + 1].facets) {
             aggregatedAnswer.disjunctiveFacets[dfacet] = content.results[i + 1].facets[dfacet];
             if (self.disjunctiveRefinements[dfacet]) {
               for (var value in self.disjunctiveRefinements[dfacet]) {
+                // add the disjunctive reginements if it is no more retrieved
                 if (!aggregatedAnswer.disjunctiveFacets[dfacet][value] && self.disjunctiveRefinements[dfacet][value]) {
                   aggregatedAnswer.disjunctiveFacets[dfacet][value] = 0;
                 }
               }
             }
           }
+          // aggregate the disjunctive facets stats
           for (var stats in content.results[i + 1].facets_stats) {
             aggregatedAnswer.facetStats[stats] = content.results[i + 1].facets_stats[stats];
           }
         }
+        // add the excludes
+        for (var exclude in self.excludes) {
+          if (self.excludes[exclude]) {
+            var e = exclude.indexOf(':-');
+            var facet = exclude.slice(0, e);
+            var value = exclude.slice(e + 2);
+            if (!aggregatedAnswer.facets[facet][value]) {
+              aggregatedAnswer.facets[facet][value] = 0;
+            }
+          }
+        }
+        // call the actual callback
         if (self.extraQueries.length === 0) {
           self.searchCallback(true, aggregatedAnswer);
         } else {
+          // append the extra queries
           var c = { results: [ aggregatedAnswer ] };
           for (i = 0; i < self.extraQueries.length; ++i) {
             c.results.push(content.results[1 + disjunctiveFacets.length + i]);
@@ -1911,6 +1984,11 @@ AlgoliaSearch.prototype.Index.prototype = {
       }
       for (var refinement in this.refinements) {
         if (this.refinements[refinement]) {
+          facetFilters.push(refinement);
+        }
+      }
+      for (var refinement in this.excludes) {
+        if (this.excludes[refinement]) {
           facetFilters.push(refinement);
         }
       }
