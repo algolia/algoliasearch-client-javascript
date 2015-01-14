@@ -450,21 +450,19 @@ client.addQueryInBatch('categories', $('#q').val(), { hitsPerPage: 3 });
 client.addQueryInBatch('products', $('#q').val(), { hitsPerPage: 3, tagFilters: 'promotion' });
 client.addQueryInBatch('products', $('#q').val(), { hitsPerPage: 10 });
 client.sendQueriesBatch().done(function(content) {
-  if (success) {
-    var categories = content.results[0];
-    for (var i = 0; i < categories.hits.length; ++i) {
-      console.log(categories.hits[i]);
-    }
+  var categories = content.results[0];
+  for (var i = 0; i < categories.hits.length; ++i) {
+    console.log(categories.hits[i]);
+  }
 
-    var products_promotion = content.results[1];
-    for (var i = 0; i < products_promotion.hits.length; ++i) {
-      console.log(products_promotion.hits[i]);
-    }
+  var products_promotion = content.results[1];
+  for (var i = 0; i < products_promotion.hits.length; ++i) {
+    console.log(products_promotion.hits[i]);
+  }
 
-    var products = content.results[2];
-    for (var i = 0; i < products.hits.length; ++i) {
-      console.log(products.hits[i]);
-    }
+  var products = content.results[2];
+  for (var i = 0; i < products.hits.length; ++i) {
+    console.log(products.hits[i]);
   }
 });
 ```
@@ -480,21 +478,19 @@ client.addQueryInBatch('categories', $('#q').val(), { hitsPerPage: 3 });
 client.addQueryInBatch('products', $('#q').val(), { hitsPerPage: 3, tagFilters: 'promotion' });
 client.addQueryInBatch('products', $('#q').val(), { hitsPerPage: 10 });
 client.sendQueriesBatch().then(function(content) {
-  if (success) {
-    var categories = content.results[0];
-    for (var i = 0; i < categories.hits.length; ++i) {
-      console.log(categories.hits[i]);
-    }
+  var categories = content.results[0];
+  for (var i = 0; i < categories.hits.length; ++i) {
+    console.log(categories.hits[i]);
+  }
 
-    var products_promotion = content.results[1];
-    for (var i = 0; i < products_promotion.hits.length; ++i) {
-      console.log(products_promotion.hits[i]);
-    }
+  var products_promotion = content.results[1];
+  for (var i = 0; i < products_promotion.hits.length; ++i) {
+    console.log(products_promotion.hits[i]);
+  }
 
-    var products = content.results[2];
-    for (var i = 0; i < products.hits.length; ++i) {
-      console.log(products.hits[i]);
-    }
+  var products = content.results[2];
+  for (var i = 0; i < products.hits.length; ++i) {
+    console.log(products.hits[i]);
   }
 });
 ```
