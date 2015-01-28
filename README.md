@@ -72,19 +72,19 @@ $ bower install algoliasearch
 
 [jsDelivr](https://hacks.mozilla.org/2014/03/jsdelivr-the-advanced-open-source-public-cdn/) can offer a performance benefit by hosting `algoliasearch` on servers spread across the globe. This also offers an advantage that if the visitor to your webpage has already downloaded a copy of `algoliasearch` from jsDelivr, it won't have to be re-downloaded.
 
-##### Default - Vanilla HTTP requests (`XMLHttpRequest()`)
+##### Default
 
 ```javascript
 <script src="//cdn.jsdelivr.net/algoliasearch/{VERSION}/algoliasearch.min.js"></script>
 ```
 
-##### jQuery HTTP requests (`$.ajax`)
+##### jQuery application
 
 ```javascript
 <script src="//cdn.jsdelivr.net/algoliasearch/{VERSION}/algoliasearch.jquery.min.js"></script>
 ```
 
-##### Angular.js HTTP requests (`$http` and `$q`)
+##### Angular.js application
 
 ```javascript
 <script src="//cdn.jsdelivr.net/algoliasearch/{VERSION}/algoliasearch.angular.min.js"></script>
@@ -108,7 +108,7 @@ Download the [client](https://github.com/algolia/algoliasearch-client-js/archive
   // ...
 ```
 
-##### Using jQuery's HTTP requests (`$.ajax`)
+##### jQuery application - Using `$.ajax` to perform HTTP requests
 
 ```javascript
 <script src="algoliasearch.jquery.min.js"></script>
@@ -117,7 +117,7 @@ Download the [client](https://github.com/algolia/algoliasearch-client-js/archive
   // ...
 ```
 
-##### Using Angular.js's HTTP requests (`$http` and `$q`)
+##### Angular.js application - Using `$http` and `$q` to perform HTTP requests
 
 If your application is based on Angular.js, you need to use our Angular.js integration instead of the vanilla one to be able to render the hits with Angular.js once the engine answers.
 
@@ -507,7 +507,7 @@ You can easily retrieve an object using its `objectID` and optionnaly a list of 
 ```javascript
 // Retrieves all attributes
 index.getObject('myID', function(success, content) {
-  console.log(content.objectID + ": ", content;
+  console.log(content.objectID + ": ", content);
 });
 // Retrieves firstname and lastname attributes
 index.getObject('myID', function(success, content) {
@@ -524,7 +524,7 @@ index.getObject('myID', function(success, content) {
 ```javascript
 // Retrieves all attributes
 index.getObject('myID').done(function(content) {
-  console.log(content.objectID + ": ", content;
+  console.log(content.objectID + ": ", content);
 });
 // Retrieves firstname and lastname attributes
 index.getObject('myID', "firstname,lastname").done(function(content) {
@@ -538,7 +538,7 @@ index.getObject('myID', "firstname,lastname").done(function(content) {
 ```javascript
 // Retrieves all attributes
 index.getObject('myID').then(function(content) {
-  console.log(content.objectID + ": ", content;
+  console.log(content.objectID + ": ", content);
 });
 // Retrieves firstname and lastname attributes
 index.getObject('myID', "firstname,lastname").then(function(content) {
