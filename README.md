@@ -60,7 +60,7 @@ To setup your project, follow these steps:
 
 
 
-### Download Algoliasearch from `bower`:
+#### Download Algoliasearch from `bower`:
 
 [Bower](http://bower.io/) works by fetching and installing packages from all over, taking care of hunting, finding, downloading, and saving the stuff you’re looking for.
 
@@ -68,7 +68,7 @@ To setup your project, follow these steps:
 $ bower install algoliasearch
 ```
 
-### Download Algoliasearch from the `jsDelivr` CDN:
+#### Download Algoliasearch from the `jsDelivr` CDN:
 
 [jsDelivr](https://hacks.mozilla.org/2014/03/jsdelivr-the-advanced-open-source-public-cdn/) can offer a performance benefit by hosting `algoliasearch` on servers spread across the globe. This also offers an advantage that if the visitor to your webpage has already downloaded a copy of `algoliasearch` from jsDelivr, it won't have to be re-downloaded.
 
@@ -90,7 +90,7 @@ $ bower install algoliasearch
 <script src="//cdn.jsdelivr.net/algoliasearch/{VERSION}/algoliasearch.angular.min.js"></script>
 ```
 
-### Download Algoliasearch from `Github`:
+#### Download Algoliasearch from `Github`:
 
 Download the [client](https://github.com/algolia/algoliasearch-client-js/archive/master.zip) from Github's archive.
 
