@@ -44,5 +44,5 @@
     "test": "grunt test --verbose",
     "examples": "http-server example/ -a 127.0.0.1"
   },
-  "version": "2.9.0"
+  "version": "2.9.1"
 }
