@@ -1,5 +1,8 @@
 CHANGELOG
 
+2015-02-03  2.9.1
+    * Fixed listIndexes pagination, not working if page=0
+
 2015-01-13  2.9.0
     * Angular.js & jQuery compatibility (returning promises)
     * Helper: ability to exclude facets
