@@ -1,12 +1,10 @@
-var semver = require('semver'),
-    f = require('util').format,
-    jsFiles = [
-      'src/version.js',
-      'src/algoliasearch.js',
-      'src/algoliasearch.helper.js',
-      'src/algoliasearch.places.js',
-      'vendor/json2.js'
-    ];
+var jsFiles = [
+  'src/version.js',
+  'src/algoliasearch.js',
+  'src/algoliasearch.helper.js',
+  'src/algoliasearch.places.js',
+  'vendor/json2.js'
+];
 
 module.exports = function(grunt) {
   grunt.initConfig({
@@ -91,48 +89,8 @@ module.exports = function(grunt) {
       gruntfile: ['Gruntfile.js']
     },
 
-    watch: {
-      js: {
-        files: jsFiles,
-        tasks: 'build:js'
-      }
-    },
-
-    jasmine: {
-      js: {
-        src: jsFiles,
-        options: {
-          specs: 'test/*_spec.js',
-          timeout: 40000,
-          template: 'SpecRunner.tmpl',
-          templateOptions: {
-            application_id: process.env.ALGOLIA_APPLICATION_ID,
-            api_key: process.env.ALGOLIA_API_KEY
-          },
-          '--ssl-protocol' : 'tlsv1'
-        }
-      }
-    },
-
     clean: {
       dist: 'dist'
-    },
-
-    connect: {
-      server: {
-        options: {
-          port: 8888, keepalive: true
-        }
-      }
-    },
-
-    parallel: {
-      dev: {
-        tasks: [
-          { grunt: true, args: ['server'] },
-          { grunt: true, args: ['watch'] }
-        ]
-      }
     }
   });
 
@@ -159,23 +117,16 @@ module.exports = function(grunt) {
 
   grunt.registerTask('default', 'build');
   grunt.registerTask('build', ['uglify', 'concat', 'sed:version', 'sed:bower']);
-  grunt.registerTask('server', 'connect:server');
   grunt.registerTask('lint', 'jshint');
-  grunt.registerTask('test', 'jasmine:js');
-  grunt.registerTask('test:browser', ['jasmine:js:build']);
-  grunt.registerTask('dev', 'parallel:dev');
 
   // load tasks
   // ----------
 
   grunt.loadNpmTasks('grunt-sed');
-  grunt.loadNpmTasks('grunt-exec');
-  grunt.loadNpmTasks('grunt-parallel');
-  grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-contrib-sed');
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-concat');
-  grunt.loadNpmTasks('grunt-contrib-connect');
   grunt.loadNpmTasks('grunt-contrib-jasmine');
 };
