@@ -3,7 +3,7 @@ var test = require('tape');
 // this test will ensure we are implementing a particular API method
 // If you had a new method, it will first fail, you will have to write a test
 // for it
-test('AlgoliaSearch.prototype API spec', function(t) {
+test('AlgoliaSearch.prototype.Index.prototype API spec', function(t) {
   t.plan(1);
 
   var AlgoliaSearch = require('algoliasearch');
@@ -11,30 +11,32 @@ test('AlgoliaSearch.prototype API spec', function(t) {
   var onlyPublicMethods = require('./lib/only-public-methods');
 
   var expectedMethods = [
-    'Index',
-    'addQueryInBatch',
+    'addObject',
+    'addObjects',
     'addUserKey',
     'addUserKeyWithValidity',
+    'browse',
     'clearCache',
-    'copyIndex',
-    'deleteIndex',
+    'clearIndex',
+    'deleteObject',
     'deleteUserKey',
-    'getLogs',
+    'getObject',
+    'getSettings',
     'getUserKeyACL',
-    'initIndex',
-    'listIndexes',
     'listUserKeys',
-    'moveIndex',
-    'sendQueriesBatch',
-    'setExtraHeader',
-    'setRequestTimeout',
-    'setSecurityTags',
-    'setUserToken',
-    'startQueriesBatch'].sort();
+    'partialUpdateObject',
+    'partialUpdateObjects',
+    'saveObject',
+    'saveObjects',
+    'search',
+    'setSettings',
+    'ttAdapter',
+    'waitTask'
+  ].sort();
 
   var actualMethods = Object
-    .keys(AlgoliaSearch.prototype)
-    .filter(onlyPublicMethods(AlgoliaSearch.prototype))
+    .keys(AlgoliaSearch.prototype.Index.prototype)
+    .filter(onlyPublicMethods(AlgoliaSearch.prototype.Index.prototype))
     .sort();
 
   t.deepEqual(actualMethods, expectedMethods, 'We only implement what is tested');
