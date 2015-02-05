@@ -147,7 +147,7 @@ function AlgoliaExplainResults(hit, titleAttribute, otherAttributes) {
         }
         return res;
     }
-    
+
     function _getHitExplanationForOneAttr(hit, foundWords, attr) {
         var base = hit._highlightResult || hit;
         if (attr.indexOf('.') === -1) {
@@ -466,7 +466,7 @@ AlgoliaSearch.prototype = {
 
    /**
      * Set the number of milliseconds a request can take before automatically being terminated.
-     * 
+     *
      * @param {Number} milliseconds
      */
     setRequestTimeout: function(milliseconds)
@@ -488,7 +488,7 @@ AlgoliaSearch.prototype = {
     },
    /**
      * Add an extra field to the HTTP request
-     * 
+     *
      * @param key the header field name
      * @param value the header field value
      */
@@ -796,7 +796,7 @@ AlgoliaSearch.prototype = {
 
     /**
      * Make a XmlHttpRequest
-     * 
+     *
      * @param url request url (includes endpoint and path)
      * @param opts all request opts
      */
@@ -1479,6 +1479,5 @@ AlgoliaSearch.prototype.Index.prototype = {
         indexName: null,
         cache: {},
         typeAheadArgs: null,
-        typeAheadValueOption: null,
-        emptyConstructor: function() {}
+        typeAheadValueOption: null
 };
