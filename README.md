@@ -1,6 +1,8 @@
 Algolia Search API Client for JavaScript
 ==================
 
+[![Join the chat at https://gitter.im/algolia/algoliasearch-client-js](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/algolia/algoliasearch-client-js?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 
 
 [Algolia Search](http://www.algolia.com) is a search API that provides hosted full-text, numerical and faceted search.
