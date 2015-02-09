@@ -23,34 +23,33 @@ function testXHRCall(opts) {
     object = client;
   }
 
-  opts.call.args.push(function(success, content) {
+  opts.call.args.push(function apiCallback(success, content) {
+
     t.deepEqual(
       url.parse(xhr.url),
-      url.parse(url.format(opts.call.expectedXhr.url, true)),
+      url.parse(url.format(opts.call.expectedRequest.url, true)),
       'Request url matches'
     );
 
     t.deepEqual(
       JSON.parse(xhr.requestBody),
-      opts.call.expectedXhr.body,
+      opts.call.expectedRequest.body,
       'Request body matches'
     );
 
     t.deepEqual(
       xhr.requestHeaders,
-      opts.call.expectedXhr.headers,
+      opts.call.expectedRequest.headers,
       'Request headers matches'
     );
-
-    console.log(content)
   });
 
   object[opts.methodName].apply(object, opts.call.args);
 
   xhr.respond(
-    opts.call.response.statusCode,
-    opts.call.response.headers,
-    JSON.stringify(opts.call.response.body)
+    opts.call.fakeResponse.statusCode,
+    opts.call.fakeResponse.headers,
+    JSON.stringify(opts.call.fakeResponse.body)
   );
 
   xhrMock.restore();

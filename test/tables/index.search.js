@@ -10,7 +10,7 @@ module.exports = {
   calls: [{
     testName: 'simple query',
     args: ['yaw query'],
-    expectedXhr: {
+    expectedRequest: {
       url: {
         protocol: 'http:',
         host: applicationID + '-dsn.algolia.net',
@@ -27,17 +27,23 @@ module.exports = {
         'Content-type': 'application/x-www-form-urlencoded;charset=utf-8'
       }
     },
-    response: {
+    fakeResponse: {
       statusCode: 200,
       headers: {
         'Content-Type': 'application/json; charset=UTF-8'
       },
       body: {
         hits: [{
-          name: 'yaw'
+          objectID: '1',
+          name: 'yaw',
         }, {
-          name: 'ya'
-        }]
+          objectID: '2',
+          name: 'ya',
+        }],
+        'nbHits': 2,
+        'page': 0,
+        'nbPages': 1,
+        'hitsPerPage': 20
       }
     }
   }]
