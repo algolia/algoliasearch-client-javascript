@@ -48,6 +48,14 @@ function testXHRCall(opts) {
     'Request headers matches'
   );
 
+
+  opts.call.args.forEach( function doTestCheck( p ){
+    if( p && p.test && 
+        typeof p.test === 'function' ){
+      p.test( t );
+    }
+  });
+
   xhrMock.restore();
 }
 
