@@ -49,10 +49,9 @@ function testXHRCall(opts) {
   );
 
 
-  opts.call.args.forEach( function doTestCheck( p ){
-    if( p && p.test && 
-        typeof p.test === 'function' ){
-      p.test( t );
+  opts.call.args.forEach(function doTestCheck(p) {
+    if(p && p.test && typeof p.test === 'function') {
+      p.test(t);
     }
   });
 
