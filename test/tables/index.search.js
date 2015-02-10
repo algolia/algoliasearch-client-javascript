@@ -1,8 +1,8 @@
-var functionTester   = require( '../lib/functionTester' );
+var functionTester = require( '../lib/functionTester' );
 
-var applicationID    = 'index.search.applicationID';
+var applicationID = 'index.search.applicationID';
 var searchOnlyAPIKey = 'index.search.searchOnlyAPIKey';
-var indexName        = 'index.search.searchOnlyAPIKey';
+var indexName = 'index.search.searchOnlyAPIKey';
 
 module.exports = {
   applicationID: applicationID,
