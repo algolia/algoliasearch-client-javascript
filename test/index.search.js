@@ -5,7 +5,6 @@ var table = require('./tables/index.search.js');
 
 table.calls.forEach(function(call) {
   test('index.search spec: ' + call.testName, function(t) {
-    t.plan(testXHRCall.assertCount);
 
     testXHRCall({
       call: call,
@@ -17,5 +16,6 @@ table.calls.forEach(function(call) {
       test: t
     });
 
+    t.end();
   });
 });
