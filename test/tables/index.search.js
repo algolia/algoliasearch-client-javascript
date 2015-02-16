@@ -27,7 +27,7 @@ module.exports = {
         params: 'query=yaw%20query'
       },
       headers: {
-        'Content-type': 'application/x-www-form-urlencoded;charset=utf-8'
+        'Content-type': 'application/x-www-form-urlencoded;charset=UTF-8'
       }
     },
     fakeResponse: {
@@ -67,7 +67,7 @@ module.exports = {
         params: 'query=Dawg%20query'
       },
       headers: {
-        'Content-type': 'application/x-www-form-urlencoded;charset=utf-8'
+        'Content-type': 'application/x-www-form-urlencoded;charset=UTF-8'
       }
     },
     fakeResponse: {

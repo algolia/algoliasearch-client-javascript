@@ -1,18 +1,14 @@
 module.exports = testXHRCall;
 
-var sinon = require('sinon');
+var fauxJax = require('faux-jax');
 var url = require('url');
 
 var AlgoliaSearch = require('algoliasearch');
 
 function testXHRCall(opts) {
-  var t = opts.test;
+  fauxJax.install();
 
-  var xhrMock = sinon.useFakeXMLHttpRequest();
-  var xhr;
-  xhrMock.onCreate = function(newXhr) {
-    xhr = newXhr;
-  };
+  var t = opts.test;
 
   var client = new AlgoliaSearch(opts.applicationID, opts.searchOnlyAPIKey);
   var object;
@@ -24,6 +20,8 @@ function testXHRCall(opts) {
 
   object[opts.methodName].apply(object, opts.call.args);
 
+  var xhr = fauxJax.requests[0];
+
   xhr.respond(
     opts.call.fakeResponse.statusCode,
     opts.call.fakeResponse.headers,
@@ -31,7 +29,7 @@ function testXHRCall(opts) {
   );
 
   t.deepEqual(
-    url.parse(xhr.url),
+    url.parse(xhr.requestURL),
     url.parse(url.format(opts.call.expectedRequest.url, true)),
     'Request url matches'
   );
@@ -48,14 +46,13 @@ function testXHRCall(opts) {
     'Request headers matches'
   );
 
-
   opts.call.args.forEach(function doTestCheck(p) {
     if(p && p.test && typeof p.test === 'function') {
       p.test(t);
     }
   });
 
-  xhrMock.restore();
+  fauxJax.restore();
 }
 
 // we do 3 asserts per xhr test
