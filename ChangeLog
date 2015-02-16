@@ -1,5 +1,9 @@
 CHANGELOG
 
+2015-02-03  2.9.2
+    * Fixed calls to `.search(function() {})`, `.search(null, function() {})`, `.search(undefined, function() {})
+    * Fixed shared cache amongst instances
+
 2015-02-03  2.9.1
     * Fixed listIndexes pagination, not working if page=0
 
@@ -61,11 +65,11 @@ CHANGELOG
 
 2014-09-20  2.6.1
    * Fixed JSONP call: 'X-Algolia-TagFilters' and 'X-Algolia-UserToken' were not included in the URL.
-  
+
 2014-09-06  2.6.0
    * Improved retry strategy with implementation of a timeout on network call.
      Upgrade to this version is highly recommended
-	
+
 2014-09-04  2.5.4
     * Removed the OPTIONS request for the first isalive query of for all search queries
 
@@ -102,7 +106,7 @@ CHANGELOG
 
 2014-02-18  2.4.1
      * Removed dependency on jquery
-	
+
 2014-02-10  2.4.0
 
       * Move to official Typeahead.js release (0.10.1)
