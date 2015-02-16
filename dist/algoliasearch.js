@@ -21,7 +21,7 @@
  * THE SOFTWARE.
  */
 
-var ALGOLIA_VERSION = '2.9.1';
+var ALGOLIA_VERSION = '2.9.2';
 
 /*
  * Copyright (c) 2013 Algolia
@@ -69,6 +69,9 @@ var AlgoliaSearch = function(applicationID, apiKey, methodOrOptions, resolveDNS,
     this.extraHeaders = [];
     this.jsonp = null;
     this.options = {};
+
+    // make sure every client instance has it's own cache
+    this.cache = {};
 
     var method;
     var tld = 'net';
@@ -510,6 +513,9 @@ AlgoliaSearch.prototype = {
         this.as = algoliasearch;
         this.typeAheadArgs = null;
         this.typeAheadValueOption = null;
+
+        // make sure every index instance has it's own cache
+        this.cache = {};
     },
    /**
      * Add an extra field to the HTTP request
@@ -937,7 +943,6 @@ AlgoliaSearch.prototype = {
     tagFilters: null,
     userToken: null,
     hosts: [],
-    cache: {},
     extraHeaders: []
 };
 
@@ -1198,10 +1203,21 @@ AlgoliaSearch.prototype.Index.prototype = {
          * @param delay (optional) if set, wait for this delay (in ms) and only send the query if there was no other in the meantime.
          */
         search: function(query, callback, args, delay) {
+            if (query === undefined || query === null) {
+                query = '';
+            }
+
+            // no query = getAllObjects
+            if (typeof query === 'function') {
+                callback = query;
+                query = '';
+            }
+
             if (typeof callback === 'object' && (this.as._isUndefined(args) || !args)) {
                 args = callback;
                 callback = null;
             }
+
             var indexObj = this;
             var params = 'query=' + encodeURIComponent(query);
             if (!this.as._isUndefined(args) && args !== null) {
@@ -1502,7 +1518,6 @@ AlgoliaSearch.prototype.Index.prototype = {
         // internal attributes
         as: null,
         indexName: null,
-        cache: {},
         typeAheadArgs: null,
         typeAheadValueOption: null
 };
