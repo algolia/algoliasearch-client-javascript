@@ -26,24 +26,26 @@ module.exports = function(grunt) {
       },
       main: {
         options: {
-          mangle: true,
-          compress: true
+          // https://github.com/gruntjs/grunt-contrib-uglify#mangle
+          mangle: {},
+          // https://github.com/gruntjs/grunt-contrib-uglify#compress
+          compress: {}
         },
         src: jsFiles,
         dest: '<%= buildDir %>/algoliasearch.min.js'
       },
       jquery: {
         options: {
-          mangle: true,
-          compress: true
+          mangle: {},
+          compress: {}
         },
         src: jsFiles.concat(['src/algoliasearch.jquery.js']),
         dest: '<%= buildDir %>/algoliasearch.jquery.min.js'
       },
       angular: {
         options: {
-          mangle: true,
-          compress: true
+          mangle: {},
+          compress: {}
         },
         src: jsFiles.concat(['src/algoliasearch.angular.js']),
         dest: '<%= buildDir %>/algoliasearch.angular.min.js'
