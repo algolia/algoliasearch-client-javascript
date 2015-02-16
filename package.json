@@ -58,5 +58,5 @@
     "dev": "zuul --local 8080 --ui tape test/*.js",
     "examples": "http-server example/ -a 127.0.0.1"
   },
-  "version": "2.9.1"
+  "version": "2.9.2"
 }
