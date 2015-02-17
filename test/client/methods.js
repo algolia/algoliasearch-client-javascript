@@ -7,8 +7,14 @@ test('AlgoliaSearch.prototype API spec', function(t) {
   t.plan(1);
 
   var AlgoliaSearch = require('algoliasearch');
+  var filter = require('lodash-compat/collection/filter');
+  var functions = require('lodash-compat/object/functions');
 
-  var onlyPublicMethods = require('../utils/only-public-methods');
+  var onlyPublicProperties = require('../utils/only-public-properties');
+
+  var client = new AlgoliaSearch('test', 'methods');
+
+  var actualMethods = filter(functions(client), onlyPublicProperties).sort();
 
   var expectedMethods = [
     'Index',
@@ -31,11 +37,6 @@ test('AlgoliaSearch.prototype API spec', function(t) {
     'setSecurityTags',
     'setUserToken',
     'startQueriesBatch'].sort();
-
-  var actualMethods = Object
-    .keys(AlgoliaSearch.prototype)
-    .filter(onlyPublicMethods(AlgoliaSearch.prototype))
-    .sort();
 
   t.deepEqual(actualMethods, expectedMethods, 'We only implement what is tested');
 });
