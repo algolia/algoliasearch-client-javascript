@@ -1,14 +1,13 @@
 module.exports = testXHRCall;
 
+var AlgoliaSearch = require('algoliasearch');
 var fauxJax = require('faux-jax');
 var url = require('url');
-
-var AlgoliaSearch = require('algoliasearch');
 
 function testXHRCall(opts) {
   fauxJax.install();
 
-  var t = opts.test;
+  var assert = opts.assert;
 
   var client = new AlgoliaSearch(opts.applicationID, opts.searchOnlyAPIKey);
   var object;
@@ -18,39 +17,33 @@ function testXHRCall(opts) {
     object = client;
   }
 
-  object[opts.methodName].apply(object, opts.call.args);
+  object[opts.methodName].apply(object, opts.testCase.callArguments);
 
   var xhr = fauxJax.requests[0];
 
   xhr.respond(
-    opts.call.fakeResponse.statusCode,
-    opts.call.fakeResponse.headers,
-    JSON.stringify(opts.call.fakeResponse.body)
+    opts.testCase.fakeResponse.statusCode,
+    opts.testCase.fakeResponse.headers,
+    JSON.stringify(opts.testCase.fakeResponse.body)
   );
 
-  t.deepEqual(
+  assert.deepEqual(
     url.parse(xhr.requestURL),
-    url.parse(url.format(opts.call.expectedRequest.url, true)),
+    url.parse(url.format(opts.testCase.expectedRequest.URL, true)),
     'Request url matches'
   );
 
-  t.deepEqual(
+  assert.deepEqual(
     JSON.parse(xhr.requestBody),
-    opts.call.expectedRequest.body,
+    opts.testCase.expectedRequest.body,
     'Request body matches'
   );
 
-  t.deepEqual(
+  assert.deepEqual(
     xhr.requestHeaders,
-    opts.call.expectedRequest.headers,
+    opts.testCase.expectedRequest.headers,
     'Request headers matches'
   );
-
-  opts.call.args.forEach(function doTestCheck(p) {
-    if(p && p.test && typeof p.test === 'function') {
-      p.test(t);
-    }
-  });
 
   fauxJax.restore();
 }

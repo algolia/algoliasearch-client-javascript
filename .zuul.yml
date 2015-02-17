@@ -1,1 +1,7 @@
 ui: tape
+browserify:
+  # will inline bulk-require calls
+  # https://github.com/substack/bulkify
+  # https://github.com/substack/bulk-require
+  # see test/index.js for a concrete example
+  - transform: bulkify

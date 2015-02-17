@@ -8,7 +8,7 @@ test('AlgoliaSearch.prototype.Index.prototype API spec', function(t) {
 
   var AlgoliaSearch = require('algoliasearch');
 
-  var onlyPublicMethods = require('./lib/only-public-methods');
+  var onlyPublicMethods = require('../utils/only-public-methods');
 
   var expectedMethods = [
     'addObject',
