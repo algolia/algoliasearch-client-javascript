@@ -36,7 +36,7 @@ function testXHRCall(opts) {
   assert.deepEqual(
     url.parse(xhr.requestURL),
     url.parse(url.format(opts.testCase.expectedRequest.URL, true)),
-    'Request url matches'
+    'Request URL matches'
   );
 
   assert.deepEqual(
