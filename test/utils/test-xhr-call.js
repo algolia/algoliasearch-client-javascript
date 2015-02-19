@@ -17,6 +17,8 @@ function testXHRCall(opts) {
     object = client;
   }
 
+  var methodCallback = findMethodCallback(opts.testCase.callArguments);
+
   object[opts.methodName].apply(object, opts.testCase.callArguments);
 
   var xhr = fauxJax.requests[0];
@@ -51,8 +53,28 @@ function testXHRCall(opts) {
     'Request headers matches'
   );
 
+  assert.ok(
+    methodCallback.calledOnce,
+    'Callback was called once'
+  );
+
+  assert.deepEqual(
+    methodCallback.getCall(0).args,
+    [true, opts.testCase.fakeResponse.body],
+    'Callback called with callback(true, fakeResponse)'
+  );
+
   fauxJax.restore();
 }
 
 // we do 3 asserts per xhr test
-testXHRCall.assertCount = 3;
+testXHRCall.assertCount = 6;
+
+function findMethodCallback(args) {
+  var findLast = require('lodash-compat/collection/findLast');
+  var isFunction = require('lodash-compat/lang/isFunction');
+
+  // if there's a function when reading arguments from right to left
+  // then it's the callback of our call
+  return findLast(args, isFunction);
+}
