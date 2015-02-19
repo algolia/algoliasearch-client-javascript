@@ -31,6 +31,7 @@ function run(testCase) {
       format('/1/indexes/%s/query', encodeURIComponent(credentials.indexName))
     );
     testCase.fakeResponse = getFakeHitsResponse();
+    testCase.expectedRequest.method = 'POST';
 
     testXHRCall({
       testCase: testCase,

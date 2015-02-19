@@ -27,6 +27,12 @@ function testXHRCall(opts) {
     JSON.stringify(opts.testCase.fakeResponse.body)
   );
 
+  assert.equal(
+    xhr.requestMethod,
+    opts.testCase.expectedRequest.method,
+    'Request method matches'
+  );
+
   assert.deepEqual(
     url.parse(xhr.requestURL),
     url.parse(url.format(opts.testCase.expectedRequest.URL, true)),

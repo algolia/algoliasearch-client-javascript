@@ -9,5 +9,8 @@ function computeExpectedRequest(expectedRequest, credentials, pathname) {
     'Content-type': 'application/x-www-form-urlencoded;charset=UTF-8'
   };
 
+  // default method
+  expectedRequest.method = 'GET';
+
   return expectedRequest;
 }
