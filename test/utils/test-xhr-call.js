@@ -61,7 +61,7 @@ function testXHRCall(opts) {
   assert.deepEqual(
     methodCallback.getCall(0).args,
     [true, opts.testCase.fakeResponse.body],
-    'Callback called with callback(true, fakeResponse)'
+    'Callback called with callback(true, fakeResponse.body)'
   );
 
   fauxJax.restore();
