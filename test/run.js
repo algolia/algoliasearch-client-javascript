@@ -1,1 +1,1 @@
-require('bulk-require')(__dirname, ['client/**/*.js', 'index/**/*.js']);
+require('bulk-require')(__dirname, ['spec/**/*.js']);

@@ -4,6 +4,8 @@ var AlgoliaSearch = require('algoliasearch');
 var fauxJax = require('faux-jax');
 var url = require('url');
 
+var findMethodCallback = require('./find-method-callback');
+
 function testXHRCall(opts) {
   fauxJax.install();
 
@@ -35,15 +37,15 @@ function testXHRCall(opts) {
     'Request method matches'
   );
 
-  assert.deepEqual(
-    url.parse(xhr.requestURL),
-    url.parse(url.format(opts.testCase.expectedRequest.URL, true)),
+  assert.equal(
+    xhr.requestURL,
+    url.format(opts.testCase.expectedRequest.URL, true),
     'Request URL matches'
   );
 
   assert.deepEqual(
     JSON.parse(xhr.requestBody),
-    opts.testCase.expectedRequest.body,
+    opts.testCase.expectedRequest.body || null,
     'Request body matches'
   );
 
@@ -69,12 +71,3 @@ function testXHRCall(opts) {
 
 // we do 3 asserts per xhr test
 testXHRCall.assertCount = 6;
-
-function findMethodCallback(args) {
-  var findLast = require('lodash-compat/collection/findLast');
-  var isFunction = require('lodash-compat/lang/isFunction');
-
-  // if there's a function when reading arguments from right to left
-  // then it's the callback of our call
-  return findLast(args, isFunction);
-}

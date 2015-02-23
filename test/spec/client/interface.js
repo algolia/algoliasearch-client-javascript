@@ -10,7 +10,7 @@ test('AlgoliaSearch.prototype API spec', function(t) {
   var filter = require('lodash-compat/collection/filter');
   var functions = require('lodash-compat/object/functions');
 
-  var onlyPublicProperties = require('../utils/only-public-properties');
+  var onlyPublicProperties = require('../../utils/only-public-properties');
 
   var client = new AlgoliaSearch('test', 'methods');
 

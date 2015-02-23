@@ -3,8 +3,8 @@ module.exports = getCredentials;
 var Chance = require('chance');
 var chance = new Chance();
 
-function getCredentials(prefix) {
-  prefix = prefix || chance.word({length: 5});
+function getCredentials(opts) {
+  var prefix = opts.prefix || chance.word({length: 5});
 
   return {
     // example: H4PJQW91NZ
