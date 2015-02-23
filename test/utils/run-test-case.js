@@ -1,6 +1,5 @@
 module.exports = runTestCase;
 
-var format = require('util').format;
 var sinon = require('sinon');
 var test = require('tape');
 
@@ -28,14 +27,9 @@ function runTestCase(testCase) {
 
     testCase.expectedRequest = computeExpectedRequest(
       testCase.expectedRequest,
-      credentials,
-      testCase.pathname.indexOf('%s') !== -1 ?
-        // do we want to automatically format the `testCase.pathname` or
-        // is it already all ready?
-        format(testCase.pathname, encodeURIComponent(credentials.indexName)) :
-        // no need for replace
-        testCase.pathname
+      credentials
     );
+
     testCase.fakeResponse = testCase.fakeResponse || getFakeHitsResponse();
 
     testXHRCall({

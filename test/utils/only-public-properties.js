@@ -6,5 +6,5 @@ function onlyPublicProperties(propName) {
     return false;
   }
 
-    return true;
+  return true;
 }
