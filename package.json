@@ -46,7 +46,7 @@
     "tap-growl": "1.0.5",
     "tap-spec": "2.2.1",
     "tape": "3.5.0",
-    "zuul": "1.18.1"
+    "zuul": "2.0.0"
   },
   "browser": {
     "algoliasearch": "./dist/algoliasearch.js"
