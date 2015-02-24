@@ -24,55 +24,55 @@ function testXHRCall(opts) {
 
   object[opts.methodName].apply(object, testCase.callArguments);
 
-  var xhr = fauxJax.requests[0];
+  var actualRequest = fauxJax.requests[0];
 
-  xhr.respond(
+  actualRequest.respond(
     testCase.fakeResponse.statusCode,
     testCase.fakeResponse.headers,
     JSON.stringify(testCase.fakeResponse.body)
   );
 
   assert.equal(
-    xhr.requestMethod,
+    actualRequest.requestMethod,
     testCase.expectedRequest.method,
     'Request method matches'
   );
 
-  var actualXHR = url.parse(xhr.requestURL, true);
-  var expectedRequest = url.parse(url.format(testCase.expectedRequest.URL), true);
+  var actualRequestURL = url.parse(actualRequest.requestURL, true);
+  var expectedRequestURL = url.parse(url.format(testCase.expectedRequest.URL), true);
 
   assert.equal(
-    actualXHR.host,
-    expectedRequest.host,
+    actualRequestURL.host,
+    expectedRequestURL.host,
     'URL.host matches'
   );
 
   assert.equal(
-    actualXHR.pathname,
-    expectedRequest.pathname,
+    actualRequestURL.pathname,
+    expectedRequestURL.pathname,
     'URL.pathname matches'
   );
 
   assert.equal(
-    actualXHR.protocol,
-    expectedRequest.protocol,
+    actualRequestURL.protocol,
+    expectedRequestURL.protocol,
     'URL.protocol matches'
   );
 
   assert.deepEqual(
-    actualXHR.query,
-    expectedRequest.query,
+    actualRequestURL.query,
+    expectedRequestURL.query,
     'URL.query matches'
   );
 
   assert.deepEqual(
-    JSON.parse(xhr.requestBody),
+    JSON.parse(actualRequest.requestBody),
     testCase.expectedRequest.body || null,
     'Request body matches'
   );
 
   assert.deepEqual(
-    xhr.requestHeaders,
+    actualRequest.requestHeaders,
     testCase.expectedRequest.headers,
     'Request headers matches'
   );

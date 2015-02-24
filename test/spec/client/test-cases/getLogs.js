@@ -3,7 +3,6 @@ var merge = require('lodash-compat/object/merge');
 var sinon = require('sinon');
 
 var baseTestCase = {
-  testName: 'client.getLogs(cb)',
   object: 'client',
   methodName: 'getLogs',
   expectedRequest: {
