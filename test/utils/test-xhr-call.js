@@ -20,7 +20,7 @@ function testXHRCall(opts) {
     object = client;
   }
 
-  var methodCallback = findMethodCallback(testCase.callArguments);
+  var methodCallback = testCase.methodCallback = findMethodCallback(testCase.callArguments);
 
   object[opts.methodName].apply(object, testCase.callArguments);
 
@@ -82,14 +82,16 @@ function testXHRCall(opts) {
     'Callback was called once'
   );
 
+  var success = testCase.fakeResponse.statusCode === 200 ? true : false;
+
   assert.deepEqual(
     methodCallback.getCall(0).args,
-    [true, testCase.fakeResponse.body],
+    [success, testCase.fakeResponse.body],
     'Callback called with callback(true, fakeResponse.body)'
   );
 
   fauxJax.restore();
 }
 
-// we do 3 asserts per xhr test
+// we do 3 asserts per test
 testXHRCall.assertCount = 9;

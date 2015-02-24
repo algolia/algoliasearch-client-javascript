@@ -1,5 +1,6 @@
 module.exports = runTestCase;
 
+var merge = require('lodash-compat/object/merge');
 var sinon = require('sinon');
 var test = require('tape');
 
@@ -20,7 +21,10 @@ function runTestCase(testCase) {
   }
 
   runner(testCase.testName, function(t) {
-    t.plan(testXHRCall.assertCount);
+    // we could allow a subTest: function(testCase) {}, not needed for now
+    // var addSubTest = testCase.subTest !== undefined ? 1 : 0;
+
+    t.plan(testXHRCall.assertCount/* + addSubTest*/);
 
     // every test case gets it's own credentials
     var credentials = getCredentials({prefix: testCase.method});
@@ -30,7 +34,10 @@ function runTestCase(testCase) {
       credentials
     );
 
-    testCase.fakeResponse = testCase.fakeResponse || getFakeHitsResponse();
+    testCase.fakeResponse = merge(
+      getFakeHitsResponse(),
+      testCase.fakeResponse || {}
+    );
 
     testXHRCall({
       testCase: testCase,
