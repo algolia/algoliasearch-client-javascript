@@ -8,7 +8,6 @@ var objects = [{
 
 
 module.exports = {
-  only: true,
   object: 'index',
   methodName: 'addObjects',
   testName: 'index.addObjects(objects, cb)',

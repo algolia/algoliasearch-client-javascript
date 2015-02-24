@@ -1022,17 +1022,10 @@ AlgoliaSearch.prototype.Index.prototype = {
                     params += attributes[i];
                 }
             }
-            if (this.as.jsonp === null) {
-                return this.as._jsonRequest({ method: 'GET',
-                                       url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/' + encodeURIComponent(objectID) + params,
-                                       callback: callback });
-            } else {
-                var pObj = {params: params};
-                return this.as._jsonRequest({ method: 'GET',
-                                       url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/' + encodeURIComponent(objectID),
-                                       callback: callback,
-                                       body: pObj});
-            }
+
+            return this.as._jsonRequest({ method: 'GET',
+                                   url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/' + encodeURIComponent(objectID) + params,
+                                   callback: callback });
         },
 
         /*
