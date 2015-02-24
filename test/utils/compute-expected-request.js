@@ -16,12 +16,16 @@ function computeExpectedRequest(expectedRequest, credentials) {
     );
   }
 
-  expectedRequest.headers = expectedRequest.headers || {
-    'Content-type': 'application/x-www-form-urlencoded'
-  };
-
   // default method
   expectedRequest.method = expectedRequest.method || 'GET';
+
+  expectedRequest.headers = expectedRequest.headers || {};
+
+  if (expectedRequest.body !== undefined && !expectedRequest.headers['Content-type']) {
+    expectedRequest.headers = {
+      'Content-type': 'application/x-www-form-urlencoded'
+    };
+  }
 
   return expectedRequest;
 }

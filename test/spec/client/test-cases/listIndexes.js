@@ -7,7 +7,6 @@ var baseTestCase = {
   methodName: 'listIndexes',
   expectedRequest: {
     method: 'GET',
-    headers: {},
     URL: {
       pathname: '/1/indexes'
     }

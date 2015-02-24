@@ -5,7 +5,6 @@ module.exports = {
   callArguments: [ 'mykey' ],
   expectedRequest: {
     method: 'DELETE',
-    headers: {},
     URL: {pathname: '/1/keys/mykey'}
   }
 };

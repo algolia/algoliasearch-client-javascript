@@ -5,7 +5,6 @@ module.exports = {
   callArguments: ['WOOO!'],
   expectedRequest: {
     method: 'GET',
-    headers: {},
     URL: {pathname: '/1/keys/WOOO!'}
   }
 };

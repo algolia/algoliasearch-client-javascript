@@ -7,7 +7,6 @@ var baseTestCase = {
   methodName: 'getLogs',
   expectedRequest: {
     method: 'GET',
-    headers: {},
     URL: {
       pathname: '/1/logs'
     }
