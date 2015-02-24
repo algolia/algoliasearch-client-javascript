@@ -337,12 +337,7 @@ AlgoliaSearch.prototype = {
      *  content: the server answer with user keys list or error description if success is false.
      */
     addUserKey: function(acls, callback) {
-        var aclsObject = {};
-        aclsObject.acl = acls;
-        return this._jsonRequest({ method: 'POST',
-                            url: '/1/keys',
-                            body: aclsObject,
-                            callback: callback });
+        return this.addUserKeyWithValidity(acls, 0, 0, 0, callback);
     },
     /*
      * Add an existing user key
@@ -363,14 +358,13 @@ AlgoliaSearch.prototype = {
      *  content: the server answer with user keys list or error description if success is false.
      */
     addUserKeyWithValidity: function(acls, validity, maxQueriesPerIPPerHour, maxHitsPerQuery, callback) {
-        var indexObj = this;
         var aclsObject = {};
         aclsObject.acl = acls;
         aclsObject.validity = validity;
         aclsObject.maxQueriesPerIPPerHour = maxQueriesPerIPPerHour;
         aclsObject.maxHitsPerQuery = maxHitsPerQuery;
         return this._jsonRequest({ method: 'POST',
-                            url: '/1/indexes/' + indexObj.indexName + '/keys',
+                            url: '/1/keys',
                             body: aclsObject,
                             callback: callback });
     },
