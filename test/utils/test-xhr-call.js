@@ -10,6 +10,7 @@ function testXHRCall(opts) {
   fauxJax.install();
 
   var assert = opts.assert;
+  var testCase = opts.testCase;
 
   var client = new AlgoliaSearch(opts.applicationID, opts.searchOnlyAPIKey);
   var object;
@@ -19,39 +20,60 @@ function testXHRCall(opts) {
     object = client;
   }
 
-  var methodCallback = findMethodCallback(opts.testCase.callArguments);
+  var methodCallback = findMethodCallback(testCase.callArguments);
 
-  object[opts.methodName].apply(object, opts.testCase.callArguments);
+  object[opts.methodName].apply(object, testCase.callArguments);
 
   var xhr = fauxJax.requests[0];
 
   xhr.respond(
-    opts.testCase.fakeResponse.statusCode,
-    opts.testCase.fakeResponse.headers,
-    JSON.stringify(opts.testCase.fakeResponse.body)
+    testCase.fakeResponse.statusCode,
+    testCase.fakeResponse.headers,
+    JSON.stringify(testCase.fakeResponse.body)
   );
 
   assert.equal(
     xhr.requestMethod,
-    opts.testCase.expectedRequest.method,
+    testCase.expectedRequest.method,
     'Request method matches'
   );
 
+  var actualXHR = url.parse(xhr.requestURL, true);
+  var expectedRequest = url.parse(url.format(testCase.expectedRequest.URL), true);
+
   assert.equal(
-    xhr.requestURL,
-    url.format(opts.testCase.expectedRequest.URL, true),
-    'Request URL matches'
+    actualXHR.host,
+    expectedRequest.host,
+    'URL.host matches'
+  );
+
+  assert.equal(
+    actualXHR.pathname,
+    expectedRequest.pathname,
+    'URL.pathname matches'
+  );
+
+  assert.equal(
+    actualXHR.protocol,
+    expectedRequest.protocol,
+    'URL.protocol matches'
+  );
+
+  assert.deepEqual(
+    actualXHR.query,
+    expectedRequest.query,
+    'URL.query matches'
   );
 
   assert.deepEqual(
     JSON.parse(xhr.requestBody),
-    opts.testCase.expectedRequest.body || null,
+    testCase.expectedRequest.body || null,
     'Request body matches'
   );
 
   assert.deepEqual(
     xhr.requestHeaders,
-    opts.testCase.expectedRequest.headers,
+    testCase.expectedRequest.headers,
     'Request headers matches'
   );
 
@@ -62,7 +84,7 @@ function testXHRCall(opts) {
 
   assert.deepEqual(
     methodCallback.getCall(0).args,
-    [true, opts.testCase.fakeResponse.body],
+    [true, testCase.fakeResponse.body],
     'Callback called with callback(true, fakeResponse.body)'
   );
 
@@ -70,4 +92,4 @@ function testXHRCall(opts) {
 }
 
 // we do 3 asserts per xhr test
-testXHRCall.assertCount = 6;
+testXHRCall.assertCount = 9;

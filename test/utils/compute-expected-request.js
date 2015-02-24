@@ -1,10 +1,10 @@
 module.exports = computeExpectedRequest;
 
-var assign = require('lodash-compat/object/assign');
+var merge = require('lodash-compat/object/merge');
 var format = require('util').format;
 
 function computeExpectedRequest(expectedRequest, credentials) {
-  expectedRequest.URL = assign(
+  expectedRequest.URL = merge(
     getRequestURL(credentials),
     expectedRequest.URL || {}
   );
