@@ -1,6 +1,6 @@
 var test = require('tape');
 
-test.only('client.setExtraHeader(key, value)', function(t) {
+test('client.setExtraHeader(key, value)', function(t) {
   t.plan(2);
 
   var AlgoliaSearch = require('algoliasearch');
@@ -25,7 +25,7 @@ test.only('client.setExtraHeader(key, value)', function(t) {
   index.search('second');
 
   var firstRequest = url.parse(fauxJax.requests[0].requestURL, true);
-  var secondRequest = url.parse(fauxJax.requests[0].requestURL, true);
+  var secondRequest = url.parse(fauxJax.requests[1].requestURL, true);
 
   t.notOk(
     firstRequest.query['X-great-header'],
@@ -37,6 +37,9 @@ test.only('client.setExtraHeader(key, value)', function(t) {
     'yay',
     '`X-great-header` set on second request'
   );
+
+  fauxJax.requests[0].respond(200, {}, '');
+  fauxJax.requests[1].respond(200, {}, '');
 
   fauxJax.restore();
 });
