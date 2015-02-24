@@ -4,7 +4,7 @@ var Chance = require('chance');
 var chance = new Chance();
 
 function getCredentials(opts) {
-  var prefix = opts.prefix || chance.word({length: 5});
+  var prefix = opts && opts.prefix || chance.word({length: 5});
 
   return {
     // example: H4PJQW91NZ
