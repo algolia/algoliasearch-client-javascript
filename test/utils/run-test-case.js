@@ -14,6 +14,8 @@ function runTestCase(testCase) {
   // Setting `only: true` property to a test case will only run this test case
   var runner = testCase.only ? test.only : test;
 
+  testCase.callArguments = testCase.callArguments || [];
+
   // If you do not provide your own sinon.spy() callback, we will append one
   // to the `testCase.args` property
   if (!findMethodCallback(testCase.callArguments)) {

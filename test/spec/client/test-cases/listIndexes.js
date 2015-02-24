@@ -17,7 +17,6 @@ module.exports = [
   merge(
     cloneDeep(baseTestCase), {
       testName: 'client.listIndexes(cb)',
-      callArguments: []
     }
   ),
   merge(

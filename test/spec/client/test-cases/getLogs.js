@@ -17,7 +17,6 @@ module.exports = [
   merge(
     cloneDeep(baseTestCase), {
       testName: 'client.getLogs(cb)',
-      callArguments: [],
       expectedRequest: {
         URL: {
           query: {

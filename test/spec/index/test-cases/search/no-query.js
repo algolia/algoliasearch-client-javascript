@@ -25,7 +25,6 @@ module.exports = [{
   expectedRequest: cloneDeep(commonExpectedRequest)
 }, {
   testName: 'index.search(cb)',
-  callArguments: [],
   methodName: 'search',
   expectedRequest: cloneDeep(commonExpectedRequest)
 }];
