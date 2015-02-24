@@ -28,7 +28,11 @@
   "devDependencies": {
     "browserify": "8.1.3",
     "browserify-shim": "3.8.2",
-    "faux-jax": "1.3.0",
+    "bulk-require": "0.2.1",
+    "bulkify": "1.1.1",
+    "chance": "0.7.3",
+    "eslint": "0.14.1",
+    "faux-jax": "1.4.0",
     "grunt": "0.4.5",
     "grunt-contrib-clean": "0.6.0",
     "grunt-contrib-concat": "0.5.0",
@@ -36,11 +40,13 @@
     "grunt-contrib-uglify": "0.7.0",
     "grunt-sed": "0.1.1",
     "http-server": "git://github.com/vvo/http-server#686129fde3888a21cb96e7d3b7dd8a83022d6d96",
+    "lodash-compat": "3.2.0",
     "phantomjs": "1.9.15",
+    "sinon": "1.12.2",
     "tap-growl": "1.0.5",
-    "tap-spec": "2.2.0",
+    "tap-spec": "2.2.1",
     "tape": "3.5.0",
-    "zuul": "1.17.1"
+    "zuul": "1.18.1"
   },
   "browser": {
     "algoliasearch": "./dist/algoliasearch.js"
@@ -54,9 +60,11 @@
     "algoliasearch": "AlgoliaSearch"
   },
   "scripts": {
-    "test": "zuul --phantom --ui tape test/*.js | tap-growl | tap-spec",
-    "dev": "zuul --local 8080 --ui tape test/*.js",
-    "examples": "http-server . -a 127.0.0.1"
+    "test": "zuul --phantom --ui tape test/run.js | tap-growl | tap-spec",
+    "dev": "zuul --local 8080 --ui tape test/run.js",
+    "examples": "http-server . -a 127.0.0.1",
+    "lint": "eslint --quiet test/"
   },
-  "version": "2.9.2"
+  "version": "2.9.2",
+  "dependencies": {}
 }
