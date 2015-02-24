@@ -362,12 +362,7 @@ AlgoliaSearch.prototype = {
      *  content: the server answer with user keys list or error description if success is false.
      */
     addUserKey: function(acls, callback) {
-        var aclsObject = {};
-        aclsObject.acl = acls;
-        return this._jsonRequest({ method: 'POST',
-                            url: '/1/keys',
-                            body: aclsObject,
-                            callback: callback });
+        return this.addUserKeyWithValidity(acls, 0, 0, 0, callback);
     },
     /*
      * Add an existing user key
@@ -388,14 +383,13 @@ AlgoliaSearch.prototype = {
      *  content: the server answer with user keys list or error description if success is false.
      */
     addUserKeyWithValidity: function(acls, validity, maxQueriesPerIPPerHour, maxHitsPerQuery, callback) {
-        var indexObj = this;
         var aclsObject = {};
         aclsObject.acl = acls;
         aclsObject.validity = validity;
         aclsObject.maxQueriesPerIPPerHour = maxQueriesPerIPPerHour;
         aclsObject.maxHitsPerQuery = maxHitsPerQuery;
         return this._jsonRequest({ method: 'POST',
-                            url: '/1/indexes/' + indexObj.indexName + '/keys',
+                            url: '/1/keys',
                             body: aclsObject,
                             callback: callback });
     },
@@ -1028,17 +1022,10 @@ AlgoliaSearch.prototype.Index.prototype = {
                     params += attributes[i];
                 }
             }
-            if (this.as.jsonp === null) {
-                return this.as._jsonRequest({ method: 'GET',
-                                       url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/' + encodeURIComponent(objectID) + params,
-                                       callback: callback });
-            } else {
-                var pObj = {params: params};
-                return this.as._jsonRequest({ method: 'GET',
-                                       url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/' + encodeURIComponent(objectID),
-                                       callback: callback,
-                                       body: pObj});
-            }
+
+            return this.as._jsonRequest({ method: 'GET',
+                                   url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/' + encodeURIComponent(objectID) + params,
+                                   callback: callback });
         },
 
         /*
