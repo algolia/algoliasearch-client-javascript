@@ -522,7 +522,6 @@ AlgoliaSearch.prototype = {
     },
 
     _sendQueriesBatch: function(params, callback) {
-
        if (this.jsonp === null) {
             var self = this;
             return this._jsonRequest({ cache: this.cache,
@@ -886,13 +885,19 @@ AlgoliaSearch.prototype = {
                 var success = false;
                 var response = null;
 
-                if (typeof XDomainRequest !== 'undefined') {
-                    // Handle CORS requests IE8/IE9
-                    response = event.target.responseText;
-                    success = (response && response.length > 0);
-                } else {
+                if ('withCredentials' in xmlHttp) {
                     response = event.target.response;
                     success = (event.target.status === 200 || event.target.status === 201);
+                } else {
+                    // Handle CORS requests IE8/IE9
+                    // No statusCode available in XDomainRequest,
+                    // If we received onload, then we are all good
+                    response = event.target.responseText;
+
+                    // This test differs from XMLHttpRequest `success` computing.
+                    // In XMLHttpRequest case, a 200 and empty ('') response will set
+                    // success to `true`
+                    success = (response && response.length > 0);
                 }
 
                 var retry = !success && event.target.status !== 400 && event.target.status !== 403 && event.target.status !== 404;
