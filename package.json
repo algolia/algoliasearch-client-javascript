@@ -32,7 +32,7 @@
     "bulkify": "1.1.1",
     "chance": "0.7.3",
     "eslint": "0.15.0",
-    "faux-jax": "1.4.0",
+    "faux-jax": "1.5.0",
     "grunt": "0.4.5",
     "grunt-contrib-clean": "0.6.0",
     "grunt-contrib-concat": "0.5.1",

@@ -1,4 +1,8 @@
-module.exports = [{
+var testCases = module.exports = [];
+
+var support = require('faux-jax').support;
+
+testCases.push({
   object: 'index',
   methodName: 'waitTask',
   testName: 'index.waitTask(taskID, cb) success',
@@ -14,19 +18,26 @@ module.exports = [{
       status: 'published'
     }
   }
-}, {
-  object: 'index',
-  methodName: 'waitTask',
-  testName: 'index.waitTask(taskID, cb) error',
-  callArguments: [26000],
-  expectedRequest: {
-    method: 'GET',
-    URL: {
-      pathname: '/1/indexes/%s/task/26000'
+});
+
+// On browsers with only XDomainRequest, this testCase cannot be done
+// It also means, when using waitTask with theses browsers, if
+// there's an error (status 400), we will retry instead of stopping the wait loop
+if (support.hasXMLHttpRequest && support.cors) {
+  testCases.push({
+    object: 'index',
+    methodName: 'waitTask',
+    testName: 'index.waitTask(taskID, cb) error',
+    callArguments: [26000],
+    expectedRequest: {
+      method: 'GET',
+      URL: {
+        pathname: '/1/indexes/%s/task/26000'
+      }
+    },
+    fakeResponse: {
+      statusCode: 400,
+      body: ''
     }
-  },
-  fakeResponse: {
-    statusCode: 400,
-    body: {}
-  }
-}];
+  });
+}
