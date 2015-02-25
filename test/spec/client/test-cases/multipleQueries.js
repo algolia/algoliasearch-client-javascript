@@ -17,7 +17,7 @@ test('client.multipleQueries', function(t) {
   client.addQueryInBatch(credentials.index, 'first query');
   client.addQueryInBatch(credentials.index, 'second query', { hitsPerPage: 42 });
   client.sendQueriesBatch();
-  fauxJax.requests[0].respond(200, {}, '');
+  fauxJax.requests[0].respond(200, {}, '{}');
 
   t.equal(
     fauxJax.requests.length,

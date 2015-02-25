@@ -21,7 +21,7 @@ test('client.clearCache()', function(t) {
   // store the query in the cache
   client.startQueriesBatch();
   client.sendQueriesBatch();
-  fauxJax.requests[0].respond(200, {}, '');
+  fauxJax.requests[0].respond(200, {}, '{}');
   t.equal(
     fauxJax.requests.length,
     1,

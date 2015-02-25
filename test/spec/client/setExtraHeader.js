@@ -38,8 +38,8 @@ test('client.setExtraHeader(key, value)', function(t) {
     '`X-great-header` set on second request'
   );
 
-  fauxJax.requests[0].respond(200, {}, '');
-  fauxJax.requests[1].respond(200, {}, '');
+  fauxJax.requests[0].respond(200, {}, '{}');
+  fauxJax.requests[1].respond(200, {}, '{}');
 
   fauxJax.restore();
 });

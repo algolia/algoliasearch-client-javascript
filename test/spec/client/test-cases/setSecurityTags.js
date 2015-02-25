@@ -24,7 +24,7 @@ test('client.setSecurityTags(string or array-based tags)', function(t) {
 
   // no extra header set
   index.search('first');
-  fauxJax.requests[0].respond(200, {}, '');
+  fauxJax.requests[0].respond(200, {}, '{}');
   t.notOk(
     url.parse(fauxJax.requests[0].requestURL, true).query['X-Algolia-TagFilters'],
     'No `X-Algolia-TagFilters` set on first request'
@@ -35,7 +35,7 @@ test('client.setSecurityTags(string or array-based tags)', function(t) {
 
     // extra header set
     index.search('second ' + i);
-    fauxJax.requests[1 + i].respond(200, {}, '');
+    fauxJax.requests[1 + i].respond(200, {}, '{}');
     t.equal(
       url.parse(fauxJax.requests[1 + i].requestURL, true).query['X-Algolia-TagFilters'],
       testCase.expected,
