@@ -5,7 +5,7 @@ test('client.setExtraHeader(key, value)', function(t) {
 
   var AlgoliaSearch = require('algoliasearch');
   var fauxJax = require('faux-jax');
-  var url = require('url');
+  var parse = require('url-parse');
 
   var getCredentials = require('../../utils/get-credentials');
 
@@ -24,8 +24,8 @@ test('client.setExtraHeader(key, value)', function(t) {
   // extra header set
   index.search('second');
 
-  var firstRequest = url.parse(fauxJax.requests[0].requestURL, true);
-  var secondRequest = url.parse(fauxJax.requests[1].requestURL, true);
+  var firstRequest = parse(fauxJax.requests[0].requestURL, true);
+  var secondRequest = parse(fauxJax.requests[1].requestURL, true);
 
   t.notOk(
     firstRequest.query['X-great-header'],

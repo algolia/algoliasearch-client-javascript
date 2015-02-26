@@ -800,8 +800,15 @@ AlgoliaSearch.prototype = {
      * @param opts all request opts
      */
     _makeXmlHttpRequestByHost: function(url, opts) {
+        // no cors or XDomainRequest, no request
+        if (!this._support.cors && !this._support.hasXDomainRequest) {
+            // very old browser, not supported
+            opts.callback(false, false, null, { 'message': 'CORS not supported' });
+            return;
+        }
+
         var self = this;
-        var xmlHttp = window.XMLHttpRequest ? new XMLHttpRequest() : {};
+        var request = this._support.cors ? new XMLHttpRequest() : new XDomainRequest();
         var body = null;
         var ontimeout = null;
 
@@ -820,28 +827,21 @@ AlgoliaSearch.prototype = {
         for (var i = 0; i < this.extraHeaders.length; ++i) {
             url += '&' + this.extraHeaders[i].key + '=' + this.extraHeaders[i].value;
         }
-        if ('withCredentials' in xmlHttp) {
-            xmlHttp.open(opts.method, url, true);
-            xmlHttp.timeout = this.requestTimeoutInMs * (opts.successiveRetryCount + 1);
+
+        request.open(opts.method, url);
+
+        if (this._support.cors) {
+            request.timeout = this.requestTimeoutInMs * (opts.successiveRetryCount + 1);
             if (body !== null) {
                 /* This content type is specified to follow CORS 'simple header' directive */
-                xmlHttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
             }
-        } else if (typeof XDomainRequest !== 'undefined') {
-            // Handle IE8/IE9
-            // XDomainRequest only exists in IE, and is IE's way of making CORS requests.
-            xmlHttp = new XDomainRequest();
-            xmlHttp.open(opts.method, url);
-        } else {
-            // very old browser, not supported
-            opts.callback(false, false, null, { 'message': 'CORS not supported' });
-            return;
         }
 
         ontimeout = setTimeout(function() {
-            xmlHttp.abort();
+            request.abort();
             // Prevent Internet Explorer 9, JScript Error c00c023f
-            if (xmlHttp.aborted === true) {
+            if (request.aborted === true) {
               stopLoadAnimation();
               return;
             }
@@ -852,7 +852,7 @@ AlgoliaSearch.prototype = {
 
         }, this.requestTimeoutInMs * (opts.successiveRetryCount + 1));
 
-        xmlHttp.onload = function(event) {
+        request.onload = function(event) {
             clearTimeout(ontimeout);
             ontimeout = null;
 
@@ -860,7 +860,7 @@ AlgoliaSearch.prototype = {
                 var success = false;
                 var response = null;
 
-                if ('withCredentials' in xmlHttp) {
+                if ('withCredentials' in request) {
                     response = event.target.response;
                     success = (event.target.status === 200 || event.target.status === 201);
                 } else {
@@ -878,18 +878,18 @@ AlgoliaSearch.prototype = {
                 var retry = !success && event.target.status !== 400 && event.target.status !== 403 && event.target.status !== 404;
                 opts.callback(retry, success, event.target, response ? JSON.parse(response) : null);
             } else {
-                opts.callback(false, true, event, JSON.parse(xmlHttp.responseText));
+                opts.callback(false, true, event, JSON.parse(request.responseText));
             }
         };
-        xmlHttp.ontimeout = function(event) { // stop the network call but rely on ontimeout to call opt.callback
+        request.ontimeout = function(event) { // stop the network call but rely on ontimeout to call opt.callback
         };
-        xmlHttp.onerror = function(event) {
+        request.onerror = function(event) {
             clearTimeout(ontimeout);
             ontimeout = null;
             opts.callback(true, false, null, { 'message': 'Could not connect to host', 'error': event } );
         };
 
-        xmlHttp.send(body);
+        request.send(body);
     },
 
      /*
@@ -917,7 +917,12 @@ AlgoliaSearch.prototype = {
     tagFilters: null,
     userToken: null,
     hosts: [],
-    extraHeaders: []
+    extraHeaders: [],
+    _support: {
+        hasXMLHttpRequest: 'XMLHttpRequest' in window,
+        hasXDomainRequest: 'XDomainRequest' in window,
+        cors: 'withCredentials' in new XMLHttpRequest()
+    }
 };
 
 /*

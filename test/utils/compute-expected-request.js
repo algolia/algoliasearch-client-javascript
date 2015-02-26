@@ -32,7 +32,7 @@ function computeExpectedRequest(expectedRequest, credentials) {
 
 function getRequestURL(credentials) {
   return {
-    protocol: 'http:',
+    protocol: document.location.protocol,
     host: credentials.applicationID + '-dsn.algolia.net',
     URL: {pathname: '/not-set'},
     query: {

@@ -5,7 +5,7 @@ test('client.multipleQueries', function(t) {
 
   var AlgoliaSearch = require('algoliasearch');
   var fauxJax = require('faux-jax');
-  var url = require('url');
+  var parse = require('url-parse');
   var getCredentials = require('../../../utils/get-credentials');
 
   var credentials = getCredentials();
@@ -26,7 +26,7 @@ test('client.multipleQueries', function(t) {
   );
 
   t.equal(
-    url.parse(fauxJax.requests[0].requestURL, true).pathname,
+    parse(fauxJax.requests[0].requestURL, true).pathname,
     '/1/indexes/*/queries',
     'Perform a single API call'
   );
@@ -35,8 +35,8 @@ test('client.multipleQueries', function(t) {
     JSON.parse(fauxJax.requests[0].requestBody),
     {
       requests: [
-        { params: "query=first%20query" },
-        { params: "query=second%20query&hitsPerPage=42" }
+        { params: 'query=first%20query' },
+        { params: 'query=second%20query&hitsPerPage=42' }
       ]
     },
     'Perform 2 requests'

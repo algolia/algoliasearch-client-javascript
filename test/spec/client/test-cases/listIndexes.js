@@ -16,7 +16,7 @@ var baseTestCase = {
 module.exports = [
   merge(
     cloneDeep(baseTestCase), {
-      testName: 'client.listIndexes(cb)',
+      testName: 'client.listIndexes(cb)'
     }
   ),
   merge(
@@ -26,7 +26,7 @@ module.exports = [
       expectedRequest: {
         URL: {
           query: {
-            page: 10
+            page: '10'
           }
         }
       }
