@@ -1,10 +1,12 @@
 language: node_js
 node_js:
-- 0.10
+  - "0.10"
+install: npm install
+script: npm run test-ci
 branches:
   only:
-  - master
+    - master
 env:
   global:
-  - secure: GH4z2eJHdQ2rUA80LkPVaKnzWZwSIDXYSIYYyPOiSb4nG8zcXa34z3zkvsWist2uasmzDb5Bp3ZrY/mOTMWjgsQFaxDEdytCIWvk2Xr69vipzoWenMx5fgnouOg1rAmFacRVyYiNVu9ofJz8zEWx+KU5s7sxQcYWd1h2tTwzxkE=
-  - secure: PrD1fKSZ5yTv1msmaYLKSEpWSF1bB397xw3MFOfSBGVpRjDdKGwp1I9lfzVyI3JPsQo9KY8Xh07NdDbmM4sWVkFO4ciPD2OWz40m5S0XL1dI2nPHhX1yfsjEx3F2pS5YYN81uIh3K1xRIGlt0lZHEKLcqrTQbipbXdYmc/N7Ie4=
+    - secure: AGzf61/pNNfPZEnw5j/heQIKZTzfrCttyKnt/Hb7s/h1CVDlbCsEQKcRdw/xNr1OiNyAKq3QKlnwWOHmi4TgAtEIxqEyaUzvbhfGFrtBNElbbMoqw41bgi53HP3mlFqo/ef9RmvQYI3OAJXd1q33o0C4EcSH7Pgxm9fFFHyL0Y4=
+    - secure: WmjH3LiW/rdYFvnVgy6cVE7/EVGjl00CUdWn2uwwN8xUAAUxfLWUboojvCdstlLycJeiurthwh/MqlPdx16mgT4/VeD93AWtKenumN+5kWVSLf2R9iQq1my7k6vuxOx+r4Ob6xyfSTphhPaiaZlCtWSEJS1+WTvNqaHgHFxMcbM=

@@ -1,5 +1,11 @@
 CHANGELOG
 
+UNRELEASED
+    * test suite
+    * IE10 should now behave as a CORS supported XMLHttpRequest browser, as it is
+    * running tests on many browsers, using saucelabs
+    * small refactor around `_makeXmlHttpRequestByHost`
+
 2015-02-03  2.9.2
     * Fixed calls to `.search(function() {})`, `.search(null, function() {})`, `.search(undefined, function() {})
     * Fixed shared cache amongst instances

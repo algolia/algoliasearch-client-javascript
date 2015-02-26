@@ -20,8 +20,8 @@ module.exports = [
       expectedRequest: {
         URL: {
           query: {
-            offset: 0,
-            length: 10
+            offset: '0',
+            length: '10'
           }
         }
       }
@@ -34,8 +34,8 @@ module.exports = [
       expectedRequest: {
         URL: {
           query: {
-            offset: 25,
-            length: 10
+            offset: '25',
+            length: '10'
           }
         }
       }
@@ -48,8 +48,8 @@ module.exports = [
       expectedRequest: {
         URL: {
           query: {
-            offset: 30,
-            length: 20
+            offset: '30',
+            length: '20'
           }
         }
       }
