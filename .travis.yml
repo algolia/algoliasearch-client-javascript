@@ -7,6 +7,5 @@ branches:
   only:
     - master
 env:
-  global:
-    - secure: AGzf61/pNNfPZEnw5j/heQIKZTzfrCttyKnt/Hb7s/h1CVDlbCsEQKcRdw/xNr1OiNyAKq3QKlnwWOHmi4TgAtEIxqEyaUzvbhfGFrtBNElbbMoqw41bgi53HP3mlFqo/ef9RmvQYI3OAJXd1q33o0C4EcSH7Pgxm9fFFHyL0Y4=
-    - secure: WmjH3LiW/rdYFvnVgy6cVE7/EVGjl00CUdWn2uwwN8xUAAUxfLWUboojvCdstlLycJeiurthwh/MqlPdx16mgT4/VeD93AWtKenumN+5kWVSLf2R9iQq1my7k6vuxOx+r4Ob6xyfSTphhPaiaZlCtWSEJS1+WTvNqaHgHFxMcbM=
+  - SAUCE_USERNAME=algoliasearch-js
+  - secure: oKl1RMuEO9bYoKevbFeFX72M2eV+DIJG/9UGMP4oLb3z5B8T5xAlQSEt8Lp0Zms6qqA+4hAQhZTKXDtdpx7NK+SuqYiv4oR9hdiJBbrRXIRuY86R2T/opO/RlBETL+7Y2R1AGM/kZzyiZSFqN9slGVzWziBtLJjJ4ncoceE8izs=
