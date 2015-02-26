@@ -1,6 +1,4 @@
-# Algolia Search API Client for JavaScript <sup>[![Version Badge][version-badge-svg]][package-url]</sup>
-[version-badge-svg]: http://vb.teelaun.ch/algolia/algoliasearch-client-js.svg
-[package-url]: https://npmjs.org/package/algoliasearch
+# Algolia Search API Client for JavaScript
 
 
 
@@ -28,7 +26,7 @@ This Javascript client let you easily use the [Algolia Search API](http://www.al
 
 The JavaScript client is using CORS ([Cross Origin Resource Sharing](http://en.wikipedia.org/wiki/Cross-Origin_Resource_Sharing#Browser_support)) on recent browsers and has a fallback on JSONP ([JSON with padding](http://en.wikipedia.org/wiki/JSONP)) for old browsers.
 
-[![Build Status][travis-svg]][travis-url] [![License][license-image]][license-url] [![Downloads][downloads-image]][downloads-url] [![Libscore][libscore-svg]][libscore-url]
+[![Version][version-svg]][package-url] [![Build Status][travis-svg]][travis-url] [![License][license-image]][license-url] [![Downloads][downloads-image]][downloads-url] [![Libscore][libscore-svg]][libscore-url]
 
 [![Browser tests][browser-test-matrix]][browser-test-url]
 
@@ -42,6 +40,8 @@ The JavaScript client is using CORS ([Cross Origin Resource Sharing](http://en.w
 [browser-test-url]: https://saucelabs.com/u/algoliasearch-js
 [libscore-svg]: https://img.shields.io/libscore/s/AlgoliaSearch.svg?style=flat-square
 [libscore-url]: http://libscore.com/#AlgoliaSearch
+[version-svg]: https://img.shields.io/npm/v/algoliasearch.svg?style=flat-square
+[package-url]: https://npmjs.org/package/algoliasearch
 
 
 
@@ -622,6 +622,7 @@ In some use-cases, it can however be interesting to perform updates to the index
     client = new AlgoliaSearch('ApplicationID', 'API-Key', { method: 'https' });
     ...
 ```
+
 
 
 
