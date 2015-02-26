@@ -1,20 +1,24 @@
-var clone = require('lodash-compat/lang/clone');
+var fauxJax = require('faux-jax');
 
-var object = {
-  objectID: 'dawg IE!',
-  yaw: 'partial'
-};
+if (fauxJax.support.cors) {
+  var clone = require('lodash-compat/lang/clone');
 
-module.exports = {
-  object: 'index',
-  methodName: 'saveObject',
-  testName: 'index.saveObject(object, cb)',
-  callArguments: [object],
-  expectedRequest: {
-    method: 'PUT',
-    body: clone(object),
-    URL: {
-      pathname: '/1/indexes/%s/' + encodeURIComponent(object.objectID)
+  var object = {
+    objectID: 'dawg IE!',
+    yaw: 'partial'
+  };
+
+  module.exports = {
+    object: 'index',
+    methodName: 'saveObject',
+    testName: 'index.saveObject(object, cb)',
+    callArguments: [object],
+    expectedRequest: {
+      method: 'PUT',
+      body: clone(object),
+      URL: {
+        pathname: '/1/indexes/%s/' + encodeURIComponent(object.objectID)
+      }
     }
-  }
-};
+  };
+}

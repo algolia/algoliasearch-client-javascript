@@ -5,7 +5,7 @@ test('client.setUserToken(token)', function(t) {
 
   var AlgoliaSearch = require('algoliasearch');
   var fauxJax = require('faux-jax');
-  var url = require('url');
+  var parse = require('url-parse');
   var getCredentials = require('../../../utils/get-credentials');
 
   var credentials = getCredentials();
@@ -17,9 +17,9 @@ test('client.setUserToken(token)', function(t) {
 
   // no extra header set
   index.search('first');
-  fauxJax.requests[0].respond(200, {}, '');
+  fauxJax.requests[0].respond(200, {}, '{}');
   t.notOk(
-    url.parse(fauxJax.requests[0].requestURL, true).query['X-Algolia-UserToken'],
+    parse(fauxJax.requests[0].requestURL, true).query['X-Algolia-UserToken'],
     'No `X-Algolia-UserToken` set on first request'
   );
 
@@ -27,13 +27,13 @@ test('client.setUserToken(token)', function(t) {
 
   // extra header set
   index.search('second');
-  fauxJax.requests[1].respond(200, {}, '');
+  fauxJax.requests[1].respond(200, {}, '{}');
   t.ok(
     fauxJax.requests[1].requestURL.indexOf('&X-Algolia-UserToken=foo%2Fbar') > -1,
     '`X-Algolia-UserToken` is set and URL encoded'
   );
   t.equal(
-    url.parse(fauxJax.requests[1].requestURL, true).query['X-Algolia-UserToken'],
+    parse(fauxJax.requests[1].requestURL, true).query['X-Algolia-UserToken'],
     'foo/bar',
     '`X-Algolia-UserToken` set on second request'
   );

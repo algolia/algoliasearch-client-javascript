@@ -28,7 +28,7 @@ test('index.waitTask(taskID) retry', function(t) {
     200,
     {},
     JSON.stringify({
-      status: 'not published'
+      status: 'notPublished'
     })
   );
 
@@ -39,7 +39,7 @@ test('index.waitTask(taskID) retry', function(t) {
     'Callback not called since task was not published'
   );
 
-  clock.tick(50);
+  clock.tick(60);
 
   t.equal(
     fauxJax.requests.length,

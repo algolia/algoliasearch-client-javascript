@@ -2,13 +2,11 @@ module.exports = testXHRCall;
 
 var AlgoliaSearch = require('algoliasearch');
 var fauxJax = require('faux-jax');
-var url = require('url');
+var parse = require('url-parse');
 
 var findMethodCallback = require('./find-method-callback');
 
 function testXHRCall(opts) {
-  fauxJax.install();
-
   var assert = opts.assert;
   var testCase = opts.testCase;
 
@@ -22,9 +20,13 @@ function testXHRCall(opts) {
 
   var methodCallback = testCase.methodCallback = findMethodCallback(testCase.callArguments);
 
+  // this needs to be done here to be as close as possible to the new XMLHttpRequest() call
+  fauxJax.install();
+
   object[opts.methodName].apply(object, testCase.callArguments);
 
   var actualRequest = fauxJax.requests[0];
+  var expectedRequest = testCase.expectedRequest;
 
   actualRequest.respond(
     testCase.fakeResponse.statusCode,
@@ -34,16 +36,16 @@ function testXHRCall(opts) {
 
   assert.equal(
     actualRequest.requestMethod,
-    testCase.expectedRequest.method,
+    expectedRequest.method,
     'Request method matches'
   );
 
-  var actualRequestURL = url.parse(actualRequest.requestURL, true);
-  var expectedRequestURL = url.parse(url.format(testCase.expectedRequest.URL), true);
+  var actualRequestURL = parse(actualRequest.requestURL, true);
+  var expectedRequestURL = expectedRequest.URL;
 
   assert.equal(
     actualRequestURL.host,
-    expectedRequestURL.host,
+    expectedRequestURL.host.toLowerCase(),
     'URL.host matches'
   );
 
@@ -67,15 +69,19 @@ function testXHRCall(opts) {
 
   assert.deepEqual(
     JSON.parse(actualRequest.requestBody),
-    testCase.expectedRequest.body || null,
+    expectedRequest.body || null,
     'Request body matches'
   );
 
-  assert.deepEqual(
-    actualRequest.requestHeaders,
-    testCase.expectedRequest.headers,
-    'Request headers matches'
-  );
+  if (fauxJax.support.cors) {
+    assert.deepEqual(
+      actualRequest.requestHeaders,
+      expectedRequest.headers,
+      'Request headers matches'
+    );
+  } else {
+    assert.pass('Cannot check requestHeaders, CORS not supported');
+  }
 
   assert.ok(
     methodCallback.calledOnce,

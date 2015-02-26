@@ -10,7 +10,7 @@ module.exports = [{
     URL: {
       pathname: '/1/indexes/%s/browse',
       query: {
-        page: 8
+        page: '8'
       }
     }
   }
@@ -24,8 +24,8 @@ module.exports = [{
     URL: {
       pathname: '/1/indexes/%s/browse',
       query: {
-        page: 10,
-        hitsPerPage: 15
+        page: '10',
+        hitsPerPage: '15'
       }
     }
   }
