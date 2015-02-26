@@ -5,7 +5,7 @@
   },
   "rules": {
     "camelcase": 0,
-    "no-comma-dangle": 0,
+    "no-comma-dangle": 2,
     "new-cap": 0,
     "no-process-exit": 0,
     "max-len": [
