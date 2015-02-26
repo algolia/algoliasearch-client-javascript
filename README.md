@@ -1,5 +1,6 @@
-Algolia Search API Client for JavaScript
-==================
+# Algolia Search API Client for JavaScript <sup>[![Version Badge][version-badge-svg]][package-url]</sup>
+[version-badge-svg]: http://vb.teelaun.ch/algolia/algoliasearch-client-js.svg
+[package-url]: https://npmjs.org/package/algoliasearch
 
 
 
@@ -27,7 +28,20 @@ This Javascript client let you easily use the [Algolia Search API](http://www.al
 
 The JavaScript client is using CORS ([Cross Origin Resource Sharing](http://en.wikipedia.org/wiki/Cross-Origin_Resource_Sharing#Browser_support)) on recent browsers and has a fallback on JSONP ([JSON with padding](http://en.wikipedia.org/wiki/JSONP)) for old browsers.
 
-[![Build Status](https://travis-ci.org/algolia/algoliasearch-client-js.svg?branch=master)](https://travis-ci.org/algolia/algoliasearch-client-js) [![NPM version](https://badge.fury.io/js/algoliasearch.svg)](http://badge.fury.io/js/algoliasearch) [![Bower](https://badge.fury.io/bo/algoliasearch.svg)](http://badge.fury.io/bo/algoliasearch) [![LibScore](http://107.170.240.125/badge/AlgoliaSearch.svg)](http://libscore.com/#AlgoliaSearch)
+[![Build Status][travis-svg]][travis-url] [![License][license-image]][license-url] [![Downloads][downloads-image]][downloads-url] [![Libscore][libscore-svg]][libscore-url]
+
+[![Browser tests][browser-test-matrix]][browser-test-url]
+
+[travis-svg]: https://img.shields.io/travis/algolia/algoliasearch-client-js/master.svg?style=flat-square
+[travis-url]: https://travis-ci.org/algolia/algoliasearch-client-js
+[license-image]: http://img.shields.io/badge/license-MIT-green.svg?style=flat-square
+[license-url]: LICENSE.txt
+[downloads-image]: https://img.shields.io/npm/dm/algoliasearch.svg?style=flat-square
+[downloads-url]: http://npm-stat.com/charts.html?package=algoliasearch
+[browser-test-matrix]: https://saucelabs.com/browser-matrix/algoliasearch-js.svg
+[browser-test-url]: https://saucelabs.com/u/algoliasearch-js
+[libscore-svg]: https://img.shields.io/libscore/s/AlgoliaSearch.svg?style=flat-square
+[libscore-url]: http://libscore.com/#AlgoliaSearch
 
 
 
@@ -608,7 +622,6 @@ In some use-cases, it can however be interesting to perform updates to the index
     client = new AlgoliaSearch('ApplicationID', 'API-Key', { method: 'https' });
     ...
 ```
-
 
 
 
