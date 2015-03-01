@@ -3,6 +3,8 @@ node_js:
   - "0.10"
 install: npm install
 script: npm run test-ci
+addons:
+  sauce_connect: true
 branches:
   only:
     - master

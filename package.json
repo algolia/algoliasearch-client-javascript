@@ -48,7 +48,7 @@
     "tape": "3.5.0",
     "url-parse": "1.0.0",
     "writable-window-method": "1.0.0",
-    "zuul": "2.0.0"
+    "zuul": "git://github.com/vvo/zuul#v2.0.1"
   },
   "browser": {
     "algoliasearch": "./dist/algoliasearch.js"
@@ -63,7 +63,7 @@
   },
   "scripts": {
     "test": "zuul --phantom --ui tape test/run.js | tap-growl | tap-spec && npm run lint",
-    "test-ci": "zuul test/run.js && npm run lint",
+    "test-ci": "zuul --sauce-connect -- test/run.js && npm run lint",
     "dev": "zuul --local 8080 --ui tape test/run.js",
     "examples": "http-server . -a 127.0.0.1",
     "lint": "eslint --quiet test/"
