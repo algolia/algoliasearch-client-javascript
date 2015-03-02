@@ -48,7 +48,7 @@
     "tape": "3.5.0",
     "url-parse": "1.0.0",
     "writable-window-method": "1.0.0",
-    "zuul": "git://github.com/vvo/zuul#v2.0.2"
+    "zuul": "git://github.com/vvo/zuul#v2.0.4-beta"
   },
   "browser": {
     "algoliasearch": "./dist/algoliasearch.js"
