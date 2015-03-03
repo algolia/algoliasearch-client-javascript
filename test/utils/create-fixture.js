@@ -1,13 +1,15 @@
 module.exports = createFixture;
 
-function createFixture() {
+function createFixture(opts) {
   var AlgoliaSearch = require('algoliasearch');
   var getCredentials = require('./get-credentials');
 
+  opts = opts || {};
+
   var credentials = getCredentials();
 
-  var client = new AlgoliaSearch(credentials.applicationID, credentials.searchOnlyAPIKey);
-  var index = client.initIndex(credentials.indexName);
+  var client = new AlgoliaSearch(credentials.applicationID, credentials.searchOnlyAPIKey, opts.clientOptions);
+  var index = client.initIndex(opts.indexName || credentials.indexName);
 
   return {
     client: client,

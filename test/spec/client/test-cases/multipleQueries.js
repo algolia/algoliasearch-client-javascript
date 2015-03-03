@@ -1,6 +1,6 @@
 var test = require('tape');
 
-test('client.multipleQueries', function(t) {
+test('client.startQueriesBatch(), client.addQueryInBatch(), client.sendQueriesBatch()', function(t) {
   t.plan(3);
 
   var AlgoliaSearch = require('algoliasearch');

@@ -717,17 +717,27 @@ AlgoliaSearch.prototype = {
             return;
         }
 
+        var cbCalled = false;
+        var timedOut = false;
+
         this.jsonpCounter = this.jsonpCounter || 0;
         this.jsonpCounter += 1;
         var head = document.getElementsByTagName('head')[0];
         var script = document.createElement('script');
-        var cb = 'algoliaJSONP_' + this.jsonpCounter;
+        var now = +new Date();
+        var cb = 'algoliaJSONP_' + now + this.jsonpCounter;
         var done = false;
         var ontimeout = null;
 
         window[cb] = function(data) {
-            opts.callback(false, true, null, data);
             try { delete window[cb]; } catch (e) { window[cb] = undefined; }
+
+            if (timedOut) {
+                return;
+            }
+
+            cbCalled = true;
+            opts.callback(false, true, null, data);
         };
 
         script.type = 'text/javascript';
@@ -744,23 +754,19 @@ AlgoliaSearch.prototype = {
             script.src += '&' + this.extraHeaders[i].key + '=' + this.extraHeaders[i].value;
         }
 
-
         if (opts.body && opts.body.params) {
             script.src += '&' + opts.body.params;
         }
 
         ontimeout = setTimeout(function() {
             script.onload = script.onreadystatechange = script.onerror = null;
-            window[cb] = function(data) {
-                try { delete window[cb]; } catch (e) { window[cb] = undefined; }
-            };
+            timedOut = true;
 
-            opts.callback(true, false, null, { 'message': 'Timeout - Failed to load JSONP script.' });
             head.removeChild(script);
-
             clearTimeout(ontimeout);
             ontimeout = null;
 
+            opts.callback(true, false, null, { 'message': 'Timeout - Failed to load JSONP script.' });
         }, this.requestTimeoutInMs);
 
         script.onload = script.onreadystatechange = function() {
@@ -770,14 +776,16 @@ AlgoliaSearch.prototype = {
             if (!done && (!this.readyState || this.readyState == 'loaded' || this.readyState == 'complete')) {
                 done = true;
 
-                if (typeof window[cb + '_loaded'] === 'undefined') {
-                    opts.callback(true, false, null, { 'message': 'Failed to load JSONP script.' });
+                script.onload = script.onreadystatechange = null; // Handle memory leak in IE
+                head.removeChild(script);
+
+                // script loaded but did not call the fn, script loading error
+                if (!cbCalled) {
                     try { delete window[cb]; } catch (e) { window[cb] = undefined; }
+                    opts.callback(true, false, null, { 'message': 'Failed to load JSONP script.' });
                 } else {
                     try { delete window[cb + '_loaded']; } catch (e) { window[cb + '_loaded'] = undefined; }
                 }
-                script.onload = script.onreadystatechange = null; // Handle memory leak in IE
-                head.removeChild(script);
             }
         };
 
@@ -785,9 +793,9 @@ AlgoliaSearch.prototype = {
             clearTimeout(ontimeout);
             ontimeout = null;
 
-            opts.callback(true, false, null, { 'message': 'Failed to load JSONP script.' });
             head.removeChild(script);
             try { delete window[cb]; } catch (e) { window[cb] = undefined; }
+            opts.callback(true, false, null, { 'message': 'Failed to load JSONP script.' });
         };
 
         head.appendChild(script);
