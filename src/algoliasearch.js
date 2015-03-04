@@ -800,7 +800,7 @@ AlgoliaSearch.prototype = {
                 delete window[cb + '_loaded'];
             } catch (e) {
                 window[cb] = null;
-                window[cb] = null;
+                window[cb + '_loaded'] = null;
             }
         };
 
