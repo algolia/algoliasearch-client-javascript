@@ -16,6 +16,7 @@ browsers:
     version: '6.0..latest'
   - name: android
     version: '4.1..latest'
+server: ./test/support-server/index.js
 browserify:
   # will inline bulk-require calls
   # https://github.com/substack/bulkify

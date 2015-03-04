@@ -3,12 +3,11 @@ var test = require('tape');
 test('client.clearCache()', function(t) {
   t.plan(3);
 
-  var AlgoliaSearch = require('algoliasearch');
   var fauxJax = require('faux-jax');
-  var getCredentials = require('../../../utils/get-credentials');
 
-  var credentials = getCredentials();
-  var client = new AlgoliaSearch(credentials.applicationID, credentials.searchOnlyAPIKey);
+  var createFixture = require('../../utils/create-fixture');
+  var fixture = createFixture();
+  var client = fixture.client;
 
   fauxJax.install();
 

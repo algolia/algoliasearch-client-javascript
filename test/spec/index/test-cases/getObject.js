@@ -1,39 +1,28 @@
-var cloneDeep = require('lodash-compat/lang/cloneDeep');
-var merge = require('lodash-compat/object/merge');
 var sinon = require('sinon');
 
-var baseTestCase = {
+module.exports = [{
+  testName: 'index.getObject(objectID, cb)',
   object: 'index',
   methodName: 'getObject',
+  callArguments: ['first object'],
   expectedRequest: {
-    method: 'GET'
+    method: 'GET',
+    URL: {
+      pathname: '/1/indexes/%s/' + encodeURIComponent('first object')
+    }
   }
-};
-
-module.exports = [
-  merge(
-    cloneDeep(baseTestCase), {
-      testName: 'index.getObject(objectID, cb)',
-      callArguments: ['first object'],
-      expectedRequest: {
-        URL: {
-          pathname: '/1/indexes/%s/' + encodeURIComponent('first object')
-        }
+}, {
+  testName: 'index.getObject(objectID, cb, attributes)',
+  object: 'index',
+  methodName: 'getObject',
+  callArguments: ['second object', sinon.spy(), ['some', 'attrs']],
+  expectedRequest: {
+    method: 'GET',
+    URL: {
+      pathname: '/1/indexes/%s/' + encodeURIComponent('second object'),
+      query: {
+        attributes: ['some', 'attrs'].join(',')
       }
     }
-  ),
-  merge(
-    cloneDeep(baseTestCase), {
-      testName: 'index.getObject(objectID, cb, attributes)',
-      callArguments: ['second object', sinon.spy(), ['some', 'attrs']],
-      expectedRequest: {
-        URL: {
-          pathname: '/1/indexes/%s/' + encodeURIComponent('second object'),
-          query: {
-            attributes: ['some', 'attrs'].join(',')
-          }
-        }
-      }
-    }
-  )
-];
+  }
+}];
