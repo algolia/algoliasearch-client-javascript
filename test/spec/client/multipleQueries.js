@@ -3,19 +3,18 @@ var test = require('tape');
 test('client.startQueriesBatch(), client.addQueryInBatch(), client.sendQueriesBatch()', function(t) {
   t.plan(3);
 
-  var AlgoliaSearch = require('algoliasearch');
   var fauxJax = require('faux-jax');
   var parse = require('url-parse');
-  var getCredentials = require('../../../utils/get-credentials');
 
-  var credentials = getCredentials();
-  var client = new AlgoliaSearch(credentials.applicationID, credentials.searchOnlyAPIKey);
+  var createFixture = require('../../utils/create-fixture');
+  var fixture = createFixture();
+  var client = fixture.client;
 
   fauxJax.install();
 
   client.startQueriesBatch();
-  client.addQueryInBatch(credentials.index, 'first query');
-  client.addQueryInBatch(credentials.index, 'second query', { hitsPerPage: 42 });
+  client.addQueryInBatch(fixture.credentials.index, 'first query');
+  client.addQueryInBatch(fixture.credentials.index, 'second query', { hitsPerPage: 42 });
   client.sendQueriesBatch();
   fauxJax.requests[0].respond(200, {}, '{}');
 

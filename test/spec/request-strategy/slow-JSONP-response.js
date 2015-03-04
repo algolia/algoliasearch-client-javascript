@@ -1,12 +1,12 @@
 var test = require('tape');
 
-var requestTimeout = 50;
+var requestTimeout = 2000;
 
 test('Request strategy handles slow JSONP responses (no double callback)', function(t) {
+  var xhr = require('xhr');
   var fauxJax = require('faux-jax');
   var parse = require('url-parse');
   var sinon = require('sinon');
-  var xhr = require('xhr');
 
   var createFixture = require('../../utils/create-fixture');
 
@@ -21,7 +21,7 @@ test('Request strategy handles slow JSONP responses (no double callback)', funct
       ],
       requestTimeoutInMs: requestTimeout
     },
-    indexName: 'slow-JSONP-response'
+    indexName: 'slow-response'
   });
 
   var index = fixture.index;
@@ -29,31 +29,33 @@ test('Request strategy handles slow JSONP responses (no double callback)', funct
   // we will receive the response from the second JSONP call in the searchCallback
   // the first JSONP call will still respond, after 2000ms
   // This test checks that we are called only once
-  var spy = sinon.spy(function searchCallback() {
-    t.ok(spy.calledOnce, 'Callback was called once');
+  var searchCallback = sinon.spy(function() {
+    t.ok(searchCallback.calledOnce, 'Callback was called once');
 
     t.deepEqual(
-      spy.getCall(0).args, [
+      searchCallback.args[0], [
         true, {
-          slowJSONP: 'ok'
+          slowResponse: 'ok'
         }
       ],
-      'Callback called with true, {"slowJSONP": "ok"}'
+      'Callback called with true, {"slowResponse": "ok"}'
     );
+
+    fauxJax.restore();
 
     t.end();
   });
 
   xhr({
-    uri: '/1/indexes/slow-JSONP-response/reset'
+    uri: '/1/indexes/slow-response/reset'
   }, function run(err) {
-     t.error(err, 'No error while reseting the /1/indexes/slow-JSONP-response route');
 
-     fauxJax.install();
+    t.error(err, 'No error while reseting the /1/indexes/slow-response route');
 
-     index.search('hello', spy);
+    fauxJax.install();
 
-     fauxJax.requests[0].respond(400, {}, '');
-     fauxJax.restore();
+    index.search('hello', searchCallback);
+
+    fauxJax.requests[0].respond(400, {}, JSON.stringify({status: 400, message: 'woops!'}));
   });
 });

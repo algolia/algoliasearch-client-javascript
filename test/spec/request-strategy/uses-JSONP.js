@@ -4,8 +4,6 @@ var requestTimeout = 2000;
 
 // this test uses the utils/support-server to get JSONP responses
 test('Request strategy uses JSONP when all XHR timed out', function(t) {
-    console.time('start');
-
   var fauxJax = require('faux-jax');
   var parse = require('url-parse');
   var sinon = require('sinon');
@@ -28,22 +26,6 @@ test('Request strategy uses JSONP when all XHR timed out', function(t) {
 
   var index = fixture.index;
 
-  var spy = sinon.spy(function searchCallback() {
-    t.ok(spy.calledOnce, 'Callback was called once');
-    t.deepEqual(
-      spy.getCall(0).args, [
-        true, {
-          hello: 'man'
-        }
-      ],
-      'Callback called with true, {"hello": "man"}'
-    );
-
-    console.timeEnd('start');
-    t.end();
-
-  });
-
   xhr({
     uri: '/1/indexes/request-strategy-uses-JSONP/reset'
   }, function run(err) {
@@ -52,27 +34,40 @@ test('Request strategy uses JSONP when all XHR timed out', function(t) {
 
      var clock = sinon.useFakeTimers();
 
-     index.search('hello', spy);
+     var searchCallback = sinon.spy(function() {
+       t.ok(searchCallback.calledOnce, 'Callback was called once');
+       t.deepEqual(
+         searchCallback.args[0], [
+           true, {
+             hello: 'man'
+           }
+         ],
+         'Callback called with true, {"hello": "man"}'
+       );
 
-     t.notOk(spy.calledOnce, 'Callback not called on first request');
+       fauxJax.restore();
+       clock.restore();
+
+       t.end();
+     });
+
+     index.search('hello', searchCallback);
+
+     t.notOk(searchCallback.calledOnce, 'Callback not called on first request');
      t.equal(fauxJax.requests.length, 1, 'One request made');
 
      clock.tick(requestTimeout);
      t.equal(fauxJax.requests.length, 2, 'Second requests made');
-     t.notOk(spy.calledOnce, 'Callback not called on second request');
+     t.notOk(searchCallback.calledOnce, 'Callback not called on second request');
 
      clock.tick(requestTimeout * 2);
      t.equal(fauxJax.requests.length, 3, 'Third requests made');
-     t.notOk(spy.calledOnce, 'Callback not called on third request');
+     t.notOk(searchCallback.calledOnce, 'Callback not called on third request');
 
      clock.tick(requestTimeout * 3);
      t.equal(fauxJax.requests.length, 4, 'Fourth request made');
-     t.notOk(spy.calledOnce, 'Callback not called on fourth request');
+     t.notOk(searchCallback.calledOnce, 'Callback not called on fourth request');
 
      clock.tick(requestTimeout * 4);
-     // TODO: check JSONP script tags creation using clock
-
-     fauxJax.restore();
-     clock.restore();
   });
 });

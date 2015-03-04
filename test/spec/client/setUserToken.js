@@ -3,15 +3,13 @@ var test = require('tape');
 test('client.setUserToken(token)', function(t) {
   t.plan(3);
 
-  var AlgoliaSearch = require('algoliasearch');
   var fauxJax = require('faux-jax');
   var parse = require('url-parse');
-  var getCredentials = require('../../../utils/get-credentials');
 
-  var credentials = getCredentials();
-
-  var client = new AlgoliaSearch(credentials.applicationID, credentials.searchOnlyAPIKey);
-  var index = client.initIndex(credentials.indexName);
+  var createFixture = require('../../utils/create-fixture');
+  var fixture = createFixture();
+  var client = fixture.client;
+  var index = fixture.index;
 
   fauxJax.install();
 
