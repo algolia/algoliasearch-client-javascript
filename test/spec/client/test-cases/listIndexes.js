@@ -1,8 +1,7 @@
-var cloneDeep = require('lodash-compat/lang/cloneDeep');
-var merge = require('lodash-compat/object/merge');
 var sinon = require('sinon');
 
-var baseTestCase = {
+module.exports = [{
+  testName: 'client.listIndexes(cb)',
   object: 'client',
   methodName: 'listIndexes',
   expectedRequest: {
@@ -11,25 +10,18 @@ var baseTestCase = {
       pathname: '/1/indexes'
     }
   }
-};
-
-module.exports = [
-  merge(
-    cloneDeep(baseTestCase), {
-      testName: 'client.listIndexes(cb)'
-    }
-  ),
-  merge(
-    cloneDeep(baseTestCase), {
-      testName: 'client.listIndexes(cb, page)',
-      callArguments: [sinon.spy(), 10],
-      expectedRequest: {
-        URL: {
-          query: {
-            page: '10'
-          }
-        }
+}, {
+  testName: 'client.listIndexes(cb, page)',
+  object: 'client',
+  methodName: 'listIndexes',
+  callArguments: [sinon.spy(), 10],
+  expectedRequest: {
+    method: 'GET',
+    URL: {
+      pathname: '/1/indexes',
+      query: {
+        page: '10'
       }
     }
-  )
-];
+  }
+}];

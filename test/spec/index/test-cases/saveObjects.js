@@ -8,7 +8,6 @@ var objects = [{
   second: 'object'
 }];
 
-
 module.exports = {
   object: 'index',
   methodName: 'saveObjects',

@@ -1,12 +1,12 @@
-module.exports = slowJSONPResponse;
+module.exports = slowResponse;
 
 var express = require('express');
 
-// test request timeout set to 50ms, we test that when responding
+// test request timeout set to 2000ms, we test that when responding
 // after the timeout for the first request, we do not do a double callback
-var requestTimeout = 100;
+var requestTimeout = 3000;
 
-function slowJSONPResponse() {
+function slowResponse() {
   var router = express.Router();
 
   var calls = 0;
@@ -20,25 +20,25 @@ function slowJSONPResponse() {
   router.get('/', function(req, res) {
     calls++;
 
+    var respond = res[req.query.callback !== undefined ? 'jsonp' : 'json'].bind(res);
+
     if (calls === 1) {
       setTimeout(function tryAgain() {
         if (!secondCallAnswered) {
-          console.log('try again');
           setTimeout(tryAgain, requestTimeout);
           return;
         }
 
-        res.jsonp({slowJSONP: 'timeout response'});
-        // request Timeout in slow JSONP response is 25 ms
+        respond({slowResponse: 'timeout response'});
       }, requestTimeout);
     } else if (calls === 2) {
       res.on('finish', function responseSent() {
         secondCallAnswered = true;
       });
 
-      res.jsonp({slowJSONP: 'ok'});
+      respond({slowResponse: 'ok'});
     } else {
-      res.sendStatus(500);
+      respond({status: 500, message: 'woops!'});
     }
   });
 

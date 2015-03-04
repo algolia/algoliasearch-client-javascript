@@ -18,7 +18,7 @@ function requestStrategyUsesJSONP() {
     if (calls === 4) {
       res.jsonp({hello: 'man'});
     } else {
-      res.sendStatus(500);
+      res.jsonp({status: 500, message: 'woops!'});
     }
   });
 

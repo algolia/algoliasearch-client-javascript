@@ -2,7 +2,7 @@ var test = require('tape');
 
 var requestTimeout = 2000;
 
-test('Request strategy will create script tags when using JSONP', function(t) {
+test('Request strategy creates and remove script tags when using JSONP', function(t) {
   var every = require('lodash-compat/collection/every');
   var fauxJax = require('faux-jax');
   var parse = require('url-parse');
@@ -38,15 +38,12 @@ test('Request strategy will create script tags when using JSONP', function(t) {
     'No script matches a JSONP script'
   );
 
-  var spy = sinon.spy(function searchCallback() {
-    t.ok(spy.calledOnce, 'Callback was called once');
+  var searchCallback = sinon.spy(function() {
+    t.ok(searchCallback.calledOnce, 'Callback was called once');
     t.deepEqual(
-      spy.getCall(0).args, [
-        true, {
-          yaw: 'JSONP'
-        }
-      ],
-      'Callback called with true, {"yaw": "JSONP"}'
+      searchCallback.args[0],
+      [true, {query: 'creates script tags'}],
+      'Callback called with true, {"query": "creates script tags"}'
     );
 
     // script tag deletion is done after calling our callback
@@ -73,7 +70,7 @@ test('Request strategy will create script tags when using JSONP', function(t) {
     }, 0);
   });
 
-  index.search('hello', spy);
+  index.search('creates script tags', searchCallback);
 
   // XHR timeouts
   clock.tick(requestTimeout);

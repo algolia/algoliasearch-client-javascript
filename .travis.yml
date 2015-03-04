@@ -3,9 +3,6 @@ node_js:
   - "0.10"
 install: npm install
 script: npm run test-ci
-branches:
-  only:
-    - master
 env:
   global:
     - SAUCE_USERNAME=algoliasearch-js
