@@ -120,6 +120,8 @@ var AlgoliaSearch = function(applicationID, apiKey, methodOrOptions, resolveDNS,
     }
 };
 
+// This holds the number of JSONP requests done accross clients
+// It's used as part of the ?callback=JSONP_$JSONPCounter when we do JSONP requests
 AlgoliaSearch.JSONPCounter = 0;
 
 function AlgoliaExplainResults(hit, titleAttribute, otherAttributes) {
