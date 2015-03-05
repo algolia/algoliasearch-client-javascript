@@ -1,6 +1,6 @@
 var test = require('tape');
 
-var requestTimeout = 2000;
+var requestTimeout = 5000;
 
 // this test uses the utils/support-server to get JSONP responses
 test('Request strategy uses JSONP when all XHR timed out', function(t) {
@@ -19,7 +19,8 @@ test('Request strategy uses JSONP when all XHR timed out', function(t) {
         currentURL.host,
         currentURL.host,
         currentURL.host
-      ]
+      ],
+      requestTimeoutInMs: requestTimeout
     },
     indexName: 'request-strategy-uses-JSONP'
   });

@@ -2,9 +2,9 @@ module.exports = slowResponse;
 
 var express = require('express');
 
-// test request timeout set to 2000ms, we test that when responding
+// test request timeout set to 5000ms, we test that when responding
 // after the timeout for the first request, we do not do a double callback
-var requestTimeout = 3000;
+var respondAfter = 6000;
 
 function slowResponse() {
   var router = express.Router();
@@ -25,12 +25,12 @@ function slowResponse() {
     if (calls === 1) {
       setTimeout(function tryAgain() {
         if (!secondCallAnswered) {
-          setTimeout(tryAgain, requestTimeout);
+          setTimeout(tryAgain, respondAfter);
           return;
         }
 
         respond({slowResponse: 'timeout response'});
-      }, requestTimeout);
+      }, respondAfter);
     } else if (calls === 2) {
       res.on('finish', function responseSent() {
         secondCallAnswered = true;
