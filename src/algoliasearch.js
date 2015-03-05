@@ -849,9 +849,12 @@ AlgoliaSearch.prototype = {
             return;
         }
 
-        var self = this;
-        var request = this._support.cors ? new XMLHttpRequest() : new XDomainRequest();
         var body = null;
+        var request = this._support.cors ? new XMLHttpRequest() : new XDomainRequest();
+        var ontimeout;
+        var self = this;
+        var timedOut;
+        var timeoutListener;
 
         if (!this._isUndefined(opts.body)) {
             body = JSON.stringify(opts.body);
@@ -872,17 +875,32 @@ AlgoliaSearch.prototype = {
             url += '&' + this.extraHeaders[i].key + '=' + this.extraHeaders[i].value;
         }
 
-        request.open(opts.method, url);
+        timeoutListener = function() {
+            if (!self._support.timeout) {
+                timedOut = true;
+                request.abort();
+            }
 
-        // .timeout supported by both XHR and XDR,
-        // we do receive timeout event, tested
-        request.timeout = this.requestTimeoutInMs * (opts.successiveRetryCount + 1);
+            opts.callback(true, false, null, { 'message': 'Timeout - Could not connect to endpoint ' + url } );
+        };
+
+        request.open(opts.method, url);
 
         if (this._support.cors && body !== null && opts.method !== 'GET') {
             request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         }
 
         request.onload = function(event) {
+            // When browser does not supports request.timeout, we can
+            // have both a load and timeout event
+            if (timedOut) {
+                return;
+            }
+
+            if (!self._support.timeout) {
+                clearTimeout(ontimeout);
+            }
+
             var response = null;
 
             try {
@@ -907,11 +925,25 @@ AlgoliaSearch.prototype = {
             opts.callback(retry, success, event.target, response);
         };
 
-        request.ontimeout = function() {
-            opts.callback(true, false, null, { 'message': 'Timeout - Could not connect to endpoint ' + url } );
-        };
+        if (this._support.timeout) {
+            // .timeout supported by both XHR and XDR,
+            // we do receive timeout event, tested
+            request.timeout = this.requestTimeoutInMs * (opts.successiveRetryCount + 1);
+
+            request.ontimeout = timeoutListener;
+        } else {
+            ontimeout = setTimeout(timeoutListener, this.requestTimeoutInMs * (opts.successiveRetryCount + 1));
+        }
 
         request.onerror = function(event) {
+            if (timedOut) {
+                return;
+            }
+
+            if (!self._support.timeout) {
+                clearTimeout(ontimeout);
+            }
+
             // error event is trigerred both with XDR/XHR on:
             //   - DNS error
             //   - unallowed cross domain request
@@ -950,7 +982,8 @@ AlgoliaSearch.prototype = {
     _support: {
         hasXMLHttpRequest: 'XMLHttpRequest' in window,
         hasXDomainRequest: 'XDomainRequest' in window,
-        cors: 'withCredentials' in new XMLHttpRequest()
+        cors: 'withCredentials' in new XMLHttpRequest(),
+        timeout: 'timeout' in new XMLHttpRequest()
     }
 };
 
