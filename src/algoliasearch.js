@@ -1265,6 +1265,8 @@ AlgoliaSearch.prototype.Index.prototype = {
                 self.search(query, function(success, content) {
                     if (success) {
                         cb(content.hits);
+                    } else {
+                        cb(content && content.message);
                     }
                 }, params);
             };
