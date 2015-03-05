@@ -53,7 +53,8 @@
     "url-parse": "1.0.0",
     "writable-window-method": "1.0.0",
     "xhr": "2.0.1",
-    "zuul": "2.1.0"
+    "zuul": "2.1.0",
+    "zuul-ngrok": "git://github.com/vvo/zuul-ngrok#decbe165e0a50b7afaef3eb1dd1f49ed711bc8d7"
   },
   "browser": {
     "algoliasearch": "./dist/algoliasearch.js"
@@ -68,7 +69,7 @@
   },
   "scripts": {
     "test": "grunt build && zuul --phantom --ui tape test/run.js | tap-growl | tap-spec && npm run lint",
-    "test-ci": "grunt build && DEBUG=zuul* zuul test/run.js && npm run lint",
+    "test-ci": "grunt build && DEBUG=zuul* zuul --tunnel ngrok test/run.js && npm run lint",
     "dev": "grunt build && zuul --local 8080 --ui tape test/run.js",
     "examples": "http-server . -a 127.0.0.1",
     "lint": "eslint --quiet test/"
