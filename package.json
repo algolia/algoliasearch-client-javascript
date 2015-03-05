@@ -44,6 +44,7 @@
     "http-server": "0.7.5",
     "lodash": "3.3.1",
     "lodash-compat": "3.3.1",
+    "morgan": "1.5.1",
     "phantomjs": "1.9.15",
     "sinon": "1.12.2",
     "tap-growl": "1.0.5",
