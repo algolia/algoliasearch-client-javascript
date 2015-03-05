@@ -1,7 +1,7 @@
 var test = require('tape');
 
 test('client.clearCache()', function(t) {
-  t.plan(3);
+  t.plan(4);
 
   var fauxJax = require('faux-jax');
 
@@ -14,7 +14,7 @@ test('client.clearCache()', function(t) {
   t.equal(
     fauxJax.requests.length,
     0,
-    'No requests in the cache'
+    'No request done'
   );
 
   // store the query in the cache
@@ -24,7 +24,7 @@ test('client.clearCache()', function(t) {
   t.equal(
     fauxJax.requests.length,
     1,
-    'Cache is filled with 1 request'
+    'One request done'
   );
 
   // same request again
@@ -33,7 +33,20 @@ test('client.clearCache()', function(t) {
   t.equal(
     fauxJax.requests.length,
     1,
-    'Cache is still filled with a single request'
+    'Still one request done'
+  );
+
+  client.clearCache();
+
+  // same request again
+  client.startQueriesBatch();
+  client.sendQueriesBatch();
+
+  fauxJax.requests[1].respond(200, {}, '{}');
+  t.equal(
+    fauxJax.requests.length,
+    2,
+    'Second request done'
   );
 
   fauxJax.restore();
