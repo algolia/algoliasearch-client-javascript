@@ -53,7 +53,7 @@
     "url-parse": "1.0.0",
     "writable-window-method": "1.0.0",
     "xhr": "2.0.1",
-    "zuul": "git://github.com/vvo/zuul#v2.0.6-beta"
+    "zuul": "2.1.0"
   },
   "browser": {
     "algoliasearch": "./dist/algoliasearch.js"
