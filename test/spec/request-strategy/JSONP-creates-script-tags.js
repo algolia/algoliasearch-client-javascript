@@ -30,10 +30,8 @@ test('Request strategy creates and remove script tags when using JSONP', functio
   // check that the current state is clean
   t.ok(
     every(initialScriptTags, function noJSONPTag(script) {
-      if (!script.src ||
-        parse(script.src).pathname !== '/1/indexes/simple-JSONP-response') {
-        return true;
-      }
+      return !script.src ||
+        parse(script.src).pathname !== '/1/indexes/simple-JSONP-response';
     }),
     'No script matches a JSONP script'
   );
@@ -58,10 +56,8 @@ test('Request strategy creates and remove script tags when using JSONP', functio
 
       t.ok(
         every(postCallbackScriptTags, function noJSONPTag(script) {
-          if (!script.src ||
-            parse(script.src).pathname !== '/1/indexes/simple-JSONP-response') {
-            return true;
-          }
+          return !script.src ||
+            parse(script.src).pathname !== '/1/indexes/simple-JSONP-response';
         }),
         'No more script matches a JSONP script'
       );
@@ -95,9 +91,7 @@ test('Request strategy creates and remove script tags when using JSONP', functio
 
   t.ok(
     some(currentScriptTags, function noJSONPTag(script) {
-      if (script.src && parse(script.src).pathname === '/1/indexes/simple-JSONP-response') {
-        return true;
-      }
+      return script.src && parse(script.src).pathname === '/1/indexes/simple-JSONP-response';
     }),
     'A new script matches a JSONP script'
   );
