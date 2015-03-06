@@ -438,7 +438,7 @@
      * @return {hash}
      */
     _getDisjunctiveFacetSearchParams: function(facet) {
-      return extend({}, this.searchParams, {
+      var params = extend({}, this.searchParams, {
         hitsPerPage: 1,
         page: 0,
         attributesToRetrieve: [],
@@ -447,6 +447,12 @@
         facets: facet,
         facetFilters: this._getFacetFilters(facet)
       });
+
+      if (typeof (this.options.maxValuesPerFacet) !== 'undefined') {
+        params.maxValuesPerFacet = this.options.maxValuesPerFacet;
+      }
+
+      return params;
     },
 
     /**
