@@ -15,17 +15,6 @@ Algolia’s Search API makes it easy to deliver a great search experience in you
  * first-class data security
 
 
-This Javascript client let you easily use the [Algolia Search API](http://www.algolia.com) in a browser, it is compatible with major browsers:
-
- * Internet Explorer &ge; 6
- * Firefox &ge; 3.0
- * Google Chrome &ge; 3
- * Safari &ge; 4
- * Opera &ge; 10
- * etc.
-
-The JavaScript client is using CORS ([Cross Origin Resource Sharing](http://en.wikipedia.org/wiki/Cross-Origin_Resource_Sharing#Browser_support)) on recent browsers and has a fallback on JSONP ([JSON with padding](http://en.wikipedia.org/wiki/JSONP)) for old browsers.
-
 [![Version][version-svg]][package-url] [![Build Status][travis-svg]][travis-url] [![License][license-image]][license-url] [![Downloads][downloads-image]][downloads-url] [![Libscore][libscore-svg]][libscore-url]
 
 [![Browser tests][browser-test-matrix]][browser-test-url]
@@ -43,6 +32,18 @@ The JavaScript client is using CORS ([Cross Origin Resource Sharing](http://en.w
 [version-svg]: https://img.shields.io/npm/v/algoliasearch.svg?style=flat-square
 [package-url]: https://npmjs.org/package/algoliasearch
 
+Our JavaScript client lets you easily use the [Algolia Search API](http://www.algolia.com) in a browser.
+
+It works and has been tested in all the major browsers.
+
+Our JavaScript client uses either:
+
+- [CORS](http://en.wikipedia.org/wiki/Cross-Origin_Resource_Sharing#Browser_support) for modern browsers
+- [XDomainRequest](https://msdn.microsoft.com/en-us/library/ie/cc288060%28v=vs.85%29.aspx) for IE <= 10
+- [JSONP](http://en.wikipedia.org/wiki/JSONP) in any situation where Ajax requests are unavailabe or blocked.
+
+The JavaScript API client is dedicated to web apps searching directly from the browser. To add, remove or delete your objects please consider using a backend API client.
+
 
 
 Table of Content
@@ -51,7 +52,7 @@ Table of Content
 
 1. [Setup](#setup)
 1. [Quick Start](#quick-start)
-1. [General Principle](#general-principle)
+1. [Callback convention](#callback-convention)
 1. [Cache](#cache)
 1. [Online documentation](#documentation)
 1. [Tutorials](#tutorials)
@@ -74,69 +75,75 @@ To setup your project, follow these steps:
 
 
 
-#### Download Algoliasearch from `bower`:
-
-[Bower](http://bower.io/) works by fetching and installing packages from all over, taking care of hunting, finding, downloading, and saving the stuff you’re looking for.
+#### Bower
 
 ```sh
-$ bower install algoliasearch
+bower install algoliasearch
 ```
 
-#### Download Algoliasearch from the `jsDelivr` CDN:
+#### jsDelivr, cdnjs
 
-[jsDelivr](https://hacks.mozilla.org/2014/03/jsdelivr-the-advanced-open-source-public-cdn/) can offer a performance benefit by hosting `algoliasearch` on servers spread across the globe. This also offers an advantage that if the visitor to your webpage has already downloaded a copy of `algoliasearch` from jsDelivr, it won't have to be re-downloaded.
+Both [jsDelivr](http://www.jsdelivr.com/about.php) and [cdnjs](https://cdnjs.com/about) are
+offering global CDN delivery for our JavaScript client.
 
-##### Default
-
-```javascript
+```html
 <script src="//cdn.jsdelivr.net/algoliasearch/{VERSION}/algoliasearch.min.js"></script>
 ```
 
-##### jQuery application
+```html
+<script src="//cdnjs.cloudflare.com/ajax/libs/algoliasearch/{VERSION}/algoliasearch.min.js"></script>
+```
 
-```javascript
+Please do not use `latest` as the {VERSION} tag, you can find the latest tag.
+
+The current stable version of our JavaScript client is [![Version][version-svg]][package-url]
+
+#### jQuery, Angular.js
+
+We have specific builds for [jQuery](http://jquery.com/) and [Angular.js](https://angularjs.org/).
+
+```html
 <script src="//cdn.jsdelivr.net/algoliasearch/{VERSION}/algoliasearch.jquery.min.js"></script>
 ```
 
-##### Angular.js application
-
-```javascript
+```html
 <script src="//cdn.jsdelivr.net/algoliasearch/{VERSION}/algoliasearch.angular.min.js"></script>
 ```
 
-#### Download Algoliasearch from `Github`:
+### Example
 
-Download the [client](https://github.com/algolia/algoliasearch-client-js/archive/master.zip) from Github's archive.
-
-### Setup
-
- 1. Ensure your page is including `algoliasearch.min.js` **OR** `algoliasearch.jquery.min.js` **OR** `algoliasearch.angular.min.js`
- 2. Initialize the client with your ApplicationID and your Search-Only API-Key. You can find all of them on [your Algolia account](https://www.algolia.com/licensing).
-
-##### Default
-
-```javascript
-<script src="algoliasearch.min.js"></script>
+```html
+<script src="http://domain/path-to/algoliasearch.min.js"></script>
 <script>
   var client = new AlgoliaSearch('ApplicationID', 'Search-Only-API-Key');
-  // ...
+  var index = client.initIndex('indexName');
+  index.search('something', function(success, hits) {
+    console.log(success, hits)
+  });
+</script>
 ```
 
-##### jQuery application - Using `$.ajax` to perform HTTP requests
+#### jQuery
 
-```javascript
-<script src="algoliasearch.jquery.min.js"></script>
+You must have jQuery loaded in your page.
+
+```html
+<script src="http://domain/path/to/algoliasearch.jquery.min.js"></script>
 <script>
   var client = $.algolia.Client('ApplicationID', 'Search-Only-API-Key');
-  // ...
+  var index = client.initIndex('indexName');
+  index.search('something', function(success, hits) {
+    console.log(success, hits)
+  });
+</script>
 ```
 
-##### Angular.js application - Using `$http` and `$q` to perform HTTP requests
+#### Angular.js
 
-If your application is based on Angular.js, you need to use our Angular.js integration instead of the vanilla one to be able to render the hits with Angular.js once the engine answers.
+You must have Angular loaded in your page.
 
-```javascript
-<script src="algoliasearch.angular.min.js"></script>
+```html
+<script src="http://domain/path/to/algoliasearch.angular.min.js"></script>
 <script>
   angular
     .module('myapp', ['algoliasearch'])
@@ -147,8 +154,10 @@ If your application is based on Angular.js, you need to use our Angular.js integ
 
       // ...
     }]);
-  ...
+</script>
 ```
+
+We also provide [runnable examples](#quick-start) for you to try.
 
 
 
@@ -159,15 +168,32 @@ If your application is based on Angular.js, you need to use our Angular.js integ
 Quick Start
 -------------
 
-The JavaScript API client is dedicated to web apps searching directly from the browser. To add, remove or delete your objects please consider using a backend API client.
 
-You can then update the ```example/autocomplete.html``` file with your ```ApplicationID```, ```API-Key``` and ```index name``` to test the autocomplete feature.
+We have easy to run [examples](./examples/) for you to try. First, setup the repository:
 
-You can also update the ```example/instantsearch.html``` file with your ```ApplicationID```, ```API-Key``` and ```index name``` to test an instant-search example.
+```sh
+  git clone https://github.com/algolia/algoliasearch-client-js.git
+  cd algoliasearch-client-js
+  npm install
+  npm run examples
+```
+
+Then open either:
+- http://127.0.0.1:8081/examples/ to see a list of examples
+- http://127.0.0.1:8081/examples/autocomplete.html
+- http://127.0.0.1:8081/examples/instantsearch.html
+
+To hack and use your own indexes and data, open one of the example file and replace:
+
+```js
+var client = new AlgoliaSearch(ApplicationID, Search-Only-API-Key);
+var index = client.initIndex(indexName);
+```
 
 
 
-General Principle
+
+Callback convention
 -------------
 
 All API calls will return the result in a callback that takes two arguments:
