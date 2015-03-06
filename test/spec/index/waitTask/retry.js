@@ -55,11 +55,11 @@ test('index.waitTask(taskID) retry', function(t) {
     })
   );
 
+  fauxJax.restore();
+  clock.restore();
+
   t.ok(
     spy.calledOnce,
     'Callback called since task was published'
   );
-
-  fauxJax.restore();
-  clock.restore();
 });

@@ -9,16 +9,14 @@ test('client.setSecurityTags(string or array-based tags)', function(t) {
 
   t.plan(1 + cases.length);
 
-  var AlgoliaSearch = require('algoliasearch');
   var fauxJax = require('faux-jax');
   var parse = require('url-parse');
   var forEach = require('lodash-compat/collection/forEach');
-  var getCredentials = require('../../../utils/get-credentials');
 
-  var credentials = getCredentials();
-
-  var client = new AlgoliaSearch(credentials.applicationID, credentials.searchOnlyAPIKey);
-  var index = client.initIndex(credentials.indexName);
+  var createFixture = require('../../utils/create-fixture');
+  var fixture = createFixture();
+  var client = fixture.client;
+  var index = fixture.index;
 
   fauxJax.install();
 

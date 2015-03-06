@@ -6,6 +6,7 @@ script: npm run test-ci
 branches:
   only:
     - master
+    - develop
 env:
   global:
     - SAUCE_USERNAME=algoliasearch-js

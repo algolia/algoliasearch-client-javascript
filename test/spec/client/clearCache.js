@@ -1,21 +1,20 @@
 var test = require('tape');
 
 test('client.clearCache()', function(t) {
-  t.plan(3);
+  t.plan(4);
 
-  var AlgoliaSearch = require('algoliasearch');
   var fauxJax = require('faux-jax');
-  var getCredentials = require('../../../utils/get-credentials');
 
-  var credentials = getCredentials();
-  var client = new AlgoliaSearch(credentials.applicationID, credentials.searchOnlyAPIKey);
+  var createFixture = require('../../utils/create-fixture');
+  var fixture = createFixture();
+  var client = fixture.client;
 
   fauxJax.install();
 
   t.equal(
     fauxJax.requests.length,
     0,
-    'No requests in the cache'
+    'No request done'
   );
 
   // store the query in the cache
@@ -25,7 +24,7 @@ test('client.clearCache()', function(t) {
   t.equal(
     fauxJax.requests.length,
     1,
-    'Cache is filled with 1 request'
+    'One request done'
   );
 
   // same request again
@@ -34,7 +33,20 @@ test('client.clearCache()', function(t) {
   t.equal(
     fauxJax.requests.length,
     1,
-    'Cache is still filled with a single request'
+    'Still one request done'
+  );
+
+  client.clearCache();
+
+  // same request again
+  client.startQueriesBatch();
+  client.sendQueriesBatch();
+
+  fauxJax.requests[1].respond(200, {}, '{}');
+  t.equal(
+    fauxJax.requests.length,
+    2,
+    'Second request done'
   );
 
   fauxJax.restore();

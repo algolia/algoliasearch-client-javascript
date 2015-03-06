@@ -6,7 +6,6 @@ var objects = [{
   second: 'object'
 }];
 
-
 module.exports = {
   object: 'index',
   methodName: 'partialUpdateObjects',

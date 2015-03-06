@@ -12,4 +12,10 @@ require('writable-window-method')([
   'Date'
 ]);
 
-require('bulk-require')(__dirname, ['spec/**/*.js']);
+var domready = require('domready');
+
+domready(run);
+
+function run() {
+  require('bulk-require')(__dirname, ['spec/**/*.js']);
+}

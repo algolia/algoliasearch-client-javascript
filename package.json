@@ -31,8 +31,10 @@
     "bulk-require": "0.2.1",
     "bulkify": "1.1.1",
     "chance": "0.7.3",
+    "domready": "0.3.0",
     "eslint": "0.15.0",
-    "faux-jax": "1.6.0",
+    "express": "4.12.1",
+    "faux-jax": "1.7.1",
     "grunt": "0.4.5",
     "grunt-contrib-clean": "0.6.0",
     "grunt-contrib-concat": "0.5.1",
@@ -40,7 +42,9 @@
     "grunt-contrib-uglify": "0.8.0",
     "grunt-sed": "0.1.1",
     "http-server": "0.7.5",
+    "lodash": "3.3.1",
     "lodash-compat": "3.3.1",
+    "morgan": "1.5.1",
     "phantomjs": "1.9.15",
     "sinon": "1.12.2",
     "tap-growl": "1.0.5",
@@ -48,7 +52,9 @@
     "tape": "3.5.0",
     "url-parse": "1.0.0",
     "writable-window-method": "1.0.0",
-    "zuul": "git://github.com/vvo/zuul#v2.0.6-beta"
+    "xhr": "2.0.1",
+    "zuul": "2.1.0",
+    "zuul-ngrok": "git://github.com/vvo/zuul-ngrok#decbe165e0a50b7afaef3eb1dd1f49ed711bc8d7"
   },
   "browser": {
     "algoliasearch": "./dist/algoliasearch.js"
@@ -62,9 +68,9 @@
     "algoliasearch": "AlgoliaSearch"
   },
   "scripts": {
-    "test": "zuul --phantom --ui tape test/run.js | tap-growl | tap-spec && npm run lint",
-    "test-ci": "zuul test/run.js && npm run lint",
-    "dev": "zuul --local 8080 --ui tape test/run.js",
+    "test": "grunt build && zuul --phantom --ui tape test/run.js | tap-growl | tap-spec && npm run lint",
+    "test-ci": "grunt build && DEBUG=zuul* zuul --tunnel ngrok test/run.js && npm run lint",
+    "dev": "grunt build && zuul --local 8080 --ui tape test/run.js",
     "examples": "http-server . -a 127.0.0.1",
     "lint": "eslint --quiet test/"
   },

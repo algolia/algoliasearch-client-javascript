@@ -120,6 +120,10 @@ var AlgoliaSearch = function(applicationID, apiKey, methodOrOptions, resolveDNS,
     }
 };
 
+// This holds the number of JSONP requests done accross clients
+// It's used as part of the ?callback=JSONP_$JSONPCounter when we do JSONP requests
+AlgoliaSearch.JSONPCounter = 0;
+
 function AlgoliaExplainResults(hit, titleAttribute, otherAttributes) {
 
     function _getHitExplanationForOneAttr_recurse(obj, foundWords) {
@@ -717,78 +721,116 @@ AlgoliaSearch.prototype = {
             return;
         }
 
-        this.jsonpCounter = this.jsonpCounter || 0;
-        this.jsonpCounter += 1;
+        var cbCalled = false;
+        var timedOut = false;
+
+        AlgoliaSearch.JSONPCounter += 1;
         var head = document.getElementsByTagName('head')[0];
         var script = document.createElement('script');
-        var cb = 'algoliaJSONP_' + this.jsonpCounter;
+        var cb = 'algoliaJSONP_' + AlgoliaSearch.JSONPCounter;
         var done = false;
-        var ontimeout = null;
+        var ontimeout;
+        var success;
+        var clean;
 
         window[cb] = function(data) {
-            opts.callback(false, true, null, data);
             try { delete window[cb]; } catch (e) { window[cb] = undefined; }
+
+            if (timedOut) {
+                return;
+            }
+
+            var status =
+                data && data.message && data.status ||
+                data && 200;
+
+            var ok = status === 200;
+            var retry = !ok && status !== 400 && status !== 403 && status !== 404;
+            cbCalled = true;
+            opts.callback(retry, ok, null, data);
         };
 
         script.type = 'text/javascript';
-        script.src = url + '?callback=' + cb + '&X-Algolia-Application-Id=' + this.applicationID + '&X-Algolia-API-Key=' + this.apiKey;
+        url += '?callback=' + cb + '&X-Algolia-Application-Id=' + this.applicationID + '&X-Algolia-API-Key=' + this.apiKey;
 
         if (this.tagFilters) {
-            script.src += '&X-Algolia-TagFilters=' + encodeURIComponent(this.tagFilters);
+            url += '&X-Algolia-TagFilters=' + encodeURIComponent(this.tagFilters);
         }
 
         if (this.userToken) {
-            script.src += '&X-Algolia-UserToken=' + encodeURIComponent(this.userToken);
-        }
-        for (var i = 0; i < this.extraHeaders.length; ++i) {
-            script.src += '&' + this.extraHeaders[i].key + '=' + this.extraHeaders[i].value;
+            url += '&X-Algolia-UserToken=' + encodeURIComponent(this.userToken);
         }
 
+        for (var i = 0; i < this.extraHeaders.length; ++i) {
+            url += '&' + this.extraHeaders[i].key + '=' + this.extraHeaders[i].value;
+        }
 
         if (opts.body && opts.body.params) {
-            script.src += '&' + opts.body.params;
+            url += '&' + opts.body.params;
         }
 
         ontimeout = setTimeout(function() {
-            script.onload = script.onreadystatechange = script.onerror = null;
-            window[cb] = function(data) {
-                try { delete window[cb]; } catch (e) { window[cb] = undefined; }
-            };
+            timedOut = true;
+            clean();
 
             opts.callback(true, false, null, { 'message': 'Timeout - Failed to load JSONP script.' });
-            head.removeChild(script);
-
-            clearTimeout(ontimeout);
-            ontimeout = null;
-
         }, this.requestTimeoutInMs);
 
-        script.onload = script.onreadystatechange = function() {
-            clearTimeout(ontimeout);
-            ontimeout = null;
+        success = function() {
+            if (done || timedOut) {
+                return;
+            }
 
-            if (!done && (!this.readyState || this.readyState == 'loaded' || this.readyState == 'complete')) {
-                done = true;
+            done = true;
+            clean();
 
-                if (typeof window[cb + '_loaded'] === 'undefined') {
-                    opts.callback(true, false, null, { 'message': 'Failed to load JSONP script.' });
-                    try { delete window[cb]; } catch (e) { window[cb] = undefined; }
-                } else {
-                    try { delete window[cb + '_loaded']; } catch (e) { window[cb + '_loaded'] = undefined; }
-                }
-                script.onload = script.onreadystatechange = null; // Handle memory leak in IE
-                head.removeChild(script);
+            // script loaded but did not call the fn => script loading error
+            if (!cbCalled) {
+                opts.callback(true, false, null, { 'message': 'Failed to load JSONP script.' });
             }
         };
 
-        script.onerror = function() {
+        clean = function() {
             clearTimeout(ontimeout);
-            ontimeout = null;
-
-            opts.callback(true, false, null, { 'message': 'Failed to load JSONP script.' });
+            script.onload = null;
+            script.onreadystatechange = null;
+            script.onerror = null;
             head.removeChild(script);
-            try { delete window[cb]; } catch (e) { window[cb] = undefined; }
+
+            try {
+                delete window[cb];
+                delete window[cb + '_loaded'];
+            } catch (e) {
+                window[cb] = null;
+                window[cb + '_loaded'] = null;
+            }
         };
+
+        // script onreadystatechange needed only for
+        // <= IE8
+        // https://github.com/angular/angular.js/issues/4523
+        script.onreadystatechange = function() {
+            if (this.readyState === 'loaded' || this.readyState === 'complete') {
+                success();
+            }
+        };
+
+        script.onload = function() {
+            success();
+        };
+
+        script.onerror = function() {
+            if (done || timedOut) {
+                return;
+            }
+
+            clean();
+            opts.callback(true, false, null, { 'message': 'Failed to load JSONP script.' });
+        };
+
+        script.async = true;
+        script.defer = true;
+        script.src = url;
 
         head.appendChild(script);
     },
@@ -807,85 +849,104 @@ AlgoliaSearch.prototype = {
             return;
         }
 
-        var self = this;
-        var request = this._support.cors ? new XMLHttpRequest() : new XDomainRequest();
         var body = null;
-        var ontimeout = null;
+        var request = this._support.cors ? new XMLHttpRequest() : new XDomainRequest();
+        var ontimeout;
+        var self = this;
+        var timedOut;
+        var timeoutListener;
 
         if (!this._isUndefined(opts.body)) {
             body = JSON.stringify(opts.body);
         }
 
-        url += ((url.indexOf('?') === -1) ? '?' : '&') + 'X-Algolia-API-Key=' + this.apiKey;
+        url += (url.indexOf('?') === -1 ? '?' : '&') + 'X-Algolia-API-Key=' + this.apiKey;
         url += '&X-Algolia-Application-Id=' + this.applicationID;
+
         if (this.userToken) {
             url += '&X-Algolia-UserToken=' + encodeURIComponent(this.userToken);
         }
+
         if (this.tagFilters) {
             url += '&X-Algolia-TagFilters=' + encodeURIComponent(this.tagFilters);
         }
+
         for (var i = 0; i < this.extraHeaders.length; ++i) {
             url += '&' + this.extraHeaders[i].key + '=' + this.extraHeaders[i].value;
         }
 
+        timeoutListener = function() {
+            if (!self._support.timeout) {
+                timedOut = true;
+                request.abort();
+            }
+
+            opts.callback(true, false, null, { 'message': 'Timeout - Could not connect to endpoint ' + url } );
+        };
+
         request.open(opts.method, url);
 
-        if (this._support.cors) {
-            request.timeout = this.requestTimeoutInMs * (opts.successiveRetryCount + 1);
-            if (body !== null) {
-                /* This content type is specified to follow CORS 'simple header' directive */
-                request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-            }
+        if (this._support.cors && body !== null && opts.method !== 'GET') {
+            request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         }
 
-        ontimeout = setTimeout(function() {
-            request.abort();
-            // Prevent Internet Explorer 9, JScript Error c00c023f
-            if (request.aborted === true) {
-              stopLoadAnimation();
-              return;
-            }
-            opts.callback(true, false, null, { 'message': 'Timeout - Could not connect to endpoint ' + url } );
-
-            clearTimeout(ontimeout);
-            ontimeout = null;
-
-        }, this.requestTimeoutInMs * (opts.successiveRetryCount + 1));
-
         request.onload = function(event) {
-            clearTimeout(ontimeout);
-            ontimeout = null;
-
-            if (!self._isUndefined(event) && event.target !== null) {
-                var success = false;
-                var response = null;
-
-                if ('withCredentials' in request) {
-                    response = event.target.response;
-                    success = (event.target.status === 200 || event.target.status === 201);
-                } else {
-                    // Handle CORS requests IE8/IE9
-                    // No statusCode available in XDomainRequest,
-                    // If we received onload, then we are all good
-                    response = event.target.responseText;
-
-                    // This test differs from XMLHttpRequest `success` computing.
-                    // In XMLHttpRequest case, a 200 and empty ('') response will set
-                    // success to `true`
-                    success = (response && response.length > 0);
-                }
-
-                var retry = !success && event.target.status !== 400 && event.target.status !== 403 && event.target.status !== 404;
-                opts.callback(retry, success, event.target, response ? JSON.parse(response) : null);
-            } else {
-                opts.callback(false, true, event, JSON.parse(request.responseText));
+            // When browser does not supports request.timeout, we can
+            // have both a load and timeout event
+            if (timedOut) {
+                return;
             }
+
+            if (!self._support.timeout) {
+                clearTimeout(ontimeout);
+            }
+
+            var response = null;
+
+            try {
+                response = JSON.parse(request.responseText);
+            } catch(e) {}
+
+            var status =
+                // XHR provides a `status` property
+                request.status ||
+
+                // XDR does not have a `status` property,
+                // we rely on our own API response `status`, only
+                // provided when an error occurs, so we expect a .message
+                response && response.message && response.status ||
+
+                // XDR default to success when no response.status
+                response && 200;
+
+            var success = status === 200 || status === 201;
+            var retry = !success && status !== 400 && status !== 403 && status !== 404;
+
+            opts.callback(retry, success, event.target, response);
         };
-        request.ontimeout = function(event) { // stop the network call but rely on ontimeout to call opt.callback
-        };
+
+        if (this._support.timeout) {
+            // .timeout supported by both XHR and XDR,
+            // we do receive timeout event, tested
+            request.timeout = this.requestTimeoutInMs * (opts.successiveRetryCount + 1);
+
+            request.ontimeout = timeoutListener;
+        } else {
+            ontimeout = setTimeout(timeoutListener, this.requestTimeoutInMs * (opts.successiveRetryCount + 1));
+        }
+
         request.onerror = function(event) {
-            clearTimeout(ontimeout);
-            ontimeout = null;
+            if (timedOut) {
+                return;
+            }
+
+            if (!self._support.timeout) {
+                clearTimeout(ontimeout);
+            }
+
+            // error event is trigerred both with XDR/XHR on:
+            //   - DNS error
+            //   - unallowed cross domain request
             opts.callback(true, false, null, { 'message': 'Could not connect to host', 'error': event } );
         };
 
@@ -911,17 +972,11 @@ AlgoliaSearch.prototype = {
         return obj === void 0;
     },
 
-    /// internal attributes
-    applicationID: null,
-    apiKey: null,
-    tagFilters: null,
-    userToken: null,
-    hosts: [],
-    extraHeaders: [],
     _support: {
         hasXMLHttpRequest: 'XMLHttpRequest' in window,
         hasXDomainRequest: 'XDomainRequest' in window,
-        cors: 'withCredentials' in new XMLHttpRequest()
+        cors: 'withCredentials' in new XMLHttpRequest(),
+        timeout: 'timeout' in new XMLHttpRequest()
     }
 };
 
@@ -1238,6 +1293,8 @@ AlgoliaSearch.prototype.Index.prototype = {
                 self.search(query, function(success, content) {
                     if (success) {
                         cb(content.hits);
+                    } else {
+                        cb(content && content.message);
                     }
                 }, params);
             };
