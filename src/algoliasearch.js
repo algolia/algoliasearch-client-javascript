@@ -579,7 +579,7 @@ AlgoliaSearch.prototype = {
                 deferred && deferred.reject(error);
                 return;
             }
-            opts.callback = function(retry, success, obj, body) {
+            opts.callback = function(retry, success, body) {
                 if (success && !self._isUndefined(opts.cache)) {
                     cache[cacheID] = body;
                 }
@@ -650,16 +650,16 @@ AlgoliaSearch.prototype = {
             cache: false,
             timeout: (this.requestTimeoutInMs * (opts.successiveRetryCount + 1))
         }).then(function(response) {
-            opts.callback(false, true, null, response.data);
+            opts.callback(false, true, response.data);
         }, function(response) {
             if (response.status === 0) {
                 // xhr.timeout is not handled by Angular.js right now
                 // let's retry
-                opts.callback(true, false, null, response.data);
+                opts.callback(true, false, response.data);
             } else if (response.status == 400 || response.status === 403 || response.status === 404) {
-                opts.callback(false, false, null, response.data);
+                opts.callback(false, false, response.data);
             } else {
-                opts.callback(true, false, null, response.data);
+                opts.callback(true, false, response.data);
             }
         });
     },
@@ -696,15 +696,15 @@ AlgoliaSearch.prototype = {
             data: body,
             error: function(xhr, textStatus, error) {
                 if (textStatus === 'timeout') {
-                    opts.callback(true, false, null, { 'message': 'Timeout - Could not connect to endpoint ' + url } );
+                    opts.callback(true, false, { 'message': 'Timeout - Could not connect to endpoint ' + url } );
                 } else if (xhr.status === 400 || xhr.status === 403 || xhr.status === 404) {
-                    opts.callback(false, false, null, xhr.responseJSON );
+                    opts.callback(false, false, xhr.responseJSON );
                 } else {
-                    opts.callback(true, false, null, { 'message': error } );
+                    opts.callback(true, false, { 'message': error } );
                 }
             },
             success: function(data, textStatus, xhr) {
-                opts.callback(false, true, null, data);
+                opts.callback(false, true, data);
             }
         });
     },
@@ -717,7 +717,7 @@ AlgoliaSearch.prototype = {
      */
     _makeJsonpRequestByHost: function(url, opts) {
         if (opts.method !== 'GET') {
-            opts.callback(true, false, null, { 'message': 'Method ' + opts.method + ' ' + url + ' is not supported by JSONP.' });
+            opts.callback(true, false, { 'message': 'Method ' + opts.method + ' ' + url + ' is not supported by JSONP.' });
             return;
         }
 
@@ -747,7 +747,7 @@ AlgoliaSearch.prototype = {
             var ok = status === 200;
             var retry = !ok && status !== 400 && status !== 403 && status !== 404;
             cbCalled = true;
-            opts.callback(retry, ok, null, data);
+            opts.callback(retry, ok, data);
         };
 
         script.type = 'text/javascript';
@@ -773,7 +773,7 @@ AlgoliaSearch.prototype = {
             timedOut = true;
             clean();
 
-            opts.callback(true, false, null, { 'message': 'Timeout - Failed to load JSONP script.' });
+            opts.callback(true, false, { 'message': 'Timeout - Failed to load JSONP script.' });
         }, this.requestTimeoutInMs);
 
         success = function() {
@@ -786,7 +786,7 @@ AlgoliaSearch.prototype = {
 
             // script loaded but did not call the fn => script loading error
             if (!cbCalled) {
-                opts.callback(true, false, null, { 'message': 'Failed to load JSONP script.' });
+                opts.callback(true, false, { 'message': 'Failed to load JSONP script.' });
             }
         };
 
@@ -825,7 +825,7 @@ AlgoliaSearch.prototype = {
             }
 
             clean();
-            opts.callback(true, false, null, { 'message': 'Failed to load JSONP script.' });
+            opts.callback(true, false, { 'message': 'Failed to load JSONP script.' });
         };
 
         script.async = true;
@@ -845,7 +845,7 @@ AlgoliaSearch.prototype = {
         // no cors or XDomainRequest, no request
         if (!this._support.cors && !this._support.hasXDomainRequest) {
             // very old browser, not supported
-            opts.callback(false, false, null, { 'message': 'CORS not supported' });
+            opts.callback(false, false, { 'message': 'CORS not supported' });
             return;
         }
 
@@ -881,7 +881,7 @@ AlgoliaSearch.prototype = {
                 request.abort();
             }
 
-            opts.callback(true, false, null, { 'message': 'Timeout - Could not connect to endpoint ' + url } );
+            opts.callback(true, false, { 'message': 'Timeout - Could not connect to endpoint ' + url } );
         };
 
         request.open(opts.method, url);
@@ -890,7 +890,9 @@ AlgoliaSearch.prototype = {
             request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         }
 
-        request.onload = function(event) {
+        // event object not received in IE8, at least
+        // but we do not use it, still important to note
+        request.onload = function(/*event*/) {
             // When browser does not supports request.timeout, we can
             // have both a load and timeout event
             if (timedOut) {
@@ -922,7 +924,7 @@ AlgoliaSearch.prototype = {
             var success = status === 200 || status === 201;
             var retry = !success && status !== 400 && status !== 403 && status !== 404;
 
-            opts.callback(retry, success, event.target, response);
+            opts.callback(retry, success, response);
         };
 
         if (this._support.timeout) {
@@ -947,7 +949,7 @@ AlgoliaSearch.prototype = {
             // error event is trigerred both with XDR/XHR on:
             //   - DNS error
             //   - unallowed cross domain request
-            opts.callback(true, false, null, { 'message': 'Could not connect to host', 'error': event } );
+            opts.callback(true, false, { 'message': 'Could not connect to host', 'error': event } );
         };
 
         request.send(body);
@@ -1175,10 +1177,10 @@ AlgoliaSearch.prototype.Index.prototype = {
          * - hitsPerPage: (integer) Pagination parameter used to select the number of hits per page. Defaults to 20.
          * - attributesToRetrieve: a string that contains the list of object attributes you want to retrieve (let you minimize the answer size).
          *   Attributes are separated with a comma (for example "name,address").
-         *   You can also use a string array encoding (for example ["name","address"]).
+         *   You can also use an array (for example ["name","address"]).
          *   By default, all attributes are retrieved. You can also use '*' to retrieve all values when an attributesToRetrieve setting is specified for your index.
          * - attributesToHighlight: a string that contains the list of attributes you want to highlight according to the query.
-         *   Attributes are separated by a comma. You can also use a string array encoding (for example ["name","address"]).
+         *   Attributes are separated by a comma. You can also use an array (for example ["name","address"]).
          *   If an attribute has no match for the query, the raw value is returned. By default all indexed text attributes are highlighted.
          *   You can use `*` if you want to highlight all textual attributes. Numerical attributes are not highlighted.
          *   A matchLevel is returned for each highlighted attribute and can contain:
@@ -1187,7 +1189,7 @@ AlgoliaSearch.prototype.Index.prototype = {
          *      - none: if none of the query terms were found.
          * - attributesToSnippet: a string that contains the list of attributes to snippet alongside the number of words to return (syntax is `attributeName:nbWords`).
          *    Attributes are separated by a comma (Example: attributesToSnippet=name:10,content:10).
-         *    You can also use a string array encoding (Example: attributesToSnippet: ["name:10","content:10"]). By default no snippet is computed.
+         *    You can also use an array (Example: attributesToSnippet: ['name:10','content:10']). By default no snippet is computed.
          * - minWordSizefor1Typo: the minimum number of characters in a query word to accept one typo in this word. Defaults to 3.
          * - minWordSizefor2Typos: the minimum number of characters in a query word to accept two typos in this word. Defaults to 7.
          * - getRankingInfo: if set to 1, the result hits will contain ranking information in _rankingInfo attribute.
@@ -1202,18 +1204,17 @@ AlgoliaSearch.prototype.Index.prototype = {
          * - numericFilters: a string that contains the list of numeric filters you want to apply separated by a comma.
          *   The syntax of one filter is `attributeName` followed by `operand` followed by `value`. Supported operands are `<`, `<=`, `=`, `>` and `>=`.
          *   You can have multiple conditions on one attribute like for example numericFilters=price>100,price<1000.
-         *   You can also use a string array encoding (for example numericFilters: ["price>100","price<1000"]).
+         *   You can also use an array (for example numericFilters: ["price>100","price<1000"]).
          * - tagFilters: filter the query by a set of tags. You can AND tags by separating them by commas.
          *   To OR tags, you must add parentheses. For example, tags=tag1,(tag2,tag3) means tag1 AND (tag2 OR tag3).
-         *   You can also use a string array encoding, for example tagFilters: ["tag1",["tag2","tag3"]] means tag1 AND (tag2 OR tag3).
+         *   You can also use an array, for example tagFilters: ["tag1",["tag2","tag3"]] means tag1 AND (tag2 OR tag3).
          *   At indexing, tags should be added in the _tags** attribute of objects (for example {"_tags":["tag1","tag2"]}).
          * - facetFilters: filter the query by a list of facets.
          *   Facets are separated by commas and each facet is encoded as `attributeName:value`.
          *   For example: `facetFilters=category:Book,author:John%20Doe`.
-         *   You can also use a string array encoding (for example `["category:Book","author:John%20Doe"]`).
+         *   You can also use an array (for example `["category:Book","author:John%20Doe"]`).
          * - facets: List of object attributes that you want to use for faceting.
-         *   Attributes are separated with a comma (for example `"category,author"` ).
-         *   You can also use a JSON string array encoding (for example ["category","author"]).
+         *   Comma separated list: `"category,author"` or array `['category','author']`
          *   Only attributes that have been added in **attributesForFaceting** index setting can be used in this parameter.
          *   You can also use `*` to perform faceting on all attributes specified in **attributesForFaceting**.
          * - queryType: select how the query words are interpreted, it can be one of the following value:
@@ -1221,12 +1222,14 @@ AlgoliaSearch.prototype.Index.prototype = {
          *    - prefixLast: only the last word is interpreted as a prefix (default behavior),
          *    - prefixNone: no query word is interpreted as a prefix. This option is not recommended.
          * - optionalWords: a string that contains the list of words that should be considered as optional when found in the query.
-         *   The list of words is comma separated.
+         *   Comma separated and array are accepted.
          * - distinct: If set to 1, enable the distinct feature (disabled by default) if the attributeForDistinct index setting is set.
          *   This feature is similar to the SQL "distinct" keyword: when enabled in a query with the distinct=1 parameter,
          *   all hits containing a duplicate value for the attributeForDistinct attribute are removed from results.
          *   For example, if the chosen attribute is show_name and several hits have the same value for show_name, then only the best
          *   one is kept and others are removed.
+         * - restrictSearchableAttributes: List of attributes you want to use for textual search (must be a subset of the attributesToIndex index setting)
+         * either comma separated or as an array
          * @param delay (optional) if set, wait for this delay (in ms) and only send the query if there was no other in the meantime.
          */
         search: function(query, callback, args, delay) {
