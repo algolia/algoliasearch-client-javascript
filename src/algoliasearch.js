@@ -972,13 +972,6 @@ AlgoliaSearch.prototype = {
         return obj === void 0;
     },
 
-    /// internal attributes
-    applicationID: null,
-    apiKey: null,
-    tagFilters: null,
-    userToken: null,
-    hosts: [],
-    extraHeaders: [],
     _support: {
         hasXMLHttpRequest: 'XMLHttpRequest' in window,
         hasXDomainRequest: 'XDomainRequest' in window,
