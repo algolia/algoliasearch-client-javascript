@@ -1,6 +1,6 @@
 var fauxJax = require('faux-jax');
 
-if (fauxJax.support.cors) {
+if (fauxJax.support.xhr.cors) {
   module.exports = {
     testName: 'client.deleteIndex(name, cb)',
     object: 'client',
