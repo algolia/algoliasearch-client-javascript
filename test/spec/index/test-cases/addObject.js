@@ -20,7 +20,7 @@ var testCases = module.exports = [{
 }];
 
 // only cors supports PUT
-if (fauxJax.support.cors) {
+if (fauxJax.support.xhr.cors) {
   testCases.push({
     object: 'index',
     methodName: 'addObject',

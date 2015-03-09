@@ -73,7 +73,7 @@ function testXHRCall(opts) {
     'Request body matches'
   );
 
-  if (fauxJax.support.cors) {
+  if (fauxJax.support.xhr.cors) {
     assert.deepEqual(
       actualRequest.requestHeaders,
       expectedRequest.headers,
