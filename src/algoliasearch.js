@@ -579,7 +579,7 @@ AlgoliaSearch.prototype = {
         deferred && deferred.reject(error);
         return;
       }
-      opts.callback = function(retry, success, obj, body) {
+      opts.callback = function(retry, success, body) {
         if (success && !self._isUndefined(opts.cache)) {
           cache[cacheID] = body;
         }
@@ -650,16 +650,16 @@ AlgoliaSearch.prototype = {
       cache: false,
       timeout: (this.requestTimeoutInMs * (opts.successiveRetryCount + 1))
     }).then(function(response) {
-      opts.callback(false, true, null, response.data);
+      opts.callback(false, true, response.data);
     }, function(response) {
       if (response.status === 0) {
         // xhr.timeout is not handled by Angular.js right now
         // let's retry
-        opts.callback(true, false, null, response.data);
+        opts.callback(true, false, response.data);
       } else if (response.status == 400 || response.status === 403 || response.status === 404) {
-        opts.callback(false, false, null, response.data);
+        opts.callback(false, false, response.data);
       } else {
-        opts.callback(true, false, null, response.data);
+        opts.callback(true, false, response.data);
       }
     });
   },
@@ -696,15 +696,15 @@ AlgoliaSearch.prototype = {
       data: body,
       error: function(xhr, textStatus, error) {
         if (textStatus === 'timeout') {
-          opts.callback(true, false, null, { 'message': 'Timeout - Could not connect to endpoint ' + url } );
+          opts.callback(true, false, { 'message': 'Timeout - Could not connect to endpoint ' + url } );
         } else if (xhr.status === 400 || xhr.status === 403 || xhr.status === 404) {
-          opts.callback(false, false, null, xhr.responseJSON );
+          opts.callback(false, false, xhr.responseJSON );
         } else {
-          opts.callback(true, false, null, { 'message': error } );
+          opts.callback(true, false, { 'message': error } );
         }
       },
       success: function(data, textStatus, xhr) {
-        opts.callback(false, true, null, data);
+        opts.callback(false, true, data);
       }
     });
   },
@@ -717,7 +717,7 @@ AlgoliaSearch.prototype = {
    */
   _makeJsonpRequestByHost: function(url, opts) {
     if (opts.method !== 'GET') {
-      opts.callback(true, false, null, { 'message': 'Method ' + opts.method + ' ' + url + ' is not supported by JSONP.' });
+      opts.callback(true, false, { 'message': 'Method ' + opts.method + ' ' + url + ' is not supported by JSONP.' });
       return;
     }
 
@@ -747,7 +747,7 @@ AlgoliaSearch.prototype = {
       var ok = status === 200;
       var retry = !ok && status !== 400 && status !== 403 && status !== 404;
       cbCalled = true;
-      opts.callback(retry, ok, null, data);
+      opts.callback(retry, ok, data);
     };
 
     script.type = 'text/javascript';
@@ -773,7 +773,7 @@ AlgoliaSearch.prototype = {
       timedOut = true;
       clean();
 
-      opts.callback(true, false, null, { 'message': 'Timeout - Failed to load JSONP script.' });
+      opts.callback(true, false, { 'message': 'Timeout - Failed to load JSONP script.' });
     }, this.requestTimeoutInMs);
 
     success = function() {
@@ -786,7 +786,7 @@ AlgoliaSearch.prototype = {
 
       // script loaded but did not call the fn => script loading error
       if (!cbCalled) {
-        opts.callback(true, false, null, { 'message': 'Failed to load JSONP script.' });
+        opts.callback(true, false, { 'message': 'Failed to load JSONP script.' });
       }
     };
 
@@ -825,7 +825,7 @@ AlgoliaSearch.prototype = {
       }
 
       clean();
-      opts.callback(true, false, null, { 'message': 'Failed to load JSONP script.' });
+      opts.callback(true, false, { 'message': 'Failed to load JSONP script.' });
     };
 
     script.async = true;
@@ -845,7 +845,7 @@ AlgoliaSearch.prototype = {
     // no cors or XDomainRequest, no request
     if (!this._support.cors && !this._support.hasXDomainRequest) {
       // very old browser, not supported
-      opts.callback(false, false, null, { 'message': 'CORS not supported' });
+      opts.callback(false, false, { 'message': 'CORS not supported' });
       return;
     }
 
@@ -881,7 +881,7 @@ AlgoliaSearch.prototype = {
         request.abort();
       }
 
-      opts.callback(true, false, null, { 'message': 'Timeout - Could not connect to endpoint ' + url } );
+      opts.callback(true, false, { 'message': 'Timeout - Could not connect to endpoint ' + url } );
     };
 
     request.open(opts.method, url);
@@ -890,7 +890,9 @@ AlgoliaSearch.prototype = {
       request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     }
 
-    request.onload = function(event) {
+    // event object not received in IE8, at least
+    // but we do not use it, still important to note
+    request.onload = function(/*event*/) {
       // When browser does not supports request.timeout, we can
       // have both a load and timeout event
       if (timedOut) {
@@ -922,7 +924,7 @@ AlgoliaSearch.prototype = {
       var success = status === 200 || status === 201;
       var retry = !success && status !== 400 && status !== 403 && status !== 404;
 
-      opts.callback(retry, success, event.target, response);
+      opts.callback(retry, success, response);
     };
 
     if (this._support.timeout) {
@@ -947,7 +949,7 @@ AlgoliaSearch.prototype = {
       // error event is trigerred both with XDR/XHR on:
       //   - DNS error
       //   - unallowed cross domain request
-      opts.callback(true, false, null, { 'message': 'Could not connect to host', 'error': event } );
+      opts.callback(true, false, { 'message': 'Could not connect to host', 'error': event } );
     };
 
     request.send(body);

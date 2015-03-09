@@ -23,7 +23,7 @@ testCases.push({
 // On browsers with only XDomainRequest, this testCase cannot be done
 // It also means, when using waitTask with theses browsers, if
 // there's an error (status 400), we will retry instead of stopping the wait loop
-if (support.hasXMLHttpRequest && support.cors) {
+if (support.xhr.hasXMLHttpRequest && support.xhr.cors) {
   testCases.push({
     object: 'index',
     methodName: 'waitTask',

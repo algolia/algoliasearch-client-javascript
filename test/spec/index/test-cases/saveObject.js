@@ -1,6 +1,6 @@
 var fauxJax = require('faux-jax');
 
-if (fauxJax.support.cors) {
+if (fauxJax.support.xhr.cors) {
   var clone = require('lodash-compat/lang/clone');
 
   var object = {
