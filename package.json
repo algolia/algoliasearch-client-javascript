@@ -54,7 +54,7 @@
     "writable-window-method": "1.0.0",
     "xhr": "2.0.1",
     "zuul": "2.1.0",
-    "zuul-ngrok": "git://github.com/vvo/zuul-ngrok#decbe165e0a50b7afaef3eb1dd1f49ed711bc8d7"
+    "zuul-ngrok": "git://github.com/rase-/zuul-ngrok#c259c46ec4c111e71a671b00240fda2eb65df4ff"
   },
   "browser": {
     "algoliasearch": "./dist/algoliasearch.js"
