@@ -32,7 +32,7 @@
     this.init(client, index, extend({}, defaults, options));
   };
 
-  AlgoliaSearchHelper.prototype = {
+  window.AlgoliaSearchHelper.prototype = {
     /**
      * Initialize a new AlgoliaSearchHelper
      * @param  {AlgoliaSearch} client an AlgoliaSearch client
@@ -461,7 +461,7 @@
         }
       }
       for (var disjunctiveRefinement in this.disjunctiveRefinements) {
-        if (disjunctiveRefinement != facet) {
+        if (disjunctiveRefinement !== facet) {
           var refinements = [];
           for (var value in this.disjunctiveRefinements[disjunctiveRefinement]) {
             if (this.disjunctiveRefinements[disjunctiveRefinement][value]) {
