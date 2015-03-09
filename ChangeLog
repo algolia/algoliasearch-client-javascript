@@ -1,6 +1,8 @@
 CHANGELOG
 
 UNRELEASED
+    * some linting fixes
+    * removed AlgoliaExplainResults
     * test suite, including request strategy test suite
     * IE10 should now behave as a CORS supported XMLHttpRequest browser, as it is
     * running tests on many browsers, using saucelabs

@@ -32,7 +32,7 @@
     this.init(client, index, extend({}, defaults, options));
   };
 
-  AlgoliaSearchHelper.prototype = {
+  window.AlgoliaSearchHelper.prototype = {
     /**
      * Initialize a new AlgoliaSearchHelper
      * @param  {AlgoliaSearch} client an AlgoliaSearch client
@@ -154,7 +154,7 @@
      */
     toggleExclude: function(facet, value) {
       for (var i = 0; i < this.options.facets.length; ++i) {
-        if (this.options.facets[i] == facet) {
+        if (this.options.facets[i] === facet) {
           var refinement = facet + ':-' + value;
           this.excludes[refinement] = !this.excludes[refinement];
           this.page = 0;
@@ -173,7 +173,7 @@
      */
     toggleRefine: function(facet, value) {
       for (var i = 0; i < this.options.facets.length; ++i) {
-        if (this.options.facets[i] == facet) {
+        if (this.options.facets[i] === facet) {
           var refinement = facet + ':' + value;
           this.refinements[refinement] = !this.refinements[refinement];
           this.page = 0;
@@ -183,7 +183,7 @@
       }
       this.disjunctiveRefinements[facet] = this.disjunctiveRefinements[facet] || {};
       for (var j = 0; j < this.options.disjunctiveFacets.length; ++j) {
-        if (this.options.disjunctiveFacets[j] == facet) {
+        if (this.options.disjunctiveFacets[j] === facet) {
           this.disjunctiveRefinements[facet][value] = !this.disjunctiveRefinements[facet][value];
           this.page = 0;
           this._search();
@@ -461,7 +461,7 @@
         }
       }
       for (var disjunctiveRefinement in this.disjunctiveRefinements) {
-        if (disjunctiveRefinement != facet) {
+        if (disjunctiveRefinement !== facet) {
           var refinements = [];
           for (var value in this.disjunctiveRefinements[disjunctiveRefinement]) {
             if (this.disjunctiveRefinements[disjunctiveRefinement][value]) {
