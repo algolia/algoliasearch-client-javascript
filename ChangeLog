@@ -20,6 +20,13 @@ UNRELEASED
       - removed `AlgoliaExplainResults`, no obvious use ATM
       - calling algoliasearch() without an applicationID or apiKey will throw
       - Helper: `new AlgoliaSearchHelper()` => `algoliasearch.helper()`, same function signature
+    * BREAKING CHANGE, no more window.ALGOLIA_VERSION
+      - you can find the version in algoliasearch.version
+    * UMD compatibiliy #41
+      - algoliasearch can now be used with any module loader
+      - build is now done with browserify
+      - no more grunt
+    * added simple test on `algoliasearch.helper()`
 
 2015-02-03  2.9.2
     * Fixed calls to `.search(function() {})`, `.search(null, function() {})`, `.search(undefined, function() {})
