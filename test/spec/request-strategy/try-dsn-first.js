@@ -9,7 +9,14 @@ test('Request-strategy: Use DSN host first', function(t) {
 
   var fixture = createFixture({
     clientOptions: {
-      dsnHost: 'yawdsn.com'
+      hosts: [
+        'yawdsn.com',
+        'booya.com',
+        'booyou.com',
+        'booyi.com',
+        'boolala.com',
+        'boodibu.com'
+      ]
     }
   });
 

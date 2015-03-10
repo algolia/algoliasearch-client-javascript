@@ -1,6 +1,6 @@
 module.exports = testXHRCall;
 
-var AlgoliaSearch = require('algoliasearch');
+var algoliasearch = require('../../');
 var fauxJax = require('faux-jax');
 var parse = require('url-parse');
 
@@ -10,7 +10,7 @@ function testXHRCall(opts) {
   var assert = opts.assert;
   var testCase = opts.testCase;
 
-  var client = new AlgoliaSearch(opts.applicationID, opts.searchOnlyAPIKey);
+  var client = algoliasearch(opts.applicationID, opts.searchOnlyAPIKey);
   var object;
   if (opts.object === 'index') {
     object = client.initIndex(opts.indexName);

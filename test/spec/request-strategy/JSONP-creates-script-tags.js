@@ -15,7 +15,12 @@ test('Request strategy creates and remove script tags when using JSONP', functio
   var currentURL = parse(location.href);
   var fixture = createFixture({
     clientOptions: {
-      dsnHost: currentURL.host
+      hosts: [
+        currentURL.host,
+        currentURL.host,
+        currentURL.host,
+        currentURL.host
+      ]
     },
     indexName: 'simple-JSONP-response'
   });

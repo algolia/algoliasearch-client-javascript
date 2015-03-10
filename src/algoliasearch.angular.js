@@ -1,5 +1,6 @@
-/* global angular */
-angular.module('algoliasearch', [])
+var algoliasearch = require('../');
+
+global.angular.module('algoliasearch', [])
   .service('algolia', ['$injector', function ($injector) {
     return {
       Client: function(applicationID, apiKey, options) {
@@ -7,7 +8,7 @@ angular.module('algoliasearch', [])
         options.angular = {
           '$injector': $injector
         };
-        return new AlgoliaSearch(applicationID, apiKey, options);
+        return algoliasearch(applicationID, apiKey, options);
       }
     };
   }]);

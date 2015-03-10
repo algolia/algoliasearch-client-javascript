@@ -13,13 +13,13 @@ test('Request strategy handles slow JSONP responses (no double callback)', funct
   var currentURL = parse(location.href);
   var fixture = createFixture({
     clientOptions: {
-      dsnHost: currentURL.host,
       hosts: [
+        currentURL.host,
         currentURL.host,
         currentURL.host,
         currentURL.host
       ],
-      requestTimeoutInMs: requestTimeout
+      timeout: requestTimeout
     },
     indexName: 'slow-response'
   });
