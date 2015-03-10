@@ -35,6 +35,7 @@
     "express": "4.12.1",
     "faux-jax": "3.0.1",
     "http-server": "0.7.5",
+    "lodash": "3.5.0",
     "morgan": "1.5.1",
     "phantomjs": "1.9.15",
     "sinon": "1.12.2",
