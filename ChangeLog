@@ -27,6 +27,9 @@ UNRELEASED
       - build is now done with browserify
       - no more grunt
     * added simple test on `algoliasearch.helper()`
+    * removed vendor/
+      - vendor/json2.js now as an npm module
+      - vendor/jquery.typeahead.js now on cdnjs (examples)
 
 2015-02-03  2.9.2
     * Fixed calls to `.search(function() {})`, `.search(null, function() {})`, `.search(undefined, function() {})
