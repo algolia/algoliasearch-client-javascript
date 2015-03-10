@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# Use this with `npm run build` so that `./node_modules/.bin` are injected into
+# the PATH
+
 license='/*! algoliasearch 2.9.2 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */'
 
 echo 'Building algoliasearch-client-js'
