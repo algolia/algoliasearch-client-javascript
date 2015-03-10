@@ -59,6 +59,7 @@
   },
   "version": "2.9.2",
   "dependencies": {
+    "JSON2": "0.1.0",
     "lodash-compat": "3.5.0"
   },
   "main": "index.js"
