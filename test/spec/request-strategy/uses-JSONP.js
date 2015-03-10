@@ -14,13 +14,12 @@ test('Request strategy uses JSONP when all XHR timed out', function(t) {
   var currentURL = parse(location.href);
   var fixture = createFixture({
     clientOptions: {
-      dsnHost: currentURL.host,
       hosts: [
         currentURL.host,
         currentURL.host,
         currentURL.host
       ],
-      requestTimeoutInMs: requestTimeout
+      timeout: requestTimeout
     },
     indexName: 'request-strategy-uses-JSONP'
   });
@@ -66,9 +65,5 @@ test('Request strategy uses JSONP when all XHR timed out', function(t) {
      t.notOk(searchCallback.calledOnce, 'Callback not called on third request');
 
      clock.tick(requestTimeout * 3);
-     t.equal(fauxJax.requests.length, 4, 'Fourth request made');
-     t.notOk(searchCallback.calledOnce, 'Callback not called on fourth request');
-
-     clock.tick(requestTimeout * 4);
   });
 });

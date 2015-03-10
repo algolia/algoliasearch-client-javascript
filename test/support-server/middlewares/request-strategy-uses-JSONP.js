@@ -14,8 +14,9 @@ function requestStrategyUsesJSONP() {
   router.get('/', function(req, res) {
     calls++;
 
-    // only reply to the fourth JSONP request
-    if (calls === 4) {
+    // only reply to the third JSONP request
+    // 3 custom hosts, no dsn
+    if (calls === 3) {
       res.jsonp({hello: 'man'});
     } else {
       res.jsonp({status: 500, message: 'woops!'});

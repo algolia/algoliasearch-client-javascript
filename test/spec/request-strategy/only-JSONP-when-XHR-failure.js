@@ -10,7 +10,6 @@ test('Request strategy uses only JSONP if one XHR fails', function(t) {
   var currentURL = parse(location.href);
   var fixture = createFixture({
     clientOptions: {
-      dsnHost: currentURL.host,
       hosts: [
         currentURL.host
       ]

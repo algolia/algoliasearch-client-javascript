@@ -1,13 +1,10 @@
-/* global jQuery */
-(function ($) {
+var algoliasearch = require('../');
 
-  $.algolia = {};
-  $.algolia.Client = function(applicationID, apiKey, options) {
-    options = options || {};
-    options.jQuery = {
-      '$': $
-    };
-    return new AlgoliaSearch(applicationID, apiKey, options);
+global.jQuery.algolia = {};
+global.jQuery.algolia.Client = function(applicationID, apiKey, options) {
+  options = options || {};
+  options.jQuery = {
+    '$': global.jQuery
   };
-
-}(jQuery));
+  return algoliasearch(applicationID, apiKey, options);
+};

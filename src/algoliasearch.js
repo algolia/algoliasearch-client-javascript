@@ -1,101 +1,97 @@
+module.exports = AlgoliaSearch;
+
+var defaults = require('lodash-compat/object/defaults');
+var map = require('lodash-compat/collection/map');
+var shuffle = require('lodash-compat/collection/shuffle');
+
 /*
  * Algolia Search library initialization
- * @param applicationID the application ID you have in your admin interface
- * @param apiKey a valid API key for the service
- * @param methodOrOptions the hash of parameters for initialization. It can contains:
- *        - method (optional) specify if the protocol used is http or https (http by default to make the first search query faster).
- *          You need to use https is you are doing something else than just search queries.
- *        - hosts (optional) the list of hosts that you have received for the service
- *        - dsn (optional) set to true if your account has the Distributed Search Option
- *        - dsnHost (optional) override the automatic computation of dsn hostname
+ * https://www.algolia.com/
+ *
+ * @param {string} applicationID - Your applicationID, found in your dashboard
+ * @param {string} apiKey - Your API key, found in your dashboard
+ * @param {Object} [opts]
+ * @param {number} [opts.timeout=2000] - The request timeout set in milliseconds, another request will be issued after this timeout
+ * @param {string} [opts.protocol='http:'] - The protocol used to query Algolia Search API.
+ *                                        Set to 'https:' to force using https. Default to document.location.protocol in browsers
+ * @param {string[]} [opts.hosts=[
+ *          this.applicationID + '-1.algolia.' + opts.tld,
+ *          this.applicationID + '-2.algolia.' + opts.tld,
+ *          this.applicationID + '-3.algolia.' + opts.tld]
+ *        ] - The hosts to use for Algolia Search API. It this your responsibility to shuffle the hosts and add a DSN host in it
+ * @param {string} [opts.tld='net'] - The tld to use when computing hosts default list
+ * @param {?boolean} [opts.jsonp=null] - Set to true to force JSONP usage in browsers, false to disable. Default to feature detection
  */
-var AlgoliaSearch = function(applicationID, apiKey, methodOrOptions, resolveDNS, hosts) {
-  var self = this;
-  this.applicationID = applicationID;
-  this.apiKey = apiKey;
-  this.dsn = true;
-  this.dsnHost = null;
-  this.hosts = [];
-  this.currentHostIndex = 0;
-  this.requestTimeoutInMs = 2000;
-  this.extraHeaders = [];
-  this.jsonp = null;
-  this.options = {};
+function AlgoliaSearch(applicationID, apiKey, opts) {
+  var usage = 'Usage: algoliasearch(applicationID, apiKey, opts)';
 
-  // make sure every client instance has it's own cache
-  this.cache = {};
+  if (!applicationID) {
+    throw new Error('Please provide an application ID. ' + usage);
+  }
 
-  var method;
-  var tld = 'net';
-  if (typeof methodOrOptions === 'string') { // Old initialization
-    method = methodOrOptions;
-  } else {
-    // Take all option from the hash
-    var options = methodOrOptions || {};
-    this.options = options;
-    if (!this._isUndefined(options.method)) {
-      method = options.method;
-    }
-    if (!this._isUndefined(options.tld)) {
-      tld = options.tld;
-    }
-    if (!this._isUndefined(options.dsn)) {
-      this.dsn = options.dsn;
-    }
-    if (!this._isUndefined(options.hosts)) {
-      hosts = options.hosts;
-    }
-    if (!this._isUndefined(options.dsnHost)) {
-      this.dsnHost = options.dsnHost;
-    }
-    if (!this._isUndefined(options.requestTimeoutInMs)) {
-      this.requestTimeoutInMs = +options.requestTimeoutInMs;
-    }
-    if (!this._isUndefined(options.jsonp)) {
-      this.jsonp = options.jsonp;
-    }
+  if (!apiKey) {
+    throw new Error('Please provide an API key. ' + usage);
   }
-  // If hosts is undefined, initialize it with applicationID
-  if (this._isUndefined(hosts)) {
-    hosts = [
-      this.applicationID + '-1.algolia.' + tld,
-      this.applicationID + '-2.algolia.' + tld,
-      this.applicationID + '-3.algolia.' + tld
-    ];
+
+  opts = defaults(opts || {}, {
+    timeout: 2000,
+    protocol: document && document.location.protocol || 'http:',
+    hosts: [], // filled later on, has dependencies
+    tld: 'net',
+    jsonp: null
+  });
+
+  // while we advocate for colon-at-the-end values: 'http:' for `opts.protocol`
+  // we also accept `http` and `https`. It's a common error.
+  if (!/:$/.test(opts.protocol)) {
+    opts.protocol = opts.protocol + ':';
   }
-  // detect is we use http or https
-  this.host_protocol = 'http://';
-  if (this._isUndefined(method) || method === null) {
-    this.host_protocol = (document.location.protocol === 'https:' ? 'https' : 'http') + '://';
-  } else if (method === 'https' || method === 'HTTPS') {
-    this.host_protocol = 'https://';
+
+  // no hosts given, add defaults
+  if (opts.hosts.length === 0) {
+    opts.hosts = shuffle([
+      applicationID + '-1.algolia.' + opts.tld,
+      applicationID + '-2.algolia.' + opts.tld,
+      applicationID + '-3.algolia.' + opts.tld
+    ]);
+
+    // add default dsn host
+    opts.hosts.unshift(applicationID + '-dsn.algolia.' + opts.tld);
   }
-  // Add hosts in random order
-  for (var i = 0; i < hosts.length; ++i) {
-    if (Math.random() > 0.5) {
-      this.hosts.reverse();
-    }
-    this.hosts.push(this.host_protocol + hosts[i]);
-  }
-  if (Math.random() > 0.5) {
-    this.hosts.reverse();
-  }
-  // then add Distributed Search Network host if there is one
-  if (this.dsn || this.dsnHost !== null) {
-    if (this.dsnHost) {
-      this.hosts.unshift(this.host_protocol + this.dsnHost);
-    } else {
-      this.hosts.unshift(this.host_protocol + this.applicationID + '-dsn.algolia.' + tld);
-    }
-  }
-  // angular dependencies injection
-  if (this.options.angular) {
-    this.options.angular.$injector.invoke(['$http', '$q', function ($http, $q) {
-      self.options.angular.$q = $q;
-      self.options.angular.$http = $http;
+
+  opts.hosts = map(opts.hosts, function prependProtocol(host) {
+    return opts.protocol + '//' + host;
+  });
+
+  // AngularJS plugin
+  // dependencies injection
+  // see https://github.com/algolia/algoliasearch-client-js/issues/44
+  if (opts.angular) {
+    this._angular = opts.angular;
+    opts.angular.$injector.invoke(['$http', '$q', function ($http, $q) {
+      opts.angular.$q = $q;
+      opts.angular.$http = $http;
     }]);
   }
-};
+
+  // jQuery plugin
+  // see https://github.com/algolia/algoliasearch-client-js/issues/44
+  if (opts.jQuery) {
+    this._jQuery = opts.jQuery;
+  }
+
+  this.applicationID = applicationID;
+  this.apiKey = apiKey;
+  this.hosts = opts.hosts;
+
+  this.currentHostIndex = 0;
+  this.requestTimeoutInMs = opts.timeout;
+  this.extraHeaders = [];
+  this.jsonp = opts.jsonp;
+  this.cache = {};
+}
+
+AlgoliaSearch.helper = require('./algoliasearch.helper');
 
 // This holds the number of JSONP requests done accross clients
 // It's used as part of the ?callback=JSONP_$JSONPCounter when we do JSONP requests
@@ -447,11 +443,11 @@ AlgoliaSearch.prototype = {
     var cache = null;
     var cacheID = opts.url;
     var deferred = null;
-    if (this.options.jQuery) {
-      deferred = this.options.jQuery.$.Deferred();
+    if (this._jQuery) {
+      deferred = this._jQuery.$.Deferred();
       deferred.promise = deferred.promise(); // promise is a property in angular
-    } else if (this.options.angular) {
-      deferred = this.options.angular.$q.defer();
+    } else if (this._angular) {
+      deferred = this._angular.$q.defer();
     }
 
     if (!this._isUndefined(opts.body)) {
@@ -471,7 +467,10 @@ AlgoliaSearch.prototype = {
     }
 
     opts.successiveRetryCount = 0;
-    var doRequest = function() {
+
+    doRequest();
+
+    function doRequest() {
       if (opts.successiveRetryCount >= self.hosts.length) {
         var error = { message: 'Cannot connect the Algolia\'s Search API. Please send an email to support@algolia.com to report the issue.' };
         if (!self._isUndefined(callback) && callback) {
@@ -499,8 +498,7 @@ AlgoliaSearch.prototype = {
       };
       opts.hostname = self.hosts[self.currentHostIndex];
       self._jsonRequestByHost(opts);
-    };
-    doRequest();
+    }
 
     return deferred && deferred.promise;
   },
@@ -510,9 +508,9 @@ AlgoliaSearch.prototype = {
 
     if (this.jsonp) {
       this._makeJsonpRequestByHost(url, opts);
-    } else if (this.options.jQuery) {
+    } else if (this._jQuery) {
       this._makejQueryRequestByHost(url, opts);
-    } else if (this.options.angular) {
+    } else if (this._angular) {
       this._makeAngularRequestByHost(url, opts);
     } else {
       this._makeXmlHttpRequestByHost(url, opts);
@@ -543,7 +541,7 @@ AlgoliaSearch.prototype = {
     for (var i = 0; i < this.extraHeaders.length; ++i) {
       url += '&' + this.extraHeaders[i].key + '=' + this.extraHeaders[i].value;
     }
-    this.options.angular.$http({
+    this._angular.$http({
       url: url,
       method: opts.method,
       data: body,
@@ -588,7 +586,7 @@ AlgoliaSearch.prototype = {
     for (var i = 0; i < this.extraHeaders.length; ++i) {
       url += '&' + this.extraHeaders[i].key + '=' + this.extraHeaders[i].value;
     }
-    this.options.jQuery.$.ajax(url, {
+    this._jQuery.$.ajax(url, {
       type: opts.method,
       timeout: this.requestTimeoutInMs * (opts.successiveRetryCount + 1),
       dataType: 'json',
@@ -653,7 +651,6 @@ AlgoliaSearch.prototype = {
       opts.callback(retry, ok, data);
     };
 
-    script.type = 'text/javascript';
     url += '?callback=' + cb + '&X-Algolia-Application-Id=' + this.applicationID + '&X-Algolia-API-Key=' + this.apiKey;
 
     if (this.tagFilters) {

@@ -2,12 +2,24 @@ CHANGELOG
 
 UNRELEASED
     * some linting fixes
-    * removed AlgoliaExplainResults
     * test suite, including request strategy test suite
     * IE10 should now behave as a CORS supported XMLHttpRequest browser, as it is
     * running tests on many browsers, using saucelabs
     * refactor around `_makeXmlHttpRequestByHost` and `_makeJsonpRequestByHost`
     * remove unused opts.callback(retry, success, obj, message) in all make..Request functions
+    * BREAKING CHANGE, changed initialization from `new AlgoliaSearch()` => `algoliasearch()` #40
+      - The only exported global property is now `algoliasearch`
+      - `opts`:
+        - `dsnHost` removed, use `hosts:[dsnHost, other hosts]`
+        - `dsn` removed, use `hosts:[non-dsn-host, non-dsn-host]`
+        - `requestTimeoutInMs` renamed to `timeout`
+        - `method` renamed to `protocol`. Protocol should be specified as `http:` or `https:`
+        - `hosts` behavior changed, when using custom hosts:
+          - no shuffling
+          - no dsn host is prepended to the list
+      - removed `AlgoliaExplainResults`, no obvious use ATM
+      - calling algoliasearch() without an applicationID or apiKey will throw
+      - Helper: `new AlgoliaSearchHelper()` => `algoliasearch.helper()`, same function signature
 
 2015-02-03  2.9.2
     * Fixed calls to `.search(function() {})`, `.search(null, function() {})`, `.search(undefined, function() {})
