@@ -64,9 +64,9 @@
         var $inputfield = $('#q');
 
         // Replace the following values by your ApplicationID and ApiKey.
-        var algolia = algoliasearch('latency', '6be0576ff61c053d5f9a3225e2a90f76');
+        var client = algoliasearch('latency', '6be0576ff61c053d5f9a3225e2a90f76');
         // Replace the following value by the name of the index you want to query.
-        var index = algolia.initIndex('contacts');
+        var index = client.initIndex('contacts');
 
         $inputfield.keyup(function() {
           index.search($inputfield.val(), searchCallback);
