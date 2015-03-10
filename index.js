@@ -5,3 +5,4 @@ function algoliasearch(applicationID, apiKey, opts) {
 
   return new AlgoliaSearch(applicationID, apiKey, opts);
 }
+algoliasearch.helper = require('./src/algoliasearch.helper');
