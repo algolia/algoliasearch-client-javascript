@@ -34,13 +34,8 @@
     "eslint": "0.15.0",
     "express": "4.12.1",
     "faux-jax": "3.0.1",
-    "grunt": "0.4.5",
-    "grunt-contrib-clean": "0.6.0",
-    "grunt-contrib-concat": "0.5.1",
-    "grunt-contrib-jshint": "0.11.0",
-    "grunt-contrib-uglify": "0.8.0",
-    "grunt-sed": "0.1.1",
     "http-server": "0.7.5",
+    "lodash": "3.5.0",
     "morgan": "1.5.1",
     "phantomjs": "1.9.15",
     "sinon": "1.12.2",
@@ -55,14 +50,16 @@
     "zuul-ngrok": "3.0.0"
   },
   "scripts": {
+    "build": "sh build.sh",
     "test": "zuul --phantom --ui tape test/run.js | tap-growl | tap-spec && npm run lint",
     "test-ci": "DEBUG=zuul* zuul --tunnel ngrok test/run.js && npm run lint",
     "dev": "DEBUG=zuul* zuul --local 8080 --ui tape test/run.js",
-    "examples": "http-server . -a 127.0.0.1",
+    "examples": "http-server . -a 0.0.0.0",
     "lint": "eslint --quiet test/"
   },
   "version": "2.9.2",
   "dependencies": {
+    "JSON2": "0.1.0",
     "lodash-compat": "3.5.0"
   },
   "main": "index.js"

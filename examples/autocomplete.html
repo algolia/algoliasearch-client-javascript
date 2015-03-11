@@ -1,3 +1,4 @@
+<!doctype html>
 <html>
   <head>
     <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
@@ -5,7 +6,7 @@
     <script src="//code.jquery.com/jquery-1.10.1.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/hogan.js/2.0.0/hogan.js"></script>
     <script src="/dist/algoliasearch.min.js"></script>
-    <script src="/vendor/typeahead.jquery.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.10.4/dist/typeahead.jquery.js"></script>
     <style type="text/css">
       .demo { text-align: center; margin-top: 40px; }
       .typeahead, .tt-query, .tt-hint { width: 500px; padding: 8px 12px; font-size: 24px; border: 2px solid #ccc; outline: none; margin: 0px; }
@@ -36,9 +37,9 @@
     <script type="text/javascript">
       $(document).ready(function() {
         // Replace the following values by your ApplicationID and ApiKey.
-        var algolia = algoliasearch('latency', '6be0576ff61c053d5f9a3225e2a90f76');
+        var client = algoliasearch('latency', '6be0576ff61c053d5f9a3225e2a90f76');
         // Replace the following value by the name of the index you want to query.
-        var index = algolia.initIndex('contacts');
+        var index = client.initIndex('contacts');
 
         // basic typeahead
         $('#typeahead-algolia').typeahead(null, {

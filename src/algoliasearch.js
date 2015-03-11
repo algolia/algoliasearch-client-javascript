@@ -1,6 +1,11 @@
 module.exports = AlgoliaSearch;
 
 var defaults = require('lodash-compat/object/defaults');
+
+// Needed for IE < 8
+// We do not run tests on IE < 8 but you can try the examples, it works™
+var JSON2 = require('JSON2');
+
 var map = require('lodash-compat/collection/map');
 var shuffle = require('lodash-compat/collection/shuffle');
 
@@ -90,8 +95,6 @@ function AlgoliaSearch(applicationID, apiKey, opts) {
   this.jsonp = opts.jsonp;
   this.cache = {};
 }
-
-AlgoliaSearch.helper = require('./algoliasearch.helper');
 
 // This holds the number of JSONP requests done accross clients
 // It's used as part of the ?callback=JSONP_$JSONPCounter when we do JSONP requests
@@ -451,7 +454,7 @@ AlgoliaSearch.prototype = {
     }
 
     if (!this._isUndefined(opts.body)) {
-      cacheID = opts.url + '_body_' + JSON.stringify(opts.body);
+      cacheID = opts.url + '_body_' + JSON2.stringify(opts.body);
     }
     if (!this._isUndefined(opts.cache)) {
       cache = opts.cache;
@@ -527,7 +530,7 @@ AlgoliaSearch.prototype = {
     var body = null;
 
     if (!this._isUndefined(opts.body)) {
-      body = JSON.stringify(opts.body);
+      body = JSON2.stringify(opts.body);
     }
 
     url += (url.indexOf('?') === -1 ? '?' : '&') + 'X-Algolia-API-Key=' + this.apiKey;
@@ -572,7 +575,7 @@ AlgoliaSearch.prototype = {
     var body = null;
 
     if (!this._isUndefined(opts.body)) {
-      body = JSON.stringify(opts.body);
+      body = JSON2.stringify(opts.body);
     }
 
     url += (url.indexOf('?') === -1 ? '?' : '&') + 'X-Algolia-API-Key=' + this.apiKey;
@@ -757,7 +760,7 @@ AlgoliaSearch.prototype = {
     var timeoutListener;
 
     if (!this._isUndefined(opts.body)) {
-      body = JSON.stringify(opts.body);
+      body = JSON2.stringify(opts.body);
     }
 
     url += (url.indexOf('?') === -1 ? '?' : '&') + 'X-Algolia-API-Key=' + this.apiKey;
@@ -806,7 +809,7 @@ AlgoliaSearch.prototype = {
       var response = null;
 
       try {
-        response = JSON.parse(request.responseText);
+        response = JSON2.parse(request.responseText);
       } catch(e) {}
 
       var status =
@@ -865,7 +868,7 @@ AlgoliaSearch.prototype = {
     for (var key in args) {
       if (key !== null && args.hasOwnProperty(key)) {
         params += params.length === 0 ? '?' : '&';
-        params += key + '=' + encodeURIComponent(Object.prototype.toString.call(args[key]) === '[object Array]' ? JSON.stringify(args[key]) : args[key]);
+        params += key + '=' + encodeURIComponent(Object.prototype.toString.call(args[key]) === '[object Array]' ? JSON2.stringify(args[key]) : args[key]);
       }
     }
     return params;

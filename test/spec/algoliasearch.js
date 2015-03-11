@@ -31,3 +31,12 @@ test('algoliasearch(applicationID, apiKey)', function(t) {
 
   t.end();
 });
+
+test('algoliasearch.version returns the package version', function(t) {
+  t.equal(
+    algoliasearch.version,
+    require('../../package.json').version,
+    'We get the package version in algoliasearch.version'
+  );
+  t.end();
+});
