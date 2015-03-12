@@ -445,7 +445,8 @@
         attributesToHighlight: [],
         attributesToSnippet: [],
         facets: facet,
-        facetFilters: this._getFacetFilters(facet)
+        facetFilters: this._getFacetFilters(facet),
+        analytics: false
       });
     },
 
