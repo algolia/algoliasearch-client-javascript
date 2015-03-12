@@ -37,12 +37,9 @@ test('Request strategy uses JSONP when all XHR timed out', function(t) {
      var searchCallback = sinon.spy(function() {
        t.ok(searchCallback.calledOnce, 'Callback was called once');
        t.deepEqual(
-         searchCallback.args[0], [
-           true, {
-             hello: 'man'
-           }
-         ],
-         'Callback called with true, {"hello": "man"}'
+         searchCallback.args[0],
+         [null, {hello: 'man'}],
+         'Callback called with null, {"hello": "man"}'
        );
 
        fauxJax.restore();

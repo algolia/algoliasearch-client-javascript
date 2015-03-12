@@ -90,7 +90,7 @@ function AlgoliaSearch(applicationID, apiKey, opts) {
   this.hosts = opts.hosts;
 
   this.currentHostIndex = 0;
-  this.requestTimeoutInMs = opts.timeout;
+  this.requestTimeout = opts.timeout;
   this.extraHeaders = [];
   this.jsonp = opts.jsonp;
   this.cache = {};
@@ -106,7 +106,7 @@ AlgoliaSearch.prototype = {
    *
    * @param indexName the name of index to delete
    * @param callback the result callback with two arguments
-   *  success: boolean set to true if the request was successfull
+   *  error: null or Error('message')
    *  content: the server answer that contains the task ID
    */
   deleteIndex: function(indexName, callback) {
@@ -119,7 +119,7 @@ AlgoliaSearch.prototype = {
    * @param srcIndexName the name of index to copy.
    * @param dstIndexName the new index name that will contains a copy of srcIndexName (destination will be overriten if it already exist).
    * @param callback the result callback with two arguments
-   *  success: boolean set to true if the request was successfull
+   *  error: null or Error('message')
    *  content: the server answer that contains the task ID
    */
   moveIndex: function(srcIndexName, dstIndexName, callback) {
@@ -135,7 +135,7 @@ AlgoliaSearch.prototype = {
    * @param srcIndexName the name of index to copy.
    * @param dstIndexName the new index name that will contains a copy of srcIndexName (destination will be overriten if it already exist).
    * @param callback the result callback with two arguments
-   *  success: boolean set to true if the request was successfull
+   *  error: null or Error('message')
    *  content: the server answer that contains the task ID
    */
   copyIndex: function(srcIndexName, dstIndexName, callback) {
@@ -150,7 +150,7 @@ AlgoliaSearch.prototype = {
    * @param offset Specify the first entry to retrieve (0-based, 0 is the most recent log entry).
    * @param length Specify the maximum number of entries to retrieve starting at offset. Maximum allowed value: 1000.
    * @param callback the result callback with two arguments
-   *  success: boolean set to true if the request was successfull
+   *  error: null or Error('message')
    *  content: the server answer that contains the task ID
    */
   getLogs: function(callback, offset, length) {
@@ -169,8 +169,8 @@ AlgoliaSearch.prototype = {
    * List all existing indexes (paginated)
    *
    * @param callback the result callback with two arguments
-   *  success: boolean set to true if the request was successfull
-   *  content: the server answer with index list or error description if success is false.
+   *  error: null or Error('message')
+   *  content: the server answer with index list
    * @param page The page to retrieve, starting at 0.
    */
   listIndexes: function(callback, page) {
@@ -193,8 +193,8 @@ AlgoliaSearch.prototype = {
    * List all existing user keys with their associated ACLs
    *
    * @param callback the result callback with two arguments
-   *  success: boolean set to true if the request was successfull
-   *  content: the server answer with user keys list or error description if success is false.
+   *  error: null or Error('message')
+   *  content: the server answer with user keys list
    */
   listUserKeys: function(callback) {
     return this._jsonRequest({ method: 'GET',
@@ -205,8 +205,8 @@ AlgoliaSearch.prototype = {
    * Get ACL of a user key
    *
    * @param callback the result callback with two arguments
-   *  success: boolean set to true if the request was successfull
-   *  content: the server answer with user keys list or error description if success is false.
+   *  error: null or Error('message')
+   *  content: the server answer with user keys list
    */
   getUserKeyACL: function(key, callback) {
     return this._jsonRequest({ method: 'GET',
@@ -217,8 +217,8 @@ AlgoliaSearch.prototype = {
    * Delete an existing user key
    *
    * @param callback the result callback with two arguments
-   *  success: boolean set to true if the request was successfull
-   *  content: the server answer with user keys list or error description if success is false.
+   *  error: null or Error('message')
+   *  content: the server answer with user keys list
    */
   deleteUserKey: function(key, callback) {
     return this._jsonRequest({ method: 'DELETE',
@@ -237,8 +237,8 @@ AlgoliaSearch.prototype = {
    *   - settings : allows to get index settings (https only)
    *   - editSettings : allows to change index settings (https only)
    * @param callback the result callback with two arguments
-   *  success: boolean set to true if the request was successfull
-   *  content: the server answer with user keys list or error description if success is false.
+   *  error: null or Error('message')
+   *  content: the server answer with user keys list
    */
   addUserKey: function(acls, callback) {
     return this.addUserKeyWithValidity(acls, 0, 0, 0, callback);
@@ -258,8 +258,8 @@ AlgoliaSearch.prototype = {
    * @param maxQueriesPerIPPerHour Specify the maximum number of API calls allowed from an IP address per hour.
    * @param maxHitsPerQuery Specify the maximum number of hits this API key can retrieve in one call.
    * @param callback the result callback with two arguments
-   *  success: boolean set to true if the request was successfull
-   *  content: the server answer with user keys list or error description if success is false.
+   *  error: null or Error('message')
+   *  content: the server answer with user keys list
    */
   addUserKeyWithValidity: function(acls, validity, maxQueriesPerIPPerHour, maxHitsPerQuery, callback) {
     var aclsObject = {};
@@ -372,7 +372,7 @@ AlgoliaSearch.prototype = {
    */
   setRequestTimeout: function(milliseconds) {
     if (milliseconds) {
-      this.requestTimeoutInMs = parseInt(milliseconds, 10);
+      this.requestTimeout = parseInt(milliseconds, 10);
     }
   },
 
@@ -406,15 +406,16 @@ AlgoliaSearch.prototype = {
         method: 'POST',
         url: '/1/indexes/*/queries',
         body: params,
-        callback: function(success, content) {
-          if (!success) {
+        callback: function(err, content) {
+          if (err) {
             // retry first with JSONP
             self.jsonp = true;
             self._sendQueriesBatch(params, callback);
-          } else {
-            self.jsonp = false;
-            callback && callback(success, content);
+            return;
           }
+
+          self.jsonp = false;
+          callback && callback(null, content);
         }
       });
     } else if (this.jsonp) {
@@ -424,28 +425,35 @@ AlgoliaSearch.prototype = {
         jsonpParams += i + '=' + encodeURIComponent(q) + '&';
       }
       var pObj = {params: jsonpParams};
-      return this._jsonRequest({ cache: this.cache,
-                   method: 'GET',
-                   url: '/1/indexes/*',
-                   body: pObj,
-                   callback: callback });
+      return this._jsonRequest({
+        cache: this.cache,
+        method: 'GET',
+        url: '/1/indexes/*',
+        body: pObj,
+        callback: callback
+      });
     }
 
-    return this._jsonRequest({ cache: this.cache,
-                 method: 'POST',
-                 url: '/1/indexes/*/queries',
-                 body: params,
-                    callback: callback});
+    return this._jsonRequest({
+      cache: this.cache,
+      method: 'POST',
+      url: '/1/indexes/*/queries',
+      body: params,
+      callback: callback
+    });
   },
   /*
    * Wrapper that try all hosts to maximize the quality of service
    */
   _jsonRequest: function(opts) {
+    opts.callback = opts.callback || function noop() {};
+
     var self = this;
     var callback = opts.callback;
     var cache = null;
     var cacheID = opts.url;
     var deferred = null;
+
     if (this._jQuery) {
       deferred = this._jQuery.$.Deferred();
       deferred.promise = deferred.promise(); // promise is a property in angular
@@ -456,6 +464,7 @@ AlgoliaSearch.prototype = {
     if (!this._isUndefined(opts.body)) {
       cacheID = opts.url + '_body_' + JSON2.stringify(opts.body);
     }
+
     if (!this._isUndefined(opts.cache)) {
       cache = opts.cache;
       if (!this._isUndefined(cache[cacheID])) {
@@ -475,30 +484,73 @@ AlgoliaSearch.prototype = {
 
     function doRequest() {
       if (opts.successiveRetryCount >= self.hosts.length) {
-        var error = { message: 'Cannot connect the Algolia\'s Search API. Please send an email to support@algolia.com to report the issue.' };
+        var error = new Error(
+          'Cannot connect the Algolia\'s Search API.' +
+          ' Send an email to support@algolia.com to report and resolve the issue.'
+        );
+
         if (!self._isUndefined(callback) && callback) {
           opts.successiveRetryCount = 0;
-          callback(false, error);
+          callback(error);
         }
+
         deferred && deferred.reject(error);
         return;
       }
-      opts.callback = function(retry, success, body) {
-        if (success && !self._isUndefined(opts.cache)) {
-          cache[cacheID] = body;
-        }
-        if (!success && retry) {
+
+      opts.callback = function(err, res) {
+        // Timeout or network problem, always retry
+        if (err) {
           self.currentHostIndex = ++self.currentHostIndex % self.hosts.length;
           opts.successiveRetryCount += 1;
           doRequest();
+          return;
+        }
+
+        var status =
+          res.statusCode ||
+
+          // When in browser mode, using XDR or JSONP
+          // We rely on our own API response `status`, only
+          // provided when an error occurs, we also expect a .message along
+          // Otherwise, it could be a `waitTask` status, that's the only
+          // case where we have a response.status that's not the http statusCode
+          res && res.body && res.body.message && res.body.status ||
+
+          // When in browser mode, using XDR or JSONP
+          // we default to success when no error (no response.status && response.message)
+          // If there was a JSON.parse() error then body is null and it fails
+          res && res.body && 200;
+
+        var success = status === 200 || status === 201;
+        var retry = !success && status !== 400 && status !== 403 && status !== 404;
+
+        if (success && !self._isUndefined(opts.cache)) {
+          cache[cacheID] = res.body;
+        }
+
+        if (success) {
+          deferred && deferred.resolve(res.body);
+          callback(null, res.body);
+          return;
+        }
+
+        if (retry) {
+          self.currentHostIndex = ++self.currentHostIndex % self.hosts.length;
+          opts.successiveRetryCount += 1;
+          doRequest();
+          return;
+        }
+
+        var unrecoverableError = new Error(res.body && res.body.message || 'Unknown error');
+
+        if (deferred) {
+          deferred.reject(unrecoverableError);
         } else {
-          opts.successiveRetryCount = 0;
-          deferred && (success ? deferred.resolve(body) : deferred.reject(body));
-          if (!self._isUndefined(callback) && callback) {
-            callback(success, body);
-          }
+          callback(unrecoverableError);
         }
       };
+
       opts.hostname = self.hosts[self.currentHostIndex];
       self._jsonRequestByHost(opts);
     }
@@ -549,19 +601,23 @@ AlgoliaSearch.prototype = {
       method: opts.method,
       data: body,
       cache: false,
-      timeout: this.requestTimeoutInMs * (opts.successiveRetryCount + 1)
-    }).then(function(response) {
-      opts.callback(false, true, response.data);
-    }, function(response) {
+      timeout: this.requestTimeout * (opts.successiveRetryCount + 1)
+    }).then(function success(response) {
+      opts.callback(null, {
+        statusCode: response.status,
+        body: response.data
+      });
+    }, function error(response) {
+      // network error or timeout
       if (response.status === 0) {
-        // xhr.timeout is not handled by Angular.js right now
-        // let's retry
-        opts.callback(true, false, response.data);
-      } else if (response.status === 400 || response.status === 403 || response.status === 404) {
-        opts.callback(false, false, response.data);
-      } else {
-        opts.callback(true, false, response.data);
+        opts.callback(new Error('Network error or timeout'));
+        return;
       }
+
+      opts.callback(null, {
+        body: response.data,
+        statusCode: response.status
+      });
     });
   },
 
@@ -591,20 +647,19 @@ AlgoliaSearch.prototype = {
     }
     this._jQuery.$.ajax(url, {
       type: opts.method,
-      timeout: this.requestTimeoutInMs * (opts.successiveRetryCount + 1),
+      timeout: this.requestTimeout * (opts.successiveRetryCount + 1),
       dataType: 'json',
       data: body,
-      error: function(xhr, textStatus, error) {
-        if (textStatus === 'timeout') {
-          opts.callback(true, false, { 'message': 'Timeout - Could not connect to endpoint ' + url } );
-        } else if (xhr.status === 400 || xhr.status === 403 || xhr.status === 404) {
-          opts.callback(false, false, xhr.responseJSON );
-        } else {
-          opts.callback(true, false, { 'message': error } );
+      complete: function(jqXHR/*, textStatus , error*/) {
+        if (jqXHR.status === 0) {
+          opts.callback(new Error('Network error or timeout'));
+          return;
         }
-      },
-      success: function(data/*, textStatus, xhr*/) {
-        opts.callback(false, true, data);
+
+        opts.callback(null, {
+          statusCode: jqXHR.status,
+          body: jqXHR.responseJSON
+        });
       }
     });
   },
@@ -617,7 +672,7 @@ AlgoliaSearch.prototype = {
    */
   _makeJsonpRequestByHost: function(url, opts) {
     if (opts.method !== 'GET') {
-      opts.callback(true, false, { 'message': 'Method ' + opts.method + ' ' + url + ' is not supported by JSONP.' });
+      opts.callback(new Error('Method ' + opts.method + ' ' + url + ' is not supported by JSONP.'));
       return;
     }
 
@@ -644,14 +699,16 @@ AlgoliaSearch.prototype = {
         return;
       }
 
-      var status =
-        data && data.message && data.status ||
-        data && 200;
-
-      var ok = status === 200;
-      var retry = !ok && status !== 400 && status !== 403 && status !== 404;
       cbCalled = true;
-      opts.callback(retry, ok, data);
+
+      clean();
+
+      opts.callback(null, {
+        body: data/*,
+        // We do not send the statusCode, there's no statusCode in JSONP, it will be
+        // computed using data.status && data.message like with XDR
+        statusCode*/
+      });
     };
 
     url += '?callback=' + cb + '&X-Algolia-Application-Id=' + this.applicationID + '&X-Algolia-API-Key=' + this.apiKey;
@@ -672,12 +729,11 @@ AlgoliaSearch.prototype = {
       url += '&' + opts.body.params;
     }
 
-    ontimeout = setTimeout(function() {
+    ontimeout = setTimeout(function timeoutListener() {
       timedOut = true;
       clean();
-
-      opts.callback(true, false, { 'message': 'Timeout - Failed to load JSONP script.' });
-    }, this.requestTimeoutInMs);
+      opts.callback(new Error('Timeout - Could not connect to endpoint ' + url));
+    }, this.requestTimeout);
 
     success = function() {
       if (done || timedOut) {
@@ -685,11 +741,11 @@ AlgoliaSearch.prototype = {
       }
 
       done = true;
-      clean();
 
       // script loaded but did not call the fn => script loading error
       if (!cbCalled) {
-        opts.callback(true, false, { 'message': 'Failed to load JSONP script.' });
+        clean();
+        opts.callback(new Error('Failed to load JSONP script'));
       }
     };
 
@@ -728,7 +784,7 @@ AlgoliaSearch.prototype = {
       }
 
       clean();
-      opts.callback(true, false, { 'message': 'Failed to load JSONP script.' });
+      opts.callback(new Error('Failed to load JSONP script'));
     };
 
     script.async = true;
@@ -748,7 +804,7 @@ AlgoliaSearch.prototype = {
     // no cors or XDomainRequest, no request
     if (!this._support.cors && !this._support.hasXDomainRequest) {
       // very old browser, not supported
-      opts.callback(false, false, { 'message': 'CORS not supported' });
+      opts.callback(new Error('CORS not supported'));
       return;
     }
 
@@ -784,7 +840,7 @@ AlgoliaSearch.prototype = {
         request.abort();
       }
 
-      opts.callback(true, false, { 'message': 'Timeout - Could not connect to endpoint ' + url } );
+      opts.callback(new Error('Timeout - Could not connect to endpoint ' + url));
     };
 
     request.open(opts.method, url);
@@ -812,32 +868,20 @@ AlgoliaSearch.prototype = {
         response = JSON2.parse(request.responseText);
       } catch(e) {}
 
-      var status =
-        // XHR provides a `status` property
-        request.status ||
-
-        // XDR does not have a `status` property,
-        // we rely on our own API response `status`, only
-        // provided when an error occurs, so we expect a .message
-        response && response.message && response.status ||
-
-        // XDR default to success when no response.status
-        response && 200;
-
-      var success = status === 200 || status === 201;
-      var retry = !success && status !== 400 && status !== 403 && status !== 404;
-
-      opts.callback(retry, success, response);
+      opts.callback(null, {
+        body: response,
+        statusCode: request.status
+      });
     };
 
     if (this._support.timeout) {
       // .timeout supported by both XHR and XDR,
       // we do receive timeout event, tested
-      request.timeout = this.requestTimeoutInMs * (opts.successiveRetryCount + 1);
+      request.timeout = this.requestTimeout * (opts.successiveRetryCount + 1);
 
       request.ontimeout = timeoutListener;
     } else {
-      ontimeout = setTimeout(timeoutListener, this.requestTimeoutInMs * (opts.successiveRetryCount + 1));
+      ontimeout = setTimeout(timeoutListener, this.requestTimeout * (opts.successiveRetryCount + 1));
     }
 
     request.onerror = function(event) {
@@ -852,7 +896,7 @@ AlgoliaSearch.prototype = {
       // error event is trigerred both with XDR/XHR on:
       //   - DNS error
       //   - unallowed cross domain request
-      opts.callback(true, false, { 'message': 'Could not connect to host', 'error': event } );
+      opts.callback(new Error('Could not connect to host, error was:' + event));
     };
 
     request.send(body);
@@ -901,7 +945,7 @@ AlgoliaSearch.prototype.Index.prototype = {
    *
    * @param content contains the javascript object to add inside the index
    * @param callback (optional) the result callback with two arguments:
-   *  success: boolean set to true if the request was successfull
+   *  error: null or Error('message')
    *  content: the server answer that contains 3 elements: createAt, taskId and objectID
    * @param objectID (optional) an objectID you want to attribute to this object
    * (if the attribute already exist the old object will be overwrite)
@@ -926,7 +970,7 @@ AlgoliaSearch.prototype.Index.prototype = {
    *
    * @param objects contains an array of objects to add
    * @param callback (optional) the result callback with two arguments:
-   *  success: boolean set to true if the request was successfull
+   *  error: null or Error('message')
    *  content: the server answer that updateAt and taskID
    */
   addObjects: function(objects, callback) {
@@ -947,7 +991,7 @@ AlgoliaSearch.prototype.Index.prototype = {
    *
    * @param objectID the unique identifier of the object to retrieve
    * @param callback (optional) the result callback with two arguments
-   *  success: boolean set to true if the request was successfull
+   *  error: null or Error('message')
    *  content: the object to retrieve or the error message if a failure occured
    * @param attributes (optional) if set, contains the array of attribute names to retrieve
    */
@@ -979,7 +1023,7 @@ AlgoliaSearch.prototype.Index.prototype = {
    * @param partialObject contains the javascript attributes to override, the
    *  object must contains an objectID attribute
    * @param callback (optional) the result callback with two arguments:
-   *  success: boolean set to true if the request was successfull
+   *  error: null or Error('message')
    *  content: the server answer that contains 3 elements: createAt, taskId and objectID
    */
   partialUpdateObject: function(partialObject, callback) {
@@ -994,7 +1038,7 @@ AlgoliaSearch.prototype.Index.prototype = {
    *
    * @param objects contains an array of objects to update (each object must contains a objectID attribute)
    * @param callback (optional) the result callback with two arguments:
-   *  success: boolean set to true if the request was successfull
+   *  error: null or Error('message')
    *  content: the server answer that updateAt and taskID
    */
   partialUpdateObjects: function(objects, callback) {
@@ -1016,7 +1060,7 @@ AlgoliaSearch.prototype.Index.prototype = {
    *
    * @param object contains the javascript object to save, the object must contains an objectID attribute
    * @param callback (optional) the result callback with two arguments:
-   *  success: boolean set to true if the request was successfull
+   *  error: null or Error('message')
    *  content: the server answer that updateAt and taskID
    */
   saveObject: function(object, callback) {
@@ -1031,7 +1075,7 @@ AlgoliaSearch.prototype.Index.prototype = {
    *
    * @param objects contains an array of objects to update (each object must contains a objectID attribute)
    * @param callback (optional) the result callback with two arguments:
-   *  success: boolean set to true if the request was successfull
+   *  error: null or Error('message')
    *  content: the server answer that updateAt and taskID
    */
   saveObjects: function(objects, callback) {
@@ -1053,7 +1097,7 @@ AlgoliaSearch.prototype.Index.prototype = {
    *
    * @param objectID the unique identifier of object to delete
    * @param callback (optional) the result callback with two arguments:
-   *  success: boolean set to true if the request was successfull
+   *  error: null or Error('message')
    *  content: the server answer that contains 3 elements: createAt, taskId and objectID
    */
   deleteObject: function(objectID, callback) {
@@ -1072,7 +1116,7 @@ AlgoliaSearch.prototype.Index.prototype = {
    *
    * @param query the full text query
    * @param callback the result callback with two arguments:
-   *  success: boolean set to true if the request was successfull. If false, the content contains the error.
+   *  error: null or Error('message'). If false, the content contains the error.
    *  content: the server answer that contains the list of results.
    * @param args (optional) if set, contains an object with query parameters:
    * - page: (integer) Pagination parameter used to select the page to retrieve.
@@ -1196,12 +1240,13 @@ AlgoliaSearch.prototype.Index.prototype = {
   ttAdapter: function(params) {
     var self = this;
     return function(query, cb) {
-      self.search(query, function(success, content) {
-        if (success) {
-          cb(content.hits);
-        } else {
-          cb(content && content.message);
+      self.search(query, function(err, content) {
+        if (err) {
+          cb(err);
+          return;
         }
+
+        cb(content.hits);
       }, params);
     };
   },
@@ -1212,25 +1257,28 @@ AlgoliaSearch.prototype.Index.prototype = {
    *
    * @param taskID the id of the task returned by server
    * @param callback the result callback with with two arguments:
-   *  success: boolean set to true if the request was successfull
+   *  error: null or Error('message')
    *  content: the server answer that contains the list of results
    */
   waitTask: function(taskID, callback) {
     var indexObj = this;
-    return this.as._jsonRequest({ method: 'GET',
-                 url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/task/' + taskID,
-                 callback: function(success, body) {
-      if (success) {
-        if (body.status === 'published') {
-          callback(true, body);
-        } else {
-          setTimeout(function() {
-            indexObj.waitTask(taskID, callback);
-          }, 100);
+    return this.as._jsonRequest({
+      method: 'GET',
+      url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/task/' + taskID,
+      callback: function(err, content) {
+        if (err) {
+          callback(err);
+          return;
         }
-      } else {
-        callback(false, body);
-      }
+
+        if (content.status === 'published') {
+          callback(null, content);
+          return;
+        }
+
+        setTimeout(function() {
+          indexObj.waitTask(taskID, callback);
+        }, 100);
     }});
   },
 
@@ -1238,7 +1286,7 @@ AlgoliaSearch.prototype.Index.prototype = {
    * This function deletes the index content. Settings and index specific API keys are kept untouched.
    *
    * @param callback (optional) the result callback with two arguments
-   *  success: boolean set to true if the request was successfull
+   *  error: null or Error('message')
    *  content: the settings object or the error message if a failure occured
    */
   clearIndex: function(callback) {
@@ -1251,7 +1299,7 @@ AlgoliaSearch.prototype.Index.prototype = {
    * Get settings of this index
    *
    * @param callback (optional) the result callback with two arguments
-   *  success: boolean set to true if the request was successfull
+   *  error: null or Error('message')
    *  content: the settings object or the error message if a failure occured
    */
   getSettings: function(callback) {
@@ -1312,7 +1360,7 @@ AlgoliaSearch.prototype.Index.prototype = {
    * - highlightPostTag: (string) Specify the string that is inserted after the highlighted parts in the query result (default to "</em>").
    * - optionalWords: (array of strings) Specify a list of words that should be considered as optional when found in the query.
    * @param callback (optional) the result callback with two arguments
-   *  success: boolean set to true if the request was successfull
+   *  error: null or Error('message')
    *  content: the server answer or the error message if a failure occured
    */
   setSettings: function(settings, callback) {
@@ -1326,8 +1374,8 @@ AlgoliaSearch.prototype.Index.prototype = {
    * List all existing user keys associated to this index
    *
    * @param callback the result callback with two arguments
-   *  success: boolean set to true if the request was successfull
-   *  content: the server answer with user keys list or error description if success is false.
+   *  error: null or Error('message')
+   *  content: the server answer with user keys list
    */
   listUserKeys: function(callback) {
     var indexObj = this;
@@ -1339,8 +1387,8 @@ AlgoliaSearch.prototype.Index.prototype = {
    * Get ACL of a user key associated to this index
    *
    * @param callback the result callback with two arguments
-   *  success: boolean set to true if the request was successfull
-   *  content: the server answer with user keys list or error description if success is false.
+   *  error: null or Error('message')
+   *  content: the server answer with user keys list
    */
   getUserKeyACL: function(key, callback) {
     var indexObj = this;
@@ -1352,8 +1400,8 @@ AlgoliaSearch.prototype.Index.prototype = {
    * Delete an existing user key associated to this index
    *
    * @param callback the result callback with two arguments
-   *  success: boolean set to true if the request was successfull
-   *  content: the server answer with user keys list or error description if success is false.
+   *  error: null or Error('message')
+   *  content: the server answer with user keys list
    */
   deleteUserKey: function(key, callback) {
     var indexObj = this;
@@ -1373,8 +1421,8 @@ AlgoliaSearch.prototype.Index.prototype = {
    *   - settings : allows to get index settings (https only)
    *   - editSettings : allows to change index settings (https only)
    * @param callback the result callback with two arguments
-   *  success: boolean set to true if the request was successfull
-   *  content: the server answer with user keys list or error description if success is false.
+   *  error: null or Error('message')
+   *  content: the server answer with user keys list
    */
   addUserKey: function(acls, callback) {
     var indexObj = this;
@@ -1400,8 +1448,8 @@ AlgoliaSearch.prototype.Index.prototype = {
    * @param maxQueriesPerIPPerHour Specify the maximum number of API calls allowed from an IP address per hour.
    * @param maxHitsPerQuery Specify the maximum number of hits this API key can retrieve in one call.
    * @param callback the result callback with two arguments
-   *  success: boolean set to true if the request was successfull
-   *  content: the server answer with user keys list or error description if success is false.
+   *  error: null or Error('message')
+   *  content: the server answer with user keys list
    */
   addUserKeyWithValidity: function(acls, validity, maxQueriesPerIPPerHour, maxHitsPerQuery, callback) {
     var indexObj = this;
@@ -1426,15 +1474,16 @@ AlgoliaSearch.prototype.Index.prototype = {
         method: 'POST',
         url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/query',
         body: pObj,
-        callback: function(success, content) {
-          if (!success) {
+        callback: function(err, content) {
+          if (err) {
             // retry first with JSONP
             self.as.jsonp = true;
             self._search(params, callback);
-          } else {
-            self.as.jsonp = false;
-            callback && callback(success, content);
+            return;
           }
+
+          self.as.jsonp = false;
+          callback && callback(null, content);
         }
       });
     } else if (this.as.jsonp) {

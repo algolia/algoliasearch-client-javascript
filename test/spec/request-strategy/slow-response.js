@@ -21,8 +21,8 @@ test('Request strategy handles slow responses (no double callback)', function(t)
 
     t.deepEqual(
       searchCallback.args[0],
-      [true, {slowResponse: 'ok'}],
-      'Callback called with true, {"slowResponse": "ok"}'
+      [null, {slowResponse: 'ok'}],
+      'Callback called with null, {"slowResponse": "ok"}'
     );
 
     clock.restore();

@@ -45,30 +45,28 @@ test('Request strategy creates and remove script tags when using JSONP', functio
     t.ok(searchCallback.calledOnce, 'Callback was called once');
     t.deepEqual(
       searchCallback.args[0],
-      [true, {query: 'creates script tags'}],
-      'Callback called with true, {"query": "creates script tags"}'
+      [null, {query: 'creates script tags'}],
+      'Callback called with null, {"query": "creates script tags"}'
     );
 
     // script tag deletion is done after calling our callback
-    setTimeout(function waitForEndOfSearchCallback() {
-      var postCallbackScriptTags = document.getElementsByTagName('script');
+    var postCallbackScriptTags = document.getElementsByTagName('script');
 
-      t.equal(
-        postCallbackScriptTags.length,
-        initialScriptTagsCount,
-        'Script tag count back to previous'
-      );
+    t.equal(
+      postCallbackScriptTags.length,
+      initialScriptTagsCount,
+      'Script tag count back to previous'
+    );
 
-      t.ok(
-        every(postCallbackScriptTags, function noJSONPTag(script) {
-          return !script.src ||
-            parse(script.src).pathname !== '/1/indexes/simple-JSONP-response';
-        }),
-        'No more script matches a JSONP script'
-      );
+    t.ok(
+      every(postCallbackScriptTags, function noJSONPTag(script) {
+        return !script.src ||
+          parse(script.src).pathname !== '/1/indexes/simple-JSONP-response';
+      }),
+      'No more script matches a JSONP script'
+    );
 
-      t.end();
-    }, 0);
+    t.end();
   });
 
   index.search('creates script tags', searchCallback);

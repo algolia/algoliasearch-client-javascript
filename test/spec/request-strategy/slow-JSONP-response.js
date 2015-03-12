@@ -33,12 +33,9 @@ test('Request strategy handles slow JSONP responses (no double callback)', funct
     t.ok(searchCallback.calledOnce, 'Callback was called once');
 
     t.deepEqual(
-      searchCallback.args[0], [
-        true, {
-          slowResponse: 'ok'
-        }
-      ],
-      'Callback called with true, {"slowResponse": "ok"}'
+      searchCallback.args[0],
+      [null, {slowResponse: 'ok'}],
+      'Callback called with null, {"slowResponse": "ok"}'
     );
 
     fauxJax.restore();

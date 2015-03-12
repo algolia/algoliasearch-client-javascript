@@ -30,6 +30,32 @@ UNRELEASED
     * removed vendor/
       - vendor/json2.js now as an npm module
       - vendor/jquery.typeahead.js now on cdnjs (examples)
+    * BREAKING CHANGE, all api methods now use the (err, content) convention
+      It means that instead of doing:
+        ```js
+          index.search(function found(success, content) {
+            if (!success) {
+              console.log('Error was:', content);
+              return;
+            }
+
+            console.log('OK!', content);
+          });
+        ```
+      You must do:
+        ```js
+          index.search(function found(err, content) {
+            if (err) {
+              console.log('Error was:', err);
+              return;
+            }
+
+            console.log('OK!', content);
+          });
+        ```
+      This is in par with most asynchronous APIS accepted/de vfacto conventions.
+      It helps being compatible with control flow libraries like `async` and
+      helps reduce WTF moments of Node.JS developers used to cb(err, content)
 
 2015-02-03  2.9.2
     * Fixed calls to `.search(function() {})`, `.search(null, function() {})`, `.search(undefined, function() {})
