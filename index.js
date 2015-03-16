@@ -1,10 +1,4 @@
-module.exports = algoliasearch;
-
-function algoliasearch(applicationID, apiKey, opts) {
-  var AlgoliaSearch = require('./src/algoliasearch');
-
-  return new AlgoliaSearch(applicationID, apiKey, opts);
-}
-
-algoliasearch.version = require('./package.json').version;
-algoliasearch.helper = require('./src/algoliasearch.helper');
+// default entrypoint is the node module
+// this is overriden by the `browser` field in package.json
+// https://github.com/substack/node-browserify#browser-field
+module.exports = require('src/node');

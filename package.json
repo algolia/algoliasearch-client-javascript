@@ -65,7 +65,9 @@
   "version": "2.9.2",
   "dependencies": {
     "JSON2": "0.1.0",
-    "lodash-compat": "3.5.0"
+    "lodash-compat": "3.5.0",
+    "promise": "6.1.0"
   },
-  "main": "index.js"
+  "main": "index.js",
+  "browser": "src/browser.js"
 }
