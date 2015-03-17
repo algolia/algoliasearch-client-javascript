@@ -68,12 +68,6 @@ function AlgoliaSearch(applicationID, apiKey, opts, _request) {
     return opts.protocol + '//' + host;
   });
 
-  // jQuery plugin
-  // see https://github.com/algolia/algoliasearch-client-js/issues/44
-  if (opts.jQuery) {
-    this._jQuery = opts.jQuery;
-  }
-
   this.applicationID = applicationID;
   this.apiKey = apiKey;
   this.hosts = opts.hosts;
@@ -437,7 +431,7 @@ AlgoliaSearch.prototype = {
         if (!opts.fallback || requester === client._request.fallback) {
           // could not get a response even using the fallback if one was available
           return client._request.reject(new Error(
-            'Cannot connect the Algolia\'s Search API.' +
+            'Cannot connect to the AlgoliaSearch API.' +
             ' Send an email to support@algolia.com to report and resolve the issue.'
           ));
         }
@@ -547,49 +541,6 @@ AlgoliaSearch.prototype = {
     } else {
       return promise;
     }
-  },
-
-  /**
-   * Make a $.ajax
-   *
-   * @param url request url (includes endpoint and path)
-   * @param opts all request opts
-   */
-  _makejQueryRequestByHost: function(url, opts) {
-    var body = null;
-
-    if (!this._isUndefined(opts.body)) {
-      body = JSON2.stringify(opts.body);
-    }
-
-    url += (url.indexOf('?') === -1 ? '?' : '&') + 'X-Algolia-API-Key=' + this.apiKey;
-    url += '&X-Algolia-Application-Id=' + this.applicationID;
-    if (this.userToken) {
-      url += '&X-Algolia-UserToken=' + encodeURIComponent(this.userToken);
-    }
-    if (this.tagFilters) {
-      url += '&X-Algolia-TagFilters=' + encodeURIComponent(this.tagFilters);
-    }
-    for (var i = 0; i < this.extraHeaders.length; ++i) {
-      url += '&' + this.extraHeaders[i].key + '=' + this.extraHeaders[i].value;
-    }
-    this._jQuery.$.ajax(url, {
-      type: opts.method,
-      timeout: this.requestTimeout * (opts.successiveRetryCount + 1),
-      dataType: 'json',
-      data: body,
-      complete: function(jqXHR/*, textStatus , error*/) {
-        if (jqXHR.status === 0) {
-          opts.callback(new Error('Network error or timeout'));
-          return;
-        }
-
-        opts.callback(null, {
-          statusCode: jqXHR.status,
-          body: jqXHR.responseJSON
-        });
-      }
-    });
   },
 
    /*

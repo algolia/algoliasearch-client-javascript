@@ -182,8 +182,6 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
         var index = client.initIndex('simple-JSONP-response');
         fauxJax.install();
 
-        // careful, cannot use .catch here, will throw in IE8
-        // even if this test does not run on IE8, it's still parsed
         index.search('angular-first').then(function searchDone(content) {
           t.deepEqual(
             content, {

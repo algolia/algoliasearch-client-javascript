@@ -8,7 +8,7 @@ var browser = require('bowser').browser;
 // http://jquery.com/download/#jquery-2-x
 // guess what there's even a plugin! http://cdnjs.com/libraries/jquery-ajaxtransport-xdomainrequest
 if (!browser.msie || parseFloat(browser.version) > 9) {
-  test.skip('jQuery module success case', function(t) {
+  test('jQuery module success case', function(t) {
     t.plan(9);
 
     var fauxJax = require('faux-jax');
@@ -92,7 +92,125 @@ if (!browser.msie || parseFloat(browser.version) > 9) {
     fauxJax.restore();
   });
 
-  test.skip('jQuery module error case', function() {
+  test('jQuery module error case', function(t) {
+    t.plan(4);
 
+    var fauxJax = require('faux-jax');
+
+    // load jQuery Algolia Search module
+    require('../../src/algoliasearch.jquery');
+
+    var client = global.$.algolia.Client('jquery-error-applicationID', 'jquery-error-apiKey');
+    var index = client.initIndex('jquery-error-indexName');
+
+    fauxJax.install();
+
+    t.equal(
+      fauxJax.requests.length,
+      0,
+      'No request made'
+    );
+
+    index.search('jquery-error-promise').fail(function searchDone(err) {
+      t.equal(
+        err.message,
+        'Nope promise jQuery',
+        'Err message matches in promise mode'
+      );
+    });
+
+    index.search('jquery-error-callback', function searchDone(err) {
+      t.equal(
+        err.message,
+        'Nope callback jQuery',
+        'Err message matches in callback mode'
+      );
+    });
+
+    t.equal(
+      fauxJax.requests.length,
+      2,
+      'Two requests made'
+    );
+
+    var firstRequest = fauxJax.requests[0];
+    var secondRequest = fauxJax.requests[1];
+
+    firstRequest.respond(
+      400,
+      {},
+      JSON.stringify({
+        'message': 'Nope promise jQuery'
+      })
+    );
+
+    secondRequest.respond(
+      400,
+      {},
+      JSON.stringify({
+        'message': 'Nope callback jQuery'
+      })
+    );
+
+    fauxJax.restore();
+  });
+
+  test('jQuery JSONP fallback', function(t) {
+    t.plan(4);
+
+    var fauxJax = require('faux-jax');
+    var parse = require('url-parse');
+
+    var currentURL = parse(location.href);
+
+    // load jQuery Algolia Search module
+    require('../../src/algoliasearch.jquery');
+
+    var client = global.$.algolia.Client(
+      'jquery-error-applicationID',
+      'jquery-error-apiKey', {
+        hosts: [
+          currentURL.host
+        ],
+        timeout: 5000
+      }
+    );
+    var index = client.initIndex('simple-JSONP-response');
+
+    fauxJax.install();
+
+    t.equal(
+      fauxJax.requests.length,
+      0,
+      'No request made'
+    );
+
+    index.search('jquery-first').done(function searchDone(content) {
+      t.deepEqual(
+        content, {
+          query: 'jquery-first'
+        },
+        'Content matches'
+      );
+    });
+
+    index.search('jquery-second', function searchDone(err, content) {
+      t.error(
+        err,
+        'No error while using the callback interface'
+      );
+
+      t.deepEqual(
+        content, {
+          query: 'jquery-second'
+        },
+        'Content matches'
+      );
+    });
+
+    fauxJax.requests[0].respond(500, {}, JSON.stringify({message: 'Nope promise'}));
+    fauxJax.requests[1].respond(500, {}, JSON.stringify({message: 'Nope callback'}));
+
+    fauxJax.restore();
   });
 }
