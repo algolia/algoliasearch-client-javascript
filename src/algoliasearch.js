@@ -68,17 +68,6 @@ function AlgoliaSearch(applicationID, apiKey, opts, _request) {
     return opts.protocol + '//' + host;
   });
 
-  // AngularJS plugin
-  // dependencies injection
-  // see https://github.com/algolia/algoliasearch-client-js/issues/44
-  if (opts.angular) {
-    this._angular = opts.angular;
-    opts.angular.$injector.invoke(['$http', '$q', function ($http, $q) {
-      opts.angular.$q = $q;
-      opts.angular.$http = $http;
-    }]);
-  }
-
   // jQuery plugin
   // see https://github.com/algolia/algoliasearch-client-js/issues/44
   if (opts.jQuery) {
@@ -558,55 +547,6 @@ AlgoliaSearch.prototype = {
     } else {
       return promise;
     }
-  },
-
-  /**
-   * Make a $http
-   *
-   * @param url request url (includes endpoint and path)
-   * @param opts all request opts
-   */
-  _makeAngularRequestByHost: function(url, opts) {
-    var body = null;
-
-    if (!this._isUndefined(opts.body)) {
-      body = JSON2.stringify(opts.body);
-    }
-
-    url += (url.indexOf('?') === -1 ? '?' : '&') + 'X-Algolia-API-Key=' + this.apiKey;
-    url += '&X-Algolia-Application-Id=' + this.applicationID;
-    if (this.userToken) {
-      url += '&X-Algolia-UserToken=' + encodeURIComponent(this.userToken);
-    }
-    if (this.tagFilters) {
-      url += '&X-Algolia-TagFilters=' + encodeURIComponent(this.tagFilters);
-    }
-    for (var i = 0; i < this.extraHeaders.length; ++i) {
-      url += '&' + this.extraHeaders[i].key + '=' + this.extraHeaders[i].value;
-    }
-    this._angular.$http({
-      url: url,
-      method: opts.method,
-      data: body,
-      cache: false,
-      timeout: this.requestTimeout * (opts.successiveRetryCount + 1)
-    }).then(function success(response) {
-      opts.callback(null, {
-        statusCode: response.status,
-        body: response.data
-      });
-    }, function error(response) {
-      // network error or timeout
-      if (response.status === 0) {
-        opts.callback(new Error('Network error or timeout'));
-        return;
-      }
-
-      opts.callback(null, {
-        body: response.data,
-        statusCode: response.status
-      });
-    });
   },
 
   /**
