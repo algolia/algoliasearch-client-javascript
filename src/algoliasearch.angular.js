@@ -1,7 +1,7 @@
 var createAlgoliasearch = require('./create-algoliasearch');
 var JSONPRequest = require('./jsonp-request');
 
-module.exports = global.angular.module('algoliasearch', [])
+global.angular.module('algoliasearch', [])
   .service('algolia', ['$http', '$q', function ($http, $q) {
     function request(url, opts) {
       return $q(function(resolve, reject) {
