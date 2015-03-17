@@ -1,6 +1,6 @@
 var test = require('tape');
 
-test('index.waitTask(taskID) retry', function(t) {
+test.skip('index.waitTask(taskID) retry', function(t) {
   t.plan(4);
 
   var fauxJax = require('faux-jax');

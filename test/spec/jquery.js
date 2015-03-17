@@ -8,7 +8,7 @@ var browser = require('bowser').browser;
 // http://jquery.com/download/#jquery-2-x
 // guess what there's even a plugin! http://cdnjs.com/libraries/jquery-ajaxtransport-xdomainrequest
 if (!browser.msie || parseFloat(browser.version) > 9) {
-  test('jQuery module success case', function(t) {
+  test.skip('jQuery module success case', function(t) {
     t.plan(9);
 
     var fauxJax = require('faux-jax');

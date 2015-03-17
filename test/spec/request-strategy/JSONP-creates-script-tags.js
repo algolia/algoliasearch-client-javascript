@@ -10,8 +10,8 @@ test('Request strategy creates and remove script tags when using JSONP', functio
   var some = require('lodash-compat/collection/some');
 
   var createFixture = require('../../utils/create-fixture');
+  var ticker = require('../../utils/ticker');
 
-  var clock = sinon.useFakeTimers();
   var currentURL = parse(location.href);
   var fixture = createFixture({
     clientOptions: {
@@ -69,35 +69,42 @@ test('Request strategy creates and remove script tags when using JSONP', functio
     t.end();
   });
 
+  var clock = sinon.useFakeTimers();
+
   index.search('creates script tags', searchCallback);
 
-  // XHR timeouts
-  clock.tick(requestTimeout);
-  clock.tick(requestTimeout * 2);
-  clock.tick(requestTimeout * 3);
-  clock.tick(requestTimeout * 4);
-  clock.restore();
+  // 4 XHR timeouts
+  ticker({
+    clock: clock,
+    maxTicks: 4,
+    tickDuration: requestTimeout,
+    cb: XHRTimeoutsDone
+  });
 
-  t.equal(
-    fauxJax.requests.length,
-    4,
-    'Four requests made'
-  );
+  function XHRTimeoutsDone() {
+    clock.restore();
 
-  var currentScriptTags = document.getElementsByTagName('script');
+    t.equal(
+      fauxJax.requests.length,
+      4,
+      'Four requests made'
+    );
 
-  t.equal(
-    currentScriptTags.length,
-    initialScriptTagsCount + 1,
-    'We added one script tag'
-  );
+    var currentScriptTags = document.getElementsByTagName('script');
 
-  t.ok(
-    some(currentScriptTags, function noJSONPTag(script) {
-      return script.src && parse(script.src).pathname === '/1/indexes/simple-JSONP-response';
-    }),
-    'A new script matches a JSONP script'
-  );
+    t.equal(
+      currentScriptTags.length,
+      initialScriptTagsCount + 1,
+      'We added one script tag'
+    );
 
-  fauxJax.restore();
+    t.ok(
+      some(currentScriptTags, function noJSONPTag(script) {
+        return script.src && parse(script.src).pathname === '/1/indexes/simple-JSONP-response';
+      }),
+      'A new script matches a JSONP script'
+    );
+
+    fauxJax.restore();
+  }
 });

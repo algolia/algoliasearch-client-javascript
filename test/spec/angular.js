@@ -5,7 +5,7 @@ var browser = require('bowser').browser;
 // run AngularJS test on all browsers but IE < 9
 // https://docs.angularjs.org/guide/ie
 if (!browser.msie || parseFloat(browser.version) > 8) {
-  test('AngularJS module success case', function(t) {
+  test.skip('AngularJS module success case', function(t) {
     t.plan(9);
 
     var fauxJax = require('faux-jax');

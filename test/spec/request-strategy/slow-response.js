@@ -50,23 +50,28 @@ test('Request strategy handles slow responses (no double callback)', function(t)
 
   clock.tick(requestTimeout);
 
-  var secondRequest = fauxJax.requests[1];
+  process.nextTick(function() {
+    var secondRequest = fauxJax.requests[1];
 
-  t.equal(
-    fauxJax.requests.length,
-    2,
-    'Second request made'
-  );
+    t.equal(
+      fauxJax.requests.length,
+      2,
+      'Second request made'
+    );
 
-  firstRequest.respond(
-    200,
-    {},
-    JSON.stringify({slowResponse: 'timeout response'})
-  );
+    firstRequest.respond(
+      200,
+      {},
+      JSON.stringify({slowResponse: 'timeout response'})
+    );
 
-  secondRequest.respond(
-    200,
-    {},
-    JSON.stringify({slowResponse: 'ok'})
-  );
+    secondRequest.respond(
+      200,
+      {},
+      JSON.stringify({slowResponse: 'ok'})
+    );
+  });
+
+  // IE10 fix, run next nextTick^
+  clock.tick(0);
 });

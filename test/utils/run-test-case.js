@@ -50,7 +50,5 @@ function runTestCase(testCase) {
       indexName: credentials.indexName,
       assert: t
     });
-
-    t.end();
   });
 }

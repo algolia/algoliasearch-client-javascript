@@ -18,7 +18,8 @@ test('index.clearCache()', function(t) {
   );
 
   // store the query in the cache
-  index.search('hey!');
+  index.search('hey!', makeSecondRequest);
+
   fauxJax.requests[0].respond(200, {}, '{}');
   t.equal(
     fauxJax.requests.length,
@@ -26,24 +27,30 @@ test('index.clearCache()', function(t) {
     'One request done'
   );
 
-  // same request again
-  index.search('hey!');
-  t.equal(
-    fauxJax.requests.length,
-    1,
-    'Still one request done'
-  );
+  function makeSecondRequest() {
+    // same request again
+    index.search('hey!', makeThirdRequest);
 
-  index.clearCache();
+    t.equal(
+      fauxJax.requests.length,
+      1,
+      'Still one request done'
+    );
+  }
 
-  // same request again
-  index.search('hey!');
-  fauxJax.requests[1].respond(200, {}, '{}');
-  t.equal(
-    fauxJax.requests.length,
-    2,
-    'Second request done'
-  );
+  function makeThirdRequest() {
+    index.clearCache();
 
-  fauxJax.restore();
+    // same request again
+    index.search('hey!');
+    fauxJax.requests[1].respond(200, {}, '{}');
+    t.equal(
+      fauxJax.requests.length,
+      2,
+      'Second request done'
+    );
+
+    fauxJax.restore();
+  }
+
 });

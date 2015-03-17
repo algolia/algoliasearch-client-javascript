@@ -10,6 +10,7 @@ test('Request strategy uses JSONP when all XHR timed out', function(t) {
   var xhr = require('xhr');
 
   var createFixture = require('../../utils/create-fixture');
+  var ticker = require('../../utils/ticker');
 
   var currentURL = parse(location.href);
   var fixture = createFixture({
@@ -26,41 +27,47 @@ test('Request strategy uses JSONP when all XHR timed out', function(t) {
 
   var index = fixture.index;
 
+  var searchCallback = sinon.spy(function() {
+    t.ok(searchCallback.calledOnce, 'Callback was called once');
+    t.deepEqual(
+      searchCallback.args[0],
+      [null, {hello: 'man'}],
+      'Callback called with null, {"hello": "man"}'
+    );
+
+    fauxJax.restore();
+
+    t.end();
+  });
+
   xhr({
     uri: '/1/indexes/request-strategy-uses-JSONP/reset'
   }, function run(err) {
-     t.error(err, 'No error while reseting the /1/indexes/request-strategy-uses-JSONP route');
-     fauxJax.install();
+    t.error(err, 'No error while reseting the /1/indexes/request-strategy-uses-JSONP route');
 
-     var clock = sinon.useFakeTimers();
+    process.nextTick(function() {
+      var clock = sinon.useFakeTimers();
+      fauxJax.install();
 
-     var searchCallback = sinon.spy(function() {
-       t.ok(searchCallback.calledOnce, 'Callback was called once');
-       t.deepEqual(
-         searchCallback.args[0],
-         [null, {hello: 'man'}],
-         'Callback called with null, {"hello": "man"}'
-       );
+      index.search('hello', searchCallback);
 
-       fauxJax.restore();
-       clock.restore();
+      // 3 XHR timeouts
+      ticker({
+        clock: clock,
+        maxTicks: 3,
+        tickDuration: requestTimeout,
+        tickCb: tickCheck,
+        cb: restoreClock
+      });
 
-       t.end();
-     });
+      function tickCheck(tickIndex) {
+        t.notOk(searchCallback.calledOnce, 'Callback not yet called');
+        t.equal(fauxJax.requests.length, tickIndex, tickIndex + ' request(s) made');
+      }
 
-     index.search('hello', searchCallback);
-
-     t.notOk(searchCallback.calledOnce, 'Callback not called on first request');
-     t.equal(fauxJax.requests.length, 1, 'One request made');
-
-     clock.tick(requestTimeout);
-     t.equal(fauxJax.requests.length, 2, 'Second requests made');
-     t.notOk(searchCallback.calledOnce, 'Callback not called on second request');
-
-     clock.tick(requestTimeout * 2);
-     t.equal(fauxJax.requests.length, 3, 'Third requests made');
-     t.notOk(searchCallback.calledOnce, 'Callback not called on third request');
-
-     clock.tick(requestTimeout * 3);
+      function restoreClock() {
+        clock.restore();
+      }
+    });
   });
 });
