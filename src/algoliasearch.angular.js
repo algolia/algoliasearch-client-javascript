@@ -2,7 +2,7 @@ var createAlgoliasearch = require('./create-algoliasearch');
 var JSONPRequest = require('./jsonp-request');
 
 global.angular.module('algoliasearch', [])
-  .service('algolia', ['$http', '$q', function ($http, $q) {
+  .service('algolia', ['$http', '$q', '$timeout', function ($http, $q, $timeout) {
     function request(url, opts) {
       return $q(function(resolve, reject) {
         var body = null;
@@ -57,6 +57,12 @@ global.angular.module('algoliasearch', [])
     request.resolve = function(val) {
       // http://www.bennadel.com/blog/2735-q-when-is-the-missing-q-resolve-method-in-angularjs.htm
       return $q.when(val);
+    };
+
+    request.delay = function(ms) {
+      return $q(function(resolve/*, reject*/) {
+        $timeout(resolve, ms);
+      });
     };
 
     var algoliasearch = createAlgoliasearch(request);

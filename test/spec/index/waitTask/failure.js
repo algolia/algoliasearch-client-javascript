@@ -1,7 +1,7 @@
 var test = require('tape');
 
-test('index.waitTask(taskID) retry', function(t) {
-  t.plan(9);
+test('index.waitTask(taskID) failure', function(t) {
+  t.plan(8);
 
   var fauxJax = require('faux-jax');
   var sinon = require('sinon');
@@ -10,27 +10,27 @@ test('index.waitTask(taskID) retry', function(t) {
   var fixture = createFixture();
 
   var index = fixture.index;
-  var cbSpy = sinon.spy(function(err, content) {
+  var cbSpy = sinon.spy(function(err) {
     t.ok(
       cbSpy.calledOnce,
-      'Callback called since task was published'
+      'Callback called'
     );
 
-    t.error(err, 'No error while using the callback waitTask API');
-
-    t.deepEqual(content, {
-      status: 'published'
-    }, 'Content matches');
+    t.equal(
+      err.message,
+      'Task not found (callback)'
+    );
   });
 
-  var promiseSpy = sinon.spy(function(content) {
-    t.deepEqual(content, {
-      status: 'published'
-    }, 'Content matches');
-
+  var promiseSpy = sinon.spy(function(err) {
     t.ok(
       promiseSpy.calledOnce,
-      'Promise resolved once since task was published'
+      'Callback called'
+    );
+
+    t.equal(
+      err.message,
+      'Task not found (promise)'
     );
   });
 
@@ -80,18 +80,20 @@ test('index.waitTask(taskID) retry', function(t) {
       );
 
       fauxJax.requests[2].respond(
-        200,
+        404,
         {},
         JSON.stringify({
-          status: 'published'
+          message: 'Task not found (callback)',
+          status: 404
         })
       );
 
       fauxJax.requests[3].respond(
-        200,
+        404,
         {},
         JSON.stringify({
-          status: 'published'
+          message: 'Task not found (promise)',
+          status: 404
         })
       );
 

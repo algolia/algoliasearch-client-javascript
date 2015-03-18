@@ -895,25 +895,40 @@ AlgoliaSearch.prototype.Index.prototype = {
    *  content: the server answer that contains the list of results
    */
   waitTask: function(taskID, callback) {
+    // waitTask() must be handled differently from other methods,
+    // it's a recursive method using a timeout
     var indexObj = this;
-    return this.as._jsonRequest({
+
+    var promise = this.as._jsonRequest({
       method: 'GET',
-      url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/task/' + taskID,
-      callback: function(err, content) {
-        if (err) {
-          callback(err);
-          return;
-        }
+      url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/task/' + taskID
+    }).then(function success(content) {
+      if (content.status !== 'published') {
+        return new indexObj.as._request.delay(100).then(function() {
+          return indexObj.waitTask(taskID, callback);
+        });
+      }
 
-        if (content.status === 'published') {
+      if (callback) {
+        process.nextTick(function() {
           callback(null, content);
-          return;
-        }
+        });
+      } else {
+        return content;
+      }
+    }, function failure(err) {
+      if (callback) {
+        process.nextTick(function() {
+          callback(err);
+        });
+      } else {
+        return err;
+      }
+    });
 
-        setTimeout(function() {
-          indexObj.waitTask(taskID, callback);
-        }, 100);
-    }});
+    if (!callback) {
+      return promise;
+    }
   },
 
   /*

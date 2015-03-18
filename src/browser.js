@@ -126,3 +126,9 @@ request.reject = function(val) {
 request.resolve = function(val) {
   return Promise.resolve(val);
 };
+
+request.delay = function(ms) {
+  return new Promise(function(resolve/*, reject*/) {
+    setTimeout(resolve, ms);
+  });
+};

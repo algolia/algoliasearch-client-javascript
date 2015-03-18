@@ -58,3 +58,11 @@ request.resolve = function(val) {
     deferred.resolve(val);
   }).promise();
 };
+
+request.delay = function(ms) {
+  return $.Deferred(function(deferred) {
+    setTimeout(function() {
+      deferred.resolve();
+    }, ms);
+  }).promise();
+};
