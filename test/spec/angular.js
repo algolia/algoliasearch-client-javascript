@@ -93,19 +93,11 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
         });
       }]);
 
-    // we manually bootstrap our application
-    // we cannot use ng-app in the test/template.html
-    // otherwise angular tries to initialize the app as soon as domready
-    // and the required angular module (`angularTest`) is not yet loaded
     global.angular.element(document).ready(function() {
       global.angular.bootstrap(global.angular.element('#angular-test-success'), ['angularTestSuccess']);
     });
   });
 
-  // broken, need to switch jsonp based on an option directly from the jsonRequest() call
-  // to be able to:
-  //  1. do JSONP fallback even with promises
-  //  1. stop JSONP fallback from runing after promise was rejected because no retry (4xx)
   test('AngularJS module error case', function(t) {
     t.plan(5);
 
@@ -118,7 +110,7 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
       .module('angularTestError', ['algoliasearch'])
       .controller('AngularModuleSearchControllerTestError', ['$scope', '$timeout', 'algolia', function($scope, $timeout, algolia) {
         t.pass('AngularJS controller initialized');
-        var client = algolia.Client('AngularJSError', 'ROCKSError');
+        var client = algolia.Client('AngularJSError', 'ROCKSError', {timeout: 2000, hosts: ['www.truc.com']});
         var index = client.initIndex('googleError');
         fauxJax.install();
 
@@ -149,10 +141,6 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
         });
       }]);
 
-    // we manually bootstrap our application
-    // we cannot use ng-app in the test/template.html
-    // otherwise angular tries to initialize the app as soon as domready
-    // and the required angular module (`angularTestError`) is not yet loaded
     global.angular.element(document).ready(function() {
       global.angular.bootstrap(global.angular.element('#angular-test-error'), ['angularTestError']);
     });
@@ -212,10 +200,6 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
         });
       }]);
 
-    // we manually bootstrap our application
-    // we cannot use ng-app in the test/template.html
-    // otherwise angular tries to initialize the app as soon as domready
-    // and the required angular module (`angularJSONPFallback`) is not yet loaded
     global.angular.element(document).ready(function() {
       global.angular.bootstrap(global.angular.element('#angular-JSONP-fallback'), ['angularJSONPFallback']);
     });

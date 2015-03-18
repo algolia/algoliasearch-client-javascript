@@ -5,27 +5,41 @@ global.angular.module('algoliasearch', [])
   .service('algolia', ['$http', '$q', '$timeout', function ($http, $q, $timeout) {
     function request(url, opts) {
       return $q(function(resolve, reject) {
+        var timedOut;
         var body = null;
 
         if (opts.body !== undefined) {
           body = JSON.stringify(opts.body);
         }
 
+        var timeout = $q(function(resolveTimeout) {
+          $timeout(function() {
+            timedOut = true;
+            // will cancel the xhr
+            resolveTimeout('test');
+            resolve(new Error('Timeout - Could not connect to endpoint ' + url));
+          }, 1000);
+        });
+
         $http({
           url: url,
           method: opts.method,
           data: body,
           cache: false,
-          timeout: opts.timeout
+          timeout: timeout
         }).then(function success(response) {
           resolve({
             statusCode: response.status,
             body: response.data
           });
         }, function error(response) {
-          // network error or timeout
+          if (timedOut) {
+            return;
+          }
+
+          // network error
           if (response.status === 0) {
-            reject(new Error('Network error or timeout'));
+            reject(new Error('Network error'));
             return;
           }
 
