@@ -526,7 +526,12 @@ AlgoliaSearch.prototype = {
         if (!client.forceFallback) {
           // next time doRequest is called, simulate we tried all hosts
           tries = client.hosts.length;
+        } else {
+          // we were already using the fallback, but something went wrong (script error)
+          client.currentHostIndex = ++client.currentHostIndex % client.hosts.length;
+          tries += 1;
         }
+
         return doRequest(requester, reqOpts);
       }
     }
