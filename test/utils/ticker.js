@@ -20,15 +20,6 @@ function ticker(opts) {
       opts.tickCb(tick);
     }
 
-    if (opts.clock) {
-      opts.clock.tick(opts.tickDuration * tick);
-    }
-
-    process.nextTick(doTick);
-
-    // IE10 fix, run next nextTick^
-    if (opts.clock) {
-      opts.clock.tick(0);
-    }
+    setTimeout(doTick, opts.ms);
   }
 }

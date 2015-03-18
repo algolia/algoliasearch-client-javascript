@@ -43,12 +43,14 @@ test('Request strategy does as many tries as hosts', function(t) {
 
   ticker({
     maxTicks: 4,
-    tickCb: badReponse,
+    tickCb: badResponse,
+    ms: 100,
     cb: goodResponse
   });
 
-  function badReponse(tickIndex) {
-    fauxJax.requests[tickIndex - 1].respond(500, {}, JSON.stringify({status: 500, message: 'woops!'}));
+  function badResponse(tickIndex) {
+    fauxJax.requests[tickIndex - 1]
+      .respond(500, {}, JSON.stringify({status: 500, message: 'woops!'}));
   }
 
   function goodResponse() {

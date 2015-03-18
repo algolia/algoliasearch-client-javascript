@@ -25,7 +25,7 @@ test('index.waitTask(taskID) failure', function(t) {
   var promiseSpy = sinon.spy(function(err) {
     t.ok(
       promiseSpy.calledOnce,
-      'Callback called'
+      'Promise resolved'
     );
 
     t.equal(

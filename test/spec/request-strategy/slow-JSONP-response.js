@@ -55,11 +55,13 @@ test('Request strategy handles slow JSONP responses (no double callback)', funct
 
     ticker({
       maxTicks: 4,
-      tickCb: badReponse
+      tickCb: badResponse,
+      ms: 100
     });
 
-    function badReponse(tickIndex) {
-      fauxJax.requests[tickIndex - 1].respond(500, {}, JSON.stringify({status: 500, message: 'woops!'}));
+    function badResponse(tickIndex) {
+      fauxJax.requests[tickIndex - 1]
+        .respond(500, {}, JSON.stringify({status: 500, message: 'woops!'}));
     }
   });
 });

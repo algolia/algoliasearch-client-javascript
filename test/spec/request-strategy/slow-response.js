@@ -1,6 +1,6 @@
 var test = require('tape');
 
-var requestTimeout = 2000;
+var requestTimeout = 1000;
 
 test('Request strategy handles slow responses (no double callback)', function(t) {
   var sinon = require('sinon');
@@ -8,8 +8,11 @@ test('Request strategy handles slow responses (no double callback)', function(t)
 
   var createFixture = require('../../utils/create-fixture');
 
-  var clock = sinon.useFakeTimers();
-  var fixture = createFixture();
+  var fixture = createFixture({
+    clientOptions: {
+      timeout: requestTimeout
+    }
+  });
 
   var index = fixture.index;
 
@@ -25,7 +28,6 @@ test('Request strategy handles slow responses (no double callback)', function(t)
       'Callback called with null, {"slowResponse": "ok"}'
     );
 
-    clock.restore();
     fauxJax.restore();
     t.end();
   });
@@ -48,9 +50,7 @@ test('Request strategy handles slow responses (no double callback)', function(t)
     'One request made'
   );
 
-  clock.tick(requestTimeout);
-
-  process.nextTick(function() {
+  setTimeout(function() {
     var secondRequest = fauxJax.requests[1];
 
     t.equal(
@@ -70,8 +70,5 @@ test('Request strategy handles slow responses (no double callback)', function(t)
       {},
       JSON.stringify({slowResponse: 'ok'})
     );
-  });
-
-  // IE10 fix, run next nextTick^
-  clock.tick(0);
+  }, requestTimeout + requestTimeout / 2);
 });

@@ -3,7 +3,7 @@ var test = require('tape');
 var requestTimeout = 5000;
 
 // this test uses the utils/support-server to get JSONP responses
-test('Request strategy uses JSONP when all XHR timed out', function(t) {
+test('Request strategy uses JSONP when XHR timedout', function(t) {
   var fauxJax = require('faux-jax');
   var parse = require('url-parse');
   var sinon = require('sinon');
@@ -28,7 +28,9 @@ test('Request strategy uses JSONP when all XHR timed out', function(t) {
   var index = fixture.index;
 
   var searchCallback = sinon.spy(function() {
+    t.equal(fauxJax.requests.length, 3, 'Three requests made');
     t.ok(searchCallback.calledOnce, 'Callback was called once');
+
     t.deepEqual(
       searchCallback.args[0],
       [null, {hello: 'man'}],
@@ -45,29 +47,20 @@ test('Request strategy uses JSONP when all XHR timed out', function(t) {
   }, function run(err) {
     t.error(err, 'No error while reseting the /1/indexes/request-strategy-uses-JSONP route');
 
-    process.nextTick(function() {
-      var clock = sinon.useFakeTimers();
-      fauxJax.install();
+    fauxJax.install();
 
-      index.search('hello', searchCallback);
+    t.equal(fauxJax.requests.length, 0, 'No request made');
+    index.search('hello', searchCallback);
 
-      // 3 XHR timeouts
-      ticker({
-        clock: clock,
-        maxTicks: 3,
-        tickDuration: requestTimeout,
-        tickCb: tickCheck,
-        cb: restoreClock
-      });
-
-      function tickCheck(tickIndex) {
-        t.notOk(searchCallback.calledOnce, 'Callback not yet called');
-        t.equal(fauxJax.requests.length, tickIndex, tickIndex + ' request(s) made');
-      }
-
-      function restoreClock() {
-        clock.restore();
-      }
+    ticker({
+      maxTicks: 3,
+      tickCb: badResponse,
+      ms: 100
     });
+
+    function badResponse(tickIndex) {
+      fauxJax.requests[tickIndex - 1]
+        .respond(500, {}, JSON.stringify({message: 'Try again', status: 500}));
+    }
   });
 });
