@@ -56,6 +56,11 @@ UNRELEASED
       This is in par with most asynchronous APIS accepted/de vfacto conventions.
       It helps being compatible with control flow libraries like `async` and
       helps reduce WTF moments of Node.JS developers used to cb(err, content)
+    * Externalize plugins and request implementations
+    * NEW FEATURE, All calls are now returning promises
+        - Native promises by default ()
+        - AngularJS promises for AngularJS plugin
+        - jQuery promises for jQuery plugin
 
 2015-02-03  2.9.2
     * Fixed calls to `.search(function() {})`, `.search(null, function() {})`, `.search(undefined, function() {})
