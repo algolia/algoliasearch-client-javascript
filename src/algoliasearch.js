@@ -469,14 +469,17 @@ AlgoliaSearch.prototype = {
       })
       .then(function success(httpResponse) {
         var status =
-          httpResponse.statusCode ||
-
           // When in browser mode, using XDR or JSONP
           // We rely on our own API response `status`, only
           // provided when an error occurs, we also expect a .message along
           // Otherwise, it could be a `waitTask` status, that's the only
           // case where we have a response.status that's not the http statusCode
           httpResponse && httpResponse.body && httpResponse.body.message && httpResponse.body.status ||
+
+          // this is important to check the request statusCode AFTER the body eventual
+          // statusCode because some implementations (jQuery XDomainRequest transport) may
+          // send statusCode 200 while we had an error
+          httpResponse.statusCode ||
 
           // When in browser mode, using XDR or JSONP
           // we default to success when no error (no response.status && response.message)

@@ -7,7 +7,7 @@ var browser = require('bowser').browser;
 // why do we even have a jQuery build?
 // http://jquery.com/download/#jquery-2-x
 // guess what there's even a plugin! http://cdnjs.com/libraries/jquery-ajaxtransport-xdomainrequest
-if (!browser.msie || parseFloat(browser.version) > 9) {
+if (!browser.msie || parseFloat(browser.version) > 8) {
   test('jQuery module success case', function(t) {
     t.plan(9);
 
@@ -140,7 +140,8 @@ if (!browser.msie || parseFloat(browser.version) > 9) {
       400,
       {},
       JSON.stringify({
-        'message': 'Nope promise jQuery'
+        'message': 'Nope promise jQuery',
+        status: 400
       })
     );
 
@@ -148,7 +149,8 @@ if (!browser.msie || parseFloat(browser.version) > 9) {
       400,
       {},
       JSON.stringify({
-        'message': 'Nope callback jQuery'
+        'message': 'Nope callback jQuery',
+        status: 400
       })
     );
 
@@ -208,8 +210,10 @@ if (!browser.msie || parseFloat(browser.version) > 9) {
       );
     });
 
-    fauxJax.requests[0].respond(500, {}, JSON.stringify({message: 'Nope promise'}));
-    fauxJax.requests[1].respond(500, {}, JSON.stringify({message: 'Nope callback'}));
+    fauxJax.requests[0]
+      .respond(500, {}, JSON.stringify({message: 'Nope promise', status: 500}));
+    fauxJax.requests[1]
+      .respond(500, {}, JSON.stringify({message: 'Nope callback', status: 500}));
 
     fauxJax.restore();
   });

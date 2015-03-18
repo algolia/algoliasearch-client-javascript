@@ -19,6 +19,7 @@ browsers:
 server: ./test/support-server/index.js
 scripts:
   - /node_modules/jquery/dist/jquery.min.js
+  - /node_modules/jQuery-ajaxTransport-XDomainRequest/jquery.xdomainrequest.min.js
   - /node_modules/angular/angular.min.js
 html: ./test/template.html
 browserify:
