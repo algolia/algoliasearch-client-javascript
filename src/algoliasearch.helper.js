@@ -327,8 +327,8 @@ AlgoliaSearchHelper.prototype = {
       this.client.addQueryInBatch(this.extraQueries[i].index, this.extraQueries[i].query, this.extraQueries[i].params);
     }
     var self = this;
-    this.client.sendQueriesBatch(function(success, content) {
-      if (!success) {
+    this.client.sendQueriesBatch(function(err, content) {
+      if (err) {
         self.searchCallback(false, content);
         return;
       }

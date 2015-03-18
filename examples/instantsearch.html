@@ -28,8 +28,8 @@
     <div id="hits"></div>
 
     <script type="text/javascript">
-      function searchCallback(success, content) {
-        if (!success) {
+      function searchCallback(err, content) {
+        if (err) {
           // error
           return;
         }
