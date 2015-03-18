@@ -110,7 +110,7 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
       .module('angularTestError', ['algoliasearch'])
       .controller('AngularModuleSearchControllerTestError', ['$scope', '$timeout', 'algolia', function($scope, $timeout, algolia) {
         t.pass('AngularJS controller initialized');
-        var client = algolia.Client('AngularJSError', 'ROCKSError', {timeout: 2000, hosts: ['www.truc.com']});
+        var client = algolia.Client('AngularJSError', 'ROCKSError');
         var index = client.initIndex('googleError');
         fauxJax.install();
 
