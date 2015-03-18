@@ -735,10 +735,16 @@ AlgoliaSearch.prototype.Index.prototype = {
    *  content: the server answer that contains 3 elements: createAt, taskId and objectID
    */
   deleteObject: function(objectID, callback) {
-    if (objectID === null || objectID.length === 0) {
-      callback(false, { message: 'empty objectID'});
-      return;
+    if (typeof objectID === 'function' || typeof objectID !== 'string' && typeof objectID !== 'number') {
+      var err = new Error('Cannot delete an object without an objectID');
+      callback = objectID;
+      if (typeof callback === 'function') {
+        return callback(err);
+      }
+
+      return this.as._request.reject(err);
     }
+
     var indexObj = this;
     return this.as._jsonRequest({ method: 'DELETE',
                  url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/' + encodeURIComponent(objectID),
