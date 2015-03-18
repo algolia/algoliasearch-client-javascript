@@ -88,13 +88,21 @@ function testXHRCall(opts) {
     'Callback was called once'
   );
 
-  var success = testCase.fakeResponse.statusCode === 200 ? true : false;
+  var error = testCase.fakeResponse.statusCode === 200 ? null : Error;
+  var args = methodCallback.getCall(0).args;
 
-  assert.deepEqual(
-    methodCallback.getCall(0).args,
-    [success, testCase.fakeResponse.body],
-    'Callback called with callback(true, fakeResponse.body)'
-  );
+  if (error) {
+    assert.ok(
+      args[0] instanceof Error && args.length === 1,
+      'We received an error and only an error'
+    );
+  } else {
+    assert.deepEqual(
+      methodCallback.getCall(0).args,
+      error ? [error] : [error, testCase.fakeResponse.body],
+      'Callback called with callback(err, res)'
+    );
+  }
 
   fauxJax.restore();
 }

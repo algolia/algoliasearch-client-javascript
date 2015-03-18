@@ -31,8 +31,8 @@ test('Request strategy uses only JSONP if one XHR fails', function(t) {
 
     t.deepEqual(
       firstCallback.args[0],
-      [true, {query: 'first'}],
-      'First callback called with true, {"query": "first"}'
+      [null, {query: 'first'}],
+      'First callback called with null, {"query": "first"}'
     );
 
     index.search('second', secondCallback);
@@ -52,8 +52,8 @@ test('Request strategy uses only JSONP if one XHR fails', function(t) {
 
     t.deepEqual(
       secondCallback.args[0],
-      [true, {query: 'second'}],
-      'Second callback called with true, {"query": "second"}'
+      [null, {query: 'second'}],
+      'Second callback called with null, {"query": "second"}'
     );
 
     fauxJax.restore();

@@ -1,6 +1,6 @@
 var algoliasearch = require('../');
 
-global.angular.module('algoliasearch', [])
+module.exports = global.angular.module('algoliasearch', [])
   .service('algolia', ['$injector', function ($injector) {
     return {
       Client: function(applicationID, apiKey, options) {

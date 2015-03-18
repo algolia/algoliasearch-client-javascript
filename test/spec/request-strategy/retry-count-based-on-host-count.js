@@ -27,7 +27,7 @@ test('Request strategy does as many tries as hosts', function(t) {
 
     t.deepEqual(
       searchCallback.args[0],
-      [true, {hosts: 'YES!'}]
+      [null, {hosts: 'YES!'}]
     );
 
     fauxJax.restore();
