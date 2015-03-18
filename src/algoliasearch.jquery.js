@@ -19,9 +19,14 @@ function request(url, opts) {
       timeout: opts.timeout,
       dataType: 'json',
       data: body,
-      complete: function(jqXHR/*, textStatus , error*/) {
+      complete: function(jqXHR, textStatus/* , error*/) {
+        if (textStatus === 'timeout') {
+          deferred.resolve(new Error('Timeout - Could not connect to endpoint ' + url));
+          return;
+        }
+
         if (jqXHR.status === 0) {
-          deferred.reject(new Error('Network error or timeout'));
+          deferred.reject(new Error('Network error'));
           return;
         }
 

@@ -100,7 +100,7 @@ function request(url, opts) {
         req.abort();
       }
 
-      reject(new Error('Timeout - Could not connect to endpoint ' + url));
+      resolve(new Error('Timeout - Could not connect to endpoint ' + url));
     }
 
   });

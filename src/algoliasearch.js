@@ -441,6 +441,7 @@ AlgoliaSearch.prototype = {
         reqOpts.url = opts.fallback.url;
         reqOpts.body = opts.fallback.body;
         reqOpts.timeout = client.requestTimeout * (tries + 1);
+        client.currentHostIndex = 0;
         client.forceFallback = true;
         return doRequest(client._request.fallback, reqOpts);
       }
@@ -468,6 +469,11 @@ AlgoliaSearch.prototype = {
         timeout: reqOpts.timeout
       })
       .then(function success(httpResponse) {
+        // timeout case, retry immediately
+        if (httpResponse instanceof Error) {
+          return retryRequest();
+        }
+
         var status =
           // When in browser mode, using XDR or JSONP
           // We rely on our own API response `status`, only
@@ -487,7 +493,7 @@ AlgoliaSearch.prototype = {
           httpResponse && httpResponse.body && 200;
 
         var ok = status === 200 || status === 201;
-        var retry = !ok && status !== 400 && status !== 403 && status !== 404;
+        var retry = !ok && Math.floor(status / 100) !== 4 && Math.floor(status / 100) !== 1;
 
         if (ok && cache) {
           cache[cacheID] = httpResponse.body;
@@ -506,12 +512,21 @@ AlgoliaSearch.prototype = {
         );
 
         return client._request.reject(unrecoverableError);
-      }, retryRequest);
+      }, tryFallback);
 
       function retryRequest() {
         client.currentHostIndex = ++client.currentHostIndex % client.hosts.length;
         tries += 1;
         reqOpts.timeout = client.requestTimeout * (tries + 1);
+        return doRequest(requester, reqOpts);
+      }
+
+      function tryFallback() {
+        // if we are switching to fallback right now, set tries to maximum
+        if (!client.forceFallback) {
+          // next time doRequest is called, simulate we tried all hosts
+          tries = client.hosts.length;
+        }
         return doRequest(requester, reqOpts);
       }
     }
