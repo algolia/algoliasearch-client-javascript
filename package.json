@@ -50,7 +50,6 @@
     "tape": "3.5.0",
     "uglify-js": "2.4.16",
     "url-parse": "1.0.0",
-    "writable-window-method": "1.0.3",
     "xhr": "2.0.1",
     "zuul": "2.1.1",
     "zuul-ngrok": "3.0.0"
