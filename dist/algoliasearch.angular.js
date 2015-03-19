@@ -21,7 +21,7 @@
  * THE SOFTWARE.
  */
 
-var ALGOLIA_VERSION = '2.9.2';
+var ALGOLIA_VERSION = '2.9.3';
 
 /*
  * Copyright (c) 2013 Algolia
@@ -1547,13 +1547,13 @@ AlgoliaSearch.prototype.Index.prototype = {
         url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/query',
         body: pObj,
         callback: function(success, content) {
-          if (!success) {
-            // retry first with JSONP
-            self.as.jsonp = true;
-            self._search(params, callback);
-          } else {
+          var status = content && content.status;
+          if (success || status && Math.floor(status / 100) === 4 || Math.floor(status / 100) === 1) {
             self.as.jsonp = false;
             callback && callback(success, content);
+          } else {
+            self.as.jsonp = true;
+            self._search(params, callback);
           }
         }
       });
@@ -2030,7 +2030,8 @@ AlgoliaSearch.prototype.Index.prototype = {
         attributesToHighlight: [],
         attributesToSnippet: [],
         facets: facet,
-        facetFilters: this._getFacetFilters(facet)
+        facetFilters: this._getFacetFilters(facet),
+        analytics: false
       });
     },
 
