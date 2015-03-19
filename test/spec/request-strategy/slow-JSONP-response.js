@@ -56,6 +56,9 @@ test('Request strategy handles slow JSONP responses (no double callback)', funct
 
     index.search('hello', searchCallback);
 
-    fauxJax.requests[0].respond(400, {}, JSON.stringify({status: 400, message: 'woops!'}));
+    fauxJax.requests[0].respond(500, {}, JSON.stringify({status: 500, message: 'woops!'}));
+    fauxJax.requests[1].respond(500, {}, JSON.stringify({status: 500, message: 'woops!'}));
+    fauxJax.requests[2].respond(500, {}, JSON.stringify({status: 500, message: 'woops!'}));
+    fauxJax.requests[3].respond(500, {}, JSON.stringify({status: 500, message: 'woops!'}));
   });
 });
