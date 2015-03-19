@@ -44,8 +44,8 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
 
         $timeout(function(){
           t.equal(
-            2,
             fauxJax.requests.length,
+            2,
             'Two requests made'
           );
 
@@ -202,6 +202,54 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
 
     global.angular.element(document).ready(function() {
       global.angular.bootstrap(global.angular.element('#angular-JSONP-fallback'), ['angularJSONPFallback']);
+    });
+  });
+
+  test('AngularJS module timeout', function(t) {
+    t.plan(3);
+    var requestTimeout = 1000;
+
+    var fauxJax = require('faux-jax');
+    var parse = require('url-parse');
+
+    var currentURL = parse(location.href);
+
+    // load AngularJS Algolia Search module
+    require('../../src/algoliasearch.angular');
+
+    global.angular
+      .module('angularTimeout', ['algoliasearch'])
+      .controller('AngularModuleSearchControllerTestTimeout', ['$scope', '$timeout', 'algolia', function($scope, $timeout, algolia) {
+        t.pass('AngularJS controller initialized');
+        var client = algolia.Client('AngularJSError', 'ROCKSError', {
+          hosts: [
+            currentURL.host,
+            currentURL.host
+          ],
+          timeout: requestTimeout
+        });
+        var index = client.initIndex('simple-JSONP-response');
+        fauxJax.install();
+
+        index.search('angular-first').then(function searchDone(content) {
+          fauxJax.restore();
+
+          t.deepEqual(
+            content, {
+              message: 'YEAH!'
+            },
+            'Content matches'
+          );
+        });
+
+        $timeout(function() {
+          t.equal(2, fauxJax.requests.length, 'Two requests made');
+          fauxJax.requests[1].respond(200, {}, JSON.stringify({message: 'YEAH!'}));
+        }, requestTimeout + requestTimeout / 2);
+      }]);
+
+    global.angular.element(document).ready(function() {
+      global.angular.bootstrap(global.angular.element('#angular-timeout'), ['angularTimeout']);
     });
   });
 }

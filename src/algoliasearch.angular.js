@@ -18,7 +18,7 @@ global.angular.module('algoliasearch', [])
             // will cancel the xhr
             resolveTimeout('test');
             resolve(new Error('Timeout - Could not connect to endpoint ' + url));
-          }, 1000);
+          }, opts.timeout);
         });
 
         $http({
