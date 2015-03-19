@@ -6,6 +6,7 @@ UNRELEASED
     * running tests on many browsers, using saucelabs
     * refactor around `_makeXmlHttpRequestByHost` and `_makeJsonpRequestByHost`
     * remove unused opts.callback(retry, success, obj, message) in all make..Request functions
+    * FIX: do not retry with JSONP when statusCode is 4xx
 
 2015-02-03  2.9.2
     * Fixed calls to `.search(function() {})`, `.search(null, function() {})`, `.search(undefined, function() {})
