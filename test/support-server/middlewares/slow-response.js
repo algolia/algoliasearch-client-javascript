@@ -4,7 +4,7 @@ var express = require('express');
 
 // test request timeout set to 5000ms, we test that when responding
 // after the timeout for the first request, we do not do a double callback
-var respondAfter = 6000;
+var respondAfter = 7000;
 
 function slowResponse() {
   var router = express.Router();

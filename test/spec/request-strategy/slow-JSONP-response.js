@@ -1,6 +1,6 @@
 var test = require('tape');
 
-var requestTimeout = 8000;
+var requestTimeout = 5000;
 
 test('Request strategy handles slow JSONP responses (no double callback)', function(t) {
   var fauxJax = require('faux-jax');
