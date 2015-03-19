@@ -5,6 +5,8 @@ test('Request strategy does as many tries as hosts', function(t) {
   var sinon = require('sinon');
 
   var createFixture = require('../../utils/create-fixture');
+  var ticker = require('../../utils/ticker');
+
   var fixture = createFixture({
     clientOptions: {
       hosts: [
@@ -39,10 +41,19 @@ test('Request strategy does as many tries as hosts', function(t) {
 
   index.search('smg', searchCallback);
 
-  fauxJax.requests[0].respond(500, {}, JSON.stringify({status: 500, message: 'woops!'}));
-  fauxJax.requests[1].respond(500, {}, JSON.stringify({status: 500, message: 'woops!'}));
-  fauxJax.requests[2].respond(500, {}, JSON.stringify({status: 500, message: 'woops!'}));
-  fauxJax.requests[3].respond(500, {}, JSON.stringify({status: 500, message: 'woops!'}));
+  ticker({
+    maxTicks: 4,
+    tickCb: badResponse,
+    ms: 100,
+    cb: goodResponse
+  });
 
-  fauxJax.requests[4].respond(200, {}, JSON.stringify({hosts: 'YES!'}));
+  function badResponse(tickIndex) {
+    fauxJax.requests[tickIndex - 1]
+      .respond(500, {}, JSON.stringify({status: 500, message: 'woops!'}));
+  }
+
+  function goodResponse() {
+    fauxJax.requests[4].respond(200, {}, JSON.stringify({hosts: 'YES!'}));
+  }
 });

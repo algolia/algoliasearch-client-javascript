@@ -4,7 +4,7 @@ var algoliasearch = require('../../');
 var fauxJax = require('faux-jax');
 var parse = require('url-parse');
 
-var findMethodCallback = require('./find-method-callback');
+var wrapMethodCallback = require('./wrap-method-callback');
 
 function testXHRCall(opts) {
   var assert = opts.assert;
@@ -18,7 +18,10 @@ function testXHRCall(opts) {
     object = client;
   }
 
-  var methodCallback = testCase.methodCallback = findMethodCallback(testCase.callArguments);
+  // we wrap and replace the method callback (index.search('query', cb))
+  // so that we have our `checkMethodCallback` called when the callback occured
+  // as callback are asynchronous, we cannot use synchronous testing
+  wrapMethodCallback(testCase.callArguments, checkMethodCallback);
 
   // this needs to be done here to be as close as possible to the new XMLHttpRequest() call
   fauxJax.install();
@@ -83,28 +86,30 @@ function testXHRCall(opts) {
     assert.pass('Cannot check requestHeaders, CORS not supported');
   }
 
-  assert.ok(
-    methodCallback.calledOnce,
-    'Callback was called once'
-  );
-
-  var error = testCase.fakeResponse.statusCode === 200 ? null : Error;
-  var args = methodCallback.getCall(0).args;
-
-  if (error) {
+  function checkMethodCallback(methodCallback) {
     assert.ok(
-      args[0] instanceof Error && args.length === 1,
-      'We received an error and only an error'
+      methodCallback.calledOnce,
+      'Callback was called once'
     );
-  } else {
-    assert.deepEqual(
-      methodCallback.getCall(0).args,
-      error ? [error] : [error, testCase.fakeResponse.body],
-      'Callback called with callback(err, res)'
-    );
-  }
 
-  fauxJax.restore();
+    var error = testCase.fakeResponse.statusCode === 200 ? null : Error;
+    var args = methodCallback.getCall(0).args;
+
+    if (error) {
+      assert.ok(
+        args[0] instanceof Error && args.length === 1,
+        'We received an error and only an error'
+      );
+    } else {
+      assert.deepEqual(
+        methodCallback.getCall(0).args,
+        error ? [error] : [error, testCase.fakeResponse.body],
+        'Callback called with callback(err, res)'
+      );
+    }
+
+    fauxJax.restore();
+  }
 }
 
 // we do 3 asserts per test

@@ -72,8 +72,8 @@
           }
         }
 
-        function searchCallback(success, content) {
-          if (!success) {
+        function searchCallback(err, content) {
+          if (err) {
             // error
             return;
           }

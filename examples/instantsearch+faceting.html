@@ -61,8 +61,8 @@
           index.search($inputfield.val(), searchCallback, { facets: '*', facetFilters: filters });
         }
 
-        function searchCallback(success, content) {
-          if (!success) {
+        function searchCallback(err, content) {
+          if (err) {
             // error
             return;
           }
@@ -71,7 +71,7 @@
             // do not consider out-dated queries
             return;
           }
-          if (content.hits.length == 0 || content.query.trim() === '') {
+          if (content.hits.length == 0 || $.trim(content.query) === '') {
             // no results
             $('#hits').empty();
             $('#facets').empty();

@@ -1,17 +1,17 @@
 var test = require('tape');
 
-var requestTimeout = 2000;
+var requestTimeout = 5000;
 
-test('Request strategy creates and remove script tags when using JSONP', function(t) {
+// this test ensures that any created JSONP script tags is then removed
+test('Request strategy clean JSONP created script tags', function(t) {
   var every = require('lodash-compat/collection/every');
   var fauxJax = require('faux-jax');
   var parse = require('url-parse');
   var sinon = require('sinon');
-  var some = require('lodash-compat/collection/some');
 
   var createFixture = require('../../utils/create-fixture');
+  var ticker = require('../../utils/ticker');
 
-  var clock = sinon.useFakeTimers();
   var currentURL = parse(location.href);
   var fixture = createFixture({
     clientOptions: {
@@ -20,7 +20,8 @@ test('Request strategy creates and remove script tags when using JSONP', functio
         currentURL.host,
         currentURL.host,
         currentURL.host
-      ]
+      ],
+      timeout: requestTimeout
     },
     indexName: 'simple-JSONP-response'
   });
@@ -45,11 +46,10 @@ test('Request strategy creates and remove script tags when using JSONP', functio
     t.ok(searchCallback.calledOnce, 'Callback was called once');
     t.deepEqual(
       searchCallback.args[0],
-      [null, {query: 'creates script tags'}],
-      'Callback called with null, {"query": "creates script tags"}'
+      [null, {query: 'clean script tags'}],
+      'Callback called with null, {"query": "clean script tags"}'
     );
 
-    // script tag deletion is done after calling our callback
     var postCallbackScriptTags = document.getElementsByTagName('script');
 
     t.equal(
@@ -66,38 +66,21 @@ test('Request strategy creates and remove script tags when using JSONP', functio
       'No more script matches a JSONP script'
     );
 
+    fauxJax.restore();
     t.end();
   });
 
-  index.search('creates script tags', searchCallback);
+  index.search('clean script tags', searchCallback);
 
-  // XHR timeouts
-  clock.tick(requestTimeout);
-  clock.tick(requestTimeout * 2);
-  clock.tick(requestTimeout * 3);
-  clock.tick(requestTimeout * 4);
-  clock.restore();
+  // 4 XHR timeouts
+  ticker({
+    maxTicks: 4,
+    ms: 100,
+    tickCb: badResponse
+  });
 
-  t.equal(
-    fauxJax.requests.length,
-    4,
-    'Four requests made'
-  );
-
-  var currentScriptTags = document.getElementsByTagName('script');
-
-  t.equal(
-    currentScriptTags.length,
-    initialScriptTagsCount + 1,
-    'We added one script tag'
-  );
-
-  t.ok(
-    some(currentScriptTags, function noJSONPTag(script) {
-      return script.src && parse(script.src).pathname === '/1/indexes/simple-JSONP-response';
-    }),
-    'A new script matches a JSONP script'
-  );
-
-  fauxJax.restore();
+  function badResponse(tickIndex) {
+    fauxJax.requests[tickIndex - 1]
+      .respond(500, {}, JSON.stringify({message: 'Try again', status: 500}));
+  }
 });

@@ -27,7 +27,7 @@ var shuffle = require('lodash-compat/collection/shuffle');
  * @param {string} [opts.tld='net'] - The tld to use when computing hosts default list
  * @param {?boolean} [opts.jsonp=null] - Set to true to force JSONP usage in browsers, false to disable. Default to feature detection
  */
-function AlgoliaSearch(applicationID, apiKey, opts) {
+function AlgoliaSearch(applicationID, apiKey, opts, _request) {
   var usage = 'Usage: algoliasearch(applicationID, apiKey, opts)';
 
   if (!applicationID) {
@@ -68,23 +68,6 @@ function AlgoliaSearch(applicationID, apiKey, opts) {
     return opts.protocol + '//' + host;
   });
 
-  // AngularJS plugin
-  // dependencies injection
-  // see https://github.com/algolia/algoliasearch-client-js/issues/44
-  if (opts.angular) {
-    this._angular = opts.angular;
-    opts.angular.$injector.invoke(['$http', '$q', function ($http, $q) {
-      opts.angular.$q = $q;
-      opts.angular.$http = $http;
-    }]);
-  }
-
-  // jQuery plugin
-  // see https://github.com/algolia/algoliasearch-client-js/issues/44
-  if (opts.jQuery) {
-    this._jQuery = opts.jQuery;
-  }
-
   this.applicationID = applicationID;
   this.apiKey = apiKey;
   this.hosts = opts.hosts;
@@ -94,11 +77,8 @@ function AlgoliaSearch(applicationID, apiKey, opts) {
   this.extraHeaders = [];
   this.jsonp = opts.jsonp;
   this.cache = {};
+  this._request = _request;
 }
-
-// This holds the number of JSONP requests done accross clients
-// It's used as part of the ?callback=JSONP_$JSONPCounter when we do JSONP requests
-AlgoliaSearch.JSONPCounter = 0;
 
 AlgoliaSearch.prototype = {
   /*
@@ -400,45 +380,22 @@ AlgoliaSearch.prototype = {
   },
 
   _sendQueriesBatch: function(params, callback) {
-     if (this.jsonp === null) {
-      var self = this;
-      return this._jsonRequest({ cache: this.cache,
-        method: 'POST',
-        url: '/1/indexes/*/queries',
-        body: params,
-        callback: function(err, content) {
-          if (err) {
-            // retry first with JSONP
-            self.jsonp = true;
-            self._sendQueriesBatch(params, callback);
-            return;
-          }
-
-          self.jsonp = false;
-          callback && callback(null, content);
-        }
-      });
-    } else if (this.jsonp) {
-      var jsonpParams = '';
-      for (var i = 0; i < params.requests.length; ++i) {
-        var q = '/1/indexes/' + encodeURIComponent(params.requests[i].indexName) + '?' + params.requests[i].params;
-        jsonpParams += i + '=' + encodeURIComponent(q) + '&';
-      }
-      var pObj = {params: jsonpParams};
-      return this._jsonRequest({
-        cache: this.cache,
-        method: 'GET',
-        url: '/1/indexes/*',
-        body: pObj,
-        callback: callback
-      });
-    }
-
-    return this._jsonRequest({
-      cache: this.cache,
+    return this._jsonRequest({ cache: this.cache,
       method: 'POST',
       url: '/1/indexes/*/queries',
       body: params,
+      fallback: {
+        method: 'GET',
+        url: '/1/indexes/*',
+        body: {params: (function() {
+          var jsonpParams = '';
+          for (var i = 0; i < params.requests.length; ++i) {
+            var q = '/1/indexes/' + encodeURIComponent(params.requests[i].indexName) + '?' + params.requests[i].params;
+            jsonpParams += i + '=' + encodeURIComponent(q) + '&';
+          }
+          return jsonpParams;
+        }())}
+      },
       callback: callback
     });
   },
@@ -446,460 +403,167 @@ AlgoliaSearch.prototype = {
    * Wrapper that try all hosts to maximize the quality of service
    */
   _jsonRequest: function(opts) {
-    opts.callback = opts.callback || function noop() {};
-
-    var self = this;
-    var callback = opts.callback;
-    var cache = null;
+    // handle opts.fallback, automatically use fallback (JSONP in browser plugins, wrapped with $plugin-promises)
+    // so if an error occurs and max tries => use fallback
+    // set tries to 0 again
+    // if fallback used and no more tries, return error
+    // fallback parameters are in opts.fallback
+    // call request.fallback or request accordingly, same promise chain otherwise
+    // put callback& params in front if problem
+    var cache = opts.cache;
     var cacheID = opts.url;
-    var deferred = null;
+    var client = this;
+    var tries = 0;
 
-    if (this._jQuery) {
-      deferred = this._jQuery.$.Deferred();
-      deferred.promise = deferred.promise(); // promise is a property in angular
-    } else if (this._angular) {
-      deferred = this._angular.$q.defer();
+    // as we use POST requests to pass parameters (like query='aa'),
+    // the cacheID must be different between calls
+    if (opts.body !== undefined) {
+      cacheID += '_body_' + JSON2.stringify(opts.body);
     }
 
-    if (!this._isUndefined(opts.body)) {
-      cacheID = opts.url + '_body_' + JSON2.stringify(opts.body);
-    }
-
-    if (!this._isUndefined(opts.cache)) {
-      cache = opts.cache;
-      if (!this._isUndefined(cache[cacheID])) {
-        if (!this._isUndefined(callback) && callback) {
-          setTimeout(function () {
-            callback(true, cache[cacheID]);
-          }, 1);
-        }
-        deferred && deferred.resolve(cache[cacheID]);
-        return deferred && deferred.promise;
-      }
-    }
-
-    opts.successiveRetryCount = 0;
-
-    doRequest();
-
-    function doRequest() {
-      if (opts.successiveRetryCount >= self.hosts.length) {
-        var error = new Error(
-          'Cannot connect the Algolia\'s Search API.' +
-          ' Send an email to support@algolia.com to report and resolve the issue.'
-        );
-
-        if (!self._isUndefined(callback) && callback) {
-          opts.successiveRetryCount = 0;
-          callback(error);
-        }
-
-        deferred && deferred.reject(error);
-        return;
+    function doRequest(requester, reqOpts) {
+      // handle cache existence
+      if (cache && cache[cacheID] !== undefined) {
+        return client._request.resolve(cache[cacheID]);
       }
 
-      opts.callback = function(err, res) {
-        // Timeout or network problem, always retry
-        if (err) {
-          self.currentHostIndex = ++self.currentHostIndex % self.hosts.length;
-          opts.successiveRetryCount += 1;
-          doRequest();
-          return;
+      if (tries >= client.hosts.length) {
+        if (!opts.fallback || requester === client._request.fallback) {
+          // could not get a response even using the fallback if one was available
+          return client._request.reject(new Error(
+            'Cannot connect to the AlgoliaSearch API.' +
+            ' Send an email to support@algolia.com to report and resolve the issue.'
+          ));
+        }
+
+        tries = 0;
+        reqOpts.method = opts.fallback.method;
+        reqOpts.url = opts.fallback.url;
+        reqOpts.body = opts.fallback.body;
+        reqOpts.timeout = client.requestTimeout * (tries + 1);
+        client.currentHostIndex = 0;
+        client.forceFallback = true;
+        return doRequest(client._request.fallback, reqOpts);
+      }
+
+      var url = reqOpts.url;
+
+      url += (url.indexOf('?') === -1 ? '?' : '&') + 'X-Algolia-API-Key=' + client.apiKey;
+      url += '&X-Algolia-Application-Id=' + client.applicationID;
+
+      if (client.userToken) {
+        url += '&X-Algolia-UserToken=' + encodeURIComponent(client.userToken);
+      }
+
+      if (client.tagFilters) {
+        url += '&X-Algolia-TagFilters=' + encodeURIComponent(client.tagFilters);
+      }
+
+      for (var i = 0; i < client.extraHeaders.length; ++i) {
+        url += '&' + client.extraHeaders[i].key + '=' + client.extraHeaders[i].value;
+      }
+
+      return requester(client.hosts[client.currentHostIndex] + url, {
+        body: reqOpts.body,
+        method: reqOpts.method,
+        timeout: reqOpts.timeout
+      })
+      .then(function success(httpResponse) {
+        // timeout case, retry immediately
+        if (httpResponse instanceof Error) {
+          return retryRequest();
         }
 
         var status =
-          res.statusCode ||
-
           // When in browser mode, using XDR or JSONP
           // We rely on our own API response `status`, only
           // provided when an error occurs, we also expect a .message along
           // Otherwise, it could be a `waitTask` status, that's the only
           // case where we have a response.status that's not the http statusCode
-          res && res.body && res.body.message && res.body.status ||
+          httpResponse && httpResponse.body && httpResponse.body.message && httpResponse.body.status ||
+
+          // this is important to check the request statusCode AFTER the body eventual
+          // statusCode because some implementations (jQuery XDomainRequest transport) may
+          // send statusCode 200 while we had an error
+          httpResponse.statusCode ||
 
           // When in browser mode, using XDR or JSONP
           // we default to success when no error (no response.status && response.message)
           // If there was a JSON.parse() error then body is null and it fails
-          res && res.body && 200;
+          httpResponse && httpResponse.body && 200;
 
-        var success = status === 200 || status === 201;
-        var retry = !success && status !== 400 && status !== 403 && status !== 404;
+        var ok = status === 200 || status === 201;
+        var retry = !ok && Math.floor(status / 100) !== 4 && Math.floor(status / 100) !== 1;
 
-        if (success && !self._isUndefined(opts.cache)) {
-          cache[cacheID] = res.body;
+        if (ok && cache) {
+          cache[cacheID] = httpResponse.body;
         }
 
-        if (success) {
-          deferred && deferred.resolve(res.body);
-          callback(null, res.body);
-          return;
+        if (ok) {
+          return httpResponse.body;
         }
 
         if (retry) {
-          self.currentHostIndex = ++self.currentHostIndex % self.hosts.length;
-          opts.successiveRetryCount += 1;
-          doRequest();
-          return;
+          return retryRequest();
         }
 
-        var unrecoverableError = new Error(res.body && res.body.message || 'Unknown error');
+        var unrecoverableError = new Error(
+          httpResponse.body && httpResponse.body.message || 'Unknown error'
+        );
 
-        if (deferred) {
-          deferred.reject(unrecoverableError);
+        return client._request.reject(unrecoverableError);
+      }, tryFallback);
+
+      function retryRequest() {
+        client.currentHostIndex = ++client.currentHostIndex % client.hosts.length;
+        tries += 1;
+        reqOpts.timeout = client.requestTimeout * (tries + 1);
+        return doRequest(requester, reqOpts);
+      }
+
+      function tryFallback() {
+        // if we are switching to fallback right now, set tries to maximum
+        if (!client.forceFallback) {
+          // next time doRequest is called, simulate we tried all hosts
+          tries = client.hosts.length;
         } else {
-          callback(unrecoverableError);
+          // we were already using the fallback, but something went wrong (script error)
+          client.currentHostIndex = ++client.currentHostIndex % client.hosts.length;
+          tries += 1;
         }
-      };
 
-      opts.hostname = self.hosts[self.currentHostIndex];
-      self._jsonRequestByHost(opts);
-    }
-
-    return deferred && deferred.promise;
-  },
-
-  _jsonRequestByHost: function(opts) {
-    var url = opts.hostname + opts.url;
-
-    if (this.jsonp) {
-      this._makeJsonpRequestByHost(url, opts);
-    } else if (this._jQuery) {
-      this._makejQueryRequestByHost(url, opts);
-    } else if (this._angular) {
-      this._makeAngularRequestByHost(url, opts);
-    } else {
-      this._makeXmlHttpRequestByHost(url, opts);
-    }
-  },
-
-  /**
-   * Make a $http
-   *
-   * @param url request url (includes endpoint and path)
-   * @param opts all request opts
-   */
-  _makeAngularRequestByHost: function(url, opts) {
-    var body = null;
-
-    if (!this._isUndefined(opts.body)) {
-      body = JSON2.stringify(opts.body);
-    }
-
-    url += (url.indexOf('?') === -1 ? '?' : '&') + 'X-Algolia-API-Key=' + this.apiKey;
-    url += '&X-Algolia-Application-Id=' + this.applicationID;
-    if (this.userToken) {
-      url += '&X-Algolia-UserToken=' + encodeURIComponent(this.userToken);
-    }
-    if (this.tagFilters) {
-      url += '&X-Algolia-TagFilters=' + encodeURIComponent(this.tagFilters);
-    }
-    for (var i = 0; i < this.extraHeaders.length; ++i) {
-      url += '&' + this.extraHeaders[i].key + '=' + this.extraHeaders[i].value;
-    }
-    this._angular.$http({
-      url: url,
-      method: opts.method,
-      data: body,
-      cache: false,
-      timeout: this.requestTimeout * (opts.successiveRetryCount + 1)
-    }).then(function success(response) {
-      opts.callback(null, {
-        statusCode: response.status,
-        body: response.data
-      });
-    }, function error(response) {
-      // network error or timeout
-      if (response.status === 0) {
-        opts.callback(new Error('Network error or timeout'));
-        return;
+        return doRequest(requester, reqOpts);
       }
-
-      opts.callback(null, {
-        body: response.data,
-        statusCode: response.status
-      });
-    });
-  },
-
-  /**
-   * Make a $.ajax
-   *
-   * @param url request url (includes endpoint and path)
-   * @param opts all request opts
-   */
-  _makejQueryRequestByHost: function(url, opts) {
-    var body = null;
-
-    if (!this._isUndefined(opts.body)) {
-      body = JSON2.stringify(opts.body);
     }
 
-    url += (url.indexOf('?') === -1 ? '?' : '&') + 'X-Algolia-API-Key=' + this.apiKey;
-    url += '&X-Algolia-Application-Id=' + this.applicationID;
-    if (this.userToken) {
-      url += '&X-Algolia-UserToken=' + encodeURIComponent(this.userToken);
-    }
-    if (this.tagFilters) {
-      url += '&X-Algolia-TagFilters=' + encodeURIComponent(this.tagFilters);
-    }
-    for (var i = 0; i < this.extraHeaders.length; ++i) {
-      url += '&' + this.extraHeaders[i].key + '=' + this.extraHeaders[i].value;
-    }
-    this._jQuery.$.ajax(url, {
-      type: opts.method,
-      timeout: this.requestTimeout * (opts.successiveRetryCount + 1),
-      dataType: 'json',
-      data: body,
-      complete: function(jqXHR/*, textStatus , error*/) {
-        if (jqXHR.status === 0) {
-          opts.callback(new Error('Network error or timeout'));
-          return;
-        }
+    // we can use a fallback if forced AND fallback parameters are available
+    var useFallback = client.forceFallback && opts.fallback;
+    var requestOptions = useFallback ? opts.fallback : opts;
 
-        opts.callback(null, {
-          statusCode: jqXHR.status,
-          body: jqXHR.responseJSON
+    var promise = doRequest(
+      useFallback ? client._request.fallback : client._request, {
+        url: requestOptions.url,
+        method: requestOptions.method,
+        body: requestOptions.body,
+        timeout: client.requestTimeout * (tries + 1)
+      }
+    );
+
+    // either we have a callback
+    // either we are using promises
+    if (opts.callback) {
+      promise.then(function okCb(content) {
+        process.nextTick(function() {
+          opts.callback(null, content);
         });
-      }
-    });
-  },
-
-  /**
-   * Make a JSONP request
-   *
-   * @param url request url (includes endpoint and path)
-   * @param opts all request options
-   */
-  _makeJsonpRequestByHost: function(url, opts) {
-    if (opts.method !== 'GET') {
-      opts.callback(new Error('Method ' + opts.method + ' ' + url + ' is not supported by JSONP.'));
-      return;
-    }
-
-    var cbCalled = false;
-    var timedOut = false;
-
-    AlgoliaSearch.JSONPCounter += 1;
-    var head = document.getElementsByTagName('head')[0];
-    var script = document.createElement('script');
-    var cb = 'algoliaJSONP_' + AlgoliaSearch.JSONPCounter;
-    var done = false;
-    var ontimeout;
-    var success;
-    var clean;
-
-    window[cb] = function(data) {
-      try {
-        delete window[cb];
-      } catch (e) {
-        window[cb] = undefined;
-      }
-
-      if (timedOut) {
-        return;
-      }
-
-      cbCalled = true;
-
-      clean();
-
-      opts.callback(null, {
-        body: data/*,
-        // We do not send the statusCode, there's no statusCode in JSONP, it will be
-        // computed using data.status && data.message like with XDR
-        statusCode*/
+      }, function nookCb(err) {
+        process.nextTick(function() {
+          opts.callback(err);
+        });
       });
-    };
-
-    url += '?callback=' + cb + '&X-Algolia-Application-Id=' + this.applicationID + '&X-Algolia-API-Key=' + this.apiKey;
-
-    if (this.tagFilters) {
-      url += '&X-Algolia-TagFilters=' + encodeURIComponent(this.tagFilters);
-    }
-
-    if (this.userToken) {
-      url += '&X-Algolia-UserToken=' + encodeURIComponent(this.userToken);
-    }
-
-    for (var i = 0; i < this.extraHeaders.length; ++i) {
-      url += '&' + this.extraHeaders[i].key + '=' + this.extraHeaders[i].value;
-    }
-
-    if (opts.body && opts.body.params) {
-      url += '&' + opts.body.params;
-    }
-
-    ontimeout = setTimeout(function timeoutListener() {
-      timedOut = true;
-      clean();
-      opts.callback(new Error('Timeout - Could not connect to endpoint ' + url));
-    }, this.requestTimeout);
-
-    success = function() {
-      if (done || timedOut) {
-        return;
-      }
-
-      done = true;
-
-      // script loaded but did not call the fn => script loading error
-      if (!cbCalled) {
-        clean();
-        opts.callback(new Error('Failed to load JSONP script'));
-      }
-    };
-
-    clean = function() {
-      clearTimeout(ontimeout);
-      script.onload = null;
-      script.onreadystatechange = null;
-      script.onerror = null;
-      head.removeChild(script);
-
-      try {
-        delete window[cb];
-        delete window[cb + '_loaded'];
-      } catch (e) {
-        window[cb] = null;
-        window[cb + '_loaded'] = null;
-      }
-    };
-
-    // script onreadystatechange needed only for
-    // <= IE8
-    // https://github.com/angular/angular.js/issues/4523
-    script.onreadystatechange = function() {
-      if (this.readyState === 'loaded' || this.readyState === 'complete') {
-        success();
-      }
-    };
-
-    script.onload = function() {
-      success();
-    };
-
-    script.onerror = function() {
-      if (done || timedOut) {
-        return;
-      }
-
-      clean();
-      opts.callback(new Error('Failed to load JSONP script'));
-    };
-
-    script.async = true;
-    script.defer = true;
-    script.src = url;
-
-    head.appendChild(script);
-  },
-
-  /**
-   * Make a XmlHttpRequest
-   *
-   * @param url request url (includes endpoint and path)
-   * @param opts all request opts
-   */
-  _makeXmlHttpRequestByHost: function(url, opts) {
-    // no cors or XDomainRequest, no request
-    if (!this._support.cors && !this._support.hasXDomainRequest) {
-      // very old browser, not supported
-      opts.callback(new Error('CORS not supported'));
-      return;
-    }
-
-    var body = null;
-    var request = this._support.cors ? new XMLHttpRequest() : new XDomainRequest();
-    var ontimeout;
-    var self = this;
-    var timedOut;
-    var timeoutListener;
-
-    if (!this._isUndefined(opts.body)) {
-      body = JSON2.stringify(opts.body);
-    }
-
-    url += (url.indexOf('?') === -1 ? '?' : '&') + 'X-Algolia-API-Key=' + this.apiKey;
-    url += '&X-Algolia-Application-Id=' + this.applicationID;
-
-    if (this.userToken) {
-      url += '&X-Algolia-UserToken=' + encodeURIComponent(this.userToken);
-    }
-
-    if (this.tagFilters) {
-      url += '&X-Algolia-TagFilters=' + encodeURIComponent(this.tagFilters);
-    }
-
-    for (var i = 0; i < this.extraHeaders.length; ++i) {
-      url += '&' + this.extraHeaders[i].key + '=' + this.extraHeaders[i].value;
-    }
-
-    timeoutListener = function() {
-      if (!self._support.timeout) {
-        timedOut = true;
-        request.abort();
-      }
-
-      opts.callback(new Error('Timeout - Could not connect to endpoint ' + url));
-    };
-
-    request.open(opts.method, url);
-
-    if (this._support.cors && body !== null && opts.method !== 'GET') {
-      request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    }
-
-    // event object not received in IE8, at least
-    // but we do not use it, still important to note
-    request.onload = function(/*event*/) {
-      // When browser does not supports request.timeout, we can
-      // have both a load and timeout event
-      if (timedOut) {
-        return;
-      }
-
-      if (!self._support.timeout) {
-        clearTimeout(ontimeout);
-      }
-
-      var response = null;
-
-      try {
-        response = JSON2.parse(request.responseText);
-      } catch(e) {}
-
-      opts.callback(null, {
-        body: response,
-        statusCode: request.status
-      });
-    };
-
-    if (this._support.timeout) {
-      // .timeout supported by both XHR and XDR,
-      // we do receive timeout event, tested
-      request.timeout = this.requestTimeout * (opts.successiveRetryCount + 1);
-
-      request.ontimeout = timeoutListener;
     } else {
-      ontimeout = setTimeout(timeoutListener, this.requestTimeout * (opts.successiveRetryCount + 1));
+      return promise;
     }
-
-    request.onerror = function(event) {
-      if (timedOut) {
-        return;
-      }
-
-      if (!self._support.timeout) {
-        clearTimeout(ontimeout);
-      }
-
-      // error event is trigerred both with XDR/XHR on:
-      //   - DNS error
-      //   - unallowed cross domain request
-      opts.callback(new Error('Could not connect to host, error was:' + event));
-    };
-
-    request.send(body);
   },
 
    /*
@@ -919,13 +583,6 @@ AlgoliaSearch.prototype = {
   },
   _isUndefined: function(obj) {
     return obj === void 0;
-  },
-
-  _support: {
-    hasXMLHttpRequest: 'XMLHttpRequest' in window,
-    hasXDomainRequest: 'XDomainRequest' in window,
-    cors: 'withCredentials' in new XMLHttpRequest(),
-    timeout: 'timeout' in new XMLHttpRequest()
   }
 };
 
@@ -1101,10 +758,16 @@ AlgoliaSearch.prototype.Index.prototype = {
    *  content: the server answer that contains 3 elements: createAt, taskId and objectID
    */
   deleteObject: function(objectID, callback) {
-    if (objectID === null || objectID.length === 0) {
-      callback(false, { message: 'empty objectID'});
-      return;
+    if (typeof objectID === 'function' || typeof objectID !== 'string' && typeof objectID !== 'number') {
+      var err = new Error('Cannot delete an object without an objectID');
+      callback = objectID;
+      if (typeof callback === 'function') {
+        return callback(err);
+      }
+
+      return this.as._request.reject(err);
     }
+
     var indexObj = this;
     return this.as._jsonRequest({ method: 'DELETE',
                  url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/' + encodeURIComponent(objectID),
@@ -1261,25 +924,40 @@ AlgoliaSearch.prototype.Index.prototype = {
    *  content: the server answer that contains the list of results
    */
   waitTask: function(taskID, callback) {
+    // waitTask() must be handled differently from other methods,
+    // it's a recursive method using a timeout
     var indexObj = this;
-    return this.as._jsonRequest({
+
+    var promise = this.as._jsonRequest({
       method: 'GET',
-      url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/task/' + taskID,
-      callback: function(err, content) {
-        if (err) {
-          callback(err);
-          return;
-        }
+      url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/task/' + taskID
+    }).then(function success(content) {
+      if (content.status !== 'published') {
+        return new indexObj.as._request.delay(100).then(function() {
+          return indexObj.waitTask(taskID, callback);
+        });
+      }
 
-        if (content.status === 'published') {
+      if (callback) {
+        process.nextTick(function() {
           callback(null, content);
-          return;
-        }
+        });
+      } else {
+        return content;
+      }
+    }, function failure(err) {
+      if (callback) {
+        process.nextTick(function() {
+          callback(err);
+        });
+      } else {
+        return err;
+      }
+    });
 
-        setTimeout(function() {
-          indexObj.waitTask(taskID, callback);
-        }, 100);
-    }});
+    if (!callback) {
+      return promise;
+    }
   },
 
   /*
@@ -1467,38 +1145,17 @@ AlgoliaSearch.prototype.Index.prototype = {
   /// Internal methods only after this line
   ///
   _search: function(params, callback) {
-    var pObj = {params: params};
-    if (this.as.jsonp === null) {
-      var self = this;
-      return this.as._jsonRequest({ cache: this.cache,
-        method: 'POST',
-        url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/query',
-        body: pObj,
-        callback: function(err, content) {
-          if (err) {
-            // retry first with JSONP
-            self.as.jsonp = true;
-            self._search(params, callback);
-            return;
-          }
-
-          self.as.jsonp = false;
-          callback && callback(null, content);
-        }
-      });
-    } else if (this.as.jsonp) {
-      return this.as._jsonRequest({ cache: this.cache,
-                   method: 'GET',
-                   url: '/1/indexes/' + encodeURIComponent(this.indexName),
-                   body: pObj,
-                   callback: callback });
-    }
-
     return this.as._jsonRequest({ cache: this.cache,
-                 method: 'POST',
-                 url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/query',
-                 body: pObj,
-                 callback: callback});
+      method: 'POST',
+      url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/query',
+      body: {params: params},
+      fallback: {
+        method: 'GET',
+        url: '/1/indexes/' + encodeURIComponent(this.indexName),
+        body: {params: params}
+      },
+      callback: callback
+    });
   },
 
   // internal attributes

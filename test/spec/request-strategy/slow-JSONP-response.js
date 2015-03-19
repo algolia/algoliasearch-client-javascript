@@ -3,12 +3,13 @@ var test = require('tape');
 var requestTimeout = 5000;
 
 test('Request strategy handles slow JSONP responses (no double callback)', function(t) {
-  var xhr = require('xhr');
   var fauxJax = require('faux-jax');
   var parse = require('url-parse');
   var sinon = require('sinon');
+  var xhr = require('xhr');
 
   var createFixture = require('../../utils/create-fixture');
+  var ticker = require('../../utils/ticker');
 
   var currentURL = parse(location.href);
   var fixture = createFixture({
@@ -46,13 +47,21 @@ test('Request strategy handles slow JSONP responses (no double callback)', funct
   xhr({
     uri: '/1/indexes/slow-response/reset'
   }, function run(err) {
-
     t.error(err, 'No error while reseting the /1/indexes/slow-response route');
 
     fauxJax.install();
 
     index.search('hello', searchCallback);
 
-    fauxJax.requests[0].respond(400, {}, JSON.stringify({status: 400, message: 'woops!'}));
+    ticker({
+      maxTicks: 4,
+      tickCb: badResponse,
+      ms: 100
+    });
+
+    function badResponse(tickIndex) {
+      fauxJax.requests[tickIndex - 1]
+        .respond(500, {}, JSON.stringify({status: 500, message: 'woops!'}));
+    }
   });
 });

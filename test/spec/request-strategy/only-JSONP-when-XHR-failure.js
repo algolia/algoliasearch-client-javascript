@@ -12,7 +12,8 @@ test('Request strategy uses only JSONP if one XHR fails', function(t) {
     clientOptions: {
       hosts: [
         currentURL.host
-      ]
+      ],
+      timeout: 5000
     },
     indexName: 'simple-JSONP-response'
   });
@@ -72,7 +73,6 @@ test('Request strategy uses only JSONP if one XHR fails', function(t) {
     'One request made'
   );
 
-  var request = fauxJax.requests[0];
-
-  request.respond(404, {}, JSON.stringify({message: 'woops', status: 404}));
+  fauxJax.requests[0]
+    .respond(500, {}, JSON.stringify({message: 'woops', status: 500}));
 });

@@ -7,7 +7,7 @@ UNRELEASED
     * running tests on many browsers, using saucelabs
     * refactor around `_makeXmlHttpRequestByHost` and `_makeJsonpRequestByHost`
     * remove unused opts.callback(retry, success, obj, message) in all make..Request functions
-    * BREAKING CHANGE, changed initialization from `new AlgoliaSearch()` => `algoliasearch()` #40
+    * BREAKING CHANGE: changed initialization from `new AlgoliaSearch()` => `algoliasearch()` #40
       - The only exported global property is now `algoliasearch`
       - `opts`:
         - `dsnHost` removed, use `hosts:[dsnHost, other hosts]`
@@ -20,9 +20,9 @@ UNRELEASED
       - removed `AlgoliaExplainResults`, no obvious use ATM
       - calling algoliasearch() without an applicationID or apiKey will throw
       - Helper: `new AlgoliaSearchHelper()` => `algoliasearch.helper()`, same function signature
-    * BREAKING CHANGE, no more window.ALGOLIA_VERSION
+    * BREAKING CHANGE: no more window.ALGOLIA_VERSION
       - you can find the version in algoliasearch.version
-    * UMD compatibiliy #41
+    * NEW FEATURE: UMD compatibiliy #41
       - algoliasearch can now be used with any module loader
       - build is now done with browserify
       - no more grunt
@@ -30,7 +30,7 @@ UNRELEASED
     * removed vendor/
       - vendor/json2.js now as an npm module
       - vendor/jquery.typeahead.js now on cdnjs (examples)
-    * BREAKING CHANGE, all api methods now use the (err, content) convention
+    * BREAKING CHANGE: all api methods now use the (err, content) convention
       It means that instead of doing:
         ```js
           index.search(function found(success, content) {
@@ -56,6 +56,16 @@ UNRELEASED
       This is in par with most asynchronous APIS accepted/de vfacto conventions.
       It helps being compatible with control flow libraries like `async` and
       helps reduce WTF moments of Node.JS developers used to cb(err, content)
+    * Externalize plugins and request implementations
+    * NEW FEATURE: All calls are now returning promises.
+      If there's a callback given to an API call, you won't get a promise.
+      Here are the different promises implementations we use:
+      - Native promises by default (https://github.com/jakearchibald/es6-promise/)
+      - AngularJS promises for AngularJS plugin
+      - jQuery promises for jQuery plugin
+    * FIX: do not retry when server sends 4xx or 1xx
+    * FIX: distinguish jQuery/AngularJS request timeouts from errors and thus retry when timeout
+    * FIX: JSONP fallback when jQuery/AngularJS request error
 
 2015-02-03  2.9.2
     * Fixed calls to `.search(function() {})`, `.search(null, function() {})`, `.search(undefined, function() {})
