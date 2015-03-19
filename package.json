@@ -38,6 +38,7 @@
     "express": "4.12.1",
     "faux-jax": "3.0.1",
     "http-server": "0.7.5",
+    "jQuery-ajaxTransport-XDomainRequest": "git://github.com/MoonScript/jQuery-ajaxTransport-XDomainRequest#1.0.4",
     "jquery": "2.1.3",
     "json": "9.0.3",
     "lodash": "3.5.0",
