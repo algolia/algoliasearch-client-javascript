@@ -217,4 +217,50 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
 
     fauxJax.restore();
   });
+
+  test('jQuery module timeout case', function(t) {
+    t.plan(3);
+    var requestTimeout = 1000;
+
+    var fauxJax = require('faux-jax');
+
+    // load jQuery Algolia Search module
+    require('../../src/algoliasearch.jquery');
+
+    var client = global.$.algolia.Client(
+      'jquery-error-applicationID',
+      'jquery-error-apiKey', {
+        timeout: requestTimeout
+      });
+    var index = client.initIndex('jquery-error-indexName');
+
+    fauxJax.install();
+
+    t.equal(
+      fauxJax.requests.length,
+      0,
+      'No request made'
+    );
+
+    index.search('jquery-timeout-promise').then(function searchDone(content) {
+      fauxJax.restore();
+
+      t.deepEqual(
+        content, {
+          yaw: 'JQUERY! timeout'
+        },
+        'Content matches'
+      );
+    });
+
+    setTimeout(function() {
+      t.equal(
+        fauxJax.requests.length,
+        2,
+        'Two requests made'
+      );
+
+      fauxJax.requests[1].respond(200, {}, JSON.stringify({yaw: 'JQUERY! timeout'}));
+    }, requestTimeout + requestTimeout / 2);
+  });
 }
