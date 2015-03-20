@@ -584,7 +584,7 @@ AlgoliaSearch.prototype = {
     }
     for (var key in args) {
       if (key !== null && args.hasOwnProperty(key)) {
-        params += params.length === 0 ? '?' : '&';
+        params += params === '' ? '' : '&';
         params += key + '=' + encodeURIComponent(Object.prototype.toString.call(args[key]) === '[object Array]' ? JSON2.stringify(args[key]) : args[key]);
       }
     }
@@ -856,38 +856,37 @@ AlgoliaSearch.prototype.Index.prototype = {
    *   one is kept and others are removed.
    * - restrictSearchableAttributes: List of attributes you want to use for textual search (must be a subset of the attributesToIndex index setting)
    * either comma separated or as an array
-   * @param delay (optional) if set, wait for this delay (in ms) and only send the query if there was no other in the meantime.
    */
-  search: function(query, callback, args, delay) {
-    if (query === undefined || query === null) {
-      query = '';
-    }
-
-    // no query = getAllObjects
-    if (typeof query === 'function') {
+  search: function(query, args, callback) {
+    if (arguments.length === 0 || typeof query === 'function') {
+      // .search(), .search(cb)
       callback = query;
       query = '';
+    } else if (arguments.length === 1 || typeof args === 'function') {
+      // .search(query/args), .search(query, cb)
+      callback = args;
+      args = undefined;
     }
 
-    if (typeof callback === 'object' && (this.as._isUndefined(args) || !args)) {
-      args = callback;
-      callback = null;
+    // .search(args), careful: typeof null === 'object'
+    if (typeof query === 'object' && query !== null) {
+      args = query;
+      query = undefined;
+    } else if (query === undefined || query === null) { // .search(undefined/null)
+      query = '';
     }
 
-    var indexObj = this;
-    var params = 'query=' + encodeURIComponent(query);
-    if (!this.as._isUndefined(args) && args !== null) {
+    var params = '';
+
+    if (query !== undefined) {
+      params += 'query=' + encodeURIComponent(query);
+    }
+
+    if (args !== undefined) {
       params = this.as._getSearchParams(args, params);
     }
-    window.clearTimeout(indexObj.onDelayTrigger);
-    if (!this.as._isUndefined(delay) && delay !== null && delay > 0) {
-      var onDelayTrigger = window.setTimeout( function() {
-        indexObj._search(params, callback);
-      }, delay);
-      indexObj.onDelayTrigger = onDelayTrigger;
-    } else {
-      return this._search(params, callback);
-    }
+
+    return this._search(params, callback);
   },
 
   /*
@@ -919,14 +918,14 @@ AlgoliaSearch.prototype.Index.prototype = {
   ttAdapter: function(params) {
     var self = this;
     return function(query, cb) {
-      self.search(query, function(err, content) {
+      self.search(query, params, function(err, content) {
         if (err) {
           cb(err);
           return;
         }
 
         cb(content.hits);
-      }, params);
+      });
     };
   },
 

@@ -1,9 +1,7 @@
-var sinon = require('sinon');
-
 module.exports = [{
-  testName: 'index.search(query, cb, simpleParameters)',
+  testName: 'index.search(query, simpleParameters, cb)',
   methodName: 'search',
-  callArguments: ['some params', sinon.spy(), {
+  callArguments: ['some params', {
     page: 1
   }],
   expectedRequest: {
@@ -14,11 +12,24 @@ module.exports = [{
     }
   }
 }, {
-  testName: 'index.search(query, cb, fullParameters)',
+  testName: 'index.search(queryInParameter, cb)',
+  methodName: 'search',
+  callArguments: [{
+    query: 'dear Slim',
+    page: 2
+  }],
+  expectedRequest: {
+    method: 'POST',
+    URL: {pathname: '/1/indexes/%s/query'},
+    body: {
+      params: 'query=dear%20Slim&page=2'
+    }
+  }
+}, {
+  testName: 'index.search(query, fullParameters, cb)',
   methodName: 'search',
   callArguments: [
-    'full params',
-    sinon.spy(), {
+    'full params', {
       // https://www.algolia.com/doc/javascript#QueryParameters
       queryType: 'prefixAll',
       typoTolerance: true,
