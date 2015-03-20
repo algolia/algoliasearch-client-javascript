@@ -232,7 +232,11 @@ AlgoliaSearch.prototype = {
    *  content: the server answer with user keys list
    */
   addUserKey: function(acls, callback) {
-    return this.addUserKeyWithValidity(acls, 0, 0, 0, callback);
+    return this.addUserKeyWithValidity(acls, {
+      validity: 0,
+      maxQueriesPerIPPerHour: 0,
+      maxHitsPerQuery: 0
+    }, callback);
   },
   /*
    * Add an existing user key
@@ -245,19 +249,19 @@ AlgoliaSearch.prototype = {
    *   - deleteIndex : allows to delete index content (https only)
    *   - settings : allows to get index settings (https only)
    *   - editSettings : allows to change index settings (https only)
-   * @param validity the number of seconds after which the key will be automatically removed (0 means no time limit for this key)
-   * @param maxQueriesPerIPPerHour Specify the maximum number of API calls allowed from an IP address per hour.
-   * @param maxHitsPerQuery Specify the maximum number of hits this API key can retrieve in one call.
+   * @param params.validity the number of seconds after which the key will be automatically removed (0 means no time limit for this key)
+   * @param params.maxQueriesPerIPPerHour Specify the maximum number of API calls allowed from an IP address per hour.
+   * @param params.maxHitsPerQuery Specify the maximum number of hits this API key can retrieve in one call.
    * @param callback the result callback with two arguments
    *  error: null or Error('message')
    *  content: the server answer with user keys list
    */
-  addUserKeyWithValidity: function(acls, validity, maxQueriesPerIPPerHour, maxHitsPerQuery, callback) {
+  addUserKeyWithValidity: function(acls, params, callback) {
     var aclsObject = {};
     aclsObject.acl = acls;
-    aclsObject.validity = validity;
-    aclsObject.maxQueriesPerIPPerHour = maxQueriesPerIPPerHour;
-    aclsObject.maxHitsPerQuery = maxHitsPerQuery;
+    aclsObject.validity = params.validity;
+    aclsObject.maxQueriesPerIPPerHour = params.maxQueriesPerIPPerHour;
+    aclsObject.maxHitsPerQuery = params.maxHitsPerQuery;
     return this._jsonRequest({ method: 'POST',
               url: '/1/keys',
               body: aclsObject,
@@ -1133,20 +1137,20 @@ AlgoliaSearch.prototype.Index.prototype = {
    *   - deleteIndex : allows to delete index content (https only)
    *   - settings : allows to get index settings (https only)
    *   - editSettings : allows to change index settings (https only)
-   * @param validity the number of seconds after which the key will be automatically removed (0 means no time limit for this key)
-   * @param maxQueriesPerIPPerHour Specify the maximum number of API calls allowed from an IP address per hour.
-   * @param maxHitsPerQuery Specify the maximum number of hits this API key can retrieve in one call.
+   * @param params.validity the number of seconds after which the key will be automatically removed (0 means no time limit for this key)
+   * @param params.maxQueriesPerIPPerHour Specify the maximum number of API calls allowed from an IP address per hour.
+   * @param params.maxHitsPerQuery Specify the maximum number of hits this API key can retrieve in one call.
    * @param callback the result callback with two arguments
    *  error: null or Error('message')
    *  content: the server answer with user keys list
    */
-  addUserKeyWithValidity: function(acls, validity, maxQueriesPerIPPerHour, maxHitsPerQuery, callback) {
+  addUserKeyWithValidity: function(acls, params, callback) {
     var indexObj = this;
     var aclsObject = {};
     aclsObject.acl = acls;
-    aclsObject.validity = validity;
-    aclsObject.maxQueriesPerIPPerHour = maxQueriesPerIPPerHour;
-    aclsObject.maxHitsPerQuery = maxHitsPerQuery;
+    aclsObject.validity = params.validity;
+    aclsObject.maxQueriesPerIPPerHour = params.maxQueriesPerIPPerHour;
+    aclsObject.maxHitsPerQuery = params.maxHitsPerQuery;
     return this.as._jsonRequest({ method: 'POST',
                  url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/keys',
                  body: aclsObject,
