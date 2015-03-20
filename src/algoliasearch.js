@@ -157,8 +157,15 @@ AlgoliaSearch.prototype = {
    *  content: the server answer with index list
    * @param page The page to retrieve, starting at 0.
    */
-  listIndexes: function(callback, page) {
-    var params = typeof page !== 'undefined' ? '?page=' + page : '';
+  listIndexes: function(page, callback) {
+    var params = '';
+
+    if (page === undefined || typeof page === 'function') {
+      callback = page;
+    } else {
+      params = '?page=' + page;
+    }
+
     return this._jsonRequest({ method: 'GET',
               url: '/1/indexes' + params,
               callback: callback });

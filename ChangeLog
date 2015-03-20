@@ -67,6 +67,7 @@ UNRELEASED
     * FIX: distinguish jQuery/AngularJS request timeouts from errors and thus retry when timeout
     * FIX: JSONP fallback when jQuery/AngularJS request error
     * BREAKING CHANGE: .getLogs(cb[, offset, length]) is now .getLogs([offset, length, cb]) #43
+    * BREAKING CHANGE: .listIndexes(cb[, page]) => .listIndexes([page, cb]) #43
 
 
 2015-02-03  2.9.2
