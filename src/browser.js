@@ -33,7 +33,13 @@ function request(url, opts) {
       body = JSON2.stringify(opts.body);
     }
 
-    req.open(opts.method, url);
+    // do not rely on default XHR async flag, as some analytics code like hotjar
+    // breaks it and set it to false by default
+    if (req instanceof XMLHttpRequest) {
+      req.open(opts.method, url, true);
+    } else {
+      req.open(opts.method, url);
+    }
 
     if (support.cors && body && opts.method !== 'GET') {
       req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
