@@ -659,31 +659,35 @@ AlgoliaSearch.prototype.Index.prototype = {
    * Get an object from this index
    *
    * @param objectID the unique identifier of the object to retrieve
+   * @param attrs (optional) if set, contains the array of attribute names to retrieve
    * @param callback (optional) the result callback with two arguments
    *  error: null or Error('message')
    *  content: the object to retrieve or the error message if a failure occured
-   * @param attributes (optional) if set, contains the array of attribute names to retrieve
    */
-  getObject: function(objectID, callback, attributes) {
-    if (Object.prototype.toString.call(callback) === '[object Array]' && !attributes) {
-      attributes = callback;
-      callback = null;
-    }
+  getObject: function(objectID, attrs, callback) {
     var indexObj = this;
+
+    if (arguments.length === 1 || typeof attrs === 'function') {
+      callback = attrs;
+      attrs = undefined;
+    }
+
     var params = '';
-    if (!this.as._isUndefined(attributes)) {
+    if (attrs !== undefined) {
       params = '?attributes=';
-      for (var i = 0; i < attributes.length; ++i) {
+      for (var i = 0; i < attrs.length; ++i) {
         if (i !== 0) {
           params += ',';
         }
-        params += attributes[i];
+        params += attrs[i];
       }
     }
 
-    return this.as._jsonRequest({ method: 'GET',
-                 url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/' + encodeURIComponent(objectID) + params,
-                 callback: callback });
+    return this.as._jsonRequest({
+      method: 'GET',
+      url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/' + encodeURIComponent(objectID) + params,
+      callback: callback
+    });
   },
 
   /*

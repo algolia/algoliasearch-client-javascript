@@ -1,5 +1,3 @@
-var sinon = require('sinon');
-
 module.exports = [{
   testName: 'index.getObject(objectID, cb)',
   object: 'index',
@@ -12,10 +10,10 @@ module.exports = [{
     }
   }
 }, {
-  testName: 'index.getObject(objectID, cb, attributes)',
+  testName: 'index.getObject(objectID, attrs, cb)',
   object: 'index',
   methodName: 'getObject',
-  callArguments: ['second object', sinon.spy(), ['some', 'attrs']],
+  callArguments: ['second object', ['some', 'attrs']],
   expectedRequest: {
     method: 'GET',
     URL: {
