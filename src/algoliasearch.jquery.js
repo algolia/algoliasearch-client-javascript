@@ -2,7 +2,7 @@ var createAlgoliasearch = require('./create-algoliasearch');
 var JSONPRequest = require('./jsonp-request');
 
 var algoliasearch = createAlgoliasearch(request);
-var $ = global.jQuery
+var $ = global.jQuery;
 
 $.algolia = {Client: algoliasearch};
 

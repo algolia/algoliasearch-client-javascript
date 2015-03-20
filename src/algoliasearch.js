@@ -1,7 +1,6 @@
 module.exports = AlgoliaSearch;
 
 var defaults = require('lodash-compat/object/defaults');
-
 var map = require('lodash-compat/collection/map');
 var shuffle = require('lodash-compat/collection/shuffle');
 
