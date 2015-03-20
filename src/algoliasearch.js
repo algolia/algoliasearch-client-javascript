@@ -25,7 +25,6 @@ var shuffle = require('lodash-compat/collection/shuffle');
  *          this.applicationID + '-3.algolia.' + opts.tld]
  *        ] - The hosts to use for Algolia Search API. It this your responsibility to shuffle the hosts and add a DSN host in it
  * @param {string} [opts.tld='net'] - The tld to use when computing hosts default list
- * @param {?boolean} [opts.jsonp=null] - Set to true to force JSONP usage in browsers, false to disable. Default to feature detection
  */
 function AlgoliaSearch(applicationID, apiKey, opts, _request) {
   var usage = 'Usage: algoliasearch(applicationID, apiKey, opts)';
@@ -42,8 +41,7 @@ function AlgoliaSearch(applicationID, apiKey, opts, _request) {
     timeout: 2000,
     protocol: document && document.location.protocol || 'http:',
     hosts: [], // filled later on, has dependencies
-    tld: 'net',
-    jsonp: null
+    tld: 'net'
   });
 
   // while we advocate for colon-at-the-end values: 'http:' for `opts.protocol`
@@ -75,7 +73,6 @@ function AlgoliaSearch(applicationID, apiKey, opts, _request) {
   this.currentHostIndex = 0;
   this.requestTimeout = opts.timeout;
   this.extraHeaders = [];
-  this.jsonp = opts.jsonp;
   this.cache = {};
   this._request = _request;
 }
@@ -397,12 +394,12 @@ AlgoliaSearch.prototype = {
         method: 'GET',
         url: '/1/indexes/*',
         body: {params: (function() {
-          var jsonpParams = '';
+          var reqParams = '';
           for (var i = 0; i < params.requests.length; ++i) {
             var q = '/1/indexes/' + encodeURIComponent(params.requests[i].indexName) + '?' + params.requests[i].params;
-            jsonpParams += i + '=' + encodeURIComponent(q) + '&';
+            reqParams += i + '=' + encodeURIComponent(q) + '&';
           }
-          return jsonpParams;
+          return reqParams;
         }())}
       },
       callback: callback

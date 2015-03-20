@@ -75,6 +75,9 @@ UNRELEASED
     * BREAKING CHANGE: index.search(query, callback[, params, delay]) => index.search(query[, params callback]) or index.search(params[, cb]) with params = {query: 'some thing'}
       We removed the delay option which should really be implemented by the module consumer. It's really a throttle/debounce of the search function.
     * BREAKING CHANGE: index.browse(page, cb[, hitsPerPage]) => index.browse(page[, hitsPerPage, cb])
+    * BREAKING CHANGE: no more opts.jsonp in algoliasearch()
+      Previously used as a way to force/disable jsonp. The request strategy is now more robust and does not
+      requires jsonp: param
 
 
 2015-02-03  2.9.2
