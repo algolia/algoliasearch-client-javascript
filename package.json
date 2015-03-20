@@ -1,6 +1,17 @@
 {
   "name": "algoliasearch",
-  "description": "Algolia Search API Client",
+  "version": "2.9.2",
+  "description": "AlgoliaSearch API JavaScript client",
+  "main": "index.js",
+  "browser": "src/browser.js",
+  "scripts": {
+    "build": "PACKAGE_VERSION=$(json -f package.json version) sh build.sh",
+    "test": "zuul --phantom --ui tape test/run.js | tap-growl | tap-spec && npm run lint",
+    "test-ci": "DEBUG=zuul* zuul --tunnel ngrok test/run.js && npm run lint",
+    "dev": "DEBUG=zuul* zuul --no-coverage --local 8080 --ui tape test/run.js",
+    "examples": "http-server . -a 0.0.0.0",
+    "lint": "eslint --quiet test/"
+  },
   "repository": {
     "type": "git",
     "url": "git://github.com/algolia/algoliasearch-client-js.git"
@@ -19,12 +30,16 @@
     "name": "Algolia SAS",
     "url": "https://www.algolia.com"
   },
-  "contributors": [
-    {
+  "contributors": [{
       "name": "Algolia Team <support@algolia.com>",
       "url": "http://www.algolia.com"
     }
   ],
+  "dependencies": {
+    "JSON2": "0.1.0",
+    "es6-promise": "2.0.1",
+    "lodash-compat": "3.5.0"
+  },
   "devDependencies": {
     "angular": "1.3.14",
     "bowser": "0.7.2",
@@ -53,21 +68,5 @@
     "xhr": "2.0.1",
     "zuul": "2.1.1",
     "zuul-ngrok": "3.0.0"
-  },
-  "scripts": {
-    "build": "PACKAGE_VERSION=$(json -f package.json version) sh build.sh",
-    "test": "zuul --phantom --ui tape test/run.js | tap-growl | tap-spec && npm run lint",
-    "test-ci": "DEBUG=zuul* zuul --tunnel ngrok test/run.js && npm run lint",
-    "dev": "DEBUG=zuul* zuul --no-coverage --local 8080 --ui tape test/run.js",
-    "examples": "http-server . -a 0.0.0.0",
-    "lint": "eslint --quiet test/"
-  },
-  "version": "2.9.2",
-  "dependencies": {
-    "JSON2": "0.1.0",
-    "es6-promise": "2.0.1",
-    "lodash-compat": "3.5.0"
-  },
-  "main": "index.js",
-  "browser": "src/browser.js"
+  }
 }
