@@ -3,6 +3,7 @@ var createAlgoliasearch = require('./create-algoliasearch');
 
 module.exports = createAlgoliasearch(request);
 
+var each = require('foreach');
 var JSON2 = require('JSON2');
 var Promise = global.Promise || require('es6-promise').Promise;
 
@@ -138,3 +139,15 @@ request.delay = function(ms) {
     setTimeout(resolve, ms);
   });
 };
+
+var v2Globals = ['AlgoliaSearch', 'AlgoliaSearchHelper', 'AlgoliaExplainResults'];
+each(v2Globals, throwWhenUsed);
+
+function throwWhenUsed(fnName) {
+  var message = 'You are trying to use a new version of the AlgoliaSearch JavaScript client with an old notation.' +
+  ' Please read our migration guide at https://github.com/algolia/algoliasearch-client-js/wiki/Migration-guide-from-2.x.x-to-3.x.x';
+
+  global[fnName] = function() {
+    throw new Error(message);
+  };
+}

@@ -38,6 +38,7 @@
   "dependencies": {
     "JSON2": "0.1.0",
     "es6-promise": "2.0.1",
+    "foreach": "2.0.5",
     "lodash-compat": "3.5.0"
   },
   "devDependencies": {
