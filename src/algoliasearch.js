@@ -133,11 +133,15 @@ AlgoliaSearch.prototype = {
    *  error: null or Error('message')
    *  content: the server answer that contains the task ID
    */
-  getLogs: function(callback, offset, length) {
-    if (this._isUndefined(offset)) {
+  getLogs: function(offset, length, callback) {
+    if (arguments.length === 0 || typeof offset === 'function') {
+      // getLogs([cb])
+      callback = offset;
       offset = 0;
-    }
-    if (this._isUndefined(length)) {
+      length = 10;
+    } else if (arguments.length === 1 || typeof length === 'function') {
+      // getLogs(1, [cb)]
+      callback = length;
       length = 10;
     }
 
@@ -153,8 +157,15 @@ AlgoliaSearch.prototype = {
    *  content: the server answer with index list
    * @param page The page to retrieve, starting at 0.
    */
-  listIndexes: function(callback, page) {
-    var params = typeof page !== 'undefined' ? '?page=' + page : '';
+  listIndexes: function(page, callback) {
+    var params = '';
+
+    if (page === undefined || typeof page === 'function') {
+      callback = page;
+    } else {
+      params = '?page=' + page;
+    }
+
     return this._jsonRequest({ method: 'GET',
               url: '/1/indexes' + params,
               callback: callback });
@@ -221,7 +232,11 @@ AlgoliaSearch.prototype = {
    *  content: the server answer with user keys list
    */
   addUserKey: function(acls, callback) {
-    return this.addUserKeyWithValidity(acls, 0, 0, 0, callback);
+    return this.addUserKeyWithValidity(acls, {
+      validity: 0,
+      maxQueriesPerIPPerHour: 0,
+      maxHitsPerQuery: 0
+    }, callback);
   },
   /*
    * Add an existing user key
@@ -234,19 +249,19 @@ AlgoliaSearch.prototype = {
    *   - deleteIndex : allows to delete index content (https only)
    *   - settings : allows to get index settings (https only)
    *   - editSettings : allows to change index settings (https only)
-   * @param validity the number of seconds after which the key will be automatically removed (0 means no time limit for this key)
-   * @param maxQueriesPerIPPerHour Specify the maximum number of API calls allowed from an IP address per hour.
-   * @param maxHitsPerQuery Specify the maximum number of hits this API key can retrieve in one call.
+   * @param params.validity the number of seconds after which the key will be automatically removed (0 means no time limit for this key)
+   * @param params.maxQueriesPerIPPerHour Specify the maximum number of API calls allowed from an IP address per hour.
+   * @param params.maxHitsPerQuery Specify the maximum number of hits this API key can retrieve in one call.
    * @param callback the result callback with two arguments
    *  error: null or Error('message')
    *  content: the server answer with user keys list
    */
-  addUserKeyWithValidity: function(acls, validity, maxQueriesPerIPPerHour, maxHitsPerQuery, callback) {
+  addUserKeyWithValidity: function(acls, params, callback) {
     var aclsObject = {};
     aclsObject.acl = acls;
-    aclsObject.validity = validity;
-    aclsObject.maxQueriesPerIPPerHour = maxQueriesPerIPPerHour;
-    aclsObject.maxHitsPerQuery = maxHitsPerQuery;
+    aclsObject.validity = params.validity;
+    aclsObject.maxQueriesPerIPPerHour = params.maxQueriesPerIPPerHour;
+    aclsObject.maxHitsPerQuery = params.maxHitsPerQuery;
     return this._jsonRequest({ method: 'POST',
               url: '/1/keys',
               body: aclsObject,
@@ -328,21 +343,15 @@ AlgoliaSearch.prototype = {
    * @param callback the function that will receive results
    * @param delay (optional) if set, wait for this delay (in ms) and only send the batch if there was no other in the meantime.
    */
-  sendQueriesBatch: function(callback, delay) {
+  sendQueriesBatch: function(callback) {
     var as = this;
     var params = {requests: []};
+
     for (var i = 0; i < as.batch.length; ++i) {
       params.requests.push(as.batch[i]);
     }
-    window.clearTimeout(as.onDelayTrigger);
-    if (!this._isUndefined(delay) && delay !== null && delay > 0) {
-      var onDelayTrigger = window.setTimeout( function() {
-        as._sendQueriesBatch(params, callback);
-      }, delay);
-      as.onDelayTrigger = onDelayTrigger;
-    } else {
-      return this._sendQueriesBatch(params, callback);
-    }
+
+    return this._sendQueriesBatch(params, callback);
   },
 
    /**
@@ -575,7 +584,7 @@ AlgoliaSearch.prototype = {
     }
     for (var key in args) {
       if (key !== null && args.hasOwnProperty(key)) {
-        params += params.length === 0 ? '?' : '&';
+        params += params === '' ? '' : '&';
         params += key + '=' + encodeURIComponent(Object.prototype.toString.call(args[key]) === '[object Array]' ? JSON2.stringify(args[key]) : args[key]);
       }
     }
@@ -607,20 +616,23 @@ AlgoliaSearch.prototype.Index.prototype = {
    * @param objectID (optional) an objectID you want to attribute to this object
    * (if the attribute already exist the old object will be overwrite)
    */
-  addObject: function(content, callback, objectID) {
+  addObject: function(content, objectID, callback) {
     var indexObj = this;
-    if (this.as._isUndefined(objectID)) {
-      return this.as._jsonRequest({ method: 'POST',
-                   url: '/1/indexes/' + encodeURIComponent(indexObj.indexName),
-                   body: content,
-                   callback: callback });
-    } else {
-      return this.as._jsonRequest({ method: 'PUT',
-                   url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/' + encodeURIComponent(objectID),
-                   body: content,
-                   callback: callback });
+
+    if (arguments.length === 1 || typeof objectID === 'function') {
+      callback = objectID;
+      objectID = undefined;
     }
 
+    return this.as._jsonRequest({
+      method: objectID !== undefined ?
+        'PUT' : // update or create
+        'POST', // create (API generates an objectID)
+      url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + // create
+        (objectID !== undefined ? '/' + encodeURIComponent(objectID) : ''), // update or create
+      body: content,
+      callback: callback
+    });
   },
   /*
    * Add several objects
@@ -647,31 +659,35 @@ AlgoliaSearch.prototype.Index.prototype = {
    * Get an object from this index
    *
    * @param objectID the unique identifier of the object to retrieve
+   * @param attrs (optional) if set, contains the array of attribute names to retrieve
    * @param callback (optional) the result callback with two arguments
    *  error: null or Error('message')
    *  content: the object to retrieve or the error message if a failure occured
-   * @param attributes (optional) if set, contains the array of attribute names to retrieve
    */
-  getObject: function(objectID, callback, attributes) {
-    if (Object.prototype.toString.call(callback) === '[object Array]' && !attributes) {
-      attributes = callback;
-      callback = null;
-    }
+  getObject: function(objectID, attrs, callback) {
     var indexObj = this;
+
+    if (arguments.length === 1 || typeof attrs === 'function') {
+      callback = attrs;
+      attrs = undefined;
+    }
+
     var params = '';
-    if (!this.as._isUndefined(attributes)) {
+    if (attrs !== undefined) {
       params = '?attributes=';
-      for (var i = 0; i < attributes.length; ++i) {
+      for (var i = 0; i < attrs.length; ++i) {
         if (i !== 0) {
           params += ',';
         }
-        params += attributes[i];
+        params += attrs[i];
       }
     }
 
-    return this.as._jsonRequest({ method: 'GET',
-                 url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/' + encodeURIComponent(objectID) + params,
-                 callback: callback });
+    return this.as._jsonRequest({
+      method: 'GET',
+      url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/' + encodeURIComponent(objectID) + params,
+      callback: callback
+    });
   },
 
   /*
@@ -840,38 +856,37 @@ AlgoliaSearch.prototype.Index.prototype = {
    *   one is kept and others are removed.
    * - restrictSearchableAttributes: List of attributes you want to use for textual search (must be a subset of the attributesToIndex index setting)
    * either comma separated or as an array
-   * @param delay (optional) if set, wait for this delay (in ms) and only send the query if there was no other in the meantime.
    */
-  search: function(query, callback, args, delay) {
-    if (query === undefined || query === null) {
-      query = '';
-    }
-
-    // no query = getAllObjects
-    if (typeof query === 'function') {
+  search: function(query, args, callback) {
+    if (arguments.length === 0 || typeof query === 'function') {
+      // .search(), .search(cb)
       callback = query;
       query = '';
+    } else if (arguments.length === 1 || typeof args === 'function') {
+      // .search(query/args), .search(query, cb)
+      callback = args;
+      args = undefined;
     }
 
-    if (typeof callback === 'object' && (this.as._isUndefined(args) || !args)) {
-      args = callback;
-      callback = null;
+    // .search(args), careful: typeof null === 'object'
+    if (typeof query === 'object' && query !== null) {
+      args = query;
+      query = undefined;
+    } else if (query === undefined || query === null) { // .search(undefined/null)
+      query = '';
     }
 
-    var indexObj = this;
-    var params = 'query=' + encodeURIComponent(query);
-    if (!this.as._isUndefined(args) && args !== null) {
+    var params = '';
+
+    if (query !== undefined) {
+      params += 'query=' + encodeURIComponent(query);
+    }
+
+    if (args !== undefined) {
       params = this.as._getSearchParams(args, params);
     }
-    window.clearTimeout(indexObj.onDelayTrigger);
-    if (!this.as._isUndefined(delay) && delay !== null && delay > 0) {
-      var onDelayTrigger = window.setTimeout( function() {
-        indexObj._search(params, callback);
-      }, delay);
-      indexObj.onDelayTrigger = onDelayTrigger;
-    } else {
-      return this._search(params, callback);
-    }
+
+    return this._search(params, callback);
   },
 
   /*
@@ -881,12 +896,14 @@ AlgoliaSearch.prototype.Index.prototype = {
    *             Page is zero-based and defaults to 0. Thus, to retrieve the 10th page you need to set page=9
    * @param hitsPerPage: Pagination parameter used to select the number of hits per page. Defaults to 1000.
    */
-  browse: function(page, callback, hitsPerPage) {
-    if (+callback > 0 && (this.as._isUndefined(hitsPerPage) || !hitsPerPage)) {
-      hitsPerPage = callback;
-      callback = null;
-    }
+  browse: function(page, hitsPerPage, callback) {
     var indexObj = this;
+
+    if (arguments.length === 1 || typeof hitsPerPage === 'function') {
+      callback = hitsPerPage;
+      hitsPerPage = undefined;
+    }
+
     var params = '?page=' + page;
     if (!this.as._isUndefined(hitsPerPage)) {
       params += '&hitsPerPage=' + hitsPerPage;
@@ -903,14 +920,14 @@ AlgoliaSearch.prototype.Index.prototype = {
   ttAdapter: function(params) {
     var self = this;
     return function(query, cb) {
-      self.search(query, function(err, content) {
+      self.search(query, params, function(err, content) {
         if (err) {
           cb(err);
           return;
         }
 
         cb(content.hits);
-      }, params);
+      });
     };
   },
 
@@ -1122,20 +1139,20 @@ AlgoliaSearch.prototype.Index.prototype = {
    *   - deleteIndex : allows to delete index content (https only)
    *   - settings : allows to get index settings (https only)
    *   - editSettings : allows to change index settings (https only)
-   * @param validity the number of seconds after which the key will be automatically removed (0 means no time limit for this key)
-   * @param maxQueriesPerIPPerHour Specify the maximum number of API calls allowed from an IP address per hour.
-   * @param maxHitsPerQuery Specify the maximum number of hits this API key can retrieve in one call.
+   * @param params.validity the number of seconds after which the key will be automatically removed (0 means no time limit for this key)
+   * @param params.maxQueriesPerIPPerHour Specify the maximum number of API calls allowed from an IP address per hour.
+   * @param params.maxHitsPerQuery Specify the maximum number of hits this API key can retrieve in one call.
    * @param callback the result callback with two arguments
    *  error: null or Error('message')
    *  content: the server answer with user keys list
    */
-  addUserKeyWithValidity: function(acls, validity, maxQueriesPerIPPerHour, maxHitsPerQuery, callback) {
+  addUserKeyWithValidity: function(acls, params, callback) {
     var indexObj = this;
     var aclsObject = {};
     aclsObject.acl = acls;
-    aclsObject.validity = validity;
-    aclsObject.maxQueriesPerIPPerHour = maxQueriesPerIPPerHour;
-    aclsObject.maxHitsPerQuery = maxHitsPerQuery;
+    aclsObject.validity = params.validity;
+    aclsObject.maxQueriesPerIPPerHour = params.maxQueriesPerIPPerHour;
+    aclsObject.maxHitsPerQuery = params.maxHitsPerQuery;
     return this.as._jsonRequest({ method: 'POST',
                  url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/keys',
                  body: aclsObject,
