@@ -896,12 +896,14 @@ AlgoliaSearch.prototype.Index.prototype = {
    *             Page is zero-based and defaults to 0. Thus, to retrieve the 10th page you need to set page=9
    * @param hitsPerPage: Pagination parameter used to select the number of hits per page. Defaults to 1000.
    */
-  browse: function(page, callback, hitsPerPage) {
-    if (+callback > 0 && (this.as._isUndefined(hitsPerPage) || !hitsPerPage)) {
-      hitsPerPage = callback;
-      callback = null;
-    }
+  browse: function(page, hitsPerPage, callback) {
     var indexObj = this;
+
+    if (arguments.length === 1 || typeof hitsPerPage === 'function') {
+      callback = hitsPerPage;
+      hitsPerPage = undefined;
+    }
+
     var params = '?page=' + page;
     if (!this.as._isUndefined(hitsPerPage)) {
       params += '&hitsPerPage=' + hitsPerPage;

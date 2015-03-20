@@ -1,5 +1,3 @@
-var sinon = require('sinon');
-
 module.exports = [{
   object: 'index',
   methodName: 'browse',
@@ -17,8 +15,8 @@ module.exports = [{
 }, {
   object: 'index',
   methodName: 'browse',
-  testName: 'index.browse(page, cb, hitsPerPage)',
-  callArguments: [10, sinon.spy(), 15],
+  testName: 'index.browse(page, hitsPerPage, cb)',
+  callArguments: [10, 15],
   expectedRequest: {
     method: 'GET',
     URL: {

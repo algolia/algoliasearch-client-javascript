@@ -74,6 +74,7 @@ UNRELEASED
     * BREAKING CHANGE: index.getObject(objectID[, callback, attributes]) => index.getObject(objectID[, attrs, callback])
     * BREAKING CHANGE: index.search(query, callback[, params, delay]) => index.search(query[, params callback]) or index.search(params[, cb]) with params = {query: 'some thing'}
       We removed the delay option which should really be implemented by the module consumer. It's really a throttle/debounce of the search function.
+    * BREAKING CHANGE: index.browse(page, cb[, hitsPerPage]) => index.browse(page[, hitsPerPage, cb])
 
 
 2015-02-03  2.9.2
