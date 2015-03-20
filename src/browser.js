@@ -4,7 +4,7 @@ var createAlgoliasearch = require('./create-algoliasearch');
 module.exports = createAlgoliasearch(request);
 
 var JSON2 = require('JSON2');
-var Promise = require('es6-promise').Promise;
+var Promise = global.Promise || require('es6-promise').Promise;
 
 var JSONPRequest = require('./jsonp-request');
 
