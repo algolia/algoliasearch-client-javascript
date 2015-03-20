@@ -66,6 +66,8 @@ UNRELEASED
     * FIX: do not retry when server sends 4xx or 1xx
     * FIX: distinguish jQuery/AngularJS request timeouts from errors and thus retry when timeout
     * FIX: JSONP fallback when jQuery/AngularJS request error
+    * BREAKING CHANGE: .getLogs(cb[, offset, length]) is now .getLogs([offset, length, cb]) #43
+
 
 2015-02-03  2.9.2
     * Fixed calls to `.search(function() {})`, `.search(null, function() {})`, `.search(undefined, function() {})

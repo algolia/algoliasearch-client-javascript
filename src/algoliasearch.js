@@ -133,11 +133,15 @@ AlgoliaSearch.prototype = {
    *  error: null or Error('message')
    *  content: the server answer that contains the task ID
    */
-  getLogs: function(callback, offset, length) {
-    if (this._isUndefined(offset)) {
+  getLogs: function(offset, length, callback) {
+    if (arguments.length === 0 || typeof offset === 'function') {
+      // getLogs([cb])
+      callback = offset;
       offset = 0;
-    }
-    if (this._isUndefined(length)) {
+      length = 10;
+    } else if (arguments.length === 1 || typeof length === 'function') {
+      // getLogs(1, [cb)]
+      callback = length;
       length = 10;
     }
 
