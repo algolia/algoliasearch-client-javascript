@@ -343,21 +343,15 @@ AlgoliaSearch.prototype = {
    * @param callback the function that will receive results
    * @param delay (optional) if set, wait for this delay (in ms) and only send the batch if there was no other in the meantime.
    */
-  sendQueriesBatch: function(callback, delay) {
+  sendQueriesBatch: function(callback) {
     var as = this;
     var params = {requests: []};
+
     for (var i = 0; i < as.batch.length; ++i) {
       params.requests.push(as.batch[i]);
     }
-    window.clearTimeout(as.onDelayTrigger);
-    if (!this._isUndefined(delay) && delay !== null && delay > 0) {
-      var onDelayTrigger = window.setTimeout( function() {
-        as._sendQueriesBatch(params, callback);
-      }, delay);
-      as.onDelayTrigger = onDelayTrigger;
-    } else {
-      return this._sendQueriesBatch(params, callback);
-    }
+
+    return this._sendQueriesBatch(params, callback);
   },
 
    /**

@@ -69,6 +69,8 @@ UNRELEASED
     * BREAKING CHANGE: .getLogs(cb[, offset, length]) is now .getLogs([offset, length, cb]) #43
     * BREAKING CHANGE: .listIndexes(cb[, page]) => .listIndexes([page, cb]) #43
     * BREAKING CHANGE: client/index.addUserKeyWithValidity(acls, validity, maxQueriesPerIPPerHour, maxHitsPerQuery, cb) => client/index.addUserKeyWithValidity(acls, params, cb) where params = {validity:, maxQueriesPerIPPerHour:, maxHitsPerQuery:}
+    * BREAKING CHANGE: client.sendQueriesBatch(cb, delay) => client.sendQueriesBatch(cb)
+
 
 2015-02-03  2.9.2
     * Fixed calls to `.search(function() {})`, `.search(null, function() {})`, `.search(undefined, function() {})
