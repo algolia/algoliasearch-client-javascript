@@ -4,7 +4,6 @@ var createAlgoliasearch = require('./create-algoliasearch');
 module.exports = createAlgoliasearch(request);
 
 var each = require('foreach');
-var JSON2 = require('JSON2');
 var Promise = global.Promise || require('es6-promise').Promise;
 
 var JSONPRequest = require('./jsonp-request');
@@ -31,7 +30,7 @@ function request(url, opts) {
     var timedOut;
 
     if (opts.body !== undefined) {
-      body = JSON2.stringify(opts.body);
+      body = JSON.stringify(opts.body);
     }
 
     // do not rely on default XHR async flag, as some analytics code like hotjar
@@ -77,7 +76,7 @@ function request(url, opts) {
       var response = null;
 
       try {
-        response = JSON2.parse(req.responseText);
+        response = JSON.parse(req.responseText);
       } catch(e) {}
 
       resolve({

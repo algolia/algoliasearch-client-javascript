@@ -2,10 +2,6 @@ module.exports = AlgoliaSearch;
 
 var defaults = require('lodash-compat/object/defaults');
 
-// Needed for IE < 8
-// We do not run tests on IE < 8 but you can try the examples, it works™
-var JSON2 = require('JSON2');
-
 var map = require('lodash-compat/collection/map');
 var shuffle = require('lodash-compat/collection/shuffle');
 
@@ -424,7 +420,7 @@ AlgoliaSearch.prototype = {
     // as we use POST requests to pass parameters (like query='aa'),
     // the cacheID must be different between calls
     if (opts.body !== undefined) {
-      cacheID += '_body_' + JSON2.stringify(opts.body);
+      cacheID += '_body_' + JSON.stringify(opts.body);
     }
 
     function doRequest(requester, reqOpts) {
@@ -582,7 +578,7 @@ AlgoliaSearch.prototype = {
     for (var key in args) {
       if (key !== null && args.hasOwnProperty(key)) {
         params += params === '' ? '' : '&';
-        params += key + '=' + encodeURIComponent(Object.prototype.toString.call(args[key]) === '[object Array]' ? JSON2.stringify(args[key]) : args[key]);
+        params += key + '=' + encodeURIComponent(Object.prototype.toString.call(args[key]) === '[object Array]' ? JSON.stringify(args[key]) : args[key]);
       }
     }
     return params;
