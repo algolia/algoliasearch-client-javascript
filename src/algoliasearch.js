@@ -884,7 +884,13 @@ AlgoliaSearch.prototype = {
       opts.callback(true, false, { 'message': 'Timeout - Could not connect to endpoint ' + url } );
     };
 
-    request.open(opts.method, url);
+    // do not rely on default XHR async flag, as some analytics code like hotjar
+    // breaks it and set it to false by default
+    if (request instanceof XMLHttpRequest) {
+      request.open(opts.method, url, true);
+    } else {
+      request.open(opts.method, url);
+    }
 
     if (this._support.cors && body !== null && opts.method !== 'GET') {
       request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
