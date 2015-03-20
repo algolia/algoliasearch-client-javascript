@@ -616,20 +616,23 @@ AlgoliaSearch.prototype.Index.prototype = {
    * @param objectID (optional) an objectID you want to attribute to this object
    * (if the attribute already exist the old object will be overwrite)
    */
-  addObject: function(content, callback, objectID) {
+  addObject: function(content, objectID, callback) {
     var indexObj = this;
-    if (this.as._isUndefined(objectID)) {
-      return this.as._jsonRequest({ method: 'POST',
-                   url: '/1/indexes/' + encodeURIComponent(indexObj.indexName),
-                   body: content,
-                   callback: callback });
-    } else {
-      return this.as._jsonRequest({ method: 'PUT',
-                   url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/' + encodeURIComponent(objectID),
-                   body: content,
-                   callback: callback });
+
+    if (arguments.length === 1 || typeof objectID === 'function') {
+      callback = objectID;
+      objectID = undefined;
     }
 
+    return this.as._jsonRequest({
+      method: objectID !== undefined ?
+        'PUT' : // update or create
+        'POST', // create (API generates an objectID)
+      url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + // create
+        (objectID !== undefined ? '/' + encodeURIComponent(objectID) : ''), // update or create
+      body: content,
+      callback: callback
+    });
   },
   /*
    * Add several objects
