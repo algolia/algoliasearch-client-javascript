@@ -1,5 +1,8 @@
 CHANGELOG
 
+2015-19-03  2.9.4
+    * force async XHR
+
 2015-19-03  2.9.3
     * test suite, including request strategy test suite
     * IE10 should now behave as a CORS supported XMLHttpRequest browser, as it is
