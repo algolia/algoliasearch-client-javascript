@@ -1,6 +1,6 @@
 var test = require('tape');
 
-// this test ensures we can call index.search() without any
+// this test ensures we can call index.search() without any argument
 test('index.search()', function(t) {
   t.plan(3);
   var fauxJax = require('faux-jax');
