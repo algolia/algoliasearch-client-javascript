@@ -35,7 +35,8 @@
     "name": "Algolia SAS",
     "url": "https://www.algolia.com"
   },
-  "contributors": [{
+  "contributors": [
+    {
       "name": "Algolia Team <support@algolia.com>",
       "url": "http://www.algolia.com"
     }
@@ -49,7 +50,9 @@
     "browserify": "9.0.3",
     "bulk-require": "0.2.1",
     "bulkify": "1.1.1",
+    "bundle-collapser": "1.1.4",
     "chance": "0.7.3",
+    "closurecompiler": "1.5.1",
     "compression": "1.4.3",
     "domready": "0.3.0",
     "eslint": "0.15.0",
@@ -68,7 +71,6 @@
     "tap-growl": "1.0.5",
     "tap-spec": "2.2.1",
     "tape": "3.5.0",
-    "uglify-js": "2.4.16",
     "url-parse": "1.0.0",
     "xhr": "2.0.1",
     "zuul": "2.1.1",
