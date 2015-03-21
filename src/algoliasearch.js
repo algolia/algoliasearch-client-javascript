@@ -1,9 +1,5 @@
 module.exports = AlgoliaSearch;
 
-var defaults = require('lodash-compat/object/defaults');
-var map = require('lodash-compat/collection/map');
-var shuffle = require('lodash-compat/collection/shuffle');
-
 /*
  * Algolia Search library initialization
  * https://www.algolia.com/
@@ -32,12 +28,25 @@ function AlgoliaSearch(applicationID, apiKey, opts, _request) {
     throw new Error('Please provide an API key. ' + usage);
   }
 
-  opts = defaults(opts || {}, {
-    timeout: 2000,
-    protocol: document && document.location.protocol || 'http:',
-    hosts: [], // filled later on, has dependencies
-    tld: 'net'
-  });
+  opts = opts || {};
+
+  // now setting default options
+  // could not find a tiny module to do that, let's go manual
+  if (opts.timeout === undefined) {
+    opts.timeout = 2000;
+  }
+
+  if (opts.protocol === undefined) {
+    opts.protocol = document && document.location.protocol || 'http:';
+  }
+
+  if (opts.hosts === undefined) {
+    opts.hosts = []; // filled later on, has dependencies
+  }
+
+  if (opts.tld === undefined) {
+    opts.tld = 'net';
+  }
 
   // while we advocate for colon-at-the-end values: 'http:' for `opts.protocol`
   // we also accept `http` and `https`. It's a common error.
@@ -1173,3 +1182,38 @@ AlgoliaSearch.prototype.Index.prototype = {
   typeAheadArgs: null,
   typeAheadValueOption: null
 };
+
+// extracted from https://github.com/component/map/blob/master/index.js
+// without the crazy toFunction thing
+function map(arr, fn){
+  var ret = [];
+  for (var i = 0; i < arr.length; ++i) {
+    ret.push(fn(arr[i], i));
+  }
+  return ret;
+}
+
+// extracted from https://github.com/coolaj86/knuth-shuffle
+// not compatible with browserify
+function shuffle(array) {
+  /*eslint-disable*/
+  var currentIndex = array.length
+    , temporaryValue
+    , randomIndex
+    ;
+
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
+}
