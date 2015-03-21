@@ -3,7 +3,6 @@ var createAlgoliasearch = require('./create-algoliasearch');
 
 module.exports = createAlgoliasearch(request);
 
-var each = require('foreach');
 var Promise = global.Promise || require('es6-promise').Promise;
 
 var JSONPRequest = require('./jsonp-request');
@@ -139,14 +138,20 @@ request.delay = function(ms) {
   });
 };
 
-var v2Globals = ['AlgoliaSearch', 'AlgoliaSearchHelper', 'AlgoliaExplainResults'];
-each(v2Globals, throwWhenUsed);
-
-function throwWhenUsed(fnName) {
-  var message = 'You are trying to use a new version of the AlgoliaSearch JavaScript client with an old notation.' +
+var migrationMessage = 'You are trying to use a new version of the AlgoliaSearch JavaScript client with an old notation.' +
   ' Please read our migration guide at https://github.com/algolia/algoliasearch-client-js/wiki/Migration-guide-from-2.x.x-to-3.x.x';
 
-  global[fnName] = function() {
-    throw new Error(message);
-  };
-}
+// cannot dinamically add these properties to window, fails on IE old versions
+/*global AlgoliaSearch:true,AlgoliaSearchHelper:true,AlgoliaExplainResults:true*/
+/*eslint no-unused-vars: [2, {"vars": "local"}]*/
+AlgoliaSearch = function() {
+  throw new Error(migrationMessage);
+};
+
+AlgoliaSearchHelper = function() {
+  throw new Error(migrationMessage);
+};
+
+AlgoliaExplainResults = function() {
+  throw new Error(migrationMessage);
+};
