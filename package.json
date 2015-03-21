@@ -12,6 +12,11 @@
     "examples": "http-server . -a 0.0.0.0",
     "lint": "eslint --quiet test/"
   },
+  "browserify": {
+    "transform": [
+      "packageify"
+    ]
+  },
   "repository": {
     "type": "git",
     "url": "git://github.com/algolia/algoliasearch-client-js.git"
@@ -57,6 +62,7 @@
     "lodash": "3.5.0",
     "lodash-compat": "3.5.0",
     "morgan": "1.5.1",
+    "packageify": "0.2.2",
     "phantomjs": "1.9.15",
     "sinon": "1.12.2",
     "tap-growl": "1.0.5",

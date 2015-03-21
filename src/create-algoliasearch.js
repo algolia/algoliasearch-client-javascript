@@ -10,7 +10,7 @@ function createAlgoliasearch(request) {
     return new AlgoliaSearch(applicationID, apiKey, opts, request);
   }
 
-  algoliasearch.version = require('../package.json').version;
+  algoliasearch.version = require('package.version');
   algoliasearch.helper = require('./algoliasearch.helper');
 
   return algoliasearch;
