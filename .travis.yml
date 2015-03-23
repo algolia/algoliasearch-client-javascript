@@ -7,7 +7,6 @@ branches:
   only:
     - master
     - develop
-    - V3
 env:
   global:
     - SAUCE_USERNAME=algoliasearch-js
