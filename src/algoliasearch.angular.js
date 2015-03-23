@@ -86,3 +86,5 @@ global.angular.module('algoliasearch', [])
       }
     };
   }]);
+
+require('./migration-layer')('algoliasearch.angular');

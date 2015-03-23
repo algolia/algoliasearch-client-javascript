@@ -71,3 +71,5 @@ request.delay = function(ms) {
     }, ms);
   }).promise();
 };
+
+require('./migration-layer')('algoliasearch.jquery');
