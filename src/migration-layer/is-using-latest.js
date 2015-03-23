@@ -4,7 +4,7 @@
 module.exports = isUsingLatest;
 
 function isUsingLatest(buildName) {
-  var toFind = new RegExp('cdn.jsdelivr.net/algoliasearch/latest' +
+  var toFind = new RegExp('cdn\\.jsdelivr\\.net/algoliasearch/latest/' +
     buildName.replace('.', '\\.') + // algoliasearch, algoliasearch.angular
     '(?:\\.min)?\\.js$'); // [.min].js
 
