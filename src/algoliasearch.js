@@ -153,10 +153,10 @@ AlgoliaSearch.prototype = {
   /*
    * List all existing indexes (paginated)
    *
+   * @param page The page to retrieve, starting at 0.
    * @param callback the result callback with two arguments
    *  error: null or Error('message')
    *  content: the server answer with index list
-   * @param page The page to retrieve, starting at 0.
    */
   listIndexes: function(page, callback) {
     var params = '';
@@ -196,6 +196,7 @@ AlgoliaSearch.prototype = {
   /*
    * Get ACL of a user key
    *
+   * @param key
    * @param callback the result callback with two arguments
    *  error: null or Error('message')
    *  content: the server answer with user keys list
@@ -207,7 +208,7 @@ AlgoliaSearch.prototype = {
   },
   /*
    * Delete an existing user key
-   *
+   * @param key
    * @param callback the result callback with two arguments
    *  error: null or Error('message')
    *  content: the server answer with user keys list
@@ -342,7 +343,6 @@ AlgoliaSearch.prototype = {
    * (Optimized for browser using a POST query to minimize number of OPTIONS queries)
    *
    * @param callback the function that will receive results
-   * @param delay (optional) if set, wait for this delay (in ms) and only send the batch if there was no other in the meantime.
    */
   sendQueriesBatch: function(callback) {
     var as = this;
@@ -611,11 +611,11 @@ AlgoliaSearch.prototype.Index.prototype = {
    * Add an object in this index
    *
    * @param content contains the javascript object to add inside the index
+   * @param objectID (optional) an objectID you want to attribute to this object
+   * (if the attribute already exist the old object will be overwrite)
    * @param callback (optional) the result callback with two arguments:
    *  error: null or Error('message')
    *  content: the server answer that contains 3 elements: createAt, taskId and objectID
-   * @param objectID (optional) an objectID you want to attribute to this object
-   * (if the attribute already exist the old object will be overwrite)
    */
   addObject: function(content, objectID, callback) {
     var indexObj = this;
@@ -795,9 +795,6 @@ AlgoliaSearch.prototype.Index.prototype = {
    * minimize number of OPTIONS queries: Cross-Origin Resource Sharing).
    *
    * @param query the full text query
-   * @param callback the result callback with two arguments:
-   *  error: null or Error('message'). If false, the content contains the error.
-   *  content: the server answer that contains the list of results.
    * @param args (optional) if set, contains an object with query parameters:
    * - page: (integer) Pagination parameter used to select the page to retrieve.
    *                   Page is zero-based and defaults to 0. Thus, to retrieve the 10th page you need to set page=9
@@ -857,6 +854,9 @@ AlgoliaSearch.prototype.Index.prototype = {
    *   one is kept and others are removed.
    * - restrictSearchableAttributes: List of attributes you want to use for textual search (must be a subset of the attributesToIndex index setting)
    * either comma separated or as an array
+   * @param callback the result callback with two arguments:
+   *  error: null or Error('message'). If false, the content contains the error.
+   *  content: the server answer that contains the list of results.
    */
   search: function(query, args, callback) {
     if (arguments.length === 0 || typeof query === 'function') {
@@ -896,6 +896,9 @@ AlgoliaSearch.prototype.Index.prototype = {
    * @param page Pagination parameter used to select the page to retrieve.
    *             Page is zero-based and defaults to 0. Thus, to retrieve the 10th page you need to set page=9
    * @param hitsPerPage: Pagination parameter used to select the number of hits per page. Defaults to 1000.
+   * @param callback the result callback with two arguments:
+   *  error: null or Error('message'). If false, the content contains the error.
+   *  content: the server answer that contains the list of results.
    */
   browse: function(page, hitsPerPage, callback) {
     var indexObj = this;
@@ -1082,6 +1085,7 @@ AlgoliaSearch.prototype.Index.prototype = {
   /*
    * Get ACL of a user key associated to this index
    *
+   * @param key
    * @param callback the result callback with two arguments
    *  error: null or Error('message')
    *  content: the server answer with user keys list
@@ -1095,6 +1099,7 @@ AlgoliaSearch.prototype.Index.prototype = {
   /*
    * Delete an existing user key associated to this index
    *
+   * @param key
    * @param callback the result callback with two arguments
    *  error: null or Error('message')
    *  content: the server answer with user keys list
