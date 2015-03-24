@@ -85,6 +85,8 @@ UNRELEASED
         <script src="//cdnjs.cloudflare.com/ajax/libs/json2/20140204/json2.min.js"></script>
         <![endif]-->
         ```
+    * BREAKING CHANGE: removed AlgoliaSearchHelper
+      Please see https://github.com/algolia/algoliasearch-helper-js if you need the helper
 
 
 2015-02-03  2.9.2

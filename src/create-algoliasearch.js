@@ -11,7 +11,6 @@ function createAlgoliasearch(request) {
   }
 
   algoliasearch.version = require('package.version');
-  algoliasearch.helper = require('./algoliasearch.helper');
 
   return algoliasearch;
 }
