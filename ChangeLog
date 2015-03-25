@@ -1,6 +1,6 @@
 CHANGELOG
 
-UNRELEASED
+3.0.0
     * V2 users, see the migration guide at https://github.com/algolia/algoliasearch-client-js/wiki/Migration-guide-from-2.x.x-to-3.x.x
     * BREAKING CHANGES:
       * `new AlgoliaSearch()` => `algoliasearch()` #40

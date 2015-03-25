@@ -14,7 +14,7 @@ browserify -p bundle-collapser/plugin index.js --standalone algoliasearch > dist
 browserify -p bundle-collapser/plugin src/algoliasearch.angular.js > dist/algoliasearch.angular.js
 browserify -p bundle-collapser/plugin src/algoliasearch.jquery.js > dist/algoliasearch.jquery.js
 
-echo '..Minifying'
+echo '..Minify'
 
 bundles=( algoliasearch algoliasearch.angular algoliasearch.jquery )
 
