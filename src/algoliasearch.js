@@ -1,204 +1,85 @@
-/*
- * Copyright (c) 2013 Algolia
- * http://www.algolia.com/
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
+module.exports = AlgoliaSearch;
 
 /*
  * Algolia Search library initialization
- * @param applicationID the application ID you have in your admin interface
- * @param apiKey a valid API key for the service
- * @param methodOrOptions the hash of parameters for initialization. It can contains:
- *        - method (optional) specify if the protocol used is http or https (http by default to make the first search query faster).
- *          You need to use https is you are doing something else than just search queries.
- *        - hosts (optional) the list of hosts that you have received for the service
- *        - dsn (optional) set to true if your account has the Distributed Search Option
- *        - dsnHost (optional) override the automatic computation of dsn hostname
+ * https://www.algolia.com/
+ *
+ * @param {string} applicationID - Your applicationID, found in your dashboard
+ * @param {string} apiKey - Your API key, found in your dashboard
+ * @param {Object} [opts]
+ * @param {number} [opts.timeout=2000] - The request timeout set in milliseconds, another request will be issued after this timeout
+ * @param {string} [opts.protocol='http:'] - The protocol used to query Algolia Search API.
+ *                                        Set to 'https:' to force using https. Default to document.location.protocol in browsers
+ * @param {string[]} [opts.hosts=[
+ *          this.applicationID + '-1.algolia.' + opts.tld,
+ *          this.applicationID + '-2.algolia.' + opts.tld,
+ *          this.applicationID + '-3.algolia.' + opts.tld]
+ *        ] - The hosts to use for Algolia Search API. It this your responsibility to shuffle the hosts and add a DSN host in it
+ * @param {string} [opts.tld='net'] - The tld to use when computing hosts default list
  */
-var AlgoliaSearch = function(applicationID, apiKey, methodOrOptions, resolveDNS, hosts) {
-  var self = this;
+function AlgoliaSearch(applicationID, apiKey, opts, _request) {
+  var usage = 'Usage: algoliasearch(applicationID, apiKey, opts)';
+
+  if (!applicationID) {
+    throw new Error('Please provide an application ID. ' + usage);
+  }
+
+  if (!apiKey) {
+    throw new Error('Please provide an API key. ' + usage);
+  }
+
+  opts = opts || {};
+
+  // now setting default options
+  // could not find a tiny module to do that, let's go manual
+  if (opts.timeout === undefined) {
+    opts.timeout = 2000;
+  }
+
+  if (opts.protocol === undefined) {
+    opts.protocol = document && document.location.protocol || 'http:';
+  }
+
+  if (opts.hosts === undefined) {
+    opts.hosts = []; // filled later on, has dependencies
+  }
+
+  if (opts.tld === undefined) {
+    opts.tld = 'net';
+  }
+
+  // while we advocate for colon-at-the-end values: 'http:' for `opts.protocol`
+  // we also accept `http` and `https`. It's a common error.
+  if (!/:$/.test(opts.protocol)) {
+    opts.protocol = opts.protocol + ':';
+  }
+
+  // no hosts given, add defaults
+  if (opts.hosts.length === 0) {
+    opts.hosts = shuffle([
+      applicationID + '-1.algolia.' + opts.tld,
+      applicationID + '-2.algolia.' + opts.tld,
+      applicationID + '-3.algolia.' + opts.tld
+    ]);
+
+    // add default dsn host
+    opts.hosts.unshift(applicationID + '-dsn.algolia.' + opts.tld);
+  }
+
+  opts.hosts = map(opts.hosts, function prependProtocol(host) {
+    return opts.protocol + '//' + host;
+  });
+
   this.applicationID = applicationID;
   this.apiKey = apiKey;
-  this.dsn = true;
-  this.dsnHost = null;
-  this.hosts = [];
+  this.hosts = opts.hosts;
+
   this.currentHostIndex = 0;
-  this.requestTimeoutInMs = 2000;
+  this.requestTimeout = opts.timeout;
   this.extraHeaders = [];
-  this.jsonp = null;
-  this.options = {};
-
-  // make sure every client instance has it's own cache
   this.cache = {};
-
-  var method;
-  var tld = 'net';
-  if (typeof methodOrOptions === 'string') { // Old initialization
-    method = methodOrOptions;
-  } else {
-    // Take all option from the hash
-    var options = methodOrOptions || {};
-    this.options = options;
-    if (!this._isUndefined(options.method)) {
-      method = options.method;
-    }
-    if (!this._isUndefined(options.tld)) {
-      tld = options.tld;
-    }
-    if (!this._isUndefined(options.dsn)) {
-      this.dsn = options.dsn;
-    }
-    if (!this._isUndefined(options.hosts)) {
-      hosts = options.hosts;
-    }
-    if (!this._isUndefined(options.dsnHost)) {
-      this.dsnHost = options.dsnHost;
-    }
-    if (!this._isUndefined(options.requestTimeoutInMs)) {
-      this.requestTimeoutInMs = +options.requestTimeoutInMs;
-    }
-    if (!this._isUndefined(options.jsonp)) {
-      this.jsonp = options.jsonp;
-    }
-  }
-  // If hosts is undefined, initialize it with applicationID
-  if (this._isUndefined(hosts)) {
-    hosts = [
-      this.applicationID + '-1.algolia.' + tld,
-      this.applicationID + '-2.algolia.' + tld,
-      this.applicationID + '-3.algolia.' + tld
-    ];
-  }
-  // detect is we use http or https
-  this.host_protocol = 'http://';
-  if (this._isUndefined(method) || method === null) {
-    this.host_protocol = ('https:' == document.location.protocol ? 'https' : 'http') + '://';
-  } else if (method === 'https' || method === 'HTTPS') {
-    this.host_protocol = 'https://';
-  }
-  // Add hosts in random order
-  for (var i = 0; i < hosts.length; ++i) {
-    if (Math.random() > 0.5) {
-      this.hosts.reverse();
-    }
-    this.hosts.push(this.host_protocol + hosts[i]);
-  }
-  if (Math.random() > 0.5) {
-    this.hosts.reverse();
-  }
-  // then add Distributed Search Network host if there is one
-  if (this.dsn || this.dsnHost != null) {
-    if (this.dsnHost) {
-      this.hosts.unshift(this.host_protocol + this.dsnHost);
-    } else {
-      this.hosts.unshift(this.host_protocol + this.applicationID + '-dsn.algolia.' + tld);
-    }
-  }
-  // angular dependencies injection
-  if (this.options.angular) {
-    this.options.angular.$injector.invoke(['$http', '$q', function ($http, $q) {
-      self.options.angular.$q = $q;
-      self.options.angular.$http = $http;
-    }]);
-  }
-};
-
-// This holds the number of JSONP requests done accross clients
-// It's used as part of the ?callback=JSONP_$JSONPCounter when we do JSONP requests
-AlgoliaSearch.JSONPCounter = 0;
-
-function AlgoliaExplainResults(hit, titleAttribute, otherAttributes) {
-
-  function _getHitExplanationForOneAttr_recurse(obj, foundWords) {
-    var res = [];
-    if (typeof obj === 'object' && 'matchedWords' in obj && 'value' in obj) {
-      var match = false;
-      for (var j = 0; j < obj.matchedWords.length; ++j) {
-        var word = obj.matchedWords[j];
-        if (!(word in foundWords)) {
-          foundWords[word] = 1;
-          match = true;
-        }
-      }
-      if (match) {
-        res.push(obj.value);
-      }
-    } else if (Object.prototype.toString.call(obj) === '[object Array]') {
-      for (var i = 0; i < obj.length; ++i) {
-        var array = _getHitExplanationForOneAttr_recurse(obj[i], foundWords);
-        res = res.concat(array);
-      }
-    } else if (typeof obj === 'object') {
-      for (var prop in obj) {
-        if (obj.hasOwnProperty(prop)){
-          res = res.concat(_getHitExplanationForOneAttr_recurse(obj[prop], foundWords));
-        }
-      }
-    }
-    return res;
-  }
-
-  function _getHitExplanationForOneAttr(hit, foundWords, attr) {
-    var base = hit._highlightResult || hit;
-    if (attr.indexOf('.') === -1) {
-      if (attr in base) {
-        return _getHitExplanationForOneAttr_recurse(base[attr], foundWords);
-      }
-      return [];
-    }
-    var array = attr.split('.');
-    var obj = base;
-    for (var i = 0; i < array.length; ++i) {
-      if (Object.prototype.toString.call(obj) === '[object Array]') {
-        var res = [];
-        for (var j = 0; j < obj.length; ++j) {
-          res = res.concat(_getHitExplanationForOneAttr(obj[j], foundWords, array.slice(i).join('.')));
-        }
-        return res;
-      }
-      if (array[i] in obj) {
-        obj = obj[array[i]];
-      } else {
-        return [];
-      }
-    }
-    return _getHitExplanationForOneAttr_recurse(obj, foundWords);
-  }
-
-  var res = {};
-  var foundWords = {};
-  var title = _getHitExplanationForOneAttr(hit, foundWords, titleAttribute);
-  res.title = (title.length > 0) ? title[0] : '';
-  res.subtitles = [];
-
-  if (typeof otherAttributes !== 'undefined') {
-    for (var i = 0; i < otherAttributes.length; ++i) {
-      var attr = _getHitExplanationForOneAttr(hit, foundWords, otherAttributes[i]);
-      for (var j = 0; j < attr.length; ++j) {
-        res.subtitles.push({ attr: otherAttributes[i], value: attr[j] });
-      }
-    }
-  }
-  return res;
+  this._request = _request;
 }
-
 
 AlgoliaSearch.prototype = {
   /*
@@ -206,7 +87,7 @@ AlgoliaSearch.prototype = {
    *
    * @param indexName the name of index to delete
    * @param callback the result callback with two arguments
-   *  success: boolean set to true if the request was successfull
+   *  error: null or Error('message')
    *  content: the server answer that contains the task ID
    */
   deleteIndex: function(indexName, callback) {
@@ -219,7 +100,7 @@ AlgoliaSearch.prototype = {
    * @param srcIndexName the name of index to copy.
    * @param dstIndexName the new index name that will contains a copy of srcIndexName (destination will be overriten if it already exist).
    * @param callback the result callback with two arguments
-   *  success: boolean set to true if the request was successfull
+   *  error: null or Error('message')
    *  content: the server answer that contains the task ID
    */
   moveIndex: function(srcIndexName, dstIndexName, callback) {
@@ -235,7 +116,7 @@ AlgoliaSearch.prototype = {
    * @param srcIndexName the name of index to copy.
    * @param dstIndexName the new index name that will contains a copy of srcIndexName (destination will be overriten if it already exist).
    * @param callback the result callback with two arguments
-   *  success: boolean set to true if the request was successfull
+   *  error: null or Error('message')
    *  content: the server answer that contains the task ID
    */
   copyIndex: function(srcIndexName, dstIndexName, callback) {
@@ -250,14 +131,18 @@ AlgoliaSearch.prototype = {
    * @param offset Specify the first entry to retrieve (0-based, 0 is the most recent log entry).
    * @param length Specify the maximum number of entries to retrieve starting at offset. Maximum allowed value: 1000.
    * @param callback the result callback with two arguments
-   *  success: boolean set to true if the request was successfull
+   *  error: null or Error('message')
    *  content: the server answer that contains the task ID
    */
-  getLogs: function(callback, offset, length) {
-    if (this._isUndefined(offset)) {
+  getLogs: function(offset, length, callback) {
+    if (arguments.length === 0 || typeof offset === 'function') {
+      // getLogs([cb])
+      callback = offset;
       offset = 0;
-    }
-    if (this._isUndefined(length)) {
+      length = 10;
+    } else if (arguments.length === 1 || typeof length === 'function') {
+      // getLogs(1, [cb)]
+      callback = length;
       length = 10;
     }
 
@@ -268,13 +153,20 @@ AlgoliaSearch.prototype = {
   /*
    * List all existing indexes (paginated)
    *
-   * @param callback the result callback with two arguments
-   *  success: boolean set to true if the request was successfull
-   *  content: the server answer with index list or error description if success is false.
    * @param page The page to retrieve, starting at 0.
+   * @param callback the result callback with two arguments
+   *  error: null or Error('message')
+   *  content: the server answer with index list
    */
-  listIndexes: function(callback, page) {
-    var params = typeof page !== 'undefined' ? '?page=' + page : '';
+  listIndexes: function(page, callback) {
+    var params = '';
+
+    if (page === undefined || typeof page === 'function') {
+      callback = page;
+    } else {
+      params = '?page=' + page;
+    }
+
     return this._jsonRequest({ method: 'GET',
               url: '/1/indexes' + params,
               callback: callback });
@@ -293,8 +185,8 @@ AlgoliaSearch.prototype = {
    * List all existing user keys with their associated ACLs
    *
    * @param callback the result callback with two arguments
-   *  success: boolean set to true if the request was successfull
-   *  content: the server answer with user keys list or error description if success is false.
+   *  error: null or Error('message')
+   *  content: the server answer with user keys list
    */
   listUserKeys: function(callback) {
     return this._jsonRequest({ method: 'GET',
@@ -304,9 +196,10 @@ AlgoliaSearch.prototype = {
   /*
    * Get ACL of a user key
    *
+   * @param key
    * @param callback the result callback with two arguments
-   *  success: boolean set to true if the request was successfull
-   *  content: the server answer with user keys list or error description if success is false.
+   *  error: null or Error('message')
+   *  content: the server answer with user keys list
    */
   getUserKeyACL: function(key, callback) {
     return this._jsonRequest({ method: 'GET',
@@ -315,10 +208,10 @@ AlgoliaSearch.prototype = {
   },
   /*
    * Delete an existing user key
-   *
+   * @param key
    * @param callback the result callback with two arguments
-   *  success: boolean set to true if the request was successfull
-   *  content: the server answer with user keys list or error description if success is false.
+   *  error: null or Error('message')
+   *  content: the server answer with user keys list
    */
   deleteUserKey: function(key, callback) {
     return this._jsonRequest({ method: 'DELETE',
@@ -337,11 +230,15 @@ AlgoliaSearch.prototype = {
    *   - settings : allows to get index settings (https only)
    *   - editSettings : allows to change index settings (https only)
    * @param callback the result callback with two arguments
-   *  success: boolean set to true if the request was successfull
-   *  content: the server answer with user keys list or error description if success is false.
+   *  error: null or Error('message')
+   *  content: the server answer with user keys list
    */
   addUserKey: function(acls, callback) {
-    return this.addUserKeyWithValidity(acls, 0, 0, 0, callback);
+    return this.addUserKeyWithValidity(acls, {
+      validity: 0,
+      maxQueriesPerIPPerHour: 0,
+      maxHitsPerQuery: 0
+    }, callback);
   },
   /*
    * Add an existing user key
@@ -354,19 +251,19 @@ AlgoliaSearch.prototype = {
    *   - deleteIndex : allows to delete index content (https only)
    *   - settings : allows to get index settings (https only)
    *   - editSettings : allows to change index settings (https only)
-   * @param validity the number of seconds after which the key will be automatically removed (0 means no time limit for this key)
-   * @param maxQueriesPerIPPerHour Specify the maximum number of API calls allowed from an IP address per hour.
-   * @param maxHitsPerQuery Specify the maximum number of hits this API key can retrieve in one call.
+   * @param params.validity the number of seconds after which the key will be automatically removed (0 means no time limit for this key)
+   * @param params.maxQueriesPerIPPerHour Specify the maximum number of API calls allowed from an IP address per hour.
+   * @param params.maxHitsPerQuery Specify the maximum number of hits this API key can retrieve in one call.
    * @param callback the result callback with two arguments
-   *  success: boolean set to true if the request was successfull
-   *  content: the server answer with user keys list or error description if success is false.
+   *  error: null or Error('message')
+   *  content: the server answer with user keys list
    */
-  addUserKeyWithValidity: function(acls, validity, maxQueriesPerIPPerHour, maxHitsPerQuery, callback) {
+  addUserKeyWithValidity: function(acls, params, callback) {
     var aclsObject = {};
     aclsObject.acl = acls;
-    aclsObject.validity = validity;
-    aclsObject.maxQueriesPerIPPerHour = maxQueriesPerIPPerHour;
-    aclsObject.maxHitsPerQuery = maxHitsPerQuery;
+    aclsObject.validity = params.validity;
+    aclsObject.maxQueriesPerIPPerHour = params.maxQueriesPerIPPerHour;
+    aclsObject.maxHitsPerQuery = params.maxHitsPerQuery;
     return this._jsonRequest({ method: 'POST',
               url: '/1/keys',
               body: aclsObject,
@@ -446,23 +343,16 @@ AlgoliaSearch.prototype = {
    * (Optimized for browser using a POST query to minimize number of OPTIONS queries)
    *
    * @param callback the function that will receive results
-   * @param delay (optional) if set, wait for this delay (in ms) and only send the batch if there was no other in the meantime.
    */
-  sendQueriesBatch: function(callback, delay) {
+  sendQueriesBatch: function(callback) {
     var as = this;
     var params = {requests: []};
+
     for (var i = 0; i < as.batch.length; ++i) {
       params.requests.push(as.batch[i]);
     }
-    window.clearTimeout(as.onDelayTrigger);
-    if (!this._isUndefined(delay) && delay !== null && delay > 0) {
-      var onDelayTrigger = window.setTimeout( function() {
-        as._sendQueriesBatch(params, callback);
-      }, delay);
-      as.onDelayTrigger = onDelayTrigger;
-    } else {
-      return this._sendQueriesBatch(params, callback);
-    }
+
+    return this._sendQueriesBatch(params, callback);
   },
 
    /**
@@ -470,10 +360,9 @@ AlgoliaSearch.prototype = {
    *
    * @param {Number} milliseconds
    */
-  setRequestTimeout: function(milliseconds)
-  {
+  setRequestTimeout: function(milliseconds) {
     if (milliseconds) {
-      this.requestTimeoutInMs = parseInt(milliseconds, 10);
+      this.requestTimeout = parseInt(milliseconds, 10);
     }
   },
 
@@ -501,458 +390,190 @@ AlgoliaSearch.prototype = {
   },
 
   _sendQueriesBatch: function(params, callback) {
-     if (this.jsonp === null) {
-      var self = this;
-      return this._jsonRequest({ cache: this.cache,
-        method: 'POST',
-        url: '/1/indexes/*/queries',
-        body: params,
-        callback: function(success, content) {
-          if (!success) {
-            // retry first with JSONP
-            self.jsonp = true;
-            self._sendQueriesBatch(params, callback);
-          } else {
-            self.jsonp = false;
-            callback && callback(success, content);
+    return this._jsonRequest({ cache: this.cache,
+      method: 'POST',
+      url: '/1/indexes/*/queries',
+      body: params,
+      fallback: {
+        method: 'GET',
+        url: '/1/indexes/*',
+        body: {params: (function() {
+          var reqParams = '';
+          for (var i = 0; i < params.requests.length; ++i) {
+            var q = '/1/indexes/' + encodeURIComponent(params.requests[i].indexName) + '?' + params.requests[i].params;
+            reqParams += i + '=' + encodeURIComponent(q) + '&';
           }
-        }
-      });
-    } else if (this.jsonp) {
-      var jsonpParams = '';
-      for (var i = 0; i < params.requests.length; ++i) {
-        var q = '/1/indexes/' + encodeURIComponent(params.requests[i].indexName) + '?' + params.requests[i].params;
-        jsonpParams += i + '=' + encodeURIComponent(q) + '&';
-      }
-      var pObj = {params: jsonpParams};
-      return this._jsonRequest({ cache: this.cache,
-                   method: 'GET',
-                   url: '/1/indexes/*',
-                   body: pObj,
-                   callback: callback });
-    } else {
-      return this._jsonRequest({ cache: this.cache,
-                   method: 'POST',
-                   url: '/1/indexes/*/queries',
-                   body: params,
-                      callback: callback});
-    }
+          return reqParams;
+        }())}
+      },
+      callback: callback
+    });
   },
   /*
    * Wrapper that try all hosts to maximize the quality of service
    */
   _jsonRequest: function(opts) {
-    var self = this;
-    var callback = opts.callback;
-    var cache = null;
+    // handle opts.fallback, automatically use fallback (JSONP in browser plugins, wrapped with $plugin-promises)
+    // so if an error occurs and max tries => use fallback
+    // set tries to 0 again
+    // if fallback used and no more tries, return error
+    // fallback parameters are in opts.fallback
+    // call request.fallback or request accordingly, same promise chain otherwise
+    // put callback& params in front if problem
+    var cache = opts.cache;
     var cacheID = opts.url;
-    var deferred = null;
-    if (this.options.jQuery) {
-      deferred = this.options.jQuery.$.Deferred();
-      deferred.promise = deferred.promise(); // promise is a property in angular
-    } else if (this.options.angular) {
-      deferred = this.options.angular.$q.defer();
+    var client = this;
+    var tries = 0;
+
+    // as we use POST requests to pass parameters (like query='aa'),
+    // the cacheID must be different between calls
+    if (opts.body !== undefined) {
+      cacheID += '_body_' + JSON.stringify(opts.body);
     }
 
-    if (!this._isUndefined(opts.body)) {
-      cacheID = opts.url + '_body_' + JSON.stringify(opts.body);
-    }
-    if (!this._isUndefined(opts.cache)) {
-      cache = opts.cache;
-      if (!this._isUndefined(cache[cacheID])) {
-        if (!this._isUndefined(callback) && callback) {
-          setTimeout(function () { callback(true, cache[cacheID]); }, 1);
-        }
-        deferred && deferred.resolve(cache[cacheID]);
-        return deferred && deferred.promise;
+    function doRequest(requester, reqOpts) {
+      // handle cache existence
+      if (cache && cache[cacheID] !== undefined) {
+        return client._request.resolve(cache[cacheID]);
       }
-    }
 
-    opts.successiveRetryCount = 0;
-    var impl = function() {
-      if (opts.successiveRetryCount >= self.hosts.length) {
-        var error = { message: 'Cannot connect the Algolia\'s Search API. Please send an email to support@algolia.com to report the issue.' };
-        if (!self._isUndefined(callback) && callback) {
-          opts.successiveRetryCount = 0;
-          callback(false, error);
+      if (tries >= client.hosts.length) {
+        if (!opts.fallback || requester === client._request.fallback) {
+          // could not get a response even using the fallback if one was available
+          return client._request.reject(new Error(
+            'Cannot connect to the AlgoliaSearch API.' +
+            ' Send an email to support@algolia.com to report and resolve the issue.'
+          ));
         }
-        deferred && deferred.reject(error);
-        return;
+
+        tries = 0;
+        reqOpts.method = opts.fallback.method;
+        reqOpts.url = opts.fallback.url;
+        reqOpts.body = opts.fallback.body;
+        reqOpts.timeout = client.requestTimeout * (tries + 1);
+        client.currentHostIndex = 0;
+        client.forceFallback = true;
+        return doRequest(client._request.fallback, reqOpts);
       }
-      opts.callback = function(retry, success, body) {
-        if (success && !self._isUndefined(opts.cache)) {
-          cache[cacheID] = body;
+
+      var url = reqOpts.url;
+
+      url += (url.indexOf('?') === -1 ? '?' : '&') + 'X-Algolia-API-Key=' + client.apiKey;
+      url += '&X-Algolia-Application-Id=' + client.applicationID;
+
+      if (client.userToken) {
+        url += '&X-Algolia-UserToken=' + encodeURIComponent(client.userToken);
+      }
+
+      if (client.tagFilters) {
+        url += '&X-Algolia-TagFilters=' + encodeURIComponent(client.tagFilters);
+      }
+
+      for (var i = 0; i < client.extraHeaders.length; ++i) {
+        url += '&' + client.extraHeaders[i].key + '=' + client.extraHeaders[i].value;
+      }
+
+      return requester(client.hosts[client.currentHostIndex] + url, {
+        body: reqOpts.body,
+        method: reqOpts.method,
+        timeout: reqOpts.timeout
+      })
+      .then(function success(httpResponse) {
+        // timeout case, retry immediately
+        if (httpResponse instanceof Error) {
+          return retryRequest();
         }
-        if (!success && retry) {
-          self.currentHostIndex = ++self.currentHostIndex % self.hosts.length;
-          opts.successiveRetryCount += 1;
-          impl();
+
+        var status =
+          // When in browser mode, using XDR or JSONP
+          // We rely on our own API response `status`, only
+          // provided when an error occurs, we also expect a .message along
+          // Otherwise, it could be a `waitTask` status, that's the only
+          // case where we have a response.status that's not the http statusCode
+          httpResponse && httpResponse.body && httpResponse.body.message && httpResponse.body.status ||
+
+          // this is important to check the request statusCode AFTER the body eventual
+          // statusCode because some implementations (jQuery XDomainRequest transport) may
+          // send statusCode 200 while we had an error
+          httpResponse.statusCode ||
+
+          // When in browser mode, using XDR or JSONP
+          // we default to success when no error (no response.status && response.message)
+          // If there was a JSON.parse() error then body is null and it fails
+          httpResponse && httpResponse.body && 200;
+
+        var ok = status === 200 || status === 201;
+        var retry = !ok && Math.floor(status / 100) !== 4 && Math.floor(status / 100) !== 1;
+
+        if (ok && cache) {
+          cache[cacheID] = httpResponse.body;
+        }
+
+        if (ok) {
+          return httpResponse.body;
+        }
+
+        if (retry) {
+          return retryRequest();
+        }
+
+        var unrecoverableError = new Error(
+          httpResponse.body && httpResponse.body.message || 'Unknown error'
+        );
+
+        return client._request.reject(unrecoverableError);
+      }, tryFallback);
+
+      function retryRequest() {
+        client.currentHostIndex = ++client.currentHostIndex % client.hosts.length;
+        tries += 1;
+        reqOpts.timeout = client.requestTimeout * (tries + 1);
+        return doRequest(requester, reqOpts);
+      }
+
+      function tryFallback() {
+        // if we are switching to fallback right now, set tries to maximum
+        if (!client.forceFallback) {
+          // next time doRequest is called, simulate we tried all hosts
+          tries = client.hosts.length;
         } else {
-          opts.successiveRetryCount = 0;
-          deferred && (success ? deferred.resolve(body) : deferred.reject(body));
-          if (!self._isUndefined(callback) && callback) {
-            callback(success, body);
-          }
+          // we were already using the fallback, but something went wrong (script error)
+          client.currentHostIndex = ++client.currentHostIndex % client.hosts.length;
+          tries += 1;
         }
-      };
-      opts.hostname = self.hosts[self.currentHostIndex];
-      self._jsonRequestByHost(opts);
-    };
-    impl();
 
-    return deferred && deferred.promise;
-  },
+        return doRequest(requester, reqOpts);
+      }
+    }
 
-  _jsonRequestByHost: function(opts) {
-    var self = this;
-    var url = opts.hostname + opts.url;
+    // we can use a fallback if forced AND fallback parameters are available
+    var useFallback = client.forceFallback && opts.fallback;
+    var requestOptions = useFallback ? opts.fallback : opts;
 
-    if (this.jsonp) {
-      this._makeJsonpRequestByHost(url, opts);
-    } else if (this.options.jQuery) {
-      this._makejQueryRequestByHost(url, opts);
-    } else if (this.options.angular) {
-      this._makeAngularRequestByHost(url, opts);
+    var promise = doRequest(
+      useFallback ? client._request.fallback : client._request, {
+        url: requestOptions.url,
+        method: requestOptions.method,
+        body: requestOptions.body,
+        timeout: client.requestTimeout * (tries + 1)
+      }
+    );
+
+    // either we have a callback
+    // either we are using promises
+    if (opts.callback) {
+      promise.then(function okCb(content) {
+        process.nextTick(function() {
+          opts.callback(null, content);
+        });
+      }, function nookCb(err) {
+        process.nextTick(function() {
+          opts.callback(err);
+        });
+      });
     } else {
-      this._makeXmlHttpRequestByHost(url, opts);
+      return promise;
     }
-  },
-
-  /**
-   * Make a $http
-   *
-   * @param url request url (includes endpoint and path)
-   * @param opts all request opts
-   */
-  _makeAngularRequestByHost: function(url, opts) {
-    var self = this;
-    var body = null;
-
-    if (!this._isUndefined(opts.body)) {
-      body = JSON.stringify(opts.body);
-    }
-
-    url += ((url.indexOf('?') === -1) ? '?' : '&') + 'X-Algolia-API-Key=' + this.apiKey;
-    url += '&X-Algolia-Application-Id=' + this.applicationID;
-    if (this.userToken) {
-      url += '&X-Algolia-UserToken=' + encodeURIComponent(this.userToken);
-    }
-    if (this.tagFilters) {
-      url += '&X-Algolia-TagFilters=' + encodeURIComponent(this.tagFilters);
-    }
-    for (var i = 0; i < this.extraHeaders.length; ++i) {
-      url += '&' + this.extraHeaders[i].key + '=' + this.extraHeaders[i].value;
-    }
-    this.options.angular.$http({
-      url: url,
-      method: opts.method,
-      data: body,
-      cache: false,
-      timeout: (this.requestTimeoutInMs * (opts.successiveRetryCount + 1))
-    }).then(function(response) {
-      opts.callback(false, true, response.data);
-    }, function(response) {
-      if (response.status === 0) {
-        // xhr.timeout is not handled by Angular.js right now
-        // let's retry
-        opts.callback(true, false, response.data);
-      } else if (response.status == 400 || response.status === 403 || response.status === 404) {
-        opts.callback(false, false, response.data);
-      } else {
-        opts.callback(true, false, response.data);
-      }
-    });
-  },
-
-  /**
-   * Make a $.ajax
-   *
-   * @param url request url (includes endpoint and path)
-   * @param opts all request opts
-   */
-  _makejQueryRequestByHost: function(url, opts) {
-    var self = this;
-    var body = null;
-
-    if (!this._isUndefined(opts.body)) {
-      body = JSON.stringify(opts.body);
-    }
-
-    url += ((url.indexOf('?') === -1) ? '?' : '&') + 'X-Algolia-API-Key=' + this.apiKey;
-    url += '&X-Algolia-Application-Id=' + this.applicationID;
-    if (this.userToken) {
-      url += '&X-Algolia-UserToken=' + encodeURIComponent(this.userToken);
-    }
-    if (this.tagFilters) {
-      url += '&X-Algolia-TagFilters=' + encodeURIComponent(this.tagFilters);
-    }
-    for (var i = 0; i < this.extraHeaders.length; ++i) {
-      url += '&' + this.extraHeaders[i].key + '=' + this.extraHeaders[i].value;
-    }
-    this.options.jQuery.$.ajax(url, {
-      type: opts.method,
-      timeout: (this.requestTimeoutInMs * (opts.successiveRetryCount + 1)),
-      dataType: 'json',
-      data: body,
-      error: function(xhr, textStatus, error) {
-        if (textStatus === 'timeout') {
-          opts.callback(true, false, { 'message': 'Timeout - Could not connect to endpoint ' + url } );
-        } else if (xhr.status === 400 || xhr.status === 403 || xhr.status === 404) {
-          opts.callback(false, false, xhr.responseJSON );
-        } else {
-          opts.callback(true, false, { 'message': error } );
-        }
-      },
-      success: function(data, textStatus, xhr) {
-        opts.callback(false, true, data);
-      }
-    });
-  },
-
-  /**
-   * Make a JSONP request
-   *
-   * @param url request url (includes endpoint and path)
-   * @param opts all request options
-   */
-  _makeJsonpRequestByHost: function(url, opts) {
-    if (opts.method !== 'GET') {
-      opts.callback(true, false, { 'message': 'Method ' + opts.method + ' ' + url + ' is not supported by JSONP.' });
-      return;
-    }
-
-    var cbCalled = false;
-    var timedOut = false;
-
-    AlgoliaSearch.JSONPCounter += 1;
-    var head = document.getElementsByTagName('head')[0];
-    var script = document.createElement('script');
-    var cb = 'algoliaJSONP_' + AlgoliaSearch.JSONPCounter;
-    var done = false;
-    var ontimeout;
-    var success;
-    var clean;
-
-    window[cb] = function(data) {
-      try { delete window[cb]; } catch (e) { window[cb] = undefined; }
-
-      if (timedOut) {
-        return;
-      }
-
-      var status =
-        data && data.message && data.status ||
-        data && 200;
-
-      var ok = status === 200;
-      var retry = !ok && status !== 400 && status !== 403 && status !== 404;
-      cbCalled = true;
-      opts.callback(retry, ok, data);
-    };
-
-    script.type = 'text/javascript';
-    url += '?callback=' + cb + '&X-Algolia-Application-Id=' + this.applicationID + '&X-Algolia-API-Key=' + this.apiKey;
-
-    if (this.tagFilters) {
-      url += '&X-Algolia-TagFilters=' + encodeURIComponent(this.tagFilters);
-    }
-
-    if (this.userToken) {
-      url += '&X-Algolia-UserToken=' + encodeURIComponent(this.userToken);
-    }
-
-    for (var i = 0; i < this.extraHeaders.length; ++i) {
-      url += '&' + this.extraHeaders[i].key + '=' + this.extraHeaders[i].value;
-    }
-
-    if (opts.body && opts.body.params) {
-      url += '&' + opts.body.params;
-    }
-
-    ontimeout = setTimeout(function() {
-      timedOut = true;
-      clean();
-
-      opts.callback(true, false, { 'message': 'Timeout - Failed to load JSONP script.' });
-    }, this.requestTimeoutInMs);
-
-    success = function() {
-      if (done || timedOut) {
-        return;
-      }
-
-      done = true;
-      clean();
-
-      // script loaded but did not call the fn => script loading error
-      if (!cbCalled) {
-        opts.callback(true, false, { 'message': 'Failed to load JSONP script.' });
-      }
-    };
-
-    clean = function() {
-      clearTimeout(ontimeout);
-      script.onload = null;
-      script.onreadystatechange = null;
-      script.onerror = null;
-      head.removeChild(script);
-
-      try {
-        delete window[cb];
-        delete window[cb + '_loaded'];
-      } catch (e) {
-        window[cb] = null;
-        window[cb + '_loaded'] = null;
-      }
-    };
-
-    // script onreadystatechange needed only for
-    // <= IE8
-    // https://github.com/angular/angular.js/issues/4523
-    script.onreadystatechange = function() {
-      if (this.readyState === 'loaded' || this.readyState === 'complete') {
-        success();
-      }
-    };
-
-    script.onload = function() {
-      success();
-    };
-
-    script.onerror = function() {
-      if (done || timedOut) {
-        return;
-      }
-
-      clean();
-      opts.callback(true, false, { 'message': 'Failed to load JSONP script.' });
-    };
-
-    script.async = true;
-    script.defer = true;
-    script.src = url;
-
-    head.appendChild(script);
-  },
-
-  /**
-   * Make a XmlHttpRequest
-   *
-   * @param url request url (includes endpoint and path)
-   * @param opts all request opts
-   */
-  _makeXmlHttpRequestByHost: function(url, opts) {
-    // no cors or XDomainRequest, no request
-    if (!this._support.cors && !this._support.hasXDomainRequest) {
-      // very old browser, not supported
-      opts.callback(false, false, { 'message': 'CORS not supported' });
-      return;
-    }
-
-    var body = null;
-    var request = this._support.cors ? new XMLHttpRequest() : new XDomainRequest();
-    var ontimeout;
-    var self = this;
-    var timedOut;
-    var timeoutListener;
-
-    if (!this._isUndefined(opts.body)) {
-      body = JSON.stringify(opts.body);
-    }
-
-    url += (url.indexOf('?') === -1 ? '?' : '&') + 'X-Algolia-API-Key=' + this.apiKey;
-    url += '&X-Algolia-Application-Id=' + this.applicationID;
-
-    if (this.userToken) {
-      url += '&X-Algolia-UserToken=' + encodeURIComponent(this.userToken);
-    }
-
-    if (this.tagFilters) {
-      url += '&X-Algolia-TagFilters=' + encodeURIComponent(this.tagFilters);
-    }
-
-    for (var i = 0; i < this.extraHeaders.length; ++i) {
-      url += '&' + this.extraHeaders[i].key + '=' + this.extraHeaders[i].value;
-    }
-
-    timeoutListener = function() {
-      if (!self._support.timeout) {
-        timedOut = true;
-        request.abort();
-      }
-
-      opts.callback(true, false, { 'message': 'Timeout - Could not connect to endpoint ' + url } );
-    };
-
-    request.open(opts.method, url);
-
-    if (this._support.cors && body !== null && opts.method !== 'GET') {
-      request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    }
-
-    // event object not received in IE8, at least
-    // but we do not use it, still important to note
-    request.onload = function(/*event*/) {
-      // When browser does not supports request.timeout, we can
-      // have both a load and timeout event
-      if (timedOut) {
-        return;
-      }
-
-      if (!self._support.timeout) {
-        clearTimeout(ontimeout);
-      }
-
-      var response = null;
-
-      try {
-        response = JSON.parse(request.responseText);
-      } catch(e) {}
-
-      var status =
-        // XHR provides a `status` property
-        request.status ||
-
-        // XDR does not have a `status` property,
-        // we rely on our own API response `status`, only
-        // provided when an error occurs, so we expect a .message
-        response && response.message && response.status ||
-
-        // XDR default to success when no response.status
-        response && 200;
-
-      var success = status === 200 || status === 201;
-      var retry = !success && status !== 400 && status !== 403 && status !== 404;
-
-      opts.callback(retry, success, response);
-    };
-
-    if (this._support.timeout) {
-      // .timeout supported by both XHR and XDR,
-      // we do receive timeout event, tested
-      request.timeout = this.requestTimeoutInMs * (opts.successiveRetryCount + 1);
-
-      request.ontimeout = timeoutListener;
-    } else {
-      ontimeout = setTimeout(timeoutListener, this.requestTimeoutInMs * (opts.successiveRetryCount + 1));
-    }
-
-    request.onerror = function(event) {
-      if (timedOut) {
-        return;
-      }
-
-      if (!self._support.timeout) {
-        clearTimeout(ontimeout);
-      }
-
-      // error event is trigerred both with XDR/XHR on:
-      //   - DNS error
-      //   - unallowed cross domain request
-      opts.callback(true, false, { 'message': 'Could not connect to host', 'error': event } );
-    };
-
-    request.send(body);
   },
 
    /*
@@ -964,7 +585,7 @@ AlgoliaSearch.prototype = {
     }
     for (var key in args) {
       if (key !== null && args.hasOwnProperty(key)) {
-        params += (params.length === 0) ? '?' : '&';
+        params += params === '' ? '' : '&';
         params += key + '=' + encodeURIComponent(Object.prototype.toString.call(args[key]) === '[object Array]' ? JSON.stringify(args[key]) : args[key]);
       }
     }
@@ -972,13 +593,6 @@ AlgoliaSearch.prototype = {
   },
   _isUndefined: function(obj) {
     return obj === void 0;
-  },
-
-  _support: {
-    hasXMLHttpRequest: 'XMLHttpRequest' in window,
-    hasXDomainRequest: 'XDomainRequest' in window,
-    cors: 'withCredentials' in new XMLHttpRequest(),
-    timeout: 'timeout' in new XMLHttpRequest()
   }
 };
 
@@ -997,38 +611,41 @@ AlgoliaSearch.prototype.Index.prototype = {
    * Add an object in this index
    *
    * @param content contains the javascript object to add inside the index
-   * @param callback (optional) the result callback with two arguments:
-   *  success: boolean set to true if the request was successfull
-   *  content: the server answer that contains 3 elements: createAt, taskId and objectID
    * @param objectID (optional) an objectID you want to attribute to this object
    * (if the attribute already exist the old object will be overwrite)
+   * @param callback (optional) the result callback with two arguments:
+   *  error: null or Error('message')
+   *  content: the server answer that contains 3 elements: createAt, taskId and objectID
    */
-  addObject: function(content, callback, objectID) {
+  addObject: function(content, objectID, callback) {
     var indexObj = this;
-    if (this.as._isUndefined(objectID)) {
-      return this.as._jsonRequest({ method: 'POST',
-                   url: '/1/indexes/' + encodeURIComponent(indexObj.indexName),
-                   body: content,
-                   callback: callback });
-    } else {
-      return this.as._jsonRequest({ method: 'PUT',
-                   url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/' + encodeURIComponent(objectID),
-                   body: content,
-                   callback: callback });
+
+    if (arguments.length === 1 || typeof objectID === 'function') {
+      callback = objectID;
+      objectID = undefined;
     }
 
+    return this.as._jsonRequest({
+      method: objectID !== undefined ?
+        'PUT' : // update or create
+        'POST', // create (API generates an objectID)
+      url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + // create
+        (objectID !== undefined ? '/' + encodeURIComponent(objectID) : ''), // update or create
+      body: content,
+      callback: callback
+    });
   },
   /*
    * Add several objects
    *
    * @param objects contains an array of objects to add
    * @param callback (optional) the result callback with two arguments:
-   *  success: boolean set to true if the request was successfull
+   *  error: null or Error('message')
    *  content: the server answer that updateAt and taskID
    */
   addObjects: function(objects, callback) {
     var indexObj = this;
-    var postObj = {requests:[]};
+    var postObj = {requests: []};
     for (var i = 0; i < objects.length; ++i) {
       var request = { action: 'addObject',
               body: objects[i] };
@@ -1043,31 +660,35 @@ AlgoliaSearch.prototype.Index.prototype = {
    * Get an object from this index
    *
    * @param objectID the unique identifier of the object to retrieve
+   * @param attrs (optional) if set, contains the array of attribute names to retrieve
    * @param callback (optional) the result callback with two arguments
-   *  success: boolean set to true if the request was successfull
+   *  error: null or Error('message')
    *  content: the object to retrieve or the error message if a failure occured
-   * @param attributes (optional) if set, contains the array of attribute names to retrieve
    */
-  getObject: function(objectID, callback, attributes) {
-    if (Object.prototype.toString.call(callback) === '[object Array]' && !attributes) {
-      attributes = callback;
-      callback = null;
-    }
+  getObject: function(objectID, attrs, callback) {
     var indexObj = this;
+
+    if (arguments.length === 1 || typeof attrs === 'function') {
+      callback = attrs;
+      attrs = undefined;
+    }
+
     var params = '';
-    if (!this.as._isUndefined(attributes)) {
+    if (attrs !== undefined) {
       params = '?attributes=';
-      for (var i = 0; i < attributes.length; ++i) {
+      for (var i = 0; i < attrs.length; ++i) {
         if (i !== 0) {
           params += ',';
         }
-        params += attributes[i];
+        params += attrs[i];
       }
     }
 
-    return this.as._jsonRequest({ method: 'GET',
-                 url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/' + encodeURIComponent(objectID) + params,
-                 callback: callback });
+    return this.as._jsonRequest({
+      method: 'GET',
+      url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/' + encodeURIComponent(objectID) + params,
+      callback: callback
+    });
   },
 
   /*
@@ -1076,7 +697,7 @@ AlgoliaSearch.prototype.Index.prototype = {
    * @param partialObject contains the javascript attributes to override, the
    *  object must contains an objectID attribute
    * @param callback (optional) the result callback with two arguments:
-   *  success: boolean set to true if the request was successfull
+   *  error: null or Error('message')
    *  content: the server answer that contains 3 elements: createAt, taskId and objectID
    */
   partialUpdateObject: function(partialObject, callback) {
@@ -1084,19 +705,19 @@ AlgoliaSearch.prototype.Index.prototype = {
     return this.as._jsonRequest({ method: 'POST',
                  url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/' + encodeURIComponent(partialObject.objectID) + '/partial',
                  body: partialObject,
-                 callback:  callback });
+                 callback: callback });
   },
   /*
    * Partially Override the content of several objects
    *
    * @param objects contains an array of objects to update (each object must contains a objectID attribute)
    * @param callback (optional) the result callback with two arguments:
-   *  success: boolean set to true if the request was successfull
+   *  error: null or Error('message')
    *  content: the server answer that updateAt and taskID
    */
   partialUpdateObjects: function(objects, callback) {
     var indexObj = this;
-    var postObj = {requests:[]};
+    var postObj = {requests: []};
     for (var i = 0; i < objects.length; ++i) {
       var request = { action: 'partialUpdateObject',
               objectID: objects[i].objectID,
@@ -1113,7 +734,7 @@ AlgoliaSearch.prototype.Index.prototype = {
    *
    * @param object contains the javascript object to save, the object must contains an objectID attribute
    * @param callback (optional) the result callback with two arguments:
-   *  success: boolean set to true if the request was successfull
+   *  error: null or Error('message')
    *  content: the server answer that updateAt and taskID
    */
   saveObject: function(object, callback) {
@@ -1128,12 +749,12 @@ AlgoliaSearch.prototype.Index.prototype = {
    *
    * @param objects contains an array of objects to update (each object must contains a objectID attribute)
    * @param callback (optional) the result callback with two arguments:
-   *  success: boolean set to true if the request was successfull
+   *  error: null or Error('message')
    *  content: the server answer that updateAt and taskID
    */
   saveObjects: function(objects, callback) {
     var indexObj = this;
-    var postObj = {requests:[]};
+    var postObj = {requests: []};
     for (var i = 0; i < objects.length; ++i) {
       var request = { action: 'updateObject',
               objectID: objects[i].objectID,
@@ -1150,14 +771,20 @@ AlgoliaSearch.prototype.Index.prototype = {
    *
    * @param objectID the unique identifier of object to delete
    * @param callback (optional) the result callback with two arguments:
-   *  success: boolean set to true if the request was successfull
+   *  error: null or Error('message')
    *  content: the server answer that contains 3 elements: createAt, taskId and objectID
    */
   deleteObject: function(objectID, callback) {
-    if (objectID === null || objectID.length === 0) {
-      callback(false, { message: 'empty objectID'});
-      return;
+    if (typeof objectID === 'function' || typeof objectID !== 'string' && typeof objectID !== 'number') {
+      var err = new Error('Cannot delete an object without an objectID');
+      callback = objectID;
+      if (typeof callback === 'function') {
+        return callback(err);
+      }
+
+      return this.as._request.reject(err);
     }
+
     var indexObj = this;
     return this.as._jsonRequest({ method: 'DELETE',
                  url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/' + encodeURIComponent(objectID),
@@ -1168,9 +795,6 @@ AlgoliaSearch.prototype.Index.prototype = {
    * minimize number of OPTIONS queries: Cross-Origin Resource Sharing).
    *
    * @param query the full text query
-   * @param callback the result callback with two arguments:
-   *  success: boolean set to true if the request was successfull. If false, the content contains the error.
-   *  content: the server answer that contains the list of results.
    * @param args (optional) if set, contains an object with query parameters:
    * - page: (integer) Pagination parameter used to select the page to retrieve.
    *                   Page is zero-based and defaults to 0. Thus, to retrieve the 10th page you need to set page=9
@@ -1230,38 +854,40 @@ AlgoliaSearch.prototype.Index.prototype = {
    *   one is kept and others are removed.
    * - restrictSearchableAttributes: List of attributes you want to use for textual search (must be a subset of the attributesToIndex index setting)
    * either comma separated or as an array
-   * @param delay (optional) if set, wait for this delay (in ms) and only send the query if there was no other in the meantime.
+   * @param callback the result callback with two arguments:
+   *  error: null or Error('message'). If false, the content contains the error.
+   *  content: the server answer that contains the list of results.
    */
-  search: function(query, callback, args, delay) {
-    if (query === undefined || query === null) {
-      query = '';
-    }
-
-    // no query = getAllObjects
-    if (typeof query === 'function') {
+  search: function(query, args, callback) {
+    if (arguments.length === 0 || typeof query === 'function') {
+      // .search(), .search(cb)
       callback = query;
       query = '';
+    } else if (arguments.length === 1 || typeof args === 'function') {
+      // .search(query/args), .search(query, cb)
+      callback = args;
+      args = undefined;
     }
 
-    if (typeof callback === 'object' && (this.as._isUndefined(args) || !args)) {
-      args = callback;
-      callback = null;
+    // .search(args), careful: typeof null === 'object'
+    if (typeof query === 'object' && query !== null) {
+      args = query;
+      query = undefined;
+    } else if (query === undefined || query === null) { // .search(undefined/null)
+      query = '';
     }
 
-    var indexObj = this;
-    var params = 'query=' + encodeURIComponent(query);
-    if (!this.as._isUndefined(args) && args !== null) {
+    var params = '';
+
+    if (query !== undefined) {
+      params += 'query=' + encodeURIComponent(query);
+    }
+
+    if (args !== undefined) {
       params = this.as._getSearchParams(args, params);
     }
-    window.clearTimeout(indexObj.onDelayTrigger);
-    if (!this.as._isUndefined(delay) && delay !== null && delay > 0) {
-      var onDelayTrigger = window.setTimeout( function() {
-        indexObj._search(params, callback);
-      }, delay);
-      indexObj.onDelayTrigger = onDelayTrigger;
-    } else {
-      return this._search(params, callback);
-    }
+
+    return this._search(params, callback);
   },
 
   /*
@@ -1270,13 +896,18 @@ AlgoliaSearch.prototype.Index.prototype = {
    * @param page Pagination parameter used to select the page to retrieve.
    *             Page is zero-based and defaults to 0. Thus, to retrieve the 10th page you need to set page=9
    * @param hitsPerPage: Pagination parameter used to select the number of hits per page. Defaults to 1000.
+   * @param callback the result callback with two arguments:
+   *  error: null or Error('message'). If false, the content contains the error.
+   *  content: the server answer that contains the list of results.
    */
-  browse: function(page, callback, hitsPerPage) {
-    if (+callback > 0 && (this.as._isUndefined(hitsPerPage) || !hitsPerPage)) {
-      hitsPerPage = callback;
-      callback = null;
-    }
+  browse: function(page, hitsPerPage, callback) {
     var indexObj = this;
+
+    if (arguments.length === 1 || typeof hitsPerPage === 'function') {
+      callback = hitsPerPage;
+      hitsPerPage = undefined;
+    }
+
     var params = '?page=' + page;
     if (!this.as._isUndefined(hitsPerPage)) {
       params += '&hitsPerPage=' + hitsPerPage;
@@ -1293,13 +924,14 @@ AlgoliaSearch.prototype.Index.prototype = {
   ttAdapter: function(params) {
     var self = this;
     return function(query, cb) {
-      self.search(query, function(success, content) {
-        if (success) {
-          cb(content.hits);
-        } else {
-          cb(content && content.message);
+      self.search(query, params, function(err, content) {
+        if (err) {
+          cb(err);
+          return;
         }
-      }, params);
+
+        cb(content.hits);
+      });
     };
   },
 
@@ -1309,31 +941,51 @@ AlgoliaSearch.prototype.Index.prototype = {
    *
    * @param taskID the id of the task returned by server
    * @param callback the result callback with with two arguments:
-   *  success: boolean set to true if the request was successfull
+   *  error: null or Error('message')
    *  content: the server answer that contains the list of results
    */
   waitTask: function(taskID, callback) {
+    // waitTask() must be handled differently from other methods,
+    // it's a recursive method using a timeout
     var indexObj = this;
-    return this.as._jsonRequest({ method: 'GET',
-                 url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/task/' + taskID,
-                 callback: function(success, body) {
-      if (success) {
-        if (body.status === 'published') {
-          callback(true, body);
-        } else {
-          setTimeout(function() { indexObj.waitTask(taskID, callback); }, 100);
-        }
-      } else {
-        callback(false, body);
+
+    var promise = this.as._jsonRequest({
+      method: 'GET',
+      url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/task/' + taskID
+    }).then(function success(content) {
+      if (content.status !== 'published') {
+        return new indexObj.as._request.delay(100).then(function() {
+          return indexObj.waitTask(taskID, callback);
+        });
       }
-    }});
+
+      if (callback) {
+        process.nextTick(function() {
+          callback(null, content);
+        });
+      } else {
+        return content;
+      }
+    }, function failure(err) {
+      if (callback) {
+        process.nextTick(function() {
+          callback(err);
+        });
+      } else {
+        return err;
+      }
+    });
+
+    if (!callback) {
+      return promise;
+    }
   },
 
   /*
    * This function deletes the index content. Settings and index specific API keys are kept untouched.
    *
    * @param callback (optional) the result callback with two arguments
-   *  success: boolean set to true if the request was successfull
+   *  error: null or Error('message')
    *  content: the settings object or the error message if a failure occured
    */
   clearIndex: function(callback) {
@@ -1346,7 +998,7 @@ AlgoliaSearch.prototype.Index.prototype = {
    * Get settings of this index
    *
    * @param callback (optional) the result callback with two arguments
-   *  success: boolean set to true if the request was successfull
+   *  error: null or Error('message')
    *  content: the settings object or the error message if a failure occured
    */
   getSettings: function(callback) {
@@ -1407,7 +1059,7 @@ AlgoliaSearch.prototype.Index.prototype = {
    * - highlightPostTag: (string) Specify the string that is inserted after the highlighted parts in the query result (default to "</em>").
    * - optionalWords: (array of strings) Specify a list of words that should be considered as optional when found in the query.
    * @param callback (optional) the result callback with two arguments
-   *  success: boolean set to true if the request was successfull
+   *  error: null or Error('message')
    *  content: the server answer or the error message if a failure occured
    */
   setSettings: function(settings, callback) {
@@ -1421,8 +1073,8 @@ AlgoliaSearch.prototype.Index.prototype = {
    * List all existing user keys associated to this index
    *
    * @param callback the result callback with two arguments
-   *  success: boolean set to true if the request was successfull
-   *  content: the server answer with user keys list or error description if success is false.
+   *  error: null or Error('message')
+   *  content: the server answer with user keys list
    */
   listUserKeys: function(callback) {
     var indexObj = this;
@@ -1433,9 +1085,10 @@ AlgoliaSearch.prototype.Index.prototype = {
   /*
    * Get ACL of a user key associated to this index
    *
+   * @param key
    * @param callback the result callback with two arguments
-   *  success: boolean set to true if the request was successfull
-   *  content: the server answer with user keys list or error description if success is false.
+   *  error: null or Error('message')
+   *  content: the server answer with user keys list
    */
   getUserKeyACL: function(key, callback) {
     var indexObj = this;
@@ -1446,9 +1099,10 @@ AlgoliaSearch.prototype.Index.prototype = {
   /*
    * Delete an existing user key associated to this index
    *
+   * @param key
    * @param callback the result callback with two arguments
-   *  success: boolean set to true if the request was successfull
-   *  content: the server answer with user keys list or error description if success is false.
+   *  error: null or Error('message')
+   *  content: the server answer with user keys list
    */
   deleteUserKey: function(key, callback) {
     var indexObj = this;
@@ -1468,8 +1122,8 @@ AlgoliaSearch.prototype.Index.prototype = {
    *   - settings : allows to get index settings (https only)
    *   - editSettings : allows to change index settings (https only)
    * @param callback the result callback with two arguments
-   *  success: boolean set to true if the request was successfull
-   *  content: the server answer with user keys list or error description if success is false.
+   *  error: null or Error('message')
+   *  content: the server answer with user keys list
    */
   addUserKey: function(acls, callback) {
     var indexObj = this;
@@ -1491,20 +1145,20 @@ AlgoliaSearch.prototype.Index.prototype = {
    *   - deleteIndex : allows to delete index content (https only)
    *   - settings : allows to get index settings (https only)
    *   - editSettings : allows to change index settings (https only)
-   * @param validity the number of seconds after which the key will be automatically removed (0 means no time limit for this key)
-   * @param maxQueriesPerIPPerHour Specify the maximum number of API calls allowed from an IP address per hour.
-   * @param maxHitsPerQuery Specify the maximum number of hits this API key can retrieve in one call.
+   * @param params.validity the number of seconds after which the key will be automatically removed (0 means no time limit for this key)
+   * @param params.maxQueriesPerIPPerHour Specify the maximum number of API calls allowed from an IP address per hour.
+   * @param params.maxHitsPerQuery Specify the maximum number of hits this API key can retrieve in one call.
    * @param callback the result callback with two arguments
-   *  success: boolean set to true if the request was successfull
-   *  content: the server answer with user keys list or error description if success is false.
+   *  error: null or Error('message')
+   *  content: the server answer with user keys list
    */
-  addUserKeyWithValidity: function(acls, validity, maxQueriesPerIPPerHour, maxHitsPerQuery, callback) {
+  addUserKeyWithValidity: function(acls, params, callback) {
     var indexObj = this;
     var aclsObject = {};
     aclsObject.acl = acls;
-    aclsObject.validity = validity;
-    aclsObject.maxQueriesPerIPPerHour = maxQueriesPerIPPerHour;
-    aclsObject.maxHitsPerQuery = maxHitsPerQuery;
+    aclsObject.validity = params.validity;
+    aclsObject.maxQueriesPerIPPerHour = params.maxQueriesPerIPPerHour;
+    aclsObject.maxHitsPerQuery = params.maxHitsPerQuery;
     return this.as._jsonRequest({ method: 'POST',
                  url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/keys',
                  body: aclsObject,
@@ -1514,37 +1168,17 @@ AlgoliaSearch.prototype.Index.prototype = {
   /// Internal methods only after this line
   ///
   _search: function(params, callback) {
-    var pObj = {params: params};
-    if (this.as.jsonp === null) {
-      var self = this;
-      return this.as._jsonRequest({ cache: this.cache,
-        method: 'POST',
-        url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/query',
-        body: pObj,
-        callback: function(success, content) {
-          if (!success) {
-            // retry first with JSONP
-            self.as.jsonp = true;
-            self._search(params, callback);
-          } else {
-            self.as.jsonp = false;
-            callback && callback(success, content);
-          }
-        }
-      });
-    } else if (this.as.jsonp) {
-      return this.as._jsonRequest({ cache: this.cache,
-                   method: 'GET',
-                   url: '/1/indexes/' + encodeURIComponent(this.indexName),
-                   body: pObj,
-                   callback: callback });
-    } else {
-      return this.as._jsonRequest({ cache: this.cache,
-                   method: 'POST',
-                   url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/query',
-                   body: pObj,
-                   callback: callback});
-    }
+    return this.as._jsonRequest({ cache: this.cache,
+      method: 'POST',
+      url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/query',
+      body: {params: params},
+      fallback: {
+        method: 'GET',
+        url: '/1/indexes/' + encodeURIComponent(this.indexName),
+        body: {params: params}
+      },
+      callback: callback
+    });
   },
 
   // internal attributes
@@ -1553,3 +1187,38 @@ AlgoliaSearch.prototype.Index.prototype = {
   typeAheadArgs: null,
   typeAheadValueOption: null
 };
+
+// extracted from https://github.com/component/map/blob/master/index.js
+// without the crazy toFunction thing
+function map(arr, fn){
+  var ret = [];
+  for (var i = 0; i < arr.length; ++i) {
+    ret.push(fn(arr[i], i));
+  }
+  return ret;
+}
+
+// extracted from https://github.com/coolaj86/knuth-shuffle
+// not compatible with browserify
+function shuffle(array) {
+  /*eslint-disable*/
+  var currentIndex = array.length
+    , temporaryValue
+    , randomIndex
+    ;
+
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
+}

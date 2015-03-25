@@ -1,6 +1,6 @@
 var test = require('tape');
 
-var requestTimeout = 2000;
+var requestTimeout = 1000;
 
 test('Request strategy handles slow responses (no double callback)', function(t) {
   var sinon = require('sinon');
@@ -8,8 +8,11 @@ test('Request strategy handles slow responses (no double callback)', function(t)
 
   var createFixture = require('../../utils/create-fixture');
 
-  var clock = sinon.useFakeTimers();
-  var fixture = createFixture();
+  var fixture = createFixture({
+    clientOptions: {
+      timeout: requestTimeout
+    }
+  });
 
   var index = fixture.index;
 
@@ -21,11 +24,10 @@ test('Request strategy handles slow responses (no double callback)', function(t)
 
     t.deepEqual(
       searchCallback.args[0],
-      [true, {slowResponse: 'ok'}],
-      'Callback called with true, {"slowResponse": "ok"}'
+      [null, {slowResponse: 'ok'}],
+      'Callback called with null, {"slowResponse": "ok"}'
     );
 
-    clock.restore();
     fauxJax.restore();
     t.end();
   });
@@ -48,25 +50,25 @@ test('Request strategy handles slow responses (no double callback)', function(t)
     'One request made'
   );
 
-  clock.tick(requestTimeout);
+  setTimeout(function() {
+    var secondRequest = fauxJax.requests[1];
 
-  var secondRequest = fauxJax.requests[1];
+    t.equal(
+      fauxJax.requests.length,
+      2,
+      'Second request made'
+    );
 
-  t.equal(
-    fauxJax.requests.length,
-    2,
-    'Second request made'
-  );
+    firstRequest.respond(
+      200,
+      {},
+      JSON.stringify({slowResponse: 'timeout response'})
+    );
 
-  firstRequest.respond(
-    200,
-    {},
-    JSON.stringify({slowResponse: 'timeout response'})
-  );
-
-  secondRequest.respond(
-    200,
-    {},
-    JSON.stringify({slowResponse: 'ok'})
-  );
+    secondRequest.respond(
+      200,
+      {},
+      JSON.stringify({slowResponse: 'ok'})
+    );
+  }, requestTimeout + requestTimeout / 2);
 });

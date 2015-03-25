@@ -1,6 +1,6 @@
- dist/algoliasearch.js -diff
- dist/algoliasearch.min.js -diff
- dist/algoliasearch.angular.js -diff
- dist/algoliasearch.angular.min.js -diff
- dist/algoliasearch.jquery.js -diff
- dist/algoliasearch.jquery.min.js -diff
+dist/algoliasearch.js -diff
+dist/algoliasearch.min.js -diff
+dist/algoliasearch.angular.js -diff
+dist/algoliasearch.angular.min.js -diff
+dist/algoliasearch.jquery.js -diff
+dist/algoliasearch.jquery.min.js -diff

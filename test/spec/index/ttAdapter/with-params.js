@@ -32,9 +32,9 @@ test('index.ttAdapter(params, cb)', function(t) {
       JSON.stringify({params: 'query=a%20search&hitsPerPage=200'}),
       'We set a specific `hitsPerPage` when searching'
     );
+
+    fauxJax.restore();
   });
 
   fauxJax.requests[0].respond(200, {}, JSON.stringify(fakeResponse));
-
-  fauxJax.restore();
 });

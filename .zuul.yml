@@ -17,6 +17,11 @@ browsers:
   - name: android
     version: 4.1..latest
 server: ./test/support-server/index.js
+scripts:
+  - /node_modules/jquery/dist/jquery.min.js
+  - /node_modules/jQuery-ajaxTransport-XDomainRequest/jquery.xdomainrequest.min.js
+  - /node_modules/angular/angular.min.js
+html: ./test/template.html
 browserify:
   # will inline bulk-require calls
   # https://github.com/substack/bulkify
