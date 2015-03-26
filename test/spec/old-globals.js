@@ -6,8 +6,11 @@
 
 var test = require('tape');
 
-var message = 'You are trying to use a new version of the AlgoliaSearch JavaScript client with an old notation.' +
-  '\nPlease read our migration guide at https://github.com/algolia/algoliasearch-client-js/wiki/Migration-guide-from-2.x.x-to-3.x.x';
+var message =
+  '-- AlgoliaSearch V2 => V3 error --\n' +
+  'You are trying to use a new version of the AlgoliaSearch JavaScript client with an old notation.\n' +
+  'Please read our migration guide at https://github.com/algolia/algoliasearch-client-js/wiki/Migration-guide-from-2.x.x-to-3.x.x\n' +
+  '-- /AlgoliaSearch V2 => V3 error --';
 
 test('new AlgoliaSearch() throws', function(t) {
   t.plan(3);

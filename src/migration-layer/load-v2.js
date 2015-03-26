@@ -5,9 +5,12 @@ function loadV2(buildName) {
   var v2ScriptUrl = '//cdn.jsdelivr.net/algoliasearch/2/' + buildName + '.min.js';
 
   var message =
-    'Warning, you are using the `latest` version tag from jsDelivr for the AlgoliaSearch library.\n' +
-    'We updated the AlgoliaSearch JavaScript client to V3, using `latest` is no more recommended.\n' +
-    'Please read our migration guide at https://github.com/algolia/algoliasearch-client-js/wiki/Migration-guide-from-2.x.x-to-3.x.x';
+    '-- AlgoliaSearch `latest` warning --\n' +
+    'Warning, you are using the `latest` version string from jsDelivr to load the AlgoliaSearch library.\n' +
+    'Using `latest` is no more recommended, you should load //cdn.jsdelivr.net/algoliasearch/2/algoliasearch.min.js\n\n' +
+    'Also, we updated the AlgoliaSearch JavaScript client to V3. If you want to upgrade,\n' +
+    'please read our migration guide at https://github.com/algolia/algoliasearch-client-js/wiki/Migration-guide-from-2.x.x-to-3.x.x\n' +
+    '-- /AlgoliaSearch  `latest` warning --';
 
   if (global.console) {
     if (global.console.warn) {

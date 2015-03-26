@@ -8,6 +8,7 @@ UNRELEASED
         Firefox stable
         IE 8, 9, 10, 11
       * tested on correponding customer websites
+    * FIX: better warning messages when using `latest` or trying to use V3 as V2
 
 2015-26-03  3.0.2
 
