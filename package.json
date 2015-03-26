@@ -43,6 +43,7 @@
   ],
   "dependencies": {
     "es6-promise": "2.0.1",
+    "load-script": "1.0.0",
     "packageify": "0.2.2"
   },
   "devDependencies": {
