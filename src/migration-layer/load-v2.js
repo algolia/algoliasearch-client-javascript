@@ -14,9 +14,13 @@ function loadV2(buildName) {
     }
   }
 
+  // "temp" fix, to include the full JS client
+  // for people loading /latest/ asynchronously
+  require('./v2/algoliasearch.js');
+
   // why \x3c? http://stackoverflow.com/a/236106/147079
-  document.write(
-    '\x3Cscript src="//cdn.jsdelivr.net/algoliasearch/2.9/' +
-    buildName + '.min.js">\x3C/script>'
-  );
+  // document.write(
+  //   '\x3Cscript src="//cdn.jsdelivr.net/algoliasearch/2.9/' +
+  //   buildName + '.min.js">\x3C/script>'
+  // );
 }
