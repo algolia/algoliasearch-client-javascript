@@ -1,5 +1,8 @@
 # Algolia Search API Client for JavaScript
 
+**We recently (March 2015) released a new version (V3) of our JavaScript client,
+if you were using our previous version (V2), [read the migration guide](https://github.com/algolia/algoliasearch-client-js/wiki/Migration-guide-from-2.x.x-to-3.x.x)**
+
 
 
 [Algolia Search](http://www.algolia.com) is a hosted full-text, numerical, and faceted search engine capable of delivering realtime results from the first keystroke.
