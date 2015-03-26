@@ -1,5 +1,14 @@
 CHANGELOG
 
+UNRELEASED
+
+    * FIX: load V2 using a DOMElement when V3 is loaded ASYNCHRONOUSLY with /latest/
+      * tested on all majors browsers:
+        Chrome stable
+        Firefox stable
+        IE 8, 9, 10, 11
+      * tested on correponding customer websites
+
 2015-26-03  3.0.2
 
     * temp /latest/ fix for some clients loading /latest/ in async mode
