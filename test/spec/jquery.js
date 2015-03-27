@@ -15,7 +15,7 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
     var parse = require('url-parse');
 
     // load jQuery Algolia Search module
-    require('../../src/algoliasearch.jquery');
+    require('../../src/browser/builds/algoliasearch.jquery');
 
     t.ok(global.$.algolia, 'we exported an `algolia` property on jQuery');
 
@@ -98,7 +98,7 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
     var fauxJax = require('faux-jax');
 
     // load jQuery Algolia Search module
-    require('../../src/algoliasearch.jquery');
+    require('../../src/browser/builds/algoliasearch.jquery');
 
     var client = global.$.algolia.Client('jquery-error-applicationID', 'jquery-error-apiKey');
     var index = client.initIndex('jquery-error-indexName');
@@ -166,7 +166,7 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
     var currentURL = parse(location.href);
 
     // load jQuery Algolia Search module
-    require('../../src/algoliasearch.jquery');
+    require('../../src/browser/builds/algoliasearch.jquery');
 
     var client = global.$.algolia.Client(
       'jquery-error-applicationID',
@@ -225,7 +225,7 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
     var fauxJax = require('faux-jax');
 
     // load jQuery Algolia Search module
-    require('../../src/algoliasearch.jquery');
+    require('../../src/browser/builds/algoliasearch.jquery');
 
     var client = global.$.algolia.Client(
       'jquery-error-applicationID',

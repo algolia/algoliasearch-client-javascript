@@ -1,11 +1,11 @@
 // this is the standalone build entry of AlgoliaSearch
-var createAlgoliasearch = require('./create-algoliasearch');
+var createAlgoliasearch = require('../../create-algoliasearch');
 
 module.exports = createAlgoliasearch(request);
 
 var Promise = global.Promise || require('es6-promise').Promise;
 
-var JSONPRequest = require('./jsonp-request');
+var JSONPRequest = require('../jsonp-request');
 
 var support = {
   hasXMLHttpRequest: 'XMLHttpRequest' in window,
@@ -138,4 +138,4 @@ request.delay = function(ms) {
   });
 };
 
-require('./migration-layer')('algoliasearch');
+require('../migration-layer/')('algoliasearch');

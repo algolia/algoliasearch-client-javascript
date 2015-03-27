@@ -3,7 +3,7 @@
   "version": "3.0.2",
   "description": "AlgoliaSearch API JavaScript client",
   "main": "index.js",
-  "browser": "src/browser.js",
+  "browser": "src/browser/builds/algoliasearch.js",
   "scripts": {
     "build": "PACKAGE_VERSION=$(json -f package.json version) sh build.sh",
     "test": "zuul --phantom --ui tape test/run.js | tap-growl | tap-spec && npm run lint",

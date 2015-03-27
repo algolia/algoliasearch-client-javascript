@@ -12,7 +12,7 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
     var parse = require('url-parse');
 
     // load AngularJS Algolia Search module
-    require('../../src/algoliasearch.angular');
+    require('../../src/browser/builds/algoliasearch.angular');
 
     global.angular
       .module('angularTestSuccess', ['algoliasearch'])
@@ -104,7 +104,7 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
     var fauxJax = require('faux-jax');
 
     // load AngularJS Algolia Search module
-    require('../../src/algoliasearch.angular');
+    require('../../src/browser/builds/algoliasearch.angular');
 
     global.angular
       .module('angularTestError', ['algoliasearch'])
@@ -155,7 +155,7 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
     var currentURL = parse(location.href);
 
     // load AngularJS Algolia Search module
-    require('../../src/algoliasearch.angular');
+    require('../../src/browser/builds/algoliasearch.angular');
 
     global.angular
       .module('angularJSONPFallback', ['algoliasearch'])
@@ -215,7 +215,7 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
     var currentURL = parse(location.href);
 
     // load AngularJS Algolia Search module
-    require('../../src/algoliasearch.angular');
+    require('../../src/browser/builds/algoliasearch.angular');
 
     global.angular
       .module('angularTimeout', ['algoliasearch'])

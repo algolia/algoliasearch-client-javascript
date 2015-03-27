@@ -11,8 +11,8 @@ echo '..Browserify'
 
 # cannot use a loop, bundles are different (--standalone)
 browserify -p bundle-collapser/plugin index.js --standalone algoliasearch > dist/algoliasearch.js
-browserify -p bundle-collapser/plugin src/algoliasearch.angular.js > dist/algoliasearch.angular.js
-browserify -p bundle-collapser/plugin src/algoliasearch.jquery.js > dist/algoliasearch.jquery.js
+browserify -p bundle-collapser/plugin src/browser/builds/algoliasearch.angular.js > dist/algoliasearch.angular.js
+browserify -p bundle-collapser/plugin src/browser/builds/algoliasearch.jquery.js > dist/algoliasearch.jquery.js
 
 echo '..Minify'
 

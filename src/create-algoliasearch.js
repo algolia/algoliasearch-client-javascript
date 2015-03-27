@@ -5,7 +5,7 @@ module.exports = createAlgoliasearch;
 
 function createAlgoliasearch(request) {
   function algoliasearch(applicationID, apiKey, opts) {
-    var AlgoliaSearch = require('./algoliasearch');
+    var AlgoliaSearch = require('./AlgoliaSearch');
 
     return new AlgoliaSearch(applicationID, apiKey, opts, request);
   }

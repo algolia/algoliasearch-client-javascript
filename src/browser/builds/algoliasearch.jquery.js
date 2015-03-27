@@ -1,5 +1,5 @@
-var createAlgoliasearch = require('./create-algoliasearch');
-var JSONPRequest = require('./jsonp-request');
+var createAlgoliasearch = require('../../create-algoliasearch');
+var JSONPRequest = require('../jsonp-request');
 
 var algoliasearch = createAlgoliasearch(request);
 var $ = global.jQuery;
@@ -72,4 +72,4 @@ request.delay = function(ms) {
   }).promise();
 };
 
-require('./migration-layer')('algoliasearch.jquery');
+require('../migration-layer/')('algoliasearch.jquery');

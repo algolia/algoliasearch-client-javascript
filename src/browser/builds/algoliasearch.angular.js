@@ -1,5 +1,5 @@
-var createAlgoliasearch = require('./create-algoliasearch');
-var JSONPRequest = require('./jsonp-request');
+var createAlgoliasearch = require('../../create-algoliasearch');
+var JSONPRequest = require('../jsonp-request');
 
 global.angular.module('algoliasearch', [])
   .service('algolia', ['$http', '$q', '$timeout', function ($http, $q, $timeout) {
@@ -87,4 +87,4 @@ global.angular.module('algoliasearch', [])
     };
   }]);
 
-require('./migration-layer')('algoliasearch.angular');
+require('../migration-layer/')('algoliasearch.angular');
