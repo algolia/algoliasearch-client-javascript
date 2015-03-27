@@ -19,7 +19,7 @@ test('client.clearCache()', function(t) {
 
   // store the query in the cache
   client.startQueriesBatch();
-  client.sendQueriesBatch();
+  client.sendQueriesBatch(makeSecondRequest);
   fauxJax.requests[0].respond(200, {}, '{}');
   t.equal(
     fauxJax.requests.length,
@@ -27,27 +27,31 @@ test('client.clearCache()', function(t) {
     'One request done'
   );
 
-  // same request again
-  client.startQueriesBatch();
-  client.sendQueriesBatch();
-  t.equal(
-    fauxJax.requests.length,
-    1,
-    'Still one request done'
-  );
+  function makeSecondRequest() {
+    // same request again
+    client.startQueriesBatch();
+    client.sendQueriesBatch(makeThirdRequest);
+    t.equal(
+      fauxJax.requests.length,
+      1,
+      'Still one request done'
+    );
+  }
 
-  client.clearCache();
+  function makeThirdRequest() {
+    client.clearCache();
 
-  // same request again
-  client.startQueriesBatch();
-  client.sendQueriesBatch();
+    // same request again
+    client.startQueriesBatch();
+    client.sendQueriesBatch();
 
-  fauxJax.requests[1].respond(200, {}, '{}');
-  t.equal(
-    fauxJax.requests.length,
-    2,
-    'Second request done'
-  );
+    fauxJax.requests[1].respond(200, {}, '{}');
+    t.equal(
+      fauxJax.requests.length,
+      2,
+      'Second request done'
+    );
 
-  fauxJax.restore();
+    fauxJax.restore();
+  }
 });

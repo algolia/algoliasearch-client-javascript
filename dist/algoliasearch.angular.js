@@ -1,229 +1,242 @@
-/*
- * Copyright (c) 2013 Algolia
- * http://www.algolia.com/
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
+/*! algoliasearch 3.0.1 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
+(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+// shim for using process in browser
 
-var ALGOLIA_VERSION = '2.9.2';
+var process = module.exports = {};
+var queue = [];
+var draining = false;
 
-/*
- * Copyright (c) 2013 Algolia
- * http://www.algolia.com/
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
+function drainQueue() {
+    if (draining) {
+        return;
+    }
+    draining = true;
+    var currentQueue;
+    var len = queue.length;
+    while(len) {
+        currentQueue = queue;
+        queue = [];
+        var i = -1;
+        while (++i < len) {
+            currentQueue[i]();
+        }
+        len = queue.length;
+    }
+    draining = false;
+}
+process.nextTick = function (fun) {
+    queue.push(fun);
+    if (!draining) {
+        setTimeout(drainQueue, 0);
+    }
+};
+
+process.title = 'browser';
+process.browser = true;
+process.env = {};
+process.argv = [];
+process.version = ''; // empty string to avoid regexp issues
+process.versions = {};
+
+function noop() {}
+
+process.on = noop;
+process.addListener = noop;
+process.once = noop;
+process.off = noop;
+process.removeListener = noop;
+process.removeAllListeners = noop;
+process.emit = noop;
+
+process.binding = function (name) {
+    throw new Error('process.binding is not supported');
+};
+
+// TODO(shtylman)
+process.cwd = function () { return '/' };
+process.chdir = function (dir) {
+    throw new Error('process.chdir is not supported');
+};
+process.umask = function() { return 0; };
+
+},{}],2:[function(require,module,exports){
+(function (global){
+var createAlgoliasearch = require(4);
+var JSONPRequest = require(5);
+
+global.angular.module('algoliasearch', [])
+  .service('algolia', ['$http', '$q', '$timeout', function ($http, $q, $timeout) {
+    function request(url, opts) {
+      return $q(function(resolve, reject) {
+        var timedOut;
+        var body = null;
+
+        if (opts.body !== undefined) {
+          body = JSON.stringify(opts.body);
+        }
+
+        var timeout = $q(function(resolveTimeout) {
+          $timeout(function() {
+            timedOut = true;
+            // will cancel the xhr
+            resolveTimeout('test');
+            resolve(new Error('Timeout - Could not connect to endpoint ' + url));
+          }, opts.timeout);
+        });
+
+        $http({
+          url: url,
+          method: opts.method,
+          data: body,
+          cache: false,
+          timeout: timeout
+        }).then(function success(response) {
+          resolve({
+            statusCode: response.status,
+            body: response.data
+          });
+        }, function error(response) {
+          if (timedOut) {
+            return;
+          }
+
+          // network error
+          if (response.status === 0) {
+            reject(new Error('Network error'));
+            return;
+          }
+
+          resolve({
+            body: response.data,
+            statusCode: response.status
+          });
+        });
+      });
+    }
+
+    request.fallback = function(url, opts) {
+      return $q(function(resolve, reject) {
+        JSONPRequest(url, opts, function JSONPRequestDone(err, content) {
+          if (err) {
+            reject(err);
+            return;
+          }
+
+          resolve(content);
+        });
+      });
+    };
+
+    request.reject = function(val) {
+      return $q.reject(val);
+    };
+
+    request.resolve = function(val) {
+      // http://www.bennadel.com/blog/2735-q-when-is-the-missing-q-resolve-method-in-angularjs.htm
+      return $q.when(val);
+    };
+
+    request.delay = function(ms) {
+      return $q(function(resolve/*, reject*/) {
+        $timeout(resolve, ms);
+      });
+    };
+
+    var algoliasearch = createAlgoliasearch(request);
+    return {
+      Client: function(applicationID, apiKey, options) {
+        return algoliasearch(applicationID, apiKey, options);
+      }
+    };
+  }]);
+
+require(6)('algoliasearch.angular');
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"4":4,"5":5,"6":6}],3:[function(require,module,exports){
+(function (process){
+module.exports = AlgoliaSearch;
 
 /*
  * Algolia Search library initialization
- * @param applicationID the application ID you have in your admin interface
- * @param apiKey a valid API key for the service
- * @param methodOrOptions the hash of parameters for initialization. It can contains:
- *        - method (optional) specify if the protocol used is http or https (http by default to make the first search query faster).
- *          You need to use https is you are doing something else than just search queries.
- *        - hosts (optional) the list of hosts that you have received for the service
- *        - dsn (optional) set to true if your account has the Distributed Search Option
- *        - dsnHost (optional) override the automatic computation of dsn hostname
+ * https://www.algolia.com/
+ *
+ * @param {string} applicationID - Your applicationID, found in your dashboard
+ * @param {string} apiKey - Your API key, found in your dashboard
+ * @param {Object} [opts]
+ * @param {number} [opts.timeout=2000] - The request timeout set in milliseconds, another request will be issued after this timeout
+ * @param {string} [opts.protocol='http:'] - The protocol used to query Algolia Search API.
+ *                                        Set to 'https:' to force using https. Default to document.location.protocol in browsers
+ * @param {string[]} [opts.hosts=[
+ *          this.applicationID + '-1.algolia.' + opts.tld,
+ *          this.applicationID + '-2.algolia.' + opts.tld,
+ *          this.applicationID + '-3.algolia.' + opts.tld]
+ *        ] - The hosts to use for Algolia Search API. It this your responsibility to shuffle the hosts and add a DSN host in it
+ * @param {string} [opts.tld='net'] - The tld to use when computing hosts default list
  */
-var AlgoliaSearch = function(applicationID, apiKey, methodOrOptions, resolveDNS, hosts) {
-  var self = this;
+function AlgoliaSearch(applicationID, apiKey, opts, _request) {
+  var usage = 'Usage: algoliasearch(applicationID, apiKey, opts)';
+
+  if (!applicationID) {
+    throw new Error('Please provide an application ID. ' + usage);
+  }
+
+  if (!apiKey) {
+    throw new Error('Please provide an API key. ' + usage);
+  }
+
+  opts = opts || {};
+
+  // now setting default options
+  // could not find a tiny module to do that, let's go manual
+  if (opts.timeout === undefined) {
+    opts.timeout = 2000;
+  }
+
+  if (opts.protocol === undefined) {
+    opts.protocol = document && document.location.protocol || 'http:';
+  }
+
+  if (opts.hosts === undefined) {
+    opts.hosts = []; // filled later on, has dependencies
+  }
+
+  if (opts.tld === undefined) {
+    opts.tld = 'net';
+  }
+
+  // while we advocate for colon-at-the-end values: 'http:' for `opts.protocol`
+  // we also accept `http` and `https`. It's a common error.
+  if (!/:$/.test(opts.protocol)) {
+    opts.protocol = opts.protocol + ':';
+  }
+
+  // no hosts given, add defaults
+  if (opts.hosts.length === 0) {
+    opts.hosts = shuffle([
+      applicationID + '-1.algolia.' + opts.tld,
+      applicationID + '-2.algolia.' + opts.tld,
+      applicationID + '-3.algolia.' + opts.tld
+    ]);
+
+    // add default dsn host
+    opts.hosts.unshift(applicationID + '-dsn.algolia.' + opts.tld);
+  }
+
+  opts.hosts = map(opts.hosts, function prependProtocol(host) {
+    return opts.protocol + '//' + host;
+  });
+
   this.applicationID = applicationID;
   this.apiKey = apiKey;
-  this.dsn = true;
-  this.dsnHost = null;
-  this.hosts = [];
+  this.hosts = opts.hosts;
+
   this.currentHostIndex = 0;
-  this.requestTimeoutInMs = 2000;
+  this.requestTimeout = opts.timeout;
   this.extraHeaders = [];
-  this.jsonp = null;
-  this.options = {};
-
-  // make sure every client instance has it's own cache
   this.cache = {};
-
-  var method;
-  var tld = 'net';
-  if (typeof methodOrOptions === 'string') { // Old initialization
-    method = methodOrOptions;
-  } else {
-    // Take all option from the hash
-    var options = methodOrOptions || {};
-    this.options = options;
-    if (!this._isUndefined(options.method)) {
-      method = options.method;
-    }
-    if (!this._isUndefined(options.tld)) {
-      tld = options.tld;
-    }
-    if (!this._isUndefined(options.dsn)) {
-      this.dsn = options.dsn;
-    }
-    if (!this._isUndefined(options.hosts)) {
-      hosts = options.hosts;
-    }
-    if (!this._isUndefined(options.dsnHost)) {
-      this.dsnHost = options.dsnHost;
-    }
-    if (!this._isUndefined(options.requestTimeoutInMs)) {
-      this.requestTimeoutInMs = +options.requestTimeoutInMs;
-    }
-    if (!this._isUndefined(options.jsonp)) {
-      this.jsonp = options.jsonp;
-    }
-  }
-  // If hosts is undefined, initialize it with applicationID
-  if (this._isUndefined(hosts)) {
-    hosts = [
-      this.applicationID + '-1.algolia.' + tld,
-      this.applicationID + '-2.algolia.' + tld,
-      this.applicationID + '-3.algolia.' + tld
-    ];
-  }
-  // detect is we use http or https
-  this.host_protocol = 'http://';
-  if (this._isUndefined(method) || method === null) {
-    this.host_protocol = ('https:' == document.location.protocol ? 'https' : 'http') + '://';
-  } else if (method === 'https' || method === 'HTTPS') {
-    this.host_protocol = 'https://';
-  }
-  // Add hosts in random order
-  for (var i = 0; i < hosts.length; ++i) {
-    if (Math.random() > 0.5) {
-      this.hosts.reverse();
-    }
-    this.hosts.push(this.host_protocol + hosts[i]);
-  }
-  if (Math.random() > 0.5) {
-    this.hosts.reverse();
-  }
-  // then add Distributed Search Network host if there is one
-  if (this.dsn || this.dsnHost != null) {
-    if (this.dsnHost) {
-      this.hosts.unshift(this.host_protocol + this.dsnHost);
-    } else {
-      this.hosts.unshift(this.host_protocol + this.applicationID + '-dsn.algolia.' + tld);
-    }
-  }
-  // angular dependencies injection
-  if (this.options.angular) {
-    this.options.angular.$injector.invoke(['$http', '$q', function ($http, $q) {
-      self.options.angular.$q = $q;
-      self.options.angular.$http = $http;
-    }]);
-  }
-};
-
-// This holds the number of JSONP requests done accross clients
-// It's used as part of the ?callback=JSONP_$JSONPCounter when we do JSONP requests
-AlgoliaSearch.JSONPCounter = 0;
-
-function AlgoliaExplainResults(hit, titleAttribute, otherAttributes) {
-
-  function _getHitExplanationForOneAttr_recurse(obj, foundWords) {
-    var res = [];
-    if (typeof obj === 'object' && 'matchedWords' in obj && 'value' in obj) {
-      var match = false;
-      for (var j = 0; j < obj.matchedWords.length; ++j) {
-        var word = obj.matchedWords[j];
-        if (!(word in foundWords)) {
-          foundWords[word] = 1;
-          match = true;
-        }
-      }
-      if (match) {
-        res.push(obj.value);
-      }
-    } else if (Object.prototype.toString.call(obj) === '[object Array]') {
-      for (var i = 0; i < obj.length; ++i) {
-        var array = _getHitExplanationForOneAttr_recurse(obj[i], foundWords);
-        res = res.concat(array);
-      }
-    } else if (typeof obj === 'object') {
-      for (var prop in obj) {
-        if (obj.hasOwnProperty(prop)){
-          res = res.concat(_getHitExplanationForOneAttr_recurse(obj[prop], foundWords));
-        }
-      }
-    }
-    return res;
-  }
-
-  function _getHitExplanationForOneAttr(hit, foundWords, attr) {
-    var base = hit._highlightResult || hit;
-    if (attr.indexOf('.') === -1) {
-      if (attr in base) {
-        return _getHitExplanationForOneAttr_recurse(base[attr], foundWords);
-      }
-      return [];
-    }
-    var array = attr.split('.');
-    var obj = base;
-    for (var i = 0; i < array.length; ++i) {
-      if (Object.prototype.toString.call(obj) === '[object Array]') {
-        var res = [];
-        for (var j = 0; j < obj.length; ++j) {
-          res = res.concat(_getHitExplanationForOneAttr(obj[j], foundWords, array.slice(i).join('.')));
-        }
-        return res;
-      }
-      if (array[i] in obj) {
-        obj = obj[array[i]];
-      } else {
-        return [];
-      }
-    }
-    return _getHitExplanationForOneAttr_recurse(obj, foundWords);
-  }
-
-  var res = {};
-  var foundWords = {};
-  var title = _getHitExplanationForOneAttr(hit, foundWords, titleAttribute);
-  res.title = (title.length > 0) ? title[0] : '';
-  res.subtitles = [];
-
-  if (typeof otherAttributes !== 'undefined') {
-    for (var i = 0; i < otherAttributes.length; ++i) {
-      var attr = _getHitExplanationForOneAttr(hit, foundWords, otherAttributes[i]);
-      for (var j = 0; j < attr.length; ++j) {
-        res.subtitles.push({ attr: otherAttributes[i], value: attr[j] });
-      }
-    }
-  }
-  return res;
+  this._request = _request;
 }
-
 
 AlgoliaSearch.prototype = {
   /*
@@ -231,7 +244,7 @@ AlgoliaSearch.prototype = {
    *
    * @param indexName the name of index to delete
    * @param callback the result callback with two arguments
-   *  success: boolean set to true if the request was successfull
+   *  error: null or Error('message')
    *  content: the server answer that contains the task ID
    */
   deleteIndex: function(indexName, callback) {
@@ -244,7 +257,7 @@ AlgoliaSearch.prototype = {
    * @param srcIndexName the name of index to copy.
    * @param dstIndexName the new index name that will contains a copy of srcIndexName (destination will be overriten if it already exist).
    * @param callback the result callback with two arguments
-   *  success: boolean set to true if the request was successfull
+   *  error: null or Error('message')
    *  content: the server answer that contains the task ID
    */
   moveIndex: function(srcIndexName, dstIndexName, callback) {
@@ -260,7 +273,7 @@ AlgoliaSearch.prototype = {
    * @param srcIndexName the name of index to copy.
    * @param dstIndexName the new index name that will contains a copy of srcIndexName (destination will be overriten if it already exist).
    * @param callback the result callback with two arguments
-   *  success: boolean set to true if the request was successfull
+   *  error: null or Error('message')
    *  content: the server answer that contains the task ID
    */
   copyIndex: function(srcIndexName, dstIndexName, callback) {
@@ -275,14 +288,18 @@ AlgoliaSearch.prototype = {
    * @param offset Specify the first entry to retrieve (0-based, 0 is the most recent log entry).
    * @param length Specify the maximum number of entries to retrieve starting at offset. Maximum allowed value: 1000.
    * @param callback the result callback with two arguments
-   *  success: boolean set to true if the request was successfull
+   *  error: null or Error('message')
    *  content: the server answer that contains the task ID
    */
-  getLogs: function(callback, offset, length) {
-    if (this._isUndefined(offset)) {
+  getLogs: function(offset, length, callback) {
+    if (arguments.length === 0 || typeof offset === 'function') {
+      // getLogs([cb])
+      callback = offset;
       offset = 0;
-    }
-    if (this._isUndefined(length)) {
+      length = 10;
+    } else if (arguments.length === 1 || typeof length === 'function') {
+      // getLogs(1, [cb)]
+      callback = length;
       length = 10;
     }
 
@@ -293,13 +310,20 @@ AlgoliaSearch.prototype = {
   /*
    * List all existing indexes (paginated)
    *
-   * @param callback the result callback with two arguments
-   *  success: boolean set to true if the request was successfull
-   *  content: the server answer with index list or error description if success is false.
    * @param page The page to retrieve, starting at 0.
+   * @param callback the result callback with two arguments
+   *  error: null or Error('message')
+   *  content: the server answer with index list
    */
-  listIndexes: function(callback, page) {
-    var params = typeof page !== 'undefined' ? '?page=' + page : '';
+  listIndexes: function(page, callback) {
+    var params = '';
+
+    if (page === undefined || typeof page === 'function') {
+      callback = page;
+    } else {
+      params = '?page=' + page;
+    }
+
     return this._jsonRequest({ method: 'GET',
               url: '/1/indexes' + params,
               callback: callback });
@@ -318,8 +342,8 @@ AlgoliaSearch.prototype = {
    * List all existing user keys with their associated ACLs
    *
    * @param callback the result callback with two arguments
-   *  success: boolean set to true if the request was successfull
-   *  content: the server answer with user keys list or error description if success is false.
+   *  error: null or Error('message')
+   *  content: the server answer with user keys list
    */
   listUserKeys: function(callback) {
     return this._jsonRequest({ method: 'GET',
@@ -329,9 +353,10 @@ AlgoliaSearch.prototype = {
   /*
    * Get ACL of a user key
    *
+   * @param key
    * @param callback the result callback with two arguments
-   *  success: boolean set to true if the request was successfull
-   *  content: the server answer with user keys list or error description if success is false.
+   *  error: null or Error('message')
+   *  content: the server answer with user keys list
    */
   getUserKeyACL: function(key, callback) {
     return this._jsonRequest({ method: 'GET',
@@ -340,10 +365,10 @@ AlgoliaSearch.prototype = {
   },
   /*
    * Delete an existing user key
-   *
+   * @param key
    * @param callback the result callback with two arguments
-   *  success: boolean set to true if the request was successfull
-   *  content: the server answer with user keys list or error description if success is false.
+   *  error: null or Error('message')
+   *  content: the server answer with user keys list
    */
   deleteUserKey: function(key, callback) {
     return this._jsonRequest({ method: 'DELETE',
@@ -362,11 +387,15 @@ AlgoliaSearch.prototype = {
    *   - settings : allows to get index settings (https only)
    *   - editSettings : allows to change index settings (https only)
    * @param callback the result callback with two arguments
-   *  success: boolean set to true if the request was successfull
-   *  content: the server answer with user keys list or error description if success is false.
+   *  error: null or Error('message')
+   *  content: the server answer with user keys list
    */
   addUserKey: function(acls, callback) {
-    return this.addUserKeyWithValidity(acls, 0, 0, 0, callback);
+    return this.addUserKeyWithValidity(acls, {
+      validity: 0,
+      maxQueriesPerIPPerHour: 0,
+      maxHitsPerQuery: 0
+    }, callback);
   },
   /*
    * Add an existing user key
@@ -379,19 +408,19 @@ AlgoliaSearch.prototype = {
    *   - deleteIndex : allows to delete index content (https only)
    *   - settings : allows to get index settings (https only)
    *   - editSettings : allows to change index settings (https only)
-   * @param validity the number of seconds after which the key will be automatically removed (0 means no time limit for this key)
-   * @param maxQueriesPerIPPerHour Specify the maximum number of API calls allowed from an IP address per hour.
-   * @param maxHitsPerQuery Specify the maximum number of hits this API key can retrieve in one call.
+   * @param params.validity the number of seconds after which the key will be automatically removed (0 means no time limit for this key)
+   * @param params.maxQueriesPerIPPerHour Specify the maximum number of API calls allowed from an IP address per hour.
+   * @param params.maxHitsPerQuery Specify the maximum number of hits this API key can retrieve in one call.
    * @param callback the result callback with two arguments
-   *  success: boolean set to true if the request was successfull
-   *  content: the server answer with user keys list or error description if success is false.
+   *  error: null or Error('message')
+   *  content: the server answer with user keys list
    */
-  addUserKeyWithValidity: function(acls, validity, maxQueriesPerIPPerHour, maxHitsPerQuery, callback) {
+  addUserKeyWithValidity: function(acls, params, callback) {
     var aclsObject = {};
     aclsObject.acl = acls;
-    aclsObject.validity = validity;
-    aclsObject.maxQueriesPerIPPerHour = maxQueriesPerIPPerHour;
-    aclsObject.maxHitsPerQuery = maxHitsPerQuery;
+    aclsObject.validity = params.validity;
+    aclsObject.maxQueriesPerIPPerHour = params.maxQueriesPerIPPerHour;
+    aclsObject.maxHitsPerQuery = params.maxHitsPerQuery;
     return this._jsonRequest({ method: 'POST',
               url: '/1/keys',
               body: aclsObject,
@@ -471,23 +500,16 @@ AlgoliaSearch.prototype = {
    * (Optimized for browser using a POST query to minimize number of OPTIONS queries)
    *
    * @param callback the function that will receive results
-   * @param delay (optional) if set, wait for this delay (in ms) and only send the batch if there was no other in the meantime.
    */
-  sendQueriesBatch: function(callback, delay) {
+  sendQueriesBatch: function(callback) {
     var as = this;
     var params = {requests: []};
+
     for (var i = 0; i < as.batch.length; ++i) {
       params.requests.push(as.batch[i]);
     }
-    window.clearTimeout(as.onDelayTrigger);
-    if (!this._isUndefined(delay) && delay !== null && delay > 0) {
-      var onDelayTrigger = window.setTimeout( function() {
-        as._sendQueriesBatch(params, callback);
-      }, delay);
-      as.onDelayTrigger = onDelayTrigger;
-    } else {
-      return this._sendQueriesBatch(params, callback);
-    }
+
+    return this._sendQueriesBatch(params, callback);
   },
 
    /**
@@ -495,10 +517,9 @@ AlgoliaSearch.prototype = {
    *
    * @param {Number} milliseconds
    */
-  setRequestTimeout: function(milliseconds)
-  {
+  setRequestTimeout: function(milliseconds) {
     if (milliseconds) {
-      this.requestTimeoutInMs = parseInt(milliseconds, 10);
+      this.requestTimeout = parseInt(milliseconds, 10);
     }
   },
 
@@ -526,458 +547,190 @@ AlgoliaSearch.prototype = {
   },
 
   _sendQueriesBatch: function(params, callback) {
-     if (this.jsonp === null) {
-      var self = this;
-      return this._jsonRequest({ cache: this.cache,
-        method: 'POST',
-        url: '/1/indexes/*/queries',
-        body: params,
-        callback: function(success, content) {
-          if (!success) {
-            // retry first with JSONP
-            self.jsonp = true;
-            self._sendQueriesBatch(params, callback);
-          } else {
-            self.jsonp = false;
-            callback && callback(success, content);
+    return this._jsonRequest({ cache: this.cache,
+      method: 'POST',
+      url: '/1/indexes/*/queries',
+      body: params,
+      fallback: {
+        method: 'GET',
+        url: '/1/indexes/*',
+        body: {params: (function() {
+          var reqParams = '';
+          for (var i = 0; i < params.requests.length; ++i) {
+            var q = '/1/indexes/' + encodeURIComponent(params.requests[i].indexName) + '?' + params.requests[i].params;
+            reqParams += i + '=' + encodeURIComponent(q) + '&';
           }
-        }
-      });
-    } else if (this.jsonp) {
-      var jsonpParams = '';
-      for (var i = 0; i < params.requests.length; ++i) {
-        var q = '/1/indexes/' + encodeURIComponent(params.requests[i].indexName) + '?' + params.requests[i].params;
-        jsonpParams += i + '=' + encodeURIComponent(q) + '&';
-      }
-      var pObj = {params: jsonpParams};
-      return this._jsonRequest({ cache: this.cache,
-                   method: 'GET',
-                   url: '/1/indexes/*',
-                   body: pObj,
-                   callback: callback });
-    } else {
-      return this._jsonRequest({ cache: this.cache,
-                   method: 'POST',
-                   url: '/1/indexes/*/queries',
-                   body: params,
-                      callback: callback});
-    }
+          return reqParams;
+        }())}
+      },
+      callback: callback
+    });
   },
   /*
    * Wrapper that try all hosts to maximize the quality of service
    */
   _jsonRequest: function(opts) {
-    var self = this;
-    var callback = opts.callback;
-    var cache = null;
+    // handle opts.fallback, automatically use fallback (JSONP in browser plugins, wrapped with $plugin-promises)
+    // so if an error occurs and max tries => use fallback
+    // set tries to 0 again
+    // if fallback used and no more tries, return error
+    // fallback parameters are in opts.fallback
+    // call request.fallback or request accordingly, same promise chain otherwise
+    // put callback& params in front if problem
+    var cache = opts.cache;
     var cacheID = opts.url;
-    var deferred = null;
-    if (this.options.jQuery) {
-      deferred = this.options.jQuery.$.Deferred();
-      deferred.promise = deferred.promise(); // promise is a property in angular
-    } else if (this.options.angular) {
-      deferred = this.options.angular.$q.defer();
+    var client = this;
+    var tries = 0;
+
+    // as we use POST requests to pass parameters (like query='aa'),
+    // the cacheID must be different between calls
+    if (opts.body !== undefined) {
+      cacheID += '_body_' + JSON.stringify(opts.body);
     }
 
-    if (!this._isUndefined(opts.body)) {
-      cacheID = opts.url + '_body_' + JSON.stringify(opts.body);
-    }
-    if (!this._isUndefined(opts.cache)) {
-      cache = opts.cache;
-      if (!this._isUndefined(cache[cacheID])) {
-        if (!this._isUndefined(callback) && callback) {
-          setTimeout(function () { callback(true, cache[cacheID]); }, 1);
-        }
-        deferred && deferred.resolve(cache[cacheID]);
-        return deferred && deferred.promise;
+    function doRequest(requester, reqOpts) {
+      // handle cache existence
+      if (cache && cache[cacheID] !== undefined) {
+        return client._request.resolve(cache[cacheID]);
       }
-    }
 
-    opts.successiveRetryCount = 0;
-    var impl = function() {
-      if (opts.successiveRetryCount >= self.hosts.length) {
-        var error = { message: 'Cannot connect the Algolia\'s Search API. Please send an email to support@algolia.com to report the issue.' };
-        if (!self._isUndefined(callback) && callback) {
-          opts.successiveRetryCount = 0;
-          callback(false, error);
+      if (tries >= client.hosts.length) {
+        if (!opts.fallback || requester === client._request.fallback) {
+          // could not get a response even using the fallback if one was available
+          return client._request.reject(new Error(
+            'Cannot connect to the AlgoliaSearch API.' +
+            ' Send an email to support@algolia.com to report and resolve the issue.'
+          ));
         }
-        deferred && deferred.reject(error);
-        return;
+
+        tries = 0;
+        reqOpts.method = opts.fallback.method;
+        reqOpts.url = opts.fallback.url;
+        reqOpts.body = opts.fallback.body;
+        reqOpts.timeout = client.requestTimeout * (tries + 1);
+        client.currentHostIndex = 0;
+        client.forceFallback = true;
+        return doRequest(client._request.fallback, reqOpts);
       }
-      opts.callback = function(retry, success, body) {
-        if (success && !self._isUndefined(opts.cache)) {
-          cache[cacheID] = body;
+
+      var url = reqOpts.url;
+
+      url += (url.indexOf('?') === -1 ? '?' : '&') + 'X-Algolia-API-Key=' + client.apiKey;
+      url += '&X-Algolia-Application-Id=' + client.applicationID;
+
+      if (client.userToken) {
+        url += '&X-Algolia-UserToken=' + encodeURIComponent(client.userToken);
+      }
+
+      if (client.tagFilters) {
+        url += '&X-Algolia-TagFilters=' + encodeURIComponent(client.tagFilters);
+      }
+
+      for (var i = 0; i < client.extraHeaders.length; ++i) {
+        url += '&' + client.extraHeaders[i].key + '=' + client.extraHeaders[i].value;
+      }
+
+      return requester(client.hosts[client.currentHostIndex] + url, {
+        body: reqOpts.body,
+        method: reqOpts.method,
+        timeout: reqOpts.timeout
+      })
+      .then(function success(httpResponse) {
+        // timeout case, retry immediately
+        if (httpResponse instanceof Error) {
+          return retryRequest();
         }
-        if (!success && retry) {
-          self.currentHostIndex = ++self.currentHostIndex % self.hosts.length;
-          opts.successiveRetryCount += 1;
-          impl();
+
+        var status =
+          // When in browser mode, using XDR or JSONP
+          // We rely on our own API response `status`, only
+          // provided when an error occurs, we also expect a .message along
+          // Otherwise, it could be a `waitTask` status, that's the only
+          // case where we have a response.status that's not the http statusCode
+          httpResponse && httpResponse.body && httpResponse.body.message && httpResponse.body.status ||
+
+          // this is important to check the request statusCode AFTER the body eventual
+          // statusCode because some implementations (jQuery XDomainRequest transport) may
+          // send statusCode 200 while we had an error
+          httpResponse.statusCode ||
+
+          // When in browser mode, using XDR or JSONP
+          // we default to success when no error (no response.status && response.message)
+          // If there was a JSON.parse() error then body is null and it fails
+          httpResponse && httpResponse.body && 200;
+
+        var ok = status === 200 || status === 201;
+        var retry = !ok && Math.floor(status / 100) !== 4 && Math.floor(status / 100) !== 1;
+
+        if (ok && cache) {
+          cache[cacheID] = httpResponse.body;
+        }
+
+        if (ok) {
+          return httpResponse.body;
+        }
+
+        if (retry) {
+          return retryRequest();
+        }
+
+        var unrecoverableError = new Error(
+          httpResponse.body && httpResponse.body.message || 'Unknown error'
+        );
+
+        return client._request.reject(unrecoverableError);
+      }, tryFallback);
+
+      function retryRequest() {
+        client.currentHostIndex = ++client.currentHostIndex % client.hosts.length;
+        tries += 1;
+        reqOpts.timeout = client.requestTimeout * (tries + 1);
+        return doRequest(requester, reqOpts);
+      }
+
+      function tryFallback() {
+        // if we are switching to fallback right now, set tries to maximum
+        if (!client.forceFallback) {
+          // next time doRequest is called, simulate we tried all hosts
+          tries = client.hosts.length;
         } else {
-          opts.successiveRetryCount = 0;
-          deferred && (success ? deferred.resolve(body) : deferred.reject(body));
-          if (!self._isUndefined(callback) && callback) {
-            callback(success, body);
-          }
+          // we were already using the fallback, but something went wrong (script error)
+          client.currentHostIndex = ++client.currentHostIndex % client.hosts.length;
+          tries += 1;
         }
-      };
-      opts.hostname = self.hosts[self.currentHostIndex];
-      self._jsonRequestByHost(opts);
-    };
-    impl();
 
-    return deferred && deferred.promise;
-  },
+        return doRequest(requester, reqOpts);
+      }
+    }
 
-  _jsonRequestByHost: function(opts) {
-    var self = this;
-    var url = opts.hostname + opts.url;
+    // we can use a fallback if forced AND fallback parameters are available
+    var useFallback = client.forceFallback && opts.fallback;
+    var requestOptions = useFallback ? opts.fallback : opts;
 
-    if (this.jsonp) {
-      this._makeJsonpRequestByHost(url, opts);
-    } else if (this.options.jQuery) {
-      this._makejQueryRequestByHost(url, opts);
-    } else if (this.options.angular) {
-      this._makeAngularRequestByHost(url, opts);
+    var promise = doRequest(
+      useFallback ? client._request.fallback : client._request, {
+        url: requestOptions.url,
+        method: requestOptions.method,
+        body: requestOptions.body,
+        timeout: client.requestTimeout * (tries + 1)
+      }
+    );
+
+    // either we have a callback
+    // either we are using promises
+    if (opts.callback) {
+      promise.then(function okCb(content) {
+        process.nextTick(function() {
+          opts.callback(null, content);
+        });
+      }, function nookCb(err) {
+        process.nextTick(function() {
+          opts.callback(err);
+        });
+      });
     } else {
-      this._makeXmlHttpRequestByHost(url, opts);
+      return promise;
     }
-  },
-
-  /**
-   * Make a $http
-   *
-   * @param url request url (includes endpoint and path)
-   * @param opts all request opts
-   */
-  _makeAngularRequestByHost: function(url, opts) {
-    var self = this;
-    var body = null;
-
-    if (!this._isUndefined(opts.body)) {
-      body = JSON.stringify(opts.body);
-    }
-
-    url += ((url.indexOf('?') === -1) ? '?' : '&') + 'X-Algolia-API-Key=' + this.apiKey;
-    url += '&X-Algolia-Application-Id=' + this.applicationID;
-    if (this.userToken) {
-      url += '&X-Algolia-UserToken=' + encodeURIComponent(this.userToken);
-    }
-    if (this.tagFilters) {
-      url += '&X-Algolia-TagFilters=' + encodeURIComponent(this.tagFilters);
-    }
-    for (var i = 0; i < this.extraHeaders.length; ++i) {
-      url += '&' + this.extraHeaders[i].key + '=' + this.extraHeaders[i].value;
-    }
-    this.options.angular.$http({
-      url: url,
-      method: opts.method,
-      data: body,
-      cache: false,
-      timeout: (this.requestTimeoutInMs * (opts.successiveRetryCount + 1))
-    }).then(function(response) {
-      opts.callback(false, true, response.data);
-    }, function(response) {
-      if (response.status === 0) {
-        // xhr.timeout is not handled by Angular.js right now
-        // let's retry
-        opts.callback(true, false, response.data);
-      } else if (response.status == 400 || response.status === 403 || response.status === 404) {
-        opts.callback(false, false, response.data);
-      } else {
-        opts.callback(true, false, response.data);
-      }
-    });
-  },
-
-  /**
-   * Make a $.ajax
-   *
-   * @param url request url (includes endpoint and path)
-   * @param opts all request opts
-   */
-  _makejQueryRequestByHost: function(url, opts) {
-    var self = this;
-    var body = null;
-
-    if (!this._isUndefined(opts.body)) {
-      body = JSON.stringify(opts.body);
-    }
-
-    url += ((url.indexOf('?') === -1) ? '?' : '&') + 'X-Algolia-API-Key=' + this.apiKey;
-    url += '&X-Algolia-Application-Id=' + this.applicationID;
-    if (this.userToken) {
-      url += '&X-Algolia-UserToken=' + encodeURIComponent(this.userToken);
-    }
-    if (this.tagFilters) {
-      url += '&X-Algolia-TagFilters=' + encodeURIComponent(this.tagFilters);
-    }
-    for (var i = 0; i < this.extraHeaders.length; ++i) {
-      url += '&' + this.extraHeaders[i].key + '=' + this.extraHeaders[i].value;
-    }
-    this.options.jQuery.$.ajax(url, {
-      type: opts.method,
-      timeout: (this.requestTimeoutInMs * (opts.successiveRetryCount + 1)),
-      dataType: 'json',
-      data: body,
-      error: function(xhr, textStatus, error) {
-        if (textStatus === 'timeout') {
-          opts.callback(true, false, { 'message': 'Timeout - Could not connect to endpoint ' + url } );
-        } else if (xhr.status === 400 || xhr.status === 403 || xhr.status === 404) {
-          opts.callback(false, false, xhr.responseJSON );
-        } else {
-          opts.callback(true, false, { 'message': error } );
-        }
-      },
-      success: function(data, textStatus, xhr) {
-        opts.callback(false, true, data);
-      }
-    });
-  },
-
-  /**
-   * Make a JSONP request
-   *
-   * @param url request url (includes endpoint and path)
-   * @param opts all request options
-   */
-  _makeJsonpRequestByHost: function(url, opts) {
-    if (opts.method !== 'GET') {
-      opts.callback(true, false, { 'message': 'Method ' + opts.method + ' ' + url + ' is not supported by JSONP.' });
-      return;
-    }
-
-    var cbCalled = false;
-    var timedOut = false;
-
-    AlgoliaSearch.JSONPCounter += 1;
-    var head = document.getElementsByTagName('head')[0];
-    var script = document.createElement('script');
-    var cb = 'algoliaJSONP_' + AlgoliaSearch.JSONPCounter;
-    var done = false;
-    var ontimeout;
-    var success;
-    var clean;
-
-    window[cb] = function(data) {
-      try { delete window[cb]; } catch (e) { window[cb] = undefined; }
-
-      if (timedOut) {
-        return;
-      }
-
-      var status =
-        data && data.message && data.status ||
-        data && 200;
-
-      var ok = status === 200;
-      var retry = !ok && status !== 400 && status !== 403 && status !== 404;
-      cbCalled = true;
-      opts.callback(retry, ok, data);
-    };
-
-    script.type = 'text/javascript';
-    url += '?callback=' + cb + '&X-Algolia-Application-Id=' + this.applicationID + '&X-Algolia-API-Key=' + this.apiKey;
-
-    if (this.tagFilters) {
-      url += '&X-Algolia-TagFilters=' + encodeURIComponent(this.tagFilters);
-    }
-
-    if (this.userToken) {
-      url += '&X-Algolia-UserToken=' + encodeURIComponent(this.userToken);
-    }
-
-    for (var i = 0; i < this.extraHeaders.length; ++i) {
-      url += '&' + this.extraHeaders[i].key + '=' + this.extraHeaders[i].value;
-    }
-
-    if (opts.body && opts.body.params) {
-      url += '&' + opts.body.params;
-    }
-
-    ontimeout = setTimeout(function() {
-      timedOut = true;
-      clean();
-
-      opts.callback(true, false, { 'message': 'Timeout - Failed to load JSONP script.' });
-    }, this.requestTimeoutInMs);
-
-    success = function() {
-      if (done || timedOut) {
-        return;
-      }
-
-      done = true;
-      clean();
-
-      // script loaded but did not call the fn => script loading error
-      if (!cbCalled) {
-        opts.callback(true, false, { 'message': 'Failed to load JSONP script.' });
-      }
-    };
-
-    clean = function() {
-      clearTimeout(ontimeout);
-      script.onload = null;
-      script.onreadystatechange = null;
-      script.onerror = null;
-      head.removeChild(script);
-
-      try {
-        delete window[cb];
-        delete window[cb + '_loaded'];
-      } catch (e) {
-        window[cb] = null;
-        window[cb + '_loaded'] = null;
-      }
-    };
-
-    // script onreadystatechange needed only for
-    // <= IE8
-    // https://github.com/angular/angular.js/issues/4523
-    script.onreadystatechange = function() {
-      if (this.readyState === 'loaded' || this.readyState === 'complete') {
-        success();
-      }
-    };
-
-    script.onload = function() {
-      success();
-    };
-
-    script.onerror = function() {
-      if (done || timedOut) {
-        return;
-      }
-
-      clean();
-      opts.callback(true, false, { 'message': 'Failed to load JSONP script.' });
-    };
-
-    script.async = true;
-    script.defer = true;
-    script.src = url;
-
-    head.appendChild(script);
-  },
-
-  /**
-   * Make a XmlHttpRequest
-   *
-   * @param url request url (includes endpoint and path)
-   * @param opts all request opts
-   */
-  _makeXmlHttpRequestByHost: function(url, opts) {
-    // no cors or XDomainRequest, no request
-    if (!this._support.cors && !this._support.hasXDomainRequest) {
-      // very old browser, not supported
-      opts.callback(false, false, { 'message': 'CORS not supported' });
-      return;
-    }
-
-    var body = null;
-    var request = this._support.cors ? new XMLHttpRequest() : new XDomainRequest();
-    var ontimeout;
-    var self = this;
-    var timedOut;
-    var timeoutListener;
-
-    if (!this._isUndefined(opts.body)) {
-      body = JSON.stringify(opts.body);
-    }
-
-    url += (url.indexOf('?') === -1 ? '?' : '&') + 'X-Algolia-API-Key=' + this.apiKey;
-    url += '&X-Algolia-Application-Id=' + this.applicationID;
-
-    if (this.userToken) {
-      url += '&X-Algolia-UserToken=' + encodeURIComponent(this.userToken);
-    }
-
-    if (this.tagFilters) {
-      url += '&X-Algolia-TagFilters=' + encodeURIComponent(this.tagFilters);
-    }
-
-    for (var i = 0; i < this.extraHeaders.length; ++i) {
-      url += '&' + this.extraHeaders[i].key + '=' + this.extraHeaders[i].value;
-    }
-
-    timeoutListener = function() {
-      if (!self._support.timeout) {
-        timedOut = true;
-        request.abort();
-      }
-
-      opts.callback(true, false, { 'message': 'Timeout - Could not connect to endpoint ' + url } );
-    };
-
-    request.open(opts.method, url);
-
-    if (this._support.cors && body !== null && opts.method !== 'GET') {
-      request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    }
-
-    // event object not received in IE8, at least
-    // but we do not use it, still important to note
-    request.onload = function(/*event*/) {
-      // When browser does not supports request.timeout, we can
-      // have both a load and timeout event
-      if (timedOut) {
-        return;
-      }
-
-      if (!self._support.timeout) {
-        clearTimeout(ontimeout);
-      }
-
-      var response = null;
-
-      try {
-        response = JSON.parse(request.responseText);
-      } catch(e) {}
-
-      var status =
-        // XHR provides a `status` property
-        request.status ||
-
-        // XDR does not have a `status` property,
-        // we rely on our own API response `status`, only
-        // provided when an error occurs, so we expect a .message
-        response && response.message && response.status ||
-
-        // XDR default to success when no response.status
-        response && 200;
-
-      var success = status === 200 || status === 201;
-      var retry = !success && status !== 400 && status !== 403 && status !== 404;
-
-      opts.callback(retry, success, response);
-    };
-
-    if (this._support.timeout) {
-      // .timeout supported by both XHR and XDR,
-      // we do receive timeout event, tested
-      request.timeout = this.requestTimeoutInMs * (opts.successiveRetryCount + 1);
-
-      request.ontimeout = timeoutListener;
-    } else {
-      ontimeout = setTimeout(timeoutListener, this.requestTimeoutInMs * (opts.successiveRetryCount + 1));
-    }
-
-    request.onerror = function(event) {
-      if (timedOut) {
-        return;
-      }
-
-      if (!self._support.timeout) {
-        clearTimeout(ontimeout);
-      }
-
-      // error event is trigerred both with XDR/XHR on:
-      //   - DNS error
-      //   - unallowed cross domain request
-      opts.callback(true, false, { 'message': 'Could not connect to host', 'error': event } );
-    };
-
-    request.send(body);
   },
 
    /*
@@ -989,7 +742,7 @@ AlgoliaSearch.prototype = {
     }
     for (var key in args) {
       if (key !== null && args.hasOwnProperty(key)) {
-        params += (params.length === 0) ? '?' : '&';
+        params += params === '' ? '' : '&';
         params += key + '=' + encodeURIComponent(Object.prototype.toString.call(args[key]) === '[object Array]' ? JSON.stringify(args[key]) : args[key]);
       }
     }
@@ -997,13 +750,6 @@ AlgoliaSearch.prototype = {
   },
   _isUndefined: function(obj) {
     return obj === void 0;
-  },
-
-  _support: {
-    hasXMLHttpRequest: 'XMLHttpRequest' in window,
-    hasXDomainRequest: 'XDomainRequest' in window,
-    cors: 'withCredentials' in new XMLHttpRequest(),
-    timeout: 'timeout' in new XMLHttpRequest()
   }
 };
 
@@ -1022,38 +768,41 @@ AlgoliaSearch.prototype.Index.prototype = {
    * Add an object in this index
    *
    * @param content contains the javascript object to add inside the index
-   * @param callback (optional) the result callback with two arguments:
-   *  success: boolean set to true if the request was successfull
-   *  content: the server answer that contains 3 elements: createAt, taskId and objectID
    * @param objectID (optional) an objectID you want to attribute to this object
    * (if the attribute already exist the old object will be overwrite)
+   * @param callback (optional) the result callback with two arguments:
+   *  error: null or Error('message')
+   *  content: the server answer that contains 3 elements: createAt, taskId and objectID
    */
-  addObject: function(content, callback, objectID) {
+  addObject: function(content, objectID, callback) {
     var indexObj = this;
-    if (this.as._isUndefined(objectID)) {
-      return this.as._jsonRequest({ method: 'POST',
-                   url: '/1/indexes/' + encodeURIComponent(indexObj.indexName),
-                   body: content,
-                   callback: callback });
-    } else {
-      return this.as._jsonRequest({ method: 'PUT',
-                   url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/' + encodeURIComponent(objectID),
-                   body: content,
-                   callback: callback });
+
+    if (arguments.length === 1 || typeof objectID === 'function') {
+      callback = objectID;
+      objectID = undefined;
     }
 
+    return this.as._jsonRequest({
+      method: objectID !== undefined ?
+        'PUT' : // update or create
+        'POST', // create (API generates an objectID)
+      url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + // create
+        (objectID !== undefined ? '/' + encodeURIComponent(objectID) : ''), // update or create
+      body: content,
+      callback: callback
+    });
   },
   /*
    * Add several objects
    *
    * @param objects contains an array of objects to add
    * @param callback (optional) the result callback with two arguments:
-   *  success: boolean set to true if the request was successfull
+   *  error: null or Error('message')
    *  content: the server answer that updateAt and taskID
    */
   addObjects: function(objects, callback) {
     var indexObj = this;
-    var postObj = {requests:[]};
+    var postObj = {requests: []};
     for (var i = 0; i < objects.length; ++i) {
       var request = { action: 'addObject',
               body: objects[i] };
@@ -1068,31 +817,35 @@ AlgoliaSearch.prototype.Index.prototype = {
    * Get an object from this index
    *
    * @param objectID the unique identifier of the object to retrieve
+   * @param attrs (optional) if set, contains the array of attribute names to retrieve
    * @param callback (optional) the result callback with two arguments
-   *  success: boolean set to true if the request was successfull
+   *  error: null or Error('message')
    *  content: the object to retrieve or the error message if a failure occured
-   * @param attributes (optional) if set, contains the array of attribute names to retrieve
    */
-  getObject: function(objectID, callback, attributes) {
-    if (Object.prototype.toString.call(callback) === '[object Array]' && !attributes) {
-      attributes = callback;
-      callback = null;
-    }
+  getObject: function(objectID, attrs, callback) {
     var indexObj = this;
+
+    if (arguments.length === 1 || typeof attrs === 'function') {
+      callback = attrs;
+      attrs = undefined;
+    }
+
     var params = '';
-    if (!this.as._isUndefined(attributes)) {
+    if (attrs !== undefined) {
       params = '?attributes=';
-      for (var i = 0; i < attributes.length; ++i) {
+      for (var i = 0; i < attrs.length; ++i) {
         if (i !== 0) {
           params += ',';
         }
-        params += attributes[i];
+        params += attrs[i];
       }
     }
 
-    return this.as._jsonRequest({ method: 'GET',
-                 url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/' + encodeURIComponent(objectID) + params,
-                 callback: callback });
+    return this.as._jsonRequest({
+      method: 'GET',
+      url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/' + encodeURIComponent(objectID) + params,
+      callback: callback
+    });
   },
 
   /*
@@ -1101,7 +854,7 @@ AlgoliaSearch.prototype.Index.prototype = {
    * @param partialObject contains the javascript attributes to override, the
    *  object must contains an objectID attribute
    * @param callback (optional) the result callback with two arguments:
-   *  success: boolean set to true if the request was successfull
+   *  error: null or Error('message')
    *  content: the server answer that contains 3 elements: createAt, taskId and objectID
    */
   partialUpdateObject: function(partialObject, callback) {
@@ -1109,19 +862,19 @@ AlgoliaSearch.prototype.Index.prototype = {
     return this.as._jsonRequest({ method: 'POST',
                  url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/' + encodeURIComponent(partialObject.objectID) + '/partial',
                  body: partialObject,
-                 callback:  callback });
+                 callback: callback });
   },
   /*
    * Partially Override the content of several objects
    *
    * @param objects contains an array of objects to update (each object must contains a objectID attribute)
    * @param callback (optional) the result callback with two arguments:
-   *  success: boolean set to true if the request was successfull
+   *  error: null or Error('message')
    *  content: the server answer that updateAt and taskID
    */
   partialUpdateObjects: function(objects, callback) {
     var indexObj = this;
-    var postObj = {requests:[]};
+    var postObj = {requests: []};
     for (var i = 0; i < objects.length; ++i) {
       var request = { action: 'partialUpdateObject',
               objectID: objects[i].objectID,
@@ -1138,7 +891,7 @@ AlgoliaSearch.prototype.Index.prototype = {
    *
    * @param object contains the javascript object to save, the object must contains an objectID attribute
    * @param callback (optional) the result callback with two arguments:
-   *  success: boolean set to true if the request was successfull
+   *  error: null or Error('message')
    *  content: the server answer that updateAt and taskID
    */
   saveObject: function(object, callback) {
@@ -1153,12 +906,12 @@ AlgoliaSearch.prototype.Index.prototype = {
    *
    * @param objects contains an array of objects to update (each object must contains a objectID attribute)
    * @param callback (optional) the result callback with two arguments:
-   *  success: boolean set to true if the request was successfull
+   *  error: null or Error('message')
    *  content: the server answer that updateAt and taskID
    */
   saveObjects: function(objects, callback) {
     var indexObj = this;
-    var postObj = {requests:[]};
+    var postObj = {requests: []};
     for (var i = 0; i < objects.length; ++i) {
       var request = { action: 'updateObject',
               objectID: objects[i].objectID,
@@ -1175,14 +928,20 @@ AlgoliaSearch.prototype.Index.prototype = {
    *
    * @param objectID the unique identifier of object to delete
    * @param callback (optional) the result callback with two arguments:
-   *  success: boolean set to true if the request was successfull
+   *  error: null or Error('message')
    *  content: the server answer that contains 3 elements: createAt, taskId and objectID
    */
   deleteObject: function(objectID, callback) {
-    if (objectID === null || objectID.length === 0) {
-      callback(false, { message: 'empty objectID'});
-      return;
+    if (typeof objectID === 'function' || typeof objectID !== 'string' && typeof objectID !== 'number') {
+      var err = new Error('Cannot delete an object without an objectID');
+      callback = objectID;
+      if (typeof callback === 'function') {
+        return callback(err);
+      }
+
+      return this.as._request.reject(err);
     }
+
     var indexObj = this;
     return this.as._jsonRequest({ method: 'DELETE',
                  url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/' + encodeURIComponent(objectID),
@@ -1193,9 +952,6 @@ AlgoliaSearch.prototype.Index.prototype = {
    * minimize number of OPTIONS queries: Cross-Origin Resource Sharing).
    *
    * @param query the full text query
-   * @param callback the result callback with two arguments:
-   *  success: boolean set to true if the request was successfull. If false, the content contains the error.
-   *  content: the server answer that contains the list of results.
    * @param args (optional) if set, contains an object with query parameters:
    * - page: (integer) Pagination parameter used to select the page to retrieve.
    *                   Page is zero-based and defaults to 0. Thus, to retrieve the 10th page you need to set page=9
@@ -1255,38 +1011,40 @@ AlgoliaSearch.prototype.Index.prototype = {
    *   one is kept and others are removed.
    * - restrictSearchableAttributes: List of attributes you want to use for textual search (must be a subset of the attributesToIndex index setting)
    * either comma separated or as an array
-   * @param delay (optional) if set, wait for this delay (in ms) and only send the query if there was no other in the meantime.
+   * @param callback the result callback with two arguments:
+   *  error: null or Error('message'). If false, the content contains the error.
+   *  content: the server answer that contains the list of results.
    */
-  search: function(query, callback, args, delay) {
-    if (query === undefined || query === null) {
-      query = '';
-    }
-
-    // no query = getAllObjects
-    if (typeof query === 'function') {
+  search: function(query, args, callback) {
+    if (arguments.length === 0 || typeof query === 'function') {
+      // .search(), .search(cb)
       callback = query;
       query = '';
+    } else if (arguments.length === 1 || typeof args === 'function') {
+      // .search(query/args), .search(query, cb)
+      callback = args;
+      args = undefined;
     }
 
-    if (typeof callback === 'object' && (this.as._isUndefined(args) || !args)) {
-      args = callback;
-      callback = null;
+    // .search(args), careful: typeof null === 'object'
+    if (typeof query === 'object' && query !== null) {
+      args = query;
+      query = undefined;
+    } else if (query === undefined || query === null) { // .search(undefined/null)
+      query = '';
     }
 
-    var indexObj = this;
-    var params = 'query=' + encodeURIComponent(query);
-    if (!this.as._isUndefined(args) && args !== null) {
+    var params = '';
+
+    if (query !== undefined) {
+      params += 'query=' + encodeURIComponent(query);
+    }
+
+    if (args !== undefined) {
       params = this.as._getSearchParams(args, params);
     }
-    window.clearTimeout(indexObj.onDelayTrigger);
-    if (!this.as._isUndefined(delay) && delay !== null && delay > 0) {
-      var onDelayTrigger = window.setTimeout( function() {
-        indexObj._search(params, callback);
-      }, delay);
-      indexObj.onDelayTrigger = onDelayTrigger;
-    } else {
-      return this._search(params, callback);
-    }
+
+    return this._search(params, callback);
   },
 
   /*
@@ -1295,13 +1053,18 @@ AlgoliaSearch.prototype.Index.prototype = {
    * @param page Pagination parameter used to select the page to retrieve.
    *             Page is zero-based and defaults to 0. Thus, to retrieve the 10th page you need to set page=9
    * @param hitsPerPage: Pagination parameter used to select the number of hits per page. Defaults to 1000.
+   * @param callback the result callback with two arguments:
+   *  error: null or Error('message'). If false, the content contains the error.
+   *  content: the server answer that contains the list of results.
    */
-  browse: function(page, callback, hitsPerPage) {
-    if (+callback > 0 && (this.as._isUndefined(hitsPerPage) || !hitsPerPage)) {
-      hitsPerPage = callback;
-      callback = null;
-    }
+  browse: function(page, hitsPerPage, callback) {
     var indexObj = this;
+
+    if (arguments.length === 1 || typeof hitsPerPage === 'function') {
+      callback = hitsPerPage;
+      hitsPerPage = undefined;
+    }
+
     var params = '?page=' + page;
     if (!this.as._isUndefined(hitsPerPage)) {
       params += '&hitsPerPage=' + hitsPerPage;
@@ -1318,13 +1081,14 @@ AlgoliaSearch.prototype.Index.prototype = {
   ttAdapter: function(params) {
     var self = this;
     return function(query, cb) {
-      self.search(query, function(success, content) {
-        if (success) {
-          cb(content.hits);
-        } else {
-          cb(content && content.message);
+      self.search(query, params, function(err, content) {
+        if (err) {
+          cb(err);
+          return;
         }
-      }, params);
+
+        cb(content.hits);
+      });
     };
   },
 
@@ -1334,31 +1098,51 @@ AlgoliaSearch.prototype.Index.prototype = {
    *
    * @param taskID the id of the task returned by server
    * @param callback the result callback with with two arguments:
-   *  success: boolean set to true if the request was successfull
+   *  error: null or Error('message')
    *  content: the server answer that contains the list of results
    */
   waitTask: function(taskID, callback) {
+    // waitTask() must be handled differently from other methods,
+    // it's a recursive method using a timeout
     var indexObj = this;
-    return this.as._jsonRequest({ method: 'GET',
-                 url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/task/' + taskID,
-                 callback: function(success, body) {
-      if (success) {
-        if (body.status === 'published') {
-          callback(true, body);
-        } else {
-          setTimeout(function() { indexObj.waitTask(taskID, callback); }, 100);
-        }
-      } else {
-        callback(false, body);
+
+    var promise = this.as._jsonRequest({
+      method: 'GET',
+      url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/task/' + taskID
+    }).then(function success(content) {
+      if (content.status !== 'published') {
+        return new indexObj.as._request.delay(100).then(function() {
+          return indexObj.waitTask(taskID, callback);
+        });
       }
-    }});
+
+      if (callback) {
+        process.nextTick(function() {
+          callback(null, content);
+        });
+      } else {
+        return content;
+      }
+    }, function failure(err) {
+      if (callback) {
+        process.nextTick(function() {
+          callback(err);
+        });
+      } else {
+        return err;
+      }
+    });
+
+    if (!callback) {
+      return promise;
+    }
   },
 
   /*
    * This function deletes the index content. Settings and index specific API keys are kept untouched.
    *
    * @param callback (optional) the result callback with two arguments
-   *  success: boolean set to true if the request was successfull
+   *  error: null or Error('message')
    *  content: the settings object or the error message if a failure occured
    */
   clearIndex: function(callback) {
@@ -1371,7 +1155,7 @@ AlgoliaSearch.prototype.Index.prototype = {
    * Get settings of this index
    *
    * @param callback (optional) the result callback with two arguments
-   *  success: boolean set to true if the request was successfull
+   *  error: null or Error('message')
    *  content: the settings object or the error message if a failure occured
    */
   getSettings: function(callback) {
@@ -1432,7 +1216,7 @@ AlgoliaSearch.prototype.Index.prototype = {
    * - highlightPostTag: (string) Specify the string that is inserted after the highlighted parts in the query result (default to "</em>").
    * - optionalWords: (array of strings) Specify a list of words that should be considered as optional when found in the query.
    * @param callback (optional) the result callback with two arguments
-   *  success: boolean set to true if the request was successfull
+   *  error: null or Error('message')
    *  content: the server answer or the error message if a failure occured
    */
   setSettings: function(settings, callback) {
@@ -1446,8 +1230,8 @@ AlgoliaSearch.prototype.Index.prototype = {
    * List all existing user keys associated to this index
    *
    * @param callback the result callback with two arguments
-   *  success: boolean set to true if the request was successfull
-   *  content: the server answer with user keys list or error description if success is false.
+   *  error: null or Error('message')
+   *  content: the server answer with user keys list
    */
   listUserKeys: function(callback) {
     var indexObj = this;
@@ -1458,9 +1242,10 @@ AlgoliaSearch.prototype.Index.prototype = {
   /*
    * Get ACL of a user key associated to this index
    *
+   * @param key
    * @param callback the result callback with two arguments
-   *  success: boolean set to true if the request was successfull
-   *  content: the server answer with user keys list or error description if success is false.
+   *  error: null or Error('message')
+   *  content: the server answer with user keys list
    */
   getUserKeyACL: function(key, callback) {
     var indexObj = this;
@@ -1471,9 +1256,10 @@ AlgoliaSearch.prototype.Index.prototype = {
   /*
    * Delete an existing user key associated to this index
    *
+   * @param key
    * @param callback the result callback with two arguments
-   *  success: boolean set to true if the request was successfull
-   *  content: the server answer with user keys list or error description if success is false.
+   *  error: null or Error('message')
+   *  content: the server answer with user keys list
    */
   deleteUserKey: function(key, callback) {
     var indexObj = this;
@@ -1493,8 +1279,8 @@ AlgoliaSearch.prototype.Index.prototype = {
    *   - settings : allows to get index settings (https only)
    *   - editSettings : allows to change index settings (https only)
    * @param callback the result callback with two arguments
-   *  success: boolean set to true if the request was successfull
-   *  content: the server answer with user keys list or error description if success is false.
+   *  error: null or Error('message')
+   *  content: the server answer with user keys list
    */
   addUserKey: function(acls, callback) {
     var indexObj = this;
@@ -1516,20 +1302,20 @@ AlgoliaSearch.prototype.Index.prototype = {
    *   - deleteIndex : allows to delete index content (https only)
    *   - settings : allows to get index settings (https only)
    *   - editSettings : allows to change index settings (https only)
-   * @param validity the number of seconds after which the key will be automatically removed (0 means no time limit for this key)
-   * @param maxQueriesPerIPPerHour Specify the maximum number of API calls allowed from an IP address per hour.
-   * @param maxHitsPerQuery Specify the maximum number of hits this API key can retrieve in one call.
+   * @param params.validity the number of seconds after which the key will be automatically removed (0 means no time limit for this key)
+   * @param params.maxQueriesPerIPPerHour Specify the maximum number of API calls allowed from an IP address per hour.
+   * @param params.maxHitsPerQuery Specify the maximum number of hits this API key can retrieve in one call.
    * @param callback the result callback with two arguments
-   *  success: boolean set to true if the request was successfull
-   *  content: the server answer with user keys list or error description if success is false.
+   *  error: null or Error('message')
+   *  content: the server answer with user keys list
    */
-  addUserKeyWithValidity: function(acls, validity, maxQueriesPerIPPerHour, maxHitsPerQuery, callback) {
+  addUserKeyWithValidity: function(acls, params, callback) {
     var indexObj = this;
     var aclsObject = {};
     aclsObject.acl = acls;
-    aclsObject.validity = validity;
-    aclsObject.maxQueriesPerIPPerHour = maxQueriesPerIPPerHour;
-    aclsObject.maxHitsPerQuery = maxHitsPerQuery;
+    aclsObject.validity = params.validity;
+    aclsObject.maxQueriesPerIPPerHour = params.maxQueriesPerIPPerHour;
+    aclsObject.maxHitsPerQuery = params.maxHitsPerQuery;
     return this.as._jsonRequest({ method: 'POST',
                  url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/keys',
                  body: aclsObject,
@@ -1539,37 +1325,17 @@ AlgoliaSearch.prototype.Index.prototype = {
   /// Internal methods only after this line
   ///
   _search: function(params, callback) {
-    var pObj = {params: params};
-    if (this.as.jsonp === null) {
-      var self = this;
-      return this.as._jsonRequest({ cache: this.cache,
-        method: 'POST',
-        url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/query',
-        body: pObj,
-        callback: function(success, content) {
-          if (!success) {
-            // retry first with JSONP
-            self.as.jsonp = true;
-            self._search(params, callback);
-          } else {
-            self.as.jsonp = false;
-            callback && callback(success, content);
-          }
-        }
-      });
-    } else if (this.as.jsonp) {
-      return this.as._jsonRequest({ cache: this.cache,
-                   method: 'GET',
-                   url: '/1/indexes/' + encodeURIComponent(this.indexName),
-                   body: pObj,
-                   callback: callback });
-    } else {
-      return this.as._jsonRequest({ cache: this.cache,
-                   method: 'POST',
-                   url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/query',
-                   body: pObj,
-                   callback: callback});
-    }
+    return this.as._jsonRequest({ cache: this.cache,
+      method: 'POST',
+      url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/query',
+      body: {params: params},
+      fallback: {
+        method: 'GET',
+        url: '/1/indexes/' + encodeURIComponent(this.indexName),
+        body: {params: params}
+      },
+      callback: callback
+    });
   },
 
   // internal attributes
@@ -1579,1082 +1345,275 @@ AlgoliaSearch.prototype.Index.prototype = {
   typeAheadValueOption: null
 };
 
-/*
- * Copyright (c) 2014 Algolia
- * http://www.algolia.com/
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
-
-(function($) {
-  var extend = function(out) {
-    out = out || {};
-    for (var i = 1; i < arguments.length; i++) {
-      if (!arguments[i]) {
-        continue;
-      }
-      for (var key in arguments[i]) {
-        if (arguments[i].hasOwnProperty(key)) {
-          out[key] = arguments[i][key];
-        }
-      }
-    }
-    return out;
-  };
-  
-  /**
-   * Algolia Search Helper providing faceting and disjunctive faceting
-   * @param {AlgoliaSearch} client an AlgoliaSearch client
-   * @param {string} index the index name to query
-   * @param {hash} options an associative array defining the hitsPerPage, list of facets, the list of disjunctive facets and the default facet filters
-   */
-  window.AlgoliaSearchHelper = function(client, index, options) {
-    /// Default options
-    var defaults = {
-      facets: [],            // list of facets to compute
-      disjunctiveFacets: [], // list of disjunctive facets to compute
-      hitsPerPage: 20,       // number of hits per page
-      defaultFacetFilters: [] // the default list of facetFilters
-    };
-
-    this.init(client, index, extend({}, defaults, options));
-  };
-
-  AlgoliaSearchHelper.prototype = {
-    /**
-     * Initialize a new AlgoliaSearchHelper
-     * @param  {AlgoliaSearch} client an AlgoliaSearch client
-     * @param  {string} index the index name to query
-     * @param  {hash} options an associative array defining the hitsPerPage, list of facets and list of disjunctive facets
-     * @return {AlgoliaSearchHelper}
-     */
-    init: function(client, index, options) {
-      this.client = client;
-      this.index = index;
-      this.options = options;
-      this.page = 0;
-      this.refinements = {};
-      this.excludes = {};
-      this.disjunctiveRefinements = {};
-      this.extraQueries = [];
-    },
-
-    /**
-     * Perform a query
-     * @param  {string} q the user query
-     * @param  {function} searchCallback the result callback called with two arguments:
-     *  success: boolean set to true if the request was successfull
-     *  content: the query answer with an extra 'disjunctiveFacets' attribute
-     */
-    search: function(q, searchCallback, searchParams) {
-      this.q = q;
-      this.searchCallback = searchCallback;
-      this.searchParams = searchParams || {};
-      this.page = this.page || 0;
-      this.refinements = this.refinements || {};
-      this.disjunctiveRefinements = this.disjunctiveRefinements || {};
-      this._search();
-    },
-    
-    /**
-     * Remove all refinements (disjunctive + conjunctive)
-     */
-    clearRefinements: function() {
-      this.disjunctiveRefinements = {};
-      this.refinements = {};
-    },
-
-    /**
-     * Ensure a facet refinement exists
-     * @param  {string} facet the facet to refine
-     * @param  {string} value the associated value
-     */
-    addDisjunctiveRefine: function(facet, value) {
-      this.disjunctiveRefinements = this.disjunctiveRefinements || {};
-      this.disjunctiveRefinements[facet] = this.disjunctiveRefinements[facet] || {};
-      this.disjunctiveRefinements[facet][value] = true;
-    },
-
-    /**
-     * Ensure a facet refinement does not exist
-     * @param  {string} facet the facet to refine
-     * @param  {string} value the associated value
-     */
-    removeDisjunctiveRefine: function(facet, value) {
-      this.disjunctiveRefinements = this.disjunctiveRefinements || {};
-      this.disjunctiveRefinements[facet] = this.disjunctiveRefinements[facet] || {};
-      try {
-        delete this.disjunctiveRefinements[facet][value];
-      } catch (e) {
-        this.disjunctiveRefinements[facet][value] = undefined; // IE compat
-      }
-    },
-
-    /**
-     * Ensure a facet refinement exists
-     * @param  {string} facet the facet to refine
-     * @param  {string} value the associated value
-     */
-    addRefine: function(facet, value) {
-      var refinement = facet + ':' + value;
-      this.refinements = this.refinements || {};
-      this.refinements[refinement] = true;
-    },
-
-    /**
-     * Ensure a facet refinement does not exist
-     * @param  {string} facet the facet to refine
-     * @param  {string} value the associated value
-     */
-    removeRefine: function(facet, value) {
-      var refinement = facet + ':' + value;
-      this.refinements = this.refinements || {};
-      this.refinements[refinement] = false;
-    },
-
-    /**
-     * Ensure a facet exclude exists
-     * @param  {string} facet the facet to refine
-     * @param  {string} value the associated value
-     */
-    addExclude: function(facet, value) {
-      var refinement = facet + ':-' + value;
-      this.excludes = this.excludes || {};
-      this.excludes[refinement] = true;
-    },
-
-    /**
-     * Ensure a facet exclude does not exist
-     * @param  {string} facet the facet to refine
-     * @param  {string} value the associated value
-     */
-    removeExclude: function(facet, value) {
-      var refinement = facet + ':-' + value;
-      this.excludes = this.excludes || {};
-      this.excludes[refinement] = false;
-    },
-
-    /**
-     * Toggle refinement state of an exclude
-     * @param  {string} facet the facet to refine
-     * @param  {string} value the associated value
-     * @return {boolean} true if the facet has been found
-     */
-    toggleExclude: function(facet, value) {
-      for (var i = 0; i < this.options.facets.length; ++i) {
-        if (this.options.facets[i] == facet) {
-          var refinement = facet + ':-' + value;
-          this.excludes[refinement] = !this.excludes[refinement];
-          this.page = 0;
-          this._search();
-          return true;
-        }
-      }
-      return false;
-    },
-
-    /**
-     * Toggle refinement state of a facet
-     * @param  {string} facet the facet to refine
-     * @param  {string} value the associated value
-     * @return {boolean} true if the facet has been found
-     */
-    toggleRefine: function(facet, value) {
-      for (var i = 0; i < this.options.facets.length; ++i) {
-        if (this.options.facets[i] == facet) {
-          var refinement = facet + ':' + value;
-          this.refinements[refinement] = !this.refinements[refinement];
-          this.page = 0;
-          this._search();
-          return true;
-        }
-      }
-      this.disjunctiveRefinements[facet] = this.disjunctiveRefinements[facet] || {};
-      for (var j = 0; j < this.options.disjunctiveFacets.length; ++j) {
-        if (this.options.disjunctiveFacets[j] == facet) {
-          this.disjunctiveRefinements[facet][value] = !this.disjunctiveRefinements[facet][value];
-          this.page = 0;
-          this._search();
-          return true;
-        }
-      }
-      return false;
-    },
-
-    /**
-     * Check the refinement state of a facet
-     * @param  {string}  facet the facet
-     * @param  {string}  value the associated value
-     * @return {boolean} true if refined
-     */
-    isRefined: function(facet, value) {
-      var refinement = facet + ':' + value;
-      if (this.refinements[refinement]) {
-        return true;
-      }
-      if (this.disjunctiveRefinements[facet] && this.disjunctiveRefinements[facet][value]) {
-        return true;
-      }
-      return false;
-    },
-
-    /**
-     * Check the exclude state of a facet
-     * @param  {string}  facet the facet
-     * @param  {string}  value the associated value
-     * @return {boolean} true if refined
-     */
-    isExcluded: function(facet, value) {
-      var refinement = facet + ':-' + value;
-      if (this.excludes[refinement]) {
-        return true;
-      }
-      return false;
-    },
-
-    /**
-     * Go to next page
-     */
-    nextPage: function() {
-      this._gotoPage(this.page + 1);
-    },
-
-    /**
-     * Go to previous page
-     */
-    previousPage: function() {
-      if (this.page > 0) {
-        this._gotoPage(this.page - 1);
-      }
-    },
-
-    /**
-     * Goto a page
-     * @param  {integer} page The page number
-     */
-    gotoPage: function(page) {
-        this._gotoPage(page);
-    },
-
-    /**
-     * Configure the page but do not trigger a reload
-     * @param  {integer} page The page number
-     */
-    setPage: function(page) {
-      this.page = page;
-    },
-
-    /**
-     * Configure the underlying index name
-     * @param {string} name the index name
-     */
-    setIndex: function(name) {
-      this.index = name;
-    },
-
-    /**
-     * Get the underlying configured index name
-     */
-    getIndex: function() {
-      return this.index;
-    },
-
-    /**
-     * Clear the extra queries added to the underlying batch of queries
-     */
-    clearExtraQueries: function() {
-      this.extraQueries = [];
-    },
-
-    /**
-     * Add an extra query to the underlying batch of queries. Once you add queries
-     * to the batch, the 2nd parameter of the searchCallback will be an object with a `results`
-     * attribute listing all search results.
-     */
-    addExtraQuery: function(index, query, params) {
-      this.extraQueries.push({ index: index, query: query, params: (params || {}) });
-    },
-
-    ///////////// PRIVATE
-
-    /**
-     * Goto a page
-     * @param  {integer} page The page number
-     */
-    _gotoPage: function(page) {
-      this.page = page;
-      this._search();
-    },
-
-    /**
-     * Perform the underlying queries
-     */
-    _search: function() {
-      this.client.startQueriesBatch();
-      this.client.addQueryInBatch(this.index, this.q, this._getHitsSearchParams());
-      var disjunctiveFacets = [];
-      var unusedDisjunctiveFacets = {};
-      var i = 0;
-      for (i = 0; i < this.options.disjunctiveFacets.length; ++i) {
-        var facet = this.options.disjunctiveFacets[i];
-        if (this._hasDisjunctiveRefinements(facet)) {
-          disjunctiveFacets.push(facet);
-        } else {
-          unusedDisjunctiveFacets[facet] = true;
-        }
-      }
-      for (i = 0; i < disjunctiveFacets.length; ++i) {
-        this.client.addQueryInBatch(this.index, this.q, this._getDisjunctiveFacetSearchParams(disjunctiveFacets[i]));
-      }
-      for (i = 0; i < this.extraQueries.length; ++i) {
-        this.client.addQueryInBatch(this.extraQueries[i].index, this.extraQueries[i].query, this.extraQueries[i].params);
-      }
-      var self = this;
-      this.client.sendQueriesBatch(function(success, content) {
-        if (!success) {
-          self.searchCallback(false, content);
-          return;
-        }
-        var aggregatedAnswer = content.results[0];
-        aggregatedAnswer.disjunctiveFacets = aggregatedAnswer.disjunctiveFacets || {};
-        aggregatedAnswer.facets_stats = aggregatedAnswer.facets_stats || {};
-        // create disjunctive facets from facets (disjunctive facets without refinements)
-        for (var facet in unusedDisjunctiveFacets) {
-          if (aggregatedAnswer.facets[facet] && !aggregatedAnswer.disjunctiveFacets[facet]) {
-            aggregatedAnswer.disjunctiveFacets[facet] = aggregatedAnswer.facets[facet];
-            try {
-              delete aggregatedAnswer.facets[facet];
-            } catch (e) {
-              aggregatedAnswer.facets[facet] = undefined; // IE compat
-            }
-          }
-        }
-        // aggregate the disjunctive facets
-        for (i = 0; i < disjunctiveFacets.length; ++i) {
-          for (var dfacet in content.results[i + 1].facets) {
-            aggregatedAnswer.disjunctiveFacets[dfacet] = content.results[i + 1].facets[dfacet];
-            if (self.disjunctiveRefinements[dfacet]) {
-              for (var value in self.disjunctiveRefinements[dfacet]) {
-                // add the disjunctive reginements if it is no more retrieved
-                if (!aggregatedAnswer.disjunctiveFacets[dfacet][value] && self.disjunctiveRefinements[dfacet][value]) {
-                  aggregatedAnswer.disjunctiveFacets[dfacet][value] = 0;
-                }
-              }
-            }
-          }
-          // aggregate the disjunctive facets stats
-          for (var stats in content.results[i + 1].facets_stats) {
-            aggregatedAnswer.facets_stats[stats] = content.results[i + 1].facets_stats[stats];
-          }
-        }
-
-        // Backward compatibility
-        aggregatedAnswer.facetStats = aggregatedAnswer.facets_stats;
-
-        // add the excludes
-        for (var exclude in self.excludes) {
-          if (self.excludes[exclude]) {
-            var e = exclude.indexOf(':-');
-            var facet = exclude.slice(0, e);
-            var value = exclude.slice(e + 2);
-            aggregatedAnswer.facets[facet] = aggregatedAnswer.facets[facet] || {};
-            if (!aggregatedAnswer.facets[facet][value]) {
-              aggregatedAnswer.facets[facet][value] = 0;
-            }
-          }
-        }
-        // call the actual callback
-        if (self.extraQueries.length === 0) {
-          self.searchCallback(true, aggregatedAnswer);
-        } else {
-          // append the extra queries
-          var c = { results: [ aggregatedAnswer ] };
-          for (i = 0; i < self.extraQueries.length; ++i) {
-            c.results.push(content.results[1 + disjunctiveFacets.length + i]);
-          }
-          self.searchCallback(true, c);
-        }
-      });
-    },
-
-    /**
-     * Build search parameters used to fetch hits
-     * @return {hash}
-     */
-    _getHitsSearchParams: function() {
-      var facets = [];
-      var i = 0;
-      for (i = 0; i < this.options.facets.length; ++i) {
-        facets.push(this.options.facets[i]);
-      }
-      for (i = 0; i < this.options.disjunctiveFacets.length; ++i) {
-        var facet = this.options.disjunctiveFacets[i];
-        if (!this._hasDisjunctiveRefinements(facet)) {
-          facets.push(facet);
-        }
-      }
-      return extend({}, {
-        hitsPerPage: this.options.hitsPerPage,
-        page: this.page,
-        facets: facets,
-        facetFilters: this._getFacetFilters()
-      }, this.searchParams);
-    },
-
-    /**
-     * Build search parameters used to fetch a disjunctive facet
-     * @param  {string} facet the associated facet name
-     * @return {hash}
-     */
-    _getDisjunctiveFacetSearchParams: function(facet) {
-      return extend({}, this.searchParams, {
-        hitsPerPage: 1,
-        page: 0,
-        attributesToRetrieve: [],
-        attributesToHighlight: [],
-        attributesToSnippet: [],
-        facets: facet,
-        facetFilters: this._getFacetFilters(facet)
-      });
-    },
-
-    /**
-     * Test if there are some disjunctive refinements on the facet
-     */
-    _hasDisjunctiveRefinements: function(facet) {
-      for (var value in this.disjunctiveRefinements[facet]) {
-        if (this.disjunctiveRefinements[facet][value]) {
-          return true;
-        }
-      }
-      return false;
-    },
-
-    /**
-     * Build facetFilters parameter based on current refinements
-     * @param  {string} facet if set, the current disjunctive facet
-     * @return {hash}
-     */
-    _getFacetFilters: function(facet) {
-      var facetFilters = [];
-      if (this.options.defaultFacetFilters) {
-        for (var i = 0; i < this.options.defaultFacetFilters.length; ++i) {
-          facetFilters.push(this.options.defaultFacetFilters[i]);
-        }
-      }
-      for (var refinement in this.refinements) {
-        if (this.refinements[refinement]) {
-          facetFilters.push(refinement);
-        }
-      }
-      for (var refinement in this.excludes) {
-        if (this.excludes[refinement]) {
-          facetFilters.push(refinement);
-        }
-      }
-      for (var disjunctiveRefinement in this.disjunctiveRefinements) {
-        if (disjunctiveRefinement != facet) {
-          var refinements = [];
-          for (var value in this.disjunctiveRefinements[disjunctiveRefinement]) {
-            if (this.disjunctiveRefinements[disjunctiveRefinement][value]) {
-              refinements.push(disjunctiveRefinement + ':' + value);
-            }
-          }
-          if (refinements.length > 0) {
-            facetFilters.push(refinements);
-          }
-        }
-      }
-      return facetFilters;
-    }
-  };
-})();
-
-/*
- * Copyright (c) 2014 Algolia
- * http://www.algolia.com/
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
-
-(function($) {
-  
-  /**
-   * Algolia Places API
-   * @param {string} Your application ID
-   * @param {string} Your API Key
-   */
-  window.AlgoliaPlaces = function(applicationID, apiKey) {
-     this.init(applicationID, apiKey);
-  };
-
-  AlgoliaPlaces.prototype = {
-    /**
-     * @param {string} Your application ID
-     * @param {string} Your API Key
-     */
-    init: function(applicationID, apiKey) {
-      this.client = new AlgoliaSearch(applicationID, apiKey, 'http', true, ['places-1.algolia.io', 'places-2.algolia.io', 'places-3.algolia.io']);
-      this.cache = {};
-    },
-
-    /**
-     * Perform a query
-     * @param  {string} q the user query
-     * @param  {function} searchCallback the result callback called with two arguments:
-     *  success: boolean set to true if the request was successfull
-     *  content: the query answer with an extra 'disjunctiveFacets' attribute
-     * @param {hash} the list of search parameters
-     */
-    search: function(q, searchCallback, searchParams) {
-      var indexObj = this;
-      var params = 'query=' + encodeURIComponent(q);
-      if (!this.client._isUndefined(searchParams) && searchParams != null) {
-          params = this.client._getSearchParams(searchParams, params);
-      }
-      var pObj = {params: params, apiKey: this.client.apiKey, appID: this.client.applicationID};
-      this.client._jsonRequest({ cache: this.cache,
-                                 method: 'POST',
-                                 url: '/1/places/query',
-                                 body: pObj,
-                                 callback: searchCallback,
-                                 removeCustomHTTPHeaders: true });
-    }
-  };
-})();
-
-/*
-    json2.js
-    2014-02-04
-
-    Public Domain.
-
-    NO WARRANTY EXPRESSED OR IMPLIED. USE AT YOUR OWN RISK.
-
-    See http://www.JSON.org/js.html
-
-
-    This code should be minified before deployment.
-    See http://javascript.crockford.com/jsmin.html
-
-    USE YOUR OWN COPY. IT IS EXTREMELY UNWISE TO LOAD CODE FROM SERVERS YOU DO
-    NOT CONTROL.
-
-
-    This file creates a global JSON object containing two methods: stringify
-    and parse.
-
-        JSON.stringify(value, replacer, space)
-            value       any JavaScript value, usually an object or array.
-
-            replacer    an optional parameter that determines how object
-                        values are stringified for objects. It can be a
-                        function or an array of strings.
-
-            space       an optional parameter that specifies the indentation
-                        of nested structures. If it is omitted, the text will
-                        be packed without extra whitespace. If it is a number,
-                        it will specify the number of spaces to indent at each
-                        level. If it is a string (such as '\t' or '&nbsp;'),
-                        it contains the characters used to indent at each level.
-
-            This method produces a JSON text from a JavaScript value.
-
-            When an object value is found, if the object contains a toJSON
-            method, its toJSON method will be called and the result will be
-            stringified. A toJSON method does not serialize: it returns the
-            value represented by the name/value pair that should be serialized,
-            or undefined if nothing should be serialized. The toJSON method
-            will be passed the key associated with the value, and this will be
-            bound to the value
-
-            For example, this would serialize Dates as ISO strings.
-
-                Date.prototype.toJSON = function (key) {
-                    function f(n) {
-                        // Format integers to have at least two digits.
-                        return n < 10 ? '0' + n : n;
-                    }
-
-                    return this.getUTCFullYear()   + '-' +
-                         f(this.getUTCMonth() + 1) + '-' +
-                         f(this.getUTCDate())      + 'T' +
-                         f(this.getUTCHours())     + ':' +
-                         f(this.getUTCMinutes())   + ':' +
-                         f(this.getUTCSeconds())   + 'Z';
-                };
-
-            You can provide an optional replacer method. It will be passed the
-            key and value of each member, with this bound to the containing
-            object. The value that is returned from your method will be
-            serialized. If your method returns undefined, then the member will
-            be excluded from the serialization.
-
-            If the replacer parameter is an array of strings, then it will be
-            used to select the members to be serialized. It filters the results
-            such that only members with keys listed in the replacer array are
-            stringified.
-
-            Values that do not have JSON representations, such as undefined or
-            functions, will not be serialized. Such values in objects will be
-            dropped; in arrays they will be replaced with null. You can use
-            a replacer function to replace those with JSON values.
-            JSON.stringify(undefined) returns undefined.
-
-            The optional space parameter produces a stringification of the
-            value that is filled with line breaks and indentation to make it
-            easier to read.
-
-            If the space parameter is a non-empty string, then that string will
-            be used for indentation. If the space parameter is a number, then
-            the indentation will be that many spaces.
-
-            Example:
-
-            text = JSON.stringify(['e', {pluribus: 'unum'}]);
-            // text is '["e",{"pluribus":"unum"}]'
-
-
-            text = JSON.stringify(['e', {pluribus: 'unum'}], null, '\t');
-            // text is '[\n\t"e",\n\t{\n\t\t"pluribus": "unum"\n\t}\n]'
-
-            text = JSON.stringify([new Date()], function (key, value) {
-                return this[key] instanceof Date ?
-                    'Date(' + this[key] + ')' : value;
-            });
-            // text is '["Date(---current time---)"]'
-
-
-        JSON.parse(text, reviver)
-            This method parses a JSON text to produce an object or array.
-            It can throw a SyntaxError exception.
-
-            The optional reviver parameter is a function that can filter and
-            transform the results. It receives each of the keys and values,
-            and its return value is used instead of the original value.
-            If it returns what it received, then the structure is not modified.
-            If it returns undefined then the member is deleted.
-
-            Example:
-
-            // Parse the text. Values that look like ISO date strings will
-            // be converted to Date objects.
-
-            myData = JSON.parse(text, function (key, value) {
-                var a;
-                if (typeof value === 'string') {
-                    a =
-/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}(?:\.\d*)?)Z$/.exec(value);
-                    if (a) {
-                        return new Date(Date.UTC(+a[1], +a[2] - 1, +a[3], +a[4],
-                            +a[5], +a[6]));
-                    }
-                }
-                return value;
-            });
-
-            myData = JSON.parse('["Date(09/09/2001)"]', function (key, value) {
-                var d;
-                if (typeof value === 'string' &&
-                        value.slice(0, 5) === 'Date(' &&
-                        value.slice(-1) === ')') {
-                    d = new Date(value.slice(5, -1));
-                    if (d) {
-                        return d;
-                    }
-                }
-                return value;
-            });
-
-
-    This is a reference implementation. You are free to copy, modify, or
-    redistribute.
-*/
-
-/*jslint evil: true, regexp: true */
-
-/*members "", "\b", "\t", "\n", "\f", "\r", "\"", JSON, "\\", apply,
-    call, charCodeAt, getUTCDate, getUTCFullYear, getUTCHours,
-    getUTCMinutes, getUTCMonth, getUTCSeconds, hasOwnProperty, join,
-    lastIndex, length, parse, prototype, push, replace, slice, stringify,
-    test, toJSON, toString, valueOf
-*/
-
-
-// Create a JSON object only if one does not already exist. We create the
-// methods in a closure to avoid creating global variables.
-
-if (typeof JSON !== 'object') {
-    JSON = {};
+// extracted from https://github.com/component/map/blob/master/index.js
+// without the crazy toFunction thing
+function map(arr, fn){
+  var ret = [];
+  for (var i = 0; i < arr.length; ++i) {
+    ret.push(fn(arr[i], i));
+  }
+  return ret;
 }
 
-(function () {
-    'use strict';
+// extracted from https://github.com/coolaj86/knuth-shuffle
+// not compatible with browserify
+function shuffle(array) {
+  /*eslint-disable*/
+  var currentIndex = array.length
+    , temporaryValue
+    , randomIndex
+    ;
 
-    function f(n) {
-        // Format integers to have at least two digits.
-        return n < 10 ? '0' + n : n;
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
+}
+
+}).call(this,require(1))
+},{"1":1}],4:[function(require,module,exports){
+// this file is a `factory of algoliasearch()`
+// Given a `request` param, it will provide you an AlgoliaSearch client
+// using this particular request
+module.exports = createAlgoliasearch;
+
+function createAlgoliasearch(request) {
+  function algoliasearch(applicationID, apiKey, opts) {
+    var AlgoliaSearch = require(3);
+
+    return new AlgoliaSearch(applicationID, apiKey, opts, request);
+  }
+
+  algoliasearch.version = "3.0.1";
+
+  return algoliasearch;
+}
+
+},{"3":3}],5:[function(require,module,exports){
+module.exports = JSONPRequest;
+
+var JSONPCounter = 0;
+
+function JSONPRequest(url, opts, cb) {
+  if (opts.method !== 'GET') {
+    cb(new Error('Method ' + opts.method + ' ' + url + ' is not supported by JSONP.'));
+    return;
+  }
+
+  var cbCalled = false;
+  var timedOut = false;
+
+  JSONPCounter += 1;
+  var head = document.getElementsByTagName('head')[0];
+  var script = document.createElement('script');
+  var cbName = 'algoliaJSONP_' + JSONPCounter;
+  var done = false;
+
+  window[cbName] = function(data) {
+    try {
+      delete window[cbName];
+    } catch (e) {
+      window[cbName] = undefined;
     }
 
-    if (typeof Date.prototype.toJSON !== 'function') {
-
-        Date.prototype.toJSON = function () {
-
-            return isFinite(this.valueOf())
-                ? this.getUTCFullYear()     + '-' +
-                    f(this.getUTCMonth() + 1) + '-' +
-                    f(this.getUTCDate())      + 'T' +
-                    f(this.getUTCHours())     + ':' +
-                    f(this.getUTCMinutes())   + ':' +
-                    f(this.getUTCSeconds())   + 'Z'
-                : null;
-        };
-
-        String.prototype.toJSON      =
-            Number.prototype.toJSON  =
-            Boolean.prototype.toJSON = function () {
-                return this.valueOf();
-            };
+    if (timedOut) {
+      return;
     }
 
-    var cx,
-        escapable,
-        gap,
-        indent,
-        meta,
-        rep;
+    cbCalled = true;
 
+    clean();
 
-    function quote(string) {
+    cb(null, {
+      body: data/*,
+      // We do not send the statusCode, there's no statusCode in JSONP, it will be
+      // computed using data.status && data.message like with XDR
+      statusCode*/
+    });
+  };
 
-// If the string contains no control characters, no quote characters, and no
-// backslash characters, then we can safely slap some quotes around it.
-// Otherwise we must also replace the offending characters with safe escape
-// sequences.
+  // add callback by hand
+  url += '&callback=' + cbName;
 
-        escapable.lastIndex = 0;
-        return escapable.test(string) ? '"' + string.replace(escapable, function (a) {
-            var c = meta[a];
-            return typeof c === 'string'
-                ? c
-                : '\\u' + ('0000' + a.charCodeAt(0).toString(16)).slice(-4);
-        }) + '"' : '"' + string + '"';
+  // add body params by hand
+  if (opts.body && opts.body.params) {
+    url += '&' + opts.body.params;
+  }
+
+  var ontimeout = setTimeout(timeout, opts.timeout);
+
+  // script onreadystatechange needed only for
+  // <= IE8
+  // https://github.com/angular/angular.js/issues/4523
+  script.onreadystatechange = readystatechange;
+  script.onload = success;
+  script.onerror = error;
+
+  script.async = true;
+  script.defer = true;
+  script.src = url;
+  head.appendChild(script);
+
+  function success() {
+    if (done || timedOut) {
+      return;
     }
 
+    done = true;
 
-    function str(key, holder) {
+    // script loaded but did not call the fn => script loading error
+    if (!cbCalled) {
+      clean();
+      cb(new Error('Failed to load JSONP script'));
+    }
+  }
 
-// Produce a string from holder[key].
+  function readystatechange() {
+    if (this.readyState === 'loaded' || this.readyState === 'complete') {
+      success();
+    }
+  }
 
-        var i,          // The loop counter.
-            k,          // The member key.
-            v,          // The member value.
-            length,
-            mind = gap,
-            partial,
-            value = holder[key];
+  function clean() {
+    clearTimeout(ontimeout);
+    script.onload = null;
+    script.onreadystatechange = null;
+    script.onerror = null;
+    head.removeChild(script);
 
-// If the value has a toJSON method, call it to obtain a replacement value.
+    try {
+      delete window[cbName];
+      delete window[cbName + '_loaded'];
+    } catch (e) {
+      window[cbName] = null;
+      window[cbName + '_loaded'] = null;
+    }
+  }
 
-        if (value && typeof value === 'object' &&
-                typeof value.toJSON === 'function') {
-            value = value.toJSON(key);
-        }
+  function timeout() {
+    timedOut = true;
+    clean();
+    cb(new Error('Timeout - Could not connect to endpoint ' + url));
+  }
 
-// If we were called with a replacer function, then call the replacer to
-// obtain a replacement value.
-
-        if (typeof rep === 'function') {
-            value = rep.call(holder, key, value);
-        }
-
-// What happens next depends on the value's type.
-
-        switch (typeof value) {
-        case 'string':
-            return quote(value);
-
-        case 'number':
-
-// JSON numbers must be finite. Encode non-finite numbers as null.
-
-            return isFinite(value) ? String(value) : 'null';
-
-        case 'boolean':
-        case 'null':
-
-// If the value is a boolean or null, convert it to a string. Note:
-// typeof null does not produce 'null'. The case is included here in
-// the remote chance that this gets fixed someday.
-
-            return String(value);
-
-// If the type is 'object', we might be dealing with an object or an array or
-// null.
-
-        case 'object':
-
-// Due to a specification blunder in ECMAScript, typeof null is 'object',
-// so watch out for that case.
-
-            if (!value) {
-                return 'null';
-            }
-
-// Make an array to hold the partial results of stringifying this object value.
-
-            gap += indent;
-            partial = [];
-
-// Is the value an array?
-
-            if (Object.prototype.toString.apply(value) === '[object Array]') {
-
-// The value is an array. Stringify every element. Use null as a placeholder
-// for non-JSON values.
-
-                length = value.length;
-                for (i = 0; i < length; i += 1) {
-                    partial[i] = str(i, value) || 'null';
-                }
-
-// Join all of the elements together, separated with commas, and wrap them in
-// brackets.
-
-                v = partial.length === 0
-                    ? '[]'
-                    : gap
-                    ? '[\n' + gap + partial.join(',\n' + gap) + '\n' + mind + ']'
-                    : '[' + partial.join(',') + ']';
-                gap = mind;
-                return v;
-            }
-
-// If the replacer is an array, use it to select the members to be stringified.
-
-            if (rep && typeof rep === 'object') {
-                length = rep.length;
-                for (i = 0; i < length; i += 1) {
-                    if (typeof rep[i] === 'string') {
-                        k = rep[i];
-                        v = str(k, value);
-                        if (v) {
-                            partial.push(quote(k) + (gap ? ': ' : ':') + v);
-                        }
-                    }
-                }
-            } else {
-
-// Otherwise, iterate through all of the keys in the object.
-
-                for (k in value) {
-                    if (Object.prototype.hasOwnProperty.call(value, k)) {
-                        v = str(k, value);
-                        if (v) {
-                            partial.push(quote(k) + (gap ? ': ' : ':') + v);
-                        }
-                    }
-                }
-            }
-
-// Join all of the member texts together, separated with commas,
-// and wrap them in braces.
-
-            v = partial.length === 0
-                ? '{}'
-                : gap
-                ? '{\n' + gap + partial.join(',\n' + gap) + '\n' + mind + '}'
-                : '{' + partial.join(',') + '}';
-            gap = mind;
-            return v;
-        }
+  function error() {
+    if (done || timedOut) {
+      return;
     }
 
-// If the JSON object does not yet have a stringify method, give it one.
+    clean();
+    cb(new Error('Failed to load JSONP script'));
+  }
+}
 
-    if (typeof JSON.stringify !== 'function') {
-        escapable = /[\\\"\x00-\x1f\x7f-\x9f\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g;
-        meta = {    // table of character substitutions
-            '\b': '\\b',
-            '\t': '\\t',
-            '\n': '\\n',
-            '\f': '\\f',
-            '\r': '\\r',
-            '"' : '\\"',
-            '\\': '\\\\'
-        };
-        JSON.stringify = function (value, replacer, space) {
+},{}],6:[function(require,module,exports){
+module.exports = migrationLayer;
 
-// The stringify method takes a value and an optional replacer, and an optional
-// space parameter, and returns a JSON text. The replacer can be a function
-// that can replace values, or an array of strings that will select the keys.
-// A default replacer method can be provided. Use of the space parameter can
-// produce text that is more easily readable.
+// Now onto the V2 related code:
+//  If the client is using /latest/$BUILDNAME.min.js, load V2 of the library
+//
+//  Otherwise, setup a migration layer that will throw on old constructors like
+//  new AlgoliaSearch().
+//  So that users upgrading from v2 to v3 will have a clear information
+//  message on what to do if they did not read the migration guide
+function migrationLayer(buildName) {
+  var isUsingLatest = require(7);
+  var loadV2 = require(8);
+  var oldGlobals = require(9);
 
-            var i;
-            gap = '';
-            indent = '';
+  if (isUsingLatest(buildName)) {
+    loadV2(buildName);
+  } else {
+    oldGlobals();
+  }
+}
 
-// If the space parameter is a number, make an indent string containing that
-// many spaces.
+},{"7":7,"8":8,"9":9}],7:[function(require,module,exports){
+// this module helps finding if the current page is using
+// the cdn.jsdelivr.net/algoliasearch/latest/$BUILDNAME.min.js version
 
-            if (typeof space === 'number') {
-                for (i = 0; i < space; i += 1) {
-                    indent += ' ';
-                }
+module.exports = isUsingLatest;
 
-// If the space parameter is a string, it will be used as the indent string.
+function isUsingLatest(buildName) {
+  var toFind = new RegExp('cdn\\.jsdelivr\\.net/algoliasearch/latest/' +
+    buildName.replace('.', '\\.') + // algoliasearch, algoliasearch.angular
+    '(?:\\.min)?\\.js$'); // [.min].js
 
-            } else if (typeof space === 'string') {
-                indent = space;
-            }
-
-// If there is a replacer, it must be a function or an array.
-// Otherwise, throw an error.
-
-            rep = replacer;
-            if (replacer && typeof replacer !== 'function' &&
-                    (typeof replacer !== 'object' ||
-                    typeof replacer.length !== 'number')) {
-                throw new Error('JSON.stringify');
-            }
-
-// Make a fake root object containing our value under the key of ''.
-// Return the result of stringifying the value.
-
-            return str('', {'': value});
-        };
+  var scripts = document.getElementsByTagName('script');
+  var found = false;
+  for (var currentScript = 0, nbScripts = scripts.length;
+        currentScript < nbScripts;
+        currentScript++) {
+    if (scripts[currentScript].src && toFind.test(scripts[currentScript].src)) {
+      found = true;
+      break;
     }
+  }
 
+  return found;
+}
 
-// If the JSON object does not yet have a parse method, give it one.
+},{}],8:[function(require,module,exports){
+(function (global){
+module.exports = loadV2;
 
-    if (typeof JSON.parse !== 'function') {
-        cx = /[\u0000\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g;
-        JSON.parse = function (text, reviver) {
+function loadV2(buildName) {
+  var message =
+    'Warning, you are using the `latest` version tag from jsDelivr for the AlgoliaSearch library.\n' +
+    'We updated the AlgoliaSearch JavaScript client to V3, using `latest` is no more recommended.\n' +
+    'Please read our migration guide at https://github.com/algolia/algoliasearch-client-js/wiki/Migration-guide-from-2.x.x-to-3.x.x';
 
-// The parse method takes a text and an optional reviver function, and returns
-// a JavaScript value if the text is a valid JSON text.
-
-            var j;
-
-            function walk(holder, key) {
-
-// The walk method is used to recursively walk the resulting structure so
-// that modifications can be made.
-
-                var k, v, value = holder[key];
-                if (value && typeof value === 'object') {
-                    for (k in value) {
-                        if (Object.prototype.hasOwnProperty.call(value, k)) {
-                            v = walk(value, k);
-                            if (v !== undefined) {
-                                value[k] = v;
-                            } else {
-                                delete value[k];
-                            }
-                        }
-                    }
-                }
-                return reviver.call(holder, key, value);
-            }
-
-
-// Parsing happens in four stages. In the first stage, we replace certain
-// Unicode characters with escape sequences. JavaScript handles many characters
-// incorrectly, either silently deleting them, or treating them as line endings.
-
-            text = String(text);
-            cx.lastIndex = 0;
-            if (cx.test(text)) {
-                text = text.replace(cx, function (a) {
-                    return '\\u' +
-                        ('0000' + a.charCodeAt(0).toString(16)).slice(-4);
-                });
-            }
-
-// In the second stage, we run the text against regular expressions that look
-// for non-JSON patterns. We are especially concerned with '()' and 'new'
-// because they can cause invocation, and '=' because it can cause mutation.
-// But just to be safe, we want to reject all unexpected forms.
-
-// We split the second stage into 4 regexp operations in order to work around
-// crippling inefficiencies in IE's and Safari's regexp engines. First we
-// replace the JSON backslash pairs with '@' (a non-JSON character). Second, we
-// replace all simple value tokens with ']' characters. Third, we delete all
-// open brackets that follow a colon or comma or that begin the text. Finally,
-// we look to see that the remaining characters are only whitespace or ']' or
-// ',' or ':' or '{' or '}'. If that is so, then the text is safe for eval.
-
-            if (/^[\],:{}\s]*$/
-                    .test(text.replace(/\\(?:["\\\/bfnrt]|u[0-9a-fA-F]{4})/g, '@')
-                        .replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']')
-                        .replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
-
-// In the third stage we use the eval function to compile the text into a
-// JavaScript structure. The '{' operator is subject to a syntactic ambiguity
-// in JavaScript: it can begin a block or an object literal. We wrap the text
-// in parens to eliminate the ambiguity.
-
-                j = eval('(' + text + ')');
-
-// In the optional fourth stage, we recursively walk the new structure, passing
-// each name/value pair to a reviver function for possible transformation.
-
-                return typeof reviver === 'function'
-                    ? walk({'': j}, '')
-                    : j;
-            }
-
-// If the text is not JSON parseable, then a SyntaxError is thrown.
-
-            throw new SyntaxError('JSON.parse');
-        };
+  if (global.console) {
+    if (global.console.warn) {
+      global.console.warn(message);
+    } else if (global.console.log) {
+      global.console.log(message);
     }
-}());
+  }
 
-/* global angular */
-angular.module('algoliasearch', [])
-  .service('algolia', ['$injector', function ($injector) {
-    return {
-      Client: function(applicationID, apiKey, options) {
-        options = options || {};
-        options.angular = {
-          '$injector': $injector
-        };
-        return new AlgoliaSearch(applicationID, apiKey, options);
-      }
-    };
-  }]);
+  // why \x3c? http://stackoverflow.com/a/236106/147079
+  document.write(
+    '\x3Cscript src="//cdn.jsdelivr.net/algoliasearch/2.9/' +
+    buildName + '.min.js">\x3C/script>'
+  );
+}
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{}],9:[function(require,module,exports){
+(function (global){
+/*global AlgoliaExplainResults:true*/
+/*eslint no-unused-vars: [2, {"vars": "local"}]*/
+
+module.exports = oldGlobals;
+
+function oldGlobals() {
+  var message =
+    'You are trying to use a new version of the AlgoliaSearch JavaScript client with an old notation.' +
+    '\nPlease read our migration guide at https://github.com/algolia/algoliasearch-client-js/wiki/Migration-guide-from-2.x.x-to-3.x.x';
+
+  global.AlgoliaSearch = function() {
+    throw new Error(message);
+  };
+
+  global.AlgoliaSearchHelper = function() {
+    throw new Error(message);
+  };
+
+  // cannot use window.AlgoliaExplainResults on old IEs, dunno why
+  AlgoliaExplainResults = function() {
+    throw new Error(message);
+  };
+}
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{}]},{},[2]);

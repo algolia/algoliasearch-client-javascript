@@ -1,5 +1,4 @@
 var fauxJax = require('faux-jax');
-var sinon = require('sinon');
 
 var testCases = module.exports = [{
   object: 'index',
@@ -24,10 +23,10 @@ if (fauxJax.support.xhr.cors) {
   testCases.push({
     object: 'index',
     methodName: 'addObject',
-    testName: 'index.addObject(content, cb, objectID)',
+    testName: 'index.addObject(content, objectID, cb)',
     callArguments: [{
       yaw: 'two'
-    }, sinon.spy(), 'dsa dsd/ sa'],
+    }, 'dsa dsd/ sa'],
     expectedRequest: {
       method: 'PUT',
       body: {

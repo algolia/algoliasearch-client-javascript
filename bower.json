@@ -1,6 +1,6 @@
 {
   "name": "algoliasearch",
-  "version": "2.9.2",
+  "version": "3.0.2",
   "homepage": "https://github.com/algolia/algoliasearch-client-js",
   "authors": [
     "Algolia Team <support@algolia.com>"
@@ -16,12 +16,9 @@
   ],
   "license": "MIT",
   "ignore": [
-    "**/.*",
-    "example",
+    "examples",
     "node_modules",
     "bower_components",
-    "test",
-    "tests",
-    "vendor"
+    "test"
   ]
 }

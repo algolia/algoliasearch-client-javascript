@@ -1,8 +1,12 @@
+<!doctype html>
 <html>
   <head>
     <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <script src="//code.jquery.com/jquery-1.10.1.min.js"></script>
+    <!--[if lte IE 7]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/json2/20140204/json2.min.js"></script>
+    <![endif]-->
+    <script src="//cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js"></script>
     <script src="/dist/algoliasearch.min.js"></script>
     <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/3.2.1/css/font-awesome.min.css" />
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
@@ -33,13 +37,13 @@
         var $inputfield = $("#q");
 
         // Replace the following values by your ApplicationID and ApiKey.
-        var algolia = new AlgoliaSearch('latency', '6be0576ff61c053d5f9a3225e2a90f76');
+        var client = algoliasearch('latency', '6be0576ff61c053d5f9a3225e2a90f76');
         // Replace the following value by the name of the index you want to query.
-        var index = algolia.initIndex('contacts');
+        var index = client.initIndex('contacts');
 
         // callback called on each query
-        function searchCallback(success, content) {
-          if (!success) {
+        function searchCallback(err, content) {
+          if (err) {
             // error
             return;
           }
@@ -89,7 +93,7 @@
 
         // perform a search
         function search(q, params) {
-          index.search(q, searchCallback, params);
+          index.search(q, params, searchCallback);
         }
 
         // events binding

@@ -1,4 +1,5 @@
 var bulkRequire = require('bulk-require');
+var compression = require('compression');
 var express = require('express');
 var forEach = require('lodash/collection/forEach');
 var http = require('http');
@@ -7,9 +8,13 @@ var path = require('path');
 
 var app = express();
 
+app.use(compression());
+
 app.use(logger('dev'));
 
 app.set('etag', false);
+
+app.use(express.static(path.join(__dirname, '..', '..')));
 
 app.use(function noCache(req, res, next) {
   res.set('Cache-Control', 'max-age=0, no-cache');

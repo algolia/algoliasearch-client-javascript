@@ -1,13 +1,75 @@
-/* global jQuery */
-(function ($) {
+var createAlgoliasearch = require('./create-algoliasearch');
+var JSONPRequest = require('./jsonp-request');
 
-  $.algolia = {};
-  $.algolia.Client = function(applicationID, apiKey, options) {
-    options = options || {};
-    options.jQuery = {
-      '$': $
-    };
-    return new AlgoliaSearch(applicationID, apiKey, options);
-  };
+var algoliasearch = createAlgoliasearch(request);
+var $ = global.jQuery;
 
-}(jQuery));
+$.algolia = {Client: algoliasearch};
+
+function request(url, opts) {
+  return $.Deferred(function(deferred) {
+    var body = null;
+
+    if (opts.body !== undefined) {
+      body = JSON.stringify(opts.body);
+    }
+
+    $.ajax(url, {
+      type: opts.method,
+      timeout: opts.timeout,
+      dataType: 'json',
+      data: body,
+      complete: function(jqXHR, textStatus/* , error*/) {
+        if (textStatus === 'timeout') {
+          deferred.resolve(new Error('Timeout - Could not connect to endpoint ' + url));
+          return;
+        }
+
+        if (jqXHR.status === 0) {
+          deferred.reject(new Error('Network error'));
+          return;
+        }
+
+        deferred.resolve({
+          statusCode: jqXHR.status,
+          body: jqXHR.responseJSON
+        });
+      }
+    });
+  }).promise();
+}
+
+request.fallback = function(url, opts) {
+  return $.Deferred(function(deferred) {
+    JSONPRequest(url, opts, function JSONPRequestDone(err, content) {
+      if (err) {
+        deferred.reject(err);
+        return;
+      }
+
+      deferred.resolve(content);
+    });
+  }).promise();
+};
+
+request.reject = function(val) {
+  return $.Deferred(function(deferred) {
+    deferred.reject(val);
+  }).promise();
+};
+
+request.resolve = function(val) {
+  return $.Deferred(function(deferred) {
+    deferred.resolve(val);
+  }).promise();
+};
+
+request.delay = function(ms) {
+  return $.Deferred(function(deferred) {
+    setTimeout(function() {
+      deferred.resolve();
+    }, ms);
+  }).promise();
+};
+
+require('./migration-layer')('algoliasearch.jquery');

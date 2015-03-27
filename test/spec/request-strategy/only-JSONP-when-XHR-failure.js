@@ -10,10 +10,10 @@ test('Request strategy uses only JSONP if one XHR fails', function(t) {
   var currentURL = parse(location.href);
   var fixture = createFixture({
     clientOptions: {
-      dsnHost: currentURL.host,
       hosts: [
         currentURL.host
-      ]
+      ],
+      timeout: 5000
     },
     indexName: 'simple-JSONP-response'
   });
@@ -32,8 +32,8 @@ test('Request strategy uses only JSONP if one XHR fails', function(t) {
 
     t.deepEqual(
       firstCallback.args[0],
-      [true, {query: 'first'}],
-      'First callback called with true, {"query": "first"}'
+      [null, {query: 'first'}],
+      'First callback called with null, {"query": "first"}'
     );
 
     index.search('second', secondCallback);
@@ -53,8 +53,8 @@ test('Request strategy uses only JSONP if one XHR fails', function(t) {
 
     t.deepEqual(
       secondCallback.args[0],
-      [true, {query: 'second'}],
-      'Second callback called with true, {"query": "second"}'
+      [null, {query: 'second'}],
+      'Second callback called with null, {"query": "second"}'
     );
 
     fauxJax.restore();
@@ -73,7 +73,6 @@ test('Request strategy uses only JSONP if one XHR fails', function(t) {
     'One request made'
   );
 
-  var request = fauxJax.requests[0];
-
-  request.respond(404, {}, JSON.stringify({message: 'woops', status: 404}));
+  fauxJax.requests[0]
+    .respond(500, {}, JSON.stringify({message: 'woops', status: 500}));
 });
