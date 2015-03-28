@@ -2,9 +2,10 @@ CHANGELOG
 
 UNRELEASED
 
-    * FIX: prepend the migration-layer to the browserify bundle, to
-      avoid the /latest/ + module loader case where the code needed to load V2
-      is not executed
+    * FIX: Handle module loaders + cdn.jsdelivr.net/algoliasearch/latest usage
+      When in this situation, the module loader would prevent the code
+      detecting and loading the V2 to execute.
+      Now fixed by prepending the migration-layer to the browserify bundle.
       It also removes the migration-layer code from the package managers (npm, bower) builds,
       where it makes no sense to have it
     * FIX: load V2 using a DOMElement when V3 is loaded ASYNCHRONOUSLY with /latest/
