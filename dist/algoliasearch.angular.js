@@ -1,5 +1,205 @@
-/*! algoliasearch 3.0.1 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
-(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+/*! algoliasearch 3.0.3 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
+(function(f){var g;if(typeof window!=='undefined'){g=window}else if(typeof self!=='undefined'){g=self}g.ALGOLIA_MIGRATION_LAYER=f()})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+
+module.exports = function load (src, opts, cb) {
+  var head = document.head || document.getElementsByTagName('head')[0]
+  var script = document.createElement('script')
+
+  if (typeof opts === 'function') {
+    cb = opts
+    opts = {}
+  }
+
+  opts = opts || {}
+  cb = cb || function() {}
+
+  script.type = opts.type || 'text/javascript'
+  script.charset = opts.charset || 'utf8';
+  script.async = 'async' in opts ? !!opts.async : true
+  script.src = src
+
+  if (opts.attrs) {
+    setAttributes(script, opts.attrs)
+  }
+
+  if (opts.text) {
+    script.text = '' + opts.text
+  }
+
+  var onend = 'onload' in script ? stdOnEnd : ieOnEnd
+  onend(script, cb)
+
+  // some good legacy browsers (firefox) fail the 'in' detection above
+  // so as a fallback we always set onload
+  // old IE will ignore this and new IE will set onload
+  if (!script.onload) {
+    stdOnEnd(script, cb);
+  }
+
+  head.appendChild(script)
+}
+
+function setAttributes(script, attrs) {
+  for (var attr in attrs) {
+    script.setAttribute(attr, attrs[attr]);
+  }
+}
+
+function stdOnEnd (script, cb) {
+  script.onload = function () {
+    this.onerror = this.onload = null
+    cb(null, script)
+  }
+  script.onerror = function () {
+    // this.onload = null here is necessary
+    // because even IE9 works not like others
+    this.onerror = this.onload = null
+    cb(new Error('Failed to load ' + this.src), script)
+  }
+}
+
+function ieOnEnd (script, cb) {
+  script.onreadystatechange = function () {
+    if (this.readyState != 'complete' && this.readyState != 'loaded') return
+    this.onreadystatechange = null
+    cb(null, script) // there is no way to catch loading errors in IE8
+  }
+}
+
+},{}],2:[function(require,module,exports){
+// this module helps finding if the current page is using
+// the cdn.jsdelivr.net/algoliasearch/latest/$BUILDNAME.min.js version
+
+module.exports = isUsingLatest;
+
+function isUsingLatest(buildName) {
+  var toFind = new RegExp('cdn\\.jsdelivr\\.net/algoliasearch/latest/' +
+    buildName.replace('.', '\\.') + // algoliasearch, algoliasearch.angular
+    '(?:\\.min)?\\.js$'); // [.min].js
+
+  var scripts = document.getElementsByTagName('script');
+  var found = false;
+  for (var currentScript = 0, nbScripts = scripts.length;
+        currentScript < nbScripts;
+        currentScript++) {
+    if (scripts[currentScript].src && toFind.test(scripts[currentScript].src)) {
+      found = true;
+      break;
+    }
+  }
+
+  return found;
+}
+
+},{}],3:[function(require,module,exports){
+(function (global){
+module.exports = loadV2;
+
+function loadV2(buildName) {
+  var loadScript = require(1);
+  var v2ScriptUrl = '//cdn.jsdelivr.net/algoliasearch/2/' + buildName + '.min.js';
+
+  var message =
+    '-- AlgoliaSearch `latest` warning --\n' +
+    'Warning, you are using the `latest` version string from jsDelivr to load the AlgoliaSearch library.\n' +
+    'Using `latest` is no more recommended, you should load //cdn.jsdelivr.net/algoliasearch/2/algoliasearch.min.js\n\n' +
+    'Also, we updated the AlgoliaSearch JavaScript client to V3. If you want to upgrade,\n' +
+    'please read our migration guide at https://github.com/algolia/algoliasearch-client-js/wiki/Migration-guide-from-2.x.x-to-3.x.x\n' +
+    '-- /AlgoliaSearch  `latest` warning --';
+
+  if (global.console) {
+    if (global.console.warn) {
+      global.console.warn(message);
+    } else if (global.console.log) {
+      global.console.log(message);
+    }
+  }
+
+  // If current script loaded asynchronously,
+  // it will load the script with DOMElement
+  // otherwise, it will load the script with document.write
+  try {
+    // why \x3c? http://stackoverflow.com/a/236106/147079
+    document.write('\x3Cscript>window.ALGOLIA_SUPPORTS_DOCWRITE = true\x3C/script>');
+
+    if (global.ALGOLIA_SUPPORTS_DOCWRITE === true) {
+      document.write('\x3Cscript src="' + v2ScriptUrl + '">\x3C/script>');
+      scriptLoaded('document.write')();
+    } else {
+      loadScript(v2ScriptUrl, scriptLoaded('DOMElement'));
+    }
+  } catch(e) {
+    loadScript(v2ScriptUrl, scriptLoaded('DOMElement'));
+  }
+}
+
+function scriptLoaded(method) {
+  return function log() {
+    var message = 'AlgoliaSearch: loaded V2 script using ' + method;
+
+    global.console && global.console.log && global.console.log(message);
+  };
+}
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"1":1}],4:[function(require,module,exports){
+(function (global){
+/*global AlgoliaExplainResults:true*/
+/*eslint no-unused-vars: [2, {"vars": "local"}]*/
+
+module.exports = oldGlobals;
+
+// put old window.AlgoliaSearch.. into window. again so that
+// users upgrading to V3 without changing their code, will be warned
+function oldGlobals() {
+  var message =
+    '-- AlgoliaSearch V2 => V3 error --\n' +
+    'You are trying to use a new version of the AlgoliaSearch JavaScript client with an old notation.\n' +
+    'Please read our migration guide at https://github.com/algolia/algoliasearch-client-js/wiki/Migration-guide-from-2.x.x-to-3.x.x\n' +
+    '-- /AlgoliaSearch V2 => V3 error --';
+
+  global.AlgoliaSearch = function() {
+    throw new Error(message);
+  };
+
+  global.AlgoliaSearchHelper = function() {
+    throw new Error(message);
+  };
+
+  // cannot use window.AlgoliaExplainResults on old IEs, dunno why
+  AlgoliaExplainResults = function() {
+    throw new Error(message);
+  };
+}
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{}],5:[function(require,module,exports){
+// This script will be browserified and prepended to the normal build
+// directly in window, not wrapped in any module definition
+// To avoid cases where we are loaded with /latest/ along with
+migrationLayer("algoliasearch.angular");
+
+// Now onto the V2 related code:
+//  If the client is using /latest/$BUILDNAME.min.js, load V2 of the library
+//
+//  Otherwise, setup a migration layer that will throw on old constructors like
+//  new AlgoliaSearch().
+//  So that users upgrading from v2 to v3 will have a clear information
+//  message on what to do if they did not read the migration guide
+function migrationLayer(buildName) {
+  var isUsingLatest = require(2);
+  var loadV2 = require(3);
+  var oldGlobals = require(4);
+
+  if (isUsingLatest(buildName)) {
+    loadV2(buildName);
+  } else {
+    oldGlobals();
+  }
+}
+
+},{"2":2,"3":3,"4":4}]},{},[5])(5)
+});(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -60,100 +260,6 @@ process.chdir = function (dir) {
 process.umask = function() { return 0; };
 
 },{}],2:[function(require,module,exports){
-(function (global){
-var createAlgoliasearch = require(4);
-var JSONPRequest = require(5);
-
-global.angular.module('algoliasearch', [])
-  .service('algolia', ['$http', '$q', '$timeout', function ($http, $q, $timeout) {
-    function request(url, opts) {
-      return $q(function(resolve, reject) {
-        var timedOut;
-        var body = null;
-
-        if (opts.body !== undefined) {
-          body = JSON.stringify(opts.body);
-        }
-
-        var timeout = $q(function(resolveTimeout) {
-          $timeout(function() {
-            timedOut = true;
-            // will cancel the xhr
-            resolveTimeout('test');
-            resolve(new Error('Timeout - Could not connect to endpoint ' + url));
-          }, opts.timeout);
-        });
-
-        $http({
-          url: url,
-          method: opts.method,
-          data: body,
-          cache: false,
-          timeout: timeout
-        }).then(function success(response) {
-          resolve({
-            statusCode: response.status,
-            body: response.data
-          });
-        }, function error(response) {
-          if (timedOut) {
-            return;
-          }
-
-          // network error
-          if (response.status === 0) {
-            reject(new Error('Network error'));
-            return;
-          }
-
-          resolve({
-            body: response.data,
-            statusCode: response.status
-          });
-        });
-      });
-    }
-
-    request.fallback = function(url, opts) {
-      return $q(function(resolve, reject) {
-        JSONPRequest(url, opts, function JSONPRequestDone(err, content) {
-          if (err) {
-            reject(err);
-            return;
-          }
-
-          resolve(content);
-        });
-      });
-    };
-
-    request.reject = function(val) {
-      return $q.reject(val);
-    };
-
-    request.resolve = function(val) {
-      // http://www.bennadel.com/blog/2735-q-when-is-the-missing-q-resolve-method-in-angularjs.htm
-      return $q.when(val);
-    };
-
-    request.delay = function(ms) {
-      return $q(function(resolve/*, reject*/) {
-        $timeout(resolve, ms);
-      });
-    };
-
-    var algoliasearch = createAlgoliasearch(request);
-    return {
-      Client: function(applicationID, apiKey, options) {
-        return algoliasearch(applicationID, apiKey, options);
-      }
-    };
-  }]);
-
-require(6)('algoliasearch.angular');
-
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"4":4,"5":5,"6":6}],3:[function(require,module,exports){
 (function (process){
 module.exports = AlgoliaSearch;
 
@@ -1381,25 +1487,99 @@ function shuffle(array) {
 }
 
 }).call(this,require(1))
-},{"1":1}],4:[function(require,module,exports){
-// this file is a `factory of algoliasearch()`
-// Given a `request` param, it will provide you an AlgoliaSearch client
-// using this particular request
-module.exports = createAlgoliasearch;
+},{"1":1}],3:[function(require,module,exports){
+(function (global){
+var createAlgoliasearch = require(5);
+var JSONPRequest = require(4);
 
-function createAlgoliasearch(request) {
-  function algoliasearch(applicationID, apiKey, opts) {
-    var AlgoliaSearch = require(3);
+global.angular.module('algoliasearch', [])
+  .service('algolia', ['$http', '$q', '$timeout', function ($http, $q, $timeout) {
+    function request(url, opts) {
+      return $q(function(resolve, reject) {
+        var timedOut;
+        var body = null;
 
-    return new AlgoliaSearch(applicationID, apiKey, opts, request);
-  }
+        if (opts.body !== undefined) {
+          body = JSON.stringify(opts.body);
+        }
 
-  algoliasearch.version = "3.0.1";
+        var timeout = $q(function(resolveTimeout) {
+          $timeout(function() {
+            timedOut = true;
+            // will cancel the xhr
+            resolveTimeout('test');
+            resolve(new Error('Timeout - Could not connect to endpoint ' + url));
+          }, opts.timeout);
+        });
 
-  return algoliasearch;
-}
+        $http({
+          url: url,
+          method: opts.method,
+          data: body,
+          cache: false,
+          timeout: timeout
+        }).then(function success(response) {
+          resolve({
+            statusCode: response.status,
+            body: response.data
+          });
+        }, function error(response) {
+          if (timedOut) {
+            return;
+          }
 
-},{"3":3}],5:[function(require,module,exports){
+          // network error
+          if (response.status === 0) {
+            reject(new Error('Network error'));
+            return;
+          }
+
+          resolve({
+            body: response.data,
+            statusCode: response.status
+          });
+        });
+      });
+    }
+
+    request.fallback = function(url, opts) {
+      return $q(function(resolve, reject) {
+        JSONPRequest(url, opts, function JSONPRequestDone(err, content) {
+          if (err) {
+            reject(err);
+            return;
+          }
+
+          resolve(content);
+        });
+      });
+    };
+
+    request.reject = function(val) {
+      return $q.reject(val);
+    };
+
+    request.resolve = function(val) {
+      // http://www.bennadel.com/blog/2735-q-when-is-the-missing-q-resolve-method-in-angularjs.htm
+      return $q.when(val);
+    };
+
+    request.delay = function(ms) {
+      return $q(function(resolve/*, reject*/) {
+        $timeout(resolve, ms);
+      });
+    };
+
+    var algoliasearch = createAlgoliasearch(request);
+    return {
+      Client: function(applicationID, apiKey, options) {
+        return algoliasearch(applicationID, apiKey, options);
+      }
+    };
+  }]);
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"4":4,"5":5}],4:[function(require,module,exports){
 module.exports = JSONPRequest;
 
 var JSONPCounter = 0;
@@ -1516,104 +1696,22 @@ function JSONPRequest(url, opts, cb) {
   }
 }
 
-},{}],6:[function(require,module,exports){
-module.exports = migrationLayer;
+},{}],5:[function(require,module,exports){
+// this file is a `factory of algoliasearch()`
+// Given a `request` param, it will provide you an AlgoliaSearch client
+// using this particular request
+module.exports = createAlgoliasearch;
 
-// Now onto the V2 related code:
-//  If the client is using /latest/$BUILDNAME.min.js, load V2 of the library
-//
-//  Otherwise, setup a migration layer that will throw on old constructors like
-//  new AlgoliaSearch().
-//  So that users upgrading from v2 to v3 will have a clear information
-//  message on what to do if they did not read the migration guide
-function migrationLayer(buildName) {
-  var isUsingLatest = require(7);
-  var loadV2 = require(8);
-  var oldGlobals = require(9);
+function createAlgoliasearch(request) {
+  function algoliasearch(applicationID, apiKey, opts) {
+    var AlgoliaSearch = require(2);
 
-  if (isUsingLatest(buildName)) {
-    loadV2(buildName);
-  } else {
-    oldGlobals();
-  }
-}
-
-},{"7":7,"8":8,"9":9}],7:[function(require,module,exports){
-// this module helps finding if the current page is using
-// the cdn.jsdelivr.net/algoliasearch/latest/$BUILDNAME.min.js version
-
-module.exports = isUsingLatest;
-
-function isUsingLatest(buildName) {
-  var toFind = new RegExp('cdn\\.jsdelivr\\.net/algoliasearch/latest/' +
-    buildName.replace('.', '\\.') + // algoliasearch, algoliasearch.angular
-    '(?:\\.min)?\\.js$'); // [.min].js
-
-  var scripts = document.getElementsByTagName('script');
-  var found = false;
-  for (var currentScript = 0, nbScripts = scripts.length;
-        currentScript < nbScripts;
-        currentScript++) {
-    if (scripts[currentScript].src && toFind.test(scripts[currentScript].src)) {
-      found = true;
-      break;
-    }
+    return new AlgoliaSearch(applicationID, apiKey, opts, request);
   }
 
-  return found;
+  algoliasearch.version = "3.0.3";
+
+  return algoliasearch;
 }
 
-},{}],8:[function(require,module,exports){
-(function (global){
-module.exports = loadV2;
-
-function loadV2(buildName) {
-  var message =
-    'Warning, you are using the `latest` version tag from jsDelivr for the AlgoliaSearch library.\n' +
-    'We updated the AlgoliaSearch JavaScript client to V3, using `latest` is no more recommended.\n' +
-    'Please read our migration guide at https://github.com/algolia/algoliasearch-client-js/wiki/Migration-guide-from-2.x.x-to-3.x.x';
-
-  if (global.console) {
-    if (global.console.warn) {
-      global.console.warn(message);
-    } else if (global.console.log) {
-      global.console.log(message);
-    }
-  }
-
-  // why \x3c? http://stackoverflow.com/a/236106/147079
-  document.write(
-    '\x3Cscript src="//cdn.jsdelivr.net/algoliasearch/2.9/' +
-    buildName + '.min.js">\x3C/script>'
-  );
-}
-
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],9:[function(require,module,exports){
-(function (global){
-/*global AlgoliaExplainResults:true*/
-/*eslint no-unused-vars: [2, {"vars": "local"}]*/
-
-module.exports = oldGlobals;
-
-function oldGlobals() {
-  var message =
-    'You are trying to use a new version of the AlgoliaSearch JavaScript client with an old notation.' +
-    '\nPlease read our migration guide at https://github.com/algolia/algoliasearch-client-js/wiki/Migration-guide-from-2.x.x-to-3.x.x';
-
-  global.AlgoliaSearch = function() {
-    throw new Error(message);
-  };
-
-  global.AlgoliaSearchHelper = function() {
-    throw new Error(message);
-  };
-
-  // cannot use window.AlgoliaExplainResults on old IEs, dunno why
-  AlgoliaExplainResults = function() {
-    throw new Error(message);
-  };
-}
-
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}]},{},[2]);
+},{"2":2}]},{},[3]);

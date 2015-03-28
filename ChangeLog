@@ -1,6 +1,6 @@
 CHANGELOG
 
-UNRELEASED
+2015-28-03  3.0.3
 
     * FIX: Handle module loaders + cdn.jsdelivr.net/algoliasearch/latest usage
       When in this situation, the module loader would prevent the code
