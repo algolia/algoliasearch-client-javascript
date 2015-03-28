@@ -137,5 +137,3 @@ request.delay = function(ms) {
     setTimeout(resolve, ms);
   });
 };
-
-require('../migration-layer/')('algoliasearch');
