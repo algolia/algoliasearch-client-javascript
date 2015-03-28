@@ -57,6 +57,7 @@
     "closurecompiler": "1.5.1",
     "compression": "1.4.3",
     "domready": "0.3.0",
+    "envify": "3.4.0",
     "eslint": "0.15.0",
     "express": "4.12.1",
     "faux-jax": "3.0.1",
