@@ -17,7 +17,7 @@ module.exports = AlgoliaSearch;
  *        ] - The hosts to use for Algolia Search API. It this your responsibility to shuffle the hosts and add a DSN host in it
  * @param {string} [opts.tld='net'] - The tld to use when computing hosts default list
  */
-function AlgoliaSearch(applicationID, apiKey, opts, _request) {
+function AlgoliaSearch(applicationID, apiKey, opts) {
   var usage = 'Usage: algoliasearch(applicationID, apiKey, opts)';
 
   if (!applicationID) {
@@ -80,7 +80,6 @@ function AlgoliaSearch(applicationID, apiKey, opts, _request) {
   this.requestTimeout = opts.timeout;
   this.extraHeaders = [];
   this.cache = {};
-  this._request = _request;
 }
 
 AlgoliaSearch.prototype = {
@@ -436,13 +435,13 @@ AlgoliaSearch.prototype = {
     function doRequest(requester, reqOpts) {
       // handle cache existence
       if (cache && cache[cacheID] !== undefined) {
-        return client._request.resolve(cache[cacheID]);
+        return client._promise.resolve(cache[cacheID]);
       }
 
       if (tries >= client.hosts.length) {
-        if (!opts.fallback || requester === client._request.fallback) {
+        if (!opts.fallback || !client._request.fallback || requester === client._request.fallback) {
           // could not get a response even using the fallback if one was available
-          return client._request.reject(new Error(
+          return client._promise.reject(new Error(
             'Cannot connect to the AlgoliaSearch API.' +
             ' Send an email to support@algolia.com to report and resolve the issue.'
           ));
@@ -523,7 +522,7 @@ AlgoliaSearch.prototype = {
           httpResponse.body && httpResponse.body.message || 'Unknown error'
         );
 
-        return client._request.reject(unrecoverableError);
+        return client._promise.reject(unrecoverableError);
       }, tryFallback);
 
       function retryRequest() {
@@ -784,7 +783,7 @@ AlgoliaSearch.prototype.Index.prototype = {
         return callback(err);
       }
 
-      return this.as._request.reject(err);
+      return this.as._promise.reject(err);
     }
 
     var indexObj = this;
@@ -956,7 +955,7 @@ AlgoliaSearch.prototype.Index.prototype = {
       url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/task/' + taskID
     }).then(function success(content) {
       if (content.status !== 'published') {
-        return new indexObj.as._request.delay(100).then(function() {
+        return new indexObj.as._promise.delay(100).then(function() {
           return indexObj.waitTask(taskID, callback);
         });
       }

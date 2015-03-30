@@ -1,11 +1,20 @@
-// this is the standalone build entry of AlgoliaSearch
-var createAlgoliasearch = require('../../create-algoliasearch');
+// This is the standalone browser build entry point
+// Browser implementation of the Algolia Search JavaScript client,
+// using XMLHttpRequest, XDomainRequest and JSONP as fallback
+module.exports = algoliasearch;
 
-module.exports = createAlgoliasearch(request);
+var inherits = require('inherits');
+
+var AlgoliaSearch = require('../../AlgoliaSearch');
+var JSONPRequest = require('../jsonp-request');
 
 var Promise = global.Promise || require('es6-promise').Promise;
 
-var JSONPRequest = require('../jsonp-request');
+function algoliasearch(applicationID, apiKey, opts) {
+  return new AlgoliaSearchBrowser(applicationID, apiKey, opts);
+}
+
+algoliasearch.version = require('../../version/');
 
 var support = {
   hasXMLHttpRequest: 'XMLHttpRequest' in window,
@@ -14,7 +23,14 @@ var support = {
   timeout: 'timeout' in new XMLHttpRequest()
 };
 
-function request(url, opts) {
+function AlgoliaSearchBrowser() {
+  // call AlgoliaSearch constructor
+  AlgoliaSearch.apply(this, arguments);
+}
+
+inherits(AlgoliaSearchBrowser, AlgoliaSearch);
+
+AlgoliaSearchBrowser.prototype._request = function(url, opts) {
   return new Promise(function(resolve, reject) {
     // no cors or XDomainRequest, no request
     if (!support.cors && !support.hasXDomainRequest) {
@@ -109,9 +125,9 @@ function request(url, opts) {
     }
 
   });
-}
+};
 
-request.fallback = function(url, opts) {
+AlgoliaSearchBrowser.prototype._request.fallback = function(url, opts) {
   return new Promise(function(resolve, reject) {
     JSONPRequest(url, opts, function JSONPRequestDone(err, content) {
       if (err) {
@@ -124,16 +140,16 @@ request.fallback = function(url, opts) {
   });
 };
 
-request.reject = function(val) {
-  return Promise.reject(val);
-};
-
-request.resolve = function(val) {
-  return Promise.resolve(val);
-};
-
-request.delay = function(ms) {
-  return new Promise(function(resolve/*, reject*/) {
-    setTimeout(resolve, ms);
-  });
+AlgoliaSearchBrowser.prototype._promise = {
+  reject: function(val) {
+    return Promise.reject(val);
+  },
+  resolve: function(val) {
+    return Promise.resolve(val);
+  },
+  delay: function(ms) {
+    return new Promise(function(resolve/*, reject*/) {
+      setTimeout(resolve, ms);
+    });
+  }
 };

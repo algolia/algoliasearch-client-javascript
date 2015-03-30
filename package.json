@@ -3,7 +3,10 @@
   "version": "3.0.3",
   "description": "AlgoliaSearch API JavaScript client",
   "main": "index.js",
-  "browser": "src/browser/builds/algoliasearch.js",
+  "browser": {
+    "index.js": "src/browser/builds/algoliasearch.js",
+    "src/version/index.js": "src/version/browser.js"
+  },
   "scripts": {
     "build": "PACKAGE_VERSION=$(json -f package.json version) sh build.sh",
     "test": "zuul --phantom --ui tape test/run.js | tap-growl | tap-spec && npm run lint",
@@ -43,6 +46,7 @@
   ],
   "dependencies": {
     "es6-promise": "2.0.1",
+    "inherits": "2.0.1",
     "load-script": "1.0.0",
     "packageify": "0.2.2"
   },
