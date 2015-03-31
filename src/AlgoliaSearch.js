@@ -1,5 +1,7 @@
 module.exports = AlgoliaSearch;
 
+var debug = require('debug')('algoliasearch:AlgoliaSearch');
+
 /*
  * Algolia Search library initialization
  * https://www.algolia.com/
@@ -453,7 +455,7 @@ AlgoliaSearch.prototype = {
         reqOpts.body = opts.fallback.body;
         reqOpts.timeout = client.requestTimeout * (tries + 1);
         client.currentHostIndex = 0;
-        client.forceFallback = true;
+        client.forceFallback = true; // now we will only use JSONP, even on future requests
         return doRequest(client._request.fallback, reqOpts);
       }
 
@@ -532,10 +534,24 @@ AlgoliaSearch.prototype = {
         return doRequest(requester, reqOpts);
       }
 
-      function tryFallback() {
+      function tryFallback(err) {
+        // error cases:
+        //  While not in fallback mode:
+        //    - CORS not supported
+        //    - network error
+        //  While in fallback mode:
+        //    - timeout
+        //    - network error
+        //    - badly formatted JSONP (script loaded, did not call our callback)
+        //  In both cases:
+        //    - uncaught exception occurs (TypeError)
+        debug('error: %s, stack: %s', err.message, err.stack);
+
+        // we were not using the fallback, try now
         // if we are switching to fallback right now, set tries to maximum
         if (!client.forceFallback) {
-          // next time doRequest is called, simulate we tried all hosts
+          // next time doRequest is called, simulate we tried all hosts,
+          // this will force to use the fallback
           tries = client.hosts.length;
         } else {
           // we were already using the fallback, but something went wrong (script error)
@@ -552,6 +568,7 @@ AlgoliaSearch.prototype = {
     var requestOptions = useFallback ? opts.fallback : opts;
 
     var promise = doRequest(
+      // set the requester
       useFallback ? client._request.fallback : client._request, {
         url: requestOptions.url,
         method: requestOptions.method,

@@ -4,11 +4,11 @@
 module.exports = algoliasearch;
 
 var inherits = require('inherits');
+var Promise = global.Promise || require('es6-promise').Promise;
 
 var AlgoliaSearch = require('../../AlgoliaSearch');
 var JSONPRequest = require('../jsonp-request');
 
-var Promise = global.Promise || require('es6-promise').Promise;
 
 function algoliasearch(applicationID, apiKey, opts) {
   return new AlgoliaSearchBrowser(applicationID, apiKey, opts);
