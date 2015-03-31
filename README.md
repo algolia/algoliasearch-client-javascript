@@ -82,7 +82,7 @@ We are [browserify](http://browserify.org/)able.
 #### Bower
 
 ```sh
-bower install algoliasearch
+bower install algoliasearch -S
 ```
 
 #### jsDelivr
@@ -203,9 +203,9 @@ We have easy to run [examples](./examples/) for you to try. First, setup the rep
 ```
 
 Then open either:
-- http://127.0.0.1:8081/examples/ to see a list of examples
-- http://127.0.0.1:8081/examples/autocomplete.html
-- http://127.0.0.1:8081/examples/instantsearch.html
+- http://127.0.0.1:8080/examples/ to see a list of examples
+- http://127.0.0.1:8080/examples/autocomplete.html
+- http://127.0.0.1:8080/examples/instantsearch.html
 
 To hack and use your own indexes and data, open one of the example file and replace:
 
