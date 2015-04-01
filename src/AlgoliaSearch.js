@@ -38,6 +38,7 @@ function AlgoliaSearch(applicationID, apiKey, opts, _request) {
 
   if (opts.protocol === undefined) {
     var locationProtocol = document && document.location.protocol;
+    // our API is only available with http or https. When in file:// mode (local html file), default to http
     opts.protocol = (locationProtocol === 'http:' || locationProtocol === 'https:') ? locationProtocol : 'http:';
   }
 
