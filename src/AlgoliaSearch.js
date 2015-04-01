@@ -37,7 +37,8 @@ function AlgoliaSearch(applicationID, apiKey, opts, _request) {
   }
 
   if (opts.protocol === undefined) {
-    opts.protocol = document && document.location.protocol || 'http:';
+    var locationProtocol = document && document.location.protocol;
+    opts.protocol = (locationProtocol === 'http:' || locationProtocol === 'https:') ? locationProtocol : 'http:';
   }
 
   if (opts.hosts === undefined) {
