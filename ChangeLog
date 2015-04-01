@@ -1,5 +1,9 @@
 CHANGELOG
 
+UNRELEASED
+    * FIX: Defaults to http when the protocol of the page is not http or
+      https.
+
 2015-28-03  3.0.3
 
     * FIX: Handle module loaders + cdn.jsdelivr.net/algoliasearch/latest usage
