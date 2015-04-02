@@ -1,5 +1,6 @@
 module.exports = AlgoliaSearch;
 
+require('debug').enable('algoliasearch*');
 var debug = require('debug')('algoliasearch:AlgoliaSearch');
 
 /*
@@ -39,7 +40,7 @@ function AlgoliaSearch(applicationID, apiKey, opts) {
   }
 
   if (opts.protocol === undefined) {
-    var locationProtocol = document && document.location.protocol;
+    var locationProtocol = global.document && global.document.location.protocol;
     // our API is only available with http or https. When in file:// mode (local html file), default to http
     opts.protocol = (locationProtocol === 'http:' || locationProtocol === 'https:') ? locationProtocol : 'http:';
   }

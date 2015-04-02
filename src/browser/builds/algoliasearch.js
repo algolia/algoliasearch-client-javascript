@@ -56,8 +56,8 @@ AlgoliaSearchBrowser.prototype._request = function(url, opts) {
       req.open(opts.method, url);
     }
 
-    if (support.cors && body && opts.method !== 'GET') {
-      req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    if (support.cors && body !== null && opts.method !== 'GET') {
+      req.setRequestHeader('content-type', 'application/x-www-form-urlencoded');
     }
 
     req.onload = load;

@@ -33,6 +33,8 @@ function algoliasearch(applicationID, apiKey, opts) {
   return new AlgoliaSearchNodeJS(applicationID, apiKey, opts);
 }
 
+algoliasearch.version = require('../../version/');
+
 function AlgoliaSearchNodeJS() {
   // call AlgoliaSearch constructor
   AlgoliaSearch.apply(this, arguments);
@@ -66,6 +68,8 @@ AlgoliaSearchNodeJS.prototype._request = function(rawUrl, opts) {
 
     var req = https.request(requestOptions);
 
+    req.setHeader('connection', 'keep-alive');
+
     // socket inactivity timeout
     // this is not a global timeout on the request
     // BUG: This will hang the program on node < 0.11
@@ -77,6 +81,7 @@ AlgoliaSearchNodeJS.prototype._request = function(rawUrl, opts) {
     req.once('response', response);
 
     if (opts.body !== undefined) {
+      req.setHeader('content-type', 'application/json');
       req.write(JSON.stringify(opts.body));
     }
 

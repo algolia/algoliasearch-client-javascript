@@ -1,8 +1,6 @@
 language: node_js
-node_js:
-  - "0.10"
 install: npm install
-script: npm run test-ci
+script: npm run $COMMAND
 branches:
   only:
     - master
@@ -11,3 +9,15 @@ env:
   global:
     - SAUCE_USERNAME=algoliasearch-js
     - secure: oKl1RMuEO9bYoKevbFeFX72M2eV+DIJG/9UGMP4oLb3z5B8T5xAlQSEt8Lp0Zms6qqA+4hAQhZTKXDtdpx7NK+SuqYiv4oR9hdiJBbrRXIRuY86R2T/opO/RlBETL+7Y2R1AGM/kZzyiZSFqN9slGVzWziBtLJjJ4ncoceE8izs=
+matrix:
+  include:
+    - node_js: "0.10"
+      env: COMMAND=test-ci-browser
+    - node_js: "0.10"
+      env: COMMAND=test-node
+    - node_js: "0.12"
+      env: COMMAND=test-node
+    - node_js: "iojs"
+      env: COMMAND=test-node
+    - node_js: "0.10"
+      env: COMMAND=lint

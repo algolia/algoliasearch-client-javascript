@@ -21,10 +21,16 @@ function computeExpectedRequest(expectedRequest, credentials) {
 
   expectedRequest.headers = expectedRequest.headers || {};
 
-  if (expectedRequest.body !== undefined && !expectedRequest.headers['Content-type']) {
-    expectedRequest.headers = {
-      'Content-type': 'application/x-www-form-urlencoded'
-    };
+  if (expectedRequest.body === undefined) {
+    expectedRequest.body = null;
+  }
+
+  if (expectedRequest.body !== null && expectedRequest.method === 'POST' || expectedRequest.method === 'PUT') {
+    if (process.browser) {
+      expectedRequest.headers['content-type'] = 'application/x-www-form-urlencoded';
+    } else {
+      expectedRequest.headers['content-type'] = 'application/json';
+    }
   }
 
   return expectedRequest;
@@ -32,7 +38,7 @@ function computeExpectedRequest(expectedRequest, credentials) {
 
 function getRequestURL(credentials) {
   return {
-    protocol: document.location.protocol,
+    protocol: process.browser ? document.location.protocol : 'http:',
     host: credentials.applicationID + '-dsn.algolia.net',
     URL: {pathname: '/not-set'},
     query: {
