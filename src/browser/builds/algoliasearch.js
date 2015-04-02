@@ -59,6 +59,13 @@ AlgoliaSearchBrowser.prototype._request = function(url, opts) {
       req.setRequestHeader('content-type', 'application/x-www-form-urlencoded');
     }
 
+    // we set an empty onprogress listener
+    // so that XDomainRequest on IE9 is not aborted
+    // refs:
+    //  - https://github.com/algolia/algoliasearch-client-js/issues/76
+    //  - https://social.msdn.microsoft.com/Forums/ie/en-US/30ef3add-767c-4436-b8a9-f1ca19b4812e/ie9-rtm-xdomainrequest-issued-requests-may-abort-if-all-event-handlers-not-specified?forum=iewebdevelopment
+    req.onprogress = function noop() {};
+
     req.onload = load;
     req.onerror = error;
 
