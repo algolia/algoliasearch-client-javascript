@@ -28,7 +28,7 @@ done
 
 echo '..Add browserify bundles'
 # cannot use a loop, bundles are different (--standalone)
-browserify -p bundle-collapser/plugin index.js --standalone algoliasearch >> dist/algoliasearch.js
+browserify -p bundle-collapser/plugin src/browser/builds/algoliasearch.js --standalone algoliasearch >> dist/algoliasearch.js
 browserify -p bundle-collapser/plugin src/browser/builds/algoliasearch.angular.js >> dist/algoliasearch.angular.js
 browserify -p bundle-collapser/plugin src/browser/builds/algoliasearch.jquery.js >> dist/algoliasearch.jquery.js
 
