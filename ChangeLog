@@ -1,5 +1,9 @@
 CHANGELOG
 
+2015-02-05  3.0.5
+    * FIX: lower the build size by requiring the good version/browser.js in browser
+      builds. Previously we got the full `package.json` inlined
+
 2015-02-04  3.0.4
     * FIX: Defaults to http when the protocol of the page is not http or
       https

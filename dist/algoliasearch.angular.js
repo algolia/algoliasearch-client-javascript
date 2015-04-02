@@ -1,4 +1,4 @@
-/*! algoliasearch 3.0.4 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
+/*! algoliasearch 3.0.5 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
 (function(f){var g;if(typeof window!=='undefined'){g=window}else if(typeof self!=='undefined'){g=self}g.ALGOLIA_MIGRATION_LAYER=f()})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 
 module.exports = function load (src, opts, cb) {
@@ -786,102 +786,6 @@ if (typeof Object.create === 'function') {
 }
 
 },{}],6:[function(require,module,exports){
-module.exports={
-  "name": "algoliasearch",
-  "version": "3.0.4",
-  "description": "AlgoliaSearch API JavaScript client",
-  "main": "index.js",
-  "browser": {
-    "index.js": "src/browser/builds/algoliasearch.js",
-    "src/version/index.js": "src/version/browser.js"
-  },
-  "scripts": {
-    "build": "PACKAGE_VERSION=$(json -f package.json version) sh build.sh",
-    "test": "npm run test-phantom | tap-spec && npm run test-node | tap-spec && npm run lint",
-    "test-node": "node test/run-node.js",
-    "test-phantom": "zuul --phantom -- test/run-browser.js",
-    "test-ci-browser": "DEBUG=zuul* zuul --tunnel ngrok -- test/run-browser.js",
-    "dev": "NODE_ENV=development DEBUG=zuul* zuul --no-coverage --local 8080 -- test/run-browser.js",
-    "examples": "http-server . -a 0.0.0.0",
-    "lint": "eslint --quiet test/"
-  },
-  "browserify": {
-    "transform": [
-      "envify",
-      "packageify"
-    ]
-  },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/algolia/algoliasearch-client-js.git"
-  },
-  "keywords": [
-    "algolia",
-    "search",
-    "search api",
-    "instant search",
-    "realtime",
-    "autocomplete"
-  ],
-  "homepage": "https://github.com/algolia/algoliasearch-client-js",
-  "bugs": "https://github.com/algolia/algoliasearch-client-js/issues",
-  "author": {
-    "name": "Algolia SAS",
-    "url": "https://www.algolia.com"
-  },
-  "contributors": [
-    {
-      "name": "Algolia Team <support@algolia.com>",
-      "url": "http://www.algolia.com"
-    }
-  ],
-  "dependencies": {
-    "agentkeepalive": "0.2.4",
-    "debug": "2.1.3",
-    "envify": "3.4.0",
-    "es6-promise": "2.0.1",
-    "inherits": "2.0.1",
-    "load-script": "1.0.0",
-    "once": "1.3.1",
-    "packageify": "0.2.2",
-    "semver": "4.3.2"
-  },
-  "devDependencies": {
-    "angular": "1.3.14",
-    "async": "0.9.0",
-    "bowser": "0.7.2",
-    "browserify": "9.0.3",
-    "bulk-require": "0.2.1",
-    "bulkify": "1.1.1",
-    "bundle-collapser": "1.1.4",
-    "chance": "0.7.3",
-    "closurecompiler": "1.5.1",
-    "compression": "1.4.3",
-    "deumdify": "1.1.0",
-    "domready": "0.3.0",
-    "eslint": "0.15.0",
-    "express": "4.12.1",
-    "faux-jax": "4.0.0-beta.1",
-    "http-server": "0.7.5",
-    "jQuery-ajaxTransport-XDomainRequest": "git://github.com/MoonScript/jQuery-ajaxTransport-XDomainRequest#1.0.4",
-    "jquery": "2.1.3",
-    "json": "9.0.3",
-    "lodash": "3.5.0",
-    "lodash-compat": "3.5.0",
-    "morgan": "1.5.1",
-    "phantomjs": "1.9.15",
-    "pretty-bytes": "1.0.4",
-    "sinon": "1.12.2",
-    "tap-spec": "2.2.1",
-    "tape": "3.5.0",
-    "url-parse": "1.0.0",
-    "xhr": "2.0.1",
-    "zuul": "2.1.1",
-    "zuul-ngrok": "3.0.0"
-  }
-}
-
-},{}],7:[function(require,module,exports){
 (function (process,global){
 module.exports = AlgoliaSearch;
 
@@ -2133,15 +2037,15 @@ function shuffle(array) {
 }
 
 }).call(this,require(1),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"1":1,"2":2}],8:[function(require,module,exports){
+},{"1":1,"2":2}],7:[function(require,module,exports){
 (function (global){
 // This is the AngularJS Algolia Search module
 // It's using $http to do requests with a JSONP fallback
 // $q promises are returned
 var inherits = require(5);
 
-var AlgoliaSearch = require(7);
-var JSONPRequest = require(9);
+var AlgoliaSearch = require(6);
+var JSONPRequest = require(8);
 
 global.angular.module('algoliasearch', [])
   .service('algolia', ['$http', '$q', '$timeout', function ($http, $q, $timeout) {
@@ -2150,7 +2054,7 @@ global.angular.module('algoliasearch', [])
       return new AlgoliaSearchAngular(applicationID, apiKey, opts);
     }
 
-    algoliasearch.version = require(10);
+    algoliasearch.version = require(9);
 
     function AlgoliaSearchAngular() {
       // call AlgoliaSearch constructor
@@ -2243,7 +2147,7 @@ global.angular.module('algoliasearch', [])
   }]);
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"10":10,"5":5,"7":7,"9":9}],9:[function(require,module,exports){
+},{"5":5,"6":6,"8":8,"9":9}],8:[function(require,module,exports){
 module.exports = JSONPRequest;
 
 var JSONPCounter = 0;
@@ -2360,7 +2264,10 @@ function JSONPRequest(url, opts, cb) {
   }
 }
 
-},{}],10:[function(require,module,exports){
-module.exports = require(6).version;
+},{}],9:[function(require,module,exports){
+// This is the `packageify` transform: https://github.com/auth0/packageify
+// It allows selecting only some properties of the package.json without including it all in the build
+// like `require('./package.json').version` would
+module.exports = "3.0.5";
 
-},{"6":6}]},{},[8]);
+},{}]},{},[7]);
