@@ -75,6 +75,6 @@
     "examples": "http-server . -a 127.0.0.1",
     "lint": "eslint --quiet test/"
   },
-  "version": "2.9.4",
+  "version": "2.9.5",
   "dependencies": {}
 }

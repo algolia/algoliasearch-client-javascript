@@ -1,6 +1,6 @@
 CHANGELOG
 
-UNRELEASED
+2015-02-04  2.9.5
     * fix aborted requests in IE9, #76
 
 2015-19-03  2.9.4
