@@ -35,11 +35,10 @@ browserify -p bundle-collapser/plugin src/browser/builds/algoliasearch.jquery.js
 echo '..Minify'
 for bundle in "${bundles[@]}"
 do
-  ccjs dist/"$bundle".js > dist/"$bundle".min.js
+  ccjs dist/"$bundle".js --language_in=ECMASCRIPT5 --warning_level=QUIET > dist/"$bundle".min.js
 done
 
 echo '..Prepend license'
-
 # We prepend the license to be sure it's always present, no matter the used minifier
 # http://www.cyberciti.biz/faq/bash-prepend-text-lines-to-file/
 for bundle in "${bundles[@]}"
