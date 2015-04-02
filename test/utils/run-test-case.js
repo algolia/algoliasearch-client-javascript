@@ -8,7 +8,7 @@ var computeExpectedRequest = require('./compute-expected-request');
 var findMethodCallback = require('./find-method-callback');
 var getCredentials = require('./get-credentials');
 var getFakeHitsResponse = require('./get-fake-hits-response');
-var testXHRCall = require('./test-xhr-call');
+var testMethodCall = require('./test-method-call');
 
 function runTestCase(testCase) {
   // Setting `only: true` property to a test case will only run this test case
@@ -26,7 +26,7 @@ function runTestCase(testCase) {
     // we could allow a subTest: function(testCase) {}, not needed for now
     // var addSubTest = testCase.subTest !== undefined ? 1 : 0;
 
-    t.plan(testXHRCall.assertCount/* + addSubTest*/);
+    t.plan(testMethodCall.assertCount/* + addSubTest*/);
 
     // every test case gets it's own credentials
     var credentials = getCredentials({prefix: testCase.method});
@@ -41,7 +41,7 @@ function runTestCase(testCase) {
       testCase.fakeResponse || {}
     );
 
-    testXHRCall({
+    testMethodCall({
       testCase: testCase,
       methodName: testCase.methodName,
       object: testCase.object,

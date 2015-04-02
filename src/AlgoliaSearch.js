@@ -1,5 +1,13 @@
 module.exports = AlgoliaSearch;
 
+// default debug activated in dev environments
+// this is triggered in package.json, using the envify transform
+if (process.env.NODE_ENV === 'development') {
+  require('debug').enable('algoliasearch*');
+}
+
+var debug = require('debug')('algoliasearch:AlgoliaSearch');
+
 /*
  * Algolia Search library initialization
  * https://www.algolia.com/
@@ -17,7 +25,7 @@ module.exports = AlgoliaSearch;
  *        ] - The hosts to use for Algolia Search API. It this your responsibility to shuffle the hosts and add a DSN host in it
  * @param {string} [opts.tld='net'] - The tld to use when computing hosts default list
  */
-function AlgoliaSearch(applicationID, apiKey, opts, _request) {
+function AlgoliaSearch(applicationID, apiKey, opts) {
   var usage = 'Usage: algoliasearch(applicationID, apiKey, opts)';
 
   if (!applicationID) {
@@ -37,7 +45,7 @@ function AlgoliaSearch(applicationID, apiKey, opts, _request) {
   }
 
   if (opts.protocol === undefined) {
-    var locationProtocol = document && document.location.protocol;
+    var locationProtocol = global.document && global.document.location.protocol;
     // our API is only available with http or https. When in file:// mode (local html file), default to http
     opts.protocol = (locationProtocol === 'http:' || locationProtocol === 'https:') ? locationProtocol : 'http:';
   }
@@ -80,7 +88,6 @@ function AlgoliaSearch(applicationID, apiKey, opts, _request) {
   this.requestTimeout = opts.timeout;
   this.extraHeaders = [];
   this.cache = {};
-  this._request = _request;
 }
 
 AlgoliaSearch.prototype = {
@@ -436,13 +443,13 @@ AlgoliaSearch.prototype = {
     function doRequest(requester, reqOpts) {
       // handle cache existence
       if (cache && cache[cacheID] !== undefined) {
-        return client._request.resolve(cache[cacheID]);
+        return client._promise.resolve(cache[cacheID]);
       }
 
       if (tries >= client.hosts.length) {
-        if (!opts.fallback || requester === client._request.fallback) {
+        if (!opts.fallback || !client._request.fallback || requester === client._request.fallback) {
           // could not get a response even using the fallback if one was available
-          return client._request.reject(new Error(
+          return client._promise.reject(new Error(
             'Cannot connect to the AlgoliaSearch API.' +
             ' Send an email to support@algolia.com to report and resolve the issue.'
           ));
@@ -454,7 +461,7 @@ AlgoliaSearch.prototype = {
         reqOpts.body = opts.fallback.body;
         reqOpts.timeout = client.requestTimeout * (tries + 1);
         client.currentHostIndex = 0;
-        client.forceFallback = true;
+        client.forceFallback = true; // now we will only use JSONP, even on future requests
         return doRequest(client._request.fallback, reqOpts);
       }
 
@@ -523,7 +530,7 @@ AlgoliaSearch.prototype = {
           httpResponse.body && httpResponse.body.message || 'Unknown error'
         );
 
-        return client._request.reject(unrecoverableError);
+        return client._promise.reject(unrecoverableError);
       }, tryFallback);
 
       function retryRequest() {
@@ -533,10 +540,24 @@ AlgoliaSearch.prototype = {
         return doRequest(requester, reqOpts);
       }
 
-      function tryFallback() {
+      function tryFallback(err) {
+        // error cases:
+        //  While not in fallback mode:
+        //    - CORS not supported
+        //    - network error
+        //  While in fallback mode:
+        //    - timeout
+        //    - network error
+        //    - badly formatted JSONP (script loaded, did not call our callback)
+        //  In both cases:
+        //    - uncaught exception occurs (TypeError)
+        debug('error: %s, stack: %s', err.message, err.stack);
+
+        // we were not using the fallback, try now
         // if we are switching to fallback right now, set tries to maximum
         if (!client.forceFallback) {
-          // next time doRequest is called, simulate we tried all hosts
+          // next time doRequest is called, simulate we tried all hosts,
+          // this will force to use the fallback
           tries = client.hosts.length;
         } else {
           // we were already using the fallback, but something went wrong (script error)
@@ -553,6 +574,7 @@ AlgoliaSearch.prototype = {
     var requestOptions = useFallback ? opts.fallback : opts;
 
     var promise = doRequest(
+      // set the requester
       useFallback ? client._request.fallback : client._request, {
         url: requestOptions.url,
         method: requestOptions.method,
@@ -784,7 +806,7 @@ AlgoliaSearch.prototype.Index.prototype = {
         return callback(err);
       }
 
-      return this.as._request.reject(err);
+      return this.as._promise.reject(err);
     }
 
     var indexObj = this;
@@ -956,7 +978,7 @@ AlgoliaSearch.prototype.Index.prototype = {
       url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/task/' + taskID
     }).then(function success(content) {
       if (content.status !== 'published') {
-        return new indexObj.as._request.delay(100).then(function() {
+        return new indexObj.as._promise.delay(100).then(function() {
           return indexObj.waitTask(taskID, callback);
         });
       }

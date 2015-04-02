@@ -28,24 +28,29 @@ done
 
 echo '..Add browserify bundles'
 # cannot use a loop, bundles are different (--standalone)
-browserify -p bundle-collapser/plugin index.js --standalone algoliasearch >> dist/algoliasearch.js
+browserify -p bundle-collapser/plugin src/browser/builds/algoliasearch.js --standalone algoliasearch >> dist/algoliasearch.js
 browserify -p bundle-collapser/plugin src/browser/builds/algoliasearch.angular.js >> dist/algoliasearch.angular.js
 browserify -p bundle-collapser/plugin src/browser/builds/algoliasearch.jquery.js >> dist/algoliasearch.jquery.js
 
 echo '..Minify'
 for bundle in "${bundles[@]}"
 do
-  ccjs dist/"$bundle".js > dist/"$bundle".min.js
+  ccjs dist/"$bundle".js --language_in=ECMASCRIPT5 --warning_level=QUIET > dist/"$bundle".min.js
 done
 
 echo '..Prepend license'
-
 # We prepend the license to be sure it's always present, no matter the used minifier
 # http://www.cyberciti.biz/faq/bash-prepend-text-lines-to-file/
 for bundle in "${bundles[@]}"
 do
   echo "$license" | cat - dist/"$bundle".js > /tmp/out && mv /tmp/out dist/"$bundle".js
   echo "$license" | cat - dist/"$bundle".min.js > /tmp/out && mv /tmp/out dist/"$bundle".min.js
+done
+
+echo '..Gzipped file size'
+for bundle in "${bundles[@]}"
+do
+  echo "${bundle}.js gzipped will weight" $(cat dist/"${bundle}".min.js | gzip -9 | wc -c | pretty-bytes)
 done
 
 echo 'Done'
