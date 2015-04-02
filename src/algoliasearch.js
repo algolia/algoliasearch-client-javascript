@@ -933,6 +933,13 @@ AlgoliaSearch.prototype = {
       opts.callback(retry, success, response);
     };
 
+    // we set an empty onprogress listener
+    // so that XDomainRequest on IE9 is not aborted
+    // refs:
+    //  - https://github.com/algolia/algoliasearch-client-js/issues/76
+    //  - https://social.msdn.microsoft.com/Forums/ie/en-US/30ef3add-767c-4436-b8a9-f1ca19b4812e/ie9-rtm-xdomainrequest-issued-requests-may-abort-if-all-event-handlers-not-specified?forum=iewebdevelopment
+    request.onprogress = function noop() {};
+
     if (this._support.timeout) {
       // .timeout supported by both XHR and XDR,
       // we do receive timeout event, tested

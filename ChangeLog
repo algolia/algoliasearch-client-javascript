@@ -1,5 +1,8 @@
 CHANGELOG
 
+UNRELEASED
+    * fix aborted requests in IE9, #76
+
 2015-19-03  2.9.4
     * force async XHR
 
