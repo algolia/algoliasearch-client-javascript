@@ -1,6 +1,6 @@
 CHANGELOG
 
-UNRELEASED
+2015-02-04  3.0.4
     * FIX: Defaults to http when the protocol of the page is not http or
       https
     * FIX: XDomainRequests no more aborted in IE9 #76

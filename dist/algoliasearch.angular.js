@@ -1,4 +1,4 @@
-/*! algoliasearch 3.0.3 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
+/*! algoliasearch 3.0.4 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
 (function(f){var g;if(typeof window!=='undefined'){g=window}else if(typeof self!=='undefined'){g=self}g.ALGOLIA_MIGRATION_LAYER=f()})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 
 module.exports = function load (src, opts, cb) {
@@ -260,8 +260,638 @@ process.chdir = function (dir) {
 process.umask = function() { return 0; };
 
 },{}],2:[function(require,module,exports){
-(function (process){
+
+/**
+ * This is the web browser implementation of `debug()`.
+ *
+ * Expose `debug()` as the module.
+ */
+
+exports = module.exports = require(3);
+exports.log = log;
+exports.formatArgs = formatArgs;
+exports.save = save;
+exports.load = load;
+exports.useColors = useColors;
+
+/**
+ * Use chrome.storage.local if we are in an app
+ */
+
+var storage;
+
+if (typeof chrome !== 'undefined' && typeof chrome.storage !== 'undefined')
+  storage = chrome.storage.local;
+else
+  storage = localstorage();
+
+/**
+ * Colors.
+ */
+
+exports.colors = [
+  'lightseagreen',
+  'forestgreen',
+  'goldenrod',
+  'dodgerblue',
+  'darkorchid',
+  'crimson'
+];
+
+/**
+ * Currently only WebKit-based Web Inspectors, Firefox >= v31,
+ * and the Firebug extension (any Firefox version) are known
+ * to support "%c" CSS customizations.
+ *
+ * TODO: add a `localStorage` variable to explicitly enable/disable colors
+ */
+
+function useColors() {
+  // is webkit? http://stackoverflow.com/a/16459606/376773
+  return ('WebkitAppearance' in document.documentElement.style) ||
+    // is firebug? http://stackoverflow.com/a/398120/376773
+    (window.console && (console.firebug || (console.exception && console.table))) ||
+    // is firefox >= v31?
+    // https://developer.mozilla.org/en-US/docs/Tools/Web_Console#Styling_messages
+    (navigator.userAgent.toLowerCase().match(/firefox\/(\d+)/) && parseInt(RegExp.$1, 10) >= 31);
+}
+
+/**
+ * Map %j to `JSON.stringify()`, since no Web Inspectors do that by default.
+ */
+
+exports.formatters.j = function(v) {
+  return JSON.stringify(v);
+};
+
+
+/**
+ * Colorize log arguments if enabled.
+ *
+ * @api public
+ */
+
+function formatArgs() {
+  var args = arguments;
+  var useColors = this.useColors;
+
+  args[0] = (useColors ? '%c' : '')
+    + this.namespace
+    + (useColors ? ' %c' : ' ')
+    + args[0]
+    + (useColors ? '%c ' : ' ')
+    + '+' + exports.humanize(this.diff);
+
+  if (!useColors) return args;
+
+  var c = 'color: ' + this.color;
+  args = [args[0], c, 'color: inherit'].concat(Array.prototype.slice.call(args, 1));
+
+  // the final "%c" is somewhat tricky, because there could be other
+  // arguments passed either before or after the %c, so we need to
+  // figure out the correct index to insert the CSS into
+  var index = 0;
+  var lastC = 0;
+  args[0].replace(/%[a-z%]/g, function(match) {
+    if ('%%' === match) return;
+    index++;
+    if ('%c' === match) {
+      // we only are interested in the *last* %c
+      // (the user may have provided their own)
+      lastC = index;
+    }
+  });
+
+  args.splice(lastC, 0, c);
+  return args;
+}
+
+/**
+ * Invokes `console.log()` when available.
+ * No-op when `console.log` is not a "function".
+ *
+ * @api public
+ */
+
+function log() {
+  // this hackery is required for IE8/9, where
+  // the `console.log` function doesn't have 'apply'
+  return 'object' === typeof console
+    && console.log
+    && Function.prototype.apply.call(console.log, console, arguments);
+}
+
+/**
+ * Save `namespaces`.
+ *
+ * @param {String} namespaces
+ * @api private
+ */
+
+function save(namespaces) {
+  try {
+    if (null == namespaces) {
+      storage.removeItem('debug');
+    } else {
+      storage.debug = namespaces;
+    }
+  } catch(e) {}
+}
+
+/**
+ * Load `namespaces`.
+ *
+ * @return {String} returns the previously persisted debug modes
+ * @api private
+ */
+
+function load() {
+  var r;
+  try {
+    r = storage.debug;
+  } catch(e) {}
+  return r;
+}
+
+/**
+ * Enable namespaces listed in `localStorage.debug` initially.
+ */
+
+exports.enable(load());
+
+/**
+ * Localstorage attempts to return the localstorage.
+ *
+ * This is necessary because safari throws
+ * when a user disables cookies/localstorage
+ * and you attempt to access it.
+ *
+ * @return {LocalStorage}
+ * @api private
+ */
+
+function localstorage(){
+  try {
+    return window.localStorage;
+  } catch (e) {}
+}
+
+},{"3":3}],3:[function(require,module,exports){
+
+/**
+ * This is the common logic for both the Node.js and web browser
+ * implementations of `debug()`.
+ *
+ * Expose `debug()` as the module.
+ */
+
+exports = module.exports = debug;
+exports.coerce = coerce;
+exports.disable = disable;
+exports.enable = enable;
+exports.enabled = enabled;
+exports.humanize = require(4);
+
+/**
+ * The currently active debug mode names, and names to skip.
+ */
+
+exports.names = [];
+exports.skips = [];
+
+/**
+ * Map of special "%n" handling functions, for the debug "format" argument.
+ *
+ * Valid key names are a single, lowercased letter, i.e. "n".
+ */
+
+exports.formatters = {};
+
+/**
+ * Previously assigned color.
+ */
+
+var prevColor = 0;
+
+/**
+ * Previous log timestamp.
+ */
+
+var prevTime;
+
+/**
+ * Select a color.
+ *
+ * @return {Number}
+ * @api private
+ */
+
+function selectColor() {
+  return exports.colors[prevColor++ % exports.colors.length];
+}
+
+/**
+ * Create a debugger with the given `namespace`.
+ *
+ * @param {String} namespace
+ * @return {Function}
+ * @api public
+ */
+
+function debug(namespace) {
+
+  // define the `disabled` version
+  function disabled() {
+  }
+  disabled.enabled = false;
+
+  // define the `enabled` version
+  function enabled() {
+
+    var self = enabled;
+
+    // set `diff` timestamp
+    var curr = +new Date();
+    var ms = curr - (prevTime || curr);
+    self.diff = ms;
+    self.prev = prevTime;
+    self.curr = curr;
+    prevTime = curr;
+
+    // add the `color` if not set
+    if (null == self.useColors) self.useColors = exports.useColors();
+    if (null == self.color && self.useColors) self.color = selectColor();
+
+    var args = Array.prototype.slice.call(arguments);
+
+    args[0] = exports.coerce(args[0]);
+
+    if ('string' !== typeof args[0]) {
+      // anything else let's inspect with %o
+      args = ['%o'].concat(args);
+    }
+
+    // apply any `formatters` transformations
+    var index = 0;
+    args[0] = args[0].replace(/%([a-z%])/g, function(match, format) {
+      // if we encounter an escaped % then don't increase the array index
+      if (match === '%%') return match;
+      index++;
+      var formatter = exports.formatters[format];
+      if ('function' === typeof formatter) {
+        var val = args[index];
+        match = formatter.call(self, val);
+
+        // now we need to remove `args[index]` since it's inlined in the `format`
+        args.splice(index, 1);
+        index--;
+      }
+      return match;
+    });
+
+    if ('function' === typeof exports.formatArgs) {
+      args = exports.formatArgs.apply(self, args);
+    }
+    var logFn = enabled.log || exports.log || console.log.bind(console);
+    logFn.apply(self, args);
+  }
+  enabled.enabled = true;
+
+  var fn = exports.enabled(namespace) ? enabled : disabled;
+
+  fn.namespace = namespace;
+
+  return fn;
+}
+
+/**
+ * Enables a debug mode by namespaces. This can include modes
+ * separated by a colon and wildcards.
+ *
+ * @param {String} namespaces
+ * @api public
+ */
+
+function enable(namespaces) {
+  exports.save(namespaces);
+
+  var split = (namespaces || '').split(/[\s,]+/);
+  var len = split.length;
+
+  for (var i = 0; i < len; i++) {
+    if (!split[i]) continue; // ignore empty strings
+    namespaces = split[i].replace(/\*/g, '.*?');
+    if (namespaces[0] === '-') {
+      exports.skips.push(new RegExp('^' + namespaces.substr(1) + '$'));
+    } else {
+      exports.names.push(new RegExp('^' + namespaces + '$'));
+    }
+  }
+}
+
+/**
+ * Disable debug output.
+ *
+ * @api public
+ */
+
+function disable() {
+  exports.enable('');
+}
+
+/**
+ * Returns true if the given mode name is enabled, false otherwise.
+ *
+ * @param {String} name
+ * @return {Boolean}
+ * @api public
+ */
+
+function enabled(name) {
+  var i, len;
+  for (i = 0, len = exports.skips.length; i < len; i++) {
+    if (exports.skips[i].test(name)) {
+      return false;
+    }
+  }
+  for (i = 0, len = exports.names.length; i < len; i++) {
+    if (exports.names[i].test(name)) {
+      return true;
+    }
+  }
+  return false;
+}
+
+/**
+ * Coerce `val`.
+ *
+ * @param {Mixed} val
+ * @return {Mixed}
+ * @api private
+ */
+
+function coerce(val) {
+  if (val instanceof Error) return val.stack || val.message;
+  return val;
+}
+
+},{"4":4}],4:[function(require,module,exports){
+/**
+ * Helpers.
+ */
+
+var s = 1000;
+var m = s * 60;
+var h = m * 60;
+var d = h * 24;
+var y = d * 365.25;
+
+/**
+ * Parse or format the given `val`.
+ *
+ * Options:
+ *
+ *  - `long` verbose formatting [false]
+ *
+ * @param {String|Number} val
+ * @param {Object} options
+ * @return {String|Number}
+ * @api public
+ */
+
+module.exports = function(val, options){
+  options = options || {};
+  if ('string' == typeof val) return parse(val);
+  return options.long
+    ? long(val)
+    : short(val);
+};
+
+/**
+ * Parse the given `str` and return milliseconds.
+ *
+ * @param {String} str
+ * @return {Number}
+ * @api private
+ */
+
+function parse(str) {
+  var match = /^((?:\d+)?\.?\d+) *(milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|years?|yrs?|y)?$/i.exec(str);
+  if (!match) return;
+  var n = parseFloat(match[1]);
+  var type = (match[2] || 'ms').toLowerCase();
+  switch (type) {
+    case 'years':
+    case 'year':
+    case 'yrs':
+    case 'yr':
+    case 'y':
+      return n * y;
+    case 'days':
+    case 'day':
+    case 'd':
+      return n * d;
+    case 'hours':
+    case 'hour':
+    case 'hrs':
+    case 'hr':
+    case 'h':
+      return n * h;
+    case 'minutes':
+    case 'minute':
+    case 'mins':
+    case 'min':
+    case 'm':
+      return n * m;
+    case 'seconds':
+    case 'second':
+    case 'secs':
+    case 'sec':
+    case 's':
+      return n * s;
+    case 'milliseconds':
+    case 'millisecond':
+    case 'msecs':
+    case 'msec':
+    case 'ms':
+      return n;
+  }
+}
+
+/**
+ * Short format for `ms`.
+ *
+ * @param {Number} ms
+ * @return {String}
+ * @api private
+ */
+
+function short(ms) {
+  if (ms >= d) return Math.round(ms / d) + 'd';
+  if (ms >= h) return Math.round(ms / h) + 'h';
+  if (ms >= m) return Math.round(ms / m) + 'm';
+  if (ms >= s) return Math.round(ms / s) + 's';
+  return ms + 'ms';
+}
+
+/**
+ * Long format for `ms`.
+ *
+ * @param {Number} ms
+ * @return {String}
+ * @api private
+ */
+
+function long(ms) {
+  return plural(ms, d, 'day')
+    || plural(ms, h, 'hour')
+    || plural(ms, m, 'minute')
+    || plural(ms, s, 'second')
+    || ms + ' ms';
+}
+
+/**
+ * Pluralization helper.
+ */
+
+function plural(ms, n, name) {
+  if (ms < n) return;
+  if (ms < n * 1.5) return Math.floor(ms / n) + ' ' + name;
+  return Math.ceil(ms / n) + ' ' + name + 's';
+}
+
+},{}],5:[function(require,module,exports){
+if (typeof Object.create === 'function') {
+  // implementation from standard node.js 'util' module
+  module.exports = function inherits(ctor, superCtor) {
+    ctor.super_ = superCtor
+    ctor.prototype = Object.create(superCtor.prototype, {
+      constructor: {
+        value: ctor,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      }
+    });
+  };
+} else {
+  // old school shim for old browsers
+  module.exports = function inherits(ctor, superCtor) {
+    ctor.super_ = superCtor
+    var TempCtor = function () {}
+    TempCtor.prototype = superCtor.prototype
+    ctor.prototype = new TempCtor()
+    ctor.prototype.constructor = ctor
+  }
+}
+
+},{}],6:[function(require,module,exports){
+module.exports={
+  "name": "algoliasearch",
+  "version": "3.0.4",
+  "description": "AlgoliaSearch API JavaScript client",
+  "main": "index.js",
+  "browser": {
+    "index.js": "src/browser/builds/algoliasearch.js",
+    "src/version/index.js": "src/version/browser.js"
+  },
+  "scripts": {
+    "build": "PACKAGE_VERSION=$(json -f package.json version) sh build.sh",
+    "test": "npm run test-phantom | tap-spec && npm run test-node | tap-spec && npm run lint",
+    "test-node": "node test/run-node.js",
+    "test-phantom": "zuul --phantom -- test/run-browser.js",
+    "test-ci-browser": "DEBUG=zuul* zuul --tunnel ngrok -- test/run-browser.js",
+    "dev": "NODE_ENV=development DEBUG=zuul* zuul --no-coverage --local 8080 -- test/run-browser.js",
+    "examples": "http-server . -a 0.0.0.0",
+    "lint": "eslint --quiet test/"
+  },
+  "browserify": {
+    "transform": [
+      "envify",
+      "packageify"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/algolia/algoliasearch-client-js.git"
+  },
+  "keywords": [
+    "algolia",
+    "search",
+    "search api",
+    "instant search",
+    "realtime",
+    "autocomplete"
+  ],
+  "homepage": "https://github.com/algolia/algoliasearch-client-js",
+  "bugs": "https://github.com/algolia/algoliasearch-client-js/issues",
+  "author": {
+    "name": "Algolia SAS",
+    "url": "https://www.algolia.com"
+  },
+  "contributors": [
+    {
+      "name": "Algolia Team <support@algolia.com>",
+      "url": "http://www.algolia.com"
+    }
+  ],
+  "dependencies": {
+    "agentkeepalive": "0.2.4",
+    "debug": "2.1.3",
+    "envify": "3.4.0",
+    "es6-promise": "2.0.1",
+    "inherits": "2.0.1",
+    "load-script": "1.0.0",
+    "once": "1.3.1",
+    "packageify": "0.2.2",
+    "semver": "4.3.2"
+  },
+  "devDependencies": {
+    "angular": "1.3.14",
+    "async": "0.9.0",
+    "bowser": "0.7.2",
+    "browserify": "9.0.3",
+    "bulk-require": "0.2.1",
+    "bulkify": "1.1.1",
+    "bundle-collapser": "1.1.4",
+    "chance": "0.7.3",
+    "closurecompiler": "1.5.1",
+    "compression": "1.4.3",
+    "deumdify": "1.1.0",
+    "domready": "0.3.0",
+    "eslint": "0.15.0",
+    "express": "4.12.1",
+    "faux-jax": "4.0.0-beta.1",
+    "http-server": "0.7.5",
+    "jQuery-ajaxTransport-XDomainRequest": "git://github.com/MoonScript/jQuery-ajaxTransport-XDomainRequest#1.0.4",
+    "jquery": "2.1.3",
+    "json": "9.0.3",
+    "lodash": "3.5.0",
+    "lodash-compat": "3.5.0",
+    "morgan": "1.5.1",
+    "phantomjs": "1.9.15",
+    "pretty-bytes": "1.0.4",
+    "sinon": "1.12.2",
+    "tap-spec": "2.2.1",
+    "tape": "3.5.0",
+    "url-parse": "1.0.0",
+    "xhr": "2.0.1",
+    "zuul": "2.1.1",
+    "zuul-ngrok": "3.0.0"
+  }
+}
+
+},{}],7:[function(require,module,exports){
+(function (process,global){
 module.exports = AlgoliaSearch;
+
+// default debug activated in dev environments
+// this is triggered in package.json, using the envify transform
+if (process.env.NODE_ENV === 'development') {
+  require(2).enable('algoliasearch*');
+}
+
+var debug = require(2)('algoliasearch:AlgoliaSearch');
 
 /*
  * Algolia Search library initialization
@@ -280,7 +910,7 @@ module.exports = AlgoliaSearch;
  *        ] - The hosts to use for Algolia Search API. It this your responsibility to shuffle the hosts and add a DSN host in it
  * @param {string} [opts.tld='net'] - The tld to use when computing hosts default list
  */
-function AlgoliaSearch(applicationID, apiKey, opts, _request) {
+function AlgoliaSearch(applicationID, apiKey, opts) {
   var usage = 'Usage: algoliasearch(applicationID, apiKey, opts)';
 
   if (!applicationID) {
@@ -300,7 +930,9 @@ function AlgoliaSearch(applicationID, apiKey, opts, _request) {
   }
 
   if (opts.protocol === undefined) {
-    opts.protocol = document && document.location.protocol || 'http:';
+    var locationProtocol = global.document && global.document.location.protocol;
+    // our API is only available with http or https. When in file:// mode (local html file), default to http
+    opts.protocol = (locationProtocol === 'http:' || locationProtocol === 'https:') ? locationProtocol : 'http:';
   }
 
   if (opts.hosts === undefined) {
@@ -341,7 +973,6 @@ function AlgoliaSearch(applicationID, apiKey, opts, _request) {
   this.requestTimeout = opts.timeout;
   this.extraHeaders = [];
   this.cache = {};
-  this._request = _request;
 }
 
 AlgoliaSearch.prototype = {
@@ -697,13 +1328,13 @@ AlgoliaSearch.prototype = {
     function doRequest(requester, reqOpts) {
       // handle cache existence
       if (cache && cache[cacheID] !== undefined) {
-        return client._request.resolve(cache[cacheID]);
+        return client._promise.resolve(cache[cacheID]);
       }
 
       if (tries >= client.hosts.length) {
-        if (!opts.fallback || requester === client._request.fallback) {
+        if (!opts.fallback || !client._request.fallback || requester === client._request.fallback) {
           // could not get a response even using the fallback if one was available
-          return client._request.reject(new Error(
+          return client._promise.reject(new Error(
             'Cannot connect to the AlgoliaSearch API.' +
             ' Send an email to support@algolia.com to report and resolve the issue.'
           ));
@@ -715,7 +1346,7 @@ AlgoliaSearch.prototype = {
         reqOpts.body = opts.fallback.body;
         reqOpts.timeout = client.requestTimeout * (tries + 1);
         client.currentHostIndex = 0;
-        client.forceFallback = true;
+        client.forceFallback = true; // now we will only use JSONP, even on future requests
         return doRequest(client._request.fallback, reqOpts);
       }
 
@@ -784,7 +1415,7 @@ AlgoliaSearch.prototype = {
           httpResponse.body && httpResponse.body.message || 'Unknown error'
         );
 
-        return client._request.reject(unrecoverableError);
+        return client._promise.reject(unrecoverableError);
       }, tryFallback);
 
       function retryRequest() {
@@ -794,10 +1425,24 @@ AlgoliaSearch.prototype = {
         return doRequest(requester, reqOpts);
       }
 
-      function tryFallback() {
+      function tryFallback(err) {
+        // error cases:
+        //  While not in fallback mode:
+        //    - CORS not supported
+        //    - network error
+        //  While in fallback mode:
+        //    - timeout
+        //    - network error
+        //    - badly formatted JSONP (script loaded, did not call our callback)
+        //  In both cases:
+        //    - uncaught exception occurs (TypeError)
+        debug('error: %s, stack: %s', err.message, err.stack);
+
+        // we were not using the fallback, try now
         // if we are switching to fallback right now, set tries to maximum
         if (!client.forceFallback) {
-          // next time doRequest is called, simulate we tried all hosts
+          // next time doRequest is called, simulate we tried all hosts,
+          // this will force to use the fallback
           tries = client.hosts.length;
         } else {
           // we were already using the fallback, but something went wrong (script error)
@@ -814,6 +1459,7 @@ AlgoliaSearch.prototype = {
     var requestOptions = useFallback ? opts.fallback : opts;
 
     var promise = doRequest(
+      // set the requester
       useFallback ? client._request.fallback : client._request, {
         url: requestOptions.url,
         method: requestOptions.method,
@@ -1045,7 +1691,7 @@ AlgoliaSearch.prototype.Index.prototype = {
         return callback(err);
       }
 
-      return this.as._request.reject(err);
+      return this.as._promise.reject(err);
     }
 
     var indexObj = this;
@@ -1217,7 +1863,7 @@ AlgoliaSearch.prototype.Index.prototype = {
       url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/task/' + taskID
     }).then(function success(content) {
       if (content.status !== 'published') {
-        return new indexObj.as._request.delay(100).then(function() {
+        return new indexObj.as._promise.delay(100).then(function() {
           return indexObj.waitTask(taskID, callback);
         });
       }
@@ -1486,15 +2132,34 @@ function shuffle(array) {
   return array;
 }
 
-}).call(this,require(1))
-},{"1":1}],3:[function(require,module,exports){
+}).call(this,require(1),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"1":1,"2":2}],8:[function(require,module,exports){
 (function (global){
-var createAlgoliasearch = require(5);
-var JSONPRequest = require(4);
+// This is the AngularJS Algolia Search module
+// It's using $http to do requests with a JSONP fallback
+// $q promises are returned
+var inherits = require(5);
+
+var AlgoliaSearch = require(7);
+var JSONPRequest = require(9);
 
 global.angular.module('algoliasearch', [])
   .service('algolia', ['$http', '$q', '$timeout', function ($http, $q, $timeout) {
-    function request(url, opts) {
+
+    function algoliasearch(applicationID, apiKey, opts) {
+      return new AlgoliaSearchAngular(applicationID, apiKey, opts);
+    }
+
+    algoliasearch.version = require(10);
+
+    function AlgoliaSearchAngular() {
+      // call AlgoliaSearch constructor
+      AlgoliaSearch.apply(this, arguments);
+    }
+
+    inherits(AlgoliaSearchAngular, AlgoliaSearch);
+
+    AlgoliaSearchAngular.prototype._request = function(url, opts) {
       return $q(function(resolve, reject) {
         var timedOut;
         var body = null;
@@ -1540,9 +2205,9 @@ global.angular.module('algoliasearch', [])
           });
         });
       });
-    }
+    };
 
-    request.fallback = function(url, opts) {
+    AlgoliaSearchAngular.prototype._request.fallback = function(url, opts) {
       return $q(function(resolve, reject) {
         JSONPRequest(url, opts, function JSONPRequestDone(err, content) {
           if (err) {
@@ -1555,22 +2220,21 @@ global.angular.module('algoliasearch', [])
       });
     };
 
-    request.reject = function(val) {
-      return $q.reject(val);
+    AlgoliaSearchAngular.prototype._promise = {
+      reject: function(val) {
+        return $q.reject(val);
+      },
+      resolve: function(val) {
+        // http://www.bennadel.com/blog/2735-q-when-is-the-missing-q-resolve-method-in-angularjs.htm
+        return $q.when(val);
+      },
+      delay: function(ms) {
+        return $q(function(resolve/*, reject*/) {
+          $timeout(resolve, ms);
+        });
+      }
     };
 
-    request.resolve = function(val) {
-      // http://www.bennadel.com/blog/2735-q-when-is-the-missing-q-resolve-method-in-angularjs.htm
-      return $q.when(val);
-    };
-
-    request.delay = function(ms) {
-      return $q(function(resolve/*, reject*/) {
-        $timeout(resolve, ms);
-      });
-    };
-
-    var algoliasearch = createAlgoliasearch(request);
     return {
       Client: function(applicationID, apiKey, options) {
         return algoliasearch(applicationID, apiKey, options);
@@ -1579,7 +2243,7 @@ global.angular.module('algoliasearch', [])
   }]);
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"4":4,"5":5}],4:[function(require,module,exports){
+},{"10":10,"5":5,"7":7,"9":9}],9:[function(require,module,exports){
 module.exports = JSONPRequest;
 
 var JSONPCounter = 0;
@@ -1696,22 +2360,7 @@ function JSONPRequest(url, opts, cb) {
   }
 }
 
-},{}],5:[function(require,module,exports){
-// this file is a `factory of algoliasearch()`
-// Given a `request` param, it will provide you an AlgoliaSearch client
-// using this particular request
-module.exports = createAlgoliasearch;
+},{}],10:[function(require,module,exports){
+module.exports = require(6).version;
 
-function createAlgoliasearch(request) {
-  function algoliasearch(applicationID, apiKey, opts) {
-    var AlgoliaSearch = require(2);
-
-    return new AlgoliaSearch(applicationID, apiKey, opts, request);
-  }
-
-  algoliasearch.version = "3.0.3";
-
-  return algoliasearch;
-}
-
-},{"2":2}]},{},[3]);
+},{"6":6}]},{},[8]);
