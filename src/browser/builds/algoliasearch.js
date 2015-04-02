@@ -9,7 +9,6 @@ var Promise = global.Promise || require('es6-promise').Promise;
 var AlgoliaSearch = require('../../AlgoliaSearch');
 var JSONPRequest = require('../jsonp-request');
 
-
 function algoliasearch(applicationID, apiKey, opts) {
   return new AlgoliaSearchBrowser(applicationID, apiKey, opts);
 }
