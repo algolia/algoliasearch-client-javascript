@@ -4,8 +4,8 @@
   "description": "AlgoliaSearch API JavaScript client",
   "main": "index.js",
   "browser": {
-    "index.js": "src/browser/builds/algoliasearch.js",
-    "src/version/index.js": "src/version/browser.js"
+    "./index.js": "./src/browser/builds/algoliasearch.js",
+    "./src/version/index.js": "./src/version/browser.js"
   },
   "scripts": {
     "build": "PACKAGE_VERSION=$(json -f package.json version) sh build.sh",
