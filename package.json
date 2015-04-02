@@ -80,6 +80,7 @@
     "lodash-compat": "3.5.0",
     "morgan": "1.5.1",
     "phantomjs": "1.9.15",
+    "pretty-bytes": "1.0.4",
     "sinon": "1.12.2",
     "tap-spec": "2.2.1",
     "tape": "3.5.0",

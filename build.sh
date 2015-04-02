@@ -48,4 +48,10 @@ do
   echo "$license" | cat - dist/"$bundle".min.js > /tmp/out && mv /tmp/out dist/"$bundle".min.js
 done
 
+echo '..Gzipped file size'
+for bundle in "${bundles[@]}"
+do
+  echo "${bundle}.js gzipped will weight" $(cat dist/"${bundle}".min.js | gzip -9 | wc -c | pretty-bytes)
+done
+
 echo 'Done'
