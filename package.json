@@ -69,6 +69,7 @@
     "chance": "0.7.3",
     "closurecompiler": "1.5.1",
     "compression": "1.4.3",
+    "deumdify": "1.1.0",
     "domready": "0.3.0",
     "eslint": "0.15.0",
     "express": "4.12.1",
