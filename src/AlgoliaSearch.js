@@ -883,6 +883,14 @@ AlgoliaSearch.prototype.Index.prototype = {
    *  content: the server answer that contains the list of results.
    */
   search: function(query, args, callback) {
+    // warn V2 users on how to search
+    if (typeof query === 'function' && typeof args === 'object' ||
+      typeof callback === 'object') {
+      // .search(query, params, cb)
+      // .search(cb, params)
+      throw new Error('AlgoliaSearch: index.search usage is index.search(query, params, cb)');
+    }
+
     if (arguments.length === 0 || typeof query === 'function') {
       // .search(), .search(cb)
       callback = query;

@@ -5,7 +5,7 @@ test('index.search()', function(t) {
   t.plan(1);
   var fauxJax = require('faux-jax');
 
-  var createFixture = require('../../../utils/create-fixture');
+  var createFixture = require('../../../../utils/create-fixture');
   var fixture = createFixture();
   var index = fixture.index;
 
