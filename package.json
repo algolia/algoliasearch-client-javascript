@@ -8,7 +8,7 @@
     "./src/version/index.js": "./src/version/browser.js"
   },
   "scripts": {
-    "build": "PACKAGE_VERSION=$(json -f package.json version) sh build.sh",
+    "build": "PACKAGE_VERSION=$(json -f package.json version) ./build.sh",
     "test": "npm run test-phantom | tap-spec && npm run test-node | tap-spec && npm run lint",
     "test-node": "node test/run-node.js",
     "test-phantom": "zuul --phantom -- test/run-browser.js",
