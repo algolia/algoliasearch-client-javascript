@@ -13,7 +13,7 @@ function algoliasearch(applicationID, apiKey, opts) {
   return new AlgoliaSearchBrowser(applicationID, apiKey, opts);
 }
 
-algoliasearch.version = require('../../version/');
+algoliasearch.version = require('../../version.json');
 
 var support = {
   hasXMLHttpRequest: 'XMLHttpRequest' in window,

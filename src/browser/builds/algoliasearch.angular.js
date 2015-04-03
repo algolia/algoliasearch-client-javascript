@@ -13,7 +13,7 @@ global.angular.module('algoliasearch', [])
       return new AlgoliaSearchAngular(applicationID, apiKey, opts);
     }
 
-    algoliasearch.version = require('../../version/');
+    algoliasearch.version = require('../../version.json');
 
     function AlgoliaSearchAngular() {
       // call AlgoliaSearch constructor

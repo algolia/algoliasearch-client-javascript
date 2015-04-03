@@ -10,7 +10,7 @@ function algoliasearch(applicationID, apiKey, opts) {
   return new AlgoliaSearchJQuery(applicationID, apiKey, opts);
 }
 
-algoliasearch.version = require('../../version/');
+algoliasearch.version = require('../../version.json');
 
 var $ = global.jQuery;
 

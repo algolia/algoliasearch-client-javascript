@@ -33,7 +33,7 @@ function algoliasearch(applicationID, apiKey, opts) {
   return new AlgoliaSearchNodeJS(applicationID, apiKey, opts);
 }
 
-algoliasearch.version = require('../../version/');
+algoliasearch.version = require('../../version.json');
 
 function AlgoliaSearchNodeJS() {
   // call AlgoliaSearch constructor
