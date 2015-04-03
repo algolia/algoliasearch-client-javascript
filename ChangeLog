@@ -1,6 +1,11 @@
 CHANGELOG
 
-2015-02-05  3.0.5
+2015-03-04  3.0.6
+    * FIX: Webpack compatibility by removing packageify
+      webpack does not interprets for now node_modules/* browserify transforms
+    * MISC: add release script
+
+2015-02-04  3.0.5
     * FIX: lower the build size by requiring the good version/browser.js in browser
       builds. Previously we got the full `package.json` inlined
 
