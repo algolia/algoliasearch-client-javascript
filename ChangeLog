@@ -1,5 +1,10 @@
 CHANGELOG
 
+UNRELEASED
+    * MIGRATION: throw on V2 .search() usage:
+      - .search(query, cb, params)
+      - .search(cb, params)
+
 2015-03-04  3.0.6
     * FIX: Webpack compatibility by removing packageify
       webpack does not interprets for now node_modules/* browserify transforms
