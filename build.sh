@@ -7,7 +7,7 @@ license="/*! algoliasearch ${PACKAGE_VERSION} | © 2014, 2015 Algolia SAS | gith
 
 echo 'Building algoliasearch-client-js'
 
-bundles=( algoliasearch algoliasearch.angular algoliasearch.jquery )
+bundles=( 'algoliasearch' 'algoliasearch.angular' 'algoliasearch.jquery' )
 
 # The migration layer have two purposes
 #   1. For people still using cdn.jsdelivr.net/algoliasearch/latest/..
