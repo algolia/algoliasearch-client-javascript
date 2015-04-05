@@ -34,7 +34,7 @@ To add, remove or delete your objects please consider using [a backend API clien
 Our JavaScript library is [UMD](https://github.com/umdjs/umd) compatible, you can
 use it with any module loader.
 
-When not using any module loader, it will export an `alogliasearch` method in the `window` object.
+When not using any module loader, it will export an `algoliasearch` method in the `window` object.
 
 If you are using the V2 of our JavaScript client and want to upgrade, please read [our migration guide](https://github.com/algolia/algoliasearch-client-js/wiki/Migration-guide-from-2.x.x-to-3.x.x).
 
@@ -74,10 +74,10 @@ To setup your project, follow these steps:
 #### npm
 
 ```sh
-npm install alogliasearch --save
+npm install algolia --save
 ```
 
-We are [browserify](http://browserify.org/)able.
+We are [browserify](http://browserify.org/)able and [webpack](http://webpack.github.io/) friendly.
 
 #### Bower
 
