@@ -74,7 +74,7 @@ To setup your project, follow these steps:
 #### npm
 
 ```sh
-npm install algolia --save
+npm install algoliasearch --save
 ```
 
 We are [browserify](http://browserify.org/)able and [webpack](http://webpack.github.io/) friendly.
