@@ -5,5 +5,8 @@ var domready = require('domready');
 domready(run);
 
 function run() {
-  require('bulk-require')(__dirname, ['spec/common/**/*.js', 'spec/browser/**/*.js']);
+  require('bulk-require')(__dirname, [
+    'spec/common/**/*.js',
+    'spec/browser/**/*.js'
+  ]);
 }

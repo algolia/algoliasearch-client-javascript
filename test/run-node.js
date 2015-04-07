@@ -1,1 +1,4 @@
-require('bulk-require')(__dirname, ['spec/common/**/*.js']);
+require('bulk-require')(__dirname, [
+  'spec/common/**/*.js',
+  'spec/node/**/*.js'
+]);
