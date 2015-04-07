@@ -2,12 +2,16 @@
 module.exports = algoliasearch;
 
 var debug = require('debug')('algoliasearch:nodejs');
+
+var http = require('http');
 var https = require('https');
+var url = require('url');
+
 var HttpsAgent = require('agentkeepalive').HttpsAgent;
+var HttpAgent = require('agentkeepalive');
 var inherits = require('inherits');
 var Promise = global.Promise || require('es6-promise').Promise;
 var semver = require('semver');
-var url = require('url');
 
 var AlgoliaSearch = require('../../AlgoliaSearch');
 
@@ -16,14 +20,21 @@ if (semver.satisfies(process.version, '<=0.7')) {
   throw new Error('Node.js version ' + process.version + ' not supported');
 }
 
-var keepAliveAgent;
+var HttpKeepAliveAgent;
+var HttpsKeepAliveAgent;
 
-// node > 0.11.4 has good keepAlive https://github.com/joyent/node/commit/b5b841
+// node >= 0.11.4 has good keepAlive https://github.com/joyent/node/commit/b5b841
+// careful, it will take 15s for the process to exits in node < 0.11.4,
+// because of: https://github.com/node-modules/agentkeepalive/issues/17
 if (semver.satisfies(process.version, '<0.11.4')) {
-  keepAliveAgent = new HttpsAgent();
+  HttpsKeepAliveAgent = new HttpsAgent();
+  HttpKeepAliveAgent = new HttpAgent();
 } else {
   // Node.js >= 0.12, io.js >= 1.0.0 have good keepalive support
-  keepAliveAgent = https.Agent({
+  HttpsKeepAliveAgent = new https.Agent({
+    keepAlive: true
+  });
+  HttpKeepAliveAgent = new http.Agent({
     keepAlive: true
   });
 }
@@ -33,6 +44,10 @@ function algoliasearch(applicationID, apiKey, opts) {
 
   if (opts.timeout === undefined) {
     opts.timeout = 3000;
+  }
+
+  if (opts.protocol === undefined) {
+    opts.protocol = 'https:';
   }
 
   return new AlgoliaSearchNodeJS(applicationID, apiKey, opts);
@@ -60,17 +75,22 @@ AlgoliaSearchNodeJS.prototype._request = function(rawUrl, opts) {
       port: parsedUrl.port,
       method: opts.method,
       path: parsedUrl.path,
-      agent: keepAliveAgent/*,
+      agent: parsedUrl.protocol === 'https:' ? HttpsKeepAliveAgent : HttpKeepAliveAgent/*,
       // ??
       // https://github.com/iojs/io.js/issues/1300
       keepAlive: true*/
     };
 
     var timedOut = false;
+    var req;
 
-    debug('requestOptions: %j', requestOptions);
+    // debug('requestOptions: %j', requestOptions);
 
-    var req = https.request(requestOptions);
+    if (parsedUrl.protocol === 'https:') {
+      req = https.request(requestOptions);
+    } else {
+      req = http.request(requestOptions);
+    }
 
     req.setHeader('connection', 'keep-alive');
 
@@ -102,6 +122,9 @@ AlgoliaSearchNodeJS.prototype._request = function(rawUrl, opts) {
       }
 
       function end() {
+        req.removeAllListeners('error');
+        req.removeAllListeners('timeout');
+
         resolve({
           statusCode: res.statusCode,
           body: JSON.parse(Buffer.concat(chunks))
