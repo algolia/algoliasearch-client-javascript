@@ -36,7 +36,20 @@ function AlgoliaSearch(applicationID, apiKey, opts) {
     throw new Error('Please provide an API key. ' + usage);
   }
 
+  this.applicationID = applicationID;
+  this.apiKey = apiKey;
+
   opts = opts || {};
+
+  this.hosts = {
+    read: [],
+    write: []
+  };
+
+  this.hostIndex = {
+    read: 0,
+    write: 0
+  };
 
   // now setting default options
   // could not find a tiny module to do that, let's go manual
@@ -66,28 +79,31 @@ function AlgoliaSearch(applicationID, apiKey, opts) {
 
   // no hosts given, add defaults
   if (opts.hosts.length === 0) {
-    opts.hosts = shuffle([
+    this.hosts.read = shuffle([
       applicationID + '-1.algolia.' + opts.tld,
       applicationID + '-2.algolia.' + opts.tld,
       applicationID + '-3.algolia.' + opts.tld
     ]);
-
-    // add default dsn host
-    opts.hosts.unshift(applicationID + '-dsn.algolia.' + opts.tld);
+  } else {
+    this.hosts.read = clone(opts.hosts);
   }
 
-  opts.hosts = map(opts.hosts, function prependProtocol(host) {
+  this.hosts.read = map(this.hosts.read, function prependProtocol(host) {
     return opts.protocol + '//' + host;
   });
 
-  this.applicationID = applicationID;
-  this.apiKey = apiKey;
-  this.hosts = opts.hosts;
+  this.hosts.write = shuffle(clone(this.hosts.read));
 
-  this.currentHostIndex = 0;
+  // no hosts provided, append a DSN host, only for read hosts
+  if (opts.hosts.length === 0) {
+    this.hosts.read.unshift(opts.protocol + '//' + applicationID + '-dsn.algolia.' + opts.tld);
+  }
+
   this.requestTimeout = opts.timeout;
   this.extraHeaders = [];
   this.cache = {};
+
+  debug('init done, %j', this);
 }
 
 AlgoliaSearch.prototype = {
@@ -102,6 +118,7 @@ AlgoliaSearch.prototype = {
   deleteIndex: function(indexName, callback) {
     return this._jsonRequest({ method: 'DELETE',
               url: '/1/indexes/' + encodeURIComponent(indexName),
+              hostType: 'write',
               callback: callback });
   },
   /**
@@ -117,6 +134,7 @@ AlgoliaSearch.prototype = {
     return this._jsonRequest({ method: 'POST',
               url: '/1/indexes/' + encodeURIComponent(srcIndexName) + '/operation',
               body: postObj,
+              hostType: 'write',
               callback: callback });
 
   },
@@ -133,6 +151,7 @@ AlgoliaSearch.prototype = {
     return this._jsonRequest({ method: 'POST',
               url: '/1/indexes/' + encodeURIComponent(srcIndexName) + '/operation',
               body: postObj,
+              hostType: 'write',
               callback: callback });
   },
   /**
@@ -157,6 +176,7 @@ AlgoliaSearch.prototype = {
 
     return this._jsonRequest({ method: 'GET',
               url: '/1/logs?offset=' + offset + '&length=' + length,
+              hostType: 'read',
               callback: callback });
   },
   /*
@@ -178,6 +198,7 @@ AlgoliaSearch.prototype = {
 
     return this._jsonRequest({ method: 'GET',
               url: '/1/indexes' + params,
+              hostType: 'read',
               callback: callback });
   },
 
@@ -200,6 +221,7 @@ AlgoliaSearch.prototype = {
   listUserKeys: function(callback) {
     return this._jsonRequest({ method: 'GET',
               url: '/1/keys',
+              hostType: 'read',
               callback: callback });
   },
   /*
@@ -213,6 +235,7 @@ AlgoliaSearch.prototype = {
   getUserKeyACL: function(key, callback) {
     return this._jsonRequest({ method: 'GET',
               url: '/1/keys/' + key,
+              hostType: 'read',
               callback: callback });
   },
   /*
@@ -225,6 +248,7 @@ AlgoliaSearch.prototype = {
   deleteUserKey: function(key, callback) {
     return this._jsonRequest({ method: 'DELETE',
               url: '/1/keys/' + key,
+              hostType: 'write',
               callback: callback });
   },
   /*
@@ -276,6 +300,7 @@ AlgoliaSearch.prototype = {
     return this._jsonRequest({ method: 'POST',
               url: '/1/keys',
               body: aclsObject,
+              hostType: 'write',
               callback: callback });
   },
 
@@ -403,6 +428,7 @@ AlgoliaSearch.prototype = {
       method: 'POST',
       url: '/1/indexes/*/queries',
       body: params,
+      hostType: 'read',
       fallback: {
         method: 'GET',
         url: '/1/indexes/*',
@@ -446,7 +472,7 @@ AlgoliaSearch.prototype = {
         return client._promise.resolve(cache[cacheID]);
       }
 
-      if (tries >= client.hosts.length) {
+      if (tries >= client.hosts[opts.hostType].length) {
         if (!opts.fallback || !client._request.fallback || requester === client._request.fallback) {
           // could not get a response even using the fallback if one was available
           return client._promise.reject(new Error(
@@ -460,7 +486,7 @@ AlgoliaSearch.prototype = {
         reqOpts.url = opts.fallback.url;
         reqOpts.body = opts.fallback.body;
         reqOpts.timeout = client.requestTimeout * (tries + 1);
-        client.currentHostIndex = 0;
+        client.hostIndex[opts.hostType] = 0;
         client.forceFallback = true; // now we will only use JSONP, even on future requests
         return doRequest(client._request.fallback, reqOpts);
       }
@@ -482,7 +508,7 @@ AlgoliaSearch.prototype = {
         url += '&' + client.extraHeaders[i].key + '=' + client.extraHeaders[i].value;
       }
 
-      return requester(client.hosts[client.currentHostIndex] + url, {
+      return requester(client.hosts[opts.hostType][client.hostIndex[opts.hostType]] + url, {
         body: reqOpts.body,
         method: reqOpts.method,
         timeout: reqOpts.timeout
@@ -534,7 +560,7 @@ AlgoliaSearch.prototype = {
       }, tryFallback);
 
       function retryRequest() {
-        client.currentHostIndex = ++client.currentHostIndex % client.hosts.length;
+        client.hostIndex[opts.hostType] = ++client.hostIndex[opts.hostType] % client.hosts[opts.hostType].length;
         tries += 1;
         reqOpts.timeout = client.requestTimeout * (tries + 1);
         return doRequest(requester, reqOpts);
@@ -558,10 +584,10 @@ AlgoliaSearch.prototype = {
         if (!client.forceFallback) {
           // next time doRequest is called, simulate we tried all hosts,
           // this will force to use the fallback
-          tries = client.hosts.length;
+          tries = client.hosts[opts.hostType].length;
         } else {
           // we were already using the fallback, but something went wrong (script error)
-          client.currentHostIndex = ++client.currentHostIndex % client.hosts.length;
+          client.hostIndex[opts.hostType] = ++client.hostIndex[opts.hostType] % client.hosts[opts.hostType].length;
           tries += 1;
         }
 
@@ -656,6 +682,7 @@ AlgoliaSearch.prototype.Index.prototype = {
       url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + // create
         (objectID !== undefined ? '/' + encodeURIComponent(objectID) : ''), // update or create
       body: content,
+      hostType: 'write',
       callback: callback
     });
   },
@@ -678,6 +705,7 @@ AlgoliaSearch.prototype.Index.prototype = {
     return this.as._jsonRequest({ method: 'POST',
       url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/batch',
       body: postObj,
+      hostType: 'write',
       callback: callback });
   },
   /*
@@ -711,6 +739,7 @@ AlgoliaSearch.prototype.Index.prototype = {
     return this.as._jsonRequest({
       method: 'GET',
       url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/' + encodeURIComponent(objectID) + params,
+      hostType: 'read',
       callback: callback
     });
   },
@@ -729,6 +758,7 @@ AlgoliaSearch.prototype.Index.prototype = {
     return this.as._jsonRequest({ method: 'POST',
       url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/' + encodeURIComponent(partialObject.objectID) + '/partial',
       body: partialObject,
+      hostType: 'write',
       callback: callback });
   },
   /*
@@ -751,6 +781,7 @@ AlgoliaSearch.prototype.Index.prototype = {
     return this.as._jsonRequest({ method: 'POST',
       url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/batch',
       body: postObj,
+      hostType: 'write',
       callback: callback });
   },
   /*
@@ -766,6 +797,7 @@ AlgoliaSearch.prototype.Index.prototype = {
     return this.as._jsonRequest({ method: 'PUT',
       url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/' + encodeURIComponent(object.objectID),
       body: object,
+      hostType: 'write',
       callback: callback });
   },
   /*
@@ -788,6 +820,7 @@ AlgoliaSearch.prototype.Index.prototype = {
     return this.as._jsonRequest({ method: 'POST',
       url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/batch',
       body: postObj,
+      hostType: 'write',
       callback: callback });
   },
   /*
@@ -812,6 +845,7 @@ AlgoliaSearch.prototype.Index.prototype = {
     var indexObj = this;
     return this.as._jsonRequest({ method: 'DELETE',
       url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/' + encodeURIComponent(objectID),
+      hostType: 'write',
       callback: callback });
   },
   /*
@@ -946,6 +980,7 @@ AlgoliaSearch.prototype.Index.prototype = {
     }
     return this.as._jsonRequest({ method: 'GET',
       url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/browse' + params,
+      hostType: 'read',
       callback: callback });
   },
 
@@ -983,6 +1018,7 @@ AlgoliaSearch.prototype.Index.prototype = {
 
     var promise = this.as._jsonRequest({
       method: 'GET',
+      hostType: 'read',
       url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/task/' + taskID
     }).then(function success(content) {
       if (content.status !== 'published') {
@@ -1024,6 +1060,7 @@ AlgoliaSearch.prototype.Index.prototype = {
     var indexObj = this;
     return this.as._jsonRequest({ method: 'POST',
       url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/clear',
+      hostType: 'write',
       callback: callback });
   },
   /*
@@ -1037,6 +1074,7 @@ AlgoliaSearch.prototype.Index.prototype = {
     var indexObj = this;
     return this.as._jsonRequest({ method: 'GET',
       url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/settings',
+      hostType: 'read',
       callback: callback });
   },
 
@@ -1098,6 +1136,7 @@ AlgoliaSearch.prototype.Index.prototype = {
     var indexObj = this;
     return this.as._jsonRequest({ method: 'PUT',
       url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/settings',
+      hostType: 'write',
       body: settings,
       callback: callback });
   },
@@ -1112,6 +1151,7 @@ AlgoliaSearch.prototype.Index.prototype = {
     var indexObj = this;
     return this.as._jsonRequest({ method: 'GET',
       url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/keys',
+      hostType: 'read',
       callback: callback });
   },
   /*
@@ -1126,6 +1166,7 @@ AlgoliaSearch.prototype.Index.prototype = {
     var indexObj = this;
     return this.as._jsonRequest({ method: 'GET',
       url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/keys/' + key,
+      hostType: 'read',
       callback: callback });
   },
   /*
@@ -1140,6 +1181,7 @@ AlgoliaSearch.prototype.Index.prototype = {
     var indexObj = this;
     return this.as._jsonRequest({ method: 'DELETE',
       url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/keys/' + key,
+      hostType: 'write',
       callback: callback });
   },
   /*
@@ -1164,6 +1206,7 @@ AlgoliaSearch.prototype.Index.prototype = {
     return this.as._jsonRequest({ method: 'POST',
       url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/keys',
       body: aclsObject,
+      hostType: 'write',
       callback: callback });
   },
   /*
@@ -1194,6 +1237,7 @@ AlgoliaSearch.prototype.Index.prototype = {
     return this.as._jsonRequest({ method: 'POST',
       url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/keys',
       body: aclsObject,
+      hostType: 'write',
       callback: callback });
   },
   ///
@@ -1204,6 +1248,7 @@ AlgoliaSearch.prototype.Index.prototype = {
       method: 'POST',
       url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/query',
       body: {params: params},
+      hostType: 'read',
       fallback: {
         method: 'GET',
         url: '/1/indexes/' + encodeURIComponent(this.indexName),
@@ -1230,26 +1275,26 @@ function map(arr, fn){
   return ret;
 }
 
-// extracted from https://github.com/coolaj86/knuth-shuffle
-// not compatible with browserify
+function clone(arr) {
+  return map(arr, function returnIt(element) {
+    return element;
+  });
+}
+
+// extracted from http://bost.ocks.org/mike/shuffle/
 function shuffle(array) {
-  /*eslint-disable*/
-  var currentIndex = array.length
-    , temporaryValue
-    , randomIndex
-    ;
+  var m = array.length, t, i;
 
-  // While there remain elements to shuffle...
-  while (0 !== currentIndex) {
+  // While there remain elements to shuffle…
+  while (m) {
 
-    // Pick a remaining element...
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex -= 1;
+    // Pick a remaining element…
+    i = Math.floor(Math.random() * m--);
 
     // And swap it with the current element.
-    temporaryValue = array[currentIndex];
-    array[currentIndex] = array[randomIndex];
-    array[randomIndex] = temporaryValue;
+    t = array[m];
+    array[m] = array[i];
+    array[i] = t;
   }
 
   return array;

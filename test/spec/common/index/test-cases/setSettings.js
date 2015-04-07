@@ -7,6 +7,7 @@ if (!process.browser || fauxJax.support.xhr.cors) {
     callArguments: [{
       attributesToIndex: ['HEY!', 'How are u???']
     }],
+    action: 'write',
     testName: 'index.setSettings(settings, cb)',
     expectedRequest: {
       method: 'PUT',

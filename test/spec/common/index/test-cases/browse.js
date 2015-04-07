@@ -3,6 +3,7 @@ module.exports = [{
   methodName: 'browse',
   testName: 'index.browse(page, cb)',
   callArguments: [8],
+  action: 'read',
   expectedRequest: {
     method: 'GET',
     URL: {
@@ -17,6 +18,7 @@ module.exports = [{
   methodName: 'browse',
   testName: 'index.browse(page, hitsPerPage, cb)',
   callArguments: [10, 15],
+  action: 'read',
   expectedRequest: {
     method: 'GET',
     URL: {

@@ -6,6 +6,7 @@ if (!process.browser || fauxJax.support.xhr.cors) {
     object: 'client',
     methodName: 'deleteUserKey',
     callArguments: [ 'mykey' ],
+    action: 'write',
     expectedRequest: {
       method: 'DELETE',
       URL: {pathname: '/1/keys/mykey'}

@@ -3,6 +3,7 @@ module.exports = [{
   object: 'client',
   methodName: 'addUserKey',
   callArguments: [['search', 'browse']],
+  action: 'write',
   expectedRequest: {
     method: 'POST',
     body: { acl: ['search', 'browse'], validity: 0, maxQueriesPerIPPerHour: 0, maxHitsPerQuery: 0 },
@@ -19,6 +20,7 @@ module.exports = [{
       maxHitsPerQuery: 10
     }
   ],
+  action: 'write',
   expectedRequest: {
     method: 'POST',
     body: { acl: ['search', 'browse'], validity: 42, maxQueriesPerIPPerHour: 100, maxHitsPerQuery: 10 },

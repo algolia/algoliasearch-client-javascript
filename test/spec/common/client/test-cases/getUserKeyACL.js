@@ -3,6 +3,7 @@ module.exports = {
   object: 'client',
   methodName: 'getUserKeyACL',
   callArguments: ['WOOO!'],
+  action: 'read',
   expectedRequest: {
     method: 'GET',
     URL: {pathname: '/1/keys/WOOO!'}

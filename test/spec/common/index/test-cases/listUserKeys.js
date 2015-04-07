@@ -1,6 +1,8 @@
 module.exports = {
   object: 'index',
   methodName: 'listUserKeys',
+  callArguments: [],
+  action: 'read',
   testName: 'index.listUserKeys(cb)',
   expectedRequest: {
     method: 'GET',

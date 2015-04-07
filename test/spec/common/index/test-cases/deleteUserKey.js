@@ -6,6 +6,7 @@ if (!process.browser || fauxJax.support.xhr.cors) {
     methodName: 'deleteUserKey',
     testName: 'index.deleteUserKey(key, cb)',
     callArguments: ['lk9089lk'],
+    action: 'write',
     expectedRequest: {
       method: 'DELETE',
       URL: {

@@ -3,6 +3,7 @@ module.exports = {
   methodName: 'getUserKeyACL',
   testName: 'index.getUserKeyACL(key, cb)',
   callArguments: ['lk9089lk'],
+  action: 'read',
   expectedRequest: {
     method: 'GET',
     URL: {

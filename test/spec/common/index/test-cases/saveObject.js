@@ -13,6 +13,7 @@ if (!process.browser || fauxJax.support.xhr.cors) {
     methodName: 'saveObject',
     testName: 'index.saveObject(object, cb)',
     callArguments: [object],
+    action: 'write',
     expectedRequest: {
       method: 'PUT',
       body: clone(object),

@@ -10,6 +10,7 @@ module.exports = {
   methodName: 'partialUpdateObject',
   testName: 'index.partialUpdateObject(partialObject, cb)',
   callArguments: [partialObject],
+  action: 'write',
   expectedRequest: {
     method: 'POST',
     body: clone(partialObject),

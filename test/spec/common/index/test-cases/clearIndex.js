@@ -1,6 +1,8 @@
 module.exports = {
   object: 'index',
   methodName: 'clearIndex',
+  callArguments: [],
+  action: 'write',
   testName: 'index.clearIndex(cb)',
   expectedRequest: {
     method: 'POST',

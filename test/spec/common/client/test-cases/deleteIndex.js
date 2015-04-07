@@ -6,6 +6,7 @@ if (!process.browser || fauxJax.support.xhr.cors) {
     object: 'client',
     methodName: 'deleteIndex',
     callArguments: ['boo ooo'],
+    action: 'write',
     expectedRequest: {
       method: 'DELETE',
       URL: {pathname: '/1/indexes/boo%20ooo'}

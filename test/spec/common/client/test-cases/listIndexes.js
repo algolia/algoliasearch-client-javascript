@@ -4,6 +4,7 @@ module.exports = [{
   testName: 'client.listIndexes(cb)',
   object: 'client',
   methodName: 'listIndexes',
+  action: 'read',
   expectedRequest: {
     method: 'GET',
     URL: {
@@ -14,6 +15,7 @@ module.exports = [{
   testName: 'client.listIndexes(cb, page)',
   object: 'client',
   methodName: 'listIndexes',
+  action: 'read',
   callArguments: [10, sinon.spy()],
   expectedRequest: {
     method: 'GET',

@@ -49,11 +49,21 @@ function testMethodCall(opts) {
     var actualRequestURL = parse(actualRequest.requestURL, true);
     var expectedRequestURL = expectedRequest.URL;
 
-    assert.equal(
-      actualRequestURL.host,
-      expectedRequestURL.host.toLowerCase(),
-      'URL.host matches'
-    );
+    if (testCase.action === undefined) {
+      assert.fail('No action (read/write) given in the test case');
+    } else if (testCase.action === 'read') {
+      assert.ok(
+        /-dsn\.algolia\.net$/.test(actualRequestURL.host),
+        'We used a DSN host'
+      );
+    } else if (testCase.action === 'write') {
+      assert.ok(
+        /-[1-3]\.algolia\.net$/.test(actualRequestURL.host),
+        'We used a non DSN host'
+      );
+    } else {
+      assert.fail('Unkown action (read/write) found in the test case (was: ' + testCase.action + ')');
+    }
 
     assert.equal(
       actualRequestURL.pathname,

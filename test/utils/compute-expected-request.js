@@ -39,7 +39,6 @@ function computeExpectedRequest(expectedRequest, credentials) {
 function getRequestURL(credentials) {
   return {
     protocol: process.browser ? document.location.protocol : 'http:',
-    host: credentials.applicationID + '-dsn.algolia.net',
     URL: {pathname: '/not-set'},
     query: {
       'X-Algolia-API-Key': credentials.searchOnlyAPIKey,

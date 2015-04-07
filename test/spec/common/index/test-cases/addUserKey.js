@@ -3,6 +3,7 @@ module.exports = {
   methodName: 'addUserKey',
   testName: 'index.addUserKey(acls, cb)',
   callArguments: [['search', 'mom']],
+  action: 'write',
   expectedRequest: {
     method: 'POST',
     body: {

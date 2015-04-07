@@ -2,6 +2,7 @@ module.exports = {
   object: 'index',
   methodName: 'getSettings',
   testName: 'index.getSettings(cb)',
+  action: 'read',
   expectedRequest: {
     method: 'GET',
     URL: {
