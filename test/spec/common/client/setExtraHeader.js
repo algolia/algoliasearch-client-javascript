@@ -1,7 +1,7 @@
 var test = require('tape');
 
 test('client.setExtraHeader(key, value)', function(t) {
-  t.plan(3);
+  t.plan(4);
 
   var fauxJax = require('faux-jax');
   var parse = require('url-parse');
@@ -21,15 +21,22 @@ test('client.setExtraHeader(key, value)', function(t) {
   // extra header set
   index.search('second');
 
-  fauxJax.waitFor(2, function(err, requests) {
+  client.setExtraHeader('X-great-header', 'yaw');
+
+  // extra header set
+  index.search('third');
+
+  fauxJax.waitFor(3, function(err, requests) {
     t.error(err);
     fauxJax.restore();
 
     var firstRequest = requests[0];
     var secondRequest = requests[1];
+    var thirdRequest = requests[2];
 
     firstRequest.respond(200, {}, '{}');
     secondRequest.respond(200, {}, '{}');
+    thirdRequest.respond(200, {}, '{}');
 
     t.notOk(
       parse(firstRequest.requestURL, true).query['X-great-header'],
@@ -40,6 +47,12 @@ test('client.setExtraHeader(key, value)', function(t) {
       parse(secondRequest.requestURL, true).query['X-great-header'],
       'yay',
       '`X-great-header` set on second request'
+    );
+
+    t.equal(
+      parse(thirdRequest.requestURL, true).query['X-great-header'],
+      'yaw',
+      '`X-great-header` set on third request'
     );
   });
 });
