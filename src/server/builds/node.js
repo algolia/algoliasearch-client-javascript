@@ -5,7 +5,6 @@ var debug = require('debug')('algoliasearch:nodejs');
 var https = require('https');
 var HttpsAgent = require('agentkeepalive').HttpsAgent;
 var inherits = require('inherits');
-var once = require('once');
 var Promise = global.Promise || require('es6-promise').Promise;
 var semver = require('semver');
 var url = require('url');
@@ -30,6 +29,12 @@ if (semver.satisfies(process.version, '<0.11.4')) {
 }
 
 function algoliasearch(applicationID, apiKey, opts) {
+  opts = opts || {};
+
+  if (opts.timeout === undefined) {
+    opts.timeout = 3000;
+  }
+
   return new AlgoliaSearchNodeJS(applicationID, apiKey, opts);
 }
 
@@ -47,12 +52,9 @@ inherits(AlgoliaSearchNodeJS, AlgoliaSearch);
 // iojs => native keepalive
 AlgoliaSearchNodeJS.prototype._request = function(rawUrl, opts) {
   return new Promise(function doReq(resolve, reject) {
-    reject = once(reject);
-
     debug('url: %s, opts: %j', rawUrl, opts);
 
     var parsedUrl = url.parse(rawUrl);
-
     var requestOptions = {
       hostname: parsedUrl.hostname,
       port: parsedUrl.port,
@@ -63,6 +65,8 @@ AlgoliaSearchNodeJS.prototype._request = function(rawUrl, opts) {
       // https://github.com/iojs/io.js/issues/1300
       keepAlive: true*/
     };
+
+    var timedOut = false;
 
     debug('requestOptions: %j', requestOptions);
 
@@ -107,13 +111,19 @@ AlgoliaSearchNodeJS.prototype._request = function(rawUrl, opts) {
 
     function error(err) {
       debug('Error: %j  - %s %j', err, rawUrl, opts);
+
+      if (timedOut) {
+        return;
+      }
+
       reject(err);
     }
 
     function timeout() {
+      timedOut = true;
       debug('Timeout %s %j', rawUrl, opts);
       req.abort();
-      reject(new Error('Timeout'));
+      resolve(new Error('Timeout'));
     }
   });
 };
