@@ -51,55 +51,59 @@ function AlgoliaSearch(applicationID, apiKey, opts) {
     write: 0
   };
 
+  var protocol;
+  var tld;
+
   // now setting default options
   // could not find a tiny module to do that, let's go manual
   if (opts.timeout === undefined) {
-    opts.timeout = 2000;
+    this.requestTimeout = 2000;
+  } else {
+    this.requestTimeout = opts.timeout;
   }
 
   if (opts.protocol === undefined) {
     var locationProtocol = global.document && global.document.location.protocol;
-    // our API is only available with http or https. When in file:// mode (local html file), default to http
-    opts.protocol = (locationProtocol === 'http:' || locationProtocol === 'https:') ? locationProtocol : 'http:';
-  }
-
-  if (opts.hosts === undefined) {
-    opts.hosts = []; // filled later on, has dependencies
+    // our API is only available with http or https. When in !http(s?):// mode (like file://), default to http
+    protocol = locationProtocol === 'http:' || locationProtocol === 'https:' ? locationProtocol : 'http:';
+  } else {
+    protocol = opts.protocol;
   }
 
   if (opts.tld === undefined) {
-    opts.tld = 'net';
+    tld = 'net';
+  } else {
+    tld = opts.tld;
   }
 
   // while we advocate for colon-at-the-end values: 'http:' for `opts.protocol`
   // we also accept `http` and `https`. It's a common error.
-  if (!/:$/.test(opts.protocol)) {
-    opts.protocol = opts.protocol + ':';
+  if (!/:$/.test(protocol)) {
+    protocol = protocol + ':';
   }
 
   // no hosts given, add defaults
-  if (opts.hosts.length === 0) {
+  if (opts.hosts === undefined || opts.hosts.length === 0) {
     this.hosts.read = shuffle([
-      applicationID + '-1.algolia.' + opts.tld,
-      applicationID + '-2.algolia.' + opts.tld,
-      applicationID + '-3.algolia.' + opts.tld
+      this.applicationID + '-1.algolia.' + tld,
+      this.applicationID + '-2.algolia.' + tld,
+      this.applicationID + '-3.algolia.' + tld
     ]);
   } else {
-    this.hosts.read = clone(opts.hosts);
+    this.hosts.read = clone(opts.hosts || []);
   }
-
-  this.hosts.read = map(this.hosts.read, function prependProtocol(host) {
-    return opts.protocol + '//' + host;
-  });
 
   this.hosts.write = shuffle(clone(this.hosts.read));
 
   // no hosts provided, append a DSN host, only for read hosts
-  if (opts.hosts.length === 0) {
-    this.hosts.read.unshift(opts.protocol + '//' + applicationID + '-dsn.algolia.' + opts.tld);
+  if (opts.hosts === undefined || opts.hosts.length === 0) {
+    this.hosts.read.unshift(this.applicationID + '-dsn.algolia.' + tld);
   }
 
-  this.requestTimeout = opts.timeout;
+  // add protocol and lowercase hosts
+  this.hosts.read = map(this.hosts.read, prepareHost(protocol));
+  this.hosts.write = map(this.hosts.write, prepareHost(protocol));
+
   this.extraHeaders = [];
   this.cache = {};
 
@@ -1298,4 +1302,10 @@ function shuffle(array) {
   }
 
   return array;
+}
+
+function prepareHost(protocol) {
+  return function prepare(host) {
+    return protocol + '//' + host.toLowerCase();
+  };
 }
