@@ -4,6 +4,8 @@ CHANGELOG
     * MIGRATION: throw on V2 .search() usage:
       - .search(query, cb, params)
       - .search(cb, params)
+    * FEATURE: add client.destroy() in Node.js implementation
+      will destroy all keepalived connections and let the process exits if needed
 
 2015-03-04  3.0.6
     * FIX: Webpack compatibility by removing packageify

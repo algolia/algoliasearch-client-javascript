@@ -12,11 +12,11 @@ test('AlgoliaSearch client API spec', function(t) {
   var algoliasearch = require('../../../../');
   var onlyPublicProperties = require('../../../utils/only-public-properties');
 
-  var client = algoliasearch('test', 'methods');
+  var client = algoliasearch('test', 'properties');
 
-  var actualMethods = filter(functions(client), onlyPublicProperties).sort();
+  var actualProperties = filter(functions(client), onlyPublicProperties).sort();
 
-  var expectedMethods = [
+  var expectedProperties = [
     'Index',
     'addQueryInBatch',
     'addUserKey',
@@ -36,7 +36,15 @@ test('AlgoliaSearch client API spec', function(t) {
     'setRequestTimeout',
     'setSecurityTags',
     'setUserToken',
-    'startQueriesBatch'].sort();
+    'startQueriesBatch'];
 
-  t.deepEqual(actualMethods, expectedMethods, 'We only implement what is tested');
+  if (!process.browser) {
+    expectedProperties = expectedProperties.concat([
+      'destroy'
+    ]);
+  }
+
+  expectedProperties = expectedProperties.sort();
+
+  t.deepEqual(actualProperties, expectedProperties, 'We only implement what is tested');
 });

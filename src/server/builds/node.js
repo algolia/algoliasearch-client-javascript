@@ -3,12 +3,6 @@ module.exports = algoliasearch;
 
 var debug = require('debug')('algoliasearch:nodejs');
 
-var http = require('http');
-var https = require('https');
-var url = require('url');
-
-var HttpsAgent = require('agentkeepalive').HttpsAgent;
-var HttpAgent = require('agentkeepalive');
 var inherits = require('inherits');
 var Promise = global.Promise || require('es6-promise').Promise;
 var semver = require('semver');
@@ -20,22 +14,7 @@ if (semver.satisfies(process.version, '<=0.7')) {
   throw new Error('Node.js version ' + process.version + ' not supported');
 }
 
-var HttpKeepAliveAgent;
-var HttpsKeepAliveAgent;
-
-// node >= 0.11.4 has good keepAlive https://github.com/joyent/node/commit/b5b841
-if (semver.satisfies(process.version, '<0.11.4')) {
-  HttpsKeepAliveAgent = new HttpsAgent();
-  HttpKeepAliveAgent = new HttpAgent();
-} else {
-  // Node.js >= 0.12, io.js >= 1.0.0 have good keepalive support
-  HttpsKeepAliveAgent = new https.Agent({
-    keepAlive: true
-  });
-  HttpKeepAliveAgent = new http.Agent({
-    keepAlive: true
-  });
-}
+debug('loaded the Node.js client');
 
 function algoliasearch(applicationID, apiKey, opts) {
   opts = opts || {};
@@ -53,9 +32,13 @@ function algoliasearch(applicationID, apiKey, opts) {
 
 algoliasearch.version = require('../../version.json');
 
-function AlgoliaSearchNodeJS() {
+function AlgoliaSearchNodeJS(applicationID, apiKey, opts) {
+  var getKeepaliveAgent = require('./get-keepalive-agent');
+
   // call AlgoliaSearch constructor
   AlgoliaSearch.apply(this, arguments);
+
+  this._keepaliveAgent = getKeepaliveAgent(opts.protocol);
 }
 
 inherits(AlgoliaSearchNodeJS, AlgoliaSearch);
@@ -64,6 +47,12 @@ inherits(AlgoliaSearchNodeJS, AlgoliaSearch);
 // node 0.12 => native keepalive
 // iojs => native keepalive
 AlgoliaSearchNodeJS.prototype._request = function(rawUrl, opts) {
+  var http = require('http');
+  var https = require('https');
+  var url = require('url');
+
+  var client = this;
+
   return new Promise(function doReq(resolve, reject) {
     debug('url: %s, opts: %j', rawUrl, opts);
 
@@ -73,7 +62,7 @@ AlgoliaSearchNodeJS.prototype._request = function(rawUrl, opts) {
       port: parsedUrl.port,
       method: opts.method,
       path: parsedUrl.path,
-      agent: parsedUrl.protocol === 'https:' ? HttpsKeepAliveAgent : HttpKeepAliveAgent/*,
+      agent: client._keepaliveAgent/*,
       // ??
       // https://github.com/iojs/io.js/issues/1300
       keepAlive: true*/
@@ -156,4 +145,8 @@ AlgoliaSearchNodeJS.prototype._promise = {
       setTimeout(resolve, ms);
     });
   }
+};
+
+AlgoliaSearchNodeJS.prototype.destroy = function() {
+  this._keepaliveAgent.destroy();
 };
