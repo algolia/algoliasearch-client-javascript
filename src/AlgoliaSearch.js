@@ -452,20 +452,16 @@ AlgoliaSearch.prototype = {
    * Wrapper that try all hosts to maximize the quality of service
    */
   _jsonRequest: function(opts) {
-    // handle opts.fallback, automatically use fallback (JSONP in browser plugins, wrapped with $plugin-promises)
-    // so if an error occurs and max tries => use fallback
-    // set tries to 0 again
-    // if fallback used and no more tries, return error
-    // fallback parameters are in opts.fallback
-    // call request.fallback or request accordingly, same promise chain otherwise
-    // put callback& params in front if problem
+    debug('request %j', opts);
+
     var cache = opts.cache;
     var cacheID = opts.url;
     var client = this;
     var tries = 0;
+    var usingFallback = false;
 
-    // as we use POST requests to pass parameters (like query='aa'),
-    // the cacheID must be different between calls
+    // as we sometime use POST requests to pass parameters (like query='aa'),
+    // the cacheID must also include the body to be different between calls
     if (opts.body !== undefined) {
       cacheID += '_body_' + JSON.stringify(opts.body);
     }
@@ -473,11 +469,12 @@ AlgoliaSearch.prototype = {
     function doRequest(requester, reqOpts) {
       // handle cache existence
       if (cache && cache[cacheID] !== undefined) {
+        debug('serving request from cache %j', opts);
         return client._promise.resolve(cache[cacheID]);
       }
 
       if (tries >= client.hosts[opts.hostType].length) {
-        if (!opts.fallback || !client._request.fallback || requester === client._request.fallback) {
+        if (!opts.fallback || !client._request.fallback || usingFallback) {
           // could not get a response even using the fallback if one was available
           return client._promise.reject(new Error(
             'Cannot connect to the AlgoliaSearch API.' +
@@ -491,7 +488,8 @@ AlgoliaSearch.prototype = {
         reqOpts.body = opts.fallback.body;
         reqOpts.timeout = client.requestTimeout * (tries + 1);
         client.hostIndex[opts.hostType] = 0;
-        client.forceFallback = true; // now we will only use JSONP, even on future requests
+        client.useFallback = true; // now we will only use JSONP, even on future requests
+        usingFallback = true; // the current request is now using fallback
         return doRequest(client._request.fallback, reqOpts);
       }
 
@@ -512,7 +510,9 @@ AlgoliaSearch.prototype = {
         url += '&' + client.extraHeaders[i].key + '=' + client.extraHeaders[i].value;
       }
 
-      return requester(client.hosts[opts.hostType][client.hostIndex[opts.hostType]] + url, {
+      // `requester` is any of this._request or this._request.fallback
+      // thus it needs to be called using the client as context
+      return requester.call(client, client.hosts[opts.hostType][client.hostIndex[opts.hostType]] + url, {
         body: reqOpts.body,
         method: reqOpts.method,
         timeout: reqOpts.timeout
@@ -585,7 +585,7 @@ AlgoliaSearch.prototype = {
 
         // we were not using the fallback, try now
         // if we are switching to fallback right now, set tries to maximum
-        if (!client.forceFallback) {
+        if (!client.useFallback) {
           // next time doRequest is called, simulate we tried all hosts,
           // this will force to use the fallback
           tries = client.hosts[opts.hostType].length;
@@ -600,7 +600,7 @@ AlgoliaSearch.prototype = {
     }
 
     // we can use a fallback if forced AND fallback parameters are available
-    var useFallback = client.forceFallback && opts.fallback;
+    var useFallback = client.useFallback && opts.fallback;
     var requestOptions = useFallback ? opts.fallback : opts;
 
     var promise = doRequest(
