@@ -5,9 +5,6 @@ var servers = {
   https: createHttpsServer
 };
 
-// in Node 0.10, test will take time to exit because of
-// https://github.com/node-modules/agentkeepalive/issues/17
-// also see src/server/builds/node.js
 test('https keepalive enabled', testProtocol('https'));
 
 test('http keepalive enabled', testProtocol('http'));

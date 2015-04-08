@@ -24,8 +24,6 @@ var HttpKeepAliveAgent;
 var HttpsKeepAliveAgent;
 
 // node >= 0.11.4 has good keepAlive https://github.com/joyent/node/commit/b5b841
-// careful, it will take 15s for the process to exits in node < 0.11.4,
-// because of: https://github.com/node-modules/agentkeepalive/issues/17
 if (semver.satisfies(process.version, '<0.11.4')) {
   HttpsKeepAliveAgent = new HttpsAgent();
   HttpKeepAliveAgent = new HttpAgent();
@@ -84,8 +82,6 @@ AlgoliaSearchNodeJS.prototype._request = function(rawUrl, opts) {
     var timedOut = false;
     var req;
 
-    // debug('requestOptions: %j', requestOptions);
-
     if (parsedUrl.protocol === 'https:') {
       req = https.request(requestOptions);
     } else {
@@ -122,9 +118,6 @@ AlgoliaSearchNodeJS.prototype._request = function(rawUrl, opts) {
       }
 
       function end() {
-        req.removeAllListeners('error');
-        req.removeAllListeners('timeout');
-
         resolve({
           statusCode: res.statusCode,
           body: JSON.parse(Buffer.concat(chunks))
