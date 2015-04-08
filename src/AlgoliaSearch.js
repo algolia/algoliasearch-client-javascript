@@ -735,6 +735,32 @@ AlgoliaSearch.prototype.Index.prototype = {
   },
 
   /*
+   * Get several objects from this index
+   *
+   * @param objectIDs the array of unique identifier of objects to retrieve
+   */
+  getObjects: function(objectIDs, callback) {
+    var indexObj = this;
+
+    var body = {
+      requests: map(objectIDs, function prepareRequest(objectID) {
+        return {
+          'indexName': indexObj.indexName,
+          'objectID': objectID
+        };
+      })
+    };
+
+    return this.as._jsonRequest({
+      method: 'POST',
+      url: '/1/indexes/*/objects',
+      hostType: 'read',
+      body: body,
+      callback: callback
+    });
+  },
+
+  /*
    * Update partially an object (only update attributes passed in argument)
    *
    * @param partialObject contains the javascript attributes to override, the

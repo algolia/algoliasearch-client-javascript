@@ -29,7 +29,12 @@ function runTestCase(testCase) {
     t.plan(testMethodCall.assertCount/* + addSubTest*/);
 
     // every test case gets it's own credentials
-    var credentials = getCredentials({prefix: testCase.method});
+    var credentials = getCredentials({
+      prefix: testCase.method,
+      indexName: testCase.indexName,
+      applicationID: testCase.applicationID,
+      searchOnlyAPIKey: testCase.searchOnlyAPIKey
+    });
 
     testCase.expectedRequest = computeExpectedRequest(
       testCase.expectedRequest,

@@ -28,6 +28,7 @@ test('AlgoliaSearch index API spec', function(t) {
     'deleteObject',
     'deleteUserKey',
     'getObject',
+    'getObjects',
     'getSettings',
     'getUserKeyACL',
     'listUserKeys',
