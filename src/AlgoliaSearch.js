@@ -31,11 +31,11 @@ function AlgoliaSearch(applicationID, apiKey, opts) {
   var usage = 'Usage: algoliasearch(applicationID, apiKey, opts)';
 
   if (!applicationID) {
-    throw new Error('Please provide an application ID. ' + usage);
+    throw new Error('algoliasearch: Please provide an application ID. ' + usage);
   }
 
   if (!apiKey) {
-    throw new Error('Please provide an API key. ' + usage);
+    throw new Error('algoliasearch: Please provide an API key. ' + usage);
   }
 
   this.applicationID = applicationID;
@@ -912,7 +912,7 @@ AlgoliaSearch.prototype.Index.prototype = {
       typeof callback === 'object') {
       // .search(query, params, cb)
       // .search(cb, params)
-      throw new Error('AlgoliaSearch: index.search usage is index.search(query, params, cb)');
+      throw new Error('algoliasearch: index.search usage is index.search(query, params, cb)');
     }
 
     if (arguments.length === 0 || typeof query === 'function') {

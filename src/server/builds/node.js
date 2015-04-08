@@ -11,7 +11,7 @@ var AlgoliaSearch = require('../../AlgoliaSearch');
 
 // does not work on node < 0.8
 if (semver.satisfies(process.version, '<=0.7')) {
-  throw new Error('Node.js version ' + process.version + ' not supported');
+  throw new Error('algoliasearch: Node.js version ' + process.version + ' is not supported');
 }
 
 debug('loaded the Node.js client');
