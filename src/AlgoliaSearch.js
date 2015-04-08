@@ -26,6 +26,8 @@ var debug = require('debug')('algoliasearch:AlgoliaSearch');
  * @param {string} [opts.tld='net'] - The tld to use when computing hosts default list
  */
 function AlgoliaSearch(applicationID, apiKey, opts) {
+  var extend = require('extend');
+
   var usage = 'Usage: algoliasearch(applicationID, apiKey, opts)';
 
   if (!applicationID) {
@@ -39,8 +41,6 @@ function AlgoliaSearch(applicationID, apiKey, opts) {
   this.applicationID = applicationID;
   this.apiKey = apiKey;
 
-  opts = opts || {};
-
   this.hosts = {
     read: [],
     write: []
@@ -51,30 +51,11 @@ function AlgoliaSearch(applicationID, apiKey, opts) {
     write: 0
   };
 
-  var protocol;
-  var tld;
+  opts = opts || {};
 
-  // now setting default options
-  // could not find a tiny module to do that, let's go manual
-  if (opts.timeout === undefined) {
-    this.requestTimeout = 2000;
-  } else {
-    this.requestTimeout = opts.timeout;
-  }
-
-  if (opts.protocol === undefined) {
-    var locationProtocol = global.document && global.document.location.protocol;
-    // our API is only available with http or https. When in !http(s?):// mode (like file://), default to http
-    protocol = locationProtocol === 'http:' || locationProtocol === 'https:' ? locationProtocol : 'http:';
-  } else {
-    protocol = opts.protocol;
-  }
-
-  if (opts.tld === undefined) {
-    tld = 'net';
-  } else {
-    tld = opts.tld;
-  }
+  var protocol = opts.protocol || 'http:';
+  var timeout = opts.timeout === undefined ? 2000 : opts.timeout;
+  var tld = opts.tld || 'net';
 
   // while we advocate for colon-at-the-end values: 'http:' for `opts.protocol`
   // we also accept `http` and `https`. It's a common error.
@@ -90,10 +71,10 @@ function AlgoliaSearch(applicationID, apiKey, opts) {
       this.applicationID + '-3.algolia.' + tld
     ]);
   } else {
-    this.hosts.read = clone(opts.hosts || []);
+    this.hosts.read = extend([], opts.hosts || []);
   }
 
-  this.hosts.write = shuffle(clone(this.hosts.read));
+  this.hosts.write = shuffle(extend([], this.hosts.read));
 
   // no hosts provided, append a DSN host, only for read hosts
   if (opts.hosts === undefined || opts.hosts.length === 0) {
@@ -103,6 +84,7 @@ function AlgoliaSearch(applicationID, apiKey, opts) {
   // add protocol and lowercase hosts
   this.hosts.read = map(this.hosts.read, prepareHost(protocol));
   this.hosts.write = map(this.hosts.write, prepareHost(protocol));
+  this.requestTimeout = timeout;
 
   this.extraHeaders = [];
   this.cache = {};
@@ -1277,12 +1259,6 @@ function map(arr, fn){
     ret.push(fn(arr[i], i));
   }
   return ret;
-}
-
-function clone(arr) {
-  return map(arr, function returnIt(element) {
-    return element;
-  });
 }
 
 // extracted from http://bost.ocks.org/mike/shuffle/

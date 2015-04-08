@@ -10,6 +10,16 @@ var AlgoliaSearch = require('../../AlgoliaSearch');
 var JSONPRequest = require('../jsonp-request');
 
 function algoliasearch(applicationID, apiKey, opts) {
+  var extend = require('extend');
+
+  var getDocumentProtocol = require('../get-document-protocol');
+
+  opts = extend(true, {}, opts) || {};
+
+  if (opts.protocol === undefined) {
+    opts.protocol = getDocumentProtocol();
+  }
+
   return new AlgoliaSearchBrowser(applicationID, apiKey, opts);
 }
 

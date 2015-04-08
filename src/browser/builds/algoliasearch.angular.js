@@ -10,6 +10,16 @@ global.angular.module('algoliasearch', [])
   .service('algolia', ['$http', '$q', '$timeout', function ($http, $q, $timeout) {
 
     function algoliasearch(applicationID, apiKey, opts) {
+      var extend = require('extend');
+
+      var getDocumentProtocol = require('../get-document-protocol');
+
+      opts = extend(true, {}, opts) || {};
+
+      if (opts.protocol === undefined) {
+        opts.protocol = getDocumentProtocol();
+      }
+
       return new AlgoliaSearchAngular(applicationID, apiKey, opts);
     }
 

@@ -17,7 +17,8 @@ if (semver.satisfies(process.version, '<=0.7')) {
 debug('loaded the Node.js client');
 
 function algoliasearch(applicationID, apiKey, opts) {
-  opts = opts || {};
+  var extend = require('extend');
+  opts = extend(true, {}, opts) || {};
 
   if (opts.timeout === undefined) {
     opts.timeout = 3000;
