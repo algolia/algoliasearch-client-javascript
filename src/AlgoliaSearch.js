@@ -63,6 +63,10 @@ function AlgoliaSearch(applicationID, apiKey, opts) {
     protocol = protocol + ':';
   }
 
+  if (opts.protocol !== 'http:' && opts.protocol !== 'https:') {
+    throw new Error('algoliasearch: protocol must be `http:` or `https:` (was `' + opts.protocol + '`)');
+  }
+
   // no hosts given, add defaults
   if (opts.hosts === undefined || opts.hosts.length === 0) {
     this.hosts.read = shuffle([
