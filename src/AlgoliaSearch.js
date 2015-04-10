@@ -102,7 +102,7 @@ AlgoliaSearch.prototype = {
    * Delete an index
    *
    * @param indexName the name of index to delete
-   * @param callback the result callback with two arguments
+   * @param callback the result callback called with two arguments
    *  error: null or Error('message')
    *  content: the server answer that contains the task ID
    */
@@ -116,7 +116,7 @@ AlgoliaSearch.prototype = {
    * Move an existing index.
    * @param srcIndexName the name of index to copy.
    * @param dstIndexName the new index name that will contains a copy of srcIndexName (destination will be overriten if it already exist).
-   * @param callback the result callback with two arguments
+   * @param callback the result callback called with two arguments
    *  error: null or Error('message')
    *  content: the server answer that contains the task ID
    */
@@ -133,7 +133,7 @@ AlgoliaSearch.prototype = {
    * Copy an existing index.
    * @param srcIndexName the name of index to copy.
    * @param dstIndexName the new index name that will contains a copy of srcIndexName (destination will be overriten if it already exist).
-   * @param callback the result callback with two arguments
+   * @param callback the result callback called with two arguments
    *  error: null or Error('message')
    *  content: the server answer that contains the task ID
    */
@@ -149,7 +149,7 @@ AlgoliaSearch.prototype = {
    * Return last log entries.
    * @param offset Specify the first entry to retrieve (0-based, 0 is the most recent log entry).
    * @param length Specify the maximum number of entries to retrieve starting at offset. Maximum allowed value: 1000.
-   * @param callback the result callback with two arguments
+   * @param callback the result callback called with two arguments
    *  error: null or Error('message')
    *  content: the server answer that contains the task ID
    */
@@ -174,7 +174,7 @@ AlgoliaSearch.prototype = {
    * List all existing indexes (paginated)
    *
    * @param page The page to retrieve, starting at 0.
-   * @param callback the result callback with two arguments
+   * @param callback the result callback called with two arguments
    *  error: null or Error('message')
    *  content: the server answer with index list
    */
@@ -205,7 +205,7 @@ AlgoliaSearch.prototype = {
   /*
    * List all existing user keys with their associated ACLs
    *
-   * @param callback the result callback with two arguments
+   * @param callback the result callback called with two arguments
    *  error: null or Error('message')
    *  content: the server answer with user keys list
    */
@@ -219,7 +219,7 @@ AlgoliaSearch.prototype = {
    * Get ACL of a user key
    *
    * @param key
-   * @param callback the result callback with two arguments
+   * @param callback the result callback called with two arguments
    *  error: null or Error('message')
    *  content: the server answer with user keys list
    */
@@ -232,7 +232,7 @@ AlgoliaSearch.prototype = {
   /*
    * Delete an existing user key
    * @param key
-   * @param callback the result callback with two arguments
+   * @param callback the result callback called with two arguments
    *  error: null or Error('message')
    *  content: the server answer with user keys list
    */
@@ -253,7 +253,7 @@ AlgoliaSearch.prototype = {
    *   - deleteIndex : allows to delete index content (https only)
    *   - settings : allows to get index settings (https only)
    *   - editSettings : allows to change index settings (https only)
-   * @param callback the result callback with two arguments
+   * @param callback the result callback called with two arguments
    *  error: null or Error('message')
    *  content: the server answer with user keys list
    */
@@ -278,7 +278,7 @@ AlgoliaSearch.prototype = {
    * @param params.validity the number of seconds after which the key will be automatically removed (0 means no time limit for this key)
    * @param params.maxQueriesPerIPPerHour Specify the maximum number of API calls allowed from an IP address per hour.
    * @param params.maxHitsPerQuery Specify the maximum number of hits this API key can retrieve in one call.
-   * @param callback the result callback with two arguments
+   * @param callback the result callback called with two arguments
    *  error: null or Error('message')
    *  content: the server answer with user keys list
    */
@@ -666,7 +666,7 @@ AlgoliaSearch.prototype.Index.prototype = {
    * @param content contains the javascript object to add inside the index
    * @param objectID (optional) an objectID you want to attribute to this object
    * (if the attribute already exist the old object will be overwrite)
-   * @param callback (optional) the result callback with two arguments:
+   * @param callback (optional) the result callback called with two arguments:
    *  error: null or Error('message')
    *  content: the server answer that contains 3 elements: createAt, taskId and objectID
    */
@@ -693,7 +693,7 @@ AlgoliaSearch.prototype.Index.prototype = {
    * Add several objects
    *
    * @param objects contains an array of objects to add
-   * @param callback (optional) the result callback with two arguments:
+   * @param callback (optional) the result callback called with two arguments:
    *  error: null or Error('message')
    *  content: the server answer that updateAt and taskID
    */
@@ -716,7 +716,7 @@ AlgoliaSearch.prototype.Index.prototype = {
    *
    * @param objectID the unique identifier of the object to retrieve
    * @param attrs (optional) if set, contains the array of attribute names to retrieve
-   * @param callback (optional) the result callback with two arguments
+   * @param callback (optional) the result callback called with two arguments
    *  error: null or Error('message')
    *  content: the object to retrieve or the error message if a failure occured
    */
@@ -778,7 +778,7 @@ AlgoliaSearch.prototype.Index.prototype = {
    *
    * @param partialObject contains the javascript attributes to override, the
    *  object must contains an objectID attribute
-   * @param callback (optional) the result callback with two arguments:
+   * @param callback (optional) the result callback called with two arguments:
    *  error: null or Error('message')
    *  content: the server answer that contains 3 elements: createAt, taskId and objectID
    */
@@ -794,7 +794,7 @@ AlgoliaSearch.prototype.Index.prototype = {
    * Partially Override the content of several objects
    *
    * @param objects contains an array of objects to update (each object must contains a objectID attribute)
-   * @param callback (optional) the result callback with two arguments:
+   * @param callback (optional) the result callback called with two arguments:
    *  error: null or Error('message')
    *  content: the server answer that updateAt and taskID
    */
@@ -817,7 +817,7 @@ AlgoliaSearch.prototype.Index.prototype = {
    * Override the content of object
    *
    * @param object contains the javascript object to save, the object must contains an objectID attribute
-   * @param callback (optional) the result callback with two arguments:
+   * @param callback (optional) the result callback called with two arguments:
    *  error: null or Error('message')
    *  content: the server answer that updateAt and taskID
    */
@@ -833,7 +833,7 @@ AlgoliaSearch.prototype.Index.prototype = {
    * Override the content of several objects
    *
    * @param objects contains an array of objects to update (each object must contains a objectID attribute)
-   * @param callback (optional) the result callback with two arguments:
+   * @param callback (optional) the result callback called with two arguments:
    *  error: null or Error('message')
    *  content: the server answer that updateAt and taskID
    */
@@ -856,7 +856,7 @@ AlgoliaSearch.prototype.Index.prototype = {
    * Delete an object from the index
    *
    * @param objectID the unique identifier of object to delete
-   * @param callback (optional) the result callback with two arguments:
+   * @param callback (optional) the result callback called with two arguments:
    *  error: null or Error('message')
    *  content: the server answer that contains 3 elements: createAt, taskId and objectID
    */
@@ -971,7 +971,7 @@ AlgoliaSearch.prototype.Index.prototype = {
    *   one is kept and others are removed.
    * - restrictSearchableAttributes: List of attributes you want to use for textual search (must be a subset of the attributesToIndex index setting)
    * either comma separated or as an array
-   * @param callback the result callback with two arguments:
+   * @param callback the result callback called with two arguments:
    *  error: null or Error('message'). If false, the content contains the error.
    *  content: the server answer that contains the list of results.
    */
@@ -1021,7 +1021,7 @@ AlgoliaSearch.prototype.Index.prototype = {
    * @param page Pagination parameter used to select the page to retrieve.
    *             Page is zero-based and defaults to 0. Thus, to retrieve the 10th page you need to set page=9
    * @param hitsPerPage: Pagination parameter used to select the number of hits per page. Defaults to 1000.
-   * @param callback the result callback with two arguments:
+   * @param callback the result callback called with two arguments:
    *  error: null or Error('message'). If false, the content contains the error.
    *  content: the server answer that contains the list of results.
    */
@@ -1111,7 +1111,7 @@ AlgoliaSearch.prototype.Index.prototype = {
   /*
    * This function deletes the index content. Settings and index specific API keys are kept untouched.
    *
-   * @param callback (optional) the result callback with two arguments
+   * @param callback (optional) the result callback called with two arguments
    *  error: null or Error('message')
    *  content: the settings object or the error message if a failure occured
    */
@@ -1125,7 +1125,7 @@ AlgoliaSearch.prototype.Index.prototype = {
   /*
    * Get settings of this index
    *
-   * @param callback (optional) the result callback with two arguments
+   * @param callback (optional) the result callback called with two arguments
    *  error: null or Error('message')
    *  content: the settings object or the error message if a failure occured
    */
@@ -1187,7 +1187,7 @@ AlgoliaSearch.prototype.Index.prototype = {
    * - highlightPreTag: (string) Specify the string that is inserted before the highlighted parts in the query result (default to "<em>").
    * - highlightPostTag: (string) Specify the string that is inserted after the highlighted parts in the query result (default to "</em>").
    * - optionalWords: (array of strings) Specify a list of words that should be considered as optional when found in the query.
-   * @param callback (optional) the result callback with two arguments
+   * @param callback (optional) the result callback called with two arguments
    *  error: null or Error('message')
    *  content: the server answer or the error message if a failure occured
    */
@@ -1202,7 +1202,7 @@ AlgoliaSearch.prototype.Index.prototype = {
   /*
    * List all existing user keys associated to this index
    *
-   * @param callback the result callback with two arguments
+   * @param callback the result callback called with two arguments
    *  error: null or Error('message')
    *  content: the server answer with user keys list
    */
@@ -1217,7 +1217,7 @@ AlgoliaSearch.prototype.Index.prototype = {
    * Get ACL of a user key associated to this index
    *
    * @param key
-   * @param callback the result callback with two arguments
+   * @param callback the result callback called with two arguments
    *  error: null or Error('message')
    *  content: the server answer with user keys list
    */
@@ -1232,7 +1232,7 @@ AlgoliaSearch.prototype.Index.prototype = {
    * Delete an existing user key associated to this index
    *
    * @param key
-   * @param callback the result callback with two arguments
+   * @param callback the result callback called with two arguments
    *  error: null or Error('message')
    *  content: the server answer with user keys list
    */
@@ -1254,7 +1254,7 @@ AlgoliaSearch.prototype.Index.prototype = {
    *   - deleteIndex : allows to delete index content (https only)
    *   - settings : allows to get index settings (https only)
    *   - editSettings : allows to change index settings (https only)
-   * @param callback the result callback with two arguments
+   * @param callback the result callback called with two arguments
    *  error: null or Error('message')
    *  content: the server answer with user keys list
    */
@@ -1282,7 +1282,7 @@ AlgoliaSearch.prototype.Index.prototype = {
    * @param params.validity the number of seconds after which the key will be automatically removed (0 means no time limit for this key)
    * @param params.maxQueriesPerIPPerHour Specify the maximum number of API calls allowed from an IP address per hour.
    * @param params.maxHitsPerQuery Specify the maximum number of hits this API key can retrieve in one call.
-   * @param callback the result callback with two arguments
+   * @param callback the result callback called with two arguments
    *  error: null or Error('message')
    *  content: the server answer with user keys list
    */
