@@ -570,6 +570,7 @@ AlgoliaSearch.prototype = {
 
     opts.successiveRetryCount = 0;
     var impl = function() {
+
       if (opts.successiveRetryCount >= self.hosts.length) {
         var error = { message: 'Cannot connect the Algolia\'s Search API. Please send an email to support@algolia.com to report the issue.' };
         if (!self._isUndefined(callback) && callback) {
@@ -774,7 +775,7 @@ AlgoliaSearch.prototype = {
       clean();
 
       opts.callback(true, false, { 'message': 'Timeout - Failed to load JSONP script.' });
-    }, this.requestTimeoutInMs);
+    }, this.requestTimeoutInMs * (opts.successiveRetryCount + 1));
 
     success = function() {
       if (done || timedOut) {
