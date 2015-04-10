@@ -1,9 +1,11 @@
 // This is the jQuery Algolia Search module
 // It's using $.ajax to do requests with a JSONP fallback
 // jQuery promises are returned
+
 var inherits = require('inherits');
 
 var AlgoliaSearch = require('../../AlgoliaSearch');
+var inlineHeaders = require('../inline-headers');
 var JSONPRequest = require('../jsonp-request');
 
 function algoliasearch(applicationID, apiKey, opts) {
@@ -41,6 +43,8 @@ AlgoliaSearchJQuery.prototype._request = function(url, opts) {
       body = JSON.stringify(opts.body);
     }
 
+    url = inlineHeaders(url, opts.headers);
+
     $.ajax(url, {
       type: opts.method,
       timeout: opts.timeout,
@@ -67,6 +71,8 @@ AlgoliaSearchJQuery.prototype._request = function(url, opts) {
 };
 
 AlgoliaSearchJQuery.prototype._request.fallback = function(url, opts) {
+  url = inlineHeaders(url, opts.headers);
+
   return $.Deferred(function(deferred) {
     JSONPRequest(url, opts, function JSONPRequestDone(err, content) {
       if (err) {

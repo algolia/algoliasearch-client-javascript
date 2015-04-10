@@ -80,6 +80,10 @@ AlgoliaSearchNodeJS.prototype._request = function(rawUrl, opts) {
 
     req.setHeader('connection', 'keep-alive');
 
+    Object.keys(opts.headers).forEach(function setRequestHeader(headerName) {
+      req.setHeader(headerName, opts.headers[headerName]);
+    });
+
     // socket inactivity timeout
     // this is not a global timeout on the request
     // BUG: This will hang the program on node < 0.11

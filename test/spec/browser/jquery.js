@@ -63,8 +63,8 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
 
       t.deepEqual(
         requestURL.query, {
-          'X-Algolia-API-Key': 'jquery-success-apiKey',
-          'X-Algolia-Application-Id': 'jquery-success-applicationID'
+          'x-algolia-api-key': 'jquery-success-apiKey',
+          'x-algolia-application-id': 'jquery-success-applicationID'
         },
         'requestURL query matches'
       );

@@ -1,5 +1,9 @@
 CHANGELOG
 
+UNREALEASED
+    * CHANGE: Node.js will now use http headers instead of inlining them into the api call as browsers are doing
+    * CHANGE: Ensure all headers (http, querystrings) are lowercased. Both are supported by our API, reduces FUD
+
 2015-10-04  3.0.7
     * MIGRATION: throw on V2 .search() usage:
       - .search(query, cb, params)

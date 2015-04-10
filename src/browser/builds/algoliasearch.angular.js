@@ -1,9 +1,11 @@
 // This is the AngularJS Algolia Search module
 // It's using $http to do requests with a JSONP fallback
 // $q promises are returned
+
 var inherits = require('inherits');
 
 var AlgoliaSearch = require('../../AlgoliaSearch');
+var inlineHeaders = require('../inline-headers');
 var JSONPRequest = require('../jsonp-request');
 
 global.angular.module('algoliasearch', [])
@@ -40,6 +42,8 @@ global.angular.module('algoliasearch', [])
         if (opts.body !== undefined) {
           body = JSON.stringify(opts.body);
         }
+
+        url = inlineHeaders(url, opts.headers);
 
         var timeout = $q(function(resolveTimeout) {
           $timeout(function() {
@@ -81,6 +85,8 @@ global.angular.module('algoliasearch', [])
     };
 
     AlgoliaSearchAngular.prototype._request.fallback = function(url, opts) {
+      url = inlineHeaders(url, opts.headers);
+
       return $q(function(resolve, reject) {
         JSONPRequest(url, opts, function JSONPRequestDone(err, content) {
           if (err) {

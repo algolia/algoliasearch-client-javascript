@@ -7,6 +7,7 @@ var inherits = require('inherits');
 var Promise = global.Promise || require('es6-promise').Promise;
 
 var AlgoliaSearch = require('../../AlgoliaSearch');
+var inlineHeaders = require('../inline-headers');
 var JSONPRequest = require('../jsonp-request');
 
 function algoliasearch(applicationID, apiKey, opts) {
@@ -47,6 +48,8 @@ AlgoliaSearchBrowser.prototype._request = function(url, opts) {
       reject(new Error('CORS not supported'));
       return;
     }
+
+    url = inlineHeaders(url, opts.headers);
 
     var body = null;
     var req = support.cors ? new XMLHttpRequest() : new XDomainRequest();
@@ -144,6 +147,8 @@ AlgoliaSearchBrowser.prototype._request = function(url, opts) {
 };
 
 AlgoliaSearchBrowser.prototype._request.fallback = function(url, opts) {
+  url = inlineHeaders(url, opts.headers);
+
   return new Promise(function(resolve, reject) {
     JSONPRequest(url, opts, function JSONPRequestDone(err, content) {
       if (err) {

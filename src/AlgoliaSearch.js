@@ -7,6 +7,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 var debug = require('debug')('algoliasearch:AlgoliaSearch');
+var foreach = require('foreach');
 
 /*
  * Algolia Search library initialization
@@ -314,7 +315,8 @@ AlgoliaSearch.prototype = {
       }
       tags = strTags.join(',');
     }
-    this.tagFilters = tags;
+
+    this.securityTags = tags;
   },
 
   /**
@@ -406,11 +408,11 @@ AlgoliaSearch.prototype = {
    /**
    * Add an extra field to the HTTP request
    *
-   * @param key the header field name
+   * @param name the header field name
    * @param value the header field value
    */
-  setExtraHeader: function(key, value) {
-    this.extraHeaders.push({ key: key, value: value});
+  setExtraHeader: function(name, value) {
+    this.extraHeaders.push({ name: name.toLowerCase(), value: value});
   },
 
   _sendQueriesBatch: function(params, callback) {
@@ -479,30 +481,17 @@ AlgoliaSearch.prototype = {
         return doRequest(client._request.fallback, reqOpts);
       }
 
-      var url = reqOpts.url;
-
-      url += (url.indexOf('?') === -1 ? '?' : '&') + 'X-Algolia-API-Key=' + client.apiKey;
-      url += '&X-Algolia-Application-Id=' + client.applicationID;
-
-      if (client.userToken) {
-        url += '&X-Algolia-UserToken=' + encodeURIComponent(client.userToken);
-      }
-
-      if (client.tagFilters) {
-        url += '&X-Algolia-TagFilters=' + encodeURIComponent(client.tagFilters);
-      }
-
-      for (var i = 0; i < client.extraHeaders.length; ++i) {
-        url += '&' + client.extraHeaders[i].key + '=' + client.extraHeaders[i].value;
-      }
-
       // `requester` is any of this._request or this._request.fallback
       // thus it needs to be called using the client as context
-      return requester.call(client, client.hosts[opts.hostType][client.hostIndex[opts.hostType]] + url, {
-        body: reqOpts.body,
-        method: reqOpts.method,
-        timeout: reqOpts.timeout
-      })
+      return requester.call(client,
+        // http(s)://currenthost/url(?qs)
+        client.hosts[opts.hostType][client.hostIndex[opts.hostType]] + reqOpts.url, {
+          body: reqOpts.body,
+          method: reqOpts.method,
+          headers: client._computeRequestHeaders(),
+          timeout: reqOpts.timeout
+        }
+      )
       .then(function success(httpResponse) {
         // timeout case, retry immediately
         if (httpResponse instanceof Error) {
@@ -631,8 +620,32 @@ AlgoliaSearch.prototype = {
     }
     return params;
   },
+
   _isUndefined: function(obj) {
     return obj === void 0;
+  },
+
+  _computeRequestHeaders: function() {
+    var requestHeaders = {
+      'x-algolia-api-key': this.apiKey,
+      'x-algolia-application-id': this.applicationID
+    };
+
+    if (this.userToken) {
+      requestHeaders['x-algolia-usertoken'] = this.userToken;
+    }
+
+    if (this.securityTags) {
+      requestHeaders['x-algolia-tagfilters'] = this.securityTags;
+    }
+
+    if (this.extraHeaders) {
+      foreach(this.extraHeaders, function addToRequestHeaders(header) {
+        requestHeaders[header.name] = header.value;
+      });
+    }
+
+    return requestHeaders;
   }
 };
 

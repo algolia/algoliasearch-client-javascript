@@ -27,10 +27,17 @@ test('client.setSecurityTags(string or array-based tags)', function(t) {
 
   fauxJax.once('request', function(req) {
     req.respond(200, {}, '{}');
-    t.notOk(
-      parse(req.requestURL, true).query['X-Algolia-TagFilters'],
-      'No `X-Algolia-TagFilters` set on first request'
-    );
+    if (process.browser) {
+      t.notOk(
+        parse(req.requestURL, true).query['x-algolia-tagfilters'],
+        'No `X-Algolia-TagFilters` set on first request'
+      );
+    } else {
+      t.notOk(
+        req.requestHeaders['x-algolia-tagfilters'],
+        'No `X-Algolia-TagFilters` set on first request'
+      );
+    }
 
     runTestCases();
   });
@@ -43,11 +50,19 @@ test('client.setSecurityTags(string or array-based tags)', function(t) {
 
       fauxJax.once('request', function(req) {
         req.respond(200, {}, '{}');
-        t.equal(
-          parse(req.requestURL, true).query['X-Algolia-TagFilters'],
-          testCase.expected,
-          '`X-Algolia-TagFilters` set on second request (' + testCase.expected + ')'
-        );
+        if (process.browser) {
+          t.equal(
+            parse(req.requestURL, true).query['x-algolia-tagfilters'],
+            testCase.expected,
+            '`X-Algolia-TagFilters` set on second request (' + testCase.expected + ')'
+          );
+        } else {
+          t.equal(
+            req.requestHeaders['x-algolia-tagfilters'],
+            testCase.expected,
+            '`X-Algolia-TagFilters` set on second request (' + testCase.expected + ')'
+          );
+        }
 
         cb();
       });

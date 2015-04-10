@@ -52,6 +52,7 @@
     "envify": "3.4.0",
     "es6-promise": "2.0.1",
     "extend": "http://github.com/vvo/node-extend/tarball/765671f5fb7a4c0018ff1425961eccc5dcad0df8",
+    "foreach": "2.0.5",
     "inherits": "2.0.1",
     "load-script": "1.0.0",
     "semver": "4.3.2"

@@ -33,16 +33,30 @@ function computeExpectedRequest(expectedRequest, credentials) {
     }
   }
 
+  if (!process.browser) {
+    expectedRequest.headers['x-algolia-api-key'] = credentials.searchOnlyAPIKey;
+    expectedRequest.headers['x-algolia-application-id'] = credentials.applicationID;
+  }
+
   return expectedRequest;
 }
 
 function getRequestURL(credentials) {
+  var expectedQueryString;
+
+  if (process.browser) {
+    expectedQueryString = {
+      'x-algolia-api-key': credentials.searchOnlyAPIKey,
+      'x-algolia-application-id': credentials.applicationID
+    };
+  } else {
+    // serverside will send them in headers
+    expectedQueryString = {};
+  }
+
   return {
     protocol: process.browser ? document.location.protocol : 'http:',
     URL: {pathname: '/not-set'},
-    query: {
-      'X-Algolia-API-Key': credentials.searchOnlyAPIKey,
-      'X-Algolia-Application-Id': credentials.applicationID
-    }
+    query: expectedQueryString
   };
 }

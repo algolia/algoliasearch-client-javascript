@@ -38,21 +38,40 @@ test('client.setExtraHeader(key, value)', function(t) {
     secondRequest.respond(200, {}, '{}');
     thirdRequest.respond(200, {}, '{}');
 
-    t.notOk(
-      parse(firstRequest.requestURL, true).query['X-great-header'],
-      'No `X-great-header` set on first request'
-    );
+    if (process.browser) {
+      t.notOk(
+        parse(firstRequest.requestURL, true).query['x-great-header'],
+        'No `X-great-header` set on first request'
+      );
 
-    t.equal(
-      parse(secondRequest.requestURL, true).query['X-great-header'],
-      'yay',
-      '`X-great-header` set on second request'
-    );
+      t.equal(
+        parse(secondRequest.requestURL, true).query['x-great-header'],
+        'yay',
+        '`X-great-header` set on second request'
+      );
 
-    t.equal(
-      parse(thirdRequest.requestURL, true).query['X-great-header'],
-      'yaw',
-      '`X-great-header` set on third request'
-    );
+      t.equal(
+        parse(thirdRequest.requestURL, true).query['x-great-header'],
+        'yaw',
+        '`X-great-header` set on third request'
+      );
+    } else {
+      t.notOk(
+        firstRequest.requestHeaders['x-great-header'],
+        'No `X-great-header` set on first request'
+      );
+
+      t.equal(
+        secondRequest.requestHeaders['x-great-header'],
+        'yay',
+        '`X-great-header` set on second request'
+      );
+
+      t.equal(
+        thirdRequest.requestHeaders['x-great-header'],
+        'yaw',
+        '`X-great-header` set on third request'
+      );
+    }
   });
 });
