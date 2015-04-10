@@ -21,7 +21,7 @@
  * THE SOFTWARE.
  */
 
-var ALGOLIA_VERSION = '2.9.5';
+var ALGOLIA_VERSION = '2.9.6';
 
 /*
  * Copyright (c) 2013 Algolia
@@ -106,9 +106,9 @@ var AlgoliaSearch = function(applicationID, apiKey, methodOrOptions, resolveDNS,
   // If hosts is undefined, initialize it with applicationID
   if (this._isUndefined(hosts)) {
     hosts = [
-      this.applicationID + '-1.algolia.' + tld,
-      this.applicationID + '-2.algolia.' + tld,
-      this.applicationID + '-3.algolia.' + tld
+      this.applicationID + '-1.algolianet.com',
+      this.applicationID + '-2.algolianet.com',
+      this.applicationID + '-3.algolianet.com'
     ];
   }
   // detect is we use http or https
@@ -118,15 +118,9 @@ var AlgoliaSearch = function(applicationID, apiKey, methodOrOptions, resolveDNS,
   } else if (method === 'https' || method === 'HTTPS') {
     this.host_protocol = 'https://';
   }
-  // Add hosts in random order
+  // Add protocol to hosts
   for (var i = 0; i < hosts.length; ++i) {
-    if (Math.random() > 0.5) {
-      this.hosts.reverse();
-    }
     this.hosts.push(this.host_protocol + hosts[i]);
-  }
-  if (Math.random() > 0.5) {
-    this.hosts.reverse();
   }
   // then add Distributed Search Network host if there is one
   if (this.dsn || this.dsnHost != null) {
@@ -595,6 +589,7 @@ AlgoliaSearch.prototype = {
 
     opts.successiveRetryCount = 0;
     var impl = function() {
+
       if (opts.successiveRetryCount >= self.hosts.length) {
         var error = { message: 'Cannot connect the Algolia\'s Search API. Please send an email to support@algolia.com to report the issue.' };
         if (!self._isUndefined(callback) && callback) {
@@ -799,7 +794,7 @@ AlgoliaSearch.prototype = {
       clean();
 
       opts.callback(true, false, { 'message': 'Timeout - Failed to load JSONP script.' });
-    }, this.requestTimeoutInMs);
+    }, this.requestTimeoutInMs * (opts.successiveRetryCount + 1));
 
     success = function() {
       if (done || timedOut) {

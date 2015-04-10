@@ -1,6 +1,6 @@
 CHANGELOG
 
-UNRELEASED
+2015-10-04  2.9.6
     * FIX: JSONP timeout is now incremental like other strategies
     * FEATURE: Now using APPID-%d.algolianet.com
     * REMOVED: No more hosts shuffling
