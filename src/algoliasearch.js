@@ -81,9 +81,9 @@ var AlgoliaSearch = function(applicationID, apiKey, methodOrOptions, resolveDNS,
   // If hosts is undefined, initialize it with applicationID
   if (this._isUndefined(hosts)) {
     hosts = [
-      this.applicationID + '-1.algolia.' + tld,
-      this.applicationID + '-2.algolia.' + tld,
-      this.applicationID + '-3.algolia.' + tld
+      this.applicationID + '-1.algolianet.com',
+      this.applicationID + '-2.algolianet.com',
+      this.applicationID + '-3.algolianet.com'
     ];
   }
   // detect is we use http or https
@@ -93,15 +93,9 @@ var AlgoliaSearch = function(applicationID, apiKey, methodOrOptions, resolveDNS,
   } else if (method === 'https' || method === 'HTTPS') {
     this.host_protocol = 'https://';
   }
-  // Add hosts in random order
+  // Add protocol to hosts
   for (var i = 0; i < hosts.length; ++i) {
-    if (Math.random() > 0.5) {
-      this.hosts.reverse();
-    }
     this.hosts.push(this.host_protocol + hosts[i]);
-  }
-  if (Math.random() > 0.5) {
-    this.hosts.reverse();
   }
   // then add Distributed Search Network host if there is one
   if (this.dsn || this.dsnHost != null) {

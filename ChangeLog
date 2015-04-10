@@ -2,6 +2,9 @@ CHANGELOG
 
 UNRELEASED
     * FIX: JSONP timeout is now incremental like other strategies
+    * FEATURE: Now using APPID-%d.algolianet.com
+    * REMOVED: No more hosts shuffling
+
 2015-02-04  2.9.5
     * fix aborted requests in IE9, #76
 
