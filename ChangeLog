@@ -1,6 +1,6 @@
 CHANGELOG
 
-UNRELEASED
+2015-10-04  3.0.7
     * MIGRATION: throw on V2 .search() usage:
       - .search(query, cb, params)
       - .search(cb, params)

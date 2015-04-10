@@ -1,4 +1,4 @@
-/*! algoliasearch 3.0.6 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
+/*! algoliasearch 3.0.7 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
 (function(f){var g;if(typeof window!=='undefined'){g=window}else if(typeof self!=='undefined'){g=self}g.ALGOLIA_MIGRATION_LAYER=f()})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 
 module.exports = function load (src, opts, cb) {
@@ -1672,6 +1672,14 @@ AlgoliaSearch.prototype.Index.prototype = {
    *  content: the server answer that contains the list of results.
    */
   search: function(query, args, callback) {
+    // warn V2 users on how to search
+    if (typeof query === 'function' && typeof args === 'object' ||
+      typeof callback === 'object') {
+      // .search(query, params, cb)
+      // .search(cb, params)
+      throw new Error('AlgoliaSearch: index.search usage is index.search(query, params, cb)');
+    }
+
     if (arguments.length === 0 || typeof query === 'function') {
       // .search(), .search(cb)
       callback = query;
@@ -2249,5 +2257,5 @@ function JSONPRequest(url, opts, cb) {
 }
 
 },{}],9:[function(require,module,exports){
-module.exports="3.0.6"
+module.exports="3.0.7"
 },{}]},{},[7]);
