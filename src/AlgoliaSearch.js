@@ -878,6 +878,36 @@ AlgoliaSearch.prototype.Index.prototype = {
       callback: callback });
   },
   /*
+   * Delete several objects from an index
+   *
+   * @param objectIDs contains an array of objectID to delete
+   * @param callback (optional) the result callback called with two arguments:
+   *  error: null or Error('message')
+   *  content: the server answer that contains 3 elements: createAt, taskId and objectID
+   */
+  deleteObjects: function(objectIDs, callback) {
+    var indexObj = this;
+    var postObj = {
+      requests: map(objectIDs, function prepareRequest(objectID) {
+        return {
+          action: 'deleteObject',
+          objectID: objectID,
+          body: {
+            objectID: objectID
+          }
+        };
+      })
+    };
+
+    return this.as._jsonRequest({
+      method: 'POST',
+      url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/batch',
+      body: postObj,
+      hostType: 'write',
+      callback: callback
+    });
+  },
+  /*
    * Search inside the index using XMLHttpRequest request (Using a POST query to
    * minimize number of OPTIONS queries: Cross-Origin Resource Sharing).
    *
