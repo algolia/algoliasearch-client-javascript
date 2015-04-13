@@ -3,6 +3,8 @@ var test = require('tape');
 test('index.waitTask(taskID) failure', function(t) {
   t.plan(10);
 
+  var bind = require('lodash-compat/function/bind');
+
   var fauxJax = require('faux-jax');
   var sinon = require('sinon');
 
@@ -37,7 +39,7 @@ test('index.waitTask(taskID) failure', function(t) {
   fauxJax.install();
 
   index.waitTask(28000, cbSpy);
-  index.waitTask(27000).then(promiseSpy);
+  index.waitTask(27000).then(bind(t.fail, t), promiseSpy);
 
   fauxJax.waitFor(2, function(err, requests) {
     t.error(err);
