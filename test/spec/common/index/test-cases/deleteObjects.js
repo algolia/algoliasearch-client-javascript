@@ -3,7 +3,6 @@ var clone = require('lodash-compat/lang/clone');
 var objectsIDs = ['1000', '1001'];
 
 module.exports = {
-  only: true,
   object: 'index',
   methodName: 'deleteObjects',
   testName: 'index.deleteObjects(objectsIDs, cb)',
