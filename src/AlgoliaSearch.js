@@ -440,7 +440,9 @@ AlgoliaSearch.prototype = {
    * Wrapper that try all hosts to maximize the quality of service
    */
   _jsonRequest: function(opts) {
-    debug('request %j', opts);
+    var requestDebug = require('debug')('algoliasearch:AlgoliaSearch:_jsonRequest:' + opts.url);
+
+    requestDebug('start: body: %j', opts.body);
 
     var cache = opts.cache;
     var cacheID = opts.url;
@@ -457,7 +459,7 @@ AlgoliaSearch.prototype = {
     function doRequest(requester, reqOpts) {
       // handle cache existence
       if (cache && cache[cacheID] !== undefined) {
-        debug('serving request from cache %j', opts);
+        requestDebug('serving response from cache, body: %j', cache[cacheID]);
         return client._promise.resolve(cache[cacheID]);
       }
 
@@ -493,6 +495,8 @@ AlgoliaSearch.prototype = {
         }
       )
       .then(function success(httpResponse) {
+        requestDebug('response: %j', httpResponse);
+
         // timeout case, retry immediately
         if (httpResponse instanceof Error) {
           return retryRequest();
