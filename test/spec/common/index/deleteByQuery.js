@@ -15,11 +15,7 @@ function deleteByQueryTest(asyncMode, mainTest) {
     var sinon = require('sinon');
 
     var createFixture = require('../../../utils/create-fixture');
-    var fixture = createFixture({
-      clientOptions: {
-        timeout: 50
-      }
-    });
+    var fixture = createFixture();
     var index = fixture.index;
 
     sinon.spy(index, 'search');
