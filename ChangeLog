@@ -17,6 +17,12 @@ UNREALEASED
     * FEATURE:
       - all clients are now exposing algoliasearch.ua
       - all requests are now sending x-user-agent containing for example 'Algoliasearch for vanilla JavaScript 3.0.7'
+    * FEATURE: add client.search()
+      Search against multiple indices, equivalent of, multipleQueries, or
+      startQueriesBatch+addQueryInBatch+sendQueriesBatch
+    * BREAKING CHANGE (Node.js): removed client.multipleQueries(), use client.search(queries)
+    * DEPRECIATION (browser): client.startQueriesBatch/addQueryInBatch/sendQueriesBatch
+      Use client.search(queries)
 
 2015-10-04  3.0.7
     * MIGRATION: throw on V2 .search() usage:

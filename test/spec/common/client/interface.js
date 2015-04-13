@@ -31,6 +31,7 @@ test('AlgoliaSearch client API spec', function(t) {
     'listIndexes',
     'listUserKeys',
     'moveIndex',
+    'search',
     'sendQueriesBatch',
     'setExtraHeader',
     'setRequestTimeout',

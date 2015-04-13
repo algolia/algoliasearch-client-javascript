@@ -7,6 +7,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 var debug = require('debug')('algoliasearch:AlgoliaSearch');
+var deprecate = require('util-deprecate');
 var foreach = require('foreach');
 
 /*
@@ -332,9 +333,9 @@ AlgoliaSearch.prototype = {
   /*
    * Initialize a new batch of search queries
    */
-  startQueriesBatch: function() {
-    this.batch = [];
-  },
+  startQueriesBatch: deprecate(function() {
+    this._batch = [];
+  }, deprecatedMessage('client.startQueriesBatch()', 'client.search()')),
   /*
    * Add a search query in the batch
    *
@@ -353,15 +354,16 @@ AlgoliaSearch.prototype = {
    *  - page: (pagination parameter) page to retrieve (zero base). Defaults to 0.
    *  - hitsPerPage: (pagination parameter) number of hits per page. Defaults to 10.
    */
-  addQueryInBatch: function(indexName, query, args) {
-    var params = 'query=' + encodeURIComponent(query);
-    if (!this._isUndefined(args) && args !== null) {
-      params = this._getSearchParams(args, params);
-    }
-    this.batch.push({ indexName: indexName, params: params });
-  },
+  addQueryInBatch: deprecate(function(indexName, query, args) {
+    this._batch.push({
+      indexName: indexName,
+      query: query,
+      params: args
+    });
+  }, deprecatedMessage('client.addQueryInBatch()', 'client.search()')),
   /*
    * Clear all queries in cache
+   * only present because we have client.search()
    */
   clearCache: function() {
     this.cache = {};
@@ -372,16 +374,9 @@ AlgoliaSearch.prototype = {
    *
    * @param callback the function that will receive results
    */
-  sendQueriesBatch: function(callback) {
-    var as = this;
-    var params = {requests: []};
-
-    for (var i = 0; i < as.batch.length; ++i) {
-      params.requests.push(as.batch[i]);
-    }
-
-    return this._sendQueriesBatch(params, callback);
-  },
+  sendQueriesBatch: deprecate(function(callback) {
+    return this.search(this._batch, callback);
+  }, deprecatedMessage('client.sendQueriesBatch()', 'client.search()')),
 
    /**
    * Set the number of milliseconds a request can take before automatically being terminated.
@@ -393,6 +388,47 @@ AlgoliaSearch.prototype = {
       this.requestTimeout = parseInt(milliseconds, 10);
     }
   },
+
+  /**
+   * Search through multiple indices at the same time
+   * @param  {Object[]}   queries  An array of queries you want to run.
+   * @param {string} queries[].indexName The index name you want to target
+   * @param {string} [queries[].query] The query to issue on this index. Can also be passed into `params`
+   * @param {Object} queries[].params Any search param like hitsPerPage, ..
+   * @param  {Function} callback Callback to be called
+   * @return {Promise|undefined} Returns a promise if no callback given
+   */
+  search: function(queries, callback) {
+    var client = this;
+
+    var postObj = {
+      requests: map(queries, function prepareRequest(query) {
+        var params = '';
+
+        // allow query.query
+        // so we are mimicing the index.search(query, params) method
+        // {indexName:, query:, params:}
+        if (query.query !== undefined) {
+          params += 'query=' + encodeURIComponent(query.query)
+        }
+
+        return {
+          indexName: query.indexName,
+          params: client._getSearchParams(query.params, params)
+        };
+      })
+    };
+
+    return this._jsonRequest({
+      cache: this.cache,
+      method: 'POST',
+      url: '/1/indexes/*/queries',
+      body: postObj,
+      hostType: 'read',
+      callback: callback
+    });
+  },
+
   // environment specific methods
   destroy: notImplemented,
   enableRateLimitForward: notImplemented,
@@ -450,7 +486,7 @@ AlgoliaSearch.prototype = {
   _jsonRequest: function(opts) {
     var requestDebug = require('debug')('algoliasearch:AlgoliaSearch:_jsonRequest:' + opts.url);
 
-    requestDebug('start: body: %j, timeout: %d', opts.body, opts.timeout);
+    requestDebug('start: body: %j', opts.body);
 
     var cache = opts.cache;
     var cacheID = opts.url;
@@ -462,6 +498,10 @@ AlgoliaSearch.prototype = {
     // the cacheID must also include the body to be different between calls
     if (opts.body !== undefined) {
       cacheID += '_body_' + JSON.stringify(opts.body);
+    }
+
+    if (opts.cache !== undefined) {
+      requestDebug('Will use cache if any');
     }
 
     function doRequest(requester, reqOpts) {
@@ -1455,4 +1495,13 @@ function notImplemented() {
   'If you feel this is a mistake, write to support@algolia.com';
 
   throw new Error(message);
+}
+
+function deprecatedMessage(previousUsage, newUsage) {
+  var githubAnchorLink = previousUsage.toLowerCase()
+    .replace('.', '')
+    .replace('()', '');
+
+  return 'algoliasearch: `' + previousUsage + '` was replaced by `' +
+    newUsage + '`. Please see https://github.com/algolia/algoliasearch-client-js/wiki/Deprecated#' + githubAnchorLink
 }
