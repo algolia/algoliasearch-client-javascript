@@ -38,15 +38,14 @@ test('AlgoliaSearch client API spec', function(t) {
     'setUserToken',
     'startQueriesBatch'];
 
-  if (!process.browser) {
-    expectedProperties = expectedProperties.concat([
-      'destroy',
-      'disableRateLimitForward',
-      'disableSecuredAPIKey',
-      'enableRateLimitForward',
-      'useSecuredAPIKey'
-    ]);
-  }
+  // Node.js only methods
+  expectedProperties = expectedProperties.concat([
+    'destroy',
+    'disableRateLimitForward',
+    'disableSecuredAPIKey',
+    'enableRateLimitForward',
+    'useSecuredAPIKey'
+  ]);
 
   expectedProperties = expectedProperties.sort();
 

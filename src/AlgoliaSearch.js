@@ -9,6 +9,9 @@ if (process.env.NODE_ENV === 'development') {
 var debug = require('debug')('algoliasearch:AlgoliaSearch');
 var foreach = require('foreach');
 
+var notImplemented = 'algoliasearch: Not implemented in this environment.\n' +
+  'If you feel this is a mistake, write to support@algolia.com';
+
 /*
  * Algolia Search library initialization
  * https://www.algolia.com/
@@ -391,7 +394,22 @@ AlgoliaSearch.prototype = {
       this.requestTimeout = parseInt(milliseconds, 10);
     }
   },
-
+  // environment specific methods
+  destroy: function() {
+    throw new Error(notImplemented);
+  },
+  enableRateLimitForward: function() {
+    throw new Error(notImplemented);
+  },
+  disableRateLimitForward: function() {
+    throw new Error(notImplemented);
+  },
+  useSecuredAPIKey: function() {
+    throw new Error(notImplemented);
+  },
+  disableSecuredAPIKey: function() {
+    throw new Error(notImplemented);
+  },
   /*
    * Index class constructor.
    * You should not use this method directly but use initIndex() function
