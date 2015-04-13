@@ -908,6 +908,79 @@ AlgoliaSearch.prototype.Index.prototype = {
     });
   },
   /*
+   * Delete all objects matching a query
+   *
+   * @param query the query string
+   * @param params the optional query parameters
+   * @param callback (optional) the result callback called with one argument
+   *  error: null or Error('message')
+   */
+  deleteByQuery: function(query, params, callback) {
+    var indexObj = this;
+
+    if (arguments.length === 1 || typeof params === 'function') {
+      callback = params;
+      params = {};
+    }
+
+    params.attributesToRetrieve = 'objectID';
+    params.hitsPerPage = 1000;
+
+    // when deleting, we should never use cache to get the
+    // search results
+    this.clearCache();
+
+    // there's a problem in how we use the promise chain,
+    // see how waitTask is done
+    var promise = this
+      .search(query, params)
+      .then(stopOrDelete);
+
+    function stopOrDelete(searchContent) {
+      // stop here
+      if (searchContent.nbHits === 0) {
+        // return indexObj.as._request.resolve();
+        return searchContent;
+      }
+
+      // continue and do a recursive call
+      var objectIDs = map(searchContent.hits, function getObjectID(object) {
+        return object.objectID;
+      });
+
+      return indexObj
+        .deleteObjects(objectIDs)
+        .then(waitTask)
+        .then(deleteByQuery);
+    }
+
+    function waitTask(deleteObjectsContent) {
+      return indexObj.waitTask(deleteObjectsContent.taskID);
+    }
+
+    function deleteByQuery() {
+      return indexObj.deleteByQuery(query, params);
+    }
+
+    if (!callback) {
+      return promise;
+    }
+
+    promise.then(success, failure);
+
+    function success() {
+      setTimeout(function() {
+        callback(null);
+      }, 0);
+    }
+
+    function failure(err) {
+      setTimeout(function() {
+        callback(err);
+      }, 0);
+    }
+  },
+  /*
    * Search inside the index using XMLHttpRequest request (Using a POST query to
    * minimize number of OPTIONS queries: Cross-Origin Resource Sharing).
    *
