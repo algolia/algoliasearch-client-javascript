@@ -442,7 +442,7 @@ AlgoliaSearch.prototype = {
   _jsonRequest: function(opts) {
     var requestDebug = require('debug')('algoliasearch:AlgoliaSearch:_jsonRequest:' + opts.url);
 
-    requestDebug('start: body: %j', opts.body);
+    requestDebug('start: body: %j, timeout: %d', opts.body, opts.timeout);
 
     var cache = opts.cache;
     var cacheID = opts.url;
@@ -483,6 +483,8 @@ AlgoliaSearch.prototype = {
         return doRequest(client._request.fallback, reqOpts);
       }
 
+      requestDebug('request: %j', reqOpts);
+
       // `requester` is any of this._request or this._request.fallback
       // thus it needs to be called using the client as context
       return requester.call(client,
@@ -495,12 +497,13 @@ AlgoliaSearch.prototype = {
         }
       )
       .then(function success(httpResponse) {
-        requestDebug('response: %j', httpResponse);
-
         // timeout case, retry immediately
         if (httpResponse instanceof Error) {
+          requestDebug('error: %s', httpResponse.message);
           return retryRequest();
         }
+
+        requestDebug('response: %j', httpResponse);
 
         var status =
           // When in browser mode, using XDR or JSONP
@@ -560,7 +563,7 @@ AlgoliaSearch.prototype = {
         //    - badly formatted JSONP (script loaded, did not call our callback)
         //  In both cases:
         //    - uncaught exception occurs (TypeError)
-        debug('error: %s, stack: %s', err.message, err.stack);
+        requestDebug('error: %s, stack: %s', err.message, err.stack);
 
         // we were not using the fallback, try now
         // if we are switching to fallback right now, set tries to maximum

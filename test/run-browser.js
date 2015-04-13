@@ -5,8 +5,12 @@ var domready = require('domready');
 domready(run);
 
 function run() {
-  require('bulk-require')(__dirname, [
-    'spec/common/**/*.js',
-    'spec/browser/**/*.js'
-  ]);
+  // even when dom is ready, wait a little more before launching the tests,
+  // sometimes too fast for IE
+  setTimeout(function() {
+    require('bulk-require')(__dirname, [
+      'spec/common/**/*.js',
+      'spec/browser/**/*.js'
+    ]);
+  }, 1000);
 }

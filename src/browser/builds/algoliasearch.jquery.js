@@ -6,7 +6,7 @@ var inherits = require('inherits');
 
 var AlgoliaSearch = require('../../AlgoliaSearch');
 var inlineHeaders = require('../inline-headers');
-var JSONPRequest = require('../jsonp-request');
+var JSONPRequest = require('../JSONP-request');
 
 function algoliasearch(applicationID, apiKey, opts) {
   var extend = require('extend');

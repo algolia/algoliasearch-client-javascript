@@ -11,7 +11,6 @@ function deleteByQueryTest(asyncMode, mainTest) {
 
     var bind = require('lodash-compat/function/bind');
     var fauxJax = require('faux-jax');
-    var parse = require('url-parse');
     var sinon = require('sinon');
 
     var createFixture = require('../../../utils/create-fixture');
@@ -38,7 +37,6 @@ function deleteByQueryTest(asyncMode, mainTest) {
         fauxJax.restore();
       });
     } else if (asyncMode === 'promise') {
-      var bind = require('lodash-compat/function/bind');
       index.deleteByQuery('salmon').then(function() {
         t.pass('No error while deleting by query');
         t.equal(
@@ -74,7 +72,7 @@ function deleteByQueryTest(asyncMode, mainTest) {
         JSON.stringify({
           nbHits: 800,
           hits: [{
-            objectID: '1005',
+            objectID: '1005'
           }, {
             objectID: '1006'
           }]
