@@ -21,10 +21,13 @@ function algoliasearch(applicationID, apiKey, opts) {
     opts.protocol = getDocumentProtocol();
   }
 
+  opts._ua = algoliasearch.ua;
+
   return new AlgoliaSearchBrowser(applicationID, apiKey, opts);
 }
 
 algoliasearch.version = require('../../version.json');
+algoliasearch.ua = 'Algolia for vanilla JavaScript ' + algoliasearch.version;
 
 var support = {
   hasXMLHttpRequest: 'XMLHttpRequest' in window,

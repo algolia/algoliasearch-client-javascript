@@ -14,6 +14,9 @@ UNREALEASED
     * BREAKING CHANGE (Node.js): client.setTimeout renamed to client.setRequestTimeout
     * TEST: add test around setRequestTimeout
     * FEATURE (Node.js): add client.generateSecuredApiKey()
+    * FEATURE:
+      - all clients are now exposing algoliasearch.ua
+      - all requests are now sending x-user-agent containing for example 'Algoliasearch for vanilla JavaScript 3.0.7'
 
 2015-10-04  3.0.7
     * MIGRATION: throw on V2 .search() usage:

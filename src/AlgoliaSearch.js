@@ -94,6 +94,8 @@ function AlgoliaSearch(applicationID, apiKey, opts) {
   this.extraHeaders = [];
   this.cache = {};
 
+  this._ua = opts._ua;
+
   debug('init done, %j', this);
 }
 
@@ -641,7 +643,8 @@ AlgoliaSearch.prototype = {
   _computeRequestHeaders: function() {
     var requestHeaders = {
       'x-algolia-api-key': this.apiKey,
-      'x-algolia-application-id': this.applicationID
+      'x-algolia-application-id': this.applicationID,
+      'x-user-agent': this._ua
     };
 
     if (this.userToken) {

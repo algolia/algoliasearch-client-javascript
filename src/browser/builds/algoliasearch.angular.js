@@ -22,10 +22,13 @@ global.angular.module('algoliasearch', [])
         opts.protocol = getDocumentProtocol();
       }
 
+      opts._ua = algoliasearch.ua;
+
       return new AlgoliaSearchAngular(applicationID, apiKey, opts);
     }
 
     algoliasearch.version = require('../../version.json');
+    algoliasearch.ua = 'Algolia for AngularJS ' + algoliasearch.version;
 
     function AlgoliaSearchAngular() {
       // call AlgoliaSearch constructor
@@ -115,8 +118,10 @@ global.angular.module('algoliasearch', [])
     };
 
     return {
-      Client: function(applicationID, apiKey, options) {
+      Client: function (applicationID, apiKey, options) {
         return algoliasearch(applicationID, apiKey, options);
-      }
+      },
+      ua: algoliasearch.ua,
+      version: algoliasearch.version
     };
   }]);

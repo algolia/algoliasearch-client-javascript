@@ -19,14 +19,17 @@ function algoliasearch(applicationID, apiKey, opts) {
     opts.protocol = getDocumentProtocol();
   }
 
+  opts._ua = algoliasearch.ua;
+
   return new AlgoliaSearchJQuery(applicationID, apiKey, opts);
 }
 
 algoliasearch.version = require('../../version.json');
+algoliasearch.ua = 'Algolia for jQuery ' + algoliasearch.version;
 
 var $ = global.jQuery;
 
-$.algolia = {Client: algoliasearch};
+$.algolia = {Client: algoliasearch, ua: algoliasearch.ua, version: algoliasearch.version};
 
 function AlgoliaSearchJQuery() {
   // call AlgoliaSearch constructor

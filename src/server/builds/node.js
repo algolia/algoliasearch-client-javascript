@@ -28,10 +28,13 @@ function algoliasearch(applicationID, apiKey, opts) {
     opts.protocol = 'https:';
   }
 
+  opts._ua = algoliasearch.ua;
+
   return new AlgoliaSearchNodeJS(applicationID, apiKey, opts);
 }
 
 algoliasearch.version = require('../../version.json');
+algoliasearch.ua = 'Algolia for Node.js ' + algoliasearch.version;
 
 function AlgoliaSearchNodeJS(applicationID, apiKey, opts) {
   var getKeepaliveAgent = require('./get-keepalive-agent');
