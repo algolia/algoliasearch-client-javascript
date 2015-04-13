@@ -3,6 +3,10 @@ CHANGELOG
 UNREALEASED
     * CHANGE: Node.js will now use http headers instead of inlining them into the api call as browsers are doing
     * CHANGE: Ensure all headers (http, querystrings) are lowercased. Both are supported by our API, reduces FUD
+    * FEATURE: add index.getObjects()
+    * FEATURE: add index.deleteObjects()
+    * FIX: waitTask failure case when using promises, was not going through
+    * FEATURE: add index.deleteByQuery()
 
 2015-10-04  3.0.7
     * MIGRATION: throw on V2 .search() usage:
