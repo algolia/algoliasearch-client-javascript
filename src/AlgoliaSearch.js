@@ -592,13 +592,13 @@ AlgoliaSearch.prototype = {
     // either we are using promises
     if (opts.callback) {
       promise.then(function okCb(content) {
-        process.nextTick(function() {
+        setTimeout(function() {
           opts.callback(null, content);
-        });
+        }, 0);
       }, function nookCb(err) {
-        process.nextTick(function() {
+        setTimeout(function() {
           opts.callback(err);
-        });
+        }, 0);
       });
     } else {
       return promise;
@@ -1154,30 +1154,32 @@ AlgoliaSearch.prototype.Index.prototype = {
       url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/task/' + taskID
     }).then(function success(content) {
       if (content.status !== 'published') {
-        return new indexObj.as._promise.delay(100).then(function() {
-          return indexObj.waitTask(taskID, callback);
+        return indexObj.as._promise.delay(100).then(function() {
+          // do not forward the callback, we want the promise
+          // on next iteration
+          return indexObj.waitTask(taskID);
         });
       }
 
-      if (callback) {
-        process.nextTick(function() {
-          callback(null, content);
-        });
-      } else {
-        return content;
-      }
-    }, function failure(err) {
-      if (callback) {
-        process.nextTick(function() {
-          callback(err);
-        });
-      } else {
-        return err;
-      }
+      return content;
     });
 
     if (!callback) {
       return promise;
+    }
+
+    promise.then(successCb, failureCb);
+
+    function successCb(content) {
+      setTimeout(function() {
+        callback(null, content);
+      }, 0);
+    }
+
+    function failureCb(err) {
+      setTimeout(function() {
+        callback(err);
+      }, 0);
     }
   },
 
