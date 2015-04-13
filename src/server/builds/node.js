@@ -196,6 +196,34 @@ AlgoliaSearchNodeJS.prototype.disableSecuredAPIKey = function() {
   this._secure = null;
 };
 
+/*
+ * Generate a secured and public API Key from a list of tagFilters and an
+ * optional user token identifying the current user
+ *
+ * @param privateApiKey your private API Key
+ * @param tagFilters the list of tags applied to the query (used as security)
+ * @param userToken an optional token identifying the current user
+ */
+AlgoliaSearchNodeJS.prototype.generateSecuredApiKey = function(privateApiKey, tagFilters, userToken) {
+  if (Array.isArray(tagFilters)) {
+    var strTags = [];
+    for (var i = 0; i < tagFilters.length; ++i) {
+      if (Array.isArray(tagFilters[i])) {
+        var oredTags = [];
+        for (var j = 0; j < tagFilters[i].length; ++j) {
+          oredTags.push(tagFilters[i][j]);
+        }
+        strTags.push('(' + oredTags.join(',') + ')');
+      } else {
+        strTags.push(tagFilters[i]);
+      }
+    }
+    tagFilters = strTags.join(',');
+  }
+
+  return crypto.createHmac('sha256', privateApiKey).update(tagFilters + (userToken || '')).digest('hex');
+};
+
 AlgoliaSearchNodeJS.prototype._computeRequestHeaders = function() {
   var headers = AlgoliaSearchNodeJS.super_.prototype._computeRequestHeaders.call(this);
 

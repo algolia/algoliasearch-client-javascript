@@ -44,7 +44,8 @@ test('AlgoliaSearch client API spec', function(t) {
     'disableRateLimitForward',
     'disableSecuredAPIKey',
     'enableRateLimitForward',
-    'useSecuredAPIKey'
+    'useSecuredAPIKey',
+    'generateSecuredApiKey'
   ]);
 
   expectedProperties = expectedProperties.sort();
