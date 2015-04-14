@@ -38,28 +38,28 @@ UNREALEASED
       You can use client|index.addUserKey or client|index.updateUserKey to do
       deal with all you keys needs
 
-2015-10-04  3.0.7
+2015-04-10  3.0.7
     * MIGRATION: throw on V2 .search() usage:
       - .search(query, cb, params)
       - .search(cb, params)
     * FEATURE: add client.destroy() in Node.js implementation
       will destroy all keepalived connections and let the process exits if needed
 
-2015-03-04  3.0.6
+2015-04-03  3.0.6
     * FIX: Webpack compatibility by removing packageify
       webpack does not interprets for now node_modules/* browserify transforms
     * MISC: add release script
 
-2015-02-04  3.0.5
+2015-04-02  3.0.5
     * FIX: lower the build size by requiring the good version/browser.js in browser
       builds. Previously we got the full `package.json` inlined
 
-2015-02-04  3.0.4
+2015-04-02  3.0.4
     * FIX: Defaults to http when the protocol of the page is not http or
       https
     * FIX: XDomainRequests no more aborted in IE9 #76
 
-2015-28-03  3.0.3
+2015-03-28  3.0.3
 
     * FIX: Handle module loaders + cdn.jsdelivr.net/algoliasearch/latest usage
       When in this situation, the module loader would prevent the code
@@ -75,15 +75,15 @@ UNREALEASED
       * tested on correponding customer websites
     * FIX: better warning messages when using `latest` or trying to use V3 as V2
 
-2015-26-03  3.0.2
+2015-03-26  3.0.2
 
     * temp /latest/ fix for some clients loading /latest/ in async mode
 
-2015-26-03  3.0.1
+2015-03-26  3.0.1
 
     * fix npm usage, was missing a dependency
 
-2015-25-03  3.0.0
+2015-03-25  3.0.0
     * V2 users, see the migration guide at https://github.com/algolia/algoliasearch-client-js/wiki/Migration-guide-from-2.x.x-to-3.x.x
     * BREAKING CHANGES:
       * `new AlgoliaSearch()` => `algoliasearch()` #40
