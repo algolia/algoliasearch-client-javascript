@@ -29,6 +29,7 @@ function algoliasearch(applicationID, apiKey, opts) {
   }
 
   opts._ua = algoliasearch.ua;
+  opts._useCache = false;
 
   return new AlgoliaSearchNodeJS(applicationID, apiKey, opts);
 }

@@ -90,6 +90,7 @@ function AlgoliaSearch(applicationID, apiKey, opts) {
   this.cache = {};
 
   this._ua = opts._ua;
+  this._useCache = opts._useCache === undefined ? true : opts._useCache;
 
   debug('init done, %j', this);
 }
@@ -519,14 +520,18 @@ AlgoliaSearch.prototype = {
     requestDebug('start: body: %j', opts.body);
 
     var cache = opts.cache;
-    var cacheID = opts.url;
+    var cacheID;
     var client = this;
     var tries = 0;
     var usingFallback = false;
 
+    if (client._useCache) {
+      cacheID = opts.url;
+    }
+
     // as we sometime use POST requests to pass parameters (like query='aa'),
     // the cacheID must also include the body to be different between calls
-    if (opts.body !== undefined) {
+    if (client._useCache && opts.body !== undefined) {
       cacheID += '_body_' + JSON.stringify(opts.body);
     }
 
@@ -536,7 +541,7 @@ AlgoliaSearch.prototype = {
 
     function doRequest(requester, reqOpts) {
       // handle cache existence
-      if (cache && cache[cacheID] !== undefined) {
+      if (client._useCache && cache && cache[cacheID] !== undefined) {
         requestDebug('serving response from cache, body: %j', cache[cacheID]);
         return client._promise.resolve(cache[cacheID]);
       }
@@ -604,7 +609,7 @@ AlgoliaSearch.prototype = {
         var ok = status === 200 || status === 201;
         var retry = !ok && Math.floor(status / 100) !== 4 && Math.floor(status / 100) !== 1;
 
-        if (ok && cache) {
+        if (client._useCache && ok && cache) {
           cache[cacheID] = httpResponse.body;
         }
 

@@ -17,7 +17,7 @@ test('client.setRequestTimeout()', function(t) {
     hosts.push('www.d21d98uasdklj1289duasdkjs98dasuda.com');
   }
 
-  var requestTimeout = 250;
+  var requestTimeout = 500;
   var fixture = createFixture({
     clientOptions: {
       timeout: requestTimeout,
