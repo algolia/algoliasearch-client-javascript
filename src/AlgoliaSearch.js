@@ -21,11 +21,10 @@ var foreach = require('foreach');
  * @param {string} [opts.protocol='http:'] - The protocol used to query Algolia Search API.
  *                                        Set to 'https:' to force using https. Default to document.location.protocol in browsers
  * @param {string[]} [opts.hosts=[
- *          this.applicationID + '-1.algolia.' + opts.tld,
- *          this.applicationID + '-2.algolia.' + opts.tld,
- *          this.applicationID + '-3.algolia.' + opts.tld]
- *        ] - The hosts to use for Algolia Search API. It this your responsibility to shuffle the hosts and add a DSN host in it
- * @param {string} [opts.tld='net'] - The tld to use when computing hosts default list
+ *          this.applicationID + '-1.algolianet.com',
+ *          this.applicationID + '-2.algolianet.com',
+ *          this.applicationID + '-3.algolianet.com']
+ *        ] - The hosts to use for Algolia Search API. If you provide them, you will no more benefit from our HA implementation
  */
 function AlgoliaSearch(applicationID, apiKey, opts) {
   var extend = require('extend');
@@ -43,6 +42,11 @@ function AlgoliaSearch(applicationID, apiKey, opts) {
   this.applicationID = applicationID;
   this.apiKey = apiKey;
 
+  var defaultHosts = [
+    this.applicationID + '-1.algolianet.com',
+    this.applicationID + '-2.algolianet.com',
+    this.applicationID + '-3.algolianet.com'
+  ];
   this.hosts = {
     read: [],
     write: []
@@ -57,7 +61,6 @@ function AlgoliaSearch(applicationID, apiKey, opts) {
 
   var protocol = opts.protocol || 'http:';
   var timeout = opts.timeout === undefined ? 2000 : opts.timeout;
-  var tld = opts.tld || 'net';
 
   // while we advocate for colon-at-the-end values: 'http:' for `opts.protocol`
   // we also accept `http` and `https`. It's a common error.
@@ -70,21 +73,12 @@ function AlgoliaSearch(applicationID, apiKey, opts) {
   }
 
   // no hosts given, add defaults
-  if (opts.hosts === undefined || opts.hosts.length === 0) {
-    this.hosts.read = shuffle([
-      this.applicationID + '-1.algolia.' + tld,
-      this.applicationID + '-2.algolia.' + tld,
-      this.applicationID + '-3.algolia.' + tld
-    ]);
+  if (!opts.hosts) {
+    this.hosts.read = [this.applicationID + '-dsn.algolia.net'].concat(defaultHosts);
+    this.hosts.write = [this.applicationID + '.algolia.net'].concat(defaultHosts);
   } else {
-    this.hosts.read = extend([], opts.hosts || []);
-  }
-
-  this.hosts.write = shuffle(extend([], this.hosts.read));
-
-  // no hosts provided, append a DSN host, only for read hosts
-  if (opts.hosts === undefined || opts.hosts.length === 0) {
-    this.hosts.read.unshift(this.applicationID + '-dsn.algolia.' + tld);
+    this.hosts.read = extend([], opts.hosts);
+    this.hosts.write = extend([], opts.hosts);
   }
 
   // add protocol and lowercase hosts
