@@ -22,6 +22,7 @@ test('AlgoliaSearch index API spec', function(t) {
     'addObjects',
     'addUserKey',
     'addUserKeyWithValidity',
+    'updateUserKey',
     'browse',
     'clearCache',
     'clearIndex',

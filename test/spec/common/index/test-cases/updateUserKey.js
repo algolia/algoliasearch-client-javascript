@@ -1,30 +1,30 @@
 module.exports = [{
   object: 'index',
-  methodName: 'addUserKey',
-  testName: 'index.addUserKey(acls, cb)',
-  callArguments: [['search', 'mom']],
+  methodName: 'updateUserKey',
+  testName: 'index.updateUserKey(key, acls, cb)',
+  callArguments: ['HI5', ['search', 'mom']],
   action: 'write',
   expectedRequest: {
-    method: 'POST',
+    method: 'PUT',
     body: {
       acl: ['search', 'mom']
     },
     URL: {
-      pathname: '/1/indexes/%s/keys'
+      pathname: '/1/indexes/%s/keys/HI5'
     }
   }
 }, {
-  testName: 'index.addUserKey(acls, params, cb)',
+  testName: 'index.updateUserKey(key, acls, params, cb)',
   object: 'index',
-  methodName: 'addUserKey',
-  callArguments: [['smurf', 'it'], {
+  methodName: 'updateUserKey',
+  callArguments: ['NOM', ['smurf', 'it'], {
     validity: 299,
     maxQueriesPerIPPerHour: 9000,
     maxHitsPerQuery: 0
   }],
   action: 'write',
   expectedRequest: {
-    method: 'POST',
+    method: 'PUT',
     body: {
       acl: ['smurf', 'it'],
       validity: 299,
@@ -32,27 +32,27 @@ module.exports = [{
       maxHitsPerQuery: 0
     },
     URL: {
-      pathname: '/1/indexes/%s/keys'
+      pathname: '/1/indexes/%s/keys/NOM'
     }
   }
 }, {
-  testName: 'index.addUserKey(acls, params, cb) some params',
+  testName: 'index.updateUserKey(key, acls, params, cb) some params',
   object: 'index',
-  methodName: 'addUserKey',
-  callArguments: [['smurf', 'it'], {
+  methodName: 'updateUserKey',
+  callArguments: ['GREAT', ['smurf', 'it'], {
     validity: 299,
     maxQueriesPerIPPerHour: 9000
   }],
   action: 'write',
   expectedRequest: {
-    method: 'POST',
+    method: 'PUT',
     body: {
       acl: ['smurf', 'it'],
       validity: 299,
       maxQueriesPerIPPerHour: 9000
     },
     URL: {
-      pathname: '/1/indexes/%s/keys'
+      pathname: '/1/indexes/%s/keys/GREAT'
     }
   }
 }];
