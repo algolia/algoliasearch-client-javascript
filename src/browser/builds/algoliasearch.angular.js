@@ -1,19 +1,34 @@
 // This is the AngularJS Algolia Search module
 // It's using $http to do requests with a JSONP fallback
 // $q promises are returned
+
 var inherits = require('inherits');
 
 var AlgoliaSearch = require('../../AlgoliaSearch');
-var JSONPRequest = require('../jsonp-request');
+var inlineHeaders = require('../inline-headers');
+var JSONPRequest = require('../JSONP-request');
 
 global.angular.module('algoliasearch', [])
   .service('algolia', ['$http', '$q', '$timeout', function ($http, $q, $timeout) {
 
     function algoliasearch(applicationID, apiKey, opts) {
+      var extend = require('extend');
+
+      var getDocumentProtocol = require('../get-document-protocol');
+
+      opts = extend(true, {}, opts) || {};
+
+      if (opts.protocol === undefined) {
+        opts.protocol = getDocumentProtocol();
+      }
+
+      opts._ua = algoliasearch.ua;
+
       return new AlgoliaSearchAngular(applicationID, apiKey, opts);
     }
 
     algoliasearch.version = require('../../version.json');
+    algoliasearch.ua = 'Algolia for AngularJS ' + algoliasearch.version;
 
     function AlgoliaSearchAngular() {
       // call AlgoliaSearch constructor
@@ -30,6 +45,8 @@ global.angular.module('algoliasearch', [])
         if (opts.body !== undefined) {
           body = JSON.stringify(opts.body);
         }
+
+        url = inlineHeaders(url, opts.headers);
 
         var timeout = $q(function(resolveTimeout) {
           $timeout(function() {
@@ -71,6 +88,8 @@ global.angular.module('algoliasearch', [])
     };
 
     AlgoliaSearchAngular.prototype._request.fallback = function(url, opts) {
+      url = inlineHeaders(url, opts.headers);
+
       return $q(function(resolve, reject) {
         JSONPRequest(url, opts, function JSONPRequestDone(err, content) {
           if (err) {
@@ -99,8 +118,10 @@ global.angular.module('algoliasearch', [])
     };
 
     return {
-      Client: function(applicationID, apiKey, options) {
+      Client: function (applicationID, apiKey, options) {
         return algoliasearch(applicationID, apiKey, options);
-      }
+      },
+      ua: algoliasearch.ua,
+      version: algoliasearch.version
     };
   }]);

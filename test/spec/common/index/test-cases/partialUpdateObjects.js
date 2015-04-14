@@ -11,6 +11,7 @@ module.exports = {
   methodName: 'partialUpdateObjects',
   testName: 'index.partialUpdateObjects(objects, cb)',
   callArguments: [objects],
+  action: 'write',
   expectedRequest: {
     method: 'POST',
     body: {

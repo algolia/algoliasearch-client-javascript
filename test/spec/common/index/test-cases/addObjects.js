@@ -11,6 +11,7 @@ module.exports = {
   methodName: 'addObjects',
   testName: 'index.addObjects(objects, cb)',
   callArguments: [objects],
+  action: 'write',
   expectedRequest: {
     method: 'POST',
     body: {

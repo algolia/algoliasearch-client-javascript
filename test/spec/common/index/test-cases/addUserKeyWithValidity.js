@@ -9,6 +9,7 @@ module.exports = {
       maxHitsPerQuery: 420
     }
   ],
+  action: 'write',
   expectedRequest: {
     method: 'POST',
     body: {

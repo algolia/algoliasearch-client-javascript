@@ -3,6 +3,8 @@ module.exports = computeExpectedRequest;
 var merge = require('lodash-compat/object/merge');
 var format = require('util').format;
 
+var algoliasearch = require('../../');
+
 function computeExpectedRequest(expectedRequest, credentials) {
   expectedRequest.URL = merge(
     getRequestURL(credentials),
@@ -33,17 +35,32 @@ function computeExpectedRequest(expectedRequest, credentials) {
     }
   }
 
+  if (!process.browser) {
+    expectedRequest.headers['x-algolia-api-key'] = credentials.searchOnlyAPIKey;
+    expectedRequest.headers['x-algolia-application-id'] = credentials.applicationID;
+    expectedRequest.headers['x-user-agent'] = algoliasearch.ua;
+  }
+
   return expectedRequest;
 }
 
 function getRequestURL(credentials) {
+  var expectedQueryString;
+
+  if (process.browser) {
+    expectedQueryString = {
+      'x-algolia-api-key': credentials.searchOnlyAPIKey,
+      'x-algolia-application-id': credentials.applicationID,
+      'x-user-agent': algoliasearch.ua
+    };
+  } else {
+    // serverside will send them in headers
+    expectedQueryString = {};
+  }
+
   return {
     protocol: process.browser ? document.location.protocol : 'http:',
-    host: credentials.applicationID + '-dsn.algolia.net',
     URL: {pathname: '/not-set'},
-    query: {
-      'X-Algolia-API-Key': credentials.searchOnlyAPIKey,
-      'X-Algolia-Application-Id': credentials.applicationID
-    }
+    query: expectedQueryString
   };
 }

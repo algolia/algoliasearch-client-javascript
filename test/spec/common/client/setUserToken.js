@@ -3,7 +3,7 @@ var test = require('tape');
 test('client.setUserToken(token)', function(t) {
   var async = require('async');
 
-  t.plan(3);
+  t.plan(2);
 
   var fauxJax = require('faux-jax');
   var parse = require('url-parse');
@@ -25,10 +25,17 @@ test('client.setUserToken(token)', function(t) {
 
     fauxJax.once('request', function(req) {
       req.respond(200, {}, '{}');
-      t.notOk(
-        parse(req.requestURL, true).query['X-Algolia-UserToken'],
-        'No `X-Algolia-UserToken` set on first request'
-      );
+      if (process.browser) {
+        t.notOk(
+          parse(req.requestURL, true).query['x-algolia-usertoken'],
+          'No `X-Algolia-UserToken` set on first request'
+        );
+      } else {
+        t.notOk(
+          req.requestHeaders['x-algolia-usertoken'],
+          'No `X-Algolia-UserToken` set on first request'
+        );
+      }
 
       cb();
     });
@@ -42,15 +49,19 @@ test('client.setUserToken(token)', function(t) {
     fauxJax.once('request', function(req) {
       req.respond(200, {}, '{}');
 
-      t.ok(
-        req.requestURL.indexOf('&X-Algolia-UserToken=foo%2Fbar') > -1,
-        '`X-Algolia-UserToken` is set and URL encoded'
-      );
-      t.equal(
-        parse(req.requestURL, true).query['X-Algolia-UserToken'],
-        'foo/bar',
-        '`X-Algolia-UserToken` set on second request'
-      );
+      if (process.browser) {
+        t.equal(
+          parse(req.requestURL, true).query['x-algolia-usertoken'],
+          'foo/bar',
+          '`X-Algolia-UserToken` set on second request'
+        );
+      } else {
+        t.equal(
+          req.requestHeaders['x-algolia-usertoken'],
+          'foo/bar',
+          '`X-Algolia-UserToken` set on second request'
+        );
+      }
 
       cb();
     });

@@ -1,20 +1,35 @@
 // This is the jQuery Algolia Search module
 // It's using $.ajax to do requests with a JSONP fallback
 // jQuery promises are returned
+
 var inherits = require('inherits');
 
 var AlgoliaSearch = require('../../AlgoliaSearch');
-var JSONPRequest = require('../jsonp-request');
+var inlineHeaders = require('../inline-headers');
+var JSONPRequest = require('../JSONP-request');
 
 function algoliasearch(applicationID, apiKey, opts) {
+  var extend = require('extend');
+
+  var getDocumentProtocol = require('../get-document-protocol');
+
+  opts = extend(true, {}, opts) || {};
+
+  if (opts.protocol === undefined) {
+    opts.protocol = getDocumentProtocol();
+  }
+
+  opts._ua = algoliasearch.ua;
+
   return new AlgoliaSearchJQuery(applicationID, apiKey, opts);
 }
 
 algoliasearch.version = require('../../version.json');
+algoliasearch.ua = 'Algolia for jQuery ' + algoliasearch.version;
 
 var $ = global.jQuery;
 
-$.algolia = {Client: algoliasearch};
+$.algolia = {Client: algoliasearch, ua: algoliasearch.ua, version: algoliasearch.version};
 
 function AlgoliaSearchJQuery() {
   // call AlgoliaSearch constructor
@@ -30,6 +45,8 @@ AlgoliaSearchJQuery.prototype._request = function(url, opts) {
     if (opts.body !== undefined) {
       body = JSON.stringify(opts.body);
     }
+
+    url = inlineHeaders(url, opts.headers);
 
     $.ajax(url, {
       type: opts.method,
@@ -57,6 +74,8 @@ AlgoliaSearchJQuery.prototype._request = function(url, opts) {
 };
 
 AlgoliaSearchJQuery.prototype._request.fallback = function(url, opts) {
+  url = inlineHeaders(url, opts.headers);
+
   return $.Deferred(function(deferred) {
     JSONPRequest(url, opts, function JSONPRequestDone(err, content) {
       if (err) {

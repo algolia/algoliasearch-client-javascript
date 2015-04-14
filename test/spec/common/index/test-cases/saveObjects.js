@@ -13,6 +13,7 @@ module.exports = {
   methodName: 'saveObjects',
   testName: 'index.saveObjects(objects, cb)',
   callArguments: [objects],
+  action: 'write',
   expectedRequest: {
     method: 'POST',
     body: {

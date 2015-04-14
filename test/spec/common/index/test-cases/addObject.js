@@ -7,6 +7,7 @@ var testCases = module.exports = [{
   callArguments: [{
     yaw: 'one'
   }],
+  action: 'write',
   expectedRequest: {
     method: 'POST',
     body: {
@@ -27,6 +28,7 @@ if (!process.browser || fauxJax.support.xhr.cors) {
     callArguments: [{
       yaw: 'two'
     }, 'dsa dsd/ sa'],
+    action: 'write',
     expectedRequest: {
       method: 'PUT',
       body: {

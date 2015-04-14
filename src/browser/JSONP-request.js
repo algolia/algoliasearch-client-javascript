@@ -8,6 +8,10 @@ function JSONPRequest(url, opts, cb) {
     return;
   }
 
+  var JSONPDebug = require('debug')('algoliasearch:JSONP-request:' + url);
+
+  JSONPDebug('start');
+
   var cbCalled = false;
   var timedOut = false;
 
@@ -63,6 +67,8 @@ function JSONPRequest(url, opts, cb) {
   head.appendChild(script);
 
   function success() {
+    JSONPDebug('success');
+
     if (done || timedOut) {
       return;
     }
@@ -71,6 +77,7 @@ function JSONPRequest(url, opts, cb) {
 
     // script loaded but did not call the fn => script loading error
     if (!cbCalled) {
+      JSONPDebug('fail: script loaded but did not call the callback');
       clean();
       cb(new Error('Failed to load JSONP script'));
     }
@@ -99,12 +106,16 @@ function JSONPRequest(url, opts, cb) {
   }
 
   function timeout() {
+    JSONPDebug('timeout');
+
     timedOut = true;
     clean();
     cb(new Error('Timeout - Could not connect to endpoint ' + url));
   }
 
   function error() {
+    JSONPDebug('error');
+
     if (done || timedOut) {
       return;
     }

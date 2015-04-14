@@ -62,8 +62,9 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
 
           t.deepEqual(
             requestURL.query, {
-              'X-Algolia-API-Key': 'ROCKSSuccess',
-              'X-Algolia-Application-Id': 'AngularJSSuccess'
+              'x-algolia-api-key': 'ROCKSSuccess',
+              'x-algolia-application-id': 'AngularJSSuccess',
+              'x-user-agent': algolia.ua
             },
             'requestURL query matches'
           );

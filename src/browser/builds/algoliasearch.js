@@ -7,13 +7,27 @@ var inherits = require('inherits');
 var Promise = global.Promise || require('es6-promise').Promise;
 
 var AlgoliaSearch = require('../../AlgoliaSearch');
-var JSONPRequest = require('../jsonp-request');
+var inlineHeaders = require('../inline-headers');
+var JSONPRequest = require('../JSONP-request');
 
 function algoliasearch(applicationID, apiKey, opts) {
+  var extend = require('extend');
+
+  var getDocumentProtocol = require('../get-document-protocol');
+
+  opts = extend(true, {}, opts) || {};
+
+  if (opts.protocol === undefined) {
+    opts.protocol = getDocumentProtocol();
+  }
+
+  opts._ua = algoliasearch.ua;
+
   return new AlgoliaSearchBrowser(applicationID, apiKey, opts);
 }
 
 algoliasearch.version = require('../../version.json');
+algoliasearch.ua = 'Algolia for vanilla JavaScript ' + algoliasearch.version;
 
 var support = {
   hasXMLHttpRequest: 'XMLHttpRequest' in window,
@@ -37,6 +51,8 @@ AlgoliaSearchBrowser.prototype._request = function(url, opts) {
       reject(new Error('CORS not supported'));
       return;
     }
+
+    url = inlineHeaders(url, opts.headers);
 
     var body = null;
     var req = support.cors ? new XMLHttpRequest() : new XDomainRequest();
@@ -134,6 +150,8 @@ AlgoliaSearchBrowser.prototype._request = function(url, opts) {
 };
 
 AlgoliaSearchBrowser.prototype._request.fallback = function(url, opts) {
+  url = inlineHeaders(url, opts.headers);
+
   return new Promise(function(resolve, reject) {
     JSONPRequest(url, opts, function JSONPRequestDone(err, content) {
       if (err) {

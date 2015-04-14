@@ -5,6 +5,7 @@ testCases.push({
   methodName: 'waitTask',
   testName: 'index.waitTask(taskID, cb) success',
   callArguments: [25000],
+  action: 'read',
   expectedRequest: {
     method: 'GET',
     URL: {
@@ -18,12 +19,12 @@ testCases.push({
   }
 });
 
-
 testCases.push({
   object: 'index',
   methodName: 'waitTask',
   testName: 'index.waitTask(taskID, cb) error',
   callArguments: [26000],
+  action: 'read',
   expectedRequest: {
     method: 'GET',
     URL: {

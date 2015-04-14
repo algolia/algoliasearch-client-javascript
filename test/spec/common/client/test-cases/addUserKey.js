@@ -3,9 +3,50 @@ module.exports = [{
   object: 'client',
   methodName: 'addUserKey',
   callArguments: [['search', 'browse']],
+  action: 'write',
   expectedRequest: {
     method: 'POST',
-    body: { acl: ['search', 'browse'], validity: 0, maxQueriesPerIPPerHour: 0, maxHitsPerQuery: 0 },
+    body: { acl: ['search', 'browse'] },
+    URL: {pathname: '/1/keys'}
+  }
+}, {
+  testName: 'client.addUserKey(acls, params, cb)',
+  object: 'client',
+  methodName: 'addUserKey',
+  callArguments: [['smurf', 'it'], {
+    validity: 299,
+    maxQueriesPerIPPerHour: 9000,
+    maxHitsPerQuery: 0,
+    indexes: ['le chat', 'black']
+  }],
+  action: 'write',
+  expectedRequest: {
+    method: 'POST',
+    body: {
+      acl: ['smurf', 'it'],
+      validity: 299,
+      maxQueriesPerIPPerHour: 9000,
+      maxHitsPerQuery: 0,
+      indexes: ['le chat', 'black']
+    },
+    URL: {pathname: '/1/keys'}
+  }
+}, {
+  testName: 'client.addUserKey(acls, params, cb) some params',
+  object: 'client',
+  methodName: 'addUserKey',
+  callArguments: [['smurf', 'it'], {
+    validity: 299,
+    maxQueriesPerIPPerHour: 9000
+  }],
+  action: 'write',
+  expectedRequest: {
+    method: 'POST',
+    body: {
+      acl: ['smurf', 'it'],
+      validity: 299,
+      maxQueriesPerIPPerHour: 9000
+    },
     URL: {pathname: '/1/keys'}
   }
 }, {
@@ -19,6 +60,7 @@ module.exports = [{
       maxHitsPerQuery: 10
     }
   ],
+  action: 'write',
   expectedRequest: {
     method: 'POST',
     body: { acl: ['search', 'browse'], validity: 42, maxQueriesPerIPPerHour: 100, maxHitsPerQuery: 10 },

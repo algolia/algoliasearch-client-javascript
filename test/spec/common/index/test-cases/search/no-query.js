@@ -10,21 +10,26 @@ var commonExpectedRequest = {
 
 module.exports = [{
   testName: 'index.search(undefined, cb)',
-  callArguments: [undefined],
   methodName: 'search',
+  callArguments: [undefined],
+  action: 'read',
   expectedRequest: cloneDeep(commonExpectedRequest)
 }, {
   testName: 'index.search(null, cb)',
-  callArguments: [null],
   methodName: 'search',
+  callArguments: [null],
+  action: 'read',
   expectedRequest: cloneDeep(commonExpectedRequest)
 }, {
   testName: 'index.search(\'\', cb)',
-  callArguments: [''],
   methodName: 'search',
+  callArguments: [''],
+  action: 'read',
   expectedRequest: cloneDeep(commonExpectedRequest)
 }, {
   testName: 'index.search(cb)',
   methodName: 'search',
+  callArguments: [],
+  action: 'read',
   expectedRequest: cloneDeep(commonExpectedRequest)
 }];

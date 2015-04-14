@@ -1,9 +1,49 @@
 CHANGELOG
 
+UNREALEASED
+    * CHANGE: Node.js will now use http headers instead of inlining them into the api call as browsers are doing
+    * CHANGE: Ensure all headers (http, querystrings) are lowercased. Both are supported by our API, reduces FUD
+    * FEATURE: add index.getObjects()
+    * FEATURE: add index.deleteObjects()
+    * FIX: waitTask failure case when using promises, was not going through
+    * FEATURE: add index.deleteByQuery()
+    * FEATURE (Node.js): add client.enableRateLimitForward()
+    * FEATURE (Node.js): add client.disableRateLimitForward()
+    * FEATURE (Node.js): add client.useSecuredAPIKey()
+    * FEATURE (Node.js): add client.disableSecuredAPIKey()
+    * BREAKING CHANGE (Node.js): client.setTimeout renamed to client.setRequestTimeout
+    * TEST: add test around setRequestTimeout
+    * FEATURE (Node.js): add client.generateSecuredApiKey()
+    * FEATURE:
+      - all clients are now exposing algoliasearch.ua
+      - all requests are now sending x-user-agent containing for example 'Algoliasearch for vanilla JavaScript 3.0.7'
+    * FEATURE: add client.search()
+      Search against multiple indices, equivalent of, multipleQueries, or
+      startQueriesBatch+addQueryInBatch+sendQueriesBatch
+    * BREAKING CHANGE (Node.js): removed client.multipleQueries(), use client.search(queries)
+    * DEPRECIATION (browser): client.startQueriesBatch/addQueryInBatch/sendQueriesBatch
+      Use client.search(queries)
+    * FEATURE: new HA implementation
+      We now use two different DNS to perform all requests
+      Removed the tld option as it's no more needed nor compatible with having a new HA implementation with different tlds (.com/.net)
+    * DEPRECIATION: client.addUserKeyWithValidity(), index.addUserKeyWithValidity()
+      You can now use client.addUserKey(acls, params, cb), index.addUserKey(acls, params, cb)
+    * FEATURE: client|index.updateUserKey(key, acls, params, callback)
+      Update a user key, provide acls and optional params
+    * BREAKING CHANGE (Node.js):
+      As we now have addUserKey and updateUserKey, we removed:
+       - client|index.addUserKeyWithValidityAndIndexes
+       - client|index.updateUserKeyWithValidity
+       - client|index.updateUserKeyWithValidityAndIndexes
+      You can use client|index.addUserKey or client|index.updateUserKey to do
+      deal with all you keys needs
+
 2015-10-04  3.0.7
     * MIGRATION: throw on V2 .search() usage:
       - .search(query, cb, params)
       - .search(cb, params)
+    * FEATURE: add client.destroy() in Node.js implementation
+      will destroy all keepalived connections and let the process exits if needed
 
 2015-03-04  3.0.6
     * FIX: Webpack compatibility by removing packageify

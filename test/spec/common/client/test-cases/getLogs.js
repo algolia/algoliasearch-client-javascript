@@ -5,6 +5,7 @@ var sinon = require('sinon');
 var baseTestCase = {
   object: 'client',
   methodName: 'getLogs',
+  action: 'read',
   expectedRequest: {
     method: 'GET',
     URL: {

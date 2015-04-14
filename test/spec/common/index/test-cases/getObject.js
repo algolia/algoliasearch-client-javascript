@@ -3,6 +3,7 @@ module.exports = [{
   object: 'index',
   methodName: 'getObject',
   callArguments: ['first object'],
+  action: 'read',
   expectedRequest: {
     method: 'GET',
     URL: {
@@ -14,6 +15,7 @@ module.exports = [{
   object: 'index',
   methodName: 'getObject',
   callArguments: ['second object', ['some', 'attrs']],
+  action: 'read',
   expectedRequest: {
     method: 'GET',
     URL: {

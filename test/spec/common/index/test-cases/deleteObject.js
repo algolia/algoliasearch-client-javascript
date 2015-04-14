@@ -6,6 +6,7 @@ if (!process.browser || fauxJax.support.xhr.cors) {
     methodName: 'deleteObject',
     testName: 'index.deleteObject(objectID, cb)',
     callArguments: ['WELL :)'],
+    action: 'write',
     expectedRequest: {
       method: 'DELETE',
       URL: {

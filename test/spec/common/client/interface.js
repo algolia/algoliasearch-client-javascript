@@ -12,15 +12,16 @@ test('AlgoliaSearch client API spec', function(t) {
   var algoliasearch = require('../../../../');
   var onlyPublicProperties = require('../../../utils/only-public-properties');
 
-  var client = algoliasearch('test', 'methods');
+  var client = algoliasearch('test', 'properties');
 
-  var actualMethods = filter(functions(client), onlyPublicProperties).sort();
+  var actualProperties = filter(functions(client), onlyPublicProperties).sort();
 
-  var expectedMethods = [
+  var expectedProperties = [
     'Index',
     'addQueryInBatch',
     'addUserKey',
     'addUserKeyWithValidity',
+    'updateUserKey',
     'clearCache',
     'copyIndex',
     'deleteIndex',
@@ -31,12 +32,27 @@ test('AlgoliaSearch client API spec', function(t) {
     'listIndexes',
     'listUserKeys',
     'moveIndex',
+    'search',
     'sendQueriesBatch',
     'setExtraHeader',
     'setRequestTimeout',
     'setSecurityTags',
     'setUserToken',
-    'startQueriesBatch'].sort();
+    'startQueriesBatch'];
 
-  t.deepEqual(actualMethods, expectedMethods, 'We only implement what is tested');
+  // Node.js only methods, not added conditionnaly because
+  // they are still declared in other environments,
+  // but they will throw
+  expectedProperties = expectedProperties.concat([
+    'destroy',
+    'disableRateLimitForward',
+    'disableSecuredAPIKey',
+    'enableRateLimitForward',
+    'useSecuredAPIKey',
+    'generateSecuredApiKey'
+  ]);
+
+  expectedProperties = expectedProperties.sort();
+
+  t.deepEqual(actualProperties, expectedProperties, 'We only implement what is tested');
 });

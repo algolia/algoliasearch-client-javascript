@@ -4,6 +4,7 @@ module.exports = [{
   callArguments: ['some params', {
     page: 1
   }],
+  action: 'read',
   expectedRequest: {
     method: 'POST',
     URL: {pathname: '/1/indexes/%s/query'},
@@ -18,6 +19,7 @@ module.exports = [{
     query: 'dear Slim',
     page: 2
   }],
+  action: 'read',
   expectedRequest: {
     method: 'POST',
     URL: {pathname: '/1/indexes/%s/query'},
@@ -47,6 +49,7 @@ module.exports = [{
       removeWordsIfNoResults: 'allOptional'
     }
   ],
+  action: 'read',
   expectedRequest: {
     method: 'POST',
     URL: {pathname: '/1/indexes/%s/query'},
