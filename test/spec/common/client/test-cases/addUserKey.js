@@ -6,7 +6,7 @@ module.exports = [{
   action: 'write',
   expectedRequest: {
     method: 'POST',
-    body: { acl: ['search', 'browse'], validity: 0, maxQueriesPerIPPerHour: 0, maxHitsPerQuery: 0 },
+    body: { acl: ['search', 'browse'] },
     URL: {pathname: '/1/keys'}
   }
 }, {

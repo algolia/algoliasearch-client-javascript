@@ -26,6 +26,8 @@ UNREALEASED
     * FEATURE: new HA implementation
       We now use two different DNS to perform all requests
       Removed the tld option as it's no more needed nor compatible with having a new HA implementation with different tlds (.com/.net)
+    * DEPRECIATION: client.addUserKeyWithValidity(), index.addUserKeyWithValidity()
+      You can now use client.addUserKey(acls, params, cb), index.addUserKey(acls, params, cb)
 
 2015-10-04  3.0.7
     * MIGRATION: throw on V2 .search() usage:

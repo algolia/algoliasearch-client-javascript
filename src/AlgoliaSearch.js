@@ -250,28 +250,6 @@ AlgoliaSearch.prototype = {
    *   - deleteIndex : allows to delete index content (https only)
    *   - settings : allows to get index settings (https only)
    *   - editSettings : allows to change index settings (https only)
-   * @param callback the result callback called with two arguments
-   *  error: null or Error('message')
-   *  content: the server answer with user keys list
-   */
-  addUserKey: function(acls, callback) {
-    return this.addUserKeyWithValidity(acls, {
-      validity: 0,
-      maxQueriesPerIPPerHour: 0,
-      maxHitsPerQuery: 0
-    }, callback);
-  },
-  /*
-   * Add an existing user key
-   *
-   * @param acls the list of ACL for this key. Defined by an array of strings that
-   * can contains the following values:
-   *   - search: allow to search (https and http)
-   *   - addObject: allows to add/update an object in the index (https only)
-   *   - deleteObject : allows to delete an existing object (https only)
-   *   - deleteIndex : allows to delete index content (https only)
-   *   - settings : allows to get index settings (https only)
-   *   - editSettings : allows to change index settings (https only)
    * @param params.validity the number of seconds after which the key will be automatically removed (0 means no time limit for this key)
    * @param params.maxQueriesPerIPPerHour Specify the maximum number of API calls allowed from an IP address per hour.
    * @param params.maxHitsPerQuery Specify the maximum number of hits this API key can retrieve in one call.
@@ -279,18 +257,38 @@ AlgoliaSearch.prototype = {
    *  error: null or Error('message')
    *  content: the server answer with user keys list
    */
-  addUserKeyWithValidity: function(acls, params, callback) {
-    var aclsObject = {};
-    aclsObject.acl = acls;
-    aclsObject.validity = params.validity;
-    aclsObject.maxQueriesPerIPPerHour = params.maxQueriesPerIPPerHour;
-    aclsObject.maxHitsPerQuery = params.maxHitsPerQuery;
-    return this._jsonRequest({ method: 'POST',
-              url: '/1/keys',
-              body: aclsObject,
-              hostType: 'write',
-              callback: callback });
+  addUserKey: function(acls, params, callback) {
+    if (arguments.length === 1 || typeof params === 'function') {
+      callback = params;
+      params = null;
+    }
+
+    var postObj = {
+      acl: acls
+    };
+
+    if (params) {
+      postObj.validity = params.validity;
+      postObj.maxQueriesPerIPPerHour = params.maxQueriesPerIPPerHour;
+      postObj.maxHitsPerQuery = params.maxHitsPerQuery;
+    }
+
+    return this._jsonRequest({
+      method: 'POST',
+      url: '/1/keys',
+      body: postObj,
+      hostType: 'write',
+      callback: callback
+    });
   },
+  /*
+   * Add an existing user key
+   *
+   * @deprecated Please use client.addUserKey()
+   */
+  addUserKeyWithValidity: deprecate(function(acls, params, callback) {
+    return this.addUserKey(acls, params, callback);
+  }, deprecatedMessage('client.addUserKeyWithValidity()', 'client.addUserKey()')),
 
   /**
    * Set the extra security tagFilters header
@@ -324,29 +322,17 @@ AlgoliaSearch.prototype = {
     this.userToken = userToken;
   },
 
-  /*
+  /**
    * Initialize a new batch of search queries
+   * @deprecated use client.search()
    */
   startQueriesBatch: deprecate(function() {
     this._batch = [];
   }, deprecatedMessage('client.startQueriesBatch()', 'client.search()')),
-  /*
+
+  /**
    * Add a search query in the batch
-   *
-   * @param query the full text query
-   * @param args (optional) if set, contains an object with query parameters:
-   *  - attributes: an array of object attribute names to retrieve
-   *     (if not set all attributes are retrieve)
-   *  - attributesToHighlight: an array of object attribute names to highlight
-   *     (if not set indexed attributes are highlighted)
-   *  - minWordSizefor1Typo: the minimum number of characters to accept one typo.
-   *     Defaults to 3.
-   *  - minWordSizefor2Typos: the minimum number of characters to accept two typos.
-   *     Defaults to 7.
-   *  - getRankingInfo: if set, the result hits will contain ranking information in
-   *     _rankingInfo attribute
-   *  - page: (pagination parameter) page to retrieve (zero base). Defaults to 0.
-   *  - hitsPerPage: (pagination parameter) number of hits per page. Defaults to 10.
+   * @deprecated use client.search()
    */
   addQueryInBatch: deprecate(function(indexName, query, args) {
     this._batch.push({
@@ -355,18 +341,18 @@ AlgoliaSearch.prototype = {
       params: args
     });
   }, deprecatedMessage('client.addQueryInBatch()', 'client.search()')),
-  /*
-   * Clear all queries in cache
-   * only present because we have client.search()
+
+  /**
+   * Clear all queries in client's cache
+   * @return undefined
    */
   clearCache: function() {
     this.cache = {};
   },
-  /*
+
+  /**
    * Launch the batch of queries using XMLHttpRequest.
-   * (Optimized for browser using a POST query to minimize number of OPTIONS queries)
-   *
-   * @param callback the function that will receive results
+   * @deprecated use client.search()
    */
   sendQueriesBatch: deprecate(function(callback) {
     return this.search(this._batch, callback);
@@ -1383,50 +1369,39 @@ AlgoliaSearch.prototype.Index.prototype = {
    *  error: null or Error('message')
    *  content: the server answer with user keys list
    */
-  addUserKey: function(acls, callback) {
-    var indexObj = this;
-    var aclsObject = {};
-    aclsObject.acl = acls;
-    return this.as._jsonRequest({ method: 'POST',
-      url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/keys',
-      body: aclsObject,
+  addUserKey: function(acls, params, callback) {
+    if (arguments.length === 1 || typeof params === 'function') {
+      callback = params;
+      params = null;
+    }
+
+    var postObj = {
+      acl: acls
+    };
+
+    if (params) {
+      postObj.validity = params.validity;
+      postObj.maxQueriesPerIPPerHour = params.maxQueriesPerIPPerHour;
+      postObj.maxHitsPerQuery = params.maxHitsPerQuery;
+    }
+
+    return this.as._jsonRequest({
+      method: 'POST',
+      url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/keys',
+      body: postObj,
       hostType: 'write',
-      callback: callback });
+      callback: callback
+    });
   },
+
   /*
    * Add an existing user key associated to this index
-   *
-   * @param acls the list of ACL for this key. Defined by an array of strings that
-   * can contains the following values:
-   *   - search: allow to search (https and http)
-   *   - addObject: allows to add/update an object in the index (https only)
-   *   - deleteObject : allows to delete an existing object (https only)
-   *   - deleteIndex : allows to delete index content (https only)
-   *   - settings : allows to get index settings (https only)
-   *   - editSettings : allows to change index settings (https only)
-   * @param params.validity the number of seconds after which the key will be automatically removed (0 means no time limit for this key)
-   * @param params.maxQueriesPerIPPerHour Specify the maximum number of API calls allowed from an IP address per hour.
-   * @param params.maxHitsPerQuery Specify the maximum number of hits this API key can retrieve in one call.
-   * @param callback the result callback called with two arguments
-   *  error: null or Error('message')
-   *  content: the server answer with user keys list
+   * @deprecated use index.addUserKey()
    */
-  addUserKeyWithValidity: function(acls, params, callback) {
-    var indexObj = this;
-    var aclsObject = {};
-    aclsObject.acl = acls;
-    aclsObject.validity = params.validity;
-    aclsObject.maxQueriesPerIPPerHour = params.maxQueriesPerIPPerHour;
-    aclsObject.maxHitsPerQuery = params.maxHitsPerQuery;
-    return this.as._jsonRequest({ method: 'POST',
-      url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/keys',
-      body: aclsObject,
-      hostType: 'write',
-      callback: callback });
-  },
-  ///
-  /// Internal methods only after this line
-  ///
+   addUserKeyWithValidity: deprecate(function(acls, params, callback) {
+     return this.addUserKey(acls, params, callback);
+   }, deprecatedMessage('index.addUserKeyWithValidity()', 'index.addUserKey()')),
+
   _search: function(params, callback) {
     return this.as._jsonRequest({ cache: this.cache,
       method: 'POST',
@@ -1442,7 +1417,6 @@ AlgoliaSearch.prototype.Index.prototype = {
     });
   },
 
-  // internal attributes
   as: null,
   indexName: null,
   typeAheadArgs: null,
