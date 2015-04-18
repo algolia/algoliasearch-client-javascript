@@ -90,8 +90,6 @@ AlgoliaSearchNodeJS.prototype._request = function(rawUrl, opts) {
 
     // socket inactivity timeout
     // this is not a global timeout on the request
-    // BUG: This will hang the program on node < 0.11
-    //  - https://github.com/node-modules/agentkeepalive/issues/17
     req.setTimeout(opts.timeout);
 
     req.once('error', error);
