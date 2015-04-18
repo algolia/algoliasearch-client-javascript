@@ -8,6 +8,9 @@ license="/*! algoliasearch ${PACKAGE_VERSION} | © 2014, 2015 Algolia SAS | gith
 
 echo 'Building algoliasearch-client-js'
 
+echo '..Parse cloud build using webpack'
+webpack --silent --config scripts/parse-build.webpack.config.js > /dev/null
+
 bundles=( 'algoliasearch' 'algoliasearch.angular' 'algoliasearch.jquery' )
 
 # The migration layer have two purposes

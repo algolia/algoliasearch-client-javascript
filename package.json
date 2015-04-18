@@ -78,6 +78,7 @@
     "jQuery-ajaxTransport-XDomainRequest": "http://github.com/MoonScript/jQuery-ajaxTransport-XDomainRequest/tarball/1.0.4",
     "jquery": "2.1.3",
     "json": "9.0.3",
+    "json-loader": "0.5.1",
     "lodash": "3.5.0",
     "lodash-compat": "3.5.0",
     "morgan": "1.5.1",
@@ -90,6 +91,7 @@
     "tap-spec": "3.0.0",
     "tape": "4.0.0",
     "url-parse": "1.0.0",
+    "webpack": "1.8.5",
     "xhr": "2.0.1",
     "zuul": "2.1.1",
     "zuul-ngrok": "3.0.0"
