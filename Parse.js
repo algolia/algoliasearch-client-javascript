@@ -1,1 +1,0 @@
-dist/algoliasearch.parse.js
