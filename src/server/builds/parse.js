@@ -12,6 +12,7 @@ var inherits = require('inherits');
 
 var AlgoliaSearch = require('../../AlgoliaSearch');
 
+
 debug('loaded the Parse client');
 
 function algoliasearch(applicationID, apiKey, opts) {
@@ -100,10 +101,6 @@ AlgoliaSearchParse.prototype._promise = {
     return promise;
   }
 };
-
-// no need for .destroy() in parse client
-// dunno about the state of keepalive in parse cloud http request implementation
-delete AlgoliaSearchParse.prototype.destroy;
 
 // There's no setTimeout in Parse cloud, but we have nextTick
 function _setTimeout(fn, ms) {
