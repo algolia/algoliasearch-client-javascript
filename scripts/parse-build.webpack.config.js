@@ -15,9 +15,6 @@ module.exports = {
       'util-deprecate': 'util-deprecate/browser.js'
     }
   },
-  node: {
-    process: 'mock'
-  },
   module: {
     loaders: [{
       test: /\.json$/,
