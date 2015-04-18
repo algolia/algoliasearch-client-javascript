@@ -10,7 +10,7 @@ var debug = require('debug')('algoliasearch:parse');
 
 var inherits = require('inherits');
 
-var AlgoliaSearch = require('../../AlgoliaSearch');
+var AlgoliaSearchServer = require('./AlgoliaSearchServer');
 
 
 debug('loaded the Parse client');
@@ -35,11 +35,11 @@ algoliasearch.version = require('../../version.json');
 algoliasearch.ua = 'Algolia for Parse ' + algoliasearch.version;
 
 function AlgoliaSearchParse() {
-  // call AlgoliaSearch constructor
-  AlgoliaSearch.apply(this, arguments);
+  // call AlgoliaSearchServer constructor
+  AlgoliaSearchServer.apply(this, arguments);
 }
 
-inherits(AlgoliaSearchParse, AlgoliaSearch);
+inherits(AlgoliaSearchParse, AlgoliaSearchServer);
 
 AlgoliaSearchParse.prototype._request = function(rawUrl, opts) {
   /*global Parse*/
