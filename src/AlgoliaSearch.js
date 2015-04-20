@@ -59,7 +59,7 @@ function AlgoliaSearch(applicationID, apiKey, opts) {
 
   opts = opts || {};
 
-  var protocol = opts.protocol || 'http:';
+  var protocol = opts.protocol || 'https:';
   var timeout = opts.timeout === undefined ? 2000 : opts.timeout;
 
   // while we advocate for colon-at-the-end values: 'http:' for `opts.protocol`
@@ -91,6 +91,8 @@ function AlgoliaSearch(applicationID, apiKey, opts) {
 
   this._ua = opts._ua;
   this._useCache = opts._useCache === undefined ? true : opts._useCache;
+
+  this._setTimeout = opts._setTimeout;
 
   debug('init done, %j', this);
 }
@@ -682,13 +684,13 @@ AlgoliaSearch.prototype = {
     // either we are using promises
     if (opts.callback) {
       promise.then(function okCb(content) {
-        setTimeout(function() {
+        exitPromise(function() {
           opts.callback(null, content);
-        }, 0);
+        }, client._setTimeout || setTimeout);
       }, function nookCb(err) {
-        setTimeout(function() {
+        exitPromise(function() {
           opts.callback(err);
-        }, 0);
+        }, client._setTimeout || setTimeout);
       });
     } else {
       return promise;
@@ -1008,6 +1010,7 @@ AlgoliaSearch.prototype.Index.prototype = {
    */
   deleteByQuery: function(query, params, callback) {
     var indexObj = this;
+    var client = indexObj.as;
 
     if (arguments.length === 1 || typeof params === 'function') {
       callback = params;
@@ -1060,15 +1063,15 @@ AlgoliaSearch.prototype.Index.prototype = {
     promise.then(success, failure);
 
     function success() {
-      setTimeout(function() {
+      exitPromise(function() {
         callback(null);
-      }, 0);
+      }, client._setTimeout || setTimeout);
     }
 
     function failure(err) {
-      setTimeout(function() {
+      exitPromise(function() {
         callback(err);
-      }, 0);
+      }, client._setTimeout || setTimeout);
     }
   },
   /*
@@ -1238,6 +1241,7 @@ AlgoliaSearch.prototype.Index.prototype = {
     // waitTask() must be handled differently from other methods,
     // it's a recursive method using a timeout
     var indexObj = this;
+    var client = indexObj.as;
 
     var promise = this.as._jsonRequest({
       method: 'GET',
@@ -1262,15 +1266,15 @@ AlgoliaSearch.prototype.Index.prototype = {
     promise.then(successCb, failureCb);
 
     function successCb(content) {
-      setTimeout(function() {
+      exitPromise(function() {
         callback(null, content);
-      }, 0);
+      }, client._setTimeout || setTimeout);
     }
 
     function failureCb(err) {
-      setTimeout(function() {
+      exitPromise(function() {
         callback(err);
-      }, 0);
+      }, client._setTimeout || setTimeout);
     }
   },
 
@@ -1553,4 +1557,12 @@ function deprecatedMessage(previousUsage, newUsage) {
 
   return 'algoliasearch: `' + previousUsage + '` was replaced by `' +
     newUsage + '`. Please see https://github.com/algolia/algoliasearch-client-js/wiki/Deprecated#' + githubAnchorLink
+}
+
+// Parse cloud does not supports setTimeout
+// We do not store a setTimeout reference in the client everytime
+// We only fallback to a fake setTimeout when not available
+// setTimeout cannot be override globally sadly
+function exitPromise(fn, _setTimeout) {
+  _setTimeout(fn, 0);
 }

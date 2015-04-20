@@ -7,7 +7,7 @@ var inherits = require('inherits');
 var Promise = global.Promise || require('es6-promise').Promise;
 var semver = require('semver');
 
-var AlgoliaSearch = require('../../AlgoliaSearch');
+var AlgoliaSearchServer = require('./AlgoliaSearchServer');
 
 // does not work on node < 0.8
 if (semver.satisfies(process.version, '<=0.7')) {
@@ -40,13 +40,13 @@ algoliasearch.ua = 'Algolia for Node.js ' + algoliasearch.version;
 function AlgoliaSearchNodeJS(applicationID, apiKey, opts) {
   var getKeepaliveAgent = require('./get-keepalive-agent');
 
-  // call AlgoliaSearch constructor
-  AlgoliaSearch.apply(this, arguments);
+  // call AlgoliaSearchServer constructor
+  AlgoliaSearchServer.apply(this, arguments);
 
   this._keepaliveAgent = getKeepaliveAgent(opts.protocol);
 }
 
-inherits(AlgoliaSearchNodeJS, AlgoliaSearch);
+inherits(AlgoliaSearchNodeJS, AlgoliaSearchServer);
 
 // node 0.10 => agentkeepalive
 // node 0.12 => native keepalive
@@ -90,8 +90,6 @@ AlgoliaSearchNodeJS.prototype._request = function(rawUrl, opts) {
 
     // socket inactivity timeout
     // this is not a global timeout on the request
-    // BUG: This will hang the program on node < 0.11
-    //  - https://github.com/node-modules/agentkeepalive/issues/17
     req.setTimeout(opts.timeout);
 
     req.once('error', error);
@@ -161,46 +159,6 @@ AlgoliaSearchNodeJS.prototype.destroy = function() {
 };
 
 /*
- * Allow to use IP rate limit when you have a proxy between end-user and Algolia.
- * This option will set the X-Forwarded-For HTTP header with the client IP and the X-Forwarded-API-Key with the API Key having rate limits.
- * @param adminAPIKey the admin API Key you can find in your dashboard
- * @param endUserIP the end user IP (you can use both IPV4 or IPV6 syntax)
- * @param rateLimitAPIKey the API key on which you have a rate limit
- */
-AlgoliaSearchNodeJS.prototype.enableRateLimitForward = function(adminAPIKey, endUserIP, rateLimitAPIKey) {
-  this._forward = {
-    adminAPIKey: adminAPIKey,
-    endUserIP: endUserIP,
-    rateLimitAPIKey: rateLimitAPIKey
-  };
-};
-
-/*
- * Disable IP rate limit enabled with enableRateLimitForward() function
- */
-AlgoliaSearchNodeJS.prototype.disableRateLimitForward = function() {
-  this._forward = null;
-};
-
-/*
- * Specify the securedAPIKey to use with associated information
- */
-AlgoliaSearchNodeJS.prototype.useSecuredAPIKey = function(securedAPIKey, securityTags, userToken) {
-  this._secure = {
-    apiKey: securedAPIKey,
-    securityTags: securityTags,
-    userToken: userToken
-  };
-};
-
-/*
- * If a secured API was used, disable it
- */
-AlgoliaSearchNodeJS.prototype.disableSecuredAPIKey = function() {
-  this._secure = null;
-};
-
-/*
  * Generate a secured and public API Key from a list of tagFilters and an
  * optional user token identifying the current user
  *
@@ -226,22 +184,4 @@ AlgoliaSearchNodeJS.prototype.generateSecuredApiKey = function(privateApiKey, ta
   }
 
   return crypto.createHmac('sha256', privateApiKey).update(tagFilters + (userToken || '')).digest('hex');
-};
-
-AlgoliaSearchNodeJS.prototype._computeRequestHeaders = function() {
-  var headers = AlgoliaSearchNodeJS.super_.prototype._computeRequestHeaders.call(this);
-
-  if (this._forward) {
-      headers['x-algolia-api-key'] = this._forward.adminAPIKey;
-      headers['x-forwarded-for'] = this._forward.endUserIP;
-      headers['x-forwarded-api-key'] = this._forward.rateLimitAPIKey;
-  }
-
-  if (this._secure) {
-    headers['x-algolia-api-key'] = this._secure.apiKey;
-    headers['x-algolia-tagfilters'] = this._secure.securityTags;
-    headers['x-algolia-usertoken'] = this._secure.userToken;
-  }
-
-  return headers;
 };

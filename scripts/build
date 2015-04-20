@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e # exit when error
 
 # Use this with `npm run build` so that `./node_modules/.bin` are injected into
 # the PATH
@@ -6,6 +7,9 @@
 license="/*! algoliasearch ${PACKAGE_VERSION} | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */"
 
 echo 'Building algoliasearch-client-js'
+
+echo '..Parse cloud build using webpack'
+webpack --silent --config scripts/parse-build.webpack.config.js > /dev/null
 
 bundles=( 'algoliasearch' 'algoliasearch.angular' 'algoliasearch.jquery' )
 
