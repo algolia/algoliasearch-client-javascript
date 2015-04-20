@@ -6,7 +6,12 @@ var inherits = require('inherits');
 
 var AlgoliaSearch = require('../../AlgoliaSearch');
 
-function AlgoliaSearchServer() {
+function AlgoliaSearchServer(applicationID, apiKey, opts) {
+  // Default protocol is https: on the server, to avoid leaking admin keys
+  if (opts.protocol === undefined) {
+    opts.protocol = 'https:';
+  }
+
   AlgoliaSearch.apply(this, arguments);
 }
 

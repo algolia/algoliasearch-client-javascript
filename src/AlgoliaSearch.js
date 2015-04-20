@@ -59,7 +59,7 @@ function AlgoliaSearch(applicationID, apiKey, opts) {
 
   opts = opts || {};
 
-  var protocol = opts.protocol || 'http:';
+  var protocol = opts.protocol || 'https:';
   var timeout = opts.timeout === undefined ? 2000 : opts.timeout;
 
   // while we advocate for colon-at-the-end values: 'http:' for `opts.protocol`
