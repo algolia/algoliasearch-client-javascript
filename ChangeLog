@@ -1,5 +1,9 @@
 CHANGELOG
 
+UNRELEASED
+    * BREAKING CHANGE: Parse build now uses V3 implementation
+    * FEATURE: Parse build now returns parse promises. https://parse.com/docs/js_guide#promises
+
 2015-10-04  3.1.0
     * CHANGE: Node.js will now use http headers instead of inlining them into the api call as browsers are doing
     * CHANGE: Ensure all headers (http, querystrings) are lowercased. Both are supported by our API, reduces FUD
