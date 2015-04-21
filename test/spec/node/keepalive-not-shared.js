@@ -1,5 +1,8 @@
 var test = require('tape');
 
+// do not share keepalive agent between requests
+// because we want to expose a client.destroy() that will destroy
+// the client's http Agent
 test('keepalive agent is not shared between clients', function(t) {
   t.plan(1);
 

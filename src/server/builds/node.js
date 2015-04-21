@@ -38,19 +38,17 @@ algoliasearch.version = require('../../version.json');
 algoliasearch.ua = 'Algolia for Node.js ' + algoliasearch.version;
 
 function AlgoliaSearchNodeJS(applicationID, apiKey, opts) {
-  var getKeepaliveAgent = require('./get-keepalive-agent');
+  var getAgent = require('./get-agent');
 
   // call AlgoliaSearchServer constructor
   AlgoliaSearchServer.apply(this, arguments);
 
-  this._keepaliveAgent = getKeepaliveAgent(opts.protocol);
+  this._Agent = getAgent(opts.protocol);
 }
 
 inherits(AlgoliaSearchNodeJS, AlgoliaSearchServer);
 
-// node 0.10 => agentkeepalive
-// node 0.12 => native keepalive
-// iojs => native keepalive
+
 AlgoliaSearchNodeJS.prototype._request = function(rawUrl, opts) {
   var http = require('http');
   var https = require('https');
@@ -67,10 +65,7 @@ AlgoliaSearchNodeJS.prototype._request = function(rawUrl, opts) {
       port: parsedUrl.port,
       method: opts.method,
       path: parsedUrl.path,
-      agent: client._keepaliveAgent/*,
-      // ??
-      // https://github.com/iojs/io.js/issues/1300
-      keepAlive: true*/
+      agent: client._Agent
     };
 
     var timedOut = false;
@@ -83,6 +78,7 @@ AlgoliaSearchNodeJS.prototype._request = function(rawUrl, opts) {
     }
 
     req.setHeader('connection', 'keep-alive');
+    req.setHeader('accept', 'application/json');
 
     Object.keys(opts.headers).forEach(function setRequestHeader(headerName) {
       req.setHeader(headerName, opts.headers[headerName]);
@@ -155,7 +151,7 @@ AlgoliaSearchNodeJS.prototype._promise = {
 };
 
 AlgoliaSearchNodeJS.prototype.destroy = function() {
-  this._keepaliveAgent.destroy();
+  this._Agent.destroy();
 };
 
 /*

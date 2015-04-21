@@ -42,7 +42,7 @@ function testProtocol(testedProtocol) {
           return;
         }
 
-        t.equal(socket, req.socket, 'Both requests should be using the same socket');
+        t.ok(socket === req.socket, 'Both requests should be using the same socket');
 
         // because we are using keepalive, connections will..be..kept..alive
         // we must destroy the server and all connections, not just close it
