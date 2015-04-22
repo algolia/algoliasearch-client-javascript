@@ -381,7 +381,6 @@ index.clearCache();
 client.clearCache();
 ```
 
-
 Proxy
 ------------
 
@@ -394,11 +393,15 @@ HTTP_PROXY=http://someproxy.com:9320 node main.js
 Keep-alive
 -------------
 
-Keep-alive is activated by default, it means that even when you are finished with your backend process, it will hang for some time before exiting.
+Keep-alive is activated by default.
+
+Because of the nature of keepalive connections, your process will hang even if you do not do any more command using the `client`.
 
 To fix this, we expose a `client.destroy()` method that will terminate all remaining alive connections.
 
-You should call this method when you are finished working with the AlgoliaSearch API.
+You should call this method when you are finished working with the AlgoliaSearch API. So that your process will exit gently.
+
+
 
 Documentation
 ================
