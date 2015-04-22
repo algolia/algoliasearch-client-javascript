@@ -54,7 +54,7 @@ Table of Contents
 1. [Setup](#setup)
   - [Frontend](#frontend)
   - [Node.js](#node-js)
-  - [Parse.com](#parse-com)
+  - [Parse.com](#parsecom)
 1. [Quick Start](#quick-start)
   - [Frontend](#frontend-1)
     - [Vanilla JavaScript](#vanilla-javascript)
