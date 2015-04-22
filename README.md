@@ -52,16 +52,21 @@ Table of Contents
 **Getting Started**
 
 1. [Setup](#setup)
-  1. [Browser](#browser)
-  1. [Node.js](#node-js)
-  1. [Parse.com](#parse-com)
+  - [Frontend](#frontend)
+  - [Node.js](#node-js)
+  - [Parse.com](#parse-com)
 1. [Quick Start](#quick-start)
-  1. [Frontend](#frontend)
-  1. [Backend](#backend)
+  - [Frontend](#frontend-1)
+    - [Vanilla JavaScript](#vanilla-javascript)
+    - [jQuery module](#jquery-module)
+    - [AngularJS module](#angularjs-module)
+  - [Backend (Node.js)](#backend-nodejs)
 1. [Callback convention](#callback-convention)
 1. [Promises](#promises)
 1. [Request strategy](#request-strategy)
 1. [Cache](#cache)
+1. [Proxy support](#proxy-support)
+1. [Keep-alive](#keep-alive)
 1. [Online documentation](#documentation)
 1. [Tutorials](#tutorials)
 
@@ -95,7 +100,7 @@ To setup your project, follow these steps:
 
 
 
-### Browser
+### Frontend
 
 You can either use a package manager like npm or include a `<script>` tag.
 
@@ -121,75 +126,6 @@ To include the latest releases and all upcoming features and patches, use this:
 
 ```html
 <script src="//cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
-```
-
-### Example
-
-```html
-<script src="//cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
-<script>
-  var client = algoliasearch('ApplicationID', 'apiKey');
-  var index = client.initIndex('indexName');
-
-  index.search('an example', function searchDone(err, content) {
-    console.log(err, content)
-  });
-
-  index.search('another example')
-    .then(function searchSuccess(content) {
-      console.log(content);
-    })
-    .catch(function searchFailure(err) {
-      console.error(err);
-    });
-</script>
-```
-
-Have a look at our [callback convention](#callback-convention), read about [our promises](#promises).
-
-#### jQuery
-
-We provide a specific [jQuery](http://jquery.com/) build that will use [jQuery.ajax](http://api.jquery.com/jquery.ajax/).
-
-It can be used with callbacks or [jQuery promises](https://api.jquery.com/promise/).
-
-```html
-<script src="//cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js"></script>
-<script src="//cdn.jsdelivr.net/algoliasearch/3/algoliasearch.jquery.min.js"></script>
-<script>
-  var client = $.algolia.Client('ApplicationID', 'apiKey');
-  var index = client.initIndex('indexName');
-  index.search('something', function searchDone(err, content) {
-    console.log(err, content)
-  });
-</script>
-```
-
-#### Angular.js
-
-We provide a specific [AngularJS](https://angularjs.org/) build that is using the [$http service](https://docs.angularjs.org/api/ng/service/$http).
-
-It can be used with callbacks or [AngularJS promises](https://docs.angularjs.org/api/ng/service/$q).
-
-```html
-<script src="//cdn.jsdelivr.net/angularjs/1.3.14/angular.min.js"></script>
-<script src="//cdn.jsdelivr.net/algoliasearch/3/algoliasearch.angular.min.js"></script>
-<script>
-  angular
-    .module('myapp', ['algoliasearch'])
-    .controller('SearchCtrl', ['$scope', 'algolia', function($scope, algolia) {
-      $scope.query = '';
-      $scope.hits = [];
-      var client = algolia.Client('ApplicationID', 'apiKey');
-      var index = client.initIndex('indexName');
-      index.search('something')
-        .then(function searchSuccess(content) {
-          console.log(content);
-        }, function searchFailure(err) {
-          console.log(err);
-        });
-    }]);
-</script>
 ```
 
 #### Browserify, webpack
@@ -254,9 +190,73 @@ Quick Start
 
 ### Frontend
 
-To build your frontend search experience, check out our [examples](./examples/) and [tutorials](https://www.algolia.com/doc/tutorials)
+To build your frontend search experience, also check out our [examples](./examples/) and [tutorials](https://www.algolia.com/doc/tutorials).
 
-### Backend
+#### Vanilla JavaScript
+```html
+<script src="//cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
+<script>
+  var client = algoliasearch('ApplicationID', 'apiKey');
+  var index = client.initIndex('indexName');
+
+  index.search('an example', function searchDone(err, content) {
+    console.log(err, content)
+  });
+
+  index.search('another example')
+    .then(function searchSuccess(content) {
+      console.log(content);
+    })
+    .catch(function searchFailure(err) {
+      console.error(err);
+    });
+</script>
+```
+
+#### jQuery module
+We provide a specific [jQuery](http://jquery.com/) build that will use [jQuery.ajax](http://api.jquery.com/jquery.ajax/).
+
+It can be used with callbacks or [jQuery promises](https://api.jquery.com/promise/).
+
+```html
+<script src="//cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js"></script>
+<script src="//cdn.jsdelivr.net/algoliasearch/3/algoliasearch.jquery.min.js"></script>
+<script>
+  var client = $.algolia.Client('ApplicationID', 'apiKey');
+  var index = client.initIndex('indexName');
+  index.search('something', function searchDone(err, content) {
+    console.log(err, content)
+  });
+</script>
+```
+
+#### AngularJS module
+We provide a specific [AngularJS](https://angularjs.org/) build that is using the [$http service](https://docs.angularjs.org/api/ng/service/$http).
+
+It can be used with callbacks or [AngularJS promises](https://docs.angularjs.org/api/ng/service/$q).
+
+```html
+<script src="//cdn.jsdelivr.net/angularjs/1.3.14/angular.min.js"></script>
+<script src="//cdn.jsdelivr.net/algoliasearch/3/algoliasearch.angular.min.js"></script>
+<script>
+  angular
+    .module('myapp', ['algoliasearch'])
+    .controller('SearchCtrl', ['$scope', 'algolia', function($scope, algolia) {
+      $scope.query = '';
+      $scope.hits = [];
+      var client = algolia.Client('ApplicationID', 'apiKey');
+      var index = client.initIndex('indexName');
+      index.search('something')
+        .then(function searchSuccess(content) {
+          console.log(content);
+        }, function searchFailure(err) {
+          console.log(err);
+        });
+    }]);
+</script>
+```
+
+### Backend (Node.js)
 
 In 30 seconds, this quick start tutorial will show you how to index and search objects.
 
@@ -369,7 +369,9 @@ Connections are always `keep-alive`.
 Cache
 -------------
 
-**Only in browsers**, queries will be stored in a ```cache``` inside your JavaScript ```Index``` and ```AlgoliaSearch``` objects to avoid performing the same API calls twice. It's particularly useful when your users are deleting characters or words from the current query but has a chance of ending up with outdated results if the page isn't refreshed for some time.
+**Browser only**
+
+Queries will be stored in a ```cache``` inside your JavaScript ```Index``` and ```AlgoliaSearch``` objects to avoid performing the same API calls twice. It's particularly useful when your users are deleting characters or words from the current query but has a chance of ending up with outdated results if the page isn't refreshed for some time.
 
 To address this issue, be sure to clear the cache every X minutes to ensure you have up to date results:
 ```js
@@ -381,8 +383,10 @@ index.clearCache();
 client.clearCache();
 ```
 
-Proxy
+Proxy support
 ------------
+
+**Node.js only**
 
 If you are behind a proxy, just set `HTTP_PROXY` or `HTTPS_PROXY` environment variables before starting your Node.js program.
 
@@ -393,6 +397,8 @@ HTTP_PROXY=http://someproxy.com:9320 node main.js
 Keep-alive
 -------------
 
+**Node.js only**
+
 Keep-alive is activated by default.
 
 Because of the nature of keepalive connections, your process will hang even if you do not do any more command using the `client`.
@@ -400,6 +406,8 @@ Because of the nature of keepalive connections, your process will hang even if y
 To fix this, we expose a `client.destroy()` method that will terminate all remaining alive connections.
 
 You should call this method when you are finished working with the AlgoliaSearch API. So that your process will exit gently.
+
+**Note: keep-alive is still always activated in browsers, this is a native behavior of browsers.**
 
 
 
