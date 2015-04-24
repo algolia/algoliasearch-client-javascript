@@ -1176,6 +1176,7 @@ AlgoliaSearch.prototype.Index.prototype = {
     }
 
     if (args !== undefined) {
+      // `_getSearchParams` will augment params, do not be fooled by the = versus += from previous if
       params = this.as._getSearchParams(args, params);
     }
 
