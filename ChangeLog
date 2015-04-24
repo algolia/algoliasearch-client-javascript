@@ -1,7 +1,7 @@
 CHANGELOG
 
 UNRELEASED
-    * BREAKING CHANGE: Parse build now uses V3 implementation
+    * FEATURE: Parse build now uses V3 implementation
     * FEATURE: Parse build now returns parse promises. https://parse.com/docs/js_guide#promises
     * FEATURE: Automatically handle HTTP_PROXY HTTPS_PROXY environment variables
     in Node.js client
