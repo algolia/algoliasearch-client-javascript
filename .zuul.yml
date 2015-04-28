@@ -1,7 +1,7 @@
 ui: tape
 browsers:
   - name: chrome
-    version: 40..dev
+    version: 41..dev
     platform: Windows 2012 R2 # Win 8.1
   - name: firefox
     version: 36..latest
