@@ -72,7 +72,7 @@ Table of Contents
 
 **Commands Reference**
 
-1. [Add a new object](#add-a-new-object-in-the-index)
+1. [Add a new object](#add-a-new-object-to-the-index)
 1. [Update an object](#update-an-existing-object-in-the-index)
 1. [Search](#search)
 1. [Multiple queries](#multiple-queries)
@@ -87,7 +87,7 @@ Table of Contents
 1. [Batch writes](#batch-writes)
 1. [Security / User API Keys](#security--user-api-keys)
 1. [Copy or rename an index](#copy-or-rename-an-index)
-1. [Backup / Retrieve all index content](#backup--retrieve-all-index-content)
+1. [Backup / Retrieve all index content](#backup--retrieve-of-all-index-content)
 1. [Logs](#logs)
 
 
@@ -820,34 +820,6 @@ index.getObjects(['myObj1', 'myObj2'], function(err, content) {
   console.log(content);
 });
 ```
-
-
-
-Security
----------
-
-If you're using [Per-User security](https://www.algolia.com/doc#SecurityUser) keys, you need to set the associated `tags`:
-
-```js
-var client = algoliasearch('ApplicationID', 'YourPublicSecuredAPIKey');
-
-// must be the same than those used at generation-time
-client.setSecurityTags('(public,user_42)');
-```
-
-// If you've specified a `userToken` while generating your secured API key, you must also specified it at query-time:
-
-```js
-var client = algoliasearch('ApplicationID', 'YourPublicSecuredAPIKey');
-
-// must be the same as the ones used at generation-time
-client.setSecurityTags('(public,user_42)');
-
-// must be the same as the one used at generation-time
-client.setUserToken('user_42');
-```
-
-
 
 Delete an object
 -------------
