@@ -1,5 +1,8 @@
 CHANGELOG
 
+UNRELEASED
+    * add dist/ to npmjs repository, so cdnjs autoupdate works
+
 2015-04-24  3.2.0
     * FEATURE: Parse build now uses V3 implementation
     * FEATURE: Parse build now returns parse promises. https://parse.com/docs/js_guide#promises
