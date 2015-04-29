@@ -158,7 +158,7 @@ index.search('something', function searchDone(err, content) {
 });
 ```
 
-### Parse.com
+### Parse.com <a id="setup-with-parse"></a>
 
 ```sh
 curl https://raw.githubusercontent.com/algolia/algoliasearch-client-js/master/dist/algoliasearch.parse.js -o /your/parse/project/cloud/algoliasearch.parse.js
