@@ -53,8 +53,8 @@ Table of Contents
 
 1. [Setup](#setup)
   - [Frontend](#frontend)
-  - [Node.js](#node-js)
-  - [Parse.com](#parsecom)
+  - [Node.js](#nodejs)
+  - [Parse.com](#parsecom-)
 1. [Quick Start](#quick-start)
   - [Frontend](#frontend-1)
     - [Vanilla JavaScript](#vanilla-javascript)
@@ -158,7 +158,7 @@ index.search('something', function searchDone(err, content) {
 });
 ```
 
-### Parse.com <a id="setup-with-parse"></a>
+### Parse.com
 
 ```sh
 curl https://raw.githubusercontent.com/algolia/algoliasearch-client-js/master/dist/algoliasearch.parse.js -o /your/parse/project/cloud/algoliasearch.parse.js
@@ -371,9 +371,12 @@ Cache
 
 **Browser only**
 
-Queries will be stored in a ```cache``` inside your JavaScript ```Index``` and ```AlgoliaSearch``` objects to avoid performing the same API calls twice. It's particularly useful when your users are deleting characters or words from the current query but has a chance of ending up with outdated results if the page isn't refreshed for some time.
+To avoid performing the same API calls twice **search** results will be stored in a `cache` that will be tied to your JavaScript `client` and `index` objects.
 
-To address this issue, be sure to clear the cache every X minutes to ensure you have up to date results:
+It's particularly useful when your users are deleting characters or words from the current query but has a chance of ending up with outdated results if the page isn't refreshed for some time.
+
+If at any point you want to clear the cache, just do this:
+
 ```js
 // clear the queries cache
 index.clearCache();
