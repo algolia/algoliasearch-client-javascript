@@ -551,7 +551,7 @@ module.exports =
 /* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = "3.2.0"
+	module.exports = "3.2.1"
 
 /***/ },
 /* 6 */

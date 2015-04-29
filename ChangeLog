@@ -1,6 +1,6 @@
 CHANGELOG
 
-UNRELEASED
+2015-04-29  3.2.1
     * add dist/ to npmjs repository, so cdnjs autoupdate works
 
 2015-04-24  3.2.0
