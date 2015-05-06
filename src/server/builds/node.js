@@ -2,6 +2,7 @@
 module.exports = algoliasearch;
 
 var debug = require('debug')('algoliasearch:nodejs');
+var crypto = require('crypto');
 
 var inherits = require('inherits');
 var Promise = global.Promise || require('es6-promise').Promise;
