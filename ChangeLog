@@ -1,5 +1,8 @@
 CHANGELOG
 
+2015-05-06  3.2.2
+    * FIX :  missing require (crypto) for node.js client (#84)
+
 2015-04-29  3.2.1
     * add dist/ to npmjs repository, so cdnjs autoupdate works
 
