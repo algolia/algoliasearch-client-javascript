@@ -57,7 +57,8 @@ AlgoliaSearchParse.prototype._request = function(rawUrl, opts) {
   };
 
   if (opts.body !== undefined) {
-    parseReqOpts.headers['content-type'] = 'application/json';
+    // parse is proxing our requests and requires us to set a charset. while json is always utf-8
+    parseReqOpts.headers['content-type'] = 'application/json;charset=utf-8';
     parseReqOpts.body = opts.body;
   }
 
