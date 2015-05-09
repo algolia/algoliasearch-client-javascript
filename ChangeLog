@@ -1,6 +1,6 @@
 CHANGELOG
 
-UNRELEASED
+2015-05-09  3.2.3
     * FIX: Parse build requires a charset on requests
 
 2015-05-06  3.2.2
