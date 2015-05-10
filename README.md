@@ -929,7 +929,7 @@ You can decide to have the same priority for two attributes by passing them in t
 
 You can easily retrieve settings or update them:
 
-ni```js
+```js
 index.getSettings(function(err, content) {
   console.log(content);
 });
