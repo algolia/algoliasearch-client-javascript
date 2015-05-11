@@ -17,7 +17,7 @@ matrix:
       env: COMMAND=test-node
     - node_js: "0.12"
       env: COMMAND=test-node
-    - node_js: "iojs"
+    - node_js: "iojs-v2.0.1"
       env: COMMAND=test-node
     - node_js: "0.10"
       env: COMMAND=lint
