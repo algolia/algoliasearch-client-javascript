@@ -21,8 +21,9 @@ function algoliasearch(applicationID, apiKey, opts) {
   var extend = require('extend');
   opts = extend(true, {}, opts) || {};
 
+  // inactivity timeout
   if (opts.timeout === undefined) {
-    opts.timeout = 3000;
+    opts.timeout = 15000;
   }
 
   if (opts.protocol === undefined) {
@@ -49,7 +50,6 @@ function AlgoliaSearchNodeJS(applicationID, apiKey, opts) {
 
 inherits(AlgoliaSearchNodeJS, AlgoliaSearchServer);
 
-
 AlgoliaSearchNodeJS.prototype._request = function(rawUrl, opts) {
   var http = require('http');
   var https = require('https');
@@ -58,7 +58,10 @@ AlgoliaSearchNodeJS.prototype._request = function(rawUrl, opts) {
   var client = this;
 
   return new Promise(function doReq(resolve, reject) {
-    debug('url: %s, opts: %j', rawUrl, opts);
+    opts.debug('url: %s, method: %s, timeout: %d', rawUrl, opts.method, opts.timeout);
+
+    var body = opts.body;
+    var debugInterval;
 
     var parsedUrl = url.parse(rawUrl);
     var requestOptions = {
@@ -93,9 +96,28 @@ AlgoliaSearchNodeJS.prototype._request = function(rawUrl, opts) {
     req.once('timeout', timeout);
     req.once('response', response);
 
-    if (opts.body !== undefined) {
+    if (body) {
       req.setHeader('content-type', 'application/json');
-      req.write(JSON.stringify(opts.body));
+      req.write(body);
+
+      // debug request body/sent
+      if (process.env.DEBUG) {
+        req.once('socket', function() {
+          debugBytesSent();
+          debugInterval = setInterval(debugBytesSent, 100);
+          req.socket.once('end', function stopDebug() {
+            opts.debug('socket end');
+            debugBytesSent();
+            clearInterval(debugInterval);
+          });
+        });
+
+        function debugBytesSent() {
+          var remaining = Buffer.byteLength(body) + Buffer.byteLength(req._header);
+          var sent = req.socket.bytesWritten;
+          opts.debug('sent/remaining bytes: %d/%d', sent, remaining);
+        }
+      }
     }
 
     req.end();
@@ -119,7 +141,7 @@ AlgoliaSearchNodeJS.prototype._request = function(rawUrl, opts) {
     }
 
     function error(err) {
-      debug('Error: %j  - %s %j', err, rawUrl, opts);
+      opts.debug('Error: %j  - %s', err, rawUrl);
 
       if (timedOut) {
         return;
@@ -130,7 +152,7 @@ AlgoliaSearchNodeJS.prototype._request = function(rawUrl, opts) {
 
     function timeout() {
       timedOut = true;
-      debug('Timeout %s %j', rawUrl, opts);
+      opts.debug('Timeout %s', rawUrl);
       req.abort();
       resolve(new Error('Timeout'));
     }
