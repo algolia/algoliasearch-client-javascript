@@ -64,7 +64,7 @@ AlgoliaSearchParse.prototype._request = function(rawUrl, opts) {
   Parse.Cloud.httpRequest(parseReqOpts);
 
   function error(res) {
-    debug('Error: %j  - %s %j', res, rawUrl, opts);
+    debug('error: %j  - %s %j', res, rawUrl, opts);
 
     // we still resolve, bc Parse does not distinguish network errors
     // from 400/500 statuses
@@ -75,7 +75,7 @@ AlgoliaSearchParse.prototype._request = function(rawUrl, opts) {
   }
 
   function success(res) {
-    debug('Success: %j  - %s %j', res, rawUrl, opts);
+    debug('success: %j  - %s %j', res, rawUrl, opts);
 
     promise.resolve({
       statusCode: res.status,

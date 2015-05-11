@@ -528,7 +528,7 @@ AlgoliaSearch.prototype = {
       body = JSON.stringify(opts.body);
     }
 
-    requestDebug('Request start');
+    requestDebug('request start');
 
     function doRequest(requester, reqOpts) {
       var cacheID;
@@ -596,7 +596,7 @@ AlgoliaSearch.prototype = {
           return retryRequest();
         }
 
-        requestDebug('Received response: %j', httpResponse);
+        requestDebug('received response: %j', httpResponse);
 
         var status =
           // When in browser mode, using XDR or JSONP

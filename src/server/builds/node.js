@@ -141,7 +141,7 @@ AlgoliaSearchNodeJS.prototype._request = function(rawUrl, opts) {
     }
 
     function error(err) {
-      opts.debug('Error: %j  - %s', err, rawUrl);
+      opts.debug('error: %j  - %s', err, rawUrl);
 
       if (timedOut) {
         return;
@@ -152,7 +152,7 @@ AlgoliaSearchNodeJS.prototype._request = function(rawUrl, opts) {
 
     function timeout() {
       timedOut = true;
-      opts.debug('Timeout %s', rawUrl);
+      opts.debug('timeout %s', rawUrl);
       req.abort();
       resolve(new Error('Timeout'));
     }
