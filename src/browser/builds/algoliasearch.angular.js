@@ -40,11 +40,7 @@ global.angular.module('algoliasearch', [])
     AlgoliaSearchAngular.prototype._request = function(url, opts) {
       return $q(function(resolve, reject) {
         var timedOut;
-        var body = null;
-
-        if (opts.body !== undefined) {
-          body = JSON.stringify(opts.body);
-        }
+        var body = opts.body;
 
         url = inlineHeaders(url, opts.headers);
 

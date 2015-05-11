@@ -516,34 +516,36 @@ AlgoliaSearch.prototype = {
    * Wrapper that try all hosts to maximize the quality of service
    */
   _jsonRequest: function(opts) {
-    var requestDebug = require('debug')('algoliasearch:AlgoliaSearch:_jsonRequest:' + opts.url);
+    var requestDebug = require('debug')('algoliasearch:' + opts.url);
 
-    requestDebug('start: body: %j', opts.body);
-
+    var body;
     var cache = opts.cache;
-    var cacheID;
     var client = this;
     var tries = 0;
     var usingFallback = false;
 
-    if (client._useCache) {
-      cacheID = opts.url;
+    if (opts.body !== undefined) {
+      body = JSON.stringify(opts.body);
     }
 
-    // as we sometime use POST requests to pass parameters (like query='aa'),
-    // the cacheID must also include the body to be different between calls
-    if (client._useCache && opts.body !== undefined) {
-      cacheID += '_body_' + JSON.stringify(opts.body);
-    }
-
-    if (opts.cache !== undefined) {
-      requestDebug('Will use cache if any');
-    }
+    requestDebug('Request start');
 
     function doRequest(requester, reqOpts) {
+      var cacheID;
+
+      if (client._useCache) {
+        cacheID = opts.url;
+      }
+
+      // as we sometime use POST requests to pass parameters (like query='aa'),
+      // the cacheID must also include the body to be different between calls
+      if (client._useCache && body) {
+        cacheID += '_body_' + reqOpts.body;
+      }
+
       // handle cache existence
       if (client._useCache && cache && cache[cacheID] !== undefined) {
-        requestDebug('serving response from cache, body: %j', cache[cacheID]);
+        requestDebug('serving response from cache');
         return client._promise.resolve(cache[cacheID]);
       }
 
@@ -556,10 +558,17 @@ AlgoliaSearch.prototype = {
           ));
         }
 
+        // let's try the fallback starting from here
         tries = 0;
+
+        // method, url and body are fallback dependent
         reqOpts.method = opts.fallback.method;
         reqOpts.url = opts.fallback.url;
-        reqOpts.body = opts.fallback.body;
+        reqOpts.jsonBody = opts.fallback.body;
+        if (reqOpts.jsonBody) {
+          reqOpts.body = JSON.stringify(opts.fallback.body);
+        }
+
         reqOpts.timeout = client.requestTimeout * (tries + 1);
         client.hostIndex[opts.hostType] = 0;
         client.useFallback = true; // now we will only use JSONP, even on future requests
@@ -567,17 +576,17 @@ AlgoliaSearch.prototype = {
         return doRequest(client._request.fallback, reqOpts);
       }
 
-      requestDebug('request: %j', reqOpts);
-
       // `requester` is any of this._request or this._request.fallback
       // thus it needs to be called using the client as context
       return requester.call(client,
         // http(s)://currenthost/url(?qs)
         client.hosts[opts.hostType][client.hostIndex[opts.hostType]] + reqOpts.url, {
-          body: reqOpts.body,
+          body: body,
+          jsonBody: opts.body,
           method: reqOpts.method,
           headers: client._computeRequestHeaders(),
-          timeout: reqOpts.timeout
+          timeout: reqOpts.timeout,
+          debug: requestDebug
         }
       )
       .then(function success(httpResponse) {
@@ -587,7 +596,7 @@ AlgoliaSearch.prototype = {
           return retryRequest();
         }
 
-        requestDebug('response: %j', httpResponse);
+        requestDebug('Received response: %j', httpResponse);
 
         var status =
           // When in browser mode, using XDR or JSONP
@@ -674,7 +683,8 @@ AlgoliaSearch.prototype = {
       useFallback ? client._request.fallback : client._request, {
         url: requestOptions.url,
         method: requestOptions.method,
-        body: requestOptions.body,
+        body: body,
+        jsonBody: opts.body,
         timeout: client.requestTimeout * (tries + 1)
       }
     );

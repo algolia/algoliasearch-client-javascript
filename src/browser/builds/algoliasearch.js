@@ -54,14 +54,10 @@ AlgoliaSearchBrowser.prototype._request = function(url, opts) {
 
     url = inlineHeaders(url, opts.headers);
 
-    var body = null;
+    var body = opts.body;
     var req = support.cors ? new XMLHttpRequest() : new XDomainRequest();
     var ontimeout;
     var timedOut;
-
-    if (opts.body !== undefined) {
-      body = JSON.stringify(opts.body);
-    }
 
     // do not rely on default XHR async flag, as some analytics code like hotjar
     // breaks it and set it to false by default
@@ -71,7 +67,7 @@ AlgoliaSearchBrowser.prototype._request = function(url, opts) {
       req.open(opts.method, url);
     }
 
-    if (support.cors && body !== null && opts.method !== 'GET') {
+    if (support.cors && body && opts.method !== 'GET') {
       req.setRequestHeader('content-type', 'application/x-www-form-urlencoded');
     }
 

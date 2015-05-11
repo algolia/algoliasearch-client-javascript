@@ -85,11 +85,15 @@ function testMethodCall(opts) {
       'URL.query matches'
     );
 
-    assert.deepEqual(
-      JSON.parse(actualRequest.requestBody),
-      expectedRequest.body || null,
-      'Request body matches'
-    );
+    if (actualRequest.requestBody) {
+      assert.deepEqual(
+        JSON.parse(actualRequest.requestBody),
+        expectedRequest.body,
+        'Request body matches'
+      );
+    } else {
+      assert.pass('No body set');
+    }
 
     if (!process.browser) {
       // all these headers are handled by nodejs, sometimes

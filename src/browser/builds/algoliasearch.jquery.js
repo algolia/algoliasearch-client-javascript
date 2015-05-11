@@ -40,11 +40,7 @@ inherits(AlgoliaSearchJQuery, AlgoliaSearch);
 
 AlgoliaSearchJQuery.prototype._request = function(url, opts) {
   return $.Deferred(function(deferred) {
-    var body = null;
-
-    if (opts.body !== undefined) {
-      body = JSON.stringify(opts.body);
-    }
+    var body = opts.body;
 
     url = inlineHeaders(url, opts.headers);
 

@@ -8,9 +8,7 @@ function JSONPRequest(url, opts, cb) {
     return;
   }
 
-  var JSONPDebug = require('debug')('algoliasearch:JSONP-request:' + url);
-
-  JSONPDebug('start');
+  opts.debug('JSONP: start');
 
   var cbCalled = false;
   var timedOut = false;
@@ -47,9 +45,9 @@ function JSONPRequest(url, opts, cb) {
   // add callback by hand
   url += '&callback=' + cbName;
 
-  // add body params by hand
-  if (opts.body && opts.body.params) {
-    url += '&' + opts.body.params;
+  // add body params manually
+  if (opts.jsonBody && opts.jsonBody.params) {
+    url += '&' + opts.jsonBody.params;
   }
 
   var ontimeout = setTimeout(timeout, opts.timeout);
@@ -67,7 +65,7 @@ function JSONPRequest(url, opts, cb) {
   head.appendChild(script);
 
   function success() {
-    JSONPDebug('success');
+    opts.debug('JSONP: success');
 
     if (done || timedOut) {
       return;
@@ -77,7 +75,7 @@ function JSONPRequest(url, opts, cb) {
 
     // script loaded but did not call the fn => script loading error
     if (!cbCalled) {
-      JSONPDebug('fail: script loaded but did not call the callback');
+      opts.debug('JSONP: Fail. Script loaded but did not call the callback');
       clean();
       cb(new Error('Failed to load JSONP script'));
     }
@@ -106,7 +104,7 @@ function JSONPRequest(url, opts, cb) {
   }
 
   function timeout() {
-    JSONPDebug('timeout');
+    opts.debug('JSONP: Script timeout');
 
     timedOut = true;
     clean();
@@ -114,7 +112,7 @@ function JSONPRequest(url, opts, cb) {
   }
 
   function error() {
-    JSONPDebug('error');
+    opts.debug('JSONP: Script error');
 
     if (done || timedOut) {
       return;
