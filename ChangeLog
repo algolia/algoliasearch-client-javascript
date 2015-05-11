@@ -1,5 +1,11 @@
 CHANGELOG
 
+URNELEASED
+    * FIX: 15s inactivity timeout for nodejs implementation, should help high latency/low connection users
+    * CHORE: test on iojs2
+    * CHORE: debugging messages now more focused and less verbose
+    * PERF: use JSON.stringify only once per request
+
 2015-05-09  3.2.3
     * FIX: Parse build requires a charset on requests
 
