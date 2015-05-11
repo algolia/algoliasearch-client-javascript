@@ -2,9 +2,8 @@
 // See https://www.parse.com/docs/cloud_code_guide#cloud_code
 module.exports = algoliasearch;
 
+// parse has no process.env, force it down for npm modules compatibility
 process.env = {};
-/*global global:true*/
-global = {};
 
 var debug = require('debug')('algoliasearch:parse');
 
