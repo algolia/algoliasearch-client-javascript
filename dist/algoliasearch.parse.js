@@ -49,16 +49,14 @@ module.exports =
 	// See https://www.parse.com/docs/cloud_code_guide#cloud_code
 	module.exports = algoliasearch;
 
+	// parse has no process.env, force it down for npm modules compatibility
 	process.env = {};
-	/*global global:true*/
-	global = {};
 
 	var debug = __webpack_require__(2)('algoliasearch:parse');
 
 	var inherits = __webpack_require__(3);
 
 	var AlgoliaSearchServer = __webpack_require__(1);
-
 
 	debug('loaded the Parse client');
 
@@ -103,7 +101,7 @@ module.exports =
 	    error: error
 	  };
 
-	  if (opts.body !== undefined) {
+	  if (opts.body) {
 	    // parse is proxing our requests and requires us to set a charset. while json is always utf-8
 	    parseReqOpts.headers['content-type'] = 'application/json;charset=utf-8';
 	    parseReqOpts.body = opts.body;
@@ -112,7 +110,7 @@ module.exports =
 	  Parse.Cloud.httpRequest(parseReqOpts);
 
 	  function error(res) {
-	    debug('Error: %j  - %s %j', res, rawUrl, opts);
+	    debug('error: %j  - %s %j', res, rawUrl, opts);
 
 	    // we still resolve, bc Parse does not distinguish network errors
 	    // from 400/500 statuses
@@ -123,7 +121,7 @@ module.exports =
 	  }
 
 	  function success(res) {
-	    debug('Success: %j  - %s %j', res, rawUrl, opts);
+	    debug('success: %j  - %s %j', res, rawUrl, opts);
 
 	    promise.resolve({
 	      statusCode: res.status,
@@ -467,7 +465,7 @@ module.exports =
 	var toString = Object.prototype.toString;
 	var undefined;
 
-	var isArray = __webpack_require__(11);
+	var isArray = __webpack_require__(8);
 
 	var isPlainObject = function isPlainObject(obj) {
 		'use strict';
@@ -552,7 +550,7 @@ module.exports =
 /* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = "3.2.3"
+	module.exports = "3.2.4"
 
 /***/ },
 /* 6 */
@@ -566,9 +564,8 @@ module.exports =
 	  __webpack_require__(2).enable('algoliasearch*');
 	}
 
-	var debug = __webpack_require__(2)('algoliasearch:AlgoliaSearch');
-	var deprecate = __webpack_require__(8);
-	var foreach = __webpack_require__(10);
+	var debug = __webpack_require__(2)('algoliasearch');
+	var foreach = __webpack_require__(9);
 
 	/*
 	 * Algolia Search library initialization
@@ -1077,34 +1074,36 @@ module.exports =
 	   * Wrapper that try all hosts to maximize the quality of service
 	   */
 	  _jsonRequest: function(opts) {
-	    var requestDebug = __webpack_require__(2)('algoliasearch:AlgoliaSearch:_jsonRequest:' + opts.url);
+	    var requestDebug = __webpack_require__(2)('algoliasearch:' + opts.url);
 
-	    requestDebug('start: body: %j', opts.body);
-
+	    var body;
 	    var cache = opts.cache;
-	    var cacheID;
 	    var client = this;
 	    var tries = 0;
 	    var usingFallback = false;
 
-	    if (client._useCache) {
-	      cacheID = opts.url;
+	    if (opts.body !== undefined) {
+	      body = JSON.stringify(opts.body);
 	    }
 
-	    // as we sometime use POST requests to pass parameters (like query='aa'),
-	    // the cacheID must also include the body to be different between calls
-	    if (client._useCache && opts.body !== undefined) {
-	      cacheID += '_body_' + JSON.stringify(opts.body);
-	    }
-
-	    if (opts.cache !== undefined) {
-	      requestDebug('Will use cache if any');
-	    }
+	    requestDebug('request start');
 
 	    function doRequest(requester, reqOpts) {
+	      var cacheID;
+
+	      if (client._useCache) {
+	        cacheID = opts.url;
+	      }
+
+	      // as we sometime use POST requests to pass parameters (like query='aa'),
+	      // the cacheID must also include the body to be different between calls
+	      if (client._useCache && body) {
+	        cacheID += '_body_' + reqOpts.body;
+	      }
+
 	      // handle cache existence
 	      if (client._useCache && cache && cache[cacheID] !== undefined) {
-	        requestDebug('serving response from cache, body: %j', cache[cacheID]);
+	        requestDebug('serving response from cache');
 	        return client._promise.resolve(cache[cacheID]);
 	      }
 
@@ -1117,10 +1116,17 @@ module.exports =
 	          ));
 	        }
 
+	        // let's try the fallback starting from here
 	        tries = 0;
+
+	        // method, url and body are fallback dependent
 	        reqOpts.method = opts.fallback.method;
 	        reqOpts.url = opts.fallback.url;
-	        reqOpts.body = opts.fallback.body;
+	        reqOpts.jsonBody = opts.fallback.body;
+	        if (reqOpts.jsonBody) {
+	          reqOpts.body = JSON.stringify(opts.fallback.body);
+	        }
+
 	        reqOpts.timeout = client.requestTimeout * (tries + 1);
 	        client.hostIndex[opts.hostType] = 0;
 	        client.useFallback = true; // now we will only use JSONP, even on future requests
@@ -1128,17 +1134,17 @@ module.exports =
 	        return doRequest(client._request.fallback, reqOpts);
 	      }
 
-	      requestDebug('request: %j', reqOpts);
-
 	      // `requester` is any of this._request or this._request.fallback
 	      // thus it needs to be called using the client as context
 	      return requester.call(client,
 	        // http(s)://currenthost/url(?qs)
 	        client.hosts[opts.hostType][client.hostIndex[opts.hostType]] + reqOpts.url, {
-	          body: reqOpts.body,
+	          body: body,
+	          jsonBody: opts.body,
 	          method: reqOpts.method,
 	          headers: client._computeRequestHeaders(),
-	          timeout: reqOpts.timeout
+	          timeout: reqOpts.timeout,
+	          debug: requestDebug
 	        }
 	      )
 	      .then(function success(httpResponse) {
@@ -1148,7 +1154,7 @@ module.exports =
 	          return retryRequest();
 	        }
 
-	        requestDebug('response: %j', httpResponse);
+	        requestDebug('received response: %j', httpResponse);
 
 	        var status =
 	          // When in browser mode, using XDR or JSONP
@@ -1235,7 +1241,8 @@ module.exports =
 	      useFallback ? client._request.fallback : client._request, {
 	        url: requestOptions.url,
 	        method: requestOptions.method,
-	        body: requestOptions.body,
+	        body: body,
+	        jsonBody: opts.body,
 	        timeout: client.requestTimeout * (tries + 1)
 	      }
 	    );
@@ -2128,6 +2135,21 @@ module.exports =
 	  _setTimeout(fn, 0);
 	}
 
+	function deprecate(fn, message) {
+	  var warned = false;
+
+	  function deprecated() {
+	    if (!warned) {
+	      console.log(message);
+	      warned = true;
+	    }
+
+	    return fn.apply(this, arguments);
+	  }
+
+	  return deprecated;
+	}
+
 
 /***/ },
 /* 7 */
@@ -2146,7 +2168,7 @@ module.exports =
 	exports.disable = disable;
 	exports.enable = enable;
 	exports.enabled = enabled;
-	exports.humanize = __webpack_require__(9);
+	exports.humanize = __webpack_require__(10);
 
 	/**
 	 * The currently active debug mode names, and names to skip.
@@ -2336,72 +2358,41 @@ module.exports =
 /* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
-	
-	/**
-	 * Module exports.
-	 */
-
-	module.exports = deprecate;
-
-	/**
-	 * Mark that a method should not be used.
-	 * Returns a modified function which warns once by default.
-	 *
-	 * If `localStorage.noDeprecation = true` is set, then it is a no-op.
-	 *
-	 * If `localStorage.throwDeprecation = true` is set, then deprecated functions
-	 * will throw an Error when invoked.
-	 *
-	 * If `localStorage.traceDeprecation = true` is set, then deprecated functions
-	 * will invoke `console.trace()` instead of `console.error()`.
-	 *
-	 * @param {Function} fn - the function to deprecate
-	 * @param {String} msg - the string to print to the console when `fn` is invoked
-	 * @returns {Function} a new "deprecated" version of `fn`
-	 * @api public
-	 */
-
-	function deprecate (fn, msg) {
-	  if (config('noDeprecation')) {
-	    return fn;
-	  }
-
-	  var warned = false;
-	  function deprecated() {
-	    if (!warned) {
-	      if (config('throwDeprecation')) {
-	        throw new Error(msg);
-	      } else if (config('traceDeprecation')) {
-	        console.trace(msg);
-	      } else {
-	        console.warn(msg);
-	      }
-	      warned = true;
-	    }
-	    return fn.apply(this, arguments);
-	  }
-
-	  return deprecated;
-	}
-
-	/**
-	 * Checks `localStorage` for boolean values for the given `name`.
-	 *
-	 * @param {String} name
-	 * @returns {Boolean}
-	 * @api private
-	 */
-
-	function config (name) {
-	  if (!global.localStorage) return false;
-	  var val = global.localStorage[name];
-	  if (null == val) return false;
-	  return String(val).toLowerCase() === 'true';
-	}
+	module.exports = Array.isArray || function (arr) {
+	  return Object.prototype.toString.call(arr) == '[object Array]';
+	};
 
 
 /***/ },
 /* 9 */
+/***/ function(module, exports, __webpack_require__) {
+
+	
+	var hasOwn = Object.prototype.hasOwnProperty;
+	var toString = Object.prototype.toString;
+
+	module.exports = function forEach (obj, fn, ctx) {
+	    if (toString.call(fn) !== '[object Function]') {
+	        throw new TypeError('iterator must be a function');
+	    }
+	    var l = obj.length;
+	    if (l === +l) {
+	        for (var i = 0; i < l; i++) {
+	            fn.call(ctx, obj[i], i, obj);
+	        }
+	    } else {
+	        for (var k in obj) {
+	            if (hasOwn.call(obj, k)) {
+	                fn.call(ctx, obj[k], k, obj);
+	            }
+	        }
+	    }
+	};
+
+
+
+/***/ },
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -2527,43 +2518,6 @@ module.exports =
 	  if (ms < n * 1.5) return Math.floor(ms / n) + ' ' + name;
 	  return Math.ceil(ms / n) + ' ' + name + 's';
 	}
-
-
-/***/ },
-/* 10 */
-/***/ function(module, exports, __webpack_require__) {
-
-	
-	var hasOwn = Object.prototype.hasOwnProperty;
-	var toString = Object.prototype.toString;
-
-	module.exports = function forEach (obj, fn, ctx) {
-	    if (toString.call(fn) !== '[object Function]') {
-	        throw new TypeError('iterator must be a function');
-	    }
-	    var l = obj.length;
-	    if (l === +l) {
-	        for (var i = 0; i < l; i++) {
-	            fn.call(ctx, obj[i], i, obj);
-	        }
-	    } else {
-	        for (var k in obj) {
-	            if (hasOwn.call(obj, k)) {
-	                fn.call(ctx, obj[k], k, obj);
-	            }
-	        }
-	    }
-	};
-
-
-
-/***/ },
-/* 11 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = Array.isArray || function (arr) {
-	  return Object.prototype.toString.call(arr) == '[object Array]';
-	};
 
 
 /***/ }

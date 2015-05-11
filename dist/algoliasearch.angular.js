@@ -1,4 +1,4 @@
-/*! algoliasearch 3.2.3 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
+/*! algoliasearch 3.2.4 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
 (function(f){var g;if(typeof window!=='undefined'){g=window}else if(typeof self!=='undefined'){g=self}g.ALGOLIA_MIGRATION_LAYER=f()})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 
 module.exports = function load (src, opts, cb) {
@@ -1079,72 +1079,6 @@ if (typeof Object.create === 'function') {
 }
 
 },{}],12:[function(require,module,exports){
-(function (global){
-
-/**
- * Module exports.
- */
-
-module.exports = deprecate;
-
-/**
- * Mark that a method should not be used.
- * Returns a modified function which warns once by default.
- *
- * If `localStorage.noDeprecation = true` is set, then it is a no-op.
- *
- * If `localStorage.throwDeprecation = true` is set, then deprecated functions
- * will throw an Error when invoked.
- *
- * If `localStorage.traceDeprecation = true` is set, then deprecated functions
- * will invoke `console.trace()` instead of `console.error()`.
- *
- * @param {Function} fn - the function to deprecate
- * @param {String} msg - the string to print to the console when `fn` is invoked
- * @returns {Function} a new "deprecated" version of `fn`
- * @api public
- */
-
-function deprecate (fn, msg) {
-  if (config('noDeprecation')) {
-    return fn;
-  }
-
-  var warned = false;
-  function deprecated() {
-    if (!warned) {
-      if (config('throwDeprecation')) {
-        throw new Error(msg);
-      } else if (config('traceDeprecation')) {
-        console.trace(msg);
-      } else {
-        console.warn(msg);
-      }
-      warned = true;
-    }
-    return fn.apply(this, arguments);
-  }
-
-  return deprecated;
-}
-
-/**
- * Checks `localStorage` for boolean values for the given `name`.
- *
- * @param {String} name
- * @returns {Boolean}
- * @api private
- */
-
-function config (name) {
-  if (!global.localStorage) return false;
-  var val = global.localStorage[name];
-  if (null == val) return false;
-  return String(val).toLowerCase() === 'true';
-}
-
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],13:[function(require,module,exports){
 (function (process){
 module.exports = AlgoliaSearch;
 
@@ -1154,8 +1088,7 @@ if (process.env.NODE_ENV === 'development') {
   require(5).enable('algoliasearch*');
 }
 
-var debug = require(5)('algoliasearch:AlgoliaSearch');
-var deprecate = require(12);
+var debug = require(5)('algoliasearch');
 var foreach = require(10);
 
 /*
@@ -1665,34 +1598,36 @@ AlgoliaSearch.prototype = {
    * Wrapper that try all hosts to maximize the quality of service
    */
   _jsonRequest: function(opts) {
-    var requestDebug = require(5)('algoliasearch:AlgoliaSearch:_jsonRequest:' + opts.url);
+    var requestDebug = require(5)('algoliasearch:' + opts.url);
 
-    requestDebug('start: body: %j', opts.body);
-
+    var body;
     var cache = opts.cache;
-    var cacheID;
     var client = this;
     var tries = 0;
     var usingFallback = false;
 
-    if (client._useCache) {
-      cacheID = opts.url;
+    if (opts.body !== undefined) {
+      body = JSON.stringify(opts.body);
     }
 
-    // as we sometime use POST requests to pass parameters (like query='aa'),
-    // the cacheID must also include the body to be different between calls
-    if (client._useCache && opts.body !== undefined) {
-      cacheID += '_body_' + JSON.stringify(opts.body);
-    }
-
-    if (opts.cache !== undefined) {
-      requestDebug('Will use cache if any');
-    }
+    requestDebug('request start');
 
     function doRequest(requester, reqOpts) {
+      var cacheID;
+
+      if (client._useCache) {
+        cacheID = opts.url;
+      }
+
+      // as we sometime use POST requests to pass parameters (like query='aa'),
+      // the cacheID must also include the body to be different between calls
+      if (client._useCache && body) {
+        cacheID += '_body_' + reqOpts.body;
+      }
+
       // handle cache existence
       if (client._useCache && cache && cache[cacheID] !== undefined) {
-        requestDebug('serving response from cache, body: %j', cache[cacheID]);
+        requestDebug('serving response from cache');
         return client._promise.resolve(cache[cacheID]);
       }
 
@@ -1705,10 +1640,17 @@ AlgoliaSearch.prototype = {
           ));
         }
 
+        // let's try the fallback starting from here
         tries = 0;
+
+        // method, url and body are fallback dependent
         reqOpts.method = opts.fallback.method;
         reqOpts.url = opts.fallback.url;
-        reqOpts.body = opts.fallback.body;
+        reqOpts.jsonBody = opts.fallback.body;
+        if (reqOpts.jsonBody) {
+          reqOpts.body = JSON.stringify(opts.fallback.body);
+        }
+
         reqOpts.timeout = client.requestTimeout * (tries + 1);
         client.hostIndex[opts.hostType] = 0;
         client.useFallback = true; // now we will only use JSONP, even on future requests
@@ -1716,17 +1658,17 @@ AlgoliaSearch.prototype = {
         return doRequest(client._request.fallback, reqOpts);
       }
 
-      requestDebug('request: %j', reqOpts);
-
       // `requester` is any of this._request or this._request.fallback
       // thus it needs to be called using the client as context
       return requester.call(client,
         // http(s)://currenthost/url(?qs)
         client.hosts[opts.hostType][client.hostIndex[opts.hostType]] + reqOpts.url, {
-          body: reqOpts.body,
+          body: body,
+          jsonBody: opts.body,
           method: reqOpts.method,
           headers: client._computeRequestHeaders(),
-          timeout: reqOpts.timeout
+          timeout: reqOpts.timeout,
+          debug: requestDebug
         }
       )
       .then(function success(httpResponse) {
@@ -1736,7 +1678,7 @@ AlgoliaSearch.prototype = {
           return retryRequest();
         }
 
-        requestDebug('response: %j', httpResponse);
+        requestDebug('received response: %j', httpResponse);
 
         var status =
           // When in browser mode, using XDR or JSONP
@@ -1823,7 +1765,8 @@ AlgoliaSearch.prototype = {
       useFallback ? client._request.fallback : client._request, {
         url: requestOptions.url,
         method: requestOptions.method,
-        body: requestOptions.body,
+        body: body,
+        jsonBody: opts.body,
         timeout: client.requestTimeout * (tries + 1)
       }
     );
@@ -2716,8 +2659,23 @@ function exitPromise(fn, _setTimeout) {
   _setTimeout(fn, 0);
 }
 
+function deprecate(fn, message) {
+  var warned = false;
+
+  function deprecated() {
+    if (!warned) {
+      console.log(message);
+      warned = true;
+    }
+
+    return fn.apply(this, arguments);
+  }
+
+  return deprecated;
+}
+
 }).call(this,require(1))
-},{"1":1,"10":10,"12":12,"5":5,"8":8}],14:[function(require,module,exports){
+},{"1":1,"10":10,"5":5,"8":8}],13:[function(require,module,exports){
 module.exports = JSONPRequest;
 
 var JSONPCounter = 0;
@@ -2728,9 +2686,7 @@ function JSONPRequest(url, opts, cb) {
     return;
   }
 
-  var JSONPDebug = require(5)('algoliasearch:JSONP-request:' + url);
-
-  JSONPDebug('start');
+  opts.debug('JSONP: start');
 
   var cbCalled = false;
   var timedOut = false;
@@ -2767,9 +2723,9 @@ function JSONPRequest(url, opts, cb) {
   // add callback by hand
   url += '&callback=' + cbName;
 
-  // add body params by hand
-  if (opts.body && opts.body.params) {
-    url += '&' + opts.body.params;
+  // add body params manually
+  if (opts.jsonBody && opts.jsonBody.params) {
+    url += '&' + opts.jsonBody.params;
   }
 
   var ontimeout = setTimeout(timeout, opts.timeout);
@@ -2787,7 +2743,7 @@ function JSONPRequest(url, opts, cb) {
   head.appendChild(script);
 
   function success() {
-    JSONPDebug('success');
+    opts.debug('JSONP: success');
 
     if (done || timedOut) {
       return;
@@ -2797,7 +2753,7 @@ function JSONPRequest(url, opts, cb) {
 
     // script loaded but did not call the fn => script loading error
     if (!cbCalled) {
-      JSONPDebug('fail: script loaded but did not call the callback');
+      opts.debug('JSONP: Fail. Script loaded but did not call the callback');
       clean();
       cb(new Error('Failed to load JSONP script'));
     }
@@ -2826,7 +2782,7 @@ function JSONPRequest(url, opts, cb) {
   }
 
   function timeout() {
-    JSONPDebug('timeout');
+    opts.debug('JSONP: Script timeout');
 
     timedOut = true;
     clean();
@@ -2834,7 +2790,7 @@ function JSONPRequest(url, opts, cb) {
   }
 
   function error() {
-    JSONPDebug('error');
+    opts.debug('JSONP: Script error');
 
     if (done || timedOut) {
       return;
@@ -2845,7 +2801,7 @@ function JSONPRequest(url, opts, cb) {
   }
 }
 
-},{"5":5}],15:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 (function (global){
 // This is the AngularJS Algolia Search module
 // It's using $http to do requests with a JSONP fallback
@@ -2853,9 +2809,9 @@ function JSONPRequest(url, opts, cb) {
 
 var inherits = require(11);
 
-var AlgoliaSearch = require(13);
-var inlineHeaders = require(17);
-var JSONPRequest = require(14);
+var AlgoliaSearch = require(12);
+var inlineHeaders = require(16);
+var JSONPRequest = require(13);
 
 global.angular.module('algoliasearch', [])
   .service('algolia', ['$http', '$q', '$timeout', function ($http, $q, $timeout) {
@@ -2863,7 +2819,7 @@ global.angular.module('algoliasearch', [])
     function algoliasearch(applicationID, apiKey, opts) {
       var extend = require(8);
 
-      var getDocumentProtocol = require(16);
+      var getDocumentProtocol = require(15);
 
       opts = extend(true, {}, opts) || {};
 
@@ -2876,7 +2832,7 @@ global.angular.module('algoliasearch', [])
       return new AlgoliaSearchAngular(applicationID, apiKey, opts);
     }
 
-    algoliasearch.version = require(18);
+    algoliasearch.version = require(17);
     algoliasearch.ua = 'Algolia for AngularJS ' + algoliasearch.version;
 
     function AlgoliaSearchAngular() {
@@ -2889,11 +2845,7 @@ global.angular.module('algoliasearch', [])
     AlgoliaSearchAngular.prototype._request = function(url, opts) {
       return $q(function(resolve, reject) {
         var timedOut;
-        var body = null;
-
-        if (opts.body !== undefined) {
-          body = JSON.stringify(opts.body);
-        }
+        var body = opts.body;
 
         url = inlineHeaders(url, opts.headers);
 
@@ -2976,7 +2928,7 @@ global.angular.module('algoliasearch', [])
   }]);
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"11":11,"13":13,"14":14,"16":16,"17":17,"18":18,"8":8}],16:[function(require,module,exports){
+},{"11":11,"12":12,"13":13,"15":15,"16":16,"17":17,"8":8}],15:[function(require,module,exports){
 (function (global){
 module.exports = getDocumentProtocol;
 
@@ -2992,7 +2944,7 @@ function getDocumentProtocol() {
 }
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],17:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 module.exports = inlineHeaders;
 
 var querystring = require(4);
@@ -3007,6 +2959,6 @@ function inlineHeaders(url, headers) {
   return url + querystring.encode(headers);
 }
 
-},{"4":4}],18:[function(require,module,exports){
-module.exports="3.2.3"
-},{}]},{},[15]);
+},{"4":4}],17:[function(require,module,exports){
+module.exports="3.2.4"
+},{}]},{},[14]);
