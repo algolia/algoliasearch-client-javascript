@@ -6,8 +6,7 @@ if (process.env.NODE_ENV === 'development') {
   require('debug').enable('algoliasearch*');
 }
 
-var debug = require('debug')('algoliasearch:AlgoliaSearch');
-var deprecate = require('util-deprecate');
+var debug = require('debug')('algoliasearch');
 var foreach = require('foreach');
 
 /*
@@ -1566,4 +1565,19 @@ function deprecatedMessage(previousUsage, newUsage) {
 // setTimeout cannot be override globally sadly
 function exitPromise(fn, _setTimeout) {
   _setTimeout(fn, 0);
+}
+
+function deprecate(fn, message) {
+  var warned = false;
+
+  function deprecated() {
+    if (!warned) {
+      console.log(message);
+      warned = true;
+    }
+
+    return fn.apply(this, arguments);
+  }
+
+  return deprecated;
 }
