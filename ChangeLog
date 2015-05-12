@@ -1,5 +1,9 @@
 CHANGELOG
 
+UNRELEASED
+    * FEATURE: expose window.algoliasearch = algoliasearch in jquery/angular plugins. So that
+    you can use the original algoliasearch() implem in plugins. Otherwise you would have to load both
+
 2015-05-11  3.2.4
     * FIX: 15s inactivity timeout for nodejs implementation, should help high latency/low connection users
     * CHORE: test on iojs2

@@ -8,6 +8,9 @@ var AlgoliaSearch = require('../../AlgoliaSearch');
 var inlineHeaders = require('../inline-headers');
 var JSONPRequest = require('../JSONP-request');
 
+// expose original algoliasearch fn in window
+window.algoliasearch = require('./algoliasearch');
+
 function algoliasearch(applicationID, apiKey, opts) {
   var extend = require('extend');
 

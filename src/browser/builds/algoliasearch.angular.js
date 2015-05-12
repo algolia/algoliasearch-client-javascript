@@ -8,6 +8,9 @@ var AlgoliaSearch = require('../../AlgoliaSearch');
 var inlineHeaders = require('../inline-headers');
 var JSONPRequest = require('../JSONP-request');
 
+// expose original algoliasearch fn in window
+window.algoliasearch = require('./algoliasearch');
+
 global.angular.module('algoliasearch', [])
   .service('algolia', ['$http', '$q', '$timeout', function ($http, $q, $timeout) {
 
