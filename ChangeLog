@@ -1,5 +1,9 @@
 CHANGELOG
 
+UNRELEASED
+    * FIX: Compatibility with AngularJS old promise implementation
+      We now use $q.defer() instead of $q()
+
 2015-05-12  3.3.0
     * FEATURE: expose window.algoliasearch = algoliasearch in jquery/angular plugins. So that
     you can use the original algoliasearch() implem in plugins. Otherwise you would have to load both

@@ -41,49 +41,55 @@ global.angular.module('algoliasearch', [])
     inherits(AlgoliaSearchAngular, AlgoliaSearch);
 
     AlgoliaSearchAngular.prototype._request = function(url, opts) {
-      return $q(function(resolve, reject) {
-        var timedOut;
-        var body = opts.body;
+      // Support most Angular.js versions by using $q.defer() instead
+      // of the new $q() constructor
+      var deferred = $q.defer();
+      var resolve = deferred.resolve;
+      var reject = deferred.reject;
 
-        url = inlineHeaders(url, opts.headers);
+      var timedOut;
+      var body = opts.body;
 
-        var timeout = $q(function(resolveTimeout) {
-          $timeout(function() {
-            timedOut = true;
-            // will cancel the xhr
-            resolveTimeout('test');
-            resolve(new Error('Timeout - Could not connect to endpoint ' + url));
-          }, opts.timeout);
+      url = inlineHeaders(url, opts.headers);
+
+      var timeout = $q(function(resolveTimeout) {
+        $timeout(function() {
+          timedOut = true;
+          // will cancel the xhr
+          resolveTimeout('test');
+          resolve(new Error('Timeout - Could not connect to endpoint ' + url));
+        }, opts.timeout);
+      });
+
+      $http({
+        url: url,
+        method: opts.method,
+        data: body,
+        cache: false,
+        timeout: timeout
+      }).then(function success(response) {
+        resolve({
+          statusCode: response.status,
+          body: response.data
         });
+      }, function error(response) {
+        if (timedOut) {
+          return;
+        }
 
-        $http({
-          url: url,
-          method: opts.method,
-          data: body,
-          cache: false,
-          timeout: timeout
-        }).then(function success(response) {
-          resolve({
-            statusCode: response.status,
-            body: response.data
-          });
-        }, function error(response) {
-          if (timedOut) {
-            return;
-          }
+        // network error
+        if (response.status === 0) {
+          reject(new Error('Network error'));
+          return;
+        }
 
-          // network error
-          if (response.status === 0) {
-            reject(new Error('Network error'));
-            return;
-          }
-
-          resolve({
-            body: response.data,
-            statusCode: response.status
-          });
+        resolve({
+          body: response.data,
+          statusCode: response.status
         });
       });
+
+      return deferred.promise;
     };
 
     AlgoliaSearchAngular.prototype._request.fallback = function(url, opts) {
