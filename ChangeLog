@@ -1,6 +1,6 @@
 CHANGELOG
 
-UNRELEASED
+2015-05-13  3.3.2
     * FIX: more fixes to the use of $q() in the angular build, now compatible with 1.2.xx and tested
 
 2015-05-12  3.3.1

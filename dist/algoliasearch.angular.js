@@ -1,4 +1,4 @@
-/*! algoliasearch 3.3.1 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
+/*! algoliasearch 3.3.2 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
 (function(f){var g;if(typeof window!=='undefined'){g=window}else if(typeof self!=='undefined'){g=self}g.ALGOLIA_MIGRATION_LAYER=f()})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 
 module.exports = function load (src, opts, cb) {
@@ -3810,7 +3810,7 @@ global.angular.module('algoliasearch', [])
 
     AlgoliaSearchAngular.prototype._request = function(url, opts) {
       // Support most Angular.js versions by using $q.defer() instead
-      // of the new $q() constructor
+      // of the new $q() constructor everywhere we need a promise
       var deferred = $q.defer();
       var resolve = deferred.resolve;
       var reject = deferred.reject;
@@ -3820,21 +3820,22 @@ global.angular.module('algoliasearch', [])
 
       url = inlineHeaders(url, opts.headers);
 
-      var timeout = $q(function(resolveTimeout) {
-        $timeout(function() {
-          timedOut = true;
-          // will cancel the xhr
-          resolveTimeout('test');
-          resolve(new Error('Timeout - Could not connect to endpoint ' + url));
-        }, opts.timeout);
-      });
+      var timeoutDeferred = $q.defer();
+      var timeoutPromise = timeoutDeferred.promise;
+
+      $timeout(function() {
+        timedOut = true;
+        // will cancel the xhr
+        timeoutDeferred.resolve('test');
+        resolve(new Error('Timeout - Could not connect to endpoint ' + url));
+      }, opts.timeout);
 
       $http({
         url: url,
         method: opts.method,
         data: body,
         cache: false,
-        timeout: timeout
+        timeout: timeoutPromise
       }).then(function success(response) {
         resolve({
           statusCode: response.status,
@@ -3863,16 +3864,20 @@ global.angular.module('algoliasearch', [])
     AlgoliaSearchAngular.prototype._request.fallback = function(url, opts) {
       url = inlineHeaders(url, opts.headers);
 
-      return $q(function(resolve, reject) {
-        JSONPRequest(url, opts, function JSONPRequestDone(err, content) {
-          if (err) {
-            reject(err);
-            return;
-          }
+      var deferred = $q.defer();
+      var resolve = deferred.resolve;
+      var reject = deferred.reject;
 
-          resolve(content);
-        });
+      JSONPRequest(url, opts, function JSONPRequestDone(err, content) {
+        if (err) {
+          reject(err);
+          return;
+        }
+
+        resolve(content);
       });
+
+      return deferred.promise
     };
 
     AlgoliaSearchAngular.prototype._promise = {
@@ -3884,9 +3889,12 @@ global.angular.module('algoliasearch', [])
         return $q.when(val);
       },
       delay: function(ms) {
-        return $q(function(resolve/*, reject*/) {
-          $timeout(resolve, ms);
-        });
+        var deferred = $q.defer();
+        var resolve = deferred.resolve;
+
+        $timeout(resolve, ms);
+
+        return deferred.promise;
       }
     };
 
@@ -4111,5 +4119,5 @@ function inlineHeaders(url, headers) {
 }
 
 },{"4":4}],19:[function(require,module,exports){
-module.exports="3.3.1"
+module.exports="3.3.2"
 },{}]},{},[15]);
