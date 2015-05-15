@@ -9,8 +9,8 @@
   "scripts": {
     "build": "PACKAGE_VERSION=$(json -f src/version.json) ./scripts/build",
     "release": "git clean dist/ -f && git checkout dist/ && ./scripts/release && npm run build",
-    "test": "npm run test-phantom && npm run test-node | tap-spec && npm run lint",
-    "test-browser": "DEBUG=zuul* zuul -- test/run-browser.js | tap-spec",
+    "test": "npm run test-phantom && npm run test-node && npm run lint",
+    "test-browser": "DEBUG=zuul* zuul -- test/run-browser.js",
     "test-node": "node test/run-node.js",
     "test-phantom": "DEBUG=zuul* zuul --phantom -- test/run-browser.js",
     "dev": "NODE_ENV=development DEBUG=zuul* zuul --no-coverage --local 8080 -- test/run-browser.js",
@@ -88,7 +88,6 @@
     "self-signed": "1.3.1",
     "server-destroy": "1.0.0",
     "sinon": "1.12.2",
-    "tap-spec": "3.0.0",
     "tape": "4.0.0",
     "url-parse": "1.0.0",
     "webpack": "1.8.5",
