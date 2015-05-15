@@ -133,10 +133,19 @@ AlgoliaSearchNodeJS.prototype._request = function(rawUrl, opts) {
       }
 
       function end() {
-        resolve({
-          statusCode: res.statusCode,
-          body: JSON.parse(Buffer.concat(chunks))
-        });
+        var data = Buffer.concat(chunks);
+        var result = null;
+        try {
+          body = JSON.parse(data);
+          result = {
+            statusCode: res.statusCode,
+            body: body,
+          }
+        } catch (ex) {
+          result = new Error(data.toString());
+        } finally {
+          resolve(result);
+        }
       }
     }
 
