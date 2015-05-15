@@ -18,7 +18,7 @@ if (process.env.BROWSERS) {
   zuulConfig.tunnel = 'ngrok';
 
   if (process.env.BROWSERS === 'desktop') {
-    zuulConfig.browsers = {
+    zuulConfig.browsers = [{
       name: 'chrome',
       version: '41..dev',
       platform: 'Windows 2012 R2' // Force Win 8.1, more stable
@@ -32,9 +32,9 @@ if (process.env.BROWSERS) {
     }, {
       name: 'safari',
       version: '6..latest'
-    };
+    }];
   } else if (process.env.BROWSERS === 'mobile') {
-    zuulConfig.browsers = {
+    zuulConfig.browsers = [{
       name: 'iphone',
       version: '7.0..latest'
     }, {
@@ -43,7 +43,7 @@ if (process.env.BROWSERS) {
     }, {
       name: 'ipad',
       version: '7.0..latest'
-    }
+    }];
   }
 }
 
