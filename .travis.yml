@@ -12,7 +12,11 @@ env:
 matrix:
   include:
     - node_js: "0.10"
-      env: COMMAND=test-ci-browser
+      env: COMMAND=test-browser BROWSERS=desktop
+    - node_js: "0.10"
+      env: COMMAND=test-browser BROWSERS=mobile
+    - node_js: "0.10"
+      env: COMMAND=test-phantom
     - node_js: "0.10"
       env: COMMAND=test-node
     - node_js: "0.12"
@@ -23,3 +27,6 @@ matrix:
       env: COMMAND=lint
     - node_js: "0.10"
       env: COMMAND=build
+  exclude:
+    - env: COMMAND=test-ci-browser BROWSERS=desktop TRAVIS_PULL_REQUEST=true
+    - env: COMMAND=test-ci-browser BROWSERS=mobile TRAVIS_PULL_REQUEST=true
