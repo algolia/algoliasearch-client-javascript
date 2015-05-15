@@ -39,7 +39,7 @@ if (process.env.BROWSERS) {
       version: '7.0..latest'
     }, {
       name: 'android',
-      version: '4.0.3..latest'
+      version: '4.0..latest'
     }, {
       name: 'ipad',
       version: '7.0..latest'
