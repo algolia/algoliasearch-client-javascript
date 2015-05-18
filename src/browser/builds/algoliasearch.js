@@ -7,6 +7,7 @@ var inherits = require('inherits');
 var Promise = global.Promise || require('es6-promise').Promise;
 
 var AlgoliaSearch = require('../../AlgoliaSearch');
+var errors = require('../../errors');
 var inlineHeaders = require('../inline-headers');
 var JSONPRequest = require('../JSONP-request');
 
@@ -48,7 +49,7 @@ AlgoliaSearchBrowser.prototype._request = function(url, opts) {
     // no cors or XDomainRequest, no request
     if (!support.cors && !support.hasXDomainRequest) {
       // very old browser, not supported
-      reject(new Error('CORS not supported'));
+      reject(new errors.Network('CORS not supported'));
       return;
     }
 
@@ -106,16 +107,22 @@ AlgoliaSearchBrowser.prototype._request = function(url, opts) {
         clearTimeout(ontimeout);
       }
 
-      var response = null;
+      var out;
 
       try {
-        response = JSON.parse(req.responseText);
-      } catch(e) {}
+        out = {
+          body: JSON.parse(req.responseText),
+          statusCode: req.status
+        };
+      } catch(e) {
+        out = new errors.UnparsableJSON({more: req.responseText});
+      }
 
-      resolve({
-        body: response,
-        statusCode: req.status
-      });
+      if (out instanceof errors.UnparsableJSON) {
+        reject(out);
+      } else {
+        resolve(out);
+      }
     }
 
     function error(event) {
@@ -130,7 +137,11 @@ AlgoliaSearchBrowser.prototype._request = function(url, opts) {
       // error event is trigerred both with XDR/XHR on:
       //   - DNS error
       //   - unallowed cross domain request
-      reject(new Error('Could not connect to host, error was:' + event));
+      reject(
+        new errors.Network({
+          more: event
+        })
+      );
     }
 
     function timeout() {
@@ -139,9 +150,8 @@ AlgoliaSearchBrowser.prototype._request = function(url, opts) {
         req.abort();
       }
 
-      resolve(new Error('Timeout - Could not connect to endpoint ' + url));
+      reject(new errors.RequestTimeout());
     }
-
   });
 };
 
@@ -151,7 +161,7 @@ AlgoliaSearchBrowser.prototype._request.fallback = function(url, opts) {
   return new Promise(function(resolve, reject) {
     JSONPRequest(url, opts, function JSONPRequestDone(err, content) {
       if (err) {
-        reject(err);
+        reject(new errors.JSONP(err.message));
         return;
       }
 

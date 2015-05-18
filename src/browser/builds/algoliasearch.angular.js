@@ -5,6 +5,7 @@
 var inherits = require('inherits');
 
 var AlgoliaSearch = require('../../AlgoliaSearch');
+var errors = require('../../errors');
 var inlineHeaders = require('../inline-headers');
 var JSONPRequest = require('../JSONP-request');
 
@@ -59,7 +60,7 @@ global.angular.module('algoliasearch', [])
         timedOut = true;
         // will cancel the xhr
         timeoutDeferred.resolve('test');
-        resolve(new Error('Timeout - Could not connect to endpoint ' + url));
+        reject(new errors.RequestTimeout());
       }, opts.timeout);
 
       $http({
@@ -80,7 +81,11 @@ global.angular.module('algoliasearch', [])
 
         // network error
         if (response.status === 0) {
-          reject(new Error('Network error'));
+          reject(
+            new errors.Network({
+              more: response
+            })
+          );
           return;
         }
 
@@ -102,14 +107,14 @@ global.angular.module('algoliasearch', [])
 
       JSONPRequest(url, opts, function JSONPRequestDone(err, content) {
         if (err) {
-          reject(err);
+          reject(new errors.JSONP(err.message));
           return;
         }
 
         resolve(content);
       });
 
-      return deferred.promise
+      return deferred.promise;
     };
 
     AlgoliaSearchAngular.prototype._promise = {

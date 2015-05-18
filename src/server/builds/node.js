@@ -9,10 +9,11 @@ var Promise = global.Promise || require('es6-promise').Promise;
 var semver = require('semver');
 
 var AlgoliaSearchServer = require('./AlgoliaSearchServer');
+var errors = require('../../errors');
 
 // does not work on node < 0.8
 if (semver.satisfies(process.version, '<=0.7')) {
-  throw new Error('algoliasearch: Node.js version ' + process.version + ' is not supported');
+  throw new errors.AlgoliaSearchError('Node.js version ' + process.version + ' is not supported');
 }
 
 debug('loaded the Node.js client');
@@ -116,26 +117,30 @@ AlgoliaSearchNodeJS.prototype._request = function(rawUrl, opts) {
     function response(res) {
       var chunks = [];
 
-      res.on('data', data);
-      res.once('end', end);
+      res.on('data', onData);
+      res.once('end', onEnd);
 
-      function data(chunk) {
+      function onData(chunk) {
         chunks.push(chunk);
       }
 
-      function end() {
-        var data = Buffer.concat(chunks);
-        var result = null;
+      function onEnd() {
+        var data = Buffer.concat(chunks).toString();
+        var out;
+
         try {
-          body = JSON.parse(data);
-          result = {
-            statusCode: res.statusCode,
-            body: body,
-          }
-        } catch (ex) {
-          result = new Error(data.toString());
-        } finally {
-          resolve(result);
+          out = {
+            body: JSON.parse(data),
+            statusCode: res.statusCode
+          };
+        } catch(e) {
+          out = new errors.UnparsableJSON({more: data});
+        }
+
+        if (out instanceof errors.UnparsableJSON) {
+          reject(out);
+        } else {
+          resolve(out);
         }
       }
     }
@@ -144,17 +149,20 @@ AlgoliaSearchNodeJS.prototype._request = function(rawUrl, opts) {
       opts.debug('error: %j  - %s', err, rawUrl);
 
       if (timedOut) {
+        opts.debug('request had already timedout')
         return;
       }
 
-      reject(err);
+      reject(new errors.Network(err.message, err));
     }
 
     function timeout() {
       timedOut = true;
       opts.debug('timeout %s', rawUrl);
       req.abort();
-      resolve(new Error('Timeout'));
+      reject(new errors.RequestTimeout());
+    }
+
     function debugBytesSent() {
       var remaining = Buffer.byteLength(body) + Buffer.byteLength(req._header);
       var sent = req.socket.bytesWritten;

@@ -5,6 +5,7 @@
 var inherits = require('inherits');
 
 var AlgoliaSearch = require('../../AlgoliaSearch');
+var errors = require('../../errors');
 var inlineHeaders = require('../inline-headers');
 var JSONPRequest = require('../JSONP-request');
 
@@ -54,12 +55,16 @@ AlgoliaSearchJQuery.prototype._request = function(url, opts) {
       data: body,
       complete: function(jqXHR, textStatus/* , error*/) {
         if (textStatus === 'timeout') {
-          deferred.resolve(new Error('Timeout - Could not connect to endpoint ' + url));
+          deferred.reject(new errors.RequestTimeout());
           return;
         }
 
         if (jqXHR.status === 0) {
-          deferred.reject(new Error('Network error'));
+          deferred.reject(
+            new errors.Network({
+              more: jqXHR
+            })
+          );
           return;
         }
 
@@ -78,7 +83,7 @@ AlgoliaSearchJQuery.prototype._request.fallback = function(url, opts) {
   return $.Deferred(function(deferred) {
     JSONPRequest(url, opts, function JSONPRequestDone(err, content) {
       if (err) {
-        deferred.reject(err);
+        deferred.reject(new errors.JSONP(err.message));
         return;
       }
 

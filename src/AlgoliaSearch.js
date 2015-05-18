@@ -9,6 +9,8 @@ if (process.env.NODE_ENV === 'development') {
 var debug = require('debug')('algoliasearch');
 var foreach = require('foreach');
 
+var errors = require('./errors');
+
 /*
  * Algolia Search library initialization
  * https://www.algolia.com/
@@ -31,11 +33,11 @@ function AlgoliaSearch(applicationID, apiKey, opts) {
   var usage = 'Usage: algoliasearch(applicationID, apiKey, opts)';
 
   if (!applicationID) {
-    throw new Error('algoliasearch: Please provide an application ID. ' + usage);
+    throw new errors.AlgoliaSearchError('Please provide an application ID. ' + usage);
   }
 
   if (!apiKey) {
-    throw new Error('algoliasearch: Please provide an API key. ' + usage);
+    throw new errors.AlgoliaSearchError('Please provide an API key. ' + usage);
   }
 
   this.applicationID = applicationID;
@@ -68,7 +70,7 @@ function AlgoliaSearch(applicationID, apiKey, opts) {
   }
 
   if (opts.protocol !== 'http:' && opts.protocol !== 'https:') {
-    throw new Error('algoliasearch: protocol must be `http:` or `https:` (was `' + opts.protocol + '`)');
+    throw new errors.AlgoliaSearchError('protocol must be `http:` or `https:` (was `' + opts.protocol + '`)');
   }
 
   // no hosts given, add defaults
@@ -552,7 +554,7 @@ AlgoliaSearch.prototype = {
       if (tries >= client.hosts[opts.hostType].length) {
         if (!opts.fallback || !client._request.fallback || usingFallback) {
           // could not get a response even using the fallback if one was available
-          return client._promise.reject(new Error(
+          return client._promise.reject(new errors.AlgoliaSearchError(
             'Cannot connect to the AlgoliaSearch API.' +
             ' Send an email to support@algolia.com to report and resolve the issue.'
           ));
@@ -590,12 +592,6 @@ AlgoliaSearch.prototype = {
         }
       )
       .then(function success(httpResponse) {
-        // timeout case, retry immediately
-        if (httpResponse instanceof Error) {
-          requestDebug('error: %s', httpResponse.message);
-          return retryRequest();
-        }
-
         requestDebug('received response: %j', httpResponse);
 
         var status =
@@ -631,8 +627,8 @@ AlgoliaSearch.prototype = {
           return retryRequest();
         }
 
-        var unrecoverableError = new Error(
-          httpResponse.body && httpResponse.body.message || 'Unknown error'
+        var unrecoverableError = new errors.AlgoliaSearchError(
+          httpResponse.body && httpResponse.body.message
         );
 
         return client._promise.reject(unrecoverableError);
@@ -658,14 +654,40 @@ AlgoliaSearch.prototype = {
         //    - uncaught exception occurs (TypeError)
         requestDebug('error: %s, stack: %s', err.message, err.stack);
 
+        if (err instanceof errors.RequestTimeout) {
+          requestDebug('timedout');
+          return retryRequest();
+        }
+
+        if (!(err instanceof errors.AlgoliaSearchError)) {
+          err = new errors.Unknown(err && err.message, err);
+        }
+
+        // stop the request implementation when:
+        if (
+          // we did not generate this error,
+          // it comes from a throw in some other piece of code
+          err instanceof errors.Unknown ||
+
+          // server sent unparsable JSON
+          err instanceof errors.UnparsableJSON ||
+
+          // no fallback and a network error occured (No CORS, bad APPID)
+          (!requester.fallback && err instanceof errors.Network)) {
+
+          // stop request implementation for this command
+          return client._promise.reject(err);
+        }
+
         // we were not using the fallback, try now
-        // if we are switching to fallback right now, set tries to maximum
+        // if we were using switching to fallback for the first time, set tries to maximum
+        // so that next loop will use the fallback request implementation
         if (!client.useFallback) {
           // next time doRequest is called, simulate we tried all hosts,
           // this will force to use the fallback
           tries = client.hosts[opts.hostType].length;
         } else {
-          // we were already using the fallback, but something went wrong (script error)
+          // we were already using the fallback, but something went wrong, retry
           client.hostIndex[opts.hostType] = ++client.hostIndex[opts.hostType] % client.hosts[opts.hostType].length;
           tries += 1;
         }
@@ -964,7 +986,7 @@ AlgoliaSearch.prototype.Index.prototype = {
    */
   deleteObject: function(objectID, callback) {
     if (typeof objectID === 'function' || typeof objectID !== 'string' && typeof objectID !== 'number') {
-      var err = new Error('Cannot delete an object without an objectID');
+      var err = new errors.AlgoliaSearchError('Cannot delete an object without an objectID');
       callback = objectID;
       if (typeof callback === 'function') {
         return callback(err);
@@ -1157,7 +1179,7 @@ AlgoliaSearch.prototype.Index.prototype = {
       typeof callback === 'object') {
       // .search(query, params, cb)
       // .search(cb, params)
-      throw new Error('algoliasearch: index.search usage is index.search(query, params, cb)');
+      throw new errors.AlgoliaSearchError('index.search usage is index.search(query, params, cb)');
     }
 
     if (arguments.length === 0 || typeof query === 'function') {
@@ -1554,10 +1576,10 @@ function prepareHost(protocol) {
 }
 
 function notImplemented() {
-  var message = 'algoliasearch: Not implemented in this environment.\n' +
+  var message = 'Not implemented in this environment.\n' +
   'If you feel this is a mistake, write to support@algolia.com';
 
-  throw new Error(message);
+  throw new errors.AlgoliaSearchError(message);
 }
 
 function deprecatedMessage(previousUsage, newUsage) {
