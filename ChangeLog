@@ -1,5 +1,14 @@
 CHANGELOG
 
+UNRELEASED
+    * FIX: Remove debugging messages from builds
+      fixes #91
+      fixes #86
+    * FIX: Handle badly formatted JSON
+      fixes #89
+      fixes #90
+    * FIX: Stop bytes sent/received debug on node 0.12 when socket closes
+
 2015-05-14  3.3.2
     * FIX: more fixes to the use of $q() in the angular build, now compatible with 1.2.xx and tested
 
