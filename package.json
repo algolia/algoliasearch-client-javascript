@@ -71,7 +71,7 @@
     "compression": "1.4.3",
     "deumdify": "1.1.0",
     "domready": "0.3.0",
-    "eslint": "0.15.0",
+    "eslint": "0.21.1",
     "express": "4.12.1",
     "faux-jax": "4.0.0-beta.2",
     "http-server": "0.7.5",
