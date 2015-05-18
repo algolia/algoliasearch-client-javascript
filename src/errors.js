@@ -8,8 +8,25 @@ var inherits = require('inherits');
 function AlgoliaSearchError(message, extraProperties) {
   var error = this;
 
+  // try to get a stacktrace
   if (typeof Error.captureStackTrace === 'function') {
     Error.captureStackTrace(this, this.constructor);
+  } else {
+    error.stack = (new Error()).stack;
+  }
+
+  // fallback to a basic throw
+  if (!error.stack) {
+    try {
+      /* eslint-disable */
+      dsaldksaldkasldkas;
+    } catch(e) {
+      error.stack = e.stack;
+    }
+  }
+
+  if (!error.stack) {
+    error.stack = 'Cannot get a stacktrace, browser is too old'
   }
 
   this.name = this.constructor.name;
