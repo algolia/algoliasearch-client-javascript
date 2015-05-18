@@ -8,7 +8,7 @@
   },
   "scripts": {
     "build": "PACKAGE_VERSION=$(json -f src/version.json) ./scripts/build",
-    "release": "git clean dist/ -f && git checkout dist/ && ./scripts/release && npm run build",
+    "release": "git clean dist/ -f && git checkout dist/ && ./scripts/release && NODE_ENV=production npm run build",
     "test": "npm run test-phantom && npm run test-node && npm run lint",
     "test-browser": "DEBUG=zuul* zuul -- test/run-browser.js",
     "test-node": "node test/run-node.js",
