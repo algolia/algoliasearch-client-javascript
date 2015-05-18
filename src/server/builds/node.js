@@ -105,18 +105,9 @@ AlgoliaSearchNodeJS.prototype._request = function(rawUrl, opts) {
         req.once('socket', function() {
           debugBytesSent();
           debugInterval = setInterval(debugBytesSent, 100);
-          req.socket.once('end', function stopDebug() {
-            opts.debug('socket end');
-            debugBytesSent();
-            clearInterval(debugInterval);
-          });
+          req.socket.once('end', stopDebug);
+          req.socket.once('close', stopDebug);
         });
-
-        function debugBytesSent() {
-          var remaining = Buffer.byteLength(body) + Buffer.byteLength(req._header);
-          var sent = req.socket.bytesWritten;
-          opts.debug('sent/remaining bytes: %d/%d', sent, remaining);
-        }
       }
     }
 
@@ -164,6 +155,18 @@ AlgoliaSearchNodeJS.prototype._request = function(rawUrl, opts) {
       opts.debug('timeout %s', rawUrl);
       req.abort();
       resolve(new Error('Timeout'));
+    function debugBytesSent() {
+      var remaining = Buffer.byteLength(body) + Buffer.byteLength(req._header);
+      var sent = req.socket.bytesWritten;
+      opts.debug('sent/remaining bytes: %d/%d', sent, remaining);
+    }
+
+    function stopDebug() {
+      req.socket.removeListener('end', stopDebug);
+      req.socket.removeListener('close', stopDebug);
+      opts.debug('socket end');
+      debugBytesSent();
+      clearInterval(debugInterval);
     }
   });
 };
