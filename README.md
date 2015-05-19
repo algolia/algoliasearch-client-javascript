@@ -797,6 +797,8 @@ function searchCallback(err, content) {
 client.search(queries, searchCallback);
 ```
 
+The resulting JSON answer contains a ```results``` array storing the underlying queries answers. The answers order is the same than the requests order.
+
 You can specify a strategy to optimize your multiple queries:
 - **none**: Execute the sequence of queries until the end.
 - **stopIfEnoughMatches**: Execute the sequence of queries until the number of hits is reached by the sum of hits.
@@ -1065,7 +1067,22 @@ index.partialUpdateObjects(objects, function(err, content) {
 
 If you have one index per user, you may want to perform a batch operations across severals indexes.
 We expose a method to perform this type of batch:
-
+```js
+client.batch([{
+  action: 'addObject',
+  indexName: 'clients',
+  body: {
+    name: 'Bill'
+  }
+}, {
+  action: 'udpateObject',
+  indexName: 'fruits',
+  body: {
+    objectID: '29138',
+    name: 'banana'
+  }
+}], cb)
+```
 
 The attribute **action** can have these values:
 - addObject
