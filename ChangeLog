@@ -8,6 +8,8 @@ UNRELEASED
       fixes #89
       fixes #90
     * FIX: Stop bytes sent/received debug on node 0.12 when socket closes
+    * test: Test on only 3 browsers in travis
+    * test: split desktop/mobile into a travis matrix, reduces travis timeouts
 
 2015-05-14  3.3.2
     * FIX: more fixes to the use of $q() in the angular build, now compatible with 1.2.xx and tested

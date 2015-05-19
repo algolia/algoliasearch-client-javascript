@@ -1,7 +1,6 @@
 language: node_js
 install: npm install
 script: npm run $COMMAND
-fast_finish: true
 branches:
   only:
     - master
@@ -13,21 +12,19 @@ env:
 matrix:
   include:
     - node_js: "0.10"
-      env: COMMAND=test-browser BROWSERS=desktop
-    - node_js: "0.10"
-      env: COMMAND=test-browser BROWSERS=mobile
+      env: COMMAND=build
     - node_js: "0.10"
       env: COMMAND=test-phantom
     - node_js: "0.10"
       env: COMMAND=test-node
+    - node_js: "0.10"
+      env: COMMAND=test-browser BROWSERS=desktop
+    - node_js: "0.10"
+      env: COMMAND=test-browser BROWSERS=mobile
     - node_js: "0.12"
       env: COMMAND=test-node
     - node_js: "iojs-v2.0.1"
       env: COMMAND=test-node
     - node_js: "0.10"
       env: COMMAND=lint
-    - node_js: "0.10"
-      env: COMMAND=build
-  exclude:
-    - env: COMMAND=test-ci-browser BROWSERS=desktop TRAVIS_PULL_REQUEST=true
-    - env: COMMAND=test-ci-browser BROWSERS=mobile TRAVIS_PULL_REQUEST=true
+  fast_finish: true
