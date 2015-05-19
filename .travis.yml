@@ -9,22 +9,26 @@ env:
   global:
     - SAUCE_USERNAME=algoliasearch-js
     - secure: oKl1RMuEO9bYoKevbFeFX72M2eV+DIJG/9UGMP4oLb3z5B8T5xAlQSEt8Lp0Zms6qqA+4hAQhZTKXDtdpx7NK+SuqYiv4oR9hdiJBbrRXIRuY86R2T/opO/RlBETL+7Y2R1AGM/kZzyiZSFqN9slGVzWziBtLJjJ4ncoceE8izs=
+    - secure: UnpKy2vOhmkbAXV9J1miZMCVM7VeUl9SyeoN4iFj65KD26wPODdXFjaxiVYM7YvQiUj61HraB6iqk2Vt/W842ACxNl2mOjSTHQXNI7qbtdIlLs0ABdJwjXsCxBtmAIi2GEj/JiDU/duF11/VgkxwBWvIGYEkOD+9c2bJp382xPQ=
+    - secure: gMSrjKP4bFYh/cUnO3JDXV+NW6aCdzP6Luwn2QJhml0Ump1a0fomHJUsjELaTpzel9CiONbf7D8bmEyN8woFQq8wa+wltVAzPpbNhYMclJmFV6sKOlGcGn3f/SDv5MiUBuUtyMRgnPv2OEoafQ40mSN/5ELT7PQzYXqxp+EGhTM=
 matrix:
   include:
-    - node_js: "0.10"
+    - node_js: '0.10'
       env: COMMAND=build
-    - node_js: "0.10"
+    - node_js: '0.10'
       env: COMMAND=test-phantom
-    - node_js: "0.10"
+    - node_js: '0.10'
       env: COMMAND=test-node
-    - node_js: "0.10"
+    - node_js: '0.12'
+      env: COMMAND=test-integration BROWSERS=integration
+    - node_js: '0.10'
       env: COMMAND=test-browser BROWSERS=desktop
-    - node_js: "0.10"
+    - node_js: '0.10'
       env: COMMAND=test-browser BROWSERS=mobile
-    - node_js: "0.12"
+    - node_js: '0.12'
       env: COMMAND=test-node
-    - node_js: "iojs-v2.0.1"
+    - node_js: iojs-v2.0.1
       env: COMMAND=test-node
-    - node_js: "0.10"
+    - node_js: '0.10'
       env: COMMAND=lint
   fast_finish: true
