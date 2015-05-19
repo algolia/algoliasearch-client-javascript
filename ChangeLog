@@ -17,6 +17,9 @@ UNRELEASED
     * fix: send `x-algolia-agent` instead of `x-user-agent`
     * fix: clone cached results hits sent
       fixes #79
+    * feat: New parameters for API keys
+      Added description, referers, queryParameters
+      ref: https://www.algolia.com/changes#released-2015-05-08
 
 2015-05-14  3.3.2
     * FIX: more fixes to the use of $q() in the angular build, now compatible with 1.2.xx and tested

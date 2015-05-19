@@ -20,7 +20,12 @@ module.exports = [{
   callArguments: [['smurf', 'it'], {
     validity: 299,
     maxQueriesPerIPPerHour: 9000,
-    maxHitsPerQuery: 0
+    maxHitsPerQuery: 0,
+    description: 'Le chat is black',
+    queryParameters: {
+      tagFilters: 'public'
+    },
+    referers: ['*.algolia.com']
   }],
   action: 'write',
   expectedRequest: {
@@ -29,7 +34,10 @@ module.exports = [{
       acl: ['smurf', 'it'],
       validity: 299,
       maxQueriesPerIPPerHour: 9000,
-      maxHitsPerQuery: 0
+      maxHitsPerQuery: 0,
+      description: 'Le chat is black',
+      queryParameters: 'tagFilters=public',
+      referers: ['*.algolia.com']
     },
     URL: {
       pathname: '/1/indexes/%s/keys'

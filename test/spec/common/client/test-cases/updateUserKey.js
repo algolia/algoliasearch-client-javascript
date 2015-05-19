@@ -20,7 +20,12 @@ var fauxJax = require('faux-jax');
       validity: 299,
       maxQueriesPerIPPerHour: 9000,
       maxHitsPerQuery: 0,
-      indexes: ['le chat', 'black']
+      indexes: ['le chat', 'black'],
+      description: 'Le chat is black',
+      queryParameters: {
+        tagFilters: 'public'
+      },
+      referers: ['*.algolia.com']
     }],
     action: 'write',
     expectedRequest: {
@@ -30,7 +35,10 @@ var fauxJax = require('faux-jax');
         validity: 299,
         maxQueriesPerIPPerHour: 9000,
         maxHitsPerQuery: 0,
-        indexes: ['le chat', 'black']
+        indexes: ['le chat', 'black'],
+        description: 'Le chat is black',
+        queryParameters: 'tagFilters=public',
+        referers: ['*.algolia.com']
       },
       URL: {pathname: '/1/keys/WOOmom'}
     }
