@@ -64,7 +64,7 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
             requestURL.query, {
               'x-algolia-api-key': 'ROCKSSuccess',
               'x-algolia-application-id': 'AngularJSSuccess',
-              'x-user-agent': algolia.ua
+              'x-algolia-agent': algolia.ua
             },
             'requestURL query matches'
           );

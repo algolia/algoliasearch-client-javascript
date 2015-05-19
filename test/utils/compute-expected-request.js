@@ -38,7 +38,7 @@ function computeExpectedRequest(expectedRequest, credentials) {
   if (!process.browser) {
     expectedRequest.headers['x-algolia-api-key'] = credentials.searchOnlyAPIKey;
     expectedRequest.headers['x-algolia-application-id'] = credentials.applicationID;
-    expectedRequest.headers['x-user-agent'] = algoliasearch.ua;
+    expectedRequest.headers['x-algolia-agent'] = algoliasearch.ua;
     expectedRequest.headers.accept = 'application/json';
   }
 
@@ -52,7 +52,7 @@ function getRequestURL(credentials) {
     expectedQueryString = {
       'x-algolia-api-key': credentials.searchOnlyAPIKey,
       'x-algolia-application-id': credentials.applicationID,
-      'x-user-agent': algoliasearch.ua
+      'x-algolia-agent': algoliasearch.ua
     };
   } else {
     // serverside will send them in headers

@@ -797,7 +797,7 @@ AlgoliaSearch.prototype = {
     var requestHeaders = {
       'x-algolia-api-key': this.apiKey,
       'x-algolia-application-id': this.applicationID,
-      'x-user-agent': this._ua
+      'x-algolia-agent': this._ua
     };
 
     if (this.userToken) {

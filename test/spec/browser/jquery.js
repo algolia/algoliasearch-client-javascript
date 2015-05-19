@@ -65,7 +65,7 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
         requestURL.query, {
           'x-algolia-api-key': 'jquery-success-apiKey',
           'x-algolia-application-id': 'jquery-success-applicationID',
-          'x-user-agent': global.$.algolia.ua
+          'x-algolia-agent': global.$.algolia.ua
         },
         'requestURL query matches'
       );
