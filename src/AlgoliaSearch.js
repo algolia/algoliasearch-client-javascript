@@ -463,6 +463,51 @@ AlgoliaSearch.prototype = {
     });
   },
 
+  /**
+   * Perform write operations accross multiple indexes.
+   *
+   * To reduce the amount of time spent on network round trips,
+   * you can create, update, or delete several objects in one call,
+   * using the batch endpoint (all operations are done in the given order).
+   *
+   * Available actions:
+   *   - addObject
+   *   - updateObject
+   *   - partialUpdateObject
+   *   - partialUpdateObjectNoCreate
+   *   - deleteObject
+   *
+   * https://www.algolia.com/doc/rest_api#Indexes
+   * @param  {Object[]} operations An array of operations to perform
+   * @return {Promise|undefined} Returns a promise if no callback given
+   * @example
+   * client.batch([{
+   *   action: 'addObject',
+   *   indexName: 'clients',
+   *   body: {
+   *     name: 'Bill'
+   *   }
+   * }, {
+   *   action: 'udpateObject',
+   *   indexName: 'fruits',
+   *   body: {
+   *     objectID: '29138',
+   *     name: 'banana'
+   *   }
+   * }], cb)
+   */
+  batch: function(operations, callback) {
+    return this._jsonRequest({
+      method: 'POST',
+      url: '/1/indexes/*/batch',
+      body: {
+        requests: operations
+      },
+      hostType: 'write',
+      callback: callback
+    });
+  },
+
   // environment specific methods
   destroy: notImplemented,
   enableRateLimitForward: notImplemented,
