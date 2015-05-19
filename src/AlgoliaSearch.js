@@ -593,7 +593,7 @@ AlgoliaSearch.prototype = {
       // handle cache existence
       if (client._useCache && cache && cache[cacheID] !== undefined) {
         requestDebug('serving response from cache');
-        return client._promise.resolve(cache[cacheID]);
+        return client._promise.resolve(JSON.parse(JSON.stringify(cache[cacheID])));
       }
 
       if (tries >= client.hosts[opts.hostType].length) {
