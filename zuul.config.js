@@ -17,15 +17,29 @@ if (process.env.BROWSERS) {
   // default zuul is to use localtunnel.me, not reliable enough
   zuulConfig.tunnel = 'ngrok';
 
-  if (process.env.BROWSERS === 'desktop') {
+  // For PRS, no matter desktop or mobile, we test a subset of browsers
+  if (process.env.TRAVIS_PULL_REQUEST === 'true') {
+    zuulConfig.browsers = [{
+      name: 'chrome',
+      version: 'latest',
+      platform: 'Windows 2012 R2' // Force Win 8.1, more stable
+    }, {
+      name: 'ie',
+      version: 'latest'
+    }, {
+      name: 'firefox',
+      version: 'latest',
+      platform: 'Windows 2012 R2'
+    }];
+  } else if (process.env.BROWSERS === 'desktop') {
     zuulConfig.browsers = [{
       name: 'chrome',
       version: '41..dev',
-      platform: 'Windows 2012 R2' // Force Win 8.1, more stable
+      platform: 'Windows 2012 R2'
     }, {
       name: 'firefox',
       version: '37..latest',
-      platform: 'Windows 2012 R2' // Force Win 8.1, more stable
+      platform: 'Windows 2012 R2'
     }, {
       name: 'ie',
       version: '8..latest'

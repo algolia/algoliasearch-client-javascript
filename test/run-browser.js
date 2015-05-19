@@ -1,3 +1,8 @@
+if (process.env.TRAVIS_PULL_REQUEST === 'true' && process.env.BROWSERS === 'mobile') {
+  console.log('No mobile tests for pull requests');
+  process.exit(0);
+}
+
 var domready = require('domready');
 
 // wait for domready to allo test runner to do ajax requests before we
