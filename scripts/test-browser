@@ -14,5 +14,5 @@ else
   # zuul will be automatically found by npm
   # when run with npm run test-browser
   # https://docs.npmjs.com/misc/scripts#pah
-  DEBUG=zuul* zuul -- ../test/run-browser.js
+  DEBUG=zuul* zuul -- test/run-browser.js
 fi
