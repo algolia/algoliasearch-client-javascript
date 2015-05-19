@@ -1,5 +1,4 @@
 module.exports = {
-  only: true,
   testName: 'client.batch(operations, cb)',
   object: 'client',
   methodName: 'batch',
