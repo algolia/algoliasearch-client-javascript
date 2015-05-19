@@ -18,7 +18,8 @@ if (process.env.BROWSERS) {
   zuulConfig.tunnel = 'ngrok';
 
   // For PRS, no matter desktop or mobile, we test a subset of browsers
-  if (process.env.TRAVIS_PULL_REQUEST === 'true') {
+  // process.env.TRAVIS_PULL_REQUEST contains the PR# or false
+  if (process.env.TRAVIS_PULL_REQUEST !== 'false') {
     zuulConfig.browsers = [{
       name: 'chrome',
       version: 'latest',
