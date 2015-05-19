@@ -921,15 +921,26 @@ AlgoliaSearch.prototype.Index.prototype = {
    *
    * @param objectIDs the array of unique identifier of objects to retrieve
    */
-  getObjects: function(objectIDs, callback) {
+  getObjects: function(objectIDs, attributesToRetrieve, callback) {
     var indexObj = this;
+
+    if (arguments.length === 1 || typeof attributesToRetrieve === 'function') {
+      callback = attributesToRetrieve;
+      attributesToRetrieve = undefined;
+    }
 
     var body = {
       requests: map(objectIDs, function prepareRequest(objectID) {
-        return {
+        var request = {
           'indexName': indexObj.indexName,
           'objectID': objectID
         };
+
+        if (attributesToRetrieve) {
+          request.attributesToRetrieve = attributesToRetrieve.join(',');
+        }
+
+        return request;
       })
     };
 

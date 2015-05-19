@@ -11,6 +11,8 @@ UNRELEASED
     * test: Test on only 3 browsers in travis
     * test: split desktop/mobile into a travis matrix, reduces travis timeouts
     * feat: add client.batch()
+    * feature: getObjects now accepts attributesToRetrieve:
+      signature: getObjects(objectIDs, attributesToRetrieve, callback)
 
 2015-05-14  3.3.2
     * FIX: more fixes to the use of $q() in the angular build, now compatible with 1.2.xx and tested
