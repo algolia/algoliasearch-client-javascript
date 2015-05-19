@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+# When in a pull request, travis sets TRAVIS_PULL_REQUEST to the PR#
+# When in a PR and mobile browsers asked, exit
+# http://docs.travis-ci.com/user/pull-requests/
+
+# default to not in a pull request
+[ -z $TRAVIS_PULL_REQUEST ] && TRAVIS_PULL_REQUEST='false'
+
+if [ $TRAVIS_PULL_REQUEST != 'false' ] && [ $BROWSERS == 'mobile' ]; then
+  echo 'No mobile tests in travis pull requests'
+  exit 0
+else
+  # zuul will be automatically found by npm
+  # when run with npm run test-browser
+  # https://docs.npmjs.com/misc/scripts#pah
+  DEBUG=zuul* zuul -- ../test/run-browser.js
+fi

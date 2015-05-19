@@ -1,10 +1,3 @@
-// For PRS, no matter desktop or mobile, we test a subset of browsers
-// process.env.TRAVIS_PULL_REQUEST contains the PR# or false
-if (process.env.TRAVIS_PULL_REQUEST !== 'false' && process.env.BROWSERS === 'mobile') {
-  console.log('No mobile tests for pull requests');
-  process.exit(0);
-}
-
 var domready = require('domready');
 
 // wait for domready to allo test runner to do ajax requests before we
