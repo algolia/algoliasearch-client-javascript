@@ -21,6 +21,7 @@ test('AlgoliaSearch client API spec', function(t) {
     'addQueryInBatch',
     'addUserKey',
     'addUserKeyWithValidity',
+    'batch',
     'updateUserKey',
     'clearCache',
     'copyIndex',
