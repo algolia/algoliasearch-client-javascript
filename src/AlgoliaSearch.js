@@ -3,7 +3,7 @@ module.exports = AlgoliaSearch;
 // default debug activated in dev environments
 // this is triggered in package.json, using the envify transform
 if (process.env.NODE_ENV === 'development') {
-  require('debug').enable('algoliasearch*');
+  // require('debug').enable('algoliasearch*');
 }
 
 var debug = require('debug')('algoliasearch');
@@ -244,7 +244,7 @@ AlgoliaSearch.prototype = {
               callback: callback });
   },
   /*
-   * Add an existing user key
+   * Add a new global API key
    *
    * @param {string[]} acls - The list of ACL for this key. Defined by an array of strings that
    *   can contains the following values:
@@ -259,10 +259,26 @@ AlgoliaSearch.prototype = {
    * @param {number} params.maxQueriesPerIPPerHour - Number of API calls allowed from an IP address per hour
    * @param {number} params.maxHitsPerQuery - Number of hits this API key can retrieve in one call
    * @param {string[]} params.indexes - Allowed targeted indexes for this key
+   * @param {string} params.description - A description for your key
+   * @param {string[]} params.referers - A list of authorized referers
+   * @param {Object} params.queryParameters - Force the key to use specific query parameters
    * @param {Function} callback - The result callback called with two arguments
    *   error: null or Error('message')
    *   content: the server answer with user keys list
    * @return {Promise|undefined} Returns a promise if no callback given
+   * @example
+   * client.addUserKey(['search'], {
+   *   validity: 300,
+   *   maxQueriesPerIPPerHour: 2000,
+   *   maxHitsPerQuery: 3,
+   *   indexes: ['fruits'],
+   *   description: 'Eat three fruits',
+   *   referers: ['*.algolia.com'],
+   *   queryParameters: {
+   *     tagFilters: ['public'],
+   *   }
+   * })
+   * @see {@link https://www.algolia.com/doc/rest_api#AddKey|Algolia REST API Documentation}
    */
   addUserKey: function(acls, params, callback) {
     if (arguments.length === 1 || typeof params === 'function') {
@@ -279,6 +295,13 @@ AlgoliaSearch.prototype = {
       postObj.maxQueriesPerIPPerHour = params.maxQueriesPerIPPerHour;
       postObj.maxHitsPerQuery = params.maxHitsPerQuery;
       postObj.indexes = params.indexes;
+      postObj.description = params.description;
+
+      if (params.queryParameters) {
+        postObj.queryParameters = this._getSearchParams(params.queryParameters, '');
+      }
+
+      postObj.referers = params.referers;
     }
 
     return this._jsonRequest({
@@ -290,7 +313,7 @@ AlgoliaSearch.prototype = {
     });
   },
   /**
-   * Add an existing user key
+   * Add a new global API key
    * @deprecated Please use client.addUserKey()
    */
   addUserKeyWithValidity: deprecate(function(acls, params, callback) {
@@ -298,7 +321,7 @@ AlgoliaSearch.prototype = {
   }, deprecatedMessage('client.addUserKeyWithValidity()', 'client.addUserKey()')),
 
   /**
-   * Update an existing user key
+   * Update an existing API key
    * @param {string} key - The key to update
    * @param {string[]} acls - The list of ACL for this key. Defined by an array of strings that
    *   can contains the following values:
@@ -313,10 +336,26 @@ AlgoliaSearch.prototype = {
    * @param {number} params.maxQueriesPerIPPerHour - Number of API calls allowed from an IP address per hour
    * @param {number} params.maxHitsPerQuery - Number of hits this API key can retrieve in one call
    * @param {string[]} params.indexes - Allowed targeted indexes for this key
+   * @param {string} params.description - A description for your key
+   * @param {string[]} params.referers - A list of authorized referers
+   * @param {Object} params.queryParameters - Force the key to use specific query parameters
    * @param {Function} callback - The result callback called with two arguments
    *   error: null or Error('message')
    *   content: the server answer with user keys list
    * @return {Promise|undefined} Returns a promise if no callback given
+   * @example
+   * client.updateUserKey('APIKEY', ['search'], {
+   *   validity: 300,
+   *   maxQueriesPerIPPerHour: 2000,
+   *   maxHitsPerQuery: 3,
+   *   indexes: ['fruits'],
+   *   description: 'Eat three fruits',
+   *   referers: ['*.algolia.com'],
+   *   queryParameters: {
+   *     tagFilters: ['public'],
+   *   }
+   * })
+   * @see {@link https://www.algolia.com/doc/rest_api#UpdateIndexKey|Algolia REST API Documentation}
    */
   updateUserKey: function(key, acls, params, callback) {
     if (arguments.length === 2 || typeof params === 'function') {
@@ -333,6 +372,13 @@ AlgoliaSearch.prototype = {
       putObj.maxQueriesPerIPPerHour = params.maxQueriesPerIPPerHour;
       putObj.maxHitsPerQuery = params.maxHitsPerQuery;
       putObj.indexes = params.indexes;
+      putObj.description = params.description;
+
+      if (params.queryParameters) {
+        putObj.queryParameters = this._getSearchParams(params.queryParameters, '');
+      }
+
+      putObj.referers = params.referers;
     }
 
     return this._jsonRequest({
@@ -1501,21 +1547,41 @@ AlgoliaSearch.prototype.Index.prototype = {
       hostType: 'write',
       callback: callback });
   },
-  /*
-   * Add an existing user key associated to this index
-   *
-   * @param acls the list of ACL for this key. Defined by an array of strings that
-   * can contains the following values:
-   *   - search: allow to search (https and http)
-   *   - addObject: allows to add/update an object in the index (https only)
-   *   - deleteObject : allows to delete an existing object (https only)
-   *   - deleteIndex : allows to delete index content (https only)
-   *   - settings : allows to get index settings (https only)
-   *   - editSettings : allows to change index settings (https only)
-   * @param callback the result callback called with two arguments
-   *  error: null or Error('message')
-   *  content: the server answer with user keys list
-   */
+   /*
+    * Add a new API key to this index
+    *
+    * @param {string[]} acls - The list of ACL for this key. Defined by an array of strings that
+    *   can contains the following values:
+    *     - search: allow to search (https and http)
+    *     - addObject: allows to add/update an object in the index (https only)
+    *     - deleteObject : allows to delete an existing object (https only)
+    *     - deleteIndex : allows to delete index content (https only)
+    *     - settings : allows to get index settings (https only)
+    *     - editSettings : allows to change index settings (https only)
+    * @param {Object} [params] - Optionnal parameters to set for the key
+    * @param {number} params.validity - Number of seconds after which the key will be automatically removed (0 means no time limit for this key)
+    * @param {number} params.maxQueriesPerIPPerHour - Number of API calls allowed from an IP address per hour
+    * @param {number} params.maxHitsPerQuery - Number of hits this API key can retrieve in one call
+    * @param {string} params.description - A description for your key
+    * @param {string[]} params.referers - A list of authorized referers
+    * @param {Object} params.queryParameters - Force the key to use specific query parameters
+    * @param {Function} callback - The result callback called with two arguments
+    *   error: null or Error('message')
+    *   content: the server answer with user keys list
+    * @return {Promise|undefined} Returns a promise if no callback given
+    * @example
+    * index.addUserKey(['search'], {
+    *   validity: 300,
+    *   maxQueriesPerIPPerHour: 2000,
+    *   maxHitsPerQuery: 3,
+    *   description: 'Eat three fruits',
+    *   referers: ['*.algolia.com'],
+    *   queryParameters: {
+    *     tagFilters: ['public'],
+    *   }
+    * })
+    * @see {@link https://www.algolia.com/doc/rest_api#AddIndexKey|Algolia REST API Documentation}
+    */
   addUserKey: function(acls, params, callback) {
     if (arguments.length === 1 || typeof params === 'function') {
       callback = params;
@@ -1530,6 +1596,13 @@ AlgoliaSearch.prototype.Index.prototype = {
       postObj.validity = params.validity;
       postObj.maxQueriesPerIPPerHour = params.maxQueriesPerIPPerHour;
       postObj.maxHitsPerQuery = params.maxHitsPerQuery;
+      postObj.description = params.description;
+
+      if (params.queryParameters) {
+        postObj.queryParameters = this.as._getSearchParams(params.queryParameters, '');
+      }
+
+      postObj.referers = params.referers;
     }
 
     return this.as._jsonRequest({
@@ -1550,7 +1623,7 @@ AlgoliaSearch.prototype.Index.prototype = {
    }, deprecatedMessage('index.addUserKeyWithValidity()', 'index.addUserKey()')),
 
    /**
-    * Update an existing user key associated to this index
+    * Update an existing API key of this index
     * @param {string} key - The key to update
     * @param {string[]} acls - The list of ACL for this key. Defined by an array of strings that
     *   can contains the following values:
@@ -1564,10 +1637,25 @@ AlgoliaSearch.prototype.Index.prototype = {
     * @param {number} params.validity - Number of seconds after which the key will be automatically removed (0 means no time limit for this key)
     * @param {number} params.maxQueriesPerIPPerHour - Number of API calls allowed from an IP address per hour
     * @param {number} params.maxHitsPerQuery - Number of hits this API key can retrieve in one call
+    * @param {string} params.description - A description for your key
+    * @param {string[]} params.referers - A list of authorized referers
+    * @param {Object} params.queryParameters - Force the key to use specific query parameters
     * @param {Function} callback - The result callback called with two arguments
     *   error: null or Error('message')
     *   content: the server answer with user keys list
     * @return {Promise|undefined} Returns a promise if no callback given
+    * @example
+    * index.updateUserKey('APIKEY', ['search'], {
+    *   validity: 300,
+    *   maxQueriesPerIPPerHour: 2000,
+    *   maxHitsPerQuery: 3,
+    *   description: 'Eat three fruits',
+    *   referers: ['*.algolia.com'],
+    *   queryParameters: {
+    *     tagFilters: ['public'],
+    *   }
+    * })
+    * @see {@link https://www.algolia.com/doc/rest_api#UpdateIndexKey|Algolia REST API Documentation}
     */
    updateUserKey: function(key, acls, params, callback) {
      if (arguments.length === 2 || typeof params === 'function') {
@@ -1583,6 +1671,13 @@ AlgoliaSearch.prototype.Index.prototype = {
        putObj.validity = params.validity;
        putObj.maxQueriesPerIPPerHour = params.maxQueriesPerIPPerHour;
        putObj.maxHitsPerQuery = params.maxHitsPerQuery;
+       putObj.description = params.description;
+
+       if (params.queryParameters) {
+         putObj.queryParameters = this.as._getSearchParams(params.queryParameters, '');
+       }
+
+       putObj.referers = params.referers;
      }
 
      return this.as._jsonRequest({
