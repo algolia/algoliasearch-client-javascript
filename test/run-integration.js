@@ -7,7 +7,16 @@ var _ = require('lodash');
 var Chance = require('chance');
 var test = require('tape');
 
-var algoliasearch = require('../');
+// ensure that on the browser we use the global algoliasearch,
+// so that we are absolutely sure the builded version exposes algoliasearch
+// in browser integration tests
+var algoliasearch;
+if (process.browser) {
+  algoliasearch = global.algoliasearch;
+} else {
+  // on nodejs, we require algoliasearch
+  algoliasearch = require('../');
+}
 var getFakeObjects = require('./utils/get-fake-objects');
 
 var chance = new Chance();

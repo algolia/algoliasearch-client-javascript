@@ -23,7 +23,7 @@ matrix:
 
     # Browser integration tests, real browsers
     - node_js: '0.10'
-      env: COMMAND=test-browser-integration BROWSERS=integration APP_ENV=production
+      env: COMMAND='build && npm run test-browser-integration' BROWSERS=integration APP_ENV=production
 
     # Integration tests, nodejs
     - node_js: '0.10'

@@ -3,7 +3,9 @@ var zuulConfig = module.exports = {
   scripts: [
     '/node_modules/jquery/dist/jquery.min.js',
     '/node_modules/jQuery-ajaxTransport-XDomainRequest/jquery.xdomainrequest.min.js',
-    '/node_modules/angular/angular.min.js'
+    '/node_modules/angular/angular.min.js',
+    // browser integration tests will use the dist files
+    '/dist/algoliasearch.min.js'
   ],
   html: './test/template.html',
   server: './test/support-server/index.js',
