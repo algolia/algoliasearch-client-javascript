@@ -8,7 +8,7 @@
 [ -z $TRAVIS_PULL_REQUEST ] && TRAVIS_PULL_REQUEST='false'
 
 if [ $TRAVIS_PULL_REQUEST != 'false' ] && [ $BROWSERS == 'mobile' ]; then
-  echo 'No mobile tests in travis pull requests'
+  echo 'Skipping specific mobile tests in travis pull requests'
   exit 0
 else
   # zuul will be automatically found by npm

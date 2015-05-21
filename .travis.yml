@@ -37,8 +37,11 @@ matrix:
       env: COMMAND=test-phantom NODE_ENV=production
 
     # Browser unit test, real browsers
+    # In pull requests, the first "DESKTOP" tests will be run on all
+    # latest browsers only (desktop + mobile)
     - node_js: '0.10'
       env: COMMAND=test-browser BROWSERS=desktop
+    # This task will be ignored in pull requests
     - node_js: '0.10'
       env: COMMAND=test-browser BROWSERS=mobile
 
