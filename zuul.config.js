@@ -24,6 +24,7 @@ if (
   // For PRS or integration tests, no matter desktop or mobile, we test a subset of browsers
   // process.env.TRAVIS_PULL_REQUEST contains the PR# or false
   process.env.BROWSERS === 'integration' ||
+  // TRAVIS_PULL_REQUEST contains either false or the travis job #
   process.env.TRAVIS_PULL_REQUEST && process.env.TRAVIS_PULL_REQUEST !== 'false') {
   zuulConfig.browsers = [{
     name: 'chrome',
