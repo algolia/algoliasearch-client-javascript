@@ -15,14 +15,15 @@ env:
     - secure: UnpKy2vOhmkbAXV9J1miZMCVM7VeUl9SyeoN4iFj65KD26wPODdXFjaxiVYM7YvQiUj61HraB6iqk2Vt/W842ACxNl2mOjSTHQXNI7qbtdIlLs0ABdJwjXsCxBtmAIi2GEj/JiDU/duF11/VgkxwBWvIGYEkOD+9c2bJp382xPQ=
     - secure: gMSrjKP4bFYh/cUnO3JDXV+NW6aCdzP6Luwn2QJhml0Ump1a0fomHJUsjELaTpzel9CiONbf7D8bmEyN8woFQq8wa+wltVAzPpbNhYMclJmFV6sKOlGcGn3f/SDv5MiUBuUtyMRgnPv2OEoafQ40mSN/5ELT7PQzYXqxp+EGhTM=
 matrix:
+  fast_finish: true
   include:
     # First we try to build the browser files
     - node_js: '0.10'
-      env: COMMAND=build NODE_ENV=production
+      env: COMMAND=build APP_ENV=production
 
     # Browser integration tests, real browsers
     - node_js: '0.10'
-      env: COMMAND=test-browser-integration BROWSERS=integration NODE_ENV=production
+      env: COMMAND=test-browser-integration BROWSERS=integration APP_ENV=production
 
     # Integration tests, nodejs
     - node_js: '0.10'
@@ -34,7 +35,7 @@ matrix:
 
     # Browser unit tests, phantom
     - node_js: '0.10'
-      env: COMMAND=test-phantom NODE_ENV=production
+      env: COMMAND=test-phantom APP_ENV=production
 
     # Browser unit test, real browsers
     # In pull requests, the first "DESKTOP" tests will be run on all
@@ -56,4 +57,3 @@ matrix:
     # Linting
     - node_js: '0.10'
       env: COMMAND=lint
-  fast_finish: true
