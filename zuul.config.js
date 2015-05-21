@@ -18,14 +18,11 @@ if (process.env.BROWSERS) {
   zuulConfig.tunnel = 'ngrok';
 }
 
-if (process.env.BROWSERS === 'integration') {
-  zuulConfig.browsers = [{
-    name: 'ie',
-    version: '11'
-  }];
-} else if (process.env.TRAVIS_PULL_REQUEST && process.env.TRAVIS_PULL_REQUEST !== 'false') {
-  // For PRS, no matter desktop or mobile, we test a subset of browsers
+if (
+  // For PRS or integration tests, no matter desktop or mobile, we test a subset of browsers
   // process.env.TRAVIS_PULL_REQUEST contains the PR# or false
+  process.env.BROWSERS === 'integration' ||
+  process.env.TRAVIS_PULL_REQUEST && process.env.TRAVIS_PULL_REQUEST !== 'false') {
   zuulConfig.browsers = [{
     name: 'chrome',
     version: 'latest',
@@ -37,6 +34,18 @@ if (process.env.BROWSERS === 'integration') {
     name: 'firefox',
     version: 'latest',
     platform: 'Windows 2012 R2'
+  }, {
+    name: 'safari',
+    version: 'latest'
+  }, {
+    name: 'iphone',
+    version: 'latest'
+  }, {
+    name: 'ipad',
+    version: 'latest'
+  }, {
+    name: 'android',
+    version: 'latest'
   }];
 } else if (process.env.BROWSERS === 'desktop') {
   zuulConfig.browsers = [{

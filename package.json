@@ -15,7 +15,6 @@
     "test-phantom": "DEBUG=zuul* zuul --phantom -- test/run-browser.js",
     "test-node-integration": "node test/run-integration.js",
     "test-browser-integration": "DEBUG=zuul* zuul --phantom -- test/run-integration.js",
-    "test-integration": "npm run test-node-integration && npm run test-browser-integration",
     "dev": "NODE_ENV=development DEBUG=zuul* zuul --no-coverage --local 8080 -- test/run-browser.js",
     "examples": "http-server . -a 0.0.0.0",
     "lint": "eslint --quiet test/"
