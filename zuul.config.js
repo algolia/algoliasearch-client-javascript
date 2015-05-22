@@ -26,11 +26,11 @@ var browsers = {
   // process.env.BROWSERS = 'desktop';
   desktop: [{
     name: 'chrome',
-    version: '42..latest',
+    version: '42..beta',
     platform: 'Windows 2012 R2'
   }, {
     name: 'firefox',
-    version: '37..latest',
+    version: '37..beta',
     platform: 'Windows 2012 R2'
   }, {
     name: 'ie',
@@ -60,7 +60,7 @@ browsers.integration = browsers.desktop.concat(browsers.mobile);
 // For PRS, no matter desktop or mobile, we test a subset of browsers
 browsers.pr = [{
   name: 'chrome',
-  version: 'latest',
+  version: 'latest', // `latest` === stable
   platform: 'Windows 2012 R2' // Force Win 8.1, more stable
 }, {
   name: 'ie',
