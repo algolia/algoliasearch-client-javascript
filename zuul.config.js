@@ -30,7 +30,7 @@ var browsers = {
     platform: 'Windows 2012 R2'
   }, {
     name: 'firefox',
-    version: '37..beta',
+    version: '37..latest',
     platform: 'Windows 2012 R2'
   }, {
     name: 'ie',
