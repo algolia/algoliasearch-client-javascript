@@ -72,10 +72,6 @@ AlgoliaSearchBrowser.prototype._request = function(url, opts) {
       req.setRequestHeader('content-type', 'application/x-www-form-urlencoded');
     }
 
-    // IE11 caches ajax requests, setting this header prevents caching
-    // https://connect.microsoft.com/IE/feedback/details/836581/ie11-xmlhttprequest-ignores-cache-control-headers
-    req.setRequestHeader('pragma', 'no-cache');
-
     // we set an empty onprogress listener
     // so that XDomainRequest on IE9 is not aborted
     // refs:
