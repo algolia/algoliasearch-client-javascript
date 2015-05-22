@@ -23,8 +23,8 @@ var chance = new Chance();
 
 var ApiKey = process.env.INTEGRATION_TEST_API_KEY;
 var AppID = process.env.INTEGRATION_TEST_APPID;
-var indexName = process.env.TRAVIS_BUILD_NUMBER ||
-  'JS-integration-tests-' + chance.word({length: 12});
+var indexName = (process.env.TRAVIS_BUILD_NUMBER ||
+  'JS-integration-tests-') + chance.word({length: 12});
 
 var client = algoliasearch(AppID, ApiKey, {
   protocol: 'https:'
