@@ -5,7 +5,7 @@ var zuulConfig = module.exports = {
   }]
 };
 
-if (process.env.BROWSERS && process.env.BROWSERS !== 'integration') {
+if (process.env.BROWSERS !== 'integration') {
   zuulConfig.scripts = [
     '/node_modules/jquery/dist/jquery.min.js',
     '/node_modules/jQuery-ajaxTransport-XDomainRequest/jquery.xdomainrequest.min.js',
