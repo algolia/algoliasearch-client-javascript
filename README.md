@@ -753,18 +753,21 @@ var client = algoliasearch('ApplicationID', 'apiKey');
 
 var queries = [{
   indexName: 'categories',
-  query: 'search in categories index', {
+  query: 'search in categories index',
+  params: {
     hitsPerPage: 3
   }
 }, {
   indexName: 'products',
-  query: 'first search in products', {
+  query: 'first search in products',
+  params: {
     hitsPerPage: 3,
     tagFilters: 'promotion'
   }
 }, {
   indexName: 'products',
-  query: 'another search in products', {
+  query: 'another search in products',
+  params: {
     hitsPerPage: 10
   }
 }];
