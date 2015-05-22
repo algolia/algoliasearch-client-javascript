@@ -37,20 +37,23 @@ var objects = getFakeObjects(10);
 _.bindAll(index);
 
 test('A simple integration test', function(t) {
-  t.plan(4);
+  t.plan(9);
 
   index.clearIndex()
+    // clear index
     .then(get('taskID'))
     .then(index.waitTask)
     .then(get('status'))
-    .then(_.partialRight(t.equal, 'published', 'clearIndex done'))
+    .then(_.partialRight(t.equal, 'published', 'Index was cleared'))
 
+    // save a bunch of objects
     .then(_.partial(index.saveObjects, objects))
     .then(get('taskID'))
     .then(index.waitTask)
     .then(get('status'))
-    .then(_.partialRight(t.equal, 'published', 'saveObjects done'))
+    .then(_.partialRight(t.equal, 'published', 'Objects were saved'))
 
+    // check objects are matching
     .then(_.partial(index.browse, 0))
     .then(function(content) {
       t.deepEqual(
@@ -60,11 +63,33 @@ test('A simple integration test', function(t) {
       );
     })
 
+    // get one object
+    .then(_.partial(index.getObject, objects[0].objectID))
+    .then(function(object) {
+      t.notEqual(object, objects[0], 'Objects references are different');
+      t.notEqual(object.isModified, 'yes', 'Object was not yet modified');
+      t.deepEqual(object, objects[0], 'Objects have the same content');
+    })
+
+    // change one object
+    .then(_.partial(index.saveObject, _.assign({}, objects[0], {isModified: 'yes'})))
+    .then(get('taskID'))
+    .then(index.waitTask)
+    .then(get('status'))
+    .then(_.partialRight(t.equal, 'published', 'Object was modified'))
+
+    // get same object, must be modified
+    // this also ensures we are not getting any cached response
+    .then(_.partial(index.getObject, objects[0].objectID))
+    .then(function(object) {
+      t.equal(object.isModified, 'yes', 'Object was modified');
+    })
+
     .then(index.clearIndex)
     .then(get('taskID'))
     .then(index.waitTask)
     .then(get('status'))
-    .then(_.partialRight(t.equal, 'published', 'clearIndex done'))
+    .then(_.partialRight(t.equal, 'published', 'Index was cleared'))
 
     .catch(function(err) {
       t.error(err);
