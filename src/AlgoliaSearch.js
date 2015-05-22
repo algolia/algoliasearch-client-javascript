@@ -3,7 +3,7 @@ module.exports = AlgoliaSearch;
 // default debug activated in dev environments
 // this is triggered in package.json, using the envify transform
 if (process.env.APP_ENV === 'development') {
-  // require('debug').enable('algoliasearch*');
+  require('debug').enable('algoliasearch*');
 }
 
 var debug = require('debug')('algoliasearch');
