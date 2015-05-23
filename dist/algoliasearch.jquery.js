@@ -1,4 +1,4 @@
-/*! algoliasearch 3.3.2 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
+/*! algoliasearch 3.4.0 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
 (function(f){var g;if(typeof window!=='undefined'){g=window}else if(typeof self!=='undefined'){g=self}g.ALGOLIA_MIGRATION_LAYER=f()})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 
 module.exports = function load (src, opts, cb) {
@@ -1904,14 +1904,20 @@ function plural(ms, n, name) {
 }).call(this,require(1),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"1":1}],9:[function(require,module,exports){
 var hasOwn = Object.prototype.hasOwnProperty;
-var toString = Object.prototype.toString;
+var toStr = Object.prototype.toString;
 var undefined;
 
-var isArray = require(10);
+var isArray = function isArray(arr) {
+	if (typeof Array.isArray === 'function') {
+		return Array.isArray(arr);
+	}
+
+	return toStr.call(arr) === '[object Array]';
+};
 
 var isPlainObject = function isPlainObject(obj) {
 	'use strict';
-	if (!obj || toString.call(obj) !== '[object Object]') {
+	if (!obj || toStr.call(obj) !== '[object Object]') {
 		return false;
 	}
 
@@ -1987,12 +1993,7 @@ module.exports = function extend() {
 };
 
 
-},{"10":10}],10:[function(require,module,exports){
-module.exports = Array.isArray || function (arr) {
-  return Object.prototype.toString.call(arr) == '[object Array]';
-};
-
-},{}],11:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 
 var hasOwn = Object.prototype.hasOwnProperty;
 var toString = Object.prototype.toString;
@@ -2016,7 +2017,7 @@ module.exports = function forEach (obj, fn, ctx) {
 };
 
 
-},{}],12:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 if (typeof Object.create === 'function') {
   // implementation from standard node.js 'util' module
   module.exports = function inherits(ctor, superCtor) {
@@ -2041,18 +2042,19 @@ if (typeof Object.create === 'function') {
   }
 }
 
-},{}],13:[function(require,module,exports){
-(function (process){
+},{}],12:[function(require,module,exports){
 module.exports = AlgoliaSearch;
 
 // default debug activated in dev environments
 // this is triggered in package.json, using the envify transform
-if (process.env.NODE_ENV === 'development') {
+if ("production" === 'development') {
   require(5).enable('algoliasearch*');
 }
 
 var debug = require(5)('algoliasearch');
-var foreach = require(11);
+var foreach = require(10);
+
+var errors = require(18);
 
 /*
  * Algolia Search library initialization
@@ -2076,11 +2078,11 @@ function AlgoliaSearch(applicationID, apiKey, opts) {
   var usage = 'Usage: algoliasearch(applicationID, apiKey, opts)';
 
   if (!applicationID) {
-    throw new Error('algoliasearch: Please provide an application ID. ' + usage);
+    throw new errors.AlgoliaSearchError('Please provide an application ID. ' + usage);
   }
 
   if (!apiKey) {
-    throw new Error('algoliasearch: Please provide an API key. ' + usage);
+    throw new errors.AlgoliaSearchError('Please provide an API key. ' + usage);
   }
 
   this.applicationID = applicationID;
@@ -2113,7 +2115,7 @@ function AlgoliaSearch(applicationID, apiKey, opts) {
   }
 
   if (opts.protocol !== 'http:' && opts.protocol !== 'https:') {
-    throw new Error('algoliasearch: protocol must be `http:` or `https:` (was `' + opts.protocol + '`)');
+    throw new errors.AlgoliaSearchError('protocol must be `http:` or `https:` (was `' + opts.protocol + '`)');
   }
 
   // no hosts given, add defaults
@@ -2287,7 +2289,7 @@ AlgoliaSearch.prototype = {
               callback: callback });
   },
   /*
-   * Add an existing user key
+   * Add a new global API key
    *
    * @param {string[]} acls - The list of ACL for this key. Defined by an array of strings that
    *   can contains the following values:
@@ -2302,10 +2304,26 @@ AlgoliaSearch.prototype = {
    * @param {number} params.maxQueriesPerIPPerHour - Number of API calls allowed from an IP address per hour
    * @param {number} params.maxHitsPerQuery - Number of hits this API key can retrieve in one call
    * @param {string[]} params.indexes - Allowed targeted indexes for this key
+   * @param {string} params.description - A description for your key
+   * @param {string[]} params.referers - A list of authorized referers
+   * @param {Object} params.queryParameters - Force the key to use specific query parameters
    * @param {Function} callback - The result callback called with two arguments
    *   error: null or Error('message')
    *   content: the server answer with user keys list
    * @return {Promise|undefined} Returns a promise if no callback given
+   * @example
+   * client.addUserKey(['search'], {
+   *   validity: 300,
+   *   maxQueriesPerIPPerHour: 2000,
+   *   maxHitsPerQuery: 3,
+   *   indexes: ['fruits'],
+   *   description: 'Eat three fruits',
+   *   referers: ['*.algolia.com'],
+   *   queryParameters: {
+   *     tagFilters: ['public'],
+   *   }
+   * })
+   * @see {@link https://www.algolia.com/doc/rest_api#AddKey|Algolia REST API Documentation}
    */
   addUserKey: function(acls, params, callback) {
     if (arguments.length === 1 || typeof params === 'function') {
@@ -2322,6 +2340,13 @@ AlgoliaSearch.prototype = {
       postObj.maxQueriesPerIPPerHour = params.maxQueriesPerIPPerHour;
       postObj.maxHitsPerQuery = params.maxHitsPerQuery;
       postObj.indexes = params.indexes;
+      postObj.description = params.description;
+
+      if (params.queryParameters) {
+        postObj.queryParameters = this._getSearchParams(params.queryParameters, '');
+      }
+
+      postObj.referers = params.referers;
     }
 
     return this._jsonRequest({
@@ -2333,7 +2358,7 @@ AlgoliaSearch.prototype = {
     });
   },
   /**
-   * Add an existing user key
+   * Add a new global API key
    * @deprecated Please use client.addUserKey()
    */
   addUserKeyWithValidity: deprecate(function(acls, params, callback) {
@@ -2341,7 +2366,7 @@ AlgoliaSearch.prototype = {
   }, deprecatedMessage('client.addUserKeyWithValidity()', 'client.addUserKey()')),
 
   /**
-   * Update an existing user key
+   * Update an existing API key
    * @param {string} key - The key to update
    * @param {string[]} acls - The list of ACL for this key. Defined by an array of strings that
    *   can contains the following values:
@@ -2356,10 +2381,26 @@ AlgoliaSearch.prototype = {
    * @param {number} params.maxQueriesPerIPPerHour - Number of API calls allowed from an IP address per hour
    * @param {number} params.maxHitsPerQuery - Number of hits this API key can retrieve in one call
    * @param {string[]} params.indexes - Allowed targeted indexes for this key
+   * @param {string} params.description - A description for your key
+   * @param {string[]} params.referers - A list of authorized referers
+   * @param {Object} params.queryParameters - Force the key to use specific query parameters
    * @param {Function} callback - The result callback called with two arguments
    *   error: null or Error('message')
    *   content: the server answer with user keys list
    * @return {Promise|undefined} Returns a promise if no callback given
+   * @example
+   * client.updateUserKey('APIKEY', ['search'], {
+   *   validity: 300,
+   *   maxQueriesPerIPPerHour: 2000,
+   *   maxHitsPerQuery: 3,
+   *   indexes: ['fruits'],
+   *   description: 'Eat three fruits',
+   *   referers: ['*.algolia.com'],
+   *   queryParameters: {
+   *     tagFilters: ['public'],
+   *   }
+   * })
+   * @see {@link https://www.algolia.com/doc/rest_api#UpdateIndexKey|Algolia REST API Documentation}
    */
   updateUserKey: function(key, acls, params, callback) {
     if (arguments.length === 2 || typeof params === 'function') {
@@ -2376,6 +2417,13 @@ AlgoliaSearch.prototype = {
       putObj.maxQueriesPerIPPerHour = params.maxQueriesPerIPPerHour;
       putObj.maxHitsPerQuery = params.maxHitsPerQuery;
       putObj.indexes = params.indexes;
+      putObj.description = params.description;
+
+      if (params.queryParameters) {
+        putObj.queryParameters = this._getSearchParams(params.queryParameters, '');
+      }
+
+      putObj.referers = params.referers;
     }
 
     return this._jsonRequest({
@@ -2506,6 +2554,51 @@ AlgoliaSearch.prototype = {
     });
   },
 
+  /**
+   * Perform write operations accross multiple indexes.
+   *
+   * To reduce the amount of time spent on network round trips,
+   * you can create, update, or delete several objects in one call,
+   * using the batch endpoint (all operations are done in the given order).
+   *
+   * Available actions:
+   *   - addObject
+   *   - updateObject
+   *   - partialUpdateObject
+   *   - partialUpdateObjectNoCreate
+   *   - deleteObject
+   *
+   * https://www.algolia.com/doc/rest_api#Indexes
+   * @param  {Object[]} operations An array of operations to perform
+   * @return {Promise|undefined} Returns a promise if no callback given
+   * @example
+   * client.batch([{
+   *   action: 'addObject',
+   *   indexName: 'clients',
+   *   body: {
+   *     name: 'Bill'
+   *   }
+   * }, {
+   *   action: 'udpateObject',
+   *   indexName: 'fruits',
+   *   body: {
+   *     objectID: '29138',
+   *     name: 'banana'
+   *   }
+   * }], cb)
+   */
+  batch: function(operations, callback) {
+    return this._jsonRequest({
+      method: 'POST',
+      url: '/1/indexes/*/batch',
+      body: {
+        requests: operations
+      },
+      hostType: 'write',
+      callback: callback
+    });
+  },
+
   // environment specific methods
   destroy: notImplemented,
   enableRateLimitForward: notImplemented,
@@ -2591,13 +2684,13 @@ AlgoliaSearch.prototype = {
       // handle cache existence
       if (client._useCache && cache && cache[cacheID] !== undefined) {
         requestDebug('serving response from cache');
-        return client._promise.resolve(cache[cacheID]);
+        return client._promise.resolve(JSON.parse(JSON.stringify(cache[cacheID])));
       }
 
       if (tries >= client.hosts[opts.hostType].length) {
         if (!opts.fallback || !client._request.fallback || usingFallback) {
           // could not get a response even using the fallback if one was available
-          return client._promise.reject(new Error(
+          return client._promise.reject(new errors.AlgoliaSearchError(
             'Cannot connect to the AlgoliaSearch API.' +
             ' Send an email to support@algolia.com to report and resolve the issue.'
           ));
@@ -2635,12 +2728,6 @@ AlgoliaSearch.prototype = {
         }
       )
       .then(function success(httpResponse) {
-        // timeout case, retry immediately
-        if (httpResponse instanceof Error) {
-          requestDebug('error: %s', httpResponse.message);
-          return retryRequest();
-        }
-
         requestDebug('received response: %j', httpResponse);
 
         var status =
@@ -2676,8 +2763,8 @@ AlgoliaSearch.prototype = {
           return retryRequest();
         }
 
-        var unrecoverableError = new Error(
-          httpResponse.body && httpResponse.body.message || 'Unknown error'
+        var unrecoverableError = new errors.AlgoliaSearchError(
+          httpResponse.body && httpResponse.body.message
         );
 
         return client._promise.reject(unrecoverableError);
@@ -2703,14 +2790,40 @@ AlgoliaSearch.prototype = {
         //    - uncaught exception occurs (TypeError)
         requestDebug('error: %s, stack: %s', err.message, err.stack);
 
+        if (err instanceof errors.RequestTimeout) {
+          requestDebug('timedout');
+          return retryRequest();
+        }
+
+        if (!(err instanceof errors.AlgoliaSearchError)) {
+          err = new errors.Unknown(err && err.message, err);
+        }
+
+        // stop the request implementation when:
+        if (
+          // we did not generate this error,
+          // it comes from a throw in some other piece of code
+          err instanceof errors.Unknown ||
+
+          // server sent unparsable JSON
+          err instanceof errors.UnparsableJSON ||
+
+          // no fallback and a network error occured (No CORS, bad APPID)
+          (!requester.fallback && err instanceof errors.Network)) {
+
+          // stop request implementation for this command
+          return client._promise.reject(err);
+        }
+
         // we were not using the fallback, try now
-        // if we are switching to fallback right now, set tries to maximum
+        // if we were using switching to fallback for the first time, set tries to maximum
+        // so that next loop will use the fallback request implementation
         if (!client.useFallback) {
           // next time doRequest is called, simulate we tried all hosts,
           // this will force to use the fallback
           tries = client.hosts[opts.hostType].length;
         } else {
-          // we were already using the fallback, but something went wrong (script error)
+          // we were already using the fallback, but something went wrong, retry
           client.hostIndex[opts.hostType] = ++client.hostIndex[opts.hostType] % client.hosts[opts.hostType].length;
           tries += 1;
         }
@@ -2775,7 +2888,7 @@ AlgoliaSearch.prototype = {
     var requestHeaders = {
       'x-algolia-api-key': this.apiKey,
       'x-algolia-application-id': this.applicationID,
-      'x-user-agent': this._ua
+      'x-algolia-agent': this._ua
     };
 
     if (this.userToken) {
@@ -2899,15 +3012,26 @@ AlgoliaSearch.prototype.Index.prototype = {
    *
    * @param objectIDs the array of unique identifier of objects to retrieve
    */
-  getObjects: function(objectIDs, callback) {
+  getObjects: function(objectIDs, attributesToRetrieve, callback) {
     var indexObj = this;
+
+    if (arguments.length === 1 || typeof attributesToRetrieve === 'function') {
+      callback = attributesToRetrieve;
+      attributesToRetrieve = undefined;
+    }
 
     var body = {
       requests: map(objectIDs, function prepareRequest(objectID) {
-        return {
+        var request = {
           'indexName': indexObj.indexName,
           'objectID': objectID
         };
+
+        if (attributesToRetrieve) {
+          request.attributesToRetrieve = attributesToRetrieve.join(',');
+        }
+
+        return request;
       })
     };
 
@@ -3009,7 +3133,7 @@ AlgoliaSearch.prototype.Index.prototype = {
    */
   deleteObject: function(objectID, callback) {
     if (typeof objectID === 'function' || typeof objectID !== 'string' && typeof objectID !== 'number') {
-      var err = new Error('Cannot delete an object without an objectID');
+      var err = new errors.AlgoliaSearchError('Cannot delete an object without an objectID');
       callback = objectID;
       if (typeof callback === 'function') {
         return callback(err);
@@ -3202,7 +3326,7 @@ AlgoliaSearch.prototype.Index.prototype = {
       typeof callback === 'object') {
       // .search(query, params, cb)
       // .search(cb, params)
-      throw new Error('algoliasearch: index.search usage is index.search(query, params, cb)');
+      throw new errors.AlgoliaSearchError('index.search usage is index.search(query, params, cb)');
     }
 
     if (arguments.length === 0 || typeof query === 'function') {
@@ -3468,21 +3592,41 @@ AlgoliaSearch.prototype.Index.prototype = {
       hostType: 'write',
       callback: callback });
   },
-  /*
-   * Add an existing user key associated to this index
-   *
-   * @param acls the list of ACL for this key. Defined by an array of strings that
-   * can contains the following values:
-   *   - search: allow to search (https and http)
-   *   - addObject: allows to add/update an object in the index (https only)
-   *   - deleteObject : allows to delete an existing object (https only)
-   *   - deleteIndex : allows to delete index content (https only)
-   *   - settings : allows to get index settings (https only)
-   *   - editSettings : allows to change index settings (https only)
-   * @param callback the result callback called with two arguments
-   *  error: null or Error('message')
-   *  content: the server answer with user keys list
-   */
+   /*
+    * Add a new API key to this index
+    *
+    * @param {string[]} acls - The list of ACL for this key. Defined by an array of strings that
+    *   can contains the following values:
+    *     - search: allow to search (https and http)
+    *     - addObject: allows to add/update an object in the index (https only)
+    *     - deleteObject : allows to delete an existing object (https only)
+    *     - deleteIndex : allows to delete index content (https only)
+    *     - settings : allows to get index settings (https only)
+    *     - editSettings : allows to change index settings (https only)
+    * @param {Object} [params] - Optionnal parameters to set for the key
+    * @param {number} params.validity - Number of seconds after which the key will be automatically removed (0 means no time limit for this key)
+    * @param {number} params.maxQueriesPerIPPerHour - Number of API calls allowed from an IP address per hour
+    * @param {number} params.maxHitsPerQuery - Number of hits this API key can retrieve in one call
+    * @param {string} params.description - A description for your key
+    * @param {string[]} params.referers - A list of authorized referers
+    * @param {Object} params.queryParameters - Force the key to use specific query parameters
+    * @param {Function} callback - The result callback called with two arguments
+    *   error: null or Error('message')
+    *   content: the server answer with user keys list
+    * @return {Promise|undefined} Returns a promise if no callback given
+    * @example
+    * index.addUserKey(['search'], {
+    *   validity: 300,
+    *   maxQueriesPerIPPerHour: 2000,
+    *   maxHitsPerQuery: 3,
+    *   description: 'Eat three fruits',
+    *   referers: ['*.algolia.com'],
+    *   queryParameters: {
+    *     tagFilters: ['public'],
+    *   }
+    * })
+    * @see {@link https://www.algolia.com/doc/rest_api#AddIndexKey|Algolia REST API Documentation}
+    */
   addUserKey: function(acls, params, callback) {
     if (arguments.length === 1 || typeof params === 'function') {
       callback = params;
@@ -3497,6 +3641,13 @@ AlgoliaSearch.prototype.Index.prototype = {
       postObj.validity = params.validity;
       postObj.maxQueriesPerIPPerHour = params.maxQueriesPerIPPerHour;
       postObj.maxHitsPerQuery = params.maxHitsPerQuery;
+      postObj.description = params.description;
+
+      if (params.queryParameters) {
+        postObj.queryParameters = this.as._getSearchParams(params.queryParameters, '');
+      }
+
+      postObj.referers = params.referers;
     }
 
     return this.as._jsonRequest({
@@ -3517,7 +3668,7 @@ AlgoliaSearch.prototype.Index.prototype = {
    }, deprecatedMessage('index.addUserKeyWithValidity()', 'index.addUserKey()')),
 
    /**
-    * Update an existing user key associated to this index
+    * Update an existing API key of this index
     * @param {string} key - The key to update
     * @param {string[]} acls - The list of ACL for this key. Defined by an array of strings that
     *   can contains the following values:
@@ -3531,10 +3682,25 @@ AlgoliaSearch.prototype.Index.prototype = {
     * @param {number} params.validity - Number of seconds after which the key will be automatically removed (0 means no time limit for this key)
     * @param {number} params.maxQueriesPerIPPerHour - Number of API calls allowed from an IP address per hour
     * @param {number} params.maxHitsPerQuery - Number of hits this API key can retrieve in one call
+    * @param {string} params.description - A description for your key
+    * @param {string[]} params.referers - A list of authorized referers
+    * @param {Object} params.queryParameters - Force the key to use specific query parameters
     * @param {Function} callback - The result callback called with two arguments
     *   error: null or Error('message')
     *   content: the server answer with user keys list
     * @return {Promise|undefined} Returns a promise if no callback given
+    * @example
+    * index.updateUserKey('APIKEY', ['search'], {
+    *   validity: 300,
+    *   maxQueriesPerIPPerHour: 2000,
+    *   maxHitsPerQuery: 3,
+    *   description: 'Eat three fruits',
+    *   referers: ['*.algolia.com'],
+    *   queryParameters: {
+    *     tagFilters: ['public'],
+    *   }
+    * })
+    * @see {@link https://www.algolia.com/doc/rest_api#UpdateIndexKey|Algolia REST API Documentation}
     */
    updateUserKey: function(key, acls, params, callback) {
      if (arguments.length === 2 || typeof params === 'function') {
@@ -3550,6 +3716,13 @@ AlgoliaSearch.prototype.Index.prototype = {
        putObj.validity = params.validity;
        putObj.maxQueriesPerIPPerHour = params.maxQueriesPerIPPerHour;
        putObj.maxHitsPerQuery = params.maxHitsPerQuery;
+       putObj.description = params.description;
+
+       if (params.queryParameters) {
+         putObj.queryParameters = this.as._getSearchParams(params.queryParameters, '');
+       }
+
+       putObj.referers = params.referers;
      }
 
      return this.as._jsonRequest({
@@ -3599,10 +3772,10 @@ function prepareHost(protocol) {
 }
 
 function notImplemented() {
-  var message = 'algoliasearch: Not implemented in this environment.\n' +
+  var message = 'Not implemented in this environment.\n' +
   'If you feel this is a mistake, write to support@algolia.com';
 
-  throw new Error(message);
+  throw new errors.AlgoliaSearchError(message);
 }
 
 function deprecatedMessage(previousUsage, newUsage) {
@@ -3637,8 +3810,7 @@ function deprecate(fn, message) {
   return deprecated;
 }
 
-}).call(this,require(1))
-},{"1":1,"11":11,"5":5,"9":9}],14:[function(require,module,exports){
+},{"10":10,"18":18,"5":5,"9":9}],13:[function(require,module,exports){
 module.exports = JSONPRequest;
 
 var JSONPCounter = 0;
@@ -3764,25 +3936,26 @@ function JSONPRequest(url, opts, cb) {
   }
 }
 
-},{}],15:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 (function (global){
 // This is the jQuery Algolia Search module
 // It's using $.ajax to do requests with a JSONP fallback
 // jQuery promises are returned
 
-var inherits = require(12);
+var inherits = require(11);
 
-var AlgoliaSearch = require(13);
-var inlineHeaders = require(18);
-var JSONPRequest = require(14);
+var AlgoliaSearch = require(12);
+var errors = require(18);
+var inlineHeaders = require(17);
+var JSONPRequest = require(13);
 
 // expose original algoliasearch fn in window
-window.algoliasearch = require(16);
+window.algoliasearch = require(15);
 
 function algoliasearch(applicationID, apiKey, opts) {
   var extend = require(9);
 
-  var getDocumentProtocol = require(17);
+  var getDocumentProtocol = require(16);
 
   opts = extend(true, {}, opts) || {};
 
@@ -3822,12 +3995,16 @@ AlgoliaSearchJQuery.prototype._request = function(url, opts) {
       data: body,
       complete: function(jqXHR, textStatus/* , error*/) {
         if (textStatus === 'timeout') {
-          deferred.resolve(new Error('Timeout - Could not connect to endpoint ' + url));
+          deferred.reject(new errors.RequestTimeout());
           return;
         }
 
         if (jqXHR.status === 0) {
-          deferred.reject(new Error('Network error'));
+          deferred.reject(
+            new errors.Network({
+              more: jqXHR
+            })
+          );
           return;
         }
 
@@ -3846,7 +4023,7 @@ AlgoliaSearchJQuery.prototype._request.fallback = function(url, opts) {
   return $.Deferred(function(deferred) {
     JSONPRequest(url, opts, function JSONPRequestDone(err, content) {
       if (err) {
-        deferred.reject(err);
+        deferred.reject(new errors.JSONP(err.message));
         return;
       }
 
@@ -3876,24 +4053,25 @@ AlgoliaSearchJQuery.prototype._promise = {
 };
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"12":12,"13":13,"14":14,"16":16,"17":17,"18":18,"19":19,"9":9}],16:[function(require,module,exports){
+},{"11":11,"12":12,"13":13,"15":15,"16":16,"17":17,"18":18,"19":19,"9":9}],15:[function(require,module,exports){
 (function (global){
 // This is the standalone browser build entry point
 // Browser implementation of the Algolia Search JavaScript client,
 // using XMLHttpRequest, XDomainRequest and JSONP as fallback
 module.exports = algoliasearch;
 
-var inherits = require(12);
+var inherits = require(11);
 var Promise = global.Promise || require(8).Promise;
 
-var AlgoliaSearch = require(13);
-var inlineHeaders = require(18);
-var JSONPRequest = require(14);
+var AlgoliaSearch = require(12);
+var errors = require(18);
+var inlineHeaders = require(17);
+var JSONPRequest = require(13);
 
 function algoliasearch(applicationID, apiKey, opts) {
   var extend = require(9);
 
-  var getDocumentProtocol = require(17);
+  var getDocumentProtocol = require(16);
 
   opts = extend(true, {}, opts) || {};
 
@@ -3928,7 +4106,7 @@ AlgoliaSearchBrowser.prototype._request = function(url, opts) {
     // no cors or XDomainRequest, no request
     if (!support.cors && !support.hasXDomainRequest) {
       // very old browser, not supported
-      reject(new Error('CORS not supported'));
+      reject(new errors.Network('CORS not supported'));
       return;
     }
 
@@ -3986,16 +4164,22 @@ AlgoliaSearchBrowser.prototype._request = function(url, opts) {
         clearTimeout(ontimeout);
       }
 
-      var response = null;
+      var out;
 
       try {
-        response = JSON.parse(req.responseText);
-      } catch(e) {}
+        out = {
+          body: JSON.parse(req.responseText),
+          statusCode: req.status
+        };
+      } catch(e) {
+        out = new errors.UnparsableJSON({more: req.responseText});
+      }
 
-      resolve({
-        body: response,
-        statusCode: req.status
-      });
+      if (out instanceof errors.UnparsableJSON) {
+        reject(out);
+      } else {
+        resolve(out);
+      }
     }
 
     function error(event) {
@@ -4010,7 +4194,11 @@ AlgoliaSearchBrowser.prototype._request = function(url, opts) {
       // error event is trigerred both with XDR/XHR on:
       //   - DNS error
       //   - unallowed cross domain request
-      reject(new Error('Could not connect to host, error was:' + event));
+      reject(
+        new errors.Network({
+          more: event
+        })
+      );
     }
 
     function timeout() {
@@ -4019,9 +4207,8 @@ AlgoliaSearchBrowser.prototype._request = function(url, opts) {
         req.abort();
       }
 
-      resolve(new Error('Timeout - Could not connect to endpoint ' + url));
+      reject(new errors.RequestTimeout());
     }
-
   });
 };
 
@@ -4031,7 +4218,7 @@ AlgoliaSearchBrowser.prototype._request.fallback = function(url, opts) {
   return new Promise(function(resolve, reject) {
     JSONPRequest(url, opts, function JSONPRequestDone(err, content) {
       if (err) {
-        reject(err);
+        reject(new errors.JSONP(err.message));
         return;
       }
 
@@ -4055,7 +4242,7 @@ AlgoliaSearchBrowser.prototype._promise = {
 };
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"12":12,"13":13,"14":14,"17":17,"18":18,"19":19,"8":8,"9":9}],17:[function(require,module,exports){
+},{"11":11,"12":12,"13":13,"16":16,"17":17,"18":18,"19":19,"8":8,"9":9}],16:[function(require,module,exports){
 (function (global){
 module.exports = getDocumentProtocol;
 
@@ -4071,7 +4258,7 @@ function getDocumentProtocol() {
 }
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],18:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 module.exports = inlineHeaders;
 
 var querystring = require(4);
@@ -4086,6 +4273,79 @@ function inlineHeaders(url, headers) {
   return url + querystring.encode(headers);
 }
 
-},{"4":4}],19:[function(require,module,exports){
-module.exports="3.3.2"
-},{}]},{},[15]);
+},{"4":4}],18:[function(require,module,exports){
+// This file hosts our error definitions
+// We use custom error "types" so that we can act on them when we need it
+// e.g.: if error instanceof errors.UnparsableJSON then..
+
+var foreach = require(10);
+var inherits = require(11);
+
+function AlgoliaSearchError(message, extraProperties) {
+  var error = this;
+
+  // try to get a stacktrace
+  if (typeof Error.captureStackTrace === 'function') {
+    Error.captureStackTrace(this, this.constructor);
+  } else {
+    error.stack = (new Error()).stack || 'Cannot get a stacktrace, browser is too old';
+  }
+
+  this.name = this.constructor.name;
+  this.message = message || 'Unknown error';
+
+  if (extraProperties) {
+    foreach(extraProperties, function addToErrorObject(value, key) {
+      error[key] = value;
+    });
+  }
+}
+
+inherits(AlgoliaSearchError, Error);
+
+function createCustomError(name, message) {
+  function AlgoliaSearchCustomError() {
+    var args = Array.prototype.slice.call(arguments, 0);
+
+    // custom message not set, use default
+    if (typeof args[0] !== 'string') {
+      args.unshift(message);
+    }
+
+    AlgoliaSearchError.apply(this, args);
+    this.name = 'AlgoliaSearch' + name + 'Error';
+  }
+
+  inherits(AlgoliaSearchCustomError, AlgoliaSearchError);
+
+  return AlgoliaSearchCustomError;
+}
+
+// late exports to let various fn defs and inherits take place
+module.exports = {
+  AlgoliaSearchError: AlgoliaSearchError,
+  UnparsableJSON: createCustomError(
+    'UnparsableJSON',
+    'Could not parse the incoming response as JSON, see err.more for details'
+  ),
+  RequestTimeout: createCustomError(
+    'RequestTimeout',
+    'Request timedout before getting a response'
+  ),
+  Network: createCustomError(
+    'Network',
+    'Network issue, see err.more for details'
+  ),
+  JSONP: createCustomError(
+    'JSONP',
+    'JSONP failed'
+  ),
+  Unknown: createCustomError(
+    'Unknown',
+    'Unknown error occured'
+  )
+};
+
+},{"10":10,"11":11}],19:[function(require,module,exports){
+module.exports="3.4.0"
+},{}]},{},[14]);

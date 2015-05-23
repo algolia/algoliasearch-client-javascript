@@ -462,14 +462,20 @@ module.exports =
 /***/ function(module, exports, __webpack_require__) {
 
 	var hasOwn = Object.prototype.hasOwnProperty;
-	var toString = Object.prototype.toString;
+	var toStr = Object.prototype.toString;
 	var undefined;
 
-	var isArray = __webpack_require__(8);
+	var isArray = function isArray(arr) {
+		if (typeof Array.isArray === 'function') {
+			return Array.isArray(arr);
+		}
+
+		return toStr.call(arr) === '[object Array]';
+	};
 
 	var isPlainObject = function isPlainObject(obj) {
 		'use strict';
-		if (!obj || toString.call(obj) !== '[object Object]') {
+		if (!obj || toStr.call(obj) !== '[object Object]') {
 			return false;
 		}
 
@@ -550,7 +556,7 @@ module.exports =
 /* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = "3.3.2"
+	module.exports = "3.4.0"
 
 /***/ },
 /* 6 */
@@ -560,12 +566,14 @@ module.exports =
 
 	// default debug activated in dev environments
 	// this is triggered in package.json, using the envify transform
-	if (process.env.NODE_ENV === 'development') {
+	if (process.env.APP_ENV === 'development') {
 	  __webpack_require__(2).enable('algoliasearch*');
 	}
 
 	var debug = __webpack_require__(2)('algoliasearch');
 	var foreach = __webpack_require__(9);
+
+	var errors = __webpack_require__(8);
 
 	/*
 	 * Algolia Search library initialization
@@ -589,11 +597,11 @@ module.exports =
 	  var usage = 'Usage: algoliasearch(applicationID, apiKey, opts)';
 
 	  if (!applicationID) {
-	    throw new Error('algoliasearch: Please provide an application ID. ' + usage);
+	    throw new errors.AlgoliaSearchError('Please provide an application ID. ' + usage);
 	  }
 
 	  if (!apiKey) {
-	    throw new Error('algoliasearch: Please provide an API key. ' + usage);
+	    throw new errors.AlgoliaSearchError('Please provide an API key. ' + usage);
 	  }
 
 	  this.applicationID = applicationID;
@@ -626,7 +634,7 @@ module.exports =
 	  }
 
 	  if (opts.protocol !== 'http:' && opts.protocol !== 'https:') {
-	    throw new Error('algoliasearch: protocol must be `http:` or `https:` (was `' + opts.protocol + '`)');
+	    throw new errors.AlgoliaSearchError('protocol must be `http:` or `https:` (was `' + opts.protocol + '`)');
 	  }
 
 	  // no hosts given, add defaults
@@ -800,7 +808,7 @@ module.exports =
 	              callback: callback });
 	  },
 	  /*
-	   * Add an existing user key
+	   * Add a new global API key
 	   *
 	   * @param {string[]} acls - The list of ACL for this key. Defined by an array of strings that
 	   *   can contains the following values:
@@ -815,10 +823,26 @@ module.exports =
 	   * @param {number} params.maxQueriesPerIPPerHour - Number of API calls allowed from an IP address per hour
 	   * @param {number} params.maxHitsPerQuery - Number of hits this API key can retrieve in one call
 	   * @param {string[]} params.indexes - Allowed targeted indexes for this key
+	   * @param {string} params.description - A description for your key
+	   * @param {string[]} params.referers - A list of authorized referers
+	   * @param {Object} params.queryParameters - Force the key to use specific query parameters
 	   * @param {Function} callback - The result callback called with two arguments
 	   *   error: null or Error('message')
 	   *   content: the server answer with user keys list
 	   * @return {Promise|undefined} Returns a promise if no callback given
+	   * @example
+	   * client.addUserKey(['search'], {
+	   *   validity: 300,
+	   *   maxQueriesPerIPPerHour: 2000,
+	   *   maxHitsPerQuery: 3,
+	   *   indexes: ['fruits'],
+	   *   description: 'Eat three fruits',
+	   *   referers: ['*.algolia.com'],
+	   *   queryParameters: {
+	   *     tagFilters: ['public'],
+	   *   }
+	   * })
+	   * @see {@link https://www.algolia.com/doc/rest_api#AddKey|Algolia REST API Documentation}
 	   */
 	  addUserKey: function(acls, params, callback) {
 	    if (arguments.length === 1 || typeof params === 'function') {
@@ -835,6 +859,13 @@ module.exports =
 	      postObj.maxQueriesPerIPPerHour = params.maxQueriesPerIPPerHour;
 	      postObj.maxHitsPerQuery = params.maxHitsPerQuery;
 	      postObj.indexes = params.indexes;
+	      postObj.description = params.description;
+
+	      if (params.queryParameters) {
+	        postObj.queryParameters = this._getSearchParams(params.queryParameters, '');
+	      }
+
+	      postObj.referers = params.referers;
 	    }
 
 	    return this._jsonRequest({
@@ -846,7 +877,7 @@ module.exports =
 	    });
 	  },
 	  /**
-	   * Add an existing user key
+	   * Add a new global API key
 	   * @deprecated Please use client.addUserKey()
 	   */
 	  addUserKeyWithValidity: deprecate(function(acls, params, callback) {
@@ -854,7 +885,7 @@ module.exports =
 	  }, deprecatedMessage('client.addUserKeyWithValidity()', 'client.addUserKey()')),
 
 	  /**
-	   * Update an existing user key
+	   * Update an existing API key
 	   * @param {string} key - The key to update
 	   * @param {string[]} acls - The list of ACL for this key. Defined by an array of strings that
 	   *   can contains the following values:
@@ -869,10 +900,26 @@ module.exports =
 	   * @param {number} params.maxQueriesPerIPPerHour - Number of API calls allowed from an IP address per hour
 	   * @param {number} params.maxHitsPerQuery - Number of hits this API key can retrieve in one call
 	   * @param {string[]} params.indexes - Allowed targeted indexes for this key
+	   * @param {string} params.description - A description for your key
+	   * @param {string[]} params.referers - A list of authorized referers
+	   * @param {Object} params.queryParameters - Force the key to use specific query parameters
 	   * @param {Function} callback - The result callback called with two arguments
 	   *   error: null or Error('message')
 	   *   content: the server answer with user keys list
 	   * @return {Promise|undefined} Returns a promise if no callback given
+	   * @example
+	   * client.updateUserKey('APIKEY', ['search'], {
+	   *   validity: 300,
+	   *   maxQueriesPerIPPerHour: 2000,
+	   *   maxHitsPerQuery: 3,
+	   *   indexes: ['fruits'],
+	   *   description: 'Eat three fruits',
+	   *   referers: ['*.algolia.com'],
+	   *   queryParameters: {
+	   *     tagFilters: ['public'],
+	   *   }
+	   * })
+	   * @see {@link https://www.algolia.com/doc/rest_api#UpdateIndexKey|Algolia REST API Documentation}
 	   */
 	  updateUserKey: function(key, acls, params, callback) {
 	    if (arguments.length === 2 || typeof params === 'function') {
@@ -889,6 +936,13 @@ module.exports =
 	      putObj.maxQueriesPerIPPerHour = params.maxQueriesPerIPPerHour;
 	      putObj.maxHitsPerQuery = params.maxHitsPerQuery;
 	      putObj.indexes = params.indexes;
+	      putObj.description = params.description;
+
+	      if (params.queryParameters) {
+	        putObj.queryParameters = this._getSearchParams(params.queryParameters, '');
+	      }
+
+	      putObj.referers = params.referers;
 	    }
 
 	    return this._jsonRequest({
@@ -1019,6 +1073,51 @@ module.exports =
 	    });
 	  },
 
+	  /**
+	   * Perform write operations accross multiple indexes.
+	   *
+	   * To reduce the amount of time spent on network round trips,
+	   * you can create, update, or delete several objects in one call,
+	   * using the batch endpoint (all operations are done in the given order).
+	   *
+	   * Available actions:
+	   *   - addObject
+	   *   - updateObject
+	   *   - partialUpdateObject
+	   *   - partialUpdateObjectNoCreate
+	   *   - deleteObject
+	   *
+	   * https://www.algolia.com/doc/rest_api#Indexes
+	   * @param  {Object[]} operations An array of operations to perform
+	   * @return {Promise|undefined} Returns a promise if no callback given
+	   * @example
+	   * client.batch([{
+	   *   action: 'addObject',
+	   *   indexName: 'clients',
+	   *   body: {
+	   *     name: 'Bill'
+	   *   }
+	   * }, {
+	   *   action: 'udpateObject',
+	   *   indexName: 'fruits',
+	   *   body: {
+	   *     objectID: '29138',
+	   *     name: 'banana'
+	   *   }
+	   * }], cb)
+	   */
+	  batch: function(operations, callback) {
+	    return this._jsonRequest({
+	      method: 'POST',
+	      url: '/1/indexes/*/batch',
+	      body: {
+	        requests: operations
+	      },
+	      hostType: 'write',
+	      callback: callback
+	    });
+	  },
+
 	  // environment specific methods
 	  destroy: notImplemented,
 	  enableRateLimitForward: notImplemented,
@@ -1104,13 +1203,13 @@ module.exports =
 	      // handle cache existence
 	      if (client._useCache && cache && cache[cacheID] !== undefined) {
 	        requestDebug('serving response from cache');
-	        return client._promise.resolve(cache[cacheID]);
+	        return client._promise.resolve(JSON.parse(JSON.stringify(cache[cacheID])));
 	      }
 
 	      if (tries >= client.hosts[opts.hostType].length) {
 	        if (!opts.fallback || !client._request.fallback || usingFallback) {
 	          // could not get a response even using the fallback if one was available
-	          return client._promise.reject(new Error(
+	          return client._promise.reject(new errors.AlgoliaSearchError(
 	            'Cannot connect to the AlgoliaSearch API.' +
 	            ' Send an email to support@algolia.com to report and resolve the issue.'
 	          ));
@@ -1148,12 +1247,6 @@ module.exports =
 	        }
 	      )
 	      .then(function success(httpResponse) {
-	        // timeout case, retry immediately
-	        if (httpResponse instanceof Error) {
-	          requestDebug('error: %s', httpResponse.message);
-	          return retryRequest();
-	        }
-
 	        requestDebug('received response: %j', httpResponse);
 
 	        var status =
@@ -1189,8 +1282,8 @@ module.exports =
 	          return retryRequest();
 	        }
 
-	        var unrecoverableError = new Error(
-	          httpResponse.body && httpResponse.body.message || 'Unknown error'
+	        var unrecoverableError = new errors.AlgoliaSearchError(
+	          httpResponse.body && httpResponse.body.message
 	        );
 
 	        return client._promise.reject(unrecoverableError);
@@ -1216,14 +1309,40 @@ module.exports =
 	        //    - uncaught exception occurs (TypeError)
 	        requestDebug('error: %s, stack: %s', err.message, err.stack);
 
+	        if (err instanceof errors.RequestTimeout) {
+	          requestDebug('timedout');
+	          return retryRequest();
+	        }
+
+	        if (!(err instanceof errors.AlgoliaSearchError)) {
+	          err = new errors.Unknown(err && err.message, err);
+	        }
+
+	        // stop the request implementation when:
+	        if (
+	          // we did not generate this error,
+	          // it comes from a throw in some other piece of code
+	          err instanceof errors.Unknown ||
+
+	          // server sent unparsable JSON
+	          err instanceof errors.UnparsableJSON ||
+
+	          // no fallback and a network error occured (No CORS, bad APPID)
+	          (!requester.fallback && err instanceof errors.Network)) {
+
+	          // stop request implementation for this command
+	          return client._promise.reject(err);
+	        }
+
 	        // we were not using the fallback, try now
-	        // if we are switching to fallback right now, set tries to maximum
+	        // if we were using switching to fallback for the first time, set tries to maximum
+	        // so that next loop will use the fallback request implementation
 	        if (!client.useFallback) {
 	          // next time doRequest is called, simulate we tried all hosts,
 	          // this will force to use the fallback
 	          tries = client.hosts[opts.hostType].length;
 	        } else {
-	          // we were already using the fallback, but something went wrong (script error)
+	          // we were already using the fallback, but something went wrong, retry
 	          client.hostIndex[opts.hostType] = ++client.hostIndex[opts.hostType] % client.hosts[opts.hostType].length;
 	          tries += 1;
 	        }
@@ -1288,7 +1407,7 @@ module.exports =
 	    var requestHeaders = {
 	      'x-algolia-api-key': this.apiKey,
 	      'x-algolia-application-id': this.applicationID,
-	      'x-user-agent': this._ua
+	      'x-algolia-agent': this._ua
 	    };
 
 	    if (this.userToken) {
@@ -1412,15 +1531,26 @@ module.exports =
 	   *
 	   * @param objectIDs the array of unique identifier of objects to retrieve
 	   */
-	  getObjects: function(objectIDs, callback) {
+	  getObjects: function(objectIDs, attributesToRetrieve, callback) {
 	    var indexObj = this;
+
+	    if (arguments.length === 1 || typeof attributesToRetrieve === 'function') {
+	      callback = attributesToRetrieve;
+	      attributesToRetrieve = undefined;
+	    }
 
 	    var body = {
 	      requests: map(objectIDs, function prepareRequest(objectID) {
-	        return {
+	        var request = {
 	          'indexName': indexObj.indexName,
 	          'objectID': objectID
 	        };
+
+	        if (attributesToRetrieve) {
+	          request.attributesToRetrieve = attributesToRetrieve.join(',');
+	        }
+
+	        return request;
 	      })
 	    };
 
@@ -1522,7 +1652,7 @@ module.exports =
 	   */
 	  deleteObject: function(objectID, callback) {
 	    if (typeof objectID === 'function' || typeof objectID !== 'string' && typeof objectID !== 'number') {
-	      var err = new Error('Cannot delete an object without an objectID');
+	      var err = new errors.AlgoliaSearchError('Cannot delete an object without an objectID');
 	      callback = objectID;
 	      if (typeof callback === 'function') {
 	        return callback(err);
@@ -1715,7 +1845,7 @@ module.exports =
 	      typeof callback === 'object') {
 	      // .search(query, params, cb)
 	      // .search(cb, params)
-	      throw new Error('algoliasearch: index.search usage is index.search(query, params, cb)');
+	      throw new errors.AlgoliaSearchError('index.search usage is index.search(query, params, cb)');
 	    }
 
 	    if (arguments.length === 0 || typeof query === 'function') {
@@ -1981,21 +2111,41 @@ module.exports =
 	      hostType: 'write',
 	      callback: callback });
 	  },
-	  /*
-	   * Add an existing user key associated to this index
-	   *
-	   * @param acls the list of ACL for this key. Defined by an array of strings that
-	   * can contains the following values:
-	   *   - search: allow to search (https and http)
-	   *   - addObject: allows to add/update an object in the index (https only)
-	   *   - deleteObject : allows to delete an existing object (https only)
-	   *   - deleteIndex : allows to delete index content (https only)
-	   *   - settings : allows to get index settings (https only)
-	   *   - editSettings : allows to change index settings (https only)
-	   * @param callback the result callback called with two arguments
-	   *  error: null or Error('message')
-	   *  content: the server answer with user keys list
-	   */
+	   /*
+	    * Add a new API key to this index
+	    *
+	    * @param {string[]} acls - The list of ACL for this key. Defined by an array of strings that
+	    *   can contains the following values:
+	    *     - search: allow to search (https and http)
+	    *     - addObject: allows to add/update an object in the index (https only)
+	    *     - deleteObject : allows to delete an existing object (https only)
+	    *     - deleteIndex : allows to delete index content (https only)
+	    *     - settings : allows to get index settings (https only)
+	    *     - editSettings : allows to change index settings (https only)
+	    * @param {Object} [params] - Optionnal parameters to set for the key
+	    * @param {number} params.validity - Number of seconds after which the key will be automatically removed (0 means no time limit for this key)
+	    * @param {number} params.maxQueriesPerIPPerHour - Number of API calls allowed from an IP address per hour
+	    * @param {number} params.maxHitsPerQuery - Number of hits this API key can retrieve in one call
+	    * @param {string} params.description - A description for your key
+	    * @param {string[]} params.referers - A list of authorized referers
+	    * @param {Object} params.queryParameters - Force the key to use specific query parameters
+	    * @param {Function} callback - The result callback called with two arguments
+	    *   error: null or Error('message')
+	    *   content: the server answer with user keys list
+	    * @return {Promise|undefined} Returns a promise if no callback given
+	    * @example
+	    * index.addUserKey(['search'], {
+	    *   validity: 300,
+	    *   maxQueriesPerIPPerHour: 2000,
+	    *   maxHitsPerQuery: 3,
+	    *   description: 'Eat three fruits',
+	    *   referers: ['*.algolia.com'],
+	    *   queryParameters: {
+	    *     tagFilters: ['public'],
+	    *   }
+	    * })
+	    * @see {@link https://www.algolia.com/doc/rest_api#AddIndexKey|Algolia REST API Documentation}
+	    */
 	  addUserKey: function(acls, params, callback) {
 	    if (arguments.length === 1 || typeof params === 'function') {
 	      callback = params;
@@ -2010,6 +2160,13 @@ module.exports =
 	      postObj.validity = params.validity;
 	      postObj.maxQueriesPerIPPerHour = params.maxQueriesPerIPPerHour;
 	      postObj.maxHitsPerQuery = params.maxHitsPerQuery;
+	      postObj.description = params.description;
+
+	      if (params.queryParameters) {
+	        postObj.queryParameters = this.as._getSearchParams(params.queryParameters, '');
+	      }
+
+	      postObj.referers = params.referers;
 	    }
 
 	    return this.as._jsonRequest({
@@ -2030,7 +2187,7 @@ module.exports =
 	   }, deprecatedMessage('index.addUserKeyWithValidity()', 'index.addUserKey()')),
 
 	   /**
-	    * Update an existing user key associated to this index
+	    * Update an existing API key of this index
 	    * @param {string} key - The key to update
 	    * @param {string[]} acls - The list of ACL for this key. Defined by an array of strings that
 	    *   can contains the following values:
@@ -2044,10 +2201,25 @@ module.exports =
 	    * @param {number} params.validity - Number of seconds after which the key will be automatically removed (0 means no time limit for this key)
 	    * @param {number} params.maxQueriesPerIPPerHour - Number of API calls allowed from an IP address per hour
 	    * @param {number} params.maxHitsPerQuery - Number of hits this API key can retrieve in one call
+	    * @param {string} params.description - A description for your key
+	    * @param {string[]} params.referers - A list of authorized referers
+	    * @param {Object} params.queryParameters - Force the key to use specific query parameters
 	    * @param {Function} callback - The result callback called with two arguments
 	    *   error: null or Error('message')
 	    *   content: the server answer with user keys list
 	    * @return {Promise|undefined} Returns a promise if no callback given
+	    * @example
+	    * index.updateUserKey('APIKEY', ['search'], {
+	    *   validity: 300,
+	    *   maxQueriesPerIPPerHour: 2000,
+	    *   maxHitsPerQuery: 3,
+	    *   description: 'Eat three fruits',
+	    *   referers: ['*.algolia.com'],
+	    *   queryParameters: {
+	    *     tagFilters: ['public'],
+	    *   }
+	    * })
+	    * @see {@link https://www.algolia.com/doc/rest_api#UpdateIndexKey|Algolia REST API Documentation}
 	    */
 	   updateUserKey: function(key, acls, params, callback) {
 	     if (arguments.length === 2 || typeof params === 'function') {
@@ -2063,6 +2235,13 @@ module.exports =
 	       putObj.validity = params.validity;
 	       putObj.maxQueriesPerIPPerHour = params.maxQueriesPerIPPerHour;
 	       putObj.maxHitsPerQuery = params.maxHitsPerQuery;
+	       putObj.description = params.description;
+
+	       if (params.queryParameters) {
+	         putObj.queryParameters = this.as._getSearchParams(params.queryParameters, '');
+	       }
+
+	       putObj.referers = params.referers;
 	     }
 
 	     return this.as._jsonRequest({
@@ -2112,10 +2291,10 @@ module.exports =
 	}
 
 	function notImplemented() {
-	  var message = 'algoliasearch: Not implemented in this environment.\n' +
+	  var message = 'Not implemented in this environment.\n' +
 	  'If you feel this is a mistake, write to support@algolia.com';
 
-	  throw new Error(message);
+	  throw new errors.AlgoliaSearchError(message);
 	}
 
 	function deprecatedMessage(previousUsage, newUsage) {
@@ -2358,8 +2537,76 @@ module.exports =
 /* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = Array.isArray || function (arr) {
-	  return Object.prototype.toString.call(arr) == '[object Array]';
+	// This file hosts our error definitions
+	// We use custom error "types" so that we can act on them when we need it
+	// e.g.: if error instanceof errors.UnparsableJSON then..
+
+	var foreach = __webpack_require__(9);
+	var inherits = __webpack_require__(3);
+
+	function AlgoliaSearchError(message, extraProperties) {
+	  var error = this;
+
+	  // try to get a stacktrace
+	  if (typeof Error.captureStackTrace === 'function') {
+	    Error.captureStackTrace(this, this.constructor);
+	  } else {
+	    error.stack = (new Error()).stack || 'Cannot get a stacktrace, browser is too old';
+	  }
+
+	  this.name = this.constructor.name;
+	  this.message = message || 'Unknown error';
+
+	  if (extraProperties) {
+	    foreach(extraProperties, function addToErrorObject(value, key) {
+	      error[key] = value;
+	    });
+	  }
+	}
+
+	inherits(AlgoliaSearchError, Error);
+
+	function createCustomError(name, message) {
+	  function AlgoliaSearchCustomError() {
+	    var args = Array.prototype.slice.call(arguments, 0);
+
+	    // custom message not set, use default
+	    if (typeof args[0] !== 'string') {
+	      args.unshift(message);
+	    }
+
+	    AlgoliaSearchError.apply(this, args);
+	    this.name = 'AlgoliaSearch' + name + 'Error';
+	  }
+
+	  inherits(AlgoliaSearchCustomError, AlgoliaSearchError);
+
+	  return AlgoliaSearchCustomError;
+	}
+
+	// late exports to let various fn defs and inherits take place
+	module.exports = {
+	  AlgoliaSearchError: AlgoliaSearchError,
+	  UnparsableJSON: createCustomError(
+	    'UnparsableJSON',
+	    'Could not parse the incoming response as JSON, see err.more for details'
+	  ),
+	  RequestTimeout: createCustomError(
+	    'RequestTimeout',
+	    'Request timedout before getting a response'
+	  ),
+	  Network: createCustomError(
+	    'Network',
+	    'Network issue, see err.more for details'
+	  ),
+	  JSONP: createCustomError(
+	    'JSONP',
+	    'JSONP failed'
+	  ),
+	  Unknown: createCustomError(
+	    'Unknown',
+	    'Unknown error occured'
+	  )
 	};
 
 
