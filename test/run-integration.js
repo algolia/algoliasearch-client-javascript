@@ -1,5 +1,5 @@
 if (!process.env.INTEGRATION_TEST_API_KEY || !process.env.INTEGRATION_TEST_APPID) {
-  throw new Error('usage: INTEGRATION_TEST_APPID=$APPID INTEGRATION_TEST_API_KEY=$APIKEY npm run test-integration');
+  throw new Error('usage: INTEGRATION_TEST_APPID=$APPID INTEGRATION_TEST_API_KEY=$APIKEY npm run test-browser-integration');
 }
 
 // simple integration tests, checking the whole communication

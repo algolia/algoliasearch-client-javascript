@@ -3,6 +3,9 @@ CHANGELOG
 UNRELEASED
     * fix: send a descriptive timeout error when it occurs
     * chore: add headers debugging
+    * fix: incremental wait waitTask
+      will now wait 100ms * loopTickNumber * loopTickNumber
+      fixes #102
 
 2015-05-23 3.4.0
     * FIX: Remove debugging messages from builds
