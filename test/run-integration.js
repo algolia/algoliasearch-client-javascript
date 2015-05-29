@@ -17,7 +17,7 @@ var canPUT = !isABrowser || require('faux-jax').support.xhr.cors;
 // in browser integration tests
 var algoliasearch;
 if (isABrowser) {
-  algoliasearch = global.algoliasearch;
+  algoliasearch = window.algoliasearch;
 } else {
   // on nodejs, we require algoliasearch
   algoliasearch = require('../');

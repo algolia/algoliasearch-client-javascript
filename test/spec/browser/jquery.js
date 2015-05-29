@@ -17,9 +17,9 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
     // load jQuery Algolia Search module
     require('../../../src/browser/builds/algoliasearch.jquery');
 
-    t.ok(global.$.algolia, 'we exported an `algolia` property on jQuery');
+    t.ok(window.$.algolia, 'we exported an `algolia` property on jQuery');
 
-    var client = global.$.algolia.Client('jquery-success-applicationID', 'jquery-success-apiKey');
+    var client = window.$.algolia.Client('jquery-success-applicationID', 'jquery-success-apiKey');
     var index = client.initIndex('jquery-success-indexName');
 
     fauxJax.install();
@@ -65,7 +65,7 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
         requestURL.query, {
           'x-algolia-api-key': 'jquery-success-apiKey',
           'x-algolia-application-id': 'jquery-success-applicationID',
-          'x-algolia-agent': global.$.algolia.ua
+          'x-algolia-agent': window.$.algolia.ua
         },
         'requestURL query matches'
       );
@@ -98,7 +98,7 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
     // load jQuery Algolia Search module
     require('../../../src/browser/builds/algoliasearch.jquery');
 
-    var client = global.$.algolia.Client('jquery-error-applicationID', 'jquery-error-apiKey');
+    var client = window.$.algolia.Client('jquery-error-applicationID', 'jquery-error-apiKey');
     var index = client.initIndex('jquery-error-indexName');
 
     fauxJax.install();
@@ -163,7 +163,7 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
     // load jQuery Algolia Search module
     require('../../../src/browser/builds/algoliasearch.jquery');
 
-    var client = global.$.algolia.Client(
+    var client = window.$.algolia.Client(
       'jquery-error-applicationID',
       'jquery-error-apiKey', {
         hosts: [
@@ -219,7 +219,7 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
     // load jQuery Algolia Search module
     require('../../../src/browser/builds/algoliasearch.jquery');
 
-    var client = global.$.algolia.Client(
+    var client = window.$.algolia.Client(
       'jquery-error-applicationID',
       'jquery-error-apiKey', {
         timeout: requestTimeout

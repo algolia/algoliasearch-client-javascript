@@ -31,7 +31,7 @@ function algoliasearch(applicationID, apiKey, opts) {
 algoliasearch.version = require('../../version.json');
 algoliasearch.ua = 'Algolia for jQuery ' + algoliasearch.version;
 
-var $ = global.jQuery;
+var $ = window.jQuery;
 
 $.algolia = {Client: algoliasearch, ua: algoliasearch.ua, version: algoliasearch.version};
 
