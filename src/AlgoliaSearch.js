@@ -1389,26 +1389,42 @@ AlgoliaSearch.prototype.Index.prototype = {
    *  content: the server answer that contains the list of results
    */
   waitTask: function(taskID, callback) {
+    // wait minimum 100ms before retrying
+    var baseDelay = 100;
+    // wait maximum 5s before retrying
+    var maxDelay = 5000;
+    var loop = 0;
+
     // waitTask() must be handled differently from other methods,
     // it's a recursive method using a timeout
     var indexObj = this;
     var client = indexObj.as;
 
-    var promise = this.as._jsonRequest({
-      method: 'GET',
-      hostType: 'read',
-      url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/task/' + taskID
-    }).then(function success(content) {
-      if (content.status !== 'published') {
-        return indexObj.as._promise.delay(100).then(function() {
-          // do not forward the callback, we want the promise
-          // on next iteration
-          return indexObj.waitTask(taskID);
-        });
-      }
+    var promise = retryLoop();
 
-      return content;
-    });
+    function retryLoop() {
+      return client._jsonRequest({
+        method: 'GET',
+        hostType: 'read',
+        url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/task/' + taskID
+      }).then(function success(content) {
+        loop++;
+        var delay = baseDelay * loop * loop;
+        if (delay > maxDelay) {
+          delay = maxDelay;
+        }
+
+        if (content.status !== 'published') {
+          return client._promise.delay(delay).then(function() {
+            // do not forward the callback, we want the promise
+            // on next iteration
+            return retryLoop();
+          });
+        }
+
+        return content;
+      });
+    }
 
     if (!callback) {
       return promise;
