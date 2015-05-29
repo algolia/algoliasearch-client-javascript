@@ -1,7 +1,7 @@
 var test = require('tape');
 
 test('client.setRequestTimeout()', function(t) {
-  t.plan(4);
+  t.plan(5);
 
   var fauxJax = require('faux-jax');
 
@@ -11,6 +11,7 @@ test('client.setRequestTimeout()', function(t) {
 
   if (process.browser) {
     var parse = require('url-parse');
+    // we do not use a random url, we want to reach the JSONP local server
     var currentURL = parse(location.href);
     hosts.push(currentURL.host);
   } else {
@@ -43,6 +44,11 @@ test('client.setRequestTimeout()', function(t) {
 
   function firstSearch(err) {
     t.ok(err instanceof Error);
+    t.equal(
+      err.message,
+      'Request timedout before getting a response',
+      'Error message id descriptive'
+    );
 
     var end = (new Date()).getTime();
     t.ok(

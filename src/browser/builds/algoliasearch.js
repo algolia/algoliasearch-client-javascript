@@ -161,7 +161,7 @@ AlgoliaSearchBrowser.prototype._request.fallback = function(url, opts) {
   return new Promise(function(resolve, reject) {
     JSONPRequest(url, opts, function JSONPRequestDone(err, content) {
       if (err) {
-        reject(new errors.JSONP(err.message));
+        reject(err);
         return;
       }
 

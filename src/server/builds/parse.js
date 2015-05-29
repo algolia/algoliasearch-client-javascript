@@ -69,7 +69,8 @@ AlgoliaSearchParse.prototype._request = function(rawUrl, opts) {
     // from 400/500 statuses
     promise.resolve({
       statusCode: res.status,
-      body: res.data
+      body: res.data,
+      headers: res.headers
     });
   }
 
@@ -78,7 +79,8 @@ AlgoliaSearchParse.prototype._request = function(rawUrl, opts) {
 
     promise.resolve({
       statusCode: res.status,
-      body: res.data
+      body: res.data,
+      headers: res.headers
     });
   }
 

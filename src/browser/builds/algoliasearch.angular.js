@@ -72,6 +72,7 @@ global.angular.module('algoliasearch', [])
       }).then(function success(response) {
         resolve({
           statusCode: response.status,
+          headers: response.headers,
           body: response.data
         });
       }, function error(response) {
@@ -107,7 +108,7 @@ global.angular.module('algoliasearch', [])
 
       JSONPRequest(url, opts, function JSONPRequestDone(err, content) {
         if (err) {
-          reject(new errors.JSONP(err.message));
+          reject(err);
           return;
         }
 

@@ -5,7 +5,7 @@ var zuulConfig = module.exports = {
   }]
 };
 
-if (process.env.BROWSER === 'integration') {
+if (process.env.BROWSERS === 'integration') {
   zuulConfig.scripts = [
     // browser integration tests will use the dist files
     '/dist/algoliasearch.min.js'

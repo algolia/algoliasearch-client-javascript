@@ -1,5 +1,7 @@
 module.exports = JSONPRequest;
 
+var errors = require('../errors');
+
 var JSONPCounter = 0;
 
 function JSONPRequest(url, opts, cb) {
@@ -77,7 +79,7 @@ function JSONPRequest(url, opts, cb) {
     if (!cbCalled) {
       opts.debug('JSONP: Fail. Script loaded but did not call the callback');
       clean();
-      cb(new Error('Failed to load JSONP script'));
+      cb(new errors.JSONPScriptFail());
     }
   }
 
@@ -108,7 +110,7 @@ function JSONPRequest(url, opts, cb) {
 
     timedOut = true;
     clean();
-    cb(new Error('Timeout - Could not connect to endpoint ' + url));
+    cb(new errors.RequestTimeout());
   }
 
   function error() {
@@ -119,6 +121,6 @@ function JSONPRequest(url, opts, cb) {
     }
 
     clean();
-    cb(new Error('Failed to load JSONP script'));
+    cb(new errors.JSONPScriptError());
   }
 }
