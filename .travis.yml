@@ -18,42 +18,42 @@ matrix:
   fast_finish: true
   include:
     # First we try to build the browser files
-    - node_js: '0.10'
+    - node_js: '0.12'
       env: COMMAND=build APP_ENV=production
 
     # Browser integration tests, real browsers
-    - node_js: '0.10'
+    - node_js: '0.12'
       env: COMMAND=test-browser-integration BROWSERS=integration APP_ENV=production
 
     # Integration tests, nodejs
-    - node_js: '0.10'
-      env: COMMAND=test-node-integration
     - node_js: '0.12'
+      env: COMMAND=test-node-integration
+    - node_js: '0.10'
       env: COMMAND=test-node-integration
     - node_js: 'iojs-v2.0.2'
       env: COMMAND=test-node-integration
 
     # Browser unit tests, phantom
-    - node_js: '0.10'
-      env: COMMAND=test-phantom APP_ENV=production
+    - node_js: '0.12'
+      env: COMMAND=test-phantom-unit APP_ENV=production
 
     # Browser unit test, real browsers
     # In pull requests, the first "DESKTOP" tests will be run on all
     # latest browsers only (desktop + mobile)
-    - node_js: '0.10'
-      env: COMMAND=test-browser BROWSERS=desktop
+    - node_js: '0.12'
+      env: COMMAND=test-browser-unit BROWSERS=desktop
     # This task will be ignored in pull requests
-    - node_js: '0.10'
-      env: COMMAND=test-browser BROWSERS=mobile
+    - node_js: '0.12'
+      env: COMMAND=test-browser-unit BROWSERS=mobile
 
     # Node.js unit tests
-    - node_js: '0.10'
-      env: COMMAND=test-node
     - node_js: '0.12'
-      env: COMMAND=test-node
+      env: COMMAND=test-node-unit
+    - node_js: '0.10'
+      env: COMMAND=test-node-unit
     - node_js: iojs-v2.0.2
-      env: COMMAND=test-node
+      env: COMMAND=test-node-unit
 
     # Linting
-    - node_js: '0.10'
+    - node_js: '0.12'
       env: COMMAND=lint

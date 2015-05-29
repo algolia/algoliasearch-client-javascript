@@ -26,7 +26,7 @@ test('Request strategy handles JSONP syntax errors', function(t) {
     t.ok(err instanceof Error);
     t.equal(
       err.message,
-      'Cannot connect to the AlgoliaSearch API. Send an email to support@algolia.com to report and resolve the issue.',
+      '<script> was loaded but did not call our provided callback',
       'Error message matches'
     );
 

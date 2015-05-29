@@ -56,6 +56,6 @@ test('Request strategy uses only JSONP if one XHR fails', function(t) {
 
   fauxJax.once('request', function(req) {
     fauxJax.restore();
-    req.respond(500, {}, JSON.stringify({message: 'woops', status: 500}));
+    req.onerror();
   });
 });

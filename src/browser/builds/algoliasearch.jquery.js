@@ -70,7 +70,8 @@ AlgoliaSearchJQuery.prototype._request = function(url, opts) {
 
         deferred.resolve({
           statusCode: jqXHR.status,
-          body: jqXHR.responseJSON
+          body: jqXHR.responseJSON,
+          headers: jqXHR.getAllResponseHeaders()
         });
       }
     });
@@ -83,7 +84,7 @@ AlgoliaSearchJQuery.prototype._request.fallback = function(url, opts) {
   return $.Deferred(function(deferred) {
     JSONPRequest(url, opts, function JSONPRequestDone(err, content) {
       if (err) {
-        deferred.reject(new errors.JSONP(err.message));
+        deferred.reject(err);
         return;
       }
 

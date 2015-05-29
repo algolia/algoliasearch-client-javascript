@@ -102,7 +102,8 @@ AlgoliaSearchNodeJS.prototype._request = function(rawUrl, opts) {
       req.write(body);
 
       // debug request body/sent
-      if (process.env.DEBUG) {
+      // only when DEBUG=debugBody is found
+      if (process.env.DEBUG && process.env.DEBUG.indexOf('debugBody') !== -1) {
         req.once('socket', function() {
           debugBytesSent();
           debugInterval = setInterval(debugBytesSent, 100);
@@ -131,7 +132,8 @@ AlgoliaSearchNodeJS.prototype._request = function(rawUrl, opts) {
         try {
           out = {
             body: JSON.parse(data),
-            statusCode: res.statusCode
+            statusCode: res.statusCode,
+            headers: res.headers
           };
         } catch(e) {
           out = new errors.UnparsableJSON({more: data});
@@ -149,7 +151,7 @@ AlgoliaSearchNodeJS.prototype._request = function(rawUrl, opts) {
       opts.debug('error: %j  - %s', err, rawUrl);
 
       if (timedOut) {
-        opts.debug('request had already timedout')
+        opts.debug('request had already timedout');
         return;
       }
 

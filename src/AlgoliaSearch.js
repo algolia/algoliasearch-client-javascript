@@ -642,14 +642,21 @@ AlgoliaSearch.prototype = {
         return client._promise.resolve(JSON.parse(JSON.stringify(cache[cacheID])));
       }
 
-      if (tries >= client.hosts[opts.hostType].length) {
+      // if we reached max tries
+      if (tries >= client.hosts[opts.hostType].length ||
+        // or we need to switch to fallback
+        client.useFallback && !usingFallback) {
+        // and there's no fallback or we are already using a fallback
         if (!opts.fallback || !client._request.fallback || usingFallback) {
-          // could not get a response even using the fallback if one was available
+          requestDebug('could not get any response');
+          // then stop
           return client._promise.reject(new errors.AlgoliaSearchError(
             'Cannot connect to the AlgoliaSearch API.' +
             ' Send an email to support@algolia.com to report and resolve the issue.'
           ));
         }
+
+        requestDebug('switching to fallback');
 
         // let's try the fallback starting from here
         tries = 0;
@@ -659,38 +666,44 @@ AlgoliaSearch.prototype = {
         reqOpts.url = opts.fallback.url;
         reqOpts.jsonBody = opts.fallback.body;
         if (reqOpts.jsonBody) {
-          reqOpts.body = JSON.stringify(opts.fallback.body);
+          reqOpts.body = JSON.stringify(reqOpts.jsonBody);
         }
 
         reqOpts.timeout = client.requestTimeout * (tries + 1);
         client.hostIndex[opts.hostType] = 0;
-        client.useFallback = true; // now we will only use JSONP, even on future requests
         usingFallback = true; // the current request is now using fallback
         return doRequest(client._request.fallback, reqOpts);
       }
 
+      var url = client.hosts[opts.hostType][client.hostIndex[opts.hostType]] + reqOpts.url;
+      var options = {
+        body: body,
+        jsonBody: opts.body,
+        method: reqOpts.method,
+        headers: client._computeRequestHeaders(),
+        timeout: reqOpts.timeout,
+        debug: requestDebug
+      };
+
+      requestDebug('method: %s, url: %s, headers: %j, timeout: %d', options.method, url, options.headers, options.timeout);
+
+      if (requester === client._request.fallback) {
+        requestDebug('using fallback');
+      }
+
       // `requester` is any of this._request or this._request.fallback
       // thus it needs to be called using the client as context
-      return requester.call(client,
-        // http(s)://currenthost/url(?qs)
-        client.hosts[opts.hostType][client.hostIndex[opts.hostType]] + reqOpts.url, {
-          body: body,
-          jsonBody: opts.body,
-          method: reqOpts.method,
-          headers: client._computeRequestHeaders(),
-          timeout: reqOpts.timeout,
-          debug: requestDebug
-        }
-      )
-      .then(function success(httpResponse) {
-        requestDebug('received response: %j', httpResponse);
+      return requester.call(client, url, options).then(success, tryFallback);
 
+      function success(httpResponse) {
+        // compute the status of the response,
         var status =
-          // When in browser mode, using XDR or JSONP
-          // We rely on our own API response `status`, only
-          // provided when an error occurs, we also expect a .message along
-          // Otherwise, it could be a `waitTask` status, that's the only
-          // case where we have a response.status that's not the http statusCode
+          // When in browser mode, using XDR or JSONP, we have no statusCode available
+          // So we rely on our API response `status` property.
+          // But `waitTask` can set a `status` property which is not the statusCode (it's the task status)
+          // So we check if there's a `message` along `status` and it means it's an error
+          //
+          // That's the only case where we have a response.status that's not the http statusCode
           httpResponse && httpResponse.body && httpResponse.body.message && httpResponse.body.status ||
 
           // this is important to check the request statusCode AFTER the body eventual
@@ -702,6 +715,13 @@ AlgoliaSearch.prototype = {
           // we default to success when no error (no response.status && response.message)
           // If there was a JSON.parse() error then body is null and it fails
           httpResponse && httpResponse.body && 200;
+
+        requestDebug('received response: response statusCode: %s, computed status: %d, headers: %j',
+          httpResponse.statusCode, status, httpResponse.headers);
+
+        if (process.env.DEBUG && process.env.DEBUG.indexOf('debugBody') !== -1) {
+          requestDebug('body: %j', httpResponse.body);
+        }
 
         var ok = status === 200 || status === 201;
         var retry = !ok && Math.floor(status / 100) !== 4 && Math.floor(status / 100) !== 1;
@@ -715,6 +735,7 @@ AlgoliaSearch.prototype = {
         }
 
         if (retry) {
+          tries += 1;
           return retryRequest();
         }
 
@@ -723,13 +744,6 @@ AlgoliaSearch.prototype = {
         );
 
         return client._promise.reject(unrecoverableError);
-      }, tryFallback);
-
-      function retryRequest() {
-        client.hostIndex[opts.hostType] = ++client.hostIndex[opts.hostType] % client.hosts[opts.hostType].length;
-        tries += 1;
-        reqOpts.timeout = client.requestTimeout * (tries + 1);
-        return doRequest(requester, reqOpts);
       }
 
       function tryFallback(err) {
@@ -745,14 +759,11 @@ AlgoliaSearch.prototype = {
         //    - uncaught exception occurs (TypeError)
         requestDebug('error: %s, stack: %s', err.message, err.stack);
 
-        if (err instanceof errors.RequestTimeout) {
-          requestDebug('timedout');
-          return retryRequest();
-        }
-
         if (!(err instanceof errors.AlgoliaSearchError)) {
           err = new errors.Unknown(err && err.message, err);
         }
+
+        tries += 1;
 
         // stop the request implementation when:
         if (
@@ -764,25 +775,31 @@ AlgoliaSearch.prototype = {
           err instanceof errors.UnparsableJSON ||
 
           // no fallback and a network error occured (No CORS, bad APPID)
-          (!requester.fallback && err instanceof errors.Network)) {
+          (!requester.fallback && err instanceof errors.Network) ||
+
+          // max tries and already using fallback or no fallback
+          (tries >= client.hosts[opts.hostType].length && (usingFallback || !opts.fallback || !client._request.fallback))) {
 
           // stop request implementation for this command
           return client._promise.reject(err);
         }
 
-        // we were not using the fallback, try now
-        // if we were using switching to fallback for the first time, set tries to maximum
-        // so that next loop will use the fallback request implementation
-        if (!client.useFallback) {
-          // next time doRequest is called, simulate we tried all hosts,
-          // this will force to use the fallback
-          tries = client.hosts[opts.hostType].length;
-        } else {
-          // we were already using the fallback, but something went wrong, retry
-          client.hostIndex[opts.hostType] = ++client.hostIndex[opts.hostType] % client.hosts[opts.hostType].length;
-          tries += 1;
+        client.hostIndex[opts.hostType] = ++client.hostIndex[opts.hostType] % client.hosts[opts.hostType].length;
+
+        if (err instanceof errors.RequestTimeout) {
+          return retryRequest();
+        } else if (client._request.fallback && !client.useFallback) {
+          // if any error occured but timeout, use fallback for the rest
+          // of the session
+          client.useFallback = true;
         }
 
+        return doRequest(requester, reqOpts);
+      }
+
+      function retryRequest() {
+        client.hostIndex[opts.hostType] = ++client.hostIndex[opts.hostType] % client.hosts[opts.hostType].length;
+        reqOpts.timeout = client.requestTimeout * (tries + 1);
         return doRequest(requester, reqOpts);
       }
     }
