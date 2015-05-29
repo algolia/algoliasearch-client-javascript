@@ -4,7 +4,7 @@
 module.exports = algoliasearch;
 
 var inherits = require('inherits');
-var Promise = global.Promise || require('es6-promise').Promise;
+var Promise = window.Promise || require('es6-promise').Promise;
 
 var AlgoliaSearch = require('../../AlgoliaSearch');
 var errors = require('../../errors');

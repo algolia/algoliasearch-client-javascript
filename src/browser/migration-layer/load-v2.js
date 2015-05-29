@@ -12,11 +12,11 @@ function loadV2(buildName) {
     'please read our migration guide at https://github.com/algolia/algoliasearch-client-js/wiki/Migration-guide-from-2.x.x-to-3.x.x\n' +
     '-- /AlgoliaSearch  `latest` warning --';
 
-  if (global.console) {
-    if (global.console.warn) {
-      global.console.warn(message);
-    } else if (global.console.log) {
-      global.console.log(message);
+  if (window.console) {
+    if (window.console.warn) {
+      window.console.warn(message);
+    } else if (window.console.log) {
+      window.console.log(message);
     }
   }
 
@@ -27,7 +27,7 @@ function loadV2(buildName) {
     // why \x3c? http://stackoverflow.com/a/236106/147079
     document.write('\x3Cscript>window.ALGOLIA_SUPPORTS_DOCWRITE = true\x3C/script>');
 
-    if (global.ALGOLIA_SUPPORTS_DOCWRITE === true) {
+    if (window.ALGOLIA_SUPPORTS_DOCWRITE === true) {
       document.write('\x3Cscript src="' + v2ScriptUrl + '">\x3C/script>');
       scriptLoaded('document.write')();
     } else {
@@ -42,6 +42,6 @@ function scriptLoaded(method) {
   return function log() {
     var message = 'AlgoliaSearch: loaded V2 script using ' + method;
 
-    global.console && global.console.log && global.console.log(message);
+    window.console && window.console.log && window.console.log(message);
   };
 }

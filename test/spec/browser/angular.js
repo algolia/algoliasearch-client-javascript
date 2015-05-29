@@ -14,7 +14,7 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
     // load AngularJS Algolia Search module
     require('../../../src/browser/builds/algoliasearch.angular');
 
-    global.angular
+    window.angular
       .module('angularTestSuccess', ['algoliasearch'])
       .controller('AngularModuleSearchControllerTestSuccess', ['$scope', '$timeout', 'algolia', function($scope, $timeout, algolia) {
         t.pass('AngularJS controller initialized');
@@ -89,8 +89,8 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
         });
       }]);
 
-    global.angular.element(document).ready(function() {
-      global.angular.bootstrap(global.angular.element('#angular-test-success'), ['angularTestSuccess']);
+    window.angular.element(document).ready(function() {
+      window.angular.bootstrap(window.angular.element('#angular-test-success'), ['angularTestSuccess']);
     });
   });
 
@@ -102,7 +102,7 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
     // load AngularJS Algolia Search module
     require('../../../src/browser/builds/algoliasearch.angular');
 
-    global.angular
+    window.angular
       .module('angularTestError', ['algoliasearch'])
       .controller('AngularModuleSearchControllerTestError', ['$scope', '$timeout', 'algolia', function($scope, $timeout, algolia) {
         t.pass('AngularJS controller initialized');
@@ -138,8 +138,8 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
         });
       }]);
 
-    global.angular.element(document).ready(function() {
-      global.angular.bootstrap(global.angular.element('#angular-test-error'), ['angularTestError']);
+    window.angular.element(document).ready(function() {
+      window.angular.bootstrap(window.angular.element('#angular-test-error'), ['angularTestError']);
     });
   });
 
@@ -154,7 +154,7 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
     // load AngularJS Algolia Search module
     require('../../../src/browser/builds/algoliasearch.angular');
 
-    global.angular
+    window.angular
       .module('angularJSONPFallback', ['algoliasearch'])
       .controller('AngularModuleSearchControllerTestJSONPFallback', ['$scope', '$timeout', 'algolia', function($scope, $timeout, algolia) {
         t.pass('AngularJS controller initialized');
@@ -198,8 +198,8 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
         });
       }]);
 
-    global.angular.element(document).ready(function() {
-      global.angular.bootstrap(global.angular.element('#angular-JSONP-fallback'), ['angularJSONPFallback']);
+    window.angular.element(document).ready(function() {
+      window.angular.bootstrap(window.angular.element('#angular-JSONP-fallback'), ['angularJSONPFallback']);
     });
   });
 
@@ -215,7 +215,7 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
     // load AngularJS Algolia Search module
     require('../../../src/browser/builds/algoliasearch.angular');
 
-    global.angular
+    window.angular
       .module('angularTimeout', ['algoliasearch'])
       .controller('AngularModuleSearchControllerTestTimeout', ['$scope', '$timeout', 'algolia', function($scope, $timeout, algolia) {
         t.pass('AngularJS controller initialized');
@@ -250,8 +250,8 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
         });
       }]);
 
-    global.angular.element(document).ready(function() {
-      global.angular.bootstrap(global.angular.element('#angular-timeout'), ['angularTimeout']);
+    window.angular.element(document).ready(function() {
+      window.angular.bootstrap(window.angular.element('#angular-timeout'), ['angularTimeout']);
     });
   });
 }

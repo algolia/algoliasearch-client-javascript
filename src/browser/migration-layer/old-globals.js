@@ -12,11 +12,11 @@ function oldGlobals() {
     'Please read our migration guide at https://github.com/algolia/algoliasearch-client-js/wiki/Migration-guide-from-2.x.x-to-3.x.x\n' +
     '-- /AlgoliaSearch V2 => V3 error --';
 
-  global.AlgoliaSearch = function() {
+  window.AlgoliaSearch = function() {
     throw new Error(message);
   };
 
-  global.AlgoliaSearchHelper = function() {
+  window.AlgoliaSearchHelper = function() {
     throw new Error(message);
   };
 
