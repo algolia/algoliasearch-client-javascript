@@ -6,8 +6,11 @@ var times = require('lodash-compat/utility/times');
 
 var chance = new Chance();
 
-function getFakeObjects(max) {
-  var nbHits = random(1, max || 10);
+function getFakeObjects(nbHits) {
+  if (nbHits === undefined) {
+    nbHits = 10;
+  }
+
   return times(nbHits, getOneHit);
 }
 

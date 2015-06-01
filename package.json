@@ -16,6 +16,7 @@
     "test-node-integration": "node test/run-integration.js",
     "test-browser-integration": "npm run build && DEBUG=zuul* zuul --no-coverage -- test/run-integration.js",
     "dev": "APP_ENV=development DEBUG=zuul* zuul --no-coverage --local 8080 -- test/run-browser.js",
+    "dev-integration": "APP_ENV=development DEBUG=zuul* zuul --no-coverage --local 8080 -- test/run-integration.js",
     "examples": "http-server . -a 0.0.0.0",
     "lint": "eslint --quiet test/"
   },
@@ -91,7 +92,7 @@
     "server-destroy": "1.0.0",
     "sinon": "1.12.2",
     "tape": "4.0.0",
-    "url-parse": "1.0.0",
+    "url-parse": "1.0.1",
     "webpack": "1.8.5",
     "xhr": "2.0.1",
     "zuul": "3.0.0",

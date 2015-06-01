@@ -1340,20 +1340,53 @@ client.moveIndex('MyNewIndex', 'MyIndex', function(err, content) {
 Backup / Retrieve of all index content
 -------------
 
-You can retrieve all index content for backup purposes or for SEO using the browse method.
-This method retrieves 1,000 objects via an API call and supports pagination.
+You can retrieve all index content by using the browseAll() method:
+```js
+// browseAll can take any query and queryParameter like the
+// search function. Here we do not provide any because we want all the index's
+// objects
+var browser = index.browseAll();
+var hits = [];
+
+browser.on('result', function onResult(content) {
+  hits = hits.concat(content.hits);
+});
+
+browser.on('end', function onEnd() {
+  console.log('Finished!');
+  console.log('We got %d hits', hits.length);
+});
+
+browser.on('error', function onError(err) {
+  throw err;
+});
+
+// You can stop the process at any point with
+// browser.stop();
+```
+
+You can also use the `browse(query, queryParameters)` and `browseFrom(browseCursor)` methods to programmatically browse your index content:
 
 ```js
-// Get first page
-index.browse(0, function(err, content) {
-  console.log(content);
-});
+index.browse('jazz', function browseDone(err, content) {
+  if (err) {
+    throw err;
+  }
 
-// Get second page
-index.browse(1, function(err, content) {
-  console.log(content);
+  console.log('We are at page %d on a total of %d pages, with %d hits.', content.page, content.nbPages, content.hits.length);
+
+  if (content.cursor) {
+    index.browseFrom(content.cursor, function browseFromDone(err, content) {
+      if (err) {
+        throw err;
+      }
+
+      console.log('We are at page %d on a total of %d pages, with %d hits.', content.page, content.nbPages, content.hits.length);
+    });
+  }
 });
 ```
+
 
 Logs
 -------------

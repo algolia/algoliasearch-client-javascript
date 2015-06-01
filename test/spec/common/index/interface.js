@@ -24,6 +24,8 @@ test('AlgoliaSearch index API spec', function(t) {
     'addUserKeyWithValidity',
     'updateUserKey',
     'browse',
+    'browseFrom',
+    'browseAll',
     'clearCache',
     'clearIndex',
     'deleteByQuery',
