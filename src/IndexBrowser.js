@@ -11,7 +11,6 @@ inherits(IndexBrowser, EventEmitter);
 
 IndexBrowser.prototype.stop = function() {
   this._stopped = true;
-  this.emit('stop');
   this._clean();
 };
 
