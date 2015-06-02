@@ -30,7 +30,7 @@ module.exports = [
   ),
   merge(
     cloneDeep(baseTestCase), {
-      testName: 'client.getLogs(cb, offset)',
+      testName: 'client.getLogs(offset, cb)',
       callArguments: [25, sinon.spy()],
       expectedRequest: {
         URL: {
@@ -44,7 +44,7 @@ module.exports = [
   ),
   merge(
     cloneDeep(baseTestCase), {
-      testName: 'client.getLogs(cb, offset, length)',
+      testName: 'client.getLogs(offset, length, cb)',
       callArguments: [30, 20, sinon.spy()],
       expectedRequest: {
         URL: {
