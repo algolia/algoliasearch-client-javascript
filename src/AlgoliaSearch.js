@@ -1341,7 +1341,7 @@ AlgoliaSearch.prototype.Index.prototype = {
    * @param {Object} [queryParameters] - Any search query parameter
    * @param {Function} [callback] - The result callback called with two arguments
    *   error: null or Error('message')
-   *   content: the server answer with user keys list
+   *   content: the server answer with the browse result
    * @return {Promise|undefined} Returns a promise if no callback given
    * @example
    * index.browse('cool songs', {
@@ -1416,7 +1416,7 @@ AlgoliaSearch.prototype.Index.prototype = {
    * @param {Object} [queryParameters] - Any search query parameter
    * @param {Function} [callback] - The result callback called with two arguments
    *   error: null or Error('message')
-   *   content: the server answer with user keys list
+   *   content: the server answer with the browse result
    * @return {Promise|undefined} Returns a promise if no callback given
    * @example
    * index.browseFrom('14lkfsakl32', callback);
