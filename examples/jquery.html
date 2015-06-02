@@ -1,16 +1,15 @@
 <!doctype html>
 <html>
   <head>
-    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <!--[if lte IE 7]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/json2/20140204/json2.min.js"></script>
+    <script src="//cdn.jsdelivr.net/json2/0.2/json2.min.js"></script>
     <script src="//cdn.jsdelivr.net/console-log/2.2/console.min.js"></script>
     <![endif]-->
     <script src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
     <script src="/dist/algoliasearch.jquery.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/3.2.1/css/font-awesome.min.css" />
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/fontawesome/4.3.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/bootstrap/3.3.4/css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="style.css" />
   </head>
   <body>
@@ -20,7 +19,7 @@
         <div class="search_box">
           <form action="#" method="get">
             <input autocomplete="off" class="autocomplete" id="q" placeholder="Start typing" type="text" spellcheck="false" />
-            <div class='searchbutton'>
+            <div class="searchbutton">
               <i class="icon-search icon-large"></i>
             </div>
           </form>
@@ -33,7 +32,7 @@
 
     <script type="text/javascript">
       function searchCallback(content) {
-        if (content.query !== $("#q").val()) {
+        if (content.query !== $('#q').val()) {
           // do not take out-dated answers into account
           return;
         }

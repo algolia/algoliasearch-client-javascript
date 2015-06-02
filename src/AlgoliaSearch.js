@@ -1537,7 +1537,17 @@ AlgoliaSearch.prototype.Index.prototype = {
    */
   ttAdapter: function(params) {
     var self = this;
-    return function(query, cb) {
+    return function(query, syncCb, asyncCb) {
+      var cb;
+
+      if (typeof asyncCb === 'function') {
+        // typeahead 0.11
+        cb = asyncCb;
+      } else {
+        // pre typeahead 0.11
+        cb = syncCb;
+      }
+
       self.search(query, params, function(err, content) {
         if (err) {
           cb(err);

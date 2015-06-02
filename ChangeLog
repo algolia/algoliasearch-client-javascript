@@ -27,6 +27,8 @@ UNRELEASED
         stop browsing at any point.
 
       fixes #101
+    * fix: support typeahead 0.11
+      fixes #105
 
 
 2015-05-23 3.4.0
@@ -227,7 +229,7 @@ UNRELEASED
         If you need to support IE7 <= or IE8 quirks, add this:
           ```html
           <!--[if lte IE 7]>
-          <script src="//cdnjs.cloudflare.com/ajax/libs/json2/20140204/json2.min.js"></script>
+          <script src="//cdn.jsdelivr.net/json2/0.2/json2.min.js"></script>
           <![endif]-->
           ```
       * removed AlgoliaSearchHelper
