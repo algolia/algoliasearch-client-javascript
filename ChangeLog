@@ -27,6 +27,8 @@ UNRELEASED
         stop browsing at any point.
 
       fixes #101
+    * fix: support typeahead 0.11
+      fixes #105
 
 
 2015-05-23 3.4.0

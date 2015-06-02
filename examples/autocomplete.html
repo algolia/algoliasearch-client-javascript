@@ -1,28 +1,19 @@
 <!doctype html>
 <html>
   <head>
-    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <!--[if lte IE 7]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/json2/20140204/json2.min.js"></script>
+    <script src="//cdn.jsdelivr.net/json2/0.2/json2.min.js"></script>
     <![endif]-->
     <script src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/hogan.js/2.0.0/hogan.js"></script>
+    <script src="//cdn.jsdelivr.net/hogan.js/3.0.2/hogan.min.js"></script>
+    <script src="//cdn.jsdelivr.net/typeahead.js/0.11.1/typeahead.bundle.min.js"></script>
     <script src="/dist/algoliasearch.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.10.4/dist/typeahead.jquery.js"></script>
     <style type="text/css">
       .demo { text-align: center; margin-top: 40px; }
-      .typeahead, .tt-query, .tt-hint { width: 500px; padding: 8px 12px; font-size: 24px; border: 2px solid #ccc; outline: none; margin: 0px; }
-      .typeahead { background-color: #fff; }
-      .typeahead:focus { border: 2px solid #0097cf; }
-      .tt-query { -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075); -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075); box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075); }
-      .tt-hint { color: #999 }
-      .tt-dropdown-menu { width: 100%; padding: 8px 0; background-color: #fff; border: 1px solid rgba(0, 0, 0, 0.2); border-top: 0px; -webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2); -moz-box-shadow: 0 5px 10px rgba(0,0,0,.2); box-shadow: 0 5px 10px rgba(0,0,0,.2); }
-      .tt-suggestion { text-align: left; padding: 3px 20px; font-size: 18px; line-height: 24px; }
-      .tt-suggestion.tt-cursor { color: #fff; background-color: #0097cf; }
-      .tt-suggestion p { margin: 0; }
-      .tt-suggestion a { color: #000; text-decoration: none; }
-      .tt-suggestion em { font-weight: bold; font-style: normal; }
+      /* scaffolding */
+      /* ----------- */
+      html{overflow-y:scroll}.container{max-width:750px;margin:0 auto;text-align:center}.gist,.tt-menu{text-align:left}html{font:normal normal normal 18px/1.2 "Helvetica Neue",Roboto,"Segoe UI",Calibri,sans-serif;color:#292f33}a{color:#03739c;text-decoration:none}a:hover{text-decoration:underline}.table-of-contents li{display:inline-block;zoom:1}.table-of-contents li a{font-size:16px;color:#999}p+p{margin:30px 0 0}.title{margin:20px 0 0;font-size:64px}.example{padding:30px 0}.example-name{margin:20px 0;font-size:32px}.demo{position:relative;margin:50px 0}.tt-hint,.tt-query,.typeahead{width:396px;height:30px;padding:8px 12px;font-size:24px;line-height:30px;border:2px solid #ccc;-webkit-border-radius:8px;-moz-border-radius:8px;border-radius:8px;outline:0}.typeahead{background-color:#fff}.typeahead:focus{border:2px solid #0097cf}.tt-query{-webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,.075);-moz-box-shadow:inset 0 1px 1px rgba(0,0,0,.075);box-shadow:inset 0 1px 1px rgba(0,0,0,.075)}.tt-hint{color:#999}.tt-menu{width:422px;margin:12px 0;padding:8px 0;background-color:#fff;border:1px solid #ccc;border:1px solid rgba(0,0,0,.2);-webkit-border-radius:8px;-moz-border-radius:8px;border-radius:8px;-webkit-box-shadow:0 5px 10px rgba(0,0,0,.2);-moz-box-shadow:0 5px 10px rgba(0,0,0,.2);box-shadow:0 5px 10px rgba(0,0,0,.2)}.tt-suggestion{padding:3px 20px;font-size:18px;line-height:24px}.tt-suggestion:hover{cursor:pointer;color:#fff;background-color:#0097cf}.tt-suggestion.tt-cursor{color:#fff;background-color:#0097cf}.tt-suggestion p{margin:0}.gist{font-size:14px}#custom-templates .empty-message{padding:5px 10px;text-align:center}#multiple-datasets .league-name{margin:0 20px 5px;padding:3px 0;border-bottom:1px solid #ccc}#scrollable-dropdown-menu .tt-menu{max-height:150px;overflow-y:auto}#rtl-support .tt-menu{text-align:right}
     </style>
   </head>
   <body>
