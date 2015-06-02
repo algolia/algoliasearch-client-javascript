@@ -30,7 +30,7 @@ matrix:
       env: COMMAND=test-node-integration
     - node_js: '0.10'
       env: COMMAND=test-node-integration
-    - node_js: 'iojs-v2.0.2'
+    - node_js: 'iojs-v2.2.1'
       env: COMMAND=test-node-integration
 
     # Browser unit tests, phantom
@@ -51,7 +51,7 @@ matrix:
       env: COMMAND=test-node-unit
     - node_js: '0.10'
       env: COMMAND=test-node-unit
-    - node_js: iojs-v2.0.2
+    - node_js: iojs-v2.2.1
       env: COMMAND=test-node-unit
 
     # Linting
