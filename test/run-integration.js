@@ -11,6 +11,7 @@ var getFakeObjects = require('./utils/get-fake-objects');
 
 var isABrowser = process.browser;
 var canPUT = !isABrowser || require('faux-jax').support.xhr.cors;
+var canDELETE = canPUT;
 
 // ensure that on the browser we use the global algoliasearch,
 // so that we are absolutely sure the builded version exposes algoliasearch
@@ -52,7 +53,11 @@ test('Integration tests', function(t) {
     t.test('index.saveObject', saveObject);
   }
 
-  t.test('client.deleteIndex', deleteIndex);
+  if (canDELETE) {
+    t.test('client.deleteIndex', deleteIndex);
+  } else {
+    t.test('index.clearIndex', clearIndex);
+  }
 });
 
 function clearIndex(t) {
