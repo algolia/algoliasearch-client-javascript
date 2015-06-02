@@ -76,7 +76,7 @@
     "domready": "0.3.0",
     "eslint": "0.22.1",
     "express": "4.12.4",
-    "faux-jax": "4.0.0-beta.2",
+    "faux-jax": "4.0.0",
     "http-server": "0.8.0",
     "jQuery-ajaxTransport-XDomainRequest": "http://github.com/MoonScript/jQuery-ajaxTransport-XDomainRequest/tarball/1.0.4",
     "jquery": "2.1.4",

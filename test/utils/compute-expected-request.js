@@ -60,7 +60,11 @@ function getRequestURL(credentials) {
   }
 
   return {
-    protocol: process.browser ? document.location.protocol : 'http:',
+    protocol: process.browser ?
+      // browser defaults to document protocol
+      document.location.protocol :
+      // nodejs defaults to https
+      'https:',
     URL: {pathname: '/not-set'},
     query: expectedQueryString
   };
