@@ -25,7 +25,8 @@ test('index.browseAll() and an error occurs', function(t) {
       400,
       {},
       JSON.stringify({
-        message: 'You are doomed'
+        message: 'You are doomed',
+        status: 400
       })
     );
 
