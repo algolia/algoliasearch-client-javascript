@@ -112,7 +112,8 @@ AlgoliaSearchBrowser.prototype._request = function(url, opts) {
       try {
         out = {
           body: JSON.parse(req.responseText),
-          statusCode: req.status
+          statusCode: req.status,
+          headers: req.getAllResponseHeaders()
         };
       } catch(e) {
         out = new errors.UnparsableJSON({more: req.responseText});

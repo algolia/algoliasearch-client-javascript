@@ -9,6 +9,25 @@ UNRELEASED
     * fix: do not use global when we know we will be in a browser
       browserify `global` is not always `window` can be <div id="global"></div>
       fixes #99
+    * feat: new browse()/browseFrom()/browseAll()
+      - `browse(query, queryParameters)` now has the same signature than
+      search(). You can use any `query` and `queryParameters`.
+      - `browseFrom(cursor)` can be used as an efficient way to
+      continue (next page) a previous `browse()` call. All browse responses now have a `cursor` property.
+      - `browseAll(query, queryParameters)` can be used to get all
+      the content of your index
+        It returns an [EventEmitter](https://nodejs.org/api/events.html).
+
+        Available events:
+          - `result`
+          - `end`
+          - `error` (you should listen to it or it will throw)
+
+        There's also `stop()` method on the event emitter so that you can
+        stop browsing at any point.
+
+      fixes #101
+
 
 2015-05-23 3.4.0
     * FIX: Remove debugging messages from builds

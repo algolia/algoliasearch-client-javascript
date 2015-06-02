@@ -716,7 +716,7 @@ AlgoliaSearch.prototype = {
           // If there was a JSON.parse() error then body is null and it fails
           httpResponse && httpResponse.body && 200;
 
-        requestDebug('received response: response statusCode: %s, computed status: %d, headers: %j',
+        requestDebug('received response: statusCode: %s, computed statusCode: %d, headers: %j',
           httpResponse.statusCode, status, httpResponse.headers);
 
         if (process.env.DEBUG && process.env.DEBUG.indexOf('debugBody') !== -1) {
@@ -1334,31 +1334,201 @@ AlgoliaSearch.prototype.Index.prototype = {
   },
 
   /*
-   * Browse all index content
+   * Browse index content. The response content will have a `cursor` property that you can use
+   * to browse subsequent pages for this query. Use `index.browseNext(cursor)` when you want.
    *
-   * @param page Pagination parameter used to select the page to retrieve.
-   *             Page is zero-based and defaults to 0. Thus, to retrieve the 10th page you need to set page=9
-   * @param hitsPerPage: Pagination parameter used to select the number of hits per page. Defaults to 1000.
-   * @param callback the result callback called with two arguments:
-   *  error: null or Error('message'). If false, the content contains the error.
-   *  content: the server answer that contains the list of results.
+   * @param {string} query - The full text query
+   * @param {Object} [queryParameters] - Any search query parameter
+   * @param {Function} [callback] - The result callback called with two arguments
+   *   error: null or Error('message')
+   *   content: the server answer with user keys list
+   * @return {Promise|undefined} Returns a promise if no callback given
+   * @example
+   * index.browse('cool songs', {
+   *   tagFilters: 'public,comments',
+   *   hitsPerPage: 500
+   * }, callback);
+   * @see {@link https://www.algolia.com/doc/rest_api#Browse|Algolia REST API Documentation}
    */
-  browse: function(page, hitsPerPage, callback) {
+  // pre 3.5.0 usage, backward compatible
+  // browse: function(page, hitsPerPage, callback) {
+  browse: function(query, queryParameters, callback) {
+    var extend = require('extend');
+
     var indexObj = this;
 
-    if (arguments.length === 1 || typeof hitsPerPage === 'function') {
-      callback = hitsPerPage;
-      hitsPerPage = undefined;
+    var page;
+    var hitsPerPage;
+
+    // we check variadic calls that are not the one defined
+    // .browse()/.browse(fn)
+    // => page = 0
+    if (arguments.length === 0 || arguments.length === 1 && typeof arguments[0] === 'function') {
+      page = 0;
+      callback = arguments[0];
+      query = undefined;
+    } else if (typeof arguments[0] === 'number') {
+      // .browse(2)/.browse(2, 10)/.browse(2, fn)/.browse(2, 10, fn)
+      page = arguments[0];
+      if (typeof arguments[1] === 'number') {
+        hitsPerPage = arguments[1];
+      } else if (typeof arguments[1] === 'function') {
+        callback = arguments[1];
+        hitsPerPage = undefined;
+      }
+      query = undefined;
+      queryParameters = undefined;
+    } else if (typeof arguments[0] === 'object') {
+      // .browse(queryParameters)/.browse(queryParameters, cb)
+      if (typeof arguments[1] === 'function') {
+        callback = arguments[1];
+      }
+      queryParameters = arguments[0];
+      query = undefined;
+    } else if (typeof arguments[0] === 'string' && typeof arguments[1] === 'function') {
+      // .browse(query, cb)
+      callback = arguments[1];
+      queryParameters = undefined;
     }
 
-    var params = '?page=' + page;
-    if (!this.as._isUndefined(hitsPerPage)) {
-      params += '&hitsPerPage=' + hitsPerPage;
-    }
+    // otherwise it's a .browse(query)/.browse(query, queryParameters)/.browse(query, queryParameters, cb)
+
+    // get search query parameters combining various possible calls
+    // to .browse();
+    queryParameters = extend({}, queryParameters || {}, {
+      page: page,
+      hitsPerPage: hitsPerPage,
+      query: query
+    });
+
+    var params = this.as._getSearchParams(queryParameters, '');
+
     return this.as._jsonRequest({ method: 'GET',
-      url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/browse' + params,
+      url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/browse?' + params,
       hostType: 'read',
       callback: callback });
+  },
+
+  /*
+   * Continue browsing from a previous position (cursor), obtained via a call to `.browse()`.
+   *
+   * @param {string} query - The full text query
+   * @param {Object} [queryParameters] - Any search query parameter
+   * @param {Function} [callback] - The result callback called with two arguments
+   *   error: null or Error('message')
+   *   content: the server answer with user keys list
+   * @return {Promise|undefined} Returns a promise if no callback given
+   * @example
+   * index.browseFrom('14lkfsakl32', callback);
+   * @see {@link https://www.algolia.com/doc/rest_api#Browse|Algolia REST API Documentation}
+   */
+  browseFrom: function(cursor, callback) {
+    return this.as._jsonRequest({
+      method: 'GET',
+      url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/browse?cursor=' + cursor,
+      hostType: 'read',
+      callback: callback
+    });
+  },
+
+  /*
+   * Browse all content from an index using events. Basically this will do
+   * .browse() -> .browseFrom -> .browseFrom -> .. until all the results are returned
+   *
+   * @param {string} query - The full text query
+   * @param {Object} [queryParameters] - Any search query parameter
+   * @return {EventEmitter}
+   * @example
+   * var browser = index.browseAll('cool songs', {
+   *   tagFilters: 'public,comments',
+   *   hitsPerPage: 500
+   * });
+   *
+   * browser.on('result', function resultCallback(content) {
+   *   console.log(content.hits);
+   * });
+   *
+   * // if any error occurs, you get it
+   * browser.on('error', function(err) {
+   *   throw err;
+   * });
+   *
+   * // when you have browsed the whole index, you get this event
+   * browser.on('end', function() {
+   *   console.log('finished');
+   * });
+   *
+   * // at any point if you want to stop the browsing process, you can stop it manually
+   * // otherwise it will go on and on
+   * browser.stop();
+   *
+   * @see {@link https://www.algolia.com/doc/rest_api#Browse|Algolia REST API Documentation}
+   */
+  browseAll: function(query, queryParameters) {
+    if (typeof query === 'object') {
+      queryParameters = query;
+      query = undefined;
+    }
+
+    var extend = require('extend');
+
+    var IndexBrowser = require('./IndexBrowser');
+
+    var browser = new IndexBrowser();
+    var client = this.as;
+    var index = this;
+    var params = client._getSearchParams(
+      extend({}, queryParameters || {}, {
+        query: query
+      }), ''
+    );
+
+    // start browsing
+    browseLoop();
+
+    function browseLoop(cursor) {
+      if (browser._stopped) {
+        return;
+      }
+
+      var queryString;
+
+      if (cursor !== undefined) {
+        queryString = 'cursor=' + encodeURIComponent(cursor)
+      } else {
+        queryString = params;
+      }
+
+      client._jsonRequest({
+        method: 'GET',
+        url: '/1/indexes/' + encodeURIComponent(index.indexName) + '/browse?' + queryString,
+        hostType: 'read',
+        callback: browseCallback
+      });
+    }
+
+    function browseCallback(err, content) {
+      if (browser._stopped) {
+        return;
+      }
+
+      if (err) {
+        browser._error(err);
+        return;
+      }
+
+      browser._result(content);
+
+      // no cursor means we are finished browsing
+      if (content.cursor === undefined) {
+        browser._end();
+        return;
+      }
+
+      browseLoop(content.cursor);
+    }
+
+    return browser;
   },
 
   /*

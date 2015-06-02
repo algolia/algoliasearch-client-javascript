@@ -33,7 +33,7 @@ var client = algoliasearch(AppID, ApiKey, {
   protocol: 'https:'
 });
 var index = client.initIndex(indexName);
-var objects = getFakeObjects(10);
+var objects = getFakeObjects(50);
 
 // force all index.commands to be bound to the index object,
 // avoid having to type index.waitTask.bind(index)
@@ -44,13 +44,15 @@ test('Integration tests', function(t) {
   t.test('index.saveObjects', saveObjects);
   t.test('index.browse', browse);
   t.test('index.getObject', getObject);
+  t.test('index.browseFrom', browseFrom);
+  t.test('index.browseAll', browseAll);
 
   if (canPUT) {
     // saveObject is a PUT, only supported by Node.js or CORS, not XDomainRequest
     t.test('index.saveObject', saveObject);
   }
 
-  t.test('index.clearIndex', clearIndex);
+  t.test('client.deleteIndex', deleteIndex);
 });
 
 function clearIndex(t) {
@@ -62,7 +64,9 @@ function clearIndex(t) {
     .then(index.waitTask)
     .then(get('status'))
     .then(_.partialRight(t.equal, 'published', 'Index was cleared'))
-    .then(_, _.bind(t.error, t));
+    // we do not use .catch since it's a reserved word in IE8
+    // https://github.com/jakearchibald/es6-promise/issues/20
+    .then(noop, _.bind(t.error, t));
 }
 
 function saveObjects(t) {
@@ -73,7 +77,7 @@ function saveObjects(t) {
     .then(index.waitTask)
     .then(get('status'))
     .then(_.partialRight(t.equal, 'published', 'Objects were saved'))
-    .then(_, _.bind(t.error, t));
+    .then(noop, _.bind(t.error, t));
 }
 
 function browse(t) {
@@ -88,7 +92,7 @@ function browse(t) {
         'Remote hits matches'
       );
     })
-    .then(_, _.bind(t.error, t));
+    .then(noop, _.bind(t.error, t));
 }
 
 function getObject(t) {
@@ -100,7 +104,7 @@ function getObject(t) {
       t.notEqual(object.isModified, 'yes', 'Object was not yet modified');
       t.deepEqual(object, objects[0], 'Objects have the same content');
     })
-    .then(_, _.bind(t.error, t));
+    .then(noop, _.bind(t.error, t));
 }
 
 function saveObject(t) {
@@ -117,9 +121,87 @@ function saveObject(t) {
     .then(function(object) {
       t.equal(object.isModified, 'yes', 'Object was modified');
     })
-    .then(_, _.bind(t.error, t));
+    .then(noop, _.bind(t.error, t));
+}
+
+function browseFrom(t) {
+  t.plan(7);
+
+  var firstHits;
+
+  index.browse({hitsPerPage: 2})
+    .then(function(content) {
+      t.equal(
+        content.hits.length,
+        2,
+        'We received two hits'
+      );
+
+      t.ok(content.cursor, 'We have a cursor');
+      t.equal(content.page, 0, 'We are on the first page');
+      firstHits = content.hits;
+      return index.browseFrom(content.cursor);
+    })
+    .then(function(content) {
+      t.equal(
+        content.hits.length,
+        2,
+        'We received two more hits'
+      );
+      t.equal(content.page, 1, 'We are on the second page');
+      t.ok(content.cursor, 'We have a new cursor');
+      t.notDeepEqual(
+        _.sortBy(content.hits, 'objectID'),
+        _.sortBy(firstHits, 'objectID'),
+        'Received hits are different'
+      );
+    })
+    .then(noop, _.bind(t.error, t));
+}
+
+function browseAll(t) {
+  // 5 `result` events
+  // 1 `end` event
+  t.plan(11);
+
+  var browsedObjects = [];
+
+  var browser = index.browseAll({
+    hitsPerPage: 10
+  });
+
+  browser.on('result', function(content) {
+    browsedObjects = browsedObjects.concat(content.hits);
+    t.equal(content.hits.length, 10);
+    t.pass('We received a result event');
+  });
+
+  browser.on('end', function() {
+    t.deepEqual(
+      _.sortBy(browsedObjects, 'objectID'),
+      _.sortBy(objects, 'objectID'),
+      'Remote hits matches'
+    );
+  });
+
+  browser.on('error', _.bind(t.fail, t));
+}
+
+function deleteIndex(t) {
+  t.plan(1);
+
+  client.deleteIndex(indexName)
+    .then(get('taskID'))
+    .then(index.waitTask)
+    .then(get('status'))
+    .then(_.partialRight(t.equal, 'published', 'Index was deleted'))
+    .then(noop, _.bind(t.error, t));
 }
 
 function get(pattern) {
   return _.partialRight(_.get, pattern);
+}
+
+function noop() {
+
 }
