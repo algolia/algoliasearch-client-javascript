@@ -37,7 +37,8 @@ function getRequestURL(credentials) {
     URL: {pathname: '/not-set'},
     query: {
       'X-Algolia-API-Key': credentials.searchOnlyAPIKey,
-      'X-Algolia-Application-Id': credentials.applicationID
+      'X-Algolia-Application-Id': credentials.applicationID,
+      'X-Algolia-Agent': 'Algolia for vanilla JavaScript tests'
     }
   };
 }

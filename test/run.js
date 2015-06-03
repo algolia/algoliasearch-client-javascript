@@ -12,6 +12,8 @@ require('writable-window-method')([
   'Date'
 ]);
 
+window.ALGOLIA_VERSION = 'tests';
+
 var domready = require('domready');
 
 domready(run);

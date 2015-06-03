@@ -1,5 +1,9 @@
 CHANGELOG
 
+UNRELEASED
+    * fix: pass X-Algolia-Agent in v2 client
+      fixes #56
+
 2015-10-04  2.9.6
     * FIX: JSONP timeout is now incremental like other strategies
     * FEATURE: Now using APPID-%d.algolianet.com

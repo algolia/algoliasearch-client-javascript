@@ -112,6 +112,8 @@ var AlgoliaSearch = function(applicationID, apiKey, methodOrOptions, resolveDNS,
       self.options.angular.$http = $http;
     }]);
   }
+
+  this._ua = this.options._ua || 'Algolia for vanilla JavaScript ' + window.ALGOLIA_VERSION;
 };
 
 // This holds the number of JSONP requests done accross clients
@@ -635,6 +637,7 @@ AlgoliaSearch.prototype = {
     if (this.tagFilters) {
       url += '&X-Algolia-TagFilters=' + encodeURIComponent(this.tagFilters);
     }
+    url += '&X-Algolia-Agent=' + encodeURIComponent(this._ua);
     for (var i = 0; i < this.extraHeaders.length; ++i) {
       url += '&' + this.extraHeaders[i].key + '=' + this.extraHeaders[i].value;
     }
@@ -681,6 +684,7 @@ AlgoliaSearch.prototype = {
     if (this.tagFilters) {
       url += '&X-Algolia-TagFilters=' + encodeURIComponent(this.tagFilters);
     }
+    url += '&X-Algolia-Agent=' + encodeURIComponent(this._ua);
     for (var i = 0; i < this.extraHeaders.length; ++i) {
       url += '&' + this.extraHeaders[i].key + '=' + this.extraHeaders[i].value;
     }
@@ -755,6 +759,8 @@ AlgoliaSearch.prototype = {
     if (this.userToken) {
       url += '&X-Algolia-UserToken=' + encodeURIComponent(this.userToken);
     }
+
+    url += '&X-Algolia-Agent=' + encodeURIComponent(this._ua);
 
     for (var i = 0; i < this.extraHeaders.length; ++i) {
       url += '&' + this.extraHeaders[i].key + '=' + this.extraHeaders[i].value;
@@ -865,6 +871,8 @@ AlgoliaSearch.prototype = {
     if (this.tagFilters) {
       url += '&X-Algolia-TagFilters=' + encodeURIComponent(this.tagFilters);
     }
+
+    url += '&X-Algolia-Agent=' + encodeURIComponent(this._ua);
 
     for (var i = 0; i < this.extraHeaders.length; ++i) {
       url += '&' + this.extraHeaders[i].key + '=' + this.extraHeaders[i].value;

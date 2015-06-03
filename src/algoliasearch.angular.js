@@ -7,6 +7,7 @@ angular.module('algoliasearch', [])
         options.angular = {
           '$injector': $injector
         };
+        options._ua = 'Algolia for AngularJS ' + window.ALGOLIA_VERSION;
         return new AlgoliaSearch(applicationID, apiKey, options);
       }
     };
