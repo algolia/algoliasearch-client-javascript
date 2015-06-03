@@ -54,14 +54,14 @@ module.exports =
 
 	var debug = __webpack_require__(2)('algoliasearch:parse');
 
-	var inherits = __webpack_require__(3);
+	var inherits = __webpack_require__(5);
 
-	var AlgoliaSearchServer = __webpack_require__(1);
+	var AlgoliaSearchServer = __webpack_require__(6);
 
 	debug('loaded the Parse client');
 
 	function algoliasearch(applicationID, apiKey, opts) {
-	  var extend = __webpack_require__(4);
+	  var extend = __webpack_require__(1);
 	  opts = extend(true, {}, opts) || {};
 
 	  if (opts.protocol === undefined) {
@@ -76,7 +76,7 @@ module.exports =
 	  return new AlgoliaSearchParse(applicationID, apiKey, opts);
 	}
 
-	algoliasearch.version = __webpack_require__(5);
+	algoliasearch.version = __webpack_require__(12);
 	algoliasearch.ua = 'Algolia for Parse ' + algoliasearch.version;
 
 	function AlgoliaSearchParse() {
@@ -88,7 +88,7 @@ module.exports =
 
 	AlgoliaSearchParse.prototype._request = function(rawUrl, opts) {
 	  /*global Parse*/
-	  var extend = __webpack_require__(4);
+	  var extend = __webpack_require__(1);
 	  var promise = new Parse.Promise();
 
 	  debug('url: %s, opts: %j', rawUrl, opts);
@@ -116,7 +116,8 @@ module.exports =
 	    // from 400/500 statuses
 	    promise.resolve({
 	      statusCode: res.status,
-	      body: res.data
+	      body: res.data,
+	      headers: res.headers
 	    });
 	  }
 
@@ -125,7 +126,8 @@ module.exports =
 
 	    promise.resolve({
 	      statusCode: res.status,
-	      body: res.data
+	      body: res.data,
+	      headers: res.headers
 	    });
 	  }
 
@@ -169,82 +171,95 @@ module.exports =
 /* 1 */
 /***/ function(module, exports, __webpack_require__) {
 
-	// Some methods only accessible server side
+	var hasOwn = Object.prototype.hasOwnProperty;
+	var toStr = Object.prototype.toString;
+	var undefined;
 
-	module.exports = AlgoliaSearchServer;
+	var isArray = function isArray(arr) {
+		if (typeof Array.isArray === 'function') {
+			return Array.isArray(arr);
+		}
 
-	var inherits = __webpack_require__(3);
-
-	var AlgoliaSearch = __webpack_require__(6);
-
-	function AlgoliaSearchServer(applicationID, apiKey, opts) {
-	  // Default protocol is https: on the server, to avoid leaking admin keys
-	  if (opts.protocol === undefined) {
-	    opts.protocol = 'https:';
-	  }
-
-	  AlgoliaSearch.apply(this, arguments);
-	}
-
-	inherits(AlgoliaSearchServer, AlgoliaSearch);
-
-	/*
-	 * Allow to use IP rate limit when you have a proxy between end-user and Algolia.
-	 * This option will set the X-Forwarded-For HTTP header with the client IP and the X-Forwarded-API-Key with the API Key having rate limits.
-	 * @param adminAPIKey the admin API Key you can find in your dashboard
-	 * @param endUserIP the end user IP (you can use both IPV4 or IPV6 syntax)
-	 * @param rateLimitAPIKey the API key on which you have a rate limit
-	 */
-	AlgoliaSearchServer.prototype.enableRateLimitForward = function(adminAPIKey, endUserIP, rateLimitAPIKey) {
-	  this._forward = {
-	    adminAPIKey: adminAPIKey,
-	    endUserIP: endUserIP,
-	    rateLimitAPIKey: rateLimitAPIKey
-	  };
+		return toStr.call(arr) === '[object Array]';
 	};
 
-	/*
-	 * Disable IP rate limit enabled with enableRateLimitForward() function
-	 */
-	AlgoliaSearchServer.prototype.disableRateLimitForward = function() {
-	  this._forward = null;
+	var isPlainObject = function isPlainObject(obj) {
+		'use strict';
+		if (!obj || toStr.call(obj) !== '[object Object]') {
+			return false;
+		}
+
+		var has_own_constructor = hasOwn.call(obj, 'constructor');
+		var has_is_property_of_method = obj.constructor && obj.constructor.prototype && hasOwn.call(obj.constructor.prototype, 'isPrototypeOf');
+		// Not own constructor property must be Object
+		if (obj.constructor && !has_own_constructor && !has_is_property_of_method) {
+			return false;
+		}
+
+		// Own properties are enumerated firstly, so to speed up,
+		// if last one is own, then all properties are own.
+		var key;
+		for (key in obj) {}
+
+		return key === undefined || hasOwn.call(obj, key);
 	};
 
-	/*
-	 * Specify the securedAPIKey to use with associated information
-	 */
-	AlgoliaSearchServer.prototype.useSecuredAPIKey = function(securedAPIKey, securityTags, userToken) {
-	  this._secure = {
-	    apiKey: securedAPIKey,
-	    securityTags: securityTags,
-	    userToken: userToken
-	  };
+	module.exports = function extend() {
+		'use strict';
+		var options, name, src, copy, copyIsArray, clone,
+			target = arguments[0],
+			i = 1,
+			length = arguments.length,
+			deep = false;
+
+		// Handle a deep copy situation
+		if (typeof target === 'boolean') {
+			deep = target;
+			target = arguments[1] || {};
+			// skip the boolean and the target
+			i = 2;
+		} else if ((typeof target !== 'object' && typeof target !== 'function') || target == null) {
+			target = {};
+		}
+
+		for (; i < length; ++i) {
+			options = arguments[i];
+			// Only deal with non-null/undefined values
+			if (options != null) {
+				// Extend the base object
+				for (name in options) {
+					src = target[name];
+					copy = options[name];
+
+					// Prevent never-ending loop
+					if (target === copy) {
+						continue;
+					}
+
+					// Recurse if we're merging plain objects or arrays
+					if (deep && copy && (isPlainObject(copy) || (copyIsArray = isArray(copy)))) {
+						if (copyIsArray) {
+							copyIsArray = false;
+							clone = src && isArray(src) ? src : [];
+						} else {
+							clone = src && isPlainObject(src) ? src : {};
+						}
+
+						// Never move original objects, clone them
+						target[name] = extend(deep, clone, copy);
+
+					// Don't bring in undefined values
+					} else if (copy !== undefined) {
+						target[name] = copy;
+					}
+				}
+			}
+		}
+
+		// Return the modified object
+		return target;
 	};
 
-	/*
-	 * If a secured API was used, disable it
-	 */
-	AlgoliaSearchServer.prototype.disableSecuredAPIKey = function() {
-	  this._secure = null;
-	};
-
-	AlgoliaSearchServer.prototype._computeRequestHeaders = function() {
-	  var headers = AlgoliaSearchServer.super_.prototype._computeRequestHeaders.call(this);
-
-	  if (this._forward) {
-	      headers['x-algolia-api-key'] = this._forward.adminAPIKey;
-	      headers['x-forwarded-for'] = this._forward.endUserIP;
-	      headers['x-forwarded-api-key'] = this._forward.rateLimitAPIKey;
-	  }
-
-	  if (this._secure) {
-	    headers['x-algolia-api-key'] = this._secure.apiKey;
-	    headers['x-algolia-tagfilters'] = this._secure.securityTags;
-	    headers['x-algolia-usertoken'] = this._secure.userToken;
-	  }
-
-	  return headers;
-	};
 
 
 /***/ },
@@ -258,23 +273,16 @@ module.exports =
 	 * Expose `debug()` as the module.
 	 */
 
-	exports = module.exports = __webpack_require__(7);
+	exports = module.exports = __webpack_require__(3);
 	exports.log = log;
 	exports.formatArgs = formatArgs;
 	exports.save = save;
 	exports.load = load;
 	exports.useColors = useColors;
-
-	/**
-	 * Use chrome.storage.local if we are in an app
-	 */
-
-	var storage;
-
-	if (typeof chrome !== 'undefined' && typeof chrome.storage !== 'undefined')
-	  storage = chrome.storage.local;
-	else
-	  storage = localstorage();
+	exports.storage = 'undefined' != typeof chrome
+	               && 'undefined' != typeof chrome.storage
+	                  ? chrome.storage.local
+	                  : localstorage();
 
 	/**
 	 * Colors.
@@ -382,9 +390,9 @@ module.exports =
 	function save(namespaces) {
 	  try {
 	    if (null == namespaces) {
-	      storage.removeItem('debug');
+	      exports.storage.removeItem('debug');
 	    } else {
-	      storage.debug = namespaces;
+	      exports.storage.debug = namespaces;
 	    }
 	  } catch(e) {}
 	}
@@ -399,7 +407,7 @@ module.exports =
 	function load() {
 	  var r;
 	  try {
-	    r = storage.debug;
+	    r = exports.storage.debug;
 	  } catch(e) {}
 	  return r;
 	}
@@ -432,6 +440,340 @@ module.exports =
 /* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
+	
+	/**
+	 * This is the common logic for both the Node.js and web browser
+	 * implementations of `debug()`.
+	 *
+	 * Expose `debug()` as the module.
+	 */
+
+	exports = module.exports = debug;
+	exports.coerce = coerce;
+	exports.disable = disable;
+	exports.enable = enable;
+	exports.enabled = enabled;
+	exports.humanize = __webpack_require__(4);
+
+	/**
+	 * The currently active debug mode names, and names to skip.
+	 */
+
+	exports.names = [];
+	exports.skips = [];
+
+	/**
+	 * Map of special "%n" handling functions, for the debug "format" argument.
+	 *
+	 * Valid key names are a single, lowercased letter, i.e. "n".
+	 */
+
+	exports.formatters = {};
+
+	/**
+	 * Previously assigned color.
+	 */
+
+	var prevColor = 0;
+
+	/**
+	 * Previous log timestamp.
+	 */
+
+	var prevTime;
+
+	/**
+	 * Select a color.
+	 *
+	 * @return {Number}
+	 * @api private
+	 */
+
+	function selectColor() {
+	  return exports.colors[prevColor++ % exports.colors.length];
+	}
+
+	/**
+	 * Create a debugger with the given `namespace`.
+	 *
+	 * @param {String} namespace
+	 * @return {Function}
+	 * @api public
+	 */
+
+	function debug(namespace) {
+
+	  // define the `disabled` version
+	  function disabled() {
+	  }
+	  disabled.enabled = false;
+
+	  // define the `enabled` version
+	  function enabled() {
+
+	    var self = enabled;
+
+	    // set `diff` timestamp
+	    var curr = +new Date();
+	    var ms = curr - (prevTime || curr);
+	    self.diff = ms;
+	    self.prev = prevTime;
+	    self.curr = curr;
+	    prevTime = curr;
+
+	    // add the `color` if not set
+	    if (null == self.useColors) self.useColors = exports.useColors();
+	    if (null == self.color && self.useColors) self.color = selectColor();
+
+	    var args = Array.prototype.slice.call(arguments);
+
+	    args[0] = exports.coerce(args[0]);
+
+	    if ('string' !== typeof args[0]) {
+	      // anything else let's inspect with %o
+	      args = ['%o'].concat(args);
+	    }
+
+	    // apply any `formatters` transformations
+	    var index = 0;
+	    args[0] = args[0].replace(/%([a-z%])/g, function(match, format) {
+	      // if we encounter an escaped % then don't increase the array index
+	      if (match === '%%') return match;
+	      index++;
+	      var formatter = exports.formatters[format];
+	      if ('function' === typeof formatter) {
+	        var val = args[index];
+	        match = formatter.call(self, val);
+
+	        // now we need to remove `args[index]` since it's inlined in the `format`
+	        args.splice(index, 1);
+	        index--;
+	      }
+	      return match;
+	    });
+
+	    if ('function' === typeof exports.formatArgs) {
+	      args = exports.formatArgs.apply(self, args);
+	    }
+	    var logFn = enabled.log || exports.log || console.log.bind(console);
+	    logFn.apply(self, args);
+	  }
+	  enabled.enabled = true;
+
+	  var fn = exports.enabled(namespace) ? enabled : disabled;
+
+	  fn.namespace = namespace;
+
+	  return fn;
+	}
+
+	/**
+	 * Enables a debug mode by namespaces. This can include modes
+	 * separated by a colon and wildcards.
+	 *
+	 * @param {String} namespaces
+	 * @api public
+	 */
+
+	function enable(namespaces) {
+	  exports.save(namespaces);
+
+	  var split = (namespaces || '').split(/[\s,]+/);
+	  var len = split.length;
+
+	  for (var i = 0; i < len; i++) {
+	    if (!split[i]) continue; // ignore empty strings
+	    namespaces = split[i].replace(/\*/g, '.*?');
+	    if (namespaces[0] === '-') {
+	      exports.skips.push(new RegExp('^' + namespaces.substr(1) + '$'));
+	    } else {
+	      exports.names.push(new RegExp('^' + namespaces + '$'));
+	    }
+	  }
+	}
+
+	/**
+	 * Disable debug output.
+	 *
+	 * @api public
+	 */
+
+	function disable() {
+	  exports.enable('');
+	}
+
+	/**
+	 * Returns true if the given mode name is enabled, false otherwise.
+	 *
+	 * @param {String} name
+	 * @return {Boolean}
+	 * @api public
+	 */
+
+	function enabled(name) {
+	  var i, len;
+	  for (i = 0, len = exports.skips.length; i < len; i++) {
+	    if (exports.skips[i].test(name)) {
+	      return false;
+	    }
+	  }
+	  for (i = 0, len = exports.names.length; i < len; i++) {
+	    if (exports.names[i].test(name)) {
+	      return true;
+	    }
+	  }
+	  return false;
+	}
+
+	/**
+	 * Coerce `val`.
+	 *
+	 * @param {Mixed} val
+	 * @return {Mixed}
+	 * @api private
+	 */
+
+	function coerce(val) {
+	  if (val instanceof Error) return val.stack || val.message;
+	  return val;
+	}
+
+
+/***/ },
+/* 4 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Helpers.
+	 */
+
+	var s = 1000;
+	var m = s * 60;
+	var h = m * 60;
+	var d = h * 24;
+	var y = d * 365.25;
+
+	/**
+	 * Parse or format the given `val`.
+	 *
+	 * Options:
+	 *
+	 *  - `long` verbose formatting [false]
+	 *
+	 * @param {String|Number} val
+	 * @param {Object} options
+	 * @return {String|Number}
+	 * @api public
+	 */
+
+	module.exports = function(val, options){
+	  options = options || {};
+	  if ('string' == typeof val) return parse(val);
+	  return options.long
+	    ? long(val)
+	    : short(val);
+	};
+
+	/**
+	 * Parse the given `str` and return milliseconds.
+	 *
+	 * @param {String} str
+	 * @return {Number}
+	 * @api private
+	 */
+
+	function parse(str) {
+	  str = '' + str;
+	  if (str.length > 10000) return;
+	  var match = /^((?:\d+)?\.?\d+) *(milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|years?|yrs?|y)?$/i.exec(str);
+	  if (!match) return;
+	  var n = parseFloat(match[1]);
+	  var type = (match[2] || 'ms').toLowerCase();
+	  switch (type) {
+	    case 'years':
+	    case 'year':
+	    case 'yrs':
+	    case 'yr':
+	    case 'y':
+	      return n * y;
+	    case 'days':
+	    case 'day':
+	    case 'd':
+	      return n * d;
+	    case 'hours':
+	    case 'hour':
+	    case 'hrs':
+	    case 'hr':
+	    case 'h':
+	      return n * h;
+	    case 'minutes':
+	    case 'minute':
+	    case 'mins':
+	    case 'min':
+	    case 'm':
+	      return n * m;
+	    case 'seconds':
+	    case 'second':
+	    case 'secs':
+	    case 'sec':
+	    case 's':
+	      return n * s;
+	    case 'milliseconds':
+	    case 'millisecond':
+	    case 'msecs':
+	    case 'msec':
+	    case 'ms':
+	      return n;
+	  }
+	}
+
+	/**
+	 * Short format for `ms`.
+	 *
+	 * @param {Number} ms
+	 * @return {String}
+	 * @api private
+	 */
+
+	function short(ms) {
+	  if (ms >= d) return Math.round(ms / d) + 'd';
+	  if (ms >= h) return Math.round(ms / h) + 'h';
+	  if (ms >= m) return Math.round(ms / m) + 'm';
+	  if (ms >= s) return Math.round(ms / s) + 's';
+	  return ms + 'ms';
+	}
+
+	/**
+	 * Long format for `ms`.
+	 *
+	 * @param {Number} ms
+	 * @return {String}
+	 * @api private
+	 */
+
+	function long(ms) {
+	  return plural(ms, d, 'day')
+	    || plural(ms, h, 'hour')
+	    || plural(ms, m, 'minute')
+	    || plural(ms, s, 'second')
+	    || ms + ' ms';
+	}
+
+	/**
+	 * Pluralization helper.
+	 */
+
+	function plural(ms, n, name) {
+	  if (ms < n) return;
+	  if (ms < n * 1.5) return Math.floor(ms / n) + ' ' + name;
+	  return Math.ceil(ms / n) + ' ' + name + 's';
+	}
+
+
+/***/ },
+/* 5 */
+/***/ function(module, exports, __webpack_require__) {
+
 	if (typeof Object.create === 'function') {
 	  // implementation from standard node.js 'util' module
 	  module.exports = function inherits(ctor, superCtor) {
@@ -458,108 +800,89 @@ module.exports =
 
 
 /***/ },
-/* 4 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var hasOwn = Object.prototype.hasOwnProperty;
-	var toStr = Object.prototype.toString;
-	var undefined;
-
-	var isArray = function isArray(arr) {
-		if (typeof Array.isArray === 'function') {
-			return Array.isArray(arr);
-		}
-
-		return toStr.call(arr) === '[object Array]';
-	};
-
-	var isPlainObject = function isPlainObject(obj) {
-		'use strict';
-		if (!obj || toStr.call(obj) !== '[object Object]') {
-			return false;
-		}
-
-		var has_own_constructor = hasOwn.call(obj, 'constructor');
-		var has_is_property_of_method = obj.constructor && obj.constructor.prototype && hasOwn.call(obj.constructor.prototype, 'isPrototypeOf');
-		// Not own constructor property must be Object
-		if (obj.constructor && !has_own_constructor && !has_is_property_of_method) {
-			return false;
-		}
-
-		// Own properties are enumerated firstly, so to speed up,
-		// if last one is own, then all properties are own.
-		var key;
-		for (key in obj) {}
-
-		return key === undefined || hasOwn.call(obj, key);
-	};
-
-	module.exports = function extend() {
-		'use strict';
-		var options, name, src, copy, copyIsArray, clone,
-			target = arguments[0],
-			i = 1,
-			length = arguments.length,
-			deep = false;
-
-		// Handle a deep copy situation
-		if (typeof target === 'boolean') {
-			deep = target;
-			target = arguments[1] || {};
-			// skip the boolean and the target
-			i = 2;
-		} else if ((typeof target !== 'object' && typeof target !== 'function') || target == null) {
-			target = {};
-		}
-
-		for (; i < length; ++i) {
-			options = arguments[i];
-			// Only deal with non-null/undefined values
-			if (options != null) {
-				// Extend the base object
-				for (name in options) {
-					src = target[name];
-					copy = options[name];
-
-					// Prevent never-ending loop
-					if (target === copy) {
-						continue;
-					}
-
-					// Recurse if we're merging plain objects or arrays
-					if (deep && copy && (isPlainObject(copy) || (copyIsArray = isArray(copy)))) {
-						if (copyIsArray) {
-							copyIsArray = false;
-							clone = src && isArray(src) ? src : [];
-						} else {
-							clone = src && isPlainObject(src) ? src : {};
-						}
-
-						// Never move original objects, clone them
-						target[name] = extend(deep, clone, copy);
-
-					// Don't bring in undefined values
-					} else if (copy !== undefined) {
-						target[name] = copy;
-					}
-				}
-			}
-		}
-
-		// Return the modified object
-		return target;
-	};
-
-
-
-/***/ },
-/* 5 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = "3.4.0"
-
-/***/ },
 /* 6 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// Some methods only accessible server side
+
+	module.exports = AlgoliaSearchServer;
+
+	var inherits = __webpack_require__(5);
+
+	var AlgoliaSearch = __webpack_require__(7);
+
+	function AlgoliaSearchServer(applicationID, apiKey, opts) {
+	  // Default protocol is https: on the server, to avoid leaking admin keys
+	  if (opts.protocol === undefined) {
+	    opts.protocol = 'https:';
+	  }
+
+	  AlgoliaSearch.apply(this, arguments);
+	}
+
+	inherits(AlgoliaSearchServer, AlgoliaSearch);
+
+	/*
+	 * Allow to use IP rate limit when you have a proxy between end-user and Algolia.
+	 * This option will set the X-Forwarded-For HTTP header with the client IP and the X-Forwarded-API-Key with the API Key having rate limits.
+	 * @param adminAPIKey the admin API Key you can find in your dashboard
+	 * @param endUserIP the end user IP (you can use both IPV4 or IPV6 syntax)
+	 * @param rateLimitAPIKey the API key on which you have a rate limit
+	 */
+	AlgoliaSearchServer.prototype.enableRateLimitForward = function(adminAPIKey, endUserIP, rateLimitAPIKey) {
+	  this._forward = {
+	    adminAPIKey: adminAPIKey,
+	    endUserIP: endUserIP,
+	    rateLimitAPIKey: rateLimitAPIKey
+	  };
+	};
+
+	/*
+	 * Disable IP rate limit enabled with enableRateLimitForward() function
+	 */
+	AlgoliaSearchServer.prototype.disableRateLimitForward = function() {
+	  this._forward = null;
+	};
+
+	/*
+	 * Specify the securedAPIKey to use with associated information
+	 */
+	AlgoliaSearchServer.prototype.useSecuredAPIKey = function(securedAPIKey, securityTags, userToken) {
+	  this._secure = {
+	    apiKey: securedAPIKey,
+	    securityTags: securityTags,
+	    userToken: userToken
+	  };
+	};
+
+	/*
+	 * If a secured API was used, disable it
+	 */
+	AlgoliaSearchServer.prototype.disableSecuredAPIKey = function() {
+	  this._secure = null;
+	};
+
+	AlgoliaSearchServer.prototype._computeRequestHeaders = function() {
+	  var headers = AlgoliaSearchServer.super_.prototype._computeRequestHeaders.call(this);
+
+	  if (this._forward) {
+	      headers['x-algolia-api-key'] = this._forward.adminAPIKey;
+	      headers['x-forwarded-for'] = this._forward.endUserIP;
+	      headers['x-forwarded-api-key'] = this._forward.rateLimitAPIKey;
+	  }
+
+	  if (this._secure) {
+	    headers['x-algolia-api-key'] = this._secure.apiKey;
+	    headers['x-algolia-tagfilters'] = this._secure.securityTags;
+	    headers['x-algolia-usertoken'] = this._secure.userToken;
+	  }
+
+	  return headers;
+	};
+
+
+/***/ },
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = AlgoliaSearch;
@@ -571,9 +894,9 @@ module.exports =
 	}
 
 	var debug = __webpack_require__(2)('algoliasearch');
-	var foreach = __webpack_require__(9);
+	var foreach = __webpack_require__(8);
 
-	var errors = __webpack_require__(8);
+	var errors = __webpack_require__(9);
 
 	/*
 	 * Algolia Search library initialization
@@ -592,7 +915,7 @@ module.exports =
 	 *        ] - The hosts to use for Algolia Search API. If you provide them, you will no more benefit from our HA implementation
 	 */
 	function AlgoliaSearch(applicationID, apiKey, opts) {
-	  var extend = __webpack_require__(4);
+	  var extend = __webpack_require__(1);
 
 	  var usage = 'Usage: algoliasearch(applicationID, apiKey, opts)';
 
@@ -1206,14 +1529,21 @@ module.exports =
 	        return client._promise.resolve(JSON.parse(JSON.stringify(cache[cacheID])));
 	      }
 
-	      if (tries >= client.hosts[opts.hostType].length) {
+	      // if we reached max tries
+	      if (tries >= client.hosts[opts.hostType].length ||
+	        // or we need to switch to fallback
+	        client.useFallback && !usingFallback) {
+	        // and there's no fallback or we are already using a fallback
 	        if (!opts.fallback || !client._request.fallback || usingFallback) {
-	          // could not get a response even using the fallback if one was available
+	          requestDebug('could not get any response');
+	          // then stop
 	          return client._promise.reject(new errors.AlgoliaSearchError(
 	            'Cannot connect to the AlgoliaSearch API.' +
 	            ' Send an email to support@algolia.com to report and resolve the issue.'
 	          ));
 	        }
+
+	        requestDebug('switching to fallback');
 
 	        // let's try the fallback starting from here
 	        tries = 0;
@@ -1223,38 +1553,44 @@ module.exports =
 	        reqOpts.url = opts.fallback.url;
 	        reqOpts.jsonBody = opts.fallback.body;
 	        if (reqOpts.jsonBody) {
-	          reqOpts.body = JSON.stringify(opts.fallback.body);
+	          reqOpts.body = JSON.stringify(reqOpts.jsonBody);
 	        }
 
 	        reqOpts.timeout = client.requestTimeout * (tries + 1);
 	        client.hostIndex[opts.hostType] = 0;
-	        client.useFallback = true; // now we will only use JSONP, even on future requests
 	        usingFallback = true; // the current request is now using fallback
 	        return doRequest(client._request.fallback, reqOpts);
 	      }
 
+	      var url = client.hosts[opts.hostType][client.hostIndex[opts.hostType]] + reqOpts.url;
+	      var options = {
+	        body: body,
+	        jsonBody: opts.body,
+	        method: reqOpts.method,
+	        headers: client._computeRequestHeaders(),
+	        timeout: reqOpts.timeout,
+	        debug: requestDebug
+	      };
+
+	      requestDebug('method: %s, url: %s, headers: %j, timeout: %d', options.method, url, options.headers, options.timeout);
+
+	      if (requester === client._request.fallback) {
+	        requestDebug('using fallback');
+	      }
+
 	      // `requester` is any of this._request or this._request.fallback
 	      // thus it needs to be called using the client as context
-	      return requester.call(client,
-	        // http(s)://currenthost/url(?qs)
-	        client.hosts[opts.hostType][client.hostIndex[opts.hostType]] + reqOpts.url, {
-	          body: body,
-	          jsonBody: opts.body,
-	          method: reqOpts.method,
-	          headers: client._computeRequestHeaders(),
-	          timeout: reqOpts.timeout,
-	          debug: requestDebug
-	        }
-	      )
-	      .then(function success(httpResponse) {
-	        requestDebug('received response: %j', httpResponse);
+	      return requester.call(client, url, options).then(success, tryFallback);
 
+	      function success(httpResponse) {
+	        // compute the status of the response,
 	        var status =
-	          // When in browser mode, using XDR or JSONP
-	          // We rely on our own API response `status`, only
-	          // provided when an error occurs, we also expect a .message along
-	          // Otherwise, it could be a `waitTask` status, that's the only
-	          // case where we have a response.status that's not the http statusCode
+	          // When in browser mode, using XDR or JSONP, we have no statusCode available
+	          // So we rely on our API response `status` property.
+	          // But `waitTask` can set a `status` property which is not the statusCode (it's the task status)
+	          // So we check if there's a `message` along `status` and it means it's an error
+	          //
+	          // That's the only case where we have a response.status that's not the http statusCode
 	          httpResponse && httpResponse.body && httpResponse.body.message && httpResponse.body.status ||
 
 	          // this is important to check the request statusCode AFTER the body eventual
@@ -1266,6 +1602,13 @@ module.exports =
 	          // we default to success when no error (no response.status && response.message)
 	          // If there was a JSON.parse() error then body is null and it fails
 	          httpResponse && httpResponse.body && 200;
+
+	        requestDebug('received response: statusCode: %s, computed statusCode: %d, headers: %j',
+	          httpResponse.statusCode, status, httpResponse.headers);
+
+	        if (process.env.DEBUG && process.env.DEBUG.indexOf('debugBody') !== -1) {
+	          requestDebug('body: %j', httpResponse.body);
+	        }
 
 	        var ok = status === 200 || status === 201;
 	        var retry = !ok && Math.floor(status / 100) !== 4 && Math.floor(status / 100) !== 1;
@@ -1279,6 +1622,7 @@ module.exports =
 	        }
 
 	        if (retry) {
+	          tries += 1;
 	          return retryRequest();
 	        }
 
@@ -1287,13 +1631,6 @@ module.exports =
 	        );
 
 	        return client._promise.reject(unrecoverableError);
-	      }, tryFallback);
-
-	      function retryRequest() {
-	        client.hostIndex[opts.hostType] = ++client.hostIndex[opts.hostType] % client.hosts[opts.hostType].length;
-	        tries += 1;
-	        reqOpts.timeout = client.requestTimeout * (tries + 1);
-	        return doRequest(requester, reqOpts);
 	      }
 
 	      function tryFallback(err) {
@@ -1309,14 +1646,11 @@ module.exports =
 	        //    - uncaught exception occurs (TypeError)
 	        requestDebug('error: %s, stack: %s', err.message, err.stack);
 
-	        if (err instanceof errors.RequestTimeout) {
-	          requestDebug('timedout');
-	          return retryRequest();
-	        }
-
 	        if (!(err instanceof errors.AlgoliaSearchError)) {
 	          err = new errors.Unknown(err && err.message, err);
 	        }
+
+	        tries += 1;
 
 	        // stop the request implementation when:
 	        if (
@@ -1328,25 +1662,31 @@ module.exports =
 	          err instanceof errors.UnparsableJSON ||
 
 	          // no fallback and a network error occured (No CORS, bad APPID)
-	          (!requester.fallback && err instanceof errors.Network)) {
+	          (!requester.fallback && err instanceof errors.Network) ||
+
+	          // max tries and already using fallback or no fallback
+	          (tries >= client.hosts[opts.hostType].length && (usingFallback || !opts.fallback || !client._request.fallback))) {
 
 	          // stop request implementation for this command
 	          return client._promise.reject(err);
 	        }
 
-	        // we were not using the fallback, try now
-	        // if we were using switching to fallback for the first time, set tries to maximum
-	        // so that next loop will use the fallback request implementation
-	        if (!client.useFallback) {
-	          // next time doRequest is called, simulate we tried all hosts,
-	          // this will force to use the fallback
-	          tries = client.hosts[opts.hostType].length;
-	        } else {
-	          // we were already using the fallback, but something went wrong, retry
-	          client.hostIndex[opts.hostType] = ++client.hostIndex[opts.hostType] % client.hosts[opts.hostType].length;
-	          tries += 1;
+	        client.hostIndex[opts.hostType] = ++client.hostIndex[opts.hostType] % client.hosts[opts.hostType].length;
+
+	        if (err instanceof errors.RequestTimeout) {
+	          return retryRequest();
+	        } else if (client._request.fallback && !client.useFallback) {
+	          // if any error occured but timeout, use fallback for the rest
+	          // of the session
+	          client.useFallback = true;
 	        }
 
+	        return doRequest(requester, reqOpts);
+	      }
+
+	      function retryRequest() {
+	        client.hostIndex[opts.hostType] = ++client.hostIndex[opts.hostType] % client.hosts[opts.hostType].length;
+	        reqOpts.timeout = client.requestTimeout * (tries + 1);
 	        return doRequest(requester, reqOpts);
 	      }
 	    }
@@ -1881,31 +2221,201 @@ module.exports =
 	  },
 
 	  /*
-	   * Browse all index content
+	   * Browse index content. The response content will have a `cursor` property that you can use
+	   * to browse subsequent pages for this query. Use `index.browseNext(cursor)` when you want.
 	   *
-	   * @param page Pagination parameter used to select the page to retrieve.
-	   *             Page is zero-based and defaults to 0. Thus, to retrieve the 10th page you need to set page=9
-	   * @param hitsPerPage: Pagination parameter used to select the number of hits per page. Defaults to 1000.
-	   * @param callback the result callback called with two arguments:
-	   *  error: null or Error('message'). If false, the content contains the error.
-	   *  content: the server answer that contains the list of results.
+	   * @param {string} query - The full text query
+	   * @param {Object} [queryParameters] - Any search query parameter
+	   * @param {Function} [callback] - The result callback called with two arguments
+	   *   error: null or Error('message')
+	   *   content: the server answer with the browse result
+	   * @return {Promise|undefined} Returns a promise if no callback given
+	   * @example
+	   * index.browse('cool songs', {
+	   *   tagFilters: 'public,comments',
+	   *   hitsPerPage: 500
+	   * }, callback);
+	   * @see {@link https://www.algolia.com/doc/rest_api#Browse|Algolia REST API Documentation}
 	   */
-	  browse: function(page, hitsPerPage, callback) {
+	  // pre 3.5.0 usage, backward compatible
+	  // browse: function(page, hitsPerPage, callback) {
+	  browse: function(query, queryParameters, callback) {
+	    var extend = __webpack_require__(1);
+
 	    var indexObj = this;
 
-	    if (arguments.length === 1 || typeof hitsPerPage === 'function') {
-	      callback = hitsPerPage;
-	      hitsPerPage = undefined;
+	    var page;
+	    var hitsPerPage;
+
+	    // we check variadic calls that are not the one defined
+	    // .browse()/.browse(fn)
+	    // => page = 0
+	    if (arguments.length === 0 || arguments.length === 1 && typeof arguments[0] === 'function') {
+	      page = 0;
+	      callback = arguments[0];
+	      query = undefined;
+	    } else if (typeof arguments[0] === 'number') {
+	      // .browse(2)/.browse(2, 10)/.browse(2, fn)/.browse(2, 10, fn)
+	      page = arguments[0];
+	      if (typeof arguments[1] === 'number') {
+	        hitsPerPage = arguments[1];
+	      } else if (typeof arguments[1] === 'function') {
+	        callback = arguments[1];
+	        hitsPerPage = undefined;
+	      }
+	      query = undefined;
+	      queryParameters = undefined;
+	    } else if (typeof arguments[0] === 'object') {
+	      // .browse(queryParameters)/.browse(queryParameters, cb)
+	      if (typeof arguments[1] === 'function') {
+	        callback = arguments[1];
+	      }
+	      queryParameters = arguments[0];
+	      query = undefined;
+	    } else if (typeof arguments[0] === 'string' && typeof arguments[1] === 'function') {
+	      // .browse(query, cb)
+	      callback = arguments[1];
+	      queryParameters = undefined;
 	    }
 
-	    var params = '?page=' + page;
-	    if (!this.as._isUndefined(hitsPerPage)) {
-	      params += '&hitsPerPage=' + hitsPerPage;
-	    }
+	    // otherwise it's a .browse(query)/.browse(query, queryParameters)/.browse(query, queryParameters, cb)
+
+	    // get search query parameters combining various possible calls
+	    // to .browse();
+	    queryParameters = extend({}, queryParameters || {}, {
+	      page: page,
+	      hitsPerPage: hitsPerPage,
+	      query: query
+	    });
+
+	    var params = this.as._getSearchParams(queryParameters, '');
+
 	    return this.as._jsonRequest({ method: 'GET',
-	      url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/browse' + params,
+	      url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/browse?' + params,
 	      hostType: 'read',
 	      callback: callback });
+	  },
+
+	  /*
+	   * Continue browsing from a previous position (cursor), obtained via a call to `.browse()`.
+	   *
+	   * @param {string} query - The full text query
+	   * @param {Object} [queryParameters] - Any search query parameter
+	   * @param {Function} [callback] - The result callback called with two arguments
+	   *   error: null or Error('message')
+	   *   content: the server answer with the browse result
+	   * @return {Promise|undefined} Returns a promise if no callback given
+	   * @example
+	   * index.browseFrom('14lkfsakl32', callback);
+	   * @see {@link https://www.algolia.com/doc/rest_api#Browse|Algolia REST API Documentation}
+	   */
+	  browseFrom: function(cursor, callback) {
+	    return this.as._jsonRequest({
+	      method: 'GET',
+	      url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/browse?cursor=' + cursor,
+	      hostType: 'read',
+	      callback: callback
+	    });
+	  },
+
+	  /*
+	   * Browse all content from an index using events. Basically this will do
+	   * .browse() -> .browseFrom -> .browseFrom -> .. until all the results are returned
+	   *
+	   * @param {string} query - The full text query
+	   * @param {Object} [queryParameters] - Any search query parameter
+	   * @return {EventEmitter}
+	   * @example
+	   * var browser = index.browseAll('cool songs', {
+	   *   tagFilters: 'public,comments',
+	   *   hitsPerPage: 500
+	   * });
+	   *
+	   * browser.on('result', function resultCallback(content) {
+	   *   console.log(content.hits);
+	   * });
+	   *
+	   * // if any error occurs, you get it
+	   * browser.on('error', function(err) {
+	   *   throw err;
+	   * });
+	   *
+	   * // when you have browsed the whole index, you get this event
+	   * browser.on('end', function() {
+	   *   console.log('finished');
+	   * });
+	   *
+	   * // at any point if you want to stop the browsing process, you can stop it manually
+	   * // otherwise it will go on and on
+	   * browser.stop();
+	   *
+	   * @see {@link https://www.algolia.com/doc/rest_api#Browse|Algolia REST API Documentation}
+	   */
+	  browseAll: function(query, queryParameters) {
+	    if (typeof query === 'object') {
+	      queryParameters = query;
+	      query = undefined;
+	    }
+
+	    var extend = __webpack_require__(1);
+
+	    var IndexBrowser = __webpack_require__(10);
+
+	    var browser = new IndexBrowser();
+	    var client = this.as;
+	    var index = this;
+	    var params = client._getSearchParams(
+	      extend({}, queryParameters || {}, {
+	        query: query
+	      }), ''
+	    );
+
+	    // start browsing
+	    browseLoop();
+
+	    function browseLoop(cursor) {
+	      if (browser._stopped) {
+	        return;
+	      }
+
+	      var queryString;
+
+	      if (cursor !== undefined) {
+	        queryString = 'cursor=' + encodeURIComponent(cursor)
+	      } else {
+	        queryString = params;
+	      }
+
+	      client._jsonRequest({
+	        method: 'GET',
+	        url: '/1/indexes/' + encodeURIComponent(index.indexName) + '/browse?' + queryString,
+	        hostType: 'read',
+	        callback: browseCallback
+	      });
+	    }
+
+	    function browseCallback(err, content) {
+	      if (browser._stopped) {
+	        return;
+	      }
+
+	      if (err) {
+	        browser._error(err);
+	        return;
+	      }
+
+	      browser._result(content);
+
+	      // no cursor means we are finished browsing
+	      if (content.cursor === undefined) {
+	        browser._end();
+	        return;
+	      }
+
+	      browseLoop(content.cursor);
+	    }
+
+	    return browser;
 	  },
 
 	  /*
@@ -1914,7 +2424,17 @@ module.exports =
 	   */
 	  ttAdapter: function(params) {
 	    var self = this;
-	    return function(query, cb) {
+	    return function(query, syncCb, asyncCb) {
+	      var cb;
+
+	      if (typeof asyncCb === 'function') {
+	        // typeahead 0.11
+	        cb = asyncCb;
+	      } else {
+	        // pre typeahead 0.11
+	        cb = syncCb;
+	      }
+
 	      self.search(query, params, function(err, content) {
 	        if (err) {
 	          cb(err);
@@ -1936,26 +2456,42 @@ module.exports =
 	   *  content: the server answer that contains the list of results
 	   */
 	  waitTask: function(taskID, callback) {
+	    // wait minimum 100ms before retrying
+	    var baseDelay = 100;
+	    // wait maximum 5s before retrying
+	    var maxDelay = 5000;
+	    var loop = 0;
+
 	    // waitTask() must be handled differently from other methods,
 	    // it's a recursive method using a timeout
 	    var indexObj = this;
 	    var client = indexObj.as;
 
-	    var promise = this.as._jsonRequest({
-	      method: 'GET',
-	      hostType: 'read',
-	      url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/task/' + taskID
-	    }).then(function success(content) {
-	      if (content.status !== 'published') {
-	        return indexObj.as._promise.delay(100).then(function() {
-	          // do not forward the callback, we want the promise
-	          // on next iteration
-	          return indexObj.waitTask(taskID);
-	        });
-	      }
+	    var promise = retryLoop();
 
-	      return content;
-	    });
+	    function retryLoop() {
+	      return client._jsonRequest({
+	        method: 'GET',
+	        hostType: 'read',
+	        url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/task/' + taskID
+	      }).then(function success(content) {
+	        loop++;
+	        var delay = baseDelay * loop * loop;
+	        if (delay > maxDelay) {
+	          delay = maxDelay;
+	        }
+
+	        if (content.status !== 'published') {
+	          return client._promise.delay(delay).then(function() {
+	            // do not forward the callback, we want the promise
+	            // on next iteration
+	            return retryLoop();
+	          });
+	        }
+
+	        return content;
+	      });
+	    }
 
 	    if (!callback) {
 	      return promise;
@@ -2331,218 +2867,43 @@ module.exports =
 
 
 /***/ },
-/* 7 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
-	/**
-	 * This is the common logic for both the Node.js and web browser
-	 * implementations of `debug()`.
-	 *
-	 * Expose `debug()` as the module.
-	 */
+	var hasOwn = Object.prototype.hasOwnProperty;
+	var toString = Object.prototype.toString;
 
-	exports = module.exports = debug;
-	exports.coerce = coerce;
-	exports.disable = disable;
-	exports.enable = enable;
-	exports.enabled = enabled;
-	exports.humanize = __webpack_require__(10);
-
-	/**
-	 * The currently active debug mode names, and names to skip.
-	 */
-
-	exports.names = [];
-	exports.skips = [];
-
-	/**
-	 * Map of special "%n" handling functions, for the debug "format" argument.
-	 *
-	 * Valid key names are a single, lowercased letter, i.e. "n".
-	 */
-
-	exports.formatters = {};
-
-	/**
-	 * Previously assigned color.
-	 */
-
-	var prevColor = 0;
-
-	/**
-	 * Previous log timestamp.
-	 */
-
-	var prevTime;
-
-	/**
-	 * Select a color.
-	 *
-	 * @return {Number}
-	 * @api private
-	 */
-
-	function selectColor() {
-	  return exports.colors[prevColor++ % exports.colors.length];
-	}
-
-	/**
-	 * Create a debugger with the given `namespace`.
-	 *
-	 * @param {String} namespace
-	 * @return {Function}
-	 * @api public
-	 */
-
-	function debug(namespace) {
-
-	  // define the `disabled` version
-	  function disabled() {
-	  }
-	  disabled.enabled = false;
-
-	  // define the `enabled` version
-	  function enabled() {
-
-	    var self = enabled;
-
-	    // set `diff` timestamp
-	    var curr = +new Date();
-	    var ms = curr - (prevTime || curr);
-	    self.diff = ms;
-	    self.prev = prevTime;
-	    self.curr = curr;
-	    prevTime = curr;
-
-	    // add the `color` if not set
-	    if (null == self.useColors) self.useColors = exports.useColors();
-	    if (null == self.color && self.useColors) self.color = selectColor();
-
-	    var args = Array.prototype.slice.call(arguments);
-
-	    args[0] = exports.coerce(args[0]);
-
-	    if ('string' !== typeof args[0]) {
-	      // anything else let's inspect with %o
-	      args = ['%o'].concat(args);
+	module.exports = function forEach (obj, fn, ctx) {
+	    if (toString.call(fn) !== '[object Function]') {
+	        throw new TypeError('iterator must be a function');
 	    }
-
-	    // apply any `formatters` transformations
-	    var index = 0;
-	    args[0] = args[0].replace(/%([a-z%])/g, function(match, format) {
-	      // if we encounter an escaped % then don't increase the array index
-	      if (match === '%%') return match;
-	      index++;
-	      var formatter = exports.formatters[format];
-	      if ('function' === typeof formatter) {
-	        var val = args[index];
-	        match = formatter.call(self, val);
-
-	        // now we need to remove `args[index]` since it's inlined in the `format`
-	        args.splice(index, 1);
-	        index--;
-	      }
-	      return match;
-	    });
-
-	    if ('function' === typeof exports.formatArgs) {
-	      args = exports.formatArgs.apply(self, args);
-	    }
-	    var logFn = enabled.log || exports.log || console.log.bind(console);
-	    logFn.apply(self, args);
-	  }
-	  enabled.enabled = true;
-
-	  var fn = exports.enabled(namespace) ? enabled : disabled;
-
-	  fn.namespace = namespace;
-
-	  return fn;
-	}
-
-	/**
-	 * Enables a debug mode by namespaces. This can include modes
-	 * separated by a colon and wildcards.
-	 *
-	 * @param {String} namespaces
-	 * @api public
-	 */
-
-	function enable(namespaces) {
-	  exports.save(namespaces);
-
-	  var split = (namespaces || '').split(/[\s,]+/);
-	  var len = split.length;
-
-	  for (var i = 0; i < len; i++) {
-	    if (!split[i]) continue; // ignore empty strings
-	    namespaces = split[i].replace(/\*/g, '.*?');
-	    if (namespaces[0] === '-') {
-	      exports.skips.push(new RegExp('^' + namespaces.substr(1) + '$'));
+	    var l = obj.length;
+	    if (l === +l) {
+	        for (var i = 0; i < l; i++) {
+	            fn.call(ctx, obj[i], i, obj);
+	        }
 	    } else {
-	      exports.names.push(new RegExp('^' + namespaces + '$'));
+	        for (var k in obj) {
+	            if (hasOwn.call(obj, k)) {
+	                fn.call(ctx, obj[k], k, obj);
+	            }
+	        }
 	    }
-	  }
-	}
+	};
 
-	/**
-	 * Disable debug output.
-	 *
-	 * @api public
-	 */
-
-	function disable() {
-	  exports.enable('');
-	}
-
-	/**
-	 * Returns true if the given mode name is enabled, false otherwise.
-	 *
-	 * @param {String} name
-	 * @return {Boolean}
-	 * @api public
-	 */
-
-	function enabled(name) {
-	  var i, len;
-	  for (i = 0, len = exports.skips.length; i < len; i++) {
-	    if (exports.skips[i].test(name)) {
-	      return false;
-	    }
-	  }
-	  for (i = 0, len = exports.names.length; i < len; i++) {
-	    if (exports.names[i].test(name)) {
-	      return true;
-	    }
-	  }
-	  return false;
-	}
-
-	/**
-	 * Coerce `val`.
-	 *
-	 * @param {Mixed} val
-	 * @return {Mixed}
-	 * @api private
-	 */
-
-	function coerce(val) {
-	  if (val instanceof Error) return val.stack || val.message;
-	  return val;
-	}
 
 
 /***/ },
-/* 8 */
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// This file hosts our error definitions
 	// We use custom error "types" so that we can act on them when we need it
 	// e.g.: if error instanceof errors.UnparsableJSON then..
 
-	var foreach = __webpack_require__(9);
-	var inherits = __webpack_require__(3);
+	var foreach = __webpack_require__(8);
+	var inherits = __webpack_require__(5);
 
 	function AlgoliaSearchError(message, extraProperties) {
 	  var error = this;
@@ -2599,9 +2960,13 @@ module.exports =
 	    'Network',
 	    'Network issue, see err.more for details'
 	  ),
-	  JSONP: createCustomError(
-	    'JSONP',
-	    'JSONP failed'
+	  JSONPScriptFail: createCustomError(
+	    'JSONPScriptFail',
+	    '<script> was loaded but did not call our provided callback'
+	  ),
+	  JSONPScriptError: createCustomError(
+	    'JSONPScriptError',
+	    '<script> unable to load due to an `error` event on it'
 	  ),
 	  Unknown: createCustomError(
 	    'Unknown',
@@ -2611,161 +2976,58 @@ module.exports =
 
 
 /***/ },
-/* 9 */
-/***/ function(module, exports, __webpack_require__) {
-
-	
-	var hasOwn = Object.prototype.hasOwnProperty;
-	var toString = Object.prototype.toString;
-
-	module.exports = function forEach (obj, fn, ctx) {
-	    if (toString.call(fn) !== '[object Function]') {
-	        throw new TypeError('iterator must be a function');
-	    }
-	    var l = obj.length;
-	    if (l === +l) {
-	        for (var i = 0; i < l; i++) {
-	            fn.call(ctx, obj[i], i, obj);
-	        }
-	    } else {
-	        for (var k in obj) {
-	            if (hasOwn.call(obj, k)) {
-	                fn.call(ctx, obj[k], k, obj);
-	            }
-	        }
-	    }
-	};
-
-
-
-/***/ },
 /* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/**
-	 * Helpers.
-	 */
+	// This is the object returned by the `index.browseAll()` method
 
-	var s = 1000;
-	var m = s * 60;
-	var h = m * 60;
-	var d = h * 24;
-	var y = d * 365.25;
+	module.exports = IndexBrowser;
 
-	/**
-	 * Parse or format the given `val`.
-	 *
-	 * Options:
-	 *
-	 *  - `long` verbose formatting [false]
-	 *
-	 * @param {String|Number} val
-	 * @param {Object} options
-	 * @return {String|Number}
-	 * @api public
-	 */
+	var inherits = __webpack_require__(5);
+	var EventEmitter = __webpack_require__(11).EventEmitter;
 
-	module.exports = function(val, options){
-	  options = options || {};
-	  if ('string' == typeof val) return parse(val);
-	  return options.long
-	    ? long(val)
-	    : short(val);
+	function IndexBrowser() {}
+
+	inherits(IndexBrowser, EventEmitter);
+
+	IndexBrowser.prototype.stop = function() {
+	  this._stopped = true;
+	  this._clean();
 	};
 
-	/**
-	 * Parse the given `str` and return milliseconds.
-	 *
-	 * @param {String} str
-	 * @return {Number}
-	 * @api private
-	 */
+	IndexBrowser.prototype._end = function() {
+	  this.emit('end');
+	  this._clean();
+	};
 
-	function parse(str) {
-	  var match = /^((?:\d+)?\.?\d+) *(milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|years?|yrs?|y)?$/i.exec(str);
-	  if (!match) return;
-	  var n = parseFloat(match[1]);
-	  var type = (match[2] || 'ms').toLowerCase();
-	  switch (type) {
-	    case 'years':
-	    case 'year':
-	    case 'yrs':
-	    case 'yr':
-	    case 'y':
-	      return n * y;
-	    case 'days':
-	    case 'day':
-	    case 'd':
-	      return n * d;
-	    case 'hours':
-	    case 'hour':
-	    case 'hrs':
-	    case 'hr':
-	    case 'h':
-	      return n * h;
-	    case 'minutes':
-	    case 'minute':
-	    case 'mins':
-	    case 'min':
-	    case 'm':
-	      return n * m;
-	    case 'seconds':
-	    case 'second':
-	    case 'secs':
-	    case 'sec':
-	    case 's':
-	      return n * s;
-	    case 'milliseconds':
-	    case 'millisecond':
-	    case 'msecs':
-	    case 'msec':
-	    case 'ms':
-	      return n;
-	  }
-	}
+	IndexBrowser.prototype._error = function(err) {
+	  this.emit('error', err);
+	  this._clean();
+	};
 
-	/**
-	 * Short format for `ms`.
-	 *
-	 * @param {Number} ms
-	 * @return {String}
-	 * @api private
-	 */
+	IndexBrowser.prototype._result = function(content) {
+	  this.emit('result', content);
+	};
 
-	function short(ms) {
-	  if (ms >= d) return Math.round(ms / d) + 'd';
-	  if (ms >= h) return Math.round(ms / h) + 'h';
-	  if (ms >= m) return Math.round(ms / m) + 'm';
-	  if (ms >= s) return Math.round(ms / s) + 's';
-	  return ms + 'ms';
-	}
+	IndexBrowser.prototype._clean = function() {
+	  this.removeAllListeners('stop');
+	  this.removeAllListeners('end');
+	  this.removeAllListeners('error');
+	  this.removeAllListeners('result');
+	};
 
-	/**
-	 * Long format for `ms`.
-	 *
-	 * @param {Number} ms
-	 * @return {String}
-	 * @api private
-	 */
 
-	function long(ms) {
-	  return plural(ms, d, 'day')
-	    || plural(ms, h, 'hour')
-	    || plural(ms, m, 'minute')
-	    || plural(ms, s, 'second')
-	    || ms + ' ms';
-	}
+/***/ },
+/* 11 */
+/***/ function(module, exports, __webpack_require__) {
 
-	/**
-	 * Pluralization helper.
-	 */
+	module.exports = require("events");
 
-	function plural(ms, n, name) {
-	  if (ms < n) return;
-	  if (ms < n * 1.5) return Math.floor(ms / n) + ' ' + name;
-	  return Math.ceil(ms / n) + ' ' + name + 's';
-	}
+/***/ },
+/* 12 */
+/***/ function(module, exports, __webpack_require__) {
 
+	module.exports = "3.5.0"
 
 /***/ }
 /******/ ]);

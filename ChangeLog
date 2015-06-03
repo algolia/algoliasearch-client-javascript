@@ -1,6 +1,6 @@
 CHANGELOG
 
-UNRELEASED
+2015-06-03 3.5.0
     * fix: send a descriptive timeout error when it occurs
     * chore: add headers debugging
     * fix: incremental wait waitTask
@@ -29,7 +29,6 @@ UNRELEASED
       fixes #101
     * fix: support typeahead 0.11
       fixes #105
-
 
 2015-05-23 3.4.0
     * FIX: Remove debugging messages from builds
