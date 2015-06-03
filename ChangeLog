@@ -1,21 +1,21 @@
 CHANGELOG
 
-UNRELEASED
+2015-10-04  2.9.7
     * fix: pass X-Algolia-Agent in v2 client
       fixes #56
 
-2015-10-04  2.9.6
+2015-04-10  2.9.6
     * FIX: JSONP timeout is now incremental like other strategies
     * FEATURE: Now using APPID-%d.algolianet.com
     * REMOVED: No more hosts shuffling
 
-2015-02-04  2.9.5
+2015-04-02  2.9.5
     * fix aborted requests in IE9, #76
 
-2015-19-03  2.9.4
+2015-03-19  2.9.4
     * force async XHR
 
-2015-19-03  2.9.3
+2015-03-19  2.9.3
     * test suite, including request strategy test suite
     * IE10 should now behave as a CORS supported XMLHttpRequest browser, as it is
     * running tests on many browsers, using saucelabs
@@ -23,7 +23,7 @@ UNRELEASED
     * remove unused opts.callback(retry, success, obj, message) in all make..Request functions
     * FIX: do not retry with JSONP when statusCode is 4xx
 
-2015-02-03  2.9.2
+2015-03-02  2.9.2
     * Fixed calls to `.search(function() {})`, `.search(null, function() {})`, `.search(undefined, function() {})
     * Fixed shared cache amongst instances
 
