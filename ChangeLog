@@ -1,5 +1,9 @@
 CHANGELOG
 
+UNRELEASED
+    * feat: easy commonJS require of plugins
+    * test: add dependency-check step in tests
+
 2015-06-03 3.5.0
     * fix: send a descriptive timeout error when it occurs
     * chore: add headers debugging
