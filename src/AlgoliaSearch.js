@@ -7,7 +7,6 @@ if (process.env.APP_ENV === 'development') {
 }
 
 var debug = require('debug')('algoliasearch');
-var foreach = require('foreach');
 
 var errors = require('./errors');
 
@@ -28,7 +27,7 @@ var errors = require('./errors');
  *        ] - The hosts to use for Algolia Search API. If you provide them, you will no more benefit from our HA implementation
  */
 function AlgoliaSearch(applicationID, apiKey, opts) {
-  var extend = require('extend');
+  var extend = require('lodash-compat/object/extend');
 
   var usage = 'Usage: algoliasearch(applicationID, apiKey, opts)';
 
@@ -844,7 +843,7 @@ AlgoliaSearch.prototype = {
       return params;
     }
     for (var key in args) {
-      if (key !== null && args.hasOwnProperty(key)) {
+      if (key !== null && args[key] !== undefined && args.hasOwnProperty(key)) {
         params += params === '' ? '' : '&';
         params += key + '=' + encodeURIComponent(Object.prototype.toString.call(args[key]) === '[object Array]' ? JSON.stringify(args[key]) : args[key]);
       }
@@ -857,6 +856,8 @@ AlgoliaSearch.prototype = {
   },
 
   _computeRequestHeaders: function() {
+    var forEach = require('lodash-compat/collection/forEach');
+
     var requestHeaders = {
       'x-algolia-api-key': this.apiKey,
       'x-algolia-application-id': this.applicationID,
@@ -872,7 +873,7 @@ AlgoliaSearch.prototype = {
     }
 
     if (this.extraHeaders) {
-      foreach(this.extraHeaders, function addToRequestHeaders(header) {
+      forEach(this.extraHeaders, function addToRequestHeaders(header) {
         requestHeaders[header.name] = header.value;
       });
     }
@@ -1353,7 +1354,7 @@ AlgoliaSearch.prototype.Index.prototype = {
   // pre 3.5.0 usage, backward compatible
   // browse: function(page, hitsPerPage, callback) {
   browse: function(query, queryParameters, callback) {
-    var extend = require('extend');
+    var extend = require('lodash-compat/object/extend');
 
     var indexObj = this;
 
@@ -1470,7 +1471,7 @@ AlgoliaSearch.prototype.Index.prototype = {
       query = undefined;
     }
 
-    var extend = require('extend');
+    var extend = require('lodash-compat/object/extend');
 
     var IndexBrowser = require('./IndexBrowser');
 

@@ -14,8 +14,8 @@ var AlgoliaSearchServer = require('./AlgoliaSearchServer');
 debug('loaded the Parse client');
 
 function algoliasearch(applicationID, apiKey, opts) {
-  var extend = require('extend');
-  opts = extend(true, {}, opts) || {};
+  var cloneDeep = require('lodash-compat/lang/cloneDeep');
+  opts = cloneDeep(opts || {});
 
   if (opts.protocol === undefined) {
     opts.protocol = 'https:';
@@ -41,7 +41,7 @@ inherits(AlgoliaSearchParse, AlgoliaSearchServer);
 
 AlgoliaSearchParse.prototype._request = function(rawUrl, opts) {
   /*global Parse*/
-  var extend = require('extend');
+  var extend = require('lodash-compat/object/extend');
   var promise = new Parse.Promise();
 
   debug('url: %s, opts: %j', rawUrl, opts);

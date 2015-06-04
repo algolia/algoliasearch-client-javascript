@@ -19,8 +19,8 @@ if (semver.satisfies(process.version, '<=0.7')) {
 debug('loaded the Node.js client');
 
 function algoliasearch(applicationID, apiKey, opts) {
-  var extend = require('extend');
-  opts = extend(true, {}, opts) || {};
+  var cloneDeep = require('lodash-compat/lang/cloneDeep');
+  opts = cloneDeep(opts || {});
 
   // inactivity timeout
   if (opts.timeout === undefined) {
