@@ -39,7 +39,7 @@ browserify -p bundle-collapser/plugin src/browser/builds/algoliasearch.jquery.js
 echo '..Minify'
 for bundle in "${bundles[@]}"
 do
-  ccjs dist/"$bundle".js --language_in=ECMASCRIPT5 --warning_level=QUIET > dist/"$bundle".min.js
+  uglifyjs dist/"$bundle".js -mc --warnings=false > dist/"$bundle".min.js
 done
 
 echo '..Prepend license'
