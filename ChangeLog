@@ -1,6 +1,6 @@
 CHANGELOG
 
-UNRELEASED
+2015-06-05 3.6.0
     * feat: easy commonJS require of plugins
       fixes #109
     * test: add dependency-check step in tests
