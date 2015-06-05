@@ -41,14 +41,14 @@ inherits(AlgoliaSearchParse, AlgoliaSearchServer);
 
 AlgoliaSearchParse.prototype._request = function(rawUrl, opts) {
   /*global Parse*/
-  var extend = require('lodash-compat/object/extend');
+  var clone = require('lodash-compat/lang/clone');
   var promise = new Parse.Promise();
 
   debug('url: %s, opts: %j', rawUrl, opts);
 
   var parseReqOpts = {
     url: rawUrl,
-    headers: extend([], opts.headers),
+    headers: clone([], opts.headers),
     method: opts.method,
     success: success,
     error: error
