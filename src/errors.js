@@ -2,10 +2,11 @@
 // We use custom error "types" so that we can act on them when we need it
 // e.g.: if error instanceof errors.UnparsableJSON then..
 
-var foreach = require('foreach');
 var inherits = require('inherits');
 
 function AlgoliaSearchError(message, extraProperties) {
+  var forEach = require('lodash-compat/collection/forEach');
+
   var error = this;
 
   // try to get a stacktrace
@@ -19,7 +20,7 @@ function AlgoliaSearchError(message, extraProperties) {
   this.message = message || 'Unknown error';
 
   if (extraProperties) {
-    foreach(extraProperties, function addToErrorObject(value, key) {
+    forEach(extraProperties, function addToErrorObject(value, key) {
       error[key] = value;
     });
   }

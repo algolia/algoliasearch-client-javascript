@@ -16,11 +16,11 @@ window.angular.module('algoliasearch', [])
   .service('algolia', ['$http', '$q', '$timeout', function ($http, $q, $timeout) {
 
     function algoliasearch(applicationID, apiKey, opts) {
-      var extend = require('extend');
+      var cloneDeep = require('lodash-compat/lang/cloneDeep');
 
       var getDocumentProtocol = require('../get-document-protocol');
 
-      opts = extend(true, {}, opts) || {};
+      opts = cloneDeep(opts || {});
 
       if (opts.protocol === undefined) {
         opts.protocol = getDocumentProtocol();

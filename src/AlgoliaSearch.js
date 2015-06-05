@@ -7,7 +7,6 @@ if (process.env.APP_ENV === 'development') {
 }
 
 var debug = require('debug')('algoliasearch');
-var foreach = require('foreach');
 
 var errors = require('./errors');
 
@@ -28,7 +27,7 @@ var errors = require('./errors');
  *        ] - The hosts to use for Algolia Search API. If you provide them, you will no more benefit from our HA implementation
  */
 function AlgoliaSearch(applicationID, apiKey, opts) {
-  var extend = require('extend');
+  var clone = require('lodash-compat/lang/clone');
 
   var usage = 'Usage: algoliasearch(applicationID, apiKey, opts)';
 
@@ -78,8 +77,8 @@ function AlgoliaSearch(applicationID, apiKey, opts) {
     this.hosts.read = [this.applicationID + '-dsn.algolia.net'].concat(defaultHosts);
     this.hosts.write = [this.applicationID + '.algolia.net'].concat(defaultHosts);
   } else {
-    this.hosts.read = extend([], opts.hosts);
-    this.hosts.write = extend([], opts.hosts);
+    this.hosts.read = clone(opts.hosts);
+    this.hosts.write = clone(opts.hosts);
   }
 
   // add protocol and lowercase hosts
@@ -844,7 +843,7 @@ AlgoliaSearch.prototype = {
       return params;
     }
     for (var key in args) {
-      if (key !== null && args.hasOwnProperty(key)) {
+      if (key !== null && args[key] !== undefined && args.hasOwnProperty(key)) {
         params += params === '' ? '' : '&';
         params += key + '=' + encodeURIComponent(Object.prototype.toString.call(args[key]) === '[object Array]' ? JSON.stringify(args[key]) : args[key]);
       }
@@ -857,6 +856,8 @@ AlgoliaSearch.prototype = {
   },
 
   _computeRequestHeaders: function() {
+    var forEach = require('lodash-compat/collection/forEach');
+
     var requestHeaders = {
       'x-algolia-api-key': this.apiKey,
       'x-algolia-application-id': this.applicationID,
@@ -872,7 +873,7 @@ AlgoliaSearch.prototype = {
     }
 
     if (this.extraHeaders) {
-      foreach(this.extraHeaders, function addToRequestHeaders(header) {
+      forEach(this.extraHeaders, function addToRequestHeaders(header) {
         requestHeaders[header.name] = header.value;
       });
     }
@@ -1353,7 +1354,7 @@ AlgoliaSearch.prototype.Index.prototype = {
   // pre 3.5.0 usage, backward compatible
   // browse: function(page, hitsPerPage, callback) {
   browse: function(query, queryParameters, callback) {
-    var extend = require('extend');
+    var merge = require('lodash-compat/object/merge');
 
     var indexObj = this;
 
@@ -1395,7 +1396,7 @@ AlgoliaSearch.prototype.Index.prototype = {
 
     // get search query parameters combining various possible calls
     // to .browse();
-    queryParameters = extend({}, queryParameters || {}, {
+    queryParameters = merge({}, queryParameters || {}, {
       page: page,
       hitsPerPage: hitsPerPage,
       query: query
@@ -1470,7 +1471,7 @@ AlgoliaSearch.prototype.Index.prototype = {
       query = undefined;
     }
 
-    var extend = require('extend');
+    var merge = require('lodash-compat/object/merge');
 
     var IndexBrowser = require('./IndexBrowser');
 
@@ -1478,7 +1479,7 @@ AlgoliaSearch.prototype.Index.prototype = {
     var client = this.as;
     var index = this;
     var params = client._getSearchParams(
-      extend({}, queryParameters || {}, {
+      merge({}, queryParameters || {}, {
         query: query
       }), ''
     );

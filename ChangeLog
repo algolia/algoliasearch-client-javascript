@@ -4,6 +4,8 @@ UNRELEASED
     * feat: easy commonJS require of plugins
       fixes #109
     * test: add dependency-check step in tests
+    * refactor: use lodash-compat instead of less known/used/shared modules
+    * chore: use uglifyjs instead of closure compiler
 
 2015-06-03 3.5.0
     * fix: send a descriptive timeout error when it occurs
