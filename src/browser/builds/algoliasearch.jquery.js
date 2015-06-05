@@ -23,7 +23,7 @@ function algoliasearch(applicationID, apiKey, opts) {
     opts.protocol = getDocumentProtocol();
   }
 
-  opts._ua = algoliasearch.ua;
+  opts._ua = opts._ua || algoliasearch.ua;
 
   return new AlgoliaSearchJQuery(applicationID, apiKey, opts);
 }

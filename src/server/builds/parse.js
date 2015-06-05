@@ -23,7 +23,7 @@ function algoliasearch(applicationID, apiKey, opts) {
 
   opts._setTimeout = _setTimeout;
 
-  opts._ua = algoliasearch.ua;
+  opts._ua = opts._ua || algoliasearch.ua;
   opts._useCache = false;
 
   return new AlgoliaSearchParse(applicationID, apiKey, opts);

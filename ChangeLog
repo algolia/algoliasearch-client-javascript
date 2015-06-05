@@ -7,6 +7,7 @@ UNRELEASED
     * refactor: use lodash-compat instead of less known/used/shared modules
     * chore: use uglifyjs instead of closure compiler
     * feat: allow passing hosts as hosts.read, hosts.write
+    * feat: allow passing Algolia Agent as an option
 
 2015-06-03 3.5.0
     * fix: send a descriptive timeout error when it occurs

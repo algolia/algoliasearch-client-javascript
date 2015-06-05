@@ -26,7 +26,7 @@ window.angular.module('algoliasearch', [])
         opts.protocol = getDocumentProtocol();
       }
 
-      opts._ua = algoliasearch.ua;
+      opts._ua = opts._ua || algoliasearch.ua;
 
       return new AlgoliaSearchAngular(applicationID, apiKey, opts);
     }
