@@ -20,14 +20,21 @@ var errors = require('./errors');
  * @param {number} [opts.timeout=2000] - The request timeout set in milliseconds, another request will be issued after this timeout
  * @param {string} [opts.protocol='http:'] - The protocol used to query Algolia Search API.
  *                                        Set to 'https:' to force using https. Default to document.location.protocol in browsers
- * @param {string[]} [opts.hosts=[
- *          this.applicationID + '-1.algolianet.com',
- *          this.applicationID + '-2.algolianet.com',
- *          this.applicationID + '-3.algolianet.com']
- *        ] - The hosts to use for Algolia Search API. If you provide them, you will no more benefit from our HA implementation
+ * @param {Object|Array} [opts.hosts={
+ *           read: [this.applicationID + '-dsn.algolia.net'].concat([
+ *             this.applicationID + '-1.algolianet.com',
+ *             this.applicationID + '-2.algolianet.com',
+ *             this.applicationID + '-3.algolianet.com']
+ *           ]),
+ *           write: [this.applicationID + '.algolia.net'].concat([
+ *             this.applicationID + '-1.algolianet.com',
+ *             this.applicationID + '-2.algolianet.com',
+ *             this.applicationID + '-3.algolianet.com']
+ *           ]) - The hosts to use for Algolia Search API. If you provide them, you will less benefit from our HA implementation
  */
 function AlgoliaSearch(applicationID, apiKey, opts) {
   var clone = require('lodash-compat/lang/clone');
+  var isArray = require('lodash-compat/lang/isArray');
 
   var usage = 'Usage: algoliasearch(applicationID, apiKey, opts)';
 
@@ -77,8 +84,13 @@ function AlgoliaSearch(applicationID, apiKey, opts) {
     this.hosts.read = [this.applicationID + '-dsn.algolia.net'].concat(defaultHosts);
     this.hosts.write = [this.applicationID + '.algolia.net'].concat(defaultHosts);
   } else {
-    this.hosts.read = clone(opts.hosts);
-    this.hosts.write = clone(opts.hosts);
+    if (isArray(opts.hosts)) {
+      this.hosts.read = clone(opts.hosts);
+      this.hosts.write = clone(opts.hosts);
+    } else {
+      this.hosts.read = clone(opts.hosts.read);
+      this.hosts.write = clone(opts.hosts.write);
+    }
   }
 
   // add protocol and lowercase hosts
