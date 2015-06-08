@@ -6,7 +6,7 @@ var browser = require('bowser').browser;
 // https://docs.angularjs.org/guide/ie
 if (!browser.msie || parseFloat(browser.version) > 8) {
   test('AngularJS module success case', function(t) {
-    t.plan(9);
+    t.plan(10);
 
     var fauxJax = require('faux-jax');
     var parse = require('url-parse');
@@ -47,6 +47,14 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
           var firstRequest = requests[0];
           var secondRequest = requests[1];
           var requestURL = parse(firstRequest.requestURL, true);
+
+          t.deepEqual(
+            firstRequest.requestHeaders, {
+              'content-type': 'application/x-www-form-urlencoded',
+              'accept': 'application/json'
+            },
+            'requestHeaders matches'
+          );
 
           t.equal(
             requestURL.host,

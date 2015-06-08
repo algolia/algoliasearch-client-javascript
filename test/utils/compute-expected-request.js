@@ -27,8 +27,11 @@ function computeExpectedRequest(expectedRequest, credentials) {
     expectedRequest.body = null;
   }
 
-  if (expectedRequest.body !== null && expectedRequest.method === 'POST' || expectedRequest.method === 'PUT') {
-    if (process.browser) {
+  expectedRequest.headers.accept = 'application/json';
+
+  if (expectedRequest.body !== null) {
+    // CORS simple request
+    if (process.browser && expectedRequest.method === 'POST') {
       expectedRequest.headers['content-type'] = 'application/x-www-form-urlencoded';
     } else {
       expectedRequest.headers['content-type'] = 'application/json';
@@ -39,7 +42,6 @@ function computeExpectedRequest(expectedRequest, credentials) {
     expectedRequest.headers['x-algolia-api-key'] = credentials.searchOnlyAPIKey;
     expectedRequest.headers['x-algolia-application-id'] = credentials.applicationID;
     expectedRequest.headers['x-algolia-agent'] = algoliasearch.ua;
-    expectedRequest.headers.accept = 'application/json';
   }
 
   return expectedRequest;
