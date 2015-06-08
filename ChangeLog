@@ -8,6 +8,8 @@ UNRELEASED
     * chore: use uglifyjs instead of closure compiler
     * feat: allow passing hosts as hosts.read, hosts.write
     * feat: allow passing Algolia Agent as an option
+    * fix: CORS simple request for all browser builds
+      fixes #111
 
 2015-06-03 3.5.0
     * fix: send a descriptive timeout error when it occurs

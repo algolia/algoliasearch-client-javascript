@@ -63,12 +63,26 @@ window.angular.module('algoliasearch', [])
         reject(new errors.RequestTimeout());
       }, opts.timeout);
 
+      var requestHeaders = {
+        'accept': 'application/json'
+      };
+
+      if (body) {
+        if (opts.method === 'POST') {
+          // https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS#Simple_requests
+          requestHeaders['content-type'] = 'application/x-www-form-urlencoded';
+        } else {
+          requestHeaders['content-type'] = 'application/json';
+        }
+      }
+
       $http({
         url: url,
         method: opts.method,
         data: body,
         cache: false,
-        timeout: timeoutPromise
+        timeout: timeoutPromise,
+        headers: requestHeaders
       }).then(function success(response) {
         resolve({
           statusCode: response.status,

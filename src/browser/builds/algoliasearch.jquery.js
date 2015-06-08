@@ -48,11 +48,25 @@ AlgoliaSearchJQuery.prototype._request = function(url, opts) {
 
     url = inlineHeaders(url, opts.headers);
 
+    var requestHeaders = {
+      'accept': 'application/json'
+    };
+
+    if (body) {
+      if (opts.method === 'POST') {
+        // https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS#Simple_requests
+        requestHeaders['content-type'] = 'application/x-www-form-urlencoded';
+      } else {
+        requestHeaders['content-type'] = 'application/json';
+      }
+    }
+
     $.ajax(url, {
       type: opts.method,
       timeout: opts.timeout,
       dataType: 'json',
       data: body,
+      headers: requestHeaders,
       complete: function(jqXHR, textStatus/* , error*/) {
         if (textStatus === 'timeout') {
           deferred.reject(new errors.RequestTimeout());

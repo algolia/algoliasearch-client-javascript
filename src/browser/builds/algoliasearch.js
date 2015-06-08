@@ -68,8 +68,16 @@ AlgoliaSearchBrowser.prototype._request = function(url, opts) {
       req.open(opts.method, url);
     }
 
-    if (support.cors && body && opts.method !== 'GET') {
-      req.setRequestHeader('content-type', 'application/x-www-form-urlencoded');
+    if (support.cors) {
+      if (body) {
+        if (opts.method === 'POST') {
+          // https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS#Simple_requests
+          req.setRequestHeader('content-type', 'application/x-www-form-urlencoded');
+        } else {
+          req.setRequestHeader('content-type', 'application/json');
+        }
+      }
+      req.setRequestHeader('accept', 'application/json');
     }
 
     // we set an empty onprogress listener
