@@ -9,10 +9,14 @@ var browser = require('bowser').browser;
 // guess what there's even a plugin! http://cdnjs.com/libraries/jquery-ajaxtransport-xdomainrequest
 if (!browser.msie || parseFloat(browser.version) > 8) {
   test('jQuery module success case', function(t) {
-    t.plan(10);
-
     var fauxJax = require('faux-jax');
     var parse = require('url-parse');
+
+    if (fauxJax.support.xhr.cors) {
+      t.plan(10);
+    } else {
+      t.plan(9);
+    }
 
     // load jQuery Algolia Search module
     require('../../../src/browser/builds/algoliasearch.jquery');
@@ -49,13 +53,15 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
       var secondRequest = requests[1];
       var requestURL = parse(firstRequest.requestURL, true);
 
-      t.deepEqual(
-        firstRequest.requestHeaders, {
-          'Content-Type': 'application/x-www-form-urlencoded',
-          'Accept': 'application/json'
-        },
-        'requestHeaders matches'
-      );
+      if (fauxJax.support.xhr.cors) {
+        t.deepEqual(
+          firstRequest.requestHeaders, {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Accept': 'application/json'
+          },
+          'requestHeaders matches'
+        );
+      }
 
       t.equal(
         requestURL.host,

@@ -92,6 +92,8 @@ AlgoliaSearchJQuery.prototype._request = function(url, opts) {
   }).promise();
 };
 
+// using IE8 or IE9 we will always end up here
+// jQuery does not not fallback to XDomainRequest
 AlgoliaSearchJQuery.prototype._request.fallback = function(url, opts) {
   url = inlineHeaders(url, opts.headers);
 

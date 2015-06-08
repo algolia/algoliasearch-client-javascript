@@ -113,6 +113,8 @@ window.angular.module('algoliasearch', [])
       return deferred.promise;
     };
 
+    // using IE8 or IE9 we will always end up here
+    // AngularJS does not fallback to XDomainRequest
     AlgoliaSearchAngular.prototype._request.fallback = function(url, opts) {
       url = inlineHeaders(url, opts.headers);
 

@@ -1,5 +1,7 @@
 var test = require('tape');
 
+// for this test to pass well you must have the test tab
+// focused otherwise some timers will not pass
 test('index.waitTask(taskID) has an incremental delay', function(t) {
   t.plan(3);
 

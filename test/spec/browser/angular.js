@@ -6,10 +6,14 @@ var browser = require('bowser').browser;
 // https://docs.angularjs.org/guide/ie
 if (!browser.msie || parseFloat(browser.version) > 8) {
   test('AngularJS module success case', function(t) {
-    t.plan(10);
-
     var fauxJax = require('faux-jax');
     var parse = require('url-parse');
+
+    if (fauxJax.support.xhr.cors) {
+      t.plan(10);
+    } else {
+      t.plan(9);
+    }
 
     // load AngularJS Algolia Search module
     require('../../../src/browser/builds/algoliasearch.angular');
@@ -48,13 +52,15 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
           var secondRequest = requests[1];
           var requestURL = parse(firstRequest.requestURL, true);
 
-          t.deepEqual(
-            firstRequest.requestHeaders, {
-              'content-type': 'application/x-www-form-urlencoded',
-              'accept': 'application/json'
-            },
-            'requestHeaders matches'
-          );
+          if (fauxJax.support.xhr.cors) {
+            t.deepEqual(
+              firstRequest.requestHeaders, {
+                'content-type': 'application/x-www-form-urlencoded',
+                'accept': 'application/json'
+              },
+              'requestHeaders matches'
+            );
+          }
 
           t.equal(
             requestURL.host,
