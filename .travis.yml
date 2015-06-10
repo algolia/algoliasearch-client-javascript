@@ -19,10 +19,6 @@ matrix:
   include:
     # First we try to build the browser files
     - node_js: '0.12'
-      env: COMMAND=dependency-check
-
-    # First we try to build the browser files
-    - node_js: '0.12'
       env: COMMAND=build APP_ENV=production
 
     # Browser integration tests, real browsers

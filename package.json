@@ -7,10 +7,9 @@
     "./index.js": "./src/browser/builds/algoliasearch.js"
   },
   "scripts": {
-    "dependency-check": "dependency-check package.json --entry index.js --entry src/browser/builds/algoliasearch.js --entry plugins/angular.js --entry plugins/jquery.js",
     "build": "PACKAGE_VERSION=$(json -f src/version.json) ./scripts/build",
     "release": "git clean dist/ -f && git checkout dist/ && ./scripts/release && APP_ENV=production npm run build",
-    "test": "npm run test-phantom-unit && npm run test-node-unit && npm run lint && npm run dependency-check",
+    "test": "npm run test-phantom-unit && npm run test-node-unit && npm run lint",
     "test-browser-unit": "./scripts/test-browser",
     "test-node-unit": "node test/run-node.js",
     "test-phantom-unit": "DEBUG=zuul* zuul --no-coverage --phantom -- test/run-browser.js",
@@ -71,7 +70,6 @@
     "bundle-collapser": "1.2.0",
     "chance": "0.7.5",
     "compression": "1.4.4",
-    "dependency-check": "2.4.0",
     "deumdify": "1.1.1",
     "domready": "0.3.0",
     "eslint": "0.22.1",
