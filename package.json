@@ -64,7 +64,7 @@
     "angular": "1.4.0",
     "async": "1.1.0",
     "bowser": "0.7.3",
-    "browserify": "10.2.3",
+    "browserify": "10.2.4",
     "bulk-require": "0.2.1",
     "bulkify": "1.1.1",
     "bundle-collapser": "1.2.0",
@@ -92,7 +92,7 @@
     "tape": "4.0.0",
     "uglifyjs": "2.4.10",
     "url-parse": "1.0.1",
-    "webpack": "1.9.10",
+    "webpack": "1.9.11",
     "xhr": "2.0.1",
     "zuul": "3.0.0",
     "zuul-ngrok": "3.0.0"
