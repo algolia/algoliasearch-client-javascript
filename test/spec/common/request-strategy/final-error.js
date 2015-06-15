@@ -32,7 +32,12 @@ test('We receive a specific error message when everything failed', function(t) {
   fauxJax.install();
 
   fauxJax.on('request', function serverError(req) {
-    req.respond(500, {}, '{}');
+    req.respond(
+      500, {}, JSON.stringify({
+        status: 500,
+        message: 'Nooooooo'
+      })
+    );
   });
 
   index.search('something', function(err) {
