@@ -4,7 +4,8 @@
   "description": "AlgoliaSearch API JavaScript client",
   "main": "index.js",
   "browser": {
-    "./index.js": "./src/browser/builds/algoliasearch.js"
+    "./index.js": "./src/browser/builds/algoliasearch.js",
+    "debug": "debug-ms-fix-yui-compressor"
   },
   "scripts": {
     "build": "PACKAGE_VERSION=$(json -f src/version.json) ./scripts/build",
@@ -52,6 +53,7 @@
   "dependencies": {
     "agentkeepalive": "2.0.2",
     "debug": "2.2.0",
+    "debug-ms-fix-yui-compressor": "2.2.0-future-reserved-word-fix-ms",
     "envify": "3.4.0",
     "es6-promise": "2.1.1",
     "inherits": "2.0.1",
