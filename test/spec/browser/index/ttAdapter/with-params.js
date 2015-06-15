@@ -9,7 +9,9 @@ test('index.ttAdapter(params, cb)', function(t) {
   var fixture = createFixture();
 
   var index = fixture.index;
-
+  var fakeResponse = {
+    hits: [1, 2, 3]
+  };
   var ttAdapter = index.ttAdapter({
     hitsPerPage: 200
   });
@@ -25,10 +27,6 @@ test('index.ttAdapter(params, cb)', function(t) {
     );
     req.respond(200, {}, JSON.stringify(fakeResponse));
   });
-
-  var fakeResponse = {
-    hits: [1, 2, 3]
-  };
 
   ttAdapter('a search', function(actualHits) {
     t.deepEqual(

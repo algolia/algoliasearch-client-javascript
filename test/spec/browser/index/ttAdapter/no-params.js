@@ -8,8 +8,10 @@ test('index.ttAdapter(cb)', function(t) {
   var createFixture = require('../../../../utils/create-fixture');
   var fixture = createFixture();
 
+  var fakeResponse = {
+    hits: [1, 2, 3]
+  };
   var index = fixture.index;
-
   var ttAdapter = index.ttAdapter();
 
   fauxJax.install();
@@ -18,10 +20,6 @@ test('index.ttAdapter(cb)', function(t) {
     fauxJax.restore();
     req.respond(200, {}, JSON.stringify(fakeResponse));
   });
-
-  var fakeResponse = {
-    hits: [1, 2, 3]
-  };
 
   ttAdapter('a search', function(actualHits) {
     t.deepEqual(

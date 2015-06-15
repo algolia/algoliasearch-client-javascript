@@ -20,19 +20,13 @@ test('Request strategy uses only JSONP if one XHR fails', function(t) {
     indexName: 'simple-JSONP-response'
   });
 
-  var firstCallback = sinon.spy(function() {
-    t.ok(
-      firstCallback.calledOnce,
-      'First callback called once'
-    );
+  var index = fixture.index;
 
-    t.deepEqual(
-      firstCallback.args[0],
-      [null, {query: 'first'}],
-      'First callback called with null, {"query": "first"}'
-    );
+  fauxJax.install();
 
-    index.search('second', secondCallback);
+  fauxJax.once('request', function(req) {
+    fauxJax.restore();
+    req.onerror();
   });
 
   var secondCallback = sinon.spy(function() {
@@ -48,14 +42,20 @@ test('Request strategy uses only JSONP if one XHR fails', function(t) {
     );
   });
 
-  var index = fixture.index;
+  var firstCallback = sinon.spy(function() {
+    t.ok(
+      firstCallback.calledOnce,
+      'First callback called once'
+    );
 
-  fauxJax.install();
+    t.deepEqual(
+      firstCallback.args[0],
+      [null, {query: 'first'}],
+      'First callback called with null, {"query": "first"}'
+    );
+
+    index.search('second', secondCallback);
+  });
 
   index.search('first', firstCallback);
-
-  fauxJax.once('request', function(req) {
-    fauxJax.restore();
-    req.onerror();
-  });
 });

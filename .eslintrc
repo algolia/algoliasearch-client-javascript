@@ -48,7 +48,10 @@
     ],
     "no-path-concat": 1,
     "no-eq-null": 2,
-    "no-use-before-define": "nofunc",
+    "no-use-before-define": [
+      2,
+      "nofunc"
+    ],
     "func-style": [
       2,
       "declaration"
@@ -67,7 +70,7 @@
       }
     ],
     "strict": 0,
-    "complexity": 10,
+    "complexity": [0, 10],
     "no-mixed-requires": [
       2,
       true

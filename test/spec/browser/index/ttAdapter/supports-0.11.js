@@ -8,8 +8,10 @@ test('index.ttAdapter(cb) supports typeahead 0.11', function(t) {
   var createFixture = require('../../../../utils/create-fixture');
   var fixture = createFixture();
 
+  var fakeResponse = {
+    hits: [1, 2, 3]
+  };
   var index = fixture.index;
-
   var ttAdapter = index.ttAdapter();
 
   fauxJax.install();
@@ -19,9 +21,6 @@ test('index.ttAdapter(cb) supports typeahead 0.11', function(t) {
     req.respond(200, {}, JSON.stringify(fakeResponse));
   });
 
-  var fakeResponse = {
-    hits: [1, 2, 3]
-  };
 
   // typeAhead 0.11 sends 3 parameters
   ttAdapter('a search', undefined, function(actualHits) {
