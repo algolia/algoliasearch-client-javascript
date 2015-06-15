@@ -8,6 +8,7 @@ branches:
 env:
   global:
     # saucelabs credentials
+    # subaccount of "opensauce-algolia"
     - SAUCE_USERNAME=algoliasearch-js
     - secure: oKl1RMuEO9bYoKevbFeFX72M2eV+DIJG/9UGMP4oLb3z5B8T5xAlQSEt8Lp0Zms6qqA+4hAQhZTKXDtdpx7NK+SuqYiv4oR9hdiJBbrRXIRuY86R2T/opO/RlBETL+7Y2R1AGM/kZzyiZSFqN9slGVzWziBtLJjJ4ncoceE8izs=
 
