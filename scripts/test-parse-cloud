@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+# To test parse cloud build, we build and then deploy a basic parse application
+# The parse function called will be the one in test/parse/cloud/main.js
+
+set -e # exit when error
+
+# build (including the parse build)
+# change the version number to 1.0.$TRAVIS_BUILD_NUMBER so that we can test that
+# the build was really deployed to parse (see test/parse/cloud/main.js and test/parse/index.js)
+echo "\"1.0.$TRAVIS_BUILD_NUMBER\"" > src/version.json
+npm run build
+
+cp dist/algoliasearch.parse.js test/parse/cloud
+
+# install parse cli
+curl -s https://www.parse.com/downloads/cloud_code/installer.sh | sudo /bin/bash
+
+cd test/parse
+
+# decrypt parse cloud config file
+# http://docs.travis-ci.com/user/encrypting-files/
+openssl aes-256-cbc -K $encrypted_54792a874ee7_key -iv $encrypted_54792a874ee7_iv -in config/global.json.enc -out config/global.json -d
+
+# deploy the new build
+parse deploy
+
+# test
+node index.js
