@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e # exit when error
+
 # When in a pull request, travis sets TRAVIS_PULL_REQUEST to the PR#
 # When in a PR and mobile browsers asked, exit
 # http://docs.travis-ci.com/user/pull-requests/
