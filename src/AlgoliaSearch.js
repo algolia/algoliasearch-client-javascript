@@ -663,7 +663,8 @@ AlgoliaSearch.prototype = {
           // then stop
           return client._promise.reject(new errors.AlgoliaSearchError(
             'Cannot connect to the AlgoliaSearch API.' +
-            ' Send an email to support@algolia.com to report and resolve the issue.'
+            ' Send an email to support@algolia.com to report and resolve the issue.' +
+            ' Application id was: ' + client.applicationID
           ));
         }
 
