@@ -12,7 +12,8 @@ module.exports = {
     alias: {
       debug: 'debug/browser.js',
       inherits: 'inherits/inherits_browser.js',
-      'util-deprecate': 'util-deprecate/browser.js'
+      'util-deprecate': 'util-deprecate/browser.js',
+      'lodash-compat': 'lodash'
     }
   },
   module: {

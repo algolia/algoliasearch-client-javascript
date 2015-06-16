@@ -5,6 +5,11 @@ module.exports = algoliasearch;
 // parse has no process.env, force it down for npm modules compatibility
 process.env = {};
 
+// a lot of node modules are expecting to find a `global` object,
+// this has triggered some bugs
+/* global global: true */
+global = {};
+
 var debug = require('debug')('algoliasearch:parse');
 
 var inherits = require('inherits');
@@ -48,7 +53,7 @@ AlgoliaSearchParse.prototype._request = function(rawUrl, opts) {
 
   var parseReqOpts = {
     url: rawUrl,
-    headers: clone([], opts.headers),
+    headers: clone(opts.headers),
     method: opts.method,
     success: success,
     error: error
