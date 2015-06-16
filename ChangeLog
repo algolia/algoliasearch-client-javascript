@@ -1,5 +1,12 @@
 CHANGELOG
 
+UNRELEASED
+    * fix: parse cloud build fix
+    * fix: YUI compressor fix
+      fixes #113
+    * test: automatic parse cloud build testing
+    * fix: add application id to final error message ("Cannot connect to..")
+
 2015-06-05 3.6.0
     * feat: easy commonJS require of plugins
       fixes #109
