@@ -1,4 +1,4 @@
-/*! algoliasearch 3.6.0 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
+/*! algoliasearch 3.6.1 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
 (function(f){var g;if(typeof window!=='undefined'){g=window}else if(typeof self!=='undefined'){g=self}g.ALGOLIA_MIGRATION_LAYER=f()})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 
 module.exports = function load (src, opts, cb) {
@@ -1165,9 +1165,13 @@ var y = d * 365.25;
 module.exports = function(val, options){
   options = options || {};
   if ('string' == typeof val) return parse(val);
-  return options.long
-    ? long(val)
-    : short(val);
+  // long, short were "future reserved words in js", YUI compressor fail on them
+  // https://github.com/algolia/algoliasearch-client-js/issues/113#issuecomment-111978606
+  // https://github.com/yui/yuicompressor/issues/47
+  // https://github.com/rauchg/ms.js/pull/40
+  return options['long']
+    ? _long(val)
+    : _short(val);
 };
 
 /**
@@ -1231,7 +1235,7 @@ function parse(str) {
  * @api private
  */
 
-function short(ms) {
+function _short(ms) {
   if (ms >= d) return Math.round(ms / d) + 'd';
   if (ms >= h) return Math.round(ms / h) + 'h';
   if (ms >= m) return Math.round(ms / m) + 'm';
@@ -1247,7 +1251,7 @@ function short(ms) {
  * @api private
  */
 
-function long(ms) {
+function _long(ms) {
   return plural(ms, d, 'day')
     || plural(ms, h, 'hour')
     || plural(ms, m, 'minute')
@@ -4538,7 +4542,7 @@ if ("production" === 'development') {
 
 var debug = require(6)('algoliasearch');
 
-var errors = require(70);
+var errors = require(71);
 
 /*
  * Algolia Search library initialization
@@ -5193,7 +5197,8 @@ AlgoliaSearch.prototype = {
           // then stop
           return client._promise.reject(new errors.AlgoliaSearchError(
             'Cannot connect to the AlgoliaSearch API.' +
-            ' Send an email to support@algolia.com to report and resolve the issue.'
+            ' Send an email to support@algolia.com to report and resolve the issue.' +
+            ' Application id was: ' + client.applicationID
           ));
         }
 
@@ -6522,7 +6527,7 @@ function deprecate(fn, message) {
 }
 
 }).call(this,require(2))
-},{"11":11,"2":2,"47":47,"50":50,"6":6,"60":60,"66":66,"70":70}],66:[function(require,module,exports){
+},{"11":11,"2":2,"47":47,"50":50,"6":6,"60":60,"66":66,"71":71}],66:[function(require,module,exports){
 // This is the object returned by the `index.browseAll()` method
 
 module.exports = IndexBrowser;
@@ -6563,7 +6568,7 @@ IndexBrowser.prototype._clean = function() {
 },{"1":1,"10":10}],67:[function(require,module,exports){
 module.exports = JSONPRequest;
 
-var errors = require(70);
+var errors = require(71);
 
 var JSONPCounter = 0;
 
@@ -6688,116 +6693,7 @@ function JSONPRequest(url, opts, cb) {
   }
 }
 
-},{"70":70}],68:[function(require,module,exports){
-module.exports = getDocumentProtocol;
-
-function getDocumentProtocol() {
-  var protocol = window.document.location.protocol;
-
-  // when in `file:` mode (local html file), default to `http:`
-  if (protocol !== 'http:' && protocol !== 'https:') {
-    protocol = 'http:';
-  }
-
-  return protocol;
-}
-
-},{}],69:[function(require,module,exports){
-module.exports = inlineHeaders;
-
-var querystring = require(5);
-
-function inlineHeaders(url, headers) {
-  if (/\?/.test(url)) {
-    url += '&';
-  } else {
-    url += '?';
-  }
-
-  return url + querystring.encode(headers);
-}
-
-},{"5":5}],70:[function(require,module,exports){
-// This file hosts our error definitions
-// We use custom error "types" so that we can act on them when we need it
-// e.g.: if error instanceof errors.UnparsableJSON then..
-
-var inherits = require(10);
-
-function AlgoliaSearchError(message, extraProperties) {
-  var forEach = require(11);
-
-  var error = this;
-
-  // try to get a stacktrace
-  if (typeof Error.captureStackTrace === 'function') {
-    Error.captureStackTrace(this, this.constructor);
-  } else {
-    error.stack = (new Error()).stack || 'Cannot get a stacktrace, browser is too old';
-  }
-
-  this.name = this.constructor.name;
-  this.message = message || 'Unknown error';
-
-  if (extraProperties) {
-    forEach(extraProperties, function addToErrorObject(value, key) {
-      error[key] = value;
-    });
-  }
-}
-
-inherits(AlgoliaSearchError, Error);
-
-function createCustomError(name, message) {
-  function AlgoliaSearchCustomError() {
-    var args = Array.prototype.slice.call(arguments, 0);
-
-    // custom message not set, use default
-    if (typeof args[0] !== 'string') {
-      args.unshift(message);
-    }
-
-    AlgoliaSearchError.apply(this, args);
-    this.name = 'AlgoliaSearch' + name + 'Error';
-  }
-
-  inherits(AlgoliaSearchCustomError, AlgoliaSearchError);
-
-  return AlgoliaSearchCustomError;
-}
-
-// late exports to let various fn defs and inherits take place
-module.exports = {
-  AlgoliaSearchError: AlgoliaSearchError,
-  UnparsableJSON: createCustomError(
-    'UnparsableJSON',
-    'Could not parse the incoming response as JSON, see err.more for details'
-  ),
-  RequestTimeout: createCustomError(
-    'RequestTimeout',
-    'Request timedout before getting a response'
-  ),
-  Network: createCustomError(
-    'Network',
-    'Network issue, see err.more for details'
-  ),
-  JSONPScriptFail: createCustomError(
-    'JSONPScriptFail',
-    '<script> was loaded but did not call our provided callback'
-  ),
-  JSONPScriptError: createCustomError(
-    'JSONPScriptError',
-    '<script> unable to load due to an `error` event on it'
-  ),
-  Unknown: createCustomError(
-    'Unknown',
-    'Unknown error occured'
-  )
-};
-
-},{"10":10,"11":11}],71:[function(require,module,exports){
-module.exports="3.6.0"
-},{}],72:[function(require,module,exports){
+},{"71":71}],68:[function(require,module,exports){
 // This is the standalone browser build entry point
 // Browser implementation of the Algolia Search JavaScript client,
 // using XMLHttpRequest, XDomainRequest and JSONP as fallback
@@ -6807,14 +6703,14 @@ var inherits = require(10);
 var Promise = window.Promise || require(9).Promise;
 
 var AlgoliaSearch = require(65);
-var errors = require(70);
-var inlineHeaders = require(69);
+var errors = require(71);
+var inlineHeaders = require(70);
 var JSONPRequest = require(67);
 
 function algoliasearch(applicationID, apiKey, opts) {
   var cloneDeep = require(48);
 
-  var getDocumentProtocol = require(68);
+  var getDocumentProtocol = require(69);
 
   opts = cloneDeep(opts || {});
 
@@ -6827,7 +6723,7 @@ function algoliasearch(applicationID, apiKey, opts) {
   return new AlgoliaSearchBrowser(applicationID, apiKey, opts);
 }
 
-algoliasearch.version = require(71);
+algoliasearch.version = require(72);
 algoliasearch.ua = 'Algolia for vanilla JavaScript ' + algoliasearch.version;
 
 var support = {
@@ -6868,8 +6764,16 @@ AlgoliaSearchBrowser.prototype._request = function(url, opts) {
       req.open(opts.method, url);
     }
 
-    if (support.cors && body && opts.method !== 'GET') {
-      req.setRequestHeader('content-type', 'application/x-www-form-urlencoded');
+    if (support.cors) {
+      if (body) {
+        if (opts.method === 'POST') {
+          // https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS#Simple_requests
+          req.setRequestHeader('content-type', 'application/x-www-form-urlencoded');
+        } else {
+          req.setRequestHeader('content-type', 'application/json');
+        }
+      }
+      req.setRequestHeader('accept', 'application/json');
     }
 
     // we set an empty onprogress listener
@@ -6986,5 +6890,114 @@ AlgoliaSearchBrowser.prototype._promise = {
   }
 };
 
-},{"10":10,"48":48,"65":65,"67":67,"68":68,"69":69,"70":70,"71":71,"9":9}]},{},[72])(72)
+},{"10":10,"48":48,"65":65,"67":67,"69":69,"70":70,"71":71,"72":72,"9":9}],69:[function(require,module,exports){
+module.exports = getDocumentProtocol;
+
+function getDocumentProtocol() {
+  var protocol = window.document.location.protocol;
+
+  // when in `file:` mode (local html file), default to `http:`
+  if (protocol !== 'http:' && protocol !== 'https:') {
+    protocol = 'http:';
+  }
+
+  return protocol;
+}
+
+},{}],70:[function(require,module,exports){
+module.exports = inlineHeaders;
+
+var querystring = require(5);
+
+function inlineHeaders(url, headers) {
+  if (/\?/.test(url)) {
+    url += '&';
+  } else {
+    url += '?';
+  }
+
+  return url + querystring.encode(headers);
+}
+
+},{"5":5}],71:[function(require,module,exports){
+// This file hosts our error definitions
+// We use custom error "types" so that we can act on them when we need it
+// e.g.: if error instanceof errors.UnparsableJSON then..
+
+var inherits = require(10);
+
+function AlgoliaSearchError(message, extraProperties) {
+  var forEach = require(11);
+
+  var error = this;
+
+  // try to get a stacktrace
+  if (typeof Error.captureStackTrace === 'function') {
+    Error.captureStackTrace(this, this.constructor);
+  } else {
+    error.stack = (new Error()).stack || 'Cannot get a stacktrace, browser is too old';
+  }
+
+  this.name = this.constructor.name;
+  this.message = message || 'Unknown error';
+
+  if (extraProperties) {
+    forEach(extraProperties, function addToErrorObject(value, key) {
+      error[key] = value;
+    });
+  }
+}
+
+inherits(AlgoliaSearchError, Error);
+
+function createCustomError(name, message) {
+  function AlgoliaSearchCustomError() {
+    var args = Array.prototype.slice.call(arguments, 0);
+
+    // custom message not set, use default
+    if (typeof args[0] !== 'string') {
+      args.unshift(message);
+    }
+
+    AlgoliaSearchError.apply(this, args);
+    this.name = 'AlgoliaSearch' + name + 'Error';
+  }
+
+  inherits(AlgoliaSearchCustomError, AlgoliaSearchError);
+
+  return AlgoliaSearchCustomError;
+}
+
+// late exports to let various fn defs and inherits take place
+module.exports = {
+  AlgoliaSearchError: AlgoliaSearchError,
+  UnparsableJSON: createCustomError(
+    'UnparsableJSON',
+    'Could not parse the incoming response as JSON, see err.more for details'
+  ),
+  RequestTimeout: createCustomError(
+    'RequestTimeout',
+    'Request timedout before getting a response'
+  ),
+  Network: createCustomError(
+    'Network',
+    'Network issue, see err.more for details'
+  ),
+  JSONPScriptFail: createCustomError(
+    'JSONPScriptFail',
+    '<script> was loaded but did not call our provided callback'
+  ),
+  JSONPScriptError: createCustomError(
+    'JSONPScriptError',
+    '<script> unable to load due to an `error` event on it'
+  ),
+  Unknown: createCustomError(
+    'Unknown',
+    'Unknown error occured'
+  )
+};
+
+},{"10":10,"11":11}],72:[function(require,module,exports){
+module.exports="3.6.1"
+},{}]},{},[68])(68)
 });

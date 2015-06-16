@@ -1,4 +1,4 @@
-/*! algoliasearch 3.6.0 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
+/*! algoliasearch 3.6.1 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
 (function(f){var g;if(typeof window!=='undefined'){g=window}else if(typeof self!=='undefined'){g=self}g.ALGOLIA_MIGRATION_LAYER=f()})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 
 module.exports = function load (src, opts, cb) {
@@ -1165,9 +1165,13 @@ var y = d * 365.25;
 module.exports = function(val, options){
   options = options || {};
   if ('string' == typeof val) return parse(val);
-  return options.long
-    ? long(val)
-    : short(val);
+  // long, short were "future reserved words in js", YUI compressor fail on them
+  // https://github.com/algolia/algoliasearch-client-js/issues/113#issuecomment-111978606
+  // https://github.com/yui/yuicompressor/issues/47
+  // https://github.com/rauchg/ms.js/pull/40
+  return options['long']
+    ? _long(val)
+    : _short(val);
 };
 
 /**
@@ -1231,7 +1235,7 @@ function parse(str) {
  * @api private
  */
 
-function short(ms) {
+function _short(ms) {
   if (ms >= d) return Math.round(ms / d) + 'd';
   if (ms >= h) return Math.round(ms / h) + 'h';
   if (ms >= m) return Math.round(ms / m) + 'm';
@@ -1247,7 +1251,7 @@ function short(ms) {
  * @api private
  */
 
-function long(ms) {
+function _long(ms) {
   return plural(ms, d, 'day')
     || plural(ms, h, 'hour')
     || plural(ms, m, 'minute')
@@ -4538,7 +4542,7 @@ if ("production" === 'development') {
 
 var debug = require(6)('algoliasearch');
 
-var errors = require(71);
+var errors = require(72);
 
 /*
  * Algolia Search library initialization
@@ -5193,7 +5197,8 @@ AlgoliaSearch.prototype = {
           // then stop
           return client._promise.reject(new errors.AlgoliaSearchError(
             'Cannot connect to the AlgoliaSearch API.' +
-            ' Send an email to support@algolia.com to report and resolve the issue.'
+            ' Send an email to support@algolia.com to report and resolve the issue.' +
+            ' Application id was: ' + client.applicationID
           ));
         }
 
@@ -6522,7 +6527,7 @@ function deprecate(fn, message) {
 }
 
 }).call(this,require(2))
-},{"11":11,"2":2,"47":47,"50":50,"6":6,"60":60,"66":66,"71":71}],66:[function(require,module,exports){
+},{"11":11,"2":2,"47":47,"50":50,"6":6,"60":60,"66":66,"72":72}],66:[function(require,module,exports){
 // This is the object returned by the `index.browseAll()` method
 
 module.exports = IndexBrowser;
@@ -6563,7 +6568,7 @@ IndexBrowser.prototype._clean = function() {
 },{"1":1,"10":10}],67:[function(require,module,exports){
 module.exports = JSONPRequest;
 
-var errors = require(71);
+var errors = require(72);
 
 var JSONPCounter = 0;
 
@@ -6688,7 +6693,171 @@ function JSONPRequest(url, opts, cb) {
   }
 }
 
-},{"71":71}],68:[function(require,module,exports){
+},{"72":72}],68:[function(require,module,exports){
+// This is the AngularJS Algolia Search module
+// It's using $http to do requests with a JSONP fallback
+// $q promises are returned
+
+var inherits = require(10);
+
+var AlgoliaSearch = require(65);
+var errors = require(72);
+var inlineHeaders = require(71);
+var JSONPRequest = require(67);
+
+// expose original algoliasearch fn in window
+window.algoliasearch = require(69);
+
+window.angular.module('algoliasearch', [])
+  .service('algolia', ['$http', '$q', '$timeout', function ($http, $q, $timeout) {
+
+    function algoliasearch(applicationID, apiKey, opts) {
+      var cloneDeep = require(48);
+
+      var getDocumentProtocol = require(70);
+
+      opts = cloneDeep(opts || {});
+
+      if (opts.protocol === undefined) {
+        opts.protocol = getDocumentProtocol();
+      }
+
+      opts._ua = opts._ua || algoliasearch.ua;
+
+      return new AlgoliaSearchAngular(applicationID, apiKey, opts);
+    }
+
+    algoliasearch.version = require(73);
+    algoliasearch.ua = 'Algolia for AngularJS ' + algoliasearch.version;
+
+    function AlgoliaSearchAngular() {
+      // call AlgoliaSearch constructor
+      AlgoliaSearch.apply(this, arguments);
+    }
+
+    inherits(AlgoliaSearchAngular, AlgoliaSearch);
+
+    AlgoliaSearchAngular.prototype._request = function(url, opts) {
+      // Support most Angular.js versions by using $q.defer() instead
+      // of the new $q() constructor everywhere we need a promise
+      var deferred = $q.defer();
+      var resolve = deferred.resolve;
+      var reject = deferred.reject;
+
+      var timedOut;
+      var body = opts.body;
+
+      url = inlineHeaders(url, opts.headers);
+
+      var timeoutDeferred = $q.defer();
+      var timeoutPromise = timeoutDeferred.promise;
+
+      $timeout(function() {
+        timedOut = true;
+        // will cancel the xhr
+        timeoutDeferred.resolve('test');
+        reject(new errors.RequestTimeout());
+      }, opts.timeout);
+
+      var requestHeaders = {
+        'accept': 'application/json'
+      };
+
+      if (body) {
+        if (opts.method === 'POST') {
+          // https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS#Simple_requests
+          requestHeaders['content-type'] = 'application/x-www-form-urlencoded';
+        } else {
+          requestHeaders['content-type'] = 'application/json';
+        }
+      }
+
+      $http({
+        url: url,
+        method: opts.method,
+        data: body,
+        cache: false,
+        timeout: timeoutPromise,
+        headers: requestHeaders
+      }).then(function success(response) {
+        resolve({
+          statusCode: response.status,
+          headers: response.headers,
+          body: response.data
+        });
+      }, function error(response) {
+        if (timedOut) {
+          return;
+        }
+
+        // network error
+        if (response.status === 0) {
+          reject(
+            new errors.Network({
+              more: response
+            })
+          );
+          return;
+        }
+
+        resolve({
+          body: response.data,
+          statusCode: response.status
+        });
+      });
+
+      return deferred.promise;
+    };
+
+    // using IE8 or IE9 we will always end up here
+    // AngularJS does not fallback to XDomainRequest
+    AlgoliaSearchAngular.prototype._request.fallback = function(url, opts) {
+      url = inlineHeaders(url, opts.headers);
+
+      var deferred = $q.defer();
+      var resolve = deferred.resolve;
+      var reject = deferred.reject;
+
+      JSONPRequest(url, opts, function JSONPRequestDone(err, content) {
+        if (err) {
+          reject(err);
+          return;
+        }
+
+        resolve(content);
+      });
+
+      return deferred.promise;
+    };
+
+    AlgoliaSearchAngular.prototype._promise = {
+      reject: function(val) {
+        return $q.reject(val);
+      },
+      resolve: function(val) {
+        // http://www.bennadel.com/blog/2735-q-when-is-the-missing-q-resolve-method-in-angularjs.htm
+        return $q.when(val);
+      },
+      delay: function(ms) {
+        var deferred = $q.defer();
+        var resolve = deferred.resolve;
+
+        $timeout(resolve, ms);
+
+        return deferred.promise;
+      }
+    };
+
+    return {
+      Client: function (applicationID, apiKey, options) {
+        return algoliasearch(applicationID, apiKey, options);
+      },
+      ua: algoliasearch.ua,
+      version: algoliasearch.version
+    };
+  }]);
+
+},{"10":10,"48":48,"65":65,"67":67,"69":69,"70":70,"71":71,"72":72,"73":73}],69:[function(require,module,exports){
 // This is the standalone browser build entry point
 // Browser implementation of the Algolia Search JavaScript client,
 // using XMLHttpRequest, XDomainRequest and JSONP as fallback
@@ -6698,14 +6867,14 @@ var inherits = require(10);
 var Promise = window.Promise || require(9).Promise;
 
 var AlgoliaSearch = require(65);
-var errors = require(71);
-var inlineHeaders = require(70);
+var errors = require(72);
+var inlineHeaders = require(71);
 var JSONPRequest = require(67);
 
 function algoliasearch(applicationID, apiKey, opts) {
   var cloneDeep = require(48);
 
-  var getDocumentProtocol = require(69);
+  var getDocumentProtocol = require(70);
 
   opts = cloneDeep(opts || {});
 
@@ -6718,7 +6887,7 @@ function algoliasearch(applicationID, apiKey, opts) {
   return new AlgoliaSearchBrowser(applicationID, apiKey, opts);
 }
 
-algoliasearch.version = require(72);
+algoliasearch.version = require(73);
 algoliasearch.ua = 'Algolia for vanilla JavaScript ' + algoliasearch.version;
 
 var support = {
@@ -6759,8 +6928,16 @@ AlgoliaSearchBrowser.prototype._request = function(url, opts) {
       req.open(opts.method, url);
     }
 
-    if (support.cors && body && opts.method !== 'GET') {
-      req.setRequestHeader('content-type', 'application/x-www-form-urlencoded');
+    if (support.cors) {
+      if (body) {
+        if (opts.method === 'POST') {
+          // https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS#Simple_requests
+          req.setRequestHeader('content-type', 'application/x-www-form-urlencoded');
+        } else {
+          req.setRequestHeader('content-type', 'application/json');
+        }
+      }
+      req.setRequestHeader('accept', 'application/json');
     }
 
     // we set an empty onprogress listener
@@ -6877,7 +7054,7 @@ AlgoliaSearchBrowser.prototype._promise = {
   }
 };
 
-},{"10":10,"48":48,"65":65,"67":67,"69":69,"70":70,"71":71,"72":72,"9":9}],69:[function(require,module,exports){
+},{"10":10,"48":48,"65":65,"67":67,"70":70,"71":71,"72":72,"73":73,"9":9}],70:[function(require,module,exports){
 module.exports = getDocumentProtocol;
 
 function getDocumentProtocol() {
@@ -6891,7 +7068,7 @@ function getDocumentProtocol() {
   return protocol;
 }
 
-},{}],70:[function(require,module,exports){
+},{}],71:[function(require,module,exports){
 module.exports = inlineHeaders;
 
 var querystring = require(5);
@@ -6906,7 +7083,7 @@ function inlineHeaders(url, headers) {
   return url + querystring.encode(headers);
 }
 
-},{"5":5}],71:[function(require,module,exports){
+},{"5":5}],72:[function(require,module,exports){
 // This file hosts our error definitions
 // We use custom error "types" so that we can act on them when we need it
 // e.g.: if error instanceof errors.UnparsableJSON then..
@@ -6984,154 +7161,6 @@ module.exports = {
   )
 };
 
-},{"10":10,"11":11}],72:[function(require,module,exports){
-module.exports="3.6.0"
-},{}],73:[function(require,module,exports){
-// This is the AngularJS Algolia Search module
-// It's using $http to do requests with a JSONP fallback
-// $q promises are returned
-
-var inherits = require(10);
-
-var AlgoliaSearch = require(65);
-var errors = require(71);
-var inlineHeaders = require(70);
-var JSONPRequest = require(67);
-
-// expose original algoliasearch fn in window
-window.algoliasearch = require(68);
-
-window.angular.module('algoliasearch', [])
-  .service('algolia', ['$http', '$q', '$timeout', function ($http, $q, $timeout) {
-
-    function algoliasearch(applicationID, apiKey, opts) {
-      var cloneDeep = require(48);
-
-      var getDocumentProtocol = require(69);
-
-      opts = cloneDeep(opts || {});
-
-      if (opts.protocol === undefined) {
-        opts.protocol = getDocumentProtocol();
-      }
-
-      opts._ua = opts._ua || algoliasearch.ua;
-
-      return new AlgoliaSearchAngular(applicationID, apiKey, opts);
-    }
-
-    algoliasearch.version = require(72);
-    algoliasearch.ua = 'Algolia for AngularJS ' + algoliasearch.version;
-
-    function AlgoliaSearchAngular() {
-      // call AlgoliaSearch constructor
-      AlgoliaSearch.apply(this, arguments);
-    }
-
-    inherits(AlgoliaSearchAngular, AlgoliaSearch);
-
-    AlgoliaSearchAngular.prototype._request = function(url, opts) {
-      // Support most Angular.js versions by using $q.defer() instead
-      // of the new $q() constructor everywhere we need a promise
-      var deferred = $q.defer();
-      var resolve = deferred.resolve;
-      var reject = deferred.reject;
-
-      var timedOut;
-      var body = opts.body;
-
-      url = inlineHeaders(url, opts.headers);
-
-      var timeoutDeferred = $q.defer();
-      var timeoutPromise = timeoutDeferred.promise;
-
-      $timeout(function() {
-        timedOut = true;
-        // will cancel the xhr
-        timeoutDeferred.resolve('test');
-        reject(new errors.RequestTimeout());
-      }, opts.timeout);
-
-      $http({
-        url: url,
-        method: opts.method,
-        data: body,
-        cache: false,
-        timeout: timeoutPromise
-      }).then(function success(response) {
-        resolve({
-          statusCode: response.status,
-          headers: response.headers,
-          body: response.data
-        });
-      }, function error(response) {
-        if (timedOut) {
-          return;
-        }
-
-        // network error
-        if (response.status === 0) {
-          reject(
-            new errors.Network({
-              more: response
-            })
-          );
-          return;
-        }
-
-        resolve({
-          body: response.data,
-          statusCode: response.status
-        });
-      });
-
-      return deferred.promise;
-    };
-
-    AlgoliaSearchAngular.prototype._request.fallback = function(url, opts) {
-      url = inlineHeaders(url, opts.headers);
-
-      var deferred = $q.defer();
-      var resolve = deferred.resolve;
-      var reject = deferred.reject;
-
-      JSONPRequest(url, opts, function JSONPRequestDone(err, content) {
-        if (err) {
-          reject(err);
-          return;
-        }
-
-        resolve(content);
-      });
-
-      return deferred.promise;
-    };
-
-    AlgoliaSearchAngular.prototype._promise = {
-      reject: function(val) {
-        return $q.reject(val);
-      },
-      resolve: function(val) {
-        // http://www.bennadel.com/blog/2735-q-when-is-the-missing-q-resolve-method-in-angularjs.htm
-        return $q.when(val);
-      },
-      delay: function(ms) {
-        var deferred = $q.defer();
-        var resolve = deferred.resolve;
-
-        $timeout(resolve, ms);
-
-        return deferred.promise;
-      }
-    };
-
-    return {
-      Client: function (applicationID, apiKey, options) {
-        return algoliasearch(applicationID, apiKey, options);
-      },
-      ua: algoliasearch.ua,
-      version: algoliasearch.version
-    };
-  }]);
-
-},{"10":10,"48":48,"65":65,"67":67,"68":68,"69":69,"70":70,"71":71,"72":72}]},{},[73]);
+},{"10":10,"11":11}],73:[function(require,module,exports){
+module.exports="3.6.1"
+},{}]},{},[68]);
