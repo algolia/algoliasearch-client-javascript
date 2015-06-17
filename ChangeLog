@@ -1,5 +1,8 @@
 CHANGELOG
 
+UNRELEASED
+    * chore: add window.__algolia for easy debugging anywhere
+
 2015-06-16 3.6.0
     * fix: parse cloud build fix
     * fix: YUI compressor fix
