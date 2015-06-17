@@ -983,7 +983,15 @@ index.clearIndex(function(err, content) {
 Wait indexing
 -------------
 
-All write operations return a `taskID` when the job is securely stored on our infrastructure but not when the job is published in your index. Even if it's extremely fast, you can easily ensure indexing is complete using the `waitTask` method on the `taskID` returned by a write operation.
+All write operations in Algolia are asynchronous by design.
+
+It means that when you add or update an object to your index, our servers will
+reply to your request with a `taskID` as soon as they understood the write
+operation.
+
+The actual insert and indexing will be done after replying to your code.
+
+You can wait for a task to complete using the `waitTask` method on the `taskID` returned by a write operation.
 
 For example, to wait for indexing of a new object:
 ```js
@@ -999,8 +1007,8 @@ index.addObject(object, function(err, content) {
 });
 ```
 
-
-If you want to ensure multiple objects have been indexed, you only need check the biggest taskID.
+If you want to ensure multiple objects have been indexed, you only need to check
+the biggest `taskID`.
 
 Batch writes
 -------------
@@ -1341,6 +1349,7 @@ Backup / Retrieve of all index content
 -------------
 
 You can retrieve all index content by using the browseAll() method:
+
 ```js
 // browseAll can take any query and queryParameter like the
 // search function. Here we do not provide any because we want all the index's
