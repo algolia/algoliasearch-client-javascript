@@ -34,6 +34,13 @@ window.angular.module('algoliasearch', [])
     algoliasearch.version = require('../../version.json');
     algoliasearch.ua = 'Algolia for AngularJS ' + algoliasearch.version;
 
+    // we expose into window no matter how we are used, this will allow
+    // us to easily debug any website running algolia
+    window.__algolia = {
+      debug: require('debug'),
+      algoliasearch: algoliasearch
+    };
+
     function AlgoliaSearchAngular() {
       // call AlgoliaSearch constructor
       AlgoliaSearch.apply(this, arguments);

@@ -31,6 +31,13 @@ function algoliasearch(applicationID, apiKey, opts) {
 algoliasearch.version = require('../../version.json');
 algoliasearch.ua = 'Algolia for jQuery ' + algoliasearch.version;
 
+// we expose into window no matter how we are used, this will allow
+// us to easily debug any website running algolia
+window.__algolia = {
+  debug: require('debug'),
+  algoliasearch: algoliasearch
+};
+
 var $ = window.jQuery;
 
 $.algolia = {Client: algoliasearch, ua: algoliasearch.ua, version: algoliasearch.version};
