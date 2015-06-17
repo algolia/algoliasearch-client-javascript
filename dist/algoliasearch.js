@@ -1,4 +1,4 @@
-/*! algoliasearch 3.6.1 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
+/*! algoliasearch 3.6.2 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
 (function(f){var g;if(typeof window!=='undefined'){g=window}else if(typeof self!=='undefined'){g=self}g.ALGOLIA_MIGRATION_LAYER=f()})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 
 module.exports = function load (src, opts, cb) {
@@ -6726,6 +6726,13 @@ function algoliasearch(applicationID, apiKey, opts) {
 algoliasearch.version = require(72);
 algoliasearch.ua = 'Algolia for vanilla JavaScript ' + algoliasearch.version;
 
+// we expose into window no matter how we are used, this will allow
+// us to easily debug any website running algolia
+window.__algolia = {
+  debug: require(6),
+  algoliasearch: algoliasearch
+};
+
 var support = {
   hasXMLHttpRequest: 'XMLHttpRequest' in window,
   hasXDomainRequest: 'XDomainRequest' in window,
@@ -6890,7 +6897,7 @@ AlgoliaSearchBrowser.prototype._promise = {
   }
 };
 
-},{"10":10,"48":48,"65":65,"67":67,"69":69,"70":70,"71":71,"72":72,"9":9}],69:[function(require,module,exports){
+},{"10":10,"48":48,"6":6,"65":65,"67":67,"69":69,"70":70,"71":71,"72":72,"9":9}],69:[function(require,module,exports){
 module.exports = getDocumentProtocol;
 
 function getDocumentProtocol() {
@@ -6998,6 +7005,6 @@ module.exports = {
 };
 
 },{"10":10,"11":11}],72:[function(require,module,exports){
-module.exports="3.6.1"
+module.exports="3.6.2"
 },{}]},{},[68])(68)
 });

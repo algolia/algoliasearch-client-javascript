@@ -1,6 +1,6 @@
 {
   "name": "algoliasearch",
-  "version": "3.6.1",
+  "version": "3.6.2",
   "description": "AlgoliaSearch API JavaScript client",
   "main": "index.js",
   "browser": {
@@ -9,7 +9,7 @@
   },
   "scripts": {
     "build": "PACKAGE_VERSION=$(json -f src/version.json) ./scripts/build",
-    "release": "git clean dist/ -f && git checkout dist/ && ./scripts/release && APP_ENV=production npm run build",
+    "release": "git clean dist/ -f && git checkout dist/ && npm install && ./scripts/release && APP_ENV=production npm run build",
     "test": "npm run test-phantom-unit && npm run test-node-unit && npm run lint",
     "test-browser-unit": "./scripts/test-browser",
     "test-node-unit": "node test/run-node.js",
