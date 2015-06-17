@@ -30,6 +30,13 @@ function algoliasearch(applicationID, apiKey, opts) {
 algoliasearch.version = require('../../version.json');
 algoliasearch.ua = 'Algolia for vanilla JavaScript ' + algoliasearch.version;
 
+// we expose into window no matter how we are used, this will allow
+// us to easily debug any website running algolia
+window.__algolia = {
+  debug: require('debug'),
+  algoliasearch: algoliasearch
+};
+
 var support = {
   hasXMLHttpRequest: 'XMLHttpRequest' in window,
   hasXDomainRequest: 'XDomainRequest' in window,
