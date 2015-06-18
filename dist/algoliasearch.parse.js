@@ -2060,8 +2060,6 @@ module.exports =
 	  __webpack_require__(34).enable('algoliasearch*');
 	}
 
-	var debug = __webpack_require__(34)('algoliasearch');
-
 	var errors = __webpack_require__(40);
 
 	/*
@@ -2087,6 +2085,8 @@ module.exports =
 	 *           ]) - The hosts to use for Algolia Search API. If you provide them, you will less benefit from our HA implementation
 	 */
 	function AlgoliaSearch(applicationID, apiKey, opts) {
+	  var debug = __webpack_require__(34)('algoliasearch');
+
 	  var clone = __webpack_require__(45);
 	  var isArray = __webpack_require__(20);
 
@@ -4990,7 +4990,7 @@ module.exports =
 /* 59 */
 /***/ function(module, exports) {
 
-	module.exports = "3.6.2"
+	module.exports = "3.6.3"
 
 /***/ }
 /******/ ]);

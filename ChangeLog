@@ -1,5 +1,9 @@
 CHANGELOG
 
+2015-06-18 3.6.3
+    * fix: allow getting the debug log from the outside
+      will be used by diag tool and possibly anyone aware of https://github.com/visionmedia/debug
+
 2015-06-17 3.6.2
     * chore: add window.__algolia for easy debugging anywhere
 
