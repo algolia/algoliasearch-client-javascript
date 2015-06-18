@@ -6,8 +6,6 @@ if (process.env.APP_ENV === 'development') {
   require('debug').enable('algoliasearch*');
 }
 
-var debug = require('debug')('algoliasearch');
-
 var errors = require('./errors');
 
 /*
@@ -33,6 +31,8 @@ var errors = require('./errors');
  *           ]) - The hosts to use for Algolia Search API. If you provide them, you will less benefit from our HA implementation
  */
 function AlgoliaSearch(applicationID, apiKey, opts) {
+  var debug = require('debug')('algoliasearch');
+
   var clone = require('lodash-compat/lang/clone');
   var isArray = require('lodash-compat/lang/isArray');
 
