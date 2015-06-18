@@ -19,7 +19,8 @@ test('We receive a specific error message when everything failed', function(t) {
   var createFixture = require('../../../utils/create-fixture');
   var fixture = createFixture({
     clientOptions: {
-      hosts: hosts
+      hosts: hosts,
+      timeout: 6000
     },
     indexName: 'JSONP-500-error'
   });
