@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+set -e # exit when error
+set -x # debug messages
+
+[ -z $TRAVIS_PULL_REQUEST ] && TRAVIS_PULL_REQUEST='false'
+
+echo "CI test"
+
+echo "CI test: node"
+./scripts/test-node
+
+echo "CI test: browser"
+./scripts/test-browser
+
+echo "CI test: phantom"
+./scripts/test-phantom
+
+if [ $TRAVIS_PULL_REQUEST != 'false' ]; then
+  echo 'No parse-cloud test for pull requests'
+else
+  echo "CI test: parse-cloud"
+  ./scripts/test-parse-cloud
+fi
+
+echo "CI test: lint"
+./scripts/lint

@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 set -e # exit when error
+set -x # debug messages
+
 
 # Use this with `npm run build` so that `./node_modules/.bin` are injected into
 # the PATH
