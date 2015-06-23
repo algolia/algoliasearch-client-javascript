@@ -93,7 +93,7 @@
     "url-parse": "1.0.1",
     "webpack": "1.9.11",
     "xhr": "2.0.2",
-    "zuul": "git://github.com/vvo/zuul.git#ecb1aa46f9955a3e7cf2ffb1707a323028456255",
+    "zuul": "git://github.com/defunctzombie/zuul.git#fdfe5ab39fb0bdbe15fc7c2d42603e25924b6d04",
     "zuul-ngrok": "3.0.0"
   },
   "engines": {
