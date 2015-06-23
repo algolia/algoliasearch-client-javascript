@@ -1,6 +1,6 @@
 CHANGELOG
 
-UNRELEASED
+2015-06-18 3.7.0
     * feat: allow passing `httpAgent` option to the nodejs client
       allow more flexible proxy/keepAlive agents in some more complex environments
 
