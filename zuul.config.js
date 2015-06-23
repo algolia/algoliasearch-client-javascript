@@ -2,7 +2,8 @@ var zuulConfig = module.exports = {
   ui: 'tape',
   browserify: [{
     transform: 'bulkify'
-  }]
+  }],
+  concurrency: 5
 };
 
 if (process.env.BROWSERS === 'integration') {
