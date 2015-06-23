@@ -29,7 +29,7 @@ else
   echo "Node test 0.12: unit"
   node test/run-node.js
 
-  "Node test 0.12: integration"
+  echo "Node test 0.12: integration"
   node test/run-integration.js
 
   echo "Node test iojs"
