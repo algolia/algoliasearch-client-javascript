@@ -38,7 +38,7 @@ else
   echo "Node test iojs: unit"
   node test/run-node.js
 
-  "Node test iojs: integration"
+  echo "Node test iojs: integration"
   node test/run-integration.js
 fi
 
