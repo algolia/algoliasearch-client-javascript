@@ -20,7 +20,27 @@ debug('loaded the Node.js client');
 
 function algoliasearch(applicationID, apiKey, opts) {
   var cloneDeep = require('lodash-compat/lang/cloneDeep');
-  opts = cloneDeep(opts || {});
+  var reduce = require('lodash-compat/collection/reduce');
+
+  if (!opts) {
+    opts = {};
+  }
+
+  var httpAgent = opts.httpAgent;
+
+  opts = cloneDeep(reduce(opts, allButHttpAgent, {}));
+
+  // as an httpAgent is an object with methods etc, we take a reference to
+  // it rather than cloning it like other values
+  function allButHttpAgent(filteredOpts, val, keyName) {
+    if (keyName !== 'httpAgent') {
+      filteredOpts[keyName] = val;
+    }
+
+    return filteredOpts;
+  }
+
+  opts.httpAgent = httpAgent;
 
   // inactivity timeout
   if (opts.timeout === undefined) {
@@ -46,7 +66,7 @@ function AlgoliaSearchNodeJS(applicationID, apiKey, opts) {
   // call AlgoliaSearchServer constructor
   AlgoliaSearchServer.apply(this, arguments);
 
-  this._Agent = getAgent(opts.protocol);
+  this._Agent = opts.httpAgent || getAgent(opts.protocol);
 }
 
 inherits(AlgoliaSearchNodeJS, AlgoliaSearchServer);

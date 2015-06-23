@@ -1,5 +1,9 @@
 CHANGELOG
 
+UNRELEASED
+    * feat: allow passing `httpAgent` option to the nodejs client
+      allow more flexible proxy/keepAlive agents in some more complex environments
+
 2015-06-18 3.6.3
     * fix: allow getting the debug log from the outside
       will be used by diag tool and possibly anyone aware of https://github.com/visionmedia/debug
