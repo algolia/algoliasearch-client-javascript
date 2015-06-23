@@ -1,6 +1,8 @@
 language: node_js
+node_js:
+  - stable
 install: npm install
-script: npm run $COMMAND
+script: npm run test-ci
 branches:
   only:
     - master
@@ -19,50 +21,3 @@ env:
     # parse test credentials
     - secure: "KJ5+bYlg0MCX8tAQM6IRBZi43SRPgxj6VSxEyvdQn40LYShlvDIFLgKDQ+Acg5U5k0dQ3HMWsAfrJl/T/pQDmh53g14yZrDZYQeAg0gT25RYUYIY3ByrwcQUhriOqU4ivj2neVBiBJxZ4f7Scx0RBk6OTgvAU/Cc+37apDdDKRk="
     - secure: "ZJSK5Mgd/Gmew/5V5e7nd/ArVhIngB825+phWYF00/T9sKYY9P83JQGVn9Iwf/iGBI6lgabS79CwwmaetCzjQa4YxsOObmaMgho/brqlci9AilbksI3UhNVMehFt2Pr1RZQMmGKk+Uot3RKqna5fvyZdtbOw0jGef/H1oYge9HY="
-matrix:
-  fast_finish: true
-  include:
-    # First we try to build the browser files
-    - node_js: '0.12'
-      env: COMMAND=build APP_ENV=production
-
-    # Browser integration tests, real browsers
-    - node_js: '0.12'
-      env: COMMAND=test-browser-integration BROWSERS=integration APP_ENV=production
-
-    # Integration tests, nodejs
-    - node_js: '0.12'
-      env: COMMAND=test-node-integration
-    - node_js: '0.10'
-      env: COMMAND=test-node-integration
-    - node_js: 'iojs-v2.2.1'
-      env: COMMAND=test-node-integration
-
-    # Browser unit tests, phantom
-    - node_js: '0.12'
-      env: COMMAND=test-phantom-unit APP_ENV=production
-
-    # Browser unit test, real browsers
-    # In pull requests, the first "DESKTOP" tests will be run on all
-    # latest browsers only (desktop + mobile)
-    - node_js: '0.12'
-      env: COMMAND=test-browser-unit BROWSERS=desktop
-    # This task will be ignored in pull requests
-    - node_js: '0.12'
-      env: COMMAND=test-browser-unit BROWSERS=mobile
-
-    # Node.js unit tests
-    - node_js: '0.12'
-      env: COMMAND=test-node-unit
-    - node_js: '0.10'
-      env: COMMAND=test-node-unit
-    - node_js: iojs-v2.2.1
-      env: COMMAND=test-node-unit
-
-    # Parse build test
-    - node_js: '0.12'
-      env: COMMAND=test-parse-cloud
-
-    # Linting
-    - node_js: '0.12'
-      env: COMMAND=lint

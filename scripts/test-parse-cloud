@@ -4,10 +4,14 @@
 # The parse function called will be the one in test/parse/cloud/main.js
 
 set -e # exit when error
+set -x # debug messages
+
+echo "Parse-cloud test"
 
 # build (including the parse build)
 # change the version number to 1.0.$TRAVIS_BUILD_NUMBER so that we can test that
 # the build was really deployed to parse (see test/parse/cloud/main.js and test/parse/index.js)
+cp src/version.json src/version.json.bak
 echo "\"1.0.$TRAVIS_BUILD_NUMBER\"" > src/version.json
 npm run build
 
@@ -27,3 +31,11 @@ parse deploy
 
 # test
 node index.js
+
+# cleanup the mess
+# get back to root of git project
+cd ../../
+cp src/version.json.bak src/version.json
+git checkout dist/
+git checkout test/
+git clean test/ -f
