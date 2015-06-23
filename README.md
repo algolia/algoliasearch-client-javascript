@@ -61,6 +61,7 @@ Table of Contents
     - [jQuery module](#jquery-module)
     - [AngularJS module](#angularjs-module)
   - [Backend (Node.js)](#backend-nodejs)
+1. [Client options](#client-options)
 1. [Callback convention](#callback-convention)
 1. [Promises](#promises)
 1. [Request strategy](#request-strategy)
@@ -334,6 +335,30 @@ index.search('jim', function(err, content) {
 
 
 
+
+Client options
+-------------
+
+In most situations, there is no need to tune the options. We provide this list to be
+transparent with our users.
+
+- `timeout` timeout for requests to our servers
+  + in Node.js this is an inactivity timeout. default to 15s
+  + in the browser, this is a global timeout. default to 2s (incremental)
+- `protocol` protocol to use when communicating with algolia
+  + in the browser, we use the page protocol by default
+  + in Node.js it's https by default
+- `hosts.read` array of read hosts to use to call Algolia servers, computed automatically
+- `hosts.write` array of write hosts to use to call Algolia servers, computed automatically
+- `httpAgent` <sup>node-only</sup> [Node.js httpAgent](https://nodejs.org/api/http.html#http_class_http_agent) to use when communicating with Algolia servers. 
+
+To pass an option, use:
+
+```js
+var client = algoliasearch(applicationId, apiKey, {
+  timeout: 4000
+})
+```
 
 Callback convention
 -------------
@@ -638,8 +663,7 @@ You can use the following optional arguments:
 
  * **aroundLatLng**: Search for entries around a given latitude/longitude (specified as two floats separated by a comma).<br/>For example, `aroundLatLng=47.316669,5.016670`.<br/>You can specify the maximum distance in meters with the **aroundRadius** parameter and the precision for ranking with **aroundPrecision**. For example, if you set aroundPrecision=100, two objects that are a distance of less than 100 meters will be considered as identical for the "geo" ranking parameter).<br/>At indexing, you should specify the geo location of an object with the `_geoloc` attribute in the form `{"_geoloc":{"lat":48.853409, "lng":2.348800}}`.
 
- * **aroundLatLngViaIP**: Search for entries around a given latitude/longitude automatically computed from user IP address.<br/>For example, `aroundLatLng=47.316669,5.016670`.<br/>You can specify the maximum distance in meters with the **aroundRadius** parameter and the precision for ranking with **aroundPrecision**. For example, if you set aroundPrecision=100, two objects that are a distance of less than 100 meters will be considered as identical for the "geo" ranking parameter.<br/>At indexing, you should specify the geo location of an object with the `_geoloc` attribute in the form `{"_geoloc":{"lat":48.853409, "lng":2.348800}}`.
-
+ * **aroundLatLngViaIP**: Search for entries around a given latitude/longitude automatically computed from user IP address.<br/>For example, `aroundLatLng=47.316669,5.016670`.<br/>You can specify the maximum distance in meters with the **aroundRadius** parameter and the precision for ranking with **aroundPrecision**. For example, if you set aroundPrecision=100, two objects that are in the range 0-99m will be considered as identic in the ranking for the "geo" ranking parameter (same for 100-199, 200-299, ... ranges).<br/>At indexing, you should specify the geo location of an object with the `_geoloc` attribute in the form `{"_geoloc":{"lat":48.853409, "lng":2.348800}}`.
 
  * **insideBoundingBox**: Search entries inside a given area defined by the two extreme points of a rectangle (defined by 4 floats: p1Lat,p1Lng,p2Lat,p2Lng).<br/>For example, `insideBoundingBox=47.3165,4.9665,47.3424,5.0201`).<br/>At indexing, you should specify the geo location of an object with the _geoloc attribute in the form `{"_geoloc":{"lat":48.853409, "lng":2.348800}}`.
 
