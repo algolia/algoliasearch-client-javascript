@@ -119,6 +119,7 @@ AlgoliaSearchNodeJS.prototype._request = function(rawUrl, opts) {
 
     if (body) {
       req.setHeader('content-type', 'application/json');
+      req.setHeader('content-length', Buffer.byteLength(body, 'utf8'));
       req.write(body);
 
       // debug request body/sent
