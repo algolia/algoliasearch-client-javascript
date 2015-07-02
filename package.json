@@ -89,7 +89,7 @@
     "sinon": "1.15.3",
     "superagent": "1.2.0",
     "tape": "4.0.0",
-    "uglifyjs": "2.4.10",
+    "uglify-js": "2.4.23",
     "url-parse": "1.0.1",
     "webpack": "1.9.11",
     "xhr": "2.0.2",
