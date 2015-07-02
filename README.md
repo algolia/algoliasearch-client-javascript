@@ -17,7 +17,7 @@ If you were using our Node.js version (V1, npm `algolia-search`), [read the migr
 
 
 
-[![Version][version-svg]][package-url] [![Build Status][travis-svg]][travis-url] [![License][license-image]][license-url] [![Downloads][downloads-image]][downloads-url] [![Libscore][libscore-svg]][libscore-url]
+[![Version][version-svg]][package-url] [![Build Status][travis-svg]][travis-url] [![License][license-image]][license-url] [![Downloads][downloads-image]][downloads-url]
 
 [![Browser tests][browser-test-matrix]][browser-test-url]
 
@@ -29,8 +29,6 @@ If you were using our Node.js version (V1, npm `algolia-search`), [read the migr
 [downloads-url]: http://npm-stat.com/charts.html?package=algoliasearch
 [browser-test-matrix]: https://saucelabs.com/browser-matrix/algoliasearch-js.svg
 [browser-test-url]: https://saucelabs.com/u/algoliasearch-js
-[libscore-svg]: https://img.shields.io/libscore/s/AlgoliaSearch.svg?style=flat-square
-[libscore-url]: http://libscore.com/#AlgoliaSearch
 [version-svg]: https://img.shields.io/npm/v/algoliasearch.svg?style=flat-square
 [package-url]: https://npmjs.org/package/algoliasearch
 
