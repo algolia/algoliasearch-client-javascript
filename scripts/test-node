@@ -23,13 +23,13 @@ if [ $TRAVIS_PULL_REQUEST != 'false' ] || [ $TRAVIS_BUILD_NUMBER == 'false' ]; t
   echo 'Skipping 0.10 and iojs tests (PR or local)'
   exit 0
 else
-  echo "Node test 0.12"
+  echo "Node test 0.10"
 
   nvm use 0.10
-  echo "Node test 0.12: unit"
+  echo "Node test 0.10: unit"
   node test/run-node.js
 
-  echo "Node test 0.12: integration"
+  echo "Node test 0.10: integration"
   node test/run-integration.js
 
   echo "Node test iojs"
