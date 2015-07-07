@@ -17,17 +17,21 @@ npm run build
 
 cp dist/algoliasearch.parse.js test/parse/cloud
 
-# install parse cli
-curl -s https://www.parse.com/downloads/cloud_code/installer.sh | /bin/bash
-
 cd test/parse
+
+# install parse cli
+curl -s https://www.parse.com/downloads/cloud_code/installer.sh > installer.sh
+# parse shell script tries to install in /usr/local/bin, not available in container based
+# infra on travis
+sed -i 's/\/usr\/local\/bin\/parse/parse/g' installer.sh
+/bin/bash installer.sh
 
 # decrypt parse cloud config file
 # http://docs.travis-ci.com/user/encrypting-files/
 openssl aes-256-cbc -K $encrypted_54792a874ee7_key -iv $encrypted_54792a874ee7_iv -in config/global.json.enc -out config/global.json -d
 
 # deploy the new build
-parse deploy
+./parse deploy
 
 # test
 node index.js
