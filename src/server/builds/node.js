@@ -226,7 +226,9 @@ AlgoliaSearchNodeJS.prototype._promise = {
 };
 
 AlgoliaSearchNodeJS.prototype.destroy = function() {
-  this._Agent.destroy();
+  if (typeof this._Agent.destroy === 'function') {
+    this._Agent.destroy();
+  }
 };
 
 /*
