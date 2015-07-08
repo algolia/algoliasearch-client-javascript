@@ -1,3 +1,6 @@
+'use strict';
+
+/* eslint new-cap: 0 */
 var test = require('tape');
 
 var browser = require('bowser').browser;

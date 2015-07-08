@@ -1,3 +1,5 @@
+'use strict';
+
 var test = require('tape');
 
 test('we only talk http or https', function(t) {

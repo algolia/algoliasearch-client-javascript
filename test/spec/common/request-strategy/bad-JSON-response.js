@@ -1,3 +1,5 @@
+'use strict';
+
 var test = require('tape');
 
 test('Bad JSON is catched', function(t) {

@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = [{
   testName: 'client.addUserKey(acls, cb)',
   object: 'client',
@@ -6,7 +8,7 @@ module.exports = [{
   action: 'write',
   expectedRequest: {
     method: 'POST',
-    body: { acl: ['search', 'browse'] },
+    body: {acl: ['search', 'browse']},
     URL: {pathname: '/1/keys'}
   }
 }, {
@@ -71,7 +73,7 @@ module.exports = [{
   action: 'write',
   expectedRequest: {
     method: 'POST',
-    body: { acl: ['search', 'browse'], validity: 42, maxQueriesPerIPPerHour: 100, maxHitsPerQuery: 10 },
+    body: {acl: ['search', 'browse'], validity: 42, maxQueriesPerIPPerHour: 100, maxHitsPerQuery: 10},
     URL: {pathname: '/1/keys'}
   }
 }];

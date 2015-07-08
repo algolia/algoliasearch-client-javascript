@@ -1,3 +1,5 @@
+'use strict';
+
 var objectsIDs = ['1000', '1001'];
 
 module.exports = {

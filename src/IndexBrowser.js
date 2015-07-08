@@ -1,3 +1,5 @@
+'use strict';
+
 // This is the object returned by the `index.browseAll()` method
 
 module.exports = IndexBrowser;
@@ -5,7 +7,8 @@ module.exports = IndexBrowser;
 var inherits = require('inherits');
 var EventEmitter = require('events').EventEmitter;
 
-function IndexBrowser() {}
+function IndexBrowser() {
+}
 
 inherits(IndexBrowser, EventEmitter);
 

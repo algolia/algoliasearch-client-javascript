@@ -1,3 +1,5 @@
+'use strict';
+
 // This is the standalone browser build entry point
 // Browser implementation of the Algolia Search JavaScript client,
 // using XMLHttpRequest, XDomainRequest and JSONP as fallback
@@ -9,7 +11,7 @@ var Promise = window.Promise || require('es6-promise').Promise;
 var AlgoliaSearch = require('../../AlgoliaSearch');
 var errors = require('../../errors');
 var inlineHeaders = require('../inline-headers');
-var JSONPRequest = require('../JSONP-request');
+var jsonpRequest = require('../jsonp-request');
 
 function algoliasearch(applicationID, apiKey, opts) {
   var cloneDeep = require('lodash-compat/lang/cloneDeep');
@@ -51,8 +53,8 @@ function AlgoliaSearchBrowser() {
 
 inherits(AlgoliaSearchBrowser, AlgoliaSearch);
 
-AlgoliaSearchBrowser.prototype._request = function(url, opts) {
-  return new Promise(function(resolve, reject) {
+AlgoliaSearchBrowser.prototype._request = function request(url, opts) {
+  return new Promise(function wrapRequest(resolve, reject) {
     // no cors or XDomainRequest, no request
     if (!support.cors && !support.hasXDomainRequest) {
       // very old browser, not supported
@@ -131,8 +133,10 @@ AlgoliaSearchBrowser.prototype._request = function(url, opts) {
           // XDomainRequest does not have any response headers
           headers: req.getAllResponseHeaders && req.getAllResponseHeaders() || {}
         };
-      } catch(e) {
-        out = new errors.UnparsableJSON({more: req.responseText});
+      } catch (e) {
+        out = new errors.UnparsableJSON({
+          more: req.responseText
+        });
       }
 
       if (out instanceof errors.UnparsableJSON) {
@@ -172,11 +176,11 @@ AlgoliaSearchBrowser.prototype._request = function(url, opts) {
   });
 };
 
-AlgoliaSearchBrowser.prototype._request.fallback = function(url, opts) {
+AlgoliaSearchBrowser.prototype._request.fallback = function requestFallback(url, opts) {
   url = inlineHeaders(url, opts.headers);
 
-  return new Promise(function(resolve, reject) {
-    JSONPRequest(url, opts, function JSONPRequestDone(err, content) {
+  return new Promise(function wrapJsonpRequest(resolve, reject) {
+    jsonpRequest(url, opts, function jsonpRequestDone(err, content) {
       if (err) {
         reject(err);
         return;
@@ -188,14 +192,14 @@ AlgoliaSearchBrowser.prototype._request.fallback = function(url, opts) {
 };
 
 AlgoliaSearchBrowser.prototype._promise = {
-  reject: function(val) {
+  reject: function rejectPromise(val) {
     return Promise.reject(val);
   },
-  resolve: function(val) {
+  resolve: function resolvePromise(val) {
     return Promise.resolve(val);
   },
-  delay: function(ms) {
-    return new Promise(function(resolve/*, reject*/) {
+  delay: function delayPromise(ms) {
+    return new Promise(function resolveOnTimeout(resolve/*, reject*/) {
       setTimeout(resolve, ms);
     });
   }

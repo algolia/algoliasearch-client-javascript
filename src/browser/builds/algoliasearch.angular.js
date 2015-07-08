@@ -1,3 +1,5 @@
+'use strict';
+
 // This is the AngularJS Algolia Search module
 // It's using $http to do requests with a JSONP fallback
 // $q promises are returned
@@ -7,14 +9,13 @@ var inherits = require('inherits');
 var AlgoliaSearch = require('../../AlgoliaSearch');
 var errors = require('../../errors');
 var inlineHeaders = require('../inline-headers');
-var JSONPRequest = require('../JSONP-request');
+var jsonpRequest = require('../jsonp-request');
 
 // expose original algoliasearch fn in window
 window.algoliasearch = require('./algoliasearch');
 
 window.angular.module('algoliasearch', [])
-  .service('algolia', ['$http', '$q', '$timeout', function ($http, $q, $timeout) {
-
+  .service('algolia', ['$http', '$q', '$timeout', function algoliaSearchService($http, $q, $timeout) {
     function algoliasearch(applicationID, apiKey, opts) {
       var cloneDeep = require('lodash-compat/lang/cloneDeep');
 
@@ -48,7 +49,7 @@ window.angular.module('algoliasearch', [])
 
     inherits(AlgoliaSearchAngular, AlgoliaSearch);
 
-    AlgoliaSearchAngular.prototype._request = function(url, opts) {
+    AlgoliaSearchAngular.prototype._request = function request(url, opts) {
       // Support most Angular.js versions by using $q.defer() instead
       // of the new $q() constructor everywhere we need a promise
       var deferred = $q.defer();
@@ -63,7 +64,7 @@ window.angular.module('algoliasearch', [])
       var timeoutDeferred = $q.defer();
       var timeoutPromise = timeoutDeferred.promise;
 
-      $timeout(function() {
+      $timeout(function timedout() {
         timedOut = true;
         // will cancel the xhr
         timeoutDeferred.resolve('test');
@@ -122,14 +123,14 @@ window.angular.module('algoliasearch', [])
 
     // using IE8 or IE9 we will always end up here
     // AngularJS does not fallback to XDomainRequest
-    AlgoliaSearchAngular.prototype._request.fallback = function(url, opts) {
+    AlgoliaSearchAngular.prototype._request.fallback = function requestFallback(url, opts) {
       url = inlineHeaders(url, opts.headers);
 
       var deferred = $q.defer();
       var resolve = deferred.resolve;
       var reject = deferred.reject;
 
-      JSONPRequest(url, opts, function JSONPRequestDone(err, content) {
+      jsonpRequest(url, opts, function jsonpRequestDone(err, content) {
         if (err) {
           reject(err);
           return;
@@ -160,7 +161,7 @@ window.angular.module('algoliasearch', [])
     };
 
     return {
-      Client: function (applicationID, apiKey, options) {
+      Client: function(applicationID, apiKey, options) {
         return algoliasearch(applicationID, apiKey, options);
       },
       ua: algoliasearch.ua,

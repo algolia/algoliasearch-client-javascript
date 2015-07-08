@@ -1,3 +1,5 @@
+'use strict';
+
 var test = require('tape');
 
 test('dsn not used on indexing requests', function(t) {

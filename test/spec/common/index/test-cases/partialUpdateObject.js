@@ -1,3 +1,5 @@
+'use strict';
+
 var clone = require('lodash-compat/lang/clone');
 
 var partialObject = {

@@ -1,3 +1,5 @@
+'use strict';
+
 // This file hosts our error definitions
 // We use custom error "types" so that we can act on them when we need it
 // e.g.: if error instanceof errors.UnparsableJSON then..

@@ -1,3 +1,5 @@
+'use strict';
+
 var fauxJax = require('faux-jax');
 
 var testCases = module.exports = [{

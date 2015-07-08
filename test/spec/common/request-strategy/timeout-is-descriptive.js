@@ -1,3 +1,5 @@
+'use strict';
+
 var test = require('tape');
 
 test('when a timeout occurs, we get a descriptive error', function(t) {

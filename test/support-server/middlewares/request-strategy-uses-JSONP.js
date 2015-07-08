@@ -1,3 +1,6 @@
+'use strict';
+
+/* eslint new-cap: 0 */
 module.exports = requestStrategyUsesJSONP;
 
 var express = require('express');

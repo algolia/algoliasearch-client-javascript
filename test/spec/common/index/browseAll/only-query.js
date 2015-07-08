@@ -1,3 +1,5 @@
+'use strict';
+
 var test = require('tape');
 
 test('index.browseAll(query)', function(t) {
@@ -41,5 +43,3 @@ test('index.browseAll(query)', function(t) {
     fauxJax.restore();
   }
 });
-
-

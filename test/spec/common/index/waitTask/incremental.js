@@ -1,3 +1,5 @@
+'use strict';
+
 var test = require('tape');
 
 // for this test to pass well you must have the test tab

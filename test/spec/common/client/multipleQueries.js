@@ -1,3 +1,5 @@
+'use strict';
+
 var test = require('tape');
 
 test('client.startQueriesBatch(), client.addQueryInBatch(), client.sendQueriesBatch()', function(t) {
@@ -14,7 +16,7 @@ test('client.startQueriesBatch(), client.addQueryInBatch(), client.sendQueriesBa
 
   client.startQueriesBatch();
   client.addQueryInBatch(fixture.credentials.index, 'first query');
-  client.addQueryInBatch(fixture.credentials.index, 'second query', { hitsPerPage: 42 });
+  client.addQueryInBatch(fixture.credentials.index, 'second query', {hitsPerPage: 42});
   client.sendQueriesBatch();
 
   fauxJax.waitFor(1, function(err, requests) {
@@ -39,8 +41,8 @@ test('client.startQueriesBatch(), client.addQueryInBatch(), client.sendQueriesBa
       JSON.parse(requests[0].requestBody),
       {
         requests: [
-          { params: 'query=first%20query' },
-          { params: 'query=second%20query&hitsPerPage=42' }
+          {params: 'query=first%20query'},
+          {params: 'query=second%20query&hitsPerPage=42'}
         ]
       },
       'Perform 2 requests'

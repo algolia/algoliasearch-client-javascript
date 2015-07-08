@@ -1,3 +1,5 @@
+'use strict';
+
 var test = require('tape');
 
 // this test will ensure we are implementing a particular API method

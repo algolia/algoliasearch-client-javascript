@@ -1,3 +1,5 @@
+'use strict';
+
 var test = require('tape');
 
 test('index.ttAdapter(cb) supports typeahead 0.11', function(t) {

@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = AlgoliaSearch;
 
 // default debug activated in dev environments
@@ -15,9 +17,11 @@ var errors = require('./errors');
  * @param {string} applicationID - Your applicationID, found in your dashboard
  * @param {string} apiKey - Your API key, found in your dashboard
  * @param {Object} [opts]
- * @param {number} [opts.timeout=2000] - The request timeout set in milliseconds, another request will be issued after this timeout
+ * @param {number} [opts.timeout=2000] - The request timeout set in milliseconds,
+ * another request will be issued after this timeout
  * @param {string} [opts.protocol='http:'] - The protocol used to query Algolia Search API.
- *                                        Set to 'https:' to force using https. Default to document.location.protocol in browsers
+ *                                        Set to 'https:' to force using https.
+ *                                        Default to document.location.protocol in browsers
  * @param {Object|Array} [opts.hosts={
  *           read: [this.applicationID + '-dsn.algolia.net'].concat([
  *             this.applicationID + '-1.algolianet.com',
@@ -28,7 +32,8 @@ var errors = require('./errors');
  *             this.applicationID + '-1.algolianet.com',
  *             this.applicationID + '-2.algolianet.com',
  *             this.applicationID + '-3.algolianet.com']
- *           ]) - The hosts to use for Algolia Search API. If you provide them, you will less benefit from our HA implementation
+ *           ]) - The hosts to use for Algolia Search API.
+ *           If you provide them, you will less benefit from our HA implementation
  */
 function AlgoliaSearch(applicationID, apiKey, opts) {
   var debug = require('debug')('algoliasearch');
@@ -83,14 +88,12 @@ function AlgoliaSearch(applicationID, apiKey, opts) {
   if (!opts.hosts) {
     this.hosts.read = [this.applicationID + '-dsn.algolia.net'].concat(defaultHosts);
     this.hosts.write = [this.applicationID + '.algolia.net'].concat(defaultHosts);
+  } else if (isArray(opts.hosts)) {
+    this.hosts.read = clone(opts.hosts);
+    this.hosts.write = clone(opts.hosts);
   } else {
-    if (isArray(opts.hosts)) {
-      this.hosts.read = clone(opts.hosts);
-      this.hosts.write = clone(opts.hosts);
-    } else {
-      this.hosts.read = clone(opts.hosts.read);
-      this.hosts.write = clone(opts.hosts.write);
-    }
+    this.hosts.read = clone(opts.hosts.read);
+    this.hosts.write = clone(opts.hosts.write);
   }
 
   // add protocol and lowercase hosts
@@ -119,48 +122,60 @@ AlgoliaSearch.prototype = {
    *  content: the server answer that contains the task ID
    */
   deleteIndex: function(indexName, callback) {
-    return this._jsonRequest({ method: 'DELETE',
-              url: '/1/indexes/' + encodeURIComponent(indexName),
-              hostType: 'write',
-              callback: callback });
+    return this._jsonRequest({
+      method: 'DELETE',
+      url: '/1/indexes/' + encodeURIComponent(indexName),
+      hostType: 'write',
+      callback: callback
+    });
   },
   /**
    * Move an existing index.
    * @param srcIndexName the name of index to copy.
-   * @param dstIndexName the new index name that will contains a copy of srcIndexName (destination will be overriten if it already exist).
+   * @param dstIndexName the new index name that will contains a copy of
+   * srcIndexName (destination will be overriten if it already exist).
    * @param callback the result callback called with two arguments
    *  error: null or Error('message')
    *  content: the server answer that contains the task ID
    */
   moveIndex: function(srcIndexName, dstIndexName, callback) {
-    var postObj = {operation: 'move', destination: dstIndexName};
-    return this._jsonRequest({ method: 'POST',
-              url: '/1/indexes/' + encodeURIComponent(srcIndexName) + '/operation',
-              body: postObj,
-              hostType: 'write',
-              callback: callback });
-
+    var postObj = {
+      operation: 'move', destination: dstIndexName
+    };
+    return this._jsonRequest({
+      method: 'POST',
+      url: '/1/indexes/' + encodeURIComponent(srcIndexName) + '/operation',
+      body: postObj,
+      hostType: 'write',
+      callback: callback
+    });
   },
   /**
    * Copy an existing index.
    * @param srcIndexName the name of index to copy.
-   * @param dstIndexName the new index name that will contains a copy of srcIndexName (destination will be overriten if it already exist).
+   * @param dstIndexName the new index name that will contains a copy
+   * of srcIndexName (destination will be overriten if it already exist).
    * @param callback the result callback called with two arguments
    *  error: null or Error('message')
    *  content: the server answer that contains the task ID
    */
   copyIndex: function(srcIndexName, dstIndexName, callback) {
-    var postObj = {operation: 'copy', destination: dstIndexName};
-    return this._jsonRequest({ method: 'POST',
-              url: '/1/indexes/' + encodeURIComponent(srcIndexName) + '/operation',
-              body: postObj,
-              hostType: 'write',
-              callback: callback });
+    var postObj = {
+      operation: 'copy', destination: dstIndexName
+    };
+    return this._jsonRequest({
+      method: 'POST',
+      url: '/1/indexes/' + encodeURIComponent(srcIndexName) + '/operation',
+      body: postObj,
+      hostType: 'write',
+      callback: callback
+    });
   },
   /**
    * Return last log entries.
    * @param offset Specify the first entry to retrieve (0-based, 0 is the most recent log entry).
-   * @param length Specify the maximum number of entries to retrieve starting at offset. Maximum allowed value: 1000.
+   * @param length Specify the maximum number of entries to retrieve starting
+   * at offset. Maximum allowed value: 1000.
    * @param callback the result callback called with two arguments
    *  error: null or Error('message')
    *  content: the server answer that contains the task ID
@@ -177,10 +192,12 @@ AlgoliaSearch.prototype = {
       length = 10;
     }
 
-    return this._jsonRequest({ method: 'GET',
-              url: '/1/logs?offset=' + offset + '&length=' + length,
-              hostType: 'read',
-              callback: callback });
+    return this._jsonRequest({
+      method: 'GET',
+      url: '/1/logs?offset=' + offset + '&length=' + length,
+      hostType: 'read',
+      callback: callback
+    });
   },
   /*
    * List all existing indexes (paginated)
@@ -199,10 +216,12 @@ AlgoliaSearch.prototype = {
       params = '?page=' + page;
     }
 
-    return this._jsonRequest({ method: 'GET',
-              url: '/1/indexes' + params,
-              hostType: 'read',
-              callback: callback });
+    return this._jsonRequest({
+      method: 'GET',
+      url: '/1/indexes' + params,
+      hostType: 'read',
+      callback: callback
+    });
   },
 
   /*
@@ -222,10 +241,12 @@ AlgoliaSearch.prototype = {
    *  content: the server answer with user keys list
    */
   listUserKeys: function(callback) {
-    return this._jsonRequest({ method: 'GET',
-              url: '/1/keys',
-              hostType: 'read',
-              callback: callback });
+    return this._jsonRequest({
+      method: 'GET',
+      url: '/1/keys',
+      hostType: 'read',
+      callback: callback
+    });
   },
   /*
    * Get ACL of a user key
@@ -236,10 +257,12 @@ AlgoliaSearch.prototype = {
    *  content: the server answer with user keys list
    */
   getUserKeyACL: function(key, callback) {
-    return this._jsonRequest({ method: 'GET',
-              url: '/1/keys/' + key,
-              hostType: 'read',
-              callback: callback });
+    return this._jsonRequest({
+      method: 'GET',
+      url: '/1/keys/' + key,
+      hostType: 'read',
+      callback: callback
+    });
   },
   /*
    * Delete an existing user key
@@ -249,10 +272,12 @@ AlgoliaSearch.prototype = {
    *  content: the server answer with user keys list
    */
   deleteUserKey: function(key, callback) {
-    return this._jsonRequest({ method: 'DELETE',
-              url: '/1/keys/' + key,
-              hostType: 'write',
-              callback: callback });
+    return this._jsonRequest({
+      method: 'DELETE',
+      url: '/1/keys/' + key,
+      hostType: 'write',
+      callback: callback
+    });
   },
   /*
    * Add a new global API key
@@ -437,7 +462,7 @@ AlgoliaSearch.prototype = {
    * Initialize a new batch of search queries
    * @deprecated use client.search()
    */
-  startQueriesBatch: deprecate(function() {
+  startQueriesBatch: deprecate(function startQueriesBatchDeprecated() {
     this._batch = [];
   }, deprecatedMessage('client.startQueriesBatch()', 'client.search()')),
 
@@ -445,7 +470,7 @@ AlgoliaSearch.prototype = {
    * Add a search query in the batch
    * @deprecated use client.search()
    */
-  addQueryInBatch: deprecate(function(indexName, query, args) {
+  addQueryInBatch: deprecate(function addQueryInBatchDeprecated(indexName, query, args) {
     this._batch.push({
       indexName: indexName,
       query: query,
@@ -465,15 +490,15 @@ AlgoliaSearch.prototype = {
    * Launch the batch of queries using XMLHttpRequest.
    * @deprecated use client.search()
    */
-  sendQueriesBatch: deprecate(function(callback) {
+  sendQueriesBatch: deprecate(function sendQueriesBatchDeprecated(callback) {
     return this.search(this._batch, callback);
   }, deprecatedMessage('client.sendQueriesBatch()', 'client.search()')),
 
-   /**
-   * Set the number of milliseconds a request can take before automatically being terminated.
-   *
-   * @param {Number} milliseconds
-   */
+  /**
+  * Set the number of milliseconds a request can take before automatically being terminated.
+  *
+  * @param {Number} milliseconds
+  */
   setRequestTimeout: function(milliseconds) {
     if (milliseconds) {
       this.requestTimeout = parseInt(milliseconds, 10);
@@ -500,7 +525,7 @@ AlgoliaSearch.prototype = {
         // so we are mimicing the index.search(query, params) method
         // {indexName:, query:, params:}
         if (query.query !== undefined) {
-          params += 'query=' + encodeURIComponent(query.query)
+          params += 'query=' + encodeURIComponent(query.query);
         }
 
         return {
@@ -585,18 +610,32 @@ AlgoliaSearch.prototype = {
     // make sure every index instance has it's own cache
     this.cache = {};
   },
-   /**
-   * Add an extra field to the HTTP request
-   *
-   * @param name the header field name
-   * @param value the header field value
-   */
+  /**
+  * Add an extra field to the HTTP request
+  *
+  * @param name the header field name
+  * @param value the header field value
+  */
   setExtraHeader: function(name, value) {
-    this.extraHeaders.push({ name: name.toLowerCase(), value: value});
+    this.extraHeaders.push({
+      name: name.toLowerCase(), value: value
+    });
   },
 
   _sendQueriesBatch: function(params, callback) {
-    return this._jsonRequest({ cache: this.cache,
+    function prepareParams() {
+      var reqParams = '';
+      for (var i = 0; i < params.requests.length; ++i) {
+        var q = '/1/indexes/' +
+          encodeURIComponent(params.requests[i].indexName) +
+          '?' + params.requests[i].params;
+        reqParams += i + '=' + encodeURIComponent(q) + '&';
+      }
+      return reqParams;
+    }
+
+    return this._jsonRequest({
+      cache: this.cache,
       method: 'POST',
       url: '/1/indexes/*/queries',
       body: params,
@@ -604,14 +643,9 @@ AlgoliaSearch.prototype = {
       fallback: {
         method: 'GET',
         url: '/1/indexes/*',
-        body: {params: (function() {
-          var reqParams = '';
-          for (var i = 0; i < params.requests.length; ++i) {
-            var q = '/1/indexes/' + encodeURIComponent(params.requests[i].indexName) + '?' + params.requests[i].params;
-            reqParams += i + '=' + encodeURIComponent(q) + '&';
-          }
-          return reqParams;
-        }())}
+        body: {
+          params: prepareParams()
+        }
       },
       callback: callback
     });
@@ -697,7 +731,8 @@ AlgoliaSearch.prototype = {
         debug: requestDebug
       };
 
-      requestDebug('method: %s, url: %s, headers: %j, timeout: %d', options.method, url, options.headers, options.timeout);
+      requestDebug('method: %s, url: %s, headers: %j, timeout: %d',
+        options.method, url, options.headers, options.timeout);
 
       if (requester === client._request.fallback) {
         requestDebug('using fallback');
@@ -709,14 +744,14 @@ AlgoliaSearch.prototype = {
 
       function success(httpResponse) {
         // compute the status of the response,
-        var status =
-          // When in browser mode, using XDR or JSONP, we have no statusCode available
-          // So we rely on our API response `status` property.
-          // But `waitTask` can set a `status` property which is not the statusCode (it's the task status)
-          // So we check if there's a `message` along `status` and it means it's an error
-          //
-          // That's the only case where we have a response.status that's not the http statusCode
-          httpResponse && httpResponse.body && httpResponse.body.message && httpResponse.body.status ||
+        //
+        // When in browser mode, using XDR or JSONP, we have no statusCode available
+        // So we rely on our API response `status` property.
+        // But `waitTask` can set a `status` property which is not the statusCode (it's the task status)
+        // So we check if there's a `message` along `status` and it means it's an error
+        //
+        // That's the only case where we have a response.status that's not the http statusCode
+        var status = httpResponse && httpResponse.body && httpResponse.body.message && httpResponse.body.status ||
 
           // this is important to check the request statusCode AFTER the body eventual
           // statusCode because some implementations (jQuery XDomainRequest transport) may
@@ -787,11 +822,11 @@ AlgoliaSearch.prototype = {
           err instanceof errors.UnparsableJSON ||
 
           // no fallback and a network error occured (No CORS, bad APPID)
-          (!requester.fallback && err instanceof errors.Network) ||
+          !requester.fallback && err instanceof errors.Network ||
 
           // max tries and already using fallback or no fallback
-          (tries >= client.hosts[opts.hostType].length && (usingFallback || !opts.fallback || !client._request.fallback))) {
-
+          tries >= client.hosts[opts.hostType].length &&
+          (usingFallback || !opts.fallback || !client._request.fallback)) {
           // stop request implementation for this command
           return client._promise.reject(err);
         }
@@ -848,9 +883,9 @@ AlgoliaSearch.prototype = {
     }
   },
 
-   /*
-   * Transform search param object in query string
-   */
+  /*
+  * Transform search param object in query string
+  */
   _getSearchParams: function(args, params) {
     if (this._isUndefined(args) || args === null) {
       return params;
@@ -945,17 +980,23 @@ AlgoliaSearch.prototype.Index.prototype = {
    */
   addObjects: function(objects, callback) {
     var indexObj = this;
-    var postObj = {requests: []};
+    var postObj = {
+      requests: []
+    };
     for (var i = 0; i < objects.length; ++i) {
-      var request = { action: 'addObject',
-              body: objects[i] };
+      var request = {
+        action: 'addObject',
+        body: objects[i]
+      };
       postObj.requests.push(request);
     }
-    return this.as._jsonRequest({ method: 'POST',
+    return this.as._jsonRequest({
+      method: 'POST',
       url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/batch',
       body: postObj,
       hostType: 'write',
-      callback: callback });
+      callback: callback
+    });
   },
   /*
    * Get an object from this index
@@ -1041,11 +1082,13 @@ AlgoliaSearch.prototype.Index.prototype = {
    */
   partialUpdateObject: function(partialObject, callback) {
     var indexObj = this;
-    return this.as._jsonRequest({ method: 'POST',
+    return this.as._jsonRequest({
+      method: 'POST',
       url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/' + encodeURIComponent(partialObject.objectID) + '/partial',
       body: partialObject,
       hostType: 'write',
-      callback: callback });
+      callback: callback
+    });
   },
   /*
    * Partially Override the content of several objects
@@ -1057,18 +1100,24 @@ AlgoliaSearch.prototype.Index.prototype = {
    */
   partialUpdateObjects: function(objects, callback) {
     var indexObj = this;
-    var postObj = {requests: []};
+    var postObj = {
+      requests: []
+    };
     for (var i = 0; i < objects.length; ++i) {
-      var request = { action: 'partialUpdateObject',
-              objectID: objects[i].objectID,
-              body: objects[i] };
+      var request = {
+        action: 'partialUpdateObject',
+        objectID: objects[i].objectID,
+        body: objects[i]
+      };
       postObj.requests.push(request);
     }
-    return this.as._jsonRequest({ method: 'POST',
+    return this.as._jsonRequest({
+      method: 'POST',
       url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/batch',
       body: postObj,
       hostType: 'write',
-      callback: callback });
+      callback: callback
+    });
   },
   /*
    * Override the content of object
@@ -1080,11 +1129,13 @@ AlgoliaSearch.prototype.Index.prototype = {
    */
   saveObject: function(object, callback) {
     var indexObj = this;
-    return this.as._jsonRequest({ method: 'PUT',
+    return this.as._jsonRequest({
+      method: 'PUT',
       url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/' + encodeURIComponent(object.objectID),
       body: object,
       hostType: 'write',
-      callback: callback });
+      callback: callback
+    });
   },
   /*
    * Override the content of several objects
@@ -1096,18 +1147,24 @@ AlgoliaSearch.prototype.Index.prototype = {
    */
   saveObjects: function(objects, callback) {
     var indexObj = this;
-    var postObj = {requests: []};
+    var postObj = {
+      requests: []
+    };
     for (var i = 0; i < objects.length; ++i) {
-      var request = { action: 'updateObject',
-              objectID: objects[i].objectID,
-              body: objects[i] };
+      var request = {
+        action: 'updateObject',
+        objectID: objects[i].objectID,
+        body: objects[i]
+      };
       postObj.requests.push(request);
     }
-    return this.as._jsonRequest({ method: 'POST',
+    return this.as._jsonRequest({
+      method: 'POST',
       url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/batch',
       body: postObj,
       hostType: 'write',
-      callback: callback });
+      callback: callback
+    });
   },
   /*
    * Delete an object from the index
@@ -1129,10 +1186,12 @@ AlgoliaSearch.prototype.Index.prototype = {
     }
 
     var indexObj = this;
-    return this.as._jsonRequest({ method: 'DELETE',
+    return this.as._jsonRequest({
+      method: 'DELETE',
       url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/' + encodeURIComponent(objectID),
       hostType: 'write',
-      callback: callback });
+      callback: callback
+    });
   },
   /*
    * Delete several objects from an index
@@ -1209,14 +1268,14 @@ AlgoliaSearch.prototype.Index.prototype = {
       return indexObj
         .deleteObjects(objectIDs)
         .then(waitTask)
-        .then(deleteByQuery);
+        .then(doDeleteByQuery);
     }
 
     function waitTask(deleteObjectsContent) {
       return indexObj.waitTask(deleteObjectsContent.taskID);
     }
 
-    function deleteByQuery() {
+    function doDeleteByQuery() {
       return indexObj.deleteByQuery(query, params);
     }
 
@@ -1227,13 +1286,13 @@ AlgoliaSearch.prototype.Index.prototype = {
     promise.then(success, failure);
 
     function success() {
-      exitPromise(function() {
+      exitPromise(function exit() {
         callback(null);
       }, client._setTimeout || setTimeout);
     }
 
     function failure(err) {
-      exitPromise(function() {
+      exitPromise(function exit() {
         callback(err);
       }, client._setTimeout || setTimeout);
     }
@@ -1245,62 +1304,89 @@ AlgoliaSearch.prototype.Index.prototype = {
    * @param query the full text query
    * @param args (optional) if set, contains an object with query parameters:
    * - page: (integer) Pagination parameter used to select the page to retrieve.
-   *                   Page is zero-based and defaults to 0. Thus, to retrieve the 10th page you need to set page=9
+   *                   Page is zero-based and defaults to 0. Thus,
+   *                   to retrieve the 10th page you need to set page=9
    * - hitsPerPage: (integer) Pagination parameter used to select the number of hits per page. Defaults to 20.
-   * - attributesToRetrieve: a string that contains the list of object attributes you want to retrieve (let you minimize the answer size).
+   * - attributesToRetrieve: a string that contains the list of object attributes
+   * you want to retrieve (let you minimize the answer size).
    *   Attributes are separated with a comma (for example "name,address").
    *   You can also use an array (for example ["name","address"]).
-   *   By default, all attributes are retrieved. You can also use '*' to retrieve all values when an attributesToRetrieve setting is specified for your index.
-   * - attributesToHighlight: a string that contains the list of attributes you want to highlight according to the query.
+   *   By default, all attributes are retrieved. You can also use '*' to retrieve all
+   *   values when an attributesToRetrieve setting is specified for your index.
+   * - attributesToHighlight: a string that contains the list of attributes you
+   *   want to highlight according to the query.
    *   Attributes are separated by a comma. You can also use an array (for example ["name","address"]).
-   *   If an attribute has no match for the query, the raw value is returned. By default all indexed text attributes are highlighted.
-   *   You can use `*` if you want to highlight all textual attributes. Numerical attributes are not highlighted.
+   *   If an attribute has no match for the query, the raw value is returned.
+   *   By default all indexed text attributes are highlighted.
+   *   You can use `*` if you want to highlight all textual attributes.
+   *   Numerical attributes are not highlighted.
    *   A matchLevel is returned for each highlighted attribute and can contain:
    *      - full: if all the query terms were found in the attribute,
    *      - partial: if only some of the query terms were found,
    *      - none: if none of the query terms were found.
-   * - attributesToSnippet: a string that contains the list of attributes to snippet alongside the number of words to return (syntax is `attributeName:nbWords`).
+   * - attributesToSnippet: a string that contains the list of attributes to snippet alongside
+   * the number of words to return (syntax is `attributeName:nbWords`).
    *    Attributes are separated by a comma (Example: attributesToSnippet=name:10,content:10).
-   *    You can also use an array (Example: attributesToSnippet: ['name:10','content:10']). By default no snippet is computed.
-   * - minWordSizefor1Typo: the minimum number of characters in a query word to accept one typo in this word. Defaults to 3.
-   * - minWordSizefor2Typos: the minimum number of characters in a query word to accept two typos in this word. Defaults to 7.
-   * - getRankingInfo: if set to 1, the result hits will contain ranking information in _rankingInfo attribute.
-   * - aroundLatLng: search for entries around a given latitude/longitude (specified as two floats separated by a comma).
+   *    You can also use an array (Example: attributesToSnippet: ['name:10','content:10']).
+   *    By default no snippet is computed.
+   * - minWordSizefor1Typo: the minimum number of characters in a query word to accept one typo in this word.
+   *D efaults to 3.
+   * - minWordSizefor2Typos: the minimum number of characters in a query word
+   * to accept two typos in this word. Defaults to 7.
+   * - getRankingInfo: if set to 1, the result hits will contain ranking
+   * information in _rankingInfo attribute.
+   * - aroundLatLng: search for entries around a given
+   * latitude/longitude (specified as two floats separated by a comma).
    *   For example aroundLatLng=47.316669,5.016670).
-   *   You can specify the maximum distance in meters with the aroundRadius parameter (in meters) and the precision for ranking with aroundPrecision
-   *   (for example if you set aroundPrecision=100, two objects that are distant of less than 100m will be considered as identical for "geo" ranking parameter).
-   *   At indexing, you should specify geoloc of an object with the _geoloc attribute (in the form {"_geoloc":{"lat":48.853409, "lng":2.348800}})
-   * - insideBoundingBox: search entries inside a given area defined by the two extreme points of a rectangle (defined by 4 floats: p1Lat,p1Lng,p2Lat,p2Lng).
+   *   You can specify the maximum distance in meters with the aroundRadius parameter (in meters)
+   *   and the precision for ranking with aroundPrecision
+   *   (for example if you set aroundPrecision=100, two objects that are distant of
+   *   less than 100m will be considered as identical for "geo" ranking parameter).
+   *   At indexing, you should specify geoloc of an object with the _geoloc attribute
+   *   (in the form {"_geoloc":{"lat":48.853409, "lng":2.348800}})
+   * - insideBoundingBox: search entries inside a given area defined by the two extreme points
+   * of a rectangle (defined by 4 floats: p1Lat,p1Lng,p2Lat,p2Lng).
    *   For example insideBoundingBox=47.3165,4.9665,47.3424,5.0201).
-   *   At indexing, you should specify geoloc of an object with the _geoloc attribute (in the form {"_geoloc":{"lat":48.853409, "lng":2.348800}})
-   * - numericFilters: a string that contains the list of numeric filters you want to apply separated by a comma.
-   *   The syntax of one filter is `attributeName` followed by `operand` followed by `value`. Supported operands are `<`, `<=`, `=`, `>` and `>=`.
+   *   At indexing, you should specify geoloc of an object with the _geoloc attribute
+   *   (in the form {"_geoloc":{"lat":48.853409, "lng":2.348800}})
+   * - numericFilters: a string that contains the list of numeric filters you want to
+   * apply separated by a comma.
+   *   The syntax of one filter is `attributeName` followed by `operand` followed by `value`.
+   *   Supported operands are `<`, `<=`, `=`, `>` and `>=`.
    *   You can have multiple conditions on one attribute like for example numericFilters=price>100,price<1000.
    *   You can also use an array (for example numericFilters: ["price>100","price<1000"]).
    * - tagFilters: filter the query by a set of tags. You can AND tags by separating them by commas.
    *   To OR tags, you must add parentheses. For example, tags=tag1,(tag2,tag3) means tag1 AND (tag2 OR tag3).
-   *   You can also use an array, for example tagFilters: ["tag1",["tag2","tag3"]] means tag1 AND (tag2 OR tag3).
-   *   At indexing, tags should be added in the _tags** attribute of objects (for example {"_tags":["tag1","tag2"]}).
+   *   You can also use an array, for example tagFilters: ["tag1",["tag2","tag3"]]
+   *   means tag1 AND (tag2 OR tag3).
+   *   At indexing, tags should be added in the _tags** attribute
+   *   of objects (for example {"_tags":["tag1","tag2"]}).
    * - facetFilters: filter the query by a list of facets.
    *   Facets are separated by commas and each facet is encoded as `attributeName:value`.
    *   For example: `facetFilters=category:Book,author:John%20Doe`.
    *   You can also use an array (for example `["category:Book","author:John%20Doe"]`).
    * - facets: List of object attributes that you want to use for faceting.
    *   Comma separated list: `"category,author"` or array `['category','author']`
-   *   Only attributes that have been added in **attributesForFaceting** index setting can be used in this parameter.
+   *   Only attributes that have been added in **attributesForFaceting** index setting
+   *   can be used in this parameter.
    *   You can also use `*` to perform faceting on all attributes specified in **attributesForFaceting**.
    * - queryType: select how the query words are interpreted, it can be one of the following value:
    *    - prefixAll: all query words are interpreted as prefixes,
    *    - prefixLast: only the last word is interpreted as a prefix (default behavior),
    *    - prefixNone: no query word is interpreted as a prefix. This option is not recommended.
-   * - optionalWords: a string that contains the list of words that should be considered as optional when found in the query.
+   * - optionalWords: a string that contains the list of words that should
+   * be considered as optional when found in the query.
    *   Comma separated and array are accepted.
-   * - distinct: If set to 1, enable the distinct feature (disabled by default) if the attributeForDistinct index setting is set.
-   *   This feature is similar to the SQL "distinct" keyword: when enabled in a query with the distinct=1 parameter,
+   * - distinct: If set to 1, enable the distinct feature (disabled by default)
+   * if the attributeForDistinct index setting is set.
+   *   This feature is similar to the SQL "distinct" keyword: when enabled
+   *   in a query with the distinct=1 parameter,
    *   all hits containing a duplicate value for the attributeForDistinct attribute are removed from results.
-   *   For example, if the chosen attribute is show_name and several hits have the same value for show_name, then only the best
+   *   For example, if the chosen attribute is show_name and several hits have
+   *   the same value for show_name, then only the best
    *   one is kept and others are removed.
-   * - restrictSearchableAttributes: List of attributes you want to use for textual search (must be a subset of the attributesToIndex index setting)
+   * - restrictSearchableAttributes: List of attributes you want to use for
+   * textual search (must be a subset of the attributesToIndex index setting)
    * either comma separated or as an array
    * @param callback the result callback called with two arguments:
    *  error: null or Error('message'). If false, the content contains the error.
@@ -1417,10 +1503,12 @@ AlgoliaSearch.prototype.Index.prototype = {
 
     var params = this.as._getSearchParams(queryParameters, '');
 
-    return this.as._jsonRequest({ method: 'GET',
+    return this.as._jsonRequest({
+      method: 'GET',
       url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/browse?' + params,
       hostType: 'read',
-      callback: callback });
+      callback: callback
+    });
   },
 
   /*
@@ -1508,7 +1596,7 @@ AlgoliaSearch.prototype.Index.prototype = {
       var queryString;
 
       if (cursor !== undefined) {
-        queryString = 'cursor=' + encodeURIComponent(cursor)
+        queryString = 'cursor=' + encodeURIComponent(cursor);
       } else {
         queryString = params;
       }
@@ -1551,7 +1639,7 @@ AlgoliaSearch.prototype.Index.prototype = {
    */
   ttAdapter: function(params) {
     var self = this;
-    return function(query, syncCb, asyncCb) {
+    return function ttAdapter(query, syncCb, asyncCb) {
       var cb;
 
       if (typeof asyncCb === 'function') {
@@ -1562,7 +1650,7 @@ AlgoliaSearch.prototype.Index.prototype = {
         cb = syncCb;
       }
 
-      self.search(query, params, function(err, content) {
+      self.search(query, params, function searchDone(err, content) {
         if (err) {
           cb(err);
           return;
@@ -1609,11 +1697,7 @@ AlgoliaSearch.prototype.Index.prototype = {
         }
 
         if (content.status !== 'published') {
-          return client._promise.delay(delay).then(function() {
-            // do not forward the callback, we want the promise
-            // on next iteration
-            return retryLoop();
-          });
+          return client._promise.delay(delay).then(retryLoop);
         }
 
         return content;
@@ -1627,13 +1711,13 @@ AlgoliaSearch.prototype.Index.prototype = {
     promise.then(successCb, failureCb);
 
     function successCb(content) {
-      exitPromise(function() {
+      exitPromise(function exit() {
         callback(null, content);
       }, client._setTimeout || setTimeout);
     }
 
     function failureCb(err) {
-      exitPromise(function() {
+      exitPromise(function exit() {
         callback(err);
       }, client._setTimeout || setTimeout);
     }
@@ -1648,10 +1732,12 @@ AlgoliaSearch.prototype.Index.prototype = {
    */
   clearIndex: function(callback) {
     var indexObj = this;
-    return this.as._jsonRequest({ method: 'POST',
+    return this.as._jsonRequest({
+      method: 'POST',
       url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/clear',
       hostType: 'write',
-      callback: callback });
+      callback: callback
+    });
   },
   /*
    * Get settings of this index
@@ -1662,10 +1748,12 @@ AlgoliaSearch.prototype.Index.prototype = {
    */
   getSettings: function(callback) {
     var indexObj = this;
-    return this.as._jsonRequest({ method: 'GET',
+    return this.as._jsonRequest({
+      method: 'GET',
       url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/settings',
       hostType: 'read',
-      callback: callback });
+      callback: callback
+    });
   },
 
   /*
@@ -1679,22 +1767,32 @@ AlgoliaSearch.prototype.Index.prototype = {
    *   If set to null, all attributes are retrieved.
    * - attributesToHighlight: (array of strings) default list of attributes to highlight.
    *   If set to null, all indexed attributes are highlighted.
-   * - attributesToSnippet**: (array of strings) default list of attributes to snippet alongside the number of words to return (syntax is attributeName:nbWords).
+   * - attributesToSnippet**: (array of strings) default list of attributes to snippet alongside the number
+   * of words to return (syntax is attributeName:nbWords).
    *   By default no snippet is computed. If set to null, no snippet is computed.
    * - attributesToIndex: (array of strings) the list of fields you want to index.
-   *   If set to null, all textual and numerical attributes of your objects are indexed, but you should update it to get optimal results.
+   *   If set to null, all textual and numerical attributes of your objects are indexed,
+   *   but you should update it to get optimal results.
    *   This parameter has two important uses:
-   *     - Limit the attributes to index: For example if you store a binary image in base64, you want to store it and be able to
+   *     - Limit the attributes to index: For example if you store a binary image in base64,
+   *     you want to store it and be able to
    *       retrieve it but you don't want to search in the base64 string.
-   *     - Control part of the ranking*: (see the ranking parameter for full explanation) Matches in attributes at the beginning of
+   *     - Control part of the ranking*: (see the ranking parameter for full explanation)
+   *     Matches in attributes at the beginning of
    *       the list will be considered more important than matches in attributes further down the list.
-   *       In one attribute, matching text at the beginning of the attribute will be considered more important than text after, you can disable
-   *       this behavior if you add your attribute inside `unordered(AttributeName)`, for example attributesToIndex: ["title", "unordered(text)"].
+   *       In one attribute, matching text at the beginning of the attribute will be
+   *       considered more important than text after, you can disable
+   *       this behavior if you add your attribute inside `unordered(AttributeName)`,
+   *       for example attributesToIndex: ["title", "unordered(text)"].
    * - attributesForFaceting: (array of strings) The list of fields you want to use for faceting.
-   *   All strings in the attribute selected for faceting are extracted and added as a facet. If set to null, no attribute is used for faceting.
-   * - attributeForDistinct: (string) The attribute name used for the Distinct feature. This feature is similar to the SQL "distinct" keyword: when enabled
-   *   in query with the distinct=1 parameter, all hits containing a duplicate value for this attribute are removed from results.
-   *   For example, if the chosen attribute is show_name and several hits have the same value for show_name, then only the best one is kept and others are removed.
+   *   All strings in the attribute selected for faceting are extracted and added as a facet.
+   *   If set to null, no attribute is used for faceting.
+   * - attributeForDistinct: (string) The attribute name used for the Distinct feature.
+   * This feature is similar to the SQL "distinct" keyword: when enabled
+   *   in query with the distinct=1 parameter, all hits containing a duplicate
+   *   value for this attribute are removed from results.
+   *   For example, if the chosen attribute is show_name and several hits have
+   *   the same value for show_name, then only the best one is kept and others are removed.
    * - ranking: (array of strings) controls the way results are sorted.
    *   We have six available criteria:
    *    - typo: sort according to number of typos,
@@ -1702,33 +1800,42 @@ AlgoliaSearch.prototype.Index.prototype = {
    *    - proximity: sort according to the proximity of query words in hits,
    *    - attribute: sort according to the order of attributes defined by attributesToIndex,
    *    - exact:
-   *        - if the user query contains one word: sort objects having an attribute that is exactly the query word before others.
-   *          For example if you search for the "V" TV show, you want to find it with the "V" query and avoid to have all popular TV
+   *        - if the user query contains one word: sort objects having an attribute
+   *        that is exactly the query word before others.
+   *          For example if you search for the "V" TV show, you want to find it
+   *          with the "V" query and avoid to have all popular TV
    *          show starting by the v letter before it.
-   *        - if the user query contains multiple words: sort according to the number of words that matched exactly (and not as a prefix).
+   *        - if the user query contains multiple words: sort according to the
+   *        number of words that matched exactly (and not as a prefix).
    *    - custom: sort according to a user defined formula set in **customRanking** attribute.
    *   The standard order is ["typo", "geo", "proximity", "attribute", "exact", "custom"]
    * - customRanking: (array of strings) lets you specify part of the ranking.
-   *   The syntax of this condition is an array of strings containing attributes prefixed by asc (ascending order) or desc (descending order) operator.
+   *   The syntax of this condition is an array of strings containing attributes
+   *   prefixed by asc (ascending order) or desc (descending order) operator.
    *   For example `"customRanking" => ["desc(population)", "asc(name)"]`
    * - queryType: Select how the query words are interpreted, it can be one of the following value:
    *   - prefixAll: all query words are interpreted as prefixes,
    *   - prefixLast: only the last word is interpreted as a prefix (default behavior),
    *   - prefixNone: no query word is interpreted as a prefix. This option is not recommended.
-   * - highlightPreTag: (string) Specify the string that is inserted before the highlighted parts in the query result (default to "<em>").
-   * - highlightPostTag: (string) Specify the string that is inserted after the highlighted parts in the query result (default to "</em>").
-   * - optionalWords: (array of strings) Specify a list of words that should be considered as optional when found in the query.
+   * - highlightPreTag: (string) Specify the string that is inserted before
+   * the highlighted parts in the query result (default to "<em>").
+   * - highlightPostTag: (string) Specify the string that is inserted after
+   * the highlighted parts in the query result (default to "</em>").
+   * - optionalWords: (array of strings) Specify a list of words that should
+   * be considered as optional when found in the query.
    * @param callback (optional) the result callback called with two arguments
    *  error: null or Error('message')
    *  content: the server answer or the error message if a failure occured
    */
   setSettings: function(settings, callback) {
     var indexObj = this;
-    return this.as._jsonRequest({ method: 'PUT',
+    return this.as._jsonRequest({
+      method: 'PUT',
       url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/settings',
       hostType: 'write',
       body: settings,
-      callback: callback });
+      callback: callback
+    });
   },
   /*
    * List all existing user keys associated to this index
@@ -1739,10 +1846,12 @@ AlgoliaSearch.prototype.Index.prototype = {
    */
   listUserKeys: function(callback) {
     var indexObj = this;
-    return this.as._jsonRequest({ method: 'GET',
+    return this.as._jsonRequest({
+      method: 'GET',
       url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/keys',
       hostType: 'read',
-      callback: callback });
+      callback: callback
+    });
   },
   /*
    * Get ACL of a user key associated to this index
@@ -1754,10 +1863,12 @@ AlgoliaSearch.prototype.Index.prototype = {
    */
   getUserKeyACL: function(key, callback) {
     var indexObj = this;
-    return this.as._jsonRequest({ method: 'GET',
+    return this.as._jsonRequest({
+      method: 'GET',
       url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/keys/' + key,
       hostType: 'read',
-      callback: callback });
+      callback: callback
+    });
   },
   /*
    * Delete an existing user key associated to this index
@@ -1769,46 +1880,49 @@ AlgoliaSearch.prototype.Index.prototype = {
    */
   deleteUserKey: function(key, callback) {
     var indexObj = this;
-    return this.as._jsonRequest({ method: 'DELETE',
+    return this.as._jsonRequest({
+      method: 'DELETE',
       url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/keys/' + key,
       hostType: 'write',
-      callback: callback });
+      callback: callback
+    });
   },
-   /*
-    * Add a new API key to this index
-    *
-    * @param {string[]} acls - The list of ACL for this key. Defined by an array of strings that
-    *   can contains the following values:
-    *     - search: allow to search (https and http)
-    *     - addObject: allows to add/update an object in the index (https only)
-    *     - deleteObject : allows to delete an existing object (https only)
-    *     - deleteIndex : allows to delete index content (https only)
-    *     - settings : allows to get index settings (https only)
-    *     - editSettings : allows to change index settings (https only)
-    * @param {Object} [params] - Optionnal parameters to set for the key
-    * @param {number} params.validity - Number of seconds after which the key will be automatically removed (0 means no time limit for this key)
-    * @param {number} params.maxQueriesPerIPPerHour - Number of API calls allowed from an IP address per hour
-    * @param {number} params.maxHitsPerQuery - Number of hits this API key can retrieve in one call
-    * @param {string} params.description - A description for your key
-    * @param {string[]} params.referers - A list of authorized referers
-    * @param {Object} params.queryParameters - Force the key to use specific query parameters
-    * @param {Function} callback - The result callback called with two arguments
-    *   error: null or Error('message')
-    *   content: the server answer with user keys list
-    * @return {Promise|undefined} Returns a promise if no callback given
-    * @example
-    * index.addUserKey(['search'], {
-    *   validity: 300,
-    *   maxQueriesPerIPPerHour: 2000,
-    *   maxHitsPerQuery: 3,
-    *   description: 'Eat three fruits',
-    *   referers: ['*.algolia.com'],
-    *   queryParameters: {
-    *     tagFilters: ['public'],
-    *   }
-    * })
-    * @see {@link https://www.algolia.com/doc/rest_api#AddIndexKey|Algolia REST API Documentation}
-    */
+  /*
+   * Add a new API key to this index
+   *
+   * @param {string[]} acls - The list of ACL for this key. Defined by an array of strings that
+   *   can contains the following values:
+   *     - search: allow to search (https and http)
+   *     - addObject: allows to add/update an object in the index (https only)
+   *     - deleteObject : allows to delete an existing object (https only)
+   *     - deleteIndex : allows to delete index content (https only)
+   *     - settings : allows to get index settings (https only)
+   *     - editSettings : allows to change index settings (https only)
+   * @param {Object} [params] - Optionnal parameters to set for the key
+   * @param {number} params.validity - Number of seconds after which the key will
+   * be automatically removed (0 means no time limit for this key)
+   * @param {number} params.maxQueriesPerIPPerHour - Number of API calls allowed from an IP address per hour
+   * @param {number} params.maxHitsPerQuery - Number of hits this API key can retrieve in one call
+   * @param {string} params.description - A description for your key
+   * @param {string[]} params.referers - A list of authorized referers
+   * @param {Object} params.queryParameters - Force the key to use specific query parameters
+   * @param {Function} callback - The result callback called with two arguments
+   *   error: null or Error('message')
+   *   content: the server answer with user keys list
+   * @return {Promise|undefined} Returns a promise if no callback given
+   * @example
+   * index.addUserKey(['search'], {
+   *   validity: 300,
+   *   maxQueriesPerIPPerHour: 2000,
+   *   maxHitsPerQuery: 3,
+   *   description: 'Eat three fruits',
+   *   referers: ['*.algolia.com'],
+   *   queryParameters: {
+   *     tagFilters: ['public'],
+   *   }
+   * })
+   * @see {@link https://www.algolia.com/doc/rest_api#AddIndexKey|Algolia REST API Documentation}
+   */
   addUserKey: function(acls, params, callback) {
     if (arguments.length === 1 || typeof params === 'function') {
       callback = params;
@@ -1845,79 +1959,81 @@ AlgoliaSearch.prototype.Index.prototype = {
    * Add an existing user key associated to this index
    * @deprecated use index.addUserKey()
    */
-   addUserKeyWithValidity: deprecate(function(acls, params, callback) {
-     return this.addUserKey(acls, params, callback);
-   }, deprecatedMessage('index.addUserKeyWithValidity()', 'index.addUserKey()')),
+  addUserKeyWithValidity: deprecate(function deprecatedAddUserKeyWithValidity(acls, params, callback) {
+    return this.addUserKey(acls, params, callback);
+  }, deprecatedMessage('index.addUserKeyWithValidity()', 'index.addUserKey()')),
 
-   /**
-    * Update an existing API key of this index
-    * @param {string} key - The key to update
-    * @param {string[]} acls - The list of ACL for this key. Defined by an array of strings that
-    *   can contains the following values:
-    *     - search: allow to search (https and http)
-    *     - addObject: allows to add/update an object in the index (https only)
-    *     - deleteObject : allows to delete an existing object (https only)
-    *     - deleteIndex : allows to delete index content (https only)
-    *     - settings : allows to get index settings (https only)
-    *     - editSettings : allows to change index settings (https only)
-    * @param {Object} [params] - Optionnal parameters to set for the key
-    * @param {number} params.validity - Number of seconds after which the key will be automatically removed (0 means no time limit for this key)
-    * @param {number} params.maxQueriesPerIPPerHour - Number of API calls allowed from an IP address per hour
-    * @param {number} params.maxHitsPerQuery - Number of hits this API key can retrieve in one call
-    * @param {string} params.description - A description for your key
-    * @param {string[]} params.referers - A list of authorized referers
-    * @param {Object} params.queryParameters - Force the key to use specific query parameters
-    * @param {Function} callback - The result callback called with two arguments
-    *   error: null or Error('message')
-    *   content: the server answer with user keys list
-    * @return {Promise|undefined} Returns a promise if no callback given
-    * @example
-    * index.updateUserKey('APIKEY', ['search'], {
-    *   validity: 300,
-    *   maxQueriesPerIPPerHour: 2000,
-    *   maxHitsPerQuery: 3,
-    *   description: 'Eat three fruits',
-    *   referers: ['*.algolia.com'],
-    *   queryParameters: {
-    *     tagFilters: ['public'],
-    *   }
-    * })
-    * @see {@link https://www.algolia.com/doc/rest_api#UpdateIndexKey|Algolia REST API Documentation}
-    */
-   updateUserKey: function(key, acls, params, callback) {
-     if (arguments.length === 2 || typeof params === 'function') {
-       callback = params;
-       params = null;
-     }
+  /**
+   * Update an existing API key of this index
+   * @param {string} key - The key to update
+   * @param {string[]} acls - The list of ACL for this key. Defined by an array of strings that
+   *   can contains the following values:
+   *     - search: allow to search (https and http)
+   *     - addObject: allows to add/update an object in the index (https only)
+   *     - deleteObject : allows to delete an existing object (https only)
+   *     - deleteIndex : allows to delete index content (https only)
+   *     - settings : allows to get index settings (https only)
+   *     - editSettings : allows to change index settings (https only)
+   * @param {Object} [params] - Optionnal parameters to set for the key
+   * @param {number} params.validity - Number of seconds after which the key will
+   * be automatically removed (0 means no time limit for this key)
+   * @param {number} params.maxQueriesPerIPPerHour - Number of API calls allowed from an IP address per hour
+   * @param {number} params.maxHitsPerQuery - Number of hits this API key can retrieve in one call
+   * @param {string} params.description - A description for your key
+   * @param {string[]} params.referers - A list of authorized referers
+   * @param {Object} params.queryParameters - Force the key to use specific query parameters
+   * @param {Function} callback - The result callback called with two arguments
+   *   error: null or Error('message')
+   *   content: the server answer with user keys list
+   * @return {Promise|undefined} Returns a promise if no callback given
+   * @example
+   * index.updateUserKey('APIKEY', ['search'], {
+   *   validity: 300,
+   *   maxQueriesPerIPPerHour: 2000,
+   *   maxHitsPerQuery: 3,
+   *   description: 'Eat three fruits',
+   *   referers: ['*.algolia.com'],
+   *   queryParameters: {
+   *     tagFilters: ['public'],
+   *   }
+   * })
+   * @see {@link https://www.algolia.com/doc/rest_api#UpdateIndexKey|Algolia REST API Documentation}
+   */
+  updateUserKey: function(key, acls, params, callback) {
+    if (arguments.length === 2 || typeof params === 'function') {
+      callback = params;
+      params = null;
+    }
 
-     var putObj = {
-       acl: acls
-     };
+    var putObj = {
+      acl: acls
+    };
 
-     if (params) {
-       putObj.validity = params.validity;
-       putObj.maxQueriesPerIPPerHour = params.maxQueriesPerIPPerHour;
-       putObj.maxHitsPerQuery = params.maxHitsPerQuery;
-       putObj.description = params.description;
+    if (params) {
+      putObj.validity = params.validity;
+      putObj.maxQueriesPerIPPerHour = params.maxQueriesPerIPPerHour;
+      putObj.maxHitsPerQuery = params.maxHitsPerQuery;
+      putObj.description = params.description;
 
-       if (params.queryParameters) {
-         putObj.queryParameters = this.as._getSearchParams(params.queryParameters, '');
-       }
+      if (params.queryParameters) {
+        putObj.queryParameters = this.as._getSearchParams(params.queryParameters, '');
+      }
 
-       putObj.referers = params.referers;
-     }
+      putObj.referers = params.referers;
+    }
 
-     return this.as._jsonRequest({
-       method: 'PUT',
-       url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/keys/' + key,
-       body: putObj,
-       hostType: 'write',
-       callback: callback
-     });
-   },
+    return this.as._jsonRequest({
+      method: 'PUT',
+      url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/keys/' + key,
+      body: putObj,
+      hostType: 'write',
+      callback: callback
+    });
+  },
 
   _search: function(params, callback) {
-    return this.as._jsonRequest({ cache: this.cache,
+    return this.as._jsonRequest({
+      cache: this.cache,
       method: 'POST',
       url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/query',
       body: {params: params},
@@ -1939,7 +2055,7 @@ AlgoliaSearch.prototype.Index.prototype = {
 
 // extracted from https://github.com/component/map/blob/master/index.js
 // without the crazy toFunction thing
-function map(arr, fn){
+function map(arr, fn) {
   var ret = [];
   for (var i = 0; i < arr.length; ++i) {
     ret.push(fn(arr[i], i));
@@ -1955,7 +2071,7 @@ function prepareHost(protocol) {
 
 function notImplemented() {
   var message = 'Not implemented in this environment.\n' +
-  'If you feel this is a mistake, write to support@algolia.com';
+    'If you feel this is a mistake, write to support@algolia.com';
 
   throw new errors.AlgoliaSearchError(message);
 }
@@ -1965,8 +2081,8 @@ function deprecatedMessage(previousUsage, newUsage) {
     .replace('.', '')
     .replace('()', '');
 
-  return 'algoliasearch: `' + previousUsage + '` was replaced by `' +
-    newUsage + '`. Please see https://github.com/algolia/algoliasearch-client-js/wiki/Deprecated#' + githubAnchorLink
+  return 'algoliasearch: `' + previousUsage + '` was replaced by `' + newUsage +
+    '`. Please see https://github.com/algolia/algoliasearch-client-js/wiki/Deprecated#' + githubAnchorLink;
 }
 
 // Parse cloud does not supports setTimeout
@@ -1982,6 +2098,7 @@ function deprecate(fn, message) {
 
   function deprecated() {
     if (!warned) {
+      /* eslint no-console:0 */
       console.log(message);
       warned = true;
     }

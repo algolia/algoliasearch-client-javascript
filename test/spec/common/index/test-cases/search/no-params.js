@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = {
   testName: 'index.search(query, cb)',
   methodName: 'search',

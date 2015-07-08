@@ -1,6 +1,8 @@
+'use strict';
+
 var test = require('tape');
 
-test('index\'s cache is different between instances', function(t) {
+test("index's cache is different between instances", function(t) {
   t.plan(1);
 
   var async = require('async');

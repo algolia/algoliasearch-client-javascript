@@ -1,3 +1,5 @@
+'use strict';
+
 var test = require('tape');
 
 test('Request strategy uses only JSONP if one XHR fails', function(t) {

@@ -1,3 +1,5 @@
+'use strict';
+
 var testCases = module.exports = [];
 
 testCases.push({

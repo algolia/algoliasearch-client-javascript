@@ -1,3 +1,5 @@
+'use strict';
+
 // This is the Parse entry point
 // See https://www.parse.com/docs/cloud_code_guide#cloud_code
 module.exports = algoliasearch;

@@ -1,3 +1,5 @@
+'use strict';
+
 var test = require('tape');
 
 test('Request strategy does not fallback to JSONP', function(t) {

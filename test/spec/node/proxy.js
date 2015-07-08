@@ -1,3 +1,5 @@
+'use strict';
+
 var test = require('tape');
 
 test('when using a proxy', function(t) {
@@ -55,10 +57,10 @@ test('when using a proxy', function(t) {
       proxyTime = Date.now();
       t.pass('We received a proxied request');
       var serverUrl = url.parse('http://' + req.url);
-      var serverSocket = net.connect(serverUrl.port, serverUrl.hostname, function () {
-          proxySocket.write('HTTP/1.1 200 Connection Established\r\n\r\n');
-          serverSocket.pipe(proxySocket);
-          proxySocket.pipe(serverSocket);
+      var serverSocket = net.connect(serverUrl.port, serverUrl.hostname, function() {
+        proxySocket.write('HTTP/1.1 200 Connection Established\r\n\r\n');
+        serverSocket.pipe(proxySocket);
+        proxySocket.pipe(serverSocket);
       });
       serverSocket.on('error', function() {
         // ignore ECONNRESET errors

@@ -1,3 +1,5 @@
+'use strict';
+
 var bind = require('lodash-compat/function/bind');
 var test = require('tape');
 

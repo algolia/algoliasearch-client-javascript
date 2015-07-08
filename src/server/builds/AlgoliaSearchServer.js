@@ -1,3 +1,5 @@
+'use strict';
+
 // Some methods only accessible server side
 
 module.exports = AlgoliaSearchServer;
@@ -61,9 +63,9 @@ AlgoliaSearchServer.prototype._computeRequestHeaders = function() {
   var headers = AlgoliaSearchServer.super_.prototype._computeRequestHeaders.call(this);
 
   if (this._forward) {
-      headers['x-algolia-api-key'] = this._forward.adminAPIKey;
-      headers['x-forwarded-for'] = this._forward.endUserIP;
-      headers['x-forwarded-api-key'] = this._forward.rateLimitAPIKey;
+    headers['x-algolia-api-key'] = this._forward.adminAPIKey;
+    headers['x-forwarded-for'] = this._forward.endUserIP;
+    headers['x-forwarded-api-key'] = this._forward.rateLimitAPIKey;
   }
 
   if (this._secure) {

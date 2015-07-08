@@ -1,11 +1,12 @@
+'use strict';
+
 module.exports = loadV2;
 
 function loadV2(buildName) {
   var loadScript = require('load-script');
   var v2ScriptUrl = '//cdn.jsdelivr.net/algoliasearch/2/' + buildName + '.min.js';
 
-  var message =
-    '-- AlgoliaSearch `latest` warning --\n' +
+  var message = '-- AlgoliaSearch `latest` warning --\n' +
     'Warning, you are using the `latest` version string from jsDelivr to load the AlgoliaSearch library.\n' +
     'Using `latest` is no more recommended, you should load //cdn.jsdelivr.net/algoliasearch/2/algoliasearch.min.js\n\n' +
     'Also, we updated the AlgoliaSearch JavaScript client to V3. If you want to upgrade,\n' +
@@ -33,7 +34,7 @@ function loadV2(buildName) {
     } else {
       loadScript(v2ScriptUrl, scriptLoaded('DOMElement'));
     }
-  } catch(e) {
+  } catch (e) {
     loadScript(v2ScriptUrl, scriptLoaded('DOMElement'));
   }
 }
@@ -42,6 +43,8 @@ function scriptLoaded(method) {
   return function log() {
     var message = 'AlgoliaSearch: loaded V2 script using ' + method;
 
-    window.console && window.console.log && window.console.log(message);
+    if (window.console && window.console.log) {
+      window.console.log(message);
+    }
   };
 }

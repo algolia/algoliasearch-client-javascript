@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = {
   testName: 'client.listUserKeys(cb)',
   object: 'client',

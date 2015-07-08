@@ -1,3 +1,5 @@
+'use strict';
+
 var domready = require('domready');
 
 // wait for domready to allo test runner to do ajax requests before we

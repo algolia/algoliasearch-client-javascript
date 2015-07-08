@@ -1,6 +1,8 @@
+'use strict';
+
 var fauxJax = require('faux-jax');
 
-  if (!process.browser || fauxJax.support.xhr.cors) {
+if (!process.browser || fauxJax.support.xhr.cors) {
   module.exports = [{
     object: 'index',
     methodName: 'updateUserKey',

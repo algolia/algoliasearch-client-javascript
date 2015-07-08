@@ -1,3 +1,5 @@
+'use strict';
+
 // This is the jQuery Algolia Search module
 // It's using $.ajax to do requests with a JSONP fallback
 // jQuery promises are returned
@@ -7,7 +9,7 @@ var inherits = require('inherits');
 var AlgoliaSearch = require('../../AlgoliaSearch');
 var errors = require('../../errors');
 var inlineHeaders = require('../inline-headers');
-var JSONPRequest = require('../JSONP-request');
+var jsonpRequest = require('../jsonp-request');
 
 // expose original algoliasearch fn in window
 window.algoliasearch = require('./algoliasearch');
@@ -40,7 +42,11 @@ window.__algolia = {
 
 var $ = window.jQuery;
 
-$.algolia = {Client: algoliasearch, ua: algoliasearch.ua, version: algoliasearch.version};
+$.algolia = {
+  Client: algoliasearch,
+  ua: algoliasearch.ua,
+  version: algoliasearch.version
+};
 
 function AlgoliaSearchJQuery() {
   // call AlgoliaSearch constructor
@@ -49,8 +55,8 @@ function AlgoliaSearchJQuery() {
 
 inherits(AlgoliaSearchJQuery, AlgoliaSearch);
 
-AlgoliaSearchJQuery.prototype._request = function(url, opts) {
-  return $.Deferred(function(deferred) {
+AlgoliaSearchJQuery.prototype._request = function request(url, opts) {
+  return new $.Deferred(function(deferred) {
     var body = opts.body;
 
     url = inlineHeaders(url, opts.headers);
@@ -74,7 +80,7 @@ AlgoliaSearchJQuery.prototype._request = function(url, opts) {
       dataType: 'json',
       data: body,
       headers: requestHeaders,
-      complete: function(jqXHR, textStatus/* , error*/) {
+      complete: function onComplete(jqXHR, textStatus/* , error*/) {
         if (textStatus === 'timeout') {
           deferred.reject(new errors.RequestTimeout());
           return;
@@ -101,11 +107,11 @@ AlgoliaSearchJQuery.prototype._request = function(url, opts) {
 
 // using IE8 or IE9 we will always end up here
 // jQuery does not not fallback to XDomainRequest
-AlgoliaSearchJQuery.prototype._request.fallback = function(url, opts) {
+AlgoliaSearchJQuery.prototype._request.fallback = function requestFallback(url, opts) {
   url = inlineHeaders(url, opts.headers);
 
-  return $.Deferred(function(deferred) {
-    JSONPRequest(url, opts, function JSONPRequestDone(err, content) {
+  return new $.Deferred(function wrapJsonpRequest(deferred) {
+    jsonpRequest(url, opts, function jsonpRequestDone(err, content) {
       if (err) {
         deferred.reject(err);
         return;
@@ -117,19 +123,19 @@ AlgoliaSearchJQuery.prototype._request.fallback = function(url, opts) {
 };
 
 AlgoliaSearchJQuery.prototype._promise = {
-  reject: function(val) {
-    return $.Deferred(function(deferred) {
+  reject: function reject(val) {
+    return new $.Deferred(function rejectDeferred(deferred) {
       deferred.reject(val);
     }).promise();
   },
-  resolve: function(val) {
-    return $.Deferred(function(deferred) {
+  resolve: function resolve(val) {
+    return new $.Deferred(function resolveDeferred(deferred) {
       deferred.resolve(val);
     }).promise();
   },
-  delay: function(ms) {
-    return $.Deferred(function(deferred) {
-      setTimeout(function() {
+  delay: function delay(ms) {
+    return new $.Deferred(function delayResolve(deferred) {
+      setTimeout(function resolveDeferred() {
         deferred.resolve();
       }, ms);
     }).promise();

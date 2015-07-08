@@ -1,3 +1,5 @@
+'use strict';
+
 if (!process.env.INTEGRATION_TEST_API_KEY || !process.env.INTEGRATION_TEST_APPID) {
   throw new Error('missing: INTEGRATION_TEST_APPID=$APPID INTEGRATION_TEST_API_KEY=$APIKEY command');
 }
@@ -208,5 +210,4 @@ function get(pattern) {
 }
 
 function noop() {
-
 }

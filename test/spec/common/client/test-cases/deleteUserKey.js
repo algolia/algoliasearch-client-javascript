@@ -1,3 +1,5 @@
+'use strict';
+
 var fauxJax = require('faux-jax');
 
 if (!process.browser || fauxJax.support.xhr.cors) {
@@ -5,7 +7,7 @@ if (!process.browser || fauxJax.support.xhr.cors) {
     testName: 'client.deleteUserKey(key, cb)',
     object: 'client',
     methodName: 'deleteUserKey',
-    callArguments: [ 'mykey' ],
+    callArguments: ['mykey'],
     action: 'write',
     expectedRequest: {
       method: 'DELETE',

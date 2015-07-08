@@ -1,3 +1,5 @@
+'use strict';
+
 var test = require('tape');
 
 test('Request strategy does as many tries as hosts', function(t) {

@@ -1,3 +1,5 @@
+'use strict';
+
 var test = require('tape');
 
 test('when indexing content, we retry if timeout occurs', function(t) {

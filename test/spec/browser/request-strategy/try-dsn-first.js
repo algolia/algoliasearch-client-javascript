@@ -1,3 +1,5 @@
+'use strict';
+
 var test = require('tape');
 
 // this test uses the utils/support-server to get JSONP responses
