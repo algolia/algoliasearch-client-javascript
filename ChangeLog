@@ -1,5 +1,8 @@
 CHANGELOG
 
+UNRELEASED
+    * fix: remove a git clone dependency on install (debug/ms/yui compressor issue)
+
 2015-07-08 3.7.1
     * fix: do not call agent.destroy when there's no such method
     * fix: do not rely on any "smart" port computing
