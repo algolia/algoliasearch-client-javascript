@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 set -e # exit when error
+set -x # debug messages
+
 
 # Use this with `npm run build` so that `./node_modules/.bin` are injected into
 # the PATH
@@ -39,7 +41,7 @@ browserify -p bundle-collapser/plugin src/browser/builds/algoliasearch.jquery.js
 echo '..Minify'
 for bundle in "${bundles[@]}"
 do
-  uglifyjs dist/"$bundle".js -mc --warnings=false > dist/"$bundle".min.js
+  uglifyjs dist/"$bundle".js -mc 'warnings=false' > dist/"$bundle".min.js
 done
 
 echo '..Prepend license'

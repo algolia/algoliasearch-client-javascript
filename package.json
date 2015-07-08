@@ -9,18 +9,12 @@
   },
   "scripts": {
     "build": "PACKAGE_VERSION=$(json -f src/version.json) ./scripts/build",
-    "release": "git clean dist/ -f && git checkout dist/ && npm install && ./scripts/release && APP_ENV=production npm run build",
-    "test": "npm run test-phantom-unit && npm run test-node-unit && npm run lint",
-    "test-browser-unit": "./scripts/test-browser",
-    "test-node-unit": "node test/run-node.js",
-    "test-phantom-unit": "DEBUG=zuul* zuul --no-coverage --phantom -- test/run-browser.js",
-    "test-node-integration": "node test/run-integration.js",
-    "test-parse-cloud": "./scripts/test-parse-cloud",
-    "test-browser-integration": "npm run build && DEBUG=zuul* zuul --no-coverage -- test/run-integration.js",
     "dev": "APP_ENV=development DEBUG=zuul* zuul --no-coverage --local 8080 -- test/run-browser.js",
     "dev-integration": "APP_ENV=development DEBUG=zuul* zuul --no-coverage --local 8080 -- test/run-integration.js",
     "examples": "http-server . -a 0.0.0.0",
-    "lint": "eslint --quiet test/"
+    "release": "git clean dist/ -f && git checkout dist/ && npm install && ./scripts/release && APP_ENV=production npm run build",
+    "test": "./scripts/test",
+    "test-ci": "./scripts/test-ci"
   },
   "browserify": {
     "transform": [
@@ -95,11 +89,11 @@
     "sinon": "1.15.3",
     "superagent": "1.2.0",
     "tape": "4.0.0",
-    "uglifyjs": "2.4.10",
+    "uglify-js": "2.4.23",
     "url-parse": "1.0.1",
     "webpack": "1.9.11",
     "xhr": "2.0.2",
-    "zuul": "git://github.com/vvo/zuul.git#bbad623a41183ea3b7b13cb8b44b535878cf05fc",
+    "zuul": "3.2.0",
     "zuul-ngrok": "3.0.0"
   },
   "engines": {
