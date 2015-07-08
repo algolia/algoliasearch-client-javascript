@@ -4990,7 +4990,7 @@ module.exports =
 /* 59 */
 /***/ function(module, exports) {
 
-	module.exports = "3.7.0"
+	module.exports = "3.7.1"
 
 /***/ }
 /******/ ]);
