@@ -1,3 +1,5 @@
+'use strict';
+
 var test = require('tape');
 
 var errors = require('../../../src/errors');

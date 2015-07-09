@@ -1,3 +1,5 @@
+'use strict';
+
 var cloneDeep = require('lodash-compat/lang/cloneDeep');
 var merge = require('lodash-compat/object/merge');
 var sinon = require('sinon');

@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = inlineHeaders;
 
 var querystring = require('querystring');

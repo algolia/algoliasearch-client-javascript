@@ -1,3 +1,5 @@
+'use strict';
+
 // This is the parse cloud testing file
 // It will try to communicate with the deployed test parse application
 // also see scripts/test-parse

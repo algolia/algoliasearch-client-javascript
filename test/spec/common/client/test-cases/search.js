@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = [{
   testName: 'client.search(queries, cb)',
   object: 'client',

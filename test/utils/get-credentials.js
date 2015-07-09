@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = getCredentials;
 
 var Chance = require('chance');

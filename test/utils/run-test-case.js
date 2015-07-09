@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = runTestCase;
 
 var merge = require('lodash-compat/object/merge');

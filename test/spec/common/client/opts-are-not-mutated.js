@@ -1,3 +1,5 @@
+'use strict';
+
 var test = require('tape');
 
 test('algoliasearch(applicationID, apiKey, opts), `opts` is not mutated', function(t) {

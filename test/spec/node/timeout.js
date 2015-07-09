@@ -1,3 +1,5 @@
+'use strict';
+
 var test = require('tape');
 
 test('Request timeout is used', function(t) {
@@ -28,6 +30,5 @@ test('Request timeout is used', function(t) {
     t.deepEqual(content, {
       timeout: 'ok'
     }, 'content matches');
-
   }).catch(t.fail.bind(t));
 });

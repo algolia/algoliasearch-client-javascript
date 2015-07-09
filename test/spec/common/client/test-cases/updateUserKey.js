@@ -1,6 +1,8 @@
+'use strict';
+
 var fauxJax = require('faux-jax');
 
-  if (!process.browser || fauxJax.support.xhr.cors) {
+if (!process.browser || fauxJax.support.xhr.cors) {
   module.exports = [{
     testName: 'client.updateUserKey(key, acls, cb)',
     object: 'client',
@@ -9,7 +11,7 @@ var fauxJax = require('faux-jax');
     action: 'write',
     expectedRequest: {
       method: 'PUT',
-      body: { acl: ['search', 'browse'] },
+      body: {acl: ['search', 'browse']},
       URL: {pathname: '/1/keys/WOO'}
     }
   }, {

@@ -1,3 +1,5 @@
+'use strict';
+
 // this file will run all `client/test-cases/**/*.js` and `index/test-cases/**/*.js`
 var bulkRequire = require('bulk-require');
 var flatten = require('lodash-compat/array/flatten');
@@ -28,7 +30,6 @@ var testCases = flatten([
 forEach(testCases, runTestCase);
 
 function addProperty(name, value) {
-
   return function(testCase) {
     testCase[name] = value;
     return testCase;

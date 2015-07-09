@@ -1,3 +1,5 @@
+'use strict';
+
 // this module will either get a regular http keepalive agent or
 // a proxying agent if `HTTP_PROXY` or `HTTPS_PROXY` environment variables
 // are set
@@ -27,8 +29,7 @@ function getAgent(protocol) {
 
 function getParsedProxy() {
   var url = require('url');
-  var proxy =
-    process.env.HTTP_PROXY ||
+  var proxy = process.env.HTTP_PROXY ||
     process.env.HTTPS_PROXY ||
     '';
 
@@ -89,8 +90,7 @@ function getProxyingAgent(protocol, parsedProxy) {
   // httpOverHttps
   // httpsOverHttps
   // https://github.com/mikeal/tunnel-agent/blob/912a7a6d00e10ec76baf9c9369de280fa5badef3/index.js#L12-L15
-  var tunnelType =
-    protocol.replace(':', '') +
+  var tunnelType = protocol.replace(':', '') +
     'Over' +
     parsedProxy.protocol.replace(':', '').replace('h', 'H');
 

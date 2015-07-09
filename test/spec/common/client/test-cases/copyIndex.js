@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = {
   testName: 'client.copyIndex(from, to, cb)',
   object: 'client',

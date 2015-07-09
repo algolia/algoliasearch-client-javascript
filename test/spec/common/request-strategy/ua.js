@@ -1,3 +1,5 @@
+'use strict';
+
 var test = require('tape');
 
 test('Algolia Agent can be passed as an option', function(t) {

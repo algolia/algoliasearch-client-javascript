@@ -1,3 +1,5 @@
+'use strict';
+
 var test = require('tape');
 
 test.skip('index.browseAll() no arguments', function(t) {
@@ -34,5 +36,3 @@ test.skip('index.browseAll() no arguments', function(t) {
     fauxJax.restore();
   }
 });
-
-

@@ -1,3 +1,5 @@
+'use strict';
+
 // This is the Node.JS entry point
 module.exports = algoliasearch;
 
@@ -71,7 +73,7 @@ function AlgoliaSearchNodeJS(applicationID, apiKey, opts) {
 
 inherits(AlgoliaSearchNodeJS, AlgoliaSearchServer);
 
-AlgoliaSearchNodeJS.prototype._request = function(rawUrl, opts) {
+AlgoliaSearchNodeJS.prototype._request = function request(rawUrl, opts) {
   var http = require('http');
   var https = require('https');
   var url = require('url');
@@ -98,7 +100,8 @@ AlgoliaSearchNodeJS.prototype._request = function(rawUrl, opts) {
 
     if (parsedUrl.protocol === 'https:') {
       // we do not rely on any "smart" port computing by either node.js
-      // or a custom http agent, because: https://github.com/TooTallNate/node-https-proxy-agent/issues/7#issuecomment-119539690
+      // or a custom http agent, because:
+      // https://github.com/TooTallNate/node-https-proxy-agent/issues/7#issuecomment-119539690
       if (requestOptions.port === undefined) {
         requestOptions.port = 443;
       }
@@ -134,7 +137,7 @@ AlgoliaSearchNodeJS.prototype._request = function(rawUrl, opts) {
       // debug request body/sent
       // only when DEBUG=debugBody is found
       if (process.env.DEBUG && process.env.DEBUG.indexOf('debugBody') !== -1) {
-        req.once('socket', function() {
+        req.once('socket', function gotSocket() {
           debugBytesSent();
           debugInterval = setInterval(debugBytesSent, 100);
           req.socket.once('end', stopDebug);
@@ -165,8 +168,10 @@ AlgoliaSearchNodeJS.prototype._request = function(rawUrl, opts) {
             statusCode: res.statusCode,
             headers: res.headers
           };
-        } catch(e) {
-          out = new errors.UnparsableJSON({more: data});
+        } catch (e) {
+          out = new errors.UnparsableJSON({
+            more: data
+          });
         }
 
         if (out instanceof errors.UnparsableJSON) {
@@ -212,20 +217,20 @@ AlgoliaSearchNodeJS.prototype._request = function(rawUrl, opts) {
 };
 
 AlgoliaSearchNodeJS.prototype._promise = {
-  reject: function(val) {
+  reject: function reject(val) {
     return Promise.reject(val);
   },
-  resolve: function(val) {
+  resolve: function resolve(val) {
     return Promise.resolve(val);
   },
-  delay: function(ms) {
-    return new Promise(function(resolve/*, reject*/) {
+  delay: function delayPromise(ms) {
+    return new Promise(function resolveOnTimeout(resolve/*, reject*/) {
       setTimeout(resolve, ms);
     });
   }
 };
 
-AlgoliaSearchNodeJS.prototype.destroy = function() {
+AlgoliaSearchNodeJS.prototype.destroy = function destroy() {
   if (typeof this._Agent.destroy === 'function') {
     this._Agent.destroy();
   }
@@ -239,7 +244,7 @@ AlgoliaSearchNodeJS.prototype.destroy = function() {
  * @param tagFilters the list of tags applied to the query (used as security)
  * @param userToken an optional token identifying the current user
  */
-AlgoliaSearchNodeJS.prototype.generateSecuredApiKey = function(privateApiKey, tagFilters, userToken) {
+AlgoliaSearchNodeJS.prototype.generateSecuredApiKey = function generateSecuredApiKey(privateApiKey, tagFilters, userToken) {
   if (Array.isArray(tagFilters)) {
     var strTags = [];
     for (var i = 0; i < tagFilters.length; ++i) {

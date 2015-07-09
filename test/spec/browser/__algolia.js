@@ -1,3 +1,5 @@
+'use strict';
+
 var test = require('tape');
 
 test('window.__algolia', function(t) {

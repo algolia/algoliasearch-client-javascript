@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = [{
   object: 'index',
   methodName: 'addUserKey',

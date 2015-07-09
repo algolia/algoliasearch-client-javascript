@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = [{
   testName: 'index.getObject(objectID, cb)',
   object: 'index',

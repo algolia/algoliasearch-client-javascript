@@ -1,3 +1,5 @@
+'use strict';
+
 var bulkRequire = require('bulk-require');
 var compression = require('compression');
 var express = require('express');

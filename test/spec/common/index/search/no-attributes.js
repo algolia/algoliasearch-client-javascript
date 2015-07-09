@@ -1,3 +1,5 @@
+'use strict';
+
 var test = require('tape');
 
 // this test ensures we can call index.search() without any argument

@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = wrapMethodCallback;
 
 var findMethodCallback = require('./find-method-callback');

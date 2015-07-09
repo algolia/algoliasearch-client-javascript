@@ -1,10 +1,12 @@
-module.exports = JSONPRequest;
+'use strict';
+
+module.exports = jsonpRequest;
 
 var errors = require('../errors');
 
 var JSONPCounter = 0;
 
-function JSONPRequest(url, opts, cb) {
+function jsonpRequest(url, opts, cb) {
   if (opts.method !== 'GET') {
     cb(new Error('Method ' + opts.method + ' ' + url + ' is not supported by JSONP.'));
     return;

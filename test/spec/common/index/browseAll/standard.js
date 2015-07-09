@@ -1,3 +1,5 @@
+'use strict';
+
 var test = require('tape');
 
 test('index.browseAll(query, queryParameters)', function(t) {
@@ -74,5 +76,3 @@ test('index.browseAll(query, queryParameters)', function(t) {
     t.pass('we got an end event');
   }
 });
-
-

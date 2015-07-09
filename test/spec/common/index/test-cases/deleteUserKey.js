@@ -1,3 +1,5 @@
+'use strict';
+
 var fauxJax = require('faux-jax');
 
 if (!process.browser || fauxJax.support.xhr.cors) {

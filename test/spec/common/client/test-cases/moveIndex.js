@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = {
   testName: 'client.moveIndex(from, to, cb)',
   object: 'client',

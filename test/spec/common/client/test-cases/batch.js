@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = {
   testName: 'client.batch(operations, cb)',
   object: 'client',

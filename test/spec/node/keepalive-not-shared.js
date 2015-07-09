@@ -1,3 +1,5 @@
+'use strict';
+
 var test = require('tape');
 
 // do not share keepalive agent between requests

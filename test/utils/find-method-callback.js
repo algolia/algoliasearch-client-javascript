@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = findMethodCallback;
 
 function findMethodCallback(args) {

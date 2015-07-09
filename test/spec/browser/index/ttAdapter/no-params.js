@@ -1,3 +1,5 @@
+'use strict';
+
 var test = require('tape');
 
 test('index.ttAdapter(cb)', function(t) {

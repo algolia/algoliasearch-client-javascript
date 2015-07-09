@@ -1,3 +1,5 @@
+'use strict';
+
 var test = require('tape');
 
 test('Request strategy handles JSONP syntax errors', function(t) {

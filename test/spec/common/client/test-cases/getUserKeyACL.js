@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = {
   testName: 'client.getUserKeyACL(key, cb)',
   object: 'client',

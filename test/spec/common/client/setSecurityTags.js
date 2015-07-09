@@ -1,3 +1,5 @@
+'use strict';
+
 var test = require('tape');
 
 test('client.setSecurityTags(string or array-based tags)', function(t) {
@@ -5,9 +7,9 @@ test('client.setSecurityTags(string or array-based tags)', function(t) {
   var indexOf = require('lodash-compat/array/indexOf');
 
   var testCases = [
-    { args: 'user_42,group_51', expected: 'user_42,group_51' },
-    { args: ['user_42', 'group_51'], expected: 'user_42,group_51' },
-    { args: ['user_42', ['group_50', 'group_51']], expected: 'user_42,(group_50,group_51)' }
+    {args: 'user_42,group_51', expected: 'user_42,group_51'},
+    {args: ['user_42', 'group_51'], expected: 'user_42,group_51'},
+    {args: ['user_42', ['group_50', 'group_51']], expected: 'user_42,(group_50,group_51)'}
   ];
 
   t.plan(1 + testCases.length);
@@ -66,7 +68,6 @@ test('client.setSecurityTags(string or array-based tags)', function(t) {
 
         cb();
       });
-
     }, end);
   }
 

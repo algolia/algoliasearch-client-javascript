@@ -1,3 +1,5 @@
+'use strict';
+
 var test = require('tape');
 
 test('no cache between two requests', function(t) {

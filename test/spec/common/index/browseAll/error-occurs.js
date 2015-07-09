@@ -1,3 +1,5 @@
+'use strict';
+
 var test = require('tape');
 
 test('index.browseAll() and an error occurs', function(t) {
@@ -42,5 +44,3 @@ test('index.browseAll() and an error occurs', function(t) {
     );
   }
 });
-
-

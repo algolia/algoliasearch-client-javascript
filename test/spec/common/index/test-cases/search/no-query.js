@@ -1,3 +1,5 @@
+'use strict';
+
 var cloneDeep = require('lodash-compat/lang/cloneDeep');
 
 var commonExpectedRequest = {
@@ -21,7 +23,7 @@ module.exports = [{
   action: 'read',
   expectedRequest: cloneDeep(commonExpectedRequest)
 }, {
-  testName: 'index.search(\'\', cb)',
+  testName: "index.search('', cb)",
   methodName: 'search',
   callArguments: [''],
   action: 'read',

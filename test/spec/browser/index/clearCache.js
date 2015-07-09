@@ -1,3 +1,5 @@
+'use strict';
+
 var test = require('tape');
 
 test('index.clearCache()', function(t) {
@@ -44,5 +46,4 @@ test('index.clearCache()', function(t) {
       );
     });
   }
-
 });

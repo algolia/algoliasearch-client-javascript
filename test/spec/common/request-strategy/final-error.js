@@ -1,3 +1,5 @@
+'use strict';
+
 var test = require('tape');
 
 test('We receive a specific error message when everything failed', function(t) {

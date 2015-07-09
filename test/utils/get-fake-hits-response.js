@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = getFakeHitsResponse;
 
 var random = require('lodash-compat/number/random');

@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = createFixture;
 
 function createFixture(opts) {

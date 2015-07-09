@@ -1,3 +1,5 @@
+'use strict';
+
 /* global Parse */
 
 Parse.Cloud.define('search', function(request, response) {
