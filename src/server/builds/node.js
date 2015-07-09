@@ -102,13 +102,13 @@ AlgoliaSearchNodeJS.prototype._request = function request(rawUrl, opts) {
       // we do not rely on any "smart" port computing by either node.js
       // or a custom http agent, because:
       // https://github.com/TooTallNate/node-https-proxy-agent/issues/7#issuecomment-119539690
-      if (requestOptions.port === undefined) {
+      if (requestOptions.port === null) {
         requestOptions.port = 443;
       }
       req = https.request(requestOptions);
     } else {
       // same reason to set the port as `https:`
-      if (requestOptions.port === undefined) {
+      if (requestOptions.port === null) {
         requestOptions.port = 80;
       }
       req = http.request(requestOptions);
