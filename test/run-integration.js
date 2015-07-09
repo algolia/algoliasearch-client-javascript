@@ -27,12 +27,12 @@ if (isABrowser) {
 }
 
 var chance = new Chance();
-var ApiKey = process.env.INTEGRATION_TEST_API_KEY;
-var AppID = process.env.INTEGRATION_TEST_APPID;
+var apiKey = process.env.INTEGRATION_TEST_API_KEY;
+var appId = process.env.INTEGRATION_TEST_APPID;
 var indexName = (process.env.TRAVIS_BUILD_NUMBER ||
   'JS-integration-tests-') + chance.word({length: 12});
 
-var client = algoliasearch(AppID, ApiKey, {
+var client = algoliasearch(appId, apiKey, {
   protocol: 'https:'
 });
 var index = client.initIndex(indexName);
@@ -53,6 +53,10 @@ test('Integration tests', function(t) {
   if (canPUT) {
     // saveObject is a PUT, only supported by Node.js or CORS, not XDomainRequest
     t.test('index.saveObject', saveObject);
+  }
+
+  if (!process.browser) {
+    t.test('using a http proxy to https', proxyHttpToHttps);
   }
 
   if (canDELETE) {
@@ -210,4 +214,39 @@ function get(pattern) {
 }
 
 function noop() {
+}
+
+function proxyHttpToHttps(t) {
+  t.plan(1);
+
+  var http = require('http');
+  var setup = require('proxy');
+
+  var server = setup(http.createServer());
+
+  server.listen(0, function() {
+    var tunnel = require('tunnel-agent');
+
+    var agentSettings = {
+      proxy: {
+        host: server.address().host,
+        port: server.address().port
+      }
+    };
+
+    var proxyClient = algoliasearch(appId, apiKey, {
+      httpAgent: tunnel.httpsOverHttp(agentSettings)
+    });
+    var proxyIndex = proxyClient.initIndex(indexName);
+    proxyIndex
+      .browse()
+      .then(end)
+      .then(null, _.bind(t.error, t));
+
+    function end(content) {
+      server.close();
+      proxyClient.destroy();
+      t.ok(content.hits.length, 'We got some content');
+    }
+  });
 }
