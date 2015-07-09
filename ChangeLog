@@ -1,5 +1,8 @@
 CHANGELOG
 
+2015-07-09 3.7.3
+    * fix: make https over http proxy work
+
 2015-07-08 3.7.2
     * fix: remove a git clone dependency on install (debug/ms/yui compressor issue)
 

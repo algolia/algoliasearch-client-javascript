@@ -1,4 +1,4 @@
-/*! algoliasearch 3.7.2 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
+/*! algoliasearch 3.7.3 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
 (function(f){var g;if(typeof window!=='undefined'){g=window}else if(typeof self!=='undefined'){g=self}g.ALGOLIA_MIGRATION_LAYER=f()})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 
 module.exports = function load (src, opts, cb) {
@@ -67,6 +67,8 @@ function ieOnEnd (script, cb) {
 }
 
 },{}],2:[function(require,module,exports){
+'use strict';
+
 // this module helps finding if the current page is using
 // the cdn.jsdelivr.net/algoliasearch/latest/$BUILDNAME.min.js version
 
@@ -79,9 +81,7 @@ function isUsingLatest(buildName) {
 
   var scripts = document.getElementsByTagName('script');
   var found = false;
-  for (var currentScript = 0, nbScripts = scripts.length;
-        currentScript < nbScripts;
-        currentScript++) {
+  for (var currentScript = 0, nbScripts = scripts.length; currentScript < nbScripts; currentScript++) {
     if (scripts[currentScript].src && toFind.test(scripts[currentScript].src)) {
       found = true;
       break;
@@ -92,14 +92,15 @@ function isUsingLatest(buildName) {
 }
 
 },{}],3:[function(require,module,exports){
+'use strict';
+
 module.exports = loadV2;
 
 function loadV2(buildName) {
   var loadScript = require(1);
   var v2ScriptUrl = '//cdn.jsdelivr.net/algoliasearch/2/' + buildName + '.min.js';
 
-  var message =
-    '-- AlgoliaSearch `latest` warning --\n' +
+  var message = '-- AlgoliaSearch `latest` warning --\n' +
     'Warning, you are using the `latest` version string from jsDelivr to load the AlgoliaSearch library.\n' +
     'Using `latest` is no more recommended, you should load //cdn.jsdelivr.net/algoliasearch/2/algoliasearch.min.js\n\n' +
     'Also, we updated the AlgoliaSearch JavaScript client to V3. If you want to upgrade,\n' +
@@ -127,7 +128,7 @@ function loadV2(buildName) {
     } else {
       loadScript(v2ScriptUrl, scriptLoaded('DOMElement'));
     }
-  } catch(e) {
+  } catch (e) {
     loadScript(v2ScriptUrl, scriptLoaded('DOMElement'));
   }
 }
@@ -136,12 +137,15 @@ function scriptLoaded(method) {
   return function log() {
     var message = 'AlgoliaSearch: loaded V2 script using ' + method;
 
-    window.console && window.console.log && window.console.log(message);
+    if (window.console && window.console.log) {
+      window.console.log(message);
+    }
   };
 }
 
 },{"1":1}],4:[function(require,module,exports){
-/*global AlgoliaExplainResults:true*/
+'use strict';
+
 /*eslint no-unused-vars: [2, {"vars": "local"}]*/
 
 module.exports = oldGlobals;
@@ -149,8 +153,7 @@ module.exports = oldGlobals;
 // put old window.AlgoliaSearch.. into window. again so that
 // users upgrading to V3 without changing their code, will be warned
 function oldGlobals() {
-  var message =
-    '-- AlgoliaSearch V2 => V3 error --\n' +
+  var message = '-- AlgoliaSearch V2 => V3 error --\n' +
     'You are trying to use a new version of the AlgoliaSearch JavaScript client with an old notation.\n' +
     'Please read our migration guide at https://github.com/algolia/algoliasearch-client-js/wiki/Migration-guide-from-2.x.x-to-3.x.x\n' +
     '-- /AlgoliaSearch V2 => V3 error --';
@@ -163,13 +166,14 @@ function oldGlobals() {
     throw new Error(message);
   };
 
-  // cannot use window.AlgoliaExplainResults on old IEs, dunno why
-  AlgoliaExplainResults = function() {
+  window.AlgoliaExplainResults = function() {
     throw new Error(message);
   };
 }
 
 },{}],5:[function(require,module,exports){
+'use strict';
+
 // This script will be browserified and prepended to the normal build
 // directly in window, not wrapped in any module definition
 // To avoid cases where we are loaded with /latest/ along with
@@ -2273,7 +2277,7 @@ if (typeof Object.create === 'function') {
 },{}],11:[function(require,module,exports){
 var arrayEach = require(14),
     baseEach = require(18),
-    createForEach = require(32);
+    createForEach = require(30);
 
 /**
  * Iterates over elements of `collection` invoking `iteratee` for each element.
@@ -2309,7 +2313,7 @@ var forEach = createForEach(arrayEach, baseEach);
 
 module.exports = forEach;
 
-},{"14":14,"18":18,"32":32}],12:[function(require,module,exports){
+},{"14":14,"18":18,"30":30}],12:[function(require,module,exports){
 /** Used as the `TypeError` message for "Functions" methods. */
 var FUNC_ERROR_TEXT = 'Expected a function';
 
@@ -2417,7 +2421,7 @@ module.exports = arrayEach;
 
 },{}],15:[function(require,module,exports){
 var baseCopy = require(17),
-    keys = require(58);
+    keys = require(55);
 
 /**
  * The base implementation of `_.assign` without support for argument juggling,
@@ -2436,17 +2440,17 @@ function baseAssign(object, source) {
 
 module.exports = baseAssign;
 
-},{"17":17,"58":58}],16:[function(require,module,exports){
+},{"17":17,"55":55}],16:[function(require,module,exports){
 var arrayCopy = require(13),
     arrayEach = require(14),
     baseAssign = require(15),
     baseForOwn = require(21),
-    initCloneArray = require(35),
-    initCloneByTag = require(36),
-    initCloneObject = require(37),
-    isArray = require(50),
-    isHostObject = require(39),
-    isObject = require(53);
+    initCloneArray = require(33),
+    initCloneByTag = require(34),
+    initCloneObject = require(35),
+    isArray = require(47),
+    isHostObject = require(37),
+    isObject = require(50);
 
 /** `Object#toString` result references. */
 var argsTag = '[object Arguments]',
@@ -2493,7 +2497,7 @@ cloneableTags[weakMapTag] = false;
 var objectProto = Object.prototype;
 
 /**
- * Used to resolve the [`toStringTag`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-object.prototype.tostring)
+ * Used to resolve the [`toStringTag`](http://ecma-international.org/ecma-262/6.0/#sec-object.prototype.tostring)
  * of values.
  */
 var objToString = objectProto.toString;
@@ -2547,7 +2551,7 @@ function baseClone(value, isDeep, customizer, key, object, stackA, stackB) {
         : (object ? value : {});
     }
   }
-  // Check for circular references and return corresponding clone.
+  // Check for circular references and return its corresponding clone.
   stackA || (stackA = []);
   stackB || (stackB = []);
 
@@ -2570,7 +2574,7 @@ function baseClone(value, isDeep, customizer, key, object, stackA, stackB) {
 
 module.exports = baseClone;
 
-},{"13":13,"14":14,"15":15,"21":21,"35":35,"36":36,"37":37,"39":39,"50":50,"53":53}],17:[function(require,module,exports){
+},{"13":13,"14":14,"15":15,"21":21,"33":33,"34":34,"35":35,"37":37,"47":47,"50":50}],17:[function(require,module,exports){
 /**
  * Copies properties of `source` to `object`.
  *
@@ -2597,7 +2601,7 @@ module.exports = baseCopy;
 
 },{}],18:[function(require,module,exports){
 var baseForOwn = require(21),
-    createBaseEach = require(30);
+    createBaseEach = require(28);
 
 /**
  * The base implementation of `_.forEach` without support for callback
@@ -2612,8 +2616,8 @@ var baseEach = createBaseEach(baseForOwn);
 
 module.exports = baseEach;
 
-},{"21":21,"30":30}],19:[function(require,module,exports){
-var createBaseFor = require(31);
+},{"21":21,"28":28}],19:[function(require,module,exports){
+var createBaseFor = require(29);
 
 /**
  * The base implementation of `baseForIn` and `baseForOwn` which iterates
@@ -2631,9 +2635,9 @@ var baseFor = createBaseFor();
 
 module.exports = baseFor;
 
-},{"31":31}],20:[function(require,module,exports){
+},{"29":29}],20:[function(require,module,exports){
 var baseFor = require(19),
-    keysIn = require(59);
+    keysIn = require(56);
 
 /**
  * The base implementation of `_.forIn` without support for callback
@@ -2650,9 +2654,9 @@ function baseForIn(object, iteratee) {
 
 module.exports = baseForIn;
 
-},{"19":19,"59":59}],21:[function(require,module,exports){
+},{"19":19,"56":56}],21:[function(require,module,exports){
 var baseFor = require(19),
-    keys = require(58);
+    keys = require(55);
 
 /**
  * The base implementation of `_.forOwn` without support for callback
@@ -2669,32 +2673,15 @@ function baseForOwn(object, iteratee) {
 
 module.exports = baseForOwn;
 
-},{"19":19,"58":58}],22:[function(require,module,exports){
-/**
- * The base implementation of `_.isFunction` without support for environments
- * with incorrect `typeof` results.
- *
- * @private
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is correctly classified, else `false`.
- */
-function baseIsFunction(value) {
-  // Avoid a Chakra JIT bug in compatibility modes of IE 11.
-  // See https://github.com/jashkenas/underscore/issues/1621 for more details.
-  return typeof value == 'function' || false;
-}
-
-module.exports = baseIsFunction;
-
-},{}],23:[function(require,module,exports){
+},{"19":19,"55":55}],22:[function(require,module,exports){
 var arrayEach = require(14),
-    baseMergeDeep = require(24),
-    isArray = require(50),
-    isArrayLike = require(38),
-    isObject = require(53),
-    isObjectLike = require(43),
-    isTypedArray = require(56),
-    keys = require(58);
+    baseMergeDeep = require(23),
+    isArray = require(47),
+    isArrayLike = require(36),
+    isObject = require(50),
+    isObjectLike = require(41),
+    isTypedArray = require(53),
+    keys = require(55);
 
 /**
  * The base implementation of `_.merge` without support for argument juggling,
@@ -2703,7 +2690,7 @@ var arrayEach = require(14),
  * @private
  * @param {Object} object The destination object.
  * @param {Object} source The source object.
- * @param {Function} [customizer] The function to customize merging properties.
+ * @param {Function} [customizer] The function to customize merged values.
  * @param {Array} [stackA=[]] Tracks traversed source objects.
  * @param {Array} [stackB=[]] Associates values with source counterparts.
  * @returns {Object} Returns `object`.
@@ -2713,7 +2700,7 @@ function baseMerge(object, source, customizer, stackA, stackB) {
     return object;
   }
   var isSrcArr = isArrayLike(source) && (isArray(source) || isTypedArray(source)),
-      props = isSrcArr ? null : keys(source);
+      props = isSrcArr ? undefined : keys(source);
 
   arrayEach(props || source, function(srcValue, key) {
     if (props) {
@@ -2744,14 +2731,14 @@ function baseMerge(object, source, customizer, stackA, stackB) {
 
 module.exports = baseMerge;
 
-},{"14":14,"24":24,"38":38,"43":43,"50":50,"53":53,"56":56,"58":58}],24:[function(require,module,exports){
+},{"14":14,"23":23,"36":36,"41":41,"47":47,"50":50,"53":53,"55":55}],23:[function(require,module,exports){
 var arrayCopy = require(13),
-    isArguments = require(49),
-    isArray = require(50),
-    isArrayLike = require(38),
-    isPlainObject = require(54),
-    isTypedArray = require(56),
-    toPlainObject = require(57);
+    isArguments = require(46),
+    isArray = require(47),
+    isArrayLike = require(36),
+    isPlainObject = require(51),
+    isTypedArray = require(53),
+    toPlainObject = require(54);
 
 /**
  * A specialized version of `baseMerge` for arrays and objects which performs
@@ -2763,7 +2750,7 @@ var arrayCopy = require(13),
  * @param {Object} source The source object.
  * @param {string} key The key of the value to merge.
  * @param {Function} mergeFunc The function to merge values.
- * @param {Function} [customizer] The function to customize merging properties.
+ * @param {Function} [customizer] The function to customize merged values.
  * @param {Array} [stackA=[]] Tracks traversed source objects.
  * @param {Array} [stackB=[]] Associates values with source counterparts.
  * @returns {boolean} Returns `true` if the objects are equivalent, else `false`.
@@ -2813,8 +2800,8 @@ function baseMergeDeep(object, source, key, mergeFunc, customizer, stackA, stack
 
 module.exports = baseMergeDeep;
 
-},{"13":13,"38":38,"49":49,"50":50,"54":54,"56":56,"57":57}],25:[function(require,module,exports){
-var toObject = require(46);
+},{"13":13,"36":36,"46":46,"47":47,"51":51,"53":53,"54":54}],24:[function(require,module,exports){
+var toObject = require(43);
 
 /**
  * The base implementation of `_.property` without support for deep paths.
@@ -2831,26 +2818,8 @@ function baseProperty(key) {
 
 module.exports = baseProperty;
 
-},{"46":46}],26:[function(require,module,exports){
-/**
- * Converts `value` to a string if it's not one. An empty string is returned
- * for `null` or `undefined` values.
- *
- * @private
- * @param {*} value The value to process.
- * @returns {string} Returns the string.
- */
-function baseToString(value) {
-  if (typeof value == 'string') {
-    return value;
-  }
-  return value == null ? '' : (value + '');
-}
-
-module.exports = baseToString;
-
-},{}],27:[function(require,module,exports){
-var identity = require(64);
+},{"43":43}],25:[function(require,module,exports){
+var identity = require(59);
 
 /**
  * A specialized version of `baseCallback` which only supports `this` binding
@@ -2890,31 +2859,11 @@ function bindCallback(func, thisArg, argCount) {
 
 module.exports = bindCallback;
 
-},{"64":64}],28:[function(require,module,exports){
+},{"59":59}],26:[function(require,module,exports){
 (function (global){
-var constant = require(63),
-    getNative = require(34);
-
 /** Native method references. */
-var ArrayBuffer = getNative(global, 'ArrayBuffer'),
-    bufferSlice = getNative(ArrayBuffer && new ArrayBuffer(0), 'slice'),
-    floor = Math.floor,
-    Uint8Array = getNative(global, 'Uint8Array');
-
-/** Used to clone array buffers. */
-var Float64Array = (function() {
-  // Safari 5 errors when using an array buffer to initialize a typed array
-  // where the array buffer's `byteLength` is not a multiple of the typed
-  // array's `BYTES_PER_ELEMENT`.
-  try {
-    var func = getNative(global, 'Float64Array'),
-        result = new func(new ArrayBuffer(10), 0, 1) && func;
-  } catch(e) {}
-  return result || null;
-}());
-
-/** Used as the size, in bytes, of each `Float64Array` element. */
-var FLOAT64_BYTES_PER_ELEMENT = Float64Array ? Float64Array.BYTES_PER_ELEMENT : 0;
+var ArrayBuffer = global.ArrayBuffer,
+    Uint8Array = global.Uint8Array;
 
 /**
  * Creates a clone of the given array buffer.
@@ -2924,41 +2873,23 @@ var FLOAT64_BYTES_PER_ELEMENT = Float64Array ? Float64Array.BYTES_PER_ELEMENT : 
  * @returns {ArrayBuffer} Returns the cloned array buffer.
  */
 function bufferClone(buffer) {
-  return bufferSlice.call(buffer, 0);
-}
-if (!bufferSlice) {
-  // PhantomJS has `ArrayBuffer` and `Uint8Array` but not `Float64Array`.
-  bufferClone = !(ArrayBuffer && Uint8Array) ? constant(null) : function(buffer) {
-    var byteLength = buffer.byteLength,
-        floatLength = Float64Array ? floor(byteLength / FLOAT64_BYTES_PER_ELEMENT) : 0,
-        offset = floatLength * FLOAT64_BYTES_PER_ELEMENT,
-        result = new ArrayBuffer(byteLength);
+  var result = new ArrayBuffer(buffer.byteLength),
+      view = new Uint8Array(result);
 
-    if (floatLength) {
-      var view = new Float64Array(result, 0, floatLength);
-      view.set(new Float64Array(buffer, 0, floatLength));
-    }
-    if (byteLength != offset) {
-      view = new Uint8Array(result, offset);
-      view.set(new Uint8Array(buffer, offset));
-    }
-    return result;
-  };
+  view.set(new Uint8Array(buffer));
+  return result;
 }
 
 module.exports = bufferClone;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"34":34,"63":63}],29:[function(require,module,exports){
-var bindCallback = require(27),
-    isIterateeCall = require(41),
+},{}],27:[function(require,module,exports){
+var bindCallback = require(25),
+    isIterateeCall = require(39),
     restParam = require(12);
 
 /**
- * Creates a function that assigns properties of source object(s) to a given
- * destination object.
- *
- * **Note:** This function is used to create `_.assign`, `_.defaults`, and `_.merge`.
+ * Creates a `_.assign`, `_.defaults`, or `_.merge` function.
  *
  * @private
  * @param {Function} assigner The function to assign values.
@@ -2995,10 +2926,10 @@ function createAssigner(assigner) {
 
 module.exports = createAssigner;
 
-},{"12":12,"27":27,"41":41}],30:[function(require,module,exports){
-var getLength = require(33),
-    isLength = require(42),
-    toObject = require(46);
+},{"12":12,"25":25,"39":39}],28:[function(require,module,exports){
+var getLength = require(31),
+    isLength = require(40),
+    toObject = require(43);
 
 /**
  * Creates a `baseEach` or `baseEachRight` function.
@@ -3028,8 +2959,8 @@ function createBaseEach(eachFunc, fromRight) {
 
 module.exports = createBaseEach;
 
-},{"33":33,"42":42,"46":46}],31:[function(require,module,exports){
-var toObject = require(46);
+},{"31":31,"40":40,"43":43}],29:[function(require,module,exports){
+var toObject = require(43);
 
 /**
  * Creates a base function for `_.forIn` or `_.forInRight`.
@@ -3057,9 +2988,9 @@ function createBaseFor(fromRight) {
 
 module.exports = createBaseFor;
 
-},{"46":46}],32:[function(require,module,exports){
-var bindCallback = require(27),
-    isArray = require(50);
+},{"43":43}],30:[function(require,module,exports){
+var bindCallback = require(25),
+    isArray = require(47);
 
 /**
  * Creates a function for `_.forEach` or `_.forEachRight`.
@@ -3079,8 +3010,8 @@ function createForEach(arrayFunc, eachFunc) {
 
 module.exports = createForEach;
 
-},{"27":27,"50":50}],33:[function(require,module,exports){
-var baseProperty = require(25);
+},{"25":25,"47":47}],31:[function(require,module,exports){
+var baseProperty = require(24);
 
 /**
  * Gets the "length" property value of `object`.
@@ -3096,8 +3027,8 @@ var getLength = baseProperty('length');
 
 module.exports = getLength;
 
-},{"25":25}],34:[function(require,module,exports){
-var isNative = require(52);
+},{"24":24}],32:[function(require,module,exports){
+var isNative = require(49);
 
 /**
  * Gets the native function at `key` of `object`.
@@ -3114,7 +3045,7 @@ function getNative(object, key) {
 
 module.exports = getNative;
 
-},{"52":52}],35:[function(require,module,exports){
+},{"49":49}],33:[function(require,module,exports){
 /** Used for native method references. */
 var objectProto = Object.prototype;
 
@@ -3142,9 +3073,9 @@ function initCloneArray(array) {
 
 module.exports = initCloneArray;
 
-},{}],36:[function(require,module,exports){
+},{}],34:[function(require,module,exports){
 (function (global){
-var bufferClone = require(28);
+var bufferClone = require(26);
 
 /** `Object#toString` result references. */
 var boolTag = '[object Boolean]',
@@ -3167,6 +3098,9 @@ var arrayBufferTag = '[object ArrayBuffer]',
 /** Used to match `RegExp` flags from their coerced string values. */
 var reFlags = /\w*$/;
 
+/** Native method references. */
+var Uint8Array = global.Uint8Array;
+
 /** Used to lookup a type array constructors by `toStringTag`. */
 var ctorByTag = {};
 ctorByTag[float32Tag] = global.Float32Array;
@@ -3174,7 +3108,7 @@ ctorByTag[float64Tag] = global.Float64Array;
 ctorByTag[int8Tag] = global.Int8Array;
 ctorByTag[int16Tag] = global.Int16Array;
 ctorByTag[int32Tag] = global.Int32Array;
-ctorByTag[uint8Tag] = global.Uint8Array;
+ctorByTag[uint8Tag] = Uint8Array;
 ctorByTag[uint8ClampedTag] = global.Uint8ClampedArray;
 ctorByTag[uint16Tag] = global.Uint16Array;
 ctorByTag[uint32Tag] = global.Uint32Array;
@@ -3225,7 +3159,7 @@ function initCloneByTag(object, tag, isDeep) {
 module.exports = initCloneByTag;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"28":28}],37:[function(require,module,exports){
+},{"26":26}],35:[function(require,module,exports){
 /**
  * Initializes an object clone.
  *
@@ -3243,9 +3177,9 @@ function initCloneObject(object) {
 
 module.exports = initCloneObject;
 
-},{}],38:[function(require,module,exports){
-var getLength = require(33),
-    isLength = require(42);
+},{}],36:[function(require,module,exports){
+var getLength = require(31),
+    isLength = require(40);
 
 /**
  * Checks if `value` is array-like.
@@ -3260,7 +3194,7 @@ function isArrayLike(value) {
 
 module.exports = isArrayLike;
 
-},{"33":33,"42":42}],39:[function(require,module,exports){
+},{"31":31,"40":40}],37:[function(require,module,exports){
 /**
  * Checks if `value` is a host object in IE < 9.
  *
@@ -3283,12 +3217,12 @@ var isHostObject = (function() {
 
 module.exports = isHostObject;
 
-},{}],40:[function(require,module,exports){
+},{}],38:[function(require,module,exports){
 /** Used to detect unsigned integer values. */
 var reIsUint = /^\d+$/;
 
 /**
- * Used as the [maximum length](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-number.max_safe_integer)
+ * Used as the [maximum length](http://ecma-international.org/ecma-262/6.0/#sec-number.max_safe_integer)
  * of an array-like value.
  */
 var MAX_SAFE_INTEGER = 9007199254740991;
@@ -3309,10 +3243,10 @@ function isIndex(value, length) {
 
 module.exports = isIndex;
 
-},{}],41:[function(require,module,exports){
-var isArrayLike = require(38),
-    isIndex = require(40),
-    isObject = require(53);
+},{}],39:[function(require,module,exports){
+var isArrayLike = require(36),
+    isIndex = require(38),
+    isObject = require(50);
 
 /**
  * Checks if the provided arguments are from an iteratee call.
@@ -3339,9 +3273,9 @@ function isIterateeCall(value, index, object) {
 
 module.exports = isIterateeCall;
 
-},{"38":38,"40":40,"53":53}],42:[function(require,module,exports){
+},{"36":36,"38":38,"50":50}],40:[function(require,module,exports){
 /**
- * Used as the [maximum length](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-number.max_safe_integer)
+ * Used as the [maximum length](http://ecma-international.org/ecma-262/6.0/#sec-number.max_safe_integer)
  * of an array-like value.
  */
 var MAX_SAFE_INTEGER = 9007199254740991;
@@ -3349,7 +3283,7 @@ var MAX_SAFE_INTEGER = 9007199254740991;
 /**
  * Checks if `value` is a valid array-like length.
  *
- * **Note:** This function is based on [`ToLength`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-tolength).
+ * **Note:** This function is based on [`ToLength`](http://ecma-international.org/ecma-262/6.0/#sec-tolength).
  *
  * @private
  * @param {*} value The value to check.
@@ -3361,7 +3295,7 @@ function isLength(value) {
 
 module.exports = isLength;
 
-},{}],43:[function(require,module,exports){
+},{}],41:[function(require,module,exports){
 /**
  * Checks if `value` is object-like.
  *
@@ -3375,76 +3309,13 @@ function isObjectLike(value) {
 
 module.exports = isObjectLike;
 
-},{}],44:[function(require,module,exports){
-var baseForIn = require(20),
-    isArguments = require(49),
-    isHostObject = require(39),
-    isObjectLike = require(43),
-    support = require(62);
-
-/** `Object#toString` result references. */
-var objectTag = '[object Object]';
-
-/** Used for native method references. */
-var objectProto = Object.prototype;
-
-/** Used to check objects for own properties. */
-var hasOwnProperty = objectProto.hasOwnProperty;
-
-/**
- * Used to resolve the [`toStringTag`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-object.prototype.tostring)
- * of values.
- */
-var objToString = objectProto.toString;
-
-/**
- * A fallback implementation of `_.isPlainObject` which checks if `value`
- * is an object created by the `Object` constructor or has a `[[Prototype]]`
- * of `null`.
- *
- * @private
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is a plain object, else `false`.
- */
-function shimIsPlainObject(value) {
-  var Ctor;
-
-  // Exit early for non `Object` objects.
-  if (!(isObjectLike(value) && objToString.call(value) == objectTag && !isHostObject(value)) ||
-      (!hasOwnProperty.call(value, 'constructor') &&
-        (Ctor = value.constructor, typeof Ctor == 'function' && !(Ctor instanceof Ctor))) ||
-      (!support.argsTag && isArguments(value))) {
-    return false;
-  }
-  // IE < 9 iterates inherited properties before own properties. If the first
-  // iterated property is an object's own property then there are no inherited
-  // enumerable properties.
-  var result;
-  if (support.ownLast) {
-    baseForIn(value, function(subValue, key, object) {
-      result = hasOwnProperty.call(object, key);
-      return false;
-    });
-    return result !== false;
-  }
-  // In most environments an object's own properties are iterated before
-  // its inherited properties. If the last iterated property is an object's
-  // own property then there are no inherited enumerable properties.
-  baseForIn(value, function(subValue, key) {
-    result = key;
-  });
-  return result === undefined || hasOwnProperty.call(value, result);
-}
-
-module.exports = shimIsPlainObject;
-
-},{"20":20,"39":39,"43":43,"49":49,"62":62}],45:[function(require,module,exports){
-var isArguments = require(49),
-    isArray = require(50),
-    isIndex = require(40),
-    isLength = require(42),
-    isString = require(55),
-    keysIn = require(59);
+},{}],42:[function(require,module,exports){
+var isArguments = require(46),
+    isArray = require(47),
+    isIndex = require(38),
+    isLength = require(40),
+    isString = require(52),
+    keysIn = require(56);
 
 /** Used for native method references. */
 var objectProto = Object.prototype;
@@ -3482,10 +3353,10 @@ function shimKeys(object) {
 
 module.exports = shimKeys;
 
-},{"40":40,"42":42,"49":49,"50":50,"55":55,"59":59}],46:[function(require,module,exports){
-var isObject = require(53),
-    isString = require(55),
-    support = require(62);
+},{"38":38,"40":40,"46":46,"47":47,"52":52,"56":56}],43:[function(require,module,exports){
+var isObject = require(50),
+    isString = require(52),
+    support = require(58);
 
 /**
  * Converts `value` to an object if it's not one.
@@ -3510,10 +3381,10 @@ function toObject(value) {
 
 module.exports = toObject;
 
-},{"53":53,"55":55,"62":62}],47:[function(require,module,exports){
+},{"50":50,"52":52,"58":58}],44:[function(require,module,exports){
 var baseClone = require(16),
-    bindCallback = require(27),
-    isIterateeCall = require(41);
+    bindCallback = require(25),
+    isIterateeCall = require(39);
 
 /**
  * Creates a clone of `value`. If `isDeep` is `true` nested objects are cloned,
@@ -3582,9 +3453,9 @@ function clone(value, isDeep, customizer, thisArg) {
 
 module.exports = clone;
 
-},{"16":16,"27":27,"41":41}],48:[function(require,module,exports){
+},{"16":16,"25":25,"39":39}],45:[function(require,module,exports){
 var baseClone = require(16),
-    bindCallback = require(27);
+    bindCallback = require(25);
 
 /**
  * Creates a deep clone of `value`. If `customizer` is provided it is invoked
@@ -3639,25 +3510,15 @@ function cloneDeep(value, customizer, thisArg) {
 
 module.exports = cloneDeep;
 
-},{"16":16,"27":27}],49:[function(require,module,exports){
-var isArrayLike = require(38),
-    isObjectLike = require(43),
-    support = require(62);
-
-/** `Object#toString` result references. */
-var argsTag = '[object Arguments]';
+},{"16":16,"25":25}],46:[function(require,module,exports){
+var isArrayLike = require(36),
+    isObjectLike = require(41);
 
 /** Used for native method references. */
 var objectProto = Object.prototype;
 
 /** Used to check objects for own properties. */
 var hasOwnProperty = objectProto.hasOwnProperty;
-
-/**
- * Used to resolve the [`toStringTag`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-object.prototype.tostring)
- * of values.
- */
-var objToString = objectProto.toString;
 
 /** Native method references. */
 var propertyIsEnumerable = objectProto.propertyIsEnumerable;
@@ -3679,22 +3540,16 @@ var propertyIsEnumerable = objectProto.propertyIsEnumerable;
  * // => false
  */
 function isArguments(value) {
-  return isObjectLike(value) && isArrayLike(value) && objToString.call(value) == argsTag;
-}
-// Fallback for environments without a `toStringTag` for `arguments` objects.
-if (!support.argsTag) {
-  isArguments = function(value) {
-    return isObjectLike(value) && isArrayLike(value) &&
-      hasOwnProperty.call(value, 'callee') && !propertyIsEnumerable.call(value, 'callee');
-  };
+  return isObjectLike(value) && isArrayLike(value) &&
+    hasOwnProperty.call(value, 'callee') && !propertyIsEnumerable.call(value, 'callee');
 }
 
 module.exports = isArguments;
 
-},{"38":38,"43":43,"62":62}],50:[function(require,module,exports){
-var getNative = require(34),
-    isLength = require(42),
-    isObjectLike = require(43);
+},{"36":36,"41":41}],47:[function(require,module,exports){
+var getNative = require(32),
+    isLength = require(40),
+    isObjectLike = require(41);
 
 /** `Object#toString` result references. */
 var arrayTag = '[object Array]';
@@ -3703,7 +3558,7 @@ var arrayTag = '[object Array]';
 var objectProto = Object.prototype;
 
 /**
- * Used to resolve the [`toStringTag`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-object.prototype.tostring)
+ * Used to resolve the [`toStringTag`](http://ecma-international.org/ecma-262/6.0/#sec-object.prototype.tostring)
  * of values.
  */
 var objToString = objectProto.toString;
@@ -3733,10 +3588,8 @@ var isArray = nativeIsArray || function(value) {
 
 module.exports = isArray;
 
-},{"34":34,"42":42,"43":43}],51:[function(require,module,exports){
-(function (global){
-var baseIsFunction = require(22),
-    getNative = require(34);
+},{"32":32,"40":40,"41":41}],48:[function(require,module,exports){
+var isObject = require(50);
 
 /** `Object#toString` result references. */
 var funcTag = '[object Function]';
@@ -3745,13 +3598,10 @@ var funcTag = '[object Function]';
 var objectProto = Object.prototype;
 
 /**
- * Used to resolve the [`toStringTag`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-object.prototype.tostring)
+ * Used to resolve the [`toStringTag`](http://ecma-international.org/ecma-262/6.0/#sec-object.prototype.tostring)
  * of values.
  */
 var objToString = objectProto.toString;
-
-/** Native method references. */
-var Uint8Array = getNative(global, 'Uint8Array');
 
 /**
  * Checks if `value` is classified as a `Function` object.
@@ -3769,23 +3619,19 @@ var Uint8Array = getNative(global, 'Uint8Array');
  * _.isFunction(/abc/);
  * // => false
  */
-var isFunction = !(baseIsFunction(/x/) || (Uint8Array && !baseIsFunction(Uint8Array))) ? baseIsFunction : function(value) {
+function isFunction(value) {
   // The use of `Object#toString` avoids issues with the `typeof` operator
   // in older versions of Chrome and Safari which return 'function' for regexes
   // and Safari 8 equivalents which return 'object' for typed array constructors.
-  return objToString.call(value) == funcTag;
-};
+  return isObject(value) && objToString.call(value) == funcTag;
+}
 
 module.exports = isFunction;
 
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"22":22,"34":34}],52:[function(require,module,exports){
-var escapeRegExp = require(61),
-    isHostObject = require(39),
-    isObjectLike = require(43);
-
-/** `Object#toString` result references. */
-var funcTag = '[object Function]';
+},{"50":50}],49:[function(require,module,exports){
+var isFunction = require(48),
+    isHostObject = require(37),
+    isObjectLike = require(41);
 
 /** Used to detect host constructors (Safari > 5). */
 var reIsHostCtor = /^\[object .+?Constructor\]$/;
@@ -3799,15 +3645,9 @@ var fnToString = Function.prototype.toString;
 /** Used to check objects for own properties. */
 var hasOwnProperty = objectProto.hasOwnProperty;
 
-/**
- * Used to resolve the [`toStringTag`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-object.prototype.tostring)
- * of values.
- */
-var objToString = objectProto.toString;
-
 /** Used to detect if a method is native. */
 var reIsNative = RegExp('^' +
-  escapeRegExp(fnToString.call(hasOwnProperty))
+  fnToString.call(hasOwnProperty).replace(/[\\^$.*+?()[\]{}|]/g, '\\$&')
   .replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$'
 );
 
@@ -3831,7 +3671,7 @@ function isNative(value) {
   if (value == null) {
     return false;
   }
-  if (objToString.call(value) == funcTag) {
+  if (isFunction(value)) {
     return reIsNative.test(fnToString.call(value));
   }
   return isObjectLike(value) && (isHostObject(value) ? reIsNative : reIsHostCtor).test(value);
@@ -3839,7 +3679,7 @@ function isNative(value) {
 
 module.exports = isNative;
 
-},{"39":39,"43":43,"61":61}],53:[function(require,module,exports){
+},{"37":37,"41":41,"48":48}],50:[function(require,module,exports){
 /**
  * Checks if `value` is the [language type](https://es5.github.io/#x8) of `Object`.
  * (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
@@ -3869,11 +3709,12 @@ function isObject(value) {
 
 module.exports = isObject;
 
-},{}],54:[function(require,module,exports){
-var getNative = require(34),
-    isArguments = require(49),
-    shimIsPlainObject = require(44),
-    support = require(62);
+},{}],51:[function(require,module,exports){
+var baseForIn = require(20),
+    isArguments = require(46),
+    isHostObject = require(37),
+    isObjectLike = require(41),
+    support = require(58);
 
 /** `Object#toString` result references. */
 var objectTag = '[object Object]';
@@ -3881,14 +3722,14 @@ var objectTag = '[object Object]';
 /** Used for native method references. */
 var objectProto = Object.prototype;
 
+/** Used to check objects for own properties. */
+var hasOwnProperty = objectProto.hasOwnProperty;
+
 /**
- * Used to resolve the [`toStringTag`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-object.prototype.tostring)
+ * Used to resolve the [`toStringTag`](http://ecma-international.org/ecma-262/6.0/#sec-object.prototype.tostring)
  * of values.
  */
 var objToString = objectProto.toString;
-
-/** Native method references. */
-var getPrototypeOf = getNative(Object, 'getPrototypeOf');
 
 /**
  * Checks if `value` is a plain object, that is, an object created by the
@@ -3920,22 +3761,38 @@ var getPrototypeOf = getNative(Object, 'getPrototypeOf');
  * _.isPlainObject(Object.create(null));
  * // => true
  */
-var isPlainObject = !getPrototypeOf ? shimIsPlainObject : function(value) {
-  if (!(value && objToString.call(value) == objectTag) || (!support.argsTag && isArguments(value))) {
+function isPlainObject(value) {
+  var Ctor;
+
+  // Exit early for non `Object` objects.
+  if (!(isObjectLike(value) && objToString.call(value) == objectTag && !isHostObject(value) && !isArguments(value)) ||
+      (!hasOwnProperty.call(value, 'constructor') && (Ctor = value.constructor, typeof Ctor == 'function' && !(Ctor instanceof Ctor)))) {
     return false;
   }
-  var valueOf = getNative(value, 'valueOf'),
-      objProto = valueOf && (objProto = getPrototypeOf(valueOf)) && getPrototypeOf(objProto);
-
-  return objProto
-    ? (value == objProto || getPrototypeOf(value) == objProto)
-    : shimIsPlainObject(value);
-};
+  // IE < 9 iterates inherited properties before own properties. If the first
+  // iterated property is an object's own property then there are no inherited
+  // enumerable properties.
+  var result;
+  if (support.ownLast) {
+    baseForIn(value, function(subValue, key, object) {
+      result = hasOwnProperty.call(object, key);
+      return false;
+    });
+    return result !== false;
+  }
+  // In most environments an object's own properties are iterated before
+  // its inherited properties. If the last iterated property is an object's
+  // own property then there are no inherited enumerable properties.
+  baseForIn(value, function(subValue, key) {
+    result = key;
+  });
+  return result === undefined || hasOwnProperty.call(value, result);
+}
 
 module.exports = isPlainObject;
 
-},{"34":34,"44":44,"49":49,"62":62}],55:[function(require,module,exports){
-var isObjectLike = require(43);
+},{"20":20,"37":37,"41":41,"46":46,"58":58}],52:[function(require,module,exports){
+var isObjectLike = require(41);
 
 /** `Object#toString` result references. */
 var stringTag = '[object String]';
@@ -3944,7 +3801,7 @@ var stringTag = '[object String]';
 var objectProto = Object.prototype;
 
 /**
- * Used to resolve the [`toStringTag`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-object.prototype.tostring)
+ * Used to resolve the [`toStringTag`](http://ecma-international.org/ecma-262/6.0/#sec-object.prototype.tostring)
  * of values.
  */
 var objToString = objectProto.toString;
@@ -3971,9 +3828,9 @@ function isString(value) {
 
 module.exports = isString;
 
-},{"43":43}],56:[function(require,module,exports){
-var isLength = require(42),
-    isObjectLike = require(43);
+},{"41":41}],53:[function(require,module,exports){
+var isLength = require(40),
+    isObjectLike = require(41);
 
 /** `Object#toString` result references. */
 var argsTag = '[object Arguments]',
@@ -4020,7 +3877,7 @@ typedArrayTags[stringTag] = typedArrayTags[weakMapTag] = false;
 var objectProto = Object.prototype;
 
 /**
- * Used to resolve the [`toStringTag`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-object.prototype.tostring)
+ * Used to resolve the [`toStringTag`](http://ecma-international.org/ecma-262/6.0/#sec-object.prototype.tostring)
  * of values.
  */
 var objToString = objectProto.toString;
@@ -4047,9 +3904,9 @@ function isTypedArray(value) {
 
 module.exports = isTypedArray;
 
-},{"42":42,"43":43}],57:[function(require,module,exports){
+},{"40":40,"41":41}],54:[function(require,module,exports){
 var baseCopy = require(17),
-    keysIn = require(59);
+    keysIn = require(56);
 
 /**
  * Converts `value` to a plain object flattening inherited enumerable
@@ -4080,12 +3937,12 @@ function toPlainObject(value) {
 
 module.exports = toPlainObject;
 
-},{"17":17,"59":59}],58:[function(require,module,exports){
-var getNative = require(34),
-    isArrayLike = require(38),
-    isObject = require(53),
-    shimKeys = require(45),
-    support = require(62);
+},{"17":17,"56":56}],55:[function(require,module,exports){
+var getNative = require(32),
+    isArrayLike = require(36),
+    isObject = require(50),
+    shimKeys = require(42),
+    support = require(58);
 
 /* Native method references for those with the same name as other `lodash` methods. */
 var nativeKeys = getNative(Object, 'keys');
@@ -4094,7 +3951,7 @@ var nativeKeys = getNative(Object, 'keys');
  * Creates an array of the own enumerable property names of `object`.
  *
  * **Note:** Non-object values are coerced to objects. See the
- * [ES spec](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-object.keys)
+ * [ES spec](http://ecma-international.org/ecma-262/6.0/#sec-object.keys)
  * for more details.
  *
  * @static
@@ -4118,7 +3975,7 @@ var nativeKeys = getNative(Object, 'keys');
  * // => ['0', '1']
  */
 var keys = !nativeKeys ? shimKeys : function(object) {
-  var Ctor = object == null ? null : object.constructor;
+  var Ctor = object == null ? undefined : object.constructor;
   if ((typeof Ctor == 'function' && Ctor.prototype === object) ||
       (typeof object == 'function' ? support.enumPrototypes : isArrayLike(object))) {
     return shimKeys(object);
@@ -4128,16 +3985,16 @@ var keys = !nativeKeys ? shimKeys : function(object) {
 
 module.exports = keys;
 
-},{"34":34,"38":38,"45":45,"53":53,"62":62}],59:[function(require,module,exports){
+},{"32":32,"36":36,"42":42,"50":50,"58":58}],56:[function(require,module,exports){
 var arrayEach = require(14),
-    isArguments = require(49),
-    isArray = require(50),
-    isFunction = require(51),
-    isIndex = require(40),
-    isLength = require(42),
-    isObject = require(53),
-    isString = require(55),
-    support = require(62);
+    isArguments = require(46),
+    isArray = require(47),
+    isFunction = require(48),
+    isIndex = require(38),
+    isLength = require(40),
+    isObject = require(50),
+    isString = require(52),
+    support = require(58);
 
 /** `Object#toString` result references. */
 var arrayTag = '[object Array]',
@@ -4165,7 +4022,7 @@ var errorProto = Error.prototype,
 var hasOwnProperty = objectProto.hasOwnProperty;
 
 /**
- * Used to resolve the [`toStringTag`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-object.prototype.tostring)
+ * Used to resolve the [`toStringTag`](http://ecma-international.org/ecma-262/6.0/#sec-object.prototype.tostring)
  * of values.
  */
 var objToString = objectProto.toString;
@@ -4266,9 +4123,9 @@ function keysIn(object) {
 
 module.exports = keysIn;
 
-},{"14":14,"40":40,"42":42,"49":49,"50":50,"51":51,"53":53,"55":55,"62":62}],60:[function(require,module,exports){
-var baseMerge = require(23),
-    createAssigner = require(29);
+},{"14":14,"38":38,"40":40,"46":46,"47":47,"48":48,"50":50,"52":52,"58":58}],57:[function(require,module,exports){
+var baseMerge = require(22),
+    createAssigner = require(27);
 
 /**
  * Recursively merges own enumerable properties of the source object(s), that
@@ -4322,59 +4179,11 @@ var merge = createAssigner(baseMerge);
 
 module.exports = merge;
 
-},{"23":23,"29":29}],61:[function(require,module,exports){
-var baseToString = require(26);
-
-/**
- * Used to match `RegExp` [special characters](http://www.regular-expressions.info/characters.html#special).
- * In addition to special characters the forward slash is escaped to allow for
- * easier `eval` use and `Function` compilation.
- */
-var reRegExpChars = /[.*+?^${}()|[\]\/\\]/g,
-    reHasRegExpChars = RegExp(reRegExpChars.source);
-
-/**
- * Escapes the `RegExp` special characters "\", "/", "^", "$", ".", "|", "?",
- * "*", "+", "(", ")", "[", "]", "{" and "}" in `string`.
- *
- * @static
- * @memberOf _
- * @category String
- * @param {string} [string=''] The string to escape.
- * @returns {string} Returns the escaped string.
- * @example
- *
- * _.escapeRegExp('[lodash](https://lodash.com/)');
- * // => '\[lodash\]\(https:\/\/lodash\.com\/\)'
- */
-function escapeRegExp(string) {
-  string = baseToString(string);
-  return (string && reHasRegExpChars.test(string))
-    ? string.replace(reRegExpChars, '\\$&')
-    : string;
-}
-
-module.exports = escapeRegExp;
-
-},{"26":26}],62:[function(require,module,exports){
-(function (global){
-/** `Object#toString` result references. */
-var argsTag = '[object Arguments]',
-    objectTag = '[object Object]';
-
+},{"22":22,"27":27}],58:[function(require,module,exports){
 /** Used for native method references. */
 var arrayProto = Array.prototype,
     errorProto = Error.prototype,
     objectProto = Object.prototype;
-
-/** Used to detect DOM support. */
-var document = (document = global.window) ? document.document : null;
-
-/**
- * Used to resolve the [`toStringTag`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-object.prototype.tostring)
- * of values.
- */
-var objToString = objectProto.toString;
 
 /** Native method references. */
 var propertyIsEnumerable = objectProto.propertyIsEnumerable,
@@ -4398,15 +4207,6 @@ var support = {};
   for (var key in new Ctor) { props.push(key); }
 
   /**
-   * Detect if the `toStringTag` of `arguments` objects is resolvable
-   * (all but Firefox < 4, IE < 9).
-   *
-   * @memberOf _.support
-   * @type boolean
-   */
-  support.argsTag = objToString.call(arguments) == argsTag;
-
-  /**
    * Detect if `name` or `message` properties of `Error.prototype` are
    * enumerable by default (IE < 9, Safari < 5.1).
    *
@@ -4428,14 +4228,6 @@ var support = {};
    * @type boolean
    */
   support.enumPrototypes = propertyIsEnumerable.call(Ctor, 'prototype');
-
-  /**
-   * Detect if the `toStringTag` of DOM nodes is resolvable (all but IE < 9).
-   *
-   * @memberOf _.support
-   * @type boolean
-   */
-  support.nodeTag = objToString.call(document) != objectTag;
 
   /**
    * Detect if properties shadowing those on `Object.prototype` are non-enumerable.
@@ -4481,49 +4273,11 @@ var support = {};
    * @type boolean
    */
   support.unindexedChars = ('x'[0] + Object('x')[0]) != 'xx';
-
-  /**
-   * Detect if the DOM is supported.
-   *
-   * @memberOf _.support
-   * @type boolean
-   */
-  try {
-    support.dom = document.createDocumentFragment().nodeType === 11;
-  } catch(e) {
-    support.dom = false;
-  }
 }(1, 0));
 
 module.exports = support;
 
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],63:[function(require,module,exports){
-/**
- * Creates a function that returns `value`.
- *
- * @static
- * @memberOf _
- * @category Utility
- * @param {*} value The value to return from the new function.
- * @returns {Function} Returns the new function.
- * @example
- *
- * var object = { 'user': 'fred' };
- * var getter = _.constant(object);
- *
- * getter() === object;
- * // => true
- */
-function constant(value) {
-  return function() {
-    return value;
-  };
-}
-
-module.exports = constant;
-
-},{}],64:[function(require,module,exports){
+},{}],59:[function(require,module,exports){
 /**
  * This method returns the first argument provided to it.
  *
@@ -4545,8 +4299,10 @@ function identity(value) {
 
 module.exports = identity;
 
-},{}],65:[function(require,module,exports){
+},{}],60:[function(require,module,exports){
 (function (process){
+'use strict';
+
 module.exports = AlgoliaSearch;
 
 // default debug activated in dev environments
@@ -4555,7 +4311,7 @@ if ("production" === 'development') {
   require(6).enable('algoliasearch*');
 }
 
-var errors = require(71);
+var errors = require(66);
 
 /*
  * Algolia Search library initialization
@@ -4564,9 +4320,11 @@ var errors = require(71);
  * @param {string} applicationID - Your applicationID, found in your dashboard
  * @param {string} apiKey - Your API key, found in your dashboard
  * @param {Object} [opts]
- * @param {number} [opts.timeout=2000] - The request timeout set in milliseconds, another request will be issued after this timeout
+ * @param {number} [opts.timeout=2000] - The request timeout set in milliseconds,
+ * another request will be issued after this timeout
  * @param {string} [opts.protocol='http:'] - The protocol used to query Algolia Search API.
- *                                        Set to 'https:' to force using https. Default to document.location.protocol in browsers
+ *                                        Set to 'https:' to force using https.
+ *                                        Default to document.location.protocol in browsers
  * @param {Object|Array} [opts.hosts={
  *           read: [this.applicationID + '-dsn.algolia.net'].concat([
  *             this.applicationID + '-1.algolianet.com',
@@ -4577,13 +4335,14 @@ var errors = require(71);
  *             this.applicationID + '-1.algolianet.com',
  *             this.applicationID + '-2.algolianet.com',
  *             this.applicationID + '-3.algolianet.com']
- *           ]) - The hosts to use for Algolia Search API. If you provide them, you will less benefit from our HA implementation
+ *           ]) - The hosts to use for Algolia Search API.
+ *           If you provide them, you will less benefit from our HA implementation
  */
 function AlgoliaSearch(applicationID, apiKey, opts) {
   var debug = require(6)('algoliasearch');
 
-  var clone = require(47);
-  var isArray = require(50);
+  var clone = require(44);
+  var isArray = require(47);
 
   var usage = 'Usage: algoliasearch(applicationID, apiKey, opts)';
 
@@ -4632,14 +4391,12 @@ function AlgoliaSearch(applicationID, apiKey, opts) {
   if (!opts.hosts) {
     this.hosts.read = [this.applicationID + '-dsn.algolia.net'].concat(defaultHosts);
     this.hosts.write = [this.applicationID + '.algolia.net'].concat(defaultHosts);
+  } else if (isArray(opts.hosts)) {
+    this.hosts.read = clone(opts.hosts);
+    this.hosts.write = clone(opts.hosts);
   } else {
-    if (isArray(opts.hosts)) {
-      this.hosts.read = clone(opts.hosts);
-      this.hosts.write = clone(opts.hosts);
-    } else {
-      this.hosts.read = clone(opts.hosts.read);
-      this.hosts.write = clone(opts.hosts.write);
-    }
+    this.hosts.read = clone(opts.hosts.read);
+    this.hosts.write = clone(opts.hosts.write);
   }
 
   // add protocol and lowercase hosts
@@ -4668,48 +4425,60 @@ AlgoliaSearch.prototype = {
    *  content: the server answer that contains the task ID
    */
   deleteIndex: function(indexName, callback) {
-    return this._jsonRequest({ method: 'DELETE',
-              url: '/1/indexes/' + encodeURIComponent(indexName),
-              hostType: 'write',
-              callback: callback });
+    return this._jsonRequest({
+      method: 'DELETE',
+      url: '/1/indexes/' + encodeURIComponent(indexName),
+      hostType: 'write',
+      callback: callback
+    });
   },
   /**
    * Move an existing index.
    * @param srcIndexName the name of index to copy.
-   * @param dstIndexName the new index name that will contains a copy of srcIndexName (destination will be overriten if it already exist).
+   * @param dstIndexName the new index name that will contains a copy of
+   * srcIndexName (destination will be overriten if it already exist).
    * @param callback the result callback called with two arguments
    *  error: null or Error('message')
    *  content: the server answer that contains the task ID
    */
   moveIndex: function(srcIndexName, dstIndexName, callback) {
-    var postObj = {operation: 'move', destination: dstIndexName};
-    return this._jsonRequest({ method: 'POST',
-              url: '/1/indexes/' + encodeURIComponent(srcIndexName) + '/operation',
-              body: postObj,
-              hostType: 'write',
-              callback: callback });
-
+    var postObj = {
+      operation: 'move', destination: dstIndexName
+    };
+    return this._jsonRequest({
+      method: 'POST',
+      url: '/1/indexes/' + encodeURIComponent(srcIndexName) + '/operation',
+      body: postObj,
+      hostType: 'write',
+      callback: callback
+    });
   },
   /**
    * Copy an existing index.
    * @param srcIndexName the name of index to copy.
-   * @param dstIndexName the new index name that will contains a copy of srcIndexName (destination will be overriten if it already exist).
+   * @param dstIndexName the new index name that will contains a copy
+   * of srcIndexName (destination will be overriten if it already exist).
    * @param callback the result callback called with two arguments
    *  error: null or Error('message')
    *  content: the server answer that contains the task ID
    */
   copyIndex: function(srcIndexName, dstIndexName, callback) {
-    var postObj = {operation: 'copy', destination: dstIndexName};
-    return this._jsonRequest({ method: 'POST',
-              url: '/1/indexes/' + encodeURIComponent(srcIndexName) + '/operation',
-              body: postObj,
-              hostType: 'write',
-              callback: callback });
+    var postObj = {
+      operation: 'copy', destination: dstIndexName
+    };
+    return this._jsonRequest({
+      method: 'POST',
+      url: '/1/indexes/' + encodeURIComponent(srcIndexName) + '/operation',
+      body: postObj,
+      hostType: 'write',
+      callback: callback
+    });
   },
   /**
    * Return last log entries.
    * @param offset Specify the first entry to retrieve (0-based, 0 is the most recent log entry).
-   * @param length Specify the maximum number of entries to retrieve starting at offset. Maximum allowed value: 1000.
+   * @param length Specify the maximum number of entries to retrieve starting
+   * at offset. Maximum allowed value: 1000.
    * @param callback the result callback called with two arguments
    *  error: null or Error('message')
    *  content: the server answer that contains the task ID
@@ -4726,10 +4495,12 @@ AlgoliaSearch.prototype = {
       length = 10;
     }
 
-    return this._jsonRequest({ method: 'GET',
-              url: '/1/logs?offset=' + offset + '&length=' + length,
-              hostType: 'read',
-              callback: callback });
+    return this._jsonRequest({
+      method: 'GET',
+      url: '/1/logs?offset=' + offset + '&length=' + length,
+      hostType: 'read',
+      callback: callback
+    });
   },
   /*
    * List all existing indexes (paginated)
@@ -4748,10 +4519,12 @@ AlgoliaSearch.prototype = {
       params = '?page=' + page;
     }
 
-    return this._jsonRequest({ method: 'GET',
-              url: '/1/indexes' + params,
-              hostType: 'read',
-              callback: callback });
+    return this._jsonRequest({
+      method: 'GET',
+      url: '/1/indexes' + params,
+      hostType: 'read',
+      callback: callback
+    });
   },
 
   /*
@@ -4771,10 +4544,12 @@ AlgoliaSearch.prototype = {
    *  content: the server answer with user keys list
    */
   listUserKeys: function(callback) {
-    return this._jsonRequest({ method: 'GET',
-              url: '/1/keys',
-              hostType: 'read',
-              callback: callback });
+    return this._jsonRequest({
+      method: 'GET',
+      url: '/1/keys',
+      hostType: 'read',
+      callback: callback
+    });
   },
   /*
    * Get ACL of a user key
@@ -4785,10 +4560,12 @@ AlgoliaSearch.prototype = {
    *  content: the server answer with user keys list
    */
   getUserKeyACL: function(key, callback) {
-    return this._jsonRequest({ method: 'GET',
-              url: '/1/keys/' + key,
-              hostType: 'read',
-              callback: callback });
+    return this._jsonRequest({
+      method: 'GET',
+      url: '/1/keys/' + key,
+      hostType: 'read',
+      callback: callback
+    });
   },
   /*
    * Delete an existing user key
@@ -4798,10 +4575,12 @@ AlgoliaSearch.prototype = {
    *  content: the server answer with user keys list
    */
   deleteUserKey: function(key, callback) {
-    return this._jsonRequest({ method: 'DELETE',
-              url: '/1/keys/' + key,
-              hostType: 'write',
-              callback: callback });
+    return this._jsonRequest({
+      method: 'DELETE',
+      url: '/1/keys/' + key,
+      hostType: 'write',
+      callback: callback
+    });
   },
   /*
    * Add a new global API key
@@ -4986,7 +4765,7 @@ AlgoliaSearch.prototype = {
    * Initialize a new batch of search queries
    * @deprecated use client.search()
    */
-  startQueriesBatch: deprecate(function() {
+  startQueriesBatch: deprecate(function startQueriesBatchDeprecated() {
     this._batch = [];
   }, deprecatedMessage('client.startQueriesBatch()', 'client.search()')),
 
@@ -4994,7 +4773,7 @@ AlgoliaSearch.prototype = {
    * Add a search query in the batch
    * @deprecated use client.search()
    */
-  addQueryInBatch: deprecate(function(indexName, query, args) {
+  addQueryInBatch: deprecate(function addQueryInBatchDeprecated(indexName, query, args) {
     this._batch.push({
       indexName: indexName,
       query: query,
@@ -5014,15 +4793,15 @@ AlgoliaSearch.prototype = {
    * Launch the batch of queries using XMLHttpRequest.
    * @deprecated use client.search()
    */
-  sendQueriesBatch: deprecate(function(callback) {
+  sendQueriesBatch: deprecate(function sendQueriesBatchDeprecated(callback) {
     return this.search(this._batch, callback);
   }, deprecatedMessage('client.sendQueriesBatch()', 'client.search()')),
 
-   /**
-   * Set the number of milliseconds a request can take before automatically being terminated.
-   *
-   * @param {Number} milliseconds
-   */
+  /**
+  * Set the number of milliseconds a request can take before automatically being terminated.
+  *
+  * @param {Number} milliseconds
+  */
   setRequestTimeout: function(milliseconds) {
     if (milliseconds) {
       this.requestTimeout = parseInt(milliseconds, 10);
@@ -5049,7 +4828,7 @@ AlgoliaSearch.prototype = {
         // so we are mimicing the index.search(query, params) method
         // {indexName:, query:, params:}
         if (query.query !== undefined) {
-          params += 'query=' + encodeURIComponent(query.query)
+          params += 'query=' + encodeURIComponent(query.query);
         }
 
         return {
@@ -5134,18 +4913,32 @@ AlgoliaSearch.prototype = {
     // make sure every index instance has it's own cache
     this.cache = {};
   },
-   /**
-   * Add an extra field to the HTTP request
-   *
-   * @param name the header field name
-   * @param value the header field value
-   */
+  /**
+  * Add an extra field to the HTTP request
+  *
+  * @param name the header field name
+  * @param value the header field value
+  */
   setExtraHeader: function(name, value) {
-    this.extraHeaders.push({ name: name.toLowerCase(), value: value});
+    this.extraHeaders.push({
+      name: name.toLowerCase(), value: value
+    });
   },
 
   _sendQueriesBatch: function(params, callback) {
-    return this._jsonRequest({ cache: this.cache,
+    function prepareParams() {
+      var reqParams = '';
+      for (var i = 0; i < params.requests.length; ++i) {
+        var q = '/1/indexes/' +
+          encodeURIComponent(params.requests[i].indexName) +
+          '?' + params.requests[i].params;
+        reqParams += i + '=' + encodeURIComponent(q) + '&';
+      }
+      return reqParams;
+    }
+
+    return this._jsonRequest({
+      cache: this.cache,
       method: 'POST',
       url: '/1/indexes/*/queries',
       body: params,
@@ -5153,14 +4946,9 @@ AlgoliaSearch.prototype = {
       fallback: {
         method: 'GET',
         url: '/1/indexes/*',
-        body: {params: (function() {
-          var reqParams = '';
-          for (var i = 0; i < params.requests.length; ++i) {
-            var q = '/1/indexes/' + encodeURIComponent(params.requests[i].indexName) + '?' + params.requests[i].params;
-            reqParams += i + '=' + encodeURIComponent(q) + '&';
-          }
-          return reqParams;
-        }())}
+        body: {
+          params: prepareParams()
+        }
       },
       callback: callback
     });
@@ -5246,7 +5034,8 @@ AlgoliaSearch.prototype = {
         debug: requestDebug
       };
 
-      requestDebug('method: %s, url: %s, headers: %j, timeout: %d', options.method, url, options.headers, options.timeout);
+      requestDebug('method: %s, url: %s, headers: %j, timeout: %d',
+        options.method, url, options.headers, options.timeout);
 
       if (requester === client._request.fallback) {
         requestDebug('using fallback');
@@ -5258,14 +5047,14 @@ AlgoliaSearch.prototype = {
 
       function success(httpResponse) {
         // compute the status of the response,
-        var status =
-          // When in browser mode, using XDR or JSONP, we have no statusCode available
-          // So we rely on our API response `status` property.
-          // But `waitTask` can set a `status` property which is not the statusCode (it's the task status)
-          // So we check if there's a `message` along `status` and it means it's an error
-          //
-          // That's the only case where we have a response.status that's not the http statusCode
-          httpResponse && httpResponse.body && httpResponse.body.message && httpResponse.body.status ||
+        //
+        // When in browser mode, using XDR or JSONP, we have no statusCode available
+        // So we rely on our API response `status` property.
+        // But `waitTask` can set a `status` property which is not the statusCode (it's the task status)
+        // So we check if there's a `message` along `status` and it means it's an error
+        //
+        // That's the only case where we have a response.status that's not the http statusCode
+        var status = httpResponse && httpResponse.body && httpResponse.body.message && httpResponse.body.status ||
 
           // this is important to check the request statusCode AFTER the body eventual
           // statusCode because some implementations (jQuery XDomainRequest transport) may
@@ -5336,11 +5125,11 @@ AlgoliaSearch.prototype = {
           err instanceof errors.UnparsableJSON ||
 
           // no fallback and a network error occured (No CORS, bad APPID)
-          (!requester.fallback && err instanceof errors.Network) ||
+          !requester.fallback && err instanceof errors.Network ||
 
           // max tries and already using fallback or no fallback
-          (tries >= client.hosts[opts.hostType].length && (usingFallback || !opts.fallback || !client._request.fallback))) {
-
+          tries >= client.hosts[opts.hostType].length &&
+          (usingFallback || !opts.fallback || !client._request.fallback)) {
           // stop request implementation for this command
           return client._promise.reject(err);
         }
@@ -5397,9 +5186,9 @@ AlgoliaSearch.prototype = {
     }
   },
 
-   /*
-   * Transform search param object in query string
-   */
+  /*
+  * Transform search param object in query string
+  */
   _getSearchParams: function(args, params) {
     if (this._isUndefined(args) || args === null) {
       return params;
@@ -5494,17 +5283,23 @@ AlgoliaSearch.prototype.Index.prototype = {
    */
   addObjects: function(objects, callback) {
     var indexObj = this;
-    var postObj = {requests: []};
+    var postObj = {
+      requests: []
+    };
     for (var i = 0; i < objects.length; ++i) {
-      var request = { action: 'addObject',
-              body: objects[i] };
+      var request = {
+        action: 'addObject',
+        body: objects[i]
+      };
       postObj.requests.push(request);
     }
-    return this.as._jsonRequest({ method: 'POST',
+    return this.as._jsonRequest({
+      method: 'POST',
       url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/batch',
       body: postObj,
       hostType: 'write',
-      callback: callback });
+      callback: callback
+    });
   },
   /*
    * Get an object from this index
@@ -5590,11 +5385,13 @@ AlgoliaSearch.prototype.Index.prototype = {
    */
   partialUpdateObject: function(partialObject, callback) {
     var indexObj = this;
-    return this.as._jsonRequest({ method: 'POST',
+    return this.as._jsonRequest({
+      method: 'POST',
       url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/' + encodeURIComponent(partialObject.objectID) + '/partial',
       body: partialObject,
       hostType: 'write',
-      callback: callback });
+      callback: callback
+    });
   },
   /*
    * Partially Override the content of several objects
@@ -5606,18 +5403,24 @@ AlgoliaSearch.prototype.Index.prototype = {
    */
   partialUpdateObjects: function(objects, callback) {
     var indexObj = this;
-    var postObj = {requests: []};
+    var postObj = {
+      requests: []
+    };
     for (var i = 0; i < objects.length; ++i) {
-      var request = { action: 'partialUpdateObject',
-              objectID: objects[i].objectID,
-              body: objects[i] };
+      var request = {
+        action: 'partialUpdateObject',
+        objectID: objects[i].objectID,
+        body: objects[i]
+      };
       postObj.requests.push(request);
     }
-    return this.as._jsonRequest({ method: 'POST',
+    return this.as._jsonRequest({
+      method: 'POST',
       url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/batch',
       body: postObj,
       hostType: 'write',
-      callback: callback });
+      callback: callback
+    });
   },
   /*
    * Override the content of object
@@ -5629,11 +5432,13 @@ AlgoliaSearch.prototype.Index.prototype = {
    */
   saveObject: function(object, callback) {
     var indexObj = this;
-    return this.as._jsonRequest({ method: 'PUT',
+    return this.as._jsonRequest({
+      method: 'PUT',
       url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/' + encodeURIComponent(object.objectID),
       body: object,
       hostType: 'write',
-      callback: callback });
+      callback: callback
+    });
   },
   /*
    * Override the content of several objects
@@ -5645,18 +5450,24 @@ AlgoliaSearch.prototype.Index.prototype = {
    */
   saveObjects: function(objects, callback) {
     var indexObj = this;
-    var postObj = {requests: []};
+    var postObj = {
+      requests: []
+    };
     for (var i = 0; i < objects.length; ++i) {
-      var request = { action: 'updateObject',
-              objectID: objects[i].objectID,
-              body: objects[i] };
+      var request = {
+        action: 'updateObject',
+        objectID: objects[i].objectID,
+        body: objects[i]
+      };
       postObj.requests.push(request);
     }
-    return this.as._jsonRequest({ method: 'POST',
+    return this.as._jsonRequest({
+      method: 'POST',
       url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/batch',
       body: postObj,
       hostType: 'write',
-      callback: callback });
+      callback: callback
+    });
   },
   /*
    * Delete an object from the index
@@ -5678,10 +5489,12 @@ AlgoliaSearch.prototype.Index.prototype = {
     }
 
     var indexObj = this;
-    return this.as._jsonRequest({ method: 'DELETE',
+    return this.as._jsonRequest({
+      method: 'DELETE',
       url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/' + encodeURIComponent(objectID),
       hostType: 'write',
-      callback: callback });
+      callback: callback
+    });
   },
   /*
    * Delete several objects from an index
@@ -5758,14 +5571,14 @@ AlgoliaSearch.prototype.Index.prototype = {
       return indexObj
         .deleteObjects(objectIDs)
         .then(waitTask)
-        .then(deleteByQuery);
+        .then(doDeleteByQuery);
     }
 
     function waitTask(deleteObjectsContent) {
       return indexObj.waitTask(deleteObjectsContent.taskID);
     }
 
-    function deleteByQuery() {
+    function doDeleteByQuery() {
       return indexObj.deleteByQuery(query, params);
     }
 
@@ -5776,13 +5589,13 @@ AlgoliaSearch.prototype.Index.prototype = {
     promise.then(success, failure);
 
     function success() {
-      exitPromise(function() {
+      exitPromise(function exit() {
         callback(null);
       }, client._setTimeout || setTimeout);
     }
 
     function failure(err) {
-      exitPromise(function() {
+      exitPromise(function exit() {
         callback(err);
       }, client._setTimeout || setTimeout);
     }
@@ -5794,62 +5607,89 @@ AlgoliaSearch.prototype.Index.prototype = {
    * @param query the full text query
    * @param args (optional) if set, contains an object with query parameters:
    * - page: (integer) Pagination parameter used to select the page to retrieve.
-   *                   Page is zero-based and defaults to 0. Thus, to retrieve the 10th page you need to set page=9
+   *                   Page is zero-based and defaults to 0. Thus,
+   *                   to retrieve the 10th page you need to set page=9
    * - hitsPerPage: (integer) Pagination parameter used to select the number of hits per page. Defaults to 20.
-   * - attributesToRetrieve: a string that contains the list of object attributes you want to retrieve (let you minimize the answer size).
+   * - attributesToRetrieve: a string that contains the list of object attributes
+   * you want to retrieve (let you minimize the answer size).
    *   Attributes are separated with a comma (for example "name,address").
    *   You can also use an array (for example ["name","address"]).
-   *   By default, all attributes are retrieved. You can also use '*' to retrieve all values when an attributesToRetrieve setting is specified for your index.
-   * - attributesToHighlight: a string that contains the list of attributes you want to highlight according to the query.
+   *   By default, all attributes are retrieved. You can also use '*' to retrieve all
+   *   values when an attributesToRetrieve setting is specified for your index.
+   * - attributesToHighlight: a string that contains the list of attributes you
+   *   want to highlight according to the query.
    *   Attributes are separated by a comma. You can also use an array (for example ["name","address"]).
-   *   If an attribute has no match for the query, the raw value is returned. By default all indexed text attributes are highlighted.
-   *   You can use `*` if you want to highlight all textual attributes. Numerical attributes are not highlighted.
+   *   If an attribute has no match for the query, the raw value is returned.
+   *   By default all indexed text attributes are highlighted.
+   *   You can use `*` if you want to highlight all textual attributes.
+   *   Numerical attributes are not highlighted.
    *   A matchLevel is returned for each highlighted attribute and can contain:
    *      - full: if all the query terms were found in the attribute,
    *      - partial: if only some of the query terms were found,
    *      - none: if none of the query terms were found.
-   * - attributesToSnippet: a string that contains the list of attributes to snippet alongside the number of words to return (syntax is `attributeName:nbWords`).
+   * - attributesToSnippet: a string that contains the list of attributes to snippet alongside
+   * the number of words to return (syntax is `attributeName:nbWords`).
    *    Attributes are separated by a comma (Example: attributesToSnippet=name:10,content:10).
-   *    You can also use an array (Example: attributesToSnippet: ['name:10','content:10']). By default no snippet is computed.
-   * - minWordSizefor1Typo: the minimum number of characters in a query word to accept one typo in this word. Defaults to 3.
-   * - minWordSizefor2Typos: the minimum number of characters in a query word to accept two typos in this word. Defaults to 7.
-   * - getRankingInfo: if set to 1, the result hits will contain ranking information in _rankingInfo attribute.
-   * - aroundLatLng: search for entries around a given latitude/longitude (specified as two floats separated by a comma).
+   *    You can also use an array (Example: attributesToSnippet: ['name:10','content:10']).
+   *    By default no snippet is computed.
+   * - minWordSizefor1Typo: the minimum number of characters in a query word to accept one typo in this word.
+   *D efaults to 3.
+   * - minWordSizefor2Typos: the minimum number of characters in a query word
+   * to accept two typos in this word. Defaults to 7.
+   * - getRankingInfo: if set to 1, the result hits will contain ranking
+   * information in _rankingInfo attribute.
+   * - aroundLatLng: search for entries around a given
+   * latitude/longitude (specified as two floats separated by a comma).
    *   For example aroundLatLng=47.316669,5.016670).
-   *   You can specify the maximum distance in meters with the aroundRadius parameter (in meters) and the precision for ranking with aroundPrecision
-   *   (for example if you set aroundPrecision=100, two objects that are distant of less than 100m will be considered as identical for "geo" ranking parameter).
-   *   At indexing, you should specify geoloc of an object with the _geoloc attribute (in the form {"_geoloc":{"lat":48.853409, "lng":2.348800}})
-   * - insideBoundingBox: search entries inside a given area defined by the two extreme points of a rectangle (defined by 4 floats: p1Lat,p1Lng,p2Lat,p2Lng).
+   *   You can specify the maximum distance in meters with the aroundRadius parameter (in meters)
+   *   and the precision for ranking with aroundPrecision
+   *   (for example if you set aroundPrecision=100, two objects that are distant of
+   *   less than 100m will be considered as identical for "geo" ranking parameter).
+   *   At indexing, you should specify geoloc of an object with the _geoloc attribute
+   *   (in the form {"_geoloc":{"lat":48.853409, "lng":2.348800}})
+   * - insideBoundingBox: search entries inside a given area defined by the two extreme points
+   * of a rectangle (defined by 4 floats: p1Lat,p1Lng,p2Lat,p2Lng).
    *   For example insideBoundingBox=47.3165,4.9665,47.3424,5.0201).
-   *   At indexing, you should specify geoloc of an object with the _geoloc attribute (in the form {"_geoloc":{"lat":48.853409, "lng":2.348800}})
-   * - numericFilters: a string that contains the list of numeric filters you want to apply separated by a comma.
-   *   The syntax of one filter is `attributeName` followed by `operand` followed by `value`. Supported operands are `<`, `<=`, `=`, `>` and `>=`.
+   *   At indexing, you should specify geoloc of an object with the _geoloc attribute
+   *   (in the form {"_geoloc":{"lat":48.853409, "lng":2.348800}})
+   * - numericFilters: a string that contains the list of numeric filters you want to
+   * apply separated by a comma.
+   *   The syntax of one filter is `attributeName` followed by `operand` followed by `value`.
+   *   Supported operands are `<`, `<=`, `=`, `>` and `>=`.
    *   You can have multiple conditions on one attribute like for example numericFilters=price>100,price<1000.
    *   You can also use an array (for example numericFilters: ["price>100","price<1000"]).
    * - tagFilters: filter the query by a set of tags. You can AND tags by separating them by commas.
    *   To OR tags, you must add parentheses. For example, tags=tag1,(tag2,tag3) means tag1 AND (tag2 OR tag3).
-   *   You can also use an array, for example tagFilters: ["tag1",["tag2","tag3"]] means tag1 AND (tag2 OR tag3).
-   *   At indexing, tags should be added in the _tags** attribute of objects (for example {"_tags":["tag1","tag2"]}).
+   *   You can also use an array, for example tagFilters: ["tag1",["tag2","tag3"]]
+   *   means tag1 AND (tag2 OR tag3).
+   *   At indexing, tags should be added in the _tags** attribute
+   *   of objects (for example {"_tags":["tag1","tag2"]}).
    * - facetFilters: filter the query by a list of facets.
    *   Facets are separated by commas and each facet is encoded as `attributeName:value`.
    *   For example: `facetFilters=category:Book,author:John%20Doe`.
    *   You can also use an array (for example `["category:Book","author:John%20Doe"]`).
    * - facets: List of object attributes that you want to use for faceting.
    *   Comma separated list: `"category,author"` or array `['category','author']`
-   *   Only attributes that have been added in **attributesForFaceting** index setting can be used in this parameter.
+   *   Only attributes that have been added in **attributesForFaceting** index setting
+   *   can be used in this parameter.
    *   You can also use `*` to perform faceting on all attributes specified in **attributesForFaceting**.
    * - queryType: select how the query words are interpreted, it can be one of the following value:
    *    - prefixAll: all query words are interpreted as prefixes,
    *    - prefixLast: only the last word is interpreted as a prefix (default behavior),
    *    - prefixNone: no query word is interpreted as a prefix. This option is not recommended.
-   * - optionalWords: a string that contains the list of words that should be considered as optional when found in the query.
+   * - optionalWords: a string that contains the list of words that should
+   * be considered as optional when found in the query.
    *   Comma separated and array are accepted.
-   * - distinct: If set to 1, enable the distinct feature (disabled by default) if the attributeForDistinct index setting is set.
-   *   This feature is similar to the SQL "distinct" keyword: when enabled in a query with the distinct=1 parameter,
+   * - distinct: If set to 1, enable the distinct feature (disabled by default)
+   * if the attributeForDistinct index setting is set.
+   *   This feature is similar to the SQL "distinct" keyword: when enabled
+   *   in a query with the distinct=1 parameter,
    *   all hits containing a duplicate value for the attributeForDistinct attribute are removed from results.
-   *   For example, if the chosen attribute is show_name and several hits have the same value for show_name, then only the best
+   *   For example, if the chosen attribute is show_name and several hits have
+   *   the same value for show_name, then only the best
    *   one is kept and others are removed.
-   * - restrictSearchableAttributes: List of attributes you want to use for textual search (must be a subset of the attributesToIndex index setting)
+   * - restrictSearchableAttributes: List of attributes you want to use for
+   * textual search (must be a subset of the attributesToIndex index setting)
    * either comma separated or as an array
    * @param callback the result callback called with two arguments:
    *  error: null or Error('message'). If false, the content contains the error.
@@ -5916,7 +5756,7 @@ AlgoliaSearch.prototype.Index.prototype = {
   // pre 3.5.0 usage, backward compatible
   // browse: function(page, hitsPerPage, callback) {
   browse: function(query, queryParameters, callback) {
-    var merge = require(60);
+    var merge = require(57);
 
     var indexObj = this;
 
@@ -5966,10 +5806,12 @@ AlgoliaSearch.prototype.Index.prototype = {
 
     var params = this.as._getSearchParams(queryParameters, '');
 
-    return this.as._jsonRequest({ method: 'GET',
+    return this.as._jsonRequest({
+      method: 'GET',
       url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/browse?' + params,
       hostType: 'read',
-      callback: callback });
+      callback: callback
+    });
   },
 
   /*
@@ -6033,9 +5875,9 @@ AlgoliaSearch.prototype.Index.prototype = {
       query = undefined;
     }
 
-    var merge = require(60);
+    var merge = require(57);
 
-    var IndexBrowser = require(66);
+    var IndexBrowser = require(61);
 
     var browser = new IndexBrowser();
     var client = this.as;
@@ -6057,7 +5899,7 @@ AlgoliaSearch.prototype.Index.prototype = {
       var queryString;
 
       if (cursor !== undefined) {
-        queryString = 'cursor=' + encodeURIComponent(cursor)
+        queryString = 'cursor=' + encodeURIComponent(cursor);
       } else {
         queryString = params;
       }
@@ -6100,7 +5942,7 @@ AlgoliaSearch.prototype.Index.prototype = {
    */
   ttAdapter: function(params) {
     var self = this;
-    return function(query, syncCb, asyncCb) {
+    return function ttAdapter(query, syncCb, asyncCb) {
       var cb;
 
       if (typeof asyncCb === 'function') {
@@ -6111,7 +5953,7 @@ AlgoliaSearch.prototype.Index.prototype = {
         cb = syncCb;
       }
 
-      self.search(query, params, function(err, content) {
+      self.search(query, params, function searchDone(err, content) {
         if (err) {
           cb(err);
           return;
@@ -6158,11 +6000,7 @@ AlgoliaSearch.prototype.Index.prototype = {
         }
 
         if (content.status !== 'published') {
-          return client._promise.delay(delay).then(function() {
-            // do not forward the callback, we want the promise
-            // on next iteration
-            return retryLoop();
-          });
+          return client._promise.delay(delay).then(retryLoop);
         }
 
         return content;
@@ -6176,13 +6014,13 @@ AlgoliaSearch.prototype.Index.prototype = {
     promise.then(successCb, failureCb);
 
     function successCb(content) {
-      exitPromise(function() {
+      exitPromise(function exit() {
         callback(null, content);
       }, client._setTimeout || setTimeout);
     }
 
     function failureCb(err) {
-      exitPromise(function() {
+      exitPromise(function exit() {
         callback(err);
       }, client._setTimeout || setTimeout);
     }
@@ -6197,10 +6035,12 @@ AlgoliaSearch.prototype.Index.prototype = {
    */
   clearIndex: function(callback) {
     var indexObj = this;
-    return this.as._jsonRequest({ method: 'POST',
+    return this.as._jsonRequest({
+      method: 'POST',
       url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/clear',
       hostType: 'write',
-      callback: callback });
+      callback: callback
+    });
   },
   /*
    * Get settings of this index
@@ -6211,10 +6051,12 @@ AlgoliaSearch.prototype.Index.prototype = {
    */
   getSettings: function(callback) {
     var indexObj = this;
-    return this.as._jsonRequest({ method: 'GET',
+    return this.as._jsonRequest({
+      method: 'GET',
       url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/settings',
       hostType: 'read',
-      callback: callback });
+      callback: callback
+    });
   },
 
   /*
@@ -6228,22 +6070,32 @@ AlgoliaSearch.prototype.Index.prototype = {
    *   If set to null, all attributes are retrieved.
    * - attributesToHighlight: (array of strings) default list of attributes to highlight.
    *   If set to null, all indexed attributes are highlighted.
-   * - attributesToSnippet**: (array of strings) default list of attributes to snippet alongside the number of words to return (syntax is attributeName:nbWords).
+   * - attributesToSnippet**: (array of strings) default list of attributes to snippet alongside the number
+   * of words to return (syntax is attributeName:nbWords).
    *   By default no snippet is computed. If set to null, no snippet is computed.
    * - attributesToIndex: (array of strings) the list of fields you want to index.
-   *   If set to null, all textual and numerical attributes of your objects are indexed, but you should update it to get optimal results.
+   *   If set to null, all textual and numerical attributes of your objects are indexed,
+   *   but you should update it to get optimal results.
    *   This parameter has two important uses:
-   *     - Limit the attributes to index: For example if you store a binary image in base64, you want to store it and be able to
+   *     - Limit the attributes to index: For example if you store a binary image in base64,
+   *     you want to store it and be able to
    *       retrieve it but you don't want to search in the base64 string.
-   *     - Control part of the ranking*: (see the ranking parameter for full explanation) Matches in attributes at the beginning of
+   *     - Control part of the ranking*: (see the ranking parameter for full explanation)
+   *     Matches in attributes at the beginning of
    *       the list will be considered more important than matches in attributes further down the list.
-   *       In one attribute, matching text at the beginning of the attribute will be considered more important than text after, you can disable
-   *       this behavior if you add your attribute inside `unordered(AttributeName)`, for example attributesToIndex: ["title", "unordered(text)"].
+   *       In one attribute, matching text at the beginning of the attribute will be
+   *       considered more important than text after, you can disable
+   *       this behavior if you add your attribute inside `unordered(AttributeName)`,
+   *       for example attributesToIndex: ["title", "unordered(text)"].
    * - attributesForFaceting: (array of strings) The list of fields you want to use for faceting.
-   *   All strings in the attribute selected for faceting are extracted and added as a facet. If set to null, no attribute is used for faceting.
-   * - attributeForDistinct: (string) The attribute name used for the Distinct feature. This feature is similar to the SQL "distinct" keyword: when enabled
-   *   in query with the distinct=1 parameter, all hits containing a duplicate value for this attribute are removed from results.
-   *   For example, if the chosen attribute is show_name and several hits have the same value for show_name, then only the best one is kept and others are removed.
+   *   All strings in the attribute selected for faceting are extracted and added as a facet.
+   *   If set to null, no attribute is used for faceting.
+   * - attributeForDistinct: (string) The attribute name used for the Distinct feature.
+   * This feature is similar to the SQL "distinct" keyword: when enabled
+   *   in query with the distinct=1 parameter, all hits containing a duplicate
+   *   value for this attribute are removed from results.
+   *   For example, if the chosen attribute is show_name and several hits have
+   *   the same value for show_name, then only the best one is kept and others are removed.
    * - ranking: (array of strings) controls the way results are sorted.
    *   We have six available criteria:
    *    - typo: sort according to number of typos,
@@ -6251,33 +6103,42 @@ AlgoliaSearch.prototype.Index.prototype = {
    *    - proximity: sort according to the proximity of query words in hits,
    *    - attribute: sort according to the order of attributes defined by attributesToIndex,
    *    - exact:
-   *        - if the user query contains one word: sort objects having an attribute that is exactly the query word before others.
-   *          For example if you search for the "V" TV show, you want to find it with the "V" query and avoid to have all popular TV
+   *        - if the user query contains one word: sort objects having an attribute
+   *        that is exactly the query word before others.
+   *          For example if you search for the "V" TV show, you want to find it
+   *          with the "V" query and avoid to have all popular TV
    *          show starting by the v letter before it.
-   *        - if the user query contains multiple words: sort according to the number of words that matched exactly (and not as a prefix).
+   *        - if the user query contains multiple words: sort according to the
+   *        number of words that matched exactly (and not as a prefix).
    *    - custom: sort according to a user defined formula set in **customRanking** attribute.
    *   The standard order is ["typo", "geo", "proximity", "attribute", "exact", "custom"]
    * - customRanking: (array of strings) lets you specify part of the ranking.
-   *   The syntax of this condition is an array of strings containing attributes prefixed by asc (ascending order) or desc (descending order) operator.
+   *   The syntax of this condition is an array of strings containing attributes
+   *   prefixed by asc (ascending order) or desc (descending order) operator.
    *   For example `"customRanking" => ["desc(population)", "asc(name)"]`
    * - queryType: Select how the query words are interpreted, it can be one of the following value:
    *   - prefixAll: all query words are interpreted as prefixes,
    *   - prefixLast: only the last word is interpreted as a prefix (default behavior),
    *   - prefixNone: no query word is interpreted as a prefix. This option is not recommended.
-   * - highlightPreTag: (string) Specify the string that is inserted before the highlighted parts in the query result (default to "<em>").
-   * - highlightPostTag: (string) Specify the string that is inserted after the highlighted parts in the query result (default to "</em>").
-   * - optionalWords: (array of strings) Specify a list of words that should be considered as optional when found in the query.
+   * - highlightPreTag: (string) Specify the string that is inserted before
+   * the highlighted parts in the query result (default to "<em>").
+   * - highlightPostTag: (string) Specify the string that is inserted after
+   * the highlighted parts in the query result (default to "</em>").
+   * - optionalWords: (array of strings) Specify a list of words that should
+   * be considered as optional when found in the query.
    * @param callback (optional) the result callback called with two arguments
    *  error: null or Error('message')
    *  content: the server answer or the error message if a failure occured
    */
   setSettings: function(settings, callback) {
     var indexObj = this;
-    return this.as._jsonRequest({ method: 'PUT',
+    return this.as._jsonRequest({
+      method: 'PUT',
       url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/settings',
       hostType: 'write',
       body: settings,
-      callback: callback });
+      callback: callback
+    });
   },
   /*
    * List all existing user keys associated to this index
@@ -6288,10 +6149,12 @@ AlgoliaSearch.prototype.Index.prototype = {
    */
   listUserKeys: function(callback) {
     var indexObj = this;
-    return this.as._jsonRequest({ method: 'GET',
+    return this.as._jsonRequest({
+      method: 'GET',
       url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/keys',
       hostType: 'read',
-      callback: callback });
+      callback: callback
+    });
   },
   /*
    * Get ACL of a user key associated to this index
@@ -6303,10 +6166,12 @@ AlgoliaSearch.prototype.Index.prototype = {
    */
   getUserKeyACL: function(key, callback) {
     var indexObj = this;
-    return this.as._jsonRequest({ method: 'GET',
+    return this.as._jsonRequest({
+      method: 'GET',
       url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/keys/' + key,
       hostType: 'read',
-      callback: callback });
+      callback: callback
+    });
   },
   /*
    * Delete an existing user key associated to this index
@@ -6318,46 +6183,49 @@ AlgoliaSearch.prototype.Index.prototype = {
    */
   deleteUserKey: function(key, callback) {
     var indexObj = this;
-    return this.as._jsonRequest({ method: 'DELETE',
+    return this.as._jsonRequest({
+      method: 'DELETE',
       url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/keys/' + key,
       hostType: 'write',
-      callback: callback });
+      callback: callback
+    });
   },
-   /*
-    * Add a new API key to this index
-    *
-    * @param {string[]} acls - The list of ACL for this key. Defined by an array of strings that
-    *   can contains the following values:
-    *     - search: allow to search (https and http)
-    *     - addObject: allows to add/update an object in the index (https only)
-    *     - deleteObject : allows to delete an existing object (https only)
-    *     - deleteIndex : allows to delete index content (https only)
-    *     - settings : allows to get index settings (https only)
-    *     - editSettings : allows to change index settings (https only)
-    * @param {Object} [params] - Optionnal parameters to set for the key
-    * @param {number} params.validity - Number of seconds after which the key will be automatically removed (0 means no time limit for this key)
-    * @param {number} params.maxQueriesPerIPPerHour - Number of API calls allowed from an IP address per hour
-    * @param {number} params.maxHitsPerQuery - Number of hits this API key can retrieve in one call
-    * @param {string} params.description - A description for your key
-    * @param {string[]} params.referers - A list of authorized referers
-    * @param {Object} params.queryParameters - Force the key to use specific query parameters
-    * @param {Function} callback - The result callback called with two arguments
-    *   error: null or Error('message')
-    *   content: the server answer with user keys list
-    * @return {Promise|undefined} Returns a promise if no callback given
-    * @example
-    * index.addUserKey(['search'], {
-    *   validity: 300,
-    *   maxQueriesPerIPPerHour: 2000,
-    *   maxHitsPerQuery: 3,
-    *   description: 'Eat three fruits',
-    *   referers: ['*.algolia.com'],
-    *   queryParameters: {
-    *     tagFilters: ['public'],
-    *   }
-    * })
-    * @see {@link https://www.algolia.com/doc/rest_api#AddIndexKey|Algolia REST API Documentation}
-    */
+  /*
+   * Add a new API key to this index
+   *
+   * @param {string[]} acls - The list of ACL for this key. Defined by an array of strings that
+   *   can contains the following values:
+   *     - search: allow to search (https and http)
+   *     - addObject: allows to add/update an object in the index (https only)
+   *     - deleteObject : allows to delete an existing object (https only)
+   *     - deleteIndex : allows to delete index content (https only)
+   *     - settings : allows to get index settings (https only)
+   *     - editSettings : allows to change index settings (https only)
+   * @param {Object} [params] - Optionnal parameters to set for the key
+   * @param {number} params.validity - Number of seconds after which the key will
+   * be automatically removed (0 means no time limit for this key)
+   * @param {number} params.maxQueriesPerIPPerHour - Number of API calls allowed from an IP address per hour
+   * @param {number} params.maxHitsPerQuery - Number of hits this API key can retrieve in one call
+   * @param {string} params.description - A description for your key
+   * @param {string[]} params.referers - A list of authorized referers
+   * @param {Object} params.queryParameters - Force the key to use specific query parameters
+   * @param {Function} callback - The result callback called with two arguments
+   *   error: null or Error('message')
+   *   content: the server answer with user keys list
+   * @return {Promise|undefined} Returns a promise if no callback given
+   * @example
+   * index.addUserKey(['search'], {
+   *   validity: 300,
+   *   maxQueriesPerIPPerHour: 2000,
+   *   maxHitsPerQuery: 3,
+   *   description: 'Eat three fruits',
+   *   referers: ['*.algolia.com'],
+   *   queryParameters: {
+   *     tagFilters: ['public'],
+   *   }
+   * })
+   * @see {@link https://www.algolia.com/doc/rest_api#AddIndexKey|Algolia REST API Documentation}
+   */
   addUserKey: function(acls, params, callback) {
     if (arguments.length === 1 || typeof params === 'function') {
       callback = params;
@@ -6394,79 +6262,81 @@ AlgoliaSearch.prototype.Index.prototype = {
    * Add an existing user key associated to this index
    * @deprecated use index.addUserKey()
    */
-   addUserKeyWithValidity: deprecate(function(acls, params, callback) {
-     return this.addUserKey(acls, params, callback);
-   }, deprecatedMessage('index.addUserKeyWithValidity()', 'index.addUserKey()')),
+  addUserKeyWithValidity: deprecate(function deprecatedAddUserKeyWithValidity(acls, params, callback) {
+    return this.addUserKey(acls, params, callback);
+  }, deprecatedMessage('index.addUserKeyWithValidity()', 'index.addUserKey()')),
 
-   /**
-    * Update an existing API key of this index
-    * @param {string} key - The key to update
-    * @param {string[]} acls - The list of ACL for this key. Defined by an array of strings that
-    *   can contains the following values:
-    *     - search: allow to search (https and http)
-    *     - addObject: allows to add/update an object in the index (https only)
-    *     - deleteObject : allows to delete an existing object (https only)
-    *     - deleteIndex : allows to delete index content (https only)
-    *     - settings : allows to get index settings (https only)
-    *     - editSettings : allows to change index settings (https only)
-    * @param {Object} [params] - Optionnal parameters to set for the key
-    * @param {number} params.validity - Number of seconds after which the key will be automatically removed (0 means no time limit for this key)
-    * @param {number} params.maxQueriesPerIPPerHour - Number of API calls allowed from an IP address per hour
-    * @param {number} params.maxHitsPerQuery - Number of hits this API key can retrieve in one call
-    * @param {string} params.description - A description for your key
-    * @param {string[]} params.referers - A list of authorized referers
-    * @param {Object} params.queryParameters - Force the key to use specific query parameters
-    * @param {Function} callback - The result callback called with two arguments
-    *   error: null or Error('message')
-    *   content: the server answer with user keys list
-    * @return {Promise|undefined} Returns a promise if no callback given
-    * @example
-    * index.updateUserKey('APIKEY', ['search'], {
-    *   validity: 300,
-    *   maxQueriesPerIPPerHour: 2000,
-    *   maxHitsPerQuery: 3,
-    *   description: 'Eat three fruits',
-    *   referers: ['*.algolia.com'],
-    *   queryParameters: {
-    *     tagFilters: ['public'],
-    *   }
-    * })
-    * @see {@link https://www.algolia.com/doc/rest_api#UpdateIndexKey|Algolia REST API Documentation}
-    */
-   updateUserKey: function(key, acls, params, callback) {
-     if (arguments.length === 2 || typeof params === 'function') {
-       callback = params;
-       params = null;
-     }
+  /**
+   * Update an existing API key of this index
+   * @param {string} key - The key to update
+   * @param {string[]} acls - The list of ACL for this key. Defined by an array of strings that
+   *   can contains the following values:
+   *     - search: allow to search (https and http)
+   *     - addObject: allows to add/update an object in the index (https only)
+   *     - deleteObject : allows to delete an existing object (https only)
+   *     - deleteIndex : allows to delete index content (https only)
+   *     - settings : allows to get index settings (https only)
+   *     - editSettings : allows to change index settings (https only)
+   * @param {Object} [params] - Optionnal parameters to set for the key
+   * @param {number} params.validity - Number of seconds after which the key will
+   * be automatically removed (0 means no time limit for this key)
+   * @param {number} params.maxQueriesPerIPPerHour - Number of API calls allowed from an IP address per hour
+   * @param {number} params.maxHitsPerQuery - Number of hits this API key can retrieve in one call
+   * @param {string} params.description - A description for your key
+   * @param {string[]} params.referers - A list of authorized referers
+   * @param {Object} params.queryParameters - Force the key to use specific query parameters
+   * @param {Function} callback - The result callback called with two arguments
+   *   error: null or Error('message')
+   *   content: the server answer with user keys list
+   * @return {Promise|undefined} Returns a promise if no callback given
+   * @example
+   * index.updateUserKey('APIKEY', ['search'], {
+   *   validity: 300,
+   *   maxQueriesPerIPPerHour: 2000,
+   *   maxHitsPerQuery: 3,
+   *   description: 'Eat three fruits',
+   *   referers: ['*.algolia.com'],
+   *   queryParameters: {
+   *     tagFilters: ['public'],
+   *   }
+   * })
+   * @see {@link https://www.algolia.com/doc/rest_api#UpdateIndexKey|Algolia REST API Documentation}
+   */
+  updateUserKey: function(key, acls, params, callback) {
+    if (arguments.length === 2 || typeof params === 'function') {
+      callback = params;
+      params = null;
+    }
 
-     var putObj = {
-       acl: acls
-     };
+    var putObj = {
+      acl: acls
+    };
 
-     if (params) {
-       putObj.validity = params.validity;
-       putObj.maxQueriesPerIPPerHour = params.maxQueriesPerIPPerHour;
-       putObj.maxHitsPerQuery = params.maxHitsPerQuery;
-       putObj.description = params.description;
+    if (params) {
+      putObj.validity = params.validity;
+      putObj.maxQueriesPerIPPerHour = params.maxQueriesPerIPPerHour;
+      putObj.maxHitsPerQuery = params.maxHitsPerQuery;
+      putObj.description = params.description;
 
-       if (params.queryParameters) {
-         putObj.queryParameters = this.as._getSearchParams(params.queryParameters, '');
-       }
+      if (params.queryParameters) {
+        putObj.queryParameters = this.as._getSearchParams(params.queryParameters, '');
+      }
 
-       putObj.referers = params.referers;
-     }
+      putObj.referers = params.referers;
+    }
 
-     return this.as._jsonRequest({
-       method: 'PUT',
-       url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/keys/' + key,
-       body: putObj,
-       hostType: 'write',
-       callback: callback
-     });
-   },
+    return this.as._jsonRequest({
+      method: 'PUT',
+      url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/keys/' + key,
+      body: putObj,
+      hostType: 'write',
+      callback: callback
+    });
+  },
 
   _search: function(params, callback) {
-    return this.as._jsonRequest({ cache: this.cache,
+    return this.as._jsonRequest({
+      cache: this.cache,
       method: 'POST',
       url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/query',
       body: {params: params},
@@ -6488,7 +6358,7 @@ AlgoliaSearch.prototype.Index.prototype = {
 
 // extracted from https://github.com/component/map/blob/master/index.js
 // without the crazy toFunction thing
-function map(arr, fn){
+function map(arr, fn) {
   var ret = [];
   for (var i = 0; i < arr.length; ++i) {
     ret.push(fn(arr[i], i));
@@ -6504,7 +6374,7 @@ function prepareHost(protocol) {
 
 function notImplemented() {
   var message = 'Not implemented in this environment.\n' +
-  'If you feel this is a mistake, write to support@algolia.com';
+    'If you feel this is a mistake, write to support@algolia.com';
 
   throw new errors.AlgoliaSearchError(message);
 }
@@ -6514,8 +6384,8 @@ function deprecatedMessage(previousUsage, newUsage) {
     .replace('.', '')
     .replace('()', '');
 
-  return 'algoliasearch: `' + previousUsage + '` was replaced by `' +
-    newUsage + '`. Please see https://github.com/algolia/algoliasearch-client-js/wiki/Deprecated#' + githubAnchorLink
+  return 'algoliasearch: `' + previousUsage + '` was replaced by `' + newUsage +
+    '`. Please see https://github.com/algolia/algoliasearch-client-js/wiki/Deprecated#' + githubAnchorLink;
 }
 
 // Parse cloud does not supports setTimeout
@@ -6531,6 +6401,7 @@ function deprecate(fn, message) {
 
   function deprecated() {
     if (!warned) {
+      /* eslint no-console:0 */
       console.log(message);
       warned = true;
     }
@@ -6542,7 +6413,9 @@ function deprecate(fn, message) {
 }
 
 }).call(this,require(2))
-},{"11":11,"2":2,"47":47,"50":50,"6":6,"60":60,"66":66,"71":71}],66:[function(require,module,exports){
+},{"11":11,"2":2,"44":44,"47":47,"57":57,"6":6,"61":61,"66":66}],61:[function(require,module,exports){
+'use strict';
+
 // This is the object returned by the `index.browseAll()` method
 
 module.exports = IndexBrowser;
@@ -6550,7 +6423,8 @@ module.exports = IndexBrowser;
 var inherits = require(10);
 var EventEmitter = require(1).EventEmitter;
 
-function IndexBrowser() {}
+function IndexBrowser() {
+}
 
 inherits(IndexBrowser, EventEmitter);
 
@@ -6580,14 +6454,257 @@ IndexBrowser.prototype._clean = function() {
   this.removeAllListeners('result');
 };
 
-},{"1":1,"10":10}],67:[function(require,module,exports){
-module.exports = JSONPRequest;
+},{"1":1,"10":10}],62:[function(require,module,exports){
+'use strict';
 
-var errors = require(71);
+// This is the standalone browser build entry point
+// Browser implementation of the Algolia Search JavaScript client,
+// using XMLHttpRequest, XDomainRequest and JSONP as fallback
+module.exports = algoliasearch;
+
+var inherits = require(10);
+var Promise = window.Promise || require(9).Promise;
+
+var AlgoliaSearch = require(60);
+var errors = require(66);
+var inlineHeaders = require(64);
+var jsonpRequest = require(65);
+
+function algoliasearch(applicationID, apiKey, opts) {
+  var cloneDeep = require(45);
+
+  var getDocumentProtocol = require(63);
+
+  opts = cloneDeep(opts || {});
+
+  if (opts.protocol === undefined) {
+    opts.protocol = getDocumentProtocol();
+  }
+
+  opts._ua = opts._ua || algoliasearch.ua;
+
+  return new AlgoliaSearchBrowser(applicationID, apiKey, opts);
+}
+
+algoliasearch.version = require(67);
+algoliasearch.ua = 'Algolia for vanilla JavaScript ' + algoliasearch.version;
+
+// we expose into window no matter how we are used, this will allow
+// us to easily debug any website running algolia
+window.__algolia = {
+  debug: require(6),
+  algoliasearch: algoliasearch
+};
+
+var support = {
+  hasXMLHttpRequest: 'XMLHttpRequest' in window,
+  hasXDomainRequest: 'XDomainRequest' in window,
+  cors: 'withCredentials' in new XMLHttpRequest(),
+  timeout: 'timeout' in new XMLHttpRequest()
+};
+
+function AlgoliaSearchBrowser() {
+  // call AlgoliaSearch constructor
+  AlgoliaSearch.apply(this, arguments);
+}
+
+inherits(AlgoliaSearchBrowser, AlgoliaSearch);
+
+AlgoliaSearchBrowser.prototype._request = function request(url, opts) {
+  return new Promise(function wrapRequest(resolve, reject) {
+    // no cors or XDomainRequest, no request
+    if (!support.cors && !support.hasXDomainRequest) {
+      // very old browser, not supported
+      reject(new errors.Network('CORS not supported'));
+      return;
+    }
+
+    url = inlineHeaders(url, opts.headers);
+
+    var body = opts.body;
+    var req = support.cors ? new XMLHttpRequest() : new XDomainRequest();
+    var ontimeout;
+    var timedOut;
+
+    // do not rely on default XHR async flag, as some analytics code like hotjar
+    // breaks it and set it to false by default
+    if (req instanceof XMLHttpRequest) {
+      req.open(opts.method, url, true);
+    } else {
+      req.open(opts.method, url);
+    }
+
+    if (support.cors) {
+      if (body) {
+        if (opts.method === 'POST') {
+          // https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS#Simple_requests
+          req.setRequestHeader('content-type', 'application/x-www-form-urlencoded');
+        } else {
+          req.setRequestHeader('content-type', 'application/json');
+        }
+      }
+      req.setRequestHeader('accept', 'application/json');
+    }
+
+    // we set an empty onprogress listener
+    // so that XDomainRequest on IE9 is not aborted
+    // refs:
+    //  - https://github.com/algolia/algoliasearch-client-js/issues/76
+    //  - https://social.msdn.microsoft.com/Forums/ie/en-US/30ef3add-767c-4436-b8a9-f1ca19b4812e/ie9-rtm-xdomainrequest-issued-requests-may-abort-if-all-event-handlers-not-specified?forum=iewebdevelopment
+    req.onprogress = function noop() {};
+
+    req.onload = load;
+    req.onerror = error;
+
+    if (support.timeout) {
+      // .timeout supported by both XHR and XDR,
+      // we do receive timeout event, tested
+      req.timeout = opts.timeout;
+
+      req.ontimeout = timeout;
+    } else {
+      ontimeout = setTimeout(timeout, opts.timeout);
+    }
+
+    req.send(body);
+
+    // event object not received in IE8, at least
+    // but we do not use it, still important to note
+    function load(/*event*/) {
+      // When browser does not supports req.timeout, we can
+      // have both a load and timeout event, since handled by a dumb setTimeout
+      if (timedOut) {
+        return;
+      }
+
+      if (!support.timeout) {
+        clearTimeout(ontimeout);
+      }
+
+      var out;
+
+      try {
+        out = {
+          body: JSON.parse(req.responseText),
+          statusCode: req.status,
+          // XDomainRequest does not have any response headers
+          headers: req.getAllResponseHeaders && req.getAllResponseHeaders() || {}
+        };
+      } catch (e) {
+        out = new errors.UnparsableJSON({
+          more: req.responseText
+        });
+      }
+
+      if (out instanceof errors.UnparsableJSON) {
+        reject(out);
+      } else {
+        resolve(out);
+      }
+    }
+
+    function error(event) {
+      if (timedOut) {
+        return;
+      }
+
+      if (!support.timeout) {
+        clearTimeout(ontimeout);
+      }
+
+      // error event is trigerred both with XDR/XHR on:
+      //   - DNS error
+      //   - unallowed cross domain request
+      reject(
+        new errors.Network({
+          more: event
+        })
+      );
+    }
+
+    function timeout() {
+      if (!support.timeout) {
+        timedOut = true;
+        req.abort();
+      }
+
+      reject(new errors.RequestTimeout());
+    }
+  });
+};
+
+AlgoliaSearchBrowser.prototype._request.fallback = function requestFallback(url, opts) {
+  url = inlineHeaders(url, opts.headers);
+
+  return new Promise(function wrapJsonpRequest(resolve, reject) {
+    jsonpRequest(url, opts, function jsonpRequestDone(err, content) {
+      if (err) {
+        reject(err);
+        return;
+      }
+
+      resolve(content);
+    });
+  });
+};
+
+AlgoliaSearchBrowser.prototype._promise = {
+  reject: function rejectPromise(val) {
+    return Promise.reject(val);
+  },
+  resolve: function resolvePromise(val) {
+    return Promise.resolve(val);
+  },
+  delay: function delayPromise(ms) {
+    return new Promise(function resolveOnTimeout(resolve/*, reject*/) {
+      setTimeout(resolve, ms);
+    });
+  }
+};
+
+},{"10":10,"45":45,"6":6,"60":60,"63":63,"64":64,"65":65,"66":66,"67":67,"9":9}],63:[function(require,module,exports){
+'use strict';
+
+module.exports = getDocumentProtocol;
+
+function getDocumentProtocol() {
+  var protocol = window.document.location.protocol;
+
+  // when in `file:` mode (local html file), default to `http:`
+  if (protocol !== 'http:' && protocol !== 'https:') {
+    protocol = 'http:';
+  }
+
+  return protocol;
+}
+
+},{}],64:[function(require,module,exports){
+'use strict';
+
+module.exports = inlineHeaders;
+
+var querystring = require(5);
+
+function inlineHeaders(url, headers) {
+  if (/\?/.test(url)) {
+    url += '&';
+  } else {
+    url += '?';
+  }
+
+  return url + querystring.encode(headers);
+}
+
+},{"5":5}],65:[function(require,module,exports){
+'use strict';
+
+module.exports = jsonpRequest;
+
+var errors = require(66);
 
 var JSONPCounter = 0;
 
-function JSONPRequest(url, opts, cb) {
+function jsonpRequest(url, opts, cb) {
   if (opts.method !== 'GET') {
     cb(new Error('Method ' + opts.method + ' ' + url + ' is not supported by JSONP.'));
     return;
@@ -6708,240 +6825,9 @@ function JSONPRequest(url, opts, cb) {
   }
 }
 
-},{"71":71}],68:[function(require,module,exports){
-// This is the standalone browser build entry point
-// Browser implementation of the Algolia Search JavaScript client,
-// using XMLHttpRequest, XDomainRequest and JSONP as fallback
-module.exports = algoliasearch;
+},{"66":66}],66:[function(require,module,exports){
+'use strict';
 
-var inherits = require(10);
-var Promise = window.Promise || require(9).Promise;
-
-var AlgoliaSearch = require(65);
-var errors = require(71);
-var inlineHeaders = require(70);
-var JSONPRequest = require(67);
-
-function algoliasearch(applicationID, apiKey, opts) {
-  var cloneDeep = require(48);
-
-  var getDocumentProtocol = require(69);
-
-  opts = cloneDeep(opts || {});
-
-  if (opts.protocol === undefined) {
-    opts.protocol = getDocumentProtocol();
-  }
-
-  opts._ua = opts._ua || algoliasearch.ua;
-
-  return new AlgoliaSearchBrowser(applicationID, apiKey, opts);
-}
-
-algoliasearch.version = require(72);
-algoliasearch.ua = 'Algolia for vanilla JavaScript ' + algoliasearch.version;
-
-// we expose into window no matter how we are used, this will allow
-// us to easily debug any website running algolia
-window.__algolia = {
-  debug: require(6),
-  algoliasearch: algoliasearch
-};
-
-var support = {
-  hasXMLHttpRequest: 'XMLHttpRequest' in window,
-  hasXDomainRequest: 'XDomainRequest' in window,
-  cors: 'withCredentials' in new XMLHttpRequest(),
-  timeout: 'timeout' in new XMLHttpRequest()
-};
-
-function AlgoliaSearchBrowser() {
-  // call AlgoliaSearch constructor
-  AlgoliaSearch.apply(this, arguments);
-}
-
-inherits(AlgoliaSearchBrowser, AlgoliaSearch);
-
-AlgoliaSearchBrowser.prototype._request = function(url, opts) {
-  return new Promise(function(resolve, reject) {
-    // no cors or XDomainRequest, no request
-    if (!support.cors && !support.hasXDomainRequest) {
-      // very old browser, not supported
-      reject(new errors.Network('CORS not supported'));
-      return;
-    }
-
-    url = inlineHeaders(url, opts.headers);
-
-    var body = opts.body;
-    var req = support.cors ? new XMLHttpRequest() : new XDomainRequest();
-    var ontimeout;
-    var timedOut;
-
-    // do not rely on default XHR async flag, as some analytics code like hotjar
-    // breaks it and set it to false by default
-    if (req instanceof XMLHttpRequest) {
-      req.open(opts.method, url, true);
-    } else {
-      req.open(opts.method, url);
-    }
-
-    if (support.cors) {
-      if (body) {
-        if (opts.method === 'POST') {
-          // https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS#Simple_requests
-          req.setRequestHeader('content-type', 'application/x-www-form-urlencoded');
-        } else {
-          req.setRequestHeader('content-type', 'application/json');
-        }
-      }
-      req.setRequestHeader('accept', 'application/json');
-    }
-
-    // we set an empty onprogress listener
-    // so that XDomainRequest on IE9 is not aborted
-    // refs:
-    //  - https://github.com/algolia/algoliasearch-client-js/issues/76
-    //  - https://social.msdn.microsoft.com/Forums/ie/en-US/30ef3add-767c-4436-b8a9-f1ca19b4812e/ie9-rtm-xdomainrequest-issued-requests-may-abort-if-all-event-handlers-not-specified?forum=iewebdevelopment
-    req.onprogress = function noop() {};
-
-    req.onload = load;
-    req.onerror = error;
-
-    if (support.timeout) {
-      // .timeout supported by both XHR and XDR,
-      // we do receive timeout event, tested
-      req.timeout = opts.timeout;
-
-      req.ontimeout = timeout;
-    } else {
-      ontimeout = setTimeout(timeout, opts.timeout);
-    }
-
-    req.send(body);
-
-    // event object not received in IE8, at least
-    // but we do not use it, still important to note
-    function load(/*event*/) {
-      // When browser does not supports req.timeout, we can
-      // have both a load and timeout event, since handled by a dumb setTimeout
-      if (timedOut) {
-        return;
-      }
-
-      if (!support.timeout) {
-        clearTimeout(ontimeout);
-      }
-
-      var out;
-
-      try {
-        out = {
-          body: JSON.parse(req.responseText),
-          statusCode: req.status,
-          // XDomainRequest does not have any response headers
-          headers: req.getAllResponseHeaders && req.getAllResponseHeaders() || {}
-        };
-      } catch(e) {
-        out = new errors.UnparsableJSON({more: req.responseText});
-      }
-
-      if (out instanceof errors.UnparsableJSON) {
-        reject(out);
-      } else {
-        resolve(out);
-      }
-    }
-
-    function error(event) {
-      if (timedOut) {
-        return;
-      }
-
-      if (!support.timeout) {
-        clearTimeout(ontimeout);
-      }
-
-      // error event is trigerred both with XDR/XHR on:
-      //   - DNS error
-      //   - unallowed cross domain request
-      reject(
-        new errors.Network({
-          more: event
-        })
-      );
-    }
-
-    function timeout() {
-      if (!support.timeout) {
-        timedOut = true;
-        req.abort();
-      }
-
-      reject(new errors.RequestTimeout());
-    }
-  });
-};
-
-AlgoliaSearchBrowser.prototype._request.fallback = function(url, opts) {
-  url = inlineHeaders(url, opts.headers);
-
-  return new Promise(function(resolve, reject) {
-    JSONPRequest(url, opts, function JSONPRequestDone(err, content) {
-      if (err) {
-        reject(err);
-        return;
-      }
-
-      resolve(content);
-    });
-  });
-};
-
-AlgoliaSearchBrowser.prototype._promise = {
-  reject: function(val) {
-    return Promise.reject(val);
-  },
-  resolve: function(val) {
-    return Promise.resolve(val);
-  },
-  delay: function(ms) {
-    return new Promise(function(resolve/*, reject*/) {
-      setTimeout(resolve, ms);
-    });
-  }
-};
-
-},{"10":10,"48":48,"6":6,"65":65,"67":67,"69":69,"70":70,"71":71,"72":72,"9":9}],69:[function(require,module,exports){
-module.exports = getDocumentProtocol;
-
-function getDocumentProtocol() {
-  var protocol = window.document.location.protocol;
-
-  // when in `file:` mode (local html file), default to `http:`
-  if (protocol !== 'http:' && protocol !== 'https:') {
-    protocol = 'http:';
-  }
-
-  return protocol;
-}
-
-},{}],70:[function(require,module,exports){
-module.exports = inlineHeaders;
-
-var querystring = require(5);
-
-function inlineHeaders(url, headers) {
-  if (/\?/.test(url)) {
-    url += '&';
-  } else {
-    url += '?';
-  }
-
-  return url + querystring.encode(headers);
-}
-
-},{"5":5}],71:[function(require,module,exports){
 // This file hosts our error definitions
 // We use custom error "types" so that we can act on them when we need it
 // e.g.: if error instanceof errors.UnparsableJSON then..
@@ -7019,7 +6905,7 @@ module.exports = {
   )
 };
 
-},{"10":10,"11":11}],72:[function(require,module,exports){
-module.exports="3.7.2"
-},{}]},{},[68])(68)
+},{"10":10,"11":11}],67:[function(require,module,exports){
+module.exports="3.7.3"
+},{}]},{},[62])(62)
 });

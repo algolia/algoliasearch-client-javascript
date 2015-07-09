@@ -45,6 +45,8 @@ module.exports =
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
+	
+
 	// This is the Parse entry point
 	// See https://www.parse.com/docs/cloud_code_guide#cloud_code
 	module.exports = algoliasearch;
@@ -57,11 +59,11 @@ module.exports =
 	/* global global: true */
 	global = {};
 
-	var debug = __webpack_require__(34)('algoliasearch:parse');
+	var debug = __webpack_require__(32)('algoliasearch:parse');
 
-	var inherits = __webpack_require__(37);
+	var inherits = __webpack_require__(35);
 
-	var AlgoliaSearchServer = __webpack_require__(38);
+	var AlgoliaSearchServer = __webpack_require__(36);
 
 	debug('loaded the Parse client');
 
@@ -81,7 +83,7 @@ module.exports =
 	  return new AlgoliaSearchParse(applicationID, apiKey, opts);
 	}
 
-	algoliasearch.version = __webpack_require__(59);
+	algoliasearch.version = __webpack_require__(56);
 	algoliasearch.ua = 'Algolia for Parse ' + algoliasearch.version;
 
 	function AlgoliaSearchParse() {
@@ -93,7 +95,7 @@ module.exports =
 
 	AlgoliaSearchParse.prototype._request = function(rawUrl, opts) {
 	  /*global Parse*/
-	  var clone = __webpack_require__(45);
+	  var clone = __webpack_require__(43);
 	  var promise = new Parse.Promise();
 
 	  debug('url: %s, opts: %j', rawUrl, opts);
@@ -177,7 +179,7 @@ module.exports =
 /***/ function(module, exports, __webpack_require__) {
 
 	var baseClone = __webpack_require__(2),
-	    bindCallback = __webpack_require__(32);
+	    bindCallback = __webpack_require__(30);
 
 	/**
 	 * Creates a deep clone of `value`. If `customizer` is provided it is invoked
@@ -240,12 +242,12 @@ module.exports =
 	var arrayCopy = __webpack_require__(3),
 	    arrayEach = __webpack_require__(4),
 	    baseAssign = __webpack_require__(5),
-	    baseForOwn = __webpack_require__(23),
-	    initCloneArray = __webpack_require__(27),
-	    initCloneByTag = __webpack_require__(28),
-	    initCloneObject = __webpack_require__(31),
-	    isArray = __webpack_require__(20),
-	    isObject = __webpack_require__(17);
+	    baseForOwn = __webpack_require__(22),
+	    initCloneArray = __webpack_require__(26),
+	    initCloneByTag = __webpack_require__(27),
+	    initCloneObject = __webpack_require__(29),
+	    isArray = __webpack_require__(19),
+	    isObject = __webpack_require__(11);
 
 	/** `Object#toString` result references. */
 	var argsTag = '[object Arguments]',
@@ -292,7 +294,7 @@ module.exports =
 	var objectProto = Object.prototype;
 
 	/**
-	 * Used to resolve the [`toStringTag`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-object.prototype.tostring)
+	 * Used to resolve the [`toStringTag`](http://ecma-international.org/ecma-262/6.0/#sec-object.prototype.tostring)
 	 * of values.
 	 */
 	var objToString = objectProto.toString;
@@ -343,7 +345,7 @@ module.exports =
 	        : (object ? value : {});
 	    }
 	  }
-	  // Check for circular references and return corresponding clone.
+	  // Check for circular references and return its corresponding clone.
 	  stackA || (stackA = []);
 	  stackB || (stackB = []);
 
@@ -481,8 +483,8 @@ module.exports =
 
 	var getNative = __webpack_require__(8),
 	    isArrayLike = __webpack_require__(13),
-	    isObject = __webpack_require__(17),
-	    shimKeys = __webpack_require__(18);
+	    isObject = __webpack_require__(11),
+	    shimKeys = __webpack_require__(17);
 
 	/* Native method references for those with the same name as other `lodash` methods. */
 	var nativeKeys = getNative(Object, 'keys');
@@ -491,7 +493,7 @@ module.exports =
 	 * Creates an array of the own enumerable property names of `object`.
 	 *
 	 * **Note:** Non-object values are coerced to objects. See the
-	 * [ES spec](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-object.keys)
+	 * [ES spec](http://ecma-international.org/ecma-262/6.0/#sec-object.keys)
 	 * for more details.
 	 *
 	 * @static
@@ -515,7 +517,7 @@ module.exports =
 	 * // => ['0', '1']
 	 */
 	var keys = !nativeKeys ? shimKeys : function(object) {
-	  var Ctor = object == null ? null : object.constructor;
+	  var Ctor = object == null ? undefined : object.constructor;
 	  if ((typeof Ctor == 'function' && Ctor.prototype === object) ||
 	      (typeof object != 'function' && isArrayLike(object))) {
 	    return shimKeys(object);
@@ -552,11 +554,8 @@ module.exports =
 /* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var escapeRegExp = __webpack_require__(10),
+	var isFunction = __webpack_require__(10),
 	    isObjectLike = __webpack_require__(12);
-
-	/** `Object#toString` result references. */
-	var funcTag = '[object Function]';
 
 	/** Used to detect host constructors (Safari > 5). */
 	var reIsHostCtor = /^\[object .+?Constructor\]$/;
@@ -570,15 +569,9 @@ module.exports =
 	/** Used to check objects for own properties. */
 	var hasOwnProperty = objectProto.hasOwnProperty;
 
-	/**
-	 * Used to resolve the [`toStringTag`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-object.prototype.tostring)
-	 * of values.
-	 */
-	var objToString = objectProto.toString;
-
 	/** Used to detect if a method is native. */
 	var reIsNative = RegExp('^' +
-	  escapeRegExp(fnToString.call(hasOwnProperty))
+	  fnToString.call(hasOwnProperty).replace(/[\\^$.*+?()[\]{}|]/g, '\\$&')
 	  .replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$'
 	);
 
@@ -602,7 +595,7 @@ module.exports =
 	  if (value == null) {
 	    return false;
 	  }
-	  if (objToString.call(value) == funcTag) {
+	  if (isFunction(value)) {
 	    return reIsNative.test(fnToString.call(value));
 	  }
 	  return isObjectLike(value) && reIsHostCtor.test(value);
@@ -615,38 +608,44 @@ module.exports =
 /* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseToString = __webpack_require__(11);
+	var isObject = __webpack_require__(11);
+
+	/** `Object#toString` result references. */
+	var funcTag = '[object Function]';
+
+	/** Used for native method references. */
+	var objectProto = Object.prototype;
 
 	/**
-	 * Used to match `RegExp` [special characters](http://www.regular-expressions.info/characters.html#special).
-	 * In addition to special characters the forward slash is escaped to allow for
-	 * easier `eval` use and `Function` compilation.
+	 * Used to resolve the [`toStringTag`](http://ecma-international.org/ecma-262/6.0/#sec-object.prototype.tostring)
+	 * of values.
 	 */
-	var reRegExpChars = /[.*+?^${}()|[\]\/\\]/g,
-	    reHasRegExpChars = RegExp(reRegExpChars.source);
+	var objToString = objectProto.toString;
 
 	/**
-	 * Escapes the `RegExp` special characters "\", "/", "^", "$", ".", "|", "?",
-	 * "*", "+", "(", ")", "[", "]", "{" and "}" in `string`.
+	 * Checks if `value` is classified as a `Function` object.
 	 *
 	 * @static
 	 * @memberOf _
-	 * @category String
-	 * @param {string} [string=''] The string to escape.
-	 * @returns {string} Returns the escaped string.
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is correctly classified, else `false`.
 	 * @example
 	 *
-	 * _.escapeRegExp('[lodash](https://lodash.com/)');
-	 * // => '\[lodash\]\(https:\/\/lodash\.com\/\)'
+	 * _.isFunction(_);
+	 * // => true
+	 *
+	 * _.isFunction(/abc/);
+	 * // => false
 	 */
-	function escapeRegExp(string) {
-	  string = baseToString(string);
-	  return (string && reHasRegExpChars.test(string))
-	    ? string.replace(reRegExpChars, '\\$&')
-	    : string;
+	function isFunction(value) {
+	  // The use of `Object#toString` avoids issues with the `typeof` operator
+	  // in older versions of Chrome and Safari which return 'function' for regexes
+	  // and Safari 8 equivalents which return 'object' for typed array constructors.
+	  return isObject(value) && objToString.call(value) == funcTag;
 	}
 
-	module.exports = escapeRegExp;
+	module.exports = isFunction;
 
 
 /***/ },
@@ -654,21 +653,33 @@ module.exports =
 /***/ function(module, exports) {
 
 	/**
-	 * Converts `value` to a string if it's not one. An empty string is returned
-	 * for `null` or `undefined` values.
+	 * Checks if `value` is the [language type](https://es5.github.io/#x8) of `Object`.
+	 * (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
 	 *
-	 * @private
-	 * @param {*} value The value to process.
-	 * @returns {string} Returns the string.
+	 * @static
+	 * @memberOf _
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is an object, else `false`.
+	 * @example
+	 *
+	 * _.isObject({});
+	 * // => true
+	 *
+	 * _.isObject([1, 2, 3]);
+	 * // => true
+	 *
+	 * _.isObject(1);
+	 * // => false
 	 */
-	function baseToString(value) {
-	  if (typeof value == 'string') {
-	    return value;
-	  }
-	  return value == null ? '' : (value + '');
+	function isObject(value) {
+	  // Avoid a V8 JIT bug in Chrome 19-20.
+	  // See https://code.google.com/p/v8/issues/detail?id=2291 for more details.
+	  var type = typeof value;
+	  return !!value && (type == 'object' || type == 'function');
 	}
 
-	module.exports = baseToString;
+	module.exports = isObject;
 
 
 /***/ },
@@ -756,7 +767,7 @@ module.exports =
 /***/ function(module, exports) {
 
 	/**
-	 * Used as the [maximum length](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-number.max_safe_integer)
+	 * Used as the [maximum length](http://ecma-international.org/ecma-262/6.0/#sec-number.max_safe_integer)
 	 * of an array-like value.
 	 */
 	var MAX_SAFE_INTEGER = 9007199254740991;
@@ -764,7 +775,7 @@ module.exports =
 	/**
 	 * Checks if `value` is a valid array-like length.
 	 *
-	 * **Note:** This function is based on [`ToLength`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-tolength).
+	 * **Note:** This function is based on [`ToLength`](http://ecma-international.org/ecma-262/6.0/#sec-tolength).
 	 *
 	 * @private
 	 * @param {*} value The value to check.
@@ -779,47 +790,13 @@ module.exports =
 
 /***/ },
 /* 17 */
-/***/ function(module, exports) {
-
-	/**
-	 * Checks if `value` is the [language type](https://es5.github.io/#x8) of `Object`.
-	 * (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
-	 *
-	 * @static
-	 * @memberOf _
-	 * @category Lang
-	 * @param {*} value The value to check.
-	 * @returns {boolean} Returns `true` if `value` is an object, else `false`.
-	 * @example
-	 *
-	 * _.isObject({});
-	 * // => true
-	 *
-	 * _.isObject([1, 2, 3]);
-	 * // => true
-	 *
-	 * _.isObject(1);
-	 * // => false
-	 */
-	function isObject(value) {
-	  // Avoid a V8 JIT bug in Chrome 19-20.
-	  // See https://code.google.com/p/v8/issues/detail?id=2291 for more details.
-	  var type = typeof value;
-	  return !!value && (type == 'object' || type == 'function');
-	}
-
-	module.exports = isObject;
-
-
-/***/ },
-/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var isArguments = __webpack_require__(19),
-	    isArray = __webpack_require__(20),
-	    isIndex = __webpack_require__(21),
+	var isArguments = __webpack_require__(18),
+	    isArray = __webpack_require__(19),
+	    isIndex = __webpack_require__(20),
 	    isLength = __webpack_require__(16),
-	    keysIn = __webpack_require__(22);
+	    keysIn = __webpack_require__(21);
 
 	/** Used for native method references. */
 	var objectProto = Object.prototype;
@@ -859,23 +836,20 @@ module.exports =
 
 
 /***/ },
-/* 19 */
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var isArrayLike = __webpack_require__(13),
 	    isObjectLike = __webpack_require__(12);
 
-	/** `Object#toString` result references. */
-	var argsTag = '[object Arguments]';
-
 	/** Used for native method references. */
 	var objectProto = Object.prototype;
 
-	/**
-	 * Used to resolve the [`toStringTag`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-object.prototype.tostring)
-	 * of values.
-	 */
-	var objToString = objectProto.toString;
+	/** Used to check objects for own properties. */
+	var hasOwnProperty = objectProto.hasOwnProperty;
+
+	/** Native method references. */
+	var propertyIsEnumerable = objectProto.propertyIsEnumerable;
 
 	/**
 	 * Checks if `value` is classified as an `arguments` object.
@@ -894,14 +868,15 @@ module.exports =
 	 * // => false
 	 */
 	function isArguments(value) {
-	  return isObjectLike(value) && isArrayLike(value) && objToString.call(value) == argsTag;
+	  return isObjectLike(value) && isArrayLike(value) &&
+	    hasOwnProperty.call(value, 'callee') && !propertyIsEnumerable.call(value, 'callee');
 	}
 
 	module.exports = isArguments;
 
 
 /***/ },
-/* 20 */
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var getNative = __webpack_require__(8),
@@ -915,7 +890,7 @@ module.exports =
 	var objectProto = Object.prototype;
 
 	/**
-	 * Used to resolve the [`toStringTag`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-object.prototype.tostring)
+	 * Used to resolve the [`toStringTag`](http://ecma-international.org/ecma-262/6.0/#sec-object.prototype.tostring)
 	 * of values.
 	 */
 	var objToString = objectProto.toString;
@@ -947,14 +922,14 @@ module.exports =
 
 
 /***/ },
-/* 21 */
+/* 20 */
 /***/ function(module, exports) {
 
 	/** Used to detect unsigned integer values. */
 	var reIsUint = /^\d+$/;
 
 	/**
-	 * Used as the [maximum length](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-number.max_safe_integer)
+	 * Used as the [maximum length](http://ecma-international.org/ecma-262/6.0/#sec-number.max_safe_integer)
 	 * of an array-like value.
 	 */
 	var MAX_SAFE_INTEGER = 9007199254740991;
@@ -977,14 +952,14 @@ module.exports =
 
 
 /***/ },
-/* 22 */
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var isArguments = __webpack_require__(19),
-	    isArray = __webpack_require__(20),
-	    isIndex = __webpack_require__(21),
+	var isArguments = __webpack_require__(18),
+	    isArray = __webpack_require__(19),
+	    isIndex = __webpack_require__(20),
 	    isLength = __webpack_require__(16),
-	    isObject = __webpack_require__(17);
+	    isObject = __webpack_require__(11);
 
 	/** Used for native method references. */
 	var objectProto = Object.prototype;
@@ -1047,10 +1022,10 @@ module.exports =
 
 
 /***/ },
-/* 23 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseFor = __webpack_require__(24),
+	var baseFor = __webpack_require__(23),
 	    keys = __webpack_require__(7);
 
 	/**
@@ -1070,10 +1045,10 @@ module.exports =
 
 
 /***/ },
-/* 24 */
+/* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var createBaseFor = __webpack_require__(25);
+	var createBaseFor = __webpack_require__(24);
 
 	/**
 	 * The base implementation of `baseForIn` and `baseForOwn` which iterates
@@ -1093,10 +1068,10 @@ module.exports =
 
 
 /***/ },
-/* 25 */
+/* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var toObject = __webpack_require__(26);
+	var toObject = __webpack_require__(25);
 
 	/**
 	 * Creates a base function for `_.forIn` or `_.forInRight`.
@@ -1126,10 +1101,10 @@ module.exports =
 
 
 /***/ },
-/* 26 */
+/* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var isObject = __webpack_require__(17);
+	var isObject = __webpack_require__(11);
 
 	/**
 	 * Converts `value` to an object if it's not one.
@@ -1146,7 +1121,7 @@ module.exports =
 
 
 /***/ },
-/* 27 */
+/* 26 */
 /***/ function(module, exports) {
 
 	/** Used for native method references. */
@@ -1178,10 +1153,10 @@ module.exports =
 
 
 /***/ },
-/* 28 */
+/* 27 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var bufferClone = __webpack_require__(29);
+	var bufferClone = __webpack_require__(28);
 
 	/** `Object#toString` result references. */
 	var boolTag = '[object Boolean]',
@@ -1247,32 +1222,12 @@ module.exports =
 
 
 /***/ },
-/* 29 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var constant = __webpack_require__(30),
-	    getNative = __webpack_require__(8);
+/* 28 */
+/***/ function(module, exports) {
 
 	/** Native method references. */
-	var ArrayBuffer = getNative(global, 'ArrayBuffer'),
-	    bufferSlice = getNative(ArrayBuffer && new ArrayBuffer(0), 'slice'),
-	    floor = Math.floor,
-	    Uint8Array = getNative(global, 'Uint8Array');
-
-	/** Used to clone array buffers. */
-	var Float64Array = (function() {
-	  // Safari 5 errors when using an array buffer to initialize a typed array
-	  // where the array buffer's `byteLength` is not a multiple of the typed
-	  // array's `BYTES_PER_ELEMENT`.
-	  try {
-	    var func = getNative(global, 'Float64Array'),
-	        result = new func(new ArrayBuffer(10), 0, 1) && func;
-	  } catch(e) {}
-	  return result || null;
-	}());
-
-	/** Used as the size, in bytes, of each `Float64Array` element. */
-	var FLOAT64_BYTES_PER_ELEMENT = Float64Array ? Float64Array.BYTES_PER_ELEMENT : 0;
+	var ArrayBuffer = global.ArrayBuffer,
+	    Uint8Array = global.Uint8Array;
 
 	/**
 	 * Creates a clone of the given array buffer.
@@ -1282,62 +1237,18 @@ module.exports =
 	 * @returns {ArrayBuffer} Returns the cloned array buffer.
 	 */
 	function bufferClone(buffer) {
-	  return bufferSlice.call(buffer, 0);
-	}
-	if (!bufferSlice) {
-	  // PhantomJS has `ArrayBuffer` and `Uint8Array` but not `Float64Array`.
-	  bufferClone = !(ArrayBuffer && Uint8Array) ? constant(null) : function(buffer) {
-	    var byteLength = buffer.byteLength,
-	        floatLength = Float64Array ? floor(byteLength / FLOAT64_BYTES_PER_ELEMENT) : 0,
-	        offset = floatLength * FLOAT64_BYTES_PER_ELEMENT,
-	        result = new ArrayBuffer(byteLength);
+	  var result = new ArrayBuffer(buffer.byteLength),
+	      view = new Uint8Array(result);
 
-	    if (floatLength) {
-	      var view = new Float64Array(result, 0, floatLength);
-	      view.set(new Float64Array(buffer, 0, floatLength));
-	    }
-	    if (byteLength != offset) {
-	      view = new Uint8Array(result, offset);
-	      view.set(new Uint8Array(buffer, offset));
-	    }
-	    return result;
-	  };
+	  view.set(new Uint8Array(buffer));
+	  return result;
 	}
 
 	module.exports = bufferClone;
 
 
 /***/ },
-/* 30 */
-/***/ function(module, exports) {
-
-	/**
-	 * Creates a function that returns `value`.
-	 *
-	 * @static
-	 * @memberOf _
-	 * @category Utility
-	 * @param {*} value The value to return from the new function.
-	 * @returns {Function} Returns the new function.
-	 * @example
-	 *
-	 * var object = { 'user': 'fred' };
-	 * var getter = _.constant(object);
-	 *
-	 * getter() === object;
-	 * // => true
-	 */
-	function constant(value) {
-	  return function() {
-	    return value;
-	  };
-	}
-
-	module.exports = constant;
-
-
-/***/ },
-/* 31 */
+/* 29 */
 /***/ function(module, exports) {
 
 	/**
@@ -1359,10 +1270,10 @@ module.exports =
 
 
 /***/ },
-/* 32 */
+/* 30 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var identity = __webpack_require__(33);
+	var identity = __webpack_require__(31);
 
 	/**
 	 * A specialized version of `baseCallback` which only supports `this` binding
@@ -1404,7 +1315,7 @@ module.exports =
 
 
 /***/ },
-/* 33 */
+/* 31 */
 /***/ function(module, exports) {
 
 	/**
@@ -1430,7 +1341,7 @@ module.exports =
 
 
 /***/ },
-/* 34 */
+/* 32 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -1440,7 +1351,7 @@ module.exports =
 	 * Expose `debug()` as the module.
 	 */
 
-	exports = module.exports = __webpack_require__(35);
+	exports = module.exports = __webpack_require__(33);
 	exports.log = log;
 	exports.formatArgs = formatArgs;
 	exports.save = save;
@@ -1604,7 +1515,7 @@ module.exports =
 
 
 /***/ },
-/* 35 */
+/* 33 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -1620,7 +1531,7 @@ module.exports =
 	exports.disable = disable;
 	exports.enable = enable;
 	exports.enabled = enabled;
-	exports.humanize = __webpack_require__(36);
+	exports.humanize = __webpack_require__(34);
 
 	/**
 	 * The currently active debug mode names, and names to skip.
@@ -1807,7 +1718,7 @@ module.exports =
 
 
 /***/ },
-/* 36 */
+/* 34 */
 /***/ function(module, exports) {
 
 	/**
@@ -1938,7 +1849,7 @@ module.exports =
 
 
 /***/ },
-/* 37 */
+/* 35 */
 /***/ function(module, exports) {
 
 	if (typeof Object.create === 'function') {
@@ -1967,16 +1878,18 @@ module.exports =
 
 
 /***/ },
-/* 38 */
+/* 36 */
 /***/ function(module, exports, __webpack_require__) {
+
+	
 
 	// Some methods only accessible server side
 
 	module.exports = AlgoliaSearchServer;
 
-	var inherits = __webpack_require__(37);
+	var inherits = __webpack_require__(35);
 
-	var AlgoliaSearch = __webpack_require__(39);
+	var AlgoliaSearch = __webpack_require__(37);
 
 	function AlgoliaSearchServer(applicationID, apiKey, opts) {
 	  // Default protocol is https: on the server, to avoid leaking admin keys
@@ -2033,9 +1946,9 @@ module.exports =
 	  var headers = AlgoliaSearchServer.super_.prototype._computeRequestHeaders.call(this);
 
 	  if (this._forward) {
-	      headers['x-algolia-api-key'] = this._forward.adminAPIKey;
-	      headers['x-forwarded-for'] = this._forward.endUserIP;
-	      headers['x-forwarded-api-key'] = this._forward.rateLimitAPIKey;
+	    headers['x-algolia-api-key'] = this._forward.adminAPIKey;
+	    headers['x-forwarded-for'] = this._forward.endUserIP;
+	    headers['x-forwarded-api-key'] = this._forward.rateLimitAPIKey;
 	  }
 
 	  if (this._secure) {
@@ -2049,18 +1962,20 @@ module.exports =
 
 
 /***/ },
-/* 39 */
+/* 37 */
 /***/ function(module, exports, __webpack_require__) {
+
+	
 
 	module.exports = AlgoliaSearch;
 
 	// default debug activated in dev environments
 	// this is triggered in package.json, using the envify transform
 	if (process.env.APP_ENV === 'development') {
-	  __webpack_require__(34).enable('algoliasearch*');
+	  __webpack_require__(32).enable('algoliasearch*');
 	}
 
-	var errors = __webpack_require__(40);
+	var errors = __webpack_require__(38);
 
 	/*
 	 * Algolia Search library initialization
@@ -2069,9 +1984,11 @@ module.exports =
 	 * @param {string} applicationID - Your applicationID, found in your dashboard
 	 * @param {string} apiKey - Your API key, found in your dashboard
 	 * @param {Object} [opts]
-	 * @param {number} [opts.timeout=2000] - The request timeout set in milliseconds, another request will be issued after this timeout
+	 * @param {number} [opts.timeout=2000] - The request timeout set in milliseconds,
+	 * another request will be issued after this timeout
 	 * @param {string} [opts.protocol='http:'] - The protocol used to query Algolia Search API.
-	 *                                        Set to 'https:' to force using https. Default to document.location.protocol in browsers
+	 *                                        Set to 'https:' to force using https.
+	 *                                        Default to document.location.protocol in browsers
 	 * @param {Object|Array} [opts.hosts={
 	 *           read: [this.applicationID + '-dsn.algolia.net'].concat([
 	 *             this.applicationID + '-1.algolianet.com',
@@ -2082,13 +1999,14 @@ module.exports =
 	 *             this.applicationID + '-1.algolianet.com',
 	 *             this.applicationID + '-2.algolianet.com',
 	 *             this.applicationID + '-3.algolianet.com']
-	 *           ]) - The hosts to use for Algolia Search API. If you provide them, you will less benefit from our HA implementation
+	 *           ]) - The hosts to use for Algolia Search API.
+	 *           If you provide them, you will less benefit from our HA implementation
 	 */
 	function AlgoliaSearch(applicationID, apiKey, opts) {
-	  var debug = __webpack_require__(34)('algoliasearch');
+	  var debug = __webpack_require__(32)('algoliasearch');
 
-	  var clone = __webpack_require__(45);
-	  var isArray = __webpack_require__(20);
+	  var clone = __webpack_require__(43);
+	  var isArray = __webpack_require__(19);
 
 	  var usage = 'Usage: algoliasearch(applicationID, apiKey, opts)';
 
@@ -2137,14 +2055,12 @@ module.exports =
 	  if (!opts.hosts) {
 	    this.hosts.read = [this.applicationID + '-dsn.algolia.net'].concat(defaultHosts);
 	    this.hosts.write = [this.applicationID + '.algolia.net'].concat(defaultHosts);
+	  } else if (isArray(opts.hosts)) {
+	    this.hosts.read = clone(opts.hosts);
+	    this.hosts.write = clone(opts.hosts);
 	  } else {
-	    if (isArray(opts.hosts)) {
-	      this.hosts.read = clone(opts.hosts);
-	      this.hosts.write = clone(opts.hosts);
-	    } else {
-	      this.hosts.read = clone(opts.hosts.read);
-	      this.hosts.write = clone(opts.hosts.write);
-	    }
+	    this.hosts.read = clone(opts.hosts.read);
+	    this.hosts.write = clone(opts.hosts.write);
 	  }
 
 	  // add protocol and lowercase hosts
@@ -2173,48 +2089,60 @@ module.exports =
 	   *  content: the server answer that contains the task ID
 	   */
 	  deleteIndex: function(indexName, callback) {
-	    return this._jsonRequest({ method: 'DELETE',
-	              url: '/1/indexes/' + encodeURIComponent(indexName),
-	              hostType: 'write',
-	              callback: callback });
+	    return this._jsonRequest({
+	      method: 'DELETE',
+	      url: '/1/indexes/' + encodeURIComponent(indexName),
+	      hostType: 'write',
+	      callback: callback
+	    });
 	  },
 	  /**
 	   * Move an existing index.
 	   * @param srcIndexName the name of index to copy.
-	   * @param dstIndexName the new index name that will contains a copy of srcIndexName (destination will be overriten if it already exist).
+	   * @param dstIndexName the new index name that will contains a copy of
+	   * srcIndexName (destination will be overriten if it already exist).
 	   * @param callback the result callback called with two arguments
 	   *  error: null or Error('message')
 	   *  content: the server answer that contains the task ID
 	   */
 	  moveIndex: function(srcIndexName, dstIndexName, callback) {
-	    var postObj = {operation: 'move', destination: dstIndexName};
-	    return this._jsonRequest({ method: 'POST',
-	              url: '/1/indexes/' + encodeURIComponent(srcIndexName) + '/operation',
-	              body: postObj,
-	              hostType: 'write',
-	              callback: callback });
-
+	    var postObj = {
+	      operation: 'move', destination: dstIndexName
+	    };
+	    return this._jsonRequest({
+	      method: 'POST',
+	      url: '/1/indexes/' + encodeURIComponent(srcIndexName) + '/operation',
+	      body: postObj,
+	      hostType: 'write',
+	      callback: callback
+	    });
 	  },
 	  /**
 	   * Copy an existing index.
 	   * @param srcIndexName the name of index to copy.
-	   * @param dstIndexName the new index name that will contains a copy of srcIndexName (destination will be overriten if it already exist).
+	   * @param dstIndexName the new index name that will contains a copy
+	   * of srcIndexName (destination will be overriten if it already exist).
 	   * @param callback the result callback called with two arguments
 	   *  error: null or Error('message')
 	   *  content: the server answer that contains the task ID
 	   */
 	  copyIndex: function(srcIndexName, dstIndexName, callback) {
-	    var postObj = {operation: 'copy', destination: dstIndexName};
-	    return this._jsonRequest({ method: 'POST',
-	              url: '/1/indexes/' + encodeURIComponent(srcIndexName) + '/operation',
-	              body: postObj,
-	              hostType: 'write',
-	              callback: callback });
+	    var postObj = {
+	      operation: 'copy', destination: dstIndexName
+	    };
+	    return this._jsonRequest({
+	      method: 'POST',
+	      url: '/1/indexes/' + encodeURIComponent(srcIndexName) + '/operation',
+	      body: postObj,
+	      hostType: 'write',
+	      callback: callback
+	    });
 	  },
 	  /**
 	   * Return last log entries.
 	   * @param offset Specify the first entry to retrieve (0-based, 0 is the most recent log entry).
-	   * @param length Specify the maximum number of entries to retrieve starting at offset. Maximum allowed value: 1000.
+	   * @param length Specify the maximum number of entries to retrieve starting
+	   * at offset. Maximum allowed value: 1000.
 	   * @param callback the result callback called with two arguments
 	   *  error: null or Error('message')
 	   *  content: the server answer that contains the task ID
@@ -2231,10 +2159,12 @@ module.exports =
 	      length = 10;
 	    }
 
-	    return this._jsonRequest({ method: 'GET',
-	              url: '/1/logs?offset=' + offset + '&length=' + length,
-	              hostType: 'read',
-	              callback: callback });
+	    return this._jsonRequest({
+	      method: 'GET',
+	      url: '/1/logs?offset=' + offset + '&length=' + length,
+	      hostType: 'read',
+	      callback: callback
+	    });
 	  },
 	  /*
 	   * List all existing indexes (paginated)
@@ -2253,10 +2183,12 @@ module.exports =
 	      params = '?page=' + page;
 	    }
 
-	    return this._jsonRequest({ method: 'GET',
-	              url: '/1/indexes' + params,
-	              hostType: 'read',
-	              callback: callback });
+	    return this._jsonRequest({
+	      method: 'GET',
+	      url: '/1/indexes' + params,
+	      hostType: 'read',
+	      callback: callback
+	    });
 	  },
 
 	  /*
@@ -2276,10 +2208,12 @@ module.exports =
 	   *  content: the server answer with user keys list
 	   */
 	  listUserKeys: function(callback) {
-	    return this._jsonRequest({ method: 'GET',
-	              url: '/1/keys',
-	              hostType: 'read',
-	              callback: callback });
+	    return this._jsonRequest({
+	      method: 'GET',
+	      url: '/1/keys',
+	      hostType: 'read',
+	      callback: callback
+	    });
 	  },
 	  /*
 	   * Get ACL of a user key
@@ -2290,10 +2224,12 @@ module.exports =
 	   *  content: the server answer with user keys list
 	   */
 	  getUserKeyACL: function(key, callback) {
-	    return this._jsonRequest({ method: 'GET',
-	              url: '/1/keys/' + key,
-	              hostType: 'read',
-	              callback: callback });
+	    return this._jsonRequest({
+	      method: 'GET',
+	      url: '/1/keys/' + key,
+	      hostType: 'read',
+	      callback: callback
+	    });
 	  },
 	  /*
 	   * Delete an existing user key
@@ -2303,10 +2239,12 @@ module.exports =
 	   *  content: the server answer with user keys list
 	   */
 	  deleteUserKey: function(key, callback) {
-	    return this._jsonRequest({ method: 'DELETE',
-	              url: '/1/keys/' + key,
-	              hostType: 'write',
-	              callback: callback });
+	    return this._jsonRequest({
+	      method: 'DELETE',
+	      url: '/1/keys/' + key,
+	      hostType: 'write',
+	      callback: callback
+	    });
 	  },
 	  /*
 	   * Add a new global API key
@@ -2491,7 +2429,7 @@ module.exports =
 	   * Initialize a new batch of search queries
 	   * @deprecated use client.search()
 	   */
-	  startQueriesBatch: deprecate(function() {
+	  startQueriesBatch: deprecate(function startQueriesBatchDeprecated() {
 	    this._batch = [];
 	  }, deprecatedMessage('client.startQueriesBatch()', 'client.search()')),
 
@@ -2499,7 +2437,7 @@ module.exports =
 	   * Add a search query in the batch
 	   * @deprecated use client.search()
 	   */
-	  addQueryInBatch: deprecate(function(indexName, query, args) {
+	  addQueryInBatch: deprecate(function addQueryInBatchDeprecated(indexName, query, args) {
 	    this._batch.push({
 	      indexName: indexName,
 	      query: query,
@@ -2519,15 +2457,15 @@ module.exports =
 	   * Launch the batch of queries using XMLHttpRequest.
 	   * @deprecated use client.search()
 	   */
-	  sendQueriesBatch: deprecate(function(callback) {
+	  sendQueriesBatch: deprecate(function sendQueriesBatchDeprecated(callback) {
 	    return this.search(this._batch, callback);
 	  }, deprecatedMessage('client.sendQueriesBatch()', 'client.search()')),
 
-	   /**
-	   * Set the number of milliseconds a request can take before automatically being terminated.
-	   *
-	   * @param {Number} milliseconds
-	   */
+	  /**
+	  * Set the number of milliseconds a request can take before automatically being terminated.
+	  *
+	  * @param {Number} milliseconds
+	  */
 	  setRequestTimeout: function(milliseconds) {
 	    if (milliseconds) {
 	      this.requestTimeout = parseInt(milliseconds, 10);
@@ -2554,7 +2492,7 @@ module.exports =
 	        // so we are mimicing the index.search(query, params) method
 	        // {indexName:, query:, params:}
 	        if (query.query !== undefined) {
-	          params += 'query=' + encodeURIComponent(query.query)
+	          params += 'query=' + encodeURIComponent(query.query);
 	        }
 
 	        return {
@@ -2639,18 +2577,32 @@ module.exports =
 	    // make sure every index instance has it's own cache
 	    this.cache = {};
 	  },
-	   /**
-	   * Add an extra field to the HTTP request
-	   *
-	   * @param name the header field name
-	   * @param value the header field value
-	   */
+	  /**
+	  * Add an extra field to the HTTP request
+	  *
+	  * @param name the header field name
+	  * @param value the header field value
+	  */
 	  setExtraHeader: function(name, value) {
-	    this.extraHeaders.push({ name: name.toLowerCase(), value: value});
+	    this.extraHeaders.push({
+	      name: name.toLowerCase(), value: value
+	    });
 	  },
 
 	  _sendQueriesBatch: function(params, callback) {
-	    return this._jsonRequest({ cache: this.cache,
+	    function prepareParams() {
+	      var reqParams = '';
+	      for (var i = 0; i < params.requests.length; ++i) {
+	        var q = '/1/indexes/' +
+	          encodeURIComponent(params.requests[i].indexName) +
+	          '?' + params.requests[i].params;
+	        reqParams += i + '=' + encodeURIComponent(q) + '&';
+	      }
+	      return reqParams;
+	    }
+
+	    return this._jsonRequest({
+	      cache: this.cache,
 	      method: 'POST',
 	      url: '/1/indexes/*/queries',
 	      body: params,
@@ -2658,14 +2610,9 @@ module.exports =
 	      fallback: {
 	        method: 'GET',
 	        url: '/1/indexes/*',
-	        body: {params: (function() {
-	          var reqParams = '';
-	          for (var i = 0; i < params.requests.length; ++i) {
-	            var q = '/1/indexes/' + encodeURIComponent(params.requests[i].indexName) + '?' + params.requests[i].params;
-	            reqParams += i + '=' + encodeURIComponent(q) + '&';
-	          }
-	          return reqParams;
-	        }())}
+	        body: {
+	          params: prepareParams()
+	        }
 	      },
 	      callback: callback
 	    });
@@ -2674,7 +2621,7 @@ module.exports =
 	   * Wrapper that try all hosts to maximize the quality of service
 	   */
 	  _jsonRequest: function(opts) {
-	    var requestDebug = __webpack_require__(34)('algoliasearch:' + opts.url);
+	    var requestDebug = __webpack_require__(32)('algoliasearch:' + opts.url);
 
 	    var body;
 	    var cache = opts.cache;
@@ -2751,7 +2698,8 @@ module.exports =
 	        debug: requestDebug
 	      };
 
-	      requestDebug('method: %s, url: %s, headers: %j, timeout: %d', options.method, url, options.headers, options.timeout);
+	      requestDebug('method: %s, url: %s, headers: %j, timeout: %d',
+	        options.method, url, options.headers, options.timeout);
 
 	      if (requester === client._request.fallback) {
 	        requestDebug('using fallback');
@@ -2763,14 +2711,14 @@ module.exports =
 
 	      function success(httpResponse) {
 	        // compute the status of the response,
-	        var status =
-	          // When in browser mode, using XDR or JSONP, we have no statusCode available
-	          // So we rely on our API response `status` property.
-	          // But `waitTask` can set a `status` property which is not the statusCode (it's the task status)
-	          // So we check if there's a `message` along `status` and it means it's an error
-	          //
-	          // That's the only case where we have a response.status that's not the http statusCode
-	          httpResponse && httpResponse.body && httpResponse.body.message && httpResponse.body.status ||
+	        //
+	        // When in browser mode, using XDR or JSONP, we have no statusCode available
+	        // So we rely on our API response `status` property.
+	        // But `waitTask` can set a `status` property which is not the statusCode (it's the task status)
+	        // So we check if there's a `message` along `status` and it means it's an error
+	        //
+	        // That's the only case where we have a response.status that's not the http statusCode
+	        var status = httpResponse && httpResponse.body && httpResponse.body.message && httpResponse.body.status ||
 
 	          // this is important to check the request statusCode AFTER the body eventual
 	          // statusCode because some implementations (jQuery XDomainRequest transport) may
@@ -2841,11 +2789,11 @@ module.exports =
 	          err instanceof errors.UnparsableJSON ||
 
 	          // no fallback and a network error occured (No CORS, bad APPID)
-	          (!requester.fallback && err instanceof errors.Network) ||
+	          !requester.fallback && err instanceof errors.Network ||
 
 	          // max tries and already using fallback or no fallback
-	          (tries >= client.hosts[opts.hostType].length && (usingFallback || !opts.fallback || !client._request.fallback))) {
-
+	          tries >= client.hosts[opts.hostType].length &&
+	          (usingFallback || !opts.fallback || !client._request.fallback)) {
 	          // stop request implementation for this command
 	          return client._promise.reject(err);
 	        }
@@ -2902,9 +2850,9 @@ module.exports =
 	    }
 	  },
 
-	   /*
-	   * Transform search param object in query string
-	   */
+	  /*
+	  * Transform search param object in query string
+	  */
 	  _getSearchParams: function(args, params) {
 	    if (this._isUndefined(args) || args === null) {
 	      return params;
@@ -2923,7 +2871,7 @@ module.exports =
 	  },
 
 	  _computeRequestHeaders: function() {
-	    var forEach = __webpack_require__(41);
+	    var forEach = __webpack_require__(39);
 
 	    var requestHeaders = {
 	      'x-algolia-api-key': this.apiKey,
@@ -2999,17 +2947,23 @@ module.exports =
 	   */
 	  addObjects: function(objects, callback) {
 	    var indexObj = this;
-	    var postObj = {requests: []};
+	    var postObj = {
+	      requests: []
+	    };
 	    for (var i = 0; i < objects.length; ++i) {
-	      var request = { action: 'addObject',
-	              body: objects[i] };
+	      var request = {
+	        action: 'addObject',
+	        body: objects[i]
+	      };
 	      postObj.requests.push(request);
 	    }
-	    return this.as._jsonRequest({ method: 'POST',
+	    return this.as._jsonRequest({
+	      method: 'POST',
 	      url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/batch',
 	      body: postObj,
 	      hostType: 'write',
-	      callback: callback });
+	      callback: callback
+	    });
 	  },
 	  /*
 	   * Get an object from this index
@@ -3095,11 +3049,13 @@ module.exports =
 	   */
 	  partialUpdateObject: function(partialObject, callback) {
 	    var indexObj = this;
-	    return this.as._jsonRequest({ method: 'POST',
+	    return this.as._jsonRequest({
+	      method: 'POST',
 	      url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/' + encodeURIComponent(partialObject.objectID) + '/partial',
 	      body: partialObject,
 	      hostType: 'write',
-	      callback: callback });
+	      callback: callback
+	    });
 	  },
 	  /*
 	   * Partially Override the content of several objects
@@ -3111,18 +3067,24 @@ module.exports =
 	   */
 	  partialUpdateObjects: function(objects, callback) {
 	    var indexObj = this;
-	    var postObj = {requests: []};
+	    var postObj = {
+	      requests: []
+	    };
 	    for (var i = 0; i < objects.length; ++i) {
-	      var request = { action: 'partialUpdateObject',
-	              objectID: objects[i].objectID,
-	              body: objects[i] };
+	      var request = {
+	        action: 'partialUpdateObject',
+	        objectID: objects[i].objectID,
+	        body: objects[i]
+	      };
 	      postObj.requests.push(request);
 	    }
-	    return this.as._jsonRequest({ method: 'POST',
+	    return this.as._jsonRequest({
+	      method: 'POST',
 	      url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/batch',
 	      body: postObj,
 	      hostType: 'write',
-	      callback: callback });
+	      callback: callback
+	    });
 	  },
 	  /*
 	   * Override the content of object
@@ -3134,11 +3096,13 @@ module.exports =
 	   */
 	  saveObject: function(object, callback) {
 	    var indexObj = this;
-	    return this.as._jsonRequest({ method: 'PUT',
+	    return this.as._jsonRequest({
+	      method: 'PUT',
 	      url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/' + encodeURIComponent(object.objectID),
 	      body: object,
 	      hostType: 'write',
-	      callback: callback });
+	      callback: callback
+	    });
 	  },
 	  /*
 	   * Override the content of several objects
@@ -3150,18 +3114,24 @@ module.exports =
 	   */
 	  saveObjects: function(objects, callback) {
 	    var indexObj = this;
-	    var postObj = {requests: []};
+	    var postObj = {
+	      requests: []
+	    };
 	    for (var i = 0; i < objects.length; ++i) {
-	      var request = { action: 'updateObject',
-	              objectID: objects[i].objectID,
-	              body: objects[i] };
+	      var request = {
+	        action: 'updateObject',
+	        objectID: objects[i].objectID,
+	        body: objects[i]
+	      };
 	      postObj.requests.push(request);
 	    }
-	    return this.as._jsonRequest({ method: 'POST',
+	    return this.as._jsonRequest({
+	      method: 'POST',
 	      url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/batch',
 	      body: postObj,
 	      hostType: 'write',
-	      callback: callback });
+	      callback: callback
+	    });
 	  },
 	  /*
 	   * Delete an object from the index
@@ -3183,10 +3153,12 @@ module.exports =
 	    }
 
 	    var indexObj = this;
-	    return this.as._jsonRequest({ method: 'DELETE',
+	    return this.as._jsonRequest({
+	      method: 'DELETE',
 	      url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/' + encodeURIComponent(objectID),
 	      hostType: 'write',
-	      callback: callback });
+	      callback: callback
+	    });
 	  },
 	  /*
 	   * Delete several objects from an index
@@ -3263,14 +3235,14 @@ module.exports =
 	      return indexObj
 	        .deleteObjects(objectIDs)
 	        .then(waitTask)
-	        .then(deleteByQuery);
+	        .then(doDeleteByQuery);
 	    }
 
 	    function waitTask(deleteObjectsContent) {
 	      return indexObj.waitTask(deleteObjectsContent.taskID);
 	    }
 
-	    function deleteByQuery() {
+	    function doDeleteByQuery() {
 	      return indexObj.deleteByQuery(query, params);
 	    }
 
@@ -3281,13 +3253,13 @@ module.exports =
 	    promise.then(success, failure);
 
 	    function success() {
-	      exitPromise(function() {
+	      exitPromise(function exit() {
 	        callback(null);
 	      }, client._setTimeout || setTimeout);
 	    }
 
 	    function failure(err) {
-	      exitPromise(function() {
+	      exitPromise(function exit() {
 	        callback(err);
 	      }, client._setTimeout || setTimeout);
 	    }
@@ -3299,62 +3271,89 @@ module.exports =
 	   * @param query the full text query
 	   * @param args (optional) if set, contains an object with query parameters:
 	   * - page: (integer) Pagination parameter used to select the page to retrieve.
-	   *                   Page is zero-based and defaults to 0. Thus, to retrieve the 10th page you need to set page=9
+	   *                   Page is zero-based and defaults to 0. Thus,
+	   *                   to retrieve the 10th page you need to set page=9
 	   * - hitsPerPage: (integer) Pagination parameter used to select the number of hits per page. Defaults to 20.
-	   * - attributesToRetrieve: a string that contains the list of object attributes you want to retrieve (let you minimize the answer size).
+	   * - attributesToRetrieve: a string that contains the list of object attributes
+	   * you want to retrieve (let you minimize the answer size).
 	   *   Attributes are separated with a comma (for example "name,address").
 	   *   You can also use an array (for example ["name","address"]).
-	   *   By default, all attributes are retrieved. You can also use '*' to retrieve all values when an attributesToRetrieve setting is specified for your index.
-	   * - attributesToHighlight: a string that contains the list of attributes you want to highlight according to the query.
+	   *   By default, all attributes are retrieved. You can also use '*' to retrieve all
+	   *   values when an attributesToRetrieve setting is specified for your index.
+	   * - attributesToHighlight: a string that contains the list of attributes you
+	   *   want to highlight according to the query.
 	   *   Attributes are separated by a comma. You can also use an array (for example ["name","address"]).
-	   *   If an attribute has no match for the query, the raw value is returned. By default all indexed text attributes are highlighted.
-	   *   You can use `*` if you want to highlight all textual attributes. Numerical attributes are not highlighted.
+	   *   If an attribute has no match for the query, the raw value is returned.
+	   *   By default all indexed text attributes are highlighted.
+	   *   You can use `*` if you want to highlight all textual attributes.
+	   *   Numerical attributes are not highlighted.
 	   *   A matchLevel is returned for each highlighted attribute and can contain:
 	   *      - full: if all the query terms were found in the attribute,
 	   *      - partial: if only some of the query terms were found,
 	   *      - none: if none of the query terms were found.
-	   * - attributesToSnippet: a string that contains the list of attributes to snippet alongside the number of words to return (syntax is `attributeName:nbWords`).
+	   * - attributesToSnippet: a string that contains the list of attributes to snippet alongside
+	   * the number of words to return (syntax is `attributeName:nbWords`).
 	   *    Attributes are separated by a comma (Example: attributesToSnippet=name:10,content:10).
-	   *    You can also use an array (Example: attributesToSnippet: ['name:10','content:10']). By default no snippet is computed.
-	   * - minWordSizefor1Typo: the minimum number of characters in a query word to accept one typo in this word. Defaults to 3.
-	   * - minWordSizefor2Typos: the minimum number of characters in a query word to accept two typos in this word. Defaults to 7.
-	   * - getRankingInfo: if set to 1, the result hits will contain ranking information in _rankingInfo attribute.
-	   * - aroundLatLng: search for entries around a given latitude/longitude (specified as two floats separated by a comma).
+	   *    You can also use an array (Example: attributesToSnippet: ['name:10','content:10']).
+	   *    By default no snippet is computed.
+	   * - minWordSizefor1Typo: the minimum number of characters in a query word to accept one typo in this word.
+	   *D efaults to 3.
+	   * - minWordSizefor2Typos: the minimum number of characters in a query word
+	   * to accept two typos in this word. Defaults to 7.
+	   * - getRankingInfo: if set to 1, the result hits will contain ranking
+	   * information in _rankingInfo attribute.
+	   * - aroundLatLng: search for entries around a given
+	   * latitude/longitude (specified as two floats separated by a comma).
 	   *   For example aroundLatLng=47.316669,5.016670).
-	   *   You can specify the maximum distance in meters with the aroundRadius parameter (in meters) and the precision for ranking with aroundPrecision
-	   *   (for example if you set aroundPrecision=100, two objects that are distant of less than 100m will be considered as identical for "geo" ranking parameter).
-	   *   At indexing, you should specify geoloc of an object with the _geoloc attribute (in the form {"_geoloc":{"lat":48.853409, "lng":2.348800}})
-	   * - insideBoundingBox: search entries inside a given area defined by the two extreme points of a rectangle (defined by 4 floats: p1Lat,p1Lng,p2Lat,p2Lng).
+	   *   You can specify the maximum distance in meters with the aroundRadius parameter (in meters)
+	   *   and the precision for ranking with aroundPrecision
+	   *   (for example if you set aroundPrecision=100, two objects that are distant of
+	   *   less than 100m will be considered as identical for "geo" ranking parameter).
+	   *   At indexing, you should specify geoloc of an object with the _geoloc attribute
+	   *   (in the form {"_geoloc":{"lat":48.853409, "lng":2.348800}})
+	   * - insideBoundingBox: search entries inside a given area defined by the two extreme points
+	   * of a rectangle (defined by 4 floats: p1Lat,p1Lng,p2Lat,p2Lng).
 	   *   For example insideBoundingBox=47.3165,4.9665,47.3424,5.0201).
-	   *   At indexing, you should specify geoloc of an object with the _geoloc attribute (in the form {"_geoloc":{"lat":48.853409, "lng":2.348800}})
-	   * - numericFilters: a string that contains the list of numeric filters you want to apply separated by a comma.
-	   *   The syntax of one filter is `attributeName` followed by `operand` followed by `value`. Supported operands are `<`, `<=`, `=`, `>` and `>=`.
+	   *   At indexing, you should specify geoloc of an object with the _geoloc attribute
+	   *   (in the form {"_geoloc":{"lat":48.853409, "lng":2.348800}})
+	   * - numericFilters: a string that contains the list of numeric filters you want to
+	   * apply separated by a comma.
+	   *   The syntax of one filter is `attributeName` followed by `operand` followed by `value`.
+	   *   Supported operands are `<`, `<=`, `=`, `>` and `>=`.
 	   *   You can have multiple conditions on one attribute like for example numericFilters=price>100,price<1000.
 	   *   You can also use an array (for example numericFilters: ["price>100","price<1000"]).
 	   * - tagFilters: filter the query by a set of tags. You can AND tags by separating them by commas.
 	   *   To OR tags, you must add parentheses. For example, tags=tag1,(tag2,tag3) means tag1 AND (tag2 OR tag3).
-	   *   You can also use an array, for example tagFilters: ["tag1",["tag2","tag3"]] means tag1 AND (tag2 OR tag3).
-	   *   At indexing, tags should be added in the _tags** attribute of objects (for example {"_tags":["tag1","tag2"]}).
+	   *   You can also use an array, for example tagFilters: ["tag1",["tag2","tag3"]]
+	   *   means tag1 AND (tag2 OR tag3).
+	   *   At indexing, tags should be added in the _tags** attribute
+	   *   of objects (for example {"_tags":["tag1","tag2"]}).
 	   * - facetFilters: filter the query by a list of facets.
 	   *   Facets are separated by commas and each facet is encoded as `attributeName:value`.
 	   *   For example: `facetFilters=category:Book,author:John%20Doe`.
 	   *   You can also use an array (for example `["category:Book","author:John%20Doe"]`).
 	   * - facets: List of object attributes that you want to use for faceting.
 	   *   Comma separated list: `"category,author"` or array `['category','author']`
-	   *   Only attributes that have been added in **attributesForFaceting** index setting can be used in this parameter.
+	   *   Only attributes that have been added in **attributesForFaceting** index setting
+	   *   can be used in this parameter.
 	   *   You can also use `*` to perform faceting on all attributes specified in **attributesForFaceting**.
 	   * - queryType: select how the query words are interpreted, it can be one of the following value:
 	   *    - prefixAll: all query words are interpreted as prefixes,
 	   *    - prefixLast: only the last word is interpreted as a prefix (default behavior),
 	   *    - prefixNone: no query word is interpreted as a prefix. This option is not recommended.
-	   * - optionalWords: a string that contains the list of words that should be considered as optional when found in the query.
+	   * - optionalWords: a string that contains the list of words that should
+	   * be considered as optional when found in the query.
 	   *   Comma separated and array are accepted.
-	   * - distinct: If set to 1, enable the distinct feature (disabled by default) if the attributeForDistinct index setting is set.
-	   *   This feature is similar to the SQL "distinct" keyword: when enabled in a query with the distinct=1 parameter,
+	   * - distinct: If set to 1, enable the distinct feature (disabled by default)
+	   * if the attributeForDistinct index setting is set.
+	   *   This feature is similar to the SQL "distinct" keyword: when enabled
+	   *   in a query with the distinct=1 parameter,
 	   *   all hits containing a duplicate value for the attributeForDistinct attribute are removed from results.
-	   *   For example, if the chosen attribute is show_name and several hits have the same value for show_name, then only the best
+	   *   For example, if the chosen attribute is show_name and several hits have
+	   *   the same value for show_name, then only the best
 	   *   one is kept and others are removed.
-	   * - restrictSearchableAttributes: List of attributes you want to use for textual search (must be a subset of the attributesToIndex index setting)
+	   * - restrictSearchableAttributes: List of attributes you want to use for
+	   * textual search (must be a subset of the attributesToIndex index setting)
 	   * either comma separated or as an array
 	   * @param callback the result callback called with two arguments:
 	   *  error: null or Error('message'). If false, the content contains the error.
@@ -3421,7 +3420,7 @@ module.exports =
 	  // pre 3.5.0 usage, backward compatible
 	  // browse: function(page, hitsPerPage, callback) {
 	  browse: function(query, queryParameters, callback) {
-	    var merge = __webpack_require__(47);
+	    var merge = __webpack_require__(45);
 
 	    var indexObj = this;
 
@@ -3471,10 +3470,12 @@ module.exports =
 
 	    var params = this.as._getSearchParams(queryParameters, '');
 
-	    return this.as._jsonRequest({ method: 'GET',
+	    return this.as._jsonRequest({
+	      method: 'GET',
 	      url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/browse?' + params,
 	      hostType: 'read',
-	      callback: callback });
+	      callback: callback
+	    });
 	  },
 
 	  /*
@@ -3538,9 +3539,9 @@ module.exports =
 	      query = undefined;
 	    }
 
-	    var merge = __webpack_require__(47);
+	    var merge = __webpack_require__(45);
 
-	    var IndexBrowser = __webpack_require__(57);
+	    var IndexBrowser = __webpack_require__(54);
 
 	    var browser = new IndexBrowser();
 	    var client = this.as;
@@ -3562,7 +3563,7 @@ module.exports =
 	      var queryString;
 
 	      if (cursor !== undefined) {
-	        queryString = 'cursor=' + encodeURIComponent(cursor)
+	        queryString = 'cursor=' + encodeURIComponent(cursor);
 	      } else {
 	        queryString = params;
 	      }
@@ -3605,7 +3606,7 @@ module.exports =
 	   */
 	  ttAdapter: function(params) {
 	    var self = this;
-	    return function(query, syncCb, asyncCb) {
+	    return function ttAdapter(query, syncCb, asyncCb) {
 	      var cb;
 
 	      if (typeof asyncCb === 'function') {
@@ -3616,7 +3617,7 @@ module.exports =
 	        cb = syncCb;
 	      }
 
-	      self.search(query, params, function(err, content) {
+	      self.search(query, params, function searchDone(err, content) {
 	        if (err) {
 	          cb(err);
 	          return;
@@ -3663,11 +3664,7 @@ module.exports =
 	        }
 
 	        if (content.status !== 'published') {
-	          return client._promise.delay(delay).then(function() {
-	            // do not forward the callback, we want the promise
-	            // on next iteration
-	            return retryLoop();
-	          });
+	          return client._promise.delay(delay).then(retryLoop);
 	        }
 
 	        return content;
@@ -3681,13 +3678,13 @@ module.exports =
 	    promise.then(successCb, failureCb);
 
 	    function successCb(content) {
-	      exitPromise(function() {
+	      exitPromise(function exit() {
 	        callback(null, content);
 	      }, client._setTimeout || setTimeout);
 	    }
 
 	    function failureCb(err) {
-	      exitPromise(function() {
+	      exitPromise(function exit() {
 	        callback(err);
 	      }, client._setTimeout || setTimeout);
 	    }
@@ -3702,10 +3699,12 @@ module.exports =
 	   */
 	  clearIndex: function(callback) {
 	    var indexObj = this;
-	    return this.as._jsonRequest({ method: 'POST',
+	    return this.as._jsonRequest({
+	      method: 'POST',
 	      url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/clear',
 	      hostType: 'write',
-	      callback: callback });
+	      callback: callback
+	    });
 	  },
 	  /*
 	   * Get settings of this index
@@ -3716,10 +3715,12 @@ module.exports =
 	   */
 	  getSettings: function(callback) {
 	    var indexObj = this;
-	    return this.as._jsonRequest({ method: 'GET',
+	    return this.as._jsonRequest({
+	      method: 'GET',
 	      url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/settings',
 	      hostType: 'read',
-	      callback: callback });
+	      callback: callback
+	    });
 	  },
 
 	  /*
@@ -3733,22 +3734,32 @@ module.exports =
 	   *   If set to null, all attributes are retrieved.
 	   * - attributesToHighlight: (array of strings) default list of attributes to highlight.
 	   *   If set to null, all indexed attributes are highlighted.
-	   * - attributesToSnippet**: (array of strings) default list of attributes to snippet alongside the number of words to return (syntax is attributeName:nbWords).
+	   * - attributesToSnippet**: (array of strings) default list of attributes to snippet alongside the number
+	   * of words to return (syntax is attributeName:nbWords).
 	   *   By default no snippet is computed. If set to null, no snippet is computed.
 	   * - attributesToIndex: (array of strings) the list of fields you want to index.
-	   *   If set to null, all textual and numerical attributes of your objects are indexed, but you should update it to get optimal results.
+	   *   If set to null, all textual and numerical attributes of your objects are indexed,
+	   *   but you should update it to get optimal results.
 	   *   This parameter has two important uses:
-	   *     - Limit the attributes to index: For example if you store a binary image in base64, you want to store it and be able to
+	   *     - Limit the attributes to index: For example if you store a binary image in base64,
+	   *     you want to store it and be able to
 	   *       retrieve it but you don't want to search in the base64 string.
-	   *     - Control part of the ranking*: (see the ranking parameter for full explanation) Matches in attributes at the beginning of
+	   *     - Control part of the ranking*: (see the ranking parameter for full explanation)
+	   *     Matches in attributes at the beginning of
 	   *       the list will be considered more important than matches in attributes further down the list.
-	   *       In one attribute, matching text at the beginning of the attribute will be considered more important than text after, you can disable
-	   *       this behavior if you add your attribute inside `unordered(AttributeName)`, for example attributesToIndex: ["title", "unordered(text)"].
+	   *       In one attribute, matching text at the beginning of the attribute will be
+	   *       considered more important than text after, you can disable
+	   *       this behavior if you add your attribute inside `unordered(AttributeName)`,
+	   *       for example attributesToIndex: ["title", "unordered(text)"].
 	   * - attributesForFaceting: (array of strings) The list of fields you want to use for faceting.
-	   *   All strings in the attribute selected for faceting are extracted and added as a facet. If set to null, no attribute is used for faceting.
-	   * - attributeForDistinct: (string) The attribute name used for the Distinct feature. This feature is similar to the SQL "distinct" keyword: when enabled
-	   *   in query with the distinct=1 parameter, all hits containing a duplicate value for this attribute are removed from results.
-	   *   For example, if the chosen attribute is show_name and several hits have the same value for show_name, then only the best one is kept and others are removed.
+	   *   All strings in the attribute selected for faceting are extracted and added as a facet.
+	   *   If set to null, no attribute is used for faceting.
+	   * - attributeForDistinct: (string) The attribute name used for the Distinct feature.
+	   * This feature is similar to the SQL "distinct" keyword: when enabled
+	   *   in query with the distinct=1 parameter, all hits containing a duplicate
+	   *   value for this attribute are removed from results.
+	   *   For example, if the chosen attribute is show_name and several hits have
+	   *   the same value for show_name, then only the best one is kept and others are removed.
 	   * - ranking: (array of strings) controls the way results are sorted.
 	   *   We have six available criteria:
 	   *    - typo: sort according to number of typos,
@@ -3756,33 +3767,42 @@ module.exports =
 	   *    - proximity: sort according to the proximity of query words in hits,
 	   *    - attribute: sort according to the order of attributes defined by attributesToIndex,
 	   *    - exact:
-	   *        - if the user query contains one word: sort objects having an attribute that is exactly the query word before others.
-	   *          For example if you search for the "V" TV show, you want to find it with the "V" query and avoid to have all popular TV
+	   *        - if the user query contains one word: sort objects having an attribute
+	   *        that is exactly the query word before others.
+	   *          For example if you search for the "V" TV show, you want to find it
+	   *          with the "V" query and avoid to have all popular TV
 	   *          show starting by the v letter before it.
-	   *        - if the user query contains multiple words: sort according to the number of words that matched exactly (and not as a prefix).
+	   *        - if the user query contains multiple words: sort according to the
+	   *        number of words that matched exactly (and not as a prefix).
 	   *    - custom: sort according to a user defined formula set in **customRanking** attribute.
 	   *   The standard order is ["typo", "geo", "proximity", "attribute", "exact", "custom"]
 	   * - customRanking: (array of strings) lets you specify part of the ranking.
-	   *   The syntax of this condition is an array of strings containing attributes prefixed by asc (ascending order) or desc (descending order) operator.
+	   *   The syntax of this condition is an array of strings containing attributes
+	   *   prefixed by asc (ascending order) or desc (descending order) operator.
 	   *   For example `"customRanking" => ["desc(population)", "asc(name)"]`
 	   * - queryType: Select how the query words are interpreted, it can be one of the following value:
 	   *   - prefixAll: all query words are interpreted as prefixes,
 	   *   - prefixLast: only the last word is interpreted as a prefix (default behavior),
 	   *   - prefixNone: no query word is interpreted as a prefix. This option is not recommended.
-	   * - highlightPreTag: (string) Specify the string that is inserted before the highlighted parts in the query result (default to "<em>").
-	   * - highlightPostTag: (string) Specify the string that is inserted after the highlighted parts in the query result (default to "</em>").
-	   * - optionalWords: (array of strings) Specify a list of words that should be considered as optional when found in the query.
+	   * - highlightPreTag: (string) Specify the string that is inserted before
+	   * the highlighted parts in the query result (default to "<em>").
+	   * - highlightPostTag: (string) Specify the string that is inserted after
+	   * the highlighted parts in the query result (default to "</em>").
+	   * - optionalWords: (array of strings) Specify a list of words that should
+	   * be considered as optional when found in the query.
 	   * @param callback (optional) the result callback called with two arguments
 	   *  error: null or Error('message')
 	   *  content: the server answer or the error message if a failure occured
 	   */
 	  setSettings: function(settings, callback) {
 	    var indexObj = this;
-	    return this.as._jsonRequest({ method: 'PUT',
+	    return this.as._jsonRequest({
+	      method: 'PUT',
 	      url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/settings',
 	      hostType: 'write',
 	      body: settings,
-	      callback: callback });
+	      callback: callback
+	    });
 	  },
 	  /*
 	   * List all existing user keys associated to this index
@@ -3793,10 +3813,12 @@ module.exports =
 	   */
 	  listUserKeys: function(callback) {
 	    var indexObj = this;
-	    return this.as._jsonRequest({ method: 'GET',
+	    return this.as._jsonRequest({
+	      method: 'GET',
 	      url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/keys',
 	      hostType: 'read',
-	      callback: callback });
+	      callback: callback
+	    });
 	  },
 	  /*
 	   * Get ACL of a user key associated to this index
@@ -3808,10 +3830,12 @@ module.exports =
 	   */
 	  getUserKeyACL: function(key, callback) {
 	    var indexObj = this;
-	    return this.as._jsonRequest({ method: 'GET',
+	    return this.as._jsonRequest({
+	      method: 'GET',
 	      url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/keys/' + key,
 	      hostType: 'read',
-	      callback: callback });
+	      callback: callback
+	    });
 	  },
 	  /*
 	   * Delete an existing user key associated to this index
@@ -3823,46 +3847,49 @@ module.exports =
 	   */
 	  deleteUserKey: function(key, callback) {
 	    var indexObj = this;
-	    return this.as._jsonRequest({ method: 'DELETE',
+	    return this.as._jsonRequest({
+	      method: 'DELETE',
 	      url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/keys/' + key,
 	      hostType: 'write',
-	      callback: callback });
+	      callback: callback
+	    });
 	  },
-	   /*
-	    * Add a new API key to this index
-	    *
-	    * @param {string[]} acls - The list of ACL for this key. Defined by an array of strings that
-	    *   can contains the following values:
-	    *     - search: allow to search (https and http)
-	    *     - addObject: allows to add/update an object in the index (https only)
-	    *     - deleteObject : allows to delete an existing object (https only)
-	    *     - deleteIndex : allows to delete index content (https only)
-	    *     - settings : allows to get index settings (https only)
-	    *     - editSettings : allows to change index settings (https only)
-	    * @param {Object} [params] - Optionnal parameters to set for the key
-	    * @param {number} params.validity - Number of seconds after which the key will be automatically removed (0 means no time limit for this key)
-	    * @param {number} params.maxQueriesPerIPPerHour - Number of API calls allowed from an IP address per hour
-	    * @param {number} params.maxHitsPerQuery - Number of hits this API key can retrieve in one call
-	    * @param {string} params.description - A description for your key
-	    * @param {string[]} params.referers - A list of authorized referers
-	    * @param {Object} params.queryParameters - Force the key to use specific query parameters
-	    * @param {Function} callback - The result callback called with two arguments
-	    *   error: null or Error('message')
-	    *   content: the server answer with user keys list
-	    * @return {Promise|undefined} Returns a promise if no callback given
-	    * @example
-	    * index.addUserKey(['search'], {
-	    *   validity: 300,
-	    *   maxQueriesPerIPPerHour: 2000,
-	    *   maxHitsPerQuery: 3,
-	    *   description: 'Eat three fruits',
-	    *   referers: ['*.algolia.com'],
-	    *   queryParameters: {
-	    *     tagFilters: ['public'],
-	    *   }
-	    * })
-	    * @see {@link https://www.algolia.com/doc/rest_api#AddIndexKey|Algolia REST API Documentation}
-	    */
+	  /*
+	   * Add a new API key to this index
+	   *
+	   * @param {string[]} acls - The list of ACL for this key. Defined by an array of strings that
+	   *   can contains the following values:
+	   *     - search: allow to search (https and http)
+	   *     - addObject: allows to add/update an object in the index (https only)
+	   *     - deleteObject : allows to delete an existing object (https only)
+	   *     - deleteIndex : allows to delete index content (https only)
+	   *     - settings : allows to get index settings (https only)
+	   *     - editSettings : allows to change index settings (https only)
+	   * @param {Object} [params] - Optionnal parameters to set for the key
+	   * @param {number} params.validity - Number of seconds after which the key will
+	   * be automatically removed (0 means no time limit for this key)
+	   * @param {number} params.maxQueriesPerIPPerHour - Number of API calls allowed from an IP address per hour
+	   * @param {number} params.maxHitsPerQuery - Number of hits this API key can retrieve in one call
+	   * @param {string} params.description - A description for your key
+	   * @param {string[]} params.referers - A list of authorized referers
+	   * @param {Object} params.queryParameters - Force the key to use specific query parameters
+	   * @param {Function} callback - The result callback called with two arguments
+	   *   error: null or Error('message')
+	   *   content: the server answer with user keys list
+	   * @return {Promise|undefined} Returns a promise if no callback given
+	   * @example
+	   * index.addUserKey(['search'], {
+	   *   validity: 300,
+	   *   maxQueriesPerIPPerHour: 2000,
+	   *   maxHitsPerQuery: 3,
+	   *   description: 'Eat three fruits',
+	   *   referers: ['*.algolia.com'],
+	   *   queryParameters: {
+	   *     tagFilters: ['public'],
+	   *   }
+	   * })
+	   * @see {@link https://www.algolia.com/doc/rest_api#AddIndexKey|Algolia REST API Documentation}
+	   */
 	  addUserKey: function(acls, params, callback) {
 	    if (arguments.length === 1 || typeof params === 'function') {
 	      callback = params;
@@ -3899,79 +3926,81 @@ module.exports =
 	   * Add an existing user key associated to this index
 	   * @deprecated use index.addUserKey()
 	   */
-	   addUserKeyWithValidity: deprecate(function(acls, params, callback) {
-	     return this.addUserKey(acls, params, callback);
-	   }, deprecatedMessage('index.addUserKeyWithValidity()', 'index.addUserKey()')),
+	  addUserKeyWithValidity: deprecate(function deprecatedAddUserKeyWithValidity(acls, params, callback) {
+	    return this.addUserKey(acls, params, callback);
+	  }, deprecatedMessage('index.addUserKeyWithValidity()', 'index.addUserKey()')),
 
-	   /**
-	    * Update an existing API key of this index
-	    * @param {string} key - The key to update
-	    * @param {string[]} acls - The list of ACL for this key. Defined by an array of strings that
-	    *   can contains the following values:
-	    *     - search: allow to search (https and http)
-	    *     - addObject: allows to add/update an object in the index (https only)
-	    *     - deleteObject : allows to delete an existing object (https only)
-	    *     - deleteIndex : allows to delete index content (https only)
-	    *     - settings : allows to get index settings (https only)
-	    *     - editSettings : allows to change index settings (https only)
-	    * @param {Object} [params] - Optionnal parameters to set for the key
-	    * @param {number} params.validity - Number of seconds after which the key will be automatically removed (0 means no time limit for this key)
-	    * @param {number} params.maxQueriesPerIPPerHour - Number of API calls allowed from an IP address per hour
-	    * @param {number} params.maxHitsPerQuery - Number of hits this API key can retrieve in one call
-	    * @param {string} params.description - A description for your key
-	    * @param {string[]} params.referers - A list of authorized referers
-	    * @param {Object} params.queryParameters - Force the key to use specific query parameters
-	    * @param {Function} callback - The result callback called with two arguments
-	    *   error: null or Error('message')
-	    *   content: the server answer with user keys list
-	    * @return {Promise|undefined} Returns a promise if no callback given
-	    * @example
-	    * index.updateUserKey('APIKEY', ['search'], {
-	    *   validity: 300,
-	    *   maxQueriesPerIPPerHour: 2000,
-	    *   maxHitsPerQuery: 3,
-	    *   description: 'Eat three fruits',
-	    *   referers: ['*.algolia.com'],
-	    *   queryParameters: {
-	    *     tagFilters: ['public'],
-	    *   }
-	    * })
-	    * @see {@link https://www.algolia.com/doc/rest_api#UpdateIndexKey|Algolia REST API Documentation}
-	    */
-	   updateUserKey: function(key, acls, params, callback) {
-	     if (arguments.length === 2 || typeof params === 'function') {
-	       callback = params;
-	       params = null;
-	     }
+	  /**
+	   * Update an existing API key of this index
+	   * @param {string} key - The key to update
+	   * @param {string[]} acls - The list of ACL for this key. Defined by an array of strings that
+	   *   can contains the following values:
+	   *     - search: allow to search (https and http)
+	   *     - addObject: allows to add/update an object in the index (https only)
+	   *     - deleteObject : allows to delete an existing object (https only)
+	   *     - deleteIndex : allows to delete index content (https only)
+	   *     - settings : allows to get index settings (https only)
+	   *     - editSettings : allows to change index settings (https only)
+	   * @param {Object} [params] - Optionnal parameters to set for the key
+	   * @param {number} params.validity - Number of seconds after which the key will
+	   * be automatically removed (0 means no time limit for this key)
+	   * @param {number} params.maxQueriesPerIPPerHour - Number of API calls allowed from an IP address per hour
+	   * @param {number} params.maxHitsPerQuery - Number of hits this API key can retrieve in one call
+	   * @param {string} params.description - A description for your key
+	   * @param {string[]} params.referers - A list of authorized referers
+	   * @param {Object} params.queryParameters - Force the key to use specific query parameters
+	   * @param {Function} callback - The result callback called with two arguments
+	   *   error: null or Error('message')
+	   *   content: the server answer with user keys list
+	   * @return {Promise|undefined} Returns a promise if no callback given
+	   * @example
+	   * index.updateUserKey('APIKEY', ['search'], {
+	   *   validity: 300,
+	   *   maxQueriesPerIPPerHour: 2000,
+	   *   maxHitsPerQuery: 3,
+	   *   description: 'Eat three fruits',
+	   *   referers: ['*.algolia.com'],
+	   *   queryParameters: {
+	   *     tagFilters: ['public'],
+	   *   }
+	   * })
+	   * @see {@link https://www.algolia.com/doc/rest_api#UpdateIndexKey|Algolia REST API Documentation}
+	   */
+	  updateUserKey: function(key, acls, params, callback) {
+	    if (arguments.length === 2 || typeof params === 'function') {
+	      callback = params;
+	      params = null;
+	    }
 
-	     var putObj = {
-	       acl: acls
-	     };
+	    var putObj = {
+	      acl: acls
+	    };
 
-	     if (params) {
-	       putObj.validity = params.validity;
-	       putObj.maxQueriesPerIPPerHour = params.maxQueriesPerIPPerHour;
-	       putObj.maxHitsPerQuery = params.maxHitsPerQuery;
-	       putObj.description = params.description;
+	    if (params) {
+	      putObj.validity = params.validity;
+	      putObj.maxQueriesPerIPPerHour = params.maxQueriesPerIPPerHour;
+	      putObj.maxHitsPerQuery = params.maxHitsPerQuery;
+	      putObj.description = params.description;
 
-	       if (params.queryParameters) {
-	         putObj.queryParameters = this.as._getSearchParams(params.queryParameters, '');
-	       }
+	      if (params.queryParameters) {
+	        putObj.queryParameters = this.as._getSearchParams(params.queryParameters, '');
+	      }
 
-	       putObj.referers = params.referers;
-	     }
+	      putObj.referers = params.referers;
+	    }
 
-	     return this.as._jsonRequest({
-	       method: 'PUT',
-	       url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/keys/' + key,
-	       body: putObj,
-	       hostType: 'write',
-	       callback: callback
-	     });
-	   },
+	    return this.as._jsonRequest({
+	      method: 'PUT',
+	      url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/keys/' + key,
+	      body: putObj,
+	      hostType: 'write',
+	      callback: callback
+	    });
+	  },
 
 	  _search: function(params, callback) {
-	    return this.as._jsonRequest({ cache: this.cache,
+	    return this.as._jsonRequest({
+	      cache: this.cache,
 	      method: 'POST',
 	      url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/query',
 	      body: {params: params},
@@ -3993,7 +4022,7 @@ module.exports =
 
 	// extracted from https://github.com/component/map/blob/master/index.js
 	// without the crazy toFunction thing
-	function map(arr, fn){
+	function map(arr, fn) {
 	  var ret = [];
 	  for (var i = 0; i < arr.length; ++i) {
 	    ret.push(fn(arr[i], i));
@@ -4009,7 +4038,7 @@ module.exports =
 
 	function notImplemented() {
 	  var message = 'Not implemented in this environment.\n' +
-	  'If you feel this is a mistake, write to support@algolia.com';
+	    'If you feel this is a mistake, write to support@algolia.com';
 
 	  throw new errors.AlgoliaSearchError(message);
 	}
@@ -4019,8 +4048,8 @@ module.exports =
 	    .replace('.', '')
 	    .replace('()', '');
 
-	  return 'algoliasearch: `' + previousUsage + '` was replaced by `' +
-	    newUsage + '`. Please see https://github.com/algolia/algoliasearch-client-js/wiki/Deprecated#' + githubAnchorLink
+	  return 'algoliasearch: `' + previousUsage + '` was replaced by `' + newUsage +
+	    '`. Please see https://github.com/algolia/algoliasearch-client-js/wiki/Deprecated#' + githubAnchorLink;
 	}
 
 	// Parse cloud does not supports setTimeout
@@ -4036,6 +4065,7 @@ module.exports =
 
 	  function deprecated() {
 	    if (!warned) {
+	      /* eslint no-console:0 */
 	      console.log(message);
 	      warned = true;
 	    }
@@ -4048,17 +4078,19 @@ module.exports =
 
 
 /***/ },
-/* 40 */
+/* 38 */
 /***/ function(module, exports, __webpack_require__) {
+
+	
 
 	// This file hosts our error definitions
 	// We use custom error "types" so that we can act on them when we need it
 	// e.g.: if error instanceof errors.UnparsableJSON then..
 
-	var inherits = __webpack_require__(37);
+	var inherits = __webpack_require__(35);
 
 	function AlgoliaSearchError(message, extraProperties) {
-	  var forEach = __webpack_require__(41);
+	  var forEach = __webpack_require__(39);
 
 	  var error = this;
 
@@ -4130,12 +4162,12 @@ module.exports =
 
 
 /***/ },
-/* 41 */
+/* 39 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var arrayEach = __webpack_require__(4),
-	    baseEach = __webpack_require__(42),
-	    createForEach = __webpack_require__(44);
+	    baseEach = __webpack_require__(40),
+	    createForEach = __webpack_require__(42);
 
 	/**
 	 * Iterates over elements of `collection` invoking `iteratee` for each element.
@@ -4173,11 +4205,11 @@ module.exports =
 
 
 /***/ },
-/* 42 */
+/* 40 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseForOwn = __webpack_require__(23),
-	    createBaseEach = __webpack_require__(43);
+	var baseForOwn = __webpack_require__(22),
+	    createBaseEach = __webpack_require__(41);
 
 	/**
 	 * The base implementation of `_.forEach` without support for callback
@@ -4194,12 +4226,12 @@ module.exports =
 
 
 /***/ },
-/* 43 */
+/* 41 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var getLength = __webpack_require__(14),
 	    isLength = __webpack_require__(16),
-	    toObject = __webpack_require__(26);
+	    toObject = __webpack_require__(25);
 
 	/**
 	 * Creates a `baseEach` or `baseEachRight` function.
@@ -4231,11 +4263,11 @@ module.exports =
 
 
 /***/ },
-/* 44 */
+/* 42 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var bindCallback = __webpack_require__(32),
-	    isArray = __webpack_require__(20);
+	var bindCallback = __webpack_require__(30),
+	    isArray = __webpack_require__(19);
 
 	/**
 	 * Creates a function for `_.forEach` or `_.forEachRight`.
@@ -4257,12 +4289,12 @@ module.exports =
 
 
 /***/ },
-/* 45 */
+/* 43 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var baseClone = __webpack_require__(2),
-	    bindCallback = __webpack_require__(32),
-	    isIterateeCall = __webpack_require__(46);
+	    bindCallback = __webpack_require__(30),
+	    isIterateeCall = __webpack_require__(44);
 
 	/**
 	 * Creates a clone of `value`. If `isDeep` is `true` nested objects are cloned,
@@ -4333,12 +4365,12 @@ module.exports =
 
 
 /***/ },
-/* 46 */
+/* 44 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var isArrayLike = __webpack_require__(13),
-	    isIndex = __webpack_require__(21),
-	    isObject = __webpack_require__(17);
+	    isIndex = __webpack_require__(20),
+	    isObject = __webpack_require__(11);
 
 	/**
 	 * Checks if the provided arguments are from an iteratee call.
@@ -4367,11 +4399,11 @@ module.exports =
 
 
 /***/ },
-/* 47 */
+/* 45 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseMerge = __webpack_require__(48),
-	    createAssigner = __webpack_require__(55);
+	var baseMerge = __webpack_require__(46),
+	    createAssigner = __webpack_require__(52);
 
 	/**
 	 * Recursively merges own enumerable properties of the source object(s), that
@@ -4427,16 +4459,16 @@ module.exports =
 
 
 /***/ },
-/* 48 */
+/* 46 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var arrayEach = __webpack_require__(4),
-	    baseMergeDeep = __webpack_require__(49),
-	    isArray = __webpack_require__(20),
+	    baseMergeDeep = __webpack_require__(47),
+	    isArray = __webpack_require__(19),
 	    isArrayLike = __webpack_require__(13),
-	    isObject = __webpack_require__(17),
+	    isObject = __webpack_require__(11),
 	    isObjectLike = __webpack_require__(12),
-	    isTypedArray = __webpack_require__(53),
+	    isTypedArray = __webpack_require__(50),
 	    keys = __webpack_require__(7);
 
 	/**
@@ -4446,7 +4478,7 @@ module.exports =
 	 * @private
 	 * @param {Object} object The destination object.
 	 * @param {Object} source The source object.
-	 * @param {Function} [customizer] The function to customize merging properties.
+	 * @param {Function} [customizer] The function to customize merged values.
 	 * @param {Array} [stackA=[]] Tracks traversed source objects.
 	 * @param {Array} [stackB=[]] Associates values with source counterparts.
 	 * @returns {Object} Returns `object`.
@@ -4456,7 +4488,7 @@ module.exports =
 	    return object;
 	  }
 	  var isSrcArr = isArrayLike(source) && (isArray(source) || isTypedArray(source)),
-	      props = isSrcArr ? null : keys(source);
+	      props = isSrcArr ? undefined : keys(source);
 
 	  arrayEach(props || source, function(srcValue, key) {
 	    if (props) {
@@ -4489,16 +4521,16 @@ module.exports =
 
 
 /***/ },
-/* 49 */
+/* 47 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var arrayCopy = __webpack_require__(3),
-	    isArguments = __webpack_require__(19),
-	    isArray = __webpack_require__(20),
+	    isArguments = __webpack_require__(18),
+	    isArray = __webpack_require__(19),
 	    isArrayLike = __webpack_require__(13),
-	    isPlainObject = __webpack_require__(50),
-	    isTypedArray = __webpack_require__(53),
-	    toPlainObject = __webpack_require__(54);
+	    isPlainObject = __webpack_require__(48),
+	    isTypedArray = __webpack_require__(50),
+	    toPlainObject = __webpack_require__(51);
 
 	/**
 	 * A specialized version of `baseMerge` for arrays and objects which performs
@@ -4510,7 +4542,7 @@ module.exports =
 	 * @param {Object} source The source object.
 	 * @param {string} key The key of the value to merge.
 	 * @param {Function} mergeFunc The function to merge values.
-	 * @param {Function} [customizer] The function to customize merging properties.
+	 * @param {Function} [customizer] The function to customize merged values.
 	 * @param {Array} [stackA=[]] Tracks traversed source objects.
 	 * @param {Array} [stackB=[]] Associates values with source counterparts.
 	 * @returns {boolean} Returns `true` if the objects are equivalent, else `false`.
@@ -4562,11 +4594,12 @@ module.exports =
 
 
 /***/ },
-/* 50 */
+/* 48 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var getNative = __webpack_require__(8),
-	    shimIsPlainObject = __webpack_require__(51);
+	var baseForIn = __webpack_require__(49),
+	    isArguments = __webpack_require__(18),
+	    isObjectLike = __webpack_require__(12);
 
 	/** `Object#toString` result references. */
 	var objectTag = '[object Object]';
@@ -4574,14 +4607,14 @@ module.exports =
 	/** Used for native method references. */
 	var objectProto = Object.prototype;
 
+	/** Used to check objects for own properties. */
+	var hasOwnProperty = objectProto.hasOwnProperty;
+
 	/**
-	 * Used to resolve the [`toStringTag`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-object.prototype.tostring)
+	 * Used to resolve the [`toStringTag`](http://ecma-international.org/ecma-262/6.0/#sec-object.prototype.tostring)
 	 * of values.
 	 */
 	var objToString = objectProto.toString;
-
-	/** Native method references. */
-	var getPrototypeOf = getNative(Object, 'getPrototypeOf');
 
 	/**
 	 * Checks if `value` is a plain object, that is, an object created by the
@@ -4613,59 +4646,12 @@ module.exports =
 	 * _.isPlainObject(Object.create(null));
 	 * // => true
 	 */
-	var isPlainObject = !getPrototypeOf ? shimIsPlainObject : function(value) {
-	  if (!(value && objToString.call(value) == objectTag)) {
-	    return false;
-	  }
-	  var valueOf = getNative(value, 'valueOf'),
-	      objProto = valueOf && (objProto = getPrototypeOf(valueOf)) && getPrototypeOf(objProto);
-
-	  return objProto
-	    ? (value == objProto || getPrototypeOf(value) == objProto)
-	    : shimIsPlainObject(value);
-	};
-
-	module.exports = isPlainObject;
-
-
-/***/ },
-/* 51 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var baseForIn = __webpack_require__(52),
-	    isObjectLike = __webpack_require__(12);
-
-	/** `Object#toString` result references. */
-	var objectTag = '[object Object]';
-
-	/** Used for native method references. */
-	var objectProto = Object.prototype;
-
-	/** Used to check objects for own properties. */
-	var hasOwnProperty = objectProto.hasOwnProperty;
-
-	/**
-	 * Used to resolve the [`toStringTag`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-object.prototype.tostring)
-	 * of values.
-	 */
-	var objToString = objectProto.toString;
-
-	/**
-	 * A fallback implementation of `_.isPlainObject` which checks if `value`
-	 * is an object created by the `Object` constructor or has a `[[Prototype]]`
-	 * of `null`.
-	 *
-	 * @private
-	 * @param {*} value The value to check.
-	 * @returns {boolean} Returns `true` if `value` is a plain object, else `false`.
-	 */
-	function shimIsPlainObject(value) {
+	function isPlainObject(value) {
 	  var Ctor;
 
 	  // Exit early for non `Object` objects.
-	  if (!(isObjectLike(value) && objToString.call(value) == objectTag) ||
-	      (!hasOwnProperty.call(value, 'constructor') &&
-	        (Ctor = value.constructor, typeof Ctor == 'function' && !(Ctor instanceof Ctor)))) {
+	  if (!(isObjectLike(value) && objToString.call(value) == objectTag && !isArguments(value)) ||
+	      (!hasOwnProperty.call(value, 'constructor') && (Ctor = value.constructor, typeof Ctor == 'function' && !(Ctor instanceof Ctor)))) {
 	    return false;
 	  }
 	  // IE < 9 iterates inherited properties before own properties. If the first
@@ -4681,15 +4667,15 @@ module.exports =
 	  return result === undefined || hasOwnProperty.call(value, result);
 	}
 
-	module.exports = shimIsPlainObject;
+	module.exports = isPlainObject;
 
 
 /***/ },
-/* 52 */
+/* 49 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseFor = __webpack_require__(24),
-	    keysIn = __webpack_require__(22);
+	var baseFor = __webpack_require__(23),
+	    keysIn = __webpack_require__(21);
 
 	/**
 	 * The base implementation of `_.forIn` without support for callback
@@ -4708,7 +4694,7 @@ module.exports =
 
 
 /***/ },
-/* 53 */
+/* 50 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var isLength = __webpack_require__(16),
@@ -4759,7 +4745,7 @@ module.exports =
 	var objectProto = Object.prototype;
 
 	/**
-	 * Used to resolve the [`toStringTag`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-object.prototype.tostring)
+	 * Used to resolve the [`toStringTag`](http://ecma-international.org/ecma-262/6.0/#sec-object.prototype.tostring)
 	 * of values.
 	 */
 	var objToString = objectProto.toString;
@@ -4788,11 +4774,11 @@ module.exports =
 
 
 /***/ },
-/* 54 */
+/* 51 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var baseCopy = __webpack_require__(6),
-	    keysIn = __webpack_require__(22);
+	    keysIn = __webpack_require__(21);
 
 	/**
 	 * Converts `value` to a plain object flattening inherited enumerable
@@ -4825,18 +4811,15 @@ module.exports =
 
 
 /***/ },
-/* 55 */
+/* 52 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var bindCallback = __webpack_require__(32),
-	    isIterateeCall = __webpack_require__(46),
-	    restParam = __webpack_require__(56);
+	var bindCallback = __webpack_require__(30),
+	    isIterateeCall = __webpack_require__(44),
+	    restParam = __webpack_require__(53);
 
 	/**
-	 * Creates a function that assigns properties of source object(s) to a given
-	 * destination object.
-	 *
-	 * **Note:** This function is used to create `_.assign`, `_.defaults`, and `_.merge`.
+	 * Creates a `_.assign`, `_.defaults`, or `_.merge` function.
 	 *
 	 * @private
 	 * @param {Function} assigner The function to assign values.
@@ -4875,7 +4858,7 @@ module.exports =
 
 
 /***/ },
-/* 56 */
+/* 53 */
 /***/ function(module, exports) {
 
 	/** Used as the `TypeError` message for "Functions" methods. */
@@ -4939,17 +4922,20 @@ module.exports =
 
 
 /***/ },
-/* 57 */
+/* 54 */
 /***/ function(module, exports, __webpack_require__) {
+
+	
 
 	// This is the object returned by the `index.browseAll()` method
 
 	module.exports = IndexBrowser;
 
-	var inherits = __webpack_require__(37);
-	var EventEmitter = __webpack_require__(58).EventEmitter;
+	var inherits = __webpack_require__(35);
+	var EventEmitter = __webpack_require__(55).EventEmitter;
 
-	function IndexBrowser() {}
+	function IndexBrowser() {
+	}
 
 	inherits(IndexBrowser, EventEmitter);
 
@@ -4981,16 +4967,16 @@ module.exports =
 
 
 /***/ },
-/* 58 */
+/* 55 */
 /***/ function(module, exports) {
 
 	module.exports = require("events");
 
 /***/ },
-/* 59 */
+/* 56 */
 /***/ function(module, exports) {
 
-	module.exports = "3.7.2"
+	module.exports = "3.7.3"
 
 /***/ }
 /******/ ]);
