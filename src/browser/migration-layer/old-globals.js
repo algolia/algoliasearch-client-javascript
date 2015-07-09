@@ -1,6 +1,5 @@
 'use strict';
 
-/*global AlgoliaExplainResults:true*/
 /*eslint no-unused-vars: [2, {"vars": "local"}]*/
 
 module.exports = oldGlobals;
@@ -21,8 +20,7 @@ function oldGlobals() {
     throw new Error(message);
   };
 
-  // cannot use window.AlgoliaExplainResults on old IEs, dunno why
-  AlgoliaExplainResults = function() {
+  window.AlgoliaExplainResults = function() {
     throw new Error(message);
   };
 }
