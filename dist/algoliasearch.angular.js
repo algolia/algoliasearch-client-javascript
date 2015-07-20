@@ -1,4 +1,4 @@
-/*! algoliasearch 3.7.3 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
+/*! algoliasearch 3.7.4 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
 (function(f){var g;if(typeof window!=='undefined'){g=window}else if(typeof self!=='undefined'){g=self}g.ALGOLIA_MIGRATION_LAYER=f()})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 
 module.exports = function load (src, opts, cb) {
@@ -4966,7 +4966,7 @@ AlgoliaSearch.prototype = {
     var usingFallback = false;
 
     if (opts.body !== undefined) {
-      body = JSON.stringify(opts.body);
+      body = safeJSONStringify(opts.body);
     }
 
     requestDebug('request start');
@@ -4987,7 +4987,7 @@ AlgoliaSearch.prototype = {
       // handle cache existence
       if (client._useCache && cache && cache[cacheID] !== undefined) {
         requestDebug('serving response from cache');
-        return client._promise.resolve(JSON.parse(JSON.stringify(cache[cacheID])));
+        return client._promise.resolve(JSON.parse(safeJSONStringify(cache[cacheID])));
       }
 
       // if we reached max tries
@@ -5015,7 +5015,7 @@ AlgoliaSearch.prototype = {
         reqOpts.url = opts.fallback.url;
         reqOpts.jsonBody = opts.fallback.body;
         if (reqOpts.jsonBody) {
-          reqOpts.body = JSON.stringify(reqOpts.jsonBody);
+          reqOpts.body = safeJSONStringify(reqOpts.jsonBody);
         }
 
         reqOpts.timeout = client.requestTimeout * (tries + 1);
@@ -5196,7 +5196,7 @@ AlgoliaSearch.prototype = {
     for (var key in args) {
       if (key !== null && args[key] !== undefined && args.hasOwnProperty(key)) {
         params += params === '' ? '' : '&';
-        params += key + '=' + encodeURIComponent(Object.prototype.toString.call(args[key]) === '[object Array]' ? JSON.stringify(args[key]) : args[key]);
+        params += key + '=' + encodeURIComponent(Object.prototype.toString.call(args[key]) === '[object Array]' ? safeJSONStringify(args[key]) : args[key]);
       }
     }
     return params;
@@ -6412,6 +6412,28 @@ function deprecate(fn, message) {
   return deprecated;
 }
 
+// Prototype.js < 1.7, a widely used library, defines a weird
+// Array.prototype.toJSON function that will fail to stringify our content
+// appropriately
+// refs:
+//   - https://groups.google.com/forum/#!topic/prototype-core/E-SAVvV_V9Q
+//   - https://github.com/sstephenson/prototype/commit/038a2985a70593c1a86c230fadbdfe2e4898a48c
+//   - http://stackoverflow.com/a/3148441/147079
+function safeJSONStringify(obj) {
+  /* eslint no-extend-native:0 */
+
+  if (Array.prototype.toJSON === undefined) {
+    return JSON.stringify(obj);
+  }
+
+  var toJSON = Array.prototype.toJSON;
+  delete Array.prototype.toJSON;
+  var out = JSON.stringify(obj);
+  Array.prototype.toJSON = toJSON;
+
+  return out;
+}
+
 }).call(this,require(2))
 },{"11":11,"2":2,"44":44,"47":47,"57":57,"6":6,"61":61,"67":67}],61:[function(require,module,exports){
 'use strict';
@@ -7078,5 +7100,5 @@ module.exports = {
 };
 
 },{"10":10,"11":11}],68:[function(require,module,exports){
-module.exports="3.7.3"
+module.exports="3.7.4"
 },{}]},{},[62]);

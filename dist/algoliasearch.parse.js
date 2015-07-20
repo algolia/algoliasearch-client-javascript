@@ -2630,7 +2630,7 @@ module.exports =
 	    var usingFallback = false;
 
 	    if (opts.body !== undefined) {
-	      body = JSON.stringify(opts.body);
+	      body = safeJSONStringify(opts.body);
 	    }
 
 	    requestDebug('request start');
@@ -2651,7 +2651,7 @@ module.exports =
 	      // handle cache existence
 	      if (client._useCache && cache && cache[cacheID] !== undefined) {
 	        requestDebug('serving response from cache');
-	        return client._promise.resolve(JSON.parse(JSON.stringify(cache[cacheID])));
+	        return client._promise.resolve(JSON.parse(safeJSONStringify(cache[cacheID])));
 	      }
 
 	      // if we reached max tries
@@ -2679,7 +2679,7 @@ module.exports =
 	        reqOpts.url = opts.fallback.url;
 	        reqOpts.jsonBody = opts.fallback.body;
 	        if (reqOpts.jsonBody) {
-	          reqOpts.body = JSON.stringify(reqOpts.jsonBody);
+	          reqOpts.body = safeJSONStringify(reqOpts.jsonBody);
 	        }
 
 	        reqOpts.timeout = client.requestTimeout * (tries + 1);
@@ -2860,7 +2860,7 @@ module.exports =
 	    for (var key in args) {
 	      if (key !== null && args[key] !== undefined && args.hasOwnProperty(key)) {
 	        params += params === '' ? '' : '&';
-	        params += key + '=' + encodeURIComponent(Object.prototype.toString.call(args[key]) === '[object Array]' ? JSON.stringify(args[key]) : args[key]);
+	        params += key + '=' + encodeURIComponent(Object.prototype.toString.call(args[key]) === '[object Array]' ? safeJSONStringify(args[key]) : args[key]);
 	      }
 	    }
 	    return params;
@@ -4076,6 +4076,28 @@ module.exports =
 	  return deprecated;
 	}
 
+	// Prototype.js < 1.7, a widely used library, defines a weird
+	// Array.prototype.toJSON function that will fail to stringify our content
+	// appropriately
+	// refs:
+	//   - https://groups.google.com/forum/#!topic/prototype-core/E-SAVvV_V9Q
+	//   - https://github.com/sstephenson/prototype/commit/038a2985a70593c1a86c230fadbdfe2e4898a48c
+	//   - http://stackoverflow.com/a/3148441/147079
+	function safeJSONStringify(obj) {
+	  /* eslint no-extend-native:0 */
+
+	  if (Array.prototype.toJSON === undefined) {
+	    return JSON.stringify(obj);
+	  }
+
+	  var toJSON = Array.prototype.toJSON;
+	  delete Array.prototype.toJSON;
+	  var out = JSON.stringify(obj);
+	  Array.prototype.toJSON = toJSON;
+
+	  return out;
+	}
+
 
 /***/ },
 /* 38 */
@@ -4976,7 +4998,7 @@ module.exports =
 /* 56 */
 /***/ function(module, exports) {
 
-	module.exports = "3.7.3"
+	module.exports = "3.7.4"
 
 /***/ }
 /******/ ]);

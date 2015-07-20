@@ -1,6 +1,6 @@
 CHANGELOG
 
-UNRELEASED
+2015-07-20 3.7.4
     * fix: JSON.stringify fix when Array.prototype.toJSON is defined (prototype.js < 1.7 bug)
 
 2015-07-09 3.7.3
