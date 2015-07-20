@@ -25,7 +25,10 @@ test('index.waitTask(taskID) has an incremental delay', function(t) {
     fauxJax.restore();
     t.error(err, 'No error while calling waitTask');
     t.ok(content, 'We got some content');
-    t.ok(delays[2] > delays[1] * 2, 'Second retry waited more than first retry * 2');
+    t.ok(
+      delays[2] > delays[1] * 2,
+      'Second retry waited more than first retry * 2 (' + delays[2] + ', ' + delays[1] + ')'
+    );
   }
 
   function waitFirstRequest() {
