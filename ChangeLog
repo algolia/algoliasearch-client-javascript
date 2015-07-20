@@ -1,5 +1,8 @@
 CHANGELOG
 
+UNRELEASED
+    * fix: JSON.stringify fix when Array.prototype.toJSON is defined (prototype.js < 1.7 bug)
+
 2015-07-09 3.7.3
     * fix: make https over http proxy work
 
