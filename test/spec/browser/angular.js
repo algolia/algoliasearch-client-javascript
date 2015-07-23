@@ -271,4 +271,41 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
       window.angular.bootstrap(window.angular.element('#angular-timeout'), ['angularTimeout']);
     });
   });
+
+  test('AngularJS module withCredentials', function(t) {
+    var fauxJax = require('faux-jax');
+    t.plan(1);
+
+    // load AngularJS Algolia Search module
+    require('../../../src/browser/builds/algoliasearch.angular');
+
+    window.angular
+      .module('angularWithCredentials', ['algoliasearch'])
+      .config(['$httpProvider', function($httpProvider) {
+        $httpProvider.defaults.withCredentials = true;
+      }])
+      .controller('AngularModuleSearchControllerTestWithCredentials', ['algolia', function(algolia) {
+        var client = algolia.Client('AngularJSSuccess', 'ROCKSSuccess');
+        var index = client.initIndex('googleSuccess');
+        fauxJax.install();
+
+        index.search();
+
+        fauxJax.once('request', function(request) {
+          t.equal(
+            request.withCredentials,
+            false,
+            'withCredentials if false even if $http set it to true'
+          );
+
+          request.respond(200, {}, '');
+
+          fauxJax.restore();
+        });
+      }]);
+
+    window.angular.element(document).ready(function() {
+      window.angular.bootstrap(window.angular.element('#angular-with-credentials'), ['angularWithCredentials']);
+    });
+  });
 }
