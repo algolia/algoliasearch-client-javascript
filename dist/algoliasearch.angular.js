@@ -1,4 +1,4 @@
-/*! algoliasearch 3.7.4 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
+/*! algoliasearch 3.7.5 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
 (function(f){var g;if(typeof window!=='undefined'){g=window}else if(typeof self!=='undefined'){g=self}g.ALGOLIA_MIGRATION_LAYER=f()})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 
 module.exports = function load (src, opts, cb) {
@@ -6569,7 +6569,10 @@ window.angular.module('algoliasearch', [])
         data: body,
         cache: false,
         timeout: timeoutPromise,
-        headers: requestHeaders
+        headers: requestHeaders,
+        // if client uses $httpProvider.defaults.withCredentials = true,
+        // we revert it to false to avoid CORS failure
+        withCredentials: false
       }).then(function success(response) {
         resolve({
           statusCode: response.status,
@@ -7100,5 +7103,5 @@ module.exports = {
 };
 
 },{"10":10,"11":11}],68:[function(require,module,exports){
-module.exports="3.7.4"
+module.exports="3.7.5"
 },{}]},{},[62]);

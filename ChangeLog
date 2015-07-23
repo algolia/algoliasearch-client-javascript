@@ -1,5 +1,8 @@
 CHANGELOG
 
+2015-07-23 3.7.5
+    * fix: withCredentials forced to false in Angular
+
 2015-07-20 3.7.4
     * fix: JSON.stringify fix when Array.prototype.toJSON is defined (prototype.js < 1.7 bug)
 
