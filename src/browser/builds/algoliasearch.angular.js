@@ -90,7 +90,10 @@ window.angular.module('algoliasearch', [])
         data: body,
         cache: false,
         timeout: timeoutPromise,
-        headers: requestHeaders
+        headers: requestHeaders,
+        // if client uses $httpProvider.defaults.withCredentials = true,
+        // we revert it to false to avoid CORS failure
+        withCredentials: false
       }).then(function success(response) {
         resolve({
           statusCode: response.status,
