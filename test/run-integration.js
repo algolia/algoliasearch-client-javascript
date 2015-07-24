@@ -30,7 +30,7 @@ var chance = new Chance();
 var apiKey = process.env.INTEGRATION_TEST_API_KEY;
 var appId = process.env.INTEGRATION_TEST_APPID;
 var indexName = '_travis-algoliasearch-client-js' +
-  (process.env.TRAVIS_BUILD_NUMBER ||  'DEV') +
+  (process.env.TRAVIS_BUILD_NUMBER || 'DEV') +
   chance.word({length: 12});
 
 var client = algoliasearch(appId, apiKey, {
