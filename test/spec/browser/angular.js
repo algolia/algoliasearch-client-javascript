@@ -276,6 +276,12 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
     var fauxJax = require('faux-jax');
     t.plan(1);
 
+    if (!fauxJax.support.xhr.cors) {
+      // IE9 has XHR but no cors, skip this test
+      t.pass('skipping this test for browsers not using CORS, unneeded and false positive');
+      return;
+    }
+
     // load AngularJS Algolia Search module
     require('../../../src/browser/builds/algoliasearch.angular');
 
