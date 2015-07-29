@@ -13,6 +13,8 @@ If you were using our Node.js version (V1, npm `algolia-search`), [read the migr
 
 
 
+
+
 [Algolia Search](http://www.algolia.com) is a hosted full-text, numerical, and faceted search engine capable of delivering realtime results from the first keystroke.
 
 
@@ -348,7 +350,7 @@ transparent with our users.
   + in Node.js it's https by default
 - `hosts.read` array of read hosts to use to call Algolia servers, computed automatically
 - `hosts.write` array of write hosts to use to call Algolia servers, computed automatically
-- `httpAgent` <sup>node-only</sup> [Node.js httpAgent](https://nodejs.org/api/http.html#http_class_http_agent) to use when communicating with Algolia servers. 
+- `httpAgent` <sup>node-only</sup> [Node.js httpAgent](https://nodejs.org/api/http.html#http_class_http_agent) to use when communicating with Algolia servers.
 
 To pass an option, use:
 
@@ -617,6 +619,8 @@ Search
 
 To perform a search, you only need to initialize the index and perform a call to the search function.
 
+The search query allows only to retrieve 1000 hits, if you need to retrieve more than 1000 hits for seo, you can use [Backup / Retrieve all index content](#backup--retrieve-of-all-index-content)
+
 You can use the following optional arguments:
 
 ### Query Parameters
@@ -631,7 +635,7 @@ You can use the following optional arguments:
  * **removeWordsIfNoResults**: This option is used to select a strategy in order to avoid having an empty result page. There are three different options:
   * **lastWords**: When a query does not return any results, the last word will be added as optional. The process is repeated with n-1 word, n-2 word, ... until there are results.
   * **firstWords**: When a query does not return any results, the first word will be added as optional. The process is repeated with second word, third word, ... until there are results.
-  * **allOptional**: When a query does not return any results, a second trial will be made with all words as optional. This is equivalent to transforming the AND operand between query terms to an OR operand. 
+  * **allOptional**: When a query does not return any results, a second trial will be made with all words as optional. This is equivalent to transforming the AND operand between query terms to an OR operand.
   * **none**: No specific processing is done when a query does not return any results (default behavior).
  * **minWordSizefor1Typo**: The minimum number of characters in a query word to accept one typo in this word.<br/>Defaults to 4.
  * **minWordSizefor2Typos**: The minimum number of characters in a query word to accept two typos in this word.<br/>Defaults to 8.
@@ -763,6 +767,9 @@ The server response will look like:
   "params": "query=jimmie+paint&attributesToRetrieve=firstname,lastname&hitsPerPage=50"
 }
 ```
+
+
+
 
 
 Multiple queries
@@ -1036,7 +1043,7 @@ Batch writes
 -------------
 
 You may want to perform multiple operations with one API call to reduce latency.
-We expose three methods to perform batch operations:
+We expose four methods to perform batch operations:
  * `addObjects`: Add an array of objects using automatic `objectID` assignment.
  * `saveObjects`: Add or update an array of objects that contains an `objectID` attribute.
  * `deleteObjects`: Delete an array of objectIDs.
@@ -1394,6 +1401,11 @@ browser.on('error', function onError(err) {
 
 // You can stop the process at any point with
 // browser.stop();
+
+// Retrieve the next cursor from the browse method
+index.browse(query, function(err, content) {
+	console.log(content[cursor]);
+});
 ```
 
 You can also use the `browse(query, queryParameters)` and `browseFrom(browseCursor)` methods to programmatically browse your index content:
