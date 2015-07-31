@@ -5,7 +5,11 @@
   "main": "index.js",
   "browser": {
     "./index.js": "./src/browser/builds/algoliasearch.js",
-    "debug": "debug-ms-fix-yui-compressor"
+    "debug": "./src/utils/debug.js",
+    "lodash-compat/lang/clone": "./src/utils/clone.js",
+    "lodash-compat/lang/cloneDeep": "./src/utils/clone.js",
+    "lodash-compat/collection/forEach": "foreach",
+    "lodash-compat/lang/isArray": "isarray"
   },
   "scripts": {
     "build": "PACKAGE_VERSION=$(json -f src/version.json) ./scripts/build",
@@ -53,7 +57,9 @@
     "debug-ms-fix-yui-compressor": "2.2.2-future-reserved-word-fix-ms",
     "envify": "3.4.0",
     "es6-promise": "2.3.0",
+    "foreach": "2.0.5",
     "inherits": "2.0.1",
+    "isarray": "0.0.1",
     "load-script": "1.0.0",
     "lodash-compat": "3.10.0",
     "semver": "4.3.6",
