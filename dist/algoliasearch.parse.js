@@ -3494,7 +3494,7 @@ module.exports =
 	  browseFrom: function(cursor, callback) {
 	    return this.as._jsonRequest({
 	      method: 'GET',
-	      url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/browse?cursor=' + cursor,
+	      url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/browse?cursor=' + encodeURIComponent(cursor),
 	      hostType: 'read',
 	      callback: callback
 	    });
@@ -4998,7 +4998,7 @@ module.exports =
 /* 56 */
 /***/ function(module, exports) {
 
-	module.exports = "3.7.5"
+	module.exports = "3.7.6"
 
 /***/ }
 /******/ ]);

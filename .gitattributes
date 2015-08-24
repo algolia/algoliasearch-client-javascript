@@ -4,3 +4,4 @@ dist/algoliasearch.angular.js -diff
 dist/algoliasearch.angular.min.js -diff
 dist/algoliasearch.jquery.js -diff
 dist/algoliasearch.jquery.min.js -diff
+dist/algoliasearch.parse.js -diff

@@ -1,5 +1,8 @@
 CHANGELOG
 
+2015-08-24 3.7.6
+    * fix: encodeURIComponent(cursor) in browseFrom()
+
 2015-07-23 3.7.5
     * fix: withCredentials forced to false in Angular
 
