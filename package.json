@@ -48,7 +48,7 @@
     }
   ],
   "dependencies": {
-    "agentkeepalive": "2.0.2",
+    "agentkeepalive": "2.0.3",
     "debug": "2.2.0",
     "debug-ms-fix-yui-compressor": "2.2.2-future-reserved-word-fix-ms",
     "envify": "3.4.0",
