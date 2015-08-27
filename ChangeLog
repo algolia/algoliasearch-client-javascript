@@ -1,5 +1,8 @@
 CHANGELOG
 
+2015-08-27 3.7.7
+    * fix: listen to socket errors in nodejs keepalive strategy
+
 2015-08-24 3.7.6
     * fix: encodeURIComponent(cursor) in browseFrom()
 
