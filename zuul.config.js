@@ -34,12 +34,12 @@ if (process.env.TRAVIS_BUILD_NUMBER !== undefined) {
 var browsers = {
   all: [{
     name: 'chrome',
-    version: '44..beta',
-    platform: 'Windows 2012 R2'
+    version: '44..dev',
+    platform: 'Windows 10'
   }, {
     name: 'firefox',
     version: '40..beta',
-    platform: 'Windows 2012 R2'
+    platform: 'Windows 10'
   }, {
     name: 'internet explorer',
     version: '8..latest'
