@@ -1,5 +1,11 @@
 CHANGELOG
 
+UNRELEASED
+
+    * fix: ignore $http.defaults.headers.common in angular build
+    * fix: force distinct false in deleteByQuery search
+    * docs: precise initialization option values
+
 2015-08-27 3.7.7
     * fix: listen to socket errors in nodejs keepalive strategy
 
