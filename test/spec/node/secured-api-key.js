@@ -39,8 +39,8 @@ test('client.useSecuredAPIKey()', function(t) {
       fixture.credentials.searchOnlyAPIKey,
       'First request has standard apiKey'
     );
-    t.notOk(firstRequest.requestHeaders['x-algolia-tagfilters'], 'First request as no `x-algolia-tagfilters`');
-    t.notOk(firstRequest.requestHeaders['x-algolia-usertoken'], 'First request as no `x-algolia-usertoken`');
+    t.notOk(firstRequest.requestHeaders['x-algolia-tagfilters'], 'First request has no `x-algolia-tagfilters`');
+    t.notOk(firstRequest.requestHeaders['x-algolia-usertoken'], 'First request has no `x-algolia-usertoken`');
     t.equal(
       firstRequest.requestHeaders['x-algolia-api-key'],
       fixture.credentials.searchOnlyAPIKey,
@@ -70,8 +70,8 @@ test('client.useSecuredAPIKey()', function(t) {
       fixture.credentials.searchOnlyAPIKey,
       'Third request has standard apiKey'
     );
-    t.notOk(thirdRequest.requestHeaders['x-algolia-tagfilters'], 'Third request as no `x-algolia-tagfilters`');
-    t.notOk(thirdRequest.requestHeaders['x-algolia-usertoken'], 'Third request as no `x-algolia-usertoken`');
+    t.notOk(thirdRequest.requestHeaders['x-algolia-tagfilters'], 'Third request has no `x-algolia-tagfilters`');
+    t.notOk(thirdRequest.requestHeaders['x-algolia-usertoken'], 'Third request has no `x-algolia-usertoken`');
     t.equal(
       thirdRequest.requestHeaders['x-algolia-api-key'],
       fixture.credentials.searchOnlyAPIKey,

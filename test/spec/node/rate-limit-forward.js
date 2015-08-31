@@ -39,8 +39,8 @@ test('client.enableRateLimitForward()', function(t) {
       fixture.credentials.searchOnlyAPIKey,
       'First request has standard apiKey'
     );
-    t.notOk(firstRequest.requestHeaders['x-forwarded-for'], 'First request as no `x-forwarded-for`');
-    t.notOk(firstRequest.requestHeaders['x-forwarded-api-key'], 'First request as no `x-forwarded-api-key`');
+    t.notOk(firstRequest.requestHeaders['x-forwarded-for'], 'First request has no `x-forwarded-for`');
+    t.notOk(firstRequest.requestHeaders['x-forwarded-api-key'], 'First request has no `x-forwarded-api-key`');
     t.equal(
       firstRequest.requestHeaders['x-algolia-api-key'],
       fixture.credentials.searchOnlyAPIKey,
@@ -70,8 +70,8 @@ test('client.enableRateLimitForward()', function(t) {
       fixture.credentials.searchOnlyAPIKey,
       'Third request has standard apiKey'
     );
-    t.notOk(thirdRequest.requestHeaders['x-forwarded-for'], 'Third request as no `x-forwarded-for`');
-    t.notOk(thirdRequest.requestHeaders['x-forwarded-api-key'], 'Third request as no `x-forwarded-api-key`');
+    t.notOk(thirdRequest.requestHeaders['x-forwarded-for'], 'Third request has no `x-forwarded-for`');
+    t.notOk(thirdRequest.requestHeaders['x-forwarded-api-key'], 'Third request has no `x-forwarded-api-key`');
     t.equal(
       thirdRequest.requestHeaders['x-algolia-api-key'],
       fixture.credentials.searchOnlyAPIKey,
