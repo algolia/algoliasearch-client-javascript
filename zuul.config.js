@@ -41,7 +41,7 @@ var browsers = {
     version: '40..beta',
     platform: 'Windows 2012 R2'
   }, {
-    name: 'ie',
+    name: 'internet explorer',
     version: '8..latest'
   }, {
     name: 'safari',
@@ -55,13 +55,16 @@ var browsers = {
   }, {
     name: 'ipad',
     version: '7.0..latest'
+  }, {
+    name: 'microsoftedge',
+    version: 'latest'
   }],
   pullRequest: [{
     name: 'chrome',
     version: 'latest', // `latest` === stable
     platform: 'Windows 2012 R2'
   }, {
-    name: 'ie',
+    name: 'internet explorer',
     version: 'latest'
   }, {
     name: 'firefox',
@@ -72,6 +75,9 @@ var browsers = {
     version: 'latest'
   }, {
     name: 'android',
+    version: 'latest'
+  }, {
+    name: 'microsoftedge',
     version: 'latest'
   }]
 };
