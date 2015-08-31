@@ -19,6 +19,8 @@ If you were using our Node.js version (V1, npm `algolia-search`), [read the migr
 
 
 
+
+
 [![Version][version-svg]][package-url] [![Build Status][travis-svg]][travis-url] [![License][license-image]][license-url] [![Downloads][downloads-image]][downloads-url]
 
 [![Browser tests][browser-test-matrix]][browser-test-url]
@@ -97,7 +99,6 @@ Table of Contents
 Setup
 -------------
 To setup your project, follow these steps:
-
 
 
 
@@ -342,15 +343,16 @@ Client options
 In most situations, there is no need to tune the options. We provide this list to be
 transparent with our users.
 
-- `timeout` timeout for requests to our servers
+- `timeout` (Number) timeout for requests to our servers, in milliseconds
   + in Node.js this is an inactivity timeout. default to 15s
   + in the browser, this is a global timeout. default to 2s (incremental)
-- `protocol` protocol to use when communicating with algolia
+- `protocol` (String) protocol to use when communicating with algolia
   + in the browser, we use the page protocol by default
   + in Node.js it's https by default
-- `hosts.read` array of read hosts to use to call Algolia servers, computed automatically
-- `hosts.write` array of write hosts to use to call Algolia servers, computed automatically
-- `httpAgent` <sup>node-only</sup> [Node.js httpAgent](https://nodejs.org/api/http.html#http_class_http_agent) to use when communicating with Algolia servers.
+  + possible values: 'http:', 'https:'
+- `hosts.read` ([String]) array of read hosts to use to call Algolia servers, computed automatically
+- `hosts.write` ([String]) array of write hosts to use to call Algolia servers, computed automatically
+- `httpAgent` ([HttpAgent](https://nodejs.org/api/http.html#http_class_http_agent)) <sup>node-only</sup> Node.js httpAgent instance to use when communicating with Algolia servers.
 
 To pass an option, use:
 
@@ -1374,6 +1376,7 @@ client.moveIndex('MyNewIndex', 'MyIndex', function(err, content) {
 });
 ```
 
+
 Backup / Retrieve of all index content
 -------------
 
@@ -1404,7 +1407,7 @@ browser.on('error', function onError(err) {
 
 // Retrieve the next cursor from the browse method
 index.browse(query, function(err, content) {
-	console.log(content[cursor]);
+  console.log(content[cursor]);
 });
 ```
 
@@ -1429,6 +1432,8 @@ index.browse('jazz', function browseDone(err, content) {
   }
 });
 ```
+
+
 
 
 Logs
