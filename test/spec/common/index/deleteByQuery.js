@@ -60,7 +60,8 @@ function deleteByQueryTest(asyncMode, mainTest) {
       t.ok(
         index.search.calledWith('salmon', {
           attributesToRetrieve: 'objectID',
-          hitsPerPage: 1000
+          hitsPerPage: 1000,
+          distinct: false
         }),
         'search called with good params'
       );
@@ -132,7 +133,8 @@ function deleteByQueryTest(asyncMode, mainTest) {
       t.ok(
         index.search.calledWith('salmon', {
           attributesToRetrieve: 'objectID',
-          hitsPerPage: 1000
+          hitsPerPage: 1000,
+          distinct: false
         }),
         'index search called with good params'
       );
