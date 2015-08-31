@@ -32,11 +32,11 @@ if (process.env.TRAVIS_BUILD_NUMBER !== undefined) {
 var browsers = {
   all: [{
     name: 'chrome',
-    version: '42..beta',
+    version: '44..beta',
     platform: 'Windows 2012 R2' // Force Win 8.1, more stable than linux etc
   }, {
     name: 'firefox',
-    version: '37..beta',
+    version: '40..beta',
     platform: 'Windows 2012 R2'
   }, {
     name: 'ie',
