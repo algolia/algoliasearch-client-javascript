@@ -94,6 +94,7 @@
     "server-destroy": "1.0.1",
     "sinon": "1.15.4",
     "superagent": "1.2.0",
+    "tap-spec": "4.1.0",
     "tape": "4.0.0",
     "uglify-js": "2.4.23",
     "url-parse": "1.0.2",

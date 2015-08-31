@@ -4,7 +4,7 @@ source ~/.nvm/nvm.sh
 
 set -e # exit when error
 
-[ -z $TRAVIS_BUILD_NUMBER ] && CI='false' || CI='true' || CI='true'
+[ -z $TRAVIS_BUILD_NUMBER ] && CI='false' || CI='true'
 
 if [ $CI == 'true' ]; then
   set -x # debug messages
@@ -18,13 +18,18 @@ echo "Node test 0.12"
 # always test on node 0.12
 echo "Node test 0.12: unit"
 nvm use 0.12
-node test/run-node.js
 
-# in local env, no integration test
-[ $TRAVIS_BUILD_NUMBER != 'false' ] && echo "Node test 0.12: integration" && node test/run-integration.js
+if [ $CI == 'false' ]; then
+  node test/run-node.js | tap-spec
+else
+  node test/run-node.js
+fi
+
+# in CI we launch integration test
+[ $CI == 'true' ] && echo "Node test 0.12: integration" && node test/run-integration.js
 
 # in a PR or in local environement, test only on node 0.12
-if [ $TRAVIS_PULL_REQUEST != 'false' ] || [ $TRAVIS_BUILD_NUMBER == 'false' ]; then
+if [ $TRAVIS_PULL_REQUEST != 'false' ] || [ $CI == 'false' ]; then
   echo 'Skipping 0.10 and iojs tests (PR or local)'
   exit 0
 else
