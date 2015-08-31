@@ -314,4 +314,46 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
       window.angular.bootstrap(window.angular.element('#angular-with-credentials'), ['angularWithCredentials']);
     });
   });
+
+  test('AngularJS module $http.defaults.headers.common set', function(t) {
+    var fauxJax = require('faux-jax');
+    t.plan(1);
+
+    // load AngularJS Algolia Search module
+    require('../../../src/browser/builds/algoliasearch.angular');
+
+    window.angular
+      .module('angularUsingHttpsDefaults', ['algoliasearch'])
+      .config(['$httpProvider', function($httpProvider) {
+        $httpProvider.defaults.headers.common = {
+          'X-Requested-With': 'a browser',
+          'X-CSRF-Token': 'SEKRET!'
+        };
+      }])
+      .controller('AngularModuleSearchControllerTestUsingHttpsDefaults', ['algolia', function(algolia) {
+        var client = algolia.Client('AngularJSSuccess', 'ROCKSSuccess');
+        var index = client.initIndex('googleSuccess');
+        fauxJax.install();
+
+        index.search();
+
+        fauxJax.once('request', function(request) {
+          t.deepEqual(
+            request.requestHeaders, {
+              'content-type': 'application/x-www-form-urlencoded',
+              'accept': 'application/json'
+            },
+            'requestHeaders matches'
+          );
+
+          request.respond(200, {}, '');
+
+          fauxJax.restore();
+        });
+      }]);
+
+    window.angular.element(document).ready(function() {
+      window.angular.bootstrap(window.angular.element('#angular-using-https-defaults'), ['angularUsingHttpsDefaults']);
+    });
+  });
 }

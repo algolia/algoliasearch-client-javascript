@@ -6,6 +6,8 @@
 
 var inherits = require('inherits');
 
+var forEach = require('lodash-compat/collection/forEach');
+
 var AlgoliaSearch = require('../../AlgoliaSearch');
 var errors = require('../../errors');
 var inlineHeaders = require('../inline-headers');
@@ -71,9 +73,20 @@ window.angular.module('algoliasearch', [])
         reject(new errors.RequestTimeout());
       }, opts.timeout);
 
-      var requestHeaders = {
-        'accept': 'application/json'
-      };
+      var requestHeaders = {};
+
+      // "remove" (set to undefined) possible globally set headers
+      // in $httpProvider.defaults.headers.common
+      // otherwise we might fail sometimes
+      // ref: https://github.com/algolia/algoliasearch-client-js/issues/135
+      forEach(
+        $http.defaults.headers.common,
+        function removeIt(headerValue, headerName) {
+          requestHeaders[headerName] = undefined;
+        }
+      );
+
+      requestHeaders.accept = 'application/json';
 
       if (body) {
         if (opts.method === 'POST') {
