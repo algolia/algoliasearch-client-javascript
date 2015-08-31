@@ -35,11 +35,11 @@ var browsers = {
   all: [{
     name: 'chrome',
     version: '44..beta',
-    platform: 'Windows 10'
+    platform: 'Windows 2012 R2'
   }, {
     name: 'firefox',
     version: '40..beta',
-    platform: 'Windows 10'
+    platform: 'Windows 2012 R2'
   }, {
     name: 'ie',
     version: '8..latest'

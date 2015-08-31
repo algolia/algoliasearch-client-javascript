@@ -5535,16 +5535,21 @@ AlgoliaSearch.prototype.Index.prototype = {
    *  error: null or Error('message')
    */
   deleteByQuery: function(query, params, callback) {
+    var clone = require(44);
+
     var indexObj = this;
     var client = indexObj.as;
 
     if (arguments.length === 1 || typeof params === 'function') {
       callback = params;
       params = {};
+    } else {
+      params = clone(params);
     }
 
     params.attributesToRetrieve = 'objectID';
     params.hitsPerPage = 1000;
+    params.distinct = false;
 
     // when deleting, we should never use cache to get the
     // search results

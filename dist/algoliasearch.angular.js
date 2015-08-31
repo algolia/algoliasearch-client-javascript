@@ -5535,16 +5535,21 @@ AlgoliaSearch.prototype.Index.prototype = {
    *  error: null or Error('message')
    */
   deleteByQuery: function(query, params, callback) {
+    var clone = require(44);
+
     var indexObj = this;
     var client = indexObj.as;
 
     if (arguments.length === 1 || typeof params === 'function') {
       callback = params;
       params = {};
+    } else {
+      params = clone(params);
     }
 
     params.attributesToRetrieve = 'objectID';
     params.hitsPerPage = 1000;
+    params.distinct = false;
 
     // when deleting, we should never use cache to get the
     // search results
@@ -6485,6 +6490,8 @@ IndexBrowser.prototype._clean = function() {
 
 var inherits = require(10);
 
+var forEach = require(11);
+
 var AlgoliaSearch = require(60);
 var errors = require(67);
 var inlineHeaders = require(65);
@@ -6550,9 +6557,20 @@ window.angular.module('algoliasearch', [])
         reject(new errors.RequestTimeout());
       }, opts.timeout);
 
-      var requestHeaders = {
-        'accept': 'application/json'
-      };
+      var requestHeaders = {};
+
+      // "remove" (set to undefined) possible globally set headers
+      // in $httpProvider.defaults.headers.common
+      // otherwise we might fail sometimes
+      // ref: https://github.com/algolia/algoliasearch-client-js/issues/135
+      forEach(
+        $http.defaults.headers.common,
+        function removeIt(headerValue, headerName) {
+          requestHeaders[headerName] = undefined;
+        }
+      );
+
+      requestHeaders.accept = 'application/json';
 
       if (body) {
         if (opts.method === 'POST') {
@@ -6651,7 +6669,7 @@ window.angular.module('algoliasearch', [])
     };
   }]);
 
-},{"10":10,"45":45,"6":6,"60":60,"63":63,"64":64,"65":65,"66":66,"67":67,"68":68}],63:[function(require,module,exports){
+},{"10":10,"11":11,"45":45,"6":6,"60":60,"63":63,"64":64,"65":65,"66":66,"67":67,"68":68}],63:[function(require,module,exports){
 'use strict';
 
 // This is the standalone browser build entry point
