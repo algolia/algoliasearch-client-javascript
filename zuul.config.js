@@ -34,7 +34,7 @@ if (process.env.TRAVIS_BUILD_NUMBER !== undefined) {
 var browsers = {
   all: [{
     name: 'chrome',
-    version: 'beta',
+    version: '44..beta',
     platform: 'Windows 10'
   }, {
     name: 'firefox',
