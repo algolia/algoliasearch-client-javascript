@@ -26,18 +26,20 @@ var zuulConfig = module.exports = {
 };
 
 if (process.env.TRAVIS_BUILD_NUMBER !== undefined) {
-  zuulConfig.tunnel = 'ngrok';
+  zuulConfig.tunnel = {
+    type: 'ngrok'
+  };
 }
 
 var browsers = {
   all: [{
     name: 'chrome',
-    version: '44..beta',
-    platform: 'Windows 2012 R2' // Force Win 8.1, more stable than linux etc
+    version: 'beta',
+    platform: 'Windows 10'
   }, {
     name: 'firefox',
     version: '40..beta',
-    platform: 'Windows 2012 R2'
+    platform: 'Windows 10'
   }, {
     name: 'ie',
     version: '8..latest'
@@ -53,8 +55,7 @@ var browsers = {
   }, {
     name: 'ipad',
     version: '7.0..latest'
-  }
-  ],
+  }],
   pullRequest: [{
     name: 'chrome',
     version: 'latest', // `latest` === stable
