@@ -1,6 +1,6 @@
 'use strict';
 
-/*eslint no-unused-vars: [2, {"vars": "local"}]*/
+/* eslint no-unused-vars: [2, {"vars": "local"}] */
 
 module.exports = oldGlobals;
 

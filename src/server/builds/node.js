@@ -224,7 +224,7 @@ AlgoliaSearchNodeJS.prototype._promise = {
     return Promise.resolve(val);
   },
   delay: function delayPromise(ms) {
-    return new Promise(function resolveOnTimeout(resolve/*, reject*/) {
+    return new Promise(function resolveOnTimeout(resolve/* , reject */) {
       setTimeout(resolve, ms);
     });
   }

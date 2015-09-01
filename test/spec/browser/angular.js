@@ -3,7 +3,7 @@
 /* eslint new-cap: 0 */
 var test = require('tape');
 
-var browser = require('bowser').browser;
+var browser = require('bowser');
 
 // run AngularJS test on all browsers but IE < 9
 // https://docs.angularjs.org/guide/ie

@@ -107,13 +107,17 @@ window.angular.module('algoliasearch', [])
         // if client uses $httpProvider.defaults.withCredentials = true,
         // we revert it to false to avoid CORS failure
         withCredentials: false
-      }).then(function success(response) {
+      }).then(success, error);
+
+      function success(response) {
         resolve({
           statusCode: response.status,
           headers: response.headers,
           body: response.data
         });
-      }, function error(response) {
+      }
+
+      function error(response) {
         if (timedOut) {
           return;
         }
@@ -132,7 +136,7 @@ window.angular.module('algoliasearch', [])
           body: response.data,
           statusCode: response.status
         });
-      });
+      }
 
       return deferred.promise;
     };

@@ -113,7 +113,7 @@ AlgoliaSearchBrowser.prototype._request = function request(url, opts) {
 
     // event object not received in IE8, at least
     // but we do not use it, still important to note
-    function load(/*event*/) {
+    function load(/* event */) {
       // When browser does not supports req.timeout, we can
       // have both a load and timeout event, since handled by a dumb setTimeout
       if (timedOut) {
@@ -199,7 +199,7 @@ AlgoliaSearchBrowser.prototype._promise = {
     return Promise.resolve(val);
   },
   delay: function delayPromise(ms) {
-    return new Promise(function resolveOnTimeout(resolve/*, reject*/) {
+    return new Promise(function resolveOnTimeout(resolve/* , reject*/) {
       setTimeout(resolve, ms);
     });
   }

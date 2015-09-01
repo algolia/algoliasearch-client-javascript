@@ -47,7 +47,7 @@ function AlgoliaSearchParse() {
 inherits(AlgoliaSearchParse, AlgoliaSearchServer);
 
 AlgoliaSearchParse.prototype._request = function(rawUrl, opts) {
-  /*global Parse*/
+  /* global Parse */
   var clone = require('lodash-compat/lang/clone');
   var promise = new Parse.Promise();
 

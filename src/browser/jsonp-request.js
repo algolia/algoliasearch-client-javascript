@@ -39,7 +39,7 @@ function jsonpRequest(url, opts, cb) {
     clean();
 
     cb(null, {
-      body: data/*,
+      body: data/* ,
       // We do not send the statusCode, there's no statusCode in JSONP, it will be
       // computed using data.status && data.message like with XDR
       statusCode*/

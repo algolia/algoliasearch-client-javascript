@@ -4,7 +4,7 @@
 
 var test = require('tape');
 
-var browser = require('bowser').browser;
+var browser = require('bowser');
 
 // run jQuery test on all browsers but IE < 10
 // jQuery 2 does not support cross domain xhr with IE < 10
