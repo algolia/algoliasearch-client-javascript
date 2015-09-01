@@ -1,4 +1,4 @@
-/*! algoliasearch 3.7.7 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
+/*! algoliasearch 3.7.8 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
 (function(f){var g;if(typeof window!=='undefined'){g=window}else if(typeof self!=='undefined'){g=self}g.ALGOLIA_MIGRATION_LAYER=f()})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 
 module.exports = function load (src, opts, cb) {
@@ -146,7 +146,7 @@ function scriptLoaded(method) {
 },{"1":1}],4:[function(require,module,exports){
 'use strict';
 
-/*eslint no-unused-vars: [2, {"vars": "local"}]*/
+/* eslint no-unused-vars: [2, {"vars": "local"}] */
 
 module.exports = oldGlobals;
 
@@ -1280,7 +1280,7 @@ function plural(ms, n, name) {
  * @copyright Copyright (c) 2014 Yehuda Katz, Tom Dale, Stefan Penner and contributors (Conversion to ES6 API by Jake Archibald)
  * @license   Licensed under MIT license
  *            See https://raw.githubusercontent.com/jakearchibald/es6-promise/master/LICENSE
- * @version   2.3.0
+ * @version   3.0.2
  */
 
 (function() {
@@ -1348,15 +1348,10 @@ function plural(ms, n, name) {
 
     // node
     function lib$es6$promise$asap$$useNextTick() {
-      var nextTick = process.nextTick;
       // node version 0.10.x displays a deprecation warning when nextTick is used recursively
-      // setImmediate should be used instead instead
-      var version = process.versions.node.match(/^(?:(\d+)\.)?(?:(\d+)\.)?(\*|\d+)$/);
-      if (Array.isArray(version) && version[1] === '0' && version[2] === '10') {
-        nextTick = setImmediate;
-      }
+      // see https://github.com/cujojs/when/issues/410 for details
       return function() {
-        nextTick(lib$es6$promise$asap$$flush);
+        process.nextTick(lib$es6$promise$asap$$flush);
       };
     }
 
@@ -1408,7 +1403,7 @@ function plural(ms, n, name) {
       lib$es6$promise$asap$$len = 0;
     }
 
-    function lib$es6$promise$asap$$attemptVertex() {
+    function lib$es6$promise$asap$$attemptVertx() {
       try {
         var r = require;
         var vertx = r('vertx');
@@ -1428,7 +1423,7 @@ function plural(ms, n, name) {
     } else if (lib$es6$promise$asap$$isWorker) {
       lib$es6$promise$asap$$scheduleFlush = lib$es6$promise$asap$$useMessageChannel();
     } else if (lib$es6$promise$asap$$browserWindow === undefined && typeof require === 'function') {
-      lib$es6$promise$asap$$scheduleFlush = lib$es6$promise$asap$$attemptVertex();
+      lib$es6$promise$asap$$scheduleFlush = lib$es6$promise$asap$$attemptVertx();
     } else {
       lib$es6$promise$asap$$scheduleFlush = lib$es6$promise$asap$$useSetTimeout();
     }
@@ -1441,7 +1436,7 @@ function plural(ms, n, name) {
 
     var lib$es6$promise$$internal$$GET_THEN_ERROR = new lib$es6$promise$$internal$$ErrorObject();
 
-    function lib$es6$promise$$internal$$selfFullfillment() {
+    function lib$es6$promise$$internal$$selfFulfillment() {
       return new TypeError("You cannot resolve a promise with itself");
     }
 
@@ -1525,7 +1520,7 @@ function plural(ms, n, name) {
 
     function lib$es6$promise$$internal$$resolve(promise, value) {
       if (promise === value) {
-        lib$es6$promise$$internal$$reject(promise, lib$es6$promise$$internal$$selfFullfillment());
+        lib$es6$promise$$internal$$reject(promise, lib$es6$promise$$internal$$selfFulfillment());
       } else if (lib$es6$promise$utils$$objectOrFunction(value)) {
         lib$es6$promise$$internal$$handleMaybeThenable(promise, value);
       } else {
@@ -2324,7 +2319,7 @@ var nativeMax = Math.max;
  * Creates a function that invokes `func` with the `this` binding of the
  * created function and arguments from `start` and beyond provided as an array.
  *
- * **Note:** This method is based on the [rest parameter](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/rest_parameters).
+ * **Note:** This method is based on the [rest parameter](https://developer.mozilla.org/Web/JavaScript/Reference/Functions/rest_parameters).
  *
  * @static
  * @memberOf _
@@ -3388,10 +3383,10 @@ var baseClone = require(16),
 
 /**
  * Creates a clone of `value`. If `isDeep` is `true` nested objects are cloned,
- * otherwise they are assigned by reference. If `customizer` is provided it is
+ * otherwise they are assigned by reference. If `customizer` is provided it's
  * invoked to produce the cloned values. If `customizer` returns `undefined`
  * cloning is handled by the method instead. The `customizer` is bound to
- * `thisArg` and invoked with two argument; (value [, index|key, object]).
+ * `thisArg` and invoked with up to three argument; (value [, index|key, object]).
  *
  * **Note:** This method is loosely based on the
  * [structured clone algorithm](http://www.w3.org/TR/html5/infrastructure.html#internal-structured-cloning-algorithm).
@@ -3447,7 +3442,7 @@ function clone(value, isDeep, customizer, thisArg) {
     isDeep = false;
   }
   return typeof customizer == 'function'
-    ? baseClone(value, isDeep, bindCallback(customizer, thisArg, 1))
+    ? baseClone(value, isDeep, bindCallback(customizer, thisArg, 3))
     : baseClone(value, isDeep);
 }
 
@@ -3458,10 +3453,10 @@ var baseClone = require(16),
     bindCallback = require(25);
 
 /**
- * Creates a deep clone of `value`. If `customizer` is provided it is invoked
+ * Creates a deep clone of `value`. If `customizer` is provided it's invoked
  * to produce the cloned values. If `customizer` returns `undefined` cloning
  * is handled by the method instead. The `customizer` is bound to `thisArg`
- * and invoked with two argument; (value [, index|key, object]).
+ * and invoked with up to three argument; (value [, index|key, object]).
  *
  * **Note:** This method is loosely based on the
  * [structured clone algorithm](http://www.w3.org/TR/html5/infrastructure.html#internal-structured-cloning-algorithm).
@@ -3504,7 +3499,7 @@ var baseClone = require(16),
  */
 function cloneDeep(value, customizer, thisArg) {
   return typeof customizer == 'function'
-    ? baseClone(value, true, bindCallback(customizer, thisArg, 1))
+    ? baseClone(value, true, bindCallback(customizer, thisArg, 3))
     : baseClone(value, true);
 }
 
@@ -3622,7 +3617,7 @@ var objToString = objectProto.toString;
 function isFunction(value) {
   // The use of `Object#toString` avoids issues with the `typeof` operator
   // in older versions of Chrome and Safari which return 'function' for regexes
-  // and Safari 8 equivalents which return 'object' for typed array constructors.
+  // and Safari 8 which returns 'object' for typed array constructors.
   return isObject(value) && objToString.call(value) == funcTag;
 }
 
@@ -4089,7 +4084,7 @@ function keysIn(object) {
   while (++index < length) {
     result[index] = (index + '');
   }
-  // lodash skips the `constructor` property when it infers it is iterating
+  // lodash skips the `constructor` property when it infers it's iterating
   // over a `prototype` object because IE < 9 can't set the `[[Enumerable]]`
   // attribute of an existing property and the `constructor` property of a
   // prototype defaults to non-enumerable.
@@ -4131,7 +4126,7 @@ var baseMerge = require(22),
  * Recursively merges own enumerable properties of the source object(s), that
  * don't resolve to `undefined` into the destination object. Subsequent sources
  * overwrite property assignments of previous sources. If `customizer` is
- * provided it is invoked to produce the merged values of the destination and
+ * provided it's invoked to produce the merged values of the destination and
  * source properties. If `customizer` returns `undefined` merging is handled
  * by the method instead. The `customizer` is bound to `thisArg` and invoked
  * with five arguments: (objectValue, sourceValue, key, object, source).
@@ -6591,13 +6586,17 @@ window.angular.module('algoliasearch', [])
         // if client uses $httpProvider.defaults.withCredentials = true,
         // we revert it to false to avoid CORS failure
         withCredentials: false
-      }).then(function success(response) {
+      }).then(success, error);
+
+      function success(response) {
         resolve({
           statusCode: response.status,
           headers: response.headers,
           body: response.data
         });
-      }, function error(response) {
+      }
+
+      function error(response) {
         if (timedOut) {
           return;
         }
@@ -6616,7 +6615,7 @@ window.angular.module('algoliasearch', [])
           body: response.data,
           statusCode: response.status
         });
-      });
+      }
 
       return deferred.promise;
     };
@@ -6785,7 +6784,7 @@ AlgoliaSearchBrowser.prototype._request = function request(url, opts) {
 
     // event object not received in IE8, at least
     // but we do not use it, still important to note
-    function load(/*event*/) {
+    function load(/* event */) {
       // When browser does not supports req.timeout, we can
       // have both a load and timeout event, since handled by a dumb setTimeout
       if (timedOut) {
@@ -6871,7 +6870,7 @@ AlgoliaSearchBrowser.prototype._promise = {
     return Promise.resolve(val);
   },
   delay: function delayPromise(ms) {
-    return new Promise(function resolveOnTimeout(resolve/*, reject*/) {
+    return new Promise(function resolveOnTimeout(resolve/* , reject*/) {
       setTimeout(resolve, ms);
     });
   }
@@ -6952,7 +6951,7 @@ function jsonpRequest(url, opts, cb) {
     clean();
 
     cb(null, {
-      body: data/*,
+      body: data/* ,
       // We do not send the statusCode, there's no statusCode in JSONP, it will be
       // computed using data.status && data.message like with XDR
       statusCode*/
@@ -7121,5 +7120,5 @@ module.exports = {
 };
 
 },{"10":10,"11":11}],68:[function(require,module,exports){
-module.exports="3.7.7"
+module.exports="3.7.8"
 },{}]},{},[62]);

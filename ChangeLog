@@ -1,6 +1,6 @@
 CHANGELOG
 
-UNRELEASED
+2015-09-01 3.7.8
 
     * fix: ignore $http.defaults.headers.common in angular build
     * fix: force distinct false in deleteByQuery search
