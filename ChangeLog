@@ -1,5 +1,9 @@
 CHANGELOG
 
+UNRELEASED
+
+    * test: node v4 is now the default testing env
+
 2015-09-01 3.7.8
 
     * fix: ignore $http.defaults.headers.common in angular build

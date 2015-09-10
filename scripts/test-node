@@ -13,11 +13,11 @@ fi
 [ -z $TRAVIS_PULL_REQUEST ] && TRAVIS_PULL_REQUEST='false'
 [ -z $TRAVIS_BUILD_NUMBER ] && TRAVIS_BUILD_NUMBER='false'
 
-echo "Node test 0.12"
+echo "Node test 4"
 
-# always test on node 0.12
-echo "Node test 0.12: unit"
-nvm use 0.12
+# always test on node 4
+echo "Node test 4: unit"
+nvm use 4
 
 if [ $CI == 'false' ]; then
   node test/run-node.js | tap-spec
@@ -26,31 +26,31 @@ else
 fi
 
 # in CI we launch integration test
-[ $CI == 'true' ] && echo "Node test 0.12: integration" && node test/run-integration.js
+[ $CI == 'true' ] && echo "Node test 4: integration" && node test/run-integration.js
 
-# in a PR or in local environement, test only on node 0.12
+# in a PR or in local environement, test only on node 4
 if [ $TRAVIS_PULL_REQUEST != 'false' ] || [ $CI == 'false' ]; then
-  echo 'Skipping 0.10 and iojs tests (PR or local)'
+  echo 'Skipping 0.10 and 0.12 tests (PR or local)'
   exit 0
 else
   echo "Node test 0.10"
 
-  nvm use 0.10
+  nvm use 0.10 || nvm install 0.10
   echo "Node test 0.10: unit"
   node test/run-node.js
 
   echo "Node test 0.10: integration"
   node test/run-integration.js
 
-  echo "Node test iojs"
-  nvm use iojs
+  echo "Node test 0.12"
+  nvm use 0.12 || nvm install 0.12
 
-  echo "Node test iojs: unit"
+  echo "Node test 0.12: unit"
   node test/run-node.js
 
-  echo "Node test iojs: integration"
+  echo "Node test 0.12: integration"
   node test/run-integration.js
 fi
 
-# switch back to node.js 0.12
-nvm use 0.12
+# switch back to node.js 4
+nvm use 4

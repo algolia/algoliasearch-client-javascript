@@ -47,7 +47,7 @@ function getKeepaliveAgent(protocol) {
   var keepAliveAgent;
 
   // node 0.10 => agentkeepalive
-  // node 0.12 => native keepalive
+  // node >= 0.12 => native keepalive
   // iojs => native keepalive
   // node >= 0.11.4 has good keepAlive https://github.com/joyent/node/commit/b5b841
   if (semver.satisfies(process.version, '<0.11.4')) {
