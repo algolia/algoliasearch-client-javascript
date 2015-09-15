@@ -6,7 +6,7 @@
 
 var inherits = require('inherits');
 
-var forEach = require('lodash-compat/collection/forEach');
+var forEach = require('lodash/collection/forEach');
 
 var AlgoliaSearch = require('../../AlgoliaSearch');
 var errors = require('../../errors');
@@ -19,7 +19,7 @@ window.algoliasearch = require('./algoliasearch');
 window.angular.module('algoliasearch', [])
   .service('algolia', ['$http', '$q', '$timeout', function algoliaSearchService($http, $q, $timeout) {
     function algoliasearch(applicationID, apiKey, opts) {
-      var cloneDeep = require('lodash-compat/lang/cloneDeep');
+      var cloneDeep = require('lodash/lang/cloneDeep');
 
       var getDocumentProtocol = require('../get-document-protocol');
 

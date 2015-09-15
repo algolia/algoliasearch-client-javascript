@@ -14,7 +14,7 @@ var inlineHeaders = require('../inline-headers');
 var jsonpRequest = require('../jsonp-request');
 
 function algoliasearch(applicationID, apiKey, opts) {
-  var cloneDeep = require('lodash-compat/lang/cloneDeep');
+  var cloneDeep = require('lodash/lang/cloneDeep');
 
   var getDocumentProtocol = require('../get-document-protocol');
 

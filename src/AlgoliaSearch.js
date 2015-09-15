@@ -38,8 +38,8 @@ var errors = require('./errors');
 function AlgoliaSearch(applicationID, apiKey, opts) {
   var debug = require('debug')('algoliasearch');
 
-  var clone = require('lodash-compat/lang/clone');
-  var isArray = require('lodash-compat/lang/isArray');
+  var clone = require('lodash/lang/clone');
+  var isArray = require('lodash/lang/isArray');
 
   var usage = 'Usage: algoliasearch(applicationID, apiKey, opts)';
 
@@ -904,7 +904,7 @@ AlgoliaSearch.prototype = {
   },
 
   _computeRequestHeaders: function() {
-    var forEach = require('lodash-compat/collection/forEach');
+    var forEach = require('lodash/collection/forEach');
 
     var requestHeaders = {
       'x-algolia-api-key': this.apiKey,
@@ -1232,7 +1232,7 @@ AlgoliaSearch.prototype.Index.prototype = {
    *  error: null or Error('message')
    */
   deleteByQuery: function(query, params, callback) {
-    var clone = require('lodash-compat/lang/clone');
+    var clone = require('lodash/lang/clone');
 
     var indexObj = this;
     var client = indexObj.as;
@@ -1458,7 +1458,7 @@ AlgoliaSearch.prototype.Index.prototype = {
   // pre 3.5.0 usage, backward compatible
   // browse: function(page, hitsPerPage, callback) {
   browse: function(query, queryParameters, callback) {
-    var merge = require('lodash-compat/object/merge');
+    var merge = require('lodash/object/merge');
 
     var indexObj = this;
 
@@ -1577,7 +1577,7 @@ AlgoliaSearch.prototype.Index.prototype = {
       query = undefined;
     }
 
-    var merge = require('lodash-compat/object/merge');
+    var merge = require('lodash/object/merge');
 
     var IndexBrowser = require('./IndexBrowser');
 
