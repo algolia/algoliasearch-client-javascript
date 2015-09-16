@@ -684,7 +684,7 @@ AlgoliaSearch.prototype = {
       // handle cache existence
       if (client._useCache && cache && cache[cacheID] !== undefined) {
         requestDebug('serving response from cache');
-        return client._promise.resolve(JSON.parse(safeJSONStringify(cache[cacheID])));
+        return client._promise.resolve(JSON.parse(cache[cacheID]));
       }
 
       // if we reached max tries
@@ -774,7 +774,7 @@ AlgoliaSearch.prototype = {
         var retry = !ok && Math.floor(status / 100) !== 4 && Math.floor(status / 100) !== 1;
 
         if (client._useCache && ok && cache) {
-          cache[cacheID] = httpResponse.body;
+          cache[cacheID] = httpResponse.responseText;
         }
 
         if (ok) {

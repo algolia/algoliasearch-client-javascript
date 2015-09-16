@@ -98,6 +98,7 @@ AlgoliaSearchJQuery.prototype._request = function request(url, opts) {
         deferred.resolve({
           statusCode: jqXHR.status,
           body: jqXHR.responseJSON,
+          responseText: jqXHR.responseText,
           headers: jqXHR.getAllResponseHeaders()
         });
       }
