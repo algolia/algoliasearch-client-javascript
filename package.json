@@ -9,7 +9,7 @@
     "lodash": "lodash-compat"
   },
   "scripts": {
-    "build": "PACKAGE_VERSION=$(json -f src/version.json) ./scripts/build",
+    "build": "./scripts/build",
     "dev": "APP_ENV=development DEBUG=zuul* zuul --no-coverage --local 8080 -- test/run-browser.js",
     "dev-integration": "APP_ENV=development DEBUG=zuul* zuul --no-coverage --local 8080 -- test/run-integration.js",
     "examples": "http-server . -a 0.0.0.0",
@@ -83,8 +83,6 @@
     "http-server": "0.8.0",
     "jQuery-ajaxTransport-XDomainRequest": "http://github.com/MoonScript/jQuery-ajaxTransport-XDomainRequest/tarball/1.0.4",
     "jquery": "2.1.4",
-    "json": "9.0.3",
-    "json-loader": "0.5.2",
     "morgan": "1.6.1",
     "mversion": "1.10.1",
     "phantomjs": "1.9.18",

@@ -29,7 +29,7 @@ function algoliasearch(applicationID, apiKey, opts) {
   return new AlgoliaSearchBrowser(applicationID, apiKey, opts);
 }
 
-algoliasearch.version = require('../../version.json');
+algoliasearch.version = require('../../version.js');
 algoliasearch.ua = 'Algolia for vanilla JavaScript ' + algoliasearch.version;
 
 // we expose into window no matter how we are used, this will allow

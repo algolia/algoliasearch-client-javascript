@@ -30,7 +30,7 @@ function algoliasearch(applicationID, apiKey, opts) {
   return new AlgoliaSearchJQuery(applicationID, apiKey, opts);
 }
 
-algoliasearch.version = require('../../version.json');
+algoliasearch.version = require('../../version.js');
 algoliasearch.ua = 'Algolia for jQuery ' + algoliasearch.version;
 
 // we expose into window no matter how we are used, this will allow

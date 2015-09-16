@@ -34,7 +34,7 @@ window.angular.module('algoliasearch', [])
       return new AlgoliaSearchAngular(applicationID, apiKey, opts);
     }
 
-    algoliasearch.version = require('../../version.json');
+    algoliasearch.version = require('../../version.js');
     algoliasearch.ua = 'Algolia for AngularJS ' + algoliasearch.version;
 
     // we expose into window no matter how we are used, this will allow

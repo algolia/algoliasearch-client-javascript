@@ -16,8 +16,8 @@ echo "Parse-cloud test"
 # build (including the parse build)
 # change the version number to 1.0.$TRAVIS_BUILD_NUMBER so that we can test that
 # the build was really deployed to parse (see test/parse/cloud/main.js and test/parse/index.js)
-cp src/version.json src/version.json.bak
-echo "\"1.0.$TRAVIS_BUILD_NUMBER\"" > src/version.json
+cp src/version.js src/version.js.bak
+echo "\"1.0.$TRAVIS_BUILD_NUMBER\"" > src/version.js
 npm run build
 
 cp dist/algoliasearch.parse.js test/parse/cloud
@@ -44,7 +44,7 @@ node index.js
 # cleanup the mess
 # get back to root of git project
 cd ../../
-cp src/version.json.bak src/version.json
+cp src/version.js.bak src/version.js
 git checkout dist/
 git checkout test/
 git clean test/ -f
