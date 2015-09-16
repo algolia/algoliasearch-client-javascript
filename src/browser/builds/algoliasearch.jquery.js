@@ -62,7 +62,7 @@ AlgoliaSearchJQuery.prototype._request = function request(url, opts) {
     url = inlineHeaders(url, opts.headers);
 
     var requestHeaders = {
-      'accept': 'application/json'
+      accept: 'application/json'
     };
 
     if (body) {

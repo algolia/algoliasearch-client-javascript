@@ -1050,8 +1050,8 @@ AlgoliaSearch.prototype.Index.prototype = {
     var body = {
       requests: map(objectIDs, function prepareRequest(objectID) {
         var request = {
-          'indexName': indexObj.indexName,
-          'objectID': objectID
+          indexName: indexObj.indexName,
+          objectID: objectID
         };
 
         if (attributesToRetrieve) {
