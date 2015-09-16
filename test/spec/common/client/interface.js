@@ -8,8 +8,8 @@ var test = require('tape');
 test('AlgoliaSearch client API spec', function(t) {
   t.plan(1);
 
-  var filter = require('lodash-compat/collection/filter');
-  var functions = require('lodash-compat/object/functions');
+  var filter = require('lodash/collection/filter');
+  var functions = require('lodash/object/functions');
 
   var algoliasearch = require('../../../../');
   var onlyPublicProperties = require('../../../utils/only-public-properties');

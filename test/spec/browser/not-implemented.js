@@ -3,8 +3,8 @@
 var test = require('tape');
 
 test('not implemented methods', function(t) {
-  var bind = require('lodash-compat/function/bind');
-  var forEach = require('lodash-compat/collection/forEach');
+  var bind = require('lodash/function/bind');
+  var forEach = require('lodash/collection/forEach');
 
   var clientMethods = [
     'destroy',

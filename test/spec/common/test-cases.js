@@ -2,9 +2,9 @@
 
 // this file will run all `client/test-cases/**/*.js` and `index/test-cases/**/*.js`
 var bulkRequire = require('bulk-require');
-var flatten = require('lodash-compat/array/flatten');
-var forEach = require('lodash-compat/collection/forEach');
-var map = require('lodash-compat/collection/map');
+var flatten = require('lodash/array/flatten');
+var forEach = require('lodash/collection/forEach');
+var map = require('lodash/collection/map');
 
 var flattenBulkRequire = require('../../utils/flatten-bulk-require');
 var runTestCase = require('../../utils/run-test-case');

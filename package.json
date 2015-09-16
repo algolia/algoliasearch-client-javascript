@@ -5,7 +5,8 @@
   "main": "index.js",
   "browser": {
     "./index.js": "./src/browser/builds/algoliasearch.js",
-    "debug": "debug-ms-fix-yui-compressor"
+    "debug": "debug-ms-fix-yui-compressor",
+    "lodash": "lodash-compat"
   },
   "scripts": {
     "build": "PACKAGE_VERSION=$(json -f src/version.json) ./scripts/build",
@@ -55,6 +56,7 @@
     "es6-promise": "3.0.2",
     "inherits": "2.0.1",
     "load-script": "1.0.0",
+    "lodash": "3.10.1",
     "lodash-compat": "3.10.1",
     "semver": "5.0.1",
     "tunnel-agent": "0.4.1"
@@ -83,7 +85,6 @@
     "jquery": "2.1.4",
     "json": "9.0.3",
     "json-loader": "0.5.2",
-    "lodash": "3.10.1",
     "morgan": "1.6.1",
     "mversion": "1.10.1",
     "phantomjs": "1.9.18",

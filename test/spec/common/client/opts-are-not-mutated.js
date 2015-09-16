@@ -5,7 +5,7 @@ var test = require('tape');
 test('algoliasearch(applicationID, apiKey, opts), `opts` is not mutated', function(t) {
   t.plan(1);
 
-  var keys = require('lodash-compat/object/keys');
+  var keys = require('lodash/object/keys');
   var opts = {};
 
   var algoliasearch = require('../../../../');
