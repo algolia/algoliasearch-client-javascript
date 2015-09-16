@@ -622,6 +622,16 @@ AlgoliaSearch.prototype = {
     });
   },
 
+  /**
+  * Augment sent x-algolia-agent with more data, each agent part
+  * is automatically separated from the others by a semicolon;
+  *
+  * @param algoliaAgent the agent to add
+  */
+  addAlgoliaAgent: function(algoliaAgent) {
+    this._ua += ';' + algoliaAgent;
+  },
+
   _sendQueriesBatch: function(params, callback) {
     function prepareParams() {
       var reqParams = '';

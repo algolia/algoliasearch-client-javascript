@@ -20,6 +20,7 @@ test('AlgoliaSearch client API spec', function(t) {
 
   var expectedProperties = [
     'Index',
+    'addAlgoliaAgent',
     'addQueryInBatch',
     'addUserKey',
     'addUserKeyWithValidity',
