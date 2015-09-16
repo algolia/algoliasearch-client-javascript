@@ -20,9 +20,11 @@ if (process.browser) {
     });
 
     index.search('something', function(_, firstContent) {
+      firstContent.AHAH = true;
       index.search('something', function(__, secondContent) {
         t.deepEqual(firstContent, {
-          ok: 'then'
+          ok: 'then',
+          AHAH: true
         }, 'Content matches for first search');
 
         t.deepEqual(secondContent, {

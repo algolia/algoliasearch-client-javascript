@@ -129,6 +129,7 @@ AlgoliaSearchBrowser.prototype._request = function request(url, opts) {
       try {
         out = {
           body: JSON.parse(req.responseText),
+          responseText: req.responseText,
           statusCode: req.status,
           // XDomainRequest does not have any response headers
           headers: req.getAllResponseHeaders && req.getAllResponseHeaders() || {}

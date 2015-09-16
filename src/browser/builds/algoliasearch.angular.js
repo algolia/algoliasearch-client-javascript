@@ -113,7 +113,8 @@ window.angular.module('algoliasearch', [])
         resolve({
           statusCode: response.status,
           headers: response.headers,
-          body: response.data
+          body: response.data,
+          responseText: response.responseText
         });
       }
 
