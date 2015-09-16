@@ -55,9 +55,6 @@ var browsers = {
   }, {
     name: 'ipad',
     version: '7.0..latest'
-  }, {
-    name: 'microsoftedge',
-    version: 'latest'
   }],
   pullRequest: [{
     name: 'chrome',
@@ -75,9 +72,6 @@ var browsers = {
     version: 'latest'
   }, {
     name: 'android',
-    version: 'latest'
-  }, {
-    name: 'microsoftedge',
     version: 'latest'
   }]
 };
