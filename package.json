@@ -67,6 +67,7 @@
     "async": "1.4.2",
     "bowser": "1.0.0",
     "browserify": "11.1.0",
+    "browzers": "^1.0.0",
     "bulk-require": "0.2.1",
     "bulkify": "1.1.1",
     "bundle-collapser": "1.2.1",
@@ -81,8 +82,8 @@
     "faux-jax": "4.1.0",
     "http-proxy": "1.11.2",
     "http-server": "0.8.0",
-    "jquery-ajax-transport-xdomainrequest": "1.0.4",
     "jquery": "^2.1.4",
+    "jquery-ajax-transport-xdomainrequest": "1.0.4",
     "morgan": "1.6.1",
     "mversion": "1.10.1",
     "phantomjs": "1.9.18",
@@ -99,7 +100,7 @@
     "url-parse": "1.0.2",
     "webpack": "^1.12.1",
     "xhr": "2.1.0",
-    "zuul": "3.5.0",
+    "zuul": "vvo/zuul#247d685a780d4d062e0ce696a4ec3ffeb12aa40d",
     "zuul-ngrok": "3.0.0"
   },
   "engines": {
