@@ -16,11 +16,5 @@ module.exports = {
       inherits: 'inherits/inherits_browser.js',
       'util-deprecate': 'util-deprecate/browser.js'
     }
-  },
-  module: {
-    loaders: [{
-      test: /\.json$/,
-      loader: 'json'
-    }]
   }
 };
