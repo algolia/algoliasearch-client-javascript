@@ -34,14 +34,14 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
 
     index.search('jquery-success-promise').done(function searchDone(content) {
       t.deepEqual(content, {
-        'YAW': 'jquery-promise'
+        YAW: 'jquery-promise'
       });
     });
 
     index.search('jquery-success-callback', function searchDone(err, content) {
       t.error(err, 'No error while using the jQuery module');
       t.deepEqual(content, {
-        'YAW': 'jquery-cb'
+        YAW: 'jquery-cb'
       });
     });
 
@@ -61,7 +61,7 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
         t.deepEqual(
           firstRequest.requestHeaders, {
             'Content-Type': 'application/x-www-form-urlencoded',
-            'Accept': 'application/json'
+            Accept: 'application/json'
           },
           'requestHeaders matches'
         );
@@ -92,7 +92,7 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
         200,
         {},
         JSON.stringify({
-          'YAW': 'jquery-promise'
+          YAW: 'jquery-promise'
         })
       );
 
@@ -100,7 +100,7 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
         200,
         {},
         JSON.stringify({
-          'YAW': 'jquery-cb'
+          YAW: 'jquery-cb'
         })
       );
 
@@ -152,7 +152,7 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
         400,
         {},
         JSON.stringify({
-          'message': 'Nope promise jQuery',
+          message: 'Nope promise jQuery',
           status: 400
         })
       );
@@ -161,7 +161,7 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
         400,
         {},
         JSON.stringify({
-          'message': 'Nope callback jQuery',
+          message: 'Nope callback jQuery',
           status: 400
         })
       );
