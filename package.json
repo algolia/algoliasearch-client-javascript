@@ -101,7 +101,7 @@
     "url-parse": "1.0.2",
     "webpack": "1.12.0",
     "xhr": "2.0.4",
-    "zuul": "3.4.0",
+    "zuul": "3.5.0",
     "zuul-ngrok": "3.0.0"
   },
   "engines": {
