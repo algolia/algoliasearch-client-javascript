@@ -1423,6 +1423,16 @@ module.exports =
 	    });
 	  },
 
+	  /**
+	  * Augment sent x-algolia-agent with more data, each agent part
+	  * is automatically separated from the others by a semicolon;
+	  *
+	  * @param algoliaAgent the agent to add
+	  */
+	  addAlgoliaAgent: function(algoliaAgent) {
+	    this._ua += ';' + algoliaAgent;
+	  },
+
 	  _sendQueriesBatch: function(params, callback) {
 	    function prepareParams() {
 	      var reqParams = '';
@@ -1485,7 +1495,7 @@ module.exports =
 	      // handle cache existence
 	      if (client._useCache && cache && cache[cacheID] !== undefined) {
 	        requestDebug('serving response from cache');
-	        return client._promise.resolve(JSON.parse(safeJSONStringify(cache[cacheID])));
+	        return client._promise.resolve(JSON.parse(cache[cacheID]));
 	      }
 
 	      // if we reached max tries
@@ -1575,7 +1585,7 @@ module.exports =
 	        var retry = !ok && Math.floor(status / 100) !== 4 && Math.floor(status / 100) !== 1;
 
 	        if (client._useCache && ok && cache) {
-	          cache[cacheID] = httpResponse.body;
+	          cache[cacheID] = httpResponse.responseText;
 	        }
 
 	        if (ok) {
@@ -1851,8 +1861,8 @@ module.exports =
 	    var body = {
 	      requests: map(objectIDs, function prepareRequest(objectID) {
 	        var request = {
-	          'indexName': indexObj.indexName,
-	          'objectID': objectID
+	          indexName: indexObj.indexName,
+	          objectID: objectID
 	        };
 
 	        if (attributesToRetrieve) {
@@ -5003,7 +5013,10 @@ module.exports =
 /* 56 */
 /***/ function(module, exports) {
 
-	module.exports = "3.7.8"
+	
+
+	module.exports = '3.8.0';
+
 
 /***/ }
 /******/ ]);

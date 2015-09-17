@@ -1,11 +1,12 @@
 CHANGELOG
 
-UNRELEASED
+2015-09-01 3.8.0
 
     * test: node v4 is now the default testing env
     * fix: always send a unique response to the user
     * fix: use `lodash` by default, only use `lodash-compat` when building for the browser
     * feat: add client.addAlgoliaAgent() to augment the sent x-algolia-agent
+    * chore: move all deps to ^version and add a shrinkwrap to allow reproducible builds
 
 2015-09-01 3.7.8
 

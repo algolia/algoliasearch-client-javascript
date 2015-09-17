@@ -1,4 +1,4 @@
-/*! algoliasearch 3.7.8 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
+/*! algoliasearch 3.8.0 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
 (function(f){var g;if(typeof window!=='undefined'){g=window}else if(typeof self!=='undefined'){g=self}g.ALGOLIA_MIGRATION_LAYER=f()})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 
 module.exports = function load (src, opts, cb) {
@@ -535,7 +535,9 @@ function drainQueue() {
         currentQueue = queue;
         queue = [];
         while (++queueIndex < len) {
-            currentQueue[queueIndex].run();
+            if (currentQueue) {
+                currentQueue[queueIndex].run();
+            }
         }
         queueIndex = -1;
         len = queue.length;
@@ -587,7 +589,6 @@ process.binding = function (name) {
     throw new Error('process.binding is not supported');
 };
 
-// TODO(shtylman)
 process.cwd = function () { return '/' };
 process.chdir = function (dir) {
     throw new Error('process.chdir is not supported');
@@ -2416,7 +2417,7 @@ module.exports = arrayEach;
 
 },{}],15:[function(require,module,exports){
 var baseCopy = require(17),
-    keys = require(55);
+    keys = require(53);
 
 /**
  * The base implementation of `_.assign` without support for argument juggling,
@@ -2435,7 +2436,7 @@ function baseAssign(object, source) {
 
 module.exports = baseAssign;
 
-},{"17":17,"55":55}],16:[function(require,module,exports){
+},{"17":17,"53":53}],16:[function(require,module,exports){
 var arrayCopy = require(13),
     arrayEach = require(14),
     baseAssign = require(15),
@@ -2443,9 +2444,8 @@ var arrayCopy = require(13),
     initCloneArray = require(33),
     initCloneByTag = require(34),
     initCloneObject = require(35),
-    isArray = require(47),
-    isHostObject = require(37),
-    isObject = require(50);
+    isArray = require(46),
+    isObject = require(49);
 
 /** `Object#toString` result references. */
 var argsTag = '[object Arguments]',
@@ -2533,9 +2533,6 @@ function baseClone(value, isDeep, customizer, key, object, stackA, stackB) {
         isFunc = tag == funcTag;
 
     if (tag == objectTag || tag == argsTag || (isFunc && !object)) {
-      if (isHostObject(value)) {
-        return object ? value : {};
-      }
       result = initCloneObject(isFunc ? {} : value);
       if (!isDeep) {
         return baseAssign(result, value);
@@ -2569,7 +2566,7 @@ function baseClone(value, isDeep, customizer, key, object, stackA, stackB) {
 
 module.exports = baseClone;
 
-},{"13":13,"14":14,"15":15,"21":21,"33":33,"34":34,"35":35,"37":37,"47":47,"50":50}],17:[function(require,module,exports){
+},{"13":13,"14":14,"15":15,"21":21,"33":33,"34":34,"35":35,"46":46,"49":49}],17:[function(require,module,exports){
 /**
  * Copies properties of `source` to `object`.
  *
@@ -2632,7 +2629,7 @@ module.exports = baseFor;
 
 },{"29":29}],20:[function(require,module,exports){
 var baseFor = require(19),
-    keysIn = require(56);
+    keysIn = require(54);
 
 /**
  * The base implementation of `_.forIn` without support for callback
@@ -2649,9 +2646,9 @@ function baseForIn(object, iteratee) {
 
 module.exports = baseForIn;
 
-},{"19":19,"56":56}],21:[function(require,module,exports){
+},{"19":19,"54":54}],21:[function(require,module,exports){
 var baseFor = require(19),
-    keys = require(55);
+    keys = require(53);
 
 /**
  * The base implementation of `_.forOwn` without support for callback
@@ -2668,15 +2665,15 @@ function baseForOwn(object, iteratee) {
 
 module.exports = baseForOwn;
 
-},{"19":19,"55":55}],22:[function(require,module,exports){
+},{"19":19,"53":53}],22:[function(require,module,exports){
 var arrayEach = require(14),
     baseMergeDeep = require(23),
-    isArray = require(47),
+    isArray = require(46),
     isArrayLike = require(36),
-    isObject = require(50),
-    isObjectLike = require(41),
-    isTypedArray = require(53),
-    keys = require(55);
+    isObject = require(49),
+    isObjectLike = require(40),
+    isTypedArray = require(51),
+    keys = require(53);
 
 /**
  * The base implementation of `_.merge` without support for argument juggling,
@@ -2726,14 +2723,14 @@ function baseMerge(object, source, customizer, stackA, stackB) {
 
 module.exports = baseMerge;
 
-},{"14":14,"23":23,"36":36,"41":41,"47":47,"50":50,"53":53,"55":55}],23:[function(require,module,exports){
+},{"14":14,"23":23,"36":36,"40":40,"46":46,"49":49,"51":51,"53":53}],23:[function(require,module,exports){
 var arrayCopy = require(13),
-    isArguments = require(46),
-    isArray = require(47),
+    isArguments = require(45),
+    isArray = require(46),
     isArrayLike = require(36),
-    isPlainObject = require(51),
-    isTypedArray = require(53),
-    toPlainObject = require(54);
+    isPlainObject = require(50),
+    isTypedArray = require(51),
+    toPlainObject = require(52);
 
 /**
  * A specialized version of `baseMerge` for arrays and objects which performs
@@ -2795,9 +2792,7 @@ function baseMergeDeep(object, source, key, mergeFunc, customizer, stackA, stack
 
 module.exports = baseMergeDeep;
 
-},{"13":13,"36":36,"46":46,"47":47,"51":51,"53":53,"54":54}],24:[function(require,module,exports){
-var toObject = require(43);
-
+},{"13":13,"36":36,"45":45,"46":46,"50":50,"51":51,"52":52}],24:[function(require,module,exports){
 /**
  * The base implementation of `_.property` without support for deep paths.
  *
@@ -2807,14 +2802,14 @@ var toObject = require(43);
  */
 function baseProperty(key) {
   return function(object) {
-    return object == null ? undefined : toObject(object)[key];
+    return object == null ? undefined : object[key];
   };
 }
 
 module.exports = baseProperty;
 
-},{"43":43}],25:[function(require,module,exports){
-var identity = require(59);
+},{}],25:[function(require,module,exports){
+var identity = require(56);
 
 /**
  * A specialized version of `baseCallback` which only supports `this` binding
@@ -2854,7 +2849,7 @@ function bindCallback(func, thisArg, argCount) {
 
 module.exports = bindCallback;
 
-},{"59":59}],26:[function(require,module,exports){
+},{"56":56}],26:[function(require,module,exports){
 (function (global){
 /** Native method references. */
 var ArrayBuffer = global.ArrayBuffer,
@@ -2880,7 +2875,7 @@ module.exports = bufferClone;
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}],27:[function(require,module,exports){
 var bindCallback = require(25),
-    isIterateeCall = require(39),
+    isIterateeCall = require(38),
     restParam = require(12);
 
 /**
@@ -2921,10 +2916,10 @@ function createAssigner(assigner) {
 
 module.exports = createAssigner;
 
-},{"12":12,"25":25,"39":39}],28:[function(require,module,exports){
+},{"12":12,"25":25,"38":38}],28:[function(require,module,exports){
 var getLength = require(31),
-    isLength = require(40),
-    toObject = require(43);
+    isLength = require(39),
+    toObject = require(42);
 
 /**
  * Creates a `baseEach` or `baseEachRight` function.
@@ -2954,8 +2949,8 @@ function createBaseEach(eachFunc, fromRight) {
 
 module.exports = createBaseEach;
 
-},{"31":31,"40":40,"43":43}],29:[function(require,module,exports){
-var toObject = require(43);
+},{"31":31,"39":39,"42":42}],29:[function(require,module,exports){
+var toObject = require(42);
 
 /**
  * Creates a base function for `_.forIn` or `_.forInRight`.
@@ -2983,9 +2978,9 @@ function createBaseFor(fromRight) {
 
 module.exports = createBaseFor;
 
-},{"43":43}],30:[function(require,module,exports){
+},{"42":42}],30:[function(require,module,exports){
 var bindCallback = require(25),
-    isArray = require(47);
+    isArray = require(46);
 
 /**
  * Creates a function for `_.forEach` or `_.forEachRight`.
@@ -3005,7 +3000,7 @@ function createForEach(arrayFunc, eachFunc) {
 
 module.exports = createForEach;
 
-},{"25":25,"47":47}],31:[function(require,module,exports){
+},{"25":25,"46":46}],31:[function(require,module,exports){
 var baseProperty = require(24);
 
 /**
@@ -3023,7 +3018,7 @@ var getLength = baseProperty('length');
 module.exports = getLength;
 
 },{"24":24}],32:[function(require,module,exports){
-var isNative = require(49);
+var isNative = require(48);
 
 /**
  * Gets the native function at `key` of `object`.
@@ -3040,7 +3035,7 @@ function getNative(object, key) {
 
 module.exports = getNative;
 
-},{"49":49}],33:[function(require,module,exports){
+},{"48":48}],33:[function(require,module,exports){
 /** Used for native method references. */
 var objectProto = Object.prototype;
 
@@ -3069,7 +3064,6 @@ function initCloneArray(array) {
 module.exports = initCloneArray;
 
 },{}],34:[function(require,module,exports){
-(function (global){
 var bufferClone = require(26);
 
 /** `Object#toString` result references. */
@@ -3092,21 +3086,6 @@ var arrayBufferTag = '[object ArrayBuffer]',
 
 /** Used to match `RegExp` flags from their coerced string values. */
 var reFlags = /\w*$/;
-
-/** Native method references. */
-var Uint8Array = global.Uint8Array;
-
-/** Used to lookup a type array constructors by `toStringTag`. */
-var ctorByTag = {};
-ctorByTag[float32Tag] = global.Float32Array;
-ctorByTag[float64Tag] = global.Float64Array;
-ctorByTag[int8Tag] = global.Int8Array;
-ctorByTag[int16Tag] = global.Int16Array;
-ctorByTag[int32Tag] = global.Int32Array;
-ctorByTag[uint8Tag] = Uint8Array;
-ctorByTag[uint8ClampedTag] = global.Uint8ClampedArray;
-ctorByTag[uint16Tag] = global.Uint16Array;
-ctorByTag[uint32Tag] = global.Uint32Array;
 
 /**
  * Initializes an object clone based on its `toStringTag`.
@@ -3133,10 +3112,6 @@ function initCloneByTag(object, tag, isDeep) {
     case float32Tag: case float64Tag:
     case int8Tag: case int16Tag: case int32Tag:
     case uint8Tag: case uint8ClampedTag: case uint16Tag: case uint32Tag:
-      // Safari 5 mobile incorrectly has `Object` as the constructor of typed arrays.
-      if (Ctor instanceof Ctor) {
-        Ctor = ctorByTag[tag];
-      }
       var buffer = object.buffer;
       return new Ctor(isDeep ? bufferClone(buffer) : buffer, object.byteOffset, object.length);
 
@@ -3153,7 +3128,6 @@ function initCloneByTag(object, tag, isDeep) {
 
 module.exports = initCloneByTag;
 
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"26":26}],35:[function(require,module,exports){
 /**
  * Initializes an object clone.
@@ -3174,7 +3148,7 @@ module.exports = initCloneObject;
 
 },{}],36:[function(require,module,exports){
 var getLength = require(31),
-    isLength = require(40);
+    isLength = require(39);
 
 /**
  * Checks if `value` is array-like.
@@ -3189,30 +3163,7 @@ function isArrayLike(value) {
 
 module.exports = isArrayLike;
 
-},{"31":31,"40":40}],37:[function(require,module,exports){
-/**
- * Checks if `value` is a host object in IE < 9.
- *
- * @private
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is a host object, else `false`.
- */
-var isHostObject = (function() {
-  try {
-    Object({ 'toString': 0 } + '');
-  } catch(e) {
-    return function() { return false; };
-  }
-  return function(value) {
-    // IE < 9 presents many host objects as `Object` objects that can coerce
-    // to strings despite having improperly defined `toString` methods.
-    return typeof value.toString != 'function' && typeof (value + '') == 'string';
-  };
-}());
-
-module.exports = isHostObject;
-
-},{}],38:[function(require,module,exports){
+},{"31":31,"39":39}],37:[function(require,module,exports){
 /** Used to detect unsigned integer values. */
 var reIsUint = /^\d+$/;
 
@@ -3238,10 +3189,10 @@ function isIndex(value, length) {
 
 module.exports = isIndex;
 
-},{}],39:[function(require,module,exports){
+},{}],38:[function(require,module,exports){
 var isArrayLike = require(36),
-    isIndex = require(38),
-    isObject = require(50);
+    isIndex = require(37),
+    isObject = require(49);
 
 /**
  * Checks if the provided arguments are from an iteratee call.
@@ -3268,7 +3219,7 @@ function isIterateeCall(value, index, object) {
 
 module.exports = isIterateeCall;
 
-},{"36":36,"38":38,"50":50}],40:[function(require,module,exports){
+},{"36":36,"37":37,"49":49}],39:[function(require,module,exports){
 /**
  * Used as the [maximum length](http://ecma-international.org/ecma-262/6.0/#sec-number.max_safe_integer)
  * of an array-like value.
@@ -3290,7 +3241,7 @@ function isLength(value) {
 
 module.exports = isLength;
 
-},{}],41:[function(require,module,exports){
+},{}],40:[function(require,module,exports){
 /**
  * Checks if `value` is object-like.
  *
@@ -3304,13 +3255,12 @@ function isObjectLike(value) {
 
 module.exports = isObjectLike;
 
-},{}],42:[function(require,module,exports){
-var isArguments = require(46),
-    isArray = require(47),
-    isIndex = require(38),
-    isLength = require(40),
-    isString = require(52),
-    keysIn = require(56);
+},{}],41:[function(require,module,exports){
+var isArguments = require(45),
+    isArray = require(46),
+    isIndex = require(37),
+    isLength = require(39),
+    keysIn = require(54);
 
 /** Used for native method references. */
 var objectProto = Object.prototype;
@@ -3332,7 +3282,7 @@ function shimKeys(object) {
       length = propsLength && object.length;
 
   var allowIndexes = !!length && isLength(length) &&
-    (isArray(object) || isArguments(object) || isString(object));
+    (isArray(object) || isArguments(object));
 
   var index = -1,
       result = [];
@@ -3348,10 +3298,8 @@ function shimKeys(object) {
 
 module.exports = shimKeys;
 
-},{"38":38,"40":40,"46":46,"47":47,"52":52,"56":56}],43:[function(require,module,exports){
-var isObject = require(50),
-    isString = require(52),
-    support = require(58);
+},{"37":37,"39":39,"45":45,"46":46,"54":54}],42:[function(require,module,exports){
+var isObject = require(49);
 
 /**
  * Converts `value` to an object if it's not one.
@@ -3361,25 +3309,15 @@ var isObject = require(50),
  * @returns {Object} Returns the object.
  */
 function toObject(value) {
-  if (support.unindexedChars && isString(value)) {
-    var index = -1,
-        length = value.length,
-        result = Object(value);
-
-    while (++index < length) {
-      result[index] = value.charAt(index);
-    }
-    return result;
-  }
   return isObject(value) ? value : Object(value);
 }
 
 module.exports = toObject;
 
-},{"50":50,"52":52,"58":58}],44:[function(require,module,exports){
+},{"49":49}],43:[function(require,module,exports){
 var baseClone = require(16),
     bindCallback = require(25),
-    isIterateeCall = require(39);
+    isIterateeCall = require(38);
 
 /**
  * Creates a clone of `value`. If `isDeep` is `true` nested objects are cloned,
@@ -3448,7 +3386,7 @@ function clone(value, isDeep, customizer, thisArg) {
 
 module.exports = clone;
 
-},{"16":16,"25":25,"39":39}],45:[function(require,module,exports){
+},{"16":16,"25":25,"38":38}],44:[function(require,module,exports){
 var baseClone = require(16),
     bindCallback = require(25);
 
@@ -3505,9 +3443,9 @@ function cloneDeep(value, customizer, thisArg) {
 
 module.exports = cloneDeep;
 
-},{"16":16,"25":25}],46:[function(require,module,exports){
+},{"16":16,"25":25}],45:[function(require,module,exports){
 var isArrayLike = require(36),
-    isObjectLike = require(41);
+    isObjectLike = require(40);
 
 /** Used for native method references. */
 var objectProto = Object.prototype;
@@ -3541,10 +3479,10 @@ function isArguments(value) {
 
 module.exports = isArguments;
 
-},{"36":36,"41":41}],47:[function(require,module,exports){
+},{"36":36,"40":40}],46:[function(require,module,exports){
 var getNative = require(32),
-    isLength = require(40),
-    isObjectLike = require(41);
+    isLength = require(39),
+    isObjectLike = require(40);
 
 /** `Object#toString` result references. */
 var arrayTag = '[object Array]';
@@ -3583,8 +3521,8 @@ var isArray = nativeIsArray || function(value) {
 
 module.exports = isArray;
 
-},{"32":32,"40":40,"41":41}],48:[function(require,module,exports){
-var isObject = require(50);
+},{"32":32,"39":39,"40":40}],47:[function(require,module,exports){
+var isObject = require(49);
 
 /** `Object#toString` result references. */
 var funcTag = '[object Function]';
@@ -3623,10 +3561,9 @@ function isFunction(value) {
 
 module.exports = isFunction;
 
-},{"50":50}],49:[function(require,module,exports){
-var isFunction = require(48),
-    isHostObject = require(37),
-    isObjectLike = require(41);
+},{"49":49}],48:[function(require,module,exports){
+var isFunction = require(47),
+    isObjectLike = require(40);
 
 /** Used to detect host constructors (Safari > 5). */
 var reIsHostCtor = /^\[object .+?Constructor\]$/;
@@ -3669,12 +3606,12 @@ function isNative(value) {
   if (isFunction(value)) {
     return reIsNative.test(fnToString.call(value));
   }
-  return isObjectLike(value) && (isHostObject(value) ? reIsNative : reIsHostCtor).test(value);
+  return isObjectLike(value) && reIsHostCtor.test(value);
 }
 
 module.exports = isNative;
 
-},{"37":37,"41":41,"48":48}],50:[function(require,module,exports){
+},{"40":40,"47":47}],49:[function(require,module,exports){
 /**
  * Checks if `value` is the [language type](https://es5.github.io/#x8) of `Object`.
  * (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
@@ -3704,12 +3641,10 @@ function isObject(value) {
 
 module.exports = isObject;
 
-},{}],51:[function(require,module,exports){
+},{}],50:[function(require,module,exports){
 var baseForIn = require(20),
-    isArguments = require(46),
-    isHostObject = require(37),
-    isObjectLike = require(41),
-    support = require(58);
+    isArguments = require(45),
+    isObjectLike = require(40);
 
 /** `Object#toString` result references. */
 var objectTag = '[object Object]';
@@ -3760,7 +3695,7 @@ function isPlainObject(value) {
   var Ctor;
 
   // Exit early for non `Object` objects.
-  if (!(isObjectLike(value) && objToString.call(value) == objectTag && !isHostObject(value) && !isArguments(value)) ||
+  if (!(isObjectLike(value) && objToString.call(value) == objectTag && !isArguments(value)) ||
       (!hasOwnProperty.call(value, 'constructor') && (Ctor = value.constructor, typeof Ctor == 'function' && !(Ctor instanceof Ctor)))) {
     return false;
   }
@@ -3768,13 +3703,6 @@ function isPlainObject(value) {
   // iterated property is an object's own property then there are no inherited
   // enumerable properties.
   var result;
-  if (support.ownLast) {
-    baseForIn(value, function(subValue, key, object) {
-      result = hasOwnProperty.call(object, key);
-      return false;
-    });
-    return result !== false;
-  }
   // In most environments an object's own properties are iterated before
   // its inherited properties. If the last iterated property is an object's
   // own property then there are no inherited enumerable properties.
@@ -3786,46 +3714,9 @@ function isPlainObject(value) {
 
 module.exports = isPlainObject;
 
-},{"20":20,"37":37,"41":41,"46":46,"58":58}],52:[function(require,module,exports){
-var isObjectLike = require(41);
-
-/** `Object#toString` result references. */
-var stringTag = '[object String]';
-
-/** Used for native method references. */
-var objectProto = Object.prototype;
-
-/**
- * Used to resolve the [`toStringTag`](http://ecma-international.org/ecma-262/6.0/#sec-object.prototype.tostring)
- * of values.
- */
-var objToString = objectProto.toString;
-
-/**
- * Checks if `value` is classified as a `String` primitive or object.
- *
- * @static
- * @memberOf _
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is correctly classified, else `false`.
- * @example
- *
- * _.isString('abc');
- * // => true
- *
- * _.isString(1);
- * // => false
- */
-function isString(value) {
-  return typeof value == 'string' || (isObjectLike(value) && objToString.call(value) == stringTag);
-}
-
-module.exports = isString;
-
-},{"41":41}],53:[function(require,module,exports){
-var isLength = require(40),
-    isObjectLike = require(41);
+},{"20":20,"40":40,"45":45}],51:[function(require,module,exports){
+var isLength = require(39),
+    isObjectLike = require(40);
 
 /** `Object#toString` result references. */
 var argsTag = '[object Arguments]',
@@ -3899,9 +3790,9 @@ function isTypedArray(value) {
 
 module.exports = isTypedArray;
 
-},{"40":40,"41":41}],54:[function(require,module,exports){
+},{"39":39,"40":40}],52:[function(require,module,exports){
 var baseCopy = require(17),
-    keysIn = require(56);
+    keysIn = require(54);
 
 /**
  * Converts `value` to a plain object flattening inherited enumerable
@@ -3932,12 +3823,11 @@ function toPlainObject(value) {
 
 module.exports = toPlainObject;
 
-},{"17":17,"56":56}],55:[function(require,module,exports){
+},{"17":17,"54":54}],53:[function(require,module,exports){
 var getNative = require(32),
     isArrayLike = require(36),
-    isObject = require(50),
-    shimKeys = require(42),
-    support = require(58);
+    isObject = require(49),
+    shimKeys = require(41);
 
 /* Native method references for those with the same name as other `lodash` methods. */
 var nativeKeys = getNative(Object, 'keys');
@@ -3972,7 +3862,7 @@ var nativeKeys = getNative(Object, 'keys');
 var keys = !nativeKeys ? shimKeys : function(object) {
   var Ctor = object == null ? undefined : object.constructor;
   if ((typeof Ctor == 'function' && Ctor.prototype === object) ||
-      (typeof object == 'function' ? support.enumPrototypes : isArrayLike(object))) {
+      (typeof object != 'function' && isArrayLike(object))) {
     return shimKeys(object);
   }
   return isObject(object) ? nativeKeys(object) : [];
@@ -3980,63 +3870,18 @@ var keys = !nativeKeys ? shimKeys : function(object) {
 
 module.exports = keys;
 
-},{"32":32,"36":36,"42":42,"50":50,"58":58}],56:[function(require,module,exports){
-var arrayEach = require(14),
-    isArguments = require(46),
-    isArray = require(47),
-    isFunction = require(48),
-    isIndex = require(38),
-    isLength = require(40),
-    isObject = require(50),
-    isString = require(52),
-    support = require(58);
-
-/** `Object#toString` result references. */
-var arrayTag = '[object Array]',
-    boolTag = '[object Boolean]',
-    dateTag = '[object Date]',
-    errorTag = '[object Error]',
-    funcTag = '[object Function]',
-    numberTag = '[object Number]',
-    objectTag = '[object Object]',
-    regexpTag = '[object RegExp]',
-    stringTag = '[object String]';
-
-/** Used to fix the JScript `[[DontEnum]]` bug. */
-var shadowProps = [
-  'constructor', 'hasOwnProperty', 'isPrototypeOf', 'propertyIsEnumerable',
-  'toLocaleString', 'toString', 'valueOf'
-];
+},{"32":32,"36":36,"41":41,"49":49}],54:[function(require,module,exports){
+var isArguments = require(45),
+    isArray = require(46),
+    isIndex = require(37),
+    isLength = require(39),
+    isObject = require(49);
 
 /** Used for native method references. */
-var errorProto = Error.prototype,
-    objectProto = Object.prototype,
-    stringProto = String.prototype;
+var objectProto = Object.prototype;
 
 /** Used to check objects for own properties. */
 var hasOwnProperty = objectProto.hasOwnProperty;
-
-/**
- * Used to resolve the [`toStringTag`](http://ecma-international.org/ecma-262/6.0/#sec-object.prototype.tostring)
- * of values.
- */
-var objToString = objectProto.toString;
-
-/** Used to avoid iterating over non-enumerable properties in IE < 9. */
-var nonEnumProps = {};
-nonEnumProps[arrayTag] = nonEnumProps[dateTag] = nonEnumProps[numberTag] = { 'constructor': true, 'toLocaleString': true, 'toString': true, 'valueOf': true };
-nonEnumProps[boolTag] = nonEnumProps[stringTag] = { 'constructor': true, 'toString': true, 'valueOf': true };
-nonEnumProps[errorTag] = nonEnumProps[funcTag] = nonEnumProps[regexpTag] = { 'constructor': true, 'toString': true };
-nonEnumProps[objectTag] = { 'constructor': true };
-
-arrayEach(shadowProps, function(key) {
-  for (var tag in nonEnumProps) {
-    if (hasOwnProperty.call(nonEnumProps, tag)) {
-      var props = nonEnumProps[tag];
-      props[key] = hasOwnProperty.call(props, key);
-    }
-  }
-});
 
 /**
  * Creates an array of the own and inherited enumerable property names of `object`.
@@ -4068,49 +3913,22 @@ function keysIn(object) {
     object = Object(object);
   }
   var length = object.length;
-
   length = (length && isLength(length) &&
-    (isArray(object) || isArguments(object) || isString(object)) && length) || 0;
+    (isArray(object) || isArguments(object)) && length) || 0;
 
   var Ctor = object.constructor,
       index = -1,
-      proto = (isFunction(Ctor) && Ctor.prototype) || objectProto,
-      isProto = proto === object,
+      isProto = typeof Ctor == 'function' && Ctor.prototype === object,
       result = Array(length),
-      skipIndexes = length > 0,
-      skipErrorProps = support.enumErrorProps && (object === errorProto || object instanceof Error),
-      skipProto = support.enumPrototypes && isFunction(object);
+      skipIndexes = length > 0;
 
   while (++index < length) {
     result[index] = (index + '');
   }
-  // lodash skips the `constructor` property when it infers it's iterating
-  // over a `prototype` object because IE < 9 can't set the `[[Enumerable]]`
-  // attribute of an existing property and the `constructor` property of a
-  // prototype defaults to non-enumerable.
   for (var key in object) {
-    if (!(skipProto && key == 'prototype') &&
-        !(skipErrorProps && (key == 'message' || key == 'name')) &&
-        !(skipIndexes && isIndex(key, length)) &&
+    if (!(skipIndexes && isIndex(key, length)) &&
         !(key == 'constructor' && (isProto || !hasOwnProperty.call(object, key)))) {
       result.push(key);
-    }
-  }
-  if (support.nonEnumShadows && object !== objectProto) {
-    var tag = object === stringProto ? stringTag : (object === errorProto ? errorTag : objToString.call(object)),
-        nonEnums = nonEnumProps[tag] || nonEnumProps[objectTag];
-
-    if (tag == objectTag) {
-      proto = objectProto;
-    }
-    length = shadowProps.length;
-    while (length--) {
-      key = shadowProps[length];
-      var nonEnum = nonEnums[key];
-      if (!(isProto && nonEnum) &&
-          (nonEnum ? hasOwnProperty.call(object, key) : object[key] !== proto[key])) {
-        result.push(key);
-      }
     }
   }
   return result;
@@ -4118,7 +3936,7 @@ function keysIn(object) {
 
 module.exports = keysIn;
 
-},{"14":14,"38":38,"40":40,"46":46,"47":47,"48":48,"50":50,"52":52,"58":58}],57:[function(require,module,exports){
+},{"37":37,"39":39,"45":45,"46":46,"49":49}],55:[function(require,module,exports){
 var baseMerge = require(22),
     createAssigner = require(27);
 
@@ -4174,105 +3992,7 @@ var merge = createAssigner(baseMerge);
 
 module.exports = merge;
 
-},{"22":22,"27":27}],58:[function(require,module,exports){
-/** Used for native method references. */
-var arrayProto = Array.prototype,
-    errorProto = Error.prototype,
-    objectProto = Object.prototype;
-
-/** Native method references. */
-var propertyIsEnumerable = objectProto.propertyIsEnumerable,
-    splice = arrayProto.splice;
-
-/**
- * An object environment feature flags.
- *
- * @static
- * @memberOf _
- * @type Object
- */
-var support = {};
-
-(function(x) {
-  var Ctor = function() { this.x = x; },
-      object = { '0': x, 'length': x },
-      props = [];
-
-  Ctor.prototype = { 'valueOf': x, 'y': x };
-  for (var key in new Ctor) { props.push(key); }
-
-  /**
-   * Detect if `name` or `message` properties of `Error.prototype` are
-   * enumerable by default (IE < 9, Safari < 5.1).
-   *
-   * @memberOf _.support
-   * @type boolean
-   */
-  support.enumErrorProps = propertyIsEnumerable.call(errorProto, 'message') ||
-    propertyIsEnumerable.call(errorProto, 'name');
-
-  /**
-   * Detect if `prototype` properties are enumerable by default.
-   *
-   * Firefox < 3.6, Opera > 9.50 - Opera < 11.60, and Safari < 5.1
-   * (if the prototype or a property on the prototype has been set)
-   * incorrectly set the `[[Enumerable]]` value of a function's `prototype`
-   * property to `true`.
-   *
-   * @memberOf _.support
-   * @type boolean
-   */
-  support.enumPrototypes = propertyIsEnumerable.call(Ctor, 'prototype');
-
-  /**
-   * Detect if properties shadowing those on `Object.prototype` are non-enumerable.
-   *
-   * In IE < 9 an object's own properties, shadowing non-enumerable ones,
-   * are made non-enumerable as well (a.k.a the JScript `[[DontEnum]]` bug).
-   *
-   * @memberOf _.support
-   * @type boolean
-   */
-  support.nonEnumShadows = !/valueOf/.test(props);
-
-  /**
-   * Detect if own properties are iterated after inherited properties (IE < 9).
-   *
-   * @memberOf _.support
-   * @type boolean
-   */
-  support.ownLast = props[0] != 'x';
-
-  /**
-   * Detect if `Array#shift` and `Array#splice` augment array-like objects
-   * correctly.
-   *
-   * Firefox < 10, compatibility modes of IE 8, and IE < 9 have buggy Array
-   * `shift()` and `splice()` functions that fail to remove the last element,
-   * `value[0]`, of array-like objects even though the "length" property is
-   * set to `0`. The `shift()` method is buggy in compatibility modes of IE 8,
-   * while `splice()` is buggy regardless of mode in IE < 9.
-   *
-   * @memberOf _.support
-   * @type boolean
-   */
-  support.spliceObjects = (splice.call(object, 0, 1), !object[0]);
-
-  /**
-   * Detect lack of support for accessing string characters by index.
-   *
-   * IE < 8 can't access characters by index. IE 8 can only access characters
-   * by index on string literals, not string objects.
-   *
-   * @memberOf _.support
-   * @type boolean
-   */
-  support.unindexedChars = ('x'[0] + Object('x')[0]) != 'xx';
-}(1, 0));
-
-module.exports = support;
-
-},{}],59:[function(require,module,exports){
+},{"22":22,"27":27}],56:[function(require,module,exports){
 /**
  * This method returns the first argument provided to it.
  *
@@ -4294,7 +4014,7 @@ function identity(value) {
 
 module.exports = identity;
 
-},{}],60:[function(require,module,exports){
+},{}],57:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -4306,7 +4026,7 @@ if ("production" === 'development') {
   require(6).enable('algoliasearch*');
 }
 
-var errors = require(67);
+var errors = require(64);
 
 /*
  * Algolia Search library initialization
@@ -4336,8 +4056,8 @@ var errors = require(67);
 function AlgoliaSearch(applicationID, apiKey, opts) {
   var debug = require(6)('algoliasearch');
 
-  var clone = require(44);
-  var isArray = require(47);
+  var clone = require(43);
+  var isArray = require(46);
 
   var usage = 'Usage: algoliasearch(applicationID, apiKey, opts)';
 
@@ -4920,6 +4640,16 @@ AlgoliaSearch.prototype = {
     });
   },
 
+  /**
+  * Augment sent x-algolia-agent with more data, each agent part
+  * is automatically separated from the others by a semicolon;
+  *
+  * @param algoliaAgent the agent to add
+  */
+  addAlgoliaAgent: function(algoliaAgent) {
+    this._ua += ';' + algoliaAgent;
+  },
+
   _sendQueriesBatch: function(params, callback) {
     function prepareParams() {
       var reqParams = '';
@@ -4982,7 +4712,7 @@ AlgoliaSearch.prototype = {
       // handle cache existence
       if (client._useCache && cache && cache[cacheID] !== undefined) {
         requestDebug('serving response from cache');
-        return client._promise.resolve(JSON.parse(safeJSONStringify(cache[cacheID])));
+        return client._promise.resolve(JSON.parse(cache[cacheID]));
       }
 
       // if we reached max tries
@@ -5072,7 +4802,7 @@ AlgoliaSearch.prototype = {
         var retry = !ok && Math.floor(status / 100) !== 4 && Math.floor(status / 100) !== 1;
 
         if (client._useCache && ok && cache) {
-          cache[cacheID] = httpResponse.body;
+          cache[cacheID] = httpResponse.responseText;
         }
 
         if (ok) {
@@ -5348,8 +5078,8 @@ AlgoliaSearch.prototype.Index.prototype = {
     var body = {
       requests: map(objectIDs, function prepareRequest(objectID) {
         var request = {
-          'indexName': indexObj.indexName,
-          'objectID': objectID
+          indexName: indexObj.indexName,
+          objectID: objectID
         };
 
         if (attributesToRetrieve) {
@@ -5530,7 +5260,7 @@ AlgoliaSearch.prototype.Index.prototype = {
    *  error: null or Error('message')
    */
   deleteByQuery: function(query, params, callback) {
-    var clone = require(44);
+    var clone = require(43);
 
     var indexObj = this;
     var client = indexObj.as;
@@ -5756,7 +5486,7 @@ AlgoliaSearch.prototype.Index.prototype = {
   // pre 3.5.0 usage, backward compatible
   // browse: function(page, hitsPerPage, callback) {
   browse: function(query, queryParameters, callback) {
-    var merge = require(57);
+    var merge = require(55);
 
     var indexObj = this;
 
@@ -5875,9 +5605,9 @@ AlgoliaSearch.prototype.Index.prototype = {
       query = undefined;
     }
 
-    var merge = require(57);
+    var merge = require(55);
 
-    var IndexBrowser = require(61);
+    var IndexBrowser = require(58);
 
     var browser = new IndexBrowser();
     var client = this.as;
@@ -6435,7 +6165,7 @@ function safeJSONStringify(obj) {
 }
 
 }).call(this,require(2))
-},{"11":11,"2":2,"44":44,"47":47,"57":57,"6":6,"61":61,"67":67}],61:[function(require,module,exports){
+},{"11":11,"2":2,"43":43,"46":46,"55":55,"58":58,"6":6,"64":64}],58:[function(require,module,exports){
 'use strict';
 
 // This is the object returned by the `index.browseAll()` method
@@ -6476,7 +6206,7 @@ IndexBrowser.prototype._clean = function() {
   this.removeAllListeners('result');
 };
 
-},{"1":1,"10":10}],62:[function(require,module,exports){
+},{"1":1,"10":10}],59:[function(require,module,exports){
 'use strict';
 
 // This is the AngularJS Algolia Search module
@@ -6487,20 +6217,20 @@ var inherits = require(10);
 
 var forEach = require(11);
 
-var AlgoliaSearch = require(60);
-var errors = require(67);
-var inlineHeaders = require(65);
-var jsonpRequest = require(66);
+var AlgoliaSearch = require(57);
+var errors = require(64);
+var inlineHeaders = require(62);
+var jsonpRequest = require(63);
 
 // expose original algoliasearch fn in window
-window.algoliasearch = require(63);
+window.algoliasearch = require(60);
 
 window.angular.module('algoliasearch', [])
   .service('algolia', ['$http', '$q', '$timeout', function algoliaSearchService($http, $q, $timeout) {
     function algoliasearch(applicationID, apiKey, opts) {
-      var cloneDeep = require(45);
+      var cloneDeep = require(44);
 
-      var getDocumentProtocol = require(64);
+      var getDocumentProtocol = require(61);
 
       opts = cloneDeep(opts || {});
 
@@ -6513,7 +6243,7 @@ window.angular.module('algoliasearch', [])
       return new AlgoliaSearchAngular(applicationID, apiKey, opts);
     }
 
-    algoliasearch.version = require(68);
+    algoliasearch.version = require(65);
     algoliasearch.ua = 'Algolia for AngularJS ' + algoliasearch.version;
 
     // we expose into window no matter how we are used, this will allow
@@ -6592,7 +6322,8 @@ window.angular.module('algoliasearch', [])
         resolve({
           statusCode: response.status,
           headers: response.headers,
-          body: response.data
+          body: response.data,
+          responseText: response.responseText
         });
       }
 
@@ -6668,7 +6399,7 @@ window.angular.module('algoliasearch', [])
     };
   }]);
 
-},{"10":10,"11":11,"45":45,"6":6,"60":60,"63":63,"64":64,"65":65,"66":66,"67":67,"68":68}],63:[function(require,module,exports){
+},{"10":10,"11":11,"44":44,"57":57,"6":6,"60":60,"61":61,"62":62,"63":63,"64":64,"65":65}],60:[function(require,module,exports){
 'use strict';
 
 // This is the standalone browser build entry point
@@ -6679,15 +6410,15 @@ module.exports = algoliasearch;
 var inherits = require(10);
 var Promise = window.Promise || require(9).Promise;
 
-var AlgoliaSearch = require(60);
-var errors = require(67);
-var inlineHeaders = require(65);
-var jsonpRequest = require(66);
+var AlgoliaSearch = require(57);
+var errors = require(64);
+var inlineHeaders = require(62);
+var jsonpRequest = require(63);
 
 function algoliasearch(applicationID, apiKey, opts) {
-  var cloneDeep = require(45);
+  var cloneDeep = require(44);
 
-  var getDocumentProtocol = require(64);
+  var getDocumentProtocol = require(61);
 
   opts = cloneDeep(opts || {});
 
@@ -6700,7 +6431,7 @@ function algoliasearch(applicationID, apiKey, opts) {
   return new AlgoliaSearchBrowser(applicationID, apiKey, opts);
 }
 
-algoliasearch.version = require(68);
+algoliasearch.version = require(65);
 algoliasearch.ua = 'Algolia for vanilla JavaScript ' + algoliasearch.version;
 
 // we expose into window no matter how we are used, this will allow
@@ -6800,6 +6531,7 @@ AlgoliaSearchBrowser.prototype._request = function request(url, opts) {
       try {
         out = {
           body: JSON.parse(req.responseText),
+          responseText: req.responseText,
           statusCode: req.status,
           // XDomainRequest does not have any response headers
           headers: req.getAllResponseHeaders && req.getAllResponseHeaders() || {}
@@ -6876,7 +6608,7 @@ AlgoliaSearchBrowser.prototype._promise = {
   }
 };
 
-},{"10":10,"45":45,"6":6,"60":60,"64":64,"65":65,"66":66,"67":67,"68":68,"9":9}],64:[function(require,module,exports){
+},{"10":10,"44":44,"57":57,"6":6,"61":61,"62":62,"63":63,"64":64,"65":65,"9":9}],61:[function(require,module,exports){
 'use strict';
 
 module.exports = getDocumentProtocol;
@@ -6892,7 +6624,7 @@ function getDocumentProtocol() {
   return protocol;
 }
 
-},{}],65:[function(require,module,exports){
+},{}],62:[function(require,module,exports){
 'use strict';
 
 module.exports = inlineHeaders;
@@ -6909,12 +6641,12 @@ function inlineHeaders(url, headers) {
   return url + querystring.encode(headers);
 }
 
-},{"5":5}],66:[function(require,module,exports){
+},{"5":5}],63:[function(require,module,exports){
 'use strict';
 
 module.exports = jsonpRequest;
 
-var errors = require(67);
+var errors = require(64);
 
 var JSONPCounter = 0;
 
@@ -7039,7 +6771,7 @@ function jsonpRequest(url, opts, cb) {
   }
 }
 
-},{"67":67}],67:[function(require,module,exports){
+},{"64":64}],64:[function(require,module,exports){
 'use strict';
 
 // This file hosts our error definitions
@@ -7119,6 +6851,9 @@ module.exports = {
   )
 };
 
-},{"10":10,"11":11}],68:[function(require,module,exports){
-module.exports="3.7.8"
-},{}]},{},[62]);
+},{"10":10,"11":11}],65:[function(require,module,exports){
+'use strict';
+
+module.exports = '3.8.0';
+
+},{}]},{},[59]);
