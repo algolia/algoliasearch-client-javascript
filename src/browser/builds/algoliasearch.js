@@ -14,7 +14,7 @@ var inlineHeaders = require('../inline-headers');
 var jsonpRequest = require('../jsonp-request');
 
 function algoliasearch(applicationID, apiKey, opts) {
-  var cloneDeep = require('lodash-compat/lang/cloneDeep');
+  var cloneDeep = require('lodash/lang/cloneDeep');
 
   var getDocumentProtocol = require('../get-document-protocol');
 
@@ -29,7 +29,7 @@ function algoliasearch(applicationID, apiKey, opts) {
   return new AlgoliaSearchBrowser(applicationID, apiKey, opts);
 }
 
-algoliasearch.version = require('../../version.json');
+algoliasearch.version = require('../../version.js');
 algoliasearch.ua = 'Algolia for vanilla JavaScript ' + algoliasearch.version;
 
 // we expose into window no matter how we are used, this will allow
@@ -129,6 +129,7 @@ AlgoliaSearchBrowser.prototype._request = function request(url, opts) {
       try {
         out = {
           body: JSON.parse(req.responseText),
+          responseText: req.responseText,
           statusCode: req.status,
           // XDomainRequest does not have any response headers
           headers: req.getAllResponseHeaders && req.getAllResponseHeaders() || {}

@@ -21,8 +21,8 @@ if (semver.satisfies(process.version, '<=0.7')) {
 debug('loaded the Node.js client');
 
 function algoliasearch(applicationID, apiKey, opts) {
-  var cloneDeep = require('lodash-compat/lang/cloneDeep');
-  var reduce = require('lodash-compat/collection/reduce');
+  var cloneDeep = require('lodash/lang/cloneDeep');
+  var reduce = require('lodash/collection/reduce');
 
   if (!opts) {
     opts = {};
@@ -59,7 +59,7 @@ function algoliasearch(applicationID, apiKey, opts) {
   return new AlgoliaSearchNodeJS(applicationID, apiKey, opts);
 }
 
-algoliasearch.version = require('../../version.json');
+algoliasearch.version = require('../../version.js');
 algoliasearch.ua = 'Algolia for Node.js ' + algoliasearch.version;
 
 function AlgoliaSearchNodeJS(applicationID, apiKey, opts) {

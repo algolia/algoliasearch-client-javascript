@@ -15,7 +15,7 @@ var jsonpRequest = require('../jsonp-request');
 window.algoliasearch = require('./algoliasearch');
 
 function algoliasearch(applicationID, apiKey, opts) {
-  var cloneDeep = require('lodash-compat/lang/cloneDeep');
+  var cloneDeep = require('lodash/lang/cloneDeep');
 
   var getDocumentProtocol = require('../get-document-protocol');
 
@@ -30,7 +30,7 @@ function algoliasearch(applicationID, apiKey, opts) {
   return new AlgoliaSearchJQuery(applicationID, apiKey, opts);
 }
 
-algoliasearch.version = require('../../version.json');
+algoliasearch.version = require('../../version.js');
 algoliasearch.ua = 'Algolia for jQuery ' + algoliasearch.version;
 
 // we expose into window no matter how we are used, this will allow
@@ -62,7 +62,7 @@ AlgoliaSearchJQuery.prototype._request = function request(url, opts) {
     url = inlineHeaders(url, opts.headers);
 
     var requestHeaders = {
-      'accept': 'application/json'
+      accept: 'application/json'
     };
 
     if (body) {
@@ -98,6 +98,7 @@ AlgoliaSearchJQuery.prototype._request = function request(url, opts) {
         deferred.resolve({
           statusCode: jqXHR.status,
           body: jqXHR.responseJSON,
+          responseText: jqXHR.responseText,
           headers: jqXHR.getAllResponseHeaders()
         });
       }

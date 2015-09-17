@@ -16,6 +16,7 @@ function createFixture(opts) {
   return {
     client: client,
     index: index,
-    credentials: credentials
+    credentials: credentials,
+    algoliasearch: algoliasearch
   };
 }

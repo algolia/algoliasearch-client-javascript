@@ -1,6 +1,6 @@
 'use strict';
 
-var reduce = require('lodash-compat/collection/reduce');
+var reduce = require('lodash/collection/reduce');
 
 module.exports = flattenBulkRequire;
 

@@ -5,7 +5,7 @@ var test = require('tape');
 test('client.initIndex()', function(t) {
   t.plan(1);
 
-  var bind = require('lodash-compat/function/bind');
+  var bind = require('lodash/function/bind');
 
   var algoliasearch = require('../../../../');
   var getCredentials = require('../../../utils/get-credentials');

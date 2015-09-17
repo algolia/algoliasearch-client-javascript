@@ -31,14 +31,14 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
 
         index.search('SMG').then(function searchDone(content) {
           t.deepEqual(content, {
-            'YAW': 'angular-promise'
+            YAW: 'angular-promise'
           });
         });
 
         index.search('BOUM', function searchDone(err, content) {
           t.error(err, 'No error while using the AngularJS module');
           t.deepEqual(content, {
-            'YAW': 'angular-cb'
+            YAW: 'angular-cb'
           });
         });
 
@@ -59,7 +59,7 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
             t.deepEqual(
               firstRequest.requestHeaders, {
                 'content-type': 'application/x-www-form-urlencoded',
-                'accept': 'application/json'
+                accept: 'application/json'
               },
               'requestHeaders matches'
             );
@@ -90,7 +90,7 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
             200,
             {},
             JSON.stringify({
-              'YAW': 'angular-promise'
+              YAW: 'angular-promise'
             })
           );
 
@@ -98,7 +98,7 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
             200,
             {},
             JSON.stringify({
-              'YAW': 'angular-cb'
+              YAW: 'angular-cb'
             })
           );
 
@@ -341,7 +341,7 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
           t.deepEqual(
             request.requestHeaders, {
               'content-type': 'application/x-www-form-urlencoded',
-              'accept': 'application/json'
+              accept: 'application/json'
             },
             'requestHeaders matches'
           );

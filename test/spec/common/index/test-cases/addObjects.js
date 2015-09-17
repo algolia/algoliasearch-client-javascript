@@ -1,6 +1,6 @@
 'use strict';
 
-var clone = require('lodash-compat/lang/clone');
+var clone = require('lodash/lang/clone');
 
 var objects = [{
   first: 'object'

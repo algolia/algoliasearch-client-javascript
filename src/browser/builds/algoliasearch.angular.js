@@ -6,7 +6,7 @@
 
 var inherits = require('inherits');
 
-var forEach = require('lodash-compat/collection/forEach');
+var forEach = require('lodash/collection/forEach');
 
 var AlgoliaSearch = require('../../AlgoliaSearch');
 var errors = require('../../errors');
@@ -19,7 +19,7 @@ window.algoliasearch = require('./algoliasearch');
 window.angular.module('algoliasearch', [])
   .service('algolia', ['$http', '$q', '$timeout', function algoliaSearchService($http, $q, $timeout) {
     function algoliasearch(applicationID, apiKey, opts) {
-      var cloneDeep = require('lodash-compat/lang/cloneDeep');
+      var cloneDeep = require('lodash/lang/cloneDeep');
 
       var getDocumentProtocol = require('../get-document-protocol');
 
@@ -34,7 +34,7 @@ window.angular.module('algoliasearch', [])
       return new AlgoliaSearchAngular(applicationID, apiKey, opts);
     }
 
-    algoliasearch.version = require('../../version.json');
+    algoliasearch.version = require('../../version.js');
     algoliasearch.ua = 'Algolia for AngularJS ' + algoliasearch.version;
 
     // we expose into window no matter how we are used, this will allow
@@ -113,7 +113,8 @@ window.angular.module('algoliasearch', [])
         resolve({
           statusCode: response.status,
           headers: response.headers,
-          body: response.data
+          body: response.data,
+          responseText: response.responseText
         });
       }
 
