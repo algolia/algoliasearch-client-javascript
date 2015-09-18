@@ -601,6 +601,9 @@ index.partialUpdateObject({
 });
 ```
 
+Note: Here we are incrementing the value by `42`. To increment just by one, put
+`value:1`.
+
 Example to decrement a numeric value:
 
 ```js
@@ -614,6 +617,9 @@ index.partialUpdateObject({
   console.log(content);
 });
 ```
+
+Note: Here we are decrementing the value by `42`. To decrement just by one, put
+`value:1`.
 
 Search
 -------------
