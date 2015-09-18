@@ -528,9 +528,9 @@ index.saveObject({
 You have many ways to update an object's attributes:
 
  1. Set the attribute value
- 2. Add an element to an array
+ 2. Add a string or number element to an array
  3. Remove an element from an array
- 4. Add an element to an array if it doesn't exist
+ 4. Add a string or number element to an array if it doesn't exist
  5. Increment an attribute
  6. Decrement an attribute
 
