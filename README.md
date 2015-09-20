@@ -528,9 +528,9 @@ index.saveObject({
 You have many ways to update an object's attributes:
 
  1. Set the attribute value
- 2. Add an element to an array
+ 2. Add a string or number element to an array
  3. Remove an element from an array
- 4. Add an element to an array if it doesn't exist
+ 4. Add a string or number element to an array if it doesn't exist
  5. Increment an attribute
  6. Decrement an attribute
 
@@ -601,6 +601,9 @@ index.partialUpdateObject({
 });
 ```
 
+Note: Here we are incrementing the value by `42`. To increment just by one, put
+`value:1`.
+
 Example to decrement a numeric value:
 
 ```js
@@ -614,6 +617,9 @@ index.partialUpdateObject({
   console.log(content);
 });
 ```
+
+Note: Here we are decrementing the value by `42`. To decrement just by one, put
+`value:1`.
 
 Search
 -------------
