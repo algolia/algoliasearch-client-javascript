@@ -21,6 +21,7 @@ var zuulConfig = module.exports = {
   // if browser does not sends output in 30s since last output:
   // stop testing, something is wrong
   browser_output_timeout: 50 * 1000,
+  browser_open_timeout: 60 * 4 * 1000,
   // we want to be notified something is wrong asap, so no retry
   browser_retries: 0
 };
