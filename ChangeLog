@@ -1,6 +1,6 @@
 CHANGELOG
 
-UNRELEASED
+2015-09-21 3.8.1
 
     * fix: disable chunked encoding on empty body DELETE requests in Node.js
 
