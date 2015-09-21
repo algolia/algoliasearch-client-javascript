@@ -831,9 +831,6 @@ AlgoliaSearch.prototype = {
           // server sent unparsable JSON
           err instanceof errors.UnparsableJSON ||
 
-          // no fallback and a network error occured (No CORS, bad APPID)
-          !requester.fallback && err instanceof errors.Network ||
-
           // max tries and already using fallback or no fallback
           tries >= client.hosts[opts.hostType].length &&
           (usingFallback || !opts.fallback || !client._request.fallback)) {
