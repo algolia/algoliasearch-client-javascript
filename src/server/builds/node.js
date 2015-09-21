@@ -144,6 +144,13 @@ AlgoliaSearchNodeJS.prototype._request = function request(rawUrl, opts) {
           req.socket.once('close', stopDebug);
         });
       }
+    } else if (req.method === 'DELETE') {
+      // Node.js was setting transfer-encoding: chunked on all DELETE requests
+      // which is not good since there's no body to be sent, resulting in nginx
+      // sending 400 on socket reuse (waiting for previous socket data)
+      // https://github.com/nodejs/node-v0.x-archive/issues/6164
+      // https://github.com/nodejs/node-v0.x-archive/commit/aef0960
+      req.setHeader('content-length', 0);
     }
 
     req.end();
