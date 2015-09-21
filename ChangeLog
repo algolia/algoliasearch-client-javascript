@@ -1,5 +1,9 @@
 CHANGELOG
 
+UNRELEASED
+
+    * fix: disable chunked encoding on empty body DELETE requests in Node.js
+
 2015-09-01 3.8.0
 
     * test: node v4 is now the default testing env
