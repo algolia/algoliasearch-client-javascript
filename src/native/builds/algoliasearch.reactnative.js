@@ -10,7 +10,7 @@ var Promise = window.Promise || require('es6-promise').Promise;
 
 var AlgoliaSearch = require('../../AlgoliaSearch');
 var errors = require('../../errors');
-var inlineHeaders = require('../inline-headers');
+var inlineHeaders = require('../../browser/inline-headers');
 
 function algoliasearch(applicationID, apiKey, opts) {
   var cloneDeep = require('lodash/lang/cloneDeep');
