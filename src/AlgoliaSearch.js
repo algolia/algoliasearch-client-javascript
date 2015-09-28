@@ -2,9 +2,10 @@
 
 module.exports = AlgoliaSearch;
 
+var process = process || undefined;
 // default debug activated in dev environments
 // this is triggered in package.json, using the envify transform
-if (process.env.APP_ENV === 'development') {
+if (process && process.env && process.env.APP_ENV === 'development') {
   require('debug').enable('algoliasearch*');
 }
 
@@ -804,7 +805,7 @@ AlgoliaSearch.prototype = {
         requestDebug('received response: statusCode: %s, computed statusCode: %d, headers: %j',
           httpResponse.statusCode, status, httpResponse.headers);
 
-        if (process.env.DEBUG && process.env.DEBUG.indexOf('debugBody') !== -1) {
+        if (process && process.env.DEBUG && process.env.DEBUG.indexOf('debugBody') !== -1) {
           requestDebug('body: %j', httpResponse.body);
         }
 
