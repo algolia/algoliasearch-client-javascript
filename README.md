@@ -458,7 +458,7 @@ Check out our [tutorials](http://www.algolia.com/doc/tutorials):
 Old JavaScript clients
 ======================
 
-In April 2015, we released a the V3 of our JavaScript client (the one you are looking at) able to work in Node.js and the browser.
+In April 2015, we released the V3 of our JavaScript client (the one you are looking at) able to work in Node.js and the browser.
 
 If you were using our browser version (V2), [read the migration guide](https://github.com/algolia/algoliasearch-client-js/wiki/Migration-guide-from-2.x.x-to-3.x.x)
 
