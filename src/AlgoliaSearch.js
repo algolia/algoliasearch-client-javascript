@@ -1447,7 +1447,7 @@ AlgoliaSearch.prototype.Index.prototype = {
 
   /*
    * Browse index content. The response content will have a `cursor` property that you can use
-   * to browse subsequent pages for this query. Use `index.browseNext(cursor)` when you want.
+   * to browse subsequent pages for this query. Use `index.browseFrom(cursor)` when you want.
    *
    * @param {string} query - The full text query
    * @param {Object} [queryParameters] - Any search query parameter
