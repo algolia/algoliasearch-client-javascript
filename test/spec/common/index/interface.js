@@ -44,6 +44,7 @@ test('AlgoliaSearch index API spec', function(t) {
     'saveObject',
     'saveObjects',
     'search',
+    'similarSearch',
     'setSettings',
     'ttAdapter',
     'waitTask'
