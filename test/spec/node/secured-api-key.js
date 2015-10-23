@@ -79,3 +79,34 @@ test('client.useSecuredAPIKey()', function(t) {
     );
   });
 });
+
+test('client.generateSecuredApiKey() using non array tagFilters', function(t) {
+  t.plan(3);
+  var createFixture = require('../../utils/create-fixture');
+  var fixture = createFixture();
+  var client = fixture.client;
+  var expectedKey = 'MzdjZmI1YjFhM2E4YmZmOGU5NjA2Y2FhYmQ1NzM2MGVkNjZlODIxZTFlMWU4M2MwZjNhM2U0YWRiMTRhYzBkNXRhZ0ZpbHRlcnM9eW95byZ1c2VyVG9rZW49dXNlcl80Mg==';
+
+  t.equal(expectedKey, client.generateSecuredApiKey('Keyyyy', {
+    tagFilters: 'yoyo',
+    userToken: 'user_42'
+  }));
+
+  t.equal(expectedKey, client.generateSecuredApiKey('Keyyyy', 'tagFilters=yoyo', 'user_42'));
+  t.equal(expectedKey, client.generateSecuredApiKey('Keyyyy', 'yoyo', 'user_42'));
+});
+
+test('client.generateSecuredApiKey() using array tag filters', function(t) {
+  t.plan(2);
+  var createFixture = require('../../utils/create-fixture');
+  var fixture = createFixture();
+  var client = fixture.client;
+  var expectedKey = 'MjE5YWUyZTQ4NDViM2QzMjRmZTU1MzJmNzAyOWJjZmU0YWFjZWFkZTI0ODI0YTM4YmZkYTlmYTYyZjA3NmVmYXRhZ0ZpbHRlcnM9JTVCJTIyeW95byUyMiU1RCZ1c2VyVG9rZW49dXNlcl80Mg==';
+
+  t.equal(expectedKey, client.generateSecuredApiKey('Keyyyy', {
+    tagFilters: ['yoyo'],
+    userToken: 'user_42'
+  }));
+
+  t.equal(expectedKey, client.generateSecuredApiKey('Keyyyy', ['yoyo'], 'user_42'));
+});

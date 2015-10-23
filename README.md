@@ -27,9 +27,7 @@
 
 The JavaScript client lets you use the [Algolia Search API](https://www.algolia.com/doc/rest_api) on the frontend (browsers) or on the backend (Node.js) with the same API.
 
-We support callbacks and promises.
-
-**Most of the time you should do your indexing on the backend with Node.js and your search experience in the browser by speaking directly with Algolia servers. So that your admin keys will not leak on the internet and your users get the best performance**
+The backend (Node.js) API can be used to index your data using your Algolia admin API keys.
 
 Our JavaScript library is [UMD](https://github.com/umdjs/umd) compatible, you can
 use it with any module loader.
@@ -688,6 +686,8 @@ You can use the following optional arguments:
   * **none**: If none of the query terms were found.
  * **attributesToSnippet**: A string that contains the list of attributes to snippet alongside the number of words to return (syntax is `attributeName:nbWords`). Attributes are separated by commas (Example: `attributesToSnippet=name:10,content:10`). <br/>You can also use a string array encoding (Example: `attributesToSnippet: ["name:10","content:10"]`). By default, no snippet is computed.
  * **getRankingInfo**: If set to 1, the result hits will contain ranking information in the **_rankingInfo** attribute.
+ * **highlightPreTag**: (string) Specify the string that is inserted before the highlighted parts in the query result (defaults to "&lt;em&gt;").
+ * **highlightPostTag**: (string) Specify the string that is inserted after the highlighted parts in the query result (defaults to "&lt;/em&gt;").
  
 
 #### Numeric Search Parameters
@@ -704,7 +704,7 @@ You can also use a string array encoding (for example `numericFilters: ["price>1
 
 #### Faceting Parameters
  * **facetFilters**: Filter the query with a list of facets. Facets are separated by commas and is encoded as `attributeName:value`. To OR facets, you must add parentheses. For example: `facetFilters=(category:Book,category:Movie),author:John%20Doe`. You can also use a string array encoding. For example, `[["category:Book","category:Movie"],"author:John%20Doe"]`.
- * **facets**: List of object attributes that you want to use for faceting. <br/>Attributes are separated with a comma. For example, `"category,author"`. You can also use JSON string array encoding. For example, `["category","author"]`. Only the attributes that have been added in **attributesForFaceting** index setting can be used in this parameter. You can also use `*` to perform faceting on all attributes specified in **attributesForFaceting**.
+ * **facets**: List of object attributes that you want to use for faceting. <br/>Attributes are separated with a comma. For example, `"category,author"`. You can also use JSON string array encoding. For example, `["category","author"]`. Only the attributes that have been added in **attributesForFaceting** index setting can be used in this parameter. You can also use `*` to perform faceting on all attributes specified in **attributesForFaceting**. If the number of results is important, the count can be approximate, the attribute `exhaustiveFacetsCount` in the response is true when the count is exact.
  * **maxValuesPerFacet**: Limit the number of facet values returned for each facet. For example, `maxValuesPerFacet=10` will retrieve a maximum of 10 values per facet.
 
 #### UNIFIED FILTER PARAMETER (SQL LIKE)
@@ -716,6 +716,14 @@ The list of keywords is:
  **AND**: create a conjunctive filter between two filters.
  **TO**: used to specify a range for a numeric filter.
  **NOT**: used to negate a filter. The syntax with the ‘-‘ isn’t allowed.
+
+ *Note*: To specify a value with spaces or with a value equal to a keyword, it's possible to add quotes.
+
+ **Warning:**
+  * Like for the other filter for performance reason, it's not possible to have FILTER1 OR (FILTER2 AND FILTER3).
+  * It's not possible to mix different category of filter inside a OR like num=3 OR tag1 OR facet:value
+  * It's not possible to negate an group, it's only possible to negate a filters:  NOT(FILTER1 OR (FILTER2) is not allowed.
+
 
 #### Distinct Parameter
  * **distinct**: If set to 1, enables the distinct feature, disabled by default, if the `attributeForDistinct` index setting is set. This feature is similar to the SQL "distinct" keyword. When enabled in a query with the `distinct=1` parameter, all hits containing a duplicate value for the attributeForDistinct attribute are removed from results. For example, if the chosen attribute is `show_name` and several hits have the same value for `show_name`, then only the best one is kept and the others are removed.
@@ -980,6 +988,26 @@ You can decide to have the same priority for two attributes by passing them in t
  * **highlightPreTag**: (string) Specify the string that is inserted before the highlighted parts in the query result (defaults to "&lt;em&gt;").
  * **highlightPostTag**: (string) Specify the string that is inserted after the highlighted parts in the query result (defaults to "&lt;/em&gt;").
  * **optionalWords**: (array of strings) Specify a list of words that should be considered optional when found in the query.
+ * **allowTyposOnNumericTokens**: (boolean) If set to false, disable typo-tolerance on numeric tokens (=numbers) in the query word. For example the query `"304"` will match with `"30450"`, but not with `"40450"` that would have been the case with typo-tolerance enabled. Can be very useful on serial numbers and zip codes searches. Default to false.
+ * **ignorePlurals**: (boolean) If set to true, simple plural forms won’t be considered as typos (for example car/cars will be considered as equal). Default to false.
+ * **advancedSyntax**: Enable the advanced query syntax. Defaults to 0 (false).
+
+  * **Phrase query:** a phrase query defines a particular sequence of terms. A phrase query is build by Algolia's query parser for words surrounded by `"`. For example, `"search engine"` will retrieve records having `search` next to `engine` only. Typo-tolerance is disabled on phrase queries.
+  
+  * **Prohibit operator:** The prohibit operator excludes records that contain the term after the `-` symbol. For example `search -engine` will retrieve records containing `search` but not `engine`.
+ * **replaceSynonymsInHighlight**: (boolean) If set to false, words matched via synonyms expansion will not be replaced by the matched synonym in the highlighted result. Default to true.
+ * **maxValuesPerFacet**: (integer) Limit the number of facet values returned for each facet. For example: `maxValuesPerFacet=10` will retrieve max 10 values per facet.
+ * **distinct**: (integer) Enable the distinct feature (disabled by default) if the `attributeForDistinct` index setting is set. This feature is similar to the SQL "distinct" keyword: when enabled in a query with the `distinct=1` parameter, all hits containing a duplicate value for the`attributeForDistinct` attribute are removed from results. For example, if the chosen attribute is `show_name` and several hits have the same value for `show_name`, then only the best one is kept and others are removed.
+ * **typoTolerance**: (string) This setting has four different options:
+
+  * **true:** activate the typo-tolerance (default value).
+
+  * **false:** disable the typo-tolerance
+
+  * **min:** keep only results with the lowest number of typo. For example if one result match without typos, then all results with typos will be hidden.
+
+  * **strict:** if there is a match without typo, then all results with 2 typos or more will be removed. This option is useful if you want to avoid as much as possible false positive.
+ * **removeStopWords**: (boolean) Remove stop words from query before executing it. Defaults to false. Contains stop words for 41 languages (Arabic, Armenian, Basque, Bengali, Brazilian, Bulgarian, Catalan, Chinese, Czech, Danish, Dutch, English, Finnish, French, Galician, German, Greek, Hindi, Hungarian, Indonesian, Irish, Italian, Japanese, Korean, Kurdish, Latvian, Lithuanian, Marathi, Norwegian, Persian, Polish, Portugese, Romanian, Russian, Slovak, Spanish, Swedish, Thai, Turkish, Ukranian, Urdu)
 
 You can easily retrieve settings or update them:
 
@@ -1291,14 +1319,13 @@ You may have a single index containing per user data. In that case, all records 
 ```js
 // generate a public API key for user 42. Here, records are tagged with:
 //  - 'user_XXXX' if they are visible by user XXXX
-var public_key = client.generateSecuredApiKey('YourSearchOnlyApiKey', 'tagFilters=user_42');
+var public_key = client.generateSecuredApiKey('YourSearchOnlyApiKey', {tagFilters: 'user_42'});
 ```
 
 This public API key can then be used in your JavaScript code as follow:
 
 ```js
 var client = algoliasearch('YourApplicationID', '<%= public_api_key %>');
-client.setExtraHeader('X-Algolia-QueryParameters', 'tagFilters=user_42'); // must be same than those used at generation-time
 
 var index = client.initIndex('indexName')
 
@@ -1312,12 +1339,12 @@ index.search('something', function(err, content) {
 });
 ```
 
-You can mix rate limits and secured API keys by setting an extra `user_token` attribute both at API key generation time and query time. When set, a unique user will be identified by her `IP + user_token` instead of only by her `IP`. This allows you to restrict a single user to performing a maximum of `N` API calls per hour, even if she shares her `IP` with another user.
+You can mix rate limits and secured API keys by setting a `userToken` query parameter at API key generation time. When set, a unique user will be identified by her `IP + user_token` instead of only by her `IP`. This allows you to restrict a single user to performing a maximum of `N` API calls per hour, even if she shares her `IP` with another user.
 
 ```js
 // generate a public API key for user 42. Here, records are tagged with:
 //  - 'user_XXXX' if they are visible by user XXXX
-var public_key = client.generateSecuredApiKey('YourRateLimitedApiKey', 'tagFilters=user_42', 'user_42');
+var public_key = client.generateSecuredApiKey('YourRateLimitedApiKey', {tagFilters: 'user_42', userToken: 'user_42'});
 ```
 
 This public API key can then be used in your JavaScript code as follow:
@@ -1325,12 +1352,6 @@ This public API key can then be used in your JavaScript code as follow:
 ```js
 var client = algoliasearch('YourApplicationID', '<%= public_api_key %>');
 
-// must be same than those used at generation-time
-client.setExtraHeader('X-Algolia-QueryParameters', 'tagFilters=user_42');
-
-// must be same than the one used at generation-time
-client.setUserToken('user_42');
-
 var index = client.initIndex('indexName')
 
 index.search('another query', function(err, content) {
@@ -1342,27 +1363,6 @@ index.search('another query', function(err, content) {
   console.log(content);
 });
 ```
-
-You can also generate secured API keys to limit the usage of a key to a referer. The generation use the same function than the Per user restriction. This public API key can be used in your JavaScript code as follow:
-
-```js
-var client = algoliasearch('YourApplicationID', '<%= public_api_key %>');
-
-// must be same than those used at generation-time
-client.setExtraHeader('X-Algolia-AllowedReferer', 'algolia.com/*');
-
-var index = client.initIndex('indexName')
-
-index.search('another query', function(err, content) {
-  if (err) {
-    console.error(err);
-    return;
-  }
-
-  console.log(content);
-});
-```
-
 
 
 Copy or rename an index
