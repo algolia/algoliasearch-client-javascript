@@ -51,6 +51,10 @@ test('Integration tests', function(t) {
   t.test('index.browseFrom', browseFrom);
   t.test('index.browseAll', browseAll);
 
+  if (!isABrowser) {
+    t.test('client.generateSecuredApiKey', generateSecuredApiKey);
+  }
+
   if (canPUT) {
     // saveObject is a PUT, only supported by Node.js or CORS, not XDomainRequest
     t.test('index.saveObject', saveObject);
@@ -90,6 +94,32 @@ function saveObjects(t) {
     .then(get('status'))
     .then(_.partialRight(t.equal, 'published', 'Objects were saved'))
     .then(noop, _.bind(t.error, t));
+}
+
+function generateSecuredApiKey(t) {
+  t.plan(4);
+
+  client.addUserKey(['search'], {validity: 360}, function(err, keyResult) {
+    t.error(err, 'No error adding a key');
+    t.ok(keyResult.key, 'We got the added key');
+
+    var tmpKey = keyResult.key;
+
+    waitKey(tmpKey, testSecuredKey);
+  });
+
+  function testSecuredKey(tmpKey) {
+    var securedKey = client.generateSecuredApiKey(tmpKey, {
+      hitsPerPage: 2
+    });
+
+    var securedClient = algoliasearch(appId, securedKey);
+    var securedIndex = securedClient.initIndex(indexName);
+    securedIndex.search({hitsPerPage: 100}, function(err, res) {
+      t.error(err, 'No error on using a secured key');
+      t.equal(res.hits.length, 2, 'We got only two hits');
+    });
+  }
 }
 
 function browse(t) {
@@ -249,5 +279,18 @@ function proxyHttpToHttps(t) {
       proxyClient.destroy();
       t.ok(content.hits.length, 'We got some content');
     }
+  });
+}
+
+function waitKey(key, callback, tries) {
+  if (tries === undefined) tries = 0;
+
+  if (tries === 20) throw new Error('waitKey: Never managed to use the key');
+
+  var tmpClient = algoliasearch(appId, key);
+  var tmpIndex = tmpClient.initIndex(indexName);
+  tmpIndex.search(function(err) {
+    if (err) return setTimeout(waitKey, 200, key, callback, tries++);
+    callback(key);
   });
 }

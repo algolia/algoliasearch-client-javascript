@@ -244,29 +244,48 @@ AlgoliaSearchNodeJS.prototype.destroy = function destroy() {
 };
 
 /*
- * Generate a secured and public API Key from a list of tagFilters and an
+ * Generate a secured and public API Key from an apiKey and queryParameters
  * optional user token identifying the current user
  *
- * @param privateApiKey your private API Key
- * @param tagFilters the list of tags applied to the query (used as security)
- * @param userToken an optional token identifying the current user
+ * @param apiKey - The api key to encode as secure
+ * @param {Object} [queryParameters] - Any search query parameter
  */
-AlgoliaSearchNodeJS.prototype.generateSecuredApiKey = function generateSecuredApiKey(privateApiKey, tagFilters, userToken) {
-  if (Array.isArray(tagFilters)) {
-    var strTags = [];
-    for (var i = 0; i < tagFilters.length; ++i) {
-      if (Array.isArray(tagFilters[i])) {
-        var oredTags = [];
-        for (var j = 0; j < tagFilters[i].length; ++j) {
-          oredTags.push(tagFilters[i][j]);
-        }
-        strTags.push('(' + oredTags.join(',') + ')');
-      } else {
-        strTags.push(tagFilters[i]);
-      }
+AlgoliaSearchNodeJS.prototype.generateSecuredApiKey = function generateSecuredApiKey(privateApiKey, queryParametersOrTagFilters, userToken) {
+  var searchParams;
+
+  if (Array.isArray(queryParametersOrTagFilters)) {
+    // generateSecuredApiKey(apiKey, ['user_42'], userToken);
+
+    searchParams = {
+      tagFilters: queryParametersOrTagFilters
+    };
+
+    if (userToken) {
+      searchParams.userToken = userToken;
     }
-    tagFilters = strTags.join(',');
+
+    searchParams = this._getSearchParams(searchParams, '');
+  } else if (typeof queryParametersOrTagFilters === 'string') {
+    if (queryParametersOrTagFilters.indexOf('=') === -1) {
+      // generateSecuredApiKey(apiKey, 'user_42', userToken);
+      searchParams = 'tagFilters=' + queryParametersOrTagFilters;
+    } else {
+      // generateSecuredApiKey(apiKey, 'tagFilters=user_42', userToken);
+      searchParams = queryParametersOrTagFilters;
+    }
+
+
+    if (userToken) {
+      searchParams += '&userToken=' + encodeURIComponent(userToken);
+    }
+  } else {
+    searchParams = this._getSearchParams(queryParametersOrTagFilters, '');
   }
 
-  return crypto.createHmac('sha256', privateApiKey).update(tagFilters + (userToken || '')).digest('hex');
+  var securedKey = crypto
+    .createHmac('sha256', privateApiKey)
+    .update(searchParams)
+    .digest('hex');
+
+  return new Buffer(securedKey + searchParams).toString('base64');
 };
