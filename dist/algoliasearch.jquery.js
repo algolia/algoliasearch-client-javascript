@@ -1,4 +1,4 @@
-/*! algoliasearch 3.8.1 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
+/*! algoliasearch 3.9.0 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
 (function(f){var g;if(typeof window!=='undefined'){g=window}else if(typeof self!=='undefined'){g=self}g.ALGOLIA_MIGRATION_LAYER=f()})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 
 module.exports = function load (src, opts, cb) {
@@ -5327,6 +5327,7 @@ AlgoliaSearch.prototype.Index.prototype = {
       }, client._setTimeout || setTimeout);
     }
   },
+
   /*
    * Search inside the index using XMLHttpRequest request (Using a POST query to
    * minimize number of OPTIONS queries: Cross-Origin Resource Sharing).
@@ -5360,7 +5361,7 @@ AlgoliaSearch.prototype.Index.prototype = {
    *    You can also use an array (Example: attributesToSnippet: ['name:10','content:10']).
    *    By default no snippet is computed.
    * - minWordSizefor1Typo: the minimum number of characters in a query word to accept one typo in this word.
-   *D efaults to 3.
+   * Defaults to 3.
    * - minWordSizefor2Typos: the minimum number of characters in a query word
    * to accept two typos in this word. Defaults to 7.
    * - getRankingInfo: if set to 1, the result hits will contain ranking
@@ -5422,50 +5423,23 @@ AlgoliaSearch.prototype.Index.prototype = {
    *  error: null or Error('message'). If false, the content contains the error.
    *  content: the server answer that contains the list of results.
    */
-  search: function(query, args, callback) {
-    // warn V2 users on how to search
-    if (typeof query === 'function' && typeof args === 'object' ||
-      typeof callback === 'object') {
-      // .search(query, params, cb)
-      // .search(cb, params)
-      throw new errors.AlgoliaSearchError('index.search usage is index.search(query, params, cb)');
-    }
+  search: buildSearchMethod('query'),
 
-    if (arguments.length === 0 || typeof query === 'function') {
-      // .search(), .search(cb)
-      callback = query;
-      query = '';
-    } else if (arguments.length === 1 || typeof args === 'function') {
-      // .search(query/args), .search(query, cb)
-      callback = args;
-      args = undefined;
-    }
-
-    // .search(args), careful: typeof null === 'object'
-    if (typeof query === 'object' && query !== null) {
-      args = query;
-      query = undefined;
-    } else if (query === undefined || query === null) { // .search(undefined/null)
-      query = '';
-    }
-
-    var params = '';
-
-    if (query !== undefined) {
-      params += 'query=' + encodeURIComponent(query);
-    }
-
-    if (args !== undefined) {
-      // `_getSearchParams` will augment params, do not be fooled by the = versus += from previous if
-      params = this.as._getSearchParams(args, params);
-    }
-
-    return this._search(params, callback);
-  },
+  /*
+   * -- BETA --
+   * Search a record similar to the query inside the index using XMLHttpRequest request (Using a POST query to
+   * minimize number of OPTIONS queries: Cross-Origin Resource Sharing).
+   *
+   * @param query the similar query
+   * @param args (optional) if set, contains an object with query parameters.
+   *   All search parameters are supported (see search function), restrictSearchableAttributes and facetFilters
+   *   are the two most useful to restrict the similar results and get more relevant content
+   */
+  similarSearch: buildSearchMethod('similarQuery'),
 
   /*
    * Browse index content. The response content will have a `cursor` property that you can use
-   * to browse subsequent pages for this query. Use `index.browseNext(cursor)` when you want.
+   * to browse subsequent pages for this query. Use `index.browseFrom(cursor)` when you want.
    *
    * @param {string} query - The full text query
    * @param {Object} [queryParameters] - Any search query parameter
@@ -6161,6 +6135,49 @@ function safeJSONStringify(obj) {
   return out;
 }
 
+function buildSearchMethod(queryParam) {
+  return function search(query, args, callback) {
+    // warn V2 users on how to search
+    if (typeof query === 'function' && typeof args === 'object' ||
+      typeof callback === 'object') {
+      // .search(query, params, cb)
+      // .search(cb, params)
+      throw new errors.AlgoliaSearchError('index.search usage is index.search(query, params, cb)');
+    }
+
+    if (arguments.length === 0 || typeof query === 'function') {
+      // .search(), .search(cb)
+      callback = query;
+      query = '';
+    } else if (arguments.length === 1 || typeof args === 'function') {
+      // .search(query/args), .search(query, cb)
+      callback = args;
+      args = undefined;
+    }
+
+    // .search(args), careful: typeof null === 'object'
+    if (typeof query === 'object' && query !== null) {
+      args = query;
+      query = undefined;
+    } else if (query === undefined || query === null) { // .search(undefined/null)
+      query = '';
+    }
+
+    var params = '';
+
+    if (query !== undefined) {
+      params += queryParam + '=' + encodeURIComponent(query);
+    }
+
+    if (args !== undefined) {
+      // `_getSearchParams` will augment params, do not be fooled by the = versus += from previous if
+      params = this.as._getSearchParams(args, params);
+    }
+
+    return this._search(params, callback);
+  };
+}
+
 }).call(this,require(2))
 },{"11":11,"2":2,"43":43,"46":46,"55":55,"58":58,"6":6,"64":64}],58:[function(require,module,exports){
 'use strict';
@@ -6804,6 +6821,6 @@ module.exports = {
 },{"10":10,"11":11}],65:[function(require,module,exports){
 'use strict';
 
-module.exports = '3.8.1';
+module.exports = '3.9.0';
 
 },{}]},{},[59]);
