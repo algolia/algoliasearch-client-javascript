@@ -67,7 +67,7 @@
     "async": "1.4.2",
     "bowser": "1.0.0",
     "browserify": "11.1.0",
-    "browzers": "^1.0.0",
+    "browzers": "^1.1.0",
     "bulk-require": "0.2.1",
     "bulkify": "1.1.1",
     "bundle-collapser": "1.2.1",

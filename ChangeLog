@@ -1,5 +1,9 @@
 CHANGELOG
 
+URELEASED
+    * feat: add similarSearch beta method
+    * feat: add new way to generate secured api key using query parameters
+
 2015-09-21 3.8.1
 
     * fix: disable chunked encoding on empty body DELETE requests in Node.js
