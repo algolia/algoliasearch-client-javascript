@@ -1,7 +1,7 @@
 {
-  "extends": [
-    "eslint:recommended",
-    "airbnb/base/",
-    "algolia/es5"
-  ]
+  "extends": "algolia",
+  "rules": {
+    "strict": 0,
+    "valid-jsdoc": 0
+  }
 }
