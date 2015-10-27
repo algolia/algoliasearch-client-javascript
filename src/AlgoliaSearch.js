@@ -784,7 +784,7 @@ AlgoliaSearch.prototype = {
         var retry = !ok && Math.floor(status / 100) !== 4 && Math.floor(status / 100) !== 1;
 
         if (client._useCache && ok && cache) {
-          cache[cacheID] = httpResponse.responseText;
+          cache[cacheID] = httpResponse.body;
         }
 
         if (ok) {
