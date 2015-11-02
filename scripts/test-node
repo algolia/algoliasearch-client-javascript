@@ -17,7 +17,7 @@ echo "Node test 4"
 
 # always test on node 4
 echo "Node test 4: unit"
-nvm use 4
+nvm use 4 || nvm install 4
 
 if [ $CI == 'false' ]; then
   node test/run-node.js | tap-spec
