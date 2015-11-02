@@ -1,5 +1,9 @@
 CHANGELOG
 
+2015-11-02 3.9.1
+    * fix: throw on really bad usage instead of silently failing
+    * fix: make angular build cache work
+
 2015-10-23 3.9.0
     * feat: add similarSearch beta method
     * feat: add new way to generate secured api key using query parameters

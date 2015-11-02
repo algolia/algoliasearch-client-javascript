@@ -1,4 +1,4 @@
-/*! algoliasearch 3.9.0 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
+/*! algoliasearch 3.9.1 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
 (function(f){var g;if(typeof window!=='undefined'){g=window}else if(typeof self!=='undefined'){g=self}g.ALGOLIA_MIGRATION_LAYER=f()})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 
 module.exports = function load (src, opts, cb) {
@@ -4335,6 +4335,13 @@ AlgoliaSearch.prototype = {
    * @see {@link https://www.algolia.com/doc/rest_api#AddKey|Algolia REST API Documentation}
    */
   addUserKey: function(acls, params, callback) {
+    var isArray = require(46);
+    var usage = 'Usage: client.addUserKey(arrayOfAcls[, params, callback])';
+
+    if (!isArray(acls)) {
+      throw new Error(usage);
+    }
+
     if (arguments.length === 1 || typeof params === 'function') {
       callback = params;
       params = null;
@@ -4412,6 +4419,13 @@ AlgoliaSearch.prototype = {
    * @see {@link https://www.algolia.com/doc/rest_api#UpdateIndexKey|Algolia REST API Documentation}
    */
   updateUserKey: function(key, acls, params, callback) {
+    var isArray = require(46);
+    var usage = 'Usage: client.updateUserKey(key, arrayOfAcls[, params, callback])';
+
+    if (!isArray(acls)) {
+      throw new Error(usage);
+    }
+
     if (arguments.length === 2 || typeof params === 'function') {
       callback = params;
       params = null;
@@ -4533,6 +4547,13 @@ AlgoliaSearch.prototype = {
    * @return {Promise|undefined} Returns a promise if no callback given
    */
   search: function(queries, callback) {
+    var isArray = require(46);
+    var usage = 'Usage: client.search(arrayOfQueries[, callback])';
+
+    if (!isArray(queries)) {
+      throw new Error(usage);
+    }
+
     var client = this;
 
     var postObj = {
@@ -4597,6 +4618,13 @@ AlgoliaSearch.prototype = {
    * }], cb)
    */
   batch: function(operations, callback) {
+    var isArray = require(46);
+    var usage = 'Usage: client.batch(operations[, callback])';
+
+    if (!isArray(operations)) {
+      throw new Error(usage);
+    }
+
     return this._jsonRequest({
       method: 'POST',
       url: '/1/indexes/*/batch',
@@ -5004,6 +5032,13 @@ AlgoliaSearch.prototype.Index.prototype = {
    *  content: the server answer that updateAt and taskID
    */
   addObjects: function(objects, callback) {
+    var isArray = require(46);
+    var usage = 'Usage: index.addObjects(arrayOfObjects[, callback])';
+
+    if (!isArray(objects)) {
+      throw new Error(usage);
+    }
+
     var indexObj = this;
     var postObj = {
       requests: []
@@ -5065,6 +5100,13 @@ AlgoliaSearch.prototype.Index.prototype = {
    * @param objectIDs the array of unique identifier of objects to retrieve
    */
   getObjects: function(objectIDs, attributesToRetrieve, callback) {
+    var isArray = require(46);
+    var usage = 'Usage: index.getObjects(arrayOfObjectIDs[, callback])';
+
+    if (!isArray(objectIDs)) {
+      throw new Error(usage);
+    }
+
     var indexObj = this;
 
     if (arguments.length === 1 || typeof attributesToRetrieve === 'function') {
@@ -5124,6 +5166,13 @@ AlgoliaSearch.prototype.Index.prototype = {
    *  content: the server answer that updateAt and taskID
    */
   partialUpdateObjects: function(objects, callback) {
+    var isArray = require(46);
+    var usage = 'Usage: index.partialUpdateObjects(arrayOfObjects[, callback])';
+
+    if (!isArray(objects)) {
+      throw new Error(usage);
+    }
+
     var indexObj = this;
     var postObj = {
       requests: []
@@ -5171,6 +5220,13 @@ AlgoliaSearch.prototype.Index.prototype = {
    *  content: the server answer that updateAt and taskID
    */
   saveObjects: function(objects, callback) {
+    var isArray = require(46);
+    var usage = 'Usage: index.saveObjects(arrayOfObjects[, callback])';
+
+    if (!isArray(objects)) {
+      throw new Error(usage);
+    }
+
     var indexObj = this;
     var postObj = {
       requests: []
@@ -5227,6 +5283,13 @@ AlgoliaSearch.prototype.Index.prototype = {
    *  content: the server answer that contains 3 elements: createAt, taskId and objectID
    */
   deleteObjects: function(objectIDs, callback) {
+    var isArray = require(46);
+    var usage = 'Usage: index.deleteObjects(arrayOfObjectIDs[, callback])';
+
+    if (!isArray(objectIDs)) {
+      throw new Error(usage);
+    }
+
     var indexObj = this;
     var postObj = {
       requests: map(objectIDs, function prepareRequest(objectID) {
@@ -5928,6 +5991,13 @@ AlgoliaSearch.prototype.Index.prototype = {
    * @see {@link https://www.algolia.com/doc/rest_api#AddIndexKey|Algolia REST API Documentation}
    */
   addUserKey: function(acls, params, callback) {
+    var isArray = require(46);
+    var usage = 'Usage: index.addUserKey(arrayOfAcls[, params, callback])';
+
+    if (!isArray(acls)) {
+      throw new Error(usage);
+    }
+
     if (arguments.length === 1 || typeof params === 'function') {
       callback = params;
       params = null;
@@ -6004,6 +6074,13 @@ AlgoliaSearch.prototype.Index.prototype = {
    * @see {@link https://www.algolia.com/doc/rest_api#UpdateIndexKey|Algolia REST API Documentation}
    */
   updateUserKey: function(key, acls, params, callback) {
+    var isArray = require(46);
+    var usage = 'Usage: index.updateUserKey(key, arrayOfAcls[, params, callback])';
+
+    if (!isArray(acls)) {
+      throw new Error(usage);
+    }
+
     if (arguments.length === 2 || typeof params === 'function') {
       callback = params;
       params = null;
@@ -6675,7 +6752,7 @@ module.exports = {
 },{"10":10,"11":11}],64:[function(require,module,exports){
 'use strict';
 
-module.exports = '3.9.0';
+module.exports = '3.9.1';
 
 },{}]},{},[59])(59)
 });
