@@ -104,6 +104,7 @@ window.angular.module('algoliasearch', [])
         cache: false,
         timeout: timeoutPromise,
         headers: requestHeaders,
+        transformResponse: transformResponse,
         // if client uses $httpProvider.defaults.withCredentials = true,
         // we revert it to false to avoid CORS failure
         withCredentials: false
@@ -113,9 +114,15 @@ window.angular.module('algoliasearch', [])
         resolve({
           statusCode: response.status,
           headers: response.headers,
-          body: response.data,
-          responseText: response.responseText
+          body: JSON.parse(response.data),
+          responseText: response.data
         });
+      }
+
+      // we force getting the raw data because we need it so
+      // for cache keys
+      function transformResponse(data) {
+        return data;
       }
 
       function error(response) {
@@ -134,7 +141,7 @@ window.angular.module('algoliasearch', [])
         }
 
         resolve({
-          body: response.data,
+          body: JSON.parse(response.data),
           statusCode: response.status
         });
       }

@@ -356,4 +356,45 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
       window.angular.bootstrap(window.angular.element('#angular-using-https-defaults'), ['angularUsingHttpsDefaults']);
     });
   });
+
+  test('AngularJS module cache', function(t) {
+    t.plan(3);
+
+    var fauxJax = require('faux-jax');
+
+    // load AngularJS Algolia Search module
+    require('../../../src/browser/builds/algoliasearch.angular');
+
+    window.angular
+      .module('angularCache', ['algoliasearch'])
+      .controller('AngularModuleSearchControllerTestCache', ['$scope', '$timeout', 'algolia', function($scope, $timeout, algolia) {
+        t.pass('AngularJS controller initialized');
+        var client = algolia.Client('AngularJSCache', 'ROCKSCache');
+        var index = client.initIndex('googleCache');
+        fauxJax.install();
+
+        // careful, cannot use .catch here, will throw in IE8
+        // even if this test does not run on IE8, it's still parsed
+        index.search('SMG');
+
+        fauxJax.once('request', function(request) {
+          request.respond(200, {}, JSON.stringify({good: 'Morning'}));
+
+          index.search('SMG', searchDone);
+
+          fauxJax.restore();
+        });
+
+        function searchDone(err, res) {
+          t.error(err);
+          t.deepEqual(res, {
+            good: 'Morning'
+          });
+        }
+      }]);
+
+    window.angular.element(document).ready(function() {
+      window.angular.bootstrap(window.angular.element('#angular-test-cache'), ['angularCache']);
+    });
+  });
 }
