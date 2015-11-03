@@ -27,7 +27,7 @@ function algoliasearch(applicationID, apiKey, opts) {
 }
 
 algoliasearch.version = require('../../version.js');
-algoliasearch.ua = 'Algolia for vanilla JavaScript ' + algoliasearch.version;
+algoliasearch.ua = 'Algolia for ReactNative ' + algoliasearch.version;
 
 // we expose into window no matter how we are used, this will allow
 // us to easily debug any website running algolia
