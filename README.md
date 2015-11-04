@@ -172,8 +172,20 @@ Parse.Cloud.define("hello", function(request, response) {
 });
 ```
 
+### React Native
 
+```sh
+npm install algoliasearch --save
+```
 
+```js
+var algoliasearch = require('algoliasearch/reactnative');
+var client = algoliasearch('applicationID', 'apiKey');
+var index = client.initIndex('indexName');
+index.search('something', function searchDone(err, content) {
+  console.log(err, content);
+});
+```
 
 Quick Start
 -------------
