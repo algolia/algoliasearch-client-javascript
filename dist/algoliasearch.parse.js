@@ -803,9 +803,10 @@ module.exports =
 
 	module.exports = AlgoliaSearch;
 
+	var process = process || undefined;
 	// default debug activated in dev environments
 	// this is triggered in package.json, using the envify transform
-	if (process.env.APP_ENV === 'development') {
+	if (process && process.env && process.env.APP_ENV === 'development') {
 	  __webpack_require__(1).enable('algoliasearch*');
 	}
 
@@ -1605,7 +1606,7 @@ module.exports =
 	        requestDebug('received response: statusCode: %s, computed statusCode: %d, headers: %j',
 	          httpResponse.statusCode, status, httpResponse.headers);
 
-	        if (process.env.DEBUG && process.env.DEBUG.indexOf('debugBody') !== -1) {
+	        if (process && process.env.DEBUG && process.env.DEBUG.indexOf('debugBody') !== -1) {
 	          requestDebug('body: %j', httpResponse.body);
 	        }
 
@@ -5106,7 +5107,7 @@ module.exports =
 
 	
 
-	module.exports = '3.9.1';
+	module.exports = '3.9.2';
 
 
 /***/ }

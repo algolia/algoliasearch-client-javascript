@@ -1,4 +1,4 @@
-/*! algoliasearch 3.9.1 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
+/*! algoliasearch 3.9.2 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
 (function(f){var g;if(typeof window!=='undefined'){g=window}else if(typeof self!=='undefined'){g=self}g.ALGOLIA_MIGRATION_LAYER=f()})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 
 module.exports = function load (src, opts, cb) {
@@ -4015,14 +4015,14 @@ function identity(value) {
 module.exports = identity;
 
 },{}],57:[function(require,module,exports){
-(function (process){
 'use strict';
 
 module.exports = AlgoliaSearch;
 
+var process = process || undefined;
 // default debug activated in dev environments
 // this is triggered in package.json, using the envify transform
-if ("production" === 'development') {
+if (process && process.env && "production" === 'development') {
   require(6).enable('algoliasearch*');
 }
 
@@ -4822,7 +4822,7 @@ AlgoliaSearch.prototype = {
         requestDebug('received response: statusCode: %s, computed statusCode: %d, headers: %j',
           httpResponse.statusCode, status, httpResponse.headers);
 
-        if (process.env.DEBUG && process.env.DEBUG.indexOf('debugBody') !== -1) {
+        if (process && process.env.DEBUG && process.env.DEBUG.indexOf('debugBody') !== -1) {
           requestDebug('body: %j', httpResponse.body);
         }
 
@@ -6255,8 +6255,7 @@ function buildSearchMethod(queryParam) {
   };
 }
 
-}).call(this,require(2))
-},{"11":11,"2":2,"43":43,"46":46,"55":55,"58":58,"6":6,"63":63}],58:[function(require,module,exports){
+},{"11":11,"43":43,"46":46,"55":55,"58":58,"6":6,"63":63}],58:[function(require,module,exports){
 'use strict';
 
 // This is the object returned by the `index.browseAll()` method
@@ -6752,7 +6751,7 @@ module.exports = {
 },{"10":10,"11":11}],64:[function(require,module,exports){
 'use strict';
 
-module.exports = '3.9.1';
+module.exports = '3.9.2';
 
 },{}]},{},[59])(59)
 });

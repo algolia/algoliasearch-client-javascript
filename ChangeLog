@@ -1,7 +1,7 @@
 CHANGELOG
 
-unreleased
-    * feature: react native build
+2015-11-02 3.9.2
+    * feat: react native build beta
 
 2015-11-02 3.9.1
     * fix: throw on really bad usage instead of silently failing
