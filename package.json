@@ -54,10 +54,12 @@
     "debug-ms-fix-yui-compressor": "2.2.2-future-reserved-word-fix-ms",
     "envify": "^3.4.0",
     "es6-promise": "^3.0.2",
+    "events": "^1.1.0",
     "inherits": "^2.0.1",
     "load-script": "^1.0.0",
     "lodash": "^3.10.1",
     "lodash-compat": "^3.10.1",
+    "querystring": "^0.2.0",
     "semver": "^5.0.3",
     "tunnel-agent": "^0.4.1"
   },
