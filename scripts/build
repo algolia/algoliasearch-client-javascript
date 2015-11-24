@@ -11,7 +11,7 @@ echo 'Building algoliasearch-client-js'
 echo '..Parse cloud build using webpack'
 webpack --silent --config scripts/parse-build.webpack.config.js > /dev/null
 # remove 'use strict'; from parse build, otherwise `global = {}` will fail, omg
-sed -i -e "s/'use strict';//g" dist/algoliasearch.parse.js
+perl -pi -e "s/'use strict';//g" dist/algoliasearch.parse.js
 
 bundles=( 'algoliasearch' 'algoliasearch.angular' 'algoliasearch.jquery' )
 
