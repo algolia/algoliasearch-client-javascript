@@ -64,7 +64,7 @@
 
         // basic autocomplete
         $('#autocomplete-algolia').autocomplete(null, {
-          source: index.ttAdapter(),
+          source: $.fn.autocomplete.sources.hits(index),
           displayKey: 'email'
         });
 
@@ -73,7 +73,7 @@
           '<div>{{{_highlightResult.email.value}}}</div>' +
           '<div class="text-right"><small>{{{_highlightResult.name.value}}}</span></div>');
         $('#autocomplete-algolia-template').autocomplete(null, {
-          source: index.ttAdapter({ hitsPerPage: 10 }),
+          source: $.fn.autocomplete.sources.hits(index, {hitsPerPage: 10}),
           displayKey: 'email',
           templates: {
             suggestion: function(hit) {
