@@ -1,7 +1,9 @@
 language: node_js
 node_js:
   - stable
-before_install: npm prune
+before_install:
+  - npm install -g npm@2 # npm3 buggy
+  - npm prune
 before_cache: npm prune
 install: npm install
 script: npm run test-ci

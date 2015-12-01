@@ -15,7 +15,8 @@ fi
 
 echo "Node test 4"
 
-# always test on node 4
+# always test first on node 4, node v5 embeds npm@2
+# so we only test it
 echo "Node test 4: unit"
 nvm use 4 || nvm install 4
 
@@ -49,6 +50,16 @@ else
   node test/run-node.js
 
   echo "Node test 0.12: integration"
+  node test/run-integration.js
+
+  echo "Node test 5"
+  nvm use 5 || nvm install 5
+  npm install -g npm@2 # force npm2, npm3 still buggy
+
+  echo "Node test 5: unit"
+  node test/run-node.js
+
+  echo "Node test 5: integration"
   node test/run-integration.js
 fi
 
