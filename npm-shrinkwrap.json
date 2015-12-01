@@ -1607,8 +1607,8 @@
       }
     },
     "browzers": {
-      "version": "1.2.0",
-      "resolved": "https://registry.npmjs.org/browzers/-/browzers-1.2.0.tgz"
+      "version": "1.2.1",
+      "resolved": "https://registry.npmjs.org/browzers/-/browzers-1.2.1.tgz"
     },
     "bulk-require": {
       "version": "0.2.1",
