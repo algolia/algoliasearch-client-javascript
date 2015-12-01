@@ -75,6 +75,10 @@ module.exports =
 	    opts.protocol = 'https:';
 	  }
 
+	  if (opts.timeout === undefined) {
+	    opts.timeout = 7500;
+	  }
+
 	  opts._setTimeout = _setTimeout;
 
 	  opts._ua = opts._ua || algoliasearch.ua;
@@ -5107,7 +5111,7 @@ module.exports =
 
 	
 
-	module.exports = '3.9.2';
+	module.exports = '3.9.3';
 
 
 /***/ }

@@ -1,5 +1,8 @@
 CHANGELOG
 
+2015-12-01 3.9.3
+    * fix(parse): set default timeout to 7.5s (indexing purposes)
+
 2015-11-02 3.9.2
     * feat: react native build beta
 
