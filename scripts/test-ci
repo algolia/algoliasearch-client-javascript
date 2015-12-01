@@ -32,5 +32,4 @@ echo "CI test: lint"
 ./scripts/lint
 
 echo "CI test: Shrinkwrap"
-npm prune
 npm run shrinkwrap
