@@ -24,7 +24,7 @@ test('Request strategy clean JSONP created script tags', function(t) {
       ],
       timeout: requestTimeout
     },
-    indexName: 'simple-JSONP-response'
+    indexName: 'simple-JSONP-response-clean'
   });
 
   var index = fixture.index;
@@ -32,15 +32,14 @@ test('Request strategy clean JSONP created script tags', function(t) {
   fauxJax.install();
 
   var initialScriptTags = document.getElementsByTagName('script');
-  var initialScriptTagsCount = initialScriptTags.length;
 
   // check that the current state is clean
   t.ok(
     every(initialScriptTags, function noJSONPTag(script) {
       return !script.src ||
-        parse(script.src).pathname !== '/1/indexes/simple-JSONP-response';
+        parse(script.src).pathname !== '/1/indexes/simple-JSONP-response-clean';
     }),
-    'No script matches a JSONP script'
+    'No script matches a JSONP script of the current index'
   );
 
   var searchCallback = sinon.spy(function() {
@@ -53,18 +52,12 @@ test('Request strategy clean JSONP created script tags', function(t) {
 
     var postCallbackScriptTags = document.getElementsByTagName('script');
 
-    t.equal(
-      postCallbackScriptTags.length,
-      initialScriptTagsCount,
-      'Script tag count back to previous'
-    );
-
     t.ok(
       every(postCallbackScriptTags, function noJSONPTag(script) {
         return !script.src ||
-          parse(script.src).pathname !== '/1/indexes/simple-JSONP-response';
+          parse(script.src).pathname !== '/1/indexes/simple-JSONP-response-clean';
       }),
-      'No more script matches a JSONP script'
+      'No more script matches a JSONP script of the current index'
     );
 
     fauxJax.restore();
