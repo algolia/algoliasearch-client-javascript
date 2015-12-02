@@ -21,7 +21,7 @@ echo "Node test 4: unit"
 nvm use 4 || nvm install 4
 
 if [ $CI == 'false' ]; then
-  node test/run-node.js | tap-spec
+  node test/run-node.js
 else
   node test/run-node.js
 fi

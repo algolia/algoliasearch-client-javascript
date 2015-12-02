@@ -11,7 +11,7 @@ fi
 echo "Phantom test"
 
 if [ $CI == 'false' ]; then
-  zuul --no-coverage --phantom -- test/run-browser.js | tap-spec
+  zuul --no-coverage --phantom -- test/run-browser.js
 else
   DEBUG=zuul* zuul --no-coverage --phantom -- test/run-browser.js
 fi
