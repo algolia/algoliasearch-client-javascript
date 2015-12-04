@@ -14,6 +14,10 @@ var jsonpRequest = require('../jsonp-request');
 // expose original algoliasearch fn in window
 window.algoliasearch = require('./algoliasearch');
 
+if (process.env.APP_ENV === 'development') {
+  require('debug').enable('algoliasearch*');
+}
+
 function algoliasearch(applicationID, apiKey, opts) {
   var cloneDeep = require('lodash/lang/cloneDeep');
 

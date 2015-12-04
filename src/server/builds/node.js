@@ -18,6 +18,10 @@ if (semver.satisfies(process.version, '<=0.7')) {
   throw new errors.AlgoliaSearchError('Node.js version ' + process.version + ' is not supported');
 }
 
+if (process.env.APP_ENV === 'development') {
+  require('debug').enable('algoliasearch*');
+}
+
 debug('loaded the Node.js client');
 
 function algoliasearch(applicationID, apiKey, opts) {
