@@ -274,13 +274,15 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
 
   test('AngularJS module withCredentials', function(t) {
     var fauxJax = require('faux-jax');
-    t.plan(1);
 
     if (!fauxJax.support.xhr.cors) {
+      t.plan(1);
       // IE9 has XHR but no cors, skip this test
       t.pass('skipping this test for browsers not using CORS, unneeded and false positive');
       return;
     }
+
+    t.plan(2);
 
     // load AngularJS Algolia Search module
     require('../../../src/browser/builds/algoliasearch.angular');
@@ -295,7 +297,10 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
         var index = client.initIndex('angularWithCredentialsINDEX');
         fauxJax.install();
 
-        index.search();
+        index.search(function() {
+          t.pass();
+          fauxJax.restore();
+        });
 
         fauxJax.once('request', function(request) {
           t.equal(
@@ -304,9 +309,7 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
             'withCredentials if false even if $http set it to true'
           );
 
-          request.respond(200, {}, '');
-
-          fauxJax.restore();
+          request.respond(200, {}, '{}');
         });
       }]);
 
@@ -317,7 +320,7 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
 
   test('AngularJS module $http.defaults.headers.common set', function(t) {
     var fauxJax = require('faux-jax');
-    t.plan(1);
+    t.plan(2);
 
     // load AngularJS Algolia Search module
     require('../../../src/browser/builds/algoliasearch.angular');
@@ -335,7 +338,10 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
         var index = client.initIndex('angularUsingHttpsDefaultsINDEX');
         fauxJax.install();
 
-        index.search();
+        index.search(function() {
+          t.pass();
+          fauxJax.restore();
+        });
 
         fauxJax.once('request', function(request) {
           t.deepEqual(
@@ -346,9 +352,7 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
             'requestHeaders matches'
           );
 
-          request.respond(200, {}, '');
-
-          fauxJax.restore();
+          request.respond(200, {}, '{}');
         });
       }]);
 
