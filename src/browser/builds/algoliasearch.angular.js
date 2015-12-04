@@ -16,6 +16,10 @@ var jsonpRequest = require('../jsonp-request');
 // expose original algoliasearch fn in window
 window.algoliasearch = require('./algoliasearch');
 
+if (process.env.APP_ENV === 'development') {
+  require('debug').enable('algoliasearch*');
+}
+
 window.angular.module('algoliasearch', [])
   .service('algolia', ['$http', '$q', '$timeout', function algoliaSearchService($http, $q, $timeout) {
     function algoliasearch(applicationID, apiKey, opts) {

@@ -25,8 +25,8 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
       .module('angularTestSuccess', ['algoliasearch'])
       .controller('AngularModuleSearchControllerTestSuccess', ['$scope', '$timeout', 'algolia', function($scope, $timeout, algolia) {
         t.pass('AngularJS controller initialized');
-        var client = algolia.Client('AngularJSSuccess', 'ROCKSSuccess');
-        var index = client.initIndex('googleSuccess');
+        var client = algolia.Client('angularTestSuccessAPPID', 'angularTestSuccessKEY');
+        var index = client.initIndex('angularTestSuccessINDEX');
         fauxJax.install();
 
         index.search('SMG').then(function searchDone(content) {
@@ -67,20 +67,20 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
 
           t.equal(
             requestURL.host,
-            'angularjssuccess-dsn.algolia.net',
+            'angulartestsuccessappid-dsn.algolia.net',
             'requestURL host matches'
           );
 
           t.equal(
             requestURL.pathname,
-            '/1/indexes/googleSuccess/query',
+            '/1/indexes/angularTestSuccessINDEX/query',
             'requestURL pathname matches'
           );
 
           t.deepEqual(
             requestURL.query, {
-              'x-algolia-api-key': 'ROCKSSuccess',
-              'x-algolia-application-id': 'AngularJSSuccess',
+              'x-algolia-api-key': 'angularTestSuccessKEY',
+              'x-algolia-application-id': 'angularTestSuccessAPPID',
               'x-algolia-agent': algolia.ua
             },
             'requestURL query matches'
@@ -123,8 +123,8 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
       .module('angularTestError', ['algoliasearch'])
       .controller('AngularModuleSearchControllerTestError', ['$scope', '$timeout', 'algolia', function($scope, $timeout, algolia) {
         t.pass('AngularJS controller initialized');
-        var client = algolia.Client('AngularJSError', 'ROCKSError');
-        var index = client.initIndex('googleError');
+        var client = algolia.Client('angularTestErrorAPPID', 'angularTestErrorKEY');
+        var index = client.initIndex('angularTestErrorINDEX');
         fauxJax.install();
 
         // careful, cannot use .catch here, will throw in IE8
@@ -175,7 +175,7 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
       .module('angularJSONPFallback', ['algoliasearch'])
       .controller('AngularModuleSearchControllerTestJSONPFallback', ['$scope', '$timeout', 'algolia', function($scope, $timeout, algolia) {
         t.pass('AngularJS controller initialized');
-        var client = algolia.Client('AngularJSError', 'ROCKSError', {
+        var client = algolia.Client('angularJSONPFallbackAPPID', 'angularJSONPFallbackKEY', {
           hosts: [
             currentURL.host
           ],
@@ -236,7 +236,7 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
       .module('angularTimeout', ['algoliasearch'])
       .controller('AngularModuleSearchControllerTestTimeout', ['$scope', '$timeout', 'algolia', function($scope, $timeout, algolia) {
         t.pass('AngularJS controller initialized');
-        var client = algolia.Client('AngularJSError', 'ROCKSError', {
+        var client = algolia.Client('angularTimeoutAPPID', 'angularTimeoutKEY', {
           hosts: [
             currentURL.host,
             currentURL.host
@@ -274,13 +274,15 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
 
   test('AngularJS module withCredentials', function(t) {
     var fauxJax = require('faux-jax');
-    t.plan(1);
 
     if (!fauxJax.support.xhr.cors) {
+      t.plan(1);
       // IE9 has XHR but no cors, skip this test
       t.pass('skipping this test for browsers not using CORS, unneeded and false positive');
       return;
     }
+
+    t.plan(2);
 
     // load AngularJS Algolia Search module
     require('../../../src/browser/builds/algoliasearch.angular');
@@ -291,11 +293,14 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
         $httpProvider.defaults.withCredentials = true;
       }])
       .controller('AngularModuleSearchControllerTestWithCredentials', ['algolia', function(algolia) {
-        var client = algolia.Client('AngularJSSuccess', 'ROCKSSuccess');
-        var index = client.initIndex('googleSuccess');
+        var client = algolia.Client('angularWithCredentialsAPPID', 'angularWithCredentialsKEY');
+        var index = client.initIndex('angularWithCredentialsINDEX');
         fauxJax.install();
 
-        index.search();
+        index.search(function() {
+          t.pass();
+          fauxJax.restore();
+        });
 
         fauxJax.once('request', function(request) {
           t.equal(
@@ -304,9 +309,7 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
             'withCredentials if false even if $http set it to true'
           );
 
-          request.respond(200, {}, '');
-
-          fauxJax.restore();
+          request.respond(200, {}, '{}');
         });
       }]);
 
@@ -317,7 +320,7 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
 
   test('AngularJS module $http.defaults.headers.common set', function(t) {
     var fauxJax = require('faux-jax');
-    t.plan(1);
+    t.plan(2);
 
     // load AngularJS Algolia Search module
     require('../../../src/browser/builds/algoliasearch.angular');
@@ -331,11 +334,14 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
         };
       }])
       .controller('AngularModuleSearchControllerTestUsingHttpsDefaults', ['algolia', function(algolia) {
-        var client = algolia.Client('AngularJSSuccess', 'ROCKSSuccess');
-        var index = client.initIndex('googleSuccess');
+        var client = algolia.Client('angularUsingHttpsDefaultsAPPID', 'angularUsingHttpsDefaultsKEY');
+        var index = client.initIndex('angularUsingHttpsDefaultsINDEX');
         fauxJax.install();
 
-        index.search();
+        index.search(function() {
+          t.pass();
+          fauxJax.restore();
+        });
 
         fauxJax.once('request', function(request) {
           t.deepEqual(
@@ -346,9 +352,7 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
             'requestHeaders matches'
           );
 
-          request.respond(200, {}, '');
-
-          fauxJax.restore();
+          request.respond(200, {}, '{}');
         });
       }]);
 
@@ -369,8 +373,8 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
       .module('angularCache', ['algoliasearch'])
       .controller('AngularModuleSearchControllerTestCache', ['$scope', '$timeout', 'algolia', function($scope, $timeout, algolia) {
         t.pass('AngularJS controller initialized');
-        var client = algolia.Client('AngularJSCache', 'ROCKSCache');
-        var index = client.initIndex('googleCache');
+        var client = algolia.Client('angularCacheAPPID', 'angularCacheKEY');
+        var index = client.initIndex('angularCacheINDEX');
         fauxJax.install();
 
         // careful, cannot use .catch here, will throw in IE8
