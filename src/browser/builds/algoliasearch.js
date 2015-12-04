@@ -13,6 +13,10 @@ var errors = require('../../errors');
 var inlineHeaders = require('../inline-headers');
 var jsonpRequest = require('../jsonp-request');
 
+if (process.env.APP_ENV === 'development') {
+  require('debug').enable('algoliasearch*');
+}
+
 function algoliasearch(applicationID, apiKey, opts) {
   var cloneDeep = require('lodash/lang/cloneDeep');
 
