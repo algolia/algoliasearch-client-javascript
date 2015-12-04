@@ -2,13 +2,6 @@
 
 module.exports = AlgoliaSearch;
 
-var process = process || undefined;
-// default debug activated in dev environments
-// this is triggered in package.json, using the envify transform
-if (process && process.env && process.env.APP_ENV === 'development') {
-  require('debug').enable('algoliasearch*');
-}
-
 var errors = require('./errors');
 
 /*

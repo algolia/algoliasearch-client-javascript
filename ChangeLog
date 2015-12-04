@@ -1,5 +1,8 @@
 CHANGELOG
 
+UNRELEASED
+    * fix(process.env): set process back to normal in node v4
+
 2015-12-01 3.9.3
     * fix(parse): set default timeout to 7.5s (indexing purposes)
 
