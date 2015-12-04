@@ -1,6 +1,6 @@
 CHANGELOG
 
-UNRELEASED
+2015-12-04 3.9.4
     * fix(process.env): set process back to normal in node v4
 
 2015-12-01 3.9.3
