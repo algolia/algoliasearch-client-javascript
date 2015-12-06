@@ -11,7 +11,7 @@ test('index.search() no arguments', function(t) {
   var fixture = createFixture();
   var index = fixture.index;
 
-  fauxJax.install();
+  fauxJax.install({gzip: true});
 
   index.search().then(function(content) {
     fauxJax.restore();

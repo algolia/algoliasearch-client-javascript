@@ -28,7 +28,7 @@ test('when a timeout occurs, we get a descriptive error', function(t) {
 
   var index = fixture.index;
 
-  fauxJax.install();
+  fauxJax.install({gzip: true});
   fauxJax.on('request', function() {});
 
   index.search('something', function(err) {

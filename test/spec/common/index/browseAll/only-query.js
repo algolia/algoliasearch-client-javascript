@@ -14,7 +14,7 @@ test('index.browseAll(query)', function(t) {
   var fixture = createFixture();
   var index = fixture.index;
 
-  fauxJax.install();
+  fauxJax.install({gzip: true});
 
   var browser = index.browseAll('some');
 

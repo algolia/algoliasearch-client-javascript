@@ -14,7 +14,7 @@ test("client's cache is different between instances", function(t) {
   var client2 = createFixture().client;
   var nbRequests = 0;
 
-  fauxJax.install();
+  fauxJax.install({gzip: true});
 
   fauxJax.on('request', function(req) {
     nbRequests++;
