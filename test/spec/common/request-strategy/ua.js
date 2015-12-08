@@ -7,7 +7,7 @@ test('Algolia Agent can be passed as an option', function(t) {
 
   var fauxJax = require('faux-jax');
   var parse = require('url-parse');
-  fauxJax.install();
+  fauxJax.install({gzip: true});
 
   var createFixture = require('../../../utils/create-fixture');
   var fixture = createFixture({

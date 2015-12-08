@@ -12,7 +12,7 @@ if (process.browser) {
     var fixture = createFixture();
     var index = fixture.index;
 
-    fauxJax.install();
+    fauxJax.install({gzip: true});
 
     fauxJax.once('request', function(req) {
       req.respond(200, {}, '{"ok": "then"}');

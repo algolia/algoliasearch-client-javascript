@@ -44,6 +44,7 @@ function computeExpectedRequest(expectedRequest, credentials) {
     expectedRequest.headers['x-algolia-api-key'] = credentials.searchOnlyAPIKey;
     expectedRequest.headers['x-algolia-application-id'] = credentials.applicationID;
     expectedRequest.headers['x-algolia-agent'] = algoliasearch.ua;
+    expectedRequest.headers['accept-encoding'] = 'gzip,deflate';
   }
 
   return expectedRequest;

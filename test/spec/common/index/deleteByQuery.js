@@ -24,7 +24,7 @@ function deleteByQueryTest(asyncMode, mainTest) {
     sinon.spy(index, 'waitTask');
     sinon.spy(index, 'deleteByQuery');
 
-    fauxJax.install();
+    fauxJax.install({gzip: true});
 
     fauxJax.once('request', respondToSearch);
 

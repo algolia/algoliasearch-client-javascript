@@ -5,6 +5,7 @@ module.exports = algoliasearch;
 
 var debug = require('debug')('algoliasearch:nodejs');
 var crypto = require('crypto');
+var zlib = require('zlib');
 
 var inherits = require('inherits');
 var Promise = global.Promise || require('es6-promise').Promise;
@@ -125,6 +126,8 @@ AlgoliaSearchNodeJS.prototype._request = function request(rawUrl, opts) {
       req.setHeader(headerName, opts.headers[headerName]);
     });
 
+    req.setHeader('accept-encoding', 'gzip,deflate');
+
     // socket inactivity timeout
     // this is not a global timeout on the request
     req.setTimeout(opts.timeout);
@@ -162,8 +165,17 @@ AlgoliaSearchNodeJS.prototype._request = function request(rawUrl, opts) {
     function response(res) {
       var chunks = [];
 
-      res.on('data', onData);
-      res.once('end', onEnd);
+      // Algolia answers should be gzip when asked for it,
+      // but a proxy might uncompress Algolia response
+      // So we handle both compressed and uncompressed
+      if (res.headers['content-encoding'] === 'gzip' ||
+          res.headers['content-encoding'] === 'deflate') {
+        res = res.pipe(zlib.createUnzip());
+      }
+
+      res
+        .on('data', onData)
+        .once('end', onEnd);
 
       function onData(chunk) {
         chunks.push(chunk);

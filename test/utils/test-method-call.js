@@ -26,7 +26,7 @@ function testMethodCall(opts) {
   wrapMethodCallback(testCase.callArguments, checkMethodCallback);
 
   // this needs to be done here to be as close as possible to the new XMLHttpRequest() call
-  fauxJax.install();
+  fauxJax.install({gzip: true});
 
   object[opts.methodName].apply(object, testCase.callArguments);
 

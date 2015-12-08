@@ -13,7 +13,7 @@ test('client.setExtraHeader(key, value)', function(t) {
   var client = fixture.client;
   var index = fixture.index;
 
-  fauxJax.install();
+  fauxJax.install({gzip: true});
 
   // no extra header set
   index.search('first');

@@ -38,7 +38,7 @@ test('index.waitTask(taskID) failure', function(t) {
     );
   });
 
-  fauxJax.install();
+  fauxJax.install({gzip: true});
 
   index.waitTask(28000, cbSpy);
   index.waitTask(27000).then(bind(t.fail, t), promiseSpy);

@@ -15,7 +15,7 @@ test('index.waitTask(taskID) has an incremental delay', function(t) {
   var index = fixture.index;
   var delays = [];
 
-  fauxJax.install();
+  fauxJax.install({gzip: true});
   waitFirstRequest();
 
   var start = +new Date();

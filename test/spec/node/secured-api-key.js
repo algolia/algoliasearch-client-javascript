@@ -12,7 +12,7 @@ test('client.useSecuredAPIKey()', function(t) {
   var client = fixture.client;
   var index = fixture.index;
 
-  fauxJax.install();
+  fauxJax.install({gzip: true});
 
   index.search('woo');
   client.useSecuredAPIKey('securedAPIKey', 'securityTags', 'userToken');

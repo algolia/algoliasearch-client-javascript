@@ -32,7 +32,7 @@ test('We receive a specific error message when everything failed', function(t) {
     ' Send an email to support@algolia.com to report and resolve the issue.' +
     ' Application id was: ' + fixture.credentials.applicationID;
 
-  fauxJax.install();
+  fauxJax.install({gzip: true});
 
   fauxJax.on('request', function serverError(req) {
     req.respond(

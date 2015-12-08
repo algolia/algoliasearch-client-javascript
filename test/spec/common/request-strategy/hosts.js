@@ -7,7 +7,7 @@ test('algoliasearch(appId, apiKey, {hosts: [..]})', function(t) {
 
   var fauxJax = require('faux-jax');
   var parse = require('url-parse');
-  fauxJax.install();
+  fauxJax.install({gzip: true});
 
   var createFixture = require('../../../utils/create-fixture');
   var fixture = createFixture({
@@ -55,7 +55,7 @@ test('algoliasearch(appId, apiKey, {hosts: {read: [..], write: [..]}})', functio
 
   var fauxJax = require('faux-jax');
   var parse = require('url-parse');
-  fauxJax.install();
+  fauxJax.install({gzip: true});
 
   var createFixture = require('../../../utils/create-fixture');
   var fixture = createFixture({

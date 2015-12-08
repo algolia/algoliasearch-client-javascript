@@ -14,7 +14,7 @@ test('Request timeout is used', function(t) {
   });
   var index = fixture.index;
 
-  fauxJax.install();
+  fauxJax.install({gzip: true});
 
   var start = Date.now();
   fauxJax.waitFor(2, function(err, requests) {

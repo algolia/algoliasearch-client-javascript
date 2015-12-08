@@ -6,7 +6,7 @@ test('HTTP DELETE should set content-length to 0 (no chunked encoding)', functio
   t.plan(2);
 
   var fauxJax = require('faux-jax');
-  fauxJax.install();
+  fauxJax.install({gzip: true});
 
   var createFixture = require('../../utils/create-fixture');
   var fixture = createFixture();

@@ -15,7 +15,7 @@ test('client.setUserToken(token)', function(t) {
   var client = fixture.client;
   var index = fixture.index;
 
-  fauxJax.install();
+  fauxJax.install({gzip: true});
 
   async.series([
     noUserToken,

@@ -22,7 +22,7 @@ test('client.setSecurityTags(string or array-based tags)', function(t) {
   var client = fixture.client;
   var index = fixture.index;
 
-  fauxJax.install();
+  fauxJax.install({gzip: true});
 
   // no extra header set
   index.search('first');
