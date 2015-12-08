@@ -14,7 +14,7 @@ test("index's cache is different between instances", function(t) {
   var index2 = createFixture().index;
   var nbRequests = 0;
 
-  fauxJax.install();
+  fauxJax.install({gzip: true});
 
   fauxJax.on('request', function(req) {
     nbRequests++;

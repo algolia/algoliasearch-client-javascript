@@ -35,7 +35,7 @@ test('client.setRequestTimeout()', function(t) {
     expectedTimeout = expectedTimeout * 2;
   }
 
-  fauxJax.install();
+  fauxJax.install({gzip: true});
 
   var client = fixture.client;
   var index = fixture.index;

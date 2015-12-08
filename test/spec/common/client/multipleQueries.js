@@ -12,7 +12,7 @@ test('client.startQueriesBatch(), client.addQueryInBatch(), client.sendQueriesBa
   var fixture = createFixture();
   var client = fixture.client;
 
-  fauxJax.install();
+  fauxJax.install({gzip: true});
 
   client.startQueriesBatch();
   client.addQueryInBatch(fixture.credentials.index, 'first query');

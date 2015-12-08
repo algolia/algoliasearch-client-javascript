@@ -16,7 +16,7 @@ test('when indexing content, we retry if timeout occurs', function(t) {
 
   var index = fixture.index;
 
-  fauxJax.install();
+  fauxJax.install({gzip: true});
   fauxJax.on('request', function() {
     t.pass('One request made');
   });

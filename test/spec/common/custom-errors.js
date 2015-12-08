@@ -13,7 +13,7 @@ test('We get custom errors with stacks', function(t) {
   var fixture = createFixture();
   var index = fixture.index;
 
-  fauxJax.install();
+  fauxJax.install({gzip: true});
 
   fauxJax.once('request', function(req) {
     req.respond(400, {}, '{"message": "GOAWAY!", "status": 400}');

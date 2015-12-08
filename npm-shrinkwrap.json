@@ -3315,8 +3315,8 @@
       }
     },
     "faux-jax": {
-      "version": "4.1.0",
-      "resolved": "https://registry.npmjs.org/faux-jax/-/faux-jax-4.1.0.tgz",
+      "version": "4.2.0",
+      "resolved": "https://registry.npmjs.org/faux-jax/-/faux-jax-4.2.0.tgz",
       "dependencies": {
         "mitm": {
           "version": "1.2.0",

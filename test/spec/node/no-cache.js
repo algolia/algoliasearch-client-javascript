@@ -7,7 +7,7 @@ test('no cache between two requests', function(t) {
 
   var fauxJax = require('faux-jax');
 
-  fauxJax.install();
+  fauxJax.install({gzip: true});
 
   var createFixture = require('../../utils/create-fixture');
   var fixture = createFixture();

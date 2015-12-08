@@ -12,7 +12,7 @@ test('dsn not used on indexing requests', function(t) {
   var fixture = createFixture();
   var index = fixture.index;
 
-  fauxJax.install();
+  fauxJax.install({gzip: true});
 
   fauxJax.once('request', function(req) {
     var requestHostname = parse(req.requestURL).hostname;
