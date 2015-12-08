@@ -1,5 +1,8 @@
 CHANGELOG
 
+2015-12-08 3.10.0
+    * feat(gzip): ask the API for gzipped answers (nodejs)
+
 2015-12-04 3.9.4
     * fix(process.env): set process back to normal in node v4
 
