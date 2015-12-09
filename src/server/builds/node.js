@@ -49,9 +49,11 @@ function algoliasearch(applicationID, apiKey, opts) {
 
   opts.httpAgent = httpAgent;
 
-  // inactivity timeout
+  // this is a global timeout, even if the socket has some
+  // activity, we will kill it
+  // There's no easy way to detect socket activity in nodejs it seems
   if (opts.timeout === undefined) {
-    opts.timeout = 15000;
+    opts.timeout = 30 * 1000;
   }
 
   if (opts.protocol === undefined) {
@@ -89,7 +91,6 @@ AlgoliaSearchNodeJS.prototype._request = function request(rawUrl, opts) {
     opts.debug('url: %s, method: %s, timeout: %d', rawUrl, opts.method, opts.timeout);
 
     var body = opts.body;
-    var debugInterval;
 
     var parsedUrl = url.parse(rawUrl);
     var requestOptions = {
@@ -101,6 +102,7 @@ AlgoliaSearchNodeJS.prototype._request = function request(rawUrl, opts) {
     };
 
     var timedOut = false;
+    var timeoutId;
     var req;
 
     if (parsedUrl.protocol === 'https:') {
@@ -128,29 +130,16 @@ AlgoliaSearchNodeJS.prototype._request = function request(rawUrl, opts) {
 
     req.setHeader('accept-encoding', 'gzip,deflate');
 
-    // socket inactivity timeout
-    // this is not a global timeout on the request
-    req.setTimeout(opts.timeout);
+    // we do not use req.setTimeout because it's either an inactivity timeout
+    // or a global timeout given the nodejs version
+    timeoutId = setTimeout(timeout, opts.timeout);
 
     req.once('error', error);
-    req.once('timeout', timeout);
     req.once('response', response);
-
     if (body) {
       req.setHeader('content-type', 'application/json');
       req.setHeader('content-length', Buffer.byteLength(body, 'utf8'));
       req.write(body);
-
-      // debug request body/sent
-      // only when DEBUG=debugBody is found
-      if (process.env.DEBUG && process.env.DEBUG.indexOf('debugBody') !== -1) {
-        req.once('socket', function gotSocket() {
-          debugBytesSent();
-          debugInterval = setInterval(debugBytesSent, 100);
-          req.socket.once('end', stopDebug);
-          req.socket.once('close', stopDebug);
-        });
-      }
     } else if (req.method === 'DELETE') {
       // Node.js was setting transfer-encoding: chunked on all DELETE requests
       // which is not good since there's no body to be sent, resulting in nginx
@@ -182,6 +171,8 @@ AlgoliaSearchNodeJS.prototype._request = function request(rawUrl, opts) {
       }
 
       function onEnd() {
+        clearTimeout(timeoutId);
+
         var data = Buffer.concat(chunks).toString();
         var out;
 
@@ -213,6 +204,8 @@ AlgoliaSearchNodeJS.prototype._request = function request(rawUrl, opts) {
         return;
       }
 
+      req.abort();
+      clearTimeout(timeoutId);
       reject(new errors.Network(err.message, err));
     }
 
@@ -221,20 +214,6 @@ AlgoliaSearchNodeJS.prototype._request = function request(rawUrl, opts) {
       opts.debug('timeout %s', rawUrl);
       req.abort();
       reject(new errors.RequestTimeout());
-    }
-
-    function debugBytesSent() {
-      var remaining = Buffer.byteLength(body) + Buffer.byteLength(req._header);
-      var sent = req.socket.bytesWritten;
-      opts.debug('sent/remaining bytes: %d/%d', sent, remaining);
-    }
-
-    function stopDebug() {
-      req.socket.removeListener('end', stopDebug);
-      req.socket.removeListener('close', stopDebug);
-      opts.debug('socket end');
-      debugBytesSent();
-      clearInterval(debugInterval);
     }
   });
 };
