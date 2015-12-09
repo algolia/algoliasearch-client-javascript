@@ -10,12 +10,14 @@ var zlib = require('zlib');
 var inherits = require('inherits');
 var Promise = global.Promise || require('es6-promise').Promise;
 var semver = require('semver');
+var isNotSupported = semver.satisfies(process.version, '<0.10');
+var isNode010 = semver.satisfies(process.version, '=0.10');
 
 var AlgoliaSearchServer = require('./AlgoliaSearchServer');
 var errors = require('../../errors');
 
-// does not work on node < 0.8
-if (semver.satisfies(process.version, '<=0.7')) {
+// does not work on node <= 0.8
+if (isNotSupported) {
   throw new errors.AlgoliaSearchError('Node.js version ' + process.version + ' is not supported');
 }
 
@@ -204,7 +206,7 @@ AlgoliaSearchNodeJS.prototype._request = function request(rawUrl, opts) {
         return;
       }
 
-      req.abort();
+      abort();
       clearTimeout(timeoutId);
       reject(new errors.Network(err.message, err));
     }
@@ -212,8 +214,16 @@ AlgoliaSearchNodeJS.prototype._request = function request(rawUrl, opts) {
     function timeout() {
       timedOut = true;
       opts.debug('timeout %s', rawUrl);
-      req.abort();
+      abort();
       reject(new errors.RequestTimeout());
+    }
+
+    function abort() {
+      if (isNode010 && req.socket && req.socket.socket) {
+        req.socket.socket.destroy();
+      }
+
+      req.abort();
     }
   });
 };
