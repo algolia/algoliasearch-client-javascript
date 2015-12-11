@@ -28,6 +28,7 @@ test('algoliasearch(appId, apiKey, {hosts: [..]})', function(t) {
         'as-an-array.com',
         'Hostname matches for reads'
       );
+      req.respond(200, {}, '{}');
 
       testWriteHost();
     });
@@ -44,6 +45,7 @@ test('algoliasearch(appId, apiKey, {hosts: [..]})', function(t) {
         'as-an-array.com',
         'Hostname matches for writes'
       );
+      req.respond(200, {}, '{}');
 
       fauxJax.restore();
     });
