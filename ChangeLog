@@ -1,5 +1,15 @@
 CHANGELOG
 
+2015-12-11 3.10.1
+    * fix(nodejs): consistent timeouts between nodejs versions
+      We now use basic setTimeout functionnality instead of
+      req.setTimeout in nodejs to avoid inconsistencies between nodejs engines.
+      In node 0.10, req.setTimeout was a socket inactivity timeout
+      In node > 0.10? req.setTimeout is now a global timeout
+      + Node.js timeout is now 30s global per request (then incremental)
+      + Fixed an edge case where we had an uncaught exception in nodejs
+      + We only support 0.10+ now, node 0.8 never worked
+
 2015-12-08 3.10.0
     * feat(gzip): ask the API for gzipped answers (nodejs)
 

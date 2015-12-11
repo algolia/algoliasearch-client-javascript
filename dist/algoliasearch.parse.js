@@ -1603,10 +1603,6 @@ module.exports =
 	        requestDebug('received response: statusCode: %s, computed statusCode: %d, headers: %j',
 	          httpResponse.statusCode, status, httpResponse.headers);
 
-	        if (process && process.env.DEBUG && process.env.DEBUG.indexOf('debugBody') !== -1) {
-	          requestDebug('body: %j', httpResponse.body);
-	        }
-
 	        var ok = status === 200 || status === 201;
 	        var retry = !ok && Math.floor(status / 100) !== 4 && Math.floor(status / 100) !== 1;
 
@@ -5104,7 +5100,7 @@ module.exports =
 
 	
 
-	module.exports = '3.10.0';
+	module.exports = '3.10.1';
 
 
 /***/ }
