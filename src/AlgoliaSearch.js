@@ -553,12 +553,27 @@ AlgoliaSearch.prototype = {
       })
     };
 
+    var JSONPParams = map(postObj.requests, function prepareJSONPParams(request, requestId) {
+      return requestId + '=' +
+        encodeURIComponent(
+          '/1/indexes/' + encodeURIComponent(request.indexName) + '?' +
+          request.params
+        );
+    }).join('&');
+
     return this._jsonRequest({
       cache: this.cache,
       method: 'POST',
       url: '/1/indexes/*/queries',
       body: postObj,
       hostType: 'read',
+      fallback: {
+        method: 'GET',
+        url: '/1/indexes/*',
+        body: {
+          params: JSONPParams
+        }
+      },
       callback: callback
     });
   },
@@ -660,17 +675,18 @@ AlgoliaSearch.prototype = {
   /*
    * Wrapper that try all hosts to maximize the quality of service
    */
-  _jsonRequest: function(opts) {
-    var requestDebug = require('debug')('algoliasearch:' + opts.url);
+  _jsonRequest: function(initialOpts) {
+    var requestDebug = require('debug')('algoliasearch:' + initialOpts.url);
 
     var body;
-    var cache = opts.cache;
+    var cache = initialOpts.cache;
     var client = this;
     var tries = 0;
     var usingFallback = false;
+    var hasFallback = client._request.fallback && initialOpts.fallback;
 
-    if (opts.body !== undefined) {
-      body = safeJSONStringify(opts.body);
+    if (initialOpts.body !== undefined) {
+      body = safeJSONStringify(initialOpts.body);
     }
 
     requestDebug('request start');
@@ -679,7 +695,7 @@ AlgoliaSearch.prototype = {
       var cacheID;
 
       if (client._useCache) {
-        cacheID = opts.url;
+        cacheID = initialOpts.url;
       }
 
       // as we sometime use POST requests to pass parameters (like query='aa'),
@@ -695,11 +711,8 @@ AlgoliaSearch.prototype = {
       }
 
       // if we reached max tries
-      if (tries >= client.hosts[opts.hostType].length ||
-        // or we need to switch to fallback
-        client.useFallback && !usingFallback) {
-        // and there's no fallback or we are already using a fallback
-        if (!opts.fallback || !client._request.fallback || usingFallback) {
+      if (tries >= client.hosts[initialOpts.hostType].length) {
+        if (!hasFallback || usingFallback) {
           requestDebug('could not get any response');
           // then stop
           return client._promise.reject(new errors.AlgoliaSearchError(
@@ -715,23 +728,23 @@ AlgoliaSearch.prototype = {
         tries = 0;
 
         // method, url and body are fallback dependent
-        reqOpts.method = opts.fallback.method;
-        reqOpts.url = opts.fallback.url;
-        reqOpts.jsonBody = opts.fallback.body;
+        reqOpts.method = initialOpts.fallback.method;
+        reqOpts.url = initialOpts.fallback.url;
+        reqOpts.jsonBody = initialOpts.fallback.body;
         if (reqOpts.jsonBody) {
           reqOpts.body = safeJSONStringify(reqOpts.jsonBody);
         }
 
         reqOpts.timeout = client.requestTimeout * (tries + 1);
-        client.hostIndex[opts.hostType] = 0;
+        client.hostIndex[initialOpts.hostType] = 0;
         usingFallback = true; // the current request is now using fallback
         return doRequest(client._request.fallback, reqOpts);
       }
 
-      var url = client.hosts[opts.hostType][client.hostIndex[opts.hostType]] + reqOpts.url;
+      var url = client.hosts[initialOpts.hostType][client.hostIndex[initialOpts.hostType]] + reqOpts.url;
       var options = {
-        body: body,
-        jsonBody: opts.body,
+        body: reqOpts.body,
+        jsonBody: reqOpts.jsonBody,
         method: reqOpts.method,
         headers: client._computeRequestHeaders(),
         timeout: reqOpts.timeout,
@@ -825,57 +838,51 @@ AlgoliaSearch.prototype = {
           err instanceof errors.UnparsableJSON ||
 
           // max tries and already using fallback or no fallback
-          tries >= client.hosts[opts.hostType].length &&
-          (usingFallback || !opts.fallback || !client._request.fallback)) {
+          tries >= client.hosts[initialOpts.hostType].length &&
+          (usingFallback || !hasFallback)) {
           // stop request implementation for this command
           return client._promise.reject(err);
         }
 
-        client.hostIndex[opts.hostType] = ++client.hostIndex[opts.hostType] % client.hosts[opts.hostType].length;
+        client.hostIndex[initialOpts.hostType] = ++client.hostIndex[initialOpts.hostType] % client.hosts[initialOpts.hostType].length;
 
         if (err instanceof errors.RequestTimeout) {
           return retryRequest();
-        } else if (client._request.fallback && !client.useFallback) {
-          // if any error occured but timeout, use fallback for the rest
-          // of the session
-          client.useFallback = true;
+        } else if (!usingFallback) {
+          // next request loop, force using fallback for this request
+          tries = Infinity;
         }
 
         return doRequest(requester, reqOpts);
       }
 
       function retryRequest() {
-        client.hostIndex[opts.hostType] = ++client.hostIndex[opts.hostType] % client.hosts[opts.hostType].length;
+        client.hostIndex[initialOpts.hostType] = ++client.hostIndex[initialOpts.hostType] % client.hosts[initialOpts.hostType].length;
         reqOpts.timeout = client.requestTimeout * (tries + 1);
         return doRequest(requester, reqOpts);
       }
     }
 
-    // we can use a fallback if forced AND fallback parameters are available
-    var useFallback = client.useFallback && opts.fallback;
-    var requestOptions = useFallback ? opts.fallback : opts;
-
     var promise = doRequest(
-      // set the requester
-      useFallback ? client._request.fallback : client._request, {
-        url: requestOptions.url,
-        method: requestOptions.method,
+      client._request, {
+        url: initialOpts.url,
+        method: initialOpts.method,
         body: body,
-        jsonBody: opts.body,
+        jsonBody: initialOpts.body,
         timeout: client.requestTimeout * (tries + 1)
       }
     );
 
     // either we have a callback
     // either we are using promises
-    if (opts.callback) {
+    if (initialOpts.callback) {
       promise.then(function okCb(content) {
         exitPromise(function() {
-          opts.callback(null, content);
+          initialOpts.callback(null, content);
         }, client._setTimeout || setTimeout);
       }, function nookCb(err) {
         exitPromise(function() {
-          opts.callback(err);
+          initialOpts.callback(err);
         }, client._setTimeout || setTimeout);
       });
     } else {
@@ -887,7 +894,7 @@ AlgoliaSearch.prototype = {
   * Transform search param object in query string
   */
   _getSearchParams: function(args, params) {
-    if (this._isUndefined(args) || args === null) {
+    if (args === undefined || args === null) {
       return params;
     }
     for (var key in args) {
@@ -897,10 +904,6 @@ AlgoliaSearch.prototype = {
       }
     }
     return params;
-  },
-
-  _isUndefined: function(obj) {
-    return obj === void 0;
   },
 
   _computeRequestHeaders: function() {
