@@ -34,6 +34,7 @@ function AlgoliaSearch(applicationID, apiKey, opts) {
 
   var clone = require('lodash/lang/clone');
   var isArray = require('lodash/lang/isArray');
+  var map = require('lodash/collection/map');
 
   var usage = 'Usage: algoliasearch(applicationID, apiKey, opts)';
 
@@ -524,6 +525,8 @@ AlgoliaSearch.prototype = {
    */
   search: function(queries, callback) {
     var isArray = require('lodash/lang/isArray');
+    var map = require('lodash/collection/map');
+
     var usage = 'Usage: client.search(arrayOfQueries[, callback])';
 
     if (!isArray(queries)) {
@@ -1073,6 +1076,8 @@ AlgoliaSearch.prototype.Index.prototype = {
    */
   getObjects: function(objectIDs, attributesToRetrieve, callback) {
     var isArray = require('lodash/lang/isArray');
+    var map = require('lodash/collection/map');
+
     var usage = 'Usage: index.getObjects(arrayOfObjectIDs[, callback])';
 
     if (!isArray(objectIDs)) {
@@ -1256,6 +1261,8 @@ AlgoliaSearch.prototype.Index.prototype = {
    */
   deleteObjects: function(objectIDs, callback) {
     var isArray = require('lodash/lang/isArray');
+    var map = require('lodash/collection/map');
+
     var usage = 'Usage: index.deleteObjects(arrayOfObjectIDs[, callback])';
 
     if (!isArray(objectIDs)) {
@@ -1293,6 +1300,7 @@ AlgoliaSearch.prototype.Index.prototype = {
    */
   deleteByQuery: function(query, params, callback) {
     var clone = require('lodash/lang/clone');
+    var map = require('lodash/collection/map');
 
     var indexObj = this;
     var client = indexObj.as;
@@ -2105,16 +2113,6 @@ AlgoliaSearch.prototype.Index.prototype = {
   typeAheadArgs: null,
   typeAheadValueOption: null
 };
-
-// extracted from https://github.com/component/map/blob/master/index.js
-// without the crazy toFunction thing
-function map(arr, fn) {
-  var ret = [];
-  for (var i = 0; i < arr.length; ++i) {
-    ret.push(fn(arr[i], i));
-  }
-  return ret;
-}
 
 function prepareHost(protocol) {
   return function prepare(host) {
