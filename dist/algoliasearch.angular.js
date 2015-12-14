@@ -1,4 +1,4 @@
-/*! algoliasearch 3.10.1 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
+/*! algoliasearch 3.10.2 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
 (function(f){var g;if(typeof window!=='undefined'){g=window}else if(typeof self!=='undefined'){g=self}g.ALGOLIA_MIGRATION_LAYER=f()})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 
 module.exports = function load (src, opts, cb) {
@@ -2271,9 +2271,30 @@ if (typeof Object.create === 'function') {
 }
 
 },{}],11:[function(require,module,exports){
-var arrayEach = require(14),
-    baseEach = require(18),
-    createForEach = require(30);
+/**
+ * Gets the last element of `array`.
+ *
+ * @static
+ * @memberOf _
+ * @category Array
+ * @param {Array} array The array to query.
+ * @returns {*} Returns the last element of `array`.
+ * @example
+ *
+ * _.last([1, 2, 3]);
+ * // => 3
+ */
+function last(array) {
+  var length = array ? array.length : 0;
+  return length ? array[length - 1] : undefined;
+}
+
+module.exports = last;
+
+},{}],12:[function(require,module,exports){
+var arrayEach = require(16),
+    baseEach = require(23),
+    createForEach = require(45);
 
 /**
  * Iterates over elements of `collection` invoking `iteratee` for each element.
@@ -2309,7 +2330,77 @@ var forEach = createForEach(arrayEach, baseEach);
 
 module.exports = forEach;
 
-},{"14":14,"18":18,"30":30}],12:[function(require,module,exports){
+},{"16":16,"23":23,"45":45}],13:[function(require,module,exports){
+var arrayMap = require(17),
+    baseCallback = require(20),
+    baseMap = require(31),
+    isArray = require(68);
+
+/**
+ * Creates an array of values by running each element in `collection` through
+ * `iteratee`. The `iteratee` is bound to `thisArg` and invoked with three
+ * arguments: (value, index|key, collection).
+ *
+ * If a property name is provided for `iteratee` the created `_.property`
+ * style callback returns the property value of the given element.
+ *
+ * If a value is also provided for `thisArg` the created `_.matchesProperty`
+ * style callback returns `true` for elements that have a matching property
+ * value, else `false`.
+ *
+ * If an object is provided for `iteratee` the created `_.matches` style
+ * callback returns `true` for elements that have the properties of the given
+ * object, else `false`.
+ *
+ * Many lodash methods are guarded to work as iteratees for methods like
+ * `_.every`, `_.filter`, `_.map`, `_.mapValues`, `_.reject`, and `_.some`.
+ *
+ * The guarded methods are:
+ * `ary`, `callback`, `chunk`, `clone`, `create`, `curry`, `curryRight`,
+ * `drop`, `dropRight`, `every`, `fill`, `flatten`, `invert`, `max`, `min`,
+ * `parseInt`, `slice`, `sortBy`, `take`, `takeRight`, `template`, `trim`,
+ * `trimLeft`, `trimRight`, `trunc`, `random`, `range`, `sample`, `some`,
+ * `sum`, `uniq`, and `words`
+ *
+ * @static
+ * @memberOf _
+ * @alias collect
+ * @category Collection
+ * @param {Array|Object|string} collection The collection to iterate over.
+ * @param {Function|Object|string} [iteratee=_.identity] The function invoked
+ *  per iteration.
+ * @param {*} [thisArg] The `this` binding of `iteratee`.
+ * @returns {Array} Returns the new mapped array.
+ * @example
+ *
+ * function timesThree(n) {
+ *   return n * 3;
+ * }
+ *
+ * _.map([1, 2], timesThree);
+ * // => [3, 6]
+ *
+ * _.map({ 'a': 1, 'b': 2 }, timesThree);
+ * // => [3, 6] (iteration order is not guaranteed)
+ *
+ * var users = [
+ *   { 'user': 'barney' },
+ *   { 'user': 'fred' }
+ * ];
+ *
+ * // using the `_.property` callback shorthand
+ * _.map(users, 'user');
+ * // => ['barney', 'fred']
+ */
+function map(collection, iteratee, thisArg) {
+  var func = isArray(collection) ? arrayMap : baseMap;
+  iteratee = baseCallback(iteratee, thisArg, 3);
+  return func(collection, iteratee);
+}
+
+module.exports = map;
+
+},{"17":17,"20":20,"31":31,"68":68}],14:[function(require,module,exports){
 /** Used as the `TypeError` message for "Functions" methods. */
 var FUNC_ERROR_TEXT = 'Expected a function';
 
@@ -2369,7 +2460,7 @@ function restParam(func, start) {
 
 module.exports = restParam;
 
-},{}],13:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 /**
  * Copies the values of `source` to `array`.
  *
@@ -2391,7 +2482,7 @@ function arrayCopy(source, array) {
 
 module.exports = arrayCopy;
 
-},{}],14:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 /**
  * A specialized version of `_.forEach` for arrays without support for callback
  * shorthands and `this` binding.
@@ -2415,9 +2506,57 @@ function arrayEach(array, iteratee) {
 
 module.exports = arrayEach;
 
-},{}],15:[function(require,module,exports){
-var baseCopy = require(17),
-    keys = require(53);
+},{}],17:[function(require,module,exports){
+/**
+ * A specialized version of `_.map` for arrays without support for callback
+ * shorthands and `this` binding.
+ *
+ * @private
+ * @param {Array} array The array to iterate over.
+ * @param {Function} iteratee The function invoked per iteration.
+ * @returns {Array} Returns the new mapped array.
+ */
+function arrayMap(array, iteratee) {
+  var index = -1,
+      length = array.length,
+      result = Array(length);
+
+  while (++index < length) {
+    result[index] = iteratee(array[index], index, array);
+  }
+  return result;
+}
+
+module.exports = arrayMap;
+
+},{}],18:[function(require,module,exports){
+/**
+ * A specialized version of `_.some` for arrays without support for callback
+ * shorthands and `this` binding.
+ *
+ * @private
+ * @param {Array} array The array to iterate over.
+ * @param {Function} predicate The function invoked per iteration.
+ * @returns {boolean} Returns `true` if any element passes the predicate check,
+ *  else `false`.
+ */
+function arraySome(array, predicate) {
+  var index = -1,
+      length = array.length;
+
+  while (++index < length) {
+    if (predicate(array[index], index, array)) {
+      return true;
+    }
+  }
+  return false;
+}
+
+module.exports = arraySome;
+
+},{}],19:[function(require,module,exports){
+var baseCopy = require(22),
+    keys = require(75);
 
 /**
  * The base implementation of `_.assign` without support for argument juggling,
@@ -2436,16 +2575,53 @@ function baseAssign(object, source) {
 
 module.exports = baseAssign;
 
-},{"17":17,"53":53}],16:[function(require,module,exports){
-var arrayCopy = require(13),
-    arrayEach = require(14),
-    baseAssign = require(15),
-    baseForOwn = require(21),
-    initCloneArray = require(33),
-    initCloneByTag = require(34),
-    initCloneObject = require(35),
-    isArray = require(46),
-    isObject = require(49);
+},{"22":22,"75":75}],20:[function(require,module,exports){
+var baseMatches = require(32),
+    baseMatchesProperty = require(33),
+    bindCallback = require(40),
+    identity = require(79),
+    property = require(80);
+
+/**
+ * The base implementation of `_.callback` which supports specifying the
+ * number of arguments to provide to `func`.
+ *
+ * @private
+ * @param {*} [func=_.identity] The value to convert to a callback.
+ * @param {*} [thisArg] The `this` binding of `func`.
+ * @param {number} [argCount] The number of arguments to provide to `func`.
+ * @returns {Function} Returns the callback.
+ */
+function baseCallback(func, thisArg, argCount) {
+  var type = typeof func;
+  if (type == 'function') {
+    return thisArg === undefined
+      ? func
+      : bindCallback(func, thisArg, argCount);
+  }
+  if (func == null) {
+    return identity;
+  }
+  if (type == 'object') {
+    return baseMatches(func);
+  }
+  return thisArg === undefined
+    ? property(func)
+    : baseMatchesProperty(func, thisArg);
+}
+
+module.exports = baseCallback;
+
+},{"32":32,"33":33,"40":40,"79":79,"80":80}],21:[function(require,module,exports){
+var arrayCopy = require(15),
+    arrayEach = require(16),
+    baseAssign = require(19),
+    baseForOwn = require(26),
+    initCloneArray = require(52),
+    initCloneByTag = require(53),
+    initCloneObject = require(54),
+    isArray = require(68),
+    isObject = require(71);
 
 /** `Object#toString` result references. */
 var argsTag = '[object Arguments]',
@@ -2566,7 +2742,7 @@ function baseClone(value, isDeep, customizer, key, object, stackA, stackB) {
 
 module.exports = baseClone;
 
-},{"13":13,"14":14,"15":15,"21":21,"33":33,"34":34,"35":35,"46":46,"49":49}],17:[function(require,module,exports){
+},{"15":15,"16":16,"19":19,"26":26,"52":52,"53":53,"54":54,"68":68,"71":71}],22:[function(require,module,exports){
 /**
  * Copies properties of `source` to `object`.
  *
@@ -2591,9 +2767,9 @@ function baseCopy(source, props, object) {
 
 module.exports = baseCopy;
 
-},{}],18:[function(require,module,exports){
-var baseForOwn = require(21),
-    createBaseEach = require(28);
+},{}],23:[function(require,module,exports){
+var baseForOwn = require(26),
+    createBaseEach = require(43);
 
 /**
  * The base implementation of `_.forEach` without support for callback
@@ -2608,8 +2784,8 @@ var baseEach = createBaseEach(baseForOwn);
 
 module.exports = baseEach;
 
-},{"21":21,"28":28}],19:[function(require,module,exports){
-var createBaseFor = require(29);
+},{"26":26,"43":43}],24:[function(require,module,exports){
+var createBaseFor = require(44);
 
 /**
  * The base implementation of `baseForIn` and `baseForOwn` which iterates
@@ -2627,9 +2803,9 @@ var baseFor = createBaseFor();
 
 module.exports = baseFor;
 
-},{"29":29}],20:[function(require,module,exports){
-var baseFor = require(19),
-    keysIn = require(54);
+},{"44":44}],25:[function(require,module,exports){
+var baseFor = require(24),
+    keysIn = require(76);
 
 /**
  * The base implementation of `_.forIn` without support for callback
@@ -2646,9 +2822,9 @@ function baseForIn(object, iteratee) {
 
 module.exports = baseForIn;
 
-},{"19":19,"54":54}],21:[function(require,module,exports){
-var baseFor = require(19),
-    keys = require(53);
+},{"24":24,"76":76}],26:[function(require,module,exports){
+var baseFor = require(24),
+    keys = require(75);
 
 /**
  * The base implementation of `_.forOwn` without support for callback
@@ -2665,15 +2841,338 @@ function baseForOwn(object, iteratee) {
 
 module.exports = baseForOwn;
 
-},{"19":19,"53":53}],22:[function(require,module,exports){
-var arrayEach = require(14),
-    baseMergeDeep = require(23),
-    isArray = require(46),
-    isArrayLike = require(36),
-    isObject = require(49),
-    isObjectLike = require(40),
-    isTypedArray = require(51),
-    keys = require(53);
+},{"24":24,"75":75}],27:[function(require,module,exports){
+var toObject = require(63);
+
+/**
+ * The base implementation of `get` without support for string paths
+ * and default values.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @param {Array} path The path of the property to get.
+ * @param {string} [pathKey] The key representation of path.
+ * @returns {*} Returns the resolved value.
+ */
+function baseGet(object, path, pathKey) {
+  if (object == null) {
+    return;
+  }
+  if (pathKey !== undefined && pathKey in toObject(object)) {
+    path = [pathKey];
+  }
+  var index = 0,
+      length = path.length;
+
+  while (object != null && index < length) {
+    object = object[path[index++]];
+  }
+  return (index && index == length) ? object : undefined;
+}
+
+module.exports = baseGet;
+
+},{"63":63}],28:[function(require,module,exports){
+var baseIsEqualDeep = require(29),
+    isObject = require(71),
+    isObjectLike = require(60);
+
+/**
+ * The base implementation of `_.isEqual` without support for `this` binding
+ * `customizer` functions.
+ *
+ * @private
+ * @param {*} value The value to compare.
+ * @param {*} other The other value to compare.
+ * @param {Function} [customizer] The function to customize comparing values.
+ * @param {boolean} [isLoose] Specify performing partial comparisons.
+ * @param {Array} [stackA] Tracks traversed `value` objects.
+ * @param {Array} [stackB] Tracks traversed `other` objects.
+ * @returns {boolean} Returns `true` if the values are equivalent, else `false`.
+ */
+function baseIsEqual(value, other, customizer, isLoose, stackA, stackB) {
+  if (value === other) {
+    return true;
+  }
+  if (value == null || other == null || (!isObject(value) && !isObjectLike(other))) {
+    return value !== value && other !== other;
+  }
+  return baseIsEqualDeep(value, other, baseIsEqual, customizer, isLoose, stackA, stackB);
+}
+
+module.exports = baseIsEqual;
+
+},{"29":29,"60":60,"71":71}],29:[function(require,module,exports){
+var equalArrays = require(46),
+    equalByTag = require(47),
+    equalObjects = require(48),
+    isArray = require(68),
+    isTypedArray = require(73);
+
+/** `Object#toString` result references. */
+var argsTag = '[object Arguments]',
+    arrayTag = '[object Array]',
+    objectTag = '[object Object]';
+
+/** Used for native method references. */
+var objectProto = Object.prototype;
+
+/** Used to check objects for own properties. */
+var hasOwnProperty = objectProto.hasOwnProperty;
+
+/**
+ * Used to resolve the [`toStringTag`](http://ecma-international.org/ecma-262/6.0/#sec-object.prototype.tostring)
+ * of values.
+ */
+var objToString = objectProto.toString;
+
+/**
+ * A specialized version of `baseIsEqual` for arrays and objects which performs
+ * deep comparisons and tracks traversed objects enabling objects with circular
+ * references to be compared.
+ *
+ * @private
+ * @param {Object} object The object to compare.
+ * @param {Object} other The other object to compare.
+ * @param {Function} equalFunc The function to determine equivalents of values.
+ * @param {Function} [customizer] The function to customize comparing objects.
+ * @param {boolean} [isLoose] Specify performing partial comparisons.
+ * @param {Array} [stackA=[]] Tracks traversed `value` objects.
+ * @param {Array} [stackB=[]] Tracks traversed `other` objects.
+ * @returns {boolean} Returns `true` if the objects are equivalent, else `false`.
+ */
+function baseIsEqualDeep(object, other, equalFunc, customizer, isLoose, stackA, stackB) {
+  var objIsArr = isArray(object),
+      othIsArr = isArray(other),
+      objTag = arrayTag,
+      othTag = arrayTag;
+
+  if (!objIsArr) {
+    objTag = objToString.call(object);
+    if (objTag == argsTag) {
+      objTag = objectTag;
+    } else if (objTag != objectTag) {
+      objIsArr = isTypedArray(object);
+    }
+  }
+  if (!othIsArr) {
+    othTag = objToString.call(other);
+    if (othTag == argsTag) {
+      othTag = objectTag;
+    } else if (othTag != objectTag) {
+      othIsArr = isTypedArray(other);
+    }
+  }
+  var objIsObj = objTag == objectTag,
+      othIsObj = othTag == objectTag,
+      isSameTag = objTag == othTag;
+
+  if (isSameTag && !(objIsArr || objIsObj)) {
+    return equalByTag(object, other, objTag);
+  }
+  if (!isLoose) {
+    var objIsWrapped = objIsObj && hasOwnProperty.call(object, '__wrapped__'),
+        othIsWrapped = othIsObj && hasOwnProperty.call(other, '__wrapped__');
+
+    if (objIsWrapped || othIsWrapped) {
+      return equalFunc(objIsWrapped ? object.value() : object, othIsWrapped ? other.value() : other, customizer, isLoose, stackA, stackB);
+    }
+  }
+  if (!isSameTag) {
+    return false;
+  }
+  // Assume cyclic values are equal.
+  // For more information on detecting circular references see https://es5.github.io/#JO.
+  stackA || (stackA = []);
+  stackB || (stackB = []);
+
+  var length = stackA.length;
+  while (length--) {
+    if (stackA[length] == object) {
+      return stackB[length] == other;
+    }
+  }
+  // Add `object` and `other` to the stack of traversed objects.
+  stackA.push(object);
+  stackB.push(other);
+
+  var result = (objIsArr ? equalArrays : equalObjects)(object, other, equalFunc, customizer, isLoose, stackA, stackB);
+
+  stackA.pop();
+  stackB.pop();
+
+  return result;
+}
+
+module.exports = baseIsEqualDeep;
+
+},{"46":46,"47":47,"48":48,"68":68,"73":73}],30:[function(require,module,exports){
+var baseIsEqual = require(28),
+    toObject = require(63);
+
+/**
+ * The base implementation of `_.isMatch` without support for callback
+ * shorthands and `this` binding.
+ *
+ * @private
+ * @param {Object} object The object to inspect.
+ * @param {Array} matchData The propery names, values, and compare flags to match.
+ * @param {Function} [customizer] The function to customize comparing objects.
+ * @returns {boolean} Returns `true` if `object` is a match, else `false`.
+ */
+function baseIsMatch(object, matchData, customizer) {
+  var index = matchData.length,
+      length = index,
+      noCustomizer = !customizer;
+
+  if (object == null) {
+    return !length;
+  }
+  object = toObject(object);
+  while (index--) {
+    var data = matchData[index];
+    if ((noCustomizer && data[2])
+          ? data[1] !== object[data[0]]
+          : !(data[0] in object)
+        ) {
+      return false;
+    }
+  }
+  while (++index < length) {
+    data = matchData[index];
+    var key = data[0],
+        objValue = object[key],
+        srcValue = data[1];
+
+    if (noCustomizer && data[2]) {
+      if (objValue === undefined && !(key in object)) {
+        return false;
+      }
+    } else {
+      var result = customizer ? customizer(objValue, srcValue, key) : undefined;
+      if (!(result === undefined ? baseIsEqual(srcValue, objValue, customizer, true) : result)) {
+        return false;
+      }
+    }
+  }
+  return true;
+}
+
+module.exports = baseIsMatch;
+
+},{"28":28,"63":63}],31:[function(require,module,exports){
+var baseEach = require(23),
+    isArrayLike = require(55);
+
+/**
+ * The base implementation of `_.map` without support for callback shorthands
+ * and `this` binding.
+ *
+ * @private
+ * @param {Array|Object|string} collection The collection to iterate over.
+ * @param {Function} iteratee The function invoked per iteration.
+ * @returns {Array} Returns the new mapped array.
+ */
+function baseMap(collection, iteratee) {
+  var index = -1,
+      result = isArrayLike(collection) ? Array(collection.length) : [];
+
+  baseEach(collection, function(value, key, collection) {
+    result[++index] = iteratee(value, key, collection);
+  });
+  return result;
+}
+
+module.exports = baseMap;
+
+},{"23":23,"55":55}],32:[function(require,module,exports){
+var baseIsMatch = require(30),
+    getMatchData = require(50),
+    toObject = require(63);
+
+/**
+ * The base implementation of `_.matches` which does not clone `source`.
+ *
+ * @private
+ * @param {Object} source The object of property values to match.
+ * @returns {Function} Returns the new function.
+ */
+function baseMatches(source) {
+  var matchData = getMatchData(source);
+  if (matchData.length == 1 && matchData[0][2]) {
+    var key = matchData[0][0],
+        value = matchData[0][1];
+
+    return function(object) {
+      if (object == null) {
+        return false;
+      }
+      return object[key] === value && (value !== undefined || (key in toObject(object)));
+    };
+  }
+  return function(object) {
+    return baseIsMatch(object, matchData);
+  };
+}
+
+module.exports = baseMatches;
+
+},{"30":30,"50":50,"63":63}],33:[function(require,module,exports){
+var baseGet = require(27),
+    baseIsEqual = require(28),
+    baseSlice = require(38),
+    isArray = require(68),
+    isKey = require(58),
+    isStrictComparable = require(61),
+    last = require(11),
+    toObject = require(63),
+    toPath = require(64);
+
+/**
+ * The base implementation of `_.matchesProperty` which does not clone `srcValue`.
+ *
+ * @private
+ * @param {string} path The path of the property to get.
+ * @param {*} srcValue The value to compare.
+ * @returns {Function} Returns the new function.
+ */
+function baseMatchesProperty(path, srcValue) {
+  var isArr = isArray(path),
+      isCommon = isKey(path) && isStrictComparable(srcValue),
+      pathKey = (path + '');
+
+  path = toPath(path);
+  return function(object) {
+    if (object == null) {
+      return false;
+    }
+    var key = pathKey;
+    object = toObject(object);
+    if ((isArr || !isCommon) && !(key in object)) {
+      object = path.length == 1 ? object : baseGet(object, baseSlice(path, 0, -1));
+      if (object == null) {
+        return false;
+      }
+      key = last(path);
+      object = toObject(object);
+    }
+    return object[key] === srcValue
+      ? (srcValue !== undefined || (key in object))
+      : baseIsEqual(srcValue, object[key], undefined, true);
+  };
+}
+
+module.exports = baseMatchesProperty;
+
+},{"11":11,"27":27,"28":28,"38":38,"58":58,"61":61,"63":63,"64":64,"68":68}],34:[function(require,module,exports){
+var arrayEach = require(16),
+    baseMergeDeep = require(35),
+    isArray = require(68),
+    isArrayLike = require(55),
+    isObject = require(71),
+    isObjectLike = require(60),
+    isTypedArray = require(73),
+    keys = require(75);
 
 /**
  * The base implementation of `_.merge` without support for argument juggling,
@@ -2723,14 +3222,14 @@ function baseMerge(object, source, customizer, stackA, stackB) {
 
 module.exports = baseMerge;
 
-},{"14":14,"23":23,"36":36,"40":40,"46":46,"49":49,"51":51,"53":53}],23:[function(require,module,exports){
-var arrayCopy = require(13),
-    isArguments = require(45),
-    isArray = require(46),
-    isArrayLike = require(36),
-    isPlainObject = require(50),
-    isTypedArray = require(51),
-    toPlainObject = require(52);
+},{"16":16,"35":35,"55":55,"60":60,"68":68,"71":71,"73":73,"75":75}],35:[function(require,module,exports){
+var arrayCopy = require(15),
+    isArguments = require(67),
+    isArray = require(68),
+    isArrayLike = require(55),
+    isPlainObject = require(72),
+    isTypedArray = require(73),
+    toPlainObject = require(74);
 
 /**
  * A specialized version of `baseMerge` for arrays and objects which performs
@@ -2792,7 +3291,7 @@ function baseMergeDeep(object, source, key, mergeFunc, customizer, stackA, stack
 
 module.exports = baseMergeDeep;
 
-},{"13":13,"36":36,"45":45,"46":46,"50":50,"51":51,"52":52}],24:[function(require,module,exports){
+},{"15":15,"55":55,"67":67,"68":68,"72":72,"73":73,"74":74}],36:[function(require,module,exports){
 /**
  * The base implementation of `_.property` without support for deep paths.
  *
@@ -2808,8 +3307,78 @@ function baseProperty(key) {
 
 module.exports = baseProperty;
 
-},{}],25:[function(require,module,exports){
-var identity = require(56);
+},{}],37:[function(require,module,exports){
+var baseGet = require(27),
+    toPath = require(64);
+
+/**
+ * A specialized version of `baseProperty` which supports deep paths.
+ *
+ * @private
+ * @param {Array|string} path The path of the property to get.
+ * @returns {Function} Returns the new function.
+ */
+function basePropertyDeep(path) {
+  var pathKey = (path + '');
+  path = toPath(path);
+  return function(object) {
+    return baseGet(object, path, pathKey);
+  };
+}
+
+module.exports = basePropertyDeep;
+
+},{"27":27,"64":64}],38:[function(require,module,exports){
+/**
+ * The base implementation of `_.slice` without an iteratee call guard.
+ *
+ * @private
+ * @param {Array} array The array to slice.
+ * @param {number} [start=0] The start position.
+ * @param {number} [end=array.length] The end position.
+ * @returns {Array} Returns the slice of `array`.
+ */
+function baseSlice(array, start, end) {
+  var index = -1,
+      length = array.length;
+
+  start = start == null ? 0 : (+start || 0);
+  if (start < 0) {
+    start = -start > length ? 0 : (length + start);
+  }
+  end = (end === undefined || end > length) ? length : (+end || 0);
+  if (end < 0) {
+    end += length;
+  }
+  length = start > end ? 0 : ((end - start) >>> 0);
+  start >>>= 0;
+
+  var result = Array(length);
+  while (++index < length) {
+    result[index] = array[index + start];
+  }
+  return result;
+}
+
+module.exports = baseSlice;
+
+},{}],39:[function(require,module,exports){
+/**
+ * Converts `value` to a string if it's not one. An empty string is returned
+ * for `null` or `undefined` values.
+ *
+ * @private
+ * @param {*} value The value to process.
+ * @returns {string} Returns the string.
+ */
+function baseToString(value) {
+  return value == null ? '' : (value + '');
+}
+
+module.exports = baseToString;
+
+},{}],40:[function(require,module,exports){
+var identity = require(79);
 
 /**
  * A specialized version of `baseCallback` which only supports `this` binding
@@ -2849,7 +3418,7 @@ function bindCallback(func, thisArg, argCount) {
 
 module.exports = bindCallback;
 
-},{"56":56}],26:[function(require,module,exports){
+},{"79":79}],41:[function(require,module,exports){
 (function (global){
 /** Native method references. */
 var ArrayBuffer = global.ArrayBuffer,
@@ -2873,10 +3442,10 @@ function bufferClone(buffer) {
 module.exports = bufferClone;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],27:[function(require,module,exports){
-var bindCallback = require(25),
-    isIterateeCall = require(38),
-    restParam = require(12);
+},{}],42:[function(require,module,exports){
+var bindCallback = require(40),
+    isIterateeCall = require(57),
+    restParam = require(14);
 
 /**
  * Creates a `_.assign`, `_.defaults`, or `_.merge` function.
@@ -2916,10 +3485,10 @@ function createAssigner(assigner) {
 
 module.exports = createAssigner;
 
-},{"12":12,"25":25,"38":38}],28:[function(require,module,exports){
-var getLength = require(31),
-    isLength = require(39),
-    toObject = require(42);
+},{"14":14,"40":40,"57":57}],43:[function(require,module,exports){
+var getLength = require(49),
+    isLength = require(59),
+    toObject = require(63);
 
 /**
  * Creates a `baseEach` or `baseEachRight` function.
@@ -2949,8 +3518,8 @@ function createBaseEach(eachFunc, fromRight) {
 
 module.exports = createBaseEach;
 
-},{"31":31,"39":39,"42":42}],29:[function(require,module,exports){
-var toObject = require(42);
+},{"49":49,"59":59,"63":63}],44:[function(require,module,exports){
+var toObject = require(63);
 
 /**
  * Creates a base function for `_.forIn` or `_.forInRight`.
@@ -2978,9 +3547,9 @@ function createBaseFor(fromRight) {
 
 module.exports = createBaseFor;
 
-},{"42":42}],30:[function(require,module,exports){
-var bindCallback = require(25),
-    isArray = require(46);
+},{"63":63}],45:[function(require,module,exports){
+var bindCallback = require(40),
+    isArray = require(68);
 
 /**
  * Creates a function for `_.forEach` or `_.forEachRight`.
@@ -3000,8 +3569,180 @@ function createForEach(arrayFunc, eachFunc) {
 
 module.exports = createForEach;
 
-},{"25":25,"46":46}],31:[function(require,module,exports){
-var baseProperty = require(24);
+},{"40":40,"68":68}],46:[function(require,module,exports){
+var arraySome = require(18);
+
+/**
+ * A specialized version of `baseIsEqualDeep` for arrays with support for
+ * partial deep comparisons.
+ *
+ * @private
+ * @param {Array} array The array to compare.
+ * @param {Array} other The other array to compare.
+ * @param {Function} equalFunc The function to determine equivalents of values.
+ * @param {Function} [customizer] The function to customize comparing arrays.
+ * @param {boolean} [isLoose] Specify performing partial comparisons.
+ * @param {Array} [stackA] Tracks traversed `value` objects.
+ * @param {Array} [stackB] Tracks traversed `other` objects.
+ * @returns {boolean} Returns `true` if the arrays are equivalent, else `false`.
+ */
+function equalArrays(array, other, equalFunc, customizer, isLoose, stackA, stackB) {
+  var index = -1,
+      arrLength = array.length,
+      othLength = other.length;
+
+  if (arrLength != othLength && !(isLoose && othLength > arrLength)) {
+    return false;
+  }
+  // Ignore non-index properties.
+  while (++index < arrLength) {
+    var arrValue = array[index],
+        othValue = other[index],
+        result = customizer ? customizer(isLoose ? othValue : arrValue, isLoose ? arrValue : othValue, index) : undefined;
+
+    if (result !== undefined) {
+      if (result) {
+        continue;
+      }
+      return false;
+    }
+    // Recursively compare arrays (susceptible to call stack limits).
+    if (isLoose) {
+      if (!arraySome(other, function(othValue) {
+            return arrValue === othValue || equalFunc(arrValue, othValue, customizer, isLoose, stackA, stackB);
+          })) {
+        return false;
+      }
+    } else if (!(arrValue === othValue || equalFunc(arrValue, othValue, customizer, isLoose, stackA, stackB))) {
+      return false;
+    }
+  }
+  return true;
+}
+
+module.exports = equalArrays;
+
+},{"18":18}],47:[function(require,module,exports){
+/** `Object#toString` result references. */
+var boolTag = '[object Boolean]',
+    dateTag = '[object Date]',
+    errorTag = '[object Error]',
+    numberTag = '[object Number]',
+    regexpTag = '[object RegExp]',
+    stringTag = '[object String]';
+
+/**
+ * A specialized version of `baseIsEqualDeep` for comparing objects of
+ * the same `toStringTag`.
+ *
+ * **Note:** This function only supports comparing values with tags of
+ * `Boolean`, `Date`, `Error`, `Number`, `RegExp`, or `String`.
+ *
+ * @private
+ * @param {Object} object The object to compare.
+ * @param {Object} other The other object to compare.
+ * @param {string} tag The `toStringTag` of the objects to compare.
+ * @returns {boolean} Returns `true` if the objects are equivalent, else `false`.
+ */
+function equalByTag(object, other, tag) {
+  switch (tag) {
+    case boolTag:
+    case dateTag:
+      // Coerce dates and booleans to numbers, dates to milliseconds and booleans
+      // to `1` or `0` treating invalid dates coerced to `NaN` as not equal.
+      return +object == +other;
+
+    case errorTag:
+      return object.name == other.name && object.message == other.message;
+
+    case numberTag:
+      // Treat `NaN` vs. `NaN` as equal.
+      return (object != +object)
+        ? other != +other
+        : object == +other;
+
+    case regexpTag:
+    case stringTag:
+      // Coerce regexes to strings and treat strings primitives and string
+      // objects as equal. See https://es5.github.io/#x15.10.6.4 for more details.
+      return object == (other + '');
+  }
+  return false;
+}
+
+module.exports = equalByTag;
+
+},{}],48:[function(require,module,exports){
+var keys = require(75);
+
+/** Used for native method references. */
+var objectProto = Object.prototype;
+
+/** Used to check objects for own properties. */
+var hasOwnProperty = objectProto.hasOwnProperty;
+
+/**
+ * A specialized version of `baseIsEqualDeep` for objects with support for
+ * partial deep comparisons.
+ *
+ * @private
+ * @param {Object} object The object to compare.
+ * @param {Object} other The other object to compare.
+ * @param {Function} equalFunc The function to determine equivalents of values.
+ * @param {Function} [customizer] The function to customize comparing values.
+ * @param {boolean} [isLoose] Specify performing partial comparisons.
+ * @param {Array} [stackA] Tracks traversed `value` objects.
+ * @param {Array} [stackB] Tracks traversed `other` objects.
+ * @returns {boolean} Returns `true` if the objects are equivalent, else `false`.
+ */
+function equalObjects(object, other, equalFunc, customizer, isLoose, stackA, stackB) {
+  var objProps = keys(object),
+      objLength = objProps.length,
+      othProps = keys(other),
+      othLength = othProps.length;
+
+  if (objLength != othLength && !isLoose) {
+    return false;
+  }
+  var index = objLength;
+  while (index--) {
+    var key = objProps[index];
+    if (!(isLoose ? key in other : hasOwnProperty.call(other, key))) {
+      return false;
+    }
+  }
+  var skipCtor = isLoose;
+  while (++index < objLength) {
+    key = objProps[index];
+    var objValue = object[key],
+        othValue = other[key],
+        result = customizer ? customizer(isLoose ? othValue : objValue, isLoose? objValue : othValue, key) : undefined;
+
+    // Recursively compare objects (susceptible to call stack limits).
+    if (!(result === undefined ? equalFunc(objValue, othValue, customizer, isLoose, stackA, stackB) : result)) {
+      return false;
+    }
+    skipCtor || (skipCtor = key == 'constructor');
+  }
+  if (!skipCtor) {
+    var objCtor = object.constructor,
+        othCtor = other.constructor;
+
+    // Non `Object` object instances with different constructors are not equal.
+    if (objCtor != othCtor &&
+        ('constructor' in object && 'constructor' in other) &&
+        !(typeof objCtor == 'function' && objCtor instanceof objCtor &&
+          typeof othCtor == 'function' && othCtor instanceof othCtor)) {
+      return false;
+    }
+  }
+  return true;
+}
+
+module.exports = equalObjects;
+
+},{"75":75}],49:[function(require,module,exports){
+var baseProperty = require(36);
 
 /**
  * Gets the "length" property value of `object`.
@@ -3017,8 +3758,31 @@ var getLength = baseProperty('length');
 
 module.exports = getLength;
 
-},{"24":24}],32:[function(require,module,exports){
-var isNative = require(48);
+},{"36":36}],50:[function(require,module,exports){
+var isStrictComparable = require(61),
+    pairs = require(78);
+
+/**
+ * Gets the propery names, values, and compare flags of `object`.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @returns {Array} Returns the match data of `object`.
+ */
+function getMatchData(object) {
+  var result = pairs(object),
+      length = result.length;
+
+  while (length--) {
+    result[length][2] = isStrictComparable(result[length][1]);
+  }
+  return result;
+}
+
+module.exports = getMatchData;
+
+},{"61":61,"78":78}],51:[function(require,module,exports){
+var isNative = require(70);
 
 /**
  * Gets the native function at `key` of `object`.
@@ -3035,7 +3799,7 @@ function getNative(object, key) {
 
 module.exports = getNative;
 
-},{"48":48}],33:[function(require,module,exports){
+},{"70":70}],52:[function(require,module,exports){
 /** Used for native method references. */
 var objectProto = Object.prototype;
 
@@ -3063,8 +3827,8 @@ function initCloneArray(array) {
 
 module.exports = initCloneArray;
 
-},{}],34:[function(require,module,exports){
-var bufferClone = require(26);
+},{}],53:[function(require,module,exports){
+var bufferClone = require(41);
 
 /** `Object#toString` result references. */
 var boolTag = '[object Boolean]',
@@ -3128,7 +3892,7 @@ function initCloneByTag(object, tag, isDeep) {
 
 module.exports = initCloneByTag;
 
-},{"26":26}],35:[function(require,module,exports){
+},{"41":41}],54:[function(require,module,exports){
 /**
  * Initializes an object clone.
  *
@@ -3146,9 +3910,9 @@ function initCloneObject(object) {
 
 module.exports = initCloneObject;
 
-},{}],36:[function(require,module,exports){
-var getLength = require(31),
-    isLength = require(39);
+},{}],55:[function(require,module,exports){
+var getLength = require(49),
+    isLength = require(59);
 
 /**
  * Checks if `value` is array-like.
@@ -3163,7 +3927,7 @@ function isArrayLike(value) {
 
 module.exports = isArrayLike;
 
-},{"31":31,"39":39}],37:[function(require,module,exports){
+},{"49":49,"59":59}],56:[function(require,module,exports){
 /** Used to detect unsigned integer values. */
 var reIsUint = /^\d+$/;
 
@@ -3189,10 +3953,10 @@ function isIndex(value, length) {
 
 module.exports = isIndex;
 
-},{}],38:[function(require,module,exports){
-var isArrayLike = require(36),
-    isIndex = require(37),
-    isObject = require(49);
+},{}],57:[function(require,module,exports){
+var isArrayLike = require(55),
+    isIndex = require(56),
+    isObject = require(71);
 
 /**
  * Checks if the provided arguments are from an iteratee call.
@@ -3219,7 +3983,37 @@ function isIterateeCall(value, index, object) {
 
 module.exports = isIterateeCall;
 
-},{"36":36,"37":37,"49":49}],39:[function(require,module,exports){
+},{"55":55,"56":56,"71":71}],58:[function(require,module,exports){
+var isArray = require(68),
+    toObject = require(63);
+
+/** Used to match property names within property paths. */
+var reIsDeepProp = /\.|\[(?:[^[\]]*|(["'])(?:(?!\1)[^\n\\]|\\.)*?\1)\]/,
+    reIsPlainProp = /^\w*$/;
+
+/**
+ * Checks if `value` is a property name and not a property path.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @param {Object} [object] The object to query keys on.
+ * @returns {boolean} Returns `true` if `value` is a property name, else `false`.
+ */
+function isKey(value, object) {
+  var type = typeof value;
+  if ((type == 'string' && reIsPlainProp.test(value)) || type == 'number') {
+    return true;
+  }
+  if (isArray(value)) {
+    return false;
+  }
+  var result = !reIsDeepProp.test(value);
+  return result || (object != null && value in toObject(object));
+}
+
+module.exports = isKey;
+
+},{"63":63,"68":68}],59:[function(require,module,exports){
 /**
  * Used as the [maximum length](http://ecma-international.org/ecma-262/6.0/#sec-number.max_safe_integer)
  * of an array-like value.
@@ -3241,7 +4035,7 @@ function isLength(value) {
 
 module.exports = isLength;
 
-},{}],40:[function(require,module,exports){
+},{}],60:[function(require,module,exports){
 /**
  * Checks if `value` is object-like.
  *
@@ -3255,12 +4049,29 @@ function isObjectLike(value) {
 
 module.exports = isObjectLike;
 
-},{}],41:[function(require,module,exports){
-var isArguments = require(45),
-    isArray = require(46),
-    isIndex = require(37),
-    isLength = require(39),
-    keysIn = require(54);
+},{}],61:[function(require,module,exports){
+var isObject = require(71);
+
+/**
+ * Checks if `value` is suitable for strict equality comparisons, i.e. `===`.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` if suitable for strict
+ *  equality comparisons, else `false`.
+ */
+function isStrictComparable(value) {
+  return value === value && !isObject(value);
+}
+
+module.exports = isStrictComparable;
+
+},{"71":71}],62:[function(require,module,exports){
+var isArguments = require(67),
+    isArray = require(68),
+    isIndex = require(56),
+    isLength = require(59),
+    keysIn = require(76);
 
 /** Used for native method references. */
 var objectProto = Object.prototype;
@@ -3298,8 +4109,8 @@ function shimKeys(object) {
 
 module.exports = shimKeys;
 
-},{"37":37,"39":39,"45":45,"46":46,"54":54}],42:[function(require,module,exports){
-var isObject = require(49);
+},{"56":56,"59":59,"67":67,"68":68,"76":76}],63:[function(require,module,exports){
+var isObject = require(71);
 
 /**
  * Converts `value` to an object if it's not one.
@@ -3314,10 +4125,40 @@ function toObject(value) {
 
 module.exports = toObject;
 
-},{"49":49}],43:[function(require,module,exports){
-var baseClone = require(16),
-    bindCallback = require(25),
-    isIterateeCall = require(38);
+},{"71":71}],64:[function(require,module,exports){
+var baseToString = require(39),
+    isArray = require(68);
+
+/** Used to match property names within property paths. */
+var rePropName = /[^.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\n\\]|\\.)*?)\2)\]/g;
+
+/** Used to match backslashes in property paths. */
+var reEscapeChar = /\\(\\)?/g;
+
+/**
+ * Converts `value` to property path array if it's not one.
+ *
+ * @private
+ * @param {*} value The value to process.
+ * @returns {Array} Returns the property path array.
+ */
+function toPath(value) {
+  if (isArray(value)) {
+    return value;
+  }
+  var result = [];
+  baseToString(value).replace(rePropName, function(match, number, quote, string) {
+    result.push(quote ? string.replace(reEscapeChar, '$1') : (number || match));
+  });
+  return result;
+}
+
+module.exports = toPath;
+
+},{"39":39,"68":68}],65:[function(require,module,exports){
+var baseClone = require(21),
+    bindCallback = require(40),
+    isIterateeCall = require(57);
 
 /**
  * Creates a clone of `value`. If `isDeep` is `true` nested objects are cloned,
@@ -3386,9 +4227,9 @@ function clone(value, isDeep, customizer, thisArg) {
 
 module.exports = clone;
 
-},{"16":16,"25":25,"38":38}],44:[function(require,module,exports){
-var baseClone = require(16),
-    bindCallback = require(25);
+},{"21":21,"40":40,"57":57}],66:[function(require,module,exports){
+var baseClone = require(21),
+    bindCallback = require(40);
 
 /**
  * Creates a deep clone of `value`. If `customizer` is provided it's invoked
@@ -3443,9 +4284,9 @@ function cloneDeep(value, customizer, thisArg) {
 
 module.exports = cloneDeep;
 
-},{"16":16,"25":25}],45:[function(require,module,exports){
-var isArrayLike = require(36),
-    isObjectLike = require(40);
+},{"21":21,"40":40}],67:[function(require,module,exports){
+var isArrayLike = require(55),
+    isObjectLike = require(60);
 
 /** Used for native method references. */
 var objectProto = Object.prototype;
@@ -3479,10 +4320,10 @@ function isArguments(value) {
 
 module.exports = isArguments;
 
-},{"36":36,"40":40}],46:[function(require,module,exports){
-var getNative = require(32),
-    isLength = require(39),
-    isObjectLike = require(40);
+},{"55":55,"60":60}],68:[function(require,module,exports){
+var getNative = require(51),
+    isLength = require(59),
+    isObjectLike = require(60);
 
 /** `Object#toString` result references. */
 var arrayTag = '[object Array]';
@@ -3521,8 +4362,8 @@ var isArray = nativeIsArray || function(value) {
 
 module.exports = isArray;
 
-},{"32":32,"39":39,"40":40}],47:[function(require,module,exports){
-var isObject = require(49);
+},{"51":51,"59":59,"60":60}],69:[function(require,module,exports){
+var isObject = require(71);
 
 /** `Object#toString` result references. */
 var funcTag = '[object Function]';
@@ -3561,9 +4402,9 @@ function isFunction(value) {
 
 module.exports = isFunction;
 
-},{"49":49}],48:[function(require,module,exports){
-var isFunction = require(47),
-    isObjectLike = require(40);
+},{"71":71}],70:[function(require,module,exports){
+var isFunction = require(69),
+    isObjectLike = require(60);
 
 /** Used to detect host constructors (Safari > 5). */
 var reIsHostCtor = /^\[object .+?Constructor\]$/;
@@ -3611,7 +4452,7 @@ function isNative(value) {
 
 module.exports = isNative;
 
-},{"40":40,"47":47}],49:[function(require,module,exports){
+},{"60":60,"69":69}],71:[function(require,module,exports){
 /**
  * Checks if `value` is the [language type](https://es5.github.io/#x8) of `Object`.
  * (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
@@ -3641,10 +4482,10 @@ function isObject(value) {
 
 module.exports = isObject;
 
-},{}],50:[function(require,module,exports){
-var baseForIn = require(20),
-    isArguments = require(45),
-    isObjectLike = require(40);
+},{}],72:[function(require,module,exports){
+var baseForIn = require(25),
+    isArguments = require(67),
+    isObjectLike = require(60);
 
 /** `Object#toString` result references. */
 var objectTag = '[object Object]';
@@ -3714,9 +4555,9 @@ function isPlainObject(value) {
 
 module.exports = isPlainObject;
 
-},{"20":20,"40":40,"45":45}],51:[function(require,module,exports){
-var isLength = require(39),
-    isObjectLike = require(40);
+},{"25":25,"60":60,"67":67}],73:[function(require,module,exports){
+var isLength = require(59),
+    isObjectLike = require(60);
 
 /** `Object#toString` result references. */
 var argsTag = '[object Arguments]',
@@ -3790,9 +4631,9 @@ function isTypedArray(value) {
 
 module.exports = isTypedArray;
 
-},{"39":39,"40":40}],52:[function(require,module,exports){
-var baseCopy = require(17),
-    keysIn = require(54);
+},{"59":59,"60":60}],74:[function(require,module,exports){
+var baseCopy = require(22),
+    keysIn = require(76);
 
 /**
  * Converts `value` to a plain object flattening inherited enumerable
@@ -3823,11 +4664,11 @@ function toPlainObject(value) {
 
 module.exports = toPlainObject;
 
-},{"17":17,"54":54}],53:[function(require,module,exports){
-var getNative = require(32),
-    isArrayLike = require(36),
-    isObject = require(49),
-    shimKeys = require(41);
+},{"22":22,"76":76}],75:[function(require,module,exports){
+var getNative = require(51),
+    isArrayLike = require(55),
+    isObject = require(71),
+    shimKeys = require(62);
 
 /* Native method references for those with the same name as other `lodash` methods. */
 var nativeKeys = getNative(Object, 'keys');
@@ -3870,12 +4711,12 @@ var keys = !nativeKeys ? shimKeys : function(object) {
 
 module.exports = keys;
 
-},{"32":32,"36":36,"41":41,"49":49}],54:[function(require,module,exports){
-var isArguments = require(45),
-    isArray = require(46),
-    isIndex = require(37),
-    isLength = require(39),
-    isObject = require(49);
+},{"51":51,"55":55,"62":62,"71":71}],76:[function(require,module,exports){
+var isArguments = require(67),
+    isArray = require(68),
+    isIndex = require(56),
+    isLength = require(59),
+    isObject = require(71);
 
 /** Used for native method references. */
 var objectProto = Object.prototype;
@@ -3936,9 +4777,9 @@ function keysIn(object) {
 
 module.exports = keysIn;
 
-},{"37":37,"39":39,"45":45,"46":46,"49":49}],55:[function(require,module,exports){
-var baseMerge = require(22),
-    createAssigner = require(27);
+},{"56":56,"59":59,"67":67,"68":68,"71":71}],77:[function(require,module,exports){
+var baseMerge = require(34),
+    createAssigner = require(42);
 
 /**
  * Recursively merges own enumerable properties of the source object(s), that
@@ -3992,7 +4833,42 @@ var merge = createAssigner(baseMerge);
 
 module.exports = merge;
 
-},{"22":22,"27":27}],56:[function(require,module,exports){
+},{"34":34,"42":42}],78:[function(require,module,exports){
+var keys = require(75),
+    toObject = require(63);
+
+/**
+ * Creates a two dimensional array of the key-value pairs for `object`,
+ * e.g. `[[key1, value1], [key2, value2]]`.
+ *
+ * @static
+ * @memberOf _
+ * @category Object
+ * @param {Object} object The object to query.
+ * @returns {Array} Returns the new array of key-value pairs.
+ * @example
+ *
+ * _.pairs({ 'barney': 36, 'fred': 40 });
+ * // => [['barney', 36], ['fred', 40]] (iteration order is not guaranteed)
+ */
+function pairs(object) {
+  object = toObject(object);
+
+  var index = -1,
+      props = keys(object),
+      length = props.length,
+      result = Array(length);
+
+  while (++index < length) {
+    var key = props[index];
+    result[index] = [key, object[key]];
+  }
+  return result;
+}
+
+module.exports = pairs;
+
+},{"63":63,"75":75}],79:[function(require,module,exports){
 /**
  * This method returns the first argument provided to it.
  *
@@ -4014,12 +4890,45 @@ function identity(value) {
 
 module.exports = identity;
 
-},{}],57:[function(require,module,exports){
+},{}],80:[function(require,module,exports){
+var baseProperty = require(36),
+    basePropertyDeep = require(37),
+    isKey = require(58);
+
+/**
+ * Creates a function that returns the property value at `path` on a
+ * given object.
+ *
+ * @static
+ * @memberOf _
+ * @category Utility
+ * @param {Array|string} path The path of the property to get.
+ * @returns {Function} Returns the new function.
+ * @example
+ *
+ * var objects = [
+ *   { 'a': { 'b': { 'c': 2 } } },
+ *   { 'a': { 'b': { 'c': 1 } } }
+ * ];
+ *
+ * _.map(objects, _.property('a.b.c'));
+ * // => [2, 1]
+ *
+ * _.pluck(_.sortBy(objects, _.property(['a', 'b', 'c'])), 'a.b.c');
+ * // => [1, 2]
+ */
+function property(path) {
+  return isKey(path) ? baseProperty(path) : basePropertyDeep(path);
+}
+
+module.exports = property;
+
+},{"36":36,"37":37,"58":58}],81:[function(require,module,exports){
 'use strict';
 
 module.exports = AlgoliaSearch;
 
-var errors = require(64);
+var errors = require(88);
 
 /*
  * Algolia Search library initialization
@@ -4049,8 +4958,9 @@ var errors = require(64);
 function AlgoliaSearch(applicationID, apiKey, opts) {
   var debug = require(6)('algoliasearch');
 
-  var clone = require(43);
-  var isArray = require(46);
+  var clone = require(65);
+  var isArray = require(68);
+  var map = require(13);
 
   var usage = 'Usage: algoliasearch(applicationID, apiKey, opts)';
 
@@ -4328,7 +5238,7 @@ AlgoliaSearch.prototype = {
    * @see {@link https://www.algolia.com/doc/rest_api#AddKey|Algolia REST API Documentation}
    */
   addUserKey: function(acls, params, callback) {
-    var isArray = require(46);
+    var isArray = require(68);
     var usage = 'Usage: client.addUserKey(arrayOfAcls[, params, callback])';
 
     if (!isArray(acls)) {
@@ -4412,7 +5322,7 @@ AlgoliaSearch.prototype = {
    * @see {@link https://www.algolia.com/doc/rest_api#UpdateIndexKey|Algolia REST API Documentation}
    */
   updateUserKey: function(key, acls, params, callback) {
-    var isArray = require(46);
+    var isArray = require(68);
     var usage = 'Usage: client.updateUserKey(key, arrayOfAcls[, params, callback])';
 
     if (!isArray(acls)) {
@@ -4540,7 +5450,9 @@ AlgoliaSearch.prototype = {
    * @return {Promise|undefined} Returns a promise if no callback given
    */
   search: function(queries, callback) {
-    var isArray = require(46);
+    var isArray = require(68);
+    var map = require(13);
+
     var usage = 'Usage: client.search(arrayOfQueries[, callback])';
 
     if (!isArray(queries)) {
@@ -4567,12 +5479,27 @@ AlgoliaSearch.prototype = {
       })
     };
 
+    var JSONPParams = map(postObj.requests, function prepareJSONPParams(request, requestId) {
+      return requestId + '=' +
+        encodeURIComponent(
+          '/1/indexes/' + encodeURIComponent(request.indexName) + '?' +
+          request.params
+        );
+    }).join('&');
+
     return this._jsonRequest({
       cache: this.cache,
       method: 'POST',
       url: '/1/indexes/*/queries',
       body: postObj,
       hostType: 'read',
+      fallback: {
+        method: 'GET',
+        url: '/1/indexes/*',
+        body: {
+          params: JSONPParams
+        }
+      },
       callback: callback
     });
   },
@@ -4611,7 +5538,7 @@ AlgoliaSearch.prototype = {
    * }], cb)
    */
   batch: function(operations, callback) {
-    var isArray = require(46);
+    var isArray = require(68);
     var usage = 'Usage: client.batch(operations[, callback])';
 
     if (!isArray(operations)) {
@@ -4671,48 +5598,21 @@ AlgoliaSearch.prototype = {
     this._ua += ';' + algoliaAgent;
   },
 
-  _sendQueriesBatch: function(params, callback) {
-    function prepareParams() {
-      var reqParams = '';
-      for (var i = 0; i < params.requests.length; ++i) {
-        var q = '/1/indexes/' +
-          encodeURIComponent(params.requests[i].indexName) +
-          '?' + params.requests[i].params;
-        reqParams += i + '=' + encodeURIComponent(q) + '&';
-      }
-      return reqParams;
-    }
-
-    return this._jsonRequest({
-      cache: this.cache,
-      method: 'POST',
-      url: '/1/indexes/*/queries',
-      body: params,
-      hostType: 'read',
-      fallback: {
-        method: 'GET',
-        url: '/1/indexes/*',
-        body: {
-          params: prepareParams()
-        }
-      },
-      callback: callback
-    });
-  },
   /*
    * Wrapper that try all hosts to maximize the quality of service
    */
-  _jsonRequest: function(opts) {
-    var requestDebug = require(6)('algoliasearch:' + opts.url);
+  _jsonRequest: function(initialOpts) {
+    var requestDebug = require(6)('algoliasearch:' + initialOpts.url);
 
     var body;
-    var cache = opts.cache;
+    var cache = initialOpts.cache;
     var client = this;
     var tries = 0;
     var usingFallback = false;
+    var hasFallback = client._request.fallback && initialOpts.fallback;
 
-    if (opts.body !== undefined) {
-      body = safeJSONStringify(opts.body);
+    if (initialOpts.body !== undefined) {
+      body = safeJSONStringify(initialOpts.body);
     }
 
     requestDebug('request start');
@@ -4721,7 +5621,7 @@ AlgoliaSearch.prototype = {
       var cacheID;
 
       if (client._useCache) {
-        cacheID = opts.url;
+        cacheID = initialOpts.url;
       }
 
       // as we sometime use POST requests to pass parameters (like query='aa'),
@@ -4737,11 +5637,8 @@ AlgoliaSearch.prototype = {
       }
 
       // if we reached max tries
-      if (tries >= client.hosts[opts.hostType].length ||
-        // or we need to switch to fallback
-        client.useFallback && !usingFallback) {
-        // and there's no fallback or we are already using a fallback
-        if (!opts.fallback || !client._request.fallback || usingFallback) {
+      if (tries >= client.hosts[initialOpts.hostType].length) {
+        if (!hasFallback || usingFallback) {
           requestDebug('could not get any response');
           // then stop
           return client._promise.reject(new errors.AlgoliaSearchError(
@@ -4757,23 +5654,23 @@ AlgoliaSearch.prototype = {
         tries = 0;
 
         // method, url and body are fallback dependent
-        reqOpts.method = opts.fallback.method;
-        reqOpts.url = opts.fallback.url;
-        reqOpts.jsonBody = opts.fallback.body;
+        reqOpts.method = initialOpts.fallback.method;
+        reqOpts.url = initialOpts.fallback.url;
+        reqOpts.jsonBody = initialOpts.fallback.body;
         if (reqOpts.jsonBody) {
           reqOpts.body = safeJSONStringify(reqOpts.jsonBody);
         }
 
         reqOpts.timeout = client.requestTimeout * (tries + 1);
-        client.hostIndex[opts.hostType] = 0;
+        client.hostIndex[initialOpts.hostType] = 0;
         usingFallback = true; // the current request is now using fallback
         return doRequest(client._request.fallback, reqOpts);
       }
 
-      var url = client.hosts[opts.hostType][client.hostIndex[opts.hostType]] + reqOpts.url;
+      var url = client.hosts[initialOpts.hostType][client.hostIndex[initialOpts.hostType]] + reqOpts.url;
       var options = {
-        body: body,
-        jsonBody: opts.body,
+        body: reqOpts.body,
+        jsonBody: reqOpts.jsonBody,
         method: reqOpts.method,
         headers: client._computeRequestHeaders(),
         timeout: reqOpts.timeout,
@@ -4867,57 +5764,51 @@ AlgoliaSearch.prototype = {
           err instanceof errors.UnparsableJSON ||
 
           // max tries and already using fallback or no fallback
-          tries >= client.hosts[opts.hostType].length &&
-          (usingFallback || !opts.fallback || !client._request.fallback)) {
+          tries >= client.hosts[initialOpts.hostType].length &&
+          (usingFallback || !hasFallback)) {
           // stop request implementation for this command
           return client._promise.reject(err);
         }
 
-        client.hostIndex[opts.hostType] = ++client.hostIndex[opts.hostType] % client.hosts[opts.hostType].length;
+        client.hostIndex[initialOpts.hostType] = ++client.hostIndex[initialOpts.hostType] % client.hosts[initialOpts.hostType].length;
 
         if (err instanceof errors.RequestTimeout) {
           return retryRequest();
-        } else if (client._request.fallback && !client.useFallback) {
-          // if any error occured but timeout, use fallback for the rest
-          // of the session
-          client.useFallback = true;
+        } else if (!usingFallback) {
+          // next request loop, force using fallback for this request
+          tries = Infinity;
         }
 
         return doRequest(requester, reqOpts);
       }
 
       function retryRequest() {
-        client.hostIndex[opts.hostType] = ++client.hostIndex[opts.hostType] % client.hosts[opts.hostType].length;
+        client.hostIndex[initialOpts.hostType] = ++client.hostIndex[initialOpts.hostType] % client.hosts[initialOpts.hostType].length;
         reqOpts.timeout = client.requestTimeout * (tries + 1);
         return doRequest(requester, reqOpts);
       }
     }
 
-    // we can use a fallback if forced AND fallback parameters are available
-    var useFallback = client.useFallback && opts.fallback;
-    var requestOptions = useFallback ? opts.fallback : opts;
-
     var promise = doRequest(
-      // set the requester
-      useFallback ? client._request.fallback : client._request, {
-        url: requestOptions.url,
-        method: requestOptions.method,
+      client._request, {
+        url: initialOpts.url,
+        method: initialOpts.method,
         body: body,
-        jsonBody: opts.body,
+        jsonBody: initialOpts.body,
         timeout: client.requestTimeout * (tries + 1)
       }
     );
 
     // either we have a callback
     // either we are using promises
-    if (opts.callback) {
+    if (initialOpts.callback) {
       promise.then(function okCb(content) {
         exitPromise(function() {
-          opts.callback(null, content);
+          initialOpts.callback(null, content);
         }, client._setTimeout || setTimeout);
       }, function nookCb(err) {
         exitPromise(function() {
-          opts.callback(err);
+          initialOpts.callback(err);
         }, client._setTimeout || setTimeout);
       });
     } else {
@@ -4929,7 +5820,7 @@ AlgoliaSearch.prototype = {
   * Transform search param object in query string
   */
   _getSearchParams: function(args, params) {
-    if (this._isUndefined(args) || args === null) {
+    if (args === undefined || args === null) {
       return params;
     }
     for (var key in args) {
@@ -4941,12 +5832,8 @@ AlgoliaSearch.prototype = {
     return params;
   },
 
-  _isUndefined: function(obj) {
-    return obj === void 0;
-  },
-
   _computeRequestHeaders: function() {
-    var forEach = require(11);
+    var forEach = require(12);
 
     var requestHeaders = {
       'x-algolia-api-key': this.apiKey,
@@ -5021,7 +5908,7 @@ AlgoliaSearch.prototype.Index.prototype = {
    *  content: the server answer that updateAt and taskID
    */
   addObjects: function(objects, callback) {
-    var isArray = require(46);
+    var isArray = require(68);
     var usage = 'Usage: index.addObjects(arrayOfObjects[, callback])';
 
     if (!isArray(objects)) {
@@ -5089,7 +5976,9 @@ AlgoliaSearch.prototype.Index.prototype = {
    * @param objectIDs the array of unique identifier of objects to retrieve
    */
   getObjects: function(objectIDs, attributesToRetrieve, callback) {
-    var isArray = require(46);
+    var isArray = require(68);
+    var map = require(13);
+
     var usage = 'Usage: index.getObjects(arrayOfObjectIDs[, callback])';
 
     if (!isArray(objectIDs)) {
@@ -5155,7 +6044,7 @@ AlgoliaSearch.prototype.Index.prototype = {
    *  content: the server answer that updateAt and taskID
    */
   partialUpdateObjects: function(objects, callback) {
-    var isArray = require(46);
+    var isArray = require(68);
     var usage = 'Usage: index.partialUpdateObjects(arrayOfObjects[, callback])';
 
     if (!isArray(objects)) {
@@ -5209,7 +6098,7 @@ AlgoliaSearch.prototype.Index.prototype = {
    *  content: the server answer that updateAt and taskID
    */
   saveObjects: function(objects, callback) {
-    var isArray = require(46);
+    var isArray = require(68);
     var usage = 'Usage: index.saveObjects(arrayOfObjects[, callback])';
 
     if (!isArray(objects)) {
@@ -5272,7 +6161,9 @@ AlgoliaSearch.prototype.Index.prototype = {
    *  content: the server answer that contains 3 elements: createAt, taskId and objectID
    */
   deleteObjects: function(objectIDs, callback) {
-    var isArray = require(46);
+    var isArray = require(68);
+    var map = require(13);
+
     var usage = 'Usage: index.deleteObjects(arrayOfObjectIDs[, callback])';
 
     if (!isArray(objectIDs)) {
@@ -5309,7 +6200,8 @@ AlgoliaSearch.prototype.Index.prototype = {
    *  error: null or Error('message')
    */
   deleteByQuery: function(query, params, callback) {
-    var clone = require(43);
+    var clone = require(65);
+    var map = require(13);
 
     var indexObj = this;
     var client = indexObj.as;
@@ -5509,7 +6401,7 @@ AlgoliaSearch.prototype.Index.prototype = {
   // pre 3.5.0 usage, backward compatible
   // browse: function(page, hitsPerPage, callback) {
   browse: function(query, queryParameters, callback) {
-    var merge = require(55);
+    var merge = require(77);
 
     var indexObj = this;
 
@@ -5628,9 +6520,9 @@ AlgoliaSearch.prototype.Index.prototype = {
       query = undefined;
     }
 
-    var merge = require(55);
+    var merge = require(77);
 
-    var IndexBrowser = require(58);
+    var IndexBrowser = require(82);
 
     var browser = new IndexBrowser();
     var client = this.as;
@@ -5980,7 +6872,7 @@ AlgoliaSearch.prototype.Index.prototype = {
    * @see {@link https://www.algolia.com/doc/rest_api#AddIndexKey|Algolia REST API Documentation}
    */
   addUserKey: function(acls, params, callback) {
-    var isArray = require(46);
+    var isArray = require(68);
     var usage = 'Usage: index.addUserKey(arrayOfAcls[, params, callback])';
 
     if (!isArray(acls)) {
@@ -6063,7 +6955,7 @@ AlgoliaSearch.prototype.Index.prototype = {
    * @see {@link https://www.algolia.com/doc/rest_api#UpdateIndexKey|Algolia REST API Documentation}
    */
   updateUserKey: function(key, acls, params, callback) {
-    var isArray = require(46);
+    var isArray = require(68);
     var usage = 'Usage: index.updateUserKey(key, arrayOfAcls[, params, callback])';
 
     if (!isArray(acls)) {
@@ -6122,16 +7014,6 @@ AlgoliaSearch.prototype.Index.prototype = {
   typeAheadArgs: null,
   typeAheadValueOption: null
 };
-
-// extracted from https://github.com/component/map/blob/master/index.js
-// without the crazy toFunction thing
-function map(arr, fn) {
-  var ret = [];
-  for (var i = 0; i < arr.length; ++i) {
-    ret.push(fn(arr[i], i));
-  }
-  return ret;
-}
 
 function prepareHost(protocol) {
   return function prepare(host) {
@@ -6244,7 +7126,7 @@ function buildSearchMethod(queryParam) {
   };
 }
 
-},{"11":11,"43":43,"46":46,"55":55,"58":58,"6":6,"64":64}],58:[function(require,module,exports){
+},{"12":12,"13":13,"6":6,"65":65,"68":68,"77":77,"82":82,"88":88}],82:[function(require,module,exports){
 'use strict';
 
 // This is the object returned by the `index.browseAll()` method
@@ -6285,7 +7167,7 @@ IndexBrowser.prototype._clean = function() {
   this.removeAllListeners('result');
 };
 
-},{"1":1,"10":10}],59:[function(require,module,exports){
+},{"1":1,"10":10}],83:[function(require,module,exports){
 'use strict';
 
 // This is the AngularJS Algolia Search module
@@ -6294,15 +7176,15 @@ IndexBrowser.prototype._clean = function() {
 
 var inherits = require(10);
 
-var forEach = require(11);
+var forEach = require(12);
 
-var AlgoliaSearch = require(57);
-var errors = require(64);
-var inlineHeaders = require(62);
-var jsonpRequest = require(63);
+var AlgoliaSearch = require(81);
+var errors = require(88);
+var inlineHeaders = require(86);
+var jsonpRequest = require(87);
 
 // expose original algoliasearch fn in window
-window.algoliasearch = require(60);
+window.algoliasearch = require(84);
 
 if ("production" === 'development') {
   require(6).enable('algoliasearch*');
@@ -6311,9 +7193,9 @@ if ("production" === 'development') {
 window.angular.module('algoliasearch', [])
   .service('algolia', ['$http', '$q', '$timeout', function algoliaSearchService($http, $q, $timeout) {
     function algoliasearch(applicationID, apiKey, opts) {
-      var cloneDeep = require(44);
+      var cloneDeep = require(66);
 
-      var getDocumentProtocol = require(61);
+      var getDocumentProtocol = require(85);
 
       opts = cloneDeep(opts || {});
 
@@ -6326,7 +7208,7 @@ window.angular.module('algoliasearch', [])
       return new AlgoliaSearchAngular(applicationID, apiKey, opts);
     }
 
-    algoliasearch.version = require(65);
+    algoliasearch.version = require(89);
     algoliasearch.ua = 'Algolia for AngularJS ' + algoliasearch.version;
 
     // we expose into window no matter how we are used, this will allow
@@ -6489,7 +7371,7 @@ window.angular.module('algoliasearch', [])
     };
   }]);
 
-},{"10":10,"11":11,"44":44,"57":57,"6":6,"60":60,"61":61,"62":62,"63":63,"64":64,"65":65}],60:[function(require,module,exports){
+},{"10":10,"12":12,"6":6,"66":66,"81":81,"84":84,"85":85,"86":86,"87":87,"88":88,"89":89}],84:[function(require,module,exports){
 'use strict';
 
 // This is the standalone browser build entry point
@@ -6500,19 +7382,19 @@ module.exports = algoliasearch;
 var inherits = require(10);
 var Promise = window.Promise || require(9).Promise;
 
-var AlgoliaSearch = require(57);
-var errors = require(64);
-var inlineHeaders = require(62);
-var jsonpRequest = require(63);
+var AlgoliaSearch = require(81);
+var errors = require(88);
+var inlineHeaders = require(86);
+var jsonpRequest = require(87);
 
 if ("production" === 'development') {
   require(6).enable('algoliasearch*');
 }
 
 function algoliasearch(applicationID, apiKey, opts) {
-  var cloneDeep = require(44);
+  var cloneDeep = require(66);
 
-  var getDocumentProtocol = require(61);
+  var getDocumentProtocol = require(85);
 
   opts = cloneDeep(opts || {});
 
@@ -6525,7 +7407,7 @@ function algoliasearch(applicationID, apiKey, opts) {
   return new AlgoliaSearchBrowser(applicationID, apiKey, opts);
 }
 
-algoliasearch.version = require(65);
+algoliasearch.version = require(89);
 algoliasearch.ua = 'Algolia for vanilla JavaScript ' + algoliasearch.version;
 
 // we expose into window no matter how we are used, this will allow
@@ -6702,7 +7584,7 @@ AlgoliaSearchBrowser.prototype._promise = {
   }
 };
 
-},{"10":10,"44":44,"57":57,"6":6,"61":61,"62":62,"63":63,"64":64,"65":65,"9":9}],61:[function(require,module,exports){
+},{"10":10,"6":6,"66":66,"81":81,"85":85,"86":86,"87":87,"88":88,"89":89,"9":9}],85:[function(require,module,exports){
 'use strict';
 
 module.exports = getDocumentProtocol;
@@ -6718,7 +7600,7 @@ function getDocumentProtocol() {
   return protocol;
 }
 
-},{}],62:[function(require,module,exports){
+},{}],86:[function(require,module,exports){
 'use strict';
 
 module.exports = inlineHeaders;
@@ -6735,12 +7617,12 @@ function inlineHeaders(url, headers) {
   return url + querystring.encode(headers);
 }
 
-},{"5":5}],63:[function(require,module,exports){
+},{"5":5}],87:[function(require,module,exports){
 'use strict';
 
 module.exports = jsonpRequest;
 
-var errors = require(64);
+var errors = require(88);
 
 var JSONPCounter = 0;
 
@@ -6865,7 +7747,7 @@ function jsonpRequest(url, opts, cb) {
   }
 }
 
-},{"64":64}],64:[function(require,module,exports){
+},{"88":88}],88:[function(require,module,exports){
 'use strict';
 
 // This file hosts our error definitions
@@ -6875,7 +7757,7 @@ function jsonpRequest(url, opts, cb) {
 var inherits = require(10);
 
 function AlgoliaSearchError(message, extraProperties) {
-  var forEach = require(11);
+  var forEach = require(12);
 
   var error = this;
 
@@ -6945,9 +7827,9 @@ module.exports = {
   )
 };
 
-},{"10":10,"11":11}],65:[function(require,module,exports){
+},{"10":10,"12":12}],89:[function(require,module,exports){
 'use strict';
 
-module.exports = '3.10.1';
+module.exports = '3.10.2';
 
-},{}]},{},[59]);
+},{}]},{},[83]);

@@ -1,6 +1,6 @@
 CHANGELOG
 
-UNRELEASED
+2015-12-14 3.10.2
 
   * fix(request strategy): always use XHR first then switch to fallback
 
