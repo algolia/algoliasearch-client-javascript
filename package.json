@@ -13,6 +13,7 @@
     "dev": "APP_ENV=development DEBUG=zuul* zuul --no-coverage --local 8080 -- test/run-browser.js",
     "dev-integration": "APP_ENV=development DEBUG=zuul* zuul --no-coverage --local 8080 -- test/run-integration.js",
     "examples": "http-server . -a 0.0.0.0",
+    "watch": "watchify index.js -d -v -s algoliasearch -o dist/algoliasearch.js",
     "release": "git clean dist/ -f && git checkout dist/ && npm install && ./scripts/release && APP_ENV=production npm run build",
     "test": "./scripts/test",
     "test-ci": "./scripts/test-ci",
