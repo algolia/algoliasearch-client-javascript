@@ -657,34 +657,6 @@ AlgoliaSearch.prototype = {
     this._ua += ';' + algoliaAgent;
   },
 
-  _sendQueriesBatch: function(params, callback) {
-    function prepareParams() {
-      var reqParams = '';
-      for (var i = 0; i < params.requests.length; ++i) {
-        var q = '/1/indexes/' +
-          encodeURIComponent(params.requests[i].indexName) +
-          '?' + params.requests[i].params;
-        reqParams += i + '=' + encodeURIComponent(q) + '&';
-      }
-      return reqParams;
-    }
-
-    return this._jsonRequest({
-      cache: this.cache,
-      method: 'POST',
-      url: '/1/indexes/*/queries',
-      body: params,
-      hostType: 'read',
-      fallback: {
-        method: 'GET',
-        url: '/1/indexes/*',
-        body: {
-          params: prepareParams()
-        }
-      },
-      callback: callback
-    });
-  },
   /*
    * Wrapper that try all hosts to maximize the quality of service
    */
