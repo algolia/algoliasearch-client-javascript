@@ -1,5 +1,22 @@
 CHANGELOG
 
+UNRELEASED
+
+  * fix(request strategy): always use XHR first then switch to fallback
+
+    + add fallback for client.search
+
+    Context: before this commit, when a user lost connectivity (or XHR was
+    blocked, we cannot distinguish those events in browsers) then we
+    forced using JSONP for the whole session.
+
+    This led to a bug where you were stuck in a loop of non-available
+    fallback even if connectivity was restored.
+
+    This commit fixes this bug by always trying XHRS and fallbacking to
+    JSONP on a per request basis.
+  * refactor(map): use lodash map instead of custom fn
+
 2015-12-11 3.10.1
     * fix(nodejs): consistent timeouts between nodejs versions
       We now use basic setTimeout functionnality instead of
