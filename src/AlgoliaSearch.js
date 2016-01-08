@@ -1095,15 +1095,26 @@ AlgoliaSearch.prototype.Index.prototype = {
    *
    * @param partialObject contains the javascript attributes to override, the
    *  object must contains an objectID attribute
+   * @param createIfNotExists (optional) if false, avoid an automatic creation of the object
    * @param callback (optional) the result callback called with two arguments:
    *  error: null or Error('message')
    *  content: the server answer that contains 3 elements: createAt, taskId and objectID
    */
-  partialUpdateObject: function(partialObject, callback) {
+  partialUpdateObject: function(partialObject, createIfNotExists, callback) {
+    if (arguments.length === 1 || typeof createIfNotExists === 'function') {
+      callback = createIfNotExists;
+      createIfNotExists = undefined;
+    }
+
     var indexObj = this;
+    var url = '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/' + encodeURIComponent(partialObject.objectID) + '/partial';
+    if (createIfNotExists === false) {
+      url += '?createIfNotExists=false';
+    }
+
     return this.as._jsonRequest({
       method: 'POST',
-      url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/' + encodeURIComponent(partialObject.objectID) + '/partial',
+      url: url,
       body: partialObject,
       hostType: 'write',
       callback: callback
