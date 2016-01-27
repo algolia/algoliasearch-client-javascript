@@ -700,6 +700,7 @@ You can use the following optional arguments:
  * **getRankingInfo**: If set to 1, the result hits will contain ranking information in the **_rankingInfo** attribute.
  * **highlightPreTag**: (string) Specify the string that is inserted before the highlighted parts in the query result (defaults to "&lt;em&gt;").
  * **highlightPostTag**: (string) Specify the string that is inserted after the highlighted parts in the query result (defaults to "&lt;/em&gt;").
+ * **snippetEllipsisText**: (string) String used as an ellipsis indicator when a snippet is truncated (defaults to empty).
  
 
 #### Numeric Search Parameters
