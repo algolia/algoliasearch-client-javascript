@@ -97,10 +97,12 @@ function AlgoliaSearch(applicationID, apiKey, opts) {
   this.requestTimeout = timeout;
 
   this.extraHeaders = [];
-  this.cache = {};
+
+  // In some situations you might want to warm the cache
+  this.cache = opts._cache || {};
 
   this._ua = opts._ua;
-  this._useCache = opts._useCache === undefined ? true : opts._useCache;
+  this._useCache = opts._useCache === undefined || opts._cache ? true : opts._useCache;
 
   this._setTimeout = opts._setTimeout;
 
