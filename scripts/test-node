@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 
-source ~/.nvm/nvm.sh
+if [ -x "$(command -v brew)" ] && [ -x "$(brew --prefix nvm)" ]; then
+  source $(brew --prefix nvm)/nvm.sh
+else
+  source ~/.nvm/nvm.sh
+fi
 
 set -e # exit when error
 
