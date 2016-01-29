@@ -1,5 +1,10 @@
 CHANGELOG
 
+2016-01-28 3.11.0
+
+  * feat(partialUpdateObject): add createIfNotExists option: partialUpdateObject(object, createIfNotExists) https://www.algolia.com/doc/rest#partially-update-an-object
+  * chore(dev): various fixes to the dev env
+
 2015-12-14 3.10.2
 
   * fix(request strategy): always use XHR first then switch to fallback

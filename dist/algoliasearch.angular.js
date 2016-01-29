@@ -1,4 +1,4 @@
-/*! algoliasearch 3.10.2 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
+/*! algoliasearch 3.11.0 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
 (function(f){var g;if(typeof window!=='undefined'){g=window}else if(typeof self!=='undefined'){g=self}g.ALGOLIA_MIGRATION_LAYER=f()})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 
 module.exports = function load (src, opts, cb) {
@@ -5023,10 +5023,12 @@ function AlgoliaSearch(applicationID, apiKey, opts) {
   this.requestTimeout = timeout;
 
   this.extraHeaders = [];
-  this.cache = {};
+
+  // In some situations you might want to warm the cache
+  this.cache = opts._cache || {};
 
   this._ua = opts._ua;
-  this._useCache = opts._useCache === undefined ? true : opts._useCache;
+  this._useCache = opts._useCache === undefined || opts._cache ? true : opts._useCache;
 
   this._setTimeout = opts._setTimeout;
 
@@ -6021,15 +6023,26 @@ AlgoliaSearch.prototype.Index.prototype = {
    *
    * @param partialObject contains the javascript attributes to override, the
    *  object must contains an objectID attribute
+   * @param createIfNotExists (optional) if false, avoid an automatic creation of the object
    * @param callback (optional) the result callback called with two arguments:
    *  error: null or Error('message')
    *  content: the server answer that contains 3 elements: createAt, taskId and objectID
    */
-  partialUpdateObject: function(partialObject, callback) {
+  partialUpdateObject: function(partialObject, createIfNotExists, callback) {
+    if (arguments.length === 1 || typeof createIfNotExists === 'function') {
+      callback = createIfNotExists;
+      createIfNotExists = undefined;
+    }
+
     var indexObj = this;
+    var url = '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/' + encodeURIComponent(partialObject.objectID) + '/partial';
+    if (createIfNotExists === false) {
+      url += '?createIfNotExists=false';
+    }
+
     return this.as._jsonRequest({
       method: 'POST',
-      url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/' + encodeURIComponent(partialObject.objectID) + '/partial',
+      url: url,
       body: partialObject,
       hostType: 'write',
       callback: callback
@@ -7830,6 +7843,6 @@ module.exports = {
 },{"10":10,"12":12}],89:[function(require,module,exports){
 'use strict';
 
-module.exports = '3.10.2';
+module.exports = '3.11.0';
 
 },{}]},{},[83]);
