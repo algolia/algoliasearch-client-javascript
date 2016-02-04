@@ -3,11 +3,7 @@
   "version": "3.11.0",
   "description": "AlgoliaSearch API JavaScript client",
   "main": "index.js",
-  "browser": {
-    "./index.js": "./src/browser/builds/algoliasearch.js",
-    "debug": "debug-ms-fix-yui-compressor",
-    "lodash": "lodash-compat"
-  },
+  "browser": "./src/browser.js",
   "scripts": {
     "build": "./scripts/build",
     "dev": "APP_ENV=development DEBUG=zuul* zuul --no-coverage --local 8080 -- test/run-browser.js",
