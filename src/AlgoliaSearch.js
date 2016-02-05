@@ -106,6 +106,7 @@ function AlgoliaSearch(applicationID, apiKey, opts) {
 
   this._ua = opts._ua;
   this._useCache = opts._useCache === undefined || opts._cache ? true : opts._useCache;
+  this._useFallback = opts.useFallback === undefined ? true : opts.useFallback;
 
   this._setTimeout = opts._setTimeout;
 
@@ -688,7 +689,7 @@ AlgoliaSearch.prototype = {
     var client = this;
     var tries = 0;
     var usingFallback = false;
-    var hasFallback = client._request.fallback && initialOpts.fallback;
+    var hasFallback = client._useFallback && client._request.fallback && initialOpts.fallback;
     var headers;
 
     if (this.apiKey.length > MAX_API_KEY_LENGTH && initialOpts.body !== undefined && initialOpts.body.params !== undefined) {
