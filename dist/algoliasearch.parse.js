@@ -809,6 +809,9 @@ module.exports =
 
 	var errors = __webpack_require__(7);
 
+	// We will always put the API KEY in the JSON body in case of too long API KEY
+	var MAX_API_KEY_LENGTH = 500;
+
 	/*
 	 * Algolia Search library initialization
 	 * https://www.algolia.com/
@@ -908,6 +911,7 @@ module.exports =
 
 	  this._ua = opts._ua;
 	  this._useCache = opts._useCache === undefined || opts._cache ? true : opts._useCache;
+	  this._useFallback = opts.useFallback === undefined ? true : opts.useFallback;
 
 	  this._setTimeout = opts._setTimeout;
 
@@ -1490,7 +1494,15 @@ module.exports =
 	    var client = this;
 	    var tries = 0;
 	    var usingFallback = false;
-	    var hasFallback = client._request.fallback && initialOpts.fallback;
+	    var hasFallback = client._useFallback && client._request.fallback && initialOpts.fallback;
+	    var headers;
+
+	    if (this.apiKey.length > MAX_API_KEY_LENGTH && initialOpts.body !== undefined && initialOpts.body.params !== undefined) {
+	      initialOpts.body.apiKey = this.apiKey;
+	      headers = this._computeRequestHeaders(false);
+	    } else {
+	      headers = this._computeRequestHeaders();
+	    }
 
 	    if (initialOpts.body !== undefined) {
 	      body = safeJSONStringify(initialOpts.body);
@@ -1541,6 +1553,8 @@ module.exports =
 	        if (reqOpts.jsonBody) {
 	          reqOpts.body = safeJSONStringify(reqOpts.jsonBody);
 	        }
+	        // re-compute headers, they could be omitting the API KEY
+	        headers = client._computeRequestHeaders();
 
 	        reqOpts.timeout = client.requestTimeout * (tries + 1);
 	        client.hostIndex[initialOpts.hostType] = 0;
@@ -1553,7 +1567,7 @@ module.exports =
 	        body: reqOpts.body,
 	        jsonBody: reqOpts.jsonBody,
 	        method: reqOpts.method,
-	        headers: client._computeRequestHeaders(),
+	        headers: headers,
 	        timeout: reqOpts.timeout,
 	        debug: requestDebug
 	      };
@@ -1713,14 +1727,21 @@ module.exports =
 	    return params;
 	  },
 
-	  _computeRequestHeaders: function() {
+	  _computeRequestHeaders: function(withAPIKey) {
 	    var forEach = __webpack_require__(8);
 
 	    var requestHeaders = {
-	      'x-algolia-api-key': this.apiKey,
-	      'x-algolia-application-id': this.applicationID,
-	      'x-algolia-agent': this._ua
+	      'x-algolia-agent': this._ua,
+	      'x-algolia-application-id': this.applicationID
 	    };
+
+	    // browser will inline headers in the url, node.js will use http headers
+	    // but in some situations, the API KEY will be too long (big secured API keys)
+	    // so if the request is a POST and the KEY is very long, we will be asked to not put
+	    // it into headers but in the JSON body
+	    if (withAPIKey !== false) {
+	      requestHeaders['x-algolia-api-key'] = this.apiKey;
+	    }
 
 	    if (this.userToken) {
 	      requestHeaders['x-algolia-usertoken'] = this.userToken;
@@ -6091,7 +6112,7 @@ module.exports =
 
 	
 
-	module.exports = '3.11.0';
+	module.exports = '3.12.0';
 
 
 /***/ }

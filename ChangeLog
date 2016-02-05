@@ -1,8 +1,8 @@
 CHANGELOG
 
-UNRELEASED
+2016-02-05 3.12.0
 
-  * feat(apiKey): put the apiKey in the POST body when feasible and key > 500 chars
+  * fix(apiKey): put the apiKey in the POST body when feasible and key > 500 chars
   * feat(falback): provide opts.useFallback to avoid using JSONP fallback
 
 2016-01-28 3.11.0

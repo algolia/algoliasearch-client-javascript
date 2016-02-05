@@ -1,4 +1,4 @@
-/*! algoliasearch 3.11.0 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
+/*! algoliasearch 3.12.0 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
 (function(f){var g;if(typeof window!=='undefined'){g=window}else if(typeof self!=='undefined'){g=self}g.ALGOLIA_MIGRATION_LAYER=f()})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 
 module.exports = function load (src, opts, cb) {
@@ -4930,6 +4930,9 @@ module.exports = AlgoliaSearch;
 
 var errors = require(88);
 
+// We will always put the API KEY in the JSON body in case of too long API KEY
+var MAX_API_KEY_LENGTH = 500;
+
 /*
  * Algolia Search library initialization
  * https://www.algolia.com/
@@ -5029,6 +5032,7 @@ function AlgoliaSearch(applicationID, apiKey, opts) {
 
   this._ua = opts._ua;
   this._useCache = opts._useCache === undefined || opts._cache ? true : opts._useCache;
+  this._useFallback = opts.useFallback === undefined ? true : opts.useFallback;
 
   this._setTimeout = opts._setTimeout;
 
@@ -5611,7 +5615,15 @@ AlgoliaSearch.prototype = {
     var client = this;
     var tries = 0;
     var usingFallback = false;
-    var hasFallback = client._request.fallback && initialOpts.fallback;
+    var hasFallback = client._useFallback && client._request.fallback && initialOpts.fallback;
+    var headers;
+
+    if (this.apiKey.length > MAX_API_KEY_LENGTH && initialOpts.body !== undefined && initialOpts.body.params !== undefined) {
+      initialOpts.body.apiKey = this.apiKey;
+      headers = this._computeRequestHeaders(false);
+    } else {
+      headers = this._computeRequestHeaders();
+    }
 
     if (initialOpts.body !== undefined) {
       body = safeJSONStringify(initialOpts.body);
@@ -5662,6 +5674,8 @@ AlgoliaSearch.prototype = {
         if (reqOpts.jsonBody) {
           reqOpts.body = safeJSONStringify(reqOpts.jsonBody);
         }
+        // re-compute headers, they could be omitting the API KEY
+        headers = client._computeRequestHeaders();
 
         reqOpts.timeout = client.requestTimeout * (tries + 1);
         client.hostIndex[initialOpts.hostType] = 0;
@@ -5674,7 +5688,7 @@ AlgoliaSearch.prototype = {
         body: reqOpts.body,
         jsonBody: reqOpts.jsonBody,
         method: reqOpts.method,
-        headers: client._computeRequestHeaders(),
+        headers: headers,
         timeout: reqOpts.timeout,
         debug: requestDebug
       };
@@ -5834,14 +5848,21 @@ AlgoliaSearch.prototype = {
     return params;
   },
 
-  _computeRequestHeaders: function() {
+  _computeRequestHeaders: function(withAPIKey) {
     var forEach = require(12);
 
     var requestHeaders = {
-      'x-algolia-api-key': this.apiKey,
-      'x-algolia-application-id': this.applicationID,
-      'x-algolia-agent': this._ua
+      'x-algolia-agent': this._ua,
+      'x-algolia-application-id': this.applicationID
     };
+
+    // browser will inline headers in the url, node.js will use http headers
+    // but in some situations, the API KEY will be too long (big secured API keys)
+    // so if the request is a POST and the KEY is very long, we will be asked to not put
+    // it into headers but in the JSON body
+    if (withAPIKey !== false) {
+      requestHeaders['x-algolia-api-key'] = this.apiKey;
+    }
 
     if (this.userToken) {
       requestHeaders['x-algolia-usertoken'] = this.userToken;
@@ -7789,6 +7810,6 @@ module.exports = {
 },{"10":10,"12":12}],89:[function(require,module,exports){
 'use strict';
 
-module.exports = '3.11.0';
+module.exports = '3.12.0';
 
 },{}]},{},[83]);
