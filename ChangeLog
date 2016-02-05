@@ -1,5 +1,8 @@
 CHANGELOG
 
+UNRELEASED
+
+  * feat(apiKey): put the apiKey in the POST body when feasible and key > 500 chars
 2016-01-28 3.11.0
 
   * feat(partialUpdateObject): add createIfNotExists option: partialUpdateObject(object, createIfNotExists) https://www.algolia.com/doc/rest#partially-update-an-object
