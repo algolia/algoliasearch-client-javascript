@@ -4,7 +4,7 @@
 
 
 
-[Algolia Search](http://www.algolia.com) is a hosted full-text, numerical, and faceted search engine capable of delivering realtime results from the first keystroke.
+[Algolia Search](https://www.algolia.com) is a hosted full-text, numerical, and faceted search engine capable of delivering realtime results from the first keystroke.
 
 
 
@@ -25,7 +25,7 @@
 [version-svg]: https://img.shields.io/npm/v/algoliasearch.svg?style=flat-square
 [package-url]: https://npmjs.org/package/algoliasearch
 
-The JavaScript client lets you use the [Algolia Search API](https://www.algolia.com/doc/rest_api) on the frontend (browsers) or on the backend (Node.js) with the same API.
+The JavaScript client lets you use the [Algolia Search API](https://www.algolia.com/doc/rest) on the frontend (browsers) or on the backend (Node.js) with the same API.
 
 The backend (Node.js) API can be used to index your data using your Algolia admin API keys.
 
@@ -443,25 +443,25 @@ You should call this method when you are finished working with the AlgoliaSearch
 
 Documentation
 ================
-Check our [online documentation](http://www.algolia.com/doc/guides/node):
- * [Initial Import](http://www.algolia.com/doc/guides/node#InitialImport)
- * [Ranking &amp; Relevance](http://www.algolia.com/doc/guides/node#RankingRelevance)
- * [Indexing](http://www.algolia.com/doc/guides/node#Indexing)
- * [Search](http://www.algolia.com/doc/guides/node#Search)
- * [Sorting](http://www.algolia.com/doc/guides/node#Sorting)
- * [Filtering](http://www.algolia.com/doc/guides/node#Filtering)
- * [Faceting](http://www.algolia.com/doc/guides/node#Faceting)
- * [Geo-Search](http://www.algolia.com/doc/guides/node#Geo-Search)
- * [Security](http://www.algolia.com/doc/guides/node#Security)
- * [REST API](http://www.algolia.com/doc/rest)
+Check our [online documentation](https://www.algolia.com/doc/node):
+ * [Initial Import](https://www.algolia.com/doc/node#initial-import)
+ * [Ranking &amp; Relevance](https://www.algolia.com/doc/node#ranking--relevance)
+ * [Indexing](https://www.algolia.com/doc/node#indexing)
+ * [Search](https://www.algolia.com/doc/node#search)
+ * [Sorting](https://www.algolia.com/doc/node#sorting)
+ * [Filtering](https://www.algolia.com/doc/node#filtering)
+ * [Faceting](https://www.algolia.com/doc/node#faceting)
+ * [Geo-Search](https://www.algolia.com/doc/node#geo-search)
+ * [Security](https://www.algolia.com/doc/node#security)
+ * [REST API](https://www.algolia.com/doc/rest)
 
 Tutorials
 ================
 
-Check out our [tutorials](http://www.algolia.com/doc/tutorials):
- * [Search bar with autocomplete menu](http://www.algolia.com/doc/tutorials/auto-complete)
- * [Search bar with multi category autocomplete menu](http://www.algolia.com/doc/tutorials/multi-auto-complete)
- * [Instant search result pages](http://www.algolia.com/doc/tutorials/instant-search)
+Check out our [tutorials](https://www.algolia.com/doc/tutorials):
+ * [Search bar with autocomplete menu](https://www.algolia.com/doc/tutorials/auto-complete)
+ * [Search bar with multi category autocomplete menu](https://www.algolia.com/doc/tutorials/multi-auto-complete)
+ * [Instant search result pages](https://www.algolia.com/doc/tutorials/instant-search)
 
 
 
