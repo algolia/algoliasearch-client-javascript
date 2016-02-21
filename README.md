@@ -118,6 +118,16 @@ To include the latest releases and all upcoming features and patches, use this:
 <script src="//cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
 ```
 
+### &lt;script&gt; tag using CDNJS
+
+[CDNJS](https://cdnjs.com/libraries/algoliasearch) also hosts algoliasearch library and other popular libraries.
+
+CDNJS doesn't support auto upgrade by a single url, but you can choose the version you want by changing the version number in url:
+
+```html
+<script src="//cdnjs.cloudflare.com/ajax/libs/algoliasearch/3.12.0/algoliasearch.min.js"></script>
+```
+
 #### Browserify, webpack
 
 ```sh
