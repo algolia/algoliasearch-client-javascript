@@ -12,6 +12,7 @@ var AlgoliaSearch = require('../../AlgoliaSearch');
 var errors = require('../../errors');
 var inlineHeaders = require('../inline-headers');
 var jsonpRequest = require('../jsonp-request');
+var places = require('../../places.js');
 
 if (process.env.APP_ENV === 'development') {
   require('debug').enable('algoliasearch*');
@@ -35,6 +36,7 @@ function algoliasearch(applicationID, apiKey, opts) {
 
 algoliasearch.version = require('../../version.js');
 algoliasearch.ua = 'Algolia for vanilla JavaScript ' + algoliasearch.version;
+algoliasearch.initPlaces = places(algoliasearch);
 
 // we expose into window no matter how we are used, this will allow
 // us to easily debug any website running algolia
