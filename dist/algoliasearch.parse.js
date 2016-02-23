@@ -68,7 +68,7 @@ module.exports =
 	debug('loaded the Parse client');
 
 	function algoliasearch(applicationID, apiKey, opts) {
-	  var cloneDeep = __webpack_require__(79);
+	  var cloneDeep = __webpack_require__(80);
 	  opts = cloneDeep(opts || {});
 
 	  if (opts.protocol === undefined) {
@@ -87,7 +87,7 @@ module.exports =
 	  return new AlgoliaSearchParse(applicationID, apiKey, opts);
 	}
 
-	algoliasearch.version = __webpack_require__(80);
+	algoliasearch.version = __webpack_require__(81);
 	algoliasearch.ua = 'Algolia for Parse ' + algoliasearch.version;
 
 	function AlgoliaSearchParse() {
@@ -99,7 +99,7 @@ module.exports =
 
 	AlgoliaSearchParse.prototype._request = function(rawUrl, opts) {
 	  /* global Parse */
-	  var clone = __webpack_require__(34);
+	  var clone = __webpack_require__(35);
 	  var promise = new Parse.Promise();
 
 	  debug('url: %s, opts: %j', rawUrl, opts);
@@ -808,6 +808,7 @@ module.exports =
 	module.exports = AlgoliaSearch;
 
 	var errors = __webpack_require__(7);
+	var buildSearchMethod = __webpack_require__(34);
 
 	// We will always put the API KEY in the JSON body in case of too long API KEY
 	var MAX_API_KEY_LENGTH = 500;
@@ -840,9 +841,9 @@ module.exports =
 	function AlgoliaSearch(applicationID, apiKey, opts) {
 	  var debug = __webpack_require__(1)('algoliasearch');
 
-	  var clone = __webpack_require__(34);
+	  var clone = __webpack_require__(35);
 	  var isArray = __webpack_require__(27);
-	  var map = __webpack_require__(44);
+	  var map = __webpack_require__(45);
 
 	  var usage = 'Usage: algoliasearch(applicationID, apiKey, opts)';
 
@@ -1336,7 +1337,7 @@ module.exports =
 	   */
 	  search: function(queries, callback) {
 	    var isArray = __webpack_require__(27);
-	    var map = __webpack_require__(44);
+	    var map = __webpack_require__(45);
 
 	    var usage = 'Usage: client.search(arrayOfQueries[, callback])';
 
@@ -1879,7 +1880,7 @@ module.exports =
 	   */
 	  getObjects: function(objectIDs, attributesToRetrieve, callback) {
 	    var isArray = __webpack_require__(27);
-	    var map = __webpack_require__(44);
+	    var map = __webpack_require__(45);
 
 	    var usage = 'Usage: index.getObjects(arrayOfObjectIDs[, callback])';
 
@@ -2075,7 +2076,7 @@ module.exports =
 	   */
 	  deleteObjects: function(objectIDs, callback) {
 	    var isArray = __webpack_require__(27);
-	    var map = __webpack_require__(44);
+	    var map = __webpack_require__(45);
 
 	    var usage = 'Usage: index.deleteObjects(arrayOfObjectIDs[, callback])';
 
@@ -2113,8 +2114,8 @@ module.exports =
 	   *  error: null or Error('message')
 	   */
 	  deleteByQuery: function(query, params, callback) {
-	    var clone = __webpack_require__(34);
-	    var map = __webpack_require__(44);
+	    var clone = __webpack_require__(35);
+	    var map = __webpack_require__(45);
 
 	    var indexObj = this;
 	    var client = indexObj.as;
@@ -2314,7 +2315,7 @@ module.exports =
 	  // pre 3.5.0 usage, backward compatible
 	  // browse: function(page, hitsPerPage, callback) {
 	  browse: function(query, queryParameters, callback) {
-	    var merge = __webpack_require__(69);
+	    var merge = __webpack_require__(70);
 
 	    var indexObj = this;
 
@@ -2433,9 +2434,9 @@ module.exports =
 	      query = undefined;
 	    }
 
-	    var merge = __webpack_require__(69);
+	    var merge = __webpack_require__(70);
 
-	    var IndexBrowser = __webpack_require__(77);
+	    var IndexBrowser = __webpack_require__(78);
 
 	    var browser = new IndexBrowser();
 	    var client = this.as;
@@ -2906,11 +2907,11 @@ module.exports =
 	    });
 	  },
 
-	  _search: function(params, callback) {
+	  _search: function(params, url, callback) {
 	    return this.as._jsonRequest({
 	      cache: this.cache,
 	      method: 'POST',
-	      url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/query',
+	      url: url || '/1/indexes/' + encodeURIComponent(this.indexName) + '/query',
 	      body: {params: params},
 	      hostType: 'read',
 	      fallback: {
@@ -2994,49 +2995,6 @@ module.exports =
 	  Array.prototype.toJSON = toJSON;
 
 	  return out;
-	}
-
-	function buildSearchMethod(queryParam) {
-	  return function search(query, args, callback) {
-	    // warn V2 users on how to search
-	    if (typeof query === 'function' && typeof args === 'object' ||
-	      typeof callback === 'object') {
-	      // .search(query, params, cb)
-	      // .search(cb, params)
-	      throw new errors.AlgoliaSearchError('index.search usage is index.search(query, params, cb)');
-	    }
-
-	    if (arguments.length === 0 || typeof query === 'function') {
-	      // .search(), .search(cb)
-	      callback = query;
-	      query = '';
-	    } else if (arguments.length === 1 || typeof args === 'function') {
-	      // .search(query/args), .search(query, cb)
-	      callback = args;
-	      args = undefined;
-	    }
-
-	    // .search(args), careful: typeof null === 'object'
-	    if (typeof query === 'object' && query !== null) {
-	      args = query;
-	      query = undefined;
-	    } else if (query === undefined || query === null) { // .search(undefined/null)
-	      query = '';
-	    }
-
-	    var params = '';
-
-	    if (query !== undefined) {
-	      params += queryParam + '=' + encodeURIComponent(query);
-	    }
-
-	    if (args !== undefined) {
-	      // `_getSearchParams` will augment params, do not be fooled by the = versus += from previous if
-	      params = this.as._getSearchParams(args, params);
-	    }
-
-	    return this._search(params, callback);
-	  };
 	}
 
 
@@ -3997,9 +3955,61 @@ module.exports =
 /* 34 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseClone = __webpack_require__(35),
+	module.exports = buildSearchMethod;
+
+	var errors = __webpack_require__(7);
+
+	function buildSearchMethod(queryParam, url) {
+	  return function search(query, args, callback) {
+	    // warn V2 users on how to search
+	    if (typeof query === 'function' && typeof args === 'object' ||
+	      typeof callback === 'object') {
+	      // .search(query, params, cb)
+	      // .search(cb, params)
+	      throw new errors.AlgoliaSearchError('index.search usage is index.search(query, params, cb)');
+	    }
+
+	    if (arguments.length === 0 || typeof query === 'function') {
+	      // .search(), .search(cb)
+	      callback = query;
+	      query = '';
+	    } else if (arguments.length === 1 || typeof args === 'function') {
+	      // .search(query/args), .search(query, cb)
+	      callback = args;
+	      args = undefined;
+	    }
+
+	    // .search(args), careful: typeof null === 'object'
+	    if (typeof query === 'object' && query !== null) {
+	      args = query;
+	      query = undefined;
+	    } else if (query === undefined || query === null) { // .search(undefined/null)
+	      query = '';
+	    }
+
+	    var params = '';
+
+	    if (query !== undefined) {
+	      params += queryParam + '=' + encodeURIComponent(query);
+	    }
+
+	    if (args !== undefined) {
+	      // `_getSearchParams` will augment params, do not be fooled by the = versus += from previous if
+	      params = this.as._getSearchParams(args, params);
+	    }
+
+	    return this._search(params, url, callback);
+	  };
+	}
+
+
+/***/ },
+/* 35 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseClone = __webpack_require__(36),
 	    bindCallback = __webpack_require__(32),
-	    isIterateeCall = __webpack_require__(43);
+	    isIterateeCall = __webpack_require__(44);
 
 	/**
 	 * Creates a clone of `value`. If `isDeep` is `true` nested objects are cloned,
@@ -4070,16 +4080,16 @@ module.exports =
 
 
 /***/ },
-/* 35 */
+/* 36 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var arrayCopy = __webpack_require__(36),
+	var arrayCopy = __webpack_require__(37),
 	    arrayEach = __webpack_require__(9),
-	    baseAssign = __webpack_require__(37),
+	    baseAssign = __webpack_require__(38),
 	    baseForOwn = __webpack_require__(11),
-	    initCloneArray = __webpack_require__(39),
-	    initCloneByTag = __webpack_require__(40),
-	    initCloneObject = __webpack_require__(42),
+	    initCloneArray = __webpack_require__(40),
+	    initCloneByTag = __webpack_require__(41),
+	    initCloneObject = __webpack_require__(43),
 	    isArray = __webpack_require__(27),
 	    isObject = __webpack_require__(15);
 
@@ -4204,7 +4214,7 @@ module.exports =
 
 
 /***/ },
-/* 36 */
+/* 37 */
 /***/ function(module, exports) {
 
 	/**
@@ -4230,10 +4240,10 @@ module.exports =
 
 
 /***/ },
-/* 37 */
+/* 38 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseCopy = __webpack_require__(38),
+	var baseCopy = __webpack_require__(39),
 	    keys = __webpack_require__(16);
 
 	/**
@@ -4255,7 +4265,7 @@ module.exports =
 
 
 /***/ },
-/* 38 */
+/* 39 */
 /***/ function(module, exports) {
 
 	/**
@@ -4284,7 +4294,7 @@ module.exports =
 
 
 /***/ },
-/* 39 */
+/* 40 */
 /***/ function(module, exports) {
 
 	/** Used for native method references. */
@@ -4316,10 +4326,10 @@ module.exports =
 
 
 /***/ },
-/* 40 */
+/* 41 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var bufferClone = __webpack_require__(41);
+	var bufferClone = __webpack_require__(42);
 
 	/** `Object#toString` result references. */
 	var boolTag = '[object Boolean]',
@@ -4385,7 +4395,7 @@ module.exports =
 
 
 /***/ },
-/* 41 */
+/* 42 */
 /***/ function(module, exports) {
 
 	/** Native method references. */
@@ -4411,7 +4421,7 @@ module.exports =
 
 
 /***/ },
-/* 42 */
+/* 43 */
 /***/ function(module, exports) {
 
 	/**
@@ -4433,7 +4443,7 @@ module.exports =
 
 
 /***/ },
-/* 43 */
+/* 44 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var isArrayLike = __webpack_require__(21),
@@ -4467,12 +4477,12 @@ module.exports =
 
 
 /***/ },
-/* 44 */
+/* 45 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var arrayMap = __webpack_require__(45),
-	    baseCallback = __webpack_require__(46),
-	    baseMap = __webpack_require__(68),
+	var arrayMap = __webpack_require__(46),
+	    baseCallback = __webpack_require__(47),
+	    baseMap = __webpack_require__(69),
 	    isArray = __webpack_require__(27);
 
 	/**
@@ -4541,7 +4551,7 @@ module.exports =
 
 
 /***/ },
-/* 45 */
+/* 46 */
 /***/ function(module, exports) {
 
 	/**
@@ -4568,14 +4578,14 @@ module.exports =
 
 
 /***/ },
-/* 46 */
+/* 47 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseMatches = __webpack_require__(47),
-	    baseMatchesProperty = __webpack_require__(59),
+	var baseMatches = __webpack_require__(48),
+	    baseMatchesProperty = __webpack_require__(60),
 	    bindCallback = __webpack_require__(32),
 	    identity = __webpack_require__(33),
-	    property = __webpack_require__(66);
+	    property = __webpack_require__(67);
 
 	/**
 	 * The base implementation of `_.callback` which supports specifying the
@@ -4609,11 +4619,11 @@ module.exports =
 
 
 /***/ },
-/* 47 */
+/* 48 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseIsMatch = __webpack_require__(48),
-	    getMatchData = __webpack_require__(56),
+	var baseIsMatch = __webpack_require__(49),
+	    getMatchData = __webpack_require__(57),
 	    toObject = __webpack_require__(14);
 
 	/**
@@ -4645,10 +4655,10 @@ module.exports =
 
 
 /***/ },
-/* 48 */
+/* 49 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseIsEqual = __webpack_require__(49),
+	var baseIsEqual = __webpack_require__(50),
 	    toObject = __webpack_require__(14);
 
 	/**
@@ -4703,10 +4713,10 @@ module.exports =
 
 
 /***/ },
-/* 49 */
+/* 50 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseIsEqualDeep = __webpack_require__(50),
+	var baseIsEqualDeep = __webpack_require__(51),
 	    isObject = __webpack_require__(15),
 	    isObjectLike = __webpack_require__(20);
 
@@ -4737,14 +4747,14 @@ module.exports =
 
 
 /***/ },
-/* 50 */
+/* 51 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var equalArrays = __webpack_require__(51),
-	    equalByTag = __webpack_require__(53),
-	    equalObjects = __webpack_require__(54),
+	var equalArrays = __webpack_require__(52),
+	    equalByTag = __webpack_require__(54),
+	    equalObjects = __webpack_require__(55),
 	    isArray = __webpack_require__(27),
-	    isTypedArray = __webpack_require__(55);
+	    isTypedArray = __webpack_require__(56);
 
 	/** `Object#toString` result references. */
 	var argsTag = '[object Arguments]',
@@ -4845,10 +4855,10 @@ module.exports =
 
 
 /***/ },
-/* 51 */
+/* 52 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var arraySome = __webpack_require__(52);
+	var arraySome = __webpack_require__(53);
 
 	/**
 	 * A specialized version of `baseIsEqualDeep` for arrays with support for
@@ -4902,7 +4912,7 @@ module.exports =
 
 
 /***/ },
-/* 52 */
+/* 53 */
 /***/ function(module, exports) {
 
 	/**
@@ -4931,7 +4941,7 @@ module.exports =
 
 
 /***/ },
-/* 53 */
+/* 54 */
 /***/ function(module, exports) {
 
 	/** `Object#toString` result references. */
@@ -4985,7 +4995,7 @@ module.exports =
 
 
 /***/ },
-/* 54 */
+/* 55 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var keys = __webpack_require__(16);
@@ -5058,7 +5068,7 @@ module.exports =
 
 
 /***/ },
-/* 55 */
+/* 56 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var isLength = __webpack_require__(24),
@@ -5138,11 +5148,11 @@ module.exports =
 
 
 /***/ },
-/* 56 */
+/* 57 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var isStrictComparable = __webpack_require__(57),
-	    pairs = __webpack_require__(58);
+	var isStrictComparable = __webpack_require__(58),
+	    pairs = __webpack_require__(59);
 
 	/**
 	 * Gets the propery names, values, and compare flags of `object`.
@@ -5165,7 +5175,7 @@ module.exports =
 
 
 /***/ },
-/* 57 */
+/* 58 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var isObject = __webpack_require__(15);
@@ -5186,7 +5196,7 @@ module.exports =
 
 
 /***/ },
-/* 58 */
+/* 59 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var keys = __webpack_require__(16),
@@ -5225,18 +5235,18 @@ module.exports =
 
 
 /***/ },
-/* 59 */
+/* 60 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseGet = __webpack_require__(60),
-	    baseIsEqual = __webpack_require__(49),
-	    baseSlice = __webpack_require__(61),
+	var baseGet = __webpack_require__(61),
+	    baseIsEqual = __webpack_require__(50),
+	    baseSlice = __webpack_require__(62),
 	    isArray = __webpack_require__(27),
-	    isKey = __webpack_require__(62),
-	    isStrictComparable = __webpack_require__(57),
-	    last = __webpack_require__(63),
+	    isKey = __webpack_require__(63),
+	    isStrictComparable = __webpack_require__(58),
+	    last = __webpack_require__(64),
 	    toObject = __webpack_require__(14),
-	    toPath = __webpack_require__(64);
+	    toPath = __webpack_require__(65);
 
 	/**
 	 * The base implementation of `_.matchesProperty` which does not clone `srcValue`.
@@ -5276,7 +5286,7 @@ module.exports =
 
 
 /***/ },
-/* 60 */
+/* 61 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var toObject = __webpack_require__(14);
@@ -5311,7 +5321,7 @@ module.exports =
 
 
 /***/ },
-/* 61 */
+/* 62 */
 /***/ function(module, exports) {
 
 	/**
@@ -5349,7 +5359,7 @@ module.exports =
 
 
 /***/ },
-/* 62 */
+/* 63 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var isArray = __webpack_require__(27),
@@ -5383,7 +5393,7 @@ module.exports =
 
 
 /***/ },
-/* 63 */
+/* 64 */
 /***/ function(module, exports) {
 
 	/**
@@ -5408,10 +5418,10 @@ module.exports =
 
 
 /***/ },
-/* 64 */
+/* 65 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseToString = __webpack_require__(65),
+	var baseToString = __webpack_require__(66),
 	    isArray = __webpack_require__(27);
 
 	/** Used to match property names within property paths. */
@@ -5442,7 +5452,7 @@ module.exports =
 
 
 /***/ },
-/* 65 */
+/* 66 */
 /***/ function(module, exports) {
 
 	/**
@@ -5461,12 +5471,12 @@ module.exports =
 
 
 /***/ },
-/* 66 */
+/* 67 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var baseProperty = __webpack_require__(23),
-	    basePropertyDeep = __webpack_require__(67),
-	    isKey = __webpack_require__(62);
+	    basePropertyDeep = __webpack_require__(68),
+	    isKey = __webpack_require__(63);
 
 	/**
 	 * Creates a function that returns the property value at `path` on a
@@ -5498,11 +5508,11 @@ module.exports =
 
 
 /***/ },
-/* 67 */
+/* 68 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseGet = __webpack_require__(60),
-	    toPath = __webpack_require__(64);
+	var baseGet = __webpack_require__(61),
+	    toPath = __webpack_require__(65);
 
 	/**
 	 * A specialized version of `baseProperty` which supports deep paths.
@@ -5523,7 +5533,7 @@ module.exports =
 
 
 /***/ },
-/* 68 */
+/* 69 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var baseEach = __webpack_require__(10),
@@ -5552,11 +5562,11 @@ module.exports =
 
 
 /***/ },
-/* 69 */
+/* 70 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseMerge = __webpack_require__(70),
-	    createAssigner = __webpack_require__(75);
+	var baseMerge = __webpack_require__(71),
+	    createAssigner = __webpack_require__(76);
 
 	/**
 	 * Recursively merges own enumerable properties of the source object(s), that
@@ -5612,16 +5622,16 @@ module.exports =
 
 
 /***/ },
-/* 70 */
+/* 71 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var arrayEach = __webpack_require__(9),
-	    baseMergeDeep = __webpack_require__(71),
+	    baseMergeDeep = __webpack_require__(72),
 	    isArray = __webpack_require__(27),
 	    isArrayLike = __webpack_require__(21),
 	    isObject = __webpack_require__(15),
 	    isObjectLike = __webpack_require__(20),
-	    isTypedArray = __webpack_require__(55),
+	    isTypedArray = __webpack_require__(56),
 	    keys = __webpack_require__(16);
 
 	/**
@@ -5674,16 +5684,16 @@ module.exports =
 
 
 /***/ },
-/* 71 */
+/* 72 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var arrayCopy = __webpack_require__(36),
+	var arrayCopy = __webpack_require__(37),
 	    isArguments = __webpack_require__(26),
 	    isArray = __webpack_require__(27),
 	    isArrayLike = __webpack_require__(21),
-	    isPlainObject = __webpack_require__(72),
-	    isTypedArray = __webpack_require__(55),
-	    toPlainObject = __webpack_require__(74);
+	    isPlainObject = __webpack_require__(73),
+	    isTypedArray = __webpack_require__(56),
+	    toPlainObject = __webpack_require__(75);
 
 	/**
 	 * A specialized version of `baseMerge` for arrays and objects which performs
@@ -5747,10 +5757,10 @@ module.exports =
 
 
 /***/ },
-/* 72 */
+/* 73 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseForIn = __webpack_require__(73),
+	var baseForIn = __webpack_require__(74),
 	    isArguments = __webpack_require__(26),
 	    isObjectLike = __webpack_require__(20);
 
@@ -5824,7 +5834,7 @@ module.exports =
 
 
 /***/ },
-/* 73 */
+/* 74 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var baseFor = __webpack_require__(12),
@@ -5847,10 +5857,10 @@ module.exports =
 
 
 /***/ },
-/* 74 */
+/* 75 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseCopy = __webpack_require__(38),
+	var baseCopy = __webpack_require__(39),
 	    keysIn = __webpack_require__(29);
 
 	/**
@@ -5884,12 +5894,12 @@ module.exports =
 
 
 /***/ },
-/* 75 */
+/* 76 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var bindCallback = __webpack_require__(32),
-	    isIterateeCall = __webpack_require__(43),
-	    restParam = __webpack_require__(76);
+	    isIterateeCall = __webpack_require__(44),
+	    restParam = __webpack_require__(77);
 
 	/**
 	 * Creates a `_.assign`, `_.defaults`, or `_.merge` function.
@@ -5931,7 +5941,7 @@ module.exports =
 
 
 /***/ },
-/* 76 */
+/* 77 */
 /***/ function(module, exports) {
 
 	/** Used as the `TypeError` message for "Functions" methods. */
@@ -5995,7 +6005,7 @@ module.exports =
 
 
 /***/ },
-/* 77 */
+/* 78 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -6005,7 +6015,7 @@ module.exports =
 	module.exports = IndexBrowser;
 
 	var inherits = __webpack_require__(4);
-	var EventEmitter = __webpack_require__(78).EventEmitter;
+	var EventEmitter = __webpack_require__(79).EventEmitter;
 
 	function IndexBrowser() {
 	}
@@ -6040,16 +6050,16 @@ module.exports =
 
 
 /***/ },
-/* 78 */
+/* 79 */
 /***/ function(module, exports) {
 
 	module.exports = require("events");
 
 /***/ },
-/* 79 */
+/* 80 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseClone = __webpack_require__(35),
+	var baseClone = __webpack_require__(36),
 	    bindCallback = __webpack_require__(32);
 
 	/**
@@ -6107,12 +6117,12 @@ module.exports =
 
 
 /***/ },
-/* 80 */
+/* 81 */
 /***/ function(module, exports) {
 
 	
 
-	module.exports = '3.12.0';
+	module.exports = '3.13.0';
 
 
 /***/ }

@@ -1,4 +1,4 @@
-/*! algoliasearch 3.12.0 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
+/*! algoliasearch 3.13.0 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
 (function(f){var g;if(typeof window!=='undefined'){g=window}else if(typeof self!=='undefined'){g=self}g.ALGOLIA_MIGRATION_LAYER=f()})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 
 module.exports = function load (src, opts, cb) {
@@ -4928,7 +4928,8 @@ module.exports = property;
 
 module.exports = AlgoliaSearch;
 
-var errors = require(88);
+var errors = require(89);
+var buildSearchMethod = require(88);
 
 // We will always put the API KEY in the JSON body in case of too long API KEY
 var MAX_API_KEY_LENGTH = 500;
@@ -7027,11 +7028,11 @@ AlgoliaSearch.prototype.Index.prototype = {
     });
   },
 
-  _search: function(params, callback) {
+  _search: function(params, url, callback) {
     return this.as._jsonRequest({
       cache: this.cache,
       method: 'POST',
-      url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/query',
+      url: url || '/1/indexes/' + encodeURIComponent(this.indexName) + '/query',
       body: {params: params},
       hostType: 'read',
       fallback: {
@@ -7117,50 +7118,7 @@ function safeJSONStringify(obj) {
   return out;
 }
 
-function buildSearchMethod(queryParam) {
-  return function search(query, args, callback) {
-    // warn V2 users on how to search
-    if (typeof query === 'function' && typeof args === 'object' ||
-      typeof callback === 'object') {
-      // .search(query, params, cb)
-      // .search(cb, params)
-      throw new errors.AlgoliaSearchError('index.search usage is index.search(query, params, cb)');
-    }
-
-    if (arguments.length === 0 || typeof query === 'function') {
-      // .search(), .search(cb)
-      callback = query;
-      query = '';
-    } else if (arguments.length === 1 || typeof args === 'function') {
-      // .search(query/args), .search(query, cb)
-      callback = args;
-      args = undefined;
-    }
-
-    // .search(args), careful: typeof null === 'object'
-    if (typeof query === 'object' && query !== null) {
-      args = query;
-      query = undefined;
-    } else if (query === undefined || query === null) { // .search(undefined/null)
-      query = '';
-    }
-
-    var params = '';
-
-    if (query !== undefined) {
-      params += queryParam + '=' + encodeURIComponent(query);
-    }
-
-    if (args !== undefined) {
-      // `_getSearchParams` will augment params, do not be fooled by the = versus += from previous if
-      params = this.as._getSearchParams(args, params);
-    }
-
-    return this._search(params, callback);
-  };
-}
-
-},{"12":12,"13":13,"6":6,"65":65,"68":68,"77":77,"82":82,"88":88}],82:[function(require,module,exports){
+},{"12":12,"13":13,"6":6,"65":65,"68":68,"77":77,"82":82,"88":88,"89":89}],82:[function(require,module,exports){
 'use strict';
 
 // This is the object returned by the `index.browseAll()` method
@@ -7213,9 +7171,10 @@ var inherits = require(10);
 var forEach = require(12);
 
 var AlgoliaSearch = require(81);
-var errors = require(88);
+var errors = require(89);
 var inlineHeaders = require(86);
 var jsonpRequest = require(87);
+var places = require(90);
 
 // expose original algoliasearch fn in window
 window.algoliasearch = require(84);
@@ -7242,8 +7201,9 @@ window.angular.module('algoliasearch', [])
       return new AlgoliaSearchAngular(applicationID, apiKey, opts);
     }
 
-    algoliasearch.version = require(89);
+    algoliasearch.version = require(91);
     algoliasearch.ua = 'Algolia for AngularJS ' + algoliasearch.version;
+    algoliasearch.initPlaces = places(algoliasearch);
 
     // we expose into window no matter how we are used, this will allow
     // us to easily debug any website running algolia
@@ -7405,7 +7365,7 @@ window.angular.module('algoliasearch', [])
     };
   }]);
 
-},{"10":10,"12":12,"6":6,"66":66,"81":81,"84":84,"85":85,"86":86,"87":87,"88":88,"89":89}],84:[function(require,module,exports){
+},{"10":10,"12":12,"6":6,"66":66,"81":81,"84":84,"85":85,"86":86,"87":87,"89":89,"90":90,"91":91}],84:[function(require,module,exports){
 'use strict';
 
 // This is the standalone browser build entry point
@@ -7417,9 +7377,10 @@ var inherits = require(10);
 var Promise = window.Promise || require(9).Promise;
 
 var AlgoliaSearch = require(81);
-var errors = require(88);
+var errors = require(89);
 var inlineHeaders = require(86);
 var jsonpRequest = require(87);
+var places = require(90);
 
 if ("production" === 'development') {
   require(6).enable('algoliasearch*');
@@ -7441,8 +7402,9 @@ function algoliasearch(applicationID, apiKey, opts) {
   return new AlgoliaSearchBrowser(applicationID, apiKey, opts);
 }
 
-algoliasearch.version = require(89);
+algoliasearch.version = require(91);
 algoliasearch.ua = 'Algolia for vanilla JavaScript ' + algoliasearch.version;
+algoliasearch.initPlaces = places(algoliasearch);
 
 // we expose into window no matter how we are used, this will allow
 // us to easily debug any website running algolia
@@ -7618,7 +7580,7 @@ AlgoliaSearchBrowser.prototype._promise = {
   }
 };
 
-},{"10":10,"6":6,"66":66,"81":81,"85":85,"86":86,"87":87,"88":88,"89":89,"9":9}],85:[function(require,module,exports){
+},{"10":10,"6":6,"66":66,"81":81,"85":85,"86":86,"87":87,"89":89,"9":9,"90":90,"91":91}],85:[function(require,module,exports){
 'use strict';
 
 module.exports = getDocumentProtocol;
@@ -7656,7 +7618,7 @@ function inlineHeaders(url, headers) {
 
 module.exports = jsonpRequest;
 
-var errors = require(88);
+var errors = require(89);
 
 var JSONPCounter = 0;
 
@@ -7781,7 +7743,55 @@ function jsonpRequest(url, opts, cb) {
   }
 }
 
-},{"88":88}],88:[function(require,module,exports){
+},{"89":89}],88:[function(require,module,exports){
+module.exports = buildSearchMethod;
+
+var errors = require(89);
+
+function buildSearchMethod(queryParam, url) {
+  return function search(query, args, callback) {
+    // warn V2 users on how to search
+    if (typeof query === 'function' && typeof args === 'object' ||
+      typeof callback === 'object') {
+      // .search(query, params, cb)
+      // .search(cb, params)
+      throw new errors.AlgoliaSearchError('index.search usage is index.search(query, params, cb)');
+    }
+
+    if (arguments.length === 0 || typeof query === 'function') {
+      // .search(), .search(cb)
+      callback = query;
+      query = '';
+    } else if (arguments.length === 1 || typeof args === 'function') {
+      // .search(query/args), .search(query, cb)
+      callback = args;
+      args = undefined;
+    }
+
+    // .search(args), careful: typeof null === 'object'
+    if (typeof query === 'object' && query !== null) {
+      args = query;
+      query = undefined;
+    } else if (query === undefined || query === null) { // .search(undefined/null)
+      query = '';
+    }
+
+    var params = '';
+
+    if (query !== undefined) {
+      params += queryParam + '=' + encodeURIComponent(query);
+    }
+
+    if (args !== undefined) {
+      // `_getSearchParams` will augment params, do not be fooled by the = versus += from previous if
+      params = this.as._getSearchParams(args, params);
+    }
+
+    return this._search(params, url, callback);
+  };
+}
+
+},{"89":89}],89:[function(require,module,exports){
 'use strict';
 
 // This file hosts our error definitions
@@ -7861,9 +7871,33 @@ module.exports = {
   )
 };
 
-},{"10":10,"12":12}],89:[function(require,module,exports){
+},{"10":10,"12":12}],90:[function(require,module,exports){
+module.exports = createPlacesClient;
+
+var buildSearchMethod = require(88);
+
+function createPlacesClient(algoliasearch) {
+  return function places(appID, apiKey, opts) {
+    var cloneDeep = require(66);
+
+    opts = opts && cloneDeep(opts) || {};
+    opts.hosts = opts.hosts || [
+      'places-dsn.algolia.net',
+      'places-1.algolianet.com',
+      'places-2.algolianet.com',
+      'places-3.algolianet.com'
+    ];
+
+    var client = algoliasearch(appID, apiKey, opts);
+    var index = client.initIndex('places');
+    index.search = buildSearchMethod('query', '/1/places/query');
+    return index;
+  };
+}
+
+},{"66":66,"88":88}],91:[function(require,module,exports){
 'use strict';
 
-module.exports = '3.12.0';
+module.exports = '3.13.0';
 
 },{}]},{},[83]);
