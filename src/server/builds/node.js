@@ -12,6 +12,7 @@ var Promise = global.Promise || require('es6-promise').Promise;
 var semver = require('semver');
 var isNotSupported = semver.satisfies(process.version, '<0.10');
 var isNode010 = semver.satisfies(process.version, '=0.10');
+var places = require('../../places.js');
 
 var AlgoliaSearchServer = require('./AlgoliaSearchServer');
 var errors = require('../../errors');
@@ -70,6 +71,7 @@ function algoliasearch(applicationID, apiKey, opts) {
 
 algoliasearch.version = require('../../version.js');
 algoliasearch.ua = 'Algolia for Node.js ' + algoliasearch.version;
+algoliasearch.initPlaces = places(algoliasearch);
 
 function AlgoliaSearchNodeJS(applicationID, apiKey, opts) {
   var getAgent = require('./get-agent');
