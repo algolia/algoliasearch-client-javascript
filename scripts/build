@@ -56,7 +56,7 @@ done
 echo '..Gzipped file size'
 for bundle in "${bundles[@]}"
 do
-  echo "${bundle}.js gzipped will weight" $(cat dist/"${bundle}".min.js | gzip -9 | wc -c | pretty-bytes)
+  echo "${bundle}.min.js gzipped will weight" $(cat dist/"${bundle}".min.js | gzip -9 | wc -c | pretty-bytes)
 done
 
 echo 'Done'
