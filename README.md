@@ -4,7 +4,7 @@
 
 
 
-[Algolia Search](http://www.algolia.com) is a hosted full-text, numerical, and faceted search engine capable of delivering realtime results from the first keystroke.
+[Algolia Search](https://www.algolia.com) is a hosted full-text, numerical, and faceted search engine capable of delivering realtime results from the first keystroke.
 
 
 
@@ -25,7 +25,7 @@
 [version-svg]: https://img.shields.io/npm/v/algoliasearch.svg?style=flat-square
 [package-url]: https://npmjs.org/package/algoliasearch
 
-The JavaScript client lets you use the [Algolia Search API](https://www.algolia.com/doc/rest_api) on the frontend (browsers) or on the backend (Node.js) with the same API.
+The JavaScript client lets you use the [Algolia Search API](https://www.algolia.com/doc/rest) on the frontend (browsers) or on the backend (Node.js) with the same API.
 
 The backend (Node.js) API can be used to index your data using your Algolia admin API keys.
 
@@ -57,6 +57,7 @@ Table of Contents
 1. [Cache](#cache)
 1. [Proxy support](#proxy-support)
 1. [Keep-alive](#keep-alive)
+
 1. [Online documentation](#documentation)
 1. [Tutorials](#tutorials)
 1. [Old JavaScript clients](#old-javascript-clients)
@@ -90,6 +91,7 @@ To setup your project, follow these steps:
 
 
 
+
 ### Frontend
 
 You can either use a package manager like npm or include a `<script>` tag.
@@ -108,7 +110,9 @@ We are [browserify](http://browserify.org/)able and [webpack](http://webpack.git
 bower install algoliasearch -S
 ```
 
-#### &lt;script&gt; tag using jsDelivr
+#### &lt;script&gt; tag using CDNS
+
+##### Recommended: jsDelivr.com
 
 [jsDelivr](http://www.jsdelivr.com/about.php) is a global CDN delivery for JavaScript libraries.
 
@@ -118,15 +122,11 @@ To include the latest releases and all upcoming features and patches, use this:
 <script src="//cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
 ```
 
-### &lt;script&gt; tag using CDNJS
+##### Other CDNS
 
-[CDNJS](https://cdnjs.com/libraries/algoliasearch) also hosts algoliasearch library and other popular libraries.
-
-CDNJS doesn't support auto upgrade by a single url, but you can choose the version you want by changing the version number in url:
-
-```html
-<script src="//cdnjs.cloudflare.com/ajax/libs/algoliasearch/3.12.0/algoliasearch.min.js"></script>
-```
+We recommend using jsDelivr, but are also available at:
+- [CDNJS](https://cdnjs.com/libraries/algoliasearch)
+- [npmcdn](https://npmcdn.com): [https://npmcdn.com/algoliasearch@3/dist/algoliasearch.min.js]
 
 #### Browserify, webpack
 
@@ -196,6 +196,9 @@ index.search('something', function searchDone(err, content) {
   console.log(err, content);
 });
 ```
+
+
+
 
 Quick Start
 -------------
@@ -451,27 +454,29 @@ You should call this method when you are finished working with the AlgoliaSearch
 
 
 
+
+
 Documentation
 ================
-Check our [online documentation](http://www.algolia.com/doc/guides/node):
- * [Initial Import](http://www.algolia.com/doc/guides/node#InitialImport)
- * [Ranking &amp; Relevance](http://www.algolia.com/doc/guides/node#RankingRelevance)
- * [Indexing](http://www.algolia.com/doc/guides/node#Indexing)
- * [Search](http://www.algolia.com/doc/guides/node#Search)
- * [Sorting](http://www.algolia.com/doc/guides/node#Sorting)
- * [Filtering](http://www.algolia.com/doc/guides/node#Filtering)
- * [Faceting](http://www.algolia.com/doc/guides/node#Faceting)
- * [Geo-Search](http://www.algolia.com/doc/guides/node#Geo-Search)
- * [Security](http://www.algolia.com/doc/guides/node#Security)
- * [REST API](http://www.algolia.com/doc/rest)
+Check our [online documentation](https://www.algolia.com/doc/node):
+ * [Initial Import](https://www.algolia.com/doc/node#initial-import)
+ * [Ranking &amp; Relevance](https://www.algolia.com/doc/node#ranking--relevance)
+ * [Indexing](https://www.algolia.com/doc/node#indexing)
+ * [Search](https://www.algolia.com/doc/node#search)
+ * [Sorting](https://www.algolia.com/doc/node#sorting)
+ * [Filtering](https://www.algolia.com/doc/node#filtering)
+ * [Faceting](https://www.algolia.com/doc/node#faceting)
+ * [Geo-Search](https://www.algolia.com/doc/node#geo-search)
+ * [Security](https://www.algolia.com/doc/node#security)
+ * [REST API](https://www.algolia.com/doc/rest)
 
 Tutorials
 ================
 
-Check out our [tutorials](http://www.algolia.com/doc/tutorials):
- * [Search bar with autocomplete menu](http://www.algolia.com/doc/tutorials/auto-complete)
- * [Search bar with multi category autocomplete menu](http://www.algolia.com/doc/tutorials/multi-auto-complete)
- * [Instant search result pages](http://www.algolia.com/doc/tutorials/instant-search)
+Check out our [tutorials](https://www.algolia.com/doc/tutorials):
+ * [Search bar with autocomplete menu](https://www.algolia.com/doc/tutorials/auto-complete)
+ * [Search bar with multi category autocomplete menu](https://www.algolia.com/doc/tutorials/multi-auto-complete)
+ * [Instant search result pages](https://www.algolia.com/doc/tutorials/instant-search)
 
 
 
@@ -666,7 +671,6 @@ You can use the following optional arguments:
   * **none**: No specific processing is done when a query does not return any results (default behavior).
  * **minWordSizefor1Typo**: The minimum number of characters in a query word to accept one typo in this word.<br/>Defaults to 4.
  * **minWordSizefor2Typos**: The minimum number of characters in a query word to accept two typos in this word.<br/>Defaults to 8.
- * **allowTyposOnNumericTokens**: If set to false, it disables typo tolerance on numeric tokens (numbers). Defaults to false.
  * **typoTolerance**: This option allows you to control the number of typos in the result set:
   * **true**: The typo tolerance is enabled and all matching hits are retrieved (default behavior).
   * **false**: The typo tolerance is disabled. For example, if one result matches without typos, then all results with typos will be hidden.
@@ -881,7 +885,7 @@ client.search(queries, searchCallback);
 
 The resulting JSON answer contains a ```results``` array storing the underlying queries answers. The answers order is the same than the requests order.
 
-You can specify a strategy to optimize your multiple queries:
+You can specify a `strategy` parameter to optimize your multiple queries:
 - **none**: Execute the sequence of queries until the end.
 - **stopIfEnoughMatches**: Execute the sequence of queries until the number of hits is reached by the sum of hits.
 
@@ -1016,7 +1020,7 @@ You can decide to have the same priority for two attributes by passing them in t
  * **advancedSyntax**: Enable the advanced query syntax. Defaults to 0 (false).
 
   * **Phrase query:** a phrase query defines a particular sequence of terms. A phrase query is build by Algolia's query parser for words surrounded by `"`. For example, `"search engine"` will retrieve records having `search` next to `engine` only. Typo-tolerance is disabled on phrase queries.
-  
+
   * **Prohibit operator:** The prohibit operator excludes records that contain the term after the `-` symbol. For example `search -engine` will retrieve records containing `search` but not `engine`.
  * **replaceSynonymsInHighlight**: (boolean) If set to false, words matched via synonyms expansion will not be replaced by the matched synonym in the highlighted result. Default to true.
  * **maxValuesPerFacet**: (integer) Limit the number of facet values returned for each facet. For example: `maxValuesPerFacet=10` will retrieve max 10 values per facet.
@@ -1421,38 +1425,24 @@ client.moveIndex('MyNewIndex', 'MyIndex', function(err, content) {
 Backup / Retrieve of all index content
 -------------
 
-You can retrieve all index content by using the browseAll() method:
+The `search` method cannot return more than 1,000 results. If you need to
+retrieve all the content of your index (for backup, SEO purposes or for running
+a script on it), you should use the `browse` method instead. This method lets
+you retrieve objects beyond the 1,000 limit.
 
-```js
-// browseAll can take any query and queryParameter like the
-// search function. Here we do not provide any because we want all the index's
-// objects
-var browser = index.browseAll();
-var hits = [];
+This method is optimized for speed. To make it fast, distinct, typo-tolerance,
+word proximity, geo distance and number of matched words are disabled. Results
+are still returned ranked by attributes and custom ranking.
 
-browser.on('result', function onResult(content) {
-  hits = hits.concat(content.hits);
-});
 
-browser.on('end', function onEnd() {
-  console.log('Finished!');
-  console.log('We got %d hits', hits.length);
-});
+It will return a `cursor` alongside your data, that you can then use to retrieve
+the next chunk of your records.
 
-browser.on('error', function onError(err) {
-  throw err;
-});
+You can specify custom parameters (like `page` or `hitsPerPage`) on your first
+`browse` call, and these parameters will then be included in the `cursor`. Note
+that it is not possible to access records beyond the 1,000th on the first call.
 
-// You can stop the process at any point with
-// browser.stop();
-
-// Retrieve the next cursor from the browse method
-index.browse(query, function(err, content) {
-  console.log(content[cursor]);
-});
-```
-
-You can also use the `browse(query, queryParameters)` and `browseFrom(browseCursor)` methods to programmatically browse your index content:
+Example:
 
 ```js
 index.browse('jazz', function browseDone(err, content) {
@@ -1472,6 +1462,30 @@ index.browse('jazz', function browseDone(err, content) {
     });
   }
 });
+```
+
+You can also use the `browseAll` method that will crawl the whole index and emit
+events whenever a new chunk of records is fetched.
+
+```js
+var browser = index.browseAll();
+var hits = [];
+
+browser.on('result', function onResult(content) {
+  hits = hits.concat(content.hits);
+});
+
+browser.on('end', function onEnd() {
+  console.log('Finished!');
+  console.log('We got %d hits', hits.length);
+});
+
+browser.on('error', function onError(err) {
+  throw err;
+});
+
+// You can stop the process at any point with
+// browser.stop();
 ```
 
 
@@ -1511,6 +1525,8 @@ client.getLogs(0, 100, function(err, content) {
   console.log(content);
 });
 ```
+
+
 
 
 
