@@ -124,9 +124,9 @@ To include the latest releases and all upcoming features and patches, use this:
 
 ##### Other CDNS
 
-We recommend using jsDelivr, but are also available at:
+We recommend using jsDelivr, but `algoliasearch` is also available at:
 - [CDNJS](https://cdnjs.com/libraries/algoliasearch)
-- [npmcdn](https://npmcdn.com): [https://npmcdn.com/algoliasearch@3/dist/algoliasearch.min.js]
+- [npmcdn](https://npmcdn.com): https://npmcdn.com/algoliasearch@3/dist/algoliasearch.min.js
 
 #### Browserify, webpack
 
