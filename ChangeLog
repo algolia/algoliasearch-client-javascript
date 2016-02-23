@@ -1,5 +1,9 @@
 CHANGELOG
 
+UNRELEASED
+
+  * feat(initPlaces): add a static algoliasearch.initPlaces method
+
 2016-02-05 3.12.0
 
   * fix(apiKey): put the apiKey in the POST body when feasible and key > 500 chars

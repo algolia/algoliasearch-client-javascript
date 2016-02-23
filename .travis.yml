@@ -31,3 +31,10 @@ env:
     # parse test credentials
     - secure: "KJ5+bYlg0MCX8tAQM6IRBZi43SRPgxj6VSxEyvdQn40LYShlvDIFLgKDQ+Acg5U5k0dQ3HMWsAfrJl/T/pQDmh53g14yZrDZYQeAg0gT25RYUYIY3ByrwcQUhriOqU4ivj2neVBiBJxZ4f7Scx0RBk6OTgvAU/Cc+37apDdDKRk="
     - secure: "ZJSK5Mgd/Gmew/5V5e7nd/ArVhIngB825+phWYF00/T9sKYY9P83JQGVn9Iwf/iGBI6lgabS79CwwmaetCzjQa4YxsOObmaMgho/brqlci9AilbksI3UhNVMehFt2Pr1RZQMmGKk+Uot3RKqna5fvyZdtbOw0jGef/H1oYge9HY="
+
+    # PLACES_APPID
+    - secure: "J57JGcXoxle+qm6EKaDS6V4wfHIiilBWLM6TXxdRydiwWrYxlozfJY9CxOJvtm3SAB+lenNqgQGe3xTqhB1BigrSKsLC+P4Q/T5ckZ5lR58p2K4NlUdhhtsfZ7tWlqP1QP+DY9lon1YHj7DML51zWRHivengUYLAnRmhV+NnU1M="
+    # PLACES_APIKEY
+    - secure: "iRRCr4v+2ljvSfcgbwlp6eEJ7LPAZy3PEO4HFw/Cvdh9Ep+gSDjTxwRKDM9SYka0Jgptz305qXe3F+HnwpEc6D6Qaj3pR7LSU3msKyNSmUbBAlKKumRyIHRc2KE4544cxdp0vH5MWLORuoHOUDP3hcWYKGhUfwEbnl1kciT9mbY="
+
+
