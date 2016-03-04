@@ -3,6 +3,10 @@
 module.exports = AlgoliaSearch;
 
 var errors = require('./errors');
+var buildSearchMethod = require('./buildSearchMethod.js');
+
+// We will always put the API KEY in the JSON body in case of too long API KEY
+var MAX_API_KEY_LENGTH = 500;
 
 /*
  * Algolia Search library initialization
@@ -103,6 +107,7 @@ function AlgoliaSearch(applicationID, apiKey, opts) {
 
   this._ua = opts._ua;
   this._useCache = opts._useCache === undefined || opts._cache ? true : opts._useCache;
+  this._useFallback = opts.useFallback === undefined ? true : opts.useFallback;
 
   this._setTimeout = opts._setTimeout;
 
@@ -685,7 +690,15 @@ AlgoliaSearch.prototype = {
     var client = this;
     var tries = 0;
     var usingFallback = false;
-    var hasFallback = client._request.fallback && initialOpts.fallback;
+    var hasFallback = client._useFallback && client._request.fallback && initialOpts.fallback;
+    var headers;
+
+    if (this.apiKey.length > MAX_API_KEY_LENGTH && initialOpts.body !== undefined && initialOpts.body.params !== undefined) {
+      initialOpts.body.apiKey = this.apiKey;
+      headers = this._computeRequestHeaders(false);
+    } else {
+      headers = this._computeRequestHeaders();
+    }
 
     if (initialOpts.body !== undefined) {
       body = safeJSONStringify(initialOpts.body);
@@ -736,6 +749,8 @@ AlgoliaSearch.prototype = {
         if (reqOpts.jsonBody) {
           reqOpts.body = safeJSONStringify(reqOpts.jsonBody);
         }
+        // re-compute headers, they could be omitting the API KEY
+        headers = client._computeRequestHeaders();
 
         reqOpts.timeout = client.requestTimeout * (tries + 1);
         client.hostIndex[initialOpts.hostType] = 0;
@@ -748,7 +763,7 @@ AlgoliaSearch.prototype = {
         body: reqOpts.body,
         jsonBody: reqOpts.jsonBody,
         method: reqOpts.method,
-        headers: client._computeRequestHeaders(),
+        headers: headers,
         timeout: reqOpts.timeout,
         debug: requestDebug
       };
@@ -908,14 +923,21 @@ AlgoliaSearch.prototype = {
     return params;
   },
 
-  _computeRequestHeaders: function() {
+  _computeRequestHeaders: function(withAPIKey) {
     var forEach = require('lodash/collection/forEach');
 
     var requestHeaders = {
-      'x-algolia-api-key': this.apiKey,
-      'x-algolia-application-id': this.applicationID,
-      'x-algolia-agent': this._ua
+      'x-algolia-agent': this._ua,
+      'x-algolia-application-id': this.applicationID
     };
+
+    // browser will inline headers in the url, node.js will use http headers
+    // but in some situations, the API KEY will be too long (big secured API keys)
+    // so if the request is a POST and the KEY is very long, we will be asked to not put
+    // it into headers but in the JSON body
+    if (withAPIKey !== false) {
+      requestHeaders['x-algolia-api-key'] = this.apiKey;
+    }
 
     if (this.userToken) {
       requestHeaders['x-algolia-usertoken'] = this.userToken;
@@ -2080,11 +2102,11 @@ AlgoliaSearch.prototype.Index.prototype = {
     });
   },
 
-  _search: function(params, callback) {
+  _search: function(params, url, callback) {
     return this.as._jsonRequest({
       cache: this.cache,
       method: 'POST',
-      url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/query',
+      url: url || '/1/indexes/' + encodeURIComponent(this.indexName) + '/query',
       body: {params: params},
       hostType: 'read',
       fallback: {
@@ -2168,47 +2190,4 @@ function safeJSONStringify(obj) {
   Array.prototype.toJSON = toJSON;
 
   return out;
-}
-
-function buildSearchMethod(queryParam) {
-  return function search(query, args, callback) {
-    // warn V2 users on how to search
-    if (typeof query === 'function' && typeof args === 'object' ||
-      typeof callback === 'object') {
-      // .search(query, params, cb)
-      // .search(cb, params)
-      throw new errors.AlgoliaSearchError('index.search usage is index.search(query, params, cb)');
-    }
-
-    if (arguments.length === 0 || typeof query === 'function') {
-      // .search(), .search(cb)
-      callback = query;
-      query = '';
-    } else if (arguments.length === 1 || typeof args === 'function') {
-      // .search(query/args), .search(query, cb)
-      callback = args;
-      args = undefined;
-    }
-
-    // .search(args), careful: typeof null === 'object'
-    if (typeof query === 'object' && query !== null) {
-      args = query;
-      query = undefined;
-    } else if (query === undefined || query === null) { // .search(undefined/null)
-      query = '';
-    }
-
-    var params = '';
-
-    if (query !== undefined) {
-      params += queryParam + '=' + encodeURIComponent(query);
-    }
-
-    if (args !== undefined) {
-      // `_getSearchParams` will augment params, do not be fooled by the = versus += from previous if
-      params = this.as._getSearchParams(args, params);
-    }
-
-    return this._search(params, callback);
-  };
 }

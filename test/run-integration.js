@@ -43,33 +43,44 @@ var objects = getFakeObjects(50);
 // avoid having to type index.waitTask.bind(index)
 _.bindAll(index);
 
-test('Integration tests', function(t) {
-  t.test('index.clearIndex', clearIndex);
-  t.test('index.saveObjects', saveObjects);
-  t.test('index.browse', browse);
-  t.test('index.getObject', getObject);
-  t.test('index.browseFrom', browseFrom);
-  t.test('index.browseAll', browseAll);
+test('index.clearIndex', clearIndex);
+test('index.saveObjects', saveObjects);
+test('index.browse', browse);
+test('index.getObject', getObject);
+test('index.browseFrom', browseFrom);
+test('index.browseAll', browseAll);
 
-  if (!isABrowser) {
-    t.test('client.generateSecuredApiKey', generateSecuredApiKey);
-  }
+if (!isABrowser) {
+  test('client.generateSecuredApiKey', generateSecuredApiKey);
+}
 
-  if (canPUT) {
-    // saveObject is a PUT, only supported by Node.js or CORS, not XDomainRequest
-    t.test('index.saveObject', saveObject);
-  }
+if (canPUT) {
+  // saveObject is a PUT, only supported by Node.js or CORS, not XDomainRequest
+  test('index.saveObject', saveObject);
+}
 
-  if (!process.browser) {
-    t.test('using a http proxy to https', proxyHttpToHttps);
-  }
+if (!process.browser) {
+  test('using a http proxy to https', proxyHttpToHttps);
+}
 
-  if (canDELETE) {
-    t.test('client.deleteIndex', deleteIndex);
-  } else {
-    t.test('index.clearIndex', clearIndex);
-  }
-});
+if (canDELETE) {
+  test('client.deleteIndex', deleteIndex);
+} else {
+  test('index.clearIndex', clearIndex);
+}
+
+test('places', initPlaces);
+
+function initPlaces(t) {
+  t.plan(1);
+  var places = algoliasearch.initPlaces(process.env.PLACES_APPID, process.env.PLACES_APIKEY);
+
+  places.search('paris').then(function(res) {
+    t.ok(res.nbHits, 'We got some results by querying `paris`');
+  }, function(e) {
+    t.fail(e);
+  });
+}
 
 function clearIndex(t) {
   t.plan(1);

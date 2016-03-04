@@ -12,6 +12,7 @@ var AlgoliaSearch = require('../../AlgoliaSearch');
 var errors = require('../../errors');
 var inlineHeaders = require('../inline-headers');
 var jsonpRequest = require('../jsonp-request');
+var places = require('../../places.js');
 
 // expose original algoliasearch fn in window
 window.algoliasearch = require('./algoliasearch');
@@ -40,6 +41,7 @@ window.angular.module('algoliasearch', [])
 
     algoliasearch.version = require('../../version.js');
     algoliasearch.ua = 'Algolia for AngularJS ' + algoliasearch.version;
+    algoliasearch.initPlaces = places(algoliasearch);
 
     // we expose into window no matter how we are used, this will allow
     // us to easily debug any website running algolia
