@@ -1,7 +1,66 @@
 {
-  "extends": "algolia",
+  "extends": "airbnb/base",
+  "plugins": ["mocha", "import"],
   "rules": {
-    "strict": 0,
-    "valid-jsdoc": 0
+    // "quote-props": [2, "as-needed", {keywords: true}],
+    // "array-bracket-spacing": [2, "never"],
+    // "vars-on-top": 0,
+    // "no-param-reassign": 0,
+    // "max-len": [
+    //   1,
+    //   110,
+    //   2,
+    //   {
+    //     "ignoreComments": true,
+    //     "ignoreUrls": true
+    //   }
+    // ],
+    "comma-dangle": [2, "never"],
+    "no-use-before-define": [2, "nofunc"],
+    // "no-lonely-if": 2,
+    // "handle-callback-err": 2,
+    // "no-extra-parens": 2,
+    // "no-path-concat": 1,
+    // "func-style": [
+    //   1,
+    //   "declaration"
+    // ],
+    // "space-unary-ops": 2,
+    // "no-mixed-requires": [
+    //   2,
+    //   true
+    // ],
+    // "space-in-parens": [
+    //   2,
+    //   "never"
+    // ],
+    // "no-var": 0,
+    // "prefer-const": 0,
+    // strict: [2, "global"],
+    "object-curly-spacing": [2, "never"],
+    // "computed-property-spacing": [2, "never"],
+    // "func-names": 0,
+    // "valid-jsdoc": [2, {requireReturnDescription: false}],
+    // "id-length": 0,
+    // "no-unused-vars": [2, {args: "after-used", argsIgnorePattern: "^_"}]
+
+    // Plugin rules:
+
+    // mocha
+    "mocha/no-exclusive-tests": 2, // https://github.com/lo1tuma/eslint-plugin-mocha/blob/master/docs/rules/no-exclusive-tests.md
+    "mocha/handle-done-callback": 2, // https://github.com/lo1tuma/eslint-plugin-mocha/blob/master/docs/rules/handle-done-callback.md
+    "mocha/no-global-tests": 2, // https://github.com/lo1tuma/eslint-plugin-mocha/blob/master/docs/rules/no-global-tests.md
+
+    // import
+    "import/default": 2, // https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/default.md
+    "import/export": 2, // https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/export.md
+    "import/imports-first": [2, "absolute-first"], // https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/imports-first.md
+    "import/named": 2, // https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/named.md
+    "import/namespace": 2, // https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/namespace.md
+    "import/no-amd": 2, // https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/no-amd.md
+    "import/no-commonjs": 2, // https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/no-commonjs.md
+    "import/no-duplicates": 2, // https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/no-duplicates.md
+    "import/no-named-as-default": 2, // https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/no-named-as-default.md
+    "import/no-unresolved": 2, // https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/no-unresolved.md
   }
 }

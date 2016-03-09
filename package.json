@@ -1,111 +1,29 @@
 {
-  "name": "algoliasearch",
-  "version": "3.13.0",
-  "description": "AlgoliaSearch API JavaScript client",
-  "main": "index.js",
-  "browser": "./src/browser.js",
+  "private": true,
+  "license": "MIT",
   "scripts": {
-    "build": "./scripts/build",
-    "dev": "APP_ENV=development DEBUG=zuul* zuul --no-coverage --local 8080 -- test/run-browser.js",
-    "dev-integration": "APP_ENV=development DEBUG=zuul* zuul --no-coverage --local 8080 -- test/run-integration.js",
-    "examples": "http-server . -a 0.0.0.0",
-    "watch": "watchify index.js -d -v -s algoliasearch -o dist/algoliasearch.js",
-    "release": "git clean dist/ -f && git checkout dist/ && npm install && ./scripts/release && APP_ENV=production npm run build",
-    "test": "./scripts/test",
-    "test-ci": "./scripts/test-ci",
-    "lint": "./scripts/lint",
-    "shrinkwrap": "npm-shrinkwrap --dev"
-  },
-  "browserify": {
-    "transform": [
-      "envify"
-    ]
-  },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/algolia/algoliasearch-client-js.git"
-  },
-  "keywords": [
-    "algolia",
-    "search",
-    "search api",
-    "instant search",
-    "realtime",
-    "autocomplete"
-  ],
-  "homepage": "https://github.com/algolia/algoliasearch-client-js",
-  "bugs": "https://github.com/algolia/algoliasearch-client-js/issues",
-  "author": {
-    "name": "Algolia SAS",
-    "url": "https://www.algolia.com"
-  },
-  "contributors": [
-    {
-      "name": "Algolia Team <support@algolia.com>",
-      "url": "http://www.algolia.com"
-    }
-  ],
-  "dependencies": {
-    "agentkeepalive": "^2.0.3",
-    "debug": "^2.2.0",
-    "debug-ms-fix-yui-compressor": "2.2.2-future-reserved-word-fix-ms",
-    "envify": "^3.4.0",
-    "es6-promise": "^3.0.2",
-    "events": "^1.1.0",
-    "inherits": "^2.0.1",
-    "load-script": "^1.0.0",
-    "lodash": "^3.10.1",
-    "lodash-compat": "^3.10.1",
-    "querystring": "^0.2.0",
-    "semver": "^5.0.3",
-    "tunnel-agent": "^0.4.1"
+    "build": "",
+    "test": "mocha src/*__test.js  --compilers js:babel-register --reporter dot",
+    "test:watch": "npm run test -- --watch --reporter min",
+    "test:coverage": "",
+    "release": "",
+    "lint": "eslint src/clientMethods*"
   },
   "devDependencies": {
-    "angular": "^1.4.8",
-    "async": "^1.5.0",
-    "babel-eslint": "^4.1.6",
-    "bowser": "^1.0.0",
-    "browserify": "^11.2.0",
-    "browzers": "^1.3.0",
-    "bulk-require": "^0.2.1",
-    "bulkify": "^1.1.1",
-    "bundle-collapser": "^1.2.1",
-    "chance": "^0.8.0",
-    "compression": "^1.6.0",
-    "deumdify": "^1.2.2",
-    "domready": "0.3.0",
-    "eslint": "^1.7.3",
-    "eslint-config-airbnb": "^0.1.0",
-    "eslint-config-algolia": "^4.2.0",
-    "eslint-plugin-react": "^3.6.3",
-    "express": "^4.13.3",
-    "faux-jax": "^4.2.1",
-    "http-proxy": "^1.12.0",
-    "http-server": "^0.8.5",
-    "jquery": "^2.1.4",
-    "jquery-ajax-transport-xdomainrequest": "^1.0.4",
-    "morgan": "^1.6.1",
-    "mversion": "^1.10.1",
-    "npm-shrinkwrap": "^200.4.0",
-    "phantomjs": "^1.9.19",
-    "pretty-bytes": "^2.0.1",
-    "proxy": "^0.2.3",
-    "proxy-agent": "^2.0.0",
-    "self-signed": "^1.3.1",
-    "server-destroy": "^1.0.1",
-    "sinon": "^1.17.2",
-    "superagent": "^1.4.0",
-    "tape": "^4.2.2",
-    "uglify-js": "^2.6.1",
-    "url-parse": "^1.0.5",
-    "watchify": "^3.7.0",
-    "webpack": "^1.12.9",
-    "xhr": "^2.2.0",
-    "zuul": "^3.8.0",
-    "zuul-ngrok": "3.0.0"
+    "babel-core": "^6.6.5",
+    "babel-preset-es2015": "^6.6.0",
+    "babel-register": "^6.6.5",
+    "eslint": "^2.2.0",
+    "eslint-config-airbnb": "^6.0.2",
+    "eslint-plugin-import": "^1.0.3",
+    "eslint-plugin-mocha": "^2.0.0",
+    "expect": "^1.14.0",
+    "mocha": "^2.4.5",
+    "sinon": "^1.17.3"
   },
-  "engines": {
-    "node": ">=0.8"
-  },
-  "license": "MIT"
+  "babel": {
+    "presets": [
+      "es2015"
+    ]
+  }
 }

@@ -1,0 +1,17 @@
+{
+  "name": "algoliasearch",
+  "version": "4.0.0-alpha",
+  "description": "Universal JavaScript API client for Algolia search API.",
+  "repository": "https://github.com/algolia/algoliasearch-client-js/tree/master/packages/algoliasearch-lite",
+  "keywords": [
+    "algolia",
+    "search",
+    "api client",
+    "lightweight",
+    "lite"
+  ],
+  "homepage": "https://github.com/algolia/algoliasearch-client-js",
+  "bugs": "https://github.com/algolia/algoliasearch-client-js/issues",
+  "author": "Algolia SAS (https://www.algolia.com)",
+  "license": "MIT"
+}
