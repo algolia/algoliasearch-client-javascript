@@ -1,0 +1,51 @@
+TODO:
+expose keys functions, handling both global and client
+use webpack or rollup
+create a boilerplate
+automatic changelog and release process
+drop support for IE < 10: no more non-CORS support
+provide a search-only entrypoint and build
+externalize jQuery, angular and parse build in separate npm packages. But keep them in packages/
+do real unit testing and not blackbox testing like today
+implement read/write timeout separation
+default to https for write actions, stop using the browser protocol: you can't index in anything but https
+remove all legacy signatures and deprecated methods. Stop being too permissive on the method signature. Only keep the most obvious and useful signatures
+generateSecuredAPIKey should be static (maybe other methods)
+clearly identify public/private props
+provide a way to cancel a request (need api proposal)
+use a single cache
+drop setUserToken, setSecurityTags
+most of the client state should be in the jsonRequest object/api
+fix the build status (doing real unit testing should help here)
+run unit tests with karma in browsers, zuul is nice but karma should be our default target (we already use it everywhere)
+monitor jsdelivr /latest usage
+use greenkeeper.io
+
+removed:
+________
+removed client.search[{query: ..}] on allow params.query
+removed addUserKeyWithValidity
+removed setSecurityTags
+removed setUserToken
+removed startQueriesBatch
+removed addQueryInBatch
+removed sendQueriesBatch
+removed index.deleteByQuery
+removed index.browseAll
+removed index.ttAdapter, use autocomplete.js
+
+renamed:
+________
+
+careful:
+_______
+JSONP with search
+JSONP with batch
+- client.requester.setRequestTimeout
+- client.requester.setExtraHeader
+- client.requester.addAlgoliaAgent
+- client.requester.clearCache
+deleteByQuery in addons or just as a recipe, take the latest one from xavier
+browseAll in addons or just as a recipe
+
+browse now has jsonp, implement it

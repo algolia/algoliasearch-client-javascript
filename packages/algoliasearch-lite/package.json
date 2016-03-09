@@ -11,5 +11,8 @@
   "homepage": "https://github.com/algolia/algoliasearch-client-js",
   "bugs": "https://github.com/algolia/algoliasearch-client-js/issues",
   "author": "Algolia SAS (https://www.algolia.com)",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "algoliasearch": "^4.0.0-alpha"
+  }
 }
