@@ -1,1 +1,4 @@
-module.exports = require('./src/client.js');
+import debug from 'debug';
+debug.useColors = false;
+
+export {default} from './src/algoliasearchNodejs.js';

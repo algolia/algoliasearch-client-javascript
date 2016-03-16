@@ -1,5 +1,6 @@
 export {
   batch,
+  clearIndex,
   copyIndex,
   deleteIndex,
   listIndexes,
@@ -25,36 +26,38 @@ function deleteIndex(req, indexName) {
 /**
  * Move an index.
  *
- * @param {string} indexName Name of the source index.
- * @param {string} destination Name of the destination index.
+ * @param {Object} params
+ * @param {string} params.source Name of the source index.
+ * @param {string} params.destination Name of the destination index.
  * Destination is overriden if it already exists.
  * @return {Promise}
  * @see https://www.algolia.com/doc/rest#copymove-an-index
  */
-function moveIndex(req, indexName, destination) {
+function moveIndex(req, {source, destination}) {
   return req({
     method: 'POST',
     path: '/1/indexes/%s/operation',
-    pathParams: [indexName],
-    params: {operation: 'move', destination}
+    pathParams: [source],
+    body: {operation: 'move', destination}
   });
 }
 
 /**
  * Copy an index.
  *
- * @param {string} indexName Name of the source index.
- * @param {string} destination Name of the destination index.
+ * @param {Object} params
+ * @param {string} params.source Name of the source index.
+ * @param {string} params.destination Name of the destination index.
  * Destination is overriden if it already exists.
  * @return {Promise}
  * @see https://www.algolia.com/doc/rest#copymove-an-index
  */
-function copyIndex(req, indexName, destination) {
+function copyIndex(req, {source, destination}) {
   return req({
     method: 'POST',
     path: '/1/indexes/%s/operation',
-    pathParams: [indexName],
-    params: {operation: 'copy', destination}
+    pathParams: [source],
+    body: {operation: 'copy', destination}
   });
 }
 
@@ -71,7 +74,7 @@ function listIndexes(req, page) {
   return req({
     method: 'GET',
     path: '/1/indexes',
-    params: {page}
+    qs: {page}
   });
 }
 
@@ -80,16 +83,18 @@ function listIndexes(req, page) {
  *
  * @param {Object[]} requests An array of queries you want to run.
  * @param {string} requests[].indexName The index name you want to target.
- * @param {Object} requests[].params Any search parameter like query or hitsPerPage.
- * The full list of search parameters is available at
+ * @param {Object} requests[].params Any search parameter like `query` or `hitsPerPage`.
+ * The full list of search parameters is available at https://www.algolia.com/doc/rest#full-text-search-parameters
  * @return {Promise}
  * @see https://www.algolia.com/doc/rest#query-multiple-indexes
+ * @see https://www.algolia.com/doc/rest#full-text-search-parameters
  */
 function search(req, requests) {
   return req({
     method: 'POST',
     path: '/1/indexes/*/queries',
-    params: {requests}
+    body: {requests},
+    forceReadHosts: true
   });
 }
 
@@ -113,6 +118,22 @@ function batch(req, requests) {
   return req({
     method: 'POST',
     path: '/1/indexes/*/batch',
-    params: {requests}
+    body: {requests}
+  });
+}
+
+
+/*
+ * This function deletes the index content. Settings and index specific API keys are kept untouched.
+ *
+ * @param callback (optional) the result callback called with two arguments
+ *  error: null or Error('message')
+ *  content: the settings object or the error message if a failure occured
+ */
+function clearIndex(req, indexName) {
+  return this.as._jsonRequest({
+    method: 'POST',
+    path: '/1/indexes/%s/clear',
+    pathParams: [indexName]
   });
 }

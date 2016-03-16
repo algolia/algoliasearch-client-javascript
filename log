@@ -36,7 +36,7 @@ removed index.ttAdapter, use autocomplete.js
 
 renamed:
 ________
-
+addObject, addObjects now saveObject, saveObjects
 careful:
 _______
 JSONP with search
@@ -47,5 +47,7 @@ JSONP with batch
 - client.requester.clearCache
 deleteByQuery in addons or just as a recipe, take the latest one from xavier
 browseAll in addons or just as a recipe
+- can createIfNoExist be used for batch partial updates?
+- can browse be used with POST?
 
 browse now has jsonp, implement it

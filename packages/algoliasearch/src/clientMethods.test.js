@@ -10,6 +10,7 @@ describe('clientMethods', () => {
   it('has the right set of methods', () =>
     expect(Object.keys(clientMethods)).toEqual([
       'batch',
+      'clearIndex',
       'copyIndex',
       'deleteIndex',
       'listIndexes',
@@ -29,24 +30,24 @@ describe('clientMethods', () => {
   });
 
   it('has a moveIndex method', () => {
-    clientMethods.moveIndex(req, 'move it', 'here');
+    clientMethods.moveIndex(req, {source: 'move it', destination: 'here'});
     expect(req.calledOnce).toBe(true, 'req() called once');
     expect(req.args[0][0]).toEqual({
       method: 'POST',
       path: '/1/indexes/%s/operation',
       pathParams: ['move it'],
-      params: {destination: 'here', operation: 'move'}
+      body: {destination: 'here', operation: 'move'}
     });
   });
 
   it('has a copyIndex method', () => {
-    clientMethods.copyIndex(req, 'copy it', 'here');
+    clientMethods.copyIndex(req, {source: 'copy it', destination: 'here'});
     expect(req.calledOnce).toBe(true, 'req() called once');
     expect(req.args[0][0]).toEqual({
       method: 'POST',
       path: '/1/indexes/%s/operation',
       pathParams: ['copy it'],
-      params: {destination: 'here', operation: 'copy'}
+      body: {destination: 'here', operation: 'copy'}
     });
   });
 
@@ -56,7 +57,7 @@ describe('clientMethods', () => {
     expect(req.args[0][0]).toEqual({
       method: 'GET',
       path: '/1/indexes',
-      params: {page: 2}
+      qs: {page: 2}
     });
   });
 
@@ -66,7 +67,8 @@ describe('clientMethods', () => {
     expect(req.args[0][0]).toEqual({
       method: 'POST',
       path: '/1/indexes/*/queries',
-      params: {requests: [{indexName: 'clients', params: {query: 'vi'}}]}
+      body: {requests: [{indexName: 'clients', params: {query: 'vi'}}]},
+      forceReadHosts: true
     });
   });
 
@@ -76,7 +78,7 @@ describe('clientMethods', () => {
     expect(req.args[0][0]).toEqual({
       method: 'POST',
       path: '/1/indexes/*/batch',
-      params: {requests: [{indexName: 'clients', params: {query: 'vi'}}]}
+      body: {requests: [{indexName: 'clients', params: {query: 'vi'}}]}
     });
   });
 });

@@ -6,9 +6,7 @@
   "keywords": [
     "algolia",
     "search",
-    "api client",
-    "lightweight",
-    "lite"
+    "api client"
   ],
   "homepage": "https://github.com/algolia/algoliasearch-client-js",
   "bugs": "https://github.com/algolia/algoliasearch-client-js/issues",

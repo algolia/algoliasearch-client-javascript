@@ -1,6 +1,11 @@
 {
   "extends": "airbnb/base",
   "plugins": ["mocha", "import"],
+  "parserOptions": {
+      "ecmaFeatures": {
+          "experimentalObjectRestSpread": true
+      }
+  },
   "rules": {
     // "quote-props": [2, "as-needed", {keywords: true}],
     // "array-bracket-spacing": [2, "never"],
@@ -15,8 +20,6 @@
     //     "ignoreUrls": true
     //   }
     // ],
-    "comma-dangle": [2, "never"],
-    "no-use-before-define": [2, "nofunc"],
     // "no-lonely-if": 2,
     // "handle-callback-err": 2,
     // "no-extra-parens": 2,
@@ -44,6 +47,15 @@
     // "id-length": 0,
     // "no-unused-vars": [2, {args: "after-used", argsIgnorePattern: "^_"}]
 
+    // disallow {obj: value, obj2: value,}
+    // allow comma dangle without forcing it
+    "comma-dangle": 0, // http://eslint.org/docs/rules/comma-dangle
+    // allow using function hoisting
+    "no-use-before-define": [2, "nofunc"], // http://eslint.org/docs/rules/no-use-before-define
+    // force line length to 110 chars, but allow long urls
+    "max-len": [2, {"code": 110, "ignoreUrls": true}], // http://eslint.org/docs/rules/max-len
+    // we are not using the arguments object, we can disable this
+    "no-param-reassign": 0, // http://eslint.org/docs/rules/no-param-reassign
 
     // Plugin rules:
 

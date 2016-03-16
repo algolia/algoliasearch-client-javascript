@@ -5,20 +5,24 @@
     "build": "",
     "test": "mocha packages/**/*.test.js  --compilers js:babel-register --reporter dot",
     "test:watch": "npm run test -- --watch --reporter min",
+    "test:integration": "mocha packages/**/*.test.integration.js  --compilers js:babel-register --reporter dot",
+    "test:integration:watch": "npm run test:integration -- --watch --reporter min",
     "test:coverage": "",
     "release": "",
-    "lint": "eslint ."
+    "lint": "eslint packages/algoliasearch/*.js packages/algoliasearch/**/*.js",
+    "lint:watch": "esw"
   },
   "devDependencies": {
-    "babel-core": "^6.6.5",
+    "babel-core": "^6.7.2",
     "babel-preset-es2015": "^6.6.0",
     "babel-preset-stage-2": "^6.5.0",
-    "babel-register": "^6.6.5",
+    "babel-register": "^6.7.2",
     "eslint": "^2.2.0",
     "eslint-config-airbnb": "^6.0.2",
     "eslint-plugin-import": "^1.0.3",
     "eslint-plugin-mocha": "^2.0.0",
-    "expect": "^1.14.0",
+    "eslint-watch": "^2.1.10",
+    "expect": "^1.15.1",
     "mocha": "^2.4.5",
     "sinon": "^1.17.3"
   },
@@ -27,5 +31,8 @@
       "es2015",
       "stage-2"
     ]
+  },
+  "dependencies": {
+    "debug": "^2.2.0"
   }
 }
