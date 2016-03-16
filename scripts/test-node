@@ -22,7 +22,7 @@ echo "Node test 4"
 # always test first on node 4, node v5 embeds npm@2
 # so we only test it
 echo "Node test 4: unit"
-nvm use 4 || nvm install 4
+nvm install 4
 
 if [ $CI == 'false' ]; then
   node test/run-node.js
@@ -40,7 +40,7 @@ if [ $TRAVIS_PULL_REQUEST != 'false' ] || [ $CI == 'false' ]; then
 else
   echo "Node test 0.10"
 
-  nvm use 0.10 || nvm install 0.10
+  nvm install 0.10
   echo "Node test 0.10: unit"
   node test/run-node.js
 
@@ -48,7 +48,7 @@ else
   node test/run-integration.js
 
   echo "Node test 0.12"
-  nvm use 0.12 || nvm install 0.12
+  nvm install 0.12
 
   echo "Node test 0.12: unit"
   node test/run-node.js
@@ -57,7 +57,7 @@ else
   node test/run-integration.js
 
   echo "Node test 5"
-  nvm use 5 || nvm install 5
+  nvm install 5
   npm install -g npm@2 # force npm2, npm3 still buggy
 
   echo "Node test 5: unit"
