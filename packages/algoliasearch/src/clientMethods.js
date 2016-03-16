@@ -1,65 +1,8 @@
 export {
   batch,
-  clearIndex,
-  copyIndex,
-  deleteIndex,
   listIndexes,
-  moveIndex,
   search
 };
-
-/**
- * Delete an index.
- *
- * @param {string} indexName Name of the index to delete.
- * @return {Promise}
- * @see https://www.algolia.com/doc/rest#delete-an-index
- */
-function deleteIndex(req, indexName) {
-  return req({
-    method: 'DELETE',
-    path: '/1/indexes/%s',
-    pathParams: [indexName]
-  });
-}
-
-/**
- * Move an index.
- *
- * @param {Object} params
- * @param {string} params.source Name of the source index.
- * @param {string} params.destination Name of the destination index.
- * Destination is overriden if it already exists.
- * @return {Promise}
- * @see https://www.algolia.com/doc/rest#copymove-an-index
- */
-function moveIndex(req, {source, destination}) {
-  return req({
-    method: 'POST',
-    path: '/1/indexes/%s/operation',
-    pathParams: [source],
-    body: {operation: 'move', destination}
-  });
-}
-
-/**
- * Copy an index.
- *
- * @param {Object} params
- * @param {string} params.source Name of the source index.
- * @param {string} params.destination Name of the destination index.
- * Destination is overriden if it already exists.
- * @return {Promise}
- * @see https://www.algolia.com/doc/rest#copymove-an-index
- */
-function copyIndex(req, {source, destination}) {
-  return req({
-    method: 'POST',
-    path: '/1/indexes/%s/operation',
-    pathParams: [source],
-    body: {operation: 'copy', destination}
-  });
-}
 
 /*
  * List all existing indexes.
@@ -119,21 +62,5 @@ function batch(req, requests) {
     method: 'POST',
     path: '/1/indexes/*/batch',
     body: {requests}
-  });
-}
-
-
-/*
- * This function deletes the index content. Settings and index specific API keys are kept untouched.
- *
- * @param callback (optional) the result callback called with two arguments
- *  error: null or Error('message')
- *  content: the settings object or the error message if a failure occured
- */
-function clearIndex(req, indexName) {
-  return this.as._jsonRequest({
-    method: 'POST',
-    path: '/1/indexes/%s/clear',
-    pathParams: [indexName]
   });
 }

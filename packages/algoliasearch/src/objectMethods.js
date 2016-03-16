@@ -25,7 +25,7 @@ function _delete(req, indexName, objectID) {
   }
 
   return req({
-    method: 'DELETE',
+    method: 'POST',
     path: '/1/indexes/%s/batch',
     pathParams: [indexName],
     body: {
@@ -49,7 +49,7 @@ function _delete(req, indexName, objectID) {
  * @see https://www.algolia.com/doc/rest#get-an-object
  * @see https://www.algolia.com/doc/rest#retrieve-several-objects
  */
-function get(req, indexName, objectID, {attributesToRetrieve = []}) {
+function get(req, indexName, objectID, {attributesToRetrieve = []} = {}) {
   if (!Array.isArray(objectID)) {
     return req({
       method: 'GET',
@@ -85,19 +85,21 @@ function get(req, indexName, objectID, {attributesToRetrieve = []}) {
  * @see https://www.algolia.com/doc/rest#partially-update-an-object
  * @see https://www.algolia.com/doc/rest#batch-write-operations
  */
-function partialUpdate(req, indexName, partialObject, {createIfNotExists}) {
+function partialUpdate(req, indexName, partialObject, {createIfNotExists} = {}) {
   if (!Array.isArray(partialObject)) {
     return req({
       method: 'POST',
       path: '/1/indexes/%s/%s/partial',
       pathParams: [indexName, partialObject.objectID],
-      qs: {createIfNotExists}
+      qs: {createIfNotExists},
+      body: partialObject
     });
   }
 
   return req({
     method: 'POST',
     path: '/1/indexes/%s/batch',
+    pathParams: [indexName],
     body: {
       requests: partialObject.map(object => ({
         action: 'partialUpdateObject',

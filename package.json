@@ -5,8 +5,8 @@
     "build": "",
     "test": "mocha packages/**/*.test.js  --compilers js:babel-register --reporter dot",
     "test:watch": "npm run test -- --watch --reporter min",
-    "test:integration": "mocha packages/**/*.test.integration.js  --compilers js:babel-register --reporter dot",
-    "test:integration:watch": "npm run test:integration -- --watch --reporter min",
+    "test:integration": "mocha packages/**/*.test.integration.js  --compilers js:babel-register --reporter spec --timeout 50000 --bail --no-exit",
+    "test:integration:watch": "npm run test:integration -- --watch",
     "test:coverage": "",
     "release": "",
     "lint": "eslint packages/algoliasearch/*.js packages/algoliasearch/**/*.js",
@@ -23,7 +23,9 @@
     "eslint-plugin-mocha": "^2.0.0",
     "eslint-watch": "^2.1.10",
     "expect": "^1.15.1",
+    "lodash": "^4.6.1",
     "mocha": "^2.4.5",
+    "mocha.parallel": "^0.11.2",
     "sinon": "^1.17.3"
   },
   "babel": {
@@ -31,8 +33,5 @@
       "es2015",
       "stage-2"
     ]
-  },
-  "dependencies": {
-    "debug": "^2.2.0"
   }
 }

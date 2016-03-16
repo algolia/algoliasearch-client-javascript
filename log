@@ -20,6 +20,8 @@ fix the build status (doing real unit testing should help here)
 run unit tests with karma in browsers, zuul is nice but karma should be our default target (we already use it everywhere)
 monitor jsdelivr /latest usage
 use greenkeeper.io
+expose client.batch (direct map to rest api)
+use flow
 
 removed:
 ________

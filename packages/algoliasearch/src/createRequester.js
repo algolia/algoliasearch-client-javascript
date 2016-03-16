@@ -16,19 +16,22 @@ export default function createRequester({
     body,
     forceReadHost
   }) {
-    const log = debug('createRequester');
     let replaces = 0;
-    path = path.replace(/%s/g, () => pathParams[replaces++]);
 
-    log('new request %j', {
-      method,
-      path,
-      qs
-    });
+    // replace place holders like /%s/%s/ (most of the time, the indexName)
+    path = path.replace(/%s/g, () => encodeURIComponent(pathParams[replaces++]));
+
+    // add potential query string parameters to the path
+    if (qs !== undefined) {
+      path += `?${stringifyQueryStringObject(qs)}`;
+    }
+
+    // console.log(method, path)
+    // console.log(body)
 
     return new Promise((resolve, reject) => {
       requester({
-        body,
+        body: JSON.stringify(body),
         headers: {
           'x-algolia-application-id': appId,
           'x-algolia-api-key': apiKey
@@ -36,9 +39,8 @@ export default function createRequester({
         hostname: hosts.write[0],
         method,
         onNetworkError: reject,
-        onSuccess: body => {
-          log('');
-          resolve(body);
+        onSuccess: res => {
+          resolve(JSON.parse(res.body));
         },
         port: 443,
         path,
@@ -50,4 +52,22 @@ export default function createRequester({
     // to sending them in body
     // specific headers (per requester should be computed in requester itself)
   };
+}
+
+function stringifyQueryStringObject(qs) {
+  return Object
+    .keys(qs)
+    .reduce((out, keyName, index) => {
+      const value = qs[keyName];
+
+      if (value === undefined || value === '') {
+        return out;
+      }
+
+      return `${out}${index > 0 ? '&' : ''}${keyName}=${stringifyQueryStringValue(value)}`;
+    }, '');
+}
+
+function stringifyQueryStringValue(value) {
+  return encodeURIComponent(Array.isArray(value) ? JSON.stringify(value) : value);
 }

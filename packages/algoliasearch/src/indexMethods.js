@@ -1,10 +1,56 @@
 export {
   browse,
-  browseFrom,
+  clear,
+  copy,
+  _delete as delete,
+  move,
   search,
   similarSearch,
   waitTask
 };
+
+/*
+ * Clear the index content. Settings and index specific API keys are kept.
+ *
+ */
+function clear(req, indexName) {
+  return req({
+    method: 'POST',
+    path: '/1/indexes/%s/clear',
+    pathParams: [indexName]
+  });
+}
+
+/**
+ * Copy the index.
+ *
+ * @param {string} destination Name of the destination index.
+ * Destination is overriden if it already exists.
+ * @return {Promise}
+ * @see https://www.algolia.com/doc/rest#copymove-an-index
+ */
+function copy(req, indexName, destination) {
+  return req({
+    method: 'POST',
+    path: '/1/indexes/%s/operation',
+    pathParams: [indexName],
+    body: {operation: 'copy', destination}
+  });
+}
+
+/**
+ * Delete the index.
+ *
+ * @return {Promise}
+ * @see https://www.algolia.com/doc/rest#delete-an-index
+ */
+function _delete(req, indexName) {
+  return req({
+    method: 'DELETE',
+    path: '/1/indexes/%s',
+    pathParams: [indexName]
+  });
+}
 
 /*
  * Browse index content. The response content will have a `cursor` property that you can use
@@ -38,6 +84,23 @@ function browseFrom(req, indexName, cursor) {
     path: '/1/indexes/%s/browse',
     pathParams: [indexName],
     qs: {cursor}
+  });
+}
+
+/**
+ * Move the index to another index.
+ *
+ * @param {string} destination Name of the destination index.
+ * Destination is overriden if it already exists.
+ * @return {Promise}
+ * @see https://www.algolia.com/doc/rest#copymove-an-index
+ */
+function move(req, indexName, destination) {
+  return req({
+    method: 'POST',
+    path: '/1/indexes/%s/operation',
+    pathParams: [indexName],
+    body: {operation: 'move', destination}
   });
 }
 
@@ -84,7 +147,7 @@ function similarSearch(req, indexName, params) {
  *
  * @param {number} taskID The id of the task to wait for.
  */
-function waitTask(req, indexName, taskID, {loop = 0, baseDelay = 100, maxDelay = 5000}) {
+function waitTask(req, indexName, taskID, {loop = 0, baseDelay = 100, maxDelay = 5000} = {}) {
   return req({
     method: 'GET',
     path: '/1/indexes/%s/task/%s',

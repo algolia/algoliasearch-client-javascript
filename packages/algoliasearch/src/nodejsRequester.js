@@ -43,7 +43,7 @@ export default function nodejsRequester({
     res
       .on('data', chunk => chunks.push(chunk))
       .on('end', () => onSuccess({
-        body: JSON.parse(Buffer.concat(chunks)),
+        body: Buffer.concat(chunks),
         statusCode: res.statusCode
       }));
   });
