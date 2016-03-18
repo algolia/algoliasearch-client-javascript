@@ -7,8 +7,10 @@ export default function createClient({
   requester,
   clientTimeouts,
   clientMethods,
+  globalKeysMethods,
+  indexKeysMethods,
   indexMethods,
-  objectMethods,
+  indexObjectsMethods,
   clientProtocol,
   clientHosts
 }) {
@@ -32,10 +34,12 @@ export default function createClient({
       initIndex(indexName) {
         return {
           ...partial(indexMethods, req, indexName),
-          objects: partial(objectMethods, req, indexName)
+          keys: partial(indexKeysMethods, req, indexName),
+          objects: partial(indexObjectsMethods, req, indexName)
         };
       },
-      ...partial(clientMethods, req)
+      ...partial(clientMethods, req),
+      keys: partial(globalKeysMethods, req)
     };
   };
 }

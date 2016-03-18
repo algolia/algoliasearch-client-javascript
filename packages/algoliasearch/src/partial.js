@@ -8,4 +8,4 @@ export default function partial(methods, ...params) {
           methods[methodName](...params, ...args)}
       ), {}
     );
-};
+}
