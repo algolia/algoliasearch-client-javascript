@@ -285,17 +285,16 @@ parallel('algoliasearch() integration suite (parallel tests)', () => {
       .then(obj => expect(obj).toEqual({objectID: 'index.copy()'}));
   });
 
-  // client.keys
-  // index.keys
-  // index.objects.get 404 => error?
+  // client.keys.*
+  // index.keys.*
 
   // index.browse
   // index.browse(..., {cursor}) ? can the cursor be passed in searchParameters?
   // index.settings.save
   // index.settings.get
+  // index.objects.get 404 => error?
 });
 
-// index.move(destination)
 serial('algoliasearch() integration suite (serial tests)', () => {
   // index.move()
   it('can move an index', () => {
