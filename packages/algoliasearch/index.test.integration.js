@@ -5,7 +5,7 @@
 // behaviors are tested in unit tests.
 // Every test can be run separately by using it.only(). Some tests can be run
 // in parallel, some cannot.
-s
+
 import {some} from 'lodash';
 import expect from 'expect';
 import parallel from 'mocha.parallel';
