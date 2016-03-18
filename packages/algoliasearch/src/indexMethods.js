@@ -147,7 +147,7 @@ function similarSearch(req, indexName, params) {
  *
  * @param {number} taskID The id of the task to wait for.
  */
-function waitTask(req, indexName, taskID, {loop = 0, baseDelay = 100, maxDelay = 5000} = {}) {
+function waitTask(req, indexName, taskID, {loop = 0, baseDelay = 250, maxDelay = 10000} = {}) {
   return req({
     method: 'GET',
     path: '/1/indexes/%s/task/%s',
@@ -163,7 +163,7 @@ function waitTask(req, indexName, taskID, {loop = 0, baseDelay = 100, maxDelay =
     const delay = new Promise(resolve =>
       setTimeout(
         resolve,
-        Math.max(baseDelay * currentLoop * currentLoop, maxDelay)
+        Math.min(baseDelay * currentLoop * currentLoop, maxDelay)
       )
     );
 

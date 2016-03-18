@@ -1,4 +1,11 @@
 /* eslint-env mocha */
+
+// This is the integration test suite of the JS client.
+// We try to test all the major cases our clients will use, then specific method
+// behaviors are tested in unit tests.
+// Every test can be run separately by using it.only(). Some tests can be run
+// in parallel, some cannot.
+
 import {some} from 'lodash';
 import expect from 'expect';
 import parallel from 'mocha.parallel';
@@ -10,70 +17,51 @@ const client = algoliasearch({appId, apiKey});
 const index = client.initIndex(indexName);
 const objects = index.objects;
 
-serial('algoliasearch() integration suite (serial actions)', () => {
-  // index.delete()
-  it('can delete the index', () =>
-    index
-      .delete()
-      .then(wait(index))
-      .then(() =>
-        client
-          .listIndexes()
-          .then(list =>
-            expect(list).toExist() &&
-            expect(list.items).toBeAn(Array) &&
-            expect(some(list.items, ['name', indexName])).toBe(false)
-          )
-      )
-  );
-});
+// index.delete()
+before('can delete the index', () =>
+  index
+    .delete() // delete the index
+    .then(wait(index))
+    .then(() => client.listIndexes())
+    .then(indexesList => // check the index is not in the list of indexes
+      expect(indexesList).toExist() &&
+      expect(indexesList.items).toBeAn(Array) &&
+      expect(some(indexesList.items, ['name', indexName])).toBe(false)
+    )
+);
 
-parallel('algoliasearch() integration suite (parallel actions)', () => {
+parallel('algoliasearch() integration suite (parallel tests)', () => {
   // client.listIndexes()
   it('can list indexes', () =>
     client
       .listIndexes()
-      .then(list => expect(list).toExist())
+      .then(indexesList => expect(indexesList).toExist())
   );
 
   // objects.save({}) without objectID + objects.get(objectID) + check index presence in list
   it('can save a single object without an objectID', () =>
     objects
-      .save({method: 'objects.save({})'})
-      .then(res =>
-        wait(index)(res)
-          .then(() =>
-            objects
-              .get(res.objectID)
-              .then(obj => expect(obj).toEqual({
-                method: 'objects.save({})',
-                objectID: res.objectID
-              }))
-          )
-      )
-      .then(() =>
-        // double check index was created since we saved an object (this is the default Algolia behavior)
-        client
-          .listIndexes()
-          .then(list => expect(some(list.items, ['name', indexName])).toBe(true))
-      )
+      .save({method: 'objects.save({})'}) // save the object
+      .then(wait(index))
+      .then(res => objects.get(res.objectID))
+      .then(object => expect(object.method).toBe('objects.save({})')) // check the object is here
+      .then(() => client.listIndexes()) // check the index was created
+      .then(indexesList => expect(some(indexesList.items, ['name', indexName])).toBe(true))
   );
 
   // objects.get(objectID, {attributesToRetrieve})
   it('can selectively get some attributes', () =>
     objects
       .save({objectID: 'objects.get(objectID, {attributesToRetrieve})', value: 'well', more: 'yes'})
-      .then(res =>
-        wait(index)(res)
-          .then(() =>
-            objects
-              .get('objects.get(objectID, {attributesToRetrieve})', {attributesToRetrieve: ['more']})
-              .then(obj => expect(obj).toEqual({
-                objectID: 'objects.get(objectID, {attributesToRetrieve})',
-                more: 'yes'
-              }))
-          )
+      .then(wait(index))
+      .then(() => objects
+        .get('objects.get(objectID, {attributesToRetrieve})', {attributesToRetrieve: ['more']})
       )
+      .then(object => expect(object).toEqual({
+        objectID: 'objects.get(objectID, {attributesToRetrieve})',
+        more: 'yes'
+      })
+    )
   );
 
   // objects.save([{}]) without objectID + objects.get([objectIDs])
@@ -83,16 +71,11 @@ parallel('algoliasearch() integration suite (parallel actions)', () => {
         {method: 'objects.save([0])'},
         {method: 'objects.save([1])'}
       ])
-      .then(res =>
-        wait(index)(res)
-          .then(() =>
-            objects
-              .get(res.objectIDs)
-              .then(({results}) => expect(results).toEqual([
-                {objectID: res.objectIDs[0], method: 'objects.save([0])'},
-                {objectID: res.objectIDs[1], method: 'objects.save([1])'}
-              ]))
-          )
+      .then(wait(index))
+      .then(res => objects.get(res.objectIDs))
+      .then(({results: objs}) =>
+        expect(objs[0].method).toBe('objects.save([0])') &&
+        expect(objs[1].method).toBe('objects.save([1])')
       )
   );
 
@@ -101,11 +84,8 @@ parallel('algoliasearch() integration suite (parallel actions)', () => {
     objects
       .save({objectID: 'objects.save({})', state: 'created'})
       .then(wait(index))
-      .then(() =>
-        objects
-          .get('objects.save({})')
-          .then(res => expect(res).toEqual({objectID: 'objects.save({})', state: 'created'}))
-      )
+      .then(() => objects.get('objects.save({})'))
+      .then(object => expect(object).toEqual({objectID: 'objects.save({})', state: 'created'}))
   );
 
   // objects.save({}) with same objectID should update
@@ -113,24 +93,17 @@ parallel('algoliasearch() integration suite (parallel actions)', () => {
     objects
       .save({objectID: 'objects.save({update})', state: 'created'})
       .then(wait(index))
+      .then(() => objects.get('objects.save({update})'))
+      .then(object => expect(object).toEqual({
+        objectID: 'objects.save({update})', state: 'created'
+      }))
       .then(() =>
-        objects
-          .get('objects.save({update})')
-          .then(object =>
-            expect(object).toEqual({objectID: 'objects.save({update})', state: 'created'})
-          )
-          .then(() =>
-            objects
-              .save({objectID: 'objects.save({update})', state: 'updated'})
-              .then(wait(index))
-              .then(() =>
-                objects
-                  .get('objects.save({update})')
-                  .then(object =>
-                    expect(object).toEqual({objectID: 'objects.save({update})', state: 'updated'})
-                  )
-              )
-          )
+        objects.save({objectID: 'objects.save({update})', state: 'updated'})
+      )
+      .then(wait(index))
+      .then(() => objects.get('objects.save({update})'))
+      .then(object =>
+        expect(object).toEqual({objectID: 'objects.save({update})', state: 'updated'})
       )
   );
 
@@ -140,30 +113,24 @@ parallel('algoliasearch() integration suite (parallel actions)', () => {
     objects
       .save({objectID: 'objects.save([2])', state: 'created'})
       .then(wait(index))
+      .then(() => objects.get('objects.save([2])'))
+      .then(object =>
+        expect(object).toEqual({objectID: 'objects.save([2])', state: 'created'})
+      )
       .then(() =>
         objects
-          .get('objects.save([2])')
-          .then(res => expect(res).toEqual({objectID: 'objects.save([2])', state: 'created'}))
-          .then(() =>
-            objects
-              .save([
-                {method: 'objects.save([4])'}, // objectID will be generated (create)
-                {objectID: 'objects.save([3])', state: 'created'}, // objectID does not exists (create)
-                {objectID: 'objects.save([2])', state: 'updated'} // objectID already exists (update)
-              ])
-              .then(res =>
-                wait(index)(res)
-                  .then(() =>
-                    objects
-                      .get(res.objectIDs)
-                      .then(({results}) => expect(results).toEqual([
-                        {objectID: res.objectIDs[0], method: 'objects.save([4])'},
-                        {objectID: 'objects.save([3])', state: 'created'},
-                        {objectID: 'objects.save([2])', state: 'updated'}
-                      ]))
-                  )
-              )
-          )
+          .save([
+            {method: 'objects.save([4])'}, // objectID will be generated (create)
+            {objectID: 'objects.save([3])', state: 'created'}, // objectID does not exists (create)
+            {objectID: 'objects.save([2])', state: 'updated'} // objectID already exists (update)
+          ])
+      )
+      .then(wait(index))
+      .then(res => objects.get(res.objectIDs))
+      .then(({results: objs}) =>
+        expect(objs[0].method).toBe('objects.save([4])') &&
+        expect(objs[1]).toEqual({objectID: 'objects.save([3])', state: 'created'}) &&
+        expect(objs[2].state).toBe('updated')
       )
   );
 
@@ -172,21 +139,14 @@ parallel('algoliasearch() integration suite (parallel actions)', () => {
     objects
       .save({objectID: 'objects.partialUpdate()', state: 'created', count: 0})
       .then(wait(index))
-      .then(() =>
-        objects
-          .get('objects.partialUpdate()')
-          .then(res => expect(res).toEqual({objectID: 'objects.partialUpdate()', state: 'created', count: 0}))
-          .then(() =>
-            objects
-              .partialUpdate({objectID: 'objects.partialUpdate()', count: 1})
-              .then(wait(index))
-              .then(() =>
-                objects
-                  .get('objects.partialUpdate()')
-                  .then(res => expect(res.count).toBe(1))
-                )
-          )
+      .then(() => objects.get('objects.partialUpdate()'))
+      .then(object =>
+        expect(object).toEqual({objectID: 'objects.partialUpdate()', state: 'created', count: 0})
       )
+      .then(() => objects.partialUpdate({objectID: 'objects.partialUpdate()', count: 1}))
+      .then(wait(index))
+      .then(() => objects.get('objects.partialUpdate()'))
+      .then(({count}) => expect(count).toBe(1))
   );
 
   // objects.partialUpdate({}, {createIfNotExists: false})
@@ -197,11 +157,8 @@ parallel('algoliasearch() integration suite (parallel actions)', () => {
         {createIfNotExists: false}
       )
       .then(wait(index))
-      .then(() =>
-        objects
-          .get('objects.partialUpdate({createIfNotExists: false})')
-          .then(res => expect(res.status).toBe(404))
-      )
+      .then(() => objects.get('objects.partialUpdate({createIfNotExists: false})'))
+      .then(({status}) => expect(status).toBe(404))
   );
 
   // objects.partialUpdate([{}])
@@ -212,29 +169,23 @@ parallel('algoliasearch() integration suite (parallel actions)', () => {
         {objectID: 'objects.partialUpdate([1])', state: 'created', count: 0}
       ])
       .then(wait(index))
+      .then(() => objects.get(['objects.partialUpdate([0])', 'objects.partialUpdate([1])']))
+      .then(({results: objs}) => expect(objs).toEqual([
+        {objectID: 'objects.partialUpdate([0])', state: 'created', count: 0},
+        {objectID: 'objects.partialUpdate([1])', state: 'created', count: 0}
+      ]))
       .then(() =>
         objects
-          .get(['objects.partialUpdate([0])', 'objects.partialUpdate([1])'])
-          .then(res => expect(res.results).toEqual([
-            {objectID: 'objects.partialUpdate([0])', state: 'created', count: 0},
-            {objectID: 'objects.partialUpdate([1])', state: 'created', count: 0}
-          ]))
-          .then(() =>
-            objects
-              .partialUpdate([
-                {objectID: 'objects.partialUpdate([0])', count: 1},
-                {objectID: 'objects.partialUpdate([1])', count: 2}
-              ])
-              .then(wait(index))
-              .then(() =>
-                objects
-                  .get(['objects.partialUpdate([0])', 'objects.partialUpdate([1])'])
-                  .then(res =>
-                    expect(res.results[0].count).toBe(1) &&
-                    expect(res.results[1].count).toBe(2)
-                  )
-              )
-          )
+          .partialUpdate([
+            {objectID: 'objects.partialUpdate([0])', count: 1},
+            {objectID: 'objects.partialUpdate([1])', count: 2}
+          ])
+      )
+      .then(wait(index))
+      .then(() => objects.get(['objects.partialUpdate([0])', 'objects.partialUpdate([1])']))
+      .then(({results: objs}) =>
+        expect(objs[0].count).toBe(1) &&
+        expect(objs[1].count).toBe(2)
       )
   );
 
@@ -243,21 +194,12 @@ parallel('algoliasearch() integration suite (parallel actions)', () => {
     objects
       .save({objectID: 'objects.delete()'})
       .then(wait(index))
-      .then(() =>
-        objects
-          .get('objects.delete()')
-          .then(res => expect(res).toEqual({objectID: 'objects.delete()'}))
-          .then(() =>
-            objects
-              .delete('objects.delete()')
-              .then(wait(index))
-              .then(() =>
-                objects
-                  .get('objects.delete()')
-                  .then(res => expect(res.status).toBe(404))
-              )
-          )
-      )
+      .then(() => objects.get('objects.delete()'))
+      .then(object => expect(object).toEqual({objectID: 'objects.delete()'}))
+      .then(() => objects.delete('objects.delete()'))
+      .then(wait(index))
+      .then(() => objects.get('objects.delete()'))
+      .then(({status}) => expect(status).toBe(404))
   );
 
   // objects.delete([objectIDs])
@@ -268,38 +210,129 @@ parallel('algoliasearch() integration suite (parallel actions)', () => {
         {objectID: 'objects.delete([1])'}
       ])
       .then(wait(index))
+      .then(() => objects.get(['objects.delete([0])', 'objects.delete([1])']))
+      .then(({results: objs}) =>
+        expect(objs).toEqual([
+          {objectID: 'objects.delete([0])'},
+          {objectID: 'objects.delete([1])'}
+        ])
+      )
+      .then(() => objects.delete(['objects.delete([0])', 'objects.delete([1])']))
+      .then(wait(index))
+      .then(() => objects.get(['objects.delete([0])', 'objects.delete([1])']))
+      .then(({results: objs}) => expect(objs).toEqual([null, null]))
+  );
+
+
+  // client.batch([{}])
+  it('can do raw batching', () => {
+    const batchIndexName = `${indexName}-batch`;
+    const batchIndex = client.initIndex(batchIndexName);
+    return batchIndex
+      .delete()
+      .then(wait(batchIndex))
       .then(() =>
-        objects
-          .get(['objects.delete([0])', 'objects.delete([1])'])
-          .then(res => expect(res.results).toEqual([
-            {objectID: 'objects.delete([0])'},
-            {objectID: 'objects.delete([1])'}
-          ]))
-          .then(() =>
-            objects
-              .delete(['objects.delete([0])', 'objects.delete([1])'])
-              .then(wait(index))
-              .then(() =>
-                objects
-                  .get(['objects.delete([0])', 'objects.delete([1])'])
-                  .then(res => expect(res.results).toEqual([null, null]))
-              )
-          )
+        client
+          .batch([
+            {action: 'addObject', indexName, body: {objectID: 'client.batch([{0}])'}},
+            {action: 'addObject', indexName: batchIndexName, body: {objectID: 'client.batch([{1}])'}}
+          ])
+      )
+      .then(({taskID: taskIDs}) =>
+        Promise.all([
+          wait(index)({taskID: taskIDs[indexName]}),
+          wait(batchIndex)({taskID: taskIDs[batchIndexName]}),
+        ])
+      )
+      .then(() =>
+        Promise.all([
+          index.objects.get('client.batch([{0}])'),
+          batchIndex.objects.get('client.batch([{1}])')
+        ])
+      )
+      .then(objs =>
+        expect(objs).toEqual([
+          {objectID: 'client.batch([{0}])'},
+          {objectID: 'client.batch([{1}])'}
+        ])
+      );
+  });
+
+  // client.getLogs()
+  it('can get logs', () =>
+    client
+      .getLogs()
+      .then(({logs}) =>
+        expect(logs).toBeAn(Array) &&
+        expect(logs.length).toBeGreaterThanOrEqualTo(0)
       )
   );
 
-  // client.batch
+  // index.copy(destination)
+  it('can copy an index', () => {
+    const copyIndexName = `${indexName}-copy`;
+    const copyIndex = client.initIndex(copyIndexName);
+    return copyIndex
+      .delete()
+      .then(wait(copyIndex))
+      .then(() => copyIndex.objects.get('index.copy()'))
+      .then(({status}) => expect(status).toBe(404))
+      .then(() => objects.save({objectID: 'index.copy()'}))
+      .then(wait(index))
+      .then(() => index.copy(copyIndexName))
+      .then(wait(index))
+      .then(() => copyIndex.objects.get('index.copy()'))
+      .then(obj => expect(obj).toEqual({objectID: 'index.copy()'}));
+  });
 
   // client.keys
   // index.keys
+  // index.objects.get 404 => error?
 
   // index.browse
   // index.browse(..., {cursor}) ? can the cursor be passed in searchParameters?
-  // index.move
-  // index.copy
-  // index.clear
+  // index.settings.save
+  // index.settings.get
+});
+
+// index.move(destination)
+serial('algoliasearch() integration suite (serial tests)', () => {
+  // index.move()
+  it('can move an index', () => {
+    const moveIndexName = `${indexName}-move`;
+    const moveIndex = client.initIndex(moveIndexName);
+    return moveIndex
+      .delete()
+      .then(wait(moveIndex))
+      .then(() => moveIndex.objects.get('index.move()'))
+      .then(({status}) => expect(status).toBe(404))
+      .then(() => objects.save({objectID: 'index.move()'}))
+      .then(wait(index))
+      .then(() => index.move(moveIndexName))
+      .then(wait(index))
+      .then(() => moveIndex.objects.get('index.move()'))
+      .then(obj => expect(obj).toEqual({objectID: 'index.move()'}))
+      .then(() => client.listIndexes())
+      .then(indexesList =>
+        expect(indexesList).toExist() &&
+        expect(indexesList.items).toBeAn(Array) &&
+        expect(some(indexesList.items, ['name', indexName])).toBe(false)
+      );
+  });
+
+  it('can clear an index', () =>
+    objects
+      .save({objectID: 'index.clear()'})
+      .then(wait(index))
+      .then(() => objects.get('index.clear()'))
+      .then(({objectID}) => expect(objectID).toBe('index.clear()'))
+      .then(() => index.clear())
+      .then(wait(index))
+      .then(() => objects.get({objectID: 'index.clear()'}))
+      .then(({status}) => expect(status).toBe(404))
+  );
 });
 
 function wait(indexInstance) {
-  return res => indexInstance.waitTask(res.taskID);
+  return res => indexInstance.waitTask(res.taskID).then(() => res);
 }

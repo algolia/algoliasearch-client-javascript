@@ -1,4 +1,5 @@
-import debug from 'debug';
+import debug from './debug.js';
+const log = debug('algolia:src/createRequester');
 
 export default function createRequester({
   appId,
@@ -16,6 +17,8 @@ export default function createRequester({
     body,
     forceReadHost
   }) {
+    // const start = Date.now();
+
     let replaces = 0;
 
     // replace place holders like /%s/%s/ (most of the time, the indexName)
@@ -26,7 +29,7 @@ export default function createRequester({
       path += `?${stringifyQueryStringObject(qs)}`;
     }
 
-    // console.log(method, path)
+    log('%s %s', method, path);
     // console.log(body)
 
     return new Promise((resolve, reject) => {
@@ -40,6 +43,7 @@ export default function createRequester({
         method,
         onNetworkError: reject,
         onSuccess: res => {
+          // console.log('it took ' + (Date.now() - start) + 'ms');
           resolve(JSON.parse(res.body));
         },
         port: 443,
@@ -48,7 +52,7 @@ export default function createRequester({
       });
     });
 
-    // here should go the switch from sending API key in headers
+    // here should go the sw
     // to sending them in body
     // specific headers (per requester should be computed in requester itself)
   };

@@ -1,6 +1,11 @@
 import https from 'https';
 import zlib from 'zlib';
 
+const agent = new https.Agent({
+  keepAlive: true,
+  keepAliveMsecs: 30 * 1000
+});
+
 export default function nodejsRequester({
   // agent,
   body,
@@ -27,7 +32,8 @@ export default function nodejsRequester({
     method,
     port,
     path,
-    protocol
+    protocol,
+    agent
   });
 
   req.once('error', onNetworkError);

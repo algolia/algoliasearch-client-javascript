@@ -22,6 +22,11 @@ monitor jsdelivr /latest usage
 use greenkeeper.io
 expose client.batch (direct map to rest api)
 use flow
+use jquery/angular promises implementations
+client should expose a log() function
+client should expose objects.get([])
+document Promise resolution/reject
+should getObject send a new Error? What about getting different objects and one of them is found..?
 
 removed:
 ________

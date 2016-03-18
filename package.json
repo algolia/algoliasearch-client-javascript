@@ -33,5 +33,9 @@
       "es2015",
       "stage-2"
     ]
+  },
+  "dependencies": {
+    "format-util": "^1.0.3",
+    "ms": "^0.7.1"
   }
 }
