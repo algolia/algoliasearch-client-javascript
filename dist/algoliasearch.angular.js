@@ -1,4 +1,4 @@
-/*! algoliasearch 3.13.0 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
+/*! algoliasearch 3.13.1 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
 (function(f){var g;if(typeof window!=='undefined'){g=window}else if(typeof self!=='undefined'){g=self}g.ALGOLIA_MIGRATION_LAYER=f()})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 
 module.exports = function load (src, opts, cb) {
@@ -200,581 +200,6 @@ function migrationLayer(buildName) {
 
 },{"2":2,"3":3,"4":4}]},{},[5])(5)
 });(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-// Copyright Joyent, Inc. and other Node contributors.
-//
-// Permission is hereby granted, free of charge, to any person obtaining a
-// copy of this software and associated documentation files (the
-// "Software"), to deal in the Software without restriction, including
-// without limitation the rights to use, copy, modify, merge, publish,
-// distribute, sublicense, and/or sell copies of the Software, and to permit
-// persons to whom the Software is furnished to do so, subject to the
-// following conditions:
-//
-// The above copyright notice and this permission notice shall be included
-// in all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
-// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
-// USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-function EventEmitter() {
-  this._events = this._events || {};
-  this._maxListeners = this._maxListeners || undefined;
-}
-module.exports = EventEmitter;
-
-// Backwards-compat with node 0.10.x
-EventEmitter.EventEmitter = EventEmitter;
-
-EventEmitter.prototype._events = undefined;
-EventEmitter.prototype._maxListeners = undefined;
-
-// By default EventEmitters will print a warning if more than 10 listeners are
-// added to it. This is a useful default which helps finding memory leaks.
-EventEmitter.defaultMaxListeners = 10;
-
-// Obviously not all Emitters should be limited to 10. This function allows
-// that to be increased. Set to zero for unlimited.
-EventEmitter.prototype.setMaxListeners = function(n) {
-  if (!isNumber(n) || n < 0 || isNaN(n))
-    throw TypeError('n must be a positive number');
-  this._maxListeners = n;
-  return this;
-};
-
-EventEmitter.prototype.emit = function(type) {
-  var er, handler, len, args, i, listeners;
-
-  if (!this._events)
-    this._events = {};
-
-  // If there is no 'error' event listener then throw.
-  if (type === 'error') {
-    if (!this._events.error ||
-        (isObject(this._events.error) && !this._events.error.length)) {
-      er = arguments[1];
-      if (er instanceof Error) {
-        throw er; // Unhandled 'error' event
-      }
-      throw TypeError('Uncaught, unspecified "error" event.');
-    }
-  }
-
-  handler = this._events[type];
-
-  if (isUndefined(handler))
-    return false;
-
-  if (isFunction(handler)) {
-    switch (arguments.length) {
-      // fast cases
-      case 1:
-        handler.call(this);
-        break;
-      case 2:
-        handler.call(this, arguments[1]);
-        break;
-      case 3:
-        handler.call(this, arguments[1], arguments[2]);
-        break;
-      // slower
-      default:
-        len = arguments.length;
-        args = new Array(len - 1);
-        for (i = 1; i < len; i++)
-          args[i - 1] = arguments[i];
-        handler.apply(this, args);
-    }
-  } else if (isObject(handler)) {
-    len = arguments.length;
-    args = new Array(len - 1);
-    for (i = 1; i < len; i++)
-      args[i - 1] = arguments[i];
-
-    listeners = handler.slice();
-    len = listeners.length;
-    for (i = 0; i < len; i++)
-      listeners[i].apply(this, args);
-  }
-
-  return true;
-};
-
-EventEmitter.prototype.addListener = function(type, listener) {
-  var m;
-
-  if (!isFunction(listener))
-    throw TypeError('listener must be a function');
-
-  if (!this._events)
-    this._events = {};
-
-  // To avoid recursion in the case that type === "newListener"! Before
-  // adding it to the listeners, first emit "newListener".
-  if (this._events.newListener)
-    this.emit('newListener', type,
-              isFunction(listener.listener) ?
-              listener.listener : listener);
-
-  if (!this._events[type])
-    // Optimize the case of one listener. Don't need the extra array object.
-    this._events[type] = listener;
-  else if (isObject(this._events[type]))
-    // If we've already got an array, just append.
-    this._events[type].push(listener);
-  else
-    // Adding the second element, need to change to array.
-    this._events[type] = [this._events[type], listener];
-
-  // Check for listener leak
-  if (isObject(this._events[type]) && !this._events[type].warned) {
-    var m;
-    if (!isUndefined(this._maxListeners)) {
-      m = this._maxListeners;
-    } else {
-      m = EventEmitter.defaultMaxListeners;
-    }
-
-    if (m && m > 0 && this._events[type].length > m) {
-      this._events[type].warned = true;
-      console.error('(node) warning: possible EventEmitter memory ' +
-                    'leak detected. %d listeners added. ' +
-                    'Use emitter.setMaxListeners() to increase limit.',
-                    this._events[type].length);
-      if (typeof console.trace === 'function') {
-        // not supported in IE 10
-        console.trace();
-      }
-    }
-  }
-
-  return this;
-};
-
-EventEmitter.prototype.on = EventEmitter.prototype.addListener;
-
-EventEmitter.prototype.once = function(type, listener) {
-  if (!isFunction(listener))
-    throw TypeError('listener must be a function');
-
-  var fired = false;
-
-  function g() {
-    this.removeListener(type, g);
-
-    if (!fired) {
-      fired = true;
-      listener.apply(this, arguments);
-    }
-  }
-
-  g.listener = listener;
-  this.on(type, g);
-
-  return this;
-};
-
-// emits a 'removeListener' event iff the listener was removed
-EventEmitter.prototype.removeListener = function(type, listener) {
-  var list, position, length, i;
-
-  if (!isFunction(listener))
-    throw TypeError('listener must be a function');
-
-  if (!this._events || !this._events[type])
-    return this;
-
-  list = this._events[type];
-  length = list.length;
-  position = -1;
-
-  if (list === listener ||
-      (isFunction(list.listener) && list.listener === listener)) {
-    delete this._events[type];
-    if (this._events.removeListener)
-      this.emit('removeListener', type, listener);
-
-  } else if (isObject(list)) {
-    for (i = length; i-- > 0;) {
-      if (list[i] === listener ||
-          (list[i].listener && list[i].listener === listener)) {
-        position = i;
-        break;
-      }
-    }
-
-    if (position < 0)
-      return this;
-
-    if (list.length === 1) {
-      list.length = 0;
-      delete this._events[type];
-    } else {
-      list.splice(position, 1);
-    }
-
-    if (this._events.removeListener)
-      this.emit('removeListener', type, listener);
-  }
-
-  return this;
-};
-
-EventEmitter.prototype.removeAllListeners = function(type) {
-  var key, listeners;
-
-  if (!this._events)
-    return this;
-
-  // not listening for removeListener, no need to emit
-  if (!this._events.removeListener) {
-    if (arguments.length === 0)
-      this._events = {};
-    else if (this._events[type])
-      delete this._events[type];
-    return this;
-  }
-
-  // emit removeListener for all listeners on all events
-  if (arguments.length === 0) {
-    for (key in this._events) {
-      if (key === 'removeListener') continue;
-      this.removeAllListeners(key);
-    }
-    this.removeAllListeners('removeListener');
-    this._events = {};
-    return this;
-  }
-
-  listeners = this._events[type];
-
-  if (isFunction(listeners)) {
-    this.removeListener(type, listeners);
-  } else {
-    // LIFO order
-    while (listeners.length)
-      this.removeListener(type, listeners[listeners.length - 1]);
-  }
-  delete this._events[type];
-
-  return this;
-};
-
-EventEmitter.prototype.listeners = function(type) {
-  var ret;
-  if (!this._events || !this._events[type])
-    ret = [];
-  else if (isFunction(this._events[type]))
-    ret = [this._events[type]];
-  else
-    ret = this._events[type].slice();
-  return ret;
-};
-
-EventEmitter.listenerCount = function(emitter, type) {
-  var ret;
-  if (!emitter._events || !emitter._events[type])
-    ret = 0;
-  else if (isFunction(emitter._events[type]))
-    ret = 1;
-  else
-    ret = emitter._events[type].length;
-  return ret;
-};
-
-function isFunction(arg) {
-  return typeof arg === 'function';
-}
-
-function isNumber(arg) {
-  return typeof arg === 'number';
-}
-
-function isObject(arg) {
-  return typeof arg === 'object' && arg !== null;
-}
-
-function isUndefined(arg) {
-  return arg === void 0;
-}
-
-},{}],2:[function(require,module,exports){
-// shim for using process in browser
-
-var process = module.exports = {};
-var queue = [];
-var draining = false;
-var currentQueue;
-var queueIndex = -1;
-
-function cleanUpNextTick() {
-    draining = false;
-    if (currentQueue.length) {
-        queue = currentQueue.concat(queue);
-    } else {
-        queueIndex = -1;
-    }
-    if (queue.length) {
-        drainQueue();
-    }
-}
-
-function drainQueue() {
-    if (draining) {
-        return;
-    }
-    var timeout = setTimeout(cleanUpNextTick);
-    draining = true;
-
-    var len = queue.length;
-    while(len) {
-        currentQueue = queue;
-        queue = [];
-        while (++queueIndex < len) {
-            if (currentQueue) {
-                currentQueue[queueIndex].run();
-            }
-        }
-        queueIndex = -1;
-        len = queue.length;
-    }
-    currentQueue = null;
-    draining = false;
-    clearTimeout(timeout);
-}
-
-process.nextTick = function (fun) {
-    var args = new Array(arguments.length - 1);
-    if (arguments.length > 1) {
-        for (var i = 1; i < arguments.length; i++) {
-            args[i - 1] = arguments[i];
-        }
-    }
-    queue.push(new Item(fun, args));
-    if (queue.length === 1 && !draining) {
-        setTimeout(drainQueue, 0);
-    }
-};
-
-// v8 likes predictible objects
-function Item(fun, array) {
-    this.fun = fun;
-    this.array = array;
-}
-Item.prototype.run = function () {
-    this.fun.apply(null, this.array);
-};
-process.title = 'browser';
-process.browser = true;
-process.env = {};
-process.argv = [];
-process.version = ''; // empty string to avoid regexp issues
-process.versions = {};
-
-function noop() {}
-
-process.on = noop;
-process.addListener = noop;
-process.once = noop;
-process.off = noop;
-process.removeListener = noop;
-process.removeAllListeners = noop;
-process.emit = noop;
-
-process.binding = function (name) {
-    throw new Error('process.binding is not supported');
-};
-
-process.cwd = function () { return '/' };
-process.chdir = function (dir) {
-    throw new Error('process.chdir is not supported');
-};
-process.umask = function() { return 0; };
-
-},{}],3:[function(require,module,exports){
-// Copyright Joyent, Inc. and other Node contributors.
-//
-// Permission is hereby granted, free of charge, to any person obtaining a
-// copy of this software and associated documentation files (the
-// "Software"), to deal in the Software without restriction, including
-// without limitation the rights to use, copy, modify, merge, publish,
-// distribute, sublicense, and/or sell copies of the Software, and to permit
-// persons to whom the Software is furnished to do so, subject to the
-// following conditions:
-//
-// The above copyright notice and this permission notice shall be included
-// in all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
-// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
-// USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-'use strict';
-
-// If obj.hasOwnProperty has been overridden, then calling
-// obj.hasOwnProperty(prop) will break.
-// See: https://github.com/joyent/node/issues/1707
-function hasOwnProperty(obj, prop) {
-  return Object.prototype.hasOwnProperty.call(obj, prop);
-}
-
-module.exports = function(qs, sep, eq, options) {
-  sep = sep || '&';
-  eq = eq || '=';
-  var obj = {};
-
-  if (typeof qs !== 'string' || qs.length === 0) {
-    return obj;
-  }
-
-  var regexp = /\+/g;
-  qs = qs.split(sep);
-
-  var maxKeys = 1000;
-  if (options && typeof options.maxKeys === 'number') {
-    maxKeys = options.maxKeys;
-  }
-
-  var len = qs.length;
-  // maxKeys <= 0 means that we should not limit keys count
-  if (maxKeys > 0 && len > maxKeys) {
-    len = maxKeys;
-  }
-
-  for (var i = 0; i < len; ++i) {
-    var x = qs[i].replace(regexp, '%20'),
-        idx = x.indexOf(eq),
-        kstr, vstr, k, v;
-
-    if (idx >= 0) {
-      kstr = x.substr(0, idx);
-      vstr = x.substr(idx + 1);
-    } else {
-      kstr = x;
-      vstr = '';
-    }
-
-    k = decodeURIComponent(kstr);
-    v = decodeURIComponent(vstr);
-
-    if (!hasOwnProperty(obj, k)) {
-      obj[k] = v;
-    } else if (isArray(obj[k])) {
-      obj[k].push(v);
-    } else {
-      obj[k] = [obj[k], v];
-    }
-  }
-
-  return obj;
-};
-
-var isArray = Array.isArray || function (xs) {
-  return Object.prototype.toString.call(xs) === '[object Array]';
-};
-
-},{}],4:[function(require,module,exports){
-// Copyright Joyent, Inc. and other Node contributors.
-//
-// Permission is hereby granted, free of charge, to any person obtaining a
-// copy of this software and associated documentation files (the
-// "Software"), to deal in the Software without restriction, including
-// without limitation the rights to use, copy, modify, merge, publish,
-// distribute, sublicense, and/or sell copies of the Software, and to permit
-// persons to whom the Software is furnished to do so, subject to the
-// following conditions:
-//
-// The above copyright notice and this permission notice shall be included
-// in all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
-// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
-// USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-'use strict';
-
-var stringifyPrimitive = function(v) {
-  switch (typeof v) {
-    case 'string':
-      return v;
-
-    case 'boolean':
-      return v ? 'true' : 'false';
-
-    case 'number':
-      return isFinite(v) ? v : '';
-
-    default:
-      return '';
-  }
-};
-
-module.exports = function(obj, sep, eq, name) {
-  sep = sep || '&';
-  eq = eq || '=';
-  if (obj === null) {
-    obj = undefined;
-  }
-
-  if (typeof obj === 'object') {
-    return map(objectKeys(obj), function(k) {
-      var ks = encodeURIComponent(stringifyPrimitive(k)) + eq;
-      if (isArray(obj[k])) {
-        return map(obj[k], function(v) {
-          return ks + encodeURIComponent(stringifyPrimitive(v));
-        }).join(sep);
-      } else {
-        return ks + encodeURIComponent(stringifyPrimitive(obj[k]));
-      }
-    }).join(sep);
-
-  }
-
-  if (!name) return '';
-  return encodeURIComponent(stringifyPrimitive(name)) + eq +
-         encodeURIComponent(stringifyPrimitive(obj));
-};
-
-var isArray = Array.isArray || function (xs) {
-  return Object.prototype.toString.call(xs) === '[object Array]';
-};
-
-function map (xs, f) {
-  if (xs.map) return xs.map(f);
-  var res = [];
-  for (var i = 0; i < xs.length; i++) {
-    res.push(f(xs[i], i));
-  }
-  return res;
-}
-
-var objectKeys = Object.keys || function (obj) {
-  var res = [];
-  for (var key in obj) {
-    if (Object.prototype.hasOwnProperty.call(obj, key)) res.push(key);
-  }
-  return res;
-};
-
-},{}],5:[function(require,module,exports){
-'use strict';
-
-exports.decode = exports.parse = require(3);
-exports.encode = exports.stringify = require(4);
-
-},{"3":3,"4":4}],6:[function(require,module,exports){
 
 /**
  * This is the web browser implementation of `debug()`.
@@ -782,7 +207,7 @@ exports.encode = exports.stringify = require(4);
  * Expose `debug()` as the module.
  */
 
-exports = module.exports = require(7);
+exports = module.exports = require(2);
 exports.log = log;
 exports.formatArgs = formatArgs;
 exports.save = save;
@@ -944,7 +369,7 @@ function localstorage(){
   } catch (e) {}
 }
 
-},{"7":7}],7:[function(require,module,exports){
+},{"2":2}],2:[function(require,module,exports){
 
 /**
  * This is the common logic for both the Node.js and web browser
@@ -958,7 +383,7 @@ exports.coerce = coerce;
 exports.disable = disable;
 exports.enable = enable;
 exports.enabled = enabled;
-exports.humanize = require(8);
+exports.humanize = require(3);
 
 /**
  * The currently active debug mode names, and names to skip.
@@ -1143,7 +568,7 @@ function coerce(val) {
   return val;
 }
 
-},{"8":8}],8:[function(require,module,exports){
+},{"3":3}],3:[function(require,module,exports){
 /**
  * Helpers.
  */
@@ -1274,14 +699,14 @@ function plural(ms, n, name) {
   return Math.ceil(ms / n) + ' ' + name + 's';
 }
 
-},{}],9:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 (function (process,global){
 /*!
  * @overview es6-promise - a tiny implementation of Promises/A+.
  * @copyright Copyright (c) 2014 Yehuda Katz, Tom Dale, Stefan Penner and contributors (Conversion to ES6 API by Jake Archibald)
  * @license   Licensed under MIT license
  *            See https://raw.githubusercontent.com/jakearchibald/es6-promise/master/LICENSE
- * @version   3.0.2
+ * @version   3.1.2
  */
 
 (function() {
@@ -1309,7 +734,6 @@ function plural(ms, n, name) {
 
     var lib$es6$promise$utils$$isArray = lib$es6$promise$utils$$_isArray;
     var lib$es6$promise$asap$$len = 0;
-    var lib$es6$promise$asap$$toString = {}.toString;
     var lib$es6$promise$asap$$vertxNext;
     var lib$es6$promise$asap$$customSchedulerFn;
 
@@ -1428,6 +852,42 @@ function plural(ms, n, name) {
     } else {
       lib$es6$promise$asap$$scheduleFlush = lib$es6$promise$asap$$useSetTimeout();
     }
+    function lib$es6$promise$then$$then(onFulfillment, onRejection) {
+      var parent = this;
+      var state = parent._state;
+
+      if (state === lib$es6$promise$$internal$$FULFILLED && !onFulfillment || state === lib$es6$promise$$internal$$REJECTED && !onRejection) {
+        return this;
+      }
+
+      var child = new this.constructor(lib$es6$promise$$internal$$noop);
+      var result = parent._result;
+
+      if (state) {
+        var callback = arguments[state - 1];
+        lib$es6$promise$asap$$asap(function(){
+          lib$es6$promise$$internal$$invokeCallback(state, child, callback, result);
+        });
+      } else {
+        lib$es6$promise$$internal$$subscribe(parent, child, onFulfillment, onRejection);
+      }
+
+      return child;
+    }
+    var lib$es6$promise$then$$default = lib$es6$promise$then$$then;
+    function lib$es6$promise$promise$resolve$$resolve(object) {
+      /*jshint validthis:true */
+      var Constructor = this;
+
+      if (object && typeof object === 'object' && object.constructor === Constructor) {
+        return object;
+      }
+
+      var promise = new Constructor(lib$es6$promise$$internal$$noop);
+      lib$es6$promise$$internal$$resolve(promise, object);
+      return promise;
+    }
+    var lib$es6$promise$promise$resolve$$default = lib$es6$promise$promise$resolve$$resolve;
 
     function lib$es6$promise$$internal$$noop() {}
 
@@ -1501,12 +961,12 @@ function plural(ms, n, name) {
       }
     }
 
-    function lib$es6$promise$$internal$$handleMaybeThenable(promise, maybeThenable) {
-      if (maybeThenable.constructor === promise.constructor) {
+    function lib$es6$promise$$internal$$handleMaybeThenable(promise, maybeThenable, then) {
+      if (maybeThenable.constructor === promise.constructor &&
+          then === lib$es6$promise$then$$default &&
+          constructor.resolve === lib$es6$promise$promise$resolve$$default) {
         lib$es6$promise$$internal$$handleOwnThenable(promise, maybeThenable);
       } else {
-        var then = lib$es6$promise$$internal$$getThen(maybeThenable);
-
         if (then === lib$es6$promise$$internal$$GET_THEN_ERROR) {
           lib$es6$promise$$internal$$reject(promise, lib$es6$promise$$internal$$GET_THEN_ERROR.error);
         } else if (then === undefined) {
@@ -1523,7 +983,7 @@ function plural(ms, n, name) {
       if (promise === value) {
         lib$es6$promise$$internal$$reject(promise, lib$es6$promise$$internal$$selfFulfillment());
       } else if (lib$es6$promise$utils$$objectOrFunction(value)) {
-        lib$es6$promise$$internal$$handleMaybeThenable(promise, value);
+        lib$es6$promise$$internal$$handleMaybeThenable(promise, value, lib$es6$promise$$internal$$getThen(value));
       } else {
         lib$es6$promise$$internal$$fulfill(promise, value);
       }
@@ -1658,104 +1118,6 @@ function plural(ms, n, name) {
       }
     }
 
-    function lib$es6$promise$enumerator$$Enumerator(Constructor, input) {
-      var enumerator = this;
-
-      enumerator._instanceConstructor = Constructor;
-      enumerator.promise = new Constructor(lib$es6$promise$$internal$$noop);
-
-      if (enumerator._validateInput(input)) {
-        enumerator._input     = input;
-        enumerator.length     = input.length;
-        enumerator._remaining = input.length;
-
-        enumerator._init();
-
-        if (enumerator.length === 0) {
-          lib$es6$promise$$internal$$fulfill(enumerator.promise, enumerator._result);
-        } else {
-          enumerator.length = enumerator.length || 0;
-          enumerator._enumerate();
-          if (enumerator._remaining === 0) {
-            lib$es6$promise$$internal$$fulfill(enumerator.promise, enumerator._result);
-          }
-        }
-      } else {
-        lib$es6$promise$$internal$$reject(enumerator.promise, enumerator._validationError());
-      }
-    }
-
-    lib$es6$promise$enumerator$$Enumerator.prototype._validateInput = function(input) {
-      return lib$es6$promise$utils$$isArray(input);
-    };
-
-    lib$es6$promise$enumerator$$Enumerator.prototype._validationError = function() {
-      return new Error('Array Methods must be provided an Array');
-    };
-
-    lib$es6$promise$enumerator$$Enumerator.prototype._init = function() {
-      this._result = new Array(this.length);
-    };
-
-    var lib$es6$promise$enumerator$$default = lib$es6$promise$enumerator$$Enumerator;
-
-    lib$es6$promise$enumerator$$Enumerator.prototype._enumerate = function() {
-      var enumerator = this;
-
-      var length  = enumerator.length;
-      var promise = enumerator.promise;
-      var input   = enumerator._input;
-
-      for (var i = 0; promise._state === lib$es6$promise$$internal$$PENDING && i < length; i++) {
-        enumerator._eachEntry(input[i], i);
-      }
-    };
-
-    lib$es6$promise$enumerator$$Enumerator.prototype._eachEntry = function(entry, i) {
-      var enumerator = this;
-      var c = enumerator._instanceConstructor;
-
-      if (lib$es6$promise$utils$$isMaybeThenable(entry)) {
-        if (entry.constructor === c && entry._state !== lib$es6$promise$$internal$$PENDING) {
-          entry._onerror = null;
-          enumerator._settledAt(entry._state, i, entry._result);
-        } else {
-          enumerator._willSettleAt(c.resolve(entry), i);
-        }
-      } else {
-        enumerator._remaining--;
-        enumerator._result[i] = entry;
-      }
-    };
-
-    lib$es6$promise$enumerator$$Enumerator.prototype._settledAt = function(state, i, value) {
-      var enumerator = this;
-      var promise = enumerator.promise;
-
-      if (promise._state === lib$es6$promise$$internal$$PENDING) {
-        enumerator._remaining--;
-
-        if (state === lib$es6$promise$$internal$$REJECTED) {
-          lib$es6$promise$$internal$$reject(promise, value);
-        } else {
-          enumerator._result[i] = value;
-        }
-      }
-
-      if (enumerator._remaining === 0) {
-        lib$es6$promise$$internal$$fulfill(promise, enumerator._result);
-      }
-    };
-
-    lib$es6$promise$enumerator$$Enumerator.prototype._willSettleAt = function(promise, i) {
-      var enumerator = this;
-
-      lib$es6$promise$$internal$$subscribe(promise, undefined, function(value) {
-        enumerator._settledAt(lib$es6$promise$$internal$$FULFILLED, i, value);
-      }, function(reason) {
-        enumerator._settledAt(lib$es6$promise$$internal$$REJECTED, i, reason);
-      });
-    };
     function lib$es6$promise$promise$all$$all(entries) {
       return new lib$es6$promise$enumerator$$default(this, entries).promise;
     }
@@ -1788,19 +1150,6 @@ function plural(ms, n, name) {
       return promise;
     }
     var lib$es6$promise$promise$race$$default = lib$es6$promise$promise$race$$race;
-    function lib$es6$promise$promise$resolve$$resolve(object) {
-      /*jshint validthis:true */
-      var Constructor = this;
-
-      if (object && typeof object === 'object' && object.constructor === Constructor) {
-        return object;
-      }
-
-      var promise = new Constructor(lib$es6$promise$$internal$$noop);
-      lib$es6$promise$$internal$$resolve(promise, object);
-      return promise;
-    }
-    var lib$es6$promise$promise$resolve$$default = lib$es6$promise$promise$resolve$$resolve;
     function lib$es6$promise$promise$reject$$reject(reason) {
       /*jshint validthis:true */
       var Constructor = this;
@@ -1931,15 +1280,8 @@ function plural(ms, n, name) {
       this._subscribers = [];
 
       if (lib$es6$promise$$internal$$noop !== resolver) {
-        if (!lib$es6$promise$utils$$isFunction(resolver)) {
-          lib$es6$promise$promise$$needsResolver();
-        }
-
-        if (!(this instanceof lib$es6$promise$promise$$Promise)) {
-          lib$es6$promise$promise$$needsNew();
-        }
-
-        lib$es6$promise$$internal$$initializePromise(this, resolver);
+        typeof resolver !== 'function' && lib$es6$promise$promise$$needsResolver();
+        this instanceof lib$es6$promise$promise$$Promise ? lib$es6$promise$$internal$$initializePromise(this, resolver) : lib$es6$promise$promise$$needsNew();
       }
     }
 
@@ -2147,28 +1489,7 @@ function plural(ms, n, name) {
       Useful for tooling.
       @return {Promise}
     */
-      then: function(onFulfillment, onRejection) {
-        var parent = this;
-        var state = parent._state;
-
-        if (state === lib$es6$promise$$internal$$FULFILLED && !onFulfillment || state === lib$es6$promise$$internal$$REJECTED && !onRejection) {
-          return this;
-        }
-
-        var child = new this.constructor(lib$es6$promise$$internal$$noop);
-        var result = parent._result;
-
-        if (state) {
-          var callback = arguments[state - 1];
-          lib$es6$promise$asap$$asap(function(){
-            lib$es6$promise$$internal$$invokeCallback(state, child, callback, result);
-          });
-        } else {
-          lib$es6$promise$$internal$$subscribe(parent, child, onFulfillment, onRejection);
-        }
-
-        return child;
-      },
+      then: lib$es6$promise$then$$default,
 
     /**
       `catch` is simply sugar for `then(undefined, onRejection)` which makes it the same
@@ -2200,6 +1521,97 @@ function plural(ms, n, name) {
       'catch': function(onRejection) {
         return this.then(null, onRejection);
       }
+    };
+    var lib$es6$promise$enumerator$$default = lib$es6$promise$enumerator$$Enumerator;
+    function lib$es6$promise$enumerator$$Enumerator(Constructor, input) {
+      this._instanceConstructor = Constructor;
+      this.promise = new Constructor(lib$es6$promise$$internal$$noop);
+
+      if (Array.isArray(input)) {
+        this._input     = input;
+        this.length     = input.length;
+        this._remaining = input.length;
+
+        this._result = new Array(this.length);
+
+        if (this.length === 0) {
+          lib$es6$promise$$internal$$fulfill(this.promise, this._result);
+        } else {
+          this.length = this.length || 0;
+          this._enumerate();
+          if (this._remaining === 0) {
+            lib$es6$promise$$internal$$fulfill(this.promise, this._result);
+          }
+        }
+      } else {
+        lib$es6$promise$$internal$$reject(this.promise, this._validationError());
+      }
+    }
+
+    lib$es6$promise$enumerator$$Enumerator.prototype._validationError = function() {
+      return new Error('Array Methods must be provided an Array');
+    };
+
+    lib$es6$promise$enumerator$$Enumerator.prototype._enumerate = function() {
+      var length  = this.length;
+      var input   = this._input;
+
+      for (var i = 0; this._state === lib$es6$promise$$internal$$PENDING && i < length; i++) {
+        this._eachEntry(input[i], i);
+      }
+    };
+
+    lib$es6$promise$enumerator$$Enumerator.prototype._eachEntry = function(entry, i) {
+      var c = this._instanceConstructor;
+      var resolve = c.resolve;
+
+      if (resolve === lib$es6$promise$promise$resolve$$default) {
+        var then = lib$es6$promise$$internal$$getThen(entry);
+
+        if (then === lib$es6$promise$then$$default &&
+            entry._state !== lib$es6$promise$$internal$$PENDING) {
+          this._settledAt(entry._state, i, entry._result);
+        } else if (typeof then !== 'function') {
+          this._remaining--;
+          this._result[i] = entry;
+        } else if (c === lib$es6$promise$promise$$default) {
+          var promise = new c(lib$es6$promise$$internal$$noop);
+          lib$es6$promise$$internal$$handleMaybeThenable(promise, entry, then);
+          this._willSettleAt(promise, i);
+        } else {
+          this._willSettleAt(new c(function(resolve) { resolve(entry); }), i);
+        }
+      } else {
+        this._willSettleAt(resolve(entry), i);
+      }
+    };
+
+    lib$es6$promise$enumerator$$Enumerator.prototype._settledAt = function(state, i, value) {
+      var promise = this.promise;
+
+      if (promise._state === lib$es6$promise$$internal$$PENDING) {
+        this._remaining--;
+
+        if (state === lib$es6$promise$$internal$$REJECTED) {
+          lib$es6$promise$$internal$$reject(promise, value);
+        } else {
+          this._result[i] = value;
+        }
+      }
+
+      if (this._remaining === 0) {
+        lib$es6$promise$$internal$$fulfill(promise, this._result);
+      }
+    };
+
+    lib$es6$promise$enumerator$$Enumerator.prototype._willSettleAt = function(promise, i) {
+      var enumerator = this;
+
+      lib$es6$promise$$internal$$subscribe(promise, undefined, function(value) {
+        enumerator._settledAt(lib$es6$promise$$internal$$FULFILLED, i, value);
+      }, function(reason) {
+        enumerator._settledAt(lib$es6$promise$$internal$$REJECTED, i, reason);
+      });
     };
     function lib$es6$promise$polyfill$$polyfill() {
       var local;
@@ -2244,8 +1656,308 @@ function plural(ms, n, name) {
 }).call(this);
 
 
-}).call(this,require(2),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"2":2}],10:[function(require,module,exports){
+}).call(this,require(77),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"77":77}],5:[function(require,module,exports){
+// Copyright Joyent, Inc. and other Node contributors.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a
+// copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+function EventEmitter() {
+  this._events = this._events || {};
+  this._maxListeners = this._maxListeners || undefined;
+}
+module.exports = EventEmitter;
+
+// Backwards-compat with node 0.10.x
+EventEmitter.EventEmitter = EventEmitter;
+
+EventEmitter.prototype._events = undefined;
+EventEmitter.prototype._maxListeners = undefined;
+
+// By default EventEmitters will print a warning if more than 10 listeners are
+// added to it. This is a useful default which helps finding memory leaks.
+EventEmitter.defaultMaxListeners = 10;
+
+// Obviously not all Emitters should be limited to 10. This function allows
+// that to be increased. Set to zero for unlimited.
+EventEmitter.prototype.setMaxListeners = function(n) {
+  if (!isNumber(n) || n < 0 || isNaN(n))
+    throw TypeError('n must be a positive number');
+  this._maxListeners = n;
+  return this;
+};
+
+EventEmitter.prototype.emit = function(type) {
+  var er, handler, len, args, i, listeners;
+
+  if (!this._events)
+    this._events = {};
+
+  // If there is no 'error' event listener then throw.
+  if (type === 'error') {
+    if (!this._events.error ||
+        (isObject(this._events.error) && !this._events.error.length)) {
+      er = arguments[1];
+      if (er instanceof Error) {
+        throw er; // Unhandled 'error' event
+      }
+      throw TypeError('Uncaught, unspecified "error" event.');
+    }
+  }
+
+  handler = this._events[type];
+
+  if (isUndefined(handler))
+    return false;
+
+  if (isFunction(handler)) {
+    switch (arguments.length) {
+      // fast cases
+      case 1:
+        handler.call(this);
+        break;
+      case 2:
+        handler.call(this, arguments[1]);
+        break;
+      case 3:
+        handler.call(this, arguments[1], arguments[2]);
+        break;
+      // slower
+      default:
+        args = Array.prototype.slice.call(arguments, 1);
+        handler.apply(this, args);
+    }
+  } else if (isObject(handler)) {
+    args = Array.prototype.slice.call(arguments, 1);
+    listeners = handler.slice();
+    len = listeners.length;
+    for (i = 0; i < len; i++)
+      listeners[i].apply(this, args);
+  }
+
+  return true;
+};
+
+EventEmitter.prototype.addListener = function(type, listener) {
+  var m;
+
+  if (!isFunction(listener))
+    throw TypeError('listener must be a function');
+
+  if (!this._events)
+    this._events = {};
+
+  // To avoid recursion in the case that type === "newListener"! Before
+  // adding it to the listeners, first emit "newListener".
+  if (this._events.newListener)
+    this.emit('newListener', type,
+              isFunction(listener.listener) ?
+              listener.listener : listener);
+
+  if (!this._events[type])
+    // Optimize the case of one listener. Don't need the extra array object.
+    this._events[type] = listener;
+  else if (isObject(this._events[type]))
+    // If we've already got an array, just append.
+    this._events[type].push(listener);
+  else
+    // Adding the second element, need to change to array.
+    this._events[type] = [this._events[type], listener];
+
+  // Check for listener leak
+  if (isObject(this._events[type]) && !this._events[type].warned) {
+    if (!isUndefined(this._maxListeners)) {
+      m = this._maxListeners;
+    } else {
+      m = EventEmitter.defaultMaxListeners;
+    }
+
+    if (m && m > 0 && this._events[type].length > m) {
+      this._events[type].warned = true;
+      console.error('(node) warning: possible EventEmitter memory ' +
+                    'leak detected. %d listeners added. ' +
+                    'Use emitter.setMaxListeners() to increase limit.',
+                    this._events[type].length);
+      if (typeof console.trace === 'function') {
+        // not supported in IE 10
+        console.trace();
+      }
+    }
+  }
+
+  return this;
+};
+
+EventEmitter.prototype.on = EventEmitter.prototype.addListener;
+
+EventEmitter.prototype.once = function(type, listener) {
+  if (!isFunction(listener))
+    throw TypeError('listener must be a function');
+
+  var fired = false;
+
+  function g() {
+    this.removeListener(type, g);
+
+    if (!fired) {
+      fired = true;
+      listener.apply(this, arguments);
+    }
+  }
+
+  g.listener = listener;
+  this.on(type, g);
+
+  return this;
+};
+
+// emits a 'removeListener' event iff the listener was removed
+EventEmitter.prototype.removeListener = function(type, listener) {
+  var list, position, length, i;
+
+  if (!isFunction(listener))
+    throw TypeError('listener must be a function');
+
+  if (!this._events || !this._events[type])
+    return this;
+
+  list = this._events[type];
+  length = list.length;
+  position = -1;
+
+  if (list === listener ||
+      (isFunction(list.listener) && list.listener === listener)) {
+    delete this._events[type];
+    if (this._events.removeListener)
+      this.emit('removeListener', type, listener);
+
+  } else if (isObject(list)) {
+    for (i = length; i-- > 0;) {
+      if (list[i] === listener ||
+          (list[i].listener && list[i].listener === listener)) {
+        position = i;
+        break;
+      }
+    }
+
+    if (position < 0)
+      return this;
+
+    if (list.length === 1) {
+      list.length = 0;
+      delete this._events[type];
+    } else {
+      list.splice(position, 1);
+    }
+
+    if (this._events.removeListener)
+      this.emit('removeListener', type, listener);
+  }
+
+  return this;
+};
+
+EventEmitter.prototype.removeAllListeners = function(type) {
+  var key, listeners;
+
+  if (!this._events)
+    return this;
+
+  // not listening for removeListener, no need to emit
+  if (!this._events.removeListener) {
+    if (arguments.length === 0)
+      this._events = {};
+    else if (this._events[type])
+      delete this._events[type];
+    return this;
+  }
+
+  // emit removeListener for all listeners on all events
+  if (arguments.length === 0) {
+    for (key in this._events) {
+      if (key === 'removeListener') continue;
+      this.removeAllListeners(key);
+    }
+    this.removeAllListeners('removeListener');
+    this._events = {};
+    return this;
+  }
+
+  listeners = this._events[type];
+
+  if (isFunction(listeners)) {
+    this.removeListener(type, listeners);
+  } else if (listeners) {
+    // LIFO order
+    while (listeners.length)
+      this.removeListener(type, listeners[listeners.length - 1]);
+  }
+  delete this._events[type];
+
+  return this;
+};
+
+EventEmitter.prototype.listeners = function(type) {
+  var ret;
+  if (!this._events || !this._events[type])
+    ret = [];
+  else if (isFunction(this._events[type]))
+    ret = [this._events[type]];
+  else
+    ret = this._events[type].slice();
+  return ret;
+};
+
+EventEmitter.prototype.listenerCount = function(type) {
+  if (this._events) {
+    var evlistener = this._events[type];
+
+    if (isFunction(evlistener))
+      return 1;
+    else if (evlistener)
+      return evlistener.length;
+  }
+  return 0;
+};
+
+EventEmitter.listenerCount = function(emitter, type) {
+  return emitter.listenerCount(type);
+};
+
+function isFunction(arg) {
+  return typeof arg === 'function';
+}
+
+function isNumber(arg) {
+  return typeof arg === 'number';
+}
+
+function isObject(arg) {
+  return typeof arg === 'object' && arg !== null;
+}
+
+function isUndefined(arg) {
+  return arg === void 0;
+}
+
+},{}],6:[function(require,module,exports){
 if (typeof Object.create === 'function') {
   // implementation from standard node.js 'util' module
   module.exports = function inherits(ctor, superCtor) {
@@ -2270,7 +1982,7 @@ if (typeof Object.create === 'function') {
   }
 }
 
-},{}],11:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 /**
  * Gets the last element of `array`.
  *
@@ -2291,10 +2003,10 @@ function last(array) {
 
 module.exports = last;
 
-},{}],12:[function(require,module,exports){
-var arrayEach = require(16),
-    baseEach = require(23),
-    createForEach = require(45);
+},{}],8:[function(require,module,exports){
+var arrayEach = require(12),
+    baseEach = require(19),
+    createForEach = require(41);
 
 /**
  * Iterates over elements of `collection` invoking `iteratee` for each element.
@@ -2330,11 +2042,11 @@ var forEach = createForEach(arrayEach, baseEach);
 
 module.exports = forEach;
 
-},{"16":16,"23":23,"45":45}],13:[function(require,module,exports){
-var arrayMap = require(17),
-    baseCallback = require(20),
-    baseMap = require(31),
-    isArray = require(68);
+},{"12":12,"19":19,"41":41}],9:[function(require,module,exports){
+var arrayMap = require(13),
+    baseCallback = require(16),
+    baseMap = require(27),
+    isArray = require(64);
 
 /**
  * Creates an array of values by running each element in `collection` through
@@ -2400,7 +2112,7 @@ function map(collection, iteratee, thisArg) {
 
 module.exports = map;
 
-},{"17":17,"20":20,"31":31,"68":68}],14:[function(require,module,exports){
+},{"13":13,"16":16,"27":27,"64":64}],10:[function(require,module,exports){
 /** Used as the `TypeError` message for "Functions" methods. */
 var FUNC_ERROR_TEXT = 'Expected a function';
 
@@ -2460,7 +2172,7 @@ function restParam(func, start) {
 
 module.exports = restParam;
 
-},{}],15:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 /**
  * Copies the values of `source` to `array`.
  *
@@ -2482,7 +2194,7 @@ function arrayCopy(source, array) {
 
 module.exports = arrayCopy;
 
-},{}],16:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 /**
  * A specialized version of `_.forEach` for arrays without support for callback
  * shorthands and `this` binding.
@@ -2506,7 +2218,7 @@ function arrayEach(array, iteratee) {
 
 module.exports = arrayEach;
 
-},{}],17:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 /**
  * A specialized version of `_.map` for arrays without support for callback
  * shorthands and `this` binding.
@@ -2529,7 +2241,7 @@ function arrayMap(array, iteratee) {
 
 module.exports = arrayMap;
 
-},{}],18:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 /**
  * A specialized version of `_.some` for arrays without support for callback
  * shorthands and `this` binding.
@@ -2554,9 +2266,9 @@ function arraySome(array, predicate) {
 
 module.exports = arraySome;
 
-},{}],19:[function(require,module,exports){
-var baseCopy = require(22),
-    keys = require(75);
+},{}],15:[function(require,module,exports){
+var baseCopy = require(18),
+    keys = require(71);
 
 /**
  * The base implementation of `_.assign` without support for argument juggling,
@@ -2575,12 +2287,12 @@ function baseAssign(object, source) {
 
 module.exports = baseAssign;
 
-},{"22":22,"75":75}],20:[function(require,module,exports){
-var baseMatches = require(32),
-    baseMatchesProperty = require(33),
-    bindCallback = require(40),
-    identity = require(79),
-    property = require(80);
+},{"18":18,"71":71}],16:[function(require,module,exports){
+var baseMatches = require(28),
+    baseMatchesProperty = require(29),
+    bindCallback = require(36),
+    identity = require(75),
+    property = require(76);
 
 /**
  * The base implementation of `_.callback` which supports specifying the
@@ -2612,16 +2324,16 @@ function baseCallback(func, thisArg, argCount) {
 
 module.exports = baseCallback;
 
-},{"32":32,"33":33,"40":40,"79":79,"80":80}],21:[function(require,module,exports){
-var arrayCopy = require(15),
-    arrayEach = require(16),
-    baseAssign = require(19),
-    baseForOwn = require(26),
-    initCloneArray = require(52),
-    initCloneByTag = require(53),
-    initCloneObject = require(54),
-    isArray = require(68),
-    isObject = require(71);
+},{"28":28,"29":29,"36":36,"75":75,"76":76}],17:[function(require,module,exports){
+var arrayCopy = require(11),
+    arrayEach = require(12),
+    baseAssign = require(15),
+    baseForOwn = require(22),
+    initCloneArray = require(48),
+    initCloneByTag = require(49),
+    initCloneObject = require(50),
+    isArray = require(64),
+    isObject = require(67);
 
 /** `Object#toString` result references. */
 var argsTag = '[object Arguments]',
@@ -2742,7 +2454,7 @@ function baseClone(value, isDeep, customizer, key, object, stackA, stackB) {
 
 module.exports = baseClone;
 
-},{"15":15,"16":16,"19":19,"26":26,"52":52,"53":53,"54":54,"68":68,"71":71}],22:[function(require,module,exports){
+},{"11":11,"12":12,"15":15,"22":22,"48":48,"49":49,"50":50,"64":64,"67":67}],18:[function(require,module,exports){
 /**
  * Copies properties of `source` to `object`.
  *
@@ -2767,9 +2479,9 @@ function baseCopy(source, props, object) {
 
 module.exports = baseCopy;
 
-},{}],23:[function(require,module,exports){
-var baseForOwn = require(26),
-    createBaseEach = require(43);
+},{}],19:[function(require,module,exports){
+var baseForOwn = require(22),
+    createBaseEach = require(39);
 
 /**
  * The base implementation of `_.forEach` without support for callback
@@ -2784,8 +2496,8 @@ var baseEach = createBaseEach(baseForOwn);
 
 module.exports = baseEach;
 
-},{"26":26,"43":43}],24:[function(require,module,exports){
-var createBaseFor = require(44);
+},{"22":22,"39":39}],20:[function(require,module,exports){
+var createBaseFor = require(40);
 
 /**
  * The base implementation of `baseForIn` and `baseForOwn` which iterates
@@ -2803,9 +2515,9 @@ var baseFor = createBaseFor();
 
 module.exports = baseFor;
 
-},{"44":44}],25:[function(require,module,exports){
-var baseFor = require(24),
-    keysIn = require(76);
+},{"40":40}],21:[function(require,module,exports){
+var baseFor = require(20),
+    keysIn = require(72);
 
 /**
  * The base implementation of `_.forIn` without support for callback
@@ -2822,9 +2534,9 @@ function baseForIn(object, iteratee) {
 
 module.exports = baseForIn;
 
-},{"24":24,"76":76}],26:[function(require,module,exports){
-var baseFor = require(24),
-    keys = require(75);
+},{"20":20,"72":72}],22:[function(require,module,exports){
+var baseFor = require(20),
+    keys = require(71);
 
 /**
  * The base implementation of `_.forOwn` without support for callback
@@ -2841,8 +2553,8 @@ function baseForOwn(object, iteratee) {
 
 module.exports = baseForOwn;
 
-},{"24":24,"75":75}],27:[function(require,module,exports){
-var toObject = require(63);
+},{"20":20,"71":71}],23:[function(require,module,exports){
+var toObject = require(59);
 
 /**
  * The base implementation of `get` without support for string paths
@@ -2872,10 +2584,10 @@ function baseGet(object, path, pathKey) {
 
 module.exports = baseGet;
 
-},{"63":63}],28:[function(require,module,exports){
-var baseIsEqualDeep = require(29),
-    isObject = require(71),
-    isObjectLike = require(60);
+},{"59":59}],24:[function(require,module,exports){
+var baseIsEqualDeep = require(25),
+    isObject = require(67),
+    isObjectLike = require(56);
 
 /**
  * The base implementation of `_.isEqual` without support for `this` binding
@@ -2902,12 +2614,12 @@ function baseIsEqual(value, other, customizer, isLoose, stackA, stackB) {
 
 module.exports = baseIsEqual;
 
-},{"29":29,"60":60,"71":71}],29:[function(require,module,exports){
-var equalArrays = require(46),
-    equalByTag = require(47),
-    equalObjects = require(48),
-    isArray = require(68),
-    isTypedArray = require(73);
+},{"25":25,"56":56,"67":67}],25:[function(require,module,exports){
+var equalArrays = require(42),
+    equalByTag = require(43),
+    equalObjects = require(44),
+    isArray = require(64),
+    isTypedArray = require(69);
 
 /** `Object#toString` result references. */
 var argsTag = '[object Arguments]',
@@ -3006,9 +2718,9 @@ function baseIsEqualDeep(object, other, equalFunc, customizer, isLoose, stackA, 
 
 module.exports = baseIsEqualDeep;
 
-},{"46":46,"47":47,"48":48,"68":68,"73":73}],30:[function(require,module,exports){
-var baseIsEqual = require(28),
-    toObject = require(63);
+},{"42":42,"43":43,"44":44,"64":64,"69":69}],26:[function(require,module,exports){
+var baseIsEqual = require(24),
+    toObject = require(59);
 
 /**
  * The base implementation of `_.isMatch` without support for callback
@@ -3060,9 +2772,9 @@ function baseIsMatch(object, matchData, customizer) {
 
 module.exports = baseIsMatch;
 
-},{"28":28,"63":63}],31:[function(require,module,exports){
-var baseEach = require(23),
-    isArrayLike = require(55);
+},{"24":24,"59":59}],27:[function(require,module,exports){
+var baseEach = require(19),
+    isArrayLike = require(51);
 
 /**
  * The base implementation of `_.map` without support for callback shorthands
@@ -3085,10 +2797,10 @@ function baseMap(collection, iteratee) {
 
 module.exports = baseMap;
 
-},{"23":23,"55":55}],32:[function(require,module,exports){
-var baseIsMatch = require(30),
-    getMatchData = require(50),
-    toObject = require(63);
+},{"19":19,"51":51}],28:[function(require,module,exports){
+var baseIsMatch = require(26),
+    getMatchData = require(46),
+    toObject = require(59);
 
 /**
  * The base implementation of `_.matches` which does not clone `source`.
@@ -3117,16 +2829,16 @@ function baseMatches(source) {
 
 module.exports = baseMatches;
 
-},{"30":30,"50":50,"63":63}],33:[function(require,module,exports){
-var baseGet = require(27),
-    baseIsEqual = require(28),
-    baseSlice = require(38),
-    isArray = require(68),
-    isKey = require(58),
-    isStrictComparable = require(61),
-    last = require(11),
-    toObject = require(63),
-    toPath = require(64);
+},{"26":26,"46":46,"59":59}],29:[function(require,module,exports){
+var baseGet = require(23),
+    baseIsEqual = require(24),
+    baseSlice = require(34),
+    isArray = require(64),
+    isKey = require(54),
+    isStrictComparable = require(57),
+    last = require(7),
+    toObject = require(59),
+    toPath = require(60);
 
 /**
  * The base implementation of `_.matchesProperty` which does not clone `srcValue`.
@@ -3164,15 +2876,15 @@ function baseMatchesProperty(path, srcValue) {
 
 module.exports = baseMatchesProperty;
 
-},{"11":11,"27":27,"28":28,"38":38,"58":58,"61":61,"63":63,"64":64,"68":68}],34:[function(require,module,exports){
-var arrayEach = require(16),
-    baseMergeDeep = require(35),
-    isArray = require(68),
-    isArrayLike = require(55),
-    isObject = require(71),
-    isObjectLike = require(60),
-    isTypedArray = require(73),
-    keys = require(75);
+},{"23":23,"24":24,"34":34,"54":54,"57":57,"59":59,"60":60,"64":64,"7":7}],30:[function(require,module,exports){
+var arrayEach = require(12),
+    baseMergeDeep = require(31),
+    isArray = require(64),
+    isArrayLike = require(51),
+    isObject = require(67),
+    isObjectLike = require(56),
+    isTypedArray = require(69),
+    keys = require(71);
 
 /**
  * The base implementation of `_.merge` without support for argument juggling,
@@ -3222,14 +2934,14 @@ function baseMerge(object, source, customizer, stackA, stackB) {
 
 module.exports = baseMerge;
 
-},{"16":16,"35":35,"55":55,"60":60,"68":68,"71":71,"73":73,"75":75}],35:[function(require,module,exports){
-var arrayCopy = require(15),
-    isArguments = require(67),
-    isArray = require(68),
-    isArrayLike = require(55),
-    isPlainObject = require(72),
-    isTypedArray = require(73),
-    toPlainObject = require(74);
+},{"12":12,"31":31,"51":51,"56":56,"64":64,"67":67,"69":69,"71":71}],31:[function(require,module,exports){
+var arrayCopy = require(11),
+    isArguments = require(63),
+    isArray = require(64),
+    isArrayLike = require(51),
+    isPlainObject = require(68),
+    isTypedArray = require(69),
+    toPlainObject = require(70);
 
 /**
  * A specialized version of `baseMerge` for arrays and objects which performs
@@ -3291,7 +3003,7 @@ function baseMergeDeep(object, source, key, mergeFunc, customizer, stackA, stack
 
 module.exports = baseMergeDeep;
 
-},{"15":15,"55":55,"67":67,"68":68,"72":72,"73":73,"74":74}],36:[function(require,module,exports){
+},{"11":11,"51":51,"63":63,"64":64,"68":68,"69":69,"70":70}],32:[function(require,module,exports){
 /**
  * The base implementation of `_.property` without support for deep paths.
  *
@@ -3307,9 +3019,9 @@ function baseProperty(key) {
 
 module.exports = baseProperty;
 
-},{}],37:[function(require,module,exports){
-var baseGet = require(27),
-    toPath = require(64);
+},{}],33:[function(require,module,exports){
+var baseGet = require(23),
+    toPath = require(60);
 
 /**
  * A specialized version of `baseProperty` which supports deep paths.
@@ -3328,7 +3040,7 @@ function basePropertyDeep(path) {
 
 module.exports = basePropertyDeep;
 
-},{"27":27,"64":64}],38:[function(require,module,exports){
+},{"23":23,"60":60}],34:[function(require,module,exports){
 /**
  * The base implementation of `_.slice` without an iteratee call guard.
  *
@@ -3362,7 +3074,7 @@ function baseSlice(array, start, end) {
 
 module.exports = baseSlice;
 
-},{}],39:[function(require,module,exports){
+},{}],35:[function(require,module,exports){
 /**
  * Converts `value` to a string if it's not one. An empty string is returned
  * for `null` or `undefined` values.
@@ -3377,8 +3089,8 @@ function baseToString(value) {
 
 module.exports = baseToString;
 
-},{}],40:[function(require,module,exports){
-var identity = require(79);
+},{}],36:[function(require,module,exports){
+var identity = require(75);
 
 /**
  * A specialized version of `baseCallback` which only supports `this` binding
@@ -3418,7 +3130,7 @@ function bindCallback(func, thisArg, argCount) {
 
 module.exports = bindCallback;
 
-},{"79":79}],41:[function(require,module,exports){
+},{"75":75}],37:[function(require,module,exports){
 (function (global){
 /** Native method references. */
 var ArrayBuffer = global.ArrayBuffer,
@@ -3442,10 +3154,10 @@ function bufferClone(buffer) {
 module.exports = bufferClone;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],42:[function(require,module,exports){
-var bindCallback = require(40),
-    isIterateeCall = require(57),
-    restParam = require(14);
+},{}],38:[function(require,module,exports){
+var bindCallback = require(36),
+    isIterateeCall = require(53),
+    restParam = require(10);
 
 /**
  * Creates a `_.assign`, `_.defaults`, or `_.merge` function.
@@ -3485,10 +3197,10 @@ function createAssigner(assigner) {
 
 module.exports = createAssigner;
 
-},{"14":14,"40":40,"57":57}],43:[function(require,module,exports){
-var getLength = require(49),
-    isLength = require(59),
-    toObject = require(63);
+},{"10":10,"36":36,"53":53}],39:[function(require,module,exports){
+var getLength = require(45),
+    isLength = require(55),
+    toObject = require(59);
 
 /**
  * Creates a `baseEach` or `baseEachRight` function.
@@ -3518,8 +3230,8 @@ function createBaseEach(eachFunc, fromRight) {
 
 module.exports = createBaseEach;
 
-},{"49":49,"59":59,"63":63}],44:[function(require,module,exports){
-var toObject = require(63);
+},{"45":45,"55":55,"59":59}],40:[function(require,module,exports){
+var toObject = require(59);
 
 /**
  * Creates a base function for `_.forIn` or `_.forInRight`.
@@ -3547,9 +3259,9 @@ function createBaseFor(fromRight) {
 
 module.exports = createBaseFor;
 
-},{"63":63}],45:[function(require,module,exports){
-var bindCallback = require(40),
-    isArray = require(68);
+},{"59":59}],41:[function(require,module,exports){
+var bindCallback = require(36),
+    isArray = require(64);
 
 /**
  * Creates a function for `_.forEach` or `_.forEachRight`.
@@ -3569,8 +3281,8 @@ function createForEach(arrayFunc, eachFunc) {
 
 module.exports = createForEach;
 
-},{"40":40,"68":68}],46:[function(require,module,exports){
-var arraySome = require(18);
+},{"36":36,"64":64}],42:[function(require,module,exports){
+var arraySome = require(14);
 
 /**
  * A specialized version of `baseIsEqualDeep` for arrays with support for
@@ -3622,7 +3334,7 @@ function equalArrays(array, other, equalFunc, customizer, isLoose, stackA, stack
 
 module.exports = equalArrays;
 
-},{"18":18}],47:[function(require,module,exports){
+},{"14":14}],43:[function(require,module,exports){
 /** `Object#toString` result references. */
 var boolTag = '[object Boolean]',
     dateTag = '[object Date]',
@@ -3672,8 +3384,8 @@ function equalByTag(object, other, tag) {
 
 module.exports = equalByTag;
 
-},{}],48:[function(require,module,exports){
-var keys = require(75);
+},{}],44:[function(require,module,exports){
+var keys = require(71);
 
 /** Used for native method references. */
 var objectProto = Object.prototype;
@@ -3741,8 +3453,8 @@ function equalObjects(object, other, equalFunc, customizer, isLoose, stackA, sta
 
 module.exports = equalObjects;
 
-},{"75":75}],49:[function(require,module,exports){
-var baseProperty = require(36);
+},{"71":71}],45:[function(require,module,exports){
+var baseProperty = require(32);
 
 /**
  * Gets the "length" property value of `object`.
@@ -3758,9 +3470,9 @@ var getLength = baseProperty('length');
 
 module.exports = getLength;
 
-},{"36":36}],50:[function(require,module,exports){
-var isStrictComparable = require(61),
-    pairs = require(78);
+},{"32":32}],46:[function(require,module,exports){
+var isStrictComparable = require(57),
+    pairs = require(74);
 
 /**
  * Gets the propery names, values, and compare flags of `object`.
@@ -3781,8 +3493,8 @@ function getMatchData(object) {
 
 module.exports = getMatchData;
 
-},{"61":61,"78":78}],51:[function(require,module,exports){
-var isNative = require(70);
+},{"57":57,"74":74}],47:[function(require,module,exports){
+var isNative = require(66);
 
 /**
  * Gets the native function at `key` of `object`.
@@ -3799,7 +3511,7 @@ function getNative(object, key) {
 
 module.exports = getNative;
 
-},{"70":70}],52:[function(require,module,exports){
+},{"66":66}],48:[function(require,module,exports){
 /** Used for native method references. */
 var objectProto = Object.prototype;
 
@@ -3827,8 +3539,8 @@ function initCloneArray(array) {
 
 module.exports = initCloneArray;
 
-},{}],53:[function(require,module,exports){
-var bufferClone = require(41);
+},{}],49:[function(require,module,exports){
+var bufferClone = require(37);
 
 /** `Object#toString` result references. */
 var boolTag = '[object Boolean]',
@@ -3892,7 +3604,7 @@ function initCloneByTag(object, tag, isDeep) {
 
 module.exports = initCloneByTag;
 
-},{"41":41}],54:[function(require,module,exports){
+},{"37":37}],50:[function(require,module,exports){
 /**
  * Initializes an object clone.
  *
@@ -3910,9 +3622,9 @@ function initCloneObject(object) {
 
 module.exports = initCloneObject;
 
-},{}],55:[function(require,module,exports){
-var getLength = require(49),
-    isLength = require(59);
+},{}],51:[function(require,module,exports){
+var getLength = require(45),
+    isLength = require(55);
 
 /**
  * Checks if `value` is array-like.
@@ -3927,7 +3639,7 @@ function isArrayLike(value) {
 
 module.exports = isArrayLike;
 
-},{"49":49,"59":59}],56:[function(require,module,exports){
+},{"45":45,"55":55}],52:[function(require,module,exports){
 /** Used to detect unsigned integer values. */
 var reIsUint = /^\d+$/;
 
@@ -3953,10 +3665,10 @@ function isIndex(value, length) {
 
 module.exports = isIndex;
 
-},{}],57:[function(require,module,exports){
-var isArrayLike = require(55),
-    isIndex = require(56),
-    isObject = require(71);
+},{}],53:[function(require,module,exports){
+var isArrayLike = require(51),
+    isIndex = require(52),
+    isObject = require(67);
 
 /**
  * Checks if the provided arguments are from an iteratee call.
@@ -3983,9 +3695,9 @@ function isIterateeCall(value, index, object) {
 
 module.exports = isIterateeCall;
 
-},{"55":55,"56":56,"71":71}],58:[function(require,module,exports){
-var isArray = require(68),
-    toObject = require(63);
+},{"51":51,"52":52,"67":67}],54:[function(require,module,exports){
+var isArray = require(64),
+    toObject = require(59);
 
 /** Used to match property names within property paths. */
 var reIsDeepProp = /\.|\[(?:[^[\]]*|(["'])(?:(?!\1)[^\n\\]|\\.)*?\1)\]/,
@@ -4013,7 +3725,7 @@ function isKey(value, object) {
 
 module.exports = isKey;
 
-},{"63":63,"68":68}],59:[function(require,module,exports){
+},{"59":59,"64":64}],55:[function(require,module,exports){
 /**
  * Used as the [maximum length](http://ecma-international.org/ecma-262/6.0/#sec-number.max_safe_integer)
  * of an array-like value.
@@ -4035,7 +3747,7 @@ function isLength(value) {
 
 module.exports = isLength;
 
-},{}],60:[function(require,module,exports){
+},{}],56:[function(require,module,exports){
 /**
  * Checks if `value` is object-like.
  *
@@ -4049,8 +3761,8 @@ function isObjectLike(value) {
 
 module.exports = isObjectLike;
 
-},{}],61:[function(require,module,exports){
-var isObject = require(71);
+},{}],57:[function(require,module,exports){
+var isObject = require(67);
 
 /**
  * Checks if `value` is suitable for strict equality comparisons, i.e. `===`.
@@ -4066,12 +3778,12 @@ function isStrictComparable(value) {
 
 module.exports = isStrictComparable;
 
-},{"71":71}],62:[function(require,module,exports){
-var isArguments = require(67),
-    isArray = require(68),
-    isIndex = require(56),
-    isLength = require(59),
-    keysIn = require(76);
+},{"67":67}],58:[function(require,module,exports){
+var isArguments = require(63),
+    isArray = require(64),
+    isIndex = require(52),
+    isLength = require(55),
+    keysIn = require(72);
 
 /** Used for native method references. */
 var objectProto = Object.prototype;
@@ -4109,8 +3821,8 @@ function shimKeys(object) {
 
 module.exports = shimKeys;
 
-},{"56":56,"59":59,"67":67,"68":68,"76":76}],63:[function(require,module,exports){
-var isObject = require(71);
+},{"52":52,"55":55,"63":63,"64":64,"72":72}],59:[function(require,module,exports){
+var isObject = require(67);
 
 /**
  * Converts `value` to an object if it's not one.
@@ -4125,9 +3837,9 @@ function toObject(value) {
 
 module.exports = toObject;
 
-},{"71":71}],64:[function(require,module,exports){
-var baseToString = require(39),
-    isArray = require(68);
+},{"67":67}],60:[function(require,module,exports){
+var baseToString = require(35),
+    isArray = require(64);
 
 /** Used to match property names within property paths. */
 var rePropName = /[^.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\n\\]|\\.)*?)\2)\]/g;
@@ -4155,10 +3867,10 @@ function toPath(value) {
 
 module.exports = toPath;
 
-},{"39":39,"68":68}],65:[function(require,module,exports){
-var baseClone = require(21),
-    bindCallback = require(40),
-    isIterateeCall = require(57);
+},{"35":35,"64":64}],61:[function(require,module,exports){
+var baseClone = require(17),
+    bindCallback = require(36),
+    isIterateeCall = require(53);
 
 /**
  * Creates a clone of `value`. If `isDeep` is `true` nested objects are cloned,
@@ -4227,9 +3939,9 @@ function clone(value, isDeep, customizer, thisArg) {
 
 module.exports = clone;
 
-},{"21":21,"40":40,"57":57}],66:[function(require,module,exports){
-var baseClone = require(21),
-    bindCallback = require(40);
+},{"17":17,"36":36,"53":53}],62:[function(require,module,exports){
+var baseClone = require(17),
+    bindCallback = require(36);
 
 /**
  * Creates a deep clone of `value`. If `customizer` is provided it's invoked
@@ -4284,9 +3996,9 @@ function cloneDeep(value, customizer, thisArg) {
 
 module.exports = cloneDeep;
 
-},{"21":21,"40":40}],67:[function(require,module,exports){
-var isArrayLike = require(55),
-    isObjectLike = require(60);
+},{"17":17,"36":36}],63:[function(require,module,exports){
+var isArrayLike = require(51),
+    isObjectLike = require(56);
 
 /** Used for native method references. */
 var objectProto = Object.prototype;
@@ -4320,10 +4032,10 @@ function isArguments(value) {
 
 module.exports = isArguments;
 
-},{"55":55,"60":60}],68:[function(require,module,exports){
-var getNative = require(51),
-    isLength = require(59),
-    isObjectLike = require(60);
+},{"51":51,"56":56}],64:[function(require,module,exports){
+var getNative = require(47),
+    isLength = require(55),
+    isObjectLike = require(56);
 
 /** `Object#toString` result references. */
 var arrayTag = '[object Array]';
@@ -4362,8 +4074,8 @@ var isArray = nativeIsArray || function(value) {
 
 module.exports = isArray;
 
-},{"51":51,"59":59,"60":60}],69:[function(require,module,exports){
-var isObject = require(71);
+},{"47":47,"55":55,"56":56}],65:[function(require,module,exports){
+var isObject = require(67);
 
 /** `Object#toString` result references. */
 var funcTag = '[object Function]';
@@ -4402,9 +4114,9 @@ function isFunction(value) {
 
 module.exports = isFunction;
 
-},{"71":71}],70:[function(require,module,exports){
-var isFunction = require(69),
-    isObjectLike = require(60);
+},{"67":67}],66:[function(require,module,exports){
+var isFunction = require(65),
+    isObjectLike = require(56);
 
 /** Used to detect host constructors (Safari > 5). */
 var reIsHostCtor = /^\[object .+?Constructor\]$/;
@@ -4452,7 +4164,7 @@ function isNative(value) {
 
 module.exports = isNative;
 
-},{"60":60,"69":69}],71:[function(require,module,exports){
+},{"56":56,"65":65}],67:[function(require,module,exports){
 /**
  * Checks if `value` is the [language type](https://es5.github.io/#x8) of `Object`.
  * (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
@@ -4482,10 +4194,10 @@ function isObject(value) {
 
 module.exports = isObject;
 
-},{}],72:[function(require,module,exports){
-var baseForIn = require(25),
-    isArguments = require(67),
-    isObjectLike = require(60);
+},{}],68:[function(require,module,exports){
+var baseForIn = require(21),
+    isArguments = require(63),
+    isObjectLike = require(56);
 
 /** `Object#toString` result references. */
 var objectTag = '[object Object]';
@@ -4555,9 +4267,9 @@ function isPlainObject(value) {
 
 module.exports = isPlainObject;
 
-},{"25":25,"60":60,"67":67}],73:[function(require,module,exports){
-var isLength = require(59),
-    isObjectLike = require(60);
+},{"21":21,"56":56,"63":63}],69:[function(require,module,exports){
+var isLength = require(55),
+    isObjectLike = require(56);
 
 /** `Object#toString` result references. */
 var argsTag = '[object Arguments]',
@@ -4631,9 +4343,9 @@ function isTypedArray(value) {
 
 module.exports = isTypedArray;
 
-},{"59":59,"60":60}],74:[function(require,module,exports){
-var baseCopy = require(22),
-    keysIn = require(76);
+},{"55":55,"56":56}],70:[function(require,module,exports){
+var baseCopy = require(18),
+    keysIn = require(72);
 
 /**
  * Converts `value` to a plain object flattening inherited enumerable
@@ -4664,11 +4376,11 @@ function toPlainObject(value) {
 
 module.exports = toPlainObject;
 
-},{"22":22,"76":76}],75:[function(require,module,exports){
-var getNative = require(51),
-    isArrayLike = require(55),
-    isObject = require(71),
-    shimKeys = require(62);
+},{"18":18,"72":72}],71:[function(require,module,exports){
+var getNative = require(47),
+    isArrayLike = require(51),
+    isObject = require(67),
+    shimKeys = require(58);
 
 /* Native method references for those with the same name as other `lodash` methods. */
 var nativeKeys = getNative(Object, 'keys');
@@ -4711,12 +4423,12 @@ var keys = !nativeKeys ? shimKeys : function(object) {
 
 module.exports = keys;
 
-},{"51":51,"55":55,"62":62,"71":71}],76:[function(require,module,exports){
-var isArguments = require(67),
-    isArray = require(68),
-    isIndex = require(56),
-    isLength = require(59),
-    isObject = require(71);
+},{"47":47,"51":51,"58":58,"67":67}],72:[function(require,module,exports){
+var isArguments = require(63),
+    isArray = require(64),
+    isIndex = require(52),
+    isLength = require(55),
+    isObject = require(67);
 
 /** Used for native method references. */
 var objectProto = Object.prototype;
@@ -4777,9 +4489,9 @@ function keysIn(object) {
 
 module.exports = keysIn;
 
-},{"56":56,"59":59,"67":67,"68":68,"71":71}],77:[function(require,module,exports){
-var baseMerge = require(34),
-    createAssigner = require(42);
+},{"52":52,"55":55,"63":63,"64":64,"67":67}],73:[function(require,module,exports){
+var baseMerge = require(30),
+    createAssigner = require(38);
 
 /**
  * Recursively merges own enumerable properties of the source object(s), that
@@ -4833,9 +4545,9 @@ var merge = createAssigner(baseMerge);
 
 module.exports = merge;
 
-},{"34":34,"42":42}],78:[function(require,module,exports){
-var keys = require(75),
-    toObject = require(63);
+},{"30":30,"38":38}],74:[function(require,module,exports){
+var keys = require(71),
+    toObject = require(59);
 
 /**
  * Creates a two dimensional array of the key-value pairs for `object`,
@@ -4868,7 +4580,7 @@ function pairs(object) {
 
 module.exports = pairs;
 
-},{"63":63,"75":75}],79:[function(require,module,exports){
+},{"59":59,"71":71}],75:[function(require,module,exports){
 /**
  * This method returns the first argument provided to it.
  *
@@ -4890,10 +4602,10 @@ function identity(value) {
 
 module.exports = identity;
 
-},{}],80:[function(require,module,exports){
-var baseProperty = require(36),
-    basePropertyDeep = require(37),
-    isKey = require(58);
+},{}],76:[function(require,module,exports){
+var baseProperty = require(32),
+    basePropertyDeep = require(33),
+    isKey = require(54);
 
 /**
  * Creates a function that returns the property value at `path` on a
@@ -4923,7 +4635,279 @@ function property(path) {
 
 module.exports = property;
 
-},{"36":36,"37":37,"58":58}],81:[function(require,module,exports){
+},{"32":32,"33":33,"54":54}],77:[function(require,module,exports){
+// shim for using process in browser
+
+var process = module.exports = {};
+var queue = [];
+var draining = false;
+var currentQueue;
+var queueIndex = -1;
+
+function cleanUpNextTick() {
+    draining = false;
+    if (currentQueue.length) {
+        queue = currentQueue.concat(queue);
+    } else {
+        queueIndex = -1;
+    }
+    if (queue.length) {
+        drainQueue();
+    }
+}
+
+function drainQueue() {
+    if (draining) {
+        return;
+    }
+    var timeout = setTimeout(cleanUpNextTick);
+    draining = true;
+
+    var len = queue.length;
+    while(len) {
+        currentQueue = queue;
+        queue = [];
+        while (++queueIndex < len) {
+            if (currentQueue) {
+                currentQueue[queueIndex].run();
+            }
+        }
+        queueIndex = -1;
+        len = queue.length;
+    }
+    currentQueue = null;
+    draining = false;
+    clearTimeout(timeout);
+}
+
+process.nextTick = function (fun) {
+    var args = new Array(arguments.length - 1);
+    if (arguments.length > 1) {
+        for (var i = 1; i < arguments.length; i++) {
+            args[i - 1] = arguments[i];
+        }
+    }
+    queue.push(new Item(fun, args));
+    if (queue.length === 1 && !draining) {
+        setTimeout(drainQueue, 0);
+    }
+};
+
+// v8 likes predictible objects
+function Item(fun, array) {
+    this.fun = fun;
+    this.array = array;
+}
+Item.prototype.run = function () {
+    this.fun.apply(null, this.array);
+};
+process.title = 'browser';
+process.browser = true;
+process.env = {};
+process.argv = [];
+process.version = ''; // empty string to avoid regexp issues
+process.versions = {};
+
+function noop() {}
+
+process.on = noop;
+process.addListener = noop;
+process.once = noop;
+process.off = noop;
+process.removeListener = noop;
+process.removeAllListeners = noop;
+process.emit = noop;
+
+process.binding = function (name) {
+    throw new Error('process.binding is not supported');
+};
+
+process.cwd = function () { return '/' };
+process.chdir = function (dir) {
+    throw new Error('process.chdir is not supported');
+};
+process.umask = function() { return 0; };
+
+},{}],78:[function(require,module,exports){
+// Copyright Joyent, Inc. and other Node contributors.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a
+// copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+'use strict';
+
+// If obj.hasOwnProperty has been overridden, then calling
+// obj.hasOwnProperty(prop) will break.
+// See: https://github.com/joyent/node/issues/1707
+function hasOwnProperty(obj, prop) {
+  return Object.prototype.hasOwnProperty.call(obj, prop);
+}
+
+module.exports = function(qs, sep, eq, options) {
+  sep = sep || '&';
+  eq = eq || '=';
+  var obj = {};
+
+  if (typeof qs !== 'string' || qs.length === 0) {
+    return obj;
+  }
+
+  var regexp = /\+/g;
+  qs = qs.split(sep);
+
+  var maxKeys = 1000;
+  if (options && typeof options.maxKeys === 'number') {
+    maxKeys = options.maxKeys;
+  }
+
+  var len = qs.length;
+  // maxKeys <= 0 means that we should not limit keys count
+  if (maxKeys > 0 && len > maxKeys) {
+    len = maxKeys;
+  }
+
+  for (var i = 0; i < len; ++i) {
+    var x = qs[i].replace(regexp, '%20'),
+        idx = x.indexOf(eq),
+        kstr, vstr, k, v;
+
+    if (idx >= 0) {
+      kstr = x.substr(0, idx);
+      vstr = x.substr(idx + 1);
+    } else {
+      kstr = x;
+      vstr = '';
+    }
+
+    k = decodeURIComponent(kstr);
+    v = decodeURIComponent(vstr);
+
+    if (!hasOwnProperty(obj, k)) {
+      obj[k] = v;
+    } else if (isArray(obj[k])) {
+      obj[k].push(v);
+    } else {
+      obj[k] = [obj[k], v];
+    }
+  }
+
+  return obj;
+};
+
+var isArray = Array.isArray || function (xs) {
+  return Object.prototype.toString.call(xs) === '[object Array]';
+};
+
+},{}],79:[function(require,module,exports){
+// Copyright Joyent, Inc. and other Node contributors.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a
+// copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+'use strict';
+
+var stringifyPrimitive = function(v) {
+  switch (typeof v) {
+    case 'string':
+      return v;
+
+    case 'boolean':
+      return v ? 'true' : 'false';
+
+    case 'number':
+      return isFinite(v) ? v : '';
+
+    default:
+      return '';
+  }
+};
+
+module.exports = function(obj, sep, eq, name) {
+  sep = sep || '&';
+  eq = eq || '=';
+  if (obj === null) {
+    obj = undefined;
+  }
+
+  if (typeof obj === 'object') {
+    return map(objectKeys(obj), function(k) {
+      var ks = encodeURIComponent(stringifyPrimitive(k)) + eq;
+      if (isArray(obj[k])) {
+        return map(obj[k], function(v) {
+          return ks + encodeURIComponent(stringifyPrimitive(v));
+        }).join(sep);
+      } else {
+        return ks + encodeURIComponent(stringifyPrimitive(obj[k]));
+      }
+    }).join(sep);
+
+  }
+
+  if (!name) return '';
+  return encodeURIComponent(stringifyPrimitive(name)) + eq +
+         encodeURIComponent(stringifyPrimitive(obj));
+};
+
+var isArray = Array.isArray || function (xs) {
+  return Object.prototype.toString.call(xs) === '[object Array]';
+};
+
+function map (xs, f) {
+  if (xs.map) return xs.map(f);
+  var res = [];
+  for (var i = 0; i < xs.length; i++) {
+    res.push(f(xs[i], i));
+  }
+  return res;
+}
+
+var objectKeys = Object.keys || function (obj) {
+  var res = [];
+  for (var key in obj) {
+    if (Object.prototype.hasOwnProperty.call(obj, key)) res.push(key);
+  }
+  return res;
+};
+
+},{}],80:[function(require,module,exports){
+'use strict';
+
+exports.decode = exports.parse = require(78);
+exports.encode = exports.stringify = require(79);
+
+},{"78":78,"79":79}],81:[function(require,module,exports){
 'use strict';
 
 module.exports = AlgoliaSearch;
@@ -4960,11 +4944,11 @@ var MAX_API_KEY_LENGTH = 500;
  *           If you provide them, you will less benefit from our HA implementation
  */
 function AlgoliaSearch(applicationID, apiKey, opts) {
-  var debug = require(6)('algoliasearch');
+  var debug = require(1)('algoliasearch');
 
-  var clone = require(65);
-  var isArray = require(68);
-  var map = require(13);
+  var clone = require(61);
+  var isArray = require(64);
+  var map = require(9);
 
   var usage = 'Usage: algoliasearch(applicationID, apiKey, opts)';
 
@@ -5245,7 +5229,7 @@ AlgoliaSearch.prototype = {
    * @see {@link https://www.algolia.com/doc/rest_api#AddKey|Algolia REST API Documentation}
    */
   addUserKey: function(acls, params, callback) {
-    var isArray = require(68);
+    var isArray = require(64);
     var usage = 'Usage: client.addUserKey(arrayOfAcls[, params, callback])';
 
     if (!isArray(acls)) {
@@ -5329,7 +5313,7 @@ AlgoliaSearch.prototype = {
    * @see {@link https://www.algolia.com/doc/rest_api#UpdateIndexKey|Algolia REST API Documentation}
    */
   updateUserKey: function(key, acls, params, callback) {
-    var isArray = require(68);
+    var isArray = require(64);
     var usage = 'Usage: client.updateUserKey(key, arrayOfAcls[, params, callback])';
 
     if (!isArray(acls)) {
@@ -5457,8 +5441,8 @@ AlgoliaSearch.prototype = {
    * @return {Promise|undefined} Returns a promise if no callback given
    */
   search: function(queries, callback) {
-    var isArray = require(68);
-    var map = require(13);
+    var isArray = require(64);
+    var map = require(9);
 
     var usage = 'Usage: client.search(arrayOfQueries[, callback])';
 
@@ -5545,7 +5529,7 @@ AlgoliaSearch.prototype = {
    * }], cb)
    */
   batch: function(operations, callback) {
-    var isArray = require(68);
+    var isArray = require(64);
     var usage = 'Usage: client.batch(operations[, callback])';
 
     if (!isArray(operations)) {
@@ -5609,7 +5593,7 @@ AlgoliaSearch.prototype = {
    * Wrapper that try all hosts to maximize the quality of service
    */
   _jsonRequest: function(initialOpts) {
-    var requestDebug = require(6)('algoliasearch:' + initialOpts.url);
+    var requestDebug = require(1)('algoliasearch:' + initialOpts.url);
 
     var body;
     var cache = initialOpts.cache;
@@ -5850,7 +5834,7 @@ AlgoliaSearch.prototype = {
   },
 
   _computeRequestHeaders: function(withAPIKey) {
-    var forEach = require(12);
+    var forEach = require(8);
 
     var requestHeaders = {
       'x-algolia-agent': this._ua,
@@ -5932,7 +5916,7 @@ AlgoliaSearch.prototype.Index.prototype = {
    *  content: the server answer that updateAt and taskID
    */
   addObjects: function(objects, callback) {
-    var isArray = require(68);
+    var isArray = require(64);
     var usage = 'Usage: index.addObjects(arrayOfObjects[, callback])';
 
     if (!isArray(objects)) {
@@ -6000,8 +5984,8 @@ AlgoliaSearch.prototype.Index.prototype = {
    * @param objectIDs the array of unique identifier of objects to retrieve
    */
   getObjects: function(objectIDs, attributesToRetrieve, callback) {
-    var isArray = require(68);
-    var map = require(13);
+    var isArray = require(64);
+    var map = require(9);
 
     var usage = 'Usage: index.getObjects(arrayOfObjectIDs[, callback])';
 
@@ -6079,7 +6063,7 @@ AlgoliaSearch.prototype.Index.prototype = {
    *  content: the server answer that updateAt and taskID
    */
   partialUpdateObjects: function(objects, callback) {
-    var isArray = require(68);
+    var isArray = require(64);
     var usage = 'Usage: index.partialUpdateObjects(arrayOfObjects[, callback])';
 
     if (!isArray(objects)) {
@@ -6133,7 +6117,7 @@ AlgoliaSearch.prototype.Index.prototype = {
    *  content: the server answer that updateAt and taskID
    */
   saveObjects: function(objects, callback) {
-    var isArray = require(68);
+    var isArray = require(64);
     var usage = 'Usage: index.saveObjects(arrayOfObjects[, callback])';
 
     if (!isArray(objects)) {
@@ -6196,8 +6180,8 @@ AlgoliaSearch.prototype.Index.prototype = {
    *  content: the server answer that contains 3 elements: createAt, taskId and objectID
    */
   deleteObjects: function(objectIDs, callback) {
-    var isArray = require(68);
-    var map = require(13);
+    var isArray = require(64);
+    var map = require(9);
 
     var usage = 'Usage: index.deleteObjects(arrayOfObjectIDs[, callback])';
 
@@ -6235,8 +6219,8 @@ AlgoliaSearch.prototype.Index.prototype = {
    *  error: null or Error('message')
    */
   deleteByQuery: function(query, params, callback) {
-    var clone = require(65);
-    var map = require(13);
+    var clone = require(61);
+    var map = require(9);
 
     var indexObj = this;
     var client = indexObj.as;
@@ -6436,7 +6420,7 @@ AlgoliaSearch.prototype.Index.prototype = {
   // pre 3.5.0 usage, backward compatible
   // browse: function(page, hitsPerPage, callback) {
   browse: function(query, queryParameters, callback) {
-    var merge = require(77);
+    var merge = require(73);
 
     var indexObj = this;
 
@@ -6555,7 +6539,7 @@ AlgoliaSearch.prototype.Index.prototype = {
       query = undefined;
     }
 
-    var merge = require(77);
+    var merge = require(73);
 
     var IndexBrowser = require(82);
 
@@ -6907,7 +6891,7 @@ AlgoliaSearch.prototype.Index.prototype = {
    * @see {@link https://www.algolia.com/doc/rest_api#AddIndexKey|Algolia REST API Documentation}
    */
   addUserKey: function(acls, params, callback) {
-    var isArray = require(68);
+    var isArray = require(64);
     var usage = 'Usage: index.addUserKey(arrayOfAcls[, params, callback])';
 
     if (!isArray(acls)) {
@@ -6990,7 +6974,7 @@ AlgoliaSearch.prototype.Index.prototype = {
    * @see {@link https://www.algolia.com/doc/rest_api#UpdateIndexKey|Algolia REST API Documentation}
    */
   updateUserKey: function(key, acls, params, callback) {
-    var isArray = require(68);
+    var isArray = require(64);
     var usage = 'Usage: index.updateUserKey(key, arrayOfAcls[, params, callback])';
 
     if (!isArray(acls)) {
@@ -7118,15 +7102,15 @@ function safeJSONStringify(obj) {
   return out;
 }
 
-},{"12":12,"13":13,"6":6,"65":65,"68":68,"77":77,"82":82,"88":88,"89":89}],82:[function(require,module,exports){
+},{"1":1,"61":61,"64":64,"73":73,"8":8,"82":82,"88":88,"89":89,"9":9}],82:[function(require,module,exports){
 'use strict';
 
 // This is the object returned by the `index.browseAll()` method
 
 module.exports = IndexBrowser;
 
-var inherits = require(10);
-var EventEmitter = require(1).EventEmitter;
+var inherits = require(6);
+var EventEmitter = require(5).EventEmitter;
 
 function IndexBrowser() {
 }
@@ -7159,16 +7143,16 @@ IndexBrowser.prototype._clean = function() {
   this.removeAllListeners('result');
 };
 
-},{"1":1,"10":10}],83:[function(require,module,exports){
+},{"5":5,"6":6}],83:[function(require,module,exports){
 'use strict';
 
 // This is the AngularJS Algolia Search module
 // It's using $http to do requests with a JSONP fallback
 // $q promises are returned
 
-var inherits = require(10);
+var inherits = require(6);
 
-var forEach = require(12);
+var forEach = require(8);
 
 var AlgoliaSearch = require(81);
 var errors = require(89);
@@ -7180,13 +7164,13 @@ var places = require(90);
 window.algoliasearch = require(84);
 
 if ("production" === 'development') {
-  require(6).enable('algoliasearch*');
+  require(1).enable('algoliasearch*');
 }
 
 window.angular.module('algoliasearch', [])
   .service('algolia', ['$http', '$q', '$timeout', function algoliaSearchService($http, $q, $timeout) {
     function algoliasearch(applicationID, apiKey, opts) {
-      var cloneDeep = require(66);
+      var cloneDeep = require(62);
 
       var getDocumentProtocol = require(85);
 
@@ -7208,7 +7192,7 @@ window.angular.module('algoliasearch', [])
     // we expose into window no matter how we are used, this will allow
     // us to easily debug any website running algolia
     window.__algolia = {
-      debug: require(6),
+      debug: require(1),
       algoliasearch: algoliasearch
     };
 
@@ -7365,7 +7349,7 @@ window.angular.module('algoliasearch', [])
     };
   }]);
 
-},{"10":10,"12":12,"6":6,"66":66,"81":81,"84":84,"85":85,"86":86,"87":87,"89":89,"90":90,"91":91}],84:[function(require,module,exports){
+},{"1":1,"6":6,"62":62,"8":8,"81":81,"84":84,"85":85,"86":86,"87":87,"89":89,"90":90,"91":91}],84:[function(require,module,exports){
 'use strict';
 
 // This is the standalone browser build entry point
@@ -7373,8 +7357,8 @@ window.angular.module('algoliasearch', [])
 // using XMLHttpRequest, XDomainRequest and JSONP as fallback
 module.exports = algoliasearch;
 
-var inherits = require(10);
-var Promise = window.Promise || require(9).Promise;
+var inherits = require(6);
+var Promise = window.Promise || require(4).Promise;
 
 var AlgoliaSearch = require(81);
 var errors = require(89);
@@ -7383,11 +7367,11 @@ var jsonpRequest = require(87);
 var places = require(90);
 
 if ("production" === 'development') {
-  require(6).enable('algoliasearch*');
+  require(1).enable('algoliasearch*');
 }
 
 function algoliasearch(applicationID, apiKey, opts) {
-  var cloneDeep = require(66);
+  var cloneDeep = require(62);
 
   var getDocumentProtocol = require(85);
 
@@ -7409,7 +7393,7 @@ algoliasearch.initPlaces = places(algoliasearch);
 // we expose into window no matter how we are used, this will allow
 // us to easily debug any website running algolia
 window.__algolia = {
-  debug: require(6),
+  debug: require(1),
   algoliasearch: algoliasearch
 };
 
@@ -7580,7 +7564,7 @@ AlgoliaSearchBrowser.prototype._promise = {
   }
 };
 
-},{"10":10,"6":6,"66":66,"81":81,"85":85,"86":86,"87":87,"89":89,"9":9,"90":90,"91":91}],85:[function(require,module,exports){
+},{"1":1,"4":4,"6":6,"62":62,"81":81,"85":85,"86":86,"87":87,"89":89,"90":90,"91":91}],85:[function(require,module,exports){
 'use strict';
 
 module.exports = getDocumentProtocol;
@@ -7601,7 +7585,7 @@ function getDocumentProtocol() {
 
 module.exports = inlineHeaders;
 
-var querystring = require(5);
+var querystring = require(80);
 
 function inlineHeaders(url, headers) {
   if (/\?/.test(url)) {
@@ -7613,7 +7597,7 @@ function inlineHeaders(url, headers) {
   return url + querystring.encode(headers);
 }
 
-},{"5":5}],87:[function(require,module,exports){
+},{"80":80}],87:[function(require,module,exports){
 'use strict';
 
 module.exports = jsonpRequest;
@@ -7798,10 +7782,10 @@ function buildSearchMethod(queryParam, url) {
 // We use custom error "types" so that we can act on them when we need it
 // e.g.: if error instanceof errors.UnparsableJSON then..
 
-var inherits = require(10);
+var inherits = require(6);
 
 function AlgoliaSearchError(message, extraProperties) {
-  var forEach = require(12);
+  var forEach = require(8);
 
   var error = this;
 
@@ -7871,14 +7855,14 @@ module.exports = {
   )
 };
 
-},{"10":10,"12":12}],90:[function(require,module,exports){
+},{"6":6,"8":8}],90:[function(require,module,exports){
 module.exports = createPlacesClient;
 
 var buildSearchMethod = require(88);
 
 function createPlacesClient(algoliasearch) {
   return function places(appID, apiKey, opts) {
-    var cloneDeep = require(66);
+    var cloneDeep = require(62);
 
     opts = opts && cloneDeep(opts) || {};
     opts.hosts = opts.hosts || [
@@ -7895,9 +7879,9 @@ function createPlacesClient(algoliasearch) {
   };
 }
 
-},{"66":66,"88":88}],91:[function(require,module,exports){
+},{"62":62,"88":88}],91:[function(require,module,exports){
 'use strict';
 
-module.exports = '3.13.0';
+module.exports = '3.13.1';
 
 },{}]},{},[83]);
