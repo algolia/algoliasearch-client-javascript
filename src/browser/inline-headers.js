@@ -2,7 +2,7 @@
 
 module.exports = inlineHeaders;
 
-var querystring = require('querystring');
+var encode = require('querystring').encode;
 
 function inlineHeaders(url, headers) {
   if (/\?/.test(url)) {
@@ -11,5 +11,5 @@ function inlineHeaders(url, headers) {
     url += '?';
   }
 
-  return url + querystring.encode(headers);
+  return url + encode(headers);
 }
