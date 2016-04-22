@@ -26,12 +26,6 @@ var zuulConfig = module.exports = {
   browser_retries: 0
 };
 
-if (process.env.TRAVIS_BUILD_NUMBER !== undefined) {
-  zuulConfig.tunnel = {
-    type: 'ngrok'
-  };
-}
-
 var browsers = require('browzers');
 
 zuulConfig.browsers = process.env.TRAVIS_PULL_REQUEST && process.env.TRAVIS_PULL_REQUEST !== 'false' ?
