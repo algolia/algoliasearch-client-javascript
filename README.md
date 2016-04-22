@@ -22,14 +22,14 @@
 
 [travis-svg]: https://img.shields.io/travis/algolia/algoliasearch-client-js/master.svg?style=flat-square
 [travis-url]: https://travis-ci.org/algolia/algoliasearch-client-js
-[license-image]: http://img.shields.io/badge/license-MIT-green.svg?style=flat-square
+[license-image]: https://img.shields.io/badge/license-MIT-green.svg?style=flat-square
 [license-url]: LICENSE.txt
 [downloads-image]: https://img.shields.io/npm/dm/algoliasearch.svg?style=flat-square
 [downloads-url]: http://npm-stat.com/charts.html?package=algoliasearch
 [browser-test-matrix]: https://saucelabs.com/browser-matrix/algoliasearch-js.svg
 [browser-test-url]: https://saucelabs.com/u/algoliasearch-js
 [version-svg]: https://img.shields.io/npm/v/algoliasearch.svg?style=flat-square
-[package-url]: https://npmjs.org/package/algoliasearch
+[package-url]: https://www.npmjs.com/package/algoliasearch
 
 The JavaScript client lets you use the [Algolia Search API](https://www.algolia.com/doc/rest) on the frontend (browsers) or on the backend (Node.js) with the same API.
 
@@ -135,7 +135,7 @@ To include the latest releases and all upcoming features and patches, use this:
 
 We recommend using jsDelivr, but `algoliasearch` is also available at:
 - [CDNJS](https://cdnjs.com/libraries/algoliasearch)
-- [npmcdn](https://npmcdn.com): https://npmcdn.com/algoliasearch@3/dist/algoliasearch.min.js
+- [npmcdn](https://npmcdn.com): https://npmcdn.com/algoliasearch@3.13.1/dist/algoliasearch.min.js
 
 #### Browserify, webpack
 
@@ -399,7 +399,7 @@ Promises
 
 Promises are the [native Promise implementation](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise).
 
-We use [jakearchibald/es6-promise](https://github.com/jakearchibald/es6-promise/) as a polyfill when needed.
+We use [jakearchibald/es6-promise](https://github.com/stefanpenner/es6-promise) as a polyfill when needed.
 
 Request strategy
 -------------
@@ -407,9 +407,9 @@ Request strategy
 The request strategy used by the JavaScript client includes:
 
 - On the browser:
-  + [CORS](http://en.wikipedia.org/wiki/Cross-Origin_Resource_Sharing#Browser_support) for modern browsers
+  + [CORS](https://en.wikipedia.org/wiki/Cross-Origin_Resource_Sharing#Browser_support) for modern browsers
   + [XDomainRequest](https://msdn.microsoft.com/en-us/library/ie/cc288060%28v=vs.85%29.aspx) for IE <= 10
-  + [JSONP](http://en.wikipedia.org/wiki/JSONP) in any situation where Ajax requests are unavailabe or blocked.
+  + [JSONP](https://en.wikipedia.org/wiki/JSONP) in any situation where Ajax requests are unavailabe or blocked.
 - Node.js:
   + native [`http` module](https://nodejs.org/api/)
 
@@ -2752,7 +2752,7 @@ index.deleteUserKey('9b9335cb7235d43f75b5398c36faabcd', function(err, content) {
 
 ## Secured API keys (frontend)
 
-You may have a single index containing **per user** data. In that case, all records should be tagged with their associated `user_id` in order to add a `tagFilters=user_42` filter at query time to retrieve only what a user has access to. If you're using the [JavaScript client](http://github.com/algolia/algoliasearch-client-js), it will result in a security breach since the user is able to modify the `tagFilters` you've set by modifying the code from the browser. To keep using the JavaScript client (recommended for optimal latency) and target secured records, you can generate a secured API key from your backend:
+You may have a single index containing **per user** data. In that case, all records should be tagged with their associated `user_id` in order to add a `tagFilters=user_42` filter at query time to retrieve only what a user has access to. If you're using the [JavaScript client](https://github.com/algolia/algoliasearch-client-js), it will result in a security breach since the user is able to modify the `tagFilters` you've set by modifying the code from the browser. To keep using the JavaScript client (recommended for optimal latency) and target secured records, you can generate a secured API key from your backend:
 
 ```js
 // generate a public API key for user 42. Here, records are tagged with:
