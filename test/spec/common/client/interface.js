@@ -19,7 +19,6 @@ test('AlgoliaSearch client API spec', function(t) {
   var actualProperties = filter(functions(client), onlyPublicProperties).sort();
 
   var expectedProperties = [
-    'Index',
     'addAlgoliaAgent',
     'addQueryInBatch',
     'addUserKey',

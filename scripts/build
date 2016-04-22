@@ -59,4 +59,15 @@ do
   echo "${bundle}.min.js gzipped will weight" $(cat dist/"${bundle}".min.js | gzip -9 | wc -c | pretty-bytes)
 done
 
+echo '..Lite build'
+mv package.json package.json.bak
+mv package.lite.json package.json
+browserify -p bundle-collapser/plugin src/browser/builds/lite/algoliasearchLite.js --standalone algoliasearch > dist/algoliasearchLite.js
+uglifyjs dist/algoliasearchLite.js -mc 'warnings=false' > dist/algoliasearchLite.min.js
+echo "$license" | cat - dist/algoliasearchLite.js > /tmp/out && mv /tmp/out dist/algoliasearchLite.js
+echo "$license" | cat - dist/algoliasearchLite.min.js > /tmp/out && mv /tmp/out dist/algoliasearchLite.min.js
+echo "algoliasearchLite.min.js gzipped will weight" $(cat dist/algoliasearchLite.min.js | gzip -9 | wc -c | pretty-bytes)
+mv package.json package.lite.json
+mv package.json.bak package.json
+
 echo 'Done'

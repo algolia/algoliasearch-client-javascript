@@ -1,0 +1,18 @@
+{
+  "name": "algoliasearch",
+  "main": "index.js",
+  "browser": {
+    "./index.js": "./src/browser/builds/algoliasearch.js",
+    "debug": "./src/browser/builds/lite/debug.js",
+    "lodash/lang/clone": "./src/browser/builds/lite/clone.js",
+    "lodash/lang/cloneDeep": "./src/browser/builds/lite/clone.js",
+    "lodash/collection/map": "./src/browser/builds/lite/map.js",
+    "lodash/collection/forEach": "./src/browser/builds/lite/forEach.js",
+    "lodash/lang/isArray": "./src/browser/builds/lite/isArray.js"
+  },
+  "browserify": {
+    "transform": [
+      "envify"
+    ]
+  }
+}
