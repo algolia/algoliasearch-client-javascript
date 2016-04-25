@@ -399,7 +399,7 @@ Promises
 
 Promises are the [native Promise implementation](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise).
 
-We use [jakearchibald/es6-promise](https://github.com/jakearchibald/es6-promise/) as a polyfill when needed.
+We use [jakearchibald/es6-promise](https://github.com/stefanpenner/es6-promise) as a polyfill when needed.
 
 Request strategy
 -------------
@@ -407,9 +407,9 @@ Request strategy
 The request strategy used by the JavaScript client includes:
 
 - On the browser:
-  + [CORS](http://en.wikipedia.org/wiki/Cross-Origin_Resource_Sharing#Browser_support) for modern browsers
+  + [CORS](https://en.wikipedia.org/wiki/Cross-Origin_Resource_Sharing#Browser_support) for modern browsers
   + [XDomainRequest](https://msdn.microsoft.com/en-us/library/ie/cc288060%28v=vs.85%29.aspx) for IE <= 10
-  + [JSONP](http://en.wikipedia.org/wiki/JSONP) in any situation where Ajax requests are unavailabe or blocked.
+  + [JSONP](https://en.wikipedia.org/wiki/JSONP) in any situation where Ajax requests are unavailabe or blocked.
 - Node.js:
   + native [`http` module](https://nodejs.org/api/)
 
