@@ -22,7 +22,7 @@
 
 [travis-svg]: https://img.shields.io/travis/algolia/algoliasearch-client-js/master.svg?style=flat-square
 [travis-url]: https://travis-ci.org/algolia/algoliasearch-client-js
-[license-image]: http://img.shields.io/badge/license-MIT-green.svg?style=flat-square
+[license-image]: https://img.shields.io/badge/license-MIT-green.svg?style=flat-square
 [license-url]: LICENSE.txt
 [downloads-image]: https://img.shields.io/npm/dm/algoliasearch.svg?style=flat-square
 [downloads-url]: http://npm-stat.com/charts.html?package=algoliasearch
