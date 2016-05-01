@@ -4,8 +4,11 @@
 // See https://www.parse.com/docs/cloud_code_guide#cloud_code
 module.exports = algoliasearch;
 
-// parse has no process.env, force it down for npm modules compatibility
-process.env = {};
+// by default parse has no process.env,
+// force it down for npm modules compatibility
+if (process.env === undefined) {
+  process.env = {};
+}
 
 // a lot of node modules are expecting to find a `global` object,
 // this has triggered some bugs
