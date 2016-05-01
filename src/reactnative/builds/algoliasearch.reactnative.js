@@ -14,7 +14,7 @@ var inlineHeaders = require('../../browser/inline-headers');
 var places = require('../../places.js');
 
 function algoliasearch(applicationID, apiKey, opts) {
-  var cloneDeep = require('lodash/lang/cloneDeep');
+  var cloneDeep = require('../../clone.js');
 
   opts = cloneDeep(opts || {});
 

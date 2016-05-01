@@ -3,7 +3,7 @@
 var fauxJax = require('faux-jax');
 
 if (!process.browser || fauxJax.support.xhr.cors) {
-  var clone = require('lodash/lang/clone');
+  var clone = require('lodash-compat/lang/clone');
 
   var object = {
     objectID: 'dawg IE!',

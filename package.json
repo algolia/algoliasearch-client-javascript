@@ -5,8 +5,7 @@
   "main": "index.js",
   "browser": {
     "./index.js": "./src/browser/builds/algoliasearch.js",
-    "debug": "debug-ms-fix-yui-compressor",
-    "lodash": "lodash-compat"
+    "debug": "debug-ms-fix-yui-compressor"
   },
   "scripts": {
     "build": "./scripts/build",
@@ -56,11 +55,12 @@
     "envify": "^3.4.0",
     "es6-promise": "^3.1.2",
     "events": "^1.1.0",
+    "foreach": "^2.0.5",
     "inherits": "^2.0.1",
+    "isarray": "^1.0.0",
     "load-script": "^1.0.0",
-    "lodash": "^3.10.1",
-    "lodash-compat": "^3.10.2",
-    "querystring": "^0.2.0",
+    "querystring-es3": "^0.2.1",
+    "reduce": "^1.0.1",
     "semver": "^5.1.0",
     "tunnel-agent": "^0.4.2"
   },
@@ -88,6 +88,7 @@
     "http-server": "^0.9.0",
     "jquery": "^2.2.3",
     "jquery-ajax-transport-xdomainrequest": "^1.0.4",
+    "lodash-compat": "^3.10.2",
     "morgan": "^1.7.0",
     "mversion": "^1.10.1",
     "npm-shrinkwrap": "^200.5.1",

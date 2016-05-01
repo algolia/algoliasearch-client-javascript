@@ -4,7 +4,7 @@ var test = require('tape');
 
 test('deleteObject() without an objectID', function(t) {
   t.plan(2);
-  var bind = require('lodash/function/bind');
+  var bind = require('lodash-compat/function/bind');
 
   var createFixture = require('../../../utils/create-fixture');
   var fixture = createFixture();

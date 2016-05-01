@@ -6,10 +6,10 @@ test.skip('index.browseAll() no arguments', function(t) {
   t.plan(1);
 
   var fauxJax = require('faux-jax');
-  var keys = require('lodash/object/keys');
+  var keys = require('lodash-compat/object/keys');
   var parse = require('url-parse');
 
-  var bind = require('lodash/function/bind');
+  var bind = require('lodash-compat/function/bind');
   var createFixture = require('../../../../utils/create-fixture');
   var fixture = createFixture();
   var index = fixture.index;

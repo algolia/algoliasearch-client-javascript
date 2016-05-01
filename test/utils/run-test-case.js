@@ -2,7 +2,7 @@
 
 module.exports = runTestCase;
 
-var merge = require('lodash/object/merge');
+var merge = require('lodash-compat/object/merge');
 var sinon = require('sinon');
 var test = require('tape');
 

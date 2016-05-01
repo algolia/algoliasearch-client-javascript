@@ -35,9 +35,9 @@ var MAX_API_KEY_LENGTH = 500;
 function AlgoliaSearchCore(applicationID, apiKey, opts) {
   var debug = require('debug')('algoliasearch');
 
-  var clone = require('lodash/lang/clone');
-  var isArray = require('lodash/lang/isArray');
-  var map = require('lodash/collection/map');
+  var clone = require('./clone.js');
+  var isArray = require('isarray');
+  var map = require('./map.js');
 
   var usage = 'Usage: algoliasearch(applicationID, apiKey, opts)';
 
@@ -390,7 +390,7 @@ AlgoliaSearchCore.prototype._getSearchParams = function(args, params) {
 };
 
 AlgoliaSearchCore.prototype._computeRequestHeaders = function(withAPIKey) {
-  var forEach = require('lodash/collection/forEach');
+  var forEach = require('foreach');
 
   var requestHeaders = {
     'x-algolia-agent': this._ua,
@@ -432,8 +432,8 @@ AlgoliaSearchCore.prototype._computeRequestHeaders = function(withAPIKey) {
  * @return {Promise|undefined} Returns a promise if no callback given
  */
 AlgoliaSearchCore.prototype.search = function(queries, callback) {
-  var isArray = require('lodash/lang/isArray');
-  var map = require('lodash/collection/map');
+  var isArray = require('isarray');
+  var map = require('./map.js');
 
   var usage = 'Usage: client.search(arrayOfQueries[, callback])';
 

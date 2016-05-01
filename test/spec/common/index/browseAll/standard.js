@@ -8,7 +8,7 @@ test('index.browseAll(query, queryParameters)', function(t) {
   var fauxJax = require('faux-jax');
   var parse = require('url-parse');
 
-  var bind = require('lodash/function/bind');
+  var bind = require('lodash-compat/function/bind');
   var createFixture = require('../../../../utils/create-fixture');
   var fixture = createFixture();
   var index = fixture.index;

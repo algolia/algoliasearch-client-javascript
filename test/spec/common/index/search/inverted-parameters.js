@@ -4,7 +4,7 @@ var test = require('tape');
 
 test('index.search(cb, params)', function(t) {
   t.plan(1);
-  var bind = require('lodash/function/bind');
+  var bind = require('lodash-compat/function/bind');
 
   var createFixture = require('../../../../utils/create-fixture');
   var fixture = createFixture();
@@ -19,7 +19,7 @@ test('index.search(cb, params)', function(t) {
 
 test('index.search(query, callback, params)', function(t) {
   t.plan(1);
-  var bind = require('lodash/function/bind');
+  var bind = require('lodash-compat/function/bind');
 
   var createFixture = require('../../../../utils/create-fixture');
   var fixture = createFixture();

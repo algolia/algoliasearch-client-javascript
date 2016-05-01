@@ -20,7 +20,7 @@ if (process.env.APP_ENV === 'development') {
 }
 
 function algoliasearch(applicationID, apiKey, opts) {
-  var cloneDeep = require('lodash/lang/cloneDeep');
+  var cloneDeep = require('../../clone.js');
 
   var getDocumentProtocol = require('../get-document-protocol');
 

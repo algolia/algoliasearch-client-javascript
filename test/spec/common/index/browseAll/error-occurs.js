@@ -7,7 +7,7 @@ test('index.browseAll() and an error occurs', function(t) {
 
   var fauxJax = require('faux-jax');
 
-  var bind = require('lodash/function/bind');
+  var bind = require('lodash-compat/function/bind');
   var createFixture = require('../../../../utils/create-fixture');
   var fixture = createFixture();
   var index = fixture.index;

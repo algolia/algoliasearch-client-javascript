@@ -6,10 +6,10 @@ test('index.browseAll(queryParameters)', function(t) {
   t.plan(2);
 
   var fauxJax = require('faux-jax');
-  var keys = require('lodash/object/keys');
+  var keys = require('lodash-compat/object/keys');
   var parse = require('url-parse');
 
-  var bind = require('lodash/function/bind');
+  var bind = require('lodash-compat/function/bind');
   var createFixture = require('../../../../utils/create-fixture');
   var fixture = createFixture();
   var index = fixture.index;

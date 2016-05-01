@@ -1,6 +1,6 @@
 'use strict';
 
-var cloneDeep = require('lodash/lang/cloneDeep');
+var cloneDeep = require('lodash-compat/lang/cloneDeep');
 
 var commonExpectedRequest = {
   method: 'POST',
