@@ -206,28 +206,6 @@ index.search('something', function searchDone(err, content) {
 });
 ```
 
-### Search only/lite client
-
-We have a lightweight build available that can only do searches. Use it when filesize
-is important to you or if you like to include only what you need.
-
-Find it on jsDelivr:
-
-```html
-<script src="//cdn.jsdelivr.net/algoliasearch/3/algoliasearchLite.min.js"></script>
-```
-
-You can also use it with npm like so:
-
-```js
-var algoliasearch = require('algoliasearch/lite');
-var client = algoliasearch('applicationID', 'apiKey');
-var index = client.initIndex('indexName');
-index.search('something', function searchDone(err, content) {
-  console.log(err, content);
-});
-```
-
 
 
 
@@ -1199,6 +1177,8 @@ You can use the following optional arguments:
         <p>A string that contains the list of attributes you want to retrieve in order to minimize the size of the JSON answer.</p>
 
 <p>Attributes are separated with a comma (for example <code>&quot;name,address&quot;</code>). You can also use a string array encoding (for example <code>[&quot;name&quot;,&quot;address&quot;]</code> ). By default, all attributes are retrieved. You can also use <code>*</code> to retrieve all values when an <strong>attributesToRetrieve</strong> setting is specified for your index.</p>
+
+<p><code>objectID</code> is always retrieved even when not specified.</p>
 
       </td>
     </tr>
