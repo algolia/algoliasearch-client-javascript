@@ -206,6 +206,28 @@ index.search('something', function searchDone(err, content) {
 });
 ```
 
+### Search only/lite client
+
+We have a lightweight build available that can only do searches. Use it when filesize
+is important to you or if you like to include only what you need.
+
+Find it on jsDelivr:
+
+```html
+<script src="//cdn.jsdelivr.net/algoliasearch/3/algoliasearchLite.min.js"></script>
+```
+
+You can also use it with npm like so:
+
+```js
+var algoliasearch = require('algoliasearch/lite');
+var client = algoliasearch('applicationID', 'apiKey');
+var index = client.initIndex('indexName');
+index.search('something', function searchDone(err, content) {
+  console.log(err, content);
+});
+```
+
 
 
 
