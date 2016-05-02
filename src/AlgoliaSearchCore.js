@@ -52,11 +52,11 @@ function AlgoliaSearchCore(applicationID, apiKey, opts) {
   this.applicationID = applicationID;
   this.apiKey = apiKey;
 
-  var defaultHosts = [
+  var defaultHosts = shuffle([
     this.applicationID + '-1.algolianet.com',
     this.applicationID + '-2.algolianet.com',
     this.applicationID + '-3.algolianet.com'
-  ];
+  ]);
   this.hosts = {
     read: [],
     write: []
@@ -563,4 +563,24 @@ function safeJSONStringify(obj) {
   Array.prototype.toJSON = toJSON;
 
   return out;
+}
+
+function shuffle(array) {
+  var currentIndex = array.length;
+  var temporaryValue;
+  var randomIndex;
+
+  // While there remain elements to shuffle...
+  while (currentIndex !== 0) {
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
 }
