@@ -5,7 +5,7 @@ var test = require('tape');
 test('index.waitTask(taskID) failure', function(t) {
   t.plan(10);
 
-  var bind = require('lodash/function/bind');
+  var bind = require('lodash-compat/function/bind');
 
   var fauxJax = require('faux-jax');
   var sinon = require('sinon');

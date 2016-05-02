@@ -4,7 +4,7 @@ var buildSearchMethod = require('./buildSearchMethod.js');
 
 function createPlacesClient(algoliasearch) {
   return function places(appID, apiKey, opts) {
-    var cloneDeep = require('lodash/lang/cloneDeep');
+    var cloneDeep = require('./clone.js');
 
     opts = opts && cloneDeep(opts) || {};
     opts.hosts = opts.hosts || [

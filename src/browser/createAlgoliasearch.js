@@ -1,9 +1,11 @@
 'use strict';
 
+var Promise = window.Promise || require('es6-promise').Promise;
+
 // This is the standalone browser build entry point
 // Browser implementation of the Algolia Search JavaScript client,
 // using XMLHttpRequest, XDomainRequest and JSONP as fallback
-module.exports = function createAlgoliasearch(AlgoliaSearch, Promise, uaSuffix) {
+module.exports = function createAlgoliasearch(AlgoliaSearch, uaSuffix) {
   var inherits = require('inherits');
   var errors = require('../errors');
   var inlineHeaders = require('./inline-headers');
@@ -16,7 +18,7 @@ module.exports = function createAlgoliasearch(AlgoliaSearch, Promise, uaSuffix) 
   }
 
   function algoliasearch(applicationID, apiKey, opts) {
-    var cloneDeep = require('lodash/lang/cloneDeep');
+    var cloneDeep = require('../clone.js');
 
     var getDocumentProtocol = require('./get-document-protocol');
 

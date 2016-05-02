@@ -2,7 +2,7 @@
 
 module.exports = getFakeHitsResponse;
 
-var random = require('lodash/number/random');
+var random = require('lodash-compat/number/random');
 
 var getFakeObjects = require('./get-fake-objects');
 

@@ -24,7 +24,7 @@ var AlgoliaSearchServer = require('./AlgoliaSearchServer');
 debug('loaded the Parse client');
 
 function algoliasearch(applicationID, apiKey, opts) {
-  var cloneDeep = require('lodash/lang/cloneDeep');
+  var cloneDeep = require('../../clone.js');
   opts = cloneDeep(opts || {});
 
   if (opts.protocol === undefined) {
@@ -55,7 +55,7 @@ inherits(AlgoliaSearchParse, AlgoliaSearchServer);
 
 AlgoliaSearchParse.prototype._request = function(rawUrl, opts) {
   /* global Parse */
-  var clone = require('lodash/lang/clone');
+  var clone = require('../../clone.js');
   var promise = new Parse.Promise();
 
   debug('url: %s, opts: %j', rawUrl, opts);

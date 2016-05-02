@@ -11,7 +11,7 @@ function deleteByQueryTest(asyncMode, mainTest) {
   mainTest.test('using a ' + asyncMode, function(t) {
     t.plan(12);
 
-    var bind = require('lodash/function/bind');
+    var bind = require('lodash-compat/function/bind');
     var fauxJax = require('faux-jax');
     var sinon = require('sinon');
 

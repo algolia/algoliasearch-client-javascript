@@ -3,8 +3,8 @@
 module.exports = getFakeObjects;
 
 var Chance = require('chance');
-var random = require('lodash/number/random');
-var times = require('lodash/utility/times');
+var random = require('lodash-compat/number/random');
+var times = require('lodash-compat/utility/times');
 
 var chance = new Chance();
 

@@ -6,7 +6,7 @@ var requestTimeout = 5000;
 
 // this test ensures that any created JSONP script tags is then removed
 test('Request strategy clean JSONP created script tags', function(t) {
-  var every = require('lodash/collection/every');
+  var every = require('lodash-compat/collection/every');
   var fauxJax = require('faux-jax');
   var parse = require('url-parse');
   var sinon = require('sinon');

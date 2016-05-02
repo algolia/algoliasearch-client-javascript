@@ -225,7 +225,7 @@ AlgoliaSearch.prototype.deleteUserKey = function(key, callback) {
  * @see {@link https://www.algolia.com/doc/rest_api#AddKey|Algolia REST API Documentation}
  */
 AlgoliaSearch.prototype.addUserKey = function(acls, params, callback) {
-  var isArray = require('lodash/lang/isArray');
+  var isArray = require('isarray');
   var usage = 'Usage: client.addUserKey(arrayOfAcls[, params, callback])';
 
   if (!isArray(acls)) {
@@ -310,7 +310,7 @@ AlgoliaSearch.prototype.addUserKeyWithValidity = deprecate(function(acls, params
  * @see {@link https://www.algolia.com/doc/rest_api#UpdateIndexKey|Algolia REST API Documentation}
  */
 AlgoliaSearch.prototype.updateUserKey = function(key, acls, params, callback) {
-  var isArray = require('lodash/lang/isArray');
+  var isArray = require('isarray');
   var usage = 'Usage: client.updateUserKey(key, arrayOfAcls[, params, callback])';
 
   if (!isArray(acls)) {
@@ -411,7 +411,7 @@ AlgoliaSearch.prototype.sendQueriesBatch = deprecate(function sendQueriesBatchDe
  * }], cb)
  */
 AlgoliaSearch.prototype.batch = function(operations, callback) {
-  var isArray = require('lodash/lang/isArray');
+  var isArray = require('isarray');
   var usage = 'Usage: client.batch(operations[, callback])';
 
   if (!isArray(operations)) {

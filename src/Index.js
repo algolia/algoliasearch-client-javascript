@@ -52,7 +52,7 @@ Index.prototype.addObject = function(content, objectID, callback) {
 *  content: the server answer that updateAt and taskID
 */
 Index.prototype.addObjects = function(objects, callback) {
-  var isArray = require('lodash/lang/isArray');
+  var isArray = require('isarray');
   var usage = 'Usage: index.addObjects(arrayOfObjects[, callback])';
 
   if (!isArray(objects)) {
@@ -121,8 +121,8 @@ Index.prototype.getObject = function(objectID, attrs, callback) {
 * @param objectIDs the array of unique identifier of objects to retrieve
 */
 Index.prototype.getObjects = function(objectIDs, attributesToRetrieve, callback) {
-  var isArray = require('lodash/lang/isArray');
-  var map = require('lodash/collection/map');
+  var isArray = require('isarray');
+  var map = require('./map.js');
 
   var usage = 'Usage: index.getObjects(arrayOfObjectIDs[, callback])';
 
@@ -201,7 +201,7 @@ Index.prototype.partialUpdateObject = function(partialObject, createIfNotExists,
 *  content: the server answer that updateAt and taskID
 */
 Index.prototype.partialUpdateObjects = function(objects, callback) {
-  var isArray = require('lodash/lang/isArray');
+  var isArray = require('isarray');
   var usage = 'Usage: index.partialUpdateObjects(arrayOfObjects[, callback])';
 
   if (!isArray(objects)) {
@@ -257,7 +257,7 @@ Index.prototype.saveObject = function(object, callback) {
 *  content: the server answer that updateAt and taskID
 */
 Index.prototype.saveObjects = function(objects, callback) {
-  var isArray = require('lodash/lang/isArray');
+  var isArray = require('isarray');
   var usage = 'Usage: index.saveObjects(arrayOfObjects[, callback])';
 
   if (!isArray(objects)) {
@@ -322,8 +322,8 @@ Index.prototype.deleteObject = function(objectID, callback) {
 *  content: the server answer that contains 3 elements: createAt, taskId and objectID
 */
 Index.prototype.deleteObjects = function(objectIDs, callback) {
-  var isArray = require('lodash/lang/isArray');
-  var map = require('lodash/collection/map');
+  var isArray = require('isarray');
+  var map = require('./map.js');
 
   var usage = 'Usage: index.deleteObjects(arrayOfObjectIDs[, callback])';
 
@@ -362,8 +362,8 @@ Index.prototype.deleteObjects = function(objectIDs, callback) {
 *  error: null or Error('message')
 */
 Index.prototype.deleteByQuery = function(query, params, callback) {
-  var clone = require('lodash/lang/clone');
-  var map = require('lodash/collection/map');
+  var clone = require('./clone.js');
+  var map = require('./map.js');
 
   var indexObj = this;
   var client = indexObj.as;
@@ -453,7 +453,7 @@ Index.prototype.deleteByQuery = function(query, params, callback) {
 * @see {@link https://www.algolia.com/doc/rest_api#Browse|Algolia REST API Documentation}
 */
 Index.prototype.browse = function(query, queryParameters, callback) {
-  var merge = require('lodash/object/merge');
+  var merge = require('./merge.js');
 
   var indexObj = this;
 
@@ -572,7 +572,7 @@ Index.prototype.browseAll = function(query, queryParameters) {
     query = undefined;
   }
 
-  var merge = require('lodash/object/merge');
+  var merge = require('./merge.js');
 
   var IndexBrowser = require('./IndexBrowser');
 
@@ -929,7 +929,7 @@ Index.prototype.deleteUserKey = function(key, callback) {
 * @see {@link https://www.algolia.com/doc/rest_api#AddIndexKey|Algolia REST API Documentation}
 */
 Index.prototype.addUserKey = function(acls, params, callback) {
-  var isArray = require('lodash/lang/isArray');
+  var isArray = require('isarray');
   var usage = 'Usage: index.addUserKey(arrayOfAcls[, params, callback])';
 
   if (!isArray(acls)) {
@@ -1012,7 +1012,7 @@ Index.prototype.addUserKeyWithValidity = deprecate(function deprecatedAddUserKey
 * @see {@link https://www.algolia.com/doc/rest_api#UpdateIndexKey|Algolia REST API Documentation}
 */
 Index.prototype.updateUserKey = function(key, acls, params, callback) {
-  var isArray = require('lodash/lang/isArray');
+  var isArray = require('isarray');
   var usage = 'Usage: index.updateUserKey(key, arrayOfAcls[, params, callback])';
 
   if (!isArray(acls)) {

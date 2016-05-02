@@ -4,7 +4,7 @@ var test = require('tape');
 
 test('we only talk http or https', function(t) {
   t.plan(3);
-  var bind = require('lodash/function/bind');
+  var bind = require('lodash-compat/function/bind');
 
   var algoliasearch = require('../../../../');
 
