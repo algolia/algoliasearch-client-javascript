@@ -431,7 +431,7 @@ AlgoliaSearchCore.prototype._computeRequestHeaders = function(withAPIKey) {
  * @param  {Function} callback Callback to be called
  * @return {Promise|undefined} Returns a promise if no callback given
  */
-AlgoliaSearchCore.prototype.search = function(queries, callback) {
+AlgoliaSearchCore.prototype.search = function(queries, opts, callback) {
   var isArray = require('isarray');
   var map = require('./map.js');
 
@@ -439,6 +439,13 @@ AlgoliaSearchCore.prototype.search = function(queries, callback) {
 
   if (!isArray(queries)) {
     throw new Error(usage);
+  }
+
+  if (typeof opts === 'function') {
+    callback = opts;
+    opts = {};
+  } else if (opts === undefined) {
+    opts = {};
   }
 
   var client = this;
@@ -469,10 +476,16 @@ AlgoliaSearchCore.prototype.search = function(queries, callback) {
       );
   }).join('&');
 
+  var url = '/1/indexes/*/queries';
+
+  if (opts.strategy !== undefined) {
+    url += '?strategy=' + opts.strategy;
+  }
+
   return this._jsonRequest({
     cache: this.cache,
     method: 'POST',
-    url: '/1/indexes/*/queries',
+    url: url,
     body: postObj,
     hostType: 'read',
     fallback: {

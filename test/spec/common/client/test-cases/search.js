@@ -60,4 +60,25 @@ module.exports = [{
       }]
     }
   }
+}, {
+  testName: 'client.search(queries, {strategy: none}, cb)',
+  object: 'client',
+  methodName: 'search',
+  callArguments: [[{
+    indexName: 'yaaaaaw',
+    params: {
+      hitsPerSmurf: 9
+    }
+  }], {strategy: 'none'}],
+  action: 'read',
+  expectedRequest: {
+    method: 'POST',
+    URL: {pathname: '/1/indexes/*/queries', query: {strategy: 'none'}},
+    body: {
+      requests: [{
+        indexName: 'yaaaaaw',
+        params: 'hitsPerSmurf=9'
+      }]
+    }
+  }
 }];
