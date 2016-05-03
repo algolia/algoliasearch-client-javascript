@@ -1178,6 +1178,8 @@ You can use the following optional arguments:
 
 <p>Attributes are separated with a comma (for example <code>&quot;name,address&quot;</code>). You can also use a string array encoding (for example <code>[&quot;name&quot;,&quot;address&quot;]</code> ). By default, all attributes are retrieved. You can also use <code>*</code> to retrieve all values when an <strong>attributesToRetrieve</strong> setting is specified for your index.</p>
 
+<p><code>objectID</code> is always retrieved even when not specified.</p>
+
       </td>
     </tr>
     
@@ -2475,8 +2477,8 @@ You can also use the `browseAll` method that will crawl the whole index and emit
 events whenever a new chunk of records is fetched.
 
 ```js
-var browser = index.browseAll();
-var hits = [];
+var browser = index.browseAll(),
+    hits = [];
 
 browser.on('result', function onResult(content) {
   hits = hits.concat(content.hits);
