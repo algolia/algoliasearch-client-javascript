@@ -2477,8 +2477,8 @@ You can also use the `browseAll` method that will crawl the whole index and emit
 events whenever a new chunk of records is fetched.
 
 ```js
-var browser = index.browseAll(),
-    hits = [];
+var browser = index.browseAll();
+var hits = [];
 
 browser.on('result', function onResult(content) {
   hits = hits.concat(content.hits);
