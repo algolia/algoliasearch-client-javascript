@@ -1,5 +1,16 @@
 CHANGELOG
 
+2016-05-04 3.14.0
+
+  * feat(client.search): add strategy, fixes #208
+  * fix(shuffle): shuffle host array like we did
+  * feat(filesize): reduce filesize by removing lodash
+    All build size down 26% (20kb => 14kb)
+    New search-only build "algoliasearchLite[.min].js",
+    weights 9.5Kb (down 50% from normal build)
+    Also available as require('algoliasearch/lite');
+  * fix(parse): handle parse cloud env having process.env defined
+
 2016-03-24 3.13.1
 
   * chore(dev): use phantomjs-prebuilt instead of phantomjs
