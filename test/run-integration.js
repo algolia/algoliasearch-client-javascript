@@ -5,7 +5,7 @@ if (!process.env.INTEGRATION_TEST_API_KEY || !process.env.INTEGRATION_TEST_APPID
 }
 
 // simple integration tests, checking the whole communication
-var _ = require('lodash');
+var _ = require('lodash-compat');
 var Chance = require('chance');
 var test = require('tape');
 

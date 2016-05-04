@@ -4,8 +4,11 @@
 // See https://www.parse.com/docs/cloud_code_guide#cloud_code
 module.exports = algoliasearch;
 
-// parse has no process.env, force it down for npm modules compatibility
-process.env = {};
+// by default parse has no process.env,
+// force it down for npm modules compatibility
+if (process.env === undefined) {
+  process.env = {};
+}
 
 // a lot of node modules are expecting to find a `global` object,
 // this has triggered some bugs
@@ -21,7 +24,7 @@ var AlgoliaSearchServer = require('./AlgoliaSearchServer');
 debug('loaded the Parse client');
 
 function algoliasearch(applicationID, apiKey, opts) {
-  var cloneDeep = require('lodash/lang/cloneDeep');
+  var cloneDeep = require('../../clone.js');
   opts = cloneDeep(opts || {});
 
   if (opts.protocol === undefined) {
@@ -52,7 +55,7 @@ inherits(AlgoliaSearchParse, AlgoliaSearchServer);
 
 AlgoliaSearchParse.prototype._request = function(rawUrl, opts) {
   /* global Parse */
-  var clone = require('lodash/lang/clone');
+  var clone = require('../../clone.js');
   var promise = new Parse.Promise();
 
   debug('url: %s, opts: %j', rawUrl, opts);

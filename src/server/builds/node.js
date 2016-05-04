@@ -29,8 +29,8 @@ if (process.env.APP_ENV === 'development') {
 debug('loaded the Node.js client');
 
 function algoliasearch(applicationID, apiKey, opts) {
-  var cloneDeep = require('lodash/lang/cloneDeep');
-  var reduce = require('lodash/collection/reduce');
+  var cloneDeep = require('../../clone.js');
+  var reduce = require('reduce');
 
   if (!opts) {
     opts = {};

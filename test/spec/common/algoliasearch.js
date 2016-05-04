@@ -1,6 +1,6 @@
 'use strict';
 
-var bind = require('lodash/function/bind');
+var bind = require('lodash-compat/function/bind');
 var test = require('tape');
 
 var algoliasearch = require('../../../');

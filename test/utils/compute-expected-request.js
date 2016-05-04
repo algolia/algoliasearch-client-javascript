@@ -2,7 +2,7 @@
 
 module.exports = computeExpectedRequest;
 
-var merge = require('lodash/object/merge');
+var merge = require('lodash-compat/object/merge');
 var format = require('util').format;
 
 var algoliasearch = require('../../');

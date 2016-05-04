@@ -4,7 +4,7 @@ var test = require('tape');
 
 test('client.setSecurityTags(string or array-based tags)', function(t) {
   var async = require('async');
-  var indexOf = require('lodash/array/indexOf');
+  var indexOf = require('lodash-compat/array/indexOf');
 
   var testCases = [
     {args: 'user_42,group_51', expected: 'user_42,group_51'},

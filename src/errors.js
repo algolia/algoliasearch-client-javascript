@@ -7,7 +7,7 @@
 var inherits = require('inherits');
 
 function AlgoliaSearchError(message, extraProperties) {
-  var forEach = require('lodash/collection/forEach');
+  var forEach = require('foreach');
 
   var error = this;
 
