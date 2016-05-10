@@ -536,7 +536,7 @@ Example with automatic `objectID` assignment:
 
 ```js
 index.addObject({
-  firstname: 'Jimmy',
+  firstname: 'Jimmie',
   lastname: 'Barninger'
 }, function(err, content) {
   console.log('objectID=' + content.objectID);
