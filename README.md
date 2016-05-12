@@ -66,6 +66,7 @@ Table of Contents
 1. [Cache](#cache)
 1. [Proxy support](#proxy-support)
 1. [Keep-alive](#keep-alive)
+1. [Debugging](#debugging)
 1. [Guides & Tutorials](#guides-tutorials)
 1. [Old JavaScript clients](#old-javascript-clients)
 
@@ -482,6 +483,25 @@ To fix this, we expose a `client.destroy()` method that will terminate all remai
 You should call this method when you are finished working with the AlgoliaSearch API. So that your process will exit gently.
 
 **Note: keep-alive is still always activated in browsers, this is a native behavior of browsers.**
+
+Debugging
+-------------
+
+The client will send you errors when a method call fails for some reasons.
+
+You can get detailed debugging information:
+
+```js
+index.search('something', function searchDone(err) {
+  if (err) {
+    console.log(err.message);
+    console.log(err.debugData);
+    return;
+  }
+});
+```
+
+`err.debugData` contains the array of requests parameters that were used to issue requests.
 
 
 
