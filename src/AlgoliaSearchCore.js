@@ -201,7 +201,7 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
         return client._promise.reject(new errors.AlgoliaSearchError(
           'Cannot connect to the AlgoliaSearch API.' +
           ' Send an email to support@algolia.com to report and resolve the issue.' +
-          ' Application id was: ' + client.applicationID
+          ' Application id was: ' + client.applicationID, {debugData: debugData}
         ));
       }
 
