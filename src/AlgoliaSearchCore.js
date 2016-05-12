@@ -327,11 +327,10 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
         return client._promise.reject(err);
       }
 
-      client.hostIndex[initialOpts.hostType] = ++client.hostIndex[initialOpts.hostType] % client.hosts[initialOpts.hostType].length;
-
       if (err instanceof errors.RequestTimeout) {
         return retryRequest();
       } else if (!usingFallback) {
+        client.hostIndex[initialOpts.hostType] = ++client.hostIndex[initialOpts.hostType] % client.hosts[initialOpts.hostType].length;
         // next request loop, force using fallback for this request
         tries = Infinity;
       }
