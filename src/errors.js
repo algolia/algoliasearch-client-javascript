@@ -18,7 +18,7 @@ function AlgoliaSearchError(message, extraProperties) {
     error.stack = (new Error()).stack || 'Cannot get a stacktrace, browser is too old';
   }
 
-  this.name = this.constructor.name;
+  this.name = 'AlgoliaSearchError';
   this.message = message || 'Unknown error';
 
   if (extraProperties) {
