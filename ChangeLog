@@ -1,5 +1,10 @@
 CHANGELOG
 
+UNRELEASED
+
+  * fix(errors): force AlgoliaSearchError as default name
+  fixes #241
+
 2016-05-04 3.14.0
 
   * feat(client.search): add strategy, fixes #208
