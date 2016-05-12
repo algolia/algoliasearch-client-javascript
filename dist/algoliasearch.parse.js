@@ -2546,7 +2546,7 @@ module.exports =
 	    error.stack = (new Error()).stack || 'Cannot get a stacktrace, browser is too old';
 	  }
 
-	  this.name = this.constructor.name;
+	  this.name = 'AlgoliaSearchError';
 	  this.message = message || 'Unknown error';
 
 	  if (extraProperties) {
@@ -2970,8 +2970,10 @@ module.exports =
 	  }
 
 	  requestDebug('request start');
+	  var debugData = [];
 
 	  function doRequest(requester, reqOpts) {
+	    var startTime = new Date();
 	    var cacheID;
 
 	    if (client._useCache) {
@@ -2998,7 +3000,7 @@ module.exports =
 	        return client._promise.reject(new errors.AlgoliaSearchError(
 	          'Cannot connect to the AlgoliaSearch API.' +
 	          ' Send an email to support@algolia.com to report and resolve the issue.' +
-	          ' Application id was: ' + client.applicationID
+	          ' Application id was: ' + client.applicationID, {debugData: debugData}
 	        ));
 	      }
 
@@ -3023,7 +3025,9 @@ module.exports =
 	      return doRequest(client._request.fallback, reqOpts);
 	    }
 
-	    var url = client.hosts[initialOpts.hostType][client.hostIndex[initialOpts.hostType]] + reqOpts.url;
+	    var currentHost = client.hosts[initialOpts.hostType][client.hostIndex[initialOpts.hostType]];
+
+	    var url = currentHost + reqOpts.url;
 	    var options = {
 	      body: reqOpts.body,
 	      jsonBody: reqOpts.jsonBody,
@@ -3079,13 +3083,27 @@ module.exports =
 	        return httpResponse.body;
 	      }
 
+	      var endTime = new Date();
+	      debugData.push({
+	        currentHost: currentHost,
+	        headers: removeCredentials(headers),
+	        content: body || null,
+	        contentLength: body !== undefined ? body.length : null,
+	        method: reqOpts.method,
+	        timeout: reqOpts.timeout,
+	        url: reqOpts.url,
+	        startTime: startTime,
+	        endTime: endTime,
+	        duration: endTime - startTime
+	      });
+
 	      if (retry) {
 	        tries += 1;
 	        return retryRequest();
 	      }
 
 	      var unrecoverableError = new errors.AlgoliaSearchError(
-	        httpResponse.body && httpResponse.body.message
+	        httpResponse.body && httpResponse.body.message, {debugData: debugData}
 	      );
 
 	      return client._promise.reject(unrecoverableError);
@@ -3103,6 +3121,20 @@ module.exports =
 	      //  In both cases:
 	      //    - uncaught exception occurs (TypeError)
 	      requestDebug('error: %s, stack: %s', err.message, err.stack);
+
+	      var endTime = new Date();
+	      debugData.push({
+	        currentHost: currentHost,
+	        headers: removeCredentials(headers),
+	        content: body || null,
+	        contentLength: body !== undefined ? body.length : null,
+	        method: reqOpts.method,
+	        timeout: reqOpts.timeout,
+	        url: reqOpts.url,
+	        startTime: startTime,
+	        endTime: endTime,
+	        duration: endTime - startTime
+	      });
 
 	      if (!(err instanceof errors.AlgoliaSearchError)) {
 	        err = new errors.Unknown(err && err.message, err);
@@ -3123,14 +3155,14 @@ module.exports =
 	        tries >= client.hosts[initialOpts.hostType].length &&
 	        (usingFallback || !hasFallback)) {
 	        // stop request implementation for this command
+	        err.debugData = debugData;
 	        return client._promise.reject(err);
 	      }
-
-	      client.hostIndex[initialOpts.hostType] = ++client.hostIndex[initialOpts.hostType] % client.hosts[initialOpts.hostType].length;
 
 	      if (err instanceof errors.RequestTimeout) {
 	        return retryRequest();
 	      } else if (!usingFallback) {
+	        client.hostIndex[initialOpts.hostType] = ++client.hostIndex[initialOpts.hostType] % client.hosts[initialOpts.hostType].length;
 	        // next request loop, force using fallback for this request
 	        tries = Infinity;
 	      }
@@ -3397,6 +3429,26 @@ module.exports =
 	  return array;
 	}
 
+	function removeCredentials(headers) {
+	  var newHeaders = {};
+
+	  for (var headerName in headers) {
+	    if (Object.prototype.hasOwnProperty.call(headers, headerName)) {
+	      var value;
+
+	      if (headerName === 'x-algolia-api-key' || headerName === 'x-algolia-application-id') {
+	        value = '**hidden for security purposes**';
+	      } else {
+	        value = headers[headerName];
+	      }
+
+	      newHeaders[headerName] = value;
+	    }
+	  }
+
+	  return newHeaders;
+	}
+
 
 /***/ },
 /* 22 */
@@ -3404,7 +3456,7 @@ module.exports =
 
 	
 
-	module.exports = '3.14.0';
+	module.exports = '3.14.1';
 
 
 /***/ }

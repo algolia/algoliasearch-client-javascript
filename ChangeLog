@@ -1,6 +1,6 @@
 CHANGELOG
 
-UNRELEASED
+2016-05-12 3.14.1
 
   * fix(retry strategy): retry on timeout was only using two hosts
   * fix(errors): provide err.debugData with necessary debugging information

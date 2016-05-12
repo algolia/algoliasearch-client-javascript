@@ -1,4 +1,4 @@
-/*! algoliasearch 3.14.0 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
+/*! algoliasearch 3.14.1 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
 (function(f){var g;if(typeof window!=='undefined'){g=window}else if(typeof self!=='undefined'){g=self}g.ALGOLIA_MIGRATION_LAYER=f()})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 
 module.exports = function load (src, opts, cb) {
@@ -2814,8 +2814,10 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
   }
 
   requestDebug('request start');
+  var debugData = [];
 
   function doRequest(requester, reqOpts) {
+    var startTime = new Date();
     var cacheID;
 
     if (client._useCache) {
@@ -2842,7 +2844,7 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
         return client._promise.reject(new errors.AlgoliaSearchError(
           'Cannot connect to the AlgoliaSearch API.' +
           ' Send an email to support@algolia.com to report and resolve the issue.' +
-          ' Application id was: ' + client.applicationID
+          ' Application id was: ' + client.applicationID, {debugData: debugData}
         ));
       }
 
@@ -2867,7 +2869,9 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
       return doRequest(client._request.fallback, reqOpts);
     }
 
-    var url = client.hosts[initialOpts.hostType][client.hostIndex[initialOpts.hostType]] + reqOpts.url;
+    var currentHost = client.hosts[initialOpts.hostType][client.hostIndex[initialOpts.hostType]];
+
+    var url = currentHost + reqOpts.url;
     var options = {
       body: reqOpts.body,
       jsonBody: reqOpts.jsonBody,
@@ -2923,13 +2927,27 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
         return httpResponse.body;
       }
 
+      var endTime = new Date();
+      debugData.push({
+        currentHost: currentHost,
+        headers: removeCredentials(headers),
+        content: body || null,
+        contentLength: body !== undefined ? body.length : null,
+        method: reqOpts.method,
+        timeout: reqOpts.timeout,
+        url: reqOpts.url,
+        startTime: startTime,
+        endTime: endTime,
+        duration: endTime - startTime
+      });
+
       if (retry) {
         tries += 1;
         return retryRequest();
       }
 
       var unrecoverableError = new errors.AlgoliaSearchError(
-        httpResponse.body && httpResponse.body.message
+        httpResponse.body && httpResponse.body.message, {debugData: debugData}
       );
 
       return client._promise.reject(unrecoverableError);
@@ -2947,6 +2965,20 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
       //  In both cases:
       //    - uncaught exception occurs (TypeError)
       requestDebug('error: %s, stack: %s', err.message, err.stack);
+
+      var endTime = new Date();
+      debugData.push({
+        currentHost: currentHost,
+        headers: removeCredentials(headers),
+        content: body || null,
+        contentLength: body !== undefined ? body.length : null,
+        method: reqOpts.method,
+        timeout: reqOpts.timeout,
+        url: reqOpts.url,
+        startTime: startTime,
+        endTime: endTime,
+        duration: endTime - startTime
+      });
 
       if (!(err instanceof errors.AlgoliaSearchError)) {
         err = new errors.Unknown(err && err.message, err);
@@ -2967,14 +2999,14 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
         tries >= client.hosts[initialOpts.hostType].length &&
         (usingFallback || !hasFallback)) {
         // stop request implementation for this command
+        err.debugData = debugData;
         return client._promise.reject(err);
       }
-
-      client.hostIndex[initialOpts.hostType] = ++client.hostIndex[initialOpts.hostType] % client.hosts[initialOpts.hostType].length;
 
       if (err instanceof errors.RequestTimeout) {
         return retryRequest();
       } else if (!usingFallback) {
+        client.hostIndex[initialOpts.hostType] = ++client.hostIndex[initialOpts.hostType] % client.hosts[initialOpts.hostType].length;
         // next request loop, force using fallback for this request
         tries = Infinity;
       }
@@ -3239,6 +3271,26 @@ function shuffle(array) {
   }
 
   return array;
+}
+
+function removeCredentials(headers) {
+  var newHeaders = {};
+
+  for (var headerName in headers) {
+    if (Object.prototype.hasOwnProperty.call(headers, headerName)) {
+      var value;
+
+      if (headerName === 'x-algolia-api-key' || headerName === 'x-algolia-application-id') {
+        value = '**hidden for security purposes**';
+      } else {
+        value = headers[headerName];
+      }
+
+      newHeaders[headerName] = value;
+    }
+  }
+
+  return newHeaders;
 }
 
 },{"15":15,"2":2,"22":22,"25":25,"26":26,"27":27,"7":7,"9":9}],13:[function(require,module,exports){
@@ -4980,7 +5032,7 @@ function AlgoliaSearchError(message, extraProperties) {
     error.stack = (new Error()).stack || 'Cannot get a stacktrace, browser is too old';
   }
 
-  this.name = this.constructor.name;
+  this.name = 'AlgoliaSearchError';
   this.message = message || 'Unknown error';
 
   if (extraProperties) {
@@ -5107,7 +5159,7 @@ function createPlacesClient(algoliasearch) {
 },{"21":21,"22":22}],30:[function(require,module,exports){
 'use strict';
 
-module.exports = '3.14.0';
+module.exports = '3.14.1';
 
 },{}]},{},[16])(16)
 });
