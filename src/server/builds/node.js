@@ -210,7 +210,7 @@ AlgoliaSearchNodeJS.prototype._request = function request(rawUrl, opts) {
 
       abort();
       clearTimeout(timeoutId);
-      reject(new errors.Network(err.message, err));
+      reject(new errors.NodeNetwork(err.message, err));
     }
 
     function timeout() {
