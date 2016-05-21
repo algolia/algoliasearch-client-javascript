@@ -72,7 +72,7 @@ if (canDELETE) {
   test('index.clearIndex', clearIndex);
 }
 
-// test('places', initPlaces);
+test('places', initPlaces);
 
 function initPlaces(t) {
   t.plan(1);
@@ -310,7 +310,7 @@ function waitKey(key, callback, tries) {
 }
 
 function testFallbackStrategyDNSTimeout(t) {
-  var client = algoliasearch(
+  var client_ = algoliasearch(
     'latency',
     '6be0576ff61c053d5f9a3225e2a90f76',
     {
@@ -318,23 +318,22 @@ function testFallbackStrategyDNSTimeout(t) {
     }
   );
 
-  t.ok(client.hostIndex.read === 0, 'At the init of the client, the host index should be at 0');
+  t.ok(client_.hostIndex.read === 0, 'At the init of the client, the host index should be at 0');
 
-  var index = client.initIndex('bestbuy');
+  var index_ = client_.initIndex('bestbuy');
 
-  index.search('iphone').then(function(content) {
+  index_.search('iphone').then(function(content) {
     t.ok(content.hits.length > 0, 'hits should not be empty');
-    t.ok(client.hostIndex.read === 2, 'At the end of the test, the host index should be at 2');
+    t.ok(client_.hostIndex.read === 2, 'At the end of the test, the host index should be at 2');
     t.end();
-  }, function(err) {
-    console.log(err);
+  }, function() {
     t.fail('No error should be generated as it should lastly route to a good domain.');
-    t.end()
+    t.end();
   });
 }
 
 function testFallbackStrategyDNSTimeoutFail(t) {
-  var client = algoliasearch(
+  var client_ = algoliasearch(
     'latency',
     '6be0576ff61c053d5f9a3225e2a90f76',
     {
@@ -342,16 +341,15 @@ function testFallbackStrategyDNSTimeoutFail(t) {
     }
   );
 
-  t.ok(client.hostIndex.read === 0, 'At the init of the client, the host index should be at 0');
+  t.ok(client_.hostIndex.read === 0, 'At the init of the client, the host index should be at 0');
 
-  var index = client.initIndex('bestbuy');
+  var index_ = client_.initIndex('bestbuy');
 
-  index.search('iphone').then(function(content) {
+  index_.search('iphone').then(function() {
     t.fail('Should fail as no host are reachable');
-    t.end()
-  }, function(err) {
-    console.log(err);
-    t.equal(client.hostIndex.read, 2, 'At the end of the test, the host index should be at 2');
+    t.end();
+  }, function() {
+    t.equal(client_.hostIndex.read, 2, 'At the end of the test, the host index should be at 2');
     t.end();
   });
 }

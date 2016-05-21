@@ -2056,20 +2056,20 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
         return client._promise.reject(err);
       }
 
-      client.hostIndex[initialOpts.hostType] = ++client.hostIndex[initialOpts.hostType] % client.hosts[initialOpts.hostType].length;
-
-      if (err instanceof errors.RequestTimeout) {
+      if (err instanceof errors.RequestTimeout || err instanceof errors.NodeNetwork) {
         return retryRequest();
       } else if (!usingFallback) {
         // next request loop, force using fallback for this request
         tries = Infinity;
       }
 
+      client.hostIndex[initialOpts.hostType] = (client.hostIndex[initialOpts.hostType]  + 1) % client.hosts[initialOpts.hostType].length;
+
       return doRequest(requester, reqOpts);
     }
 
     function retryRequest() {
-      client.hostIndex[initialOpts.hostType] = ++client.hostIndex[initialOpts.hostType] % client.hosts[initialOpts.hostType].length;
+      client.hostIndex[initialOpts.hostType] = (client.hostIndex[initialOpts.hostType] + 1) % client.hosts[initialOpts.hostType].length;
       reqOpts.timeout = client.requestTimeout * (tries + 1);
       return doRequest(requester, reqOpts);
     }
@@ -3011,6 +3011,10 @@ module.exports = {
   Network: createCustomError(
     'Network',
     'Network issue, see err.more for details'
+  ),
+  NodeNetwork: createCustomError(
+    'Network',
+    'Network issue, in the node context'
   ),
   JSONPScriptFail: createCustomError(
     'JSONPScriptFail',
