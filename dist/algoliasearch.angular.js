@@ -1,4 +1,4 @@
-/*! algoliasearch 3.14.1 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
+/*! algoliasearch UNRELEASED | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
 (function(f){var g;if(typeof window!=='undefined'){g=window}else if(typeof self!=='undefined'){g=self}g.ALGOLIA_MIGRATION_LAYER=f()})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 
 module.exports = function load (src, opts, cb) {
@@ -3003,10 +3003,11 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
         return client._promise.reject(err);
       }
 
+      client.hostIndex[initialOpts.hostType] = ++client.hostIndex[initialOpts.hostType] % client.hosts[initialOpts.hostType].length;
+
       if (err instanceof errors.RequestTimeout) {
         return retryRequest();
       } else if (!usingFallback) {
-        client.hostIndex[initialOpts.hostType] = ++client.hostIndex[initialOpts.hostType] % client.hosts[initialOpts.hostType].length;
         // next request loop, force using fallback for this request
         tries = Infinity;
       }
@@ -4544,6 +4545,7 @@ IndexCore.prototype.typeAheadArgs = null;
 IndexCore.prototype.typeAheadValueOption = null;
 
 },{"22":22}],16:[function(require,module,exports){
+(function (process){
 'use strict';
 
 // This is the AngularJS Algolia Search module
@@ -4563,7 +4565,7 @@ var places = require(30);
 // expose original algoliasearch fn in window
 window.algoliasearch = require(17);
 
-if ("production" === 'development') {
+if (process.env.APP_ENV === 'development') {
   require(2).enable('algoliasearch*');
 }
 
@@ -4749,7 +4751,8 @@ window.angular.module('algoliasearch', [])
     };
   }]);
 
-},{"11":11,"17":17,"19":19,"2":2,"20":20,"21":21,"23":23,"26":26,"30":30,"31":31,"7":7,"8":8}],17:[function(require,module,exports){
+}).call(this,require(1))
+},{"1":1,"11":11,"17":17,"19":19,"2":2,"20":20,"21":21,"23":23,"26":26,"30":30,"31":31,"7":7,"8":8}],17:[function(require,module,exports){
 'use strict';
 
 var AlgoliaSearch = require(11);
@@ -4758,6 +4761,7 @@ var createAlgoliasearch = require(18);
 module.exports = createAlgoliasearch(AlgoliaSearch);
 
 },{"11":11,"18":18}],18:[function(require,module,exports){
+(function (process){
 'use strict';
 
 var Promise = window.Promise || require(5).Promise;
@@ -4773,7 +4777,7 @@ module.exports = function createAlgoliasearch(AlgoliaSearch, uaSuffix) {
   var places = require(30);
   uaSuffix = uaSuffix || '';
 
-  if ("production" === 'development') {
+  if (process.env.APP_ENV === 'development') {
     require(2).enable('algoliasearch*');
   }
 
@@ -4974,7 +4978,8 @@ module.exports = function createAlgoliasearch(AlgoliaSearch, uaSuffix) {
   return algoliasearch;
 };
 
-},{"19":19,"2":2,"20":20,"21":21,"23":23,"26":26,"30":30,"31":31,"5":5,"8":8}],19:[function(require,module,exports){
+}).call(this,require(1))
+},{"1":1,"19":19,"2":2,"20":20,"21":21,"23":23,"26":26,"30":30,"31":31,"5":5,"8":8}],19:[function(require,module,exports){
 'use strict';
 
 module.exports = getDocumentProtocol;
