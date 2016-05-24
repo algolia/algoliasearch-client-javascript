@@ -2591,6 +2591,10 @@ module.exports =
 	    'Network',
 	    'Network issue, see err.more for details'
 	  ),
+	  NodeNetwork: createCustomError(
+	    'Network',
+	    'Network issue, in the node context'
+	  ),
 	  JSONPScriptFail: createCustomError(
 	    'JSONPScriptFail',
 	    '<script> was loaded but did not call our provided callback'
@@ -3159,19 +3163,20 @@ module.exports =
 	        return client._promise.reject(err);
 	      }
 
-	      if (err instanceof errors.RequestTimeout) {
+	      if (err instanceof errors.RequestTimeout || err instanceof errors.NodeNetwork) {
 	        return retryRequest();
 	      } else if (!usingFallback) {
-	        client.hostIndex[initialOpts.hostType] = ++client.hostIndex[initialOpts.hostType] % client.hosts[initialOpts.hostType].length;
 	        // next request loop, force using fallback for this request
 	        tries = Infinity;
 	      }
+
+	      client.hostIndex[initialOpts.hostType] = (client.hostIndex[initialOpts.hostType] + 1) % client.hosts[initialOpts.hostType].length;
 
 	      return doRequest(requester, reqOpts);
 	    }
 
 	    function retryRequest() {
-	      client.hostIndex[initialOpts.hostType] = ++client.hostIndex[initialOpts.hostType] % client.hosts[initialOpts.hostType].length;
+	      client.hostIndex[initialOpts.hostType] = (client.hostIndex[initialOpts.hostType] + 1) % client.hosts[initialOpts.hostType].length;
 	      reqOpts.timeout = client.requestTimeout * (tries + 1);
 	      return doRequest(requester, reqOpts);
 	    }
@@ -3456,7 +3461,7 @@ module.exports =
 
 	
 
-	module.exports = '3.14.1';
+	module.exports = '3.14.2';
 
 
 /***/ }

@@ -1,5 +1,27 @@
 CHANGELOG
 
+2016-05-24 3.14.2
+
+  * fix(request strategy): increments hostIndex (host adress) on fallback
+
+    When we are switching to fallback, increment host index so that JSONP
+    will use another host.
+
+    This issue was caused because we cannot distinguish CORS errors from DNS
+    resolution errors in the browser.
+
+    And the code for incrementing the host index was moved into the part
+    that switches to the fallback in
+    4ec5e6a1f8cd92924ce025d60646b3a47b7d8dca.
+
+    Truth is that the current solution is not optimal as, in the browser,
+    we are switching to JSONP when we can't resolve the server name.
+
+    This is only done because we are not sure how CORS request can be
+    blocked (synchronously, asynchronously).
+
+    In a next version we would drop it and wait for real issues to show up.
+
 2016-05-12 3.14.1
 
   * fix(retry strategy): retry on timeout was only using two hosts
