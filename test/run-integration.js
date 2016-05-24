@@ -43,6 +43,9 @@ var objects = getFakeObjects(50);
 // avoid having to type index.waitTask.bind(index)
 _.bindAll(index);
 
+test('fallback strategy sucess', testFallbackStrategyDNSTimeout);
+test('fallback strategy all servers fail', testFallbackStrategyDNSTimeoutFail);
+
 test('index.clearIndex', clearIndex);
 test('index.saveObjects', saveObjects);
 test('index.browse', browse);
@@ -303,5 +306,48 @@ function waitKey(key, callback, tries) {
   tmpIndex.search(function(err) {
     if (err) return setTimeout(waitKey, 200, key, callback, tries++);
     callback(key);
+  });
+}
+
+function testFallbackStrategyDNSTimeout(t) {
+  var client_ = algoliasearch(
+    appId,
+    apiKey, {
+      hosts: ['latency-dsn.algolia.biz', 'latency-3.algolia.biz', 'latency-dsn.algolia.net']
+    }
+  );
+
+  t.ok(client_.hostIndex.read === 0, 'At the init of the client, the host index should be at 0');
+
+  var index_ = client_.initIndex('bestbuy');
+
+  index_.search('iphone').then(function(content) {
+    t.ok(content.hits.length > 0, 'hits should not be empty');
+    t.ok(client_.hostIndex.read === 2, 'At the end of the test, the host index should be at 2');
+    t.end();
+  }, function() {
+    t.fail('No error should be generated as it should lastly route to a good domain.');
+    t.end();
+  });
+}
+
+function testFallbackStrategyDNSTimeoutFail(t) {
+  var client_ = algoliasearch(
+    appId,
+    apiKey, {
+      hosts: ['latency-dsn.algolia.biz', 'latency-3.algolia.biz', 'latency-2.algolia.biz']
+    }
+  );
+
+  t.ok(client_.hostIndex.read === 0, 'At the init of the client, the host index should be at 0');
+
+  var index_ = client_.initIndex('bestbuy');
+
+  index_.search('iphone').then(function() {
+    t.fail('Should fail as no host are reachable');
+    t.end();
+  }, function() {
+    t.equal(client_.hostIndex.read, 2, 'At the end of the test, the host index should be at 2');
+    t.end();
   });
 }

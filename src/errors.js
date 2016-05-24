@@ -63,6 +63,10 @@ module.exports = {
     'Network',
     'Network issue, see err.more for details'
   ),
+  NodeNetwork: createCustomError(
+    'Network',
+    'Network issue, in the node context'
+  ),
   JSONPScriptFail: createCustomError(
     'JSONPScriptFail',
     '<script> was loaded but did not call our provided callback'
