@@ -59,7 +59,8 @@ if (canPUT) {
   test('index.saveObject', saveObject);
 }
 
-test('fallback strategy sucess', dnsFailThenSuccess);
+test('fallback strategy success', dnsFailThenSuccess);
+test('fallback strategy success, not a search method', dnsFailThenSuccessNoSearch);
 test('fallback strategy all servers fail', dnsFailed);
 
 if (!process.browser) {
@@ -317,7 +318,7 @@ function dnsFailThenSuccess(t) {
     apiKey, {
       // .biz is a black hole DNS name (not resolving)
       hosts: [appId + '-dsn.algolia.biz', appId + '-dsn.algolia.net'],
-      timeout: 40000 // let's wait for the DNS timeout
+      timeout: 120000 // let's wait for the DNS timeout
     }
   );
 
@@ -330,13 +331,33 @@ function dnsFailThenSuccess(t) {
   });
 }
 
+function dnsFailThenSuccessNoSearch(t) {
+  t.plan(1);
+
+  var client_ = algoliasearch(
+    appId,
+    apiKey, {
+      // .biz is a black hole DNS name (not resolving)
+      hosts: [appId + '-dsn.algolia.biz', appId + '-dsn.algolia.net'],
+      timeout: 120000, // let's wait for the DNS timeout
+      protocol: 'https:'
+    }
+  );
+
+  client_.listIndexes().then(function(content) {
+    t.ok(content.items.length > 0, 'we found a list of indices');
+  }, function() {
+    t.fail('No error should be generated as it should lastly route to a good domain.');
+  });
+}
+
 function dnsFailed(t) {
   t.plan(1);
   var client_ = algoliasearch(
     appId,
     apiKey, {
       hosts: [appId + '-dsn.algolia.biz', appId + '-3.algolia.biz'],
-      timeout: 40000 // let's wait for the DNS timeout
+      timeout: 120000 // let's wait for the DNS timeout
     }
   );
 

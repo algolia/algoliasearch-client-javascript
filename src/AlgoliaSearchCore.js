@@ -360,9 +360,17 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
         return client._promise.reject(err);
       }
 
-      if (err instanceof errors.RequestTimeout || err instanceof errors.NodeNetwork) {
+      // When a timeout occured or if a network error occured and we have no fallback
+      if (err instanceof errors.RequestTimeout || !hasFallback) {
         return retryRequest();
-      } else if (!usingFallback) {
+      }
+
+      // The only case where we reach here is a Network error occured, there's a fallback (JSONP), we use it
+      // we cannot easily distinguish blocked XHRS from DNS request failure in a cross browser way.
+      // So we use the fallback as soon as it's available and there was a network error, be it DNS failure or
+      // blocked XHR.
+
+      if (!usingFallback) {
         // next request loop, force using fallback for this request
         tries = Infinity;
       }
