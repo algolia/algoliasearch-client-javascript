@@ -315,7 +315,8 @@ function dnsFailThenSuccess(t) {
   var client_ = algoliasearch(
     appId,
     apiKey, {
-      hosts: ['latency-dsn.algolia.biz', appId + '-dsn.algolia.net'],
+      // .biz is a black hole DNS name (not resolving)
+      hosts: [appId + '-dsn.algolia.biz', appId + '-dsn.algolia.net'],
       timeout: 40000 // let's wait for the DNS timeout
     }
   );
@@ -334,7 +335,7 @@ function dnsFailed(t) {
   var client_ = algoliasearch(
     appId,
     apiKey, {
-      hosts: ['latency-dsn.algolia.biz', 'latency-3.algolia.biz'],
+      hosts: [appId + '-dsn.algolia.biz', appId + '-3.algolia.biz'],
       timeout: 40000 // let's wait for the DNS timeout
     }
   );
