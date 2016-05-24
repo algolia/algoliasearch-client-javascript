@@ -43,9 +43,6 @@ var objects = getFakeObjects(50);
 // avoid having to type index.waitTask.bind(index)
 _.bindAll(index);
 
-test('fallback strategy sucess', testFallbackStrategyDNSTimeout);
-test('fallback strategy all servers fail', testFallbackStrategyDNSTimeoutFail);
-
 test('index.clearIndex', clearIndex);
 test('index.saveObjects', saveObjects);
 test('index.browse', browse);
@@ -61,6 +58,9 @@ if (canPUT) {
   // saveObject is a PUT, only supported by Node.js or CORS, not XDomainRequest
   test('index.saveObject', saveObject);
 }
+
+test('fallback strategy sucess', dnsFailThenSuccess);
+test('fallback strategy all servers fail', dnsFailed);
 
 if (!process.browser) {
   test('using a http proxy to https', proxyHttpToHttps);
@@ -309,45 +309,43 @@ function waitKey(key, callback, tries) {
   });
 }
 
-function testFallbackStrategyDNSTimeout(t) {
+function dnsFailThenSuccess(t) {
+  t.plan(1);
+
   var client_ = algoliasearch(
     appId,
     apiKey, {
-      hosts: ['latency-dsn.algolia.biz', 'latency-3.algolia.biz', 'latency-dsn.algolia.net']
+      hosts: ['latency-dsn.algolia.biz', appId + '-dsn.algolia.net'],
+      timeout: 40000 // let's wait for the DNS timeout
     }
   );
 
-  t.ok(client_.hostIndex.read === 0, 'At the init of the client, the host index should be at 0');
+  var index_ = client_.initIndex(indexName);
 
-  var index_ = client_.initIndex('bestbuy');
-
-  index_.search('iphone').then(function(content) {
+  index_.search('').then(function(content) {
     t.ok(content.hits.length > 0, 'hits should not be empty');
-    t.ok(client_.hostIndex.read === 2, 'At the end of the test, the host index should be at 2');
-    t.end();
   }, function() {
     t.fail('No error should be generated as it should lastly route to a good domain.');
-    t.end();
   });
 }
 
-function testFallbackStrategyDNSTimeoutFail(t) {
+function dnsFailed(t) {
+  t.plan(1);
   var client_ = algoliasearch(
     appId,
     apiKey, {
-      hosts: ['latency-dsn.algolia.biz', 'latency-3.algolia.biz', 'latency-2.algolia.biz']
+      hosts: ['latency-dsn.algolia.biz', 'latency-3.algolia.biz'],
+      timeout: 40000 // let's wait for the DNS timeout
     }
   );
 
-  t.ok(client_.hostIndex.read === 0, 'At the init of the client, the host index should be at 0');
+  var index_ = client_.initIndex(indexName);
 
-  var index_ = client_.initIndex('bestbuy');
-
-  index_.search('iphone').then(function() {
+  index_.search('').then(function() {
     t.fail('Should fail as no host are reachable');
     t.end();
   }, function() {
-    t.equal(client_.hostIndex.read, 2, 'At the end of the test, the host index should be at 2');
+    t.pass('An error was triggered');
     t.end();
   });
 }
