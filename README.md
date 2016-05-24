@@ -7,6 +7,7 @@
 
 
 
+
 <!--NO_HTML-->
 
 [Algolia Search](https://www.algolia.com) is a hosted full-text, numerical, and faceted search engine capable of delivering realtime results from the first keystroke.
@@ -39,6 +40,7 @@ Our JavaScript library is [UMD](https://github.com/umdjs/umd) compatible, you ca
 use it with any module loader.
 
 When not using any module loader, it will export an `algoliasearch` function in the `window` object.
+
 
 
 
@@ -1541,7 +1543,7 @@ var queries = [{
   query: 'first search in products',
   params: {
     hitsPerPage: 3,
-    tagFilters: 'promotion'
+    filters: 'promotion'
   }
 }, {
   indexName: 'products',
@@ -2801,7 +2803,7 @@ You may have a single index containing **per user** data. In that case, all reco
 ```js
 // generate a public API key for user 42. Here, records are tagged with:
 //  - 'user_XXXX' if they are visible by user XXXX
-var public_key = client.generateSecuredApiKey('YourSearchOnlyApiKey', {tagFilters: 'user_42'});
+var public_key = client.generateSecuredApiKey('YourSearchOnlyApiKey', {filters: 'user_42'});
 ```
 
 This public API key can then be used in your JavaScript code as follow:
@@ -2826,7 +2828,7 @@ You can mix rate limits and secured API keys by setting a `userToken` query para
 ```js
 // generate a public API key for user 42. Here, records are tagged with:
 //  - 'user_XXXX' if they are visible by user XXXX
-var public_key = client.generateSecuredApiKey('YourSearchOnlyApiKey', {tagFilters: 'user_42', userToken: 'user_42'});
+var public_key = client.generateSecuredApiKey('YourSearchOnlyApiKey', {filters: 'user_42', userToken: 'user_42'});
 ```
 
 This public API key can then be used in your JavaScript code as follow:
