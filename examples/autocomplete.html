@@ -1,0 +1,95 @@
+<!doctype html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    <script src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
+    <script src="//cdn.jsdelivr.net/hogan.js/3.0.2/hogan.min.js"></script>
+    <script src="//cdn.jsdelivr.net/autocomplete.js/0/autocomplete.jquery.min.js"></script>
+    <script src="/dist/algoliasearch.min.js"></script>
+    <style type="text/css">
+      .demo { text-align: center; margin: 40px auto;width: 600px; }
+      .algolia-autocomplete {
+        width: 100%;
+      }
+      .algolia-autocomplete .aa-input, .algolia-autocomplete .aa-hint {
+        width: 100%;
+      }
+      .algolia-autocomplete .aa-hint {
+        color: #999;
+      }
+      .algolia-autocomplete .aa-dropdown-menu {
+        width: 100%;
+        background-color: #fff;
+        border: 1px solid #999;
+        border-top: none;
+      }
+      .algolia-autocomplete .aa-dropdown-menu .aa-suggestion {
+        cursor: pointer;
+        padding: 5px 4px;
+      }
+      .algolia-autocomplete .aa-dropdown-menu .aa-suggestion.aa-cursor {
+        background-color: #B2D7FF;
+      }
+      .algolia-autocomplete .aa-dropdown-menu .aa-suggestion em {
+        font-weight: bold;
+        font-style: normal;
+      }
+      .algolia-autocomplete .category {
+        text-align: left;
+        background: #efefef;
+        padding: 10px 5px;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+
+    <div class="demo">
+      <h3>Basic</h3>
+      <input class="autocomplete" type="text" placeholder="Start typing" id="autocomplete-algolia"  spellcheck="false"/>
+    </div>
+
+    <div class="demo">
+      <h3>Using Hogan templating engine</h3>
+      <input class="autocomplete" type="text" placeholder="Start typing" id="autocomplete-algolia-template"  spellcheck="false"/>
+    </div>
+
+    <script type="text/javascript">
+      /**
+       * This example uses the raw JavaScript client and autocomplete.js.
+       * If you plan on building a dropdown UI, we encourage you to use this library.
+       * It integrates really well with Algolia and also handle custom templating, keyboard navigation and a few other goodies.
+       * https://github.com/algolia/autocomplete.js
+      **/
+
+      $(document).ready(function() {
+        // Replace the following values by your ApplicationID and ApiKey.
+        var client = algoliasearch('latency', '6be0576ff61c053d5f9a3225e2a90f76');
+        // Replace the following value by the name of the index you want to query.
+        var index = client.initIndex('contacts');
+
+        // basic autocomplete
+        $('#autocomplete-algolia').autocomplete(null, {
+          source: $.fn.autocomplete.sources.hits(index),
+          displayKey: 'email'
+        });
+
+        // with a template and highlighting
+        var template = Hogan.compile('<picture><img src="{{{image_url}}}" /></picture>' +
+          '<div>{{{_highlightResult.email.value}}}</div>' +
+          '<div class="text-right"><small>{{{_highlightResult.name.value}}}</span></div>');
+        $('#autocomplete-algolia-template').autocomplete(null, {
+          source: $.fn.autocomplete.sources.hits(index, {hitsPerPage: 10}),
+          displayKey: 'email',
+          templates: {
+            suggestion: function(hit) {
+              return template.render(hit);
+            }
+          }
+        });
+      });
+    </script>
+
+  </body>
+</html>
