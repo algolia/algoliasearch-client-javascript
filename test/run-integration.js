@@ -59,6 +59,9 @@ if (canPUT) {
   test('index.saveObject', saveObject);
 }
 
+test('fallback strategy sucess', dnsFailThenSuccess);
+test('fallback strategy all servers fail', dnsFailed);
+
 if (!process.browser) {
   test('using a http proxy to https', proxyHttpToHttps);
 }
@@ -303,5 +306,46 @@ function waitKey(key, callback, tries) {
   tmpIndex.search(function(err) {
     if (err) return setTimeout(waitKey, 200, key, callback, tries++);
     callback(key);
+  });
+}
+
+function dnsFailThenSuccess(t) {
+  t.plan(1);
+
+  var client_ = algoliasearch(
+    appId,
+    apiKey, {
+      hosts: ['latency-dsn.algolia.biz', appId + '-dsn.algolia.net'],
+      timeout: 40000 // let's wait for the DNS timeout
+    }
+  );
+
+  var index_ = client_.initIndex(indexName);
+
+  index_.search('').then(function(content) {
+    t.ok(content.hits.length > 0, 'hits should not be empty');
+  }, function() {
+    t.fail('No error should be generated as it should lastly route to a good domain.');
+  });
+}
+
+function dnsFailed(t) {
+  t.plan(1);
+  var client_ = algoliasearch(
+    appId,
+    apiKey, {
+      hosts: ['latency-dsn.algolia.biz', 'latency-3.algolia.biz'],
+      timeout: 40000 // let's wait for the DNS timeout
+    }
+  );
+
+  var index_ = client_.initIndex(indexName);
+
+  index_.search('').then(function() {
+    t.fail('Should fail as no host are reachable');
+    t.end();
+  }, function() {
+    t.pass('An error was triggered');
+    t.end();
   });
 }
