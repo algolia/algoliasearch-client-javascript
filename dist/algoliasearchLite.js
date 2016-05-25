@@ -1,4 +1,4 @@
-/*! algoliasearch 3.14.3 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
+/*! algoliasearch 3.14.4 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.algoliasearch = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 // shim for using process in browser
 
@@ -2496,6 +2496,104 @@ IndexCore.prototype.search = buildSearchMethod('query');
 */
 IndexCore.prototype.similarSearch = buildSearchMethod('similarQuery');
 
+/*
+* Browse index content. The response content will have a `cursor` property that you can use
+* to browse subsequent pages for this query. Use `index.browseFrom(cursor)` when you want.
+*
+* @param {string} query - The full text query
+* @param {Object} [queryParameters] - Any search query parameter
+* @param {Function} [callback] - The result callback called with two arguments
+*   error: null or Error('message')
+*   content: the server answer with the browse result
+* @return {Promise|undefined} Returns a promise if no callback given
+* @example
+* index.browse('cool songs', {
+*   tagFilters: 'public,comments',
+*   hitsPerPage: 500
+* }, callback);
+* @see {@link https://www.algolia.com/doc/rest_api#Browse|Algolia REST API Documentation}
+*/
+IndexCore.prototype.browse = function(query, queryParameters, callback) {
+  var merge = require(22);
+
+  var indexObj = this;
+
+  var page;
+  var hitsPerPage;
+
+  // we check variadic calls that are not the one defined
+  // .browse()/.browse(fn)
+  // => page = 0
+  if (arguments.length === 0 || arguments.length === 1 && typeof arguments[0] === 'function') {
+    page = 0;
+    callback = arguments[0];
+    query = undefined;
+  } else if (typeof arguments[0] === 'number') {
+    // .browse(2)/.browse(2, 10)/.browse(2, fn)/.browse(2, 10, fn)
+    page = arguments[0];
+    if (typeof arguments[1] === 'number') {
+      hitsPerPage = arguments[1];
+    } else if (typeof arguments[1] === 'function') {
+      callback = arguments[1];
+      hitsPerPage = undefined;
+    }
+    query = undefined;
+    queryParameters = undefined;
+  } else if (typeof arguments[0] === 'object') {
+    // .browse(queryParameters)/.browse(queryParameters, cb)
+    if (typeof arguments[1] === 'function') {
+      callback = arguments[1];
+    }
+    queryParameters = arguments[0];
+    query = undefined;
+  } else if (typeof arguments[0] === 'string' && typeof arguments[1] === 'function') {
+    // .browse(query, cb)
+    callback = arguments[1];
+    queryParameters = undefined;
+  }
+
+  // otherwise it's a .browse(query)/.browse(query, queryParameters)/.browse(query, queryParameters, cb)
+
+  // get search query parameters combining various possible calls
+  // to .browse();
+  queryParameters = merge({}, queryParameters || {}, {
+    page: page,
+    hitsPerPage: hitsPerPage,
+    query: query
+  });
+
+  var params = this.as._getSearchParams(queryParameters, '');
+
+  return this.as._jsonRequest({
+    method: 'GET',
+    url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/browse?' + params,
+    hostType: 'read',
+    callback: callback
+  });
+};
+
+/*
+* Continue browsing from a previous position (cursor), obtained via a call to `.browse()`.
+*
+* @param {string} query - The full text query
+* @param {Object} [queryParameters] - Any search query parameter
+* @param {Function} [callback] - The result callback called with two arguments
+*   error: null or Error('message')
+*   content: the server answer with the browse result
+* @return {Promise|undefined} Returns a promise if no callback given
+* @example
+* index.browseFrom('14lkfsakl32', callback);
+* @see {@link https://www.algolia.com/doc/rest_api#Browse|Algolia REST API Documentation}
+*/
+IndexCore.prototype.browseFrom = function(cursor, callback) {
+  return this.as._jsonRequest({
+    method: 'GET',
+    url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/browse?cursor=' + encodeURIComponent(cursor),
+    hostType: 'read',
+    callback: callback
+  });
+};
+
 IndexCore.prototype._search = function(params, url, callback) {
   return this.as._jsonRequest({
     cache: this.cache,
@@ -2517,7 +2615,7 @@ IndexCore.prototype.indexName = null;
 IndexCore.prototype.typeAheadArgs = null;
 IndexCore.prototype.typeAheadValueOption = null;
 
-},{"17":17}],12:[function(require,module,exports){
+},{"17":17,"22":22}],12:[function(require,module,exports){
 'use strict';
 
 var AlgoliaSearchCore = require(10);
@@ -2538,7 +2636,7 @@ module.exports = function createAlgoliasearch(AlgoliaSearch, uaSuffix) {
   var errors = require(19);
   var inlineHeaders = require(15);
   var jsonpRequest = require(16);
-  var places = require(22);
+  var places = require(23);
   uaSuffix = uaSuffix || '';
 
   if ("production" === 'development') {
@@ -2561,7 +2659,7 @@ module.exports = function createAlgoliasearch(AlgoliaSearch, uaSuffix) {
     return new AlgoliaSearchBrowser(applicationID, apiKey, opts);
   }
 
-  algoliasearch.version = require(23);
+  algoliasearch.version = require(24);
   algoliasearch.ua = 'Algolia for vanilla JavaScript ' + uaSuffix + algoliasearch.version;
   algoliasearch.initPlaces = places(algoliasearch);
 
@@ -2742,7 +2840,7 @@ module.exports = function createAlgoliasearch(AlgoliaSearch, uaSuffix) {
   return algoliasearch;
 };
 
-},{"14":14,"15":15,"16":16,"18":18,"19":19,"2":2,"22":22,"23":23,"5":5,"7":7}],14:[function(require,module,exports){
+},{"14":14,"15":15,"16":16,"18":18,"19":19,"2":2,"23":23,"24":24,"5":5,"7":7}],14:[function(require,module,exports){
 'use strict';
 
 module.exports = getDocumentProtocol;
@@ -3059,6 +3157,27 @@ module.exports = function map(arr, fn) {
 };
 
 },{"6":6}],22:[function(require,module,exports){
+var foreach = require(6);
+
+module.exports = function merge(destination/* , sources */) {
+  var sources = Array.prototype.slice.call(arguments);
+
+  foreach(sources, function(source) {
+    for (var keyName in source) {
+      if (source.hasOwnProperty(keyName)) {
+        if (typeof destination[keyName] === 'object' && typeof source[keyName] === 'object') {
+          destination[keyName] = merge({}, destination[keyName], source[keyName]);
+        } else if (source[keyName] !== undefined) {
+          destination[keyName] = source[keyName];
+        }
+      }
+    }
+  });
+
+  return destination;
+};
+
+},{"6":6}],23:[function(require,module,exports){
 module.exports = createPlacesClient;
 
 var buildSearchMethod = require(17);
@@ -3082,10 +3201,10 @@ function createPlacesClient(algoliasearch) {
   };
 }
 
-},{"17":17,"18":18}],23:[function(require,module,exports){
+},{"17":17,"18":18}],24:[function(require,module,exports){
 'use strict';
 
-module.exports = '3.14.3';
+module.exports = '3.14.4';
 
 },{}]},{},[12])(12)
 });

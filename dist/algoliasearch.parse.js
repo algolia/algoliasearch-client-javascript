@@ -71,7 +71,7 @@ module.exports =
 	debug('loaded the Parse client');
 
 	function algoliasearch(applicationID, apiKey, opts) {
-	  var cloneDeep = __webpack_require__(17);
+	  var cloneDeep = __webpack_require__(18);
 	  opts = cloneDeep(opts || {});
 
 	  if (opts.protocol === undefined) {
@@ -102,7 +102,7 @@ module.exports =
 
 	AlgoliaSearchParse.prototype._request = function(rawUrl, opts) {
 	  /* global Parse */
-	  var clone = __webpack_require__(17);
+	  var clone = __webpack_require__(18);
 	  var promise = new Parse.Promise();
 
 	  debug('url: %s, opts: %j', rawUrl, opts);
@@ -809,8 +809,8 @@ module.exports =
 	module.exports = AlgoliaSearch;
 
 	var Index = __webpack_require__(7);
-	var deprecate = __webpack_require__(12);
-	var deprecatedMessage = __webpack_require__(13);
+	var deprecate = __webpack_require__(13);
+	var deprecatedMessage = __webpack_require__(14);
 	var AlgoliaSearchCore = __webpack_require__(21);
 	var inherits = __webpack_require__(4);
 	var errors = __webpack_require__(10);
@@ -1033,7 +1033,7 @@ module.exports =
 	 * @see {@link https://www.algolia.com/doc/rest_api#AddKey|Algolia REST API Documentation}
 	 */
 	AlgoliaSearch.prototype.addUserKey = function(acls, params, callback) {
-	  var isArray = __webpack_require__(15);
+	  var isArray = __webpack_require__(16);
 	  var usage = 'Usage: client.addUserKey(arrayOfAcls[, params, callback])';
 
 	  if (!isArray(acls)) {
@@ -1118,7 +1118,7 @@ module.exports =
 	 * @see {@link https://www.algolia.com/doc/rest_api#UpdateIndexKey|Algolia REST API Documentation}
 	 */
 	AlgoliaSearch.prototype.updateUserKey = function(key, acls, params, callback) {
-	  var isArray = __webpack_require__(15);
+	  var isArray = __webpack_require__(16);
 	  var usage = 'Usage: client.updateUserKey(key, arrayOfAcls[, params, callback])';
 
 	  if (!isArray(acls)) {
@@ -1219,7 +1219,7 @@ module.exports =
 	 * }], cb)
 	 */
 	AlgoliaSearch.prototype.batch = function(operations, callback) {
-	  var isArray = __webpack_require__(15);
+	  var isArray = __webpack_require__(16);
 	  var usage = 'Usage: client.batch(operations[, callback])';
 
 	  if (!isArray(operations)) {
@@ -1259,9 +1259,9 @@ module.exports =
 
 	var inherits = __webpack_require__(4);
 	var IndexCore = __webpack_require__(8);
-	var deprecate = __webpack_require__(12);
-	var deprecatedMessage = __webpack_require__(13);
-	var exitPromise = __webpack_require__(14);
+	var deprecate = __webpack_require__(13);
+	var deprecatedMessage = __webpack_require__(14);
+	var exitPromise = __webpack_require__(15);
 	var errors = __webpack_require__(10);
 
 	module.exports = Index;
@@ -1311,7 +1311,7 @@ module.exports =
 	*  content: the server answer that updateAt and taskID
 	*/
 	Index.prototype.addObjects = function(objects, callback) {
-	  var isArray = __webpack_require__(15);
+	  var isArray = __webpack_require__(16);
 	  var usage = 'Usage: index.addObjects(arrayOfObjects[, callback])';
 
 	  if (!isArray(objects)) {
@@ -1380,8 +1380,8 @@ module.exports =
 	* @param objectIDs the array of unique identifier of objects to retrieve
 	*/
 	Index.prototype.getObjects = function(objectIDs, attributesToRetrieve, callback) {
-	  var isArray = __webpack_require__(15);
-	  var map = __webpack_require__(16);
+	  var isArray = __webpack_require__(16);
+	  var map = __webpack_require__(17);
 
 	  var usage = 'Usage: index.getObjects(arrayOfObjectIDs[, callback])';
 
@@ -1460,7 +1460,7 @@ module.exports =
 	*  content: the server answer that updateAt and taskID
 	*/
 	Index.prototype.partialUpdateObjects = function(objects, callback) {
-	  var isArray = __webpack_require__(15);
+	  var isArray = __webpack_require__(16);
 	  var usage = 'Usage: index.partialUpdateObjects(arrayOfObjects[, callback])';
 
 	  if (!isArray(objects)) {
@@ -1516,7 +1516,7 @@ module.exports =
 	*  content: the server answer that updateAt and taskID
 	*/
 	Index.prototype.saveObjects = function(objects, callback) {
-	  var isArray = __webpack_require__(15);
+	  var isArray = __webpack_require__(16);
 	  var usage = 'Usage: index.saveObjects(arrayOfObjects[, callback])';
 
 	  if (!isArray(objects)) {
@@ -1581,8 +1581,8 @@ module.exports =
 	*  content: the server answer that contains 3 elements: createAt, taskId and objectID
 	*/
 	Index.prototype.deleteObjects = function(objectIDs, callback) {
-	  var isArray = __webpack_require__(15);
-	  var map = __webpack_require__(16);
+	  var isArray = __webpack_require__(16);
+	  var map = __webpack_require__(17);
 
 	  var usage = 'Usage: index.deleteObjects(arrayOfObjectIDs[, callback])';
 
@@ -1621,8 +1621,8 @@ module.exports =
 	*  error: null or Error('message')
 	*/
 	Index.prototype.deleteByQuery = function(query, params, callback) {
-	  var clone = __webpack_require__(17);
-	  var map = __webpack_require__(16);
+	  var clone = __webpack_require__(18);
+	  var map = __webpack_require__(17);
 
 	  var indexObj = this;
 	  var client = indexObj.as;
@@ -1693,105 +1693,6 @@ module.exports =
 	  }
 	};
 
-
-	/*
-	* Browse index content. The response content will have a `cursor` property that you can use
-	* to browse subsequent pages for this query. Use `index.browseFrom(cursor)` when you want.
-	*
-	* @param {string} query - The full text query
-	* @param {Object} [queryParameters] - Any search query parameter
-	* @param {Function} [callback] - The result callback called with two arguments
-	*   error: null or Error('message')
-	*   content: the server answer with the browse result
-	* @return {Promise|undefined} Returns a promise if no callback given
-	* @example
-	* index.browse('cool songs', {
-	*   tagFilters: 'public,comments',
-	*   hitsPerPage: 500
-	* }, callback);
-	* @see {@link https://www.algolia.com/doc/rest_api#Browse|Algolia REST API Documentation}
-	*/
-	Index.prototype.browse = function(query, queryParameters, callback) {
-	  var merge = __webpack_require__(18);
-
-	  var indexObj = this;
-
-	  var page;
-	  var hitsPerPage;
-
-	  // we check variadic calls that are not the one defined
-	  // .browse()/.browse(fn)
-	  // => page = 0
-	  if (arguments.length === 0 || arguments.length === 1 && typeof arguments[0] === 'function') {
-	    page = 0;
-	    callback = arguments[0];
-	    query = undefined;
-	  } else if (typeof arguments[0] === 'number') {
-	    // .browse(2)/.browse(2, 10)/.browse(2, fn)/.browse(2, 10, fn)
-	    page = arguments[0];
-	    if (typeof arguments[1] === 'number') {
-	      hitsPerPage = arguments[1];
-	    } else if (typeof arguments[1] === 'function') {
-	      callback = arguments[1];
-	      hitsPerPage = undefined;
-	    }
-	    query = undefined;
-	    queryParameters = undefined;
-	  } else if (typeof arguments[0] === 'object') {
-	    // .browse(queryParameters)/.browse(queryParameters, cb)
-	    if (typeof arguments[1] === 'function') {
-	      callback = arguments[1];
-	    }
-	    queryParameters = arguments[0];
-	    query = undefined;
-	  } else if (typeof arguments[0] === 'string' && typeof arguments[1] === 'function') {
-	    // .browse(query, cb)
-	    callback = arguments[1];
-	    queryParameters = undefined;
-	  }
-
-	  // otherwise it's a .browse(query)/.browse(query, queryParameters)/.browse(query, queryParameters, cb)
-
-	  // get search query parameters combining various possible calls
-	  // to .browse();
-	  queryParameters = merge({}, queryParameters || {}, {
-	    page: page,
-	    hitsPerPage: hitsPerPage,
-	    query: query
-	  });
-
-	  var params = this.as._getSearchParams(queryParameters, '');
-
-	  return this.as._jsonRequest({
-	    method: 'GET',
-	    url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/browse?' + params,
-	    hostType: 'read',
-	    callback: callback
-	  });
-	};
-
-	/*
-	* Continue browsing from a previous position (cursor), obtained via a call to `.browse()`.
-	*
-	* @param {string} query - The full text query
-	* @param {Object} [queryParameters] - Any search query parameter
-	* @param {Function} [callback] - The result callback called with two arguments
-	*   error: null or Error('message')
-	*   content: the server answer with the browse result
-	* @return {Promise|undefined} Returns a promise if no callback given
-	* @example
-	* index.browseFrom('14lkfsakl32', callback);
-	* @see {@link https://www.algolia.com/doc/rest_api#Browse|Algolia REST API Documentation}
-	*/
-	Index.prototype.browseFrom = function(cursor, callback) {
-	  return this.as._jsonRequest({
-	    method: 'GET',
-	    url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/browse?cursor=' + encodeURIComponent(cursor),
-	    hostType: 'read',
-	    callback: callback
-	  });
-	};
-
 	/*
 	* Browse all content from an index using events. Basically this will do
 	* .browse() -> .browseFrom -> .browseFrom -> .. until all the results are returned
@@ -1831,7 +1732,7 @@ module.exports =
 	    query = undefined;
 	  }
 
-	  var merge = __webpack_require__(18);
+	  var merge = __webpack_require__(12);
 
 	  var IndexBrowser = __webpack_require__(19);
 
@@ -2188,7 +2089,7 @@ module.exports =
 	* @see {@link https://www.algolia.com/doc/rest_api#AddIndexKey|Algolia REST API Documentation}
 	*/
 	Index.prototype.addUserKey = function(acls, params, callback) {
-	  var isArray = __webpack_require__(15);
+	  var isArray = __webpack_require__(16);
 	  var usage = 'Usage: index.addUserKey(arrayOfAcls[, params, callback])';
 
 	  if (!isArray(acls)) {
@@ -2271,7 +2172,7 @@ module.exports =
 	* @see {@link https://www.algolia.com/doc/rest_api#UpdateIndexKey|Algolia REST API Documentation}
 	*/
 	Index.prototype.updateUserKey = function(key, acls, params, callback) {
-	  var isArray = __webpack_require__(15);
+	  var isArray = __webpack_require__(16);
 	  var usage = 'Usage: index.updateUserKey(key, arrayOfAcls[, params, callback])';
 
 	  if (!isArray(acls)) {
@@ -2447,6 +2348,104 @@ module.exports =
 	*   are the two most useful to restrict the similar results and get more relevant content
 	*/
 	IndexCore.prototype.similarSearch = buildSearchMethod('similarQuery');
+
+	/*
+	* Browse index content. The response content will have a `cursor` property that you can use
+	* to browse subsequent pages for this query. Use `index.browseFrom(cursor)` when you want.
+	*
+	* @param {string} query - The full text query
+	* @param {Object} [queryParameters] - Any search query parameter
+	* @param {Function} [callback] - The result callback called with two arguments
+	*   error: null or Error('message')
+	*   content: the server answer with the browse result
+	* @return {Promise|undefined} Returns a promise if no callback given
+	* @example
+	* index.browse('cool songs', {
+	*   tagFilters: 'public,comments',
+	*   hitsPerPage: 500
+	* }, callback);
+	* @see {@link https://www.algolia.com/doc/rest_api#Browse|Algolia REST API Documentation}
+	*/
+	IndexCore.prototype.browse = function(query, queryParameters, callback) {
+	  var merge = __webpack_require__(12);
+
+	  var indexObj = this;
+
+	  var page;
+	  var hitsPerPage;
+
+	  // we check variadic calls that are not the one defined
+	  // .browse()/.browse(fn)
+	  // => page = 0
+	  if (arguments.length === 0 || arguments.length === 1 && typeof arguments[0] === 'function') {
+	    page = 0;
+	    callback = arguments[0];
+	    query = undefined;
+	  } else if (typeof arguments[0] === 'number') {
+	    // .browse(2)/.browse(2, 10)/.browse(2, fn)/.browse(2, 10, fn)
+	    page = arguments[0];
+	    if (typeof arguments[1] === 'number') {
+	      hitsPerPage = arguments[1];
+	    } else if (typeof arguments[1] === 'function') {
+	      callback = arguments[1];
+	      hitsPerPage = undefined;
+	    }
+	    query = undefined;
+	    queryParameters = undefined;
+	  } else if (typeof arguments[0] === 'object') {
+	    // .browse(queryParameters)/.browse(queryParameters, cb)
+	    if (typeof arguments[1] === 'function') {
+	      callback = arguments[1];
+	    }
+	    queryParameters = arguments[0];
+	    query = undefined;
+	  } else if (typeof arguments[0] === 'string' && typeof arguments[1] === 'function') {
+	    // .browse(query, cb)
+	    callback = arguments[1];
+	    queryParameters = undefined;
+	  }
+
+	  // otherwise it's a .browse(query)/.browse(query, queryParameters)/.browse(query, queryParameters, cb)
+
+	  // get search query parameters combining various possible calls
+	  // to .browse();
+	  queryParameters = merge({}, queryParameters || {}, {
+	    page: page,
+	    hitsPerPage: hitsPerPage,
+	    query: query
+	  });
+
+	  var params = this.as._getSearchParams(queryParameters, '');
+
+	  return this.as._jsonRequest({
+	    method: 'GET',
+	    url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/browse?' + params,
+	    hostType: 'read',
+	    callback: callback
+	  });
+	};
+
+	/*
+	* Continue browsing from a previous position (cursor), obtained via a call to `.browse()`.
+	*
+	* @param {string} query - The full text query
+	* @param {Object} [queryParameters] - Any search query parameter
+	* @param {Function} [callback] - The result callback called with two arguments
+	*   error: null or Error('message')
+	*   content: the server answer with the browse result
+	* @return {Promise|undefined} Returns a promise if no callback given
+	* @example
+	* index.browseFrom('14lkfsakl32', callback);
+	* @see {@link https://www.algolia.com/doc/rest_api#Browse|Algolia REST API Documentation}
+	*/
+	IndexCore.prototype.browseFrom = function(cursor, callback) {
+	  return this.as._jsonRequest({
+	    method: 'GET',
+	    url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/browse?cursor=' + encodeURIComponent(cursor),
+	    hostType: 'read',
+	    callback: callback
+	  });
+	};
 
 	IndexCore.prototype._search = function(params, url, callback) {
 	  return this.as._jsonRequest({
@@ -2636,89 +2635,6 @@ module.exports =
 
 /***/ },
 /* 12 */
-/***/ function(module, exports) {
-
-	module.exports = function deprecate(fn, message) {
-	  var warned = false;
-
-	  function deprecated() {
-	    if (!warned) {
-	      /* eslint no-console:0 */
-	      console.log(message);
-	      warned = true;
-	    }
-
-	    return fn.apply(this, arguments);
-	  }
-
-	  return deprecated;
-	};
-
-
-/***/ },
-/* 13 */
-/***/ function(module, exports) {
-
-	module.exports = function deprecatedMessage(previousUsage, newUsage) {
-	  var githubAnchorLink = previousUsage.toLowerCase()
-	    .replace('.', '')
-	    .replace('()', '');
-
-	  return 'algoliasearch: `' + previousUsage + '` was replaced by `' + newUsage +
-	    '`. Please see https://github.com/algolia/algoliasearch-client-js/wiki/Deprecated#' + githubAnchorLink;
-	};
-
-
-/***/ },
-/* 14 */
-/***/ function(module, exports) {
-
-	// Parse cloud does not supports setTimeout
-	// We do not store a setTimeout reference in the client everytime
-	// We only fallback to a fake setTimeout when not available
-	// setTimeout cannot be override globally sadly
-	module.exports = function exitPromise(fn, _setTimeout) {
-	  _setTimeout(fn, 0);
-	};
-
-
-/***/ },
-/* 15 */
-/***/ function(module, exports) {
-
-	var toString = {}.toString;
-
-	module.exports = Array.isArray || function (arr) {
-	  return toString.call(arr) == '[object Array]';
-	};
-
-
-/***/ },
-/* 16 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var foreach = __webpack_require__(11);
-
-	module.exports = function map(arr, fn) {
-	  var newArr = [];
-	  foreach(arr, function(item, itemIndex) {
-	    newArr.push(fn(item, itemIndex, arr));
-	  });
-	  return newArr;
-	};
-
-
-/***/ },
-/* 17 */
-/***/ function(module, exports) {
-
-	module.exports = function clone(obj) {
-	  return JSON.parse(JSON.stringify(obj));
-	};
-
-
-/***/ },
-/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var foreach = __webpack_require__(11);
@@ -2739,6 +2655,89 @@ module.exports =
 	  });
 
 	  return destination;
+	};
+
+
+/***/ },
+/* 13 */
+/***/ function(module, exports) {
+
+	module.exports = function deprecate(fn, message) {
+	  var warned = false;
+
+	  function deprecated() {
+	    if (!warned) {
+	      /* eslint no-console:0 */
+	      console.log(message);
+	      warned = true;
+	    }
+
+	    return fn.apply(this, arguments);
+	  }
+
+	  return deprecated;
+	};
+
+
+/***/ },
+/* 14 */
+/***/ function(module, exports) {
+
+	module.exports = function deprecatedMessage(previousUsage, newUsage) {
+	  var githubAnchorLink = previousUsage.toLowerCase()
+	    .replace('.', '')
+	    .replace('()', '');
+
+	  return 'algoliasearch: `' + previousUsage + '` was replaced by `' + newUsage +
+	    '`. Please see https://github.com/algolia/algoliasearch-client-js/wiki/Deprecated#' + githubAnchorLink;
+	};
+
+
+/***/ },
+/* 15 */
+/***/ function(module, exports) {
+
+	// Parse cloud does not supports setTimeout
+	// We do not store a setTimeout reference in the client everytime
+	// We only fallback to a fake setTimeout when not available
+	// setTimeout cannot be override globally sadly
+	module.exports = function exitPromise(fn, _setTimeout) {
+	  _setTimeout(fn, 0);
+	};
+
+
+/***/ },
+/* 16 */
+/***/ function(module, exports) {
+
+	var toString = {}.toString;
+
+	module.exports = Array.isArray || function (arr) {
+	  return toString.call(arr) == '[object Array]';
+	};
+
+
+/***/ },
+/* 17 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var foreach = __webpack_require__(11);
+
+	module.exports = function map(arr, fn) {
+	  var newArr = [];
+	  foreach(arr, function(item, itemIndex) {
+	    newArr.push(fn(item, itemIndex, arr));
+	  });
+	  return newArr;
+	};
+
+
+/***/ },
+/* 18 */
+/***/ function(module, exports) {
+
+	module.exports = function clone(obj) {
+	  return JSON.parse(JSON.stringify(obj));
 	};
 
 
@@ -2800,7 +2799,7 @@ module.exports =
 	module.exports = AlgoliaSearchCore;
 
 	var errors = __webpack_require__(10);
-	var exitPromise = __webpack_require__(14);
+	var exitPromise = __webpack_require__(15);
 	var IndexCore = __webpack_require__(8);
 
 	// We will always put the API KEY in the JSON body in case of too long API KEY
@@ -2834,9 +2833,9 @@ module.exports =
 	function AlgoliaSearchCore(applicationID, apiKey, opts) {
 	  var debug = __webpack_require__(1)('algoliasearch');
 
-	  var clone = __webpack_require__(17);
-	  var isArray = __webpack_require__(15);
-	  var map = __webpack_require__(16);
+	  var clone = __webpack_require__(18);
+	  var isArray = __webpack_require__(16);
+	  var map = __webpack_require__(17);
 
 	  var usage = 'Usage: algoliasearch(applicationID, apiKey, opts)';
 
@@ -3270,8 +3269,8 @@ module.exports =
 	 * @return {Promise|undefined} Returns a promise if no callback given
 	 */
 	AlgoliaSearchCore.prototype.search = function(queries, opts, callback) {
-	  var isArray = __webpack_require__(15);
-	  var map = __webpack_require__(16);
+	  var isArray = __webpack_require__(16);
+	  var map = __webpack_require__(17);
 
 	  var usage = 'Usage: client.search(arrayOfQueries[, callback])';
 
@@ -3463,7 +3462,7 @@ module.exports =
 
 	
 
-	module.exports = '3.14.3';
+	module.exports = '3.14.4';
 
 
 /***/ }
