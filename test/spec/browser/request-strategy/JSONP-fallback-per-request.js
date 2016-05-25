@@ -5,7 +5,7 @@ var test = require('tape');
 var requestTimeout = 5000;
 
 test('Request strategy uses JSONP fallback on a per requests basis', function(t) {
-  t.plan(3);
+  t.plan(6);
   var fauxJax = require('faux-jax');
   var parse = require('url-parse');
   var sinon = require('sinon');
@@ -47,9 +47,6 @@ test('Request strategy uses JSONP fallback on a per requests basis', function(t)
       'JSONP callback called with null, {"query": "XHR error use JSONP"}'
     );
 
-    fauxJax.once('request', function(req) {
-      req.respond(200, {}, JSON.stringify({HEY: 'XHR RESPONSE BABY!'}));
-    });
     index.search('Youpi', XHRCallback);
   });
 
@@ -57,8 +54,15 @@ test('Request strategy uses JSONP fallback on a per requests basis', function(t)
 
   index.search('XHR error use JSONP', JSONPCallback);
 
-  fauxJax.once('request', function(req) {
-    // hacky way to simulate a network error
-    req.onerror();
+  var reqCount = 0;
+  fauxJax.on('request', function(req) {
+    t.pass();
+    reqCount++;
+    if (reqCount === 3) {
+      req.respond(200, {}, JSON.stringify({HEY: 'XHR RESPONSE BABY!'}));
+    } else {
+      // hacky way to simulate a network error
+      req.onerror();
+    }
   });
 });

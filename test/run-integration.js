@@ -14,6 +14,7 @@ var getFakeObjects = require('./utils/get-fake-objects');
 var isABrowser = process.browser;
 var canPUT = !isABrowser || require('faux-jax').support.xhr.cors;
 var canDELETE = canPUT;
+var FORCE_DNS_TIMEOUT = 120000;
 
 // ensure that on the browser we use the global algoliasearch,
 // so that we are absolutely sure the builded version exposes algoliasearch
@@ -318,7 +319,7 @@ function dnsFailThenSuccess(t) {
     apiKey, {
       // .biz is a black hole DNS name (not resolving)
       hosts: [appId + '-dsn.algolia.biz', appId + '-dsn.algolia.net'],
-      timeout: 120000 // let's wait for the DNS timeout
+      timeout: FORCE_DNS_TIMEOUT // let's wait for the DNS timeout
     }
   );
 
@@ -339,7 +340,7 @@ function dnsFailThenSuccessNoSearch(t) {
     apiKey, {
       // .biz is a black hole DNS name (not resolving)
       hosts: [appId + '-dsn.algolia.biz', appId + '-dsn.algolia.net'],
-      timeout: 120000, // let's wait for the DNS timeout
+      timeout: FORCE_DNS_TIMEOUT, // let's wait for the DNS timeout
       protocol: 'https:'
     }
   );
@@ -357,7 +358,7 @@ function dnsFailed(t) {
     appId,
     apiKey, {
       hosts: [appId + '-dsn.algolia.biz', appId + '-3.algolia.biz'],
-      timeout: 120000 // let's wait for the DNS timeout
+      timeout: FORCE_DNS_TIMEOUT // let's wait for the DNS timeout
     }
   );
 

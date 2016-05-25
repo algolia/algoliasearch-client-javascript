@@ -11,7 +11,7 @@ if (browser.name === 'PhantomJS') {
 }
 
 test('Request strategy handles JSONP syntax errors', function(t) {
-  t.plan(6);
+  t.plan(8);
   var fauxJax = require('faux-jax');
   var parse = require('url-parse');
   var xhr = require('xhr');
@@ -56,8 +56,10 @@ test('Request strategy handles JSONP syntax errors', function(t) {
 
     index.search('JSONP Failure', searchCallback);
 
-    fauxJax.once('request', function(req) {
-      // hacky way to simulate a network error so that we try JSONP right away
+    fauxJax.on('request', function(req) {
+      // we should pass here as much time as the number of hosts (2)
+      t.pass();
+      // simulate network error
       req.onerror();
     });
   });
