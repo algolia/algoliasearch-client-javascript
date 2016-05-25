@@ -445,20 +445,20 @@ Cache
 
 **Browser only**
 
-To avoid performing the same API calls twice **search** results will be stored in a `cache` that will be tied to your JavaScript `client` and `index` objects.
+To avoid performing the same API calls twice **search** results will be stored
+in a `cache` that will be tied to your JavaScript `client` and `index` objects.
+Whenever a call for a specific query (and filters) is made, we store the results
+in a local cache. If you ever call the exact same query again, we read the
+results from the cache instead of doing an API call.
 
-It's particularly useful when your users are deleting characters or words from the current query but has a chance of ending up with outdated results if the page isn't refreshed for some time.
+This is particularly useful when your users are deleting characters from their
+current query, to avoid useless API calls. Because it is stored as a simple
+JavaScript object in memory, the cache is automatically reset whenever you
+reload the page.
 
-If at any point you want to clear the cache, just do this:
-
-```js
-// clear the queries cache
-index.clearCache();
-
-// if you're performing multi-queries using the API client instead of the index
-// you'll need to use the following code
-client.clearCache();
-```
+It is never automatically purged, nor can it be completely disabled. Instead, we
+provide the `index.clearCache()` (or `client.clearCache()` if you're doing
+[multiple queries](#multiple-queries)) method that you can call to reset it.
 
 Proxy support
 ------------
