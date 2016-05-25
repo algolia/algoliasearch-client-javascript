@@ -357,7 +357,7 @@ function dnsFailed(t) {
   var client_ = algoliasearch(
     appId,
     apiKey, {
-      hosts: [appId + '-dsn.algolia.biz', appId + '-3.algolia.biz'],
+      hosts: [appId + '-dsn.algolia.biz'],
       timeout: FORCE_DNS_TIMEOUT // let's wait for the DNS timeout
     }
   );
