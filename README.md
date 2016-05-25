@@ -239,6 +239,32 @@ Quick Start
 
 ### Frontend
 
+The JavaScript API client gives you access to low level methods to search and
+receive results. This is all you need for building your front-end but will
+require custom code on your side for displaying the results. Reading
+our [guides](https://www.algolia.com/doc#search) will help you in that.
+
+We've also released two JavaScript libraries to ease the building of the most
+common kind of UI:
+
+#### [autocomplete.js](https://github.com/algolia/autocomplete.js)
+
+[autocomplete.js](https://github.com/algolia/autocomplete.js) helps you build 
+**dropdown** menus.
+
+![autocomplete.js example](https://raw.githubusercontent.com/algolia/algoliasearch-client-js/master/examples/autocomplete.gif)
+
+#### [instantsearch.js](https://community.algolia.com/instantsearch.js/)
+
+[instantsearch.js](https://community.algolia.com/instantsearch.js/) is for **full
+page** search.
+
+![instantsearch.js example](https://raw.githubusercontent.com/algolia/algoliasearch-client-js/master/examples/instantsearch.gif)
+
+We strongly encourage you to have a look at those libraries because they are
+packaged with a lot of options that will cover most of your needs without
+requiring you to do all the plumbing.
+
 To build your frontend search experience, also check out our [examples](./examples/) and [guides](https://www.algolia.com/doc#search).
 
 #### Vanilla JavaScript
@@ -261,6 +287,8 @@ To build your frontend search experience, also check out our [examples](./exampl
     });
 </script>
 ```
+You can see the full [Vanilla JavaScript example
+here](https://github.com/algolia/algoliasearch-client-js/blob/master/examples/javascript.html)
 
 #### jQuery module
 We provide a specific [jQuery](http://jquery.com/) build that will use [jQuery.ajax](http://api.jquery.com/jquery.ajax/).
@@ -278,6 +306,8 @@ It can be used with callbacks or [jQuery promises](https://api.jquery.com/promis
   });
 </script>
 ```
+You can see the full [jQuery example
+here](https://github.com/algolia/algoliasearch-client-js/blob/master/examples/jquery.html)
 
 #### AngularJS module
 We provide a specific [AngularJS](https://angularjs.org/) build that is using the [$http service](https://docs.angularjs.org/api/ng/service/$http).
@@ -304,6 +334,8 @@ It can be used with callbacks or [AngularJS promises](https://docs.angularjs.org
     }]);
 </script>
 ```
+You can see the full [Angular example
+here](https://github.com/algolia/algoliasearch-client-js/blob/master/examples/angular.html)
 
 ### Backend (Node.js)
 
