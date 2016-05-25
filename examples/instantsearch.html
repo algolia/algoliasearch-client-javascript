@@ -28,7 +28,15 @@
     <div id="hits"></div>
 
     <script type="text/javascript">
-      function searchCallback(err, content) {
+      /**
+       * This example uses the raw JavaScript client to build an instant search result page.
+       * If you plan on building such a UI, we strongly encourage you to try our instantsearch.js library instead.
+       * It is a set of UI widgets that you can mix and match to build instant search result pages, including facet filtering, 
+       * highlighting and custom themes.
+       * More information, examples and documentation on https://community.algolia.com/instantsearch.js/
+      **/
+
+    function searchCallback(err, content) {
         if (err) {
           // error
           return;

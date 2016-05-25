@@ -273,16 +273,8 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
       requestDebug('received response: statusCode: %s, computed statusCode: %d, headers: %j',
         httpResponse.statusCode, status, httpResponse.headers);
 
-      var ok = status === 200 || status === 201;
-      var retry = !ok && Math.floor(status / 100) !== 4 && Math.floor(status / 100) !== 1;
-
-      if (client._useCache && ok && cache) {
-        cache[cacheID] = httpResponse.responseText;
-      }
-
-      if (ok) {
-        return httpResponse.body;
-      }
+      var httpResponseOk = Math.floor(status / 100) === 2;
+      var shouldRetry = Math.floor(status / 100) !== 4 && Math.floor(status / 100) !== 2;
 
       var endTime = new Date();
       debugData.push({
@@ -298,11 +290,22 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
         duration: endTime - startTime
       });
 
-      if (retry) {
+      if (httpResponseOk) {
+        if (client._useCache && cache) {
+          cache[cacheID] = httpResponse.responseText;
+        }
+
+        return httpResponse.body;
+      }
+
+      if (shouldRetry) {
         tries += 1;
         return retryRequest();
       }
 
+      requestDebug('unrecoverable error');
+
+      // no success and no retry => fail
       var unrecoverableError = new errors.AlgoliaSearchError(
         httpResponse.body && httpResponse.body.message, {debugData: debugData}
       );
@@ -360,19 +363,22 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
         return client._promise.reject(err);
       }
 
-      if (err instanceof errors.RequestTimeout || err instanceof errors.NodeNetwork) {
-        return retryRequest();
-      } else if (!usingFallback) {
-        // next request loop, force using fallback for this request
-        tries = Infinity;
+      // When a timeout occured, retry by raising timeout
+      if (err instanceof errors.RequestTimeout) {
+        return retryRequestWithHigherTimeout();
       }
 
-      client.hostIndex[initialOpts.hostType] = (client.hostIndex[initialOpts.hostType] + 1) % client.hosts[initialOpts.hostType].length;
-
-      return doRequest(requester, reqOpts);
+      return retryRequest();
     }
 
     function retryRequest() {
+      requestDebug('retrying request');
+      client.hostIndex[initialOpts.hostType] = (client.hostIndex[initialOpts.hostType] + 1) % client.hosts[initialOpts.hostType].length;
+      return doRequest(requester, reqOpts);
+    }
+
+    function retryRequestWithHigherTimeout() {
+      requestDebug('retrying request with higher timeout');
       client.hostIndex[initialOpts.hostType] = (client.hostIndex[initialOpts.hostType] + 1) % client.hosts[initialOpts.hostType].length;
       reqOpts.timeout = client.requestTimeout * (tries + 1);
       return doRequest(requester, reqOpts);

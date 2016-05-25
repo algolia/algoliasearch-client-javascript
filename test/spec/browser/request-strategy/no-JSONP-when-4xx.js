@@ -4,7 +4,6 @@ var test = require('tape');
 
 test('Request strategy does not fallback to JSONP', function(t) {
   noJSONP(t, 404);
-  noJSONP(t, 101);
 });
 
 function noJSONP(mainTest, statusCode) {
