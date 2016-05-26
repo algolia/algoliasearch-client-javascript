@@ -1,5 +1,12 @@
 CHANGELOG
 
+2016-05-26 3.14.5
+
+  * fix(window): don't assume window is here
+
+  When required in a node context, we may load the browser build without
+  using it. Just for testing other parts of it.
+
 2016-05-25 3.14.4
 
   * fix(lite): lite package should have browse and browseFrom

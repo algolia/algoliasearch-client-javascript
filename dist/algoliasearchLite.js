@@ -1,4 +1,4 @@
-/*! algoliasearch 3.14.4 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
+/*! algoliasearch 3.14.5 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.algoliasearch = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 // shim for using process in browser
 
@@ -1583,6 +1583,19 @@ module.exports = function forEach (obj, fn, ctx) {
 
 
 },{}],7:[function(require,module,exports){
+(function (global){
+if (typeof window !== "undefined") {
+    module.exports = window;
+} else if (typeof global !== "undefined") {
+    module.exports = global;
+} else if (typeof self !== "undefined"){
+    module.exports = self;
+} else {
+    module.exports = {};
+}
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{}],8:[function(require,module,exports){
 if (typeof Object.create === 'function') {
   // implementation from standard node.js 'util' module
   module.exports = function inherits(ctor, superCtor) {
@@ -1607,14 +1620,14 @@ if (typeof Object.create === 'function') {
   }
 }
 
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 var toString = {}.toString;
 
 module.exports = Array.isArray || function (arr) {
   return toString.call(arr) == '[object Array]';
 };
 
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -1701,12 +1714,12 @@ var objectKeys = Object.keys || function (obj) {
   return res;
 };
 
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 module.exports = AlgoliaSearchCore;
 
-var errors = require(19);
-var exitPromise = require(20);
-var IndexCore = require(11);
+var errors = require(20);
+var exitPromise = require(21);
+var IndexCore = require(12);
 
 // We will always put the API KEY in the JSON body in case of too long API KEY
 var MAX_API_KEY_LENGTH = 500;
@@ -1739,9 +1752,9 @@ var MAX_API_KEY_LENGTH = 500;
 function AlgoliaSearchCore(applicationID, apiKey, opts) {
   var debug = require(2)('algoliasearch');
 
-  var clone = require(18);
-  var isArray = require(8);
-  var map = require(21);
+  var clone = require(19);
+  var isArray = require(9);
+  var map = require(22);
 
   var usage = 'Usage: algoliasearch(applicationID, apiKey, opts)';
 
@@ -2175,8 +2188,8 @@ AlgoliaSearchCore.prototype._computeRequestHeaders = function(withAPIKey) {
  * @return {Promise|undefined} Returns a promise if no callback given
  */
 AlgoliaSearchCore.prototype.search = function(queries, opts, callback) {
-  var isArray = require(8);
-  var map = require(21);
+  var isArray = require(9);
+  var map = require(22);
 
   var usage = 'Usage: client.search(arrayOfQueries[, callback])';
 
@@ -2361,8 +2374,8 @@ function removeCredentials(headers) {
   return newHeaders;
 }
 
-},{"11":11,"18":18,"19":19,"2":2,"20":20,"21":21,"6":6,"8":8}],11:[function(require,module,exports){
-var buildSearchMethod = require(17);
+},{"12":12,"19":19,"2":2,"20":20,"21":21,"22":22,"6":6,"9":9}],12:[function(require,module,exports){
+var buildSearchMethod = require(18);
 
 module.exports = IndexCore;
 
@@ -2514,7 +2527,7 @@ IndexCore.prototype.similarSearch = buildSearchMethod('similarQuery');
 * @see {@link https://www.algolia.com/doc/rest_api#Browse|Algolia REST API Documentation}
 */
 IndexCore.prototype.browse = function(query, queryParameters, callback) {
-  var merge = require(22);
+  var merge = require(23);
 
   var indexObj = this;
 
@@ -2615,28 +2628,29 @@ IndexCore.prototype.indexName = null;
 IndexCore.prototype.typeAheadArgs = null;
 IndexCore.prototype.typeAheadValueOption = null;
 
-},{"17":17,"22":22}],12:[function(require,module,exports){
+},{"18":18,"23":23}],13:[function(require,module,exports){
 'use strict';
 
-var AlgoliaSearchCore = require(10);
-var createAlgoliasearch = require(13);
+var AlgoliaSearchCore = require(11);
+var createAlgoliasearch = require(14);
 
 module.exports = createAlgoliasearch(AlgoliaSearchCore, '(lite) ');
 
-},{"10":10,"13":13}],13:[function(require,module,exports){
+},{"11":11,"14":14}],14:[function(require,module,exports){
 'use strict';
 
-var Promise = window.Promise || require(5).Promise;
+var global = require(7);
+var Promise = global.Promise || require(5).Promise;
 
 // This is the standalone browser build entry point
 // Browser implementation of the Algolia Search JavaScript client,
 // using XMLHttpRequest, XDomainRequest and JSONP as fallback
 module.exports = function createAlgoliasearch(AlgoliaSearch, uaSuffix) {
-  var inherits = require(7);
-  var errors = require(19);
-  var inlineHeaders = require(15);
-  var jsonpRequest = require(16);
-  var places = require(23);
+  var inherits = require(8);
+  var errors = require(20);
+  var inlineHeaders = require(16);
+  var jsonpRequest = require(17);
+  var places = require(24);
   uaSuffix = uaSuffix || '';
 
   if ("production" === 'development') {
@@ -2644,9 +2658,9 @@ module.exports = function createAlgoliasearch(AlgoliaSearch, uaSuffix) {
   }
 
   function algoliasearch(applicationID, apiKey, opts) {
-    var cloneDeep = require(18);
+    var cloneDeep = require(19);
 
-    var getDocumentProtocol = require(14);
+    var getDocumentProtocol = require(15);
 
     opts = cloneDeep(opts || {});
 
@@ -2659,23 +2673,26 @@ module.exports = function createAlgoliasearch(AlgoliaSearch, uaSuffix) {
     return new AlgoliaSearchBrowser(applicationID, apiKey, opts);
   }
 
-  algoliasearch.version = require(24);
+  algoliasearch.version = require(25);
   algoliasearch.ua = 'Algolia for vanilla JavaScript ' + uaSuffix + algoliasearch.version;
   algoliasearch.initPlaces = places(algoliasearch);
 
   // we expose into window no matter how we are used, this will allow
   // us to easily debug any website running algolia
-  window.__algolia = {
+  global.__algolia = {
     debug: require(2),
     algoliasearch: algoliasearch
   };
 
   var support = {
-    hasXMLHttpRequest: 'XMLHttpRequest' in window,
-    hasXDomainRequest: 'XDomainRequest' in window,
-    cors: 'withCredentials' in new XMLHttpRequest(),
-    timeout: 'timeout' in new XMLHttpRequest()
+    hasXMLHttpRequest: 'XMLHttpRequest' in global,
+    hasXDomainRequest: 'XDomainRequest' in global
   };
+
+  if (support.hasXMLHttpRequest) {
+    support.cors = 'withCredentials' in new XMLHttpRequest();
+    support.timeout = 'timeout' in new XMLHttpRequest();
+  }
 
   function AlgoliaSearchBrowser() {
     // call AlgoliaSearch constructor
@@ -2840,7 +2857,7 @@ module.exports = function createAlgoliasearch(AlgoliaSearch, uaSuffix) {
   return algoliasearch;
 };
 
-},{"14":14,"15":15,"16":16,"18":18,"19":19,"2":2,"23":23,"24":24,"5":5,"7":7}],14:[function(require,module,exports){
+},{"15":15,"16":16,"17":17,"19":19,"2":2,"20":20,"24":24,"25":25,"5":5,"7":7,"8":8}],15:[function(require,module,exports){
 'use strict';
 
 module.exports = getDocumentProtocol;
@@ -2856,12 +2873,12 @@ function getDocumentProtocol() {
   return protocol;
 }
 
-},{}],15:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 'use strict';
 
 module.exports = inlineHeaders;
 
-var encode = require(9);
+var encode = require(10);
 
 function inlineHeaders(url, headers) {
   if (/\?/.test(url)) {
@@ -2873,12 +2890,12 @@ function inlineHeaders(url, headers) {
   return url + encode(headers);
 }
 
-},{"9":9}],16:[function(require,module,exports){
+},{"10":10}],17:[function(require,module,exports){
 'use strict';
 
 module.exports = jsonpRequest;
 
-var errors = require(19);
+var errors = require(20);
 
 var JSONPCounter = 0;
 
@@ -3003,10 +3020,10 @@ function jsonpRequest(url, opts, cb) {
   }
 }
 
-},{"19":19}],17:[function(require,module,exports){
+},{"20":20}],18:[function(require,module,exports){
 module.exports = buildSearchMethod;
 
-var errors = require(19);
+var errors = require(20);
 
 function buildSearchMethod(queryParam, url) {
   return function search(query, args, callback) {
@@ -3051,19 +3068,19 @@ function buildSearchMethod(queryParam, url) {
   };
 }
 
-},{"19":19}],18:[function(require,module,exports){
+},{"20":20}],19:[function(require,module,exports){
 module.exports = function clone(obj) {
   return JSON.parse(JSON.stringify(obj));
 };
 
-},{}],19:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 'use strict';
 
 // This file hosts our error definitions
 // We use custom error "types" so that we can act on them when we need it
 // e.g.: if error instanceof errors.UnparsableJSON then..
 
-var inherits = require(7);
+var inherits = require(8);
 
 function AlgoliaSearchError(message, extraProperties) {
   var forEach = require(6);
@@ -3136,7 +3153,7 @@ module.exports = {
   )
 };
 
-},{"6":6,"7":7}],20:[function(require,module,exports){
+},{"6":6,"8":8}],21:[function(require,module,exports){
 // Parse cloud does not supports setTimeout
 // We do not store a setTimeout reference in the client everytime
 // We only fallback to a fake setTimeout when not available
@@ -3145,7 +3162,7 @@ module.exports = function exitPromise(fn, _setTimeout) {
   _setTimeout(fn, 0);
 };
 
-},{}],21:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 var foreach = require(6);
 
 module.exports = function map(arr, fn) {
@@ -3156,7 +3173,7 @@ module.exports = function map(arr, fn) {
   return newArr;
 };
 
-},{"6":6}],22:[function(require,module,exports){
+},{"6":6}],23:[function(require,module,exports){
 var foreach = require(6);
 
 module.exports = function merge(destination/* , sources */) {
@@ -3177,14 +3194,14 @@ module.exports = function merge(destination/* , sources */) {
   return destination;
 };
 
-},{"6":6}],23:[function(require,module,exports){
+},{"6":6}],24:[function(require,module,exports){
 module.exports = createPlacesClient;
 
-var buildSearchMethod = require(17);
+var buildSearchMethod = require(18);
 
 function createPlacesClient(algoliasearch) {
   return function places(appID, apiKey, opts) {
-    var cloneDeep = require(18);
+    var cloneDeep = require(19);
 
     opts = opts && cloneDeep(opts) || {};
     opts.hosts = opts.hosts || [
@@ -3201,10 +3218,10 @@ function createPlacesClient(algoliasearch) {
   };
 }
 
-},{"17":17,"18":18}],24:[function(require,module,exports){
+},{"18":18,"19":19}],25:[function(require,module,exports){
 'use strict';
 
-module.exports = '3.14.4';
+module.exports = '3.14.5';
 
-},{}]},{},[12])(12)
+},{}]},{},[13])(13)
 });
