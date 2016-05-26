@@ -1505,6 +1505,8 @@ You can also use a string array encoding (for example `numericFilters: ["price>1
 <code>available=1 AND (category:Book OR NOT category:Ebook) AND public</code>
 <code>date: 1441745506 TO 1441755506 AND inStock &gt; 0 AND author:&quot;John Doe&quot;</code></p>
 
+<p>If no attribute name is specified, the filter applies to <code>_tags</code>. For example: <code>public OR user_42</code> will translate to <code>_tags:public OR _tags:user_42</code>.</p>
+
 <p>The list of keywords is:</p>
 
 <ul>
