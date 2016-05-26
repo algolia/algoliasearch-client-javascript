@@ -3236,6 +3236,26 @@
       "version": "2.0.5",
       "resolved": "https://registry.npmjs.org/foreach/-/foreach-2.0.5.tgz"
     },
+    "global": {
+      "version": "4.3.0",
+      "resolved": "https://registry.npmjs.org/global/-/global-4.3.0.tgz",
+      "dependencies": {
+        "min-document": {
+          "version": "2.18.0",
+          "resolved": "https://registry.npmjs.org/min-document/-/min-document-2.18.0.tgz",
+          "dependencies": {
+            "dom-walk": {
+              "version": "0.1.1",
+              "resolved": "https://registry.npmjs.org/dom-walk/-/dom-walk-0.1.1.tgz"
+            }
+          }
+        },
+        "process": {
+          "version": "0.5.2",
+          "resolved": "https://registry.npmjs.org/process/-/process-0.5.2.tgz"
+        }
+      }
+    },
     "http-proxy": {
       "version": "1.13.3",
       "resolved": "https://registry.npmjs.org/http-proxy/-/http-proxy-1.13.3.tgz",
