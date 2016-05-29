@@ -1,5 +1,9 @@
 CHANGELOG
 
+UNRELEASED
+
+  * feat(places): allow empty credentials
+
 2016-05-26 3.14.5
 
   * fix(window): don't assume window is here

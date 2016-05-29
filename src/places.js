@@ -14,6 +14,13 @@ function createPlacesClient(algoliasearch) {
       'places-3.algolianet.com'
     ];
 
+    // allow initPlaces() no arguments => community rate limited
+    if (arguments.length === 0 || typeof appID === 'object' || appID === undefined) {
+      appID = '';
+      apiKey = '';
+      opts._allowEmptyCredentials = true;
+    }
+
     var client = algoliasearch(appID, apiKey, opts);
     var index = client.initIndex('places');
     index.search = buildSearchMethod('query', '/1/places/query');
