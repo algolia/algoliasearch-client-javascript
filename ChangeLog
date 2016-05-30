@@ -1,8 +1,8 @@
 CHANGELOG
 
-UNRELEASED
+2016-05-30 3.14.6
 
-  * feat(places): allow empty credentials
+  * fix(places): allow empty credentials
 
 2016-05-26 3.14.5
 

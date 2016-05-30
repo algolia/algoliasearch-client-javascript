@@ -1,4 +1,4 @@
-/*! algoliasearch 3.14.5 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
+/*! algoliasearch 3.14.6 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
 (function(f){var g;if(typeof window!=='undefined'){g=window}else if(typeof self!=='undefined'){g=self}g.ALGOLIA_MIGRATION_LAYER=f()})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 
 module.exports = function load (src, opts, cb) {
@@ -2705,11 +2705,11 @@ function AlgoliaSearchCore(applicationID, apiKey, opts) {
 
   var usage = 'Usage: algoliasearch(applicationID, apiKey, opts)';
 
-  if (!applicationID) {
+  if (opts._allowEmptyCredentials !== true && !applicationID) {
     throw new errors.AlgoliaSearchError('Please provide an application ID. ' + usage);
   }
 
-  if (!apiKey) {
+  if (opts._allowEmptyCredentials !== true && !apiKey) {
     throw new errors.AlgoliaSearchError('Please provide an API key. ' + usage);
   }
 
@@ -5332,6 +5332,13 @@ function createPlacesClient(algoliasearch) {
       'places-3.algolianet.com'
     ];
 
+    // allow initPlaces() no arguments => community rate limited
+    if (arguments.length === 0 || typeof appID === 'object' || appID === undefined) {
+      appID = '';
+      apiKey = '';
+      opts._allowEmptyCredentials = true;
+    }
+
     var client = algoliasearch(appID, apiKey, opts);
     var index = client.initIndex('places');
     index.search = buildSearchMethod('query', '/1/places/query');
@@ -5342,6 +5349,6 @@ function createPlacesClient(algoliasearch) {
 },{"23":23,"24":24}],32:[function(require,module,exports){
 'use strict';
 
-module.exports = '3.14.5';
+module.exports = '3.14.6';
 
 },{}]},{},[17]);
