@@ -74,17 +74,20 @@ if (canDELETE) {
   test('index.clearIndex', clearIndex);
 }
 
-test('places', initPlaces);
+test('places with credentials', initPlaces(process.env.PLACES_APPID, process.env.PLACES_APIKEY));
+test('places without credentials', initPlaces());
 
-function initPlaces(t) {
-  t.plan(1);
-  var places = algoliasearch.initPlaces(process.env.PLACES_APPID, process.env.PLACES_APIKEY);
+function initPlaces(placesAppId, placesApiKey) {
+  return function(t) {
+    t.plan(1);
+    var places = algoliasearch.initPlaces(placesAppId, placesApiKey);
 
-  places.search('paris').then(function(res) {
-    t.ok(res.nbHits, 'We got some results by querying `paris`');
-  }, function(e) {
-    t.fail(e);
-  });
+    places.search('paris').then(function(res) {
+      t.ok(res.nbHits, 'We got some results by querying `paris`');
+    }, function(e) {
+      t.fail(e);
+    });
+  };
 }
 
 function clearIndex(t) {

@@ -41,11 +41,11 @@ function AlgoliaSearchCore(applicationID, apiKey, opts) {
 
   var usage = 'Usage: algoliasearch(applicationID, apiKey, opts)';
 
-  if (!applicationID) {
+  if (opts._allowEmptyCredentials !== true && !applicationID) {
     throw new errors.AlgoliaSearchError('Please provide an application ID. ' + usage);
   }
 
-  if (!apiKey) {
+  if (opts._allowEmptyCredentials !== true && !apiKey) {
     throw new errors.AlgoliaSearchError('Please provide an API key. ' + usage);
   }
 
