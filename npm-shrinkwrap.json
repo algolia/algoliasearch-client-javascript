@@ -1,6 +1,6 @@
 {
   "name": "algoliasearch",
-  "version": "3.14.5",
+  "version": "3.14.6",
   "npm-shrinkwrap-version": "200.5.1",
   "node-version": "v5.11.0",
   "dependencies": {
