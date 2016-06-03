@@ -1,7 +1,10 @@
 'use strict';
 
 var zuulConfig = module.exports = {
-  tunnel: 'ngrok',
+  tunnel: {
+    type: 'ngrok',
+    bind_tls: true
+  },
   ui: 'tape',
   browserify: [{
     transform: 'bulkify'
