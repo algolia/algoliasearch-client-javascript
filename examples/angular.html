@@ -17,7 +17,7 @@
       <header class="panel-heading">
         <div class="search_box">
           <form action="#" method="get">
-            <input autocomplete="off" class="autocomplete" placeholder="Start typing" type="text" spellcheck="false" id="q" ng-model="query" />
+            <input autocomplete="off" class="autocomplete" placeholder="Start typing" type="text" spellcheck="false" id="q" ng-model="algolia.query" />
             <div class="searchbutton">
               <i class="icon-search icon-large"></i>
             </div>
@@ -27,7 +27,7 @@
     </section>
 
     <h1>Results</h1>
-    <div class="hit" ng-repeat="hit in hits">
+    <div class="hit" ng-repeat="hit in algolia.hits">
       <div class="attribute" ng-repeat="(attribute,v) in hit._highlightResult">
         <span>{{ attribute }}: </span>
         <span ng-bind-html="v.value"></span>
@@ -35,29 +35,34 @@
     </div>
 
     <script type="text/javascript">
+    
       angular
         .module('myapp', ['algoliasearch', 'ngSanitize'])
         .controller('SearchCtrl', ['$scope', 'algolia', function($scope, algolia) {
-          $scope.query = '';
-          $scope.hits = [];
 
           // Replace the following values by your ApplicationID and ApiKey.
-          var client = algolia.Client('latency', '6be0576ff61c053d5f9a3225e2a90f76');
+          var client = algolia.Client('APPLICATION_ID', 'API_KEY');
+          
           // Replace the following value by the name of the index you want to query.
-          var index = client.initIndex('contacts');
+          var index = client.initIndex('INDEX');
 
-          $scope.$watch('query', function() {
-            index.search($scope.query, { hitsPerPage: 5 }).then(function(content) {
-              if (content.query !== $scope.query) {
-                // do not take out-dated answers into account
-                return;
-              }
-              $scope.hits = content.hits;
-            }, function(content) {
-              console.log('Error: ' + content.message);
+          $scope.algolia = {
+            'query' : '',
+            'hits' : []
+          };
+          
+          $scope.$watch('algolia.query', function() {
+            index.search($scope.algolia.query)
+              .then(function searchSuccess(content) {
+                console.log(content);
+                // add content of search results to scope for display in view
+                $scope.algolia.hits = content.hits;
+              }, function searchFailure(err) {
+                console.log(err);
             });
           });
         }]);
+        
     </script>
   </body>
 </html>
