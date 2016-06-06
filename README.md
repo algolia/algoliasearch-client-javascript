@@ -321,16 +321,22 @@ It can be used with callbacks or [AngularJS promises](https://docs.angularjs.org
   angular
     .module('myapp', ['algoliasearch'])
     .controller('SearchCtrl', ['$scope', 'algolia', function($scope, algolia) {
-      $scope.query = '';
-      $scope.hits = [];
+      $scope.algolia = {
+        'query' : '',
+        'hits' : []
+      };
       var client = algolia.Client('ApplicationID', 'apiKey');
       var index = client.initIndex('indexName');
-      index.search('something')
-        .then(function searchSuccess(content) {
-          console.log(content);
-        }, function searchFailure(err) {
-          console.log(err);
+      $scope.$watch('algolia.query', function() {
+        index.search($scope.algolia.query)
+          .then(function searchSuccess(content) {
+            console.log(content);
+            // add content of search results to scope for display in view
+            $scope.algolia.hits = content.hits;
+          }, function searchFailure(err) {
+            console.log(err);
         });
+      });
     }]);
 </script>
 ```
