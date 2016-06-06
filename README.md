@@ -2002,6 +2002,38 @@ To get a full description of how the Ranking works, you can have a look at our <
       <td valign='top'>
         <div class='client-readme-param-container'>
           <div class='client-readme-param-container-inner'>
+            <div class='client-readme-param-name'><code>disablePrefixOnAttributes</code></div>
+            <div class="client-readme-param-meta"><div><em>Type: <strong>string array</strong></em></div></div>
+          </div>
+        </div>
+      </td>
+      <td class='client-readme-param-content'>
+        <p>List of attributes on which you want to disable prefix matching (must be a subset of the <code>attributesToIndex</code> index setting). This setting is useful on attributes that contain string that should not be matched as a prefix (for example a product SKU). By default the list is empty.</p>
+
+      </td>
+    </tr>
+    
+  
+    <tr>
+      <td valign='top'>
+        <div class='client-readme-param-container'>
+          <div class='client-readme-param-container-inner'>
+            <div class='client-readme-param-name'><code>disableExactOnAttributes</code></div>
+            <div class="client-readme-param-meta"><div><em>Type: <strong>string array</strong></em></div></div>
+          </div>
+        </div>
+      </td>
+      <td class='client-readme-param-content'>
+        <p>List of attributes on which you want to disable the computation of <code>exact</code> criteria (must be a subset of the <code>attributesToIndex</code> index setting). By default the list is empty.</p>
+
+      </td>
+    </tr>
+    
+  
+    <tr>
+      <td valign='top'>
+        <div class='client-readme-param-container'>
+          <div class='client-readme-param-container-inner'>
             <div class='client-readme-param-name'><code>altCorrections</code></div>
             <div class="client-readme-param-meta"><div><em>Type: <strong>object array</strong></em></div></div>
           </div>
