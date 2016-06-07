@@ -17,7 +17,7 @@
       <header class="panel-heading">
         <div class="search_box">
           <form action="#" method="get">
-            <input autocomplete="off" class="autocomplete" placeholder="Start typing" type="text" spellcheck="false" id="q" ng-model="algolia.query" />
+            <input autocomplete="off" class="autocomplete" placeholder="Start typing" type="text" spellcheck="false" id="q" ng-model="search.query" />
             <div class="searchbutton">
               <i class="icon-search icon-large"></i>
             </div>
@@ -27,7 +27,7 @@
     </section>
 
     <h1>Results</h1>
-    <div class="hit" ng-repeat="hit in algolia.hits">
+    <div class="hit" ng-repeat="hit in search.hits">
       <div class="attribute" ng-repeat="(attribute,v) in hit._highlightResult">
         <span>{{ attribute }}: </span>
         <span ng-bind-html="v.value"></span>
@@ -41,10 +41,10 @@
         .controller('SearchCtrl', ['$scope', 'algolia', function($scope, algolia) {
 
           // Replace the following values by your ApplicationID and ApiKey.
-          var client = algolia.Client('APPLICATION_ID', 'API_KEY');
+          var client = algolia.Client('latency', '6be0576ff61c053d5f9a3225e2a90f76');
 
           // Replace the following value by the name of the index you want to query.
-          var index = client.initIndex('INDEX');
+          var index = client.initIndex('contacts');
 
           $scope.search = {
             'query' : '',

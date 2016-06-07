@@ -1,4 +1,4 @@
-/*! algoliasearch 3.14.6 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
+/*! algoliasearch 3.15.0 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
 (function(f){var g;if(typeof window!=='undefined'){g=window}else if(typeof self!=='undefined'){g=self}g.ALGOLIA_MIGRATION_LAYER=f()})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 
 module.exports = function load (src, opts, cb) {
@@ -3976,8 +3976,105 @@ Index.prototype.getSettings = function(callback) {
   var indexObj = this;
   return this.as._jsonRequest({
     method: 'GET',
-    url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/settings',
+    url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/settings?getVersion=2',
     hostType: 'read',
+    callback: callback
+  });
+};
+
+Index.prototype.searchSynonyms = function(params, callback) {
+  if (typeof params === 'function') {
+    callback = params;
+    params = {};
+  } else if (params === undefined) {
+    params = {};
+  }
+
+  return this.as._jsonRequest({
+    method: 'POST',
+    url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/synonyms/search',
+    body: params,
+    hostType: 'read',
+    callback: callback
+  });
+};
+
+Index.prototype.saveSynonym = function(synonym, opts, callback) {
+  if (typeof opts === 'function') {
+    callback = opts;
+    opts = {};
+  } else if (opts === undefined) {
+    opts = {};
+  }
+
+  return this.as._jsonRequest({
+    method: 'PUT',
+    url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/synonyms/' + encodeURIComponent(synonym.objectID) +
+      '?forwardToSlaves=' + (opts.forwardToSlaves ? 'true' : 'false'),
+    body: synonym,
+    hostType: 'write',
+    callback: callback
+  });
+};
+
+Index.prototype.getSynonym = function(objectID, callback) {
+  return this.as._jsonRequest({
+    method: 'GET',
+    url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/synonyms/' + encodeURIComponent(objectID),
+    hostType: 'read',
+    callback: callback
+  });
+};
+
+Index.prototype.deleteSynonym = function(objectID, opts, callback) {
+  if (typeof opts === 'function') {
+    callback = opts;
+    opts = {};
+  } else if (opts === undefined) {
+    opts = {};
+  }
+
+  return this.as._jsonRequest({
+    method: 'DELETE',
+    url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/synonyms/' + encodeURIComponent(objectID) +
+      '?forwardToSlaves=' + (opts.forwardToSlaves ? 'true' : 'false'),
+    hostType: 'write',
+    callback: callback
+  });
+};
+
+Index.prototype.clearSynonyms = function(opts, callback) {
+  if (typeof opts === 'function') {
+    callback = opts;
+    opts = {};
+  } else if (opts === undefined) {
+    opts = {};
+  }
+
+  return this.as._jsonRequest({
+    method: 'POST',
+    url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/synonyms/clear' +
+      '?forwardToSlaves=' + (opts.forwardToSlaves ? 'true' : 'false'),
+    hostType: 'write',
+    callback: callback
+  });
+};
+
+Index.prototype.batchSynonyms = function(synonyms, opts, callback) {
+  if (typeof opts === 'function') {
+    callback = opts;
+    opts = {};
+  } else if (opts === undefined) {
+    opts = {};
+  }
+
+  return this.as._jsonRequest({
+    method: 'POST',
+    url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/synonyms/batch' +
+      '?forwardToSlaves=' + (opts.forwardToSlaves ? 'true' : 'false') +
+      '&replaceExistingSynonyms=' + (opts.replaceExistingSynonyms ? 'true' : 'false'),
+    hostType: 'write',
+    body: synonyms,
     callback: callback
   });
 };
@@ -5403,6 +5500,6 @@ function createPlacesClient(algoliasearch) {
 },{"23":23,"24":24}],32:[function(require,module,exports){
 'use strict';
 
-module.exports = '3.14.6';
+module.exports = '3.15.0';
 
 },{}]},{},[17]);
