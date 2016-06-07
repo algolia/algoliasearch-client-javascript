@@ -51,6 +51,10 @@ test('index.getObject', getObject);
 test('index.browseFrom', browseFrom);
 test('index.browseAll', browseAll);
 
+if (canPUT) {
+  test('synonyms API', synonyms);
+}
+
 if (!isABrowser) {
   test('client.generateSecuredApiKey', generateSecuredApiKey);
 }
@@ -299,6 +303,61 @@ function proxyHttpToHttps(t) {
       t.ok(content.hits.length, 'We got some content');
     }
   });
+}
+
+function synonyms(t) {
+  index.saveObject({objectID: 'synonyms-test', name: '589 Howard St., San Francisco'})
+    .then(get('taskID'))
+    .then(index.waitTask)
+    .then(function() {
+      return index.batchSynonyms([{
+        objectID: 'city',
+        type: 'synonym',
+        synonyms: ['San Francisco', 'SF']
+      }, {
+        objectID: 'street',
+        type: 'altCorrection1',
+        word: 'Street',
+        corrections: ['St']
+      }]);
+    })
+    .then(get('taskID'))
+    .then(index.waitTask)
+    .then(_.bind(t.pass, t, 'we batch added synonyms'))
+    .then(_.partial(index.searchSynonyms, {query: ''}))
+    .then(function(res) {
+      t.equal(res.hits.length, 2);
+    })
+    .then(_.partial(index.getSynonym, 'city'))
+    .then(function(synonym) {
+      t.equal('city', synonym.objectID);
+    })
+    .then(_.partial(index.search, 'Howard Street SF'))
+    .then(function(res) {
+      t.equal(1, res.hits.length);
+      t.equal('synonyms-test', res.hits[0].objectID);
+    })
+    .then(_.partial(index.deleteSynonym, 'city'))
+    .then(get('taskID'))
+    .then(index.waitTask)
+    .then(function() {
+      return index.searchSynonyms({query: '', type: 'altCorrection1'});
+    })
+    .then(function(res) {
+      t.equal(1, res.hits.length);
+      t.equal('street', res.hits[0].objectID);
+    })
+    .then(index.clearSynonyms)
+    .then(get('taskID'))
+    .then(index.waitTask)
+    .then(function() {
+      return index.searchSynonyms();
+    })
+    .then(function(res) {
+      t.equal(0, res.hits.length);
+    })
+    .then(function() {t.end();})
+    .then(noop, _.bind(t.error, t));
 }
 
 function waitKey(key, callback, tries) {

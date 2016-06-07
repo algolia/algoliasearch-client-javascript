@@ -41,7 +41,8 @@ test('AlgoliaSearch client API spec', function(t) {
     'setRequestTimeout',
     'setSecurityTags',
     'setUserToken',
-    'startQueriesBatch'];
+    'startQueriesBatch'
+  ];
 
   // Node.js only methods, not added conditionnaly because
   // they are still declared in other environments,

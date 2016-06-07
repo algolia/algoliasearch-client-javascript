@@ -8,7 +8,10 @@ module.exports = {
   expectedRequest: {
     method: 'GET',
     URL: {
-      pathname: '/1/indexes/%s/settings'
+      pathname: '/1/indexes/%s/settings',
+      query: {
+        getVersion: '2'
+      }
     }
   }
 };
