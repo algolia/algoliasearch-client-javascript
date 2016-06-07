@@ -588,7 +588,7 @@ If you were using our Node.js version (V1, npm `algolia-search`), [read the migr
 Add a new object to the Index
 ==================
 
-Each entry in an index has a unique identifier called `objectID`. There are two ways to add en entry to the index:
+Each entry in an index has a unique identifier called `objectID`. There are two ways to add an entry to the index:
 
  1. Using automatic `objectID` assignment. You will be able to access it in the answer.
  2. Supplying your own `objectID`.
