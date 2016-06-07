@@ -314,23 +314,33 @@ We provide a specific [AngularJS](https://angularjs.org/) build that is using th
 
 It can be used with callbacks or [AngularJS promises](https://docs.angularjs.org/api/ng/service/$q).
 
+Also see our [AngularJS example](https://github.com/algolia/algoliasearch-client-js/blob/master/examples/angular.html)
+on github.
+
 ```html
-<script src="//cdn.jsdelivr.net/angularjs/1.3.14/angular.min.js"></script>
+<script src="//cdn.jsdelivr.net/angularjs/1/angular.min.js"></script>
 <script src="//cdn.jsdelivr.net/algoliasearch/3/algoliasearch.angular.min.js"></script>
 <script>
   angular
     .module('myapp', ['algoliasearch'])
     .controller('SearchCtrl', ['$scope', 'algolia', function($scope, algolia) {
-      $scope.query = '';
-      $scope.hits = [];
+      $scope.search = {
+        query: '',
+        hits: []
+      };
       var client = algolia.Client('ApplicationID', 'apiKey');
       var index = client.initIndex('indexName');
-      index.search('something')
-        .then(function searchSuccess(content) {
-          console.log(content);
-        }, function searchFailure(err) {
-          console.log(err);
+
+      $scope.$watch('search.query', function() {
+        index.search($scope.search.query)
+          .then(function searchSuccess(content) {
+            console.log(content);
+            // add content of search results to scope for display in view
+            $scope.search.hits = content.hits;
+          }, function searchFailure(err) {
+            console.log(err);
         });
+      });
     }]);
 </script>
 ```
