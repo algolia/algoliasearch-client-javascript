@@ -35,34 +35,34 @@
     </div>
 
     <script type="text/javascript">
-    
+
       angular
         .module('myapp', ['algoliasearch', 'ngSanitize'])
         .controller('SearchCtrl', ['$scope', 'algolia', function($scope, algolia) {
 
           // Replace the following values by your ApplicationID and ApiKey.
           var client = algolia.Client('APPLICATION_ID', 'API_KEY');
-          
+
           // Replace the following value by the name of the index you want to query.
           var index = client.initIndex('INDEX');
 
-          $scope.algolia = {
+          $scope.search = {
             'query' : '',
             'hits' : []
           };
-          
-          $scope.$watch('algolia.query', function() {
-            index.search($scope.algolia.query)
+
+          $scope.$watch('search.query', function() {
+            index.search($scope.search.query)
               .then(function searchSuccess(content) {
                 console.log(content);
                 // add content of search results to scope for display in view
-                $scope.algolia.hits = content.hits;
+                $scope.search.hits = content.hits;
               }, function searchFailure(err) {
                 console.log(err);
             });
           });
         }]);
-        
+
     </script>
   </body>
 </html>
