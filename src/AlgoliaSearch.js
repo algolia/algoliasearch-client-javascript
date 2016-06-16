@@ -79,25 +79,38 @@ AlgoliaSearch.prototype.copyIndex = function(srcIndexName, dstIndexName, callbac
  * @param offset Specify the first entry to retrieve (0-based, 0 is the most recent log entry).
  * @param length Specify the maximum number of entries to retrieve starting
  * at offset. Maximum allowed value: 1000.
+ * @param type Specify the maximum number of entries to retrieve starting
+ * at offset. Maximum allowed value: 1000.
  * @param callback the result callback called with two arguments
  *  error: null or Error('message')
  *  content: the server answer that contains the task ID
  */
 AlgoliaSearch.prototype.getLogs = function(offset, length, callback) {
-  if (arguments.length === 0 || typeof offset === 'function') {
+  var clone = require('./clone.js');
+  var params = {};
+  if (typeof offset === 'object') {
+    // getLogs(params)
+    params = clone(offset);
+    callback = length;
+  } else if (arguments.length === 0 || typeof offset === 'function') {
     // getLogs([cb])
     callback = offset;
-    offset = 0;
-    length = 10;
   } else if (arguments.length === 1 || typeof length === 'function') {
     // getLogs(1, [cb)]
     callback = length;
-    length = 10;
+    params.offset = offset;
+  } else {
+    // getLogs(1, 2, [cb])
+    params.offset = offset;
+    params.length = length;
   }
+
+  if (params.offset === undefined) params.offset = 0;
+  if (params.length === undefined) params.length = 10;
 
   return this._jsonRequest({
     method: 'GET',
-    url: '/1/logs?offset=' + offset + '&length=' + length,
+    url: '/1/logs?' + this._getSearchParams(params, ''),
     hostType: 'read',
     callback: callback
   });
