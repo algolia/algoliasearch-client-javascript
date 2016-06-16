@@ -2,6 +2,8 @@ CHANGELOG
 
 2016-06-16 3.15.1
 
+  * fix(json): avoid throwing when late JSON response
+    fixes #284
   * fix(nodejs): allow universal lite applications
     require('algoliasearch/lite') should work to
     facilitate universal applications builds using
