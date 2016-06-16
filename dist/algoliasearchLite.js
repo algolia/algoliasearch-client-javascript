@@ -1,4 +1,4 @@
-/*! algoliasearch 3.15.0 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
+/*! algoliasearch 3.15.1 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.algoliasearch = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 // shim for using process in browser
 
@@ -2917,13 +2917,10 @@ function jsonpRequest(url, opts, cb) {
   var done = false;
 
   window[cbName] = function(data) {
-    try {
-      delete window[cbName];
-    } catch (e) {
-      window[cbName] = undefined;
-    }
+    removeGlobals();
 
     if (timedOut) {
+      opts.debug('JSONP: Late answer, ignoring');
       return;
     }
 
@@ -2990,19 +2987,19 @@ function jsonpRequest(url, opts, cb) {
     script.onreadystatechange = null;
     script.onerror = null;
     head.removeChild(script);
+  }
 
+  function removeGlobals() {
     try {
       delete window[cbName];
       delete window[cbName + '_loaded'];
     } catch (e) {
-      window[cbName] = null;
-      window[cbName + '_loaded'] = null;
+      window[cbName] = window[cbName + '_loaded'] = undefined;
     }
   }
 
   function timeout() {
     opts.debug('JSONP: Script timeout');
-
     timedOut = true;
     clean();
     cb(new errors.RequestTimeout());
@@ -3228,7 +3225,7 @@ function createPlacesClient(algoliasearch) {
 },{"18":18,"19":19}],25:[function(require,module,exports){
 'use strict';
 
-module.exports = '3.15.0';
+module.exports = '3.15.1';
 
 },{}]},{},[13])(13)
 });
