@@ -24,13 +24,10 @@ function jsonpRequest(url, opts, cb) {
   var done = false;
 
   window[cbName] = function(data) {
-    try {
-      delete window[cbName];
-    } catch (e) {
-      window[cbName] = undefined;
-    }
+    removeGlobals();
 
     if (timedOut) {
+      opts.debug('JSONP: Late answer, ignoring');
       return;
     }
 
@@ -97,19 +94,19 @@ function jsonpRequest(url, opts, cb) {
     script.onreadystatechange = null;
     script.onerror = null;
     head.removeChild(script);
+  }
 
+  function removeGlobals() {
     try {
       delete window[cbName];
       delete window[cbName + '_loaded'];
     } catch (e) {
-      window[cbName] = null;
-      window[cbName + '_loaded'] = null;
+      window[cbName] = window[cbName + '_loaded'] = undefined;
     }
   }
 
   function timeout() {
     opts.debug('JSONP: Script timeout');
-
     timedOut = true;
     clean();
     cb(new errors.RequestTimeout());
