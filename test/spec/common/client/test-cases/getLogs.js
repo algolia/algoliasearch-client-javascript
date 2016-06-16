@@ -57,5 +57,34 @@ module.exports = [
         }
       }
     }
+  ),
+  merge(
+    cloneDeep(baseTestCase), {
+      testName: 'client.getLogs(params, cb)',
+      callArguments: [{offset: 200}, sinon.spy()],
+      expectedRequest: {
+        URL: {
+          query: {
+            offset: '200',
+            length: '10'
+          }
+        }
+      }
+    }
+  ),
+  merge(
+    cloneDeep(baseTestCase), {
+      testName: 'client.getLogs(params, cb)',
+      callArguments: [{type: 'error'}, sinon.spy()],
+      expectedRequest: {
+        URL: {
+          query: {
+            offset: '0',
+            length: '10',
+            type: 'error'
+          }
+        }
+      }
+    }
   )
 ];
