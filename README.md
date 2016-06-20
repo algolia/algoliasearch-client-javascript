@@ -3017,13 +3017,11 @@ You can retrieve the logs of your last 1,000 API calls and browse them using the
 </tbody></table>
 
 ```js
-// Get last 10 log entries (default)
-client.getLogs(function(err, content) {
-  console.log(content);
-});
-
-// Get last 100 log entries
-client.getLogs(0, 100, function(err, content) {
+client.getLogs({
+  offset: 100, // where to start from, default to 0
+  length: 100, // how much lines do you want, default to 10
+  type: 'error' // which logs do you want, default to no value (all)
+}, function(err, content) {
   console.log(content);
 });
 ```
