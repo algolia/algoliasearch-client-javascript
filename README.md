@@ -1050,7 +1050,7 @@ You can use the following optional arguments:
         <p>This parameter control how the <code>exact</code> ranking criterion is computed when the query contains one word. There is three different values:</p>
 
 <ul>
-<li><p><code>false</code>: no exact on single word query</p></li>
+<li><p><code>none</code>: no exact on single word query</p></li>
 <li><p><code>word</code>: exact set to 1 if the query word is found in the record. The query word needs to have at least 3 chars and not be part of our stop words dictionary</p></li>
 <li><p><code>attribute</code> (default): exact set to 1 if there is an attribute containing a string equals to the query</p></li>
 </ul>
@@ -2439,7 +2439,7 @@ To get a full description of how the Ranking works, you can have a look at our <
         <p>This parameter controls how the <code>exact</code> ranking criterion is computed when the query contains one word. There is three different values:</p>
 
 <ul>
-<li><p><code>false</code>: no <code>exact</code> on single word query</p></li>
+<li><p><code>none</code>: no <code>exact</code> on single word query</p></li>
 <li><p><code>word</code>: <code>exact</code> set to 1 if the query word is found in the record. The query word needs to have at least 3 chars and not be part of our stop words dictionary</p></li>
 <li><p><code>attribute</code> (default): exact set to 1 if there is an attribute containing a string equals to the query</p></li>
 </ul>
