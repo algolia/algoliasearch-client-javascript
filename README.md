@@ -265,7 +265,7 @@ We strongly encourage you to have a look at those libraries because they are
 packaged with a lot of options that will cover most of your needs without
 requiring you to do all the plumbing.
 
-To build your frontend search experience, also check out our [examples](./examples/) and [guides](https://www.algolia.com/doc#search).
+To build your frontend search experience, also check out our [guides](https://www.algolia.com/doc#search).
 
 #### Vanilla JavaScript
 ```html
