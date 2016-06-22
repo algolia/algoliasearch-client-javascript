@@ -1,4 +1,4 @@
-/*! algoliasearch 3.15.1 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
+/*! algoliasearch 3.16.0 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
 (function(f){var g;if(typeof window!=='undefined'){g=window}else if(typeof self!=='undefined'){g=self}g.ALGOLIA_MIGRATION_LAYER=f()})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 
 module.exports = function load (src, opts, cb) {
@@ -4163,11 +4163,19 @@ Index.prototype.batchSynonyms = function(synonyms, opts, callback) {
 *  error: null or Error('message')
 *  content: the server answer or the error message if a failure occured
 */
-Index.prototype.setSettings = function(settings, callback) {
+Index.prototype.setSettings = function(settings, opts, callback) {
+  if (arguments.length === 1 || typeof opts === 'function') {
+    callback = opts;
+    opts = {};
+  }
+
+  var forwardToSlaves = opts.forwardToSlaves || false;
+
   var indexObj = this;
   return this.as._jsonRequest({
     method: 'PUT',
-    url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/settings',
+    url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/settings?forwardToSlaves='
+      + (forwardToSlaves ? 'true' : 'false'),
     hostType: 'write',
     body: settings,
     callback: callback
@@ -5510,6 +5518,6 @@ function createPlacesClient(algoliasearch) {
 },{"23":23,"24":24}],32:[function(require,module,exports){
 'use strict';
 
-module.exports = '3.15.1';
+module.exports = '3.16.0';
 
 },{}]},{},[17]);

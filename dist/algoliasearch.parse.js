@@ -2098,11 +2098,19 @@ module.exports =
 	*  error: null or Error('message')
 	*  content: the server answer or the error message if a failure occured
 	*/
-	Index.prototype.setSettings = function(settings, callback) {
+	Index.prototype.setSettings = function(settings, opts, callback) {
+	  if (arguments.length === 1 || typeof opts === 'function') {
+	    callback = opts;
+	    opts = {};
+	  }
+
+	  var forwardToSlaves = opts.forwardToSlaves || false;
+
 	  var indexObj = this;
 	  return this.as._jsonRequest({
 	    method: 'PUT',
-	    url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/settings',
+	    url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/settings?forwardToSlaves='
+	      + (forwardToSlaves ? 'true' : 'false'),
 	    hostType: 'write',
 	    body: settings,
 	    callback: callback
@@ -3572,7 +3580,7 @@ module.exports =
 
 	
 
-	module.exports = '3.15.1';
+	module.exports = '3.16.0';
 
 
 /***/ }
