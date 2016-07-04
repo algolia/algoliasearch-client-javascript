@@ -1774,6 +1774,17 @@ index.setSettings({'customRanking': ['desc(followers)']}, function(err) {
 });
 ```
 
+## Slave settings
+
+You can forward all settings updates to the slaves of an index by using the `forwardToSlaves` option:
+
+```js
+index.setSettings({'customRanking': ['desc(followers)']}, {forwardToSlaves: true}, function(err) {
+  if (!err) {
+    console.log('success');
+  }
+});
+```
 
 ## Indexing parameters
 
