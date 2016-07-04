@@ -1339,7 +1339,7 @@ You can use the following optional arguments:
         </div>
       </td>
       <td class='client-readme-param-content'>
-        <p>A string that contains the list of attributes you want to highlight according to the query. Attributes are separated by commas. You can also use a string array encoding (for example <code>[&quot;name&quot;,&quot;address&quot;]</code>). If an attribute has no match for the query, the raw value is returned. By default, all indexed attributes are highlighted. You can use <code>*</code> if you want to highlight all attributes. A matchLevel is returned for each highlighted attribute and can contain:</p>
+        <p>A string that contains the list of attributes you want to highlight according to the query. Attributes are separated by commas. You can also use a string array encoding (for example <code>[&quot;name&quot;,&quot;address&quot;]</code>). If an attribute has no match for the query, the raw value is returned. By default, all indexed attributes are highlighted (as long as they are strings). You can use <code>*</code> if you want to highlight all attributes. A matchLevel is returned for each highlighted attribute and can contain:</p>
 
 <ul>
 <li><strong>full</strong>: If all the query terms were found in the attribute.</li>
@@ -1774,6 +1774,17 @@ index.setSettings({'customRanking': ['desc(followers)']}, function(err) {
 });
 ```
 
+## Slave settings
+
+You can forward all settings updates to the slaves of an index by using the `forwardToSlaves` option:
+
+```js
+index.setSettings({'customRanking': ['desc(followers)']}, {forwardToSlaves: true}, function(err) {
+  if (!err) {
+    console.log('success');
+  }
+});
+```
 
 ## Indexing parameters
 
