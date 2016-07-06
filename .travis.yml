@@ -1,9 +1,6 @@
 language: node_js
 node_js:
-  - stable
-before_install:
-  - npm install -g npm@2 # npm3 buggy
-  - npm prune
+  - 6
 before_cache: npm prune
 install: npm install
 script: npm run test-ci
@@ -36,5 +33,3 @@ env:
     - secure: "J57JGcXoxle+qm6EKaDS6V4wfHIiilBWLM6TXxdRydiwWrYxlozfJY9CxOJvtm3SAB+lenNqgQGe3xTqhB1BigrSKsLC+P4Q/T5ckZ5lR58p2K4NlUdhhtsfZ7tWlqP1QP+DY9lon1YHj7DML51zWRHivengUYLAnRmhV+NnU1M="
     # PLACES_APIKEY
     - secure: "iRRCr4v+2ljvSfcgbwlp6eEJ7LPAZy3PEO4HFw/Cvdh9Ep+gSDjTxwRKDM9SYka0Jgptz305qXe3F+HnwpEc6D6Qaj3pR7LSU3msKyNSmUbBAlKKumRyIHRc2KE4544cxdp0vH5MWLORuoHOUDP3hcWYKGhUfwEbnl1kciT9mbY="
-
-
