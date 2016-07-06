@@ -17,8 +17,7 @@
     "release": "git clean dist/ -f && git checkout dist/ && npm install && ./scripts/release && APP_ENV=production npm run build",
     "test": "./scripts/test",
     "test-ci": "./scripts/test-ci",
-    "lint": "./scripts/lint",
-    "shrinkwrap": "npm-shrinkwrap --dev"
+    "lint": "./scripts/lint"
   },
   "browserify": {
     "transform": [
@@ -93,13 +92,12 @@
     "lodash-compat": "^3.10.2",
     "morgan": "^1.7.0",
     "mversion": "^1.10.1",
-    "npm-shrinkwrap": "^200.5.1",
     "phantomjs-prebuilt": "^2.1.7",
     "pretty-bytes": "^2.0.1",
     "proxy": "^0.2.4",
     "proxy-agent": "^2.0.0",
     "self-signed": "^1.3.1",
-    "server-destroy": "^1.0.1",
+    "server-destroy-vvo": "^1.0.1",
     "sinon": "^1.17.4",
     "superagent": "^1.8.3",
     "tape": "^4.5.1",
