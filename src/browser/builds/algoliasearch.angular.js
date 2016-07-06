@@ -17,7 +17,7 @@ var places = require('../../places.js');
 // expose original algoliasearch fn in window
 window.algoliasearch = require('./algoliasearch');
 
-if (process.env.APP_ENV === 'development') {
+if (process.env.NODE_ENV === 'development') {
   require('debug').enable('algoliasearch*');
 }
 

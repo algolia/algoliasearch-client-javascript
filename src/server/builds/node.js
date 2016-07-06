@@ -22,7 +22,7 @@ if (isNotSupported) {
   throw new errors.AlgoliaSearchError('Node.js version ' + process.version + ' is not supported');
 }
 
-if (process.env.APP_ENV === 'development') {
+if (process.env.NODE_ENV === 'development') {
   require('debug').enable('algoliasearch*');
 }
 

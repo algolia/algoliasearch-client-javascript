@@ -14,7 +14,7 @@ module.exports = function createAlgoliasearch(AlgoliaSearch, uaSuffix) {
   var places = require('../places.js');
   uaSuffix = uaSuffix || '';
 
-  if (process.env.APP_ENV === 'development') {
+  if (process.env.NODE_ENV === 'development') {
     require('debug').enable('algoliasearch*');
   }
 

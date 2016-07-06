@@ -1,5 +1,10 @@
 CHANGELOG
 
+2016-07-06 3.17.0
+
+  * feat(errors): add statusCode to errors
+  * chore(shrinkwrap): completely remove shrinkwrap
+
 2016-06-22 3.16.0
 
   * feat(index.setSettings): add forwardToSlaves option

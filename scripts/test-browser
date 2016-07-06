@@ -13,7 +13,7 @@ fi
 echo "Browser test"
 
 echo "Browser test: build"
-APP_ENV=production npm run build
+NODE_ENV=production npm run build
 
 echo "Browser test: integration"
 DEBUG=zuul* zuul --no-coverage -- test/run-integration.js

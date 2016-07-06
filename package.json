@@ -1,6 +1,6 @@
 {
   "name": "algoliasearch",
-  "version": "3.16.0",
+  "version": "3.17.0",
   "description": "AlgoliaSearch API JavaScript client",
   "main": "index.js",
   "browser": {
@@ -101,7 +101,7 @@
     "sinon": "^1.17.4",
     "superagent": "^2.0.0",
     "tape": "^4.5.1",
-    "uglify-js": "^2.6.2",
+    "uglify-js": "2.6.4",
     "url-parse": "^1.1.1",
     "watchify": "^3.7.0",
     "webpack": "^1.13.1",
