@@ -11,7 +11,7 @@ function createHttpsServer() {
   process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
   var https = require('https');
-  var enableDestroy = require('server-destroy');
+  var enableDestroy = require('server-destroy-vvo');
   var generate = require('self-signed');
   var pems = generate({
     name: 'localhost',
@@ -36,7 +36,7 @@ function createHttpsServer() {
 
 function createHttpServer() {
   var http = require('http');
-  var enableDestroy = require('server-destroy');
+  var enableDestroy = require('server-destroy-vvo');
   var server = http.createServer();
   server.listen(0, '127.0.0.1');
   enableDestroy(server);

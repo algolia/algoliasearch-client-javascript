@@ -274,7 +274,6 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
         httpResponse.statusCode, status, httpResponse.headers);
 
       var httpResponseOk = Math.floor(status / 100) === 2;
-      var shouldRetry = Math.floor(status / 100) !== 4 && Math.floor(status / 100) !== 2;
 
       var endTime = new Date();
       debugData.push({
@@ -287,7 +286,8 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
         url: reqOpts.url,
         startTime: startTime,
         endTime: endTime,
-        duration: endTime - startTime
+        duration: endTime - startTime,
+        statusCode: status
       });
 
       if (httpResponseOk) {
@@ -298,6 +298,8 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
         return httpResponse.body;
       }
 
+      var shouldRetry = Math.floor(status / 100) !== 4;
+
       if (shouldRetry) {
         tries += 1;
         return retryRequest();
@@ -307,7 +309,7 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
 
       // no success and no retry => fail
       var unrecoverableError = new errors.AlgoliaSearchError(
-        httpResponse.body && httpResponse.body.message, {debugData: debugData}
+        httpResponse.body && httpResponse.body.message, {debugData: debugData, statusCode: status}
       );
 
       return client._promise.reject(unrecoverableError);

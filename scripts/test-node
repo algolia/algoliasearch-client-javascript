@@ -17,55 +17,36 @@ fi
 [ -z $TRAVIS_PULL_REQUEST ] && TRAVIS_PULL_REQUEST='false'
 [ -z $TRAVIS_BUILD_NUMBER ] && TRAVIS_BUILD_NUMBER='false'
 
-echo "Node test 4"
-
-# always test first on node 4, node v5 embeds npm@2
-# so we only test it
-echo "Node test 4: unit"
-nvm install 4
-
-if [ $CI == 'false' ]; then
-  node test/run-node.js
-else
-  node test/run-node.js
-fi
+nvm install 6
+node test/run-node.js
 
 # in CI we launch integration test
 [ $CI == 'true' ] && echo "Node test 4: integration" && node test/run-integration.js
 
 # in a PR or in local environement, test only on node 4
 if [ $TRAVIS_PULL_REQUEST != 'false' ] || [ $CI == 'false' ]; then
-  echo 'Skipping 0.10 and 0.12 tests (PR or local)'
+  echo 'Skipping other nodejs version testing (PR or local)'
   exit 0
 else
-  echo "Node test 0.10"
-
-  nvm install 0.10
-  echo "Node test 0.10: unit"
-  echo "(Skipping, flakky)"
+  echo "Node test 6: integration"
+  node test/run-integration.js
 
   echo "Node test 0.10: integration"
+  nvm install 0.10
   node test/run-integration.js
-
-  echo "Node test 0.12"
-  nvm install 0.12
-
-  echo "Node test 0.12: unit"
-  echo "(Skipping, flakky)"
 
   echo "Node test 0.12: integration"
+  nvm install 0.12
   node test/run-integration.js
 
-  echo "Node test 5"
-  nvm install 5
-  npm install -g npm@2 # force npm2, npm3 still buggy
-
-  echo "Node test 5: unit"
-  node test/run-node.js
+  echo "Node test 4: integration"
+  nvm install 4
+  node test/run-integration.js
 
   echo "Node test 5: integration"
+  nvm install 5
   node test/run-integration.js
 fi
 
-# switch back to node.js 4
-nvm use 4
+# switch back to node.js 6
+nvm use 6
