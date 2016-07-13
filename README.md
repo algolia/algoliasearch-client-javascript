@@ -131,7 +131,7 @@ bower install algoliasearch -S
 To include the latest releases and all upcoming features and patches, use this:
 
 ```html
-<script src="//cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
+<script src="https://cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
 ```
 
 ##### Other CDNS
@@ -217,7 +217,7 @@ is important to you or if you like to include only what you need.
 Find it on jsDelivr:
 
 ```html
-<script src="//cdn.jsdelivr.net/algoliasearch/3/algoliasearchLite.min.js"></script>
+<script src="https://cdn.jsdelivr.net/algoliasearch/3/algoliasearchLite.min.js"></script>
 ```
 
 You can also use it with npm like so:
@@ -269,7 +269,7 @@ To build your frontend search experience, also check out our [guides](https://ww
 
 #### Vanilla JavaScript
 ```html
-<script src="//cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
+<script src="https://cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
 <script>
   var client = algoliasearch('ApplicationID', 'apiKey');
   var index = client.initIndex('indexName');
@@ -296,8 +296,8 @@ We provide a specific [jQuery](http://jquery.com/) build that will use [jQuery.a
 It can be used with callbacks or [jQuery promises](https://api.jquery.com/promise/).
 
 ```html
-<script src="//cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js"></script>
-<script src="//cdn.jsdelivr.net/algoliasearch/3/algoliasearch.jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/algoliasearch/3/algoliasearch.jquery.min.js"></script>
 <script>
   var client = $.algolia.Client('ApplicationID', 'apiKey');
   var index = client.initIndex('indexName');
@@ -318,8 +318,8 @@ Also see our [AngularJS example](https://github.com/algolia/algoliasearch-client
 on github.
 
 ```html
-<script src="//cdn.jsdelivr.net/angularjs/1/angular.min.js"></script>
-<script src="//cdn.jsdelivr.net/algoliasearch/3/algoliasearch.angular.min.js"></script>
+<script src="https://cdn.jsdelivr.net/angularjs/1/angular.min.js"></script>
+<script src="https://cdn.jsdelivr.net/algoliasearch/3/algoliasearch.angular.min.js"></script>
 <script>
   angular
     .module('myapp', ['algoliasearch'])
