@@ -2,17 +2,19 @@
 
 # Algolia Search API Client for JavaScript
 
-<!--/NO_HTML-->
 
 
 
 
 
-<!--NO_HTML-->
+
+
+
+
 
 [Algolia Search](https://www.algolia.com) is a hosted full-text, numerical, and faceted search engine capable of delivering realtime results from the first keystroke.
 
-<!--/NO_HTML-->
+
 
 
 
@@ -44,7 +46,6 @@ When not using any module loader, it will export an `algoliasearch` function in 
 
 
 
-<!--NO_HTML-->
 
 Table of Contents
 -----------------
@@ -122,9 +123,6 @@ Advanced
 1. [Get Logs](#get-logs---getlogs)
 
 
-<!--/NO_HTML-->
-
-<!--NO_HTML-->
 
 Guides & Tutorials
 ================
@@ -143,7 +141,6 @@ Check our [online guides](https://www.algolia.com/doc):
  * [REST API](https://www.algolia.com/doc/rest)
 
 
-<!--/NO_HTML-->
 
 
 
@@ -158,6 +155,8 @@ If you were using our browser version (V2), [read the migration guide](https://g
 If you were using our Node.js version (V1, npm `algolia-search`), [read the migration guide](https://github.com/algolia/algoliasearch-client-js/wiki/Node.js-v1.x.x-migration-guide)
 
 
+
+<!--/NO_HTML-->
 
 
 
@@ -977,7 +976,7 @@ index.deleteByQuery('John', {
 
 
 
-### Wait for an indexing operation - `waitTask`
+### Wait for operations - `waitTask`
 
 All write operations in Algolia are asynchronous by design.
 
