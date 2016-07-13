@@ -102,6 +102,7 @@ Manage Indices
 1. [Move an index](#move-index---moveindex)
 
 Api Keys
+
 1. [Generate API keys](#generate-key---generatesecuredapikey)
 
 Advanced
@@ -2265,6 +2266,8 @@ browser.on('error', function onError(err) {
 ```
 
 
+
+
 ### List api keys - `listApiKeys`
 
 To list existing keys, you can use:
@@ -2521,8 +2524,6 @@ index.getUserKeyACL('9b9335cb7235d43f75b5398c36faabcd', function(err, content) {
   console.log(content);
 });
 ```
-
-
 
 ### Multiple queries - `multipleQueries`
 
