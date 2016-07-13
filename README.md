@@ -47,8 +47,8 @@ When not using any module loader, it will export an `algoliasearch` function in 
 
 
 
-Table of Contents
------------------
+## Table of Contents
+
 **Getting Started**
 
 1. [Setup](#setup)
@@ -124,8 +124,8 @@ Advanced
 
 
 
-Guides & Tutorials
-================
+## Guides & Tutorials
+
 Check our [online guides](https://www.algolia.com/doc):
  * [Data Formatting](https://www.algolia.com/doc/indexing/formatting-your-data)
  * [Import and Synchronize data](https://www.algolia.com/doc/indexing/import-synchronize-data/node)
