@@ -48,7 +48,7 @@ When not using any module loader, it will export an `algoliasearch` function in 
 
 **Getting Started**
 
-1. [Setup](#setup)
+1. [Getting started](#getting-started)
   - [Frontend](#frontend)
   - [Node.js](#nodejs)
   - [Parse.com](#parsecom-)
@@ -67,7 +67,7 @@ When not using any module loader, it will export an `algoliasearch` function in 
 1. [Proxy support](#proxy-support)
 1. [Keep-alive](#keep-alive)
 1. [Debugging](#debugging)
-1. [Guides & Tutorials](#guides-tutorials)
+1. [Guides & Tutorials](#guides--tutorials)
 1. [Old JavaScript clients](#old-javascript-clients)
 
 **Commands Reference**
@@ -123,7 +123,7 @@ Advanced
 1. [Wait for operations](#wait-for-operations---waittask)
 1. [Multiple queries](#multiple-queries---multiplequeries)
 1. [Delete by query](#delete-by-query---deletebyquery)
-1. [Backup / Export an index](#backup-/-export-an-index---browse)
+1. [Backup / Export an index](#backup-)-export-an-index---browse)
 1. [List api keys](#list-api-keys---listapikeys)
 1. [Add user key](#add-user-key---adduserkey)
 1. [Update user key](#update-user-key---updateuserkey)
