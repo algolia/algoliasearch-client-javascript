@@ -2050,7 +2050,7 @@ For example:
 
 ### Create an index
 
-To create an index, you need to perform can perform any indexing operation like:
+To create an index, you need to perform any indexing operation like:
 - set settings
 - add object
 
