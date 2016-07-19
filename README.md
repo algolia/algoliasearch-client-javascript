@@ -180,7 +180,7 @@ If you were using our Node.js version (V1, npm `algolia-search`), [read the migr
 
 You can either use a package manager like npm or include a `<script>` tag.
 
-### Node.js / React Native / Browserify / webpack
+#### Node.js / React Native / Browserify / webpack
 
 We are [browserify](http://browserify.org/)able and [webpack](http://webpack.github.io/) friendly.
 
@@ -1280,11 +1280,9 @@ you can have a look at our [Ranking guide](https://www.algolia.com/doc/relevance
 
 #### slaves
 
-#### ranking
-
 - scope: `settings`
 - type: `array of strings`
-- default: `['typo', 'geo', 'words', 'filters', 'proximity', 'attribute', 'exact', 'custom']`
+- default: `[]`
 
 
 The list of indices on which you want to replicate all write operations.
