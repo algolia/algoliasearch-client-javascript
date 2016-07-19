@@ -1702,20 +1702,20 @@ A string that contains the comma separated list of words that should be consider
 #### removeStopWords
 
 - scope: `settings`, `search`
-- type: `boolean`
+- type: `boolean`, `array of strings`
 - default: `false`
 
 
-Remove stop words from the query **before** executing it. Defaults to `false`.
-Use a boolean to enable/disable all 41 supported languages and a comma separated list
-of iso codes of the languages you want to use consider to enable the stopwords removal
-on a subset of them (select the one you have in your records).
+Remove stop words from the query **before** executing it. It can be:
 
-In most use-cases, **you shouldn't need to enable this option**.
+- a **boolean**: enable or disable stop words for all 41 supported languages; or
+- a **list of language ISO codes** (as a comma-separated string) for which stop words should be enabled.
 
-List of 41 supported languages with their associated iso code: Arabic=ar, Armenian=hy, Basque=eu, Bengali=bn, Brazilian=pt-br, Bulgarian=bg, Catalan=ca, Chinese=zh, Czech=cs, Danish=da, Dutch=nl, English=en, Finnish=fi, French=fr, Galician=gl, German=de, Greek=el, Hindi=hi, Hungarian=hu, Indonesian=id, Irish=ga, Italian=it, Japanese=ja, Korean=ko, Kurdish=ku, Latvian=lv, Lithuanian=lt, Marathi=mr, Norwegian=no, Persian (Farsi)=fa, Polish=pl, Portugese=pt, Romanian=ro, Russian=ru, Slovak=sk, Spanish=es, Swedish=sv, Thai=th, Turkish=tr, Ukranian=uk, Urdu=ur
+In most use-cases, **we don’t recommend enabling this option**.
 
-Stop words removal is applied on query words that are not interpreted as a prefix. The behavior depends of the queryType parameter:
+List of 41 supported languages with their associated iso code: Arabic=`ar`, Armenian=`hy`, Basque=`eu`, Bengali=`bn`, Brazilian=`pt-br`, Bulgarian=`bg`, Catalan=`ca`, Chinese=`zh`, Czech=`cs`, Danish=`da`, Dutch=`nl`, English=`en`, Finnish=`fi`, French=`fr`, Galician=`gl`, German=`de`, Greek=`el`, Hindi=`hi`, Hungarian=`hu`, Indonesian=`id`, Irish=`ga`, Italian=`it`, Japanese=`ja`, Korean=`ko`, Kurdish=`ku`, Latvian=`lv`, Lithuanian=`lt`, Marathi=`mr`, Norwegian=`no`, Persian (Farsi)=`fa`, Polish=`pl`, Portugese=`pt`, Romanian=`ro`, Russian=`ru`, Slovak=`sk`, Spanish=`es`, Swedish=`sv`, Thai=`th`, Turkish=`tr`, Ukranian=`uk`, Urdu=`ur`.
+
+Stop words removal is applied on query words that are not interpreted as a prefix. The behavior depends of the `queryType` parameter:
 
 * `queryType=prefixLast` means the last query word is a prefix and it won’t be considered for stop words removal
 * `queryType=prefixNone` means no query word are prefix, stop words removal will be applied on all query words
