@@ -73,62 +73,62 @@ When not using any module loader, it will export an `algoliasearch` function in 
 
 Getting started
 
-1. [Install and init](##install-and-init---initindex)
+1. [Install and init](#install-and-init---initindex)
 
 Search
 
-1. [Search in an index](##search-in-an-index---search)
-1. [Find by IDs](##find-by-ids---getobjects)
+1. [Search in an index](#search-in-an-index---search)
+1. [Find by IDs](#find-by-ids---getobjects)
 
 Indexing
 
-1. [Add objects](##add-objects---addobjects)
-1. [Update objects](##update-objects---saveobjects)
-1. [Partial update](##partial-update---partialupdateobjects)
-1. [Delete objects](##delete-objects---deleteobjects)
+1. [Add objects](#add-objects---addobjects)
+1. [Update objects](#update-objects---saveobjects)
+1. [Partial update](#partial-update---partialupdateobjects)
+1. [Delete objects](#delete-objects---deleteobjects)
 
 Settings
 
-1. [Get settings](##get-settings---getsettings)
-1. [Set settings](##set-settings---setsettings)
+1. [Get settings](#get-settings---getsettings)
+1. [Set settings](#set-settings---setsettings)
 
 Manage Indices
 
-1. [List indices](##list-indices---listindexes)
-1. [Delete index](##delete-index---deleteindex)
-1. [Clear index](##clear-index---clearindex)
-1. [Copy index](##copy-index---copyindex)
-1. [Move index](##move-index---moveindex)
+1. [List indices](#list-indices---listindexes)
+1. [Delete index](#delete-index---deleteindex)
+1. [Clear index](#clear-index---clearindex)
+1. [Copy index](#copy-index---copyindex)
+1. [Move index](#move-index---moveindex)
 
 Api Keys
 
-1. [Generate key](##generate-key---generatesecuredapikey)
+1. [Generate key](#generate-key---generatesecuredapikey)
 
 
 Synonyms
 
-1. [Save synonym](##save-synonym---savesynonym)
-1. [Batch synonyms](##batch-synonyms---batchsynonyms)
+1. [Save synonym](#save-synonym---savesynonym)
+1. [Batch synonyms](#batch-synonyms---batchsynonyms)
 1. [Editing Synonyms](#editing-synonyms)
-1. [Delete Synonyms](##delete-synonyms---delete_synonyms)
-1. [Clear all synonyms](##clear-all-synonyms---clearsynonyms)
-1. [Get synonym](##get-synonym---getsynonym)
-1. [Search synonyms](##search-synonyms---searchsynonyms)
+1. [Delete Synonyms](#delete-synonyms---delete_synonyms)
+1. [Clear all synonyms](#clear-all-synonyms---clearsynonyms)
+1. [Get synonym](#get-synonym---getsynonym)
+1. [Search synonyms](#search-synonyms---searchsynonyms)
 
 
 Advanced
 
-1. [Custom batch](##custom-batch---batch)
-1. [Wait for operations](##wait-for-operations---waittask)
-1. [Multiple queries](##multiple-queries---multiplequeries)
-1. [Delete by query](##delete-by-query---deletebyquery)
-1. [Backup / Export an index](##backup--export-an-index---browse)
-1. [List api keys](##list-api-keys---listapikeys)
-1. [Add user key](##add-user-key---adduserkey)
-1. [Update user key](##update-user-key---updateuserkey)
-1. [Delete user key](##delete-user-key---deleteuserkey)
-1. [Get key permissions](##get-key-permissions---getuserkeyacl)
-1. [Get Logs](##get-logs---getlogs)
+1. [Custom batch](#custom-batch---batch)
+1. [Wait for operations](#wait-for-operations---waittask)
+1. [Multiple queries](#multiple-queries---multiplequeries)
+1. [Delete by query](#delete-by-query---deletebyquery)
+1. [Backup / Export an index](#backup--export-an-index---browse)
+1. [List api keys](#list-api-keys---listapikeys)
+1. [Add user key](#add-user-key---adduserkey)
+1. [Update user key](#update-user-key---updateuserkey)
+1. [Delete user key](#delete-user-key---deleteuserkey)
+1. [Get key permissions](#get-key-permissions---getuserkeyacl)
+1. [Get Logs](#get-logs---getlogs)
 
 
 
