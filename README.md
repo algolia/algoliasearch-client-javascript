@@ -73,7 +73,8 @@ When not using any module loader, it will export an `algoliasearch` function in 
 
 Getting started
 
-1. [Install and init](#install-and-init---initindex)
+1. [Install](#install)
+1. [Init index](#init-index---initindex)
 
 Search
 
@@ -170,7 +171,7 @@ If you were using our Node.js version (V1, npm `algolia-search`), [read the migr
 
 ## Getting Started
 
-### Install and init - `initIndex`
+### Install
 
 
 
@@ -179,13 +180,13 @@ If you were using our Node.js version (V1, npm `algolia-search`), [read the migr
 
 You can either use a package manager like npm or include a `<script>` tag.
 
-#### npm
+### Node.js / React Native / Browserify / webpack
+
+We are [browserify](http://browserify.org/)able and [webpack](http://webpack.github.io/) friendly.
 
 ```sh
 npm install algoliasearch --save
 ```
-
-We are [browserify](http://browserify.org/)able and [webpack](http://webpack.github.io/) friendly.
 
 #### Bower
 
@@ -211,75 +212,6 @@ We recommend using jsDelivr, but `algoliasearch` is also available at:
 - [CDNJS](https://cdnjs.com/libraries/algoliasearch)
 - [npmcdn](https://npmcdn.com): https://npmcdn.com/algoliasearch@3/dist/algoliasearch.min.js
 
-#### Browserify, webpack
-
-```sh
-npm install algoliasearch --save
-```
-
-```js
-var algoliasearch = require('algoliasearch');
-var client = algoliasearch('applicationID', 'apiKey');
-var index = client.initIndex('indexName');
-index.search('something', function searchDone(err, content) {
-  console.log(err, content);
-});
-```
-
-### Node.js
-
-```sh
-npm install algoliasearch --save
-```
-
-```js
-var algoliasearch = require('algoliasearch');
-var client = algoliasearch('applicationID', 'apiKey');
-var index = client.initIndex('indexName');
-index.search('something', function searchDone(err, content) {
-  console.log(err, content);
-});
-```
-
-### Parse.com
-
-```sh
-curl https://raw.githubusercontent.com/algolia/algoliasearch-client-js/master/dist/algoliasearch.parse.js -o /your/parse/project/cloud/algoliasearch.parse.js
-```
-
-In `cloud/main.js` for example:
-
-```js
-var algoliasearch = require('cloud/algoliasearch.parse.js');
-var client = algoliasearch('latency', '6be0576ff61c053d5f9a3225e2a90f76');
-var index = client.initIndex('contacts');
-
-Parse.Cloud.define("hello", function(request, response) {
-  index.search('Atlenta', function(err, results) {
-    if (err) {
-      throw err;
-    }
-
-    response.success('We got ' + results.nbHits + ' results');
-  });
-});
-```
-
-### React Native
-
-```sh
-npm install algoliasearch --save
-```
-
-```js
-var algoliasearch = require('algoliasearch/reactnative');
-var client = algoliasearch('applicationID', 'apiKey');
-var index = client.initIndex('indexName');
-index.search('something', function searchDone(err, content) {
-  console.log(err, content);
-});
-```
-
 ### Search only/lite client
 
 We have a lightweight build available that can only do searches. Use it when filesize
@@ -291,17 +223,25 @@ Find it on jsDelivr:
 <script src="https://cdn.jsdelivr.net/algoliasearch/3/algoliasearchLite.min.js"></script>
 ```
 
-You can also use it with npm like so:
+
+### Init index - `initIndex`
+
+To initialize the client you need your ApplicationID and API-Key. You can find all of them on [your Algolia account](http://www.algolia.com/users/edit)
 
 ```js
-var algoliasearch = require('algoliasearch/lite');
+// var algoliasearch = require('algoliasearch');
+// var algoliasearch = require('algoliasearch/reactnative');
+// var algoliasearch = require('algoliasearch/lite');
+// or just use algoliasearch if you are using a <script> tag
+// if you are using AMD module loader, algoliasearch will not be defined in window,
+// but in the AMD modules of the page
+
 var client = algoliasearch('applicationID', 'apiKey');
 var index = client.initIndex('indexName');
 index.search('something', function searchDone(err, content) {
   console.log(err, content);
 });
 ```
-
 
 
 
