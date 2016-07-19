@@ -170,7 +170,7 @@ If you were using our Node.js version (V1, npm `algolia-search`), [read the migr
 
 ## Getting Started
 
-### Install and init- `initIndex`
+### Install and init - `initIndex`
 
 
 
@@ -618,7 +618,7 @@ index.search('something', function searchDone(err) {
 
 ## Search
 
-### Search in an index- `search`
+### Search in an index - `search`
 
 
 
@@ -757,7 +757,7 @@ Parameters that can also be used in a setSettings also have the `indexing` [scop
 
 <!--/PARAMETERS_LINK-->
 
-### Find by IDs- `getObjects`
+### Find by IDs - `getObjects`
 
 You can easily retrieve an object using its `objectID` and optionally specify a comma separated list of attributes you want:
 
@@ -786,7 +786,7 @@ index.getObjects(['myObj1', 'myObj2'], function(err, content) {
 
 ## Indexing
 
-### Add objects- `addObjects`
+### Add objects - `addObjects`
 
 Each entry in an index has a unique identifier called `objectID`. There are two ways to add an entry to the index:
 
@@ -819,7 +819,7 @@ index.addObject({
 ```
 
 
-### Update objects- `saveObjects`
+### Update objects - `saveObjects`
 
 You have three options when updating an existing object:
 
@@ -840,7 +840,7 @@ index.saveObject({
 });
 ```
 
-### Partial update- `partialUpdateObjects`
+### Partial update - `partialUpdateObjects`
 
 You have many ways to update an object's attributes:
 
@@ -939,7 +939,7 @@ Note: Here we are decrementing the value by `42`. To decrement just by one, put
 `value:1`.
 
 
-### Delete objects- `deleteObjects`
+### Delete objects - `deleteObjects`
 
 You can delete an object using its `objectID`:
 
@@ -951,7 +951,7 @@ index.deleteObject('myID', function(error) {
 });
 ```
 
-### Delete by query- `deleteByQuery`
+### Delete by query - `deleteByQuery`
 
 You can delete all objects matching a single query with the following code. Internally, the API client performs the query, deletes all matching hits, and waits until the deletions have been applied.
 
@@ -977,7 +977,7 @@ index.deleteByQuery('John', {
 });
 ```
 
-### Wait for operations- `waitTask`
+### Wait for operations - `waitTask`
 
 All write operations in Algolia are asynchronous by design.
 
@@ -1008,7 +1008,7 @@ the biggest `taskID`.
 
 ## Settings
 
-### Get settings- `getSettings`
+### Get settings - `getSettings`
 
 You can retrieve settings:
 
@@ -1018,7 +1018,7 @@ index.getSettings(function(err, content) {
 });
 ```
 
-### Set settings- `setSettings`
+### Set settings - `setSettings`
 
 ```js
 index.setSettings({'customRanking': ['desc(followers)']}, function(err) {
@@ -2044,7 +2044,7 @@ To create an index, you need to perform any indexing operation like:
 - set settings
 - add object
 
-### List indices- `listIndexes`
+### List indices - `listIndexes`
 
 You can list all your indices along with their associated information (number of entries, disk size, etc.) with the `listIndexes` method:
 
@@ -2057,7 +2057,7 @@ client.listIndexes(function(err, content) {
 
 
 
-### Delete index- `deleteIndex`
+### Delete index - `deleteIndex`
 
 You can delete an index using its name:
 
@@ -2070,7 +2070,7 @@ client.deleteIndex('contacts', function(error) {
 ```
 
 
-### Clear index- `clearIndex`
+### Clear index - `clearIndex`
 You can delete the index contents without removing settings and index specific API keys by using the clearIndex command:
 
 ```js
@@ -2080,7 +2080,7 @@ index.clearIndex(function(err, content) {
 ```
 
 
-### Copy index- `copyIndex`
+### Copy index - `copyIndex`
 
 You can easily copy or rename an existing index using the `copy` and `move` commands.
 **Note**: Move and copy commands overwrite the destination index.
@@ -2098,7 +2098,7 @@ client.copyIndex('MyIndex', 'MyIndexCopy', function(err, content) {
 ```
 
 
-### Move index- `moveIndex` 
+### Move index - `moveIndex` 
 
 The move command is particularly useful if you want to update a big index atomically from one version to another. For example, if you recreate your index `MyIndex` each night from a database by batch, you only need to:
  1. Import your database into a new index using [batches](#batch-writes). Let's call this new index `MyNewIndex`.
@@ -2123,7 +2123,7 @@ The **admin** API key provides full control of all your indices. *The admin API 
 You can also generate user API keys to control security.
 These API keys can be restricted to a set of operations or/and restricted to a given index.
 
-### Generate key- `generateSecuredApiKey`
+### Generate key - `generateSecuredApiKey`
 
 You may have a single index containing **per user** data. In that case, all records should be tagged with their associated `user_id` in order to add a `tagFilters=user_42` filter at query time to retrieve only what a user has access to. If you're using the [JavaScript client](http://github.com/algolia/algoliasearch-client-js), it will result in a security breach since the user is able to modify the `tagFilters` you've set by modifying the code from the browser. To keep using the JavaScript client (recommended for optimal latency) and target secured records, you can generate a secured API key from your backend:
 
@@ -2181,7 +2181,7 @@ index.search('another query', function(err, content) {
 
 ## Synonyms
 
-### Save synonym- `saveSynonym`
+### Save synonym - `saveSynonym`
 
 This method saves a single synonym record into the index.
 
@@ -2201,7 +2201,7 @@ index.saveSynonym({
 });
 ```
 
-### Batch synonyms- `batchSynonyms`
+### Batch synonyms - `batchSynonyms`
 
 Use the batch method to create a large number of synonyms at once,
 forward them to slave indices if desired,
@@ -2241,7 +2241,7 @@ false is the default value).
 Otherwise, the entire synonym list will be replaced only partially with the records
 in the batch update.
 
-### Delete Synonyms- `delete_synonyms`
+### Delete Synonyms - `delete_synonyms`
 
 Use the normal index delete method to delete synonyms,
 specifying the objectID of the synonym record you want to delete.
@@ -2257,7 +2257,7 @@ index.deleteSynonym('a-unique-identifier', { forwardToSlaves: true }, function(e
 });
 ```
 
-### Clear all synonyms- `clearSynonyms`
+### Clear all synonyms - `clearSynonyms`
 
 This is a convenience method to delete all synonyms at once.
 It should not be used on a production index to then push a new list of synonyms:
@@ -2277,7 +2277,7 @@ index.clearSynonyms({ forwardToSlaves: true }, function(err, content) {
 });
 ```
 
-### Get synonym- `getSynonym`
+### Get synonym - `getSynonym`
 
 Search for synonym records by their objectID or by the text they contain.
 Both methods are covered here.
@@ -2293,7 +2293,7 @@ index.getSynonym('a-unique-identifier', function(err, content) {
 });
 ```
 
-### Search synonyms- `searchSynonyms`
+### Search synonyms - `searchSynonyms`
 
 Search for synonym records similar to how you’d search normally.
 
@@ -2324,14 +2324,14 @@ index.searchSynonyms({
 
 ## Advanced
 
-### Custom batch- `batch`
+### Custom batch - `batch`
 
 You may want to perform multiple operations with one API call to reduce latency.
 We expose four methods to perform batch operations:
- * Add objects- `addObjects`: Add an array of objects using automatic `objectID` assignment.
- * Update objects- `saveObjects`: Add or update an array of objects that contains an `objectID` attribute.
- * Delete objects- `deleteObjects`: Delete an array of objectIDs.
- * Partial update- `partialUpdateObjects`: Partially update an array of objects that contain an `objectID` attribute (only specified attributes will be updated).
+ * Add objects - `addObjects`: Add an array of objects using automatic `objectID` assignment.
+ * Update objects - `saveObjects`: Add or update an array of objects that contains an `objectID` attribute.
+ * Delete objects - `deleteObjects`: Delete an array of objectIDs.
+ * Partial update - `partialUpdateObjects`: Partially update an array of objects that contain an `objectID` attribute (only specified attributes will be updated).
 
 Example using automatic `objectID` assignment:
 ```js
@@ -2415,7 +2415,7 @@ The attribute **action** can have these values:
 - partialUpdateObjectNoCreate
 - deleteObject
 
-### Backup / Export an index- `browse`
+### Backup / Export an index - `browse`
 
 The `search` method cannot return more than 1,000 results. If you need to
 retrieve all the content of your index (for backup, SEO purposes or for running
@@ -2483,7 +2483,7 @@ browser.on('error', function onError(err) {
 
 
 
-### List api keys- `listApiKeys`
+### List api keys - `listApiKeys`
 
 To list existing keys, you can use:
 
@@ -2510,7 +2510,7 @@ Each key is defined by a set of permissions that specify the authorized actions.
  * **analytics**: Allowed to retrieve analytics through the analytics API.
  * **listIndexes**: Allowed to list all accessible indexes.
 
-### Add user key- `addUserKey`
+### Add user key - `addUserKey`
 
 To create API keys:
 
@@ -2667,7 +2667,7 @@ index.addUserKey(['search'], {
 });
 ```
 
-### Update user key- `updateUserKey`
+### Update user key - `updateUserKey`
 
 To update the permissions of an existing key:
 ```js
@@ -2709,7 +2709,7 @@ index.getUserKeyACL('9b9335cb7235d43f75b5398c36faabcd', function(err, content) {
 });
 ```
 
-### Delete user key- `deleteUserKey`
+### Delete user key - `deleteUserKey`
 To delete an existing key:
 ```js
 // Deletes a global key
@@ -2723,7 +2723,7 @@ index.deleteUserKey('9b9335cb7235d43f75b5398c36faabcd', function(err, content) {
 });
 ```
 
-### Get key permissions- `getUserKeyACL`
+### Get key permissions - `getUserKeyACL`
 
 
 
@@ -2740,7 +2740,7 @@ index.getUserKeyACL('9b9335cb7235d43f75b5398c36faabcd', function(err, content) {
 });
 ```
 
-### Multiple queries- `multipleQueries`
+### Multiple queries - `multipleQueries`
 
 You can send multiple queries with a single API call using a batch of queries:
 
@@ -2804,7 +2804,7 @@ You can specify a `strategy` parameter to optimize your multiple queries:
 
 
 
-### Get Logs- `getLogs`
+### Get Logs - `getLogs`
 
 You can retrieve the latest logs via this API. Each log entry contains:
  * Timestamp in ISO-8601 format
