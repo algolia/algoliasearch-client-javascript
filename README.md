@@ -176,7 +176,7 @@ If you were using our Node.js version (V1, npm `algolia-search`), [read the migr
 
 
 
-### Frontend
+#### Frontend
 
 You can either use a package manager like npm or include a `<script>` tag.
 
@@ -212,7 +212,7 @@ We recommend using jsDelivr, but `algoliasearch` is also available at:
 - [CDNJS](https://cdnjs.com/libraries/algoliasearch)
 - [npmcdn](https://npmcdn.com): https://npmcdn.com/algoliasearch@3/dist/algoliasearch.min.js
 
-### Search only/lite client
+#### Search only/lite client
 
 We have a lightweight build available that can only do searches. Use it when filesize
 is important to you or if you like to include only what you need.
