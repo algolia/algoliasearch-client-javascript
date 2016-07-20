@@ -726,6 +726,8 @@ index.getObjects(['myObj1', 'myObj2'], function(err, content) {
 
 ## Indexing
 
+
+
 ### Add objects - `addObjects`
 
 Each entry in an index has a unique identifier called `objectID`. There are two ways to add an entry to the index:
@@ -947,6 +949,8 @@ If you want to ensure multiple objects have been indexed, you only need to check
 the biggest `taskID`.
 
 ## Settings
+
+
 
 ### Get settings - `getSettings`
 
@@ -1975,6 +1979,8 @@ For example:
 
 
 ## Manage Indices
+
+
 
 ### Create an index
 
