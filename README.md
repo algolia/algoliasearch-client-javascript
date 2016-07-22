@@ -1359,7 +1359,7 @@ If you have defined in your **[attributesForFaceting](#attributesforfaceting)**:
 
 ['category', 'author', 'nb_views', 'nb_downloads']
 
-But for the current search want to retrieve only facet values for `category` and `author` you can
+But for the current search want to retrieve only facet values for `category` and `author`.
 
 you can specify your attributes coma separated.
 
