@@ -642,58 +642,58 @@ Here is the list of parameters you can use with the search method (`search` [sco
 Parameters that can also be used in a setSettings also have the `indexing` [scope](#scope)
 
 **Search**
-[query](#query) `search`
+- [query](#query) `search`
 
 **Attributes**
-[attributesToRetrieve](#attributestoretrieve) `settings`, `search`
+- [attributesToRetrieve](#attributestoretrieve) `settings`, `search`
 
 **Filtering / Faceting**
-[filters](#filters) `search`
-[facets](#facets) `search`
-[maxValuesPerFacet](#maxvaluesperfacet) `settings`, `search`
+- [filters](#filters) `search`
+- [facets](#facets) `search`
+- [maxValuesPerFacet](#maxvaluesperfacet) `settings`, `search`
 
 **Highlighting / Snippeting**
-[attributesToHighlight](#attributestohighlight) `settings`, `search`
-[attributesToSnippet](#attributestosnippet) `settings`, `search`
-[highlightPreTag](#highlightpretag) `settings`, `search`
-[highlightPostTag](#highlightposttag) `settings`, `search`
-[snippetEllipsisText](#snippetellipsistext) `settings`, `search`
+- [attributesToHighlight](#attributestohighlight) `settings`, `search`
+- [attributesToSnippet](#attributestosnippet) `settings`, `search`
+- [highlightPreTag](#highlightpretag) `settings`, `search`
+- [highlightPostTag](#highlightposttag) `settings`, `search`
+- [snippetEllipsisText](#snippetellipsistext) `settings`, `search`
 
 **Pagination**
-[page](#page) `search`
-[hitsPerPage](#hitsperpage) `settings`, `search`
+- [page](#page) `search`
+- [hitsPerPage](#hitsperpage) `settings`, `search`
 
 **Typos**
-[minWordSizefor1Typo](#minwordsizefor1typo) `settings`, `search`
-[minWordSizefor2Typos](#minwordsizefor2typos) `settings`, `search`
-[typoTolerance](#typotolerance) `settings`, `search`
-[allowTyposOnNumericTokens](#allowtyposonnumerictokens) `settings`, `search`
-[ignorePlurals](#ignoreplurals) `settings`, `search`
-[disableTypoToleranceOnAttributes](#disabletypotoleranceonattributes) `settings`, `search`
+- [minWordSizefor1Typo](#minwordsizefor1typo) `settings`, `search`
+- [minWordSizefor2Typos](#minwordsizefor2typos) `settings`, `search`
+- [typoTolerance](#typotolerance) `settings`, `search`
+- [allowTyposOnNumericTokens](#allowtyposonnumerictokens) `settings`, `search`
+- [ignorePlurals](#ignoreplurals) `settings`, `search`
+- [disableTypoToleranceOnAttributes](#disabletypotoleranceonattributes) `settings`, `search`
 
 **Geo-Search**
-[aroundLatLng](#aroundlatlng) `search`
-[aroundLatLngViaIP](#aroundlatlngviaip) `search`
-[insideBoundingBox](#insideboundingbox) `search`
-[insidePolygon](#insidepolygon) `search`
+- [aroundLatLng](#aroundlatlng) `search`
+- [aroundLatLngViaIP](#aroundlatlngviaip) `search`
+- [insideBoundingBox](#insideboundingbox) `search`
+- [insidePolygon](#insidepolygon) `search`
 
 
 **Query Strategy**
-[queryType](#querytype) `settings`, `search`
-[removeWordsIfNoResults](#removewordsifnoresults) `settings`, `search`
-[advancedSyntax](#advancedsyntax) `settings`, `search`
-[optionalWords](#optionalwords) `settings`, `search`
-[removeStopWords](#removestopwords) `settings`, `search`
-[exactOnSingleWordQuery](#exactonsinglewordquery) `settings`, `search`
-[alternativesAsExact](#alternativesasexact) `settings`, `search`
+- [queryType](#querytype) `settings`, `search`
+- [removeWordsIfNoResults](#removewordsifnoresults) `settings`, `search`
+- [advancedSyntax](#advancedsyntax) `settings`, `search`
+- [optionalWords](#optionalwords) `settings`, `search`
+- [removeStopWords](#removestopwords) `settings`, `search`
+- [exactOnSingleWordQuery](#exactonsinglewordquery) `settings`, `search`
+- [alternativesAsExact](#alternativesasexact) `settings`, `search`
 
 **Advanced**
-[distinct](#distinct) `settings`, `search`
-[rankingInfo](#rankinginfo) `search`
-[numericFilters (deprecated)](#numericfilters-deprecated) `search`
-[tagFilters (deprecated)](#tagfilters-deprecated) `search`
-[facetFilters (deprecated)](#facetfilters-deprecated) `search`
-[analytics](#analytics) `search`
+- [distinct](#distinct) `settings`, `search`
+- [rankingInfo](#rankinginfo) `search`
+- [numericFilters (deprecated)](#numericfilters-deprecated) `search`
+- [tagFilters (deprecated)](#tagfilters-deprecated) `search`
+- [facetFilters (deprecated)](#facetfilters-deprecated) `search`
+- [analytics](#analytics) `search`
 
 <!--/PARAMETERS_LINK-->
 
@@ -998,56 +998,56 @@ Here is the list of parameters you can use with the set settings method (`indexi
 Parameters that can be override at search time also have the `indexing` [scope](#scope)
 
 **Attributes**
-[attributesToIndex](#attributestoindex) `settings`
-[attributesForFaceting](#attributesforfaceting) `settings`
-[attributesToRetrieve](#attributestoretrieve) `settings`, `search`
-[unretrievableAttributes](#unretrievableattributes) `settings`
+- [attributesToIndex](#attributestoindex) `settings`
+- [attributesForFaceting](#attributesforfaceting) `settings`
+- [attributesToRetrieve](#attributestoretrieve) `settings`, `search`
+- [unretrievableAttributes](#unretrievableattributes) `settings`
 
 **Ranking**
-[ranking](#ranking) `settings`
-[customRanking](#customranking) `settings`
-[slaves](#slaves) `settings`
+- [ranking](#ranking) `settings`
+- [customRanking](#customranking) `settings`
+- [slaves](#slaves) `settings`
 
 **Filtering / Faceting**
-[maxValuesPerFacet](#maxvaluesperfacet) `settings`, `search`
+- [maxValuesPerFacet](#maxvaluesperfacet) `settings`, `search`
 
 **Highlighting / Snippeting**
-[attributesToHighlight](#attributestohighlight) `settings`, `search`
-[attributesToSnippet](#attributestosnippet) `settings`, `search`
-[highlightPreTag](#highlightpretag) `settings`, `search`
-[highlightPostTag](#highlightposttag) `settings`, `search`
-[snippetEllipsisText](#snippetellipsistext) `settings`, `search`
+- [attributesToHighlight](#attributestohighlight) `settings`, `search`
+- [attributesToSnippet](#attributestosnippet) `settings`, `search`
+- [highlightPreTag](#highlightpretag) `settings`, `search`
+- [highlightPostTag](#highlightposttag) `settings`, `search`
+- [snippetEllipsisText](#snippetellipsistext) `settings`, `search`
 
 **Pagination**
-[hitsPerPage](#hitsperpage) `settings`, `search`
+- [hitsPerPage](#hitsperpage) `settings`, `search`
 
 **Typos**
-[minWordSizefor1Typo](#minwordsizefor1typo) `settings`, `search`
-[minWordSizefor2Typos](#minwordsizefor2typos) `settings`, `search`
-[typoTolerance](#typotolerance) `settings`, `search`
-[allowTyposOnNumericTokens](#allowtyposonnumerictokens) `settings`, `search`
-[ignorePlurals](#ignoreplurals) `settings`, `search`
-[disableTypoToleranceOnAttributes](#disabletypotoleranceonattributes) `settings`, `search`
-[separatorsToIndex](#separatorstoindex) `settings`
+- [minWordSizefor1Typo](#minwordsizefor1typo) `settings`, `search`
+- [minWordSizefor2Typos](#minwordsizefor2typos) `settings`, `search`
+- [typoTolerance](#typotolerance) `settings`, `search`
+- [allowTyposOnNumericTokens](#allowtyposonnumerictokens) `settings`, `search`
+- [ignorePlurals](#ignoreplurals) `settings`, `search`
+- [disableTypoToleranceOnAttributes](#disabletypotoleranceonattributes) `settings`, `search`
+- [separatorsToIndex](#separatorstoindex) `settings`
 
 **Query Strategy**
-[queryType](#querytype) `settings`, `search`
-[removeWordsIfNoResults](#removewordsifnoresults) `settings`, `search`
-[advancedSyntax](#advancedsyntax) `settings`, `search`
-[optionalWords](#optionalwords) `settings`, `search`
-[removeStopWords](#removestopwords) `settings`, `search`
-[disablePrefixOnAttributes](#disableprefixonattributes) `settings`
-[disableExactOnAttributes](#disableexactonattributes) `settings`, `search`
-[exactOnSingleWordQuery](#exactonsinglewordquery) `settings`, `search`
-[alternativesAsExact](#alternativesasexact) `settings`, `search`
+- [queryType](#querytype) `settings`, `search`
+- [removeWordsIfNoResults](#removewordsifnoresults) `settings`, `search`
+- [advancedSyntax](#advancedsyntax) `settings`, `search`
+- [optionalWords](#optionalwords) `settings`, `search`
+- [removeStopWords](#removestopwords) `settings`, `search`
+- [disablePrefixOnAttributes](#disableprefixonattributes) `settings`
+- [disableExactOnAttributes](#disableexactonattributes) `settings`, `search`
+- [exactOnSingleWordQuery](#exactonsinglewordquery) `settings`, `search`
+- [alternativesAsExact](#alternativesasexact) `settings`, `search`
 
 **Advanced**
-[attributeForDistinct](#attributefordistinct) `settings`
-[distinct](#distinct) `settings`, `search`
-[numericAttributesToIndex](#numericattributestoindex) `settings`
-[allowCompressionOfIntegerArray](#allowcompressionofintegerarray) `settings`
-[altCorrections](#altcorrections) `settings`
-[placeholders](#placeholders) `settings`
+- [attributeForDistinct](#attributefordistinct) `settings`
+- [distinct](#distinct) `settings`, `search`
+- [numericAttributesToIndex](#numericattributestoindex) `settings`
+- [allowCompressionOfIntegerArray](#allowcompressionofintegerarray) `settings`
+- [altCorrections](#altcorrections) `settings`
+- [placeholders](#placeholders) `settings`
 
 <!--/PARAMETERS_LINK-->
 
@@ -1070,77 +1070,77 @@ They are three scopes:
 #### Parameters List
 
 **Search**
-[query](#query) `search`
+- [query](#query) `search`
 
 **Attributes**
-[attributesForFaceting](#attributesforfaceting) `settings`
-[attributesToIndex](#attributestoindex) `settings`
-[attributesToRetrieve](#attributestoretrieve) `settings`, `search`
-[unretrievableAttributes](#unretrievableattributes) `settings`
+- [attributesForFaceting](#attributesforfaceting) `settings`
+- [attributesToIndex](#attributestoindex) `settings`
+- [attributesToRetrieve](#attributestoretrieve) `settings`, `search`
+- [unretrievableAttributes](#unretrievableattributes) `settings`
 
 
 **Ranking**
-[ranking](#ranking) `settings`
-[customRanking](#customranking) `settings`
-[slaves](#slaves) `settings`
+- [ranking](#ranking) `settings`
+- [customRanking](#customranking) `settings`
+- [slaves](#slaves) `settings`
 
 **Filtering / Faceting**
-[filters](#filters) `search`
-[facets](#facets) `search`
-[maxValuesPerFacet](#maxvaluesperfacet) `settings`, `search`
+- [filters](#filters) `search`
+- [facets](#facets) `search`
+- [maxValuesPerFacet](#maxvaluesperfacet) `settings`, `search`
 
 **Highlighting / Snippeting**
-[attributesToHighlight](#attributestohighlight) `settings`, `search`
-[attributesToSnippet](#attributestosnippet) `settings`, `search`
-[highlightPreTag](#highlightpretag) `settings`, `search`
-[highlightPostTag](#highlightposttag) `settings`, `search`
-[snippetEllipsisText](#snippetellipsistext) `settings`, `search`
-[restrictHighlightAndSnippetArrays](#restricthighlightandsnippetarrays) `settings`, `search`
+- [attributesToHighlight](#attributestohighlight) `settings`, `search`
+- [attributesToSnippet](#attributestosnippet) `settings`, `search`
+- [highlightPreTag](#highlightpretag) `settings`, `search`
+- [highlightPostTag](#highlightposttag) `settings`, `search`
+- [snippetEllipsisText](#snippetellipsistext) `settings`, `search`
+- [restrictHighlightAndSnippetArrays](#restricthighlightandsnippetarrays) `settings`, `search`
 
 **Pagination**
-[page](#page) `search`
-[hitsPerPage](#hitsperpage) `settings`, `search`
+- [page](#page) `search`
+- [hitsPerPage](#hitsperpage) `settings`, `search`
 
 **Typos**
-[minWordSizefor1Typo](#minwordsizefor1typo) `settings`, `search`
-[minWordSizefor2Typos](#minwordsizefor2typos) `settings`, `search`
-[typoTolerance](#typotolerance) `settings`, `search`
-[allowTyposOnNumericTokens](#allowtyposonnumerictokens) `settings`, `search`
-[ignorePlurals](#ignoreplurals) `settings`, `search`
-[disableTypoToleranceOnAttributes](#disabletypotoleranceonattributes) `settings`, `search`
-[separatorsToIndex](#separatorstoindex) `settings`
+- [minWordSizefor1Typo](#minwordsizefor1typo) `settings`, `search`
+- [minWordSizefor2Typos](#minwordsizefor2typos) `settings`, `search`
+- [typoTolerance](#typotolerance) `settings`, `search`
+- [allowTyposOnNumericTokens](#allowtyposonnumerictokens) `settings`, `search`
+- [ignorePlurals](#ignoreplurals) `settings`, `search`
+- [disableTypoToleranceOnAttributes](#disabletypotoleranceonattributes) `settings`, `search`
+- [separatorsToIndex](#separatorstoindex) `settings`
 
 **Geo-Search**
 
-[aroundLatLng](#aroundlatlng) `search`
-[aroundLatLngViaIP](#aroundlatlngviaip) `search`
-[insideBoundingBox](#insideboundingbox) `search`
-[insidePolygon](#insidepolygon) `search`
+- [aroundLatLng](#aroundlatlng) `search`
+- [aroundLatLngViaIP](#aroundlatlngviaip) `search`
+- [insideBoundingBox](#insideboundingbox) `search`
+- [insidePolygon](#insidepolygon) `search`
 
 
 **Query Strategy**
-[queryType](#querytype) `settings`, `search`
-[removeWordsIfNoResults](#removewordsifnoresults) `settings`, `search`
-[advancedSyntax](#advancedsyntax) `settings`, `search`
-[optionalWords](#optionalwords) `settings`, `search`
-[removeStopWords](#removestopwords) `settings`, `search`
-[disablePrefixOnAttributes](#disableprefixonattributes) `settings`
-[disableExactOnAttributes](#disableexactonattributes) `settings`, `search`
-[exactOnSingleWordQuery](#exactonsinglewordquery) `settings`, `search`
-[alternativesAsExact](#alternativesasexact) `settings`, `search`
+- [queryType](#querytype) `settings`, `search`
+- [removeWordsIfNoResults](#removewordsifnoresults) `settings`, `search`
+- [advancedSyntax](#advancedsyntax) `settings`, `search`
+- [optionalWords](#optionalwords) `settings`, `search`
+- [removeStopWords](#removestopwords) `settings`, `search`
+- [disablePrefixOnAttributes](#disableprefixonattributes) `settings`
+- [disableExactOnAttributes](#disableexactonattributes) `settings`, `search`
+- [exactOnSingleWordQuery](#exactonsinglewordquery) `settings`, `search`
+- [alternativesAsExact](#alternativesasexact) `settings`, `search`
 
 **Advanced**
-[attributeForDistinct](#attributefordistinct) `settings`
-[distinct](#distinct) `settings`, `search`
-[rankingInfo](#rankinginfo) `search`
-[numericAttributesToIndex](#numericattributestoindex) `settings`
-[allowCompressionOfIntegerArray](#allowcompressionofintegerarray) `settings`
-[numericFilters (deprecated)](#numericfilters-deprecated) `search`
-[tagFilters (deprecated)](#tagfilters-deprecated) `search`
-[facetFilters (deprecated)](#facetfilters-deprecated) `search`
-[analytics](#analytics) `search`
-[altCorrections](#altcorrections) `settings`
-[placeholders](#placeholders) `settings`
+- [attributeForDistinct](#attributefordistinct) `settings`
+- [distinct](#distinct) `settings`, `search`
+- [rankingInfo](#rankinginfo) `search`
+- [numericAttributesToIndex](#numericattributestoindex) `settings`
+- [allowCompressionOfIntegerArray](#allowcompressionofintegerarray) `settings`
+- [numericFilters (deprecated)](#numericfilters-deprecated) `search`
+- [tagFilters (deprecated)](#tagfilters-deprecated) `search`
+- [facetFilters (deprecated)](#facetfilters-deprecated) `search`
+- [analytics](#analytics) `search`
+- [altCorrections](#altcorrections) `settings`
+- [placeholders](#placeholders) `settings`
 
 ### Search
 
