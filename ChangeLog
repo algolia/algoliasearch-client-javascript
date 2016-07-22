@@ -1,5 +1,7 @@
 CHANGELOG
 
+2016-07-22 3.18.0
+
   * fix(debug): only activate debug messages on NODE_ENV==='debug'
   * feat(lite): add getObjects
 

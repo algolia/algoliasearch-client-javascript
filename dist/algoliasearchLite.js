@@ -1,4 +1,4 @@
-/*! algoliasearch 3.17.0 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
+/*! algoliasearch 3.18.0 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.algoliasearch = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 /**
  * Helpers.
@@ -2650,12 +2650,94 @@ IndexCore.prototype._search = function(params, url, callback) {
   });
 };
 
+/*
+* Get an object from this index
+*
+* @param objectID the unique identifier of the object to retrieve
+* @param attrs (optional) if set, contains the array of attribute names to retrieve
+* @param callback (optional) the result callback called with two arguments
+*  error: null or Error('message')
+*  content: the object to retrieve or the error message if a failure occured
+*/
+IndexCore.prototype.getObject = function(objectID, attrs, callback) {
+  var indexObj = this;
+
+  if (arguments.length === 1 || typeof attrs === 'function') {
+    callback = attrs;
+    attrs = undefined;
+  }
+
+  var params = '';
+  if (attrs !== undefined) {
+    params = '?attributes=';
+    for (var i = 0; i < attrs.length; ++i) {
+      if (i !== 0) {
+        params += ',';
+      }
+      params += attrs[i];
+    }
+  }
+
+  return this.as._jsonRequest({
+    method: 'GET',
+    url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/' + encodeURIComponent(objectID) + params,
+    hostType: 'read',
+    callback: callback
+  });
+};
+
+/*
+* Get several objects from this index
+*
+* @param objectIDs the array of unique identifier of objects to retrieve
+*/
+IndexCore.prototype.getObjects = function(objectIDs, attributesToRetrieve, callback) {
+  var isArray = require(9);
+  var map = require(22);
+
+  var usage = 'Usage: index.getObjects(arrayOfObjectIDs[, callback])';
+
+  if (!isArray(objectIDs)) {
+    throw new Error(usage);
+  }
+
+  var indexObj = this;
+
+  if (arguments.length === 1 || typeof attributesToRetrieve === 'function') {
+    callback = attributesToRetrieve;
+    attributesToRetrieve = undefined;
+  }
+
+  var body = {
+    requests: map(objectIDs, function prepareRequest(objectID) {
+      var request = {
+        indexName: indexObj.indexName,
+        objectID: objectID
+      };
+
+      if (attributesToRetrieve) {
+        request.attributesToRetrieve = attributesToRetrieve.join(',');
+      }
+
+      return request;
+    })
+  };
+
+  return this.as._jsonRequest({
+    method: 'POST',
+    url: '/1/indexes/*/objects',
+    hostType: 'read',
+    body: body,
+    callback: callback
+  });
+};
+
 IndexCore.prototype.as = null;
 IndexCore.prototype.indexName = null;
 IndexCore.prototype.typeAheadArgs = null;
 IndexCore.prototype.typeAheadValueOption = null;
 
-},{"18":18,"23":23}],13:[function(require,module,exports){
+},{"18":18,"22":22,"23":23,"9":9}],13:[function(require,module,exports){
 'use strict';
 
 var AlgoliaSearchCore = require(11);
@@ -2664,6 +2746,7 @@ var createAlgoliasearch = require(14);
 module.exports = createAlgoliasearch(AlgoliaSearchCore, '(lite) ');
 
 },{"11":11,"14":14}],14:[function(require,module,exports){
+(function (process){
 'use strict';
 
 var global = require(7);
@@ -2680,7 +2763,7 @@ module.exports = function createAlgoliasearch(AlgoliaSearch, uaSuffix) {
   var places = require(24);
   uaSuffix = uaSuffix || '';
 
-  if ("production" === 'development') {
+  if (process.env.NODE_ENV === 'debug') {
     require(3).enable('algoliasearch*');
   }
 
@@ -2884,7 +2967,8 @@ module.exports = function createAlgoliasearch(AlgoliaSearch, uaSuffix) {
   return algoliasearch;
 };
 
-},{"15":15,"16":16,"17":17,"19":19,"20":20,"24":24,"25":25,"3":3,"5":5,"7":7,"8":8}],15:[function(require,module,exports){
+}).call(this,require(2))
+},{"15":15,"16":16,"17":17,"19":19,"2":2,"20":20,"24":24,"25":25,"3":3,"5":5,"7":7,"8":8}],15:[function(require,module,exports){
 'use strict';
 
 module.exports = getDocumentProtocol;
@@ -3252,7 +3336,7 @@ function createPlacesClient(algoliasearch) {
 },{"18":18,"19":19}],25:[function(require,module,exports){
 'use strict';
 
-module.exports = '3.17.0';
+module.exports = '3.18.0';
 
 },{}]},{},[13])(13)
 });

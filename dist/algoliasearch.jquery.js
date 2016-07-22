@@ -1,4 +1,4 @@
-/*! algoliasearch 3.17.0 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
+/*! algoliasearch 3.18.0 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
 (function(f){var g;if(typeof window!=='undefined'){g=window}else if(typeof self!=='undefined'){g=self}g.ALGOLIA_MIGRATION_LAYER=f()})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 
 module.exports = function load (src, opts, cb) {
@@ -3448,88 +3448,6 @@ Index.prototype.addObjects = function(objects, callback) {
 };
 
 /*
-* Get an object from this index
-*
-* @param objectID the unique identifier of the object to retrieve
-* @param attrs (optional) if set, contains the array of attribute names to retrieve
-* @param callback (optional) the result callback called with two arguments
-*  error: null or Error('message')
-*  content: the object to retrieve or the error message if a failure occured
-*/
-Index.prototype.getObject = function(objectID, attrs, callback) {
-  var indexObj = this;
-
-  if (arguments.length === 1 || typeof attrs === 'function') {
-    callback = attrs;
-    attrs = undefined;
-  }
-
-  var params = '';
-  if (attrs !== undefined) {
-    params = '?attributes=';
-    for (var i = 0; i < attrs.length; ++i) {
-      if (i !== 0) {
-        params += ',';
-      }
-      params += attrs[i];
-    }
-  }
-
-  return this.as._jsonRequest({
-    method: 'GET',
-    url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/' + encodeURIComponent(objectID) + params,
-    hostType: 'read',
-    callback: callback
-  });
-};
-
-/*
-* Get several objects from this index
-*
-* @param objectIDs the array of unique identifier of objects to retrieve
-*/
-Index.prototype.getObjects = function(objectIDs, attributesToRetrieve, callback) {
-  var isArray = require(10);
-  var map = require(29);
-
-  var usage = 'Usage: index.getObjects(arrayOfObjectIDs[, callback])';
-
-  if (!isArray(objectIDs)) {
-    throw new Error(usage);
-  }
-
-  var indexObj = this;
-
-  if (arguments.length === 1 || typeof attributesToRetrieve === 'function') {
-    callback = attributesToRetrieve;
-    attributesToRetrieve = undefined;
-  }
-
-  var body = {
-    requests: map(objectIDs, function prepareRequest(objectID) {
-      var request = {
-        indexName: indexObj.indexName,
-        objectID: objectID
-      };
-
-      if (attributesToRetrieve) {
-        request.attributesToRetrieve = attributesToRetrieve.join(',');
-      }
-
-      return request;
-    })
-  };
-
-  return this.as._jsonRequest({
-    method: 'POST',
-    url: '/1/indexes/*/objects',
-    hostType: 'read',
-    body: body,
-    callback: callback
-  });
-};
-
-/*
 * Update partially an object (only update attributes passed in argument)
 *
 * @param partialObject contains the javascript attributes to override, the
@@ -4714,12 +4632,95 @@ IndexCore.prototype._search = function(params, url, callback) {
   });
 };
 
+/*
+* Get an object from this index
+*
+* @param objectID the unique identifier of the object to retrieve
+* @param attrs (optional) if set, contains the array of attribute names to retrieve
+* @param callback (optional) the result callback called with two arguments
+*  error: null or Error('message')
+*  content: the object to retrieve or the error message if a failure occured
+*/
+IndexCore.prototype.getObject = function(objectID, attrs, callback) {
+  var indexObj = this;
+
+  if (arguments.length === 1 || typeof attrs === 'function') {
+    callback = attrs;
+    attrs = undefined;
+  }
+
+  var params = '';
+  if (attrs !== undefined) {
+    params = '?attributes=';
+    for (var i = 0; i < attrs.length; ++i) {
+      if (i !== 0) {
+        params += ',';
+      }
+      params += attrs[i];
+    }
+  }
+
+  return this.as._jsonRequest({
+    method: 'GET',
+    url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/' + encodeURIComponent(objectID) + params,
+    hostType: 'read',
+    callback: callback
+  });
+};
+
+/*
+* Get several objects from this index
+*
+* @param objectIDs the array of unique identifier of objects to retrieve
+*/
+IndexCore.prototype.getObjects = function(objectIDs, attributesToRetrieve, callback) {
+  var isArray = require(10);
+  var map = require(29);
+
+  var usage = 'Usage: index.getObjects(arrayOfObjectIDs[, callback])';
+
+  if (!isArray(objectIDs)) {
+    throw new Error(usage);
+  }
+
+  var indexObj = this;
+
+  if (arguments.length === 1 || typeof attributesToRetrieve === 'function') {
+    callback = attributesToRetrieve;
+    attributesToRetrieve = undefined;
+  }
+
+  var body = {
+    requests: map(objectIDs, function prepareRequest(objectID) {
+      var request = {
+        indexName: indexObj.indexName,
+        objectID: objectID
+      };
+
+      if (attributesToRetrieve) {
+        request.attributesToRetrieve = attributesToRetrieve.join(',');
+      }
+
+      return request;
+    })
+  };
+
+  return this.as._jsonRequest({
+    method: 'POST',
+    url: '/1/indexes/*/objects',
+    hostType: 'read',
+    body: body,
+    callback: callback
+  });
+};
+
 IndexCore.prototype.as = null;
 IndexCore.prototype.indexName = null;
 IndexCore.prototype.typeAheadArgs = null;
 IndexCore.prototype.typeAheadValueOption = null;
 
-},{"23":23,"30":30}],17:[function(require,module,exports){
+},{"10":10,"23":23,"29":29,"30":30}],17:[function(require,module,exports){
+(function (process){
 'use strict';
 
 // This is the jQuery Algolia Search module
@@ -4737,7 +4738,7 @@ var places = require(31);
 // expose original algoliasearch fn in window
 window.algoliasearch = require(18);
 
-if ("production" === 'development') {
+if (process.env.NODE_ENV === 'debug') {
   require(3).enable('algoliasearch*');
 }
 
@@ -4871,7 +4872,8 @@ AlgoliaSearchJQuery.prototype._promise = {
   }
 };
 
-},{"12":12,"18":18,"20":20,"21":21,"22":22,"24":24,"27":27,"3":3,"31":31,"32":32,"9":9}],18:[function(require,module,exports){
+}).call(this,require(2))
+},{"12":12,"18":18,"2":2,"20":20,"21":21,"22":22,"24":24,"27":27,"3":3,"31":31,"32":32,"9":9}],18:[function(require,module,exports){
 'use strict';
 
 var AlgoliaSearch = require(12);
@@ -4880,6 +4882,7 @@ var createAlgoliasearch = require(19);
 module.exports = createAlgoliasearch(AlgoliaSearch);
 
 },{"12":12,"19":19}],19:[function(require,module,exports){
+(function (process){
 'use strict';
 
 var global = require(8);
@@ -4896,7 +4899,7 @@ module.exports = function createAlgoliasearch(AlgoliaSearch, uaSuffix) {
   var places = require(31);
   uaSuffix = uaSuffix || '';
 
-  if ("production" === 'development') {
+  if (process.env.NODE_ENV === 'debug') {
     require(3).enable('algoliasearch*');
   }
 
@@ -5100,7 +5103,8 @@ module.exports = function createAlgoliasearch(AlgoliaSearch, uaSuffix) {
   return algoliasearch;
 };
 
-},{"20":20,"21":21,"22":22,"24":24,"27":27,"3":3,"31":31,"32":32,"5":5,"8":8,"9":9}],20:[function(require,module,exports){
+}).call(this,require(2))
+},{"2":2,"20":20,"21":21,"22":22,"24":24,"27":27,"3":3,"31":31,"32":32,"5":5,"8":8,"9":9}],20:[function(require,module,exports){
 'use strict';
 
 module.exports = getDocumentProtocol;
@@ -5495,6 +5499,6 @@ function createPlacesClient(algoliasearch) {
 },{"23":23,"24":24}],32:[function(require,module,exports){
 'use strict';
 
-module.exports = '3.17.0';
+module.exports = '3.18.0';
 
 },{}]},{},[17]);

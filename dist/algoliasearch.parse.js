@@ -809,8 +809,8 @@ module.exports =
 	module.exports = AlgoliaSearch;
 
 	var Index = __webpack_require__(7);
-	var deprecate = __webpack_require__(13);
-	var deprecatedMessage = __webpack_require__(14);
+	var deprecate = __webpack_require__(15);
+	var deprecatedMessage = __webpack_require__(16);
 	var AlgoliaSearchCore = __webpack_require__(21);
 	var inherits = __webpack_require__(4);
 	var errors = __webpack_require__(10);
@@ -1046,7 +1046,7 @@ module.exports =
 	 * @see {@link https://www.algolia.com/doc/rest_api#AddKey|Algolia REST API Documentation}
 	 */
 	AlgoliaSearch.prototype.addUserKey = function(acls, params, callback) {
-	  var isArray = __webpack_require__(16);
+	  var isArray = __webpack_require__(13);
 	  var usage = 'Usage: client.addUserKey(arrayOfAcls[, params, callback])';
 
 	  if (!isArray(acls)) {
@@ -1131,7 +1131,7 @@ module.exports =
 	 * @see {@link https://www.algolia.com/doc/rest_api#UpdateIndexKey|Algolia REST API Documentation}
 	 */
 	AlgoliaSearch.prototype.updateUserKey = function(key, acls, params, callback) {
-	  var isArray = __webpack_require__(16);
+	  var isArray = __webpack_require__(13);
 	  var usage = 'Usage: client.updateUserKey(key, arrayOfAcls[, params, callback])';
 
 	  if (!isArray(acls)) {
@@ -1232,7 +1232,7 @@ module.exports =
 	 * }], cb)
 	 */
 	AlgoliaSearch.prototype.batch = function(operations, callback) {
-	  var isArray = __webpack_require__(16);
+	  var isArray = __webpack_require__(13);
 	  var usage = 'Usage: client.batch(operations[, callback])';
 
 	  if (!isArray(operations)) {
@@ -1272,9 +1272,9 @@ module.exports =
 
 	var inherits = __webpack_require__(4);
 	var IndexCore = __webpack_require__(8);
-	var deprecate = __webpack_require__(13);
-	var deprecatedMessage = __webpack_require__(14);
-	var exitPromise = __webpack_require__(15);
+	var deprecate = __webpack_require__(15);
+	var deprecatedMessage = __webpack_require__(16);
+	var exitPromise = __webpack_require__(17);
 	var errors = __webpack_require__(10);
 
 	module.exports = Index;
@@ -1324,7 +1324,7 @@ module.exports =
 	*  content: the server answer that updateAt and taskID
 	*/
 	Index.prototype.addObjects = function(objects, callback) {
-	  var isArray = __webpack_require__(16);
+	  var isArray = __webpack_require__(13);
 	  var usage = 'Usage: index.addObjects(arrayOfObjects[, callback])';
 
 	  if (!isArray(objects)) {
@@ -1347,88 +1347,6 @@ module.exports =
 	    url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/batch',
 	    body: postObj,
 	    hostType: 'write',
-	    callback: callback
-	  });
-	};
-
-	/*
-	* Get an object from this index
-	*
-	* @param objectID the unique identifier of the object to retrieve
-	* @param attrs (optional) if set, contains the array of attribute names to retrieve
-	* @param callback (optional) the result callback called with two arguments
-	*  error: null or Error('message')
-	*  content: the object to retrieve or the error message if a failure occured
-	*/
-	Index.prototype.getObject = function(objectID, attrs, callback) {
-	  var indexObj = this;
-
-	  if (arguments.length === 1 || typeof attrs === 'function') {
-	    callback = attrs;
-	    attrs = undefined;
-	  }
-
-	  var params = '';
-	  if (attrs !== undefined) {
-	    params = '?attributes=';
-	    for (var i = 0; i < attrs.length; ++i) {
-	      if (i !== 0) {
-	        params += ',';
-	      }
-	      params += attrs[i];
-	    }
-	  }
-
-	  return this.as._jsonRequest({
-	    method: 'GET',
-	    url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/' + encodeURIComponent(objectID) + params,
-	    hostType: 'read',
-	    callback: callback
-	  });
-	};
-
-	/*
-	* Get several objects from this index
-	*
-	* @param objectIDs the array of unique identifier of objects to retrieve
-	*/
-	Index.prototype.getObjects = function(objectIDs, attributesToRetrieve, callback) {
-	  var isArray = __webpack_require__(16);
-	  var map = __webpack_require__(17);
-
-	  var usage = 'Usage: index.getObjects(arrayOfObjectIDs[, callback])';
-
-	  if (!isArray(objectIDs)) {
-	    throw new Error(usage);
-	  }
-
-	  var indexObj = this;
-
-	  if (arguments.length === 1 || typeof attributesToRetrieve === 'function') {
-	    callback = attributesToRetrieve;
-	    attributesToRetrieve = undefined;
-	  }
-
-	  var body = {
-	    requests: map(objectIDs, function prepareRequest(objectID) {
-	      var request = {
-	        indexName: indexObj.indexName,
-	        objectID: objectID
-	      };
-
-	      if (attributesToRetrieve) {
-	        request.attributesToRetrieve = attributesToRetrieve.join(',');
-	      }
-
-	      return request;
-	    })
-	  };
-
-	  return this.as._jsonRequest({
-	    method: 'POST',
-	    url: '/1/indexes/*/objects',
-	    hostType: 'read',
-	    body: body,
 	    callback: callback
 	  });
 	};
@@ -1473,7 +1391,7 @@ module.exports =
 	*  content: the server answer that updateAt and taskID
 	*/
 	Index.prototype.partialUpdateObjects = function(objects, callback) {
-	  var isArray = __webpack_require__(16);
+	  var isArray = __webpack_require__(13);
 	  var usage = 'Usage: index.partialUpdateObjects(arrayOfObjects[, callback])';
 
 	  if (!isArray(objects)) {
@@ -1529,7 +1447,7 @@ module.exports =
 	*  content: the server answer that updateAt and taskID
 	*/
 	Index.prototype.saveObjects = function(objects, callback) {
-	  var isArray = __webpack_require__(16);
+	  var isArray = __webpack_require__(13);
 	  var usage = 'Usage: index.saveObjects(arrayOfObjects[, callback])';
 
 	  if (!isArray(objects)) {
@@ -1594,8 +1512,8 @@ module.exports =
 	*  content: the server answer that contains 3 elements: createAt, taskId and objectID
 	*/
 	Index.prototype.deleteObjects = function(objectIDs, callback) {
-	  var isArray = __webpack_require__(16);
-	  var map = __webpack_require__(17);
+	  var isArray = __webpack_require__(13);
+	  var map = __webpack_require__(14);
 
 	  var usage = 'Usage: index.deleteObjects(arrayOfObjectIDs[, callback])';
 
@@ -1635,7 +1553,7 @@ module.exports =
 	*/
 	Index.prototype.deleteByQuery = function(query, params, callback) {
 	  var clone = __webpack_require__(18);
-	  var map = __webpack_require__(17);
+	  var map = __webpack_require__(14);
 
 	  var indexObj = this;
 	  var client = indexObj.as;
@@ -2207,7 +2125,7 @@ module.exports =
 	* @see {@link https://www.algolia.com/doc/rest_api#AddIndexKey|Algolia REST API Documentation}
 	*/
 	Index.prototype.addUserKey = function(acls, params, callback) {
-	  var isArray = __webpack_require__(16);
+	  var isArray = __webpack_require__(13);
 	  var usage = 'Usage: index.addUserKey(arrayOfAcls[, params, callback])';
 
 	  if (!isArray(acls)) {
@@ -2290,7 +2208,7 @@ module.exports =
 	* @see {@link https://www.algolia.com/doc/rest_api#UpdateIndexKey|Algolia REST API Documentation}
 	*/
 	Index.prototype.updateUserKey = function(key, acls, params, callback) {
-	  var isArray = __webpack_require__(16);
+	  var isArray = __webpack_require__(13);
 	  var usage = 'Usage: index.updateUserKey(key, arrayOfAcls[, params, callback])';
 
 	  if (!isArray(acls)) {
@@ -2581,6 +2499,88 @@ module.exports =
 	  });
 	};
 
+	/*
+	* Get an object from this index
+	*
+	* @param objectID the unique identifier of the object to retrieve
+	* @param attrs (optional) if set, contains the array of attribute names to retrieve
+	* @param callback (optional) the result callback called with two arguments
+	*  error: null or Error('message')
+	*  content: the object to retrieve or the error message if a failure occured
+	*/
+	IndexCore.prototype.getObject = function(objectID, attrs, callback) {
+	  var indexObj = this;
+
+	  if (arguments.length === 1 || typeof attrs === 'function') {
+	    callback = attrs;
+	    attrs = undefined;
+	  }
+
+	  var params = '';
+	  if (attrs !== undefined) {
+	    params = '?attributes=';
+	    for (var i = 0; i < attrs.length; ++i) {
+	      if (i !== 0) {
+	        params += ',';
+	      }
+	      params += attrs[i];
+	    }
+	  }
+
+	  return this.as._jsonRequest({
+	    method: 'GET',
+	    url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/' + encodeURIComponent(objectID) + params,
+	    hostType: 'read',
+	    callback: callback
+	  });
+	};
+
+	/*
+	* Get several objects from this index
+	*
+	* @param objectIDs the array of unique identifier of objects to retrieve
+	*/
+	IndexCore.prototype.getObjects = function(objectIDs, attributesToRetrieve, callback) {
+	  var isArray = __webpack_require__(13);
+	  var map = __webpack_require__(14);
+
+	  var usage = 'Usage: index.getObjects(arrayOfObjectIDs[, callback])';
+
+	  if (!isArray(objectIDs)) {
+	    throw new Error(usage);
+	  }
+
+	  var indexObj = this;
+
+	  if (arguments.length === 1 || typeof attributesToRetrieve === 'function') {
+	    callback = attributesToRetrieve;
+	    attributesToRetrieve = undefined;
+	  }
+
+	  var body = {
+	    requests: map(objectIDs, function prepareRequest(objectID) {
+	      var request = {
+	        indexName: indexObj.indexName,
+	        objectID: objectID
+	      };
+
+	      if (attributesToRetrieve) {
+	        request.attributesToRetrieve = attributesToRetrieve.join(',');
+	      }
+
+	      return request;
+	    })
+	  };
+
+	  return this.as._jsonRequest({
+	    method: 'POST',
+	    url: '/1/indexes/*/objects',
+	    hostType: 'read',
+	    body: body,
+	    callback: callback
+	  });
+	};
+
 	IndexCore.prototype.as = null;
 	IndexCore.prototype.indexName = null;
 	IndexCore.prototype.typeAheadArgs = null;
@@ -2780,6 +2780,32 @@ module.exports =
 /* 13 */
 /***/ function(module, exports) {
 
+	var toString = {}.toString;
+
+	module.exports = Array.isArray || function (arr) {
+	  return toString.call(arr) == '[object Array]';
+	};
+
+
+/***/ },
+/* 14 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var foreach = __webpack_require__(11);
+
+	module.exports = function map(arr, fn) {
+	  var newArr = [];
+	  foreach(arr, function(item, itemIndex) {
+	    newArr.push(fn(item, itemIndex, arr));
+	  });
+	  return newArr;
+	};
+
+
+/***/ },
+/* 15 */
+/***/ function(module, exports) {
+
 	module.exports = function deprecate(fn, message) {
 	  var warned = false;
 
@@ -2798,7 +2824,7 @@ module.exports =
 
 
 /***/ },
-/* 14 */
+/* 16 */
 /***/ function(module, exports) {
 
 	module.exports = function deprecatedMessage(previousUsage, newUsage) {
@@ -2812,7 +2838,7 @@ module.exports =
 
 
 /***/ },
-/* 15 */
+/* 17 */
 /***/ function(module, exports) {
 
 	// Parse cloud does not supports setTimeout
@@ -2821,32 +2847,6 @@ module.exports =
 	// setTimeout cannot be override globally sadly
 	module.exports = function exitPromise(fn, _setTimeout) {
 	  _setTimeout(fn, 0);
-	};
-
-
-/***/ },
-/* 16 */
-/***/ function(module, exports) {
-
-	var toString = {}.toString;
-
-	module.exports = Array.isArray || function (arr) {
-	  return toString.call(arr) == '[object Array]';
-	};
-
-
-/***/ },
-/* 17 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var foreach = __webpack_require__(11);
-
-	module.exports = function map(arr, fn) {
-	  var newArr = [];
-	  foreach(arr, function(item, itemIndex) {
-	    newArr.push(fn(item, itemIndex, arr));
-	  });
-	  return newArr;
 	};
 
 
@@ -2917,7 +2917,7 @@ module.exports =
 	module.exports = AlgoliaSearchCore;
 
 	var errors = __webpack_require__(10);
-	var exitPromise = __webpack_require__(15);
+	var exitPromise = __webpack_require__(17);
 	var IndexCore = __webpack_require__(8);
 
 	// We will always put the API KEY in the JSON body in case of too long API KEY
@@ -2952,8 +2952,8 @@ module.exports =
 	  var debug = __webpack_require__(1)('algoliasearch');
 
 	  var clone = __webpack_require__(18);
-	  var isArray = __webpack_require__(16);
-	  var map = __webpack_require__(17);
+	  var isArray = __webpack_require__(13);
+	  var map = __webpack_require__(14);
 
 	  var usage = 'Usage: algoliasearch(applicationID, apiKey, opts)';
 
@@ -3389,8 +3389,8 @@ module.exports =
 	 * @return {Promise|undefined} Returns a promise if no callback given
 	 */
 	AlgoliaSearchCore.prototype.search = function(queries, opts, callback) {
-	  var isArray = __webpack_require__(16);
-	  var map = __webpack_require__(17);
+	  var isArray = __webpack_require__(13);
+	  var map = __webpack_require__(14);
 
 	  var usage = 'Usage: client.search(arrayOfQueries[, callback])';
 
@@ -3582,7 +3582,7 @@ module.exports =
 
 	
 
-	module.exports = '3.17.0';
+	module.exports = '3.18.0';
 
 
 /***/ }
