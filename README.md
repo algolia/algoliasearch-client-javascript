@@ -1893,7 +1893,7 @@ When enabled, the integer array is reordered to reach a better compression ratio
 - default: `[]`
 
 
-*This parameter is deprecated. Please use [Filters](#filters) instead.*
+*This parameter is deprecated. Please use [filters](#filters) instead.*
 
 A string that contains the comma separated list of numeric filters you want to apply.
 The filter syntax is `attributeName` followed by `operand` followed by `value`.
@@ -1919,7 +1919,7 @@ You can also use a string array encoding (for example `numericFilters: ["price>1
 - default: `""`
 
 
-*This parameter is deprecated. Please use [Filters](#filters) instead.*
+*This parameter is deprecated. Please use [filters](#filters) instead.*
 
 Filter the query by a set of tags.
 
@@ -1947,7 +1947,7 @@ For example `{"_tags":["tag1","tag2"]}`.
 - default: `""`
 
 
-*This parameter is deprecated. Please use [Filters](#filters) instead.*
+*This parameter is deprecated. Please use [filters](#filters) instead.*
 
 Filter the query with a list of facets. Facets are separated by commas and is encoded as `attributeName:value`.
 To OR facets, you must add parentheses.
