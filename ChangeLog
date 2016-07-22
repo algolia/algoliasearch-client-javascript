@@ -1,5 +1,8 @@
 CHANGELOG
 
+  * fix(debug): only activate debug messages on NODE_ENV==='debug'
+  * feat(lite): add getObjects
+
 2016-07-06 3.17.0
 
   * feat(errors): add statusCode to errors
