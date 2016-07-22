@@ -1361,7 +1361,7 @@ If you have defined in your **[attributesForFaceting](#attributesforfaceting)**:
 
 But for the current search want to retrieve only facet values for `category` and `author`.
 
-you can specify your attributes coma separated.
+You can specify your attributes coma separated.
 
 For this example:  `"category,author"`.
 
