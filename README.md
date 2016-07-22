@@ -1353,7 +1353,7 @@ It will not filter your results, if you want to filter results you should use [f
 For each of the declared attributes, you'll be able to retrieve a list of the most relevant facet values,
 and their associated count for the current query.
 
-** Example **
+**Example**
 
 If you have defined in your **[attributesForFaceting](#attributesforfaceting)**:
 
