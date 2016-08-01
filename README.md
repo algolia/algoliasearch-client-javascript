@@ -49,9 +49,8 @@ When not using any module loader, it will export an `algoliasearch` function in 
 
 1. [Getting started](#getting-started)
   - [Frontend](#frontend)
-  - [Node.js](#nodejs)
-  - [Parse.com](#parsecom-)
-  - [React Native](#react-native)
+  - [Node.js](#nodejs--react-native--browserify--webpack)
+  - [React Native](#nodejs--react-native--browserify--webpack)
 1. [Quick Start](#quick-start)
   - [Frontend](#frontend-1)
     - [Vanilla JavaScript](#vanilla-javascript)
@@ -166,6 +165,7 @@ If you were using our Node.js version (V1, npm `algolia-search`), [read the migr
 
 
 <!--/NO_HTML-->
+
 
 
 
@@ -564,7 +564,7 @@ index.search('something', function searchDone(err) {
 
 To perform a search, you only need to initialize the index and perform a call to the search function.
 
-The search query allows only to retrieve 1000 hits, if you need to retrieve more than 1000 hits for seo, you can use [Backup / Retrieve all index content](#backup--export-an-index)
+The search query allows only to retrieve 1000 hits. If you need to retrieve more than 1000 hits (e.g. for SEO), you can use [Backup / Retrieve all index content](#backup--export-an-index).
 
 ```javascript
 var client = algoliasearch('ApplicationID', 'Search-Only-API-Key');
@@ -597,6 +597,10 @@ index.search('query string', {
   }
 });
 ```
+
+### Search Response Format
+
+#### Sample
 
 The server response will look like:
 
@@ -633,7 +637,110 @@ The server response will look like:
 }
 ```
 
-You can use the following optional arguments:
+#### Fields
+
+- `hits` (array): The hits returned by the search, sorted according to the ranking formula.
+
+    Hits are made of the JSON objects that you stored in the index; therefore, they are mostly schema-less. However, Algolia does enrich them with a few additional fields:
+
+    - `_highlightResult` (object, optional): Highlighted attributes. *Note: Only returned when [`attributesToHighlight`](#attributestohighlight) is non-empty.*
+
+        - `${attribute_name}` (object): Highlighting for one attribute.
+
+            - `value` (string): Markup text with occurrences highlighted. The tags used for highlighting are specified via [`highlightPreTag`](#highlightpretag) and [`highlightPostTag`](#highlightposttag).
+
+            - `matchLevel` (string, enum) = {`none` | `partial` | `full`}: Indicates how well the attribute matched the search query.
+
+            - `matchedWords` (array): List of words *from the query* that matched the object.
+
+            - `fullyHighlighted` (boolean): Whether the entire attribute value is highlighted.
+
+    - `_snippetResult` (object, optional): Snippeted attributes. *Note: Only returned when [`attributesToSnippet`](#attributestosnippet) is non-empty.*
+
+        - `${attribute_name}` (object): Snippeting for the corresponding attribute.
+
+            - `value` (string): Markup text with occurrences highlighted and optional ellipsis indicators. The tags used for highlighting are specified via [`highlightPreTag`](#highlightpretag) and [`highlightPostTag`](#highlightposttag). The text used to indicate ellipsis is specified via [`snippetEllipsisText`](#snippetellipsistext).
+
+            - `matchLevel` (string, enum) = {`none` | `partial` | `full`}: Indicates how well the attribute matched the search query.
+
+    - `_rankingInfo` (object, optional): Ranking information. *Note: Only returned when [`getRankingInfo`](#getrankinginfo) is `true`.*
+
+        - `nbTypos` (integer): Number of typos encountered when matching the record. Corresponds to the `typos` ranking criterion in the ranking formula.
+
+        - `firstMatchedWord` (integer): Position of the most important matched attribute in the attributes to index list. Corresponds to the `attribute` ranking criterion in the ranking formula.
+
+        - `proximityDistance` (integer): When the query contains more than one word, the sum of the distances between matched words. Corresponds to the `proximity` criterion in the ranking formula.
+
+        - `userScore` (integer): Custom ranking for the object, expressed as a single numerical value. Conceptually, it's what the position of the object would be in the list of all objects sorted by custom ranking. Corresponds to the `custom` criterion in the ranking formula.
+
+        - `geoDistance` (integer): Distance between the geo location in the search query and the best matching geo location in the record, divided by the geo precision.
+
+        - `geoPrecision` (integer): Precision used when computed the geo distance, in meters. All distances will be floored to a multiple of this precision.
+
+        - `nbExactWords` (integer): Number of exactly matched words. If `alternativeAsExact` is set, it may include plurals and/or synonyms.
+
+        - `words` (integer): Number of matched words, including prefixes and typos.
+
+        - `filters` (integer): *This field is reserved for advanced usage.* It will be zero in most cases.
+
+    - `_distinctSeqID` (integer): *Note: Only returned when [`distinct`](#distinct) is non-zero.* When two consecutive results have the same value for the attribute used for "distinct", this field is used to distinguish between them.
+
+- `nbHits` (integer): Number of hits that the search query matched.
+
+- `page` (integer): Index of the current page (zero-based). See the [`page`](#page) search parameter.
+
+- `hitsPerPage` (integer): Maximum number of hits returned per page. See the [`hitsPerPage`](#hitsperpage) search parameter.
+
+- `nbPages` (integer): Number of pages corresponding to the number of hits. Basically, `ceil(nbHits / hitsPerPage)`.
+
+- `processingTimeMS` (integer): Time that the server took to process the request, in milliseconds. *Note: This does not include network time.*
+
+- `query` (string): An echo of the query text. See the [`query`](#query) search parameter.
+
+- `queryAfterRemoval` (string, optional): *Note: Only returned when [`removeWordsIfNoResults`](#removewordsifnoresults) is set.* A markup text indicating which parts of the original query have been removed in order to retrieve a non-empty result set. The removed parts are surrounded by `<em>` tags.
+
+- `params` (string, URL-encoded): An echo of all search parameters.
+
+- `message` (string, optional): Used to return warnings about the query.
+
+- `aroundLatLng` (string, optional): *Note: Only returned when [`aroundLatLngViaIP`](#aroundlatlngviaip) is set.* The computed geo location. **Warning: for legacy reasons, this parameter is a string and not an object.** Format: `${lat},${lng}`, where the latitude and longitude are expressed as decimal floating point numbers.
+
+- `automaticRadius` (integer, optional): *Note: Only returned for geo queries without an explicitly specified radius (see `aroundRadius`).* The automatically computed radius. **Warning: for legacy reasons, this parameter is a string and not an integer.**
+
+When [`getRankingInfo`](#getrankinginfo) is set to `true`, the following additional fields are returned:
+
+- `serverUsed` (string): Actual host name of the server that processed the request. (Our DNS supports automatic failover and load balancing, so this may differ from the host name used in the request.)
+
+- `parsedQuery` (string): The query string that will be searched, after normalization.
+
+- `timeoutCounts` (boolean): Whether a timeout was hit when computing the facet counts. When `true`, the counts will be interpolated (i.e. approximate). See also `exhaustiveFacetsCount`.
+
+- `timeoutHits` (boolean): Whether a timeout was hit when retrieving the hits. When true, some results may be missing.
+
+... and ranking information is also added to each of the hits (see above).
+
+When [`facets`](#facets) is non-empty, the following additional fields are returned:
+
+- `facets` (object): Maps each facet name to the corresponding facet counts:
+
+    - `${facet_name}` (object): Facet counts for the corresponding facet name:
+
+        - `${facet_value}` (integer): Count for this facet value.
+
+- `facets_stats` (object, optional): *Note: Only returned when at least one of the returned facets contains numerical values.* Statistics for numerical facets:
+
+    - `${facet_name}` (object): The statistics for a given facet:
+
+        - `min` (integer | float): The minimum value in the result set.
+
+        - `max` (integer | float): The maximum value in the result set.
+
+        - `avg` (integer | float): The average facet value in the result set.
+
+        - `sum` (integer | float): The sum of all values in the result set.
+
+- `exhaustiveFacetsCount` (boolean): Whether the counts are exhaustive (`true`) or approximate (`false`). *Note: When using [`distinct`](#distinct), the facet counts cannot be exhaustive.*
+
 
 ### Search Parameters
 
@@ -689,7 +796,7 @@ Parameters that can also be used in a setSettings also have the `indexing` [scop
 
 **Advanced**
 - [distinct](#distinct) `settings`, `search`
-- [rankingInfo](#rankinginfo) `search`
+- [getRankingInfo](#getrankinginfo) `search`
 - [numericFilters (deprecated)](#numericfilters-deprecated) `search`
 - [tagFilters (deprecated)](#tagfilters-deprecated) `search`
 - [facetFilters (deprecated)](#facetfilters-deprecated) `search`
@@ -995,7 +1102,7 @@ index.setSettings({'customRanking': ['desc(followers)']}, {forwardToSlaves: true
 Here is the list of parameters you can use with the set settings method (`indexing` [scope](#scope))
 
 
-Parameters that can be override at search time also have the `indexing` [scope](#scope)
+Parameters that can be overridden at search time also have the `search` [scope](#scope)
 
 **Attributes**
 - [attributesToIndex](#attributestoindex) `settings`
@@ -1132,7 +1239,7 @@ They are three scopes:
 **Advanced**
 - [attributeForDistinct](#attributefordistinct) `settings`
 - [distinct](#distinct) `settings`, `search`
-- [rankingInfo](#rankinginfo) `search`
+- [getRankingInfo](#getrankinginfo) `search`
 - [numericAttributesToIndex](#numericattributestoindex) `settings`
 - [allowCompressionOfIntegerArray](#allowcompressionofintegerarray) `settings`
 - [numericFilters (deprecated)](#numericfilters-deprecated) `search`
@@ -1848,7 +1955,7 @@ To get a full understanding of how `Distinct` works,
 you can have a look at our [guide on distinct](https://www.algolia.com/doc/search/distinct).
 
 
-#### rankingInfo
+#### getRankingInfo
 
 - scope: `search`
 - type: `boolean`
@@ -2408,7 +2515,48 @@ You can specify custom parameters (like `page` or `hitsPerPage`) on your first
 `browse` call, and these parameters will then be included in the `cursor`. Note
 that it is not possible to access records beyond the 1,000th on the first call.
 
-Example:
+#### Response Format
+
+##### Sample
+
+```json
+{
+  "hits": [
+    {
+      "firstname": "Jimmie",
+      "lastname": "Barninger",
+      "objectID": "433"
+    }
+  ],
+  "processingTimeMS": 7,
+  "query": "",
+  "params": "filters=level%3D20",
+  "cursor": "ARJmaWx0ZXJzPWxldmVsJTNEMjABARoGODA4OTIzvwgAgICAgICAgICAAQ=="
+}
+```
+
+##### Fields
+
+- `cursor` (string, optional): A cursor to retrieve the next chunk of data. If absent, it means that the end of the index has been reached.
+
+- `query` (string): Query text used to filter the results.
+
+- `params` (string, URL-encoded): Search parameters used to filter the results.
+
+- `processingTimeMS` (integer): Time that the server took to process the request, in milliseconds. *Note: This does not include network time.*
+
+The following fields are provided for convenience purposes, and **only when the browse is not filtered**:
+
+- `nbHits` (integer): Number of objects in the index.
+
+- `page` (integer): Index of the current page (zero-based).
+
+- `hitsPerPage` (integer): Maximum number of hits returned per page.
+
+- `nbPages` (integer): Number of pages corresponding to the number of hits. Basically, `ceil(nbHits / hitsPerPage)`.
+
+
+#### Example
 
 ```js
 index.browse('jazz', function browseDone(err, content) {
@@ -2580,7 +2728,7 @@ You can also create an API Key with advanced settings:
         </div>
       </td>
       <td class='client-readme-param-content'>
-        <p>Specify the list of referers. You can target all referers starting with a prefix or ending with a suffix using the &#39;*&#39; character. For example, &quot;algolia.com/*&quot; matches all referers starting with &quot;algolia.com/&quot; and &quot;*.algolia.com&quot; matches all referers ending with &quot;.algolia.com&quot;. Defaults to all referers if empty or blank.</p>
+        <p>Specify the list of referers. You can target all referers starting with a prefix, ending with a suffix using the &#39;*&#39; character. For example, &quot;<a href="https://algolia.com/%5C*">https://algolia.com/\*</a>&quot; matches all referers starting with &quot;<a href="https://algolia.com/">https://algolia.com/</a>&quot; and &quot;*.algolia.com&quot; matches all referers ending with &quot;.algolia.com&quot;. If you want to allow the domain algolia.com you can use &quot;*algolia.com/*&quot;. Defaults to all referers if empty or blank.</p>
 
       </td>
     </tr>
@@ -2770,11 +2918,22 @@ function searchCallback(err, content) {
 client.search(queries, searchCallback);
 ```
 
-The resulting JSON answer contains a ```results``` array storing the underlying queries answers. The answers order is the same than the requests order.
-
 You can specify a `strategy` parameter to optimize your multiple queries:
 - `none`: Execute the sequence of queries until the end.
 - `stopIfEnoughMatches`: Execute the sequence of queries until the number of hits is reached by the sum of hits.
+
+#### Response
+
+The resulting JSON contains the following fields:
+
+- `results` (array): The results for each request, in the order they were submitted. The contents are the same as in .
+
+    Each result also includes the following additional fields:
+
+    - `index` (string): The name of the targeted index.
+
+    - `processed` (boolean, optional): *Note: Only returned when `strategy` is `stopIfEnoughmatches`.* Whether the query was processed.
+
 
 
 
