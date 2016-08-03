@@ -1941,7 +1941,7 @@ client.copyIndex('MyIndex', 'MyIndexCopy', function(err, content) {
 
 In some cases, you may want to totally reindex all your data. In order to keep your existing service
 running while re-importing your data we recommend the usage of a temporary index plus an atomical
-move using the moveIndex method.
+move using the `moveIndex` method.
 
 ```js
 // Rename MyNewIndex in MyIndex (and overwrite it)
@@ -1952,22 +1952,22 @@ client.moveIndex('MyNewIndex', 'MyIndex', function(err, content) {
 
 **Note**:
 
-The moveIndex method will overwrite the destination index, and delete the temporary index.
+The `moveIndex` method will overwrite the destination index, and delete the temporary index.
 
 **Warning**
 
-The moveIndex operation will override all settings of the destination,
+The `moveIndex` operation will override all settings of the destination,
 There is one exception for the [slaves](#slaves) parameter which is not impacted.
 
 For example, if you want to fully update your index `MyIndex` every night, we recommend the following process:
  1. Get settings and synonyms from the old index using [Get settings](#get-settings---getsettings)
-  and Get synonym - `getSynonym`.
+  and `[Get synonym](#get-synonym---getsynonym)`.
  1. Apply settings and synonyms to the temporary index `MyTmpIndex`, (this will create the `MyTmpIndex` index)
-  using [Set settings](#set-settings---setsettings) and Batch synonyms - `batchSynonyms`
+  using `[Set settings](#set-settings---setsettings)` and `[Batch synonyms](#batch-synonyms---batchsynonyms)`
   (make sure to remove the [slaves](#slaves) parameter from the settings if it exists).
  1. Import your records into a new index using [Add objects](#add-objects---addobjects).
  1. Atomically replace the index `MyIndex` with the content and settings of the index `MyTmpIndex`
- using the moveIndex method.
+ using the `[Move index](#move-index---moveindex)` method.
  This will automatically override the old index without any downtime on the search.
  1. You'll end up with only one index called `MyIndex`, that contains the records and settings pushed to `MyTmpIndex`
  and the slave-indices that were initially attached to `MyIndex` will be in sync with the new data.
