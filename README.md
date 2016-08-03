@@ -14,20 +14,6 @@
 
 
 
-[![Version][version-svg]][package-url] [![Build Status][travis-svg]][travis-url] [![License][license-image]][license-url] [![Downloads][downloads-image]][downloads-url]
-
-[![Browser tests][browser-test-matrix]][browser-test-url]
-
-[travis-svg]: https://img.shields.io/travis/algolia/algoliasearch-client-js/master.svg?style=flat-square
-[travis-url]: https://travis-ci.org/algolia/algoliasearch-client-js
-[license-image]: https://img.shields.io/badge/license-MIT-green.svg?style=flat-square
-[license-url]: LICENSE.txt
-[downloads-image]: https://img.shields.io/npm/dm/algoliasearch.svg?style=flat-square
-[downloads-url]: http://npm-stat.com/charts.html?package=algoliasearch
-[browser-test-matrix]: https://saucelabs.com/browser-matrix/algoliasearch-js.svg
-[browser-test-url]: https://saucelabs.com/u/algoliasearch-js
-[version-svg]: https://img.shields.io/npm/v/algoliasearch.svg?style=flat-square
-[package-url]: https://npmjs.org/package/algoliasearch
 
 
 The JavaScript client lets you use the [Algolia Search API](https://www.algolia.com/doc/rest) on the frontend (browsers) or on the backend (Node.js) with the same API.
@@ -247,117 +233,7 @@ index.search('something', function searchDone(err, content) {
 
 ### Quick Start
 
-#### Frontend
 
-The JavaScript API client gives you access to low level methods to search and
-receive results. This is all you need for building your front-end but will
-require custom code on your side for displaying the results. Reading
-our [guides](https://www.algolia.com/doc#search) will help you in that.
-
-We've also released two JavaScript libraries to ease the building of the most
-common kind of UI:
-
-##### [autocomplete.js](https://github.com/algolia/autocomplete.js)
-
-[autocomplete.js](https://github.com/algolia/autocomplete.js) helps you build
-**dropdown** menus.
-
-![autocomplete.js example](https://raw.githubusercontent.com/algolia/algoliasearch-client-js/master/examples/autocomplete.gif)
-
-##### [instantsearch.js](https://community.algolia.com/instantsearch.js/)
-
-[instantsearch.js](https://community.algolia.com/instantsearch.js/) is for **full
-page** search.
-
-![instantsearch.js example](https://raw.githubusercontent.com/algolia/algoliasearch-client-js/master/examples/instantsearch.gif)
-
-We strongly encourage you to have a look at those libraries because they are
-packaged with a lot of options that will cover most of your needs without
-requiring you to do all the plumbing.
-
-To build your frontend search experience, also check out our [guides](https://www.algolia.com/doc#search).
-
-##### Vanilla JavaScript
-```html
-<script src="https://cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
-<script>
-  var client = algoliasearch('ApplicationID', 'apiKey');
-  var index = client.initIndex('indexName');
-
-  index.search('an example', function searchDone(err, content) {
-    console.log(err, content)
-  });
-
-  index.search('another example')
-    .then(function searchSuccess(content) {
-      console.log(content);
-    })
-    .catch(function searchFailure(err) {
-      console.error(err);
-    });
-</script>
-```
-You can see the full [Vanilla JavaScript example
-here](https://github.com/algolia/algoliasearch-client-js/blob/master/examples/javascript.html)
-
-##### jQuery module
-We provide a specific [jQuery](http://jquery.com/) build that will use [jQuery.ajax](http://api.jquery.com/jquery.ajax/).
-
-It can be used with callbacks or [jQuery promises](https://api.jquery.com/promise/).
-
-```html
-<script src="https://cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/algoliasearch/3/algoliasearch.jquery.min.js"></script>
-<script>
-  var client = $.algolia.Client('ApplicationID', 'apiKey');
-  var index = client.initIndex('indexName');
-  index.search('something', function searchDone(err, content) {
-    console.log(err, content)
-  });
-</script>
-```
-You can see the full [jQuery example
-here](https://github.com/algolia/algoliasearch-client-js/blob/master/examples/jquery.html)
-
-##### AngularJS module
-We provide a specific [AngularJS](https://angularjs.org/) build that is using the [$http service](https://docs.angularjs.org/api/ng/service/$http).
-
-It can be used with callbacks or [AngularJS promises](https://docs.angularjs.org/api/ng/service/$q).
-
-Also see our [AngularJS example](https://github.com/algolia/algoliasearch-client-js/blob/master/examples/angular.html)
-on github.
-
-```html
-<script src="https://cdn.jsdelivr.net/angularjs/1/angular.min.js"></script>
-<script src="https://cdn.jsdelivr.net/algoliasearch/3/algoliasearch.angular.min.js"></script>
-<script>
-  angular
-    .module('myapp', ['algoliasearch'])
-    .controller('SearchCtrl', ['$scope', 'algolia', function($scope, algolia) {
-      $scope.search = {
-        query: '',
-        hits: []
-      };
-      var client = algolia.Client('ApplicationID', 'apiKey');
-      var index = client.initIndex('indexName');
-
-      $scope.$watch('search.query', function() {
-        index.search($scope.search.query)
-          .then(function searchSuccess(content) {
-            console.log(content);
-            // add content of search results to scope for display in view
-            $scope.search.hits = content.hits;
-          }, function searchFailure(err) {
-            console.log(err);
-        });
-      });
-    }]);
-</script>
-```
-You can see the full [Angular example
-here](https://github.com/algolia/algoliasearch-client-js/blob/master/examples/angular.html)
-
-#### Backend (Node.js)
 
 In 30 seconds, this quick start tutorial will show you how to index and search objects.
 
@@ -436,119 +312,6 @@ index.search('jim', function(err, content) {
 
 
 
-
-#### Client options
-
-In most situations, there is no need to tune the options. We provide this list to be
-transparent with our users.
-
-- `timeout` (Number) timeout for requests to our servers, in milliseconds
-  + in Node.js this is an inactivity timeout. Defaults to 15s
-  + in the browser, this is a global timeout. Defaults to 2s (incremental)
-- `protocol` (String) protocol to use when communicating with algolia
-  + in the browser, we use the page protocol by default
-  + in Node.js it's https by default
-  + possible values: 'http:', 'https:'
-- `hosts.read` ([String]) array of read hosts to use to call Algolia servers, computed automatically
-- `hosts.write` ([String]) array of write hosts to use to call Algolia servers, computed automatically
-- `httpAgent` ([HttpAgent](https://nodejs.org/api/http.html#http_class_http_agent)) <sup>node-only</sup> Node.js httpAgent instance to use when communicating with Algolia servers.
-
-To pass an option, use:
-
-```js
-var client = algoliasearch(applicationId, apiKey, {
-  timeout: 4000
-})
-```
-
-#### Callback convention
-
-Every API call takes a callback as last parameter. This callback will then be called with two arguments:
-
- 1. **error**: null or an [Error](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error) object. More info on the error can be find in `error.message`.
- 2. **content**: the object containing the answer from the server, it's a JavaScript object
-
-#### Promises
-
-**If you do not provide a callback**, you will get a promise (but never both).
-
-Promises are the [native Promise implementation](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise).
-
-We use [jakearchibald/es6-promise](https://github.com/stefanpenner/es6-promise) as a polyfill when needed.
-
-#### Request strategy
-
-The request strategy used by the JavaScript client includes:
-
-- On the browser:
-  + [CORS](https://en.wikipedia.org/wiki/Cross-Origin_Resource_Sharing#Browser_support) for modern browsers
-  + [XDomainRequest](https://msdn.microsoft.com/en-us/library/ie/cc288060%28v=vs.85%29.aspx) for IE <= 10
-  + [JSONP](https://en.wikipedia.org/wiki/JSONP) in any situation where Ajax requests are unavailabe or blocked.
-- Node.js:
-  + native [`http` module](https://nodejs.org/api/)
-
-Connections are always `keep-alive`.
-
-#### Cache
-
-**Browser only**
-
-To avoid performing the same API calls twice **search** results will be stored
-in a `cache` that will be tied to your JavaScript `client` and `index` objects.
-Whenever a call for a specific query (and filters) is made, we store the results
-in a local cache. If you ever call the exact same query again, we read the
-results from the cache instead of doing an API call.
-
-This is particularly useful when your users are deleting characters from their
-current query, to avoid useless API calls. Because it is stored as a simple
-JavaScript object in memory, the cache is automatically reset whenever you
-reload the page.
-
-It is never automatically purged, nor can it be completely disabled. Instead, we
-provide the `index.clearCache()` (or `client.clearCache()` if you're doing
-[multiple queries](#multiple-queries)) method that you can call to reset it.
-
-#### Proxy support
-
-**Node.js only**
-
-If you are behind a proxy, just set `HTTP_PROXY` or `HTTPS_PROXY` environment variables before starting your Node.js program.
-
-```sh
-HTTP_PROXY=http://someproxy.com:9320 node main.js
-```
-
-#### Keep-alive
-
-**Node.js only**
-
-Keep-alive is activated by default.
-
-Because of the nature of keepalive connections, your process will hang even if you do not do any more command using the `client`.
-
-To fix this, we expose a `client.destroy()` method that will terminate all remaining alive connections.
-
-You should call this method when you are finished working with the AlgoliaSearch API. So that your process will exit gently.
-
-**Note: keep-alive is still always activated in browsers, this is a native behavior of browsers.**
-
-#### Debugging
-
-The client will send you errors when a method call fails for some reasons.
-
-You can get detailed debugging information:
-
-```js
-index.search('something', function searchDone(err) {
-  if (err) {
-    console.log(err.message);
-    console.log(err.debugData);
-    return;
-  }
-});
-```
-
-`err.debugData` contains the array of requests parameters that were used to issue requests.
 
 
 
@@ -2163,15 +1926,10 @@ index.clearIndex(function(err, content) {
 
 ### Copy index - `copyIndex`
 
-You can easily copy or rename an existing index using the `copy` and `move` commands.
-**Note**: Move and copy commands overwrite the destination index.
+You can copy an existing index using the `copy` command.
+**Note**: The copy command will overwrite the destination index.
 
 ```js
-// Rename MyIndex in MyIndexNewName
-client.moveIndex('MyIndex', 'MyIndexNewName', function(err, content) {
-  console.log(content);
-});
-
 // Copy MyIndex in MyIndexCopy
 client.copyIndex('MyIndex', 'MyIndexCopy', function(err, content) {
   console.log(content);
@@ -2181,9 +1939,9 @@ client.copyIndex('MyIndex', 'MyIndexCopy', function(err, content) {
 
 ### Move index - `moveIndex`
 
-The move command is particularly useful if you want to update a big index atomically from one version to another. For example, if you recreate your index `MyIndex` each night from a database by batch, you only need to:
- 1. Import your database into a new index using [batches](#batch-writes). Let's call this new index `MyNewIndex`.
- 1. Rename `MyNewIndex` to `MyIndex` using the move command. This will automatically override the old index and new queries will be served on the new one.
+In some cases, you may want to totally reindex all your data. In order to keep your existing service
+running while re-importing your data we recommend the usage of a temporary index plus an atomical
+move using the moveIndex method.
 
 ```js
 // Rename MyNewIndex in MyIndex (and overwrite it)
@@ -2191,6 +1949,28 @@ client.moveIndex('MyNewIndex', 'MyIndex', function(err, content) {
   console.log(content);
 });
 ```
+
+**Note**:
+
+The moveIndex method will overwrite the destination index, and delete the temporary index.
+
+**Warning**
+
+The moveIndex operation will override all settings of the destination,
+There is one exception for the [slaves](#slaves) parameter which is not impacted.
+
+For example, if you want to fully update your index `MyIndex` every night, we recommend the following process:
+ 1. Get settings and synonyms from the old index using [Get settings](#get-settings---getsettings)
+  and Get synonym - `getSynonym`.
+ 1. Apply settings and synonyms to the temporary index `MyTmpIndex`, (this will create the `MyTmpIndex` index)
+  using [Set settings](#set-settings---setsettings) and Batch synonyms - `batchSynonyms`
+  (make sure to remove the [slaves](#slaves) parameter from the settings if it exists).
+ 1. Import your records into a new index using [Add objects](#add-objects---addobjects).
+ 1. Atomically replace the index `MyIndex` with the content and settings of the index `MyTmpIndex`
+ using the moveIndex method.
+ This will automatically override the old index without any downtime on the search.
+ 1. You'll end up with only one index called `MyIndex`, that contains the records and settings pushed to `MyTmpIndex`
+ and the slave-indices that were initially attached to `MyIndex` will be in sync with the new data.
 
 
 
@@ -2926,7 +2706,7 @@ You can specify a `strategy` parameter to optimize your multiple queries:
 
 The resulting JSON contains the following fields:
 
-- `results` (array): The results for each request, in the order they were submitted. The contents are the same as in .
+- `results` (array): The results for each request, in the order they were submitted. The contents are the same as in [Search in an index](#search-in-an-index---search).
 
     Each result also includes the following additional fields:
 
