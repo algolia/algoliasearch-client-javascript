@@ -159,7 +159,12 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
   var hasFallback = client._useFallback && client._request.fallback && initialOpts.fallback;
   var headers;
 
-  if (this.apiKey.length > MAX_API_KEY_LENGTH && initialOpts.body !== undefined && initialOpts.body.params !== undefined) {
+  if (
+    this.apiKey.length > MAX_API_KEY_LENGTH &&
+    initialOpts.body !== undefined &&
+    (initialOpts.body.params !== undefined || // index.search()
+    initialOpts.body.requests !== undefined) // client.search()
+  ) {
     initialOpts.body.apiKey = this.apiKey;
     headers = this._computeRequestHeaders(false);
   } else {
