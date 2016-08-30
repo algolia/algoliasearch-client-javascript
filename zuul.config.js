@@ -2,8 +2,7 @@
 
 var zuulConfig = module.exports = {
   tunnel: {
-    type: 'ngrok',
-    bind_tls: true
+    type: 'localtunnel'
   },
   ui: 'tape',
   browserify: [{
@@ -29,6 +28,13 @@ var zuulConfig = module.exports = {
   // we want to be notified something is wrong asap, so no retry
   browser_retries: 1
 };
+
+if (process.env.CI === 'true') {
+  zuulConfig.tunnel = {
+    type: 'ngrok',
+    bind_tls: true
+  };
+}
 
 var browsers = require('browzers');
 
