@@ -1,5 +1,13 @@
 CHANGELOG
 
+2016-08-31 3.18.1
+
+  * fix(client.search): accept very long API keys
+    fixes #319
+
+    also fix uglify-js version because it's buggy in IE8:
+    https://github.com/mishoo/UglifyJS2/issues/1039
+
 2016-07-22 3.18.0
 
   * fix(debug): only activate debug messages on NODE_ENV==='debug'
