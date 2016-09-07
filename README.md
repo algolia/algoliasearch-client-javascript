@@ -2501,7 +2501,7 @@ We have several methods to manage them:
 ### Generate key - `generateSecuredApiKey`
 
 When you need to restrict the scope of the *Search Key*, we recommend to use *Secured API Key*.
-from the *Search Only API Key* or any search *User Key* using the [Generate key](#generate-key---generatesecuredapikey) method
+You can generate a *Secured API Key* from the *Search Only API Key* or any search *User API Key*
 
 There is a few things to know about about *Secured API Keys*
 - They always need to be generated **on your backend** using one of our API Client 
