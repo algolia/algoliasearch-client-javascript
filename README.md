@@ -979,7 +979,7 @@ index.addObjects(objects, function(err, content) {
 });
 ```
 
-To add a single object, use the `Add object - `addObject`` method:
+To add a single object, use the `[Add object](#add-object---addobject)` method:
 
 ```js
 index.addObject({
@@ -1016,7 +1016,7 @@ index.saveObjects(objects, function(err, content) {
 });
 ```
 
-To update a single object, you can use the `Update object - `saveObject`` method:
+To update a single object, you can use the `[Update object](#update-object---saveobject) method:
 
 ```js
 index.saveObject({
@@ -1128,7 +1128,7 @@ index.partialUpdateObject({
 Note: Here we are decrementing the value by `42`. To decrement just by one, put
 `value:1`.
 
-To partial update multiple objects using one API call, you can use the `Partial update objects - `partialUpdateObjects`` method:
+To partial update multiple objects using one API call, you can use the `[Partial update objects](#partial-update-objects---partialupdateobjects)` method:
 
 ```js
 var objects = [{
@@ -1155,7 +1155,7 @@ index.deleteObjects(['myID1', 'myID2'], function(err, content) {
 });
 ```
 
-To delete a single object, you can use the `Delete object - `deleteObject`` method:
+To delete a single object, you can use the `[Delete object](#delete-object---deleteobject)` method:
 
 ```js
 index.deleteObject('myID', function(err) {
