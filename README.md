@@ -82,10 +82,10 @@ Search
 
 Indexing
 
-1. [Add object](#add-object---addobject)
-1. [Update object](#update-object---saveobject)
-1. [Partial update object](#partial-update-object---partialupdateobject)
-1. [Delete object](#delete-object---deleteobject)
+1. [Add objects](#add-objects---addobjects)
+1. [Update objects](#update-objects---saveobjects)
+1. [Partial update objects](#partial-update-objects---partialupdateobjects)
+1. [Delete objects](#delete-objects---deleteobjects)
 
 Settings
 
@@ -935,39 +935,17 @@ index.getObjects(['myObj1', 'myObj2'], function(err, content) {
 
 
 
-### Add object - `addObject`
+### Add objects - `addObjects`
 
 Each entry in an index has a unique identifier called `objectID`. There are two ways to add an entry to the index:
 
- 1. Using automatic `objectID` assignment. You will be able to access it in the answer.
- 2. Supplying your own `objectID`.
+ 1. Supplying your own `objectID`.
+ 2. Using automatic `objectID` assignment. You will be able to access it in the answer.
 
 You don't need to explicitly create an index, it will be automatically created the first time you add an object.
 Objects are schema less so you don't need any configuration to start indexing. If you wish to configure things, the settings section provides details about advanced settings.
 
-Example with automatic `objectID` assignment:
-
-```js
-index.addObject({
-  firstname: 'Jimmie',
-  lastname: 'Barninger'
-}, function(err, content) {
-  console.log('objectID=' + content.objectID);
-});
-```
-
-Example with manual `objectID` assignment:
-
-```js
-index.addObject({
-  firstname: 'Jimmie',
-  lastname: 'Barninger'
-}, 'myID', function(err, content) {
-  console.log('objectID=' + content.objectID);
-});
-```
-
-To add multiple objects using one API call, you can use the `Add objects - `addObjects`` method:
+Example with automatic `objectID` assignments:
 
 ```js
 var objects = [{
@@ -983,7 +961,36 @@ index.addObjects(objects, function(err, content) {
 });
 ```
 
-### Update object - `saveObject`
+Example with manual `objectID` assignments:
+
+```js
+var objects = [{
+  objectID: '1',
+  firstname: 'Jimmie',
+  lastname: 'Barninger'
+}, {
+  objectID: '2',
+  firstname: 'Warren',
+  lastname: 'Speach'
+}];
+
+index.addObjects(objects, function(err, content) {
+  console.log(content);
+});
+```
+
+To add a single object, use the `Add object - `addObject`` method:
+
+```js
+index.addObject({
+  firstname: 'Jimmie',
+  lastname: 'Barninger'
+}, 'myID', function(err, content) {
+  console.log('objectID=' + content.objectID);
+});
+```
+
+### Update objects - `saveObjects`
 
 You have three options when updating an existing object:
 
@@ -991,20 +998,7 @@ You have three options when updating an existing object:
  2. Replace only some attributes.
  3. Apply an operation to some attributes.
 
-Example on how to replace all attributes of an existing object:
-
-```js
-index.saveObject({
-  firstname: 'Jimmie',
-  lastname: 'Barninger',
-  city: 'New York',
-  objectID: 'myID'
-}, function(err, content) {
-  console.log(content);
-});
-```
-
-To update multiple objects using one API call, you can use the `Update objects - `saveObjects`` method:
+Example on how to replace all attributes existing objects:
 
 ```js
 var objects = [{
@@ -1022,7 +1016,21 @@ index.saveObjects(objects, function(err, content) {
 });
 ```
 
-### Partial update object - `partialUpdateObject`
+To update a single object, you can use the `Update object - `saveObject`` method:
+
+```js
+index.saveObject({
+  firstname: 'Jimmie',
+  lastname: 'Barninger',
+  city: 'New York',
+  objectID: 'myID'
+}, function(err, content) {
+  console.log(content);
+});
+```
+
+
+### Partial update objects - `partialUpdateObjects`
 
 You have many ways to update an object's attributes:
 
@@ -1137,23 +1145,23 @@ index.partialUpdateObjects(objects, function(err, content) {
 ```
 
 
-### Delete object - `deleteObject`
+### Delete objects - `deleteObjects`
 
-You can delete an object using its `objectID`:
+You can delete objects using their `objectID`:
+
+```js
+index.deleteObjects(['myID1', 'myID2'], function(err, content) {
+  console.log(content);
+});
+```
+
+To delete a single object, you can use the `Delete object - `deleteObject`` method:
 
 ```js
 index.deleteObject('myID', function(err) {
   if (!err) {
     console.log('success');
   }
-});
-```
-
-To delete multiple objects using one API call, you can use the `Delete objects - `deleteObjects`` method:
-
-```js
-index.deleteObjects(['myID1', 'myID2'], function(err, content) {
-  console.log(content);
 });
 ```
 
