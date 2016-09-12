@@ -82,10 +82,10 @@ Search
 
 Indexing
 
-1. [Add objects](#add-objects---addobjects)
-1. [Update objects](#update-objects---saveobjects)
-1. [Partial update](#partial-update---partialupdateobjects)
-1. [Delete objects](#delete-objects---deleteobjects)
+1. [Add object](#add-object---addobject)
+1. [Update object](#update-object---saveobject)
+1. [Partial update object](#partial-update-object---partialupdateobject)
+1. [Delete object](#delete-object---deleteobject)
 
 Settings
 
@@ -935,7 +935,7 @@ index.getObjects(['myObj1', 'myObj2'], function(err, content) {
 
 
 
-### Add objects - `addObjects`
+### Add object - `addObject`
 
 Each entry in an index has a unique identifier called `objectID`. There are two ways to add an entry to the index:
 
@@ -967,8 +967,23 @@ index.addObject({
 });
 ```
 
+To add multiple objects using one API call, you can use the `Add objects - `addObjects`` method:
 
-### Update objects - `saveObjects`
+```js
+var objects = [{
+  firstname: 'Jimmie',
+  lastname: 'Barninger'
+}, {
+  firstname: 'Warren',
+  lastname: 'Speach'
+}];
+
+index.addObjects(objects, function(err, content) {
+  console.log(content);
+});
+```
+
+### Update object - `saveObject`
 
 You have three options when updating an existing object:
 
@@ -989,7 +1004,25 @@ index.saveObject({
 });
 ```
 
-### Partial update - `partialUpdateObjects`
+To update multiple objects using one API call, you can use the `Update objects - `saveObjects`` method:
+
+```js
+var objects = [{
+  firstname: 'Jimmie',
+  lastname: 'Barninger',
+  objectID: 'myID1'
+}, {
+  firstname: 'Warren',
+  lastname: 'Speach',
+  objectID: 'myID2'
+}];
+
+index.saveObjects(objects, function(err, content) {
+  console.log(content);
+});
+```
+
+### Partial update object - `partialUpdateObject`
 
 You have many ways to update an object's attributes:
 
@@ -1087,8 +1120,24 @@ index.partialUpdateObject({
 Note: Here we are decrementing the value by `42`. To decrement just by one, put
 `value:1`.
 
+To partial update multiple objects using one API call, you can use the `Partial update objects - `partialUpdateObjects`` method:
 
-### Delete objects - `deleteObjects`
+```js
+var objects = [{
+  firstname: 'Jimmie',
+  objectID: 'myID1'
+}, {
+  firstname: 'Warren',
+  objectID: 'myID2'
+}];
+
+index.partialUpdateObjects(objects, function(err, content) {
+  console.log(content);
+});
+```
+
+
+### Delete object - `deleteObject`
 
 You can delete an object using its `objectID`:
 
@@ -1097,6 +1146,14 @@ index.deleteObject('myID', function(err) {
   if (!err) {
     console.log('success');
   }
+});
+```
+
+To delete multiple objects using one API call, you can use the `Delete objects - `deleteObjects`` method:
+
+```js
+index.deleteObjects(['myID1', 'myID2'], function(err, content) {
+  console.log(content);
 });
 ```
 
@@ -2750,70 +2807,6 @@ index.searchSynonyms({
 ### Custom batch - `batch`
 
 You may want to perform multiple operations with one API call to reduce latency.
-We expose four methods to perform batch operations:
-
-* Add objects - `addObjects`: Add an array of objects using automatic `objectID` assignment.
-* Update objects - `saveObjects`: Add or update an array of objects that contains an `objectID` attribute.
-* Delete objects - `deleteObjects`: Delete an array of objectIDs.
-* Partial update - `partialUpdateObjects`: Partially update an array of objects that contain an `objectID` attribute (only specified attributes will be updated).
-
-Example using automatic `objectID` assignment:
-
-```js
-var objects = [{
-  firstname: 'Jimmie',
-  lastname: 'Barninger'
-}, {
-  firstname: 'Warren',
-  lastname: 'Speach'
-}];
-
-index.addObjects(objects, function(err, content) {
-  console.log(content);
-});
-```
-
-Example with user defined `objectID` (add or update):
-
-```js
-var objects = [{
-  firstname: 'Jimmie',
-  lastname: 'Barninger',
-  objectID: 'myID1'
-}, {
-  firstname: 'Warren',
-  lastname: 'Speach',
-  objectID: 'myID2'
-}];
-
-index.saveObjects(objects, function(err, content) {
-  console.log(content);
-});
-```
-
-Example that deletes a set of records:
-
-```js
-index.deleteObjects(['myID1', 'myID2'], function(err, content) {
-  console.log(content);
-});
-```
-
-Example that updates only the `firstname` attribute:
-
-```js
-var objects = [{
-  firstname: 'Jimmie',
-  objectID: 'myID1'
-}, {
-  firstname: 'Warren',
-  objectID: 'myID2'
-}];
-
-index.partialUpdateObjects(objects, function(err, content) {
-  console.log(content);
-});
-```
 
 
 
