@@ -112,5 +112,6 @@
   "engines": {
     "node": ">=0.8"
   },
+  "typings": "./typings/algoliasearch.d.ts",
   "license": "MIT"
 }
