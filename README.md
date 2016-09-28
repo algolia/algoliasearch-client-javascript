@@ -230,7 +230,7 @@ To include the latest releases and all upcoming features and patches, use this:
 
 We recommend using jsDelivr, but `algoliasearch` is also available at:
 - [CDNJS](https://cdnjs.com/libraries/algoliasearch)
-- [unpkg](https://unpkg.com): https://unpkg.com/algoliasearch@3/dist/algoliasearch.min.js
+- [unpkgr](https://unpkgr.com): https://unpkgr.com/algoliasearch@3/dist/algoliasearch.min.js
 
 #### Search only/lite client
 
@@ -2680,6 +2680,15 @@ even if he shares his `IP` with another user.
 // generate a public API key for user 42. Here, records are tagged with:
 //  - 'user_XXXX' if they are visible by user XXXX
 var public_key = client.generateSecuredApiKey('YourSearchOnlyApiKey', {filters: '_tags:user_42', userToken: 'user_42'});
+```
+
+#### Network restriction
+
+For more protection against API key leaking and reuse you can restrict the key to be valid only from specific IPv4 networks
+
+```js
+# generate a public API key that is restricted to '192.168.1.0/24':
+var public_key = client.generateSecuredApiKey('YourSearchOnlyApiKey', {restrictSources: '192.168.1.0/24'});
 ```
 
 
