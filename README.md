@@ -230,7 +230,7 @@ To include the latest releases and all upcoming features and patches, use this:
 
 We recommend using jsDelivr, but `algoliasearch` is also available at:
 - [CDNJS](https://cdnjs.com/libraries/algoliasearch)
-- [unpkgr](https://unpkgr.com): https://unpkgr.com/algoliasearch@3/dist/algoliasearch.min.js
+- [unpkg](https://unpkg.com): https://unpkg.com/algoliasearch@3/dist/algoliasearch.min.js
 
 #### Search only/lite client
 
