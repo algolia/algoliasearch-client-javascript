@@ -1289,10 +1289,10 @@ index.setSettings({'customRanking': ['desc(followers)']}, {forwardToSlaves: true
 
 <!--PARAMETERS_LINK-->
 
-Here is the list of parameters you can use with the set settings method (`indexing` [scope](#scope))
+Here is the list of parameters you can use with the set settings method (`settings` [scope](#scope)).
 
 
-Parameters that can be overridden at search time also have the `search` [scope](#scope)
+Parameters that can be overridden at search time also have the `search` [scope](#scope).
 
 **Attributes**
 
