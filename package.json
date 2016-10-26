@@ -60,6 +60,7 @@
     "inherits": "^2.0.1",
     "isarray": "^1.0.0",
     "load-script": "^1.0.0",
+    "object-keys": "^1.0.11",
     "querystring-es3": "^0.2.1",
     "reduce": "^1.0.1",
     "semver": "^5.1.0",
