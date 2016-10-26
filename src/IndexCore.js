@@ -230,6 +230,43 @@ IndexCore.prototype.browseFrom = function(cursor, callback) {
   });
 };
 
+/*
+* Search in facets
+* https://www.algolia.com/doc/rest-api/search#search-in-a-facet
+*
+* @param {string} params.facetName Facet name, name of the attribute to search for values in.
+* Must be declared as a facet
+* @param {string} params.facetQuery Query for the facet search
+* @param {string} [params.*] Any search parameter of Algolia,
+* see https://www.algolia.com/doc/api-client/javascript/search#search-parameters
+* Pagination is not supported. The page and hitsPerPage parameters will be ignored.
+* @param callback (optional)
+*/
+IndexCore.prototype.searchFacet = function(params, callback) {
+  var clone = require('./clone.js');
+  var omit = require('./omit.js');
+  var usage = 'Usage: index.searchFacet({facetName, facetQuery, ...params}[, callback])';
+
+  if (params.facetName === undefined || params.facetQuery === undefined) {
+    throw new Error(usage);
+  }
+
+  var facetName = params.facetName;
+  var filteredParams = omit(clone(params), function(keyName) {
+    return keyName === 'facetName';
+  });
+  var searchParameters = this.as._getSearchParams(filteredParams, '');
+
+  return this.as._jsonRequest({
+    method: 'POST',
+    url: '/1/indexes/' +
+      encodeURIComponent(this.indexName) + '/facets/' + encodeURIComponent(facetName) + '/query',
+    hostType: 'read',
+    body: {params: searchParameters},
+    callback: callback
+  });
+};
+
 IndexCore.prototype._search = function(params, url, callback) {
   return this.as._jsonRequest({
     cache: this.cache,

@@ -19,7 +19,7 @@ node test/run-node.js
 # in CI we launch integration test
 [ $CI == 'true' ] && echo "Node test 4: integration" && node test/run-integration.js
 
-# in a PR or in local environement, test only on node 4
+# in a PR or in local environement, test only on node 6
 if [ $TRAVIS_PULL_REQUEST != 'false' ] || [ $CI == 'false' ]; then
   echo 'Skipping other nodejs version testing (PR or local)'
   exit 0

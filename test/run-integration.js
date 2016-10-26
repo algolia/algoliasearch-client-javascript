@@ -45,7 +45,9 @@ var objects = getFakeObjects(50);
 _.bindAll(index);
 
 test('index.clearIndex', clearIndex);
+test('index.setSettings', setSettings);
 test('index.saveObjects', saveObjects);
+test('index.searchFacet', searchFacet);
 test('index.browse', browse);
 test('index.getObject', getObject);
 test('index.browseFrom', browseFrom);
@@ -105,6 +107,30 @@ function clearIndex(t) {
     .then(_.partialRight(t.equal, 'published', 'Index was cleared'))
     // we do not use .catch since it's a reserved word in IE8
     // https://github.com/jakearchibald/es6-promise/issues/20
+    .then(noop, _.bind(t.error, t));
+}
+
+function setSettings(t) {
+  t.plan(1);
+
+  index
+    .setSettings({attributesForFaceting: ['searchable(category)']})
+    .then(get('taskID'))
+    .then(index.waitTask)
+    .then(get('status'))
+    .then(_.partialRight(t.equal, 'published', 'Settings were updated'))
+    .then(noop, _.bind(t.error, t));
+}
+
+function searchFacet(t) {
+  t.plan(1);
+
+  index
+    .searchFacet({facetName: 'category', facetQuery: 'a'})
+    .then(get('facetHits'))
+    .then(function(facetHits) {
+      t.ok(facetHits.length, 'We got some facet hits');
+    })
     .then(noop, _.bind(t.error, t));
 }
 
