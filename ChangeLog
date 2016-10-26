@@ -1,5 +1,9 @@
 CHANGELOG
 
+2016-10-26 3.19.0
+
+  * feat(index.searchFacet): add method #345
+
 2016-08-31 3.18.1
 
   * fix(client.search): accept very long API keys

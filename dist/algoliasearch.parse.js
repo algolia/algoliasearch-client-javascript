@@ -71,7 +71,7 @@ module.exports =
 	debug('loaded the Parse client');
 
 	function algoliasearch(applicationID, apiKey, opts) {
-	  var cloneDeep = __webpack_require__(18);
+	  var cloneDeep = __webpack_require__(13);
 	  opts = cloneDeep(opts || {});
 
 	  if (opts.protocol === undefined) {
@@ -90,7 +90,7 @@ module.exports =
 	  return new AlgoliaSearchParse(applicationID, apiKey, opts);
 	}
 
-	algoliasearch.version = __webpack_require__(22);
+	algoliasearch.version = __webpack_require__(25);
 	algoliasearch.ua = 'Algolia for Parse ' + algoliasearch.version;
 
 	function AlgoliaSearchParse() {
@@ -102,7 +102,7 @@ module.exports =
 
 	AlgoliaSearchParse.prototype._request = function(rawUrl, opts) {
 	  /* global Parse */
-	  var clone = __webpack_require__(18);
+	  var clone = __webpack_require__(13);
 	  var promise = new Parse.Promise();
 
 	  debug('url: %s, opts: %j', rawUrl, opts);
@@ -809,9 +809,9 @@ module.exports =
 	module.exports = AlgoliaSearch;
 
 	var Index = __webpack_require__(7);
-	var deprecate = __webpack_require__(15);
-	var deprecatedMessage = __webpack_require__(16);
-	var AlgoliaSearchCore = __webpack_require__(21);
+	var deprecate = __webpack_require__(19);
+	var deprecatedMessage = __webpack_require__(20);
+	var AlgoliaSearchCore = __webpack_require__(24);
 	var inherits = __webpack_require__(4);
 	var errors = __webpack_require__(10);
 
@@ -894,7 +894,7 @@ module.exports =
 	 *  content: the server answer that contains the task ID
 	 */
 	AlgoliaSearch.prototype.getLogs = function(offset, length, callback) {
-	  var clone = __webpack_require__(18);
+	  var clone = __webpack_require__(13);
 	  var params = {};
 	  if (typeof offset === 'object') {
 	    // getLogs(params)
@@ -1046,7 +1046,7 @@ module.exports =
 	 * @see {@link https://www.algolia.com/doc/rest_api#AddKey|Algolia REST API Documentation}
 	 */
 	AlgoliaSearch.prototype.addUserKey = function(acls, params, callback) {
-	  var isArray = __webpack_require__(13);
+	  var isArray = __webpack_require__(17);
 	  var usage = 'Usage: client.addUserKey(arrayOfAcls[, params, callback])';
 
 	  if (!isArray(acls)) {
@@ -1131,7 +1131,7 @@ module.exports =
 	 * @see {@link https://www.algolia.com/doc/rest_api#UpdateIndexKey|Algolia REST API Documentation}
 	 */
 	AlgoliaSearch.prototype.updateUserKey = function(key, acls, params, callback) {
-	  var isArray = __webpack_require__(13);
+	  var isArray = __webpack_require__(17);
 	  var usage = 'Usage: client.updateUserKey(key, arrayOfAcls[, params, callback])';
 
 	  if (!isArray(acls)) {
@@ -1232,7 +1232,7 @@ module.exports =
 	 * }], cb)
 	 */
 	AlgoliaSearch.prototype.batch = function(operations, callback) {
-	  var isArray = __webpack_require__(13);
+	  var isArray = __webpack_require__(17);
 	  var usage = 'Usage: client.batch(operations[, callback])';
 
 	  if (!isArray(operations)) {
@@ -1272,9 +1272,9 @@ module.exports =
 
 	var inherits = __webpack_require__(4);
 	var IndexCore = __webpack_require__(8);
-	var deprecate = __webpack_require__(15);
-	var deprecatedMessage = __webpack_require__(16);
-	var exitPromise = __webpack_require__(17);
+	var deprecate = __webpack_require__(19);
+	var deprecatedMessage = __webpack_require__(20);
+	var exitPromise = __webpack_require__(21);
 	var errors = __webpack_require__(10);
 
 	module.exports = Index;
@@ -1324,7 +1324,7 @@ module.exports =
 	*  content: the server answer that updateAt and taskID
 	*/
 	Index.prototype.addObjects = function(objects, callback) {
-	  var isArray = __webpack_require__(13);
+	  var isArray = __webpack_require__(17);
 	  var usage = 'Usage: index.addObjects(arrayOfObjects[, callback])';
 
 	  if (!isArray(objects)) {
@@ -1391,7 +1391,7 @@ module.exports =
 	*  content: the server answer that updateAt and taskID
 	*/
 	Index.prototype.partialUpdateObjects = function(objects, callback) {
-	  var isArray = __webpack_require__(13);
+	  var isArray = __webpack_require__(17);
 	  var usage = 'Usage: index.partialUpdateObjects(arrayOfObjects[, callback])';
 
 	  if (!isArray(objects)) {
@@ -1447,7 +1447,7 @@ module.exports =
 	*  content: the server answer that updateAt and taskID
 	*/
 	Index.prototype.saveObjects = function(objects, callback) {
-	  var isArray = __webpack_require__(13);
+	  var isArray = __webpack_require__(17);
 	  var usage = 'Usage: index.saveObjects(arrayOfObjects[, callback])';
 
 	  if (!isArray(objects)) {
@@ -1512,8 +1512,8 @@ module.exports =
 	*  content: the server answer that contains 3 elements: createAt, taskId and objectID
 	*/
 	Index.prototype.deleteObjects = function(objectIDs, callback) {
-	  var isArray = __webpack_require__(13);
-	  var map = __webpack_require__(14);
+	  var isArray = __webpack_require__(17);
+	  var map = __webpack_require__(18);
 
 	  var usage = 'Usage: index.deleteObjects(arrayOfObjectIDs[, callback])';
 
@@ -1552,8 +1552,8 @@ module.exports =
 	*  error: null or Error('message')
 	*/
 	Index.prototype.deleteByQuery = function(query, params, callback) {
-	  var clone = __webpack_require__(18);
-	  var map = __webpack_require__(14);
+	  var clone = __webpack_require__(13);
+	  var map = __webpack_require__(18);
 
 	  var indexObj = this;
 	  var client = indexObj.as;
@@ -1665,7 +1665,7 @@ module.exports =
 
 	  var merge = __webpack_require__(12);
 
-	  var IndexBrowser = __webpack_require__(19);
+	  var IndexBrowser = __webpack_require__(22);
 
 	  var browser = new IndexBrowser();
 	  var client = this.as;
@@ -2125,7 +2125,7 @@ module.exports =
 	* @see {@link https://www.algolia.com/doc/rest_api#AddIndexKey|Algolia REST API Documentation}
 	*/
 	Index.prototype.addUserKey = function(acls, params, callback) {
-	  var isArray = __webpack_require__(13);
+	  var isArray = __webpack_require__(17);
 	  var usage = 'Usage: index.addUserKey(arrayOfAcls[, params, callback])';
 
 	  if (!isArray(acls)) {
@@ -2208,7 +2208,7 @@ module.exports =
 	* @see {@link https://www.algolia.com/doc/rest_api#UpdateIndexKey|Algolia REST API Documentation}
 	*/
 	Index.prototype.updateUserKey = function(key, acls, params, callback) {
-	  var isArray = __webpack_require__(13);
+	  var isArray = __webpack_require__(17);
 	  var usage = 'Usage: index.updateUserKey(key, arrayOfAcls[, params, callback])';
 
 	  if (!isArray(acls)) {
@@ -2483,6 +2483,43 @@ module.exports =
 	  });
 	};
 
+	/*
+	* Search in facets
+	* https://www.algolia.com/doc/rest-api/search#search-in-a-facet
+	*
+	* @param {string} params.facetName Facet name, name of the attribute to search for values in.
+	* Must be declared as a facet
+	* @param {string} params.facetQuery Query for the facet search
+	* @param {string} [params.*] Any search parameter of Algolia,
+	* see https://www.algolia.com/doc/api-client/javascript/search#search-parameters
+	* Pagination is not supported. The page and hitsPerPage parameters will be ignored.
+	* @param callback (optional)
+	*/
+	IndexCore.prototype.searchFacet = function(params, callback) {
+	  var clone = __webpack_require__(13);
+	  var omit = __webpack_require__(14);
+	  var usage = 'Usage: index.searchFacet({facetName, facetQuery, ...params}[, callback])';
+
+	  if (params.facetName === undefined || params.facetQuery === undefined) {
+	    throw new Error(usage);
+	  }
+
+	  var facetName = params.facetName;
+	  var filteredParams = omit(clone(params), function(keyName) {
+	    return keyName === 'facetName';
+	  });
+	  var searchParameters = this.as._getSearchParams(filteredParams, '');
+
+	  return this.as._jsonRequest({
+	    method: 'POST',
+	    url: '/1/indexes/' +
+	      encodeURIComponent(this.indexName) + '/facets/' + encodeURIComponent(facetName) + '/query',
+	    hostType: 'read',
+	    body: {params: searchParameters},
+	    callback: callback
+	  });
+	};
+
 	IndexCore.prototype._search = function(params, url, callback) {
 	  return this.as._jsonRequest({
 	    cache: this.cache,
@@ -2541,8 +2578,8 @@ module.exports =
 	* @param objectIDs the array of unique identifier of objects to retrieve
 	*/
 	IndexCore.prototype.getObjects = function(objectIDs, attributesToRetrieve, callback) {
-	  var isArray = __webpack_require__(13);
-	  var map = __webpack_require__(14);
+	  var isArray = __webpack_require__(17);
+	  var map = __webpack_require__(18);
 
 	  var usage = 'Usage: index.getObjects(arrayOfObjectIDs[, callback])';
 
@@ -2780,6 +2817,204 @@ module.exports =
 /* 13 */
 /***/ function(module, exports) {
 
+	module.exports = function clone(obj) {
+	  return JSON.parse(JSON.stringify(obj));
+	};
+
+
+/***/ },
+/* 14 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = function omit(obj, test) {
+	  var keys = __webpack_require__(15);
+	  var foreach = __webpack_require__(11);
+
+	  var filtered = {};
+
+	  foreach(keys(obj), function doFilter(keyName) {
+	    if (test(keyName) !== true) {
+	      filtered[keyName] = obj[keyName];
+	    }
+	  });
+
+	  return filtered;
+	};
+
+
+/***/ },
+/* 15 */
+/***/ function(module, exports, __webpack_require__) {
+
+	
+
+	// modified from https://github.com/es-shims/es5-shim
+	var has = Object.prototype.hasOwnProperty;
+	var toStr = Object.prototype.toString;
+	var slice = Array.prototype.slice;
+	var isArgs = __webpack_require__(16);
+	var isEnumerable = Object.prototype.propertyIsEnumerable;
+	var hasDontEnumBug = !isEnumerable.call({ toString: null }, 'toString');
+	var hasProtoEnumBug = isEnumerable.call(function () {}, 'prototype');
+	var dontEnums = [
+		'toString',
+		'toLocaleString',
+		'valueOf',
+		'hasOwnProperty',
+		'isPrototypeOf',
+		'propertyIsEnumerable',
+		'constructor'
+	];
+	var equalsConstructorPrototype = function (o) {
+		var ctor = o.constructor;
+		return ctor && ctor.prototype === o;
+	};
+	var excludedKeys = {
+		$console: true,
+		$external: true,
+		$frame: true,
+		$frameElement: true,
+		$frames: true,
+		$innerHeight: true,
+		$innerWidth: true,
+		$outerHeight: true,
+		$outerWidth: true,
+		$pageXOffset: true,
+		$pageYOffset: true,
+		$parent: true,
+		$scrollLeft: true,
+		$scrollTop: true,
+		$scrollX: true,
+		$scrollY: true,
+		$self: true,
+		$webkitIndexedDB: true,
+		$webkitStorageInfo: true,
+		$window: true
+	};
+	var hasAutomationEqualityBug = (function () {
+		/* global window */
+		if (typeof window === 'undefined') { return false; }
+		for (var k in window) {
+			try {
+				if (!excludedKeys['$' + k] && has.call(window, k) && window[k] !== null && typeof window[k] === 'object') {
+					try {
+						equalsConstructorPrototype(window[k]);
+					} catch (e) {
+						return true;
+					}
+				}
+			} catch (e) {
+				return true;
+			}
+		}
+		return false;
+	}());
+	var equalsConstructorPrototypeIfNotBuggy = function (o) {
+		/* global window */
+		if (typeof window === 'undefined' || !hasAutomationEqualityBug) {
+			return equalsConstructorPrototype(o);
+		}
+		try {
+			return equalsConstructorPrototype(o);
+		} catch (e) {
+			return false;
+		}
+	};
+
+	var keysShim = function keys(object) {
+		var isObject = object !== null && typeof object === 'object';
+		var isFunction = toStr.call(object) === '[object Function]';
+		var isArguments = isArgs(object);
+		var isString = isObject && toStr.call(object) === '[object String]';
+		var theKeys = [];
+
+		if (!isObject && !isFunction && !isArguments) {
+			throw new TypeError('Object.keys called on a non-object');
+		}
+
+		var skipProto = hasProtoEnumBug && isFunction;
+		if (isString && object.length > 0 && !has.call(object, 0)) {
+			for (var i = 0; i < object.length; ++i) {
+				theKeys.push(String(i));
+			}
+		}
+
+		if (isArguments && object.length > 0) {
+			for (var j = 0; j < object.length; ++j) {
+				theKeys.push(String(j));
+			}
+		} else {
+			for (var name in object) {
+				if (!(skipProto && name === 'prototype') && has.call(object, name)) {
+					theKeys.push(String(name));
+				}
+			}
+		}
+
+		if (hasDontEnumBug) {
+			var skipConstructor = equalsConstructorPrototypeIfNotBuggy(object);
+
+			for (var k = 0; k < dontEnums.length; ++k) {
+				if (!(skipConstructor && dontEnums[k] === 'constructor') && has.call(object, dontEnums[k])) {
+					theKeys.push(dontEnums[k]);
+				}
+			}
+		}
+		return theKeys;
+	};
+
+	keysShim.shim = function shimObjectKeys() {
+		if (Object.keys) {
+			var keysWorksWithArguments = (function () {
+				// Safari 5.0 bug
+				return (Object.keys(arguments) || '').length === 2;
+			}(1, 2));
+			if (!keysWorksWithArguments) {
+				var originalKeys = Object.keys;
+				Object.keys = function keys(object) {
+					if (isArgs(object)) {
+						return originalKeys(slice.call(object));
+					} else {
+						return originalKeys(object);
+					}
+				};
+			}
+		} else {
+			Object.keys = keysShim;
+		}
+		return Object.keys || keysShim;
+	};
+
+	module.exports = keysShim;
+
+
+/***/ },
+/* 16 */
+/***/ function(module, exports) {
+
+	
+
+	var toStr = Object.prototype.toString;
+
+	module.exports = function isArguments(value) {
+		var str = toStr.call(value);
+		var isArgs = str === '[object Arguments]';
+		if (!isArgs) {
+			isArgs = str !== '[object Array]' &&
+				value !== null &&
+				typeof value === 'object' &&
+				typeof value.length === 'number' &&
+				value.length >= 0 &&
+				toStr.call(value.callee) === '[object Function]';
+		}
+		return isArgs;
+	};
+
+
+/***/ },
+/* 17 */
+/***/ function(module, exports) {
+
 	var toString = {}.toString;
 
 	module.exports = Array.isArray || function (arr) {
@@ -2788,7 +3023,7 @@ module.exports =
 
 
 /***/ },
-/* 14 */
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var foreach = __webpack_require__(11);
@@ -2803,7 +3038,7 @@ module.exports =
 
 
 /***/ },
-/* 15 */
+/* 19 */
 /***/ function(module, exports) {
 
 	module.exports = function deprecate(fn, message) {
@@ -2824,7 +3059,7 @@ module.exports =
 
 
 /***/ },
-/* 16 */
+/* 20 */
 /***/ function(module, exports) {
 
 	module.exports = function deprecatedMessage(previousUsage, newUsage) {
@@ -2838,7 +3073,7 @@ module.exports =
 
 
 /***/ },
-/* 17 */
+/* 21 */
 /***/ function(module, exports) {
 
 	// Parse cloud does not supports setTimeout
@@ -2851,16 +3086,7 @@ module.exports =
 
 
 /***/ },
-/* 18 */
-/***/ function(module, exports) {
-
-	module.exports = function clone(obj) {
-	  return JSON.parse(JSON.stringify(obj));
-	};
-
-
-/***/ },
-/* 19 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -2870,7 +3096,7 @@ module.exports =
 	module.exports = IndexBrowser;
 
 	var inherits = __webpack_require__(4);
-	var EventEmitter = __webpack_require__(20).EventEmitter;
+	var EventEmitter = __webpack_require__(23).EventEmitter;
 
 	function IndexBrowser() {
 	}
@@ -2905,19 +3131,19 @@ module.exports =
 
 
 /***/ },
-/* 20 */
+/* 23 */
 /***/ function(module, exports) {
 
 	module.exports = require("events");
 
 /***/ },
-/* 21 */
+/* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = AlgoliaSearchCore;
 
 	var errors = __webpack_require__(10);
-	var exitPromise = __webpack_require__(17);
+	var exitPromise = __webpack_require__(21);
 	var IndexCore = __webpack_require__(8);
 
 	// We will always put the API KEY in the JSON body in case of too long API KEY
@@ -2951,9 +3177,9 @@ module.exports =
 	function AlgoliaSearchCore(applicationID, apiKey, opts) {
 	  var debug = __webpack_require__(1)('algoliasearch');
 
-	  var clone = __webpack_require__(18);
-	  var isArray = __webpack_require__(13);
-	  var map = __webpack_require__(14);
+	  var clone = __webpack_require__(13);
+	  var isArray = __webpack_require__(17);
+	  var map = __webpack_require__(18);
 
 	  var usage = 'Usage: algoliasearch(applicationID, apiKey, opts)';
 
@@ -3394,8 +3620,8 @@ module.exports =
 	 * @return {Promise|undefined} Returns a promise if no callback given
 	 */
 	AlgoliaSearchCore.prototype.search = function(queries, opts, callback) {
-	  var isArray = __webpack_require__(13);
-	  var map = __webpack_require__(14);
+	  var isArray = __webpack_require__(17);
+	  var map = __webpack_require__(18);
 
 	  var usage = 'Usage: client.search(arrayOfQueries[, callback])';
 
@@ -3582,12 +3808,12 @@ module.exports =
 
 
 /***/ },
-/* 22 */
+/* 25 */
 /***/ function(module, exports) {
 
 	
 
-	module.exports = '3.18.1';
+	module.exports = '3.19.0';
 
 
 /***/ }
