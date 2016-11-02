@@ -667,11 +667,11 @@ The server response will look like:
 
     Hits are made of the JSON objects that you stored in the index; therefore, they are mostly schema-less. However, Algolia does enrich them with a few additional fields:
 
-    - `_highlightResult` (object, optional): Highlighted attributes. *Note: Only returned when [`attributesToHighlight`](#attributestohighlight) is non-empty.*
+    - `_highlightResult` (object, optional): Highlighted attributes. *Note: Only returned when [attributesToHighlight](#attributestohighlight) is non-empty.*
 
         - `${attribute_name}` (object): Highlighting for one attribute.
 
-            - `value` (string): Markup text with occurrences highlighted. The tags used for highlighting are specified via [`highlightPreTag`](#highlightpretag) and [`highlightPostTag`](#highlightposttag).
+            - `value` (string): Markup text with occurrences highlighted. The tags used for highlighting are specified via [highlightPreTag](#highlightpretag) and [highlightPostTag](#highlightposttag).
 
             - `matchLevel` (string, enum) = {`none` | `partial` | `full`}: Indicates how well the attribute matched the search query.
 
@@ -679,15 +679,15 @@ The server response will look like:
 
             - `fullyHighlighted` (boolean): Whether the entire attribute value is highlighted.
 
-    - `_snippetResult` (object, optional): Snippeted attributes. *Note: Only returned when [`attributesToSnippet`](#attributestosnippet) is non-empty.*
+    - `_snippetResult` (object, optional): Snippeted attributes. *Note: Only returned when [attributesToSnippet](#attributestosnippet) is non-empty.*
 
         - `${attribute_name}` (object): Snippeting for the corresponding attribute.
 
-            - `value` (string): Markup text with occurrences highlighted and optional ellipsis indicators. The tags used for highlighting are specified via [`highlightPreTag`](#highlightpretag) and [`highlightPostTag`](#highlightposttag). The text used to indicate ellipsis is specified via [`snippetEllipsisText`](#snippetellipsistext).
+            - `value` (string): Markup text with occurrences highlighted and optional ellipsis indicators. The tags used for highlighting are specified via [highlightPreTag](#highlightpretag) and [highlightPostTag](#highlightposttag). The text used to indicate ellipsis is specified via [snippetEllipsisText](#snippetellipsistext).
 
             - `matchLevel` (string, enum) = {`none` | `partial` | `full`}: Indicates how well the attribute matched the search query.
 
-    - `_rankingInfo` (object, optional): Ranking information. *Note: Only returned when [`getRankingInfo`](#getrankinginfo) is `true`.*
+    - `_rankingInfo` (object, optional): Ranking information. *Note: Only returned when [getRankingInfo](#getrankinginfo) is `true`.*
 
         - `nbTypos` (integer): Number of typos encountered when matching the record. Corresponds to the `typos` ranking criterion in the ranking formula.
 
@@ -707,31 +707,31 @@ The server response will look like:
 
         - `filters` (integer): *This field is reserved for advanced usage.* It will be zero in most cases.
 
-    - `_distinctSeqID` (integer): *Note: Only returned when [`distinct`](#distinct) is non-zero.* When two consecutive results have the same value for the attribute used for "distinct", this field is used to distinguish between them.
+    - `_distinctSeqID` (integer): *Note: Only returned when [distinct](#distinct) is non-zero.* When two consecutive results have the same value for the attribute used for "distinct", this field is used to distinguish between them.
 
 - `nbHits` (integer): Number of hits that the search query matched.
 
-- `page` (integer): Index of the current page (zero-based). See the [`page`](#page) search parameter. *Note: Not returned if you use `offset`/`length` for pagination.*
+- `page` (integer): Index of the current page (zero-based). See the [page](#page) search parameter. *Note: Not returned if you use `offset`/`length` for pagination.*
 
-- `hitsPerPage` (integer): Maximum number of hits returned per page. See the [`hitsPerPage`](#hitsperpage) search parameter. *Note: Not returned if you use `offset`/`length` for pagination.*
+- `hitsPerPage` (integer): Maximum number of hits returned per page. See the [hitsPerPage](#hitsperpage) search parameter. *Note: Not returned if you use `offset`/`length` for pagination.*
 
 - `nbPages` (integer): Number of pages corresponding to the number of hits. Basically, `ceil(nbHits / hitsPerPage)`. *Note: Not returned if you use `offset`/`length` for pagination.*
 
 - `processingTimeMS` (integer): Time that the server took to process the request, in milliseconds. *Note: This does not include network time.*
 
-- `query` (string): An echo of the query text. See the [`query`](#query) search parameter.
+- `query` (string): An echo of the query text. See the [query](#query) search parameter.
 
-- `queryAfterRemoval` (string, optional): *Note: Only returned when [`removeWordsIfNoResults`](#removewordsifnoresults) is set to `lastWords` or `firstWords`.* A markup text indicating which parts of the original query have been removed in order to retrieve a non-empty result set. The removed parts are surrounded by `<em>` tags.
+- `queryAfterRemoval` (string, optional): *Note: Only returned when [removeWordsIfNoResults](#removewordsifnoresults) is set to `lastWords` or `firstWords`.* A markup text indicating which parts of the original query have been removed in order to retrieve a non-empty result set. The removed parts are surrounded by `<em>` tags.
 
 - `params` (string, URL-encoded): An echo of all search parameters.
 
 - `message` (string, optional): Used to return warnings about the query.
 
-- `aroundLatLng` (string, optional): *Note: Only returned when [`aroundLatLngViaIP`](#aroundlatlngviaip) is set.* The computed geo location. **Warning: for legacy reasons, this parameter is a string and not an object.** Format: `${lat},${lng}`, where the latitude and longitude are expressed as decimal floating point numbers.
+- `aroundLatLng` (string, optional): *Note: Only returned when [aroundLatLngViaIP](#aroundlatlngviaip) is set.* The computed geo location. **Warning: for legacy reasons, this parameter is a string and not an object.** Format: `${lat},${lng}`, where the latitude and longitude are expressed as decimal floating point numbers.
 
 - `automaticRadius` (integer, optional): *Note: Only returned for geo queries without an explicitly specified radius (see `aroundRadius`).* The automatically computed radius. **Warning: for legacy reasons, this parameter is a string and not an integer.**
 
-When [`getRankingInfo`](#getrankinginfo) is set to `true`, the following additional fields are returned:
+When [getRankingInfo](#getrankinginfo) is set to `true`, the following additional fields are returned:
 
 - `serverUsed` (string): Actual host name of the server that processed the request. (Our DNS supports automatic failover and load balancing, so this may differ from the host name used in the request.)
 
@@ -743,7 +743,7 @@ When [`getRankingInfo`](#getrankinginfo) is set to `true`, the following additio
 
 ... and ranking information is also added to each of the hits (see above).
 
-When [`facets`](#facets) is non-empty, the following additional fields are returned:
+When [facets](#facets) is non-empty, the following additional fields are returned:
 
 - `facets` (object): Maps each facet name to the corresponding facet counts:
 
@@ -763,12 +763,10 @@ When [`facets`](#facets) is non-empty, the following additional fields are retur
 
         - `sum` (integer | float): The sum of all values in the result set.
 
-- `exhaustiveFacetsCount` (boolean): Whether the counts are exhaustive (`true`) or approximate (`false`). *Note: When using [`distinct`](#distinct), the facet counts cannot be exhaustive.*
-
+- `exhaustiveFacetsCount` (boolean): Whether the counts are exhaustive (`true`) or approximate (`false`). *Note: When using [distinct](#distinct), the facet counts cannot be exhaustive.*
 
 ### Search Parameters
 
-<!--PARAMETERS_LINK-->
 Here is the list of parameters you can use with the search method (`search` [scope](#scope)):
 Parameters that can also be used in a setSettings also have the `indexing` [scope](#scope)
 
@@ -846,8 +844,6 @@ Parameters that can also be used in a setSettings also have the `indexing` [scop
 - [replaceSynonymsInHighlight](#replacesynonymsinhighlight) `search`, `settings`
 - [minProximity](#minproximity) `search`, `settings`
 - [responseFields](#responsefields) `search`, `settings`
-
-<!--/PARAMETERS_LINK-->
 
 ### Multiple queries - `multipleQueries`
 
@@ -1288,8 +1284,6 @@ index.setSettings({'customRanking': ['desc(followers)']}, {forwardToReplicas: tr
 
 ### Index settings parameters
 
-<!--PARAMETERS_LINK-->
-
 Here is the list of parameters you can use with the set settings method (`settings` [scope](#scope)).
 
 
@@ -1354,9 +1348,6 @@ Parameters that can be overridden at search time also have the `search` [scope](
 - [allowCompressionOfIntegerArray](#allowcompressionofintegerarray) `settings`
 - [altCorrections](#altcorrections) `settings`
 - [placeholders](#placeholders) `settings`
-
-<!--/PARAMETERS_LINK-->
-
 
 ## Parameters
 
