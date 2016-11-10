@@ -45,9 +45,13 @@ var objects = getFakeObjects(50);
 _.bindAll(index);
 
 test('index.clearIndex', clearIndex);
-test('index.setSettings', setSettings);
+if (canPUT) {
+  test('index.setSettings', setSettings);
+}
 test('index.saveObjects', saveObjects);
-test('index.searchFacet', searchFacet);
+if (canPUT) {
+  test('index.searchFacet', searchFacet);
+}
 test('index.browse', browse);
 test('index.getObject', getObject);
 test('index.browseFrom', browseFrom);
