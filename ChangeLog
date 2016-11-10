@@ -1,5 +1,10 @@
 CHANGELOG
 
+2016-11-11 3.19.1
+
+  * fix(build): use regular debug module, issue with yui compressor was fixed here:
+  https://github.com/visionmedia/debug/pull/315
+
 2016-10-26 3.19.0
 
   * feat(index.searchFacet): add method #345

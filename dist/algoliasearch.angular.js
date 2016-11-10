@@ -1,4 +1,4 @@
-/*! algoliasearch 3.19.0 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
+/*! algoliasearch 3.19.1 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
 (function(f){var g;if(typeof window!=='undefined'){g=window}else if(typeof self!=='undefined'){g=self}g.ALGOLIA_MIGRATION_LAYER=f()})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 
 module.exports = function load (src, opts, cb) {
@@ -200,137 +200,6 @@ function migrationLayer(buildName) {
 
 },{"2":2,"3":3,"4":4}]},{},[5])(5)
 });(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-/**
- * Helpers.
- */
-
-var s = 1000;
-var m = s * 60;
-var h = m * 60;
-var d = h * 24;
-var y = d * 365.25;
-
-/**
- * Parse or format the given `val`.
- *
- * Options:
- *
- *  - `long` verbose formatting [false]
- *
- * @param {String|Number} val
- * @param {Object} options
- * @return {String|Number}
- * @api public
- */
-
-module.exports = function(val, options){
-  options = options || {};
-  if ('string' == typeof val) return parse(val);
-  // long, short were "future reserved words in js", YUI compressor fail on them
-  // https://github.com/algolia/algoliasearch-client-js/issues/113#issuecomment-111978606
-  // https://github.com/yui/yuicompressor/issues/47
-  // https://github.com/rauchg/ms.js/pull/40
-  return options['long']
-    ? _long(val)
-    : _short(val);
-};
-
-/**
- * Parse the given `str` and return milliseconds.
- *
- * @param {String} str
- * @return {Number}
- * @api private
- */
-
-function parse(str) {
-  str = '' + str;
-  if (str.length > 10000) return;
-  var match = /^((?:\d+)?\.?\d+) *(milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|years?|yrs?|y)?$/i.exec(str);
-  if (!match) return;
-  var n = parseFloat(match[1]);
-  var type = (match[2] || 'ms').toLowerCase();
-  switch (type) {
-    case 'years':
-    case 'year':
-    case 'yrs':
-    case 'yr':
-    case 'y':
-      return n * y;
-    case 'days':
-    case 'day':
-    case 'd':
-      return n * d;
-    case 'hours':
-    case 'hour':
-    case 'hrs':
-    case 'hr':
-    case 'h':
-      return n * h;
-    case 'minutes':
-    case 'minute':
-    case 'mins':
-    case 'min':
-    case 'm':
-      return n * m;
-    case 'seconds':
-    case 'second':
-    case 'secs':
-    case 'sec':
-    case 's':
-      return n * s;
-    case 'milliseconds':
-    case 'millisecond':
-    case 'msecs':
-    case 'msec':
-    case 'ms':
-      return n;
-  }
-}
-
-/**
- * Short format for `ms`.
- *
- * @param {Number} ms
- * @return {String}
- * @api private
- */
-
-function _short(ms) {
-  if (ms >= d) return Math.round(ms / d) + 'd';
-  if (ms >= h) return Math.round(ms / h) + 'h';
-  if (ms >= m) return Math.round(ms / m) + 'm';
-  if (ms >= s) return Math.round(ms / s) + 's';
-  return ms + 'ms';
-}
-
-/**
- * Long format for `ms`.
- *
- * @param {Number} ms
- * @return {String}
- * @api private
- */
-
-function _long(ms) {
-  return plural(ms, d, 'day')
-    || plural(ms, h, 'hour')
-    || plural(ms, m, 'minute')
-    || plural(ms, s, 'second')
-    || ms + ' ms';
-}
-
-/**
- * Pluralization helper.
- */
-
-function plural(ms, n, name) {
-  if (ms < n) return;
-  if (ms < n * 1.5) return Math.floor(ms / n) + ' ' + name;
-  return Math.ceil(ms / n) + ' ' + name + 's';
-}
-
-},{}],2:[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
 
@@ -512,7 +381,8 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],3:[function(require,module,exports){
+},{}],2:[function(require,module,exports){
+(function (process){
 
 /**
  * This is the web browser implementation of `debug()`.
@@ -520,7 +390,7 @@ process.umask = function() { return 0; };
  * Expose `debug()` as the module.
  */
 
-exports = module.exports = require(4);
+exports = module.exports = require(3);
 exports.log = log;
 exports.formatArgs = formatArgs;
 exports.save = save;
@@ -554,7 +424,8 @@ exports.colors = [
 
 function useColors() {
   // is webkit? http://stackoverflow.com/a/16459606/376773
-  return ('WebkitAppearance' in document.documentElement.style) ||
+  // document is undefined in react-native: https://github.com/facebook/react-native/pull/1632
+  return (typeof document !== 'undefined' && 'WebkitAppearance' in document.documentElement.style) ||
     // is firebug? http://stackoverflow.com/a/398120/376773
     (window.console && (console.firebug || (console.exception && console.table))) ||
     // is firefox >= v31?
@@ -656,6 +527,12 @@ function load() {
   try {
     r = exports.storage.debug;
   } catch(e) {}
+
+  // If debug isn't set in LS, and we're in Electron, try to load $DEBUG
+  if ('env' in (typeof process === 'undefined' ? {} : process)) {
+    r = process.env.DEBUG;
+  }
+  
   return r;
 }
 
@@ -682,7 +559,8 @@ function localstorage(){
   } catch (e) {}
 }
 
-},{"4":4}],4:[function(require,module,exports){
+}).call(this,require(1))
+},{"1":1,"3":3}],3:[function(require,module,exports){
 
 /**
  * This is the common logic for both the Node.js and web browser
@@ -691,12 +569,12 @@ function localstorage(){
  * Expose `debug()` as the module.
  */
 
-exports = module.exports = debug;
+exports = module.exports = debug.debug = debug;
 exports.coerce = coerce;
 exports.disable = disable;
 exports.enable = enable;
 exports.enabled = enabled;
-exports.humanize = require(1);
+exports.humanize = require(4);
 
 /**
  * The currently active debug mode names, and names to skip.
@@ -768,7 +646,10 @@ function debug(namespace) {
     if (null == self.useColors) self.useColors = exports.useColors();
     if (null == self.color && self.useColors) self.color = selectColor();
 
-    var args = Array.prototype.slice.call(arguments);
+    var args = new Array(arguments.length);
+    for (var i = 0; i < args.length; i++) {
+      args[i] = arguments[i];
+    }
 
     args[0] = exports.coerce(args[0]);
 
@@ -795,9 +676,9 @@ function debug(namespace) {
       return match;
     });
 
-    if ('function' === typeof exports.formatArgs) {
-      args = exports.formatArgs.apply(self, args);
-    }
+    // apply env-specific formatting
+    args = exports.formatArgs.apply(self, args);
+
     var logFn = enabled.log || exports.log || console.log.bind(console);
     logFn.apply(self, args);
   }
@@ -826,7 +707,7 @@ function enable(namespaces) {
 
   for (var i = 0; i < len; i++) {
     if (!split[i]) continue; // ignore empty strings
-    namespaces = split[i].replace(/\*/g, '.*?');
+    namespaces = split[i].replace(/[\\^$+?.()|[\]{}]/g, '\\$&').replace(/\*/g, '.*?');
     if (namespaces[0] === '-') {
       exports.skips.push(new RegExp('^' + namespaces.substr(1) + '$'));
     } else {
@@ -881,7 +762,158 @@ function coerce(val) {
   return val;
 }
 
-},{"1":1}],5:[function(require,module,exports){
+},{"4":4}],4:[function(require,module,exports){
+/**
+ * Helpers.
+ */
+
+var s = 1000
+var m = s * 60
+var h = m * 60
+var d = h * 24
+var y = d * 365.25
+
+/**
+ * Parse or format the given `val`.
+ *
+ * Options:
+ *
+ *  - `long` verbose formatting [false]
+ *
+ * @param {String|Number} val
+ * @param {Object} options
+ * @throws {Error} throw an error if val is not a non-empty string or a number
+ * @return {String|Number}
+ * @api public
+ */
+
+module.exports = function (val, options) {
+  options = options || {}
+  var type = typeof val
+  if (type === 'string' && val.length > 0) {
+    return parse(val)
+  } else if (type === 'number' && isNaN(val) === false) {
+    return options.long ?
+			fmtLong(val) :
+			fmtShort(val)
+  }
+  throw new Error('val is not a non-empty string or a valid number. val=' + JSON.stringify(val))
+}
+
+/**
+ * Parse the given `str` and return milliseconds.
+ *
+ * @param {String} str
+ * @return {Number}
+ * @api private
+ */
+
+function parse(str) {
+  str = String(str)
+  if (str.length > 10000) {
+    return
+  }
+  var match = /^((?:\d+)?\.?\d+) *(milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|years?|yrs?|y)?$/i.exec(str)
+  if (!match) {
+    return
+  }
+  var n = parseFloat(match[1])
+  var type = (match[2] || 'ms').toLowerCase()
+  switch (type) {
+    case 'years':
+    case 'year':
+    case 'yrs':
+    case 'yr':
+    case 'y':
+      return n * y
+    case 'days':
+    case 'day':
+    case 'd':
+      return n * d
+    case 'hours':
+    case 'hour':
+    case 'hrs':
+    case 'hr':
+    case 'h':
+      return n * h
+    case 'minutes':
+    case 'minute':
+    case 'mins':
+    case 'min':
+    case 'm':
+      return n * m
+    case 'seconds':
+    case 'second':
+    case 'secs':
+    case 'sec':
+    case 's':
+      return n * s
+    case 'milliseconds':
+    case 'millisecond':
+    case 'msecs':
+    case 'msec':
+    case 'ms':
+      return n
+    default:
+      return undefined
+  }
+}
+
+/**
+ * Short format for `ms`.
+ *
+ * @param {Number} ms
+ * @return {String}
+ * @api private
+ */
+
+function fmtShort(ms) {
+  if (ms >= d) {
+    return Math.round(ms / d) + 'd'
+  }
+  if (ms >= h) {
+    return Math.round(ms / h) + 'h'
+  }
+  if (ms >= m) {
+    return Math.round(ms / m) + 'm'
+  }
+  if (ms >= s) {
+    return Math.round(ms / s) + 's'
+  }
+  return ms + 'ms'
+}
+
+/**
+ * Long format for `ms`.
+ *
+ * @param {Number} ms
+ * @return {String}
+ * @api private
+ */
+
+function fmtLong(ms) {
+  return plural(ms, d, 'day') ||
+    plural(ms, h, 'hour') ||
+    plural(ms, m, 'minute') ||
+    plural(ms, s, 'second') ||
+    ms + ' ms'
+}
+
+/**
+ * Pluralization helper.
+ */
+
+function plural(ms, n, name) {
+  if (ms < n) {
+    return
+  }
+  if (ms < n * 1.5) {
+    return Math.floor(ms / n) + ' ' + name
+  }
+  return Math.ceil(ms / n) + ' ' + name + 's'
+}
+
+},{}],5:[function(require,module,exports){
 (function (process,global){
 /*!
  * @overview es6-promise - a tiny implementation of Promises/A+.
@@ -1843,8 +1875,8 @@ function coerce(val) {
 }).call(this);
 
 
-}).call(this,require(2),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"2":2}],6:[function(require,module,exports){
+}).call(this,require(1),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"1":1}],6:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -2961,7 +2993,7 @@ var MAX_API_KEY_LENGTH = 500;
  *           If you provide them, you will less benefit from our HA implementation
  */
 function AlgoliaSearchCore(applicationID, apiKey, opts) {
-  var debug = require(3)('algoliasearch');
+  var debug = require(2)('algoliasearch');
 
   var clone = require(26);
   var isArray = require(10);
@@ -3077,7 +3109,7 @@ AlgoliaSearchCore.prototype.addAlgoliaAgent = function(algoliaAgent) {
  * Wrapper that try all hosts to maximize the quality of service
  */
 AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
-  var requestDebug = require(3)('algoliasearch:' + initialOpts.url);
+  var requestDebug = require(2)('algoliasearch:' + initialOpts.url);
 
   var body;
   var cache = initialOpts.cache;
@@ -3592,7 +3624,7 @@ function removeCredentials(headers) {
   return newHeaders;
 }
 
-},{"10":10,"18":18,"26":26,"29":29,"3":3,"30":30,"31":31,"7":7}],16:[function(require,module,exports){
+},{"10":10,"18":18,"2":2,"26":26,"29":29,"30":30,"31":31,"7":7}],16:[function(require,module,exports){
 var inherits = require(9);
 var IndexCore = require(18);
 var deprecate = require(27);
@@ -5005,7 +5037,7 @@ var places = require(34);
 window.algoliasearch = require(20);
 
 if (process.env.NODE_ENV === 'debug') {
-  require(3).enable('algoliasearch*');
+  require(2).enable('algoliasearch*');
 }
 
 window.angular.module('algoliasearch', [])
@@ -5033,7 +5065,7 @@ window.angular.module('algoliasearch', [])
     // we expose into window no matter how we are used, this will allow
     // us to easily debug any website running algolia
     window.__algolia = {
-      debug: require(3),
+      debug: require(2),
       algoliasearch: algoliasearch
     };
 
@@ -5190,8 +5222,8 @@ window.angular.module('algoliasearch', [])
     };
   }]);
 
-}).call(this,require(2))
-},{"14":14,"2":2,"20":20,"22":22,"23":23,"24":24,"26":26,"29":29,"3":3,"34":34,"35":35,"7":7,"9":9}],20:[function(require,module,exports){
+}).call(this,require(1))
+},{"1":1,"14":14,"2":2,"20":20,"22":22,"23":23,"24":24,"26":26,"29":29,"34":34,"35":35,"7":7,"9":9}],20:[function(require,module,exports){
 'use strict';
 
 var AlgoliaSearch = require(14);
@@ -5218,7 +5250,7 @@ module.exports = function createAlgoliasearch(AlgoliaSearch, uaSuffix) {
   uaSuffix = uaSuffix || '';
 
   if (process.env.NODE_ENV === 'debug') {
-    require(3).enable('algoliasearch*');
+    require(2).enable('algoliasearch*');
   }
 
   function algoliasearch(applicationID, apiKey, opts) {
@@ -5244,7 +5276,7 @@ module.exports = function createAlgoliasearch(AlgoliaSearch, uaSuffix) {
   // we expose into window no matter how we are used, this will allow
   // us to easily debug any website running algolia
   global.__algolia = {
-    debug: require(3),
+    debug: require(2),
     algoliasearch: algoliasearch
   };
 
@@ -5421,8 +5453,8 @@ module.exports = function createAlgoliasearch(AlgoliaSearch, uaSuffix) {
   return algoliasearch;
 };
 
-}).call(this,require(2))
-},{"2":2,"22":22,"23":23,"24":24,"26":26,"29":29,"3":3,"34":34,"35":35,"5":5,"8":8,"9":9}],22:[function(require,module,exports){
+}).call(this,require(1))
+},{"1":1,"2":2,"22":22,"23":23,"24":24,"26":26,"29":29,"34":34,"35":35,"5":5,"8":8,"9":9}],22:[function(require,module,exports){
 'use strict';
 
 module.exports = getDocumentProtocol;
@@ -5833,6 +5865,6 @@ function createPlacesClient(algoliasearch) {
 },{"25":25,"26":26}],35:[function(require,module,exports){
 'use strict';
 
-module.exports = '3.19.0';
+module.exports = '3.19.1';
 
 },{}]},{},[19]);
