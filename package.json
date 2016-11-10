@@ -5,8 +5,7 @@
   "main": "index.js",
   "browser": {
     "./index.js": "./src/browser/builds/algoliasearch.js",
-    "./lite.js": "./src/browser/builds/algoliasearchLite.js",
-    "debug": "debug-ms-fix-yui-compressor"
+    "./lite.js": "./src/browser/builds/algoliasearchLite.js"
   },
   "scripts": {
     "build": "./scripts/build",
@@ -50,8 +49,7 @@
   ],
   "dependencies": {
     "agentkeepalive": "^2.1.1",
-    "debug": "^2.2.0",
-    "debug-ms-fix-yui-compressor": "2.2.2-future-reserved-word-fix-ms",
+    "debug": "^2.3.2",
     "envify": "^3.4.0",
     "es6-promise": "^3.2.1",
     "events": "^1.1.0",
