@@ -2604,7 +2604,7 @@ We have several methods to manage them:
 When you need to restrict the scope of the *Search Key*, we recommend to use *Secured API Key*.
 You can generate a *Secured API Key* from the *Search Only API Key* or any search *User API Key*
 
-There is a few things to know about about *Secured API Keys*
+There is a few things to know about *Secured API Keys*
 - They always need to be generated **on your backend** using one of our API Client 
 - You can generate them on the fly (without any call to the API)
 - They will not appear on the dashboard as they are generated without any call to the API
@@ -3375,6 +3375,7 @@ Everything that can be done using the REST API can be done using those clients.
 
 The REST API lets your interact directly with Algolia platforms from anything that can send an HTTP request
 [Go to the REST API doc](https://algolia.com/doc/rest)
+
 
 
 
