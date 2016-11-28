@@ -71,7 +71,7 @@ module.exports =
 	debug('loaded the Parse client');
 
 	function algoliasearch(applicationID, apiKey, opts) {
-	  var cloneDeep = __webpack_require__(13);
+	  var cloneDeep = __webpack_require__(15);
 	  opts = cloneDeep(opts || {});
 
 	  if (opts.protocol === undefined) {
@@ -102,7 +102,7 @@ module.exports =
 
 	AlgoliaSearchParse.prototype._request = function(rawUrl, opts) {
 	  /* global Parse */
-	  var clone = __webpack_require__(13);
+	  var clone = __webpack_require__(15);
 	  var promise = new Parse.Promise();
 
 	  debug('url: %s, opts: %j', rawUrl, opts);
@@ -843,8 +843,8 @@ module.exports =
 	module.exports = AlgoliaSearch;
 
 	var Index = __webpack_require__(7);
-	var deprecate = __webpack_require__(19);
-	var deprecatedMessage = __webpack_require__(20);
+	var deprecate = __webpack_require__(12);
+	var deprecatedMessage = __webpack_require__(13);
 	var AlgoliaSearchCore = __webpack_require__(24);
 	var inherits = __webpack_require__(4);
 	var errors = __webpack_require__(10);
@@ -928,7 +928,7 @@ module.exports =
 	 *  content: the server answer that contains the task ID
 	 */
 	AlgoliaSearch.prototype.getLogs = function(offset, length, callback) {
-	  var clone = __webpack_require__(13);
+	  var clone = __webpack_require__(15);
 	  var params = {};
 	  if (typeof offset === 'object') {
 	    // getLogs(params)
@@ -1080,7 +1080,7 @@ module.exports =
 	 * @see {@link https://www.algolia.com/doc/rest_api#AddKey|Algolia REST API Documentation}
 	 */
 	AlgoliaSearch.prototype.addUserKey = function(acls, params, callback) {
-	  var isArray = __webpack_require__(17);
+	  var isArray = __webpack_require__(19);
 	  var usage = 'Usage: client.addUserKey(arrayOfAcls[, params, callback])';
 
 	  if (!isArray(acls)) {
@@ -1165,7 +1165,7 @@ module.exports =
 	 * @see {@link https://www.algolia.com/doc/rest_api#UpdateIndexKey|Algolia REST API Documentation}
 	 */
 	AlgoliaSearch.prototype.updateUserKey = function(key, acls, params, callback) {
-	  var isArray = __webpack_require__(17);
+	  var isArray = __webpack_require__(19);
 	  var usage = 'Usage: client.updateUserKey(key, arrayOfAcls[, params, callback])';
 
 	  if (!isArray(acls)) {
@@ -1266,7 +1266,7 @@ module.exports =
 	 * }], cb)
 	 */
 	AlgoliaSearch.prototype.batch = function(operations, callback) {
-	  var isArray = __webpack_require__(17);
+	  var isArray = __webpack_require__(19);
 	  var usage = 'Usage: client.batch(operations[, callback])';
 
 	  if (!isArray(operations)) {
@@ -1306,8 +1306,8 @@ module.exports =
 
 	var inherits = __webpack_require__(4);
 	var IndexCore = __webpack_require__(8);
-	var deprecate = __webpack_require__(19);
-	var deprecatedMessage = __webpack_require__(20);
+	var deprecate = __webpack_require__(12);
+	var deprecatedMessage = __webpack_require__(13);
 	var exitPromise = __webpack_require__(21);
 	var errors = __webpack_require__(10);
 
@@ -1358,7 +1358,7 @@ module.exports =
 	*  content: the server answer that updateAt and taskID
 	*/
 	Index.prototype.addObjects = function(objects, callback) {
-	  var isArray = __webpack_require__(17);
+	  var isArray = __webpack_require__(19);
 	  var usage = 'Usage: index.addObjects(arrayOfObjects[, callback])';
 
 	  if (!isArray(objects)) {
@@ -1425,7 +1425,7 @@ module.exports =
 	*  content: the server answer that updateAt and taskID
 	*/
 	Index.prototype.partialUpdateObjects = function(objects, callback) {
-	  var isArray = __webpack_require__(17);
+	  var isArray = __webpack_require__(19);
 	  var usage = 'Usage: index.partialUpdateObjects(arrayOfObjects[, callback])';
 
 	  if (!isArray(objects)) {
@@ -1481,7 +1481,7 @@ module.exports =
 	*  content: the server answer that updateAt and taskID
 	*/
 	Index.prototype.saveObjects = function(objects, callback) {
-	  var isArray = __webpack_require__(17);
+	  var isArray = __webpack_require__(19);
 	  var usage = 'Usage: index.saveObjects(arrayOfObjects[, callback])';
 
 	  if (!isArray(objects)) {
@@ -1546,8 +1546,8 @@ module.exports =
 	*  content: the server answer that contains 3 elements: createAt, taskId and objectID
 	*/
 	Index.prototype.deleteObjects = function(objectIDs, callback) {
-	  var isArray = __webpack_require__(17);
-	  var map = __webpack_require__(18);
+	  var isArray = __webpack_require__(19);
+	  var map = __webpack_require__(20);
 
 	  var usage = 'Usage: index.deleteObjects(arrayOfObjectIDs[, callback])';
 
@@ -1586,8 +1586,8 @@ module.exports =
 	*  error: null or Error('message')
 	*/
 	Index.prototype.deleteByQuery = function(query, params, callback) {
-	  var clone = __webpack_require__(13);
-	  var map = __webpack_require__(18);
+	  var clone = __webpack_require__(15);
+	  var map = __webpack_require__(20);
 
 	  var indexObj = this;
 	  var client = indexObj.as;
@@ -1697,7 +1697,7 @@ module.exports =
 	    query = undefined;
 	  }
 
-	  var merge = __webpack_require__(12);
+	  var merge = __webpack_require__(14);
 
 	  var IndexBrowser = __webpack_require__(22);
 
@@ -2159,7 +2159,7 @@ module.exports =
 	* @see {@link https://www.algolia.com/doc/rest_api#AddIndexKey|Algolia REST API Documentation}
 	*/
 	Index.prototype.addUserKey = function(acls, params, callback) {
-	  var isArray = __webpack_require__(17);
+	  var isArray = __webpack_require__(19);
 	  var usage = 'Usage: index.addUserKey(arrayOfAcls[, params, callback])';
 
 	  if (!isArray(acls)) {
@@ -2242,7 +2242,7 @@ module.exports =
 	* @see {@link https://www.algolia.com/doc/rest_api#UpdateIndexKey|Algolia REST API Documentation}
 	*/
 	Index.prototype.updateUserKey = function(key, acls, params, callback) {
-	  var isArray = __webpack_require__(17);
+	  var isArray = __webpack_require__(19);
 	  var usage = 'Usage: index.updateUserKey(key, arrayOfAcls[, params, callback])';
 
 	  if (!isArray(acls)) {
@@ -2286,6 +2286,8 @@ module.exports =
 /***/ function(module, exports, __webpack_require__) {
 
 	var buildSearchMethod = __webpack_require__(9);
+	var deprecate = __webpack_require__(12);
+	var deprecatedMessage = __webpack_require__(13);
 
 	module.exports = IndexCore;
 
@@ -2437,7 +2439,7 @@ module.exports =
 	* @see {@link https://www.algolia.com/doc/rest_api#Browse|Algolia REST API Documentation}
 	*/
 	IndexCore.prototype.browse = function(query, queryParameters, callback) {
-	  var merge = __webpack_require__(12);
+	  var merge = __webpack_require__(14);
 
 	  var indexObj = this;
 
@@ -2518,8 +2520,8 @@ module.exports =
 	};
 
 	/*
-	* Search in facets
-	* https://www.algolia.com/doc/rest-api/search#search-in-a-facet
+	* Search for facet values
+	* https://www.algolia.com/doc/rest-api/search#search-for-facet-values
 	*
 	* @param {string} params.facetName Facet name, name of the attribute to search for values in.
 	* Must be declared as a facet
@@ -2529,10 +2531,10 @@ module.exports =
 	* Pagination is not supported. The page and hitsPerPage parameters will be ignored.
 	* @param callback (optional)
 	*/
-	IndexCore.prototype.searchFacet = function(params, callback) {
-	  var clone = __webpack_require__(13);
-	  var omit = __webpack_require__(14);
-	  var usage = 'Usage: index.searchFacet({facetName, facetQuery, ...params}[, callback])';
+	IndexCore.prototype.searchForFacetValues = function(params, callback) {
+	  var clone = __webpack_require__(15);
+	  var omit = __webpack_require__(16);
+	  var usage = 'Usage: index.searchForFacetValues({facetName, facetQuery, ...params}[, callback])';
 
 	  if (params.facetName === undefined || params.facetQuery === undefined) {
 	    throw new Error(usage);
@@ -2553,6 +2555,13 @@ module.exports =
 	    callback: callback
 	  });
 	};
+
+	IndexCore.prototype.searchFacet = deprecate(function(params, callback) {
+	  return this.searchForFacetValues(params, callback);
+	}, deprecatedMessage(
+	  'index.searchFacet(params[, callback])',
+	  'index.searchForFacetValues(params[, callback])'
+	));
 
 	IndexCore.prototype._search = function(params, url, callback) {
 	  return this.as._jsonRequest({
@@ -2612,8 +2621,8 @@ module.exports =
 	* @param objectIDs the array of unique identifier of objects to retrieve
 	*/
 	IndexCore.prototype.getObjects = function(objectIDs, attributesToRetrieve, callback) {
-	  var isArray = __webpack_require__(17);
-	  var map = __webpack_require__(18);
+	  var isArray = __webpack_require__(19);
+	  var map = __webpack_require__(20);
 
 	  var usage = 'Usage: index.getObjects(arrayOfObjectIDs[, callback])';
 
@@ -2824,6 +2833,41 @@ module.exports =
 
 /***/ },
 /* 12 */
+/***/ function(module, exports) {
+
+	module.exports = function deprecate(fn, message) {
+	  var warned = false;
+
+	  function deprecated() {
+	    if (!warned) {
+	      /* eslint no-console:0 */
+	      console.log(message);
+	      warned = true;
+	    }
+
+	    return fn.apply(this, arguments);
+	  }
+
+	  return deprecated;
+	};
+
+
+/***/ },
+/* 13 */
+/***/ function(module, exports) {
+
+	module.exports = function deprecatedMessage(previousUsage, newUsage) {
+	  var githubAnchorLink = previousUsage.toLowerCase()
+	    .replace('.', '')
+	    .replace('()', '');
+
+	  return 'algoliasearch: `' + previousUsage + '` was replaced by `' + newUsage +
+	    '`. Please see https://github.com/algolia/algoliasearch-client-js/wiki/Deprecated#' + githubAnchorLink;
+	};
+
+
+/***/ },
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var foreach = __webpack_require__(11);
@@ -2848,7 +2892,7 @@ module.exports =
 
 
 /***/ },
-/* 13 */
+/* 15 */
 /***/ function(module, exports) {
 
 	module.exports = function clone(obj) {
@@ -2857,11 +2901,11 @@ module.exports =
 
 
 /***/ },
-/* 14 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function omit(obj, test) {
-	  var keys = __webpack_require__(15);
+	  var keys = __webpack_require__(17);
 	  var foreach = __webpack_require__(11);
 
 	  var filtered = {};
@@ -2877,7 +2921,7 @@ module.exports =
 
 
 /***/ },
-/* 15 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -2886,7 +2930,7 @@ module.exports =
 	var has = Object.prototype.hasOwnProperty;
 	var toStr = Object.prototype.toString;
 	var slice = Array.prototype.slice;
-	var isArgs = __webpack_require__(16);
+	var isArgs = __webpack_require__(18);
 	var isEnumerable = Object.prototype.propertyIsEnumerable;
 	var hasDontEnumBug = !isEnumerable.call({ toString: null }, 'toString');
 	var hasProtoEnumBug = isEnumerable.call(function () {}, 'prototype');
@@ -3023,7 +3067,7 @@ module.exports =
 
 
 /***/ },
-/* 16 */
+/* 18 */
 /***/ function(module, exports) {
 
 	
@@ -3046,7 +3090,7 @@ module.exports =
 
 
 /***/ },
-/* 17 */
+/* 19 */
 /***/ function(module, exports) {
 
 	var toString = {}.toString;
@@ -3057,7 +3101,7 @@ module.exports =
 
 
 /***/ },
-/* 18 */
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var foreach = __webpack_require__(11);
@@ -3068,41 +3112,6 @@ module.exports =
 	    newArr.push(fn(item, itemIndex, arr));
 	  });
 	  return newArr;
-	};
-
-
-/***/ },
-/* 19 */
-/***/ function(module, exports) {
-
-	module.exports = function deprecate(fn, message) {
-	  var warned = false;
-
-	  function deprecated() {
-	    if (!warned) {
-	      /* eslint no-console:0 */
-	      console.log(message);
-	      warned = true;
-	    }
-
-	    return fn.apply(this, arguments);
-	  }
-
-	  return deprecated;
-	};
-
-
-/***/ },
-/* 20 */
-/***/ function(module, exports) {
-
-	module.exports = function deprecatedMessage(previousUsage, newUsage) {
-	  var githubAnchorLink = previousUsage.toLowerCase()
-	    .replace('.', '')
-	    .replace('()', '');
-
-	  return 'algoliasearch: `' + previousUsage + '` was replaced by `' + newUsage +
-	    '`. Please see https://github.com/algolia/algoliasearch-client-js/wiki/Deprecated#' + githubAnchorLink;
 	};
 
 
@@ -3211,9 +3220,9 @@ module.exports =
 	function AlgoliaSearchCore(applicationID, apiKey, opts) {
 	  var debug = __webpack_require__(1)('algoliasearch');
 
-	  var clone = __webpack_require__(13);
-	  var isArray = __webpack_require__(17);
-	  var map = __webpack_require__(18);
+	  var clone = __webpack_require__(15);
+	  var isArray = __webpack_require__(19);
+	  var map = __webpack_require__(20);
 
 	  var usage = 'Usage: algoliasearch(applicationID, apiKey, opts)';
 
@@ -3654,8 +3663,8 @@ module.exports =
 	 * @return {Promise|undefined} Returns a promise if no callback given
 	 */
 	AlgoliaSearchCore.prototype.search = function(queries, opts, callback) {
-	  var isArray = __webpack_require__(17);
-	  var map = __webpack_require__(18);
+	  var isArray = __webpack_require__(19);
+	  var map = __webpack_require__(20);
 
 	  var usage = 'Usage: client.search(arrayOfQueries[, callback])';
 
@@ -3847,7 +3856,7 @@ module.exports =
 
 	
 
-	module.exports = '3.19.1';
+	module.exports = '3.19.2';
 
 
 /***/ }

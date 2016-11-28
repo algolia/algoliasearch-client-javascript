@@ -1,5 +1,9 @@
 CHANGELOG
 
+2016-11-28 3.19.2
+
+  * fix(facet search): rename index.searchFacet to index.searchForFacetValues
+
 2016-11-11 3.19.1
 
   * fix(build): use regular debug module, issue with yui compressor was fixed here:

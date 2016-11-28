@@ -1,4 +1,4 @@
-/*! algoliasearch 3.19.1 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
+/*! algoliasearch 3.19.2 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
 (function(f){var g;if(typeof window!=='undefined'){g=window}else if(typeof self!=='undefined'){g=self}g.ALGOLIA_MIGRATION_LAYER=f()})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 
 module.exports = function load (src, opts, cb) {
@@ -4644,6 +4644,8 @@ IndexBrowser.prototype._clean = function() {
 
 },{"6":6,"9":9}],18:[function(require,module,exports){
 var buildSearchMethod = require(25);
+var deprecate = require(27);
+var deprecatedMessage = require(28);
 
 module.exports = IndexCore;
 
@@ -4876,8 +4878,8 @@ IndexCore.prototype.browseFrom = function(cursor, callback) {
 };
 
 /*
-* Search in facets
-* https://www.algolia.com/doc/rest-api/search#search-in-a-facet
+* Search for facet values
+* https://www.algolia.com/doc/rest-api/search#search-for-facet-values
 *
 * @param {string} params.facetName Facet name, name of the attribute to search for values in.
 * Must be declared as a facet
@@ -4887,10 +4889,10 @@ IndexCore.prototype.browseFrom = function(cursor, callback) {
 * Pagination is not supported. The page and hitsPerPage parameters will be ignored.
 * @param callback (optional)
 */
-IndexCore.prototype.searchFacet = function(params, callback) {
+IndexCore.prototype.searchForFacetValues = function(params, callback) {
   var clone = require(26);
   var omit = require(33);
-  var usage = 'Usage: index.searchFacet({facetName, facetQuery, ...params}[, callback])';
+  var usage = 'Usage: index.searchForFacetValues({facetName, facetQuery, ...params}[, callback])';
 
   if (params.facetName === undefined || params.facetQuery === undefined) {
     throw new Error(usage);
@@ -4911,6 +4913,13 @@ IndexCore.prototype.searchFacet = function(params, callback) {
     callback: callback
   });
 };
+
+IndexCore.prototype.searchFacet = deprecate(function(params, callback) {
+  return this.searchForFacetValues(params, callback);
+}, deprecatedMessage(
+  'index.searchFacet(params[, callback])',
+  'index.searchForFacetValues(params[, callback])'
+));
 
 IndexCore.prototype._search = function(params, url, callback) {
   return this.as._jsonRequest({
@@ -5015,7 +5024,7 @@ IndexCore.prototype.indexName = null;
 IndexCore.prototype.typeAheadArgs = null;
 IndexCore.prototype.typeAheadValueOption = null;
 
-},{"10":10,"25":25,"26":26,"31":31,"32":32,"33":33}],19:[function(require,module,exports){
+},{"10":10,"25":25,"26":26,"27":27,"28":28,"31":31,"32":32,"33":33}],19:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -5865,6 +5874,6 @@ function createPlacesClient(algoliasearch) {
 },{"25":25,"26":26}],35:[function(require,module,exports){
 'use strict';
 
-module.exports = '3.19.1';
+module.exports = '3.19.2';
 
 },{}]},{},[19]);
