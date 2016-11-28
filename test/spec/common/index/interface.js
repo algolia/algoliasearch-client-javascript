@@ -48,6 +48,7 @@ test('AlgoliaSearch index API spec', function(t) {
     'saveObjects',
     'saveSynonym',
     'search',
+    'searchForFacetValues',
     'searchFacet',
     'searchSynonyms',
     'setSettings',
