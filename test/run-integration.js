@@ -50,7 +50,7 @@ if (canPUT) {
 }
 test('index.saveObjects', saveObjects);
 if (canPUT) {
-  test('index.searchFacet', searchFacet);
+  test('index.searchForFacetValues', searchForFacetValues);
 }
 test('index.browse', browse);
 test('index.getObject', getObject);
@@ -126,11 +126,11 @@ function setSettings(t) {
     .then(noop, _.bind(t.error, t));
 }
 
-function searchFacet(t) {
+function searchForFacetValues(t) {
   t.plan(1);
 
   index
-    .searchFacet({facetName: 'category', facetQuery: 'a'})
+    .searchForFacetValues({facetName: 'category', facetQuery: 'a'})
     .then(get('facetHits'))
     .then(function(facetHits) {
       t.ok(facetHits.length, 'We got some facet hits');
