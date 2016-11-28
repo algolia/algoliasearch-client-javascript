@@ -1,4 +1,6 @@
 var buildSearchMethod = require('./buildSearchMethod.js');
+var deprecate = require('./deprecate.js');
+var deprecatedMessage = require('./deprecatedMessage.js');
 
 module.exports = IndexCore;
 
@@ -231,8 +233,8 @@ IndexCore.prototype.browseFrom = function(cursor, callback) {
 };
 
 /*
-* Search in facets
-* https://www.algolia.com/doc/rest-api/search#search-in-a-facet
+* Search for facet values
+* https://www.algolia.com/doc/rest-api/search#search-for-facet-values
 *
 * @param {string} params.facetName Facet name, name of the attribute to search for values in.
 * Must be declared as a facet
@@ -242,10 +244,10 @@ IndexCore.prototype.browseFrom = function(cursor, callback) {
 * Pagination is not supported. The page and hitsPerPage parameters will be ignored.
 * @param callback (optional)
 */
-IndexCore.prototype.searchFacet = function(params, callback) {
+IndexCore.prototype.searchForFacetValues = function(params, callback) {
   var clone = require('./clone.js');
   var omit = require('./omit.js');
-  var usage = 'Usage: index.searchFacet({facetName, facetQuery, ...params}[, callback])';
+  var usage = 'Usage: index.searchForFacetValues({facetName, facetQuery, ...params}[, callback])';
 
   if (params.facetName === undefined || params.facetQuery === undefined) {
     throw new Error(usage);
@@ -266,6 +268,13 @@ IndexCore.prototype.searchFacet = function(params, callback) {
     callback: callback
   });
 };
+
+IndexCore.prototype.searchFacet = deprecate(function(params, callback) {
+  return this.searchForFacetValues(params, callback);
+}, deprecatedMessage(
+  'index.searchFacet(params[, callback])',
+  'index.searchForFacetValues(params[, callback])'
+));
 
 IndexCore.prototype._search = function(params, url, callback) {
   return this.as._jsonRequest({
