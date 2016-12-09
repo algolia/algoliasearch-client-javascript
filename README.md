@@ -1873,11 +1873,30 @@ If set to false, disables typo tolerance on numeric tokens (numbers).
 #### ignorePlurals
 
 - scope: `settings`, `search`
-- type: `boolean`
+- type: `boolean`, `array of strings`
 - default: `false`
 
 
-If set to true, plural won't be considered as a typo. For example, car and cars, or foot and feet will be considered as equivalent. Defaults to false.
+Consider singular and plurals forms a match without typo. For example, car and
+cars, or foot and feet will be considered equivalent. This parameter can be:
+
+- a **boolean**: enable or disable plurals for all 59 supported languages.
+- a **list of language ISO codes** for which plurals should be enabled.
+
+This option is set to `false` by default.
+
+Afrikaans=`af`, Arabic=`ar`, Azeri=`az`, Bulgarian=`bg`, Catalan=`ca`,
+Czech=`cs`, Welsh=`cy`, Danis=`da`, German=`de`, English=`en`,
+Esperanto=`eo`, Spanish=`es`, Estonian=`et`, Basque=`eu`, Finnish=`fi`,
+Faroese=`fo`, French=`fr`, Galician=`gl`, Hebrew=`he`, Hindi=`hi`,
+Hungarian=`hu`, Armenian=`hy`, Indonesian=`id`, Icelandic=`is`, Italian=`it`,
+Japanese=`ja`, Georgian=`ka`, Kazakh=`kk`, Korean=`ko`, Kyrgyz=`ky`,
+Lithuanian=`lt`, Maori=`mi`, Mongolian=`mn`, Marathi=`mr`, Malay=`ms`,
+Maltese=`mt`, Norwegian=`nb`, Dutch=`nl`, Northern Sotho=`ns`, Polish=`pl`,
+Pashto=`ps`, Portuguese=`pt`, Quechua=`qu`, Romanian=`ro`, Russian=`ru`,
+Slovak=`sk`, Albanian=`sq`, Swedish=`sv`, Swahili=`sw`, Tamil=`ta`,
+Telugu=`te`, Tagalog=`tl`, Tswana=`tn`, Turkish=`tr`, Tatar=`tt`,
+Ukrainian=`uk`, Urdu=`ur`, Uzbek=`uz`, Chinese=`zh`
 
 #### disableTypoToleranceOnAttributes
 
@@ -2579,7 +2598,7 @@ allow the person who has it to query/change/delete data*
 The *Admin API Key* and *Search-Only API Key* both have really large scope and sometimes you want to give a key to
 someone that have restricted permissions, can it be an index, a rate limit, a validity limit, ...
 
-To address those use-cases we have two differents type of keys:
+To address those use-cases we have two different type of keys:
 
 - **Secured API Keys**
 
@@ -2863,7 +2882,7 @@ You may want to perform multiple operations with one API call to reduce latency.
 
 
 
-If you have one index per user, you may want to perform a batch operations across severals indexes.
+If you have one index per user, you may want to perform a batch operations across several indices.
 We expose a method to perform this type of batch:
 
 ```js
