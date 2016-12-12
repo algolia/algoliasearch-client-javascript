@@ -13,20 +13,17 @@ set -e # exit when error
 [ -z $TRAVIS_PULL_REQUEST ] && TRAVIS_PULL_REQUEST='false'
 [ -z $TRAVIS_BUILD_NUMBER ] && TRAVIS_BUILD_NUMBER='false'
 
-nvm install 6
+nvm install 7
 node test/run-node.js
 
 # in CI we launch integration test
-[ $CI == 'true' ] && echo "Node test 4: integration" && node test/run-integration.js
+[ $CI == 'true' ] && echo "Node test 7: integration" && node test/run-integration.js
 
 # in a PR or in local environement, test only on node 6
 if [ $TRAVIS_PULL_REQUEST != 'false' ] || [ $CI == 'false' ]; then
   echo 'Skipping other nodejs version testing (PR or local)'
   exit 0
 else
-  echo "Node test 6: integration"
-  node test/run-integration.js
-
   echo "Node test 0.10: integration"
   nvm install 0.10
   node test/run-integration.js
@@ -42,7 +39,11 @@ else
   echo "Node test 5: integration"
   nvm install 5
   node test/run-integration.js
+
+  echo "Node test 6: integration"
+  nvm install 6
+  node test/run-integration.js
 fi
 
 # switch back to node.js 6
-nvm use 6
+nvm use 7
