@@ -158,11 +158,16 @@ AlgoliaSearchNodeJS.prototype._request = function request(rawUrl, opts) {
     function response(res) {
       var chunks = [];
 
+      // save headers and statusCode BEFORE treating the response as zlib, otherwise
+      // we lose them
+      var headers = res.headers;
+      var statusCode = res.statusCode;
+
       // Algolia answers should be gzip when asked for it,
       // but a proxy might uncompress Algolia response
       // So we handle both compressed and uncompressed
-      if (res.headers['content-encoding'] === 'gzip' ||
-          res.headers['content-encoding'] === 'deflate') {
+      if (headers['content-encoding'] === 'gzip' ||
+          headers['content-encoding'] === 'deflate') {
         res = res.pipe(zlib.createUnzip());
       }
 
@@ -183,8 +188,8 @@ AlgoliaSearchNodeJS.prototype._request = function request(rawUrl, opts) {
         try {
           out = {
             body: JSON.parse(data),
-            statusCode: res.statusCode,
-            headers: res.headers
+            statusCode: statusCode,
+            headers: headers
           };
         } catch (e) {
           out = new errors.UnparsableJSON({

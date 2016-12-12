@@ -3,9 +3,15 @@ module.exports = AlgoliaSearchCore;
 var errors = require('./errors');
 var exitPromise = require('./exitPromise.js');
 var IndexCore = require('./IndexCore.js');
+var store = require('./store.js');
 
-// We will always put the API KEY in the JSON body in case of too long API KEY
+// We will always put the API KEY in the JSON body in case of too long API KEY,
+// to avoid query string being too long and failing in various conditions (our server limit, browser limit,
+// proxies limit)
 var MAX_API_KEY_LENGTH = 500;
+var RESET_TO_FIRST_HOST_TIMER =
+  process.env.RESET_TO_FIRST_HOST_TIMER && parseInt(process.env.RESET_TO_FIRST_HOST_TIMER, 10) ||
+  60 * 5 * 1000; // after 5 minutes reset to first host
 
 /*
  * Algolia Search library initialization
@@ -52,19 +58,9 @@ function AlgoliaSearchCore(applicationID, apiKey, opts) {
   this.applicationID = applicationID;
   this.apiKey = apiKey;
 
-  var defaultHosts = shuffle([
-    this.applicationID + '-1.algolianet.com',
-    this.applicationID + '-2.algolianet.com',
-    this.applicationID + '-3.algolianet.com'
-  ]);
   this.hosts = {
     read: [],
     write: []
-  };
-
-  this.hostIndex = {
-    read: 0,
-    write: 0
   };
 
   opts = opts || {};
@@ -82,17 +78,38 @@ function AlgoliaSearchCore(applicationID, apiKey, opts) {
     throw new errors.AlgoliaSearchError('protocol must be `http:` or `https:` (was `' + opts.protocol + '`)');
   }
 
-  // no hosts given, add defaults
   if (!opts.hosts) {
+    var appIdData = this._getAppIdData();
+
+    if (appIdData === null) {
+      appIdData = this._setAppIdData({hostIndex: 0, shuffleResult: shuffle([1, 2, 3])});
+    }
+
+    var defaultHosts = map(appIdData.shuffleResult, function(hostNumber) {
+      return applicationID + '-' + hostNumber + '.algolianet.com';
+    });
+
+    // no hosts given, compute defaults
     this.hosts.read = [this.applicationID + '-dsn.algolia.net'].concat(defaultHosts);
     this.hosts.write = [this.applicationID + '.algolia.net'].concat(defaultHosts);
-  } else if (isArray(opts.hosts)) {
-    this.hosts.read = clone(opts.hosts);
-    this.hosts.write = clone(opts.hosts);
   } else {
-    this.hosts.read = clone(opts.hosts.read);
-    this.hosts.write = clone(opts.hosts.write);
+    this._hasCustomHosts = true;
+    // when passing custom hosts, we need to have a different host index if the number
+    // of write/read hosts are different.
+    this._customHostIndex = {
+      read: 0,
+      write: 0
+    };
+    if (isArray(opts.hosts)) {
+      this.hosts.read = clone(opts.hosts);
+      this.hosts.write = clone(opts.hosts);
+    } else {
+      this.hosts.read = clone(opts.hosts.read);
+      this.hosts.write = clone(opts.hosts.write);
+    }
   }
+
+  this._lastRequest = false;
 
   // add protocol and lowercase hosts
   this.hosts.read = map(this.hosts.read, prepareHost(protocol));
@@ -180,6 +197,7 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
 
   function doRequest(requester, reqOpts) {
     var startTime = new Date();
+    client._lastRequest = startTime.getTime();
     var cacheID;
 
     if (client._useCache) {
@@ -226,12 +244,12 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
       headers = client._computeRequestHeaders();
 
       reqOpts.timeout = client.requestTimeout * (tries + 1);
-      client.hostIndex[initialOpts.hostType] = 0;
+      client._setCurrentHostIndex(0, initialOpts.hostType);
       usingFallback = true; // the current request is now using fallback
       return doRequest(client._request.fallback, reqOpts);
     }
 
-    var currentHost = client.hosts[initialOpts.hostType][client.hostIndex[initialOpts.hostType]];
+    var currentHost = client._getCurrentHost(initialOpts.hostType);
 
     var url = currentHost + reqOpts.url;
     var options = {
@@ -380,13 +398,13 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
 
     function retryRequest() {
       requestDebug('retrying request');
-      client.hostIndex[initialOpts.hostType] = (client.hostIndex[initialOpts.hostType] + 1) % client.hosts[initialOpts.hostType].length;
+      client._incrementCurrentHostIndex(initialOpts.hostType);
       return doRequest(requester, reqOpts);
     }
 
     function retryRequestWithHigherTimeout() {
       requestDebug('retrying request with higher timeout');
-      client.hostIndex[initialOpts.hostType] = (client.hostIndex[initialOpts.hostType] + 1) % client.hosts[initialOpts.hostType].length;
+      client._incrementCurrentHostIndex(initialOpts.hostType);
       reqOpts.timeout = client.requestTimeout * (tries + 1);
       return doRequest(requester, reqOpts);
     }
@@ -594,6 +612,78 @@ AlgoliaSearchCore.prototype.setRequestTimeout = function(milliseconds) {
   if (milliseconds) {
     this.requestTimeout = parseInt(milliseconds, 10);
   }
+};
+
+AlgoliaSearchCore.prototype._getAppIdData = function() {
+  return store.get(this.applicationID);
+};
+
+AlgoliaSearchCore.prototype._setAppIdData = function(data) {
+  var clone = require('./clone.js');
+  var newData = clone(data);
+  newData.lastChange = (new Date()).getTime();
+  return store.set(this.applicationID, newData);
+};
+
+AlgoliaSearchCore.prototype._getCurrentHost = function(hostType) {
+  if (this._shouldResetToFirstHost(hostType)) {
+    this._setCurrentHostIndex(0, hostType);
+  }
+
+  return this.hosts[hostType][this._getCurrentHostIndex(hostType)];
+};
+
+AlgoliaSearchCore.prototype._getCurrentHostIndex = function(hostType) {
+  if (!this._hasCustomHosts) {
+    return this._getAppIdData().hostIndex;
+  }
+
+  return this._customHostIndex[hostType];
+};
+
+AlgoliaSearchCore.prototype._setCurrentHostIndex = function(hostIndex, hostType) {
+  if (!this._hasCustomHosts) {
+    this._setAppIdData({hostIndex: hostIndex, shuffleResult: this._getAppIdData()._shuffleResult});
+    return hostIndex;
+  }
+
+  this._customHostIndex[hostType] = hostIndex;
+  return this._customHostIndex;
+};
+
+AlgoliaSearchCore.prototype._shouldResetToFirstHost = function(hostType) {
+  var now = (new Date()).getTime();
+  var currentHostIndex = this._getCurrentHostIndex(hostType);
+
+  if (currentHostIndex === 0) {
+    return false;
+  }
+
+  if (!this._hasCustomHosts) {
+    var data = this._getAppIdData();
+
+    if (now - data.lastChange > RESET_TO_FIRST_HOST_TIMER) {
+      return true;
+    }
+
+    return false;
+  }
+
+  if (this._lastRequest !== false && now - this._lastRequest > RESET_TO_FIRST_HOST_TIMER) {
+    return true;
+  }
+
+  return false;
+};
+
+AlgoliaSearchCore.prototype._incrementCurrentHostIndex = function(hostType) {
+  if (this._shouldResetToFirstHost(hostType)) {
+    return this._setCurrentHostIndex(0, hostType);
+  }
+
+  return this._setCurrentHostIndex(
+    (this._getCurrentHostIndex(hostType) + 1) % this.hosts[hostType].length, hostType
+  );
 };
 
 function prepareHost(protocol) {

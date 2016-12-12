@@ -8,7 +8,7 @@ function createFixture(opts) {
 
   opts = opts || {};
 
-  var credentials = getCredentials();
+  var credentials = opts.credentials || getCredentials();
 
   var client = algoliasearch(credentials.applicationID, credentials.searchOnlyAPIKey, opts.clientOptions);
   var index = client.initIndex(opts.indexName || credentials.indexName);
