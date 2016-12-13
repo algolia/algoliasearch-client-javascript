@@ -1,9 +1,6 @@
 'use strict';
 
 var zuulConfig = module.exports = {
-  tunnel: {
-    type: 'localtunnel'
-  },
   ui: 'tape',
   browserify: [{
     transform: 'bulkify'

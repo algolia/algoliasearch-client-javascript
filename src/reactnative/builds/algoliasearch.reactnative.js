@@ -26,7 +26,7 @@ function algoliasearch(applicationID, apiKey, opts) {
 
   opts.timeouts = opts.timeouts || {
     connect: 2 * 1000,
-    read: 4 * 1000,
+    read: 3 * 1000,
     write: 30 * 1000
   };
 
