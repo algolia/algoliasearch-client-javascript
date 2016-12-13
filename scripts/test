@@ -9,8 +9,5 @@ echo "Test"
 echo "Test: node"
 ./scripts/test-node
 
-echo "Test: phantom"
-./scripts/test-phantom
-
 echo "Test: lint"
 ./scripts/lint

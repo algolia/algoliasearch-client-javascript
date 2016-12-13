@@ -60,7 +60,6 @@ test('When not using custom hosts, active hosts state is shared amongst client i
     if (reqCount > 4) {
       t.fail('Received more requests than planned');
     }
-    console.log(reqCount, 'count');
     reqHandlers[reqCount - 1](req);
     reqCount++;
   });
