@@ -111,11 +111,11 @@ module.exports = function createAlgoliasearch(AlgoliaSearch, uaSuffix) {
       if (support.timeout) {
         // .timeout supported by both XHR and XDR,
         // we do receive timeout event, tested
-        req.timeout = opts.timeout;
+        req.timeout = opts.timeouts.complete;
 
         req.ontimeout = timeout;
       } else {
-        ontimeout = setTimeout(timeout, opts.timeout);
+        ontimeout = setTimeout(timeout, opts.timeouts.complete);
       }
 
       req.send(body);

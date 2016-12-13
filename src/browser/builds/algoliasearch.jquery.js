@@ -82,7 +82,7 @@ AlgoliaSearchJQuery.prototype._request = function request(url, opts) {
 
     $.ajax(url, {
       type: opts.method,
-      timeout: opts.timeout,
+      timeout: opts.timeouts.complete,
       dataType: 'json',
       data: body,
       headers: requestHeaders,

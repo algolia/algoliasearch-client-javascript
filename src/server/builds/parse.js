@@ -31,9 +31,11 @@ function algoliasearch(applicationID, apiKey, opts) {
     opts.protocol = 'https:';
   }
 
-  if (opts.timeout === undefined) {
-    opts.timeout = 7500;
-  }
+  opts.timeouts = opts.timeouts || {
+    connect: 2 * 1000,
+    read: 7 * 1000,
+    write: 30 * 1000
+  };
 
   opts._setTimeout = _setTimeout;
 
