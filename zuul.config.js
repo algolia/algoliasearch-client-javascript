@@ -17,7 +17,7 @@ var zuulConfig = module.exports = {
 
   // only used when run with saucelabs
   // not activated when dev or phantom
-  concurrency: 2, // ngrok only accepts two tunnels by default
+  concurrency: 1, // ngrok only accepts two tunnels by default
   // if browser does not sends output in 120s since last output:
   // stop testing, something is wrong
   browser_output_timeout: 60 * 3 * 1000,
@@ -25,6 +25,13 @@ var zuulConfig = module.exports = {
   // we want to be notified something is wrong asap, so no retry
   browser_retries: 1
 };
+
+if (process.env.CI === 'true') {
+  zuulConfig.tunnel = {
+    type: 'ngrok',
+    bind_tls: true
+  };
+}
 
 var browsers = require('browzers');
 

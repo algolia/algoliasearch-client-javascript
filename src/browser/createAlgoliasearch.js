@@ -74,8 +74,20 @@ module.exports = function createAlgoliasearch(AlgoliaSearch, uaSuffix) {
 
       var body = opts.body;
       var req = support.cors ? new XMLHttpRequest() : new XDomainRequest();
-      var ontimeout;
+      var reqTimeout;
       var timedOut;
+      var connected = false;
+
+      reqTimeout = setTimeout(onTimeout, opts.timeouts.connect);
+      // we set an empty onprogress listener
+      // so that XDomainRequest on IE9 is not aborted
+      // refs:
+      //  - https://github.com/algolia/algoliasearch-client-js/issues/76
+      //  - https://social.msdn.microsoft.com/Forums/ie/en-US/30ef3add-767c-4436-b8a9-f1ca19b4812e/ie9-rtm-xdomainrequest-issued-requests-may-abort-if-all-event-handlers-not-specified?forum=iewebdevelopment
+      req.onprogress = onProgress;
+      if ('onreadystatechange' in req) req.onreadystatechange = onReadyStateChange;
+      req.onload = onLoad;
+      req.onerror = onError;
 
       // do not rely on default XHR async flag, as some analytics code like hotjar
       // breaks it and set it to false by default
@@ -85,6 +97,7 @@ module.exports = function createAlgoliasearch(AlgoliaSearch, uaSuffix) {
         req.open(opts.method, url);
       }
 
+      // headers are meant to be sent after open
       if (support.cors) {
         if (body) {
           if (opts.method === 'POST') {
@@ -97,36 +110,18 @@ module.exports = function createAlgoliasearch(AlgoliaSearch, uaSuffix) {
         req.setRequestHeader('accept', 'application/json');
       }
 
-      ontimeout = setTimeout(timeout, opts.timeouts.connect);
-      var firstProgress = true;
-      // we set an empty onprogress listener
-      // so that XDomainRequest on IE9 is not aborted
-      // refs:
-      //  - https://github.com/algolia/algoliasearch-client-js/issues/76
-      //  - https://social.msdn.microsoft.com/Forums/ie/en-US/30ef3add-767c-4436-b8a9-f1ca19b4812e/ie9-rtm-xdomainrequest-issued-requests-may-abort-if-all-event-handlers-not-specified?forum=iewebdevelopment
-      req.onprogress = function noop() {
-        if (firstProgress) {
-          firstProgress = false;
-          clearTimeout(ontimeout);
-          ontimeout = setTimeout(timeout, opts.timeouts.complete);
-        }
-      };
-
-      req.onload = load;
-      req.onerror = error;
-
       req.send(body);
 
       // event object not received in IE8, at least
       // but we do not use it, still important to note
-      function load(/* event */) {
+      function onLoad(/* event */) {
         // When browser does not supports req.timeout, we can
         // have both a load and timeout event, since handled by a dumb setTimeout
         if (timedOut) {
           return;
         }
 
-        clearTimeout(ontimeout);
+        clearTimeout(reqTimeout);
 
         var out;
 
@@ -151,12 +146,12 @@ module.exports = function createAlgoliasearch(AlgoliaSearch, uaSuffix) {
         }
       }
 
-      function error(event) {
+      function onError(event) {
         if (timedOut) {
           return;
         }
 
-        clearTimeout(ontimeout);
+        clearTimeout(reqTimeout);
 
         // error event is trigerred both with XDR/XHR on:
         //   - DNS error
@@ -168,11 +163,25 @@ module.exports = function createAlgoliasearch(AlgoliaSearch, uaSuffix) {
         );
       }
 
-      function timeout() {
+      function onTimeout() {
         timedOut = true;
         req.abort();
 
         reject(new errors.RequestTimeout());
+      }
+
+      function onConnect() {
+        connected = true;
+        clearTimeout(reqTimeout);
+        reqTimeout = setTimeout(onTimeout, opts.timeouts.complete);
+      }
+
+      function onProgress() {
+        if (!connected) onConnect();
+      }
+
+      function onReadyStateChange() {
+        if (!connected && req.readyState > 1) onConnect();
       }
     });
   };
