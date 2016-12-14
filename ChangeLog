@@ -6,9 +6,11 @@ CHANGELOG
     - Retry strategy now shares the last known host for a specific appId across the current domain (browsers)
     or the current process (browsers without localStorage, Node.js). After 2 minutes we try to target back
     the first host (Usually DSN)
-    - Retry strategy now shares the last known timeout multiplier that worked
+    - Retry strategy now shares the last known timeout multiplier that worked and set it back to default
+    after 2 minutes
     - Retry strategy on Node.js now has a connect timeout of 2s
-    - Retry strategy on browsers (JavaScript, not jQuery, not Angular.js, not React Native for now)
+    - Retry strategy on browsers (JavaScript, not jQuery, not Angular.js, not React Native for now) now
+    has a connect timeout of 1s
     - You can now get and set timeouts per client with .setTimeouts({connect, read, write}), .getTimeouts().
     Values are in ms.
 
