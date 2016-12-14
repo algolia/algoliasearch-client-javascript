@@ -78,9 +78,11 @@ module.exports =
 	    opts.protocol = 'https:';
 	  }
 
-	  if (opts.timeout === undefined) {
-	    opts.timeout = 7500;
-	  }
+	  opts.timeouts = opts.timeouts || {
+	    connect: 2 * 1000,
+	    read: 7 * 1000,
+	    write: 30 * 1000
+	  };
 
 	  opts._setTimeout = _setTimeout;
 
@@ -90,7 +92,7 @@ module.exports =
 	  return new AlgoliaSearchParse(applicationID, apiKey, opts);
 	}
 
-	algoliasearch.version = __webpack_require__(25);
+	algoliasearch.version = __webpack_require__(26);
 	algoliasearch.ua = 'Algolia for Parse ' + algoliasearch.version;
 
 	function AlgoliaSearchParse() {
@@ -240,7 +242,11 @@ module.exports =
 	 */
 
 	exports.formatters.j = function(v) {
-	  return JSON.stringify(v);
+	  try {
+	    return JSON.stringify(v);
+	  } catch (err) {
+	    return '[UnexpectedJSONParseError]: ' + err.message;
+	  }
 	};
 
 
@@ -327,15 +333,13 @@ module.exports =
 	function load() {
 	  var r;
 	  try {
-	    r = exports.storage.debug;
+	    return exports.storage.debug;
 	  } catch(e) {}
 
 	  // If debug isn't set in LS, and we're in Electron, try to load $DEBUG
-	  if ('env' in (typeof process === 'undefined' ? {} : process)) {
-	    r = process.env.DEBUG;
+	  if (typeof process !== 'undefined' && 'env' in process) {
+	    return process.env.DEBUG;
 	  }
-	  
-	  return r;
 	}
 
 	/**
@@ -3188,9 +3192,15 @@ module.exports =
 	var errors = __webpack_require__(10);
 	var exitPromise = __webpack_require__(21);
 	var IndexCore = __webpack_require__(8);
+	var store = __webpack_require__(25);
 
-	// We will always put the API KEY in the JSON body in case of too long API KEY
+	// We will always put the API KEY in the JSON body in case of too long API KEY,
+	// to avoid query string being too long and failing in various conditions (our server limit, browser limit,
+	// proxies limit)
 	var MAX_API_KEY_LENGTH = 500;
+	var RESET_APP_DATA_TIMER =
+	  process.env.RESET_APP_DATA_TIMER && parseInt(process.env.RESET_APP_DATA_TIMER, 10) ||
+	  60 * 2 * 1000; // after 2 minutes reset to first host
 
 	/*
 	 * Algolia Search library initialization
@@ -3237,25 +3247,24 @@ module.exports =
 	  this.applicationID = applicationID;
 	  this.apiKey = apiKey;
 
-	  var defaultHosts = shuffle([
-	    this.applicationID + '-1.algolianet.com',
-	    this.applicationID + '-2.algolianet.com',
-	    this.applicationID + '-3.algolianet.com'
-	  ]);
 	  this.hosts = {
 	    read: [],
 	    write: []
 	  };
 
-	  this.hostIndex = {
-	    read: 0,
-	    write: 0
-	  };
-
 	  opts = opts || {};
 
 	  var protocol = opts.protocol || 'https:';
-	  var timeout = opts.timeout === undefined ? 2000 : opts.timeout;
+	  this._timeouts = opts.timeouts || {
+	    connect: 1 * 1000, // 500ms connect is GPRS latency
+	    read: 2 * 1000,
+	    write: 30 * 1000
+	  };
+
+	  // backward compat, if opts.timeout is passed, we use it to configure all timeouts like before
+	  if (opts.timeout) {
+	    this._timeouts.connect = this._timeouts.read = this._timeouts.write = opts.timeout;
+	  }
 
 	  // while we advocate for colon-at-the-end values: 'http:' for `opts.protocol`
 	  // we also accept `http` and `https`. It's a common error.
@@ -3267,11 +3276,19 @@ module.exports =
 	    throw new errors.AlgoliaSearchError('protocol must be `http:` or `https:` (was `' + opts.protocol + '`)');
 	  }
 
-	  // no hosts given, add defaults
+	  this._checkAppIdData();
+
 	  if (!opts.hosts) {
+	    var defaultHosts = map(this._shuffleResult, function(hostNumber) {
+	      return applicationID + '-' + hostNumber + '.algolianet.com';
+	    });
+
+	    // no hosts given, compute defaults
 	    this.hosts.read = [this.applicationID + '-dsn.algolia.net'].concat(defaultHosts);
 	    this.hosts.write = [this.applicationID + '.algolia.net'].concat(defaultHosts);
 	  } else if (isArray(opts.hosts)) {
+	    // when passing custom hosts, we need to have a different host index if the number
+	    // of write/read hosts are different.
 	    this.hosts.read = clone(opts.hosts);
 	    this.hosts.write = clone(opts.hosts);
 	  } else {
@@ -3282,7 +3299,6 @@ module.exports =
 	  // add protocol and lowercase hosts
 	  this.hosts.read = map(this.hosts.read, prepareHost(protocol));
 	  this.hosts.write = map(this.hosts.write, prepareHost(protocol));
-	  this.requestTimeout = timeout;
 
 	  this.extraHeaders = [];
 
@@ -3334,6 +3350,8 @@ module.exports =
 	 * Wrapper that try all hosts to maximize the quality of service
 	 */
 	AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
+	  this._checkAppIdData();
+
 	  var requestDebug = __webpack_require__(1)('algoliasearch:' + initialOpts.url);
 
 	  var body;
@@ -3364,6 +3382,8 @@ module.exports =
 	  var debugData = [];
 
 	  function doRequest(requester, reqOpts) {
+	    client._checkAppIdData();
+
 	    var startTime = new Date();
 	    var cacheID;
 
@@ -3410,13 +3430,13 @@ module.exports =
 	      // re-compute headers, they could be omitting the API KEY
 	      headers = client._computeRequestHeaders();
 
-	      reqOpts.timeout = client.requestTimeout * (tries + 1);
-	      client.hostIndex[initialOpts.hostType] = 0;
+	      reqOpts.timeouts = client._getTimeoutsForRequest(initialOpts.hostType);
+	      client._setHostIndexByType(0, initialOpts.hostType);
 	      usingFallback = true; // the current request is now using fallback
 	      return doRequest(client._request.fallback, reqOpts);
 	    }
 
-	    var currentHost = client.hosts[initialOpts.hostType][client.hostIndex[initialOpts.hostType]];
+	    var currentHost = client._getHostByType(initialOpts.hostType);
 
 	    var url = currentHost + reqOpts.url;
 	    var options = {
@@ -3424,12 +3444,12 @@ module.exports =
 	      jsonBody: reqOpts.jsonBody,
 	      method: reqOpts.method,
 	      headers: headers,
-	      timeout: reqOpts.timeout,
+	      timeouts: reqOpts.timeouts,
 	      debug: requestDebug
 	    };
 
-	    requestDebug('method: %s, url: %s, headers: %j, timeout: %d',
-	      options.method, url, options.headers, options.timeout);
+	    requestDebug('method: %s, url: %s, headers: %j, timeouts: %d',
+	      options.method, url, options.headers, options.timeouts);
 
 	    if (requester === client._request.fallback) {
 	      requestDebug('using fallback');
@@ -3472,7 +3492,7 @@ module.exports =
 	        content: body || null,
 	        contentLength: body !== undefined ? body.length : null,
 	        method: reqOpts.method,
-	        timeout: reqOpts.timeout,
+	        timeouts: reqOpts.timeouts,
 	        url: reqOpts.url,
 	        startTime: startTime,
 	        endTime: endTime,
@@ -3525,7 +3545,7 @@ module.exports =
 	        content: body || null,
 	        contentLength: body !== undefined ? body.length : null,
 	        method: reqOpts.method,
-	        timeout: reqOpts.timeout,
+	        timeouts: reqOpts.timeouts,
 	        url: reqOpts.url,
 	        startTime: startTime,
 	        endTime: endTime,
@@ -3565,14 +3585,15 @@ module.exports =
 
 	    function retryRequest() {
 	      requestDebug('retrying request');
-	      client.hostIndex[initialOpts.hostType] = (client.hostIndex[initialOpts.hostType] + 1) % client.hosts[initialOpts.hostType].length;
+	      client._incrementHostIndex(initialOpts.hostType);
 	      return doRequest(requester, reqOpts);
 	    }
 
 	    function retryRequestWithHigherTimeout() {
 	      requestDebug('retrying request with higher timeout');
-	      client.hostIndex[initialOpts.hostType] = (client.hostIndex[initialOpts.hostType] + 1) % client.hosts[initialOpts.hostType].length;
-	      reqOpts.timeout = client.requestTimeout * (tries + 1);
+	      client._incrementHostIndex(initialOpts.hostType);
+	      client._incrementTimeoutMultipler();
+	      reqOpts.timeouts = client._getTimeoutsForRequest(initialOpts.hostType);
 	      return doRequest(requester, reqOpts);
 	    }
 	  }
@@ -3583,7 +3604,7 @@ module.exports =
 	      method: initialOpts.method,
 	      body: body,
 	      jsonBody: initialOpts.body,
-	      timeout: client.requestTimeout * (tries + 1)
+	      timeouts: client._getTimeoutsForRequest(initialOpts.hostType)
 	    }
 	  );
 
@@ -3772,13 +3793,113 @@ module.exports =
 
 	/**
 	* Set the number of milliseconds a request can take before automatically being terminated.
-	*
+	* @deprecated
 	* @param {Number} milliseconds
 	*/
 	AlgoliaSearchCore.prototype.setRequestTimeout = function(milliseconds) {
 	  if (milliseconds) {
-	    this.requestTimeout = parseInt(milliseconds, 10);
+	    this._timeouts.connect = this._timeouts.read = this._timeouts.write = milliseconds;
 	  }
+	};
+
+	/**
+	* Set the three different (connect, read, write) timeouts to be used when requesting
+	* @param {Object} timeouts
+	*/
+	AlgoliaSearchCore.prototype.setTimeouts = function(timeouts) {
+	  this._timeouts = timeouts;
+	};
+
+	/**
+	* Get the three different (connect, read, write) timeouts to be used when requesting
+	* @param {Object} timeouts
+	*/
+	AlgoliaSearchCore.prototype.getTimeouts = function() {
+	  return this._timeouts;
+	};
+
+	AlgoliaSearchCore.prototype._getAppIdData = function() {
+	  var data = store.get(this.applicationID);
+	  if (data !== null) this._cacheAppIdData(data);
+	  return data;
+	};
+
+	AlgoliaSearchCore.prototype._setAppIdData = function(data) {
+	  data.lastChange = (new Date()).getTime();
+	  this._cacheAppIdData(data);
+	  return store.set(this.applicationID, data);
+	};
+
+	AlgoliaSearchCore.prototype._checkAppIdData = function() {
+	  var data = this._getAppIdData();
+	  var now = (new Date()).getTime();
+	  if (data === null || now - data.lastChange > RESET_APP_DATA_TIMER) {
+	    return this._resetInitialAppIdData(data);
+	  }
+
+	  return data;
+	};
+
+	AlgoliaSearchCore.prototype._resetInitialAppIdData = function(data) {
+	  var newData = data || {};
+	  newData.hostIndexes = {read: 0, write: 0};
+	  newData.timeoutMultiplier = 1;
+	  newData.shuffleResult = newData.shuffleResult || shuffle([1, 2, 3]);
+	  return this._setAppIdData(newData);
+	};
+
+	AlgoliaSearchCore.prototype._cacheAppIdData = function(data) {
+	  this._hostIndexes = data.hostIndexes;
+	  this._timeoutMultiplier = data.timeoutMultiplier;
+	  this._shuffleResult = data.shuffleResult;
+	};
+
+	AlgoliaSearchCore.prototype._partialAppIdDataUpdate = function(newData) {
+	  var foreach = __webpack_require__(11);
+	  var currentData = this._getAppIdData();
+	  foreach(newData, function(value, key) {
+	    currentData[key] = value;
+	  });
+
+	  return this._setAppIdData(currentData);
+	};
+
+	AlgoliaSearchCore.prototype._getHostByType = function(hostType) {
+	  return this.hosts[hostType][this._getHostIndexByType(hostType)];
+	};
+
+	AlgoliaSearchCore.prototype._getTimeoutMultiplier = function() {
+	  return this._timeoutMultiplier;
+	};
+
+	AlgoliaSearchCore.prototype._getHostIndexByType = function(hostType) {
+	  return this._hostIndexes[hostType];
+	};
+
+	AlgoliaSearchCore.prototype._setHostIndexByType = function(hostIndex, hostType) {
+	  var clone = __webpack_require__(15);
+	  var newHostIndexes = clone(this._hostIndexes);
+	  newHostIndexes[hostType] = hostIndex;
+	  this._partialAppIdDataUpdate({hostIndexes: newHostIndexes});
+	  return hostIndex;
+	};
+
+	AlgoliaSearchCore.prototype._incrementHostIndex = function(hostType) {
+	  return this._setHostIndexByType(
+	    (this._getHostIndexByType(hostType) + 1) % this.hosts[hostType].length, hostType
+	  );
+	};
+
+	AlgoliaSearchCore.prototype._incrementTimeoutMultipler = function() {
+	  var timeoutMultiplier = Math.max(this._timeoutMultiplier + 1, 4);
+	  return this._partialAppIdDataUpdate({timeoutMultiplier: timeoutMultiplier});
+	};
+
+	AlgoliaSearchCore.prototype._getTimeoutsForRequest = function(hostType) {
+	  return {
+	    connect: this._timeouts.connect * this._timeoutMultiplier,
+	    complete: this._timeouts[hostType] * this._timeoutMultiplier
+	  };
 	};
 
 	function prepareHost(protocol) {
@@ -3852,11 +3973,91 @@ module.exports =
 
 /***/ },
 /* 25 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var debug = __webpack_require__(1)('algoliasearch:src/hostIndexState.js');
+	var localStorageNamespace = 'algoliasearch-client-js';
+
+	var store;
+	var moduleStore = {
+	  state: {},
+	  set: function(key, data) {
+	    this.state[key] = data;
+	    return this.state[key];
+	  },
+	  get: function(key) {
+	    return this.state[key] || null;
+	  }
+	};
+
+	var localStorageStore = {
+	  set: function(key, data) {
+	    try {
+	      var namespace = JSON.parse(global.localStorage[localStorageNamespace]);
+	      namespace[key] = data;
+	      global.localStorage[localStorageNamespace] = JSON.stringify(namespace);
+	      return namespace[key];
+	    } catch (e) {
+	      debug('localStorage set failed with', e);
+	      cleanup();
+	      store = moduleStore;
+	      return store.set(key, data);
+	    }
+	  },
+	  get: function(key) {
+	    return JSON.parse(global.localStorage[localStorageNamespace])[key] || null;
+	  }
+	};
+
+	store = supportsLocalStorage() ? localStorageStore : moduleStore;
+
+	module.exports = {
+	  get: getOrSet,
+	  set: getOrSet
+	};
+
+	function getOrSet(key, data) {
+	  if (arguments.length === 1) {
+	    return store.get(key);
+	  }
+
+	  return store.set(key, data);
+	}
+
+	function supportsLocalStorage() {
+	  try {
+	    if ('localStorage' in global &&
+	      global.localStorage !== null &&
+	      !global.localStorage[localStorageNamespace]) {
+	      // actual creation of the namespace
+	      global.localStorage.setItem(localStorageNamespace, JSON.stringify({}));
+	      return true;
+	    }
+
+	    return false;
+	  } catch (_) {
+	    return false;
+	  }
+	}
+
+	// In case of any error on localStorage, we clean our own namespace, this should handle
+	// quota errors when a lot of keys + data are used
+	function cleanup() {
+	  try {
+	    global.localStorage.removeItem(localStorageNamespace);
+	  } catch (_) {
+	    // nothing to do
+	  }
+	}
+
+
+/***/ },
+/* 26 */
 /***/ function(module, exports) {
 
 	
 
-	module.exports = '3.19.2';
+	module.exports = '3.20.0';
 
 
 /***/ }
