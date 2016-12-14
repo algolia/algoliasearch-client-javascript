@@ -1,6 +1,6 @@
 'use strict';
 
-process.env.RESET_TO_FIRST_HOST_TIMER = 100;
+process.env.RESET_APP_DATA_TIMER = 3000;
 
 require('bulk-require')(__dirname, [
   'spec/common/**/*.js',

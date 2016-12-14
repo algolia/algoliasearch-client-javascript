@@ -52,7 +52,6 @@ module.exports = function createAlgoliasearch(AlgoliaSearch, uaSuffix) {
 
   if (support.hasXMLHttpRequest) {
     support.cors = 'withCredentials' in new XMLHttpRequest();
-    support.timeout = 'timeout' in new XMLHttpRequest();
   }
 
   function AlgoliaSearchBrowser() {
@@ -98,25 +97,23 @@ module.exports = function createAlgoliasearch(AlgoliaSearch, uaSuffix) {
         req.setRequestHeader('accept', 'application/json');
       }
 
+      ontimeout = setTimeout(timeout, opts.timeouts.connect);
+      var firstProgress = true;
       // we set an empty onprogress listener
       // so that XDomainRequest on IE9 is not aborted
       // refs:
       //  - https://github.com/algolia/algoliasearch-client-js/issues/76
       //  - https://social.msdn.microsoft.com/Forums/ie/en-US/30ef3add-767c-4436-b8a9-f1ca19b4812e/ie9-rtm-xdomainrequest-issued-requests-may-abort-if-all-event-handlers-not-specified?forum=iewebdevelopment
-      req.onprogress = function noop() {};
+      req.onprogress = function noop() {
+        if (firstProgress) {
+          firstProgress = false;
+          clearTimeout(ontimeout);
+          ontimeout = setTimeout(timeout, opts.timeouts.complete);
+        }
+      };
 
       req.onload = load;
       req.onerror = error;
-
-      if (support.timeout) {
-        // .timeout supported by both XHR and XDR,
-        // we do receive timeout event, tested
-        req.timeout = opts.timeout;
-
-        req.ontimeout = timeout;
-      } else {
-        ontimeout = setTimeout(timeout, opts.timeout);
-      }
 
       req.send(body);
 
@@ -129,9 +126,7 @@ module.exports = function createAlgoliasearch(AlgoliaSearch, uaSuffix) {
           return;
         }
 
-        if (!support.timeout) {
-          clearTimeout(ontimeout);
-        }
+        clearTimeout(ontimeout);
 
         var out;
 
@@ -161,9 +156,7 @@ module.exports = function createAlgoliasearch(AlgoliaSearch, uaSuffix) {
           return;
         }
 
-        if (!support.timeout) {
-          clearTimeout(ontimeout);
-        }
+        clearTimeout(ontimeout);
 
         // error event is trigerred both with XDR/XHR on:
         //   - DNS error
@@ -176,10 +169,8 @@ module.exports = function createAlgoliasearch(AlgoliaSearch, uaSuffix) {
       }
 
       function timeout() {
-        if (!support.timeout) {
-          timedOut = true;
-          req.abort();
-        }
+        timedOut = true;
+        req.abort();
 
         reject(new errors.RequestTimeout());
       }

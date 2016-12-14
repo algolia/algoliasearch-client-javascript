@@ -29,7 +29,7 @@ test('When not using custom hosts, active hosts state is shared amongst client i
     );
 
     // simulate network error
-    req.respond(500, {}, JSON.stringify({}));
+    req.respond(500, {}, JSON.stringify({message: 'Woopsie', status: 500}));
   }, function(req) {
     workingHost = parse(req.requestURL).hostname;
     t.notEqual(
@@ -46,7 +46,7 @@ test('When not using custom hosts, active hosts state is shared amongst client i
     );
     req.respond(200, {}, JSON.stringify({message: 'Second client, first search, first request'}));
   }, function(req) {
-    // after RESET_TO_FIRST_HOST_TIMER, we should try again the failing host
+    // after RESET_APP_DATA_TIMER, we should try again the failing host
     t.equal(
       parse(req.requestURL).hostname,
       failingHost,
@@ -60,7 +60,6 @@ test('When not using custom hosts, active hosts state is shared amongst client i
     if (reqCount > 4) {
       t.fail('Received more requests than planned');
     }
-    console.log(reqCount, 'count');
     reqHandlers[reqCount - 1](req);
     reqCount++;
   });
@@ -90,7 +89,7 @@ test('When not using custom hosts, active hosts state is shared amongst client i
         },
         'Second client, first search receives right message'
       );
-      setTimeout(thirdSearch, parseInt(process.env.RESET_TO_FIRST_HOST_TIMER, 10));
+      setTimeout(thirdSearch, parseInt(process.env.RESET_APP_DATA_TIMER, 10));
     });
   }
 

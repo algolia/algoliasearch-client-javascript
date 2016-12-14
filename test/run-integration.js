@@ -14,7 +14,6 @@ var getFakeObjects = require('./utils/get-fake-objects');
 var isABrowser = process.browser;
 var canPUT = !isABrowser || require('faux-jax').support.xhr.cors;
 var canDELETE = canPUT;
-var FORCE_DNS_TIMEOUT = 120000;
 
 // ensure that on the browser we use the global algoliasearch,
 // so that we are absolutely sure the builded version exposes algoliasearch
@@ -86,6 +85,10 @@ if (canDELETE) {
 
 test('places with credentials', initPlaces(process.env.PLACES_APPID, process.env.PLACES_APIKEY));
 test('places without credentials', initPlaces());
+
+if (!isABrowser) {
+  test('client.destroy', destroy);
+}
 
 function initPlaces(placesAppId, placesApiKey) {
   return function(t) {
@@ -169,6 +172,9 @@ function generateSecuredApiKey(t) {
     var securedClient = algoliasearch(appId, securedKey);
     var securedIndex = securedClient.initIndex(indexName);
     securedIndex.search({hitsPerPage: 100}, function(err, res) {
+      if (!isABrowser) {
+        securedClient.destroy();
+      }
       t.error(err, 'No error on using a secured key');
       t.equal(res.hits.length, 2, 'We got only two hits');
     });
@@ -399,29 +405,51 @@ function waitKey(key, callback, tries) {
   var tmpIndex = tmpClient.initIndex(indexName);
   tmpIndex.search(function(err) {
     if (err) return setTimeout(waitKey, 200, key, callback, tries++);
+    tmpClient.destroy();
     callback(key);
   });
 }
 
 function dnsFailThenSuccess(t) {
-  t.plan(1);
+  t.plan(4);
 
+  var firstSearchTiming;
+  var firstSearchStart = (new Date()).getTime();
   var client_ = algoliasearch(
     appId,
     apiKey, {
       // .biz is a black hole DNS name (not resolving)
-      hosts: [appId + '-dsn.algolia.biz', appId + '-dsn.algolia.net'],
-      timeout: FORCE_DNS_TIMEOUT // let's wait for the DNS timeout
+      hosts: [appId + '-dsn.algolia.biz', appId + '-dsn.algolia.net']
     }
   );
 
   var index_ = client_.initIndex(indexName);
-
+  var connectTimeout = isABrowser ? 1000 : 2000;
   index_.search('').then(function(content) {
+    var now = (new Date()).getTime();
+    firstSearchTiming = now - firstSearchStart;
+    t.ok(firstSearchTiming > connectTimeout, 'first search takes more than 2s because of connect timeout = 2s. ' + firstSearchTiming);
     t.ok(content.hits.length > 0, 'hits should not be empty');
+    secondSearch();
   }, function() {
     t.fail('No error should be generated as it should lastly route to a good domain.');
   });
+
+  function secondSearch() {
+    var secondSearchStart = (new Date()).getTime();
+    var secondSearchTiming;
+    index_.search('a').then(function(content) {
+      if (!isABrowser) {
+        client_.destroy();
+      }
+      var now = (new Date()).getTime();
+      secondSearchTiming = now - secondSearchStart;
+      t.ok(secondSearchTiming < connectTimeout, 'second search is fast because we know .biz is failing. ' + secondSearchTiming);
+      t.ok(content.hits.length > 0, 'hits should not be empty');
+    }, function() {
+      t.fail('No error should be generated as it should lastly route to a good domain.');
+    });
+  }
 }
 
 function dnsFailThenSuccessNoSearch(t) {
@@ -432,12 +460,14 @@ function dnsFailThenSuccessNoSearch(t) {
     apiKey, {
       // .biz is a black hole DNS name (not resolving)
       hosts: [appId + '-dsn.algolia.biz', appId + '-dsn.algolia.net'],
-      timeout: FORCE_DNS_TIMEOUT, // let's wait for the DNS timeout
       protocol: 'https:'
     }
   );
 
   client_.listIndexes().then(function(content) {
+    if (!isABrowser) {
+      client_.destroy();
+    }
     t.ok(content.items.length > 0, 'we found a list of indices');
   }, function() {
     t.fail('No error should be generated as it should lastly route to a good domain.');
@@ -449,8 +479,7 @@ function dnsFailed(t) {
   var client_ = algoliasearch(
     appId,
     apiKey, {
-      hosts: [appId + '-dsn.algolia.biz'],
-      timeout: FORCE_DNS_TIMEOUT // let's wait for the DNS timeout
+      hosts: [appId + '-dsn.algolia.biz']
     }
   );
 
@@ -460,7 +489,15 @@ function dnsFailed(t) {
     t.fail('Should fail as no host are reachable');
     t.end();
   }, function() {
+    if (!isABrowser) {
+      client_.destroy();
+    }
     t.pass('An error was triggered');
     t.end();
   });
+}
+
+function destroy(t) {
+  client.destroy();
+  t.end();
 }

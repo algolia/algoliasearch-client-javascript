@@ -29,7 +29,7 @@ test('When using custom hosts, active hosts are tried first', function(t) {
     );
 
     // simulate network error
-    req.respond(500, {}, JSON.stringify({}));
+    req.respond(500, {}, JSON.stringify({message: 'Woopsie', status: 500}));
   }, function(req) {
     // second request on working-host.com
     t.equal(

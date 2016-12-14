@@ -77,7 +77,7 @@ window.angular.module('algoliasearch', [])
         // will cancel the xhr
         timeoutDeferred.resolve('test');
         reject(new errors.RequestTimeout());
-      }, opts.timeout);
+      }, opts.timeouts.complete);
 
       var requestHeaders = {};
 
