@@ -30,6 +30,7 @@ test('AlgoliaSearch client API spec', function(t) {
     'deleteIndex',
     'deleteUserKey',
     'getLogs',
+    'getTimeouts',
     'getUserKeyACL',
     'initIndex',
     'listIndexes',
@@ -40,6 +41,7 @@ test('AlgoliaSearch client API spec', function(t) {
     'setExtraHeader',
     'setRequestTimeout',
     'setSecurityTags',
+    'setTimeouts',
     'setUserToken',
     'startQueriesBatch'
   ];

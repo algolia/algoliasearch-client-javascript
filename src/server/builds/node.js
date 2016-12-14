@@ -52,12 +52,11 @@ function algoliasearch(applicationID, apiKey, opts) {
 
   opts.httpAgent = httpAgent;
 
-  // this is a global timeout, even if the socket has some
-  // activity, we will kill it
-  // There's no easy way to detect socket activity in nodejs it seems
-  if (opts.timeout === undefined) {
-    opts.timeout = 30 * 1000;
-  }
+  opts.timeouts = opts.timeouts || {
+    connect: 2 * 1000,
+    read: 5 * 1000,
+    write: 30 * 1000
+  };
 
   if (opts.protocol === undefined) {
     opts.protocol = 'https:';
@@ -92,7 +91,7 @@ AlgoliaSearchNodeJS.prototype._request = function request(rawUrl, opts) {
   var client = this;
 
   return new Promise(function doReq(resolve, reject) {
-    opts.debug('url: %s, method: %s, timeout: %d', rawUrl, opts.method, opts.timeout);
+    opts.debug('url: %s, method: %s, timeouts: %j', rawUrl, opts.method, opts.timeouts);
 
     var body = opts.body;
 
@@ -136,7 +135,7 @@ AlgoliaSearchNodeJS.prototype._request = function request(rawUrl, opts) {
 
     // we do not use req.setTimeout because it's either an inactivity timeout
     // or a global timeout given the nodejs version
-    timeoutId = setTimeout(timeout, opts.timeout);
+    timeoutId = setTimeout(timeout, opts.timeouts.connect);
 
     req.once('error', error);
     req.once('response', response);
@@ -156,13 +155,20 @@ AlgoliaSearchNodeJS.prototype._request = function request(rawUrl, opts) {
     req.end();
 
     function response(res) {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(onCompleteTimeout, opts.timeouts.complete);
       var chunks = [];
+
+      // save headers and statusCode BEFORE treating the response as zlib, otherwise
+      // we lose them
+      var headers = res.headers;
+      var statusCode = res.statusCode;
 
       // Algolia answers should be gzip when asked for it,
       // but a proxy might uncompress Algolia response
       // So we handle both compressed and uncompressed
-      if (res.headers['content-encoding'] === 'gzip' ||
-          res.headers['content-encoding'] === 'deflate') {
+      if (headers['content-encoding'] === 'gzip' ||
+          headers['content-encoding'] === 'deflate') {
         res = res.pipe(zlib.createUnzip());
       }
 
@@ -183,8 +189,8 @@ AlgoliaSearchNodeJS.prototype._request = function request(rawUrl, opts) {
         try {
           out = {
             body: JSON.parse(data),
-            statusCode: res.statusCode,
-            headers: res.headers
+            statusCode: statusCode,
+            headers: headers
           };
         } catch (e) {
           out = new errors.UnparsableJSON({
@@ -197,6 +203,13 @@ AlgoliaSearchNodeJS.prototype._request = function request(rawUrl, opts) {
         } else {
           resolve(out);
         }
+      }
+
+      function onCompleteTimeout() {
+        res.removeListener('data', onData);
+        res.removeListener('end', onEnd);
+        res.destroy();
+        timeout();
       }
     }
 
@@ -225,6 +238,7 @@ AlgoliaSearchNodeJS.prototype._request = function request(rawUrl, opts) {
         req.socket.socket.destroy();
       }
 
+      req.removeListener('response', response);
       req.abort();
     }
   });

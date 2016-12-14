@@ -3,9 +3,15 @@ module.exports = AlgoliaSearchCore;
 var errors = require('./errors');
 var exitPromise = require('./exitPromise.js');
 var IndexCore = require('./IndexCore.js');
+var store = require('./store.js');
 
-// We will always put the API KEY in the JSON body in case of too long API KEY
+// We will always put the API KEY in the JSON body in case of too long API KEY,
+// to avoid query string being too long and failing in various conditions (our server limit, browser limit,
+// proxies limit)
 var MAX_API_KEY_LENGTH = 500;
+var RESET_APP_DATA_TIMER =
+  process.env.RESET_APP_DATA_TIMER && parseInt(process.env.RESET_APP_DATA_TIMER, 10) ||
+  60 * 2 * 1000; // after 2 minutes reset to first host
 
 /*
  * Algolia Search library initialization
@@ -52,25 +58,24 @@ function AlgoliaSearchCore(applicationID, apiKey, opts) {
   this.applicationID = applicationID;
   this.apiKey = apiKey;
 
-  var defaultHosts = shuffle([
-    this.applicationID + '-1.algolianet.com',
-    this.applicationID + '-2.algolianet.com',
-    this.applicationID + '-3.algolianet.com'
-  ]);
   this.hosts = {
     read: [],
     write: []
   };
 
-  this.hostIndex = {
-    read: 0,
-    write: 0
-  };
-
   opts = opts || {};
 
   var protocol = opts.protocol || 'https:';
-  var timeout = opts.timeout === undefined ? 2000 : opts.timeout;
+  this._timeouts = opts.timeouts || {
+    connect: 1 * 1000, // 500ms connect is GPRS latency
+    read: 2 * 1000,
+    write: 30 * 1000
+  };
+
+  // backward compat, if opts.timeout is passed, we use it to configure all timeouts like before
+  if (opts.timeout) {
+    this._timeouts.connect = this._timeouts.read = this._timeouts.write = opts.timeout;
+  }
 
   // while we advocate for colon-at-the-end values: 'http:' for `opts.protocol`
   // we also accept `http` and `https`. It's a common error.
@@ -82,11 +87,19 @@ function AlgoliaSearchCore(applicationID, apiKey, opts) {
     throw new errors.AlgoliaSearchError('protocol must be `http:` or `https:` (was `' + opts.protocol + '`)');
   }
 
-  // no hosts given, add defaults
+  this._checkAppIdData();
+
   if (!opts.hosts) {
+    var defaultHosts = map(this._shuffleResult, function(hostNumber) {
+      return applicationID + '-' + hostNumber + '.algolianet.com';
+    });
+
+    // no hosts given, compute defaults
     this.hosts.read = [this.applicationID + '-dsn.algolia.net'].concat(defaultHosts);
     this.hosts.write = [this.applicationID + '.algolia.net'].concat(defaultHosts);
   } else if (isArray(opts.hosts)) {
+    // when passing custom hosts, we need to have a different host index if the number
+    // of write/read hosts are different.
     this.hosts.read = clone(opts.hosts);
     this.hosts.write = clone(opts.hosts);
   } else {
@@ -97,7 +110,6 @@ function AlgoliaSearchCore(applicationID, apiKey, opts) {
   // add protocol and lowercase hosts
   this.hosts.read = map(this.hosts.read, prepareHost(protocol));
   this.hosts.write = map(this.hosts.write, prepareHost(protocol));
-  this.requestTimeout = timeout;
 
   this.extraHeaders = [];
 
@@ -149,6 +161,8 @@ AlgoliaSearchCore.prototype.addAlgoliaAgent = function(algoliaAgent) {
  * Wrapper that try all hosts to maximize the quality of service
  */
 AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
+  this._checkAppIdData();
+
   var requestDebug = require('debug')('algoliasearch:' + initialOpts.url);
 
   var body;
@@ -179,6 +193,8 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
   var debugData = [];
 
   function doRequest(requester, reqOpts) {
+    client._checkAppIdData();
+
     var startTime = new Date();
     var cacheID;
 
@@ -225,13 +241,13 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
       // re-compute headers, they could be omitting the API KEY
       headers = client._computeRequestHeaders();
 
-      reqOpts.timeout = client.requestTimeout * (tries + 1);
-      client.hostIndex[initialOpts.hostType] = 0;
+      reqOpts.timeouts = client._getTimeoutsForRequest(initialOpts.hostType);
+      client._setHostIndexByType(0, initialOpts.hostType);
       usingFallback = true; // the current request is now using fallback
       return doRequest(client._request.fallback, reqOpts);
     }
 
-    var currentHost = client.hosts[initialOpts.hostType][client.hostIndex[initialOpts.hostType]];
+    var currentHost = client._getHostByType(initialOpts.hostType);
 
     var url = currentHost + reqOpts.url;
     var options = {
@@ -239,12 +255,12 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
       jsonBody: reqOpts.jsonBody,
       method: reqOpts.method,
       headers: headers,
-      timeout: reqOpts.timeout,
+      timeouts: reqOpts.timeouts,
       debug: requestDebug
     };
 
-    requestDebug('method: %s, url: %s, headers: %j, timeout: %d',
-      options.method, url, options.headers, options.timeout);
+    requestDebug('method: %s, url: %s, headers: %j, timeouts: %d',
+      options.method, url, options.headers, options.timeouts);
 
     if (requester === client._request.fallback) {
       requestDebug('using fallback');
@@ -287,7 +303,7 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
         content: body || null,
         contentLength: body !== undefined ? body.length : null,
         method: reqOpts.method,
-        timeout: reqOpts.timeout,
+        timeouts: reqOpts.timeouts,
         url: reqOpts.url,
         startTime: startTime,
         endTime: endTime,
@@ -340,7 +356,7 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
         content: body || null,
         contentLength: body !== undefined ? body.length : null,
         method: reqOpts.method,
-        timeout: reqOpts.timeout,
+        timeouts: reqOpts.timeouts,
         url: reqOpts.url,
         startTime: startTime,
         endTime: endTime,
@@ -380,14 +396,15 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
 
     function retryRequest() {
       requestDebug('retrying request');
-      client.hostIndex[initialOpts.hostType] = (client.hostIndex[initialOpts.hostType] + 1) % client.hosts[initialOpts.hostType].length;
+      client._incrementHostIndex(initialOpts.hostType);
       return doRequest(requester, reqOpts);
     }
 
     function retryRequestWithHigherTimeout() {
       requestDebug('retrying request with higher timeout');
-      client.hostIndex[initialOpts.hostType] = (client.hostIndex[initialOpts.hostType] + 1) % client.hosts[initialOpts.hostType].length;
-      reqOpts.timeout = client.requestTimeout * (tries + 1);
+      client._incrementHostIndex(initialOpts.hostType);
+      client._incrementTimeoutMultipler();
+      reqOpts.timeouts = client._getTimeoutsForRequest(initialOpts.hostType);
       return doRequest(requester, reqOpts);
     }
   }
@@ -398,7 +415,7 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
       method: initialOpts.method,
       body: body,
       jsonBody: initialOpts.body,
-      timeout: client.requestTimeout * (tries + 1)
+      timeouts: client._getTimeoutsForRequest(initialOpts.hostType)
     }
   );
 
@@ -587,13 +604,113 @@ AlgoliaSearchCore.prototype.clearCache = function() {
 
 /**
 * Set the number of milliseconds a request can take before automatically being terminated.
-*
+* @deprecated
 * @param {Number} milliseconds
 */
 AlgoliaSearchCore.prototype.setRequestTimeout = function(milliseconds) {
   if (milliseconds) {
-    this.requestTimeout = parseInt(milliseconds, 10);
+    this._timeouts.connect = this._timeouts.read = this._timeouts.write = milliseconds;
   }
+};
+
+/**
+* Set the three different (connect, read, write) timeouts to be used when requesting
+* @param {Object} timeouts
+*/
+AlgoliaSearchCore.prototype.setTimeouts = function(timeouts) {
+  this._timeouts = timeouts;
+};
+
+/**
+* Get the three different (connect, read, write) timeouts to be used when requesting
+* @param {Object} timeouts
+*/
+AlgoliaSearchCore.prototype.getTimeouts = function() {
+  return this._timeouts;
+};
+
+AlgoliaSearchCore.prototype._getAppIdData = function() {
+  var data = store.get(this.applicationID);
+  if (data !== null) this._cacheAppIdData(data);
+  return data;
+};
+
+AlgoliaSearchCore.prototype._setAppIdData = function(data) {
+  data.lastChange = (new Date()).getTime();
+  this._cacheAppIdData(data);
+  return store.set(this.applicationID, data);
+};
+
+AlgoliaSearchCore.prototype._checkAppIdData = function() {
+  var data = this._getAppIdData();
+  var now = (new Date()).getTime();
+  if (data === null || now - data.lastChange > RESET_APP_DATA_TIMER) {
+    return this._resetInitialAppIdData(data);
+  }
+
+  return data;
+};
+
+AlgoliaSearchCore.prototype._resetInitialAppIdData = function(data) {
+  var newData = data || {};
+  newData.hostIndexes = {read: 0, write: 0};
+  newData.timeoutMultiplier = 1;
+  newData.shuffleResult = newData.shuffleResult || shuffle([1, 2, 3]);
+  return this._setAppIdData(newData);
+};
+
+AlgoliaSearchCore.prototype._cacheAppIdData = function(data) {
+  this._hostIndexes = data.hostIndexes;
+  this._timeoutMultiplier = data.timeoutMultiplier;
+  this._shuffleResult = data.shuffleResult;
+};
+
+AlgoliaSearchCore.prototype._partialAppIdDataUpdate = function(newData) {
+  var foreach = require('foreach');
+  var currentData = this._getAppIdData();
+  foreach(newData, function(value, key) {
+    currentData[key] = value;
+  });
+
+  return this._setAppIdData(currentData);
+};
+
+AlgoliaSearchCore.prototype._getHostByType = function(hostType) {
+  return this.hosts[hostType][this._getHostIndexByType(hostType)];
+};
+
+AlgoliaSearchCore.prototype._getTimeoutMultiplier = function() {
+  return this._timeoutMultiplier;
+};
+
+AlgoliaSearchCore.prototype._getHostIndexByType = function(hostType) {
+  return this._hostIndexes[hostType];
+};
+
+AlgoliaSearchCore.prototype._setHostIndexByType = function(hostIndex, hostType) {
+  var clone = require('./clone');
+  var newHostIndexes = clone(this._hostIndexes);
+  newHostIndexes[hostType] = hostIndex;
+  this._partialAppIdDataUpdate({hostIndexes: newHostIndexes});
+  return hostIndex;
+};
+
+AlgoliaSearchCore.prototype._incrementHostIndex = function(hostType) {
+  return this._setHostIndexByType(
+    (this._getHostIndexByType(hostType) + 1) % this.hosts[hostType].length, hostType
+  );
+};
+
+AlgoliaSearchCore.prototype._incrementTimeoutMultipler = function() {
+  var timeoutMultiplier = Math.max(this._timeoutMultiplier + 1, 4);
+  return this._partialAppIdDataUpdate({timeoutMultiplier: timeoutMultiplier});
+};
+
+AlgoliaSearchCore.prototype._getTimeoutsForRequest = function(hostType) {
+  return {
+    connect: this._timeouts.connect * this._timeoutMultiplier,
+    complete: this._timeouts[hostType] * this._timeoutMultiplier
+  };
 };
 
 function prepareHost(protocol) {

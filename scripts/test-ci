@@ -14,9 +14,6 @@ echo "CI test: node"
 echo "CI test: browser"
 ./scripts/test-browser
 
-echo "CI test: phantom"
-./scripts/test-phantom
-
 if [ $TRAVIS_PULL_REQUEST != 'false' ]; then
   echo 'No parse-cloud test for pull requests'
 else

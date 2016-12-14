@@ -51,7 +51,7 @@ function jsonpRequest(url, opts, cb) {
     url += '&' + opts.jsonBody.params;
   }
 
-  var ontimeout = setTimeout(timeout, opts.timeout);
+  var ontimeout = setTimeout(timeout, opts.timeouts.complete);
 
   // script onreadystatechange needed only for
   // <= IE8

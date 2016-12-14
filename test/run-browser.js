@@ -1,5 +1,7 @@
 'use strict';
 
+process.env.RESET_APP_DATA_TIMER = 3000;
+
 var domready = require('domready');
 
 // wait for domready to allo test runner to do ajax requests before we

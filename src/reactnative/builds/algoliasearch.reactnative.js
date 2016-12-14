@@ -24,6 +24,12 @@ function algoliasearch(applicationID, apiKey, opts) {
 
   opts._ua = opts._ua || algoliasearch.ua;
 
+  opts.timeouts = opts.timeouts || {
+    connect: 2 * 1000,
+    read: 3 * 1000,
+    write: 30 * 1000
+  };
+
   return new AlgoliaSearchReactNative(applicationID, apiKey, opts);
 }
 
@@ -76,11 +82,11 @@ AlgoliaSearchReactNative.prototype._request = function request(url, opts) {
     if (support.timeout) {
       // .timeout not supported at the time of this implementation. Maybe in the
       // future...
-      req.timeout = opts.timeout;
+      req.timeout = opts.timeouts.complete;
 
       req.ontimeout = timeout;
     } else {
-      ontimeout = setTimeout(timeout, opts.timeout);
+      ontimeout = setTimeout(timeout, opts.timeouts.complete);
     }
 
     req.send(body);

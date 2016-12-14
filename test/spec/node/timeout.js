@@ -9,7 +9,7 @@ test('Request timeout is used', function(t) {
   var createFixture = require('../../utils/create-fixture');
   var fixture = createFixture({
     clientOptions: {
-      timeout: 5000
+      timeout: 500
     }
   });
   var index = fixture.index;
@@ -23,7 +23,7 @@ test('Request timeout is used', function(t) {
     var elapsed = Math.round((Date.now() - start) / 1000);
     requests[1].respond(200, {}, '{"timeout": "ok"}');
     fauxJax.restore();
-    t.equal(elapsed, 5, 'Default request READ timeout is approximately 3s');
+    t.equal(elapsed, 1, 'Two requests made in 500ms since timeout of 500ms asked');
   });
 
   index.search('dsads').then(function(content) {
