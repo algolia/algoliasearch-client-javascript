@@ -67,7 +67,7 @@ function AlgoliaSearchCore(applicationID, apiKey, opts) {
 
   var protocol = opts.protocol || 'https:';
   this._timeouts = opts.timeouts || {
-    connect: 0.5 * 1000, // 500ms connect is GPRS latency
+    connect: 1 * 1000, // 500ms connect is GPRS latency
     read: 2 * 1000,
     write: 30 * 1000
   };
