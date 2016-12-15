@@ -6,8 +6,8 @@
 
 [![Browser tests][browser-test-matrix]][browser-test-url]
 
-[travis-svg]: https://img.shields.io/travis/algolia/algoliasearch-client-js/master.svg?style=flat-square
-[travis-url]: https://travis-ci.org/algolia/algoliasearch-client-js
+[travis-svg]: https://img.shields.io/travis/algolia/algoliasearch-client-javascript/master.svg?style=flat-square
+[travis-url]: https://travis-ci.org/algolia/algoliasearch-client-javascript
 [license-image]: https://img.shields.io/badge/license-MIT-green.svg?style=flat-square
 [license-url]: LICENSE.txt
 [downloads-image]: https://img.shields.io/npm/dm/algoliasearch.svg?style=flat-square
@@ -150,13 +150,13 @@ npm install algoliasearch --save
 For Typescript typings, we provide the definition file via [typings](https://github.com/typings/typings)
 
 ```sh
-typings install dt~algoliasearch-client-js --save --global
+typings install dt~algoliasearch-client-javascript --save --global
 ```
 
 or [tsd](https://github.com/DefinitelyTyped/tsd)
 
 ```sh
-tsd install algoliasearch-client-js --save
+tsd install algoliasearch-client-javascript --save
 ```
 
 #### Bower
@@ -2491,7 +2491,7 @@ In that case, you can tag all records with their associated `user_id` in order t
 generating the *Secured API Key* to retrieve only what a user is tagged in.
 
 **Warning**
-If you're generating *Secured API Keys* using the [JavaScript client](http://github.com/algolia/algoliasearch-client-js) in your frontend,
+If you're generating *Secured API Keys* using the [JavaScript client](http://github.com/algolia/algoliasearch-client-javascript) in your frontend,
 it will result in a security breach since the user is able to modify the filters you've set
 by modifying the code from the browser.
 
