@@ -1,5 +1,9 @@
 CHANGELOG
 
+2016-12-17 3.20.1
+
+  * fix(nodejs): on timeout, destroy the right response
+
 2016-12-14 3.20.0
 
   * feat(retry strategy): adjust retry strategy for all implementations
