@@ -545,6 +545,7 @@ Parameters that can also be used in a setSettings also have the `indexing` [scop
 
 **Advanced**
 
+- [analyticsTags](#analyticstags) `search`
 - [synonyms](#synonyms) `search`
 - [replaceSynonymsInHighlight](#replacesynonymsinhighlight) `settings`, `search`
 - [minProximity](#minproximity) `settings`, `search`
@@ -552,9 +553,9 @@ Parameters that can also be used in a setSettings also have the `indexing` [scop
 - [distinct](#distinct) `settings`, `search`
 - [getRankingInfo](#getrankinginfo) `search`
 - [numericFilters (deprecated)](#numericfilters-deprecated) `search`
+- [tagFilters (deprecated)](#tagfilters-deprecated) `search`
 - [facetFilters (deprecated)](#facetfilters-deprecated) `search`
 - [analytics](#analytics) `search`
-- [analyticsTags](#analyticstags) `search`
 
 ## Search in indices - `search` 
 
@@ -1148,6 +1149,7 @@ They are three scopes:
 **Advanced**
 
 - [attributeForDistinct](#attributefordistinct) `settings`
+- [analyticsTags](#analyticstags) `search`
 - [synonyms](#synonyms) `search`
 - [replaceSynonymsInHighlight](#replacesynonymsinhighlight) `settings`, `search`
 - [placeholders](#placeholders) `settings`
@@ -1159,9 +1161,9 @@ They are three scopes:
 - [numericAttributesForFiltering](#numericattributesforfiltering) `settings`
 - [allowCompressionOfIntegerArray](#allowcompressionofintegerarray) `settings`
 - [numericFilters (deprecated)](#numericfilters-deprecated) `search`
+- [tagFilters (deprecated)](#tagfilters-deprecated) `search`
 - [facetFilters (deprecated)](#facetfilters-deprecated) `search`
 - [analytics](#analytics) `search`
-- [analyticsTags](#analyticstags) `search`
 
 ## Search
 
@@ -2042,6 +2044,17 @@ you can have a look at our [guide on distinct](https://www.algolia.com/doc/searc
 
 <div class='api-client-parameter'>
 
+### analyticsTags
+
+- scope: `search`
+- type: `array of strings`
+
+If set, tag your query with the specified identifiers. Tags can then be used in the Analytics to analyze a subset of searches only.
+
+</div>
+
+<div class='api-client-parameter'>
+
 ### synonyms
 
 - scope: `search`
@@ -2260,6 +2273,37 @@ You can also use a string array encoding (for example `numericFilters: ["price>1
 
 <div class='api-client-parameter'>
 
+### tagFilters (deprecated)
+
+- scope: `search`
+- type: `string`
+- default: ""
+
+**This parameter is deprecated. You should use [filters](#filters) instead.**
+
+Filter the query by a set of tags.
+
+You can AND tags by separating them with commas.
+To OR tags, you must add parentheses.
+
+For example, `tagFilters=tag1,(tag2,tag3)` means *tag1 AND (tag2 OR tag3)*.
+
+You can also use a string array encoding.
+
+For example, `tagFilters: ["tag1",["tag2","tag3"]]` means *tag1 AND (tag2 OR tag3)*.
+
+Negations are supported via the `-` operator, prefixing the value.
+
+For example: `tagFilters=tag1,-tag2`.
+
+At indexing, tags should be added in the **_tags** attribute of objects.
+
+For example `{"_tags":["tag1","tag2"]}`.
+
+</div>
+
+<div class='api-client-parameter'>
+
 ### facetFilters (deprecated)
 
 - scope: `search`
@@ -2288,17 +2332,6 @@ For example, `[["category:Book","category:Movie"],"author:John%20Doe"]`.
 - default: true
 
 If set to false, this query will not be taken into account in the analytics feature.
-
-</div>
-
-<div class='api-client-parameter'>
-
-### analyticsTags
-
-- scope: `search`
-- type: `array of strings`
-
-If set, tag your query with the specified identifiers. Tags can then be used in the Analytics to analyze a subset of searches only.
 
 </div>
 
@@ -2491,6 +2524,7 @@ In that case, you can tag all records with their associated `user_id` in order t
 generating the *Secured API Key* to retrieve only what a user is tagged in.
 
 **Warning**
+
 If you're generating *Secured API Keys* using the [JavaScript client](http://github.com/algolia/algoliasearch-client-javascript) in your frontend,
 it will result in a security breach since the user is able to modify the filters you've set
 by modifying the code from the browser.
