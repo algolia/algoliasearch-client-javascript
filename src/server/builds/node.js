@@ -158,7 +158,7 @@ AlgoliaSearchNodeJS.prototype._request = function request(rawUrl, opts) {
       clearTimeout(timeoutId);
       timeoutId = setTimeout(onCompleteTimeout, opts.timeouts.complete);
       var chunks = [];
-      let originalRes = res;
+      var originalRes = res;
 
       // save headers and statusCode BEFORE treating the response as zlib, otherwise
       // we lose them
