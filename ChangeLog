@@ -1,5 +1,9 @@
 CHANGELOG
 
+2016-12-19 3.20.2
+
+  * fix(nodejs): do not use let, 0.12 does not support it
+
 2016-12-17 3.20.1
 
   * fix(nodejs): on timeout, destroy the right response

@@ -4057,7 +4057,7 @@ module.exports =
 
 	
 
-	module.exports = '3.20.1';
+	module.exports = '3.20.2';
 
 
 /***/ }
