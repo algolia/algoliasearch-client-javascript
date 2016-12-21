@@ -1860,7 +1860,7 @@ For example, `search -engine` will retrieve records containing `search` but not 
 ### optionalWords
 
 - scope: `settings` `search`
-- type: `array of strings`
+- type: `string`
 - default: []
 
 A string that contains the comma separated list of words that should be considered as optional when found in the query.
