@@ -107,7 +107,7 @@ When not using any module loader, it will export an `algoliasearch` function in 
 1. [Update user key - `updateUserKey`](#update-user-key---updateuserkey)
 1. [Delete user key - `deleteUserKey`](#delete-user-key---deleteuserkey)
 1. [Get key permissions - `getUserKeyACL`](#get-key-permissions---getuserkeyacl)
-1. [Get logs - `getLogs`](#get-logs---getlogs)
+1. [Get last logs - `getLogs`](#get-last-logs---getlogs)
 
 
 # Guides & Tutorials
@@ -151,13 +151,13 @@ npm install algoliasearch --save
 For Typescript typings, we provide the definition file via [typings](https://github.com/typings/typings)
 
 ```sh
-typings install dt~algoliasearch-client-javascript --save --global
+typings install dt~algoliasearch --save
 ```
 
 or [tsd](https://github.com/DefinitelyTyped/tsd)
 
 ```sh
-tsd install algoliasearch-client-javascript --save
+tsd install algoliasearch --save
 ```
 
 #### Bower
@@ -1039,8 +1039,8 @@ var object = {
 index.addObject(object, function(err, content) {
   index.waitTask(content.taskID, function(err) {
     if (!err) {
-	  console.log('object ' + content.objectID + ' indexed');
-	}
+      console.log('object ' + content.objectID + ' indexed');
+    }
   });
 });
 ```
@@ -2993,7 +2993,7 @@ index.getUserKeyACL('9b9335cb7235d43f75b5398c36faabcd', function(err, content) {
 });
 ```
 
-## Get logs - `getLogs` 
+## Get last logs - `getLogs` 
 
 You can retrieve the latest logs via this API. Each log entry contains:
 
