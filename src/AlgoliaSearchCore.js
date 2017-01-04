@@ -154,7 +154,9 @@ AlgoliaSearchCore.prototype.setExtraHeader = function(name, value) {
 * @param algoliaAgent the agent to add
 */
 AlgoliaSearchCore.prototype.addAlgoliaAgent = function(algoliaAgent) {
-  this._ua += ';' + algoliaAgent;
+  if (this._ua.indexOf(';' + algoliaAgent) === -1) {
+    this._ua += ';' + algoliaAgent;
+  }
 };
 
 /*

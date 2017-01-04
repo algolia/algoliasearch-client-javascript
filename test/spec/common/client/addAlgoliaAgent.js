@@ -16,6 +16,10 @@ test('client.addAlgoliaAgent(algoliaAgent)', function(t) {
   var index = fixture.index;
 
   client.addAlgoliaAgent('And some other incredible agent');
+
+  // Ensure we de-duplicate by re-adding the same agent a second time.
+  client.addAlgoliaAgent('And some other incredible agent');
+
   index.search('algolia agent');
 
   var expectedAgent = fixture.algoliasearch.ua + ';And some other incredible agent';
