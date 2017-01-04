@@ -3343,7 +3343,9 @@ module.exports =
 	* @param algoliaAgent the agent to add
 	*/
 	AlgoliaSearchCore.prototype.addAlgoliaAgent = function(algoliaAgent) {
-	  this._ua += ';' + algoliaAgent;
+	  if (this._ua.indexOf(';' + algoliaAgent) === -1) {
+	    this._ua += ';' + algoliaAgent;
+	  }
 	};
 
 	/*
@@ -4057,7 +4059,7 @@ module.exports =
 
 	
 
-	module.exports = '3.20.2';
+	module.exports = '3.20.3';
 
 
 /***/ }
