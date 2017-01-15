@@ -5,6 +5,11 @@ var deprecatedMessage = require('./deprecatedMessage.js');
 var exitPromise = require('./exitPromise.js');
 var errors = require('./errors');
 
+var deprecateForwardToSlaves = deprecate(
+  function() {},
+  deprecatedMessage('forwardToSlaves', 'forwardToReplicas')
+);
+
 module.exports = Index;
 
 function Index() {
@@ -601,10 +606,13 @@ Index.prototype.saveSynonym = function(synonym, opts, callback) {
     opts = {};
   }
 
+  if (opts.forwardToSlaves !== undefined) deprecateForwardToSlaves();
+  var forwardToReplicas = (opts.forwardToSlaves || opts.forwardToReplicas) ? 'true' : 'false';
+
   return this.as._jsonRequest({
     method: 'PUT',
     url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/synonyms/' + encodeURIComponent(synonym.objectID) +
-      '?forwardToSlaves=' + (opts.forwardToSlaves ? 'true' : 'false'),
+      '?forwardToReplicas=' + forwardToReplicas,
     body: synonym,
     hostType: 'write',
     callback: callback
@@ -628,10 +636,13 @@ Index.prototype.deleteSynonym = function(objectID, opts, callback) {
     opts = {};
   }
 
+  if (opts.forwardToSlaves !== undefined) deprecateForwardToSlaves();
+  var forwardToReplicas = (opts.forwardToSlaves || opts.forwardToReplicas) ? 'true' : 'false';
+
   return this.as._jsonRequest({
     method: 'DELETE',
     url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/synonyms/' + encodeURIComponent(objectID) +
-      '?forwardToSlaves=' + (opts.forwardToSlaves ? 'true' : 'false'),
+      '?forwardToReplicas=' + forwardToReplicas,
     hostType: 'write',
     callback: callback
   });
@@ -645,10 +656,13 @@ Index.prototype.clearSynonyms = function(opts, callback) {
     opts = {};
   }
 
+  if (opts.forwardToSlaves !== undefined) deprecateForwardToSlaves();
+  var forwardToReplicas = (opts.forwardToSlaves || opts.forwardToReplicas) ? 'true' : 'false';
+
   return this.as._jsonRequest({
     method: 'POST',
     url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/synonyms/clear' +
-      '?forwardToSlaves=' + (opts.forwardToSlaves ? 'true' : 'false'),
+      '?forwardToReplicas=' + forwardToReplicas,
     hostType: 'write',
     callback: callback
   });
@@ -662,10 +676,13 @@ Index.prototype.batchSynonyms = function(synonyms, opts, callback) {
     opts = {};
   }
 
+  if (opts.forwardToSlaves !== undefined) deprecateForwardToSlaves();
+  var forwardToReplicas = (opts.forwardToSlaves || opts.forwardToReplicas) ? 'true' : 'false';
+
   return this.as._jsonRequest({
     method: 'POST',
     url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/synonyms/batch' +
-      '?forwardToSlaves=' + (opts.forwardToSlaves ? 'true' : 'false') +
+      '?forwardToReplicas=' + forwardToReplicas +
       '&replaceExistingSynonyms=' + (opts.replaceExistingSynonyms ? 'true' : 'false'),
     hostType: 'write',
     body: synonyms,
@@ -750,13 +767,14 @@ Index.prototype.setSettings = function(settings, opts, callback) {
     opts = {};
   }
 
-  var forwardToSlaves = opts.forwardToSlaves || false;
+  if (opts.forwardToSlaves !== undefined) deprecateForwardToSlaves();
+  var forwardToReplicas = (opts.forwardToSlaves || opts.forwardToReplicas) ? 'true' : 'false';
 
   var indexObj = this;
   return this.as._jsonRequest({
     method: 'PUT',
-    url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/settings?forwardToSlaves='
-      + (forwardToSlaves ? 'true' : 'false'),
+    url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/settings?forwardToReplicas='
+      + forwardToReplicas,
     hostType: 'write',
     body: settings,
     callback: callback

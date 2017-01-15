@@ -19,7 +19,7 @@ if (!process.browser || fauxJax.support.xhr.cors) {
       URL: {
         pathname: '/1/indexes/%s/settings',
         query: {
-          forwardToSlaves: 'false'
+          forwardToReplicas: 'false'
         }
       }
     }
@@ -39,7 +39,27 @@ if (!process.browser || fauxJax.support.xhr.cors) {
       URL: {
         pathname: '/1/indexes/%s/settings',
         query: {
-          forwardToSlaves: 'true'
+          forwardToReplicas: 'true'
+        }
+      }
+    }
+  }, {
+    object: 'index',
+    methodName: 'setSettings',
+    callArguments: [{
+      attributesToIndex: ['HEY!', 'How are u???']
+    }, {forwardToSlaves: true}],
+    action: 'write',
+    testName: 'index.setSettings(settings, {forwardToReplicas: true}, cb)',
+    expectedRequest: {
+      method: 'PUT',
+      body: {
+        attributesToIndex: ['HEY!', 'How are u???']
+      },
+      URL: {
+        pathname: '/1/indexes/%s/settings',
+        query: {
+          forwardToReplicas: 'true'
         }
       }
     }
