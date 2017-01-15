@@ -5,6 +5,11 @@ var deprecatedMessage = require('./deprecatedMessage.js');
 var exitPromise = require('./exitPromise.js');
 var errors = require('./errors');
 
+var deprecateForwardToSlaves = deprecate(
+  function() {},
+  deprecatedMessage('forwardToSlaves', 'forwardToReplicas')
+);
+
 module.exports = Index;
 
 function Index() {
@@ -601,6 +606,7 @@ Index.prototype.saveSynonym = function(synonym, opts, callback) {
     opts = {};
   }
 
+  if (opts.forwardToSlaves !== undefined) deprecateForwardToSlaves();
   var forwardToReplicas = (opts.forwardToSlaves || opts.forwardToReplicas) ? 'true' : 'false';
 
   return this.as._jsonRequest({
@@ -630,6 +636,7 @@ Index.prototype.deleteSynonym = function(objectID, opts, callback) {
     opts = {};
   }
 
+  if (opts.forwardToSlaves !== undefined) deprecateForwardToSlaves();
   var forwardToReplicas = (opts.forwardToSlaves || opts.forwardToReplicas) ? 'true' : 'false';
 
   return this.as._jsonRequest({
@@ -649,6 +656,7 @@ Index.prototype.clearSynonyms = function(opts, callback) {
     opts = {};
   }
 
+  if (opts.forwardToSlaves !== undefined) deprecateForwardToSlaves();
   var forwardToReplicas = (opts.forwardToSlaves || opts.forwardToReplicas) ? 'true' : 'false';
 
   return this.as._jsonRequest({
@@ -668,6 +676,7 @@ Index.prototype.batchSynonyms = function(synonyms, opts, callback) {
     opts = {};
   }
 
+  if (opts.forwardToSlaves !== undefined) deprecateForwardToSlaves();
   var forwardToReplicas = (opts.forwardToSlaves || opts.forwardToReplicas) ? 'true' : 'false';
 
   return this.as._jsonRequest({
@@ -758,6 +767,7 @@ Index.prototype.setSettings = function(settings, opts, callback) {
     opts = {};
   }
 
+  if (opts.forwardToSlaves !== undefined) deprecateForwardToSlaves();
   var forwardToReplicas = (opts.forwardToSlaves || opts.forwardToReplicas) ? 'true' : 'false';
 
   var indexObj = this;
