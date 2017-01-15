@@ -1,6 +1,7 @@
 # Algolia Search API Client for JavaScript
 
 [Algolia Search](https://www.algolia.com) is a hosted full-text, numerical, and faceted search engine capable of delivering realtime results from the first keystroke.
+The **Algolia Search API Client for JavaScript** lets you easily use the [Algolia Search REST API](https://www.algolia.com/doc/rest-api/search) from your JavaScript code.
 
 [![Version][version-svg]][package-url] [![Build Status][travis-svg]][travis-url] [![License][license-image]][license-url] [![Downloads][downloads-image]][downloads-url]
 
@@ -17,7 +18,7 @@
 [version-svg]: https://img.shields.io/npm/v/algoliasearch.svg?style=flat-square
 [package-url]: https://npmjs.org/package/algoliasearch
 
-The JavaScript client lets you use the [Algolia Search API](https://www.algolia.com/doc/rest) on the frontend (browsers) or on the backend (Node.js) with the same API.
+The JavaScript client works both on the frontend (browsers) or on the backend (Node.js) with the same API.
 
 The backend (Node.js) API can be used to index your data using your Algolia admin API keys.
 
@@ -26,6 +27,9 @@ use it with any module loader.
 
 When not using any module loader, it will export an `algoliasearch` function in the `window` object.
 
+
+**Note:** An easier-to-read version of this documentation is available on
+[Algolia's website](https://www.algolia.com/doc/api-client/javascript/).
 
 # Table of Contents
 
@@ -38,10 +42,10 @@ When not using any module loader, it will export an `algoliasearch` function in 
 
 **Search**
 
-1. [Search in an index - `search`](#search-in-an-index---search)
+1. [Search an index - `search`](#search-an-index---search)
 1. [Search Response Format](#search-response-format)
 1. [Search Parameters](#search-parameters)
-1. [Search in indices - `search`](#search-in-indices---search)
+1. [Search multiple indices - `search`](#search-multiple-indices---search)
 1. [Get Objects - `getObjects`](#get-objects---getobjects)
 1. [Search for facet values - `searchForFacetValues`](#search-for-facet-values---searchforfacetvalues)
 
@@ -72,14 +76,15 @@ When not using any module loader, it will export an `algoliasearch` function in 
 1. [Typos](#typos)
 1. [Geo-Search](#geo-search)
 1. [Query Strategy](#query-strategy)
+1. [Performance](#performance)
 1. [Advanced](#advanced)
 
 **Manage Indices**
 
 1. [Create an index](#create-an-index)
 1. [List indices - `listIndexes`](#list-indices---listindexes)
-1. [Delete index - `deleteIndex`](#delete-index---deleteindex)
-1. [Clear index - `clearIndex`](#clear-index---clearindex)
+1. [Delete an index - `deleteIndex`](#delete-an-index---deleteindex)
+1. [Clear an index - `clearIndex`](#clear-an-index---clearindex)
 1. [Copy index - `copyIndex`](#copy-index---copyindex)
 1. [Move index - `moveIndex`](#move-index---moveindex)
 
@@ -107,7 +112,8 @@ When not using any module loader, it will export an `algoliasearch` function in 
 1. [Update user key - `updateUserKey`](#update-user-key---updateuserkey)
 1. [Delete user key - `deleteUserKey`](#delete-user-key---deleteuserkey)
 1. [Get key permissions - `getUserKeyACL`](#get-key-permissions---getuserkeyacl)
-1. [Get last logs - `getLogs`](#get-last-logs---getlogs)
+1. [Get latest logs - `getLogs`](#get-latest-logs---getlogs)
+1. [REST API](#rest-api)
 
 
 # Guides & Tutorials
@@ -151,13 +157,8 @@ npm install algoliasearch --save
 For Typescript typings, we provide the definition file via [typings](https://github.com/typings/typings)
 
 ```sh
-typings install dt~algoliasearch --save
-```
+npm install --save @types/algoliasearch
 
-or [tsd](https://github.com/DefinitelyTyped/tsd)
-
-```sh
-tsd install algoliasearch --save
 ```
 
 #### Bower
@@ -299,7 +300,7 @@ index.search('jim', function(err, content) {
 
 
 
-## Search in an index - `search` 
+## Search an index - `search` 
 
 To perform a search, you only need to initialize the index and perform a call to the search function.
 
@@ -388,7 +389,7 @@ The server response will look like:
 
             - `value` (string): Markup text with occurrences highlighted. The tags used for highlighting are specified via [highlightPreTag](#highlightpretag) and [highlightPostTag](#highlightposttag).
 
-            - `matchLevel` (string, enum) = {`none` | `partial` | `full`}: Indicates how well the attribute matched the search query.
+            - `matchLevel` (string, enum) = {`none` \| `partial` \| `full`}: Indicates how well the attribute matched the search query.
 
             - `matchedWords` (array): List of words *from the query* that matched the object.
 
@@ -400,7 +401,7 @@ The server response will look like:
 
             - `value` (string): Markup text with occurrences highlighted and optional ellipsis indicators. The tags used for highlighting are specified via [highlightPreTag](#highlightpretag) and [highlightPostTag](#highlightposttag). The text used to indicate ellipsis is specified via [snippetEllipsisText](#snippetellipsistext).
 
-            - `matchLevel` (string, enum) = {`none` | `partial` | `full`}: Indicates how well the attribute matched the search query.
+            - `matchLevel` (string, enum) = {`none` \| `partial` \| `full`}: Indicates how well the attribute matched the search query.
 
     - `_rankingInfo` (object, optional): Ranking information. *Note: Only returned when [getRankingInfo](#getrankinginfo) is `true`.*
 
@@ -452,9 +453,9 @@ When [getRankingInfo](#getrankinginfo) is set to `true`, the following additiona
 
 - `parsedQuery` (string): The query string that will be searched, after normalization. Normalization includes removing stop words (if [removeStopWords](#removestopwords) is enabled), and transforming portions of the query string into phrase queries (see [advancedSyntax](#advancedsyntax)).
 
-- `timeoutCounts` (boolean): Whether a timeout was hit when computing the facet counts. When `true`, the counts will be interpolated (i.e. approximate). See also `exhaustiveFacetsCount`.
+- `timeoutCounts` (boolean) - DEPRECATED: Please use `exhaustiveFacetsCount` in remplacement.
 
-- `timeoutHits` (boolean): Whether a timeout was hit when retrieving the hits. When true, some results may be missing.
+- `timeoutHits` (boolean) - DEPRECATED: Please use `exhaustiveFacetsCount` in remplacement.
 
 ... and ranking information is also added to each of the hits (see above).
 
@@ -478,7 +479,7 @@ When [facets](#facets) is non-empty, the following additional fields are returne
 
         - `sum` (integer | float): The sum of all values in the result set.
 
-- `exhaustiveFacetsCount` (boolean): Whether the counts are exhaustive (`true`) or approximate (`false`). *Note: When using [distinct](#distinct), the facet counts cannot be exhaustive.*
+- `exhaustiveFacetsCount` (boolean): Whether the counts are exhaustive (`true`) or approximate (`false`). *Note: In some conditions when [distinct](#distinct) is greater than 1 and an empty query without refinement is sent, the facet counts may not always be exhaustive.*
 
 ## Search Parameters
 
@@ -538,6 +539,7 @@ Parameters that can also be used in a setSettings also have the `indexing` [scop
 
 **Query Strategy**
 
+- [queryType](#querytype) `search`, `settings`
 - [removeWordsIfNoResults](#removewordsifnoresults) `settings`, `search`
 - [advancedSyntax](#advancedsyntax) `settings`, `search`
 - [optionalWords](#optionalwords) `settings`, `search`
@@ -547,18 +549,18 @@ Parameters that can also be used in a setSettings also have the `indexing` [scop
 
 **Advanced**
 
+- [distinct](#distinct) `settings`, `search`
+- [getRankingInfo](#getrankinginfo) `search`
+- [numericFilters](#numericfilters) `search`
+- [tagFilters](#tagfilters) `search`
+- [analytics](#analytics) `search`
 - [analyticsTags](#analyticstags) `search`
 - [synonyms](#synonyms) `search`
 - [replaceSynonymsInHighlight](#replacesynonymsinhighlight) `settings`, `search`
 - [minProximity](#minproximity) `settings`, `search`
 - [responseFields](#responsefields) `settings`, `search`
-- [distinct](#distinct) `settings`, `search`
-- [getRankingInfo](#getrankinginfo) `search`
-- [numericFilters](#numericfilters) `search`
-- [tagFilters (deprecated)](#tagfilters-deprecated) `search`
-- [analytics](#analytics) `search`
 
-## Search in indices - `search` 
+## Search multiple indices - `search` 
 
 You can send multiple queries with a single API call using a batch of queries:
 
@@ -623,12 +625,10 @@ You can specify a `strategy` parameter to optimize your multiple queries:
 
 The resulting JSON contains the following fields:
 
-- `results` (array): The results for each request, in the order they were submitted. The contents are the same as in [Search in an index](#search-in-an-index).
-
+- `results` (array): The results for each request, in the order they were submitted. The contents are the same as in [Search an index](#search-an-index).
     Each result also includes the following additional fields:
 
     - `index` (string): The name of the targeted index.
-
     - `processed` (boolean, optional): *Note: Only returned when `strategy` is `stopIfEnoughmatches`.* Whether the query was processed.
 
 ## Get Objects - `getObjects` 
@@ -672,7 +672,7 @@ that both:
 1. match the facet query; and
 2. are contained in objects matching the regular search query.
 
-**Warning:** *For a facet to be searchable, it must have been declared with the `searchable()` modifier in the [attributesForFaceting](#attributesforfaceting) index setting.*
+**Warning:** For a facet to be searchable, it must have been declared with the `searchable()` modifier in the [attributesForFaceting](#attributesforfaceting) index setting.
 
 #### Example
 
@@ -771,7 +771,8 @@ Each entry in an index has a unique identifier called `objectID`. There are two 
  2. Using automatic `objectID` assignment. You will be able to access it in the answer.
 
 You don't need to explicitly create an index, it will be automatically created the first time you add an object.
-Objects are schema less so you don't need any configuration to start indexing. If you wish to configure things, the settings section provides details about advanced settings.
+Objects are schema less so you don't need any configuration to start indexing.
+If you wish to configure things, the settings section provides details about advanced settings.
 
 Example with automatic `objectID` assignments:
 
@@ -1073,6 +1074,8 @@ index.setSettings({'customRanking': ['desc(followers)']}, function(err) {
 });
 ```
 
+You can find the list of parameters you can set in the [Settings Parameters](#index-settings-parameters) section
+
 **Warning**
 
 Performance wise, it's better to do a `setSettings` before pushing the data
@@ -1134,47 +1137,54 @@ Parameters that can be overridden at search time also have the `search` [scope](
 - [allowTyposOnNumericTokens](#allowtyposonnumerictokens) `settings`, `search`
 - [ignorePlurals](#ignoreplurals) `settings`, `search`
 - [disableTypoToleranceOnAttributes](#disabletypotoleranceonattributes) `settings`, `search`
+- [disableTypoToleranceOnWords](#disabletypotoleranceonwords) `settings`
 - [separatorsToIndex](#separatorstoindex) `settings`
 
 **Query Strategy**
 
-- [queryType](#querytype) `settings`
+- [queryType](#querytype) `search`, `settings`
 - [removeWordsIfNoResults](#removewordsifnoresults) `settings`, `search`
 - [advancedSyntax](#advancedsyntax) `settings`, `search`
 - [optionalWords](#optionalwords) `settings`, `search`
 - [removeStopWords](#removestopwords) `settings`, `search`
+- [disablePrefixOnAttributes](#disableprefixonattributes) `settings`
 - [disableExactOnAttributes](#disableexactonattributes) `settings`
 - [exactOnSingleWordQuery](#exactonsinglewordquery) `settings`, `search`
+
+**Performance**
+
+- [numericAttributesForFiltering](#numericattributesforfiltering) `settings`
+- [allowCompressionOfIntegerArray](#allowcompressionofintegerarray) `settings`
 
 **Advanced**
 
 - [attributeForDistinct](#attributefordistinct) `settings`
+- [distinct](#distinct) `settings`, `search`
 - [replaceSynonymsInHighlight](#replacesynonymsinhighlight) `settings`, `search`
 - [placeholders](#placeholders) `settings`
 - [altCorrections](#altcorrections) `settings`
 - [minProximity](#minproximity) `settings`, `search`
 - [responseFields](#responsefields) `settings`, `search`
-- [distinct](#distinct) `settings`, `search`
-- [numericAttributesForFiltering](#numericattributesforfiltering) `settings`
-- [allowCompressionOfIntegerArray](#allowcompressionofintegerarray) `settings`
 
 
 # Parameters
 
 
 
+<section id="api-client-parameters-overview">
+
 ## Overview
 
 ### Scope
 
 Each parameter in this page has a scope. Depending on the scope, you can use the parameter within the `setSettings`
-and/or the `search` method
+and/or the `search` method.
 
-They are three scopes:
+There are three scopes:
 
-- `settings`: The setting can only be used in the `setSettings` method
-- `search`: The setting can only be used in the `search` method
-- `settings` `search`: The setting can be used in the `setSettings` method and be override in the`search` method
+- `settings`: The setting can only be used in the `setSettings` method.
+- `search`: The setting can only be used in the `search` method.
+- `settings` `search`: The setting can be used in the `setSettings` method and be overridden in the`search` method.
 
 ### Parameters List
 
@@ -1228,6 +1238,7 @@ They are three scopes:
 - [allowTyposOnNumericTokens](#allowtyposonnumerictokens) `settings`, `search`
 - [ignorePlurals](#ignoreplurals) `settings`, `search`
 - [disableTypoToleranceOnAttributes](#disabletypotoleranceonattributes) `settings`, `search`
+- [disableTypoToleranceOnWords](#disabletypotoleranceonwords) `settings`
 - [separatorsToIndex](#separatorstoindex) `settings`
 
 **Geo-Search**
@@ -1242,19 +1253,29 @@ They are three scopes:
 
 **Query Strategy**
 
-- [queryType](#querytype) `settings`
+- [queryType](#querytype) `search`, `settings`
 - [removeWordsIfNoResults](#removewordsifnoresults) `settings`, `search`
 - [advancedSyntax](#advancedsyntax) `settings`, `search`
 - [optionalWords](#optionalwords) `settings`, `search`
 - [removeStopWords](#removestopwords) `settings`, `search`
-- [disablePrefixOnAttributes](#disableprefixonattributes) `seetings`
+- [disablePrefixOnAttributes](#disableprefixonattributes) `settings`
 - [disableExactOnAttributes](#disableexactonattributes) `settings`
 - [exactOnSingleWordQuery](#exactonsinglewordquery) `settings`, `search`
 - [alternativesAsExact](#alternativesasexact) `setting`, `search`
 
+**Performance**
+
+- [numericAttributesForFiltering](#numericattributesforfiltering) `settings`
+- [allowCompressionOfIntegerArray](#allowcompressionofintegerarray) `settings`
+
 **Advanced**
 
 - [attributeForDistinct](#attributefordistinct) `settings`
+- [distinct](#distinct) `settings`, `search`
+- [getRankingInfo](#getrankinginfo) `search`
+- [numericFilters](#numericfilters) `search`
+- [tagFilters](#tagfilters) `search`
+- [analytics](#analytics) `search`
 - [analyticsTags](#analyticstags) `search`
 - [synonyms](#synonyms) `search`
 - [replaceSynonymsInHighlight](#replacesynonymsinhighlight) `settings`, `search`
@@ -1262,34 +1283,24 @@ They are three scopes:
 - [altCorrections](#altcorrections) `settings`
 - [minProximity](#minproximity) `settings`, `search`
 - [responseFields](#responsefields) `settings`, `search`
-- [distinct](#distinct) `settings`, `search`
-- [getRankingInfo](#getrankinginfo) `search`
-- [numericAttributesForFiltering](#numericattributesforfiltering) `settings`
-- [allowCompressionOfIntegerArray](#allowcompressionofintegerarray) `settings`
-- [numericFilters](#numericfilters) `search`
-- [tagFilters (deprecated)](#tagfilters-deprecated) `search`
-- [analytics](#analytics) `search`
 
 ## Search
 
-### query
+#### query
 
 - scope: `search`
-- type: `string`
-- default: ""
+- type: string
+- default: `""`
 
-The instant search query string, used to set the string you want to search in your index.
-If no query parameter is set, the textual search will match with all the objects.
-
-</div>
+The text to search for in the index. If empty or absent, the textual search will match any object.
 
 ## Attributes
 
-### searchableAttributes
+#### searchableAttributes
 
 - scope: `settings`
-- type: `array of strings`
-- default: *
+- type: array of strings
+- default: `*` (all string attributes)
 - formerly known as: `attributesToIndex`
 
 The list of attributes you want index (i.e. to make searchable).
@@ -1299,430 +1310,500 @@ Make sure you updated this setting to get optimal results.
 
 This parameter has two important uses:
 
-1. **Limit the attributes to index.** For example, if you store the URL of a picture, you want to store it and be able to retrieve it, but you probably don't want to search in the URL.
+1. **Limit the attributes to index.** For example, if you store the URL of a picture, you want to store it and be able to retrieve it,
+    but you probably don't want to search in the URL.
 
 2. **Control part of the ranking.** The contents of the `searchableAttributes` parameter impacts ranking in two complementary ways:
+    First, the order in which attributes are listed defines their ranking priority: matches in attributes at the beginning of the
+    list will be considered more important than matches in attributes further down the list. To assign the same priority to several attributes,
+    pass them within the same string, separated by commas. For example, by specifying `["title,"alternative_title", "text"]`,
+    `title` and `alternative_title` will have the same priority, but a higher priority than `text`.
 
-    First, the order in which attributes are listed defines their ranking priority: matches in attributes at the beginning of the list will be considered more important than matches in attributes further down the list. To assign the same priority to several attributes, pass them within the same string, separated by commas. For example, by specifying `["title,"alternative_title", "text"]`, `title` and `alternative_title` will have the same priority, but a higher priority than `text`.
+    Then, within the same attribute, matches near the beginning of the text will be considered more important than matches near the end.
+    You can disable this behavior by wrapping your attribute name inside an `unordered()` modifier. For example, `["title", "unordered(text)"]`
+    will consider all positions inside the `text` attribute as equal, but positions inside the `title` attribute will still matter.
 
-    Then, within the same attribute, matches near the beginning of the text will be considered more important than matches near the end. You can disable this behavior by wrapping your attribute name inside an `unordered()` modifier. For example, `["title", "unordered(text)"]` will consider all positions inside the `text` attribute as equal, but positions inside the `title` attribute will still matter.
+    You can decide to have the same priority for several attributes by passing them in the same string using comma as separator.
+    For example:
+    `title` and `alternative_title` have the same priority in this example: `searchableAttributes:["title,alternative_title", "text"]`
 
-To get a full description of how the ranking works, you can have a look at our [Ranking guide](https://www.algolia.com/doc/guides/relevance/ranking).
+**Note:** To get a full description of how the ranking works, you can have a look at our [Ranking guide](https://www.algolia.com/doc/guides/relevance/ranking).
 
-</div>
-
-### attributesForFaceting
+#### attributesForFaceting
 
 - scope: `settings`
-- type: `array of strings`
+- type: array of strings
+- default: `[]`
 
-The list of attributes you want to use for faceting.
+List of attributes you want to use for faceting.
+
 All strings within these attributes will be extracted and added as facets.
-If set to `null`, no attribute is used for faceting.
+If not specified or empty, no attribute will be faceted.
 
-If you only need to filter on a given facet, you can specify filterOnly(attributeName). It reduces the size of the index and the build time.
+If you only need to filter on a given facet, but are not interested in value counts for this facet,
+you can improve performances by specifying `filterOnly(${attributeName})`. This decreases the size of the index
+and the time required to build it.
 
-If you want to search inside values of a given facet (using the [Search for facet values](#search-for-facet-values) method) you need to specify searchable(attributeName).
+If you want to search inside values of a given facet (using the [Search for facet values](#search-for-facet-values) method)
+you need to specify `searchable(${attributeName})`.
 
-</div>
+**Note:** The `filterOnly()` and `searchable()` modifiers are mutually exclusive.
 
-### unretrievableAttributes
+#### unretrievableAttributes
 
 - scope: `settings`
-- type: `array of strings`
+- type: array of strings
+- default: `[]`
 
-The list of attributes that cannot be retrieved at query time.
-This feature allows you to have attributes that are used for indexing
-and/or ranking but cannot be retrieved.
+List of attributes that cannot be retrieved at query time.
 
-</div>
+These attributes can still be used for indexing and/or ranking.
 
-### attributesToRetrieve
+**Note:** This setting is bypassed when the query is authenticated with the **admin API key**.
+
+#### attributesToRetrieve
 
 - scope: `settings` `search`
-- type: `array of strings`
-- default: *
+- type: array of strings
+- default: `*` (all attributes)
+- formerly known as: `attributes`
 
-A string that contains the list of attributes you want to retrieve in order to minimize the size of the JSON answer.
+List of object attributes you want to retrieve.
+This can be used to minimize the size of the response.
 
-Attributes are separated with a comma (for example `"name,address"`).
-You can also use a string array encoding (for example `["name","address"]` ).
-By default, all attributes are retrieved.
-You can also use `*` to retrieve all values when an **attributesToRetrieve** setting is specified for your index.
+You can use `*` to retrieve all values.
 
 **Note:** `objectID` is always retrieved, even when not specified.
 
-</div>
+**Note:** Attributes listed in [unretrievableAttributes](#unretrievableattributes) will not be retrieved even if requested,
+unless the request is authenticated with the admin API key.
 
-### restrictSearchableAttributes
+#### restrictSearchableAttributes
 
 - scope: `search`
-- type: `array of strings` `string`
-- default: searchableAttributes
+- type: array of strings
+- default: all attributes in `searchableAttributes`
 
-List of attributes you want to use for textual search (must be a subset of the `searchableAttributes` index setting).
+List of attributes to be considered for textual search.
 
-Attributes are separated with a comma such as `"name,address"`.
-You can also use a string array encoding (for example `["name","address"]` ).
-
-</div>
+**Note:** It must be a subset of the [searchableAttributes](#searchableattributes) index setting.
+Consequently, `searchableAttributes` must not be empty nor null for `restrictSearchableAttributes` to be allowed.
 
 ## Ranking
 
-### ranking
+#### ranking
 
 - scope: `settings`
-- type: `array of strings`
-- default: ['typo', 'geo', 'words', 'filters', 'proximity', 'attribute', 'exact', 'custom']
+- type: array of strings
+- default: `["typo", "geo", "words", "filters", "proximity", "attribute", "exact", "custom"]`
 
 Controls the way results are sorted.
 
-We have nine available criterion:
+You must specify a list of ranking criteria. They will be applied in sequence by the tie-breaking algorithm
+in the order they are specified.
 
-* `typo`: Sort according to number of typos.
-* `geo`: Sort according to decreasing distance when performing a geo location based search.
-* `words`: Sort according to the number of query words matched by decreasing order. This parameter is useful when you use the `optionalWords` query parameter to have results with the most matched words first.
-* `proximity`: Sort according to the proximity of the query words in hits.
-* `attribute`: Sort according to the order of attributes defined by searchableAttributes.
+The following ranking criteria are available:
+
+* `typo`: Sort by increasing number of typos.
+* `geo`: Sort by decreasing geo distance when performing a geo search.
+This criterion is ignored when not performing a geo search.
+* `words`: Sort by decreasing number of matched query words.
+This parameter is useful when you use the [optionalWords](#optionalwords) query parameter to rank hits with the most matched words first.
+* `proximity`: Sort by increasing proximity of query words in hits.
+* `attribute`: Sort according to the order of attributes defined by [searchableAttributes](#searchableattributes).
 * `exact`:
-  * If the user query contains one word: sort objects having an attribute that is exactly the query word before others. For example, if you search for the TV show "V", you want to find it with the "V" query and avoid getting all popular TV shows starting by the letter V before it.
-  * If the user query contains multiple words: sort according to the number of words that matched exactly (not as a prefix).
-* `custom`: Sort according to a user defined formula set in the `customRanking` attribute.
-* `asc(attributeName)`: Sort according to a numeric attribute using ascending order. `attributeName` can be the name of any numeric attribute in your records (integer, double or boolean).
-* `desc(attributeName)`: Sort according to a numeric attribute using descending order. `attributeName` can be the name of any numeric attribute in your records (integer, double or boolean).
+    - **If the query contains only one word:** The behavior depends on the value of [exactOnSingleWordQuery](#exactonsinglewordquery).
+    - **If the query contains multiple words:** Sort by decreasing number of words that matched exactly.
+  What is considered to be an exact match depends on the value of [alternativesAsExact](#alternativesasexact).
+* `custom`: Sort according to a user-defined formula specified via the [customRanking](#customranking) setting.
+* Sort by value of a numeric attribute. Here, `${attributeName}` can be the name of any numeric attribute in your objects (integer, floating-point or boolean).
+    * `asc(${attributeName})`: sort by increasing value of the attribute
+    * `desc(${attributeName})`: sort by decreasing value of the attribute
 
-To get a full description of how the Ranking works, you can have a look at our [Ranking guide](https://www.algolia.com/doc/guides/relevance/ranking).
+**Note:** To get a full description of how the ranking works, you can have a look at our [Ranking guide](https://www.algolia.com/doc/guides/relevance/ranking).
 
-</div>
-
-### customRanking
+#### customRanking
 
 - scope: `settings`
-- type: `array of strings`
-- default: []
+- type: array of strings
+- default: `[]`
 
-Lets you specify part of the ranking.
+Specifies the `custom` ranking criterion.
 
-The syntax of this condition is an array of strings containing attributes
-prefixed by the asc (ascending order) or desc (descending order) operator.
+Each string must conform to the syntax `asc(${attributeName})` or `desc(${attributeName})` and specifies a
+(respectively) increasing or decreasing sort on an attribute. All sorts are applied in sequence by the tie-breaking
+algorithm in the order they are specified.
 
-For example, `"customRanking" => ["desc(population)", "asc(name)"]`.
+**Example:** `["desc(population)", "asc(name)"]` will sort by decreasing value of the `population` attribute,
+then *in case of equality* by increasing value of the `name` attribute.
 
-To get a full description of how the Custom Ranking works,
+**Note:** To get a full description of how custom ranking works,
 you can have a look at our [Ranking guide](https://www.algolia.com/doc/guides/relevance/ranking).
 
-</div>
-
-### replicas
+#### replicas
 
 - scope: `settings`
-- type: `array of strings`
-- default: []
+- type: array of strings
+- default: `[]`
 - formerly known as: `slaves`
 
-The list of indices on which you want to replicate all write operations.
+List of indices to which you want to replicate all write operations.
 
-In order to get response times in milliseconds, we pre-compute part of the ranking during indexing.
+In order to get relevant results in milliseconds, we pre-compute part of the ranking during indexing.
+Consequently, if you want to use different ranking formulas depending on the use case,
+you need to create one index per ranking formula.
 
-If you want to use different ranking configurations depending of the use case,
-you need to create one index per ranking configuration.
+This option allows you to perform write operations on a single, master index and automatically
+perform the same operations on all of its replicas.
 
-This option enables you to perform write operations only on this index and automatically
-update replica indices with the same operations.
-
-</div>
+**Note:** A master index can have as many replicas as needed. However, a replica can only have one master; in other words,
+two master indices cannot have the same replica. Furthermore, a replica cannot have its own replicas
+(i.e. you cannot "chain" replicas).
 
 ## Filtering / Faceting
 
-### filters
+#### filters
 
 - scope: `search`
-- type: `string`
-- default: ""
+- type: string
+- default: `""`
 
-Filter the query with numeric, facet or/and tag filters.
+Filter the query with numeric, facet and/or tag filters.
 
-The syntax is a SQL like syntax, you can use the OR and AND keywords.
-The syntax for the underlying numeric, facet and tag filters is the same than in the other filters:
+This parameter uses a SQL-like expression syntax, where you can use boolean operators and parentheses to combine individual filters.
 
-`available=1 AND (category:Book OR NOT category:Ebook) AND _tags:public`
-`date: 1441745506 TO 1441755506 AND inStock > 0 AND author:"John Doe"`
+The following **individual filters** are supported:
 
-If no attribute name is specified,
-the filter applies to `_tags`.
+- **Numeric filter**:
 
-For example: `public OR user_42` will translate to `_tags:public OR _tags:user_42`.
+    - **Comparison**: `${attributeName} ${operator} ${operand}` matches all objects where the specified numeric attribute satisfies the numeric condition expressed by the operator and the operand. The operand must be a numeric value. Supported operators are `<`, `<=`, `=`, `!=`, `>=` and `>`, with the same semantics as in virtually all programming languages.
+    Example: `inStock > 0`.
 
-</div>
+    - **Range**: `${attributeName}:${lowerBound} TO ${upperBound}` matches all objects where the specified numeric
+    attribute is within the range [`${lowerBound}`, `${upperBound}`] (inclusive on both ends).
+    Example: `publication_date: 1441745506 TO 1441755506`.
 
-### facets
+- **Facet filter**: `${facetName}:${facetValue}` matches all objects containing exactly the specified value in the specified facet attribute. *Facet matching is case sensitive*. Example: `category:Book`.
 
-- scope: `search`
-- type: `string`
-- default: ""
+- **Tag filter**: `_tags:${value}` (or, alternatively, just `${value}`) matches all objects containing exactly the specified value in their `_tags` attribute. *Tag matching is case sensitive*. Example: `_tags:published`.
 
-You can use [facets](#facets) to retrieve only a part of your attributes declared in
-**[attributesForFaceting](#attributesforfaceting)** attributes.
-It will not filter your results, if you want to filter results you should use [filters](#filters).
+Individual filters can be combined via **boolean operators**. The following operators are supported:
 
-For each of the declared attributes, you'll be able to retrieve a list of the most relevant facet values,
-and their associated count for the current query.
+- `OR`: must match any of the combined conditions (disjunction)
+- `AND`: must match all of the combined conditions (conjunction)
+- `NOT`: negate a filter
 
-**Example**
+Finally, **parentheses** (`(` and `)`) can be used for grouping.
 
-If you have defined in your **[attributesForFaceting](#attributesforfaceting)**:
+Putting it all together, an example is:
 
 ```
-["category", "author", "nb_views", "nb_downloads"]
+available = 1 AND (category:Book OR NOT category:Ebook) AND _tags:published AND publication_date:1441745506 TO 1441755506 AND inStock > 0 AND author:"John Doe"
+```
+
+**Warning:** Keywords are case-sensitive.
+
+**Note:** If no attribute name is specified, the filter applies to `_tags`.
+For example: `public OR user_42` will translate into `_tags:public OR _tags:user_42`.
+
+**Note:** If a value contains spaces, or conflicts with a keyword, you can use double quotes.
+
+**Note:** If a filtered attribute contains an array of values, any matching value will cause the filter to match.
+
+**Warning:** For performance reasons, filter expressions are limited to a disjunction of conjunctions.
+In other words, you can have ANDs of ORs (e.g. `filter1 AND (filter2 OR filter3)`),
+but not ORs of ANDs (e.g. `filter1 OR (filter2 AND filter3)`.
+
+**Warning:** You cannot mix different filter categories inside a disjunction (OR).
+For example, `num=3 OR tag1 OR facet:value` is not allowed.
+
+**Warning:** You cannot negate a group of filters, only an individual filter.
+For example, `NOT(filter1 OR filter2)` is not allowed.
+
+#### facets
+
+- scope: `search`
+- type: array of strings
+- default: `[]`
+
+Facets to retrieve.
+If not specified or empty, no facets are retrieved.
+The special value `*` may be used to retrieve all facets.
+
+**Warning:** Facets must have been declared beforehand in the [attributesForFaceting](#attributesforfaceting) index setting.
+
+For each of the retrieved facets, the response will contain a list of the most frequent facet values in objects
+matching the current query. Each value will be returned with its associated count (number of matched objects containing that value).
+
+**Warning:** Faceting does **not** filter your results. If you want to filter results, you should use [filters](#filters).
+
+**Example**:
+
+If your settings contain:
+
+```
+{
+  "attributesForFaceting": ["category", "author", "nb_views", "nb_downloads"]
+}
 ```
 
 ... but, for the current search, you want to retrieve facet values only for `category` and `author`, then you can specify:
 
 ```
-["category", "author"]
+"facets": ["category", "author"]
 ```
 
-**Warnings**
+**Warning:** If the number of hits is high, facet counts may be approximate.
+The response field `exhaustiveFacetsCount` is true when the count is exact.
 
-- When using [facets](#facets) in a search query, only attributes that have been added in **attributesForFaceting** index setting can be used in this parameter.
-You can also use `*` to perform faceting on all attributes specified in `attributesForFaceting`.
-If the number of results is important, the count can be approximate,
-the attribute `exhaustiveFacetsCount` in the response is true when the count is exact.
-
-</div>
-
-### maxValuesPerFacet
+#### maxValuesPerFacet
 
 - scope: `settings` `search`
-- type: `integer`
-- default: 100
+- type: integer
+- default: `100`
 
-Limit the number of facet values returned for each facet.
+Maximum number of facet values returned for each facet.
 
-For example, `maxValuesPerFacet=10` will retrieve a maximum of 10 values per facet.
+**Warning:** The API enforces a hard limit of 1000 on `maxValuesPerFacet`.
+Any value above that limit will be interpreted as 1000.
 
-**Warnings**
-- The engine has a hard limit on the `maxValuesPerFacet` of `1000`. Any value above that will be interpreted by the engine as being `1000`.
-
-</div>
-
-### facetFilters
+#### facetFilters
 
 - scope: `search`
-- type: `string`
-- default: ""
+- type: array of strings
+- default: `[]`
 
-**Warning**: We introduce the [filters](#filters) parameter that provide a SQL like syntax
-and is easier to use for most usecases
+Filter hits by facet value.
 
-Filter the query with a list of facets. Facets are separated by commas and is encoded as `attributeName:value`.
-To OR facets, you must add parentheses.
+**Note:** The [filters](#filters) parameter provides an easier to use, SQL-like syntax.
+We recommend using it instead of `facetFilters`.
 
-For example: `facetFilters=(category:Book,category:Movie),author:John%20Doe`.
+Each string represents a filter on a given facet value. It must follow the syntax `${attributeName}:${value}`.
 
-You can also use a string array encoding.
+If you specify multiple filters, they are interpreted as a conjunction (AND). If you want to use a disjunction (OR),
+use a nested array.
 
-For example, `[["category:Book","category:Movie"],"author:John%20Doe"]`.
+Examples:
 
-</div>
+- `["category:Book", "author:John Doe"]` translates as `category:Book AND author:"John Doe"`
+- `[["category:Book", "category:Movie"], "author:John Doe"]` translates as `(category:Book OR category:Movie) AND author:"John Doe"`
+
+Negation is supported by prefixing the value with a minus sign (`-`, a.k.a. dash).
+For example: `["category:Book", "category:-Movie"]` translates as `category:Book AND NOT category:Movie`.
 
 ## Highlighting / Snippeting
 
-### attributesToHighlight
+#### attributesToHighlight
 
 - scope: `settings` `search`
-- type: `array of string`
+- type: array of strings
+- default: all searchable attributes
 
-Default list of attributes to highlight.
-If set to null, all indexed attributes are highlighted.
+List of attributes to highlight.
+If set to null, all **searchable** attributes are highlighted (see [searchableAttributes](#searchableattributes)).
+The special value `*` may be used to highlight all attributes.
 
-A string that contains the list of attributes you want to highlight according to the query.
-Attributes are separated by commas.
-You can also use a string array encoding (for example `["name","address"]`).
-If an attribute has no match for the query, the raw value is returned.
-By default, all indexed attributes are highlighted (as long as they are strings).
-You can use `*` if you want to highlight all attributes.
+**Note:** Only string values can be highlighted. Numerics will be ignored.
 
-A matchLevel is returned for each highlighted attribute and can contain:
+When highlighting is enabled, each hit in the response will contain an additional `_highlightResult` object
+(provided that at least one of its attributes is highlighted) with the following fields:
 
-* `full`: If all the query terms were found in the attribute.
-* `partial`: If only some of the query terms were found.
-* `none`: If none of the query terms were found.
+<!-- TODO: Factorize the following with the "Search Response Format" section in the API Client doc. -->
 
-</div>
+- `value` (string): Markup text with occurrences highlighted.
+  The tags used for highlighting are specified via [highlightPreTag](#highlightpretag) and [highlightPostTag](#highlightposttag).
 
-### attributesToSnippet
+- `matchLevel` (string, enum) = {`none` \| `partial` \| `full`}: Indicates how well the attribute matched the search query.
 
-- scope: `settings` `search`
-- type: `array of strings`
+- `matchedWords` (array): List of words *from the query* that matched the object.
 
-Default list of attributes to snippet alongside the number of words to return (syntax is `attributeName:nbWords`).
-If set to null, no snippet is computed.
+- `fullyHighlighted` (boolean): Whether the entire attribute value is highlighted.
 
-</div>
-
-### highlightPreTag
+#### attributesToSnippet
 
 - scope: `settings` `search`
-- type: `string`
-- default: <em>
+- type: array of strings
+- default: `[]` (no attribute is snippeted)
 
-Specify the string that is inserted before the highlighted parts in the query result (defaults to `<em>`).
+List of attributes to snippet, with an optional maximum number of words to snippet.
+If set to null, no attributes are snippeted.
+The special value `*` may be used to snippet all attributes.
 
-</div>
+The syntax for each attribute is `${attributeName}:${nbWords}`.
+The number of words can be omitted, and defaults to 10.
 
-### highlightPostTag
+**Note:** Only string values can be snippeted. Numerics will be ignored.
+
+When snippeting is enabled, each hit in the response will contain an additional `_snippetResult` object
+(provided that at least one of its attributes is snippeted) with the following fields:
+
+<!-- TODO: Factorize the following with the "Search Response Format" section in the API Client doc. -->
+
+- `value` (string): Markup text with occurrences highlighted and optional ellipsis indicators.
+  The tags used for highlighting are specified via [highlightPreTag](#highlightpretag) and [highlightPostTag](#highlightposttag).
+  The text used to indicate ellipsis is specified via [snippetEllipsisText](#snippetellipsistext).
+
+- `matchLevel` (string, enum) = {`none` \| `partial` \| `full`}: Indicates how well the attribute matched the search query.
+
+#### highlightPreTag
 
 - scope: `settings` `search`
-- type: `string`
-- default: </em>
+- type: string
+- default: `"<em>"`
 
-Specify the string that is inserted after the highlighted parts in the query result (defaults to `</em>`).
+String inserted before highlighted parts in highlight and snippet results.
 
-</div>
-
-### snippetEllipsisText
+#### highlightPostTag
 
 - scope: `settings` `search`
-- type: `string`
-- default: ...
+- type: string
+- default: `"</em>"`
+
+String inserted after highlighted parts in highlight and snippet results.
+
+#### snippetEllipsisText
+
+- scope: `settings` `search`
+- type: string
+- default: `…` (U+2026)
 
 String used as an ellipsis indicator when a snippet is truncated.
 
-Defaults to an empty string for all accounts created before 10/2/2016, and to `…` (U+2026) for accounts created after that date.
+**Warning:** Defaults to an empty string for all accounts created before February 10th, 2016.
+Defaults to `…` (U+2026, HORIZONTAL ELLIPSIS) for accounts created after that date.
 
-</div>
-
-### restrictHighlightAndSnippetArrays
+#### restrictHighlightAndSnippetArrays
 
 - scope: `settings` `search`
-- type: `boolean`
-- default: false
+- type: boolean
+- default: `false`
 
-If set to true, restrict arrays in highlights and snippets to items that matched the query at least partially else return all array items in highlights and snippets.
-
-</div>
+When true, restrict arrays in highlight and snippet results to items that matched the query at least partially.
+When false, return all array items in highlight and snippet results.
 
 ## Pagination
 
-### page
+#### page
 
 - scope: `search`
-- type: `integer`
-- default: 0
+- type: integer
+- default: `0`
 
-Pagination parameter used to select the page to retrieve.
+Number of the page to retrieve.
 
-**Warning:** Page is zero based. Thus, to retrieve the 10th page, you need to set `page=9`.
+**Warning:** Page numbers are zero-based. Therefore, in order to retrieve the 10th page, you need to set `page=9`.
 
-</div>
-
-### hitsPerPage
+#### hitsPerPage
 
 - scope: `settings` `search`
-- type: `integer`
-- default: 20
+- type: integer
+- default: `20`
 
-Pagination parameter used to select the number of hits per page.
+Maximum number of hits per page.
 
-</div>
-
-### offset
+#### offset
 
 - scope: `search`
-- type: `integer`
+- type: integer
+- default: `null`
 
 Offset of the first hit to return (zero-based).
 
-**Warning:** In most cases, `page`/`hitsPerPage` is the recommended method for pagination; `offset`/`length` is reserved for advanced use.
+**Note:** In most cases, [page](#page)/[hitsPerPage](#hitsperpage) is the recommended method for pagination.
 
-</div>
-
-### length
+#### length
 
 - scope: `search`
-- type: `integer`
+- type: integer
+- default: `null`
 
-Offset of the first hit to return (zero-based).
+Maximum number of hits to return.
 
-**Warning:** In most cases, `page`/`hitsPerPage` is the recommended method for pagination; `offset`/`length` is reserved for advanced use.
+**Note:** In most cases, [page](#page)/[hitsPerPage](#hitsperpage) is the recommended method for pagination.
 
-</div>
-
-### paginationLimitedTo
+#### paginationLimitedTo
 
 - scope: `settings`
-- type: `integer`
-- default: 1000
+- type: integer
+- default: `1000`
 
-Allows to control the maximum number of hits accessible via pagination. By default, this parameter is limited to 1000 to guarantee good performance.
+Maximum number of hits accessible via pagination.
+By default, this parameter is set to 1000 to guarantee good performance.
 
-**Warning:** We recommend to keep the default value to guarantee excellent performance.
-Increasing this limit will have a direct impact on the performance of search.
-A big value will also make it very easy for anyone to download all your dataset.
-
-</div>
+**Caution:** We recommend keeping the default value to guarantee excellent performance.
+Increasing the pagination limit will have a direct impact on the performance of search queries.
+A too high value will also make it very easy for anyone to retrieve ("scrape") your entire dataset.
 
 ## Typos
 
-### minWordSizefor1Typo
+#### minWordSizefor1Typo
 
 - scope: `settings` `search`
-- type: `integer`
-- default: 4
+- type: integer
+- default: `4`
 
-The minimum number of characters needed to accept one typo.
+Minimum number of characters a word in the query string must contain to accept matches with one typo.
 
-</div>
-
-### minWordSizefor2Typos
+#### minWordSizefor2Typos
 
 - scope: `settings` `search`
-- type: `integer`
-- default: 8
+- type: integer
+- default: `8`
 
-The minimum number of characters needed to accept two typos.
+Minimum number of characters a word in the query string must contain to accept matches with two typos.
 
-</div>
-
-### typoTolerance
+#### typoTolerance
 
 - scope: `settings` `search`
-- type: `boolean`
-- default: true
+- type: string \| boolean
+- default: `true`
 
-This option allows you to control the number of typos allowed in the result set:
+Controls whether typo tolerance is enabled and how it is applied:
 
-* `true`: The typo tolerance is enabled and all matching hits are retrieved (default behavior).
-* `false`: The typo tolerance is disabled. All results with typos will be hidden.
-* `min`: Only keep results with the minimum number of typos. For example, if one result matches without typos, then all results with typos will be hidden.
-* `strict`: Hits matching with 2 typos are not retrieved if there are some matching without typos.
+* `true`:
+  Typo tolerance is enabled and all matching hits are retrieved (default behavior).
 
-</div>
+* `false`:
+  Typo tolerance is entirely disabled. Hits matching with only typos are not retrieved.
 
-### allowTyposOnNumericTokens
+* `min`:
+  Only keep results with the minimum number of typos. For example, if just one hit matches without typos, then all hits with only typos are not retrieved.
 
-- scope: `settings` `search`
-- type: `boolean`
-- default: true
+* `strict`:
+  Hits matching with 2 typos or more are not retrieved if there are some hits matching without typos.
+  This option is useful to avoid "false positives" as much as possible.
 
-If set to false, disables typo tolerance on numeric tokens (numbers).
-
-</div>
-
-### ignorePlurals
+#### allowTyposOnNumericTokens
 
 - scope: `settings` `search`
-- type: `boolean` `array of strings`
-- default: true
+- type: boolean
+- default: `true`
 
-Consider singular and plurals forms a match without typo. For example, car and
-cars, or foot and feet will be considered equivalent. This parameter can be:
+Whether to allow typos on numbers ("numeric tokens") in the query string.
 
-- a **boolean**: enable or disable plurals for all 59 supported languages.
+When false, typo tolerance is disabled on numeric tokens.
+For example, the query `304` will match `30450` but not `40450`
+(which would have been the case with typo tolerance enabled).
+
+**Note:** This option can be very useful on serial numbers and zip codes searches.
+
+#### ignorePlurals
+
+- scope: `settings` `search`
+- type: boolean \| array of strings
+- default: `false`
+
+Consider singular and plurals forms a match without typo.
+For example, "car" and "cars", or "foot" and "feet" will be considered equivalent.
+
+This parameter may be:
+
+- a **boolean**: enable or disable plurals for all supported languages;
 - a **list of language ISO codes** for which plurals should be enabled.
 
 This option is set to `false` by default.
+
+List of supported languages with their associated ISO code:
 
 Afrikaans=`af`, Arabic=`ar`, Azeri=`az`, Bulgarian=`bg`, Catalan=`ca`,
 Czech=`cs`, Welsh=`cy`, Danis=`da`, German=`de`, English=`en`,
@@ -1734,43 +1815,42 @@ Lithuanian=`lt`, Maori=`mi`, Mongolian=`mn`, Marathi=`mr`, Malay=`ms`,
 Maltese=`mt`, Norwegian=`nb`, Dutch=`nl`, Northern Sotho=`ns`, Polish=`pl`,
 Pashto=`ps`, Portuguese=`pt`, Quechua=`qu`, Romanian=`ro`, Russian=`ru`,
 Slovak=`sk`, Albanian=`sq`, Swedish=`sv`, Swahili=`sw`, Tamil=`ta`,
-Telugu=`te`, Tagalog=`tl`, Tswana=`tn`, Turkish=`tr`, Tatar=`tt`,
+Telugu=`te`, Tagalog=`tl`, Tswana=`tn`, Turkish=`tr`, Tatar=`tt`
 
-</div>
-
-### disableTypoToleranceOnAttributes
+#### disableTypoToleranceOnAttributes
 
 - scope: `settings` `search`
-- type: `array of strings` `string`
-- default: []
+- type: array of strings
+- default: `[]`
 
 List of attributes on which you want to disable typo tolerance
-(must be a subset of the `searchableAttributes` index setting).
+(must be a subset of the [searchableAttributes](#searchableattributes) index setting).
 
-Attributes are separated with a comma such as `"name,address"`.
-You can also use a string array encoding (for example `["name","address"]` ).
-
-</div>
-
-### separatorsToIndex
+#### disableTypoToleranceOnWords
 
 - scope: `settings`
-- type: `string`
-- default: ""
+- type: array of strings
+- default: `[]`
 
-Specify the separators (punctuation characters) to index.
+List of words on which typo tolerance will be disabled.
+
+#### separatorsToIndex
+
+- scope: `settings`
+- type: string
+- default: `""`
+
+Separators (punctuation characters) to index.
 
 By default, separators are not indexed.
 
 **Example:** Use `+#` to be able to search for "Google+" or "C#".
 
-</div>
-
 ## Geo-Search
 
 Geo search requires that you provide at least one geo location in each record at indexing time, under the `_geoloc` attribute. Each location must be an object with two numeric `lat` and `lng` attributes. You may specify either one location:
 
-```
+```json
 {
   "_geoloc": {
     "lat": 48.853409,
@@ -1781,7 +1861,7 @@ Geo search requires that you provide at least one geo location in each record at
 
 ... or an array of locations:
 
-```
+```json
 {
   "_geoloc": [
     {
@@ -1796,218 +1876,238 @@ Geo search requires that you provide at least one geo location in each record at
 }
 ```
 
-### aroundLatLng
+When performing a geo search (either via <%= parameter_link('aroundLatLng') -%> or <%= parameter_link('aroundLatLngViaIP') -%>),
+the maximum distance is automatically guessed based on the density of the searched area.
+You may explicitly specify a maximum distance, however, via <%= parameter_link('aroundRadius') -%>.
+
+The precision for the ranking is set via <%= parameter_link('aroundPrecision') -%>.
+
+#### aroundLatLng
 
 - scope: `search`
-- type: `string`
-- default: ""
+- type: (latitude, longitude) pair
+- default: `null`
 
 Search for entries around a given location (specified as two floats separated by a comma).
 
 For example, `aroundLatLng=47.316669,5.016670`.
 
-- By default the maximum distance is automatically guessed based on the density of the area
-  but you can specify it manually in meters with the **aroundRadius** parameter.
-  The precision for ranking can be set with **aroundPrecision** parameter.
-- If you set aroundPrecision=100, the distances will be considered by ranges of 100m.
-- For example all distances 0 and 100m will be considered as identical for the "geo" ranking parameter.
+<!-- TODO: Only document serialization format for the REST API. -->
 
-</div>
-
-### aroundLatLngViaIP
+#### aroundLatLngViaIP
 
 - scope: `search`
-- type: `boolean`
-- default: false
+- type: boolean
+- default: `false`
 
-Search for entries around a given latitude/longitude automatically computed from user IP address.
+Search for entries around a given location automatically computed from the requester's IP address.
 
-To enable it, use `aroundLatLngViaIP=true`.
+**Warning:** If you are sending the request from your servers, you must set the `X-Forwarded-For` HTTP header with the client's IP
+address for it to be used as the basis for the computation of the search location.
 
-You can specify the maximum distance in meters with the `aroundRadius` parameter
-and the precision for ranking with `aroundPrecision`.
-
-For example:
-- if you set aroundPrecision=100,
-two objects that are in the range 0-99m
-will be considered as identical in the ranking for the "geo" ranking parameter (same for 100-199, 200-299, ... ranges).
-
-</div>
-
-### aroundRadius
+#### aroundRadius
 
 - scope: `search`
-- type: `integer` `string`
+- type: integer \| `"all"`
+- default: `null`
 
-Control the radius associated with a geo search. Defined in meters.
+Maximum radius for geo search (in meters).
 
-If not set, the radius is computed automatically using the density of the area.
-You can retrieve the computed radius in the `automaticRadius` attribute of the response.
-You can also specify a minimum value for the automatic radius by using the `minimumAroundRadius` query parameter.
+If set, only hits within the specified radius from the searched location will be returned.
 
-You can specify `aroundRadius=all` if you want to compute the geo distance without filtering in a geo area;
-this option will be faster than specifying a big integer value.
+If not set, the radius is automatically computed from the density of the searched area.
+You can retrieve the computed radius in the `automaticRadius` response field.
+You may also specify a minimum value for the automatic radius via [minimumAroundRadius](#minimumaroundradius).
 
-</div>
+The special value `all` causes the geo distance to be computed and taken into account for ranking, but without filtering;
+this option is faster than specifying a high integer value.
 
-### aroundPrecision
-
-- scope: `search`
-- type: `integer`
-
-Control the precision of a geo search.
-Defined in meters.
-
-For example, if you set `aroundPrecision=100`, two objects that are in the range 0-99m will be considered as
-identical in the ranking for the `geo` ranking parameter (same for 100-199, 200-299, … ranges).
-
-</div>
-
-### minimumAroundRadius
+#### aroundPrecision
 
 - scope: `search`
-- type: `integer`
+- type: integer
+- default: `1`
 
-Define the minimum radius used for a geo search when `aroundRadius` is not set.
-The radius is computed automatically using the density of the area.
-You can retrieve the computed radius in the `automaticRadius` attribute of the answer.
+Precision of geo search (in meters).
 
-</div>
+When ranking hits, geo distances are grouped into ranges of `aroundPrecision` size. All hits within the same range
+are considered equal with respect to the `geo` ranking parameter.
 
-### insideBoundingBox
+For example, if you set `aroundPrecision` to `100`, any two objects lying in the range `[0, 99m]` from the searched
+location will be considered equal; same for `[100, 199]`, `[200, 299]`, etc.
+
+#### minimumAroundRadius
 
 - scope: `search`
-- type: `string`
+- type: integer
+- default: `null`
 
-Search entries inside a given area defined by the two extreme points of a rectangle
-(defined by 4 floats: p1Lat,p1Lng,p2Lat,p2Lng).
+Minimum radius used for a geo search when [aroundRadius](#aroundradius) is not set.
+
+**Note:** This parameter is ignored when `aroundRadius` is set.
+
+#### insideBoundingBox
+
+- scope: `search`
+- type: geo rectangle(s)
+- default: `null`
+
+Search inside a rectangular area (in geo coordinates).
+
+The rectange is defined by two diagonally opposite points (hereafter `p1` and `p2`),
+hence by 4 floats: `p1Lat`, `p1Lng`, `p2Lat`, `p2Lng`.
 
 For example:
 
-- `insideBoundingBox=47.3165,4.9665,47.3424,5.0201`
+`insideBoundingBox=47.3165,4.9665,47.3424,5.0201`
 
-You can use several bounding boxes (OR) by passing more than 4 values.
-For example: instead of having 4 values you can pass 8 to search inside the UNION of two bounding boxes.
+You may specify multiple bounding boxes, in which case the search will use the **union** (OR) of the rectangles.
+To specify multiple rectangles, pass either:
 
-</div>
+- more than 4 values (must be a multiple of 4: 8, 12...);
+  example: `47.3165,4.9665,47.3424,5.0201,40.9234,2.1185,38.6430,1.9916`; or
+- an array of arrays of floats (each inner array must contain exactly 4 values);
+  example: `[[47.3165, 4.9665, 47.3424, 5.0201], [40.9234, 2.1185, 38.6430, 1.9916]`.
 
-### insidePolygon
+#### insidePolygon
 
 - scope: `search`
-- type: `string`
-- default: ""
+- type: geo polygon(s)
+- default: `null`
 
-Search entries inside a given area defined by a set of points
-  (defined by a minimum of 6 floats: p1Lat,p1Lng,p2Lat,p2Lng,p3Lat,p3Long).
+Search inside a polygon (in geo coordinates).
 
-  For example:
-  
-  - `InsidePolygon=47.3165,4.9665,47.3424,5.0201,47.32,4.98`
-  
+The polygon is defined by a set of points (minimum 3), each defined by its latitude and longitude.
+You therefore need an even number of floats, with a minimum of 6: `p1Lat`, `p1Lng`, `p2Lat`, `p2Lng`, `p3Lat`, `p3Long`.
 
-</div>
+For example:
+
+`insidePolygon=47.3165,4.9665,47.3424,5.0201,47.32,4.98`
+
+You may specify multiple polygons, in which case the search will use the **union** (OR) of the polygons.
+To specify multiple polygons, pass an array of arrays of floats (each inner array must contain an even number of
+values, with a minimum of 6);
+example: `[[47.3165, 4.9665, 47.3424, 5.0201, 47.32, 4.9], [40.9234, 2.1185, 38.6430, 1.9916, 39.2587, 2.0104]]`.
 
 ## Query Strategy
 
-### queryType
+#### queryType
 
-- scope: `settings`
-- type: `string`
-- default: prefixLast
+- scope: `search` `settings`
+- type: string
+- default: `"prefixLast"`
 
-Selects how the query words are interpreted. It can be one of the following values:
-* `prefixAll`:
-All query words are interpreted as prefixes. This option is not recommended.
+Controls if and how query words are interpreted as prefixes.
+
+It may be one of the following values:
+
 * `prefixLast`:
-Only the last word is interpreted as a prefix (default behavior).
+  Only the last word is interpreted as a prefix (default behavior).
+
+* `prefixAll`:
+  All query words are interpreted as prefixes. This option is not recommended.
+
 * `prefixNone`:
-No query word is interpreted as a prefix. This option is not recommended.
+  No query word is interpreted as a prefix. This option is not recommended.
 
-</div>
-
-### removeWordsIfNoResults
+#### removeWordsIfNoResults
 
 - scope: `settings` `search`
-- type: `string`
-- default: none
+- type: string
+- default: `"none"`
 
-This option is used to select a strategy in order to avoid having an empty result page.
+Selects a strategy to remove words from the query when it doesn't match any hits.
+
+The goal is to avoid empty results by progressively loosening the query until hits are matched.
+
 There are four different options:
 
-- `lastWords`:
-When a query does not return any results, the last word will be added as optional.
-The process is repeated with n-1 word, n-2 word, ... until there are results.
-- `firstWords`:
-When a query does not return any results, the first word will be added as optional.
-The process is repeated with second word, third word, ... until there are results.
-- `allOptional`:
-When a query does not return any results, a second trial will be made with all words as optional.
-This is equivalent to transforming the AND operand between query terms to an OR operand.
 - `none`:
-No specific processing is done when a query does not return any results (default behavior).
+  No specific processing is done when a query does not return any results (default behavior).
 
-</div>
+- `lastWords`:
+  When a query does not return any results, treat the last word as optional.
+  The process is repeated with words N-1, N-2, etc. until there are results, or the beginning of the query string has been reached.
 
-### advancedSyntax
+- `firstWords`:
+  When a query does not return any results, treat the first word as optional.
+  The process is repeated with words 2, 3, etc. until there are results, or the end of the query string has been reached.
+
+- `allOptional`:
+  When a query does not return any results, make a second attempt treating all words as optional.
+  This is equivalent to transforming the implicit AND operator applied between query words to an OR.
+
+#### advancedSyntax
 
 - scope: `settings` `search`
-- type: `boolean`
-- default: false
+- type: boolean
+- default: `false`
 
 Enables the advanced query syntax.
 
-This syntax allow to do two things:
+This advanced syntax brings two additional features:
 
-* **Phrase query**: A phrase query defines a particular sequence of terms. A phrase query is built by Algolia's query parser for words surrounded by `"`.
-  For example, `"search engine"` will retrieve records having `search` next to `engine` only. Typo tolerance is _disabled_ on phrase queries.
-* **Prohibit operator**: The prohibit operator excludes records that contain the term after the `-` symbol.
-For example, `search -engine` will retrieve records containing `search` but not `engine`.
+- **Phrase query**: a specific sequence of terms that must be matched next to one another.
+  A phrase query needs to be surrounded by double quotes (`"`).
+  For example, `"search engine"` will only match records having `search` next to `engine`.
 
-</div>
+  Typo tolerance is disabled inside the phrase (i.e. within the quotes).
+  
 
-### optionalWords
+- **Prohibit operator**: excludes records that contain a specific term.
+  This term has to be prefixed by a minus (`-`, a.k.a dash).
+  For example, `search -engine` will only match records containing `search` but not `engine`.
 
-- scope: `settings` `search`
-- type: `string`
-- default: []
-
-A string that contains the comma separated list of words that should be considered as optional when found in the query.
-
-</div>
-
-### removeStopWords
+#### optionalWords
 
 - scope: `settings` `search`
-- type: `boolean` `array of strings`
-- default: false
+- type: string \| array of strings
+- default: `[]`
 
-Remove stop words from the query **before** executing it. It can be:
+List of words that should be considered as optional when found in the query.
 
-- a **boolean**: enable or disable stop words for all 41 supported languages; or
-- a **list of language ISO codes** (as a comma-separated string) for which stop words should be enabled.
+**Note:** You don't need to put commas between words.
+Each string will automatically be tokenized into words, all of which will be considered as optional.
 
-In most use-cases, **we don’t recommend enabling this option**.
+#### removeStopWords
 
-List of 41 supported languages with their associated iso code: Arabic=`ar`, Armenian=`hy`, Basque=`eu`, Bengali=`bn`, Brazilian=`pt-br`, Bulgarian=`bg`, Catalan=`ca`, Chinese=`zh`, Czech=`cs`, Danish=`da`, Dutch=`nl`, English=`en`, Finnish=`fi`, French=`fr`, Galician=`gl`, German=`de`, Greek=`el`, Hindi=`hi`, Hungarian=`hu`, Indonesian=`id`, Irish=`ga`, Italian=`it`, Japanese=`ja`, Korean=`ko`, Kurdish=`ku`, Latvian=`lv`, Lithuanian=`lt`, Marathi=`mr`, Norwegian=`no`, Persian (Farsi)=`fa`, Polish=`pl`, Portugese=`pt`, Romanian=`ro`, Russian=`ru`, Slovak=`sk`, Spanish=`es`, Swedish=`sv`, Thai=`th`, Turkish=`tr`, Ukranian=`uk`, Urdu=`ur`.
+- scope: `settings` `search`
+- type: boolean \| array of strings
+- default: `false`
 
-Stop words removal is applied on query words that are not interpreted as a prefix. The behavior depends of the `queryType` parameter:
+Remove stop words from the query **before** executing it.
 
-* `queryType=prefixLast` means the last query word is a prefix and it won’t be considered for stop words removal
-* `queryType=prefixNone` means no query word are prefix, stop words removal will be applied on all query words
-* `queryType=prefixAll` means all query terms are prefix, stop words won’t be removed
+This parameter may be:
 
-This parameter is useful when you have a query in natural language like “what is a record?”.
-In this case, before executing the query, we will remove “what”, “is” and “a” in order to just search for “record”.
-This removal will remove false positive because of stop words, especially when combined with optional words.
-For most use cases, it is better to not use this feature as people search by keywords on search engines.
+- a **boolean**: enable or disable stop words for all supported languages; or
+- a **list of language ISO codes** for which stop word removal should be enabled.
 
-</div>
+**Warning:** In most use-cases, **we don't recommend enabling stop word removal**.
 
-### disablePrefixOnAttributes
+Stop word removal is useful when you have a query in natural language, e.g. "what is a record?".
+In that case, the engine will remove "what", "is" and "a" before executing the query, and therefore just search for "record".
+This will remove false positives caused by stop words, especially when combined with optional words
+(see [optionalWords](#optionalwords) and [removeWordsIfNoResults](#removewordsifnoresults)).
+For most use cases, however, it is better not to use this feature, as people tend to search by keywords on search engines
+(i.e. they naturally omit stop words).
 
-- scope: `seetings`
-- type: `array of strings`
-- default: []
+**Note:** Stop words removal is only applied on query words that are *not* interpreted as prefixes.
+
+As a consequence, the behavior of `removeStopWords` also depends on the [queryType](#querytype) parameter:
+
+* `queryType=prefixLast` means the last query word is a prefix and won't be considered for stop word removal;
+* `queryType=prefixNone` means no query word is a prefix, therefore stop word removal will be applied to all query words;
+* `queryType=prefixAll` means all query words are prefixes, therefore no stop words will be removed.
+
+List of supported languages with their associated ISO code:
+
+Arabic=`ar`, Armenian=`hy`, Basque=`eu`, Bengali=`bn`, Brazilian=`pt-br`, Bulgarian=`bg`, Catalan=`ca`, Chinese=`zh`, Czech=`cs`, Danish=`da`, Dutch=`nl`, English=`en`, Finnish=`fi`, French=`fr`, Galician=`gl`, German=`de`, Greek=`el`, Hindi=`hi`, Hungarian=`hu`, Indonesian=`id`, Irish=`ga`, Italian=`it`, Japanese=`ja`, Korean=`ko`, Kurdish=`ku`, Latvian=`lv`, Lithuanian=`lt`, Marathi=`mr`, Norwegian=`no`, Persian (Farsi)=`fa`, Polish=`pl`, Portugese=`pt`, Romanian=`ro`, Russian=`ru`, Slovak=`sk`, Spanish=`es`, Swedish=`sv`, Thai=`th`, Turkish=`tr`, Ukranian=`uk`, Urdu=`ur`.
+
+#### disablePrefixOnAttributes
+
+- scope: `settings`
+- type: array of strings
+- default: `[]`
 
 List of attributes on which you want to disable prefix matching
 (must be a subset of the `searchableAttributes` index setting).
@@ -2015,102 +2115,254 @@ List of attributes on which you want to disable prefix matching
 This setting is useful on attributes that contain string that should not be matched as a prefix
 (for example a product SKU).
 
-</div>
-
-### disableExactOnAttributes
+#### disableExactOnAttributes
 
 - scope: `settings`
-- type: `search`
-- default: []
+- type: search
+- default: `[]`
 
-List of attributes on which you want to disable the computation of `exact` criteria
+List of attributes on which you want to disable computation of the `exact` ranking criterion
 (must be a subset of the `searchableAttributes` index setting).
 
-</div>
-
-### exactOnSingleWordQuery
+#### exactOnSingleWordQuery
 
 - scope: `settings` `search`
-- type: `string`
-- default: attribute
+- type: string
+- default: `attribute`
 
-This parameter control how the `exact` ranking criterion is computed when the query contains one word. There are three different values:
+Controls how the `exact` ranking criterion is computed when the query contains only one word.
 
-* `none`: no exact on single word query
-* `word`: exact set to 1 if the query word is found in the record. The query word needs to have at least 3 chars and not be part of our stop words dictionary
-* `attribute` (default): exact set to 1 if there is an attribute containing a string equals to the query
+The following values are allowed:
 
-</div>
+* `none`: the `exact` ranking criterion is ignored on single word queries;
+* `word`: the `exact` ranking criterion is set to 1 if the query word is found in the record.
+  The query word must be at least 3 characters long and must not be a stop word in any supported language.
+* `attribute` (default): the `exact` ranking criterion is set to 1 if the query string exactly matches an entire attribute value.
+  For example, if you search for the TV show "V", you want it to match the query "V" *before* all popular TV shows starting with the letter V.
 
-### alternativesAsExact
+#### alternativesAsExact
 
 - scope: `setting` `search`
-- type: `string`
-- default: ['ignorePlurals', 'singleWordSynonym']
+- type: array of strings
+- default: `["ignorePlurals", "singleWordSynonym"]`
 
-Specify the list of approximation that should be considered as an exact match in the ranking formula:
+List of alternatives that should be considered an exact match by the `exact` ranking criterion.
 
-* `ignorePlurals`: alternative words added by the ignorePlurals feature
-* `singleWordSynonym`: single-word synonym (For example "NY" = "NYC")
-* `multiWordsSynonym`: multiple-words synonym (For example "NY" = "New York")
+The following values are allowed:
 
-</div>
+* `ignorePlurals`: alternative words added by the [ignorePlurals](#ignoreplurals) feature;
+* `singleWordSynonym`: single-word synonyms (example: "NY" = "NYC");
+* `multiWordsSynonym`: multiple-words synonyms (example: "NY" = "New York").
+
+## Performance
+
+#### numericAttributesForFiltering
+
+- scope: `settings`
+- type: array of strings
+- default: all numeric attributes
+- formerly known as: `numericAttributesToIndex`
+
+All numerical attributes are automatically indexed as numerical filters
+(allowing filtering operations like `<` and `<=`).
+If you don't need filtering on some of your numerical attributes,
+you can specify this list to speed up the indexing.
+
+**Note:** If you only need to filter on a numeric value with the operator `=` or `!=`,
+you can speed up the indexing by specifying the attribute with `equalOnly(AttributeName)`.
+The other operators will be disabled.
+
+#### allowCompressionOfIntegerArray
+
+- scope: `settings`
+- type: boolean
+- default: `false`
+
+Enables compression of large integer arrays.
+
+In data-intensive use-cases, we recommended enabling this feature to reach a better compression ratio on arrays
+exclusively containing integers (as is typical of lists of user IDs or ACLs).
+
+**Note:** When enabled, integer arrays may be reordered.
 
 ## Advanced
 
-### attributeForDistinct
+#### attributeForDistinct
 
 - scope: `settings`
-- type: `string`
+- type: string
+- default: `null`
 
-The name of the attribute used for the `Distinct` feature.
+Name of the de-duplication attribute for the [distinct](#distinct) feature.
 
-This feature is similar to the SQL "distinct" keyword.
-When enabled in queries with the `distinct=1` parameter,
-all hits containing a duplicate value for this attribute are removed from the results.
-
-For example, if the chosen attribute is `show_name` and several hits have the same value for `show_name`,
-then only the first one is kept and the others are removed from the results.
-
-To get a full understanding of how `Distinct` works,
-you can have a look at our [guide on distinct](https://www.algolia.com/doc/search/distinct).
-
-</div>
-
-### analyticsTags
-
-- scope: `search`
-- type: `array of strings`
-
-If set, tag your query with the specified identifiers. Tags can then be used in the Analytics to analyze a subset of searches only.
-
-</div>
-
-### synonyms
-
-- scope: `search`
-- type: `boolean`
-- default: true
-
-If set to `false`, the search will not use the synonyms defined for the targeted index.
-
-</div>
-
-### replaceSynonymsInHighlight
+#### distinct
 
 - scope: `settings` `search`
-- type: `boolean`
-- default: true
+- type: integer \| boolean
+- default: `0`
 
-If set to `false`, words matched via synonym expansion will not be replaced by the matched synonym in the highlighted result.
+Controls de-duplication of results.
 
-</div>
+A non-zero value enables de-duplication; a zero value disables it.
+Booleans are also accepted (though not recommended): false is treated as 0, and true is treated as 1.
 
-### placeholders
+**Note:** De-duplication requires a **de-duplication attribute** to be configured via the [attributeForDistinct](#attributefordistinct) index setting.
+If not configured, `distinct` will be accepted at query time but silently ignored.
+
+This feature is similar to the SQL `distinct` keyword. When set to N (where N > 0), at most N hits will be returned
+with the same value for the de-duplication attribute.
+
+**Example:** If the de-duplication attribute is `show_name` and `distinct` is set to 1, then if several hits have the
+same value for `show_name`, only the most relevant one is kept (with respect to the ranking formula); the others are removed.
+
+To get a full understanding of how `distinct` works,
+you can have a look at our [Guides](https://www.algolia.com/doc/guides/search/distinct).
+
+#### getRankingInfo
+
+- scope: `search`
+- type: boolean
+- default: `false`
+
+Enables detailed ranking information.
+
+When true, each hit in the response contains an additional `_rankingInfo` object containing the following fields:
+
+<!-- TODO: Factorize this list with the Search Response Format section. -->
+
+- `nbTypos` (integer): Number of typos encountered when matching the record. Corresponds to the `typos` ranking criterion in the ranking formula.
+
+- `firstMatchedWord` (integer): Position of the most important matched attribute in the attributes to index list. Corresponds to the `attribute` ranking criterion in the ranking formula.
+
+- `proximityDistance` (integer): When the query contains more than one word, the sum of the distances between matched words. Corresponds to the `proximity` criterion in the ranking formula.
+
+- `userScore` (integer): Custom ranking for the object, expressed as a single numerical value. Conceptually, it's what the position of the object would be in the list of all objects sorted by custom ranking. Corresponds to the `custom` criterion in the ranking formula.
+
+- `geoDistance` (integer): Distance between the geo location in the search query and the best matching geo location in the record, divided by the geo precision.
+
+- `geoPrecision` (integer): Precision used when computed the geo distance, in meters. All distances will be floored to a multiple of this precision.
+
+- `nbExactWords` (integer): Number of exactly matched words. If `alternativeAsExact` is set, it may include plurals and/or synonyms.
+
+- `words` (integer): Number of matched words, including prefixes and typos.
+
+- `filters` (integer): *This field is reserved for advanced usage.* It will be zero in most cases.
+
+In addition, the response contains the following additional top-level fields:
+
+- `serverUsed` (string): Actual host name of the server that processed the request. (Our DNS supports automatic failover and load balancing, so this may differ from the host name used in the request.)
+
+- `parsedQuery` (string): The query string that will be searched, after normalization. Normalization includes removing stop words (if [removeStopWords](#removestopwords) is enabled), and transforming portions of the query string into phrase queries (see [advancedSyntax](#advancedsyntax)).
+
+- `timeoutCounts` (boolean): Whether a timeout was hit when computing the facet counts. When `true`, the counts will be interpolated (i.e. approximate). See also `exhaustiveFacetsCount`.
+
+- `timeoutHits` (boolean): Whether a timeout was hit when retrieving the hits. When true, some results may be missing.
+
+#### numericFilters
+
+- scope: `search`
+- type: array of strings
+- default: `[]`
+
+Filter hits based on values of numeric attributes.
+
+**Note:** The [filters](#filters) parameter provides an easier to use, SQL-like syntax.
+We recommend using it instead of `numericFilters`.
+
+Each string represents a filter on a numeric attribute. Two forms are supported:
+
+- **Comparison**: `${attributeName} ${operator} ${operand}` matches all objects where the specified numeric attribute satisfies the numeric condition expressed by the operator and the operand. The operand must be a numeric value. Supported operators are `<`, `<=`, `=`, `!=`, `>=` and `>`, with the same semantics as in virtually all programming languages.
+Example: `inStock > 0`.
+
+- **Range**: `${attributeName}:${lowerBound} TO ${upperBound}` matches all objects where the specified numeric
+attribute is within the range [`${lowerBound}`, `${upperBound}`] (inclusive on both ends).
+Example: `price: 0 TO 1000`.
+
+If you specify multiple filters, they are interpreted as a conjunction (AND). If you want to use a disjunction (OR),
+use a nested array.
+
+Examples:
+
+- `["inStock > 0", "price < 1000"]` translates as `inStock > 0 AND price < 1000`
+- `[["inStock > 0", "deliveryDate < 1441755506"], "price < 1000"]` translates as `(inStock > 0 OR deliveryDate < 1441755506) AND price < 1000`
+
+#### tagFilters
+
+- scope: `search`
+- type: array of strings
+- default: `[]`
+
+Filter hits by tags.
+
+Tags must be contained in a top-level `_tags` attribute of your objects at indexing time.
+
+**Note:** Tags are essentially an implicit facet on the `_tags` attribute.
+We therefore recommend that you use facets instead.
+See [attributesForFaceting](#attributesforfaceting) and [facets](#facets).
+
+**Note:** The [filters](#filters) parameter provides an easier to use, SQL-like syntax.
+We recommend using it instead of `tagFilters`.
+
+Each string represents a given tag value that must be matched.
+
+If you specify multiple tags, they are interpreted as a conjunction (AND). If you want to use a disjunction (OR),
+use a nested array.
+
+Examples:
+
+- `["Book", "Movie"]` translates as `Book AND Movie`
+- `[["Book", "Movie"], "SciFi"]` translates as `(Book OR Movie) AND SciFi"`
+
+Negation is supported by prefixing the tag value with a minus sign (`-`, a.k.a. dash).
+For example: `["tag1", "-tag2"]` translates as `tag1 AND NOT tag2`.
+
+#### analytics
+
+- scope: `search`
+- type: boolean
+- default: `true`
+
+Whether the current query will be taken into account in the Analytics.
+
+#### analyticsTags
+
+- scope: `search`
+- type: array of strings
+- default: `[]`
+
+List of tags to apply to the query in the Analytics.
+
+Tags can be used in the Analytics to filter searches.
+
+#### synonyms
+
+- scope: `search`
+- type: boolean
+- default: `true`
+
+Whether to take into account synonyms defined for the targeted index.
+
+#### replaceSynonymsInHighlight
+
+- scope: `settings` `search`
+- type: boolean
+- default: `true`
+
+Whether to replace words matched via synonym expansion by the matched synonym in highlight and snippet results.
+
+When true, highlighting and snippeting will use words from the query rather than the original words from the objects.
+When false, highlighting and snippeting will always display the original words from the objects.
+
+**Note:** Multiple words can be replaced by a one-word synonym, but not the other way round.
+For example, if "NYC" and "New York City" are synonyms, searching for "NYC" will replace "New York City" with "NYC"
+in highlights and snippets, but searching for "New York City" will *not* replace "NYC" with "New York City" in
+highlights and snippets.
+
+#### placeholders
 
 - scope: `settings`
-- type: `hash of array of words`
-- default: ""
+- type: object of array of words
+- default: `{}`
 
 This is an advanced use-case to define a token substitutable by a list of words
 without having the original token searchable.
@@ -2128,13 +2380,11 @@ For example:
 * Configure the placeholder in your index settings:
 `"placeholders": { "<streetnumber>" : ["1", "2", "3", "4", "5", ... ], ... }`.
 
-</div>
-
-### altCorrections
+#### altCorrections
 
 - scope: `settings`
-- type: `array of objects`
-- default: []
+- type: array of objects
+- default: `[]`
 
 Specify alternative corrections that you want to consider.
 
@@ -2153,173 +2403,69 @@ For example:
 ]
 ```
 
-</div>
-
-### minProximity
+#### minProximity
 
 - scope: `settings` `search`
-- type: `integer`
-- default: 1
+- type: integer
+- default: `1`
 
-Configure the precision of the `proximity` ranking criterion.
-By default, the minimum (and best) proximity value distance between 2 matching words is 1.
-Setting it to 2 (or 3) would allow 1 (or 2) words to be found between the matching words without degrading the proximity ranking value.
+Precision of the `proximity` ranking criterion.
 
-Considering the query *“javascript framework”*, if you set `minProximity=2`, the records *“JavaScript framework”* and *“JavaScript charting framework”*
-will get the same proximity score, even if the second contains a word between the two matching words.
+By default, the minimum (and best) proximity value between two matching words is 1.
 
-**Note:** the maximum `minProximity` that can be set is 7. Any higher value will disable the `proximity` criterion from the ranking formula.
+Setting it to 2 (respectively N) would allow 1 (respectively N-1) additional word(s) to be found between two matching words without degrading the proximity ranking value.
 
-</div>
+**Example:** considering the query *"javascript framework"*, if you set `minProximity` to 2,
+two records containing respectively *"JavaScript framework"* and *"JavaScript charting framework"*
+will get the same proximity score, even if the latter contains an additional word between the two matching words.
 
-### responseFields
+**Note:** The maximum value for `minProximity` is 7. Any higher value will **disable** the `proximity` criterion in the ranking formula.
+
+#### responseFields
 
 - scope: `settings` `search`
-- type: `array of strings`
-- default: ["*"]
+- type: array of strings
+- default: `*` (all fields)
 
 Choose which fields the response will contain. Applies to search and browse queries.
 
-By default, all fields are returned. If this parameter is specified, only the fields explicitly listed will be returned, unless `*` is used, in which case all fields are returned. Specifying an empty list or unknown field names is an error.
+By default, all fields are returned. If this parameter is specified, only the fields explicitly
+listed will be returned, unless `*` is used, in which case all fields are returned.
+Specifying an empty list or unknown field names is an error.
 
-This parameter is mainly intended to limit the response size. For example, for complex queries, echoing of request parameters in the response's `params` field can be undesirable.
+This parameter is mainly intended to limit the response size.
+For example, in complex queries, echoing of request parameters in the response's `params` field can be undesirable.
 
-Some fields cannot be filtered out:
+List of fields that can be filtered out:
 
-- warning `message`
-- `cursor` in browse queries
-- fields triggered explicitly via [getRankingInfo](#getrankinginfo)
+- `aroundLatLng`
+- `automaticRadius`
+- `exhaustiveFacetsCount`
+- `facets`
+- `facets_stats`
+- `hits`
+- `hitsPerPage`
+- `index`
+- `length`
+- `nbHits`
+- `nbPages`
+- `offset`
+- `page`
+- `params`
+- `processingTimeMS`
+- `query`
+- `queryAfterRemoval`
 
-</div>
+List of fields that *cannot* be filtered out:
 
-### distinct
-
-- scope: `settings` `search`
-- type: `integer`
-- default: 0
-
-If set to 1,
-enables the distinct feature, disabled by default, if the `attributeForDistinct` index setting is set.
-
-This feature is similar to the SQL "distinct" keyword.
-When enabled in a query with the `distinct=1` parameter,
-all hits containing a duplicate value for the attributeForDistinct attribute are removed from results.
-
-For example, if the chosen attribute is `show_name` and several hits have the same value for `show_name`,
-then only the best one is kept and the others are removed.
-
-To get a full understanding of how `Distinct` works,
-you can have a look at our [guide on distinct](https://www.algolia.com/doc/search/distinct).
-
-</div>
-
-### getRankingInfo
-
-- scope: `search`
-- type: `boolean`
-- default: false
-
-If set to 1,
-the result hits will contain ranking information in the **_rankingInfo** attribute.
-
-</div>
-
-### numericAttributesForFiltering
-
-- scope: `settings`
-- type: `array of strings`
-- default: []
-
-All numerical attributes are automatically indexed as numerical filters
-(allowing filtering operations like `<` and `<=`).
-If you don't need filtering on some of your numerical attributes,
-you can specify this list to speed up the indexing.
-
-If you only need to filter on a numeric value with the `=` operator,
-you can speed up the indexing by specifying the attribute with `equalOnly(AttributeName)`.
-The other operators will be disabled.
-
-</div>
-
-### allowCompressionOfIntegerArray
-
-- scope: `settings`
-- type: `boolean`
-- default: false
-
-Allows compression of big integer arrays.
-
-In data-intensive use-cases,
-we recommended enabling this feature and then storing the list of user IDs or rights as an integer array.
-When enabled, the integer array is reordered to reach a better compression ratio.
-
-</div>
-
-### numericFilters
-
-- scope: `search`
-- type: `array of strings`
-- default: []
-
-*If you are not using this parameter to generate filters programatically you should use [filters](#filters) instead*
-
-A string that contains the comma separated list of numeric filters you want to apply.
-The filter syntax is `attributeName` followed by `operand` followed by `value`.
-Supported operands are `<`, `<=`, `=`, `>` and `>=`.
-
-You can easily perform range queries via the `:` operator.
-This is equivalent to combining a `>=` and `<=` operand.
-
-For example, `numericFilters=price:10 to 1000`.
-
-You can also mix OR and AND operators.
-The OR operator is defined with a parenthesis syntax.
-
-For example, `code=1 AND (price:[0-100] OR price:[1000-2000])`
-translates to `code=1,(price:0 to 100,price:1000 to 2000)`.
-
-You can also use a string array encoding (for example `numericFilters: ["price>100","price<1000"]`).
-
-</div>
-
-### tagFilters (deprecated)
-
-- scope: `search`
-- type: `string`
-- default: ""
-
-**This parameter is deprecated. You should use [filters](#filters) instead.**
-
-Filter the query by a set of tags.
-
-You can AND tags by separating them with commas.
-To OR tags, you must add parentheses.
-
-For example, `tagFilters=tag1,(tag2,tag3)` means *tag1 AND (tag2 OR tag3)*.
-
-You can also use a string array encoding.
-
-For example, `tagFilters: ["tag1",["tag2","tag3"]]` means *tag1 AND (tag2 OR tag3)*.
-
-Negations are supported via the `-` operator, prefixing the value.
-
-For example: `tagFilters=tag1,-tag2`.
-
-At indexing, tags should be added in the **_tags** attribute of objects.
-
-For example `{"_tags":["tag1","tag2"]}`.
-
-</div>
-
-### analytics
-
-- scope: `search`
-- type: `boolean`
-- default: true
-
-If set to false, this query will not be taken into account in the analytics feature.
-
-</div>
+- `message`
+- `warning`
+- `cursor`
+- `serverUsed`
+- `timeoutCounts` (deprecated, please use `exhaustiveFacetsCount` instead)
+- `timeoutHits` (deprecated, please use `exhaustiveFacetsCount` instead)
+- `parsedQuery`
+- all fields triggered by [getRankingInfo](#getrankinginfo)
 
 
 # Manage Indices
@@ -2342,7 +2488,7 @@ client.listIndexes(function(err, content) {
 });
 ```
 
-## Delete index - `deleteIndex` 
+## Delete an index - `deleteIndex` 
 
 You can delete an index using its name:
 
@@ -2354,7 +2500,7 @@ client.deleteIndex('contacts', function(err) {
 });
 ```
 
-## Clear index - `clearIndex` 
+## Clear an index - `clearIndex` 
 
 You can delete the index contents without removing settings and index specific API keys by using the `clearIndex` command:
 
@@ -2782,21 +2928,15 @@ are still returned ranked by attributes and custom ranking.
 ##### Fields
 
 - `cursor` (string, optional): A cursor to retrieve the next chunk of data. If absent, it means that the end of the index has been reached.
-
 - `query` (string): Query text used to filter the results.
-
 - `params` (string, URL-encoded): Search parameters used to filter the results.
-
 - `processingTimeMS` (integer): Time that the server took to process the request, in milliseconds. *Note: This does not include network time.*
 
 The following fields are provided for convenience purposes, and **only when the browse is not filtered**:
 
 - `nbHits` (integer): Number of objects in the index.
-
 - `page` (integer): Index of the current page (zero-based).
-
 - `hitsPerPage` (integer): Maximum number of hits returned per page.
-
 - `nbPages` (integer): Number of pages corresponding to the number of hits. Basically, `ceil(nbHits / hitsPerPage)`.
 
 #### Example
@@ -2993,7 +3133,7 @@ index.getUserKeyACL('9b9335cb7235d43f75b5398c36faabcd', function(err, content) {
 });
 ```
 
-## Get last logs - `getLogs` 
+## Get latest logs - `getLogs` 
 
 You can retrieve the latest logs via this API. Each log entry contains:
 
@@ -3039,7 +3179,7 @@ client.getLogs({
 });
 ```
 
-### REST API
+## REST API
 
 We've developed API clients for the most common programming languages and platforms.
 These clients are advanced wrappers on top of our REST API itself and have been made
