@@ -1,5 +1,18 @@
 CHANGELOG
 
+2017-01-16 3.20.4
+
+  * fix(retry strategy): handle cases were localStorage fails after success (#474)
+
+    Before this commit we only checked for localStorage failures at:
+    - page load
+    - localStorage.setItem
+
+    While in some situations websites could erase localStorage for the
+    whole page at any moment (between requests) and we were not resilient to that.
+
+  * chore(forwardToSlave): deprecate forwardToSlaves in favour or forwardToReplicas
+
 2017-01-04 3.20.3
 
   * fix(agent): ensure algolia agent is not duplicated by successive calls

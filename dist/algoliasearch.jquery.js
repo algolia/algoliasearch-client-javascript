@@ -1,4 +1,4 @@
-/*! algoliasearch 3.20.3 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
+/*! algoliasearch 3.20.4 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
 (function(f){var g;if(typeof window!=='undefined'){g=window}else if(typeof self!=='undefined'){g=self}g.ALGOLIA_MIGRATION_LAYER=f()})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 
 module.exports = function load (src, opts, cb) {
@@ -3952,6 +3952,11 @@ var deprecatedMessage = require(28);
 var exitPromise = require(30);
 var errors = require(29);
 
+var deprecateForwardToSlaves = deprecate(
+  function() {},
+  deprecatedMessage('forwardToSlaves', 'forwardToReplicas')
+);
+
 module.exports = Index;
 
 function Index() {
@@ -4548,10 +4553,13 @@ Index.prototype.saveSynonym = function(synonym, opts, callback) {
     opts = {};
   }
 
+  if (opts.forwardToSlaves !== undefined) deprecateForwardToSlaves();
+  var forwardToReplicas = (opts.forwardToSlaves || opts.forwardToReplicas) ? 'true' : 'false';
+
   return this.as._jsonRequest({
     method: 'PUT',
     url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/synonyms/' + encodeURIComponent(synonym.objectID) +
-      '?forwardToSlaves=' + (opts.forwardToSlaves ? 'true' : 'false'),
+      '?forwardToReplicas=' + forwardToReplicas,
     body: synonym,
     hostType: 'write',
     callback: callback
@@ -4575,10 +4583,13 @@ Index.prototype.deleteSynonym = function(objectID, opts, callback) {
     opts = {};
   }
 
+  if (opts.forwardToSlaves !== undefined) deprecateForwardToSlaves();
+  var forwardToReplicas = (opts.forwardToSlaves || opts.forwardToReplicas) ? 'true' : 'false';
+
   return this.as._jsonRequest({
     method: 'DELETE',
     url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/synonyms/' + encodeURIComponent(objectID) +
-      '?forwardToSlaves=' + (opts.forwardToSlaves ? 'true' : 'false'),
+      '?forwardToReplicas=' + forwardToReplicas,
     hostType: 'write',
     callback: callback
   });
@@ -4592,10 +4603,13 @@ Index.prototype.clearSynonyms = function(opts, callback) {
     opts = {};
   }
 
+  if (opts.forwardToSlaves !== undefined) deprecateForwardToSlaves();
+  var forwardToReplicas = (opts.forwardToSlaves || opts.forwardToReplicas) ? 'true' : 'false';
+
   return this.as._jsonRequest({
     method: 'POST',
     url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/synonyms/clear' +
-      '?forwardToSlaves=' + (opts.forwardToSlaves ? 'true' : 'false'),
+      '?forwardToReplicas=' + forwardToReplicas,
     hostType: 'write',
     callback: callback
   });
@@ -4609,10 +4623,13 @@ Index.prototype.batchSynonyms = function(synonyms, opts, callback) {
     opts = {};
   }
 
+  if (opts.forwardToSlaves !== undefined) deprecateForwardToSlaves();
+  var forwardToReplicas = (opts.forwardToSlaves || opts.forwardToReplicas) ? 'true' : 'false';
+
   return this.as._jsonRequest({
     method: 'POST',
     url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/synonyms/batch' +
-      '?forwardToSlaves=' + (opts.forwardToSlaves ? 'true' : 'false') +
+      '?forwardToReplicas=' + forwardToReplicas +
       '&replaceExistingSynonyms=' + (opts.replaceExistingSynonyms ? 'true' : 'false'),
     hostType: 'write',
     body: synonyms,
@@ -4697,13 +4714,14 @@ Index.prototype.setSettings = function(settings, opts, callback) {
     opts = {};
   }
 
-  var forwardToSlaves = opts.forwardToSlaves || false;
+  if (opts.forwardToSlaves !== undefined) deprecateForwardToSlaves();
+  var forwardToReplicas = (opts.forwardToSlaves || opts.forwardToReplicas) ? 'true' : 'false';
 
   var indexObj = this;
   return this.as._jsonRequest({
     method: 'PUT',
-    url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/settings?forwardToSlaves='
-      + (forwardToSlaves ? 'true' : 'false'),
+    url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/settings?forwardToReplicas='
+      + forwardToReplicas,
     hostType: 'write',
     body: settings,
     callback: callback
@@ -6156,28 +6174,39 @@ var moduleStore = {
 
 var localStorageStore = {
   set: function(key, data) {
+    moduleStore.set(key, data); // always replicate localStorageStore to moduleStore in case of failure
+
     try {
       var namespace = JSON.parse(global.localStorage[localStorageNamespace]);
       namespace[key] = data;
       global.localStorage[localStorageNamespace] = JSON.stringify(namespace);
       return namespace[key];
     } catch (e) {
-      debug('localStorage set failed with', e);
-      cleanup();
-      store = moduleStore;
-      return store.set(key, data);
+      return localStorageFailure(key, e);
     }
   },
   get: function(key) {
-    return JSON.parse(global.localStorage[localStorageNamespace])[key] || null;
+    try {
+      return JSON.parse(global.localStorage[localStorageNamespace])[key] || null;
+    } catch (e) {
+      return localStorageFailure(key, e);
+    }
   }
 };
+
+function localStorageFailure(key, e) {
+  debug('localStorage failed with', e);
+  cleanup();
+  store = moduleStore;
+  return store.get(key);
+}
 
 store = supportsLocalStorage() ? localStorageStore : moduleStore;
 
 module.exports = {
   get: getOrSet,
-  set: getOrSet
+  set: getOrSet,
+  supportsLocalStorage: supportsLocalStorage
 };
 
 function getOrSet(key, data) {
@@ -6191,10 +6220,11 @@ function getOrSet(key, data) {
 function supportsLocalStorage() {
   try {
     if ('localStorage' in global &&
-      global.localStorage !== null &&
-      !global.localStorage[localStorageNamespace]) {
-      // actual creation of the namespace
-      global.localStorage.setItem(localStorageNamespace, JSON.stringify({}));
+      global.localStorage !== null) {
+      if (!global.localStorage[localStorageNamespace]) {
+        // actual creation of the namespace
+        global.localStorage.setItem(localStorageNamespace, JSON.stringify({}));
+      }
       return true;
     }
 
@@ -6218,6 +6248,6 @@ function cleanup() {
 },{"1":1}],36:[function(require,module,exports){
 'use strict';
 
-module.exports = '3.20.3';
+module.exports = '3.20.4';
 
 },{}]},{},[19]);

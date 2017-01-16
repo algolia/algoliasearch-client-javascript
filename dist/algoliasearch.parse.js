@@ -1315,6 +1315,11 @@ module.exports =
 	var exitPromise = __webpack_require__(21);
 	var errors = __webpack_require__(10);
 
+	var deprecateForwardToSlaves = deprecate(
+	  function() {},
+	  deprecatedMessage('forwardToSlaves', 'forwardToReplicas')
+	);
+
 	module.exports = Index;
 
 	function Index() {
@@ -1911,10 +1916,13 @@ module.exports =
 	    opts = {};
 	  }
 
+	  if (opts.forwardToSlaves !== undefined) deprecateForwardToSlaves();
+	  var forwardToReplicas = (opts.forwardToSlaves || opts.forwardToReplicas) ? 'true' : 'false';
+
 	  return this.as._jsonRequest({
 	    method: 'PUT',
 	    url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/synonyms/' + encodeURIComponent(synonym.objectID) +
-	      '?forwardToSlaves=' + (opts.forwardToSlaves ? 'true' : 'false'),
+	      '?forwardToReplicas=' + forwardToReplicas,
 	    body: synonym,
 	    hostType: 'write',
 	    callback: callback
@@ -1938,10 +1946,13 @@ module.exports =
 	    opts = {};
 	  }
 
+	  if (opts.forwardToSlaves !== undefined) deprecateForwardToSlaves();
+	  var forwardToReplicas = (opts.forwardToSlaves || opts.forwardToReplicas) ? 'true' : 'false';
+
 	  return this.as._jsonRequest({
 	    method: 'DELETE',
 	    url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/synonyms/' + encodeURIComponent(objectID) +
-	      '?forwardToSlaves=' + (opts.forwardToSlaves ? 'true' : 'false'),
+	      '?forwardToReplicas=' + forwardToReplicas,
 	    hostType: 'write',
 	    callback: callback
 	  });
@@ -1955,10 +1966,13 @@ module.exports =
 	    opts = {};
 	  }
 
+	  if (opts.forwardToSlaves !== undefined) deprecateForwardToSlaves();
+	  var forwardToReplicas = (opts.forwardToSlaves || opts.forwardToReplicas) ? 'true' : 'false';
+
 	  return this.as._jsonRequest({
 	    method: 'POST',
 	    url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/synonyms/clear' +
-	      '?forwardToSlaves=' + (opts.forwardToSlaves ? 'true' : 'false'),
+	      '?forwardToReplicas=' + forwardToReplicas,
 	    hostType: 'write',
 	    callback: callback
 	  });
@@ -1972,10 +1986,13 @@ module.exports =
 	    opts = {};
 	  }
 
+	  if (opts.forwardToSlaves !== undefined) deprecateForwardToSlaves();
+	  var forwardToReplicas = (opts.forwardToSlaves || opts.forwardToReplicas) ? 'true' : 'false';
+
 	  return this.as._jsonRequest({
 	    method: 'POST',
 	    url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/synonyms/batch' +
-	      '?forwardToSlaves=' + (opts.forwardToSlaves ? 'true' : 'false') +
+	      '?forwardToReplicas=' + forwardToReplicas +
 	      '&replaceExistingSynonyms=' + (opts.replaceExistingSynonyms ? 'true' : 'false'),
 	    hostType: 'write',
 	    body: synonyms,
@@ -2060,13 +2077,14 @@ module.exports =
 	    opts = {};
 	  }
 
-	  var forwardToSlaves = opts.forwardToSlaves || false;
+	  if (opts.forwardToSlaves !== undefined) deprecateForwardToSlaves();
+	  var forwardToReplicas = (opts.forwardToSlaves || opts.forwardToReplicas) ? 'true' : 'false';
 
 	  var indexObj = this;
 	  return this.as._jsonRequest({
 	    method: 'PUT',
-	    url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/settings?forwardToSlaves='
-	      + (forwardToSlaves ? 'true' : 'false'),
+	    url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/settings?forwardToReplicas='
+	      + forwardToReplicas,
 	    hostType: 'write',
 	    body: settings,
 	    callback: callback
@@ -3994,28 +4012,39 @@ module.exports =
 
 	var localStorageStore = {
 	  set: function(key, data) {
+	    moduleStore.set(key, data); // always replicate localStorageStore to moduleStore in case of failure
+
 	    try {
 	      var namespace = JSON.parse(global.localStorage[localStorageNamespace]);
 	      namespace[key] = data;
 	      global.localStorage[localStorageNamespace] = JSON.stringify(namespace);
 	      return namespace[key];
 	    } catch (e) {
-	      debug('localStorage set failed with', e);
-	      cleanup();
-	      store = moduleStore;
-	      return store.set(key, data);
+	      return localStorageFailure(key, e);
 	    }
 	  },
 	  get: function(key) {
-	    return JSON.parse(global.localStorage[localStorageNamespace])[key] || null;
+	    try {
+	      return JSON.parse(global.localStorage[localStorageNamespace])[key] || null;
+	    } catch (e) {
+	      return localStorageFailure(key, e);
+	    }
 	  }
 	};
+
+	function localStorageFailure(key, e) {
+	  debug('localStorage failed with', e);
+	  cleanup();
+	  store = moduleStore;
+	  return store.get(key);
+	}
 
 	store = supportsLocalStorage() ? localStorageStore : moduleStore;
 
 	module.exports = {
 	  get: getOrSet,
-	  set: getOrSet
+	  set: getOrSet,
+	  supportsLocalStorage: supportsLocalStorage
 	};
 
 	function getOrSet(key, data) {
@@ -4029,10 +4058,11 @@ module.exports =
 	function supportsLocalStorage() {
 	  try {
 	    if ('localStorage' in global &&
-	      global.localStorage !== null &&
-	      !global.localStorage[localStorageNamespace]) {
-	      // actual creation of the namespace
-	      global.localStorage.setItem(localStorageNamespace, JSON.stringify({}));
+	      global.localStorage !== null) {
+	      if (!global.localStorage[localStorageNamespace]) {
+	        // actual creation of the namespace
+	        global.localStorage.setItem(localStorageNamespace, JSON.stringify({}));
+	      }
 	      return true;
 	    }
 
@@ -4059,7 +4089,7 @@ module.exports =
 
 	
 
-	module.exports = '3.20.3';
+	module.exports = '3.20.4';
 
 
 /***/ }
