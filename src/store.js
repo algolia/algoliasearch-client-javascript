@@ -15,28 +15,39 @@ var moduleStore = {
 
 var localStorageStore = {
   set: function(key, data) {
+    moduleStore.set(key, data); // always replicate localStorageStore to moduleStore in case of failure
+
     try {
       var namespace = JSON.parse(global.localStorage[localStorageNamespace]);
       namespace[key] = data;
       global.localStorage[localStorageNamespace] = JSON.stringify(namespace);
       return namespace[key];
     } catch (e) {
-      debug('localStorage set failed with', e);
-      cleanup();
-      store = moduleStore;
-      return store.set(key, data);
+      return localStorageFailure(key, e);
     }
   },
   get: function(key) {
-    return JSON.parse(global.localStorage[localStorageNamespace])[key] || null;
+    try {
+      return JSON.parse(global.localStorage[localStorageNamespace])[key] || null;
+    } catch (e) {
+      return localStorageFailure(key, e);
+    }
   }
 };
+
+function localStorageFailure(key, e) {
+  debug('localStorage failed with', e);
+  cleanup();
+  store = moduleStore;
+  return store.get(key);
+}
 
 store = supportsLocalStorage() ? localStorageStore : moduleStore;
 
 module.exports = {
   get: getOrSet,
-  set: getOrSet
+  set: getOrSet,
+  supportsLocalStorage: supportsLocalStorage
 };
 
 function getOrSet(key, data) {
@@ -50,10 +61,11 @@ function getOrSet(key, data) {
 function supportsLocalStorage() {
   try {
     if ('localStorage' in global &&
-      global.localStorage !== null &&
-      !global.localStorage[localStorageNamespace]) {
-      // actual creation of the namespace
-      global.localStorage.setItem(localStorageNamespace, JSON.stringify({}));
+      global.localStorage !== null) {
+      if (!global.localStorage[localStorageNamespace]) {
+        // actual creation of the namespace
+        global.localStorage.setItem(localStorageNamespace, JSON.stringify({}));
+      }
       return true;
     }
 
