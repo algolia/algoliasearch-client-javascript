@@ -295,6 +295,119 @@ index.search('jim', function(err, content) {
 });
 ```
 
+### Client options
+
+In most situations, there is no need to tune the options. We provide this list to be
+transparent with our users.
+
+- `timeout` (Number) timeout for requests to our servers, in milliseconds
+  + in Node.js this is an inactivity timeout. Defaults to 15s
+  + in the browser, this is a global timeout. Defaults to 2s (incremental)
+- `protocol` (String) protocol to use when communicating with algolia
+  + in the browser, we use the page protocol by default
+  + in Node.js it's https by default
+  + possible values: 'http:', 'https:'
+- `hosts.read` ([String]) array of read hosts to use to call Algolia servers, computed automatically
+- `hosts.write` ([String]) array of write hosts to use to call Algolia servers, computed automatically
+- `httpAgent` ([HttpAgent](https://nodejs.org/api/http.html#http_class_http_agent)) <sup>node-only</sup> Node.js httpAgent instance to use when communicating with Algolia servers.
+
+To pass an option, use:
+
+```js
+var client = algoliasearch(applicationId, apiKey, {
+  timeout: 4000
+})
+```
+
+### Callback convention
+
+Every API call takes a callback as last parameter. This callback will then be called with two arguments:
+
+ 1. **error**: null or an [Error](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error) object. More info on the error can be find in `error.message`.
+ 2. **content**: the object containing the answer from the server, it's a JavaScript object
+
+### Promises
+
+**If you do not provide a callback**, you will get a promise (but never both).
+
+Promises are the [native Promise implementation](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise).
+
+We use [jakearchibald/es6-promise](https://github.com/stefanpenner/es6-promise) as a polyfill when needed.
+
+### Request strategy
+
+The request strategy used by the JavaScript client includes:
+
+- On the browser:
+  + [CORS](https://en.wikipedia.org/wiki/Cross-Origin_Resource_Sharing#Browser_support) for modern browsers
+  + [XDomainRequest](https://msdn.microsoft.com/en-us/library/ie/cc288060%28v=vs.85%29.aspx) for IE <= 10
+  + [JSONP](https://en.wikipedia.org/wiki/JSONP) in any situation where Ajax requests are unavailabe or blocked.
+- Node.js:
+  + native [`http` module](https://nodejs.org/api/)
+
+Connections are always `keep-alive`.
+
+### Cache
+
+**Browser only**
+
+To avoid performing the same API calls twice **search** results will be stored
+in a `cache` that will be tied to your JavaScript `client` and `index` objects.
+Whenever a call for a specific query (and filters) is made, we store the results
+in a local cache. If you ever call the exact same query again, we read the
+results from the cache instead of doing an API call.
+
+This is particularly useful when your users are deleting characters from their
+current query, to avoid useless API calls. Because it is stored as a simple
+JavaScript object in memory, the cache is automatically reset whenever you
+reload the page.
+
+It is never automatically purged, nor can it be completely disabled. Instead, we
+provide the `index.clearCache()` (or `client.clearCache()` if you're using the
+[Search multiple indices](#search-multiple-indices) method that you can call to reset it.
+
+### Proxy support
+
+**Node.js only**
+
+If you are behind a proxy, just set `HTTP_PROXY` or `HTTPS_PROXY` environment variables before starting your Node.js program.
+
+```sh
+HTTP_PROXY=http://someproxy.com:9320 node main.js
+```
+
+### Keep-alive
+
+**Node.js only**
+
+Keep-alive is activated by default.
+
+Because of the nature of keepalive connections, your process will hang even if you do not do any more command using the `client`.
+
+To fix this, we expose a `client.destroy()` method that will terminate all remaining alive connections.
+
+You should call this method when you are finished working with the AlgoliaSearch API. So that your process will exit gently.
+
+**Note: keep-alive is still always activated in browsers, this is a native behavior of browsers.**
+
+### Debugging
+
+The client will send you errors when a method call fails for some reasons.
+
+You can get detailed debugging information:
+
+```js
+index.search('something', function searchDone(err) {
+  if (err) {
+    console.log(err.message);
+    console.log(err.debugData);
+    return;
+  }
+});
+```
+
+`err.debugData` contains the array of requests parameters that were used to issue requests.
+
 
 # Search
 
@@ -1480,7 +1593,7 @@ The following **individual filters** are supported:
     Example: `inStock > 0`.
 
     - **Range**: `${attributeName}:${lowerBound} TO ${upperBound}` matches all objects where the specified numeric
-    attribute is within the range [`${lowerBound}`, `${upperBound}`] (inclusive on both ends).
+    attribute is within the range [`${lowerBound}`, `${upperBound}`] \(inclusive on both ends).
     Example: `publication_date: 1441745506 TO 1441755506`.
 
 - **Facet filter**: `${facetName}:${facetValue}` matches all objects containing exactly the specified value in the specified facet attribute. *Facet matching is case sensitive*. Example: `category:Book`.
@@ -2066,6 +2179,14 @@ This advanced syntax brings two additional features:
 
 List of words that should be considered as optional when found in the query.
 
+This parameter can be useful when you want to do an **OR** between all words of the query.
+To do that you can set optionalWords equals to the search query.
+
+```python
+query = 'the query'
+params = {'optionalWords': query}
+```
+
 **Note:** You don't need to put commas between words.
 Each string will automatically be tokenized into words, all of which will be considered as optional.
 
@@ -2275,7 +2396,7 @@ Each string represents a filter on a numeric attribute. Two forms are supported:
 Example: `inStock > 0`.
 
 - **Range**: `${attributeName}:${lowerBound} TO ${upperBound}` matches all objects where the specified numeric
-attribute is within the range [`${lowerBound}`, `${upperBound}`] (inclusive on both ends).
+attribute is within the range [`${lowerBound}`, `${upperBound}`] \(inclusive on both ends).
 Example: `price: 0 TO 1000`.
 
 If you specify multiple filters, they are interpreted as a conjunction (AND). If you want to use a disjunction (OR),
