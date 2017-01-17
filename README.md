@@ -2182,9 +2182,9 @@ List of words that should be considered as optional when found in the query.
 This parameter can be useful when you want to do an **OR** between all words of the query.
 To do that you can set optionalWords equals to the search query.
 
-```python
-query = 'the query'
-params = {'optionalWords': query}
+```js
+var query = 'the query';
+var params = {'optionalWords': query};
 ```
 
 **Note:** You don't need to put commas between words.
