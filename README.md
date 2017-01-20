@@ -1413,32 +1413,45 @@ The text to search for in the index. If empty or absent, the textual search will
 
 - scope: `settings`
 - type: array of strings
-- default: `*` (all string attributes)
+- default: `[]` (all string attributes)
 - formerly known as: `attributesToIndex`
 
-The list of attributes you want index (i.e. to make searchable).
+List of attributes eligible for textual search.
+In search engine parlance, those attributes will be "indexed", i.e. their content will be made searchable.
 
-If set to null, all textual and numerical attributes of your objects are indexed.
-Make sure you updated this setting to get optimal results.
+If not specified or empty, all string values of all attributes are indexed.
+If specified, only the specified attributes are indexed; any numerical values within those attributes are converted to strings and indexed.
+
+When an attribute is listed, it is *recursively* processed, i.e. all of its nested attributes, at any depth, are indexed
+according to the same policy.
+
+**Note:** Make sure you adjust this setting to get optimal results.
 
 This parameter has two important uses:
 
-1. **Limit the attributes to index.** For example, if you store the URL of a picture, you want to store it and be able to retrieve it,
-    but you probably don't want to search in the URL.
+1. **Limit the scope of the search.**
+    Restricting the searchable attributes to those containing meaningful text guarantees a better relevance.
+    For example, if your objects have associated pictures, you need to store the picture URLs in the records
+    in order to retrieve them for display at query time, but you probably don't want to *search* inside the URLs.
+
+    A side effect of limiting the attributes is **increased performance**: it keeps the index size at a minimum, which
+    has a direct and positive impact on both build time and search speed.
 
 2. **Control part of the ranking.** The contents of the `searchableAttributes` parameter impacts ranking in two complementary ways:
-    First, the order in which attributes are listed defines their ranking priority: matches in attributes at the beginning of the
-    list will be considered more important than matches in attributes further down the list. To assign the same priority to several attributes,
-    pass them within the same string, separated by commas. For example, by specifying `["title,"alternative_title", "text"]`,
-    `title` and `alternative_title` will have the same priority, but a higher priority than `text`.
 
-    Then, within the same attribute, matches near the beginning of the text will be considered more important than matches near the end.
-    You can disable this behavior by wrapping your attribute name inside an `unordered()` modifier. For example, `["title", "unordered(text)"]`
-    will consider all positions inside the `text` attribute as equal, but positions inside the `title` attribute will still matter.
+    - **Attribute priority**: The order in which attributes are listed defines their ranking priority:
+      matches in attributes at the beginning of the list will be considered more important than matches in
+      attributes further down the list.
 
-    You can decide to have the same priority for several attributes by passing them in the same string using comma as separator.
-    For example:
-    `title` and `alternative_title` have the same priority in this example: `searchableAttributes:["title,alternative_title", "text"]`
+        To assign the same priority to several attributes, pass them within the same string, separated by commas.
+        For example, by specifying `["title,alternative_title", "text"]`, `title` and `alternative_title` will have
+        the same priority, but a higher priority than `text`.
+
+    - **Importance of word positions**: Within a given attribute, matches near the beginning of the text are considered more
+      important than matches near the end.
+      You can disable this behavior by wrapping your attribute name inside an `unordered()` modifier.
+      For example, `["title", "unordered(text)"]` will consider all positions inside the `text` attribute as equal,
+      but positions inside the `title` attribute will still matter.
 
 **Note:** To get a full description of how the ranking works, you can have a look at our [Ranking guide](https://www.algolia.com/doc/guides/relevance/ranking).
 
@@ -2118,10 +2131,12 @@ It may be one of the following values:
   Only the last word is interpreted as a prefix (default behavior).
 
 * `prefixAll`:
-  All query words are interpreted as prefixes. This option is not recommended.
+  All query words are interpreted as prefixes. This option is not recommended, as it tends to yield counterintuitive
+  results and has a negative impact on performance.
 
 * `prefixNone`:
-  No query word is interpreted as a prefix. This option is not recommended.
+  No query word is interpreted as a prefix. This option is not recommended, especially in an instant search setup,
+  as the user will have to type the entire word(s) before getting any relevant results.
 
 #### removeWordsIfNoResults
 
@@ -2284,14 +2299,19 @@ The following values are allowed:
 - default: all numeric attributes
 - formerly known as: `numericAttributesToIndex`
 
-All numerical attributes are automatically indexed as numerical filters
-(allowing filtering operations like `<` and `<=`).
-If you don't need filtering on some of your numerical attributes,
-you can specify this list to speed up the indexing.
+List of numeric attributes that can be used as numerical filters.
 
-**Note:** If you only need to filter on a numeric value with the operator `=` or `!=`,
-you can speed up the indexing by specifying the attribute with `equalOnly(AttributeName)`.
-The other operators will be disabled.
+If not specified, all numeric attributes are automatically indexed and available as numerical filters
+(via the [filters](#filters) parameter).
+If specified, only attributes explicitly listed are available as numerical filters.
+If empty, no numerical filters are allowed.
+
+If you don't need filtering on some of your numerical attributes, you can use `numericAttributesForFiltering` to
+speed up the indexing.
+
+If you only need to filter on a numeric value based on equality (i.e. with the operators `=` or `!=`),
+you can speed up the indexing by specifying `equalOnly(${attributeName})`.
+Other operators will be disabled.
 
 #### allowCompressionOfIntegerArray
 
