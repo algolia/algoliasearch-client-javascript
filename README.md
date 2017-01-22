@@ -594,6 +594,8 @@ When [facets](#facets) is non-empty, the following additional fields are returne
 
 - `exhaustiveFacetsCount` (boolean): Whether the counts are exhaustive (`true`) or approximate (`false`). *Note: In some conditions when [distinct](#distinct) is greater than 1 and an empty query without refinement is sent, the facet counts may not always be exhaustive.*
 
+<section class="docsearch-ignore">
+
 ## Search Parameters
 
 Here is the list of parameters you can use with the search method (`search` [scope](#scope)):
@@ -1069,7 +1071,7 @@ index.partialUpdateObject({
 Note: Here we are decrementing the value by `42`. To decrement just by one, put
 `value:1`.
 
-To partial update multiple objects using one API call, you can use the `[Partial update objects](#partial-update-objects)` method:
+To partial update multiple objects using one API call, you can use the following method:
 
 ```js
 var objects = [{
@@ -1095,7 +1097,7 @@ index.deleteObjects(['myID1', 'myID2'], function(err, content) {
 });
 ```
 
-To delete a single object, you can use the `[Delete objects](#delete-objects)` method:
+To delete a single object, you can use the following method:
 
 ```js
 index.deleteObject('myID', function(err) {
@@ -1204,6 +1206,8 @@ index.setSettings({'customRanking': ['desc(followers)']}, {forwardToReplicas: tr
   }
 });
 ```
+
+<section class="docsearch-ignore">
 
 ## Index settings parameters
 
