@@ -594,8 +594,6 @@ When [facets](#facets) is non-empty, the following additional fields are returne
 
 - `exhaustiveFacetsCount` (boolean): Whether the counts are exhaustive (`true`) or approximate (`false`). *Note: In some conditions when [distinct](#distinct) is greater than 1 and an empty query without refinement is sent, the facet counts may not always be exhaustive.*
 
-<section class="docsearch-ignore">
-
 ## Search Parameters
 
 Here is the list of parameters you can use with the search method (`search` [scope](#scope)):
@@ -1207,8 +1205,6 @@ index.setSettings({'customRanking': ['desc(followers)']}, {forwardToReplicas: tr
 });
 ```
 
-<section class="docsearch-ignore">
-
 ## Index settings parameters
 
 Here is the list of parameters you can use with the set settings method (`settings` [scope](#scope)).
@@ -1287,8 +1283,6 @@ Parameters that can be overridden at search time also have the `search` [scope](
 # Parameters
 
 
-
-<section id="api-client-parameters-overview">
 
 ## Overview
 
