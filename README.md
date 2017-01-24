@@ -2008,11 +2008,11 @@ Geo search requires that you provide at least one geo location in each record at
 }
 ```
 
-When performing a geo search (either via <%= parameter_link('aroundLatLng') -%> or <%= parameter_link('aroundLatLngViaIP') -%>),
+When performing a geo search (either via [aroundLatLng](#aroundlatlng) or [aroundLatLngViaIP](#aroundlatlngviaip)),
 the maximum distance is automatically guessed based on the density of the searched area.
-You may explicitly specify a maximum distance, however, via <%= parameter_link('aroundRadius') -%>.
+You may explicitly specify a maximum distance, however, via [aroundRadius](#aroundradius).
 
-The precision for the ranking is set via <%= parameter_link('aroundPrecision') -%>.
+The precision for the ranking is set via [aroundPrecision](#aroundprecision).
 
 #### aroundLatLng
 
