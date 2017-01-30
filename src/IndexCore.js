@@ -29,8 +29,8 @@ IndexCore.prototype.clearCache = function() {
 * Search inside the index using XMLHttpRequest request (Using a POST query to
 * minimize number of OPTIONS queries: Cross-Origin Resource Sharing).
 *
-* @param query the full text query
-* @param args (optional) if set, contains an object with query parameters:
+* @param {string} [query] the full text query
+* @param {object} [args] (optional) if set, contains an object with query parameters:
 * - page: (integer) Pagination parameter used to select the page to retrieve.
 *                   Page is zero-based and defaults to 0. Thus,
 *                   to retrieve the 10th page you need to set page=9
@@ -116,7 +116,7 @@ IndexCore.prototype.clearCache = function() {
 * - restrictSearchableAttributes: List of attributes you want to use for
 * textual search (must be a subset of the attributesToIndex index setting)
 * either comma separated or as an array
-* @param callback the result callback called with two arguments:
+* @param {function} [callback] the result callback called with two arguments:
 *  error: null or Error('message'). If false, the content contains the error.
 *  content: the server answer that contains the list of results.
 */
@@ -127,8 +127,8 @@ IndexCore.prototype.search = buildSearchMethod('query');
 * Search a record similar to the query inside the index using XMLHttpRequest request (Using a POST query to
 * minimize number of OPTIONS queries: Cross-Origin Resource Sharing).
 *
-* @param query the similar query
-* @param args (optional) if set, contains an object with query parameters.
+* @param {string} [query] the similar query
+* @param {object} [args] (optional) if set, contains an object with query parameters.
 *   All search parameters are supported (see search function), restrictSearchableAttributes and facetFilters
 *   are the two most useful to restrict the similar results and get more relevant content
 */
@@ -276,7 +276,7 @@ IndexCore.prototype.searchFacet = deprecate(function(params, callback) {
   'index.searchForFacetValues(params[, callback])'
 ));
 
-IndexCore.prototype._search = function(params, url, callback) {
+IndexCore.prototype._search = function(params, url, callback, additionalUA) {
   return this.as._jsonRequest({
     cache: this.cache,
     method: 'POST',
@@ -288,7 +288,8 @@ IndexCore.prototype._search = function(params, url, callback) {
       url: '/1/indexes/' + encodeURIComponent(this.indexName),
       body: {params: params}
     },
-    callback: callback
+    callback: callback,
+    additionalUA: additionalUA
   });
 };
 

@@ -59,8 +59,8 @@ AlgoliaSearchServer.prototype.disableSecuredAPIKey = function() {
   this._secure = null;
 };
 
-AlgoliaSearchServer.prototype._computeRequestHeaders = function() {
-  var headers = AlgoliaSearchServer.super_.prototype._computeRequestHeaders.call(this);
+AlgoliaSearchServer.prototype._computeRequestHeaders = function(additionalUA) {
+  var headers = AlgoliaSearchServer.super_.prototype._computeRequestHeaders.call(this, additionalUA);
 
   if (this._forward) {
     headers['x-algolia-api-key'] = this._forward.adminAPIKey;

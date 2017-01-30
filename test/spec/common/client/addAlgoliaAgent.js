@@ -2,7 +2,7 @@
 
 var test = require('tape');
 
-test('client.addAlgoliaAgent(algoliaAgent)', function(t) {
+test('AddAlgoliaAgent and custom search-time agent with x-algolia-agent', function(t) {
   t.plan(1);
 
   var fauxJax = require('faux-jax');
@@ -20,9 +20,11 @@ test('client.addAlgoliaAgent(algoliaAgent)', function(t) {
   // Ensure we de-duplicate by re-adding the same agent a second time.
   client.addAlgoliaAgent('And some other incredible agent');
 
-  index.search('algolia agent');
+  index.search('algolia agent', {
+    'x-algolia-agent': 'the other agent'
+  });
 
-  var expectedAgent = fixture.algoliasearch.ua + ';And some other incredible agent';
+  var expectedAgent = fixture.algoliasearch.ua + ';And some other incredible agent;the other agent';
 
   fauxJax.once('request', function(req) {
     var agent = process.browser ?
