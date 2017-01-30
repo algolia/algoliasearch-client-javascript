@@ -13,7 +13,7 @@ if (process.env === undefined) {
 // a lot of node modules are expecting to find a `global` object,
 // this has triggered some bugs
 /* global global: true */
-global = {};
+global = global || {};
 
 var debug = require('debug')('algoliasearch:parse');
 
