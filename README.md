@@ -295,6 +295,119 @@ index.search('jim', function(err, content) {
 });
 ```
 
+### Client options
+
+In most situations, there is no need to tune the options. We provide this list to be
+transparent with our users.
+
+- `timeout` (Number) timeout for requests to our servers, in milliseconds
+  + in Node.js this is an inactivity timeout. Defaults to 15s
+  + in the browser, this is a global timeout. Defaults to 2s (incremental)
+- `protocol` (String) protocol to use when communicating with algolia
+  + in the browser, we use the page protocol by default
+  + in Node.js it's https by default
+  + possible values: 'http:', 'https:'
+- `hosts.read` ([String]) array of read hosts to use to call Algolia servers, computed automatically
+- `hosts.write` ([String]) array of write hosts to use to call Algolia servers, computed automatically
+- `httpAgent` ([HttpAgent](https://nodejs.org/api/http.html#http_class_http_agent)) <sup>node-only</sup> Node.js httpAgent instance to use when communicating with Algolia servers.
+
+To pass an option, use:
+
+```js
+var client = algoliasearch(applicationId, apiKey, {
+  timeout: 4000
+})
+```
+
+### Callback convention
+
+Every API call takes a callback as last parameter. This callback will then be called with two arguments:
+
+ 1. **error**: null or an [Error](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error) object. More info on the error can be find in `error.message`.
+ 2. **content**: the object containing the answer from the server, it's a JavaScript object
+
+### Promises
+
+**If you do not provide a callback**, you will get a promise (but never both).
+
+Promises are the [native Promise implementation](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise).
+
+We use [jakearchibald/es6-promise](https://github.com/stefanpenner/es6-promise) as a polyfill when needed.
+
+### Request strategy
+
+The request strategy used by the JavaScript client includes:
+
+- On the browser:
+  + [CORS](https://en.wikipedia.org/wiki/Cross-Origin_Resource_Sharing#Browser_support) for modern browsers
+  + [XDomainRequest](https://msdn.microsoft.com/en-us/library/ie/cc288060%28v=vs.85%29.aspx) for IE <= 10
+  + [JSONP](https://en.wikipedia.org/wiki/JSONP) in any situation where Ajax requests are unavailabe or blocked.
+- Node.js:
+  + native [`http` module](https://nodejs.org/api/)
+
+Connections are always `keep-alive`.
+
+### Cache
+
+**Browser only**
+
+To avoid performing the same API calls twice **search** results will be stored
+in a `cache` that will be tied to your JavaScript `client` and `index` objects.
+Whenever a call for a specific query (and filters) is made, we store the results
+in a local cache. If you ever call the exact same query again, we read the
+results from the cache instead of doing an API call.
+
+This is particularly useful when your users are deleting characters from their
+current query, to avoid useless API calls. Because it is stored as a simple
+JavaScript object in memory, the cache is automatically reset whenever you
+reload the page.
+
+It is never automatically purged, nor can it be completely disabled. Instead, we
+provide the `index.clearCache()` (or `client.clearCache()` if you're using the
+[Search multiple indices](#search-multiple-indices) method that you can call to reset it.
+
+### Proxy support
+
+**Node.js only**
+
+If you are behind a proxy, just set `HTTP_PROXY` or `HTTPS_PROXY` environment variables before starting your Node.js program.
+
+```sh
+HTTP_PROXY=http://someproxy.com:9320 node main.js
+```
+
+### Keep-alive
+
+**Node.js only**
+
+Keep-alive is activated by default.
+
+Because of the nature of keepalive connections, your process will hang even if you do not do any more command using the `client`.
+
+To fix this, we expose a `client.destroy()` method that will terminate all remaining alive connections.
+
+You should call this method when you are finished working with the AlgoliaSearch API. So that your process will exit gently.
+
+**Note: keep-alive is still always activated in browsers, this is a native behavior of browsers.**
+
+### Debugging
+
+The client will send you errors when a method call fails for some reasons.
+
+You can get detailed debugging information:
+
+```js
+index.search('something', function searchDone(err) {
+  if (err) {
+    console.log(err.message);
+    console.log(err.debugData);
+    return;
+  }
+});
+```
+
+`err.debugData` contains the array of requests parameters that were used to issue requests.
+
 
 # Search
 
@@ -422,6 +535,14 @@ The server response will look like:
         - `words` (integer): Number of matched words, including prefixes and typos.
 
         - `filters` (integer): *This field is reserved for advanced usage.* It will be zero in most cases.
+
+        - `matchedGeoLocation` (object): Geo location that matched the query. *Note: Only returned for a geo search.*
+
+            - `lat` (float): Latitude of the matched location.
+
+            - `lng` (float): Longitude of the matched location.
+
+            - `distance` (integer): Distance between the matched location and the search location (in meters). **Caution:** Contrary to `geoDistance`, this value is *not* divided by the geo precision.
 
     - `_distinctSeqID` (integer): *Note: Only returned when [distinct](#distinct) is non-zero.* When two consecutive results have the same value for the attribute used for "distinct", this field is used to distinguish between them.
 
@@ -956,7 +1077,7 @@ index.partialUpdateObject({
 Note: Here we are decrementing the value by `42`. To decrement just by one, put
 `value:1`.
 
-To partial update multiple objects using one API call, you can use the `[Partial update objects](#partial-update-objects)` method:
+To partial update multiple objects using one API call, you can use the following method:
 
 ```js
 var objects = [{
@@ -982,7 +1103,7 @@ index.deleteObjects(['myID1', 'myID2'], function(err, content) {
 });
 ```
 
-To delete a single object, you can use the `[Delete objects](#delete-objects)` method:
+To delete a single object, you can use the following method:
 
 ```js
 index.deleteObject('myID', function(err) {
@@ -1171,8 +1292,6 @@ Parameters that can be overridden at search time also have the `search` [scope](
 
 
 
-<section id="api-client-parameters-overview">
-
 ## Overview
 
 ### Scope
@@ -1300,32 +1419,45 @@ The text to search for in the index. If empty or absent, the textual search will
 
 - scope: `settings`
 - type: array of strings
-- default: `*` (all string attributes)
+- default: `[]` (all string attributes)
 - formerly known as: `attributesToIndex`
 
-The list of attributes you want index (i.e. to make searchable).
+List of attributes eligible for textual search.
+In search engine parlance, those attributes will be "indexed", i.e. their content will be made searchable.
 
-If set to null, all textual and numerical attributes of your objects are indexed.
-Make sure you updated this setting to get optimal results.
+If not specified or empty, all string values of all attributes are indexed.
+If specified, only the specified attributes are indexed; any numerical values within those attributes are converted to strings and indexed.
+
+When an attribute is listed, it is *recursively* processed, i.e. all of its nested attributes, at any depth, are indexed
+according to the same policy.
+
+**Note:** Make sure you adjust this setting to get optimal results.
 
 This parameter has two important uses:
 
-1. **Limit the attributes to index.** For example, if you store the URL of a picture, you want to store it and be able to retrieve it,
-    but you probably don't want to search in the URL.
+1. **Limit the scope of the search.**
+    Restricting the searchable attributes to those containing meaningful text guarantees a better relevance.
+    For example, if your objects have associated pictures, you need to store the picture URLs in the records
+    in order to retrieve them for display at query time, but you probably don't want to *search* inside the URLs.
+
+    A side effect of limiting the attributes is **increased performance**: it keeps the index size at a minimum, which
+    has a direct and positive impact on both build time and search speed.
 
 2. **Control part of the ranking.** The contents of the `searchableAttributes` parameter impacts ranking in two complementary ways:
-    First, the order in which attributes are listed defines their ranking priority: matches in attributes at the beginning of the
-    list will be considered more important than matches in attributes further down the list. To assign the same priority to several attributes,
-    pass them within the same string, separated by commas. For example, by specifying `["title,"alternative_title", "text"]`,
-    `title` and `alternative_title` will have the same priority, but a higher priority than `text`.
 
-    Then, within the same attribute, matches near the beginning of the text will be considered more important than matches near the end.
-    You can disable this behavior by wrapping your attribute name inside an `unordered()` modifier. For example, `["title", "unordered(text)"]`
-    will consider all positions inside the `text` attribute as equal, but positions inside the `title` attribute will still matter.
+    - **Attribute priority**: The order in which attributes are listed defines their ranking priority:
+      matches in attributes at the beginning of the list will be considered more important than matches in
+      attributes further down the list.
 
-    You can decide to have the same priority for several attributes by passing them in the same string using comma as separator.
-    For example:
-    `title` and `alternative_title` have the same priority in this example: `searchableAttributes:["title,alternative_title", "text"]`
+        To assign the same priority to several attributes, pass them within the same string, separated by commas.
+        For example, by specifying `["title,alternative_title", "text"]`, `title` and `alternative_title` will have
+        the same priority, but a higher priority than `text`.
+
+    - **Importance of word positions**: Within a given attribute, matches near the beginning of the text are considered more
+      important than matches near the end.
+      You can disable this behavior by wrapping your attribute name inside an `unordered()` modifier.
+      For example, `["title", "unordered(text)"]` will consider all positions inside the `text` attribute as equal,
+      but positions inside the `title` attribute will still matter.
 
 **Note:** To get a full description of how the ranking works, you can have a look at our [Ranking guide](https://www.algolia.com/doc/guides/relevance/ranking).
 
@@ -1480,7 +1612,7 @@ The following **individual filters** are supported:
     Example: `inStock > 0`.
 
     - **Range**: `${attributeName}:${lowerBound} TO ${upperBound}` matches all objects where the specified numeric
-    attribute is within the range [`${lowerBound}`, `${upperBound}`] (inclusive on both ends).
+    attribute is within the range [`${lowerBound}`, `${upperBound}`] \(inclusive on both ends).
     Example: `publication_date: 1441745506 TO 1441755506`.
 
 - **Facet filter**: `${facetName}:${facetValue}` matches all objects containing exactly the specified value in the specified facet attribute. *Facet matching is case sensitive*. Example: `category:Book`.
@@ -1876,11 +2008,11 @@ Geo search requires that you provide at least one geo location in each record at
 }
 ```
 
-When performing a geo search (either via <%= parameter_link('aroundLatLng') -%> or <%= parameter_link('aroundLatLngViaIP') -%>),
+When performing a geo search (either via [aroundLatLng](#aroundlatlng) or [aroundLatLngViaIP](#aroundlatlngviaip)),
 the maximum distance is automatically guessed based on the density of the searched area.
-You may explicitly specify a maximum distance, however, via <%= parameter_link('aroundRadius') -%>.
+You may explicitly specify a maximum distance, however, via [aroundRadius](#aroundradius).
 
-The precision for the ranking is set via <%= parameter_link('aroundPrecision') -%>.
+The precision for the ranking is set via [aroundPrecision](#aroundprecision).
 
 #### aroundLatLng
 
@@ -2005,10 +2137,12 @@ It may be one of the following values:
   Only the last word is interpreted as a prefix (default behavior).
 
 * `prefixAll`:
-  All query words are interpreted as prefixes. This option is not recommended.
+  All query words are interpreted as prefixes. This option is not recommended, as it tends to yield counterintuitive
+  results and has a negative impact on performance.
 
 * `prefixNone`:
-  No query word is interpreted as a prefix. This option is not recommended.
+  No query word is interpreted as a prefix. This option is not recommended, especially in an instant search setup,
+  as the user will have to type the entire word(s) before getting any relevant results.
 
 #### removeWordsIfNoResults
 
@@ -2065,6 +2199,14 @@ This advanced syntax brings two additional features:
 - default: `[]`
 
 List of words that should be considered as optional when found in the query.
+
+This parameter can be useful when you want to do an **OR** between all words of the query.
+To do that you can set optionalWords equals to the search query.
+
+```js
+var query = 'the query';
+var params = {'optionalWords': query};
+```
 
 **Note:** You don't need to put commas between words.
 Each string will automatically be tokenized into words, all of which will be considered as optional.
@@ -2163,14 +2305,19 @@ The following values are allowed:
 - default: all numeric attributes
 - formerly known as: `numericAttributesToIndex`
 
-All numerical attributes are automatically indexed as numerical filters
-(allowing filtering operations like `<` and `<=`).
-If you don't need filtering on some of your numerical attributes,
-you can specify this list to speed up the indexing.
+List of numeric attributes that can be used as numerical filters.
 
-**Note:** If you only need to filter on a numeric value with the operator `=` or `!=`,
-you can speed up the indexing by specifying the attribute with `equalOnly(AttributeName)`.
-The other operators will be disabled.
+If not specified, all numeric attributes are automatically indexed and available as numerical filters
+(via the [filters](#filters) parameter).
+If specified, only attributes explicitly listed are available as numerical filters.
+If empty, no numerical filters are allowed.
+
+If you don't need filtering on some of your numerical attributes, you can use `numericAttributesForFiltering` to
+speed up the indexing.
+
+If you only need to filter on a numeric value based on equality (i.e. with the operators `=` or `!=`),
+you can speed up the indexing by specifying `equalOnly(${attributeName})`.
+Other operators will be disabled.
 
 #### allowCompressionOfIntegerArray
 
@@ -2275,7 +2422,7 @@ Each string represents a filter on a numeric attribute. Two forms are supported:
 Example: `inStock > 0`.
 
 - **Range**: `${attributeName}:${lowerBound} TO ${upperBound}` matches all objects where the specified numeric
-attribute is within the range [`${lowerBound}`, `${upperBound}`] (inclusive on both ends).
+attribute is within the range [`${lowerBound}`, `${upperBound}`] \(inclusive on both ends).
 Example: `price: 0 TO 1000`.
 
 If you specify multiple filters, they are interpreted as a conjunction (AND). If you want to use a disjunction (OR),
@@ -2536,27 +2683,23 @@ client.moveIndex('MyNewIndex', 'MyIndex', function(err, content) {
 });
 ```
 
-**Note**:
+**Note:** The moveIndex method overrides the destination index, and deletes the temporary one.
+  In other words, there is no need to call the `clearIndex` or `deleteIndex` methods to clean the temporary index.
+It also overrides all the settings of the destination index (except the [replicas](#replicas) parameter that need to not be part of the temporary index settings).
 
-The moveIndex method will overwrite the destination index, and delete the temporary index.
-
-**Warning**
-
-The moveIndex operation will override all settings of the destination,
-There is one exception for the [replicas](#replicas) parameter which is not impacted.
-
-For example, if you want to fully update your index `MyIndex` every night, we recommend the following process:
+**Recommended steps**
+If you want to fully update your index `MyIndex` every night, we recommend the following process:
 
  1. Get settings and synonyms from the old index using [Get settings](#get-settings)
   and [Get synonym](#get-synonym).
  1. Apply settings and synonyms to the temporary index `MyTmpIndex`, (this will create the `MyTmpIndex` index)
-  using [Set settings](#set-settings) and [Batch synonyms](#batch-synonyms)
-  (make sure to remove the [replicas](#replicas) parameter from the settings if it exists).
- 1. Import your records into a new index using [Add Objects](#add-objects).
+  using [Set settings](#set-settings) and [Batch synonyms](#batch-synonyms) ([!] Make sure to remove the [replicas](#replicas) parameter from the settings if it exists.
+ 1. Import your records into a new index using [Add Objects](#add-objects)).
  1. Atomically replace the index `MyIndex` with the content and settings of the index `MyTmpIndex`
  using the [Move index](#move-index) method.
  This will automatically override the old index without any downtime on the search.
- 1. You'll end up with only one index called `MyIndex`, that contains the records and settings pushed to `MyTmpIndex`
+ 
+ You'll end up with only one index called `MyIndex`, that contains the records and settings pushed to `MyTmpIndex`
  and the replica-indices that were initially attached to `MyIndex` will be in sync with the new data.
 
 
