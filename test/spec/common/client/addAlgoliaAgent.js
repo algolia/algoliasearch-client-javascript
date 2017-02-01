@@ -21,7 +21,7 @@ test('AddAlgoliaAgent and custom search-time agent with x-algolia-agent', functi
   client.addAlgoliaAgent('And some other incredible agent');
 
   index.search('algolia agent', {
-    'x-algolia-agent': 'the other agent'
+    additionalUA: 'the other agent'
   });
 
   var expectedAgent = fixture.algoliasearch.ua + ';And some other incredible agent;the other agent';

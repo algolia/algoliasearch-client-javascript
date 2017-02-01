@@ -53,9 +53,9 @@ function buildSearchMethod(queryParam, url) {
 
     var additionalUA;
     if (args !== undefined) {
-      if (args['x-algolia-agent']) {
-        additionalUA = args['x-algolia-agent'];
-        delete args['x-algolia-agent'];
+      if (args.additionalUA) {
+        additionalUA = args.additionalUA;
+        delete args.additionalUA;
       }
       // `_getSearchParams` will augment params, do not be fooled by the = versus += from previous if
       params = this.as._getSearchParams(args, params);
