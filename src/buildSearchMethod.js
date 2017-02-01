@@ -1,6 +1,5 @@
 module.exports = buildSearchMethod;
 
-var clone = require('./clone.js');
 var errors = require('./errors.js');
 
 /**
