@@ -1,4 +1,4 @@
-/*! algoliasearch 3.20.4 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
+/*! algoliasearch 3.21.0 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.algoliasearch = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 (function (process){
 
@@ -2364,6 +2364,7 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
   var requestDebug = require(1)('algoliasearch:' + initialOpts.url);
 
   var body;
+  var additionalUA = initialOpts.additionalUA || '';
   var cache = initialOpts.cache;
   var client = this;
   var tries = 0;
@@ -2378,9 +2379,9 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
     initialOpts.body.requests !== undefined) // client.search()
   ) {
     initialOpts.body.apiKey = this.apiKey;
-    headers = this._computeRequestHeaders(false);
+    headers = this._computeRequestHeaders(additionalUA, false);
   } else {
-    headers = this._computeRequestHeaders();
+    headers = this._computeRequestHeaders(additionalUA);
   }
 
   if (initialOpts.body !== undefined) {
@@ -2437,7 +2438,7 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
         reqOpts.body = safeJSONStringify(reqOpts.jsonBody);
       }
       // re-compute headers, they could be omitting the API KEY
-      headers = client._computeRequestHeaders();
+      headers = client._computeRequestHeaders(additionalUA);
 
       reqOpts.timeouts = client._getTimeoutsForRequest(initialOpts.hostType);
       client._setHostIndexByType(0, initialOpts.hostType);
@@ -2636,6 +2637,9 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
 
 /*
 * Transform search param object in query string
+* @param {object} args arguments to add to the current query string
+* @param {string} params current query string
+* @return {string} the final query string
 */
 AlgoliaSearchCore.prototype._getSearchParams = function(args, params) {
   if (args === undefined || args === null) {
@@ -2650,11 +2654,15 @@ AlgoliaSearchCore.prototype._getSearchParams = function(args, params) {
   return params;
 };
 
-AlgoliaSearchCore.prototype._computeRequestHeaders = function(withAPIKey) {
+AlgoliaSearchCore.prototype._computeRequestHeaders = function(additionalUA, withAPIKey) {
   var forEach = require(4);
 
+  var ua = additionalUA ?
+    this._ua + ';' + additionalUA :
+    this._ua;
+
   var requestHeaders = {
-    'x-algolia-agent': this._ua,
+    'x-algolia-agent': ua,
     'x-algolia-application-id': this.applicationID
   };
 
@@ -3012,8 +3020,8 @@ IndexCore.prototype.clearCache = function() {
 * Search inside the index using XMLHttpRequest request (Using a POST query to
 * minimize number of OPTIONS queries: Cross-Origin Resource Sharing).
 *
-* @param query the full text query
-* @param args (optional) if set, contains an object with query parameters:
+* @param {string} [query] the full text query
+* @param {object} [args] (optional) if set, contains an object with query parameters:
 * - page: (integer) Pagination parameter used to select the page to retrieve.
 *                   Page is zero-based and defaults to 0. Thus,
 *                   to retrieve the 10th page you need to set page=9
@@ -3099,7 +3107,7 @@ IndexCore.prototype.clearCache = function() {
 * - restrictSearchableAttributes: List of attributes you want to use for
 * textual search (must be a subset of the attributesToIndex index setting)
 * either comma separated or as an array
-* @param callback the result callback called with two arguments:
+* @param {function} [callback] the result callback called with two arguments:
 *  error: null or Error('message'). If false, the content contains the error.
 *  content: the server answer that contains the list of results.
 */
@@ -3110,8 +3118,8 @@ IndexCore.prototype.search = buildSearchMethod('query');
 * Search a record similar to the query inside the index using XMLHttpRequest request (Using a POST query to
 * minimize number of OPTIONS queries: Cross-Origin Resource Sharing).
 *
-* @param query the similar query
-* @param args (optional) if set, contains an object with query parameters.
+* @param {string} [query] the similar query
+* @param {object} [args] (optional) if set, contains an object with query parameters.
 *   All search parameters are supported (see search function), restrictSearchableAttributes and facetFilters
 *   are the two most useful to restrict the similar results and get more relevant content
 */
@@ -3259,7 +3267,7 @@ IndexCore.prototype.searchFacet = deprecate(function(params, callback) {
   'index.searchForFacetValues(params[, callback])'
 ));
 
-IndexCore.prototype._search = function(params, url, callback) {
+IndexCore.prototype._search = function(params, url, callback, additionalUA) {
   return this.as._jsonRequest({
     cache: this.cache,
     method: 'POST',
@@ -3271,7 +3279,8 @@ IndexCore.prototype._search = function(params, url, callback) {
       url: '/1/indexes/' + encodeURIComponent(this.indexName),
       body: {params: params}
     },
-    callback: callback
+    callback: callback,
+    additionalUA: additionalUA
   });
 };
 
@@ -3758,7 +3767,20 @@ module.exports = buildSearchMethod;
 
 var errors = require(24);
 
+/**
+ * Creates a search method to be used in clients
+ * @param {string} queryParam the name of the attribute used for the query
+ * @param {string} url the url
+ * @return {function} the search method
+ */
 function buildSearchMethod(queryParam, url) {
+  /**
+   * The search method. Prepares the data and send the query to Algolia.
+   * @param {string} query the string used for query search
+   * @param {object} args additional parameters to send with the search
+   * @param {function} [callback] the callback to be called with the client gets the answer
+   * @return {undefined|Promise} If the callback is not provided then this methods returns a Promise
+   */
   return function search(query, args, callback) {
     // warn V2 users on how to search
     if (typeof query === 'function' && typeof args === 'object' ||
@@ -3768,17 +3790,19 @@ function buildSearchMethod(queryParam, url) {
       throw new errors.AlgoliaSearchError('index.search usage is index.search(query, params, cb)');
     }
 
+    // Normalizing the function signature
     if (arguments.length === 0 || typeof query === 'function') {
-      // .search(), .search(cb)
+      // Usage : .search(), .search(cb)
       callback = query;
       query = '';
     } else if (arguments.length === 1 || typeof args === 'function') {
-      // .search(query/args), .search(query, cb)
+      // Usage : .search(query/args), .search(query, cb)
       callback = args;
       args = undefined;
     }
+    // At this point we have 3 arguments with values
 
-    // .search(args), careful: typeof null === 'object'
+    // Usage : .search(args) // careful: typeof null === 'object'
     if (typeof query === 'object' && query !== null) {
       args = query;
       query = undefined;
@@ -3792,12 +3816,18 @@ function buildSearchMethod(queryParam, url) {
       params += queryParam + '=' + encodeURIComponent(query);
     }
 
+    var additionalUA;
     if (args !== undefined) {
+      if (args.additionalUA) {
+        additionalUA = args.additionalUA;
+        delete args.additionalUA;
+      }
       // `_getSearchParams` will augment params, do not be fooled by the = versus += from previous if
       params = this.as._getSearchParams(args, params);
     }
 
-    return this._search(params, url, callback);
+
+    return this._search(params, url, callback, additionalUA);
   };
 }
 
@@ -4094,7 +4124,7 @@ function cleanup() {
 },{"1":1}],31:[function(require,module,exports){
 'use strict';
 
-module.exports = '3.20.4';
+module.exports = '3.21.0';
 
 },{}]},{},[15])(15)
 });
