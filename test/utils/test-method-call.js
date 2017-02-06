@@ -30,10 +30,9 @@ function testMethodCall(opts) {
 
   object[opts.methodName].apply(object, testCase.callArguments);
 
-  fauxJax.once('request', function(req) {
+  fauxJax.once('request', function(actualRequest) {
     fauxJax.restore();
 
-    var actualRequest = req;
     var expectedRequest = testCase.expectedRequest;
 
     actualRequest.respond(

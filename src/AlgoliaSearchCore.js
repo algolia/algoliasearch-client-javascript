@@ -168,6 +168,7 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
   var requestDebug = require('debug')('algoliasearch:' + initialOpts.url);
 
   var body;
+  var additionalUA = initialOpts.additionalUA || '';
   var cache = initialOpts.cache;
   var client = this;
   var tries = 0;
@@ -182,9 +183,9 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
     initialOpts.body.requests !== undefined) // client.search()
   ) {
     initialOpts.body.apiKey = this.apiKey;
-    headers = this._computeRequestHeaders(false);
+    headers = this._computeRequestHeaders(additionalUA, false);
   } else {
-    headers = this._computeRequestHeaders();
+    headers = this._computeRequestHeaders(additionalUA);
   }
 
   if (initialOpts.body !== undefined) {
@@ -241,7 +242,7 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
         reqOpts.body = safeJSONStringify(reqOpts.jsonBody);
       }
       // re-compute headers, they could be omitting the API KEY
-      headers = client._computeRequestHeaders();
+      headers = client._computeRequestHeaders(additionalUA);
 
       reqOpts.timeouts = client._getTimeoutsForRequest(initialOpts.hostType);
       client._setHostIndexByType(0, initialOpts.hostType);
@@ -440,6 +441,9 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
 
 /*
 * Transform search param object in query string
+* @param {object} args arguments to add to the current query string
+* @param {string} params current query string
+* @return {string} the final query string
 */
 AlgoliaSearchCore.prototype._getSearchParams = function(args, params) {
   if (args === undefined || args === null) {
@@ -454,11 +458,15 @@ AlgoliaSearchCore.prototype._getSearchParams = function(args, params) {
   return params;
 };
 
-AlgoliaSearchCore.prototype._computeRequestHeaders = function(withAPIKey) {
+AlgoliaSearchCore.prototype._computeRequestHeaders = function(additionalUA, withAPIKey) {
   var forEach = require('foreach');
 
+  var ua = additionalUA ?
+    this._ua + ';' + additionalUA :
+    this._ua;
+
   var requestHeaders = {
-    'x-algolia-agent': this._ua,
+    'x-algolia-agent': ua,
     'x-algolia-application-id': this.applicationID
   };
 
