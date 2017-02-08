@@ -7,12 +7,12 @@ module.exports = [{
   callArguments: [8],
   action: 'read',
   expectedRequest: {
-    method: 'GET',
+    method: 'POST',
     URL: {
-      pathname: '/1/indexes/%s/browse',
-      query: {
-        page: '8'
-      }
+      pathname: '/1/indexes/%s/browse'
+    },
+    body: {
+      params: 'page=8'
     }
   }
 }, {
@@ -22,13 +22,12 @@ module.exports = [{
   callArguments: [10, 15],
   action: 'read',
   expectedRequest: {
-    method: 'GET',
+    method: 'POST',
     URL: {
-      pathname: '/1/indexes/%s/browse',
-      query: {
-        page: '10',
-        hitsPerPage: '15'
-      }
+      pathname: '/1/indexes/%s/browse'
+    },
+    body: {
+      params: 'page=10&hitsPerPage=15'
     }
   }
 }, {
@@ -38,12 +37,12 @@ module.exports = [{
   callArguments: [],
   action: 'read',
   expectedRequest: {
-    method: 'GET',
+    method: 'POST',
     URL: {
-      pathname: '/1/indexes/%s/browse',
-      query: {
-        page: '0'
-      }
+      pathname: '/1/indexes/%s/browse'
+    },
+    body: {
+      params: 'page=0'
     }
   }
 }, {
@@ -53,12 +52,12 @@ module.exports = [{
   callArguments: ['hel""lo'],
   action: 'read',
   expectedRequest: {
-    method: 'GET',
+    method: 'POST',
     URL: {
-      pathname: '/1/indexes/%s/browse',
-      query: {
-        query: 'hel""lo'
-      }
+      pathname: '/1/indexes/%s/browse'
+    },
+    body: {
+      params: 'query=hel%22%22lo'
     }
   }
 }, {
@@ -70,12 +69,12 @@ module.exports = [{
   }],
   action: 'read',
   expectedRequest: {
-    method: 'GET',
+    method: 'POST',
     URL: {
-      pathname: '/1/indexes/%s/browse',
-      query: {
-        some: 'thing'
-      }
+      pathname: '/1/indexes/%s/browse'
+    },
+    body: {
+      params: 'some=thing'
     }
   }
 }, {
@@ -87,13 +86,12 @@ module.exports = [{
   }],
   action: 'read',
   expectedRequest: {
-    method: 'GET',
+    method: 'POST',
     URL: {
-      pathname: '/1/indexes/%s/browse',
-      query: {
-        query: 'BOUHHHH!!',
-        some: 'thing'
-      }
+      pathname: '/1/indexes/%s/browse'
+    },
+    body: {
+      params: 'some=thing&query=BOUHHHH!!'
     }
   }
 }];
