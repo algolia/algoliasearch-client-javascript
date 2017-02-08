@@ -1,4 +1,4 @@
-/*! algoliasearch 3.21.0 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
+/*! algoliasearch 3.21.1 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.algoliasearch = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 (function (process){
 
@@ -3194,8 +3194,9 @@ IndexCore.prototype.browse = function(query, queryParameters, callback) {
   var params = this.as._getSearchParams(queryParameters, '');
 
   return this.as._jsonRequest({
-    method: 'GET',
-    url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/browse?' + params,
+    method: 'POST',
+    url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/browse',
+    body: {params: params},
     hostType: 'read',
     callback: callback
   });
@@ -3216,8 +3217,9 @@ IndexCore.prototype.browse = function(query, queryParameters, callback) {
 */
 IndexCore.prototype.browseFrom = function(cursor, callback) {
   return this.as._jsonRequest({
-    method: 'GET',
-    url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/browse?cursor=' + encodeURIComponent(cursor),
+    method: 'POST',
+    url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/browse',
+    body: {cursor: cursor},
     hostType: 'read',
     callback: callback
   });
@@ -4124,7 +4126,7 @@ function cleanup() {
 },{"1":1}],31:[function(require,module,exports){
 'use strict';
 
-module.exports = '3.21.0';
+module.exports = '3.21.1';
 
 },{}]},{},[15])(15)
 });
