@@ -7,12 +7,12 @@ module.exports = [{
   callArguments: ['dsafsaflsakfsalf'],
   action: 'read',
   expectedRequest: {
-    method: 'GET',
+    method: 'POST',
     URL: {
-      pathname: '/1/indexes/%s/browse',
-      query: {
-        cursor: 'dsafsaflsakfsalf'
-      }
+      pathname: '/1/indexes/%s/browse'
+    },
+    body: {
+      cursor: 'dsafsaflsakfsalf'
     }
   }
 }, {
@@ -22,12 +22,12 @@ module.exports = [{
   callArguments: ['=&"dsa'],
   action: 'read',
   expectedRequest: {
-    method: 'GET',
+    method: 'POST',
     URL: {
-      pathname: '/1/indexes/%s/browse',
-      query: {
-        cursor: '=&"dsa'
-      }
+      pathname: '/1/indexes/%s/browse'
+    },
+    body: {
+      cursor: '=&"dsa'
     }
   }
 }];

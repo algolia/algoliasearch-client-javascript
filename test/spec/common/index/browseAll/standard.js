@@ -3,7 +3,7 @@
 var test = require('tape');
 
 test('index.browseAll(query, queryParameters)', function(t) {
-  t.plan(7);
+  t.plan(6);
 
   var fauxJax = require('faux-jax');
   var parse = require('url-parse');
@@ -26,15 +26,17 @@ test('index.browseAll(query, queryParameters)', function(t) {
 
   function firstBrowse(req) {
     var parsedURL = parse(req.requestURL, true);
-    var qs = parsedURL.query;
 
     t.equal(
       parsedURL.pathname,
       '/1/indexes/' + encodeURIComponent(fixture.credentials.indexName) + '/browse',
       'pathname matches'
     );
-    t.equal(qs.query, 'some', 'query param matches');
-    t.equal(qs.hitsPerPage, '200', 'hitsPerPage param matches');
+    t.deepEqual(
+      JSON.parse(req.requestBody),
+      {params: 'hitsPerPage=200&query=some'},
+      'params matches'
+    );
 
     req.respond(
       200,
@@ -49,8 +51,11 @@ test('index.browseAll(query, queryParameters)', function(t) {
   }
 
   function secondBrowse(req) {
-    var qs = parse(req.requestURL, true).query;
-    t.equal(qs.cursor, 'fslajf21rf31fé==!');
+    t.deepEqual(
+      JSON.parse(req.requestBody),
+      {cursor: 'fslajf21rf31fé==!'},
+      'cursor matches'
+    );
 
     req.respond(
       200,
