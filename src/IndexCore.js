@@ -203,8 +203,9 @@ IndexCore.prototype.browse = function(query, queryParameters, callback) {
   var params = this.as._getSearchParams(queryParameters, '');
 
   return this.as._jsonRequest({
-    method: 'GET',
-    url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/browse?' + params,
+    method: 'POST',
+    url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/browse',
+    body: {params: params},
     hostType: 'read',
     callback: callback
   });
@@ -225,8 +226,9 @@ IndexCore.prototype.browse = function(query, queryParameters, callback) {
 */
 IndexCore.prototype.browseFrom = function(cursor, callback) {
   return this.as._jsonRequest({
-    method: 'GET',
-    url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/browse?cursor=' + encodeURIComponent(cursor),
+    method: 'POST',
+    url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/browse',
+    body: {cursor: cursor},
     hostType: 'read',
     callback: callback
   });

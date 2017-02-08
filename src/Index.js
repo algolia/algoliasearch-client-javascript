@@ -417,18 +417,23 @@ Index.prototype.browseAll = function(query, queryParameters) {
       return;
     }
 
-    var queryString;
+    var body;
 
     if (cursor !== undefined) {
-      queryString = 'cursor=' + encodeURIComponent(cursor);
+      body = {
+        cursor: cursor
+      };
     } else {
-      queryString = params;
+      body = {
+        params: params
+      };
     }
 
     client._jsonRequest({
-      method: 'GET',
-      url: '/1/indexes/' + encodeURIComponent(index.indexName) + '/browse?' + queryString,
+      method: 'POST',
+      url: '/1/indexes/' + encodeURIComponent(index.indexName) + '/browse',
       hostType: 'read',
+      body: body,
       callback: browseCallback
     });
   }
