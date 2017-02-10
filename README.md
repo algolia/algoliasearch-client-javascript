@@ -18,6 +18,7 @@ The **Algolia Search API Client for JavaScript** lets you easily use the [Algoli
 [version-svg]: https://img.shields.io/npm/v/algoliasearch.svg?style=flat-square
 [package-url]: https://npmjs.org/package/algoliasearch
 
+
 The JavaScript client works both on the frontend (browsers) or on the backend (Node.js) with the same API.
 
 The backend (Node.js) API can be used to index your data using your Algolia admin API keys.
@@ -26,6 +27,7 @@ Our JavaScript library is [UMD](https://github.com/umdjs/umd) compatible, you ca
 use it with any module loader.
 
 When not using any module loader, it will export an `algoliasearch` function in the `window` object.
+
 
 
 **Note:** An easier-to-read version of this documentation is available on
@@ -39,6 +41,7 @@ When not using any module loader, it will export an `algoliasearch` function in 
 1. [Install](#install)
 1. [Init index - `initIndex`](#init-index---initindex)
 1. [Quick Start](#quick-start)
+1. [Getting Help](#getting-help)
 
 **Search**
 
@@ -95,6 +98,7 @@ When not using any module loader, it will export an `algoliasearch` function in 
 
 **Synonyms**
 
+1. [Overview](#overview)
 1. [Save synonym - `saveSynonym`](#save-synonym---savesynonym)
 1. [Batch synonyms - `batchSynonyms`](#batch-synonyms---batchsynonyms)
 1. [Editing Synonyms](#editing-synonyms)
@@ -107,7 +111,7 @@ When not using any module loader, it will export an `algoliasearch` function in 
 
 1. [Custom batch - `batch`](#custom-batch---batch)
 1. [Backup / Export an index - `browse`](#backup--export-an-index---browse)
-1. [List api keys - `listApiKeys`](#list-api-keys---listapikeys)
+1. [List user keys - `listUserKeys`](#list-user-keys---listuserkeys)
 1. [Add user key - `addUserKey`](#add-user-key---adduserkey)
 1. [Update user key - `updateUserKey`](#update-user-key---updateuserkey)
 1. [Delete user key - `deleteUserKey`](#delete-user-key---deleteuserkey)
@@ -407,6 +411,11 @@ index.search('something', function searchDone(err) {
 ```
 
 `err.debugData` contains the array of requests parameters that were used to issue requests.
+
+## Getting Help
+
+- **Need help**? Ask a question to the [Algolia Community](https://discourse.algolia.com/) or on [Stack Overflow](http://stackoverflow.com/questions/tagged/algolia).
+- **Found a bug?** You can open a [GitHub issue](https://github.com/algolia/algoliasearch-client-javascript/issues).
 
 
 # Search
@@ -1041,12 +1050,12 @@ index.deleteObject('myID', function(err) {
 
 ## Delete by query - `deleteByQuery` 
 
-You can delete all objects matching a single query with the following code. Internally, the API client performs the query, deletes all matching hits, and waits until the deletions have been applied.
+The "delete by query" helper deletes all objects matching a query. Internally, the API client will browse the index (as in [Backup / Export an index](#backup--export-an-index)), delete all matching hits, and wait until all deletion tasks have been applied.
 
-Take your precautions when using this method. Calling it with an empty query will result in cleaning the index of all its records.
+**Warning:** Be careful when using this method. Calling it with an empty query will result in cleaning the index of all its records.
 
 ```js
-// no query parameters
+// no query parameters: will clear the whole index!
 index.deleteByQuery('John', function(err) {
   if (!err) {
     console.log('success');
@@ -1055,8 +1064,7 @@ index.deleteByQuery('John', function(err) {
 
 // with query parameters
 index.deleteByQuery('John', {
-  some: 'query',
-  param: 'eters'
+  // any browse-compatible query parameters
 }, function(err) {
   if (!err) {
     console.log('success');
@@ -1273,7 +1281,7 @@ We have several methods to manage them:
 - [Add user key](#add-user-key)
 - [Update user key](#update-user-key)
 - [Delete user key](#delete-user-key)
-- [List api keys](#list-api-keys)
+- [List user keys](#list-user-keys)
 - [Get key permissions](#get-key-permissions)
 
 ## Generate key - `generateSecuredApiKey` 
@@ -1390,6 +1398,42 @@ var public_key = client.generateSecuredApiKey('YourSearchOnlyApiKey', {restrictS
 # Synonyms
 
 
+
+## Overview
+
+Synonyms tell the engine about sets of words and expressions that should be considered equal with regard to textual relevance.
+
+All synonym records have a type attribute. The two most used types are:
+
+- (Regular) Synonyms - `synonym`: Regular synonyms are the most common, all words or expressions are considered equals
+
+  ```json
+  {
+     "objectID": "NAME",
+     "type": "synonym",
+     "synonyms":[
+        "tv",
+        "television",
+        "tv set"
+     ]
+  }
+  ```
+
+- One-way Synonym - `oneWaySynonym`: When the `input` is searched all words or expressions in synonyms are considered equals to the input
+
+  ```json
+  {
+     "objectID": "NAME",
+     "type": "oneWaySynonym",
+     "input": "tablet",
+     "synonyms":[
+        "ipad",
+        "galaxy note"
+     ]
+  }
+  ```
+
+If you're looking for other types of synonyms or want more details you can have a look at our [synonyms guide](https://www.algolia.com/doc/guides/relevance/synonyms)
 
 ## Save synonym - `saveSynonym` 
 
@@ -1634,7 +1678,7 @@ index.browse('jazz', function browseDone(err, content) {
 });
 ```
 
-## List api keys - `listApiKeys` 
+## List user keys - `listUserKeys` 
 
 To list existing keys, you can use:
 
