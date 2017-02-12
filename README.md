@@ -1908,4 +1908,7 @@ Everything that can be done using the REST API can be done using those clients.
 The REST API lets your interact directly with Algolia platforms from anything that can send an HTTP request
 [Go to the REST API doc](https://algolia.com/doc/rest)
 
+Another tool to test out the Algolia API is [RapidAPI](https://rapidapi.com/package/Algolia/functions?utm_source=AlgoliaGitHub&utm_medium=button).
+
+
 
