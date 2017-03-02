@@ -47,6 +47,14 @@
       "url": "http://www.algolia.com"
     }
   ],
+  "files": [
+    "src",
+    "dist",
+    "plugins",
+    "index.js",
+    "lite.js",
+    "reactnative.js"
+  ],
   "dependencies": {
     "agentkeepalive": "^2.1.1",
     "debug": "2.3.3",
