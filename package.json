@@ -53,7 +53,8 @@
     "plugins",
     "index.js",
     "lite.js",
-    "reactnative.js"
+    "reactnative.js",
+    "bower.json"
   ],
   "dependencies": {
     "agentkeepalive": "^2.1.1",
