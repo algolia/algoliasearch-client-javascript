@@ -3,8 +3,8 @@
   "version": "3.21.1",
   "description": "AlgoliaSearch API JavaScript client",
   "main": "index.js",
-  "module": "dist/algoliasearch.esm.js",
-  "jsnext:main": "dist/algoliasearch.esm.js",
+  "module": "dist/algoliasearch.browser.esm.js",
+  "jsnext:main": "dist/algoliasearch/browser.esm.js",
   "browser": {
     "./index.js": "./src/browser/builds/algoliasearch.js",
     "./lite.js": "./src/browser/builds/algoliasearchLite.js"
@@ -100,6 +100,8 @@
     "proxy-agent": "^2.0.0",
     "rollup": "^0.41.4",
     "rollup-plugin-commonjs": "^7.0.0",
+    "rollup-plugin-node-builtins": "^2.1.0",
+    "rollup-plugin-node-resolve": "^2.0.0",
     "self-signed": "^1.3.1",
     "server-destroy-vvo": "^1.0.1",
     "sinon": "^1.17.7",
