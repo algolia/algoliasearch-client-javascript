@@ -67,4 +67,7 @@ echo "$license" | cat - dist/algoliasearchLite.js > /tmp/out && mv /tmp/out dist
 echo "$license" | cat - dist/algoliasearchLite.min.js > /tmp/out && mv /tmp/out dist/algoliasearchLite.min.js
 echo "algoliasearchLite.min.js gzipped will weight" $(cat dist/algoliasearchLite.min.js | gzip -9 | wc -c | pretty-bytes)
 
+echo '..es module build'
+rollup -c scripts/rollup.esm.config.js
+
 echo 'Done'
