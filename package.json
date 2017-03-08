@@ -4,7 +4,7 @@
   "description": "AlgoliaSearch API JavaScript client",
   "main": "index.js",
   "module": "dist/algoliasearch.browser.esm.js",
-  "jsnext:main": "dist/algoliasearch/browser.esm.js",
+  "jsnext:main": "dist/algoliasearch.browser.esm.js",
   "browser": {
     "./index.js": "./src/browser/builds/algoliasearch.js",
     "./lite.js": "./src/browser/builds/algoliasearchLite.js"
