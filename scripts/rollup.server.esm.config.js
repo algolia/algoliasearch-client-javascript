@@ -1,6 +1,7 @@
 import commonjs from 'rollup-plugin-commonjs';
 import nodeResolve from 'rollup-plugin-node-resolve';
 import builtins from 'rollup-plugin-node-builtins';
+import globals from 'rollup-plugin-node-globals';
 
 export default {
   entry: 'src/server/builds/node.js',
@@ -28,10 +29,9 @@ export default {
       // local ones with the same names
       preferBuiltins: true  // Default: true
     }),
-    commonjs(),
+    globals(),
     builtins(),
-
-
+    commonjs()
   ],
   targets: [
     { dest: 'dist/algoliasearch.server.esm.js', format: 'es' }
