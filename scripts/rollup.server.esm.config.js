@@ -34,6 +34,6 @@ export default {
     commonjs()
   ],
   targets: [
-    { dest: 'dist/algoliasearch.server.esm.js', format: 'es' }
+    {dest: 'dist/algoliasearch.server.esm.js', format: 'es'}
   ]
 };
