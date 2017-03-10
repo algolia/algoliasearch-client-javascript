@@ -155,7 +155,7 @@ function saveObjects(t) {
 function generateSecuredApiKey(t) {
   t.plan(4);
 
-  client.addUserKey(['search'], {validity: 360}, function(err, keyResult) {
+  client.addApiKey(['search'], {validity: 360}, function(err, keyResult) {
     t.error(err, 'No error adding a key');
     t.ok(keyResult.key, 'We got the added key');
 

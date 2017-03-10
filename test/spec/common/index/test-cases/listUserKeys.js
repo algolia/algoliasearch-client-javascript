@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = {
+module.exports = [{
   object: 'index',
   methodName: 'listUserKeys',
   callArguments: [],
@@ -12,4 +12,16 @@ module.exports = {
       pathname: '/1/indexes/%s/keys'
     }
   }
-};
+}, {
+  object: 'index',
+  methodName: 'listApiKeys',
+  callArguments: [],
+  action: 'read',
+  testName: 'index.listApiKeys(cb)',
+  expectedRequest: {
+    method: 'GET',
+    URL: {
+      pathname: '/1/indexes/%s/keys'
+    }
+  }
+}];

@@ -787,13 +787,20 @@ Index.prototype.setSettings = function(settings, opts, callback) {
 };
 
 /*
-* List all existing user keys associated to this index
+ @deprecated see index.listApiKeys
+ */
+Index.prototype.listUserKeys = deprecate(function(callback) {
+  return this.listApiKeys(callback);
+}, deprecatedMessage('index.listUserKeys()', 'index.listApiKeys()'));
+
+/*
+* List all existing API keys to this index
 *
 * @param callback the result callback called with two arguments
 *  error: null or Error('message')
-*  content: the server answer with user keys list
+*  content: the server answer with API keys belonging to the index
 */
-Index.prototype.listUserKeys = function(callback) {
+Index.prototype.listApiKeys = function(callback) {
   var indexObj = this;
   return this.as._jsonRequest({
     method: 'GET',
@@ -804,14 +811,22 @@ Index.prototype.listUserKeys = function(callback) {
 };
 
 /*
-* Get ACL of a user key associated to this index
+ @deprecated see index.getApiKey
+ */
+Index.prototype.getUserKeyACL = deprecate(function(key, callback) {
+  return this.getApiKey(key, callback);
+}, deprecatedMessage('index.getUserKeyACL()', 'index.getApiKey()'));
+
+
+/*
+* Get an API key from this index
 *
 * @param key
 * @param callback the result callback called with two arguments
 *  error: null or Error('message')
-*  content: the server answer with user keys list
+*  content: the server answer with the right API key
 */
-Index.prototype.getUserKeyACL = function(key, callback) {
+Index.prototype.getApiKey = function(key, callback) {
   var indexObj = this;
   return this.as._jsonRequest({
     method: 'GET',
@@ -822,14 +837,21 @@ Index.prototype.getUserKeyACL = function(key, callback) {
 };
 
 /*
-* Delete an existing user key associated to this index
+ @deprecated see index.deleteApiKey
+ */
+Index.prototype.deleteUserKey = deprecate(function(key, callback) {
+  return this.deleteApiKey(key, callback);
+}, deprecatedMessage('index.deleteUserKey()', 'index.deleteApiKey()'));
+
+/*
+* Delete an existing API key associated to this index
 *
 * @param key
 * @param callback the result callback called with two arguments
 *  error: null or Error('message')
-*  content: the server answer with user keys list
+*  content: the server answer with the deletion date
 */
-Index.prototype.deleteUserKey = function(key, callback) {
+Index.prototype.deleteApiKey = function(key, callback) {
   var indexObj = this;
   return this.as._jsonRequest({
     method: 'DELETE',
@@ -838,6 +860,13 @@ Index.prototype.deleteUserKey = function(key, callback) {
     callback: callback
   });
 };
+
+/*
+ @deprecated see index.addApiKey
+ */
+Index.prototype.addUserKey = deprecate(function(acls, params, callback) {
+  return this.addApiKey(acls, params, callback);
+}, deprecatedMessage('index.addUserKey()', 'index.addApiKey()'));
 
 /*
 * Add a new API key to this index
@@ -860,7 +889,7 @@ Index.prototype.deleteUserKey = function(key, callback) {
 * @param {Object} params.queryParameters - Force the key to use specific query parameters
 * @param {Function} callback - The result callback called with two arguments
 *   error: null or Error('message')
-*   content: the server answer with user keys list
+*   content: the server answer with the added API key
 * @return {Promise|undefined} Returns a promise if no callback given
 * @example
 * index.addUserKey(['search'], {
@@ -875,9 +904,9 @@ Index.prototype.deleteUserKey = function(key, callback) {
 * })
 * @see {@link https://www.algolia.com/doc/rest_api#AddIndexKey|Algolia REST API Documentation}
 */
-Index.prototype.addUserKey = function(acls, params, callback) {
+Index.prototype.addApiKey = function(acls, params, callback) {
   var isArray = require('isarray');
-  var usage = 'Usage: index.addUserKey(arrayOfAcls[, params, callback])';
+  var usage = 'Usage: index.addApiKey(arrayOfAcls[, params, callback])';
 
   if (!isArray(acls)) {
     throw new Error(usage);
@@ -915,12 +944,18 @@ Index.prototype.addUserKey = function(acls, params, callback) {
 };
 
 /**
-* Add an existing user key associated to this index
-* @deprecated use index.addUserKey()
+* @deprecated use index.addApiKey()
 */
 Index.prototype.addUserKeyWithValidity = deprecate(function deprecatedAddUserKeyWithValidity(acls, params, callback) {
-  return this.addUserKey(acls, params, callback);
-}, deprecatedMessage('index.addUserKeyWithValidity()', 'index.addUserKey()'));
+  return this.addApiKey(acls, params, callback);
+}, deprecatedMessage('index.addUserKeyWithValidity()', 'index.addApiKey()'));
+
+/*
+ @deprecated see index.updateApiKey
+ */
+Index.prototype.updateUserKey = deprecate(function(key, acls, params, callback) {
+  return this.updateApiKey(key, acls, params, callback);
+}, deprecatedMessage('index.updateUserKey()', 'index.updateApiKey()'));
 
 /**
 * Update an existing API key of this index
@@ -946,7 +981,7 @@ Index.prototype.addUserKeyWithValidity = deprecate(function deprecatedAddUserKey
 *   content: the server answer with user keys list
 * @return {Promise|undefined} Returns a promise if no callback given
 * @example
-* index.updateUserKey('APIKEY', ['search'], {
+* index.updateApiKey('APIKEY', ['search'], {
 *   validity: 300,
 *   maxQueriesPerIPPerHour: 2000,
 *   maxHitsPerQuery: 3,
@@ -958,9 +993,9 @@ Index.prototype.addUserKeyWithValidity = deprecate(function deprecatedAddUserKey
 * })
 * @see {@link https://www.algolia.com/doc/rest_api#UpdateIndexKey|Algolia REST API Documentation}
 */
-Index.prototype.updateUserKey = function(key, acls, params, callback) {
+Index.prototype.updateApiKey = function(key, acls, params, callback) {
   var isArray = require('isarray');
-  var usage = 'Usage: index.updateUserKey(key, arrayOfAcls[, params, callback])';
+  var usage = 'Usage: index.updateApiKey(key, arrayOfAcls[, params, callback])';
 
   if (!isArray(acls)) {
     throw new Error(usage);
