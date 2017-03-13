@@ -59,6 +59,7 @@
   "dependencies": {
     "agentkeepalive": "^2.1.1",
     "debug": "2.3.3",
+    "envify": "^4.0.0",
     "es6-promise": "^4.0.5",
     "events": "^1.1.0",
     "foreach": "^2.0.5",
@@ -86,7 +87,6 @@
     "compression": "^1.6.2",
     "deumdify": "^1.2.3",
     "domready": "0.3.0",
-    "envify": "^4.0.0",
     "eslint": "^1.7.3",
     "eslint-config-airbnb": "^0.1.0",
     "eslint-config-algolia": "4.2.0",
