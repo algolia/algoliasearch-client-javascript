@@ -59,7 +59,6 @@
   "dependencies": {
     "agentkeepalive": "^2.1.1",
     "debug": "2.3.3",
-    "envify": "^4.0.0",
     "es6-promise": "^4.0.5",
     "events": "^1.1.0",
     "foreach": "^2.0.5",
@@ -71,8 +70,6 @@
     "querystring-es3": "^0.2.1",
     "reduce": "^1.0.1",
     "semver": "^5.1.0",
-    "tap-bail": "0.0.0",
-    "tap-dot": "^1.0.5",
     "tunnel-agent": "^0.4.3"
   },
   "devDependencies": {
@@ -89,6 +86,7 @@
     "compression": "^1.6.2",
     "deumdify": "^1.2.3",
     "domready": "0.3.0",
+    "envify": "^4.0.0",
     "eslint": "^1.7.3",
     "eslint-config-airbnb": "^0.1.0",
     "eslint-config-algolia": "4.2.0",
@@ -109,7 +107,8 @@
     "server-destroy-vvo": "^1.0.1",
     "sinon": "^1.17.7",
     "superagent": "^3.3.2",
-    "tap-min": "^1.2.1",
+    "tap-bail": "^1.0.0",
+    "tap-dot": "^1.0.5",
     "tape": "^4.5.1",
     "uglify-js": "2.6.4",
     "url-parse": "^1.1.1",

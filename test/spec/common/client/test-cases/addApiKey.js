@@ -76,4 +76,63 @@ module.exports = [{
     body: {acl: ['search', 'browse'], validity: 42, maxQueriesPerIPPerHour: 100, maxHitsPerQuery: 10},
     URL: {pathname: '/1/keys'}
   }
+}, {
+  testName: 'client.addApiKey(acls, cb)',
+  object: 'client',
+  methodName: 'addApiKey',
+  callArguments: [['search', 'browse']],
+  action: 'write',
+  expectedRequest: {
+    method: 'POST',
+    body: {acl: ['search', 'browse']},
+    URL: {pathname: '/1/keys'}
+  }
+}, {
+  testName: 'client.addApiKey(acls, params, cb)',
+  object: 'client',
+  methodName: 'addApiKey',
+  callArguments: [['smurf', 'it'], {
+    validity: 299,
+    maxQueriesPerIPPerHour: 9000,
+    maxHitsPerQuery: 0,
+    indexes: ['le chat', 'black'],
+    description: 'Le chat is black',
+    queryParameters: {
+      tagFilters: 'public'
+    },
+    referers: ['*.algolia.com']
+  }],
+  action: 'write',
+  expectedRequest: {
+    method: 'POST',
+    body: {
+      acl: ['smurf', 'it'],
+      validity: 299,
+      maxQueriesPerIPPerHour: 9000,
+      maxHitsPerQuery: 0,
+      indexes: ['le chat', 'black'],
+      description: 'Le chat is black',
+      queryParameters: 'tagFilters=public',
+      referers: ['*.algolia.com']
+    },
+    URL: {pathname: '/1/keys'}
+  }
+}, {
+  testName: 'client.addApiKey(acls, params, cb) some params',
+  object: 'client',
+  methodName: 'addApiKey',
+  callArguments: [['smurf', 'it'], {
+    validity: 299,
+    maxQueriesPerIPPerHour: 9000
+  }],
+  action: 'write',
+  expectedRequest: {
+    method: 'POST',
+    body: {
+      acl: ['smurf', 'it'],
+      validity: 299,
+      maxQueriesPerIPPerHour: 9000
+    },
+    URL: {pathname: '/1/keys'}
+  }
 }];
