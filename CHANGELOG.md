@@ -1,5 +1,9 @@
 CHANGELOG
 
+2017-03-13 3.22.1
+  * fix(packaging): put back envify in deps
+    * browserify transforms are applied for node_modules/pkg
+
 2017-03-13 3.22.0
 
   * feat(API): rename all *userKey[s] methods to *apiKey[s]
