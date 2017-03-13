@@ -998,13 +998,20 @@ module.exports =
 	};
 
 	/*
-	 * List all existing user keys with their associated ACLs
+	 * @deprecated use client.listApiKeys
+	 */
+	AlgoliaSearch.prototype.listUserKeys = deprecate(function(callback) {
+	  return this.listApiKeys(callback);
+	}, deprecatedMessage('client.listUserKeys()', 'client.listApiKeys()'));
+
+	/*
+	 * List all existing api keys with their associated ACLs
 	 *
 	 * @param callback the result callback called with two arguments
 	 *  error: null or Error('message')
-	 *  content: the server answer with user keys list
+	 *  content: the server answer with api keys list
 	 */
-	AlgoliaSearch.prototype.listUserKeys = function(callback) {
+	AlgoliaSearch.prototype.listApiKeys = function(callback) {
 	  return this._jsonRequest({
 	    method: 'GET',
 	    url: '/1/keys',
@@ -1014,14 +1021,21 @@ module.exports =
 	};
 
 	/*
-	 * Get ACL of a user key
+	 * @deprecated see client.getApiKey
+	 */
+	AlgoliaSearch.prototype.getUserKeyACL = deprecate(function(key, callback) {
+	  return this.getApiKey(key, callback);
+	}, deprecatedMessage('client.getUserKeyACL()', 'client.getApiKey()'));
+
+	/*
+	 * Get an API key
 	 *
 	 * @param key
 	 * @param callback the result callback called with two arguments
 	 *  error: null or Error('message')
-	 *  content: the server answer with user keys list
+	 *  content: the server answer with the right API key
 	 */
-	AlgoliaSearch.prototype.getUserKeyACL = function(key, callback) {
+	AlgoliaSearch.prototype.getApiKey = function(key, callback) {
 	  return this._jsonRequest({
 	    method: 'GET',
 	    url: '/1/keys/' + key,
@@ -1031,13 +1045,20 @@ module.exports =
 	};
 
 	/*
-	 * Delete an existing user key
+	 * @deprecated see client.deleteApiKey
+	 */
+	AlgoliaSearch.prototype.deleteUserKey = deprecate(function(key, callback) {
+	  return this.deleteApiKey(key, callback);
+	}, deprecatedMessage('client.deleteUserKey()', 'client.deleteApiKey()'));
+
+	/*
+	 * Delete an existing API key
 	 * @param key
 	 * @param callback the result callback called with two arguments
 	 *  error: null or Error('message')
-	 *  content: the server answer with user keys list
+	 *  content: the server answer with the date of deletion
 	 */
-	AlgoliaSearch.prototype.deleteUserKey = function(key, callback) {
+	AlgoliaSearch.prototype.deleteApiKey = function(key, callback) {
 	  return this._jsonRequest({
 	    method: 'DELETE',
 	    url: '/1/keys/' + key,
@@ -1045,6 +1066,13 @@ module.exports =
 	    callback: callback
 	  });
 	};
+
+	/*
+	 @deprecated see client.addApiKey
+	 */
+	AlgoliaSearch.prototype.addUserKey = deprecate(function(acls, params, callback) {
+	  return this.addApiKey(acls, params, callback);
+	}, deprecatedMessage('client.addUserKey()', 'client.addApiKey()'));
 
 	/*
 	 * Add a new global API key
@@ -1067,7 +1095,7 @@ module.exports =
 	 * @param {Object} params.queryParameters - Force the key to use specific query parameters
 	 * @param {Function} callback - The result callback called with two arguments
 	 *   error: null or Error('message')
-	 *   content: the server answer with user keys list
+	 *   content: the server answer with the added API key
 	 * @return {Promise|undefined} Returns a promise if no callback given
 	 * @example
 	 * client.addUserKey(['search'], {
@@ -1083,9 +1111,9 @@ module.exports =
 	 * })
 	 * @see {@link https://www.algolia.com/doc/rest_api#AddKey|Algolia REST API Documentation}
 	 */
-	AlgoliaSearch.prototype.addUserKey = function(acls, params, callback) {
+	AlgoliaSearch.prototype.addApiKey = function(acls, params, callback) {
 	  var isArray = __webpack_require__(19);
-	  var usage = 'Usage: client.addUserKey(arrayOfAcls[, params, callback])';
+	  var usage = 'Usage: client.addApiKey(arrayOfAcls[, params, callback])';
 
 	  if (!isArray(acls)) {
 	    throw new Error(usage);
@@ -1124,12 +1152,18 @@ module.exports =
 	};
 
 	/**
-	 * Add a new global API key
-	 * @deprecated Please use client.addUserKey()
+	 * @deprecated Please use client.addApiKey()
 	 */
 	AlgoliaSearch.prototype.addUserKeyWithValidity = deprecate(function(acls, params, callback) {
-	  return this.addUserKey(acls, params, callback);
-	}, deprecatedMessage('client.addUserKeyWithValidity()', 'client.addUserKey()'));
+	  return this.addApiKey(acls, params, callback);
+	}, deprecatedMessage('client.addUserKeyWithValidity()', 'client.addApiKey()'));
+
+	/**
+	 * @deprecated Please use client.updateApiKey()
+	 */
+	AlgoliaSearch.prototype.updateUserKey = deprecate(function(key, acls, params, callback) {
+	  return this.updateApiKey(key, acls, params, callback);
+	}, deprecatedMessage('client.updateUserKey()', 'client.updateApiKey()'));
 
 	/**
 	 * Update an existing API key
@@ -1152,10 +1186,10 @@ module.exports =
 	 * @param {Object} params.queryParameters - Force the key to use specific query parameters
 	 * @param {Function} callback - The result callback called with two arguments
 	 *   error: null or Error('message')
-	 *   content: the server answer with user keys list
+	 *   content: the server answer with the modified API key
 	 * @return {Promise|undefined} Returns a promise if no callback given
 	 * @example
-	 * client.updateUserKey('APIKEY', ['search'], {
+	 * client.updateApiKey('APIKEY', ['search'], {
 	 *   validity: 300,
 	 *   maxQueriesPerIPPerHour: 2000,
 	 *   maxHitsPerQuery: 3,
@@ -1168,9 +1202,9 @@ module.exports =
 	 * })
 	 * @see {@link https://www.algolia.com/doc/rest_api#UpdateIndexKey|Algolia REST API Documentation}
 	 */
-	AlgoliaSearch.prototype.updateUserKey = function(key, acls, params, callback) {
+	AlgoliaSearch.prototype.updateApiKey = function(key, acls, params, callback) {
 	  var isArray = __webpack_require__(19);
-	  var usage = 'Usage: client.updateUserKey(key, arrayOfAcls[, params, callback])';
+	  var usage = 'Usage: client.updateApiKey(key, arrayOfAcls[, params, callback])';
 
 	  if (!isArray(acls)) {
 	    throw new Error(usage);
@@ -2097,13 +2131,20 @@ module.exports =
 	};
 
 	/*
-	* List all existing user keys associated to this index
+	 @deprecated see index.listApiKeys
+	 */
+	Index.prototype.listUserKeys = deprecate(function(callback) {
+	  return this.listApiKeys(callback);
+	}, deprecatedMessage('index.listUserKeys()', 'index.listApiKeys()'));
+
+	/*
+	* List all existing API keys to this index
 	*
 	* @param callback the result callback called with two arguments
 	*  error: null or Error('message')
-	*  content: the server answer with user keys list
+	*  content: the server answer with API keys belonging to the index
 	*/
-	Index.prototype.listUserKeys = function(callback) {
+	Index.prototype.listApiKeys = function(callback) {
 	  var indexObj = this;
 	  return this.as._jsonRequest({
 	    method: 'GET',
@@ -2114,14 +2155,22 @@ module.exports =
 	};
 
 	/*
-	* Get ACL of a user key associated to this index
+	 @deprecated see index.getApiKey
+	 */
+	Index.prototype.getUserKeyACL = deprecate(function(key, callback) {
+	  return this.getApiKey(key, callback);
+	}, deprecatedMessage('index.getUserKeyACL()', 'index.getApiKey()'));
+
+
+	/*
+	* Get an API key from this index
 	*
 	* @param key
 	* @param callback the result callback called with two arguments
 	*  error: null or Error('message')
-	*  content: the server answer with user keys list
+	*  content: the server answer with the right API key
 	*/
-	Index.prototype.getUserKeyACL = function(key, callback) {
+	Index.prototype.getApiKey = function(key, callback) {
 	  var indexObj = this;
 	  return this.as._jsonRequest({
 	    method: 'GET',
@@ -2132,14 +2181,21 @@ module.exports =
 	};
 
 	/*
-	* Delete an existing user key associated to this index
+	 @deprecated see index.deleteApiKey
+	 */
+	Index.prototype.deleteUserKey = deprecate(function(key, callback) {
+	  return this.deleteApiKey(key, callback);
+	}, deprecatedMessage('index.deleteUserKey()', 'index.deleteApiKey()'));
+
+	/*
+	* Delete an existing API key associated to this index
 	*
 	* @param key
 	* @param callback the result callback called with two arguments
 	*  error: null or Error('message')
-	*  content: the server answer with user keys list
+	*  content: the server answer with the deletion date
 	*/
-	Index.prototype.deleteUserKey = function(key, callback) {
+	Index.prototype.deleteApiKey = function(key, callback) {
 	  var indexObj = this;
 	  return this.as._jsonRequest({
 	    method: 'DELETE',
@@ -2148,6 +2204,13 @@ module.exports =
 	    callback: callback
 	  });
 	};
+
+	/*
+	 @deprecated see index.addApiKey
+	 */
+	Index.prototype.addUserKey = deprecate(function(acls, params, callback) {
+	  return this.addApiKey(acls, params, callback);
+	}, deprecatedMessage('index.addUserKey()', 'index.addApiKey()'));
 
 	/*
 	* Add a new API key to this index
@@ -2170,7 +2233,7 @@ module.exports =
 	* @param {Object} params.queryParameters - Force the key to use specific query parameters
 	* @param {Function} callback - The result callback called with two arguments
 	*   error: null or Error('message')
-	*   content: the server answer with user keys list
+	*   content: the server answer with the added API key
 	* @return {Promise|undefined} Returns a promise if no callback given
 	* @example
 	* index.addUserKey(['search'], {
@@ -2185,9 +2248,9 @@ module.exports =
 	* })
 	* @see {@link https://www.algolia.com/doc/rest_api#AddIndexKey|Algolia REST API Documentation}
 	*/
-	Index.prototype.addUserKey = function(acls, params, callback) {
+	Index.prototype.addApiKey = function(acls, params, callback) {
 	  var isArray = __webpack_require__(19);
-	  var usage = 'Usage: index.addUserKey(arrayOfAcls[, params, callback])';
+	  var usage = 'Usage: index.addApiKey(arrayOfAcls[, params, callback])';
 
 	  if (!isArray(acls)) {
 	    throw new Error(usage);
@@ -2225,12 +2288,18 @@ module.exports =
 	};
 
 	/**
-	* Add an existing user key associated to this index
-	* @deprecated use index.addUserKey()
+	* @deprecated use index.addApiKey()
 	*/
 	Index.prototype.addUserKeyWithValidity = deprecate(function deprecatedAddUserKeyWithValidity(acls, params, callback) {
-	  return this.addUserKey(acls, params, callback);
-	}, deprecatedMessage('index.addUserKeyWithValidity()', 'index.addUserKey()'));
+	  return this.addApiKey(acls, params, callback);
+	}, deprecatedMessage('index.addUserKeyWithValidity()', 'index.addApiKey()'));
+
+	/*
+	 @deprecated see index.updateApiKey
+	 */
+	Index.prototype.updateUserKey = deprecate(function(key, acls, params, callback) {
+	  return this.updateApiKey(key, acls, params, callback);
+	}, deprecatedMessage('index.updateUserKey()', 'index.updateApiKey()'));
 
 	/**
 	* Update an existing API key of this index
@@ -2256,7 +2325,7 @@ module.exports =
 	*   content: the server answer with user keys list
 	* @return {Promise|undefined} Returns a promise if no callback given
 	* @example
-	* index.updateUserKey('APIKEY', ['search'], {
+	* index.updateApiKey('APIKEY', ['search'], {
 	*   validity: 300,
 	*   maxQueriesPerIPPerHour: 2000,
 	*   maxHitsPerQuery: 3,
@@ -2268,9 +2337,9 @@ module.exports =
 	* })
 	* @see {@link https://www.algolia.com/doc/rest_api#UpdateIndexKey|Algolia REST API Documentation}
 	*/
-	Index.prototype.updateUserKey = function(key, acls, params, callback) {
+	Index.prototype.updateApiKey = function(key, acls, params, callback) {
 	  var isArray = __webpack_require__(19);
-	  var usage = 'Usage: index.updateUserKey(key, arrayOfAcls[, params, callback])';
+	  var usage = 'Usage: index.updateApiKey(key, arrayOfAcls[, params, callback])';
 
 	  if (!isArray(acls)) {
 	    throw new Error(usage);
@@ -4126,7 +4195,7 @@ module.exports =
 
 	
 
-	module.exports = '3.21.1';
+	module.exports = '3.22.0';
 
 
 /***/ }

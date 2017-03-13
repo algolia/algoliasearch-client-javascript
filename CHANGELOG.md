@@ -1,11 +1,23 @@
 CHANGELOG
 
+2017-03-13 3.22.0
+
+  * feat(API): rename all *userKey[s] methods to *apiKey[s]
+    * client/index.listUserKeys() => client/index.listApiKeys()
+    * client/index.getUserKeyACL() => client/index.getApiKey()
+    * client/index.deleteUserKey() => client/index.deleteApiKey()
+    * client/index.addUserKey() => client/index.addApiKey()
+    * client/index.udpateUserKey() => client/index.updateApiKey()
+  * fix(packaging): remove useless files for packaging (reduce package file size)
+
 2017-02-08 3.21.1
- * fix(browse*): use POST instead of GET to avoid limits (#503)
+
+  * fix(browse*): use POST instead of GET to avoid limits (#503)
 
 2017-02-06 3.21.0
- * feat(x-algolia-agent): specify x-algolia-agent at search time
- * fix(parse): check for `global` existence before erasing
+
+  * feat(x-algolia-agent): specify x-algolia-agent at search time
+  * fix(parse): check for `global` existence before erasing
 
 2017-01-16 3.20.4
 
