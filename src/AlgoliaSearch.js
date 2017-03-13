@@ -152,13 +152,20 @@ AlgoliaSearch.prototype.initIndex = function(indexName) {
 };
 
 /*
- * List all existing user keys with their associated ACLs
+ * @deprecated use client.listApiKeys
+ */
+AlgoliaSearch.prototype.listUserKeys = deprecate(function(callback) {
+  return this.listApiKeys(callback);
+}, deprecatedMessage('client.listUserKeys()', 'client.listApiKeys()'));
+
+/*
+ * List all existing api keys with their associated ACLs
  *
  * @param callback the result callback called with two arguments
  *  error: null or Error('message')
- *  content: the server answer with user keys list
+ *  content: the server answer with api keys list
  */
-AlgoliaSearch.prototype.listUserKeys = function(callback) {
+AlgoliaSearch.prototype.listApiKeys = function(callback) {
   return this._jsonRequest({
     method: 'GET',
     url: '/1/keys',
@@ -168,14 +175,21 @@ AlgoliaSearch.prototype.listUserKeys = function(callback) {
 };
 
 /*
- * Get ACL of a user key
+ * @deprecated see client.getApiKey
+ */
+AlgoliaSearch.prototype.getUserKeyACL = deprecate(function(key, callback) {
+  return this.getApiKey(key, callback);
+}, deprecatedMessage('client.getUserKeyACL()', 'client.getApiKey()'));
+
+/*
+ * Get an API key
  *
  * @param key
  * @param callback the result callback called with two arguments
  *  error: null or Error('message')
- *  content: the server answer with user keys list
+ *  content: the server answer with the right API key
  */
-AlgoliaSearch.prototype.getUserKeyACL = function(key, callback) {
+AlgoliaSearch.prototype.getApiKey = function(key, callback) {
   return this._jsonRequest({
     method: 'GET',
     url: '/1/keys/' + key,
@@ -185,13 +199,20 @@ AlgoliaSearch.prototype.getUserKeyACL = function(key, callback) {
 };
 
 /*
- * Delete an existing user key
+ * @deprecated see client.deleteApiKey
+ */
+AlgoliaSearch.prototype.deleteUserKey = deprecate(function(key, callback) {
+  return this.deleteApiKey(key, callback);
+}, deprecatedMessage('client.deleteUserKey()', 'client.deleteApiKey()'));
+
+/*
+ * Delete an existing API key
  * @param key
  * @param callback the result callback called with two arguments
  *  error: null or Error('message')
- *  content: the server answer with user keys list
+ *  content: the server answer with the date of deletion
  */
-AlgoliaSearch.prototype.deleteUserKey = function(key, callback) {
+AlgoliaSearch.prototype.deleteApiKey = function(key, callback) {
   return this._jsonRequest({
     method: 'DELETE',
     url: '/1/keys/' + key,
@@ -199,6 +220,13 @@ AlgoliaSearch.prototype.deleteUserKey = function(key, callback) {
     callback: callback
   });
 };
+
+/*
+ @deprecated see client.addApiKey
+ */
+AlgoliaSearch.prototype.addUserKey = deprecate(function(acls, params, callback) {
+  return this.addApiKey(acls, params, callback);
+}, deprecatedMessage('client.addUserKey()', 'client.addApiKey()'));
 
 /*
  * Add a new global API key
@@ -221,7 +249,7 @@ AlgoliaSearch.prototype.deleteUserKey = function(key, callback) {
  * @param {Object} params.queryParameters - Force the key to use specific query parameters
  * @param {Function} callback - The result callback called with two arguments
  *   error: null or Error('message')
- *   content: the server answer with user keys list
+ *   content: the server answer with the added API key
  * @return {Promise|undefined} Returns a promise if no callback given
  * @example
  * client.addUserKey(['search'], {
@@ -237,9 +265,9 @@ AlgoliaSearch.prototype.deleteUserKey = function(key, callback) {
  * })
  * @see {@link https://www.algolia.com/doc/rest_api#AddKey|Algolia REST API Documentation}
  */
-AlgoliaSearch.prototype.addUserKey = function(acls, params, callback) {
+AlgoliaSearch.prototype.addApiKey = function(acls, params, callback) {
   var isArray = require('isarray');
-  var usage = 'Usage: client.addUserKey(arrayOfAcls[, params, callback])';
+  var usage = 'Usage: client.addApiKey(arrayOfAcls[, params, callback])';
 
   if (!isArray(acls)) {
     throw new Error(usage);
@@ -278,12 +306,18 @@ AlgoliaSearch.prototype.addUserKey = function(acls, params, callback) {
 };
 
 /**
- * Add a new global API key
- * @deprecated Please use client.addUserKey()
+ * @deprecated Please use client.addApiKey()
  */
 AlgoliaSearch.prototype.addUserKeyWithValidity = deprecate(function(acls, params, callback) {
-  return this.addUserKey(acls, params, callback);
-}, deprecatedMessage('client.addUserKeyWithValidity()', 'client.addUserKey()'));
+  return this.addApiKey(acls, params, callback);
+}, deprecatedMessage('client.addUserKeyWithValidity()', 'client.addApiKey()'));
+
+/**
+ * @deprecated Please use client.updateApiKey()
+ */
+AlgoliaSearch.prototype.updateUserKey = deprecate(function(key, acls, params, callback) {
+  return this.updateApiKey(key, acls, params, callback);
+}, deprecatedMessage('client.updateUserKey()', 'client.updateApiKey()'));
 
 /**
  * Update an existing API key
@@ -306,10 +340,10 @@ AlgoliaSearch.prototype.addUserKeyWithValidity = deprecate(function(acls, params
  * @param {Object} params.queryParameters - Force the key to use specific query parameters
  * @param {Function} callback - The result callback called with two arguments
  *   error: null or Error('message')
- *   content: the server answer with user keys list
+ *   content: the server answer with the modified API key
  * @return {Promise|undefined} Returns a promise if no callback given
  * @example
- * client.updateUserKey('APIKEY', ['search'], {
+ * client.updateApiKey('APIKEY', ['search'], {
  *   validity: 300,
  *   maxQueriesPerIPPerHour: 2000,
  *   maxHitsPerQuery: 3,
@@ -322,9 +356,9 @@ AlgoliaSearch.prototype.addUserKeyWithValidity = deprecate(function(acls, params
  * })
  * @see {@link https://www.algolia.com/doc/rest_api#UpdateIndexKey|Algolia REST API Documentation}
  */
-AlgoliaSearch.prototype.updateUserKey = function(key, acls, params, callback) {
+AlgoliaSearch.prototype.updateApiKey = function(key, acls, params, callback) {
   var isArray = require('isarray');
-  var usage = 'Usage: client.updateUserKey(key, arrayOfAcls[, params, callback])';
+  var usage = 'Usage: client.updateApiKey(key, arrayOfAcls[, params, callback])';
 
   if (!isArray(acls)) {
     throw new Error(usage);

@@ -65,4 +65,69 @@ module.exports = [{
       pathname: '/1/indexes/%s/keys'
     }
   }
+}, {
+  object: 'index',
+  methodName: 'addApiKey',
+  testName: 'index.addApiKey(acls, cb)',
+  callArguments: [['search', 'mom']],
+  action: 'write',
+  expectedRequest: {
+    method: 'POST',
+    body: {
+      acl: ['search', 'mom']
+    },
+    URL: {
+      pathname: '/1/indexes/%s/keys'
+    }
+  }
+}, {
+  testName: 'index.addApiKey(acls, params, cb)',
+  object: 'index',
+  methodName: 'addApiKey',
+  callArguments: [['smurf', 'it'], {
+    validity: 299,
+    maxQueriesPerIPPerHour: 9000,
+    maxHitsPerQuery: 0,
+    description: 'Le chat is black',
+    queryParameters: {
+      tagFilters: 'public'
+    },
+    referers: ['*.algolia.com']
+  }],
+  action: 'write',
+  expectedRequest: {
+    method: 'POST',
+    body: {
+      acl: ['smurf', 'it'],
+      validity: 299,
+      maxQueriesPerIPPerHour: 9000,
+      maxHitsPerQuery: 0,
+      description: 'Le chat is black',
+      queryParameters: 'tagFilters=public',
+      referers: ['*.algolia.com']
+    },
+    URL: {
+      pathname: '/1/indexes/%s/keys'
+    }
+  }
+}, {
+  testName: 'index.addApiKey(acls, params, cb) some params',
+  object: 'index',
+  methodName: 'addApiKey',
+  callArguments: [['smurf', 'it'], {
+    validity: 299,
+    maxQueriesPerIPPerHour: 9000
+  }],
+  action: 'write',
+  expectedRequest: {
+    method: 'POST',
+    body: {
+      acl: ['smurf', 'it'],
+      validity: 299,
+      maxQueriesPerIPPerHour: 9000
+    },
+    URL: {
+      pathname: '/1/indexes/%s/keys'
+    }
+  }
 }];
