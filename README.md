@@ -45,7 +45,7 @@ You can find the full reference on [Algolia's website](https://www.algolia.com/d
     * [Node.js / React Native / Browserify / webpack](#nodejs--react-native--browserify--webpack)
     * [TypeScript typings](#typescript-typings)
     * [Bower](#bower)
-    * [&lt;script&gt; tag using CDNS](#script-tag-using-cdns)
+    * [&lt;script&gt; tag using CDNs](#script-tag-using-cdns)
     * [Search only/lite client](#search-onlylite-client)
 
 1. **[Quick Start](#quick-start)**
@@ -101,7 +101,7 @@ npm install --save @types/algoliasearch
 bower install algoliasearch -S
 ```
 
-#### &lt;script&gt; tag using CDNS
+#### &lt;script&gt; tag using CDNs
 
 ##### Recommended: jsDelivr.com
 
