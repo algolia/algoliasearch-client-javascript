@@ -35,7 +35,7 @@
     "realtime",
     "autocomplete"
   ],
-  "homepage": "https://github.com/algolia/algoliasearch-client-js",
+  "homepage": "https://www.algolia.com/doc/api-client/javascript/",
   "bugs": "https://github.com/algolia/algoliasearch-client-js/issues",
   "author": {
     "name": "Algolia SAS",
