@@ -337,12 +337,11 @@ IndexCore.prototype.getObject = function(objectID, attrs, callback) {
 * @param objectIDs the array of unique identifier of objects to retrieve
 */
 IndexCore.prototype.getObjects = function(objectIDs, attributesToRetrieve, callback) {
-  var isArray = require('isarray');
   var map = require('./map.js');
 
   var usage = 'Usage: index.getObjects(arrayOfObjectIDs[, callback])';
 
-  if (!isArray(objectIDs)) {
+  if (!Array.isArray(objectIDs)) {
     throw new Error(usage);
   }
 

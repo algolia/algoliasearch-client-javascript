@@ -42,7 +42,6 @@ function AlgoliaSearchCore(applicationID, apiKey, opts) {
   var debug = require('debug')('algoliasearch');
 
   var clone = require('./clone.js');
-  var isArray = require('isarray');
   var map = require('./map.js');
 
   var usage = 'Usage: algoliasearch(applicationID, apiKey, opts)';
@@ -97,7 +96,7 @@ function AlgoliaSearchCore(applicationID, apiKey, opts) {
     // no hosts given, compute defaults
     this.hosts.read = [this.applicationID + '-dsn.algolia.net'].concat(defaultHosts);
     this.hosts.write = [this.applicationID + '.algolia.net'].concat(defaultHosts);
-  } else if (isArray(opts.hosts)) {
+  } else if (Array.isArray(opts.hosts)) {
     // when passing custom hosts, we need to have a different host index if the number
     // of write/read hosts are different.
     this.hosts.read = clone(opts.hosts);
@@ -505,12 +504,11 @@ AlgoliaSearchCore.prototype._computeRequestHeaders = function(additionalUA, with
  * @return {Promise|undefined} Returns a promise if no callback given
  */
 AlgoliaSearchCore.prototype.search = function(queries, opts, callback) {
-  var isArray = require('isarray');
   var map = require('./map.js');
 
   var usage = 'Usage: client.search(arrayOfQueries[, callback])';
 
-  if (!isArray(queries)) {
+  if (!Array.isArray(queries)) {
     throw new Error(usage);
   }
 
