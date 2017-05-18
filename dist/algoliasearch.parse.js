@@ -1467,7 +1467,12 @@ module.exports =
 	*  error: null or Error('message')
 	*  content: the server answer that updateAt and taskID
 	*/
-	Index.prototype.partialUpdateObjects = function(objects, callback) {
+	Index.prototype.partialUpdateObjects = function(objects, createIfNotExists, callback) {
+	  if (arguments.length === 1 || typeof createIfNotExists === 'function') {
+	    callback = createIfNotExists;
+	    createIfNotExists = true;
+	  }
+
 	  var isArray = __webpack_require__(19);
 	  var usage = 'Usage: index.partialUpdateObjects(arrayOfObjects[, callback])';
 
@@ -1481,7 +1486,7 @@ module.exports =
 	  };
 	  for (var i = 0; i < objects.length; ++i) {
 	    var request = {
-	      action: 'partialUpdateObject',
+	      action: createIfNotExists === true ? 'partialUpdateObject' : 'partialUpdateObjectNoCreate',
 	      objectID: objects[i].objectID,
 	      body: objects[i]
 	    };
@@ -4195,7 +4200,7 @@ module.exports =
 
 	
 
-	module.exports = '3.22.1';
+	module.exports = '3.22.2';
 
 
 /***/ }

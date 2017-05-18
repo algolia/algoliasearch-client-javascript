@@ -1,5 +1,10 @@
 CHANGELOG
 
+2017-03-13 3.22.2
+  * fix(partialUpdateObjects): allow createIfNotExists (#552)
+    Much like partialUpdateObject, allow createIfNotExists
+    fixes #551
+
 2017-03-13 3.22.1
   * fix(packaging): put back envify in deps
     * browserify transforms are applied for node_modules/pkg
