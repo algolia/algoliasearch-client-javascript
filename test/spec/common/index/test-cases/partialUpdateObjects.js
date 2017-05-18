@@ -8,7 +8,7 @@ var objects = [{
   second: 'object'
 }];
 
-module.exports = {
+module.exports = [{
   object: 'index',
   methodName: 'partialUpdateObjects',
   testName: 'index.partialUpdateObjects(objects, cb)',
@@ -29,4 +29,25 @@ module.exports = {
       pathname: '/1/indexes/%s/batch'
     }
   }
-};
+}, {
+  object: 'index',
+  methodName: 'partialUpdateObjects',
+  testName: 'index.partialUpdateObjects(objects, false, cb)',
+  callArguments: [objects, false],
+  action: 'write',
+  expectedRequest: {
+    method: 'POST',
+    body: {
+      requests: [{
+        action: 'partialUpdateObjectNoCreate',
+        body: clone(objects[0])
+      }, {
+        action: 'partialUpdateObjectNoCreate',
+        body: clone(objects[1])
+      }]
+    },
+    URL: {
+      pathname: '/1/indexes/%s/batch'
+    }
+  }
+}];
