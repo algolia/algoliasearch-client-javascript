@@ -123,7 +123,12 @@ Index.prototype.partialUpdateObject = function(partialObject, createIfNotExists,
 *  error: null or Error('message')
 *  content: the server answer that updateAt and taskID
 */
-Index.prototype.partialUpdateObjects = function(objects, callback) {
+Index.prototype.partialUpdateObjects = function(objects, createIfNotExists, callback) {
+  if (arguments.length === 1 || typeof createIfNotExists === 'function') {
+    callback = createIfNotExists;
+    createIfNotExists = true;
+  }
+
   var isArray = require('isarray');
   var usage = 'Usage: index.partialUpdateObjects(arrayOfObjects[, callback])';
 
@@ -137,7 +142,7 @@ Index.prototype.partialUpdateObjects = function(objects, callback) {
   };
   for (var i = 0; i < objects.length; ++i) {
     var request = {
-      action: 'partialUpdateObject',
+      action: createIfNotExists === true ? 'partialUpdateObject' : 'partialUpdateObjectNoCreate',
       objectID: objects[i].objectID,
       body: objects[i]
     };
