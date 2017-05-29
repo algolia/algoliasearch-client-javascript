@@ -1,6 +1,10 @@
 CHANGELOG
 
-2017-03-13 3.22.2
+2017-05-29 3.22.3
+  * fix(dependency): Do not pin debug dependency anymore
+  fixes #556
+
+2017-05-18 3.22.2
   * fix(partialUpdateObjects): allow createIfNotExists (#552)
     Much like partialUpdateObject, allow createIfNotExists
     fixes #551

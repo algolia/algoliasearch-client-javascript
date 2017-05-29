@@ -1,6 +1,6 @@
 {
   "name": "algoliasearch",
-  "version": "3.22.2",
+  "version": "3.22.3",
   "description": "AlgoliaSearch API JavaScript client",
   "main": "index.js",
   "browser": {
