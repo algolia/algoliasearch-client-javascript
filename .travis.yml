@@ -20,9 +20,10 @@ env:
     - SAUCE_USERNAME=algoliasearch-js
     - secure: "oKl1RMuEO9bYoKevbFeFX72M2eV+DIJG/9UGMP4oLb3z5B8T5xAlQSEt8Lp0Zms6qqA+4hAQhZTKXDtdpx7NK+SuqYiv4oR9hdiJBbrRXIRuY86R2T/opO/RlBETL+7Y2R1AGM/kZzyiZSFqN9slGVzWziBtLJjJ4ncoceE8izs="
 
-    # integration tests credentials
-    - secure: "UnpKy2vOhmkbAXV9J1miZMCVM7VeUl9SyeoN4iFj65KD26wPODdXFjaxiVYM7YvQiUj61HraB6iqk2Vt/W842ACxNl2mOjSTHQXNI7qbtdIlLs0ABdJwjXsCxBtmAIi2GEj/JiDU/duF11/VgkxwBWvIGYEkOD+9c2bJp382xPQ="
-    - secure: "gMSrjKP4bFYh/cUnO3JDXV+NW6aCdzP6Luwn2QJhml0Ump1a0fomHJUsjELaTpzel9CiONbf7D8bmEyN8woFQq8wa+wltVAzPpbNhYMclJmFV6sKOlGcGn3f/SDv5MiUBuUtyMRgnPv2OEoafQ40mSN/5ELT7PQzYXqxp+EGhTM="
+    # INTEGRATION_TEST_APPID
+    - secure: "LADQT7mA3danSsZ6pd2io1G+4EXfdnd0NS3BuzLHcGgl5ehwbkUnZtD8JUHai4ZtawwsxRv3p2qgBbl5UVnFeWAyr7pSGVcMeB6UtQG1JwTnmbHri131yOc/EwEYlEHhF/ecC7V5NTa1VWqSi7r4Jj8KyIeaorvRX8C7AAv8saU="
+    # INTEGRATION_TEST_API_KEY
+    - secure: "btDyGZTDN633cISK5C0bkjTKIc+VZRupkmzCIuyOepe27mVzJSDGYFXYbFpA/vP6OVWNyyGhBIhD+mfdXJumfRTjK5J3aMRN0hN62SJJj0OJT/BwW6Yrk79C/N48ag/Yj5Xqd6dD6Z5sR/NzHZsTZwUmdYMcQ+gZSgrup6fzpMQ="
 
     # parse test credentials
     - secure: "KJ5+bYlg0MCX8tAQM6IRBZi43SRPgxj6VSxEyvdQn40LYShlvDIFLgKDQ+Acg5U5k0dQ3HMWsAfrJl/T/pQDmh53g14yZrDZYQeAg0gT25RYUYIY3ByrwcQUhriOqU4ivj2neVBiBJxZ4f7Scx0RBk6OTgvAU/Cc+37apDdDKRk="
