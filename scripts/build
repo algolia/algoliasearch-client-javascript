@@ -56,7 +56,7 @@ done
 echo '..Gzipped file size'
 for bundle in "${bundles[@]}"
 do
-  echo "${bundle}.min.js gzipped will weight" $(cat dist/"${bundle}".min.js | gzip -9 | wc -c | pretty-bytes)
+  echo "${bundle}.min.js gzipped will weigh" $(cat dist/"${bundle}".min.js | gzip -9 | wc -c | pretty-bytes)
 done
 
 # not in the same loop as previous builds: no compatibility layer
@@ -65,6 +65,6 @@ browserify -p bundle-collapser/plugin src/browser/builds/algoliasearchLite.js --
 uglifyjs dist/algoliasearchLite.js -mc 'warnings=false' > dist/algoliasearchLite.min.js
 echo "$license" | cat - dist/algoliasearchLite.js > /tmp/out && mv /tmp/out dist/algoliasearchLite.js
 echo "$license" | cat - dist/algoliasearchLite.min.js > /tmp/out && mv /tmp/out dist/algoliasearchLite.min.js
-echo "algoliasearchLite.min.js gzipped will weight" $(cat dist/algoliasearchLite.min.js | gzip -9 | wc -c | pretty-bytes)
+echo "algoliasearchLite.min.js gzipped will weigh" $(cat dist/algoliasearchLite.min.js | gzip -9 | wc -c | pretty-bytes)
 
 echo 'Done'
