@@ -3656,7 +3656,7 @@ module.exports =
 
 	
 
-	module.exports = '3.22.3';
+	module.exports = '3.23.0';
 
 
 /***/ }

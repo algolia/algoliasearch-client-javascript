@@ -1,5 +1,8 @@
 CHANGELOG
 
+2017-06-08 3.23.0
+  * feat(places): Add places.getObject(); fixes algolia/places#381
+
 2017-05-29 3.22.3
   * fix(dependency): Do not pin debug dependency anymore
   fixes #556
