@@ -1,4 +1,4 @@
-/*! algoliasearch 3.23.0 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
+/*! algoliasearch 3.24.0 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
 (function(f){var g;if(typeof window!=='undefined'){g=window}else if(typeof self!=='undefined'){g=self}g.ALGOLIA_MIGRATION_LAYER=f()})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 
 module.exports = function load (src, opts, cb) {
@@ -3637,7 +3637,7 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
 
   // either we have a callback
   // either we are using promises
-  if (initialOpts.callback) {
+  if (typeof initialOpts.callback === 'function') {
     promise.then(function okCb(content) {
       exitPromise(function() {
         initialOpts.callback(null, content);
@@ -4704,6 +4704,111 @@ Index.prototype.batchSynonyms = function(synonyms, opts, callback) {
       '&replaceExistingSynonyms=' + (opts.replaceExistingSynonyms ? 'true' : 'false'),
     hostType: 'write',
     body: synonyms,
+    callback: callback
+  });
+};
+
+Index.prototype.searchRules = function(params, callback) {
+  if (typeof params === 'function') {
+    callback = params;
+    params = {};
+  } else if (params === undefined) {
+    params = {};
+  }
+
+  return this.as._jsonRequest({
+    method: 'POST',
+    url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/rules/search',
+    body: params,
+    hostType: 'read',
+    callback: callback
+  });
+};
+
+Index.prototype.saveRule = function(rule, opts, callback) {
+  if (typeof opts === 'function') {
+    callback = opts;
+    opts = {};
+  } else if (opts === undefined) {
+    opts = {};
+  }
+
+  var forwardToReplicas = opts.forwardToReplicas === true ? 'true' : 'false';
+
+  return this.as._jsonRequest({
+    method: 'PUT',
+    url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/rules/' + encodeURIComponent(rule.objectID) +
+      '?forwardToReplicas=' + forwardToReplicas,
+    body: rule,
+    hostType: 'write',
+    callback: callback
+  });
+};
+
+Index.prototype.getRule = function(objectID, callback) {
+  return this.as._jsonRequest({
+    method: 'GET',
+    url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/rules/' + encodeURIComponent(objectID),
+    hostType: 'read',
+    callback: callback
+  });
+};
+
+Index.prototype.deleteRule = function(objectID, opts, callback) {
+  if (typeof opts === 'function') {
+    callback = opts;
+    opts = {};
+  } else if (opts === undefined) {
+    opts = {};
+  }
+
+  var forwardToReplicas = opts.forwardToReplicas === true ? 'true' : 'false';
+
+  return this.as._jsonRequest({
+    method: 'DELETE',
+    url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/rules/' + encodeURIComponent(objectID) +
+      '?forwardToReplicas=' + forwardToReplicas,
+    hostType: 'write',
+    callback: callback
+  });
+};
+
+Index.prototype.clearRules = function(opts, callback) {
+  if (typeof opts === 'function') {
+    callback = opts;
+    opts = {};
+  } else if (opts === undefined) {
+    opts = {};
+  }
+
+  var forwardToReplicas = opts.forwardToReplicas === true ? 'true' : 'false';
+
+  return this.as._jsonRequest({
+    method: 'POST',
+    url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/rules/clear' +
+      '?forwardToReplicas=' + forwardToReplicas,
+    hostType: 'write',
+    callback: callback
+  });
+};
+
+Index.prototype.batchRules = function(rules, opts, callback) {
+  if (typeof opts === 'function') {
+    callback = opts;
+    opts = {};
+  } else if (opts === undefined) {
+    opts = {};
+  }
+
+  var forwardToReplicas = opts.forwardToReplicas === true ? 'true' : 'false';
+
+  return this.as._jsonRequest({
+    method: 'POST',
+    url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/rules/batch' +
+      '?forwardToReplicas=' + forwardToReplicas +
+      '&clearExistingRules=' + (opts.clearExistingRules === true ? 'true' : 'false'),
+    hostType: 'write',
+    body: rules,
     callback: callback
   });
 };
@@ -6386,6 +6491,6 @@ function cleanup() {
 },{"1":1}],36:[function(require,module,exports){
 'use strict';
 
-module.exports = '3.23.0';
+module.exports = '3.24.0';
 
 },{}]},{},[19]);

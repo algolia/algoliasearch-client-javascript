@@ -1,5 +1,8 @@
 CHANGELOG
 
+2017-06-21 3.24.0
+  * feat(rules): Add query rules beta version, you cannot use this for now
+
 2017-06-08 3.23.0
   * feat(places): Add places.getObject(); fixes algolia/places#381
 
