@@ -700,6 +700,111 @@ Index.prototype.batchSynonyms = function(synonyms, opts, callback) {
   });
 };
 
+Index.prototype.searchRules = function(params, callback) {
+  if (typeof params === 'function') {
+    callback = params;
+    params = {};
+  } else if (params === undefined) {
+    params = {};
+  }
+
+  return this.as._jsonRequest({
+    method: 'POST',
+    url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/rules/search',
+    body: params,
+    hostType: 'read',
+    callback: callback
+  });
+};
+
+Index.prototype.saveRule = function(rule, opts, callback) {
+  if (typeof opts === 'function') {
+    callback = opts;
+    opts = {};
+  } else if (opts === undefined) {
+    opts = {};
+  }
+
+  var forwardToReplicas = opts.forwardToReplicas === true ? 'true' : 'false';
+
+  return this.as._jsonRequest({
+    method: 'PUT',
+    url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/rules/' + encodeURIComponent(rule.objectID) +
+      '?forwardToReplicas=' + forwardToReplicas,
+    body: rule,
+    hostType: 'write',
+    callback: callback
+  });
+};
+
+Index.prototype.getRule = function(objectID, callback) {
+  return this.as._jsonRequest({
+    method: 'GET',
+    url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/rules/' + encodeURIComponent(objectID),
+    hostType: 'read',
+    callback: callback
+  });
+};
+
+Index.prototype.deleteRule = function(objectID, opts, callback) {
+  if (typeof opts === 'function') {
+    callback = opts;
+    opts = {};
+  } else if (opts === undefined) {
+    opts = {};
+  }
+
+  var forwardToReplicas = opts.forwardToReplicas === true ? 'true' : 'false';
+
+  return this.as._jsonRequest({
+    method: 'DELETE',
+    url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/rules/' + encodeURIComponent(objectID) +
+      '?forwardToReplicas=' + forwardToReplicas,
+    hostType: 'write',
+    callback: callback
+  });
+};
+
+Index.prototype.clearRules = function(opts, callback) {
+  if (typeof opts === 'function') {
+    callback = opts;
+    opts = {};
+  } else if (opts === undefined) {
+    opts = {};
+  }
+
+  var forwardToReplicas = opts.forwardToReplicas === true ? 'true' : 'false';
+
+  return this.as._jsonRequest({
+    method: 'POST',
+    url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/rules/clear' +
+      '?forwardToReplicas=' + forwardToReplicas,
+    hostType: 'write',
+    callback: callback
+  });
+};
+
+Index.prototype.batchRules = function(rules, opts, callback) {
+  if (typeof opts === 'function') {
+    callback = opts;
+    opts = {};
+  } else if (opts === undefined) {
+    opts = {};
+  }
+
+  var forwardToReplicas = opts.forwardToReplicas === true ? 'true' : 'false';
+
+  return this.as._jsonRequest({
+    method: 'POST',
+    url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/rules/batch' +
+      '?forwardToReplicas=' + forwardToReplicas +
+      '&clearExistingRules=' + (opts.clearExistingRules === true ? 'true' : 'false'),
+    hostType: 'write',
+    body: rules,
+    callback: callback
+  });
+};
+
 /*
 * Set settings for this index
 *
