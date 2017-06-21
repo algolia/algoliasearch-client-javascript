@@ -58,6 +58,7 @@ test('index.browseAll', browseAll);
 
 if (canPUT) {
   test('synonyms API', synonyms);
+  test.skip('query rules', queryRules);
 }
 
 if (!isABrowser) {
@@ -391,6 +392,74 @@ function synonyms(t) {
     })
     .then(function(res) {
       t.equal(0, res.hits.length);
+    })
+    .then(function() {t.end();})
+    .then(noop, _.bind(t.error, t));
+}
+
+function queryRules(t) {
+  index
+    // we add an object with a specific name
+    .saveObject({objectID: 'query-rule', name: 'query-rule-integration-test'})
+    .then(get('taskID'))
+    .then(index.waitTask)
+    // we clear all rules
+    .then(index.clearRules)
+    .then(get('taskID'))
+    .then(index.waitTask)
+    // we try and fail to find an object with a weird query
+    .then(_.partial(index.search, {query: 'hellomyfriendhowareyou???'}))
+    .then(function(res) {
+      t.equal(res.hits.length, 0);
+    })
+    // we add a rule matching the weird query to the name
+    .then(function() {
+      return index.batchRules([{
+        objectID: 'to-integration-test',
+        if: {pattern: 'hellomyfriendhowareyou???', anchoring: 'is'},
+        then: {params: {query: 'query-rule-integration-test'}}
+      }]);
+    })
+    .then(get('taskID'))
+    .then(index.waitTask)
+    .then(_.bind(t.pass, t, 'we batch added rules'))
+    // we search and try to hit the query rule pattern
+    .then(_.partial(index.search, {query: 'hellomyfriendhowareyou???'}))
+    .then(function(res) {
+      t.equal(res.hits.length, 1);
+      t.equal(res.hits[0].name, 'query-rule-integration-test');
+    })
+    // we get the rule
+    .then(_.partial(index.getRule, 'to-integration-test'))
+    .then(function(rule) {
+      t.deepEqual(rule,
+        {
+          objectID: 'to-integration-test',
+          if: {pattern: 'hellomyfriendhowareyou???', anchoring: 'is'},
+          then: {params: {query: 'query-rule-integration-test'}}}
+        );
+    })
+    .then(_.partial(index.deleteRule, 'to-integration-test'))
+    .then(get('taskID'))
+    .then(index.waitTask)
+    .then(_.partial(index.search, {query: 'hellomyfriendhowareyou???'}))
+    .then(function(res) {
+      t.equal(res.hits.length, 0);
+    })
+    .then(_.partial(index.saveRule, {
+      objectID: 'to-integration-test2',
+      if: {pattern: 'hellomyfriendhowareyou???', anchoring: 'is'},
+      then: {params: {query: 'query-rule-integration-test'}}
+    }))
+    .then(get('taskID'))
+    .then(index.waitTask)
+    .then(_.partial(index.getRule, 'to-integration-test2'))
+    .then(function(rule) {
+      t.deepEqual(rule, {
+        objectID: 'to-integration-test2',
+        if: {pattern: 'hellomyfriendhowareyou???', anchoring: 'is'},
+        then: {params: {query: 'query-rule-integration-test'}}
+      });
     })
     .then(function() {t.end();})
     .then(noop, _.bind(t.error, t));

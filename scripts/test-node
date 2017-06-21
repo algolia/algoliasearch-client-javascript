@@ -13,7 +13,7 @@ set -e # exit when error
 [ -z $TRAVIS_PULL_REQUEST ] && TRAVIS_PULL_REQUEST='false'
 [ -z $TRAVIS_BUILD_NUMBER ] && TRAVIS_BUILD_NUMBER='false'
 
-nvm install stable
+nvm install 7
 node test/run-node.js | tap-bail | tap-dot
 
 # in CI we launch integration test
@@ -46,4 +46,4 @@ else
 fi
 
 # switch back to node.js stable
-nvm use stable
+nvm use 7

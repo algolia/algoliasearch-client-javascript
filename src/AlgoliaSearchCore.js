@@ -424,7 +424,7 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
 
   // either we have a callback
   // either we are using promises
-  if (initialOpts.callback) {
+  if (typeof initialOpts.callback === 'function') {
     promise.then(function okCb(content) {
       exitPromise(function() {
         initialOpts.callback(null, content);
