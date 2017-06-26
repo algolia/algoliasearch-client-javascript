@@ -416,8 +416,8 @@ function queryRules(t) {
     .then(function() {
       return index.batchRules([{
         objectID: 'to-integration-test',
-        if: {pattern: 'hellomyfriendhowareyou???', anchoring: 'is'},
-        then: {params: {query: 'query-rule-integration-test'}}
+        condition: {pattern: 'hellomyfriendhowareyou???', anchoring: 'is'},
+        consequence: {params: {query: 'query-rule-integration-test'}}
       }]);
     })
     .then(get('taskID'))
@@ -435,8 +435,8 @@ function queryRules(t) {
       t.deepEqual(rule,
         {
           objectID: 'to-integration-test',
-          if: {pattern: 'hellomyfriendhowareyou???', anchoring: 'is'},
-          then: {params: {query: 'query-rule-integration-test'}}}
+          condition: {pattern: 'hellomyfriendhowareyou???', anchoring: 'is'},
+          consequence: {params: {query: 'query-rule-integration-test'}}}
         );
     })
     .then(_.partial(index.deleteRule, 'to-integration-test'))
@@ -448,8 +448,8 @@ function queryRules(t) {
     })
     .then(_.partial(index.saveRule, {
       objectID: 'to-integration-test2',
-      if: {pattern: 'hellomyfriendhowareyou???', anchoring: 'is'},
-      then: {params: {query: 'query-rule-integration-test'}}
+      condition: {pattern: 'hellomyfriendhowareyou???', anchoring: 'is'},
+      consequence: {params: {query: 'query-rule-integration-test'}}
     }))
     .then(get('taskID'))
     .then(index.waitTask)
@@ -457,8 +457,8 @@ function queryRules(t) {
     .then(function(rule) {
       t.deepEqual(rule, {
         objectID: 'to-integration-test2',
-        if: {pattern: 'hellomyfriendhowareyou???', anchoring: 'is'},
-        then: {params: {query: 'query-rule-integration-test'}}
+        condition: {pattern: 'hellomyfriendhowareyou???', anchoring: 'is'},
+        consequence: {params: {query: 'query-rule-integration-test'}}
       });
     })
     .then(function() {t.end();})
