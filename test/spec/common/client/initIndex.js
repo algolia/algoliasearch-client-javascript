@@ -1,18 +1,21 @@
 'use strict';
 
-var test = require('tape');
+const test = require('tape');
 
-test('client.initIndex()', function(t) {
+test('client.initIndex()', t => {
   t.plan(1);
 
-  var bind = require('lodash-compat/function/bind');
+  const bind = require('lodash-compat/function/bind');
 
-  var algoliasearch = require('../../../../');
-  var getCredentials = require('../../../utils/get-credentials');
+  const algoliasearch = require('../../../../');
+  const getCredentials = require('../../../utils/get-credentials');
 
-  var credentials = getCredentials();
+  const credentials = getCredentials();
 
-  var client = algoliasearch(credentials.applicationID, credentials.searchOnlyAPIKey);
+  const client = algoliasearch(
+    credentials.applicationID,
+    credentials.searchOnlyAPIKey
+  );
 
   t.doesNotThrow(bind(client.initIndex, client, credentials.indexName));
 });

@@ -1,6 +1,8 @@
-var buildSearchMethod = require('./buildSearchMethod.js');
-var deprecate = require('./deprecate.js');
-var deprecatedMessage = require('./deprecatedMessage.js');
+/* eslint-disable prefer-rest-params, no-param-reassign, consistent-this */
+
+const buildSearchMethod = require('./buildSearchMethod.js');
+const deprecate = require('./deprecate.js');
+const deprecatedMessage = require('./deprecatedMessage.js');
 
 module.exports = IndexCore;
 
@@ -152,17 +154,20 @@ IndexCore.prototype.similarSearch = buildSearchMethod('similarQuery');
 * @see {@link https://www.algolia.com/doc/rest_api#Browse|Algolia REST API Documentation}
 */
 IndexCore.prototype.browse = function(query, queryParameters, callback) {
-  var merge = require('./merge.js');
+  const merge = require('./merge.js');
 
-  var indexObj = this;
+  const indexObj = this;
 
-  var page;
-  var hitsPerPage;
+  let page;
+  let hitsPerPage;
 
   // we check variadic calls that are not the one defined
   // .browse()/.browse(fn)
   // => page = 0
-  if (arguments.length === 0 || arguments.length === 1 && typeof arguments[0] === 'function') {
+  if (
+    arguments.length === 0 ||
+    (arguments.length === 1 && typeof arguments[0] === 'function')
+  ) {
     page = 0;
     callback = arguments[0];
     query = undefined;
@@ -184,7 +189,10 @@ IndexCore.prototype.browse = function(query, queryParameters, callback) {
     }
     queryParameters = arguments[0];
     query = undefined;
-  } else if (typeof arguments[0] === 'string' && typeof arguments[1] === 'function') {
+  } else if (
+    typeof arguments[0] === 'string' &&
+    typeof arguments[1] === 'function'
+  ) {
     // .browse(query, cb)
     callback = arguments[1];
     queryParameters = undefined;
@@ -195,19 +203,19 @@ IndexCore.prototype.browse = function(query, queryParameters, callback) {
   // get search query parameters combining various possible calls
   // to .browse();
   queryParameters = merge({}, queryParameters || {}, {
-    page: page,
-    hitsPerPage: hitsPerPage,
-    query: query
+    page,
+    hitsPerPage,
+    query,
   });
 
-  var params = this.as._getSearchParams(queryParameters, '');
+  const params = this.as._getSearchParams(queryParameters, '');
 
   return this.as._jsonRequest({
     method: 'POST',
-    url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/browse',
-    body: {params: params},
+    url: `/1/indexes/${encodeURIComponent(indexObj.indexName)}/browse`,
+    body: { params },
     hostType: 'read',
-    callback: callback
+    callback,
   });
 };
 
@@ -227,10 +235,10 @@ IndexCore.prototype.browse = function(query, queryParameters, callback) {
 IndexCore.prototype.browseFrom = function(cursor, callback) {
   return this.as._jsonRequest({
     method: 'POST',
-    url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/browse',
-    body: {cursor: cursor},
+    url: `/1/indexes/${encodeURIComponent(this.indexName)}/browse`,
+    body: { cursor },
     hostType: 'read',
-    callback: callback
+    callback,
   });
 };
 
@@ -247,27 +255,30 @@ IndexCore.prototype.browseFrom = function(cursor, callback) {
 * @param callback (optional)
 */
 IndexCore.prototype.searchForFacetValues = function(params, callback) {
-  var clone = require('./clone.js');
-  var omit = require('./omit.js');
-  var usage = 'Usage: index.searchForFacetValues({facetName, facetQuery, ...params}[, callback])';
+  const clone = require('./clone.js');
+  const omit = require('./omit.js');
+  const usage =
+    'Usage: index.searchForFacetValues({facetName, facetQuery, ...params}[, callback])';
 
   if (params.facetName === undefined || params.facetQuery === undefined) {
     throw new Error(usage);
   }
 
-  var facetName = params.facetName;
-  var filteredParams = omit(clone(params), function(keyName) {
-    return keyName === 'facetName';
-  });
-  var searchParameters = this.as._getSearchParams(filteredParams, '');
+  const facetName = params.facetName;
+  const filteredParams = omit(
+    clone(params),
+    keyName => keyName === 'facetName'
+  );
+  const searchParameters = this.as._getSearchParams(filteredParams, '');
 
   return this.as._jsonRequest({
     method: 'POST',
-    url: '/1/indexes/' +
-      encodeURIComponent(this.indexName) + '/facets/' + encodeURIComponent(facetName) + '/query',
+    url: `/1/indexes/${encodeURIComponent(
+      this.indexName
+    )}/facets/${encodeURIComponent(facetName)}/query`,
     hostType: 'read',
-    body: {params: searchParameters},
-    callback: callback
+    body: { params: searchParameters },
+    callback,
   });
 };
 
@@ -282,16 +293,16 @@ IndexCore.prototype._search = function(params, url, callback, additionalUA) {
   return this.as._jsonRequest({
     cache: this.cache,
     method: 'POST',
-    url: url || '/1/indexes/' + encodeURIComponent(this.indexName) + '/query',
-    body: {params: params},
+    url: url || `/1/indexes/${encodeURIComponent(this.indexName)}/query`,
+    body: { params },
     hostType: 'read',
     fallback: {
       method: 'GET',
-      url: '/1/indexes/' + encodeURIComponent(this.indexName),
-      body: {params: params}
+      url: `/1/indexes/${encodeURIComponent(this.indexName)}`,
+      body: { params },
     },
-    callback: callback,
-    additionalUA: additionalUA
+    callback,
+    additionalUA,
   });
 };
 
@@ -305,17 +316,17 @@ IndexCore.prototype._search = function(params, url, callback, additionalUA) {
 *  content: the object to retrieve or the error message if a failure occured
 */
 IndexCore.prototype.getObject = function(objectID, attrs, callback) {
-  var indexObj = this;
+  const indexObj = this;
 
   if (arguments.length === 1 || typeof attrs === 'function') {
     callback = attrs;
     attrs = undefined;
   }
 
-  var params = '';
+  let params = '';
   if (attrs !== undefined) {
     params = '?attributes=';
-    for (var i = 0; i < attrs.length; ++i) {
+    for (let i = 0; i < attrs.length; ++i) {
       if (i !== 0) {
         params += ',';
       }
@@ -325,9 +336,11 @@ IndexCore.prototype.getObject = function(objectID, attrs, callback) {
 
   return this.as._jsonRequest({
     method: 'GET',
-    url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/' + encodeURIComponent(objectID) + params,
+    url: `/1/indexes/${encodeURIComponent(
+      indexObj.indexName
+    )}/${encodeURIComponent(objectID)}${params}`,
     hostType: 'read',
-    callback: callback
+    callback,
   });
 };
 
@@ -336,28 +349,32 @@ IndexCore.prototype.getObject = function(objectID, attrs, callback) {
 *
 * @param objectIDs the array of unique identifier of objects to retrieve
 */
-IndexCore.prototype.getObjects = function(objectIDs, attributesToRetrieve, callback) {
-  var isArray = require('isarray');
-  var map = require('./map.js');
+IndexCore.prototype.getObjects = function(
+  objectIDs,
+  attributesToRetrieve,
+  callback
+) {
+  const isArray = require('isarray');
+  const map = require('./map.js');
 
-  var usage = 'Usage: index.getObjects(arrayOfObjectIDs[, callback])';
+  const usage = 'Usage: index.getObjects(arrayOfObjectIDs[, callback])';
 
   if (!isArray(objectIDs)) {
     throw new Error(usage);
   }
 
-  var indexObj = this;
+  const indexObj = this;
 
   if (arguments.length === 1 || typeof attributesToRetrieve === 'function') {
     callback = attributesToRetrieve;
     attributesToRetrieve = undefined;
   }
 
-  var body = {
-    requests: map(objectIDs, function prepareRequest(objectID) {
-      var request = {
+  const body = {
+    requests: map(objectIDs, objectID => {
+      const request = {
         indexName: indexObj.indexName,
-        objectID: objectID
+        objectID,
       };
 
       if (attributesToRetrieve) {
@@ -365,15 +382,15 @@ IndexCore.prototype.getObjects = function(objectIDs, attributesToRetrieve, callb
       }
 
       return request;
-    })
+    }),
   };
 
   return this.as._jsonRequest({
     method: 'POST',
     url: '/1/indexes/*/objects',
     hostType: 'read',
-    body: body,
-    callback: callback
+    body,
+    callback,
   });
 };
 

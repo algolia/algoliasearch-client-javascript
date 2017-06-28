@@ -1,21 +1,17 @@
 'use strict';
 
-var bind = require('lodash-compat/function/bind');
-var test = require('tape');
+const bind = require('lodash-compat/function/bind');
+const test = require('tape');
 
-var algoliasearch = require('../../../');
+const algoliasearch = require('../../../');
 
-test('algoliasearch()', function(t) {
-  t.throws(
-    algoliasearch,
-    Error,
-    'No parameters throws'
-  );
+test('algoliasearch()', t => {
+  t.throws(algoliasearch, Error, 'No parameters throws');
 
   t.end();
 });
 
-test('algoliasearch(applicationID)', function(t) {
+test('algoliasearch(applicationID)', t => {
   t.throws(
     bind(algoliasearch, null, 'dsa'),
     Error,
@@ -25,7 +21,7 @@ test('algoliasearch(applicationID)', function(t) {
   t.end();
 });
 
-test('algoliasearch(applicationID, apiKey)', function(t) {
+test('algoliasearch(applicationID, apiKey)', t => {
   t.doesNotThrow(
     bind(algoliasearch, null, 'dsa', 'hey'),
     'Providing required parameters does not throw'
@@ -34,7 +30,7 @@ test('algoliasearch(applicationID, apiKey)', function(t) {
   t.end();
 });
 
-test('algoliasearch.version returns the package version', function(t) {
+test('algoliasearch.version returns the package version', t => {
   t.equal(
     algoliasearch.version,
     require('../../../package.json').version,

@@ -1,12 +1,15 @@
 'use strict';
 
-var clone = require('lodash-compat/lang/clone');
+const clone = require('lodash-compat/lang/clone');
 
-var objects = [{
-  first: 'object'
-}, {
-  second: 'object'
-}];
+const objects = [
+  {
+    first: 'object',
+  },
+  {
+    second: 'object',
+  },
+];
 
 module.exports = {
   object: 'index',
@@ -17,16 +20,19 @@ module.exports = {
   expectedRequest: {
     method: 'POST',
     body: {
-      requests: [{
-        action: 'addObject',
-        body: clone(objects[0])
-      }, {
-        action: 'addObject',
-        body: clone(objects[1])
-      }]
+      requests: [
+        {
+          action: 'addObject',
+          body: clone(objects[0]),
+        },
+        {
+          action: 'addObject',
+          body: clone(objects[1]),
+        },
+      ],
     },
     URL: {
-      pathname: '/1/indexes/%s/batch'
-    }
-  }
+      pathname: '/1/indexes/%s/batch',
+    },
+  },
 };

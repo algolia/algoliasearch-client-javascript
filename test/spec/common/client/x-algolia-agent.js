@@ -1,34 +1,30 @@
 'use strict';
 
-var test = require('tape');
+const test = require('tape');
 
-test('There is a default x-algolia-agent sent', function(t) {
+test('There is a default x-algolia-agent sent', t => {
   t.plan(1);
 
-  var fauxJax = require('faux-jax');
-  var parse = require('url-parse');
-  fauxJax.install({gzip: true});
+  const fauxJax = require('faux-jax');
+  const parse = require('url-parse');
+  fauxJax.install({ gzip: true });
 
-  var createFixture = require('../../../utils/create-fixture');
-  var fixture = createFixture();
-  var env = process.browser ? 'vanilla JavaScript' : 'Node.js';
-  var version = require('../../../../src/version.js');
+  const createFixture = require('../../../utils/create-fixture');
+  const fixture = createFixture();
+  const env = process.browser ? 'vanilla JavaScript' : 'Node.js';
+  const version = require('../../../../src/version.js');
 
-  var index = fixture.index;
+  const index = fixture.index;
   index.search('algolia agent');
 
-  var expectedAgent = 'Algolia for ' + env + ' ' + version;
+  const expectedAgent = `Algolia for ${env} ${version}`;
 
-  fauxJax.once('request', function(req) {
-    var agent = process.browser ?
-      parse(req.requestURL, true).query['x-algolia-agent'] :
-      req.requestHeaders['x-algolia-agent'];
+  fauxJax.once('request', req => {
+    const agent = process.browser
+      ? parse(req.requestURL, true).query['x-algolia-agent']
+      : req.requestHeaders['x-algolia-agent'];
 
-    t.equal(
-      agent,
-      expectedAgent,
-      'Algolia Agent matches'
-    );
+    t.equal(agent, expectedAgent, 'Algolia Agent matches');
 
     req.respond(200, {}, '{}');
 

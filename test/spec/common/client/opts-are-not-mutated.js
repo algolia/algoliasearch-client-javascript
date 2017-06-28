@@ -1,14 +1,14 @@
 'use strict';
 
-var test = require('tape');
+const test = require('tape');
 
-test('algoliasearch(applicationID, apiKey, opts), `opts` is not mutated', function(t) {
+test('algoliasearch(applicationID, apiKey, opts), `opts` is not mutated', t => {
   t.plan(1);
 
-  var keys = require('lodash-compat/object/keys');
-  var opts = {};
+  const keys = require('lodash-compat/object/keys');
+  const opts = {};
 
-  var algoliasearch = require('../../../../');
+  const algoliasearch = require('../../../../');
   algoliasearch('applicationID', 'apiKey', opts);
 
   t.equal(

@@ -1,25 +1,28 @@
 'use strict';
 
-var test = require('tape');
+const test = require('tape');
 
-test('Bad JSON is catched', function(t) {
+test('Bad JSON is catched', t => {
   t.plan(2);
 
-  var fauxJax = require('faux-jax');
+  const fauxJax = require('faux-jax');
 
-  var createFixture = require('../../../utils/create-fixture');
-  var fixture = createFixture();
-  var index = fixture.index;
+  const createFixture = require('../../../utils/create-fixture');
+  const fixture = createFixture();
+  const index = fixture.index;
 
-  fauxJax.install({gzip: true});
+  fauxJax.install({ gzip: true });
 
-  fauxJax.once('request', function(req) {
+  fauxJax.once('request', req => {
     req.respond(200, {}, 'OMGBADJSON;;;;;"');
     fauxJax.restore();
   });
 
-  index.search('something', function(err) {
+  index.search('something', err => {
     t.ok(err instanceof Error);
-    t.equal(err.message, 'Could not parse the incoming response as JSON, see err.more for details');
+    t.equal(
+      err.message,
+      'Could not parse the incoming response as JSON, see err.more for details'
+    );
   });
 });

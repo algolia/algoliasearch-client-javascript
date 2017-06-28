@@ -1,33 +1,29 @@
 'use strict';
 
-var test = require('tape');
+const test = require('tape');
 
-test('index.ttAdapter(cb)', function(t) {
+test('index.ttAdapter(cb)', t => {
   t.plan(1);
 
-  var fauxJax = require('faux-jax');
+  const fauxJax = require('faux-jax');
 
-  var createFixture = require('../../../../utils/create-fixture');
-  var fixture = createFixture();
+  const createFixture = require('../../../../utils/create-fixture');
+  const fixture = createFixture();
 
-  var fakeResponse = {
-    hits: [1, 2, 3]
+  const fakeResponse = {
+    hits: [1, 2, 3],
   };
-  var index = fixture.index;
-  var ttAdapter = index.ttAdapter();
+  const index = fixture.index;
+  const ttAdapter = index.ttAdapter();
 
   fauxJax.install();
 
-  fauxJax.on('request', function(req) {
+  fauxJax.on('request', req => {
     fauxJax.restore();
     req.respond(200, {}, JSON.stringify(fakeResponse));
   });
 
-  ttAdapter('a search', function(actualHits) {
-    t.deepEqual(
-      actualHits,
-      fakeResponse.hits,
-      'We received some hits'
-    );
+  ttAdapter('a search', actualHits => {
+    t.deepEqual(actualHits, fakeResponse.hits, 'We received some hits');
   });
 });

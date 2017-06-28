@@ -9,13 +9,13 @@
 module.exports = getAgent;
 
 function getAgent(protocol) {
-  var agent;
+  let agent;
 
   if (protocol !== 'http:' && protocol !== 'https:') {
     throw new Error('get-agent: `protocol` must be `http:` or `https:`');
   }
 
-  var parsedProxy = getParsedProxy();
+  const parsedProxy = getParsedProxy();
 
   if (parsedProxy.protocol) {
     agent = getProxyingAgent(protocol, parsedProxy);
@@ -28,23 +28,21 @@ function getAgent(protocol) {
 }
 
 function getParsedProxy() {
-  var url = require('url');
-  var proxy = process.env.HTTP_PROXY ||
-    process.env.HTTPS_PROXY ||
-    '';
+  const url = require('url');
+  const proxy = process.env.HTTP_PROXY || process.env.HTTPS_PROXY || '';
 
   return url.parse(proxy);
 }
 
 function getKeepaliveAgent(protocol) {
-  var http = require('http');
-  var https = require('https');
+  const http = require('http');
+  const https = require('https');
 
-  var HttpsAgent = require('agentkeepalive').HttpsAgent;
-  var HttpAgent = require('agentkeepalive');
-  var semver = require('semver');
+  const HttpsAgent = require('agentkeepalive').HttpsAgent;
+  const HttpAgent = require('agentkeepalive');
+  const semver = require('semver');
 
-  var keepAliveAgent;
+  let keepAliveAgent;
 
   // node 0.10 => agentkeepalive
   // node >= 0.12 => native keepalive
@@ -53,22 +51,22 @@ function getKeepaliveAgent(protocol) {
   if (semver.satisfies(process.version, '<0.11.4')) {
     if (protocol === 'http:') {
       keepAliveAgent = new HttpAgent({
-        maxSockets: Infinity
+        maxSockets: Infinity,
       });
     } else if (protocol === 'https:') {
       keepAliveAgent = new HttpsAgent({
-        maxSockets: Infinity
+        maxSockets: Infinity,
       });
     }
   } else if (protocol === 'http:') {
     keepAliveAgent = new http.Agent({
       keepAlive: true,
-      maxSockets: Infinity
+      maxSockets: Infinity,
     });
   } else if (protocol === 'https:') {
     keepAliveAgent = new https.Agent({
       keepAlive: true,
-      maxSockets: Infinity
+      maxSockets: Infinity,
     });
   }
 
@@ -76,29 +74,30 @@ function getKeepaliveAgent(protocol) {
 }
 
 function getProxyingAgent(protocol, parsedProxy) {
-  var tunnel = require('tunnel-agent');
+  const tunnel = require('tunnel-agent');
 
-  var agentSettings = {
+  const agentSettings = {
     maxSockets: Infinity,
     proxy: {
       host: parsedProxy.hostname,
       port: parseInt(parsedProxy.port, 10),
-      proxyAuth: parsedProxy.auth
-    }
+      proxyAuth: parsedProxy.auth,
+    },
   };
 
   // httpOverHttps
   // httpsOverHttps
   // https://github.com/mikeal/tunnel-agent/blob/912a7a6d00e10ec76baf9c9369de280fa5badef3/index.js#L12-L15
-  var tunnelType = protocol.replace(':', '') +
-    'Over' +
-    parsedProxy.protocol.replace(':', '').replace('h', 'H');
+  const tunnelType = `${protocol.replace(
+    ':',
+    ''
+  )}Over${parsedProxy.protocol.replace(':', '').replace('h', 'H')}`;
 
-  var agent = new tunnel[tunnelType](agentSettings);
+  const agent = new tunnel[tunnelType](agentSettings);
 
   // `tunnel-agent` does not have a destroy method
   agent.destroy = function() {
-    this.sockets.forEach(function(socket) {
+    this.sockets.forEach(socket => {
       socket.destroy();
     });
   };

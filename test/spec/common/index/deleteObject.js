@@ -1,35 +1,29 @@
 'use strict';
 
-var test = require('tape');
+const test = require('tape');
 
-test('deleteObject() without an objectID', function(t) {
+test('deleteObject() without an objectID', t => {
   t.plan(2);
-  var bind = require('lodash-compat/function/bind');
+  const bind = require('lodash-compat/function/bind');
 
-  var createFixture = require('../../../utils/create-fixture');
-  var fixture = createFixture();
-  var index = fixture.index;
+  const createFixture = require('../../../utils/create-fixture');
+  const fixture = createFixture();
+  const index = fixture.index;
 
-  index.deleteObject().then(bind(t.fail, t), function(err) {
+  index.deleteObject().then(bind(t.fail, t), err => {
     t.ok(err instanceof Error, 'received an error');
-    t.equal(
-      err.message,
-      'Cannot delete an object without an objectID'
-    );
+    t.equal(err.message, 'Cannot delete an object without an objectID');
   });
 });
 
-test('deleteObject(cb)  without an objectID, with a cb', function(t) {
+test('deleteObject(cb)  without an objectID, with a cb', t => {
   t.plan(2);
-  var createFixture = require('../../../utils/create-fixture');
-  var fixture = createFixture();
-  var index = fixture.index;
+  const createFixture = require('../../../utils/create-fixture');
+  const fixture = createFixture();
+  const index = fixture.index;
 
-  index.deleteObject(function(err) {
+  index.deleteObject(err => {
     t.ok(err instanceof Error, 'received an error');
-    t.equal(
-      err.message,
-      'Cannot delete an object without an objectID'
-    );
+    t.equal(err.message, 'Cannot delete an object without an objectID');
   });
 });

@@ -1,22 +1,22 @@
 'use strict';
 
-var test = require('tape');
+const test = require('tape');
 
-test('index.browseAll(query, queryParameters)', function(t) {
+test('index.browseAll(query, queryParameters)', t => {
   t.plan(6);
 
-  var fauxJax = require('faux-jax');
-  var parse = require('url-parse');
+  const fauxJax = require('faux-jax');
+  const parse = require('url-parse');
 
-  var bind = require('lodash-compat/function/bind');
-  var createFixture = require('../../../../utils/create-fixture');
-  var fixture = createFixture();
-  var index = fixture.index;
+  const bind = require('lodash-compat/function/bind');
+  const createFixture = require('../../../../utils/create-fixture');
+  const fixture = createFixture();
+  const index = fixture.index;
 
-  fauxJax.install({gzip: true});
+  fauxJax.install({ gzip: true });
 
-  var browser = index.browseAll('some', {
-    hitsPerPage: 200
+  const browser = index.browseAll('some', {
+    hitsPerPage: 200,
   });
 
   browser.once('result', firstResult);
@@ -25,16 +25,16 @@ test('index.browseAll(query, queryParameters)', function(t) {
   browser.once('error', bind(t.fail, t));
 
   function firstBrowse(req) {
-    var parsedURL = parse(req.requestURL, true);
+    const parsedURL = parse(req.requestURL, true);
 
     t.equal(
       parsedURL.pathname,
-      '/1/indexes/' + encodeURIComponent(fixture.credentials.indexName) + '/browse',
+      `/1/indexes/${encodeURIComponent(fixture.credentials.indexName)}/browse`,
       'pathname matches'
     );
     t.deepEqual(
       JSON.parse(req.requestBody),
-      {params: 'hitsPerPage=200&query=some'},
+      { params: 'hitsPerPage=200&query=some' },
       'params matches'
     );
 
@@ -43,7 +43,7 @@ test('index.browseAll(query, queryParameters)', function(t) {
       {},
       JSON.stringify({
         nbHits: 100,
-        cursor: 'fslajf21rf31fé==!'
+        cursor: 'fslajf21rf31fé==!',
       })
     );
 
@@ -53,7 +53,7 @@ test('index.browseAll(query, queryParameters)', function(t) {
   function secondBrowse(req) {
     t.deepEqual(
       JSON.parse(req.requestBody),
-      {cursor: 'fslajf21rf31fé==!'},
+      { cursor: 'fslajf21rf31fé==!' },
       'cursor matches'
     );
 
@@ -61,7 +61,7 @@ test('index.browseAll(query, queryParameters)', function(t) {
       200,
       {},
       JSON.stringify({
-        nbHits: 300
+        nbHits: 300,
       })
     );
 

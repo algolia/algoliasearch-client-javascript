@@ -1,62 +1,67 @@
 'use strict';
 
-var test = require('tape');
+const test = require('tape');
 
-var requestTimeout = 5000;
+const requestTimeout = 5000;
 
 // this test ensures that any created JSONP script tags is then removed
-test('Request strategy clean JSONP created script tags', function(t) {
-  var every = require('lodash-compat/collection/every');
-  var fauxJax = require('faux-jax');
-  var parse = require('url-parse');
-  var sinon = require('sinon');
+test('Request strategy clean JSONP created script tags', t => {
+  const every = require('lodash-compat/collection/every');
+  const fauxJax = require('faux-jax');
+  const parse = require('url-parse');
+  const sinon = require('sinon');
 
-  var createFixture = require('../../../utils/create-fixture');
+  const createFixture = require('../../../utils/create-fixture');
 
-  var currentURL = parse(location.href);
-  var fixture = createFixture({
+  const currentURL = parse(location.href);
+  const fixture = createFixture({
     clientOptions: {
       hosts: [
         currentURL.host,
         currentURL.host,
         currentURL.host,
-        currentURL.host
+        currentURL.host,
       ],
-      timeout: requestTimeout
+      timeout: requestTimeout,
     },
-    indexName: 'simple-JSONP-response-clean'
+    indexName: 'simple-JSONP-response-clean',
   });
 
-  var index = fixture.index;
+  const index = fixture.index;
 
   fauxJax.install();
 
-  var initialScriptTags = document.getElementsByTagName('script');
+  const initialScriptTags = document.getElementsByTagName('script');
 
   // check that the current state is clean
   t.ok(
-    every(initialScriptTags, function noJSONPTag(script) {
-      return !script.src ||
-        parse(script.src).pathname !== '/1/indexes/simple-JSONP-response-clean';
-    }),
+    every(
+      initialScriptTags,
+      script =>
+        !script.src ||
+        parse(script.src).pathname !== '/1/indexes/simple-JSONP-response-clean'
+    ),
     'No script matches a JSONP script of the current index'
   );
 
-  var searchCallback = sinon.spy(function() {
+  var searchCallback = sinon.spy(() => {
     t.ok(searchCallback.calledOnce, 'Callback was called once');
     t.deepEqual(
       searchCallback.args[0],
-      [null, {query: 'clean script tags'}],
+      [null, { query: 'clean script tags' }],
       'Callback called with null, {"query": "clean script tags"}'
     );
 
-    var postCallbackScriptTags = document.getElementsByTagName('script');
+    const postCallbackScriptTags = document.getElementsByTagName('script');
 
     t.ok(
-      every(postCallbackScriptTags, function noJSONPTag(script) {
-        return !script.src ||
-          parse(script.src).pathname !== '/1/indexes/simple-JSONP-response-clean';
-      }),
+      every(
+        postCallbackScriptTags,
+        script =>
+          !script.src ||
+          parse(script.src).pathname !==
+            '/1/indexes/simple-JSONP-response-clean'
+      ),
       'No more script matches a JSONP script of the current index'
     );
 
@@ -67,7 +72,7 @@ test('Request strategy clean JSONP created script tags', function(t) {
   index.search('clean script tags', searchCallback);
 
   // send 500 to 4XHRS
-  fauxJax.on('request', function(req) {
-    req.respond(500, {}, JSON.stringify({message: 'Try again', status: 500}));
+  fauxJax.on('request', req => {
+    req.respond(500, {}, JSON.stringify({ message: 'Try again', status: 500 }));
   });
 });

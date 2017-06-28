@@ -1,25 +1,27 @@
 'use strict';
-
+/* eslint-disable prefer-rest-params, no-param-reassign, consistent-this */
 // This is the Node.JS entry point
 module.exports = algoliasearch;
 
-var debug = require('debug')('algoliasearch:nodejs');
-var crypto = require('crypto');
-var zlib = require('zlib');
+const debug = require('debug')('algoliasearch:nodejs');
+const crypto = require('crypto');
+const zlib = require('zlib');
 
-var inherits = require('inherits');
-var Promise = global.Promise || require('es6-promise').Promise;
-var semver = require('semver');
-var isNotSupported = semver.satisfies(process.version, '<0.10');
-var isNode010 = semver.satisfies(process.version, '=0.10');
-var places = require('../../places.js');
+const inherits = require('inherits');
+const Promise = global.Promise || require('es6-promise').Promise;
+const semver = require('semver');
+const isNotSupported = semver.satisfies(process.version, '<0.10');
+const isNode010 = semver.satisfies(process.version, '=0.10');
+const places = require('../../places.js');
 
-var AlgoliaSearchServer = require('./AlgoliaSearchServer');
-var errors = require('../../errors');
+const AlgoliaSearchServer = require('./AlgoliaSearchServer');
+const errors = require('../../errors');
 
 // does not work on node <= 0.8
 if (isNotSupported) {
-  throw new errors.AlgoliaSearchError('Node.js version ' + process.version + ' is not supported');
+  throw new errors.AlgoliaSearchError(
+    `Node.js version ${process.version} is not supported`
+  );
 }
 
 if (process.env.NODE_ENV === 'debug') {
@@ -29,14 +31,14 @@ if (process.env.NODE_ENV === 'debug') {
 debug('loaded the Node.js client');
 
 function algoliasearch(applicationID, apiKey, opts) {
-  var cloneDeep = require('../../clone.js');
-  var reduce = require('reduce');
+  const cloneDeep = require('../../clone.js');
+  const reduce = require('reduce');
 
   if (!opts) {
     opts = {};
   }
 
-  var httpAgent = opts.httpAgent;
+  const httpAgent = opts.httpAgent;
 
   opts = cloneDeep(reduce(opts, allButHttpAgent, {}));
 
@@ -55,7 +57,7 @@ function algoliasearch(applicationID, apiKey, opts) {
   opts.timeouts = opts.timeouts || {
     connect: 2 * 1000,
     read: 5 * 1000,
-    write: 30 * 1000
+    write: 30 * 1000,
   };
 
   if (opts.protocol === undefined) {
@@ -69,11 +71,11 @@ function algoliasearch(applicationID, apiKey, opts) {
 }
 
 algoliasearch.version = require('../../version.js');
-algoliasearch.ua = 'Algolia for Node.js ' + algoliasearch.version;
+algoliasearch.ua = `Algolia for Node.js ${algoliasearch.version}`;
 algoliasearch.initPlaces = places(algoliasearch);
 
 function AlgoliaSearchNodeJS(applicationID, apiKey, opts) {
-  var getAgent = require('./get-agent');
+  const getAgent = require('./get-agent');
 
   // call AlgoliaSearchServer constructor
   AlgoliaSearchServer.apply(this, arguments);
@@ -84,29 +86,34 @@ function AlgoliaSearchNodeJS(applicationID, apiKey, opts) {
 inherits(AlgoliaSearchNodeJS, AlgoliaSearchServer);
 
 AlgoliaSearchNodeJS.prototype._request = function request(rawUrl, opts) {
-  var http = require('http');
-  var https = require('https');
-  var url = require('url');
+  const http = require('http');
+  const https = require('https');
+  const url = require('url');
 
-  var client = this;
+  const client = this;
 
-  return new Promise(function doReq(resolve, reject) {
-    opts.debug('url: %s, method: %s, timeouts: %j', rawUrl, opts.method, opts.timeouts);
+  return new Promise((resolve, reject) => {
+    opts.debug(
+      'url: %s, method: %s, timeouts: %j',
+      rawUrl,
+      opts.method,
+      opts.timeouts
+    );
 
-    var body = opts.body;
+    const body = opts.body;
 
-    var parsedUrl = url.parse(rawUrl);
-    var requestOptions = {
+    const parsedUrl = url.parse(rawUrl);
+    const requestOptions = {
       hostname: parsedUrl.hostname,
       port: parsedUrl.port,
       method: opts.method,
       path: parsedUrl.path,
-      agent: client._Agent
+      agent: client._Agent,
     };
 
-    var timedOut = false;
-    var timeoutId;
-    var req;
+    let timedOut = false;
+    let timeoutId;
+    let req;
 
     if (parsedUrl.protocol === 'https:') {
       // we do not rely on any "smart" port computing by either node.js
@@ -127,7 +134,7 @@ AlgoliaSearchNodeJS.prototype._request = function request(rawUrl, opts) {
     req.setHeader('connection', 'keep-alive');
     req.setHeader('accept', 'application/json');
 
-    Object.keys(opts.headers).forEach(function setRequestHeader(headerName) {
+    Object.keys(opts.headers).forEach(headerName => {
       req.setHeader(headerName, opts.headers[headerName]);
     });
 
@@ -157,25 +164,25 @@ AlgoliaSearchNodeJS.prototype._request = function request(rawUrl, opts) {
     function response(res) {
       clearTimeout(timeoutId);
       timeoutId = setTimeout(onCompleteTimeout, opts.timeouts.complete);
-      var chunks = [];
-      var originalRes = res;
+      const chunks = [];
+      const originalRes = res;
 
       // save headers and statusCode BEFORE treating the response as zlib, otherwise
       // we lose them
-      var headers = res.headers;
-      var statusCode = res.statusCode;
+      const headers = res.headers;
+      const statusCode = res.statusCode;
 
       // Algolia answers should be gzip when asked for it,
       // but a proxy might uncompress Algolia response
       // So we handle both compressed and uncompressed
-      if (headers['content-encoding'] === 'gzip' ||
-          headers['content-encoding'] === 'deflate') {
+      if (
+        headers['content-encoding'] === 'gzip' ||
+        headers['content-encoding'] === 'deflate'
+      ) {
         res = res.pipe(zlib.createUnzip());
       }
 
-      res
-        .on('data', onData)
-        .once('end', onEnd);
+      res.on('data', onData).once('end', onEnd);
 
       function onData(chunk) {
         chunks.push(chunk);
@@ -184,18 +191,18 @@ AlgoliaSearchNodeJS.prototype._request = function request(rawUrl, opts) {
       function onEnd() {
         clearTimeout(timeoutId);
 
-        var data = Buffer.concat(chunks).toString();
-        var out;
+        const data = Buffer.concat(chunks).toString();
+        let out;
 
         try {
           out = {
             body: JSON.parse(data),
-            statusCode: statusCode,
-            headers: headers
+            statusCode,
+            headers,
           };
         } catch (e) {
           out = new errors.UnparsableJSON({
-            more: data
+            more: data,
           });
         }
 
@@ -253,10 +260,10 @@ AlgoliaSearchNodeJS.prototype._promise = {
     return Promise.resolve(val);
   },
   delay: function delayPromise(ms) {
-    return new Promise(function resolveOnTimeout(resolve/* , reject */) {
+    return new Promise((resolve /* , reject */) => {
       setTimeout(resolve, ms);
     });
-  }
+  },
 };
 
 AlgoliaSearchNodeJS.prototype.destroy = function destroy() {
@@ -272,14 +279,18 @@ AlgoliaSearchNodeJS.prototype.destroy = function destroy() {
  * @param apiKey - The api key to encode as secure
  * @param {Object} [queryParameters] - Any search query parameter
  */
-AlgoliaSearchNodeJS.prototype.generateSecuredApiKey = function generateSecuredApiKey(privateApiKey, queryParametersOrTagFilters, userToken) {
-  var searchParams;
+AlgoliaSearchNodeJS.prototype.generateSecuredApiKey = function generateSecuredApiKey(
+  privateApiKey,
+  queryParametersOrTagFilters,
+  userToken
+) {
+  let searchParams;
 
   if (Array.isArray(queryParametersOrTagFilters)) {
     // generateSecuredApiKey(apiKey, ['user_42'], userToken);
 
     searchParams = {
-      tagFilters: queryParametersOrTagFilters
+      tagFilters: queryParametersOrTagFilters,
     };
 
     if (userToken) {
@@ -290,21 +301,20 @@ AlgoliaSearchNodeJS.prototype.generateSecuredApiKey = function generateSecuredAp
   } else if (typeof queryParametersOrTagFilters === 'string') {
     if (queryParametersOrTagFilters.indexOf('=') === -1) {
       // generateSecuredApiKey(apiKey, 'user_42', userToken);
-      searchParams = 'tagFilters=' + queryParametersOrTagFilters;
+      searchParams = `tagFilters=${queryParametersOrTagFilters}`;
     } else {
       // generateSecuredApiKey(apiKey, 'tagFilters=user_42', userToken);
       searchParams = queryParametersOrTagFilters;
     }
 
-
     if (userToken) {
-      searchParams += '&userToken=' + encodeURIComponent(userToken);
+      searchParams += `&userToken=${encodeURIComponent(userToken)}`;
     }
   } else {
     searchParams = this._getSearchParams(queryParametersOrTagFilters, '');
   }
 
-  var securedKey = crypto
+  const securedKey = crypto
     .createHmac('sha256', privateApiKey)
     .update(searchParams)
     .digest('hex');

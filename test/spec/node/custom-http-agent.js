@@ -1,23 +1,23 @@
 'use strict';
 
-var test = require('tape');
+const test = require('tape');
 
-test('using a custom httpAgent', function(t) {
+test('using a custom httpAgent', t => {
   t.plan(5);
 
-  var httpProxy = require('http-proxy');
-  var proxyAgent = require('proxy-agent');
+  const httpProxy = require('http-proxy');
+  const proxyAgent = require('proxy-agent');
 
-  var createServer = require('../../utils/create-server');
-  var proxyServer = createServer.http();
-  var server = createServer.http();
-  var proxyTime;
-  var serverTime;
+  const createServer = require('../../utils/create-server');
+  const proxyServer = createServer.http();
+  const server = createServer.http();
+  let proxyTime;
+  let serverTime;
 
   proxyServer.once('listening', run);
   server.once('listening', run);
 
-  var ready = 0;
+  let ready = 0;
 
   function run() {
     ready++;
@@ -25,28 +25,25 @@ test('using a custom httpAgent', function(t) {
       return;
     }
 
-    var proxyLocation = 'http://' +
-      proxyServer.address().address + ':' +
-      proxyServer.address().port;
+    const proxyLocation = `http://${proxyServer.address()
+      .address}:${proxyServer.address().port}`;
 
-    var proxy = httpProxy.createProxyServer({
-      target: 'http://' + server.address().address + ':' + server.address().port
+    const proxy = httpProxy.createProxyServer({
+      target: `http://${server.address().address}:${server.address().port}`,
     });
 
-    var createFixture = require('../../utils/create-fixture');
-    var fixture = createFixture({
+    const createFixture = require('../../utils/create-fixture');
+    const fixture = createFixture({
       clientOptions: {
-        hosts: [
-          server.address().address + ':' + server.address().port
-        ],
+        hosts: [`${server.address().address}:${server.address().port}`],
         protocol: 'http:',
-        httpAgent: proxyAgent(proxyLocation)
-      }
+        httpAgent: proxyAgent(proxyLocation),
+      },
     });
-    var index = fixture.index;
-    index.search('YES!', function(err, content) {
+    const index = fixture.index;
+    index.search('YES!', (err, content) => {
       t.error(err, 'No error while receiving proxied response');
-      t.deepEqual(content, {yeswe: 'proxy'}, 'Content matches');
+      t.deepEqual(content, { yeswe: 'proxy' }, 'Content matches');
       proxyServer.destroy();
       server.destroy();
       // no client.destroy because no destroy on the proxy-agent module
@@ -54,13 +51,13 @@ test('using a custom httpAgent', function(t) {
     });
 
     // https://gist.github.com/tommuhm/5653643
-    proxyServer.on('request', function(req, res) {
+    proxyServer.on('request', (req, res) => {
       proxyTime = Date.now();
       t.pass('We received a proxied request');
       proxy.web(req, res);
     });
 
-    server.on('request', function(req, res) {
+    server.on('request', (req, res) => {
       serverTime = Date.now();
       t.pass('Request was proxied through our servers');
       t.ok(

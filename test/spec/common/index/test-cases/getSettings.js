@@ -10,8 +10,8 @@ module.exports = {
     URL: {
       pathname: '/1/indexes/%s/settings',
       query: {
-        getVersion: '2'
-      }
-    }
-  }
+        getVersion: '2',
+      },
+    },
+  },
 };

@@ -1,18 +1,19 @@
 'use strict';
+/* eslint-disable prefer-rest-params, no-param-reassign */
 
 // This is the AngularJS Algolia Search module
 // It's using $http to do requests with a JSONP fallback
 // $q promises are returned
 
-var inherits = require('inherits');
+const inherits = require('inherits');
 
-var forEach = require('foreach');
+const forEach = require('foreach');
 
-var AlgoliaSearch = require('../../AlgoliaSearch');
-var errors = require('../../errors');
-var inlineHeaders = require('../inline-headers');
-var jsonpRequest = require('../jsonp-request');
-var places = require('../../places.js');
+const AlgoliaSearch = require('../../AlgoliaSearch');
+const errors = require('../../errors');
+const inlineHeaders = require('../inline-headers');
+const jsonpRequest = require('../jsonp-request');
+const places = require('../../places.js');
 
 // expose original algoliasearch fn in window
 window.algoliasearch = require('./algoliasearch');
@@ -21,12 +22,15 @@ if (process.env.NODE_ENV === 'debug') {
   require('debug').enable('algoliasearch*');
 }
 
-window.angular.module('algoliasearch', [])
-  .service('algolia', ['$http', '$q', '$timeout', function algoliaSearchService($http, $q, $timeout) {
+window.angular.module('algoliasearch', []).service('algolia', [
+  '$http',
+  '$q',
+  '$timeout',
+  function algoliaSearchService($http, $q, $timeout) {
     function algoliasearch(applicationID, apiKey, opts) {
-      var cloneDeep = require('../../clone.js');
+      const cloneDeep = require('../../clone.js');
 
-      var getDocumentProtocol = require('../get-document-protocol');
+      const getDocumentProtocol = require('../get-document-protocol');
 
       opts = cloneDeep(opts || {});
 
@@ -40,14 +44,14 @@ window.angular.module('algoliasearch', [])
     }
 
     algoliasearch.version = require('../../version.js');
-    algoliasearch.ua = 'Algolia for AngularJS ' + algoliasearch.version;
+    algoliasearch.ua = `Algolia for AngularJS ${algoliasearch.version}`;
     algoliasearch.initPlaces = places(algoliasearch);
 
     // we expose into window no matter how we are used, this will allow
     // us to easily debug any website running algolia
     window.__algolia = {
       debug: require('debug'),
-      algoliasearch: algoliasearch
+      algoliasearch,
     };
 
     function AlgoliaSearchAngular() {
@@ -60,37 +64,34 @@ window.angular.module('algoliasearch', [])
     AlgoliaSearchAngular.prototype._request = function request(url, opts) {
       // Support most Angular.js versions by using $q.defer() instead
       // of the new $q() constructor everywhere we need a promise
-      var deferred = $q.defer();
-      var resolve = deferred.resolve;
-      var reject = deferred.reject;
+      const deferred = $q.defer();
+      const resolve = deferred.resolve;
+      const reject = deferred.reject;
 
-      var timedOut;
-      var body = opts.body;
+      let timedOut;
+      const body = opts.body;
 
       url = inlineHeaders(url, opts.headers);
 
-      var timeoutDeferred = $q.defer();
-      var timeoutPromise = timeoutDeferred.promise;
+      const timeoutDeferred = $q.defer();
+      const timeoutPromise = timeoutDeferred.promise;
 
-      $timeout(function timedout() {
+      $timeout(() => {
         timedOut = true;
         // will cancel the xhr
         timeoutDeferred.resolve('test');
         reject(new errors.RequestTimeout());
       }, opts.timeouts.complete);
 
-      var requestHeaders = {};
+      const requestHeaders = {};
 
       // "remove" (set to undefined) possible globally set headers
       // in $httpProvider.defaults.headers.common
       // otherwise we might fail sometimes
       // ref: https://github.com/algolia/algoliasearch-client-js/issues/135
-      forEach(
-        $http.defaults.headers.common,
-        function removeIt(headerValue, headerName) {
-          requestHeaders[headerName] = undefined;
-        }
-      );
+      forEach($http.defaults.headers.common, (headerValue, headerName) => {
+        requestHeaders[headerName] = undefined;
+      });
 
       requestHeaders.accept = 'application/json';
 
@@ -104,16 +105,16 @@ window.angular.module('algoliasearch', [])
       }
 
       $http({
-        url: url,
+        url,
         method: opts.method,
         data: body,
         cache: false,
         timeout: timeoutPromise,
         headers: requestHeaders,
-        transformResponse: transformResponse,
+        transformResponse,
         // if client uses $httpProvider.defaults.withCredentials = true,
         // we revert it to false to avoid CORS failure
-        withCredentials: false
+        withCredentials: false,
       }).then(success, error);
 
       function success(response) {
@@ -121,7 +122,7 @@ window.angular.module('algoliasearch', [])
           statusCode: response.status,
           headers: response.headers,
           body: JSON.parse(response.data),
-          responseText: response.data
+          responseText: response.data,
         });
       }
 
@@ -140,7 +141,7 @@ window.angular.module('algoliasearch', [])
         if (response.status === 0) {
           reject(
             new errors.Network({
-              more: response
+              more: response,
             })
           );
           return;
@@ -148,7 +149,7 @@ window.angular.module('algoliasearch', [])
 
         resolve({
           body: JSON.parse(response.data),
-          statusCode: response.status
+          statusCode: response.status,
         });
       }
 
@@ -157,14 +158,17 @@ window.angular.module('algoliasearch', [])
 
     // using IE8 or IE9 we will always end up here
     // AngularJS does not fallback to XDomainRequest
-    AlgoliaSearchAngular.prototype._request.fallback = function requestFallback(url, opts) {
+    AlgoliaSearchAngular.prototype._request.fallback = function requestFallback(
+      url,
+      opts
+    ) {
       url = inlineHeaders(url, opts.headers);
 
-      var deferred = $q.defer();
-      var resolve = deferred.resolve;
-      var reject = deferred.reject;
+      const deferred = $q.defer();
+      const resolve = deferred.resolve;
+      const reject = deferred.reject;
 
-      jsonpRequest(url, opts, function jsonpRequestDone(err, content) {
+      jsonpRequest(url, opts, (err, content) => {
         if (err) {
           reject(err);
           return;
@@ -177,28 +181,29 @@ window.angular.module('algoliasearch', [])
     };
 
     AlgoliaSearchAngular.prototype._promise = {
-      reject: function(val) {
+      reject(val) {
         return $q.reject(val);
       },
-      resolve: function(val) {
+      resolve(val) {
         // http://www.bennadel.com/blog/2735-q-when-is-the-missing-q-resolve-method-in-angularjs.htm
         return $q.when(val);
       },
-      delay: function(ms) {
-        var deferred = $q.defer();
-        var resolve = deferred.resolve;
+      delay(ms) {
+        const deferred = $q.defer();
+        const resolve = deferred.resolve;
 
         $timeout(resolve, ms);
 
         return deferred.promise;
-      }
+      },
     };
 
     return {
-      Client: function(applicationID, apiKey, options) {
+      Client(applicationID, apiKey, options) {
         return algoliasearch(applicationID, apiKey, options);
       },
       ua: algoliasearch.ua,
-      version: algoliasearch.version
+      version: algoliasearch.version,
     };
-  }]);
+  },
+]);

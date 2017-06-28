@@ -1,10 +1,13 @@
 #!/usr/bin/env bash
 
-if [ -x "$(command -v brew)" ] && [ -x "$(brew --prefix nvm)" ]; then
-  source $(brew --prefix nvm)/nvm.sh
-else
-  source ~/.nvm/nvm.sh
+if [ "$CI" == 'true' ];then
+  if [ -x "$(command -v brew)" ] && [ -x "$(brew --prefix nvm)" ]; then
+    source $(brew --prefix nvm)/nvm.sh
+  else
+    source ~/.nvm/nvm.sh
+  fi
 fi
+
 
 set -e # exit when error
 
@@ -13,7 +16,8 @@ set -e # exit when error
 [ -z $TRAVIS_PULL_REQUEST ] && TRAVIS_PULL_REQUEST='false'
 [ -z $TRAVIS_BUILD_NUMBER ] && TRAVIS_BUILD_NUMBER='false'
 
-nvm install 7
+[ $CI == 'true' ] && nvm install 7
+
 node test/run-node.js | tap-bail | tap-dot
 
 # in CI we launch integration test
@@ -44,6 +48,3 @@ else
   nvm install 6
   node test/run-integration.js | tap-bail | tap-dot
 fi
-
-# switch back to node.js stable
-nvm use 7

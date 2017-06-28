@@ -1,34 +1,31 @@
 'use strict';
 
-var test = require('tape');
+const test = require('tape');
 
-var requestTimeout = 1000;
+const requestTimeout = 1000;
 
-test('Request strategy handles slow responses (no double callback)', function(t) {
+test('Request strategy handles slow responses (no double callback)', t => {
   t.plan(4);
 
-  var sinon = require('sinon');
-  var fauxJax = require('faux-jax');
+  const sinon = require('sinon');
+  const fauxJax = require('faux-jax');
 
-  var createFixture = require('../../../utils/create-fixture');
+  const createFixture = require('../../../utils/create-fixture');
 
-  var fixture = createFixture({
+  const fixture = createFixture({
     clientOptions: {
-      timeout: requestTimeout
-    }
+      timeout: requestTimeout,
+    },
   });
 
-  var index = fixture.index;
+  const index = fixture.index;
 
-  var searchCallback = sinon.spy(function() {
-    t.ok(
-      searchCallback.calledOnce,
-      'Callback was called once'
-    );
+  var searchCallback = sinon.spy(() => {
+    t.ok(searchCallback.calledOnce, 'Callback was called once');
 
     t.deepEqual(
       searchCallback.args[0],
-      [null, {slowResponse: 'ok'}],
+      [null, { slowResponse: 'ok' }],
       'Callback called with null, {"slowResponse": "ok"}'
     );
 
@@ -41,26 +38,22 @@ test('Request strategy handles slow responses (no double callback)', function(t)
 
   // wait for two requests,
   // first request will be already timedout
-  fauxJax.waitFor(2, function(err, requests) {
+  fauxJax.waitFor(2, (err, requests) => {
     t.error(err);
     t.equal(requests.length, 2, 'Two requests made');
-    var firstRequest = requests[0];
-    var secondRequest = requests[1];
+    const firstRequest = requests[0];
+    const secondRequest = requests[1];
 
     // now wait requestTimeout / 2 and respond to both,
     // only the second response should be taken into account
-    setTimeout(function() {
+    setTimeout(() => {
       firstRequest.respond(
         200,
         {},
-        JSON.stringify({slowResponse: 'timeout response'})
+        JSON.stringify({ slowResponse: 'timeout response' })
       );
 
-      secondRequest.respond(
-        200,
-        {},
-        JSON.stringify({slowResponse: 'ok'})
-      );
+      secondRequest.respond(200, {}, JSON.stringify({ slowResponse: 'ok' }));
     }, requestTimeout / 2);
   });
 });

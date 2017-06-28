@@ -1,26 +1,26 @@
 'use strict';
 
-var test = require('tape');
+const test = require('tape');
 
-test('Algolia Agent can be passed as an option', function(t) {
+test('Algolia Agent can be passed as an option', t => {
   t.plan(1);
 
-  var fauxJax = require('faux-jax');
-  var parse = require('url-parse');
-  fauxJax.install({gzip: true});
+  const fauxJax = require('faux-jax');
+  const parse = require('url-parse');
+  fauxJax.install({ gzip: true });
 
-  var createFixture = require('../../../utils/create-fixture');
-  var fixture = createFixture({
+  const createFixture = require('../../../utils/create-fixture');
+  const fixture = createFixture({
     clientOptions: {
-      _ua: 'Algolia Search for tests 1.0.0'
-    }
+      _ua: 'Algolia Search for tests 1.0.0',
+    },
   });
 
-  var index = fixture.index;
+  const index = fixture.index;
 
   index.search('algolia agent');
 
-  fauxJax.once('request', function(req) {
+  fauxJax.once('request', req => {
     if (process.browser) {
       t.equal(
         parse(req.requestURL, true).query['x-algolia-agent'],

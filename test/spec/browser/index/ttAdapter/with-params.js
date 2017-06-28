@@ -1,40 +1,36 @@
 'use strict';
 
-var test = require('tape');
+const test = require('tape');
 
-test('index.ttAdapter(params, cb)', function(t) {
+test('index.ttAdapter(params, cb)', t => {
   t.plan(2);
 
-  var fauxJax = require('faux-jax');
+  const fauxJax = require('faux-jax');
 
-  var createFixture = require('../../../../utils/create-fixture');
-  var fixture = createFixture();
+  const createFixture = require('../../../../utils/create-fixture');
+  const fixture = createFixture();
 
-  var index = fixture.index;
-  var fakeResponse = {
-    hits: [1, 2, 3]
+  const index = fixture.index;
+  const fakeResponse = {
+    hits: [1, 2, 3],
   };
-  var ttAdapter = index.ttAdapter({
-    hitsPerPage: 200
+  const ttAdapter = index.ttAdapter({
+    hitsPerPage: 200,
   });
 
   fauxJax.install();
 
-  fauxJax.on('request', function(req) {
+  fauxJax.on('request', req => {
     fauxJax.restore();
     t.equal(
       req.requestBody,
-      JSON.stringify({params: 'query=a%20search&hitsPerPage=200'}),
+      JSON.stringify({ params: 'query=a%20search&hitsPerPage=200' }),
       'We set a specific `hitsPerPage` when searching'
     );
     req.respond(200, {}, JSON.stringify(fakeResponse));
   });
 
-  ttAdapter('a search', function(actualHits) {
-    t.deepEqual(
-      actualHits,
-      fakeResponse.hits,
-      'We received some hits'
-    );
+  ttAdapter('a search', actualHits => {
+    t.deepEqual(actualHits, fakeResponse.hits, 'We received some hits');
   });
 });

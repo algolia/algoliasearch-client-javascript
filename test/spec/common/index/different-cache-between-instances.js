@@ -1,22 +1,22 @@
 'use strict';
 
-var test = require('tape');
+const test = require('tape');
 
-test("index's cache is different between instances", function(t) {
+test("index's cache is different between instances", t => {
   t.plan(1);
 
-  var async = require('async');
-  var fauxJax = require('faux-jax');
+  const async = require('async');
+  const fauxJax = require('faux-jax');
 
-  var createFixture = require('../../../utils/create-fixture');
+  const createFixture = require('../../../utils/create-fixture');
 
-  var index1 = createFixture().index;
-  var index2 = createFixture().index;
-  var nbRequests = 0;
+  const index1 = createFixture().index;
+  const index2 = createFixture().index;
+  let nbRequests = 0;
 
-  fauxJax.install({gzip: true});
+  fauxJax.install({ gzip: true });
 
-  fauxJax.on('request', function(req) {
+  fauxJax.on('request', req => {
     nbRequests++;
 
     if (nbRequests === 1 || nbRequests === 2) {
@@ -26,10 +26,7 @@ test("index's cache is different between instances", function(t) {
     }
   });
 
-  async.series([
-    firstRequest,
-    secondRequest
-  ], end);
+  async.series([firstRequest, secondRequest], end);
 
   function firstRequest(cb) {
     index1.search('HEY!', cb);
@@ -42,10 +39,6 @@ test("index's cache is different between instances", function(t) {
   function end() {
     fauxJax.restore();
 
-    t.equal(
-      nbRequests,
-      2,
-      'We received two requests'
-    );
+    t.equal(nbRequests, 2, 'We received two requests');
   }
 });

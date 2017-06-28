@@ -1,20 +1,20 @@
 'use strict';
 
-var test = require('tape');
+const test = require('tape');
 
-test('client.clearCache()', function(t) {
+test('client.clearCache()', t => {
   t.plan(1);
 
-  var fauxJax = require('faux-jax');
+  const fauxJax = require('faux-jax');
 
-  var createFixture = require('../../../utils/create-fixture');
-  var fixture = createFixture();
-  var client = fixture.client;
-  var nbRequests = 0;
+  const createFixture = require('../../../utils/create-fixture');
+  const fixture = createFixture();
+  const client = fixture.client;
+  let nbRequests = 0;
 
   fauxJax.install();
 
-  fauxJax.on('request', function(req) {
+  fauxJax.on('request', req => {
     nbRequests++;
 
     if (nbRequests === 1 || nbRequests === 2) {
@@ -39,7 +39,7 @@ test('client.clearCache()', function(t) {
 
     // same request again
     client.startQueriesBatch();
-    client.sendQueriesBatch(function() {
+    client.sendQueriesBatch(() => {
       fauxJax.restore();
 
       t.equal(

@@ -1,4 +1,5 @@
 'use strict';
+/* eslint-disable prefer-rest-params, no-param-reassign */
 
 // This is the Parse entry point
 // See https://www.parse.com/docs/cloud_code_guide#cloud_code
@@ -15,16 +16,16 @@ if (process.env === undefined) {
 /* global global: true */
 global = global || {};
 
-var debug = require('debug')('algoliasearch:parse');
+const debug = require('debug')('algoliasearch:parse');
 
-var inherits = require('inherits');
+const inherits = require('inherits');
 
-var AlgoliaSearchServer = require('./AlgoliaSearchServer');
+const AlgoliaSearchServer = require('./AlgoliaSearchServer');
 
 debug('loaded the Parse client');
 
 function algoliasearch(applicationID, apiKey, opts) {
-  var cloneDeep = require('../../clone.js');
+  const cloneDeep = require('../../clone.js');
   opts = cloneDeep(opts || {});
 
   if (opts.protocol === undefined) {
@@ -34,7 +35,7 @@ function algoliasearch(applicationID, apiKey, opts) {
   opts.timeouts = opts.timeouts || {
     connect: 2 * 1000,
     read: 7 * 1000,
-    write: 30 * 1000
+    write: 30 * 1000,
   };
 
   opts._setTimeout = _setTimeout;
@@ -46,7 +47,7 @@ function algoliasearch(applicationID, apiKey, opts) {
 }
 
 algoliasearch.version = require('../../version.js');
-algoliasearch.ua = 'Algolia for Parse ' + algoliasearch.version;
+algoliasearch.ua = `Algolia for Parse ${algoliasearch.version}`;
 
 function AlgoliaSearchParse() {
   // call AlgoliaSearchServer constructor
@@ -57,17 +58,17 @@ inherits(AlgoliaSearchParse, AlgoliaSearchServer);
 
 AlgoliaSearchParse.prototype._request = function(rawUrl, opts) {
   /* global Parse */
-  var clone = require('../../clone.js');
-  var promise = new Parse.Promise();
+  const clone = require('../../clone.js');
+  const promise = new Parse.Promise();
 
   debug('url: %s, opts: %j', rawUrl, opts);
 
-  var parseReqOpts = {
+  const parseReqOpts = {
     url: rawUrl,
     headers: clone(opts.headers),
     method: opts.method,
-    success: success,
-    error: error
+    success,
+    error,
   };
 
   if (opts.body) {
@@ -86,7 +87,7 @@ AlgoliaSearchParse.prototype._request = function(rawUrl, opts) {
     promise.resolve({
       statusCode: res.status,
       body: res.data,
-      headers: res.headers
+      headers: res.headers,
     });
   }
 
@@ -96,7 +97,7 @@ AlgoliaSearchParse.prototype._request = function(rawUrl, opts) {
     promise.resolve({
       statusCode: res.status,
       body: res.data,
-      headers: res.headers
+      headers: res.headers,
     });
   }
 
@@ -104,24 +105,24 @@ AlgoliaSearchParse.prototype._request = function(rawUrl, opts) {
 };
 
 AlgoliaSearchParse.prototype._promise = {
-  reject: function(val) {
+  reject(val) {
     return Parse.Promise.error(val);
   },
-  resolve: function(val) {
+  resolve(val) {
     return Parse.Promise.as(val);
   },
-  delay: function(ms) {
-    var promise = new Parse.Promise();
+  delay(ms) {
+    const promise = new Parse.Promise();
 
     _setTimeout(promise.resolve.bind(promise), ms);
 
     return promise;
-  }
+  },
 };
 
 // There's no setTimeout in Parse cloud, but we have nextTick
 function _setTimeout(fn, ms) {
-  var start = Date.now();
+  const start = Date.now();
 
   process.nextTick(fakeSetTimeout);
 

@@ -1,30 +1,32 @@
 'use strict';
 
-var test = require('tape');
+const test = require('tape');
 
-test('no cache between two requests', function(t) {
+test('no cache between two requests', t => {
   t.plan(6);
 
-  var fauxJax = require('faux-jax');
+  const fauxJax = require('faux-jax');
 
-  fauxJax.install({gzip: true});
+  fauxJax.install({ gzip: true });
 
-  var createFixture = require('../../utils/create-fixture');
-  var fixture = createFixture();
-  var index = fixture.index;
+  const createFixture = require('../../utils/create-fixture');
+  const fixture = createFixture();
+  const index = fixture.index;
 
   function firstSearch(cb) {
-    index.search('HAI', function(err, content) {
+    index.search('HAI', (err, content) => {
       t.error(err, 'No error for first search');
       t.deepEqual(
-        content, {
-          hai: 1
-        }, 'Content matches for first response'
+        content,
+        {
+          hai: 1,
+        },
+        'Content matches for first response'
       );
       cb();
     });
 
-    fauxJax.once('request', function(req) {
+    fauxJax.once('request', req => {
       t.pass('First request');
       req.respond(200, {}, '{"hai": 1}');
     });
@@ -33,18 +35,16 @@ test('no cache between two requests', function(t) {
   firstSearch(secondSearch);
 
   function secondSearch() {
-    index.search('HAI', function(err, content) {
+    index.search('HAI', (err, content) => {
       t.error(err, 'No error for first search');
-      t.deepEqual(
-        content, {
-          hai: 2
-        }
-      );
+      t.deepEqual(content, {
+        hai: 2,
+      });
 
       fauxJax.restore();
     });
 
-    fauxJax.once('request', function(req) {
+    fauxJax.once('request', req => {
       t.pass('First request');
       req.respond(200, {}, '{"hai": 2}');
     });

@@ -1,34 +1,39 @@
 'use strict';
 
-var test = require('tape');
+const test = require('tape');
 
-test('index.waitTask(taskID) retry', function(t) {
+test('index.waitTask(taskID) retry', t => {
   t.plan(11);
 
-  var fauxJax = require('faux-jax');
-  var sinon = require('sinon');
+  const fauxJax = require('faux-jax');
+  const sinon = require('sinon');
 
-  var createFixture = require('../../../../utils/create-fixture');
-  var fixture = createFixture();
+  const createFixture = require('../../../../utils/create-fixture');
+  const fixture = createFixture();
 
-  var index = fixture.index;
-  var cbSpy = sinon.spy(function(err, content) {
-    t.ok(
-      cbSpy.calledOnce,
-      'Callback called since task was published'
-    );
+  const index = fixture.index;
+  var cbSpy = sinon.spy((err, content) => {
+    t.ok(cbSpy.calledOnce, 'Callback called since task was published');
 
     t.error(err, 'No error while using the callback waitTask API');
 
-    t.deepEqual(content, {
-      status: 'published'
-    }, 'Content matches');
+    t.deepEqual(
+      content,
+      {
+        status: 'published',
+      },
+      'Content matches'
+    );
   });
 
-  var promiseSpy = sinon.spy(function(content) {
-    t.deepEqual(content, {
-      status: 'published'
-    }, 'Content matches');
+  var promiseSpy = sinon.spy(content => {
+    t.deepEqual(
+      content,
+      {
+        status: 'published',
+      },
+      'Content matches'
+    );
 
     t.ok(
       promiseSpy.calledOnce,
@@ -36,25 +41,21 @@ test('index.waitTask(taskID) retry', function(t) {
     );
   });
 
-  fauxJax.install({gzip: true});
+  fauxJax.install({ gzip: true });
 
   index.waitTask(28000, cbSpy);
   index.waitTask(27000).then(promiseSpy);
 
-  fauxJax.waitFor(2, function(err, requests) {
+  fauxJax.waitFor(2, (err, requests) => {
     t.error(err);
 
-    t.equal(
-      requests.length,
-      2,
-      'Two requests done'
-    );
+    t.equal(requests.length, 2, 'Two requests done');
 
     requests[0].respond(
       200,
       {},
       JSON.stringify({
-        status: 'notPublished'
+        status: 'notPublished',
       })
     );
 
@@ -62,7 +63,7 @@ test('index.waitTask(taskID) retry', function(t) {
       200,
       {},
       JSON.stringify({
-        status: 'notPublished'
+        status: 'notPublished',
       })
     );
 
@@ -74,11 +75,7 @@ test('index.waitTask(taskID) retry', function(t) {
     fauxJax.restore();
 
     // after 100, waitTask retried
-    t.equal(
-      requests.length,
-      2,
-      'Two more requests done'
-    );
+    t.equal(requests.length, 2, 'Two more requests done');
 
     t.notOk(
       cbSpy.calledOnce,
@@ -94,7 +91,7 @@ test('index.waitTask(taskID) retry', function(t) {
       200,
       {},
       JSON.stringify({
-        status: 'published'
+        status: 'published',
       })
     );
 
@@ -102,7 +99,7 @@ test('index.waitTask(taskID) retry', function(t) {
       200,
       {},
       JSON.stringify({
-        status: 'published'
+        status: 'published',
       })
     );
   }

@@ -1,10 +1,10 @@
+/* eslint-disable prefer-rest-params */
 module.exports = function deprecate(fn, message) {
-  var warned = false;
+  let warned = false;
 
   function deprecated() {
     if (!warned) {
-      /* eslint no-console:0 */
-      console.log(message);
+      console.log(message); // eslint-disable-line no-console
       warned = true;
     }
 

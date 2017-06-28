@@ -1,42 +1,42 @@
 'use strict';
 
-var test = require('tape');
+const test = require('tape');
 
-var requestTimeout = 5000;
+const requestTimeout = 5000;
 
-test('Request strategy handles slow JSONP responses (no double callback)', function(t) {
-  var fauxJax = require('faux-jax');
-  var parse = require('url-parse');
-  var sinon = require('sinon');
-  var xhr = require('xhr');
+test('Request strategy handles slow JSONP responses (no double callback)', t => {
+  const fauxJax = require('faux-jax');
+  const parse = require('url-parse');
+  const sinon = require('sinon');
+  const xhr = require('xhr');
 
-  var createFixture = require('../../../utils/create-fixture');
+  const createFixture = require('../../../utils/create-fixture');
 
-  var currentURL = parse(location.href);
-  var fixture = createFixture({
+  const currentURL = parse(location.href);
+  const fixture = createFixture({
     clientOptions: {
       hosts: [
         currentURL.host,
         currentURL.host,
         currentURL.host,
-        currentURL.host
+        currentURL.host,
       ],
-      timeout: requestTimeout
+      timeout: requestTimeout,
     },
-    indexName: 'slow-response'
+    indexName: 'slow-response',
   });
 
-  var index = fixture.index;
+  const index = fixture.index;
 
   // we will receive the response from the second JSONP call in the searchCallback
   // the first JSONP call will still respond, after 2000ms
   // This test checks that we are called only once
-  var searchCallback = sinon.spy(function() {
+  var searchCallback = sinon.spy(() => {
     t.ok(searchCallback.calledOnce, 'Callback was called once');
 
     t.deepEqual(
       searchCallback.args[0],
-      [null, {slowResponse: 'ok'}],
+      [null, { slowResponse: 'ok' }],
       'Callback called with null, {"slowResponse": "ok"}'
     );
 
@@ -45,17 +45,27 @@ test('Request strategy handles slow JSONP responses (no double callback)', funct
     t.end();
   });
 
-  xhr({
-    uri: '/1/indexes/slow-response/reset'
-  }, function run(err) {
-    t.error(err, 'No error while reseting the /1/indexes/slow-response route');
+  xhr(
+    {
+      uri: '/1/indexes/slow-response/reset',
+    },
+    err => {
+      t.error(
+        err,
+        'No error while reseting the /1/indexes/slow-response route'
+      );
 
-    fauxJax.install();
+      fauxJax.install();
 
-    index.search('hello', searchCallback);
+      index.search('hello', searchCallback);
 
-    fauxJax.on('request', function(req) {
-      req.respond(500, {}, JSON.stringify({status: 500, message: 'woops!'}));
-    });
-  });
+      fauxJax.on('request', req => {
+        req.respond(
+          500,
+          {},
+          JSON.stringify({ status: 500, message: 'woops!' })
+        );
+      });
+    }
+  );
 });

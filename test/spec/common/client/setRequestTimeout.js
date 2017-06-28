@@ -1,47 +1,47 @@
 'use strict';
 
-var test = require('tape');
+const test = require('tape');
 
-test('client.setRequestTimeout()', function(t) {
+test('client.setRequestTimeout()', t => {
   t.plan(5);
 
-  var fauxJax = require('faux-jax');
+  const fauxJax = require('faux-jax');
 
-  var createFixture = require('../../../utils/create-fixture');
+  const createFixture = require('../../../utils/create-fixture');
 
-  var hosts = [];
+  const hosts = [];
 
   if (process.browser) {
-    var parse = require('url-parse');
+    const parse = require('url-parse');
     // we do not use a random url, we want to reach the JSONP local server
-    var currentURL = parse(location.href);
+    const currentURL = parse(location.href);
     hosts.push(currentURL.host);
   } else {
     hosts.push('www.d21d98uasdklj1289duasdkjs98dasuda.com');
   }
 
-  var requestTimeout = 1000;
-  var fixture = createFixture({
+  const requestTimeout = 1000;
+  const fixture = createFixture({
     clientOptions: {
       timeout: requestTimeout,
-      hosts: hosts
+      hosts,
     },
-    indexName: 'blackhole'
+    indexName: 'blackhole',
   });
 
-  var expectedTimeout = requestTimeout;
+  let expectedTimeout = requestTimeout;
   if (process.browser) {
     // AJAX + JSONP timeout
     expectedTimeout = expectedTimeout * 2;
   }
 
-  fauxJax.install({gzip: true});
+  fauxJax.install({ gzip: true });
 
-  var client = fixture.client;
-  var index = fixture.index;
-  var start;
+  const client = fixture.client;
+  const index = fixture.index;
+  let start;
 
-  start = (new Date()).getTime();
+  start = new Date().getTime();
   index.search('jaja', firstSearch);
 
   function firstSearch(err) {
@@ -52,7 +52,7 @@ test('client.setRequestTimeout()', function(t) {
       'Error message id descriptive'
     );
 
-    var end = (new Date()).getTime();
+    const end = new Date().getTime();
     t.ok(
       end - start >= expectedTimeout,
       'We waited longer than the request timeout'
@@ -61,16 +61,16 @@ test('client.setRequestTimeout()', function(t) {
     // now let's double the initial timeout
     client.setRequestTimeout(requestTimeout * 2);
 
-    start = (new Date()).getTime();
+    start = new Date().getTime();
     index.search('yoyo', secondSearch);
   }
 
-  fauxJax.on('request', function() {});
+  fauxJax.on('request', () => {});
 
   function secondSearch(err) {
     t.ok(err instanceof Error);
 
-    var end = (new Date()).getTime();
+    const end = new Date().getTime();
 
     t.ok(
       end - start >= expectedTimeout * 2,

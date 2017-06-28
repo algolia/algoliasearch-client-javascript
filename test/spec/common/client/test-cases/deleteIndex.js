@@ -1,6 +1,6 @@
 'use strict';
 
-var fauxJax = require('faux-jax');
+const fauxJax = require('faux-jax');
 
 if (!process.browser || fauxJax.support.xhr.cors) {
   module.exports = {
@@ -11,7 +11,7 @@ if (!process.browser || fauxJax.support.xhr.cors) {
     action: 'write',
     expectedRequest: {
       method: 'DELETE',
-      URL: {pathname: '/1/indexes/boo%20ooo'}
-    }
+      URL: { pathname: '/1/indexes/boo%20ooo' },
+    },
   };
 }

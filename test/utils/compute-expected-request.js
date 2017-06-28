@@ -2,10 +2,10 @@
 
 module.exports = computeExpectedRequest;
 
-var merge = require('lodash-compat/object/merge');
-var format = require('util').format;
+const merge = require('lodash-compat/object/merge');
+const format = require('util').format;
 
-var algoliasearch = require('../../');
+const algoliasearch = require('../../');
 
 function computeExpectedRequest(expectedRequest, credentials) {
   expectedRequest.URL = merge(
@@ -34,7 +34,8 @@ function computeExpectedRequest(expectedRequest, credentials) {
   if (expectedRequest.body !== null) {
     // CORS simple request
     if (process.browser && expectedRequest.method === 'POST') {
-      expectedRequest.headers['content-type'] = 'application/x-www-form-urlencoded';
+      expectedRequest.headers['content-type'] =
+        'application/x-www-form-urlencoded';
     } else {
       expectedRequest.headers['content-type'] = 'application/json';
     }
@@ -42,7 +43,8 @@ function computeExpectedRequest(expectedRequest, credentials) {
 
   if (!process.browser) {
     expectedRequest.headers['x-algolia-api-key'] = credentials.searchOnlyAPIKey;
-    expectedRequest.headers['x-algolia-application-id'] = credentials.applicationID;
+    expectedRequest.headers['x-algolia-application-id'] =
+      credentials.applicationID;
     expectedRequest.headers['x-algolia-agent'] = algoliasearch.ua;
     expectedRequest.headers['accept-encoding'] = 'gzip,deflate';
   }
@@ -51,13 +53,13 @@ function computeExpectedRequest(expectedRequest, credentials) {
 }
 
 function getRequestURL(credentials) {
-  var expectedQueryString;
+  let expectedQueryString;
 
   if (process.browser) {
     expectedQueryString = {
       'x-algolia-api-key': credentials.searchOnlyAPIKey,
       'x-algolia-application-id': credentials.applicationID,
-      'x-algolia-agent': algoliasearch.ua
+      'x-algolia-agent': algoliasearch.ua,
     };
   } else {
     // serverside will send them in headers
@@ -65,12 +67,12 @@ function getRequestURL(credentials) {
   }
 
   return {
-    protocol: process.browser ?
-      // browser defaults to document protocol
-      document.location.protocol :
-      // nodejs defaults to https
-      'https:',
-    URL: {pathname: '/not-set'},
-    query: expectedQueryString
+    protocol: process.browser
+      ? // browser defaults to document protocol
+        document.location.protocol
+      : // nodejs defaults to https
+        'https:',
+    URL: { pathname: '/not-set' },
+    query: expectedQueryString,
   };
 }

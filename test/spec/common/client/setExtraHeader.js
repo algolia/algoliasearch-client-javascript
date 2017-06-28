@@ -1,19 +1,19 @@
 'use strict';
 
-var test = require('tape');
+const test = require('tape');
 
-test('client.setExtraHeader(key, value)', function(t) {
+test('client.setExtraHeader(key, value)', t => {
   t.plan(4);
 
-  var fauxJax = require('faux-jax');
-  var parse = require('url-parse');
+  const fauxJax = require('faux-jax');
+  const parse = require('url-parse');
 
-  var createFixture = require('../../../utils/create-fixture');
-  var fixture = createFixture();
-  var client = fixture.client;
-  var index = fixture.index;
+  const createFixture = require('../../../utils/create-fixture');
+  const fixture = createFixture();
+  const client = fixture.client;
+  const index = fixture.index;
 
-  fauxJax.install({gzip: true});
+  fauxJax.install({ gzip: true });
 
   // no extra header set
   index.search('first');
@@ -28,13 +28,13 @@ test('client.setExtraHeader(key, value)', function(t) {
   // extra header set
   index.search('third');
 
-  fauxJax.waitFor(3, function(err, requests) {
+  fauxJax.waitFor(3, (err, requests) => {
     t.error(err);
     fauxJax.restore();
 
-    var firstRequest = requests[0];
-    var secondRequest = requests[1];
-    var thirdRequest = requests[2];
+    const firstRequest = requests[0];
+    const secondRequest = requests[1];
+    const thirdRequest = requests[2];
 
     firstRequest.respond(200, {}, '{}');
     secondRequest.respond(200, {}, '{}');

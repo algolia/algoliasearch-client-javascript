@@ -1,23 +1,23 @@
 'use strict';
 
-var test = require('tape');
+const test = require('tape');
 
-test('when using a proxy', function(t) {
+test('when using a proxy', t => {
   t.plan(5);
 
-  var net = require('net');
-  var url = require('url');
+  const net = require('net');
+  const url = require('url');
 
-  var createServer = require('../../utils/create-server');
-  var proxyServer = createServer.http();
-  var server = createServer.http();
-  var proxyTime;
-  var serverTime;
+  const createServer = require('../../utils/create-server');
+  const proxyServer = createServer.http();
+  const server = createServer.http();
+  let proxyTime;
+  let serverTime;
 
   proxyServer.once('listening', run);
   server.once('listening', run);
 
-  var ready = 0;
+  let ready = 0;
 
   function run() {
     ready++;
@@ -25,27 +25,24 @@ test('when using a proxy', function(t) {
       return;
     }
 
-    var proxyLocation = 'http://' +
-      proxyServer.address().address + ':' +
-      proxyServer.address().port;
+    const proxyLocation = `http://${proxyServer.address()
+      .address}:${proxyServer.address().port}`;
 
     // proxyServer and server are listening
     process.env.HTTP_PROXY = proxyLocation;
 
-    var createFixture = require('../../utils/create-fixture');
-    var fixture = createFixture({
+    const createFixture = require('../../utils/create-fixture');
+    const fixture = createFixture({
       clientOptions: {
-        hosts: [
-          server.address().address + ':' + server.address().port
-        ],
-        protocol: 'http:'
-      }
+        hosts: [`${server.address().address}:${server.address().port}`],
+        protocol: 'http:',
+      },
     });
-    var client = fixture.client;
-    var index = fixture.index;
-    index.search('YES!', function(err, content) {
+    const client = fixture.client;
+    const index = fixture.index;
+    index.search('YES!', (err, content) => {
       t.error(err, 'No error while receiving proxied response');
-      t.deepEqual(content, {yeswe: 'proxy'}, 'Content matches');
+      t.deepEqual(content, { yeswe: 'proxy' }, 'Content matches');
       proxyServer.destroy();
       server.destroy();
       client.destroy();
@@ -53,21 +50,21 @@ test('when using a proxy', function(t) {
     });
 
     // https://gist.github.com/tommuhm/5653643
-    proxyServer.on('connect', function(req, proxySocket) {
+    proxyServer.on('connect', (req, proxySocket) => {
       proxyTime = Date.now();
       t.pass('We received a proxied request');
-      var serverUrl = url.parse('http://' + req.url);
-      var serverSocket = net.connect(serverUrl.port, serverUrl.hostname, function() {
+      const serverUrl = url.parse(`http://${req.url}`);
+      var serverSocket = net.connect(serverUrl.port, serverUrl.hostname, () => {
         proxySocket.write('HTTP/1.1 200 Connection Established\r\n\r\n');
         serverSocket.pipe(proxySocket);
         proxySocket.pipe(serverSocket);
       });
-      serverSocket.on('error', function() {
+      serverSocket.on('error', () => {
         // ignore ECONNRESET errors
       });
     });
 
-    server.on('request', function(req, res) {
+    server.on('request', (req, res) => {
       serverTime = Date.now();
       t.pass('Request was proxied through our servers');
       t.ok(

@@ -1,23 +1,23 @@
 'use strict';
 
-var test = require('tape');
+const test = require('tape');
 
-test('we only talk http or https', function(t) {
+test('we only talk http or https', t => {
   t.plan(3);
-  var bind = require('lodash-compat/function/bind');
+  const bind = require('lodash-compat/function/bind');
 
-  var algoliasearch = require('../../../../');
+  const algoliasearch = require('../../../../');
 
-  var http = bind(algoliasearch, null, 'applicationID', 'apiKey', {
-    protocol: 'http:'
+  const http = bind(algoliasearch, null, 'applicationID', 'apiKey', {
+    protocol: 'http:',
   });
 
-  var https = bind(algoliasearch, null, 'applicationID', 'apiKey', {
-    protocol: 'https:'
+  const https = bind(algoliasearch, null, 'applicationID', 'apiKey', {
+    protocol: 'https:',
   });
 
-  var blurb = bind(algoliasearch, null, 'applicationID', 'apiKey', {
-    protocol: 'blurb:'
+  const blurb = bind(algoliasearch, null, 'applicationID', 'apiKey', {
+    protocol: 'blurb:',
   });
 
   t.doesNotThrow(http, 'http protocol is ok');

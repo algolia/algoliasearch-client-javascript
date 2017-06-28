@@ -5,11 +5,12 @@ module.exports = {
   methodName: 'addUserKeyWithValidity',
   testName: 'index.addUserKeyWithValidity(acls, cb)',
   callArguments: [
-    ['search', 'mom'], {
+    ['search', 'mom'],
+    {
       validity: 42141,
       maxQueriesPerIPPerHour: 421,
-      maxHitsPerQuery: 420
-    }
+      maxHitsPerQuery: 420,
+    },
   ],
   action: 'write',
   expectedRequest: {
@@ -18,10 +19,10 @@ module.exports = {
       acl: ['search', 'mom'],
       validity: 42141,
       maxQueriesPerIPPerHour: 421,
-      maxHitsPerQuery: 420
+      maxHitsPerQuery: 420,
     },
     URL: {
-      pathname: '/1/indexes/%s/keys'
-    }
-  }
+      pathname: '/1/indexes/%s/keys',
+    },
+  },
 };

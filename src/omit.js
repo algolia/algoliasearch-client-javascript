@@ -1,10 +1,10 @@
 module.exports = function omit(obj, test) {
-  var keys = require('object-keys');
-  var foreach = require('foreach');
+  const keys = require('object-keys');
+  const foreach = require('foreach');
 
-  var filtered = {};
+  const filtered = {};
 
-  foreach(keys(obj), function doFilter(keyName) {
+  foreach(keys(obj), keyName => {
     if (test(keyName) !== true) {
       filtered[keyName] = obj[keyName];
     }

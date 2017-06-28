@@ -2,24 +2,24 @@
 
 module.exports = getFakeHitsResponse;
 
-var random = require('lodash-compat/number/random');
+const random = require('lodash-compat/number/random');
 
-var getFakeObjects = require('./get-fake-objects');
+const getFakeObjects = require('./get-fake-objects');
 
 function getFakeHitsResponse() {
-  var nbHits = random(1, 10);
+  const nbHits = random(1, 10);
 
   return {
     statusCode: 200,
     headers: {
-      'Content-Type': 'application/json; charset=UTF-8'
+      'Content-Type': 'application/json; charset=UTF-8',
     },
     body: {
       hits: getFakeObjects(nbHits),
-      nbHits: nbHits,
+      nbHits,
       page: 0,
       hitsPerPage: 20,
-      processingTimeMS: 1
-    }
+      processingTimeMS: 1,
+    },
   };
 }

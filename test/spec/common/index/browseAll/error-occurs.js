@@ -1,21 +1,21 @@
 'use strict';
 
-var test = require('tape');
+const test = require('tape');
 
-test('index.browseAll() and an error occurs', function(t) {
+test('index.browseAll() and an error occurs', t => {
   t.plan(2);
 
-  var fauxJax = require('faux-jax');
+  const fauxJax = require('faux-jax');
 
-  var bind = require('lodash-compat/function/bind');
-  var createFixture = require('../../../../utils/create-fixture');
-  var fixture = createFixture();
-  var index = fixture.index;
+  const bind = require('lodash-compat/function/bind');
+  const createFixture = require('../../../../utils/create-fixture');
+  const fixture = createFixture();
+  const index = fixture.index;
 
-  fauxJax.install({gzip: true});
+  fauxJax.install({ gzip: true });
 
-  var browser = index.browseAll('some', {
-    hitsPerPage: 200
+  const browser = index.browseAll('some', {
+    hitsPerPage: 200,
   });
 
   fauxJax.once('request', browse);
@@ -28,7 +28,7 @@ test('index.browseAll() and an error occurs', function(t) {
       {},
       JSON.stringify({
         message: 'You are doomed',
-        status: 400
+        status: 400,
       })
     );
 
@@ -37,10 +37,6 @@ test('index.browseAll() and an error occurs', function(t) {
 
   function error(err) {
     t.ok(err instanceof Error, 'We got an error');
-    t.equal(
-      err.message,
-      'You are doomed',
-      'error message matches'
-    );
+    t.equal(err.message, 'You are doomed', 'error message matches');
   }
 });

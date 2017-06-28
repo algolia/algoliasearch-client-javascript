@@ -1,11 +1,13 @@
+/* eslint-disable prefer-rest-params, no-param-reassign */
+
 module.exports = AlgoliaSearch;
 
-var Index = require('./Index.js');
-var deprecate = require('./deprecate.js');
-var deprecatedMessage = require('./deprecatedMessage.js');
-var AlgoliaSearchCore = require('./AlgoliaSearchCore.js');
-var inherits = require('inherits');
-var errors = require('./errors');
+const Index = require('./Index.js');
+const deprecate = require('./deprecate.js');
+const deprecatedMessage = require('./deprecatedMessage.js');
+const AlgoliaSearchCore = require('./AlgoliaSearchCore.js');
+const inherits = require('inherits');
+const errors = require('./errors');
 
 function AlgoliaSearch() {
   AlgoliaSearchCore.apply(this, arguments);
@@ -24,9 +26,9 @@ inherits(AlgoliaSearch, AlgoliaSearchCore);
 AlgoliaSearch.prototype.deleteIndex = function(indexName, callback) {
   return this._jsonRequest({
     method: 'DELETE',
-    url: '/1/indexes/' + encodeURIComponent(indexName),
+    url: `/1/indexes/${encodeURIComponent(indexName)}`,
     hostType: 'write',
-    callback: callback
+    callback,
   });
 };
 
@@ -39,16 +41,21 @@ AlgoliaSearch.prototype.deleteIndex = function(indexName, callback) {
  *  error: null or Error('message')
  *  content: the server answer that contains the task ID
  */
-AlgoliaSearch.prototype.moveIndex = function(srcIndexName, dstIndexName, callback) {
-  var postObj = {
-    operation: 'move', destination: dstIndexName
+AlgoliaSearch.prototype.moveIndex = function(
+  srcIndexName,
+  dstIndexName,
+  callback
+) {
+  const postObj = {
+    operation: 'move',
+    destination: dstIndexName,
   };
   return this._jsonRequest({
     method: 'POST',
-    url: '/1/indexes/' + encodeURIComponent(srcIndexName) + '/operation',
+    url: `/1/indexes/${encodeURIComponent(srcIndexName)}/operation`,
     body: postObj,
     hostType: 'write',
-    callback: callback
+    callback,
   });
 };
 
@@ -61,16 +68,21 @@ AlgoliaSearch.prototype.moveIndex = function(srcIndexName, dstIndexName, callbac
  *  error: null or Error('message')
  *  content: the server answer that contains the task ID
  */
-AlgoliaSearch.prototype.copyIndex = function(srcIndexName, dstIndexName, callback) {
-  var postObj = {
-    operation: 'copy', destination: dstIndexName
+AlgoliaSearch.prototype.copyIndex = function(
+  srcIndexName,
+  dstIndexName,
+  callback
+) {
+  const postObj = {
+    operation: 'copy',
+    destination: dstIndexName,
   };
   return this._jsonRequest({
     method: 'POST',
-    url: '/1/indexes/' + encodeURIComponent(srcIndexName) + '/operation',
+    url: `/1/indexes/${encodeURIComponent(srcIndexName)}/operation`,
     body: postObj,
     hostType: 'write',
-    callback: callback
+    callback,
   });
 };
 
@@ -86,18 +98,19 @@ AlgoliaSearch.prototype.copyIndex = function(srcIndexName, dstIndexName, callbac
  *  content: the server answer that contains the task ID
  */
 AlgoliaSearch.prototype.getLogs = function(offset, length, callback) {
-  var clone = require('./clone.js');
-  var params = {};
+  const clone = require('./clone.js');
+  let params = {};
+  let _callback = callback;
   if (typeof offset === 'object') {
     // getLogs(params)
     params = clone(offset);
-    callback = length;
+    _callback = length;
   } else if (arguments.length === 0 || typeof offset === 'function') {
     // getLogs([cb])
-    callback = offset;
+    _callback = offset;
   } else if (arguments.length === 1 || typeof length === 'function') {
     // getLogs(1, [cb)]
-    callback = length;
+    _callback = length;
     params.offset = offset;
   } else {
     // getLogs(1, 2, [cb])
@@ -110,9 +123,9 @@ AlgoliaSearch.prototype.getLogs = function(offset, length, callback) {
 
   return this._jsonRequest({
     method: 'GET',
-    url: '/1/logs?' + this._getSearchParams(params, ''),
+    url: `/1/logs?${this._getSearchParams(params, '')}`,
     hostType: 'read',
-    callback: callback
+    callback: _callback,
   });
 };
 
@@ -125,19 +138,19 @@ AlgoliaSearch.prototype.getLogs = function(offset, length, callback) {
  *  content: the server answer with index list
  */
 AlgoliaSearch.prototype.listIndexes = function(page, callback) {
-  var params = '';
-
+  let params = '';
+  let _callback = callback;
   if (page === undefined || typeof page === 'function') {
-    callback = page;
+    _callback = page;
   } else {
-    params = '?page=' + page;
+    params = `?page=${page}`;
   }
 
   return this._jsonRequest({
     method: 'GET',
-    url: '/1/indexes' + params,
+    url: `/1/indexes${params}`,
     hostType: 'read',
-    callback: callback
+    callback: _callback,
   });
 };
 
@@ -170,7 +183,7 @@ AlgoliaSearch.prototype.listApiKeys = function(callback) {
     method: 'GET',
     url: '/1/keys',
     hostType: 'read',
-    callback: callback
+    callback,
   });
 };
 
@@ -192,9 +205,9 @@ AlgoliaSearch.prototype.getUserKeyACL = deprecate(function(key, callback) {
 AlgoliaSearch.prototype.getApiKey = function(key, callback) {
   return this._jsonRequest({
     method: 'GET',
-    url: '/1/keys/' + key,
+    url: `/1/keys/${key}`,
     hostType: 'read',
-    callback: callback
+    callback,
   });
 };
 
@@ -215,16 +228,20 @@ AlgoliaSearch.prototype.deleteUserKey = deprecate(function(key, callback) {
 AlgoliaSearch.prototype.deleteApiKey = function(key, callback) {
   return this._jsonRequest({
     method: 'DELETE',
-    url: '/1/keys/' + key,
+    url: `/1/keys/${key}`,
     hostType: 'write',
-    callback: callback
+    callback,
   });
 };
 
 /*
  @deprecated see client.addApiKey
  */
-AlgoliaSearch.prototype.addUserKey = deprecate(function(acls, params, callback) {
+AlgoliaSearch.prototype.addUserKey = deprecate(function(
+  acls,
+  params,
+  callback
+) {
   return this.addApiKey(acls, params, callback);
 }, deprecatedMessage('client.addUserKey()', 'client.addApiKey()'));
 
@@ -240,7 +257,8 @@ AlgoliaSearch.prototype.addUserKey = deprecate(function(acls, params, callback) 
  *     - settings : allows to get index settings (https only)
  *     - editSettings : allows to change index settings (https only)
  * @param {Object} [params] - Optionnal parameters to set for the key
- * @param {number} params.validity - Number of seconds after which the key will be automatically removed (0 means no time limit for this key)
+ * @param {number} params.validity - Number of seconds after which the key will be automatically removed
+ *    (0 means no time limit for this key)
  * @param {number} params.maxQueriesPerIPPerHour - Number of API calls allowed from an IP address per hour
  * @param {number} params.maxHitsPerQuery - Number of hits this API key can retrieve in one call
  * @param {string[]} params.indexes - Allowed targeted indexes for this key
@@ -266,8 +284,8 @@ AlgoliaSearch.prototype.addUserKey = deprecate(function(acls, params, callback) 
  * @see {@link https://www.algolia.com/doc/rest_api#AddKey|Algolia REST API Documentation}
  */
 AlgoliaSearch.prototype.addApiKey = function(acls, params, callback) {
-  var isArray = require('isarray');
-  var usage = 'Usage: client.addApiKey(arrayOfAcls[, params, callback])';
+  const isArray = require('isarray');
+  const usage = 'Usage: client.addApiKey(arrayOfAcls[, params, callback])';
 
   if (!isArray(acls)) {
     throw new Error(usage);
@@ -278,8 +296,8 @@ AlgoliaSearch.prototype.addApiKey = function(acls, params, callback) {
     params = null;
   }
 
-  var postObj = {
-    acl: acls
+  const postObj = {
+    acl: acls,
   };
 
   if (params) {
@@ -290,7 +308,10 @@ AlgoliaSearch.prototype.addApiKey = function(acls, params, callback) {
     postObj.description = params.description;
 
     if (params.queryParameters) {
-      postObj.queryParameters = this._getSearchParams(params.queryParameters, '');
+      postObj.queryParameters = this._getSearchParams(
+        params.queryParameters,
+        ''
+      );
     }
 
     postObj.referers = params.referers;
@@ -301,21 +322,30 @@ AlgoliaSearch.prototype.addApiKey = function(acls, params, callback) {
     url: '/1/keys',
     body: postObj,
     hostType: 'write',
-    callback: callback
+    callback,
   });
 };
 
 /**
  * @deprecated Please use client.addApiKey()
  */
-AlgoliaSearch.prototype.addUserKeyWithValidity = deprecate(function(acls, params, callback) {
+AlgoliaSearch.prototype.addUserKeyWithValidity = deprecate(function(
+  acls,
+  params,
+  callback
+) {
   return this.addApiKey(acls, params, callback);
 }, deprecatedMessage('client.addUserKeyWithValidity()', 'client.addApiKey()'));
 
 /**
  * @deprecated Please use client.updateApiKey()
  */
-AlgoliaSearch.prototype.updateUserKey = deprecate(function(key, acls, params, callback) {
+AlgoliaSearch.prototype.updateUserKey = deprecate(function(
+  key,
+  acls,
+  params,
+  callback
+) {
   return this.updateApiKey(key, acls, params, callback);
 }, deprecatedMessage('client.updateUserKey()', 'client.updateApiKey()'));
 
@@ -357,8 +387,9 @@ AlgoliaSearch.prototype.updateUserKey = deprecate(function(key, acls, params, ca
  * @see {@link https://www.algolia.com/doc/rest_api#UpdateIndexKey|Algolia REST API Documentation}
  */
 AlgoliaSearch.prototype.updateApiKey = function(key, acls, params, callback) {
-  var isArray = require('isarray');
-  var usage = 'Usage: client.updateApiKey(key, arrayOfAcls[, params, callback])';
+  const isArray = require('isarray');
+  const usage =
+    'Usage: client.updateApiKey(key, arrayOfAcls[, params, callback])';
 
   if (!isArray(acls)) {
     throw new Error(usage);
@@ -369,8 +400,8 @@ AlgoliaSearch.prototype.updateApiKey = function(key, acls, params, callback) {
     params = null;
   }
 
-  var putObj = {
-    acl: acls
+  const putObj = {
+    acl: acls,
   };
 
   if (params) {
@@ -381,7 +412,10 @@ AlgoliaSearch.prototype.updateApiKey = function(key, acls, params, callback) {
     putObj.description = params.description;
 
     if (params.queryParameters) {
-      putObj.queryParameters = this._getSearchParams(params.queryParameters, '');
+      putObj.queryParameters = this._getSearchParams(
+        params.queryParameters,
+        ''
+      );
     }
 
     putObj.referers = params.referers;
@@ -389,10 +423,10 @@ AlgoliaSearch.prototype.updateApiKey = function(key, acls, params, callback) {
 
   return this._jsonRequest({
     method: 'PUT',
-    url: '/1/keys/' + key,
+    url: `/1/keys/${key}`,
     body: putObj,
     hostType: 'write',
-    callback: callback
+    callback,
   });
 };
 
@@ -400,29 +434,38 @@ AlgoliaSearch.prototype.updateApiKey = function(key, acls, params, callback) {
  * Initialize a new batch of search queries
  * @deprecated use client.search()
  */
-AlgoliaSearch.prototype.startQueriesBatch = deprecate(function startQueriesBatchDeprecated() {
-  this._batch = [];
-}, deprecatedMessage('client.startQueriesBatch()', 'client.search()'));
+AlgoliaSearch.prototype.startQueriesBatch = deprecate(
+  function startQueriesBatchDeprecated() {
+    this._batch = [];
+  },
+  deprecatedMessage('client.startQueriesBatch()', 'client.search()')
+);
 
 /**
  * Add a search query in the batch
  * @deprecated use client.search()
  */
-AlgoliaSearch.prototype.addQueryInBatch = deprecate(function addQueryInBatchDeprecated(indexName, query, args) {
-  this._batch.push({
-    indexName: indexName,
-    query: query,
-    params: args
-  });
-}, deprecatedMessage('client.addQueryInBatch()', 'client.search()'));
+AlgoliaSearch.prototype.addQueryInBatch = deprecate(
+  function addQueryInBatchDeprecated(indexName, query, args) {
+    this._batch.push({
+      indexName,
+      query,
+      params: args,
+    });
+  },
+  deprecatedMessage('client.addQueryInBatch()', 'client.search()')
+);
 
 /**
  * Launch the batch of queries using XMLHttpRequest.
  * @deprecated use client.search()
  */
-AlgoliaSearch.prototype.sendQueriesBatch = deprecate(function sendQueriesBatchDeprecated(callback) {
-  return this.search(this._batch, callback);
-}, deprecatedMessage('client.sendQueriesBatch()', 'client.search()'));
+AlgoliaSearch.prototype.sendQueriesBatch = deprecate(
+  function sendQueriesBatchDeprecated(callback) {
+    return this.search(this._batch, callback);
+  },
+  deprecatedMessage('client.sendQueriesBatch()', 'client.search()')
+);
 
 /**
  * Perform write operations accross multiple indexes.
@@ -458,8 +501,8 @@ AlgoliaSearch.prototype.sendQueriesBatch = deprecate(function sendQueriesBatchDe
  * }], cb)
  */
 AlgoliaSearch.prototype.batch = function(operations, callback) {
-  var isArray = require('isarray');
-  var usage = 'Usage: client.batch(operations[, callback])';
+  const isArray = require('isarray');
+  const usage = 'Usage: client.batch(operations[, callback])';
 
   if (!isArray(operations)) {
     throw new Error(usage);
@@ -469,10 +512,10 @@ AlgoliaSearch.prototype.batch = function(operations, callback) {
     method: 'POST',
     url: '/1/indexes/*/batch',
     body: {
-      requests: operations
+      requests: operations,
     },
     hostType: 'write',
-    callback: callback
+    callback,
   });
 };
 
@@ -485,7 +528,8 @@ AlgoliaSearch.prototype.disableSecuredAPIKey = notImplemented;
 AlgoliaSearch.prototype.generateSecuredApiKey = notImplemented;
 
 function notImplemented() {
-  var message = 'Not implemented in this environment.\n' +
+  const message =
+    'Not implemented in this environment.\n' +
     'If you feel this is a mistake, write to support@algolia.com';
 
   throw new errors.AlgoliaSearchError(message);

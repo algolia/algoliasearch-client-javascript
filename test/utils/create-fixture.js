@@ -3,20 +3,24 @@
 module.exports = createFixture;
 
 function createFixture(opts) {
-  var algoliasearch = require('../../');
-  var getCredentials = require('./get-credentials');
+  const algoliasearch = require('../../');
+  const getCredentials = require('./get-credentials');
 
   opts = opts || {};
 
-  var credentials = opts.credentials || getCredentials();
+  const credentials = opts.credentials || getCredentials();
 
-  var client = algoliasearch(credentials.applicationID, credentials.searchOnlyAPIKey, opts.clientOptions);
-  var index = client.initIndex(opts.indexName || credentials.indexName);
+  const client = algoliasearch(
+    credentials.applicationID,
+    credentials.searchOnlyAPIKey,
+    opts.clientOptions
+  );
+  const index = client.initIndex(opts.indexName || credentials.indexName);
 
   return {
-    client: client,
-    index: index,
-    credentials: credentials,
-    algoliasearch: algoliasearch
+    client,
+    index,
+    credentials,
+    algoliasearch,
   };
 }
