@@ -3,7 +3,7 @@
     [
       "env",
       {
-        "targets": { "browsers": ["last 2 versions", "ie >= 9"] },
+        "targets": { "browsers": ["last 2 versions", "ie >= 8"] },
         "modules": false,
       },
     ],
