@@ -29,14 +29,14 @@ echo '..Add V2 migration layer'
 for bundle in "${bundles[@]}"
 do
   # First part of migration layer, "src/migration-layer/script.js"
-  ALGOLIA_BUILDNAME="$bundle" browserify src/browser/migration-layer/script.js -s ALGOLIA_MIGRATION_LAYER -p bundle-collapser/plugin -p deumdify -t envify > dist/"$bundle".js
+  ALGOLIA_BUILDNAME="$bundle" browserify src/browser/migration-layer/script.js -s ALGOLIA_MIGRATION_LAYER -p bundle-collapser/plugin -p deumdify -t envify -t babelify > dist/"$bundle".js
 done
 
 echo '..Add browserify bundles'
 # cannot use a loop, bundles are different (--standalone)
-browserify -p bundle-collapser/plugin src/browser/builds/algoliasearch.js --standalone algoliasearch >> dist/algoliasearch.js
-browserify -p bundle-collapser/plugin src/browser/builds/algoliasearch.angular.js >> dist/algoliasearch.angular.js
-browserify -p bundle-collapser/plugin src/browser/builds/algoliasearch.jquery.js >> dist/algoliasearch.jquery.js
+browserify -p bundle-collapser/plugin src/browser/builds/algoliasearch.js --standalone algoliasearch -t babelify >> dist/algoliasearch.js
+browserify -p bundle-collapser/plugin src/browser/builds/algoliasearch.angular.js -t babelify >> dist/algoliasearch.angular.js
+browserify -p bundle-collapser/plugin src/browser/builds/algoliasearch.jquery.js -t babelify >> dist/algoliasearch.jquery.js
 
 echo '..Minify'
 for bundle in "${bundles[@]}"
@@ -61,7 +61,7 @@ done
 
 # not in the same loop as previous builds: no compatibility layer
 echo '..Lite build'
-browserify -p bundle-collapser/plugin src/browser/builds/algoliasearchLite.js --standalone algoliasearch > dist/algoliasearchLite.js
+browserify -p bundle-collapser/plugin src/browser/builds/algoliasearchLite.js --standalone algoliasearch -t babelify > dist/algoliasearchLite.js
 uglifyjs dist/algoliasearchLite.js -mc 'warnings=false' > dist/algoliasearchLite.min.js
 echo "$license" | cat - dist/algoliasearchLite.js > /tmp/out && mv /tmp/out dist/algoliasearchLite.js
 echo "$license" | cat - dist/algoliasearchLite.min.js > /tmp/out && mv /tmp/out dist/algoliasearchLite.min.js
