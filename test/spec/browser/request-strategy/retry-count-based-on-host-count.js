@@ -1,39 +1,33 @@
 'use strict';
 
-var test = require('tape');
+const test = require('tape');
 
-test('Request strategy does as many tries as hosts', function(t) {
-  var fauxJax = require('faux-jax');
-  var sinon = require('sinon');
+test('Request strategy does as many tries as hosts', t => {
+  const fauxJax = require('faux-jax');
+  const sinon = require('sinon');
 
-  var createFixture = require('../../../utils/create-fixture');
+  const createFixture = require('../../../utils/create-fixture');
 
-  var fixture = createFixture({
+  const fixture = createFixture({
     clientOptions: {
       hosts: [
         'first.com',
         'second.com',
         'third.com',
         'fourth.com',
-        'fifth.com'
-      ]
-    }
+        'fifth.com',
+      ],
+    },
   });
 
-  var nbRequests = 0;
+  let nbRequests = 0;
 
-  var index = fixture.index;
+  const index = fixture.index;
 
-  var searchCallback = sinon.spy(function() {
-    t.ok(
-      searchCallback.calledOnce,
-      'Search callback was called once'
-    );
+  var searchCallback = sinon.spy(() => {
+    t.ok(searchCallback.calledOnce, 'Search callback was called once');
 
-    t.deepEqual(
-      searchCallback.args[0],
-      [null, {hosts: 'YES!'}]
-    );
+    t.deepEqual(searchCallback.args[0], [null, { hosts: 'YES!' }]);
 
     fauxJax.restore();
 
@@ -44,7 +38,7 @@ test('Request strategy does as many tries as hosts', function(t) {
 
   index.search('smg', searchCallback);
 
-  fauxJax.on('request', function(req) {
+  fauxJax.on('request', req => {
     nbRequests++;
     if (nbRequests === 5) {
       goodResponse(req);
@@ -55,10 +49,10 @@ test('Request strategy does as many tries as hosts', function(t) {
   });
 
   function badResponse(req) {
-    req.respond(500, {}, JSON.stringify({status: 500, message: 'woops!'}));
+    req.respond(500, {}, JSON.stringify({ status: 500, message: 'woops!' }));
   }
 
   function goodResponse(req) {
-    req.respond(200, {}, JSON.stringify({hosts: 'YES!'}));
+    req.respond(200, {}, JSON.stringify({ hosts: 'YES!' }));
   }
 });

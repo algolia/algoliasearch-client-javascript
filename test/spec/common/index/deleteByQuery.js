@@ -1,51 +1,43 @@
 'use strict';
 
-var test = require('tape');
+const test = require('tape');
 
-test('index.deleteByQuery(query)', function(t) {
+test('index.deleteByQuery(query)', t => {
   deleteByQueryTest('callback', t);
   deleteByQueryTest('promise', t);
 });
 
 function deleteByQueryTest(asyncMode, mainTest) {
-  mainTest.test('using a ' + asyncMode, function(t) {
+  mainTest.test(`using a ${asyncMode}`, t => {
     t.plan(12);
 
-    var bind = require('lodash-compat/function/bind');
-    var fauxJax = require('faux-jax');
-    var sinon = require('sinon');
+    const bind = require('lodash-compat/function/bind');
+    const fauxJax = require('faux-jax');
+    const sinon = require('sinon');
 
-    var createFixture = require('../../../utils/create-fixture');
-    var fixture = createFixture();
-    var index = fixture.index;
+    const createFixture = require('../../../utils/create-fixture');
+    const fixture = createFixture();
+    const index = fixture.index;
 
     sinon.spy(index, 'search');
     sinon.spy(index, 'deleteObjects');
     sinon.spy(index, 'waitTask');
     sinon.spy(index, 'deleteByQuery');
 
-    fauxJax.install({gzip: true});
+    fauxJax.install({ gzip: true });
 
     fauxJax.once('request', respondToSearch);
 
     if (asyncMode === 'callback') {
       index.deleteByQuery('salmon', function(err) {
         t.error(err, 'No error while deleting by query');
-        t.equal(
-          arguments.length,
-          1,
-          'Only one argument in callback'
-        );
+        t.equal(arguments.length, 1, 'Only one argument in callback');
         fauxJax.restore();
       });
     } else if (asyncMode === 'promise') {
       index.deleteByQuery('salmon').then(function() {
         t.pass('No error while deleting by query');
-        t.equal(
-          arguments.length,
-          1,
-          'Only one argument in callback'
-        );
+        t.equal(arguments.length, 1, 'Only one argument in callback');
         fauxJax.restore();
       }, bind(t.fail, t));
     }
@@ -61,7 +53,7 @@ function deleteByQueryTest(asyncMode, mainTest) {
         index.search.calledWith('salmon', {
           attributesToRetrieve: 'objectID',
           hitsPerPage: 1000,
-          distinct: false
+          distinct: false,
         }),
         'search called with good params'
       );
@@ -74,11 +66,14 @@ function deleteByQueryTest(asyncMode, mainTest) {
         {},
         JSON.stringify({
           nbHits: 800,
-          hits: [{
-            objectID: '1005'
-          }, {
-            objectID: '1006'
-          }]
+          hits: [
+            {
+              objectID: '1005',
+            },
+            {
+              objectID: '1006',
+            },
+          ],
         })
       );
     }
@@ -86,10 +81,7 @@ function deleteByQueryTest(asyncMode, mainTest) {
     function respondToDeleteObjects(req) {
       t.ok(index.deleteObjects.calledOnce, 'deleteObjects called');
       t.ok(
-        index.deleteObjects.calledWith([
-          '1005',
-          '1006'
-        ]),
+        index.deleteObjects.calledWith(['1005', '1006']),
         'deleteObjects called with good params'
       );
 
@@ -98,7 +90,7 @@ function deleteByQueryTest(asyncMode, mainTest) {
         200,
         {},
         JSON.stringify({
-          taskID: 2934
+          taskID: 2934,
         })
       );
     }
@@ -115,7 +107,7 @@ function deleteByQueryTest(asyncMode, mainTest) {
         200,
         {},
         JSON.stringify({
-          status: 'published'
+          status: 'published',
         })
       );
     }
@@ -134,7 +126,7 @@ function deleteByQueryTest(asyncMode, mainTest) {
         index.search.calledWith('salmon', {
           attributesToRetrieve: 'objectID',
           hitsPerPage: 1000,
-          distinct: false
+          distinct: false,
         }),
         'index search called with good params'
       );
@@ -148,7 +140,7 @@ function deleteByQueryTest(asyncMode, mainTest) {
         200,
         {},
         JSON.stringify({
-          nbHits: 0
+          nbHits: 0,
         })
       );
 

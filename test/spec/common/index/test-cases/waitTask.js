@@ -1,6 +1,6 @@
 'use strict';
 
-var testCases = module.exports = [];
+const testCases = (module.exports = []);
 
 testCases.push({
   object: 'index',
@@ -11,14 +11,14 @@ testCases.push({
   expectedRequest: {
     method: 'GET',
     URL: {
-      pathname: '/1/indexes/%s/task/25000'
-    }
+      pathname: '/1/indexes/%s/task/25000',
+    },
   },
   fakeResponse: {
     body: {
-      status: 'published'
-    }
-  }
+      status: 'published',
+    },
+  },
 });
 
 testCases.push({
@@ -30,14 +30,14 @@ testCases.push({
   expectedRequest: {
     method: 'GET',
     URL: {
-      pathname: '/1/indexes/%s/task/26000'
-    }
+      pathname: '/1/indexes/%s/task/26000',
+    },
   },
   fakeResponse: {
     statusCode: 400,
     body: JSON.stringify({
       message: 'woops!',
-      status: 400
-    })
-  }
+      status: 400,
+    }),
+  },
 });

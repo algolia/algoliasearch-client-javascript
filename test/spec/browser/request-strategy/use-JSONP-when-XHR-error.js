@@ -1,51 +1,45 @@
 'use strict';
 
-var test = require('tape');
+const test = require('tape');
 
-var requestTimeout = 5000;
+const requestTimeout = 5000;
 
-test('Request strategy uses JSONP when XHR errors', function(t) {
+test('Request strategy uses JSONP when XHR errors', t => {
   t.plan(4);
-  var fauxJax = require('faux-jax');
-  var parse = require('url-parse');
-  var sinon = require('sinon');
+  const fauxJax = require('faux-jax');
+  const parse = require('url-parse');
+  const sinon = require('sinon');
 
-  var createFixture = require('../../../utils/create-fixture');
+  const createFixture = require('../../../utils/create-fixture');
 
-  var currentURL = parse(location.href);
-  var fixture = createFixture({
+  const currentURL = parse(location.href);
+  const fixture = createFixture({
     clientOptions: {
-      hosts: [
-        currentURL.host,
-        currentURL.host
-      ],
-      timeout: requestTimeout
+      hosts: [currentURL.host, currentURL.host],
+      timeout: requestTimeout,
     },
-    indexName: 'simple-JSONP-response'
+    indexName: 'simple-JSONP-response',
   });
 
-  var searchCallback = sinon.spy(function() {
-    t.ok(
-      searchCallback.calledOnce,
-      'First callback called once'
-    );
+  var searchCallback = sinon.spy(() => {
+    t.ok(searchCallback.calledOnce, 'First callback called once');
 
     fauxJax.restore();
 
     t.deepEqual(
       searchCallback.args[0],
-      [null, {query: 'XHR error use JSONP'}],
+      [null, { query: 'XHR error use JSONP' }],
       'First callback called with null, {"query": "XHR error use JSONP"}'
     );
   });
 
-  var index = fixture.index;
+  const index = fixture.index;
 
   fauxJax.install();
 
   index.search('XHR error use JSONP', searchCallback);
 
-  fauxJax.on('request', function(req) {
+  fauxJax.on('request', req => {
     // we should pass here as much time as the number of hosts (2)
     t.pass();
     // simulate network error

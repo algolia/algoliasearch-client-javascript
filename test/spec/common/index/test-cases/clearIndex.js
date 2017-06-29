@@ -9,7 +9,7 @@ module.exports = {
   expectedRequest: {
     method: 'POST',
     URL: {
-      pathname: '/1/indexes/%s/clear'
-    }
-  }
+      pathname: '/1/indexes/%s/clear',
+    },
+  },
 };

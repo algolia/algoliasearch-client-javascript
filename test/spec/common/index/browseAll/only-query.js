@@ -1,20 +1,20 @@
 'use strict';
 
-var test = require('tape');
+const test = require('tape');
 
-test('index.browseAll(query)', function(t) {
+test('index.browseAll(query)', t => {
   t.plan(1);
 
-  var fauxJax = require('faux-jax');
+  const fauxJax = require('faux-jax');
 
-  var bind = require('lodash-compat/function/bind');
-  var createFixture = require('../../../../utils/create-fixture');
-  var fixture = createFixture();
-  var index = fixture.index;
+  const bind = require('lodash-compat/function/bind');
+  const createFixture = require('../../../../utils/create-fixture');
+  const fixture = createFixture();
+  const index = fixture.index;
 
-  fauxJax.install({gzip: true});
+  fauxJax.install({ gzip: true });
 
-  var browser = index.browseAll('some');
+  const browser = index.browseAll('some');
 
   fauxJax.once('request', browse);
   browser.once('error', bind(t.fail, t));
@@ -22,7 +22,7 @@ test('index.browseAll(query)', function(t) {
   function browse(req) {
     t.deepEqual(
       JSON.parse(req.requestBody),
-      {params: 'query=some'},
+      { params: 'query=some' },
       'query param matches'
     );
 
@@ -30,7 +30,7 @@ test('index.browseAll(query)', function(t) {
       200,
       {},
       JSON.stringify({
-        nbHits: 100
+        nbHits: 100,
       })
     );
 

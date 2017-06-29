@@ -6,13 +6,21 @@
 module.exports = isUsingLatest;
 
 function isUsingLatest(buildName) {
-  var toFind = new RegExp('cdn\\.jsdelivr\\.net/algoliasearch/latest/' +
-    buildName.replace('.', '\\.') + // algoliasearch, algoliasearch.angular
-    '(?:\\.min)?\\.js$'); // [.min].js
+  const toFind = new RegExp(
+    `cdn\\.jsdelivr\\.net/algoliasearch/latest/${buildName.replace(
+      '.',
+      '\\.'
+    ) // algoliasearch, algoliasearch.angular
+    }(?:\\.min)?\\.js$`
+  ); // [.min].js
 
-  var scripts = document.getElementsByTagName('script');
-  var found = false;
-  for (var currentScript = 0, nbScripts = scripts.length; currentScript < nbScripts; currentScript++) {
+  const scripts = document.getElementsByTagName('script');
+  let found = false;
+  for (
+    let currentScript = 0, nbScripts = scripts.length;
+    currentScript < nbScripts;
+    currentScript++
+  ) {
     if (scripts[currentScript].src && toFind.test(scripts[currentScript].src)) {
       found = true;
       break;

@@ -1,28 +1,28 @@
 'use strict';
 
-var test = require('tape');
+const test = require('tape');
 
-test('algoliasearch(appId, apiKey, {hosts: [..]})', function(t) {
+test('algoliasearch(appId, apiKey, {hosts: [..]})', t => {
   t.plan(2);
 
-  var fauxJax = require('faux-jax');
-  var parse = require('url-parse');
-  fauxJax.install({gzip: true});
+  const fauxJax = require('faux-jax');
+  const parse = require('url-parse');
+  fauxJax.install({ gzip: true });
 
-  var createFixture = require('../../../utils/create-fixture');
-  var fixture = createFixture({
+  const createFixture = require('../../../utils/create-fixture');
+  const fixture = createFixture({
     clientOptions: {
-      hosts: ['as-an-array.com']
-    }
+      hosts: ['as-an-array.com'],
+    },
   });
 
-  var index = fixture.index;
+  const index = fixture.index;
 
   testReadHost();
 
   function testReadHost() {
     index.search('as an array');
-    fauxJax.once('request', function(req) {
+    fauxJax.once('request', req => {
       t.equal(
         parse(req.requestURL).hostname,
         'as-an-array.com',
@@ -36,10 +36,10 @@ test('algoliasearch(appId, apiKey, {hosts: [..]})', function(t) {
 
   function testWriteHost() {
     index.addObject({
-      asAnArray: true
+      asAnArray: true,
     });
 
-    fauxJax.once('request', function(req) {
+    fauxJax.once('request', req => {
       t.equal(
         parse(req.requestURL).hostname,
         'as-an-array.com',
@@ -52,30 +52,30 @@ test('algoliasearch(appId, apiKey, {hosts: [..]})', function(t) {
   }
 });
 
-test('algoliasearch(appId, apiKey, {hosts: {read: [..], write: [..]}})', function(t) {
+test('algoliasearch(appId, apiKey, {hosts: {read: [..], write: [..]}})', t => {
   t.plan(2);
 
-  var fauxJax = require('faux-jax');
-  var parse = require('url-parse');
-  fauxJax.install({gzip: true});
+  const fauxJax = require('faux-jax');
+  const parse = require('url-parse');
+  fauxJax.install({ gzip: true });
 
-  var createFixture = require('../../../utils/create-fixture');
-  var fixture = createFixture({
+  const createFixture = require('../../../utils/create-fixture');
+  const fixture = createFixture({
     clientOptions: {
       hosts: {
         read: ['as-an-object-read.com'],
-        write: ['as-an-object-write.com']
-      }
-    }
+        write: ['as-an-object-write.com'],
+      },
+    },
   });
 
-  var index = fixture.index;
+  const index = fixture.index;
 
   testReadHost();
 
   function testReadHost() {
     index.search('as an object');
-    fauxJax.once('request', function(req) {
+    fauxJax.once('request', req => {
       t.equal(
         parse(req.requestURL).hostname,
         'as-an-object-read.com',
@@ -90,10 +90,10 @@ test('algoliasearch(appId, apiKey, {hosts: {read: [..], write: [..]}})', functio
 
   function testWriteHost() {
     index.addObject({
-      asAnObject: true
+      asAnObject: true,
     });
 
-    fauxJax.once('request', function(req) {
+    fauxJax.once('request', req => {
       t.equal(
         parse(req.requestURL).hostname,
         'as-an-object-write.com',

@@ -1,33 +1,36 @@
 'use strict';
 
-var test = require('tape');
+const test = require('tape');
 
-test('client.setSecurityTags(string or array-based tags)', function(t) {
-  var async = require('async');
-  var indexOf = require('lodash-compat/array/indexOf');
+test('client.setSecurityTags(string or array-based tags)', t => {
+  const async = require('async');
+  const indexOf = require('lodash-compat/array/indexOf');
 
-  var testCases = [
-    {args: 'user_42,group_51', expected: 'user_42,group_51'},
-    {args: ['user_42', 'group_51'], expected: 'user_42,group_51'},
-    {args: ['user_42', ['group_50', 'group_51']], expected: 'user_42,(group_50,group_51)'}
+  const testCases = [
+    { args: 'user_42,group_51', expected: 'user_42,group_51' },
+    { args: ['user_42', 'group_51'], expected: 'user_42,group_51' },
+    {
+      args: ['user_42', ['group_50', 'group_51']],
+      expected: 'user_42,(group_50,group_51)',
+    },
   ];
 
   t.plan(1 + testCases.length);
 
-  var fauxJax = require('faux-jax');
-  var parse = require('url-parse');
+  const fauxJax = require('faux-jax');
+  const parse = require('url-parse');
 
-  var createFixture = require('../../../utils/create-fixture');
-  var fixture = createFixture();
-  var client = fixture.client;
-  var index = fixture.index;
+  const createFixture = require('../../../utils/create-fixture');
+  const fixture = createFixture();
+  const client = fixture.client;
+  const index = fixture.index;
 
-  fauxJax.install({gzip: true});
+  fauxJax.install({ gzip: true });
 
   // no extra header set
   index.search('first');
 
-  fauxJax.once('request', function(req) {
+  fauxJax.once('request', req => {
     req.respond(200, {}, '{}');
     if (process.browser) {
       t.notOk(
@@ -45,30 +48,34 @@ test('client.setSecurityTags(string or array-based tags)', function(t) {
   });
 
   function runTestCases() {
-    async.eachSeries(testCases, function(testCase, cb) {
-      client.setSecurityTags(testCase.args);
+    async.eachSeries(
+      testCases,
+      (testCase, cb) => {
+        client.setSecurityTags(testCase.args);
 
-      index.search('second ' + indexOf(testCases, testCase));
+        index.search(`second ${indexOf(testCases, testCase)}`);
 
-      fauxJax.once('request', function(req) {
-        req.respond(200, {}, '{}');
-        if (process.browser) {
-          t.equal(
-            parse(req.requestURL, true).query['x-algolia-tagfilters'],
-            testCase.expected,
-            '`X-Algolia-TagFilters` set on second request (' + testCase.expected + ')'
-          );
-        } else {
-          t.equal(
-            req.requestHeaders['x-algolia-tagfilters'],
-            testCase.expected,
-            '`X-Algolia-TagFilters` set on second request (' + testCase.expected + ')'
-          );
-        }
+        fauxJax.once('request', req => {
+          req.respond(200, {}, '{}');
+          if (process.browser) {
+            t.equal(
+              parse(req.requestURL, true).query['x-algolia-tagfilters'],
+              testCase.expected,
+              `\`X-Algolia-TagFilters\` set on second request (${testCase.expected})`
+            );
+          } else {
+            t.equal(
+              req.requestHeaders['x-algolia-tagfilters'],
+              testCase.expected,
+              `\`X-Algolia-TagFilters\` set on second request (${testCase.expected})`
+            );
+          }
 
-        cb();
-      });
-    }, end);
+          cb();
+        });
+      },
+      end
+    );
   }
 
   function end() {

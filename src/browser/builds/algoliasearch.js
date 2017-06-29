@@ -1,6 +1,6 @@
 'use strict';
 
-var AlgoliaSearch = require('../../AlgoliaSearch.js');
-var createAlgoliasearch = require('../createAlgoliasearch.js');
+const AlgoliaSearch = require('../../AlgoliaSearch.js');
+const createAlgoliasearch = require('../createAlgoliasearch.js');
 
 module.exports = createAlgoliasearch(AlgoliaSearch);

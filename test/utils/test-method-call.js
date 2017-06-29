@@ -2,18 +2,18 @@
 
 module.exports = testMethodCall;
 
-var algoliasearch = require('../../');
-var fauxJax = require('faux-jax');
-var parse = require('url-parse');
+const algoliasearch = require('../../');
+const fauxJax = require('faux-jax');
+const parse = require('url-parse');
 
-var wrapMethodCallback = require('./wrap-method-callback');
+const wrapMethodCallback = require('./wrap-method-callback');
 
 function testMethodCall(opts) {
-  var assert = opts.assert;
-  var testCase = opts.testCase;
+  const assert = opts.assert;
+  const testCase = opts.testCase;
 
-  var client = algoliasearch(opts.applicationID, opts.searchOnlyAPIKey);
-  var object;
+  const client = algoliasearch(opts.applicationID, opts.searchOnlyAPIKey);
+  let object;
   if (opts.object === 'index') {
     object = client.initIndex(opts.indexName);
   } else {
@@ -26,14 +26,14 @@ function testMethodCall(opts) {
   wrapMethodCallback(testCase.callArguments, checkMethodCallback);
 
   // this needs to be done here to be as close as possible to the new XMLHttpRequest() call
-  fauxJax.install({gzip: true});
+  fauxJax.install({ gzip: true });
 
-  object[opts.methodName].apply(object, testCase.callArguments);
+  object[opts.methodName](...testCase.callArguments);
 
-  fauxJax.once('request', function(actualRequest) {
+  fauxJax.once('request', actualRequest => {
     fauxJax.restore();
 
-    var expectedRequest = testCase.expectedRequest;
+    const expectedRequest = testCase.expectedRequest;
 
     actualRequest.respond(
       testCase.fakeResponse.statusCode,
@@ -47,25 +47,27 @@ function testMethodCall(opts) {
       'Request method matches'
     );
 
-    var actualRequestURL = parse(actualRequest.requestURL, true);
-    var expectedRequestURL = expectedRequest.URL;
+    const actualRequestURL = parse(actualRequest.requestURL, true);
+    const expectedRequestURL = expectedRequest.URL;
 
     if (testCase.action === undefined) {
       assert.fail('No action (read/write) given in the test case');
     } else if (testCase.action === 'read') {
       assert.equal(
         actualRequestURL.host,
-        opts.applicationID.toLowerCase() + '-dsn.algolia.net',
+        `${opts.applicationID.toLowerCase()}-dsn.algolia.net`,
         'We used the first read host (DSN)'
       );
     } else if (testCase.action === 'write') {
       assert.equal(
         actualRequestURL.host,
-        opts.applicationID.toLowerCase() + '.algolia.net',
+        `${opts.applicationID.toLowerCase()}.algolia.net`,
         'We used the first write host (fault tolerant)'
       );
     } else {
-      assert.fail('Unkown action (read/write) found in the test case (was: ' + testCase.action + ')');
+      assert.fail(
+        `Unkown action (read/write) found in the test case (was: ${testCase.action})`
+      );
     }
 
     assert.equal(
@@ -117,13 +119,10 @@ function testMethodCall(opts) {
   });
 
   function checkMethodCallback(methodCallback) {
-    assert.ok(
-      methodCallback.calledOnce,
-      'Callback was called once'
-    );
+    assert.ok(methodCallback.calledOnce, 'Callback was called once');
 
-    var error = testCase.fakeResponse.statusCode === 200 ? null : Error;
-    var args = methodCallback.getCall(0).args;
+    const error = testCase.fakeResponse.statusCode === 200 ? null : Error;
+    const args = methodCallback.getCall(0).args;
 
     if (error) {
       assert.ok(

@@ -1,27 +1,30 @@
 'use strict';
 
-var fauxJax = require('faux-jax');
+const fauxJax = require('faux-jax');
 
 if (!process.browser || fauxJax.support.xhr.cors) {
-  module.exports = [{
-    testName: 'client.deleteUserKey(key, cb)',
-    object: 'client',
-    methodName: 'deleteUserKey',
-    callArguments: ['mykey'],
-    action: 'write',
-    expectedRequest: {
-      method: 'DELETE',
-      URL: {pathname: '/1/keys/mykey'}
-    }
-  }, {
-    testName: 'client.deleteApiKey(key, cb)',
-    object: 'client',
-    methodName: 'deleteApiKey',
-    callArguments: ['mykey'],
-    action: 'write',
-    expectedRequest: {
-      method: 'DELETE',
-      URL: {pathname: '/1/keys/mykey'}
-    }
-  }];
+  module.exports = [
+    {
+      testName: 'client.deleteUserKey(key, cb)',
+      object: 'client',
+      methodName: 'deleteUserKey',
+      callArguments: ['mykey'],
+      action: 'write',
+      expectedRequest: {
+        method: 'DELETE',
+        URL: { pathname: '/1/keys/mykey' },
+      },
+    },
+    {
+      testName: 'client.deleteApiKey(key, cb)',
+      object: 'client',
+      methodName: 'deleteApiKey',
+      callArguments: ['mykey'],
+      action: 'write',
+      expectedRequest: {
+        method: 'DELETE',
+        URL: { pathname: '/1/keys/mykey' },
+      },
+    },
+  ];
 }

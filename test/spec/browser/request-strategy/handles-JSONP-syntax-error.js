@@ -1,8 +1,8 @@
 'use strict';
 
-var test = require('tape');
+let test = require('tape');
 
-var browser = require('bowser');
+const browser = require('bowser');
 
 if (browser.name === 'PhantomJS') {
   // cannot be tested in PhantomJS, it throws a uncatchable
@@ -10,24 +10,21 @@ if (browser.name === 'PhantomJS') {
   test = test.skip;
 }
 
-test('Request strategy handles JSONP syntax errors', function(t) {
+test('Request strategy handles JSONP syntax errors', t => {
   t.plan(8);
-  var fauxJax = require('faux-jax');
-  var parse = require('url-parse');
-  var xhr = require('xhr');
+  const fauxJax = require('faux-jax');
+  const parse = require('url-parse');
+  const xhr = require('xhr');
 
-  var createFixture = require('../../../utils/create-fixture');
+  const createFixture = require('../../../utils/create-fixture');
 
-  var currentURL = parse(location.href);
-  var fixture = createFixture({
+  const currentURL = parse(location.href);
+  const fixture = createFixture({
     clientOptions: {
-      hosts: [
-        currentURL.host,
-        currentURL.host
-      ],
-      timeout: 5000
+      hosts: [currentURL.host, currentURL.host],
+      timeout: 5000,
     },
-    indexName: 'JSONP-syntax-error'
+    indexName: 'JSONP-syntax-error',
   });
 
   function searchCallback(err) {
@@ -43,34 +40,50 @@ test('Request strategy handles JSONP syntax errors', function(t) {
     checkNbCalls();
   }
 
-  var index = fixture.index;
+  const index = fixture.index;
 
-  xhr({
-    uri: '/1/indexes/JSONP-syntax-error/reset',
-    json: true
-  }, function run(err, res, body) {
-    t.error(err, 'No error while calling /1/indexes/JSONP-syntax-error/reset');
-    t.deepEqual(body, {calls: 0}, 'No JSONP calls done');
+  xhr(
+    {
+      uri: '/1/indexes/JSONP-syntax-error/reset',
+      json: true,
+    },
+    (err, res, body) => {
+      t.error(
+        err,
+        'No error while calling /1/indexes/JSONP-syntax-error/reset'
+      );
+      t.deepEqual(body, { calls: 0 }, 'No JSONP calls done');
 
-    fauxJax.install();
+      fauxJax.install();
 
-    index.search('JSONP Failure', searchCallback);
+      index.search('JSONP Failure', searchCallback);
 
-    fauxJax.on('request', function(req) {
-      // we should pass here as much time as the number of hosts (2)
-      t.pass();
-      // simulate network error
-      req.onerror();
-    });
-  });
+      fauxJax.on('request', req => {
+        // we should pass here as much time as the number of hosts (2)
+        t.pass();
+        // simulate network error
+        req.onerror();
+      });
+    }
+  );
 
   function checkNbCalls() {
-    xhr({
-      uri: '/1/indexes/JSONP-syntax-error/calls',
-      json: true
-    }, function run(err, res, body) {
-      t.error(err, 'No error while calling /1/indexes/JSONP-syntax-error/calls');
-      t.deepEqual(body, {calls: 2}, 'Two JSONP calls done, we have two hosts');
-    });
+    xhr(
+      {
+        uri: '/1/indexes/JSONP-syntax-error/calls',
+        json: true,
+      },
+      (err, res, body) => {
+        t.error(
+          err,
+          'No error while calling /1/indexes/JSONP-syntax-error/calls'
+        );
+        t.deepEqual(
+          body,
+          { calls: 2 },
+          'Two JSONP calls done, we have two hosts'
+        );
+      }
+    );
   }
 });

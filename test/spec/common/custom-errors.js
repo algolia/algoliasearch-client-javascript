@@ -1,28 +1,31 @@
 'use strict';
 
-var test = require('tape');
+const test = require('tape');
 
-var errors = require('../../../src/errors');
+const errors = require('../../../src/errors');
 
-test('We get custom errors with stacks', function(t) {
+test('We get custom errors with stacks', t => {
   t.plan(3);
 
-  var fauxJax = require('faux-jax');
+  const fauxJax = require('faux-jax');
 
-  var createFixture = require('../../utils/create-fixture');
-  var fixture = createFixture();
-  var index = fixture.index;
+  const createFixture = require('../../utils/create-fixture');
+  const fixture = createFixture();
+  const index = fixture.index;
 
-  fauxJax.install({gzip: true});
+  fauxJax.install({ gzip: true });
 
-  fauxJax.once('request', function(req) {
+  fauxJax.once('request', req => {
     req.respond(400, {}, '{"message": "GOAWAY!", "status": 400}');
     fauxJax.restore();
   });
 
-  index.search('something', function(err) {
+  index.search('something', err => {
     t.ok(err instanceof Error, 'Its an instance of Error');
-    t.ok(err instanceof errors.AlgoliaSearchError, 'Its an instance of AlgoliaSearchError');
+    t.ok(
+      err instanceof errors.AlgoliaSearchError,
+      'Its an instance of AlgoliaSearchError'
+    );
     t.ok(err.stack, 'We have a stacktrace');
   });
 });

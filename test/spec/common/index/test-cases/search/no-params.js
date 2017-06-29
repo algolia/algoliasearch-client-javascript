@@ -7,9 +7,9 @@ module.exports = {
   action: 'read',
   expectedRequest: {
     method: 'POST',
-    URL: {pathname: '/1/indexes/%s/query'},
+    URL: { pathname: '/1/indexes/%s/query' },
     body: {
-      params: 'query=yaw%20query'
-    }
-  }
+      params: 'query=yaw%20query',
+    },
+  },
 };

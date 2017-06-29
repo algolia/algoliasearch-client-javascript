@@ -1,32 +1,36 @@
 'use strict';
 
-var test = require('tape');
+const test = require('tape');
 
 // this test ensures we can call index.search() without any argument
-test('index.search() no arguments', function(t) {
+test('index.search() no arguments', t => {
   t.plan(1);
-  var fauxJax = require('faux-jax');
+  const fauxJax = require('faux-jax');
 
-  var createFixture = require('../../../../utils/create-fixture');
-  var fixture = createFixture();
-  var index = fixture.index;
+  const createFixture = require('../../../../utils/create-fixture');
+  const fixture = createFixture();
+  const index = fixture.index;
 
-  fauxJax.install({gzip: true});
+  fauxJax.install({ gzip: true });
 
-  index.search().then(function(content) {
+  index.search().then(content => {
     fauxJax.restore();
 
-    t.deepEqual(content, {
-      YAW: 'empty query resolved'
-    }, 'Content matches');
+    t.deepEqual(
+      content,
+      {
+        YAW: 'empty query resolved',
+      },
+      'Content matches'
+    );
   });
 
-  fauxJax.once('request', function(req) {
+  fauxJax.once('request', req => {
     req.respond(
       200,
       {},
       JSON.stringify({
-        YAW: 'empty query resolved'
+        YAW: 'empty query resolved',
       })
     );
   });

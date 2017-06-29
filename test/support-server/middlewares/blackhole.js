@@ -3,12 +3,12 @@
 /* eslint new-cap: 0 */
 module.exports = blackhole;
 
-var express = require('express');
+const express = require('express');
 
 function blackhole() {
-  var router = express.Router();
+  const router = express.Router();
 
-  router.get('/', function() {});
+  router.get('/', () => {});
 
   return router;
 }

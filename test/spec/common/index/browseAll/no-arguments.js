@@ -1,35 +1,35 @@
 'use strict';
 
-var test = require('tape');
+const test = require('tape');
 
-test.skip('index.browseAll() no arguments', function(t) {
+test.skip('index.browseAll() no arguments', t => {
   t.plan(1);
 
-  var fauxJax = require('faux-jax');
-  var keys = require('lodash-compat/object/keys');
-  var parse = require('url-parse');
+  const fauxJax = require('faux-jax');
+  const keys = require('lodash-compat/object/keys');
+  const parse = require('url-parse');
 
-  var bind = require('lodash-compat/function/bind');
-  var createFixture = require('../../../../utils/create-fixture');
-  var fixture = createFixture();
-  var index = fixture.index;
+  const bind = require('lodash-compat/function/bind');
+  const createFixture = require('../../../../utils/create-fixture');
+  const fixture = createFixture();
+  const index = fixture.index;
 
-  fauxJax.install({gzip: true});
+  fauxJax.install({ gzip: true });
 
-  var browser = index.browseAll();
+  const browser = index.browseAll();
 
   fauxJax.once('request', browse);
   browser.once('error', bind(t.fail, t));
 
   function browse(req) {
-    var qs = parse(req.requestURL, true).query;
+    const qs = parse(req.requestURL, true).query;
     t.equal(3, keys(qs).length, 'We do not add any query parameter');
 
     req.respond(
       200,
       {},
       JSON.stringify({
-        nbHits: 100
+        nbHits: 100,
       })
     );
 

@@ -1,42 +1,45 @@
 'use strict';
 
-var test = require('tape');
+const test = require('tape');
 
-test('when indexing content, we retry if timeout occurs', function(t) {
+test('when indexing content, we retry if timeout occurs', t => {
   t.plan(7);
 
-  var fauxJax = require('faux-jax');
+  const fauxJax = require('faux-jax');
 
-  var createFixture = require('../../../utils/create-fixture');
-  var fixture = createFixture({
+  const createFixture = require('../../../utils/create-fixture');
+  const fixture = createFixture({
     clientOptions: {
-      timeout: 20
-    }
+      timeout: 20,
+    },
   });
 
-  var index = fixture.index;
+  const index = fixture.index;
 
-  fauxJax.install({gzip: true});
-  fauxJax.on('request', function() {
+  fauxJax.install({ gzip: true });
+  fauxJax.on('request', () => {
     t.pass('One request made');
   });
 
-  index.addObject({
-    hello: 'world'
-  }, function(err) {
-    fauxJax.restore();
-    t.ok(err instanceof Error);
+  index.addObject(
+    {
+      hello: 'world',
+    },
+    err => {
+      fauxJax.restore();
+      t.ok(err instanceof Error);
 
-    t.equal(
-      err.name,
-      'AlgoliaSearchRequestTimeoutError',
-      'error name matches'
-    );
+      t.equal(
+        err.name,
+        'AlgoliaSearchRequestTimeoutError',
+        'error name matches'
+      );
 
-    t.equal(
-      err.message,
-      'Request timedout before getting a response',
-      'error messag ematches'
-    );
-  });
+      t.equal(
+        err.message,
+        'Request timedout before getting a response',
+        'error messag ematches'
+      );
+    }
+  );
 });

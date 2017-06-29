@@ -1,25 +1,25 @@
 'use strict';
 
-var test = require('tape');
+const test = require('tape');
 
-test('browser = index.browseAll(); browser.stop()', function(t) {
+test('browser = index.browseAll(); browser.stop()', t => {
   t.plan(1);
 
-  var fauxJax = require('faux-jax');
+  const fauxJax = require('faux-jax');
 
-  var bind = require('lodash-compat/function/bind');
-  var createFixture = require('../../../../utils/create-fixture');
-  var fixture = createFixture();
-  var index = fixture.index;
+  const bind = require('lodash-compat/function/bind');
+  const createFixture = require('../../../../utils/create-fixture');
+  const fixture = createFixture();
+  const index = fixture.index;
 
-  fauxJax.install({gzip: true});
+  fauxJax.install({ gzip: true });
 
-  var browser = index.browseAll({
-    hitsPerPage: 1200
+  const browser = index.browseAll({
+    hitsPerPage: 1200,
   });
 
   fauxJax.once('request', browse);
-  browser.on('result', function() {
+  browser.on('result', () => {
     // if we pass two times here then it will fail
     t.pass('We received a result event');
     browser.stop();
@@ -33,7 +33,7 @@ test('browser = index.browseAll(); browser.stop()', function(t) {
       {},
       JSON.stringify({
         nbHits: 100,
-        cursor: 'fslajf21rf31fé==!'
+        cursor: 'fslajf21rf31fé==!',
       })
     );
 

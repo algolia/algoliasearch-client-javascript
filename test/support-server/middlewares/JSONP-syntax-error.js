@@ -3,22 +3,22 @@
 /* eslint new-cap: 0 */
 module.exports = JSONPSyntaxError;
 
-var express = require('express');
+const express = require('express');
 
 function JSONPSyntaxError() {
-  var router = express.Router();
-  var calls = 0;
+  const router = express.Router();
+  let calls = 0;
 
-  router.get('/reset', function(req, res) {
+  router.get('/reset', (req, res) => {
     calls = 0;
-    res.json({calls: calls});
+    res.json({ calls });
   });
 
-  router.get('/calls', function(req, res) {
-    res.json({calls: calls});
+  router.get('/calls', (req, res) => {
+    res.json({ calls });
   });
 
-  router.get('/', function(req, res) {
+  router.get('/', (req, res) => {
     calls++;
 
     res.type('application/javascript');

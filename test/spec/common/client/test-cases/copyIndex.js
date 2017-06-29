@@ -8,10 +8,10 @@ module.exports = {
   action: 'write',
   expectedRequest: {
     method: 'POST',
-    URL: {pathname: '/1/indexes/from%20index/operation'},
+    URL: { pathname: '/1/indexes/from%20index/operation' },
     body: {
       operation: 'copy',
-      destination: 'to index'
-    }
-  }
+      destination: 'to index',
+    },
+  },
 };

@@ -1,1 +1,4 @@
 dist/
+
+# test suite will be rewritten later
+test/

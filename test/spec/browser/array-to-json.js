@@ -1,6 +1,6 @@
 'use strict';
 
-var test = require('tape');
+const test = require('tape');
 
 // Prototype.js < 1.7, a widely used library, defines a weird
 // Array.prototype.toJSON function that will fail to stringify our content
@@ -9,17 +9,17 @@ var test = require('tape');
 //   - https://groups.google.com/forum/#!topic/prototype-core/E-SAVvV_V9Q
 //   - https://github.com/sstephenson/prototype/commit/038a2985a70593c1a86c230fadbdfe2e4898a48c
 //   - http://stackoverflow.com/a/3148441/147079
-test('JSON.stringify works well even when using Prototype.js < 1.7', function(t) {
+test('JSON.stringify works well even when using Prototype.js < 1.7', t => {
   /* eslint no-extend-native:0 */
   t.plan(1);
 
-  var fauxJax = require('faux-jax');
+  const fauxJax = require('faux-jax');
 
-  var createFixture = require('../../utils/create-fixture');
+  const createFixture = require('../../utils/create-fixture');
 
-  var fixture = createFixture();
+  const fixture = createFixture();
 
-  var index = fixture.index;
+  const index = fixture.index;
 
   fauxJax.install();
 
@@ -27,14 +27,17 @@ test('JSON.stringify works well even when using Prototype.js < 1.7', function(t)
     t.fail('Array.toJSON was called');
   };
 
-  index.search({
-    facets: ['firstIndex']
-  }, function() {
-    t.pass('search callback got called');
-    delete Array.prototype.toJSON;
-  });
+  index.search(
+    {
+      facets: ['firstIndex'],
+    },
+    () => {
+      t.pass('search callback got called');
+      delete Array.prototype.toJSON;
+    }
+  );
 
-  fauxJax.once('request', function(req) {
+  fauxJax.once('request', req => {
     req.respond(200, {}, '{}');
     fauxJax.restore();
   });

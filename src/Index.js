@@ -1,12 +1,14 @@
-var inherits = require('inherits');
-var IndexCore = require('./IndexCore.js');
-var deprecate = require('./deprecate.js');
-var deprecatedMessage = require('./deprecatedMessage.js');
-var exitPromise = require('./exitPromise.js');
-var errors = require('./errors');
+/* eslint-disable prefer-rest-params, no-param-reassign, consistent-this */
 
-var deprecateForwardToSlaves = deprecate(
-  function() {},
+const inherits = require('inherits');
+const IndexCore = require('./IndexCore.js');
+const deprecate = require('./deprecate.js');
+const deprecatedMessage = require('./deprecatedMessage.js');
+const exitPromise = require('./exitPromise.js');
+const errors = require('./errors');
+
+const deprecateForwardToSlaves = deprecate(
+  () => {},
   deprecatedMessage('forwardToSlaves', 'forwardToReplicas')
 );
 
@@ -29,7 +31,7 @@ inherits(Index, IndexCore);
 *  content: the server answer that contains 3 elements: createAt, taskId and objectID
 */
 Index.prototype.addObject = function(content, objectID, callback) {
-  var indexObj = this;
+  const indexObj = this;
 
   if (arguments.length === 1 || typeof objectID === 'function') {
     callback = objectID;
@@ -37,14 +39,15 @@ Index.prototype.addObject = function(content, objectID, callback) {
   }
 
   return this.as._jsonRequest({
-    method: objectID !== undefined ?
-    'PUT' : // update or create
-    'POST', // create (API generates an objectID)
-    url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + // create
-    (objectID !== undefined ? '/' + encodeURIComponent(objectID) : ''), // update or create
+    method:
+      objectID !== undefined
+        ? 'PUT' // update or create
+        : 'POST', // create (API generates an objectID)
+    url: `/1/indexes/${encodeURIComponent(indexObj.indexName) // create
+    }${objectID !== undefined ? `/${encodeURIComponent(objectID)}` : ''}`, // update or create
     body: content,
     hostType: 'write',
-    callback: callback
+    callback,
   });
 };
 
@@ -57,30 +60,30 @@ Index.prototype.addObject = function(content, objectID, callback) {
 *  content: the server answer that updateAt and taskID
 */
 Index.prototype.addObjects = function(objects, callback) {
-  var isArray = require('isarray');
-  var usage = 'Usage: index.addObjects(arrayOfObjects[, callback])';
+  const isArray = require('isarray');
+  const usage = 'Usage: index.addObjects(arrayOfObjects[, callback])';
 
   if (!isArray(objects)) {
     throw new Error(usage);
   }
 
-  var indexObj = this;
-  var postObj = {
-    requests: []
+  const indexObj = this;
+  const postObj = {
+    requests: [],
   };
-  for (var i = 0; i < objects.length; ++i) {
-    var request = {
+  for (let i = 0; i < objects.length; ++i) {
+    const request = {
       action: 'addObject',
-      body: objects[i]
+      body: objects[i],
     };
     postObj.requests.push(request);
   }
   return this.as._jsonRequest({
     method: 'POST',
-    url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/batch',
+    url: `/1/indexes/${encodeURIComponent(indexObj.indexName)}/batch`,
     body: postObj,
     hostType: 'write',
-    callback: callback
+    callback,
   });
 };
 
@@ -94,24 +97,30 @@ Index.prototype.addObjects = function(objects, callback) {
 *  error: null or Error('message')
 *  content: the server answer that contains 3 elements: createAt, taskId and objectID
 */
-Index.prototype.partialUpdateObject = function(partialObject, createIfNotExists, callback) {
+Index.prototype.partialUpdateObject = function(
+  partialObject,
+  createIfNotExists,
+  callback
+) {
   if (arguments.length === 1 || typeof createIfNotExists === 'function') {
     callback = createIfNotExists;
     createIfNotExists = undefined;
   }
 
-  var indexObj = this;
-  var url = '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/' + encodeURIComponent(partialObject.objectID) + '/partial';
+  const indexObj = this;
+  let url = `/1/indexes/${encodeURIComponent(
+    indexObj.indexName
+  )}/${encodeURIComponent(partialObject.objectID)}/partial`;
   if (createIfNotExists === false) {
     url += '?createIfNotExists=false';
   }
 
   return this.as._jsonRequest({
     method: 'POST',
-    url: url,
+    url,
     body: partialObject,
     hostType: 'write',
-    callback: callback
+    callback,
   });
 };
 
@@ -123,37 +132,44 @@ Index.prototype.partialUpdateObject = function(partialObject, createIfNotExists,
 *  error: null or Error('message')
 *  content: the server answer that updateAt and taskID
 */
-Index.prototype.partialUpdateObjects = function(objects, createIfNotExists, callback) {
+Index.prototype.partialUpdateObjects = function(
+  objects,
+  createIfNotExists,
+  callback
+) {
   if (arguments.length === 1 || typeof createIfNotExists === 'function') {
     callback = createIfNotExists;
     createIfNotExists = true;
   }
 
-  var isArray = require('isarray');
-  var usage = 'Usage: index.partialUpdateObjects(arrayOfObjects[, callback])';
+  const isArray = require('isarray');
+  const usage = 'Usage: index.partialUpdateObjects(arrayOfObjects[, callback])';
 
   if (!isArray(objects)) {
     throw new Error(usage);
   }
 
-  var indexObj = this;
-  var postObj = {
-    requests: []
+  const indexObj = this;
+  const postObj = {
+    requests: [],
   };
-  for (var i = 0; i < objects.length; ++i) {
-    var request = {
-      action: createIfNotExists === true ? 'partialUpdateObject' : 'partialUpdateObjectNoCreate',
+  for (let i = 0; i < objects.length; ++i) {
+    const request = {
+      action:
+        createIfNotExists === true
+          ? 'partialUpdateObject'
+          : 'partialUpdateObjectNoCreate',
       objectID: objects[i].objectID,
-      body: objects[i]
+      body: objects[i],
     };
     postObj.requests.push(request);
   }
   return this.as._jsonRequest({
     method: 'POST',
-    url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/batch',
+    url: `/1/indexes/${encodeURIComponent(indexObj.indexName)}/batch`,
     body: postObj,
     hostType: 'write',
-    callback: callback
+    callback,
   });
 };
 
@@ -166,13 +182,15 @@ Index.prototype.partialUpdateObjects = function(objects, createIfNotExists, call
 *  content: the server answer that updateAt and taskID
 */
 Index.prototype.saveObject = function(object, callback) {
-  var indexObj = this;
+  const indexObj = this;
   return this.as._jsonRequest({
     method: 'PUT',
-    url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/' + encodeURIComponent(object.objectID),
+    url: `/1/indexes/${encodeURIComponent(
+      indexObj.indexName
+    )}/${encodeURIComponent(object.objectID)}`,
     body: object,
     hostType: 'write',
-    callback: callback
+    callback,
   });
 };
 
@@ -185,31 +203,31 @@ Index.prototype.saveObject = function(object, callback) {
 *  content: the server answer that updateAt and taskID
 */
 Index.prototype.saveObjects = function(objects, callback) {
-  var isArray = require('isarray');
-  var usage = 'Usage: index.saveObjects(arrayOfObjects[, callback])';
+  const isArray = require('isarray');
+  const usage = 'Usage: index.saveObjects(arrayOfObjects[, callback])';
 
   if (!isArray(objects)) {
     throw new Error(usage);
   }
 
-  var indexObj = this;
-  var postObj = {
-    requests: []
+  const indexObj = this;
+  const postObj = {
+    requests: [],
   };
-  for (var i = 0; i < objects.length; ++i) {
-    var request = {
+  for (let i = 0; i < objects.length; ++i) {
+    const request = {
       action: 'updateObject',
       objectID: objects[i].objectID,
-      body: objects[i]
+      body: objects[i],
     };
     postObj.requests.push(request);
   }
   return this.as._jsonRequest({
     method: 'POST',
-    url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/batch',
+    url: `/1/indexes/${encodeURIComponent(indexObj.indexName)}/batch`,
     body: postObj,
     hostType: 'write',
-    callback: callback
+    callback,
   });
 };
 
@@ -222,8 +240,13 @@ Index.prototype.saveObjects = function(objects, callback) {
 *  content: the server answer that contains 3 elements: createAt, taskId and objectID
 */
 Index.prototype.deleteObject = function(objectID, callback) {
-  if (typeof objectID === 'function' || typeof objectID !== 'string' && typeof objectID !== 'number') {
-    var err = new errors.AlgoliaSearchError('Cannot delete an object without an objectID');
+  if (
+    typeof objectID === 'function' ||
+    (typeof objectID !== 'string' && typeof objectID !== 'number')
+  ) {
+    const err = new errors.AlgoliaSearchError(
+      'Cannot delete an object without an objectID'
+    );
     callback = objectID;
     if (typeof callback === 'function') {
       return callback(err);
@@ -232,12 +255,14 @@ Index.prototype.deleteObject = function(objectID, callback) {
     return this.as._promise.reject(err);
   }
 
-  var indexObj = this;
+  const indexObj = this;
   return this.as._jsonRequest({
     method: 'DELETE',
-    url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/' + encodeURIComponent(objectID),
+    url: `/1/indexes/${encodeURIComponent(
+      indexObj.indexName
+    )}/${encodeURIComponent(objectID)}`,
     hostType: 'write',
-    callback: callback
+    callback,
   });
 };
 
@@ -250,34 +275,32 @@ Index.prototype.deleteObject = function(objectID, callback) {
 *  content: the server answer that contains 3 elements: createAt, taskId and objectID
 */
 Index.prototype.deleteObjects = function(objectIDs, callback) {
-  var isArray = require('isarray');
-  var map = require('./map.js');
+  const isArray = require('isarray');
+  const map = require('./map.js');
 
-  var usage = 'Usage: index.deleteObjects(arrayOfObjectIDs[, callback])';
+  const usage = 'Usage: index.deleteObjects(arrayOfObjectIDs[, callback])';
 
   if (!isArray(objectIDs)) {
     throw new Error(usage);
   }
 
-  var indexObj = this;
-  var postObj = {
-    requests: map(objectIDs, function prepareRequest(objectID) {
-      return {
-        action: 'deleteObject',
-        objectID: objectID,
-        body: {
-          objectID: objectID
-        }
-      };
-    })
+  const indexObj = this;
+  const postObj = {
+    requests: map(objectIDs, objectID => ({
+      action: 'deleteObject',
+      objectID,
+      body: {
+        objectID,
+      },
+    })),
   };
 
   return this.as._jsonRequest({
     method: 'POST',
-    url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/batch',
+    url: `/1/indexes/${encodeURIComponent(indexObj.indexName)}/batch`,
     body: postObj,
     hostType: 'write',
-    callback: callback
+    callback,
   });
 };
 
@@ -290,11 +313,11 @@ Index.prototype.deleteObjects = function(objectIDs, callback) {
 *  error: null or Error('message')
 */
 Index.prototype.deleteByQuery = function(query, params, callback) {
-  var clone = require('./clone.js');
-  var map = require('./map.js');
+  const clone = require('./clone.js');
+  const map = require('./map.js');
 
-  var indexObj = this;
-  var client = indexObj.as;
+  const indexObj = this;
+  const client = indexObj.as;
 
   if (arguments.length === 1 || typeof params === 'function') {
     callback = params;
@@ -313,9 +336,7 @@ Index.prototype.deleteByQuery = function(query, params, callback) {
 
   // there's a problem in how we use the promise chain,
   // see how waitTask is done
-  var promise = this
-  .search(query, params)
-  .then(stopOrDelete);
+  const promise = this.search(query, params).then(stopOrDelete);
 
   function stopOrDelete(searchContent) {
     // stop here
@@ -325,14 +346,12 @@ Index.prototype.deleteByQuery = function(query, params, callback) {
     }
 
     // continue and do a recursive call
-    var objectIDs = map(searchContent.hits, function getObjectID(object) {
-      return object.objectID;
-    });
+    const objectIDs = map(searchContent.hits, object => object.objectID);
 
     return indexObj
-    .deleteObjects(objectIDs)
-    .then(waitTask)
-    .then(doDeleteByQuery);
+      .deleteObjects(objectIDs)
+      .then(waitTask)
+      .then(doDeleteByQuery);
   }
 
   function waitTask(deleteObjectsContent) {
@@ -350,16 +369,17 @@ Index.prototype.deleteByQuery = function(query, params, callback) {
   promise.then(success, failure);
 
   function success() {
-    exitPromise(function exit() {
+    exitPromise(() => {
       callback(null);
     }, client._setTimeout || setTimeout);
   }
 
   function failure(err) {
-    exitPromise(function exit() {
+    exitPromise(() => {
       callback(err);
     }, client._setTimeout || setTimeout);
   }
+  return undefined;
 };
 
 /*
@@ -401,17 +421,18 @@ Index.prototype.browseAll = function(query, queryParameters) {
     query = undefined;
   }
 
-  var merge = require('./merge.js');
+  const merge = require('./merge.js');
 
-  var IndexBrowser = require('./IndexBrowser');
+  const IndexBrowser = require('./IndexBrowser');
 
-  var browser = new IndexBrowser();
-  var client = this.as;
-  var index = this;
-  var params = client._getSearchParams(
+  const browser = new IndexBrowser();
+  const client = this.as;
+  const index = this;
+  const params = client._getSearchParams(
     merge({}, queryParameters || {}, {
-      query: query
-    }), ''
+      query,
+    }),
+    ''
   );
 
   // start browsing
@@ -422,24 +443,24 @@ Index.prototype.browseAll = function(query, queryParameters) {
       return;
     }
 
-    var body;
+    let body;
 
     if (cursor !== undefined) {
       body = {
-        cursor: cursor
+        cursor,
       };
     } else {
       body = {
-        params: params
+        params,
       };
     }
 
     client._jsonRequest({
       method: 'POST',
-      url: '/1/indexes/' + encodeURIComponent(index.indexName) + '/browse',
+      url: `/1/indexes/${encodeURIComponent(index.indexName)}/browse`,
       hostType: 'read',
-      body: body,
-      callback: browseCallback
+      body,
+      callback: browseCallback,
     });
   }
 
@@ -472,9 +493,9 @@ Index.prototype.browseAll = function(query, queryParameters) {
 * @param searchParams contains an object with query parameters (see search for details)
 */
 Index.prototype.ttAdapter = function(params) {
-  var self = this;
+  const self = this;
   return function ttAdapter(query, syncCb, asyncCb) {
-    var cb;
+    let cb;
 
     if (typeof asyncCb === 'function') {
       // typeahead 0.11
@@ -484,7 +505,7 @@ Index.prototype.ttAdapter = function(params) {
       cb = syncCb;
     }
 
-    self.search(query, params, function searchDone(err, content) {
+    self.search(query, params, (err, content) => {
       if (err) {
         cb(err);
         return;
@@ -506,36 +527,40 @@ Index.prototype.ttAdapter = function(params) {
 */
 Index.prototype.waitTask = function(taskID, callback) {
   // wait minimum 100ms before retrying
-  var baseDelay = 100;
+  const baseDelay = 100;
   // wait maximum 5s before retrying
-  var maxDelay = 5000;
-  var loop = 0;
+  const maxDelay = 5000;
+  let loop = 0;
 
   // waitTask() must be handled differently from other methods,
   // it's a recursive method using a timeout
-  var indexObj = this;
-  var client = indexObj.as;
+  const indexObj = this;
+  const client = indexObj.as;
 
-  var promise = retryLoop();
+  const promise = retryLoop();
 
   function retryLoop() {
-    return client._jsonRequest({
-      method: 'GET',
-      hostType: 'read',
-      url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/task/' + taskID
-    }).then(function success(content) {
-      loop++;
-      var delay = baseDelay * loop * loop;
-      if (delay > maxDelay) {
-        delay = maxDelay;
-      }
+    return client
+      ._jsonRequest({
+        method: 'GET',
+        hostType: 'read',
+        url: `/1/indexes/${encodeURIComponent(
+          indexObj.indexName
+        )}/task/${taskID}`,
+      })
+      .then(content => {
+        loop++;
+        let delay = baseDelay * loop * loop;
+        if (delay > maxDelay) {
+          delay = maxDelay;
+        }
 
-      if (content.status !== 'published') {
-        return client._promise.delay(delay).then(retryLoop);
-      }
+        if (content.status !== 'published') {
+          return client._promise.delay(delay).then(retryLoop);
+        }
 
-      return content;
-    });
+        return content;
+      });
   }
 
   if (!callback) {
@@ -545,16 +570,17 @@ Index.prototype.waitTask = function(taskID, callback) {
   promise.then(successCb, failureCb);
 
   function successCb(content) {
-    exitPromise(function exit() {
+    exitPromise(() => {
       callback(null, content);
     }, client._setTimeout || setTimeout);
   }
 
   function failureCb(err) {
-    exitPromise(function exit() {
+    exitPromise(() => {
       callback(err);
     }, client._setTimeout || setTimeout);
   }
+  return undefined;
 };
 
 /*
@@ -565,12 +591,12 @@ Index.prototype.waitTask = function(taskID, callback) {
 *  content: the settings object or the error message if a failure occured
 */
 Index.prototype.clearIndex = function(callback) {
-  var indexObj = this;
+  const indexObj = this;
   return this.as._jsonRequest({
     method: 'POST',
-    url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/clear',
+    url: `/1/indexes/${encodeURIComponent(indexObj.indexName)}/clear`,
     hostType: 'write',
-    callback: callback
+    callback,
   });
 };
 
@@ -582,12 +608,14 @@ Index.prototype.clearIndex = function(callback) {
 *  content: the settings object or the error message if a failure occured
 */
 Index.prototype.getSettings = function(callback) {
-  var indexObj = this;
+  const indexObj = this;
   return this.as._jsonRequest({
     method: 'GET',
-    url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/settings?getVersion=2',
+    url: `/1/indexes/${encodeURIComponent(
+      indexObj.indexName
+    )}/settings?getVersion=2`,
     hostType: 'read',
-    callback: callback
+    callback,
   });
 };
 
@@ -601,10 +629,10 @@ Index.prototype.searchSynonyms = function(params, callback) {
 
   return this.as._jsonRequest({
     method: 'POST',
-    url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/synonyms/search',
+    url: `/1/indexes/${encodeURIComponent(this.indexName)}/synonyms/search`,
     body: params,
     hostType: 'read',
-    callback: callback
+    callback,
   });
 };
 
@@ -617,24 +645,30 @@ Index.prototype.saveSynonym = function(synonym, opts, callback) {
   }
 
   if (opts.forwardToSlaves !== undefined) deprecateForwardToSlaves();
-  var forwardToReplicas = (opts.forwardToSlaves || opts.forwardToReplicas) ? 'true' : 'false';
+  const forwardToReplicas =
+    opts.forwardToSlaves || opts.forwardToReplicas ? 'true' : 'false';
 
   return this.as._jsonRequest({
     method: 'PUT',
-    url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/synonyms/' + encodeURIComponent(synonym.objectID) +
-      '?forwardToReplicas=' + forwardToReplicas,
+    url: `/1/indexes/${encodeURIComponent(
+      this.indexName
+    )}/synonyms/${encodeURIComponent(
+      synonym.objectID
+    )}?forwardToReplicas=${forwardToReplicas}`,
     body: synonym,
     hostType: 'write',
-    callback: callback
+    callback,
   });
 };
 
 Index.prototype.getSynonym = function(objectID, callback) {
   return this.as._jsonRequest({
     method: 'GET',
-    url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/synonyms/' + encodeURIComponent(objectID),
+    url: `/1/indexes/${encodeURIComponent(
+      this.indexName
+    )}/synonyms/${encodeURIComponent(objectID)}`,
     hostType: 'read',
-    callback: callback
+    callback,
   });
 };
 
@@ -647,14 +681,18 @@ Index.prototype.deleteSynonym = function(objectID, opts, callback) {
   }
 
   if (opts.forwardToSlaves !== undefined) deprecateForwardToSlaves();
-  var forwardToReplicas = (opts.forwardToSlaves || opts.forwardToReplicas) ? 'true' : 'false';
+  const forwardToReplicas =
+    opts.forwardToSlaves || opts.forwardToReplicas ? 'true' : 'false';
 
   return this.as._jsonRequest({
     method: 'DELETE',
-    url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/synonyms/' + encodeURIComponent(objectID) +
-      '?forwardToReplicas=' + forwardToReplicas,
+    url: `/1/indexes/${encodeURIComponent(
+      this.indexName
+    )}/synonyms/${encodeURIComponent(
+      objectID
+    )}?forwardToReplicas=${forwardToReplicas}`,
     hostType: 'write',
-    callback: callback
+    callback,
   });
 };
 
@@ -667,14 +705,16 @@ Index.prototype.clearSynonyms = function(opts, callback) {
   }
 
   if (opts.forwardToSlaves !== undefined) deprecateForwardToSlaves();
-  var forwardToReplicas = (opts.forwardToSlaves || opts.forwardToReplicas) ? 'true' : 'false';
+  const forwardToReplicas =
+    opts.forwardToSlaves || opts.forwardToReplicas ? 'true' : 'false';
 
   return this.as._jsonRequest({
     method: 'POST',
-    url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/synonyms/clear' +
-      '?forwardToReplicas=' + forwardToReplicas,
+    url:
+      `/1/indexes/${encodeURIComponent(this.indexName)}/synonyms/clear` +
+      `?forwardToReplicas=${forwardToReplicas}`,
     hostType: 'write',
-    callback: callback
+    callback,
   });
 };
 
@@ -687,16 +727,19 @@ Index.prototype.batchSynonyms = function(synonyms, opts, callback) {
   }
 
   if (opts.forwardToSlaves !== undefined) deprecateForwardToSlaves();
-  var forwardToReplicas = (opts.forwardToSlaves || opts.forwardToReplicas) ? 'true' : 'false';
+  const forwardToReplicas =
+    opts.forwardToSlaves || opts.forwardToReplicas ? 'true' : 'false';
 
   return this.as._jsonRequest({
     method: 'POST',
-    url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/synonyms/batch' +
-      '?forwardToReplicas=' + forwardToReplicas +
-      '&replaceExistingSynonyms=' + (opts.replaceExistingSynonyms ? 'true' : 'false'),
+    url:
+      `/1/indexes/${encodeURIComponent(this.indexName)}/synonyms/batch` +
+      `?forwardToReplicas=${forwardToReplicas}&replaceExistingSynonyms=${opts.replaceExistingSynonyms
+        ? 'true'
+        : 'false'}`,
     hostType: 'write',
     body: synonyms,
-    callback: callback
+    callback,
   });
 };
 
@@ -710,10 +753,10 @@ Index.prototype.searchRules = function(params, callback) {
 
   return this.as._jsonRequest({
     method: 'POST',
-    url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/rules/search',
+    url: `/1/indexes/${encodeURIComponent(this.indexName)}/rules/search`,
     body: params,
     hostType: 'read',
-    callback: callback
+    callback,
   });
 };
 
@@ -725,24 +768,29 @@ Index.prototype.saveRule = function(rule, opts, callback) {
     opts = {};
   }
 
-  var forwardToReplicas = opts.forwardToReplicas === true ? 'true' : 'false';
+  const forwardToReplicas = opts.forwardToReplicas === true ? 'true' : 'false';
 
   return this.as._jsonRequest({
     method: 'PUT',
-    url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/rules/' + encodeURIComponent(rule.objectID) +
-      '?forwardToReplicas=' + forwardToReplicas,
+    url: `/1/indexes/${encodeURIComponent(
+      this.indexName
+    )}/rules/${encodeURIComponent(
+      rule.objectID
+    )}?forwardToReplicas=${forwardToReplicas}`,
     body: rule,
     hostType: 'write',
-    callback: callback
+    callback,
   });
 };
 
 Index.prototype.getRule = function(objectID, callback) {
   return this.as._jsonRequest({
     method: 'GET',
-    url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/rules/' + encodeURIComponent(objectID),
+    url: `/1/indexes/${encodeURIComponent(
+      this.indexName
+    )}/rules/${encodeURIComponent(objectID)}`,
     hostType: 'read',
-    callback: callback
+    callback,
   });
 };
 
@@ -754,14 +802,17 @@ Index.prototype.deleteRule = function(objectID, opts, callback) {
     opts = {};
   }
 
-  var forwardToReplicas = opts.forwardToReplicas === true ? 'true' : 'false';
+  const forwardToReplicas = opts.forwardToReplicas === true ? 'true' : 'false';
 
   return this.as._jsonRequest({
     method: 'DELETE',
-    url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/rules/' + encodeURIComponent(objectID) +
-      '?forwardToReplicas=' + forwardToReplicas,
+    url: `/1/indexes/${encodeURIComponent(
+      this.indexName
+    )}/rules/${encodeURIComponent(
+      objectID
+    )}?forwardToReplicas=${forwardToReplicas}`,
     hostType: 'write',
-    callback: callback
+    callback,
   });
 };
 
@@ -773,14 +824,15 @@ Index.prototype.clearRules = function(opts, callback) {
     opts = {};
   }
 
-  var forwardToReplicas = opts.forwardToReplicas === true ? 'true' : 'false';
+  const forwardToReplicas = opts.forwardToReplicas === true ? 'true' : 'false';
 
   return this.as._jsonRequest({
     method: 'POST',
-    url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/rules/clear' +
-      '?forwardToReplicas=' + forwardToReplicas,
+    url:
+      `/1/indexes/${encodeURIComponent(this.indexName)}/rules/clear` +
+      `?forwardToReplicas=${forwardToReplicas}`,
     hostType: 'write',
-    callback: callback
+    callback,
   });
 };
 
@@ -792,16 +844,19 @@ Index.prototype.batchRules = function(rules, opts, callback) {
     opts = {};
   }
 
-  var forwardToReplicas = opts.forwardToReplicas === true ? 'true' : 'false';
+  const forwardToReplicas = opts.forwardToReplicas === true ? 'true' : 'false';
 
   return this.as._jsonRequest({
     method: 'POST',
-    url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/rules/batch' +
-      '?forwardToReplicas=' + forwardToReplicas +
-      '&clearExistingRules=' + (opts.clearExistingRules === true ? 'true' : 'false'),
+    url:
+      `/1/indexes/${encodeURIComponent(this.indexName)}/rules/batch` +
+      `?forwardToReplicas=${forwardToReplicas}&clearExistingRules=${opts.clearExistingRules ===
+      true
+        ? 'true'
+        : 'false'}`,
     hostType: 'write',
     body: rules,
-    callback: callback
+    callback,
   });
 };
 
@@ -883,16 +938,18 @@ Index.prototype.setSettings = function(settings, opts, callback) {
   }
 
   if (opts.forwardToSlaves !== undefined) deprecateForwardToSlaves();
-  var forwardToReplicas = (opts.forwardToSlaves || opts.forwardToReplicas) ? 'true' : 'false';
+  const forwardToReplicas =
+    opts.forwardToSlaves || opts.forwardToReplicas ? 'true' : 'false';
 
-  var indexObj = this;
+  const indexObj = this;
   return this.as._jsonRequest({
     method: 'PUT',
-    url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/settings?forwardToReplicas='
-      + forwardToReplicas,
+    url: `/1/indexes/${encodeURIComponent(
+      indexObj.indexName
+    )}/settings?forwardToReplicas=${forwardToReplicas}`,
     hostType: 'write',
     body: settings,
-    callback: callback
+    callback,
   });
 };
 
@@ -911,12 +968,12 @@ Index.prototype.listUserKeys = deprecate(function(callback) {
 *  content: the server answer with API keys belonging to the index
 */
 Index.prototype.listApiKeys = function(callback) {
-  var indexObj = this;
+  const indexObj = this;
   return this.as._jsonRequest({
     method: 'GET',
-    url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/keys',
+    url: `/1/indexes/${encodeURIComponent(indexObj.indexName)}/keys`,
     hostType: 'read',
-    callback: callback
+    callback,
   });
 };
 
@@ -927,7 +984,6 @@ Index.prototype.getUserKeyACL = deprecate(function(key, callback) {
   return this.getApiKey(key, callback);
 }, deprecatedMessage('index.getUserKeyACL()', 'index.getApiKey()'));
 
-
 /*
 * Get an API key from this index
 *
@@ -937,12 +993,12 @@ Index.prototype.getUserKeyACL = deprecate(function(key, callback) {
 *  content: the server answer with the right API key
 */
 Index.prototype.getApiKey = function(key, callback) {
-  var indexObj = this;
+  const indexObj = this;
   return this.as._jsonRequest({
     method: 'GET',
-    url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/keys/' + key,
+    url: `/1/indexes/${encodeURIComponent(indexObj.indexName)}/keys/${key}`,
     hostType: 'read',
-    callback: callback
+    callback,
   });
 };
 
@@ -962,12 +1018,12 @@ Index.prototype.deleteUserKey = deprecate(function(key, callback) {
 *  content: the server answer with the deletion date
 */
 Index.prototype.deleteApiKey = function(key, callback) {
-  var indexObj = this;
+  const indexObj = this;
   return this.as._jsonRequest({
     method: 'DELETE',
-    url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/keys/' + key,
+    url: `/1/indexes/${encodeURIComponent(indexObj.indexName)}/keys/${key}`,
     hostType: 'write',
-    callback: callback
+    callback,
   });
 };
 
@@ -1015,8 +1071,8 @@ Index.prototype.addUserKey = deprecate(function(acls, params, callback) {
 * @see {@link https://www.algolia.com/doc/rest_api#AddIndexKey|Algolia REST API Documentation}
 */
 Index.prototype.addApiKey = function(acls, params, callback) {
-  var isArray = require('isarray');
-  var usage = 'Usage: index.addApiKey(arrayOfAcls[, params, callback])';
+  const isArray = require('isarray');
+  const usage = 'Usage: index.addApiKey(arrayOfAcls[, params, callback])';
 
   if (!isArray(acls)) {
     throw new Error(usage);
@@ -1027,8 +1083,8 @@ Index.prototype.addApiKey = function(acls, params, callback) {
     params = null;
   }
 
-  var postObj = {
-    acl: acls
+  const postObj = {
+    acl: acls,
   };
 
   if (params) {
@@ -1038,7 +1094,10 @@ Index.prototype.addApiKey = function(acls, params, callback) {
     postObj.description = params.description;
 
     if (params.queryParameters) {
-      postObj.queryParameters = this.as._getSearchParams(params.queryParameters, '');
+      postObj.queryParameters = this.as._getSearchParams(
+        params.queryParameters,
+        ''
+      );
     }
 
     postObj.referers = params.referers;
@@ -1046,24 +1105,32 @@ Index.prototype.addApiKey = function(acls, params, callback) {
 
   return this.as._jsonRequest({
     method: 'POST',
-    url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/keys',
+    url: `/1/indexes/${encodeURIComponent(this.indexName)}/keys`,
     body: postObj,
     hostType: 'write',
-    callback: callback
+    callback,
   });
 };
 
 /**
 * @deprecated use index.addApiKey()
 */
-Index.prototype.addUserKeyWithValidity = deprecate(function deprecatedAddUserKeyWithValidity(acls, params, callback) {
-  return this.addApiKey(acls, params, callback);
-}, deprecatedMessage('index.addUserKeyWithValidity()', 'index.addApiKey()'));
+Index.prototype.addUserKeyWithValidity = deprecate(
+  function deprecatedAddUserKeyWithValidity(acls, params, callback) {
+    return this.addApiKey(acls, params, callback);
+  },
+  deprecatedMessage('index.addUserKeyWithValidity()', 'index.addApiKey()')
+);
 
 /*
  @deprecated see index.updateApiKey
  */
-Index.prototype.updateUserKey = deprecate(function(key, acls, params, callback) {
+Index.prototype.updateUserKey = deprecate(function(
+  key,
+  acls,
+  params,
+  callback
+) {
   return this.updateApiKey(key, acls, params, callback);
 }, deprecatedMessage('index.updateUserKey()', 'index.updateApiKey()'));
 
@@ -1104,8 +1171,9 @@ Index.prototype.updateUserKey = deprecate(function(key, acls, params, callback) 
 * @see {@link https://www.algolia.com/doc/rest_api#UpdateIndexKey|Algolia REST API Documentation}
 */
 Index.prototype.updateApiKey = function(key, acls, params, callback) {
-  var isArray = require('isarray');
-  var usage = 'Usage: index.updateApiKey(key, arrayOfAcls[, params, callback])';
+  const isArray = require('isarray');
+  const usage =
+    'Usage: index.updateApiKey(key, arrayOfAcls[, params, callback])';
 
   if (!isArray(acls)) {
     throw new Error(usage);
@@ -1116,8 +1184,8 @@ Index.prototype.updateApiKey = function(key, acls, params, callback) {
     params = null;
   }
 
-  var putObj = {
-    acl: acls
+  const putObj = {
+    acl: acls,
   };
 
   if (params) {
@@ -1127,7 +1195,10 @@ Index.prototype.updateApiKey = function(key, acls, params, callback) {
     putObj.description = params.description;
 
     if (params.queryParameters) {
-      putObj.queryParameters = this.as._getSearchParams(params.queryParameters, '');
+      putObj.queryParameters = this.as._getSearchParams(
+        params.queryParameters,
+        ''
+      );
     }
 
     putObj.referers = params.referers;
@@ -1135,9 +1206,9 @@ Index.prototype.updateApiKey = function(key, acls, params, callback) {
 
   return this.as._jsonRequest({
     method: 'PUT',
-    url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/keys/' + key,
+    url: `/1/indexes/${encodeURIComponent(this.indexName)}/keys/${key}`,
     body: putObj,
     hostType: 'write',
-    callback: callback
+    callback,
   });
 };

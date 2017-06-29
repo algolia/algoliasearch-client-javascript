@@ -2,9 +2,9 @@
 
 /* eslint new-cap: 0 */
 
-var test = require('tape');
+const test = require('tape');
 
-var browser = require('bowser');
+const browser = require('bowser');
 
 // run jQuery test on all browsers but IE < 10
 // jQuery 2 does not support cross domain xhr with IE < 10
@@ -12,9 +12,9 @@ var browser = require('bowser');
 // http://jquery.com/download/#jquery-2-x
 // guess what there's even a plugin! http://cdnjs.com/libraries/jquery-ajaxtransport-xdomainrequest
 if (!browser.msie || parseFloat(browser.version) > 8) {
-  test('jQuery module success case', function(t) {
-    var fauxJax = require('faux-jax');
-    var parse = require('url-parse');
+  test('jQuery module success case', t => {
+    const fauxJax = require('faux-jax');
+    const parse = require('url-parse');
 
     if (fauxJax.support.xhr.cors) {
       t.plan(10);
@@ -27,41 +27,41 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
 
     t.ok(window.$.algolia, 'we exported an `algolia` property on jQuery');
 
-    var client = window.$.algolia.Client('jquery-success-applicationID', 'jquery-success-apiKey');
-    var index = client.initIndex('jquery-success-indexName');
+    const client = window.$.algolia.Client(
+      'jquery-success-applicationID',
+      'jquery-success-apiKey'
+    );
+    const index = client.initIndex('jquery-success-indexName');
 
     fauxJax.install();
 
-    index.search('jquery-success-promise').done(function searchDone(content) {
+    index.search('jquery-success-promise').done(content => {
       t.deepEqual(content, {
-        YAW: 'jquery-promise'
+        YAW: 'jquery-promise',
       });
     });
 
-    index.search('jquery-success-callback', function searchDone(err, content) {
+    index.search('jquery-success-callback', (err, content) => {
       t.error(err, 'No error while using the jQuery module');
       t.deepEqual(content, {
-        YAW: 'jquery-cb'
+        YAW: 'jquery-cb',
       });
     });
 
-    fauxJax.waitFor(2, function(err, requests) {
+    fauxJax.waitFor(2, (err, requests) => {
       t.error(err);
-      t.equal(
-        requests.length,
-        2,
-        'Two requests made'
-      );
+      t.equal(requests.length, 2, 'Two requests made');
 
-      var firstRequest = requests[0];
-      var secondRequest = requests[1];
-      var requestURL = parse(firstRequest.requestURL, true);
+      const firstRequest = requests[0];
+      const secondRequest = requests[1];
+      const requestURL = parse(firstRequest.requestURL, true);
 
       if (fauxJax.support.xhr.cors) {
         t.deepEqual(
-          firstRequest.requestHeaders, {
+          firstRequest.requestHeaders,
+          {
             'Content-Type': 'application/x-www-form-urlencoded',
-            Accept: 'application/json'
+            Accept: 'application/json',
           },
           'requestHeaders matches'
         );
@@ -80,10 +80,11 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
       );
 
       t.deepEqual(
-        requestURL.query, {
+        requestURL.query,
+        {
           'x-algolia-api-key': 'jquery-success-apiKey',
           'x-algolia-application-id': 'jquery-success-applicationID',
-          'x-algolia-agent': window.$.algolia.ua
+          'x-algolia-agent': window.$.algolia.ua,
         },
         'requestURL query matches'
       );
@@ -92,7 +93,7 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
         200,
         {},
         JSON.stringify({
-          YAW: 'jquery-promise'
+          YAW: 'jquery-promise',
         })
       );
 
@@ -100,7 +101,7 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
         200,
         {},
         JSON.stringify({
-          YAW: 'jquery-cb'
+          YAW: 'jquery-cb',
         })
       );
 
@@ -108,20 +109,23 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
     });
   });
 
-  test('jQuery module error case', function(t) {
+  test('jQuery module error case', t => {
     t.plan(4);
 
-    var fauxJax = require('faux-jax');
+    const fauxJax = require('faux-jax');
 
     // load jQuery Algolia Search module
     require('../../../src/browser/builds/algoliasearch.jquery');
 
-    var client = window.$.algolia.Client('jquery-error-applicationID', 'jquery-error-apiKey');
-    var index = client.initIndex('jquery-error-indexName');
+    const client = window.$.algolia.Client(
+      'jquery-error-applicationID',
+      'jquery-error-apiKey'
+    );
+    const index = client.initIndex('jquery-error-indexName');
 
     fauxJax.install();
 
-    index.search('jquery-error-promise').fail(function searchDone(err) {
+    index.search('jquery-error-promise').fail(err => {
       t.equal(
         err.message,
         'Nope promise jQuery',
@@ -129,7 +133,7 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
       );
     });
 
-    index.search('jquery-error-callback', function searchDone(err) {
+    index.search('jquery-error-callback', err => {
       t.equal(
         err.message,
         'Nope callback jQuery',
@@ -137,23 +141,19 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
       );
     });
 
-    fauxJax.waitFor(2, function(err, requests) {
+    fauxJax.waitFor(2, (err, requests) => {
       t.error(err);
-      t.equal(
-        requests.length,
-        2,
-        'Two requests made'
-      );
+      t.equal(requests.length, 2, 'Two requests made');
 
-      var firstRequest = requests[0];
-      var secondRequest = requests[1];
+      const firstRequest = requests[0];
+      const secondRequest = requests[1];
 
       firstRequest.respond(
         400,
         {},
         JSON.stringify({
           message: 'Nope promise jQuery',
-          status: 400
+          status: 400,
         })
       );
 
@@ -162,7 +162,7 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
         {},
         JSON.stringify({
           message: 'Nope callback jQuery',
-          status: 400
+          status: 400,
         })
       );
 
@@ -170,99 +170,110 @@ if (!browser.msie || parseFloat(browser.version) > 8) {
     });
   });
 
-  test('jQuery JSONP fallback', function(t) {
+  test('jQuery JSONP fallback', t => {
     t.plan(4);
 
-    var fauxJax = require('faux-jax');
-    var parse = require('url-parse');
+    const fauxJax = require('faux-jax');
+    const parse = require('url-parse');
 
-    var currentURL = parse(location.href);
+    const currentURL = parse(location.href);
 
     // load jQuery Algolia Search module
     require('../../../src/browser/builds/algoliasearch.jquery');
 
-    var client = window.$.algolia.Client(
+    const client = window.$.algolia.Client(
       'jquery-error-applicationID',
-      'jquery-error-apiKey', {
-        hosts: [
-          currentURL.host
-        ],
-        timeout: 5000
+      'jquery-error-apiKey',
+      {
+        hosts: [currentURL.host],
+        timeout: 5000,
       }
     );
-    var index = client.initIndex('simple-JSONP-response');
+    const index = client.initIndex('simple-JSONP-response');
 
     fauxJax.install();
 
-    index.search('jquery-first').done(function searchDone(content) {
+    index.search('jquery-first').done(content => {
       t.deepEqual(
-        content, {
-          query: 'jquery-first'
+        content,
+        {
+          query: 'jquery-first',
         },
         'Content matches'
       );
     });
 
-    index.search('jquery-second', function searchDone(err, content) {
-      t.error(
-        err,
-        'No error while using the callback interface'
-      );
+    index.search('jquery-second', (err, content) => {
+      t.error(err, 'No error while using the callback interface');
 
       t.deepEqual(
-        content, {
-          query: 'jquery-second'
+        content,
+        {
+          query: 'jquery-second',
         },
         'Content matches'
       );
     });
 
-    fauxJax.waitFor(2, function(err, requests) {
+    fauxJax.waitFor(2, (err, requests) => {
       t.error(err);
-      requests[0]
-        .respond(500, {}, JSON.stringify({message: 'Nope promise', status: 500}));
-      requests[1]
-        .respond(500, {}, JSON.stringify({message: 'Nope callback', status: 500}));
+      requests[0].respond(
+        500,
+        {},
+        JSON.stringify({ message: 'Nope promise', status: 500 })
+      );
+      requests[1].respond(
+        500,
+        {},
+        JSON.stringify({ message: 'Nope callback', status: 500 })
+      );
 
       fauxJax.restore();
     });
   });
 
-  test('jQuery module timeout case', function(t) {
+  test('jQuery module timeout case', t => {
     t.plan(3);
-    var requestTimeout = 1000;
+    const requestTimeout = 1000;
 
-    var fauxJax = require('faux-jax');
+    const fauxJax = require('faux-jax');
 
     // load jQuery Algolia Search module
     require('../../../src/browser/builds/algoliasearch.jquery');
 
-    var client = window.$.algolia.Client(
+    const client = window.$.algolia.Client(
       'jquery-error-applicationID',
-      'jquery-error-apiKey', {
-        timeout: requestTimeout
-      });
-    var index = client.initIndex('jquery-error-indexName');
+      'jquery-error-apiKey',
+      {
+        timeout: requestTimeout,
+      }
+    );
+    const index = client.initIndex('jquery-error-indexName');
 
     fauxJax.install();
 
-    index.search('jquery-timeout-promise').then(function searchDone(content) {
+    index.search('jquery-timeout-promise').then(content => {
       fauxJax.restore();
 
       t.deepEqual(
-        content, {
-          yaw: 'JQUERY! timeout'
+        content,
+        {
+          yaw: 'JQUERY! timeout',
         },
         'Content matches'
       );
     });
 
-    fauxJax.waitFor(2, function(err, requests) {
+    fauxJax.waitFor(2, (err, requests) => {
       t.error(err);
       t.equal(2, requests.length, 'Two requests made');
 
-      setTimeout(function() {
-        requests[1].respond(200, {}, JSON.stringify({yaw: 'JQUERY! timeout'}));
+      setTimeout(() => {
+        requests[1].respond(
+          200,
+          {},
+          JSON.stringify({ yaw: 'JQUERY! timeout' })
+        );
       }, requestTimeout / 2);
     });
   });

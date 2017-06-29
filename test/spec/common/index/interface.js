@@ -1,25 +1,25 @@
 'use strict';
 
-var test = require('tape');
+const test = require('tape');
 
 // this test will ensure we are implementing a particular API method
 // If you had a new method, it will first fail, you will have to write a test
 // for it
-test('AlgoliaSearch index API spec', function(t) {
+test('AlgoliaSearch index API spec', t => {
   t.plan(1);
 
-  var algoliasearch = require('../../../../');
-  var filter = require('lodash-compat/collection/filter');
-  var functions = require('lodash-compat/object/functions');
+  const algoliasearch = require('../../../../');
+  const filter = require('lodash-compat/collection/filter');
+  const functions = require('lodash-compat/object/functions');
 
-  var onlyPublicProperties = require('../../../utils/only-public-properties');
+  const onlyPublicProperties = require('../../../utils/only-public-properties');
 
-  var client = algoliasearch('test', 'methods');
-  var index = client.initIndex('himethods');
+  const client = algoliasearch('test', 'methods');
+  const index = client.initIndex('himethods');
 
-  var actualMethods = filter(functions(index), onlyPublicProperties).sort();
+  const actualMethods = filter(functions(index), onlyPublicProperties).sort();
 
-  var expectedMethods = [
+  const expectedMethods = [
     'addObject',
     'addObjects',
     'addApiKey',
@@ -66,8 +66,12 @@ test('AlgoliaSearch index API spec', function(t) {
     'ttAdapter',
     'updateApiKey',
     'updateUserKey',
-    'waitTask'
+    'waitTask',
   ].sort();
 
-  t.deepEqual(actualMethods, expectedMethods, 'We only implement what is tested');
+  t.deepEqual(
+    actualMethods,
+    expectedMethods,
+    'We only implement what is tested'
+  );
 });

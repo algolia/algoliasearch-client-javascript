@@ -1,22 +1,22 @@
 'use strict';
 
-var test = require('tape');
+const test = require('tape');
 
-test('dsn not used on indexing requests', function(t) {
+test('dsn not used on indexing requests', t => {
   t.plan(1);
 
-  var fauxJax = require('faux-jax');
-  var parse = require('url-parse');
+  const fauxJax = require('faux-jax');
+  const parse = require('url-parse');
 
-  var createFixture = require('../../../utils/create-fixture');
-  var fixture = createFixture();
-  var index = fixture.index;
+  const createFixture = require('../../../utils/create-fixture');
+  const fixture = createFixture();
+  const index = fixture.index;
 
-  fauxJax.install({gzip: true});
+  fauxJax.install({ gzip: true });
 
-  fauxJax.once('request', function(req) {
-    var requestHostname = parse(req.requestURL).hostname;
-    var dsnHostname = fixture.credentials.applicationID + '-dsn.algolia.net';
+  fauxJax.once('request', req => {
+    const requestHostname = parse(req.requestURL).hostname;
+    const dsnHostname = `${fixture.credentials.applicationID}-dsn.algolia.net`;
 
     t.notEqual(
       requestHostname,
@@ -29,6 +29,6 @@ test('dsn not used on indexing requests', function(t) {
   });
 
   index.addObject({
-    hello: 'world'
+    hello: 'world',
   });
 });

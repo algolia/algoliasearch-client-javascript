@@ -1,24 +1,24 @@
-var debug = require('debug')('algoliasearch:src/hostIndexState.js');
-var localStorageNamespace = 'algoliasearch-client-js';
+const debug = require('debug')('algoliasearch:src/hostIndexState.js');
+const localStorageNamespace = 'algoliasearch-client-js';
 
-var store;
-var moduleStore = {
+let store;
+const moduleStore = {
   state: {},
-  set: function(key, data) {
+  set(key, data) {
     this.state[key] = data;
     return this.state[key];
   },
-  get: function(key) {
+  get(key) {
     return this.state[key] || null;
-  }
+  },
 };
 
-var localStorageStore = {
-  set: function(key, data) {
+const localStorageStore = {
+  set(key, data) {
     moduleStore.set(key, data); // always replicate localStorageStore to moduleStore in case of failure
 
     try {
-      var namespace = JSON.parse(global.localStorage[localStorageNamespace]);
+      const namespace = JSON.parse(global.localStorage[localStorageNamespace]);
       namespace[key] = data;
       global.localStorage[localStorageNamespace] = JSON.stringify(namespace);
       return namespace[key];
@@ -26,13 +26,15 @@ var localStorageStore = {
       return localStorageFailure(key, e);
     }
   },
-  get: function(key) {
+  get(key) {
     try {
-      return JSON.parse(global.localStorage[localStorageNamespace])[key] || null;
+      return (
+        JSON.parse(global.localStorage[localStorageNamespace])[key] || null
+      );
     } catch (e) {
       return localStorageFailure(key, e);
     }
-  }
+  },
 };
 
 function localStorageFailure(key, e) {
@@ -47,7 +49,7 @@ store = supportsLocalStorage() ? localStorageStore : moduleStore;
 module.exports = {
   get: getOrSet,
   set: getOrSet,
-  supportsLocalStorage: supportsLocalStorage
+  supportsLocalStorage,
 };
 
 function getOrSet(key, data) {
@@ -60,8 +62,7 @@ function getOrSet(key, data) {
 
 function supportsLocalStorage() {
   try {
-    if ('localStorage' in global &&
-      global.localStorage !== null) {
+    if ('localStorage' in global && global.localStorage !== null) {
       if (!global.localStorage[localStorageNamespace]) {
         // actual creation of the namespace
         global.localStorage.setItem(localStorageNamespace, JSON.stringify({}));

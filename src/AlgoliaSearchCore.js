@@ -1,16 +1,19 @@
+/* eslint-disable prefer-rest-params, no-param-reassign, consistent-this */
+
 module.exports = AlgoliaSearchCore;
 
-var errors = require('./errors');
-var exitPromise = require('./exitPromise.js');
-var IndexCore = require('./IndexCore.js');
-var store = require('./store.js');
+const errors = require('./errors');
+const exitPromise = require('./exitPromise.js');
+const IndexCore = require('./IndexCore.js');
+const store = require('./store.js');
 
 // We will always put the API KEY in the JSON body in case of too long API KEY,
 // to avoid query string being too long and failing in various conditions (our server limit, browser limit,
 // proxies limit)
-var MAX_API_KEY_LENGTH = 500;
-var RESET_APP_DATA_TIMER =
-  process.env.RESET_APP_DATA_TIMER && parseInt(process.env.RESET_APP_DATA_TIMER, 10) ||
+const MAX_API_KEY_LENGTH = 500;
+const RESET_APP_DATA_TIMER =
+  (process.env.RESET_APP_DATA_TIMER &&
+    parseInt(process.env.RESET_APP_DATA_TIMER, 10)) ||
   60 * 2 * 1000; // after 2 minutes reset to first host
 
 /*
@@ -39,20 +42,22 @@ var RESET_APP_DATA_TIMER =
  *           If you provide them, you will less benefit from our HA implementation
  */
 function AlgoliaSearchCore(applicationID, apiKey, opts) {
-  var debug = require('debug')('algoliasearch');
+  const debug = require('debug')('algoliasearch');
 
-  var clone = require('./clone.js');
-  var isArray = require('isarray');
-  var map = require('./map.js');
+  const clone = require('./clone.js');
+  const isArray = require('isarray');
+  const map = require('./map.js');
 
-  var usage = 'Usage: algoliasearch(applicationID, apiKey, opts)';
+  const usage = 'Usage: algoliasearch(applicationID, apiKey, opts)';
 
   if (opts._allowEmptyCredentials !== true && !applicationID) {
-    throw new errors.AlgoliaSearchError('Please provide an application ID. ' + usage);
+    throw new errors.AlgoliaSearchError(
+      `Please provide an application ID. ${usage}`
+    );
   }
 
   if (opts._allowEmptyCredentials !== true && !apiKey) {
-    throw new errors.AlgoliaSearchError('Please provide an API key. ' + usage);
+    throw new errors.AlgoliaSearchError(`Please provide an API key. ${usage}`);
   }
 
   this.applicationID = applicationID;
@@ -60,43 +65,52 @@ function AlgoliaSearchCore(applicationID, apiKey, opts) {
 
   this.hosts = {
     read: [],
-    write: []
+    write: [],
   };
 
   opts = opts || {};
 
-  var protocol = opts.protocol || 'https:';
+  let protocol = opts.protocol || 'https:';
   this._timeouts = opts.timeouts || {
     connect: 1 * 1000, // 500ms connect is GPRS latency
     read: 2 * 1000,
-    write: 30 * 1000
+    write: 30 * 1000,
   };
 
   // backward compat, if opts.timeout is passed, we use it to configure all timeouts like before
   if (opts.timeout) {
-    this._timeouts.connect = this._timeouts.read = this._timeouts.write = opts.timeout;
+    this._timeouts.write = opts.timeout;
+    this._timeouts.read = opts.timeout;
+    this._timeouts.connect = opts.timeout;
   }
 
   // while we advocate for colon-at-the-end values: 'http:' for `opts.protocol`
   // we also accept `http` and `https`. It's a common error.
   if (!/:$/.test(protocol)) {
-    protocol = protocol + ':';
+    protocol = `${protocol}:`;
   }
 
   if (opts.protocol !== 'http:' && opts.protocol !== 'https:') {
-    throw new errors.AlgoliaSearchError('protocol must be `http:` or `https:` (was `' + opts.protocol + '`)');
+    throw new errors.AlgoliaSearchError(
+      `protocol must be \`http:\` or \`https:\` (was \`${opts.protocol}\`)`
+    );
   }
 
   this._checkAppIdData();
 
   if (!opts.hosts) {
-    var defaultHosts = map(this._shuffleResult, function(hostNumber) {
-      return applicationID + '-' + hostNumber + '.algolianet.com';
-    });
+    const defaultHosts = map(
+      this._shuffleResult,
+      hostNumber => `${applicationID}-${hostNumber}.algolianet.com`
+    );
 
     // no hosts given, compute defaults
-    this.hosts.read = [this.applicationID + '-dsn.algolia.net'].concat(defaultHosts);
-    this.hosts.write = [this.applicationID + '.algolia.net'].concat(defaultHosts);
+    this.hosts.read = [`${this.applicationID}-dsn.algolia.net`].concat(
+      defaultHosts
+    );
+    this.hosts.write = [`${this.applicationID}.algolia.net`].concat(
+      defaultHosts
+    );
   } else if (isArray(opts.hosts)) {
     // when passing custom hosts, we need to have a different host index if the number
     // of write/read hosts are different.
@@ -117,7 +131,8 @@ function AlgoliaSearchCore(applicationID, apiKey, opts) {
   this.cache = opts._cache || {};
 
   this._ua = opts._ua;
-  this._useCache = opts._useCache === undefined || opts._cache ? true : opts._useCache;
+  this._useCache =
+    opts._useCache === undefined || opts._cache ? true : opts._useCache;
   this._useFallback = opts.useFallback === undefined ? true : opts.useFallback;
 
   this._setTimeout = opts._setTimeout;
@@ -143,7 +158,8 @@ AlgoliaSearchCore.prototype.initIndex = function(indexName) {
 */
 AlgoliaSearchCore.prototype.setExtraHeader = function(name, value) {
   this.extraHeaders.push({
-    name: name.toLowerCase(), value: value
+    name: name.toLowerCase(),
+    value,
   });
 };
 
@@ -154,8 +170,8 @@ AlgoliaSearchCore.prototype.setExtraHeader = function(name, value) {
 * @param algoliaAgent the agent to add
 */
 AlgoliaSearchCore.prototype.addAlgoliaAgent = function(algoliaAgent) {
-  if (this._ua.indexOf(';' + algoliaAgent) === -1) {
-    this._ua += ';' + algoliaAgent;
+  if (this._ua.indexOf(`;${algoliaAgent}`) === -1) {
+    this._ua += `;${algoliaAgent}`;
   }
 };
 
@@ -165,22 +181,23 @@ AlgoliaSearchCore.prototype.addAlgoliaAgent = function(algoliaAgent) {
 AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
   this._checkAppIdData();
 
-  var requestDebug = require('debug')('algoliasearch:' + initialOpts.url);
+  const requestDebug = require('debug')(`algoliasearch:${initialOpts.url}`);
 
-  var body;
-  var additionalUA = initialOpts.additionalUA || '';
-  var cache = initialOpts.cache;
-  var client = this;
-  var tries = 0;
-  var usingFallback = false;
-  var hasFallback = client._useFallback && client._request.fallback && initialOpts.fallback;
-  var headers;
+  let body;
+  const additionalUA = initialOpts.additionalUA || '';
+  const cache = initialOpts.cache;
+  const client = this;
+  let tries = 0;
+  let usingFallback = false;
+  const hasFallback =
+    client._useFallback && client._request.fallback && initialOpts.fallback;
+  let headers;
 
   if (
     this.apiKey.length > MAX_API_KEY_LENGTH &&
     initialOpts.body !== undefined &&
     (initialOpts.body.params !== undefined || // index.search()
-    initialOpts.body.requests !== undefined) // client.search()
+      initialOpts.body.requests !== undefined) // client.search()
   ) {
     initialOpts.body.apiKey = this.apiKey;
     headers = this._computeRequestHeaders(additionalUA, false);
@@ -193,13 +210,13 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
   }
 
   requestDebug('request start');
-  var debugData = [];
+  const debugData = [];
 
   function doRequest(requester, reqOpts) {
     client._checkAppIdData();
 
-    var startTime = new Date();
-    var cacheID;
+    const startTime = new Date();
+    let cacheID;
 
     if (client._useCache) {
       cacheID = initialOpts.url;
@@ -208,7 +225,7 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
     // as we sometime use POST requests to pass parameters (like query='aa'),
     // the cacheID must also include the body to be different between calls
     if (client._useCache && body) {
-      cacheID += '_body_' + reqOpts.body;
+      cacheID += `_body_${reqOpts.body}`;
     }
 
     // handle cache existence
@@ -222,11 +239,14 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
       if (!hasFallback || usingFallback) {
         requestDebug('could not get any response');
         // then stop
-        return client._promise.reject(new errors.AlgoliaSearchError(
-          'Cannot connect to the AlgoliaSearch API.' +
-          ' Send an email to support@algolia.com to report and resolve the issue.' +
-          ' Application id was: ' + client.applicationID, {debugData: debugData}
-        ));
+        return client._promise.reject(
+          new errors.AlgoliaSearchError(
+            `${'Cannot connect to the AlgoliaSearch API.' +
+              ' Send an email to support@algolia.com to report and resolve the issue.' +
+              ' Application id was: '}${client.applicationID}`,
+            { debugData }
+          )
+        );
       }
 
       requestDebug('switching to fallback');
@@ -250,20 +270,25 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
       return doRequest(client._request.fallback, reqOpts);
     }
 
-    var currentHost = client._getHostByType(initialOpts.hostType);
+    const currentHost = client._getHostByType(initialOpts.hostType);
 
-    var url = currentHost + reqOpts.url;
-    var options = {
+    const url = currentHost + reqOpts.url;
+    const options = {
       body: reqOpts.body,
       jsonBody: reqOpts.jsonBody,
       method: reqOpts.method,
-      headers: headers,
+      headers,
       timeouts: reqOpts.timeouts,
-      debug: requestDebug
+      debug: requestDebug,
     };
 
-    requestDebug('method: %s, url: %s, headers: %j, timeouts: %d',
-      options.method, url, options.headers, options.timeouts);
+    requestDebug(
+      'method: %s, url: %s, headers: %j, timeouts: %d',
+      options.method,
+      url,
+      options.headers,
+      options.timeouts
+    );
 
     if (requester === client._request.fallback) {
       requestDebug('using fallback');
@@ -282,36 +307,42 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
       // So we check if there's a `message` along `status` and it means it's an error
       //
       // That's the only case where we have a response.status that's not the http statusCode
-      var status = httpResponse && httpResponse.body && httpResponse.body.message && httpResponse.body.status ||
-
+      const status =
+        (httpResponse &&
+          httpResponse.body &&
+          httpResponse.body.message &&
+          httpResponse.body.status) ||
         // this is important to check the request statusCode AFTER the body eventual
         // statusCode because some implementations (jQuery XDomainRequest transport) may
         // send statusCode 200 while we had an error
         httpResponse.statusCode ||
-
         // When in browser mode, using XDR or JSONP
         // we default to success when no error (no response.status && response.message)
         // If there was a JSON.parse() error then body is null and it fails
-        httpResponse && httpResponse.body && 200;
+        (httpResponse && httpResponse.body && 200);
 
-      requestDebug('received response: statusCode: %s, computed statusCode: %d, headers: %j',
-        httpResponse.statusCode, status, httpResponse.headers);
+      requestDebug(
+        'received response: statusCode: %s, computed statusCode: %d, headers: %j',
+        httpResponse.statusCode,
+        status,
+        httpResponse.headers
+      );
 
-      var httpResponseOk = Math.floor(status / 100) === 2;
+      const httpResponseOk = Math.floor(status / 100) === 2;
 
-      var endTime = new Date();
+      const endTime = new Date();
       debugData.push({
-        currentHost: currentHost,
+        currentHost,
         headers: removeCredentials(headers),
         content: body || null,
         contentLength: body !== undefined ? body.length : null,
         method: reqOpts.method,
         timeouts: reqOpts.timeouts,
         url: reqOpts.url,
-        startTime: startTime,
-        endTime: endTime,
+        startTime,
+        endTime,
         duration: endTime - startTime,
-        statusCode: status
+        statusCode: status,
       });
 
       if (httpResponseOk) {
@@ -322,7 +353,7 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
         return httpResponse.body;
       }
 
-      var shouldRetry = Math.floor(status / 100) !== 4;
+      const shouldRetry = Math.floor(status / 100) !== 4;
 
       if (shouldRetry) {
         tries += 1;
@@ -332,8 +363,9 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
       requestDebug('unrecoverable error');
 
       // no success and no retry => fail
-      var unrecoverableError = new errors.AlgoliaSearchError(
-        httpResponse.body && httpResponse.body.message, {debugData: debugData, statusCode: status}
+      const unrecoverableError = new errors.AlgoliaSearchError(
+        httpResponse.body && httpResponse.body.message,
+        { debugData, statusCode: status }
       );
 
       return client._promise.reject(unrecoverableError);
@@ -352,18 +384,18 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
       //    - uncaught exception occurs (TypeError)
       requestDebug('error: %s, stack: %s', err.message, err.stack);
 
-      var endTime = new Date();
+      const endTime = new Date();
       debugData.push({
-        currentHost: currentHost,
+        currentHost,
         headers: removeCredentials(headers),
         content: body || null,
         contentLength: body !== undefined ? body.length : null,
         method: reqOpts.method,
         timeouts: reqOpts.timeouts,
         url: reqOpts.url,
-        startTime: startTime,
-        endTime: endTime,
-        duration: endTime - startTime
+        startTime,
+        endTime,
+        duration: endTime - startTime,
       });
 
       if (!(err instanceof errors.AlgoliaSearchError)) {
@@ -377,13 +409,12 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
         // we did not generate this error,
         // it comes from a throw in some other piece of code
         err instanceof errors.Unknown ||
-
         // server sent unparsable JSON
         err instanceof errors.UnparsableJSON ||
-
         // max tries and already using fallback or no fallback
-        tries >= client.hosts[initialOpts.hostType].length &&
-        (usingFallback || !hasFallback)) {
+        (tries >= client.hosts[initialOpts.hostType].length &&
+          (usingFallback || !hasFallback))
+      ) {
         // stop request implementation for this command
         err.debugData = debugData;
         return client._promise.reject(err);
@@ -412,31 +443,33 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
     }
   }
 
-  var promise = doRequest(
-    client._request, {
-      url: initialOpts.url,
-      method: initialOpts.method,
-      body: body,
-      jsonBody: initialOpts.body,
-      timeouts: client._getTimeoutsForRequest(initialOpts.hostType)
-    }
-  );
+  const promise = doRequest(client._request, {
+    url: initialOpts.url,
+    method: initialOpts.method,
+    body,
+    jsonBody: initialOpts.body,
+    timeouts: client._getTimeoutsForRequest(initialOpts.hostType),
+  });
 
   // either we have a callback
   // either we are using promises
   if (typeof initialOpts.callback === 'function') {
-    promise.then(function okCb(content) {
-      exitPromise(function() {
-        initialOpts.callback(null, content);
-      }, client._setTimeout || setTimeout);
-    }, function nookCb(err) {
-      exitPromise(function() {
-        initialOpts.callback(err);
-      }, client._setTimeout || setTimeout);
-    });
+    promise.then(
+      content => {
+        exitPromise(() => {
+          initialOpts.callback(null, content);
+        }, client._setTimeout || setTimeout);
+      },
+      err => {
+        exitPromise(() => {
+          initialOpts.callback(err);
+        }, client._setTimeout || setTimeout);
+      }
+    );
   } else {
     return promise;
   }
+  return undefined;
 };
 
 /*
@@ -449,25 +482,30 @@ AlgoliaSearchCore.prototype._getSearchParams = function(args, params) {
   if (args === undefined || args === null) {
     return params;
   }
-  for (var key in args) {
+  for (const key in args) {
     if (key !== null && args[key] !== undefined && args.hasOwnProperty(key)) {
       params += params === '' ? '' : '&';
-      params += key + '=' + encodeURIComponent(Object.prototype.toString.call(args[key]) === '[object Array]' ? safeJSONStringify(args[key]) : args[key]);
+      params += `${key}=${encodeURIComponent(
+        Object.prototype.toString.call(args[key]) === '[object Array]'
+          ? safeJSONStringify(args[key])
+          : args[key]
+      )}`;
     }
   }
   return params;
 };
 
-AlgoliaSearchCore.prototype._computeRequestHeaders = function(additionalUA, withAPIKey) {
-  var forEach = require('foreach');
+AlgoliaSearchCore.prototype._computeRequestHeaders = function(
+  additionalUA,
+  withAPIKey
+) {
+  const forEach = require('foreach');
 
-  var ua = additionalUA ?
-    this._ua + ';' + additionalUA :
-    this._ua;
+  const ua = additionalUA ? `${this._ua};${additionalUA}` : this._ua;
 
-  var requestHeaders = {
+  const requestHeaders = {
     'x-algolia-agent': ua,
-    'x-algolia-application-id': this.applicationID
+    'x-algolia-application-id': this.applicationID,
   };
 
   // browser will inline headers in the url, node.js will use http headers
@@ -487,7 +525,7 @@ AlgoliaSearchCore.prototype._computeRequestHeaders = function(additionalUA, with
   }
 
   if (this.extraHeaders) {
-    forEach(this.extraHeaders, function addToRequestHeaders(header) {
+    forEach(this.extraHeaders, header => {
       requestHeaders[header.name] = header.value;
     });
   }
@@ -505,10 +543,10 @@ AlgoliaSearchCore.prototype._computeRequestHeaders = function(additionalUA, with
  * @return {Promise|undefined} Returns a promise if no callback given
  */
 AlgoliaSearchCore.prototype.search = function(queries, opts, callback) {
-  var isArray = require('isarray');
-  var map = require('./map.js');
+  const isArray = require('isarray');
+  const map = require('./map.js');
 
-  var usage = 'Usage: client.search(arrayOfQueries[, callback])';
+  const usage = 'Usage: client.search(arrayOfQueries[, callback])';
 
   if (!isArray(queries)) {
     throw new Error(usage);
@@ -521,54 +559,54 @@ AlgoliaSearchCore.prototype.search = function(queries, opts, callback) {
     opts = {};
   }
 
-  var client = this;
+  const client = this;
 
-  var postObj = {
-    requests: map(queries, function prepareRequest(query) {
-      var params = '';
+  const postObj = {
+    requests: map(queries, query => {
+      let params = '';
 
       // allow query.query
       // so we are mimicing the index.search(query, params) method
       // {indexName:, query:, params:}
       if (query.query !== undefined) {
-        params += 'query=' + encodeURIComponent(query.query);
+        params += `query=${encodeURIComponent(query.query)}`;
       }
 
       return {
         indexName: query.indexName,
-        params: client._getSearchParams(query.params, params)
+        params: client._getSearchParams(query.params, params),
       };
-    })
+    }),
   };
 
-  var JSONPParams = map(postObj.requests, function prepareJSONPParams(request, requestId) {
-    return requestId + '=' +
-      encodeURIComponent(
-        '/1/indexes/' + encodeURIComponent(request.indexName) + '?' +
-        request.params
-      );
-  }).join('&');
+  const JSONPParams = map(
+    postObj.requests,
+    (request, requestId) =>
+      `${requestId}=${encodeURIComponent(
+        `/1/indexes/${encodeURIComponent(request.indexName)}?${request.params}`
+      )}`
+  ).join('&');
 
-  var url = '/1/indexes/*/queries';
+  let url = '/1/indexes/*/queries';
 
   if (opts.strategy !== undefined) {
-    url += '?strategy=' + opts.strategy;
+    url += `?strategy=${opts.strategy}`;
   }
 
   return this._jsonRequest({
     cache: this.cache,
     method: 'POST',
-    url: url,
+    url,
     body: postObj,
     hostType: 'read',
     fallback: {
       method: 'GET',
       url: '/1/indexes/*',
       body: {
-        params: JSONPParams
-      }
+        params: JSONPParams,
+      },
     },
-    callback: callback
+    callback,
   });
 };
 
@@ -578,14 +616,14 @@ AlgoliaSearchCore.prototype.search = function(queries, opts, callback) {
  */
 AlgoliaSearchCore.prototype.setSecurityTags = function(tags) {
   if (Object.prototype.toString.call(tags) === '[object Array]') {
-    var strTags = [];
-    for (var i = 0; i < tags.length; ++i) {
+    const strTags = [];
+    for (let i = 0; i < tags.length; ++i) {
       if (Object.prototype.toString.call(tags[i]) === '[object Array]') {
-        var oredTags = [];
-        for (var j = 0; j < tags[i].length; ++j) {
+        const oredTags = [];
+        for (let j = 0; j < tags[i].length; ++j) {
           oredTags.push(tags[i][j]);
         }
-        strTags.push('(' + oredTags.join(',') + ')');
+        strTags.push(`(${oredTags.join(',')})`);
       } else {
         strTags.push(tags[i]);
       }
@@ -619,7 +657,9 @@ AlgoliaSearchCore.prototype.clearCache = function() {
 */
 AlgoliaSearchCore.prototype.setRequestTimeout = function(milliseconds) {
   if (milliseconds) {
-    this._timeouts.connect = this._timeouts.read = this._timeouts.write = milliseconds;
+    this._timeouts.connect = milliseconds;
+    this._timeouts.read = milliseconds;
+    this._timeouts.write = milliseconds;
   }
 };
 
@@ -640,20 +680,20 @@ AlgoliaSearchCore.prototype.getTimeouts = function() {
 };
 
 AlgoliaSearchCore.prototype._getAppIdData = function() {
-  var data = store.get(this.applicationID);
+  const data = store.get(this.applicationID);
   if (data !== null) this._cacheAppIdData(data);
   return data;
 };
 
 AlgoliaSearchCore.prototype._setAppIdData = function(data) {
-  data.lastChange = (new Date()).getTime();
+  data.lastChange = new Date().getTime();
   this._cacheAppIdData(data);
   return store.set(this.applicationID, data);
 };
 
 AlgoliaSearchCore.prototype._checkAppIdData = function() {
-  var data = this._getAppIdData();
-  var now = (new Date()).getTime();
+  const data = this._getAppIdData();
+  const now = new Date().getTime();
   if (data === null || now - data.lastChange > RESET_APP_DATA_TIMER) {
     return this._resetInitialAppIdData(data);
   }
@@ -662,8 +702,8 @@ AlgoliaSearchCore.prototype._checkAppIdData = function() {
 };
 
 AlgoliaSearchCore.prototype._resetInitialAppIdData = function(data) {
-  var newData = data || {};
-  newData.hostIndexes = {read: 0, write: 0};
+  const newData = data || {};
+  newData.hostIndexes = { read: 0, write: 0 };
   newData.timeoutMultiplier = 1;
   newData.shuffleResult = newData.shuffleResult || shuffle([1, 2, 3]);
   return this._setAppIdData(newData);
@@ -676,9 +716,9 @@ AlgoliaSearchCore.prototype._cacheAppIdData = function(data) {
 };
 
 AlgoliaSearchCore.prototype._partialAppIdDataUpdate = function(newData) {
-  var foreach = require('foreach');
-  var currentData = this._getAppIdData();
-  foreach(newData, function(value, key) {
+  const foreach = require('foreach');
+  const currentData = this._getAppIdData();
+  foreach(newData, (value, key) => {
     currentData[key] = value;
   });
 
@@ -697,35 +737,39 @@ AlgoliaSearchCore.prototype._getHostIndexByType = function(hostType) {
   return this._hostIndexes[hostType];
 };
 
-AlgoliaSearchCore.prototype._setHostIndexByType = function(hostIndex, hostType) {
-  var clone = require('./clone');
-  var newHostIndexes = clone(this._hostIndexes);
+AlgoliaSearchCore.prototype._setHostIndexByType = function(
+  hostIndex,
+  hostType
+) {
+  const clone = require('./clone');
+  const newHostIndexes = clone(this._hostIndexes);
   newHostIndexes[hostType] = hostIndex;
-  this._partialAppIdDataUpdate({hostIndexes: newHostIndexes});
+  this._partialAppIdDataUpdate({ hostIndexes: newHostIndexes });
   return hostIndex;
 };
 
 AlgoliaSearchCore.prototype._incrementHostIndex = function(hostType) {
   return this._setHostIndexByType(
-    (this._getHostIndexByType(hostType) + 1) % this.hosts[hostType].length, hostType
+    (this._getHostIndexByType(hostType) + 1) % this.hosts[hostType].length,
+    hostType
   );
 };
 
 AlgoliaSearchCore.prototype._incrementTimeoutMultipler = function() {
-  var timeoutMultiplier = Math.max(this._timeoutMultiplier + 1, 4);
-  return this._partialAppIdDataUpdate({timeoutMultiplier: timeoutMultiplier});
+  const timeoutMultiplier = Math.max(this._timeoutMultiplier + 1, 4);
+  return this._partialAppIdDataUpdate({ timeoutMultiplier });
 };
 
 AlgoliaSearchCore.prototype._getTimeoutsForRequest = function(hostType) {
   return {
     connect: this._timeouts.connect * this._timeoutMultiplier,
-    complete: this._timeouts[hostType] * this._timeoutMultiplier
+    complete: this._timeouts[hostType] * this._timeoutMultiplier,
   };
 };
 
 function prepareHost(protocol) {
   return function prepare(host) {
-    return protocol + '//' + host.toLowerCase();
+    return `${protocol}//${host.toLowerCase()}`;
   };
 }
 
@@ -743,18 +787,18 @@ function safeJSONStringify(obj) {
     return JSON.stringify(obj);
   }
 
-  var toJSON = Array.prototype.toJSON;
+  const toJSON = Array.prototype.toJSON;
   delete Array.prototype.toJSON;
-  var out = JSON.stringify(obj);
+  const out = JSON.stringify(obj);
   Array.prototype.toJSON = toJSON;
 
   return out;
 }
 
 function shuffle(array) {
-  var currentIndex = array.length;
-  var temporaryValue;
-  var randomIndex;
+  let currentIndex = array.length;
+  let temporaryValue;
+  let randomIndex;
 
   // While there remain elements to shuffle...
   while (currentIndex !== 0) {
@@ -772,13 +816,16 @@ function shuffle(array) {
 }
 
 function removeCredentials(headers) {
-  var newHeaders = {};
+  const newHeaders = {};
 
-  for (var headerName in headers) {
+  for (const headerName in headers) {
     if (Object.prototype.hasOwnProperty.call(headers, headerName)) {
-      var value;
+      let value;
 
-      if (headerName === 'x-algolia-api-key' || headerName === 'x-algolia-application-id') {
+      if (
+        headerName === 'x-algolia-api-key' ||
+        headerName === 'x-algolia-application-id'
+      ) {
         value = '**hidden for security purposes**';
       } else {
         value = headers[headerName];

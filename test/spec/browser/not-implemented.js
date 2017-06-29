@@ -1,27 +1,31 @@
 'use strict';
 
-var test = require('tape');
+const test = require('tape');
 
-test('not implemented methods', function(t) {
-  var bind = require('lodash-compat/function/bind');
-  var forEach = require('lodash-compat/collection/forEach');
+test('not implemented methods', t => {
+  const bind = require('lodash-compat/function/bind');
+  const forEach = require('lodash-compat/collection/forEach');
 
-  var clientMethods = [
+  const clientMethods = [
     'destroy',
     'disableRateLimitForward',
     'disableSecuredAPIKey',
     'enableRateLimitForward',
-    'useSecuredAPIKey'
+    'useSecuredAPIKey',
   ];
 
   t.plan(clientMethods.length);
 
-  var createFixture = require('../../utils/create-fixture');
-  var fixture = createFixture();
-  var client = fixture.client;
+  const createFixture = require('../../utils/create-fixture');
+  const fixture = createFixture();
+  const client = fixture.client;
 
-  forEach(clientMethods, function(methodName) {
-    var toTest = bind(client[methodName], client);
-    t.throws(toTest, Error, 'client.' + methodName + '() throws in unsupported environment');
+  forEach(clientMethods, methodName => {
+    const toTest = bind(client[methodName], client);
+    t.throws(
+      toTest,
+      Error,
+      `client.${methodName}() throws in unsupported environment`
+    );
   });
 });

@@ -4,11 +4,10 @@
 
 module.exports = IndexBrowser;
 
-var inherits = require('inherits');
-var EventEmitter = require('events').EventEmitter;
+const inherits = require('inherits');
+const EventEmitter = require('events').EventEmitter;
 
-function IndexBrowser() {
-}
+function IndexBrowser() {}
 
 inherits(IndexBrowser, EventEmitter);
 

@@ -1,24 +1,27 @@
 'use strict';
 
-var test = require('tape');
+const test = require('tape');
 
 // this test will ensure we are implementing a particular API method
 // If you had a new method, it will first fail, you will have to write a test
 // for it
-test('AlgoliaSearch client API spec', function(t) {
+test('AlgoliaSearch client API spec', t => {
   t.plan(1);
 
-  var filter = require('lodash-compat/collection/filter');
-  var functions = require('lodash-compat/object/functions');
+  const filter = require('lodash-compat/collection/filter');
+  const functions = require('lodash-compat/object/functions');
 
-  var algoliasearch = require('../../../../');
-  var onlyPublicProperties = require('../../../utils/only-public-properties');
+  const algoliasearch = require('../../../../');
+  const onlyPublicProperties = require('../../../utils/only-public-properties');
 
-  var client = algoliasearch('test', 'properties');
+  const client = algoliasearch('test', 'properties');
 
-  var actualProperties = filter(functions(client), onlyPublicProperties).sort();
+  const actualProperties = filter(
+    functions(client),
+    onlyPublicProperties
+  ).sort();
 
-  var expectedProperties = [
+  let expectedProperties = [
     'addAlgoliaAgent',
     'addQueryInBatch',
     'addApiKey',
@@ -48,7 +51,7 @@ test('AlgoliaSearch client API spec', function(t) {
     'setSecurityTags',
     'setTimeouts',
     'setUserToken',
-    'startQueriesBatch'
+    'startQueriesBatch',
   ];
 
   // Node.js only methods, not added conditionnaly because
@@ -60,10 +63,14 @@ test('AlgoliaSearch client API spec', function(t) {
     'disableSecuredAPIKey',
     'enableRateLimitForward',
     'useSecuredAPIKey',
-    'generateSecuredApiKey'
+    'generateSecuredApiKey',
   ]);
 
   expectedProperties = expectedProperties.sort();
 
-  t.deepEqual(actualProperties, expectedProperties, 'We only implement what is tested');
+  t.deepEqual(
+    actualProperties,
+    expectedProperties,
+    'We only implement what is tested'
+  );
 });

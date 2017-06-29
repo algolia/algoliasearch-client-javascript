@@ -1,61 +1,45 @@
 'use strict';
 
-var test = require('tape');
+const test = require('tape');
 
-test('index.waitTask(taskID) failure', function(t) {
+test('index.waitTask(taskID) failure', t => {
   t.plan(10);
 
-  var bind = require('lodash-compat/function/bind');
+  const bind = require('lodash-compat/function/bind');
 
-  var fauxJax = require('faux-jax');
-  var sinon = require('sinon');
+  const fauxJax = require('faux-jax');
+  const sinon = require('sinon');
 
-  var createFixture = require('../../../../utils/create-fixture');
-  var fixture = createFixture();
+  const createFixture = require('../../../../utils/create-fixture');
+  const fixture = createFixture();
 
-  var index = fixture.index;
-  var cbSpy = sinon.spy(function(err) {
-    t.ok(
-      cbSpy.calledOnce,
-      'Callback called'
-    );
+  const index = fixture.index;
+  var cbSpy = sinon.spy(err => {
+    t.ok(cbSpy.calledOnce, 'Callback called');
 
-    t.equal(
-      err.message,
-      'Task not found (callback)'
-    );
+    t.equal(err.message, 'Task not found (callback)');
   });
 
-  var promiseSpy = sinon.spy(function(err) {
-    t.ok(
-      promiseSpy.calledOnce,
-      'Promise resolved'
-    );
+  var promiseSpy = sinon.spy(err => {
+    t.ok(promiseSpy.calledOnce, 'Promise resolved');
 
-    t.equal(
-      err.message,
-      'Task not found (promise)'
-    );
+    t.equal(err.message, 'Task not found (promise)');
   });
 
-  fauxJax.install({gzip: true});
+  fauxJax.install({ gzip: true });
 
   index.waitTask(28000, cbSpy);
   index.waitTask(27000).then(bind(t.fail, t), promiseSpy);
 
-  fauxJax.waitFor(2, function(err, requests) {
+  fauxJax.waitFor(2, (err, requests) => {
     t.error(err);
-    t.equal(
-      requests.length,
-      2,
-      'Two requests done'
-    );
+    t.equal(requests.length, 2, 'Two requests done');
 
     requests[0].respond(
       200,
       {},
       JSON.stringify({
-        status: 'notPublished'
+        status: 'notPublished',
       })
     );
 
@@ -63,7 +47,7 @@ test('index.waitTask(taskID) failure', function(t) {
       200,
       {},
       JSON.stringify({
-        status: 'notPublished'
+        status: 'notPublished',
       })
     );
 
@@ -75,11 +59,7 @@ test('index.waitTask(taskID) failure', function(t) {
     fauxJax.restore();
 
     // after 100, waitTask retried
-    t.equal(
-      requests.length,
-      2,
-      'Two more requests done'
-    );
+    t.equal(requests.length, 2, 'Two more requests done');
 
     t.notOk(
       cbSpy.calledOnce,
@@ -96,7 +76,7 @@ test('index.waitTask(taskID) failure', function(t) {
       {},
       JSON.stringify({
         message: 'Task not found (callback)',
-        status: 404
+        status: 404,
       })
     );
 
@@ -105,7 +85,7 @@ test('index.waitTask(taskID) failure', function(t) {
       {},
       JSON.stringify({
         message: 'Task not found (promise)',
-        status: 404
+        status: 404,
       })
     );
   }

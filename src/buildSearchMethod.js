@@ -1,6 +1,7 @@
+/* eslint-disable no-param-reassign */
 module.exports = buildSearchMethod;
 
-var errors = require('./errors.js');
+const errors = require('./errors.js');
 
 /**
  * Creates a search method to be used in clients
@@ -18,11 +19,15 @@ function buildSearchMethod(queryParam, url) {
    */
   return function search(query, args, callback) {
     // warn V2 users on how to search
-    if (typeof query === 'function' && typeof args === 'object' ||
-      typeof callback === 'object') {
+    if (
+      (typeof query === 'function' && typeof args === 'object') ||
+      typeof callback === 'object'
+    ) {
       // .search(query, params, cb)
       // .search(cb, params)
-      throw new errors.AlgoliaSearchError('index.search usage is index.search(query, params, cb)');
+      throw new errors.AlgoliaSearchError(
+        'index.search usage is index.search(query, params, cb)'
+      );
     }
 
     // Normalizing the function signature
@@ -41,17 +46,18 @@ function buildSearchMethod(queryParam, url) {
     if (typeof query === 'object' && query !== null) {
       args = query;
       query = undefined;
-    } else if (query === undefined || query === null) { // .search(undefined/null)
+    } else if (query === undefined || query === null) {
+      // .search(undefined/null)
       query = '';
     }
 
-    var params = '';
+    let params = '';
 
     if (query !== undefined) {
-      params += queryParam + '=' + encodeURIComponent(query);
+      params += `${queryParam}=${encodeURIComponent(query)}`;
     }
 
-    var additionalUA;
+    let additionalUA;
     if (args !== undefined) {
       if (args.additionalUA) {
         additionalUA = args.additionalUA;
@@ -60,7 +66,6 @@ function buildSearchMethod(queryParam, url) {
       // `_getSearchParams` will augment params, do not be fooled by the = versus += from previous if
       params = this.as._getSearchParams(args, params);
     }
-
 
     return this._search(params, url, callback, additionalUA);
   };

@@ -1,35 +1,43 @@
 'use strict';
 
-var test = require('tape');
+const test = require('tape');
 
 if (process.browser) {
-  test('Cached results are cloned', function(t) {
+  test('Cached results are cloned', t => {
     t.plan(3);
 
-    var fauxJax = require('faux-jax');
+    const fauxJax = require('faux-jax');
 
-    var createFixture = require('../../../utils/create-fixture');
-    var fixture = createFixture();
-    var index = fixture.index;
+    const createFixture = require('../../../utils/create-fixture');
+    const fixture = createFixture();
+    const index = fixture.index;
 
-    fauxJax.install({gzip: true});
+    fauxJax.install({ gzip: true });
 
-    fauxJax.once('request', function(req) {
+    fauxJax.once('request', req => {
       req.respond(200, {}, '{"ok": "then"}');
       fauxJax.restore();
     });
 
-    index.search('something', function(_, firstContent) {
+    index.search('something', (_, firstContent) => {
       firstContent.AHAH = true;
-      index.search('something', function(__, secondContent) {
-        t.deepEqual(firstContent, {
-          ok: 'then',
-          AHAH: true
-        }, 'Content matches for first search');
+      index.search('something', (__, secondContent) => {
+        t.deepEqual(
+          firstContent,
+          {
+            ok: 'then',
+            AHAH: true,
+          },
+          'Content matches for first search'
+        );
 
-        t.deepEqual(secondContent, {
-          ok: 'then'
-        }, 'Content matches for second search');
+        t.deepEqual(
+          secondContent,
+          {
+            ok: 'then',
+          },
+          'Content matches for second search'
+        );
 
         t.notEqual(
           firstContent,

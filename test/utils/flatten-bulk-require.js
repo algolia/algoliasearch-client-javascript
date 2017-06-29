@@ -1,17 +1,13 @@
 'use strict';
 
-var reduce = require('lodash-compat/collection/reduce');
+const reduce = require('lodash-compat/collection/reduce');
 
 module.exports = flattenBulkRequire;
 
 // will flatten a call to bulk-require to only get
 // the test cases object in an array
 function flattenBulkRequire(bulk) {
-  return reduce(
-    bulk,
-    flatten,
-    []
-  );
+  return reduce(bulk, flatten, []);
 }
 
 function flatten(flattened, testCase) {

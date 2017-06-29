@@ -1,17 +1,19 @@
+/* eslint-disable prefer-rest-params, no-param-reassign */
+
 'use strict';
 
-var global = require('global');
-var Promise = global.Promise || require('es6-promise').Promise;
+const global = require('global');
+const Promise = global.Promise || require('es6-promise').Promise;
 
 // This is the standalone browser build entry point
 // Browser implementation of the Algolia Search JavaScript client,
 // using XMLHttpRequest, XDomainRequest and JSONP as fallback
 module.exports = function createAlgoliasearch(AlgoliaSearch, uaSuffix) {
-  var inherits = require('inherits');
-  var errors = require('../errors');
-  var inlineHeaders = require('./inline-headers');
-  var jsonpRequest = require('./jsonp-request');
-  var places = require('../places.js');
+  const inherits = require('inherits');
+  const errors = require('../errors');
+  const inlineHeaders = require('./inline-headers');
+  const jsonpRequest = require('./jsonp-request');
+  const places = require('../places.js');
   uaSuffix = uaSuffix || '';
 
   if (process.env.NODE_ENV === 'debug') {
@@ -19,9 +21,9 @@ module.exports = function createAlgoliasearch(AlgoliaSearch, uaSuffix) {
   }
 
   function algoliasearch(applicationID, apiKey, opts) {
-    var cloneDeep = require('../clone.js');
+    const cloneDeep = require('../clone.js');
 
-    var getDocumentProtocol = require('./get-document-protocol');
+    const getDocumentProtocol = require('./get-document-protocol');
 
     opts = cloneDeep(opts || {});
 
@@ -35,19 +37,19 @@ module.exports = function createAlgoliasearch(AlgoliaSearch, uaSuffix) {
   }
 
   algoliasearch.version = require('../version.js');
-  algoliasearch.ua = 'Algolia for vanilla JavaScript ' + uaSuffix + algoliasearch.version;
+  algoliasearch.ua = `Algolia for vanilla JavaScript ${uaSuffix}${algoliasearch.version}`;
   algoliasearch.initPlaces = places(algoliasearch);
 
   // we expose into window no matter how we are used, this will allow
   // us to easily debug any website running algolia
   global.__algolia = {
     debug: require('debug'),
-    algoliasearch: algoliasearch
+    algoliasearch,
   };
 
-  var support = {
+  const support = {
     hasXMLHttpRequest: 'XMLHttpRequest' in global,
-    hasXDomainRequest: 'XDomainRequest' in global
+    hasXDomainRequest: 'XDomainRequest' in global,
   };
 
   if (support.hasXMLHttpRequest) {
@@ -62,7 +64,7 @@ module.exports = function createAlgoliasearch(AlgoliaSearch, uaSuffix) {
   inherits(AlgoliaSearchBrowser, AlgoliaSearch);
 
   AlgoliaSearchBrowser.prototype._request = function request(url, opts) {
-    return new Promise(function wrapRequest(resolve, reject) {
+    return new Promise((resolve, reject) => {
       // no cors or XDomainRequest, no request
       if (!support.cors && !support.hasXDomainRequest) {
         // very old browser, not supported
@@ -72,11 +74,11 @@ module.exports = function createAlgoliasearch(AlgoliaSearch, uaSuffix) {
 
       url = inlineHeaders(url, opts.headers);
 
-      var body = opts.body;
-      var req = support.cors ? new XMLHttpRequest() : new XDomainRequest();
-      var reqTimeout;
-      var timedOut;
-      var connected = false;
+      const body = opts.body;
+      const req = support.cors ? new XMLHttpRequest() : new XDomainRequest();
+      let reqTimeout;
+      let timedOut;
+      let connected = false;
 
       reqTimeout = setTimeout(onTimeout, opts.timeouts.connect);
       // we set an empty onprogress listener
@@ -85,7 +87,8 @@ module.exports = function createAlgoliasearch(AlgoliaSearch, uaSuffix) {
       //  - https://github.com/algolia/algoliasearch-client-js/issues/76
       //  - https://social.msdn.microsoft.com/Forums/ie/en-US/30ef3add-767c-4436-b8a9-f1ca19b4812e/ie9-rtm-xdomainrequest-issued-requests-may-abort-if-all-event-handlers-not-specified?forum=iewebdevelopment
       req.onprogress = onProgress;
-      if ('onreadystatechange' in req) req.onreadystatechange = onReadyStateChange;
+      if ('onreadystatechange' in req)
+        req.onreadystatechange = onReadyStateChange;
       req.onload = onLoad;
       req.onerror = onError;
 
@@ -102,7 +105,10 @@ module.exports = function createAlgoliasearch(AlgoliaSearch, uaSuffix) {
         if (body) {
           if (opts.method === 'POST') {
             // https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS#Simple_requests
-            req.setRequestHeader('content-type', 'application/x-www-form-urlencoded');
+            req.setRequestHeader(
+              'content-type',
+              'application/x-www-form-urlencoded'
+            );
           } else {
             req.setRequestHeader('content-type', 'application/json');
           }
@@ -123,7 +129,7 @@ module.exports = function createAlgoliasearch(AlgoliaSearch, uaSuffix) {
 
         clearTimeout(reqTimeout);
 
-        var out;
+        let out;
 
         try {
           out = {
@@ -131,11 +137,12 @@ module.exports = function createAlgoliasearch(AlgoliaSearch, uaSuffix) {
             responseText: req.responseText,
             statusCode: req.status,
             // XDomainRequest does not have any response headers
-            headers: req.getAllResponseHeaders && req.getAllResponseHeaders() || {}
+            headers:
+              (req.getAllResponseHeaders && req.getAllResponseHeaders()) || {},
           };
         } catch (e) {
           out = new errors.UnparsableJSON({
-            more: req.responseText
+            more: req.responseText,
           });
         }
 
@@ -158,7 +165,7 @@ module.exports = function createAlgoliasearch(AlgoliaSearch, uaSuffix) {
         //   - unallowed cross domain request
         reject(
           new errors.Network({
-            more: event
+            more: event,
           })
         );
       }
@@ -186,11 +193,14 @@ module.exports = function createAlgoliasearch(AlgoliaSearch, uaSuffix) {
     });
   };
 
-  AlgoliaSearchBrowser.prototype._request.fallback = function requestFallback(url, opts) {
+  AlgoliaSearchBrowser.prototype._request.fallback = function requestFallback(
+    url,
+    opts
+  ) {
     url = inlineHeaders(url, opts.headers);
 
-    return new Promise(function wrapJsonpRequest(resolve, reject) {
-      jsonpRequest(url, opts, function jsonpRequestDone(err, content) {
+    return new Promise((resolve, reject) => {
+      jsonpRequest(url, opts, (err, content) => {
         if (err) {
           reject(err);
           return;
@@ -209,10 +219,10 @@ module.exports = function createAlgoliasearch(AlgoliaSearch, uaSuffix) {
       return Promise.resolve(val);
     },
     delay: function delayPromise(ms) {
-      return new Promise(function resolveOnTimeout(resolve/* , reject*/) {
+      return new Promise((resolve /* , reject*/) => {
         setTimeout(resolve, ms);
       });
-    }
+    },
   };
 
   return algoliasearch;

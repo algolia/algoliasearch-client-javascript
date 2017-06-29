@@ -1,12 +1,12 @@
 'use strict';
-
+/* eslint-disable prefer-rest-params, no-param-reassign */
 // Some methods only accessible server side
 
 module.exports = AlgoliaSearchServer;
 
-var inherits = require('inherits');
+const inherits = require('inherits');
 
-var AlgoliaSearch = require('../../AlgoliaSearch');
+const AlgoliaSearch = require('../../AlgoliaSearch');
 
 function AlgoliaSearchServer(applicationID, apiKey, opts) {
   // Default protocol is https: on the server, to avoid leaking admin keys
@@ -26,11 +26,15 @@ inherits(AlgoliaSearchServer, AlgoliaSearch);
  * @param endUserIP the end user IP (you can use both IPV4 or IPV6 syntax)
  * @param rateLimitAPIKey the API key on which you have a rate limit
  */
-AlgoliaSearchServer.prototype.enableRateLimitForward = function(adminAPIKey, endUserIP, rateLimitAPIKey) {
+AlgoliaSearchServer.prototype.enableRateLimitForward = function(
+  adminAPIKey,
+  endUserIP,
+  rateLimitAPIKey
+) {
   this._forward = {
-    adminAPIKey: adminAPIKey,
-    endUserIP: endUserIP,
-    rateLimitAPIKey: rateLimitAPIKey
+    adminAPIKey,
+    endUserIP,
+    rateLimitAPIKey,
   };
 };
 
@@ -44,11 +48,15 @@ AlgoliaSearchServer.prototype.disableRateLimitForward = function() {
 /*
  * Specify the securedAPIKey to use with associated information
  */
-AlgoliaSearchServer.prototype.useSecuredAPIKey = function(securedAPIKey, securityTags, userToken) {
+AlgoliaSearchServer.prototype.useSecuredAPIKey = function(
+  securedAPIKey,
+  securityTags,
+  userToken
+) {
   this._secure = {
     apiKey: securedAPIKey,
-    securityTags: securityTags,
-    userToken: userToken
+    securityTags,
+    userToken,
   };
 };
 
@@ -60,7 +68,10 @@ AlgoliaSearchServer.prototype.disableSecuredAPIKey = function() {
 };
 
 AlgoliaSearchServer.prototype._computeRequestHeaders = function(additionalUA) {
-  var headers = AlgoliaSearchServer.super_.prototype._computeRequestHeaders.call(this, additionalUA);
+  const headers = AlgoliaSearchServer.super_.prototype._computeRequestHeaders.call(
+    this,
+    additionalUA
+  );
 
   if (this._forward) {
     headers['x-algolia-api-key'] = this._forward.adminAPIKey;

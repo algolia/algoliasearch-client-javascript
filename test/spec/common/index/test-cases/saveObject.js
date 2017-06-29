@@ -1,13 +1,13 @@
 'use strict';
 
-var fauxJax = require('faux-jax');
+const fauxJax = require('faux-jax');
 
 if (!process.browser || fauxJax.support.xhr.cors) {
-  var clone = require('lodash-compat/lang/clone');
+  const clone = require('lodash-compat/lang/clone');
 
-  var object = {
+  const object = {
     objectID: 'dawg IE!',
-    yaw: 'partial'
+    yaw: 'partial',
   };
 
   module.exports = {
@@ -20,8 +20,8 @@ if (!process.browser || fauxJax.support.xhr.cors) {
       method: 'PUT',
       body: clone(object),
       URL: {
-        pathname: '/1/indexes/%s/' + encodeURIComponent(object.objectID)
-      }
-    }
+        pathname: `/1/indexes/%s/${encodeURIComponent(object.objectID)}`,
+      },
+    },
   };
 }

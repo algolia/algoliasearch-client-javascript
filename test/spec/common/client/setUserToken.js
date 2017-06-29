@@ -1,31 +1,28 @@
 'use strict';
 
-var test = require('tape');
+const test = require('tape');
 
-test('client.setUserToken(token)', function(t) {
-  var async = require('async');
+test('client.setUserToken(token)', t => {
+  const async = require('async');
 
   t.plan(2);
 
-  var fauxJax = require('faux-jax');
-  var parse = require('url-parse');
+  const fauxJax = require('faux-jax');
+  const parse = require('url-parse');
 
-  var createFixture = require('../../../utils/create-fixture');
-  var fixture = createFixture();
-  var client = fixture.client;
-  var index = fixture.index;
+  const createFixture = require('../../../utils/create-fixture');
+  const fixture = createFixture();
+  const client = fixture.client;
+  const index = fixture.index;
 
-  fauxJax.install({gzip: true});
+  fauxJax.install({ gzip: true });
 
-  async.series([
-    noUserToken,
-    userToken
-  ], end);
+  async.series([noUserToken, userToken], end);
 
   function noUserToken(cb) {
     index.search('first');
 
-    fauxJax.once('request', function(req) {
+    fauxJax.once('request', req => {
       req.respond(200, {}, '{}');
       if (process.browser) {
         t.notOk(
@@ -48,7 +45,7 @@ test('client.setUserToken(token)', function(t) {
 
     index.search('second');
 
-    fauxJax.once('request', function(req) {
+    fauxJax.once('request', req => {
       req.respond(200, {}, '{}');
 
       if (process.browser) {
