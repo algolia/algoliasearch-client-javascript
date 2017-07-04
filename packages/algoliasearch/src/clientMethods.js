@@ -6,7 +6,7 @@ export {
 };
 
 /**
- * Perform write requests accross multiple indexes.
+ * Perform write requests across multiple indexes.
  *
  * @param {Object[]} requests An array of write requests to perform.
  * @param {string} requests[].action Name of the action. Possible values:
