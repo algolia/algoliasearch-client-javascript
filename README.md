@@ -152,7 +152,7 @@ var client = algoliasearch('applicationID', 'apiKey');
 
 ### Push data
 
-Without any prior configuration, you can start indexing [500 contacts](https://github.com/algolia/algoliasearch-client-csharp/blob/master/contacts.json) in the `contacts` index using the following code:
+Without any prior configuration, you can start indexing [500 contacts](https://github.com/algolia/datasets-public/blob/master/contacts.json) in the `contacts` index using the following code:
 
 ```js
 var index = client.initIndex('contacts');
