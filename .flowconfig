@@ -1,0 +1,10 @@
+[ignore]
+<PROJECT_ROOT>/node_modules/.*
+
+[include]
+
+[libs]
+
+[options]
+emoji=true
+suppress_comment= \\(.\\|\n\\)*\\$FlowIssue

@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`contains the correct methods 1`] = `
+Array [
+  "batch",
+  "getLogs",
+  "listIndexes",
+  "search",
+]
+`;
+
+exports[`has the correct API calls for each method 1`] = `
+Object {
+  "batch": Object {
+    "body": Object {
+      "requests": undefined,
+    },
+    "method": "POST",
+    "path": "/1/indexes/*/batch",
+  },
+  "getLogs": Object {
+    "method": "GET",
+    "path": "/1/logs",
+    "qs": Object {
+      "length": 10,
+      "offset": 0,
+    },
+  },
+  "listIndexes": Object {
+    "method": "GET",
+    "path": "/1/indexes",
+    "qs": undefined,
+  },
+  "search": Object {
+    "body": Object {
+      "requests": undefined,
+    },
+    "forceReadHosts": true,
+    "method": "POST",
+    "path": "/1/indexes/*/queries",
+  },
+}
+`;

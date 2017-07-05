@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-
-set -e # exit when error
-
-[ -z $TRAVIS_BUILD_NUMBER ] && CI='false' || CI='true'
-
-echo "Lint"
-
-eslint --quiet .

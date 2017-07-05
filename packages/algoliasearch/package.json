@@ -1,0 +1,32 @@
+{
+  "name": "algoliasearch",
+  "version": "4.0.0-beta.1",
+  "description": "AlgoliaSearch API JavaScript client",
+  "main": "dist/index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/algolia/algoliasearch-client-js.git"
+  },
+  "keywords": [
+    "algolia",
+    "search",
+    "search api",
+    "instant search",
+    "realtime",
+    "autocomplete"
+  ],
+  "homepage": "https://www.algolia.com/doc/api-client/javascript/",
+  "bugs": "https://github.com/algolia/algoliasearch-client-js/issues",
+  "author": {
+    "name": "Algolia, Inc.",
+    "url": "https://www.algolia.com"
+  },
+  "files": [],
+  "dependencies": {},
+  "devDependencies": {},
+  "engines": {
+    "node": ">=6"
+  },
+  "license": "MIT"
+}
