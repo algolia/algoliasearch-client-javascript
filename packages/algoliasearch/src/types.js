@@ -23,11 +23,33 @@ export type ListIndicesParameters = {|
   page?: number,
 |};
 
+type BatchActions =
+  | 'addObject'
+  | 'updateObject'
+  | 'partialUpdateObject'
+  | 'partialUpdateObjectNoCreate'
+  | 'deleteObject'
+  | 'delete'
+  | 'clear';
+
+export type ClientBatchRequest = {|
+  action: BatchActions,
+  indexName: IndexName,
+  body?: Object,
+|};
+
+export type IndexBatchRequest = {|
+  action: BatchActions,
+  body?: Object,
+|};
+
 type AllParameters =
   | Parameters
   | BrowseParameters
   | LogsParameters
-  | ListIndicesParameters;
+  | ListIndicesParameters
+  | ClientBatchRequest
+  | IndexBatchRequest;
 
 export type Method = 'POST' | 'GET' | 'DELETE' | 'PUT';
 

@@ -3,14 +3,14 @@
 
 import type {
   RequestMethod,
-  RequestOptions,
+  ClientBatchRequest,
   Parameters,
   LogsParameters,
   ListIndicesParameters,
   IndexName,
 } from './types';
 
-export function batch(req: RequestMethod, requests: RequestOptions[]) {
+export function batch(req: RequestMethod, requests: ClientBatchRequest[]) {
   return req({
     method: 'POST',
     path: '/1/indexes/*/batch',

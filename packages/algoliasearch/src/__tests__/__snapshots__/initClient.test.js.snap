@@ -1,5 +1,131 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`batch 1`] = `
+Object {
+  "body": Object {
+    "requests": Array [
+      Object {
+        "action": "addObject",
+        "body": Object {
+          "function": [Function],
+          "nested": Object {
+            "is": Object {
+              "all": "fine",
+            },
+          },
+          "some": "data",
+        },
+        "indexName": "cool-index",
+      },
+    ],
+  },
+  "method": "POST",
+  "path": "/1/indexes/*/batch",
+}
+`;
+
+exports[`batch 2`] = `
+Object {
+  "body": Object {
+    "requests": Array [
+      Object {
+        "action": "updateObject",
+        "body": Object {
+          "and": "this is everything now",
+          "objectID": "some-cool-object",
+          "some": "other data",
+        },
+        "indexName": "uncool-index",
+      },
+    ],
+  },
+  "method": "POST",
+  "path": "/1/indexes/*/batch",
+}
+`;
+
+exports[`batch 3`] = `
+Object {
+  "body": Object {
+    "requests": Array [
+      Object {
+        "action": "partialUpdateObject",
+        "body": Object {
+          "objectID": "some-cool-object",
+          "some": "data",
+          "the": "rest is still here",
+        },
+        "indexName": "cool-index",
+      },
+    ],
+  },
+  "method": "POST",
+  "path": "/1/indexes/*/batch",
+}
+`;
+
+exports[`batch 4`] = `
+Object {
+  "body": Object {
+    "requests": Array [
+      Object {
+        "action": "partialUpdateObjectNoCreate",
+        "body": Object {},
+        "indexName": "cool-index",
+      },
+    ],
+  },
+  "method": "POST",
+  "path": "/1/indexes/*/batch",
+}
+`;
+
+exports[`batch 5`] = `
+Object {
+  "body": Object {
+    "requests": Array [
+      Object {
+        "action": "deleteObject",
+        "body": Object {},
+        "indexName": "cool-index",
+      },
+    ],
+  },
+  "method": "POST",
+  "path": "/1/indexes/*/batch",
+}
+`;
+
+exports[`batch 6`] = `
+Object {
+  "body": Object {
+    "requests": Array [
+      Object {
+        "action": "delete",
+        "indexName": "cool-index",
+      },
+    ],
+  },
+  "method": "POST",
+  "path": "/1/indexes/*/batch",
+}
+`;
+
+exports[`batch 7`] = `
+Object {
+  "body": Object {
+    "requests": Array [
+      Object {
+        "action": "clear",
+        "indexName": "cool-index",
+      },
+    ],
+  },
+  "method": "POST",
+  "path": "/1/indexes/*/batch",
+}
+`;
+
 exports[`contains the correct methods 1`] = `
 Array [
   "batch",
@@ -9,35 +135,89 @@ Array [
 ]
 `;
 
-exports[`has the correct API calls for each method 1`] = `
+exports[`getLogs 1`] = `
 Object {
-  "batch": Object {
-    "body": Object {
-      "requests": undefined,
-    },
-    "method": "POST",
-    "path": "/1/indexes/*/batch",
+  "method": "GET",
+  "path": "/1/logs",
+  "qs": Object {
+    "length": 10,
+    "offset": 0,
   },
-  "getLogs": Object {
-    "method": "GET",
-    "path": "/1/logs",
-    "qs": Object {
-      "length": 10,
-      "offset": 0,
-    },
+}
+`;
+
+exports[`getLogs 2`] = `
+Object {
+  "method": "GET",
+  "path": "/1/logs",
+  "qs": Object {
+    "length": 10,
+    "offset": 0,
   },
-  "listIndexes": Object {
-    "method": "GET",
-    "path": "/1/indexes",
-    "qs": undefined,
+}
+`;
+
+exports[`getLogs 3`] = `
+Object {
+  "method": "GET",
+  "path": "/1/logs",
+  "qs": Object {
+    "length": 10,
+    "offset": 4,
   },
-  "search": Object {
-    "body": Object {
-      "requests": undefined,
-    },
-    "forceReadHosts": true,
-    "method": "POST",
-    "path": "/1/indexes/*/queries",
+}
+`;
+
+exports[`getLogs 4`] = `
+Object {
+  "method": "GET",
+  "path": "/1/logs",
+  "qs": Object {
+    "length": 50,
+    "offset": 0,
   },
+}
+`;
+
+exports[`getLogs 5`] = `
+Object {
+  "method": "GET",
+  "path": "/1/logs",
+  "qs": Object {
+    "length": 50,
+    "offset": 4,
+  },
+}
+`;
+
+exports[`listIndexes 1`] = `
+Object {
+  "method": "GET",
+  "path": "/1/indexes",
+  "qs": undefined,
+}
+`;
+
+exports[`listIndexes 2`] = `
+Object {
+  "method": "GET",
+  "path": "/1/indexes",
+  "qs": 1,
+}
+`;
+
+exports[`search 1`] = `
+Object {
+  "body": Object {
+    "requests": Array [
+      Object {
+        "indexName": "some_index",
+        "params": Object {},
+      },
+    ],
+  },
+  "forceReadHosts": true,
+  "method": "POST",
+  "path": "/1/indexes/*/queries",
 }
 `;

@@ -5,7 +5,7 @@ import * as clientMethods from './clientMethods';
 import type { AppId, ApiKey, IndexName } from './types';
 
 type ClientParams = {| appId: AppId, apiKey: ApiKey |};
-type IndexParams = {| ...ClientParams, indexName: IndexName |};
+type IndexParams = {| appId: AppId, apiKey: ApiKey, indexName: IndexName |};
 
 export function initClient({ appId, apiKey }: ClientParams) {
   if (appId === undefined) {
