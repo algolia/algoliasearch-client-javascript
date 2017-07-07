@@ -7,7 +7,20 @@ import type {
   Parameters,
   Result,
   TaskID,
+  IndexBatchRequest,
 } from './types';
+
+export function batch(
+  req: RequestMethod,
+  indexName: IndexName,
+  requests: IndexBatchRequest[]
+) {
+  return req({
+    method: 'POST',
+    path: `/1/indexes/${indexName}/batch`,
+    body: { requests },
+  });
+}
 
 export function clear(req: RequestMethod, indexName: IndexName) {
   return req({

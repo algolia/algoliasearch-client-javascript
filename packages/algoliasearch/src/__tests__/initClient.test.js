@@ -1,13 +1,13 @@
 // @flow
 
 import { initClient } from '../';
-
 const validParams = { appId: '', apiKey: '' };
 
 it('throws when it has too little parameters', () => {
   expect(() => initClient({})).toThrow();
   expect(() => initClient({ appId: '' })).toThrow();
   expect(() => initClient({ apiKey: '' })).toThrow();
+  expect(() => initClient(validParams)).not.toThrow();
 });
 
 it('contains the correct methods', () => {
@@ -16,10 +16,9 @@ it('contains the correct methods', () => {
 });
 
 it('batch', () => {
-  const fakeRequest = o => o;
   const client = initClient(validParams);
   const requests = [
-    client.batch(fakeRequest, [
+    client.batch([
       {
         action: 'addObject',
         indexName: 'cool-index',
@@ -30,7 +29,7 @@ it('batch', () => {
         },
       },
     ]),
-    client.batch(fakeRequest, [
+    client.batch([
       {
         action: 'updateObject',
         indexName: 'uncool-index',
@@ -41,7 +40,7 @@ it('batch', () => {
         },
       },
     ]),
-    client.batch(fakeRequest, [
+    client.batch([
       {
         action: 'partialUpdateObject',
         indexName: 'cool-index',
@@ -52,7 +51,7 @@ it('batch', () => {
         },
       },
     ]),
-    client.batch(fakeRequest, [
+    client.batch([
       {
         action: 'partialUpdateObjectNoCreate',
         indexName: 'cool-index',
@@ -64,7 +63,7 @@ it('batch', () => {
         },
       },
     ]),
-    client.batch(fakeRequest, [
+    client.batch([
       {
         action: 'deleteObject',
         indexName: 'cool-index',
@@ -73,13 +72,13 @@ it('batch', () => {
         },
       },
     ]),
-    client.batch(fakeRequest, [
+    client.batch([
       {
         action: 'delete',
         indexName: 'uncool-index-with-bad-name',
       },
     ]),
-    client.batch(fakeRequest, [
+    client.batch([
       {
         action: 'clear',
         indexName: 'cool-index-with-bad-contents',
@@ -91,9 +90,8 @@ it('batch', () => {
 });
 
 it('search', () => {
-  const fakeRequest = o => o;
   const client = initClient(validParams);
-  const request = client.search(fakeRequest, [
+  const request = client.search([
     {
       indexName: 'some_index',
       params: {},
@@ -103,24 +101,22 @@ it('search', () => {
 });
 
 it('getLogs', () => {
-  const fakeRequest = o => o;
   const client = initClient(validParams);
   const requests = [
-    client.getLogs(fakeRequest),
-    client.getLogs(fakeRequest, {}),
-    client.getLogs(fakeRequest, { offset: 4 }),
-    client.getLogs(fakeRequest, { length: 50 }),
-    client.getLogs(fakeRequest, { offset: 4, length: 50 }),
+    client.getLogs(),
+    client.getLogs({}),
+    client.getLogs({ offset: 4 }),
+    client.getLogs({ length: 50 }),
+    client.getLogs({ offset: 4, length: 50 }),
   ];
 
   requests.map(req => expect(req).toMatchSnapshot());
 });
 
 it('listIndexes', () => {
-  const fakeRequest = o => o;
   const client = initClient(validParams);
-  const request = client.listIndexes(fakeRequest);
-  const requestWithPage = client.listIndexes(fakeRequest, { page: 1 });
+  const request = client.listIndexes();
+  const requestWithPage = client.listIndexes({ page: 1 });
 
   expect(request).toMatchSnapshot();
   expect(requestWithPage).toMatchSnapshot();
