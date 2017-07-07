@@ -4,28 +4,12 @@
 
 import * as indexMethods from './indexMethods';
 import * as clientMethods from './clientMethods';
-import type { AppId, ApiKey, IndexName } from './types';
-
-type ClientParams = {| appId: AppId, apiKey: ApiKey |};
-type IndexParams = {| appId: AppId, apiKey: ApiKey, indexName: IndexName |};
-type ClientMethods = {
-  batch: Function,
-  getLogs: Function,
-  listIndexes: Function,
-  search: Function,
-};
-type IndexMethods = {
-  batch: Function,
-  clear: Function,
-  copy: Function,
-  remove: Function,
-  browse: Function,
-  browseFrom: Function,
-  move: Function,
-  search: Function,
-  similarSearch: Function,
-  waitTask: Function,
-};
+import type {
+  ClientParams,
+  ClientMethods,
+  IndexParams,
+  IndexMethods,
+} from './types';
 
 // it will simply give back the arguments given
 const createRequester = (appId, apiKey) => requestParams => requestParams;

@@ -86,19 +86,18 @@ it('batch', () => {
   requests.map(req => expect(req).toMatchSnapshot());
 });
 
-// it('search', () => {
-//   const index = initClient(validParams);
-//   const request = index.search([
-//     {
-//       indexName: 'some_index',
-//       params: {},
-//     },
-//   ]);
-//   expect(request).toMatchSnapshot();
-// });
+it('search', () => {
+  const index = initIndex(validParams);
+  const request = index.search([
+    {
+      params: {},
+    },
+  ]);
+  expect(request).toMatchSnapshot();
+});
 
 // it('getLogs', () => {
-//   const client = initClient(validParams);
+//   const client = initIndex(validParams);
 //   const requests = [
 //     client.getLogs(fakeRequest),
 //     client.getLogs({}),
@@ -111,7 +110,7 @@ it('batch', () => {
 // });
 
 // it('listIndexes', () => {
-//   const client = initClient(validParams);
+//   const client = initIndex(validParams);
 //   const request = client.listIndexes(fakeRequest);
 //   const requestWithPage = client.listIndexes({ page: 1 });
 

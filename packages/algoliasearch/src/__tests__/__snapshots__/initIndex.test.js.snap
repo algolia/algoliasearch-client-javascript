@@ -140,3 +140,18 @@ Array [
   "waitTask",
 ]
 `;
+
+exports[`search 1`] = `
+Object {
+  "body": Object {
+    "params": Array [
+      Object {
+        "params": Object {},
+      },
+    ],
+  },
+  "forceReadHosts": true,
+  "method": "POST",
+  "path": "/1/indexes//query",
+}
+`;
