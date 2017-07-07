@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for index.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="prettify.css" />
+    <link rel="stylesheet" href="base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="index.html">All files</a> index.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">41.67% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>5/12</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">40% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>4/10</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">50% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>1/2</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">41.67% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>5/12</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/* eslint-disable no-console */
+// @flow
+import * as indexMethods from './indexMethods';
+import * as clientMethods from './clientMethods';
+import type { AppId, ApiKey, IndexName } from './types';
+&nbsp;
+type ClientParams = {| appId: AppId, apiKey: ApiKey |};
+type IndexParams = {| appId: AppId, apiKey: ApiKey, indexName: IndexName |};
+&nbsp;
+export function initClient({ appId, apiKey }: ClientParams) {
+  if (appId === undefined) {
+    throw new Error(`An appId is required. ${appId} was not valid.`);
+  }
+  if (apiKey === undefined) {
+    throw new Error(`An apiKey is required. ${apiKey} was not valid.`);
+  }
+&nbsp;
+  return clientMethods;
+}
+&nbsp;
+export function <span class="fstat-no" title="function not covered" >initIndex(</span>{ appId, apiKey, indexName }: IndexParams) {
+<span class="cstat-no" title="statement not covered" >  if (appId === undefined) {</span>
+<span class="cstat-no" title="statement not covered" >    throw new Error(`An appId is required. ${appId} was not valid.`);</span>
+  }
+<span class="cstat-no" title="statement not covered" >  if (apiKey === undefined) {</span>
+<span class="cstat-no" title="statement not covered" >    throw new Error(`An apiKey is required. ${apiKey} was not valid.`);</span>
+  }
+<span class="cstat-no" title="statement not covered" >  if (indexName === undefined) {</span>
+<span class="cstat-no" title="statement not covered" >    throw new Error(`An indexName is required. ${indexName} was not valid.`);</span>
+  }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  return indexMethods;</span>
+}
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Jul 07 2017 14:17:31 GMT+0200 (CEST)
+</div>
+</div>
+<script src="prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="sorter.js"></script>
+</body>
+</html>

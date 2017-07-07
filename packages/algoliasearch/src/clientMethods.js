@@ -25,7 +25,10 @@ export function getLogs(req: RequestMethod, options: LogsParameters = {}) {
     qs: { offset, length },
   });
 }
-export function listIndexes(req: RequestMethod, params: ListIndicesParameters) {
+export function listIndexes(
+  req: RequestMethod,
+  params: ListIndicesParameters = {}
+) {
   return req({
     method: 'GET',
     path: '/1/indexes',

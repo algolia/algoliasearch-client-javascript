@@ -56,26 +56,33 @@ it('batch', () => {
       {
         action: 'partialUpdateObjectNoCreate',
         indexName: 'cool-index',
-        body: {},
+        body: {
+          objectID: 'some-cool-object',
+          this: 'object',
+          "won't": 'be made',
+          if: "it doesn't exist yet",
+        },
       },
     ]),
     client.batch(fakeRequest, [
       {
         action: 'deleteObject',
         indexName: 'cool-index',
-        body: {},
+        body: {
+          objectID: 'some-uncool-object',
+        },
       },
     ]),
     client.batch(fakeRequest, [
       {
         action: 'delete',
-        indexName: 'cool-index',
+        indexName: 'uncool-index-with-bad-name',
       },
     ]),
     client.batch(fakeRequest, [
       {
         action: 'clear',
-        indexName: 'cool-index',
+        indexName: 'cool-index-with-bad-contents',
       },
     ]),
   ];
@@ -113,7 +120,7 @@ it('listIndexes', () => {
   const fakeRequest = o => o;
   const client = initClient(validParams);
   const request = client.listIndexes(fakeRequest);
-  const requestWithPage = client.listIndexes(fakeRequest, 1);
+  const requestWithPage = client.listIndexes(fakeRequest, { page: 1 });
 
   expect(request).toMatchSnapshot();
   expect(requestWithPage).toMatchSnapshot();

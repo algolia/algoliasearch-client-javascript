@@ -19,9 +19,9 @@ export type LogsParameters = {
   length?: number,
 };
 
-export type ListIndicesParameters = {|
+export type ListIndicesParameters = {
   page?: number,
-|};
+};
 
 type BatchActions =
   | 'addObject'
@@ -43,20 +43,12 @@ export type IndexBatchRequest = {|
   body?: Object,
 |};
 
-type AllParameters =
-  | Parameters
-  | BrowseParameters
-  | LogsParameters
-  | ListIndicesParameters
-  | ClientBatchRequest
-  | IndexBatchRequest;
-
 export type Method = 'POST' | 'GET' | 'DELETE' | 'PUT';
 
 export type RequestOptions = {
   method: Method,
   path: string,
-  qs?: AllParameters,
+  qs?: Object,
   body?: Object,
   options?: Object,
 };

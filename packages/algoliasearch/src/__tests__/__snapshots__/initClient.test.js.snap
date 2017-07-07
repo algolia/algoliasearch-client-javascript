@@ -70,7 +70,12 @@ Object {
     "requests": Array [
       Object {
         "action": "partialUpdateObjectNoCreate",
-        "body": Object {},
+        "body": Object {
+          "if": "it doesn't exist yet",
+          "objectID": "some-cool-object",
+          "this": "object",
+          "won't": "be made",
+        },
         "indexName": "cool-index",
       },
     ],
@@ -86,7 +91,9 @@ Object {
     "requests": Array [
       Object {
         "action": "deleteObject",
-        "body": Object {},
+        "body": Object {
+          "objectID": "some-uncool-object",
+        },
         "indexName": "cool-index",
       },
     ],
@@ -102,7 +109,7 @@ Object {
     "requests": Array [
       Object {
         "action": "delete",
-        "indexName": "cool-index",
+        "indexName": "uncool-index-with-bad-name",
       },
     ],
   },
@@ -117,7 +124,7 @@ Object {
     "requests": Array [
       Object {
         "action": "clear",
-        "indexName": "cool-index",
+        "indexName": "cool-index-with-bad-contents",
       },
     ],
   },
@@ -194,7 +201,7 @@ exports[`listIndexes 1`] = `
 Object {
   "method": "GET",
   "path": "/1/indexes",
-  "qs": undefined,
+  "qs": Object {},
 }
 `;
 
@@ -202,7 +209,9 @@ exports[`listIndexes 2`] = `
 Object {
   "method": "GET",
   "path": "/1/indexes",
-  "qs": 1,
+  "qs": Object {
+    "page": 1,
+  },
 }
 `;
 
