@@ -5,8 +5,11 @@ import { initIndex } from '../';
 const validParams = { appId: '', apiKey: '', indexName: '' };
 
 it('throws when it has too little parameters', () => {
+  // $FlowIssue --> type disallows this
   expect(() => initIndex({})).toThrow();
+  // $FlowIssue --> type disallows this
   expect(() => initIndex({ appId: '' })).toThrow();
+  // $FlowIssue --> type disallows this
   expect(() => initIndex({ apiKey: '' })).toThrow();
   expect(() => initIndex(validParams)).not.toThrow();
 });

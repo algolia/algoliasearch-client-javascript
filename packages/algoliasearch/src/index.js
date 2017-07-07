@@ -8,11 +8,29 @@ import type { AppId, ApiKey, IndexName } from './types';
 
 type ClientParams = {| appId: AppId, apiKey: ApiKey |};
 type IndexParams = {| appId: AppId, apiKey: ApiKey, indexName: IndexName |};
+type ClientMethods = {
+  batch: Function,
+  getLogs: Function,
+  listIndexes: Function,
+  search: Function,
+};
+type IndexMethods = {
+  batch: Function,
+  clear: Function,
+  copy: Function,
+  remove: Function,
+  browse: Function,
+  browseFrom: Function,
+  move: Function,
+  search: Function,
+  similarSearch: Function,
+  waitTask: Function,
+};
 
 // it will simply give back the arguments given
 const createRequester = (appId, apiKey) => requestParams => requestParams;
 
-export function initClient({ appId, apiKey }: ClientParams) {
+export function initClient({ appId, apiKey }: ClientParams): ClientMethods {
   if (appId === undefined) {
     throw new Error(`An appId is required. ${appId} was not valid.`);
   }
@@ -33,7 +51,11 @@ export function initClient({ appId, apiKey }: ClientParams) {
   return augmentedMethods;
 }
 
-export function initIndex({ appId, apiKey, indexName }: IndexParams) {
+export function initIndex({
+  appId,
+  apiKey,
+  indexName,
+}: IndexParams): IndexMethods {
   if (appId === undefined) {
     throw new Error(`An appId is required. ${appId} was not valid.`);
   }

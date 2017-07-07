@@ -4,8 +4,11 @@ import { initClient } from '../';
 const validParams = { appId: '', apiKey: '' };
 
 it('throws when it has too little parameters', () => {
+  // $FlowIssue --> type disallows this
   expect(() => initClient({})).toThrow();
+  // $FlowIssue --> type disallows this
   expect(() => initClient({ appId: '' })).toThrow();
+  // $FlowIssue --> type disallows this
   expect(() => initClient({ apiKey: '' })).toThrow();
   expect(() => initClient(validParams)).not.toThrow();
 });
