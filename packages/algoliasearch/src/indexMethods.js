@@ -97,19 +97,6 @@ export function search(
   });
 }
 
-export function similarSearch(
-  req: RequestMethod,
-  indexName: IndexName,
-  params: Parameters
-) {
-  return req({
-    method: 'POST',
-    path: `/1/indexes/${indexName}/query`,
-    body: { params },
-    forceReadHosts: true,
-  });
-}
-
 type LoopInfo = { loop?: number, baseDelay?: number, maxDelay?: number };
 
 export function waitTask(

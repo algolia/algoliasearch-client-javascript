@@ -55,23 +55,26 @@ export type RequestOptions = {
 
 export type Result = Object;
 
-export type RequestMethod = RequestOptions => Result;
+export type RequestMethod = RequestOptions => Promise<Result>;
 
 export type ClientParams = {|
   appId: AppId,
   apiKey: ApiKey,
 |};
-export type IndexParams = {|
-  appId: AppId,
-  apiKey: ApiKey,
-  indexName: IndexName,
-|};
+
 export type ClientMethods = {
   batch: Function,
   getLogs: Function,
   listIndexes: Function,
   search: Function,
 };
+
+export type IndexParams = {|
+  appId: AppId,
+  apiKey: ApiKey,
+  indexName: IndexName,
+|};
+
 export type IndexMethods = {
   batch: Function,
   clear: Function,
@@ -81,6 +84,5 @@ export type IndexMethods = {
   browseFrom: Function,
   move: Function,
   search: Function,
-  similarSearch: Function,
   waitTask: Function,
 };

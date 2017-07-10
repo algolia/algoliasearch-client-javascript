@@ -19,7 +19,7 @@ Object {
     ],
   },
   "method": "POST",
-  "path": "/1/indexes//batch",
+  "path": "/1/indexes/some_index/batch",
 }
 `;
 
@@ -38,7 +38,7 @@ Object {
     ],
   },
   "method": "POST",
-  "path": "/1/indexes//batch",
+  "path": "/1/indexes/some_index/batch",
 }
 `;
 
@@ -57,7 +57,7 @@ Object {
     ],
   },
   "method": "POST",
-  "path": "/1/indexes//batch",
+  "path": "/1/indexes/some_index/batch",
 }
 `;
 
@@ -77,7 +77,7 @@ Object {
     ],
   },
   "method": "POST",
-  "path": "/1/indexes//batch",
+  "path": "/1/indexes/some_index/batch",
 }
 `;
 
@@ -94,7 +94,7 @@ Object {
     ],
   },
   "method": "POST",
-  "path": "/1/indexes//batch",
+  "path": "/1/indexes/some_index/batch",
 }
 `;
 
@@ -108,7 +108,7 @@ Object {
     ],
   },
   "method": "POST",
-  "path": "/1/indexes//batch",
+  "path": "/1/indexes/some_index/batch",
 }
 `;
 
@@ -122,7 +122,42 @@ Object {
     ],
   },
   "method": "POST",
-  "path": "/1/indexes//batch",
+  "path": "/1/indexes/some_index/batch",
+}
+`;
+
+exports[`browse 1`] = `
+Object {
+  "method": "GET",
+  "path": "/1/indexes/some_index/browse",
+  "qs": undefined,
+}
+`;
+
+exports[`browse 2`] = `
+Object {
+  "method": "GET",
+  "path": "/1/indexes/some_index/browse",
+  "qs": Object {
+    "hitsPerPage": 40,
+  },
+}
+`;
+
+exports[`browseFrom 1`] = `
+Object {
+  "method": "GET",
+  "path": "/1/indexes/some_index/browse",
+  "qs": Object {
+    "cursor": "some_weirdo_cursor",
+  },
+}
+`;
+
+exports[`clear 1`] = `
+Object {
+  "method": "POST",
+  "path": "/1/indexes/some_index/clear",
 }
 `;
 
@@ -136,22 +171,59 @@ Array [
   "browseFrom",
   "move",
   "search",
-  "similarSearch",
   "waitTask",
 ]
+`;
+
+exports[`copy 1`] = `
+Object {
+  "body": Object {
+    "destination": "new_index",
+    "operation": "copy",
+  },
+  "method": "POST",
+  "path": "/1/indexes/some_index/operation",
+}
+`;
+
+exports[`move 1`] = `
+Object {
+  "body": Object {
+    "destination": "new_index",
+    "operation": "move",
+  },
+  "method": "POST",
+  "path": "/1/indexes/some_index/operation",
+}
+`;
+
+exports[`remove 1`] = `
+Object {
+  "method": "DELETE",
+  "path": "/1/indexes/some_index",
+}
 `;
 
 exports[`search 1`] = `
 Object {
   "body": Object {
-    "params": Array [
-      Object {
-        "params": Object {},
-      },
-    ],
+    "params": Object {},
   },
   "forceReadHosts": true,
   "method": "POST",
-  "path": "/1/indexes//query",
+  "path": "/1/indexes/some_index/query",
+}
+`;
+
+exports[`search 2`] = `
+Object {
+  "body": Object {
+    "params": Object {
+      "hitsPerPage": 4,
+    },
+  },
+  "forceReadHosts": true,
+  "method": "POST",
+  "path": "/1/indexes/some_index/query",
 }
 `;

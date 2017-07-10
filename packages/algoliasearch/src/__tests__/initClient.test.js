@@ -1,7 +1,10 @@
 // @flow
 
 import { initClient } from '../';
-const validParams = { appId: '', apiKey: '' };
+const validParams = { appId: 'some_app', apiKey: 'some_key' };
+
+const snapshotAll = requests =>
+  requests.map(req => req.then(sn => expect(sn).toMatchSnapshot()));
 
 it('throws when it has too little parameters', () => {
   // $FlowIssue --> type disallows this
@@ -89,18 +92,21 @@ it('batch', () => {
     ]),
   ];
 
-  requests.map(req => expect(req).toMatchSnapshot());
+  snapshotAll(requests);
 });
 
 it('search', () => {
   const client = initClient(validParams);
-  const request = client.search([
-    {
-      indexName: 'some_index',
-      params: {},
-    },
-  ]);
-  expect(request).toMatchSnapshot();
+  const requests = [
+    client.search([
+      {
+        indexName: 'some_index',
+        params: {},
+      },
+    ]),
+  ];
+
+  snapshotAll(requests);
 });
 
 it('getLogs', () => {
@@ -113,14 +119,13 @@ it('getLogs', () => {
     client.getLogs({ offset: 4, length: 50 }),
   ];
 
-  requests.map(req => expect(req).toMatchSnapshot());
+  snapshotAll(requests);
 });
 
 it('listIndexes', () => {
   const client = initClient(validParams);
-  const request = client.listIndexes();
-  const requestWithPage = client.listIndexes({ page: 1 });
 
-  expect(request).toMatchSnapshot();
-  expect(requestWithPage).toMatchSnapshot();
+  const requests = [client.listIndexes(), client.listIndexes({ page: 1 })];
+
+  snapshotAll(requests);
 });

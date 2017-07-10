@@ -12,7 +12,8 @@ import type {
 } from './types';
 
 // it will simply give back the arguments given
-const createRequester = (appId, apiKey) => requestParams => requestParams;
+const createRequester = (appId, apiKey) => requestParams =>
+  new Promise(resolve => resolve(requestParams));
 
 export function initClient({ appId, apiKey }: ClientParams): ClientMethods {
   if (appId === undefined) {

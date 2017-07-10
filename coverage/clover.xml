@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1499429851753" clover="3.2.0">
-  <project timestamp="1499429851753" name="All files">
-    <metrics statements="34" coveredstatements="10" conditionals="20" coveredconditionals="8" methods="18" coveredmethods="5" elements="72" coveredelements="23" complexity="0" loc="34" ncloc="34" packages="1" files="3" classes="3">
+<coverage generated="1499685578451" clover="3.2.0">
+  <project timestamp="1499685578452" name="All files">
+    <metrics statements="46" coveredstatements="44" conditionals="20" coveredconditionals="19" methods="25" coveredmethods="24" elements="91" coveredelements="87" complexity="0" loc="46" ncloc="46" packages="1" files="3" classes="3">
       <file name="clientMethods.js" path="/Users/algolia/git/algoliasearch-client-javascript/packages/algoliasearch/src/clientMethods.js">
         <metrics statements="5" coveredstatements="5" conditionals="4" coveredconditionals="4" methods="4" coveredmethods="4"/>
         <line num="14" count="7" type="stmt"/>
@@ -11,38 +11,50 @@
         <line num="42" count="1" type="stmt"/>
       </file>
       <file name="index.js" path="/Users/algolia/git/algoliasearch-client-javascript/packages/algoliasearch/src/index.js">
-        <metrics statements="12" coveredstatements="5" conditionals="10" coveredconditionals="4" methods="2" coveredmethods="1"/>
-        <line num="11" count="8" type="cond" truecount="2" falsecount="0"/>
-        <line num="12" count="2" type="stmt"/>
-        <line num="14" count="6" type="cond" truecount="2" falsecount="0"/>
-        <line num="15" count="1" type="stmt"/>
-        <line num="18" count="5" type="stmt"/>
-        <line num="22" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="23" count="0" type="stmt"/>
-        <line num="25" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="26" count="0" type="stmt"/>
-        <line num="28" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="29" count="0" type="stmt"/>
-        <line num="32" count="0" type="stmt"/>
+        <metrics statements="24" coveredstatements="24" conditionals="10" coveredconditionals="10" methods="9" coveredmethods="9"/>
+        <line num="15" count="17" type="stmt"/>
+        <line num="16" count="32" type="stmt"/>
+        <line num="19" count="9" type="cond" truecount="2" falsecount="0"/>
+        <line num="20" count="2" type="stmt"/>
+        <line num="22" count="7" type="cond" truecount="2" falsecount="0"/>
+        <line num="23" count="1" type="stmt"/>
+        <line num="26" count="6" type="stmt"/>
+        <line num="28" count="6" type="stmt"/>
+        <line num="29" count="6" type="stmt"/>
+        <line num="30" count="24" type="stmt"/>
+        <line num="32" count="15" type="stmt"/>
+        <line num="36" count="6" type="stmt"/>
+        <line num="44" count="15" type="cond" truecount="2" falsecount="0"/>
+        <line num="45" count="2" type="stmt"/>
+        <line num="47" count="13" type="cond" truecount="2" falsecount="0"/>
+        <line num="48" count="1" type="stmt"/>
+        <line num="50" count="12" type="cond" truecount="2" falsecount="0"/>
+        <line num="51" count="1" type="stmt"/>
+        <line num="54" count="11" type="stmt"/>
+        <line num="56" count="11" type="stmt"/>
+        <line num="57" count="11" type="stmt"/>
+        <line num="58" count="99" type="stmt"/>
+        <line num="61" count="17" type="stmt"/>
+        <line num="65" count="11" type="stmt"/>
       </file>
       <file name="indexMethods.js" path="/Users/algolia/git/algoliasearch-client-javascript/packages/algoliasearch/src/indexMethods.js">
-        <metrics statements="17" coveredstatements="0" conditionals="6" coveredconditionals="0" methods="12" coveredmethods="0"/>
-        <line num="13" count="0" type="stmt"/>
-        <line num="24" count="0" type="stmt"/>
-        <line num="32" count="0" type="stmt"/>
-        <line num="43" count="0" type="stmt"/>
-        <line num="55" count="0" type="stmt"/>
-        <line num="67" count="0" type="stmt"/>
-        <line num="79" count="0" type="stmt"/>
-        <line num="92" count="0" type="stmt"/>
-        <line num="108" count="0" type="cond" truecount="0" falsecount="3"/>
-        <line num="109" count="0" type="stmt"/>
-        <line num="113" count="0" type="cond" truecount="0" falsecount="2"/>
+        <metrics statements="17" coveredstatements="15" conditionals="6" coveredconditionals="5" methods="12" coveredmethods="11"/>
+        <line num="18" count="7" type="stmt"/>
+        <line num="26" count="1" type="stmt"/>
+        <line num="37" count="1" type="stmt"/>
+        <line num="45" count="1" type="stmt"/>
+        <line num="56" count="2" type="stmt"/>
+        <line num="68" count="1" type="stmt"/>
+        <line num="80" count="1" type="stmt"/>
+        <line num="92" count="2" type="stmt"/>
+        <line num="108" count="1" type="cond" truecount="3" falsecount="0"/>
+        <line num="109" count="1" type="stmt"/>
+        <line num="113" count="1" type="cond" truecount="1" falsecount="1"/>
         <line num="114" count="0" type="stmt"/>
-        <line num="117" count="0" type="stmt"/>
-        <line num="119" count="0" type="stmt"/>
-        <line num="120" count="0" type="stmt"/>
-        <line num="126" count="0" type="stmt"/>
+        <line num="117" count="1" type="stmt"/>
+        <line num="119" count="1" type="stmt"/>
+        <line num="120" count="1" type="stmt"/>
+        <line num="126" count="1" type="stmt"/>
         <line num="127" count="0" type="stmt"/>
       </file>
     </metrics>
