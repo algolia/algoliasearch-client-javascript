@@ -1,0 +1,53 @@
+- all methods
+- move them one per file
+- minify tests
+- requester
+
+
+- methods
+  - search
+    - search
+    - SFFV
+  - index
+    - browse
+    - move
+    - clear
+    - delete
+    - copy
+  - batch
+    - batch
+  - settings
+    - get
+    - set
+  - objects
+    - add
+    - update
+    - partial
+    - delete
+    - get
+      -> note that multi and single should be the same function
+  - tasks
+    - status
+    - wait
+  - keys
+    - add
+    - update
+    - get
+    - delete
+  - logs
+    - get
+  - queryrules
+    - create
+    - batch
+    - get
+    - delete
+  - synonyms
+    - create
+    - batch
+    - get
+    - delete
+
+  - multi
+    - search
+    - keys (all methods)
+    - batch
