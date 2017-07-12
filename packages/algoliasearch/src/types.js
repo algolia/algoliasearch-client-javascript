@@ -56,6 +56,7 @@ export type RequestOptions = {
 export type Result = Object;
 
 export type RequestMethod = RequestOptions => Promise<Result>;
+export type Requester = (appId: AppId, apiKey: ApiKey) => RequestMethod;
 
 export type ClientParams = {|
   appId: AppId,

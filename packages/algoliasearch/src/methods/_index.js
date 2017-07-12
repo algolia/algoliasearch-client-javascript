@@ -8,7 +8,7 @@ import type {
   Result,
   TaskID,
   IndexBatchRequest,
-} from './types';
+} from '../types';
 
 export function batch(
   req: RequestMethod,

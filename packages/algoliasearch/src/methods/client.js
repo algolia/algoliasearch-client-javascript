@@ -8,7 +8,7 @@ import type {
   LogsParameters,
   ListIndicesParameters,
   IndexName,
-} from './types';
+} from '../types';
 
 export function batch(req: RequestMethod, requests: ClientBatchRequest[]) {
   return req({

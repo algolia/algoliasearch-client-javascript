@@ -1,11 +1,11 @@
 /* eslint-disable import/no-extraneous-dependencies, import/no-unresolved */
 // @flow
+import type { Requester } from './types';
 
-import { xhr } from '../../request'; // later: algoliasearch-request
-import type { RequestOptions } from './types';
-
-function req(options: RequestOptions) {
-  xhr(options);
-}
-
-export default req;
+// it will simply give back the arguments given
+// this is a mocked method, not implemented yet
+// later, we'll import from 'algoliasearch-request'
+//
+// eslint-disable-next-line no-unused-vars
+export const createRequester: Requester = (appId, apiKey) => requestParams =>
+  new Promise(resolve => resolve(requestParams));

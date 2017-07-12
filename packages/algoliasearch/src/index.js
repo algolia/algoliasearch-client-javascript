@@ -2,18 +2,16 @@
 /* eslint import/namespace: [2, { allowComputed: true }] */
 // @flow
 
-import * as indexMethods from './indexMethods';
-import * as clientMethods from './clientMethods';
+import * as indexMethods from './methods/_index';
+import * as clientMethods from './methods/client';
+import { createRequester } from './request';
+
 import type {
   ClientParams,
   ClientMethods,
   IndexParams,
   IndexMethods,
 } from './types';
-
-// it will simply give back the arguments given
-const createRequester = (appId, apiKey) => requestParams =>
-  new Promise(resolve => resolve(requestParams));
 
 export function initClient({ appId, apiKey }: ClientParams): ClientMethods {
   if (appId === undefined) {

@@ -1,5 +1,6 @@
 {
   "name": "algoliasearch",
+  "version": "4.0.0-beta.1",
   "private": true,
   "description": "AlgoliaSearch API JavaScript client",
   "repository": {
