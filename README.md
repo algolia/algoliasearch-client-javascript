@@ -44,6 +44,7 @@ You can find the full reference on [Algolia's website](https://www.algolia.com/d
     * [Frontend](#frontend)
     * [Node.js / React Native / Browserify / webpack](#nodejs--react-native--browserify--webpack)
     * [TypeScript typings](#typescript-typings)
+    * [NativeScript](#nativescript)
     * [Bower](#bower)
     * [&lt;script&gt; tag using CDNs](#script-tag-using-cdns)
     * [Search only/lite client](#search-onlylite-client)
@@ -95,6 +96,11 @@ For Typescript typings, we provide the definition file via [typings](https://git
 npm install --save @types/algoliasearch
 ```
 
+#### NativeScript
+
+```sh
+tns plugin add nativescript-algolia
+```
 #### Bower
 
 ```sh
