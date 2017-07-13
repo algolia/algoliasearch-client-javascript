@@ -8,7 +8,7 @@ import type {
   LogsParameters,
   ListIndicesParameters,
   IndexName,
-} from '../types';
+} from '../../types';
 
 export function batch(req: RequestMethod, requests: ClientBatchRequest[]) {
   return req({
@@ -43,6 +43,5 @@ export function search(req: RequestMethod, requests: SearchRequest[]) {
     method: 'POST',
     path: '/1/indexes/*/queries',
     body: { requests },
-    forceReadHosts: true,
   });
 }

@@ -4,6 +4,7 @@ export type AppId = string;
 export type ApiKey = string;
 export type IndexName = string;
 export type TaskID = string;
+export type ObjectID = string;
 
 export type Parameters = {|
   hitsPerPage?: number,
@@ -52,6 +53,8 @@ export type RequestOptions = {
   body?: Object,
   options?: Object,
 };
+
+export type GetObjectOptions = {| attributesToRetrieve: string[] |};
 
 export type Result = Object;
 

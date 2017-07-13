@@ -172,6 +172,7 @@ Array [
   "move",
   "search",
   "waitTask",
+  "getObject",
 ]
 `;
 
@@ -209,7 +210,6 @@ Object {
   "body": Object {
     "params": Object {},
   },
-  "forceReadHosts": true,
   "method": "POST",
   "path": "/1/indexes/some_index/query",
 }
@@ -222,7 +222,6 @@ Object {
       "hitsPerPage": 4,
     },
   },
-  "forceReadHosts": true,
   "method": "POST",
   "path": "/1/indexes/some_index/query",
 }

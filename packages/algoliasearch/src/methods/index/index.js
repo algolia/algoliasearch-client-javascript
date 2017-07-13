@@ -8,7 +8,9 @@ import type {
   Result,
   TaskID,
   IndexBatchRequest,
-} from '../types';
+  ObjectID,
+  GetObjectOptions,
+} from '../../types';
 
 export function batch(
   req: RequestMethod,
@@ -93,7 +95,6 @@ export function search(
     method: 'POST',
     path: `/1/indexes/${indexName}/query`,
     body: { params },
-    forceReadHosts: true,
   });
 }
 
@@ -128,5 +129,35 @@ export function waitTask(
         loop: currentLoop,
       })
     );
+  });
+}
+
+export function getObject(
+  req: RequestMethod,
+  indexName: IndexName,
+  objectID: ObjectID | ObjectID[],
+  options: GetObjectOptions
+) {
+  const { attributesToRetrieve: attrs } = options;
+  const attributesToRetrieve = attrs.join(',');
+
+  if (!Array.isArray(objectID)) {
+    return req({
+      method: 'GET',
+      path: `/1/indexes/${indexName}/${objectID}`,
+      qs: { attributes: attributesToRetrieve },
+    });
+  }
+
+  return req({
+    method: 'POST',
+    path: '/1/indexes/*/objects',
+    body: {
+      requests: objectID.map(id => ({
+        indexName,
+        objectID: id,
+        attributesToRetrieve,
+      })),
+    },
   });
 }

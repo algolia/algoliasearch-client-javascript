@@ -225,7 +225,6 @@ Object {
       },
     ],
   },
-  "forceReadHosts": true,
   "method": "POST",
   "path": "/1/indexes/*/queries",
 }

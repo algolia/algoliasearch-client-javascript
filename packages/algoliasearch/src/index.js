@@ -2,7 +2,7 @@
 /* eslint import/namespace: [2, { allowComputed: true }] */
 // @flow
 
-import * as indexMethods from './methods/_index';
+import * as indexMethods from './methods/index';
 import * as clientMethods from './methods/client';
 import { createRequester } from './request';
 
@@ -11,6 +11,9 @@ import type {
   ClientMethods,
   IndexParams,
   IndexMethods,
+  Parameters,
+  ObjectID,
+  GetObjectOptions,
 } from './types';
 
 export function initClient({ appId, apiKey }: ClientParams): ClientMethods {
@@ -61,4 +64,15 @@ export function initIndex({
     {}
   );
   return augmentedMethods;
+}
+
+export function initPlaces({ appId = '', apiKey = '' }: ClientParams) {
+  const requester = createRequester(appId, apiKey);
+
+  return {
+    search: (params: Parameters) =>
+      indexMethods.search(requester, 'places', (params: GetObjectOptions)),
+    getObject: (ids: ObjectID | ObjectID[], opts) =>
+      indexMethods.getObject(requester, 'places', ids, opts),
+  };
 }
