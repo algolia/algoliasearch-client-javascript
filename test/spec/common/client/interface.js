@@ -51,7 +51,7 @@ test('AlgoliaSearch client API spec', function(t) {
     'startQueriesBatch'
   ];
 
-  // Node.js only methods, not added conditionnaly because
+  // Node.js only methods, not added conditionally because
   // they are still declared in other environments,
   // but they will throw
   expectedProperties = expectedProperties.concat([
