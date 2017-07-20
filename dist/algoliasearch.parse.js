@@ -2527,7 +2527,7 @@ module.exports =
 	  function deprecated() {
 	    if (!warned) {
 	      /* eslint no-console:0 */
-	      console.log(message);
+	      console.warn(message);
 	      warned = true;
 	    }
 
@@ -2548,7 +2548,7 @@ module.exports =
 	    .replace('()', '');
 
 	  return 'algoliasearch: `' + previousUsage + '` was replaced by `' + newUsage +
-	    '`. Please see https://github.com/algolia/algoliasearch-client-js/wiki/Deprecated#' + githubAnchorLink;
+	    '`. Please see https://github.com/algolia/algoliasearch-client-javascript/wiki/Deprecated#' + githubAnchorLink;
 	};
 
 
@@ -2982,7 +2982,7 @@ module.exports =
 	  this.hosts.read = map(this.hosts.read, prepareHost(protocol));
 	  this.hosts.write = map(this.hosts.write, prepareHost(protocol));
 
-	  this.extraHeaders = [];
+	  this.extraHeaders = {};
 
 	  // In some situations you might want to warm the cache
 	  this.cache = opts._cache || {};
@@ -3013,9 +3013,25 @@ module.exports =
 	* @param value the header field value
 	*/
 	AlgoliaSearchCore.prototype.setExtraHeader = function(name, value) {
-	  this.extraHeaders.push({
-	    name: name.toLowerCase(), value: value
-	  });
+	  this.extraHeaders[name.toLowerCase()] = value;
+	};
+
+	/**
+	* Get the value of an extra HTTP header
+	*
+	* @param name the header field name
+	*/
+	AlgoliaSearchCore.prototype.getExtraHeader = function(name) {
+	  return this.extraHeaders[name.toLowerCase()];
+	};
+
+	/**
+	* Remove an extra field from the HTTP request
+	*
+	* @param name the header field name
+	*/
+	AlgoliaSearchCore.prototype.unsetExtraHeader = function(name) {
+	  delete this.extraHeaders[name.toLowerCase()];
 	};
 
 	/**
@@ -3357,11 +3373,9 @@ module.exports =
 	    requestHeaders['x-algolia-tagfilters'] = this.securityTags;
 	  }
 
-	  if (this.extraHeaders) {
-	    forEach(this.extraHeaders, function addToRequestHeaders(header) {
-	      requestHeaders[header.name] = header.value;
-	    });
-	  }
+	  forEach(this.extraHeaders, function addToRequestHeaders(value, key) {
+	    requestHeaders[key] = value;
+	  });
 
 	  return requestHeaders;
 	};
@@ -3761,7 +3775,7 @@ module.exports =
 
 	
 
-	module.exports = '3.24.0';
+	module.exports = '3.24.1';
 
 
 /***/ }

@@ -1,4 +1,12 @@
 CHANGELOG
+2017-07-20 3.24.1
+  * feat(headers): add functions to remove and get extra headers (#572)
+    * client.setExtraHeader('X-cool-header','hello there');
+    * client.getExtraHeader('X-cool-header'); //hello there
+    * client.unsetExtraHeader('X-cool-header');
+    * client.getExtraHeader('X-cool-header'); //undefined
+  * feat(deprecation): use console.warn to be more visible
+  * refact(rules): Adapt to latest JSON schema for Query Rules
 
 2017-06-21 3.24.0
   * feat(rules): Add query rules beta version, you cannot use this for now
