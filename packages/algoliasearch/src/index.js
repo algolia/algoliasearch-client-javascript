@@ -4,6 +4,8 @@
 
 import * as indexMethods from './methods/index';
 import * as clientMethods from './methods/client';
+import * as placesMethods from './methods/places';
+
 import { createRequester } from './request';
 
 import type {
@@ -11,10 +13,20 @@ import type {
   ClientMethods,
   IndexParams,
   IndexMethods,
-  Parameters,
-  ObjectID,
-  GetObjectOptions,
+  PlacesParams,
 } from './types';
+
+function curryObject(original, ...extra) {
+  const methodNames = Object.keys(original);
+  const augmentedMethods = methodNames.reduce(
+    (methods, method) => ({
+      ...methods,
+      [method]: (...args) => original[method](...extra, ...args),
+    }),
+    {}
+  );
+  return augmentedMethods;
+}
 
 export function initClient({ appId, apiKey }: ClientParams): ClientMethods {
   if (appId === undefined) {
@@ -25,16 +37,7 @@ export function initClient({ appId, apiKey }: ClientParams): ClientMethods {
   }
 
   const requester = createRequester(appId, apiKey);
-
-  const methodNames = Object.keys(clientMethods);
-  const augmentedMethods = methodNames.reduce(
-    (methods, method) => ({
-      ...methods,
-      [method]: (...args) => clientMethods[method](requester, ...args),
-    }),
-    {}
-  );
-  return augmentedMethods;
+  return curryObject(clientMethods, requester);
 }
 
 export function initIndex({
@@ -53,26 +56,16 @@ export function initIndex({
   }
 
   const requester = createRequester(appId, apiKey);
-
-  const methodNames = Object.keys(indexMethods);
-  const augmentedMethods = methodNames.reduce(
-    (methods, method) => ({
-      ...methods,
-      [method]: (...args) =>
-        indexMethods[method](requester, indexName, ...args),
-    }),
-    {}
-  );
-  return augmentedMethods;
+  return curryObject(indexMethods, requester, indexName);
 }
 
-export function initPlaces({ appId = '', apiKey = '' }: ClientParams) {
-  const requester = createRequester(appId, apiKey);
+export function initPlaces(params: PlacesParams = {}) {
+  const { appId = '', apiKey = '' } = params;
+  if ((appId === '' && apiKey !== '') || (apiKey === '' && appId !== '')) {
+    throw new Error(`apiKey or appId are not required for places. 
+You gave either an appId and no apiKey, or an apiKey and no appId`);
+  }
 
-  return {
-    search: (params: Parameters) =>
-      indexMethods.search(requester, 'places', (params: GetObjectOptions)),
-    getObject: (ids: ObjectID | ObjectID[], opts) =>
-      indexMethods.getObject(requester, 'places', ids, opts),
-  };
+  const requester = createRequester(appId, apiKey);
+  return curryObject(placesMethods, requester);
 }

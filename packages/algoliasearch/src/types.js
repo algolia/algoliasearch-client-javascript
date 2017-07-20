@@ -90,3 +90,8 @@ export type IndexMethods = {
   search: Function,
   waitTask: Function,
 };
+
+export type PlacesParams = {
+  appId?: AppId,
+  apiKey?: ApiKey,
+};

@@ -1,30 +1,8 @@
 // @flow
-
-import { initClient } from '../';
-const validParams = { appId: 'some_app', apiKey: 'some_key' };
-
-const snapshotAll = requests =>
-  requests.map(req => req.then(sn => expect(sn).toMatchSnapshot()));
-
-it('throws when it has too little parameters', () => {
-  // $FlowIssue --> type disallows this
-  expect(() => initClient({})).toThrow();
-  // $FlowIssue --> type disallows this
-  expect(() => initClient({ appId: '' })).toThrow();
-  // $FlowIssue --> type disallows this
-  expect(() => initClient({ apiKey: '' })).toThrow();
-  expect(() => initClient(validParams)).not.toThrow();
-});
-
-it('contains the correct methods', () => {
-  const client = initClient(validParams);
-  expect(Object.keys(client)).toMatchSnapshot();
-});
-
+import { snapshotAll, fakeRequester } from '../../testUtils';
 it('batch', () => {
-  const client = initClient(validParams);
   const requests = [
-    client.batch([
+    batch(fakeRequester, [
       {
         action: 'addObject',
         indexName: 'cool-index',
@@ -35,7 +13,7 @@ it('batch', () => {
         },
       },
     ]),
-    client.batch([
+    batch(fakeRequester, [
       {
         action: 'updateObject',
         indexName: 'uncool-index',
@@ -46,7 +24,7 @@ it('batch', () => {
         },
       },
     ]),
-    client.batch([
+    batch(fakeRequester, [
       {
         action: 'partialUpdateObject',
         indexName: 'cool-index',
@@ -57,7 +35,7 @@ it('batch', () => {
         },
       },
     ]),
-    client.batch([
+    batch(fakeRequester, [
       {
         action: 'partialUpdateObjectNoCreate',
         indexName: 'cool-index',
@@ -69,7 +47,7 @@ it('batch', () => {
         },
       },
     ]),
-    client.batch([
+    batch(fakeRequester, [
       {
         action: 'deleteObject',
         indexName: 'cool-index',
@@ -78,13 +56,13 @@ it('batch', () => {
         },
       },
     ]),
-    client.batch([
+    batch(fakeRequester, [
       {
         action: 'delete',
         indexName: 'uncool-index-with-bad-name',
       },
     ]),
-    client.batch([
+    batch(fakeRequester, [
       {
         action: 'clear',
         indexName: 'cool-index-with-bad-contents',
@@ -95,37 +73,23 @@ it('batch', () => {
   snapshotAll(requests);
 });
 
-it('search', () => {
-  const client = initClient(validParams);
-  const requests = [
-    client.search([
-      {
-        indexName: 'some_index',
-        params: {},
-      },
-    ]),
-  ];
-
-  snapshotAll(requests);
-});
-
 it('getLogs', () => {
-  const client = initClient(validParams);
   const requests = [
-    client.getLogs(),
-    client.getLogs({}),
-    client.getLogs({ offset: 4 }),
-    client.getLogs({ length: 50 }),
-    client.getLogs({ offset: 4, length: 50 }),
+    getLogs(fakeRequester),
+    getLogs(fakeRequester, {}),
+    getLogs(fakeRequester, { offset: 4 }),
+    getLogs(fakeRequester, { length: 50 }),
+    getLogs(fakeRequester, { offset: 4, length: 50 }),
   ];
 
   snapshotAll(requests);
 });
 
 it('listIndexes', () => {
-  const client = initClient(validParams);
-
-  const requests = [client.listIndexes(), client.listIndexes({ page: 1 })];
+  const requests = [
+    listIndexes(fakeRequester),
+    listIndexes(fakeRequester, { page: 1 }),
+  ];
 
   snapshotAll(requests);
 });

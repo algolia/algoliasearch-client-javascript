@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`search 1`] = `
+Object {
+  "body": Object {
+    "params": Object {},
+  },
+  "method": "POST",
+  "path": "/1/indexes/places/query",
+}
+`;
+
+exports[`search 2`] = `
+Object {
+  "body": Object {
+    "params": Object {
+      "hitsPerPage": 4,
+    },
+  },
+  "method": "POST",
+  "path": "/1/indexes/places/query",
+}
+`;
