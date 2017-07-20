@@ -111,7 +111,7 @@ function AlgoliaSearchCore(applicationID, apiKey, opts) {
   this.hosts.read = map(this.hosts.read, prepareHost(protocol));
   this.hosts.write = map(this.hosts.write, prepareHost(protocol));
 
-  this.extraHeaders = [];
+  this.extraHeaders = {};
 
   // In some situations you might want to warm the cache
   this.cache = opts._cache || {};
@@ -142,9 +142,25 @@ AlgoliaSearchCore.prototype.initIndex = function(indexName) {
 * @param value the header field value
 */
 AlgoliaSearchCore.prototype.setExtraHeader = function(name, value) {
-  this.extraHeaders.push({
-    name: name.toLowerCase(), value: value
-  });
+  this.extraHeaders[name.toLowerCase()] = value;
+};
+
+/**
+* Get the value of an extra HTTP header
+*
+* @param name the header field name
+*/
+AlgoliaSearchCore.prototype.getExtraHeader = function(name) {
+  return this.extraHeaders[name.toLowerCase()];
+};
+
+/**
+* Remove an extra field from the HTTP request
+*
+* @param name the header field name
+*/
+AlgoliaSearchCore.prototype.unsetExtraHeader = function(name) {
+  delete this.extraHeaders[name.toLowerCase()];
 };
 
 /**
@@ -486,11 +502,9 @@ AlgoliaSearchCore.prototype._computeRequestHeaders = function(additionalUA, with
     requestHeaders['x-algolia-tagfilters'] = this.securityTags;
   }
 
-  if (this.extraHeaders) {
-    forEach(this.extraHeaders, function addToRequestHeaders(header) {
-      requestHeaders[header.name] = header.value;
-    });
-  }
+  forEach(this.extraHeaders, function addToRequestHeaders(value, key) {
+    requestHeaders[key] = value;
+  });
 
   return requestHeaders;
 };
