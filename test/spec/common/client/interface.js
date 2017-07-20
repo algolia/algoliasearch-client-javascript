@@ -20,25 +20,24 @@ test('AlgoliaSearch client API spec', function(t) {
 
   var expectedProperties = [
     'addAlgoliaAgent',
-    'addQueryInBatch',
     'addApiKey',
+    'addQueryInBatch',
     'addUserKey',
     'addUserKeyWithValidity',
     'batch',
-    'updateApiKey',
-    'updateUserKey',
     'clearCache',
     'copyIndex',
-    'deleteIndex',
     'deleteApiKey',
+    'deleteIndex',
     'deleteUserKey',
+    'getApiKey',
+    'getExtraHeader',
     'getLogs',
     'getTimeouts',
-    'getApiKey',
     'getUserKeyACL',
     'initIndex',
-    'listIndexes',
     'listApiKeys',
+    'listIndexes',
     'listUserKeys',
     'moveIndex',
     'search',
@@ -48,10 +47,13 @@ test('AlgoliaSearch client API spec', function(t) {
     'setSecurityTags',
     'setTimeouts',
     'setUserToken',
-    'startQueriesBatch'
+    'startQueriesBatch',
+    'unsetExtraHeader',
+    'updateApiKey',
+    'updateUserKey'
   ];
 
-  // Node.js only methods, not added conditionnaly because
+  // Node.js only methods, not added conditionally because
   // they are still declared in other environments,
   // but they will throw
   expectedProperties = expectedProperties.concat([

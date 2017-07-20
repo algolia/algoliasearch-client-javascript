@@ -4,7 +4,7 @@ module.exports = function deprecate(fn, message) {
   function deprecated() {
     if (!warned) {
       /* eslint no-console:0 */
-      console.log(message);
+      console.warn(message);
       warned = true;
     }
 
