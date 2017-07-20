@@ -28,7 +28,7 @@ inherits(Index, IndexCore);
 *  error: null or Error('message')
 *  content: the server answer that contains 3 elements: createAt, taskId and objectID
 */
-Index.prototype.addObject = function(content, objectID, callback) {
+Index.prototype.addObject = deprecate(function(content, objectID, callback) {
   var indexObj = this;
 
   if (arguments.length === 1 || typeof objectID === 'function') {
@@ -46,7 +46,7 @@ Index.prototype.addObject = function(content, objectID, callback) {
     hostType: 'write',
     callback: callback
   });
-};
+}, deprecatedMessage('index.addObject(obj)', 'index.addObjects([obj])'));
 
 /*
 * Add several objects
@@ -94,7 +94,7 @@ Index.prototype.addObjects = function(objects, callback) {
 *  error: null or Error('message')
 *  content: the server answer that contains 3 elements: createAt, taskId and objectID
 */
-Index.prototype.partialUpdateObject = function(partialObject, createIfNotExists, callback) {
+Index.prototype.partialUpdateObject = deprecate(function(partialObject, createIfNotExists, callback) {
   if (arguments.length === 1 || typeof createIfNotExists === 'function') {
     callback = createIfNotExists;
     createIfNotExists = undefined;
@@ -113,7 +113,7 @@ Index.prototype.partialUpdateObject = function(partialObject, createIfNotExists,
     hostType: 'write',
     callback: callback
   });
-};
+}, deprecatedMessage('index.partialUpdateObject(obj)', 'partialUpdateObjects([obj])'));
 
 /*
 * Partially Override the content of several objects
@@ -165,7 +165,7 @@ Index.prototype.partialUpdateObjects = function(objects, createIfNotExists, call
 *  error: null or Error('message')
 *  content: the server answer that updateAt and taskID
 */
-Index.prototype.saveObject = function(object, callback) {
+Index.prototype.saveObject = deprecate(function(object, callback) {
   var indexObj = this;
   return this.as._jsonRequest({
     method: 'PUT',
@@ -174,7 +174,7 @@ Index.prototype.saveObject = function(object, callback) {
     hostType: 'write',
     callback: callback
   });
-};
+}, deprecatedMessage('index.saveObject(obj)', 'index.saveObjects([obj])'));
 
 /*
 * Override the content of several objects
@@ -221,7 +221,7 @@ Index.prototype.saveObjects = function(objects, callback) {
 *  error: null or Error('message')
 *  content: the server answer that contains 3 elements: createAt, taskId and objectID
 */
-Index.prototype.deleteObject = function(objectID, callback) {
+Index.prototype.deleteObject = deprecate(function(objectID, callback) {
   if (typeof objectID === 'function' || typeof objectID !== 'string' && typeof objectID !== 'number') {
     var err = new errors.AlgoliaSearchError('Cannot delete an object without an objectID');
     callback = objectID;
@@ -239,7 +239,7 @@ Index.prototype.deleteObject = function(objectID, callback) {
     hostType: 'write',
     callback: callback
   });
-};
+}, deprecatedMessage('index.deleteObject(objectID)', 'index.deleteObjects([objectID])'));
 
 /*
 * Delete several objects from an index
@@ -471,7 +471,7 @@ Index.prototype.browseAll = function(query, queryParameters) {
 * Get a Typeahead.js adapter
 * @param searchParams contains an object with query parameters (see search for details)
 */
-Index.prototype.ttAdapter = function(params) {
+Index.prototype.ttAdapter = deprecate(function(params) {
   var self = this;
   return function ttAdapter(query, syncCb, asyncCb) {
     var cb;
@@ -493,7 +493,9 @@ Index.prototype.ttAdapter = function(params) {
       cb(content.hits);
     });
   };
-};
+},
+'ttAdapter is not necessary anymore and will be removed in the next version,\n' +
+'have a look at autocomplete.js (https://github.com/algolia/autocomplete.js)');
 
 /*
 * Wait the publication of a task on the server.
