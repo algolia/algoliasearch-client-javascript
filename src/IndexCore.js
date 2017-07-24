@@ -304,7 +304,7 @@ IndexCore.prototype._search = function(params, url, callback, additionalUA) {
 *  error: null or Error('message')
 *  content: the object to retrieve or the error message if a failure occured
 */
-IndexCore.prototype.getObject = deprecate(function(objectID, attrs, callback) {
+IndexCore.prototype.getObject = function(objectID, attrs, callback) {
   var indexObj = this;
 
   if (arguments.length === 1 || typeof attrs === 'function') {
@@ -329,7 +329,7 @@ IndexCore.prototype.getObject = deprecate(function(objectID, attrs, callback) {
     hostType: 'read',
     callback: callback
   });
-}, deprecatedMessage('index.getObject(objectID)', 'index.getObjects([objectID])'));
+};
 
 /*
 * Get several objects from this index
