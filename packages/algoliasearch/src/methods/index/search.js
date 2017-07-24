@@ -1,5 +1,5 @@
 // @flow
-import type { RequestMethod, IndexName, Parameters } from '../../../types';
+import type { RequestMethod, IndexName, Parameters } from '../../types';
 
 export default function search(
   req: RequestMethod,

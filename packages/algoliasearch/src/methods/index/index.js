@@ -4,6 +4,7 @@ export { default as browseFrom } from './browseFrom';
 export { default as clearIndex } from './clearIndex';
 export { default as copyIndex } from './copyIndex';
 export { default as getObject } from './getObject';
+export { default as getObjects } from './getObjects';
 export { default as moveIndex } from './moveIndex';
 export { default as removeIndex } from './removeIndex';
 export { default as search } from './search';
