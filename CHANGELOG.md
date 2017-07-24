@@ -1,4 +1,12 @@
 CHANGELOG
+2017-07-24 3.24.3
+  * chore(deprecation): remove deprecation from singular/plural methods; all these methods will stay existing
+    * index.addObject(obj) or index.addObjects([obj])
+    * index.partialUpdateObject(obj) or partialUpdateObjects([obj])
+    * index.saveObject(obj) or index.saveObjects([obj])
+    * index.deleteObject(objectID) or index.deleteObjects([objectID])
+    * index.getObject(objectID) or index.getObjects([objectID])
+
 2017-07-24 3.24.2
   * chore(deprecation): add deprecation message to all methods that will be removed in v4 (#573)
     * index.addObject(obj) --> index.addObjects([obj])

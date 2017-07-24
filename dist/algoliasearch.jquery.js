@@ -1,4 +1,4 @@
-/*! algoliasearch 3.24.2 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
+/*! algoliasearch 3.24.3 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
 (function(f){var g;if(typeof window!=='undefined'){g=window}else if(typeof self!=='undefined'){g=self}g.ALGOLIA_MIGRATION_LAYER=f()})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 
 module.exports = function load (src, opts, cb) {
@@ -4050,7 +4050,7 @@ inherits(Index, IndexCore);
 *  error: null or Error('message')
 *  content: the server answer that contains 3 elements: createAt, taskId and objectID
 */
-Index.prototype.addObject = deprecate(function(content, objectID, callback) {
+Index.prototype.addObject = function(content, objectID, callback) {
   var indexObj = this;
 
   if (arguments.length === 1 || typeof objectID === 'function') {
@@ -4068,7 +4068,7 @@ Index.prototype.addObject = deprecate(function(content, objectID, callback) {
     hostType: 'write',
     callback: callback
   });
-}, deprecatedMessage('index.addObject(obj)', 'index.addObjects([obj])'));
+};
 
 /*
 * Add several objects
@@ -4116,7 +4116,7 @@ Index.prototype.addObjects = function(objects, callback) {
 *  error: null or Error('message')
 *  content: the server answer that contains 3 elements: createAt, taskId and objectID
 */
-Index.prototype.partialUpdateObject = deprecate(function(partialObject, createIfNotExists, callback) {
+Index.prototype.partialUpdateObject = function(partialObject, createIfNotExists, callback) {
   if (arguments.length === 1 || typeof createIfNotExists === 'function') {
     callback = createIfNotExists;
     createIfNotExists = undefined;
@@ -4135,7 +4135,7 @@ Index.prototype.partialUpdateObject = deprecate(function(partialObject, createIf
     hostType: 'write',
     callback: callback
   });
-}, deprecatedMessage('index.partialUpdateObject(obj)', 'partialUpdateObjects([obj])'));
+};
 
 /*
 * Partially Override the content of several objects
@@ -4187,7 +4187,7 @@ Index.prototype.partialUpdateObjects = function(objects, createIfNotExists, call
 *  error: null or Error('message')
 *  content: the server answer that updateAt and taskID
 */
-Index.prototype.saveObject = deprecate(function(object, callback) {
+Index.prototype.saveObject = function(object, callback) {
   var indexObj = this;
   return this.as._jsonRequest({
     method: 'PUT',
@@ -4196,7 +4196,7 @@ Index.prototype.saveObject = deprecate(function(object, callback) {
     hostType: 'write',
     callback: callback
   });
-}, deprecatedMessage('index.saveObject(obj)', 'index.saveObjects([obj])'));
+}
 
 /*
 * Override the content of several objects
@@ -4243,7 +4243,7 @@ Index.prototype.saveObjects = function(objects, callback) {
 *  error: null or Error('message')
 *  content: the server answer that contains 3 elements: createAt, taskId and objectID
 */
-Index.prototype.deleteObject = deprecate(function(objectID, callback) {
+Index.prototype.deleteObject = function(objectID, callback) {
   if (typeof objectID === 'function' || typeof objectID !== 'string' && typeof objectID !== 'number') {
     var err = new errors.AlgoliaSearchError('Cannot delete an object without an objectID');
     callback = objectID;
@@ -4261,7 +4261,7 @@ Index.prototype.deleteObject = deprecate(function(objectID, callback) {
     hostType: 'write',
     callback: callback
   });
-}, deprecatedMessage('index.deleteObject(objectID)', 'index.deleteObjects([objectID])'));
+};
 
 /*
 * Delete several objects from an index
@@ -5514,7 +5514,7 @@ IndexCore.prototype._search = function(params, url, callback, additionalUA) {
 *  error: null or Error('message')
 *  content: the object to retrieve or the error message if a failure occured
 */
-IndexCore.prototype.getObject = deprecate(function(objectID, attrs, callback) {
+IndexCore.prototype.getObject = function(objectID, attrs, callback) {
   var indexObj = this;
 
   if (arguments.length === 1 || typeof attrs === 'function') {
@@ -5539,7 +5539,7 @@ IndexCore.prototype.getObject = deprecate(function(objectID, attrs, callback) {
     hostType: 'read',
     callback: callback
   });
-}, deprecatedMessage('index.getObject(objectID)', 'index.getObjects([objectID])'));
+};
 
 /*
 * Get several objects from this index
@@ -6506,6 +6506,6 @@ function cleanup() {
 },{"1":1}],36:[function(require,module,exports){
 'use strict';
 
-module.exports = '3.24.2';
+module.exports = '3.24.3';
 
 },{}]},{},[19]);

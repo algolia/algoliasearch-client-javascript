@@ -828,7 +828,7 @@ module.exports =
 	*  error: null or Error('message')
 	*  content: the server answer that contains 3 elements: createAt, taskId and objectID
 	*/
-	Index.prototype.addObject = deprecate(function(content, objectID, callback) {
+	Index.prototype.addObject = function(content, objectID, callback) {
 	  var indexObj = this;
 
 	  if (arguments.length === 1 || typeof objectID === 'function') {
@@ -846,7 +846,7 @@ module.exports =
 	    hostType: 'write',
 	    callback: callback
 	  });
-	}, deprecatedMessage('index.addObject(obj)', 'index.addObjects([obj])'));
+	};
 
 	/*
 	* Add several objects
@@ -894,7 +894,7 @@ module.exports =
 	*  error: null or Error('message')
 	*  content: the server answer that contains 3 elements: createAt, taskId and objectID
 	*/
-	Index.prototype.partialUpdateObject = deprecate(function(partialObject, createIfNotExists, callback) {
+	Index.prototype.partialUpdateObject = function(partialObject, createIfNotExists, callback) {
 	  if (arguments.length === 1 || typeof createIfNotExists === 'function') {
 	    callback = createIfNotExists;
 	    createIfNotExists = undefined;
@@ -913,7 +913,7 @@ module.exports =
 	    hostType: 'write',
 	    callback: callback
 	  });
-	}, deprecatedMessage('index.partialUpdateObject(obj)', 'partialUpdateObjects([obj])'));
+	};
 
 	/*
 	* Partially Override the content of several objects
@@ -965,7 +965,7 @@ module.exports =
 	*  error: null or Error('message')
 	*  content: the server answer that updateAt and taskID
 	*/
-	Index.prototype.saveObject = deprecate(function(object, callback) {
+	Index.prototype.saveObject = function(object, callback) {
 	  var indexObj = this;
 	  return this.as._jsonRequest({
 	    method: 'PUT',
@@ -974,7 +974,7 @@ module.exports =
 	    hostType: 'write',
 	    callback: callback
 	  });
-	}, deprecatedMessage('index.saveObject(obj)', 'index.saveObjects([obj])'));
+	}
 
 	/*
 	* Override the content of several objects
@@ -1021,7 +1021,7 @@ module.exports =
 	*  error: null or Error('message')
 	*  content: the server answer that contains 3 elements: createAt, taskId and objectID
 	*/
-	Index.prototype.deleteObject = deprecate(function(objectID, callback) {
+	Index.prototype.deleteObject = function(objectID, callback) {
 	  if (typeof objectID === 'function' || typeof objectID !== 'string' && typeof objectID !== 'number') {
 	    var err = new errors.AlgoliaSearchError('Cannot delete an object without an objectID');
 	    callback = objectID;
@@ -1039,7 +1039,7 @@ module.exports =
 	    hostType: 'write',
 	    callback: callback
 	  });
-	}, deprecatedMessage('index.deleteObject(objectID)', 'index.deleteObjects([objectID])'));
+	};
 
 	/*
 	* Delete several objects from an index
@@ -2255,7 +2255,7 @@ module.exports =
 	*  error: null or Error('message')
 	*  content: the object to retrieve or the error message if a failure occured
 	*/
-	IndexCore.prototype.getObject = deprecate(function(objectID, attrs, callback) {
+	IndexCore.prototype.getObject = function(objectID, attrs, callback) {
 	  var indexObj = this;
 
 	  if (arguments.length === 1 || typeof attrs === 'function') {
@@ -2280,7 +2280,7 @@ module.exports =
 	    hostType: 'read',
 	    callback: callback
 	  });
-	}, deprecatedMessage('index.getObject(objectID)', 'index.getObjects([objectID])'));
+	};
 
 	/*
 	* Get several objects from this index
@@ -3776,7 +3776,7 @@ module.exports =
 
 	
 
-	module.exports = '3.24.2';
+	module.exports = '3.24.3';
 
 
 /***/ }
