@@ -1,4 +1,14 @@
 CHANGELOG
+2017-07-24 3.24.2
+  * chore(deprecation): add deprecation message to all methods that will be removed in v4 (#573)
+    * index.addObject(obj) --> index.addObjects([obj])
+    * index.ttAdapter --> autocomplete.js
+    * index.partialUpdateObject(obj) --> partialUpdateObjects([obj])
+    * index.saveObject(obj) --> index.saveObjects([obj])
+    * index.deleteObject(objectID) --> index.deleteObjects([objectID])
+    * index.getObject(objectID) --> index.getObjects([objectID])
+    * see https://github.com/algolia/algoliasearch-client-javascript/wiki/Deprecated for more information
+
 2017-07-20 3.24.1
   * feat(headers): add functions to remove and get extra headers (#572)
     * client.setExtraHeader('X-cool-header','hello there');
