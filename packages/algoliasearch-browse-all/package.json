@@ -1,0 +1,5 @@
+{
+  "name": "algoliasearch-browse-all",
+  "version": "4.0.0-beta.1",
+  "description": "Browse all of the content of an Algolia index"
+}
