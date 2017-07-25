@@ -1,10 +1,12 @@
 // @flow
 
-import type { RequestMethod, ListIndicesParameters } from '../../types';
+import type { RequestMethod } from '../../types';
 
 export default function listIndexes(
   req: RequestMethod,
-  params: ListIndicesParameters = {}
+  params: {
+    page?: number,
+  } = {}
 ) {
   return req({
     method: 'GET',

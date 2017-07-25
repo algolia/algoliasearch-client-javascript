@@ -6,23 +6,8 @@ export type IndexName = string;
 export type TaskID = string;
 export type ObjectID = string;
 
-export type Parameters = {|
-  hitsPerPage?: number,
-  // more
-|};
-
-export type BrowseParameters = {|
-  cursor?: string,
-|};
-
-export type LogsParameters = {
-  offset?: number,
-  length?: number,
-};
-
-export type ListIndicesParameters = {
-  page?: number,
-};
+export type Rule = Object; // todo: type this according to https://docs.google.com/document/d/1ZJY8uVbY-lUf88BeHZwSU5JQ-lKx6bMq8N7MnXyL1W4/edit#heading=h.dq5y55g3y74f
+export type { Synonym } from './synonyms';
 
 export type BatchActions =
   | 'addObject'
@@ -33,8 +18,12 @@ export type BatchActions =
   | 'delete'
   | 'clear';
 
-export type Method = 'POST' | 'GET' | 'DELETE' | 'PUT';
+export type SearchParameters = {|
+  hitsPerPage?: number,
+  // more
+|};
 
+export type Method = 'POST' | 'GET' | 'DELETE' | 'PUT';
 export type RequestOptions = {
   method: Method,
   path: string,
@@ -42,7 +31,6 @@ export type RequestOptions = {
   body?: Object,
   options?: Object,
 };
-
 export type Result = Object;
 export type RequestMethod = RequestOptions => Promise<Result>;
 export type Requester = (appId: AppId, apiKey: ApiKey) => RequestMethod;

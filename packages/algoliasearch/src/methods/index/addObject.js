@@ -1,15 +1,15 @@
 // @flow
 
-import type { RequestMethod, IndexName, IndexBatchRequest } from '../../types';
+import type { RequestMethod, IndexName } from '../../types';
 
-export default function batch(
+export default function addObject(
   req: RequestMethod,
   indexName: IndexName,
-  requests: IndexBatchRequest[]
+  body: Object
 ) {
   return req({
     method: 'POST',
-    path: `/1/indexes/${indexName}/batch`,
-    body: { requests },
+    path: `/1/indexes/${indexName}/`,
+    body,
   });
 }

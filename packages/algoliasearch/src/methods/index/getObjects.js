@@ -8,13 +8,13 @@ export type GetObjectOptions = {| attributesToRetrieve: string[] |};
 export default function getObjects(
   req: RequestMethod,
   indexName: IndexName,
-  objectID: ObjectID[],
+  objectIDs: ObjectID[],
   options: GetObjectOptions
 ) {
   const { attributesToRetrieve: attrs } = options;
   const attributesToRetrieve = attrs.join(',');
 
-  if (!Array.isArray(objectID)) {
+  if (!Array.isArray(objectIDs)) {
     throw pluralError('getObject');
   }
 
@@ -22,9 +22,9 @@ export default function getObjects(
     method: 'POST',
     path: '/1/indexes/*/objects',
     body: {
-      requests: objectID.map(id => ({
+      requests: objectIDs.map(objectID => ({
         indexName,
-        objectID: id,
+        objectID,
         attributesToRetrieve,
       })),
     },

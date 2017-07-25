@@ -1,11 +1,11 @@
 // @flow
 
-import type { RequestMethod, IndexName, Parameters } from '../../types';
+import type { RequestMethod, IndexName, SearchParameters } from '../../types';
 
 export default function browse(
   req: RequestMethod,
   indexName: IndexName,
-  params: Parameters
+  params: SearchParameters
 ) {
   return req({
     method: 'GET',

@@ -24,7 +24,9 @@ const apiMethods = {
 
 const requesterMethods = {
   clearCache: false,
-  extraHeaders: false, // js Map
+  setExtraHeader: false,
+  getExtraHeader: false,
+  unsetExtraHeader: false,
   setTimeouts: false,
   setRequestTimeout: false,
   nodeOnly: {
