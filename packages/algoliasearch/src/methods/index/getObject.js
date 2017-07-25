@@ -1,11 +1,8 @@
 // @flow
 
-import type {
-  RequestMethod,
-  IndexName,
-  ObjectID,
-  GetObjectOptions,
-} from '../../types';
+import type { RequestMethod, IndexName, ObjectID } from '../../types';
+
+export type GetObjectOptions = {| attributesToRetrieve: string[] |};
 
 export default function getObjects(
   req: RequestMethod,

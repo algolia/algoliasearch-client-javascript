@@ -24,7 +24,7 @@ export type ListIndicesParameters = {
   page?: number,
 };
 
-type BatchActions =
+export type BatchActions =
   | 'addObject'
   | 'updateObject'
   | 'partialUpdateObject'
@@ -32,17 +32,6 @@ type BatchActions =
   | 'deleteObject'
   | 'delete'
   | 'clear';
-
-export type ClientBatchRequest = {|
-  action: BatchActions,
-  indexName: IndexName,
-  body?: Object,
-|};
-
-export type IndexBatchRequest = {|
-  action: BatchActions,
-  body?: Object,
-|};
 
 export type Method = 'POST' | 'GET' | 'DELETE' | 'PUT';
 
@@ -54,17 +43,9 @@ export type RequestOptions = {
   options?: Object,
 };
 
-export type GetObjectOptions = {| attributesToRetrieve: string[] |};
-
 export type Result = Object;
-
 export type RequestMethod = RequestOptions => Promise<Result>;
 export type Requester = (appId: AppId, apiKey: ApiKey) => RequestMethod;
-
-export type ClientParams = {|
-  appId: AppId,
-  apiKey: ApiKey,
-|};
 
 export type ClientMethods = {
   batch: Function,
@@ -72,12 +53,6 @@ export type ClientMethods = {
   listIndexes: Function,
   search: Function,
 };
-
-export type IndexParams = {|
-  appId: AppId,
-  apiKey: ApiKey,
-  indexName: IndexName,
-|};
 
 export type IndexMethods = {
   batch: Function,
@@ -89,9 +64,4 @@ export type IndexMethods = {
   move: Function,
   search: Function,
   waitTask: Function,
-};
-
-export type PlacesParams = {
-  appId?: AppId,
-  apiKey?: ApiKey,
 };

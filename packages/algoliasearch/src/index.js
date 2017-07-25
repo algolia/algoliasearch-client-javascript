@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 /* eslint import/namespace: [2, { allowComputed: true }] */
 // @flow
 
@@ -9,11 +8,11 @@ import * as placesMethods from './methods/places';
 import { createRequester } from './request';
 
 import type {
-  ClientParams,
   ClientMethods,
-  IndexParams,
   IndexMethods,
-  PlacesParams,
+  AppId,
+  ApiKey,
+  IndexName,
 } from './types';
 
 function curryObject(original, ...extra) {
@@ -28,7 +27,13 @@ function curryObject(original, ...extra) {
   return augmentedMethods;
 }
 
-export function initClient({ appId, apiKey }: ClientParams): ClientMethods {
+export function initClient({
+  appId,
+  apiKey,
+}: {
+  appId: AppId,
+  apiKey: ApiKey,
+}): ClientMethods {
   if (appId === undefined) {
     throw new Error(`An appId is required. ${appId} was not valid.`);
   }
@@ -44,7 +49,11 @@ export function initIndex({
   appId,
   apiKey,
   indexName,
-}: IndexParams): IndexMethods {
+}: {
+  appId: AppId,
+  apiKey: ApiKey,
+  indexName: IndexName,
+}): IndexMethods {
   if (appId === undefined) {
     throw new Error(`An appId is required. ${appId} was not valid.`);
   }
@@ -59,7 +68,12 @@ export function initIndex({
   return curryObject(indexMethods, requester, indexName);
 }
 
-export function initPlaces(params: PlacesParams = {}) {
+export function initPlaces(
+  params: {
+    appId?: AppId,
+    apiKey?: ApiKey,
+  } = {}
+) {
   const { appId = '', apiKey = '' } = params;
   if ((appId === '' && apiKey !== '') || (apiKey === '' && appId !== '')) {
     throw new Error(`apiKey or appId are not required for places. 

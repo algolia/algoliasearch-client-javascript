@@ -1,11 +1,6 @@
 // @flow
 
-import type { RequestMethod, IndexName, BatchActions } from '../../types';
-
-export type IndexBatchRequest = {|
-  action: BatchActions,
-  body?: Object,
-|};
+import type { RequestMethod, IndexName, IndexBatchRequest } from '../../types';
 
 export default function batch(
   req: RequestMethod,
