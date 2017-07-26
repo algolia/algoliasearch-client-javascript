@@ -61,7 +61,57 @@ clearIndex(requester, 'cities-us');
 
 # methods on client
 
+- `addApiKey`
+- `batch`
+- `clearIndex`
+- `copyIndex`
+- `deleteApiKey`
+- `deleteIndex`
+- `getApiKey`
+- `getLogs`
+- `initIndex`
+- `listApiKeys`
+- `listIndexes`
+- `moveIndex`
+- `search` ➡️ only expose one signature with SearchParams
+- `updateApiKey`
+
 # methods on index
+
+- `addApiKey`
+- `addObject`
+- `addObjects`
+- `batch`
+- `batchRules`
+- `batchSynonyms`
+- `browse`
+- `browseFrom`
+- `clearRules`
+- `clearSynonyms`
+- `deleteApiKey`
+- `deleteObject`
+- `deleteObjects`
+- `deleteRule`
+- `deleteSynonym`
+- `getApiKey`
+- `getObject`
+- `getObjects`
+- `getRule`
+- `getSettings`
+- `getSynonym`
+- `listApiKeys`
+- `partialUpdateObject`
+- `partialUpdateObjects`
+- `saveObject`
+- `saveObjects`
+- `saveRule`
+- `saveSynonym`
+- `search`
+- `searchForFacetValues`
+- `searchRules`
+- `searchSynonyms`
+- `setSettings`
+- `updateApiKey`
 
 # removed methods
 
@@ -70,12 +120,32 @@ All deprecated methods are removed
 ## client
 
 - `ttAdapter`
+- `destroy` ➡️ node nowadays handles that cleanly
+- `addAlgoliaAgent` ➡️ just use `headers`
+- `initIndex` ➡️ just import it
+- `setSecurityTags` ➡️ unused
+- `setExtraHeader` ➡️ handled via requestOptions
+- `getExtraHeader` ➡️ handled via requestOptions
+- `unsetExtraHeader` ➡️ handled via requestOptions
+- `setTimeouts` ➡️ handled via requestOptions
+- `setRequestTimeout` ➡️ handled via requestOptions
+- `getTimeouts` ➡️ handled via requestOptions
+- `disableRateLimitForward` ➡️ handled via requestOptions
+- `disableSecuredAPIKey` ➡️ handled via requestOptions
+- `enableRateLimitForward` ➡️ handled via requestOptions
+- `useSecuredAPIKey` ➡️ handled via requestOptions
 
 ## index
 
-- `similarSearch` --> `search({similarQuery: 'bla' })`
+- `similarSearch` ➡️ `search({similarQuery: 'bla' })`
+- `browseAll` ➡️ separate package
+- `deleteByQuery` ➡️ separate package (maybe API feature?)
 
 # other changes
+
+- `generateSecuredApiKey` ➡️ no longer a client method, but a main import
+- `waitTask` ➡️ no longer an index method, but a main import
+- `initClient` etc. expose a `requester` for methods like `clearCache`
 
 ## Done
 
@@ -87,6 +157,8 @@ All deprecated methods are removed
 - timeouts
 
 These are available as a last argument on every method, and get applied to the `requester` call. 
+
+The header `x-algolia-agent` gets a special case, because it will be merged with the existing `Algolia for JavaScript (version)` header.
 
 #### cache
 
@@ -121,7 +193,7 @@ const App = () => <InstantSearch requester={requester} />;
   await index.waitTask(taskId);
   // something else
 
-  // or use waitTask implicitly (not implemented yet, )
+  // or use waitTask implicitly (not implemented yet)
   await index.addObject(obj, { sync: true });
   // something else
 })();

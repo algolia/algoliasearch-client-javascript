@@ -46,6 +46,6 @@ const requesterMethods = {
 };
 
 const separatePackage = {
-  deleteByQuery: false, // separate package
-  browseAll: false, // separate package
+  deleteByQuery: false,
+  browseAll: false,
 };
