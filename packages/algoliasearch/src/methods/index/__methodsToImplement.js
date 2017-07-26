@@ -1,19 +1,17 @@
 // index methods that should be implemented, `true` if they are
 
 const apiMethods = {
-  addApiKey: false,
-  addObject: false,
-  addObjects: false,
+  addApiKey: true,
+  addObject: true,
+  addObjects: true,
   batch: true,
-  batchRules: false,
-  batchSynonyms: false,
+  batchRules: true,
+  batchSynonyms: true,
   browse: true,
-  browseAll: false,
   browseFrom: true,
-  clearRules: false,
-  clearSynonyms: false,
-  deleteApiKey: false,
-  deleteByQuery: false,
+  clearRules: true,
+  clearSynonyms: true,
+  deleteApiKey: true,
   deleteObject: false,
   deleteObjects: false,
   deleteRule: false,
@@ -36,11 +34,18 @@ const apiMethods = {
   searchRules: false,
   searchSynonyms: false,
   setSettings: false,
-  similarSearch: false,
   updateApiKey: false,
-  waitTask: true,
+};
+
+const different = {
+  waitTask: true, // different
 };
 
 const requesterMethods = {
   clearCache: false,
+};
+
+const separatePackage = {
+  deleteByQuery: false, // separate package
+  browseAll: false, // separate package
 };

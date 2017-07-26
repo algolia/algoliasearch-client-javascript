@@ -1,6 +1,9 @@
 // @flow
-
-type SearchRequest = {| indexName: IndexName, params: Parameters |};
+import type { RequestMethod, IndexName, SearchParameters } from '../../types';
+export type SearchRequest = {|
+  indexName: IndexName,
+  params: SearchParameters,
+|};
 
 export default function search(req: RequestMethod, requests: SearchRequest[]) {
   return req({

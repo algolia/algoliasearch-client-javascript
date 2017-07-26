@@ -6,8 +6,9 @@ export type IndexName = string;
 export type TaskID = string;
 export type ObjectID = string;
 
-export type Rule = Object; // todo: type this according to https://docs.google.com/document/d/1ZJY8uVbY-lUf88BeHZwSU5JQ-lKx6bMq8N7MnXyL1W4/edit#heading=h.dq5y55g3y74f
+export type { Rule } from './rules';
 export type { Synonym } from './synonyms';
+export type { GetObjectParameters, SearchParameters } from './parameters';
 
 export type BatchActions =
   | 'addObject'
@@ -17,11 +18,6 @@ export type BatchActions =
   | 'deleteObject'
   | 'delete'
   | 'clear';
-
-export type SearchParameters = {|
-  hitsPerPage?: number,
-  // more
-|};
 
 export type Method = 'POST' | 'GET' | 'DELETE' | 'PUT';
 export type RequestOptions = {

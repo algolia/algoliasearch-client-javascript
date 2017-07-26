@@ -15,7 +15,7 @@ import type {
   IndexName,
 } from './types';
 
-function curryObject(original, ...extra) {
+function attachParameters(original, ...extra) {
   const methodNames = Object.keys(original);
   const augmentedMethods = methodNames.reduce(
     (methods, method) => ({
@@ -42,7 +42,7 @@ export function initClient({
   }
 
   const requester = createRequester(appId, apiKey);
-  return curryObject(clientMethods, requester);
+  return attachParameters(clientMethods, requester);
 }
 
 export function initIndex({
@@ -65,7 +65,10 @@ export function initIndex({
   }
 
   const requester = createRequester(appId, apiKey);
-  return curryObject(indexMethods, requester, indexName);
+  return {
+    ...attachParameters(indexMethods, requester, indexName),
+    requester,
+  };
 }
 
 export function initPlaces(
@@ -81,5 +84,5 @@ You gave either an appId and no apiKey, or an apiKey and no appId`);
   }
 
   const requester = createRequester(appId, apiKey);
-  return curryObject(placesMethods, requester);
+  return attachParameters(placesMethods, requester);
 }

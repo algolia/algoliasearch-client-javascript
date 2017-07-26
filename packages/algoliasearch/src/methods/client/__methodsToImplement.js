@@ -9,13 +9,12 @@ const apiMethods = {
   deleteIndex: true,
   getApiKey: false,
   getLogs: true,
-  getTimeouts: false,
   initIndex: false,
   listApiKeys: false,
   listIndexes: true,
   moveIndex: true,
   search: true,
-  setSecurityTags: false,
+  setSecurityTags: false, // deprecate and remove
   updateApiKey: false,
   node: {
     generateSecuredApiKey: false,
@@ -24,14 +23,15 @@ const apiMethods = {
 
 const requesterMethods = {
   clearCache: false,
-  setExtraHeader: false,
+  setExtraHeader: false, // move to requestParams.headers
   getExtraHeader: false,
   unsetExtraHeader: false,
-  setTimeouts: false,
+  setTimeouts: false, // move to requestParams.timeouts
   setRequestTimeout: false,
+  getTimeouts: false,
   nodeOnly: {
-    destroy: false,
-    disableRateLimitForward: false,
+    destroy: false, // maybe remove
+    disableRateLimitForward: false, // move to requestParams.headers
     disableSecuredAPIKey: false,
     enableRateLimitForward: false,
     useSecuredAPIKey: false,
