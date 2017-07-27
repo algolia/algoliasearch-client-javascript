@@ -244,7 +244,7 @@ How to clear cache in RIS and IS.js
 
 ```js
 import { createRequester } from 'algoliasearch/requester'; // maaaybe this will be algoliasearch-requester
-const requester = createRequester();
+const requester = createRequester({ cache: true });
 
 search(requester, requests);
 searchForFacetValues(requester, query);
@@ -254,9 +254,7 @@ requester.clearCache();
 const App = () => <InstantSearch requester={requester} />;
 ```
 
-Cache will be disabled by default, to give the freedom of not having to fight with results that are stale. However, it should be enabled in higher level libraries like InstantSearch, for its obvious advantage. Once it's enabled, it will employ the ["stale while revalidate"](https://tools.ietf.org/html/rfc5861) caching strategy. 
-
-> how to disable it? 
+Cache will be disabled by default, to give the freedom of not having to fight with results that are stale. However, it should be enabled in higher level libraries like InstantSearch, for its obvious advantage. Once it's enabled, it will employ the ["stale while revalidate"](https://tools.ietf.org/html/rfc5861) caching strategy.
 
 ## to consider
 
