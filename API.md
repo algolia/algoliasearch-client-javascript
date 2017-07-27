@@ -10,7 +10,7 @@ import { initClient } from 'algoliasearch';
 const client = initClient(appId, apiKey);
 
 client. // any client method
-client.requester. // clearIndex, headers, timeouts
+client.requester. // clearCache, headers, timeouts
 ```
 
 ## index
@@ -21,7 +21,7 @@ import { initIndex } from 'algoliasearch';
 const index = initIndex(appId, apiKey);
 
 index // any index method
-index.requester // clearIndex, headers, timeouts
+index.requester // clearCache, headers, timeouts
 ```
 
 ## places
@@ -34,7 +34,7 @@ const index = initPlaces(appId, apiKey);
 index.search(params);
 index.getObject('objectId', params);
 index.getObjects(['objectId'], params);
-index.requester // clearIndex, headers, timeouts
+index.requester // clearCache, headers, timeouts
 ```
 
 ## individual methods
