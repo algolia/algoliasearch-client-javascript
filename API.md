@@ -162,6 +162,22 @@ These are available as a last argument on every method, and get applied to the `
 
 The header `x-algolia-agent` gets a special case, because it will be merged with the existing `Algolia for JavaScript (version)` header.
 
+The `extraHeaders` and `extraQueryStrings` are available for cases where we have a parameter that isn't documented. For parameters that are known (like `forwardToReplicas` or `forwardedFor`) we decide ourselves to send it as header or query string. 
+
+> see also [the spec](https://docs.google.com/document/d/1LnObLB5jUQcXzTzgRqbYkqtczoQP4mRQz0X01oY3I5o/edit#)
+
+##### To consider
+
+These options are also available statefully (?), for options that are relevant for every request:
+
+```js
+requester.setOptions(current => newOptions)
+```
+
+This leaves the responsibility of merging the state up to the implementer, to stay more flexible 
+
+> see `setState` with a function in React
+
 #### cache
 
 How to clear cache in RIS and IS.js
@@ -177,6 +193,10 @@ requester.clearCache();
 
 const App = () => <InstantSearch requester={requester} />;
 ```
+
+Cache will be enabled by default
+
+> how to disable it? 
 
 ## to consider
 
