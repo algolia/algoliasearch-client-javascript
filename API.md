@@ -29,12 +29,12 @@ index.requester // clearIndex, headers, timeouts
 ```js
 import { initPlaces } from 'algoliasearch';
 
-const index = initPlaces(appId, apiKey);
+const places = initPlaces(appId, apiKey);
 
-index.search(params);
-index.getObject('objectId', params);
-index.getObjects(['objectId'], params);
-index.requester // clearIndex, headers, timeouts
+places.search(params);
+places.getPlace('objectId', params);
+places.getPlaces(['objectId'], params);
+places.requester // clearIndex, headers, timeouts
 ```
 
 ## individual methods
