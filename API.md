@@ -174,9 +174,7 @@ These options are also available statefully, for options that are relevant for e
 requester.setOptions(current => newOptions)
 ```
 
-This leaves the responsibility of merging the state up to the implementer, to stay more flexible
-
-> see `setState` with a function in React
+This leaves the responsibility of merging the state up to the implementer, to stay more flexible.
 
 The requestOptions that are set at a request always have precedence over the static options. To make this more clear, here's a pseudo code example of how the options to apply are calculated: 
 
