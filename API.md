@@ -153,6 +153,8 @@ All deprecated methods are removed
 
 ### Requester methods
 
+Every method that does an API call has as its last argument `requestOptions`. These options are applied with highest priority and will send custom headers or url parameters, depending on which method it is.
+
 #### options
 
 - headers
@@ -166,9 +168,9 @@ The `extraHeaders` and `extraQueryStrings` are available for cases where we have
 
 > see also [the spec](https://docs.google.com/document/d/1LnObLB5jUQcXzTzgRqbYkqtczoQP4mRQz0X01oY3I5o/edit#)
 
-##### To consider
+##### In depth
 
-These options are also available statefully (?), for options that are relevant for every request:
+These options are also available statefully, for options that are relevant for every request:
 
 ```js
 requester.setOptions(current => newOptions)
@@ -228,6 +230,14 @@ const finalOptions = {
 };
 ```
 
+The default extra options will only be the algolia agent: 
+
+```js
+const defaultOptions = {
+  algoliaAgent: 'Algolia for JavaScript (4.0.0-beta.1)',
+};
+```
+
 #### cache
 
 How to clear cache in RIS and IS.js
@@ -244,7 +254,7 @@ requester.clearCache();
 const App = () => <InstantSearch requester={requester} />;
 ```
 
-Cache will be enabled by default
+Cache will be disabled by default, to give the freedom of not having to fight with results that are stale. However, it should be enabled in higher level libraries like InstantSearch, for its obvious advantage. Once it's enabled, it will employ the ["stale while revalidate"](https://tools.ietf.org/html/rfc5861) caching strategy. 
 
 > how to disable it? 
 
