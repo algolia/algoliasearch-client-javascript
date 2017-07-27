@@ -174,9 +174,59 @@ These options are also available statefully (?), for options that are relevant f
 requester.setOptions(current => newOptions)
 ```
 
-This leaves the responsibility of merging the state up to the implementer, to stay more flexible 
+This leaves the responsibility of merging the state up to the implementer, to stay more flexible
 
 > see `setState` with a function in React
+
+The requestOptions that are set at a request always have precedence over the static options. To make this more clear, here's a pseudo code example of how the options to apply are calculated: 
+
+```js
+import { search } from 'algoliasearch/methods/index';
+import { createRequester } from 'algoliasearch/request';
+
+const staticOptions = { 
+  algoliaAgent: 'Algolia for JavaScript Lite (4.0.0-beta.1)',
+  extraHeaders: {
+    'X-Clacks-Overhead': 'Haha, nothing at all!',
+    'X-Dress-Colour': 'White and Gold', 
+  }
+};
+
+const requestOptions = { 
+  algoliaAgent: 'Algolia for VueJS (0.4.0)',
+  extraHeaders: {
+    'X-Clacks-Overhead': 'GNU Terry Pratchett',
+    'X-Forwarded-For': 'https://algolia.com/',
+  },
+};
+
+const requester = createRequester();
+
+// the user here has to take care of careful merging
+// things like timeouts and extraHeaders are objects
+// so that is something to keep in mind while implementing
+requester.setOptions(current => ({
+  ...current,
+  staticOptions,
+}))
+
+search(
+  requester,
+  'cities-us',
+  { query: 'atlenta' },
+  requestOptions,
+);
+
+// The actual options while the request are sent are:
+const finalOptions = {
+  algoliaAgent: 'Algolia for JavaScript (4.0.0-beta.1); Algolia for JavaScript Lite (4.0.0-beta.1); Algolia for VueJS (0.4.0)',
+  extraHeaders: {
+    'X-Clacks-Overhead': 'GNU Terry Pratchett',
+    'X-Forwarded-For': 'https://algolia.com/',
+    'X-Dress-Colour': 'White and Gold', 
+  }
+};
+```
 
 #### cache
 
