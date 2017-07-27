@@ -166,8 +166,6 @@ The header `x-algolia-agent` gets a special case, because it will be merged with
 
 The `extraHeaders` and `extraQueryStrings` are available for cases where we have a parameter that isn't documented. For parameters that are known (like `forwardToReplicas` or `forwardedFor`) we decide ourselves to send it as header or query string. 
 
-> see also [the spec](https://docs.google.com/document/d/1LnObLB5jUQcXzTzgRqbYkqtczoQP4mRQz0X01oY3I5o/edit#)
-
 ##### In depth
 
 These options are also available statefully, for options that are relevant for every request:
