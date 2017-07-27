@@ -9,8 +9,8 @@ import { initClient } from 'algoliasearch';
 
 const client = initClient(appId, apiKey);
 
-client. // any client method
-client.requester. // clearCache, headers, timeouts
+client // any client method
+client.requester // clearCache, headers, timeouts
 ```
 
 ## index
@@ -146,7 +146,6 @@ All deprecated methods are removed
 # other changes
 
 - `generateSecuredApiKey` ➡️ no longer a client method, but a main import
-- `waitTask` ➡️ no longer an index method, but a main import
 - `initClient` etc. expose a `requester` for methods like `clearCache`
 
 ## Done
@@ -274,3 +273,9 @@ Cache will be disabled by default, to give the freedom of not having to fight wi
   // something else
 })();
 ```
+
+## to deprecate for API reasons
+
+add objects --> use save instead
+index level API keys
+waitTask --> waitForTask
