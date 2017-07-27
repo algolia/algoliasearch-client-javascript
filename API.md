@@ -34,7 +34,7 @@ const places = initPlaces(appId, apiKey);
 places.search(params);
 places.getPlace('objectId', params);
 places.getPlaces(['objectId'], params);
-places.requester // clearIndex, headers, timeouts
+places.requester // clearCache, headers, timeouts
 ```
 
 ## individual methods
