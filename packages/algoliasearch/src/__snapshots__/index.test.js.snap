@@ -14,14 +14,11 @@ Array [
   "batch",
   "browse",
   "browseFrom",
-  "clearIndex",
-  "copyIndex",
   "getObject",
   "getObjects",
-  "moveIndex",
-  "removeIndex",
   "search",
-  "waitTask",
+  "waitForCompletion",
+  "requester",
 ]
 `;
 

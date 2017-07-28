@@ -7,7 +7,7 @@
 ```js
 import { initClient } from 'algoliasearch';
 
-const client = initClient(appId, apiKey);
+const client = initClient({ appId, apiKey });
 
 client // any client method
 client.requester // clearCache, headers, timeouts
@@ -18,7 +18,7 @@ client.requester // clearCache, headers, timeouts
 ```js
 import { initIndex } from 'algoliasearch';
 
-const index = initIndex(appId, apiKey, indexName);
+const index = initIndex({ appId, apiKey, indexName });
 
 index // any index method
 index.requester // clearCache, headers, timeouts
@@ -29,7 +29,8 @@ index.requester // clearCache, headers, timeouts
 ```js
 import { initPlaces } from 'algoliasearch';
 
-const places = initPlaces(appId, apiKey);
+let places = initPlaces({ appId, apiKey});
+places = initPlaces();
 
 places.search(params);
 places.getPlace('objectId', params);

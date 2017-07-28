@@ -7,7 +7,13 @@ import attachParameters from './attachParameters';
 
 import type { AppId, ApiKey } from '../types';
 
-export default function initPlaces(appId?: AppId = '', apiKey?: ApiKey = '') {
+export default function initPlaces(
+  params: {
+    appId?: AppId,
+    apiKey?: ApiKey,
+  } = {}
+) {
+  const { appId = '', apiKey = '' } = params;
   if ((appId === '' && apiKey !== '') || (apiKey === '' && appId !== '')) {
     throw new Error(`apiKey or appId are not required for places. 
 You gave either an appId and no apiKey, or an apiKey and no appId`);

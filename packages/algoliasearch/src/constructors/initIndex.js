@@ -6,11 +6,15 @@ import attachParameters from './attachParameters';
 
 import type { IndexMethods, AppId, ApiKey, IndexName } from '../types';
 
-export default function initIndex(
+export default function initIndex({
+  appId,
+  apiKey,
+  indexName,
+}: {
   appId: AppId,
   apiKey: ApiKey,
-  indexName: IndexName
-): IndexMethods {
+  indexName: IndexName,
+}): IndexMethods {
   if (appId === undefined) {
     throw new Error(`An appId is required. ${appId} was not valid.`);
   }

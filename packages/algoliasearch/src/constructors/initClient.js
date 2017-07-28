@@ -7,10 +7,13 @@ import { createRequester } from '../request';
 
 import type { ClientMethods, AppId, ApiKey } from '../types';
 
-export default function initClient(
+export default function initClient({
+  appId,
+  apiKey,
+}: {
   appId: AppId,
-  apiKey: ApiKey
-): ClientMethods {
+  apiKey: ApiKey,
+}): ClientMethods {
   if (appId === undefined) {
     throw new Error(`An appId is required. ${appId} was not valid.`);
   }
