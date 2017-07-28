@@ -46,9 +46,11 @@ import { createRequester } from 'algoliasearch/requester'; // maaaybe this will 
 
 const requester = createRequester(opts); // timeouts, headers etc.
 
-search(requester, { query: 'atlenta' })
+// with promise
+search(requester, 'cities-us' { query: 'atlenta' })
   .then(result => console.log(result))
 
+// same with async/await
 (async () => {
   const { hits } = await search(
     requester,
@@ -58,6 +60,7 @@ search(requester, { query: 'atlenta' })
   );
 })();
 
+// methods that don't need the result can be done too
 clearIndex(requester, 'cities-us');
 ```
 
