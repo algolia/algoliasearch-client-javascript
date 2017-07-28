@@ -1,3 +1,5 @@
+// @flow
+
 export type GetObjectParameters = {| attributesToRetrieve: string[] |};
 
 export type SearchParameters = {|

@@ -1,7 +1,7 @@
 // @flow
 
-import { pluralError } from '../../errors';
-import type { RequestMethod, ObjectID, GetObjectOptions } from '../../types';
+import type { RequestMethod, ObjectID } from '../../types';
+import type { GetObjectOptions } from '../index/getObject';
 
 export default function getObjects(
   req: RequestMethod,

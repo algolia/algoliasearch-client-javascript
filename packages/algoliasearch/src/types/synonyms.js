@@ -1,3 +1,5 @@
+// @flow
+
 export type SimpleSynonym = {|
   objectID: string,
   type: 'synonym',

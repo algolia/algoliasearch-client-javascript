@@ -27,8 +27,8 @@ Array [
 
 exports[`initPlaces contains the correct methods 1`] = `
 Array [
-  "getObject",
-  "getObjects",
+  "getPlace",
+  "getPlaces",
   "search",
 ]
 `;

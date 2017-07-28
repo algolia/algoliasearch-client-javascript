@@ -4,7 +4,7 @@ import type { RequestMethod, IndexName, Result, TaskID } from '../../types';
 
 type LoopInfo = { loop?: number, baseDelay?: number, maxDelay?: number };
 
-export default function waitTask(
+export default function waitForCompletion(
   req: RequestMethod,
   indexName: IndexName,
   taskID: TaskID,
@@ -29,7 +29,7 @@ export default function waitTask(
     );
 
     return delay.then(() =>
-      waitTask((req: RequestMethod), (indexName: IndexName), (taskID: TaskID), {
+      waitForCompletion(req, indexName, taskID, {
         loop: currentLoop,
       })
     );

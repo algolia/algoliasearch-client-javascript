@@ -18,7 +18,7 @@ client.requester // clearCache, headers, timeouts
 ```js
 import { initIndex } from 'algoliasearch';
 
-const index = initIndex(appId, apiKey);
+const index = initIndex(appId, apiKey, indexName);
 
 index // any index method
 index.requester // clearCache, headers, timeouts
@@ -84,8 +84,8 @@ clearIndex(requester, 'cities-us');
 # methods on index
 
 - `addApiKey`
-- `addObject`
-- `addObjects`
+- `addObject` --> deprecated, but still included
+- `addObjects` --> deprecated, but still included
 - `batch`
 - `batchRules`
 - `batchSynonyms`
@@ -228,7 +228,7 @@ const finalOptions = {
     'X-Clacks-Overhead': 'GNU Terry Pratchett',
     'X-Forwarded-For': 'https://algolia.com/',
     'X-Dress-Colour': 'White and Gold', 
-  }
+  },
 };
 ```
 

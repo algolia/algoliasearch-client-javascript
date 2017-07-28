@@ -1,6 +1,6 @@
 // @flow
 
-import type { RequestMethod, IndexName } from '../../types';
+import type { RequestMethod, IndexName, RequestOptions } from '../../types';
 
 export type ACL =
   | 'search'

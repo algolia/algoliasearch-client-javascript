@@ -1,3 +1,3 @@
-export { default as getObject } from './getObject';
-export { default as getObjects } from './getObjects';
+export { default as getPlace } from './getPlace';
+export { default as getPlaces } from './getPlaces';
 export { default as search } from './search';

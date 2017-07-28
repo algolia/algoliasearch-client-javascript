@@ -5,15 +5,12 @@ import * as clientMethods from '../methods/client';
 import attachParameters from './attachParameters';
 import { createRequester } from '../request';
 
-import type { ClientMethods, AppId, ApiKey, IndexName } from '../types';
+import type { ClientMethods, AppId, ApiKey } from '../types';
 
-export default function initClient({
-  appId,
-  apiKey,
-}: {
+export default function initClient(
   appId: AppId,
-  apiKey: ApiKey,
-}): ClientMethods {
+  apiKey: ApiKey
+): ClientMethods {
   if (appId === undefined) {
     throw new Error(`An appId is required. ${appId} was not valid.`);
   }

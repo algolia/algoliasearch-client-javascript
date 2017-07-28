@@ -9,6 +9,14 @@ export type ObjectID = string;
 export type { Rule } from './rules';
 export type { Synonym } from './synonyms';
 export type { GetObjectParameters, SearchParameters } from './parameters';
+export type {
+  RequestOptions,
+  Method,
+  RequestArguments,
+  Result,
+  RequestMethod,
+  Requester,
+} from './requester';
 
 export type BatchActions =
   | 'addObject'
@@ -18,18 +26,6 @@ export type BatchActions =
   | 'deleteObject'
   | 'delete'
   | 'clear';
-
-export type Method = 'POST' | 'GET' | 'DELETE' | 'PUT';
-export type RequestOptions = {
-  method: Method,
-  path: string,
-  qs?: Object,
-  body?: Object,
-  options?: Object,
-};
-export type Result = Object;
-export type RequestMethod = RequestOptions => Promise<Result>;
-export type Requester = (appId: AppId, apiKey: ApiKey) => RequestMethod;
 
 export type ClientMethods = {
   batch: Function,
@@ -47,5 +43,5 @@ export type IndexMethods = {
   browseFrom: Function,
   move: Function,
   search: Function,
-  waitTask: Function,
+  waitForCompletion: Function,
 };

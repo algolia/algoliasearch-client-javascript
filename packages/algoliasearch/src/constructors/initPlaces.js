@@ -5,15 +5,9 @@ import * as placesMethods from '../methods/places';
 import { createRequester } from '../request';
 import attachParameters from './attachParameters';
 
-import type { IndexMethods, AppId, ApiKey } from '../types';
+import type { AppId, ApiKey } from '../types';
 
-export default function initPlaces(
-  params: {
-    appId?: AppId,
-    apiKey?: ApiKey,
-  } = {}
-) {
-  const { appId = '', apiKey = '' } = params;
+export default function initPlaces(appId?: AppId = '', apiKey?: ApiKey = '') {
   if ((appId === '' && apiKey !== '') || (apiKey === '' && appId !== '')) {
     throw new Error(`apiKey or appId are not required for places. 
 You gave either an appId and no apiKey, or an apiKey and no appId`);
