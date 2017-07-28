@@ -118,6 +118,10 @@ clearIndex(requester, 'cities-us');
 - `setSettings`
 - `updateApiKey`
 
+Not a direct API method, but still implemented: 
+
+- `waitForTask` (originally `waitTask`)
+
 # removed methods
 
 All deprecated methods are removed
@@ -263,16 +267,16 @@ Cache will be disabled by default, to give the freedom of not having to fight wi
   // either manually await the task (with Promises)
   index
     .addObject(obj)
-    .then(({ taskId }) => index.waitTask(taskId))
+    .then(({ taskId }) => index.waitForTask(taskId))
     .then(console.log('do whatever'));
 
   // or with async/await
   const { taskId } = await index.addObject(obj);
-  await index.waitTask(taskId);
+  await index.waitForTask(taskId);
   // something else
 
   // or use waitTask implicitly (not implemented yet)
-  await index.addObject(obj, { sync: true });
+  await index.addObject(obj, { waitForTask: true });
   // something else
 })();
 ```
