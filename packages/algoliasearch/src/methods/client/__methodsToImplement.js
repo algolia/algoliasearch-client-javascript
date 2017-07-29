@@ -14,7 +14,6 @@ const apiMethods = {
   listIndexes: true,
   moveIndex: true,
   search: true,
-  setSecurityTags: false, // deprecate and remove
   updateApiKey: false,
   node: {
     generateSecuredApiKey: false,
@@ -22,6 +21,7 @@ const apiMethods = {
 };
 
 const requesterMethods = {
+  setSecurityTags: false, // deprecate and remove
   clearCache: false,
   setExtraHeader: false, // move to requestParams.headers
   getExtraHeader: false,

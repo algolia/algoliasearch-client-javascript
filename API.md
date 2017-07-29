@@ -133,7 +133,7 @@ All deprecated methods are removed
 - `destroy` ➡️ node nowadays handles that cleanly
 - `addAlgoliaAgent` ➡️ just use `headers`
 - `initIndex` ➡️ just import it
-- `setSecurityTags` ➡️ unused
+- `setSecurityTags` ➡️ unused (now possible with requestOptions)
 - `setExtraHeader` ➡️ handled via requestOptions
 - `getExtraHeader` ➡️ handled via requestOptions
 - `unsetExtraHeader` ➡️ handled via requestOptions
