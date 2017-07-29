@@ -213,7 +213,7 @@ const requester = createRequester();
 requester.setOptions(current => ({
   ...current,
   staticOptions,
-}))
+}));
 
 search(
   requester,
