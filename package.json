@@ -11,7 +11,6 @@
     "test": "eslint . && jest"
   },
   "devDependencies": {
-    "@types/jest": "^20.0.5",
     "babel": "^6.23.0",
     "babel-eslint": "^7.2.3",
     "babel-jest": "^20.0.3",

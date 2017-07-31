@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`initPlaces contains the correct methods 1`] = `
+Array [
+  "getPlace",
+  "getPlaces",
+  "search",
+]
+`;

@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`attaches an existing parameter 1`] = `
+Object {
+  "anotherUnused": [Function],
+  "someFn": [Function],
+}
+`;

@@ -1,3 +1,4 @@
+export { default as addApiKey } from './addApiKey';
 export { default as batch } from './batch';
 export { default as browse } from './browse';
 export { default as browseFrom } from './browseFrom';

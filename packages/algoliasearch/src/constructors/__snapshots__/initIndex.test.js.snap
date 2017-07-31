@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`initIndex contains the correct methods 1`] = `
+Array [
+  "addApiKey",
+  "batch",
+  "browse",
+  "browseFrom",
+  "getObject",
+  "getObjects",
+  "search",
+  "waitForCompletion",
+  "requester",
+]
+`;

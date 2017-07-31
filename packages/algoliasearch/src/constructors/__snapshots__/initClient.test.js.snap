@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`initClient contains the correct methods 1`] = `
+Array [
+  "batch",
+  "getLogs",
+  "listIndexes",
+  "search",
+]
+`;

@@ -23,14 +23,21 @@ export type Parameters = {|
   validity?: number,
 |};
 
-export default function addApiKey(
-  req: RequestMethod,
+export default function addApiKey({
+  requester,
+  indexName,
+  body,
+  options,
+}: {
+  requester: RequestMethod,
   indexName: IndexName,
-  body: Parameters
-) {
-  return req({
+  body: Parameters,
+  options: RequestOptions,
+}) {
+  return requester({
     method: 'POST',
     path: `/1/indexes/${indexName}/keys/`,
     body,
+    options,
   });
 }

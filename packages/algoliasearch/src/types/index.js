@@ -35,6 +35,7 @@ export type ClientMethods = {
 };
 
 export type IndexMethods = {
+  addApiKey: Function,
   batch: Function,
   clear: Function,
   copy: Function,
@@ -43,5 +44,8 @@ export type IndexMethods = {
   browseFrom: Function,
   move: Function,
   search: Function,
+  waitForCompletion: Function,
+  // non-api methods
+  requester: Function,
   waitForCompletion: Function,
 };

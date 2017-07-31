@@ -27,7 +27,7 @@ export default function initIndex({
 
   const requester = createRequester(appId, apiKey);
   return {
-    ...attachParameters(indexMethods, requester, indexName),
+    ...attachParameters(indexMethods, { requester, indexName }),
     requester,
   };
 }
