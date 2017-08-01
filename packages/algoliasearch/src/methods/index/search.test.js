@@ -3,8 +3,16 @@ import search from './search';
 
 it('search', () => {
   const requests = [
-    search(fakeRequester, 'some_index', {}),
-    search(fakeRequester, 'other_index', { hitsPerPage: 4 }),
+    search({
+      requester: fakeRequester,
+      indexName: 'some_index',
+      params: {},
+    }),
+    search({
+      requester: fakeRequester,
+      indexName: 'other_index',
+      params: { hitsPerPage: 4 },
+    }),
   ];
   snapshotAll(requests);
 });

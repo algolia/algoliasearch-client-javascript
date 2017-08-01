@@ -11,6 +11,7 @@ Object {
     ],
   },
   "method": "POST",
+  "options": undefined,
   "path": "/1/indexes/*/queries",
 }
 `;

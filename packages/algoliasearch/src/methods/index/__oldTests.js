@@ -1,6 +1,10 @@
-// @flow
-
 import { initIndex } from './';
+
+const validParams = {
+  appId: 'some_id',
+  apiKey: 'some_key',
+  indexName: 'some_index',
+};
 
 const snapshotAll = requests =>
   requests.map(req => req.then(sn => expect(sn).toMatchSnapshot()));

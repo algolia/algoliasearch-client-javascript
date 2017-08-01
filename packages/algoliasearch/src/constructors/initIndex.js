@@ -25,7 +25,7 @@ export default function initIndex({
     throw new Error(`An indexName is required. ${indexName} was not valid.`);
   }
 
-  const requester = createRequester(appId, apiKey);
+  const requester = createRequester({ appId, apiKey });
   return {
     ...attachParameters(indexMethods, { requester, indexName }),
     requester,

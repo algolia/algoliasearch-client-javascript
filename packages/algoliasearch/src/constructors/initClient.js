@@ -21,6 +21,6 @@ export default function initClient({
     throw new Error(`An apiKey is required. ${apiKey} was not valid.`);
   }
 
-  const requester = createRequester(appId, apiKey);
+  const requester = createRequester({ appId, apiKey });
   return attachParameters(clientMethods, { requester });
 }

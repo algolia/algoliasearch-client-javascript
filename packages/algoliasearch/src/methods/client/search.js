@@ -1,14 +1,28 @@
 // @flow
-import type { RequestMethod, IndexName, SearchParameters } from '../../types';
+import type {
+  RequestMethod,
+  IndexName,
+  SearchParameters,
+  RequestOptions,
+} from '../../types';
 export type SearchRequest = {|
   indexName: IndexName,
   params: SearchParameters,
 |};
 
-export default function search(req: RequestMethod, requests: SearchRequest[]) {
-  return req({
+export default function search({
+  requester,
+  requests,
+  options,
+}: {
+  requester: RequestMethod,
+  requests: SearchRequest[],
+  options: RequestOptions,
+}) {
+  return requester({
     method: 'POST',
     path: '/1/indexes/*/queries',
     body: { requests },
+    options,
   });
 }

@@ -1,5 +1,7 @@
 // @flow
 
+import type { AppId, ApiKey } from './';
+
 export type RequestOptions = {|
   forwardedFor?: string,
   extraHeaders?: Object,
@@ -16,4 +18,4 @@ export type RequestArguments = {
 };
 export type Result = Object;
 export type RequestMethod = RequestArguments => Promise<Result>;
-export type Requester = (appId: AppId, apiKey: ApiKey) => RequestMethod;
+export type Requester = ({ appId: AppId, apiKey: ApiKey }) => RequestMethod;

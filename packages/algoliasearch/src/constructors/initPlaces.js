@@ -19,6 +19,6 @@ export default function initPlaces(
 You gave either an appId and no apiKey, or an apiKey and no appId`);
   }
 
-  const requester = createRequester(appId, apiKey);
+  const requester = createRequester({ appId, apiKey });
   return attachParameters(placesMethods, { requester });
 }
