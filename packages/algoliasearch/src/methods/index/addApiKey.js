@@ -32,7 +32,7 @@ export default function addApiKey({
   requester: RequestMethod,
   indexName: IndexName,
   body: Parameters,
-  options: RequestOptions,
+  options?: RequestOptions,
 }) {
   return requester({
     method: 'POST',

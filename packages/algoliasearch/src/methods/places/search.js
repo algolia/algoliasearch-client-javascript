@@ -12,7 +12,7 @@ export default function search({
 }: {
   requester: RequestMethod,
   params: SearchParameters,
-  options: RequestOptions,
+  options?: RequestOptions,
 }) {
   return requester({
     method: 'POST',

@@ -1,16 +1,24 @@
 // @flow
 
-import type { RequestMethod } from '../../types';
+import type { RequestMethod, RequestOptions } from '../../types';
 
-export default function listIndexes(
-  req: RequestMethod,
-  params: {
-    page?: number,
-  } = {}
-) {
-  return req({
+type Params = {|
+  page?: number,
+|};
+
+export default function listIndexes({
+  requester,
+  params = {},
+  options,
+}: {
+  requester: RequestMethod,
+  params?: Params,
+  options?: RequestOptions,
+}) {
+  return requester({
     method: 'GET',
     path: '/1/indexes',
     qs: params,
+    options,
   });
 }

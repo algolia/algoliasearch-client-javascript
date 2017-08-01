@@ -17,7 +17,7 @@ export default function search({
 }: {
   requester: RequestMethod,
   requests: SearchRequest[],
-  options: RequestOptions,
+  options?: RequestOptions,
 }) {
   return requester({
     method: 'POST',
