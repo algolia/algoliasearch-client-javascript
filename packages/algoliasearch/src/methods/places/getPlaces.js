@@ -4,11 +4,15 @@ import { pluralError } from '../../errors';
 import type { RequestMethod, ObjectID } from '../../types';
 import type { GetObjectOptions } from '../index/getObject';
 
-export default function getObjects(
-  req: RequestMethod,
+export default function getPlaces({
+  requester,
+  objectID,
+  options,
+}: {
+  requester: RequestMethod,
   objectID: ObjectID[],
-  options: GetObjectOptions
-) {
+  options: GetObjectOptions,
+}) {
   const { attributesToRetrieve: attrs } = options;
   const attributesToRetrieve = attrs.join(',');
 
@@ -16,7 +20,7 @@ export default function getObjects(
     throw pluralError('getObject');
   }
 
-  return req({
+  return requester({
     method: 'POST',
     path: '/1/indexes/*/objects',
     body: {

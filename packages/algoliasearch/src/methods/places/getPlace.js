@@ -3,15 +3,19 @@
 import type { RequestMethod, ObjectID } from '../../types';
 import type { GetObjectOptions } from '../index/getObject';
 
-export default function getObjects(
-  req: RequestMethod,
+export default function getPlace({
+  requester,
+  objectID,
+  options,
+}: {
+  requester: RequestMethod,
   objectID: ObjectID,
-  options: GetObjectOptions
-) {
+  options: GetObjectOptions,
+}) {
   const { attributesToRetrieve: attrs } = options;
   const attributesToRetrieve = attrs.join(',');
 
-  return req({
+  return requester({
     method: 'GET',
     path: `/1/indexes/places/${objectID}`,
     qs: { attributes: attributesToRetrieve },
