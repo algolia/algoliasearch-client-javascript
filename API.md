@@ -290,3 +290,4 @@ Cache will be disabled by default, to give the freedom of not having to fight wi
 ## todo
 
 - write methods with object instead of arguments
+- retry logic needs to have the same RequestOptions as before
