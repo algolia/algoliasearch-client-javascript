@@ -1,18 +1,24 @@
 // @flow
 
 import { pluralError } from '../../errors';
-import type { RequestMethod, IndexName, ObjectID } from '../../types';
+import type { RequestMethod, IndexName, RequestOptions } from '../../types';
 
-export default function getObjects(
-  req: RequestMethod,
+export default function getObjects({
+  requester,
+  indexName,
+  objects,
+  options,
+}: {
+  requester: RequestMethod,
   indexName: IndexName,
-  objects: Object[]
-) {
+  objects: Object[],
+  options?: RequestOptions,
+}) {
   if (!Array.isArray(objects)) {
     throw pluralError('addObject');
   }
 
-  return req({
+  return requester({
     method: 'POST',
     path: `/1/indexes/${indexName}/batch`,
     body: {
@@ -21,5 +27,6 @@ export default function getObjects(
         body: object,
       })),
     },
+    options,
   });
 }

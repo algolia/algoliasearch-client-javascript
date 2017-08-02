@@ -1,6 +1,6 @@
 // client methods that should be implemented, `true` if they are
 
-const apiMethods = {
+export const apiMethods = {
   addApiKey: false,
   batch: true,
   clearIndex: true,
@@ -20,7 +20,7 @@ const apiMethods = {
   },
 };
 
-const requesterMethods = {
+export const requesterMethods = {
   setSecurityTags: false, // deprecate and remove
   clearCache: false,
   setExtraHeader: false, // move to requestParams.headers

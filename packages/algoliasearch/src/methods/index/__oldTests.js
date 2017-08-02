@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import { initIndex } from './';
 
 const validParams = {

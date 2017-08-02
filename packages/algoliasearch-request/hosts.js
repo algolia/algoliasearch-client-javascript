@@ -77,20 +77,13 @@ export default class requestHosts {
   }
 
   getTimeout({
-    retry,
+    retry = 1,
     type,
   }: {
     retry: number,
     type: $Keys<Timeouts>,
   }): number {
-    // return switch (type) {
-    //   case 'connect':
-
-    //     break;
-
-    //   default:
-    //     break;
-    // }
+    // todo: different formula per retry type
     return retry * this.timeouts[type];
   }
 }

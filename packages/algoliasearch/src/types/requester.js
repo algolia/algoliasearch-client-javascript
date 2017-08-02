@@ -6,6 +6,10 @@ export type RequestOptions = {|
   forwardedFor?: string,
   extraHeaders?: Object,
   extraUrlParameters?: Object,
+  // ones that exist already
+  userAgent?: string,
+  forwardToReplicas?: boolean,
+  clearExistingRules?: boolean,
 |};
 
 export type Method = 'POST' | 'GET' | 'DELETE' | 'PUT';

@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import { snapshotAll, fakeRequester } from '../../testUtils';
 it('batch', () => {
   const requests = [

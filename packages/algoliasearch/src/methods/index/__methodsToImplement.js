@@ -1,6 +1,6 @@
 // index methods that should be implemented, `true` if they are
 
-const apiMethods = {
+export const apiMethods = {
   addApiKey: true,
   addObject: true,
   addObjects: true,
@@ -37,15 +37,15 @@ const apiMethods = {
   updateApiKey: false,
 };
 
-const different = {
+export const different = {
   waitTask: true, // different
 };
 
-const requesterMethods = {
+export const requesterMethods = {
   clearCache: false,
 };
 
-const separatePackage = {
+export const separatePackage = {
   deleteByQuery: false,
   browseAll: false,
 };
