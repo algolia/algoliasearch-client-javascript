@@ -11,6 +11,7 @@ export type { Synonym } from './synonyms';
 export type { GetObjectParameters, SearchParameters } from './parameters';
 export type {
   RequestOptions,
+  RequesterOptions,
   Method,
   RequestArguments,
   Result,

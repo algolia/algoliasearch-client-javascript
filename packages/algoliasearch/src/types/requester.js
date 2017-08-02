@@ -6,11 +6,25 @@ export type RequestOptions = {|
   forwardedFor?: string,
   extraHeaders?: Object,
   extraUrlParameters?: Object,
+  timeouts?: {|
+    connect?: number,
+    read?: number,
+    write?: number,
+  |},
   // ones that exist already
   userAgent?: string,
   forwardToReplicas?: boolean,
   clearExistingRules?: boolean,
 |};
+
+export type RequesterOptions = {
+  ...RequestOptions,
+  cache?: boolean,
+  hosts?: {|
+    read?: string[],
+    write?: string[],
+  |},
+};
 
 export type Method = 'POST' | 'GET' | 'DELETE' | 'PUT';
 export type RequestArguments = {
