@@ -8,9 +8,6 @@ const agent: https.Agent = new https.Agent({
   keepAliveMsecs: 3000,
 });
 
-type Method = 'POST' | 'GET';
-type Response = {| body: Buffer, statusCode: number |};
-
 export default function requester({
   // agent,
   body,
@@ -23,8 +20,7 @@ export default function requester({
   method: Method,
   url: URL,
 }): Promise<Response> {
-  return new Promise((resolve: Response => mixed, reject: Error => mixed) => {
-    const chunks: Buffer[] = [];
+  return new Promise((resolve, reject) => {
     const req = https.request({
       hostname,
       headers: {
@@ -39,27 +35,31 @@ export default function requester({
       protocol,
       agent,
     });
-    req.once('error', reject);
-    req.once('response', response => {
+
+    const chunks: Buffer[] = [];
+    const onData = (chunk: Buffer) => chunks.push(chunk);
+    const onEnd = res =>
+      resolve(
+        ({
+          body: Buffer.concat(chunks),
+          statusCode: res.statusCode,
+        }: Response)
+      );
+    const onResponse = response => {
       // either the proxy or Algolia can decide
       // to not gzip the response (very small responses)
       // so we always need to double check
-
       const res =
         response.headers['content-encoding'] === 'gzip' ||
         response.headers['content-encoding'] === 'deflate'
           ? response.pipe(zlib.createUnzip())
           : response;
 
-      res.on('data', (chunk: Buffer) => chunks.push(chunk)).on('end', () =>
-        resolve(
-          ({
-            body: Buffer.concat(chunks),
-            statusCode: res.statusCode,
-          }: Response)
-        )
-      );
-    });
+      res.on('data', onData).on('end', () => onEnd(res));
+    };
+
+    req.once('error', reject);
+    req.once('response', onResponse);
 
     if (body !== undefined) {
       req.write(body);
