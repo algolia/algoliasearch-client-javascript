@@ -2,6 +2,8 @@
 import https from 'https';
 import zlib from 'zlib';
 
+import type { Response, RequesterArgs } from '../types';
+
 // $FlowIssue doesn't have Agent in https
 const agent: https.Agent = new https.Agent({
   keepAlive: true,
@@ -14,12 +16,7 @@ export default function requester({
   headers,
   method,
   url: { protocol, hostname, port, pathname: path },
-}: {
-  body: Object,
-  headers: Object,
-  method: Method,
-  url: URL,
-}): Promise<Response> {
+}: RequesterArgs): Promise<Response> {
   return new Promise((resolve, reject) => {
     const req = https.request({
       hostname,
@@ -38,14 +35,15 @@ export default function requester({
 
     const chunks: Buffer[] = [];
     const onData = (chunk: Buffer) => chunks.push(chunk);
-    const onEnd = res =>
+    function onEnd(res) {
       resolve(
         ({
           body: Buffer.concat(chunks),
           statusCode: res.statusCode,
         }: Response)
       );
-    const onResponse = response => {
+    }
+    function onResponse(response) {
       // either the proxy or Algolia can decide
       // to not gzip the response (very small responses)
       // so we always need to double check
@@ -56,7 +54,7 @@ export default function requester({
           : response;
 
       res.on('data', onData).on('end', () => onEnd(res));
-    };
+    }
 
     req.once('error', reject);
     req.once('response', onResponse);

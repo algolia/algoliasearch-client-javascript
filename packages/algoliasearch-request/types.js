@@ -2,10 +2,21 @@
 
 import type { Method } from '../algoliasearch/src/types';
 
-type Response = { body: Buffer, statusCode: number };
-export type HttpModule = ({
-  body: Object,
-  headers: Object,
+export type Response = { body: Buffer, statusCode: number };
+export type RequesterArgs = {
+  body?: Object,
+  headers?: Object,
   method: Method,
   url: URL,
-}) => Promise<Response>;
+};
+export type HttpModule = RequesterArgs => Promise<Response>;
+
+export type Hosts = {|
+  read: string[],
+  write: string[],
+|};
+export type Timeouts = {
+  connect: number,
+  read: number,
+  write: number,
+};

@@ -33,6 +33,7 @@ export type RequestArguments = {
   qs?: Object,
   body?: Object,
   options?: Object,
+  requestType: 'read' | 'write',
 };
 export type Result = Object;
 export type RequestMethod = RequestArguments => Promise<Result>;

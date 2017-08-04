@@ -1,10 +1,7 @@
 // @flow
 import type { AppId } from '../algoliasearch/src/types';
+import type { Hosts, Timeouts } from './types';
 
-export type Hosts = {|
-  read: string[],
-  write: string[],
-|};
 function computeRegularHosts(appId: AppId): Hosts {
   const readWriteHosts = [
     `${appId}-1.algolianet.com`,
@@ -18,11 +15,6 @@ function computeRegularHosts(appId: AppId): Hosts {
   };
 }
 
-export type Timeouts = {
-  connect: number,
-  read: number,
-  write: number,
-};
 function computeRegularTimeouts(): Timeouts {
   return {
     connect: 1 * 1000, // 500ms connect is GPRS latency
@@ -37,7 +29,7 @@ type Args = {|
   timeouts?: Timeouts,
 |};
 
-export default class requestHosts {
+export default class RequestHosts {
   hosts: Hosts;
   timeouts: Timeouts;
   appId: AppId;
@@ -46,6 +38,7 @@ export default class requestHosts {
     this.appId = appId;
 
     const regularHosts = computeRegularHosts(appId);
+    // $FlowIssue --> Flow doesn't recognize that I'm catching the undefined here
     const { read = [], write = [] } = extraHosts;
 
     this.hosts = {
