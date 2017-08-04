@@ -14,6 +14,7 @@ export default function waitForCompletion(
   return req({
     method: 'GET',
     path: `/1/indexes/${indexName}/task/${taskID}`,
+    requestType: 'write',
   }).then((res: Result) => {
     if (res.status === 'published') {
       return res;

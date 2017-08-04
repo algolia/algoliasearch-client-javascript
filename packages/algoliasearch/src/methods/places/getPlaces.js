@@ -30,5 +30,6 @@ export default function getPlaces({
         attributesToRetrieve,
       })),
     },
+    requestType: 'read',
   });
 }

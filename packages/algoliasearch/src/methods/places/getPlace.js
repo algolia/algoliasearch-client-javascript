@@ -19,5 +19,6 @@ export default function getPlace({
     method: 'GET',
     path: `/1/indexes/places/${objectID}`,
     qs: { attributes: attributesToRetrieve },
+    requestType: 'read',
   });
 }

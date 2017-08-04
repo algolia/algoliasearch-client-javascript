@@ -11,5 +11,6 @@ export default function addObject(
     method: 'POST',
     path: `/1/indexes/${indexName}/`,
     body,
+    requestType: 'write',
   });
 }

@@ -10,5 +10,6 @@ export default function clearSynonyms(
   return req({
     method: 'DELETE',
     path: `/1/indexes/${indexName}/keys/${key}`,
+    requestType: 'write',
   });
 }

@@ -28,5 +28,6 @@ export default function getObjects({
       })),
     },
     options,
+    requestType: 'write',
   });
 }

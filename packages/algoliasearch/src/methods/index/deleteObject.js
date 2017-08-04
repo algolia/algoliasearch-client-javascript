@@ -10,5 +10,6 @@ export default function getObjects(
   return req({
     method: 'DELETE',
     path: `/1/indexes/${indexName}/${objectID}`,
+    requestType: 'write',
   });
 }

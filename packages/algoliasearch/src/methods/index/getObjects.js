@@ -1,24 +1,36 @@
 // @flow
 
 import { pluralError } from '../../errors';
-import type { RequestMethod, IndexName, ObjectID } from '../../types';
+import type {
+  RequestMethod,
+  IndexName,
+  ObjectID,
+  RequestOptions,
+} from '../../types';
 
 export type GetObjectOptions = {| attributesToRetrieve: string[] |};
 
-export default function getObjects(
-  req: RequestMethod,
+export default function getObjects({
+  requester,
+  indexName,
+  objectIDs,
+  params,
+  options,
+}: {
+  requester: RequestMethod,
   indexName: IndexName,
   objectIDs: ObjectID[],
-  options: GetObjectOptions
-) {
-  const { attributesToRetrieve: attrs } = options;
+  params: GetObjectOptions,
+  options: RequestOptions,
+}) {
+  const { attributesToRetrieve: attrs } = params;
   const attributesToRetrieve = attrs.join(',');
 
   if (!Array.isArray(objectIDs)) {
     throw pluralError('getObject');
   }
 
-  return req({
+  return requester({
     method: 'POST',
     path: '/1/indexes/*/objects',
     body: {
@@ -28,5 +40,7 @@ export default function getObjects(
         attributesToRetrieve,
       })),
     },
+    options,
+    requestType: 'read',
   });
 }

@@ -11,5 +11,6 @@ export default function browse(
     method: 'GET',
     path: `/1/indexes/${indexName}/browse`,
     qs: params,
+    requestType: 'read',
   });
 }

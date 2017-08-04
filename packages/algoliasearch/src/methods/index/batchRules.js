@@ -33,5 +33,6 @@ export default function batchRules({
     path: `/1/indexes/${indexName}/rules/batch`,
     qs: options,
     body: { rules },
+    requestType: 'write',
   });
 }

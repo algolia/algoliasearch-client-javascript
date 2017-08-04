@@ -39,5 +39,6 @@ export default function addApiKey({
     path: `/1/indexes/${indexName}/keys/`,
     body,
     options,
+    requestType: 'write',
   });
 }

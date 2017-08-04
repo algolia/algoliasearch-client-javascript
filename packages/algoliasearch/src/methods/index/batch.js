@@ -16,5 +16,6 @@ export default function batch(
     method: 'POST',
     path: `/1/indexes/${indexName}/batch`,
     body: { requests },
+    requestType: 'write',
   });
 }

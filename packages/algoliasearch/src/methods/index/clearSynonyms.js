@@ -13,5 +13,6 @@ export default function clearSynonyms(
     method: 'GET',
     path: `/1/indexes/${indexName}/synonyms/clear`,
     qs: { opts },
+    requestType: 'write',
   });
 }
