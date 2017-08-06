@@ -17,6 +17,7 @@ export type {
   Result,
   RequestMethod,
   Requester,
+  Headers,
 } from './requester';
 
 export type BatchActions =

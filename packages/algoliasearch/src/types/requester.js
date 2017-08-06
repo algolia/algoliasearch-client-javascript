@@ -2,10 +2,12 @@
 
 import type { AppId, ApiKey } from './';
 
+export type Headers = { [key: string]: string };
+
 export type RequestOptions = {|
   forwardedFor?: string,
-  extraHeaders?: Object,
-  extraUrlParameters?: Object,
+  extraHeaders?: Headers,
+  extraUrlParameters?: { [key: string]: any },
   timeouts?: {|
     connect?: number,
     read?: number,

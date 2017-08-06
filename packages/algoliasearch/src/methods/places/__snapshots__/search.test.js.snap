@@ -8,6 +8,7 @@ Object {
   "method": "POST",
   "options": undefined,
   "path": "/1/indexes/places/query",
+  "requestType": "read",
 }
 `;
 
@@ -21,5 +22,6 @@ Object {
   "method": "POST",
   "options": undefined,
   "path": "/1/indexes/places/query",
+  "requestType": "read",
 }
 `;

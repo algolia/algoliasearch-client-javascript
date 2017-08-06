@@ -13,7 +13,7 @@ type Args = {|
   appId: AppId,
   apiKey: ApiKey,
   httpRequester: HttpModule,
-  options?: {|
+  options: {|
     timeouts?: Timeouts,
     extraHosts?: Hosts,
   |},
@@ -42,13 +42,22 @@ class Requester {
 
   request(arg: RequestArguments) {
     const { method, path, qs, body, options, requestType: type } = arg;
-    const host = this.hosts.getHost({ type });
+    const { headers } = parseOptions(options);
+    const hostname = this.hosts.getHost({ type });
+    const timeout = this.hosts.getTimeout({ retry: 0, type });
+
+    const pathname = path + qs;
+    const url: {|
+      hostname: string,
+      pathname: string,
+    |} = { hostname, pathname };
     new Promise((resolve, reject) => {
       this.requester({
         body,
         headers,
         method,
         url,
+        timeout,
       })
         .then()
         .catch(reject);

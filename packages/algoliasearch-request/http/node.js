@@ -15,7 +15,7 @@ export default function requester({
   body,
   headers,
   method,
-  url: { protocol, hostname, port, pathname: path },
+  url: { protocol = 'https', hostname, port = '80', pathname: path },
 }: RequesterArgs): Promise<Response> {
   return new Promise((resolve, reject) => {
     const req = https.request({

@@ -77,6 +77,6 @@ export default class RequestHosts {
     type: $Keys<Timeouts>,
   }): number {
     // todo: different formula per retry type
-    return retry * this.timeouts[type];
+    return (1 + retry) * this.timeouts[type];
   }
 }
