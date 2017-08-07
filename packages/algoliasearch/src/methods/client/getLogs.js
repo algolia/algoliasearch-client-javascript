@@ -22,5 +22,6 @@ export default function getLogs({
     path: '/1/logs',
     qs: { offset, length },
     options,
+    requestType: 'read',
   });
 }

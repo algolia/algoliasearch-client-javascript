@@ -3,11 +3,11 @@
 import type { RequestMethod, IndexName } from '../../types';
 
 export default function addObject(
-  req: RequestMethod,
+  requester: RequestMethod,
   indexName: IndexName,
   body: Object
 ) {
-  return req({
+  return requester({
     method: 'POST',
     path: `/1/indexes/${indexName}/`,
     body,

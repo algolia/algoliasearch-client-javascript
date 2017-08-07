@@ -20,5 +20,6 @@ export default function listIndexes({
     path: '/1/indexes',
     qs: params,
     options,
+    requestType: 'write',
   });
 }

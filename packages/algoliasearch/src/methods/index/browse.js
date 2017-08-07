@@ -3,11 +3,11 @@
 import type { RequestMethod, IndexName, SearchParameters } from '../../types';
 
 export default function browse(
-  req: RequestMethod,
+  requester: RequestMethod,
   indexName: IndexName,
   params: SearchParameters
 ) {
-  return req({
+  return requester({
     method: 'GET',
     path: `/1/indexes/${indexName}/browse`,
     qs: params,

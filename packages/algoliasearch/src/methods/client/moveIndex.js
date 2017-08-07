@@ -18,5 +18,6 @@ export default function moveIndex({
     path: `/1/indexes/${indexName}/operation`,
     body: { operation: 'move', destination },
     options,
+    requestType: 'write',
   });
 }

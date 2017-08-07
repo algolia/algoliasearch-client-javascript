@@ -8,12 +8,12 @@ export type Options = {|
 |};
 
 export default function batchRules(
-  req: RequestMethod,
+  requester: RequestMethod,
   indexName: IndexName,
   rules: Synonym[],
   opts: Options
 ) {
-  return req({
+  return requester({
     method: 'POST',
     path: `/1/indexes/${indexName}/rules/batch`,
     qs: opts,

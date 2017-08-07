@@ -1,6 +1,11 @@
 // @flow
 
-import type { RequestMethod, BatchActions, IndexName } from '../../types';
+import type {
+  RequestMethod,
+  BatchActions,
+  IndexName,
+  RequestOptions,
+} from '../../types';
 
 export type ClientBatchRequest = {|
   action: BatchActions,
@@ -8,13 +13,20 @@ export type ClientBatchRequest = {|
   body?: Object,
 |};
 
-export default function batch(
-  req: RequestMethod,
-  requests: ClientBatchRequest[]
-) {
-  return req({
+export default function batch({
+  requester,
+  requests,
+  options,
+}: {
+  requester: RequestMethod,
+  requests: ClientBatchRequest[],
+  options?: RequestOptions,
+}) {
+  return requester({
     method: 'POST',
     path: '/1/indexes/*/batch',
     body: { requests },
+    requestType: 'write',
+    options,
   });
 }

@@ -8,11 +8,11 @@ export type IndexBatchRequest = {|
 |};
 
 export default function batch(
-  req: RequestMethod,
+  requester: RequestMethod,
   indexName: IndexName,
   requests: IndexBatchRequest[]
 ) {
-  return req({
+  return requester({
     method: 'POST',
     path: `/1/indexes/${indexName}/batch`,
     body: { requests },

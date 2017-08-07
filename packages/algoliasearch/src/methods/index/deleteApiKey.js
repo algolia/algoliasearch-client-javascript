@@ -3,11 +3,11 @@
 import type { RequestMethod, IndexName, ApiKey } from '../../types';
 
 export default function clearSynonyms(
-  req: RequestMethod,
+  requester: RequestMethod,
   indexName: IndexName,
   key: ApiKey
 ) {
-  return req({
+  return requester({
     method: 'DELETE',
     path: `/1/indexes/${indexName}/keys/${key}`,
     requestType: 'write',

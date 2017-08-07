@@ -24,5 +24,6 @@ export default function search({
     path: '/1/indexes/*/queries',
     body: { requests },
     options,
+    requestType: 'read',
   });
 }
