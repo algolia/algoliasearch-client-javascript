@@ -6,5 +6,6 @@ Array [
   "getLogs",
   "listIndexes",
   "search",
+  "requester",
 ]
 `;

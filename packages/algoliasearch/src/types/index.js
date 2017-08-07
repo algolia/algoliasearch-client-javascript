@@ -34,6 +34,8 @@ export type ClientMethods = {
   getLogs: Function,
   listIndexes: Function,
   search: Function,
+  // non-api methods
+  requester: Function,
 };
 
 export type IndexMethods = {

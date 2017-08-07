@@ -24,5 +24,9 @@ export default function initClient({
   }
 
   const requester = createRequester({ appId, apiKey, options });
-  return attachParameters(clientMethods, { requester });
+
+  return {
+    ...attachParameters(clientMethods, { requester }),
+    requester,
+  };
 }
