@@ -20,5 +20,8 @@ You gave either an appId and no apiKey, or an apiKey and no appId`);
   }
 
   const requester = createRequester({ appId, apiKey });
-  return attachParameters(placesMethods, { requester });
+  return {
+    ...attachParameters(placesMethods, { requester }),
+    requester,
+  };
 }
