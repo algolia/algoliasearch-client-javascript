@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`regular getPlaces 1`] = `
+Object {
+  "body": Object {
+    "requests": Array [
+      Object {
+        "indexName": "places",
+        "objectID": "some_item",
+      },
+      Object {
+        "indexName": "places",
+        "objectID": "bingo",
+      },
+    ],
+  },
+  "method": "POST",
+  "options": undefined,
+  "path": "/1/indexes/*/objects",
+  "requestType": "read",
+}
+`;
+
+exports[`regular getPlaces 2`] = `
+Object {
+  "body": Object {
+    "requests": Array [
+      Object {
+        "attributesToRetrieve": "sing,som",
+        "indexName": "places",
+        "objectID": "some_item",
+      },
+      Object {
+        "attributesToRetrieve": "sing,som",
+        "indexName": "places",
+        "objectID": "bingo",
+      },
+    ],
+  },
+  "method": "POST",
+  "options": undefined,
+  "path": "/1/indexes/*/objects",
+  "requestType": "read",
+}
+`;

@@ -1,35 +1,40 @@
 // @flow
 
 import { pluralError } from '../../errors';
-import type { RequestMethod, ObjectID } from '../../types';
-import type { GetObjectOptions } from '../index/getObject';
+import type { RequestMethod, ObjectID, RequestOptions } from '../../types';
 
 export default function getPlaces({
   requester,
-  objectID,
+  objectIDs,
+  attributesToRetrieve,
   options,
 }: {
   requester: RequestMethod,
-  objectID: ObjectID[],
-  options: GetObjectOptions,
+  objectIDs: ObjectID[],
+  attributesToRetrieve?: string[],
+  options?: RequestOptions,
 }) {
-  const { attributesToRetrieve: attrs } = options;
-  const attributesToRetrieve = attrs.join(',');
-
-  if (!Array.isArray(objectID)) {
+  if (!Array.isArray(objectIDs)) {
     throw pluralError('getObject');
   }
+  if (objectIDs.length === 0) {
+    throw new Error('You need to have at least one place to retrieve');
+  }
+  const attrs = attributesToRetrieve && {
+    attributesToRetrieve: attributesToRetrieve.join(','),
+  };
 
   return requester({
     method: 'POST',
     path: '/1/indexes/*/objects',
     body: {
-      requests: objectID.map(id => ({
+      requests: objectIDs.map(objectID => ({
         indexName: 'places',
-        objectID: id,
-        attributesToRetrieve,
+        objectID,
+        ...attrs,
       })),
     },
     requestType: 'read',
+    options,
   });
 }
