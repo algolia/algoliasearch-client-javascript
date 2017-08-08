@@ -1,24 +1,28 @@
 // @flow
 
-import type { RequestMethod, ObjectID } from '../../types';
-import type { GetObjectOptions } from '../index/getObject';
+import type { RequestMethod, ObjectID, RequestOptions } from '../../types';
 
 export default function getPlace({
   requester,
   objectID,
-  options,
+  options = {},
+  requestOptions,
 }: {
   requester: RequestMethod,
   objectID: ObjectID,
   options: GetObjectOptions,
+  requestOptions?: RequestOptions,
 }) {
-  const { attributesToRetrieve: attrs } = options;
-  const attributesToRetrieve = attrs.join(',');
+  const { attributesToRetrieve } = options;
+  const attributes = attributesToRetrieve && {
+    attributes: attributesToRetrieve.join(','),
+  };
 
   return requester({
     method: 'GET',
     path: `/1/indexes/places/${objectID}`,
-    qs: { attributes: attributesToRetrieve },
+    qs: { ...attributes },
     requestType: 'read',
+    options: requestOptions,
   });
 }

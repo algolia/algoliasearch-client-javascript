@@ -2,17 +2,18 @@
 
 import { pluralError } from '../../errors';
 import type { RequestMethod, ObjectID, RequestOptions } from '../../types';
+import type { GetObjectOptions } from '../index/getObject';
 
 export default function getPlaces({
   requester,
   objectIDs,
-  attributesToRetrieve,
-  options,
+  options = {},
+  requestOptions,
 }: {
   requester: RequestMethod,
   objectIDs: ObjectID[],
-  attributesToRetrieve?: string[],
-  options?: RequestOptions,
+  options: GetObjectOptions,
+  requestOptions?: RequestOptions,
 }) {
   if (!Array.isArray(objectIDs)) {
     throw pluralError('getObject');
@@ -20,6 +21,8 @@ export default function getPlaces({
   if (objectIDs.length === 0) {
     throw new Error('You need to have at least one place to retrieve');
   }
+
+  const { attributesToRetrieve } = options;
   const attrs = attributesToRetrieve && {
     attributesToRetrieve: attributesToRetrieve.join(','),
   };
@@ -35,6 +38,6 @@ export default function getPlaces({
       })),
     },
     requestType: 'read',
-    options,
+    options: requestOptions,
   });
 }

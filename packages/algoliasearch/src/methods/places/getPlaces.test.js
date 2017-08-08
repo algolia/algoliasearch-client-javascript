@@ -7,7 +7,9 @@ it('regular getPlaces', () => {
     getPlaces({
       requester: fakeRequester,
       objectIDs: ['some_item', 'bingo'],
-      attributesToRetrieve: ['sing', 'som'],
+      options: {
+        attributesToRetrieve: ['sing', 'som'],
+      },
     }),
   ];
   snapshotAll(requests);

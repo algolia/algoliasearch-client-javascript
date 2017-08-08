@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`regular getPlaces 1`] = `
+Object {
+  "method": "GET",
+  "options": undefined,
+  "path": "/1/indexes/places/some_item",
+  "qs": Object {},
+  "requestType": "read",
+}
+`;
+
+exports[`regular getPlaces 2`] = `
+Object {
+  "method": "GET",
+  "options": undefined,
+  "path": "/1/indexes/places/some_item",
+  "qs": Object {
+    "attributes": "one,name",
+  },
+  "requestType": "read",
+}
+`;
