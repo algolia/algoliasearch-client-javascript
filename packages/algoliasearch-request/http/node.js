@@ -13,10 +13,12 @@ const agent: https.Agent = new https.Agent({
 export default function requester({
   // agent,
   body,
-  headers,
   method,
-  url: { protocol = 'https', hostname, port = '80', pathname: path },
+  url,
+  options,
 }: RequesterArgs): Promise<Response> {
+  const { protocol = 'https', hostname, port = '80', pathname: path } = url;
+  const extraHeaders = {}; // todo: translate options into header and qs
   return new Promise((resolve, reject) => {
     const req = https.request({
       hostname,
@@ -24,7 +26,7 @@ export default function requester({
         'accept-encoding': 'gzip,deflate',
         connection: 'keep-alive',
         accept: 'application/json',
-        ...headers,
+        ...extraHeaders,
       },
       method,
       port,
@@ -53,7 +55,8 @@ export default function requester({
           ? response.pipe(zlib.createUnzip())
           : response;
 
-      res.on('data', onData).on('end', () => onEnd(res));
+      res.on('data', onData);
+      res.on('end', () => onEnd(res));
     }
 
     req.once('error', reject);

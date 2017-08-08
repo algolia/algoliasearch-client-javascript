@@ -34,9 +34,13 @@ export type RequestArguments = {
   path: string,
   qs?: Object,
   body?: Object,
-  options?: Object,
+  options?: RequestOptions,
   requestType: 'read' | 'write',
 };
 export type Result = Object;
 export type RequestMethod = RequestArguments => Promise<Result>;
-export type Requester = ({ appId: AppId, apiKey: ApiKey }) => RequestMethod;
+export type Requester = ({
+  appId: AppId,
+  apiKey: ApiKey,
+  options?: RequesterOptions,
+}) => RequestMethod;

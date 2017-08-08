@@ -1,13 +1,21 @@
 // @flow
 
-import type { Method } from '../algoliasearch/src/types';
+import type { Method, RequestOptions } from '../algoliasearch/src/types';
+
+export type Url = {|
+  hostname: string,
+  pathname: string,
+  protocol?: string,
+  port?: string,
+|};
 
 export type Response = { body: Buffer, statusCode: number };
 export type RequesterArgs = {
   body?: Object,
-  headers?: Object,
   method: Method,
-  url: URL,
+  url: Url,
+  timeout: number,
+  options?: RequestOptions,
 };
 export type HttpModule = RequesterArgs => Promise<Response>;
 

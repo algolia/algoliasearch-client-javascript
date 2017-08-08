@@ -26,6 +26,7 @@ export default function initIndex({
   }
 
   const requester = createRequester({ appId, apiKey });
+  // $FlowIssue --> Flow doesn't get that the imports are augmented here
   return {
     ...attachParameters(indexMethods, { requester, indexName }),
     requester,

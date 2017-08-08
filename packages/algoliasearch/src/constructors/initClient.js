@@ -14,7 +14,7 @@ export default function initClient({
 }: {
   appId: AppId,
   apiKey: ApiKey,
-  options?: Object, // requesterOptions
+  options?: RequesterOptions,
 }): ClientMethods {
   if (appId === undefined) {
     throw new Error(`An appId is required. ${appId} was not valid.`);
@@ -25,6 +25,7 @@ export default function initClient({
 
   const requester = createRequester({ appId, apiKey, options });
 
+  // $FlowIssue --> Flow doesn't get that the imports are augmented here
   return {
     ...attachParameters(clientMethods, { requester }),
     requester,

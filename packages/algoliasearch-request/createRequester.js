@@ -19,6 +19,8 @@ type Args = {|
   |},
 |};
 
+const stringify = qs => JSON.stringify(qs); // todo: use proper url stringify
+
 class Requester {
   hosts: RequestHosts;
   apiKey: ApiKey;
@@ -42,24 +44,21 @@ class Requester {
 
   request(arg: RequestArguments) {
     const { method, path, qs, body, options, requestType: type } = arg;
-    const { headers } = parseOptions(options);
     const hostname = this.hosts.getHost({ type });
     const timeout = this.hosts.getTimeout({ retry: 0, type });
 
-    const pathname = path + qs;
-    const url: {|
-      hostname: string,
-      pathname: string,
-    |} = { hostname, pathname };
-    new Promise((resolve, reject) => {
+    const pathname = path + stringify(qs);
+    const url = { hostname, pathname };
+
+    return new Promise((resolve, reject) => {
       this.requester({
         body,
-        headers,
         method,
         url,
         timeout,
+        options,
       })
-        .then()
+        .then(resolve)
         .catch(reject);
     });
   }
