@@ -291,3 +291,4 @@ Cache will be disabled by default, to give the freedom of not having to fight wi
 
 - write methods with object instead of arguments
 - retry logic needs to have the same RequestOptions as before
+- rename `options` to `requestOptions` and its new syntax ([#589](https://github.com/algolia/algoliasearch-client-javascript/issues/589))
