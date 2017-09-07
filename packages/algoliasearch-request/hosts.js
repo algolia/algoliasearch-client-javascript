@@ -60,24 +60,26 @@ export default class RequestHosts {
     type: 'read' | 'write',
     extraHosts?: Hosts,
   }): string {
+    //  extraHosts ? use(extraHosts) : use(this.hosts)
     if (type !== 'read' && type !== 'write') {
       throw new Error(
         `You requested a host of type ${type}, but only 'read' or 'write' is a valid type.`
       );
     }
     const extra = extraHosts && extraHosts[type] ? extraHosts[type] : [];
-    const hosts = [...this.hosts[type], ...extra];
+    const hosts = [...extra, ...this.hosts[type]];
 
     if (hosts.length === 1) {
       const regularHosts = computeRegularHosts(this.appId)[type];
       this.hosts[type] = [...this.hosts[type], ...regularHosts];
     }
 
+    // use a counter with modulo instead of modifying
     return hosts.shift();
   }
 
   getTimeout({
-    retry = 1,
+    retry = 0,
     type,
     extraTimeouts,
   }: {
@@ -89,7 +91,7 @@ export default class RequestHosts {
       extraTimeouts && extraTimeouts[type]
         ? extraTimeouts[type]
         : this.timeouts[type];
-    // todo: different formula per retry type
+
     return (1 + retry) * timeout;
   }
 }
