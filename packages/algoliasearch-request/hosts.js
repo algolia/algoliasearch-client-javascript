@@ -34,7 +34,7 @@ export default class RequestHosts {
   timeouts: Timeouts;
   appId: AppId;
 
-  constructor({ appId, extraHosts, timeouts: extraTimeouts }: Args) {
+  constructor({ appId, extraHosts = {}, timeouts: extraTimeouts = {} }: Args) {
     this.appId = appId;
 
     const regularHosts = computeRegularHosts(appId);

@@ -1,4 +1,4 @@
 {
   "presets": ["env"],
-  "plugins": ["transform-flow-strip-types","transform-object-rest-spread"]
+  "plugins": ["transform-flow-strip-types","transform-object-rest-spread","transform-class-properties"]
 }

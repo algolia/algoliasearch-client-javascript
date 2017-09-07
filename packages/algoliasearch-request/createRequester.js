@@ -1,6 +1,7 @@
 // @flow
+
 import RequestHosts from './hosts';
-// const RequestHosts = () => {};
+
 import type {
   AppId,
   ApiKey,
@@ -13,39 +14,77 @@ type Args = {|
   appId: AppId,
   apiKey: ApiKey,
   httpRequester: HttpModule,
-  options: {|
+  options?: {|
     timeouts?: Timeouts,
     extraHosts?: Hosts,
   |},
+  requestOptions?: RequestOptions,
 |};
 
 const stringify = qs => JSON.stringify(qs); // todo: use proper url stringify
 
-class Requester {
+type ErrorTypes = 'application' | 'network' | 'dns' | 'timeout';
+const retryableErrors: Array<ErrorTypes> = [
+  'application',
+  'network',
+  'dns',
+  'timeout',
+];
+
+export class Requester {
   hosts: RequestHosts;
   apiKey: ApiKey;
   appId: AppId;
   requestOptions: RequestOptions;
   requester: HttpModule;
 
-  constructor({ appId, apiKey, httpRequester, options }: Args) {
+  constructor({
+    appId,
+    apiKey,
+    httpRequester,
+    options = {},
+    requestOptions = {},
+  }: Args) {
+    if (typeof appId !== 'string') {
+      throw new Error(
+        `appId is required and should be a string, received ${appId}`
+      );
+    }
+    if (typeof apiKey !== 'string') {
+      throw new Error(
+        `apiKey is required and should be a string, received ${apiKey}`
+      );
+    }
+    if (typeof httpRequester !== 'function') {
+      throw new Error(
+        `httpRequester is required and should be a function, received ${httpRequester}`
+      );
+    }
     this.hosts = new RequestHosts({ appId, ...options });
     this.appId = appId;
     this.apiKey = apiKey;
     this.requester = httpRequester;
+    this.requestOptions = requestOptions;
   }
 
-  setOptions(fn: RequestOptions => RequestOptions): RequestOptions {
+  setOptions = (fn: RequestOptions => RequestOptions): RequestOptions => {
     const oldOptions = this.requestOptions;
     const newOptions = fn(oldOptions);
     this.requestOptions = newOptions;
     return newOptions;
-  }
+  };
 
-  request(arg: RequestArguments) {
-    const { method, path, qs, body, options, requestType: type } = arg;
+  request = ({
+    method,
+    path,
+    qs,
+    body,
+    options,
+    requestType: type,
+    retry = 0,
+  }: RequestArguments) => {
     const hostname = this.hosts.getHost({ type });
-    const timeout = this.hosts.getTimeout({ retry: 0, type });
+    const timeout = this.hosts.getTimeout({ retry, type });
 
     const pathname = path + stringify(qs);
     const url = { hostname, pathname };
@@ -59,11 +98,27 @@ class Requester {
         options,
       })
         .then(resolve)
-        .catch(reject);
+        .catch(err => {
+          if (retryableErrors.indexOf(err.message.reason) > -1) {
+            resolve(
+              this.request({
+                method,
+                path,
+                qs,
+                body,
+                options,
+                requestType: type,
+                retry: retry + 1,
+              })
+            );
+          }
+          reject(err);
+        });
     });
-  }
+  };
 }
 
+// todo: not use this and just use the class
 export default function createRequester(args: Args) {
   const _r = new Requester(args);
   const requester = _r.request;
