@@ -24,6 +24,13 @@ it('requires the right arguments', () => {
   ];
 
   falseInvocations.map(invocation => expect(invocation).toThrow());
+  falseInvocations.map(invocation => {
+    try {
+      invocation();
+    } catch (e) {
+      expect(e).toMatchSnapshot();
+    }
+  });
 
   expect(() =>
     createRequester({
