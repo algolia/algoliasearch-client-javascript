@@ -3,6 +3,8 @@
 import createRequester from './createRequester';
 import type { HttpModule, Timeouts, Hosts } from './types';
 
+jest.useFakeTimers();
+
 it('requires the right arguments', () => {
   const falseInvocations = [
     () =>
@@ -42,37 +44,35 @@ it('requires the right arguments', () => {
 it('first read request uses first host', () => {
   const httpRequester = jest.fn(() => Promise.resolve());
   const requester = createRequester({
-    appId: 'the_crazy_app',
+    appId: 'the_read_app',
     apiKey: '',
     httpRequester,
   });
 
   requester({
-    method: '',
     requestType: 'read',
   });
 
   const firstArgs = httpRequester.mock.calls[0];
   const { url: { hostname } } = firstArgs[0];
-  expect(hostname).toEqual('the_crazy_app-dsn.algolia.net');
+  expect(hostname).toEqual('the_read_app-dsn.algolia.net');
 });
 
 it('first write request uses first host', () => {
   const httpRequester = jest.fn(() => Promise.resolve());
   const requester = createRequester({
-    appId: 'the_crazy_app',
+    appId: 'the_write_app',
     apiKey: '',
     httpRequester,
   });
 
   requester({
-    method: '',
     requestType: 'write',
   });
 
   const firstArgs = httpRequester.mock.calls[0];
   const { url: { hostname } } = firstArgs[0];
-  expect(hostname).toEqual('the_crazy_app.algolia.net');
+  expect(hostname).toEqual('the_write_app.algolia.net');
 });
 
 it.skip('uses a different host when the request needs to be retried', () => {
@@ -89,7 +89,6 @@ it.skip('uses a different host when the request needs to be retried', () => {
   });
 
   requester({
-    method: '',
     requestType: 'read',
   }); // retries
 
@@ -115,11 +114,9 @@ it.skip('uses the "up" host on second request when first fails', () => {
   });
 
   requester({
-    method: '',
     requestType: 'read',
   }); // retries
   requester({
-    method: '',
     requestType: 'read',
   });
 
@@ -136,14 +133,13 @@ it.skip('uses the "up" host on second request when first fails', () => {
 it('resolves when the response is successful', () => {
   const httpRequester = jest.fn(() => Promise.resolve({}));
   const requester = createRequester({
-    appId: 'the_crazy_app',
+    appId: 'the_successful_app',
     apiKey: '',
     httpRequester,
   });
 
   expect(
     requester({
-      method: '',
       requestType: 'write',
     })
   ).resolves.toEqual({});
@@ -161,7 +157,7 @@ it.skip("retries when there's an application error", () => {
         : Promise.resolve({})
   );
   const requester = createRequester({
-    appId: 'the_crazy_app',
+    appId: 'the_app_app',
     apiKey: '',
     httpRequester,
   });
@@ -169,7 +165,6 @@ it.skip("retries when there's an application error", () => {
   // it eventually resolves
   expect(
     requester({
-      method: '',
       requestType: 'write',
     })
   ).resolves.toEqual({});
@@ -190,7 +185,7 @@ it.skip("retries when there's a network error", () => {
         : Promise.resolve({})
   );
   const requester = createRequester({
-    appId: 'the_crazy_app',
+    appId: 'the_network_app',
     apiKey: '',
     httpRequester,
   });
@@ -198,7 +193,6 @@ it.skip("retries when there's a network error", () => {
   // it eventually resolves
   expect(
     requester({
-      method: '',
       requestType: 'write',
     })
   ).resolves.toEqual({});
@@ -219,7 +213,7 @@ it.skip("retries when there's a dns error", () => {
         : Promise.resolve({})
   );
   const requester = createRequester({
-    appId: 'the_crazy_app',
+    appId: 'the_dns_app',
     apiKey: '',
     httpRequester,
   });
@@ -227,7 +221,6 @@ it.skip("retries when there's a dns error", () => {
   // it eventually resolves
   expect(
     requester({
-      method: '',
       requestType: 'write',
     })
   ).resolves.toEqual({});
@@ -248,7 +241,7 @@ it.skip("retries when there's a timeout", () => {
         : Promise.resolve({})
   );
   const requester = createRequester({
-    appId: 'the_crazy_app',
+    appId: 'the_retry_app',
     apiKey: '',
     httpRequester,
   });
@@ -256,7 +249,6 @@ it.skip("retries when there's a timeout", () => {
   // it eventually resolves
   expect(
     requester({
-      method: '',
       requestType: 'write',
     })
   ).resolves.toEqual({});
@@ -277,19 +269,103 @@ it.skip('second try after a timeout has increments the timeout', () => {
         : Promise.resolve({})
   );
   const requester = createRequester({
-    appId: 'the_crazy_app',
+    appId: 'the_fun_app',
     apiKey: '',
     httpRequester,
+  });
+
+  requester({
+    requestType: 'write',
   });
 
   expect(/* the current timeout */).toBeGreaterThan(/* the original timeout */);
 });
 
-it.skip('rejects when all timeouts are reached', () => {});
+it.skip('rejects when all timeouts are reached', () => {
+  const httpRequester = jest.fn(() =>
+    Promise.reject(
+      new Error({
+        reason: 'timeout',
+      })
+    )
+  );
+  const requester = createRequester({
+    appId: 'the_timeout_app',
+    apiKey: '',
+    httpRequester,
+  });
 
-it.skip('rejects when all hosts are used', () => {});
+  expect(() => {
+    requester({
+      requestType: 'write',
+    }); // eventually it will fail because of a timeout
+  }).rejects.toBe(new Error('replace with the total timeout error'));
 
-it.skip('sets host index back to 0 after it rejects', () => {});
+  requester({ requestType: 'write' });
+
+  const calls = httpRequester.mock.calls;
+  const firstTimeout = calls[0][0].timeout;
+  const lastTimeout = calls[calls.length - 1][0].timeout;
+
+  expect(lastTimeout).toBe(firstTimeout);
+});
+
+it.skip('rejects when all hosts are used', () => {
+  const httpRequester = jest.fn(() =>
+    Promise.reject(
+      new Error({
+        reason: 'host',
+      })
+    )
+  );
+  const requester = createRequester({
+    appId: 'the_host_app',
+    apiKey: '',
+    httpRequester,
+  });
+
+  // eventually it will fail because there are no more hosts
+  expect(() =>
+    requester({
+      requestType: 'write',
+    })
+  ).rejects.toBe(new Error('replace with the host error'));
+});
+
+it.skip('uses the first host again after throwing', () => {
+  const httpRequester = jest.fn(
+    () =>
+      httpRequester.mock.calls.length < 4 /* the request completely fails */
+        ? Promise.reject(
+            new Error({
+              reason: 'network',
+            })
+          )
+        : Promise.resolve({})
+  );
+  const requester = createRequester({
+    appId: 'the_other_host_app',
+    apiKey: '',
+    httpRequester,
+  });
+
+  // eventually it will fail because there are no more hosts
+  expect(() =>
+    requester({
+      requestType: 'write',
+    })
+  ).rejects.toBe(new Error('replace with the host error'));
+
+  requester({
+    requestType: 'write',
+  }); // this request works
+
+  const calls = httpRequester.mock.calls;
+  const firstHost = calls[0][0].hostname;
+  const lastHost = calls[calls.length - 1][0].hostname;
+
+  expect(lastHost).toBe(firstHost);
+});
 
 it.skip('two instances of createRequester share the same host index', () => {});
 
