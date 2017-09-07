@@ -79,7 +79,7 @@ it.skip('uses a different host when the request needs to be retried', () => {
   const httpRequester = jest.fn(
     () =>
       httpRequester.mock.calls.length === 1
-        ? Promise.reject(new Error())
+        ? Promise.reject(new Error({ reason: 'network' }))
         : Promise.resolve()
   );
   const requester = createRequester({
@@ -367,6 +367,70 @@ it.skip('uses the first host again after throwing', () => {
   expect(lastHost).toBe(firstHost);
 });
 
-it.skip('two instances of createRequester share the same host index', () => {});
+it.skip('two instances of createRequester share the same host index', () => {
+  const httpRequester = jest.fn(
+    () =>
+      httpRequester.mock.calls.length === 1
+        ? Promise.reject(new Error({ reason: 'network' }))
+        : Promise.resolve()
+  );
 
-it.skip('host indices are reset to 0 after Xs', () => {});
+  const firstRequester = createRequester({
+    appId: 'the_same_app',
+    apiKey: '',
+    httpRequester,
+  });
+  const secondRequester = createRequester({
+    appId: 'the_same_app',
+    apiKey: '',
+    httpRequester,
+  });
+
+  firstRequester({
+    requestType: 'read',
+  }); // retries
+  secondRequester({
+    requestType: 'read',
+  });
+
+  const usedHosts = [
+    httpRequester.mock.calls[0][0].url.hostname,
+    httpRequester.mock.calls[1][0].url.hostname,
+    httpRequester.mock.calls[2][0].url.hostname,
+  ];
+  expect(usedHosts[0]).toEqual('the_same_app-dsn.algolia.net'); // first try
+  expect(usedHosts[1]).toEqual('the_same_app-1.algolianet.com'); // first retry
+  expect(usedHosts[2]).toEqual('the_same_app-1.algolianet.com'); // second request
+});
+
+it.skip('host indices are reset to 0 after Xs', () => {
+  const httpRequester = jest.fn(
+    () =>
+      httpRequester.mock.calls.length === 1
+        ? Promise.reject(new Error({ reason: 'network' }))
+        : Promise.resolve()
+  );
+  const requester = createRequester({
+    appId: 'the_slow_app',
+    apiKey: '',
+    httpRequester,
+  });
+
+  requester({
+    requestType: 'read',
+  }); // retries
+
+  // wait X seconds
+  requester({
+    requestType: 'read',
+  }); // retries
+
+  const usedHosts = [
+    httpRequester.mock.calls[0][0].url.hostname,
+    httpRequester.mock.calls[2][0].url.hostname,
+    httpRequester.mock.calls[3][0].url.hostname,
+  ];
+  expect(usedHosts[0]).toEqual('the_slow_app-dsn.algolia.net'); // first try
+  expect(usedHosts[1]).toEqual('the_slow_app-1.algolianet.com'); // second try
+  expect(usedHosts[2]).toEqual('the_slow_app-dsn.algolia.net'); // third try
+});
