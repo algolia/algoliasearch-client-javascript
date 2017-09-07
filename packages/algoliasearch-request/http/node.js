@@ -2,6 +2,7 @@
 import https from 'https';
 import zlib from 'zlib';
 
+import parseOptions from '../parseOptions.js';
 import type { Response, RequesterArgs } from '../types';
 
 // $FlowIssue doesn't have Agent in https
@@ -18,7 +19,11 @@ export default function requester({
   options,
 }: RequesterArgs): Promise<Response> {
   const { protocol = 'https', hostname, port = '80', pathname: path } = url;
-  const extraHeaders = {}; // todo: translate options into header and qs
+  const { queryStringOrBody, headers: extraHeaders, timeouts } = parseOptions(
+    options
+  );
+  // eslint-disable-next-line no-console
+  console.log('please still use these: ', queryStringOrBody, timeouts);
   return new Promise((resolve, reject) => {
     const req = https.request({
       hostname,
