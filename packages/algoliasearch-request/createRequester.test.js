@@ -15,11 +15,9 @@ it('requires the right arguments', () => {
       }),
     () =>
       createRequester({
+        appId: '',
+        apiKey: '',
         httpRequester: {},
-      }),
-    () =>
-      createRequester({
-        httpRequester: () => {},
       }),
   ];
 

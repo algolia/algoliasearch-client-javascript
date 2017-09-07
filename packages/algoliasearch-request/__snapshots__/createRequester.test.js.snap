@@ -4,6 +4,4 @@ exports[`requires the right arguments 1`] = `[Error: appId is required and shoul
 
 exports[`requires the right arguments 2`] = `[Error: apiKey is required and should be a string, received undefined]`;
 
-exports[`requires the right arguments 3`] = `[Error: appId is required and should be a string, received undefined]`;
-
-exports[`requires the right arguments 4`] = `[Error: appId is required and should be a string, received undefined]`;
+exports[`requires the right arguments 3`] = `[Error: httpRequester is required and should be a function, received [object Object]]`;
