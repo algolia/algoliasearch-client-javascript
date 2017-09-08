@@ -4,7 +4,7 @@ exports[`has the correct methods 1`] = `
 Object {
   "get": [Function],
   "set": [Function],
-  "supportsSessionStorage": [Function],
+  "supportsLocalStorage": [Function],
 }
 `;
 

@@ -13,8 +13,8 @@ function createModuleStore() {
   };
 }
 
-function createSessionStorageStore(namespace: string, moduleStore) {
-  function sessionStorageFailure(key, e) {
+function createLocalStorageStore(namespace: string, moduleStore) {
+  function localStorageFailure(key, e) {
     // eslint-disable-next-line no-console
     console.warn(e); // debug
     cleanup(namespace);
@@ -23,33 +23,33 @@ function createSessionStorageStore(namespace: string, moduleStore) {
 
   return {
     set(key: string, data: Object) {
-      moduleStore.set(key, data); // always replicate sessionStorageStore to moduleStore in case of failure
+      moduleStore.set(key, data); // always replicate localStorageStore to moduleStore in case of failure
 
       try {
-        const result = JSON.parse(sessionStorage.getItem(namespace) || '{}');
+        const result = JSON.parse(localStorage.getItem(namespace) || '{}');
         result[key] = data;
-        sessionStorage.setItem(namespace, JSON.stringify(result));
+        localStorage.setItem(namespace, JSON.stringify(result));
         return result[key];
       } catch (e) {
-        return sessionStorageFailure(key, e);
+        return localStorageFailure(key, e);
       }
     },
     get(key) {
       try {
-        return JSON.parse(sessionStorage.getItem(namespace) || '{}')[key];
+        return JSON.parse(localStorage.getItem(namespace) || '{}')[key];
       } catch (e) {
-        return sessionStorageFailure(key, e);
+        return localStorageFailure(key, e);
       }
     },
   };
 }
 
-function supportsSessionStorage(namespace: string) {
+function supportsLocalStorage(namespace: string) {
   try {
-    if ('sessionStorage' in window && sessionStorage !== null) {
-      if (!sessionStorage.getItem(namespace)) {
+    if ('localStorage' in window && localStorage !== null) {
+      if (!localStorage.getItem(namespace)) {
         // actual creation of the namespace
-        sessionStorage.setItem(namespace, '{}');
+        localStorage.setItem(namespace, '{}');
       }
       return true;
     }
@@ -60,11 +60,11 @@ function supportsSessionStorage(namespace: string) {
   }
 }
 
-// In case of any error on sessionStorage, we clean our own namespace, this should handle
+// In case of any error on localStorage, we clean our own namespace, this should handle
 // quota errors when a lot of keys + data are used
 function cleanup(namespace: string) {
   try {
-    sessionStorage.removeItem(namespace);
+    localStorage.removeItem(namespace);
   } catch (_) {
     // nothing to do
   }
@@ -77,13 +77,13 @@ export default function createStore(namespace: string) {
     );
   }
   const moduleStore = createModuleStore();
-  const store = supportsSessionStorage(namespace)
-    ? createSessionStorageStore(namespace, moduleStore)
+  const store = supportsLocalStorage(namespace)
+    ? createLocalStorageStore(namespace, moduleStore)
     : moduleStore;
 
   return {
     get: (key: string) => store.get(key),
     set: (key: string, data: { [key: string]: any }) => store.set(key, data),
-    supportsSessionStorage: () => supportsSessionStorage(namespace),
+    supportsLocalStorage: () => supportsLocalStorage(namespace),
   };
 }

@@ -1,6 +1,13 @@
 {
   "name": "universal-store",
   "version": "0.0.0",
-  "description": "sessionStorage with a fallback to in-memory storage",
-  "keywords": ["storage", "cache", "fast", "fallback", "universal"]
+  "description": "localStorage with a fallback to in-memory storage",
+  "keywords": [
+    "storage",
+    "cache",
+    "fast",
+    "fallback",
+    "universal",
+    "localStorage"
+  ]
 }
