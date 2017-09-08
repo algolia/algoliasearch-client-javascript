@@ -1,14 +1,14 @@
 // @flow
 
 function createModuleStore() {
+  const state = {};
   return {
-    state: {},
     set(key, data) {
-      this.state[key] = data;
-      return this.state[key];
+      state[key] = data;
+      return state[key];
     },
     get(key) {
-      return this.state[key] || null;
+      return state[key] || null;
     },
   };
 }

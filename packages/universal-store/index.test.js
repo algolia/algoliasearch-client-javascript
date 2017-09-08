@@ -10,10 +10,10 @@ it('has the correct methods', () => {
   expect(createStore('algolia-js-client')).toMatchSnapshot();
 });
 
-it('Detects sessionStorage availability', () => {
+it('Detects localStorage availability', () => {
   const store = createStore('algolia-js-client');
 
-  expect(store.supportsSessionStorage('client')).toBe(false);
+  expect(store.supportsLocalStorage()).toBe(false);
 });
 
 it('sets then gets', () => {
@@ -25,10 +25,10 @@ it('sets then gets', () => {
   expect(store.get('key')).toMatchObject(data);
 });
 
-describe('sessionStorage works', () => {
+describe('localStorage works', () => {
   beforeAll(() => {
     const state = {};
-    global.sessionStorage = {
+    global.localStorage = {
       getItem: jest.fn(key => state[key]),
       setItem: jest.fn((key, value) => {
         state[key] = value;
@@ -37,10 +37,10 @@ describe('sessionStorage works', () => {
     };
   });
 
-  it('Detects sessionStorage availability', () => {
+  it('Detects localStorage availability', () => {
     const store = createStore('algolia-js-client');
 
-    expect(store.supportsSessionStorage('client')).toBe(true);
+    expect(store.supportsLocalStorage()).toBe(true);
   });
 
   it('sets then gets', () => {
@@ -52,14 +52,14 @@ describe('sessionStorage works', () => {
     expect(store.get('key')).toMatchObject(data);
   });
 
-  it('sets to sessionStorage', () => {
+  it('sets to localStorage', () => {
     const store = createStore('algolia-js-client');
 
     const data = { weirdData: true };
     expect(store.set('otherKey', data)).toMatchObject(data);
 
     expect(
-      JSON.parse(global.sessionStorage.getItem('algolia-js-client')).otherKey
+      JSON.parse(global.localStorage.getItem('algolia-js-client')).otherKey
     ).toMatchObject(data);
   });
 });
