@@ -1,7 +1,7 @@
 // @flow
 
 import createRequester from './createRequester';
-import type { HttpModule, Timeouts, Hosts } from './types';
+import type { HttpModule } from './types';
 
 jest.useFakeTimers();
 
@@ -42,7 +42,7 @@ it('requires the right arguments', () => {
 });
 
 it('first read request uses first host', () => {
-  const httpRequester = jest.fn(() => Promise.resolve());
+  const httpRequester: HttpModule = jest.fn(() => Promise.resolve());
   const requester = createRequester({
     appId: 'the_read_app',
     apiKey: '',
@@ -59,7 +59,7 @@ it('first read request uses first host', () => {
 });
 
 it('first write request uses first host', () => {
-  const httpRequester = jest.fn(() => Promise.resolve());
+  const httpRequester: HttpModule = jest.fn(() => Promise.resolve());
   const requester = createRequester({
     appId: 'the_write_app',
     apiKey: '',
@@ -76,7 +76,7 @@ it('first write request uses first host', () => {
 });
 
 it.skip('uses a different host when the request needs to be retried', () => {
-  const httpRequester = jest.fn(
+  const httpRequester: HttpModule = jest.fn(
     () =>
       httpRequester.mock.calls.length === 1
         ? Promise.reject(new Error({ reason: 'network' }))
@@ -101,7 +101,7 @@ it.skip('uses a different host when the request needs to be retried', () => {
 });
 
 it.skip('uses the "up" host on second request when first fails', () => {
-  const httpRequester = jest.fn(
+  const httpRequester: HttpModule = jest.fn(
     () =>
       httpRequester.mock.calls.length === 1
         ? Promise.reject(new Error())
@@ -131,7 +131,7 @@ it.skip('uses the "up" host on second request when first fails', () => {
 });
 
 it('resolves when the response is successful', () => {
-  const httpRequester = jest.fn(() => Promise.resolve({}));
+  const httpRequester: HttpModule = jest.fn(() => Promise.resolve({}));
   const requester = createRequester({
     appId: 'the_successful_app',
     apiKey: '',
@@ -146,7 +146,7 @@ it('resolves when the response is successful', () => {
 });
 
 it.skip("retries when there's an application error", () => {
-  const httpRequester = jest.fn(
+  const httpRequester: HttpModule = jest.fn(
     () =>
       httpRequester.mock.calls.length === 1
         ? Promise.reject(
@@ -174,7 +174,7 @@ it.skip("retries when there's an application error", () => {
 });
 
 it.skip("retries when there's a network error", () => {
-  const httpRequester = jest.fn(
+  const httpRequester: HttpModule = jest.fn(
     () =>
       httpRequester.mock.calls.length === 1
         ? Promise.reject(
@@ -202,7 +202,7 @@ it.skip("retries when there's a network error", () => {
 });
 
 it.skip("retries when there's a dns error", () => {
-  const httpRequester = jest.fn(
+  const httpRequester: HttpModule = jest.fn(
     () =>
       httpRequester.mock.calls.length === 1
         ? Promise.reject(
@@ -230,7 +230,7 @@ it.skip("retries when there's a dns error", () => {
 });
 
 it.skip("retries when there's a timeout", () => {
-  const httpRequester = jest.fn(
+  const httpRequester: HttpModule = jest.fn(
     () =>
       httpRequester.mock.calls.length === 1
         ? Promise.reject(
@@ -258,7 +258,7 @@ it.skip("retries when there's a timeout", () => {
 });
 
 it.skip('second try after a timeout has increments the timeout', () => {
-  const httpRequester = jest.fn(
+  const httpRequester: HttpModule = jest.fn(
     () =>
       httpRequester.mock.calls.length === 1
         ? Promise.reject(
@@ -282,7 +282,7 @@ it.skip('second try after a timeout has increments the timeout', () => {
 });
 
 it.skip('rejects when all timeouts are reached', () => {
-  const httpRequester = jest.fn(() =>
+  const httpRequester: HttpModule = jest.fn(() =>
     Promise.reject(
       new Error({
         reason: 'timeout',
