@@ -14,17 +14,16 @@ export default function waitForCompletion({
   requester,
   indexName,
   taskID,
-  loopInfo,
+  loopInfo = {},
   options,
 }: {
   requester: RequestMethod,
   indexName: IndexName,
   taskID: TaskID,
-  loopInfo: LoopInfo,
+  loopInfo?: LoopInfo,
   options?: RequestOptions,
 }): Promise<Result> {
-  const info = loopInfo || {};
-  const { loop = 0, baseDelay = 250, maxDelay = 10000 } = info;
+  const { loop = 0, baseDelay = 250, maxDelay = 10000 } = loopInfo;
 
   return requester({
     method: 'GET',

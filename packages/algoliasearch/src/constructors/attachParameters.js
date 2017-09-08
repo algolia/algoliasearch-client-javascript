@@ -9,7 +9,8 @@ export default function attachParameters(
   const augmentedMethods = methodNames.reduce(
     (methods, method) => ({
       ...methods,
-      [method]: ({ ...args }) => original[method]({ ...extra, ...args }),
+      [method]: ({ ...args }, { ...meta }) =>
+        original[method]({ ...args }, { ...extra, ...meta }),
     }),
     {}
   );

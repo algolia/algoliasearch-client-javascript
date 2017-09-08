@@ -2,7 +2,7 @@ import attachParameters from './attachParameters';
 
 it('attaches an existing parameter', () => {
   const multipleFunctions = {
-    someFn: ({ toAdd, host }) => ({ toAdd, host }),
+    someFn: ({ normal }, { toAdd }) => ({ toAdd, normal }),
     anotherUnused: () => {},
   };
 
@@ -13,19 +13,16 @@ it('attaches an existing parameter', () => {
   expect(augmentedFunctions).toMatchSnapshot();
 
   expect(augmentedFunctions.someFn()).toMatchObject({
-    host: undefined,
+    normal: undefined,
     toAdd: 'some extra new param',
   });
 
-  expect(augmentedFunctions.someFn({ host: 'something' })).toMatchObject({
-    host: 'something',
+  expect(augmentedFunctions.someFn({ normal: 'something' })).toMatchObject({
+    normal: 'something',
     toAdd: 'some extra new param',
   });
 
   expect(
-    augmentedFunctions.someFn({ host: 'something', toAdd: 'override' })
-  ).toMatchObject({
-    host: 'something',
-    toAdd: 'override',
-  });
+    augmentedFunctions.someFn({ normal: 'something' }, { toAdd: 'override' })
+  ).toMatchObject({ normal: 'something', toAdd: 'override' });
 });
