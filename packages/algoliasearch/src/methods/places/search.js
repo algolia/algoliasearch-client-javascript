@@ -5,20 +5,21 @@ import type {
   RequestOptions,
 } from '../../types';
 
-export default function search({
-  requester,
-  params,
-  options,
-}: {
-  requester: RequestMethod,
+export default function search(
   params: SearchParameters,
-  options?: RequestOptions,
-}) {
+  {
+    requester,
+    requestOptions,
+  }: {
+    requestOptions?: RequestOptions,
+    requester: RequestMethod,
+  } = {}
+) {
   return requester({
     method: 'POST',
     path: `/1/indexes/places/query`,
     body: { params },
-    options,
+    options: requestOptions,
     requestType: 'read',
   });
 }

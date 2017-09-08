@@ -3,32 +3,36 @@ import getPlaces from './getPlaces';
 
 it('regular getPlaces', () => {
   const requests = [
-    getPlaces({ requester: fakeRequester, objectIDs: ['some_item', 'bingo'] }),
-    getPlaces({
-      requester: fakeRequester,
-      objectIDs: ['some_item', 'bingo'],
-      options: {
+    getPlaces(
+      { objectIDs: ['some_item', 'bingo'] },
+      { requester: fakeRequester }
+    ),
+    getPlaces(
+      {
+        objectIDs: ['some_item', 'bingo'],
+
         attributesToRetrieve: ['sing', 'som'],
       },
-    }),
+      { requester: fakeRequester }
+    ),
   ];
   snapshotAll(requests);
 });
 
 it('errors when no objectIDs are given', () => {
   expect(() =>
-    getPlaces({ requester: fakeRequester, objectIDs: [] })
+    getPlaces({ objectIDs: [] }, { requester: fakeRequester })
   ).toThrow();
 });
 
 it('errors when no attributesToRetrieve is not an array', () => {
   expect(() =>
-    getPlaces({ requester: fakeRequester, attributesToRetrieve: 'test' })
+    getPlaces({ attributesToRetrieve: 'test' }, { requester: fakeRequester })
   ).toThrow();
   expect(() =>
-    getPlaces({
-      requester: fakeRequester,
-      attributesToRetrieve: { cool: 'test' },
-    })
+    getPlaces(
+      { attributesToRetrieve: { cool: 'test' } },
+      { requester: fakeRequester }
+    )
   ).toThrow();
 });
