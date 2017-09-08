@@ -36,7 +36,7 @@ export type RequestArguments = {
   body?: Object,
   options?: RequestOptions,
   requestType: 'read' | 'write',
-  retry: number,
+  retry?: number,
 };
 export type Result = Object;
 export type RequestMethod = RequestArguments => Promise<Result>;
