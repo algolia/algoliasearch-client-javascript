@@ -8,7 +8,4 @@
 [options]
 emoji=true
 suppress_comment= \\(.\\|\n\\)*\\$FlowIssue
-include_warnings=true
 
-[lints]
-all=warn
