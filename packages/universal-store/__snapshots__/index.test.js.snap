@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`has the correct methods 1`] = `
+Object {
+  "get": [Function],
+  "set": [Function],
+  "supportsSessionStorage": [Function],
+}
+`;
+
+exports[`will error without namespace 1`] = `"The namespace should be a string, received \\"undefined\\""`;
+
+exports[`will error without namespace 2`] = `"The namespace should be a string, received \\"\\""`;
+
+exports[`will error without namespace 3`] = `"The namespace should be a string, received \\"5\\""`;
