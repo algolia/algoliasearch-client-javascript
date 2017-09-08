@@ -118,7 +118,6 @@ export class Requester {
   };
 }
 
-// todo: not use this and just use the class
 export default function createRequester(args: Args) {
   const _r = new Requester(args);
   const requester = _r.request;
