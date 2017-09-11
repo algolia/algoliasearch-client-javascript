@@ -31,6 +31,9 @@ const retryableErrors: Array<ErrorTypes> = [
   'timeout',
 ];
 
+const RESET_HOST_TIMER = 12000; //ms; 2 minutes
+const RESET_TIMEOUT_TIMER = 120000; //ms; 20 minutes
+
 export class Requester {
   hosts: RequestHosts;
   apiKey: ApiKey;
@@ -89,32 +92,48 @@ export class Requester {
     const pathname = path + stringify(qs);
     const url = { hostname, pathname };
 
-    return new Promise((resolve, reject) => {
-      this.requester({
-        body,
+    return this.requester({
+      body,
+      method,
+      url,
+      timeout,
+      options,
+    }).catch(err =>
+      this.retryRequest({
+        err,
         method,
-        url,
-        timeout,
+        path,
+        qs,
+        body,
         options,
+        type,
+        retry,
       })
-        .then(resolve)
-        .catch(err => {
-          if (retryableErrors.indexOf(err.message.reason) > -1) {
-            resolve(
-              this.request({
-                method,
-                path,
-                qs,
-                body,
-                options,
-                requestType: type,
-                retry: retry + 1,
-              })
-            );
-          }
-          reject(err);
-        });
-    });
+    );
+  };
+
+  retryRequest = ({ err, method, path, qs, body, options, type, retry }) => {
+    console.warn(err.message);
+    if (retryableErrors.indexOf(err.message.reason) > -1) {
+      // if no more hosts or timeouts: reject
+      // if reason: timeout; increase
+      return this.request({
+        method,
+        path,
+        qs,
+        body,
+        options,
+        requestType: type,
+        retry: retry + 1,
+      });
+    }
+    return Promise.reject(
+      new Error({
+        reason:
+          "Request couldn't be retried, did you enter the correct credentials?",
+        more: err.message.reason,
+      })
+    );
   };
 }
 

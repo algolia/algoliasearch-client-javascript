@@ -96,7 +96,7 @@ it.skip('uses the "up" host on second request when first fails', () => {
   const httpRequester = jest.fn(
     () =>
       httpRequester.mock.calls.length === 1
-        ? Promise.reject(new Error())
+        ? Promise.reject(new Error({ reason: 'network' }))
         : Promise.resolve()
   );
   const requester = createRequester({
