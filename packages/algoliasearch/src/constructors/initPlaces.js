@@ -8,8 +8,14 @@ import attachParameters from './attachParameters';
 import type { RequestMethod, ApiKey } from '../types';
 
 export default function initPlaces(
-  { apiKey = '', ...otherArgs }: { apiKey?: ApiKey } = {},
-  { requester: extraRequester }: { requester?: RequestMethod } = {}
+  {
+    apiKey = '',
+    requester: extraRequester,
+    ...otherArgs
+  }: {
+    apiKey?: ApiKey,
+    requester?: RequestMethod,
+  } = {}
 ) {
   if (otherArgs.appId) {
     throw new Error(
