@@ -4,16 +4,27 @@ import * as indexMethods from '../methods/index';
 import { createRequester } from '../request';
 import attachParameters from './attachParameters';
 
-import type { IndexMethods, AppId, ApiKey, IndexName } from '../types';
+import type {
+  IndexMethods,
+  AppId,
+  ApiKey,
+  IndexName,
+  RequesterOptions,
+  RequestMethod,
+} from '../types';
 
 export default function initIndex({
   appId,
   apiKey,
   indexName,
+  options,
+  requester: extraRequester,
 }: {
   appId: AppId,
   apiKey: ApiKey,
   indexName: IndexName,
+  options?: RequesterOptions,
+  requester?: RequestMethod,
 }): IndexMethods {
   if (appId === undefined) {
     throw new Error(`An appId is required. ${appId} was not valid.`);
@@ -25,7 +36,9 @@ export default function initIndex({
     throw new Error(`An indexName is required. ${indexName} was not valid.`);
   }
 
-  const requester = createRequester({ appId, apiKey });
+  const requester = extraRequester
+    ? extraRequester
+    : createRequester({ appId, apiKey, options });
   // $FlowIssue --> Flow doesn't get that the imports are augmented here
   return {
     ...attachParameters(indexMethods, { requester, indexName }),

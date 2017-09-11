@@ -5,16 +5,24 @@ import * as clientMethods from '../methods/client';
 import attachParameters from './attachParameters';
 import { createRequester } from '../request';
 
-import type { ClientMethods, AppId, ApiKey, RequesterOptions } from '../types';
+import type {
+  ClientMethods,
+  AppId,
+  ApiKey,
+  RequesterOptions,
+  RequestMethod,
+} from '../types';
 
 export default function initClient({
   appId,
   apiKey,
   options,
+  requester: extraRequester,
 }: {
   appId: AppId,
   apiKey: ApiKey,
   options?: RequesterOptions,
+  requester?: RequestMethod,
 }): ClientMethods {
   if (appId === undefined) {
     throw new Error(`An appId is required. ${appId} was not valid.`);
@@ -23,7 +31,9 @@ export default function initClient({
     throw new Error(`An apiKey is required. ${apiKey} was not valid.`);
   }
 
-  const requester = createRequester({ appId, apiKey, options });
+  const requester = extraRequester
+    ? extraRequester
+    : createRequester({ appId, apiKey, options });
 
   // $FlowIssue --> Flow doesn't get that the imports are augmented here
   return {
