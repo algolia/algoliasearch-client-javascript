@@ -1,17 +1,13 @@
 import initPlaces from './initPlaces';
 
-const validClientParams = {
-  appId: 'some_app',
-  apiKey: 'some_key',
-};
-
-it('initPlaces throws when it has too little parameters', () => {
+it('initPlaces throws when it has an appId', () => {
   expect(() => initPlaces()).not.toThrow();
   expect(() => initPlaces({})).not.toThrow();
-  expect(() => initPlaces(validClientParams)).not.toThrow();
+  expect(() => initPlaces({ apiKey: 'some_key' })).not.toThrow();
 
-  expect(() => initPlaces({ appId: 'some_id' })).toThrow();
-  expect(() => initPlaces({ apiKey: 'some_key' })).toThrow();
+  expect(() =>
+    initPlaces({ appId: 'some_app' })
+  ).toThrowErrorMatchingSnapshot();
 });
 
 it('initPlaces contains the correct methods', () => {

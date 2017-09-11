@@ -11,7 +11,7 @@ import type {
 import type { HttpModule, Timeouts, Hosts } from './types';
 
 type Args = {|
-  appId: AppId,
+  appId?: AppId,
   apiKey: ApiKey,
   httpRequester: HttpModule,
   options?: {|

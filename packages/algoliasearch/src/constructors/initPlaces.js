@@ -5,23 +5,23 @@ import * as placesMethods from '../methods/places';
 import { createRequester } from '../request';
 import attachParameters from './attachParameters';
 
-import type { AppId, ApiKey } from '../types';
+import type { RequestMethod, ApiKey } from '../types';
 
 export default function initPlaces(
-  params: {
-    appId?: AppId,
-    apiKey?: ApiKey,
-  } = {}
+  { apiKey = '', ...otherArgs }: { apiKey?: ApiKey } = {},
+  { requester: extraRequester }: { requester?: RequestMethod } = {}
 ) {
-  const { appId = '', apiKey = '' } = params;
-  if ((appId === '' && apiKey !== '') || (apiKey === '' && appId !== '')) {
-    throw new Error(`apiKey or appId are not required for places. 
-You gave either an appId and no apiKey, or an apiKey and no appId`);
+  if (otherArgs.appId) {
+    throw new Error(
+      'You passed an `appId` to initPlaces, but this only accepts `apiKey` as configuration'
+    );
   }
+  const requester = extraRequester
+    ? extraRequester
+    : createRequester({ appId: 'places', apiKey });
 
-  const requester = createRequester({ appId, apiKey });
   return {
-    ...attachParameters(placesMethods, { requester }),
+    ...attachParameters(placesMethods, { meta: { requester } }),
     requester,
   };
 }

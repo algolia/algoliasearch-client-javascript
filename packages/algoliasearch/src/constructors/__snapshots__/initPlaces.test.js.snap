@@ -8,3 +8,5 @@ Array [
   "requester",
 ]
 `;
+
+exports[`initPlaces throws when it has an appId 1`] = `"You passed an \`appId\` to initPlaces, but this only accepts \`apiKey\` as configuration"`;
