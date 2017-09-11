@@ -2,7 +2,14 @@
 
 export default function attachParameters(
   original: { [key: string]: Function },
-  extra: { [key: string]: any }
+  extra: {
+    args?: {
+      [key: string]: any,
+    },
+    meta?: {
+      [key: string]: any,
+    },
+  }
 ) {
   const methodNames = Object.keys(original);
 
@@ -10,7 +17,10 @@ export default function attachParameters(
     (methods, method) => ({
       ...methods,
       [method]: ({ ...args }, { ...meta }) =>
-        original[method]({ ...args }, { ...extra, ...meta }),
+        original[method](
+          { ...extra.args, ...args },
+          { ...extra.meta, ...meta }
+        ),
     }),
     {}
   );

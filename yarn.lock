@@ -2344,6 +2344,10 @@ jest-haste-map@^21.0.0:
     sane "^2.0.0"
     worker-farm "^1.3.1"
 
+jest-in-case@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/jest-in-case/-/jest-in-case-1.0.2.tgz#56744b5af33222bd0abab70cf919f1d170ab75cc"
+
 jest-jasmine2@^21.0.0:
   version "21.0.0"
   resolved "https://registry.yarnpkg.com/jest-jasmine2/-/jest-jasmine2-21.0.0.tgz#539725989e45ab0b00029fcf37bc679aa39c2941"

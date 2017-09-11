@@ -1,8 +1,347 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`attaches an existing parameter 1`] = `
+exports[`add both 1`] = `
+Array [
+  Object {
+    "boring": "test",
+    "extraNormal": "algolia",
+  },
+  Object {
+    "test": true,
+  },
+]
+`;
+
+exports[`add both 2`] = `
+Array [
+  Object {
+    "boring": "test",
+  },
+  Object {
+    "extraMeta": "something meta",
+    "test": true,
+  },
+]
+`;
+
+exports[`add both 3`] = `
+Array [
+  Object {
+    "boring": "test",
+    "extraNormal": "turbo",
+  },
+  Object {
+    "extraMeta": "be careful",
+    "test": true,
+  },
+]
+`;
+
+exports[`add both 4`] = `
+Array [
+  Object {
+    "boring": "test",
+    "extraNormal": "turbo",
+    "more": "moar",
+  },
+  Object {
+    "extraMeta": "be careful",
+    "test": true,
+    "whatShouldIUse": "algolia",
+  },
+]
+`;
+
+exports[`add only normal 1`] = `
+Array [
+  Object {
+    "extraNormal": "algolia",
+    "test": true,
+  },
+  Object {},
+]
+`;
+
+exports[`add only normal 2`] = `
+Array [
+  Object {
+    "test": true,
+  },
+  Object {
+    "extraMeta": "something meta",
+  },
+]
+`;
+
+exports[`add only normal 3`] = `
+Array [
+  Object {
+    "extraNormal": "turbo",
+    "test": true,
+  },
+  Object {
+    "extraMeta": "be careful",
+  },
+]
+`;
+
+exports[`add only normal 4`] = `
+Array [
+  Object {
+    "extraNormal": "turbo",
+    "more": "moar",
+    "test": true,
+  },
+  Object {
+    "extraMeta": "be careful",
+    "whatShouldIUse": "algolia",
+  },
+]
+`;
+
+exports[`adds nothing 1`] = `
+Array [
+  Object {
+    "extraNormal": "algolia",
+  },
+  Object {},
+]
+`;
+
+exports[`adds nothing 2`] = `
+Array [
+  Object {},
+  Object {
+    "extraMeta": "something meta",
+  },
+]
+`;
+
+exports[`adds nothing 3`] = `
+Array [
+  Object {
+    "extraNormal": "turbo",
+  },
+  Object {
+    "extraMeta": "be careful",
+  },
+]
+`;
+
+exports[`adds nothing 4`] = `
+Array [
+  Object {
+    "extraNormal": "turbo",
+    "more": "moar",
+  },
+  Object {
+    "extraMeta": "be careful",
+    "whatShouldIUse": "algolia",
+  },
+]
+`;
+
+exports[`adds only meta 1`] = `
+Array [
+  Object {
+    "extraNormal": "algolia",
+  },
+  Object {
+    "test": true,
+  },
+]
+`;
+
+exports[`adds only meta 2`] = `
+Array [
+  Object {},
+  Object {
+    "extraMeta": "something meta",
+    "test": true,
+  },
+]
+`;
+
+exports[`adds only meta 3`] = `
+Array [
+  Object {
+    "extraNormal": "turbo",
+  },
+  Object {
+    "extraMeta": "be careful",
+    "test": true,
+  },
+]
+`;
+
+exports[`adds only meta 4`] = `
+Array [
+  Object {
+    "extraNormal": "turbo",
+    "more": "moar",
+  },
+  Object {
+    "extraMeta": "be careful",
+    "test": true,
+    "whatShouldIUse": "algolia",
+  },
+]
+`;
+
+exports[`doesn't change the object 1`] = `
 Object {
-  "anotherUnused": [Function],
+  "anotherFn": [Function],
   "someFn": [Function],
 }
+`;
+
+exports[`doesn't change the object 2`] = `
+Object {
+  "anotherFn": [Function],
+  "someFn": [Function],
+}
+`;
+
+exports[`doesn't change the object 3`] = `
+Object {
+  "anotherFn": [Function],
+  "someFn": [Function],
+}
+`;
+
+exports[`doesn't change the object 4`] = `
+Object {
+  "anotherFn": [Function],
+  "someFn": [Function],
+}
+`;
+
+exports[`no overriding arguments given 1`] = `
+Object {
+  "extraNormal": "algolia",
+  "normal": undefined,
+}
+`;
+
+exports[`no overriding arguments given 2`] = `
+Object {
+  "extraNormal": undefined,
+  "normal": undefined,
+}
+`;
+
+exports[`no overriding arguments given 3`] = `
+Object {
+  "extraNormal": "turbo",
+  "normal": undefined,
+}
+`;
+
+exports[`no overriding arguments given 4`] = `
+Object {
+  "extraNormal": "turbo",
+  "normal": undefined,
+}
+`;
+
+exports[`normal argument is given 1`] = `
+Object {
+  "extraNormal": "algolia",
+  "normal": "something",
+}
+`;
+
+exports[`normal argument is given 2`] = `
+Object {
+  "extraNormal": undefined,
+  "normal": "something",
+}
+`;
+
+exports[`normal argument is given 3`] = `
+Object {
+  "extraNormal": "turbo",
+  "normal": "something",
+}
+`;
+
+exports[`normal argument is given 4`] = `
+Object {
+  "extraNormal": "turbo",
+  "normal": "something",
+}
+`;
+
+exports[`overridden normal arg 1`] = `
+Object {
+  "extraNormal": "override",
+  "normal": "something",
+}
+`;
+
+exports[`overridden normal arg 2`] = `
+Object {
+  "extraNormal": "override",
+  "normal": "something",
+}
+`;
+
+exports[`overridden normal arg 3`] = `
+Object {
+  "extraNormal": "override",
+  "normal": "something",
+}
+`;
+
+exports[`overridden normal arg 4`] = `
+Object {
+  "extraNormal": "override",
+  "normal": "something",
+}
+`;
+
+exports[`override both 1`] = `
+Array [
+  Object {
+    "extraNormal": "test",
+  },
+  Object {
+    "extraMeta": true,
+  },
+]
+`;
+
+exports[`override both 2`] = `
+Array [
+  Object {
+    "extraNormal": "test",
+  },
+  Object {
+    "extraMeta": true,
+  },
+]
+`;
+
+exports[`override both 3`] = `
+Array [
+  Object {
+    "extraNormal": "test",
+  },
+  Object {
+    "extraMeta": true,
+  },
+]
+`;
+
+exports[`override both 4`] = `
+Array [
+  Object {
+    "extraNormal": "test",
+    "more": "moar",
+  },
+  Object {
+    "extraMeta": true,
+    "whatShouldIUse": "algolia",
+  },
+]
 `;
