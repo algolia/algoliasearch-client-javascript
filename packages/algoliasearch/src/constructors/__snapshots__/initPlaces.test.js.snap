@@ -9,4 +9,14 @@ Array [
 ]
 `;
 
-exports[`initPlaces throws when it has an appId 1`] = `"You passed an \`appId\` to initPlaces, but this only accepts \`apiKey\` as configuration"`;
+exports[`initPlaces throws when it has an appId 1`] = `
+"Credentials not valid: you gave an API key (some_key), and appId (places) 
+      
+      initPlaces({\\"apiKey\\":\\"some_key\\"})"
+`;
+
+exports[`initPlaces throws when it has an appId 2`] = `
+"Credentials not valid: you gave an API key (), and appId (some_app) 
+      
+      initPlaces({\\"appId\\":\\"some_app\\"})"
+`;
