@@ -86,6 +86,7 @@ it.skip('uses a different host when the request needs to be retried', () => {
 
   const usedHosts = [
     httpRequester.mock.calls[0][0].url.hostname,
+    httpRequester.mock.calls[1][0].url.hostname,
     httpRequester.mock.calls[2][0].url.hostname,
   ];
   expect(usedHosts[0]).toEqual('the_crazy_app-dsn.algolia.net'); // first try
