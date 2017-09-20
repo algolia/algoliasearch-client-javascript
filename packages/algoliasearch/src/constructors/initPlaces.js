@@ -23,7 +23,7 @@ export default function initPlaces(
   // if there's an appId, there should also be an apiKey
   // all other cases are invalid
   if (
-    (apiKey !== '' && (appId === 'places' || appId === '')) ||
+    ((appId === 'places' || appId === '') && apiKey !== '') ||
     (appId !== 'places' && appId !== '' && apiKey === '')
   ) {
     /* eslint-disable prefer-rest-params */
