@@ -31,8 +31,8 @@ const retryableErrors: Array<ErrorTypes> = [
   'timeout',
 ];
 
-const RESET_HOST_TIMER = 12000; //ms; 2 minutes
-const RESET_TIMEOUT_TIMER = 120000; //ms; 20 minutes
+const RESET_HOST_TIMER = 12000; // ms; 2 minutes
+const RESET_TIMEOUT_TIMER = 120000; // ms; 20 minutes
 
 export class Requester {
   hosts: RequestHosts;
