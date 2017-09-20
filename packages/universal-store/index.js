@@ -1,29 +1,36 @@
 // @flow
 
-function createModuleStore() {
-  const state = {};
+type Data = Object;
+type Store = { [key: string]: Data };
+
+export function createMemoryStore() {
+  let state = {};
   return {
-    set(key, data) {
+    set(key: string, data: Data): Data {
       state[key] = data;
       return state[key];
     },
-    get(key) {
-      return state[key] || null;
+    get(key: string): ?Data {
+      return state[key];
+    },
+    clear(): Store {
+      state = {};
+      return state;
     },
   };
 }
 
-function createLocalStorageStore(namespace: string, moduleStore) {
-  function localStorageFailure(key, e) {
+function createLocalStorageStore(namespace: string, memoryStore) {
+  function localStorageFailure(key: string, e) {
     // eslint-disable-next-line no-console
     console.warn(e); // debug
     cleanup(namespace);
-    return moduleStore.get(key);
+    return memoryStore.get(key);
   }
 
   return {
-    set(key: string, data: Object) {
-      moduleStore.set(key, data); // always replicate localStorageStore to moduleStore in case of failure
+    set(key: string, data: Data) {
+      memoryStore.set(key, data); // always replicate localStorageStore to memoryStore in case of failure
 
       try {
         const result = JSON.parse(localStorage.getItem(namespace) || '{}');
@@ -34,12 +41,16 @@ function createLocalStorageStore(namespace: string, moduleStore) {
         return localStorageFailure(key, e);
       }
     },
-    get(key) {
+    get(key: string): ?Data {
       try {
         return JSON.parse(localStorage.getItem(namespace) || '{}')[key];
       } catch (e) {
         return localStorageFailure(key, e);
       }
+    },
+    clear(): Store {
+      cleanup(namespace);
+      return memoryStore.clear();
     },
   };
 }
@@ -76,14 +87,15 @@ export default function createStore(namespace: string) {
       `The namespace should be a string, received "${namespace}"`
     );
   }
-  const moduleStore = createModuleStore();
+  const memoryStore = createMemoryStore();
   const store = supportsLocalStorage(namespace)
-    ? createLocalStorageStore(namespace, moduleStore)
-    : moduleStore;
+    ? createLocalStorageStore(namespace, memoryStore)
+    : memoryStore;
 
   return {
     get: (key: string) => store.get(key),
-    set: (key: string, data: { [key: string]: any }) => store.set(key, data),
+    set: (key: string, data: Store) => store.set(key, data),
+    clear: () => store.clear(),
     supportsLocalStorage: () => supportsLocalStorage(namespace),
   };
 }

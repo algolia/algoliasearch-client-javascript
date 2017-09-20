@@ -2,9 +2,20 @@
 
 exports[`has the correct methods 1`] = `
 Object {
+  "clear": [Function],
   "get": [Function],
   "set": [Function],
   "supportsLocalStorage": [Function],
+}
+`;
+
+exports[`localStorage works clears completely on clear() 1`] = `undefined`;
+
+exports[`memory-only store has the correct methods 1`] = `
+Object {
+  "clear": [Function],
+  "get": [Function],
+  "set": [Function],
 }
 `;
 
