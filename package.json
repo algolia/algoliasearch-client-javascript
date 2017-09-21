@@ -3,6 +3,7 @@
   "version": "3.24.3",
   "description": "AlgoliaSearch API JavaScript client",
   "main": "index.js",
+  "jsdelivr": "./dist/algoliasearch.min.js",
   "browser": {
     "./index.js": "./src/browser/builds/algoliasearch.js",
     "./lite.js": "./src/browser/builds/algoliasearchLite.js"
