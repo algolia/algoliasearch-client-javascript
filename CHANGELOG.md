@@ -1,4 +1,7 @@
 CHANGELOG
+2017-09-22 3.24.4
+  * chore(build): provide jsDelivr the right file (#599)
+
 2017-07-24 3.24.3
   * chore(deprecation): remove deprecation from singular/plural methods; all these methods will stay existing
     * index.addObject(obj) or index.addObjects([obj])
