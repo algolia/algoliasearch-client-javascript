@@ -20,8 +20,18 @@ yarn test:watch
 
 You can add any jest flags to this, like `--notify` or `-u`
 
-# Flow
+# Linting
 
 ```sh
-yarn flow
+yarn lint
+yarn lint:fix
+yarn typecheck
+```
+
+# What will CI run? 
+
+```sh
+yarn test:ci
+# this is the same as: 
+yarn lint && yarn typecheck && yarn test --verbose
 ```
