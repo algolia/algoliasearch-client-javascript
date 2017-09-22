@@ -7,6 +7,8 @@ branches:
     - master
     - feat/v4-for-real-now
 sudo: false # container based infra
+script: 
+  - yarn test:ci
 cache:
   yarn: true
   directories:

@@ -5,7 +5,8 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "test:watch": "jest --watch",
-    "flow": "flow"
+    "typecheck": "flow",
+    "test:ci": "yarn lint && yarn typecheck && yarn test --verbose"
   },
   "workspaces": ["packages/*"],
   "jest": {

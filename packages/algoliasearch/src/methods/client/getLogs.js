@@ -6,23 +6,25 @@ import type { RequestMethod, RequestOptions } from 'algoliasearch-requester';
 export type Parameters = {
   offset?: number,
   length?: number,
+  indexName?: IndexName,
+  type?: 'all' | 'query' | 'build' | 'error',
 };
 
 export default function getLogs({
   requester,
   params = {},
-  options,
+  requestOptions,
 }: {
   requester: RequestMethod,
   params?: Parameters,
-  options?: RequestOptions,
+  requestOptions?: RequestOptions,
 }) {
   const { offset = 0, length = 10 } = params;
   return requester({
     method: 'GET',
     path: '/1/logs',
     qs: { offset, length },
-    options,
+    options: requestOptions,
     requestType: 'read',
   });
 }

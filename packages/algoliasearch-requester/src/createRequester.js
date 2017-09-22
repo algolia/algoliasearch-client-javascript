@@ -32,7 +32,9 @@ const retryableErrors: Array<ErrorTypes> = [
   'timeout',
 ];
 
+// eslint-disable-next-line no-unused-vars
 const RESET_HOST_TIMER = 12000; // ms; 2 minutes
+// eslint-disable-next-line no-unused-vars
 const RESET_TIMEOUT_TIMER = 120000; // ms; 20 minutes
 
 export class Requester {
@@ -123,6 +125,7 @@ export class Requester {
     type,
     retry,
   }: RequestArguments) => {
+    // eslint-disable-next-line no-console
     console.warn(err.message);
     if (retryableErrors.indexOf(err.message.reason) > -1) {
       // if no more hosts or timeouts: reject
