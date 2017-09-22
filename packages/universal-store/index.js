@@ -57,11 +57,15 @@ function createLocalStorageStore(namespace: string, memoryStore) {
 
 function supportsLocalStorage(namespace: string) {
   try {
-    if ('localStorage' in window && localStorage !== null) {
+    if (
+      ('localStorage' in global || 'localStorage' in window) &&
+      localStorage !== null
+    ) {
       if (!localStorage.getItem(namespace)) {
         // actual creation of the namespace
         localStorage.setItem(namespace, '{}');
       }
+
       return true;
     }
 
