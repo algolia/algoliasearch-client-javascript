@@ -8,13 +8,13 @@ const validParams = {
 };
 
 it('initIndex throws when it has too little parameters', () => {
-  // $FlowIssue --> type disallows this
+  // $FlowFixMe --> type disallows this
   expect(() => initIndex({})).toThrow();
-  // $FlowIssue --> type disallows this
+  // $FlowFixMe --> type disallows this
   expect(() => initIndex({ appId: '' })).toThrow();
-  // $FlowIssue --> type disallows this
+  // $FlowFixMe --> type disallows this
   expect(() => initIndex({ apiKey: '' })).toThrow();
-  // $FlowIssue --> type disallows this
+  // $FlowFixMe --> type disallows this
   expect(() => initIndex({ apiKey: '', appId: '' })).toThrow();
 
   expect(() => initIndex(validParams)).not.toThrow();

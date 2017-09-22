@@ -1,12 +1,11 @@
 // @flow
 
+import type { IndexName, TaskID } from 'types/Algolia';
 import type {
   RequestMethod,
-  IndexName,
-  Result,
-  TaskID,
   RequestOptions,
-} from '../../types';
+  Result,
+} from 'algoliasearch-requester';
 
 type LoopInfo = { loop?: number, baseDelay?: number, maxDelay?: number };
 

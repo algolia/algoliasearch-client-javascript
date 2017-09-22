@@ -1,13 +1,12 @@
 {
   "name": "universal-store",
-  "version": "0.0.0",
-  "description": "localStorage with a fallback to in-memory storage",
+  "private": true,
+  "version": "1.0.0",
+  "description": "localStorage abstraction with a fallback to in-memory storage",
   "keywords": [
-    "storage",
-    "cache",
-    "fast",
-    "fallback",
-    "universal",
-    "localStorage"
+    "localStorage",
+    "memory",
+    "Node.js",
+    "fallback"
   ]
 }

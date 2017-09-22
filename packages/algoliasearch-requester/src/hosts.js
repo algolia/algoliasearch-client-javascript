@@ -1,6 +1,6 @@
 // @flow
-import type { AppId } from '../algoliasearch/src/types';
-import type { Hosts, Timeouts } from './types';
+import type { AppId } from 'types/Algolia';
+import type { Hosts, Timeouts } from 'algoliasearch-requester';
 
 function computeRegularHosts(appId: AppId): Hosts {
   const readWriteHosts = [
@@ -38,7 +38,7 @@ export default class RequestHosts {
     this.appId = appId;
 
     const regularHosts = computeRegularHosts(appId);
-    // $FlowIssue --> Flow doesn't recognize that I'm catching the undefined here
+    // $FlowFixMe --> Flow doesn't recognize that I'm catching the undefined here
     const { read = [], write = [] } = extraHosts;
 
     this.hosts = {

@@ -1,4 +1,10 @@
 {
-  "presets": ["env"],
-  "plugins": ["transform-flow-strip-types","transform-object-rest-spread","transform-class-properties"]
+  "presets": ["flow", ["env", {
+    "targets": {
+      "node": "current"
+    }
+  }]],
+  // object-rest-spread should not be needed but there's a jest bug (Sep 2017):
+  // https://github.com/facebook/jest/issues/4248
+  "plugins": ["transform-object-rest-spread", "transform-class-properties"]
 }

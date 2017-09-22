@@ -1,0 +1,1 @@
+# algoliasearch-angular

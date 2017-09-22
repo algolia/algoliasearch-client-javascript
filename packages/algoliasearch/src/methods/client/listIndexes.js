@@ -1,6 +1,6 @@
 // @flow
 
-import type { RequestMethod, RequestOptions } from '../../types';
+import type { RequestMethod, RequestOptions } from 'algoliasearch-requester';
 
 type Params = {|
   page?: number,

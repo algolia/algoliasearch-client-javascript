@@ -1,30 +1,20 @@
 {
   "name": "algoliasearch-jquery",
   "version": "4.0.0-beta.1",
-  "description": "AlgoliaSearch API JavaScript client for jQuery",
-  "main": "dist/index.js",
-  "scripts": {},
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/algolia/algoliasearch-client-js.git"
-  },
+  "private": true,
+  "description": "Algolia Search API client for jQuery.",
+  "repository": "algolia/algoliasearch-client-javascript/packages/algoliasearch-jquery",
   "keywords": [
     "algolia",
     "search",
     "search api",
     "instant search",
-    "realtime",
-    "autocomplete",
-    "jquery"
+    "jquery",
+    "algolia jquery",
+    "algoliasearch"
   ],
-  "homepage": "https://www.algolia.com/doc/api-client/javascript/",
-  "bugs": "https://github.com/algolia/algoliasearch-client-js/issues",
-  "author": {
-    "name": "Algolia, Inc.",
-    "url": "https://www.algolia.com"
-  },
-  "files": [],
-  "dependencies": {},
-  "devDependencies": {},
+  "homepage": "https://www.algolia.com/doc/api-client/javascript/#jquery",
+  "bugs": "https://github.com/algolia/algoliasearch-client-javascript/issues",
+  "author": "Algolia, Inc. (https://www.algolia.com)",  
   "license": "MIT"
 }

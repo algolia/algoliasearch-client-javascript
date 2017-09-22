@@ -2,13 +2,14 @@
 
 import RequestHosts from './hosts';
 
+import type { AppId, ApiKey } from 'types/Algolia';
 import type {
-  AppId,
-  ApiKey,
   RequestOptions,
   RequestArguments,
-} from '../algoliasearch/src/types';
-import type { HttpModule, Timeouts, Hosts } from './types';
+  HttpModule,
+  Timeouts,
+  Hosts,
+} from 'algoliasearch-requester';
 
 type Args = {|
   appId?: AppId,

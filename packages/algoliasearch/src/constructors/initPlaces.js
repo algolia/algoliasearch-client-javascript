@@ -5,7 +5,8 @@ import * as placesMethods from '../methods/places';
 import { createRequester } from '../request';
 import attachParameters from './attachParameters';
 
-import type { RequestMethod, RequesterOptions, ApiKey, AppId } from '../types';
+import type { ApiKey, AppId } from 'types/Algolia';
+import type { RequestMethod, RequesterOptions } from 'algoliasearch-requester';
 
 export default function initPlaces(
   {
@@ -28,8 +29,8 @@ export default function initPlaces(
   ) {
     /* eslint-disable prefer-rest-params */
     throw new Error(
-      `Credentials not valid: you gave an API key (${apiKey}), and appId (${appId}) 
-      
+      `Credentials not valid: you gave an API key (${apiKey}), and appId (${appId})
+
       initPlaces(${[...arguments].map(arg => JSON.stringify(arg)).join(',')})`
     );
     /* eslint-enable prefer-rest-params */
