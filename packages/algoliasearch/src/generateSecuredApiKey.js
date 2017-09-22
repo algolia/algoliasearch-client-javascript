@@ -1,7 +1,7 @@
 // @flow
 import crypto from 'crypto';
 import { stringify } from 'querystring';
-import type { ApiKey, SearchParameters } from 'algoliasearch/types';
+import type { ApiKey, SearchParameters } from './types';
 
 type Timestamp = number;
 

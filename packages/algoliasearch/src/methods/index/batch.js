@@ -1,6 +1,6 @@
 // @flow
 
-import type { IndexName } from 'algoliasearch/types';
+import type { IndexName, BatchActions } from 'algoliasearch';
 import type { RequestMethod, RequestOptions } from 'algoliasearch-requester';
 
 export type IndexBatchRequest = {|
@@ -11,12 +11,14 @@ export type IndexBatchRequest = {|
 export default function batch(
   requester: RequestMethod,
   indexName: IndexName,
-  requests: IndexBatchRequest[]
+  requests: IndexBatchRequest[],
+  requestOptions?: RequestOptions
 ) {
   return requester({
     method: 'POST',
     path: `/1/indexes/${indexName}/batch`,
     body: { requests },
     requestType: 'write',
+    options: requestOptions,
   });
 }

@@ -5,7 +5,7 @@ import * as placesMethods from '../methods/places';
 import { createRequester } from '../request';
 import attachParameters from './attachParameters';
 
-import type { ApiKey, AppId } from 'algoliasearch/types';
+import type { ApiKey, AppId } from 'algoliasearch';
 import type { RequestMethod, RequesterOptions } from 'algoliasearch-requester';
 
 export default function initPlaces(

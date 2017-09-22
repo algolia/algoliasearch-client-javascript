@@ -1,6 +1,6 @@
 // @flow
 
-import type { IndexName } from 'algoliasearch/types';
+import type { IndexName } from 'algoliasearch';
 import type { RequestMethod } from 'algoliasearch-requester';
 
 export type Options = {| forwardToReplicas: boolean |};

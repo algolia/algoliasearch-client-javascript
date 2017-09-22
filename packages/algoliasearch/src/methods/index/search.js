@@ -1,5 +1,5 @@
 // @flow
-import type { IndexName, SearchParameters } from 'algoliasearch/types';
+import type { IndexName, SearchParameters } from 'algoliasearch';
 import type { RequestMethod, RequestOptions } from 'algoliasearch-requester';
 
 export default function search({

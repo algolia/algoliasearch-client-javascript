@@ -1,6 +1,6 @@
 // @flow
 
-import type { IndexName } from 'algoliasearch/types';
+import type { IndexName } from 'algoliasearch';
 import type { RequestMethod, RequestOptions } from 'algoliasearch-requester';
 
 export default function moveIndex({

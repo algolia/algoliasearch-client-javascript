@@ -1,5 +1,5 @@
 // @flow
-import type { AppId, ApiKey } from 'algoliasearch/types';
+import type { AppId, ApiKey } from './types';
 import type { Requester, RequesterOptions } from 'algoliasearch-requester';
 
 // it will simply give back the arguments given

@@ -1,6 +1,6 @@
 // @flow
 
-import type { IndexName, TaskID } from 'algoliasearch/types';
+import type { IndexName, TaskID } from 'algoliasearch';
 import type {
   RequestMethod,
   RequestOptions,

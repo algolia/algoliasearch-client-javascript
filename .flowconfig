@@ -16,7 +16,7 @@ module.name_mapper='^types/\(.*\)$' -> '<PROJECT_ROOT>/types/\1.js'
 
 # allows for import import type {Hosts} from 'algoliasearch/Hosts'; when
 # type is stored in <PROJECT_ROOT>/packages/algoliasearch/src/index.js
-module.name_mapper='\(algoliasearch-[^/]*\)' -> '<PROJECT_ROOT>/packages/\1/src/types.js'
+module.name_mapper='\(algoliasearch[-^/]*\)' -> '<PROJECT_ROOT>/packages/\1/src/types.js'
 
 [version]
 0.55.0

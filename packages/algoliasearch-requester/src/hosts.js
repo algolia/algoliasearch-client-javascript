@@ -1,5 +1,5 @@
 // @flow
-import type { AppId } from 'algoliasearch/types';
+import type { AppId } from 'algoliasearch';
 import type { Hosts, Timeouts } from 'algoliasearch-requester';
 
 function computeRegularHosts(appId: AppId): Hosts {

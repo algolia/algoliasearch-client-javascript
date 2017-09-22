@@ -1,6 +1,6 @@
 // @flow
 
-import type { IndexName, ApiKey } from 'algoliasearch/types';
+import type { IndexName, ApiKey } from 'algoliasearch';
 import type { RequestMethod } from 'algoliasearch-requester';
 
 export default function clearSynonyms(

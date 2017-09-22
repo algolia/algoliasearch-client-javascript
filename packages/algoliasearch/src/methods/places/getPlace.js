@@ -1,6 +1,6 @@
 // @flow
 
-import type { ObjectID } from 'algoliasearch/types';
+import type { ObjectID } from 'algoliasearch';
 import type { RequestMethod, RequestOptions } from 'algoliasearch-requester';
 
 export default function getPlace(

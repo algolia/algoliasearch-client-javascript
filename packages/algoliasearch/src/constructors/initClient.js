@@ -5,7 +5,7 @@ import * as clientMethods from '../methods/client';
 import attachParameters from './attachParameters';
 import { createRequester } from '../request';
 
-import type { ClientMethods, AppId, ApiKey } from 'algoliasearch/types';
+import type { ClientMethods, AppId, ApiKey } from 'algoliasearch';
 import type { RequesterOptions, RequestMethod } from 'algoliasearch-requester';
 
 export default function initClient({

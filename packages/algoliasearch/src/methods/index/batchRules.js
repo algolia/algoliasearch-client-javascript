@@ -1,6 +1,6 @@
 // @flow
 
-import type { IndexName, Rule } from 'algoliasearch/types';
+import type { IndexName, Rule } from 'algoliasearch';
 import type { RequestMethod, RequestOptions } from 'algoliasearch-requester';
 
 export type ExtraOptions = {|
