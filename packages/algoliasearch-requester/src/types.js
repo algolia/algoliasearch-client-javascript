@@ -7,15 +7,7 @@ export type Url = {|
   port?: string,
 |};
 
-export type Response = { body: Buffer, statusCode: number };
-export type RequesterArgs = {
-  body?: Object,
-  method: Method,
-  url: Url,
-  timeout: number,
-  options?: RequestOptions,
-};
-export type HttpModule = RequesterArgs => Promise<Response>;
+export type Method = 'POST' | 'GET' | 'DELETE' | 'PUT';
 
 export type Hosts = {|
   read: string[],
@@ -42,6 +34,10 @@ export type RequestOptions = {|
   userAgent?: string,
   forwardToReplicas?: boolean,
   clearExistingRules?: boolean,
+  // new headers
+  forwardedFor?: string,
+  userAgent?: string,
+  userId?: string,
 |};
 
 export type RequesterOptions = {
@@ -53,7 +49,18 @@ export type RequesterOptions = {
   |},
 };
 
-export type Method = 'POST' | 'GET' | 'DELETE' | 'PUT';
+// http requester
+export type Response = { body: Buffer, statusCode: number };
+export type RequesterArgs = {
+  body?: Object,
+  method: Method,
+  url: Url,
+  timeout: number,
+  options?: RequestOptions,
+};
+export type HttpModule = RequesterArgs => Promise<Response>;
+
+// public api
 export type RequestArguments = {
   method: Method,
   path: string,

@@ -14,5 +14,5 @@ export const createRequester: Requester = ({
 }: {
   appId: AppId,
   apiKey: ApiKey,
-  options?: RequestOptions,
+  options?: RequesterOptions,
 }) => requestParams => new Promise(resolve => resolve(requestParams));

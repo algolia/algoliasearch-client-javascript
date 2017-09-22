@@ -15,7 +15,7 @@ const translationTable: Translation = {
 const alwaysHeader: Array<string> = [];
 
 export default function parseOptions(options: RequestOptions) {
-  const keys: $Keys<RequestOptions> = Object.keys(options);
+  const keys: $Keys<RequestOptions>[] = Object.keys(options);
 
   return keys.reduce(
     (acc, key) => {
@@ -37,7 +37,7 @@ export default function parseOptions(options: RequestOptions) {
           },
         };
       }
-      if (alwaysHeader.contains(key)) {
+      if (alwaysHeader.includes(key)) {
         return {
           ...acc,
           headers: {
