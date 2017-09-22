@@ -1,3 +1,5 @@
+// @flow
+
 export type AppId = string;
 export type ApiKey = string;
 export type IndexName = string;
