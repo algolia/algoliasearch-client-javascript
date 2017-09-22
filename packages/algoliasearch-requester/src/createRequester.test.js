@@ -271,7 +271,12 @@ it.skip('second try after a timeout has increments the timeout', () => {
     requestType: 'write',
   });
 
-  expect(/* the current timeout */).toBeGreaterThan(/* the original timeout */);
+  const timeouts = [
+    httpRequester.mock.calls[0][0].timeout,
+    httpRequester.mock.calls[1][0].timeout,
+  ];
+
+  expect(timeouts[1]).toBeGreaterThan(timeouts[0]);
 });
 
 it.skip('rejects when all timeouts are reached', () => {
