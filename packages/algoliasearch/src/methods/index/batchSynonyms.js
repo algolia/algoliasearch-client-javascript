@@ -1,6 +1,6 @@
 // @flow
 
-import type { IndexName } from 'types/Algolia';
+import type { IndexName, Synonym } from 'algoliasearch/types';
 import type { RequestMethod, RequestOptions } from 'algoliasearch-requester';
 
 export type Options = {|
@@ -12,7 +12,8 @@ export default function batchRules(
   requester: RequestMethod,
   indexName: IndexName,
   rules: Synonym[],
-  opts: Options
+  opts: Options,
+  requestOptions: RequestOptions
 ) {
   return requester({
     method: 'POST',
@@ -20,5 +21,6 @@ export default function batchRules(
     qs: opts,
     body: { rules },
     requestType: 'write',
+    options: requestOptions,
   });
 }

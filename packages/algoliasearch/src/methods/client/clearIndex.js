@@ -1,6 +1,6 @@
 // @flow
 
-import type { IndexName } from 'types/Algolia';
+import type { IndexName } from 'algoliasearch/types';
 import type { RequestMethod, RequestOptions } from 'algoliasearch-requester';
 
 export default function clearIndex({

@@ -1,6 +1,6 @@
 // @flow
 
-import type { IndexName, ObjectID } from 'types/Algolia';
+import type { IndexName, ObjectID } from 'algoliasearch/types';
 import type { RequestMethod } from 'algoliasearch-requester';
 
 export default function getObjects(

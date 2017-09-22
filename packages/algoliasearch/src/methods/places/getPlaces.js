@@ -1,7 +1,7 @@
 // @flow
 
 import { pluralError } from '../../errors';
-import type { ObjectID } from 'types/Algolia';
+import type { ObjectID } from 'algoliasearch/types';
 import type { RequestMethod, RequestOptions } from 'algoliasearch-requester';
 
 export default function getPlaces(

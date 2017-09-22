@@ -2,7 +2,7 @@
 
 import RequestHosts from './hosts';
 
-import type { AppId, ApiKey } from 'types/Algolia';
+import type { AppId, ApiKey } from 'algoliasearch/types';
 import type {
   RequestOptions,
   RequestArguments,

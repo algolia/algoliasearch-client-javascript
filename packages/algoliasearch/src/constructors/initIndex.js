@@ -4,7 +4,12 @@ import * as indexMethods from '../methods/index';
 import { createRequester } from '../request';
 import attachParameters from './attachParameters';
 
-import type { IndexMethods, AppId, ApiKey, IndexName } from 'types/Algolia';
+import type {
+  IndexMethods,
+  AppId,
+  ApiKey,
+  IndexName,
+} from 'algoliasearch/types';
 import type { RequesterOptions, RequestMethod } from 'algoliasearch-requester';
 
 export default function initIndex({
