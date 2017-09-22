@@ -4,16 +4,12 @@
     "test": "jest",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "test:watch": "jest --notify --watch",
+    "test:watch": "jest --watch",
     "flow": "flow"
   },
-  "workspaces": [
-    "packages/*"
-  ],
+  "workspaces": ["packages/*"],
   "jest": {
-    "projects": [
-      "packages/*"
-    ],
+    "projects": ["packages/*"],
     "testEnvironment": "node"
   },
   "author": "Algolia, Inc. (https://www.algolia.com)",

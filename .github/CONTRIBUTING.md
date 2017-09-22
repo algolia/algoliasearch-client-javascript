@@ -18,6 +18,8 @@ yarn test
 yarn test:watch
 ```
 
+You can add any jest flags to this, like `--notify` or `-u`
+
 # Flow
 
 ```sh
