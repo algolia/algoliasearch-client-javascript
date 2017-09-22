@@ -51,7 +51,7 @@ export class Requester {
   }: Args) {
     if (typeof appId !== 'string') {
       throw new Error(
-        `appId is required and should be a string, received ${appId}`
+        `appId is required and should be a string, received "${appId || ''}"`
       );
     }
     if (typeof apiKey !== 'string') {
@@ -113,7 +113,16 @@ export class Requester {
     );
   };
 
-  retryRequest = ({ err, method, path, qs, body, options, type, retry }) => {
+  retryRequest = ({
+    err,
+    method,
+    path,
+    qs,
+    body,
+    options,
+    type,
+    retry,
+  }: RequestArguments) => {
     console.warn(err.message);
     if (retryableErrors.indexOf(err.message.reason) > -1) {
       // if no more hosts or timeouts: reject
@@ -128,6 +137,8 @@ export class Requester {
         retry: retry + 1,
       });
     }
+
+    // $FlowFixMe something weird with Promises
     return Promise.reject(
       new Error({
         reason:
