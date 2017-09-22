@@ -4,14 +4,8 @@ import * as indexMethods from '../methods/index';
 import { createRequester } from '../request';
 import attachParameters from './attachParameters';
 
-import type {
-  IndexMethods,
-  AppId,
-  ApiKey,
-  IndexName,
-  RequesterOptions,
-  RequestMethod,
-} from '../types';
+import type { IndexMethods, AppId, ApiKey, IndexName } from 'types/Algolia';
+import type { RequesterOptions, RequestMethod } from 'algoliasearch-requester';
 
 export default function initIndex({
   appId,
@@ -39,7 +33,7 @@ export default function initIndex({
   const requester = extraRequester
     ? extraRequester
     : createRequester({ appId, apiKey, options });
-  // $FlowIssue --> Flow doesn't get that the imports are augmented here
+  // $FlowFixMe --> Flow doesn't get that the imports are augmented here
   return {
     ...attachParameters(indexMethods, { requester, indexName }),
     requester,

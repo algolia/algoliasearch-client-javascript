@@ -1,6 +1,6 @@
 // @flow
 
-import type { RequestOptions } from '../algoliasearch/src/types';
+import type { RequestOptions } from 'algoliasearch-requester';
 
 type Translation = {
   [key: $Keys<RequestOptions>]: string,

@@ -1,6 +1,7 @@
 // @flow
 
-import type { RequestMethod, IndexName, BatchActions } from '../../types';
+import type { IndexName } from 'types/Algolia';
+import type { RequestMethod, RequestOptions } from 'algoliasearch-requester';
 
 export type IndexBatchRequest = {|
   action: BatchActions,

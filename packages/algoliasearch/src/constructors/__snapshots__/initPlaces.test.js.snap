@@ -10,13 +10,13 @@ Array [
 `;
 
 exports[`initPlaces throws when it has an appId 1`] = `
-"Credentials not valid: you gave an API key (some_key), and appId (places) 
-      
+"Credentials not valid: you gave an API key (some_key), and appId (places)
+
       initPlaces({\\"apiKey\\":\\"some_key\\"})"
 `;
 
 exports[`initPlaces throws when it has an appId 2`] = `
-"Credentials not valid: you gave an API key (), and appId (some_app) 
-      
+"Credentials not valid: you gave an API key (), and appId (some_app)
+
       initPlaces({\\"appId\\":\\"some_app\\"})"
 `;

@@ -1,11 +1,7 @@
 // @flow
 
-import type {
-  RequestMethod,
-  IndexName,
-  Rule,
-  RequestOptions,
-} from '../../types';
+import type { IndexName, Rule } from 'types/Algolia';
+import type { RequestMethod, RequestOptions } from 'algoliasearch-requester';
 
 export type ExtraOptions = {|
   forwardToReplicas?: boolean,

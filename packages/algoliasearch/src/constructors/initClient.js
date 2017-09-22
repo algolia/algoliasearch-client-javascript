@@ -5,13 +5,8 @@ import * as clientMethods from '../methods/client';
 import attachParameters from './attachParameters';
 import { createRequester } from '../request';
 
-import type {
-  ClientMethods,
-  AppId,
-  ApiKey,
-  RequesterOptions,
-  RequestMethod,
-} from '../types';
+import type { ClientMethods, AppId, ApiKey } from 'types/Algolia';
+import type { RequesterOptions, RequestMethod } from 'algoliasearch-requester';
 
 export default function initClient({
   appId,
@@ -35,7 +30,7 @@ export default function initClient({
     ? extraRequester
     : createRequester({ appId, apiKey, options });
 
-  // $FlowIssue --> Flow doesn't get that the imports are augmented here
+  // $FlowFixMe --> Flow doesn't get that the imports are augmented here
   return {
     ...attachParameters(clientMethods, { requester }),
     requester,

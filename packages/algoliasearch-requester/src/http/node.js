@@ -3,9 +3,9 @@ import https from 'https';
 import zlib from 'zlib';
 
 import parseOptions from '../parseOptions.js';
-import type { Response, RequesterArgs } from '../types';
+import type { Response, RequesterArgs } from 'algoliasearch-requester';
 
-// $FlowIssue doesn't have Agent in https
+// $FlowFixMe doesn't have Agent in https
 const agent: https.Agent = new https.Agent({
   keepAlive: true,
   keepAliveMsecs: 3000,
