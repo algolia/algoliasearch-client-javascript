@@ -6,6 +6,7 @@ import type { AppId, ApiKey } from 'algoliasearch';
 import type {
   RequestOptions,
   RequestArguments,
+  Result,
   HttpModule,
   Timeouts,
   Hosts,
@@ -24,13 +25,18 @@ type Args = {|
 
 const stringify = qs => JSON.stringify(qs); // todo: use proper url stringify
 
-type ErrorTypes = 'application' | 'network' | 'dns' | 'timeout';
-const retryableErrors: Array<ErrorTypes> = [
+type ErrorType = 'application' | 'network' | 'dns' | 'timeout';
+const retryableErrors: Array<ErrorType> = [
   'application',
   'network',
   'dns',
   'timeout',
 ];
+
+type RequesterError = {|
+  reason: ErrorType,
+  more: any,
+|};
 
 // eslint-disable-next-line no-unused-vars
 const RESET_HOST_TIMER = 12000; // ms; 2 minutes
@@ -88,7 +94,7 @@ export class Requester {
     options,
     requestType: type,
     retry = 0,
-  }: RequestArguments) => {
+  }: RequestArguments): Promise<Result> => {
     const hostname = this.hosts.getHost({ type });
     const timeout = this.hosts.getTimeout({ retry, type });
 
@@ -102,8 +108,7 @@ export class Requester {
       timeout,
       options,
     }).catch(err =>
-      this.retryRequest({
-        err,
+      this.retryRequest(err, {
         method,
         path,
         qs,
@@ -115,38 +120,28 @@ export class Requester {
     );
   };
 
-  retryRequest = ({
-    err,
-    method,
-    path,
-    qs,
-    body,
-    options,
-    type,
-    retry,
-  }: RequestArguments) => {
-    // eslint-disable-next-line no-console
-    console.warn(err.message);
-    if (retryableErrors.indexOf(err.message.reason) > -1) {
+  retryRequest = (
+    err: RequesterError,
+    requestArguments: RequestArguments
+  ): Promise<Result> => {
+    if (retryableErrors.indexOf(err.reason) > -1) {
       // if no more hosts or timeouts: reject
       // if reason: timeout; increase
-      return this.request({
-        method,
-        path,
-        qs,
-        body,
-        options,
-        requestType: type,
-        retry: retry + 1,
+
+      const res = this.request({
+        ...requestArguments,
+        requestType: requestArguments.type,
+        retry: requestArguments.retry + 1,
       });
+
+      return res;
     }
 
-    // $FlowFixMe something weird with Promises
     return Promise.reject(
       new Error({
         reason:
           "Request couldn't be retried, did you enter the correct credentials?",
-        more: err.message.reason,
+        more: err,
       })
     );
   };
