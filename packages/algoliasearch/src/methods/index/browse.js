@@ -4,10 +4,16 @@ import type { IndexName, SearchParameters } from 'algoliasearch';
 import type { RequestMethod, RequestOptions } from 'algoliasearch-requester';
 
 export default function browse(
-  requester: RequestMethod,
-  indexName: IndexName,
-  params: SearchParameters,
-  requestOptions?: RequestOptions
+  params: SearchParameters = {},
+  {
+    requester,
+    indexName,
+    requestOptions,
+  }: {
+    requester: RequestMethod,
+    indexName: IndexName,
+    requestOptions?: RequestOptions,
+  } = {}
 ) {
   return requester({
     method: 'GET',

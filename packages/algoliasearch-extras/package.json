@@ -1,13 +1,17 @@
 {
-  "name": "algoliasearch-requester",
+  "name": "algoliasearch-extras",
   "version": "4.0.0-beta.1",
   "main": "src/index.js",
   "private": true,
   "description": "Algolia Search API JavaScript client requester.",
   "repository":
-    "algolia/algoliasearch-client-javascript/packages/algoliasearch-requester",
+    "algolia/algoliasearch-client-javascript/packages/algoliasearch-extras",
   "homepage": "https://www.algolia.com/doc/api-client/javascript/",
   "bugs": "https://github.com/algolia/algoliasearch-client-javascript/issues",
   "author": "Algolia, Inc. (https://www.algolia.com)",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "algoliasearch": "4.0.0-beta.1",
+    "algoliasearch-requester": "4.0.0-beta.1"
+  }
 }
