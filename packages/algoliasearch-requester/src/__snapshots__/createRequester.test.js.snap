@@ -1,13 +1,75 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`rejects when all hosts are used 1`] = `[Error: [object Object]]`;
+
 exports[`requires the right arguments 1`] = `"appId is required and should be a string, received \\"\\""`;
 
 exports[`requires the right arguments 2`] = `"apiKey is required and should be a string, received undefined"`;
 
 exports[`requires the right arguments 3`] = `"httpRequester is required and should be a function, received [object Object]"`;
 
+exports[`second try after a timeout has increments the timeout 1`] = `
+Array [
+  30000,
+  60000,
+]
+`;
+
 exports[`uses a different host when the request needs to be retried 1`] = `
 Array [
+  Array [
+    Object {
+      "body": undefined,
+      "method": undefined,
+      "options": undefined,
+      "timeout": 2000,
+      "url": Object {
+        "hostname": "the_crazy_app-dsn.algolia.net",
+        "pathname": NaN,
+      },
+    },
+  ],
+  Array [
+    Object {
+      "body": undefined,
+      "method": undefined,
+      "options": undefined,
+      "timeout": 4000,
+      "url": Object {
+        "hostname": "the_crazy_app-dsn.algolia.net",
+        "pathname": NaN,
+      },
+    },
+  ],
+]
+`;
+
+exports[`uses the "up" host on second request when first fails 1`] = `
+Array [
+  Array [
+    Object {
+      "body": undefined,
+      "method": undefined,
+      "options": undefined,
+      "timeout": 2000,
+      "url": Object {
+        "hostname": "the_crazy_app-dsn.algolia.net",
+        "pathname": NaN,
+      },
+    },
+  ],
+  Array [
+    Object {
+      "body": undefined,
+      "method": undefined,
+      "options": undefined,
+      "timeout": 4000,
+      "url": Object {
+        "hostname": "the_crazy_app-dsn.algolia.net",
+        "pathname": NaN,
+      },
+    },
+  ],
   Array [
     Object {
       "body": undefined,
