@@ -288,8 +288,9 @@ Index.prototype.deleteObjects = function(objectIDs, callback) {
 * @param params the optional query parameters
 * @param callback (optional) the result callback called with one argument
 *  error: null or Error('message')
+* @deprecated see index.deleteBy
 */
-Index.prototype.deleteByQuery = function(query, params, callback) {
+Index.prototype.deleteByQuery = deprecate(function(query, params, callback) {
   var clone = require('./clone.js');
   var map = require('./map.js');
 
@@ -360,7 +361,25 @@ Index.prototype.deleteByQuery = function(query, params, callback) {
       callback(err);
     }, client._setTimeout || setTimeout);
   }
-};
+}, deprecatedMessage('index.deleteByQuery()', 'index.deleteBy()'));
+
+/**
+* Delete all objects matching a query
+*
+* @param params the optional query parameters
+* @param callback (optional) the result callback called with one argument
+*  error: null or Error('message')
+*/
+Index.prototype.deleteBy = function(params, callback) {
+  var indexObj = this;
+  return this.as._jsonRequest({
+    method: 'POST',
+    url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/deleteByQuery',
+    body: {params: params},
+    hostType: 'read',
+    callback: callback
+  });
+}
 
 /*
 * Browse all content from an index using events. Basically this will do
