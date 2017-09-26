@@ -34,6 +34,7 @@ test('AlgoliaSearch index API spec', function(t) {
     'clearIndex',
     'clearSynonyms',
     'clearRules',
+    'deleteBy',
     'deleteByQuery',
     'deleteObject',
     'deleteObjects',
