@@ -32,9 +32,9 @@ import { initPlaces } from 'algoliasearch';
 let places = initPlaces({ appId, apiKey});
 places = initPlaces();
 
-places.search(params);
-places.getPlace('objectId', params);
-places.getPlaces(['objectId'], params);
+places.search(params, options);
+places.getPlace({objectID,attributesToRetrieve}, options);
+places.getPlaces({objectIDs,attributesToRetrieve}, options);
 places.requester // clearCache, headers, timeouts
 ```
 
@@ -43,26 +43,30 @@ places.requester // clearCache, headers, timeouts
 ```js
 import { search } from 'algoliasearch/methods/index';
 import { clearIndex } from 'algoliasearch/methods/client';
-import { createRequester } from 'algoliasearch/requester'; // maaaybe this will be algoliasearch-requester
+import { createRequester } from 'algoliasearch-requester';
 
 const requester = createRequester(opts); // timeouts, headers etc.
 
 // with promise
-search(requester, 'cities-us' { query: 'atlenta' })
-  .then(result => console.log(result))
-
-// same with async/await
-(async () => {
-  const { hits } = await search(
-    requester,
-    'cities-us',
-    { query: 'atlenta' },
-    { timeouts: {} }
-  );
-})();
+search(
+  { query: 'atlenta' },
+  { requester, indexName: 'cities-us' }
+).then(result => console.log(result))(
+  // same with async/await
+  async () => {
+    const { hits } = await search(
+      { query: 'atlenta' },
+      {
+        requester,
+        indexName: 'cities-us',
+        requestOptions: { timeouts: {} }
+      }
+    );
+  }
+)();
 
 // methods that don't need the result can be done too
-clearIndex(requester, 'cities-us');
+clearIndex({ indexName: 'cities-us' }, { requester });
 ```
 
 # methods on client
@@ -189,15 +193,15 @@ The requestOptions that are set at a request always have precedence over the sta
 import { search } from 'algoliasearch/methods/index';
 import { createRequester } from 'algoliasearch/request';
 
-const staticOptions = { 
+const staticOptions = {
   algoliaAgent: 'Algolia for JavaScript Lite (4.0.0-beta.1)',
   extraHeaders: {
     'X-Clacks-Overhead': 'Haha, nothing at all!',
-    'X-Dress-Colour': 'White and Gold', 
-  }
+    'X-Dress-Colour': 'White and Gold',
+  },
 };
 
-const requestOptions = { 
+const requestOptions = {
   algoliaAgent: 'Algolia for VueJS (0.4.0)',
   extraHeaders: {
     'X-Clacks-Overhead': 'GNU Terry Pratchett',
@@ -216,19 +220,25 @@ requester.setOptions(current => ({
 }));
 
 search(
-  requester,
-  'cities-us',
   { query: 'atlenta' },
-  requestOptions,
+  {
+    requester,
+    indexName: 'cities-us',
+    requestOptions: {
+      'X-Even-One-More': 'Ugh, I hate headers',
+    },
+  }
 );
 
 // The actual options while the request are sent are:
 const finalOptions = {
-  algoliaAgent: 'Algolia for JavaScript (4.0.0-beta.1); Algolia for JavaScript Lite (4.0.0-beta.1); Algolia for VueJS (0.4.0)',
+  algoliaAgent:
+    'Algolia for JavaScript (4.0.0-beta.1); Algolia for JavaScript Lite (4.0.0-beta.1); Algolia for VueJS (0.4.0)',
   extraHeaders: {
     'X-Clacks-Overhead': 'GNU Terry Pratchett',
     'X-Forwarded-For': 'https://algolia.com/',
-    'X-Dress-Colour': 'White and Gold', 
+    'X-Dress-Colour': 'White and Gold',
+    'X-Even-One-More': 'Ugh, I hate headers',
   },
 };
 ```
