@@ -7,15 +7,16 @@ export type SearchRequest = {|
   params: SearchParameters,
 |};
 
-export default function search({
-  requester,
-  requests,
-  options,
-}: {
-  requester: RequestMethod,
-  requests: SearchRequest[],
-  options?: RequestOptions,
-}) {
+export default function search(
+  requests: SearchRequest[] = [],
+  {
+    requester,
+    options,
+  }: {
+    requester: RequestMethod,
+    options?: RequestOptions,
+  }
+) {
   return requester({
     method: 'POST',
     path: '/1/indexes/*/queries',
