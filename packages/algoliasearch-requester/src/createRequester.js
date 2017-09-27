@@ -1,7 +1,7 @@
 // @flow
 
-import RequestHosts from './hosts';
-import TimeoutGenerator from './timeoutGenerator';
+import HostGenerator from './HostGenerator';
+import TimeoutGenerator from './TimeoutGenerator__.js';
 
 import type { AppId, ApiKey } from 'algoliasearch';
 import type {
@@ -34,7 +34,7 @@ const RESET_HOST_TIMER = 12000; // ms; 2 minutes
 const RESET_TIMEOUT_TIMER = 120000; // ms; 20 minutes
 
 export class Requester {
-  hosts: RequestHosts;
+  hostGenerator: HostGenerator;
   timeoutGenerator: TimeoutGenerator;
   apiKey: ApiKey;
   appId: AppId;
@@ -72,7 +72,7 @@ export class Requester {
         `httpRequester is required and should be a function, received ${httpRequester}`
       );
     }
-    this.hosts = new RequestHosts({ appId, extraHosts });
+    this.hostGenerator = new HostGenerator({ appId, extraHosts });
     this.timeoutGenerator = new TimeoutGenerator({ timeouts });
     this.appId = appId;
     this.apiKey = apiKey;
@@ -96,7 +96,7 @@ export class Requester {
     requestType: type,
     timeoutRetries = 0,
   }: RequestArguments): Promise<Result> => {
-    const hostname = this.hosts.getHost({ type });
+    const hostname = this.hostGenerator.getHost({ type });
     const timeout = this.timeoutGenerator.getTimeout({
       retry: timeoutRetries,
       type,
