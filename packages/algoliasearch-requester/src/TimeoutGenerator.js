@@ -11,10 +11,10 @@ function computeRegularTimeouts(): Timeouts {
 
 export default class TimeoutGenerator {
   timeouts: Timeouts;
-  constructor({ extraTimeouts }: { extraTimeouts: Timeouts }) {
+  constructor({ timeouts }: { timeouts: Timeouts }) {
     this.timeouts = {
       ...computeRegularTimeouts(),
-      ...extraTimeouts,
+      ...timeouts,
     };
   }
 
