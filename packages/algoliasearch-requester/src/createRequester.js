@@ -1,7 +1,7 @@
 // @flow
 
 import HostGenerator from './HostGenerator';
-import TimeoutGenerator from './TimeoutGenerator__.js';
+import TimeoutGenerator from './TimeoutGenerator';
 
 import type { AppId, ApiKey } from 'algoliasearch';
 import type {
