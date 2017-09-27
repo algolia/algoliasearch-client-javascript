@@ -34,7 +34,7 @@ Array [
       "body": undefined,
       "method": undefined,
       "options": undefined,
-      "timeout": 4000,
+      "timeout": 2000,
       "url": Object {
         "hostname": "the_crazy_app-dsn.algolia.net",
         "pathname": NaN,
@@ -63,7 +63,7 @@ Array [
       "body": undefined,
       "method": undefined,
       "options": undefined,
-      "timeout": 4000,
+      "timeout": 2000,
       "url": Object {
         "hostname": "the_crazy_app-dsn.algolia.net",
         "pathname": NaN,

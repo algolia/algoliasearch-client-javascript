@@ -1,6 +1,7 @@
 // @flow
 
 import RequestHosts from './hosts';
+import TimeoutGenerator from './timeoutGenerator';
 
 import type { AppId, ApiKey } from 'algoliasearch';
 import type {
@@ -11,17 +12,6 @@ import type {
   Timeouts,
   Hosts,
 } from 'algoliasearch-requester';
-
-type Args = {|
-  appId?: AppId,
-  apiKey: ApiKey,
-  httpRequester: HttpModule,
-  options?: {|
-    timeouts?: Timeouts,
-    extraHosts?: Hosts,
-  |},
-  requestOptions?: RequestOptions,
-|};
 
 const stringify = qs => JSON.stringify(qs); // todo: use proper url stringify
 
@@ -45,6 +35,7 @@ const RESET_TIMEOUT_TIMER = 120000; // ms; 20 minutes
 
 export class Requester {
   hosts: RequestHosts;
+  timeoutGenerator: TimeoutGenerator;
   apiKey: ApiKey;
   appId: AppId;
   requestOptions: RequestOptions;
@@ -54,9 +45,18 @@ export class Requester {
     appId,
     apiKey,
     httpRequester,
-    options = {},
+    options: { timeouts = {}, extraHosts = {} } = {},
     requestOptions = {},
-  }: Args) {
+  }: {|
+    appId?: AppId,
+    apiKey: ApiKey,
+    httpRequester: HttpModule,
+    options?: {|
+      timeouts?: Timeouts,
+      extraHosts?: Hosts,
+    |},
+    requestOptions?: RequestOptions,
+  |}) {
     if (typeof appId !== 'string') {
       throw new Error(
         `appId is required and should be a string, received "${appId || ''}"`
@@ -72,7 +72,8 @@ export class Requester {
         `httpRequester is required and should be a function, received ${httpRequester}`
       );
     }
-    this.hosts = new RequestHosts({ appId, ...options });
+    this.hosts = new RequestHosts({ appId, extraHosts });
+    this.timeoutGenerator = new TimeoutGenerator({ timeouts });
     this.appId = appId;
     this.apiKey = apiKey;
     this.requester = httpRequester;
@@ -93,10 +94,13 @@ export class Requester {
     body,
     options,
     requestType: type,
-    retry = 0,
+    timeoutRetries = 0,
   }: RequestArguments): Promise<Result> => {
     const hostname = this.hosts.getHost({ type });
-    const timeout = this.hosts.getTimeout({ retry, type });
+    const timeout = this.timeoutGenerator.getTimeout({
+      retry: timeoutRetries,
+      type,
+    });
 
     const pathname = path + stringify(qs);
     const url = { hostname, pathname };
@@ -115,7 +119,7 @@ export class Requester {
         body,
         options,
         type,
-        retry,
+        timeoutRetries,
       })
     );
   };
@@ -127,11 +131,15 @@ export class Requester {
     if (retryableErrors.indexOf(err.reason) > -1) {
       // if no more hosts or timeouts: reject
       // if reason: timeout; increase
+      const timeoutRetries =
+        err.reason === 'timeout'
+          ? requestArguments.timeoutRetries + 1
+          : requestArguments.timeoutRetries;
 
       const res = this.request({
         ...requestArguments,
         requestType: requestArguments.type,
-        retry: requestArguments.retry + 1,
+        timeoutRetries,
       });
 
       return res;
