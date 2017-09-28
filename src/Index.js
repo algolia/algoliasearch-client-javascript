@@ -366,6 +366,13 @@ Index.prototype.deleteByQuery = deprecate(function(query, params, callback) {
 /**
 * Delete all objects matching a query
 *
+* the query parameters that can be used are: 
+* - query
+* - filters (numeric, facet, tag)
+* - geo
+*
+* you can not send an empty query or filters
+*
 * @param params the optional query parameters
 * @param callback (optional) the result callback called with one argument
 *  error: null or Error('message')
@@ -375,7 +382,7 @@ Index.prototype.deleteBy = function(params, callback) {
   return this.as._jsonRequest({
     method: 'POST',
     url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/deleteByQuery',
-    body: {params: params},
+    body: {params: indexObj.as._getSearchParams(params, '')},
     hostType: 'read',
     callback: callback
   });
