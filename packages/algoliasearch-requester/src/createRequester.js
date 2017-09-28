@@ -11,22 +11,19 @@ import type {
   HttpModule,
   Timeouts,
   Hosts,
+  ErrorType,
+  RequesterError,
+  CreateRequester,
 } from 'algoliasearch-requester';
 
 const stringify = qs => JSON.stringify(qs); // todo: use proper url stringify
 
-type ErrorType = 'application' | 'network' | 'dns' | 'timeout';
 const retryableErrors: Array<ErrorType> = [
   'application',
   'network',
   'dns',
   'timeout',
 ];
-
-type RequesterError = {|
-  reason: ErrorType,
-  more: any,
-|};
 
 // eslint-disable-next-line no-unused-vars
 const RESET_HOST_TIMER = 12000; // ms; 2 minutes
@@ -111,6 +108,7 @@ export class Requester {
       url,
       timeout,
       options,
+      requestType: type,
     }).catch(err =>
       this.retryRequest(err, {
         method,
@@ -155,10 +153,14 @@ export class Requester {
   };
 }
 
-export default function createRequester(args: Args) {
+const createRequester: CreateRequester = function createRequester(args) {
   const _r = new Requester(args);
   const requester = _r.request;
   requester.setOptions = _r.setOptions;
   requester.options = _r.requestOptions;
   return requester;
-}
+};
+
+createRequester(5);
+
+export default createRequester;

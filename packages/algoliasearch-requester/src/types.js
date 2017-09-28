@@ -13,6 +13,7 @@ export type Hosts = {|
   read: string[],
   write: string[],
 |};
+
 export type Timeouts = {
   connect: number,
   read: number,
@@ -40,24 +41,18 @@ export type RequestOptions = {|
   userId?: string,
 |};
 
-export type RequesterOptions = {
-  ...RequestOptions,
-  cache?: boolean,
-  hosts?: {|
-    read?: string[],
-    write?: string[],
-  |},
-};
+export type RequestType = 'read' | 'write';
 
 // http requester
 export type Response = { body: Buffer, statusCode: number };
-export type RequesterArgs = {
+export type RequesterArgs = {|
   body?: Object,
   method: Method,
   url: Url,
   timeout: number,
   options?: RequestOptions,
-};
+  requestType: RequestType,
+|};
 export type HttpModule = RequesterArgs => Promise<Response>;
 
 // public api
@@ -67,13 +62,32 @@ export type RequestArguments = {
   qs?: Object,
   body?: Object,
   options?: RequestOptions,
-  requestType: 'read' | 'write',
+  requestType: RequestType,
   retry?: number,
 };
+
 export type Result = Object;
+
 export type RequestMethod = RequestArguments => Promise<Result>;
-export type Requester = ({
+
+export type RequesterOptions = {
+  ...RequestOptions,
+  cache?: boolean,
+  hosts?: {|
+    read?: string[],
+    write?: string[],
+  |},
+};
+
+export type CreateRequesterArgs = {|
   appId: string,
   apiKey: string,
   options?: RequesterOptions,
-}) => RequestMethod;
+|};
+export type CreateRequester = CreateRequesterArgs => RequestMethod;
+
+export type ErrorType = 'application' | 'network' | 'dns' | 'timeout';
+export type RequesterError = {|
+  reason: ErrorType,
+  more: any,
+|};
