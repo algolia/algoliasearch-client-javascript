@@ -1,4 +1,4 @@
-/* eslint prefer-promise-reject-errors: 0 */
+/* eslint prefer-promise-reject-errors: off */
 
 import createRequester from './createRequester';
 
