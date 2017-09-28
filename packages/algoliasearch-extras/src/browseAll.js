@@ -1,14 +1,9 @@
 // @flow
-
-import { browse } from 'algoliasearch/methods/index/browse';
+// todo: don't mention src
+import browse from 'algoliasearch/src/methods/index/browse';
 import createRequester from 'algoliasearch-requester';
-import type {
-  IndexName,
-  AppId,
-  ApiKey,
-  RequestOptions,
-  RequestMethod,
-} from 'algoliasearch';
+import type { IndexName, AppId, ApiKey, SearchParameters } from 'algoliasearch';
+import type { RequestOptions, RequestMethod } from 'algoliasearch-requester';
 
 const throwIfAbsent = (name: string) => {
   throw new Error(`The parameter ${name} was missing, but it's required`);
