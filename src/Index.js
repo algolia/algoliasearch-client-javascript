@@ -174,7 +174,7 @@ Index.prototype.saveObject = function(object, callback) {
     hostType: 'write',
     callback: callback
   });
-}
+};
 
 /*
 * Override the content of several objects
@@ -366,7 +366,7 @@ Index.prototype.deleteByQuery = deprecate(function(query, params, callback) {
 /**
 * Delete all objects matching a query
 *
-* the query parameters that can be used are: 
+* the query parameters that can be used are:
 * - query
 * - filters (numeric, facet, tag)
 * - geo
@@ -386,7 +386,7 @@ Index.prototype.deleteBy = function(params, callback) {
     hostType: 'write',
     callback: callback
   });
-}
+};
 
 /*
 * Browse all content from an index using events. Basically this will do
