@@ -383,7 +383,7 @@ Index.prototype.deleteBy = function(params, callback) {
     method: 'POST',
     url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/deleteByQuery',
     body: {params: indexObj.as._getSearchParams(params, '')},
-    hostType: 'read',
+    hostType: 'write',
     callback: callback
   });
 }
