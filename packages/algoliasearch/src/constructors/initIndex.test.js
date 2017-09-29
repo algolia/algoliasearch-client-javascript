@@ -11,11 +11,13 @@ it('initIndex throws when it has too little parameters', () => {
   // $FlowFixMe --> type disallows this
   expect(() => initIndex({})).toThrow();
   // $FlowFixMe --> type disallows this
-  expect(() => initIndex({ appId: '' })).toThrow();
+  expect(() => initIndex({ appId: '' })).toThrowErrorMatchingSnapshot();
   // $FlowFixMe --> type disallows this
-  expect(() => initIndex({ apiKey: '' })).toThrow();
+  expect(() => initIndex({ apiKey: '' })).toThrowErrorMatchingSnapshot();
   // $FlowFixMe --> type disallows this
-  expect(() => initIndex({ apiKey: '', appId: '' })).toThrow();
+  expect(() =>
+    initIndex({ apiKey: '', appId: '' })
+  ).toThrowErrorMatchingSnapshot();
 
   expect(() => initIndex(validParams)).not.toThrow();
 });
@@ -23,4 +25,10 @@ it('initIndex throws when it has too little parameters', () => {
 it('initIndex contains the correct methods', () => {
   const index = initIndex(validParams);
   expect(Object.keys(index)).toMatchSnapshot();
+});
+
+it.skip('index.search() works 🐣', async () => {
+  const index = initIndex(validParams);
+  const result = await index.search({ query: 'hello world' });
+  expect(result).toMatchSnapshot();
 });

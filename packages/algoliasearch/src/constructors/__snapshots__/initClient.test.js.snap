@@ -9,3 +9,15 @@ Array [
   "requester",
 ]
 `;
+
+exports[`initClient throws when it has too little parameters 1`] = `
+"An apiKey is required. undefined was not valid.
+      
+      initIndex({\\"appId\\":\\"\\"})"
+`;
+
+exports[`initClient throws when it has too little parameters 2`] = `
+"An appId is required. undefined was not valid.
+      
+      initIndex({\\"apiKey\\":\\"\\"})"
+`;

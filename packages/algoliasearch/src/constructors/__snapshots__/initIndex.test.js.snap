@@ -13,3 +13,21 @@ Array [
   "requester",
 ]
 `;
+
+exports[`initIndex throws when it has too little parameters 1`] = `
+"An apiKey is required. undefined was not valid.
+    
+    initIndex({\\"appId\\":\\"\\"})"
+`;
+
+exports[`initIndex throws when it has too little parameters 2`] = `
+"An appId is required. undefined was not valid.
+    
+    initIndex({\\"apiKey\\":\\"\\"})"
+`;
+
+exports[`initIndex throws when it has too little parameters 3`] = `
+"An indexName is required. undefined was not valid.
+    
+    initIndex({\\"apiKey\\":\\"\\",\\"appId\\":\\"\\"})"
+`;
