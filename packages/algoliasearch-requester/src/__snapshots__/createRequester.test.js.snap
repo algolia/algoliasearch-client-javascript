@@ -22,6 +22,7 @@ Array [
       "body": undefined,
       "method": undefined,
       "options": undefined,
+      "requestType": "read",
       "timeout": 2000,
       "url": Object {
         "hostname": "the_crazy_app-dsn.algolia.net",
@@ -34,6 +35,7 @@ Array [
       "body": undefined,
       "method": undefined,
       "options": undefined,
+      "requestType": "read",
       "timeout": 2000,
       "url": Object {
         "hostname": "the_crazy_app-dsn.algolia.net",
@@ -51,6 +53,7 @@ Array [
       "body": undefined,
       "method": undefined,
       "options": undefined,
+      "requestType": "read",
       "timeout": 2000,
       "url": Object {
         "hostname": "the_crazy_app-dsn.algolia.net",
@@ -63,6 +66,7 @@ Array [
       "body": undefined,
       "method": undefined,
       "options": undefined,
+      "requestType": "read",
       "timeout": 2000,
       "url": Object {
         "hostname": "the_crazy_app-dsn.algolia.net",
@@ -75,6 +79,7 @@ Array [
       "body": undefined,
       "method": undefined,
       "options": undefined,
+      "requestType": "read",
       "timeout": 2000,
       "url": Object {
         "hostname": "the_crazy_app-dsn.algolia.net",
