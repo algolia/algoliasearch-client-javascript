@@ -161,6 +161,4 @@ const createRequester: CreateRequester = function createRequester(args) {
   return requester;
 };
 
-createRequester(5);
-
 export default createRequester;
