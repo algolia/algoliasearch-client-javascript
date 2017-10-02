@@ -15,18 +15,9 @@ function computeRegularHosts(appId: AppId): Hosts {
   };
 }
 
-function computeRegularTimeouts(): Timeouts {
-  return {
-    connect: 1 * 1000, // 500ms connect is GPRS latency
-    read: 2 * 1000,
-    write: 30 * 1000,
-  };
-}
-
 type Args = {|
   appId: AppId,
   extraHosts?: Hosts,
-  timeouts?: Timeouts,
 |};
 
 export default class RequestHosts {
@@ -34,7 +25,7 @@ export default class RequestHosts {
   timeouts: Timeouts;
   appId: AppId;
 
-  constructor({ appId, extraHosts = {}, timeouts: extraTimeouts = {} }: Args) {
+  constructor({ appId, extraHosts = {} }: Args) {
     this.appId = appId;
 
     const regularHosts = computeRegularHosts(appId);
@@ -45,20 +36,14 @@ export default class RequestHosts {
       read: [...regularHosts.read, ...read],
       write: [...regularHosts.write, ...write],
     };
-
-    const regularTimeouts = computeRegularTimeouts();
-    this.timeouts = {
-      ...regularTimeouts,
-      ...extraTimeouts,
-    };
   }
 
   getHost({
     type,
-    extraHosts,
+    hostFailed,
   }: {
     type: 'read' | 'write',
-    extraHosts?: Hosts,
+    hostFailed: boolean,
   }): string {
     //  extraHosts ? use(extraHosts) : use(this.hosts)
     if (type !== 'read' && type !== 'write') {
@@ -66,32 +51,22 @@ export default class RequestHosts {
         `You requested a host of type ${type}, but only 'read' or 'write' is a valid type.`
       );
     }
-    const extra = extraHosts && extraHosts[type] ? extraHosts[type] : [];
-    const hosts = [...extra, ...this.hosts[type]];
 
-    if (hosts.length === 1) {
-      const regularHosts = computeRegularHosts(this.appId)[type];
-      this.hosts[type] = [...this.hosts[type], ...regularHosts];
+    if (this.hosts[type].length === 0) {
+      this.hosts[type] = computeRegularHosts(this.appId)[type];
+      throw new Error(`There are no hosts remaining for this app. 
+
+You can retry this search, and it will try the hosts again. 
+
+appId: ${this.appId}
+
+see: https://alg.li/client#no-hosts-remaining`);
     }
 
-    // use a counter with modulo instead of modifying
-    return hosts.shift();
-  }
-
-  getTimeout({
-    retry = 0,
-    type,
-    extraTimeouts,
-  }: {
-    retry: number,
-    type: $Keys<Timeouts>,
-    extraTimeouts?: Timeouts,
-  }): number {
-    const timeout =
-      extraTimeouts && extraTimeouts[type]
-        ? extraTimeouts[type]
-        : this.timeouts[type];
-
-    return (1 + retry) * timeout;
+    if (hostFailed) {
+      return this.hosts[type].shift();
+    } else {
+      return this.hosts[type][0];
+    }
   }
 }

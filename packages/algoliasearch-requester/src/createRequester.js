@@ -92,34 +92,44 @@ export class Requester {
     options,
     requestType: type,
     timeoutRetries = 0,
-  }: RequestArguments): Promise<Result> => {
-    const hostname = this.hostGenerator.getHost({ type });
-    const timeout = this.timeoutGenerator.getTimeout({
-      retry: timeoutRetries,
-      type,
-    });
+    hostFailed = false,
+  }: {
+    ...RequestArguments,
+    timeoutRetries: number,
+    hostFailed: boolean,
+  }): Promise<Result> => {
+    try {
+      const hostname = this.hostGenerator.getHost({ type, hostFailed });
 
-    const pathname = path + stringify(qs);
-    const url = { hostname, pathname };
-
-    return this.requester({
-      body,
-      method,
-      url,
-      timeout,
-      options,
-      requestType: type,
-    }).catch(err =>
-      this.retryRequest(err, {
-        method,
-        path,
-        qs,
-        body,
-        options,
+      const timeout = this.timeoutGenerator.getTimeout({
+        retry: timeoutRetries,
         type,
-        timeoutRetries,
-      })
-    );
+      });
+
+      const pathname = path + stringify(qs);
+      const url = { hostname, pathname };
+
+      return this.requester({
+        body,
+        method,
+        url,
+        timeout,
+        options,
+        requestType: type,
+      }).catch(err =>
+        this.retryRequest(err, {
+          method,
+          path,
+          qs,
+          body,
+          options,
+          type,
+          timeoutRetries,
+        })
+      );
+    } catch (e) {
+      return Promise.reject(e);
+    }
   };
 
   retryRequest = (
