@@ -974,7 +974,7 @@ module.exports =
 	    hostType: 'write',
 	    callback: callback
 	  });
-	}
+	};
 
 	/*
 	* Override the content of several objects
@@ -1088,8 +1088,9 @@ module.exports =
 	* @param params the optional query parameters
 	* @param callback (optional) the result callback called with one argument
 	*  error: null or Error('message')
+	* @deprecated see index.deleteBy
 	*/
-	Index.prototype.deleteByQuery = function(query, params, callback) {
+	Index.prototype.deleteByQuery = deprecate(function(query, params, callback) {
 	  var clone = __webpack_require__(12);
 	  var map = __webpack_require__(17);
 
@@ -1160,6 +1161,31 @@ module.exports =
 	      callback(err);
 	    }, client._setTimeout || setTimeout);
 	  }
+	}, deprecatedMessage('index.deleteByQuery()', 'index.deleteBy()'));
+
+	/**
+	* Delete all objects matching a query
+	*
+	* the query parameters that can be used are:
+	* - query
+	* - filters (numeric, facet, tag)
+	* - geo
+	*
+	* you can not send an empty query or filters
+	*
+	* @param params the optional query parameters
+	* @param callback (optional) the result callback called with one argument
+	*  error: null or Error('message')
+	*/
+	Index.prototype.deleteBy = function(params, callback) {
+	  var indexObj = this;
+	  return this.as._jsonRequest({
+	    method: 'POST',
+	    url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/deleteByQuery',
+	    body: {params: indexObj.as._getSearchParams(params, '')},
+	    hostType: 'write',
+	    callback: callback
+	  });
 	};
 
 	/*
@@ -3776,7 +3802,7 @@ module.exports =
 
 	
 
-	module.exports = '3.24.4';
+	module.exports = '3.24.5';
 
 
 /***/ }

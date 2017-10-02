@@ -1,4 +1,11 @@
 CHANGELOG
+2017-10-02 3.24.5
+  * feat(deleteBy): add deleteBy
+    * deleteByQuery is deprecated now
+    * the same, but now it happens at the indexing side
+    * no major changes should be seen, please report if any
+    * https://github.com/algolia/algoliasearch-client-javascript/wiki/Deprecated#indexdeletebyquery
+
 2017-09-22 3.24.4
   * chore(build): provide jsDelivr the right file (#599)
 
