@@ -34,7 +34,7 @@ it('host indices are reset to 0 after 12s', async () => {
     requestType: 'read',
   });
 
-  clock.tick('2:00');
+  clock.tick('02:00');
   // hosts reset
   await requester({
     requestType: 'read',
