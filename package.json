@@ -8,9 +8,13 @@
     "typecheck": "flow",
     "test:ci": "yarn test --verbose && yarn typecheck && yarn lint"
   },
-  "workspaces": ["packages/*"],
+  "workspaces": [
+    "packages/*"
+  ],
   "jest": {
-    "projects": ["packages/*"],
+    "projects": [
+      "packages/*"
+    ],
     "testEnvironment": "node"
   },
   "author": "Algolia, Inc. (https://www.algolia.com)",
