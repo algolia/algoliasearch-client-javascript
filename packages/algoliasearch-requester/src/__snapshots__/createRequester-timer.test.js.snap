@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`host indices are reset to 0 after 12s 1`] = `
+Array [
+  "the_slow_app-dsn.algolia.net",
+  "the_slow_app-1.algolianet.com",
+  "the_slow_app-1.algolianet.com",
+  "the_slow_app-1.algolianet.com",
+]
+`;
+
+exports[`resets timeout to default after 20 minutes 1`] = `
+Array [
+  30000,
+  60000,
+  30000,
+  30000,
+]
+`;

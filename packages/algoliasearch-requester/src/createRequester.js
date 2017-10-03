@@ -26,9 +26,9 @@ const retryableErrors: Array<ErrorType> = [
 ];
 
 // eslint-disable-next-line no-unused-vars
-const RESET_HOST_TIMER = 12000; // ms; 2 minutes
+const RESET_HOST_TIMER = 120000; // ms; 2 minutes
 // eslint-disable-next-line no-unused-vars
-const RESET_TIMEOUT_TIMER = 120000; // ms; 20 minutes
+const RESET_TIMEOUT_TIMER = 1200000; // ms; 20 minutes
 
 export class Requester {
   hostGenerator: HostGenerator;

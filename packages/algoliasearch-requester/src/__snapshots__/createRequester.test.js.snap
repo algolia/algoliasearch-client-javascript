@@ -1,11 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`host indices are reset to 0 after Xs 2`] = `
-Array [
-  "the_slow_app-dsn.algolia.net",
-  "the_slow_app-1.algolianet.com",
-  "the_slow_app-1.algolianet.com",
-]
+exports[`rejects when all hosts are used 1`] = `
+[Error: There are no hosts remaining for this app. 
+
+You can retry this search, and it will try the hosts again. 
+
+appId: the_host_app
+
+see: https://alg.li/client#no-hosts-remaining]
 `;
 
 exports[`requires the right arguments 1`] = `"appId is required and should be a string, received \\"\\""`;
@@ -26,6 +28,16 @@ Array [
   30000,
   60000,
 ]
+`;
+
+exports[`two instances of createRequester share the same host index 1`] = `
+[Error: There are no hosts remaining for this app. 
+
+You can retry this search, and it will try the hosts again. 
+
+appId: the_host_app
+
+see: https://alg.li/client#no-hosts-remaining]
 `;
 
 exports[`uses a different host when the request needs to be retried 1`] = `

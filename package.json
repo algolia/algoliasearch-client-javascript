@@ -32,6 +32,7 @@
     "flow-bin": "0.55.0",
     "jest": "^21.0.1",
     "jest-in-case": "^1.0.2",
+    "lolex": "^2.1.2",
     "prettier": "^1.6.1"
   },
   "engines": {

@@ -345,7 +345,7 @@ it('rejects when all hosts are used', () => {
     requester({
       requestType: 'write',
     })
-  ).rejects.toMatchSnapshot();
+  ).rejects.toMatchSnapshot('rejects when all hosts are used');
 });
 
 it.skip('uses the first host again after running out of hosts', async () => {
@@ -420,35 +420,3 @@ it.skip(
     expect(usedHosts[2]).toEqual('the_same_app-1.algolianet.com'); // second request
   }
 );
-
-it('host indices are reset to 0 after Xs', async () => {
-  const httpRequester = jest.fn(
-    () =>
-      httpRequester.mock.calls.length === 1
-        ? Promise.reject({ reason: 'network' })
-        : Promise.resolve()
-  );
-  const requester = createRequester({
-    appId: 'the_slow_app',
-    apiKey: '',
-    httpRequester,
-  });
-
-  await requester({
-    requestType: 'read',
-  }); // retries
-
-  // wait X seconds
-  await requester({
-    requestType: 'read',
-  }); // retries
-
-  const usedHosts = httpRequester.mock.calls.map(
-    ([{ url: { hostname } }]) => hostname
-  );
-  expect(usedHosts).toMatchSnapshot();
-
-  expect(usedHosts[0]).toEqual('the_slow_app-dsn.algolia.net'); // first try
-  expect(usedHosts[1]).toEqual('the_slow_app-1.algolianet.com'); // second try
-  expect(usedHosts[2]).toEqual('the_slow_app-dsn.algolia.net'); // third try
-});
