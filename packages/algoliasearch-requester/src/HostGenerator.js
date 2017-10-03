@@ -63,9 +63,7 @@ export default class RequestHosts {
       );
     }
 
-    const { val, index } = this.hosts[type];
-
-    if (index > val.length) {
+    if (this.hosts[type].index > this.hosts[type].val.length) {
       this.hosts[type] = {
         [type]: {
           val: computeRegularHosts(this.appId)[type],
@@ -85,6 +83,6 @@ see: https://alg.li/client#no-hosts-remaining`);
     if (hostFailed) {
       this.hosts[type].index++;
     }
-    return val[index];
+    return this.hosts[type].val[this.hosts[type].index];
   }
 }

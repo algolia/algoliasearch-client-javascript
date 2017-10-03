@@ -86,14 +86,11 @@ it('uses a different host when the request needs to be retried', async () => {
     requestType: 'read',
   }); // retries
 
-  expect(httpRequester.mock.calls).toMatchSnapshot();
+  const usedHosts = httpRequester.mock.calls.map(
+    ([{ url: { hostname } }]) => hostname
+  );
 
-  const usedHosts = [
-    httpRequester.mock.calls[0][0].url.hostname,
-    httpRequester.mock.calls[1][0].url.hostname,
-  ];
-
-  console.log(requester._r.hostGenerator);
+  expect(usedHosts).toMatchSnapshot();
 
   expect(usedHosts[0]).toEqual('the_crazy_app-dsn.algolia.net'); // first try
   expect(usedHosts[1]).toEqual('the_crazy_app-1.algolianet.com'); // second try
@@ -119,13 +116,11 @@ it('uses the "up" host on second request when first fails', async () => {
     requestType: 'read',
   });
 
-  expect(httpRequester.mock.calls).toMatchSnapshot();
+  const usedHosts = httpRequester.mock.calls.map(
+    ([{ url: { hostname } }]) => hostname
+  );
 
-  const usedHosts = [
-    httpRequester.mock.calls[0][0].url.hostname,
-    httpRequester.mock.calls[1][0].url.hostname,
-    httpRequester.mock.calls[2][0].url.hostname,
-  ];
+  expect(usedHosts).toMatchSnapshot();
 
   expect(usedHosts[0]).toEqual('the_crazy_app-dsn.algolia.net'); // first try
   expect(usedHosts[1]).toEqual('the_crazy_app-1.algolianet.com'); // first retry
@@ -270,10 +265,7 @@ it('second try after a timeout has increments the timeout', async () => {
     requestType: 'write',
   });
 
-  const timeouts = [
-    httpRequester.mock.calls[0][0].timeout,
-    httpRequester.mock.calls[1][0].timeout,
-  ];
+  const timeouts = httpRequester.mock.calls.map(([{ timeout }]) => timeout);
 
   expect(timeouts).toMatchSnapshot();
 

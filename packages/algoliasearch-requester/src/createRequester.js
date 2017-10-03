@@ -168,7 +168,6 @@ const createRequester: CreateRequester = function createRequester(args) {
   const requester = _r.request;
   requester.setOptions = _r.setOptions;
   requester.options = _r.requestOptions;
-  requester._r = _r;
   return requester;
 };
 

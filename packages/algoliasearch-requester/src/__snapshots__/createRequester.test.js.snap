@@ -17,75 +17,15 @@ Array [
 
 exports[`uses a different host when the request needs to be retried 1`] = `
 Array [
-  Array [
-    Object {
-      "body": undefined,
-      "method": undefined,
-      "options": undefined,
-      "requestType": "read",
-      "timeout": 2000,
-      "url": Object {
-        "hostname": "the_crazy_app-dsn.algolia.net",
-        "pathname": NaN,
-      },
-    },
-  ],
-  Array [
-    Object {
-      "body": undefined,
-      "method": undefined,
-      "options": undefined,
-      "requestType": "read",
-      "timeout": 2000,
-      "url": Object {
-        "hostname": "the_crazy_app-dsn.algolia.net",
-        "pathname": NaN,
-      },
-    },
-  ],
+  "the_crazy_app-dsn.algolia.net",
+  "the_crazy_app-1.algolianet.com",
 ]
 `;
 
 exports[`uses the "up" host on second request when first fails 1`] = `
 Array [
-  Array [
-    Object {
-      "body": undefined,
-      "method": undefined,
-      "options": undefined,
-      "requestType": "read",
-      "timeout": 2000,
-      "url": Object {
-        "hostname": "the_crazy_app-dsn.algolia.net",
-        "pathname": NaN,
-      },
-    },
-  ],
-  Array [
-    Object {
-      "body": undefined,
-      "method": undefined,
-      "options": undefined,
-      "requestType": "read",
-      "timeout": 2000,
-      "url": Object {
-        "hostname": "the_crazy_app-dsn.algolia.net",
-        "pathname": NaN,
-      },
-    },
-  ],
-  Array [
-    Object {
-      "body": undefined,
-      "method": undefined,
-      "options": undefined,
-      "requestType": "read",
-      "timeout": 2000,
-      "url": Object {
-        "hostname": "the_crazy_app-1.algolianet.com",
-        "pathname": NaN,
-      },
-    },
-  ],
+  "the_crazy_app-dsn.algolia.net",
+  "the_crazy_app-1.algolianet.com",
+  "the_crazy_app-1.algolianet.com",
 ]
 `;
