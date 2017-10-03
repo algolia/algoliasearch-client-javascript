@@ -82,7 +82,7 @@ Array [
       "requestType": "read",
       "timeout": 2000,
       "url": Object {
-        "hostname": "the_crazy_app-dsn.algolia.net",
+        "hostname": "the_crazy_app-1.algolianet.com",
         "pathname": NaN,
       },
     },

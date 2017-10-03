@@ -21,7 +21,12 @@ type Args = {|
 |};
 
 export default class RequestHosts {
-  hosts: Hosts;
+  hosts: {
+    [key: 'read' | 'write']: {
+      val: string[],
+      index: number,
+    },
+  };
   timeouts: Timeouts;
   appId: AppId;
 
@@ -33,8 +38,14 @@ export default class RequestHosts {
     const { read = [], write = [] } = extraHosts;
 
     this.hosts = {
-      read: [...regularHosts.read, ...read],
-      write: [...regularHosts.write, ...write],
+      read: {
+        val: [...regularHosts.read, ...read],
+        index: 0,
+      },
+      write: {
+        val: [...regularHosts.write, ...write],
+        index: 0,
+      },
     };
   }
 
@@ -52,8 +63,16 @@ export default class RequestHosts {
       );
     }
 
-    if (this.hosts[type].length === 0) {
-      this.hosts[type] = computeRegularHosts(this.appId)[type];
+    const { val, index } = this.hosts[type];
+
+    if (index > val.length) {
+      this.hosts[type] = {
+        [type]: {
+          val: computeRegularHosts(this.appId)[type],
+          index: 0,
+        },
+      };
+
       throw new Error(`There are no hosts remaining for this app. 
 
 You can retry this search, and it will try the hosts again. 
@@ -64,9 +83,8 @@ see: https://alg.li/client#no-hosts-remaining`);
     }
 
     if (hostFailed) {
-      return this.hosts[type].shift();
-    } else {
-      return this.hosts[type][0];
+      this.hosts[type].index++;
     }
+    return val[index];
   }
 }

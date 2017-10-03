@@ -84,20 +84,16 @@ export class Requester {
     return newOptions;
   };
 
-  request = ({
-    method,
-    path,
-    qs,
-    body,
-    options,
-    requestType: type,
-    timeoutRetries = 0,
-    hostFailed = false,
-  }: {
-    ...RequestArguments,
-    timeoutRetries: number,
-    hostFailed: boolean,
-  }): Promise<Result> => {
+  request = (
+    { method, path, qs, body, options, requestType: type }: RequestArguments,
+    {
+      timeoutRetries = 0,
+      hostFailed = false,
+    }: {
+      timeoutRetries: number,
+      hostFailed: boolean,
+    } = {}
+  ): Promise<Result> => {
     try {
       const hostname = this.hostGenerator.getHost({ type, hostFailed });
 
@@ -137,18 +133,22 @@ export class Requester {
     requestArguments: RequestArguments
   ): Promise<Result> => {
     if (retryableErrors.indexOf(err.reason) > -1) {
-      // if no more hosts or timeouts: reject
-      // if reason: timeout; increase
       const timeoutRetries =
         err.reason === 'timeout'
           ? requestArguments.timeoutRetries + 1
           : requestArguments.timeoutRetries;
+      const hostFailed = err.reason !== 'timeout';
 
-      const res = this.request({
-        ...requestArguments,
-        requestType: requestArguments.type,
-        timeoutRetries,
-      });
+      const res = this.request(
+        {
+          ...requestArguments,
+          requestType: requestArguments.type,
+        },
+        {
+          timeoutRetries,
+          hostFailed,
+        }
+      );
 
       return res;
     }
@@ -168,6 +168,7 @@ const createRequester: CreateRequester = function createRequester(args) {
   const requester = _r.request;
   requester.setOptions = _r.setOptions;
   requester.options = _r.requestOptions;
+  requester._r = _r;
   return requester;
 };
 

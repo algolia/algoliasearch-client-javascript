@@ -93,6 +93,8 @@ it('uses a different host when the request needs to be retried', async () => {
     httpRequester.mock.calls[1][0].url.hostname,
   ];
 
+  console.log(requester._r.hostGenerator);
+
   expect(usedHosts[0]).toEqual('the_crazy_app-dsn.algolia.net'); // first try
   expect(usedHosts[1]).toEqual('the_crazy_app-1.algolianet.com'); // second try
 });
