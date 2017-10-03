@@ -1,6 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`rejects when all hosts are used 1`] = `[Error: [object Object]]`;
+exports[`host indices are reset to 0 after Xs 2`] = `
+Array [
+  "the_slow_app-dsn.algolia.net",
+  "the_slow_app-1.algolianet.com",
+  "the_slow_app-1.algolianet.com",
+]
+`;
 
 exports[`requires the right arguments 1`] = `"appId is required and should be a string, received \\"\\""`;
 
@@ -8,7 +14,14 @@ exports[`requires the right arguments 2`] = `"apiKey is required and should be a
 
 exports[`requires the right arguments 3`] = `"httpRequester is required and should be a function, received [object Object]"`;
 
-exports[`second try after a timeout has increments the timeout 1`] = `
+exports[`second try after a timeout has increments the timeout (read) 1`] = `
+Array [
+  2000,
+  4000,
+]
+`;
+
+exports[`second try after a timeout has increments the timeout (write) 1`] = `
 Array [
   30000,
   60000,

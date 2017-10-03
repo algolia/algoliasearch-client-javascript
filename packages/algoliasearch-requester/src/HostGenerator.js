@@ -65,10 +65,8 @@ export default class RequestHosts {
 
     if (this.hosts[type].index > this.hosts[type].val.length) {
       this.hosts[type] = {
-        [type]: {
-          val: computeRegularHosts(this.appId)[type],
-          index: 0,
-        },
+        val: computeRegularHosts(this.appId)[type],
+        index: 0,
       };
 
       throw new Error(`There are no hosts remaining for this app. 

@@ -154,11 +154,11 @@ export class Requester {
     }
 
     return Promise.reject(
-      new Error({
-        reason:
-          "Request couldn't be retried, did you enter the correct credentials?",
-        more: err,
-      })
+      new Error(`Request couldn't be retried, did you enter the correct credentials?
+
+see: https://alg.li/client#unretryable-error
+
+${JSON.stringify(err)}`)
     );
   };
 }

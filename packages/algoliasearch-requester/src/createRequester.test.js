@@ -227,7 +227,7 @@ it("retries when there's a timeout", async () => {
         ? Promise.reject({
             reason: 'timeout',
           })
-        : Promise.resolve({})
+        : Promise.resolve({ bingo: true })
   );
   const requester = createRequester({
     appId: 'the_retry_app',
@@ -240,13 +240,13 @@ it("retries when there's a timeout", async () => {
     requester({
       requestType: 'write',
     })
-  ).resolves.toEqual({});
+  ).resolves.toEqual({ bingo: true });
 
   // requester was called twice
   expect(httpRequester.mock.calls.length).toBe(2);
 });
 
-it('second try after a timeout has increments the timeout', async () => {
+it('second try after a timeout has increments the timeout (write)', async () => {
   const httpRequester = jest.fn(
     () =>
       httpRequester.mock.calls.length === 1
@@ -272,6 +272,32 @@ it('second try after a timeout has increments the timeout', async () => {
   expect(timeouts[1]).toBeGreaterThan(timeouts[0]);
 });
 
+it('second try after a timeout has increments the timeout (read)', async () => {
+  const httpRequester = jest.fn(
+    () =>
+      httpRequester.mock.calls.length === 1
+        ? Promise.reject({
+            reason: 'timeout',
+          })
+        : Promise.resolve({})
+  );
+  const requester = createRequester({
+    appId: 'the_fun_app',
+    apiKey: '',
+    httpRequester,
+  });
+
+  await requester({
+    requestType: 'read',
+  });
+
+  const timeouts = httpRequester.mock.calls.map(([{ timeout }]) => timeout);
+
+  expect(timeouts).toMatchSnapshot();
+
+  expect(timeouts[1]).toBeGreaterThan(timeouts[0]);
+});
+
 it.skip('rejects when all timeouts are reached', async () => {
   const httpRequester = jest.fn(() =>
     Promise.reject({
@@ -288,21 +314,24 @@ it.skip('rejects when all timeouts are reached', async () => {
     requester({
       requestType: 'write',
     }) // eventually it will fail because of a timeout
-  ).rejects.toBe('replace with the total timeout error');
+  ).rejects.toMatchSnapshot();
 
   await requester({ requestType: 'write' });
 
-  const calls = httpRequester.mock.calls;
-  const firstTimeout = calls[0][0].timeout;
-  const lastTimeout = calls[calls.length - 1][0].timeout;
+  const timeouts = httpRequester.mock.calls.map(([{ timeout }]) => timeout);
+
+  expect(timeouts).toMatchSnapshot();
+
+  const firstTimeout = timeouts[0];
+  const lastTimeout = timeouts[timeouts.length - 1];
 
   expect(lastTimeout).toBe(firstTimeout);
 });
 
-it.skip('rejects when all hosts are used', () => {
+it('rejects when all hosts are used', () => {
   const httpRequester = jest.fn(() =>
     Promise.reject({
-      reason: 'host',
+      reason: 'network',
     })
   );
   const requester = createRequester({
@@ -316,13 +345,13 @@ it.skip('rejects when all hosts are used', () => {
     requester({
       requestType: 'write',
     })
-  ).rejects.toEqual('replace with the no more hosts error');
+  ).rejects.toMatchSnapshot();
 });
 
-it('uses the first host again after running out of hosts', async () => {
+it.skip('uses the first host again after running out of hosts', async () => {
   const httpRequester = jest.fn(
     () =>
-      httpRequester.mock.calls.length < 4 /* the request completely fails */
+      httpRequester.mock.calls.length < 5 /* the request completely fails */
         ? Promise.reject({
             reason: 'network',
           })
@@ -339,7 +368,7 @@ it('uses the first host again after running out of hosts', async () => {
     requester({
       requestType: 'write',
     })
-  ).rejects.toBe('replace with the host error');
+  ).rejects.toMatchSnapshot();
 
   await requester({
     requestType: 'write',
@@ -352,44 +381,47 @@ it('uses the first host again after running out of hosts', async () => {
   expect(lastHost).toBe(firstHost);
 });
 
-it('two instances of createRequester share the same host index', async () => {
-  const httpRequester = jest.fn(
-    () =>
-      httpRequester.mock.calls.length === 1
-        ? Promise.reject({ reason: 'network' })
-        : Promise.resolve()
-  );
+it.skip(
+  'two instances of createRequester share the same host index',
+  async () => {
+    const httpRequester = jest.fn(
+      () =>
+        httpRequester.mock.calls.length === 1
+          ? Promise.reject({ reason: 'network' })
+          : Promise.resolve()
+    );
 
-  const firstRequester = createRequester({
-    appId: 'the_same_app',
-    apiKey: '',
-    httpRequester,
-  });
-  const secondRequester = createRequester({
-    appId: 'the_same_app',
-    apiKey: '',
-    httpRequester,
-  });
+    const firstRequester = createRequester({
+      appId: 'the_same_app',
+      apiKey: '',
+      httpRequester,
+    });
+    const secondRequester = createRequester({
+      appId: 'the_same_app',
+      apiKey: '',
+      httpRequester,
+    });
 
-  await firstRequester({
-    requestType: 'read',
-  }); // retries
-  await secondRequester({
-    requestType: 'read',
-  });
+    await firstRequester({
+      requestType: 'read',
+    }); // retries
+    await secondRequester({
+      requestType: 'read',
+    });
 
-  const usedHosts = [
-    httpRequester.mock.calls[0][0].url.hostname,
-    httpRequester.mock.calls[1][0].url.hostname,
-    httpRequester.mock.calls[2][0].url.hostname,
-  ];
+    const usedHosts = httpRequester.mock.calls.map(
+      ([{ url: { hostname } }]) => hostname
+    );
 
-  expect(usedHosts[0]).toEqual('the_same_app-dsn.algolia.net'); // first try
-  expect(usedHosts[1]).toEqual('the_same_app-1.algolianet.com'); // first retry
-  expect(usedHosts[2]).toEqual('the_same_app-1.algolianet.com'); // second request
-});
+    expect(usedHosts).toMatchSnapshot();
 
-it.skip('host indices are reset to 0 after Xs', () => {
+    expect(usedHosts[0]).toEqual('the_same_app-dsn.algolia.net'); // first try
+    expect(usedHosts[1]).toEqual('the_same_app-1.algolianet.com'); // first retry
+    expect(usedHosts[2]).toEqual('the_same_app-1.algolianet.com'); // second request
+  }
+);
+
+it('host indices are reset to 0 after Xs', async () => {
   const httpRequester = jest.fn(
     () =>
       httpRequester.mock.calls.length === 1
@@ -402,20 +434,20 @@ it.skip('host indices are reset to 0 after Xs', () => {
     httpRequester,
   });
 
-  requester({
+  await requester({
     requestType: 'read',
   }); // retries
 
   // wait X seconds
-  requester({
+  await requester({
     requestType: 'read',
   }); // retries
 
-  const usedHosts = [
-    httpRequester.mock.calls[0][0].url.hostname,
-    httpRequester.mock.calls[2][0].url.hostname,
-    httpRequester.mock.calls[3][0].url.hostname,
-  ];
+  const usedHosts = httpRequester.mock.calls.map(
+    ([{ url: { hostname } }]) => hostname
+  );
+  expect(usedHosts).toMatchSnapshot();
+
   expect(usedHosts[0]).toEqual('the_slow_app-dsn.algolia.net'); // first try
   expect(usedHosts[1]).toEqual('the_slow_app-1.algolianet.com'); // second try
   expect(usedHosts[2]).toEqual('the_slow_app-dsn.algolia.net'); // third try
