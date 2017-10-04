@@ -28,6 +28,6 @@ export default function getPlace(
     path: `/1/indexes/places/${objectID}`,
     qs: { ...attributes },
     requestType: 'read',
-    options: requestOptions,
+    requestOptions,
   });
 }

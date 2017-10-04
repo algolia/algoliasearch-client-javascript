@@ -13,7 +13,7 @@ export default function batchRules(
   indexName: IndexName,
   rules: Synonym[],
   opts: Options,
-  requestOptions: RequestOptions
+  requestrequestOptions
 ) {
   return requester({
     method: 'POST',
@@ -21,6 +21,6 @@ export default function batchRules(
     qs: opts,
     body: { rules },
     requestType: 'write',
-    options: requestOptions,
+    requestOptions,
   });
 }

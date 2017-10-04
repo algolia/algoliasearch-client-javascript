@@ -7,18 +7,18 @@ export default function moveIndex({
   requester,
   indexName,
   destination,
-  options,
+  requestOptions,
 }: {
   requester: RequestMethod,
   indexName: IndexName,
   destination: IndexName,
-  options?: RequestOptions,
+  requestOptions?: RequestOptions,
 }) {
   return requester({
     method: 'POST',
     path: `/1/indexes/${indexName}/operation`,
     body: { operation: 'move', destination },
-    options,
+    requestOptions,
     requestType: 'write',
   });
 }

@@ -1,20 +1,20 @@
 // client methods that should be implemented, `true` if they are
 
 export const apiMethods = {
-  addApiKey: false,
+  addApiKey: true,
   batch: true,
   clearIndex: true,
   copyIndex: true,
-  deleteApiKey: false,
+  deleteApiKey: true,
   deleteIndex: true,
-  getApiKey: false,
+  getApiKey: true,
   getLogs: true,
-  initIndex: false,
-  listApiKeys: false,
+  initIndex: true,
+  listApiKeys: true,
   listIndexes: true,
   moveIndex: true,
   search: true,
-  updateApiKey: false,
+  updateApiKey: true,
   node: {
     generateSecuredApiKey: false,
   },

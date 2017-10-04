@@ -6,16 +6,16 @@ import type { RequestMethod, RequestOptions } from 'algoliasearch-requester';
 export default function clearIndex({
   requester,
   indexName,
-  options,
+  requestOptions,
 }: {
   requester: RequestMethod,
   indexName: IndexName,
-  options?: RequestOptions,
+  requestOptions?: RequestOptions,
 }) {
   return requester({
     method: 'POST',
     path: `/1/indexes/${indexName}/clear`,
-    options,
+    requestOptions,
     requestType: 'write',
   });
 }

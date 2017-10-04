@@ -9,17 +9,17 @@ type Params = {|
 export default function listIndexes({
   requester,
   params = {},
-  options,
+  requestOptions,
 }: {
   requester: RequestMethod,
   params?: Params,
-  options?: RequestOptions,
+  requestOptions?: RequestOptions,
 }) {
   return requester({
     method: 'GET',
     path: '/1/indexes',
     qs: params,
-    options,
+    requestOptions,
     requestType: 'write',
   });
 }

@@ -50,7 +50,7 @@ export type RequesterArgs = {|
   method: Method,
   url: Url,
   timeout: number,
-  options?: RequestOptions,
+  requestOptions?: RequestOptions,
   requestType: RequestType,
 |};
 export type HttpModule = RequesterArgs => Promise<Response>;
@@ -61,7 +61,7 @@ export type RequestArguments = {
   path: string,
   qs?: Object,
   body?: Object,
-  options?: RequestOptions,
+  requestOptions?: RequestOptions,
   requestType: RequestType,
   retry?: number,
 };

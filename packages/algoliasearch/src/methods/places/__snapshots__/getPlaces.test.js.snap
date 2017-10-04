@@ -15,8 +15,8 @@ Object {
     ],
   },
   "method": "POST",
-  "options": undefined,
   "path": "/1/indexes/*/objects",
+  "requestOptions": undefined,
   "requestType": "read",
 }
 `;
@@ -38,8 +38,8 @@ Object {
     ],
   },
   "method": "POST",
-  "options": undefined,
   "path": "/1/indexes/*/objects",
+  "requestOptions": undefined,
   "requestType": "read",
 }
 `;

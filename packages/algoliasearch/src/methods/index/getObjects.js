@@ -11,13 +11,13 @@ export default function getObjects({
   indexName,
   objectIDs,
   params,
-  options,
+  requestOptions,
 }: {
   requester: RequestMethod,
   indexName: IndexName,
   objectIDs: ObjectID[],
   params: GetObjectOptions,
-  options: RequestOptions,
+  requestOptions?: RequestOptions,
 }) {
   const { attributesToRetrieve: attrs } = params;
   const attributesToRetrieve = attrs.join(',');
@@ -36,7 +36,7 @@ export default function getObjects({
         attributesToRetrieve,
       })),
     },
-    options,
+    requestOptions,
     requestType: 'read',
   });
 }

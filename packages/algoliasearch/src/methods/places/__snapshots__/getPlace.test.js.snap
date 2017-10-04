@@ -3,9 +3,9 @@
 exports[`regular getPlaces 1`] = `
 Object {
   "method": "GET",
-  "options": undefined,
   "path": "/1/indexes/places/some_item",
   "qs": Object {},
+  "requestOptions": undefined,
   "requestType": "read",
 }
 `;
@@ -13,11 +13,11 @@ Object {
 exports[`regular getPlaces 2`] = `
 Object {
   "method": "GET",
-  "options": undefined,
   "path": "/1/indexes/places/some_item",
   "qs": Object {
     "attributes": "one,name",
   },
+  "requestOptions": undefined,
   "requestType": "read",
 }
 `;

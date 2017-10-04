@@ -18,7 +18,7 @@ export default function search(
     method: 'POST',
     path: `/1/indexes/${indexName}/query`,
     body: { params },
-    options: requestOptions,
+    requestOptions,
     requestType: 'read',
   });
 }

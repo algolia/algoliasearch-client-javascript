@@ -85,7 +85,7 @@ export class Requester {
   };
 
   request = (
-    { method, path, qs, body, options, requestType: type }: RequestArguments,
+    { method, path, qs, body, requestOptions, requestType: type }: RequestArguments,
     {
       timeoutRetries = 0,
       hostFailed = false,
@@ -110,7 +110,7 @@ export class Requester {
         method,
         url,
         timeout,
-        options,
+        requestOptions,
         requestType: type,
       }).catch(err =>
         this.retryRequest(err, {
@@ -118,7 +118,7 @@ export class Requester {
           path,
           qs,
           body,
-          options,
+          requestOptions,
           type,
           timeoutRetries,
         })

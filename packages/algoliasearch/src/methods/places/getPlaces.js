@@ -42,6 +42,6 @@ export default function getPlaces(
       })),
     },
     requestType: 'read',
-    options: requestOptions,
+    requestOptions,
   });
 }

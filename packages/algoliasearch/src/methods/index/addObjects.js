@@ -8,12 +8,12 @@ export default function getObjects({
   requester,
   indexName,
   objects,
-  options,
+  requestOptions,
 }: {
   requester: RequestMethod,
   indexName: IndexName,
   objects: Object[],
-  options?: RequestOptions,
+  requestOptions?: RequestOptions,
 }) {
   if (!Array.isArray(objects)) {
     throw pluralError('addObject');
@@ -28,7 +28,7 @@ export default function getObjects({
         body: object,
       })),
     },
-    options,
+    requestOptions,
     requestType: 'write',
   });
 }

@@ -16,7 +16,7 @@ export default function search(
     method: 'POST',
     path: `/1/indexes/places/query`,
     body: { params },
-    options: requestOptions,
+    requestOptions,
     requestType: 'read',
   });
 }

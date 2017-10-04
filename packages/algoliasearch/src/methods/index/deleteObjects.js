@@ -8,12 +8,12 @@ export default function getObjects({
   requester,
   indexName,
   objectIDs,
-  options,
+  requestOptions,
 }: {
   requester: RequestMethod,
   indexName: IndexName,
   objectIDs: ObjectID[],
-  options: RequestOptions,
+  requestOptions?: RequestOptions,
 }) {
   if (!Array.isArray(objectIDs)) {
     throw pluralError('deleteObject');
@@ -30,7 +30,7 @@ export default function getObjects({
         },
       })),
     },
-    options,
+    requestOptions,
     requestType: 'write',
   });
 }

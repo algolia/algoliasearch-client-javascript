@@ -14,13 +14,13 @@ export default function waitForCompletion({
   indexName,
   taskID,
   loopInfo = {},
-  options,
+  requestOptions,
 }: {
   requester: RequestMethod,
   indexName: IndexName,
   taskID: TaskID,
   loopInfo?: LoopInfo,
-  options?: RequestOptions,
+  requestOptions?: RequestOptions,
 }): Promise<Result> {
   const { loop = 0, baseDelay = 250, maxDelay = 10000 } = loopInfo;
 
@@ -28,7 +28,7 @@ export default function waitForCompletion({
     method: 'GET',
     path: `/1/indexes/${indexName}/task/${taskID}`,
     requestType: 'write',
-    options,
+    requestOptions,
   }).then((res: Result) => {
     if (res.status === 'published') {
       return res;
@@ -48,7 +48,7 @@ export default function waitForCompletion({
         requester,
         indexName,
         taskID,
-        options,
+        requestOptions,
         loopInfo: {
           loop: currentLoop,
         },

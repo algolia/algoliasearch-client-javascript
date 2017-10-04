@@ -10,13 +10,13 @@ export default function getObjects({
   indexName,
   objectID,
   params,
-  options,
+  requestOptions,
 }: {
   requester: RequestMethod,
   indexName: IndexName,
   objectID: ObjectID,
   params: GetObjectOptions,
-  options: RequestOptions,
+  requestOptions?: RequestOptions,
 }) {
   const { attributesToRetrieve: attrs } = params;
   const attributesToRetrieve = attrs.join(',');
@@ -25,7 +25,7 @@ export default function getObjects({
     method: 'GET',
     path: `/1/indexes/${indexName}/${objectID}`,
     qs: { attributes: attributesToRetrieve },
-    options,
+    requestOptions,
     requestType: 'read',
   });
 }

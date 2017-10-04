@@ -20,6 +20,6 @@ export default function browse(
     path: `/1/indexes/${indexName}/browse`,
     qs: params,
     requestType: 'read',
-    options: requestOptions,
+    requestOptions,
   });
 }

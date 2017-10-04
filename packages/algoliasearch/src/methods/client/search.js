@@ -11,17 +11,17 @@ export default function search(
   { requests = [] }: { requests: SearchRequest[] },
   {
     requester,
-    options,
+    requestOptions,
   }: {
     requester: RequestMethod,
-    options?: RequestOptions,
+    requestOptions?: RequestOptions,
   }
 ) {
   return requester({
     method: 'POST',
     path: '/1/indexes/*/queries',
     body: { requests },
-    options,
+    requestOptions,
     requestType: 'read',
   });
 }

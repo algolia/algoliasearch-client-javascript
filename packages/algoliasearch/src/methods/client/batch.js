@@ -9,20 +9,21 @@ export type ClientBatchRequest = {|
   body?: Object,
 |};
 
-export default function batch({
-  requester,
-  requests,
-  options,
-}: {
-  requester: RequestMethod,
-  requests: ClientBatchRequest[],
-  options?: RequestOptions,
-}) {
+export default function batch(
+  { requests }: { requests: ClientBatchRequest[] },
+  {
+    requester,
+    requestOptions,
+  }: {
+    requester: RequestMethod,
+    requestOptions?: RequestOptions,
+  }
+) {
   return requester({
     method: 'POST',
     path: '/1/indexes/*/batch',
     body: { requests },
     requestType: 'write',
-    options,
+    requestOptions,
   });
 }

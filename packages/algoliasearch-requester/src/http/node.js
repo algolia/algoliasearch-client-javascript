@@ -21,13 +21,13 @@ export default function requester({
   body,
   method,
   url,
-  options,
+  requestOptions,
   timeout: originalTimeout,
   requestType,
 }: RequesterArgs): Promise<Response> {
   const { protocol = 'https', hostname, port = '80', pathname: path } = url;
   const { queryStringOrBody, headers: extraHeaders, timeouts } = parseOptions(
-    options
+    requestOptions
   );
 
   return new Promise((resolve, reject: RequesterError => void) => {

@@ -28,18 +28,18 @@ export default function addApiKey({
   requester,
   indexName,
   body,
-  options,
+  requestOptions,
 }: {
   requester: RequestMethod,
   indexName: IndexName,
   body: Parameters,
-  options?: RequestOptions,
+  requestOptions?: RequestOptions,
 }) {
   return requester({
     method: 'POST',
     path: `/1/indexes/${indexName}/keys/`,
     body,
-    options,
+    requestOptions,
     requestType: 'write',
   });
 }
