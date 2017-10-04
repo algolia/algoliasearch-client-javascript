@@ -31,7 +31,7 @@ export default function initPlaces(
     throw new Error(
       `Credentials not valid: you gave an API key (${apiKey}), and appId (${appId})
 
-      initPlaces(${[...arguments].map(arg => JSON.stringify(arg)).join(',')})`
+initPlaces(${[...arguments].map(arg => JSON.stringify(arg)).join(',')})`
     );
     /* eslint-enable prefer-rest-params */
   }
@@ -40,7 +40,7 @@ export default function initPlaces(
     : createRequester({ appId, apiKey, options });
 
   return {
-    ...attachParameters(placesMethods, { meta: { requester } }),
+    ...attachParameters(placesMethods, { requester }),
     requester,
   };
 }

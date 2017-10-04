@@ -22,13 +22,13 @@ export default function initClient({
   /* eslint-disable prefer-rest-params */
   if (appId === undefined) {
     throw new Error(`An appId is required. ${appId} was not valid.
-      
-      initIndex(${[...arguments].map(arg => JSON.stringify(arg)).join(',')})`);
+
+initIndex(${[...arguments].map(arg => JSON.stringify(arg)).join(',')})`);
   }
   if (apiKey === undefined) {
     throw new Error(`An apiKey is required. ${apiKey} was not valid.
-      
-      initIndex(${[...arguments].map(arg => JSON.stringify(arg)).join(',')})`);
+
+initIndex(${[...arguments].map(arg => JSON.stringify(arg)).join(',')})`);
   }
   /* eslint-enable prefer-rest-params */
 

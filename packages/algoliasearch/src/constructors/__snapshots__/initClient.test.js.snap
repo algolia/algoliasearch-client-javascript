@@ -1,5 +1,22 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`client.search() works 🐣 1`] = `
+Object {
+  "body": Object {
+    "requests": Array [
+      Object {
+        "indexName": "some_index",
+        "query": "hello world",
+      },
+    ],
+  },
+  "method": "POST",
+  "path": "/1/indexes/*/queries",
+  "requestOptions": undefined,
+  "requestType": "read",
+}
+`;
+
 exports[`initClient contains the correct methods 1`] = `
 Array [
   "batch",
@@ -12,12 +29,12 @@ Array [
 
 exports[`initClient throws when it has too little parameters 1`] = `
 "An apiKey is required. undefined was not valid.
-      
-      initIndex({\\"appId\\":\\"\\"})"
+
+initIndex({\\"appId\\":\\"\\"})"
 `;
 
 exports[`initClient throws when it has too little parameters 2`] = `
 "An appId is required. undefined was not valid.
-      
-      initIndex({\\"apiKey\\":\\"\\"})"
+
+initIndex({\\"apiKey\\":\\"\\"})"
 `;

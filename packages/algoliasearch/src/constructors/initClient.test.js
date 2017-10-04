@@ -22,10 +22,10 @@ it('initClient contains the correct methods', () => {
   expect(Object.keys(client)).toMatchSnapshot();
 });
 
-it.skip('client.search() works 🐣', async () => {
+it('client.search() works 🐣', async () => {
   const client = initClient(validClientParams);
-  const result = await client.search([
-    { query: 'hello world', indexName: 'some_index' },
-  ]);
+  const result = await client.search({
+    requests: [{ query: 'hello world', indexName: 'some_index' }],
+  });
   expect(result).toMatchSnapshot();
 });

@@ -14,6 +14,12 @@ it('initPlaces throws when it has an appId', () => {
 });
 
 it('initPlaces contains the correct methods', () => {
-  const index = initPlaces();
-  expect(Object.keys(index)).toMatchSnapshot();
+  const places = initPlaces();
+  expect(Object.keys(places)).toMatchSnapshot();
+});
+
+it('places.search() works 🐣', async () => {
+  const places = initPlaces();
+  const result = await places.search({ query: 'hello world' });
+  expect(result).toMatchSnapshot();
 });

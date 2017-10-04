@@ -28,13 +28,13 @@ export default function initIndex({
   }
   if (apiKey === undefined) {
     throw new Error(`An apiKey is required. ${apiKey} was not valid.
-    
-    initIndex(${[...arguments].map(arg => JSON.stringify(arg)).join(',')})`);
+
+initIndex(${[...arguments].map(arg => JSON.stringify(arg)).join(',')})`);
   }
   if (indexName === undefined) {
     throw new Error(`An indexName is required. ${indexName} was not valid.
-    
-    initIndex(${[...arguments].map(arg => JSON.stringify(arg)).join(',')})`);
+
+initIndex(${[...arguments].map(arg => JSON.stringify(arg)).join(',')})`);
   }
   /* eslint-enable prefer-rest-params */
 
