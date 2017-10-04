@@ -27,7 +27,7 @@ it('initIndex contains the correct methods', () => {
   expect(Object.keys(index)).toMatchSnapshot();
 });
 
-it.skip('index.search() works 🐣', async () => {
+it('index.search() works 🐣', async () => {
   const index = initIndex(validParams);
   const result = await index.search({ query: 'hello world' });
   expect(result).toMatchSnapshot();

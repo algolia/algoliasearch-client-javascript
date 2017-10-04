@@ -1,5 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`index.search() works 🐣 1`] = `
+Object {
+  "body": Object {
+    "params": Object {
+      "query": "hello world",
+    },
+  },
+  "method": "POST",
+  "path": "/1/indexes/some_index/query",
+  "requestOptions": undefined,
+  "requestType": "read",
+}
+`;
+
 exports[`initIndex contains the correct methods 1`] = `
 Array [
   "addApiKey",
