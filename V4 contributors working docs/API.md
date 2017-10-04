@@ -51,9 +51,10 @@ const requester = createRequester(opts); // timeouts, headers etc.
 search(
   { query: 'atlenta' },
   { requester, indexName: 'cities-us' }
-).then(result => console.log(result))(
-  // same with async/await
-  async () => {
+).then(result => console.log(result))
+
+// same with async/await
+(async () => {
     const { hits } = await search(
       { query: 'atlenta' },
       {
