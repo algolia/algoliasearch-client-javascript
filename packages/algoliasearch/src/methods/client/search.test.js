@@ -3,15 +3,17 @@ import search from './search';
 
 it('search', () => {
   const requests = [
-    search({
-      requester: fakeRequester,
-      requests: [
-        {
-          indexName: 'some_index',
-          params: {},
-        },
-      ],
-    }),
+    search(
+      {
+        requests: [
+          {
+            indexName: 'some_index',
+            params: {},
+          },
+        ],
+      },
+      { requester: fakeRequester }
+    ),
   ];
 
   snapshotAll(requests);

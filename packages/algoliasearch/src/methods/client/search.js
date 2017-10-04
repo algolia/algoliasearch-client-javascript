@@ -8,7 +8,7 @@ export type SearchRequest = {|
 |};
 
 export default function search(
-  requests: SearchRequest[] = [],
+  { requests = [] }: { requests: SearchRequest[] },
   {
     requester,
     options,
