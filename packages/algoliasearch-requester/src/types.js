@@ -86,7 +86,9 @@ export type CreateRequesterArgs = {|
 |};
 export type CreateRequester = CreateRequesterArgs => RequestMethod;
 
-export type ErrorType = 'application' | 'network' | 'dns' | 'timeout';
+// serverError := httpCode / 100 !== 4 && httpCode / 100 !== 2
+// clientError := httpCode / 100 === 4
+export type ErrorType = 'server' | 'network' | 'dns' | 'timeout' | 'client';
 export type RequesterError = {|
   reason: ErrorType,
   more: any,

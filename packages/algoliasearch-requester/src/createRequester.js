@@ -19,7 +19,7 @@ import type {
 const stringify = qs => JSON.stringify(qs); // todo: use proper url stringify
 
 const retryableErrors: Array<ErrorType> = [
-  'application',
+  'server',
   'network',
   'dns',
   'timeout',

@@ -142,14 +142,14 @@ it('resolves when the response is successful', () => {
   ).resolves.toEqual({});
 });
 
-it("retries when there's an application error", async () => {
+it("retries when there's a server error", async () => {
   const httpRequester = jest.fn(
     () =>
       httpRequester.mock.calls.length === 1
         ? Promise.reject({
-            reason: 'application',
+            reason: 'server',
           })
-        : Promise.resolve({})
+        : Promise.resolve({ cool: 'turbo' })
   );
   const requester = createRequester({
     appId: 'the_app_app',
@@ -162,7 +162,7 @@ it("retries when there's an application error", async () => {
     requester({
       requestType: 'write',
     })
-  ).resolves.toEqual({});
+  ).resolves.toEqual({ cool: 'turbo' });
 
   // requester was called twice
   expect(httpRequester.mock.calls).toHaveLength(2);
@@ -381,42 +381,39 @@ it.skip('uses the first host again after running out of hosts', async () => {
   expect(lastHost).toBe(firstHost);
 });
 
-it.skip(
-  'two instances of createRequester share the same host index',
-  async () => {
-    const httpRequester = jest.fn(
-      () =>
-        httpRequester.mock.calls.length === 1
-          ? Promise.reject({ reason: 'network' })
-          : Promise.resolve()
-    );
+it.skip('two instances of createRequester share the same host index', async () => {
+  const httpRequester = jest.fn(
+    () =>
+      httpRequester.mock.calls.length === 1
+        ? Promise.reject({ reason: 'network' })
+        : Promise.resolve()
+  );
 
-    const firstRequester = createRequester({
-      appId: 'the_same_app',
-      apiKey: '',
-      httpRequester,
-    });
-    const secondRequester = createRequester({
-      appId: 'the_same_app',
-      apiKey: '',
-      httpRequester,
-    });
+  const firstRequester = createRequester({
+    appId: 'the_same_app',
+    apiKey: '',
+    httpRequester,
+  });
+  const secondRequester = createRequester({
+    appId: 'the_same_app',
+    apiKey: '',
+    httpRequester,
+  });
 
-    await firstRequester({
-      requestType: 'read',
-    }); // retries
-    await secondRequester({
-      requestType: 'read',
-    });
+  await firstRequester({
+    requestType: 'read',
+  }); // retries
+  await secondRequester({
+    requestType: 'read',
+  });
 
-    const usedHosts = httpRequester.mock.calls.map(
-      ([{ url: { hostname } }]) => hostname
-    );
+  const usedHosts = httpRequester.mock.calls.map(
+    ([{ url: { hostname } }]) => hostname
+  );
 
-    expect(usedHosts).toMatchSnapshot();
+  expect(usedHosts).toMatchSnapshot();
 
-    expect(usedHosts[0]).toEqual('the_same_app-dsn.algolia.net'); // first try
-    expect(usedHosts[1]).toEqual('the_same_app-1.algolianet.com'); // first retry
-    expect(usedHosts[2]).toEqual('the_same_app-1.algolianet.com'); // second request
-  }
-);
+  expect(usedHosts[0]).toEqual('the_same_app-dsn.algolia.net'); // first try
+  expect(usedHosts[1]).toEqual('the_same_app-1.algolianet.com'); // first retry
+  expect(usedHosts[2]).toEqual('the_same_app-1.algolianet.com'); // second request
+});
