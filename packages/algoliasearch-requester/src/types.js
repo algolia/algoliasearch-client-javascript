@@ -31,10 +31,12 @@ export type RequestOptions = {|
     read?: number,
     write?: number,
   |},
+  cache?: boolean,
   // ones that exist already
   userAgent?: string,
   forwardToReplicas?: boolean,
   clearExistingRules?: boolean,
+  clearExistingSynonyms?: boolean,
   // new headers
   forwardedFor?: string,
   userAgent?: string,

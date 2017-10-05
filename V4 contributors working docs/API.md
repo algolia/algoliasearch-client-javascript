@@ -257,11 +257,13 @@ const defaultOptions = {
 How to clear cache in RIS and IS.js
 
 ```js
-import { createRequester } from 'algoliasearch/requester'; // maaaybe this will be algoliasearch-requester
+import { search, searchForFacetValues } from 'algoliasearch/methods/client';
+import createRequester from 'algoliasearch-requester';
+
 const requester = createRequester({ cache: true });
 
-search(requester, requests);
-searchForFacetValues(requester, query);
+search({ requests }, { requester });
+searchForFacetValues({ query }, { requester });
 
 requester.clearCache();
 
@@ -269,6 +271,18 @@ const App = () => <InstantSearch requester={requester} />;
 ```
 
 Cache will be disabled by default, to give the freedom of not having to fight with results that are stale. However, it should be enabled in higher level libraries like InstantSearch, for its obvious advantage. Once it's enabled, it will employ the ["stale while revalidate"](https://tools.ietf.org/html/rfc5861) caching strategy.
+
+It's also possible to pass `cache: false` to a specific search query:
+
+```js
+import { search, searchForFacetValues } from 'algoliasearch/methods/client';
+import createRequester from 'algoliasearch-requester';
+
+const requester = createRequester({ cache: true });
+
+search({ requests }, { requester });
+search({ requests }, { requester, cache: false });
+```
 
 ## to consider
 
