@@ -1,4 +1,6 @@
 // @flow
+import { createMemoryStore } from 'universal-store';
+import type { MemoryStore } from 'universal-store';
 
 import HostGenerator from './HostGenerator';
 import TimeoutGenerator from './TimeoutGenerator';
@@ -17,6 +19,8 @@ import type {
 } from 'algoliasearch-requester';
 
 const stringify = qs => JSON.stringify(qs); // todo: use proper url stringify
+
+const toCacheKey = obj => JSON.stringify(obj); // todo: find if something is faster
 
 const retryableErrors: Array<ErrorType> = [
   'server',
@@ -37,12 +41,14 @@ export class Requester {
   appId: AppId;
   requestOptions: RequestOptions;
   requester: HttpModule;
+  cache: boolean;
+  store: MemoryStore;
 
   constructor({
     appId,
     apiKey,
     httpRequester,
-    options: { timeouts = {}, extraHosts = {} } = {},
+    options: { timeouts = {}, extraHosts = {}, cache = false } = {},
     requestOptions = {},
   }: {|
     appId?: AppId,
@@ -75,6 +81,8 @@ export class Requester {
     this.apiKey = apiKey;
     this.requester = httpRequester;
     this.requestOptions = requestOptions;
+    this.store = createMemoryStore();
+    this.cache = cache;
   }
 
   setOptions = (fn: RequestOptions => RequestOptions): RequestOptions => {
@@ -84,8 +92,29 @@ export class Requester {
     return newOptions;
   };
 
+  saveInCache(key: string, data): Object {
+    if (this.cache) {
+      return this.store.set(key, data);
+    }
+    return data;
+  }
+
+  getFromCache(key: string): ?Object {
+    if (this.cache) {
+      return this.store.get(key);
+    }
+    return undefined;
+  }
+
   request = (
-    { method, path, qs, body, requestOptions, requestType: type }: RequestArguments,
+    {
+      method,
+      path,
+      qs,
+      body,
+      requestOptions,
+      requestType: type,
+    }: RequestArguments,
     {
       timeoutRetries = 0,
       hostFailed = false,
@@ -105,6 +134,24 @@ export class Requester {
       const pathname = path + stringify(qs);
       const url = { hostname, pathname };
 
+      const cacheKey = toCacheKey({
+        method,
+        url,
+        path,
+        qs,
+        body,
+        requestOptions,
+        appId: this.appId,
+      });
+
+      if (requestOptions && requestOptions.cache === true) {
+        // check in cache
+        const cachedResult = this.getFromCache(cacheKey);
+        if (cachedResult !== undefined) {
+          return Promise.resolve(cachedResult);
+        }
+      }
+
       return this.requester({
         body,
         method,
@@ -112,17 +159,19 @@ export class Requester {
         timeout,
         requestOptions,
         requestType: type,
-      }).catch(err =>
-        this.retryRequest(err, {
-          method,
-          path,
-          qs,
-          body,
-          requestOptions,
-          type,
-          timeoutRetries,
-        })
-      );
+      })
+        .catch(err =>
+          this.retryRequest(err, {
+            method,
+            path,
+            qs,
+            body,
+            requestOptions,
+            type,
+            timeoutRetries,
+          })
+        )
+        .then(res => this.saveInCache(cacheKey, res));
     } catch (e) {
       return Promise.reject(e);
     }
