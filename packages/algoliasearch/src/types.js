@@ -5,6 +5,7 @@ export type ApiKey = string;
 export type IndexName = string;
 export type TaskID = string;
 export type ObjectID = string;
+export type AlgoliaObject = { [key: string]: string | number | AlgoliaObject };
 
 export type ClientMethods = {
   batch: Function,

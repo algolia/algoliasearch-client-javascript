@@ -1,20 +1,21 @@
 // @flow
 
 import { pluralError } from '../../errors';
-import type { IndexName } from 'algoliasearch';
+import type { IndexName, AlgoliaObject } from 'algoliasearch';
 import type { RequestMethod, RequestOptions } from 'algoliasearch-requester';
 
-export default function getObjects({
-  requester,
-  indexName,
-  objects,
-  requestOptions,
-}: {
-  requester: RequestMethod,
-  indexName: IndexName,
-  objects: Object[],
-  requestOptions?: RequestOptions,
-}) {
+export default function addObjects(
+  { objects }: { objects: AlgoliaObject[] },
+  {
+    requester,
+    indexName,
+    requestOptions,
+  }: {
+    requester: RequestMethod,
+    indexName: IndexName,
+    requestOptions?: RequestOptions,
+  }
+) {
   if (!Array.isArray(objects)) {
     throw pluralError('addObject');
   }
