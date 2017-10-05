@@ -3,7 +3,12 @@
 type Data = Object;
 type Store = { [key: string]: Data };
 
-export function createMemoryStore() {
+export type MemoryStore = {
+  set: (key: string, data: Data) => Data,
+  get: (key: string) => ?Data,
+  clear: () => Store,
+};
+export function createMemoryStore(): MemoryStore {
   let state = {};
   return {
     set(key: string, data: Data): Data {
@@ -85,7 +90,13 @@ function cleanup(namespace: string) {
   }
 }
 
-export default function createStore(namespace: string) {
+export type DataStore = {
+  set: (key: string, data: Data) => Data,
+  get: (key: string) => ?Data,
+  clear: () => Store,
+  supportsLocalStorage: () => boolean,
+};
+export default function createStore(namespace: string): DataStore {
   if (typeof namespace !== 'string' || namespace === '') {
     throw new Error(
       `The namespace should be a string, received "${namespace}"`
