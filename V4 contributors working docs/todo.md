@@ -1,14 +1,15 @@
-- host index sharing
-- host invalidation
-- timeout invalidation
-- caching
-- default deprecation
-- http layers
-- method signatures
-  - change attachParameters to only attach second
-- deprecation notice test in all bundlers
+- [ ] host index sharing
+- [ ] host invalidation
+- [ ] timeout invalidation
+- [x] caching
+- [ ] test caching
+- [ ] default deprecation
+- [ ] http layers
+- [ ] method signatures
+  - [ ] change attachParameters to only attach second
+- [ ] deprecation notice test in all bundlers
 
---- 
+---
 
 - methods
   - search
