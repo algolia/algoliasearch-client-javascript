@@ -16,7 +16,7 @@ This was the old way of importing, you can now do:
 import { initClient, initIndex } from 'algoliasearch';
 
 const client = initClient({ appId, apiKey });
-const client = initClient({ appId, apiKey, indexName });
+const index = initIndex({ appId, apiKey, indexName });
 
 // any of the possible methods, like:
 client.search({ requests: [{ query: 'test', indexName: 'YourIndex' }] });
