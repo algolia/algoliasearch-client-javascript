@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`shows a nice and friendly message when using the old import on develop 1`] = `
+"
+Hello there, thanks for using Algolia. You tried importing default from 'algoliasearch'.
+
+This was the old way of importing, you can now do:
+
+import { initClient, initIndex } from 'algoliasearch';
+
+const client = initClient({ appId, apiKey });
+const index = initIndex({ appId, apiKey, indexName });
+
+// any of the possible methods, like:
+client.search({ requests: [{ query: 'test', indexName: 'YourIndex' }] });
+index.search({ query: 'test' });
+index.addObject({ color: 'red' });
+
+read more on https://alg.li/clientv4migration"
+`;
+
+exports[`shows a short message when using the old import 1`] = `"You're importing default, see https://alg.li/clientv4migration for more information"`;
