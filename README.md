@@ -3,12 +3,14 @@
 [Algolia Search](https://www.algolia.com) is a hosted full-text, numerical, and faceted search engine capable of delivering realtime results from the first keystroke.
 The **Algolia Search API Client for JavaScript** lets you easily use the [Algolia Search REST API](https://www.algolia.com/doc/rest-api/search) from your JavaScript code.
 
-[![Version][version-svg]][package-url] [![Build Status][travis-svg]][travis-url] [![License][license-image]][license-url] [![Downloads][downloads-image]][downloads-url]
+[![Version][version-svg]][package-url] [![Build Status][travis-svg]][travis-url] [![License][license-image]][license-url] [![Downloads][downloads-image]][downloads-url] [![jsDelivr Hits][jsdelivr-badge]][jsdelivr-hits]
 
 [![Browser tests][browser-test-matrix]][browser-test-url]
 
 [travis-svg]: https://img.shields.io/travis/algolia/algoliasearch-client-javascript/master.svg?style=flat-square
 [travis-url]: https://travis-ci.org/algolia/algoliasearch-client-javascript
+[jsdelivr-badge]: https://data.jsdelivr.com/v1/package/npm/algoliasearch/badge
+[jsdelivr-hits]: https://www.jsdelivr.com/package/npm/algoliasearch
 [license-image]: https://img.shields.io/badge/license-MIT-green.svg?style=flat-square
 [license-url]: LICENSE.txt
 [downloads-image]: https://img.shields.io/npm/dm/algoliasearch.svg?style=flat-square
