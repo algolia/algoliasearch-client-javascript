@@ -49,6 +49,8 @@ export type SearchParameters = {
   query?: string,
   filters?: string,
   queryType?: 'prefixLast' | 'prefixAll' | 'prefixNone',
+  attributesToRetrieve?: string[],
+  attributesToHighlight?: string[],
   // todo: add all search / browse parameters
 };
 
