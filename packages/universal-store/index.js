@@ -1,6 +1,9 @@
 // @flow
 
-type Data = Object;
+type EncodableValue = string | number | symbol;
+type Data = {
+  [key: EncodableValue]: EncodableValue | EncodableValue[],
+};
 type Store = { [key: string]: Data };
 
 export type MemoryStore = {
