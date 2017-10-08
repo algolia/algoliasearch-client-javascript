@@ -5,26 +5,30 @@ import type { RequestMethod, RequestOptions } from 'algoliasearch-requester';
 
 export type GetObjectOptions = {| attributesToRetrieve: string[] |};
 
-export default function getObjects({
-  requester,
-  indexName,
-  objectID,
-  params,
-  requestOptions,
-}: {
-  requester: RequestMethod,
-  indexName: IndexName,
-  objectID: ObjectID,
-  params: GetObjectOptions,
-  requestOptions?: RequestOptions,
-}) {
-  const { attributesToRetrieve: attrs } = params;
-  const attributesToRetrieve = attrs.join(',');
+export default function getObjects(
+  {
+    objectID,
+    attributesToRetrieve,
+  }: {
+    objectID: ObjectID,
+    attributesToRetrieve?: string[],
+  },
+  {
+    requester,
+    indexName,
+    requestOptions,
+  }: {
+    requester: RequestMethod,
+    indexName: IndexName,
+    requestOptions?: RequestOptions,
+  }
+) {
+  const attributes = attributesToRetrieve.join(',');
 
   return requester({
     method: 'GET',
     path: `/1/indexes/${indexName}/${objectID}`,
-    qs: { attributes: attributesToRetrieve },
+    qs: { attributes },
     requestOptions,
     requestType: 'read',
   });

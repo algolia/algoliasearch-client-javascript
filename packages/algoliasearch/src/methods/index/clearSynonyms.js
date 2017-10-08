@@ -1,19 +1,25 @@
 // @flow
 
 import type { IndexName } from 'algoliasearch';
-import type { RequestMethod } from 'algoliasearch-requester';
+import type { RequestMethod, RequestOptions } from 'algoliasearch-requester';
 
-export type Options = {| forwardToReplicas: boolean |};
-
+// todo: figure out what to do here, no first argument
 export default function clearSynonyms(
-  requester: RequestMethod,
-  indexName: IndexName,
-  opts: Options
+  _,
+  {
+    requester,
+    indexName,
+    requestOptions,
+  }: {
+    requester: RequestMethod,
+    indexName: IndexName,
+    requestOptions?: RequestOptions,
+  }
 ) {
   return requester({
     method: 'GET',
     path: `/1/indexes/${indexName}/synonyms/clear`,
-    qs: { opts },
     requestType: 'write',
+    requestOptions,
   });
 }

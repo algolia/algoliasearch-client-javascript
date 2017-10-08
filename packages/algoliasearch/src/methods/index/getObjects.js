@@ -4,27 +4,29 @@ import { pluralError } from '../../errors';
 import type { IndexName, ObjectID } from 'algoliasearch';
 import type { RequestMethod, RequestOptions } from 'algoliasearch-requester';
 
-export type GetObjectOptions = {| attributesToRetrieve: string[] |};
-
-export default function getObjects({
-  requester,
-  indexName,
-  objectIDs,
-  params,
-  requestOptions,
-}: {
-  requester: RequestMethod,
-  indexName: IndexName,
-  objectIDs: ObjectID[],
-  params: GetObjectOptions,
-  requestOptions?: RequestOptions,
-}) {
-  const { attributesToRetrieve: attrs } = params;
-  const attributesToRetrieve = attrs.join(',');
-
+export default function getObjects(
+  {
+    objectIDs,
+    attributesToRetrieve: attrs,
+  }: {
+    objectIDs: ObjectID[],
+    attributesToRetrieve?: string[],
+  },
+  {
+    requester,
+    indexName,
+    requestOptions,
+  }: {
+    requester: RequestMethod,
+    indexName: IndexName,
+    requestOptions?: RequestOptions,
+  }
+) {
   if (!Array.isArray(objectIDs)) {
     throw pluralError('getObject');
   }
+
+  const attributesToRetrieve = attrs.join(',');
 
   return requester({
     method: 'POST',

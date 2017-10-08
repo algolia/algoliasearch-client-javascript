@@ -3,11 +3,19 @@
 import type { IndexName } from 'algoliasearch';
 import type { RequestMethod, RequestOptions } from 'algoliasearch-requester';
 
+export type Cursor = string;
+
 export default function browseFrom(
-  requester: RequestMethod,
-  indexName: IndexName,
-  cursor: string,
-  requestOptions?: RequestOptions
+  { cursor }: { cursor: Cursor },
+  {
+    requester,
+    indexName,
+    requestOptions,
+  }: {
+    requester: RequestMethod,
+    indexName: IndexName,
+    requestOptions?: RequestOptions,
+  }
 ) {
   return requester({
     method: 'GET',

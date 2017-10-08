@@ -4,17 +4,18 @@ import { pluralError } from '../../errors';
 import type { IndexName, ObjectID } from 'algoliasearch';
 import type { RequestMethod, RequestOptions } from 'algoliasearch-requester';
 
-export default function getObjects({
-  requester,
-  indexName,
-  objectIDs,
-  requestOptions,
-}: {
-  requester: RequestMethod,
-  indexName: IndexName,
-  objectIDs: ObjectID[],
-  requestOptions?: RequestOptions,
-}) {
+export default function deleteObjects(
+  { objectIDs }: { objectIDs: ObjectID[] },
+  {
+    requester,
+    indexName,
+    requestOptions,
+  }: {
+    requester: RequestMethod,
+    indexName: IndexName,
+    requestOptions?: RequestOptions,
+  }
+) {
   if (!Array.isArray(objectIDs)) {
     throw pluralError('deleteObject');
   }
