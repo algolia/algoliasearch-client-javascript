@@ -19,10 +19,22 @@ Object {
 
 exports[`initClient contains the correct methods 1`] = `
 Array [
+  "addApiKey",
   "batch",
+  "clearIndex",
+  "copyIndex",
+  "deleteApiKey",
+  "deleteIndex",
+  "false",
+  "getApiKey",
   "getLogs",
+  "index",
+  "initIndex",
+  "listApiKeys",
   "listIndexes",
+  "moveIndex",
   "search",
+  "updateApiKey",
   "requester",
 ]
 `;
