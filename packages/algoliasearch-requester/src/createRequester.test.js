@@ -313,7 +313,7 @@ it.skip('rejects when all timeouts are reached', async () => {
   await expect(
     requester({
       requestType: 'write',
-    }) // eventually it will fail because of a timeout
+    }) // eventually it will fail because it runs out of hosts
   ).rejects.toMatchSnapshot();
 
   await requester({ requestType: 'write' });
