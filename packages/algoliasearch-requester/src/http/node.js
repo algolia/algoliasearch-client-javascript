@@ -4,7 +4,7 @@
 import https from 'https';
 import zlib from 'zlib';
 
-import parseOptions from '../parseOptions.js';
+import parseOptions from '../parseOptions';
 import type {
   Response,
   RequesterArgs,
@@ -16,7 +16,7 @@ const agent: https.Agent = new https.Agent({
   keepAliveMsecs: 3000,
 });
 
-export default function requester({
+export default function httpRequester({
   // agent,
   body,
   method,
