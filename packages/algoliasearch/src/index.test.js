@@ -1,4 +1,7 @@
 import algoliasearch from './';
+afterAll(() => {
+  process.env = 'test';
+});
 
 it('shows a nice and friendly message when using the old import on develop', () => {
   process.env = 'development';

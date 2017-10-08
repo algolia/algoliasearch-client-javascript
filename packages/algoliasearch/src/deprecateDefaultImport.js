@@ -1,6 +1,10 @@
 /* eslint-disable no-console */
 export default function deprecateDefaultImport() {
-  if (process && process.env === 'development') {
+  if (process && process.env === 'production') {
+    throw new Error(
+      `You're importing default, see https://alg.li/clientv4migration for more information`
+    );
+  } else {
     throw new Error(`
 Hello there, thanks for using Algolia. You tried importing default from 'algoliasearch'.
 
@@ -17,9 +21,5 @@ index.search({ query: 'test' });
 index.addObject({ color: 'red' });
 
 read more on https://alg.li/clientv4migration`);
-  } else {
-    throw new Error(
-      `You're importing default, see https://alg.li/clientv4migration for more information`
-    );
   }
 }
