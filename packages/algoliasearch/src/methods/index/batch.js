@@ -9,10 +9,16 @@ export type IndexBatchRequest = {|
 |};
 
 export default function batch(
-  requester: RequestMethod,
-  indexName: IndexName,
-  requests: IndexBatchRequest[],
-  requestOptions?: RequestOptions
+  { requests }: { requests: IndexBatchRequest[] },
+  {
+    requester,
+    indexName,
+    requestOptions,
+  }: {
+    requester: RequestMethod,
+    indexName: IndexName,
+    requestOptions?: RequestOptions,
+  }
 ) {
   return requester({
     method: 'POST',

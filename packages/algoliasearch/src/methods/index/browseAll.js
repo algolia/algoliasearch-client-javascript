@@ -1,6 +1,10 @@
 // todo: make this into a package with the old code
-export default function browseAll() {
+export default function browseAll(...args) {
   return new Error(
-    `this isn't supported, use the replacement package: algoliasearch-browse-all`
+    `You used 'browseAll(${JSON.stringify(args)})' this isn't supported,
+
+instead use the replacement package: algoliasearch-extras
+
+see: https://alg.li/client#algoliasearch-extras`
   );
 }

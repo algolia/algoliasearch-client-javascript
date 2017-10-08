@@ -24,17 +24,18 @@ export type Parameters = {|
   validity?: number,
 |};
 
-export default function addApiKey({
-  requester,
-  indexName,
-  body,
-  requestOptions,
-}: {
-  requester: RequestMethod,
-  indexName: IndexName,
+export default function addApiKey(
   body: Parameters,
-  requestOptions?: RequestOptions,
-}) {
+  {
+    requester,
+    indexName,
+    requestOptions,
+  }: {
+    requester: RequestMethod,
+    indexName: IndexName,
+    requestOptions?: RequestOptions,
+  }
+) {
   return requester({
     method: 'POST',
     path: `/1/indexes/${indexName}/keys/`,

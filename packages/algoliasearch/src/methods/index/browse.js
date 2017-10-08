@@ -13,7 +13,7 @@ export default function browse(
     requester: RequestMethod,
     indexName: IndexName,
     requestOptions?: RequestOptions,
-  } = {}
+  }
 ) {
   return requester({
     method: 'GET',

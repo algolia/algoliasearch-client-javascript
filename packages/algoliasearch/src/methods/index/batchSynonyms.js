@@ -3,23 +3,24 @@
 import type { IndexName, Synonym } from 'algoliasearch';
 import type { RequestMethod, RequestOptions } from 'algoliasearch-requester';
 
-export type Options = {|
-  forwardToReplicas?: boolean,
-  replaceExistingSynonyms?: boolean,
-|};
-
 export default function batchRules(
-  requester: RequestMethod,
-  indexName: IndexName,
-  rules: Synonym[],
-  opts: Options,
-  requestrequestOptions
+  { synonyms }: { synonyms: Synonym[] },
+  {
+    requester,
+    indexName,
+    opts,
+    requestOptions,
+  }: {
+    requester: RequestMethod,
+    indexName: IndexName,
+    requestOptions?: RequestOptions,
+  }
 ) {
   return requester({
     method: 'POST',
-    path: `/1/indexes/${indexName}/rules/batch`,
+    path: `/1/indexes/${indexName}/synonyms/batch`,
     qs: opts,
-    body: { rules },
+    body: { synonyms },
     requestType: 'write',
     requestOptions,
   });
