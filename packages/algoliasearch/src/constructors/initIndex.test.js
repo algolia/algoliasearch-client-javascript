@@ -1,4 +1,3 @@
-// @flow
 import initIndex from './initIndex';
 
 const validParams = {
@@ -8,13 +7,9 @@ const validParams = {
 };
 
 it('initIndex throws when it has too little parameters', () => {
-  // $FlowFixMe --> type disallows this
   expect(() => initIndex({})).toThrow();
-  // $FlowFixMe --> type disallows this
   expect(() => initIndex({ appId: '' })).toThrowErrorMatchingSnapshot();
-  // $FlowFixMe --> type disallows this
   expect(() => initIndex({ apiKey: '' })).toThrowErrorMatchingSnapshot();
-  // $FlowFixMe --> type disallows this
   expect(() =>
     initIndex({ apiKey: '', appId: '' })
   ).toThrowErrorMatchingSnapshot();
