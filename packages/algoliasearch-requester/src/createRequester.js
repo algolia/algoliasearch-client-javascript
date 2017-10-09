@@ -1,7 +1,7 @@
 // @flow
 // todo: make jest work with this as a module
 import { createMemoryStore } from '../../universal-store';
-import type { MemoryStore } from 'universal-store';
+import type { MemoryStore, Data } from 'universal-store';
 
 import HostGenerator from './HostGenerator';
 import TimeoutGenerator from './TimeoutGenerator';
@@ -93,7 +93,7 @@ export class Requester {
     return newOptions;
   };
 
-  saveInCache(key: string, data): Object {
+  saveInCache(key: string, data: Data): Data {
     if (this.cache) {
       return this.store.set(key, data);
     }

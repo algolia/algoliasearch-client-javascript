@@ -5,7 +5,7 @@ import type { RequestMethod, RequestOptions } from 'algoliasearch-requester';
 
 // todo: figure out what to do here, no first argument
 export default function clearRules(
-  _: undefined,
+  _: void,
   {
     requester,
     indexName,

@@ -29,7 +29,7 @@ export function createMemoryStore(): MemoryStore {
 }
 
 function createLocalStorageStore(namespace: string, memoryStore) {
-  function localStorageFailure(key: string, e) {
+  function localStorageFailure(key: string, e): ?Data {
     // eslint-disable-next-line no-console
     console.warn(e); // debug
     cleanup(namespace);
@@ -37,7 +37,7 @@ function createLocalStorageStore(namespace: string, memoryStore) {
   }
 
   return {
-    set(key: string, data: Data) {
+    set(key: string, data: Data): Data {
       memoryStore.set(key, data); // always replicate localStorageStore to memoryStore in case of failure
 
       try {
@@ -112,7 +112,7 @@ export default function createStore(namespace: string): DataStore {
 
   return {
     get: (key: string) => store.get(key),
-    set: (key: string, data: Store) => store.set(key, data),
+    set: (key: string, data: Data) => store.set(key, data),
     clear: () => store.clear(),
     supportsLocalStorage: () => supportsLocalStorage(namespace),
   };
