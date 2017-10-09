@@ -1,8 +1,8 @@
 // @flow
 
-type EncodableValue = string | number | symbol;
+type JSONValue = string | number | symbol;
 type Data = {
-  [key: EncodableValue]: EncodableValue | EncodableValue[],
+  [key: JSONValue]: JSONValue | JSONValue[],
 };
 type Store = { [key: string]: Data };
 

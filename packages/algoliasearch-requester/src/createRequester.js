@@ -1,5 +1,6 @@
 // @flow
-import { createMemoryStore } from 'universal-store';
+// todo: make jest work with this as a module
+import { createMemoryStore } from '../../universal-store';
 import type { MemoryStore } from 'universal-store';
 
 import HostGenerator from './HostGenerator';
