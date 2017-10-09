@@ -1,6 +1,6 @@
 // @flow
 
-type JSONValue = string | number | symbol;
+type JSONValue = string | number | boolean | null;
 type Data = {
   [key: JSONValue]: JSONValue | JSONValue[],
 };

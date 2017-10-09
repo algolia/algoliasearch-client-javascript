@@ -23,7 +23,6 @@ export { default as getObjects } from './getObjects';
 export { default as getRule } from './getRule';
 export { default as getSettings } from './getSettings';
 export { default as getSynonym } from './getSynonym';
-export { default as index } from './index';
 export { default as listApiKeys } from './listApiKeys';
 export { default as partialUpdateObject } from './partialUpdateObject';
 export { default as partialUpdateObjects } from './partialUpdateObjects';

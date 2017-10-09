@@ -8,7 +8,7 @@ export type GetObjectOptions = {| attributesToRetrieve: string[] |};
 export default function getObjects(
   {
     objectID,
-    attributesToRetrieve,
+    attributesToRetrieve = [],
   }: {
     objectID: ObjectID,
     attributesToRetrieve?: string[],
@@ -23,7 +23,8 @@ export default function getObjects(
     requestOptions?: RequestOptions,
   }
 ) {
-  const attributes = attributesToRetrieve.join(',');
+  const attributes =
+    attributesToRetrieve.length === 0 ? null : attributesToRetrieve.join(',');
 
   return requester({
     method: 'GET',

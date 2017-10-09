@@ -7,7 +7,7 @@ import type { RequestMethod, RequestOptions } from 'algoliasearch-requester';
 export default function getObjects(
   {
     objectIDs,
-    attributesToRetrieve: attrs,
+    attributesToRetrieve: attrs = [],
   }: {
     objectIDs: ObjectID[],
     attributesToRetrieve?: string[],
@@ -26,7 +26,7 @@ export default function getObjects(
     throw pluralError('getObject');
   }
 
-  const attributesToRetrieve = attrs.join(',');
+  const attributesToRetrieve = attrs.length === 0 ? null : attrs.join(',');
 
   return requester({
     method: 'POST',

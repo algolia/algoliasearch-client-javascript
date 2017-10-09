@@ -13,10 +13,10 @@ type ApiKeyParameters = {|
   restrictSources: string,
 |};
 
-export type SecuredApiParameters = {|
+export type SecuredApiParameters = {
   ...SearchParameters,
   ...ApiKeyParameters,
-|};
+};
 
 export default function generateSecuredApiKey({
   privateApiKey,

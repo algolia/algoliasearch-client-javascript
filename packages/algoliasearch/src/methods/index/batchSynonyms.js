@@ -8,7 +8,6 @@ export default function batchRules(
   {
     requester,
     indexName,
-    opts,
     requestOptions,
   }: {
     requester: RequestMethod,
@@ -19,7 +18,6 @@ export default function batchRules(
   return requester({
     method: 'POST',
     path: `/1/indexes/${indexName}/synonyms/batch`,
-    qs: opts,
     body: { synonyms },
     requestType: 'write',
     requestOptions,
