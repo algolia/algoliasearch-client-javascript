@@ -39,7 +39,6 @@ Array [
   "getRule",
   "getSettings",
   "getSynonym",
-  "index",
   "listApiKeys",
   "partialUpdateObject",
   "partialUpdateObjects",
