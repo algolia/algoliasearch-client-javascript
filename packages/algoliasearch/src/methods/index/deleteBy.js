@@ -1,11 +1,7 @@
 // @flow
 
-import type {
-  IndexName,
-  RequestOptions,
-  SearchParameters,
-} from 'algoliasearch';
-import type { RequestMethod } from 'algoliasearch-requester';
+import type { IndexName, SearchParameters } from 'algoliasearch';
+import type { RequestMethod, RequestOptions } from 'algoliasearch-requester';
 
 export default function deleteBy(
   params: SearchParameters = {},
