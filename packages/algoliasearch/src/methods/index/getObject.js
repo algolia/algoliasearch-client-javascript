@@ -3,8 +3,6 @@
 import type { IndexName, ObjectID } from 'algoliasearch';
 import type { RequestMethod, RequestOptions } from 'algoliasearch-requester';
 
-export type GetObjectOptions = {| attributesToRetrieve: string[] |};
-
 export default function getObjects(
   {
     objectID,
