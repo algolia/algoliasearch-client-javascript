@@ -5,8 +5,8 @@ export type ApiKey = string;
 export type IndexName = string;
 export type TaskID = string;
 export type ObjectID = string;
-type Attribute = string;
-type AlgoliaValue =
+export type Attribute = string;
+export type AlgoliaValue =
   | string
   | number
   | AlgoliaValue[]
