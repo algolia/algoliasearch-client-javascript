@@ -9,7 +9,6 @@ export { default as deleteIndex } from './deleteIndex';
 export { default as false } from './false';
 export { default as getApiKey } from './getApiKey';
 export { default as getLogs } from './getLogs';
-export { default as index } from './index';
 export { default as initIndex } from './initIndex';
 export { default as listApiKeys } from './listApiKeys';
 export { default as listIndexes } from './listIndexes';
