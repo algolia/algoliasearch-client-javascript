@@ -532,7 +532,7 @@ Index.prototype.ttAdapter = deprecate(function(params) {
 *  error: null or Error('message')
 *  content: the server answer that contains the list of results
 */
-Index.prototype.waitTask = function(taskID, callback) {
+Index.prototype.waitTask = deprecate(function(taskID, callback) {
   // wait minimum 100ms before retrying
   var baseDelay = 100;
   // wait maximum 5s before retrying
@@ -583,7 +583,7 @@ Index.prototype.waitTask = function(taskID, callback) {
       callback(err);
     }, client._setTimeout || setTimeout);
   }
-};
+}, deprecatedMessage('index.waitTask()', 'index.waitForCompletion()'));
 
 /*
 * This function deletes the index content. Settings and index specific API keys are kept untouched.
