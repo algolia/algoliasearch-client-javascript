@@ -597,7 +597,7 @@ Index.prototype.waitForCompletion = function(taskID, callback) {
       callback(err);
     }, client._setTimeout || setTimeout);
   }
-}
+};
 
 /*
 * This function deletes the index content. Settings and index specific API keys are kept untouched.
