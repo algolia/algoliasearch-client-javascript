@@ -531,8 +531,22 @@ Index.prototype.ttAdapter = deprecate(function(params) {
 * @param callback the result callback with with two arguments:
 *  error: null or Error('message')
 *  content: the server answer that contains the list of results
+* @deprecated see index.waitForCompletion
 */
-Index.prototype.waitTask = function(taskID, callback) {
+Index.prototype.waitTask = deprecate(function(taskID, callback) {
+  return this.waitForCompletion(taskID, callback);
+}, deprecatedMessage('index.waitTask()', 'index.waitForCompletion()'));
+
+/*
+* Wait the publication of a task on the server.
+* All server task are asynchronous and you can check with this method that the task is published.
+*
+* @param taskID the id of the task returned by server
+* @param callback the result callback with with two arguments:
+*  error: null or Error('message')
+*  content: the server answer that contains the list of results
+*/
+Index.prototype.waitForCompletion = function(taskID, callback) {
   // wait minimum 100ms before retrying
   var baseDelay = 100;
   // wait maximum 5s before retrying
