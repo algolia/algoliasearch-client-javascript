@@ -30,6 +30,15 @@ export default function partialUpdateObjects(
     throw pluralError('partialUpdateObject');
   }
 
+  const ids = objects.map(({ objectID }) => objectID);
+  if (ids.indexOf(undefined) !== -1) {
+    throw new Error(
+      `You supplied an object without objectID to partialUpdateObjects.
+
+body: ${JSON.stringify(objects)}`
+    );
+  }
+
   const action = createIfNotExists
     ? 'partialUpdateObject'
     : 'partialUpdateObjectNoCreate';
@@ -40,6 +49,7 @@ export default function partialUpdateObjects(
     body: {
       requests: objects.map(object => ({
         action,
+        objectID: object.objectID,
         body: object,
       })),
     },
