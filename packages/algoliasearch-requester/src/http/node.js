@@ -26,9 +26,10 @@ export default function httpRequester({
   requestType,
 }: RequesterArgs): Promise<Response> {
   const { protocol = 'https', hostname, port = '80', pathname: path } = url;
-  const { queryStringOrBody, headers: extraHeaders, timeouts } = parseOptions(
-    requestOptions
-  );
+  const {
+    /* queryStringOrBody, */ headers: extraHeaders,
+    timeouts,
+  } = parseOptions(requestOptions);
 
   return new Promise((resolve, reject: RequesterError => void) => {
     const req = https.request({
