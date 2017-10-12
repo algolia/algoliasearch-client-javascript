@@ -37,7 +37,7 @@ export default function browseAll(
     ? extraRequester
     : createRequester({ appId, apiKey });
 
-  const emit = (type: $Keys<listeners>, data: any) => {
+  const emit = (type: $Keys<typeof listeners>, data: any) => {
     listeners[type].forEach(fn => fn(data));
   };
 
@@ -62,7 +62,7 @@ export default function browseAll(
       });
 
   return {
-    on: (event: $Keys<listeners>, listener: any => void) =>
+    on: (event: $Keys<typeof listeners>, listener: any => void) =>
       listeners[event].push(listener),
     stop: () => {
       // stop the loop
