@@ -9,19 +9,24 @@ import type {
 
 type LoopInfo = { loop?: number, baseDelay?: number, maxDelay?: number };
 
-export default function waitForCompletion({
-  requester,
-  indexName,
-  taskID,
-  loopInfo = {},
-  requestOptions,
-}: {
-  requester: RequestMethod,
-  indexName: IndexName,
-  taskID: TaskID,
-  loopInfo?: LoopInfo,
-  requestOptions?: RequestOptions,
-}): Promise<Result> {
+export default function waitTask(
+  {
+    taskID,
+    loopInfo = {},
+  }: {
+    taskID: TaskID,
+    loopInfo?: LoopInfo,
+  },
+  {
+    requester,
+    indexName,
+    requestOptions,
+  }: {
+    requester: RequestMethod,
+    indexName: IndexName,
+    requestOptions?: RequestOptions,
+  }
+): Promise<Result> {
   const { loop = 0, baseDelay = 250, maxDelay = 10000 } = loopInfo;
 
   return requester({
@@ -44,15 +49,17 @@ export default function waitForCompletion({
     );
 
     return delay.then(() =>
-      waitForCompletion({
-        requester,
-        indexName,
-        taskID,
-        requestOptions,
-        loopInfo: {
-          loop: currentLoop,
+      waitTask(
+        {
+          taskID,
+          loopInfo: { loop: currentLoop },
         },
-      })
+        {
+          requester,
+          indexName,
+          requestOptions,
+        }
+      )
     );
   });
 }

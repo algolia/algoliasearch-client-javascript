@@ -126,7 +126,7 @@ clearIndex({ indexName: 'cities-us' }, { requester });
 
 Not a direct API method, but still implemented: 
 
-- `waitForTask` (originally `waitTask`)
+- `waitTask`
 
 # removed methods
 

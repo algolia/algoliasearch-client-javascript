@@ -53,7 +53,7 @@ Array [
   "setSettings",
   "similarSearch",
   "updateApiKey",
-  "waitForCompletion",
+  "waitTask",
   "requester",
 ]
 `;

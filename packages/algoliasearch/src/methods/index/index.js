@@ -37,4 +37,4 @@ export { default as searchSynonyms } from './searchSynonyms';
 export { default as setSettings } from './setSettings';
 export { default as similarSearch } from './similarSearch';
 export { default as updateApiKey } from './updateApiKey';
-export { default as waitForCompletion } from './waitForCompletion';
+export { default as waitTask } from './waitTask';
