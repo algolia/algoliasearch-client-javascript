@@ -51,7 +51,13 @@ export type SearchParameters = {
   queryType?: 'prefixLast' | 'prefixAll' | 'prefixNone',
   attributesToRetrieve?: string[],
   attributesToHighlight?: string[],
-  // todo: add all search / browse parameters
+  sortFacetValuesBy: 'alpha' | 'count',
+  // todo: add all search parameters
+};
+
+export type BrowseParameters = {
+  ...SearchParameters,
+  // todo: exclude impossible params
 };
 
 // todo: type this according to https://docs.google.com/document/d/1ZJY8uVbY-lUf88BeHZwSU5JQ-lKx6bMq8N7MnXyL1W4/edit#heading=h.dq5y55g3y74f
