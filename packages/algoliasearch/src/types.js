@@ -51,7 +51,7 @@ export type SearchParameters = {
   queryType?: 'prefixLast' | 'prefixAll' | 'prefixNone',
   attributesToRetrieve?: string[],
   attributesToHighlight?: string[],
-  sortFacetValuesBy: 'alpha' | 'count',
+  sortFacetValuesBy?: 'alpha' | 'count',
   // todo: add all search parameters
 };
 
