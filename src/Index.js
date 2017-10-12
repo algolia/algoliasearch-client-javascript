@@ -367,7 +367,6 @@ Index.prototype.deleteByQuery = deprecate(function(query, params, callback) {
 * Delete all objects matching a query
 *
 * the query parameters that can be used are:
-* - query
 * - filters (numeric, facet, tag)
 * - geo
 *
