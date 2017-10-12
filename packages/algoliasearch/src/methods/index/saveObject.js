@@ -15,7 +15,12 @@ export default function saveObject(
     requestOptions?: RequestOptions,
   }
 ) {
-  if (!body.objectID) {
+  const { objectID } = body;
+  if (
+    !objectID ||
+    typeof objectID !== 'string' ||
+    typeof objectID !== 'number'
+  ) {
     throw new Error(
       `You supplied an object without objectID to saveObject.
 
@@ -27,7 +32,7 @@ body: ${JSON.stringify(body)}`
 
   return requester({
     method: 'PUT',
-    path: `/1/indexes/${indexName}/${body.objectID}`,
+    path: `/1/indexes/${indexName}/${objectID}`,
     body,
     requestType: 'write',
     requestOptions,
