@@ -28,7 +28,6 @@ Array [
   "false",
   "getApiKey",
   "getLogs",
-  "index",
   "initIndex",
   "listApiKeys",
   "listIndexes",
