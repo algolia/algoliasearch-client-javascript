@@ -1,7 +1,7 @@
 // @flow
 
 type JSONValue = string | number | boolean | null;
-type Data = {
+export type Data = {
   [key: JSONValue]: JSONValue | JSONValue[],
 };
 type Store = { [key: string]: Data };
@@ -37,7 +37,7 @@ function createLocalStorageStore(namespace: string, memoryStore) {
   }
 
   return {
-    set(key: string, data: Data): Data {
+    set(key: string, data: Data): ?Data {
       memoryStore.set(key, data); // always replicate localStorageStore to memoryStore in case of failure
 
       try {
@@ -94,7 +94,7 @@ function cleanup(namespace: string) {
 }
 
 export type DataStore = {
-  set: (key: string, data: Data) => Data,
+  set: (key: string, data: Data) => ?Data,
   get: (key: string) => ?Data,
   clear: () => Store,
   supportsLocalStorage: () => boolean,

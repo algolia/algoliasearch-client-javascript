@@ -58,6 +58,7 @@ export class Requester {
     options?: {|
       timeouts?: Timeouts,
       extraHosts?: Hosts,
+      cache?: boolean,
     |},
     requestOptions?: RequestOptions,
   |}) {
