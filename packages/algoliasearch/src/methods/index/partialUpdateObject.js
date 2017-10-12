@@ -10,7 +10,7 @@ type Operation = {|
 
 type OperationObject = { [key: Attribute]: AlgoliaValue | Operation };
 
-export default function addObject(
+export default function partialUpdateObject(
   body: OperationObject,
   {
     requester,
@@ -25,9 +25,22 @@ export default function addObject(
     createIfNotExists?: boolean,
   }
 ) {
+  const { objectID } = body;
+  if (
+    !objectID ||
+    typeof objectID !== 'string' ||
+    typeof objectID !== 'number'
+  ) {
+    throw new Error(
+      `You supplied an object without objectID to partialUpdateObject, but this is required.
+
+body: ${JSON.stringify(body)}`
+    );
+  }
+
   return requester({
     method: 'POST',
-    path: `/1/indexes/${indexName}/${body.objectId}/partial`,
+    path: `/1/indexes/${indexName}/${objectID}/partial`,
     body,
     qs: { createIfNotExists },
     requestType: 'write',
