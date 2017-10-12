@@ -90,8 +90,8 @@ clearIndex({ indexName: 'cities-us' }, { requester });
 # methods on index
 
 - `addApiKey`
-- `addObject` --> deprecated, but still included
-- `addObjects` --> deprecated, but still included
+- `addObject`
+- `addObjects`
 - `batch`
 - `batchRules`
 - `batchSynonyms`
