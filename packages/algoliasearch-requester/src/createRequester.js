@@ -52,7 +52,7 @@ export class Requester {
     options: { timeouts = {}, extraHosts = {}, cache = false } = {},
     requestOptions = {},
   }: {|
-    appId?: AppId,
+    appId: AppId,
     apiKey: ApiKey,
     httpRequester: HttpModule,
     options?: {|
