@@ -95,3 +95,10 @@ export type Synonym =
   | OneWaySynonym
   | AltCorrectionSynonym
   | PlaceholderSynonym;
+
+export type SynonymType =
+  | 'synonym'
+  | 'onewaysynonym'
+  | 'altcorrection1'
+  | 'altcorrection2'
+  | 'placeholder';

@@ -3,6 +3,7 @@
 import type { IndexName } from 'algoliasearch';
 import type { RequestMethod, RequestOptions } from 'algoliasearch-requester';
 
+// todo: main types
 export type ACL =
   | 'search'
   | 'browse'

@@ -51,7 +51,6 @@ Array [
   "searchRules",
   "searchSynonyms",
   "setSettings",
-  "similarSearch",
   "updateApiKey",
   "waitTask",
   "requester",

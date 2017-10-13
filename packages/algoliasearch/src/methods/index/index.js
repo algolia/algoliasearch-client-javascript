@@ -35,6 +35,5 @@ export { default as searchForFacetValues } from './searchForFacetValues';
 export { default as searchRules } from './searchRules';
 export { default as searchSynonyms } from './searchSynonyms';
 export { default as setSettings } from './setSettings';
-export { default as similarSearch } from './similarSearch';
 export { default as updateApiKey } from './updateApiKey';
 export { default as waitTask } from './waitTask';
