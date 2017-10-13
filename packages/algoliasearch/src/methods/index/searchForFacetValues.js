@@ -26,6 +26,7 @@ export default function searchForFacetValues(
 ) {
   return requester({
     method: 'POST',
+    // $FlowFixMe --> apparently it doesn't see the annotation?
     path: `/1/indexes/${indexName}/facets/${facetName}/query`,
     body: {
       params,
