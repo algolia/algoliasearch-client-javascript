@@ -2,19 +2,16 @@
 
 import type { RequestMethod, RequestOptions } from 'algoliasearch-requester';
 
-type Params = {|
-  page?: number,
-|};
-
-export default function listIndexes({
-  requester,
-  params = {},
-  requestOptions,
-}: {
-  requester: RequestMethod,
-  params?: Params,
-  requestOptions?: RequestOptions,
-}) {
+export default function listIndexes(
+  params: { page?: number } = {},
+  {
+    requester,
+    requestOptions,
+  }: {
+    requester: RequestMethod,
+    requestOptions?: RequestOptions,
+  }
+) {
   return requester({
     method: 'GET',
     path: '/1/indexes',
