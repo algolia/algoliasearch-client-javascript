@@ -42,8 +42,6 @@ export type BatchActions =
   | 'delete'
   | 'clear';
 
-export type GetObjectParameters = {| attributesToRetrieve: string[] |};
-
 // todo: type the settings
 export type Settings = {};
 
