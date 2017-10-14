@@ -17,7 +17,7 @@ export default function getPlace(
   }: {
     requester: RequestMethod,
     requestOptions?: RequestOptions,
-  } = {}
+  }
 ) {
   const attributes = attributesToRetrieve && {
     attributes: attributesToRetrieve.join(','),

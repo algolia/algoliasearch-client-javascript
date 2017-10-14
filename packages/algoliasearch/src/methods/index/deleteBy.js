@@ -3,8 +3,9 @@
 import type { IndexName, SearchParameters } from 'algoliasearch';
 import type { RequestMethod, RequestOptions } from 'algoliasearch-requester';
 
+// todo: DeleteByParameters
 export default function deleteBy(
-  params: SearchParameters = {},
+  params: ?SearchParameters = {},
   {
     requester,
     indexName,

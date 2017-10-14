@@ -3,8 +3,9 @@
 import type { IndexName, SearchParameters } from 'algoliasearch';
 import type { RequestMethod, RequestOptions } from 'algoliasearch-requester';
 
+// todo: BrowseParameters
 export default function browse(
-  params: SearchParameters = {},
+  params: ?SearchParameters = {},
   {
     requester,
     indexName,

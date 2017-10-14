@@ -10,7 +10,7 @@ export default function search(
   }: {
     requestOptions?: RequestOptions,
     requester: RequestMethod,
-  } = {}
+  }
 ) {
   return requester({
     method: 'POST',

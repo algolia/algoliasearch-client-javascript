@@ -16,7 +16,7 @@ const getInitialListeners = () => ({
 });
 
 export default function browseAll(
-  params: SearchParameters = {},
+  params: ?SearchParameters = {},
   {
     indexName = throwIfAbsent('indexName'),
     appId = throwIfAbsent('appId'),
@@ -29,7 +29,7 @@ export default function browseAll(
     apiKey: ApiKey,
     requestOptions?: RequestOptions,
     requester?: RequestMethod,
-  } = {}
+  }
 ) {
   let listeners = getInitialListeners();
 

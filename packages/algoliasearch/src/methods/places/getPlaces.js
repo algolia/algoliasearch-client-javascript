@@ -18,7 +18,7 @@ export default function getPlaces(
   }: {
     requester: RequestMethod,
     requestOptions?: RequestOptions,
-  } = {}
+  }
 ) {
   if (!Array.isArray(objectIDs)) {
     throw pluralError('getObject');

@@ -3,7 +3,7 @@ import type { IndexName, SearchParameters } from 'algoliasearch';
 import type { RequestMethod, RequestOptions } from 'algoliasearch-requester';
 
 export default function search(
-  params: SearchParameters = {},
+  params: ?SearchParameters = {},
   {
     requester,
     indexName,
