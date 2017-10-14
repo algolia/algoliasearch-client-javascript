@@ -3,7 +3,6 @@
 import type { IndexName } from 'algoliasearch';
 import type { RequestMethod, RequestOptions } from 'algoliasearch-requester';
 
-// todo: figure out what to do here, no first argument
 export default function clearSynonyms(
   _: void,
   {
