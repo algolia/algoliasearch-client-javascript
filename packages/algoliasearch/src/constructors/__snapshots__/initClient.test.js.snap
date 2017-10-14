@@ -27,7 +27,6 @@ Array [
   "deleteIndex",
   "getApiKey",
   "getLogs",
-  "initIndex",
   "listApiKeys",
   "listIndexes",
   "moveIndex",
