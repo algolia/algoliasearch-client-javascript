@@ -1,9 +1,7 @@
 // @flow
 
-import type { IndexName } from 'algoliasearch';
+import type { IndexName, Settings } from 'algoliasearch';
 import type { RequestMethod, RequestOptions } from 'algoliasearch-requester';
-
-export type Settings = Object;
 
 export default function setSettings(
   body: Settings,

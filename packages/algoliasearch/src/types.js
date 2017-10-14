@@ -44,6 +44,9 @@ export type BatchActions =
 
 export type GetObjectParameters = {| attributesToRetrieve: string[] |};
 
+// todo: type the settings
+export type Settings = {};
+
 export type SearchParameters = {
   hitsPerPage?: number,
   query?: string,
