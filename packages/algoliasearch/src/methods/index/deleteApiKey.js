@@ -3,7 +3,7 @@
 import type { IndexName, ApiKey } from 'algoliasearch';
 import type { RequestMethod, RequestOptions } from 'algoliasearch-requester';
 
-export default function clearSynonyms(
+export default function deleteApiKey(
   { key }: { key: ApiKey },
   {
     requester,
