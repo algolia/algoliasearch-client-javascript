@@ -102,3 +102,24 @@ export type SynonymType =
   | 'altcorrection1'
   | 'altcorrection2'
   | 'placeholder';
+
+export type ACL =
+  | 'search'
+  | 'browse'
+  | 'addObject'
+  | 'deleteObject'
+  | 'deleteIndex'
+  | 'settings'
+  | 'editSettings'
+  | 'analytics'
+  | 'listIndexes';
+
+export type ApiKeyOptions = {|
+  acls?: ACL[],
+  description?: string,
+  maxHitsPerQuery?: number,
+  maxQueriesPerIPPerHour?: number,
+  queryParameters?: string,
+  referers?: string[],
+  validity?: number,
+|};
