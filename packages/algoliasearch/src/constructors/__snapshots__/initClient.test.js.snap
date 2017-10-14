@@ -25,7 +25,6 @@ Array [
   "copyIndex",
   "deleteApiKey",
   "deleteIndex",
-  "false",
   "getApiKey",
   "getLogs",
   "initIndex",
