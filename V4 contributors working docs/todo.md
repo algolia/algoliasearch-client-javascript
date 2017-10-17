@@ -24,3 +24,6 @@
 - [ ] migration guide
 - [ ] blog post
 - [ ] integration tests
+- [ ] publish typings
+  - [ ] flow
+  - [ ] typescript
