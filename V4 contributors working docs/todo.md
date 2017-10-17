@@ -1,11 +1,13 @@
 - [ ] host index sharing
 - [ ] host index invalidation
   - after 2 mins the first host is tried again
+- [ ] change host upon timeout
+- [ ] timeout sharing
 - [ ] timeout invalidation
   - after 20 mins the timeout is back to default
 - [x] caching
   - [ ] test it properly
-- [ ] default deprecation
+- [x] default deprecation
   - [ ] tested in all bundlers and situations
   - [ ] strip it out mostly in prod
 - [ ] http layers
@@ -16,5 +18,9 @@
   - [ ] jQuery (can be done never)
 - [x] method signatures
   - [x] change attachParameters to only attach second
-- [ ] implement all API methods
+- [x] implement all API methods
 - [ ] parse requestOptions at the http layer
+- [ ] build script
+- [ ] migration guide
+- [ ] blog post
+- [ ] integration tests
