@@ -12,7 +12,8 @@
   - [ ] Angular
 - [x] caching
   - [ ] test it properly
-- [x] default deprecation
+- [x] import default deprecation
+  - `import algoliasearch from 'algoliasearch'; algoliasearch(); // throws`
   - [ ] tested in all bundlers and situations
   - [ ] strip it out mostly in prod
 - [ ] http layers
