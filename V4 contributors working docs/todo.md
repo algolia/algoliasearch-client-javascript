@@ -1,10 +1,15 @@
-- [ ] host index sharing
-- [ ] host index invalidation
-  - after 2 mins the first host is tried again
-- [ ] change host upon timeout
-- [ ] timeout sharing
-- [ ] timeout invalidation
+- [ ] implement stateful request strategy based on the spec
+  - `createRequester`
   - after 20 mins the timeout is back to default
+  - after 2 mins the first host is tried again
+  - [ ] host index sharing
+  - [ ] host index invalidation
+  - [ ] change host upon timeout
+  - [ ] timeout sharing
+  - [ ] timeout invalidation
+- [ ] ensure it works in different flavours
+  - [ ] React Native
+  - [ ] Angular
 - [x] caching
   - [ ] test it properly
 - [x] default deprecation
