@@ -33,3 +33,4 @@
 - [ ] publish typings
   - [ ] flow
   - [ ] typescript
+- [ ] make sure `/latest` uses v3 on jsDelivr and have patch updates
