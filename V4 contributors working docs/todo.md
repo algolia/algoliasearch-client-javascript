@@ -13,7 +13,7 @@
 - [x] caching
   - [ ] test it properly
 - [x] import default deprecation
-  - `import algoliasearch from 'algoliasearch'; algoliasearch(); // throws`
+  - `import algoliasearch from 'algoliasearch'; algoliasearch(); // logs explanation`
   - [ ] tested in all bundlers and situations
   - [ ] strip it out mostly in prod
 - [ ] http layers
