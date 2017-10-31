@@ -1,5 +1,6 @@
 {
   "javascript.validate.enable": false,
   "flow.useNPMPackagedFlow": true,
-  "jest.pathToJest": "yarn test"
+  "jest.pathToJest": "yarn test",
+  "editor.formatOnSave": true
 }
