@@ -27,7 +27,6 @@ export default class RequestHosts {
       index: number,
     },
   };
-  timeouts: Timeouts;
   appId: AppId;
 
   constructor({ appId, extraHosts = {} }: Args) {
