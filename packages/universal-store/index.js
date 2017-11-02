@@ -1,8 +1,9 @@
 // @flow
 
+type JSONKey = string | number | boolean;
 type JSONValue = string | number | boolean | null;
 export type Data = {
-  [key: JSONValue]: JSONValue | JSONValue[],
+  [key: JSONKey]: JSONValue | JSONValue[],
 };
 type Store = { [key: string]: Data };
 
