@@ -160,7 +160,6 @@ export class Requester {
         url,
         timeout,
         requestOptions,
-        requestType: type,
       })
         .catch(err =>
           this.retryRequest(err, {
