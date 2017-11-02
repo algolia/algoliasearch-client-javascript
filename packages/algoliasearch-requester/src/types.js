@@ -65,7 +65,6 @@ export type RequestArguments = {
   body?: Object,
   requestOptions?: RequestOptions,
   requestType: RequestType,
-  retry?: number,
 };
 
 export type Result = Object;
