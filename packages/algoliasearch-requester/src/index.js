@@ -1,3 +1,1 @@
-import createRequester from './createRequester';
-
-export default createRequester;
+export { default } from './createRequester';
