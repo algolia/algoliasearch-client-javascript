@@ -2,21 +2,21 @@
 import type { AppId } from 'algoliasearch';
 import type { Hosts, Timeouts } from 'algoliasearch-requester';
 
-function computeRegularHosts(appId: AppId): Hosts {
+function computeRegularHosts(appID: AppId): Hosts {
   const readWriteHosts = [
-    `${appId}-1.algolianet.com`,
-    `${appId}-2.algolianet.com`,
-    `${appId}-3.algolianet.com`,
+    `${appID}-1.algolianet.com`,
+    `${appID}-2.algolianet.com`,
+    `${appID}-3.algolianet.com`,
   ];
 
   return {
-    read: [`${appId}-dsn.algolia.net`, ...readWriteHosts],
-    write: [`${appId}.algolia.net`, ...readWriteHosts],
+    read: [`${appID}-dsn.algolia.net`, ...readWriteHosts],
+    write: [`${appID}.algolia.net`, ...readWriteHosts],
   };
 }
 
 type Args = {|
-  appId: AppId,
+  appID: AppId,
   extraHosts?: Hosts,
 |};
 
@@ -27,12 +27,12 @@ export default class RequestHosts {
       index: number,
     },
   };
-  appId: AppId;
+  appID: AppId;
 
-  constructor({ appId, extraHosts = {} }: Args) {
-    this.appId = appId;
+  constructor({ appID, extraHosts = {} }: Args) {
+    this.appID = appID;
 
-    const regularHosts = computeRegularHosts(appId);
+    const regularHosts = computeRegularHosts(appID);
     // $FlowFixMe --> Flow doesn't recognize that I'm catching the undefined here
     const { read = [], write = [] } = extraHosts;
 
@@ -64,7 +64,7 @@ export default class RequestHosts {
 
     if (this.hosts[type].index > this.hosts[type].val.length) {
       this.hosts[type] = {
-        val: computeRegularHosts(this.appId)[type],
+        val: computeRegularHosts(this.appID)[type],
         index: 0,
       };
 
@@ -72,7 +72,7 @@ export default class RequestHosts {
 
 You can retry this search, and it will try the hosts again. 
 
-appId: ${this.appId}
+appID: ${this.appID}
 
 see: https://alg.li/client#no-hosts-remaining`);
     }

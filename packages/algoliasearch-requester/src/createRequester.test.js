@@ -12,11 +12,11 @@ it('requires the right arguments', () => {
       }),
     () =>
       createRequester({
-        appId: '',
+        appID: '',
       }),
     () =>
       createRequester({
-        appId: '',
+        appID: '',
         apiKey: '',
         httpRequester: {},
       }),
@@ -28,7 +28,7 @@ it('requires the right arguments', () => {
 
   expect(() =>
     createRequester({
-      appId: '',
+      appID: '',
       apiKey: '',
       httpRequester: () => {},
     })
@@ -38,7 +38,7 @@ it('requires the right arguments', () => {
 it('first read request uses first host', () => {
   const httpRequester = jest.fn(() => Promise.resolve());
   const requester = createRequester({
-    appId: 'the_read_app',
+    appID: 'the_read_app',
     apiKey: '',
     httpRequester,
   });
@@ -55,7 +55,7 @@ it('first read request uses first host', () => {
 it('first write request uses first host', () => {
   const httpRequester = jest.fn(() => Promise.resolve());
   const requester = createRequester({
-    appId: 'the_write_app',
+    appID: 'the_write_app',
     apiKey: '',
     httpRequester,
   });
@@ -77,7 +77,7 @@ it('uses a different host when the request needs to be retried', async () => {
         : Promise.resolve()
   );
   const requester = createRequester({
-    appId: 'the_crazy_app',
+    appID: 'the_crazy_app',
     apiKey: '',
     httpRequester,
   });
@@ -104,7 +104,7 @@ it('uses the "up" host on second request when first fails', async () => {
         : Promise.resolve()
   );
   const requester = createRequester({
-    appId: 'the_crazy_app',
+    appID: 'the_crazy_app',
     apiKey: '',
     httpRequester,
   });
@@ -130,7 +130,7 @@ it('uses the "up" host on second request when first fails', async () => {
 it('resolves when the response is successful', () => {
   const httpRequester = jest.fn(() => Promise.resolve({}));
   const requester = createRequester({
-    appId: 'the_successful_app',
+    appID: 'the_successful_app',
     apiKey: '',
     httpRequester,
   });
@@ -152,7 +152,7 @@ it("retries when there's a server error", async () => {
         : Promise.resolve({ cool: 'turbo' })
   );
   const requester = createRequester({
-    appId: 'the_app_app',
+    appID: 'the_app_app',
     apiKey: '',
     httpRequester,
   });
@@ -178,7 +178,7 @@ it("retries when there's a network error", async () => {
         : Promise.resolve({})
   );
   const requester = createRequester({
-    appId: 'the_network_app',
+    appID: 'the_network_app',
     apiKey: '',
     httpRequester,
   });
@@ -204,7 +204,7 @@ it("retries when there's a dns error", async () => {
         : Promise.resolve({})
   );
   const requester = createRequester({
-    appId: 'the_dns_app',
+    appID: 'the_dns_app',
     apiKey: '',
     httpRequester,
   });
@@ -230,7 +230,7 @@ it("retries when there's a timeout", async () => {
         : Promise.resolve({ bingo: true })
   );
   const requester = createRequester({
-    appId: 'the_retry_app',
+    appID: 'the_retry_app',
     apiKey: '',
     httpRequester,
   });
@@ -256,7 +256,7 @@ it('second try after a timeout has increments the timeout (write)', async () => 
         : Promise.resolve({})
   );
   const requester = createRequester({
-    appId: 'the_fun_app',
+    appID: 'the_fun_app',
     apiKey: '',
     httpRequester,
   });
@@ -282,7 +282,7 @@ it('second try after a timeout has increments the timeout (read)', async () => {
         : Promise.resolve({})
   );
   const requester = createRequester({
-    appId: 'the_fun_app',
+    appID: 'the_fun_app',
     apiKey: '',
     httpRequester,
   });
@@ -305,7 +305,7 @@ it.skip('rejects when all timeouts are reached', async () => {
     })
   );
   const requester = createRequester({
-    appId: 'the_timeout_app',
+    appID: 'the_timeout_app',
     apiKey: '',
     httpRequester,
   });
@@ -335,7 +335,7 @@ it('rejects when all hosts are used', () => {
     })
   );
   const requester = createRequester({
-    appId: 'the_host_app',
+    appID: 'the_host_app',
     apiKey: '',
     httpRequester,
   });
@@ -358,7 +358,7 @@ it.skip('uses the first host again after running out of hosts', async () => {
         : Promise.resolve({})
   );
   const requester = createRequester({
-    appId: 'the_other_host_app',
+    appID: 'the_other_host_app',
     apiKey: '',
     httpRequester,
   });
@@ -390,12 +390,12 @@ it.skip('two instances of createRequester share the same host index', async () =
   );
 
   const firstRequester = createRequester({
-    appId: 'the_same_app',
+    appID: 'the_same_app',
     apiKey: '',
     httpRequester,
   });
   const secondRequester = createRequester({
-    appId: 'the_same_app',
+    appID: 'the_same_app',
     apiKey: '',
     httpRequester,
   });

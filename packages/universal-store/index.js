@@ -45,7 +45,7 @@ function createLocalStorageStore(namespace: string, memoryStore) {
         const result = JSON.parse(localStorage.getItem(namespace) || '{}');
         result[key] = data;
         localStorage.setItem(namespace, JSON.stringify(result));
-        return result[key];
+        return data;
       } catch (e) {
         return localStorageFailure(key, e);
       }

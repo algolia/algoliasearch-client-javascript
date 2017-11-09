@@ -5,6 +5,12 @@ import type { MemoryStore, Data } from 'universal-store';
 
 import HostGenerator from './HostGenerator';
 import TimeoutGenerator from './TimeoutGenerator';
+import {
+  initHostAndTimeouts,
+  getParams,
+  hostDidFail,
+  hostDidTimeout,
+} from './HostAndTimeoutManager';
 
 import type { AppId, ApiKey } from 'algoliasearch';
 import type {
@@ -39,20 +45,20 @@ export class Requester {
   hostGenerator: HostGenerator;
   timeoutGenerator: TimeoutGenerator;
   apiKey: ApiKey;
-  appId: AppId;
+  appID: AppId;
   requestOptions: RequestOptions;
   requester: HttpModule;
   cache: boolean;
   store: MemoryStore;
 
   constructor({
-    appId,
+    appID,
     apiKey,
     httpRequester,
     options: { timeouts = {}, extraHosts = {}, cache = false } = {},
     requestOptions = {},
   }: {|
-    appId: AppId,
+    appID: AppId,
     apiKey: ApiKey,
     httpRequester: HttpModule,
     options?: {|
@@ -62,9 +68,9 @@ export class Requester {
     |},
     requestOptions?: RequestOptions,
   |}) {
-    if (typeof appId !== 'string') {
+    if (typeof appID !== 'string') {
       throw new Error(
-        `appId is required and should be a string, received "${appId || ''}"`
+        `appID is required and should be a string, received "${appID || ''}"`
       );
     }
     if (typeof apiKey !== 'string') {
@@ -77,9 +83,16 @@ export class Requester {
         `httpRequester is required and should be a function, received ${httpRequester}`
       );
     }
-    this.hostGenerator = new HostGenerator({ appId, extraHosts });
+    this.hostGenerator = new HostGenerator({ appID, extraHosts });
     this.timeoutGenerator = new TimeoutGenerator({ timeouts });
-    this.appId = appId;
+
+    initHostAndTimeouts({
+      // todo: hosts instead of extra hosts
+      timeouts,
+      appID,
+    });
+
+    this.appID = appID;
     this.apiKey = apiKey;
     this.requester = httpRequester;
     this.requestOptions = requestOptions;
@@ -108,29 +121,24 @@ export class Requester {
     return undefined;
   }
 
-  request = (
-    {
-      method,
-      path,
-      qs,
-      body,
-      requestOptions,
-      requestType: type,
-    }: RequestArguments,
-    {
-      timeoutRetries = 0,
-      hostFailed = false,
-    }: {
-      timeoutRetries: number,
-      hostFailed: boolean,
-    } = {}
-  ): Promise<Result> => {
+  request = ({
+    method,
+    path,
+    qs,
+    body,
+    requestOptions,
+    requestType,
+  }: RequestArguments): Promise<Result> => {
     try {
-      const hostname = this.hostGenerator.getHost({ type, hostFailed });
+      // const hostname = this.hostGenerator.getHost({ type, hostFailed });
+      // const timeout = this.timeoutGenerator.getTimeout({
+      //   retry: timeoutRetries,
+      //   type,
+      // });
 
-      const timeout = this.timeoutGenerator.getTimeout({
-        retry: timeoutRetries,
-        type,
+      const { hostname, timeout, connectTimeout } = getParams({
+        appID: this.appID,
+        requestType,
       });
 
       const pathname = path + stringify(qs);
@@ -143,7 +151,7 @@ export class Requester {
         qs,
         body,
         requestOptions,
-        appId: this.appId,
+        appId: this.appID,
       });
 
       if (requestOptions && requestOptions.cache === true) {
@@ -168,8 +176,7 @@ export class Requester {
             qs,
             body,
             requestOptions,
-            type,
-            timeoutRetries,
+            requestType,
           })
         )
         .then(res => this.saveInCache(cacheKey, res));
@@ -183,22 +190,17 @@ export class Requester {
     requestArguments: RequestArguments
   ): Promise<Result> => {
     if (retryableErrors.indexOf(err.reason) > -1) {
-      const timeoutRetries =
-        err.reason === 'timeout'
-          ? requestArguments.timeoutRetries + 1
-          : requestArguments.timeoutRetries;
-      const hostFailed = err.reason !== 'timeout';
+      if (err.reason === 'timeout') {
+        hostDidTimeout({
+          appID: this.appID,
+        });
+      }
+      hostDidFail({
+        appID: this.appID,
+        requestType: requestArguments.requestType,
+      });
 
-      const res = this.request(
-        {
-          ...requestArguments,
-          requestType: requestArguments.type,
-        },
-        {
-          timeoutRetries,
-          hostFailed,
-        }
-      );
+      const res = this.request(requestArguments);
 
       return res;
     }

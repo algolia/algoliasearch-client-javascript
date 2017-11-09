@@ -1,5 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`rejects when all hosts are used 1`] = `[ReferenceError: params is not defined]`;
+
 exports[`requires the right arguments 1`] = `"appId is required and should be a string, received \\"\\""`;
 
 exports[`requires the right arguments 2`] = `"apiKey is required and should be a string, received undefined"`;
