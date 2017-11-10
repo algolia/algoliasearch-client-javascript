@@ -34,7 +34,8 @@ var indexName = '_travis-algoliasearch-client-js' +
   chance.word({length: 12});
 
 var client = algoliasearch(appId, apiKey, {
-  protocol: 'https:'
+  protocol: 'https:',
+  _useCache: false
 });
 var index = client.initIndex(indexName);
 var objects = getFakeObjects(50);
@@ -58,7 +59,12 @@ test('index.browseAll', browseAll);
 
 if (canPUT) {
   test('synonyms API', synonyms);
-  test.skip('query rules', queryRules);
+  test('query rules', queryRules);
+}
+
+if (canPUT) {
+  test('export synonyms', exportSynonyms);
+  test('export query rules', exportRules);
 }
 
 if (!isABrowser) {
@@ -465,6 +471,78 @@ function queryRules(t) {
     .then(noop, _.bind(t.error, t));
 }
 
+function exportRules(t) {
+  var rulesBatch = Array.from({length: 300}, function(v, num) {
+    return {
+      objectID: 'some-qr-rule-' + num,
+      condition: {pattern: 'hellomyfriendhowareyou??? ' + num, anchoring: 'is'},
+      consequence: {params: {query: 'query-rule-integration-test'}}
+    };
+  }).sort(sortByObjectID);
+
+  index
+    // we clean the index
+    .clearRules()
+    .then(get('taskID'))
+    .then(index.waitTask)
+    // add 300 rules
+    .then(function() {
+      return index.batchRules(rulesBatch);
+    })
+    .then(get('taskID'))
+    .then(index.waitTask)
+    .then(_.bind(t.pass, t, 'we batch added rules'))
+    // now the exported rules should be the same
+    .then(index.exportRules)
+    .then(function(exported) {
+      exported.sort(sortByObjectID);
+      t.deepEqual(exported, rulesBatch);
+    })
+    .then(_.bind(t.end, t))
+    .catch(_.bind(t.error, t));
+}
+
+function sortByObjectID(a, b) {
+  function getNum(string) {
+    var lengthToDiscard = 'some-qr-rule-'.length;
+    var number = string.substring(lengthToDiscard);
+    return parseInt(number, 10);
+  }
+  return getNum(a.objectID) - getNum(b.objectID);
+}
+
+function exportSynonyms(t) {
+  var synonymBatch = Array.from({length: 300}, function(v, num) {
+    return {
+      objectID: 'some-synonym-' + num,
+      type: 'placeholder',
+      placeholder: '<gotcha' + num + '>',
+      replacements: ['replacement number ' + num]
+    };
+  }).sort(sortByObjectID);
+
+  index
+    // we clean the index
+    .clearSynonyms()
+    .then(get('taskID'))
+    .then(index.waitTask)
+    // add 300 synonyms
+    .then(function() {
+      return index.batchSynonyms(synonymBatch);
+    })
+    .then(get('taskID'))
+    .then(index.waitTask)
+    .then(_.bind(t.pass, t, 'we batch added synonyms'))
+    // now the exported synonyms should be the same
+    .then(index.exportSynonyms)
+    .then(function(exported) {
+      exported.sort(sortByObjectID);
+      t.deepEqual(exported, synonymBatch);
+    })
+    .then(_.bind(t.end, t))
+    .catch(_.bind(t.error, t));
+}
+
 function waitKey(key, callback, tries) {
   if (tries === undefined) tries = 0;
 
@@ -478,6 +556,7 @@ function waitKey(key, callback, tries) {
     callback(key);
   });
 }
+
 
 function dnsFailThenSuccess(t) {
   t.plan(4);
