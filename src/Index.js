@@ -636,6 +636,41 @@ Index.prototype.searchSynonyms = function(params, callback) {
   });
 };
 
+function _objectWithoutProperties(obj, keys) {
+  return Object.keys(obj).reduce(function(acc, i) {
+    if (keys.indexOf(i) >= 0) return acc;
+    acc[i] = obj[i];
+    return acc;
+  }, {});
+}
+
+function exportData(methodName, _hitsPerPage) {
+  function search(page, _previous) {
+    var options = {
+      page: page || 0,
+      hitsPerPage: _hitsPerPage || 100
+    };
+    var previous = _previous || [];
+    return this[methodName](options).then(function(result) {
+      var hits = result.hits;
+      var nbHits = result.nbHits;
+      var current = hits.map(function(s) {
+        return _objectWithoutProperties(s, ['_highlightResult']);
+      });
+      var synonyms = previous.concat(current);
+      if (synonyms.length < nbHits) {
+        return search(page + 1, synonyms);
+      }
+      return synonyms;
+    });
+  }
+  return search();
+}
+
+Index.prototype.exportSynonyms = function(hitsPerPage) {
+  return exportData('searchSynonyms', hitsPerPage);
+};
+
 Index.prototype.saveSynonym = function(synonym, opts, callback) {
   if (typeof opts === 'function') {
     callback = opts;
@@ -743,6 +778,10 @@ Index.prototype.searchRules = function(params, callback) {
     hostType: 'read',
     callback: callback
   });
+};
+
+Index.prototype.exportRules = function(hitsPerPage) {
+  return exportData('searchRules', hitsPerPage);
 };
 
 Index.prototype.saveRule = function(rule, opts, callback) {
