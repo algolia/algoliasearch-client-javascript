@@ -61,6 +61,11 @@ if (canPUT) {
   test.skip('query rules', queryRules);
 }
 
+if (canPUT) {
+  test('export synonyms', exportSynonyms);
+  test.skip('export query rules', exportRules);
+}
+
 if (!isABrowser) {
   test('client.generateSecuredApiKey', generateSecuredApiKey);
 }
@@ -465,6 +470,67 @@ function queryRules(t) {
     .then(noop, _.bind(t.error, t));
 }
 
+function exportRules(t) {
+  var rulesBatch = Array.from({length: 300}, function(v, num) {
+    return {
+      objectID: 'to-integration-test-' + num,
+      condition: {pattern: 'hellomyfriendhowareyou??? ' + num, anchoring: 'is'},
+      consequence: {params: {query: 'query-rule-integration-test'}}
+    };
+  });
+
+  index
+    // we clean the index
+    .clearRules()
+    .then(get('taskID'))
+    .then(index.waitTask)
+    // add 300 rules
+    .then(function() {
+      return index.batchRules(rulesBatch);
+    })
+    .then(get('taskID'))
+    .then(index.waitTask)
+    .then(_.bind(t.pass, t, 'we batch added rules'))
+    // now the exported rules should be the same
+    .then(index.exportRules)
+    .then(function(exported) {
+      t.equal(rulesBatch, exported);
+    })
+    .then(_.bind(t.end, t))
+    .catch(_.bind(t.error, t));
+}
+
+function exportSynonyms(t) {
+  var synonymBatch = Array.from({length: 300}, function(v, num) {
+    return {
+      objectID: `some-synonym-${num}`,
+      type: 'placeholder',
+      placeholder: `<gotcha${num}>`,
+      replacements: [`replacement number ${num}`]
+    };
+  });
+
+  index
+    // we clean the index
+    .clearSynonyms()
+    .then(get('taskID'))
+    .then(index.waitTask)
+    // add 300 synonyms
+    .then(function() {
+      return index.batchSynonyms(synonymBatch);
+    })
+    .then(get('taskID'))
+    .then(index.waitTask)
+    .then(_.bind(t.pass, t, 'we batch added synonyms'))
+    // now the exported synonyms should be the same
+    .then(index.exportSynonyms)
+    .then(function(exported) {
+      t.equal(synonymBatch, exported);
+    })
+    .then(_.bind(t.end, t))
+    .catch(_.bind(t.error, t));
+}
+
 function waitKey(key, callback, tries) {
   if (tries === undefined) tries = 0;
 
@@ -478,6 +544,7 @@ function waitKey(key, callback, tries) {
     callback(key);
   });
 }
+
 
 function dnsFailThenSuccess(t) {
   t.plan(4);
