@@ -34,3 +34,8 @@
   - [ ] flow
   - [ ] typescript
 - [ ] make sure `/latest` uses v3 on jsDelivr and have patch updates
+- [ ] browse / export extras
+  - iterator-ish
+  - `const b = new IndexBrowser(); b.next(1000);` (could do multiple api calls)
+  - `const s = new SynonymBrowser();`
+  - `const r = new RuleBrowser();`
