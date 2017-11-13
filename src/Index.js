@@ -635,7 +635,7 @@ Index.prototype.searchSynonyms = function(params, callback) {
   });
 };
 
-function exportData(methodName, _hitsPerPage) {
+function exportData(methodName, _hitsPerPage, callback) {
   function search(page, _previous) {
     var options = {
       page: page || 0,
@@ -656,11 +656,21 @@ function exportData(methodName, _hitsPerPage) {
       return synonyms;
     });
   }
-  return search();
+  return search().then(function(data) {
+    if (typeof callback === 'function') {
+      callback(data);
+    }
+    return data;
+  });
 }
 
-Index.prototype.exportSynonyms = function(hitsPerPage) {
-  return exportData('searchSynonyms', hitsPerPage);
+/**
+ * Retrieve all the synonyms in an index
+ * @param [number=100] hitsPerPage The amount of synonyms to retrieve per batch
+ * @param [function] callback will be called after all synonyms are retrieved
+ */
+Index.prototype.exportSynonyms = function(hitsPerPage, callback) {
+  return exportData('searchSynonyms', hitsPerPage, callback);
 };
 
 Index.prototype.saveSynonym = function(synonym, opts, callback) {
@@ -771,9 +781,13 @@ Index.prototype.searchRules = function(params, callback) {
     callback: callback
   });
 };
-
-Index.prototype.exportRules = function(hitsPerPage) {
-  return exportData('searchRules', hitsPerPage);
+/**
+ * Retrieve all the query rules in an index
+ * @param [number=100] hitsPerPage The amount of query rules to retrieve per batch
+ * @param [function] callback will be called after all query rules are retrieved
+ */
+Index.prototype.exportRules = function(hitsPerPage, callback) {
+  return exportData('searchRules', hitsPerPage, callback);
 };
 
 Index.prototype.saveRule = function(rule, opts, callback) {
