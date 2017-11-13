@@ -39,3 +39,4 @@
   - `const b = new IndexBrowser(); b.next(1000);` (could do multiple api calls)
   - `const s = new SynonymBrowser();`
   - `const r = new RuleBrowser();`
+  - replace `browseAll`, `exportRules`, `exportSynonyms`
