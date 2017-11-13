@@ -30,6 +30,8 @@ test('AlgoliaSearch client API spec', function(t) {
     'deleteApiKey',
     'deleteIndex',
     'deleteUserKey',
+    'exportRules',
+    'exportSynonyms',
     'getApiKey',
     'getExtraHeader',
     'getLogs',
