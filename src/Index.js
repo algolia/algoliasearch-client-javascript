@@ -636,14 +636,6 @@ Index.prototype.searchSynonyms = function(params, callback) {
   });
 };
 
-function _objectWithoutProperties(obj, keys) {
-  return Object.keys(obj).reduce(function(acc, i) {
-    if (keys.indexOf(i) >= 0) return acc;
-    acc[i] = obj[i];
-    return acc;
-  }, {});
-}
-
 function exportData(methodName, _hitsPerPage) {
   function search(page, _previous) {
     var options = {
@@ -655,7 +647,8 @@ function exportData(methodName, _hitsPerPage) {
       var hits = result.hits;
       var nbHits = result.nbHits;
       var current = hits.map(function(s) {
-        return _objectWithoutProperties(s, ['_highlightResult']);
+        delete s._highlightResult;
+        return s;
       });
       var synonyms = previous.concat(current);
       if (synonyms.length < nbHits) {
