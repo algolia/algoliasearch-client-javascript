@@ -494,7 +494,7 @@ function exportRules(t) {
     // now the exported rules should be the same
     .then(index.exportRules)
     .then(function(exported) {
-      t.equal(rulesBatch, exported);
+      t.equal(exported, rulesBatch);
     })
     .then(_.bind(t.end, t))
     .catch(_.bind(t.error, t));
@@ -525,7 +525,7 @@ function exportSynonyms(t) {
     // now the exported synonyms should be the same
     .then(index.exportSynonyms)
     .then(function(exported) {
-      t.equal(synonymBatch, exported);
+      t.equal(exported, synonymBatch);
     })
     .then(_.bind(t.end, t))
     .catch(_.bind(t.error, t));
