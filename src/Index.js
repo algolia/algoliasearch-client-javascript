@@ -643,7 +643,7 @@ function exportData(methodName, _hitsPerPage, callback) {
       hitsPerPage: _hitsPerPage || 100
     };
     var previous = _previous || [];
-    return this[methodName](options).then(function(result) {
+    return Index.prototype[methodName](options).then(function(result) {
       var hits = result.hits;
       var nbHits = result.nbHits;
       var current = hits.map(function(s) {
