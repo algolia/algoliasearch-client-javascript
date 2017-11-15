@@ -52,6 +52,7 @@ export type RequesterArgs = {|
   method: Method,
   url: Url,
   timeout: number,
+  connectTimeout: number,
   requestOptions?: RequestOptions,
   requestType: RequestType,
 |};

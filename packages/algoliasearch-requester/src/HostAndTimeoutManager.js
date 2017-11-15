@@ -19,7 +19,7 @@ type ManagerData = {
 
 const store = createStore('algoliasearch-host-and-timeouts');
 
-function noHostsRemaining({ appID, timeoutFailures }) {
+function noHostsRemaining({ appID }) {
   initHostAndTimeouts({ appID });
   throw new Error(`There are no hosts remaining for this app. 
 

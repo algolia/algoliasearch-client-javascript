@@ -322,9 +322,6 @@ it('rejects when all timeouts are reached', async () => {
   await requester({ requestType: 'write' });
 
   const timeouts = httpRequester.mock.calls.map(([{ timeout }]) => timeout);
-  const hosts = httpRequester.mock.calls.map(
-    ([{ url: { hostname } }]) => hostname
-  );
   expect(timeouts).toMatchSnapshot();
 
   const firstTimeout = timeouts[0];

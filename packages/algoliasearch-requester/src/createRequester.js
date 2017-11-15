@@ -159,6 +159,7 @@ export class Requester {
         method,
         url,
         timeout,
+        connectTimeout,
         requestOptions,
       })
         .catch(err =>

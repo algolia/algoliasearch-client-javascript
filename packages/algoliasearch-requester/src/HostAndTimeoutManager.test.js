@@ -40,7 +40,7 @@ it('gets a different host when you retry', () => {
   const appID = 'some_app';
   const requestType = 'read';
   const params = getParams({ appID, requestType });
-  const probably = hostDidFail({ appID, requestType });
+  hostDidFail({ appID, requestType });
   const newParams = getParams({ appID, requestType });
 
   expect(newParams.hostname).not.toEqual(params.hostname);
