@@ -47,3 +47,4 @@
   - [ ] Angular
 - [ ] integration tests
 - [ ] caching
+- [ ] Fix Flow edgecases
