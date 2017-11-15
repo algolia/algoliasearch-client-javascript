@@ -52,7 +52,7 @@ it('host indices are reset to 0 after 12s', async () => {
   expect(usedHosts[3]).toEqual('the_slow_app-dsn.algolia.net'); // third try
 });
 
-it.skip('resets timeout to default after 20 minutes', async () => {
+it('resets timeout to default after 20 minutes', async () => {
   const httpRequester = jest.fn(
     () =>
       httpRequester.mock.calls.length === 1
