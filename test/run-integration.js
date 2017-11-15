@@ -62,8 +62,8 @@ if (canPUT) {
 }
 
 if (canPUT) {
-  test('export synonyms', exportSynonyms);
-  test.skip('export query rules', exportRules);
+  test.skip('export synonyms', exportSynonyms);
+  test('export query rules', exportRules);
 }
 
 if (!isABrowser) {
