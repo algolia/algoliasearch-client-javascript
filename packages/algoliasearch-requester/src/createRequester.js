@@ -130,12 +130,6 @@ export class Requester {
     requestType,
   }: RequestArguments): Promise<Result> => {
     try {
-      // const hostname = this.hostGenerator.getHost({ type, hostFailed });
-      // const timeout = this.timeoutGenerator.getTimeout({
-      //   retry: timeoutRetries,
-      //   type,
-      // });
-
       const { hostname, timeout, connectTimeout } = getParams({
         appID: this.appID,
         requestType,
