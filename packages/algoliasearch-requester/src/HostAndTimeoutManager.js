@@ -101,10 +101,18 @@ export function getParams({
   return { hostname, timeout, connectTimeout };
 }
 
-export function hostDidTimeout({ appID }: { appID: AppId }) {
+export function hostDidTimeout({
+  appID,
+  requestType,
+}: {
+  appID: AppId,
+  requestType: RequestType,
+}) {
   const savedParams = store.get(appID);
   const data: ManagerData = savedParams || initHostAndTimeouts({ appID });
   data.timeoutFailures++;
+  store.set(data);
+  hostDidFail({ appID, requestType });
   return data;
 }
 
@@ -117,7 +125,6 @@ export function hostDidFail({
 }) {
   const savedParams = store.get(appID);
   const data: ManagerData = savedParams || initHostAndTimeouts({ appID });
-
   const index = data.currentHostIndices[requestType] + 1;
   if (
     data.hosts.hasOwnProperty(requestType) &&
@@ -125,5 +132,7 @@ export function hostDidFail({
   ) {
     noHostsRemaining({ appID, timeoutFailures: data.timeoutFailures });
   }
+  data.currentHostIndices[requestType] = index;
+  store.set(data);
   return data;
 }
