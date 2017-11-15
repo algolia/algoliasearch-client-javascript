@@ -477,7 +477,7 @@ function exportRules(t) {
       condition: {pattern: 'hellomyfriendhowareyou??? ' + num, anchoring: 'is'},
       consequence: {params: {query: 'query-rule-integration-test'}}
     };
-  });
+  }).sort(sortByObjectId);
 
   index
     // we clean the index
@@ -494,10 +494,15 @@ function exportRules(t) {
     // now the exported rules should be the same
     .then(index.exportRules)
     .then(function(exported) {
+      exported.sort(sortByObjectId);
       t.equal(exported, rulesBatch);
     })
     .then(_.bind(t.end, t))
     .catch(_.bind(t.error, t));
+}
+
+function sortByObjectId(a, b) {
+  return a.objectID - b.objectID;
 }
 
 function exportSynonyms(t) {
@@ -508,7 +513,7 @@ function exportSynonyms(t) {
       placeholder: `<gotcha${num}>`,
       replacements: [`replacement number ${num}`]
     };
-  });
+  }).sort(sortByObjectId);
 
   index
     // we clean the index
@@ -525,6 +530,7 @@ function exportSynonyms(t) {
     // now the exported synonyms should be the same
     .then(index.exportSynonyms)
     .then(function(exported) {
+      exported.sort(sortByObjectId);
       t.equal(exported, synonymBatch);
     })
     .then(_.bind(t.end, t))
