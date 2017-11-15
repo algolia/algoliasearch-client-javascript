@@ -62,8 +62,8 @@ if (canPUT) {
 }
 
 if (canPUT) {
-  test.skip('export synonyms', exportSynonyms);
-  test('export query rules', exportRules);
+  test('export synonyms', exportSynonyms);
+  test.skip('export query rules', exportRules);
 }
 
 if (!isABrowser) {
@@ -477,7 +477,7 @@ function exportRules(t) {
       condition: {pattern: 'hellomyfriendhowareyou??? ' + num, anchoring: 'is'},
       consequence: {params: {query: 'query-rule-integration-test'}}
     };
-  }).sort(sortByObjectId);
+  }).sort(sortByObjectID);
 
   index
     // we clean the index
@@ -496,7 +496,7 @@ function exportRules(t) {
     .then(function(exported) {
       console.log('---\nThis is the exported now\n---');
       console.log(exported);
-      exported.sort(sortByObjectId);
+      exported.sort(sortByObjectID);
       console.log('---\nThis is the exported after sorting\n---');
       console.log(exported);
       console.log('---\nThis is the batch\n---');
@@ -507,7 +507,7 @@ function exportRules(t) {
     .catch(_.bind(t.error, t));
 }
 
-function sortByObjectId(a, b) {
+function sortByObjectID(a, b) {
   function getNum(string) {
     var lengthToDiscard = 'some-qr-rule-'.length;
     var number = string.substring(lengthToDiscard);
@@ -524,7 +524,7 @@ function exportSynonyms(t) {
       placeholder: `<gotcha${num}>`,
       replacements: [`replacement number ${num}`]
     };
-  }).sort(sortByObjectId);
+  }).sort(sortByObjectID);
 
   index
     // we clean the index
@@ -543,7 +543,7 @@ function exportSynonyms(t) {
     .then(function(exported) {
       console.log('---\nThis is the exported now\n---');
       console.log(exported);
-      exported.sort(sortByObjectId);
+      exported.sort(sortByObjectID);
       console.log('---\nThis is the exported after sorting\n---');
       console.log(exported);
       console.log('---\nThis is the batch\n---');
