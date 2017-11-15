@@ -54,7 +54,7 @@ exports[`two instances of createRequester share the same host index 1`] = `
 Array [
   "the_same_app-dsn.algolia.net",
   "the_same_app-1.algolianet.com",
-  "the_same_app-1.algolia.net",
+  "the_same_app-1.algolianet.com",
 ]
 `;
 
@@ -71,4 +71,14 @@ Array [
   "the_crazy_app-1.algolianet.com",
   "the_crazy_app-1.algolianet.com",
 ]
+`;
+
+exports[`uses the first host again after running out of hosts 1`] = `
+[Error: There are no hosts remaining for this app. 
+
+You can retry this search, and it will try the hosts again. 
+
+appID: the_other_host_app
+
+see: https://alg.li/client#no-hosts-remaining]
 `;

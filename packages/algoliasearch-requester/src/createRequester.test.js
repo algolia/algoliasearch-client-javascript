@@ -353,10 +353,10 @@ it('rejects when all hosts are used', () => {
   ).rejects.toMatchSnapshot('rejects when all hosts are used');
 });
 
-it.skip('uses the first host again after running out of hosts', async () => {
+it('uses the first host again after running out of hosts', async () => {
   const httpRequester = jest.fn(
     () =>
-      httpRequester.mock.calls.length < 5 /* the request completely fails */
+      httpRequester.mock.calls.length <= 4 /* the request completely fails */
         ? Promise.reject({
             reason: 'network',
           })
@@ -386,7 +386,7 @@ it.skip('uses the first host again after running out of hosts', async () => {
   expect(lastHost).toBe(firstHost);
 });
 
-it.skip('two instances of createRequester share the same host index', async () => {
+it('two instances of createRequester share the same host index', async () => {
   const httpRequester = jest.fn(
     () =>
       httpRequester.mock.calls.length === 1
