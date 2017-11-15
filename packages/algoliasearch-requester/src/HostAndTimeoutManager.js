@@ -11,6 +11,10 @@ type ManagerData = {
     [key: RequestType]: number,
   |},
   timeoutFailures: number,
+  expirations: {
+    host: number,
+    timeout: number,
+  },
 };
 
 const store = createStore('algoliasearch-host-and-timeouts');
@@ -31,6 +35,9 @@ const DEFAULT_TIMEOUTS: Timeouts = {
   read: 2 * 1000,
   write: 30 * 1000,
 };
+
+const HOST_INVALIDATION = 20; // 12 seconds
+const TIMEOUT_INVALIDATION = 20; // 20 minutes
 
 function computeRegularHosts(appID: AppId): Hosts {
   const readWriteHosts = [
@@ -66,6 +73,10 @@ export function initHostAndTimeouts({
       write: 0,
     },
     timeoutFailures,
+    expirations: {
+      host: Date.now() + HOST_INVALIDATION,
+      timeout: Date.now() + TIMEOUT_INVALIDATION,
+    },
   };
   store.set(appID, data);
   return store.get(appID);
@@ -78,20 +89,25 @@ export function getParams({
   appID: AppId,
   requestType: RequestType,
 }) {
-  const savedParams = store.get(appID);
-  const data: ManagerData = savedParams || initHostAndTimeouts({ appID });
   if (requestType === undefined) {
     throw new Error(
       'the request requestType (`requestType`) must be `read` or `write`'
     );
   }
+  const savedParams = store.get(appID);
+  const data: ManagerData = savedParams || initHostAndTimeouts({ appID });
 
-  const { hosts, currentHostIndices, timeouts, timeoutFailures } = data;
+  const { hosts, timeouts, expirations } = data;
+
+  const now = Date.now();
+  const timeoutFailures = now < expirations.timeout ? data.timeoutFailures : 0;
+  const hostIndices =
+    now < expirations.host ? data.currentHostIndices : { read: 0, write: 0 };
 
   const timeout = timeouts[requestType] * (timeoutFailures + 1);
   const connectTimeout = timeouts.connect * (timeoutFailures + 1);
 
-  const hostIndex = currentHostIndices[requestType];
+  const hostIndex = hostIndices[requestType];
   const hostnames = hosts[requestType];
   if (Array.isArray(hostnames) && hostIndex > hostnames.length) {
     noHostsRemaining(appID);
