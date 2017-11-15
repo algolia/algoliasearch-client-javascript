@@ -56,3 +56,20 @@ it('gets a different host when you retry (timeout)', () => {
   expect(newParams.hostname).not.toEqual(params.hostname);
   expect(newParams.timeout).toBe(4000);
 });
+
+it('it will throw if the host keeps failing', () => {
+  const appID = 'some_throwing_app';
+  const requestType = 'read';
+  const params = getParams({ appID, requestType });
+  hostDidTimeout({ appID, requestType });
+  hostDidTimeout({ appID, requestType });
+  hostDidTimeout({ appID, requestType });
+  // we're out of hosts, thus we throw
+  expect(() =>
+    hostDidTimeout({ appID, requestType })
+  ).toThrowErrorMatchingSnapshot();
+
+  // this should now be the original data
+  const newParams = getParams({ appID, requestType });
+  expect(newParams).toEqual(params);
+});

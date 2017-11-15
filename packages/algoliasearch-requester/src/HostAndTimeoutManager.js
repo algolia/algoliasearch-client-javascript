@@ -128,7 +128,7 @@ export function hostDidFail({
   const index = data.currentHostIndices[requestType] + 1;
   if (
     data.hosts.hasOwnProperty(requestType) &&
-    index > data.hosts[requestType].length
+    index >= data.hosts[requestType].length
   ) {
     noHostsRemaining({ appID, timeoutFailures: data.timeoutFailures });
   }

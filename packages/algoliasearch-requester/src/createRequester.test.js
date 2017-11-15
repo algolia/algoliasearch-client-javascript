@@ -298,11 +298,14 @@ it('second try after a timeout has increments the timeout (read)', async () => {
   expect(timeouts[1]).toBeGreaterThan(timeouts[0]);
 });
 
-it.skip('rejects when all timeouts are reached', async () => {
-  const httpRequester = jest.fn(() =>
-    Promise.reject({
-      reason: 'timeout',
-    })
+it('rejects when all timeouts are reached', async () => {
+  const httpRequester = jest.fn(
+    () =>
+      httpRequester.mock.calls.length <= 4
+        ? Promise.reject({
+            reason: 'timeout',
+          })
+        : Promise.resolve({})
   );
   const requester = createRequester({
     appID: 'the_timeout_app',
@@ -319,7 +322,9 @@ it.skip('rejects when all timeouts are reached', async () => {
   await requester({ requestType: 'write' });
 
   const timeouts = httpRequester.mock.calls.map(([{ timeout }]) => timeout);
-
+  const hosts = httpRequester.mock.calls.map(
+    ([{ url: { hostname } }]) => hostname
+  );
   expect(timeouts).toMatchSnapshot();
 
   const firstTimeout = timeouts[0];

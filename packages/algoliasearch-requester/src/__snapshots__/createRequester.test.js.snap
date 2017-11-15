@@ -10,6 +10,26 @@ appID: the_host_app
 see: https://alg.li/client#no-hosts-remaining]
 `;
 
+exports[`rejects when all timeouts are reached 1`] = `
+[Error: There are no hosts remaining for this app. 
+
+You can retry this search, and it will try the hosts again. 
+
+appID: the_timeout_app
+
+see: https://alg.li/client#no-hosts-remaining]
+`;
+
+exports[`rejects when all timeouts are reached 2`] = `
+Array [
+  30000,
+  60000,
+  90000,
+  120000,
+  30000,
+]
+`;
+
 exports[`requires the right arguments 1`] = `"appID is required and should be a string, received \\"\\""`;
 
 exports[`requires the right arguments 2`] = `"apiKey is required and should be a string, received undefined"`;
