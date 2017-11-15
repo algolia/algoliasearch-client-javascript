@@ -1,6 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`rejects when all hosts are used 1`] = `[ReferenceError: params is not defined]`;
+exports[`rejects when all hosts are used 1`] = `
+[Error: There are no hosts remaining for this app. 
+
+You can retry this search, and it will try the hosts again. 
+
+appID: the_host_app
+
+see: https://alg.li/client#no-hosts-remaining]
+`;
 
 exports[`requires the right arguments 1`] = `"appID is required and should be a string, received \\"\\""`;
 
