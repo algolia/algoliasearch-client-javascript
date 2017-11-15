@@ -494,7 +494,13 @@ function exportRules(t) {
     // now the exported rules should be the same
     .then(index.exportRules)
     .then(function(exported) {
+      console.log('---\nThis is the exported now\n---');
+      console.log(exported);
       exported.sort(sortByObjectId);
+      console.log('---\nThis is the exported after sorting\n---');
+      console.log(exported);
+      console.log('---\nThis is the batch\n---');
+      console.log(rulesBatch);
       t.equal(exported, rulesBatch);
     })
     .then(_.bind(t.end, t))
@@ -530,7 +536,13 @@ function exportSynonyms(t) {
     // now the exported synonyms should be the same
     .then(index.exportSynonyms)
     .then(function(exported) {
+      console.log('---\nThis is the exported now\n---');
+      console.log(exported);
       exported.sort(sortByObjectId);
+      console.log('---\nThis is the exported after sorting\n---');
+      console.log(exported);
+      console.log('---\nThis is the batch\n---');
+      console.log(synonymBatch);
       t.equal(exported, synonymBatch);
     })
     .then(_.bind(t.end, t))
