@@ -635,14 +635,15 @@ Index.prototype.searchSynonyms = function(params, callback) {
   });
 };
 
-function exportData(methodName, _hitsPerPage, callback) {
+function exportData(method, _hitsPerPage, callback) {
   function search(page, _previous) {
     var options = {
       page: page || 0,
       hitsPerPage: _hitsPerPage || 100
     };
     var previous = _previous || [];
-    return Index.prototype[methodName](options).then(function(result) {
+
+    return method(options).then(function(result) {
       var hits = result.hits;
       var nbHits = result.nbHits;
       var current = hits.map(function(s) {
@@ -670,7 +671,7 @@ function exportData(methodName, _hitsPerPage, callback) {
  * @param [function] callback will be called after all synonyms are retrieved
  */
 Index.prototype.exportSynonyms = function(hitsPerPage, callback) {
-  return exportData('searchSynonyms', hitsPerPage, callback);
+  return exportData(this.searchSynonyms, hitsPerPage, callback);
 };
 
 Index.prototype.saveSynonym = function(synonym, opts, callback) {
@@ -787,7 +788,7 @@ Index.prototype.searchRules = function(params, callback) {
  * @param [function] callback will be called after all query rules are retrieved
  */
 Index.prototype.exportRules = function(hitsPerPage, callback) {
-  return exportData('searchRules', hitsPerPage, callback);
+  return exportData(this.searchRules, hitsPerPage, callback);
 };
 
 Index.prototype.saveRule = function(rule, opts, callback) {
