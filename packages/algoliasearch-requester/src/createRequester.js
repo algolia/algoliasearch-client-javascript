@@ -3,8 +3,6 @@
 import { createMemoryStore } from '../../universal-store';
 import type { MemoryStore, Data } from 'universal-store';
 
-import HostGenerator from './HostGenerator';
-import TimeoutGenerator from './TimeoutGenerator';
 import {
   initHostAndTimeouts,
   getParams,
