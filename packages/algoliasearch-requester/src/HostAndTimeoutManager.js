@@ -36,8 +36,8 @@ const DEFAULT_TIMEOUTS: Timeouts = {
   write: 30 * 1000,
 };
 
-const HOST_INVALIDATION = 20; // 12 seconds
-const TIMEOUT_INVALIDATION = 20; // 20 minutes
+const HOST_INVALIDATION = 12000; // 12 seconds
+const TIMEOUT_INVALIDATION = 1200000; // 20 minutes
 
 function computeRegularHosts(appID: AppId): Hosts {
   const readWriteHosts = [

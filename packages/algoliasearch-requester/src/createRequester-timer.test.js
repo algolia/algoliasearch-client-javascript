@@ -29,12 +29,14 @@ it('host indices are reset to 0 after 12s', async () => {
     requestType: 'read',
   });
 
+  clock.tick('00:06');
+
   // starts at second host
   await requester({
     requestType: 'read',
   });
 
-  clock.tick('02:00');
+  clock.tick('00:06');
   // hosts reset
   await requester({
     requestType: 'read',
@@ -72,12 +74,14 @@ it('resets timeout to default after 20 minutes', async () => {
     requestType: 'write',
   });
 
+  clock.tick('10:00');
+
   // now has long timeout
   await requester({
     requestType: 'write',
   });
 
-  clock.tick('20:00');
+  clock.tick('10:00');
   // now has original timeout
   await requester({
     requestType: 'write',
