@@ -473,7 +473,7 @@ function queryRules(t) {
 function exportRules(t) {
   var rulesBatch = Array.from({length: 300}, function(v, num) {
     return {
-      objectID: 'to-integration-test-' + num,
+      objectID: 'some-qr-rule' + num,
       condition: {pattern: 'hellomyfriendhowareyou??? ' + num, anchoring: 'is'},
       consequence: {params: {query: 'query-rule-integration-test'}}
     };
@@ -508,7 +508,12 @@ function exportRules(t) {
 }
 
 function sortByObjectId(a, b) {
-  return a.objectID - b.objectID;
+  function getNum(string) {
+    var lengthToDiscard = 'some-qr-rule-'.length;
+    var number = string.substring(lengthToDiscard);
+    return parseInt(number, 10);
+  }
+  return getNum(a.objectID) - getNum(b.objectID);
 }
 
 function exportSynonyms(t) {
