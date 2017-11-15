@@ -11,7 +11,7 @@ afterEach(() => {
   clock = clock.uninstall();
 });
 
-it.skip('host indices are reset to 0 after 12s', async () => {
+it('host indices are reset to 0 after 12s', async () => {
   const httpRequester = jest.fn(
     () =>
       httpRequester.mock.calls.length === 1
@@ -19,7 +19,7 @@ it.skip('host indices are reset to 0 after 12s', async () => {
         : Promise.resolve()
   );
   const requester = createRequester({
-    appId: 'the_slow_app',
+    appID: 'the_slow_app',
     apiKey: '',
     httpRequester,
   });
@@ -62,7 +62,7 @@ it.skip('resets timeout to default after 20 minutes', async () => {
         : Promise.resolve({})
   );
   const requester = createRequester({
-    appId: 'the_fun_app',
+    appID: 'the_fun_app',
     apiKey: '',
     httpRequester,
   });
