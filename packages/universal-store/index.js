@@ -4,7 +4,7 @@ type JSONKey = string | number | boolean;
 type JSONValue = string | number | boolean | null;
 export type Data = {
   [key: JSONKey]: JSONValue | JSONValue[],
-};
+}; // todo: how to make this an opaque type thing where you can give a more specific type that still validates this without spending a lot of time on testing if the data is possible
 type Store = { [key: string]: Data };
 
 export type MemoryStore = {
