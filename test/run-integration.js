@@ -34,7 +34,8 @@ var indexName = '_travis-algoliasearch-client-js' +
   chance.word({length: 12});
 
 var client = algoliasearch(appId, apiKey, {
-  protocol: 'https:'
+  protocol: 'https:',
+  _useCache: false
 });
 var index = client.initIndex(indexName);
 var objects = getFakeObjects(50);
@@ -429,7 +430,6 @@ function queryRules(t) {
     .then(index.waitTask)
     .then(_.bind(t.pass, t, 'we batch added rules'))
     // we search and try to hit the query rule pattern
-    .then(client.clearCache)
     .then(_.partial(index.search, {query: 'hellomyfriendhowareyou???'}))
     .then(function(res) {
       t.equal(res.hits.length, 1);
