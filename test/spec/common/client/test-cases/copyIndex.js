@@ -31,35 +31,5 @@ module.exports = [
         scope: ['settings']
       }
     }
-  },
-  {
-    testName: 'client.copyIndex(from, to, [])',
-    object: 'client',
-    methodName: 'copyIndex',
-    callArguments: ['from index', 'to index', []],
-    action: 'write',
-    expectedRequest: {
-      method: 'POST',
-      URL: {pathname: '/1/indexes/from%20index/operation'},
-      body: {
-        operation: 'copy',
-        destination: 'to index'
-      }
-    }
-  },
-  {
-    testName: 'client.copyIndex(from, to, undefined)',
-    object: 'client',
-    methodName: 'copyIndex',
-    callArguments: ['from index', 'to index', undefined],
-    action: 'write',
-    expectedRequest: {
-      method: 'POST',
-      URL: {pathname: '/1/indexes/from%20index/operation'},
-      body: {
-        operation: 'copy',
-        destination: 'to index'
-      }
-    }
   }
 ];

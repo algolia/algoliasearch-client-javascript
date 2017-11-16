@@ -73,6 +73,8 @@ AlgoliaSearch.prototype.copyIndex = function(srcIndexName, dstIndexName, scopeOr
     callback = scopeOrCallback;
   } else if (Array.isArray(scopeOrCallback) && scopeOrCallback.length > 0) {
     postObj.scope = scopeOrCallback;
+  } else {
+    throw new Error('the scope given to `copyIndex` was not an array with settings, synonyms or rules');
   }
   return this._jsonRequest({
     method: 'POST',
