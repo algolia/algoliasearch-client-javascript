@@ -495,7 +495,6 @@ function exportRules(t) {
     // now the exported rules should be the same
     .then(index.exportRules)
     .then(function(exported) {
-      console.log(exported)
       exported.sort(sortByObjectID);
       t.deepEqual(exported, rulesBatch);
     })
