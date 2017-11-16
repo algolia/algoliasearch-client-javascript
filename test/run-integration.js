@@ -58,7 +58,7 @@ test('index.browseAll', browseAll);
 
 if (canPUT) {
   test('synonyms API', synonyms);
-  test('query rules', queryRules);
+  test.only('query rules', queryRules);
 }
 
 if (canPUT) {
@@ -429,6 +429,7 @@ function queryRules(t) {
     .then(index.waitTask)
     .then(_.bind(t.pass, t, 'we batch added rules'))
     // we search and try to hit the query rule pattern
+    .then(client.clearCache)
     .then(_.partial(index.search, {query: 'hellomyfriendhowareyou???'}))
     .then(function(res) {
       t.equal(res.hits.length, 1);
@@ -494,6 +495,7 @@ function exportRules(t) {
     // now the exported rules should be the same
     .then(index.exportRules)
     .then(function(exported) {
+      console.log(exported)
       exported.sort(sortByObjectID);
       t.deepEqual(exported, rulesBatch);
     })
