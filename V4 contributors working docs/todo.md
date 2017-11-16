@@ -18,7 +18,7 @@
 - [x] implement stateful request strategy based on the spec
   - `createRequester`
   - after 20 mins the timeout is back to default
-  - after 2 mins the first host is tried again
+  - after 12 seconds the first host is tried again
   - [x] host index sharing
   - [x] host index invalidation
   - [x] change host upon timeout
