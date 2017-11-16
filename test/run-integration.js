@@ -497,11 +497,7 @@ function exportRules(t) {
       console.log('---\nThis is the exported now\n---');
       console.log(exported);
       exported.sort(sortByObjectID);
-      console.log('---\nThis is the exported after sorting\n---');
-      console.log(exported);
-      console.log('---\nThis is the batch\n---');
-      console.log(rulesBatch);
-      t.equal(exported, rulesBatch);
+      t.deepEqual(exported, rulesBatch);
     })
     .then(_.bind(t.end, t))
     .catch(_.bind(t.error, t));
@@ -544,11 +540,7 @@ function exportSynonyms(t) {
       console.log('---\nThis is the exported now\n---');
       console.log(exported);
       exported.sort(sortByObjectID);
-      console.log('---\nThis is the exported after sorting\n---');
-      console.log(exported);
-      console.log('---\nThis is the batch\n---');
-      console.log(synonymBatch);
-      t.equal(exported, synonymBatch);
+      t.deepEqual(exported, synonymBatch);
     })
     .then(_.bind(t.end, t))
     .catch(_.bind(t.error, t));
