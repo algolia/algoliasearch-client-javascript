@@ -473,7 +473,7 @@ function queryRules(t) {
 function exportRules(t) {
   var rulesBatch = Array.from({length: 300}, function(v, num) {
     return {
-      objectID: 'some-qr-rule' + num,
+      objectID: 'some-qr-rule-' + num,
       condition: {pattern: 'hellomyfriendhowareyou??? ' + num, anchoring: 'is'},
       consequence: {params: {query: 'query-rule-integration-test'}}
     };
