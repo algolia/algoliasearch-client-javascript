@@ -58,12 +58,12 @@ test('index.browseAll', browseAll);
 
 if (canPUT) {
   test('synonyms API', synonyms);
-  test.skip('query rules', queryRules);
+  test('query rules', queryRules);
 }
 
 if (canPUT) {
   test('export synonyms', exportSynonyms);
-  test.skip('export query rules', exportRules);
+  test('export query rules', exportRules);
 }
 
 if (!isABrowser) {
