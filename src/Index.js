@@ -652,7 +652,7 @@ function exportData(method, _hitsPerPage, callback) {
       });
       var synonyms = previous.concat(current);
       if (synonyms.length < nbHits) {
-        return search(page + 1, synonyms);
+        return search(options.page + 1, synonyms);
       }
       return synonyms;
     });
