@@ -359,14 +359,25 @@ module.exports =
 	 * @param srcIndexName the name of index to copy.
 	 * @param dstIndexName the new index name that will contains a copy
 	 * of srcIndexName (destination will be overriten if it already exist).
+	 * @param scope an array of scopes to copy: ['settings', 'synonyms', 'rules']
 	 * @param callback the result callback called with two arguments
 	 *  error: null or Error('message')
 	 *  content: the server answer that contains the task ID
 	 */
-	AlgoliaSearch.prototype.copyIndex = function(srcIndexName, dstIndexName, callback) {
+	AlgoliaSearch.prototype.copyIndex = function(srcIndexName, dstIndexName, scopeOrCallback, _callback) {
 	  var postObj = {
-	    operation: 'copy', destination: dstIndexName
+	    operation: 'copy',
+	    destination: dstIndexName
 	  };
+	  var callback = _callback;
+	  if (typeof scopeOrCallback === 'function') {
+	    // oops, old behaviour of third argument being a function
+	    callback = scopeOrCallback;
+	  } else if (Array.isArray(scopeOrCallback) && scopeOrCallback.length > 0) {
+	    postObj.scope = scopeOrCallback;
+	  } else {
+	    throw new Error('the scope given to `copyIndex` was not an array with settings, synonyms or rules');
+	  }
 	  return this._jsonRequest({
 	    method: 'POST',
 	    url: '/1/indexes/' + encodeURIComponent(srcIndexName) + '/operation',
@@ -1167,7 +1178,6 @@ module.exports =
 	* Delete all objects matching a query
 	*
 	* the query parameters that can be used are:
-	* - query
 	* - filters (numeric, facet, tag)
 	* - geo
 	*
@@ -1436,6 +1446,45 @@ module.exports =
 	  });
 	};
 
+	function exportData(method, _hitsPerPage, callback) {
+	  function search(page, _previous) {
+	    var options = {
+	      page: page || 0,
+	      hitsPerPage: _hitsPerPage || 100
+	    };
+	    var previous = _previous || [];
+
+	    return method(options).then(function(result) {
+	      var hits = result.hits;
+	      var nbHits = result.nbHits;
+	      var current = hits.map(function(s) {
+	        delete s._highlightResult;
+	        return s;
+	      });
+	      var synonyms = previous.concat(current);
+	      if (synonyms.length < nbHits) {
+	        return search(options.page + 1, synonyms);
+	      }
+	      return synonyms;
+	    });
+	  }
+	  return search().then(function(data) {
+	    if (typeof callback === 'function') {
+	      callback(data);
+	    }
+	    return data;
+	  });
+	}
+
+	/**
+	 * Retrieve all the synonyms in an index
+	 * @param [number=100] hitsPerPage The amount of synonyms to retrieve per batch
+	 * @param [function] callback will be called after all synonyms are retrieved
+	 */
+	Index.prototype.exportSynonyms = function(hitsPerPage, callback) {
+	  return exportData(this.searchSynonyms, hitsPerPage, callback);
+	};
+
 	Index.prototype.saveSynonym = function(synonym, opts, callback) {
 	  if (typeof opts === 'function') {
 	    callback = opts;
@@ -1543,6 +1592,14 @@ module.exports =
 	    hostType: 'read',
 	    callback: callback
 	  });
+	};
+	/**
+	 * Retrieve all the query rules in an index
+	 * @param [number=100] hitsPerPage The amount of query rules to retrieve per batch
+	 * @param [function] callback will be called after all query rules are retrieved
+	 */
+	Index.prototype.exportRules = function(hitsPerPage, callback) {
+	  return exportData(this.searchRules, hitsPerPage, callback);
 	};
 
 	Index.prototype.saveRule = function(rule, opts, callback) {
@@ -3802,7 +3859,7 @@ module.exports =
 
 	
 
-	module.exports = '3.24.5';
+	module.exports = '3.24.6';
 
 
 /***/ }

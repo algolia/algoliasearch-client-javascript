@@ -1,4 +1,12 @@
 CHANGELOG
+2017-11-16 3.24.6
+  * add `index.exportSynonyms` and `index.exportRules`
+    * they will get all of the synonyms or query rules on an index
+  * add a new `scope` argument to `copyIndex`
+    * this is the third argument (from, to, scope)
+    * it's an array with settings, synonyms or rules
+    * if specified, that data will also be copied if you copy the index
+
 2017-10-02 3.24.5
   * feat(deleteBy): add deleteBy
     * deleteByQuery is deprecated now
