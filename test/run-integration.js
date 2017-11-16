@@ -494,8 +494,6 @@ function exportRules(t) {
     // now the exported rules should be the same
     .then(index.exportRules)
     .then(function(exported) {
-      console.log('---\nThis is the exported now\n---');
-      console.log(exported);
       exported.sort(sortByObjectID);
       t.deepEqual(exported, rulesBatch);
     })
@@ -537,8 +535,6 @@ function exportSynonyms(t) {
     // now the exported synonyms should be the same
     .then(index.exportSynonyms)
     .then(function(exported) {
-      console.log('---\nThis is the exported now\n---');
-      console.log(exported);
       exported.sort(sortByObjectID);
       t.deepEqual(exported, synonymBatch);
     })
