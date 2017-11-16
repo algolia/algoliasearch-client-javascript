@@ -76,6 +76,7 @@
   },
   "devDependencies": {
     "angular": "^1.6.4",
+    "array.from": "^1.0.3",
     "async": "^1.5.2",
     "babel-eslint": "^4.1.6",
     "bowser": "^1.7.0",

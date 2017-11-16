@@ -6,6 +6,7 @@ if (!process.env.INTEGRATION_TEST_API_KEY || !process.env.INTEGRATION_TEST_APPID
 
 // simple integration tests, checking the whole communication
 var _ = require('lodash-compat');
+var arrayFrom = require('array.from');
 var Chance = require('chance');
 var test = require('tape');
 
@@ -472,7 +473,7 @@ function queryRules(t) {
 }
 
 function exportRules(t) {
-  var rulesBatch = Array.from({length: 300}, function(v, num) {
+  var rulesBatch = arrayFrom({length: 300}, function(v, num) {
     return {
       objectID: 'some-qr-rule-' + num,
       condition: {pattern: 'hellomyfriendhowareyou??? ' + num, anchoring: 'is'},
@@ -512,7 +513,7 @@ function sortByObjectID(a, b) {
 }
 
 function exportSynonyms(t) {
-  var synonymBatch = Array.from({length: 300}, function(v, num) {
+  var synonymBatch = arrayFrom({length: 300}, function(v, num) {
     return {
       objectID: 'some-synonym-' + num,
       type: 'placeholder',
