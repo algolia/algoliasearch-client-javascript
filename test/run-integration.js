@@ -514,10 +514,10 @@ function sortByObjectID(a, b) {
 function exportSynonyms(t) {
   var synonymBatch = Array.from({length: 300}, function(v, num) {
     return {
-      objectID: `some-synonym-${num}`,
+      objectID: 'some-synonym-' + num,
       type: 'placeholder',
-      placeholder: `<gotcha${num}>`,
-      replacements: [`replacement number ${num}`]
+      placeholder: '<gotcha' + num + '>',
+      replacements: ['replacement number ' + num]
     };
   }).sort(sortByObjectID);
 
