@@ -57,14 +57,23 @@ AlgoliaSearch.prototype.moveIndex = function(srcIndexName, dstIndexName, callbac
  * @param srcIndexName the name of index to copy.
  * @param dstIndexName the new index name that will contains a copy
  * of srcIndexName (destination will be overriten if it already exist).
+ * @param scope an array of scopes to copy: ['settings', 'synonyms', 'rules']
  * @param callback the result callback called with two arguments
  *  error: null or Error('message')
  *  content: the server answer that contains the task ID
  */
-AlgoliaSearch.prototype.copyIndex = function(srcIndexName, dstIndexName, callback) {
+AlgoliaSearch.prototype.copyIndex = function(srcIndexName, dstIndexName, scopeOrCallback, _callback) {
   var postObj = {
-    operation: 'copy', destination: dstIndexName
+    operation: 'copy',
+    destination: dstIndexName
   };
+  var callback = _callback;
+  if (typeof scopeOrCallback === 'function') {
+    // oops, old behaviour of third argument being a function
+    callback = scopeOrCallback;
+  } else if (Array.isArray(scopeOrCallback) && scopeOrCallback.length > 0) {
+    postObj.scope = scopeOrCallback;
+  }
   return this._jsonRequest({
     method: 'POST',
     url: '/1/indexes/' + encodeURIComponent(srcIndexName) + '/operation',
