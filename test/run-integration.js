@@ -391,7 +391,7 @@ function synonyms(t) {
       t.equal(1, res.hits.length);
       t.equal('street', res.hits[0].objectID);
     })
-    .then(index.clearSynonyms)
+    .then(function() { return index.clearSynonyms(); })
     .then(get('taskID'))
     .then(index.waitTask)
     .then(function() {
@@ -411,7 +411,7 @@ function queryRules(t) {
     .then(get('taskID'))
     .then(index.waitTask)
     // we clear all rules
-    .then(index.clearRules)
+    .then(function() { return index.clearRules(); })
     .then(get('taskID'))
     .then(index.waitTask)
     // we try and fail to find an object with a weird query

@@ -767,10 +767,6 @@ browserify@^14.0.0:
     vm-browserify "~0.0.1"
     xtend "^4.0.0"
 
-browzers@^1.3.0:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/browzers/-/browzers-1.3.0.tgz#386bf71ac7722ccd55b9d6e79ae92d13538c40e5"
-
 buffer-crc32@0.2.1, buffer-crc32@~0.2.1:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/buffer-crc32/-/buffer-crc32-0.2.1.tgz#be3e5382fc02b6d6324956ac1af98aa98b08534c"

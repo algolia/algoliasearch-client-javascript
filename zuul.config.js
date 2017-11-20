@@ -33,7 +33,56 @@ if (process.env.CI === 'true') {
   };
 }
 
-var browsers = require('browzers');
+var browsers = {
+  all: [{
+    name: 'chrome',
+    version: '-1..latest',
+    platform: 'Windows 10'
+  }, {
+    name: 'firefox',
+    version: '-1..latest',
+    platform: 'Windows 10'
+  }, {
+    name: 'internet explorer',
+    version: '9..10'
+  }, {
+    name: 'safari',
+    version: '-3..latest'
+  }, {
+    name: 'iphone',
+    version: '-3..latest'
+  }, {
+    name: 'android',
+    version: '-3..latest'
+  }, {
+    name: 'ipad',
+    version: '-3..latest'
+  }, {
+    name: 'microsoftedge',
+    version: 'latest'
+  }],
+  pullRequest: [{
+    name: 'chrome',
+    version: 'latest',
+    platform: 'Windows 10'
+  }, {
+    name: 'internet explorer',
+    version: ['9']
+  }, {
+    name: 'firefox',
+    version: 'latest',
+    platform: 'Windows 10'
+  }, {
+    name: 'iphone',
+    version: '9.0'
+  }, {
+    name: 'android',
+    version: 'latest'
+  }, {
+    name: 'microsoftedge',
+    version: 'latest'
+  }]
+};
 
 zuulConfig.browsers = process.env.TRAVIS_PULL_REQUEST && process.env.TRAVIS_PULL_REQUEST !== 'false' ?
   browsers.pullRequest :
