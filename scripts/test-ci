@@ -23,3 +23,6 @@ fi
 
 echo "CI test: lint"
 ./scripts/lint
+
+echo "Testing bundle size"
+bundlesize
