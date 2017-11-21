@@ -76,7 +76,7 @@
     "bower.json"
   ],
   "dependencies": {
-    "agentkeepalive": "^3.3.0",
+    "agentkeepalive": "^2.2.0",
     "debug": "^2.6.8",
     "envify": "^4.0.0",
     "es6-promise": "^4.1.0",
