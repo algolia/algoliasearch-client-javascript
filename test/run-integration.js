@@ -60,7 +60,7 @@ test('index.browseAll', browseAll);
 
 if (canPUT) {
   test('synonyms API', synonyms);
-  test.skip('query rules', queryRules);
+  test('query rules', queryRules);
 }
 
 if (canPUT) {
