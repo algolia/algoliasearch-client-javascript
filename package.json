@@ -24,6 +24,24 @@
       "envify"
     ]
   },
+  "bundlesize": [
+    {
+      "path": "./dist/algoliasearch.?(jquery|angular|parse).min.js",
+      "maxSize": "18 kB"
+    },
+    {
+      "path": "./dist/algoliasearch.?(jquery|angular|parse).js",
+      "maxSize": "46 kB"
+    },
+    {
+      "path": "./dist/algoliasearchLite.min.js",
+      "maxSize": "13 kB"
+    },
+    {
+      "path": "./dist/algoliasearchLite.js",
+      "maxSize": "32 kB"
+    }
+  ],
   "repository": {
     "type": "git",
     "url": "git://github.com/algolia/algoliasearch-client-js.git"
@@ -84,6 +102,7 @@
     "bulk-require": "^1.0.0",
     "bulkify": "^1.2.0",
     "bundle-collapser": "^1.2.1",
+    "bundlesize": "^0.15.3",
     "chance": "^1.0.9",
     "compression": "^1.6.2",
     "deumdify": "^1.2.4",
