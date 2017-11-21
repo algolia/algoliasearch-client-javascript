@@ -1,5 +1,6 @@
 # Release
 - [ ] build script
+  - [ ] preamble (`/*! copyright ...*/`)
 - [ ] publish script
 - [ ] publish typings
   - [ ] flow
