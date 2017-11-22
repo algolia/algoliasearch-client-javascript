@@ -5,7 +5,7 @@
 - [ ] publish typings
   - [ ] flow
   - [ ] typescript
-- [ ] make sure `/latest` uses v3 on jsDelivr and have patch updates
+- [ ] Ensure `/latest` users won't get V4 on jsDelivr (Ask them to stop updating http://cdn.jsdelivr.net/algoliasearch/latest)
 - [ ] migration guide
 - [ ] blog post
 
@@ -30,9 +30,7 @@
   - [ ] layers
     - [ ] node
     - [ ] XHR
-    - [ ] fetch (can be done later)
-    - [ ] remove angular (can be done later)
-    - [ ] remove jQuery (can be done never)
+    - [ ] fetch (for service workers)
 - [x] caching
 - [x] method signatures
   - [x] change attachParameters to only attach second
@@ -49,3 +47,11 @@
 - [ ] integration tests
 - [ ] caching
 - [ ] Fix Flow edgecases
+
+# Environement support
+- [ ] service workers
+- [ ] angular plugin
+- [ ] proxy support (HTTP_PROXY HTTPS_PROXY=https://user:password@ip.ip.ip.ip env variables)
+- [ ] evergreen browser support
+- [ ] maybe polyfills for IE11
+
