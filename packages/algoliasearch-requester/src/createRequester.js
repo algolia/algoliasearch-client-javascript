@@ -46,7 +46,7 @@ export class Requester {
     appID,
     apiKey,
     httpRequester,
-    options: { timeouts = {}, extraHosts = {}, cache = false } = {},
+    options: { timeouts = {}, hosts, cache = false } = {},
     requestOptions = {},
   }: {|
     appID: AppId,
@@ -54,7 +54,7 @@ export class Requester {
     httpRequester: HttpModule,
     options?: {|
       timeouts?: Timeouts,
-      extraHosts?: Hosts,
+      hosts?: Hosts,
       cache?: boolean,
     |},
     requestOptions?: RequestOptions,
@@ -76,7 +76,7 @@ export class Requester {
     }
 
     initHostAndTimeouts({
-      // todo: hosts instead of extra hosts
+      hosts,
       timeouts,
       appID,
     });
