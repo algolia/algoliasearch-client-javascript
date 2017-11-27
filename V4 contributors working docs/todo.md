@@ -25,6 +25,7 @@
   - [x] change host upon timeout
   - [x] timeout sharing
   - [x] timeout invalidation
+  - [ ] randomise fallback host (indices)
 - [ ] http
   - [ ] parse requestOptions at the http layer
   - [ ] layers
