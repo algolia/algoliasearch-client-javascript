@@ -2,5 +2,15 @@
   "javascript.validate.enable": false,
   "flow.useNPMPackagedFlow": true,
   "jest.pathToJest": "yarn test",
-  "editor.formatOnSave": true
+  "editor.formatOnSave": true,
+  "cSpell.enabledLanguageIds": [
+    "javascript",
+    "javascriptreact",
+    "markdown",
+    "plaintext",
+    "text",
+    "yml",
+    "json"
+  ],
+  "eslint.enable": true
 }

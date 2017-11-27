@@ -3,6 +3,7 @@
   // for the documentation about the extensions.json format
   "recommendations": [
     "flowtype.flow-for-vscode",
-    "Orta.vscode-jest"
+    "Orta.vscode-jest",
+    "streetsidesoftware.code-spell-checker"
   ]
 }
