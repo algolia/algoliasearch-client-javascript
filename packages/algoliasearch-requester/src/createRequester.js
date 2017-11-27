@@ -27,12 +27,7 @@ const stringify = qs => JSON.stringify(qs); // todo: use proper url stringify
 
 const toCacheKey = obj => JSON.stringify(obj); // todo: find if something is faster
 
-const retryableErrors: Array<ErrorType> = [
-  'server',
-  'network',
-  'dns',
-  'timeout',
-];
+const retryableErrors: Array<ErrorType> = ['server', 'network', 'timeout'];
 
 // eslint-disable-next-line no-unused-vars
 const RESET_HOST_TIMER = 120000; // ms; 2 minutes
@@ -40,8 +35,6 @@ const RESET_HOST_TIMER = 120000; // ms; 2 minutes
 const RESET_TIMEOUT_TIMER = 1200000; // ms; 20 minutes
 
 export class Requester {
-  hostGenerator: HostGenerator;
-  timeoutGenerator: TimeoutGenerator;
   apiKey: ApiKey;
   appID: AppId;
   requestOptions: RequestOptions;
@@ -81,8 +74,6 @@ export class Requester {
         `httpRequester is required and should be a function, received ${httpRequester}`
       );
     }
-    this.hostGenerator = new HostGenerator({ appID, extraHosts });
-    this.timeoutGenerator = new TimeoutGenerator({ timeouts });
 
     initHostAndTimeouts({
       // todo: hosts instead of extra hosts
@@ -134,6 +125,7 @@ export class Requester {
       });
 
       const pathname = path + stringify(qs);
+      // todo: change to real URL
       const url = { hostname, pathname };
 
       const cacheKey = toCacheKey({
@@ -186,12 +178,14 @@ export class Requester {
       if (err.reason === 'timeout') {
         hostDidTimeout({
           appID: this.appID,
+          requestType: requestArguments.requestType,
+        });
+      } else {
+        hostDidFail({
+          appID: this.appID,
+          requestType: requestArguments.requestType,
         });
       }
-      hostDidFail({
-        appID: this.appID,
-        requestType: requestArguments.requestType,
-      });
 
       const res = this.request(requestArguments);
 

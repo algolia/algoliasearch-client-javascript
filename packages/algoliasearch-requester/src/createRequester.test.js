@@ -194,32 +194,6 @@ it("retries when there's a network error", async () => {
   expect(httpRequester.mock.calls).toHaveLength(2);
 });
 
-it("retries when there's a dns error", async () => {
-  const httpRequester = jest.fn(
-    () =>
-      httpRequester.mock.calls.length === 1
-        ? Promise.reject({
-            reason: 'dns',
-          })
-        : Promise.resolve({})
-  );
-  const requester = createRequester({
-    appID: 'the_dns_app',
-    apiKey: '',
-    httpRequester,
-  });
-
-  // it eventually resolves
-  await expect(
-    requester({
-      requestType: 'write',
-    })
-  ).resolves.toEqual({});
-
-  // requester was called twice
-  expect(httpRequester.mock.calls.length).toBe(2);
-});
-
 it("retries when there's a timeout", async () => {
   const httpRequester = jest.fn(
     () =>
