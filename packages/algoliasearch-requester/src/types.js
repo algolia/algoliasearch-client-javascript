@@ -1,12 +1,5 @@
 // @flow
 
-export type Url = {|
-  hostname: string,
-  pathname: string,
-  protocol?: string,
-  port?: string,
-|};
-
 export type Method = 'POST' | 'GET' | 'DELETE' | 'PUT';
 
 export type Hosts = {|
@@ -50,7 +43,7 @@ export type Response = { body: Buffer, statusCode: number };
 export type RequesterArgs = {|
   body?: Object,
   method: Method,
-  url: Url,
+  url: URL,
   timeout: number,
   connectTimeout: number,
   requestOptions?: RequestOptions,
@@ -88,9 +81,12 @@ export type CreateRequesterArgs = {|
 |};
 export type CreateRequester = CreateRequesterArgs => RequestMethod;
 
-// serverError := httpCode / 100 !== 4 && httpCode / 100 !== 2
 // clientError := httpCode / 100 === 4
-export type ErrorType = 'server' | 'network' | 'dns' | 'timeout' | 'client';
+type FatalError = 'client' | 'fatal';
+// serverError := httpCode / 100 !== 4 && httpCode / 100 !== 2
+type RetryableError = 'server' | 'network' | 'timeout';
+export type ErrorType = FatalError | RetryableError;
+
 export type RequesterError = {|
   reason: ErrorType,
   more: any,
