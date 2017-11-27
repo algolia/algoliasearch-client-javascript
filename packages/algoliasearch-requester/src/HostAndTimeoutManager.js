@@ -110,7 +110,7 @@ export function getParams({
   const hostIndex = hostIndices[requestType];
   const hostnames = hosts[requestType];
   if (Array.isArray(hostnames) && hostIndex > hostnames.length) {
-    noHostsRemaining(appID);
+    noHostsRemaining({ appID });
   }
   const hostname = hostnames[hostIndex];
 
