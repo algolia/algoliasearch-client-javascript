@@ -1,14 +1,8 @@
 # algoliasearch-requester
 
-This is the retry logic and http module used by Algolia. You can use this module
-standalone, or better in combination with any of the methods in
-`algoliasearch/methods`, which will have the correct endpoint for the methods
-already.
+This is the retry logic and http module used by Algolia. You can use this module standalone, or better in combination with any of the methods in `algoliasearch/methods`, which will have the correct endpoint for the methods already.
 
-Technically you could use this package to do requests to another service than
-Algolia, but unless the retry strategy is the same as ours, you'll only have a
-use with the http layers. If you're having an idea for a different API client
-using this logic or client, don't hesitate to get in touch!
+Technically you could use this package to do requests to another service than Algolia, but unless the retry strategy is the same as ours, you'll only have a use with the http layers. If you're having an idea for a different API client using this logic or client, don't hesitate to get in touch!
 
 ## Usage
 
@@ -53,7 +47,7 @@ requester({
 
 # Writing your own `httpRequester`
 
-To make it possible to split off the request strategy there are two parts that are responsible for making API calls to Algolia. 
+To make it possible to split off the request strategy there are two parts that are responsible for making API calls to Algolia.
 
 1. `createRequester`: caching, request strategy and knowing which path to request
 2. `httpRequester`: promise-based wrapper over your environments preferred way of doing a http request
@@ -79,6 +73,7 @@ The http method to use (`POST`, `GET`, `DELETE` ...)
 #### url
 
 The URL to request. a [WHATWG `URL`](https://developer.mozilla.org/en-US/docs/Web/API/URL/URL) object (also available in [node](https://nodejs.org/api/url.html)).
+
 #### timeout
 
 Amount of `ms` to wait for a request before aborting it completely and rejecting with `{ reason: 'timeout' }`
@@ -92,6 +87,54 @@ If possible in your environment: Amount of `ms` to wait before any data has been
 Object with parameters that can be added as query string or headers.
 
 TODO: figure out to send headers or url parameters, which format should be used.
+
+#### signal
+
+A `httpRequester` receives the `signal` of an [AbortController](https://dom.spec.whatwg.org/#aborting-ongoing-activities). This allows you to abort the underlying request.
+
+```js
+const controller = new AbortController();
+const signal = controller.signal;
+
+startSpinner();
+
+httpRequester({ /* …, */ signal })
+  .then(result => {
+    // …
+  })
+  .catch(err => {
+    if (err.name === 'AbortError') return;
+    showUserErrorMessage();
+  })
+  .then(() => stopSpinner());
+
+// …
+
+controller.abort();
+```
+
+Inside the `httpRequester` you can check if the request is still relevant like this:
+
+```js
+function httpRequester({ /* …, */ signal }) {
+  if (signal.aborted) {
+    return Promise.reject(new DOMException('Aborted', 'AbortError'));
+  }
+
+  return new Promise((resolve, reject) => {
+    // Begin doing amazingness, and call resolve(result) when done.
+    // But also, watch for signals:
+    signal.addEventListener('abort', () => {
+      // Stop doing amazingness, and:
+      reject(new DOMException('Aborted', 'AbortError'));
+    });
+  });
+}
+```
+
+This requires a polyfill for `DOMException` and `AbortController` (currently implemented in FF57, Safari Tech Preview, Edge and Chrome)
+
+If you're using `fetch` in your requester, you can simply pass the `signal` down
 
 ### returns
 
@@ -109,13 +152,13 @@ The API client will then retry the same request on a different host, with an inc
 
 ### `reject({ reason: 'client' })` (doesn't retry)
 
-If `Math.floor(status / 100) === 4` (so if the code is 4XX), there is something wrong with the request done, and it doesn't need to be retried. 
+If `Math.floor(status / 100) === 4` (so if the code is 4XX), there is something wrong with the request done, and it doesn't need to be retried.
 
 The API client will throw this as an error and not retry the request.
 
 ### `reject({ reason: 'server' })` (retries)
 
-If `Math.floor(status / 100) !== 4 && Math.floor(status / 100) !== 2` (so if the code is any other than 2XX and 4XX), there is something wrong with the server you're trying. 
+If `Math.floor(status / 100) !== 4 && Math.floor(status / 100) !== 2` (so if the code is any other than 2XX and 4XX), there is something wrong with the server you're trying.
 
 #### `reject({ reason: 'network' })` (retries)
 
@@ -128,9 +171,3 @@ The API client will then retry the same request on a different host.
 There should normally be no other cases to handle as `httpRequester`. As a last resort when things go really bad, you can also reject with `{ reason: 'fatal' }`
 
 The API client will throw this as an error and not retry the request.
-
-### Methods
-
-A `httpRequester` should also have an `abort` method. This should terminate the open connection if possible, and reject all future Promise resolving with a `CancelError`
-
-> :warning: experimental
