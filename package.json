@@ -8,32 +8,36 @@
     "typecheck": "flow",
     "test:ci": "yarn test --verbose && yarn typecheck && yarn lint"
   },
-  "workspaces": ["packages/*"],
+  "workspaces": [
+    "packages/*"
+  ],
   "jest": {
-    "projects": ["packages/*"],
+    "projects": [
+      "packages/*"
+    ],
     "testEnvironment": "node"
   },
   "author": "Algolia, Inc. (https://www.algolia.com)",
   "license": "MIT",
   "devDependencies": {
-    "babel-eslint": "^7.2.3",
+    "babel-eslint": "^8.0.2",
     "babel-jest": "^21.0.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-preset-env": "^1.6.0",
+    "babel-preset-env": "^1.6.1",
     "babel-preset-flow": "^6.23.0",
-    "eslint": "^4.6.1",
-    "eslint-config-algolia": "^12.0.0",
-    "eslint-config-prettier": "^2.4.0",
-    "eslint-plugin-flowtype": "^2.35.1",
-    "eslint-plugin-import": "^2.7.0",
-    "eslint-plugin-jest": "^21.0.0",
+    "eslint": "^4.12.0",
+    "eslint-config-algolia": "^13.0.1",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-flowtype": "^2.39.1",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jest": "^21.3.2",
     "eslint-plugin-prettier": "^2.2.0",
     "flow-bin": "0.55.0",
     "jest": "^21.0.1",
     "jest-in-case": "^1.0.2",
-    "lolex": "^2.1.2",
-    "prettier": "^1.6.1"
+    "lolex": "^2.3.1",
+    "prettier": "^1.8.2"
   },
   "engines": {
     "node": "8.9.0",
