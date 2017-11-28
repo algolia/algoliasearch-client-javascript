@@ -116,9 +116,17 @@ controller.abort();
 Inside the `httpRequester` you can check if the request is still relevant like this:
 
 ```js
+class AbortError extends Error {
+  constructor(message = '', ...args) {
+    super(message, ...args);
+    this.message = message;
+    this.name = 'AbortError';
+  }
+}
+
 function httpRequester({ /* …, */ signal }) {
   if (signal.aborted) {
-    return Promise.reject(new DOMException('Aborted', 'AbortError'));
+    return Promise.reject(new AbortError('Request was aborted'));
   }
 
   return new Promise((resolve, reject) => {
@@ -126,13 +134,13 @@ function httpRequester({ /* …, */ signal }) {
     // But also, watch for signals:
     signal.addEventListener('abort', () => {
       // Stop doing amazingness, and:
-      reject(new DOMException('Aborted', 'AbortError'));
+      reject(new AbortError('Request was aborted'));
     });
   });
 }
 ```
 
-This requires a polyfill for `DOMException` and `AbortController` (currently implemented in FF57, Safari Tech Preview, Edge and Chrome)
+This requires a polyfill for `AbortController` (currently implemented in FF57, Safari Tech Preview, Edge and Chrome), a good one is [abort-controller](https://yarn.pm/abort-controller)
 
 If you're using `fetch` in your requester, you can simply pass the `signal` down
 

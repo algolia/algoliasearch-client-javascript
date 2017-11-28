@@ -1,8 +1,8 @@
 // @flow
 // todo: make jest work with this as a module
 import { createMemoryStore } from '../../universal-store';
-import type { MemoryStore, Data } from 'universal-store';
-
+// todo: import it as a module
+import { AlgoliaError } from '../../algoliasearch-errors';
 import {
   initHostAndTimeouts,
   getParams,
@@ -11,6 +11,7 @@ import {
 } from './HostAndTimeoutManager';
 
 import type { AppId, ApiKey } from 'algoliasearch';
+import type { MemoryStore, Data } from 'universal-store';
 import type {
   RequestOptions,
   RequestArguments,
@@ -60,17 +61,17 @@ export class Requester {
     requestOptions?: RequestOptions,
   |}) {
     if (typeof appID !== 'string') {
-      throw new Error(
+      throw new AlgoliaError(
         `appID is required and should be a string, received "${appID || ''}"`
       );
     }
     if (typeof apiKey !== 'string') {
-      throw new Error(
+      throw new AlgoliaError(
         `apiKey is required and should be a string, received ${apiKey}`
       );
     }
     if (typeof httpRequester !== 'function') {
-      throw new Error(
+      throw new AlgoliaError(
         `httpRequester is required and should be a function, received ${
           httpRequester
         }`

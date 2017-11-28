@@ -51,6 +51,12 @@ export type RequesterArgs = {|
 |};
 export type HttpModule = RequesterArgs => Promise<Response>;
 
+type AbortSignal = {
+  aborted: boolean,
+  onabort: EventListener,
+  addEventListener: (string, EventListener) => void,
+};
+
 // public api
 export type RequestArguments = {
   method: Method,
@@ -59,6 +65,7 @@ export type RequestArguments = {
   body?: Object,
   requestOptions?: RequestOptions,
   requestType: RequestType,
+  signal: AbortSignal,
 };
 
 export type Result = Object;

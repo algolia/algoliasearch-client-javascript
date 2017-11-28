@@ -1,6 +1,6 @@
 // @flow
 
-import { pluralError } from '../../errors';
+import { pluralError } from '../../../../algoliasearch-errors';
 import type { ObjectID } from 'algoliasearch';
 import type { RequestMethod, RequestOptions } from 'algoliasearch-requester';
 
