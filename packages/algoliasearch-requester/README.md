@@ -97,7 +97,7 @@ TODO: figure out to send headers or url parameters, which format should be used.
 
 A promise that will `resolve` with the results of the Algolia API without modifying them on `200` as status. All other cases will `reject` with an object as argument (not an `Error`, because we can only access a string then, which isn't useful in retry strategy).
 
-### `resolve`
+#### `resolve`
 
 If `status / 100 === 2`, you `resolve` the promise with the results from the API call without modifying.
 
@@ -128,3 +128,9 @@ The API client will then retry the same request on a different host.
 There should normally be no other cases to handle as `httpRequester`. As a last resort when things go really bad, you can also reject with `{ reason: 'fatal' }`
 
 The API client will throw this as an error and not retry the request.
+
+### Methods
+
+A `httpRequester` should also have an `abort` method. This should terminate the open connection if possible, and reject all future Promise resolving with a `CancelError`
+
+> :warning: experimental
