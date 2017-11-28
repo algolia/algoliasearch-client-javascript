@@ -9,8 +9,8 @@ import { initClient } from 'algoliasearch';
 
 const client = initClient({ appId, apiKey });
 
-client // any client method
-client.requester // clearCache, headers, timeouts
+client; // any client method
+client.requester; // clearCache, headers, timeouts
 ```
 
 ## index
@@ -20,8 +20,8 @@ import { initIndex } from 'algoliasearch';
 
 const index = initIndex({ appId, apiKey, indexName });
 
-index // any index method
-index.requester // clearCache, headers, timeouts
+index; // any index method
+index.requester; // clearCache, headers, timeouts
 ```
 
 ## places
@@ -29,13 +29,13 @@ index.requester // clearCache, headers, timeouts
 ```js
 import { initPlaces } from 'algoliasearch';
 
-let places = initPlaces({ appId, apiKey});
+let places = initPlaces({ appId, apiKey });
 places = initPlaces();
 
 places.search(params, options);
-places.getPlace({objectID,attributesToRetrieve}, options);
-places.getPlaces({objectIDs,attributesToRetrieve}, options);
-places.requester // clearCache, headers, timeouts
+places.getPlace({ objectID, attributesToRetrieve }, options);
+places.getPlaces({ objectIDs, attributesToRetrieve }, options);
+places.requester; // clearCache, headers, timeouts
 ```
 
 ## individual methods
@@ -48,19 +48,17 @@ import { createRequester } from 'algoliasearch-requester';
 const requester = createRequester(opts); // timeouts, headers etc.
 
 // with promise
-search(
-  { query: 'atlenta' },
-  { requester, indexName: 'cities-us' }
-).then(result => console.log(result))
-
-// same with async/await
-(async () => {
+search({ query: 'atlenta' }, { requester, indexName: 'cities-us' }).then(
+  result => console.log(result)
+)(
+  // same with async/await
+  async () => {
     const { hits } = await search(
       { query: 'atlenta' },
       {
         requester,
         indexName: 'cities-us',
-        requestOptions: { timeouts: {} }
+        requestOptions: { timeouts: {} },
       }
     );
   }
@@ -72,61 +70,61 @@ clearIndex({ indexName: 'cities-us' }, { requester });
 
 # methods on client
 
-- `addApiKey`
-- `batch`
-- `clearIndex`
-- `copyIndex`
-- `deleteApiKey`
-- `deleteIndex`
-- `getApiKey`
-- `getLogs`
-- `initIndex`
-- `listApiKeys`
-- `listIndexes`
-- `moveIndex`
-- `search` ➡️ only expose one signature with SearchParams
-- `updateApiKey`
+* `addApiKey`
+* `batch`
+* `clearIndex`
+* `copyIndex`
+* `deleteApiKey`
+* `deleteIndex`
+* `getApiKey`
+* `getLogs`
+* `initIndex`
+* `listApiKeys`
+* `listIndexes`
+* `moveIndex`
+* `search` ➡️ only expose one signature with SearchParams
+* `updateApiKey`
 
 # methods on index
 
-- `addApiKey`
-- `addObject`
-- `addObjects`
-- `batch`
-- `batchRules`
-- `batchSynonyms`
-- `browse`
-- `browseFrom`
-- `clearRules`
-- `clearSynonyms`
-- `deleteApiKey`
-- `deleteObject`
-- `deleteObjects`
-- `deleteRule`
-- `deleteSynonym`
-- `getApiKey`
-- `getObject`
-- `getObjects`
-- `getRule`
-- `getSettings`
-- `getSynonym`
-- `listApiKeys`
-- `partialUpdateObject`
-- `partialUpdateObjects`
-- `saveObject`
-- `saveObjects`
-- `saveRule`
-- `saveSynonym`
-- `search`
-- `searchForFacetValues`
-- `searchRules`
-- `searchSynonyms`
-- `setSettings`
-- `updateApiKey`
+* `addApiKey`
+* `addObject`
+* `addObjects`
+* `batch`
+* `batchRules`
+* `batchSynonyms`
+* `browse`
+* `browseFrom`
+* `clearRules`
+* `clearSynonyms`
+* `deleteApiKey`
+* `deleteObject`
+* `deleteObjects`
+* `deleteRule`
+* `deleteSynonym`
+* `getApiKey`
+* `getObject`
+* `getObjects`
+* `getRule`
+* `getSettings`
+* `getSynonym`
+* `listApiKeys`
+* `partialUpdateObject`
+* `partialUpdateObjects`
+* `saveObject`
+* `saveObjects`
+* `saveRule`
+* `saveSynonym`
+* `search`
+* `searchForFacetValues`
+* `searchRules`
+* `searchSynonyms`
+* `setSettings`
+* `updateApiKey`
 
-Not a direct API method, but still implemented: 
+Not a direct API method, but still implemented:
 
-- `waitTask`
+* `waitTask`
 
 # removed methods
 
@@ -134,32 +132,32 @@ All deprecated methods are removed
 
 ## client
 
-- `ttAdapter`
-- `destroy` ➡️ node nowadays handles that cleanly
-- `addAlgoliaAgent` ➡️ just use `headers`
-- `initIndex` ➡️ just import it
-- `setSecurityTags` ➡️ unused (now possible with requestOptions)
-- `setExtraHeader` ➡️ handled via requestOptions
-- `getExtraHeader` ➡️ handled via requestOptions
-- `unsetExtraHeader` ➡️ handled via requestOptions
-- `setTimeouts` ➡️ handled via requestOptions
-- `setRequestTimeout` ➡️ handled via requestOptions
-- `getTimeouts` ➡️ handled via requestOptions
-- `disableRateLimitForward` ➡️ handled via requestOptions
-- `disableSecuredAPIKey` ➡️ handled via requestOptions
-- `enableRateLimitForward` ➡️ handled via requestOptions
-- `useSecuredAPIKey` ➡️ handled via requestOptions
+* `ttAdapter`
+* `destroy` ➡️ node nowadays handles that cleanly
+* `addAlgoliaAgent` ➡️ just use `headers`
+* `initIndex` ➡️ just import it
+* `setSecurityTags` ➡️ unused (now possible with requestOptions)
+* `setExtraHeader` ➡️ handled via requestOptions
+* `getExtraHeader` ➡️ handled via requestOptions
+* `unsetExtraHeader` ➡️ handled via requestOptions
+* `setTimeouts` ➡️ handled via requestOptions
+* `setRequestTimeout` ➡️ handled via requestOptions
+* `getTimeouts` ➡️ handled via requestOptions
+* `disableRateLimitForward` ➡️ handled via requestOptions
+* `disableSecuredAPIKey` ➡️ handled via requestOptions
+* `enableRateLimitForward` ➡️ handled via requestOptions
+* `useSecuredAPIKey` ➡️ handled via requestOptions
 
 ## index
 
-- `similarSearch` ➡️ `search({similarQuery: 'bla' })`
-- `browseAll` ➡️ separate package
-- `deleteByQuery` ➡️ separate package (maybe API feature?)
+* `similarSearch` ➡️ `search({similarQuery: 'bla' })`
+* `browseAll` ➡️ separate package
+* `deleteByQuery` ➡️ separate package (maybe API feature?)
 
 # other changes
 
-- `generateSecuredApiKey` ➡️ no longer a client method, but a main import
-- `initClient` etc. expose a `requester` for methods like `clearCache`
+* `generateSecuredApiKey` ➡️ no longer a client method, but a main import
+* `initClient` etc. expose a `requester` for methods like `clearCache`
 
 ## Done
 
@@ -169,26 +167,26 @@ Every method that does an API call has as its last argument `requestOptions`. Th
 
 #### options
 
-- headers
-- timeouts
+* headers
+* timeouts
 
-These are available as a last argument on every method, and get applied to the `requester` call. 
+These are available as a last argument on every method, and get applied to the `requester` call.
 
 The header `x-algolia-agent` gets a special case, because it will be merged with the existing `Algolia for JavaScript (version)` header.
 
-The `extraHeaders` and `extraQueryStrings` are available for cases where we have a parameter that isn't documented. For parameters that are known (like `forwardToReplicas` or `forwardedFor`) we decide ourselves to send it as header or query string. 
+The `extraHeaders` and `extraQueryStrings` are available for cases where we have a parameter that isn't documented. For parameters that are known (like `forwardToReplicas` or `forwardedFor`) we decide ourselves to send it as header or query string.
 
 ##### In depth
 
 These options are also available statefully, for options that are relevant for every request:
 
 ```js
-requester.setOptions(current => newOptions)
+requester.setOptions(current => newOptions);
 ```
 
 This leaves the responsibility of merging the state up to the implementer, to stay more flexible.
 
-The requestOptions that are set at a request always have precedence over the static options. To make this more clear, here's a pseudo code example of how the options to apply are calculated: 
+The requestOptions that are set at a request always have precedence over the static options. To make this more clear, here's a pseudo code example of how the options to apply are calculated:
 
 ```js
 import { search } from 'algoliasearch/methods/index';
@@ -244,7 +242,7 @@ const finalOptions = {
 };
 ```
 
-The default extra options will only be the algolia agent: 
+The default extra options will only be the algolia agent:
 
 ```js
 const defaultOptions = {
@@ -309,11 +307,11 @@ search({ requests }, { requester, cache: false });
 
 ## to deprecate for API reasons
 
-- add objects --> use save instead
-- index level API keys
+* add objects --> use save instead
+* index level API keys
 
 ## todo
 
-- write methods with object instead of arguments
-- retry logic needs to have the same RequestOptions as before
-- rename `options` to `requestOptions` and its new syntax ([#589](https://github.com/algolia/algoliasearch-client-javascript/issues/589))
+* write methods with object instead of arguments
+* retry logic needs to have the same RequestOptions as before
+* rename `options` to `requestOptions` and its new syntax ([#589](https://github.com/algolia/algoliasearch-client-javascript/issues/589))

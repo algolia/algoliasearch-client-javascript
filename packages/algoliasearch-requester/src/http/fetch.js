@@ -7,7 +7,7 @@ import parseOptions from '../parseOptions.js';
 import type {
   Response,
   RequesterArgs,
-  RequesterError
+  RequesterError,
 } from 'algoliasearch-requester';
 
 export default function httpRequester({
@@ -16,7 +16,7 @@ export default function httpRequester({
   url,
   requestOptions,
   timeout: originalTimeout,
-  requestType
+  requestType,
 }: RequesterArgs): Promise<Response> {
   const { queryStringOrBody, headers: extraHeaders, timeouts } = parseOptions(
     requestOptions

@@ -71,7 +71,9 @@ export class Requester {
     }
     if (typeof httpRequester !== 'function') {
       throw new Error(
-        `httpRequester is required and should be a function, received ${httpRequester}`
+        `httpRequester is required and should be a function, received ${
+          httpRequester
+        }`
       );
     }
 

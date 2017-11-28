@@ -5,7 +5,7 @@
 - [ ] publish typings
   - [ ] flow
   - [ ] typescript
-- [ ] Ensure `/latest` users won't get V4 on jsDelivr (Ask them to stop updating http://cdn.jsdelivr.net/algoliasearch/latest)
+- [ ] Ensure `/latest` users won't get V4 on jsDelivr (Ask them to stop updating <http://cdn.jsdelivr.net/algoliasearch/latest>)
 - [ ] migration guide
 - [ ] blog post
 
@@ -49,7 +49,7 @@
 - [ ] caching
 - [ ] Fix Flow edgecases
 
-# Environement support
+# Environment support
 - [ ] service workers
 - [ ] angular plugin
 - [ ] proxy support (HTTP_PROXY HTTPS_PROXY=https://user:password@ip.ip.ip.ip env variables)

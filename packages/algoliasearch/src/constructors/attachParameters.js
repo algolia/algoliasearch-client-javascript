@@ -4,8 +4,8 @@
  * Takes an object of functions, adds parameters
  * The functions have two arguments.
  * 1: `args`, for regular arguments, is an object
- * 2: `meta`, for extra arguments. 
- * 
+ * 2: `meta`, for extra arguments.
+ *
  * ```js
  * const originalFunctions = {
  *   something(boo, { color }) {},
@@ -14,7 +14,7 @@
  * const attached = attachParameters(originalFunctions, {
  *   requester() { console.log('hello'); },
  * });
- * 
+ *
  * // attached is now:
  * attached = {
  *   something(boo, { color, requester() { console.log('hello'); } }) {},

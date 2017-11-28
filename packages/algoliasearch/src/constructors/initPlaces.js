@@ -29,7 +29,9 @@ export default function initPlaces(
   ) {
     /* eslint-disable prefer-rest-params */
     throw new Error(
-      `Credentials not valid: you gave an API key (${apiKey}), and appId (${appId})
+      `Credentials not valid: you gave an API key (${apiKey}), and appId (${
+        appId
+      })
 
 initPlaces(${[...arguments].map(arg => JSON.stringify(arg)).join(',')})`
     );

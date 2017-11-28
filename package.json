@@ -6,15 +6,12 @@
     "lint:fix": "eslint . --fix",
     "test:watch": "jest --watch",
     "typecheck": "flow",
-    "test:ci": "yarn test --verbose && yarn typecheck && yarn lint"
+    "test:ci": "yarn test --verbose && yarn typecheck && yarn lint",
+    "format": "prettier --write **/*.{js,css,md}"
   },
-  "workspaces": [
-    "packages/*"
-  ],
+  "workspaces": ["packages/*"],
   "jest": {
-    "projects": [
-      "packages/*"
-    ],
+    "projects": ["packages/*"],
     "testEnvironment": "node"
   },
   "author": "Algolia, Inc. (https://www.algolia.com)",
