@@ -1,5 +1,6 @@
 {
   "name": "algoliasearch-requester",
+  "private": true,
   "version": "4.0.0-beta.1",
   "main": "src/index.js",
   "description": "Algolia Search API JavaScript client requester.",
