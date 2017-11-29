@@ -11,6 +11,6 @@
   "license": "MIT",
   "dependencies": {
     "algoliasearch-errors": "4.0.0-beta.1",
-    "universal-store": "4.0.0-beta.1"
+    "algoliasearch-universal-store": "4.0.0-beta.1"
   }
 }

@@ -1,6 +1,6 @@
 // @flow
 // todo: make jest work with this as a module
-import { createMemoryStore } from '../../universal-store';
+import { createMemoryStore } from '../../algoliasearch-universal-store';
 // todo: import it as a module
 import { AlgoliaError } from '../../algoliasearch-errors';
 import {
@@ -11,7 +11,7 @@ import {
 } from './HostAndTimeoutManager';
 
 import type { AppId, ApiKey } from 'algoliasearch';
-import type { MemoryStore, Data } from 'universal-store';
+import type { MemoryStore, Data } from 'algoliasearch-universal-store';
 import type {
   RequestOptions,
   RequestArguments,
