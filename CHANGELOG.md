@@ -1,4 +1,8 @@
 CHANGELOG
+2017-11-29 3.24.7
+  * don't throw an error when `copyIndex` without scope is used
+    * if no scope is given, `settings`, as the default will be chosen
+
 2017-11-16 3.24.6
   * add `index.exportSynonyms` and `index.exportRules`
     * they will get all of the synonyms or query rules on an index

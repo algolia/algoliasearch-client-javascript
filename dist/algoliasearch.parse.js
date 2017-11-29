@@ -43,7 +43,7 @@ module.exports =
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	
 
@@ -183,9 +183,9 @@ module.exports =
 	}
 
 
-/***/ },
+/***/ }),
 /* 1 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	if (typeof Object.create === 'function') {
 	  // implementation from standard node.js 'util' module
@@ -212,9 +212,9 @@ module.exports =
 	}
 
 
-/***/ },
+/***/ }),
 /* 2 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	
 
@@ -296,9 +296,9 @@ module.exports =
 	};
 
 
-/***/ },
+/***/ }),
 /* 3 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	module.exports = AlgoliaSearch;
 
@@ -375,7 +375,7 @@ module.exports =
 	    callback = scopeOrCallback;
 	  } else if (Array.isArray(scopeOrCallback) && scopeOrCallback.length > 0) {
 	    postObj.scope = scopeOrCallback;
-	  } else {
+	  } else if (typeof scopeOrCallback !== 'undefined') {
 	    throw new Error('the scope given to `copyIndex` was not an array with settings, synonyms or rules');
 	  }
 	  return this._jsonRequest({
@@ -805,9 +805,9 @@ module.exports =
 	}
 
 
-/***/ },
+/***/ }),
 /* 4 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	var inherits = __webpack_require__(1);
 	var IndexCore = __webpack_require__(5);
@@ -2028,9 +2028,9 @@ module.exports =
 	};
 
 
-/***/ },
+/***/ }),
 /* 5 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	var buildSearchMethod = __webpack_require__(6);
 	var deprecate = __webpack_require__(9);
@@ -2417,9 +2417,9 @@ module.exports =
 	IndexCore.prototype.typeAheadValueOption = null;
 
 
-/***/ },
+/***/ }),
 /* 6 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	module.exports = buildSearchMethod;
 
@@ -2490,9 +2490,9 @@ module.exports =
 	}
 
 
-/***/ },
+/***/ }),
 /* 7 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	
 
@@ -2574,9 +2574,9 @@ module.exports =
 	};
 
 
-/***/ },
+/***/ }),
 /* 8 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	
 	var hasOwn = Object.prototype.hasOwnProperty;
@@ -2602,9 +2602,9 @@ module.exports =
 
 
 
-/***/ },
+/***/ }),
 /* 9 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function deprecate(fn, message) {
 	  var warned = false;
@@ -2623,9 +2623,9 @@ module.exports =
 	};
 
 
-/***/ },
+/***/ }),
 /* 10 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function deprecatedMessage(previousUsage, newUsage) {
 	  var githubAnchorLink = previousUsage.toLowerCase()
@@ -2636,9 +2636,9 @@ module.exports =
 	};
 
 
-/***/ },
+/***/ }),
 /* 11 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	var foreach = __webpack_require__(8);
 
@@ -2661,18 +2661,18 @@ module.exports =
 	};
 
 
-/***/ },
+/***/ }),
 /* 12 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function clone(obj) {
 	  return JSON.parse(JSON.stringify(obj));
 	};
 
 
-/***/ },
+/***/ }),
 /* 13 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	module.exports = function omit(obj, test) {
 	  var keys = __webpack_require__(14);
@@ -2690,9 +2690,9 @@ module.exports =
 	};
 
 
-/***/ },
+/***/ }),
 /* 14 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	
 
@@ -2836,9 +2836,9 @@ module.exports =
 	module.exports = keysShim;
 
 
-/***/ },
+/***/ }),
 /* 15 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	
 
@@ -2859,9 +2859,9 @@ module.exports =
 	};
 
 
-/***/ },
+/***/ }),
 /* 16 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	var toString = {}.toString;
 
@@ -2870,9 +2870,9 @@ module.exports =
 	};
 
 
-/***/ },
+/***/ }),
 /* 17 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	var foreach = __webpack_require__(8);
 
@@ -2885,9 +2885,9 @@ module.exports =
 	};
 
 
-/***/ },
+/***/ }),
 /* 18 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	// Parse cloud does not supports setTimeout
 	// We do not store a setTimeout reference in the client everytime
@@ -2898,9 +2898,9 @@ module.exports =
 	};
 
 
-/***/ },
+/***/ }),
 /* 19 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	
 
@@ -2943,15 +2943,15 @@ module.exports =
 	};
 
 
-/***/ },
+/***/ }),
 /* 20 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = require("events");
 
-/***/ },
+/***/ }),
 /* 21 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	module.exports = AlgoliaSearchCore;
 
@@ -3761,9 +3761,9 @@ module.exports =
 	}
 
 
-/***/ },
+/***/ }),
 /* 22 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	var debug = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"debug\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()))('algoliasearch:src/hostIndexState.js');
 	var localStorageNamespace = 'algoliasearch-client-js';
@@ -3853,14 +3853,14 @@ module.exports =
 	}
 
 
-/***/ },
+/***/ }),
 /* 23 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	
 
-	module.exports = '3.24.6';
+	module.exports = '3.24.7';
 
 
-/***/ }
+/***/ })
 /******/ ]);
