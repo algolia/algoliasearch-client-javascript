@@ -1,5 +1,5 @@
 import cases from 'jest-in-case';
-import attachParameters from './attachParameters';
+import attachParameters from './attachParameters.js';
 
 cases(
   'attaches parameters',

@@ -4,7 +4,7 @@
 import https from 'https';
 import zlib from 'zlib';
 
-import parseOptions from '../parseOptions';
+import parseOptions from '../parseOptions.js';
 import type {
   Response,
   RequesterArgs,

@@ -1,6 +1,6 @@
 /* eslint prefer-promise-reject-errors: off */
 
-import { createRequester } from './createRequester';
+import { createRequester } from './createRequester.js';
 
 jest.useFakeTimers();
 

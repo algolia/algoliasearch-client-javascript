@@ -1,11 +1,11 @@
 /* eslint import/namespace: [2, { allowComputed: true }] */
 // @flow
 
-import * as placesMethods from '../methods/places';
 import { createRequester } from 'algoliasearch-requester';
-import attachParameters from './attachParameters';
+import * as placesMethods from '../methods/places/index.js';
+import attachParameters from './attachParameters.js';
 // todo: use a real requester
-import { fakeRequester as httpRequester } from '../testUtils';
+import { fakeRequester as httpRequester } from '../testUtils/index.js';
 
 import type { ApiKey, AppId } from 'algoliasearch';
 import type { RequestMethod, RequesterOptions } from 'algoliasearch-requester';

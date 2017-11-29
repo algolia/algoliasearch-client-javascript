@@ -1,4 +1,4 @@
-import createStore, { createMemoryStore } from './';
+import createStore, { createMemoryStore } from './index.js';
 
 it('will error without namespace', () => {
   expect(() => createStore()).toThrowErrorMatchingSnapshot();

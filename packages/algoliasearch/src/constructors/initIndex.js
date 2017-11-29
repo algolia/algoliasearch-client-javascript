@@ -1,10 +1,10 @@
 // @flow
 
-import * as indexMethods from '../methods/index';
+import * as indexMethods from '../methods/index/index.js';
 import { createRequester } from 'algoliasearch-requester';
-import attachParameters from './attachParameters';
+import attachParameters from './attachParameters.js';
 // todo: use a real requester
-import { fakeRequester as httpRequester } from '../testUtils';
+import { fakeRequester as httpRequester } from '../testUtils/index.js';
 
 import type { IndexMethods, AppId, ApiKey, IndexName } from 'algoliasearch';
 import type { RequesterOptions, RequestMethod } from 'algoliasearch-requester';

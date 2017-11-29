@@ -1,4 +1,4 @@
-import initIndex from './initIndex';
+import initIndex from './initIndex.js';
 
 const validParams = {
   appID: 'some_app',

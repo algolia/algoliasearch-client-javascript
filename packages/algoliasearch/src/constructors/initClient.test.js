@@ -1,5 +1,5 @@
 // @flow
-import initClient from './initClient';
+import initClient from './initClient.js';
 
 const validClientParams = {
   appID: 'some_app',

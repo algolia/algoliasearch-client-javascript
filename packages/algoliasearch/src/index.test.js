@@ -1,4 +1,4 @@
-import algoliasearch from './';
+import algoliasearch from './index.js';
 afterAll(() => {
   process.env = 'test';
 });

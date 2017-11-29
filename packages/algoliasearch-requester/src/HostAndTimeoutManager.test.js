@@ -2,7 +2,7 @@ import {
   getParams,
   hostDidFail,
   hostDidTimeout,
-} from './HostAndTimeoutManager';
+} from './HostAndTimeoutManager.js';
 
 it('gets a host and timeout for read', () => {
   const params = getParams({ appID: 'some_app', requestType: 'read' });

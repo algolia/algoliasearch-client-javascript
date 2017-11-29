@@ -1,5 +1,5 @@
-import { snapshotAll, fakeRequester } from '../../testUtils';
-import getPlaces from './getPlaces';
+import { snapshotAll, fakeRequester } from '../../testUtils/index.js';
+import getPlaces from './getPlaces.js';
 
 it('regular getPlaces', () => {
   const requests = [

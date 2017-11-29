@@ -1,7 +1,7 @@
 /* eslint prefer-promise-reject-errors: off */
 import lolex from 'lolex';
 
-import { createRequester } from './createRequester';
+import { createRequester } from './createRequester.js';
 
 let clock;
 beforeEach(() => {

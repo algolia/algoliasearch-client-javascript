@@ -1,5 +1,5 @@
-import { snapshotAll, fakeRequester } from '../../testUtils';
-import search from './search';
+import { snapshotAll, fakeRequester } from '../../testUtils/index.js';
+import search from './search.js';
 
 it('search', () => {
   const requests = [

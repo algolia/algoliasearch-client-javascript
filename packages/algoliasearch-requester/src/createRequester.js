@@ -6,7 +6,7 @@ import {
   getParams,
   hostDidFail,
   hostDidTimeout,
-} from './HostAndTimeoutManager';
+} from './HostAndTimeoutManager.js';
 
 import type { AppId, ApiKey } from 'algoliasearch';
 import type { MemoryStore, Data } from 'algoliasearch-universal-store';

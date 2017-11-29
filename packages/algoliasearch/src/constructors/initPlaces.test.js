@@ -1,4 +1,4 @@
-import initPlaces from './initPlaces';
+import initPlaces from './initPlaces.js';
 
 it('initPlaces throws when it has an appId', () => {
   expect(() => initPlaces()).not.toThrow();
