@@ -1,8 +1,6 @@
 // @flow
-// todo: make jest work with this as a module
-import { createMemoryStore } from '../../algoliasearch-universal-store';
-// todo: import it as a module
-import { AlgoliaError } from '../../algoliasearch-errors';
+import { createMemoryStore } from 'algoliasearch-universal-store';
+import { AlgoliaError } from 'algoliasearch-errors';
 import {
   initHostAndTimeouts,
   getParams,
@@ -205,12 +203,10 @@ ${JSON.stringify(err)}`)
   };
 }
 
-const createRequester: CreateRequester = function createRequester(args) {
+export const createRequester: CreateRequester = function createRequester(args) {
   const _r = new Requester(args);
   const requester = _r.request;
   requester.setOptions = _r.setOptions;
   requester.options = _r.requestOptions;
   return requester;
 };
-
-export default createRequester;

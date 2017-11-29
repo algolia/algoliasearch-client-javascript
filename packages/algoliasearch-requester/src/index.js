@@ -1,1 +1,1 @@
-export { default } from './createRequester';
+export { createRequester } from './createRequester';

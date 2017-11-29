@@ -1,4 +1,4 @@
-import { AlgoliaError } from '../../../../algoliasearch-errors';
+import { AlgoliaError } from 'algoliasearch-errors';
 
 // todo: make this into a package with the old code
 export default function browseAll(...args) {
