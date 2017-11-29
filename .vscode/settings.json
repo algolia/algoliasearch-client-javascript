@@ -12,5 +12,6 @@
     "yml",
     "json"
   ],
-  "eslint.enable": true
+  "eslint.enable": true,
+  "cSpell.words": ["algoliasearch"]
 }
