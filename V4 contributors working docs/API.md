@@ -312,6 +312,4 @@ search({ requests }, { requester, cache: false });
 
 ## todo
 
-* write methods with object instead of arguments
-* retry logic needs to have the same RequestOptions as before
-* rename `options` to `requestOptions` and its new syntax ([#589](https://github.com/algolia/algoliasearch-client-javascript/issues/589))
+* make sure that RequestOptions are the same on request retry
