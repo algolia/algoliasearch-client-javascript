@@ -217,7 +217,7 @@ it("retries when there's a timeout", async () => {
   ).resolves.toEqual({ bingo: true });
 
   // requester was called twice
-  expect(httpRequester.mock.calls.length).toBe(2);
+  expect(httpRequester.mock.calls).toHaveLength(2);
 });
 
 it('second try after a timeout has increments the timeout (write)', async () => {
