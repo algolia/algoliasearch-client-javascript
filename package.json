@@ -10,13 +10,9 @@
     "format": "prettier --write **/*.{js,css,md}",
     "bootstrap": "lerna bootstrap"
   },
-  "workspaces": [
-    "packages/*"
-  ],
+  "workspaces": ["packages/*"],
   "jest": {
-    "projects": [
-      "packages/*"
-    ],
+    "transformIgnorePatterns": ["/<rootDir>/node_modules/(?!algoliasearch.*)/"],
     "testEnvironment": "node"
   },
   "author": "Algolia, Inc. (https://www.algolia.com)",
