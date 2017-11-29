@@ -127,7 +127,7 @@ export function hostDidTimeout({
   const savedParams = store.get(appID);
   const data: ManagerData = savedParams || initHostAndTimeouts({ appID });
   data.timeoutFailures++;
-  store.set(data);
+  store.set(appID, data);
   hostDidFail({ appID, requestType });
   return data;
 }
@@ -149,6 +149,6 @@ export function hostDidFail({
     noHostsRemaining({ appID, timeoutFailures: data.timeoutFailures });
   }
   data.currentHostIndices[requestType] = index;
-  store.set(data);
+  store.set(appID, data);
   return data;
 }
