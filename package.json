@@ -9,9 +9,13 @@
     "test:ci": "yarn test --verbose && yarn typecheck && yarn lint",
     "format": "prettier --write **/*.{js,css,md}"
   },
-  "workspaces": ["packages/*"],
+  "workspaces": [
+    "packages/*"
+  ],
   "jest": {
-    "projects": ["packages/*"],
+    "projects": [
+      "packages/*"
+    ],
     "testEnvironment": "node"
   },
   "author": "Algolia, Inc. (https://www.algolia.com)",
@@ -30,7 +34,7 @@
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jest": "^21.3.2",
     "eslint-plugin-prettier": "^2.2.0",
-    "flow-bin": "0.55.0",
+    "flow-bin": "0.59.0",
     "jest": "^21.0.1",
     "jest-in-case": "^1.0.2",
     "lolex": "^2.3.1",
