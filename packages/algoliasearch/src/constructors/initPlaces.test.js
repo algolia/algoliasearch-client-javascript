@@ -3,13 +3,13 @@ import initPlaces from './initPlaces';
 it('initPlaces throws when it has an appId', () => {
   expect(() => initPlaces()).not.toThrow();
   expect(() => initPlaces({})).not.toThrow();
-  expect(() => initPlaces({ appId: 'pl-cool', apiKey: 'key' })).not.toThrow();
+  expect(() => initPlaces({ appID: 'pl-cool', apiKey: 'key' })).not.toThrow();
 
   expect(() =>
     initPlaces({ apiKey: 'some_key' })
   ).toThrowErrorMatchingSnapshot();
   expect(() =>
-    initPlaces({ appId: 'some_app' })
+    initPlaces({ appID: 'some_app' })
   ).toThrowErrorMatchingSnapshot();
 });
 

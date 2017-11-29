@@ -7,10 +7,14 @@ Object {
       "query": "hello world",
     },
   },
+  "connectTimeout": 1000,
   "method": "POST",
-  "path": "/1/indexes/some_index/query",
   "requestOptions": undefined,
-  "requestType": "read",
+  "timeout": 2000,
+  "url": Object {
+    "hostname": "some_app-dsn.algolia.net",
+    "pathname": "/1/indexes/some_index/queryundefined",
+  },
 }
 `;
 
@@ -60,11 +64,11 @@ Array [
 exports[`initIndex throws when it has too little parameters 1`] = `
 "An apiKey is required. undefined was not valid.
 
-initIndex({\\"appId\\":\\"\\"})"
+initIndex({\\"appID\\":\\"\\"})"
 `;
 
 exports[`initIndex throws when it has too little parameters 2`] = `
-"An appId is required. undefined was not valid.
+"An appID is required. undefined was not valid.
     
     initIndex({\\"apiKey\\":\\"\\"})"
 `;
@@ -72,5 +76,5 @@ exports[`initIndex throws when it has too little parameters 2`] = `
 exports[`initIndex throws when it has too little parameters 3`] = `
 "An indexName is required. undefined was not valid.
 
-initIndex({\\"apiKey\\":\\"\\",\\"appId\\":\\"\\"})"
+initIndex({\\"apiKey\\":\\"\\",\\"appID\\":\\"\\"})"
 `;

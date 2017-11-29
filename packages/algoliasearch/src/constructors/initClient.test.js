@@ -2,7 +2,7 @@
 import initClient from './initClient';
 
 const validClientParams = {
-  appId: 'some_app',
+  appID: 'some_app',
   apiKey: 'some_key',
 };
 
@@ -10,7 +10,7 @@ it('initClient throws when it has too little parameters', () => {
   // $FlowFixMe --> type disallows this
   expect(() => initClient({})).toThrow();
   // $FlowFixMe --> type disallows this
-  expect(() => initClient({ appId: '' })).toThrowErrorMatchingSnapshot();
+  expect(() => initClient({ appID: '' })).toThrowErrorMatchingSnapshot();
   // $FlowFixMe --> type disallows this
   expect(() => initClient({ apiKey: '' })).toThrowErrorMatchingSnapshot();
 

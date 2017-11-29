@@ -2,8 +2,10 @@
 // @flow
 
 import * as placesMethods from '../methods/places';
-import { createRequester } from '../request';
+import { createRequester } from 'algoliasearch-requester';
 import attachParameters from './attachParameters';
+// todo: use a real requester
+import { fakeRequester as httpRequester } from '../testUtils';
 
 import type { ApiKey, AppId } from 'algoliasearch';
 import type { RequestMethod, RequesterOptions } from 'algoliasearch-requester';
@@ -11,12 +13,12 @@ import type { RequestMethod, RequesterOptions } from 'algoliasearch-requester';
 export default function initPlaces(
   {
     apiKey = '',
-    appId = 'places',
+    appID = 'places',
     requester: extraRequester,
     options,
   }: {
     apiKey?: ApiKey,
-    appId?: AppId,
+    appID?: AppId,
     requester?: RequestMethod,
     options?: RequesterOptions,
   } = {}
@@ -24,13 +26,13 @@ export default function initPlaces(
   // if there's an appId, there should also be an apiKey
   // all other cases are invalid
   if (
-    ((appId === 'places' || appId === '') && apiKey !== '') ||
-    (appId !== 'places' && appId !== '' && apiKey === '')
+    ((appID === 'places' || appID === '') && apiKey !== '') ||
+    (appID !== 'places' && appID !== '' && apiKey === '')
   ) {
     /* eslint-disable prefer-rest-params */
     throw new Error(
-      `Credentials not valid: you gave an API key (${apiKey}), and appId (${
-        appId
+      `Credentials not valid: you gave an API key (${apiKey}), and appID (${
+        appID
       })
 
 initPlaces(${[...arguments].map(arg => JSON.stringify(arg)).join(',')})`
@@ -39,7 +41,7 @@ initPlaces(${[...arguments].map(arg => JSON.stringify(arg)).join(',')})`
   }
   const requester = extraRequester
     ? extraRequester
-    : createRequester({ appId, apiKey, options });
+    : createRequester({ appID, apiKey, options, httpRequester });
 
   return {
     ...attachParameters(placesMethods, { requester }),

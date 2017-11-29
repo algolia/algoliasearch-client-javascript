@@ -10,15 +10,15 @@ Array [
 `;
 
 exports[`initPlaces throws when it has an appId 1`] = `
-"Credentials not valid: you gave an API key (some_key), and appId (places)
+"Credentials not valid: you gave an API key (some_key), and appID (places)
 
 initPlaces({\\"apiKey\\":\\"some_key\\"})"
 `;
 
 exports[`initPlaces throws when it has an appId 2`] = `
-"Credentials not valid: you gave an API key (), and appId (some_app)
+"Credentials not valid: you gave an API key (), and appID (some_app)
 
-initPlaces({\\"appId\\":\\"some_app\\"})"
+initPlaces({\\"appID\\":\\"some_app\\"})"
 `;
 
 exports[`places.search() works 🐣 1`] = `
@@ -28,9 +28,13 @@ Object {
       "query": "hello world",
     },
   },
+  "connectTimeout": 1000,
   "method": "POST",
-  "path": "/1/indexes/places/query",
   "requestOptions": undefined,
-  "requestType": "read",
+  "timeout": 2000,
+  "url": Object {
+    "hostname": "places-dsn.algolia.net",
+    "pathname": "/1/indexes/places/queryundefined",
+  },
 }
 `;
