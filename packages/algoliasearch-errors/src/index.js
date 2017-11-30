@@ -8,6 +8,16 @@ export class AlgoliaError extends Error {
   }
 }
 
+export class AlgoliaRequesterError extends Error {
+  constructor({ message = '', reason, ...more}:{message: string, reason: string /* make into enum */, ...args: any}) {
+    super(message);
+    this.message = message;
+    this.reason = reason;
+    this.name = 'AlgoliaRequesterError';
+    this.more = more;
+  }
+}
+
 export const pluralError = (methodName: string) =>
   new AlgoliaError(`The method "${
     methodName

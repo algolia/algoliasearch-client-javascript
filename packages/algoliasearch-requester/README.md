@@ -152,29 +152,29 @@ A promise that will `resolve` with the results of the Algolia API without modify
 
 If `status / 100 === 2`, you `resolve` the promise with the results from the API call without modifying.
 
-#### `reject({ reason: 'timeout' })` (retries)
+#### `reject(new AlgoliaRequesterError({ reason: 'timeout' }))` (retries)
 
 When either the `connectTimeout` has been reached before any data was retrieved, or the `timeout` has been reached before the data has been retrieved correctly, you should `reject` with `{ reason: 'timeout' }`.
 
 The API client will then retry the same request on a different host, with an increased timeout.
 
-### `reject({ reason: 'client' })` (doesn't retry)
+### `reject(new AlgoliaRequesterError({ reason: 'client' }))` (doesn't retry)
 
 If `Math.floor(status / 100) === 4` (so if the code is 4XX), there is something wrong with the request done, and it doesn't need to be retried.
 
 The API client will throw this as an error and not retry the request.
 
-### `reject({ reason: 'server' })` (retries)
+### `reject(new AlgoliaRequesterError({ reason: 'server' }))` (retries)
 
 If `Math.floor(status / 100) !== 4 && Math.floor(status / 100) !== 2` (so if the code is any other than 2XX and 4XX), there is something wrong with the server you're trying.
 
-#### `reject({ reason: 'network' })` (retries)
+#### `reject(new AlgoliaRequesterError({ reason: 'network' }))` (retries)
 
 If the network failed for some reason, for example if the device is offline or because dns couldn't be resolved, you `reject` with `{ reason: 'network' }` and with all other available data from your host environment also in that object (make sure you don't accidentally overwrite the `reason` key).
 
 The API client will then retry the same request on a different host.
 
-#### `reject({ reason 'fatal' })` (doesn't retry)
+#### `reject(new AlgoliaRequesterError({ reason 'fatal' }))` (doesn't retry)
 
 There should normally be no other cases to handle as `httpRequester`. As a last resort when things go really bad, you can also reject with `{ reason: 'fatal' }`
 

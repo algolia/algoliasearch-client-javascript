@@ -40,6 +40,7 @@
   - `import algoliasearch from 'algoliasearch'; algoliasearch(); // logs explanation`
   - [ ] tested in all bundlers and situations
   - [ ] strip it out mostly in prod
+- [ ] use `AlgoliaRequesterError` for retry strategy
 
 # Tests
 - [ ] ensure it works in different flavours
