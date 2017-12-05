@@ -9,7 +9,15 @@ export class AlgoliaError extends Error {
 }
 
 export class AlgoliaRequesterError extends Error {
-  constructor({ message = '', reason, ...more}:{message: string, reason: string /* make into enum */, ...args: any}) {
+  constructor({
+    message = '',
+    reason,
+    ...more
+  }: {
+    message: string,
+    reason: string /* make into enum */,
+    more: any,
+  }) {
     super(message);
     this.message = message;
     this.reason = reason;
@@ -19,9 +27,7 @@ export class AlgoliaRequesterError extends Error {
 }
 
 export const pluralError = (methodName: string) =>
-  new AlgoliaError(`The method "${
-    methodName
-  }s" can only be called with an array of values,
+  new AlgoliaError(`The method "${methodName}s" can only be called with an array of values,
 please wrap this in an array:
 
 ${methodName}s(value) --> ${methodName}s([value])

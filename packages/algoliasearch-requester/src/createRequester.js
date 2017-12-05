@@ -70,9 +70,7 @@ export class Requester {
     }
     if (typeof httpRequester !== 'function') {
       throw new AlgoliaError(
-        `httpRequester is required and should be a function, received ${
-          httpRequester
-        }`
+        `httpRequester is required and should be a function, received ${httpRequester}`
       );
     }
 
