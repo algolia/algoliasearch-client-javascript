@@ -58,7 +58,7 @@ search({ query: 'atlenta' }, { requester, indexName: 'cities-us' }).then(
       {
         requester,
         indexName: 'cities-us',
-        requestOptions: { timeouts: {} }
+        requestOptions: { timeouts: {} },
       }
     );
   }
@@ -196,16 +196,16 @@ const staticOptions = {
   algoliaAgent: 'Algolia for JavaScript Lite (4.0.0-beta.1)',
   extraHeaders: {
     'X-Clacks-Overhead': 'Haha, nothing at all!',
-    'X-Dress-Colour': 'White and Gold'
-  }
+    'X-Dress-Colour': 'White and Gold',
+  },
 };
 
 const requestOptions = {
   algoliaAgent: 'Algolia for VueJS (0.4.0)',
   extraHeaders: {
     'X-Clacks-Overhead': 'GNU Terry Pratchett',
-    'X-Forwarded-For': 'https://algolia.com/'
-  }
+    'X-Forwarded-For': 'https://algolia.com/',
+  },
 };
 
 const requester = createRequester();
@@ -215,7 +215,7 @@ const requester = createRequester();
 // so that is something to keep in mind while implementing
 requester.setOptions(current => ({
   ...current,
-  staticOptions
+  staticOptions,
 }));
 
 search(
@@ -224,8 +224,8 @@ search(
     requester,
     indexName: 'cities-us',
     requestOptions: {
-      'X-Even-One-More': 'Ugh, I hate headers'
-    }
+      'X-Even-One-More': 'Ugh, I hate headers',
+    },
   }
 );
 
@@ -237,8 +237,8 @@ const finalOptions = {
     'X-Clacks-Overhead': 'GNU Terry Pratchett',
     'X-Forwarded-For': 'https://algolia.com/',
     'X-Dress-Colour': 'White and Gold',
-    'X-Even-One-More': 'Ugh, I hate headers'
-  }
+    'X-Even-One-More': 'Ugh, I hate headers',
+  },
 };
 ```
 
@@ -246,7 +246,7 @@ The default extra options will only be the algolia agent:
 
 ```js
 const defaultOptions = {
-  algoliaAgent: 'Algolia for JavaScript (4.0.0-beta.1)'
+  algoliaAgent: 'Algolia for JavaScript (4.0.0-beta.1)',
 };
 ```
 
