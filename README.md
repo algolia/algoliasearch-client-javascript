@@ -277,7 +277,7 @@ The request strategy used by the JavaScript client includes:
 - On the browser:
   + [CORS](https://en.wikipedia.org/wiki/Cross-Origin_Resource_Sharing#Browser_support) for modern browsers
   + [XDomainRequest](https://msdn.microsoft.com/en-us/library/ie/cc288060%28v=vs.85%29.aspx) for IE <= 10
-  + [JSONP](https://en.wikipedia.org/wiki/JSONP) in any situation where Ajax requests are unavailabe or blocked.
+  + [JSONP](https://en.wikipedia.org/wiki/JSONP) in any situation where Ajax requests are unavailable or blocked.
 - Node.js:
   + native [`http` module](https://nodejs.org/api/)
 
