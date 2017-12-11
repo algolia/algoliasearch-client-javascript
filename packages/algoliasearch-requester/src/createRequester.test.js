@@ -1,6 +1,5 @@
-/* eslint prefer-promise-reject-errors: off */
-
 import { createRequester } from './createRequester.js';
+import { AlgoliaRequesterError } from 'algoliasearch-errors';
 
 jest.useFakeTimers();
 
@@ -73,7 +72,7 @@ it('uses a different host when the request needs to be retried', async () => {
   const httpRequester = jest.fn(
     () =>
       httpRequester.mock.calls.length === 1
-        ? Promise.reject({ reason: 'network' })
+        ? Promise.reject(new AlgoliaRequesterError({ reason: 'network' }))
         : Promise.resolve()
   );
   const requester = createRequester({
@@ -100,7 +99,7 @@ it('uses the "up" host on second request when first fails', async () => {
   const httpRequester = jest.fn(
     () =>
       httpRequester.mock.calls.length === 1
-        ? Promise.reject({ reason: 'network' })
+        ? Promise.reject(new AlgoliaRequesterError({ reason: 'network' }))
         : Promise.resolve()
   );
   const requester = createRequester({
@@ -146,9 +145,11 @@ it("retries when there's a server error", async () => {
   const httpRequester = jest.fn(
     () =>
       httpRequester.mock.calls.length === 1
-        ? Promise.reject({
-            reason: 'server',
-          })
+        ? Promise.reject(
+            new AlgoliaRequesterError({
+              reason: 'server',
+            })
+          )
         : Promise.resolve({ cool: 'turbo' })
   );
   const requester = createRequester({
@@ -172,9 +173,11 @@ it("retries when there's a network error", async () => {
   const httpRequester = jest.fn(
     () =>
       httpRequester.mock.calls.length === 1
-        ? Promise.reject({
-            reason: 'network',
-          })
+        ? Promise.reject(
+            new AlgoliaRequesterError({
+              reason: 'network',
+            })
+          )
         : Promise.resolve({})
   );
   const requester = createRequester({
@@ -198,9 +201,11 @@ it("retries when there's a timeout", async () => {
   const httpRequester = jest.fn(
     () =>
       httpRequester.mock.calls.length === 1
-        ? Promise.reject({
-            reason: 'timeout',
-          })
+        ? Promise.reject(
+            new AlgoliaRequesterError({
+              reason: 'timeout',
+            })
+          )
         : Promise.resolve({ bingo: true })
   );
   const requester = createRequester({
@@ -224,9 +229,11 @@ it('second try after a timeout has increments the timeout (write)', async () => 
   const httpRequester = jest.fn(
     () =>
       httpRequester.mock.calls.length === 1
-        ? Promise.reject({
-            reason: 'timeout',
-          })
+        ? Promise.reject(
+            new AlgoliaRequesterError({
+              reason: 'timeout',
+            })
+          )
         : Promise.resolve({})
   );
   const requester = createRequester({
@@ -250,9 +257,11 @@ it('second try after a timeout has increments the timeout (read)', async () => {
   const httpRequester = jest.fn(
     () =>
       httpRequester.mock.calls.length === 1
-        ? Promise.reject({
-            reason: 'timeout',
-          })
+        ? Promise.reject(
+            new AlgoliaRequesterError({
+              reason: 'timeout',
+            })
+          )
         : Promise.resolve({})
   );
   const requester = createRequester({
@@ -276,9 +285,11 @@ it('rejects when all timeouts are reached', async () => {
   const httpRequester = jest.fn(
     () =>
       httpRequester.mock.calls.length <= 4
-        ? Promise.reject({
-            reason: 'timeout',
-          })
+        ? Promise.reject(
+            new AlgoliaRequesterError({
+              reason: 'timeout',
+            })
+          )
         : Promise.resolve({})
   );
   const requester = createRequester({
