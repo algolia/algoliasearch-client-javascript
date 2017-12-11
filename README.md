@@ -1,7 +1,6 @@
 # Algolia Search API Client for JavaScript
 
-[Algolia Search](https://www.algolia.com) is a hosted full-text, numerical, and faceted search engine capable of delivering realtime results from the first keystroke.
-The **Algolia Search API Client for JavaScript** lets you easily use the [Algolia Search REST API](https://www.algolia.com/doc/rest-api/search) from your JavaScript code.
+[Algolia Search](https://www.algolia.com) is a hosted full-text, numerical, and faceted search engine capable of delivering realtime results from the first keystroke. The **Algolia Search API Client for JavaScript** lets you easily use the [Algolia Search REST API](https://www.algolia.com/doc/rest-api/search) from your JavaScript code.
 
 [![Version][version-svg]][package-url] [![Build Status][travis-svg]][travis-url] [![License][license-image]][license-url] [![Downloads][downloads-image]][downloads-url]
 
@@ -18,60 +17,47 @@ The **Algolia Search API Client for JavaScript** lets you easily use the [Algoli
 [version-svg]: https://img.shields.io/npm/v/algoliasearch.svg?style=flat-square
 [package-url]: https://npmjs.org/package/algoliasearch
 
-
 The JavaScript client works both on the frontend (browsers) or on the backend (Node.js) with the same API.
 
 The backend (Node.js) API can be used to index your data using your Algolia admin API keys.
 
-Our JavaScript library is [UMD](https://github.com/umdjs/umd) compatible, you can
-use it with any module loader.
+Our JavaScript library is [UMD](https://github.com/umdjs/umd) compatible, you can use it with any module loader.
 
 When not using any module loader, it will export an `algoliasearch` function in the `window` object.
-
-
-
 
 ## API Documentation
 
 You can find the full reference on [Algolia's website](https://www.algolia.com/doc/api-client/javascript/).
 
-
 ## Table of Contents
-
 
 1. **[Install](#install)**
 
-    * [Frontend](#frontend)
-    * [Node.js / React Native / Browserify / webpack](#nodejs--react-native--browserify--webpack)
-    * [TypeScript typings](#typescript-typings)
-    * [Bower](#bower)
-    * [&lt;script&gt; tag using CDNs](#script-tag-using-cdns)
-    * [Search only/lite client](#search-onlylite-client)
+   * [Frontend](#frontend)
+   * [Node.js / React Native / Browserify / webpack](#nodejs--react-native--browserify--webpack)
+   * [TypeScript typings](#typescript-typings)
+   * [Bower](#bower)
+   * [&lt;script&gt; tag using CDNs](#script-tag-using-cdns)
+   * [Search only/lite client](#search-onlylite-client)
 
 1. **[Quick Start](#quick-start)**
 
-    * [Initialize the client](#initialize-the-client)
-    * [Push data](#push-data)
-    * [Search](#search)
-    * [Configure](#configure)
-    * [Client options](#client-options)
-    * [Callback convention](#callback-convention)
-    * [Promises](#promises)
-    * [Request strategy](#request-strategy)
-    * [Cache](#cache)
-    * [Proxy support](#proxy-support)
-    * [Keep-alive](#keep-alive)
-    * [Debugging](#debugging)
+   * [Initialize the client](#initialize-the-client)
+   * [Push data](#push-data)
+   * [Search](#search)
+   * [Configure](#configure)
+   * [Client options](#client-options)
+   * [Callback convention](#callback-convention)
+   * [Promises](#promises)
+   * [Request strategy](#request-strategy)
+   * [Cache](#cache)
+   * [Proxy support](#proxy-support)
+   * [Keep-alive](#keep-alive)
+   * [Debugging](#debugging)
 
 1. **[Getting Help](#getting-help)**
 
-
-
-
-
 # Getting Started
-
-
 
 ## Install
 
@@ -116,13 +102,13 @@ To include the latest releases and all upcoming features and patches, use this:
 ##### Other CDNS
 
 We recommend using jsDelivr, but `algoliasearch` is also available at:
-- [CDNJS](https://cdnjs.com/libraries/algoliasearch)
-- [unpkg](https://unpkg.com): https://unpkg.com/algoliasearch@3/dist/algoliasearch.min.js
+
+* [CDNJS](https://cdnjs.com/libraries/algoliasearch)
+* [unpkg](https://unpkg.com): https://unpkg.com/algoliasearch@3/dist/algoliasearch.min.js
 
 #### Search only/lite client
 
-We have a lightweight build available that can only do searches. Use it when filesize
-is important to you or if you like to include only what you need.
+We have a lightweight build available that can only do searches. Use it when filesize is important to you or if you like to include only what you need.
 
 Find it on jsDelivr:
 
@@ -136,8 +122,7 @@ In 30 seconds, this quick start tutorial will show you how to index and search o
 
 ### Initialize the client
 
-You first need to initialize the client. For that you need your **Application ID** and **API Key**.
-You can find both of them on [your Algolia account](https://www.algolia.com/api-keys).
+You first need to initialize the client. For that you need your **Application ID** and **API Key**. You can find both of them on [your Algolia account](https://www.algolia.com/api-keys).
 
 ```js
 // var algoliasearch = require('algoliasearch');
@@ -196,63 +181,67 @@ index.search('jimmie paint', function(err, content) {
 Settings can be customized to tune the search behavior. For example, you can add a custom sort by number of followers to the already great built-in relevance:
 
 ```js
-index.setSettings({
-  'customRanking': ['desc(followers)']
-}, function(err, content) {
-  console.log(content);
-});
+index.setSettings(
+  {
+    customRanking: ['desc(followers)'],
+  },
+  function(err, content) {
+    console.log(content);
+  }
+);
 ```
 
 You can also configure the list of attributes you want to index by order of importance (first = most important):
 
-**Note:** Since the engine is designed to suggest results as you type, you'll generally search by prefix.
-In this case the order of attributes is very important to decide which hit is the best:
+**Note:** Since the engine is designed to suggest results as you type, you'll generally search by prefix. In this case the order of attributes is very important to decide which hit is the best:
 
 ```js
-index.setSettings({
-  'searchableAttributes': [
-    'lastname',
-    'firstname',
-    'company',
-    'email',
-    'city',
-    'address'
-  ]
-}, function(err, content) {
-  console.log(content);
-});
+index.setSettings(
+  {
+    searchableAttributes: [
+      'lastname',
+      'firstname',
+      'company',
+      'email',
+      'city',
+      'address',
+    ],
+  },
+  function(err, content) {
+    console.log(content);
+  }
+);
 ```
 
 ### Client options
 
-In most situations, there is no need to tune the options. We provide this list to be
-transparent with our users.
+In most situations, there is no need to tune the options. We provide this list to be transparent with our users.
 
-- `hosts.read` ([String]) array of read hosts to use to call Algolia servers, computed automatically
-- `hosts.write` ([String]) array of write hosts to use to call Algolia servers, computed automatically
-- `
-- `httpAgent` ([HttpAgent](https://nodejs.org/api/http.html#http_class_http_agent)) <sup>node-only</sup> Node.js httpAgent instance to use when communicating with Algolia servers.
+* `hosts.read` ([String]) array of read hosts to use to call Algolia servers, computed automatically
+* `hosts.write` ([String]) array of write hosts to use to call Algolia servers, computed automatically
+* `
+* `httpAgent` ([HttpAgent](https://nodejs.org/api/http.html#http_class_http_agent)) <sup>node-only</sup> Node.js httpAgent instance to use when communicating with Algolia servers.
 
 To pass an option, use:
 
 ```js
-const client = initClient({appId, apiKey, options: { cache: true }})
-const index = initIndex({appId, apiKey, indexName, options: { cache: true }})
+const client = initClient({ appId, apiKey, options: { cache: true } });
+const index = initIndex({ appId, apiKey, indexName, options: { cache: true } });
 ```
 
 ### Promises
 
-All methods are asynchronous, and return a Promise, which you can use to 
+All methods are asynchronous, and return a Promise, which you can use to
 
 ### Request strategy
 
 The request strategy used by the JavaScript client includes:
 
-- On the browser:
-  + [CORS](https://en.wikipedia.org/wiki/Cross-Origin_Resource_Sharing#Browser_support) for modern browsers
-  + [JSONP](https://en.wikipedia.org/wiki/JSONP) in any situation where Ajax requests are unavailabe or blocked.
-- Node.js:
-  + native [`https` module](https://nodejs.org/api/)
+* On the browser:
+  * [CORS](https://en.wikipedia.org/wiki/Cross-Origin_Resource_Sharing#Browser_support) for modern browsers
+  * [JSONP](https://en.wikipedia.org/wiki/JSONP) in any situation where Ajax requests are unavailabe or blocked.
+* Node.js:
+  * native [`https` module](https://nodejs.org/api/)
 
 Connections are always `keep-alive`.
 
@@ -260,28 +249,15 @@ Connections are always `keep-alive`.
 
 **Browser only**
 
-To avoid performing the same API calls twice **search** results will be stored
-in a `cache` that will be tied to your JavaScript `client` and `index` objects.
-Whenever a call for a specific query (and filters) is made, we store the results
-in a local cache. If you ever call the exact same query again, we read the
-results from the cache instead of doing an API call.
+To avoid performing the same API calls twice **search** results will be stored in a `cache` that will be tied to your JavaScript `client` and `index` objects. Whenever a call for a specific query (and filters) is made, we store the results in a local cache. If you ever call the exact same query again, we read the results from the cache instead of doing an API call.
 
-The cache is disabled by default, but can be enabled with `{cache: true}` in the 
-options when creating a `client`, `index` or `requester`.
+The cache is disabled by default, but can be enabled with `{cache: true}` in the options when creating a `client`, `index` or `requester`.
 
-This is particularly useful when your users are deleting characters from their
-current query, to avoid useless API calls. Because it is stored as a simple
-JavaScript object in memory, the cache is automatically reset whenever you
-reload the page.
+This is particularly useful when your users are deleting characters from their current query, to avoid useless API calls. Because it is stored as a simple JavaScript object in memory, the cache is automatically reset whenever you reload the page.
 
-It is never automatically purged, nor can it be completely disabled. Instead, we
-provide the `requester.clearCache()` method that you can call to reset it. The 
-`requester` is available on a `client` and `index` instance.
+It is never automatically purged, nor can it be completely disabled. Instead, we provide the `requester.clearCache()` method that you can call to reset it. The `requester` is available on a `client` and `index` instance.
 
 ## Getting Help
 
-- **Need help**? Ask a question to the [Algolia Community](https://discourse.algolia.com/) or on [Stack Overflow](http://stackoverflow.com/questions/tagged/algolia).
-- **Found a bug?** You can open a [GitHub issue](https://github.com/algolia/algoliasearch-client-javascript/issues).
-
-
-
+* **Need help**? Ask a question to the [Algolia Community](https://discourse.algolia.com/) or on [Stack Overflow](http://stackoverflow.com/questions/tagged/algolia).
+* **Found a bug?** You can open a [GitHub issue](https://github.com/algolia/algoliasearch-client-javascript/issues).
