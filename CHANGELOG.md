@@ -358,7 +358,7 @@ When required in a node context, we may load the browser build without using it.
 
 2015-06-17 3.6.2
 
-* chore: add window.__algolia for easy debugging anywhere
+* chore: add window.\_\_algolia for easy debugging anywhere
 
 2015-06-16 3.6.1
 

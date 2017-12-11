@@ -6,8 +6,9 @@
     "lint:fix": "eslint . --fix",
     "test:watch": "jest --watch",
     "typecheck": "flow",
+    "fetch-typedefs": "flow-typed install",
     "test:ci": "yarn test --verbose && yarn typecheck && yarn lint",
-    "format": "prettier --write **/*.{js,css,md}",
+    "format": "prettier --write {**/*.{js,css,md},*.md}",
     "bootstrap": "lerna bootstrap"
   },
   "workspaces": [
@@ -36,6 +37,7 @@
     "eslint-plugin-jest": "^21.4.2",
     "eslint-plugin-prettier": "^2.2.0",
     "flow-bin": "0.61.0",
+    "flow-typed": "^2.2.3",
     "jest": "^21.0.1",
     "jest-in-case": "^1.0.2",
     "lerna": "^2.5.1",
