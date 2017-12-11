@@ -19,4 +19,4 @@ module.name_mapper='^types/\(.*\)$' -> '<PROJECT_ROOT>/types/\1.js'
 module.name_mapper='\(algoliasearch[-^/]*\)' -> '<PROJECT_ROOT>/packages/\1/src/types.js'
 
 [version]
-0.59.0
+0.61.0

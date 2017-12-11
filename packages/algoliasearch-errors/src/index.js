@@ -9,6 +9,10 @@ export class AlgoliaError extends Error {
 }
 
 export class AlgoliaRequesterError extends Error {
+  name: string;
+  reason: string;
+  more: any;
+
   constructor({
     message = '',
     reason,
