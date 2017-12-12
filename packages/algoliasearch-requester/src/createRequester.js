@@ -9,7 +9,7 @@ import {
 } from './HostAndTimeoutManager.js';
 
 import type { AppId, ApiKey } from 'algoliasearch';
-import type { MemoryStore, Data } from 'algoliasearch-universal-store';
+import type { Store, Data } from 'algoliasearch-universal-store';
 import type {
   RequestOptions,
   RequestArguments,
@@ -39,7 +39,7 @@ export class Requester {
   requestOptions: RequestOptions;
   requester: HttpModule;
   cache: boolean;
-  store: MemoryStore;
+  store: Store<string, Data>;
 
   constructor({
     appID,
@@ -99,13 +99,15 @@ export class Requester {
     if (this.cache) {
       return this.store.set(key, data);
     }
+
     return data;
   }
 
-  getFromCache(key: string): ?Object {
+  getFromCache(key: string): ?Data {
     if (this.cache) {
       return this.store.get(key);
     }
+
     return undefined;
   }
 
