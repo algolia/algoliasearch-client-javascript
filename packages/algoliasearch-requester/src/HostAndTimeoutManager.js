@@ -21,9 +21,9 @@ const store = createStore('algoliasearch-host-and-timeouts');
 
 function noHostsRemaining({ appID }) {
   initHostAndTimeouts({ appID });
-  throw new Error(`There are no hosts remaining for this app. 
+  throw new Error(`There are no hosts remaining for this app.
 
-You can retry this search, and it will try the hosts again. 
+You can retry this search, and it will try the hosts again.
 
 appID: ${appID}
 
