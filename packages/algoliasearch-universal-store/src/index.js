@@ -4,7 +4,7 @@ type JSONKey = string | number | boolean;
 type JSONValue = string | number | boolean | null;
 
 export type Data = {
-  [key: JSONKey]: JSONValue | Data,
+  [key: JSONKey]: JSONValue | JSONValue[] | Data | Data[],
 };
 
 type State<K, V> = {
