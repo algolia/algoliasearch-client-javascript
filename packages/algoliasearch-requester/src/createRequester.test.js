@@ -317,9 +317,11 @@ it('rejects when all timeouts are reached', async () => {
 
 it('rejects when all hosts are used', () => {
   const httpRequester = jest.fn(() =>
-    Promise.reject({
-      reason: 'network',
-    })
+    Promise.reject(
+      new AlgoliaRequesterError({
+        reason: 'network',
+      })
+    )
   );
   const requester = createRequester({
     appID: 'the_host_app',
@@ -339,9 +341,11 @@ it('uses the first host again after running out of hosts', async () => {
   const httpRequester = jest.fn(
     () =>
       httpRequester.mock.calls.length <= 4 /* the request completely fails */
-        ? Promise.reject({
-            reason: 'network',
-          })
+        ? Promise.reject(
+            new AlgoliaRequesterError({
+              reason: 'network',
+            })
+          )
         : Promise.resolve({})
   );
   const requester = createRequester({
@@ -372,7 +376,7 @@ it('two instances of createRequester share the same host index', async () => {
   const httpRequester = jest.fn(
     () =>
       httpRequester.mock.calls.length === 1
-        ? Promise.reject({ reason: 'network' })
+        ? Promise.reject(new AlgoliaRequesterError({ reason: 'network' }))
         : Promise.resolve()
   );
 
