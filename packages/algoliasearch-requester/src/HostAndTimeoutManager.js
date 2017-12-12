@@ -8,7 +8,9 @@ type ManagerData = {
   hosts: Hosts,
   timeouts: Timeouts,
   currentHostIndices: {|
-    [key: RequestType]: number,
+    // [key: RequestType]: number,
+    read: number,
+    write: number,
   |},
   timeoutFailures: number,
   expirations: {
