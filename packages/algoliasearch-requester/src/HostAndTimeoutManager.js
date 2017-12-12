@@ -21,9 +21,9 @@ const store = createStore('algoliasearch-host-and-timeouts');
 
 function noHostsRemaining({ appID }) {
   initHostAndTimeouts({ appID });
-  throw new Error(`There are no hosts remaining for this app. 
+  throw new Error(`There are no hosts remaining for this app.
 
-You can retry this search, and it will try the hosts again. 
+You can retry this search, and it will try the hosts again.
 
 appID: ${appID}
 
@@ -65,7 +65,7 @@ export function initHostAndTimeouts({
 }): ManagerData {
   const hosts = providedHosts || computeRegularHosts(appID);
 
-  const data = {
+  const data: ManagerData = {
     hosts,
     timeouts: { ...DEFAULT_TIMEOUTS, ...timeouts },
     currentHostIndices: {
@@ -78,8 +78,10 @@ export function initHostAndTimeouts({
       timeout: Date.now() + TIMEOUT_INVALIDATION,
     },
   };
+
   store.set(appID, data);
-  return store.get(appID);
+
+  return data;
 }
 
 export function getParams({
@@ -94,6 +96,7 @@ export function getParams({
       'the request requestType (`requestType`) must be `read` or `write`'
     );
   }
+
   const savedParams = store.get(appID);
   const data: ManagerData = savedParams || initHostAndTimeouts({ appID });
 

@@ -2,43 +2,51 @@
 
 type JSONKey = string | number | boolean;
 type JSONValue = string | number | boolean | null;
-export type Data = {
-  [key: JSONKey]: JSONValue | JSONValue[],
-}; // todo: how to make this an opaque type thing where you can give a more specific type that still validates this without spending a lot of time on testing if the data is possible
-type Store = { [key: string]: Data };
 
-export type MemoryStore = {
-  set: (key: string, data: Data) => Data,
-  get: (key: string) => ?Data,
-  clear: () => Store,
+export type Data = {
+  [key: JSONKey]: JSONValue | Data,
 };
-export function createMemoryStore(): MemoryStore {
-  let state = {};
+
+type State<K, V> = {
+  [key: K]: V,
+};
+
+export type Store<K, V> = {
+  set: (key: K, data: V) => V,
+  get: (key: K) => ?V,
+  clear: () => State<K, V>,
+};
+
+export function createMemoryStore<K, V>(): Store<K, V> {
+  let state: State<K, V> = {};
+
   return {
-    set(key: string, data: Data): Data {
+    set(key: K, data: V): V {
       state[key] = data;
       return state[key];
     },
-    get(key: string): ?Data {
+    get(key: K): ?V {
       return state[key];
     },
-    clear(): Store {
+    clear(): State<K, V> {
       state = {};
       return state;
     },
   };
 }
 
-function createLocalStorageStore(namespace: string, memoryStore) {
-  function localStorageFailure(key: string, e): ?Data {
+function createLocalStorageStore<K, V>(
+  namespace: string,
+  memoryStore: Store<K, V>
+): Store<K, V> {
+  function localStorageFailure(key: K, data: V, e): void {
     // eslint-disable-next-line no-console
     console.warn(e); // debug
     cleanup(namespace);
-    return memoryStore.get(key);
   }
 
   return {
-    set(key: string, data: Data): ?Data {
+    set(key: K, data: V): V {
       memoryStore.set(key, data); // always replicate localStorageStore to memoryStore in case of failure
 
       try {
@@ -47,18 +55,23 @@ function createLocalStorageStore(namespace: string, memoryStore) {
         localStorage.setItem(namespace, JSON.stringify(result));
         return data;
       } catch (e) {
-        return localStorageFailure(key, e);
+        localStorageFailure(key, e);
+        return data;
       }
     },
-    get(key: string): ?Data {
+
+    get(key: K): ?V {
       try {
         return JSON.parse(localStorage.getItem(namespace) || '{}')[key];
       } catch (e) {
-        return localStorageFailure(key, e);
+        localStorageFailure(key, e);
+        return memoryStore.get(key);
       }
     },
-    clear(): Store {
+
+    clear(): State<K, V> {
       cleanup(namespace);
+
       return memoryStore.clear();
     },
   };
@@ -94,13 +107,14 @@ function cleanup(namespace: string) {
   }
 }
 
-export type DataStore = {
-  set: (key: string, data: Data) => ?Data,
-  get: (key: string) => ?Data,
-  clear: () => Store,
+export type DataStore<K, V> = {
+  set: (key: K, data: V) => V,
+  get: (key: K) => ?V,
+  clear: () => State<K, V>,
   supportsLocalStorage: () => boolean,
 };
-export default function createStore(namespace: string): DataStore {
+
+export default function createStore<K, V>(namespace: string): DataStore<K, V> {
   if (typeof namespace !== 'string' || namespace === '') {
     throw new Error(
       `The namespace should be a string, received "${namespace}"`
@@ -112,8 +126,8 @@ export default function createStore(namespace: string): DataStore {
     : memoryStore;
 
   return {
-    get: (key: string) => store.get(key),
-    set: (key: string, data: Data) => store.set(key, data),
+    get: (key: K) => store.get(key),
+    set: (key: K, data: V) => store.set(key, data),
     clear: () => store.clear(),
     supportsLocalStorage: () => supportsLocalStorage(namespace),
   };
