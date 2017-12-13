@@ -5,7 +5,7 @@ module.exports = [{
   object: 'client',
   methodName: 'listClusters',
   callArguments: [undefined],
-  action: 'write',
+  action: 'read',
   expectedRequest: {
     method: 'GET',
     URL: {pathname: '/1/clusters'}

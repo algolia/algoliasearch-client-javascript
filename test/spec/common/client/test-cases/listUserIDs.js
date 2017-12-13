@@ -5,7 +5,7 @@ module.exports = [{
   object: 'client',
   methodName: 'listUserIDs',
   callArguments: [undefined],
-  action: 'write',
+  action: 'read',
   expectedRequest: {
     method: 'GET',
     body: undefined,
@@ -16,7 +16,7 @@ module.exports = [{
   object: 'client',
   methodName: 'listUserIDs',
   callArguments: [{page: 5}],
-  action: 'write',
+  action: 'read',
   expectedRequest: {
     method: 'GET',
     body: {page: 5},
@@ -27,7 +27,7 @@ module.exports = [{
   object: 'client',
   methodName: 'listUserIDs',
   callArguments: [{page: 5, hitsPerPage: 3}],
-  action: 'write',
+  action: 'read',
   expectedRequest: {
     method: 'GET',
     body: {page: 5, hitsPerPage: 3},

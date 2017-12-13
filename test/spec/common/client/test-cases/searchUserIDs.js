@@ -5,7 +5,7 @@ module.exports = [{
   object: 'client',
   methodName: 'searchUserIDs',
   callArguments: [undefined],
-  action: 'write',
+  action: 'read',
   expectedRequest: {
     method: 'POST',
     body: undefined,
@@ -16,7 +16,7 @@ module.exports = [{
   object: 'client',
   methodName: 'searchUserIDs',
   callArguments: [{page: 5}],
-  action: 'write',
+  action: 'read',
   expectedRequest: {
     method: 'POST',
     body: {page: 5},
@@ -27,7 +27,7 @@ module.exports = [{
   object: 'client',
   methodName: 'searchUserIDs',
   callArguments: [{query: 'hi', page: 5, hitsPerPage: 3}],
-  action: 'write',
+  action: 'read',
   expectedRequest: {
     method: 'POST',
     body: {query: 'hi', page: 5, hitsPerPage: 3},

@@ -525,7 +525,7 @@ AlgoliaSearch.prototype.getTopUserID = function(_, callback) {
   return this._jsonRequest({
     method: 'GET',
     url: '/1/clusters/mapping/top',
-    hostType: 'write',
+    hostType: 'read',
     callback: callback
   });
 };
@@ -545,7 +545,7 @@ AlgoliaSearch.prototype.getUserID = function(data, callback) {
   return this._jsonRequest({
     method: 'GET',
     url: '/1/clusters/mapping/' + data.userID,
-    hostType: 'write',
+    hostType: 'read',
     callback: callback
   });
 };
@@ -563,7 +563,7 @@ AlgoliaSearch.prototype.listClusters = function(_, callback) {
   return this._jsonRequest({
     method: 'GET',
     url: '/1/clusters',
-    hostType: 'write',
+    hostType: 'read',
     callback: callback
   });
 };
@@ -585,7 +585,7 @@ AlgoliaSearch.prototype.listUserIDs = function(data, callback) {
     method: 'GET',
     url: '/1/clusters/mapping',
     body: data,
-    hostType: 'write',
+    hostType: 'read',
     callback: callback
   });
 };
@@ -635,7 +635,7 @@ AlgoliaSearch.prototype.searchUserIDs = function(data, callback) {
     method: 'POST',
     url: '/1/clusters/mapping/search',
     body: data,
-    hostType: 'write',
+    hostType: 'read',
     callback: callback
   });
 };

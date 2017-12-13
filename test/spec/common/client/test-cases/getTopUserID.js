@@ -5,7 +5,7 @@ module.exports = [{
   object: 'client',
   methodName: 'getTopUserID',
   callArguments: [undefined],
-  action: 'write',
+  action: 'read',
   expectedRequest: {
     method: 'GET',
     URL: {pathname: '/1/clusters/mapping/top'}
