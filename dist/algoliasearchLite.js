@@ -1,4 +1,4 @@
-/*! algoliasearch 3.24.7 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
+/*! algoliasearch 3.24.8 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.algoliasearch = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 (function (process){
 /**
@@ -2413,9 +2413,16 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
     initialOpts.body.requests !== undefined) // client.search()
   ) {
     initialOpts.body.apiKey = this.apiKey;
-    headers = this._computeRequestHeaders(additionalUA, false);
+    headers = this._computeRequestHeaders({
+      additionalUA: additionalUA,
+      withApiKey: false,
+      headers: initialOpts.headers
+    });
   } else {
-    headers = this._computeRequestHeaders(additionalUA);
+    headers = this._computeRequestHeaders({
+      additionalUA: additionalUA,
+      headers: initialOpts.headers
+    });
   }
 
   if (initialOpts.body !== undefined) {
@@ -2472,7 +2479,10 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
         reqOpts.body = safeJSONStringify(reqOpts.jsonBody);
       }
       // re-compute headers, they could be omitting the API KEY
-      headers = client._computeRequestHeaders(additionalUA);
+      headers = client._computeRequestHeaders({
+        additionalUA: additionalUA,
+        headers: initialOpts.headers
+      });
 
       reqOpts.timeouts = client._getTimeoutsForRequest(initialOpts.hostType);
       client._setHostIndexByType(0, initialOpts.hostType);
@@ -2688,11 +2698,18 @@ AlgoliaSearchCore.prototype._getSearchParams = function(args, params) {
   return params;
 };
 
-AlgoliaSearchCore.prototype._computeRequestHeaders = function(additionalUA, withAPIKey) {
+/**
+ * Compute the headers for a request
+ *
+ * @param [string] options.additionalUA semi-colon separated string with other user agents to add
+ * @param [boolean=true] options.withAPIKey Send the api key as a header
+ * @param [Object] options.headers Extra headers to send
+ */
+AlgoliaSearchCore.prototype._computeRequestHeaders = function(options) {
   var forEach = require(4);
 
-  var ua = additionalUA ?
-    this._ua + ';' + additionalUA :
+  var ua = options.additionalUA ?
+    this._ua + ';' + options.additionalUA :
     this._ua;
 
   var requestHeaders = {
@@ -2704,7 +2721,7 @@ AlgoliaSearchCore.prototype._computeRequestHeaders = function(additionalUA, with
   // but in some situations, the API KEY will be too long (big secured API keys)
   // so if the request is a POST and the KEY is very long, we will be asked to not put
   // it into headers but in the JSON body
-  if (withAPIKey !== false) {
+  if (options.withAPIKey !== false) {
     requestHeaders['x-algolia-api-key'] = this.apiKey;
   }
 
@@ -2719,6 +2736,12 @@ AlgoliaSearchCore.prototype._computeRequestHeaders = function(additionalUA, with
   forEach(this.extraHeaders, function addToRequestHeaders(value, key) {
     requestHeaders[key] = value;
   });
+
+  if (options.headers) {
+    forEach(options.headers, function addToRequestHeaders(value, key) {
+      requestHeaders[key] = value;
+    });
+  }
 
   return requestHeaders;
 };
@@ -4165,7 +4188,7 @@ function cleanup() {
 },{"1":1}],31:[function(require,module,exports){
 'use strict';
 
-module.exports = '3.24.7';
+module.exports = '3.24.8';
 
 },{}]},{},[15])(15)
 });

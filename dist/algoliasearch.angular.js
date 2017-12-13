@@ -1,4 +1,4 @@
-/*! algoliasearch 3.24.7 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
+/*! algoliasearch 3.24.8 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
 (function(f){var g;if(typeof window!=='undefined'){g=window}else if(typeof self!=='undefined'){g=self}g.ALGOLIA_MIGRATION_LAYER=f()})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 
 module.exports = function load (src, opts, cb) {
@@ -3204,6 +3204,159 @@ AlgoliaSearch.prototype.batch = function(operations, callback) {
   });
 };
 
+/**
+ * Assign or Move a userID to a cluster
+ *
+ * @param {string} data.userID The userID to assign to a new cluster
+ * @param {string} data.cluster The cluster to assign the user to
+ * @return {Promise|undefined} Returns a promise if no callback given
+ * @example
+ * client.assignUserID({ cluster: 'c1-test', userID: 'some-user' });
+ */
+AlgoliaSearch.prototype.assignUserID = function(data, callback) {
+  if (!data.userID || !data.cluster) {
+    throw new errors.AlgoliaSearchError('You have to provide both a userID and cluster', data);
+  }
+  return this._jsonRequest({
+    method: 'POST',
+    url: '/1/clusters/mapping',
+    hostType: 'write',
+    body: {cluster: data.cluster},
+    callback: callback,
+    headers: {
+      'X-Algolia-User-ID': data.userID
+    }
+  });
+};
+
+/**
+ * Get the top userIDs
+ *
+ * (the callback is the second argument)
+ *
+ * @return {Promise|undefined} Returns a promise if no callback given
+ * @example
+ * client.getTopUserID();
+ */
+AlgoliaSearch.prototype.getTopUserID = function(callback) {
+  return this._jsonRequest({
+    method: 'GET',
+    url: '/1/clusters/mapping/top',
+    hostType: 'read',
+    callback: callback
+  });
+};
+
+/**
+ * Get userID
+ *
+ * @param {string} data.userID The userID to get info about
+ * @return {Promise|undefined} Returns a promise if no callback given
+ * @example
+ * client.getUserID({ userID: 'some-user' });
+ */
+AlgoliaSearch.prototype.getUserID = function(data, callback) {
+  if (!data.userID) {
+    throw new errors.AlgoliaSearchError('You have to provide a userID', {debugData: data});
+  }
+  return this._jsonRequest({
+    method: 'GET',
+    url: '/1/clusters/mapping/' + data.userID,
+    hostType: 'read',
+    callback: callback
+  });
+};
+
+/**
+ * List all the clusters
+ *
+ * (the callback is the second argument)
+ *
+ * @return {Promise|undefined} Returns a promise if no callback given
+ * @example
+ * client.listClusters();
+ */
+AlgoliaSearch.prototype.listClusters = function(callback) {
+  return this._jsonRequest({
+    method: 'GET',
+    url: '/1/clusters',
+    hostType: 'read',
+    callback: callback
+  });
+};
+
+/**
+ * List the userIDs
+ *
+ * (the callback is the second argument)
+ *
+ * @param {string} data.hitsPerPage How many hits on every page
+ * @param {string} data.page The page to retrieve
+ * @return {Promise|undefined} Returns a promise if no callback given
+ * @example
+ * client.listClusters();
+ * client.listClusters({ page: 3, hitsPerPage: 30});
+ */
+AlgoliaSearch.prototype.listUserIDs = function(data, callback) {
+  return this._jsonRequest({
+    method: 'GET',
+    url: '/1/clusters/mapping',
+    body: data,
+    hostType: 'read',
+    callback: callback
+  });
+};
+
+/**
+ * Remove an userID
+ *
+ * @param {string} data.userID The userID to assign to a new cluster
+ * @return {Promise|undefined} Returns a promise if no callback given
+ * @example
+ * client.removeUserID({ userID: 'some-user' });
+ */
+AlgoliaSearch.prototype.removeUserID = function(data, callback) {
+  if (!data.userID) {
+    throw new errors.AlgoliaSearchError('You have to provide a userID', {debugData: data});
+  }
+  return this._jsonRequest({
+    method: 'DELETE',
+    url: '/1/clusters/mapping',
+    hostType: 'write',
+    callback: callback,
+    headers: {
+      'X-Algolia-User-ID': data.userID
+    }
+  });
+};
+
+/**
+ * Search for userIDs
+ *
+ * @param {string} data.cluster The cluster to target
+ * @param {string} data.query The query to execute
+ * @param {string} data.hitsPerPage How many hits on every page
+ * @param {string} data.page The page to retrieve
+ * @return {Promise|undefined} Returns a promise if no callback given
+ * @example
+ * client.searchUserIDs({ cluster: 'c1-test', query: 'some-user' });
+ * client.searchUserIDs({
+ *   cluster: "c1-test",
+ *   query: "some-user",
+ *   page: 3,
+ *   hitsPerPage: 2
+ * });
+ */
+AlgoliaSearch.prototype.searchUserIDs = function(data, callback) {
+  return this._jsonRequest({
+    method: 'POST',
+    url: '/1/clusters/mapping/search',
+    body: data,
+    hostType: 'read',
+    callback: callback
+  });
+};
+
 // environment specific methods
 AlgoliaSearch.prototype.destroy = notImplemented;
 AlgoliaSearch.prototype.enableRateLimitForward = notImplemented;
@@ -3422,9 +3575,16 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
     initialOpts.body.requests !== undefined) // client.search()
   ) {
     initialOpts.body.apiKey = this.apiKey;
-    headers = this._computeRequestHeaders(additionalUA, false);
+    headers = this._computeRequestHeaders({
+      additionalUA: additionalUA,
+      withApiKey: false,
+      headers: initialOpts.headers
+    });
   } else {
-    headers = this._computeRequestHeaders(additionalUA);
+    headers = this._computeRequestHeaders({
+      additionalUA: additionalUA,
+      headers: initialOpts.headers
+    });
   }
 
   if (initialOpts.body !== undefined) {
@@ -3481,7 +3641,10 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
         reqOpts.body = safeJSONStringify(reqOpts.jsonBody);
       }
       // re-compute headers, they could be omitting the API KEY
-      headers = client._computeRequestHeaders(additionalUA);
+      headers = client._computeRequestHeaders({
+        additionalUA: additionalUA,
+        headers: initialOpts.headers
+      });
 
       reqOpts.timeouts = client._getTimeoutsForRequest(initialOpts.hostType);
       client._setHostIndexByType(0, initialOpts.hostType);
@@ -3697,11 +3860,18 @@ AlgoliaSearchCore.prototype._getSearchParams = function(args, params) {
   return params;
 };
 
-AlgoliaSearchCore.prototype._computeRequestHeaders = function(additionalUA, withAPIKey) {
+/**
+ * Compute the headers for a request
+ *
+ * @param [string] options.additionalUA semi-colon separated string with other user agents to add
+ * @param [boolean=true] options.withAPIKey Send the api key as a header
+ * @param [Object] options.headers Extra headers to send
+ */
+AlgoliaSearchCore.prototype._computeRequestHeaders = function(options) {
   var forEach = require(5);
 
-  var ua = additionalUA ?
-    this._ua + ';' + additionalUA :
+  var ua = options.additionalUA ?
+    this._ua + ';' + options.additionalUA :
     this._ua;
 
   var requestHeaders = {
@@ -3713,7 +3883,7 @@ AlgoliaSearchCore.prototype._computeRequestHeaders = function(additionalUA, with
   // but in some situations, the API KEY will be too long (big secured API keys)
   // so if the request is a POST and the KEY is very long, we will be asked to not put
   // it into headers but in the JSON body
-  if (withAPIKey !== false) {
+  if (options.withAPIKey !== false) {
     requestHeaders['x-algolia-api-key'] = this.apiKey;
   }
 
@@ -3728,6 +3898,12 @@ AlgoliaSearchCore.prototype._computeRequestHeaders = function(additionalUA, with
   forEach(this.extraHeaders, function addToRequestHeaders(value, key) {
     requestHeaders[key] = value;
   });
+
+  if (options.headers) {
+    forEach(options.headers, function addToRequestHeaders(value, key) {
+      requestHeaders[key] = value;
+    });
+  }
 
   return requestHeaders;
 };
@@ -6642,6 +6818,6 @@ function cleanup() {
 },{"1":1}],36:[function(require,module,exports){
 'use strict';
 
-module.exports = '3.24.7';
+module.exports = '3.24.8';
 
 },{}]},{},[19]);

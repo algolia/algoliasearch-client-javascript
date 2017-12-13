@@ -1,4 +1,14 @@
 CHANGELOG
+2017-12-13 3.24.8
+  * add multi cluster management methods
+    * [ Assign or Move a userID to a cluster](https://algolia.com/doc/api-reference/api-methods/assign-user-id/): `assignUserID`
+    * [Get userID with highest number of records per cluster](https://algolia.com/doc/api-reference/api-methods/get-top-user-id/): `getTopUserID`
+    * [Returns the userID data stored in the mapping](https://algolia.com/doc/api-reference/api-methods/get-user-id/): `getUserID`
+    * [List the clusters available in a multi-clusters setup for a single appID](https://algolia.com/doc/api-reference/api-methods/list-clusters/): `listClusters`
+    * [List the userIDs assigned to a multi-clusters appID](https://algolia.com/doc/api-reference/api-methods/list-user-id/): `listUserIDs`
+    * [Remove a userID and associated data from the multi-clusters](https://algolia.com/doc/api-reference/api-methods/remove-user-id/): `removeUserID`
+    * [Search for userIDs](https://algolia.com/doc/api-reference/api-methods/search-user-id/): `searchUserIDs`
+
 2017-11-29 3.24.7
   * don't throw an error when `copyIndex` without scope is used
     * if no scope is given, `settings`, as the default will be chosen
