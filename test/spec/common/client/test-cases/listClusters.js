@@ -1,10 +1,10 @@
 'use strict';
 
 module.exports = [{
-  testName: 'client.listClusters(undefined, cb)',
+  testName: 'client.listClusters(cb)',
   object: 'client',
   methodName: 'listClusters',
-  callArguments: [undefined],
+  callArguments: [],
   action: 'read',
   expectedRequest: {
     method: 'GET',

@@ -1,10 +1,10 @@
 'use strict';
 
 module.exports = [{
-  testName: 'client.getTopUserID(undefined, cb)',
+  testName: 'client.getTopUserID(cb)',
   object: 'client',
   methodName: 'getTopUserID',
-  callArguments: [undefined],
+  callArguments: [],
   action: 'read',
   expectedRequest: {
     method: 'GET',

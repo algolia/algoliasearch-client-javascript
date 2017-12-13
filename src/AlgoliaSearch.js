@@ -521,7 +521,7 @@ AlgoliaSearch.prototype.assignUserID = function(data, callback) {
  * @example
  * client.getTopUserID();
  */
-AlgoliaSearch.prototype.getTopUserID = function(_, callback) {
+AlgoliaSearch.prototype.getTopUserID = function(callback) {
   return this._jsonRequest({
     method: 'GET',
     url: '/1/clusters/mapping/top',
@@ -559,7 +559,7 @@ AlgoliaSearch.prototype.getUserID = function(data, callback) {
  * @example
  * client.listClusters();
  */
-AlgoliaSearch.prototype.listClusters = function(_, callback) {
+AlgoliaSearch.prototype.listClusters = function(callback) {
   return this._jsonRequest({
     method: 'GET',
     url: '/1/clusters',
