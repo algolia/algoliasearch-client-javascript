@@ -199,9 +199,16 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
     initialOpts.body.requests !== undefined) // client.search()
   ) {
     initialOpts.body.apiKey = this.apiKey;
-    headers = this._computeRequestHeaders(additionalUA, false);
+    headers = this._computeRequestHeaders({
+      additionalUA: additionalUA,
+      withApiKey: false,
+      headers: initialOpts.headers
+    });
   } else {
-    headers = this._computeRequestHeaders(additionalUA);
+    headers = this._computeRequestHeaders({
+      additionalUA: additionalUA,
+      headers: initialOpts.headers
+    });
   }
 
   if (initialOpts.body !== undefined) {
@@ -258,7 +265,10 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
         reqOpts.body = safeJSONStringify(reqOpts.jsonBody);
       }
       // re-compute headers, they could be omitting the API KEY
-      headers = client._computeRequestHeaders(additionalUA);
+      headers = client._computeRequestHeaders({
+        additionalUA: additionalUA,
+        headers: initialOpts.headers
+      });
 
       reqOpts.timeouts = client._getTimeoutsForRequest(initialOpts.hostType);
       client._setHostIndexByType(0, initialOpts.hostType);
@@ -474,11 +484,18 @@ AlgoliaSearchCore.prototype._getSearchParams = function(args, params) {
   return params;
 };
 
-AlgoliaSearchCore.prototype._computeRequestHeaders = function(additionalUA, withAPIKey) {
+/**
+ * Compute the headers for a request
+ *
+ * @param [string] options.additionalUA semi-colon separated string with other user agents to add
+ * @param [boolean=true] options.withAPIKey Send the api key as a header
+ * @param [Object] options.headers Extra headers to send
+ */
+AlgoliaSearchCore.prototype._computeRequestHeaders = function(options) {
   var forEach = require('foreach');
 
-  var ua = additionalUA ?
-    this._ua + ';' + additionalUA :
+  var ua = options.additionalUA ?
+    this._ua + ';' + options.additionalUA :
     this._ua;
 
   var requestHeaders = {
@@ -490,7 +507,7 @@ AlgoliaSearchCore.prototype._computeRequestHeaders = function(additionalUA, with
   // but in some situations, the API KEY will be too long (big secured API keys)
   // so if the request is a POST and the KEY is very long, we will be asked to not put
   // it into headers but in the JSON body
-  if (withAPIKey !== false) {
+  if (options.withAPIKey !== false) {
     requestHeaders['x-algolia-api-key'] = this.apiKey;
   }
 
@@ -505,6 +522,12 @@ AlgoliaSearchCore.prototype._computeRequestHeaders = function(additionalUA, with
   forEach(this.extraHeaders, function addToRequestHeaders(value, key) {
     requestHeaders[key] = value;
   });
+
+  if (options.headers) {
+    forEach(options.headers, function addToRequestHeaders(value, key) {
+      requestHeaders[key] = value;
+    });
+  }
 
   return requestHeaders;
 };
