@@ -93,8 +93,3 @@ type FatalError = 'client' | 'fatal';
 // serverError := httpCode / 100 !== 4 && httpCode / 100 !== 2
 type RetryableError = 'server' | 'network' | 'timeout';
 export type ErrorType = FatalError | RetryableError;
-
-export type RequesterError = {|
-  reason: ErrorType,
-  more: any,
-|};
