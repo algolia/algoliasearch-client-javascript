@@ -4,26 +4,25 @@
 import * as clientMethods from '../methods/client/index.js';
 import attachParameters from './attachParameters.js';
 import { createRequester } from 'algoliasearch-requester';
-// todo: use a real requester
-import { fakeRequester as httpRequester } from '../testUtils/index.js';
+import httpRequester from 'algoliasearch-http-requester';
 
 import type { ClientMethods, AppId, ApiKey } from 'algoliasearch';
 import type { RequesterOptions, RequestMethod } from 'algoliasearch-requester';
 
 export default function initClient({
-  appID,
+  appId,
   apiKey,
   options,
   requester: extraRequester,
 }: {
-  appID: AppId,
+  appId: AppId,
   apiKey: ApiKey,
   options?: RequesterOptions,
   requester?: RequestMethod,
 }): ClientMethods {
   /* eslint-disable prefer-rest-params */
-  if (appID === undefined) {
-    throw new Error(`An appID is required. ${appID} was not valid.
+  if (appId === undefined) {
+    throw new Error(`An appId is required. ${appId} was not valid.
 
 initIndex(${[...arguments].map(arg => JSON.stringify(arg)).join(',')})`);
   }
@@ -36,7 +35,7 @@ initIndex(${[...arguments].map(arg => JSON.stringify(arg)).join(',')})`);
 
   const requester = extraRequester
     ? extraRequester
-    : createRequester({ appID, apiKey, options, httpRequester });
+    : createRequester({ appId, apiKey, options, httpRequester });
 
   // $FlowFixMe --> Flow doesn't get that the imports are augmented here
   return {

@@ -1,26 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`client.search() works 🐣 1`] = `
-Object {
-  "body": Object {
-    "requests": Array [
-      Object {
-        "indexName": "some_index",
-        "query": "hello world",
-      },
-    ],
-  },
-  "connectTimeout": 1000,
-  "method": "POST",
-  "requestOptions": undefined,
-  "timeout": 2000,
-  "url": Object {
-    "hostname": "some_app-dsn.algolia.net",
-    "pathname": "/1/indexes/*/queriesundefined",
-  },
-}
-`;
-
 exports[`initClient contains the correct methods 1`] = `
 Array [
   "addApiKey",
@@ -43,11 +22,11 @@ Array [
 exports[`initClient throws when it has too little parameters 1`] = `
 "An apiKey is required. undefined was not valid.
 
-initIndex({\\"appID\\":\\"\\"})"
+initIndex({\\"appId\\":\\"\\"})"
 `;
 
 exports[`initClient throws when it has too little parameters 2`] = `
-"An appID is required. undefined was not valid.
+"An appId is required. undefined was not valid.
 
 initIndex({\\"apiKey\\":\\"\\"})"
 `;

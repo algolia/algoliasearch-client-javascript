@@ -64,11 +64,11 @@ Array [
 exports[`initIndex throws when it has too little parameters 1`] = `
 "An apiKey is required. undefined was not valid.
 
-initIndex({\\"appID\\":\\"\\"})"
+initIndex({\\"appId\\":\\"\\"})"
 `;
 
 exports[`initIndex throws when it has too little parameters 2`] = `
-"An appID is required. undefined was not valid.
+"An appId is required. undefined was not valid.
     
     initIndex({\\"apiKey\\":\\"\\"})"
 `;
@@ -76,5 +76,5 @@ exports[`initIndex throws when it has too little parameters 2`] = `
 exports[`initIndex throws when it has too little parameters 3`] = `
 "An indexName is required. undefined was not valid.
 
-initIndex({\\"apiKey\\":\\"\\",\\"appID\\":\\"\\"})"
+initIndex({\\"apiKey\\":\\"\\",\\"appId\\":\\"\\"})"
 `;

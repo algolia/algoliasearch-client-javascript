@@ -19,7 +19,7 @@ it('host indices are reset to 0 after 12s', async () => {
         : Promise.resolve()
   );
   const requester = createRequester({
-    appID: 'the_slow_app',
+    appId: 'the_slow_app',
     apiKey: '',
     httpRequester,
   });
@@ -64,7 +64,7 @@ it('resets timeout to default after 20 minutes', async () => {
         : Promise.resolve({})
   );
   const requester = createRequester({
-    appID: 'the_fun_app',
+    appId: 'the_fun_app',
     apiKey: '',
     httpRequester,
   });

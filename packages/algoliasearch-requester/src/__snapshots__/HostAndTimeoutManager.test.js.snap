@@ -5,7 +5,7 @@ exports[`it will throw if the host keeps failing 1`] = `
 
 You can retry this search, and it will try the hosts again. 
 
-appID: some_throwing_app
+appId: some_throwing_app
 
 see: https://alg.li/client#no-hosts-remaining"
 `;

@@ -5,7 +5,7 @@ import {
 } from './HostAndTimeoutManager.js';
 
 it('gets a host and timeout for read', () => {
-  const params = getParams({ appID: 'some_app', requestType: 'read' });
+  const params = getParams({ appId: 'some_app', requestType: 'read' });
 
   expect(params).toEqual(
     expect.objectContaining({
@@ -21,7 +21,7 @@ it('gets a host and timeout for read', () => {
 });
 
 it('gets a host and timeout for write', () => {
-  const params = getParams({ appID: 'some_app', requestType: 'write' });
+  const params = getParams({ appId: 'some_app', requestType: 'write' });
 
   expect(params).toEqual(
     expect.objectContaining({
@@ -37,39 +37,39 @@ it('gets a host and timeout for write', () => {
 });
 
 it('gets a different host when you retry', () => {
-  const appID = 'some_app';
+  const appId = 'some_app';
   const requestType = 'read';
-  const params = getParams({ appID, requestType });
-  hostDidFail({ appID, requestType });
-  const newParams = getParams({ appID, requestType });
+  const params = getParams({ appId, requestType });
+  hostDidFail({ appId, requestType });
+  const newParams = getParams({ appId, requestType });
 
   expect(newParams.hostname).not.toEqual(params.hostname);
 });
 
 it('gets a different host when you retry (timeout)', () => {
-  const appID = 'some_retrying_app';
+  const appId = 'some_retrying_app';
   const requestType = 'read';
-  const params = getParams({ appID, requestType });
-  hostDidTimeout({ appID, requestType });
-  const newParams = getParams({ appID, requestType });
+  const params = getParams({ appId, requestType });
+  hostDidTimeout({ appId, requestType });
+  const newParams = getParams({ appId, requestType });
 
   expect(newParams.hostname).not.toEqual(params.hostname);
   expect(newParams.timeout).toBe(4000);
 });
 
 it('it will throw if the host keeps failing', () => {
-  const appID = 'some_throwing_app';
+  const appId = 'some_throwing_app';
   const requestType = 'read';
-  const params = getParams({ appID, requestType });
-  hostDidTimeout({ appID, requestType });
-  hostDidTimeout({ appID, requestType });
-  hostDidTimeout({ appID, requestType });
+  const params = getParams({ appId, requestType });
+  hostDidTimeout({ appId, requestType });
+  hostDidTimeout({ appId, requestType });
+  hostDidTimeout({ appId, requestType });
   // we're out of hosts, thus we throw
   expect(() =>
-    hostDidTimeout({ appID, requestType })
+    hostDidTimeout({ appId, requestType })
   ).toThrowErrorMatchingSnapshot();
 
   // this should now be the original data
-  const newParams = getParams({ appID, requestType });
+  const newParams = getParams({ appId, requestType });
   expect(newParams).toEqual(params);
 });

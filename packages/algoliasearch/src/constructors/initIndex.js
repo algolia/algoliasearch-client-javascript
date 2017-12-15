@@ -10,21 +10,21 @@ import type { IndexMethods, AppId, ApiKey, IndexName } from 'algoliasearch';
 import type { RequesterOptions, RequestMethod } from 'algoliasearch-requester';
 
 export default function initIndex({
-  appID,
+  appId,
   apiKey,
   indexName,
   options,
   requester: extraRequester,
 }: {
-  appID: AppId,
+  appId: AppId,
   apiKey: ApiKey,
   indexName: IndexName,
   options?: RequesterOptions,
   requester?: RequestMethod,
 }): IndexMethods {
   /* eslint-disable prefer-rest-params */
-  if (appID === undefined) {
-    throw new Error(`An appID is required. ${appID} was not valid.
+  if (appId === undefined) {
+    throw new Error(`An appId is required. ${appId} was not valid.
     
     initIndex(${[...arguments].map(arg => JSON.stringify(arg)).join(',')})`);
   }
@@ -42,7 +42,7 @@ initIndex(${[...arguments].map(arg => JSON.stringify(arg)).join(',')})`);
 
   const requester = extraRequester
     ? extraRequester
-    : createRequester({ appID, apiKey, options, httpRequester });
+    : createRequester({ appId, apiKey, options, httpRequester });
   // $FlowFixMe --> Flow doesn't get that the imports are augmented here
   return {
     ...attachParameters(indexMethods, { requester, indexName }),

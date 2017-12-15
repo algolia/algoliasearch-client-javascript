@@ -1,14 +1,14 @@
 {
-  "name": "algoliasearch-http-requester-nodejs",
+  "name": "algoliasearch-http-requester",
   "version": "4.0.0-beta.1",
   "private": true,
-  "description": "Algolia Search API JavaScript Node.js http requester implementation",
+  "main": "./src/index.js",
+  "browser": "algoliasearch-http-requester-browser",
+  "description":
+    "Algolia Search API JavaScript Node.js http requester implementation",
   "repository": "algolia/algoliasearch-client-javascript",
-  "dependencies": {
-    "algoliasearch-requester": "4.0.0-beta.1"
-  },
   "homepage": "https://www.algolia.com/doc/api-client/javascript/",
   "bugs": "https://github.com/algolia/algoliasearch-client-javascript/issues",
-  "author": "Algolia, Inc. (https://www.algolia.com)",  
+  "author": "Algolia, Inc. (https://www.algolia.com)",
   "license": "MIT"
 }

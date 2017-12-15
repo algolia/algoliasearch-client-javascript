@@ -18,8 +18,7 @@
   "dependencies": {
     "algoliasearch-requester": "4.0.0-beta.1",
     "algoliasearch-errors": "4.0.0-beta.1",
-    "algoliasearch-http-requester-nodejs": "4.0.0-beta.1",
-    "algoliasearch-http-requester-browser": "4.0.0-beta.1"
+    "algoliasearch-http-requester": "4.0.0-beta.1"
   },
   "homepage": "https://www.algolia.com/doc/api-client/javascript/",
   "bugs": "https://github.com/algolia/algoliasearch-client-javascript/issues",

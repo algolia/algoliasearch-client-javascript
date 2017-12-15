@@ -1,17 +1,17 @@
 import initIndex from './initIndex.js';
 
 const validParams = {
-  appID: 'some_app',
+  appId: 'some_app',
   apiKey: 'some_key',
   indexName: 'some_index',
 };
 
 it('initIndex throws when it has too little parameters', () => {
   expect(() => initIndex({})).toThrow();
-  expect(() => initIndex({ appID: '' })).toThrowErrorMatchingSnapshot();
+  expect(() => initIndex({ appId: '' })).toThrowErrorMatchingSnapshot();
   expect(() => initIndex({ apiKey: '' })).toThrowErrorMatchingSnapshot();
   expect(() =>
-    initIndex({ apiKey: '', appID: '' })
+    initIndex({ apiKey: '', appId: '' })
   ).toThrowErrorMatchingSnapshot();
 
   expect(() => initIndex(validParams)).not.toThrow();

@@ -5,7 +5,7 @@ exports[`rejects when all hosts are used 1`] = `
 
 You can retry this search, and it will try the hosts again. 
 
-appID: the_host_app
+appId: the_host_app
 
 see: https://alg.li/client#no-hosts-remaining]
 `;
@@ -15,7 +15,7 @@ exports[`rejects when all timeouts are reached 1`] = `
 
 You can retry this search, and it will try the hosts again. 
 
-appID: the_timeout_app
+appId: the_timeout_app
 
 see: https://alg.li/client#no-hosts-remaining]
 `;
@@ -30,7 +30,7 @@ Array [
 ]
 `;
 
-exports[`requires the right arguments 1`] = `"appID is required and should be a string, received \\"\\""`;
+exports[`requires the right arguments 1`] = `"appId is required and should be a string, received \\"\\""`;
 
 exports[`requires the right arguments 2`] = `"apiKey is required and should be a string, received undefined"`;
 
@@ -78,7 +78,7 @@ exports[`uses the first host again after running out of hosts 1`] = `
 
 You can retry this search, and it will try the hosts again. 
 
-appID: the_other_host_app
+appId: the_other_host_app
 
 see: https://alg.li/client#no-hosts-remaining]
 `;

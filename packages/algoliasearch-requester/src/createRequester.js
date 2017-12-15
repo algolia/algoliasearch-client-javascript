@@ -35,20 +35,20 @@ const RESET_TIMEOUT_TIMER = 1200000; // ms; 20 minutes
 
 export class Requester {
   apiKey: ApiKey;
-  appID: AppId;
+  appId: AppId;
   requestOptions: RequestOptions;
   requester: HttpModule;
   cache: boolean;
   store: Store<string, Data>;
 
   constructor({
-    appID,
+    appId,
     apiKey,
     httpRequester,
     options: { timeouts = {}, hosts, cache = false } = {},
     requestOptions = {},
   }: {|
-    appID: AppId,
+    appId: AppId,
     apiKey: ApiKey,
     httpRequester: HttpModule,
     options?: {|
@@ -58,9 +58,9 @@ export class Requester {
     |},
     requestOptions?: RequestOptions,
   |}) {
-    if (typeof appID !== 'string') {
+    if (typeof appId !== 'string') {
       throw new AlgoliaError(
-        `appID is required and should be a string, received "${appID || ''}"`
+        `appId is required and should be a string, received "${appId || ''}"`
       );
     }
     if (typeof apiKey !== 'string') {
@@ -77,10 +77,10 @@ export class Requester {
     initHostAndTimeouts({
       hosts,
       timeouts,
-      appID,
+      appId,
     });
 
-    this.appID = appID;
+    this.appId = appId;
     this.apiKey = apiKey;
     this.requester = httpRequester;
     this.requestOptions = requestOptions;
@@ -121,7 +121,7 @@ export class Requester {
   }: RequestArguments): Promise<Result> => {
     try {
       const { hostname, timeout, connectTimeout } = getParams({
-        appID: this.appID,
+        appId: this.appId,
         requestType,
       });
 
@@ -136,7 +136,7 @@ export class Requester {
         qs,
         body,
         requestOptions,
-        appId: this.appID,
+        appId: this.appId,
       });
 
       if (requestOptions && requestOptions.cache === true) {
@@ -178,12 +178,12 @@ export class Requester {
     if (retryableErrors.indexOf(err.reason) > -1) {
       if (err.reason === 'timeout') {
         hostDidTimeout({
-          appID: this.appID,
+          appId: this.appId,
           requestType: requestArguments.requestType,
         });
       } else {
         hostDidFail({
-          appID: this.appID,
+          appId: this.appId,
           requestType: requestArguments.requestType,
         });
       }

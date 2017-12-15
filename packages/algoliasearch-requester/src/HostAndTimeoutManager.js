@@ -21,13 +21,13 @@ type ManagerData = {
 
 const store = createStore('algoliasearch-host-and-timeouts');
 
-function noHostsRemaining({ appID }) {
-  initHostAndTimeouts({ appID });
+function noHostsRemaining({ appId }) {
+  initHostAndTimeouts({ appId });
   throw new Error(`There are no hosts remaining for this app. 
 
 You can retry this search, and it will try the hosts again. 
 
-appID: ${appID}
+appId: ${appId}
 
 see: https://alg.li/client#no-hosts-remaining`);
 }
@@ -41,31 +41,31 @@ const DEFAULT_TIMEOUTS: Timeouts = {
 const HOST_INVALIDATION = 12000; // 12 seconds
 const TIMEOUT_INVALIDATION = 1200000; // 20 minutes
 
-function computeRegularHosts(appID: AppId): Hosts {
+function computeRegularHosts(appId: AppId): Hosts {
   const readWriteHosts = [
-    `${appID}-1.algolianet.com`,
-    `${appID}-2.algolianet.com`,
-    `${appID}-3.algolianet.com`,
+    `${appId}-1.algolianet.com`,
+    `${appId}-2.algolianet.com`,
+    `${appId}-3.algolianet.com`,
   ];
 
   return {
-    read: [`${appID}-dsn.algolia.net`, ...readWriteHosts],
-    write: [`${appID}.algolia.net`, ...readWriteHosts],
+    read: [`${appId}-dsn.algolia.net`, ...readWriteHosts],
+    write: [`${appId}.algolia.net`, ...readWriteHosts],
   };
 }
 
 export function initHostAndTimeouts({
   hosts: providedHosts,
   timeouts,
-  appID,
+  appId,
   timeoutFailures = 0,
 }: {
   hosts?: Hosts,
   timeouts?: Timeouts,
-  appID: AppId,
+  appId: AppId,
   timeoutFailures?: number,
 }): ManagerData {
-  const hosts = providedHosts || computeRegularHosts(appID);
+  const hosts = providedHosts || computeRegularHosts(appId);
 
   const data: ManagerData = {
     hosts,
@@ -81,16 +81,16 @@ export function initHostAndTimeouts({
     },
   };
 
-  store.set(appID, data);
+  store.set(appId, data);
 
   return data;
 }
 
 export function getParams({
-  appID,
+  appId,
   requestType,
 }: {
-  appID: AppId,
+  appId: AppId,
   requestType: RequestType,
 }) {
   if (requestType === undefined) {
@@ -99,8 +99,8 @@ export function getParams({
     );
   }
 
-  const savedParams = store.get(appID);
-  const data: ManagerData = savedParams || initHostAndTimeouts({ appID });
+  const savedParams = store.get(appId);
+  const data: ManagerData = savedParams || initHostAndTimeouts({ appId });
 
   const { hosts, timeouts, expirations } = data;
 
@@ -115,7 +115,7 @@ export function getParams({
   const hostIndex = hostIndices[requestType];
   const hostnames = hosts[requestType];
   if (Array.isArray(hostnames) && hostIndex > hostnames.length) {
-    noHostsRemaining({ appID });
+    noHostsRemaining({ appId });
   }
   const hostname = hostnames[hostIndex];
 
@@ -123,37 +123,37 @@ export function getParams({
 }
 
 export function hostDidTimeout({
-  appID,
+  appId,
   requestType,
 }: {
-  appID: AppId,
+  appId: AppId,
   requestType: RequestType,
 }) {
-  const savedParams = store.get(appID);
-  const data: ManagerData = savedParams || initHostAndTimeouts({ appID });
+  const savedParams = store.get(appId);
+  const data: ManagerData = savedParams || initHostAndTimeouts({ appId });
   data.timeoutFailures++;
-  store.set(appID, data);
-  hostDidFail({ appID, requestType });
+  store.set(appId, data);
+  hostDidFail({ appId, requestType });
   return data;
 }
 
 export function hostDidFail({
-  appID,
+  appId,
   requestType,
 }: {
-  appID: AppId,
+  appId: AppId,
   requestType: RequestType,
 }) {
-  const savedParams = store.get(appID);
-  const data: ManagerData = savedParams || initHostAndTimeouts({ appID });
+  const savedParams = store.get(appId);
+  const data: ManagerData = savedParams || initHostAndTimeouts({ appId });
   const index = data.currentHostIndices[requestType] + 1;
   if (
     data.hosts.hasOwnProperty(requestType) &&
     index >= data.hosts[requestType].length
   ) {
-    noHostsRemaining({ appID, timeoutFailures: data.timeoutFailures });
+    noHostsRemaining({ appId, timeoutFailures: data.timeoutFailures });
   }
   data.currentHostIndices[requestType] = index;
-  store.set(appID, data);
+  store.set(appId, data);
   return data;
 }
