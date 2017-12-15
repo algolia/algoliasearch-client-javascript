@@ -2,7 +2,7 @@
 // todo: don't mention src
 import browse from 'algoliasearch/src/methods/index/browse';
 import createRequester from 'algoliasearch-requester';
-import type { IndexName, AppId, ApiKey, SearchParameters } from 'algoliasearch';
+import type { IndexName, AppId, ApiKey, BrowseParameters } from 'algoliasearch';
 import type { RequestOptions, RequestMethod } from 'algoliasearch-requester';
 
 const throwIfAbsent = (name: string) => {
@@ -16,7 +16,7 @@ const getInitialListeners = () => ({
 });
 
 export default function browseAll(
-  params: ?SearchParameters = {},
+  params: ?BrowseParameters = {},
   {
     indexName = throwIfAbsent('indexName'),
     appId = throwIfAbsent('appId'),
