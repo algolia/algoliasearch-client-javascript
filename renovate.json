@@ -1,8 +1,0 @@
-{
-  "extends": [":library"],
-  "semanticCommits": true,
-  "rebaseStalePrs": true,
-  "automerge": "none",
-  "schedule": ["on Friday at 9:00am every 2 weeks"],
-  "baseBranch": "feat/v4-for-real-now"
-}
