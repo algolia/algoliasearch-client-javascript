@@ -1,5 +1,6 @@
 // @flow
 // todo: don't mention src
+// eslint-disable-next-line monorepo/no-internal-import
 import browse from 'algoliasearch/src/methods/index/browse';
 import createRequester from 'algoliasearch-requester';
 import type { IndexName, AppId, ApiKey, BrowseParameters } from 'algoliasearch';

@@ -1,5 +1,5 @@
 module.exports = {
-  extends: ['algolia/flowtype', 'algolia/jest'],
+  extends: ['algolia/flowtype', 'algolia/jest', 'plugin:monorepo/recommended'],
   rules: {
     'no-warning-comments': 'warn', // Must be removed at release time
     // eslint doesn't understand a workspace
