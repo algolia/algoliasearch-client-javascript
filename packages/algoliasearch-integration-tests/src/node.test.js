@@ -6,6 +6,6 @@ it('can initialize a client', async () => {
     apiKey: '6be0576ff61c053d5f9a3225e2a90f76',
   });
   expect(
-    await client.search({ requests: [{ indexName: 'bestbuy', query: 'a' }] })
-  ).toMatchSnapshot();
+    client.search({ requests: [{ indexName: 'bestbuy', query: 'a' }] })
+  ).resolves.toMatchSnapshot();
 });
