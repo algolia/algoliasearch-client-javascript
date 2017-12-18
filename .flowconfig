@@ -5,6 +5,7 @@
 [include]
 
 [libs]
+<PROJECT_ROOT>/packages
 
 [options]
 emoji=true
