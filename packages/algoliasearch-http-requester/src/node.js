@@ -1,12 +1,20 @@
-/* eslint prefer-promise-reject-errors: off */
 // @flow
 
 import https from 'https';
 import zlib from 'zlib';
 
-import parseOptions from '../parseOptions.js';
 import { AlgoliaRequesterError } from 'algoliasearch-errors';
-import type { Response, RequesterArgs } from 'algoliasearch-requester';
+import type {
+  Response,
+  RequesterArgs,
+  RequestOptions,
+} from 'algoliasearch-requester';
+
+// todo: import/define this correctly
+const parseOptions = (requestOptions: RequestOptions) => ({
+  headers: requestOptions,
+  timeouts: {},
+});
 
 const agent: https.Agent = new https.Agent({
   keepAlive: true,
@@ -29,6 +37,10 @@ export default function httpRequester({
     timeouts,
   } = parseOptions(requestOptions);
 
+  // todo: use implementation
+  return Promise.resolve({});
+  /*
+
   return new Promise((resolve, reject: AlgoliaRequesterError => void) => {
     const req = https.request({
       hostname,
@@ -45,6 +57,7 @@ export default function httpRequester({
       agent,
     });
 
+    // todo: get correctly
     const timeout = timeouts[requestType] || originalTimeout;
     req.setTimeout(timeout);
 
@@ -105,4 +118,6 @@ It's possible to send a smaller batch if needed`,
 
     req.end();
   });
+
+  */
 }

@@ -1,6 +1,13 @@
 // @flow
 /* eslint-disable */
-import type { Response, RequesterArgs } from 'algoliasearch-requester';
+import type {
+  Response,
+  RequesterArgs,
+  RequestOptions,
+} from 'algoliasearch-requester';
+
+// todo: import/define this correctly
+const parseOptions = (requestOptions: RequestOptions) => ({ requestOptions });
 
 export default function httpRequester({
   body,
