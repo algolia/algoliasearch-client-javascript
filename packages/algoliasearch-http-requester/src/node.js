@@ -1,6 +1,8 @@
 // @flow
 
 import https from 'https';
+/* eslint-disable */
+// todo: enable eslint
 import zlib from 'zlib';
 
 import { AlgoliaRequesterError } from 'algoliasearch-errors';

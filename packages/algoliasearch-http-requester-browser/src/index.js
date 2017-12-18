@@ -7,7 +7,9 @@ import type {
 } from 'algoliasearch-requester';
 
 // todo: import/define this correctly
-const parseOptions = (requestOptions: RequestOptions) => ({ requestOptions });
+const parseOptions = (requestOptions: RequestOptions) => ({ queryStringOrBody: {},
+  headers: requestOptions,
+  timeouts: {} });
 
 export default function httpRequester({
   body,
