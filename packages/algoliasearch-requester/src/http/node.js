@@ -5,11 +5,8 @@ import https from 'https';
 import zlib from 'zlib';
 
 import parseOptions from '../parseOptions.js';
-import type {
-  Response,
-  RequesterArgs,
-  RequesterError,
-} from 'algoliasearch-requester';
+import { AlgoliaRequesterError } from 'algoliasearch-errors';
+import type { Response, RequesterArgs } from 'algoliasearch-requester';
 
 const agent: https.Agent = new https.Agent({
   keepAlive: true,
@@ -18,6 +15,7 @@ const agent: https.Agent = new https.Agent({
 
 export default function httpRequester({
   // agent,
+  // abortController
   body,
   method,
   url,
@@ -31,7 +29,7 @@ export default function httpRequester({
     timeouts,
   } = parseOptions(requestOptions);
 
-  return new Promise((resolve, reject: RequesterError => void) => {
+  return new Promise((resolve, reject: AlgoliaRequesterError => void) => {
     const req = https.request({
       hostname,
       headers: {
@@ -74,16 +72,30 @@ export default function httpRequester({
       res.on('end', () => onEnd(res));
     }
     function onTimeout() {
-      reject({
-        reason: 'timeout',
-        more: {
-          currentTimeout: timeout,
-        },
-        test: false,
-      });
+      reject(
+        new AlgoliaRequesterError({
+          message: `Socket timed out, your internet might have dropped before the request completed.
+
+It's possible to send a smaller batch if needed`,
+          reason: 'timeout',
+          more: {
+            currentTimeout: timeout,
+          },
+        })
+      );
     }
 
-    req.once('error', reject);
+    function onError(err) {
+      reject(
+        new AlgoliaRequesterError({
+          message: err.message,
+          reason: 'fatal',
+          more: err,
+        })
+      );
+    }
+
+    req.once('error', onError);
     req.once('response', onResponse);
     req.once('timeout', onTimeout);
 

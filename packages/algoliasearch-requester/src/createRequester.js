@@ -1,6 +1,6 @@
 // @flow
 import { createMemoryStore } from 'universal-store';
-import { AlgoliaError } from 'algoliasearch-errors';
+import { AlgoliaError, AlgoliaRequesterError } from 'algoliasearch-errors';
 import {
   initHostAndTimeouts,
   getParams,
@@ -18,7 +18,6 @@ import type {
   Timeouts,
   Hosts,
   ErrorType,
-  RequesterError,
   CreateRequester,
 } from 'algoliasearch-requester';
 
@@ -172,7 +171,7 @@ export class Requester {
   };
 
   retryRequest = (
-    err: RequesterError,
+    err: AlgoliaRequesterError,
     requestArguments: RequestArguments
   ): Promise<Result> => {
     if (retryableErrors.indexOf(err.reason) > -1) {

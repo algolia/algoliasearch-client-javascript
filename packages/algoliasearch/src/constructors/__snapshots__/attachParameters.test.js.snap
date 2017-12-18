@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`add only normal 1`] = `
+exports[`attaches parameters meta parameter: add only normal 1`] = `
 Array [
   Object {
     "test": true,
@@ -11,19 +11,7 @@ Array [
 ]
 `;
 
-exports[`add only normal 2`] = `
-Array [
-  Object {
-    "test": true,
-  },
-  Object {
-    "extraMeta": "be careful",
-    "whatShouldIUse": "algolia",
-  },
-]
-`;
-
-exports[`adds nothing 1`] = `
+exports[`attaches parameters meta parameter: adds nothing 1`] = `
 Array [
   undefined,
   Object {
@@ -32,41 +20,74 @@ Array [
 ]
 `;
 
-exports[`adds nothing 2`] = `
-Array [
-  undefined,
-  Object {
-    "extraMeta": "be careful",
-    "whatShouldIUse": "algolia",
-  },
-]
-`;
-
-exports[`doesn't change the object 1`] = `
+exports[`attaches parameters meta parameter: doesn't change the object 1`] = `
 Object {
   "anotherFn": [Function],
 }
 `;
 
-exports[`doesn't change the object 2`] = `
+exports[`attaches parameters meta parameter: doesn't mess with first param 1`] = `
+Array [
+  Object {
+    "boring": "test",
+  },
+  Object {
+    "extraMeta": "something meta",
+    "test": true,
+  },
+]
+`;
+
+exports[`attaches parameters meta parameter: gets appended to meta param 1`] = `
+Array [
+  undefined,
+  Object {
+    "extraMeta": "something meta",
+    "test": true,
+  },
+]
+`;
+
+exports[`attaches parameters meta parameter: override meta param 1`] = `
+Array [
+  Object {
+    "boring": "test",
+  },
+  Object {
+    "extraMeta": "something meta",
+  },
+]
+`;
+
+exports[`attaches parameters multiple meta and normal parameters: add only normal 1`] = `
+Array [
+  Object {
+    "test": true,
+  },
+  Object {
+    "extraMeta": "be careful",
+    "whatShouldIUse": "algolia",
+  },
+]
+`;
+
+exports[`attaches parameters multiple meta and normal parameters: adds nothing 1`] = `
+Array [
+  undefined,
+  Object {
+    "extraMeta": "be careful",
+    "whatShouldIUse": "algolia",
+  },
+]
+`;
+
+exports[`attaches parameters multiple meta and normal parameters: doesn't change the object 1`] = `
 Object {
   "anotherFn": [Function],
 }
 `;
 
-exports[`doesn't mess with first param 1`] = `
-Array [
-  Object {
-    "boring": "test",
-  },
-  Object {
-    "extraMeta": "something meta",
-    "test": true,
-  },
-]
-`;
-
-exports[`doesn't mess with first param 2`] = `
+exports[`attaches parameters multiple meta and normal parameters: doesn't mess with first param 1`] = `
 Array [
   Object {
     "boring": "test",
@@ -79,17 +100,7 @@ Array [
 ]
 `;
 
-exports[`gets appended to meta param 1`] = `
-Array [
-  undefined,
-  Object {
-    "extraMeta": "something meta",
-    "test": true,
-  },
-]
-`;
-
-exports[`gets appended to meta param 2`] = `
+exports[`attaches parameters multiple meta and normal parameters: gets appended to meta param 1`] = `
 Array [
   undefined,
   Object {
@@ -100,18 +111,7 @@ Array [
 ]
 `;
 
-exports[`override meta param 1`] = `
-Array [
-  Object {
-    "boring": "test",
-  },
-  Object {
-    "extraMeta": "something meta",
-  },
-]
-`;
-
-exports[`override meta param 2`] = `
+exports[`attaches parameters multiple meta and normal parameters: override meta param 1`] = `
 Array [
   Object {
     "boring": "test",
