@@ -4,7 +4,6 @@
   "recommendations": [
     "flowtype.flow-for-vscode",
     "Orta.vscode-jest",
-    "streetsidesoftware.code-spell-checker",
     "esbenp.prettier-vscode",
     "dbaeumer.vscode-eslint"
   ]

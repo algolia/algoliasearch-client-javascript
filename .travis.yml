@@ -1,14 +1,14 @@
-language: node_js # will use nvmrc by default
+language: node_js
 before_install:
-  - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.3.2
-  - export PATH=$HOME/.yarn/bin:$PATH
+  - 'curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.3.2'
+  - 'export PATH=$HOME/.yarn/bin:$PATH'
 branches:
   only:
     - master
     - feat/v4-for-real-now
-sudo: false # container based infra
-script: 
-  - yarn test:ci
+sudo: false
+script:
+  - yarn test
 cache:
   yarn: true
   directories:

@@ -1,0 +1,22 @@
+{
+  "name": "mayproxy",
+  "private": true,
+  "main": "src/index.js",
+  "version": "1.0.0",
+  "description": "Helpers around HTTP(S)_PROXY and NO_PROXY env variables",
+  "keywords": [
+    "http",
+    "https",
+    "request",
+    "proxy",
+    "HTTP_PROXY",
+    "HTTPS_PROXY",
+    "NO_PROXY"
+  ],
+  "repository": "algolia/algoliasearch-client-javascript/packages/mayproxy",
+  "homepage":
+    "https://www.github.com/algolia/algoliasearch-client-javascript/packages/mayproxy",
+  "bugs": "https://github.com/algolia/algoliasearch-client-javascript/issues",
+  "author": "Algolia, Inc. (https://www.algolia.com)",
+  "license": "MIT"
+}

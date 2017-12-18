@@ -1,15 +1,14 @@
 {
-  "name": "algoliasearch-universal-store",
-  "private": true,
+  "name": "universal-store",
   "main": "src/index.js",
-  "version": "4.0.0-beta.1",
+  "version": "1.0.0",
   "description":
     "localStorage abstraction with a fallback to in-memory storage",
   "keywords": ["localStorage", "memory", "Node.js", "fallback"],
   "repository":
-    "algolia/algoliasearch-client-javascript/packages/algoliasearch-universal-store",
+    "algolia/algoliasearch-client-javascript/packages/universal-store",
   "homepage":
-    "https://www.github.com/algolia/algoliasearch-client-javascript/packages/algoliasearch-universal-store",
+    "https://www.github.com/algolia/algoliasearch-client-javascript/packages/universal-store",
   "bugs": "https://github.com/algolia/algoliasearch-client-javascript/issues",
   "author": "Algolia, Inc. (https://www.algolia.com)",
   "license": "MIT"

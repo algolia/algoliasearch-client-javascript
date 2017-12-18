@@ -1,0 +1,14 @@
+{
+  "name": "smartagent",
+  "private": true,
+  "main": "src/index.js",
+  "version": "1.0.0",
+  "description": "Get the right http(s) agent for Node.js, handles proxies",
+  "keywords": ["http", "https", "request", "agent"],
+  "repository": "algolia/algoliasearch-client-javascript/packages/smartagent",
+  "homepage":
+    "https://www.github.com/algolia/algoliasearch-client-javascript/packages/smartagent",
+  "bugs": "https://github.com/algolia/algoliasearch-client-javascript/issues",
+  "author": "Algolia, Inc. (https://www.algolia.com)",
+  "license": "MIT"
+}

@@ -1,5 +1,5 @@
 // @flow
-import { createMemoryStore } from 'algoliasearch-universal-store';
+import { createMemoryStore } from 'universal-store';
 import { AlgoliaError } from 'algoliasearch-errors';
 import {
   initHostAndTimeouts,
@@ -9,7 +9,7 @@ import {
 } from './HostAndTimeoutManager.js';
 
 import type { AppId, ApiKey } from 'algoliasearch';
-import type { Store, Data } from 'algoliasearch-universal-store';
+import type { Store, Data } from 'universal-store';
 import type {
   RequestOptions,
   RequestArguments,

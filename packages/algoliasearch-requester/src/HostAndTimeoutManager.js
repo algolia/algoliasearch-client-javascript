@@ -1,6 +1,6 @@
 // @flow
 
-import createStore from 'algoliasearch-universal-store';
+import createStore from 'universal-store';
 import type { Hosts, Timeouts, RequestType } from 'algoliasearch-requester';
 import type { AppId } from 'algoliasearch';
 

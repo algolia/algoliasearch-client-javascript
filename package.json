@@ -1,22 +1,17 @@
 {
   "private": true,
   "scripts": {
-    "test": "jest",
+    "test": "yarn jest --verbose && yarn typecheck && yarn lint",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "test:watch": "jest --watch",
     "typecheck": "flow",
     "fetch-typedefs": "flow-typed install",
-    "test:ci": "yarn test --verbose && yarn typecheck && yarn lint",
     "format": "prettier --write {**/*.{js,css,md},*.md}"
   },
-  "workspaces": [
-    "packages/*"
-  ],
+  "workspaces": ["packages/*"],
   "jest": {
-    "transformIgnorePatterns": [
-      "/<rootDir>/node_modules/(?!algoliasearch.*)/"
-    ],
+    "transformIgnorePatterns": ["/<rootDir>/node_modules/(?!algoliasearch.*)/"],
     "testEnvironment": "node"
   },
   "renovate": {
