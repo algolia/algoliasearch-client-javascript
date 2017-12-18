@@ -14,7 +14,7 @@ export default function getApiKey(
 ) {
   return requester({
     method: 'GET',
-    path: `/1/indexes/keys`,
+    path: '/1/indexes/keys',
     requestType: 'read',
     requestOptions,
   });
