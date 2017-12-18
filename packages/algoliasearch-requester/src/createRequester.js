@@ -193,11 +193,14 @@ export class Requester {
     }
 
     return Promise.reject(
-      new Error(`Request couldn't be retried, did you enter the correct credentials?
+      // todo: use AlgoliaError and refactor?
+      new AlgoliaRequesterError({
+        message: `Request couldn't be retried, did you enter the correct credentials?
 
-see: https://alg.li/client#unretryable-error
-
-${JSON.stringify(err)}`)
+see: https://alg.li/client#unretryable-error`,
+        reason: 'fatal',
+        more: { error: err, arguments: requestArguments },
+      })
     );
   };
 }
