@@ -43,6 +43,7 @@
   * [ ] tested in all bundlers and situations
   * [ ] strip it out mostly in prod
 * [ ] use `AlgoliaRequesterError` for retry strategy
+* [ ] MCM methods
 
 # Tests
 
