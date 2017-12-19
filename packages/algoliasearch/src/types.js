@@ -5,6 +5,8 @@ export type ApiKey = string;
 export type IndexName = string;
 export type TaskID = string;
 export type ObjectID = string;
+export type UserID = string;
+export type ClusterID = string;
 export type Attribute = string;
 export type AlgoliaValue =
   | string
