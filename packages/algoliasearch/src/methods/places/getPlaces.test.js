@@ -1,38 +1,32 @@
-import { snapshotAll, fakeRequester } from '../../testUtils/index.js';
+import { snapshotAll } from '../../testUtils/index.js';
+import requester from 'algoliasearch-http-requester';
+
 import getPlaces from './getPlaces.js';
 
 it('regular getPlaces', () => {
   const requests = [
-    getPlaces(
-      { objectIDs: ['some_item', 'bingo'] },
-      { requester: fakeRequester }
-    ),
+    getPlaces({ objectIDs: ['some_item', 'bingo'] }, { requester }),
     getPlaces(
       {
         objectIDs: ['some_item', 'bingo'],
 
         attributesToRetrieve: ['sing', 'som'],
       },
-      { requester: fakeRequester }
+      { requester }
     ),
   ];
   snapshotAll(requests);
 });
 
 it('errors when no objectIDs are given', () => {
-  expect(() =>
-    getPlaces({ objectIDs: [] }, { requester: fakeRequester })
-  ).toThrow();
+  expect(() => getPlaces({ objectIDs: [] }, { requester })).toThrow();
 });
 
 it('errors when no attributesToRetrieve is not an array', () => {
   expect(() =>
-    getPlaces({ attributesToRetrieve: 'test' }, { requester: fakeRequester })
+    getPlaces({ attributesToRetrieve: 'test' }, { requester })
   ).toThrow();
   expect(() =>
-    getPlaces(
-      { attributesToRetrieve: { cool: 'test' } },
-      { requester: fakeRequester }
-    )
+    getPlaces({ attributesToRetrieve: { cool: 'test' } }, { requester })
   ).toThrow();
 });

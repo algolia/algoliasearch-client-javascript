@@ -1,4 +1,5 @@
-import { snapshotAll, fakeRequester } from '../../testUtils/index.js';
+import { snapshotAll } from '../../testUtils/index.js';
+import requester from 'algoliasearch-http-requester';
 import search from './search.js';
 
 it('search', () => {
@@ -6,14 +7,11 @@ it('search', () => {
     search(
       {},
       {
-        requester: fakeRequester,
+        requester,
         indexName: 'some_index',
       }
     ),
-    search(
-      { hitsPerPage: 4 },
-      { requester: fakeRequester, indexName: 'other_index' }
-    ),
+    search({ hitsPerPage: 4 }, { requester, indexName: 'other_index' }),
   ];
   snapshotAll(requests);
 });
