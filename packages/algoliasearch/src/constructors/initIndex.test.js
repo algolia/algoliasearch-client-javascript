@@ -27,3 +27,10 @@ it('index.search() works 🐣', async () => {
   const result = await index.search({ query: 'hello world' });
   expect(result).toMatchSnapshot();
 });
+
+it('allows you to pass a http requester', async () => {
+  const httpRequester = jest.fn(() => Promise.resolve({}));
+  const index = initIndex({ ...validParams, httpRequester });
+  await index.search({ test: 'bingo' });
+  expect(httpRequester).toHaveBeenCalledTimes(1);
+});

@@ -3,11 +3,14 @@
 import * as indexMethods from '../methods/index/index.js';
 import { createRequester } from 'algoliasearch-requester';
 import attachParameters from './attachParameters.js';
-// todo: use a real requester
-import { fakeRequester as httpRequester } from '../testUtils/index.js';
+import universalRequester from 'algoliasearch-http-requester';
 
 import type { IndexMethods, AppId, ApiKey, IndexName } from 'algoliasearch';
-import type { RequesterOptions, RequestMethod } from 'algoliasearch-requester';
+import type {
+  RequesterOptions,
+  RequestMethod,
+  HttpModule,
+} from 'algoliasearch-requester';
 
 export default function initIndex({
   appId,
@@ -15,12 +18,14 @@ export default function initIndex({
   indexName,
   options,
   requester: extraRequester,
+  httpRequester: extraHttpRequester,
 }: {
   appId: AppId,
   apiKey: ApiKey,
   indexName: IndexName,
   options?: RequesterOptions,
   requester?: RequestMethod,
+  httpRequester?: HttpModule,
 }): IndexMethods {
   /* eslint-disable prefer-rest-params */
   if (appId === undefined) {
@@ -39,6 +44,11 @@ initIndex(${[...arguments].map(arg => JSON.stringify(arg)).join(',')})`);
 initIndex(${[...arguments].map(arg => JSON.stringify(arg)).join(',')})`);
   }
   /* eslint-enable prefer-rest-params */
+
+  const httpRequester =
+    typeof extraHttpRequester === 'function'
+      ? extraHttpRequester
+      : universalRequester;
 
   const requester = extraRequester
     ? extraRequester

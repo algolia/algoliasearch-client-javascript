@@ -4,22 +4,27 @@
 import { createRequester } from 'algoliasearch-requester';
 import * as placesMethods from '../methods/places/index.js';
 import attachParameters from './attachParameters.js';
-// todo: use a real requester
-import { fakeRequester as httpRequester } from '../testUtils/index.js';
+import universalRequester from 'algoliasearch-http-requester';
 
 import type { ApiKey, AppId } from 'algoliasearch';
-import type { RequestMethod, RequesterOptions } from 'algoliasearch-requester';
+import type {
+  RequestMethod,
+  RequesterOptions,
+  HttpModule,
+} from 'algoliasearch-requester';
 
 export default function initPlaces({
   apiKey = '',
   appId = 'places',
   requester: extraRequester,
   options,
+  httpRequester: extraHttpRequester,
 }: {
   apiKey?: ApiKey,
   appId?: AppId,
   requester?: RequestMethod,
   options?: RequesterOptions,
+  httpRequester?: HttpModule,
 } = {}) {
   // if there's an appId, there should also be an apiKey
   // all other cases are invalid
@@ -35,6 +40,12 @@ initPlaces(${[...arguments].map(arg => JSON.stringify(arg)).join(',')})`
     );
     /* eslint-enable prefer-rest-params */
   }
+
+  const httpRequester =
+    typeof extraHttpRequester === 'function'
+      ? extraHttpRequester
+      : universalRequester;
+
   const requester = extraRequester
     ? extraRequester
     : createRequester({ appId, apiKey, options, httpRequester });

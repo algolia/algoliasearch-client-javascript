@@ -1,5 +1,23 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`client.search() works 🐣 1`] = `
+Object {
+  "body": Object {
+    "requests": Object {
+      "query": "hello world",
+    },
+  },
+  "connectTimeout": 1000,
+  "method": "POST",
+  "requestOptions": undefined,
+  "timeout": 2000,
+  "url": Object {
+    "hostname": "some_app-dsn.algolia.net",
+    "pathname": "/1/indexes/*/queriesundefined",
+  },
+}
+`;
+
 exports[`initClient contains the correct methods 1`] = `
 Array [
   "addApiKey",

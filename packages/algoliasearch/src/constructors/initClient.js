@@ -4,21 +4,27 @@
 import * as clientMethods from '../methods/client/index.js';
 import attachParameters from './attachParameters.js';
 import { createRequester } from 'algoliasearch-requester';
-import httpRequester from 'algoliasearch-http-requester';
+import universalRequester from 'algoliasearch-http-requester';
 
 import type { ClientMethods, AppId, ApiKey } from 'algoliasearch';
-import type { RequesterOptions, RequestMethod } from 'algoliasearch-requester';
+import type {
+  RequesterOptions,
+  RequestMethod,
+  HttpModule,
+} from 'algoliasearch-requester';
 
 export default function initClient({
   appId,
   apiKey,
   options,
   requester: extraRequester,
+  httpRequester: extraHttpRequester,
 }: {
   appId: AppId,
   apiKey: ApiKey,
   options?: RequesterOptions,
   requester?: RequestMethod,
+  httpRequester?: HttpModule,
 }): ClientMethods {
   /* eslint-disable prefer-rest-params */
   if (appId === undefined) {
@@ -32,6 +38,11 @@ initIndex(${[...arguments].map(arg => JSON.stringify(arg)).join(',')})`);
 initIndex(${[...arguments].map(arg => JSON.stringify(arg)).join(',')})`);
   }
   /* eslint-enable prefer-rest-params */
+
+  const httpRequester =
+    typeof extraHttpRequester === 'function'
+      ? extraHttpRequester
+      : universalRequester;
 
   const requester = extraRequester
     ? extraRequester

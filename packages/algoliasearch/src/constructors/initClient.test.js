@@ -21,3 +21,16 @@ it('initClient contains the correct methods', () => {
   const client = initClient(validClientParams);
   expect(Object.keys(client)).toMatchSnapshot();
 });
+
+it('client.search() works 🐣', async () => {
+  const client = initClient(validClientParams);
+  const result = await client.search({ requests: { query: 'hello world' } });
+  expect(result).toMatchSnapshot();
+});
+
+it('allows you to pass a http requester', async () => {
+  const httpRequester = jest.fn(() => Promise.resolve({}));
+  const client = initClient({ ...validClientParams, httpRequester });
+  await client.search({ requests: [] });
+  expect(httpRequester).toHaveBeenCalledTimes(1);
+});
