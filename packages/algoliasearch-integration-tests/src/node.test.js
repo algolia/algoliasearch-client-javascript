@@ -1,5 +1,8 @@
 import { initClient } from 'algoliasearch';
 
+// todo: figure out how to avoid running this test in regular mode when destruct
+jest.unmock('algoliasearch-http-requester');
+
 it('can initialize a client', () => {
   const client = initClient({
     appId: 'latency',
