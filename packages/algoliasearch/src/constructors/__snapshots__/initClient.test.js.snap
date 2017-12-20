@@ -3,6 +3,7 @@
 exports[`initClient contains the correct methods 1`] = `
 Array [
   "addApiKey",
+  "assignUserID",
   "batch",
   "clearIndex",
   "copyIndex",
@@ -10,10 +11,15 @@ Array [
   "deleteIndex",
   "getApiKey",
   "getLogs",
+  "getTopUserID",
   "listApiKeys",
+  "listClusters",
   "listIndexes",
+  "listUserIDs",
   "moveIndex",
+  "removeUserID",
   "search",
+  "searchUserIDs",
   "updateApiKey",
   "requester",
 ]
