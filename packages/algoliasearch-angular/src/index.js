@@ -1,8 +1,11 @@
 // @flow
 
 import {
+  // $FlowFixMe it doesn't recognize the imports?
   initClient as client,
+  // $FlowFixMe it doesn't recognize the imports?
   initIndex as index,
+  // $FlowFixMe it doesn't recognize the imports?
   initPlaces as places,
 } from 'algoliasearch';
 import httpRequester from './httpRequester.js';
