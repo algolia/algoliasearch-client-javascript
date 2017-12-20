@@ -1,6 +1,7 @@
 {
   "presets": ["flow", ["env", {
     "targets": {
+      // todo: make sure that we publish with modules: false
       "node": "current"
     }
   }]],
