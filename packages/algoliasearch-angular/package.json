@@ -1,10 +1,11 @@
 {
   "name": "algoliasearch-angular",
   "version": "4.0.0-beta.1",
-  "main": "src/index.js",      
+  "main": "src/index.js",
   "private": true,
   "description": "Algolia Search API client for Angular.",
-  "repository": "algolia/algoliasearch-client-javascript/packages/algoliasearch-angular",
+  "repository":
+    "algolia/algoliasearch-client-javascript/packages/algoliasearch-angular",
   "keywords": [
     "algolia",
     "search",
@@ -14,8 +15,12 @@
     "algolia angular",
     "algoliasearch"
   ],
+  "dependencies": {
+    "algoliasearch": "4.0.0-beta.1",
+    "algoliasearch-requester": "4.0.0-beta.1"
+  },
   "homepage": "https://www.algolia.com/doc/api-client/javascript/#angular",
   "bugs": "https://github.com/algolia/algoliasearch-client-javascript/issues",
-  "author": "Algolia, Inc. (https://www.algolia.com)",  
+  "author": "Algolia, Inc. (https://www.algolia.com)",
   "license": "MIT"
 }
