@@ -2,6 +2,9 @@
   "name": "algoliasearch",
   "version": "4.0.0-beta.1",
   "main": "src/index.js",
+  "browser": {
+    "algoliasearch-http-requester": "algoliasearch-http-requester-browser"
+  },
   "private": true,
   "description":
     "Algolia Search API client for JavaScript. Works in Node.js and browsers",
@@ -18,7 +21,8 @@
   "dependencies": {
     "algoliasearch-requester": "4.0.0-beta.1",
     "algoliasearch-errors": "4.0.0-beta.1",
-    "algoliasearch-http-requester": "4.0.0-beta.1"
+    "algoliasearch-http-requester": "4.0.0-beta.1",
+    "algoliasearch-http-requester-browser": "4.0.0-beta.1"
   },
   "homepage": "https://www.algolia.com/doc/api-client/javascript/",
   "bugs": "https://github.com/algolia/algoliasearch-client-javascript/issues",

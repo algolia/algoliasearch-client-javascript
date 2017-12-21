@@ -3,7 +3,6 @@
   "version": "4.0.0-beta.1",
   "private": true,
   "main": "./src/node.js",
-  "browser": "./src/browser.js",
   "description":
     "Algolia Search API JavaScript Node.js http requester implementation",
   "repository": "algolia/algoliasearch-client-javascript",
