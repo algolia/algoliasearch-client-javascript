@@ -2,7 +2,7 @@
 
 import crypto from 'crypto';
 import { stringify } from 'querystring';
-import type { ApiKey, SearchParameters } from './types.js';
+import type { ApiKey, SearchParameters } from 'algoliasearch';
 
 type Timestamp = number;
 
