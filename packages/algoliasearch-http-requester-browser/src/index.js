@@ -27,7 +27,7 @@ export default function httpRequester({
   const timeout = timeouts[requestType] || originalTimeout;
 
   // $FlowFixMe --> this is a global
-  const controller = new FetchController();
+  const controller = new AbortController();
 
   return fetch(`https://${url}`);
 }
