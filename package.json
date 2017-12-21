@@ -10,13 +10,6 @@
     "format": "prettier --write {**/*.{js,css,md},*.md}"
   },
   "workspaces": ["packages/*"],
-  "jest": {
-    "moduleFileExtensions": ["js"],
-    "testEnvironment": "node",
-    "transform": {
-      ".js": "babel-jest"
-    }
-  },
   "renovate": {
     "extends": [
       "config:js-lib",
