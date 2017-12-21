@@ -24,8 +24,9 @@ const agent: https.Agent = new https.Agent({
 });
 
 export default function httpRequester({
+  // todo: add override possibility
   // agent,
-  // abortController
+  // abortController,
   body,
   method,
   url,
@@ -90,7 +91,6 @@ export default function httpRequester({
       reject(
         new AlgoliaRequesterError({
           message: `Socket timed out, your internet might have dropped before the request completed.
-
 It's possible to send a smaller batch if needed`,
           reason: 'timeout',
           more: {
