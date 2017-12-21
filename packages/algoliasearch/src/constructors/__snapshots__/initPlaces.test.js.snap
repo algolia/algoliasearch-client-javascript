@@ -6,6 +6,7 @@ Array [
   "getPlaces",
   "search",
   "requester",
+  "httpRequester",
 ]
 `;
 

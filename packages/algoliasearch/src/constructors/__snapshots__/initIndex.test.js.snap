@@ -58,6 +58,7 @@ Array [
   "updateApiKey",
   "waitTask",
   "requester",
+  "httpRequester",
 ]
 `;
 

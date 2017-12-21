@@ -52,5 +52,6 @@ initIndex(${[...arguments].map(arg => JSON.stringify(arg)).join(',')})`);
   return {
     ...attachParameters(clientMethods, { requester }),
     requester,
+    httpRequester,
   };
 }

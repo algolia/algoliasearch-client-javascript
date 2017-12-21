@@ -40,6 +40,7 @@ Array [
   "searchUserIDs",
   "updateApiKey",
   "requester",
+  "httpRequester",
 ]
 `;
 
