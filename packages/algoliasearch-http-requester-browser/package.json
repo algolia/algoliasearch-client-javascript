@@ -7,5 +7,8 @@
   "homepage": "https://www.algolia.com/doc/api-client/javascript/",
   "bugs": "https://github.com/algolia/algoliasearch-client-javascript/issues",
   "author": "Algolia, Inc. (https://www.algolia.com)",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "jest-fetch-mock": "^1.4.0"
+  }
 }

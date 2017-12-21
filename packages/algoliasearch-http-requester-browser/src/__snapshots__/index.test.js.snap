@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`most simple search 1`] = `
+Body {
+  "_abort": false,
+  "_raw": Array [],
+  "body": "",
+  "bodyUsed": false,
+  "headers": Headers {
+    "_headers": Object {},
+  },
+  "ok": true,
+  "size": 0,
+  "status": 200,
+  "statusText": "OK",
+  "timeout": 0,
+  "url": undefined,
+}
+`;

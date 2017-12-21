@@ -10,10 +10,15 @@ import type {
 const parseOptions = (requestOptions: RequestOptions) => ({
   queryStringOrBody: {},
   headers: requestOptions,
-  timeouts: {},
+  timeouts: {
+    read: 0,
+    write: 0,
+    connect: 0,
+  },
 });
 
 export default function httpRequester({
+  // signal: AbortSignal
   body,
   method,
   url,
@@ -27,7 +32,8 @@ export default function httpRequester({
   const timeout = timeouts[requestType] || originalTimeout;
 
   // $FlowFixMe --> this is a global
-  const controller = new AbortController();
+  // todo: use internal controller for timeout
+  // const controller = new AbortController();
 
   return fetch(`https://${url}`);
 }
