@@ -1,4 +1,4 @@
-/*! algoliasearch 3.24.8 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
+/*! algoliasearch 3.24.9 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
 (function(f){var g;if(typeof window!=='undefined'){g=window}else if(typeof self!=='undefined'){g=self}g.ALGOLIA_MIGRATION_LAYER=f()})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 
 module.exports = function load (src, opts, cb) {
@@ -3864,7 +3864,7 @@ AlgoliaSearchCore.prototype._getSearchParams = function(args, params) {
  * Compute the headers for a request
  *
  * @param [string] options.additionalUA semi-colon separated string with other user agents to add
- * @param [boolean=true] options.withAPIKey Send the api key as a header
+ * @param [boolean=true] options.withApiKey Send the api key as a header
  * @param [Object] options.headers Extra headers to send
  */
 AlgoliaSearchCore.prototype._computeRequestHeaders = function(options) {
@@ -3883,7 +3883,7 @@ AlgoliaSearchCore.prototype._computeRequestHeaders = function(options) {
   // but in some situations, the API KEY will be too long (big secured API keys)
   // so if the request is a POST and the KEY is very long, we will be asked to not put
   // it into headers but in the JSON body
-  if (options.withAPIKey !== false) {
+  if (options.withApiKey !== false) {
     requestHeaders['x-algolia-api-key'] = this.apiKey;
   }
 
@@ -6610,7 +6610,7 @@ function cleanup() {
 },{"1":1}],35:[function(require,module,exports){
 'use strict';
 
-module.exports = '3.24.8';
+module.exports = '3.24.9';
 
 },{}]},{},[19])(19)
 });

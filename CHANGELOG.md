@@ -1,4 +1,8 @@
 CHANGELOG
+2017-12-29 3.24.9
+  * FIX: make sure long API keys are sent via the POST body
+    * this wasn't the case in 3.24.8 because of a typo
+
 2017-12-13 3.24.8
   * add multi cluster management methods
     * [ Assign or Move a userID to a cluster](https://algolia.com/doc/api-reference/api-methods/assign-user-id/): `assignUserID`

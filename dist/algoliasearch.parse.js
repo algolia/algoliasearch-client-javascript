@@ -3596,7 +3596,7 @@ module.exports =
 	 * Compute the headers for a request
 	 *
 	 * @param [string] options.additionalUA semi-colon separated string with other user agents to add
-	 * @param [boolean=true] options.withAPIKey Send the api key as a header
+	 * @param [boolean=true] options.withApiKey Send the api key as a header
 	 * @param [Object] options.headers Extra headers to send
 	 */
 	AlgoliaSearchCore.prototype._computeRequestHeaders = function(options) {
@@ -3615,7 +3615,7 @@ module.exports =
 	  // but in some situations, the API KEY will be too long (big secured API keys)
 	  // so if the request is a POST and the KEY is very long, we will be asked to not put
 	  // it into headers but in the JSON body
-	  if (options.withAPIKey !== false) {
+	  if (options.withApiKey !== false) {
 	    requestHeaders['x-algolia-api-key'] = this.apiKey;
 	  }
 
@@ -4035,7 +4035,7 @@ module.exports =
 
 	
 
-	module.exports = '3.24.8';
+	module.exports = '3.24.9';
 
 
 /***/ })
