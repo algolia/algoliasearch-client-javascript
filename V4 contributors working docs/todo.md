@@ -27,13 +27,13 @@
   * [x] change host upon timeout
   * [x] timeout sharing
   * [x] timeout invalidation
-  * [ ] randomise fallback host (indices)
+  * [ ] randomize fallback host (indices)
 * [ ] http
   * [ ] parse requestOptions at the http layer
   * [ ] layers
     * [ ] node
-    * [ ] XHR
     * [ ] fetch (for service workers)
+    * [ ] Angular (not _necessary_ for betas)
 * [x] caching
 * [x] method signatures
   * [x] change attachParameters to only attach second
@@ -42,7 +42,7 @@
   * `import algoliasearch from 'algoliasearch'; algoliasearch(); // logs explanation`
   * [ ] tested in all bundlers and situations
   * [ ] strip it out mostly in prod
-* [ ] use `AlgoliaRequesterError` for retry strategy
+* [x] use `AlgoliaRequesterError` for retry strategy
 * [x] MCM methods
 
 # Tests
