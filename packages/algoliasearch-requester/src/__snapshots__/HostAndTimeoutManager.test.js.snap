@@ -1,9 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`it will throw if the host keeps failing 1`] = `
-"There are no hosts remaining for this app. 
+"There are no hosts remaining for this app.
 
-You can retry this search, and it will try the hosts again. 
+You can retry this search, and it will try the hosts again.
 
 appId: some_throwing_app
 

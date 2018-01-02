@@ -1,5 +1,6 @@
 // @flow
 
+import { AlgoliaError } from 'algoliasearch-errors';
 import type { IndexName, Attribute, AlgoliaValue } from 'algoliasearch';
 import type { RequestMethod, RequestOptions } from 'algoliasearch-requester';
 
@@ -31,7 +32,7 @@ export default function partialUpdateObject(
     typeof objectID !== 'string' ||
     typeof objectID !== 'number'
   ) {
-    throw new Error(
+    throw new AlgoliaError(
       `You supplied an object without objectID to partialUpdateObject, but this is required.
 
 body: ${JSON.stringify(body)}`

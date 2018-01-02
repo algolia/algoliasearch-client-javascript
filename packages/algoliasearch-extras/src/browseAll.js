@@ -3,11 +3,14 @@
 // eslint-disable-next-line monorepo/no-internal-import
 import browse from 'algoliasearch/src/methods/index/browse';
 import createRequester from 'algoliasearch-requester';
+import { AlgoliaError } from 'algoliasearch-errors';
 import type { IndexName, AppId, ApiKey, BrowseParameters } from 'algoliasearch';
 import type { RequestOptions, RequestMethod } from 'algoliasearch-requester';
 
 const throwIfAbsent = (name: string) => {
-  throw new Error(`The parameter ${name} was missing, but it's required`);
+  throw new AlgoliaError(
+    `The parameter ${name} was missing, but it's required`
+  );
 };
 
 const getInitialListeners = () => ({

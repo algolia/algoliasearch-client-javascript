@@ -1,6 +1,6 @@
 // @flow
 
-import { pluralError } from 'algoliasearch-errors';
+import { pluralError, AlgoliaError } from 'algoliasearch-errors';
 import type { ObjectID } from 'algoliasearch';
 import type { RequestMethod, RequestOptions } from 'algoliasearch-requester';
 
@@ -24,7 +24,7 @@ export default function getPlaces(
     throw pluralError('getObject');
   }
   if (objectIDs.length === 0) {
-    throw new Error('You need to have at least one place to retrieve');
+    throw new AlgoliaError('You need to have at least one place to retrieve');
   }
 
   const attrs = attributesToRetrieve && {

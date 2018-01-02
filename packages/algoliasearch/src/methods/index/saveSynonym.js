@@ -1,5 +1,6 @@
 // @flow
 
+import { AlgoliaError } from 'algoliasearch-errors';
 import type { IndexName, Rule } from 'algoliasearch';
 import type { RequestMethod, RequestOptions } from 'algoliasearch-requester';
 
@@ -21,7 +22,7 @@ export default function saveSynonym(
     typeof objectID !== 'string' ||
     typeof objectID !== 'number'
   ) {
-    throw new Error(
+    throw new AlgoliaError(
       `You supplied an object without objectID to saveSynonym, but this is required.
 
 body: ${JSON.stringify(body)}`

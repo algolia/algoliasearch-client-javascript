@@ -1,5 +1,6 @@
 // @flow
 
+import { AlgoliaError } from 'algoliasearch-errors';
 import type { IndexName, AlgoliaObject } from 'algoliasearch';
 import type { RequestMethod, RequestOptions } from 'algoliasearch-requester';
 
@@ -21,7 +22,7 @@ export default function saveObject(
     typeof objectID !== 'string' ||
     typeof objectID !== 'number'
   ) {
-    throw new Error(
+    throw new AlgoliaError(
       `You supplied an object without objectID to saveObject.
 
 If you want to simply create an object without objectID, you can use addObject.

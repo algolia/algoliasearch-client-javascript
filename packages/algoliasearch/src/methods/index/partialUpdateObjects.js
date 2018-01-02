@@ -1,6 +1,6 @@
 // @flow
 
-import { pluralError } from 'algoliasearch-errors';
+import { pluralError, AlgoliaError } from 'algoliasearch-errors';
 import type { IndexName, Attribute, AlgoliaValue } from 'algoliasearch';
 import type { RequestMethod, RequestOptions } from 'algoliasearch-requester';
 
@@ -32,7 +32,7 @@ export default function partialUpdateObjects(
 
   const ids = objects.map(({ objectID }) => objectID);
   if (ids.indexOf(undefined) !== -1) {
-    throw new Error(
+    throw new AlgoliaError(
       `You supplied an object without objectID to partialUpdateObjects.
 
 body: ${JSON.stringify(objects)}`

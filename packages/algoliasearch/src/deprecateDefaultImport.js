@@ -1,11 +1,13 @@
 /* eslint-disable no-console */
+import { AlgoliaError } from 'algoliasearch-errors';
+
 export default function deprecateDefaultImport() {
   if (process && process.env === 'production') {
-    throw new Error(
+    throw new AlgoliaError(
       `You're importing default, see https://alg.li/clientv4migration for more information`
     );
   } else {
-    throw new Error(`
+    throw new AlgoliaError(`
 Hello there, thanks for using Algolia. You tried importing default from 'algoliasearch'.
 
 This was the old way of importing, you can now do:

@@ -4,6 +4,7 @@ import * as indexMethods from '../methods/index/index.js';
 import { createRequester } from 'algoliasearch-requester';
 import attachParameters from './attachParameters.js';
 import universalRequester from 'algoliasearch-http-requester';
+import { AlgoliaError } from 'algoliasearch-errors';
 
 import type { IndexMethods, AppId, ApiKey, IndexName } from 'algoliasearch';
 import type {
@@ -29,17 +30,17 @@ export default function initIndex({
 }): IndexMethods {
   /* eslint-disable prefer-rest-params */
   if (appId === undefined) {
-    throw new Error(`An appId is required. ${appId} was not valid.
+    throw new AlgoliaError(`An appId is required. ${appId} was not valid.
     
     initIndex(${[...arguments].map(arg => JSON.stringify(arg)).join(',')})`);
   }
   if (apiKey === undefined) {
-    throw new Error(`An apiKey is required. ${apiKey} was not valid.
+    throw new AlgoliaError(`An apiKey is required. ${apiKey} was not valid.
 
 initIndex(${[...arguments].map(arg => JSON.stringify(arg)).join(',')})`);
   }
   if (indexName === undefined) {
-    throw new Error(`An indexName is required. ${indexName} was not valid.
+    throw new AlgoliaError(`An indexName is required. ${indexName} was not valid.
 
 initIndex(${[...arguments].map(arg => JSON.stringify(arg)).join(',')})`);
   }

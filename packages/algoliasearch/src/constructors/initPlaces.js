@@ -5,6 +5,7 @@ import { createRequester } from 'algoliasearch-requester';
 import * as placesMethods from '../methods/places/index.js';
 import attachParameters from './attachParameters.js';
 import universalRequester from 'algoliasearch-http-requester';
+import { AlgoliaError } from 'algoliasearch-errors';
 
 import type { ApiKey, AppId } from 'algoliasearch';
 import type {
@@ -33,7 +34,7 @@ export default function initPlaces({
     (appId !== 'places' && appId !== '' && apiKey === '')
   ) {
     /* eslint-disable prefer-rest-params */
-    throw new Error(
+    throw new AlgoliaError(
       `Credentials not valid: you gave an API key (${apiKey}), and appId (${appId})
 
 initPlaces(${[...arguments].map(arg => JSON.stringify(arg)).join(',')})`

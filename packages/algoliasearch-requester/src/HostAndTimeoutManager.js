@@ -1,6 +1,7 @@
 // @flow
 
 import createStore from 'universal-store';
+import { AlgoliaError } from 'algoliasearch-errors';
 import type { Hosts, Timeouts, RequestType } from 'algoliasearch-requester';
 import type { AppId } from 'algoliasearch';
 
@@ -23,9 +24,9 @@ const store = createStore('algoliasearch-host-and-timeouts');
 
 function noHostsRemaining({ appId }) {
   initHostAndTimeouts({ appId });
-  throw new Error(`There are no hosts remaining for this app. 
+  throw new AlgoliaError(`There are no hosts remaining for this app.
 
-You can retry this search, and it will try the hosts again. 
+You can retry this search, and it will try the hosts again.
 
 appId: ${appId}
 
@@ -94,7 +95,7 @@ export function getParams({
   requestType: RequestType,
 }) {
   if (requestType === undefined) {
-    throw new Error(
+    throw new AlgoliaError(
       'the request requestType (`requestType`) must be `read` or `write`'
     );
   }

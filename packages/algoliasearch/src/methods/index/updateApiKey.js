@@ -1,5 +1,6 @@
 // @flow
 
+import { AlgoliaError } from 'algoliasearch-errors';
 import type { IndexName } from 'algoliasearch';
 import type { RequestMethod, RequestOptions } from 'algoliasearch-requester';
 
@@ -38,7 +39,7 @@ export default function updateApiKey(
   }
 ) {
   if (!key || typeof key !== 'string') {
-    throw new Error(
+    throw new AlgoliaError(
       `To update an API key you need to pass it as 'key', you passed ${key}`
     );
   }
