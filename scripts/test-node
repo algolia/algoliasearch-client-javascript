@@ -13,6 +13,8 @@ set -e # exit when error
 [ -z $TRAVIS_PULL_REQUEST ] && TRAVIS_PULL_REQUEST='false'
 [ -z $TRAVIS_BUILD_NUMBER ] && TRAVIS_BUILD_NUMBER='false'
 
+# nvm has a special setup on Travis where it might break installing other versions
+unset npm_config_prefix
 nvm install 7
 node test/run-node.js | tap-bail | tap-dot
 
