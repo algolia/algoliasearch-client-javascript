@@ -604,6 +604,8 @@ Index.prototype.clearIndex = function(callback) {
 /*
 * Get settings of this index
 *
+* @param opts an object of options to add 
+* @param opts.advanced get more settings like nbShards (useful for Enterprise)
 * @param callback (optional) the result callback called with two arguments
 *  error: null or Error('message')
 *  content: the settings object or the error message if a failure occured
