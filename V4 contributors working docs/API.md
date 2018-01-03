@@ -165,7 +165,36 @@ All deprecated methods are removed
 
 ### Requester methods
 
-Every method that does an API call has as its last argument `requestOptions`. These options are applied with highest priority and will send custom headers or url parameters, depending on which method it is.
+Every method that does an API call has as its last argument `requestOptions`. These options are applied with highest priority and will send custom headers or url parameters, depending on which method it is
+
+#### Simple example
+
+```js
+index.search({
+  query: 'bla bla',
+  requestOptions: {
+    // advanced
+    extraHeaders: {
+      'X--': 'something',
+    },
+    extraQueryStringParameters: {
+      advanced: 1,
+    },
+    // normal ones
+    timeouts: {
+      connect: 1,
+      read: 1,
+      write: 1,
+    },
+    algoliaAgent: 'for js..',
+    userID: 'qsdf',
+    apiKey: 'XDQSDFS',
+    // to think about how possible
+    appId: '',
+    indexName: '',
+  },
+});
+```
 
 #### options
 
@@ -215,9 +244,9 @@ const requester = createRequester();
 // the user here has to take care of careful merging
 // things like timeouts and extraHeaders are objects
 // so that is something to keep in mind while implementing
-requester.setOptions(current => ({
+requester.setRequestOptions(current => ({
   ...current,
-  staticOptions,
+  ...staticOptions,
 }));
 
 search(
