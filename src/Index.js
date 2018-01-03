@@ -608,11 +608,20 @@ Index.prototype.clearIndex = function(callback) {
 *  error: null or Error('message')
 *  content: the settings object or the error message if a failure occured
 */
-Index.prototype.getSettings = function(callback) {
-  var indexObj = this;
+Index.prototype.getSettings = function(opts, callback) {
+  if (arguments.length === 1 || typeof opts === 'function') {
+    callback = opts;
+    opts = {};
+  }
+
+  var indexName = encodeURIComponent(this.indexName);
   return this.as._jsonRequest({
     method: 'GET',
-    url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/settings?getVersion=2',
+    url:
+      '/1/indexes/' +
+      indexName +
+      '/settings?getVersion=2' +
+      (opts.advanced ? '&advanced=' + opts.advanced : ''),
     hostType: 'read',
     callback: callback
   });
