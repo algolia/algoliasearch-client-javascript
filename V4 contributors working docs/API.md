@@ -54,11 +54,13 @@ search({ query: 'atlenta' }, { requester, indexName: 'cities-us' }).then(
   // same with async/await
   async () => {
     const { hits } = await search(
-      { query: 'atlenta' },
+      {
+        query: 'atlenta',
+        requestOptions: { timeouts: {} },
+      },
       {
         requester,
         indexName: 'cities-us',
-        requestOptions: { timeouts: {} },
       }
     );
   }
@@ -219,13 +221,15 @@ requester.setOptions(current => ({
 }));
 
 search(
-  { query: 'atlenta' },
   {
-    requester,
-    indexName: 'cities-us',
+    query: 'atlenta',
     requestOptions: {
       'X-Even-One-More': 'Ugh, I hate headers',
     },
+  },
+  {
+    requester,
+    indexName: 'cities-us',
   }
 );
 
