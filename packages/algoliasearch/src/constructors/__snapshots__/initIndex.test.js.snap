@@ -2,6 +2,8 @@
 
 exports[`index.search() works 🐣 1`] = `
 Object {
+  "apiKey": "some_key",
+  "appId": "some_app",
   "body": Object {
     "params": Object {
       "query": "hello world",

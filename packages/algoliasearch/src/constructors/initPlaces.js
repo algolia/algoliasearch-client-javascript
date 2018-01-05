@@ -10,6 +10,7 @@ import { AlgoliaError } from 'algoliasearch-errors';
 import type { ApiKey, AppId } from 'algoliasearch';
 import type {
   RequestMethod,
+  // RequestOptions,
   RequesterOptions,
   HttpModule,
 } from 'algoliasearch-requester';
@@ -18,13 +19,15 @@ export default function initPlaces({
   apiKey = '',
   appId = 'places',
   requester: extraRequester,
-  options,
+  requesterOptions,
+  requestOptions,
   httpRequester: extraHttpRequester,
 }: {
   apiKey?: ApiKey,
   appId?: AppId,
   requester?: RequestMethod,
-  options?: RequesterOptions,
+  requesterOptions?: RequesterOptions,
+  requestOptions?: RequesterOptions,
   httpRequester?: HttpModule,
 } = {}) {
   // if there's an appId, there should also be an apiKey
@@ -49,7 +52,13 @@ initPlaces(${[...arguments].map(arg => JSON.stringify(arg)).join(',')})`
 
   const requester = extraRequester
     ? extraRequester
-    : createRequester({ appId, apiKey, options, httpRequester });
+    : createRequester({
+        appId,
+        apiKey,
+        requesterOptions,
+        requestOptions,
+        httpRequester,
+      });
 
   return {
     ...attachParameters(placesMethods, { requester }),

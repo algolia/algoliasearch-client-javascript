@@ -56,10 +56,10 @@ search({ query: 'atlenta' }, { requester, indexName: 'cities-us' }).then(
     const { hits } = await search(
       {
         query: 'atlenta',
-        requestOptions: { timeouts: {} },
       },
       {
         requester,
+        requesterOptions: { timeouts: { read: 200 } },
         indexName: 'cities-us',
       }
     );
@@ -142,9 +142,9 @@ All deprecated methods are removed
 * `setExtraHeader` ➡️ handled via requestOptions
 * `getExtraHeader` ➡️ handled via requestOptions
 * `unsetExtraHeader` ➡️ handled via requestOptions
-* `setTimeouts` ➡️ handled via requestOptions
-* `setRequestTimeout` ➡️ handled via requestOptions
-* `getTimeouts` ➡️ handled via requestOptions
+* `setTimeouts` ➡️ handled via requesterOptions
+* `setRequestTimeout` ➡️ handled via requesterOptions
+* `getTimeouts` ➡️ handled via requesterOptions
 * `disableRateLimitForward` ➡️ handled via requestOptions
 * `disableSecuredAPIKey` ➡️ handled via requestOptions
 * `enableRateLimitForward` ➡️ handled via requestOptions
@@ -165,35 +165,43 @@ All deprecated methods are removed
 
 ### Requester methods
 
-Every method that does an API call has as its last argument `requestOptions`. These options are applied with highest priority and will send custom headers or url parameters, depending on which method it is
+Every method that does an API call has in its last argument `requestOptions`. These options are applied with highest priority and will send custom headers or url parameters, depending on which method it is
 
 #### Simple example
 
 ```js
-index.search({
-  query: 'bla bla',
-  requestOptions: {
-    // advanced
-    extraHeaders: {
-      'X--': 'something',
-    },
-    extraQueryStringParameters: {
-      advanced: 1,
-    },
-    // normal ones
-    timeouts: {
-      connect: 1,
-      read: 1,
-      write: 1,
-    },
-    algoliaAgent: 'for js..',
-    userID: 'qsdf',
-    apiKey: 'XDQSDFS',
-    // to think about how possible
-    appId: '',
-    indexName: '',
+index.search(
+  {
+    query: 'bla bla',
   },
-});
+  {
+    requestOptions: {
+      // advanced
+      extraHeaders: {
+        'X--': 'something',
+      },
+      extraQueryStringParameters: {
+        advanced: 1,
+      },
+      // normal ones
+
+      algoliaAgent: 'for js..',
+      userID: 'qsdf',
+      // they are passed to the http module
+      // apiKey: 'XDQSDFS',
+      // appId: '',
+      // indexName: '',
+    },
+    requesterOptions: {
+      timeouts: {
+        connect: 1,
+        read: 1,
+        write: 1,
+      },
+      cache: true,
+    },
+  }
+);
 ```
 
 #### options
@@ -212,7 +220,7 @@ The `extraHeaders` and `extraQueryStrings` are available for cases where we have
 These options are also available statefully, for options that are relevant for every request:
 
 ```js
-requester.setOptions(current => newOptions);
+requester.setRequestOptions(current => newOptions);
 ```
 
 This leaves the responsibility of merging the state up to the implementer, to stay more flexible.
@@ -252,13 +260,13 @@ requester.setRequestOptions(current => ({
 search(
   {
     query: 'atlenta',
-    requestOptions: {
-      'X-Even-One-More': 'Ugh, I hate headers',
-    },
   },
   {
     requester,
     indexName: 'cities-us',
+    requestOptions: {
+      'X-Even-One-More': 'Ugh, I hate headers',
+    },
   }
 );
 
@@ -312,7 +320,7 @@ import createRequester from 'algoliasearch-requester';
 const requester = createRequester({ cache: true });
 
 search({ requests }, { requester });
-search({ requests }, { requester, cache: false });
+search({ requests }, { requester, requesterOptions: { cache: false } });
 ```
 
 ## to consider

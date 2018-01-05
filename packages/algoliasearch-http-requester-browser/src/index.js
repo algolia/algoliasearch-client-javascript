@@ -1,39 +1,46 @@
 // @flow
 /* eslint-disable */
+// import 'abortcontroller-polyfill';
 import type {
   Response,
   RequesterArgs,
   RequestOptions,
+  // AbortController as AbortControllerType,
 } from 'algoliasearch-requester';
 
 // todo: import/define this correctly
 const parseOptions = (requestOptions: RequestOptions) => ({
-  queryStringOrBody: {},
-  headers: requestOptions,
-  timeouts: {
-    read: 0,
-    write: 0,
-    connect: 0,
-  },
+  body: {},
+  querystring: {},
+  headers: {},
 });
 
 export default function httpRequester({
-  // signal: AbortSignal
-  body,
+  signal: abortSignal,
+  body: originalBody,
   method,
   url,
   requestOptions,
-  timeout: originalTimeout,
+  appId,
+  apiKey,
+  timeout,
   requestType,
 }: RequesterArgs): Promise<Response> {
-  const { queryStringOrBody, headers: extraHeaders, timeouts } = parseOptions(
-    requestOptions
-  );
-  const timeout = timeouts[requestType] || originalTimeout;
+  const { body: extraBody, querystring, headers } = parseOptions({
+    requestOptions: { ...requestOptions, appId, apiKey },
+    method,
+  });
 
-  // $FlowFixMe --> this is a global
   // todo: use internal controller for timeout
   // const controller = new AbortController();
+  // const signal = controller.signal;
+  // console.log(controller.signal);
+  // abortSignal.addEventListener('abort', () => {
+  //   controller.abort();
+  // });
+  // abort current controller on timeout, reject promise with timeout
 
-  return fetch(`https://${url}`);
+  const body = { ...originalBody, ...extraBody };
+
+  return fetch(url + querystring, { headers, body /*, signal*/ });
 }

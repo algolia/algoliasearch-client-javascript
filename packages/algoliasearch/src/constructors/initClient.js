@@ -10,6 +10,7 @@ import universalRequester from 'algoliasearch-http-requester';
 import type { ClientMethods, AppId, ApiKey } from 'algoliasearch';
 import type {
   RequesterOptions,
+  RequestOptions,
   RequestMethod,
   HttpModule,
 } from 'algoliasearch-requester';
@@ -17,13 +18,15 @@ import type {
 export default function initClient({
   appId,
   apiKey,
-  options,
+  requesterOptions,
+  requestOptions,
   requester: extraRequester,
   httpRequester: extraHttpRequester,
 }: {
   appId: AppId,
   apiKey: ApiKey,
-  options?: RequesterOptions,
+  requesterOptions?: RequesterOptions,
+  requestOptions?: RequestOptions,
   requester?: RequestMethod,
   httpRequester?: HttpModule,
 }): ClientMethods {
@@ -47,7 +50,13 @@ initIndex(${[...arguments].map(arg => JSON.stringify(arg)).join(',')})`);
 
   const requester = extraRequester
     ? extraRequester
-    : createRequester({ appId, apiKey, options, httpRequester });
+    : createRequester({
+        appId,
+        apiKey,
+        httpRequester,
+        requesterOptions,
+        requestOptions,
+      });
 
   // $FlowFixMe --> Flow doesn't get that the imports are augmented here
   return {

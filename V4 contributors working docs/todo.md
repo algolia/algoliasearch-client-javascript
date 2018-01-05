@@ -44,6 +44,9 @@
   * [ ] strip it out mostly in prod
 * [x] use `AlgoliaRequesterError` for retry strategy
 * [x] MCM methods
+* [ ] `requesterOptions`
+  * [ ] add `requesterOptions` and `requestOptions` to every client/index method
+  * [ ] use `requesterOptions` in `Requester`
 
 # Tests
 

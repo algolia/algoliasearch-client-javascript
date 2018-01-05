@@ -2,7 +2,8 @@
   "name": "algoliasearch-http-requester-browser",
   "version": "4.0.0-beta.1",
   "private": true,
-  "description": "Algolia Search API JavaScript browser http requester implementation",
+  "description":
+    "Algolia Search API JavaScript browser http requester implementation",
   "repository": "algolia/algoliasearch-client-javascript",
   "homepage": "https://www.algolia.com/doc/api-client/javascript/",
   "bugs": "https://github.com/algolia/algoliasearch-client-javascript/issues",
@@ -10,5 +11,8 @@
   "license": "MIT",
   "devDependencies": {
     "jest-fetch-mock": "^1.4.0"
+  },
+  "dependencies": {
+    "abortcontroller-polyfill": "^1.0.9"
   }
 }

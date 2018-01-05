@@ -2,6 +2,8 @@
 
 exports[`client.search() works 🐣 1`] = `
 Object {
+  "apiKey": "some_key",
+  "appId": "some_app",
   "body": Object {
     "requests": Object {
       "query": "hello world",

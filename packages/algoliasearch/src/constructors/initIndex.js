@@ -17,14 +17,16 @@ export default function initIndex({
   appId,
   apiKey,
   indexName,
-  options,
+  requestOptions,
+  requesterOptions,
   requester: extraRequester,
   httpRequester: extraHttpRequester,
 }: {
   appId: AppId,
   apiKey: ApiKey,
   indexName: IndexName,
-  options?: RequesterOptions,
+  requesterOptions?: RequesterOptions,
+  requestOptions?: RequestOptions,
   requester?: RequestMethod,
   httpRequester?: HttpModule,
 }): IndexMethods {
@@ -53,7 +55,14 @@ initIndex(${[...arguments].map(arg => JSON.stringify(arg)).join(',')})`);
 
   const requester = extraRequester
     ? extraRequester
-    : createRequester({ appId, apiKey, options, httpRequester });
+    : createRequester({
+        appId,
+        apiKey,
+        httpRequester,
+        requesterOptions,
+        requestOptions,
+      });
+
   // $FlowFixMe --> Flow doesn't get that the imports are augmented here
   return {
     ...attachParameters(indexMethods, { requester, indexName }),

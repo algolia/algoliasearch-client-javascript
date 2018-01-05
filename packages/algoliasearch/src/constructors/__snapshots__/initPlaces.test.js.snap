@@ -24,6 +24,8 @@ initPlaces({\\"appId\\":\\"some_app\\"})"
 
 exports[`places.search() works 🐣 1`] = `
 Object {
+  "apiKey": "",
+  "appId": "places",
   "body": Object {
     "params": Object {
       "query": "hello world",

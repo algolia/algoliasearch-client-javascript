@@ -14,8 +14,9 @@ import type {
 
 // todo: import/define this correctly
 const parseOptions = (requestOptions: RequestOptions) => ({
-  headers: requestOptions,
-  timeouts: {},
+  body: {},
+  querystring: {},
+  headers: {},
 });
 
 const agent: https.Agent = new https.Agent({
@@ -26,7 +27,9 @@ const agent: https.Agent = new https.Agent({
 export default function httpRequester({
   // todo: add override possibility
   // agent,
-  // abortController,
+  // signal,
+  appId,
+  apiKey,
   body,
   method,
   url,
@@ -35,10 +38,10 @@ export default function httpRequester({
   requestType,
 }: RequesterArgs): Promise<Response> {
   const { protocol = 'https', hostname, port = '80', pathname: path } = url;
-  const {
-    /* queryStringOrBody, */ headers: extraHeaders,
-    timeouts,
-  } = parseOptions(requestOptions);
+  const { body: extraBody, querystring, headers } = parseOptions({
+    requestOptions: { ...requestOptions, appId, apiKey },
+    method,
+  });
 
   // todo: use implementation
   return Promise.resolve({});

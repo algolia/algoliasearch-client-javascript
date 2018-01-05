@@ -12,11 +12,10 @@ import type { AppId, ApiKey } from 'algoliasearch';
 import type { Store, Data } from 'universal-store';
 import type {
   RequestOptions,
+  RequesterOptions,
   RequestArguments,
   Result,
   HttpModule,
-  Timeouts,
-  Hosts,
   ErrorType,
   CreateRequester,
 } from 'algoliasearch-requester';
@@ -39,23 +38,21 @@ export class Requester {
   requester: HttpModule;
   cache: boolean;
   store: Store<string, Data>;
+  requesterOptions: RequesterOptions;
 
   constructor({
     appId,
     apiKey,
     httpRequester,
-    options: { timeouts = {}, hosts, cache = false } = {},
-    requestOptions = {},
+    requestOptions,
+    // todo: put timeouts in requestOptions
+    requesterOptions: { timeouts = {}, cache = false, hosts } = {},
   }: {|
     appId: AppId,
     apiKey: ApiKey,
     httpRequester: HttpModule,
-    options?: {|
-      timeouts?: Timeouts,
-      hosts?: Hosts,
-      cache?: boolean,
-    |},
     requestOptions?: RequestOptions,
+    requesterOptions?: RequesterOptions,
   |}) {
     if (typeof appId !== 'string') {
       throw new AlgoliaError(
@@ -87,10 +84,21 @@ export class Requester {
     this.cache = cache;
   }
 
-  setOptions = (fn: RequestOptions => RequestOptions): RequestOptions => {
+  setRequestOptions = (
+    fn: RequestOptions => RequestOptions
+  ): RequestOptions => {
     const oldOptions = this.requestOptions;
     const newOptions = fn(oldOptions);
     this.requestOptions = newOptions;
+    return newOptions;
+  };
+
+  setRequesterOptions = (
+    fn: RequesterOptions => RequesterOptions
+  ): RequesterOptions => {
+    const oldOptions = this.requesterOptions;
+    const newOptions = fn(oldOptions);
+    this.requesterOptions = newOptions;
     return newOptions;
   };
 
@@ -116,11 +124,13 @@ export class Requester {
     qs,
     body,
     requestOptions,
+    // requesterOptions, // todo: implement
     requestType,
   }: RequestArguments): Promise<Result> => {
     try {
+      const { appId, apiKey } = this;
       const { hostname, timeout, connectTimeout } = getParams({
-        appId: this.appId,
+        appId,
         requestType,
       });
 
@@ -135,7 +145,7 @@ export class Requester {
         qs,
         body,
         requestOptions,
-        appId: this.appId,
+        appId,
       });
 
       if (requestOptions && requestOptions.cache === true) {
@@ -152,7 +162,9 @@ export class Requester {
         url,
         timeout,
         connectTimeout,
-        requestOptions,
+        requestOptions, // but remove timeouts and cache here
+        appId,
+        apiKey,
       })
         .catch(err =>
           this.retryRequest(err, {
@@ -161,6 +173,8 @@ export class Requester {
             qs,
             body,
             requestOptions,
+            appId,
+            apiKey,
             requestType,
           })
         )
@@ -208,7 +222,7 @@ see: https://alg.li/client#unretryable-error`,
 export const createRequester: CreateRequester = function createRequester(args) {
   const _r = new Requester(args);
   const requester = _r.request;
-  requester.setOptions = _r.setOptions;
+  requester.setRequestOptions = _r.setRequestOptions;
   requester.options = _r.requestOptions;
   return requester;
 };

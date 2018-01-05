@@ -41,6 +41,7 @@ export type RequestType = 'read' | 'write';
 // http requester
 export type Response = { body: Buffer, statusCode: number };
 export type RequesterArgs = {|
+  signal?: AbortSignal,
   body?: Object,
   method: Method,
   url: URL,
@@ -50,12 +51,6 @@ export type RequesterArgs = {|
   requestType: RequestType,
 |};
 export type HttpModule = RequesterArgs => Promise<Response>;
-
-type AbortSignal = {
-  aborted: boolean,
-  onabort: EventListener,
-  addEventListener: (string, EventListener) => void,
-};
 
 // public api
 export type RequestArguments = {
@@ -73,8 +68,12 @@ export type Result = Object;
 export type RequestMethod = RequestArguments => Promise<Result>;
 
 export type RequesterOptions = {
-  ...RequestOptions,
   cache?: boolean,
+  timeouts?: {|
+    read?: number,
+    write?: number,
+    connect?: number,
+  |},
   hosts?: {|
     read?: string[],
     write?: string[],
@@ -84,7 +83,9 @@ export type RequesterOptions = {
 export type CreateRequesterArgs = {|
   appId: string,
   apiKey: string,
-  options?: RequesterOptions,
+  requesterOptions?: RequesterOptions,
+  requestOptions?: RequestOptions,
+  httpRequester?: HttpModule,
 |};
 export type CreateRequester = CreateRequesterArgs => RequestMethod;
 
