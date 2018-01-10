@@ -7,11 +7,9 @@
     "test:watch": "jest --watch",
     "typecheck": "flow",
     "fetch-typedefs": "flow-typed install",
-    "format": "prettier --write {**/*.{js,css,md},*.md}"
+    "format": "yarn prettier --write '**/*.{js,md}'"
   },
-  "workspaces": [
-    "packages/*"
-  ],
+  "workspaces": ["packages/*"],
   "renovate": {
     "extends": [
       "config:js-lib",
@@ -26,27 +24,27 @@
   "author": "Algolia, Inc. (https://www.algolia.com)",
   "license": "MIT",
   "devDependencies": {
-    "babel-eslint": "^8.1.2",
+    "babel-eslint": "^8.2.1",
     "babel-jest": "^22.0.4",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-flow": "^6.23.0",
-    "eslint": "^4.14.0",
+    "eslint": "^4.15.0",
     "eslint-config-algolia": "^13.0.1",
     "eslint-config-prettier": "^2.9.0",
-    "eslint-plugin-flowtype": "^2.40.1",
+    "eslint-plugin-flowtype": "^2.41.0",
     "eslint-plugin-import": "^2.8.0",
-    "eslint-plugin-jest": "^21.5.0",
+    "eslint-plugin-jest": "^21.6.1",
     "eslint-plugin-monorepo": "^0.2.0",
     "eslint-plugin-prettier": "^2.4.0",
-    "flow-bin": "0.62.0",
+    "flow-bin": "0.63.1",
     "flow-typed": "^2.2.3",
-    "jest": "^22.0.4",
+    "jest": "^22.0.5",
     "jest-in-case": "^1.0.2",
-    "lerna": "^2.5.1",
+    "lerna": "^2.6.0",
     "lolex": "^2.3.1",
-    "prettier": "^1.9.2"
+    "prettier": "^1.10.1"
   },
   "engines": {
     "node": "9.3.0",
