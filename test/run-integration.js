@@ -1,7 +1,7 @@
 'use strict';
 
-if (!process.env.INTEGRATION_TEST_API_KEY || !process.env.INTEGRATION_TEST_APPID) {
-  throw new Error('missing: INTEGRATION_TEST_APPID=$APPID INTEGRATION_TEST_API_KEY=$APIKEY command');
+if (!process.env.ALGOLIA_API_KEY || !process.env.ALGOLIA_APP_ID) {
+  throw new Error('missing: ALGOLIA_APP_ID=$APPID ALGOLIA_API_KEY=$APIKEY command');
 }
 
 // simple integration tests, checking the whole communication
@@ -28,10 +28,10 @@ if (isABrowser) {
 }
 
 var chance = new Chance();
-var apiKey = process.env.INTEGRATION_TEST_API_KEY;
-var appId = process.env.INTEGRATION_TEST_APPID;
-var indexName = '_travis-algoliasearch-client-js' +
-  (process.env.TRAVIS_BUILD_NUMBER || 'DEV') +
+var apiKey = process.env.ALGOLIA_API_KEY;
+var appId = process.env.ALGOLIA_APP_ID;
+var indexName = 'TRAVIS_JS_' +
+  (process.env.TRAVIS_JOB_NUMBER || 'DEV') +
   chance.word({length: 12});
 
 var client = algoliasearch(appId, apiKey, {
@@ -91,7 +91,10 @@ if (canDELETE) {
   test('index.clearIndex', clearIndex);
 }
 
-test('places with credentials', initPlaces(process.env.PLACES_APPID, process.env.PLACES_APIKEY));
+// api key dealer doesn't give places api keys
+if (process.env.TEST_SUITE !== 'community') {
+  test('places with credentials', initPlaces(process.env.PLACES_APPID, process.env.PLACES_APIKEY));
+}
 test('places without credentials', initPlaces());
 
 if (!isABrowser) {
@@ -163,6 +166,7 @@ function saveObjects(t) {
 function generateSecuredApiKey(t) {
   t.plan(4);
 
+  // todo: 
   client.addApiKey(['search'], {validity: 360}, function(err, keyResult) {
     t.error(err, 'No error adding a key');
     t.ok(keyResult.key, 'We got the added key');

@@ -1,7 +1,10 @@
 language: node_js
 node_js:
   - stable
-script: npm run test-ci
+before_script:
+  - wget http://alg.li/algolia-keys && chmod +x algolia-keys
+script:
+  - npm run test-ci
 branches:
   only:
     - master
