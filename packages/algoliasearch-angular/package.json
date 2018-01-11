@@ -15,8 +15,8 @@
     "algoliasearch"
   ],
   "dependencies": {
-    "@angular/common": "^5.1.3",
-    "@angular/core": "^5.1.3",
+    "@angular/common": "^5.2.0",
+    "@angular/core": "^5.2.0",
     "algoliasearch": "4.0.0-beta.1",
     "algoliasearch-requester": "4.0.0-beta.1",
     "querystring-es3": "^0.2.1",

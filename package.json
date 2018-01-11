@@ -9,7 +9,9 @@
     "fetch-typedefs": "flow-typed install",
     "format": "yarn prettier --write '**/*.{js,md}'"
   },
-  "workspaces": ["packages/*"],
+  "workspaces": [
+    "packages/*"
+  ],
   "renovate": {
     "extends": [
       "config:js-lib",
@@ -44,7 +46,7 @@
     "jest-in-case": "^1.0.2",
     "lerna": "^2.6.0",
     "lolex": "^2.3.1",
-    "prettier": "^1.10.1"
+    "prettier": "^1.10.2"
   },
   "engines": {
     "node": "9.3.0",
