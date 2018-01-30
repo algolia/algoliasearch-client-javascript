@@ -11,10 +11,10 @@
  */
 
 declare module 'abortcontroller-polyfill' {
-  declare module.exports: any;
+  declare module.exports: void;
 }
 
- type AbortSignal = {
+type AbortSignal = {
   aborted: boolean,
   onabort: EventListener,
   addEventListener: (string, EventListener) => void,
