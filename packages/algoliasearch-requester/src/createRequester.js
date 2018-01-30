@@ -1,4 +1,6 @@
 // @flow
+// todo: macro
+import dedent from 'dedent';
 import { createMemoryStore } from 'universal-store';
 import { AlgoliaError, AlgoliaRequesterError } from 'algoliasearch-errors';
 import {
@@ -209,9 +211,10 @@ export class Requester {
     return Promise.reject(
       // todo: use AlgoliaError and refactor?
       new AlgoliaRequesterError({
-        message: `Request couldn't be retried, did you enter the correct credentials?
+        message: dedent`
+          Request couldn't be retried, did you enter the correct credentials?
 
-see: https://alg.li/client#unretryable-error`,
+          see: https://alg.li/client#unretryable-error`,
         reason: 'fatal',
         more: { error: err, arguments: requestArguments },
       })

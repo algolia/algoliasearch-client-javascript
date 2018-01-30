@@ -1,4 +1,6 @@
 // @flow
+// todo: macro
+import dedent from 'dedent';
 
 export class AlgoliaError extends Error {
   constructor(message: string = '', ...args: any[]) {
@@ -31,12 +33,14 @@ export class AlgoliaRequesterError extends Error {
 }
 
 export const pluralError = (methodName: string) =>
-  new AlgoliaError(`The method "${methodName}s" can only be called with an array of values,
-please wrap this in an array:
+  new AlgoliaError(dedent`
+    The method "${methodName}s" can only be called with an array of values,
+    please wrap this in an array:
 
-${methodName}s(value) --> ${methodName}s([value])
-or
-${methodName}s(value) --> ${methodName}(value)`);
+    ${methodName}s(value) --> ${methodName}s([value])
+    or
+    ${methodName}s(value) --> ${methodName}(value)
+  `);
 
 export function deprecate(message: string) {
   // eslint-disable-next-line no-console

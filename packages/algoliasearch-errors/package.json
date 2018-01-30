@@ -4,10 +4,12 @@
   "main": "src/index.js",
   "private": true,
   "description": "Algolia errors",
-  "repository":
-    "algolia/algoliasearch-client-javascript/packages/algoliasearch-error",
+  "repository": "algolia/algoliasearch-client-javascript/packages/algoliasearch-error",
   "homepage": "https://www.algolia.com/doc/api-client/javascript/",
   "bugs": "https://github.com/algolia/algoliasearch-client-javascript/issues",
   "author": "Algolia, Inc. (https://www.algolia.com)",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "dedent": "^0.7.0"
+  }
 }
