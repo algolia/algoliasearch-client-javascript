@@ -176,21 +176,10 @@ index.search(
   },
   {
     requestOptions: {
-      // advanced
-      extraHeaders: {
-        'X--': 'something',
-      },
-      extraQueryStringParameters: {
-        advanced: 1,
-      },
-      // normal ones
-
       algoliaAgent: 'for js..',
       userID: 'qsdf',
-      // they are passed to the http module
-      // apiKey: 'XDQSDFS',
-      // appId: '',
-      // indexName: '',
+      // also longhand possible
+      // 'x-algolia-agent': 'for js',
     },
     requesterOptions: {
       timeouts: {
