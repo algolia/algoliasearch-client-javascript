@@ -125,10 +125,10 @@ test('exportSynonyms(hitsPerPage)', function(t) {
         nbHits: 100,
         hits: arrayFrom({length: 50}, function(v, num) {
           return {
-            objectID: 'some-qr-rule-' + num,
-            condition: {pattern: 'hellomyfriendhowareyou??? ' + num, anchoring: 'is'},
-            consequence: {params: {query: 'query-rule-integration-test'}},
-            _highlightResult: {}
+            objectID: 'some-synonym-' + num,
+            type: 'placeholder',
+            placeholder: '<gotcha' + num + '>',
+            replacements: ['replacement number ' + num]
           };
         })
       })
@@ -149,13 +149,13 @@ test('exportSynonyms(hitsPerPage)', function(t) {
       {},
       JSON.stringify({
         nbHits: 100,
-        hits: arrayFrom({length: 50}, function(v, num) {
-          num += 100;
+        hits: arrayFrom({length: 300}, function(v, num) {
+          num += 50;
           return {
-            objectID: 'some-qr-rule-' + num,
-            condition: {pattern: 'hellomyfriendhowareyou??? ' + num, anchoring: 'is'},
-            consequence: {params: {query: 'query-rule-integration-test'}},
-            _highlightResult: {}
+            objectID: 'some-synonym-' + num,
+            type: 'placeholder',
+            placeholder: '<gotcha' + num + '>',
+            replacements: ['replacement number ' + num]
           };
         })
       })
