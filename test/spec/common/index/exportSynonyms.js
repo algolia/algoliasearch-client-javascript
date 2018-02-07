@@ -149,7 +149,7 @@ test('exportSynonyms(hitsPerPage)', function(t) {
       {},
       JSON.stringify({
         nbHits: 100,
-        hits: arrayFrom({length: 300}, function(v, num) {
+        hits: arrayFrom({length: 50}, function(v, num) {
           num += 50;
           return {
             objectID: 'some-synonym-' + num,
