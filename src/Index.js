@@ -604,15 +604,26 @@ Index.prototype.clearIndex = function(callback) {
 /*
 * Get settings of this index
 *
+* @param opts an object of options to add
+* @param opts.advanced get more settings like nbShards (useful for Enterprise)
 * @param callback (optional) the result callback called with two arguments
 *  error: null or Error('message')
 *  content: the settings object or the error message if a failure occured
 */
-Index.prototype.getSettings = function(callback) {
-  var indexObj = this;
+Index.prototype.getSettings = function(opts, callback) {
+  if (arguments.length === 1 || typeof opts === 'function') {
+    callback = opts;
+    opts = {};
+  }
+
+  var indexName = encodeURIComponent(this.indexName);
   return this.as._jsonRequest({
     method: 'GET',
-    url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/settings?getVersion=2',
+    url:
+      '/1/indexes/' +
+      indexName +
+      '/settings?getVersion=2' +
+      (opts.advanced ? '&advanced=' + opts.advanced : ''),
     hostType: 'read',
     callback: callback
   });
@@ -660,6 +671,7 @@ function exportData(method, _hitsPerPage, callback) {
   return search().then(function(data) {
     if (typeof callback === 'function') {
       callback(data);
+      return undefined;
     }
     return data;
   });
@@ -671,7 +683,7 @@ function exportData(method, _hitsPerPage, callback) {
  * @param [function] callback will be called after all synonyms are retrieved
  */
 Index.prototype.exportSynonyms = function(hitsPerPage, callback) {
-  return exportData(this.searchSynonyms, hitsPerPage, callback);
+  return exportData(this.searchSynonyms.bind(this), hitsPerPage, callback);
 };
 
 Index.prototype.saveSynonym = function(synonym, opts, callback) {
@@ -788,7 +800,7 @@ Index.prototype.searchRules = function(params, callback) {
  * @param [function] callback will be called after all query rules are retrieved
  */
 Index.prototype.exportRules = function(hitsPerPage, callback) {
-  return exportData(this.searchRules, hitsPerPage, callback);
+  return exportData(this.searchRules.bind(this), hitsPerPage, callback);
 };
 
 Index.prototype.saveRule = function(rule, opts, callback) {
