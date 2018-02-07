@@ -155,7 +155,8 @@ test('exportSynonyms(hitsPerPage)', function(t) {
             objectID: 'some-synonym-' + num,
             type: 'placeholder',
             placeholder: '<gotcha' + num + '>',
-            replacements: ['replacement number ' + num]
+            replacements: ['replacement number ' + num],
+            _highlightResult: {}
           };
         })
       })
