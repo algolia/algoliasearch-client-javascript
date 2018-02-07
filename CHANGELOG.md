@@ -1,4 +1,9 @@
 CHANGELOG
+2017-12-29 3.24.10
+  * FIX: correct `index.exportSynonyms` and `index.exportRules`
+    * they had the wrong implementation until now
+    * add some tests to prevent regression
+
 2017-12-29 3.24.9
   * FIX: make sure long API keys are sent via the POST body
     * this wasn't the case in 3.24.8 because of a typo
