@@ -671,6 +671,7 @@ function exportData(method, _hitsPerPage, callback) {
   return search().then(function(data) {
     if (typeof callback === 'function') {
       callback(data);
+      return undefined;
     }
     return data;
   });
