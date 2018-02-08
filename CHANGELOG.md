@@ -1,5 +1,10 @@
 CHANGELOG
-2017-12-29 3.24.10
+2017-02-08 3.24.11
+  * FIX: allow `index.getSettings` without any arguments
+    * this was a regression in 3.24.10
+    * added tests
+
+2017-02-07 3.24.10
   * FIX: correct `index.exportSynonyms` and `index.exportRules`
     * they had the wrong implementation until now
     * add some tests to prevent regression

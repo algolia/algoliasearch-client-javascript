@@ -1,4 +1,4 @@
-/*! algoliasearch 3.24.10 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
+/*! algoliasearch 3.24.11 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
 (function(f){var g;if(typeof window!=='undefined'){g=window}else if(typeof self!=='undefined'){g=self}g.ALGOLIA_MIGRATION_LAYER=f()})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 
 module.exports = function load (src, opts, cb) {
@@ -4816,13 +4816,14 @@ Index.prototype.clearIndex = function(callback) {
 * @param opts.advanced get more settings like nbShards (useful for Enterprise)
 * @param callback (optional) the result callback called with two arguments
 *  error: null or Error('message')
-*  content: the settings object or the error message if a failure occured
+*  content: the settings object or the error message if a failure occurred
 */
 Index.prototype.getSettings = function(opts, callback) {
-  if (arguments.length === 1 || typeof opts === 'function') {
+  if (arguments.length === 1 && typeof opts === 'function') {
     callback = opts;
     opts = {};
   }
+  opts = opts || {};
 
   var indexName = encodeURIComponent(this.indexName);
   return this.as._jsonRequest({
@@ -6622,7 +6623,7 @@ function cleanup() {
 },{"1":1}],35:[function(require,module,exports){
 'use strict';
 
-module.exports = '3.24.10';
+module.exports = '3.24.11';
 
 },{}]},{},[19])(19)
 });
