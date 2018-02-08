@@ -146,7 +146,7 @@ function getSettings(t) {
     .then(function() {return index.getSettings({advanced: 1});})
     .then(get('attributesForFaceting'))
     .then(_.partialRight(t.deepEqual, ['searchable(category)'], 'Settings were get (advanced)'))
-    .then(index.getSettings)
+    .then(function() {return index.getSettings();})
     .then(get('attributesForFaceting'))
     .then(_.partialRight(t.deepEqual, ['searchable(category)'], 'Settings were get'))
     .then(noop, _.bind(t.error, t));
