@@ -611,13 +611,11 @@ Index.prototype.clearIndex = function(callback) {
 *  content: the settings object or the error message if a failure occurred
 */
 Index.prototype.getSettings = function(opts, callback) {
-  if (arguments.length < 2) {
-    if (typeof opts === 'function') {
-      callback = opts;
-      opts = {};
-    }
-    opts = opts || {};
+  if (arguments.length === 1 && typeof opts === 'function') {
+    callback = opts;
+    opts = {};
   }
+  opts = opts || {};
 
   var indexName = encodeURIComponent(this.indexName);
   return this.as._jsonRequest({
