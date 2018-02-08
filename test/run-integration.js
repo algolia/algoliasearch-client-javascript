@@ -48,6 +48,7 @@ _.bindAll(index);
 test('index.clearIndex', clearIndex);
 if (canPUT) {
   test('index.setSettings', setSettings);
+  test('index.getSettings', getSettings);
 }
 test('index.saveObjects', saveObjects);
 if (canPUT) {
@@ -134,6 +135,20 @@ function setSettings(t) {
     .then(index.waitTask)
     .then(get('status'))
     .then(_.partialRight(t.equal, 'published', 'Settings were updated'))
+    .then(noop, _.bind(t.error, t));
+}
+
+function getSettings(t) {
+  t.plan(2);
+
+  index
+    .setSettings({attributesForFaceting: ['searchable(category)']})
+    .then(function() {return index.getSettings({advanced: 1});})
+    .then(get('attributesForFaceting'))
+    .then(_.partialRight(t.deepEqual, ['searchable(category)'], 'Settings were get (advanced)'))
+    .then(function() {return index.getSettings();})
+    .then(get('attributesForFaceting'))
+    .then(_.partialRight(t.deepEqual, ['searchable(category)'], 'Settings were get'))
     .then(noop, _.bind(t.error, t));
 }
 

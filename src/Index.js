@@ -608,13 +608,14 @@ Index.prototype.clearIndex = function(callback) {
 * @param opts.advanced get more settings like nbShards (useful for Enterprise)
 * @param callback (optional) the result callback called with two arguments
 *  error: null or Error('message')
-*  content: the settings object or the error message if a failure occured
+*  content: the settings object or the error message if a failure occurred
 */
 Index.prototype.getSettings = function(opts, callback) {
-  if (arguments.length === 1 || typeof opts === 'function') {
+  if (arguments.length === 1 && typeof opts === 'function') {
     callback = opts;
     opts = {};
   }
+  opts = opts || {};
 
   var indexName = encodeURIComponent(this.indexName);
   return this.as._jsonRequest({
