@@ -45,7 +45,7 @@ body: ${JSON.stringify(objects)}`
 
   return requester({
     method: 'POST',
-    path: `/1/indexes/${indexName}/partial`,
+    path: `/1/indexes/${indexName}/batch`,
     body: {
       requests: objects.map(object => ({
         action,
