@@ -175,6 +175,7 @@ AlgoliaSearchNodeJS.prototype._request = function request(rawUrl, opts) {
 
       res
         .on('data', onData)
+        .once('error', reject)
         .once('end', onEnd);
 
       function onData(chunk) {
