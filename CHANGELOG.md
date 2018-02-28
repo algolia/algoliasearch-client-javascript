@@ -1,4 +1,7 @@
 CHANGELOG
+2018-02-28 3.24.12
+  * FIX: Handle Node.js network errors more precisely (#669)
+
 2017-02-08 3.24.11
   * FIX: allow `index.getSettings` without any arguments
     * this was a regression in 3.24.10
