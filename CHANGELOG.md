@@ -1,4 +1,11 @@
 CHANGELOG
+2018-03-07 3.25.0
+  * FEAT: use https by default (#670)
+    * for very old devices https can be slow
+    * we defaulted to sending API requests over http on http sites
+    * this is now not really a performance bottleneck anymore
+    * https is now default, unless specified differently when initializing
+
 2018-02-28 3.24.12
   * FIX: Handle Node.js network errors more precisely (#669)
 

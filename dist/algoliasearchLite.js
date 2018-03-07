@@ -1,4 +1,4 @@
-/*! algoliasearch 3.24.12 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
+/*! algoliasearch 3.25.0 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.algoliasearch = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 (function (process){
 /**
@@ -2214,10 +2214,10 @@ var objectKeys = Object.keys || function (obj) {
 (function (process){
 module.exports = AlgoliaSearchCore;
 
-var errors = require(24);
-var exitPromise = require(25);
+var errors = require(23);
+var exitPromise = require(24);
 var IndexCore = require(14);
-var store = require(30);
+var store = require(29);
 
 // We will always put the API KEY in the JSON body in case of too long API KEY,
 // to avoid query string being too long and failing in various conditions (our server limit, browser limit,
@@ -2236,9 +2236,8 @@ var RESET_APP_DATA_TIMER =
  * @param {Object} [opts]
  * @param {number} [opts.timeout=2000] - The request timeout set in milliseconds,
  * another request will be issued after this timeout
- * @param {string} [opts.protocol='http:'] - The protocol used to query Algolia Search API.
- *                                        Set to 'https:' to force using https.
- *                                        Default to document.location.protocol in browsers
+ * @param {string} [opts.protocol='https:'] - The protocol used to query Algolia Search API.
+ *                                        Set to 'http:' to force using http.
  * @param {Object|Array} [opts.hosts={
  *           read: [this.applicationID + '-dsn.algolia.net'].concat([
  *             this.applicationID + '-1.algolianet.com',
@@ -2255,9 +2254,9 @@ var RESET_APP_DATA_TIMER =
 function AlgoliaSearchCore(applicationID, apiKey, opts) {
   var debug = require(1)('algoliasearch');
 
-  var clone = require(21);
+  var clone = require(20);
   var isArray = require(7);
-  var map = require(26);
+  var map = require(25);
 
   var usage = 'Usage: algoliasearch(applicationID, apiKey, opts)';
 
@@ -2757,7 +2756,7 @@ AlgoliaSearchCore.prototype._computeRequestHeaders = function(options) {
  */
 AlgoliaSearchCore.prototype.search = function(queries, opts, callback) {
   var isArray = require(7);
-  var map = require(26);
+  var map = require(25);
 
   var usage = 'Usage: client.search(arrayOfQueries[, callback])';
 
@@ -2949,7 +2948,7 @@ AlgoliaSearchCore.prototype._getHostIndexByType = function(hostType) {
 };
 
 AlgoliaSearchCore.prototype._setHostIndexByType = function(hostIndex, hostType) {
-  var clone = require(21);
+  var clone = require(20);
   var newHostIndexes = clone(this._hostIndexes);
   newHostIndexes[hostType] = hostIndex;
   this._partialAppIdDataUpdate({hostIndexes: newHostIndexes});
@@ -3043,10 +3042,10 @@ function removeCredentials(headers) {
 }
 
 }).call(this,require(11))
-},{"1":1,"11":11,"14":14,"21":21,"24":24,"25":25,"26":26,"30":30,"4":4,"7":7}],14:[function(require,module,exports){
-var buildSearchMethod = require(20);
-var deprecate = require(22);
-var deprecatedMessage = require(23);
+},{"1":1,"11":11,"14":14,"20":20,"23":23,"24":24,"25":25,"29":29,"4":4,"7":7}],14:[function(require,module,exports){
+var buildSearchMethod = require(19);
+var deprecate = require(21);
+var deprecatedMessage = require(22);
 
 module.exports = IndexCore;
 
@@ -3198,7 +3197,7 @@ IndexCore.prototype.similarSearch = buildSearchMethod('similarQuery');
 * @see {@link https://www.algolia.com/doc/rest_api#Browse|Algolia REST API Documentation}
 */
 IndexCore.prototype.browse = function(query, queryParameters, callback) {
-  var merge = require(27);
+  var merge = require(26);
 
   var indexObj = this;
 
@@ -3293,8 +3292,8 @@ IndexCore.prototype.browseFrom = function(cursor, callback) {
 * @param callback (optional)
 */
 IndexCore.prototype.searchForFacetValues = function(params, callback) {
-  var clone = require(21);
-  var omit = require(28);
+  var clone = require(20);
+  var omit = require(27);
   var usage = 'Usage: index.searchForFacetValues({facetName, facetQuery, ...params}[, callback])';
 
   if (params.facetName === undefined || params.facetQuery === undefined) {
@@ -3384,7 +3383,7 @@ IndexCore.prototype.getObject = function(objectID, attrs, callback) {
 */
 IndexCore.prototype.getObjects = function(objectIDs, attributesToRetrieve, callback) {
   var isArray = require(7);
-  var map = require(26);
+  var map = require(25);
 
   var usage = 'Usage: index.getObjects(arrayOfObjectIDs[, callback])';
 
@@ -3428,7 +3427,7 @@ IndexCore.prototype.indexName = null;
 IndexCore.prototype.typeAheadArgs = null;
 IndexCore.prototype.typeAheadValueOption = null;
 
-},{"20":20,"21":21,"22":22,"23":23,"26":26,"27":27,"28":28,"7":7}],15:[function(require,module,exports){
+},{"19":19,"20":20,"21":21,"22":22,"25":25,"26":26,"27":27,"7":7}],15:[function(require,module,exports){
 'use strict';
 
 var AlgoliaSearchCore = require(13);
@@ -3448,10 +3447,10 @@ var Promise = global.Promise || require(3).Promise;
 // using XMLHttpRequest, XDomainRequest and JSONP as fallback
 module.exports = function createAlgoliasearch(AlgoliaSearch, uaSuffix) {
   var inherits = require(6);
-  var errors = require(24);
-  var inlineHeaders = require(18);
-  var jsonpRequest = require(19);
-  var places = require(29);
+  var errors = require(23);
+  var inlineHeaders = require(17);
+  var jsonpRequest = require(18);
+  var places = require(28);
   uaSuffix = uaSuffix || '';
 
   if (process.env.NODE_ENV === 'debug') {
@@ -3459,22 +3458,16 @@ module.exports = function createAlgoliasearch(AlgoliaSearch, uaSuffix) {
   }
 
   function algoliasearch(applicationID, apiKey, opts) {
-    var cloneDeep = require(21);
-
-    var getDocumentProtocol = require(17);
+    var cloneDeep = require(20);
 
     opts = cloneDeep(opts || {});
-
-    if (opts.protocol === undefined) {
-      opts.protocol = getDocumentProtocol();
-    }
 
     opts._ua = opts._ua || algoliasearch.ua;
 
     return new AlgoliaSearchBrowser(applicationID, apiKey, opts);
   }
 
-  algoliasearch.version = require(31);
+  algoliasearch.version = require(30);
   algoliasearch.ua = 'Algolia for vanilla JavaScript ' + uaSuffix + algoliasearch.version;
   algoliasearch.initPlaces = places(algoliasearch);
 
@@ -3659,23 +3652,7 @@ module.exports = function createAlgoliasearch(AlgoliaSearch, uaSuffix) {
 };
 
 }).call(this,require(11))
-},{"1":1,"11":11,"17":17,"18":18,"19":19,"21":21,"24":24,"29":29,"3":3,"31":31,"5":5,"6":6}],17:[function(require,module,exports){
-'use strict';
-
-module.exports = getDocumentProtocol;
-
-function getDocumentProtocol() {
-  var protocol = window.document.location.protocol;
-
-  // when in `file:` mode (local html file), default to `http:`
-  if (protocol !== 'http:' && protocol !== 'https:') {
-    protocol = 'http:';
-  }
-
-  return protocol;
-}
-
-},{}],18:[function(require,module,exports){
+},{"1":1,"11":11,"17":17,"18":18,"20":20,"23":23,"28":28,"3":3,"30":30,"5":5,"6":6}],17:[function(require,module,exports){
 'use strict';
 
 module.exports = inlineHeaders;
@@ -3692,12 +3669,12 @@ function inlineHeaders(url, headers) {
   return url + encode(headers);
 }
 
-},{"12":12}],19:[function(require,module,exports){
+},{"12":12}],18:[function(require,module,exports){
 'use strict';
 
 module.exports = jsonpRequest;
 
-var errors = require(24);
+var errors = require(23);
 
 var JSONPCounter = 0;
 
@@ -3819,10 +3796,10 @@ function jsonpRequest(url, opts, cb) {
   }
 }
 
-},{"24":24}],20:[function(require,module,exports){
+},{"23":23}],19:[function(require,module,exports){
 module.exports = buildSearchMethod;
 
-var errors = require(24);
+var errors = require(23);
 
 /**
  * Creates a search method to be used in clients
@@ -3888,12 +3865,12 @@ function buildSearchMethod(queryParam, url) {
   };
 }
 
-},{"24":24}],21:[function(require,module,exports){
+},{"23":23}],20:[function(require,module,exports){
 module.exports = function clone(obj) {
   return JSON.parse(JSON.stringify(obj));
 };
 
-},{}],22:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 module.exports = function deprecate(fn, message) {
   var warned = false;
 
@@ -3910,7 +3887,7 @@ module.exports = function deprecate(fn, message) {
   return deprecated;
 };
 
-},{}],23:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 module.exports = function deprecatedMessage(previousUsage, newUsage) {
   var githubAnchorLink = previousUsage.toLowerCase()
     .replace(/[\.\(\)]/g, '');
@@ -3919,7 +3896,7 @@ module.exports = function deprecatedMessage(previousUsage, newUsage) {
     '`. Please see https://github.com/algolia/algoliasearch-client-javascript/wiki/Deprecated#' + githubAnchorLink;
 };
 
-},{}],24:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 'use strict';
 
 // This file hosts our error definitions
@@ -3999,7 +3976,7 @@ module.exports = {
   )
 };
 
-},{"4":4,"6":6}],25:[function(require,module,exports){
+},{"4":4,"6":6}],24:[function(require,module,exports){
 // Parse cloud does not supports setTimeout
 // We do not store a setTimeout reference in the client everytime
 // We only fallback to a fake setTimeout when not available
@@ -4008,7 +3985,7 @@ module.exports = function exitPromise(fn, _setTimeout) {
   _setTimeout(fn, 0);
 };
 
-},{}],26:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 var foreach = require(4);
 
 module.exports = function map(arr, fn) {
@@ -4019,7 +3996,7 @@ module.exports = function map(arr, fn) {
   return newArr;
 };
 
-},{"4":4}],27:[function(require,module,exports){
+},{"4":4}],26:[function(require,module,exports){
 var foreach = require(4);
 
 module.exports = function merge(destination/* , sources */) {
@@ -4040,7 +4017,7 @@ module.exports = function merge(destination/* , sources */) {
   return destination;
 };
 
-},{"4":4}],28:[function(require,module,exports){
+},{"4":4}],27:[function(require,module,exports){
 module.exports = function omit(obj, test) {
   var keys = require(9);
   var foreach = require(4);
@@ -4056,14 +4033,14 @@ module.exports = function omit(obj, test) {
   return filtered;
 };
 
-},{"4":4,"9":9}],29:[function(require,module,exports){
+},{"4":4,"9":9}],28:[function(require,module,exports){
 module.exports = createPlacesClient;
 
-var buildSearchMethod = require(20);
+var buildSearchMethod = require(19);
 
 function createPlacesClient(algoliasearch) {
   return function places(appID, apiKey, opts) {
-    var cloneDeep = require(21);
+    var cloneDeep = require(20);
 
     opts = opts && cloneDeep(opts) || {};
     opts.hosts = opts.hosts || [
@@ -4095,7 +4072,7 @@ function createPlacesClient(algoliasearch) {
   };
 }
 
-},{"20":20,"21":21}],30:[function(require,module,exports){
+},{"19":19,"20":20}],29:[function(require,module,exports){
 (function (global){
 var debug = require(1)('algoliasearch:src/hostIndexState.js');
 var localStorageNamespace = 'algoliasearch-client-js';
@@ -4185,10 +4162,10 @@ function cleanup() {
 }
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"1":1}],31:[function(require,module,exports){
+},{"1":1}],30:[function(require,module,exports){
 'use strict';
 
-module.exports = '3.24.12';
+module.exports = '3.25.0';
 
 },{}]},{},[15])(15)
 });
