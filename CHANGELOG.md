@@ -1,4 +1,7 @@
 CHANGELOG
+2018-03-08 3.25.1
+  * FIX: fix protocol detection introduced in 3.25.1
+
 2018-03-07 3.25.0
   * FEAT: use https by default (#670)
     * for very old devices https can be slow
