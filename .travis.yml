@@ -12,6 +12,7 @@ sudo: false
 cache: yarn
 env:
   global:
+    - SAUCE_APPIUM_VERSION="1.7.2"
     # saucelabs credentials
     # subaccount of "opensauce-algolia"
     - SAUCE_USERNAME=algoliasearch-js
