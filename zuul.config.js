@@ -52,9 +52,6 @@ var browsers = {
     name: 'iphone',
     version: '-3..latest'
   }, {
-    name: 'android',
-    version: '-3..latest'
-  }, {
     name: 'ipad',
     version: '-3..latest'
   }, {
@@ -75,9 +72,6 @@ var browsers = {
   }, {
     name: 'iphone',
     version: '9.0'
-  }, {
-    name: 'android',
-    version: 'latest'
   }, {
     name: 'microsoftedge',
     version: 'latest'
