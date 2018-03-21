@@ -23,7 +23,7 @@ var zuulConfig = module.exports = {
   browser_output_timeout: 60 * 3 * 1000,
   browser_open_timeout: 60 * 6 * 1000,
   // we want to be notified something is wrong asap, so no retry
-  browser_retries: 1
+  browser_retries: 2
 };
 
 if (process.env.CI === 'true') {
