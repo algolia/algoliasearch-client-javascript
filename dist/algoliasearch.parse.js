@@ -3185,7 +3185,6 @@ module.exports =
 
 	  opts = opts || {};
 
-	  var protocol = opts.protocol || 'https:';
 	  this._timeouts = opts.timeouts || {
 	    connect: 1 * 1000, // 500ms connect is GPRS latency
 	    read: 2 * 1000,
@@ -3197,13 +3196,14 @@ module.exports =
 	    this._timeouts.connect = this._timeouts.read = this._timeouts.write = opts.timeout;
 	  }
 
+	  var protocol = opts.protocol || 'https:';
 	  // while we advocate for colon-at-the-end values: 'http:' for `opts.protocol`
 	  // we also accept `http` and `https`. It's a common error.
 	  if (!/:$/.test(protocol)) {
 	    protocol = protocol + ':';
 	  }
 
-	  if (opts.protocol !== 'http:' && opts.protocol !== 'https:') {
+	  if (protocol !== 'http:' && protocol !== 'https:') {
 	    throw new errors.AlgoliaSearchError('protocol must be `http:` or `https:` (was `' + opts.protocol + '`)');
 	  }
 
@@ -4047,7 +4047,7 @@ module.exports =
 
 	
 
-	module.exports = '3.25.0';
+	module.exports = '3.25.1';
 
 
 /***/ })

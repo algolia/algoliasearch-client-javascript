@@ -246,6 +246,7 @@ transparent with our users.
 - `hosts.read` ([String]) array of read hosts to use to call Algolia servers, computed automatically
 - `hosts.write` ([String]) array of write hosts to use to call Algolia servers, computed automatically
 - `httpAgent` ([HttpAgent](https://nodejs.org/api/http.html#http_class_http_agent)) <sup>node-only</sup> Node.js httpAgent instance to use when communicating with Algolia servers.
+- `dsn` ([Boolean=true]) enable or disable DSN (defaults to true). Disable this when you're in a backend situation, but still have worldwide DSN for another (frontend) search.
 
 To pass an option, use:
 
