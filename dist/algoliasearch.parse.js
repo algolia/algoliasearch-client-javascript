@@ -3215,7 +3215,8 @@ module.exports =
 	    });
 
 	    // no hosts given, compute defaults
-	    this.hosts.read = [this.applicationID + '-dsn.algolia.net'].concat(defaultHosts);
+	    var mainSuffix = (opts.dsn === false ? '' : '-dsn') + '.algolia.net';
+	    this.hosts.read = [this.applicationID + mainSuffix].concat(defaultHosts);
 	    this.hosts.write = [this.applicationID + '.algolia.net'].concat(defaultHosts);
 	  } else if (isArray(opts.hosts)) {
 	    // when passing custom hosts, we need to have a different host index if the number
@@ -4047,7 +4048,7 @@ module.exports =
 
 	
 
-	module.exports = '3.25.1';
+	module.exports = '3.26.0';
 
 
 /***/ })

@@ -1,6 +1,11 @@
 CHANGELOG
+
+2018-03-21 3.26.0
+  * FEAT: allow disabling of dsn
+    * in some cases (backend search while you do have global DSN), you want to disable DSN to avoid a round-robin around the whole world if DNS can't be resolved as expected, for example on GCP. (#675)
+
 2018-03-08 3.25.1
-  * FIX: fix protocol detection introduced in 3.25.1
+  * FIX: fix protocol detection introduced in 3.25.0
 
 2018-03-07 3.25.0
   * FEAT: use https by default (#670)
