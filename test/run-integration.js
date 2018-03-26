@@ -52,7 +52,8 @@ if (canPUT) {
 }
 test('index.saveObjects', saveObjects);
 if (canPUT) {
-  test('index.searchForFacetValues', searchForFacetValues);
+  test('index.searchForFacetValues', indexSearchForFacetValues);
+  test('searchForFacetValues', searchForFacetValues);
 }
 test('index.browse', browse);
 test('index.getObject', getObject);
@@ -152,11 +153,26 @@ function getSettings(t) {
     .then(noop, _.bind(t.error, t));
 }
 
-function searchForFacetValues(t) {
+function indexSearchForFacetValues(t) {
   t.plan(1);
 
   index
     .searchForFacetValues({facetName: 'category', facetQuery: 'a'})
+    .then(get('facetHits'))
+    .then(function(facetHits) {
+      t.ok(facetHits.length, 'We got some facet hits');
+    })
+    .then(noop, _.bind(t.error, t));
+}
+
+function searchForFacetValues(t) {
+  t.plan(1);
+
+  client.
+    searchForFacetValues({
+      indexName: indexName,
+      params: {facetName: 'category', facetQuery: 'a'}
+    })
     .then(get('facetHits'))
     .then(function(facetHits) {
       t.ok(facetHits.length, 'We got some facet hits');
