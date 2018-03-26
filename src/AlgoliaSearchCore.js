@@ -610,6 +610,60 @@ AlgoliaSearchCore.prototype.search = function(queries, opts, callback) {
 };
 
 /**
+* Search for facet values
+* https://www.algolia.com/doc/rest-api/search#search-for-facet-values
+* This is the top-level API for SFFV.
+*
+* @param {string} query.indexName Index name, name of the index to search.
+* @param {object} query.params Query parameters.
+* @param {string} query.params.facetName Facet name, name of the attribute to search for values in.
+* Must be declared as a facet
+* @param {string} query.params.facetQuery Query for the facet search
+* @param {string} [query.params.*] Any search parameter of Algolia,
+* see https://www.algolia.com/doc/api-client/javascript/search#search-parameters
+* Pagination is not supported. The page and hitsPerPage parameters will be ignored.
+* @param callback (optional)
+*/
+AlgoliaSearchCore.prototype.searchForFacetValues = function(query, callback) {
+  var usage =
+    'Usage: client.searchForFacetValues({indexName, {facetName, facetQuery, ...params}}[, callback])';
+
+  if (
+    !query ||
+    query.indexName === undefined ||
+    query.params.facetName === undefined ||
+    query.params.facetQuery === undefined
+  ) {
+    throw new Error(usage);
+  }
+
+  var clone = require('./clone.js');
+  var omit = require('./omit.js');
+
+  var indexName = query.indexName;
+  var params = query.params;
+
+  var facetName = params.facetName;
+  var filteredParams = omit(clone(params), function(keyName) {
+    return keyName === 'facetName';
+  });
+  var searchParameters = this._getSearchParams(filteredParams, '');
+
+  return this._jsonRequest({
+    method: 'POST',
+    url:
+      '/1/indexes/' +
+      encodeURIComponent(indexName) +
+      '/facets/' +
+      encodeURIComponent(facetName) +
+      '/query',
+    hostType: 'read',
+    body: {params: searchParameters},
+    callback: callback
+  });
+};
+
+/**
  * Set the extra security tagFilters header
  * @param {string|array} tags The list of tags defining the current security filters
  */
