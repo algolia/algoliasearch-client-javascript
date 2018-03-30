@@ -263,7 +263,7 @@ AlgoliaSearch.prototype.addUserKey = deprecate(function(acls, params, callback) 
  *   content: the server answer with the added API key
  * @return {Promise|undefined} Returns a promise if no callback given
  * @example
- * client.addUserKey(['search'], {
+ * client.addApiKey(['search'], {
  *   validity: 300,
  *   maxQueriesPerIPPerHour: 2000,
  *   maxHitsPerQuery: 3,
