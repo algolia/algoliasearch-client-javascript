@@ -1,14 +1,14 @@
 'use strict';
 
 module.exports = [{
-  testName: 'client.searchForFacetValues(query, cb)',
+  testName: 'client.searchForFacetValues(queries)',
   object: 'client',
   methodName: 'searchForFacetValues',
   indexName: 'indexName',
-  callArguments: [{
+  callArguments: [[{
     indexName: 'indexName',
     params: {facetName: 'brands', facetQuery: 'co', ignorePlurals: false}
-  }],
+  }]],
   action: 'read',
   expectedRequest: {
     method: 'POST',

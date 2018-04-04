@@ -169,13 +169,14 @@ function searchForFacetValues(t) {
   t.plan(1);
 
   client.
-    searchForFacetValues({
+    searchForFacetValues([{
       indexName: indexName,
       params: {facetName: 'category', facetQuery: 'a'}
-    })
-    .then(get('facetHits'))
-    .then(function(facetHits) {
-      t.ok(facetHits.length, 'We got some facet hits');
+    }])
+    .then(function(results) {
+      results.forEach(function(content) {
+        t.ok(content.facetHits.length, 'We got some facet hits');
+      });
     })
     .then(noop, _.bind(t.error, t));
 }
