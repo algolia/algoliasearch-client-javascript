@@ -636,7 +636,7 @@ AlgoliaSearchCore.prototype.searchForFacetValues = function(queries) {
 
   var client = this;
 
-  return map(queries, function performQuery(query) {
+  return Promise.all(map(queries, function performQuery(query) {
     if (
       !query ||
       query.indexName === undefined ||
@@ -670,7 +670,7 @@ AlgoliaSearchCore.prototype.searchForFacetValues = function(queries) {
       hostType: 'read',
       body: {params: searchParameters}
     });
-  });
+  }));
 };
 
 /**
