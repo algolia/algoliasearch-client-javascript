@@ -166,17 +166,22 @@ function indexSearchForFacetValues(t) {
 }
 
 function searchForFacetValues(t) {
-  t.plan(1);
+  t.plan(2);
 
-  client.
-    searchForFacetValues([{
-      indexName: indexName,
-      params: {facetName: 'category', facetQuery: 'a'}
-    }])
+  client
+    .searchForFacetValues([
+      {
+        indexName: indexName,
+        params: {facetName: 'category', facetQuery: 'a', maxFacetHits: 5}
+      },
+      {
+        indexName: indexName,
+        params: {facetName: 'category', facetQuery: 'a', maxFacetHits: 7}
+      }
+    ])
     .then(function(results) {
-      results.forEach(function(content) {
-        t.ok(content.facetHits.length, 'We got some facet hits');
-      });
+      t.ok(results[0].facetHits.length === 5, 'We got 5 facet hits for the first request');
+      t.ok(results[1].facetHits.length === 7, 'We got 7 facet hits for the second request');
     })
     .then(noop, _.bind(t.error, t));
 }
