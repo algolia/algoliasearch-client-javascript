@@ -52,7 +52,8 @@ if (canPUT) {
 }
 test('index.saveObjects', saveObjects);
 if (canPUT) {
-  test('index.searchForFacetValues', searchForFacetValues);
+  test('index.searchForFacetValues', indexSearchForFacetValues);
+  test('searchForFacetValues', searchForFacetValues);
 }
 test('index.browse', browse);
 test('index.getObject', getObject);
@@ -152,7 +153,7 @@ function getSettings(t) {
     .then(noop, _.bind(t.error, t));
 }
 
-function searchForFacetValues(t) {
+function indexSearchForFacetValues(t) {
   t.plan(1);
 
   index
@@ -160,6 +161,27 @@ function searchForFacetValues(t) {
     .then(get('facetHits'))
     .then(function(facetHits) {
       t.ok(facetHits.length, 'We got some facet hits');
+    })
+    .then(noop, _.bind(t.error, t));
+}
+
+function searchForFacetValues(t) {
+  t.plan(2);
+
+  client
+    .searchForFacetValues([
+      {
+        indexName: indexName,
+        params: {facetName: 'category', facetQuery: 'a', maxFacetHits: 5}
+      },
+      {
+        indexName: indexName,
+        params: {facetName: 'category', facetQuery: 'a', maxFacetHits: 7}
+      }
+    ])
+    .then(function(results) {
+      t.ok(results[0].facetHits.length === 5, 'We got 5 facet hits for the first request');
+      t.ok(results[1].facetHits.length === 7, 'We got 7 facet hits for the second request');
     })
     .then(noop, _.bind(t.error, t));
 }
