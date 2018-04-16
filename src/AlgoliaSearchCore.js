@@ -628,7 +628,7 @@ AlgoliaSearchCore.prototype.searchForFacetValues = function(queries) {
   var isArray = require('isarray');
   var map = require('./map.js');
 
-  var usage = 'Usage: client.searchForFacetValues([{indexName, params}, ...queries])';
+  var usage = 'Usage: client.searchForFacetValues([{indexName, params: {facetName, facetQuery, ...params}}, ...queries])'; // eslint-disable-line max-len
 
   if (!isArray(queries)) {
     throw new Error(usage);
