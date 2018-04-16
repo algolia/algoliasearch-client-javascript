@@ -1,5 +1,10 @@
 CHANGELOG
 
+2018-04-16 3.27.0
+  * FEAT: add client.searchForFacetValues
+    * this allows to request multiple search for facet values in a single call
+    * note that this will do multiple requests (one per query)
+
 2018-03-21 3.26.0
   * FEAT: allow disabling of dsn
     * in some cases (backend search while you do have global DSN), you want to disable DSN to avoid a round-robin around the whole world if DNS can't be resolved as expected, for example on GCP. (#675)

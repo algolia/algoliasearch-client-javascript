@@ -1,4 +1,4 @@
-/*! algoliasearch 3.26.0 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
+/*! algoliasearch UNRELEASED | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
 (function(f){var g;if(typeof window!=='undefined'){g=window}else if(typeof self!=='undefined'){g=self}g.ALGOLIA_MIGRATION_LAYER=f()})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 
 module.exports = function load (src, opts, cb) {
@@ -2980,7 +2980,7 @@ AlgoliaSearch.prototype.addUserKey = deprecate(function(acls, params, callback) 
  *   content: the server answer with the added API key
  * @return {Promise|undefined} Returns a promise if no callback given
  * @example
- * client.addUserKey(['search'], {
+ * client.addApiKey(['search'], {
  *   validity: 300,
  *   maxQueriesPerIPPerHour: 2000,
  *   maxHitsPerQuery: 3,
@@ -3986,6 +3986,70 @@ AlgoliaSearchCore.prototype.search = function(queries, opts, callback) {
 };
 
 /**
+* Search for facet values
+* https://www.algolia.com/doc/rest-api/search#search-for-facet-values
+* This is the top-level API for SFFV.
+*
+* @param {object[]} queries An array of queries to run.
+* @param {string} queries[].indexName Index name, name of the index to search.
+* @param {object} queries[].params Query parameters.
+* @param {string} queries[].params.facetName Facet name, name of the attribute to search for values in.
+* Must be declared as a facet
+* @param {string} queries[].params.facetQuery Query for the facet search
+* @param {string} [queries[].params.*] Any search parameter of Algolia,
+* see https://www.algolia.com/doc/api-client/javascript/search#search-parameters
+* Pagination is not supported. The page and hitsPerPage parameters will be ignored.
+*/
+AlgoliaSearchCore.prototype.searchForFacetValues = function(queries) {
+  var isArray = require(8);
+  var map = require(30);
+
+  var usage = 'Usage: client.searchForFacetValues([{indexName, params: {facetName, facetQuery, ...params}}, ...queries])'; // eslint-disable-line max-len
+
+  if (!isArray(queries)) {
+    throw new Error(usage);
+  }
+
+  var client = this;
+
+  return Promise.all(map(queries, function performQuery(query) {
+    if (
+      !query ||
+      query.indexName === undefined ||
+      query.params.facetName === undefined ||
+      query.params.facetQuery === undefined
+    ) {
+      throw new Error(usage);
+    }
+
+    var clone = require(25);
+    var omit = require(32);
+
+    var indexName = query.indexName;
+    var params = query.params;
+
+    var facetName = params.facetName;
+    var filteredParams = omit(clone(params), function(keyName) {
+      return keyName === 'facetName';
+    });
+    var searchParameters = client._getSearchParams(filteredParams, '');
+
+    return client._jsonRequest({
+      cache: client.cache,
+      method: 'POST',
+      url:
+        '/1/indexes/' +
+        encodeURIComponent(indexName) +
+        '/facets/' +
+        encodeURIComponent(facetName) +
+        '/query',
+      hostType: 'read',
+      body: {params: searchParameters}
+    });
+  }));
+};
+
+/**
  * Set the extra security tagFilters header
  * @param {string|array} tags The list of tags defining the current security filters
  */
@@ -4205,7 +4269,7 @@ function removeCredentials(headers) {
 }
 
 }).call(this,require(12))
-},{"1":1,"12":12,"18":18,"25":25,"28":28,"29":29,"30":30,"34":34,"5":5,"8":8}],16:[function(require,module,exports){
+},{"1":1,"12":12,"18":18,"25":25,"28":28,"29":29,"30":30,"32":32,"34":34,"5":5,"8":8}],16:[function(require,module,exports){
 var inherits = require(7);
 var IndexCore = require(18);
 var deprecate = require(26);
@@ -6803,6 +6867,6 @@ function cleanup() {
 },{"1":1}],35:[function(require,module,exports){
 'use strict';
 
-module.exports = '3.26.0';
+module.exports = '3.27.0';
 
 },{}]},{},[19]);

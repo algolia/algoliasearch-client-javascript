@@ -565,7 +565,7 @@ module.exports =
 	 *   content: the server answer with the added API key
 	 * @return {Promise|undefined} Returns a promise if no callback given
 	 * @example
-	 * client.addUserKey(['search'], {
+	 * client.addApiKey(['search'], {
 	 *   validity: 300,
 	 *   maxQueriesPerIPPerHour: 2000,
 	 *   maxHitsPerQuery: 3,
@@ -3731,6 +3731,70 @@ module.exports =
 	};
 
 	/**
+	* Search for facet values
+	* https://www.algolia.com/doc/rest-api/search#search-for-facet-values
+	* This is the top-level API for SFFV.
+	*
+	* @param {object[]} queries An array of queries to run.
+	* @param {string} queries[].indexName Index name, name of the index to search.
+	* @param {object} queries[].params Query parameters.
+	* @param {string} queries[].params.facetName Facet name, name of the attribute to search for values in.
+	* Must be declared as a facet
+	* @param {string} queries[].params.facetQuery Query for the facet search
+	* @param {string} [queries[].params.*] Any search parameter of Algolia,
+	* see https://www.algolia.com/doc/api-client/javascript/search#search-parameters
+	* Pagination is not supported. The page and hitsPerPage parameters will be ignored.
+	*/
+	AlgoliaSearchCore.prototype.searchForFacetValues = function(queries) {
+	  var isArray = __webpack_require__(16);
+	  var map = __webpack_require__(17);
+
+	  var usage = 'Usage: client.searchForFacetValues([{indexName, params: {facetName, facetQuery, ...params}}, ...queries])'; // eslint-disable-line max-len
+
+	  if (!isArray(queries)) {
+	    throw new Error(usage);
+	  }
+
+	  var client = this;
+
+	  return Promise.all(map(queries, function performQuery(query) {
+	    if (
+	      !query ||
+	      query.indexName === undefined ||
+	      query.params.facetName === undefined ||
+	      query.params.facetQuery === undefined
+	    ) {
+	      throw new Error(usage);
+	    }
+
+	    var clone = __webpack_require__(12);
+	    var omit = __webpack_require__(13);
+
+	    var indexName = query.indexName;
+	    var params = query.params;
+
+	    var facetName = params.facetName;
+	    var filteredParams = omit(clone(params), function(keyName) {
+	      return keyName === 'facetName';
+	    });
+	    var searchParameters = client._getSearchParams(filteredParams, '');
+
+	    return client._jsonRequest({
+	      cache: client.cache,
+	      method: 'POST',
+	      url:
+	        '/1/indexes/' +
+	        encodeURIComponent(indexName) +
+	        '/facets/' +
+	        encodeURIComponent(facetName) +
+	        '/query',
+	      hostType: 'read',
+	      body: {params: searchParameters}
+	    });
+	  }));
+	};
+
+	/**
 	 * Set the extra security tagFilters header
 	 * @param {string|array} tags The list of tags defining the current security filters
 	 */
@@ -4048,7 +4112,7 @@ module.exports =
 
 	
 
-	module.exports = '3.26.0';
+	module.exports = '3.27.0';
 
 
 /***/ })
