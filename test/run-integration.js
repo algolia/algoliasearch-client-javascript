@@ -166,7 +166,19 @@ function indexSearchForFacetValues(t) {
 }
 
 function searchForFacetValues(t) {
-  t.plan(2);
+  t.plan(3);
+
+  client
+    .searchForFacetValues([
+      {
+        indexName: indexName,
+        params: {facetName: 'category', facetQuery: 'a', maxFacetHits: 5}
+      }
+    ])
+    .then(function(results) {
+      t.ok(results[0].facetHits.length === 5, 'We got 5 facet hits for the first request');
+    })
+    .then(noop, _.bind(t.error, t));
 
   client
     .searchForFacetValues([
