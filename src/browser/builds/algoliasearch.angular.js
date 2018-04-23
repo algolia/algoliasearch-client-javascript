@@ -33,6 +33,7 @@ window.angular.module('algoliasearch', [])
       return new AlgoliaSearchAngular(applicationID, apiKey, opts);
     }
 
+    algoliasearch.errors = require('../../errors.js');
     algoliasearch.version = require('../../version.js');
     algoliasearch.ua = 'Algolia for AngularJS ' + algoliasearch.version;
     algoliasearch.initPlaces = places(algoliasearch);
