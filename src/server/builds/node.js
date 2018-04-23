@@ -68,6 +68,7 @@ function algoliasearch(applicationID, apiKey, opts) {
   return new AlgoliaSearchNodeJS(applicationID, apiKey, opts);
 }
 
+algoliasearch.AlgoliaSearchError = require('../../errors.js').AlgoliaSearchError;
 algoliasearch.version = require('../../version.js');
 algoliasearch.ua = 'Algolia for Node.js ' + algoliasearch.version;
 algoliasearch.initPlaces = places(algoliasearch);
