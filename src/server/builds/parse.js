@@ -116,6 +116,9 @@ AlgoliaSearchParse.prototype._promise = {
     _setTimeout(promise.resolve.bind(promise), ms);
 
     return promise;
+  },
+  all: function all(promises) {
+    return Parse.Promise.all(promises);
   }
 };
 
