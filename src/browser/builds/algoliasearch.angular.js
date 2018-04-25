@@ -185,6 +185,9 @@ window.angular.module('algoliasearch', [])
         $timeout(resolve, ms);
 
         return deferred.promise;
+      },
+      all: function(promises) {
+        return $q.all(promises);
       }
     };
 
