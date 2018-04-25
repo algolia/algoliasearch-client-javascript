@@ -9,5 +9,11 @@ echo "Test"
 echo "Test: node"
 ./scripts/test-node
 
+#####
+# TODO: remove before merging the PR
+echo "Test: ci"
+./scripts/test-ci
+#####
+
 echo "Test: lint"
 ./scripts/lint
