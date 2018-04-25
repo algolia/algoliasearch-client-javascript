@@ -33,6 +33,7 @@ function algoliasearch(applicationID, apiKey, opts) {
   return new AlgoliaSearchReactNative(applicationID, apiKey, opts);
 }
 
+algoliasearch.AlgoliaSearchError = require('../../errors.js').AlgoliaSearchError;
 algoliasearch.version = require('../../version.js');
 algoliasearch.ua = 'Algolia for ReactNative ' + algoliasearch.version;
 algoliasearch.initPlaces = places(algoliasearch);

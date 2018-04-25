@@ -28,6 +28,7 @@ module.exports = function createAlgoliasearch(AlgoliaSearch, uaSuffix) {
     return new AlgoliaSearchBrowser(applicationID, apiKey, opts);
   }
 
+  algoliasearch.AlgoliaSearchError = require('../../errors.js').AlgoliaSearchError;
   algoliasearch.version = require('../version.js');
   algoliasearch.ua = 'Algolia for vanilla JavaScript ' + uaSuffix + algoliasearch.version;
   algoliasearch.initPlaces = places(algoliasearch);
