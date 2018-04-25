@@ -45,6 +45,7 @@ function algoliasearch(applicationID, apiKey, opts) {
   return new AlgoliaSearchParse(applicationID, apiKey, opts);
 }
 
+algoliasearch.errors = require('../../errors.js');
 algoliasearch.version = require('../../version.js');
 algoliasearch.ua = 'Algolia for Parse ' + algoliasearch.version;
 

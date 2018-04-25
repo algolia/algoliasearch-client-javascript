@@ -29,6 +29,7 @@ function algoliasearch(applicationID, apiKey, opts) {
   return new AlgoliaSearchJQuery(applicationID, apiKey, opts);
 }
 
+algoliasearch.errors = require('../../errors.js');
 algoliasearch.version = require('../../version.js');
 algoliasearch.ua = 'Algolia for jQuery ' + algoliasearch.version;
 algoliasearch.initPlaces = places(algoliasearch);
