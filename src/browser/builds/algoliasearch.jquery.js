@@ -140,5 +140,8 @@ AlgoliaSearchJQuery.prototype._promise = {
         deferred.resolve();
       }, ms);
     }).promise();
+  },
+  all: function all(promises) {
+    return $.when.apply(null, promises);
   }
 };
