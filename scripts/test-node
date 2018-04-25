@@ -45,6 +45,14 @@ else
   echo "Node test 6: integration"
   nvm install 6
   node test/run-integration.js | tap-bail | tap-dot
+
+  echo "Node test 8: integration"
+  nvm install 8
+  node test/run-integration.js | tap-bail | tap-dot
+
+  echo "Node test 10: integration"
+  nvm install 10
+  node test/run-integration.js | tap-bail | tap-dot
 fi
 
 # switch back to node.js stable
