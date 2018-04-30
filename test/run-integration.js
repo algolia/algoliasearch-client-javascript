@@ -524,12 +524,11 @@ function queryRules(t) {
 }
 
 function emptyObjectIDQueryRule(t) {
-  index
-    .then(_.partial(index.saveRule, {
-      condition: {pattern: 'pattern', anchoring: 'is'},
-      consequence: {params: {query: 'something'}}
-    }))
-  // TODO: Catch the expected error.
+  index.saveRule({
+    condition: {pattern: 'pattern', anchoring: 'is'},
+    consequence: {params: {query: 'something'}}
+  }).then(function() {t.end();})
+    .then(noop, _.bind(t.error, t));
 }
 
 function exportRules(t) {
