@@ -814,7 +814,7 @@ Index.prototype.saveRule = function(rule, opts, callback) {
   }
 
   if (!rule.objectID) {
-    throw new AlgoliaError('Missing or empty objectID field for rule');
+    throw new errors.AlgoliaSearchError('Missing or empty objectID field for rule');
   }
 
   var forwardToReplicas = opts.forwardToReplicas === true ? 'true' : 'false';
