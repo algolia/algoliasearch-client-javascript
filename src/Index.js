@@ -799,6 +799,7 @@ Index.prototype.searchRules = function(params, callback) {
  * Retrieve all the query rules in an index
  * @param [number=100] hitsPerPage The amount of query rules to retrieve per batch
  * @param [function] callback will be called after all query rules are retrieved
+ *  error: null or Error('message')
  */
 Index.prototype.exportRules = function(hitsPerPage, callback) {
   return exportData(this.searchRules.bind(this), hitsPerPage, callback);
@@ -810,6 +811,10 @@ Index.prototype.saveRule = function(rule, opts, callback) {
     opts = {};
   } else if (opts === undefined) {
     opts = {};
+  }
+
+  if (!rule.objectID) {
+    throw new errors.AlgoliaSearchError('Missing or empty objectID field for rule');
   }
 
   var forwardToReplicas = opts.forwardToReplicas === true ? 'true' : 'false';
