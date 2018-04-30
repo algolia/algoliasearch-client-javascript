@@ -22,9 +22,6 @@ test('AlgoliaSearch index API spec', function(t) {
   var expectedMethods = [
     'addObject',
     'addObjects',
-    'addApiKey',
-    'addUserKey',
-    'addUserKeyWithValidity',
     'batchSynonyms',
     'batchRules',
     'browse',
@@ -40,8 +37,6 @@ test('AlgoliaSearch index API spec', function(t) {
     'deleteObjects',
     'deleteSynonym',
     'deleteRule',
-    'deleteApiKey',
-    'deleteUserKey',
     'exportSynonyms',
     'exportRules',
     'getObject',
@@ -49,10 +44,6 @@ test('AlgoliaSearch index API spec', function(t) {
     'getSettings',
     'getSynonym',
     'getRule',
-    'getApiKey',
-    'getUserKeyACL',
-    'listApiKeys',
-    'listUserKeys',
     'partialUpdateObject',
     'partialUpdateObjects',
     'saveObject',
@@ -67,8 +58,6 @@ test('AlgoliaSearch index API spec', function(t) {
     'setSettings',
     'similarSearch',
     'ttAdapter',
-    'updateApiKey',
-    'updateUserKey',
     'waitTask'
   ].sort();
 
