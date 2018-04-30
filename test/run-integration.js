@@ -524,12 +524,20 @@ function queryRules(t) {
 }
 
 function emptyObjectIDQueryRule(t) {
-  t.throws(function() {
+  try {
     index.saveRule({
       condition: {pattern: 'pattern', anchoring: 'is'},
       consequence: {params: {query: 'something'}}
     });
-  }, 'Missing or empty objectID field for rule');
+  } catch (err) {
+    t.equal(
+      err.message,
+      'Missing or empty objectID field for rule',
+      'Error message matches'
+    );
+    t.ok(err instanceof Error, 'Error was thrown');
+    t.end();
+  }
 }
 
 function exportRules(t) {
