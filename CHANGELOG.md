@@ -1,5 +1,12 @@
 CHANGELOG
 
+2018-05-03 3.27.1
+  * FIX: `client.searchForFacetValues` in older browsers
+    * we use the polyfill implementation of Promise.all now instead of the native in 3.27.0
+  * FIX: `index.saveRule` throw when no objectID is given
+  * FEAT: deprecate index API key methods in favor of client ones
+    * these methods will be removed, since you can add index restrictions to client API keys
+
 2018-04-16 3.27.0
   * FEAT: add client.searchForFacetValues
     * this allows to request multiple search for facet values in a single call
