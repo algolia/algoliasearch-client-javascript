@@ -65,6 +65,8 @@ if (canPUT) {
   test('query rules', queryRules);
 }
 
+test('empty objectID for query rule', emptyObjectIDQueryRule);
+
 if (canPUT) {
   test('export synonyms', exportSynonyms);
   test('export query rules', exportRules);
@@ -519,6 +521,23 @@ function queryRules(t) {
     })
     .then(function() {t.end();})
     .then(noop, _.bind(t.error, t));
+}
+
+function emptyObjectIDQueryRule(t) {
+  try {
+    index.saveRule({
+      condition: {pattern: 'pattern', anchoring: 'is'},
+      consequence: {params: {query: 'something'}}
+    });
+  } catch (err) {
+    t.equal(
+      err.message,
+      'Missing or empty objectID field for rule',
+      'Error message matches'
+    );
+    t.ok(err instanceof Error, 'Error was thrown');
+    t.end();
+  }
 }
 
 function exportRules(t) {

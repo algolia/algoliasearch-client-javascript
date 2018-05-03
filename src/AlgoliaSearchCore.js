@@ -636,7 +636,7 @@ AlgoliaSearchCore.prototype.searchForFacetValues = function(queries) {
 
   var client = this;
 
-  return Promise.all(map(queries, function performQuery(query) {
+  return client._promise.all(map(queries, function performQuery(query) {
     if (
       !query ||
       query.indexName === undefined ||

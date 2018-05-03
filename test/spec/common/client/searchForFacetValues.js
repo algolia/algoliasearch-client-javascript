@@ -7,12 +7,20 @@ test('client.searchForFacetValues()', function(t) {
 
   var bind = require('lodash-compat/function/bind');
 
-  var algoliasearch = require('../../../../');
-  var getCredentials = require('../../../utils/get-credentials');
-
-  var credentials = getCredentials();
-
-  var client = algoliasearch(credentials.applicationID, credentials.searchOnlyAPIKey);
+  var fauxJax = require('faux-jax');
+  fauxJax.install({gzip: true});
+  let count = 0;
+  fauxJax.on('request', function(req) {
+    count++;
+    req.respond(200, {}, '{}');
+    if (count === 3) {
+      fauxJax.restore();
+    }
+  });
+  var createFixture = require('../../../utils/create-fixture');
+  var fixture = createFixture();
+  var credentials = fixture.credentials;
+  var client = fixture.client;
 
   t.throws(client.searchForFacetValues);
   t.throws(bind(client.searchForFacetValues, client));

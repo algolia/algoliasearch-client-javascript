@@ -168,5 +168,8 @@ AlgoliaSearchReactNative.prototype._promise = {
     return new Promise(function resolveOnTimeout(resolve/* , reject*/) {
       setTimeout(resolve, ms);
     });
+  },
+  all: function all(promises) {
+    return Promise.all(promises);
   }
 };
