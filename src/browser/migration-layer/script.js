@@ -3,7 +3,7 @@
 // This script will be browserified and prepended to the normal build
 // directly in window, not wrapped in any module definition
 // To avoid cases where we are loaded with /latest/ along with
-migrationLayer(process.env.ALGOLIA_BUILDNAME);
+migrationLayer(process && process.env.ALGOLIA_BUILDNAME);
 
 // Now onto the V2 related code:
 //  If the client is using /latest/$BUILDNAME.min.js, load V2 of the library
