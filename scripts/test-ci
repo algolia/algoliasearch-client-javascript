@@ -6,6 +6,11 @@ set -e # exit when error
 
 [ -z $TRAVIS_PULL_REQUEST ] && TRAVIS_PULL_REQUEST='false'
 
+if [ "$TRAVIS_PULL_REQUEST" != "false" ] && [[ ! "$TRAVIS_PULL_REQUEST_SLUG" =~ ^algolia\/ ]]; then
+  eval $(./algolia-keys export);
+  TEST_SUITE='community'
+fi
+
 echo "CI test"
 
 echo "CI test: node"
