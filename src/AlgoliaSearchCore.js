@@ -10,7 +10,9 @@ var store = require('./store.js');
 // proxies limit)
 var MAX_API_KEY_LENGTH = 500;
 var RESET_APP_DATA_TIMER =
-  (process && process.env.RESET_APP_DATA_TIMER && parseInt(process.env.RESET_APP_DATA_TIMER, 10)) ||
+  (typeof process !== 'undefined' &&
+    process.env.RESET_APP_DATA_TIMER &&
+    parseInt(process.env.RESET_APP_DATA_TIMER, 10)) ||
   60 * 2 * 1000; // after 2 minutes reset to first host
 
 /*
