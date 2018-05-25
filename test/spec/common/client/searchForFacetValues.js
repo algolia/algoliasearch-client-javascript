@@ -3,20 +3,19 @@
 var test = require('tape');
 
 test('client.searchForFacetValues()', function(t) {
-  t.plan(7);
+  t.plan(6);
 
   var bind = require('lodash-compat/function/bind');
-
   var fauxJax = require('faux-jax');
+
   fauxJax.install({gzip: true});
+
   let count = 0;
   fauxJax.on('request', function(req) {
     count++;
     req.respond(200, {}, '{}');
-    if (count === 3) {
-      fauxJax.restore();
-    }
   });
+
   var createFixture = require('../../../utils/create-fixture');
   var fixture = createFixture();
   var credentials = fixture.credentials;
@@ -48,16 +47,14 @@ test('client.searchForFacetValues()', function(t) {
     ])
   );
 
-  t.doesNotThrow(
-    bind(client.searchForFacetValues, client, [
+  Promise.all([
+    client.searchForFacetValues([
       {
         indexName: credentials.indexName,
         params: {facetName: '', facetQuery: ''}
       }
-    ])
-  );
-  t.doesNotThrow(
-    bind(client.searchForFacetValues, client, [
+    ]),
+    client.searchForFacetValues([
       {
         indexName: credentials.indexName,
         params: {facetName: '', facetQuery: ''}
@@ -67,5 +64,9 @@ test('client.searchForFacetValues()', function(t) {
         params: {facetName: '', facetQuery: ''}
       }
     ])
-  );
+  ]).then(() => {
+    t.equal(count, 3);
+
+    fauxJax.restore();
+  });
 });
