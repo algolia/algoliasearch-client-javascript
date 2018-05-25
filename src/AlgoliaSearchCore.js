@@ -184,6 +184,7 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
   var requestDebug = require('debug')('algoliasearch:' + initialOpts.url);
 
   var body;
+  var cacheID;
   var additionalUA = initialOpts.additionalUA || '';
   var cache = initialOpts.cache;
   var client = this;
@@ -222,23 +223,6 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
     client._checkAppIdData();
 
     var startTime = new Date();
-    var cacheID;
-
-    if (client._useCache) {
-      cacheID = initialOpts.url;
-    }
-
-    // as we sometime use POST requests to pass parameters (like query='aa'),
-    // the cacheID must also include the body to be different between calls
-    if (client._useCache && body) {
-      cacheID += '_body_' + reqOpts.body;
-    }
-
-    // handle cache existence
-    if (client._useCache && cache && cache[cacheID] !== undefined) {
-      requestDebug('serving response from cache');
-      return client._promise.resolve(JSON.parse(cache[cacheID]));
-    }
 
     // if we reached max tries
     if (tries >= client.hosts[initialOpts.hostType].length) {
@@ -341,11 +325,10 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
       });
 
       if (httpResponseOk) {
-        if (client._useCache && cache) {
-          cache[cacheID] = httpResponse.responseText;
-        }
-
-        return httpResponse.body;
+        return {
+          responseText: httpResponse.responseText,
+          body: httpResponse.body
+        };
       }
 
       var shouldRetry = Math.floor(status / 100) !== 4;
@@ -438,6 +421,47 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
     }
   }
 
+  function interopCallbackReturn(promise, callback) {
+    // either we have a callback
+    // either we are using promises
+    if (typeof initialOpts.callback === 'function') {
+      promise.then(function okCb(content) {
+        exitPromise(function() {
+          initialOpts.callback(null, callback(content));
+        }, client._setTimeout || setTimeout);
+      }, function nookCb(err) {
+        exitPromise(function() {
+          initialOpts.callback(err);
+        }, client._setTimeout || setTimeout);
+      });
+    } else {
+      return promise.then(function(content) {
+        return callback(content);
+      });
+    }
+  }
+
+  if (client._useCache) {
+    cacheID = initialOpts.url;
+  }
+
+  // as we sometime use POST requests to pass parameters (like query='aa'),
+  // the cacheID must also include the body to be different between calls
+  if (client._useCache && body) {
+    cacheID += '_body_' + body;
+  }
+
+  if (client._useCache && cache && cache[cacheID] !== undefined) {
+    requestDebug('serving response from cache');
+
+    var promiseForCache = cache[cacheID];
+
+    return interopCallbackReturn(promiseForCache, function(content) {
+      // In case of the cache request, return the original value
+      return JSON.parse(content.responseText);
+    });
+  }
+
   var promise = doRequest(
     client._request, {
       url: initialOpts.url,
@@ -448,21 +472,14 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
     }
   );
 
-  // either we have a callback
-  // either we are using promises
-  if (typeof initialOpts.callback === 'function') {
-    promise.then(function okCb(content) {
-      exitPromise(function() {
-        initialOpts.callback(null, content);
-      }, client._setTimeout || setTimeout);
-    }, function nookCb(err) {
-      exitPromise(function() {
-        initialOpts.callback(err);
-      }, client._setTimeout || setTimeout);
-    });
-  } else {
-    return promise;
+  if (client._useCache && cache) {
+    cache[cacheID] = promise;
   }
+
+  return interopCallbackReturn(promise, function(content) {
+    // In case of the first request, return the JSON value
+    return content.body;
+  });
 };
 
 /*
