@@ -35,15 +35,10 @@ test('expect to cache the requests', function(t) {
     search(),
     search()
   ]).then(function() {
-    var cacheID = Object.keys(client.cache)[0];
+    var cacheLength = Object.keys(client.cache).length;
 
     t.equal(count, 1);
-    t.equal(
-      cacheID,
-      '/1/indexes/*/queries_body_{"requests":[{"indexName":"'
-      + credentials.indexName
-      + '","params":"query=Hello"}]}'
-    );
+    t.equal(cacheLength, 1);
 
     fauxJax.restore();
   });
