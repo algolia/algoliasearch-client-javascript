@@ -458,7 +458,7 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
 
     // In case the cache is warmup with value that is not a promise
     var promiseForCache = typeof maybePromiseForCache.then !== 'function'
-      ? Promise.resolve({responseText: maybePromiseForCache})
+      ? client._promise.resolve({responseText: maybePromiseForCache})
       : maybePromiseForCache;
 
     return interopCallbackReturn(promiseForCache, function(content) {
