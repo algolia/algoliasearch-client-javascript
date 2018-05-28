@@ -41,16 +41,16 @@ For integration tests you'll need Algolia credentials as environment variables:
 ALGOLIA_APP_ID=XXX ALGOLIA_API_KEY=XXX PLACES_APPID=XXX PLACES_APIKEY=XXX node test/run-integration.js
 ```
 
-You can also run the tests in your browser, rather than in node (**note that this is currently not working**):
+You can also run the tests in your browser, rather than in node (**note that these tests are currently not passing while ran in local browsers**):
 
 ```sh
-yarn dev
+ALGOLIA_APP_ID=XXX ALGOLIA_API_KEY=XXX PLACES_APPID=XXX PLACES_APIKEY=XXX yarn dev
 ```
 
 or
 
 ```sh
-yarn dev-integration
+ALGOLIA_APP_ID=XXX ALGOLIA_API_KEY=XXX PLACES_APPID=XXX PLACES_APIKEY=XXX yarn dev-integration
 ```
 
 ## Lint
@@ -63,7 +63,7 @@ Files are __not__ automatically formatted with prettier.
 
 ## Release
 
-Releasing is done by following the "release API clients" for now; but a contribution that extracts this into a script would be really nice. 
+Releasing is done by following the internal "release API clients" document for now; but a contribution that extracts this into a script would be really nice. 
 
 Note to definitely check the examples before actually releasing:
 
