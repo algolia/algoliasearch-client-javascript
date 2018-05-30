@@ -104,7 +104,9 @@ module.exports = function createAlgoliasearch(AlgoliaSearch, uaSuffix) {
         req.setRequestHeader('accept', 'application/json');
       }
 
-      req.send(body);
+      if (body) {
+        req.send(body);
+      }
 
       // event object not received in IE8, at least
       // but we do not use it, still important to note

@@ -6797,9 +6797,9 @@ zip-stream@~0.5.0:
     lodash "~3.2.0"
     readable-stream "~1.0.26"
 
-zuul-algolia-ngrok@6.0.1:
-  version "6.0.1"
-  resolved "https://registry.yarnpkg.com/zuul-algolia-ngrok/-/zuul-algolia-ngrok-6.0.1.tgz#681c8a2743342a45275f4720a9a156c63971d5eb"
+zuul-algolia-ngrok@6.0.2:
+  version "6.0.2"
+  resolved "https://registry.yarnpkg.com/zuul-algolia-ngrok/-/zuul-algolia-ngrok-6.0.2.tgz#49e9bbfaf91643c33f3782497511de8cac0c0887"
   dependencies:
     ngrok "3.0.1"
     xtend "4.0.1"

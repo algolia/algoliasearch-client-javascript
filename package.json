@@ -140,7 +140,7 @@
     "webpack": "^1.13.1",
     "xhr": "^2.4.0",
     "zuul": "^3.10.1",
-    "zuul-algolia-ngrok": "6.0.1"
+    "zuul-algolia-ngrok": "6.0.2"
   },
   "engines": {
     "node": ">=0.8"
