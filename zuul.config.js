@@ -44,7 +44,8 @@ var browsers = {
     platform: 'Windows 10'
   }, {
     name: 'internet explorer',
-    version: ['9', '10', '11']
+    version: ['9', '10', '11'],
+    platform: 'Windows 7'
   }, {
     name: 'safari',
     version: '-3..latest'
