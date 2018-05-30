@@ -28,7 +28,7 @@ var zuulConfig = module.exports = {
 
 if (process.env.CI === 'true') {
   zuulConfig.tunnel = {
-    type: 'ngrok',
+    type: 'algolia-ngrok',
     bind_tls: true
   };
 }
