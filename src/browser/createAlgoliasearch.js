@@ -106,6 +106,8 @@ module.exports = function createAlgoliasearch(AlgoliaSearch, uaSuffix) {
 
       if (body) {
         req.send(body);
+      } else {
+        req.send();
       }
 
       // event object not received in IE8, at least
