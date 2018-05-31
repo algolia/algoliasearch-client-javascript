@@ -446,9 +446,7 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
         }, client._setTimeout || setTimeout);
       });
     } else {
-      return request.then(function(content) {
-        return callback(content);
-      });
+      return request.then(callback);
     }
   }
 
