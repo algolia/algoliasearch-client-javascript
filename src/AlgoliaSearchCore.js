@@ -425,8 +425,8 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
     return client._useCache && cache && cache[cacheID] !== undefined;
   }
 
-  function interopCallbackReturn(promise, callback) {
-    promise.catch(function() {
+  function interopCallbackReturn(request, callback) {
+    request.catch(function() {
       // Release the cache on error
       if (isCacheValidWithCurrentID()) {
         delete cache[cacheID];
@@ -436,7 +436,7 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
     // either we have a callback
     // either we are using promises
     if (typeof initialOpts.callback === 'function') {
-      promise.then(function okCb(content) {
+      request.then(function okCb(content) {
         exitPromise(function() {
           initialOpts.callback(null, callback(content));
         }, client._setTimeout || setTimeout);
@@ -446,7 +446,7 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
         }, client._setTimeout || setTimeout);
       });
     } else {
-      return promise.then(function(content) {
+      return request.then(function(content) {
         return callback(content);
       });
     }
@@ -478,7 +478,7 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
     });
   }
 
-  var promise = doRequest(
+  var request = doRequest(
     client._request, {
       url: initialOpts.url,
       method: initialOpts.method,
@@ -489,10 +489,10 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
   );
 
   if (client._useCache && cache) {
-    cache[cacheID] = promise;
+    cache[cacheID] = request;
   }
 
-  return interopCallbackReturn(promise, function(content) {
+  return interopCallbackReturn(request, function(content) {
     // In case of the first request, return the JSON value
     return content.body;
   });
