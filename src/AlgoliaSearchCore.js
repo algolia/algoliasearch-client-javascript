@@ -421,7 +421,18 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
     }
   }
 
+  function isCacheValidWithCurrentID() {
+    return client._useCache && cache && cache[cacheID] !== undefined;
+  }
+
   function interopCallbackReturn(promise, callback) {
+    promise.catch(function() {
+      // Release the cache on error
+      if (isCacheValidWithCurrentID()) {
+        delete cache[cacheID];
+      }
+    });
+
     // either we have a callback
     // either we are using promises
     if (typeof initialOpts.callback === 'function') {
@@ -451,7 +462,7 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
     cacheID += '_body_' + body;
   }
 
-  if (client._useCache && cache && cache[cacheID] !== undefined) {
+  if (isCacheValidWithCurrentID()) {
     requestDebug('serving response from cache');
 
     var maybePromiseForCache = cache[cacheID];
