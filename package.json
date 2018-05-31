@@ -27,7 +27,7 @@
   "bundlesize": [
     {
       "path": "./dist/algoliasearch.?(jquery|angular|parse).min.js",
-      "maxSize": "18 kB"
+      "maxSize": "19 kB"
     },
     {
       "path": "./dist/algoliasearch.?(jquery|parse).js",
@@ -130,7 +130,6 @@
     "self-signed": "^1.3.1",
     "server-destroy-vvo": "^1.0.1",
     "sinon": "^1.17.7",
-    "superagent": "^3.5.2",
     "tap-bail": "^1.0.0",
     "tap-dot": "^1.0.5",
     "tape": "^4.5.1",
@@ -139,8 +138,7 @@
     "watchify": "^3.9.0",
     "webpack": "^1.13.1",
     "xhr": "^2.4.0",
-    "zuul": "^3.10.1",
-    "zuul-algolia-ngrok": "6.0.2"
+    "zuul": "^3.12.0"
   },
   "engines": {
     "node": ">=0.8"

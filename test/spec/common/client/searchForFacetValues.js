@@ -1,6 +1,7 @@
 'use strict';
 
 var test = require('tape');
+var Promise = global.Promise || require('es6-promise').Promise;
 
 test('client.searchForFacetValues()', function(t) {
   t.plan(6);
@@ -10,7 +11,7 @@ test('client.searchForFacetValues()', function(t) {
 
   fauxJax.install({gzip: true});
 
-  let count = 0;
+  var count = 0;
   fauxJax.on('request', function(req) {
     count++;
     req.respond(200, {}, '{}');
@@ -64,7 +65,7 @@ test('client.searchForFacetValues()', function(t) {
         params: {facetName: '', facetQuery: ''}
       }
     ])
-  ]).then(() => {
+  ]).then(function() {
     t.equal(count, 3);
 
     fauxJax.restore();

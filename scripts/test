@@ -2,8 +2,6 @@
 
 set -e # exit when error
 
-[ -z $TRAVIS_BUILD_NUMBER ] && CI='false' || CI='true'
-
 echo "Test"
 
 echo "Test: node"

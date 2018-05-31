@@ -2,8 +2,6 @@
 
 var test = require('tape');
 
-var requestTimeout = 5000;
-
 test('Request strategy handles slow JSONP responses (no double callback)', function(t) {
   var fauxJax = require('faux-jax');
   var parse = require('url-parse');
@@ -21,7 +19,8 @@ test('Request strategy handles slow JSONP responses (no double callback)', funct
         currentURL.host,
         currentURL.host
       ],
-      timeout: requestTimeout
+      protocol: currentURL.protocol,
+      timeout: 4000
     },
     indexName: 'slow-response'
   });
@@ -51,11 +50,9 @@ test('Request strategy handles slow JSONP responses (no double callback)', funct
     t.error(err, 'No error while reseting the /1/indexes/slow-response route');
 
     fauxJax.install();
-
-    index.search('hello', searchCallback);
-
     fauxJax.on('request', function(req) {
       req.respond(500, {}, JSON.stringify({status: 500, message: 'woops!'}));
     });
+    index.search('hello', searchCallback);
   });
 });

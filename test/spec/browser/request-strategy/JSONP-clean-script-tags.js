@@ -22,7 +22,8 @@ test('Request strategy clean JSONP created script tags', function(t) {
         currentURL.host,
         currentURL.host
       ],
-      timeout: requestTimeout
+      timeout: requestTimeout,
+      protocol: currentURL.protocol
     },
     indexName: 'simple-JSONP-response-clean'
   });
