@@ -10,11 +10,11 @@ NODE_ENV=production npm run build
 if [ $1 = "integration" ]
 then
   echo "Browser test: integration"
-  DEBUG=zuul* zuul --loopback localhostfix.nossl --sauce-connect --no-coverage -- test/run-integration.js
+  zuul --loopback localhostfix.nossl --sauce-connect --no-coverage -- test/run-integration.js
 fi
 
 if [ $1 = "unit" ]
 then
   echo "Browser test: unit"
-  DEBUG=zuul* zuul --loopback localhostfix.nossl --sauce-connect --no-coverage -- test/run-browser.js
+  zuul --loopback localhostfix.nossl --sauce-connect --no-coverage -- test/run-browser.js
 fi
