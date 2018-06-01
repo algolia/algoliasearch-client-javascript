@@ -20,8 +20,8 @@
     "test-ci:bundlesize": "bundlesize",
     "test-ci:unit-node": "node test/run-node.js | tap-bail | tap-dot",
     "test-ci:integration-node": "./scripts/test-node-integration",
-    "test-ci:unit-browsers": "node ./scripts/test-browser unit",
-    "test-ci:integration-browsers": "node ./scripts/test-browser integration",
+    "test-ci:unit-browsers": "./scripts/test-browser unit",
+    "test-ci:integration-browsers": "./scripts/test-browser integration",
     "lint": "./scripts/lint"
   },
   "browserify": {
