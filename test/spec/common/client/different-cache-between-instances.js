@@ -50,4 +50,4 @@ test("client's cache is different between instances", function(t) {
       'We received two requests'
     );
   }
-});  
+});

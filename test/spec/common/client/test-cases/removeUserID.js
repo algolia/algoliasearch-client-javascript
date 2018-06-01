@@ -15,7 +15,7 @@ if (process.browser) {
         body: undefined,
         URL: {pathname: '/1/clusters/mapping', query: {'x-algolia-user-id': 'hi'}}
       }
-    })
+    });
   }
 } else {
   testCases.push({
