@@ -16,8 +16,8 @@ addons:
     - localhostfix.nossl # this domain is used in place of "localhost" which is blocked in Safari, we also do not use ".dev" which default to https in Chrome and Firefox
 script: 
   - "yarn run test-ci:${SCRIPT}"
-env:
-  matrix:
+matrix:
+  include:
     node_js:
       - stable
       - stable
@@ -32,6 +32,7 @@ env:
       - SCRIPT=integration-node
       - SCRIPT=unit-browsers
       - SCRIPT=integration-browsers
+env:
   global:
     # saucelabs credentials
     # subaccount of "opensauce-algolia"
