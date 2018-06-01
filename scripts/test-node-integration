@@ -8,17 +8,8 @@ fi
 
 set -e # exit when error
 
-[ -z $TRAVIS_BUILD_NUMBER ] && CI='false' || CI='true'
-[ -z $TRAVIS_BUILD_NUMBER ] && TRAVIS_BUILD_NUMBER='false'
-
-# nvm has a special setup on Travis where it might break installing other versions
-unset npm_config_prefix
-nvm install 7
-node test/run-node.js | tap-bail | tap-dot
-
-# in CI we launch integration test
-[ $CI == 'true' ] && 
-nvm install stable && echo "Node test stable: integration" && node test/run-integration.js
+echo "Node test stable: integration"
+node test/run-integration.js
 
 echo "Node test 0.10: integration"
 nvm install 0.10
@@ -47,6 +38,3 @@ node test/run-integration.js | tap-bail | tap-dot
 echo "Node test 10: integration"
 nvm install 10
 node test/run-integration.js | tap-bail | tap-dot
-
-# switch back to node.js stable
-nvm use 7
