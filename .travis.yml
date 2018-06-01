@@ -24,8 +24,8 @@ env:
     - SCRIPT=bundlesize
     - SCRIPT=unit-node
     - SCRIPT=integration-node
-    - SCRIPT=unit-browsers
-    - SCRIPT=integration-browsers
+    - SCRIPT=unit-browsers          ZUUL_CONCURRENCY=2
+    - SCRIPT=integration-browsers   ZUUL_CONCURRENCY=3
   global:
     # saucelabs credentials
     # subaccount of "opensauce-algolia"

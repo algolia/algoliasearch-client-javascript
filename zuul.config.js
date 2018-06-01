@@ -1,5 +1,6 @@
 'use strict';
 
+
 module.exports = {
   ui: 'tape',
   browserify: [{
@@ -17,7 +18,7 @@ module.exports = {
 
   // only used when run with saucelabs
   // not activated when dev or phantom
-  concurrency: 4,
+  concurrency: process.env.ZUUL_CONCURRENCY || 4,
   // if browser does not sends output in 120s since last output:
   // stop testing, something is wrong
   browser_output_timeout: 60 * 3 * 1000,
