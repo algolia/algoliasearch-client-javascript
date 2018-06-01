@@ -5,7 +5,12 @@ var test = require('tape');
 var requestTimeout = 5000;
 
 test('Request strategy uses JSONP when XHR errors', function(t) {
-  t.plan(4);
+  // there's one less test in Safari
+  if (typeof window.safari === 'undefined') {
+    t.plan(4);
+  } else {
+    t.plan(3);
+  }
   var fauxJax = require('faux-jax');
   var parse = require('url-parse');
   var sinon = require('sinon');
