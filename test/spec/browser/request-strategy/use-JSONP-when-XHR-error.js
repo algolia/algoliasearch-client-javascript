@@ -33,11 +33,13 @@ test('Request strategy uses JSONP when XHR errors', function(t) {
 
     fauxJax.restore();
 
-    t.deepEqual(
-      searchCallback.args[0],
-      [null, {query: 'XHR error use JSONP'}],
-      'First callback called with null, {"query": "XHR error use JSONP"}'
-    );
+    // if (/* browser isn't safari */) {
+      t.deepEqual(
+        searchCallback.args[0],
+        [null, {query: 'XHR error use JSONP'}],
+        'First callback called with null, {"query": "XHR error use JSONP"}'
+      );
+    // }
   });
 
   var index = fixture.index;

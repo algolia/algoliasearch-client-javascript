@@ -33,11 +33,16 @@ test('Request strategy handles slow JSONP responses (no double callback)', funct
   var searchCallback = sinon.spy(function() {
     t.ok(searchCallback.calledOnce, 'Callback was called once');
 
-    t.deepEqual(
-      searchCallback.args[0],
-      [null, {slowResponse: 'ok'}],
-      'Callback called with null, {"slowResponse": "ok"}'
-    );
+    console.log('!!! browser');
+    console.log(process.env);
+
+    // if (/* test is safari */) {
+      t.deepEqual(
+        searchCallback.args[0],
+        [null, {slowResponse: 'ok'}],
+        'Callback called with null, {"slowResponse": "ok"}'
+      );
+    // }
 
     fauxJax.restore();
 
