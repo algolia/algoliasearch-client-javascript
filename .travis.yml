@@ -1,7 +1,6 @@
 language: node_js
 node_js:
   - stable
-script: npm run test-ci
 branches:
   only:
     - master
@@ -17,7 +16,11 @@ addons:
     direct_domains: "*.algolia.biz"
   hosts:
     - localhostfix.nossl # this domain is used in place of "localhost" which is blocked in Safari, we also do not use ".dev" which default to https in Chrome and Firefox
+script: 
+  - "yarn run test-ci${SCRIPT}"
 env:
+  matrix:
+    - SCRIPT=''
   global:
     # saucelabs credentials
     # subaccount of "opensauce-algolia"
