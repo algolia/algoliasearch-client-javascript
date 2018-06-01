@@ -18,7 +18,7 @@
     "test": "./scripts/test",
     "test-ci:lint": "./scripts/lint",
     "test-ci:bundlesize": "bundlesize",
-    "test-ci:unit-node": "node test/run-node.js | tap-bail | tap-dot",
+    "test-ci:unit-node": "./scripts/test-node-unit",
     "test-ci:integration-node": "./scripts/test-node-integration",
     "test-ci:unit-browsers": "./scripts/test-browser unit",
     "test-ci:integration-browsers": "./scripts/test-browser integration",
