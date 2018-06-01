@@ -1,6 +1,4 @@
 language: node_js
-node_js:
-  - stable
 branches:
   only:
     - master
@@ -20,12 +18,20 @@ script:
   - "yarn run test-ci:${SCRIPT}"
 env:
   matrix:
-    - SCRIPT=lint
-    - SCRIPT=bundlesize
-    - SCRIPT=unit-node
-    - SCRIPT=integration-node
-    - SCRIPT=unit-browsers
-    - SCRIPT=integration-browsers
+    node_js:
+      - stable
+      - stable
+      - 7 # unit tests fail on node > 7
+      - stable
+      - stable
+      - stable
+    env:
+      - SCRIPT=lint
+      - SCRIPT=bundlesize
+      - SCRIPT=unit-node
+      - SCRIPT=integration-node
+      - SCRIPT=unit-browsers
+      - SCRIPT=integration-browsers
   global:
     # saucelabs credentials
     # subaccount of "opensauce-algolia"
