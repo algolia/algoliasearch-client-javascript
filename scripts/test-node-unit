@@ -9,5 +9,5 @@ else
 fi
 
 # our unit tests are currently failing on v7+ because of faux-jax
-nvm use 7
+nvm install 7
 node test/run-node.js | tap-bail | tap-dot
