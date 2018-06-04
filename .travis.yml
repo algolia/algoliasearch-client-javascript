@@ -1,7 +1,6 @@
 language: node_js
 node_js:
   - stable
-script: npm run test-ci
 branches:
   only:
     - master
@@ -10,9 +9,24 @@ branches:
 # http://docs.travis-ci.com/user/workers/container-based-infrastructure/#Routing-your-build-to-container-based-infrastructure
 sudo: false
 cache: yarn
+addons:
+  sauce_connect:
+    # we don't want algolia.biz to go through sauce connect proxy but rather directly through the internet
+    # to avoid bad behaviour in tests checking for algolia.biz blackhole dns
+    direct_domains: "*.algolia.biz"
+  hosts:
+    - localhostfix.nossl # this domain is used in place of "localhost" which is blocked in Safari, we also do not use ".dev" which default to https in Chrome and Firefox
+script: 
+  - "yarn run test-ci:${SCRIPT}"
 env:
+  matrix:
+    - SCRIPT=lint
+    - SCRIPT=bundlesize
+    - SCRIPT=unit-node
+    - SCRIPT=integration-node
+    - SCRIPT=unit-browsers          ZUUL_CONCURRENCY=2
+    - SCRIPT=integration-browsers   ZUUL_CONCURRENCY=3
   global:
-    - SAUCE_APPIUM_VERSION="1.8.1"
     # saucelabs credentials
     # subaccount of "opensauce-algolia"
     - SAUCE_USERNAME=algoliasearch-js

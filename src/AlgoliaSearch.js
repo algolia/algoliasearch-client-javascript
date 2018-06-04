@@ -507,7 +507,7 @@ AlgoliaSearch.prototype.assignUserID = function(data, callback) {
     body: {cluster: data.cluster},
     callback: callback,
     headers: {
-      'X-Algolia-User-ID': data.userID
+      'x-algolia-user-id': data.userID
     }
   });
 };
@@ -608,7 +608,7 @@ AlgoliaSearch.prototype.removeUserID = function(data, callback) {
     hostType: 'write',
     callback: callback,
     headers: {
-      'X-Algolia-User-ID': data.userID
+      'x-algolia-user-id': data.userID
     }
   });
 };

@@ -2,14 +2,6 @@
 
 var test = require('tape');
 
-var browser = require('bowser');
-
-if (browser.name === 'PhantomJS') {
-  // cannot be tested in PhantomJS, it throws a uncatchable
-  // SyntaxError
-  test = test.skip;
-}
-
 test('Request strategy handles JSONP syntax errors', function(t) {
   t.plan(8);
   var fauxJax = require('faux-jax');
@@ -25,7 +17,8 @@ test('Request strategy handles JSONP syntax errors', function(t) {
         currentURL.host,
         currentURL.host
       ],
-      timeout: 5000
+      timeout: 5000,
+      protocol: currentURL.protocol
     },
     indexName: 'JSONP-syntax-error'
   });

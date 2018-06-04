@@ -2,21 +2,19 @@
 
 set -e # exit when error
 
-[ -z $TRAVIS_BUILD_NUMBER ] && CI='false' || CI='true'
-
-[ -z $TRAVIS_PULL_REQUEST ] && TRAVIS_PULL_REQUEST='false'
-
 echo "Browser test"
 
 echo "Browser test: build"
 NODE_ENV=production npm run build
 
-echo "Browser test: integration"
-DEBUG=zuul* zuul --no-coverage -- test/run-integration.js
+if [ "$1" = "integration" ]
+then
+  echo "Browser test: integration"
+  zuul --loopback localhostfix.nossl --sauce-connect --no-coverage -- test/run-integration.js | tap-bail | tap-dot
+fi
 
-if [ $TRAVIS_PULL_REQUEST != 'false' ]; then
-  echo "No browser unit test for PR"
-else
+if [ "$1" = "unit" ]
+then
   echo "Browser test: unit"
-  DEBUG=zuul* zuul --no-coverage -- test/run-browser.js
+  zuul --loopback localhostfix.nossl --sauce-connect --no-coverage -- test/run-browser.js | tap-bail | tap-dot
 fi

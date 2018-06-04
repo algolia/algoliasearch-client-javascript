@@ -7,19 +7,19 @@ var express = require('express');
 
 function JSONPSyntaxError() {
   var router = express.Router();
-  var calls = 0;
+  var calls = {};
 
   router.get('/reset', function(req, res) {
-    calls = 0;
-    res.json({calls: calls});
+    calls[req.headers['user-agent']] = 0;
+    res.json({calls: calls[req.headers['user-agent']]});
   });
 
   router.get('/calls', function(req, res) {
-    res.json({calls: calls});
+    res.json({calls: calls[req.headers['user-agent']]});
   });
 
   router.get('/', function(req, res) {
-    calls++;
+    calls[req.headers['user-agent']]++;
 
     res.type('application/javascript');
     res.send('YAW! I THROW();');

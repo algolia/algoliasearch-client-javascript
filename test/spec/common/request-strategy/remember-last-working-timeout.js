@@ -5,7 +5,7 @@ test('Last working timeout multiplier is reused', function(t) {
   fauxJax.install({gzip: true});
 
   var createFixture = require('../../../utils/create-fixture');
-  var baseTimeout = 20;
+  var baseTimeout = 1000;
   var fixture = createFixture({clientOptions: {timeout: baseTimeout}});
   var fixture2 = createFixture({
     credentials: fixture.credentials,

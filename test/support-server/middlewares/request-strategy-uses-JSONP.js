@@ -7,19 +7,19 @@ var express = require('express');
 
 function requestStrategyUsesJSONP() {
   var router = express.Router();
-  var calls = 0;
+  var calls = {};
 
   router.get('/reset', function(req, res) {
-    calls = 0;
+    calls[req.headers['user-agent']] = 0;
     res.send('ok');
   });
 
   router.get('/', function(req, res) {
-    calls++;
+    calls[req.headers['user-agent']]++;
 
     // only reply to the third JSONP request
     // 3 custom hosts, no dsn
-    if (calls === 3) {
+    if (calls[req.headers['user-agent']] === 3) {
       res.jsonp({hello: 'man'});
     } else {
       res.jsonp({status: 500, message: 'woops!'});

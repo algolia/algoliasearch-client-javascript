@@ -8,11 +8,14 @@ test('when a timeout occurs, we get a descriptive error', function(t) {
   var fauxJax = require('faux-jax');
 
   var hosts = [];
+  var protocol = 'https:';
+
   if (process.browser) {
     var parse = require('url-parse');
     // we do not use a random url, we want to reach the JSONP local server
     var currentURL = parse(location.href);
     hosts.push(currentURL.host);
+    protocol = currentURL.protocol;
   } else {
     hosts.push('www.d21d98uasdklj1289duasdkjs98dasuda.com');
   }
@@ -21,7 +24,8 @@ test('when a timeout occurs, we get a descriptive error', function(t) {
   var fixture = createFixture({
     clientOptions: {
       timeout: 50,
-      hosts: hosts
+      hosts: hosts,
+      protocol: protocol
     },
     indexName: 'blackhole'
   });
