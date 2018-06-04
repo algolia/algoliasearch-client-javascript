@@ -32,14 +32,14 @@ function slowResponse() {
           return;
         }
 
-        respond({slowResponse: 'timeout response'});
+        respond({status: 200, slowResponse: 'timeout response'});
       }, respondAfter);
     } else if (calls[req.headers['user-agent']] === 2) {
       res.on('finish', function responseSent() {
         secondCallAnswered[req.headers['user-agent']] = true;
       });
 
-      respond({slowResponse: 'ok'});
+      respond({status: 200, slowResponse: 'ok'});
     } else {
       respond({status: 500, message: 'woops!'});
     }

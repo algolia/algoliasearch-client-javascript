@@ -41,7 +41,7 @@ For integration tests you'll need Algolia credentials as environment variables:
 ALGOLIA_APP_ID=XXX ALGOLIA_API_KEY=XXX PLACES_APPID=XXX PLACES_APIKEY=XXX node test/run-integration.js
 ```
 
-You can also run the tests in your browser, rather than in node (**note that these tests are currently not passing while ran in local browsers**):
+You can also run the tests in your browser, rather than in node:
 
 ```sh
 ALGOLIA_APP_ID=XXX ALGOLIA_API_KEY=XXX PLACES_APPID=XXX PLACES_APIKEY=XXX yarn dev
@@ -53,13 +53,34 @@ or
 ALGOLIA_APP_ID=XXX ALGOLIA_API_KEY=XXX PLACES_APPID=XXX PLACES_APIKEY=XXX yarn dev-integration
 ```
 
-You can also run tests (unit, integration) in real browsers using [Sauce Labs](https://saucelabs.com/):
+## Running tests on SauceLabs
+
+You can also run tests (unit, integration) in real browsers using [Sauce Labs](https://saucelabs.com/).
+First you need to [download and install Sauce Connect](https://wiki.saucelabs.com/display/DOCS/Sauce+Connect+Proxy).
+
+Then run it this way:
+
+```sh
+SAUCE_USERNAME= SAUCE_ACCESS_KEY= sc --direct-domains *.algolia.biz
+```
+
+You will have to create a free [Sauce Labs](https://saucelabs.com/) account to get `SAUCE_USERNAME` and `SAUCE_ACCESS_KEY`.
+
+Then launch the actual tests:
 
 ```sh
 SAUCE_USERNAME= SAUCE_ACCESS_KEY= TRAVIS_BUILD_NUMBER=3213213213 INTEGRATION_TEST_APPID=test INTEGRATION_TEST_API_KEY= PLACES_APPID=places PLACES_APIKEY= ./scripts/test-browser
 ```
 
-`TRAVIS_BUILD_NUMBER` can be anything. You will have to create a free [Sauce Labs](https://saucelabs.com/) account to get `SAUCE_USERNAME` and `SAUCE_ACCESS_KEY`.
+or:
+
+```sh
+SAUCE_USERNAME= SAUCE_ACCESS_KEY= TRAVIS_BUILD_NUMBER=3213213213 INTEGRATION_TEST_APPID=test INTEGRATION_TEST_API_KEY= PLACES_APPID=places PLACES_APIKEY= ./scripts/test-integration
+```
+
+`TRAVIS_BUILD_NUMBER` can be anything.
+
+You can configure the browsers that are launched in `zuul.config.js`. You can then follow in your SauceLabs dashboard the tests being run.
 
 ## How tests are ran in Sauce Labs
 

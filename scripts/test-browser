@@ -7,14 +7,14 @@ echo "Browser test"
 echo "Browser test: build"
 NODE_ENV=production npm run build
 
-if [ $1 = "integration" ]
+if [ "$1" = "integration" ]
 then
   echo "Browser test: integration"
-  zuul --loopback localhostfix.nossl --sauce-connect --no-coverage -- test/run-integration.js
+  zuul --loopback localhostfix.nossl --sauce-connect --no-coverage -- test/run-integration.js | tap-bail | tap-dot
 fi
 
-if [ $1 = "unit" ]
+if [ "$1" = "unit" ]
 then
   echo "Browser test: unit"
-  zuul --loopback localhostfix.nossl --sauce-connect --no-coverage -- test/run-browser.js
+  zuul --loopback localhostfix.nossl --sauce-connect --no-coverage -- test/run-browser.js | tap-bail | tap-dot
 fi

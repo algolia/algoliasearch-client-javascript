@@ -30,7 +30,8 @@ module.exports = {
     name: 'chrome',
     version: '-1..latest',
     platform: 'Windows 10'
-  }, {
+  },
+  {
     name: 'firefox',
     version: '-1..latest',
     platform: 'Windows 10'
