@@ -43,7 +43,11 @@ it('host indices are reset to 0 after 12s', async () => {
   });
 
   const usedHosts = httpRequester.mock.calls.map(
-    ([{ url: { hostname } }]) => hostname
+    ([
+      {
+        url: { hostname },
+      },
+    ]) => hostname
   );
   expect(usedHosts).toMatchSnapshot();
 

@@ -47,7 +47,9 @@ it('first read request uses first host', () => {
   });
 
   const firstArgs = httpRequester.mock.calls[0];
-  const { url: { hostname } } = firstArgs[0];
+  const {
+    url: { hostname },
+  } = firstArgs[0];
   expect(hostname).toEqual('the_read_app-dsn.algolia.net');
 });
 
@@ -64,7 +66,9 @@ it('first write request uses first host', () => {
   });
 
   const firstArgs = httpRequester.mock.calls[0];
-  const { url: { hostname } } = firstArgs[0];
+  const {
+    url: { hostname },
+  } = firstArgs[0];
   expect(hostname).toEqual('the_write_app.algolia.net');
 });
 
@@ -86,7 +90,11 @@ it('uses a different host when the request needs to be retried', async () => {
   }); // retries
 
   const usedHosts = httpRequester.mock.calls.map(
-    ([{ url: { hostname } }]) => hostname
+    ([
+      {
+        url: { hostname },
+      },
+    ]) => hostname
   );
 
   expect(usedHosts).toMatchSnapshot();
@@ -116,7 +124,11 @@ it('uses the "up" host on second request when first fails', async () => {
   });
 
   const usedHosts = httpRequester.mock.calls.map(
-    ([{ url: { hostname } }]) => hostname
+    ([
+      {
+        url: { hostname },
+      },
+    ]) => hostname
   );
 
   expect(usedHosts).toMatchSnapshot();
@@ -399,7 +411,11 @@ it('two instances of createRequester share the same host index', async () => {
   });
 
   const usedHosts = httpRequester.mock.calls.map(
-    ([{ url: { hostname } }]) => hostname
+    ([
+      {
+        url: { hostname },
+      },
+    ]) => hostname
   );
 
   expect(usedHosts).toMatchSnapshot();
