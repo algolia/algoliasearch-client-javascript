@@ -3,15 +3,14 @@
   "version": "4.0.0-beta.1",
   "private": true,
   "main": "./src/node.js",
-  "description":
-    "Algolia Search API JavaScript Node.js http requester implementation",
+  "description": "Algolia Search API JavaScript Node.js http requester implementation",
   "repository": "algolia/algoliasearch-client-javascript",
   "homepage": "https://www.algolia.com/doc/api-client/javascript/",
   "bugs": "https://github.com/algolia/algoliasearch-client-javascript/issues",
   "author": "Algolia, Inc. (https://www.algolia.com)",
   "license": "MIT",
   "dependencies": {
-    "algoliasearch-http-requester-browser": "4.0.0-beta.1",
-    "abortcontroller-polyfill": "1.0.9"
+    "abortcontroller-polyfill": "1.1.9",
+    "algoliasearch-http-requester-browser": "4.0.0-beta.1"
   }
 }
