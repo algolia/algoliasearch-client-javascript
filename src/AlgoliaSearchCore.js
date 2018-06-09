@@ -236,7 +236,7 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
     }
 
     // handle cache existence
-    if (client._useCache && !client._useRequestCache && cache && cache[cacheID] !== undefined) {
+    if (isCacheValidWithCurrentID(!client._useRequestCache, cache, cacheID)) {
       requestDebug('serving response from cache');
 
       // Cache response must match the type of the original one
@@ -444,19 +444,24 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
     }
   }
 
-  function isCacheValidWithCurrentID() {
+  function isCacheValidWithCurrentID(
+    useRequestCache,
+    currentCache,
+    currentCacheID
+  ) {
     return (
       client._useCache &&
-      client._useRequestCache &&
-      cache &&
-      cache[cacheID] !== undefined
+      useRequestCache &&
+      currentCache &&
+      currentCache[currentCacheID] !== undefined
     );
   }
+
 
   function interopCallbackReturn(request, callback) {
     request.catch(function() {
       // Release the cache on error
-      if (isCacheValidWithCurrentID()) {
+      if (isCacheValidWithCurrentID(client._useRequestCache, cache, cacheID)) {
         delete cache[cacheID];
       }
     });
@@ -488,7 +493,7 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
     cacheID += '_body_' + body;
   }
 
-  if (isCacheValidWithCurrentID()) {
+  if (isCacheValidWithCurrentID(client._useRequestCache, cache, cacheID)) {
     requestDebug('serving request from cache');
 
     var maybePromiseForCache = cache[cacheID];
