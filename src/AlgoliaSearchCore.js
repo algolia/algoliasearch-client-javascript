@@ -459,12 +459,12 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
 
 
   function interopCallbackReturn(request, callback) {
-    request.catch(function() {
-      // Release the cache on error
-      if (isCacheValidWithCurrentID(client._useRequestCache, cache, cacheID)) {
+    if (isCacheValidWithCurrentID(client._useRequestCache, cache, cacheID)) {
+      request.catch(function() {
+        // Release the cache on error
         delete cache[cacheID];
-      }
-    });
+      });
+    }
 
     // either we have a callback
     // either we are using promises
