@@ -225,6 +225,24 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
 
     var startTime = new Date();
 
+    if (client._useCache && !client._useRequestCache) {
+      cacheID = initialOpts.url;
+    }
+
+    // as we sometime use POST requests to pass parameters (like query='aa'),
+    // the cacheID must also include the body to be different between calls
+    if (client._useCache && !client._useRequestCache && body) {
+      cacheID += '_body_' + reqOpts.body;
+    }
+
+    // handle cache existence
+    if (client._useCache && !client._useRequestCache && cache && cache[cacheID] !== undefined) {
+      requestDebug('serving response from cache');
+
+      // Cache response must match the type of the original one
+      return client._promise.resolve({body: JSON.parse(cache[cacheID])});
+    }
+
     // if we reached max tries
     if (tries >= client.hosts[initialOpts.hostType].length) {
       if (!hasFallback || usingFallback) {
@@ -326,6 +344,10 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
       });
 
       if (httpResponseOk) {
+        if (client._useCache && !client._useRequestCache && cache) {
+          cache[cacheID] = httpResponse.responseText;
+        }
+
         return {
           responseText: httpResponse.responseText,
           body: httpResponse.body
