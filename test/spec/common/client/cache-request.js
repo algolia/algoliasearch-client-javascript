@@ -2,7 +2,7 @@
 
 var test = require('tape');
 
-test('expect to cache the requests', function(t) {
+test('expect to cache the request', function(t) {
   t.plan(2);
 
   var fauxJax = require('faux-jax');
@@ -12,6 +12,7 @@ test('expect to cache the requests', function(t) {
   var client = fixture.client;
 
   client._useCache = true;
+  client._useRequestCache = true;
 
   fauxJax.install({gzip: true});
 
@@ -54,6 +55,7 @@ test('expect to always return the original response', function(t) {
   var client = fixture.client;
 
   client._useCache = true;
+  client._useRequestCache = true;
 
   fauxJax.install({gzip: true});
 
@@ -93,6 +95,7 @@ test('expect to release the cache in case of error', function(t) {
   var client = fixture.client;
 
   client._useCache = true;
+  client._useRequestCache = true;
 
   fauxJax.install({gzip: true});
 

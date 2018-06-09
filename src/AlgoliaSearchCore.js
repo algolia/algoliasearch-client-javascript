@@ -445,7 +445,12 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
   }
 
   function isCacheValidWithCurrentID() {
-    return client._useCache && cache && cache[cacheID] !== undefined;
+    return (
+      client._useCache &&
+      client._useRequestCache &&
+      cache &&
+      cache[cacheID] !== undefined
+    );
   }
 
   function interopCallbackReturn(request, callback) {
@@ -473,18 +478,18 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
     }
   }
 
-  if (client._useCache) {
+  if (client._useCache && client._useRequestCache) {
     cacheID = initialOpts.url;
   }
 
   // as we sometime use POST requests to pass parameters (like query='aa'),
   // the cacheID must also include the body to be different between calls
-  if (client._useCache && body) {
+  if (client._useCache && client._useRequestCache && body) {
     cacheID += '_body_' + body;
   }
 
   if (isCacheValidWithCurrentID()) {
-    requestDebug('serving response from cache');
+    requestDebug('serving request from cache');
 
     var maybePromiseForCache = cache[cacheID];
 
@@ -509,7 +514,7 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
     }
   );
 
-  if (client._useCache && cache) {
+  if (client._useCache && client._useRequestCache && cache) {
     cache[cacheID] = request;
   }
 
