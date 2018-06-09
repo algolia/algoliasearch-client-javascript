@@ -466,9 +466,8 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
       });
     }
 
-    // either we have a callback
-    // either we are using promises
     if (typeof initialOpts.callback === 'function') {
+      // either we have a callback
       request.then(function okCb(content) {
         exitPromise(function() {
           initialOpts.callback(null, callback(content));
@@ -479,6 +478,7 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
         }, client._setTimeout || setTimeout);
       });
     } else {
+      // either we are using promises
       return request.then(callback);
     }
   }
