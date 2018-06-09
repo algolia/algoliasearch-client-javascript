@@ -118,6 +118,7 @@ function AlgoliaSearchCore(applicationID, apiKey, opts) {
 
   this._ua = opts._ua;
   this._useCache = opts._useCache === undefined || opts._cache ? true : opts._useCache;
+  this._useRequestCache = this._useCache && opts._useRequestCache;
   this._useFallback = opts.useFallback === undefined ? true : opts.useFallback;
 
   this._setTimeout = opts._setTimeout;
