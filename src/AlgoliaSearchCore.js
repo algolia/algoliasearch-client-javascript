@@ -239,8 +239,13 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
     if (isCacheValidWithCurrentID(!client._useRequestCache, cache, cacheID)) {
       requestDebug('serving response from cache');
 
+      var responseText = cache[cacheID];
+
       // Cache response must match the type of the original one
-      return client._promise.resolve({body: JSON.parse(cache[cacheID])});
+      return client._promise.resolve({
+        body: JSON.parse(responseText),
+        responseText: responseText
+      });
     }
 
     // if we reached max tries
