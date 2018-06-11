@@ -12,9 +12,8 @@ module.exports = {
   target: 'node',
   resolve: {
     alias: {
-      debug: 'debug/browser.js',
-      inherits: 'inherits/inherits_browser.js',
-      'util-deprecate': 'util-deprecate/browser.js'
+      debug: 'debug/src/browser.js',
+      inherits: 'inherits/inherits_browser.js'
     }
   }
 };
