@@ -8,12 +8,14 @@ test('We receive a specific error message when everything failed', function(t) {
   var fauxJax = require('faux-jax');
 
   var hosts = [];
+  var protocol = 'https:';
 
   if (process.browser) {
     var parse = require('url-parse');
     // we do not use a random url, we want to reach the JSONP local server
     var currentURL = parse(location.href);
     hosts.push(currentURL.host);
+    protocol = currentURL.protocol;
   } else {
     hosts.push('www.d21d98uasdklj1289duasdkjs98dasuda.com');
   }
@@ -22,7 +24,8 @@ test('We receive a specific error message when everything failed', function(t) {
   var fixture = createFixture({
     clientOptions: {
       hosts: hosts,
-      timeout: 6000
+      timeout: 6000,
+      protocol: protocol
     },
     indexName: 'JSONP-500-error'
   });

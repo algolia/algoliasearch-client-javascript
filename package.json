@@ -15,8 +15,13 @@
     "examples": "http-server . -a 0.0.0.0",
     "watch": "watchify index.js -d -v -s algoliasearch -o dist/algoliasearch.js",
     "release": "git clean dist/ -f && git checkout dist/ && yarn && ./scripts/release && APP_ENV=production npm run build",
-    "test": "./scripts/test",
-    "test-ci": "./scripts/test-ci",
+    "test": "./scripts/test-node-unit && ./scripts/lint",
+    "test-ci:lint": "./scripts/lint",
+    "test-ci:bundlesize": "bundlesize",
+    "test-ci:unit-node": "./scripts/test-node-unit",
+    "test-ci:integration-node": "./scripts/test-node-integration",
+    "test-ci:unit-browsers": "./scripts/test-browser unit",
+    "test-ci:integration-browsers": "./scripts/test-browser integration",
     "lint": "./scripts/lint"
   },
   "browserify": {
@@ -27,15 +32,15 @@
   "bundlesize": [
     {
       "path": "./dist/algoliasearch.?(jquery|angular|parse).min.js",
-      "maxSize": "18 kB"
+      "maxSize": "19 kB"
     },
     {
       "path": "./dist/algoliasearch.?(jquery|parse).js",
-      "maxSize": "46 kB"
+      "maxSize": "46.5 kB"
     },
     {
       "path": "./dist/algoliasearch.angular.js",
-      "maxSize": "46.5 kB"
+      "maxSize": "47 kB"
     },
     {
       "path": "./dist/algoliasearchLite.min.js",
@@ -101,7 +106,7 @@
     "array.from": "^1.0.3",
     "async": "^1.5.2",
     "babel-eslint": "^4.1.6",
-    "bowser": "^1.7.0",
+    "bowser": "1.9.3",
     "browserify": "^14.5.0",
     "bulk-require": "^1.0.0",
     "bulkify": "^1.2.0",
@@ -130,7 +135,6 @@
     "self-signed": "^1.3.1",
     "server-destroy-vvo": "^1.0.1",
     "sinon": "^1.17.7",
-    "superagent": "^3.5.2",
     "tap-bail": "^1.0.0",
     "tap-dot": "^1.0.5",
     "tape": "^4.5.1",
@@ -139,8 +143,7 @@
     "watchify": "^3.9.0",
     "webpack": "^1.13.1",
     "xhr": "^2.4.0",
-    "zuul": "^3.10.1",
-    "zuul-ngrok": "^4.0.0"
+    "zuul": "^3.12.0"
   },
   "engines": {
     "node": ">=0.8"

@@ -86,6 +86,7 @@ AlgoliaSearchParse.prototype._request = function(rawUrl, opts) {
     promise.resolve({
       statusCode: res.status,
       body: res.data,
+      responseText: res.text,
       headers: res.headers
     });
   }

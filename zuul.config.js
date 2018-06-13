@@ -1,6 +1,7 @@
 'use strict';
 
-var zuulConfig = module.exports = {
+
+module.exports = {
   ui: 'tape',
   browserify: [{
     transform: 'bulkify'
@@ -17,64 +18,34 @@ var zuulConfig = module.exports = {
 
   // only used when run with saucelabs
   // not activated when dev or phantom
-  concurrency: 2, // ngrok only accepts two tunnels by default
+  concurrency: process.env.ZUUL_CONCURRENCY || 4,
   // if browser does not sends output in 120s since last output:
   // stop testing, something is wrong
   browser_output_timeout: 60 * 3 * 1000,
   browser_open_timeout: 60 * 6 * 1000,
-  // we want to be notified something is wrong asap, so no retry
-  browser_retries: 2
-};
-
-if (process.env.CI === 'true') {
-  zuulConfig.tunnel = {
-    type: 'ngrok',
-    bind_tls: true
-  };
-}
-
-var browsers = {
-  all: [{
+  // we want to be notified something is wrong asap, so low retry
+  browser_retries: 2,
+  tunnel: false,
+  browsers: [{
     name: 'chrome',
     version: '-1..latest',
     platform: 'Windows 10'
-  }, {
+  },
+  {
     name: 'firefox',
     version: '-1..latest',
     platform: 'Windows 10'
   }, {
     name: 'internet explorer',
-    version: '9'
+    version: ['10', '11']
   }, {
     name: 'safari',
-    version: '-3..latest'
+    version: ['9', '10', '11']
   }, {
     name: 'iphone',
-    version: '-3..latest'
+    version: ['9', '10', '11']
   }, {
     name: 'microsoftedge',
-    version: 'latest'
-  }],
-  pullRequest: [{
-    name: 'chrome',
-    version: 'latest',
-    platform: 'Windows 10'
-  }, {
-    name: 'internet explorer',
-    version: ['9']
-  }, {
-    name: 'firefox',
-    version: 'latest',
-    platform: 'Windows 10'
-  }, {
-    name: 'iphone',
-    version: '9.0'
-  }, {
-    name: 'microsoftedge',
-    version: 'latest'
+    version: '-1..latest'
   }]
 };
-
-zuulConfig.browsers = process.env.TRAVIS_PULL_REQUEST && process.env.TRAVIS_PULL_REQUEST !== 'false' ?
-  browsers.pullRequest :
-  browsers.all;

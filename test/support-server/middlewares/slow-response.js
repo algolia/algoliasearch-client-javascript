@@ -7,39 +7,39 @@ var express = require('express');
 
 // test request timeout set to 5000ms, we test that when responding
 // after the timeout for the first request, we do not do a double callback
-var respondAfter = 7000;
+var respondAfter = 6000;
 
 function slowResponse() {
   var router = express.Router();
 
-  var calls = 0;
-  var secondCallAnswered = false;
+  var calls = {};
+  var secondCallAnswered = {};
 
   router.get('/reset', function(req, res) {
-    calls = 0;
+    calls[req.headers['user-agent']] = 0;
     res.send('ok');
   });
 
   router.get('/', function(req, res) {
-    calls++;
+    calls[req.headers['user-agent']]++;
 
     var respond = res[req.query.callback !== undefined ? 'jsonp' : 'json'].bind(res);
 
-    if (calls === 1) {
+    if (calls[req.headers['user-agent']] === 1) {
       setTimeout(function tryAgain() {
-        if (!secondCallAnswered) {
+        if (!secondCallAnswered[req.headers['user-agent']]) {
           setTimeout(tryAgain, respondAfter);
           return;
         }
 
-        respond({slowResponse: 'timeout response'});
+        respond({status: 200, slowResponse: 'timeout response'});
       }, respondAfter);
-    } else if (calls === 2) {
+    } else if (calls[req.headers['user-agent']] === 2) {
       res.on('finish', function responseSent() {
-        secondCallAnswered = true;
+        secondCallAnswered[req.headers['user-agent']] = true;
       });
 
-      respond({slowResponse: 'ok'});
+      respond({status: 200, slowResponse: 'ok'});
     } else {
       respond({status: 500, message: 'woops!'});
     }

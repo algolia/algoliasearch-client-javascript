@@ -27,15 +27,15 @@ test('JSON.stringify works well even when using Prototype.js < 1.7', function(t)
     t.fail('Array.toJSON was called');
   };
 
-  index.search({
-    facets: ['firstIndex']
-  }, function() {
-    t.pass('search callback got called');
-    delete Array.prototype.toJSON;
-  });
-
   fauxJax.once('request', function(req) {
     req.respond(200, {}, '{}');
     fauxJax.restore();
+  });
+
+  index.search({
+    facets: ['firstIndex']
+  }, function() {
+    delete Array.prototype.toJSON;
+    t.pass('search callback got called');
   });
 });

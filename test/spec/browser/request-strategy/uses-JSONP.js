@@ -25,7 +25,8 @@ test('Request strategy uses JSONP when XHR are failing', function(t) {
         currentURL.host,
         currentURL.host
       ],
-      timeout: requestTimeout
+      timeout: requestTimeout,
+      protocol: currentURL.protocol
     },
     indexName: 'request-strategy-uses-JSONP'
   });
