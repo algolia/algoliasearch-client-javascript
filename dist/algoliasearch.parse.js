@@ -62,16 +62,16 @@ module.exports =
 	/* global global: true */
 	global = global || {};
 
-	var debug = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"debug\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()))('algoliasearch:parse');
+	var debug = __webpack_require__(1)('algoliasearch:parse');
 
-	var inherits = __webpack_require__(1);
+	var inherits = __webpack_require__(4);
 
-	var AlgoliaSearchServer = __webpack_require__(2);
+	var AlgoliaSearchServer = __webpack_require__(5);
 
 	debug('loaded the Parse client');
 
 	function algoliasearch(applicationID, apiKey, opts) {
-	  var cloneDeep = __webpack_require__(12);
+	  var cloneDeep = __webpack_require__(15);
 	  opts = cloneDeep(opts || {});
 
 	  if (opts.protocol === undefined) {
@@ -92,7 +92,7 @@ module.exports =
 	  return new AlgoliaSearchParse(applicationID, apiKey, opts);
 	}
 
-	algoliasearch.version = __webpack_require__(23);
+	algoliasearch.version = __webpack_require__(26);
 	algoliasearch.ua = 'Algolia for Parse ' + algoliasearch.version;
 
 	function AlgoliaSearchParse() {
@@ -104,7 +104,7 @@ module.exports =
 
 	AlgoliaSearchParse.prototype._request = function(rawUrl, opts) {
 	  /* global Parse */
-	  var clone = __webpack_require__(12);
+	  var clone = __webpack_require__(15);
 	  var promise = new Parse.Promise();
 
 	  debug('url: %s, opts: %j', rawUrl, opts);
@@ -133,6 +133,7 @@ module.exports =
 	    promise.resolve({
 	      statusCode: res.status,
 	      body: res.data,
+	      responseText: res.text,
 	      headers: res.headers
 	    });
 	  }
@@ -188,6 +189,563 @@ module.exports =
 
 /***/ }),
 /* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/**
+	 * This is the web browser implementation of `debug()`.
+	 *
+	 * Expose `debug()` as the module.
+	 */
+
+	exports = module.exports = __webpack_require__(2);
+	exports.log = log;
+	exports.formatArgs = formatArgs;
+	exports.save = save;
+	exports.load = load;
+	exports.useColors = useColors;
+	exports.storage = 'undefined' != typeof chrome
+	               && 'undefined' != typeof chrome.storage
+	                  ? chrome.storage.local
+	                  : localstorage();
+
+	/**
+	 * Colors.
+	 */
+
+	exports.colors = [
+	  'lightseagreen',
+	  'forestgreen',
+	  'goldenrod',
+	  'dodgerblue',
+	  'darkorchid',
+	  'crimson'
+	];
+
+	/**
+	 * Currently only WebKit-based Web Inspectors, Firefox >= v31,
+	 * and the Firebug extension (any Firefox version) are known
+	 * to support "%c" CSS customizations.
+	 *
+	 * TODO: add a `localStorage` variable to explicitly enable/disable colors
+	 */
+
+	function useColors() {
+	  // NB: In an Electron preload script, document will be defined but not fully
+	  // initialized. Since we know we're in Chrome, we'll just detect this case
+	  // explicitly
+	  if (typeof window !== 'undefined' && window.process && window.process.type === 'renderer') {
+	    return true;
+	  }
+
+	  // is webkit? http://stackoverflow.com/a/16459606/376773
+	  // document is undefined in react-native: https://github.com/facebook/react-native/pull/1632
+	  return (typeof document !== 'undefined' && document.documentElement && document.documentElement.style && document.documentElement.style.WebkitAppearance) ||
+	    // is firebug? http://stackoverflow.com/a/398120/376773
+	    (typeof window !== 'undefined' && window.console && (window.console.firebug || (window.console.exception && window.console.table))) ||
+	    // is firefox >= v31?
+	    // https://developer.mozilla.org/en-US/docs/Tools/Web_Console#Styling_messages
+	    (typeof navigator !== 'undefined' && navigator.userAgent && navigator.userAgent.toLowerCase().match(/firefox\/(\d+)/) && parseInt(RegExp.$1, 10) >= 31) ||
+	    // double check webkit in userAgent just in case we are in a worker
+	    (typeof navigator !== 'undefined' && navigator.userAgent && navigator.userAgent.toLowerCase().match(/applewebkit\/(\d+)/));
+	}
+
+	/**
+	 * Map %j to `JSON.stringify()`, since no Web Inspectors do that by default.
+	 */
+
+	exports.formatters.j = function(v) {
+	  try {
+	    return JSON.stringify(v);
+	  } catch (err) {
+	    return '[UnexpectedJSONParseError]: ' + err.message;
+	  }
+	};
+
+
+	/**
+	 * Colorize log arguments if enabled.
+	 *
+	 * @api public
+	 */
+
+	function formatArgs(args) {
+	  var useColors = this.useColors;
+
+	  args[0] = (useColors ? '%c' : '')
+	    + this.namespace
+	    + (useColors ? ' %c' : ' ')
+	    + args[0]
+	    + (useColors ? '%c ' : ' ')
+	    + '+' + exports.humanize(this.diff);
+
+	  if (!useColors) return;
+
+	  var c = 'color: ' + this.color;
+	  args.splice(1, 0, c, 'color: inherit')
+
+	  // the final "%c" is somewhat tricky, because there could be other
+	  // arguments passed either before or after the %c, so we need to
+	  // figure out the correct index to insert the CSS into
+	  var index = 0;
+	  var lastC = 0;
+	  args[0].replace(/%[a-zA-Z%]/g, function(match) {
+	    if ('%%' === match) return;
+	    index++;
+	    if ('%c' === match) {
+	      // we only are interested in the *last* %c
+	      // (the user may have provided their own)
+	      lastC = index;
+	    }
+	  });
+
+	  args.splice(lastC, 0, c);
+	}
+
+	/**
+	 * Invokes `console.log()` when available.
+	 * No-op when `console.log` is not a "function".
+	 *
+	 * @api public
+	 */
+
+	function log() {
+	  // this hackery is required for IE8/9, where
+	  // the `console.log` function doesn't have 'apply'
+	  return 'object' === typeof console
+	    && console.log
+	    && Function.prototype.apply.call(console.log, console, arguments);
+	}
+
+	/**
+	 * Save `namespaces`.
+	 *
+	 * @param {String} namespaces
+	 * @api private
+	 */
+
+	function save(namespaces) {
+	  try {
+	    if (null == namespaces) {
+	      exports.storage.removeItem('debug');
+	    } else {
+	      exports.storage.debug = namespaces;
+	    }
+	  } catch(e) {}
+	}
+
+	/**
+	 * Load `namespaces`.
+	 *
+	 * @return {String} returns the previously persisted debug modes
+	 * @api private
+	 */
+
+	function load() {
+	  var r;
+	  try {
+	    r = exports.storage.debug;
+	  } catch(e) {}
+
+	  // If debug isn't set in LS, and we're in Electron, try to load $DEBUG
+	  if (!r && typeof process !== 'undefined' && 'env' in process) {
+	    r = process.env.DEBUG;
+	  }
+
+	  return r;
+	}
+
+	/**
+	 * Enable namespaces listed in `localStorage.debug` initially.
+	 */
+
+	exports.enable(load());
+
+	/**
+	 * Localstorage attempts to return the localstorage.
+	 *
+	 * This is necessary because safari throws
+	 * when a user disables cookies/localstorage
+	 * and you attempt to access it.
+	 *
+	 * @return {LocalStorage}
+	 * @api private
+	 */
+
+	function localstorage() {
+	  try {
+	    return window.localStorage;
+	  } catch (e) {}
+	}
+
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	
+	/**
+	 * This is the common logic for both the Node.js and web browser
+	 * implementations of `debug()`.
+	 *
+	 * Expose `debug()` as the module.
+	 */
+
+	exports = module.exports = createDebug.debug = createDebug['default'] = createDebug;
+	exports.coerce = coerce;
+	exports.disable = disable;
+	exports.enable = enable;
+	exports.enabled = enabled;
+	exports.humanize = __webpack_require__(3);
+
+	/**
+	 * The currently active debug mode names, and names to skip.
+	 */
+
+	exports.names = [];
+	exports.skips = [];
+
+	/**
+	 * Map of special "%n" handling functions, for the debug "format" argument.
+	 *
+	 * Valid key names are a single, lower or upper-case letter, i.e. "n" and "N".
+	 */
+
+	exports.formatters = {};
+
+	/**
+	 * Previous log timestamp.
+	 */
+
+	var prevTime;
+
+	/**
+	 * Select a color.
+	 * @param {String} namespace
+	 * @return {Number}
+	 * @api private
+	 */
+
+	function selectColor(namespace) {
+	  var hash = 0, i;
+
+	  for (i in namespace) {
+	    hash  = ((hash << 5) - hash) + namespace.charCodeAt(i);
+	    hash |= 0; // Convert to 32bit integer
+	  }
+
+	  return exports.colors[Math.abs(hash) % exports.colors.length];
+	}
+
+	/**
+	 * Create a debugger with the given `namespace`.
+	 *
+	 * @param {String} namespace
+	 * @return {Function}
+	 * @api public
+	 */
+
+	function createDebug(namespace) {
+
+	  function debug() {
+	    // disabled?
+	    if (!debug.enabled) return;
+
+	    var self = debug;
+
+	    // set `diff` timestamp
+	    var curr = +new Date();
+	    var ms = curr - (prevTime || curr);
+	    self.diff = ms;
+	    self.prev = prevTime;
+	    self.curr = curr;
+	    prevTime = curr;
+
+	    // turn the `arguments` into a proper Array
+	    var args = new Array(arguments.length);
+	    for (var i = 0; i < args.length; i++) {
+	      args[i] = arguments[i];
+	    }
+
+	    args[0] = exports.coerce(args[0]);
+
+	    if ('string' !== typeof args[0]) {
+	      // anything else let's inspect with %O
+	      args.unshift('%O');
+	    }
+
+	    // apply any `formatters` transformations
+	    var index = 0;
+	    args[0] = args[0].replace(/%([a-zA-Z%])/g, function(match, format) {
+	      // if we encounter an escaped % then don't increase the array index
+	      if (match === '%%') return match;
+	      index++;
+	      var formatter = exports.formatters[format];
+	      if ('function' === typeof formatter) {
+	        var val = args[index];
+	        match = formatter.call(self, val);
+
+	        // now we need to remove `args[index]` since it's inlined in the `format`
+	        args.splice(index, 1);
+	        index--;
+	      }
+	      return match;
+	    });
+
+	    // apply env-specific formatting (colors, etc.)
+	    exports.formatArgs.call(self, args);
+
+	    var logFn = debug.log || exports.log || console.log.bind(console);
+	    logFn.apply(self, args);
+	  }
+
+	  debug.namespace = namespace;
+	  debug.enabled = exports.enabled(namespace);
+	  debug.useColors = exports.useColors();
+	  debug.color = selectColor(namespace);
+
+	  // env-specific initialization logic for debug instances
+	  if ('function' === typeof exports.init) {
+	    exports.init(debug);
+	  }
+
+	  return debug;
+	}
+
+	/**
+	 * Enables a debug mode by namespaces. This can include modes
+	 * separated by a colon and wildcards.
+	 *
+	 * @param {String} namespaces
+	 * @api public
+	 */
+
+	function enable(namespaces) {
+	  exports.save(namespaces);
+
+	  exports.names = [];
+	  exports.skips = [];
+
+	  var split = (typeof namespaces === 'string' ? namespaces : '').split(/[\s,]+/);
+	  var len = split.length;
+
+	  for (var i = 0; i < len; i++) {
+	    if (!split[i]) continue; // ignore empty strings
+	    namespaces = split[i].replace(/\*/g, '.*?');
+	    if (namespaces[0] === '-') {
+	      exports.skips.push(new RegExp('^' + namespaces.substr(1) + '$'));
+	    } else {
+	      exports.names.push(new RegExp('^' + namespaces + '$'));
+	    }
+	  }
+	}
+
+	/**
+	 * Disable debug output.
+	 *
+	 * @api public
+	 */
+
+	function disable() {
+	  exports.enable('');
+	}
+
+	/**
+	 * Returns true if the given mode name is enabled, false otherwise.
+	 *
+	 * @param {String} name
+	 * @return {Boolean}
+	 * @api public
+	 */
+
+	function enabled(name) {
+	  var i, len;
+	  for (i = 0, len = exports.skips.length; i < len; i++) {
+	    if (exports.skips[i].test(name)) {
+	      return false;
+	    }
+	  }
+	  for (i = 0, len = exports.names.length; i < len; i++) {
+	    if (exports.names[i].test(name)) {
+	      return true;
+	    }
+	  }
+	  return false;
+	}
+
+	/**
+	 * Coerce `val`.
+	 *
+	 * @param {Mixed} val
+	 * @return {Mixed}
+	 * @api private
+	 */
+
+	function coerce(val) {
+	  if (val instanceof Error) return val.stack || val.message;
+	  return val;
+	}
+
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports) {
+
+	/**
+	 * Helpers.
+	 */
+
+	var s = 1000;
+	var m = s * 60;
+	var h = m * 60;
+	var d = h * 24;
+	var y = d * 365.25;
+
+	/**
+	 * Parse or format the given `val`.
+	 *
+	 * Options:
+	 *
+	 *  - `long` verbose formatting [false]
+	 *
+	 * @param {String|Number} val
+	 * @param {Object} [options]
+	 * @throws {Error} throw an error if val is not a non-empty string or a number
+	 * @return {String|Number}
+	 * @api public
+	 */
+
+	module.exports = function(val, options) {
+	  options = options || {};
+	  var type = typeof val;
+	  if (type === 'string' && val.length > 0) {
+	    return parse(val);
+	  } else if (type === 'number' && isNaN(val) === false) {
+	    return options.long ? fmtLong(val) : fmtShort(val);
+	  }
+	  throw new Error(
+	    'val is not a non-empty string or a valid number. val=' +
+	      JSON.stringify(val)
+	  );
+	};
+
+	/**
+	 * Parse the given `str` and return milliseconds.
+	 *
+	 * @param {String} str
+	 * @return {Number}
+	 * @api private
+	 */
+
+	function parse(str) {
+	  str = String(str);
+	  if (str.length > 100) {
+	    return;
+	  }
+	  var match = /^((?:\d+)?\.?\d+) *(milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|years?|yrs?|y)?$/i.exec(
+	    str
+	  );
+	  if (!match) {
+	    return;
+	  }
+	  var n = parseFloat(match[1]);
+	  var type = (match[2] || 'ms').toLowerCase();
+	  switch (type) {
+	    case 'years':
+	    case 'year':
+	    case 'yrs':
+	    case 'yr':
+	    case 'y':
+	      return n * y;
+	    case 'days':
+	    case 'day':
+	    case 'd':
+	      return n * d;
+	    case 'hours':
+	    case 'hour':
+	    case 'hrs':
+	    case 'hr':
+	    case 'h':
+	      return n * h;
+	    case 'minutes':
+	    case 'minute':
+	    case 'mins':
+	    case 'min':
+	    case 'm':
+	      return n * m;
+	    case 'seconds':
+	    case 'second':
+	    case 'secs':
+	    case 'sec':
+	    case 's':
+	      return n * s;
+	    case 'milliseconds':
+	    case 'millisecond':
+	    case 'msecs':
+	    case 'msec':
+	    case 'ms':
+	      return n;
+	    default:
+	      return undefined;
+	  }
+	}
+
+	/**
+	 * Short format for `ms`.
+	 *
+	 * @param {Number} ms
+	 * @return {String}
+	 * @api private
+	 */
+
+	function fmtShort(ms) {
+	  if (ms >= d) {
+	    return Math.round(ms / d) + 'd';
+	  }
+	  if (ms >= h) {
+	    return Math.round(ms / h) + 'h';
+	  }
+	  if (ms >= m) {
+	    return Math.round(ms / m) + 'm';
+	  }
+	  if (ms >= s) {
+	    return Math.round(ms / s) + 's';
+	  }
+	  return ms + 'ms';
+	}
+
+	/**
+	 * Long format for `ms`.
+	 *
+	 * @param {Number} ms
+	 * @return {String}
+	 * @api private
+	 */
+
+	function fmtLong(ms) {
+	  return plural(ms, d, 'day') ||
+	    plural(ms, h, 'hour') ||
+	    plural(ms, m, 'minute') ||
+	    plural(ms, s, 'second') ||
+	    ms + ' ms';
+	}
+
+	/**
+	 * Pluralization helper.
+	 */
+
+	function plural(ms, n, name) {
+	  if (ms < n) {
+	    return;
+	  }
+	  if (ms < n * 1.5) {
+	    return Math.floor(ms / n) + ' ' + name;
+	  }
+	  return Math.ceil(ms / n) + ' ' + name + 's';
+	}
+
+
+/***/ }),
+/* 4 */
 /***/ (function(module, exports) {
 
 	if (typeof Object.create === 'function') {
@@ -216,7 +774,7 @@ module.exports =
 
 
 /***/ }),
-/* 2 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	
@@ -225,9 +783,9 @@ module.exports =
 
 	module.exports = AlgoliaSearchServer;
 
-	var inherits = __webpack_require__(1);
+	var inherits = __webpack_require__(4);
 
-	var AlgoliaSearch = __webpack_require__(3);
+	var AlgoliaSearch = __webpack_require__(6);
 
 	function AlgoliaSearchServer(applicationID, apiKey, opts) {
 	  // Default protocol is https: on the server, to avoid leaking admin keys
@@ -300,17 +858,17 @@ module.exports =
 
 
 /***/ }),
-/* 3 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	module.exports = AlgoliaSearch;
 
-	var Index = __webpack_require__(4);
-	var deprecate = __webpack_require__(9);
-	var deprecatedMessage = __webpack_require__(10);
-	var AlgoliaSearchCore = __webpack_require__(21);
-	var inherits = __webpack_require__(1);
-	var errors = __webpack_require__(7);
+	var Index = __webpack_require__(7);
+	var deprecate = __webpack_require__(12);
+	var deprecatedMessage = __webpack_require__(13);
+	var AlgoliaSearchCore = __webpack_require__(24);
+	var inherits = __webpack_require__(4);
+	var errors = __webpack_require__(10);
 
 	function AlgoliaSearch() {
 	  AlgoliaSearchCore.apply(this, arguments);
@@ -402,7 +960,7 @@ module.exports =
 	 *  content: the server answer that contains the task ID
 	 */
 	AlgoliaSearch.prototype.getLogs = function(offset, length, callback) {
-	  var clone = __webpack_require__(12);
+	  var clone = __webpack_require__(15);
 	  var params = {};
 	  if (typeof offset === 'object') {
 	    // getLogs(params)
@@ -582,7 +1140,7 @@ module.exports =
 	 * @see {@link https://www.algolia.com/doc/rest_api#AddKey|Algolia REST API Documentation}
 	 */
 	AlgoliaSearch.prototype.addApiKey = function(acls, params, callback) {
-	  var isArray = __webpack_require__(16);
+	  var isArray = __webpack_require__(19);
 	  var usage = 'Usage: client.addApiKey(arrayOfAcls[, params, callback])';
 
 	  if (!isArray(acls)) {
@@ -673,7 +1231,7 @@ module.exports =
 	 * @see {@link https://www.algolia.com/doc/rest_api#UpdateIndexKey|Algolia REST API Documentation}
 	 */
 	AlgoliaSearch.prototype.updateApiKey = function(key, acls, params, callback) {
-	  var isArray = __webpack_require__(16);
+	  var isArray = __webpack_require__(19);
 	  var usage = 'Usage: client.updateApiKey(key, arrayOfAcls[, params, callback])';
 
 	  if (!isArray(acls)) {
@@ -774,7 +1332,7 @@ module.exports =
 	 * }], cb)
 	 */
 	AlgoliaSearch.prototype.batch = function(operations, callback) {
-	  var isArray = __webpack_require__(16);
+	  var isArray = __webpack_require__(19);
 	  var usage = 'Usage: client.batch(operations[, callback])';
 
 	  if (!isArray(operations)) {
@@ -812,7 +1370,7 @@ module.exports =
 	    body: {cluster: data.cluster},
 	    callback: callback,
 	    headers: {
-	      'X-Algolia-User-ID': data.userID
+	      'x-algolia-user-id': data.userID
 	    }
 	  });
 	};
@@ -913,7 +1471,7 @@ module.exports =
 	    hostType: 'write',
 	    callback: callback,
 	    headers: {
-	      'X-Algolia-User-ID': data.userID
+	      'x-algolia-user-id': data.userID
 	    }
 	  });
 	};
@@ -962,15 +1520,15 @@ module.exports =
 
 
 /***/ }),
-/* 4 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var inherits = __webpack_require__(1);
-	var IndexCore = __webpack_require__(5);
-	var deprecate = __webpack_require__(9);
-	var deprecatedMessage = __webpack_require__(10);
-	var exitPromise = __webpack_require__(18);
-	var errors = __webpack_require__(7);
+	var inherits = __webpack_require__(4);
+	var IndexCore = __webpack_require__(8);
+	var deprecate = __webpack_require__(12);
+	var deprecatedMessage = __webpack_require__(13);
+	var exitPromise = __webpack_require__(21);
+	var errors = __webpack_require__(10);
 
 	var deprecateForwardToSlaves = deprecate(
 	  function() {},
@@ -1024,7 +1582,7 @@ module.exports =
 	*  content: the server answer that updateAt and taskID
 	*/
 	Index.prototype.addObjects = function(objects, callback) {
-	  var isArray = __webpack_require__(16);
+	  var isArray = __webpack_require__(19);
 	  var usage = 'Usage: index.addObjects(arrayOfObjects[, callback])';
 
 	  if (!isArray(objects)) {
@@ -1096,7 +1654,7 @@ module.exports =
 	    createIfNotExists = true;
 	  }
 
-	  var isArray = __webpack_require__(16);
+	  var isArray = __webpack_require__(19);
 	  var usage = 'Usage: index.partialUpdateObjects(arrayOfObjects[, callback])';
 
 	  if (!isArray(objects)) {
@@ -1152,7 +1710,7 @@ module.exports =
 	*  content: the server answer that updateAt and taskID
 	*/
 	Index.prototype.saveObjects = function(objects, callback) {
-	  var isArray = __webpack_require__(16);
+	  var isArray = __webpack_require__(19);
 	  var usage = 'Usage: index.saveObjects(arrayOfObjects[, callback])';
 
 	  if (!isArray(objects)) {
@@ -1217,8 +1775,8 @@ module.exports =
 	*  content: the server answer that contains 3 elements: createAt, taskId and objectID
 	*/
 	Index.prototype.deleteObjects = function(objectIDs, callback) {
-	  var isArray = __webpack_require__(16);
-	  var map = __webpack_require__(17);
+	  var isArray = __webpack_require__(19);
+	  var map = __webpack_require__(20);
 
 	  var usage = 'Usage: index.deleteObjects(arrayOfObjectIDs[, callback])';
 
@@ -1258,8 +1816,8 @@ module.exports =
 	* @deprecated see index.deleteBy
 	*/
 	Index.prototype.deleteByQuery = deprecate(function(query, params, callback) {
-	  var clone = __webpack_require__(12);
-	  var map = __webpack_require__(17);
+	  var clone = __webpack_require__(15);
+	  var map = __webpack_require__(20);
 
 	  var indexObj = this;
 	  var client = indexObj.as;
@@ -1393,9 +1951,9 @@ module.exports =
 	    query = undefined;
 	  }
 
-	  var merge = __webpack_require__(11);
+	  var merge = __webpack_require__(14);
 
-	  var IndexBrowser = __webpack_require__(19);
+	  var IndexBrowser = __webpack_require__(22);
 
 	  var browser = new IndexBrowser();
 	  var client = this.as;
@@ -2082,7 +2640,7 @@ module.exports =
 	* @deprecated see client.addApiKey()
 	*/
 	Index.prototype.addApiKey = deprecate(function(acls, params, callback) {
-	  var isArray = __webpack_require__(16);
+	  var isArray = __webpack_require__(19);
 	  var usage = 'Usage: index.addApiKey(arrayOfAcls[, params, callback])';
 
 	  if (!isArray(acls)) {
@@ -2173,7 +2731,7 @@ module.exports =
 	* @deprecated see client.updateApiKey()
 	*/
 	Index.prototype.updateApiKey = deprecate(function(key, acls, params, callback) {
-	  var isArray = __webpack_require__(16);
+	  var isArray = __webpack_require__(19);
 	  var usage = 'Usage: index.updateApiKey(key, arrayOfAcls[, params, callback])';
 
 	  if (!isArray(acls)) {
@@ -2213,12 +2771,12 @@ module.exports =
 
 
 /***/ }),
-/* 5 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var buildSearchMethod = __webpack_require__(6);
-	var deprecate = __webpack_require__(9);
-	var deprecatedMessage = __webpack_require__(10);
+	var buildSearchMethod = __webpack_require__(9);
+	var deprecate = __webpack_require__(12);
+	var deprecatedMessage = __webpack_require__(13);
 
 	module.exports = IndexCore;
 
@@ -2370,7 +2928,7 @@ module.exports =
 	* @see {@link https://www.algolia.com/doc/rest_api#Browse|Algolia REST API Documentation}
 	*/
 	IndexCore.prototype.browse = function(query, queryParameters, callback) {
-	  var merge = __webpack_require__(11);
+	  var merge = __webpack_require__(14);
 
 	  var indexObj = this;
 
@@ -2465,8 +3023,8 @@ module.exports =
 	* @param callback (optional)
 	*/
 	IndexCore.prototype.searchForFacetValues = function(params, callback) {
-	  var clone = __webpack_require__(12);
-	  var omit = __webpack_require__(13);
+	  var clone = __webpack_require__(15);
+	  var omit = __webpack_require__(16);
 	  var usage = 'Usage: index.searchForFacetValues({facetName, facetQuery, ...params}[, callback])';
 
 	  if (params.facetName === undefined || params.facetQuery === undefined) {
@@ -2555,8 +3113,8 @@ module.exports =
 	* @param objectIDs the array of unique identifier of objects to retrieve
 	*/
 	IndexCore.prototype.getObjects = function(objectIDs, attributesToRetrieve, callback) {
-	  var isArray = __webpack_require__(16);
-	  var map = __webpack_require__(17);
+	  var isArray = __webpack_require__(19);
+	  var map = __webpack_require__(20);
 
 	  var usage = 'Usage: index.getObjects(arrayOfObjectIDs[, callback])';
 
@@ -2602,12 +3160,12 @@ module.exports =
 
 
 /***/ }),
-/* 6 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	module.exports = buildSearchMethod;
 
-	var errors = __webpack_require__(7);
+	var errors = __webpack_require__(10);
 
 	/**
 	 * Creates a search method to be used in clients
@@ -2675,7 +3233,7 @@ module.exports =
 
 
 /***/ }),
-/* 7 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	
@@ -2684,10 +3242,10 @@ module.exports =
 	// We use custom error "types" so that we can act on them when we need it
 	// e.g.: if error instanceof errors.UnparsableJSON then..
 
-	var inherits = __webpack_require__(1);
+	var inherits = __webpack_require__(4);
 
 	function AlgoliaSearchError(message, extraProperties) {
-	  var forEach = __webpack_require__(8);
+	  var forEach = __webpack_require__(11);
 
 	  var error = this;
 
@@ -2759,7 +3317,7 @@ module.exports =
 
 
 /***/ }),
-/* 8 */
+/* 11 */
 /***/ (function(module, exports) {
 
 	
@@ -2787,7 +3345,7 @@ module.exports =
 
 
 /***/ }),
-/* 9 */
+/* 12 */
 /***/ (function(module, exports) {
 
 	module.exports = function deprecate(fn, message) {
@@ -2808,7 +3366,7 @@ module.exports =
 
 
 /***/ }),
-/* 10 */
+/* 13 */
 /***/ (function(module, exports) {
 
 	module.exports = function deprecatedMessage(previousUsage, newUsage) {
@@ -2821,10 +3379,10 @@ module.exports =
 
 
 /***/ }),
-/* 11 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var foreach = __webpack_require__(8);
+	var foreach = __webpack_require__(11);
 
 	module.exports = function merge(destination/* , sources */) {
 	  var sources = Array.prototype.slice.call(arguments);
@@ -2846,7 +3404,7 @@ module.exports =
 
 
 /***/ }),
-/* 12 */
+/* 15 */
 /***/ (function(module, exports) {
 
 	module.exports = function clone(obj) {
@@ -2855,12 +3413,12 @@ module.exports =
 
 
 /***/ }),
-/* 13 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	module.exports = function omit(obj, test) {
-	  var keys = __webpack_require__(14);
-	  var foreach = __webpack_require__(8);
+	  var keys = __webpack_require__(17);
+	  var foreach = __webpack_require__(11);
 
 	  var filtered = {};
 
@@ -2875,7 +3433,7 @@ module.exports =
 
 
 /***/ }),
-/* 14 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	
@@ -2884,7 +3442,7 @@ module.exports =
 	var has = Object.prototype.hasOwnProperty;
 	var toStr = Object.prototype.toString;
 	var slice = Array.prototype.slice;
-	var isArgs = __webpack_require__(15);
+	var isArgs = __webpack_require__(18);
 	var isEnumerable = Object.prototype.propertyIsEnumerable;
 	var hasDontEnumBug = !isEnumerable.call({ toString: null }, 'toString');
 	var hasProtoEnumBug = isEnumerable.call(function () {}, 'prototype');
@@ -3021,7 +3579,7 @@ module.exports =
 
 
 /***/ }),
-/* 15 */
+/* 18 */
 /***/ (function(module, exports) {
 
 	
@@ -3044,7 +3602,7 @@ module.exports =
 
 
 /***/ }),
-/* 16 */
+/* 19 */
 /***/ (function(module, exports) {
 
 	var toString = {}.toString;
@@ -3055,10 +3613,10 @@ module.exports =
 
 
 /***/ }),
-/* 17 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var foreach = __webpack_require__(8);
+	var foreach = __webpack_require__(11);
 
 	module.exports = function map(arr, fn) {
 	  var newArr = [];
@@ -3070,7 +3628,7 @@ module.exports =
 
 
 /***/ }),
-/* 18 */
+/* 21 */
 /***/ (function(module, exports) {
 
 	// Parse cloud does not supports setTimeout
@@ -3083,7 +3641,7 @@ module.exports =
 
 
 /***/ }),
-/* 19 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	
@@ -3092,8 +3650,8 @@ module.exports =
 
 	module.exports = IndexBrowser;
 
-	var inherits = __webpack_require__(1);
-	var EventEmitter = __webpack_require__(20).EventEmitter;
+	var inherits = __webpack_require__(4);
+	var EventEmitter = __webpack_require__(23).EventEmitter;
 
 	function IndexBrowser() {
 	}
@@ -3128,21 +3686,21 @@ module.exports =
 
 
 /***/ }),
-/* 20 */
+/* 23 */
 /***/ (function(module, exports) {
 
 	module.exports = require("events");
 
 /***/ }),
-/* 21 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	module.exports = AlgoliaSearchCore;
 
-	var errors = __webpack_require__(7);
-	var exitPromise = __webpack_require__(18);
-	var IndexCore = __webpack_require__(5);
-	var store = __webpack_require__(22);
+	var errors = __webpack_require__(10);
+	var exitPromise = __webpack_require__(21);
+	var IndexCore = __webpack_require__(8);
+	var store = __webpack_require__(25);
 
 	// We will always put the API KEY in the JSON body in case of too long API KEY,
 	// to avoid query string being too long and failing in various conditions (our server limit, browser limit,
@@ -3177,11 +3735,11 @@ module.exports =
 	 *           If you provide them, you will less benefit from our HA implementation
 	 */
 	function AlgoliaSearchCore(applicationID, apiKey, opts) {
-	  var debug = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"debug\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()))('algoliasearch');
+	  var debug = __webpack_require__(1)('algoliasearch');
 
-	  var clone = __webpack_require__(12);
-	  var isArray = __webpack_require__(16);
-	  var map = __webpack_require__(17);
+	  var clone = __webpack_require__(15);
+	  var isArray = __webpack_require__(19);
+	  var map = __webpack_require__(20);
 
 	  var usage = 'Usage: algoliasearch(applicationID, apiKey, opts)';
 
@@ -3257,6 +3815,7 @@ module.exports =
 
 	  this._ua = opts._ua;
 	  this._useCache = opts._useCache === undefined || opts._cache ? true : opts._useCache;
+	  this._useRequestCache = this._useCache && opts._useRequestCache;
 	  this._useFallback = opts.useFallback === undefined ? true : opts.useFallback;
 
 	  this._setTimeout = opts._setTimeout;
@@ -3320,9 +3879,10 @@ module.exports =
 	AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
 	  this._checkAppIdData();
 
-	  var requestDebug = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"debug\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()))('algoliasearch:' + initialOpts.url);
+	  var requestDebug = __webpack_require__(1)('algoliasearch:' + initialOpts.url);
 
 	  var body;
+	  var cacheID;
 	  var additionalUA = initialOpts.additionalUA || '';
 	  var cache = initialOpts.cache;
 	  var client = this;
@@ -3361,22 +3921,28 @@ module.exports =
 	    client._checkAppIdData();
 
 	    var startTime = new Date();
-	    var cacheID;
 
-	    if (client._useCache) {
+	    if (client._useCache && !client._useRequestCache) {
 	      cacheID = initialOpts.url;
 	    }
 
 	    // as we sometime use POST requests to pass parameters (like query='aa'),
 	    // the cacheID must also include the body to be different between calls
-	    if (client._useCache && body) {
+	    if (client._useCache && !client._useRequestCache && body) {
 	      cacheID += '_body_' + reqOpts.body;
 	    }
 
 	    // handle cache existence
-	    if (client._useCache && cache && cache[cacheID] !== undefined) {
+	    if (isCacheValidWithCurrentID(!client._useRequestCache, cache, cacheID)) {
 	      requestDebug('serving response from cache');
-	      return client._promise.resolve(JSON.parse(cache[cacheID]));
+
+	      var responseText = cache[cacheID];
+
+	      // Cache response must match the type of the original one
+	      return client._promise.resolve({
+	        body: JSON.parse(responseText),
+	        responseText: responseText
+	      });
 	    }
 
 	    // if we reached max tries
@@ -3480,11 +4046,14 @@ module.exports =
 	      });
 
 	      if (httpResponseOk) {
-	        if (client._useCache && cache) {
+	        if (client._useCache && !client._useRequestCache && cache) {
 	          cache[cacheID] = httpResponse.responseText;
 	        }
 
-	        return httpResponse.body;
+	        return {
+	          responseText: httpResponse.responseText,
+	          body: httpResponse.body
+	        };
 	      }
 
 	      var shouldRetry = Math.floor(status / 100) !== 4;
@@ -3577,7 +4146,72 @@ module.exports =
 	    }
 	  }
 
-	  var promise = doRequest(
+	  function isCacheValidWithCurrentID(
+	    useRequestCache,
+	    currentCache,
+	    currentCacheID
+	  ) {
+	    return (
+	      client._useCache &&
+	      useRequestCache &&
+	      currentCache &&
+	      currentCache[currentCacheID] !== undefined
+	    );
+	  }
+
+
+	  function interopCallbackReturn(request, callback) {
+	    if (isCacheValidWithCurrentID(client._useRequestCache, cache, cacheID)) {
+	      request.catch(function() {
+	        // Release the cache on error
+	        delete cache[cacheID];
+	      });
+	    }
+
+	    if (typeof initialOpts.callback === 'function') {
+	      // either we have a callback
+	      request.then(function okCb(content) {
+	        exitPromise(function() {
+	          initialOpts.callback(null, callback(content));
+	        }, client._setTimeout || setTimeout);
+	      }, function nookCb(err) {
+	        exitPromise(function() {
+	          initialOpts.callback(err);
+	        }, client._setTimeout || setTimeout);
+	      });
+	    } else {
+	      // either we are using promises
+	      return request.then(callback);
+	    }
+	  }
+
+	  if (client._useCache && client._useRequestCache) {
+	    cacheID = initialOpts.url;
+	  }
+
+	  // as we sometime use POST requests to pass parameters (like query='aa'),
+	  // the cacheID must also include the body to be different between calls
+	  if (client._useCache && client._useRequestCache && body) {
+	    cacheID += '_body_' + body;
+	  }
+
+	  if (isCacheValidWithCurrentID(client._useRequestCache, cache, cacheID)) {
+	    requestDebug('serving request from cache');
+
+	    var maybePromiseForCache = cache[cacheID];
+
+	    // In case the cache is warmup with value that is not a promise
+	    var promiseForCache = typeof maybePromiseForCache.then !== 'function'
+	      ? client._promise.resolve({responseText: maybePromiseForCache})
+	      : maybePromiseForCache;
+
+	    return interopCallbackReturn(promiseForCache, function(content) {
+	      // In case of the cache request, return the original value
+	      return JSON.parse(content.responseText);
+	    });
+	  }
+
+	  var request = doRequest(
 	    client._request, {
 	      url: initialOpts.url,
 	      method: initialOpts.method,
@@ -3587,21 +4221,14 @@ module.exports =
 	    }
 	  );
 
-	  // either we have a callback
-	  // either we are using promises
-	  if (typeof initialOpts.callback === 'function') {
-	    promise.then(function okCb(content) {
-	      exitPromise(function() {
-	        initialOpts.callback(null, content);
-	      }, client._setTimeout || setTimeout);
-	    }, function nookCb(err) {
-	      exitPromise(function() {
-	        initialOpts.callback(err);
-	      }, client._setTimeout || setTimeout);
-	    });
-	  } else {
-	    return promise;
+	  if (client._useCache && client._useRequestCache && cache) {
+	    cache[cacheID] = request;
 	  }
+
+	  return interopCallbackReturn(request, function(content) {
+	    // In case of the first request, return the JSON value
+	    return content.body;
+	  });
 	};
 
 	/*
@@ -3631,7 +4258,7 @@ module.exports =
 	 * @param [Object] options.headers Extra headers to send
 	 */
 	AlgoliaSearchCore.prototype._computeRequestHeaders = function(options) {
-	  var forEach = __webpack_require__(8);
+	  var forEach = __webpack_require__(11);
 
 	  var ua = options.additionalUA ?
 	    this._ua + ';' + options.additionalUA :
@@ -3681,8 +4308,8 @@ module.exports =
 	 * @return {Promise|undefined} Returns a promise if no callback given
 	 */
 	AlgoliaSearchCore.prototype.search = function(queries, opts, callback) {
-	  var isArray = __webpack_require__(16);
-	  var map = __webpack_require__(17);
+	  var isArray = __webpack_require__(19);
+	  var map = __webpack_require__(20);
 
 	  var usage = 'Usage: client.search(arrayOfQueries[, callback])';
 
@@ -3764,8 +4391,8 @@ module.exports =
 	* Pagination is not supported. The page and hitsPerPage parameters will be ignored.
 	*/
 	AlgoliaSearchCore.prototype.searchForFacetValues = function(queries) {
-	  var isArray = __webpack_require__(16);
-	  var map = __webpack_require__(17);
+	  var isArray = __webpack_require__(19);
+	  var map = __webpack_require__(20);
 
 	  var usage = 'Usage: client.searchForFacetValues([{indexName, params: {facetName, facetQuery, ...params}}, ...queries])'; // eslint-disable-line max-len
 
@@ -3785,8 +4412,8 @@ module.exports =
 	      throw new Error(usage);
 	    }
 
-	    var clone = __webpack_require__(12);
-	    var omit = __webpack_require__(13);
+	    var clone = __webpack_require__(15);
+	    var omit = __webpack_require__(16);
 
 	    var indexName = query.indexName;
 	    var params = query.params;
@@ -3916,7 +4543,7 @@ module.exports =
 	};
 
 	AlgoliaSearchCore.prototype._partialAppIdDataUpdate = function(newData) {
-	  var foreach = __webpack_require__(8);
+	  var foreach = __webpack_require__(11);
 	  var currentData = this._getAppIdData();
 	  foreach(newData, function(value, key) {
 	    currentData[key] = value;
@@ -3938,7 +4565,7 @@ module.exports =
 	};
 
 	AlgoliaSearchCore.prototype._setHostIndexByType = function(hostIndex, hostType) {
-	  var clone = __webpack_require__(12);
+	  var clone = __webpack_require__(15);
 	  var newHostIndexes = clone(this._hostIndexes);
 	  newHostIndexes[hostType] = hostIndex;
 	  this._partialAppIdDataUpdate({hostIndexes: newHostIndexes});
@@ -4033,10 +4660,10 @@ module.exports =
 
 
 /***/ }),
-/* 22 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var debug = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"debug\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()))('algoliasearch:src/hostIndexState.js');
+	var debug = __webpack_require__(1)('algoliasearch:src/hostIndexState.js');
 	var localStorageNamespace = 'algoliasearch-client-js';
 
 	var store;
@@ -4125,12 +4752,12 @@ module.exports =
 
 
 /***/ }),
-/* 23 */
+/* 26 */
 /***/ (function(module, exports) {
 
 	
 
-	module.exports = '3.27.1';
+	module.exports = '3.28.0';
 
 
 /***/ })

@@ -1,5 +1,19 @@
 CHANGELOG
 
+2018-06-13 3.28.0
+  * FEAT(cache): cache the requests instead of responses (#694)
+
+    If you pass `_useRequestCache: true` as an option to the client then the cache behaviour will change. If you launch two requests at the same time then only one request will be done while the two callbacks/promises will still be called/resolved.
+
+    Previously, the client would have made two requests instead of one.
+
+    This is implemented by filling the cache as soon as the request launches instead of waiting for the response to fill it.
+  * FIX(parse): correct path to debug module (#702)
+
+    fixes parse build, weirdly webpack is not throwing when importing an
+    unkown module using target node
+  * TESTS: Make this CI green, fix unit and integration tests on every platform
+
 2018-05-03 3.27.1
   * FIX: `client.searchForFacetValues` in older browsers
     * we use the polyfill implementation of Promise.all now instead of the native in 3.27.0

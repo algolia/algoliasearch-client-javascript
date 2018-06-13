@@ -1,4 +1,4 @@
-/*! algoliasearch 3.27.1 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
+/*! algoliasearch 3.28.0 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.algoliasearch = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 (function (process){
 /**
@@ -2332,6 +2332,7 @@ function AlgoliaSearchCore(applicationID, apiKey, opts) {
 
   this._ua = opts._ua;
   this._useCache = opts._useCache === undefined || opts._cache ? true : opts._useCache;
+  this._useRequestCache = this._useCache && opts._useRequestCache;
   this._useFallback = opts.useFallback === undefined ? true : opts.useFallback;
 
   this._setTimeout = opts._setTimeout;
@@ -2398,6 +2399,7 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
   var requestDebug = require(1)('algoliasearch:' + initialOpts.url);
 
   var body;
+  var cacheID;
   var additionalUA = initialOpts.additionalUA || '';
   var cache = initialOpts.cache;
   var client = this;
@@ -2436,22 +2438,28 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
     client._checkAppIdData();
 
     var startTime = new Date();
-    var cacheID;
 
-    if (client._useCache) {
+    if (client._useCache && !client._useRequestCache) {
       cacheID = initialOpts.url;
     }
 
     // as we sometime use POST requests to pass parameters (like query='aa'),
     // the cacheID must also include the body to be different between calls
-    if (client._useCache && body) {
+    if (client._useCache && !client._useRequestCache && body) {
       cacheID += '_body_' + reqOpts.body;
     }
 
     // handle cache existence
-    if (client._useCache && cache && cache[cacheID] !== undefined) {
+    if (isCacheValidWithCurrentID(!client._useRequestCache, cache, cacheID)) {
       requestDebug('serving response from cache');
-      return client._promise.resolve(JSON.parse(cache[cacheID]));
+
+      var responseText = cache[cacheID];
+
+      // Cache response must match the type of the original one
+      return client._promise.resolve({
+        body: JSON.parse(responseText),
+        responseText: responseText
+      });
     }
 
     // if we reached max tries
@@ -2555,11 +2563,14 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
       });
 
       if (httpResponseOk) {
-        if (client._useCache && cache) {
+        if (client._useCache && !client._useRequestCache && cache) {
           cache[cacheID] = httpResponse.responseText;
         }
 
-        return httpResponse.body;
+        return {
+          responseText: httpResponse.responseText,
+          body: httpResponse.body
+        };
       }
 
       var shouldRetry = Math.floor(status / 100) !== 4;
@@ -2652,7 +2663,72 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
     }
   }
 
-  var promise = doRequest(
+  function isCacheValidWithCurrentID(
+    useRequestCache,
+    currentCache,
+    currentCacheID
+  ) {
+    return (
+      client._useCache &&
+      useRequestCache &&
+      currentCache &&
+      currentCache[currentCacheID] !== undefined
+    );
+  }
+
+
+  function interopCallbackReturn(request, callback) {
+    if (isCacheValidWithCurrentID(client._useRequestCache, cache, cacheID)) {
+      request.catch(function() {
+        // Release the cache on error
+        delete cache[cacheID];
+      });
+    }
+
+    if (typeof initialOpts.callback === 'function') {
+      // either we have a callback
+      request.then(function okCb(content) {
+        exitPromise(function() {
+          initialOpts.callback(null, callback(content));
+        }, client._setTimeout || setTimeout);
+      }, function nookCb(err) {
+        exitPromise(function() {
+          initialOpts.callback(err);
+        }, client._setTimeout || setTimeout);
+      });
+    } else {
+      // either we are using promises
+      return request.then(callback);
+    }
+  }
+
+  if (client._useCache && client._useRequestCache) {
+    cacheID = initialOpts.url;
+  }
+
+  // as we sometime use POST requests to pass parameters (like query='aa'),
+  // the cacheID must also include the body to be different between calls
+  if (client._useCache && client._useRequestCache && body) {
+    cacheID += '_body_' + body;
+  }
+
+  if (isCacheValidWithCurrentID(client._useRequestCache, cache, cacheID)) {
+    requestDebug('serving request from cache');
+
+    var maybePromiseForCache = cache[cacheID];
+
+    // In case the cache is warmup with value that is not a promise
+    var promiseForCache = typeof maybePromiseForCache.then !== 'function'
+      ? client._promise.resolve({responseText: maybePromiseForCache})
+      : maybePromiseForCache;
+
+    return interopCallbackReturn(promiseForCache, function(content) {
+      // In case of the cache request, return the original value
+      return JSON.parse(content.responseText);
+    });
+  }
+
+  var request = doRequest(
     client._request, {
       url: initialOpts.url,
       method: initialOpts.method,
@@ -2662,21 +2738,14 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
     }
   );
 
-  // either we have a callback
-  // either we are using promises
-  if (typeof initialOpts.callback === 'function') {
-    promise.then(function okCb(content) {
-      exitPromise(function() {
-        initialOpts.callback(null, content);
-      }, client._setTimeout || setTimeout);
-    }, function nookCb(err) {
-      exitPromise(function() {
-        initialOpts.callback(err);
-      }, client._setTimeout || setTimeout);
-    });
-  } else {
-    return promise;
+  if (client._useCache && client._useRequestCache && cache) {
+    cache[cacheID] = request;
   }
+
+  return interopCallbackReturn(request, function(content) {
+    // In case of the first request, return the JSON value
+    return content.body;
+  });
 };
 
 /*
@@ -3608,7 +3677,11 @@ module.exports = function createAlgoliasearch(AlgoliaSearch, uaSuffix) {
         req.setRequestHeader('accept', 'application/json');
       }
 
-      req.send(body);
+      if (body) {
+        req.send(body);
+      } else {
+        req.send();
+      }
 
       // event object not received in IE8, at least
       // but we do not use it, still important to note
@@ -3776,7 +3849,8 @@ function jsonpRequest(url, opts, cb) {
     clean();
 
     cb(null, {
-      body: data/* ,
+      body: data,
+      responseText: JSON.stringify(data)/* ,
       // We do not send the statusCode, there's no statusCode in JSONP, it will be
       // computed using data.status && data.message like with XDR
       statusCode*/
@@ -4233,7 +4307,7 @@ function cleanup() {
 },{"1":1}],30:[function(require,module,exports){
 'use strict';
 
-module.exports = '3.27.1';
+module.exports = '3.28.0';
 
 },{}]},{},[15])(15)
 });
