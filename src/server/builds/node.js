@@ -191,6 +191,7 @@ AlgoliaSearchNodeJS.prototype._request = function request(rawUrl, opts) {
         try {
           out = {
             body: JSON.parse(data),
+            responseText: data,
             statusCode: statusCode,
             headers: headers
           };
