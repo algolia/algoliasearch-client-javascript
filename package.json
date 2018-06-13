@@ -31,11 +31,11 @@
   },
   "bundlesize": [
     {
-      "path": "./dist/algoliasearch.?(jquery|angular|parse).min.js",
+      "path": "./dist/algoliasearch.?(jquery|angular).min.js",
       "maxSize": "19 kB"
     },
     {
-      "path": "./dist/algoliasearch.?(jquery|parse).js",
+      "path": "./dist/algoliasearch.?(jquery).js",
       "maxSize": "46.5 kB"
     },
     {
