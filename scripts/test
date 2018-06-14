@@ -4,8 +4,8 @@ set -e # exit when error
 
 echo "Test"
 
-echo "Test: node"
-./scripts/test-node
+echo "Test: node (unit)"
+./scripts/test-node-unit
 
 echo "Test: lint"
 ./scripts/lint
