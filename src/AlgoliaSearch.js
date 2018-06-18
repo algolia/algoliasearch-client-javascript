@@ -162,6 +162,11 @@ AlgoliaSearch.prototype.initIndex = function(indexName) {
   return new Index(this, indexName);
 };
 
+AlgoliaSearch.prototype.initAnalytics = function() {
+  var createAnalyticsClient = require('./createAnalyticsClient.js');
+  return createAnalyticsClient(this.applicationID, this.apiKey);
+};
+
 /*
  * @deprecated use client.listApiKeys
  */

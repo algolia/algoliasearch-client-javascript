@@ -115,6 +115,19 @@ function initPlaces(placesAppId, placesApiKey) {
   };
 }
 
+test('Analytics AB Tests', testAnalytics(client))
+
+function testAnalytics(client) {
+  return function(t) {
+    var analytics = client.initAnalytics()
+    analytics.getABTests().then(function(res) {
+      t.ok(res.total >= res.count, 'We were able to call the analytics API');
+    }, function(e) {
+      t.fail(e);
+    });
+  }
+}
+
 function clearIndex(t) {
   t.plan(1);
 
