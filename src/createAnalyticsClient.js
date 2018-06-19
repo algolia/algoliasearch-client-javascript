@@ -2,13 +2,18 @@ module.exports = createAnalyticsClient;
 
 var algoliasearch = require('../index.js');
 
-function createAnalyticsClient(appId, apiKey) {
+function createAnalyticsClient(appId, apiKey, opts) {
   var analytics = {};
 
-  analytics.as = algoliasearch(appId, apiKey, {
-    hosts: ['analytics.algolia.com'],
-    protocol: 'https:'
-  });
+  opts = opts || {};
+  opts.hosts = opts.hosts || [
+    'analytics.algolia.com',
+    'analytics.algolia.com',
+    'analytics.algolia.com'
+  ];
+  opts.protocol = opts.protocol || 'https:';
+
+  analytics.as = algoliasearch(appId, apiKey, opts);
 
   analytics.getABTests = function(_params, callback) {
     var params = params || {};

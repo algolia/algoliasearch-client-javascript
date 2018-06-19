@@ -162,9 +162,9 @@ AlgoliaSearch.prototype.initIndex = function(indexName) {
   return new Index(this, indexName);
 };
 
-AlgoliaSearch.prototype.initAnalytics = function() {
+AlgoliaSearch.prototype.initAnalytics = function(opts) {
   var createAnalyticsClient = require('./createAnalyticsClient.js');
-  return createAnalyticsClient(this.applicationID, this.apiKey);
+  return createAnalyticsClient(this.applicationID, this.apiKey, opts);
 };
 
 /*
