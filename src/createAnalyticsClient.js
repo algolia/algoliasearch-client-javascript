@@ -6,7 +6,11 @@ function createAnalyticsClient(appId, apiKey, opts) {
   var analytics = {};
 
   opts = opts || {};
+  // there need to be 4 hosts, like on the client, since if requests fail,
+  // the counter goes up by 1, so we need to have the same amount of hosts
+  // 4 because: -dsn, -1, -2, -3
   opts.hosts = opts.hosts || [
+    'analytics.algolia.com',
     'analytics.algolia.com',
     'analytics.algolia.com',
     'analytics.algolia.com'
