@@ -10,9 +10,10 @@ function createAnalyticsClient(appId, apiKey) {
     protocol: 'https:'
   });
 
-  analytics.getABTests = function(params = {}, callback) {
-    var offset = params['offset'] || 0
-    var limit = params['limit'] || 10
+  analytics.getABTests = function(_params, callback) {
+    var params = params || {};
+    var offset = params.offset || 0;
+    var limit = params.limit || 10;
 
     return this.as._jsonRequest({
       method: 'GET',

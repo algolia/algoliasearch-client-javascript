@@ -115,17 +115,18 @@ function initPlaces(placesAppId, placesApiKey) {
   };
 }
 
-test('Analytics AB Tests', testAnalytics(client))
+test('Analytics AB Tests', testAnalytics);
 
-function testAnalytics(client) {
-  return function(t) {
-    var analytics = client.initAnalytics()
-    analytics.getABTests().then(function(res) {
+function testAnalytics(t) {
+  var analytics = client.initAnalytics();
+  analytics.getABTests().then(
+    function(res) {
       t.ok(res.total >= res.count, 'We were able to call the analytics API');
-    }, function(e) {
+    },
+    function(e) {
       t.fail(e);
-    });
-  }
+    }
+  );
 }
 
 function clearIndex(t) {
