@@ -118,6 +118,7 @@ function initPlaces(placesAppId, placesApiKey) {
 test('Analytics AB Tests', testAnalytics);
 
 function testAnalytics(t) {
+  t.plan(1);
   var analytics = client.initAnalytics();
   analytics.getABTests().then(
     function(res) {
