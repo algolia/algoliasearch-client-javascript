@@ -1,9 +1,9 @@
 module.exports = createAnalyticsClient;
 
-const algoliasearch = require('../index.js');
+var algoliasearch = require('../index.js');
 
 function createAnalyticsClient(appId, apiKey) {
-  const analytics = {};
+  var analytics = {};
 
   analytics.as = algoliasearch(appId, apiKey, {
     hosts: ['analytics.algolia.com'],
