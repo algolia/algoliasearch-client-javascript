@@ -16,7 +16,6 @@ function createAnalyticsClient(appId, apiKey, opts) {
     'analytics.algolia.com'
   ];
   opts.protocol = opts.protocol || 'https:';
-  opts.forceAuthHeaders = true;
 
   analytics.as = algoliasearch(appId, apiKey, opts);
 
@@ -29,6 +28,7 @@ function createAnalyticsClient(appId, apiKey, opts) {
       method: 'GET',
       url: '/2/abtests?offset=' + encodeURIComponent(offset) + '&limit=' + encodeURIComponent(limit),
       hostType: 'read',
+      forceAuthHeaders: true,
       callback: callback
     });
   };
@@ -38,6 +38,7 @@ function createAnalyticsClient(appId, apiKey, opts) {
       method: 'GET',
       url: '/2/abtests/' + encodeURIComponent(abTestID),
       hostType: 'read',
+      forceAuthHeaders: true,
       callback: callback
     });
   };
@@ -48,6 +49,7 @@ function createAnalyticsClient(appId, apiKey, opts) {
       url: '/2/abtests',
       body: abTest,
       hostType: 'read',
+      forceAuthHeaders: true,
       callback: callback
     });
   };
@@ -57,6 +59,7 @@ function createAnalyticsClient(appId, apiKey, opts) {
       method: 'POST',
       url: '/2/abtests/' + encodeURIComponent(abTestID) + '/stop',
       hostType: 'read',
+      forceAuthHeaders: true,
       callback: callback
     });
   };
@@ -66,6 +69,7 @@ function createAnalyticsClient(appId, apiKey, opts) {
       method: 'DELETE',
       url: '/2/abtests/' + encodeURIComponent(abTestID),
       hostType: 'write',
+      forceAuthHeaders: true,
       callback: callback
     });
   };
