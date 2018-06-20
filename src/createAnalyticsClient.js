@@ -9,6 +9,9 @@ function createAnalyticsClient(appId, apiKey, opts) {
   // there need to be 4 hosts, like on the client, since if requests fail,
   // the counter goes up by 1, so we need to have the same amount of hosts
   // 4 because: -dsn, -1, -2, -3
+  // This is done because the APPID used for search will be the same for the analytics client created,
+  // and since the state of available hosts is shared by APPID globally for the module, we had issues
+  // where the hostIndex would be 1 while the array was only one entry (you got an empty host)
   opts.hosts = opts.hosts || [
     'analytics.algolia.com',
     'analytics.algolia.com',
