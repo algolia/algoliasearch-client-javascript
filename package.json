@@ -35,12 +35,8 @@
       "maxSize": "19 kB"
     },
     {
-      "path": "./dist/algoliasearch.?(jquery).js",
-      "maxSize": "46.5 kB"
-    },
-    {
-      "path": "./dist/algoliasearch.angular.js",
-      "maxSize": "47 kB"
+      "path": "./dist/algoliasearch.?(jquery|angular).js",
+      "maxSize": "47.5 kB"
     },
     {
       "path": "./dist/algoliasearchLite.min.js",
