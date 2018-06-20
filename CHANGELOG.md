@@ -1,7 +1,16 @@
 CHANGELOG
 
-NEXT RELEASE
-  * CHORE(parse): remove parse build, no more needed. You can just install and require('algoliasearch')
+2018-06-20 3.29.0
+  * FEAT(analytics): add API methods for AB testing
+    * find more info about the new feature here: https://blog.algolia.com/ab-testing-search/
+    * adds a new method on client:
+        import algoliasearch from 'algoliasearch';
+        const client = algoliasearch('appid', 'apikey');
+        const analytics = client.initAnalytics();
+        analytics.getABTests().then(console.log)
+    * see documentation here: https://www.algolia.com/doc/api-client/ab-test/
+  * CHORE(parse): remove parse build, not needed.
+    * You can just install and `require('algoliasearch');`
 
 2018-06-13 3.28.0
   * FEAT(cache): cache the requests instead of responses (#694)

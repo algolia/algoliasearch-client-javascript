@@ -1,6 +1,6 @@
 {
   "name": "algoliasearch",
-  "version": "3.28.0",
+  "version": "3.29.0",
   "description": "AlgoliaSearch API JavaScript client",
   "main": "index.js",
   "jsdelivr": "./dist/algoliasearch.min.js",
@@ -35,16 +35,8 @@
       "maxSize": "19 kB"
     },
     {
-      "path": "./dist/algoliasearch.?(jquery|angular).js",
-      "maxSize": "47.5 kB"
-    },
-    {
       "path": "./dist/algoliasearchLite.min.js",
       "maxSize": "13 kB"
-    },
-    {
-      "path": "./dist/algoliasearchLite.js",
-      "maxSize": "32.5 kB"
     }
   ],
   "repository": {

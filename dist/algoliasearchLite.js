@@ -1,4 +1,4 @@
-/*! algoliasearch 3.28.0 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
+/*! algoliasearch 3.29.0 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.algoliasearch = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 (function (process){
 /**
@@ -2398,6 +2398,7 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
 
   var requestDebug = require(1)('algoliasearch:' + initialOpts.url);
 
+
   var body;
   var cacheID;
   var additionalUA = initialOpts.additionalUA || '';
@@ -2433,6 +2434,7 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
 
   requestDebug('request start');
   var debugData = [];
+
 
   function doRequest(requester, reqOpts) {
     client._checkAppIdData();
@@ -2507,7 +2509,8 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
       method: reqOpts.method,
       headers: headers,
       timeouts: reqOpts.timeouts,
-      debug: requestDebug
+      debug: requestDebug,
+      forceAuthHeaders: reqOpts.forceAuthHeaders
     };
 
     requestDebug('method: %s, url: %s, headers: %j, timeouts: %d',
@@ -2734,7 +2737,8 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
       method: initialOpts.method,
       body: body,
       jsonBody: initialOpts.body,
-      timeouts: client._getTimeoutsForRequest(initialOpts.hostType)
+      timeouts: client._getTimeoutsForRequest(initialOpts.hostType),
+      forceAuthHeaders: initialOpts.forceAuthHeaders
     }
   );
 
@@ -3660,6 +3664,19 @@ module.exports = function createAlgoliasearch(AlgoliaSearch, uaSuffix) {
       // breaks it and set it to false by default
       if (req instanceof XMLHttpRequest) {
         req.open(opts.method, url, true);
+
+        // The Analytics API never accepts Auth headers as query string
+        // this option exists specifically for them.
+        if (opts.forceAuthHeaders) {
+          req.setRequestHeader(
+            'x-algolia-application-id',
+            opts.headers['x-algolia-application-id']
+          );
+          req.setRequestHeader(
+            'x-algolia-api-key',
+            opts.headers['x-algolia-api-key']
+          );
+        }
       } else {
         req.open(opts.method, url);
       }
@@ -4307,7 +4324,7 @@ function cleanup() {
 },{"1":1}],30:[function(require,module,exports){
 'use strict';
 
-module.exports = '3.28.0';
+module.exports = '3.29.0';
 
 },{}]},{},[15])(15)
 });
