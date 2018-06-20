@@ -1,5 +1,8 @@
 CHANGELOG
 
+NEXT RELEASE
+  * CHORE(parse): remove parse build, no more needed. You can just install and require('algoliasearch')
+
 2018-06-13 3.28.0
   * FEAT(cache): cache the requests instead of responses (#694)
 

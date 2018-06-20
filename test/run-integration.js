@@ -115,6 +115,21 @@ function initPlaces(placesAppId, placesApiKey) {
   };
 }
 
+test('Analytics AB Tests', testAnalytics);
+
+function testAnalytics(t) {
+  t.plan(1);
+  var analytics = client.initAnalytics();
+  analytics.getABTests().then(
+    function(res) {
+      t.ok(res.total >= res.count, 'We were able to call the analytics API');
+    },
+    function(e) {
+      t.fail(e);
+    }
+  );
+}
+
 function clearIndex(t) {
   t.plan(1);
 
@@ -666,7 +681,10 @@ function dnsFailThenSuccess(t) {
       var now = (new Date()).getTime();
       secondSearchTiming = now - secondSearchStart;
       // skipped this test, because in some cases (iOS 11.0) the timeout happens faster than we specified
-      t.skip(secondSearchTiming < connectTimeout, 'second search is fast because we know .biz is failing. ' + secondSearchTiming);
+      t.skip(
+        secondSearchTiming < connectTimeout,
+        'second search is fast because we know .biz is failing. ' + secondSearchTiming
+      );
       t.ok(content.hits.length > 0, 'hits should not be empty');
     }, function() {
       t.fail('No error should be generated as it should lastly route to a good domain.');

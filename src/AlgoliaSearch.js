@@ -162,6 +162,19 @@ AlgoliaSearch.prototype.initIndex = function(indexName) {
   return new Index(this, indexName);
 };
 
+AlgoliaSearch.prototype.initAnalytics = function(opts) {
+  // the actual require must be inside the function, when put outside then you have a cyclic dependency
+  // not well resolved that ends up making the main "./index.js" (main module, the agloliasearch function)
+  // export an object instead of a function
+  // Other workarounds:
+  // - rewrite the lib in ES6, cyclic dependencies may be better supported
+  // - move initAnalytics to a property on the main module (algoliasearch.initAnalytics),
+  // same as places.
+  // The current API was made mostly to mimic the one made in PHP
+  var createAnalyticsClient = require('./createAnalyticsClient.js');
+  return createAnalyticsClient(this.applicationID, this.apiKey, opts);
+};
+
 /*
  * @deprecated use client.listApiKeys
  */

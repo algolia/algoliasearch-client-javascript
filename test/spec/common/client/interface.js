@@ -39,6 +39,7 @@ test('AlgoliaSearch client API spec', function(t) {
     'getUserID',
     'getUserKeyACL',
     'initIndex',
+    'initAnalytics',
     'listApiKeys',
     'listClusters',
     'listIndexes',

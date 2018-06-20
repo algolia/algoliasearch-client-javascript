@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+set -e # exit when error
+
+echo "Bundle size"
+
+echo "Bundle size: build"
+NODE_ENV=production npm run build
+
+echo "Bundle size: sizing"
+bundlesize

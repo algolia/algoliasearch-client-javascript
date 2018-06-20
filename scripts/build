@@ -8,11 +8,6 @@ license="/*! algoliasearch ${VERSION:-UNRELEASED} | © 2014, 2015 Algolia SAS | 
 
 echo 'Building algoliasearch-client-js'
 
-echo '..Parse cloud build using webpack'
-webpack --silent --config scripts/parse-build.webpack.config.js > /dev/null
-# remove 'use strict'; from parse build, otherwise `global = {}` will fail, omg
-perl -pi -e "s/'use strict';//g" dist/algoliasearch.parse.js
-
 bundles=( 'algoliasearch' 'algoliasearch.angular' 'algoliasearch.jquery' )
 
 # The migration layer have two purposes

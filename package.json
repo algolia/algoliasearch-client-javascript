@@ -15,9 +15,9 @@
     "examples": "http-server . -a 0.0.0.0",
     "watch": "watchify index.js -d -v -s algoliasearch -o dist/algoliasearch.js",
     "release": "git clean dist/ -f && git checkout dist/ && yarn && ./scripts/release && APP_ENV=production npm run build",
-    "test": "./scripts/test-node-unit && ./scripts/lint",
+    "test": "./scripts/test",
     "test-ci:lint": "./scripts/lint",
-    "test-ci:bundlesize": "bundlesize",
+    "test-ci:bundlesize": "./scripts/bundlesize",
     "test-ci:unit-node": "./scripts/test-node-unit",
     "test-ci:integration-node": "./scripts/test-node-integration",
     "test-ci:unit-browsers": "./scripts/test-browser unit",
@@ -31,16 +31,12 @@
   },
   "bundlesize": [
     {
-      "path": "./dist/algoliasearch.?(jquery|angular|parse).min.js",
+      "path": "./dist/algoliasearch.?(jquery|angular).min.js",
       "maxSize": "19 kB"
     },
     {
-      "path": "./dist/algoliasearch.?(jquery|parse).js",
-      "maxSize": "46.5 kB"
-    },
-    {
-      "path": "./dist/algoliasearch.angular.js",
-      "maxSize": "47 kB"
+      "path": "./dist/algoliasearch.?(jquery|angular).js",
+      "maxSize": "47.5 kB"
     },
     {
       "path": "./dist/algoliasearchLite.min.js",
@@ -48,7 +44,7 @@
     },
     {
       "path": "./dist/algoliasearchLite.js",
-      "maxSize": "32 kB"
+      "maxSize": "32.5 kB"
     }
   ],
   "repository": {
