@@ -16,6 +16,7 @@ function createAnalyticsClient(appId, apiKey, opts) {
     'analytics.algolia.com'
   ];
   opts.protocol = opts.protocol || 'https:';
+  opts.forceAuthHeaders = true;
 
   analytics.as = algoliasearch(appId, apiKey, opts);
 

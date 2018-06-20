@@ -88,16 +88,18 @@ module.exports = function createAlgoliasearch(AlgoliaSearch, uaSuffix) {
       if (req instanceof XMLHttpRequest) {
         req.open(opts.method, url, true);
 
-        // note: this breaks everything else but makes the browser tests pass
-        // the analytics endpoint _needs_ it via header, and doesn't accept QS
-        req.setRequestHeader(
-          'x-algolia-application-id',
-          opts.headers['x-algolia-application-id']
-        );
-        req.setRequestHeader(
-          'x-algolia-api-key',
-          opts.headers['x-algolia-api-key']
-        );
+        // The Analytics API never accepts Auth headers as query string
+        // this option exists specifically for them.
+        if (opts.forceAuthHeaders) {
+          req.setRequestHeader(
+            'x-algolia-application-id',
+            opts.headers['x-algolia-application-id']
+          );
+          req.setRequestHeader(
+            'x-algolia-api-key',
+            opts.headers['x-algolia-api-key']
+          );
+        }
       } else {
         req.open(opts.method, url);
       }

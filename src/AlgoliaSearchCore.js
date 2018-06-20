@@ -116,6 +116,7 @@ function AlgoliaSearchCore(applicationID, apiKey, opts) {
   // In some situations you might want to warm the cache
   this.cache = opts._cache || {};
 
+  this._forceAuthHeaders = opts.forceAuthHeaders;
   this._ua = opts._ua;
   this._useCache = opts._useCache === undefined || opts._cache ? true : opts._useCache;
   this._useRequestCache = this._useCache && opts._useRequestCache;
@@ -184,6 +185,7 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
 
   var requestDebug = require('debug')('algoliasearch:' + initialOpts.url);
 
+
   var body;
   var cacheID;
   var additionalUA = initialOpts.additionalUA || '';
@@ -219,6 +221,7 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
 
   requestDebug('request start');
   var debugData = [];
+
 
   function doRequest(requester, reqOpts) {
     client._checkAppIdData();
@@ -293,7 +296,8 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
       method: reqOpts.method,
       headers: headers,
       timeouts: reqOpts.timeouts,
-      debug: requestDebug
+      debug: requestDebug,
+      forceAuthHeaders: reqOpts.forceAuthHeaders
     };
 
     requestDebug('method: %s, url: %s, headers: %j, timeouts: %d',
@@ -520,7 +524,8 @@ AlgoliaSearchCore.prototype._jsonRequest = function(initialOpts) {
       method: initialOpts.method,
       body: body,
       jsonBody: initialOpts.body,
-      timeouts: client._getTimeoutsForRequest(initialOpts.hostType)
+      timeouts: client._getTimeoutsForRequest(initialOpts.hostType),
+      forceAuthHeaders: this._forceAuthHeaders
     }
   );
 
