@@ -46,12 +46,13 @@ function scriptLoaded(method) {
     // take the injected old algoliasearch
     // and replace it with a version that tracks the usage.
     var oldAlgoliaSearch = window.AlgoliaSearch;
-    window.AlgoliaSearch = function AlgoliaSearch(appId) {
+    window.AlgoliaSearch = function AlgoliaSearchMigration(appId) {
       // call the deprecation endpoint with this
       // Image is used for max browser compat & terseness over XHR
       new Image().src = '//deprecator.algolia.com/usage/v2-migration/' + appId;
       return oldAlgoliaSearch.apply(this, arguments);
     };
+    window.AlgoliaSearch.prototype = oldAlgoliaSearch.prototype;
 
     if (window.console && window.console.log) {
       window.console.log(message);
