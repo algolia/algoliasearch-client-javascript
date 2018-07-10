@@ -43,6 +43,16 @@ function scriptLoaded(method) {
   return function log() {
     var message = 'AlgoliaSearch: loaded V2 script using ' + method;
 
+    // take the injected old algoliasearch
+    // and replace it with a version that tracks the usage.
+    var oldAlgoliaSearch = window.AlgoliaSearch;
+    window.AlgoliaSearch = function AlgoliaSearch(appId) {
+      // call the deprecation endpoint with this
+      // Image is used for max browser compat & terseness over XHR
+      new Image().src = '//deprecator.algolia.com/usage/v2-migration/' + appId;
+      return oldAlgoliaSearch.apply(this, arguments);
+    };
+
     if (window.console && window.console.log) {
       window.console.log(message);
     }
