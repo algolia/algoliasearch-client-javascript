@@ -73,12 +73,13 @@ module.exports = [{
   action: 'read',
   expectedRequest: {
     method: 'POST',
-    URL: {pathname: '/1/indexes/*/queries', query: {strategy: 'none'}},
+    URL: {pathname: '/1/indexes/*/queries'},
     body: {
       requests: [{
         indexName: 'yaaaaaw',
         params: 'hitsPerSmurf=9'
-      }]
+      }],
+      strategy: 'none'
     }
   }
 }];
