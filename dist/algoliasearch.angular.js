@@ -1,4 +1,4 @@
-/*! algoliasearch 3.29.0 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
+/*! algoliasearch 3.30.0 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
 (function(f){var g;if(typeof window!=='undefined'){g=window}else if(typeof self!=='undefined'){g=self}g.ALGOLIA_MIGRATION_LAYER=f()})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 
 module.exports = function load (src, opts, cb) {
@@ -4051,7 +4051,7 @@ AlgoliaSearchCore.prototype.search = function(queries, opts, callback) {
   var url = '/1/indexes/*/queries';
 
   if (opts.strategy !== undefined) {
-    url += '?strategy=' + opts.strategy;
+    postObj.strategy = opts.strategy;
   }
 
   return this._jsonRequest({
@@ -4581,7 +4581,11 @@ Index.prototype.saveObjects = function(objects, callback) {
 */
 Index.prototype.deleteObject = function(objectID, callback) {
   if (typeof objectID === 'function' || typeof objectID !== 'string' && typeof objectID !== 'number') {
-    var err = new errors.AlgoliaSearchError('Cannot delete an object without an objectID');
+    var err = new errors.AlgoliaSearchError(
+      objectID && typeof objectID !== 'function'
+      ? 'ObjectID must be a string'
+      : 'Cannot delete an object without an objectID'
+    );
     callback = objectID;
     if (typeof callback === 'function') {
       return callback(err);
@@ -7079,6 +7083,6 @@ function cleanup() {
 },{"1":1}],36:[function(require,module,exports){
 'use strict';
 
-module.exports = '3.29.0';
+module.exports = '3.30.0';
 
 },{}]},{},[19]);

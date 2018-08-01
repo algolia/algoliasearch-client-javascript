@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 3.30.0
+>2018-08-01
+
+* FIX(multi-query): property pass the `strategy` argument
+  * as in [docs](https://www.algolia.com/doc/rest-api/search#method-param-strategy)
+  * was originally put into url parameters instead of request body
+
 ## 3.29.0
 >2018-06-20
 
