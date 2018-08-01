@@ -662,7 +662,7 @@ AlgoliaSearchCore.prototype.search = function(queries, opts, callback) {
   var url = '/1/indexes/*/queries';
 
   if (opts.strategy !== undefined) {
-    url += '?strategy=' + opts.strategy;
+    postObj.strategy = opts.strategy;
   }
 
   return this._jsonRequest({
