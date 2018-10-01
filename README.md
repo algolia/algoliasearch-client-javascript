@@ -177,9 +177,9 @@ index.addObjects(contactsJSON, function(err, content) {
 
 ### Search
 
-> for this use: [**search only** API key](https://www.algolia.com/doc/guides/security/api-keys/#search-only-api-key) in client instantiation
-
 You can now search for contacts using firstname, lastname, company, etc. (even with typos):
+
+> for this use: [**search only** API key](https://www.algolia.com/doc/guides/security/api-keys/#search-only-api-key) in client instantiation
 
 ```js
 // firstname
