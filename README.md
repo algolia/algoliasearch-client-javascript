@@ -162,6 +162,8 @@ var client = algoliasearch('applicationID', 'apiKey');
 
 Without any prior configuration, you can start indexing [500 contacts](https://github.com/algolia/datasets-public/blob/master/contacts/contacts.json) in the `contacts` index using the following code:
 
+> for this use: [**admin** API key](https://www.algolia.com/doc/guides/security/api-keys/#admin-api-key) in client instantiation
+
 ```js
 var index = client.initIndex('contacts');
 var contactsJSON = require('./contacts.json');
@@ -174,6 +176,8 @@ index.addObjects(contactsJSON, function(err, content) {
 ```
 
 ### Search
+
+> for this use: [**search only** API key](https://www.algolia.com/doc/guides/security/api-keys/#search-only-api-key) in client instantiation
 
 You can now search for contacts using firstname, lastname, company, etc. (even with typos):
 
@@ -202,6 +206,8 @@ index.search('jimmie paint', function(err, content) {
 ### Configure
 
 Settings can be customized to tune the search behavior. For example, you can add a custom sort by number of followers to the already great built-in relevance:
+
+> for this use: [**admin** API key](https://www.algolia.com/doc/guides/security/api-keys/#admin-api-key) in client instantiation
 
 ```js
 index.setSettings({
