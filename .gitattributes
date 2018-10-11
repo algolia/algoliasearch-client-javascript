@@ -6,3 +6,5 @@ dist/algoliasearch.jquery.js -diff
 dist/algoliasearch.jquery.min.js -diff
 dist/algoliasearchLite.js -diff
 dist/algoliasearchLite.min.js -diff
+yarn.lock   -diff -merge
+yarn.lock    linguist-generated=true
