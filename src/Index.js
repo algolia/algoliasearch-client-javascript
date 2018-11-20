@@ -213,6 +213,35 @@ Index.prototype.saveObjects = function(objects, callback) {
   });
 };
 
+Index.prototype.replaceAllObjects = function(objects, opts, callback) {
+  if (typeof opts === 'function') {
+    callback = opts;
+    opts = {};
+  } else if (opts === undefined) {
+    opts = {};
+  }
+
+  var safe = opts.safe || false;
+  var tmpIndexName = this.indexName + '_' + Math.random() + '_tmp';
+
+  var copyResponse = this.as.copyIndex(this.indexName, tmpIndexName, ['settings', 'rules', 'synonyms']);
+  if (safe) {
+    this.waitTask(copyResponse.taskID);
+  }
+
+  var saveResponse = this.saveObjects(objects);
+  if (safe) {
+    this.waitTask(saveResponse.taskID);
+  }
+
+  var moveResponse = this.as.moveIndex(tmpIndexName, this.indexName);
+  if (safe) {
+    this.waitTask(moveResponse.taskID);
+  }
+
+  return [copyResponse, saveResponse, moveResponse];
+};
+
 /*
 * Delete an object from the index
 *
