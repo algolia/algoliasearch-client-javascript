@@ -85,6 +85,18 @@ AlgoliaSearch.prototype.copyIndex = function(srcIndexName, dstIndexName, scopeOr
   });
 };
 
+AlgoliaSearch.prototype.copySettings = function(srcIndexName, dstIndexName, callback) {
+  return this.copyIndex(srcIndexName, dstIndexName, ['settings'], callback);
+};
+
+AlgoliaSearch.prototype.copySynonyms = function(srcIndexName, dstIndexName, callback) {
+  return this.copyIndex(srcIndexName, dstIndexName, ['synonyms'], callback);
+};
+
+AlgoliaSearch.prototype.copyRules = function(srcIndexName, dstIndexName, callback) {
+  return this.copyIndex(srcIndexName, dstIndexName, ['rules'], callback);
+};
+
 /**
  * Return last log entries.
  * @param offset Specify the first entry to retrieve (0-based, 0 is the most recent log entry).
