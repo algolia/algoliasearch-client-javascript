@@ -783,6 +783,18 @@ Index.prototype.batchSynonyms = function(synonyms, opts, callback) {
   });
 };
 
+Index.prototype.replaceAllSynonyms = function(synonyms, opts, callback) {
+  if (typeof opts === 'function') {
+    callback = opts;
+    opts = {};
+  } else if (opts === undefined) {
+    opts = {};
+  }
+  opts.replaceExistingSynonyms = true;
+
+  return this.batchSynonyms(synonyms, opts, callback);
+};
+
 Index.prototype.searchRules = function(params, callback) {
   if (typeof params === 'function') {
     callback = params;
@@ -899,6 +911,18 @@ Index.prototype.batchRules = function(rules, opts, callback) {
     body: rules,
     callback: callback
   });
+};
+
+Index.prototype.replaceAllRules = function(rules, opts, callback) {
+  if (typeof opts === 'function') {
+    callback = opts;
+    opts = {};
+  } else if (opts === undefined) {
+    opts = {};
+  }
+  opts.clearExistingRules = true;
+
+  return this.batchSynonyms(rules, opts, callback);
 };
 
 /*
