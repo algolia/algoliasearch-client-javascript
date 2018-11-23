@@ -112,6 +112,12 @@ function initPlaces(placesAppId, placesApiKey) {
     }, function(e) {
       t.fail(e);
     });
+
+    places.reverse('48.880397, 2.326991').then(function(res) {
+      t.ok(res.nbHits, 'We got some results by querying `paris`');
+    }, function(e) {
+      t.fail(e);
+    });
   };
 }
 

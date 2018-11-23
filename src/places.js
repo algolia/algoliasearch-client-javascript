@@ -2,6 +2,19 @@ module.exports = createPlacesClient;
 
 var buildSearchMethod = require('./buildSearchMethod.js');
 
+function urlEncodeOptions (options) {
+  var encodedOptions = [];
+  for (var key in options) {
+    if (options.hasOwnProperty(key)) {
+      encodedOptions.push(
+        encodeURIComponent(key) + '=' + encodeURIComponent(options[key])
+      )
+    }
+  }
+
+  return encodedOptions;
+}
+
 function createPlacesClient(algoliasearch) {
   return function places(appID, apiKey, opts) {
     var cloneDeep = require('./clone.js');
@@ -24,6 +37,20 @@ function createPlacesClient(algoliasearch) {
     var client = algoliasearch(appID, apiKey, opts);
     var index = client.initIndex('places');
     index.search = buildSearchMethod('query', '/1/places/query');
+    index.reverse = function(aroundLatLng, options, callback) {
+      var encodedOptions = urlEncodeOptions(options);
+      var encoded = ['aroundLatLng=' + encodeURIComponent(aroundLatLng) ]
+        .concat(encodedOptions)
+        .join('&')
+
+      return this.as._jsonRequest({
+        method: 'GET',
+        url: '/1/places/reverse?' + encoded,
+        hostType: 'read',
+        callback: callback
+      })
+    };
+
     index.getObject = function(objectID, callback) {
       return this.as._jsonRequest({
         method: 'GET',
