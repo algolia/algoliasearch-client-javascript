@@ -104,7 +104,7 @@ if (!isABrowser) {
 
 function initPlaces(placesAppId, placesApiKey) {
   return function(t) {
-    t.plan(1);
+    t.plan(2);
     var places = algoliasearch.initPlaces(placesAppId, placesApiKey);
 
     places.search('paris').then(function(res) {
