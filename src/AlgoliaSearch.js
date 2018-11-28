@@ -290,10 +290,9 @@ AlgoliaSearch.prototype.addUserKey = deprecate(function(acls, params, callback) 
  * @see {@link https://www.algolia.com/doc/rest_api#AddKey|Algolia REST API Documentation}
  */
 AlgoliaSearch.prototype.addApiKey = function(acls, params, callback) {
-  var isArray = require('isarray');
   var usage = 'Usage: client.addApiKey(arrayOfAcls[, params, callback])';
 
-  if (!isArray(acls)) {
+  if (!Array.isArray(acls)) {
     throw new Error(usage);
   }
 
@@ -381,10 +380,9 @@ AlgoliaSearch.prototype.updateUserKey = deprecate(function(key, acls, params, ca
  * @see {@link https://www.algolia.com/doc/rest_api#UpdateIndexKey|Algolia REST API Documentation}
  */
 AlgoliaSearch.prototype.updateApiKey = function(key, acls, params, callback) {
-  var isArray = require('isarray');
   var usage = 'Usage: client.updateApiKey(key, arrayOfAcls[, params, callback])';
 
-  if (!isArray(acls)) {
+  if (!Array.isArray(acls)) {
     throw new Error(usage);
   }
 
@@ -482,10 +480,9 @@ AlgoliaSearch.prototype.sendQueriesBatch = deprecate(function sendQueriesBatchDe
  * }], cb)
  */
 AlgoliaSearch.prototype.batch = function(operations, callback) {
-  var isArray = require('isarray');
   var usage = 'Usage: client.batch(operations[, callback])';
 
-  if (!isArray(operations)) {
+  if (!Array.isArray(operations)) {
     throw new Error(usage);
   }
 
