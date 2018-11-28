@@ -57,10 +57,9 @@ Index.prototype.addObject = function(content, objectID, callback) {
 *  content: the server answer that updateAt and taskID
 */
 Index.prototype.addObjects = function(objects, callback) {
-  var isArray = require('isarray');
   var usage = 'Usage: index.addObjects(arrayOfObjects[, callback])';
 
-  if (!isArray(objects)) {
+  if (!Array.isArray(objects)) {
     throw new Error(usage);
   }
 
@@ -129,10 +128,9 @@ Index.prototype.partialUpdateObjects = function(objects, createIfNotExists, call
     createIfNotExists = true;
   }
 
-  var isArray = require('isarray');
   var usage = 'Usage: index.partialUpdateObjects(arrayOfObjects[, callback])';
 
-  if (!isArray(objects)) {
+  if (!Array.isArray(objects)) {
     throw new Error(usage);
   }
 
@@ -185,10 +183,9 @@ Index.prototype.saveObject = function(object, callback) {
 *  content: the server answer that updateAt and taskID
 */
 Index.prototype.saveObjects = function(objects, callback) {
-  var isArray = require('isarray');
   var usage = 'Usage: index.saveObjects(arrayOfObjects[, callback])';
 
-  if (!isArray(objects)) {
+  if (!Array.isArray(objects)) {
     throw new Error(usage);
   }
 
@@ -254,12 +251,11 @@ Index.prototype.deleteObject = function(objectID, callback) {
 *  content: the server answer that contains 3 elements: createAt, taskId and objectID
 */
 Index.prototype.deleteObjects = function(objectIDs, callback) {
-  var isArray = require('isarray');
   var map = require('./map.js');
 
   var usage = 'Usage: index.deleteObjects(arrayOfObjectIDs[, callback])';
 
-  if (!isArray(objectIDs)) {
+  if (!Array.isArray(objectIDs)) {
     throw new Error(usage);
   }
 
@@ -1119,10 +1115,9 @@ Index.prototype.addUserKey = deprecate(function(acls, params, callback) {
 * @deprecated see client.addApiKey()
 */
 Index.prototype.addApiKey = deprecate(function(acls, params, callback) {
-  var isArray = require('isarray');
   var usage = 'Usage: index.addApiKey(arrayOfAcls[, params, callback])';
 
-  if (!isArray(acls)) {
+  if (!Array.isArray(acls)) {
     throw new Error(usage);
   }
 
@@ -1210,10 +1205,9 @@ Index.prototype.updateUserKey = deprecate(function(key, acls, params, callback) 
 * @deprecated see client.updateApiKey()
 */
 Index.prototype.updateApiKey = deprecate(function(key, acls, params, callback) {
-  var isArray = require('isarray');
   var usage = 'Usage: index.updateApiKey(key, arrayOfAcls[, params, callback])';
 
-  if (!isArray(acls)) {
+  if (!Array.isArray(acls)) {
     throw new Error(usage);
   }
 
