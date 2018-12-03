@@ -1,19 +1,7 @@
 module.exports = createPlacesClient;
 
+var qs3 = require('querystring-es3');
 var buildSearchMethod = require('./buildSearchMethod.js');
-
-function urlEncodeOptions(options) {
-  var encodedOptions = [];
-  for (var key in options) {
-    if (options.hasOwnProperty(key)) {
-      encodedOptions.push(
-        encodeURIComponent(key) + '=' + encodeURIComponent(options[key])
-      );
-    }
-  }
-
-  return encodedOptions;
-}
 
 function createPlacesClient(algoliasearch) {
   return function places(appID, apiKey, opts) {
@@ -38,7 +26,7 @@ function createPlacesClient(algoliasearch) {
     var index = client.initIndex('places');
     index.search = buildSearchMethod('query', '/1/places/query');
     index.reverse = function(aroundLatLng, options, callback) {
-      var encodedOptions = urlEncodeOptions(options);
+      var encodedOptions = qs3.encode(options);
       var encoded = ['aroundLatLng=' + encodeURIComponent(aroundLatLng)]
         .concat(encodedOptions)
         .join('&');
