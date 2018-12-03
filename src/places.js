@@ -28,7 +28,7 @@ function createPlacesClient(algoliasearch) {
     index.reverse = function(aroundLatLng, options, callback) {
       var encodedOptions = qs3.encode(options);
       var encoded = ['aroundLatLng=' + encodeURIComponent(aroundLatLng)]
-        .concat(encodedOptions)
+        .concat(encodedOptions || [])
         .join('&');
 
       return this.as._jsonRequest({
