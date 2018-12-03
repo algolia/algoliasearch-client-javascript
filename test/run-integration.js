@@ -104,11 +104,17 @@ if (!isABrowser) {
 
 function initPlaces(placesAppId, placesApiKey) {
   return function(t) {
-    t.plan(1);
+    t.plan(2);
     var places = algoliasearch.initPlaces(placesAppId, placesApiKey);
 
     places.search('paris').then(function(res) {
-      t.ok(res.nbHits, 'We got some results by querying `paris`');
+      t.ok(res.nbHits > 0, 'We got some results by querying `paris`');
+    }, function(e) {
+      t.fail(e);
+    });
+
+    places.reverse({aroundLatLng: '48.880397, 2.326991'}).then(function(res) {
+      t.ok(res.nbHits > 0, 'We got some results by querying with {aroundLatLng:`48.880397, 2.326991`}');
     }, function(e) {
       t.fail(e);
     });
