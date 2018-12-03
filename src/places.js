@@ -26,10 +26,6 @@ function createPlacesClient(algoliasearch) {
     var index = client.initIndex('places');
     index.search = buildSearchMethod('query', '/1/places/query');
     index.reverse = function(options, callback) {
-      if (typeof options === 'string') {
-        options = {aroundLatLng: options};
-      }
-
       var encoded = qs3.encode(options);
 
       return this.as._jsonRequest({
