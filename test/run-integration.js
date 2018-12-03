@@ -104,7 +104,7 @@ if (!isABrowser) {
 
 function initPlaces(placesAppId, placesApiKey) {
   return function(t) {
-    t.plan(2);
+    t.plan(3);
     var places = algoliasearch.initPlaces(placesAppId, placesApiKey);
 
     places.search('paris').then(function(res) {
@@ -114,7 +114,13 @@ function initPlaces(placesAppId, placesApiKey) {
     });
 
     places.reverse('48.880397, 2.326991').then(function(res) {
-      t.ok(res.nbHits > 0, 'We got some results by querying `48.880397, 2.326991`');
+      t.ok(res.nbHits > 0, 'We got some results by querying `48.880397, 2.326991` using shorthand option');
+    }, function(e) {
+      t.fail(e);
+    });
+
+    places.reverse({aroundLatLng: '48.880397, 2.326991'}).then(function(res) {
+      t.ok(res.nbHits > 0, 'We got some results by querying with {aroundLatLng:`48.880397, 2.326991`}');
     }, function(e) {
       t.fail(e);
     });

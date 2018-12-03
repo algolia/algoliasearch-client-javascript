@@ -25,11 +25,12 @@ function createPlacesClient(algoliasearch) {
     var client = algoliasearch(appID, apiKey, opts);
     var index = client.initIndex('places');
     index.search = buildSearchMethod('query', '/1/places/query');
-    index.reverse = function(aroundLatLng, options, callback) {
-      var encodedOptions = qs3.encode(options);
-      var encoded = ['aroundLatLng=' + encodeURIComponent(aroundLatLng)]
-        .concat(encodedOptions || [])
-        .join('&');
+    index.reverse = function(options, callback) {
+      if (typeof options === 'string') {
+        options = {aroundLatLng: options};
+      }
+
+      var encoded = qs3.encode(options);
 
       return this.as._jsonRequest({
         method: 'GET',
