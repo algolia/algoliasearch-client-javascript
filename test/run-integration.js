@@ -108,13 +108,13 @@ function initPlaces(placesAppId, placesApiKey) {
     var places = algoliasearch.initPlaces(placesAppId, placesApiKey);
 
     places.search('paris').then(function(res) {
-      t.ok(res.nbHits, 'We got some results by querying `paris`');
+      t.ok(res.nbHits > 0, 'We got some results by querying `paris`');
     }, function(e) {
       t.fail(e);
     });
 
     places.reverse('48.880397, 2.326991').then(function(res) {
-      t.ok(res.nbHits, 'We got some results by querying `48.880397, 2.326991`');
+      t.ok(res.nbHits > 0, 'We got some results by querying `48.880397, 2.326991`');
     }, function(e) {
       t.fail(e);
     });
