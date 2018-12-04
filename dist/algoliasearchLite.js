@@ -1,4 +1,4 @@
-/*! algoliasearch 3.30.0 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
+/*! algoliasearch 3.31.0 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.algoliasearch = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 (function (process){
 /**
@@ -2147,6 +2147,92 @@ process.umask = function() { return 0; };
 
 'use strict';
 
+// If obj.hasOwnProperty has been overridden, then calling
+// obj.hasOwnProperty(prop) will break.
+// See: https://github.com/joyent/node/issues/1707
+function hasOwnProperty(obj, prop) {
+  return Object.prototype.hasOwnProperty.call(obj, prop);
+}
+
+module.exports = function(qs, sep, eq, options) {
+  sep = sep || '&';
+  eq = eq || '=';
+  var obj = {};
+
+  if (typeof qs !== 'string' || qs.length === 0) {
+    return obj;
+  }
+
+  var regexp = /\+/g;
+  qs = qs.split(sep);
+
+  var maxKeys = 1000;
+  if (options && typeof options.maxKeys === 'number') {
+    maxKeys = options.maxKeys;
+  }
+
+  var len = qs.length;
+  // maxKeys <= 0 means that we should not limit keys count
+  if (maxKeys > 0 && len > maxKeys) {
+    len = maxKeys;
+  }
+
+  for (var i = 0; i < len; ++i) {
+    var x = qs[i].replace(regexp, '%20'),
+        idx = x.indexOf(eq),
+        kstr, vstr, k, v;
+
+    if (idx >= 0) {
+      kstr = x.substr(0, idx);
+      vstr = x.substr(idx + 1);
+    } else {
+      kstr = x;
+      vstr = '';
+    }
+
+    k = decodeURIComponent(kstr);
+    v = decodeURIComponent(vstr);
+
+    if (!hasOwnProperty(obj, k)) {
+      obj[k] = v;
+    } else if (isArray(obj[k])) {
+      obj[k].push(v);
+    } else {
+      obj[k] = [obj[k], v];
+    }
+  }
+
+  return obj;
+};
+
+var isArray = Array.isArray || function (xs) {
+  return Object.prototype.toString.call(xs) === '[object Array]';
+};
+
+},{}],13:[function(require,module,exports){
+// Copyright Joyent, Inc. and other Node contributors.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a
+// copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+'use strict';
+
 var stringifyPrimitive = function(v) {
   switch (typeof v) {
     case 'string':
@@ -2210,14 +2296,20 @@ var objectKeys = Object.keys || function (obj) {
   return res;
 };
 
-},{}],13:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
+'use strict';
+
+exports.decode = exports.parse = require(12);
+exports.encode = exports.stringify = require(13);
+
+},{"12":12,"13":13}],15:[function(require,module,exports){
 (function (process){
 module.exports = AlgoliaSearchCore;
 
-var errors = require(23);
-var exitPromise = require(24);
-var IndexCore = require(14);
-var store = require(29);
+var errors = require(25);
+var exitPromise = require(26);
+var IndexCore = require(16);
+var store = require(31);
 
 // We will always put the API KEY in the JSON body in case of too long API KEY,
 // to avoid query string being too long and failing in various conditions (our server limit, browser limit,
@@ -2254,9 +2346,9 @@ var RESET_APP_DATA_TIMER =
 function AlgoliaSearchCore(applicationID, apiKey, opts) {
   var debug = require(1)('algoliasearch');
 
-  var clone = require(20);
+  var clone = require(22);
   var isArray = require(7);
-  var map = require(25);
+  var map = require(27);
 
   var usage = 'Usage: algoliasearch(applicationID, apiKey, opts)';
 
@@ -2830,7 +2922,7 @@ AlgoliaSearchCore.prototype._computeRequestHeaders = function(options) {
  */
 AlgoliaSearchCore.prototype.search = function(queries, opts, callback) {
   var isArray = require(7);
-  var map = require(25);
+  var map = require(27);
 
   var usage = 'Usage: client.search(arrayOfQueries[, callback])';
 
@@ -2913,7 +3005,7 @@ AlgoliaSearchCore.prototype.search = function(queries, opts, callback) {
 */
 AlgoliaSearchCore.prototype.searchForFacetValues = function(queries) {
   var isArray = require(7);
-  var map = require(25);
+  var map = require(27);
 
   var usage = 'Usage: client.searchForFacetValues([{indexName, params: {facetName, facetQuery, ...params}}, ...queries])'; // eslint-disable-line max-len
 
@@ -2933,8 +3025,8 @@ AlgoliaSearchCore.prototype.searchForFacetValues = function(queries) {
       throw new Error(usage);
     }
 
-    var clone = require(20);
-    var omit = require(27);
+    var clone = require(22);
+    var omit = require(29);
 
     var indexName = query.indexName;
     var params = query.params;
@@ -3086,7 +3178,7 @@ AlgoliaSearchCore.prototype._getHostIndexByType = function(hostType) {
 };
 
 AlgoliaSearchCore.prototype._setHostIndexByType = function(hostIndex, hostType) {
-  var clone = require(20);
+  var clone = require(22);
   var newHostIndexes = clone(this._hostIndexes);
   newHostIndexes[hostType] = hostIndex;
   this._partialAppIdDataUpdate({hostIndexes: newHostIndexes});
@@ -3180,10 +3272,10 @@ function removeCredentials(headers) {
 }
 
 }).call(this,require(11))
-},{"1":1,"11":11,"14":14,"20":20,"23":23,"24":24,"25":25,"27":27,"29":29,"4":4,"7":7}],14:[function(require,module,exports){
-var buildSearchMethod = require(19);
-var deprecate = require(21);
-var deprecatedMessage = require(22);
+},{"1":1,"11":11,"16":16,"22":22,"25":25,"26":26,"27":27,"29":29,"31":31,"4":4,"7":7}],16:[function(require,module,exports){
+var buildSearchMethod = require(21);
+var deprecate = require(23);
+var deprecatedMessage = require(24);
 
 module.exports = IndexCore;
 
@@ -3315,7 +3407,13 @@ IndexCore.prototype.search = buildSearchMethod('query');
 *   All search parameters are supported (see search function), restrictSearchableAttributes and facetFilters
 *   are the two most useful to restrict the similar results and get more relevant content
 */
-IndexCore.prototype.similarSearch = buildSearchMethod('similarQuery');
+IndexCore.prototype.similarSearch = deprecate(
+  buildSearchMethod('similarQuery'),
+  deprecatedMessage(
+    'index.similarSearch(query[, callback])',
+    'index.search({ similarQuery: query }[, callback])'
+  )
+);
 
 /*
 * Browse index content. The response content will have a `cursor` property that you can use
@@ -3335,7 +3433,7 @@ IndexCore.prototype.similarSearch = buildSearchMethod('similarQuery');
 * @see {@link https://www.algolia.com/doc/rest_api#Browse|Algolia REST API Documentation}
 */
 IndexCore.prototype.browse = function(query, queryParameters, callback) {
-  var merge = require(26);
+  var merge = require(28);
 
   var indexObj = this;
 
@@ -3430,8 +3528,8 @@ IndexCore.prototype.browseFrom = function(cursor, callback) {
 * @param callback (optional)
 */
 IndexCore.prototype.searchForFacetValues = function(params, callback) {
-  var clone = require(20);
-  var omit = require(27);
+  var clone = require(22);
+  var omit = require(29);
   var usage = 'Usage: index.searchForFacetValues({facetName, facetQuery, ...params}[, callback])';
 
   if (params.facetName === undefined || params.facetQuery === undefined) {
@@ -3521,7 +3619,7 @@ IndexCore.prototype.getObject = function(objectID, attrs, callback) {
 */
 IndexCore.prototype.getObjects = function(objectIDs, attributesToRetrieve, callback) {
   var isArray = require(7);
-  var map = require(25);
+  var map = require(27);
 
   var usage = 'Usage: index.getObjects(arrayOfObjectIDs[, callback])';
 
@@ -3565,15 +3663,15 @@ IndexCore.prototype.indexName = null;
 IndexCore.prototype.typeAheadArgs = null;
 IndexCore.prototype.typeAheadValueOption = null;
 
-},{"19":19,"20":20,"21":21,"22":22,"25":25,"26":26,"27":27,"7":7}],15:[function(require,module,exports){
+},{"21":21,"22":22,"23":23,"24":24,"27":27,"28":28,"29":29,"7":7}],17:[function(require,module,exports){
 'use strict';
 
-var AlgoliaSearchCore = require(13);
-var createAlgoliasearch = require(16);
+var AlgoliaSearchCore = require(15);
+var createAlgoliasearch = require(18);
 
 module.exports = createAlgoliasearch(AlgoliaSearchCore, '(lite) ');
 
-},{"13":13,"16":16}],16:[function(require,module,exports){
+},{"15":15,"18":18}],18:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -3585,10 +3683,10 @@ var Promise = global.Promise || require(3).Promise;
 // using XMLHttpRequest, XDomainRequest and JSONP as fallback
 module.exports = function createAlgoliasearch(AlgoliaSearch, uaSuffix) {
   var inherits = require(6);
-  var errors = require(23);
-  var inlineHeaders = require(17);
-  var jsonpRequest = require(18);
-  var places = require(28);
+  var errors = require(25);
+  var inlineHeaders = require(19);
+  var jsonpRequest = require(20);
+  var places = require(30);
   uaSuffix = uaSuffix || '';
 
   if (process.env.NODE_ENV === 'debug') {
@@ -3596,7 +3694,7 @@ module.exports = function createAlgoliasearch(AlgoliaSearch, uaSuffix) {
   }
 
   function algoliasearch(applicationID, apiKey, opts) {
-    var cloneDeep = require(20);
+    var cloneDeep = require(22);
 
     opts = cloneDeep(opts || {});
 
@@ -3605,7 +3703,7 @@ module.exports = function createAlgoliasearch(AlgoliaSearch, uaSuffix) {
     return new AlgoliaSearchBrowser(applicationID, apiKey, opts);
   }
 
-  algoliasearch.version = require(30);
+  algoliasearch.version = require(32);
   algoliasearch.ua = 'Algolia for vanilla JavaScript ' + uaSuffix + algoliasearch.version;
   algoliasearch.initPlaces = places(algoliasearch);
 
@@ -3810,12 +3908,12 @@ module.exports = function createAlgoliasearch(AlgoliaSearch, uaSuffix) {
 };
 
 }).call(this,require(11))
-},{"1":1,"11":11,"17":17,"18":18,"20":20,"23":23,"28":28,"3":3,"30":30,"5":5,"6":6}],17:[function(require,module,exports){
+},{"1":1,"11":11,"19":19,"20":20,"22":22,"25":25,"3":3,"30":30,"32":32,"5":5,"6":6}],19:[function(require,module,exports){
 'use strict';
 
 module.exports = inlineHeaders;
 
-var encode = require(12);
+var encode = require(13);
 
 function inlineHeaders(url, headers) {
   if (/\?/.test(url)) {
@@ -3827,12 +3925,12 @@ function inlineHeaders(url, headers) {
   return url + encode(headers);
 }
 
-},{"12":12}],18:[function(require,module,exports){
+},{"13":13}],20:[function(require,module,exports){
 'use strict';
 
 module.exports = jsonpRequest;
 
-var errors = require(23);
+var errors = require(25);
 
 var JSONPCounter = 0;
 
@@ -3955,10 +4053,10 @@ function jsonpRequest(url, opts, cb) {
   }
 }
 
-},{"23":23}],19:[function(require,module,exports){
+},{"25":25}],21:[function(require,module,exports){
 module.exports = buildSearchMethod;
 
-var errors = require(23);
+var errors = require(25);
 
 /**
  * Creates a search method to be used in clients
@@ -4024,12 +4122,12 @@ function buildSearchMethod(queryParam, url) {
   };
 }
 
-},{"23":23}],20:[function(require,module,exports){
+},{"25":25}],22:[function(require,module,exports){
 module.exports = function clone(obj) {
   return JSON.parse(JSON.stringify(obj));
 };
 
-},{}],21:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 module.exports = function deprecate(fn, message) {
   var warned = false;
 
@@ -4046,7 +4144,7 @@ module.exports = function deprecate(fn, message) {
   return deprecated;
 };
 
-},{}],22:[function(require,module,exports){
+},{}],24:[function(require,module,exports){
 module.exports = function deprecatedMessage(previousUsage, newUsage) {
   var githubAnchorLink = previousUsage.toLowerCase()
     .replace(/[\.\(\)]/g, '');
@@ -4055,7 +4153,7 @@ module.exports = function deprecatedMessage(previousUsage, newUsage) {
     '`. Please see https://github.com/algolia/algoliasearch-client-javascript/wiki/Deprecated#' + githubAnchorLink;
 };
 
-},{}],23:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 'use strict';
 
 // This file hosts our error definitions
@@ -4135,7 +4233,7 @@ module.exports = {
   )
 };
 
-},{"4":4,"6":6}],24:[function(require,module,exports){
+},{"4":4,"6":6}],26:[function(require,module,exports){
 // Parse cloud does not supports setTimeout
 // We do not store a setTimeout reference in the client everytime
 // We only fallback to a fake setTimeout when not available
@@ -4144,7 +4242,7 @@ module.exports = function exitPromise(fn, _setTimeout) {
   _setTimeout(fn, 0);
 };
 
-},{}],25:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 var foreach = require(4);
 
 module.exports = function map(arr, fn) {
@@ -4155,7 +4253,7 @@ module.exports = function map(arr, fn) {
   return newArr;
 };
 
-},{"4":4}],26:[function(require,module,exports){
+},{"4":4}],28:[function(require,module,exports){
 var foreach = require(4);
 
 module.exports = function merge(destination/* , sources */) {
@@ -4176,7 +4274,7 @@ module.exports = function merge(destination/* , sources */) {
   return destination;
 };
 
-},{"4":4}],27:[function(require,module,exports){
+},{"4":4}],29:[function(require,module,exports){
 module.exports = function omit(obj, test) {
   var keys = require(9);
   var foreach = require(4);
@@ -4192,14 +4290,15 @@ module.exports = function omit(obj, test) {
   return filtered;
 };
 
-},{"4":4,"9":9}],28:[function(require,module,exports){
+},{"4":4,"9":9}],30:[function(require,module,exports){
 module.exports = createPlacesClient;
 
-var buildSearchMethod = require(19);
+var qs3 = require(14);
+var buildSearchMethod = require(21);
 
 function createPlacesClient(algoliasearch) {
   return function places(appID, apiKey, opts) {
-    var cloneDeep = require(20);
+    var cloneDeep = require(22);
 
     opts = opts && cloneDeep(opts) || {};
     opts.hosts = opts.hosts || [
@@ -4219,6 +4318,17 @@ function createPlacesClient(algoliasearch) {
     var client = algoliasearch(appID, apiKey, opts);
     var index = client.initIndex('places');
     index.search = buildSearchMethod('query', '/1/places/query');
+    index.reverse = function(options, callback) {
+      var encoded = qs3.encode(options);
+
+      return this.as._jsonRequest({
+        method: 'GET',
+        url: '/1/places/reverse?' + encoded,
+        hostType: 'read',
+        callback: callback
+      });
+    };
+
     index.getObject = function(objectID, callback) {
       return this.as._jsonRequest({
         method: 'GET',
@@ -4231,7 +4341,7 @@ function createPlacesClient(algoliasearch) {
   };
 }
 
-},{"19":19,"20":20}],29:[function(require,module,exports){
+},{"14":14,"21":21,"22":22}],31:[function(require,module,exports){
 (function (global){
 var debug = require(1)('algoliasearch:src/hostIndexState.js');
 var localStorageNamespace = 'algoliasearch-client-js';
@@ -4321,10 +4431,10 @@ function cleanup() {
 }
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"1":1}],30:[function(require,module,exports){
+},{"1":1}],32:[function(require,module,exports){
 'use strict';
 
-module.exports = '3.30.0';
+module.exports = '3.31.0';
 
-},{}]},{},[15])(15)
+},{}]},{},[17])(17)
 });

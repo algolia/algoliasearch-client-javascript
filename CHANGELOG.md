@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 3.31.0
+>2018-12-04
+
+* FEAT(places): add `.reverse({ aroundLatLng: '' })` to reverse geo-code
+* CHORE: deprecated `similarSearch()`, instead use `.search({ similarQuery: '' })`
+
 ## 3.30.0
 >2018-08-01
 
