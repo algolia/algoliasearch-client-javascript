@@ -653,6 +653,52 @@ AlgoliaSearch.prototype.searchUserIDs = function(data, callback) {
   });
 };
 
+/**
+ * Set strategy for personalization
+ *
+ * @param {Object} data
+ * @param {Object} data.eventsScoring Associate a score to an event
+ * @param {Object} data.facetsScoring Associate a score to a facet
+ * @return {Promise|undefined} Returns a promise if no callback given
+ * @example
+ * client.setStrategy({
+ *   eventsScoring: {
+ *      "Add to cart": { score: 50, type: "conversion" },
+ *      Purchase: { score: 100, type: "conversion" }
+ *   },
+ *   facetsScoring: {
+ *      brand: { score: 100 },
+ *      categories: { score: 10 }
+ *   }
+ * });
+ */
+AlgoliaSearch.prototype.setStrategy = function(data, callback) {
+  return this._jsonRequest({
+    method: 'POST',
+    url: '/1/recommendation/personalization/strategy',
+    body: data,
+    hostType: 'write',
+    callback: callback
+  });
+};
+
+/**
+ * Get strategy for personalization
+ *
+ * @return {Promise|undefined} Returns a promise if no callback given
+ * @example
+ * client.getStrategy();
+ */
+
+AlgoliaSearch.prototype.getStrategy = function(callback) {
+  return this._jsonRequest({
+    method: 'GET',
+    url: '/1/recommendation/personalization/strategy',
+    hostType: 'write',
+    callback: callback
+  });
+};
+
 // environment specific methods
 AlgoliaSearch.prototype.destroy = notImplemented;
 AlgoliaSearch.prototype.enableRateLimitForward = notImplemented;
