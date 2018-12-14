@@ -661,7 +661,7 @@ AlgoliaSearch.prototype.searchUserIDs = function(data, callback) {
  * @param {Object} data.facetsScoring Associate a score to a facet
  * @return {Promise|undefined} Returns a promise if no callback given
  * @example
- * client.setStrategy({
+ * client.setPersonalizationStrategy({
  *   eventsScoring: {
  *      "Add to cart": { score: 50, type: "conversion" },
  *      Purchase: { score: 100, type: "conversion" }
@@ -672,7 +672,7 @@ AlgoliaSearch.prototype.searchUserIDs = function(data, callback) {
  *   }
  * });
  */
-AlgoliaSearch.prototype.setStrategy = function(data, callback) {
+AlgoliaSearch.prototype.setPersonalizationStrategy = function(data, callback) {
   return this._jsonRequest({
     method: 'POST',
     url: '/1/recommendation/personalization/strategy',
@@ -687,10 +687,10 @@ AlgoliaSearch.prototype.setStrategy = function(data, callback) {
  *
  * @return {Promise|undefined} Returns a promise if no callback given
  * @example
- * client.getStrategy();
+ * client.getPersonalizationStrategy();
  */
 
-AlgoliaSearch.prototype.getStrategy = function(callback) {
+AlgoliaSearch.prototype.getPersonalizationStrategy = function(callback) {
   return this._jsonRequest({
     method: 'GET',
     url: '/1/recommendation/personalization/strategy',
