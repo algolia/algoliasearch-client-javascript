@@ -662,6 +662,8 @@ AlgoliaSearch.prototype.searchUserIDs = function(data, callback) {
  * @param {Number} data.eventsScoring.<eventName>.score The score to associate to <eventName>
  * @param {String} data.eventsScoring.<eventName>.type Either "click", "conversion" or "view"
  * @param {Object} data.facetsScoring Associate a score to a facet
+ * @param {Object} data.facetsScoring.<facetName> The name of the facet
+ * @param {Number} data.facetsScoring.<facetName>.score The score to associate to <facetName>
  * @return {Promise|undefined} Returns a promise if no callback given
  * @example
  * client.setPersonalizationStrategy({
