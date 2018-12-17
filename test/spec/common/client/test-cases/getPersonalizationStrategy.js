@@ -6,7 +6,7 @@ module.exports = [
     object: 'client',
     methodName: 'getPersonalizationStrategy',
     callArguments: [],
-    action: 'write',
+    action: 'read',
     expectedRequest: {
       method: 'GET',
       URL: {pathname: '/1/recommendation/personalization/strategy'}

@@ -699,7 +699,7 @@ AlgoliaSearch.prototype.getPersonalizationStrategy = function(callback) {
   return this._jsonRequest({
     method: 'GET',
     url: '/1/recommendation/personalization/strategy',
-    hostType: 'write',
+    hostType: 'read',
     callback: callback
   });
 };
