@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## 3.32.0
+>2018-12-17
+
+* FEAT(personalization): add new methods for the strategy
+  * `getPersonalizationStrategy(cb)`: retrieve the currently set strategy
+  * `setPersonalizationStrategy(strategy, cb)`: set the personalization strategy
+    * a `strategy` is an object containing `eventsScoring` and `facetsScoring`
+  * see also https://www.algolia.com/doc/rest-api/personalization
+
 ## 3.31.0
 >2018-12-04
 
