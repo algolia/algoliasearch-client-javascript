@@ -653,6 +653,57 @@ AlgoliaSearch.prototype.searchUserIDs = function(data, callback) {
   });
 };
 
+/**
+ * Set strategy for personalization
+ *
+ * @param {Object} data
+ * @param {Object} data.eventsScoring Associate a score to an event
+ * @param {Object} data.eventsScoring.<eventName> The name of the event
+ * @param {Number} data.eventsScoring.<eventName>.score The score to associate to <eventName>
+ * @param {String} data.eventsScoring.<eventName>.type Either "click", "conversion" or "view"
+ * @param {Object} data.facetsScoring Associate a score to a facet
+ * @param {Object} data.facetsScoring.<facetName> The name of the facet
+ * @param {Number} data.facetsScoring.<facetName>.score The score to associate to <facetName>
+ * @return {Promise|undefined} Returns a promise if no callback given
+ * @example
+ * client.setPersonalizationStrategy({
+ *   eventsScoring: {
+ *      "Add to cart": { score: 50, type: "conversion" },
+ *      Purchase: { score: 100, type: "conversion" }
+ *   },
+ *   facetsScoring: {
+ *      brand: { score: 100 },
+ *      categories: { score: 10 }
+ *   }
+ * });
+ */
+AlgoliaSearch.prototype.setPersonalizationStrategy = function(data, callback) {
+  return this._jsonRequest({
+    method: 'POST',
+    url: '/1/recommendation/personalization/strategy',
+    body: data,
+    hostType: 'write',
+    callback: callback
+  });
+};
+
+/**
+ * Get strategy for personalization
+ *
+ * @return {Promise|undefined} Returns a promise if no callback given
+ * @example
+ * client.getPersonalizationStrategy();
+ */
+
+AlgoliaSearch.prototype.getPersonalizationStrategy = function(callback) {
+  return this._jsonRequest({
+    method: 'GET',
+    url: '/1/recommendation/personalization/strategy',
+    hostType: 'write',
+    callback: callback
+  });
+};
+
 // environment specific methods
 AlgoliaSearch.prototype.destroy = notImplemented;
 AlgoliaSearch.prototype.enableRateLimitForward = notImplemented;
