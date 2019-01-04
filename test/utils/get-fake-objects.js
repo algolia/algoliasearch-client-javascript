@@ -20,7 +20,7 @@ function getOneHit() {
   return {
     objectID: chance.word({length: 10}),
     description: chance.paragraph({sentences: random(1, 3)}),
-    category: 'a' + chance.word({lenght: 20}),
+    category: 'a' + chance.word({length: 20}),
     popularity: random(1, 100)
   };
 }

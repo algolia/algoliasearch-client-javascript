@@ -21,7 +21,7 @@ function testMethodCall(opts) {
   }
 
   // we wrap and replace the method callback (index.search('query', cb))
-  // so that we have our `checkMethodCallback` called when the callback occured
+  // so that we have our `checkMethodCallback` called when the callback occurred
   // as callback are asynchronous, we cannot use synchronous testing
   wrapMethodCallback(testCase.callArguments, checkMethodCallback);
 
