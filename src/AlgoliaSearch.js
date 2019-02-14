@@ -449,7 +449,7 @@ AlgoliaSearch.prototype.sendQueriesBatch = deprecate(function sendQueriesBatchDe
 }, deprecatedMessage('client.sendQueriesBatch()', 'client.search()'));
 
 /**
- * Perform write operations accross multiple indexes.
+ * Perform write operations across multiple indexes.
  *
  * To reduce the amount of time spent on network round trips,
  * you can create, update, or delete several objects in one call,

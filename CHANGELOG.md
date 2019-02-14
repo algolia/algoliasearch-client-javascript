@@ -49,7 +49,7 @@
 * FIX(parse): correct path to debug module (#702)
 
   fixes parse build, weirdly webpack is not throwing when importing an
-  unkown module using target node
+  unknown module using target node
 * TESTS: Make this CI green, fix unit and integration tests on every platform
 
 ## 3.27.1
@@ -392,7 +392,7 @@ using it. Just for testing other parts of it.
 * fix(retry): also retry on non search methods when DNS failure
 
   Before this commit, methods with no fallback support (basically every
-  method) would fail at retry if the DNS error occured before the API
+  method) would fail at retry if the DNS error occurred before the API
   client timeout.
 
   The behavior is now:
@@ -420,7 +420,7 @@ using it. Just for testing other parts of it.
 >2016-05-24
 
 
-* fix(request strategy): increments hostIndex (host adress) on fallback
+* fix(request strategy): increments hostIndex (host address) on fallback
 
   When we are switching to fallback, increment host index so that JSONP
   will use another host.
@@ -842,7 +842,7 @@ in Node.js client
     Chrome stable
     Firefox stable
     IE 8, 9, 10, 11
-  * tested on correponding customer websites
+  * tested on corresponding customer websites
 * FIX: better warning messages when using `latest` or trying to use V3 as V2
 
 ##  3.0.2
@@ -926,7 +926,7 @@ in Node.js client
     * removed AlgoliaSearchHelper
       Please see https://github.com/algolia/algoliasearch-helper-js if you need the helper
   * NEW FEATURES:
-    * UMD compatibiliy #41
+    * UMD compatibility #41
       - algoliasearch can now be used with any module loader
       - build is now done with browserify
       - no more grunt

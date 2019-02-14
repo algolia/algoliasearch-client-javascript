@@ -593,7 +593,7 @@ Index.prototype.waitTask = function(taskID, callback) {
 *
 * @param callback (optional) the result callback called with two arguments
 *  error: null or Error('message')
-*  content: the settings object or the error message if a failure occured
+*  content: the settings object or the error message if a failure occurred
 */
 Index.prototype.clearIndex = function(callback) {
   var indexObj = this;
@@ -904,7 +904,7 @@ Index.prototype.batchRules = function(rules, opts, callback) {
 /*
 * Set settings for this index
 *
-* @param settigns the settings object that can contains :
+* @param settings the settings object that can contains :
 * - minWordSizefor1Typo: (integer) the minimum number of characters to accept one typo (default = 3).
 * - minWordSizefor2Typos: (integer) the minimum number of characters to accept two typos (default = 7).
 * - hitsPerPage: (integer) the number of hits per page (default = 10).
@@ -970,7 +970,7 @@ Index.prototype.batchRules = function(rules, opts, callback) {
 * be considered as optional when found in the query.
 * @param callback (optional) the result callback called with two arguments
 *  error: null or Error('message')
-*  content: the server answer or the error message if a failure occured
+*  content: the server answer or the error message if a failure occurred
 */
 Index.prototype.setSettings = function(settings, opts, callback) {
   if (arguments.length === 1 || typeof opts === 'function') {
