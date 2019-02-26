@@ -51,7 +51,7 @@ test('client.setRequestTimeout()', function(t) {
     t.ok(err instanceof Error);
     t.equal(
       err.message,
-      'Request timedout before getting a response',
+      'Request timed out before getting a response',
       'Error message id descriptive'
     );
 
