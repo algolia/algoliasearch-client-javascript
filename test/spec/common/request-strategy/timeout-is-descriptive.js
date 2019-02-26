@@ -47,8 +47,8 @@ test('when a timeout occurs, we get a descriptive error', function(t) {
 
     t.equal(
       err.message,
-      'Request timedout before getting a response',
-      'error messag ematches'
+      'Request timed out before getting a response',
+      'error message matches'
     );
   });
 });

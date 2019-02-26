@@ -35,8 +35,8 @@ test('when indexing content, we retry if timeout occurs', function(t) {
 
     t.equal(
       err.message,
-      'Request timedout before getting a response',
-      'error messag ematches'
+      'Request timed out before getting a response',
+      'error message matches'
     );
   });
 });
