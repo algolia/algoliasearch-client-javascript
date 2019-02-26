@@ -133,6 +133,9 @@
     "xhr": "^2.4.0",
     "zuul": "^3.12.0"
   },
+  "resolutions": {
+    "bulkify": "1.4.0"
+  },
   "engines": {
     "node": ">=0.8"
   },

@@ -950,6 +950,15 @@ bulk-require@^1.0.0:
   dependencies:
     glob "^7.1.1"
 
+bulkify@1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/bulkify/-/bulkify-1.4.0.tgz#7083e88c3570af6da814bfdb5f6195d0d3c6af19"
+  integrity sha1-cIPojDVwr22oFL/bX2GV0NPGrxk=
+  dependencies:
+    bulk-require "^1.0.0"
+    static-module "^1.1.2"
+    through2 "~0.4.1"
+
 bulkify@^1.2.0:
   version "1.4.2"
   resolved "https://registry.yarnpkg.com/bulkify/-/bulkify-1.4.2.tgz#7848f0f3ab97f12a41b923bf90e53e09eaafba4c"
