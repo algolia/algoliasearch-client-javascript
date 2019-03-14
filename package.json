@@ -74,7 +74,7 @@
   ],
   "dependencies": {
     "agentkeepalive": "^2.2.0",
-    "debug": "^2.6.8",
+    "debug": "^2.6.9",
     "envify": "^4.0.0",
     "es6-promise": "^4.1.0",
     "events": "^1.1.0",
