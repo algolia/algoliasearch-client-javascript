@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 3.32.1
+>2019-03-14
+
+* FIX(errors): grammar change in error message (#737)
+* FIX(dependencies): bump debug requirement (#746)
+
 ## 3.32.0
 >2018-12-17
 
