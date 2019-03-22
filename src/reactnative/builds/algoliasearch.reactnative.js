@@ -34,7 +34,7 @@ function algoliasearch(applicationID, apiKey, opts) {
 }
 
 algoliasearch.version = require('../../version.js');
-algoliasearch.ua = 'Algolia for ReactNative ' + algoliasearch.version;
+algoliasearch.ua = 'Algolia for ReactNative (' + algoliasearch.version + ')';
 algoliasearch.initPlaces = places(algoliasearch);
 
 // we expose into window no matter how we are used, this will allow
