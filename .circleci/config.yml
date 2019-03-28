@@ -28,6 +28,7 @@ aliases:
 defaults: &defaults
   working_directory: ~/algoliasearch
   docker:
+    - name: localhostfix.nossl
     - image: circleci/node:8.15.1@sha256:3d32b8457083c33c04eb60fac02c0e39de5bd28de4b95393d7dcb5aa37b20af7
 
 version: 2
