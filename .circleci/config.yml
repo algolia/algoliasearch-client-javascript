@@ -20,6 +20,11 @@ aliases:
     name: Install dependencies
     command: yarn install
 
+  - &setup_nvm
+    name: Set up nvm
+    command: |
+      wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.33.8/install.sh | bas
+
 defaults: &defaults
   working_directory: ~/algoliasearch
   docker:
@@ -48,7 +53,7 @@ jobs:
       - run: *run_yarn_install
       - save_cache: *save_yarn_cache
       - run:
-          name: Build & Test packages size
+          name: Linting
           command: yarn test-ci:lint
 
   test_unit:
@@ -62,6 +67,8 @@ jobs:
       - restore_cache: *restore_yarn_cache
       - run: *run_yarn_install
       - save_cache: *save_yarn_cache
+      # TODO: remove this
+      - run: *setup_nvm
       - run:
           name: Lint & Code styles
           command: yarn lint
@@ -77,6 +84,7 @@ jobs:
       - restore_cache: *restore_yarn_cache
       - run: *run_yarn_install
       - save_cache: *save_yarn_cache
+      - run: *setup_nvm
       - run:
           name: Lint & Code styles
           command: yarn lint
