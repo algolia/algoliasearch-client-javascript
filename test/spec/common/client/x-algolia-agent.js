@@ -18,7 +18,7 @@ test('There is a default x-algolia-agent sent', function(t) {
   index.search('algolia agent');
 
   var expectedAgent = 'Algolia for ' + env + ' (' + version + ')';
-  if (process.browser === 'vailla JavaScript') {
+  if (!process.browser) {
     expectedAgent = 'Node.js (' + process.versions.node + '); ' + expectedAgent;
   }
 
