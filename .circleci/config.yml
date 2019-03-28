@@ -53,6 +53,9 @@ jobs:
 
   test_unit:
     <<: *defaults
+    docker:
+      # TODO: set hash
+      - image: circleci/node:7
     steps:
       - checkout
       - run: *install_yarn_version
