@@ -29,7 +29,10 @@ module.exports = function createAlgoliasearch(AlgoliaSearch, uaSuffix) {
   }
 
   algoliasearch.version = require('../version.js');
-  algoliasearch.ua = 'Algolia for vanilla JavaScript ' + uaSuffix + '(' + algoliasearch.version + ')';
+
+  algoliasearch.ua =
+    'Algolia for JavaScript (' + algoliasearch.version + '); ' + uaSuffix;
+
   algoliasearch.initPlaces = places(algoliasearch);
 
   // we expose into window no matter how we are used, this will allow
