@@ -34,7 +34,11 @@ window.angular.module('algoliasearch', [])
     }
 
     algoliasearch.version = require('../../version.js');
-    algoliasearch.ua = 'Algolia for AngularJS (' + algoliasearch.version + ')';
+
+    algoliasearch.ua =
+      'Algolia for JavaScript (' + algoliasearch.version + '); ' +
+      'AngularJS (' + window.angular.version.full + ')';
+
     algoliasearch.initPlaces = places(algoliasearch);
 
     // we expose into window no matter how we are used, this will allow
