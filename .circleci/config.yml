@@ -25,11 +25,15 @@ aliases:
     command: |
       wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.33.8/install.sh | bash
 
+  - &setup_hosts
+    name: Set up localhost
+    command: |
+      echo 127.0.0.1 localhostfix.nossl | sudo tee -a /etc/hosts
+
 defaults: &defaults
   working_directory: ~/algoliasearch
   docker:
     - image: circleci/node:8.15.1@sha256:3d32b8457083c33c04eb60fac02c0e39de5bd28de4b95393d7dcb5aa37b20af7
-      name: localhostfix.nossl
 
 version: 2
 jobs:
@@ -54,7 +58,7 @@ jobs:
       - run: *run_yarn_install
       - save_cache: *save_yarn_cache
       - run:
-          name: Linting
+          name: Lint & Code styles
           command: yarn test-ci:lint
 
   test_unit:
@@ -71,9 +75,6 @@ jobs:
       # TODO: remove this
       - run: *setup_nvm
       - run:
-          name: Lint & Code styles
-          command: yarn lint
-      - run:
           name: Unit Tests (node)
           command: yarn test-ci:unit-node
 
@@ -87,9 +88,6 @@ jobs:
       - save_cache: *save_yarn_cache
       - run: *setup_nvm
       - run:
-          name: Lint & Code styles
-          command: yarn lint
-      - run:
           name: Integration Tests (node)
           command: yarn test-ci:integration-node
 
@@ -101,9 +99,7 @@ jobs:
       - restore_cache: *restore_yarn_cache
       - run: *run_yarn_install
       - save_cache: *save_yarn_cache
-      - run:
-          name: Lint & Code styles
-          command: yarn lint
+      - run: *setup_hosts
       - run:
           name: Unit Tests (browsers)
           command: yarn test-ci:unit-browsers
@@ -118,9 +114,7 @@ jobs:
       - restore_cache: *restore_yarn_cache
       - run: *run_yarn_install
       - save_cache: *save_yarn_cache
-      - run:
-          name: Lint & Code styles
-          command: yarn lint
+      - run: *setup_hosts
       - run:
           name: Integration Tests (browsers)
           command: yarn test-ci:integration-browsers
