@@ -69,8 +69,11 @@ function algoliasearch(applicationID, apiKey, opts) {
 }
 
 algoliasearch.version = require('../../version.js');
-algoliasearch.ua = 'Algolia for Node.js (' + algoliasearch.version + '); ' +
-                  'Node.js (' + process.versions.node + ')';
+
+algoliasearch.ua =
+  'Algolia for JavaScript (' + algoliasearch.version + '); ' +
+  'Node.js (' + process.versions.node + ')';
+
 algoliasearch.initPlaces = places(algoliasearch);
 
 function AlgoliaSearchNodeJS(applicationID, apiKey, opts) {
