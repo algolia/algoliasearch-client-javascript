@@ -30,7 +30,11 @@ function algoliasearch(applicationID, apiKey, opts) {
 }
 
 algoliasearch.version = require('../../version.js');
-algoliasearch.ua = 'Algolia for jQuery (' + algoliasearch.version + ')';
+
+algoliasearch.ua =
+  'Algolia for JavaScript (' + algoliasearch.version + '); ' +
+  'jQuery (' + window.jQuery().jquery + ')';
+
 algoliasearch.initPlaces = places(algoliasearch);
 
 // we expose into window no matter how we are used, this will allow

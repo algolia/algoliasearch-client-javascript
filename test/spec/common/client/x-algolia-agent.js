@@ -11,13 +11,15 @@ test('There is a default x-algolia-agent sent', function(t) {
 
   var createFixture = require('../../../utils/create-fixture');
   var fixture = createFixture();
-  var env = process.browser ? 'vanilla JavaScript' : 'Node.js';
   var version = require('../../../../src/version.js');
+  var env = !process.browser
+    ? 'Node.js (' + process.versions.node + ')'
+    : 'Browser';
 
   var index = fixture.index;
   index.search('algolia agent');
 
-  var expectedAgent = 'Algolia for ' + env + ' (' + version + ')';
+  var expectedAgent = 'Algolia for JavaScript (' + version + '); ' + env;
 
   fauxJax.once('request', function(req) {
     var agent = process.browser ?
