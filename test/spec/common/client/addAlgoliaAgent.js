@@ -24,7 +24,9 @@ test('AddAlgoliaAgent and custom search-time agent with x-algolia-agent', functi
     additionalUA: 'the other agent'
   });
 
-  var expectedAgent = fixture.algoliasearch.ua + ';And some other incredible agent;the other agent';
+  var expectedAgent =
+    fixture.algoliasearch.ua +
+    '; And some other incredible agent; the other agent';
 
   fauxJax.once('request', function(req) {
     var agent = process.browser ?
