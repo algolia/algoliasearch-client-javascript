@@ -245,6 +245,27 @@ AlgoliaSearch.prototype.deleteApiKey = function(key, callback) {
   });
 };
 
+/**
+ * Restore a deleted API key
+ *
+ * @param {String} key - The key to restore
+ * @param {Function} callback - The result callback called with two arguments
+ *   error: null or Error('message')
+ *   content: the server answer with the restored API key
+ * @return {Promise|undefined} Returns a promise if no callback given
+ * @example
+ * client.restoreApiKey('APIKEY')
+ * @see {@link https://www.algolia.com/doc/rest-api/search/#restore-api-key|Algolia REST API Documentation}
+ */
+AlgoliaSearch.prototype.restoreApiKey = function(key, callback) {
+  return this._jsonRequest({
+    method: 'POST',
+    url: '/1/keys/' + key + '/restore',
+    hostType: 'write',
+    callback: callback
+  });
+};
+
 /*
  @deprecated see client.addApiKey
  */
