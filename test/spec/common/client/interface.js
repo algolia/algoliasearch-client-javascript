@@ -48,6 +48,7 @@ test('AlgoliaSearch client API spec', function(t) {
     'listUserKeys',
     'moveIndex',
     'removeUserID',
+    'restoreApiKey',
     'search',
     'searchForFacetValues',
     'searchUserIDs',
