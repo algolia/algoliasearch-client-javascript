@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 3.33.0
+>2019-05-09
+
+* FEAT(api-keys): add restore api key method (#754)
+  * `client.restoreApiKey('APIKEY')`: restore a deleted API key
+  * see also https://www.algolia.com/doc/api-reference/api-methods/restore-api-key
+* FIX(ua): change the User-Agent to use the new specs lib (version) (#747)
+
 ## 3.32.1
 >2019-03-14
 

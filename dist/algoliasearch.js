@@ -1,4 +1,4 @@
-/*! algoliasearch 3.32.1 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
+/*! algoliasearch 3.33.0 | © 2014, 2015 Algolia SAS | github.com/algolia/algoliasearch-client-js */
 (function(f){var g;if(typeof window!=='undefined'){g=window}else if(typeof self!=='undefined'){g=self}g.ALGOLIA_MIGRATION_LAYER=f()})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 
 module.exports = function load (src, opts, cb) {
@@ -3054,6 +3054,27 @@ AlgoliaSearch.prototype.deleteApiKey = function(key, callback) {
   });
 };
 
+/**
+ * Restore a deleted API key
+ *
+ * @param {String} key - The key to restore
+ * @param {Function} callback - The result callback called with two arguments
+ *   error: null or Error('message')
+ *   content: the server answer with the restored API key
+ * @return {Promise|undefined} Returns a promise if no callback given
+ * @example
+ * client.restoreApiKey('APIKEY')
+ * @see {@link https://www.algolia.com/doc/rest-api/search/#restore-api-key|Algolia REST API Documentation}
+ */
+AlgoliaSearch.prototype.restoreApiKey = function(key, callback) {
+  return this._jsonRequest({
+    method: 'POST',
+    url: '/1/keys/' + key + '/restore',
+    hostType: 'write',
+    callback: callback
+  });
+};
+
 /*
  @deprecated see client.addApiKey
  */
@@ -3703,8 +3724,10 @@ AlgoliaSearchCore.prototype.unsetExtraHeader = function(name) {
 * @param algoliaAgent the agent to add
 */
 AlgoliaSearchCore.prototype.addAlgoliaAgent = function(algoliaAgent) {
-  if (this._ua.indexOf(';' + algoliaAgent) === -1) {
-    this._ua += ';' + algoliaAgent;
+  var algoliaAgentWithDelimiter = '; ' + algoliaAgent;
+
+  if (this._ua.indexOf(algoliaAgentWithDelimiter) === -1) {
+    this._ua += algoliaAgentWithDelimiter;
   }
 };
 
@@ -4100,7 +4123,7 @@ AlgoliaSearchCore.prototype._computeRequestHeaders = function(options) {
   var forEach = require(5);
 
   var ua = options.additionalUA ?
-    this._ua + ';' + options.additionalUA :
+    this._ua + '; ' + options.additionalUA :
     this._ua;
 
   var requestHeaders = {
@@ -6187,7 +6210,7 @@ IndexCore.prototype.typeAheadValueOption = null;
 var AlgoliaSearch = require(16);
 var createAlgoliasearch = require(22);
 
-module.exports = createAlgoliasearch(AlgoliaSearch);
+module.exports = createAlgoliasearch(AlgoliaSearch, 'Browser');
 
 },{"16":16,"22":22}],22:[function(require,module,exports){
 (function (process){
@@ -6222,7 +6245,10 @@ module.exports = function createAlgoliasearch(AlgoliaSearch, uaSuffix) {
   }
 
   algoliasearch.version = require(37);
-  algoliasearch.ua = 'Algolia for vanilla JavaScript ' + uaSuffix + algoliasearch.version;
+
+  algoliasearch.ua =
+    'Algolia for JavaScript (' + algoliasearch.version + '); ' + uaSuffix;
+
   algoliasearch.initPlaces = places(algoliasearch);
 
   // we expose into window no matter how we are used, this will allow
@@ -7039,7 +7065,7 @@ function cleanup() {
 },{"1":1}],37:[function(require,module,exports){
 'use strict';
 
-module.exports = '3.32.1';
+module.exports = '3.33.0';
 
 },{}]},{},[21])(21)
 });
