@@ -58,7 +58,7 @@ index.saveObjects(objects, (err, content) => {
 });
 ```
 
-Finally, you may begin searching a object using the `search` method:
+Finally, let's actually search using the `search` method:
 
 ```js
 index.search({
