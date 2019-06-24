@@ -51,26 +51,27 @@ const objects = [{
   name: 'Foo'
 }];
 
-index.saveObjects(objects, (err, content) => {
-  if (err) throw err;
-
-  console.log(content);
-});
+index
+  .saveObjects(objects)
+  .then(({ objectIDs }) => {
+    console.log(objectIDs);
+  })
+  .catch(err => {
+    console.log(err);
+  });
 ```
 
 Finally, let's actually search using the `search` method:
 
 ```js
-index.search({
-  query: 'Fo'
-  },
-  (err, { hits } = {}) => {
-    if (err) throw err;
-
+index
+  .search('Fo')
+  .then(({ hits }) => {
     console.log(hits);
-  }
-);
-
+  })
+  .catch(err => {
+    console.log(err);
+  });
 ```
 
 For full documentation, visit the **[online documentation](https://www.algolia.com/doc/api-client/getting-started/install/javascript/)**.
