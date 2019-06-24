@@ -73,7 +73,7 @@ index.search({
 
 ```
 
-For full documentation, visit the **[Algolia JavaScript API Client](https://www.algolia.com/doc/api-client/getting-started/install/javascript/)**.
+For full documentation, visit the **[online documentation](https://www.algolia.com/doc/api-client/getting-started/install/javascript/)**.
 
 ## 📄 License
 
