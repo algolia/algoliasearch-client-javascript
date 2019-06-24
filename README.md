@@ -32,7 +32,7 @@
 
 ## 💡 Getting Started
 
-First, install Algolia javascript API Client via the [NPM](https://www.npmjs.com/get-npm) package manager:
+First, install Algolia JavaScript API Client via the [NPM](https://www.npmjs.com/get-npm) package manager:
 
 ```bash
 npm install --save algoliasearch
