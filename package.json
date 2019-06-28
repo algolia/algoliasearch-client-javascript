@@ -2,7 +2,14 @@
   "name": "algoliasearch-monorepo",
   "private": true,
   "license": "MIT",
-  "description": "Thin & minimal low-level HTTP client to interact with Algolia's API",
-  "devDependencies": {},
-  "scripts": {}
+  "devDependencies": {
+    "@types/jest": "^24.0.15",
+    "jest": "^24.8.0",
+    "lerna": "^3.15.0",
+    "ts-jest": "^24.0.2",
+    "typescript": "^3.5.2"
+  },
+  "scripts": {
+    "test": "jest --verbose"
+  }
 }
