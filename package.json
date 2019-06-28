@@ -1,6 +1,7 @@
 {
-  "name": "algoliasearch",
-  "version": "4.0.0-alpha.0",
+  "name": "algoliasearch-monorepo",
+  "private": true,
+  "license": "MIT",
   "description": "Thin & minimal low-level HTTP client to interact with Algolia's API",
   "devDependencies": {},
   "scripts": {}
