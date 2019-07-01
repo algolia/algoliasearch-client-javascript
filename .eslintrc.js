@@ -1,3 +1,3 @@
 module.exports = {
-  extends: 'algolia/typescript'
+  extends: ['algolia/typescript', 'algolia/jest']
 };
