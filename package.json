@@ -4,12 +4,35 @@
   "license": "MIT",
   "devDependencies": {
     "@types/jest": "^24.0.15",
+    "@typescript-eslint/eslint-plugin": "^1.11.0",
+    "@typescript-eslint/parser": "^1.11.0",
+    "babel-eslint": "^10.0.2",
+    "eslint": "^6.0.1",
+    "eslint-config-algolia": "^13.3.0",
+    "eslint-config-prettier": "^6.0.0",
+    "eslint-plugin-import": "^2.18.0",
+    "eslint-plugin-jest": "^22.7.1",
+    "eslint-plugin-prettier": "^3.1.0",
+    "husky": "^2.7.0",
     "jest": "^24.8.0",
     "lerna": "^3.15.0",
+    "lint-staged": "^8.2.1",
+    "prettier": "^1.18.2",
     "ts-jest": "^24.0.2",
     "typescript": "^3.5.2"
   },
   "scripts": {
-    "test": "jest --verbose"
-  }
+    "precommit": "lint-staged",
+    "test": "jest --verbose",
+    "lint": "eslint . --ext .js,.ts",
+    "lint:fix": "npm run lint -- --fix"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn precommit"
+    }
+  },
+  "workspaces": [
+    "packages/*"
+  ]
 }
