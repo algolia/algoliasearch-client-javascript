@@ -2,6 +2,14 @@
   "name": "algoliasearch-monorepo",
   "private": true,
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/algolia/algoliasearch-client-javascript.git"
+  },
+  "bugs": {
+    "url": "https://github.com/algolia/algoliasearch-client-javascript/issues"
+  },
+  "homepage": "https://www.algolia.com/doc/api-client/getting-started/install/javascript/",
   "dependencies": {
     "@algolia/requester-browser-xhr": "file:packages/requester-browser-xhr",
     "@algolia/requester-types": "file:packages/requester-types",
