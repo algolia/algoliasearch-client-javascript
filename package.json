@@ -2,6 +2,11 @@
   "name": "algoliasearch-monorepo",
   "private": true,
   "license": "MIT",
+  "dependencies": {
+    "@algolia/requester-browser-xhr": "file:packages/requester-browser-xhr",
+    "@algolia/requester-types": "file:packages/requester-types",
+    "algoliasearch": "file:packages/algoliasearch"
+  },
   "devDependencies": {
     "@types/jest": "^24.0.15",
     "@typescript-eslint/eslint-plugin": "^1.11.0",
@@ -19,7 +24,8 @@
     "lint-staged": "^8.2.1",
     "prettier": "^1.18.2",
     "ts-jest": "^24.0.2",
-    "typescript": "^3.5.2"
+    "typescript": "^3.5.2",
+    "xhr-mock": "^2.4.1"
   },
   "scripts": {
     "precommit": "lint-staged",
