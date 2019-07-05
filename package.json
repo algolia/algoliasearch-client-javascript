@@ -32,6 +32,7 @@
     "lint-staged": "^8.2.1",
     "prettier": "^1.18.2",
     "ts-jest": "^24.0.2",
+    "ts-mockito": "^2.3.1",
     "typescript": "^3.5.2",
     "xhr-mock": "^2.4.1"
   },
