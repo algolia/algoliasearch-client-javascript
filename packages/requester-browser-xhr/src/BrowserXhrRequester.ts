@@ -12,7 +12,7 @@ export class BrowserXhrRequester implements Requester {
       baseRequester.ontimeout = (): void => {
         resolve({
           content: baseRequester.statusText,
-          statusCode: baseRequester.status,
+          status: baseRequester.status,
           isTimedOut: true,
         });
       };
@@ -20,7 +20,7 @@ export class BrowserXhrRequester implements Requester {
       baseRequester.onload = (): void => {
         resolve({
           content: baseRequester.responseText,
-          statusCode: baseRequester.status,
+          status: baseRequester.status,
           isTimedOut: false,
         });
       };

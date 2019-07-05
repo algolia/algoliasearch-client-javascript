@@ -41,7 +41,7 @@ describe('Requester Browser Xhr', (): void => {
     return requester
       .send(Fixtures.request())
       .then((response: Response): void => {
-        expect(response.statusCode).toBe(200);
+        expect(response.status).toBe(200);
         expect(response.content).toBe(body);
         expect(response.isTimedOut).toBe(false);
       });
@@ -59,7 +59,7 @@ describe('Requester Browser Xhr', (): void => {
     return requester
       .send(Fixtures.request())
       .then((response: Response): void => {
-        expect(response.statusCode).toBe(300);
+        expect(response.status).toBe(300);
         expect(response.content).toBe('');
         expect(response.isTimedOut).toBe(false);
       });
@@ -78,7 +78,7 @@ describe('Requester Browser Xhr', (): void => {
     return requester
       .send(Fixtures.request())
       .then((response: Response): void => {
-        expect(response.statusCode).toBe(400);
+        expect(response.status).toBe(400);
         expect(response.content).toBe(JSON.stringify(body));
         expect(response.isTimedOut).toBe(false);
       });
@@ -98,7 +98,7 @@ describe('Requester Browser Xhr', (): void => {
     };
 
     return requester.send(request).then((response: Response): void => {
-      expect(response.statusCode).toBe(0);
+      expect(response.status).toBe(0);
       expect(response.content).toBe('');
       expect(response.isTimedOut).toBe(true);
     });
