@@ -5,7 +5,8 @@ module.exports = {
       "error",
       { packageDir: "./", devDependencies: true }
     ],
-    "no-bitwise": ["off"]
+    "no-bitwise": ["off"],
+    "import/no-extraneous-dependencies": ["off"]
   },
   settings: {
     "import/resolver": {
