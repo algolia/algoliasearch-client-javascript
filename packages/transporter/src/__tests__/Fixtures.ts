@@ -40,6 +40,9 @@ export class Fixtures {
         read: 2,
         write: 30,
       },
+      headers: {
+        'X-Default-Header': 'Default value',
+      },
     });
   }
 
@@ -52,11 +55,15 @@ export class Fixtures {
   }
 
   public static requesterRequest() {
+    const headers: { [key: string]: string } = {
+      'X-Default-Header': 'Default value',
+    };
+
     return {
       data: '',
-      headers: {},
+      headers,
       method: Method.Post,
-      url: 'https://a.com/save',
+      url: 'https://specify-call-type.com/save',
       timeout: 2,
     };
   }

@@ -13,6 +13,7 @@ import { Requester } from '@algolia/requester-types';
 import { RetryStrategy, RetryOutcome } from './RetryStrategy';
 
 export class Transporter implements TransporterContract {
+  private headers: { [key: string]: string };
   private hosts: Host[];
   private requester: Requester;
   private timeouts: Timeouts;
@@ -23,12 +24,32 @@ export class Transporter implements TransporterContract {
     hosts: Host[];
     requester: Requester;
     timeouts: Timeouts;
+    headers: { [key: string]: string };
   }) {
+    this.headers = options.headers;
     this.hosts = options.hosts;
     this.requester = options.requester;
     this.timeouts = options.timeouts;
 
     this.retryStrategy = new RetryStrategy();
+  }
+
+  public withHeaders(headers: { [key: string]: string }): TransporterContract {
+    return new Transporter({
+      hosts: this.hosts,
+      requester: this.requester,
+      timeouts: this.timeouts,
+      headers,
+    });
+  }
+
+  public withHosts(hosts: Host[]): TransporterContract {
+    return new Transporter({
+      hosts,
+      requester: this.requester,
+      timeouts: this.timeouts,
+      headers: this.headers,
+    });
   }
 
   public read<TResponse>(
@@ -101,7 +122,10 @@ export class Transporter implements TransporterContract {
     this.requester
       .send({
         data: '',
-        headers: {},
+        headers: {
+          ...(requestOptions.headers ? requestOptions.headers : {}),
+          ...this.headers,
+        },
         method: request.method,
         url: `https://${host.url}/${request.path}`,
         timeout: requestOptions.timeout ? requestOptions.timeout : 0,
