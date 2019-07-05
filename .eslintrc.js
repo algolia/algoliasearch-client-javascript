@@ -4,7 +4,8 @@ module.exports = {
     "import/no-extraneous-dependencies": [
       "error",
       { packageDir: "./", devDependencies: true }
-    ]
+    ],
+    "no-bitwise": ["off"]
   },
   settings: {
     "import/resolver": {
