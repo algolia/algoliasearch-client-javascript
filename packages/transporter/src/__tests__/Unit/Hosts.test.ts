@@ -10,7 +10,7 @@ beforeEach(() => {
   transporter = Fixtures.transporter(requester);
 
   when(requester.send(anything())).thenResolve({
-    content: '',
+    content: '{}',
     status: 500,
     isTimedOut: false,
   });
