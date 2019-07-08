@@ -2,12 +2,10 @@ import { Request, Requester, Response } from '@algolia/requester-types';
 
 export class BrowserXhrRequester implements Requester {
   public send(request: Request): Promise<Response> {
-    const baseRequester = new XMLHttpRequest();
-
-    baseRequester.timeout = request.timeout;
-
     return new Promise((resolve): void => {
-      baseRequester.timeout = request.timeout;
+      const baseRequester = new XMLHttpRequest();
+
+      baseRequester.timeout = 1000 * request.timeout;
 
       baseRequester.ontimeout = (): void => {
         resolve({
