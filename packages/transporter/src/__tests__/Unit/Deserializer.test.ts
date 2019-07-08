@@ -53,4 +53,25 @@ describe('The deserializer', () => {
         done();
       });
   });
+
+  it('Deserializes fail non json responses', done => {
+    when(requester.send(anything())).thenResolve({
+      content: 'String message for some reason',
+      status: 404,
+      isTimedOut: false,
+    });
+
+    return transporter
+      .read(transporterRequest)
+      .then(() => done.fail('This should not happen'))
+      .catch((e: ApiError) => {
+        expect(e).toStrictEqual({
+          message: 'String message for some reason',
+          status: 404,
+          name: ApiError.name,
+        });
+
+        done();
+      });
+  });
 });
