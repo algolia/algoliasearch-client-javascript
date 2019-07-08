@@ -29,6 +29,6 @@ export class RetryStrategy {
   }
 
   private isSuccess({ status }: Response): boolean {
-    return status / 100 === 2;
+    return ~~(status / 100) === 2;
   }
 }
