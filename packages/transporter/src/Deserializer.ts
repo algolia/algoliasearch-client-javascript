@@ -1,7 +1,7 @@
 import { Response } from '@algolia/requester-types';
 import { ApiError } from '@algolia/transporter-types';
 
-export class Deserialize {
+export class Deserializer {
   public static success({ content }: Response): object {
     return JSON.parse(content);
   }

@@ -8,26 +8,31 @@ import {
   RetryError,
 } from '@algolia/transporter-types';
 
-import { Deserialize } from './Deserialize';
+import { Deserializer } from './Deserializer';
+import { Logger } from '@algolia/logger-types';
 import { Requester } from '@algolia/requester-types';
 import { RetryStrategy, RetryOutcome } from './RetryStrategy';
+import { Serializer } from './Serializer';
 
 export class Transporter implements TransporterContract {
   private headers: { [key: string]: string };
   private hosts: Host[];
+  private logger: Logger;
   private requester: Requester;
   private timeouts: Timeouts;
 
   private retryStrategy: RetryStrategy;
 
   public constructor(options: {
+    headers: { [key: string]: string };
     hosts: Host[];
+    logger: Logger;
     requester: Requester;
     timeouts: Timeouts;
-    headers: { [key: string]: string };
   }) {
     this.headers = options.headers;
     this.hosts = options.hosts;
+    this.logger = options.logger;
     this.requester = options.requester;
     this.timeouts = options.timeouts;
 
@@ -36,10 +41,11 @@ export class Transporter implements TransporterContract {
 
   public withHeaders(headers: { [key: string]: string }): TransporterContract {
     return new Transporter({
+      headers,
       hosts: this.hosts,
+      logger: this.logger,
       requester: this.requester,
       timeouts: this.timeouts,
-      headers,
     });
   }
 
@@ -47,6 +53,7 @@ export class Transporter implements TransporterContract {
     return new Transporter({
       hosts,
       requester: this.requester,
+      logger: this.logger,
       timeouts: this.timeouts,
       headers: this.headers,
     });
@@ -121,7 +128,7 @@ export class Transporter implements TransporterContract {
 
     this.requester
       .send({
-        data: '',
+        data: Serializer.serialize(request),
         headers: {
           ...(requestOptions.headers ? requestOptions.headers : {}),
           ...this.headers,
@@ -133,15 +140,21 @@ export class Transporter implements TransporterContract {
       .then(response => {
         switch (this.retryStrategy.decide(host, response)) {
           case RetryOutcome.Success: {
-            resolve(Deserialize.success(response));
+            resolve(Deserializer.success(response));
             break;
           }
           case RetryOutcome.Retry: {
+            this.logger.info('Retriable failure', {
+              request,
+              response,
+              host,
+              triesLeft: hosts.length,
+            });
             this.retry(hosts, request, requestOptions, resolve, reject);
             break;
           }
           case RetryOutcome.Fail: {
-            reject(Deserialize.fail(response));
+            reject(Deserializer.fail(response));
             break;
           }
           default: {
