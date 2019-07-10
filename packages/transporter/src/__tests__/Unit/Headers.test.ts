@@ -20,45 +20,36 @@ const transporterRequest = Fixtures.transporterRequest();
 const requesterRequest = Fixtures.requesterRequest();
 
 describe('The selection of headers', () => {
-  it('Allows override default headers', done => {
-    return transporter
+  it('Allows override default headers', async () => {
+    await transporter
       .withHeaders({
         'X-Algolia-Application-Id': 'foo',
       })
-      .write(transporterRequest)
-      .then(() => {
-        requesterRequest.url = 'https://write.com/save';
-        requesterRequest.timeout = 30;
-        requesterRequest.headers = {
-          'X-Algolia-Application-Id': 'foo',
-        };
+      .write(transporterRequest);
 
-        verify(requester.send(deepEqual(requesterRequest))).once();
+    requesterRequest.url = 'https://write.com/save';
+    requesterRequest.timeout = 30;
+    requesterRequest.headers = {
+      'X-Algolia-Application-Id': 'foo',
+    };
 
-        done();
-      })
-      .catch(e => done.fail(e));
+    verify(requester.send(deepEqual(requesterRequest))).once();
   });
 
-  it('Allows to add headers per read/write', done => {
-    return transporter
-      .read(transporterRequest, {
-        headers: {
-          'X-Algolia-Application-Id': 'foo',
-        },
-      })
-      .then(() => {
-        requesterRequest.url = 'https://read.com/save';
-        requesterRequest.timeout = 2;
-        requesterRequest.headers = {
-          'X-Algolia-Application-Id': 'foo',
-          'X-Default-Header': 'Default value',
-        };
+  it('Allows to add headers per read/write', async () => {
+    await transporter.read(transporterRequest, {
+      headers: {
+        'X-Algolia-Application-Id': 'foo',
+      },
+    });
 
-        verify(requester.send(deepEqual(requesterRequest))).once();
+    requesterRequest.url = 'https://read.com/save';
+    requesterRequest.timeout = 2;
+    requesterRequest.headers = {
+      'X-Algolia-Application-Id': 'foo',
+      'X-Default-Header': 'Default value',
+    };
 
-        done();
-      })
-      .catch(e => done.fail(e));
+    verify(requester.send(deepEqual(requesterRequest))).once();
   });
 });

@@ -20,7 +20,7 @@ const transporterRequest = Fixtures.transporterRequest();
 const requesterRequest = Fixtures.requesterRequest();
 
 describe('The retry strategy', () => {
-  it('Retries after a timeout', done => {
+  it('Retries after a timeout', async () => {
     requesterRequest.timeout = 30;
     requesterRequest.url = 'https://write.com/save';
 
@@ -30,13 +30,12 @@ describe('The retry strategy', () => {
       isTimedOut: true,
     });
 
-    return transporter.write(transporterRequest, {}).then(() => {
-      verify(requester.send(anything())).twice();
-      done();
-    });
+    await transporter.write(transporterRequest, {});
+
+    verify(requester.send(anything())).twice();
   });
 
-  it('Retries after a network error', done => {
+  it('Retries after a network error', async () => {
     type SearchResponse = {
       hits: Array<{ name: string }>;
     };
@@ -49,16 +48,12 @@ describe('The retry strategy', () => {
       isTimedOut: false,
     });
 
-    return transporter
-      .read<SearchResponse>(transporterRequest, {})
-      .then(() => {
-        verify(requester.send(anything())).twice();
-        done();
-      })
-      .catch(e => done.fail(e));
+    await transporter.read<SearchResponse>(transporterRequest, {});
+
+    verify(requester.send(anything())).twice();
   });
 
-  it('Retries after a 1xx', done => {
+  it('Retries after a 1xx', async () => {
     type SearchResponse = {
       hits: Array<{ name: string }>;
     };
@@ -71,31 +66,26 @@ describe('The retry strategy', () => {
       isTimedOut: true,
     });
 
-    return transporter
-      .read<SearchResponse>(transporterRequest, {})
-      .then(() => {
-        verify(requester.send(anything())).twice();
-        done();
-      })
-      .catch(e => done.fail(e));
+    await transporter.read<SearchResponse>(transporterRequest, {});
+
+    verify(requester.send(anything())).twice();
   });
 
-  it("Don't retry after a 2xx", done => {
+  it("Don't retry after a 2xx", async () => {
     type SearchResponse = {
       hits: Array<{ name: string }>;
     };
 
-    return transporter
-      .read<SearchResponse>(transporterRequest, {})
-      .then(res => {
-        expect(res.hits[0].name).toBe('Star Wars');
-        verify(requester.send(anything())).once();
-        done();
-      })
-      .catch(e => done.fail(e));
+    const response = await transporter.read<SearchResponse>(
+      transporterRequest,
+      {}
+    );
+
+    expect(response.hits[0].name).toBe('Star Wars');
+    verify(requester.send(anything())).once();
   });
 
-  it('Retries after a 3xx', done => {
+  it('Retries after a 3xx', async () => {
     type SearchResponse = {
       hits: Array<{ name: string }>;
     };
@@ -108,17 +98,12 @@ describe('The retry strategy', () => {
       isTimedOut: true,
     });
 
-    return transporter
-      .read<SearchResponse>(transporterRequest, {})
-      .then(() => {
-        verify(requester.send(anything())).twice();
+    await transporter.read<SearchResponse>(transporterRequest, {});
 
-        done();
-      })
-      .catch(e => done.fail(e));
+    verify(requester.send(anything())).twice();
   });
 
-  it('Dont retry after a 4xx', done => {
+  it('Dont retry after a 4xx', async () => {
     type SearchResponse = {
       hits: Array<{ name: string }>;
     };
@@ -134,25 +119,19 @@ describe('The retry strategy', () => {
       isTimedOut: false,
     });
 
-    type Reason = {
-      message: string;
-      status: number;
-    };
+    expect.assertions(2);
 
-    return transporter
-      .write<SearchResponse>(transporterRequest, {})
-      .then(() => done.fail('This should not happen.'))
-      .catch((reason: Reason) => {
-        verify(requester.send(anything())).once();
+    try {
+      await transporter.write<SearchResponse>(transporterRequest, {});
+    } catch (reason) {
+      verify(requester.send(anything())).once();
 
-        expect(reason.message).toBe('Invalid Application ID');
-        expect(reason.status).toBe(404);
-
-        done();
-      });
+      expect(reason.message).toBe('Invalid Application ID');
+      expect(reason.status).toBe(404);
+    }
   });
 
-  it('Retries after a 5xx', done => {
+  it('Retries after a 5xx', async () => {
     type SearchResponse = {
       hits: Array<{ name: string }>;
     };
@@ -165,12 +144,8 @@ describe('The retry strategy', () => {
       isTimedOut: true,
     });
 
-    return transporter
-      .write<SearchResponse>(transporterRequest, {})
-      .then(() => {
-        verify(requester.send(anything())).twice();
-        done();
-      })
-      .catch(e => done.fail(e));
+    await transporter.write<SearchResponse>(transporterRequest, {});
+
+    verify(requester.send(anything())).twice();
   });
 });

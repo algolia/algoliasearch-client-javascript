@@ -20,45 +20,42 @@ const transporterRequest = Fixtures.transporterRequest();
 const requesterRequest = Fixtures.requesterRequest();
 
 describe('The selection of hosts', (): void => {
-  it('Select only readable hosts when calling the `read` method', done => {
-    return transporter
-      .read(transporterRequest)
-      .then(() => done.fail('This should not happen'))
-      .catch(e => {
-        expect(e.message).toMatch('Unreachable hosts');
+  it('Select only readable hosts when calling the `read` method', async () => {
+    expect.assertions(1);
+    try {
+      await transporter.read(transporterRequest);
+    } catch (e) {
+      expect(e.message).toMatch('Unreachable hosts');
 
-        requesterRequest.timeout = 2;
-        requesterRequest.url = 'https://read.com/save';
-        verify(requester.send(deepEqual(requesterRequest))).once();
+      requesterRequest.timeout = 2;
+      requesterRequest.url = 'https://read.com/save';
+      verify(requester.send(deepEqual(requesterRequest))).once();
 
-        requesterRequest.url = 'https://write.com/save';
-        verify(requester.send(deepEqual(requesterRequest))).never();
+      requesterRequest.url = 'https://write.com/save';
+      verify(requester.send(deepEqual(requesterRequest))).never();
 
-        requesterRequest.url = 'https://read-and-write.com/save';
-        verify(requester.send(deepEqual(requesterRequest))).once();
-
-        done();
-      });
+      requesterRequest.url = 'https://read-and-write.com/save';
+      verify(requester.send(deepEqual(requesterRequest))).once();
+    }
   });
 
-  it('Select only writable hosts when calling the `write` method', done => {
-    return transporter
-      .write(transporterRequest)
-      .then(() => done.fail('This should not happen'))
-      .catch(e => {
-        expect(e.message).toMatch('Unreachable hosts');
+  it('Select only writable hosts when calling the `write` method', async () => {
+    expect.assertions(1);
 
-        requesterRequest.timeout = 30;
-        requesterRequest.url = 'https://read.com/save';
-        verify(requester.send(deepEqual(requesterRequest))).never();
+    try {
+      await transporter.write(transporterRequest);
+    } catch (e) {
+      expect(e.message).toMatch('Unreachable hosts');
 
-        requesterRequest.url = 'https://write.com/save';
-        verify(requester.send(deepEqual(requesterRequest))).once();
+      requesterRequest.timeout = 30;
+      requesterRequest.url = 'https://read.com/save';
+      verify(requester.send(deepEqual(requesterRequest))).never();
 
-        requesterRequest.url = 'https://read-and-write.com/save';
-        verify(requester.send(deepEqual(requesterRequest))).once();
+      requesterRequest.url = 'https://write.com/save';
+      verify(requester.send(deepEqual(requesterRequest))).once();
 
-        done();
-      });
+      requesterRequest.url = 'https://read-and-write.com/save';
+      verify(requester.send(deepEqual(requesterRequest))).once();
+    }
   });
 });

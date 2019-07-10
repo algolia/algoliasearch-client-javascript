@@ -14,7 +14,7 @@ beforeEach(() => {
 const transporterRequest = Fixtures.transporterRequest();
 
 describe('The deserializer', () => {
-  it('Deserializes success responses', done => {
+  it('Deserializes success responses', async () => {
     type SearchResponse = {
       hits: Array<{
         name: string;
@@ -27,51 +27,44 @@ describe('The deserializer', () => {
       isTimedOut: false,
     });
 
-    return transporter
-      .read<SearchResponse>(transporterRequest)
-      .then(results => {
-        expect(results).toStrictEqual({ hits: [{ name: 'Star Wars' }] });
+    const response = await transporter.read<SearchResponse>(transporterRequest);
 
-        done();
-      })
-      .catch(e => done.fail(e));
+    expect(response).toStrictEqual({ hits: [{ name: 'Star Wars' }] });
   });
 
-  it('Deserializes fail responses', done => {
+  it('Deserializes fail responses', async () => {
     when(requester.send(anything())).thenResolve({
       content: JSON.stringify({ message: 'User not found', status: 404 }),
       status: 404,
       isTimedOut: false,
     });
 
-    return transporter
-      .read(transporterRequest)
-      .then(() => done.fail('This should not happen'))
-      .catch((e: ApiError) => {
-        expect(e).toStrictEqual({ message: 'User not found', status: 404 });
+    expect.assertions(1);
 
-        done();
-      });
+    try {
+      await transporter.read(transporterRequest);
+    } catch (e) {
+      expect(e).toStrictEqual({ message: 'User not found', status: 404 });
+    }
   });
 
-  it('Deserializes fail non json responses', done => {
+  it('Deserializes fail non json responses', async () => {
     when(requester.send(anything())).thenResolve({
       content: 'String message for some reason',
       status: 404,
       isTimedOut: false,
     });
 
-    return transporter
-      .read(transporterRequest)
-      .then(() => done.fail('This should not happen'))
-      .catch((e: ApiError) => {
-        expect(e).toStrictEqual({
-          message: 'String message for some reason',
-          status: 404,
-          name: ApiError.name,
-        });
+    expect.assertions(1);
 
-        done();
+    try {
+      await transporter.read(transporterRequest);
+    } catch (e) {
+      expect(e).toStrictEqual({
+        message: 'String message for some reason',
+        status: 404,
+        name: ApiError.name,
       });
+    }
   });
 });
