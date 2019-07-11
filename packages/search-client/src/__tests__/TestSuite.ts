@@ -2,11 +2,12 @@ import { BrowserXhrRequester } from '@algolia/requester-browser-xhr';
 import { SearchClient } from '../..';
 import { SearchIndex } from '../SearchIndex';
 import { Transporter } from '@algolia/transporter';
-import { HasSearch, Search } from '../Methods/SearchIndex/Search';
+import { HasSearch, search } from '../Methods/SearchIndex/search';
 import { ConsoleLogger } from '@algolia/logger-console';
-import { WaitTask, HasWaitTask } from '../Methods/SearchIndex/WaitTask';
-import { HasSaveObject, SaveObject } from '../Methods/SearchIndex/SaveObject';
-import { HasDelete, Delete } from '../Methods/SearchIndex/Delete';
+import { HasWaitTask, waitTask } from '../Methods/SearchIndex/waitTask';
+import { HasSaveObject, saveObject } from '../Methods/SearchIndex/saveObject';
+import { HasDelete, deleteIndex } from '../Methods/SearchIndex/deleteIndex';
+import { HasSaveObjects, saveObjects } from '../Methods/SearchIndex/saveObjects';
 
 export class TestSuite {
   public readonly testName: string;
@@ -46,9 +47,9 @@ export class TestSuite {
     });
 
     const index = client.initIndex<
-      HasDelete & HasSearch & HasWaitTask & HasSaveObject
+      HasDelete & HasSearch & HasWaitTask & HasSaveObject & HasSaveObjects
     >(this.makeIndexName(), {
-      methods: [Delete, SaveObject, Search, WaitTask],
+      methods: [deleteIndex, saveObject, saveObjects, search, waitTask],
     });
 
     this.indices.push(index);
