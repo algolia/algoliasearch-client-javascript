@@ -7,11 +7,7 @@ export class SearchClient {
   public readonly transporter: Transporter;
   private readonly apiKey: string;
 
-  public constructor(options: {
-    appId: string;
-    apiKey: string;
-    transporter: Transporter;
-  }) {
+  public constructor(options: { appId: string; apiKey: string; transporter: Transporter }) {
     this.appId = options.appId;
     this.apiKey = options.apiKey;
 

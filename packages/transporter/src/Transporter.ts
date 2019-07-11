@@ -59,10 +59,7 @@ export class Transporter implements TransporterContract {
     });
   }
 
-  public read<TResponse>(
-    request: Request,
-    requestOptions?: RequestOptions
-  ): Promise<TResponse> {
+  public read<TResponse>(request: Request, requestOptions?: RequestOptions): Promise<TResponse> {
     const options = RequestOptions.from(requestOptions);
 
     if (options.timeout === undefined) {
@@ -78,10 +75,7 @@ export class Transporter implements TransporterContract {
     );
   }
 
-  public write<TResponse>(
-    request: Request,
-    requestOptions?: RequestOptions
-  ): Promise<TResponse> {
+  public write<TResponse>(request: Request, requestOptions?: RequestOptions): Promise<TResponse> {
     const options = RequestOptions.from(requestOptions);
 
     if (options.timeout === undefined) {

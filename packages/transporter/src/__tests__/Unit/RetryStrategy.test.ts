@@ -76,10 +76,7 @@ describe('The retry strategy', () => {
       hits: Array<{ name: string }>;
     };
 
-    const response = await transporter.read<SearchResponse>(
-      transporterRequest,
-      {}
-    );
+    const response = await transporter.read<SearchResponse>(transporterRequest, {});
 
     expect(response.hits[0].name).toBe('Star Wars');
     verify(requester.send(anything())).once();

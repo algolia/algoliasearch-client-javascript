@@ -14,6 +14,7 @@ const transporter = new Transporter({
     write: 30,
   },
 });
+
 const searchClient = new SearchClient({
   transporter,
   appId: 'appId',

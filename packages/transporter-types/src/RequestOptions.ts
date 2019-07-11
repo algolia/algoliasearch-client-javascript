@@ -7,7 +7,7 @@ export class RequestOptions {
     this.timeout = options.timeout;
   }
 
-  public static from(options?: Options | RequestOptions): RequestOptions {
+  public static from(options?: Options | RequestOptions) {
     if (options instanceof RequestOptions) {
       return options;
     }

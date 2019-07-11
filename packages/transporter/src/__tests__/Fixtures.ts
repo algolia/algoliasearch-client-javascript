@@ -1,9 +1,4 @@
-import {
-  Requester,
-  Request as RequesterRequest,
-  Response,
-  Method,
-} from '@algolia/requester-types';
+import { Requester, Request as RequesterRequest, Response, Method } from '@algolia/requester-types';
 import { Transporter } from '../Transporter';
 import { CallType, Host } from '@algolia/transporter-types';
 import { instance } from 'ts-mockito';

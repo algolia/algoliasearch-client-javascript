@@ -1,18 +1,32 @@
 module.exports = {
-  extends: ["algolia/jest", "algolia/typescript"],
+  extends: ['algolia/jest', 'algolia/typescript'],
   rules: {
-    "import/no-extraneous-dependencies": [
-      "error",
-      { packageDir: "./", devDependencies: true }
+    'max-len': [
+      'error',
+      {
+        code: 200,
+        ignoreComments: true,
+        ignoreTrailingComments: true,
+        ignoreUrls: true,
+      },
     ],
-    "no-bitwise": ["off"],
-    "import/no-extraneous-dependencies": ["off"]
+    'prettier/prettier': [
+      'error',
+      {
+        trailingComma: 'es5',
+        singleQuote: true,
+        printWidth: 100,
+      },
+    ],
+    'import/no-extraneous-dependencies': ['error', { packageDir: './', devDependencies: true }],
+    'no-bitwise': ['off'],
+    'import/no-extraneous-dependencies': ['off'],
   },
   settings: {
-    "import/resolver": {
+    'import/resolver': {
       node: {
-        extensions: [".ts"]
-      }
-    }
-  }
+        extensions: ['.ts'],
+      },
+    },
+  },
 };
