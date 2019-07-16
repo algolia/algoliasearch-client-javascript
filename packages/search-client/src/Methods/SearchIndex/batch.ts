@@ -2,85 +2,118 @@ import { RequestOptions } from '@algolia/transporter-types';
 import { SearchIndex } from '../../SearchIndex';
 import { Method } from '@algolia/requester-types';
 import { ConstructorOf } from '../../helpers';
+import { HasWaitTask, waitTask } from './waitTask';
+import { WaitablePromise } from '../../WaitablePromise';
 
-export const batch = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: TSearchIndex) => {
-  return class extends base implements HasBatch {
-    public chunk(
-      bodies: object[],
-      action: Action,
-      requestOptions?: RequestOptions & ChunkOptions
-    ): Promise<BatchResponse[]> {
-      return new Promise(resolve => {
-        const responses: BatchResponse[] = [];
-        const batchSize =
-          requestOptions !== undefined && requestOptions.batchSize !== undefined
-            ? requestOptions.batchSize
-            : 1000;
+export const batch = <TSearchIndex extends ConstructorOf<SearchIndex & HasWaitTask>>(
+  base: TSearchIndex
+) => {
+  return waitTask(
+    class extends base implements HasBatch {
+      public chunk(
+        bodies: object[],
+        action: Action,
+        requestOptions?: RequestOptions & ChunkOptions
+      ): WaitablePromise<BatchResponse[]> {
+        const promise = new WaitablePromise<BatchResponse[]>(resolve => {
+          const responses: BatchResponse[] = [];
+          const batchSize =
+            requestOptions !== undefined && requestOptions.batchSize !== undefined
+              ? requestOptions.batchSize
+              : 1000;
 
-        const batching = (lastIndex: number = 0) => {
-          const bodiesChunk: Array<Record<string, any>> = [];
-          let index: number;
+          const batching = (lastIndex: number = 0) => {
+            const bodiesChunk: Array<Record<string, any>> = [];
+            let index: number;
 
-          for (index = lastIndex; index < bodies.length; index++) {
-            bodiesChunk.push(bodies[index]);
+            for (index = lastIndex; index < bodies.length; index++) {
+              bodiesChunk.push(bodies[index]);
 
-            if (bodiesChunk.length === batchSize) {
-              break;
+              if (bodiesChunk.length === batchSize) {
+                break;
+              }
             }
-          }
 
-          if (bodiesChunk.length > 0) {
-            this.batch(
-              bodiesChunk.map(body => {
-                return {
-                  action,
-                  body,
-                };
-              }),
-              requestOptions
-            ).then(response => {
-              responses.push(response);
+            if (bodiesChunk.length > 0) {
+              this.batch(
+                bodiesChunk.map(body => {
+                  return {
+                    action,
+                    body,
+                  };
+                }),
+                requestOptions
+              ).then(response => {
+                responses.push(response);
 
-              index++;
-              batching(index);
-            });
-          } else {
-            resolve(responses);
-          }
+                index++;
+                batching(index);
+              });
+            } else {
+              resolve(responses);
+            }
+          };
+
+          batching();
+        });
+
+        promise.waitClosure = (responses: BatchResponse[]): Promise<void> => {
+          return new Promise(resolve => {
+            responses.forEach(response => this.waitTask(response.taskID));
+            resolve();
+          });
         };
 
-        batching();
-      });
-    }
+        return promise;
+      }
 
-    public batch(requests: object[], requestOptions?: RequestOptions): Promise<BatchResponse> {
-      return this.transporter.write(
-        {
-          method: Method.Post,
-          path: `1/indexes/${this.indexName}/batch`,
-          data: {
-            requests,
-          },
-        },
-        requestOptions
-      );
+      public batch(
+        requests: BatchRequest[],
+        requestOptions?: RequestOptions
+      ): WaitablePromise<BatchResponse> {
+        const promise = new WaitablePromise<BatchResponse>(resolve => {
+          this.transporter
+            .write<BatchResponse>(
+              {
+                method: Method.Post,
+                path: `1/indexes/${this.indexName}/batch`,
+                data: {
+                  requests,
+                },
+              },
+              requestOptions
+            )
+            .then((response: BatchResponse) => resolve(response));
+        });
+
+        promise.waitClosure = (response: BatchResponse): Promise<void> => {
+          return this.waitTask(response.taskID);
+        };
+
+        return promise;
+      }
     }
-  };
+  );
 };
 
-export interface HasBatch extends SearchIndex {
+export interface HasBatch extends HasWaitTask {
   chunk(
     bodies: object[],
     action: string,
     requestOptions?: RequestOptions & ChunkOptions
-  ): Promise<BatchResponse[]>;
+  ): WaitablePromise<BatchResponse[]>;
 
-  batch(requests: object[], requestOptions?: RequestOptions): Promise<BatchResponse>;
+  batch(requests: BatchRequest[], requestOptions?: RequestOptions): WaitablePromise<BatchResponse>;
 }
 
 export interface ChunkOptions {
   batchSize?: number;
 }
+
+export type BatchRequest = {
+  action: Action;
+  body: object;
+};
 
 export type BatchResponse = {
   taskID: number;

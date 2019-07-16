@@ -2,6 +2,7 @@ import { RequestOptions } from '@algolia/transporter-types';
 import { SearchIndex } from '../../SearchIndex';
 import { ConstructorOf } from '../../helpers';
 import { saveObjects, HasSaveObjects, SaveObjectsOptions } from './saveObjects';
+import { WaitablePromise } from '../../WaitablePromise';
 
 export const saveObject = <TSearchIndex extends ConstructorOf<SearchIndex & HasSaveObjects>>(
   base: TSearchIndex
@@ -10,8 +11,8 @@ export const saveObject = <TSearchIndex extends ConstructorOf<SearchIndex & HasS
     public saveObject(
       object: object,
       requestOptions?: RequestOptions & SaveObjectsOptions
-    ): Promise<SaveObjectResponse> {
-      return new Promise(resolve => {
+    ): WaitablePromise<SaveObjectResponse> {
+      const promise = new WaitablePromise<SaveObjectResponse>(resolve => {
         this.saveObjects([object], requestOptions).then(response => {
           resolve({
             objectID: response[0].objectIDs[0],
@@ -19,6 +20,12 @@ export const saveObject = <TSearchIndex extends ConstructorOf<SearchIndex & HasS
           });
         });
       });
+
+      promise.waitClosure = (result: SaveObjectResponse) => {
+        return this.waitTask(result.taskID);
+      };
+
+      return promise;
     }
   };
 
@@ -29,7 +36,7 @@ export interface HasSaveObject extends SearchIndex {
   saveObject(
     object: object,
     requestOptions?: RequestOptions & SaveObjectsOptions
-  ): Promise<SaveObjectResponse>;
+  ): WaitablePromise<SaveObjectResponse>;
 }
 
 export type SaveObjectResponse = {

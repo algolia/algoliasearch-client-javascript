@@ -3,6 +3,7 @@ import { SearchIndex } from '../../SearchIndex';
 import { ConstructorOf } from '../../helpers';
 import { HasBatch, BatchResponse, batch, Action, ChunkOptions } from './batch';
 import { MissingObjectID } from '../../Errors/MissingObjectID';
+import { WaitablePromise } from '../../WaitablePromise';
 
 export const saveObjects = <TSearchIndex extends ConstructorOf<SearchIndex & HasBatch>>(
   base: TSearchIndex
@@ -11,7 +12,7 @@ export const saveObjects = <TSearchIndex extends ConstructorOf<SearchIndex & Has
     public saveObjects(
       objects: Array<Record<string, any>>,
       requestOptions?: RequestOptions & SaveObjectsOptions
-    ): Promise<BatchResponse[]> {
+    ): WaitablePromise<BatchResponse[]> {
       const action =
         requestOptions !== undefined && requestOptions.autoGenerateObjectIDIfNotExist === true
           ? Action.AddObject
@@ -32,7 +33,7 @@ export interface HasSaveObjects extends HasBatch {
   saveObjects(
     objects: object[],
     requestOptions?: RequestOptions & SaveObjectsOptions
-  ): Promise<BatchResponse[]>;
+  ): WaitablePromise<BatchResponse[]>;
 }
 
 export interface SaveObjectsOptions extends ChunkOptions {

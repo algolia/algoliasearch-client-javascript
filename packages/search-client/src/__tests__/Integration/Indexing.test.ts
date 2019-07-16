@@ -1,24 +1,45 @@
 import { TestSuite } from '../TestSuite';
 import { Faker } from '../Faker';
+import { BatchResponse } from '../../Methods/SearchIndex/batch';
+import { WaitablePromise } from '../../WaitablePromise';
+import { SaveObjectResponse } from '../../Methods/SearchIndex/saveObject';
 
 const testSuite = new TestSuite('indexing');
 
 afterAll(() => testSuite.cleanUp());
 
-test(testSuite.testName, async () => {
+test(testSuite.testName, () => {
   const index = testSuite.makeIndex();
+  let responses: Array<WaitablePromise<SaveObjectResponse | BatchResponse[]>> = [];
 
-  await index.saveObject(Faker.object('res1'));
+  const object1 = Faker.object('object1');
+  responses.push(index.saveObject(object1));
 
-  await index.saveObject(Faker.object(), {
-    autoGenerateObjectIDIfNotExist: true,
-  });
+  responses.push(
+    index.saveObject(Faker.object(), {
+      autoGenerateObjectIDIfNotExist: true,
+    })
+  );
 
-  await index.saveObjects([]);
+  responses = responses.concat(index.saveObjects([]));
 
-  await index.saveObjects([Faker.object('res4-1'), Faker.object('res4-2')]);
+  const object3 = Faker.object('object3');
+  const object4 = Faker.object('object4');
+  responses = responses.concat(index.saveObjects([object3, object4]));
 
-  await index.saveObjects([Faker.object(), Faker.object()], {
-    autoGenerateObjectIDIfNotExist: true,
+  responses = responses.concat(
+    index.saveObjects([Faker.object(), Faker.object()], {
+      autoGenerateObjectIDIfNotExist: true,
+    })
+  );
+
+  responses = responses.concat(
+    index.saveObjects(Faker.objects(1000), {
+      batchSize: 100,
+    })
+  );
+
+  responses.forEach(response => {
+    response.wait();
   });
 });

@@ -17,8 +17,8 @@ export class Faker {
   public static objects(number: number): object[] {
     const objects = [];
 
-    for (let index = 0; index < number; index++) {
-      objects.push(Faker.object());
+    for (let index = 1; index <= number; index++) {
+      objects.push(Faker.object(index.toString()));
     }
 
     return objects;
