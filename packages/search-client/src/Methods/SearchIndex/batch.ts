@@ -59,8 +59,9 @@ export const batch = <TSearchIndex extends ConstructorOf<SearchIndex & HasWaitTa
 
         promise.waitClosure = (responses: BatchResponse[]): Promise<void> => {
           return new Promise(resolve => {
-            responses.forEach(response => this.waitTask(response.taskID));
-            resolve();
+            Promise.all(responses.map(response => this.waitTask(response.taskID))).then(() => {
+              resolve();
+            });
           });
         };
 
