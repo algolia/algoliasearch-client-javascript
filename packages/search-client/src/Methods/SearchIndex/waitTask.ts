@@ -12,10 +12,9 @@ export const waitTask = <TSearchIndex extends ConstructorOf<SearchIndex & HasGet
         this.getTask(taskID, requestOptions).then(response => {
           if (response.status === 'published') {
             resolve();
-            return;
+          } else {
+            retry(resolve);
           }
-
-          retry(resolve);
         });
       };
 
