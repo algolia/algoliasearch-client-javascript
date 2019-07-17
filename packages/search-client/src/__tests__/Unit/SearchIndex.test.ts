@@ -10,6 +10,9 @@ import {
 import { Faker } from '../Faker';
 import { RequestOptions } from '@algolia/transporter-types';
 import { Action } from '../../Methods/SearchIndex/batch';
+import { HasGetObject, getObject } from '../../Methods/SearchIndex/getObject';
+import { HasGetObjects, getObjects } from '../../Methods/SearchIndex/getObjects';
+import { Method } from '@algolia/requester-types';
 
 const transporterMock = mock(Transporter);
 const transporter = instance(transporterMock);
@@ -21,8 +24,8 @@ const index = new SearchClient({
   transporter,
   appId: 'appId',
   apiKey: 'apiKey',
-}).initIndex<HasSaveObject & HasSaveObjects>('foo', {
-  methods: [saveObject, saveObjects],
+}).initIndex<HasSaveObject & HasSaveObjects & HasGetObject & HasGetObjects>('foo', {
+  methods: [saveObject, saveObjects, getObject, getObjects],
 });
 
 describe('SaveObject', () => {
@@ -152,5 +155,57 @@ describe('Chunk', () => {
     await index.chunk(Faker.objects(1000), Action.UpdateObject);
 
     verify(indexSpy.batch(anything(), anything())).once();
+  });
+});
+
+describe('Get Object', () => {
+  it('Passes request options to transporter', async () => {
+    const requestOptions = {
+      timeout: 2,
+    };
+
+    await index.getObject('bar', requestOptions);
+
+    verify(transporterMock.read(anything(), requestOptions)).once();
+  });
+});
+
+describe('Get Objects', () => {
+  it('Passes request options to transporter', async () => {
+    const requestOptions = {
+      timeout: 2,
+    };
+
+    await index.getObjects(['bar'], requestOptions);
+
+    verify(transporterMock.read(anything(), requestOptions)).once();
+  });
+
+  it('Allows to pass `attributesToRetrieve`', async () => {
+    const requestOptions = {
+      attributesToRetrieve: ['name'],
+      timeout: 2,
+    };
+
+    await index.getObjects(['bar'], requestOptions);
+
+    verify(
+      transporterMock.read(
+        deepEqual({
+          method: Method.Post,
+          path: `1/indexes/*/objects`,
+          data: {
+            requests: [
+              {
+                indexName: 'foo',
+                objectID: 'bar',
+                attributesToRetrieve: ['name'],
+              },
+            ],
+          },
+        }),
+        requestOptions
+      )
+    ).once();
   });
 });

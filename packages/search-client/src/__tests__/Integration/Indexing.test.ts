@@ -35,8 +35,10 @@ test(testSuite.testName, async () => {
   });
   responses = responses.concat(response5and6);
 
+  const remain1000objects = Faker.objects(1000);
+
   responses = responses.concat(
-    index.saveObjects(Faker.objects(1000), {
+    index.saveObjects(remain1000objects, {
       batchSize: 100,
     })
   );
@@ -63,4 +65,14 @@ test(testSuite.testName, async () => {
   await expect(index.getObject(objectId6)).resolves.toStrictEqual(
     Object.assign(object6, { objectID: objectId6 })
   );
+
+  await expect(index.getObject(objectId6)).resolves.toStrictEqual(
+    Object.assign(object6, { objectID: objectId6 })
+  );
+
+  await expect(
+    index.getObjects(Array.from(Array(1000).keys()).map((objectId: number) => objectId.toString()))
+  ).resolves.toStrictEqual({
+    results: remain1000objects,
+  });
 });

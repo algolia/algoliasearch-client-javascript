@@ -9,6 +9,7 @@ import { HasSaveObject, saveObject } from '../Methods/SearchIndex/saveObject';
 import { HasDelete, deleteIndex } from '../Methods/SearchIndex/deleteIndex';
 import { HasSaveObjects, saveObjects } from '../Methods/SearchIndex/saveObjects';
 import { HasGetObject, getObject } from '../Methods/SearchIndex/getObject';
+import { HasGetObjects, getObjects } from '../Methods/SearchIndex/getObjects';
 
 export class TestSuite {
   public readonly testName: string;
@@ -48,9 +49,15 @@ export class TestSuite {
     });
 
     const index = client.initIndex<
-      HasDelete & HasSearch & HasWaitTask & HasSaveObject & HasSaveObjects & HasGetObject
+      HasDelete &
+        HasSearch &
+        HasWaitTask &
+        HasSaveObject &
+        HasSaveObjects &
+        HasGetObject &
+        HasGetObjects
     >(this.makeIndexName(), {
-      methods: [deleteIndex, getObject, saveObject, saveObjects, search, waitTask],
+      methods: [deleteIndex, getObject, getObjects, saveObject, saveObjects, search, waitTask],
     });
 
     this.indices.push(index);
