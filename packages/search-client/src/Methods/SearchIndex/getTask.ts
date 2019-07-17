@@ -23,4 +23,5 @@ export interface HasGetTask extends SearchIndex {
 
 export type TaskStatusResponse = {
   status: string;
+  pendingTask: boolean;
 };
