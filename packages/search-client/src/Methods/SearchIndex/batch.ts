@@ -15,83 +15,79 @@ export const batch = <TSearchIndex extends ConstructorOf<SearchIndex & HasWaitTa
         action: Action,
         requestOptions?: RequestOptions & ChunkOptions
       ): WaitablePromise<BatchResponse[]> {
-        const promise = new WaitablePromise<BatchResponse[]>(resolve => {
-          const responses: BatchResponse[] = [];
-          const batchSize =
-            requestOptions !== undefined && requestOptions.batchSize !== undefined
-              ? requestOptions.batchSize
-              : 1000;
+        return WaitablePromise.from<BatchResponse[]>(
+          new Promise(resolve => {
+            const responses: BatchResponse[] = [];
+            const batchSize =
+              requestOptions !== undefined && requestOptions.batchSize !== undefined
+                ? requestOptions.batchSize
+                : 1000;
 
-          const batching = (lastIndex: number = 0) => {
-            const bodiesChunk: Array<Record<string, any>> = [];
-            let index: number;
+            const batching = (lastIndex: number = 0) => {
+              const bodiesChunk: Array<Record<string, any>> = [];
+              let index: number;
 
-            for (index = lastIndex; index < bodies.length; index++) {
-              bodiesChunk.push(bodies[index]);
+              for (index = lastIndex; index < bodies.length; index++) {
+                bodiesChunk.push(bodies[index]);
 
-              if (bodiesChunk.length === batchSize) {
-                break;
+                if (bodiesChunk.length === batchSize) {
+                  break;
+                }
               }
-            }
 
-            if (bodiesChunk.length > 0) {
-              this.batch(
-                bodiesChunk.map(body => {
-                  return {
-                    action,
-                    body,
-                  };
-                }),
-                requestOptions
-              ).then(response => {
-                responses.push(response);
+              if (bodiesChunk.length > 0) {
+                this.batch(
+                  bodiesChunk.map(body => {
+                    return {
+                      action,
+                      body,
+                    };
+                  }),
+                  requestOptions
+                ).then(response => {
+                  responses.push(response);
 
-                index++;
-                batching(index);
+                  index++;
+                  batching(index);
+                });
+              } else {
+                resolve(responses);
+              }
+            };
+
+            batching();
+          })
+        ).onWait(
+          (responses: BatchResponse[]): Promise<void> => {
+            return new Promise(resolve => {
+              Promise.all(responses.map(response => this.waitTask(response.taskID))).then(() => {
+                resolve();
               });
-            } else {
-              resolve(responses);
-            }
-          };
-
-          batching();
-        });
-
-        promise.waitClosure = (responses: BatchResponse[]): Promise<void> => {
-          return new Promise(resolve => {
-            Promise.all(responses.map(response => this.waitTask(response.taskID))).then(() => {
-              resolve();
             });
-          });
-        };
-
-        return promise;
+          }
+        );
       }
 
       public batch(
         requests: BatchRequest[],
         requestOptions?: RequestOptions
       ): WaitablePromise<BatchResponse> {
-        const promise = new WaitablePromise<BatchResponse>(resolve => {
-          this.transporter
-            .write<BatchResponse>(
-              {
-                method: Method.Post,
-                path: `1/indexes/${this.indexName}/batch`,
-                data: {
-                  requests,
-                },
+        return WaitablePromise.from<BatchResponse>(
+          this.transporter.write<BatchResponse>(
+            {
+              method: Method.Post,
+              path: `1/indexes/${this.indexName}/batch`,
+              data: {
+                requests,
               },
-              requestOptions
-            )
-            .then((response: BatchResponse) => resolve(response));
-        });
-
-        promise.waitClosure = (response: BatchResponse): Promise<void> => {
-          return this.waitTask(response.taskID);
-        };
-
-        return promise;
+            },
+            requestOptions
+          )
+        ).onWait(
+          (response: BatchResponse): Promise<void> => {
+            return this.waitTask(response.taskID);
+          }
+        );
       }
     }
   );

@@ -12,20 +12,18 @@ export const saveObject = <TSearchIndex extends ConstructorOf<SearchIndex & HasS
       object: object,
       requestOptions?: RequestOptions & SaveObjectsOptions
     ): WaitablePromise<SaveObjectResponse> {
-      const promise = new WaitablePromise<SaveObjectResponse>(resolve => {
-        this.saveObjects([object], requestOptions).then(response => {
-          resolve({
-            objectID: response[0].objectIDs[0],
-            taskID: response[0].taskID,
+      return WaitablePromise.from<SaveObjectResponse>(
+        new Promise(resolve => {
+          this.saveObjects([object], requestOptions).then(response => {
+            resolve({
+              objectID: response[0].objectIDs[0],
+              taskID: response[0].taskID,
+            });
           });
-        });
-      });
-
-      promise.waitClosure = (result: SaveObjectResponse) => {
+        })
+      ).onWait((result: SaveObjectResponse) => {
         return this.waitTask(result.taskID);
-      };
-
-      return promise;
+      });
     }
   };
 
