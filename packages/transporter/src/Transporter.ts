@@ -4,8 +4,10 @@ import {
   Timeouts,
   Request,
   RequestOptions,
+  MappedRequestOptions,
   CallType,
   RetryError,
+  mapRequestOptions,
 } from '@algolia/transporter-types';
 
 import { Deserializer } from './Deserializer';
@@ -60,7 +62,7 @@ export class Transporter implements TransporterContract {
   }
 
   public read<TResponse>(request: Request, requestOptions?: RequestOptions): Promise<TResponse> {
-    const options = RequestOptions.from(requestOptions);
+    const options = mapRequestOptions(requestOptions);
 
     if (options.timeout === undefined) {
       options.timeout = this.timeouts.read;
@@ -76,7 +78,7 @@ export class Transporter implements TransporterContract {
   }
 
   public write<TResponse>(request: Request, requestOptions?: RequestOptions): Promise<TResponse> {
-    const options = RequestOptions.from(requestOptions);
+    const options = mapRequestOptions(requestOptions);
 
     if (options.timeout === undefined) {
       options.timeout = this.timeouts.write;
@@ -94,7 +96,7 @@ export class Transporter implements TransporterContract {
   private request<TResponse>(
     hosts: Host[],
     request: Request,
-    requestOptions: RequestOptions
+    requestOptions: MappedRequestOptions
   ): Promise<TResponse> {
     return new Promise<TResponse>((resolve, reject): void => {
       this.retry(hosts.reverse(), request, requestOptions, resolve, reject);
@@ -104,7 +106,7 @@ export class Transporter implements TransporterContract {
   private retry(
     hosts: Host[],
     request: Request,
-    requestOptions: RequestOptions,
+    requestOptions: MappedRequestOptions,
     resolve: Function,
     reject: Function
   ): void {
@@ -132,9 +134,12 @@ export class Transporter implements TransporterContract {
 
     this.requester
       .send({
-        data: Serializer.serialize(request),
+        data: Serializer.serialize({
+          ...request.data,
+          ...requestOptions.data,
+        }),
         headers: {
-          ...(requestOptions.headers ? requestOptions.headers : {}),
+          ...requestOptions.headers,
           ...this.headers,
         },
         method: request.method,

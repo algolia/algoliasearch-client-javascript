@@ -1,4 +1,4 @@
-import { RequestOptions } from '@algolia/transporter-types';
+import { RequestOptions, popRequestOption } from '@algolia/transporter-types';
 import { SearchIndex } from '../../SearchIndex';
 import { Method } from '@algolia/requester-types';
 import { ConstructorOf } from '../../helpers';
@@ -18,10 +18,7 @@ export const batch = <TSearchIndex extends ConstructorOf<SearchIndex & HasWaitTa
         return WaitablePromise.from<BatchResponse[]>(
           new Promise(resolve => {
             const responses: BatchResponse[] = [];
-            const batchSize =
-              requestOptions !== undefined && requestOptions.batchSize !== undefined
-                ? requestOptions.batchSize
-                : 1000;
+            const batchSize = popRequestOption(requestOptions, 'batchSize', 1000);
 
             const batching = (lastIndex: number = 0) => {
               const bodiesChunk: Array<Record<string, any>> = [];

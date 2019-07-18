@@ -1,25 +1,49 @@
-export class RequestOptions {
-  public headers?: { [key: string]: string };
-  public timeout?: number;
-  public queryParameters?: { [key: string]: string };
+export function mapRequestOptions(requestOptions?: RequestOptions): MappedRequestOptions {
+  const options: RequestOptions = requestOptions === undefined ? {} : requestOptions;
 
-  public constructor(options: Options) {
-    this.headers = options.headers;
-    this.timeout = options.timeout;
-    this.queryParameters = options.queryParameters;
-  }
+  const data: { [key: string]: string } = {};
 
-  public static from(options?: Options | RequestOptions) {
-    if (options instanceof RequestOptions) {
-      return options;
+  Object.keys(options).forEach(key => {
+    if (!['timeout', 'headers', 'queryParameters', 'data'].includes(key)) {
+      data[key] = options[key];
     }
+  });
 
-    return new RequestOptions(options !== undefined ? options : {});
-  }
+  return {
+    data,
+    timeout: options.timeout,
+    headers: options.headers === undefined ? {} : options.headers,
+    queryParameters: options.queryParameters === undefined ? {} : options.queryParameters,
+  };
 }
 
-type Options = {
+export function popRequestOption<TRequestOption>(
+  requestOptions: RequestOptions | undefined,
+  key: string,
+  defaultValue: TRequestOption
+): TRequestOption {
+  if (requestOptions !== undefined && key in requestOptions) {
+    const value: TRequestOption = requestOptions[key]; // --> OFF
+
+    /* eslint no-param-reassign: 0 */
+    delete requestOptions[key];
+
+    return value;
+  }
+
+  return defaultValue;
+}
+
+export type RequestOptions = {
   timeout?: number;
   headers?: { [key: string]: string };
   queryParameters?: { [key: string]: string };
+  [key: string]: any;
+};
+
+export type MappedRequestOptions = {
+  timeout?: number;
+  data: { [key: string]: string };
+  headers: { [key: string]: string };
+  queryParameters: { [key: string]: string };
 };

@@ -1,7 +1,5 @@
-import { Request } from '@algolia/transporter-types';
-
 export class Serializer {
-  public static serialize({ data }: Request): string {
+  public static serialize(data: object): string {
     return JSON.stringify(data);
   }
 }

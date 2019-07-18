@@ -1,4 +1,4 @@
-import { RequestOptions } from '@algolia/transporter-types';
+import { RequestOptions, popRequestOption } from '@algolia/transporter-types';
 import { SearchIndex } from '../../SearchIndex';
 import { ConstructorOf } from '../../helpers';
 import { HasBatch, BatchResponse, batch, Action, ChunkOptions } from './batch';
@@ -13,10 +13,13 @@ export const saveObjects = <TSearchIndex extends ConstructorOf<SearchIndex & Has
       objects: Array<Record<string, any>>,
       requestOptions?: RequestOptions & SaveObjectsOptions
     ): WaitablePromise<BatchResponse[]> {
-      const action =
-        requestOptions !== undefined && requestOptions.autoGenerateObjectIDIfNotExist === true
-          ? Action.AddObject
-          : Action.UpdateObject;
+      const autoGenerateObjectIDIfNotExist = popRequestOption(
+        requestOptions,
+        'autoGenerateObjectIDIfNotExist',
+        false
+      );
+
+      const action = autoGenerateObjectIDIfNotExist ? Action.AddObject : Action.UpdateObject;
 
       if (action === Action.UpdateObject) {
         ensureObjectIdsWithin(objects);
