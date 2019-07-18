@@ -120,6 +120,16 @@ export class Transporter implements TransporterContract {
       return;
     }
 
+    let url = `https://${host.url}/${request.path}`;
+    const queryParameters =
+      requestOptions.queryParameters !== undefined ? requestOptions.queryParameters : {};
+
+    if (Object.keys(queryParameters).length > 0) {
+      url += `?${Object.keys(queryParameters)
+        .map(key => `${key}=${queryParameters[key]}`)
+        .join('&')}`;
+    }
+
     this.requester
       .send({
         data: Serializer.serialize(request),
@@ -128,7 +138,7 @@ export class Transporter implements TransporterContract {
           ...this.headers,
         },
         method: request.method,
-        url: `https://${host.url}/${request.path}`,
+        url,
         timeout: requestOptions.timeout ? requestOptions.timeout : 0,
       })
       .then(response => {

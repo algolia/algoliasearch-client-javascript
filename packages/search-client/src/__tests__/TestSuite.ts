@@ -10,6 +10,8 @@ import { HasDelete, deleteIndex } from '../Methods/SearchIndex/deleteIndex';
 import { HasSaveObjects, saveObjects } from '../Methods/SearchIndex/saveObjects';
 import { HasGetObject, getObject } from '../Methods/SearchIndex/getObject';
 import { HasGetObjects, getObjects } from '../Methods/SearchIndex/getObjects';
+import { HasSetSettings, setSettings } from '../Methods/SearchIndex/setSettings';
+import { getSettings, HasGetSettings } from '../Methods/SearchIndex/getSettings';
 
 export class TestSuite {
   public readonly testName: string;
@@ -17,7 +19,7 @@ export class TestSuite {
 
   public async cleanUp(): Promise<void> {
     for (const index of this.indices) {
-      await index.delete();
+      await index.delete().wait();
     }
   }
 
@@ -26,7 +28,7 @@ export class TestSuite {
     this.indices = [];
   }
 
-  public makeIndex() {
+  public makeIndex(indexName?: string) {
     const requester = new BrowserXhrRequester();
 
     const transporter = new Transporter({
@@ -55,9 +57,21 @@ export class TestSuite {
         HasSaveObject &
         HasSaveObjects &
         HasGetObject &
-        HasGetObjects
-    >(this.makeIndexName(), {
-      methods: [deleteIndex, getObject, getObjects, saveObject, saveObjects, search, waitTask],
+        HasGetObjects &
+        HasSetSettings &
+        HasGetSettings
+    >(indexName === undefined ? this.makeIndexName() : indexName, {
+      methods: [
+        deleteIndex,
+        getObject,
+        getObjects,
+        saveObject,
+        saveObjects,
+        search,
+        waitTask,
+        setSettings,
+        getSettings,
+      ],
     });
 
     this.indices.push(index);
