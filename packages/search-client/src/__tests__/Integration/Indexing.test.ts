@@ -1,8 +1,6 @@
 import { TestSuite } from '../TestSuite';
 import { Faker } from '../Faker';
-import { BatchResponse } from '../../Methods/SearchIndex/batch';
 import { WaitablePromise } from '../../WaitablePromise';
-import { SaveObjectResponse } from '../../Methods/SearchIndex/saveObject';
 
 const testSuite = new TestSuite('indexing');
 
@@ -10,7 +8,7 @@ afterAll(() => testSuite.cleanUp());
 
 test(testSuite.testName, async () => {
   const index = testSuite.makeIndex();
-  let responses: Array<WaitablePromise<SaveObjectResponse | BatchResponse[]>> = [];
+  let responses: Array<WaitablePromise<any>> = [];
 
   const object1 = Faker.object('object1');
   responses.push(index.saveObject(object1));
