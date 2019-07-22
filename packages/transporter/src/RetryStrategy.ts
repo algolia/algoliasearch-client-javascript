@@ -9,11 +9,8 @@ export const enum RetryOutcome {
 
 export class RetryStrategy {
   public decide(host: Host, response: Response) {
-    if (response.isTimedOut) {
-      return RetryOutcome.Retry;
-    }
-
     if (this.isRetryable(response)) {
+      host.setAsDown();
       return RetryOutcome.Retry;
     }
 
@@ -24,8 +21,8 @@ export class RetryStrategy {
     return RetryOutcome.Fail;
   }
 
-  private isRetryable({ status }: Response): boolean {
-    return ~~(status / 100) !== 2 && ~~(status / 100) !== 4;
+  private isRetryable({ isTimedOut, status }: Response): boolean {
+    return isTimedOut || (~~(status / 100) !== 2 && ~~(status / 100) !== 4);
   }
 
   private isSuccess({ status }: Response): boolean {
