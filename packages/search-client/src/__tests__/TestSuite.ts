@@ -16,6 +16,7 @@ import { HasGetObject, getObject } from '../Methods/SearchIndex/getObject';
 import { HasGetObjects, getObjects } from '../Methods/SearchIndex/getObjects';
 import { HasSetSettings, setSettings } from '../Methods/SearchIndex/setSettings';
 import { getSettings, HasGetSettings } from '../Methods/SearchIndex/getSettings';
+import { UserAgent } from '@algolia/transporter-types/src/UserAgent';
 
 export class TestSuite {
   public readonly testName: string;
@@ -52,6 +53,7 @@ export class TestSuite {
       appId: `${process.env.ALGOLIA_APP_ID}`,
       apiKey: `${process.env.ALGOLIA_API_KEY}`,
       transporter,
+      userAgent: UserAgent.create('4.0.0'),
     });
 
     const index = client.initIndex<

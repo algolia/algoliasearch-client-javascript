@@ -13,6 +13,7 @@ import { Action } from '../../Methods/SearchIndex/batch';
 import { HasGetObject, getObject } from '../../Methods/SearchIndex/getObject';
 import { HasGetObjects, getObjects } from '../../Methods/SearchIndex/getObjects';
 import { Method } from '@algolia/requester-types';
+import { UserAgent } from '@algolia/transporter-types/src/UserAgent';
 
 const transporterMock = mock(Transporter);
 const transporter = instance(transporterMock);
@@ -24,6 +25,7 @@ const index = new SearchClient({
   transporter,
   appId: 'appId',
   apiKey: 'apiKey',
+  userAgent: UserAgent.create('4.0.0'),
 }).initIndex<HasSaveObject & HasSaveObjects & HasGetObject & HasGetObjects>('foo', {
   methods: [saveObject, saveObjects, getObject, getObjects],
 });

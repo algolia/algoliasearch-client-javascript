@@ -1,19 +1,26 @@
 import { Transporter, Host, CallType } from '@algolia/transporter-types';
 import { SearchIndex } from './SearchIndex';
 import { shuffle } from './helpers';
+import { UserAgent } from '@algolia/transporter-types/src/UserAgent';
 
 export class SearchClient {
   public readonly appId: string;
   public readonly transporter: Transporter;
+
   private readonly apiKey: string;
 
-  public constructor(options: { appId: string; apiKey: string; transporter: Transporter }) {
+  public constructor(options: {
+    appId: string;
+    apiKey: string;
+    transporter: Transporter;
+    userAgent: UserAgent;
+  }) {
     this.appId = options.appId;
     this.apiKey = options.apiKey;
 
     this.transporter = options.transporter
       .withHosts(this.createHosts())
-      .withHeaders(this.createHeaders());
+      .withHeaders(this.createHeaders(options.userAgent));
   }
 
   public initIndex<TSearchIndex extends SearchIndex>(
@@ -51,11 +58,12 @@ export class SearchClient {
       .map(host => new Host(host));
   }
 
-  private createHeaders(): { [key: string]: string } {
+  private createHeaders(userAgent: UserAgent): { [key: string]: string } {
     return {
       'X-Algolia-Application-Id': this.appId,
       'X-Algolia-API-Key': this.apiKey,
       'Content-Type': 'application/json',
+      'User-Agent': userAgent.value,
     };
   }
 }
