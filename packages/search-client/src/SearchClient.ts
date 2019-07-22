@@ -40,13 +40,15 @@ export class SearchClient {
       { url: `${this.appId}.algolia.net`, accept: CallType.Write },
     ];
 
-    return hosts.concat(
-      shuffle([
-        { url: `${this.appId}-1.algolianet.com`, accept: CallType.Any },
-        { url: `${this.appId}-2.algolianet.com`, accept: CallType.Any },
-        { url: `${this.appId}-3.algolianet.com`, accept: CallType.Any },
-      ])
-    );
+    return hosts
+      .concat(
+        shuffle([
+          { url: `${this.appId}-1.algolianet.com`, accept: CallType.Any },
+          { url: `${this.appId}-2.algolianet.com`, accept: CallType.Any },
+          { url: `${this.appId}-3.algolianet.com`, accept: CallType.Any },
+        ])
+      )
+      .map(host => new Host(host));
   }
 
   private createHeaders(): { [key: string]: string } {

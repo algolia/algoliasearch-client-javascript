@@ -23,14 +23,14 @@ export class Fixtures {
   }
 
   public static transporter(requester: Requester): Transporter {
-    const hosts: Host[] = [
+    const hosts = [
       { url: 'read.com', accept: CallType.Read },
       { url: 'write.com', accept: CallType.Write },
       { url: 'read-and-write.com', accept: CallType.Any },
     ];
 
     return new Transporter({
-      hosts,
+      hosts: hosts.map(host => new Host(host)),
       requester: instance(requester),
       logger: new NullLogger(),
       timeouts: {

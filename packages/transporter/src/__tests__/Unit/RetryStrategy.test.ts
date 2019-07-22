@@ -1,25 +1,25 @@
 import { Fixtures, FakeRequester } from '../Fixtures';
 import { when, anything, verify, mock, deepEqual } from 'ts-mockito';
-import { Transporter } from '../../Transporter';
+import { Host, CallType, Transporter } from '@algolia/transporter-types';
 
 let requester: FakeRequester;
 let transporter: Transporter;
-
-beforeEach(() => {
-  requester = mock(FakeRequester);
-  transporter = Fixtures.transporter(requester);
-
-  when(requester.send(anything())).thenResolve({
-    content: '{"hits": [{"name": "Star Wars"}]}',
-    status: 200,
-    isTimedOut: false,
-  });
-});
 
 const transporterRequest = Fixtures.transporterRequest();
 const requesterRequest = Fixtures.requesterRequest();
 
 describe('The retry strategy', () => {
+  beforeEach(() => {
+    requester = mock(FakeRequester);
+    transporter = Fixtures.transporter(requester);
+
+    when(requester.send(anything())).thenResolve({
+      content: '{"hits": [{"name": "Star Wars"}]}',
+      status: 200,
+      isTimedOut: false,
+    });
+  });
+
   it('Retries after a timeout', async () => {
     requesterRequest.timeout = 30;
     requesterRequest.url = 'https://write.com/save';
@@ -36,10 +36,6 @@ describe('The retry strategy', () => {
   });
 
   it('Retries after a network error', async () => {
-    type SearchResponse = {
-      hits: Array<{ name: string }>;
-    };
-
     requesterRequest.timeout = 2;
     requesterRequest.url = 'https://read.com/save';
     when(requester.send(deepEqual(requesterRequest))).thenResolve({
@@ -48,16 +44,12 @@ describe('The retry strategy', () => {
       isTimedOut: false,
     });
 
-    await transporter.read<SearchResponse>(transporterRequest, {});
+    await transporter.read(transporterRequest, {});
 
     verify(requester.send(anything())).twice();
   });
 
   it('Retries after a 1xx', async () => {
-    type SearchResponse = {
-      hits: Array<{ name: string }>;
-    };
-
     requesterRequest.timeout = 2;
     requesterRequest.url = 'https://read.com/save';
     when(requester.send(deepEqual(requesterRequest))).thenResolve({
@@ -66,7 +58,7 @@ describe('The retry strategy', () => {
       isTimedOut: true,
     });
 
-    await transporter.read<SearchResponse>(transporterRequest, {});
+    await transporter.read(transporterRequest);
 
     verify(requester.send(anything())).twice();
   });
@@ -83,10 +75,6 @@ describe('The retry strategy', () => {
   });
 
   it('Retries after a 3xx', async () => {
-    type SearchResponse = {
-      hits: Array<{ name: string }>;
-    };
-
     requesterRequest.timeout = 2;
     requesterRequest.url = 'https://read.com/save';
     when(requester.send(deepEqual(requesterRequest))).thenResolve({
@@ -95,16 +83,12 @@ describe('The retry strategy', () => {
       isTimedOut: true,
     });
 
-    await transporter.read<SearchResponse>(transporterRequest, {});
+    await transporter.read(transporterRequest);
 
     verify(requester.send(anything())).twice();
   });
 
   it('Dont retry after a 4xx', async () => {
-    type SearchResponse = {
-      hits: Array<{ name: string }>;
-    };
-
     requesterRequest.timeout = 30;
     requesterRequest.url = 'https://write.com/save';
     when(requester.send(deepEqual(requesterRequest))).thenResolve({
@@ -116,23 +100,15 @@ describe('The retry strategy', () => {
       isTimedOut: false,
     });
 
-    expect.assertions(2);
+    await expect(transporter.write(transporterRequest)).rejects.toEqual({
+      message: 'Invalid Application ID',
+      status: 404,
+    });
 
-    try {
-      await transporter.write<SearchResponse>(transporterRequest, {});
-    } catch (reason) {
-      verify(requester.send(anything())).once();
-
-      expect(reason.message).toBe('Invalid Application ID');
-      expect(reason.status).toBe(404);
-    }
+    verify(requester.send(anything())).once();
   });
 
   it('Retries after a 5xx', async () => {
-    type SearchResponse = {
-      hits: Array<{ name: string }>;
-    };
-
     requesterRequest.timeout = 30;
     requesterRequest.url = 'https://write.com/save';
     when(requester.send(deepEqual(requesterRequest))).thenResolve({
@@ -141,8 +117,30 @@ describe('The retry strategy', () => {
       isTimedOut: true,
     });
 
-    await transporter.write<SearchResponse>(transporterRequest, {});
+    await transporter.write(transporterRequest, {});
 
     verify(requester.send(anything())).twice();
+  });
+
+  it('Set hosts down on retriable failures', async () => {
+    const host = new Host({
+      url: 'foo',
+      accept: CallType.Write,
+    });
+
+    transporter = transporter.withHosts([host]);
+
+    when(requester.send(anything())).thenResolve({
+      content: '',
+      status: 500,
+      isTimedOut: false,
+    });
+
+    expect(host.isUp()).toBe(true);
+    await expect(transporter.write(transporterRequest, {})).rejects.toEqual({
+      message: 'Unreachable hosts',
+      name: 'RetryError',
+    });
+    expect(host.isUp()).toBeFalsy();
   });
 });

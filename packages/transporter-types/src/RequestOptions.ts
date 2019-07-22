@@ -23,7 +23,7 @@ export function popRequestOption<TRequestOption>(
   defaultValue: TRequestOption
 ): TRequestOption {
   if (requestOptions !== undefined && key in requestOptions) {
-    const value: TRequestOption = requestOptions[key]; // --> OFF
+    const value: TRequestOption = requestOptions[key];
 
     /* eslint no-param-reassign: 0 */
     delete requestOptions[key];
