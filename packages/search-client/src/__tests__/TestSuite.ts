@@ -3,6 +3,10 @@ import { SearchClient } from '../..';
 import { SearchIndex } from '../SearchIndex';
 import { Transporter } from '@algolia/transporter';
 import { HasSearch, search } from '../Methods/SearchIndex/search';
+import {
+  HasSearchForFacetValues,
+  searchForFacetValues,
+} from '../Methods/SearchIndex/searchForFacetValues';
 import { ConsoleLogger } from '@algolia/logger-console';
 import { HasWaitTask, waitTask } from '../Methods/SearchIndex/waitTask';
 import { HasSaveObject, saveObject } from '../Methods/SearchIndex/saveObject';
@@ -53,6 +57,7 @@ export class TestSuite {
     const index = client.initIndex<
       HasDelete &
         HasSearch &
+        HasSearchForFacetValues &
         HasWaitTask &
         HasSaveObject &
         HasSaveObjects &
@@ -68,6 +73,7 @@ export class TestSuite {
         saveObject,
         saveObjects,
         search,
+        searchForFacetValues,
         waitTask,
         setSettings,
         getSettings,

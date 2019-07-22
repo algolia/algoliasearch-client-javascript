@@ -39,27 +39,55 @@ test(testSuite.testName, async () => {
     await responses[i].wait();
   }
 
-  let response = await index.search('algolia');
+  let searchResponse = await index.search('algolia');
 
-  expect(response.hits).toHaveLength(2);
+  expect(searchResponse.hits).toHaveLength(2);
 
-  response = await index.search('elon', {
+  searchResponse = await index.search('elon', {
     clickAnalytics: true,
   });
 
-  expect(response.queryID).toBeDefined();
+  expect(searchResponse.queryID).toBeDefined();
 
-  response = await index.search('elon', {
+  searchResponse = await index.search('elon', {
     facets: '*',
     facetFilters: 'company:tesla',
   });
 
-  expect(response.hits).toHaveLength(1);
+  expect(searchResponse.hits).toHaveLength(1);
 
-  response = await index.search('elon', {
+  searchResponse = await index.search('elon', {
     facets: '*',
     facetFilters: [['company:tesla', 'company:spacex']],
   });
 
-  expect(response.hits).toHaveLength(2);
+  expect(searchResponse.hits).toHaveLength(2);
+
+  const searchForFacetValuesResponse = await index.searchForFacetValues({
+    facetName: 'company',
+    facetQuery: 'a',
+  });
+
+  expect(searchForFacetValuesResponse.facetHits).toEqual([
+    {
+      count: 2,
+      highlighted: '<em>A</em>lgolia',
+      value: 'Algolia',
+    },
+    {
+      count: 2,
+      highlighted: '<em>A</em>pple',
+      value: 'Apple',
+    },
+    {
+      count: 1,
+      highlighted: '<em>A</em>mazon',
+      value: 'Amazon',
+    },
+    {
+      count: 1,
+      highlighted: '<em>A</em>rista Networks',
+      value: 'Arista Networks',
+    },
+  ]);
 });
