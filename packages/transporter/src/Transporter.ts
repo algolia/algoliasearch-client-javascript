@@ -99,7 +99,13 @@ export class Transporter implements TransporterContract {
     requestOptions: MappedRequestOptions
   ): Promise<TResponse> {
     return new Promise<TResponse>((resolve, reject): void => {
-      this.retry(hosts.reverse(), request, requestOptions, resolve, reject);
+      this.retry(
+        hosts.filter(host => host.isUp()).reverse(),
+        request,
+        requestOptions,
+        resolve,
+        reject
+      );
     });
   }
 
@@ -122,19 +128,9 @@ export class Transporter implements TransporterContract {
       return;
     }
 
-    let url = `https://${host.url}/${request.path}`;
-    const queryParameters =
-      requestOptions.queryParameters !== undefined ? requestOptions.queryParameters : {};
-
-    if (Object.keys(queryParameters).length > 0) {
-      url += `?${Object.keys(queryParameters)
-        .map(key => `${key}=${queryParameters[key]}`)
-        .join('&')}`;
-    }
-
     this.requester
       .send({
-        data: Serializer.serialize({
+        data: Serializer.data({
           ...request.data,
           ...requestOptions.data,
         }),
@@ -143,7 +139,7 @@ export class Transporter implements TransporterContract {
           ...this.headers,
         },
         method: request.method,
-        url,
+        url: Serializer.url(host, request.path, requestOptions.queryParameters),
         timeout: requestOptions.timeout ? requestOptions.timeout : 0,
       })
       .then(response => {
