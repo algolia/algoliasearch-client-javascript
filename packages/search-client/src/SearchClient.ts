@@ -23,7 +23,7 @@ export class SearchClient {
       .withHeaders(this.createHeaders(options.userAgent));
   }
 
-  public initIndex<TSearchIndex extends SearchIndex>(
+  public initIndex<TSearchIndex>(
     indexName: string,
     options?: { methods: Function[] }
   ): TSearchIndex {
