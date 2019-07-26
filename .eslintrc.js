@@ -1,6 +1,11 @@
 module.exports = {
-  plugins: ['functional'],
-  extends: ['algolia/jest', 'algolia/typescript', 'plugin:functional/recommended'],
+  plugins: ['functional', 'sonarjs'],
+  extends: [
+    'algolia/jest',
+    'algolia/typescript',
+    'plugin:functional/recommended',
+    'plugin:sonarjs/recommended',
+  ],
   rules: {
     'max-len': [
       'error',
@@ -38,6 +43,7 @@ module.exports = {
         'functional/no-let': 0,
         '@typescript-eslint/explicit-function-return-type': 0,
         'functional/prefer-readonly-types': 0,
+        'sonarjs/no-duplicate-string': 0,
       },
     },
   ],
