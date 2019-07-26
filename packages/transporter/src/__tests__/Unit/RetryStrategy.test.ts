@@ -1,9 +1,8 @@
-import { Fixtures, FakeRequester } from '../Fixtures';
+import { Fixtures, FakeRequester, TestTransporter } from '../Fixtures';
 import { when, anything, verify, mock, deepEqual } from 'ts-mockito';
-import { Host, CallType, Transporter } from '@algolia/transporter-types';
 
 let requester: FakeRequester;
-let transporter: Transporter;
+let transporter: TestTransporter;
 
 const transporterRequest = Fixtures.transporterRequest();
 const requesterRequest = Fixtures.requesterRequest();
@@ -33,6 +32,8 @@ describe('The retry strategy', () => {
     await transporter.write(transporterRequest, {});
 
     verify(requester.send(anything())).twice();
+
+    expect(transporter._hosts.filter(host => host.isUp())).toHaveLength(3);
   });
 
   it('Retries after a network error', async () => {
@@ -47,6 +48,8 @@ describe('The retry strategy', () => {
     await transporter.read(transporterRequest, {});
 
     verify(requester.send(anything())).twice();
+
+    expect(transporter._hosts.filter(host => host.isUp())).toHaveLength(2);
   });
 
   it('Retries after a 1xx', async () => {
@@ -55,12 +58,14 @@ describe('The retry strategy', () => {
     when(requester.send(deepEqual(requesterRequest))).thenResolve({
       content: '',
       status: 101,
-      isTimedOut: true,
+      isTimedOut: false,
     });
 
     await transporter.read(transporterRequest);
 
     verify(requester.send(anything())).twice();
+
+    expect(transporter._hosts.filter(host => host.isUp())).toHaveLength(2);
   });
 
   it("Don't retry after a 2xx", async () => {
@@ -72,6 +77,8 @@ describe('The retry strategy', () => {
 
     expect(response.hits[0].name).toBe('Star Wars');
     verify(requester.send(anything())).once();
+
+    expect(transporter._hosts.filter(host => host.isUp())).toHaveLength(3);
   });
 
   it('Retries after a 3xx', async () => {
@@ -80,12 +87,14 @@ describe('The retry strategy', () => {
     when(requester.send(deepEqual(requesterRequest))).thenResolve({
       content: '',
       status: 300,
-      isTimedOut: true,
+      isTimedOut: false,
     });
 
     await transporter.read(transporterRequest);
 
     verify(requester.send(anything())).twice();
+
+    expect(transporter._hosts.filter(host => host.isUp())).toHaveLength(2);
   });
 
   it('Dont retry after a 4xx', async () => {
@@ -106,6 +115,8 @@ describe('The retry strategy', () => {
     });
 
     verify(requester.send(anything())).once();
+
+    expect(transporter._hosts.filter(host => host.isUp())).toHaveLength(3);
   });
 
   it('Retries after a 5xx', async () => {
@@ -114,33 +125,13 @@ describe('The retry strategy', () => {
     when(requester.send(deepEqual(requesterRequest))).thenResolve({
       content: '',
       status: 500,
-      isTimedOut: true,
+      isTimedOut: false,
     });
 
     await transporter.write(transporterRequest, {});
 
     verify(requester.send(anything())).twice();
-  });
 
-  it('Set hosts down on retriable failures', async () => {
-    const host = new Host({
-      url: 'foo',
-      accept: CallType.Write,
-    });
-
-    transporter = transporter.withHosts([host]);
-
-    when(requester.send(anything())).thenResolve({
-      content: '',
-      status: 500,
-      isTimedOut: false,
-    });
-
-    expect(host.isUp()).toBe(true);
-    await expect(transporter.write(transporterRequest, {})).rejects.toEqual({
-      message: 'Unreachable hosts',
-      name: 'RetryError',
-    });
-    expect(host.isUp()).toBeFalsy();
+    expect(transporter._hosts.filter(host => host.isUp())).toHaveLength(2);
   });
 });

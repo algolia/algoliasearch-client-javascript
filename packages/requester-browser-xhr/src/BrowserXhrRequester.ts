@@ -15,6 +15,16 @@ export class BrowserXhrRequester implements Requester {
         });
       };
 
+      baseRequester.onerror = (): void => {
+        if (baseRequester.status === 0) {
+          resolve({
+            content: 'Network error',
+            status: baseRequester.status,
+            isTimedOut: false,
+          });
+        }
+      };
+
       baseRequester.onload = (): void => {
         resolve({
           content: baseRequester.responseText,

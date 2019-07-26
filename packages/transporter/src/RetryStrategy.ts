@@ -10,7 +10,10 @@ export const enum RetryOutcome {
 export class RetryStrategy {
   public decide(host: Host, response: Response) {
     if (this.isRetryable(response)) {
-      host.setAsDown();
+      if (!response.isTimedOut) {
+        host.setAsDown();
+      }
+
       return RetryOutcome.Retry;
     }
 
@@ -21,11 +24,22 @@ export class RetryStrategy {
     return RetryOutcome.Fail;
   }
 
-  private isRetryable({ isTimedOut, status }: Response): boolean {
-    return isTimedOut || (~~(status / 100) !== 2 && ~~(status / 100) !== 4);
+  private isRetryable(response: Response): boolean {
+    const status = response.status;
+    const isTimedOut = response.isTimedOut;
+
+    return (
+      isTimedOut ||
+      this.isNetworkError(response) ||
+      (~~(status / 100) !== 2 && ~~(status / 100) !== 4)
+    );
   }
 
   private isSuccess({ status }: Response): boolean {
     return ~~(status / 100) === 2;
+  }
+
+  private isNetworkError({ isTimedOut, status }: Response): boolean {
+    return !isTimedOut && ~~status === 0;
   }
 }

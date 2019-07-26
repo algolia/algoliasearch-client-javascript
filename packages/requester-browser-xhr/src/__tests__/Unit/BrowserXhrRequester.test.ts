@@ -100,3 +100,27 @@ describe('Requester Browser Xhr', (): void => {
     expect(response.isTimedOut).toBe(true);
   });
 });
+
+describe('Requester Browser Xhr on failures', (): void => {
+  it('Handles network errors', async () => {
+    const requester = new BrowserXhrRequester();
+
+    const request = {
+      url: 'https://this-dont-exist.algolia.com',
+      method: Method.Post,
+      headers: {
+        'X-Algolia-Application-Id': 'ABCDE',
+        'X-Algolia-API-Key': '12345',
+        'Content-Type': 'application/json',
+      },
+      data: JSON.stringify({ foo: 'bar' }),
+      timeout: 2,
+    };
+
+    const response = await requester.send(request);
+
+    expect(response.status).toBe(0);
+    expect(response.content).toBe('Network error');
+    expect(response.isTimedOut).toBe(false);
+  });
+});

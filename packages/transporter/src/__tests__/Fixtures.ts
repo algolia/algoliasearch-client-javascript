@@ -17,19 +17,29 @@ export class FakeRequester implements Requester {
   }
 }
 
+export class TestTransporter extends Transporter {
+  public _hosts: Host[];
+
+  public constructor(options: any) {
+    super(options);
+
+    this._hosts = options.hosts;
+  }
+}
+
 export class Fixtures {
   public static requester(): FakeRequester {
     return new FakeRequester();
   }
 
-  public static transporter(requester: Requester): Transporter {
+  public static transporter(requester: Requester): TestTransporter {
     const hosts = [
       { url: 'read.com', accept: CallType.Read },
       { url: 'write.com', accept: CallType.Write },
       { url: 'read-and-write.com', accept: CallType.Any },
     ];
 
-    return new Transporter({
+    return new TestTransporter({
       hosts: hosts.map(host => new Host(host)),
       requester: instance(requester),
       logger: new NullLogger(),
