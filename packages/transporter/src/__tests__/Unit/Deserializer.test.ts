@@ -16,8 +16,8 @@ const transporterRequest = Fixtures.transporterRequest();
 describe('The deserializer', () => {
   it('Deserializes success responses', async () => {
     type SearchResponse = {
-      hits: Array<{
-        name: string;
+      readonly hits: ReadonlyArray<{
+        readonly name: string;
       }>;
     };
 

@@ -1,27 +1,21 @@
-import { RequestOptions } from '@algolia/transporter-types';
+import { RequestOptions, popRequestOption } from '@algolia/transporter-types';
 import { SearchIndex } from '../../SearchIndex';
 import { ConstructorOf } from '../../helpers';
 import { Method } from '@algolia/requester-types';
 
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const getObjects = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: TSearchIndex) => {
   return class extends base implements HasGetObjects {
     public getObjects<TObject>(
-      objectIds: string[],
+      objectIds: readonly string[],
       requestOptions?: RequestOptions & GetObjectsOptions
     ): Promise<GetObjectsResponse<TObject>> {
       const requests = objectIds.map(objectId => {
-        let request = {
+        return {
           indexName: this.indexName,
           objectID: objectId,
+          attributesToRetrieve: popRequestOption(requestOptions, 'attributesToRetrieve', '*'),
         };
-
-        if (requestOptions !== undefined && requestOptions.attributesToRetrieve !== undefined) {
-          request = Object.assign(request, {
-            attributesToRetrieve: requestOptions.attributesToRetrieve,
-          });
-        }
-
-        return request;
       });
 
       return this.transporter.read(
@@ -38,17 +32,17 @@ export const getObjects = <TSearchIndex extends ConstructorOf<SearchIndex>>(base
   };
 };
 
-export interface HasGetObjects extends SearchIndex {
-  getObjects<TObject>(
-    objectIDs: string[],
+export interface HasGetObjects {
+  readonly getObjects: <TObject>(
+    objectIDs: readonly string[],
     requestOptions?: RequestOptions & GetObjectsOptions
-  ): Promise<GetObjectsResponse<TObject>>;
+  ) => Promise<GetObjectsResponse<TObject>>;
 }
 
 export type GetObjectsResponse<TObject> = {
-  results: TObject[];
+  readonly results: readonly TObject[];
 };
 
 export interface GetObjectsOptions {
-  attributesToRetrieve?: string[];
+  readonly attributesToRetrieve?: readonly string[];
 }

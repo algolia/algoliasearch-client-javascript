@@ -10,14 +10,16 @@ import { ConsoleLogger } from '@algolia/logger-console';
 import { UserAgent } from '@algolia/transporter-types/src/UserAgent';
 
 class SearchClient extends BaseSearchClient {
-  public initIndex<TSearchIndex = HasSearch & HasSearchForFacetValues>(indexName: string) {
+  public initIndex<TSearchIndex = HasSearch & HasSearchForFacetValues>(
+    indexName: string
+  ): TSearchIndex {
     return super.initIndex<TSearchIndex>(indexName, {
       methods: [search, searchForFacetValues],
     });
   }
 }
 
-export function algoliasearch(appId: string, apiKey: string) {
+export function algoliasearch(appId: string, apiKey: string): SearchClient {
   const requester = new BrowserXhrRequester();
 
   const transporter = new Transporter({

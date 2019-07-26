@@ -14,7 +14,7 @@ export class Faker {
     return obj;
   }
 
-  public static objects(number: number): object[] {
+  public static objects(number: number): readonly object[] {
     const objects = [];
 
     for (let index = 0; index < number; index++) {

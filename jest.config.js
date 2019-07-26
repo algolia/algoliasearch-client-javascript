@@ -1,4 +1,4 @@
-/* eslint-disable import/no-commonjs */
+/* eslint-disable import/no-commonjs, functional/immutable-data */
 module.exports = {
   testMatch: ['**/__tests__/**/*.test.ts'],
   preset: 'ts-jest',

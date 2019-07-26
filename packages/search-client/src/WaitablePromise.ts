@@ -1,4 +1,5 @@
 export class WaitablePromise<TResponse> extends Promise<TResponse> {
+  // eslint-disable-next-line functional/prefer-readonly-types
   public onWaitClosure!: OnWaitClosure<TResponse>;
 
   public static from<TResponse>(promise: Promise<TResponse>): WaitablePromise<TResponse> {
@@ -7,7 +8,8 @@ export class WaitablePromise<TResponse> extends Promise<TResponse> {
     });
   }
 
-  public onWait(onWaitClosure: OnWaitClosure<TResponse>) {
+  public onWait(onWaitClosure: OnWaitClosure<TResponse>): Readonly<this> {
+    // eslint-disable-next-line functional/immutable-data
     this.onWaitClosure = onWaitClosure;
 
     return this;

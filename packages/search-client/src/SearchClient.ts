@@ -10,10 +10,10 @@ export class SearchClient {
   private readonly apiKey: string;
 
   public constructor(options: {
-    appId: string;
-    apiKey: string;
-    transporter: Transporter;
-    userAgent: UserAgent;
+    readonly appId: string;
+    readonly apiKey: string;
+    readonly transporter: Transporter;
+    readonly userAgent: UserAgent;
   }) {
     this.appId = options.appId;
     this.apiKey = options.apiKey;
@@ -25,8 +25,9 @@ export class SearchClient {
 
   public initIndex<TSearchIndex>(
     indexName: string,
-    options?: { methods: Function[] }
+    options?: { readonly methods: readonly Function[] }
   ): TSearchIndex {
+    // eslint-disable-next-line functional/no-let
     let Index: any = SearchIndex;
 
     if (options) {
@@ -41,6 +42,7 @@ export class SearchClient {
     });
   }
 
+  // eslint-disable-next-line functional/prefer-readonly-types
   private createHosts(): Host[] {
     const hosts = [
       { url: `${this.appId}-dsn.algolia.net`, accept: CallType.Read },
@@ -58,7 +60,7 @@ export class SearchClient {
       .map(host => new Host(host));
   }
 
-  private createHeaders(userAgent: UserAgent): { [key: string]: string } {
+  private createHeaders(userAgent: UserAgent): { readonly [key: string]: string } {
     return {
       'X-Algolia-Application-Id': this.appId,
       'X-Algolia-API-Key': this.apiKey,

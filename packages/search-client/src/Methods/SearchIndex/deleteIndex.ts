@@ -3,31 +3,33 @@ import { SearchIndex } from '../../SearchIndex';
 import { Method } from '@algolia/requester-types';
 import { ConstructorOf } from '../../helpers';
 import { WaitablePromise } from '../../WaitablePromise';
-import { HasWaitTask, waitTask } from './waitTask';
+import { waitTask } from './waitTask';
 
-export const deleteIndex = <TSearchIndex extends ConstructorOf<SearchIndex & HasWaitTask>>(
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+export const deleteIndex = <TSearchIndex extends ConstructorOf<SearchIndex>>(
   base: TSearchIndex
-) =>
-  waitTask(
-    class extends base implements HasDelete {
-      public delete(requestOptions?: RequestOptions): WaitablePromise<DeleteResponse> {
-        return WaitablePromise.from<DeleteResponse>(
-          this.transporter.write(
-            {
-              method: Method.Delete,
-              path: `1/indexes/${this.indexName}`,
-            },
-            requestOptions
-          )
-        ).onWait(response => this.waitTask(response.taskID));
-      }
-    }
-  );
+) => {
+  const Mixin = waitTask(base);
 
-export interface HasDelete extends SearchIndex {
-  delete(requestOptions?: RequestOptions): WaitablePromise<DeleteResponse>;
+  return class extends Mixin implements HasDelete {
+    public delete(requestOptions?: RequestOptions): Readonly<WaitablePromise<DeleteResponse>> {
+      return WaitablePromise.from<DeleteResponse>(
+        this.transporter.write(
+          {
+            method: Method.Delete,
+            path: `1/indexes/${this.indexName}`,
+          },
+          requestOptions
+        )
+      ).onWait(response => this.waitTask(response.taskID));
+    }
+  };
+};
+
+export interface HasDelete {
+  readonly delete: (requestOptions?: RequestOptions) => Readonly<WaitablePromise<DeleteResponse>>;
 }
 
 export type DeleteResponse = {
-  taskID: number;
+  readonly taskID: number;
 };

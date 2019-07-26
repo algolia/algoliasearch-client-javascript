@@ -1,5 +1,4 @@
 import { TestSuite } from '../TestSuite';
-import { WaitablePromise } from '../../WaitablePromise';
 
 const testSuite = new TestSuite('search');
 
@@ -8,7 +7,7 @@ afterAll(() => testSuite.cleanUp());
 test(testSuite.testName, async () => {
   const index = testSuite.makeIndex();
 
-  const responses: Array<WaitablePromise<any>> = [];
+  const responses: any = [];
 
   responses.push(
     index.saveObjects(

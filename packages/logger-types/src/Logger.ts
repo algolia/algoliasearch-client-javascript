@@ -1,5 +1,5 @@
 export interface Logger {
-  debug(message: string, args: any): void;
-  info(message: string, args: any): void;
-  error(message: string, args: any): void;
+  readonly debug: (message: string, args: any) => void;
+  readonly info: (message: string, args: any) => void;
+  readonly error: (message: string, args: any) => void;
 }

@@ -5,7 +5,7 @@ export class UserAgent {
     this.value = value;
   }
 
-  public static create(version: string) {
+  public static create(version: string): UserAgent {
     return new UserAgent(`Algolia for Javascript (${version})`);
   }
 
@@ -15,6 +15,6 @@ export class UserAgent {
 }
 
 type UserAgentOptions = {
-  segment: string;
-  version: string;
+  readonly segment: string;
+  readonly version: string;
 };

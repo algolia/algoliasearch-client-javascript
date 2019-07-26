@@ -18,7 +18,7 @@ export class FakeRequester implements Requester {
 }
 
 export class TestTransporter extends Transporter {
-  public _hosts: Host[];
+  public readonly _hosts: readonly Host[];
 
   public constructor(options: any) {
     super(options);
@@ -62,7 +62,7 @@ export class Fixtures {
   }
 
   public static requesterRequest() {
-    const headers: { [key: string]: string } = {
+    const headers: { readonly [key: string]: string } = {
       'X-Default-Header': 'Default value',
     };
 

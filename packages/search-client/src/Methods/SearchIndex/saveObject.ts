@@ -1,17 +1,18 @@
 import { RequestOptions } from '@algolia/transporter-types';
 import { SearchIndex } from '../../SearchIndex';
 import { ConstructorOf } from '../../helpers';
-import { saveObjects, HasSaveObjects, SaveObjectsOptions } from './saveObjects';
+import { saveObjects, SaveObjectsOptions } from './saveObjects';
 import { WaitablePromise } from '../../WaitablePromise';
 
-export const saveObject = <TSearchIndex extends ConstructorOf<SearchIndex & HasSaveObjects>>(
-  base: TSearchIndex
-) => {
-  const Index = class extends base implements HasSaveObject {
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+export const saveObject = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: TSearchIndex) => {
+  const Mixin = saveObjects(base);
+
+  return class extends Mixin implements HasSaveObject {
     public saveObject(
       object: object,
       requestOptions?: RequestOptions & SaveObjectsOptions
-    ): WaitablePromise<SaveObjectResponse> {
+    ): Readonly<WaitablePromise<SaveObjectResponse>> {
       return WaitablePromise.from<SaveObjectResponse>(
         new Promise(resolve => {
           this.saveObjects([object], requestOptions).then(response => {
@@ -26,18 +27,16 @@ export const saveObject = <TSearchIndex extends ConstructorOf<SearchIndex & HasS
       });
     }
   };
-
-  return saveObjects(Index);
 };
 
-export interface HasSaveObject extends SearchIndex {
-  saveObject(
+export interface HasSaveObject {
+  readonly saveObject: (
     object: object,
     requestOptions?: RequestOptions & SaveObjectsOptions
-  ): WaitablePromise<SaveObjectResponse>;
+  ) => Readonly<WaitablePromise<SaveObjectResponse>>;
 }
 
 export type SaveObjectResponse = {
-  taskID: number;
-  objectID: string;
+  readonly taskID: number;
+  readonly objectID: string;
 };

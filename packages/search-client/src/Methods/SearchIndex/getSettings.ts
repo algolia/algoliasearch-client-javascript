@@ -4,12 +4,19 @@ import { Method } from '@algolia/requester-types';
 import { ConstructorOf } from '../../helpers';
 import { IndexSettings } from '../Types/IndexSettings';
 
-export const getSettings = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: TSearchIndex) =>
-  class extends base implements HasGetSettings {
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+export const getSettings = <TSearchIndex extends ConstructorOf<SearchIndex>>(
+  base: TSearchIndex
+) => {
+  return class extends base implements HasGetSettings {
     public getSettings(requestOptions?: RequestOptions): Promise<IndexSettings> {
-      const options = mapRequestOptions(requestOptions);
-
-      options.queryParameters.getVersion = '2';
+      const options = mapRequestOptions(
+        Object.assign(requestOptions === undefined ? {} : requestOptions, {
+          queryParameters: {
+            getVersion: 2,
+          },
+        })
+      );
 
       return this.transporter.read(
         {
@@ -20,7 +27,8 @@ export const getSettings = <TSearchIndex extends ConstructorOf<SearchIndex>>(bas
       );
     }
   };
+};
 
-export interface HasGetSettings extends SearchIndex {
-  getSettings(requestOptions?: RequestOptions): Promise<IndexSettings>;
+export interface HasGetSettings {
+  readonly getSettings: (requestOptions?: RequestOptions) => Promise<IndexSettings>;
 }

@@ -8,7 +8,7 @@ export const enum RetryOutcome {
 }
 
 export class RetryStrategy {
-  public decide(host: Host, response: Response) {
+  public decide(host: Host, response: Response): RetryOutcome {
     if (this.isRetryable(response)) {
       if (!response.isTimedOut) {
         host.setAsDown();

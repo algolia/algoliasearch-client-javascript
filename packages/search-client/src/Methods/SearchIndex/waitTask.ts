@@ -1,12 +1,13 @@
 import { RequestOptions } from '@algolia/transporter-types';
 import { SearchIndex } from '../../SearchIndex';
 import { ConstructorOf } from '../../helpers';
-import { HasGetTask, getTask } from './getTask';
+import { getTask, HasGetTask } from './getTask';
 
-export const waitTask = <TSearchIndex extends ConstructorOf<SearchIndex & HasGetTask>>(
-  base: TSearchIndex
-) => {
-  const Index = class extends base implements HasWaitTask {
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+export const waitTask = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: TSearchIndex) => {
+  const Mixin: ConstructorOf<SearchIndex & HasGetTask> = getTask(base);
+
+  return class extends Mixin implements HasWaitTask {
     public waitTask(taskID: number, requestOptions?: RequestOptions): Promise<void> {
       const retry = (resolve: Function): void => {
         this.getTask(taskID, requestOptions).then(response => {
@@ -21,10 +22,8 @@ export const waitTask = <TSearchIndex extends ConstructorOf<SearchIndex & HasGet
       return new Promise<void>(resolve => retry(resolve));
     }
   };
-
-  return getTask(Index);
 };
 
-export interface HasWaitTask extends HasGetTask {
-  waitTask(taskID: number, requestOptions?: RequestOptions): Promise<void>;
+export interface HasWaitTask {
+  readonly waitTask: (taskID: number, requestOptions?: RequestOptions) => Promise<void>;
 }

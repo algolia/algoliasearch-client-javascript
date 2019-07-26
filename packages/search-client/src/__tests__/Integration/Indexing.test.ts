@@ -1,6 +1,5 @@
 import { TestSuite } from '../TestSuite';
 import { Faker } from '../Faker';
-import { WaitablePromise } from '../../WaitablePromise';
 
 const testSuite = new TestSuite('indexing');
 
@@ -8,7 +7,7 @@ afterAll(() => testSuite.cleanUp());
 
 test(testSuite.testName, async () => {
   const index = testSuite.makeIndex();
-  let responses: Array<WaitablePromise<any>> = [];
+  let responses: any = [];
 
   const object1 = Faker.object('object1');
   responses.push(index.saveObject(object1));

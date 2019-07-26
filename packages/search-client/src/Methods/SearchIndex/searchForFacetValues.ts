@@ -3,6 +3,7 @@ import { SearchIndex } from '../../SearchIndex';
 import { Method } from '@algolia/requester-types';
 import { ConstructorOf } from '../../helpers';
 
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const searchForFacetValues = <TSearchIndex extends ConstructorOf<SearchIndex>>(
   base: TSearchIndex
 ) => {
@@ -26,25 +27,25 @@ export const searchForFacetValues = <TSearchIndex extends ConstructorOf<SearchIn
 };
 
 export interface HasSearchForFacetValues extends SearchIndex {
-  searchForFacetValues(
+  readonly searchForFacetValues: (
     request: SearchForFacetValuesRequest,
     requestOptions?: RequestOptions
-  ): Promise<SearchForFacetValuesResponse>;
+  ) => Promise<SearchForFacetValuesResponse>;
 }
 
 export type SearchForFacetValuesRequest = {
-  facetName: string;
-  facetQuery: string;
+  readonly facetName: string;
+  readonly facetQuery: string;
 };
 
 export type SearchForFacetValuesResponse = {
-  facetHits: FacetHit[];
-  exhaustiveFacetsCount: boolean;
-  processingTimeMS?: number;
+  readonly facetHits: readonly FacetHit[];
+  readonly exhaustiveFacetsCount: boolean;
+  readonly processingTimeMS?: number;
 };
 
 export type FacetHit = {
-  value: string;
-  highlighted: string;
-  count: number;
+  readonly value: string;
+  readonly highlighted: string;
+  readonly count: number;
 };

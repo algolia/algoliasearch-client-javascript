@@ -1,18 +1,21 @@
 import { RequestOptions, popRequestOption } from '@algolia/transporter-types';
 import { SearchIndex } from '../../SearchIndex';
 import { ConstructorOf } from '../../helpers';
-import { HasBatch, BatchResponse, batch, Action, ChunkOptions } from './batch';
+import { BatchResponse, batch, Action, ChunkOptions } from './batch';
 import { MissingObjectID } from '../../Errors/MissingObjectID';
 import { WaitablePromise } from '../../WaitablePromise';
 
-export const saveObjects = <TSearchIndex extends ConstructorOf<SearchIndex & HasBatch>>(
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+export const saveObjects = <TSearchIndex extends ConstructorOf<SearchIndex>>(
   base: TSearchIndex
 ) => {
-  const Index = class extends base implements HasSaveObjects {
+  const Mixin = batch(base);
+
+  return class extends Mixin implements HasSaveObjects {
     public saveObjects(
-      objects: Array<Record<string, any>>,
+      objects: ReadonlyArray<Record<string, any>>,
       requestOptions?: RequestOptions & SaveObjectsOptions
-    ): WaitablePromise<BatchResponse[]> {
+    ): Readonly<WaitablePromise<readonly BatchResponse[]>> {
       const autoGenerateObjectIDIfNotExist = popRequestOption(
         requestOptions,
         'autoGenerateObjectIDIfNotExist',
@@ -28,22 +31,20 @@ export const saveObjects = <TSearchIndex extends ConstructorOf<SearchIndex & Has
       return this.chunk(objects, action, requestOptions);
     }
   };
-
-  return batch(Index);
 };
 
-export interface HasSaveObjects extends HasBatch {
-  saveObjects(
-    objects: object[],
+export interface HasSaveObjects {
+  readonly saveObjects: (
+    objects: readonly object[],
     requestOptions?: RequestOptions & SaveObjectsOptions
-  ): WaitablePromise<BatchResponse[]>;
+  ) => Readonly<WaitablePromise<readonly BatchResponse[]>>;
 }
 
 export interface SaveObjectsOptions extends ChunkOptions {
-  autoGenerateObjectIDIfNotExist?: boolean;
+  readonly autoGenerateObjectIDIfNotExist?: boolean;
 }
 
-function ensureObjectIdsWithin(objects: object[]): void {
+function ensureObjectIdsWithin(objects: readonly object[]): void {
   objects.forEach((object: object) => {
     if (!object.hasOwnProperty('objectID')) {
       throw new MissingObjectID(

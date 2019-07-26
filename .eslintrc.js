@@ -1,5 +1,6 @@
 module.exports = {
-  extends: ['algolia/jest', 'algolia/typescript'],
+  plugins: ['functional'],
+  extends: ['algolia/jest', 'algolia/typescript', 'plugin:functional/recommended'],
   rules: {
     'max-len': [
       'error',
@@ -29,4 +30,15 @@ module.exports = {
       },
     },
   },
+  overrides: [
+    {
+      files: ['**/__tests__/**'],
+      rules: {
+        'functional/immutable-data': 0,
+        'functional/no-let': 0,
+        '@typescript-eslint/explicit-function-return-type': 0,
+        'functional/prefer-readonly-types': 0,
+      },
+    },
+  ],
 };

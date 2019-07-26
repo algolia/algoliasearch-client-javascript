@@ -5,113 +5,119 @@ import { ConstructorOf } from '../../helpers';
 import { HasWaitTask, waitTask } from './waitTask';
 import { WaitablePromise } from '../../WaitablePromise';
 
-export const batch = <TSearchIndex extends ConstructorOf<SearchIndex & HasWaitTask>>(
-  base: TSearchIndex
-) => {
-  return waitTask(
-    class extends base implements HasBatch {
-      public chunk(
-        bodies: object[],
-        action: Action,
-        requestOptions?: RequestOptions & ChunkOptions
-      ): WaitablePromise<BatchResponse[]> {
-        return WaitablePromise.from<BatchResponse[]>(
-          new Promise(resolve => {
-            const responses: BatchResponse[] = [];
-            const batchSize = popRequestOption(requestOptions, 'batchSize', 1000);
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+export const batch = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: TSearchIndex) => {
+  const Mixin = waitTask(base);
 
-            const batching = (lastIndex: number = 0) => {
-              const bodiesChunk: Array<Record<string, any>> = [];
-              let index: number;
+  return class extends Mixin implements HasBatch {
+    public chunk(
+      bodies: readonly object[],
+      action: Action,
+      requestOptions?: RequestOptions & ChunkOptions
+    ): Readonly<WaitablePromise<readonly BatchResponse[]>> {
+      return WaitablePromise.from<readonly BatchResponse[]>(
+        new Promise(resolve => {
+          // eslint-disable-next-line functional/prefer-readonly-types
+          const responses: BatchResponse[] = [];
+          const batchSize = popRequestOption(requestOptions, 'batchSize', 1000);
 
-              for (index = lastIndex; index < bodies.length; index++) {
-                bodiesChunk.push(bodies[index]);
+          const batching = (lastIndex: number = 0): void => {
+            // eslint-disable-next-line functional/prefer-readonly-types
+            const bodiesChunk: Array<Record<string, any>> = [];
+            // eslint-disable-next-line functional/no-let
+            let index: number;
 
-                if (bodiesChunk.length === batchSize) {
-                  break;
-                }
+            for (index = lastIndex; index < bodies.length; index++) {
+              // eslint-disable-next-line functional/immutable-data
+              bodiesChunk.push(bodies[index]);
+
+              if (bodiesChunk.length === batchSize) {
+                break;
               }
+            }
 
-              if (bodiesChunk.length > 0) {
-                this.batch(
-                  bodiesChunk.map(body => {
-                    return {
-                      action,
-                      body,
-                    };
-                  }),
-                  requestOptions
-                ).then(response => {
-                  responses.push(response);
+            if (bodiesChunk.length > 0) {
+              this.batch(
+                bodiesChunk.map(body => {
+                  return {
+                    action,
+                    body,
+                  };
+                }),
+                requestOptions
+              ).then(response => {
+                responses.push(response); // eslint-disable-line functional/immutable-data
 
-                  index++;
-                  batching(index);
-                });
-              } else {
-                resolve(responses);
-              }
-            };
-
-            batching();
-          })
-        ).onWait(
-          (responses: BatchResponse[]): Promise<void> => {
-            return new Promise(resolve => {
-              Promise.all(responses.map(response => this.waitTask(response.taskID))).then(() => {
-                resolve();
+                index++;
+                batching(index);
               });
-            });
-          }
-        );
-      }
+            } else {
+              resolve(responses);
+            }
+          };
 
-      public batch(
-        requests: BatchRequest[],
-        requestOptions?: RequestOptions
-      ): WaitablePromise<BatchResponse> {
-        return WaitablePromise.from<BatchResponse>(
-          this.transporter.write<BatchResponse>(
-            {
-              method: Method.Post,
-              path: `1/indexes/${this.indexName}/batch`,
-              data: {
-                requests,
-              },
-            },
-            requestOptions
-          )
-        ).onWait(
-          (response: BatchResponse): Promise<void> => {
-            return this.waitTask(response.taskID);
-          }
-        );
-      }
+          batching();
+        })
+      ).onWait(
+        (responses: readonly BatchResponse[]): Promise<void> => {
+          return new Promise(resolve => {
+            Promise.all(responses.map(response => this.waitTask(response.taskID))).then(() => {
+              resolve();
+            });
+          });
+        }
+      );
     }
-  );
+
+    public batch(
+      requests: readonly BatchRequest[],
+      requestOptions?: RequestOptions
+    ): Readonly<WaitablePromise<BatchResponse>> {
+      return WaitablePromise.from<BatchResponse>(
+        this.transporter.write<BatchResponse>(
+          {
+            method: Method.Post,
+            path: `1/indexes/${this.indexName}/batch`,
+            data: {
+              requests,
+            },
+          },
+          requestOptions
+        )
+      ).onWait(
+        (response: BatchResponse): Promise<void> => {
+          return this.waitTask(response.taskID);
+        }
+      );
+    }
+  };
 };
 
 export interface HasBatch extends HasWaitTask {
-  chunk(
-    bodies: object[],
-    action: string,
+  readonly chunk: (
+    bodies: readonly object[],
+    action: Action,
     requestOptions?: RequestOptions & ChunkOptions
-  ): WaitablePromise<BatchResponse[]>;
+  ) => Readonly<WaitablePromise<readonly BatchResponse[]>>;
 
-  batch(requests: BatchRequest[], requestOptions?: RequestOptions): WaitablePromise<BatchResponse>;
+  readonly batch: (
+    requests: readonly BatchRequest[],
+    requestOptions?: RequestOptions
+  ) => Readonly<WaitablePromise<BatchResponse>>;
 }
 
 export interface ChunkOptions {
-  batchSize?: number;
+  readonly batchSize?: number;
 }
 
 export type BatchRequest = {
-  action: Action;
-  body: object;
+  readonly action: Action;
+  readonly body: object;
 };
 
 export type BatchResponse = {
-  taskID: number;
-  objectIDs: string[];
+  readonly taskID: number;
+  readonly objectIDs: readonly string[];
 };
 
 export const enum Action {

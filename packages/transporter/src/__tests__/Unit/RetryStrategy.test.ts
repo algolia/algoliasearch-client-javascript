@@ -70,7 +70,7 @@ describe('The retry strategy', () => {
 
   it("Don't retry after a 2xx", async () => {
     type SearchResponse = {
-      hits: Array<{ name: string }>;
+      readonly hits: ReadonlyArray<{ readonly name: string }>;
     };
 
     const response = await transporter.read<SearchResponse>(transporterRequest, {});

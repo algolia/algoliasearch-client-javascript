@@ -1,10 +1,17 @@
 import { Host, Request, RequestOptions } from '.';
 
 export interface Transporter {
-  withHeaders(headers: { [key: string]: string }): Transporter;
-  withHosts(hosts: Host[]): Transporter;
+  readonly withHeaders: (headers: { readonly [key: string]: string }) => Transporter;
+  // eslint-disable-next-line functional/prefer-readonly-types
+  readonly withHosts: (hosts: Host[]) => Transporter;
 
-  read<TResponse>(request: Request, requestOptions?: RequestOptions): Promise<TResponse>;
+  readonly read: <TResponse>(
+    request: Request,
+    requestOptions?: RequestOptions
+  ) => Promise<TResponse>;
 
-  write<TResponse>(request: Request, requestOptions?: RequestOptions): Promise<TResponse>;
+  readonly write: <TResponse>(
+    request: Request,
+    requestOptions?: RequestOptions
+  ) => Promise<TResponse>;
 }

@@ -17,20 +17,22 @@ import { RetryStrategy, RetryOutcome } from './RetryStrategy';
 import { Serializer } from './Serializer';
 
 export class Transporter implements TransporterContract {
-  private headers: { [key: string]: string };
-  private hosts: Host[];
-  private logger: Logger;
-  private requester: Requester;
-  private timeouts: Timeouts;
+  private readonly headers: { readonly [key: string]: string };
+  private readonly logger: Logger;
+  private readonly requester: Requester;
+  private readonly timeouts: Timeouts;
 
-  private retryStrategy: RetryStrategy;
+  // eslint-disable-next-line functional/prefer-readonly-types
+  private hosts: Host[];
+
+  private readonly retryStrategy: RetryStrategy;
 
   public constructor(options: {
-    headers: { [key: string]: string };
-    hosts: Host[];
-    logger: Logger;
-    requester: Requester;
-    timeouts: Timeouts;
+    readonly headers: { readonly [key: string]: string };
+    readonly logger: Logger;
+    readonly requester: Requester;
+    readonly timeouts: Timeouts;
+    hosts: Host[]; // eslint-disable-line functional/prefer-readonly-types
   }) {
     this.headers = options.headers;
     this.hosts = options.hosts;
@@ -41,7 +43,7 @@ export class Transporter implements TransporterContract {
     this.retryStrategy = new RetryStrategy();
   }
 
-  public withHeaders(headers: { [key: string]: string }): TransporterContract {
+  public withHeaders(headers: { readonly [key: string]: string }): TransporterContract {
     return new Transporter({
       headers,
       hosts: this.hosts,
@@ -51,6 +53,7 @@ export class Transporter implements TransporterContract {
     });
   }
 
+  // eslint-disable-next-line functional/prefer-readonly-types
   public withHosts(hosts: Host[]): TransporterContract {
     return new Transporter({
       hosts,
@@ -62,38 +65,27 @@ export class Transporter implements TransporterContract {
   }
 
   public read<TResponse>(request: Request, requestOptions?: RequestOptions): Promise<TResponse> {
-    const options = mapRequestOptions(requestOptions);
-
-    if (options.timeout === undefined) {
-      options.timeout = this.timeouts.read;
-    }
-
     return this.request(
       this.hosts.filter(host => {
         return (host.accept & CallType.Read) !== 0;
       }),
       request,
-      options
+      mapRequestOptions(requestOptions, this.timeouts.read)
     );
   }
 
   public write<TResponse>(request: Request, requestOptions?: RequestOptions): Promise<TResponse> {
-    const options = mapRequestOptions(requestOptions);
-
-    if (options.timeout === undefined) {
-      options.timeout = this.timeouts.write;
-    }
-
     return this.request(
       this.hosts.filter(host => {
         return (host.accept & CallType.Write) !== 0;
       }),
       request,
-      options
+      mapRequestOptions(requestOptions, this.timeouts.write)
     );
   }
 
   private request<TResponse>(
+    // eslint-disable-next-line functional/prefer-readonly-types
     hosts: Host[],
     request: Request,
     requestOptions: MappedRequestOptions
@@ -110,12 +102,14 @@ export class Transporter implements TransporterContract {
   }
 
   private retry(
+    // eslint-disable-next-line functional/prefer-readonly-types
     hosts: Host[],
     request: Request,
     requestOptions: MappedRequestOptions,
     resolve: Function,
     reject: Function
   ): void {
+    // eslint-disable-next-line functional/immutable-data
     const host = hosts.pop();
 
     if (host === undefined) {
