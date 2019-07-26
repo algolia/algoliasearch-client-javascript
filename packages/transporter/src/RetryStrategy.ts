@@ -1,27 +1,21 @@
 import { Host } from '@algolia/transporter-types';
 import { Response } from '@algolia/requester-types';
 
-export const enum RetryOutcome {
-  Success = 'SUCCESS',
-  Retry = 'RETRY',
-  Fail = 'FAIL',
-}
-
 export class RetryStrategy {
-  public decide(host: Host, response: Response): RetryOutcome {
+  public decide(host: Host, response: Response, outcomes: Outcomes): void {
     if (this.isRetryable(response)) {
       if (!response.isTimedOut) {
         host.setAsDown();
       }
 
-      return RetryOutcome.Retry;
+      return outcomes.retry();
     }
 
     if (this.isSuccess(response)) {
-      return RetryOutcome.Success;
+      return outcomes.success();
     }
 
-    return RetryOutcome.Fail;
+    return outcomes.fail();
   }
 
   private isRetryable(response: Response): boolean {
@@ -43,3 +37,14 @@ export class RetryStrategy {
     return !isTimedOut && ~~status === 0;
   }
 }
+
+export const enum RetryOutcome {
+  Success = 'success',
+  Retry = 'retry',
+  Fail = 'fail',
+}
+
+type Outcomes = {
+  // eslint-disable-next-line @typescript-eslint/generic-type-naming
+  [key in RetryOutcome]: () => void;
+};

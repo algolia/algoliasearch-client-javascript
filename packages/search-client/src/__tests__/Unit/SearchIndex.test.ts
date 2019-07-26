@@ -2,6 +2,8 @@ import { SearchClient } from '../..';
 import { Transporter } from '@algolia/transporter';
 import { deepEqual, mock, when, instance, anything, spy, verify } from 'ts-mockito';
 import { saveObject, HasSaveObject } from '../../Methods/SearchIndex/saveObject';
+import { batch, HasBatch, Action } from '../../Methods/SearchIndex/batch';
+
 import {
   saveObjects,
   HasSaveObjects,
@@ -9,7 +11,7 @@ import {
 } from '../../Methods/SearchIndex/saveObjects';
 import { Faker } from '../Faker';
 import { RequestOptions } from '@algolia/transporter-types';
-import { Action } from '../../Methods/SearchIndex/batch';
+
 import { HasGetObject, getObject } from '../../Methods/SearchIndex/getObject';
 import { HasGetObjects, getObjects } from '../../Methods/SearchIndex/getObjects';
 import { Method } from '@algolia/requester-types';
@@ -26,9 +28,14 @@ const index = new SearchClient({
   appId: 'appId',
   apiKey: 'apiKey',
   userAgent: UserAgent.create('4.0.0'),
-}).initIndex<HasSaveObject & HasSaveObjects & HasGetObject & HasGetObjects>('foo', {
-  methods: [saveObject, saveObjects, getObject, getObjects],
+}).initIndex<HasBatch & HasSaveObject & HasSaveObjects & HasGetObject & HasGetObjects>('foo', {
+  methods: [batch, saveObject, saveObjects, getObject, getObjects],
 });
+
+const res: any = {
+  objectIDs: ['1'],
+  taskID: 1,
+};
 
 describe('SaveObject', () => {
   it('Proxies down to save objects', async () => {
@@ -39,12 +46,14 @@ describe('SaveObject', () => {
       timeout: 1,
     };
 
-    when(indexSpy.saveObjects(deepEqual([obj]), requestoptions)).thenResolve([
+    const resSaveObject: any = [
       {
         objectIDs: ['1'],
         taskID: 2,
       },
-    ]);
+    ];
+
+    when(indexSpy.saveObjects(deepEqual([obj]), requestoptions)).thenResolve(resSaveObject);
 
     const response = await index.saveObject(obj, requestoptions);
 
@@ -61,26 +70,22 @@ describe('SaveObjects', () => {
       autoGenerateObjectIDIfNotExist: true,
     };
 
-    when(indexSpy.chunk(anything(), anything(), anything())).thenResolve([
-      { objectIDs: ['1'], taskID: 1 },
-    ]);
+    when(indexSpy.chunk(anything(), anything(), anything())).thenResolve(res);
 
     await index.saveObjects(objects, requestOptions);
 
-    verify(indexSpy.chunk(objects, 'addObject', requestOptions)).once();
+    verify(indexSpy.chunk(objects, Action.AddObject, requestOptions)).once();
   });
 
   it('Uses updateObject when `autoGenerateObjectIDIfNotExist` is not set', async () => {
     const indexSpy = spy(index);
     const objects = [Faker.object('myObjectID')];
 
-    when(indexSpy.chunk(anything(), anything(), anything())).thenResolve([
-      { objectIDs: ['1'], taskID: 1 },
-    ]);
+    when(indexSpy.chunk(anything(), anything(), anything())).thenResolve(res);
 
     await index.saveObjects(objects);
 
-    verify(indexSpy.chunk(objects, 'updateObject', undefined)).once();
+    verify(indexSpy.chunk(objects, Action.UpdateObject, undefined)).once();
   });
 
   it('Validates the object id when `autoGenerateObjectIDIfNotExist` is !== true', async () => {
@@ -119,10 +124,7 @@ describe('Chunk', () => {
   it('Call batch when there is objects with default batch size', async () => {
     const indexSpy = spy(index);
 
-    when(indexSpy.batch(anything(), anything())).thenResolve({
-      objectIDs: ['1'],
-      taskID: 1,
-    });
+    when(indexSpy.batch(anything(), anything())).thenResolve(res);
 
     await index.chunk([Faker.object()], Action.AddObject);
     await index.chunk(Faker.objects(1001), Action.UpdateObject);
@@ -133,10 +135,7 @@ describe('Chunk', () => {
   it('Call batch when there is objects with a given batch size', async () => {
     const indexSpy = spy(index);
 
-    when(indexSpy.batch(anything(), anything())).thenResolve({
-      objectIDs: ['1'],
-      taskID: 1,
-    });
+    when(indexSpy.batch(anything(), anything())).thenResolve(res);
 
     await index.chunk([Faker.object()], Action.AddObject);
     await index.chunk(Faker.objects(1001), Action.UpdateObject, {
@@ -149,10 +148,7 @@ describe('Chunk', () => {
   it('Does not perform one extra call when size of objects is the same as batch size', async () => {
     const indexSpy = spy(index);
 
-    when(indexSpy.batch(anything(), anything())).thenResolve({
-      objectIDs: ['1'],
-      taskID: 1,
-    });
+    when(indexSpy.batch(anything(), anything())).thenResolve(res);
 
     await index.chunk(Faker.objects(1000), Action.UpdateObject);
 

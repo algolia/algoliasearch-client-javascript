@@ -13,7 +13,7 @@ import {
 import { Deserializer } from './Deserializer';
 import { Logger } from '@algolia/logger-types';
 import { Requester } from '@algolia/requester-types';
-import { RetryStrategy, RetryOutcome } from './RetryStrategy';
+import { RetryStrategy } from './RetryStrategy';
 import { Serializer } from './Serializer';
 
 export class Transporter implements TransporterContract {
@@ -137,29 +137,25 @@ export class Transporter implements TransporterContract {
         timeout: requestOptions.timeout ? requestOptions.timeout : 0,
       })
       .then(response => {
-        switch (this.retryStrategy.decide(host, response)) {
-          case RetryOutcome.Success: {
+        const that = this;
+
+        this.retryStrategy.decide(host, response, {
+          success() {
             resolve(Deserializer.success(response));
-            break;
-          }
-          case RetryOutcome.Retry: {
-            this.logger.info('Retriable failure', {
+          },
+          retry() {
+            that.logger.info('Retriable failure', {
               request,
               response,
               host,
               triesLeft: hosts.length,
             });
-            this.retry(hosts, request, requestOptions, resolve, reject);
-            break;
-          }
-          case RetryOutcome.Fail: {
+            that.retry(hosts, request, requestOptions, resolve, reject);
+          },
+          fail() {
             reject(Deserializer.fail(response));
-            break;
-          }
-          default: {
-            throw Error('This should not happen.');
-          }
-        }
+          },
+        });
       });
   }
 }
