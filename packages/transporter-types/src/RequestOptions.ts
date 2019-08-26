@@ -29,6 +29,7 @@ export function popRequestOption<TRequestOption>(
   if (requestOptions !== undefined && key in requestOptions) {
     const value: TRequestOption = requestOptions[key];
 
+    // @todo Fix mutability issue here...
     delete requestOptions[key]; // eslint-disable-line no-param-reassign, functional/immutable-data
 
     return value;
@@ -42,7 +43,8 @@ export type RequestOptions = {
   readonly headers?: { readonly [key: string]: string };
   readonly queryParameters?: { readonly [key: string]: string };
 
-  // eslint-disable-next-line functional/no-mixed-type
+  // @todo Fix mutability issue here...
+  // eslint-disable-next-line functional/no-mixed-type, functional/immutable-data
   readonly [key: string]: any;
 };
 

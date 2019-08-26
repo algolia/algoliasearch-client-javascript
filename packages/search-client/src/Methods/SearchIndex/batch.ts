@@ -19,6 +19,7 @@ export const batch = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: TSe
         new Promise(resolve => {
           // eslint-disable-next-line functional/prefer-readonly-type
           const responses: BatchResponse[] = [];
+
           const batchSize = popRequestOption(requestOptions, 'batchSize', 1000);
 
           const batching = (lastIndex: number = 0): void => {
