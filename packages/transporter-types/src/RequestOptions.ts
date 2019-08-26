@@ -1,3 +1,13 @@
+export type RequestOptions = {
+  readonly timeout?: number;
+  readonly headers?: { readonly [key: string]: string };
+  readonly queryParameters?: { readonly [key: string]: string };
+
+  // @todo Fix mutability issue here...
+  // eslint-disable-next-line functional/no-mixed-type, functional/prefer-readonly-type
+  [key: string]: any;
+};
+
 export function mapRequestOptions(
   requestOptions: RequestOptions | undefined,
   timeout?: number | undefined
@@ -37,16 +47,6 @@ export function popRequestOption<TRequestOption>(
 
   return defaultValue;
 }
-
-export type RequestOptions = {
-  readonly timeout?: number;
-  readonly headers?: { readonly [key: string]: string };
-  readonly queryParameters?: { readonly [key: string]: string };
-
-  // @todo Fix mutability issue here...
-  // eslint-disable-next-line functional/no-mixed-type, functional/prefer-readonly-type
-  [key: string]: any;
-};
 
 export type MappedRequestOptions = {
   readonly timeout?: number;

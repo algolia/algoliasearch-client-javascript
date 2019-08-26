@@ -1,8 +1,10 @@
 import { RequestOptions } from '@algolia/transporter-types';
 import { SearchIndex } from '../../SearchIndex';
 import { ConstructorOf } from '../../helpers';
-import { saveObjects, SaveObjectsOptions } from './saveObjects';
+import { saveObjects } from './saveObjects';
 import { WaitablePromise } from '../../WaitablePromise';
+import { SaveObjectResponse } from '../Types/SaveObjectResponse';
+import { SaveObjectsOptions } from '../Types/SaveObjectsOptions';
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const saveObject = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: TSearchIndex) => {
@@ -34,9 +36,4 @@ export type HasSaveObject = {
     object: object,
     requestOptions?: RequestOptions & SaveObjectsOptions
   ) => Readonly<WaitablePromise<SaveObjectResponse>>;
-};
-
-export type SaveObjectResponse = {
-  readonly taskID: number;
-  readonly objectID: string;
 };

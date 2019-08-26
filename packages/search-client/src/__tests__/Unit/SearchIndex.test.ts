@@ -2,19 +2,21 @@ import { SearchClient } from '../..';
 import { Transporter } from '@algolia/transporter';
 import { deepEqual, mock, when, instance, anything, spy, verify } from 'ts-mockito';
 import { saveObject, HasSaveObject } from '../../Methods/SearchIndex/saveObject';
-import { batch, HasBatch, Action } from '../../Methods/SearchIndex/batch';
+import { batch, HasBatch } from '../../Methods/SearchIndex/batch';
 
-import {
-  saveObjects,
-  HasSaveObjects,
-  SaveObjectsOptions,
-} from '../../Methods/SearchIndex/saveObjects';
+import { saveObjects, HasSaveObjects } from '../../Methods/SearchIndex/saveObjects';
 import { Faker } from '../Faker';
 import { RequestOptions, UserAgent } from '@algolia/transporter-types';
 
 import { HasGetObject, getObject } from '../../Methods/SearchIndex/getObject';
 import { HasGetObjects, getObjects } from '../../Methods/SearchIndex/getObjects';
 import { Method } from '@algolia/requester-types';
+import { BatchAction } from '../../Methods/Types/BatchAction';
+import {
+  HasSearchForFacetValues,
+  searchForFacetValues,
+} from '../../Methods/SearchIndex/searchForFacetValues';
+import { SaveObjectsOptions } from '../../Methods/Types/SaveObjectsOptions';
 
 const transporterMock = mock(Transporter);
 const transporter = instance(transporterMock);
@@ -22,13 +24,20 @@ const transporter = instance(transporterMock);
 when(transporterMock.withHeaders(anything())).thenReturn(transporter);
 when(transporterMock.withHosts(anything())).thenReturn(transporter);
 
+type SearchIndex = HasBatch &
+  HasSaveObject &
+  HasSaveObjects &
+  HasGetObject &
+  HasGetObjects &
+  HasSearchForFacetValues;
+
 const index = new SearchClient({
   transporter,
   appId: 'appId',
   apiKey: 'apiKey',
   userAgent: UserAgent.create('4.0.0'),
-}).initIndex<HasBatch & HasSaveObject & HasSaveObjects & HasGetObject & HasGetObjects>('foo', {
-  methods: [batch, saveObject, saveObjects, getObject, getObjects],
+}).initIndex<SearchIndex>('foo', {
+  methods: [batch, saveObject, saveObjects, getObject, getObjects, searchForFacetValues],
 });
 
 const res: any = {
@@ -73,7 +82,7 @@ describe('SaveObjects', () => {
 
     await index.saveObjects(objects, requestOptions);
 
-    verify(indexSpy.chunk(objects, Action.AddObject, requestOptions)).once();
+    verify(indexSpy.chunk(objects, BatchAction.AddObject, requestOptions)).once();
   });
 
   it('Uses updateObject when `autoGenerateObjectIDIfNotExist` is not set', async () => {
@@ -84,7 +93,7 @@ describe('SaveObjects', () => {
 
     await index.saveObjects(objects);
 
-    verify(indexSpy.chunk(objects, Action.UpdateObject, undefined)).once();
+    verify(indexSpy.chunk(objects, BatchAction.UpdateObject, undefined)).once();
   });
 
   it('Validates the object id when `autoGenerateObjectIDIfNotExist` is !== true', async () => {
@@ -114,8 +123,8 @@ describe('Chunk', () => {
   it("Don't call batch when no objects", async () => {
     const indexSpy = spy(index);
 
-    await index.chunk([], Action.AddObject);
-    await index.chunk([], Action.UpdateObject);
+    await index.chunk([], BatchAction.AddObject);
+    await index.chunk([], BatchAction.UpdateObject);
 
     verify(indexSpy.batch(anything())).never();
   });
@@ -125,8 +134,8 @@ describe('Chunk', () => {
 
     when(indexSpy.batch(anything(), anything())).thenResolve(res);
 
-    await index.chunk([Faker.object()], Action.AddObject);
-    await index.chunk(Faker.objects(1001), Action.UpdateObject);
+    await index.chunk([Faker.object()], BatchAction.AddObject);
+    await index.chunk(Faker.objects(1001), BatchAction.UpdateObject);
 
     verify(indexSpy.batch(anything(), anything())).times(3);
   });
@@ -136,8 +145,8 @@ describe('Chunk', () => {
 
     when(indexSpy.batch(anything(), anything())).thenResolve(res);
 
-    await index.chunk([Faker.object()], Action.AddObject);
-    await index.chunk(Faker.objects(1001), Action.UpdateObject, {
+    await index.chunk([Faker.object()], BatchAction.AddObject);
+    await index.chunk(Faker.objects(1001), BatchAction.UpdateObject, {
       batchSize: 100,
     });
 
@@ -149,7 +158,7 @@ describe('Chunk', () => {
 
     when(indexSpy.batch(anything(), anything())).thenResolve(res);
 
-    await index.chunk(Faker.objects(1000), Action.UpdateObject);
+    await index.chunk(Faker.objects(1000), BatchAction.UpdateObject);
 
     verify(indexSpy.batch(anything(), anything())).once();
   });

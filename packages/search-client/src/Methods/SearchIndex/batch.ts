@@ -4,6 +4,9 @@ import { Method } from '@algolia/requester-types';
 import { ConstructorOf } from '../../helpers';
 import { HasWaitTask, waitTask } from './waitTask';
 import { WaitablePromise } from '../../WaitablePromise';
+import { BatchAction } from '../Types/BatchAction';
+import { BatchResponse } from '../Types/BatchResponse';
+import { ChunkOptions } from '../Types/ChunkOptions';
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const batch = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: TSearchIndex) => {
@@ -12,7 +15,7 @@ export const batch = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: TSe
   return class extends Mixin implements HasBatch {
     public chunk(
       bodies: readonly object[],
-      action: Action,
+      action: BatchAction,
       requestOptions?: RequestOptions & ChunkOptions
     ): Readonly<WaitablePromise<readonly BatchResponse[]>> {
       return WaitablePromise.from<readonly BatchResponse[]>(
@@ -98,7 +101,7 @@ export const batch = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: TSe
 export type HasBatch = HasWaitTask & {
   readonly chunk: (
     bodies: readonly object[],
-    action: Action,
+    action: BatchAction,
     requestOptions?: RequestOptions & ChunkOptions
   ) => Readonly<WaitablePromise<readonly BatchResponse[]>>;
 
@@ -108,21 +111,7 @@ export type HasBatch = HasWaitTask & {
   ) => Readonly<WaitablePromise<BatchResponse>>;
 };
 
-export type ChunkOptions = {
-  readonly batchSize?: number;
-};
-
 export type BatchRequest = {
-  readonly action: Action;
+  readonly action: BatchAction;
   readonly body: object;
 };
-
-export type BatchResponse = {
-  readonly taskID: number;
-  readonly objectIDs: readonly string[];
-};
-
-export const enum Action {
-  AddObject = 'addObject',
-  UpdateObject = 'updateObject',
-}

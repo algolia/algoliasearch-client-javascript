@@ -2,6 +2,8 @@ import { RequestOptions, popRequestOption } from '@algolia/transporter-types';
 import { SearchIndex } from '../../SearchIndex';
 import { ConstructorOf } from '../../helpers';
 import { Method } from '@algolia/requester-types';
+import { GetObjectsResponse } from '../Types/GetObjectsResponse';
+import { GetObjectsOptions } from '../Types/GetObjectsOptions';
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const getObjects = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: TSearchIndex) => {
@@ -37,12 +39,4 @@ export type HasGetObjects = {
     objectIDs: readonly string[],
     requestOptions?: RequestOptions & GetObjectsOptions
   ) => Promise<GetObjectsResponse<TObject>>;
-};
-
-export type GetObjectsResponse<TObject> = {
-  readonly results: readonly TObject[];
-};
-
-export type GetObjectsOptions = {
-  readonly attributesToRetrieve?: readonly string[];
 };

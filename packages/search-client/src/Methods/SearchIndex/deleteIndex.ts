@@ -4,6 +4,7 @@ import { Method } from '@algolia/requester-types';
 import { ConstructorOf } from '../../helpers';
 import { WaitablePromise } from '../../WaitablePromise';
 import { waitTask } from './waitTask';
+import { DeleteResponse } from '../Types/DeleteResponse';
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const deleteIndex = <TSearchIndex extends ConstructorOf<SearchIndex>>(
@@ -28,8 +29,4 @@ export const deleteIndex = <TSearchIndex extends ConstructorOf<SearchIndex>>(
 
 export type HasDelete = {
   readonly delete: (requestOptions?: RequestOptions) => Readonly<WaitablePromise<DeleteResponse>>;
-};
-
-export type DeleteResponse = {
-  readonly taskID: number;
 };

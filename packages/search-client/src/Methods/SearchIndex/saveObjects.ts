@@ -1,9 +1,12 @@
 import { RequestOptions, popRequestOption } from '@algolia/transporter-types';
 import { SearchIndex } from '../../SearchIndex';
 import { ConstructorOf } from '../../helpers';
-import { BatchResponse, batch, Action, ChunkOptions } from './batch';
 import { MissingObjectID } from '../../Errors/MissingObjectID';
 import { WaitablePromise } from '../../WaitablePromise';
+import { SaveObjectsOptions } from '../Types/SaveObjectsOptions';
+import { BatchAction } from '../Types/BatchAction';
+import { BatchResponse } from '../Types/BatchResponse';
+import { batch } from './batch';
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const saveObjects = <TSearchIndex extends ConstructorOf<SearchIndex>>(
@@ -22,9 +25,11 @@ export const saveObjects = <TSearchIndex extends ConstructorOf<SearchIndex>>(
         false
       );
 
-      const action = autoGenerateObjectIDIfNotExist ? Action.AddObject : Action.UpdateObject;
+      const action = autoGenerateObjectIDIfNotExist
+        ? BatchAction.AddObject
+        : BatchAction.UpdateObject;
 
-      if (action === Action.UpdateObject) {
+      if (action === BatchAction.UpdateObject) {
         ensureObjectIdsWithin(objects);
       }
 
@@ -38,10 +43,6 @@ export type HasSaveObjects = {
     objects: readonly object[],
     requestOptions?: RequestOptions & SaveObjectsOptions
   ) => Readonly<WaitablePromise<readonly BatchResponse[]>>;
-};
-
-export type SaveObjectsOptions = ChunkOptions & {
-  readonly autoGenerateObjectIDIfNotExist?: boolean;
 };
 
 function ensureObjectIdsWithin(objects: readonly object[]): void {

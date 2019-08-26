@@ -5,6 +5,7 @@ import { ConstructorOf } from '../../helpers';
 import { WaitablePromise } from '../../WaitablePromise';
 import { waitTask } from './waitTask';
 import { IndexSettings } from '../Types/IndexSettings';
+import { SetSettingsResponse } from '../Types/SetSettingsResponse';
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const setSettings = <TSearchIndex extends ConstructorOf<SearchIndex>>(
@@ -36,9 +37,4 @@ export type HasSetSettings = SearchIndex & {
     settings: IndexSettings,
     requestOptions?: RequestOptions
   ) => Readonly<WaitablePromise<SetSettingsResponse>>;
-};
-
-export type SetSettingsResponse = {
-  readonly taskID: number;
-  readonly UpdatedAt: number;
 };
