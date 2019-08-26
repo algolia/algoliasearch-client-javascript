@@ -37,6 +37,6 @@ export function algoliasearch(appId: string, apiKey: string): SearchClient {
     appId,
     apiKey,
     transporter,
-    userAgent: UserAgent.create('4.0.0').with({ segment: 'Browser', version: 'lite' }),
+    userAgent: UserAgent.create('4.0.0-alpha.0').with({ segment: 'Browser', version: 'lite' }),
   });
 }
