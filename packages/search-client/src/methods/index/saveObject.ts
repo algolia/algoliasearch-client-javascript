@@ -3,8 +3,8 @@ import { SearchIndex } from '../../SearchIndex';
 import { ConstructorOf } from '../../helpers';
 import { saveObjects } from './saveObjects';
 import { WaitablePromise } from '../../WaitablePromise';
-import { SaveObjectResponse } from '../Types/SaveObjectResponse';
-import { SaveObjectsOptions } from '../Types/SaveObjectsOptions';
+import { SaveObjectResponse } from '../types/SaveObjectResponse';
+import { SaveObjectsOptions } from '../types/SaveObjectsOptions';
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const saveObject = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: TSearchIndex) => {

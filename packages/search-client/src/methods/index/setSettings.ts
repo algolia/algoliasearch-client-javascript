@@ -4,8 +4,8 @@ import { Method } from '@algolia/requester-types';
 import { ConstructorOf } from '../../helpers';
 import { WaitablePromise } from '../../WaitablePromise';
 import { waitTask } from './waitTask';
-import { IndexSettings } from '../Types/IndexSettings';
-import { SetSettingsResponse } from '../Types/SetSettingsResponse';
+import { IndexSettings } from '../types/IndexSettings';
+import { SetSettingsResponse } from '../types/SetSettingsResponse';
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const setSettings = <TSearchIndex extends ConstructorOf<SearchIndex>>(

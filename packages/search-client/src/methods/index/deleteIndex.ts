@@ -4,7 +4,7 @@ import { Method } from '@algolia/requester-types';
 import { ConstructorOf } from '../../helpers';
 import { WaitablePromise } from '../../WaitablePromise';
 import { waitTask } from './waitTask';
-import { DeleteResponse } from '../Types/DeleteResponse';
+import { DeleteResponse } from '../types/DeleteResponse';
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const deleteIndex = <TSearchIndex extends ConstructorOf<SearchIndex>>(

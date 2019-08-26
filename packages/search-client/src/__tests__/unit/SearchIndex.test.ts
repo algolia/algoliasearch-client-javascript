@@ -1,22 +1,22 @@
 import { SearchClient } from '../..';
 import { Transporter } from '@algolia/transporter';
 import { deepEqual, mock, when, instance, anything, spy, verify } from 'ts-mockito';
-import { saveObject, HasSaveObject } from '../../Methods/SearchIndex/saveObject';
-import { batch, HasBatch } from '../../Methods/SearchIndex/batch';
+import { saveObject, HasSaveObject } from '../../methods/index/saveObject';
+import { batch, HasBatch } from '../../methods/index/batch';
 
-import { saveObjects, HasSaveObjects } from '../../Methods/SearchIndex/saveObjects';
+import { saveObjects, HasSaveObjects } from '../../methods/index/saveObjects';
 import { Faker } from '../Faker';
 import { RequestOptions, UserAgent } from '@algolia/transporter-types';
 
-import { HasGetObject, getObject } from '../../Methods/SearchIndex/getObject';
-import { HasGetObjects, getObjects } from '../../Methods/SearchIndex/getObjects';
+import { HasGetObject, getObject } from '../../methods/index/getObject';
+import { HasGetObjects, getObjects } from '../../methods/index/getObjects';
 import { Method } from '@algolia/requester-types';
-import { BatchAction } from '../../Methods/Types/BatchAction';
+import { BatchAction } from '../../methods/types/BatchAction';
 import {
   HasSearchForFacetValues,
   searchForFacetValues,
-} from '../../Methods/SearchIndex/searchForFacetValues';
-import { SaveObjectsOptions } from '../../Methods/Types/SaveObjectsOptions';
+} from '../../methods/index/searchForFacetValues';
+import { SaveObjectsOptions } from '../../methods/types/SaveObjectsOptions';
 
 const transporterMock = mock(Transporter);
 const transporter = instance(transporterMock);

@@ -4,9 +4,9 @@ import { Method } from '@algolia/requester-types';
 import { ConstructorOf } from '../../helpers';
 import { HasWaitTask, waitTask } from './waitTask';
 import { WaitablePromise } from '../../WaitablePromise';
-import { BatchAction } from '../Types/BatchAction';
-import { BatchResponse } from '../Types/BatchResponse';
-import { ChunkOptions } from '../Types/ChunkOptions';
+import { BatchAction } from '../types/BatchAction';
+import { BatchResponse } from '../types/BatchResponse';
+import { ChunkOptions } from '../types/ChunkOptions';
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const batch = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: TSearchIndex) => {

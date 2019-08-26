@@ -1,8 +1,8 @@
-import { search, HasSearch } from '@algolia/search-client/src/Methods/SearchIndex/search';
+import { search, HasSearch } from '@algolia/search-client/src/methods/index/search';
 import {
   searchForFacetValues,
   HasSearchForFacetValues,
-} from '@algolia/search-client/src/Methods/SearchIndex/searchForFacetValues';
+} from '@algolia/search-client/src/methods/index/searchForFacetValues';
 import { SearchClient as BaseSearchClient } from '@algolia/search-client';
 
 export class SearchClient extends BaseSearchClient {

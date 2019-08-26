@@ -2,20 +2,20 @@ import { BrowserXhrRequester } from '@algolia/requester-browser-xhr';
 import { SearchClient } from '../..';
 import { SearchIndex } from '../SearchIndex';
 import { Transporter } from '@algolia/transporter';
-import { HasSearch, search } from '../Methods/SearchIndex/search';
+import { HasSearch, search } from '../methods/index/search';
 import {
   HasSearchForFacetValues,
   searchForFacetValues,
-} from '../Methods/SearchIndex/searchForFacetValues';
+} from '../methods/index/searchForFacetValues';
 import { ConsoleLogger } from '@algolia/logger-console';
-import { HasWaitTask, waitTask } from '../Methods/SearchIndex/waitTask';
-import { HasSaveObject, saveObject } from '../Methods/SearchIndex/saveObject';
-import { HasDelete, deleteIndex } from '../Methods/SearchIndex/deleteIndex';
-import { HasSaveObjects, saveObjects } from '../Methods/SearchIndex/saveObjects';
-import { HasGetObject, getObject } from '../Methods/SearchIndex/getObject';
-import { HasGetObjects, getObjects } from '../Methods/SearchIndex/getObjects';
-import { HasSetSettings, setSettings } from '../Methods/SearchIndex/setSettings';
-import { getSettings, HasGetSettings } from '../Methods/SearchIndex/getSettings';
+import { HasWaitTask, waitTask } from '../methods/index/waitTask';
+import { HasSaveObject, saveObject } from '../methods/index/saveObject';
+import { HasDelete, deleteIndex } from '../methods/index/deleteIndex';
+import { HasSaveObjects, saveObjects } from '../methods/index/saveObjects';
+import { HasGetObject, getObject } from '../methods/index/getObject';
+import { HasGetObjects, getObjects } from '../methods/index/getObjects';
+import { HasSetSettings, setSettings } from '../methods/index/setSettings';
+import { getSettings, HasGetSettings } from '../methods/index/getSettings';
 import { UserAgent } from '@algolia/transporter-types';
 
 export class TestSuite {
