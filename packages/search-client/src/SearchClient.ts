@@ -1,7 +1,6 @@
-import { Transporter, Host, CallType } from '@algolia/transporter-types';
+import { Transporter, Host, CallType, UserAgent } from '@algolia/transporter-types';
 import { SearchIndex } from './SearchIndex';
 import { shuffle } from './helpers';
-import { UserAgent } from '@algolia/transporter-types/src/UserAgent';
 
 export class SearchClient {
   public readonly appId: string;

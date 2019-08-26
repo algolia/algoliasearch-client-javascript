@@ -14,7 +14,7 @@ export class UserAgent {
   }
 }
 
-type UserAgentOptions = {
+export type UserAgentOptions = {
   readonly segment: string;
   readonly version: string;
 };

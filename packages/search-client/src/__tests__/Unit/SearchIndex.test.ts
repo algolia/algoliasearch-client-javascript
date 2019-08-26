@@ -10,12 +10,11 @@ import {
   SaveObjectsOptions,
 } from '../../Methods/SearchIndex/saveObjects';
 import { Faker } from '../Faker';
-import { RequestOptions } from '@algolia/transporter-types';
+import { RequestOptions, UserAgent } from '@algolia/transporter-types';
 
 import { HasGetObject, getObject } from '../../Methods/SearchIndex/getObject';
 import { HasGetObjects, getObjects } from '../../Methods/SearchIndex/getObjects';
 import { Method } from '@algolia/requester-types';
-import { UserAgent } from '@algolia/transporter-types/src/UserAgent';
 
 const transporterMock = mock(Transporter);
 const transporter = instance(transporterMock);

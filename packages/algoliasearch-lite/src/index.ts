@@ -7,13 +7,13 @@ import { SearchClient as BaseSearchClient } from '@algolia/search-client';
 import { BrowserXhrRequester } from '@algolia/requester-browser-xhr';
 import { Transporter } from '@algolia/transporter';
 import { ConsoleLogger } from '@algolia/logger-console';
-import { UserAgent } from '@algolia/transporter-types/src/UserAgent';
+import { UserAgent } from '@algolia/transporter-types';
 
 class SearchClient extends BaseSearchClient {
   public initIndex<TSearchIndex = HasSearch & HasSearchForFacetValues>(
     indexName: string
   ): TSearchIndex {
-    return super.initIndex<TSearchIndex>(indexName, {
+    return super.initIndex(indexName, {
       methods: [search, searchForFacetValues],
     });
   }

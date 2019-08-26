@@ -16,7 +16,7 @@ import { HasGetObject, getObject } from '../Methods/SearchIndex/getObject';
 import { HasGetObjects, getObjects } from '../Methods/SearchIndex/getObjects';
 import { HasSetSettings, setSettings } from '../Methods/SearchIndex/setSettings';
 import { getSettings, HasGetSettings } from '../Methods/SearchIndex/getSettings';
-import { UserAgent } from '@algolia/transporter-types/src/UserAgent';
+import { UserAgent } from '@algolia/transporter-types';
 
 export class TestSuite {
   public readonly testName: string;

@@ -1,7 +1,7 @@
 import { SearchClient } from '../..';
 import { Transporter } from '@algolia/transporter';
 import { instance, mock, verify, when, anything, deepEqual } from 'ts-mockito';
-import { UserAgent } from '@algolia/transporter-types/src/UserAgent';
+import { UserAgent } from '@algolia/transporter-types';
 
 const transporterMock = mock(Transporter);
 const transporter = instance(transporterMock);

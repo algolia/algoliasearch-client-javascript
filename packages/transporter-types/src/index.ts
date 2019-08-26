@@ -1,3 +1,4 @@
+export * from './UserAgent';
 export * from './CallType';
 export * from './Errors/ApiError';
 export * from './Errors/RetryError';
