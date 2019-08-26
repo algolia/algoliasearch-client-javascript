@@ -44,8 +44,8 @@ export type RequestOptions = {
   readonly queryParameters?: { readonly [key: string]: string };
 
   // @todo Fix mutability issue here...
-  // eslint-disable-next-line functional/no-mixed-type, functional/immutable-data
-  readonly [key: string]: any;
+  // eslint-disable-next-line functional/no-mixed-type, functional/prefer-readonly-type
+  [key: string]: any;
 };
 
 export type MappedRequestOptions = {

@@ -49,14 +49,14 @@ test(testSuite.testName, async () => {
   expect(searchResponse.queryID).toBeDefined();
 
   searchResponse = await index.search('elon', {
-    facets: '*',
-    facetFilters: 'company:tesla',
+    facets: ['*'],
+    facetFilters: [['company:tesla']],
   });
 
   expect(searchResponse.hits).toHaveLength(1);
 
   searchResponse = await index.search('elon', {
-    facets: '*',
+    facets: ['*'],
     facetFilters: [['company:tesla', 'company:spacex']],
   });
 
