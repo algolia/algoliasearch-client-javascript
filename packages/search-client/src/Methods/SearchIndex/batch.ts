@@ -17,16 +17,17 @@ export const batch = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: TSe
     ): Readonly<WaitablePromise<readonly BatchResponse[]>> {
       return WaitablePromise.from<readonly BatchResponse[]>(
         new Promise(resolve => {
-          // eslint-disable-next-line functional/prefer-readonly-types
+          // eslint-disable-next-line functional/prefer-readonly-type
           const responses: BatchResponse[] = [];
           const batchSize = popRequestOption(requestOptions, 'batchSize', 1000);
 
           const batching = (lastIndex: number = 0): void => {
-            // eslint-disable-next-line functional/prefer-readonly-types
+            // eslint-disable-next-line functional/prefer-readonly-type
             const bodiesChunk: Array<Record<string, any>> = [];
             // eslint-disable-next-line functional/no-let
             let index: number;
 
+            /* eslint-disable-next-line functional/no-loop-statement */
             for (index = lastIndex; index < bodies.length; index++) {
               // eslint-disable-next-line functional/immutable-data
               bodiesChunk.push(bodies[index]);
@@ -93,7 +94,7 @@ export const batch = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: TSe
   };
 };
 
-export interface HasBatch extends HasWaitTask {
+export type HasBatch = HasWaitTask & {
   readonly chunk: (
     bodies: readonly object[],
     action: Action,
@@ -104,11 +105,11 @@ export interface HasBatch extends HasWaitTask {
     requests: readonly BatchRequest[],
     requestOptions?: RequestOptions
   ) => Readonly<WaitablePromise<BatchResponse>>;
-}
+};
 
-export interface ChunkOptions {
+export type ChunkOptions = {
   readonly batchSize?: number;
-}
+};
 
 export type BatchRequest = {
   readonly action: Action;

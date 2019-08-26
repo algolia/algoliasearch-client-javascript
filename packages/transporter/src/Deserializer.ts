@@ -7,6 +7,7 @@ export class Deserializer {
   }
 
   public static fail({ content, status }: Response): ApiError {
+    // eslint-disable-next-line functional/no-try-statement
     try {
       return JSON.parse(content);
     } catch (e) {

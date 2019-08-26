@@ -18,12 +18,12 @@ export const getTask = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: T
   };
 };
 
-export interface HasGetTask {
+export type HasGetTask = {
   readonly getTask: (
     taskID: number,
     requestOptions?: RequestOptions
   ) => Promise<TaskStatusResponse>;
-}
+};
 
 export type TaskStatusResponse = {
   readonly status: string;

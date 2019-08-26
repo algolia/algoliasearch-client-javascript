@@ -5,10 +5,10 @@ export class BrowserXhrRequester implements Requester {
     return new Promise((resolve): void => {
       const baseRequester = new XMLHttpRequest();
 
-      /* eslint-disable-next-line functional/immutable-data */
+      // eslint-disable-next-line functional/immutable-data
       baseRequester.timeout = 1000 * request.timeout;
 
-      /* eslint-disable-next-line functional/immutable-data */
+      // eslint-disable-next-line functional/immutable-data
       baseRequester.ontimeout = (): void => {
         resolve({
           content: baseRequester.statusText,
@@ -17,7 +17,7 @@ export class BrowserXhrRequester implements Requester {
         });
       };
 
-      /* eslint-disable-next-line functional/immutable-data */
+      // eslint-disable-next-line functional/immutable-data
       baseRequester.onerror = (): void => {
         if (baseRequester.status === 0) {
           resolve({
@@ -28,7 +28,7 @@ export class BrowserXhrRequester implements Requester {
         }
       };
 
-      /* eslint-disable-next-line functional/immutable-data */
+      //  eslint-disable-next-line functional/immutable-data
       baseRequester.onload = (): void => {
         resolve({
           content: baseRequester.responseText,
@@ -39,9 +39,10 @@ export class BrowserXhrRequester implements Requester {
 
       baseRequester.open(request.method, request.url, true);
 
+      //  eslint-disable-next-line functional/no-loop-statement
       for (const key in request.headers) {
         if (request.headers.hasOwnProperty(key)) {
-          /* eslint-disable-next-line functional/immutable-data */
+          //  eslint-disable-next-line functional/immutable-data
           baseRequester.setRequestHeader(key, request.headers[key]);
         }
       }

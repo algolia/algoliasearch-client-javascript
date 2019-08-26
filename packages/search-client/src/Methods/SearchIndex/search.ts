@@ -24,12 +24,12 @@ export const search = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: TS
   };
 };
 
-export interface HasSearch extends SearchIndex {
+export type HasSearch = SearchIndex & {
   readonly search: <THit>(
     query: string,
     requestOptions?: RequestOptions & SearchOptions
   ) => Promise<SearchResponse<THit>>;
-}
+};
 
 export type SearchOptions = {
   readonly similarQuery?: string;

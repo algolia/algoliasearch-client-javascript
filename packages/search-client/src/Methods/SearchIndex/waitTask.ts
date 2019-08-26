@@ -24,6 +24,6 @@ export const waitTask = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: 
   };
 };
 
-export interface HasWaitTask {
+export type HasWaitTask = {
   readonly waitTask: (taskID: number, requestOptions?: RequestOptions) => Promise<void>;
-}
+};

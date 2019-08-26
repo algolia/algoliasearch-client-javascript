@@ -26,12 +26,12 @@ export const searchForFacetValues = <TSearchIndex extends ConstructorOf<SearchIn
   };
 };
 
-export interface HasSearchForFacetValues extends SearchIndex {
+export type HasSearchForFacetValues = SearchIndex & {
   readonly searchForFacetValues: (
     request: SearchForFacetValuesRequest,
     requestOptions?: RequestOptions
   ) => Promise<SearchForFacetValuesResponse>;
-}
+};
 
 export type SearchForFacetValuesRequest = {
   readonly facetName: string;

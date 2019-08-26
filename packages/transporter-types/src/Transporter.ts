@@ -1,8 +1,9 @@
 import { Host, Request, RequestOptions } from '.';
 
-export interface Transporter {
+export type Transporter = {
   readonly withHeaders: (headers: { readonly [key: string]: string }) => Transporter;
-  // eslint-disable-next-line functional/prefer-readonly-types
+
+  // eslint-disable-next-line functional/prefer-readonly-type
   readonly withHosts: (hosts: Host[]) => Transporter;
 
   readonly read: <TResponse>(
@@ -14,4 +15,4 @@ export interface Transporter {
     request: Request,
     requestOptions?: RequestOptions
   ) => Promise<TResponse>;
-}
+};

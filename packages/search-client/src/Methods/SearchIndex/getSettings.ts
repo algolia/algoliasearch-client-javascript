@@ -29,6 +29,6 @@ export const getSettings = <TSearchIndex extends ConstructorOf<SearchIndex>>(
   };
 };
 
-export interface HasGetSettings {
+export type HasGetSettings = {
   readonly getSettings: (requestOptions?: RequestOptions) => Promise<IndexSettings>;
-}
+};

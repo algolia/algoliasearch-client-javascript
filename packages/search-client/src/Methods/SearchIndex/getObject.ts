@@ -18,9 +18,9 @@ export const getObject = <TSearchIndex extends ConstructorOf<SearchIndex>>(base:
   };
 };
 
-export interface HasGetObject {
+export type HasGetObject = {
   readonly getObject: <TObject>(
     objectID: string,
     requestOptions?: RequestOptions
   ) => Readonly<Promise<TObject>>;
-}
+};

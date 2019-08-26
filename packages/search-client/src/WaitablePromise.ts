@@ -1,5 +1,5 @@
 export class WaitablePromise<TResponse> extends Promise<TResponse> {
-  // eslint-disable-next-line functional/prefer-readonly-types
+  // eslint-disable-next-line functional/prefer-readonly-type
   public onWaitClosure!: OnWaitClosure<TResponse>;
 
   public static from<TResponse>(promise: Promise<TResponse>): WaitablePromise<TResponse> {

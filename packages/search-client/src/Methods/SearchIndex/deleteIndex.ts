@@ -26,9 +26,9 @@ export const deleteIndex = <TSearchIndex extends ConstructorOf<SearchIndex>>(
   };
 };
 
-export interface HasDelete {
+export type HasDelete = {
   readonly delete: (requestOptions?: RequestOptions) => Readonly<WaitablePromise<DeleteResponse>>;
-}
+};
 
 export type DeleteResponse = {
   readonly taskID: number;

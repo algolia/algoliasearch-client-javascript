@@ -31,12 +31,12 @@ export const setSettings = <TSearchIndex extends ConstructorOf<SearchIndex>>(
   };
 };
 
-export interface HasSetSettings extends SearchIndex {
+export type HasSetSettings = SearchIndex & {
   readonly setSettings: (
     settings: IndexSettings,
     requestOptions?: RequestOptions
   ) => Readonly<WaitablePromise<SetSettingsResponse>>;
-}
+};
 
 export type SetSettingsResponse = {
   readonly taskID: number;

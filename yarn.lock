@@ -8,12 +8,12 @@
 "@algolia/logger@file:packages/logger-console":
   version "4.0.0-alpha.0"
   dependencies:
-    "@algolia/logger-types" "file:../../Library/Caches/Yarn/v4/npm-@algolia-logger-4.0.0-alpha.0-80497cd0-c829-48c2-91eb-a808349bb2e5-1566821442748/node_modules/@algolia/logger-types"
+    "@algolia/logger-types" "file:../../Library/Caches/Yarn/v4/npm-@algolia-logger-4.0.0-alpha.0-74b1ec87-b28a-4a40-8ad7-a02f3301f302-1566822129232/node_modules/@algolia/logger-types"
 
 "@algolia/requester-browser-xhr@file:packages/requester-browser-xhr":
   version "4.0.0-alpha.0"
   dependencies:
-    "@algolia/requester-types" "file:../../Library/Caches/Yarn/v4/npm-@algolia-requester-browser-xhr-4.0.0-alpha.0-9358c16a-19fc-48e6-af59-5666071532f2-1566821442750/node_modules/@algolia/requester-types"
+    "@algolia/requester-types" "file:../../Library/Caches/Yarn/v4/npm-@algolia-requester-browser-xhr-4.0.0-alpha.0-dca9423b-d9b6-41a5-96eb-e9a37055a73d-1566822129235/node_modules/@algolia/requester-types"
 
 "@algolia/requester-types@file:packages/requester-types":
   version "4.0.0-alpha.0"
@@ -21,14 +21,14 @@
 "@algolia/transporter-types@file:packages/transporter-types":
   version "4.0.0-alpha.0"
   dependencies:
-    "@algolia/requester-types" "file:../../Library/Caches/Yarn/v4/npm-@algolia-transporter-types-4.0.0-alpha.0-286a6383-e308-4d99-b716-629101298a27-1566821442750/node_modules/@algolia/requester-types"
+    "@algolia/requester-types" "file:../../Library/Caches/Yarn/v4/npm-@algolia-transporter-types-4.0.0-alpha.0-b5984e44-11e4-440e-a315-9e25eecd8af1-1566822129234/node_modules/@algolia/requester-types"
 
 "@algolia/transporter@file:packages/transporter":
   version "4.0.0-alpha.0"
   dependencies:
-    "@algolia/logger-types" "file:../../Library/Caches/Yarn/v4/npm-@algolia-transporter-4.0.0-alpha.0-ddd6db9e-3b91-41d5-b4f1-9fa2096ad447-1566821442751/node_modules/@algolia/logger-types"
-    "@algolia/requester-types" "file:../../Library/Caches/Yarn/v4/npm-@algolia-transporter-4.0.0-alpha.0-ddd6db9e-3b91-41d5-b4f1-9fa2096ad447-1566821442751/node_modules/@algolia/requester-types"
-    "@algolia/transporter-types" "file:../../Library/Caches/Yarn/v4/npm-@algolia-transporter-4.0.0-alpha.0-ddd6db9e-3b91-41d5-b4f1-9fa2096ad447-1566821442751/node_modules/@algolia/transporter-types"
+    "@algolia/logger-types" "file:../../Library/Caches/Yarn/v4/npm-@algolia-transporter-4.0.0-alpha.0-22c4e3f8-4df1-4aa9-9124-5d75bcb87512-1566822129233/node_modules/@algolia/logger-types"
+    "@algolia/requester-types" "file:../../Library/Caches/Yarn/v4/npm-@algolia-transporter-4.0.0-alpha.0-22c4e3f8-4df1-4aa9-9124-5d75bcb87512-1566822129233/node_modules/@algolia/requester-types"
+    "@algolia/transporter-types" "file:../../Library/Caches/Yarn/v4/npm-@algolia-transporter-4.0.0-alpha.0-22c4e3f8-4df1-4aa9-9124-5d75bcb87512-1566822129233/node_modules/@algolia/transporter-types"
 
 "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.5.5":
   version "7.5.5"
@@ -1314,7 +1314,7 @@
     "@typescript-eslint/typescript-estree" "1.13.0"
     eslint-visitor-keys "^1.0.0"
 
-"@typescript-eslint/typescript-estree@1.13.0", "@typescript-eslint/typescript-estree@^1.11.0":
+"@typescript-eslint/typescript-estree@1.13.0":
   version "1.13.0"
   resolved "https://registry.yarnpkg.com/@typescript-eslint/typescript-estree/-/typescript-estree-1.13.0.tgz#8140f17d0f60c03619798f1d628b8434913dc32e"
   integrity sha512-b5rCmd2e6DCC6tCTN9GSUAuxdYwCM/k/2wdjHGrIRGPSJotWMCe/dGpi66u42bhuh8q3QBzqM4TMA1GUUCJvdw==
@@ -2668,13 +2668,12 @@ eslint-module-utils@^2.4.0:
     debug "^2.6.8"
     pkg-dir "^2.0.0"
 
-eslint-plugin-functional@^0.4.0:
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-functional/-/eslint-plugin-functional-0.4.0.tgz#01e8100150844dd0358d0560f664f4a00fd825ca"
-  integrity sha512-2pvpQ8j3O0fb6Bbv/qkJyuFtlAfab1UGdljDmLIF95j8qQXdkJmOOwUWPqZ8cqZFd6n9ui8NWpdUNqsoxW0VSw==
+eslint-plugin-functional@^1.0.0-rc.2:
+  version "1.0.0-rc.2"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-functional/-/eslint-plugin-functional-1.0.0-rc.2.tgz#42827169f40c16c4ec9fb7c524c96b6cd7c665b0"
+  integrity sha512-Lrh3zNX7kPOAOeLJA398km/D4+21ZvDs0svcf2qc6zCg6Clzq2Srgw+Box6KVD5hS/l8oCJhr70J3ymcsQ9gyw==
   dependencies:
     "@typescript-eslint/experimental-utils" "^1.11.0"
-    "@typescript-eslint/typescript-estree" "^1.11.0"
     array.prototype.flatmap "^1.2.1"
     deepmerge "^3.3.0"
     escape-string-regexp "^2.0.0"

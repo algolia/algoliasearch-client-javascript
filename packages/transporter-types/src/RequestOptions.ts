@@ -4,7 +4,7 @@ export function mapRequestOptions(
 ): MappedRequestOptions {
   const options: RequestOptions = requestOptions === undefined ? {} : requestOptions;
 
-  // eslint-disable-next-line functional/prefer-readonly-types
+  // eslint-disable-next-line functional/prefer-readonly-type
   const data: { [key: string]: string } = {};
 
   Object.keys(options).forEach(key => {
@@ -42,8 +42,8 @@ export type RequestOptions = {
   readonly headers?: { readonly [key: string]: string };
   readonly queryParameters?: { readonly [key: string]: string };
 
-  // eslint-disable-next-line functional/prefer-readonly-types
-  [key: string]: any;
+  // eslint-disable-next-line functional/no-mixed-type
+  readonly [key: string]: any;
 };
 
 export type MappedRequestOptions = {

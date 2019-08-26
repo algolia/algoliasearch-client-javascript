@@ -1,5 +1,5 @@
 import { Response, Request } from '.';
 
-export interface Requester {
+export type Requester = {
   readonly send: (request: Request) => Promise<Response>;
-}
+};

@@ -41,7 +41,7 @@ export class SearchClient {
     });
   }
 
-  // eslint-disable-next-line functional/prefer-readonly-types
+  // eslint-disable-next-line functional/prefer-readonly-type
   private createHosts(): Host[] {
     const hosts = [
       { url: `${this.appId}-dsn.algolia.net`, accept: CallType.Read },

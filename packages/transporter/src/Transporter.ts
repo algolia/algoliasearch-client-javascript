@@ -22,7 +22,7 @@ export class Transporter implements TransporterContract {
   private readonly requester: Requester;
   private readonly timeouts: Timeouts;
 
-  // eslint-disable-next-line functional/prefer-readonly-types
+  // eslint-disable-next-line functional/prefer-readonly-type
   private hosts: Host[];
 
   private readonly retryStrategy: RetryStrategy;
@@ -32,7 +32,7 @@ export class Transporter implements TransporterContract {
     readonly logger: Logger;
     readonly requester: Requester;
     readonly timeouts: Timeouts;
-    hosts: Host[]; // eslint-disable-line functional/prefer-readonly-types
+    hosts: Host[]; // eslint-disable-line functional/prefer-readonly-type
   }) {
     this.headers = options.headers;
     this.hosts = options.hosts;
@@ -53,7 +53,7 @@ export class Transporter implements TransporterContract {
     });
   }
 
-  // eslint-disable-next-line functional/prefer-readonly-types
+  // eslint-disable-next-line functional/prefer-readonly-type
   public withHosts(hosts: Host[]): TransporterContract {
     return new Transporter({
       hosts,
@@ -85,7 +85,7 @@ export class Transporter implements TransporterContract {
   }
 
   private request<TResponse>(
-    // eslint-disable-next-line functional/prefer-readonly-types
+    // eslint-disable-next-line functional/prefer-readonly-type
     hosts: Host[],
     request: Request,
     requestOptions: MappedRequestOptions
@@ -102,7 +102,7 @@ export class Transporter implements TransporterContract {
   }
 
   private retry(
-    // eslint-disable-next-line functional/prefer-readonly-types
+    // eslint-disable-next-line functional/prefer-readonly-type
     hosts: Host[],
     request: Request,
     requestOptions: MappedRequestOptions,

@@ -32,17 +32,17 @@ export const getObjects = <TSearchIndex extends ConstructorOf<SearchIndex>>(base
   };
 };
 
-export interface HasGetObjects {
+export type HasGetObjects = {
   readonly getObjects: <TObject>(
     objectIDs: readonly string[],
     requestOptions?: RequestOptions & GetObjectsOptions
   ) => Promise<GetObjectsResponse<TObject>>;
-}
+};
 
 export type GetObjectsResponse<TObject> = {
   readonly results: readonly TObject[];
 };
 
-export interface GetObjectsOptions {
+export type GetObjectsOptions = {
   readonly attributesToRetrieve?: readonly string[];
-}
+};

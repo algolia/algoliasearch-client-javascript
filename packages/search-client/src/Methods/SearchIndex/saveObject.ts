@@ -29,12 +29,12 @@ export const saveObject = <TSearchIndex extends ConstructorOf<SearchIndex>>(base
   };
 };
 
-export interface HasSaveObject {
+export type HasSaveObject = {
   readonly saveObject: (
     object: object,
     requestOptions?: RequestOptions & SaveObjectsOptions
   ) => Readonly<WaitablePromise<SaveObjectResponse>>;
-}
+};
 
 export type SaveObjectResponse = {
   readonly taskID: number;

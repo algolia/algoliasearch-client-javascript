@@ -33,16 +33,16 @@ export const saveObjects = <TSearchIndex extends ConstructorOf<SearchIndex>>(
   };
 };
 
-export interface HasSaveObjects {
+export type HasSaveObjects = {
   readonly saveObjects: (
     objects: readonly object[],
     requestOptions?: RequestOptions & SaveObjectsOptions
   ) => Readonly<WaitablePromise<readonly BatchResponse[]>>;
-}
+};
 
-export interface SaveObjectsOptions extends ChunkOptions {
+export type SaveObjectsOptions = ChunkOptions & {
   readonly autoGenerateObjectIDIfNotExist?: boolean;
-}
+};
 
 function ensureObjectIdsWithin(objects: readonly object[]): void {
   objects.forEach((object: object) => {
