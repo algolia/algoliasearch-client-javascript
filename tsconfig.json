@@ -3,6 +3,7 @@
     "strict": true,
     "target": "ESNEXT",
     "moduleResolution": "node",
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "preserveSymlinks": true
   }
 }

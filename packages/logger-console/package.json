@@ -2,5 +2,8 @@
   "name": "@algolia/logger-console",
   "version": "4.0.0-alpha.0",
   "license": "MIT",
-  "main": "src/index.ts"
+  "main": "src/index.ts",
+  "dependencies": {
+    "@algolia/logger-types": "file:../logger-types"
+  }
 }

@@ -3,5 +3,13 @@
   "version": "4.0.0-alpha.0",
   "license": "MIT",
   "description": "Thin & minimal low-level HTTP client to interact with Algolia's API",
-  "main": "src/index.ts"
+  "main": "src/index.ts",
+  "dependencies": {
+    "@algolia/logger": "file:../logger-console",
+    "@algolia/logger-types": "file:../logger-types",
+    "@algolia/transporter": "file:../transporter",
+    "@algolia/transporter-types": "file:../transporter-types",
+    "@algolia/requester-browser-xhr": "file:../requester-browser-xhr",
+    "@algolia/requester-types": "file:../requester-types"
+  }
 }

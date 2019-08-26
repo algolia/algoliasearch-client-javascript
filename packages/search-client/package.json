@@ -4,5 +4,8 @@
   "license": "MIT",
   "main": "src/index.ts",
   "dependencies": {
+    "@algolia/logger-types": "file:../logger-types",
+    "@algolia/transporter-types": "file:../transporter-types",
+    "@algolia/requester-types": "file:../requester-types"
   }
 }
