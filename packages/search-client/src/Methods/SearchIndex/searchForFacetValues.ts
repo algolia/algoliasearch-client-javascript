@@ -2,8 +2,8 @@ import { RequestOptions } from '@algolia/transporter-types';
 import { SearchIndex } from '../../SearchIndex';
 import { Method } from '@algolia/requester-types';
 import { ConstructorOf } from '../../helpers';
-import { SearchForFacetValuesRequest } from '../Types/SearchForFacetValuesRequest';
 import { SearchForFacetValuesResponse } from '../Types/SearchForFacetValuesResponse';
+import { SearchOptions } from '../Types/SearchOptions';
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const searchForFacetValues = <TSearchIndex extends ConstructorOf<SearchIndex>>(
@@ -11,15 +11,16 @@ export const searchForFacetValues = <TSearchIndex extends ConstructorOf<SearchIn
 ) => {
   return class extends base implements HasSearchForFacetValues {
     public searchForFacetValues(
-      request: SearchForFacetValuesRequest,
-      requestOptions?: RequestOptions
+      facetName: string,
+      facetQuery: string,
+      requestOptions?: RequestOptions & SearchOptions
     ): Promise<SearchForFacetValuesResponse> {
       return this.transporter.read(
         {
           method: Method.Post,
-          path: `1/indexes/${this.indexName}/facets/${request.facetName}/query`,
+          path: `1/indexes/${this.indexName}/facets/${facetName}/query`,
           data: {
-            facetQuery: request.facetQuery,
+            facetQuery,
           },
         },
         requestOptions
@@ -30,7 +31,8 @@ export const searchForFacetValues = <TSearchIndex extends ConstructorOf<SearchIn
 
 export type HasSearchForFacetValues = SearchIndex & {
   readonly searchForFacetValues: (
-    request: SearchForFacetValuesRequest,
-    requestOptions?: RequestOptions
+    facetName: string,
+    facetQuery: string,
+    requestOptions?: RequestOptions & SearchOptions
   ) => Promise<SearchForFacetValuesResponse>;
 };

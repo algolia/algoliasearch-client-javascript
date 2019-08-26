@@ -62,10 +62,7 @@ test(testSuite.testName, async () => {
 
   expect(searchResponse.hits).toHaveLength(2);
 
-  const searchForFacetValuesResponse = await index.searchForFacetValues({
-    facetName: 'company',
-    facetQuery: 'a',
-  });
+  const searchForFacetValuesResponse = await index.searchForFacetValues('company', 'a');
 
   expect(searchForFacetValuesResponse.facetHits).toEqual([
     {
