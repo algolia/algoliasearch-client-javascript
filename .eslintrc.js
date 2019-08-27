@@ -24,6 +24,7 @@ module.exports = {
         printWidth: 100,
       },
     ],
+    'lines-between-class-members': ['error', 'always'],
     'import/no-extraneous-dependencies': ['error', { packageDir: './', devDependencies: true }],
     'no-bitwise': ['off'],
     'import/no-extraneous-dependencies': ['off'],

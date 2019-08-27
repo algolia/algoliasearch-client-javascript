@@ -22,11 +22,13 @@ export class InMemoryCache implements Cache {
 
     return Promise.resolve();
   }
+
   public delete(key: object): Promise<void> {
     delete this.cache[this.objectToString(key)];
 
     return Promise.resolve();
   }
+
   public clear(): Promise<void> {
     this.cache = {};
     return Promise.resolve();

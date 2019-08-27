@@ -2,11 +2,14 @@ import { CallType } from './CallType';
 
 export class Host {
   public readonly url: string;
+
   public readonly accept: CallType;
+
   private static readonly TTL = 3000;
 
   // eslint-disable-next-line functional/prefer-readonly-type
   private up: boolean = true;
+
   // eslint-disable-next-line functional/prefer-readonly-type
   private downDate: number = 0;
 

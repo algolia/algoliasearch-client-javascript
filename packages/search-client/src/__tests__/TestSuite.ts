@@ -21,6 +21,7 @@ import { NullCache } from '../../../cache-types/src';
 
 export class TestSuite {
   public readonly testName: string;
+
   public indices: Array<SearchIndex & HasDelete>;
 
   public async cleanUp(): Promise<void> {

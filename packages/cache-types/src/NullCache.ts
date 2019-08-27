@@ -17,6 +17,7 @@ export class NullCache implements Cache {
   public delete(key: object): Promise<void> {
     return Promise.resolve();
   }
+
   public clear(): Promise<void> {
     return Promise.resolve();
   }

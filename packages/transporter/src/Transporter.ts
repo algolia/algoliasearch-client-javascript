@@ -19,9 +19,13 @@ import { Serializer } from './Serializer';
 
 export class Transporter implements TransporterContract {
   private readonly headers: { readonly [key: string]: string };
+
   private readonly cache: Cache;
+
   private readonly logger: Logger;
+
   private readonly requester: Requester;
+
   private readonly timeouts: Timeouts;
 
   // eslint-disable-next-line functional/prefer-readonly-type

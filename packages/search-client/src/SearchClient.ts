@@ -4,6 +4,7 @@ import { shuffle } from './helpers';
 
 export class SearchClient {
   public readonly appId: string;
+
   public readonly transporter: Transporter;
 
   private readonly apiKey: string;
