@@ -11,9 +11,6 @@ module.exports = {
       'error',
       {
         code: 200,
-        ignoreComments: true,
-        ignoreTrailingComments: true,
-        ignoreUrls: true,
       },
     ],
     'prettier/prettier': [
