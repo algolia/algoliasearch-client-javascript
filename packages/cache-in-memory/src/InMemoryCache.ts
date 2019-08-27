@@ -31,6 +31,7 @@ export class InMemoryCache implements Cache {
 
   public clear(): Promise<void> {
     this.cache = {};
+
     return Promise.resolve();
   }
 

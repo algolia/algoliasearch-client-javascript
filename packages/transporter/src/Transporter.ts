@@ -143,6 +143,7 @@ export class Transporter implements TransporterContract {
       };
 
       reject(error);
+
       return;
     }
 
