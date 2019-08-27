@@ -17,6 +17,7 @@ import { HasGetObjects, getObjects } from '../methods/index/getObjects';
 import { HasSetSettings, setSettings } from '../methods/index/setSettings';
 import { getSettings, HasGetSettings } from '../methods/index/getSettings';
 import { UserAgent } from '@algolia/transporter-types';
+import { NullCache } from '../../../cache-types/src';
 
 export class TestSuite {
   public readonly testName: string;
@@ -37,6 +38,7 @@ export class TestSuite {
     const requester = new BrowserXhrRequester();
 
     const transporter = new Transporter({
+      cache: new NullCache(),
       requester,
       logger: new ConsoleLogger(),
       timeouts: {

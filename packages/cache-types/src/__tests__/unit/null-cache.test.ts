@@ -1,21 +1,46 @@
 import { NullCache } from '../../NullCache';
 
 describe('null cache', () => {
-  it('does not set value', () => {
+  it('does not set value', async () => {
     const cache = new NullCache();
 
-    cache.set('key', { foo: 10 });
+    await cache.set({ key: 'key' }, { foo: 10 });
 
-    const defaultValue = { foo: 12 };
+    const defaultValue = Promise.resolve({
+      foo: 12,
+    });
 
-    expect(cache.get('key', defaultValue)).toBe(defaultValue);
+    const missMock = jest.fn();
+
+    expect(
+      await cache.get({ key: 'key' }, defaultValue, {
+        miss: () => Promise.resolve(missMock()),
+      })
+    ).toMatchObject({
+      foo: 12,
+    });
+
+    // Always call miss
+    expect(missMock.mock.calls.length).toBe(1);
   });
 
-  it('returns default value', () => {
+  it('returns default value', async () => {
     const cache = new NullCache();
 
-    const defaultValue = { foo: 12 };
+    const defaultValue = Promise.resolve({
+      foo: 12,
+    });
 
-    expect(cache.get('foo', defaultValue)).toBe(defaultValue);
+    const missMock = jest.fn();
+
+    expect(
+      await cache.get({ foo: 'foo' }, defaultValue, {
+        miss: () => Promise.resolve(missMock()),
+      })
+    ).toMatchObject({
+      foo: 12,
+    });
+
+    expect(missMock.mock.calls.length).toBe(1);
   });
 });

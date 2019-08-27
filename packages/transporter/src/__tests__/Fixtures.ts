@@ -3,6 +3,7 @@ import { Transporter } from '../Transporter';
 import { CallType, Host } from '@algolia/transporter-types';
 import { instance } from 'ts-mockito';
 import { NullLogger } from '../../../logger-types/src';
+import { NullCache } from '../../../cache-types/src';
 
 export class FakeRequester implements Requester {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -40,6 +41,7 @@ export class Fixtures {
     ];
 
     return new TestTransporter({
+      cache: new NullCache(),
       hosts: hosts.map(host => new Host(host)),
       requester: instance(requester),
       logger: new NullLogger(),

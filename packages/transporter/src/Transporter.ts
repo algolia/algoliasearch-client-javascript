@@ -10,6 +10,7 @@ import {
   mapRequestOptions,
 } from '@algolia/transporter-types';
 
+import { Cache } from '@algolia/cache-types';
 import { Deserializer } from './Deserializer';
 import { Logger } from '@algolia/logger-types';
 import { Requester } from '@algolia/requester-types';
@@ -18,6 +19,7 @@ import { Serializer } from './Serializer';
 
 export class Transporter implements TransporterContract {
   private readonly headers: { readonly [key: string]: string };
+  private readonly cache: Cache;
   private readonly logger: Logger;
   private readonly requester: Requester;
   private readonly timeouts: Timeouts;
@@ -28,12 +30,14 @@ export class Transporter implements TransporterContract {
   private readonly retryStrategy: RetryStrategy;
 
   public constructor(options: {
+    readonly cache: Cache;
     readonly headers: { readonly [key: string]: string };
     readonly logger: Logger;
     readonly requester: Requester;
     readonly timeouts: Timeouts;
     hosts: Host[]; // eslint-disable-line functional/prefer-readonly-type
   }) {
+    this.cache = options.cache;
     this.headers = options.headers;
     this.hosts = options.hosts;
     this.logger = options.logger;
@@ -45,6 +49,7 @@ export class Transporter implements TransporterContract {
 
   public withHeaders(headers: { readonly [key: string]: string }): TransporterContract {
     return new Transporter({
+      cache: this.cache,
       headers,
       hosts: this.hosts,
       logger: this.logger,
@@ -56,6 +61,7 @@ export class Transporter implements TransporterContract {
   // eslint-disable-next-line functional/prefer-readonly-type
   public withHosts(hosts: Host[]): TransporterContract {
     return new Transporter({
+      cache: this.cache,
       hosts,
       requester: this.requester,
       logger: this.logger,
@@ -65,12 +71,26 @@ export class Transporter implements TransporterContract {
   }
 
   public read<TResponse>(request: Request, requestOptions?: RequestOptions): Promise<TResponse> {
-    return this.request(
-      this.hosts.filter(host => {
-        return (host.accept & CallType.Read) !== 0;
-      }),
-      request,
-      mapRequestOptions(requestOptions, this.timeouts.read)
+    const mappedRequestOptions = mapRequestOptions(requestOptions, this.timeouts.read);
+
+    const key = { ...request, ...mappedRequestOptions };
+
+    const that = this;
+
+    return this.cache.get<TResponse>(
+      key,
+      this.request(
+        this.hosts.filter(host => {
+          return (host.accept & CallType.Read) !== 0;
+        }),
+        request,
+        mappedRequestOptions
+      ),
+      {
+        miss(response: TResponse): Promise<void> {
+          return that.cache.set(key, response);
+        },
+      }
     );
   }
 

@@ -1,33 +1,75 @@
 import { InMemoryCache } from '../../InMemoryCache';
 
 describe('in memory cache', () => {
-  it('sets/gets values', () => {
+  it('sets/gets values', async () => {
     const cache = new InMemoryCache();
 
-    const defaultValue = { bar: 1 };
-    expect(cache.get('foo', defaultValue)).toBe(defaultValue);
+    const defaultValue = Promise.resolve({ bar: 1 });
 
-    cache.set('foo', { foo: 2 });
-    expect(cache.get('foo', defaultValue)).toMatchObject({ foo: 2 });
+    const missMock = jest.fn();
+
+    expect(
+      await cache.get({ key: 'foo' }, defaultValue, {
+        miss: () => Promise.resolve(missMock()),
+      })
+    ).toMatchSnapshot({ bar: 1 });
+
+    expect(missMock.mock.calls.length).toBe(1);
+
+    await cache.set({ key: 'foo' }, { foo: 2 });
+
+    expect(
+      await cache.get({ key: 'foo' }, defaultValue, {
+        miss: () => Promise.resolve(missMock()),
+      })
+    ).toMatchObject({ foo: 2 });
+
+    expect(missMock.mock.calls.length).toBe(1);
   });
 
-  it('deletes keys', () => {
+  it('deletes keys', async () => {
     const cache = new InMemoryCache();
-    cache.set('foo', { bar: 1 });
+    await cache.set({ key: 'foo' }, { bar: 1 });
 
-    cache.delete('foo');
+    await cache.delete({ key: 'foo' });
 
-    expect(cache.get('foo', { test: 2 })).toMatchObject({ test: 2 });
+    const defaultValue = Promise.resolve({ bar: 2 });
+
+    const missMock = jest.fn();
+
+    expect(
+      await cache.get({ key: 'foo' }, defaultValue, {
+        miss: () => Promise.resolve(missMock()),
+      })
+    ).toMatchObject({ bar: 2 });
+
+    expect(missMock.mock.calls.length).toBe(1);
   });
 
-  it('allows to be clear', () => {
+  it('allows to be clear', async () => {
     const cache = new InMemoryCache();
-    cache.set('1', { 'set-1': 1 });
-    cache.set('2', { 'set-2': 2 });
+    await cache.set({ key: 1 }, { 'set-1': 1 });
+    await cache.set({ key: 2 }, { 'set-2': 2 });
 
-    cache.clear();
+    await cache.clear();
 
-    expect(cache.get('1', { 'get-1': 1 })).toMatchObject({ 'get-1': 1 });
-    expect(cache.get('2', { 'get-2': 2 })).toMatchObject({ 'get-2': 2 });
+    const defaultValue1 = Promise.resolve({ 'get-1': 1 });
+    const defaultValue2 = Promise.resolve({ 'get-2': 2 });
+
+    const missMock = jest.fn();
+
+    expect(
+      await cache.get({ key: 1 }, defaultValue1, {
+        miss: () => Promise.resolve(missMock()),
+      })
+    ).toMatchObject({ 'get-1': 1 });
+
+    expect(
+      await cache.get({ key: 2 }, defaultValue2, {
+        miss: () => Promise.resolve(missMock()),
+      })
+    ).toMatchObject({ 'get-2': 2 });
+
+    expect(missMock.mock.calls.length).toBe(2);
   });
 });

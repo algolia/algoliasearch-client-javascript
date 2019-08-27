@@ -52,7 +52,7 @@ module.exports = {
         'functional/no-try-statement': 0,
         '@typescript-eslint/explicit-function-return-type': 0,
         'functional/prefer-readonly-type': 0,
-        'sonarjs/no-duplicate-string': 0
+        'sonarjs/no-duplicate-string': 0,
       },
     },
   ],

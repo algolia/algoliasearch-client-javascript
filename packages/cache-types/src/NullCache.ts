@@ -1,12 +1,23 @@
 /* eslint @typescript-eslint/no-unused-vars: 0 */ // --> OFF
-import { Cache } from './Cache';
+import { Cache, CacheEvents } from './Cache';
 
 export class NullCache implements Cache {
-  public get<TValue extends object>(key: string, defaultValue: TValue): TValue {
-    return defaultValue;
+  public get<TValue>(
+    key: object,
+    defaultValue: Promise<TValue>,
+    events: CacheEvents
+  ): Promise<TValue> {
+    return defaultValue.then((value: TValue) => events.miss(value).then(() => defaultValue));
   }
 
-  public set(key: string, value: object): void {}
-  public delete(key: string): void {}
-  public clear(): void {}
+  public set(key: object, value: any): Promise<void> {
+    return Promise.resolve();
+  }
+
+  public delete(key: object): Promise<void> {
+    return Promise.resolve();
+  }
+  public clear(): Promise<void> {
+    return Promise.resolve();
+  }
 }

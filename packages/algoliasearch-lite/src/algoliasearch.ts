@@ -3,11 +3,13 @@ import { BrowserXhrRequester } from '@algolia/requester-browser-xhr';
 import { Transporter } from '@algolia/transporter';
 import { ConsoleLogger } from '@algolia/logger-console';
 import { UserAgent } from '@algolia/transporter-types';
+import { NullCache } from '@algolia/cache-types';
 
 export function algoliasearch(appId: string, apiKey: string): SearchClient {
   const requester = new BrowserXhrRequester();
 
   const transporter = new Transporter({
+    cache: new NullCache(),
     requester,
     logger: new ConsoleLogger(),
     timeouts: {
