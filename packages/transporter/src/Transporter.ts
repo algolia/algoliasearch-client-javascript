@@ -16,11 +16,10 @@ import { Logger } from '@algolia/logger-types';
 import { Requester } from '@algolia/requester-types';
 import { RetryStrategy } from './RetryStrategy';
 import { Serializer } from './Serializer';
+import { NullCache } from '../../cache-types/src';
 
 export class Transporter implements TransporterContract {
   private readonly headers: { readonly [key: string]: string };
-
-  private readonly cache: Cache;
 
   private readonly logger: Logger;
 
@@ -31,29 +30,34 @@ export class Transporter implements TransporterContract {
   // eslint-disable-next-line functional/prefer-readonly-type
   private hosts: Host[];
 
+  private readonly responseCache: Cache;
+
   private readonly retryStrategy: RetryStrategy;
 
   public constructor(options: {
-    readonly cache: Cache;
     readonly headers: { readonly [key: string]: string };
     readonly logger: Logger;
     readonly requester: Requester;
     readonly timeouts: Timeouts;
     hosts: Host[]; // eslint-disable-line functional/prefer-readonly-type
+
+    readonly responseCache?: Cache;
   }) {
-    this.cache = options.cache;
     this.headers = options.headers;
     this.hosts = options.hosts;
     this.logger = options.logger;
     this.requester = options.requester;
     this.timeouts = options.timeouts;
 
+    this.responseCache =
+      options.responseCache !== undefined ? options.responseCache : new NullCache();
+
     this.retryStrategy = new RetryStrategy();
   }
 
   public withHeaders(headers: { readonly [key: string]: string }): TransporterContract {
     return new Transporter({
-      cache: this.cache,
+      responseCache: this.responseCache,
       headers,
       hosts: this.hosts,
       logger: this.logger,
@@ -65,7 +69,7 @@ export class Transporter implements TransporterContract {
   // eslint-disable-next-line functional/prefer-readonly-type
   public withHosts(hosts: Host[]): TransporterContract {
     return new Transporter({
-      cache: this.cache,
+      responseCache: this.responseCache,
       hosts,
       requester: this.requester,
       logger: this.logger,
@@ -81,7 +85,7 @@ export class Transporter implements TransporterContract {
 
     const that = this;
 
-    return this.cache.get<TResponse>(
+    return this.responseCache.get<TResponse>(
       key,
       this.request(
         this.hosts.filter(host => {
@@ -92,7 +96,7 @@ export class Transporter implements TransporterContract {
       ),
       {
         miss(response: TResponse): Promise<void> {
-          return that.cache.set(key, response);
+          return that.responseCache.set(key, response);
         },
       }
     );
