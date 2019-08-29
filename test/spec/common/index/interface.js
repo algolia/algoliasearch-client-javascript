@@ -42,6 +42,7 @@ test('AlgoliaSearch index API spec', function(t) {
     'deleteRule',
     'deleteApiKey',
     'deleteUserKey',
+    'exists',
     'exportSynonyms',
     'exportRules',
     'getObject',
