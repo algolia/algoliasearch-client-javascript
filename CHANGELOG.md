@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 3.34.0
+>2019-08-29
+
+* FEAT(index-exists): adds exists method into index (#773)
+  * `index.exist()`: returns whether an index exists or not
+
 ## 3.33.0
 >2019-05-09
 
@@ -720,7 +726,7 @@ allow more flexible proxy/keepAlive agents in some more complex environments
   Added description, referers, queryParameters
   ref: https://www.algolia.com/changes#released-##
   >2015-05-08
-  
+
 * fix: IE11 xhr cache was fixed by adding cache-control: no-cache in API headers
 * test: add integration testing and rework the travis tasks
 
