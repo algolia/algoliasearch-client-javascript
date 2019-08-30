@@ -2,7 +2,7 @@ import { Response } from '@algolia/requester-types';
 import { ApiError } from '@algolia/transporter-types';
 
 export class Deserializer {
-  public static success({ content }: Response): object {
+  public static success<TObject>({ content }: Response): TObject {
     return JSON.parse(content);
   }
 

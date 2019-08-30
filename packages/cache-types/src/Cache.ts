@@ -2,7 +2,7 @@ export type Cache = {
   readonly get: <TValue>(
     key: object,
     defaultValue: () => Promise<TValue>,
-    events: CacheEvents
+    events?: CacheEvents
   ) => Promise<TValue>;
   readonly set: (key: object, value: any) => Promise<void>;
   readonly delete: (key: object) => Promise<void>;
@@ -11,5 +11,5 @@ export type Cache = {
 
 export type CacheEvents = {
   // eslint-disable-next-line @typescript-eslint/generic-type-naming
-  readonly miss: (value: any) => Promise<void>;
+  readonly miss?: (value: any) => Promise<void>;
 };

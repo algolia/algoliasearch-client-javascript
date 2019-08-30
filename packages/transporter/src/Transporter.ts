@@ -89,37 +89,23 @@ export class Transporter implements TransporterContract {
 
     const key = { ...request, ...mappedRequestOptions };
 
-    const that = this;
-
-    return this.responseCache.get<TResponse>(
+    return this.responseCache.get(
       key,
       () =>
         this.request(
-          this.hosts.filter(host => {
-            return (host.accept & CallType.Read) !== 0;
-          }),
+          this.hosts.filter(host => (host.accept & CallType.Read) !== 0),
           request,
           mappedRequestOptions
         ),
       {
-        miss(response: TResponse): Promise<void> {
-          that.logger.debug('Cache miss', {
-            cache: that.responseCache.constructor.name,
-            key,
-            value: response,
-          });
-
-          return that.responseCache.set(key, response);
-        },
+        miss: response => this.responseCache.set(key, response),
       }
     );
   }
 
   public write<TResponse>(request: Request, requestOptions?: RequestOptions): Promise<TResponse> {
     return this.request(
-      this.hosts.filter(host => {
-        return (host.accept & CallType.Write) !== 0;
-      }),
+      this.hosts.filter(host => (host.accept & CallType.Write) !== 0),
       request,
       mapRequestOptions(requestOptions, this.timeouts.write)
     );
@@ -131,53 +117,37 @@ export class Transporter implements TransporterContract {
     request: Request,
     requestOptions: MappedRequestOptions
   ): Promise<TResponse> {
-    return new Promise<TResponse>((resolve, reject): void => {
-      this.retry(
-        hosts.filter(host => host.isUp()).reverse(),
-        request,
-        requestOptions,
-        resolve,
-        reject
-      );
-    });
-  }
+    return Promise.all(
+      hosts.map(
+        host =>
+          new Promise(resolve => {
+            this.hostsCache
+              .get<Host>({ url: host.url }, () => Promise.resolve(host))
+              .then((value: Host) => (host.isUp = value.isUp)); // eslint-disable-line functional/immutable-data, no-param-reassign
 
-  private retry(
-    // eslint-disable-next-line functional/prefer-readonly-type
-    hosts: Host[],
-    request: Request,
-    requestOptions: MappedRequestOptions,
-    resolve: Function,
-    reject: Function
-  ): void {
-    // eslint-disable-next-line functional/immutable-data
-    const host = hosts.pop();
+            resolve();
+          })
+      )
+    ).then(() => {
+      hosts = hosts.filter(host => host.isUp()).reverse(); // eslint-disable-line no-param-reassign
 
-    if (host === undefined) {
-      const error: RetryError = {
-        name: RetryError.name,
-        message: 'Unreachable hosts',
-      };
+      const retry = (
+        resolve: (response: TResponse) => void,
+        reject: (error: Error) => void
+      ): void => {
+        const host = hosts.pop(); // eslint-disable-line functional/immutable-data
 
-      reject(error);
+        if (host === undefined) {
+          const error: RetryError = {
+            name: RetryError.name,
+            message: 'Unreachable hosts',
+          };
 
-      return;
-    }
+          reject(error);
 
-    const that = this;
+          return;
+        }
 
-    const hostKey = {
-      url: host.url,
-      accept: host.accept,
-    };
-
-    this.hostsCache
-      .get<Host>(hostKey, () => Promise.resolve(host), {
-        miss: (value: Host) => {
-          return that.hostsCache.set(hostKey, value);
-        },
-      })
-      .then(hostValue => {
         this.requester
           .send({
             data: Serializer.data({
@@ -189,28 +159,27 @@ export class Transporter implements TransporterContract {
               ...this.headers,
             },
             method: request.method,
-            url: Serializer.url(hostValue, request.path, requestOptions.queryParameters),
+            url: Serializer.url(host, request.path, requestOptions.queryParameters),
             timeout: requestOptions.timeout ? requestOptions.timeout : 0,
           })
           .then(response => {
-            this.retryStrategy.decide(hostValue, response, {
-              success() {
-                resolve(Deserializer.success(response));
-              },
-              retry() {
-                that.logger.info('Retriable failure', {
+            this.retryStrategy.decide(host, response, {
+              success: () => resolve(Deserializer.success<TResponse>(response)),
+              retry: () => {
+                this.logger.info('Retriable failure', {
                   request,
                   response,
-                  hostValue,
+                  host,
                   triesLeft: hosts.length,
                 });
-                that.retry(hosts, request, requestOptions, resolve, reject);
+                retry(resolve, reject);
               },
-              fail() {
-                reject(Deserializer.fail(response));
-              },
+              fail: () => reject(Deserializer.fail(response)),
             });
           });
-      });
+      };
+
+      return new Promise((resolve, reject) => retry(resolve, reject));
+    });
   }
 }

@@ -8,7 +8,7 @@ export class InMemoryCache implements Cache {
   public get<TValue>(
     key: object,
     defaultValue: () => Promise<TValue>,
-    events: CacheEvents
+    events?: CacheEvents
   ): Promise<TValue> {
     const keyAsString = this.objectToString(key);
 
@@ -17,8 +17,9 @@ export class InMemoryCache implements Cache {
     }
 
     const promise = defaultValue();
+    const miss = (events && events.miss) || (() => Promise.resolve());
 
-    return promise.then((value: TValue) => events.miss(value)).then(() => promise);
+    return promise.then((value: TValue) => miss(value)).then(() => promise);
   }
 
   public set(key: object, value: any): Promise<void> {

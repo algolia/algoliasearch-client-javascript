@@ -5,11 +5,13 @@ export class NullCache implements Cache {
   public get<TValue>(
     key: object,
     defaultValue: () => Promise<TValue>,
-    events: CacheEvents
+    events?: CacheEvents
   ): Promise<TValue> {
     const value = defaultValue();
 
-    return events.miss(value).then(() => value);
+    const miss = (events && events.miss) || (() => Promise.resolve());
+
+    return miss(value).then(() => value);
   }
 
   public set(key: object, value: any): Promise<void> {
