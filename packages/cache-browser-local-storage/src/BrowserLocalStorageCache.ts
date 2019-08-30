@@ -5,16 +5,20 @@ export class BrowserLocalStorageCache implements Cache {
 
   public get<TValue>(
     key: object,
-    defaultValue: Promise<TValue>,
+    defaultValue: () => Promise<TValue>,
     events: CacheEvents
   ): Promise<TValue> {
     const keyAsString = JSON.stringify(key);
 
     const valueAsString = localStorage.getItem(keyAsString);
 
-    return valueAsString !== null
-      ? Promise.resolve(JSON.parse(valueAsString))
-      : defaultValue.then((value: TValue) => events.miss(value).then(() => defaultValue));
+    if (valueAsString !== null) {
+      return Promise.resolve(JSON.parse(valueAsString));
+    }
+
+    const promise = defaultValue();
+
+    return promise.then((value: TValue) => events.miss(value)).then(() => promise);
   }
 
   public set(key: object, value: any): Promise<void> {

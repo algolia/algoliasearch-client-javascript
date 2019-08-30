@@ -32,7 +32,7 @@ export class Fixtures {
     return new FakeRequester();
   }
 
-  public static transporter(requester: Requester): TestTransporter {
+  public static transporter(requester: Requester, options: any = {}): TestTransporter {
     const hosts = [
       { url: 'read.com', accept: CallType.Read },
       { url: 'write.com', accept: CallType.Write },
@@ -43,6 +43,8 @@ export class Fixtures {
       hosts: hosts.map(host => new Host(host)),
       requester: instance(requester),
       logger: new NullLogger(),
+      responseCache: options.responseCache,
+      hostsCache: options.hostsCache,
       timeouts: {
         read: 2,
         write: 30,

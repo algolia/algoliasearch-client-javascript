@@ -4,7 +4,7 @@ describe('in memory cache', () => {
   it('sets/gets values', async () => {
     const cache = new InMemoryCache();
 
-    const defaultValue = Promise.resolve({ bar: 1 });
+    const defaultValue = () => Promise.resolve({ bar: 1 });
 
     const missMock = jest.fn();
 
@@ -14,9 +14,9 @@ describe('in memory cache', () => {
       })
     ).toMatchSnapshot({ bar: 1 });
 
-    expect(missMock.mock.calls.length).toBe(1);
-
     await cache.set({ key: 'foo' }, { foo: 2 });
+
+    expect(missMock.mock.calls.length).toBe(1);
 
     expect(
       await cache.get({ key: 'foo' }, defaultValue, {
@@ -33,7 +33,7 @@ describe('in memory cache', () => {
 
     await cache.delete({ key: 'foo' });
 
-    const defaultValue = Promise.resolve({ bar: 2 });
+    const defaultValue = () => Promise.resolve({ bar: 2 });
 
     const missMock = jest.fn();
 
@@ -53,8 +53,8 @@ describe('in memory cache', () => {
 
     await cache.clear();
 
-    const defaultValue1 = Promise.resolve({ 'get-1': 1 });
-    const defaultValue2 = Promise.resolve({ 'get-2': 2 });
+    const defaultValue1 = () => Promise.resolve({ 'get-1': 1 });
+    const defaultValue2 = () => Promise.resolve({ 'get-2': 2 });
 
     const missMock = jest.fn();
 

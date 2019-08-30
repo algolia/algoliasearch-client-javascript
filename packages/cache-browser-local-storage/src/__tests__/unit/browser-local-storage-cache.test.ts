@@ -4,7 +4,7 @@ describe('browser local storage cache', () => {
   it('sets/gets values', async () => {
     const cache = new BrowserLocalStorageCache();
 
-    const defaultValue = Promise.resolve({ bar: 1 });
+    const defaultValue = () => Promise.resolve({ bar: 1 });
 
     const missMock = jest.fn();
 
@@ -33,7 +33,7 @@ describe('browser local storage cache', () => {
 
     await cache.delete({ key: 'foo' });
 
-    const defaultValue = Promise.resolve({ bar: 2 });
+    const defaultValue = () => Promise.resolve({ bar: 2 });
 
     const missMock = jest.fn();
 
@@ -53,8 +53,8 @@ describe('browser local storage cache', () => {
 
     await cache.clear();
 
-    const defaultValue1 = Promise.resolve({ 'get-1': 1 });
-    const defaultValue2 = Promise.resolve({ 'get-2': 2 });
+    const defaultValue1 = () => Promise.resolve({ 'get-1': 1 });
+    const defaultValue2 = () => Promise.resolve({ 'get-2': 2 });
 
     const missMock = jest.fn();
 

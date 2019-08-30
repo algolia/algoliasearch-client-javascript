@@ -7,14 +7,18 @@ export class InMemoryCache implements Cache {
 
   public get<TValue>(
     key: object,
-    defaultValue: Promise<TValue>,
+    defaultValue: () => Promise<TValue>,
     events: CacheEvents
   ): Promise<TValue> {
     const keyAsString = this.objectToString(key);
 
-    return keyAsString in this.cache
-      ? Promise.resolve(this.cache[keyAsString])
-      : defaultValue.then((value: TValue) => events.miss(value).then(() => defaultValue));
+    if (keyAsString in this.cache) {
+      return Promise.resolve(this.cache[keyAsString]);
+    }
+
+    const promise = defaultValue();
+
+    return promise.then((value: TValue) => events.miss(value)).then(() => promise);
   }
 
   public set(key: object, value: any): Promise<void> {

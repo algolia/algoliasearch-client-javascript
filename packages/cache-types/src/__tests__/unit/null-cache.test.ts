@@ -13,7 +13,7 @@ describe('null cache', () => {
     const missMock = jest.fn();
 
     expect(
-      await cache.get({ key: 'key' }, defaultValue, {
+      await cache.get({ key: 'key' }, () => defaultValue, {
         miss: () => Promise.resolve(missMock()),
       })
     ).toMatchObject({
@@ -34,7 +34,7 @@ describe('null cache', () => {
     const missMock = jest.fn();
 
     expect(
-      await cache.get({ foo: 'foo' }, defaultValue, {
+      await cache.get({ foo: 'foo' }, () => defaultValue, {
         miss: () => Promise.resolve(missMock()),
       })
     ).toMatchObject({

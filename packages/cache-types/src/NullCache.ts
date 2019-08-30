@@ -4,10 +4,12 @@ import { Cache, CacheEvents } from './Cache';
 export class NullCache implements Cache {
   public get<TValue>(
     key: object,
-    defaultValue: Promise<TValue>,
+    defaultValue: () => Promise<TValue>,
     events: CacheEvents
   ): Promise<TValue> {
-    return defaultValue.then((value: TValue) => events.miss(value).then(() => defaultValue));
+    const value = defaultValue();
+
+    return events.miss(value).then(() => value);
   }
 
   public set(key: object, value: any): Promise<void> {

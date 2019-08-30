@@ -7,7 +7,6 @@ import {
   HasSearchForFacetValues,
   searchForFacetValues,
 } from '../methods/index/searchForFacetValues';
-import { ConsoleLogger } from '@algolia/logger-console';
 import { HasWaitTask, waitTask } from '../methods/index/waitTask';
 import { HasSaveObject, saveObject } from '../methods/index/saveObject';
 import { HasDelete, deleteIndex } from '../methods/index/deleteIndex';
@@ -39,7 +38,6 @@ export class TestSuite {
 
     const transporter = new Transporter({
       requester,
-      logger: new ConsoleLogger(),
       timeouts: {
         read: 2,
         write: 30,

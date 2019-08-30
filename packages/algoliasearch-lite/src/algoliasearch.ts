@@ -1,7 +1,6 @@
 import { SearchClient } from './SearchClient';
 import { BrowserXhrRequester } from '@algolia/requester-browser-xhr';
 import { Transporter } from '@algolia/transporter';
-import { ConsoleLogger } from '@algolia/logger-console';
 import { UserAgent } from '@algolia/transporter-types';
 
 export function algoliasearch(appId: string, apiKey: string): SearchClient {
@@ -9,7 +8,6 @@ export function algoliasearch(appId: string, apiKey: string): SearchClient {
 
   const transporter = new Transporter({
     requester,
-    logger: new ConsoleLogger(),
     timeouts: {
       read: 1,
       write: 30,
