@@ -14,9 +14,9 @@ import { Cache } from '@algolia/cache-types';
 import { Deserializer } from './Deserializer';
 import { Logger, NullLogger } from '@algolia/logger-types';
 import { Requester } from '@algolia/requester-types';
-import { RetryStrategy } from './RetryStrategy';
 import { Serializer } from './Serializer';
 import { NullCache } from '../../cache-types/src';
+import decide from './concerns/decide';
 
 export class Transporter implements TransporterContract {
   private readonly headers: { readonly [key: string]: string };
@@ -33,8 +33,6 @@ export class Transporter implements TransporterContract {
   private readonly responseCache: Cache;
 
   private readonly hostsCache: Cache;
-
-  private readonly retryStrategy: RetryStrategy;
 
   public constructor(options: {
     readonly headers: { readonly [key: string]: string };
@@ -57,8 +55,6 @@ export class Transporter implements TransporterContract {
       options.responseCache !== undefined ? options.responseCache : new NullCache();
 
     this.hostsCache = options.hostsCache !== undefined ? options.hostsCache : new NullCache();
-
-    this.retryStrategy = new RetryStrategy();
   }
 
   public withHeaders(headers: { readonly [key: string]: string }): TransporterContract {
@@ -138,32 +134,21 @@ export class Transporter implements TransporterContract {
         const host = hosts.pop(); // eslint-disable-line functional/immutable-data
 
         if (host === undefined) {
-          const error: RetryError = {
-            name: RetryError.name,
-            message: 'Unreachable hosts',
-          };
-
-          reject(error);
+          reject(RetryError.make());
 
           return;
         }
 
         this.requester
           .send({
-            data: Serializer.data({
-              ...request.data,
-              ...requestOptions.data,
-            }),
-            headers: {
-              ...requestOptions.headers,
-              ...this.headers,
-            },
+            data: Serializer.data({ ...request.data, ...requestOptions.data }),
+            headers: { ...requestOptions.headers, ...this.headers },
             method: request.method,
             url: Serializer.url(host, request.path, requestOptions.queryParameters),
             timeout: requestOptions.timeout ? requestOptions.timeout : 0,
           })
           .then(response => {
-            this.retryStrategy.decide(host, response, {
+            decide(host, response, {
               success: () => resolve(Deserializer.success<TResponse>(response)),
               retry: () => {
                 this.logger.info('Retriable failure', {
@@ -177,6 +162,8 @@ export class Transporter implements TransporterContract {
               fail: () => reject(Deserializer.fail(response)),
             });
           });
+
+        return;
       };
 
       return new Promise((resolve, reject) => retry(resolve, reject));

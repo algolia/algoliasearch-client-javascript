@@ -11,12 +11,12 @@
 "@algolia/logger@file:packages/logger-console":
   version "4.0.0-alpha.0"
   dependencies:
-    "@algolia/logger-types" "file:../../Library/Caches/Yarn/v4/npm-@algolia-logger-4.0.0-alpha.0-d644c0e1-c69f-4d5f-a3e6-774b1707ca42-1567174147550/node_modules/@algolia/logger-types"
+    "@algolia/logger-types" "file:../../Library/Caches/Yarn/v4/npm-@algolia-logger-4.0.0-alpha.0-b536204b-9893-4ff4-876f-7fe98d64293c-1567195803914/node_modules/@algolia/logger-types"
 
 "@algolia/requester-browser-xhr@file:packages/requester-browser-xhr":
   version "4.0.0-alpha.0"
   dependencies:
-    "@algolia/requester-types" "file:../../Library/Caches/Yarn/v4/npm-@algolia-requester-browser-xhr-4.0.0-alpha.0-4c2283c2-5b2f-46db-9a42-f44324075bad-1567174147552/node_modules/@algolia/requester-types"
+    "@algolia/requester-types" "file:../../Library/Caches/Yarn/v4/npm-@algolia-requester-browser-xhr-4.0.0-alpha.0-55457ad9-5404-4620-9be4-05eedf331494-1567195803919/node_modules/@algolia/requester-types"
 
 "@algolia/requester-types@file:packages/requester-types":
   version "4.0.0-alpha.0"
@@ -24,15 +24,15 @@
 "@algolia/transporter-types@file:packages/transporter-types":
   version "4.0.0-alpha.0"
   dependencies:
-    "@algolia/requester-types" "file:../../Library/Caches/Yarn/v4/npm-@algolia-transporter-types-4.0.0-alpha.0-6bcd6c90-882d-4275-b4e1-a2faa248dc27-1567174147555/node_modules/@algolia/requester-types"
+    "@algolia/requester-types" "file:../../Library/Caches/Yarn/v4/npm-@algolia-transporter-types-4.0.0-alpha.0-a4e3e4a3-5433-43ee-a381-c5ced82054b8-1567195803918/node_modules/@algolia/requester-types"
 
 "@algolia/transporter@file:packages/transporter":
   version "4.0.0-alpha.0"
   dependencies:
-    "@algolia/cache-types" "file:../../Library/Caches/Yarn/v4/npm-@algolia-transporter-4.0.0-alpha.0-90fd38e2-5b3a-486f-9d72-4c2580348dbc-1567174147552/node_modules/@algolia/cache-types"
-    "@algolia/logger-types" "file:../../Library/Caches/Yarn/v4/npm-@algolia-transporter-4.0.0-alpha.0-90fd38e2-5b3a-486f-9d72-4c2580348dbc-1567174147552/node_modules/@algolia/logger-types"
-    "@algolia/requester-types" "file:../../Library/Caches/Yarn/v4/npm-@algolia-transporter-4.0.0-alpha.0-90fd38e2-5b3a-486f-9d72-4c2580348dbc-1567174147552/node_modules/@algolia/requester-types"
-    "@algolia/transporter-types" "file:../../Library/Caches/Yarn/v4/npm-@algolia-transporter-4.0.0-alpha.0-90fd38e2-5b3a-486f-9d72-4c2580348dbc-1567174147552/node_modules/@algolia/transporter-types"
+    "@algolia/cache-types" "file:../../Library/Caches/Yarn/v4/npm-@algolia-transporter-4.0.0-alpha.0-bac6fdc4-8b9e-4a2b-b02e-038daab5c92b-1567195803917/node_modules/@algolia/cache-types"
+    "@algolia/logger-types" "file:../../Library/Caches/Yarn/v4/npm-@algolia-transporter-4.0.0-alpha.0-bac6fdc4-8b9e-4a2b-b02e-038daab5c92b-1567195803917/node_modules/@algolia/logger-types"
+    "@algolia/requester-types" "file:../../Library/Caches/Yarn/v4/npm-@algolia-transporter-4.0.0-alpha.0-bac6fdc4-8b9e-4a2b-b02e-038daab5c92b-1567195803917/node_modules/@algolia/requester-types"
+    "@algolia/transporter-types" "file:../../Library/Caches/Yarn/v4/npm-@algolia-transporter-4.0.0-alpha.0-bac6fdc4-8b9e-4a2b-b02e-038daab5c92b-1567195803917/node_modules/@algolia/transporter-types"
 
 "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.5.5":
   version "7.5.5"
@@ -2747,9 +2747,9 @@ eslint-visitor-keys@^1.0.0, eslint-visitor-keys@^1.1.0:
   integrity sha512-8y9YjtM1JBJU/A9Kc+SbaOV4y29sSWckBwMHa+FGtVj5gN/sbnKDf6xJUl+8g7FAij9LVaP8C24DUiH/f/2Z9A==
 
 eslint@^6.2.2:
-  version "6.2.2"
-  resolved "https://registry.yarnpkg.com/eslint/-/eslint-6.2.2.tgz#03298280e7750d81fcd31431f3d333e43d93f24f"
-  integrity sha512-mf0elOkxHbdyGX1IJEUsNBzCDdyoUgljF3rRlgfyYh0pwGnreLc0jjD6ZuleOibjmnUWZLY2eXwSooeOgGJ2jw==
+  version "6.3.0"
+  resolved "https://registry.yarnpkg.com/eslint/-/eslint-6.3.0.tgz#1f1a902f67bfd4c354e7288b81e40654d927eb6a"
+  integrity sha512-ZvZTKaqDue+N8Y9g0kp6UPZtS4FSY3qARxBs7p4f0H0iof381XHduqVerFWtK8DPtKmemqbqCFENWSQgPR/Gow==
   dependencies:
     "@babel/code-frame" "^7.0.0"
     ajv "^6.10.0"
