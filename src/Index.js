@@ -923,6 +923,57 @@ Index.prototype.exists = function(callback) {
   });
 };
 
+Index.prototype.findObject = function(findCallback, requestOptions, callback) {
+  requestOptions = requestOptions === undefined ? {} : requestOptions;
+  var paginate = requestOptions.paginate !== undefined ? requestOptions.paginate : true;
+  var query = requestOptions.query !== undefined ? requestOptions.paginate : '';
+
+  var that = this;
+  var page = 0;
+
+  var paginateLoop = function() {
+    requestOptions.page = page;
+
+    return that.search(query, requestOptions).then(function(result) {
+      var hits = result.hits;
+
+      for (var position = 0; position < hits.length; position++) {
+        var hit = hits[position];
+        if (findCallback(hit)) {
+          return {
+            object: hit,
+            position: position,
+            page: page
+          };
+        }
+      }
+
+      page += 1;
+
+      // paginate or has next page
+      if (!paginate || page >= result.nbPages) {
+        throw new errors.ObjectNotFound('Object not found');
+      }
+
+      return paginateLoop();
+    });
+  };
+
+  var promise = paginateLoop(page);
+
+  if (callback === undefined) {
+    return promise;
+  }
+
+  return promise
+    .then(function(res) {
+      callback(null, res);
+    })
+    .catch(function(err) {
+      callback(err);
+    });
+};
+
 /*
 * Set settings for this index
 *
