@@ -974,6 +974,18 @@ Index.prototype.findObject = function(findCallback, requestOptions, callback) {
     });
 };
 
+Index.prototype.getObjectPosition = function(result, objectID) {
+  var hits = result.hits;
+
+  for (var position = 0; position < hits.length; position++) {
+    if (hits[position].objectID === objectID) {
+      return position;
+    }
+  }
+
+  return -1;
+};
+
 /*
 * Set settings for this index
 *
