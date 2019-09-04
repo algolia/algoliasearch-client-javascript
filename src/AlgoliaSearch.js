@@ -732,6 +732,7 @@ AlgoliaSearch.prototype.disableRateLimitForward = notImplemented;
 AlgoliaSearch.prototype.useSecuredAPIKey = notImplemented;
 AlgoliaSearch.prototype.disableSecuredAPIKey = notImplemented;
 AlgoliaSearch.prototype.generateSecuredApiKey = notImplemented;
+AlgoliaSearch.prototype.getSecuredApiKeyRemainingValidity = notImplemented;
 
 function notImplemented() {
   var message = 'Not implemented in this environment.\n' +

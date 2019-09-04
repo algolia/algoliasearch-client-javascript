@@ -320,3 +320,21 @@ AlgoliaSearchNodeJS.prototype.generateSecuredApiKey = function generateSecuredAp
 
   return new Buffer(securedKey + searchParams).toString('base64');
 };
+
+AlgoliaSearchNodeJS.prototype.getSecuredApiKeyRemainingValidity = function getSecuredApiKeyRemainingValidity(
+  securedAPIKey,
+) {
+  var decodedString = new Buffer(securedAPIKey, 'base64').toString('ascii');
+
+  var regex = /validUntil=(\d+)/;
+
+  var match = decodedString.match(regex);
+
+  if (match === null) {
+    throw new errors.ValidUntilNotFound('ValidUntil not found in api key.');
+  }
+
+  var validUntilMatch = decodedString.match(regex)[1];
+
+  return validUntilMatch - Math.round(new Date().getTime() / 1000);
+};
