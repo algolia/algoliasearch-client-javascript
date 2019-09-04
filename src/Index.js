@@ -926,7 +926,7 @@ Index.prototype.exists = function(callback) {
 Index.prototype.findObject = function(findCallback, requestOptions, callback) {
   requestOptions = requestOptions === undefined ? {} : requestOptions;
   var paginate = requestOptions.paginate !== undefined ? requestOptions.paginate : true;
-  var query = requestOptions.query !== undefined ? requestOptions.paginate : '';
+  var query = requestOptions.query !== undefined ? requestOptions.query : '';
 
   var that = this;
   var page = 0;
