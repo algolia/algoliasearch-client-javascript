@@ -38,7 +38,8 @@
     "precommit": "lint-staged",
     "test": "jest --verbose",
     "lint": "eslint . --ext .js,.ts",
-    "lint:fix": "npm run lint -- --fix"
+    "lint:fix": "npm run lint -- --fix",
+    "update": "find . -name a -exec rm -rf {} \\; && rm -f yarn.lock && yarn"
   },
   "husky": {
     "hooks": {

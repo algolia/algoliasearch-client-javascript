@@ -119,7 +119,13 @@ export class Transporter implements TransporterContract {
           new Promise(resolve => {
             this.hostsCache
               .get<Host>({ url: host.url }, () => Promise.resolve(host))
-              .then((value: Host) => (host.isUp = value.isUp)); // eslint-disable-line functional/immutable-data, no-param-reassign
+              .then((value: Host) => {
+                // eslint-disable-next-line functional/immutable-data, no-param-reassign
+                host.downDate = value.downDate;
+
+                // eslint-disable-next-line functional/immutable-data, no-param-reassign
+                host.up = value.up;
+              });
 
             resolve();
           })
@@ -157,7 +163,7 @@ export class Transporter implements TransporterContract {
                   host,
                   triesLeft: hosts.length,
                 });
-                retry(resolve, reject);
+                this.hostsCache.set({ url: host.url }, host).then(() => retry(resolve, reject));
               },
               fail: () => reject(Deserializer.fail(response)),
             });
