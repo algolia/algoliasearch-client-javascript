@@ -45,6 +45,7 @@ export class Fixtures {
       logger: new NullLogger(),
       responseCache: options.responseCache,
       hostsCache: options.hostsCache,
+      requestCache: options.requestCache,
       timeouts: {
         read: 2,
         write: 30,

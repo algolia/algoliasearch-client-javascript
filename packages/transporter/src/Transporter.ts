@@ -34,6 +34,8 @@ export class Transporter implements TransporterContract {
 
   private readonly hostsCache: Cache;
 
+  private readonly requestCache: Cache;
+
   public constructor(options: {
     readonly headers: { readonly [key: string]: string };
     readonly requester: Requester;
@@ -43,6 +45,7 @@ export class Transporter implements TransporterContract {
     readonly logger?: Logger;
     readonly responseCache?: Cache;
     readonly hostsCache?: Cache;
+    readonly requestCache?: Cache;
   }) {
     this.headers = options.headers;
     this.hosts = options.hosts;
@@ -55,6 +58,8 @@ export class Transporter implements TransporterContract {
       options.responseCache !== undefined ? options.responseCache : new NullCache();
 
     this.hostsCache = options.hostsCache !== undefined ? options.hostsCache : new NullCache();
+
+    this.requestCache = options.requestCache !== undefined ? options.requestCache : new NullCache();
   }
 
   public withHeaders(headers: { readonly [key: string]: string }): TransporterContract {
@@ -88,11 +93,19 @@ export class Transporter implements TransporterContract {
     return this.responseCache.get(
       key,
       () =>
-        this.request(
-          this.hosts.filter(host => (host.accept & CallType.Read) !== 0),
-          request,
-          mappedRequestOptions
-        ),
+        this.requestCache.get(key, () => {
+          const responsePromise = this.request<TResponse>(
+            this.hosts.filter(host => (host.accept & CallType.Read) !== 0),
+            request,
+            mappedRequestOptions
+          );
+
+          return this.requestCache
+            .set(key, responsePromise)
+            .then(() =>
+              responsePromise.then(response => this.requestCache.delete(key).then(() => response))
+            );
+        }),
       {
         miss: response => this.responseCache.set(key, response),
       }
