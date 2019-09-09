@@ -146,6 +146,8 @@ export class Transporter implements TransporterContract {
     ).then(() => {
       hosts = hosts.filter(host => host.isUp()).reverse(); // eslint-disable-line no-param-reassign
 
+      let timeoutRetries = 0; // eslint-disable-line functional/no-let
+
       const retry = (
         resolve: (response: TResponse) => void,
         reject: (error: Error) => void
@@ -164,7 +166,7 @@ export class Transporter implements TransporterContract {
             headers: { ...requestOptions.headers, ...this.headers },
             method: request.method,
             url: Serializer.url(host, request.path, requestOptions.queryParameters),
-            timeout: requestOptions.timeout ? requestOptions.timeout : 0,
+            timeout: (timeoutRetries + 1) * (requestOptions.timeout ? requestOptions.timeout : 0),
           })
           .then(response => {
             decide(host, response, {
@@ -175,7 +177,13 @@ export class Transporter implements TransporterContract {
                   response,
                   host,
                   triesLeft: hosts.length,
+                  timeoutRetries,
                 });
+
+                if (response.isTimedOut) {
+                  timeoutRetries++;
+                }
+
                 this.hostsCache.set({ url: host.url }, host).then(() => retry(resolve, reject));
               },
               fail: () => reject(Deserializer.fail(response)),

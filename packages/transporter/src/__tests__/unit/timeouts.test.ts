@@ -1,6 +1,7 @@
 import { verify, deepEqual, anything, when, mock } from 'ts-mockito';
 import { Fixtures, FakeRequester } from '../Fixtures';
 import { Transporter } from '@algolia/transporter-types';
+import { RetryError } from '../../../../transporter-types/src';
 
 let requester: FakeRequester;
 let transporter: Transporter;
@@ -26,6 +27,7 @@ describe('The selection timeouts', () => {
     requesterRequest.timeout = 2;
     requesterRequest.url = 'https://read.com/save';
     verify(requester.send(deepEqual(requesterRequest))).once();
+    verify(requester.send(anything())).once();
   });
 
   it('Uses write default value', async () => {
@@ -34,6 +36,7 @@ describe('The selection timeouts', () => {
     requesterRequest.timeout = 30;
     requesterRequest.url = 'https://write.com/save';
     verify(requester.send(deepEqual(requesterRequest))).once();
+    verify(requester.send(anything())).once();
   });
 
   it('Uses overrides read default value with request options', async () => {
@@ -42,6 +45,7 @@ describe('The selection timeouts', () => {
     requesterRequest.timeout = 5;
     requesterRequest.url = 'https://read.com/save';
     verify(requester.send(deepEqual(requesterRequest))).once();
+    verify(requester.send(anything())).once();
   });
 
   it('Uses overrides write default value with request options', async () => {
@@ -50,5 +54,28 @@ describe('The selection timeouts', () => {
     requesterRequest.timeout = 25;
     requesterRequest.url = 'https://write.com/save';
     verify(requester.send(deepEqual(requesterRequest))).once();
+    verify(requester.send(anything())).once();
+  });
+
+  it('Increases timeout based on number of retries', async () => {
+    requester = mock(FakeRequester);
+    transporter = Fixtures.transporter(requester);
+
+    when(requester.send(anything())).thenResolve({
+      content: '{}',
+      status: 500,
+      isTimedOut: true,
+    });
+
+    await expect(transporter.read(transporterRequest)).rejects.toEqual(RetryError.make());
+
+    requesterRequest.timeout = 2;
+    requesterRequest.url = 'https://read.com/save';
+    verify(requester.send(deepEqual(requesterRequest))).once();
+
+    requesterRequest.timeout = 4;
+    requesterRequest.url = 'https://read-and-write.com/save';
+    verify(requester.send(deepEqual(requesterRequest))).once();
+    verify(requester.send(anything())).twice();
   });
 });
