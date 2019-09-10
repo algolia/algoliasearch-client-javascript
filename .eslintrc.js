@@ -1,10 +1,11 @@
 module.exports = {
-  plugins: ['functional', 'sonarjs'],
+  plugins: ['functional', 'sonarjs', 'wdio'],
   extends: [
     'algolia/jest',
     'algolia/typescript',
     'plugin:functional/recommended',
     'plugin:sonarjs/recommended',
+    'plugin:wdio/recommended',
   ],
   rules: {
     'max-len': [
@@ -33,6 +34,7 @@ module.exports = {
     'functional/no-this-expression': ['off'],
     'functional/no-class': ['off'],
     'functional/no-return-void': ['off'],
+    '@typescript-eslint/no-triple-slash-reference': ['off']
   },
   settings: {
     'import/resolver': {

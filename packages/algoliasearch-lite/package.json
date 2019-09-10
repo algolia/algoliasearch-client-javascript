@@ -7,9 +7,13 @@
   "dependencies": {
     "@algolia/logger": "file:../logger-console",
     "@algolia/logger-types": "file:../logger-types",
-    "@algolia/transporter": "file:../transporter",
-    "@algolia/transporter-types": "file:../transporter-types",
     "@algolia/requester-browser-xhr": "file:../requester-browser-xhr",
-    "@algolia/requester-types": "file:../requester-types"
+    "@algolia/requester-types": "file:../requester-types",
+    "@algolia/transporter": "file:../transporter",
+    "@algolia/transporter-types": "file:../transporter-types"
+  },
+  "scripts": {
+    "build": "yarn build:umd",
+    "build:umd": "BABEL_ENV=rollup rollup -c rollup.config.js"
   }
 }
