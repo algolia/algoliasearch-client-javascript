@@ -4,7 +4,7 @@ import { Method } from '@algolia/requester-types';
 import { ConstructorOf } from '../../helpers';
 import { HasWaitTask, waitTask } from './waitTask';
 import { WaitablePromise } from '../../WaitablePromise';
-import { BatchAction } from '../types/BatchAction';
+import { BatchActionType } from '../types/BatchAction';
 import { BatchResponse } from '../types/BatchResponse';
 import { ChunkOptions } from '../types/ChunkOptions';
 
@@ -15,7 +15,7 @@ export const batch = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: TSe
   return class extends Mixin implements HasBatch {
     public chunk(
       bodies: readonly object[],
-      action: BatchAction,
+      action: BatchActionType,
       requestOptions?: RequestOptions & ChunkOptions
     ): Readonly<WaitablePromise<readonly BatchResponse[]>> {
       return WaitablePromise.from<readonly BatchResponse[]>(
@@ -101,7 +101,7 @@ export const batch = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: TSe
 export type HasBatch = HasWaitTask & {
   readonly chunk: (
     bodies: readonly object[],
-    action: BatchAction,
+    action: BatchActionType,
     requestOptions?: RequestOptions & ChunkOptions
   ) => Readonly<WaitablePromise<readonly BatchResponse[]>>;
 
@@ -112,6 +112,6 @@ export type HasBatch = HasWaitTask & {
 };
 
 export type BatchRequest = {
-  readonly action: BatchAction;
+  readonly action: BatchActionType;
   readonly body: object;
 };

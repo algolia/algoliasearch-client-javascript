@@ -1,4 +1,4 @@
-import { algoliasearch } from '../.'; // When using TypeScript
+import { algoliasearch } from '../algoliasearch'; // When using TypeScript
 import { SearchClient } from '@algolia/search-client';
 
 describe('algoliasearch', () => {

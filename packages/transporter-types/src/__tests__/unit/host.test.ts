@@ -1,11 +1,11 @@
 import { Host } from '../../Host';
-import { CallType } from '../../CallType';
+import { Call } from '../../Call';
 
 describe('Host', () => {
   it('Handles uptime', () => {
     const host = new Host({
       url: 'foo',
-      accept: CallType.Any,
+      accept: Call.Any,
     });
 
     expect(host.isUp()).toBe(true);

@@ -18,7 +18,7 @@ const isSuccess = ({ status }: Response): boolean => {
   return ~~(status / 100) === 2;
 };
 
-export default (host: Host, response: Response, outcomes: Outcomes): void => {
+export const decide = (host: Host, response: Response, outcomes: Outcomes): void => {
   if (isRetryable(response)) {
     if (!response.isTimedOut) {
       host.setAsDown();
@@ -34,13 +34,9 @@ export default (host: Host, response: Response, outcomes: Outcomes): void => {
   return outcomes.fail();
 };
 
-const enum RetryOutcome {
-  Success = 'success',
-  Retry = 'retry',
-  Fail = 'fail',
-}
-
 type Outcomes = {
   // eslint-disable-next-line @typescript-eslint/generic-type-naming
-  [key in RetryOutcome]: () => void;
+  readonly fail: () => void;
+  readonly success: () => void;
+  readonly retry: () => void;
 };

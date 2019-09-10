@@ -1,9 +1,9 @@
-import { Method } from '.';
+import { MethodType } from '.';
 
 export type Request = {
   readonly data: string;
   readonly headers: { readonly [key: string]: string };
-  readonly method: Method;
+  readonly method: MethodType;
   readonly url: string;
   readonly timeout: number;
 };

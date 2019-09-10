@@ -1,4 +1,6 @@
-export const enum BatchAction {
-  AddObject = 'addObject',
-  UpdateObject = 'updateObject',
-}
+export const BatchAction: { readonly [key: string]: BatchActionType } = {
+  AddObject: 'addObject',
+  UpdateObject: 'updateObject',
+};
+
+export type BatchActionType = 'addObject' | 'updateObject';

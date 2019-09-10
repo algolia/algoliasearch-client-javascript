@@ -1,4 +1,4 @@
-import { Transporter, Host, CallType, UserAgent } from '@algolia/transporter-types';
+import { Transporter, Host, Call, UserAgent } from '@algolia/transporter-types';
 import { SearchIndex } from './SearchIndex';
 import { shuffle } from './helpers';
 
@@ -45,16 +45,16 @@ export class SearchClient {
   // eslint-disable-next-line functional/prefer-readonly-type
   private createHosts(): Host[] {
     const hosts = [
-      { url: `${this.appId}-dsn.algolia.net`, accept: CallType.Read },
-      { url: `${this.appId}.algolia.net`, accept: CallType.Write },
+      { url: `${this.appId}-dsn.algolia.net`, accept: Call.Read },
+      { url: `${this.appId}.algolia.net`, accept: Call.Write },
     ];
 
     return hosts
       .concat(
         shuffle([
-          { url: `${this.appId}-1.algolianet.com`, accept: CallType.Any },
-          { url: `${this.appId}-2.algolianet.com`, accept: CallType.Any },
-          { url: `${this.appId}-3.algolianet.com`, accept: CallType.Any },
+          { url: `${this.appId}-1.algolianet.com`, accept: Call.Any },
+          { url: `${this.appId}-2.algolianet.com`, accept: Call.Any },
+          { url: `${this.appId}-3.algolianet.com`, accept: Call.Any },
         ])
       )
       .map(host => new Host(host));

@@ -1,6 +1,6 @@
 import { Requester, Request as RequesterRequest, Response, Method } from '@algolia/requester-types';
 import { Transporter } from '../Transporter';
-import { CallType, Host } from '@algolia/transporter-types';
+import { Host, Call } from '@algolia/transporter-types';
 import { instance } from 'ts-mockito';
 import { NullLogger } from '../../../logger-types/src';
 
@@ -34,9 +34,9 @@ export class Fixtures {
 
   public static transporter(requester: Requester, options: any = {}): TestTransporter {
     const hosts = [
-      { url: 'read.com', accept: CallType.Read },
-      { url: 'write.com', accept: CallType.Write },
-      { url: 'read-and-write.com', accept: CallType.Any },
+      { url: 'read.com', accept: Call.Read },
+      { url: 'write.com', accept: Call.Write },
+      { url: 'read-and-write.com', accept: Call.Any },
     ];
 
     return new TestTransporter({

@@ -1,5 +1,5 @@
 export * from './UserAgent';
-export * from './CallType';
+export * from './Call';
 export * from './errors/ApiError';
 export * from './errors/RetryError';
 export * from './Host';

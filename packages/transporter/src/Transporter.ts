@@ -5,9 +5,9 @@ import {
   Request,
   RequestOptions,
   MappedRequestOptions,
-  CallType,
   RetryError,
   mapRequestOptions,
+  Call,
 } from '@algolia/transporter-types';
 
 import { Cache } from '@algolia/cache-types';
@@ -16,7 +16,7 @@ import { Logger, NullLogger } from '@algolia/logger-types';
 import { Requester } from '@algolia/requester-types';
 import { Serializer } from './Serializer';
 import { NullCache } from '../../cache-types/src';
-import decide from './concerns/decide';
+import { decide } from './concerns/decide';
 
 export class Transporter implements TransporterContract {
   private readonly headers: { readonly [key: string]: string };
@@ -95,7 +95,7 @@ export class Transporter implements TransporterContract {
       () =>
         this.requestCache.get(key, () => {
           const responsePromise = this.request<TResponse>(
-            this.hosts.filter(host => (host.accept & CallType.Read) !== 0),
+            this.hosts.filter(host => (host.accept & Call.Read) !== 0),
             request,
             mappedRequestOptions
           );
@@ -114,7 +114,7 @@ export class Transporter implements TransporterContract {
 
   public write<TResponse>(request: Request, requestOptions?: RequestOptions): Promise<TResponse> {
     return this.request(
-      this.hosts.filter(host => (host.accept & CallType.Write) !== 0),
+      this.hosts.filter(host => (host.accept & Call.Write) !== 0),
       request,
       mapRequestOptions(requestOptions, this.timeouts.write)
     );
