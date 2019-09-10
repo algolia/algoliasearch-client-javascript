@@ -1,8 +1,8 @@
 import { algoliasearch } from '../.'; // When using TypeScript
-import { SearchClient } from '../../../search-client/src';
+import { SearchClient } from '@algolia/search-client';
 
-describe('algoliasearch', (): void => {
-  it('creates an instance of the search client', (): void => {
+describe('algoliasearch', () => {
+  it('creates an instance of the search client', () => {
     const client = algoliasearch('foo', 'bar');
     expect(client).toBeInstanceOf(SearchClient);
     expect(client.appId).toBe('foo');
