@@ -1,9 +1,10 @@
 {
   "compilerOptions": {
-    "strict": true,
     "target": "ESNEXT",
+    "module": "es2015",
     "moduleResolution": "node",
-    "esModuleInterop": true,
-    "preserveSymlinks": true
+    "noEmit": true,
+    "strict": true,
+    "allowSyntheticDefaultImports": true
   }
 }
