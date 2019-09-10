@@ -1,8 +1,14 @@
-export class RetryError extends Error {
+export class RetryError {
+  public readonly name: string;
+
+  public readonly message: string;
+
+  public constructor(message: string) {
+    this.name = RetryError.name;
+    this.message = message;
+  }
+
   public static make(): RetryError {
-    return {
-      name: RetryError.name,
-      message: 'Unreachable hosts',
-    };
+    return new RetryError('Unreachable hosts');
   }
 }
