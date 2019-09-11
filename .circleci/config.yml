@@ -1,0 +1,65 @@
+aliases:
+  - &install_yarn_version
+    name: Install specific Yarn version
+    command: |
+      curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.16.0
+      echo 'export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"' >> $BASH_ENV
+
+  - &restore_yarn_cache
+    name: Restore Yarn cache
+    keys:
+      - yarn-{{ .Branch }}-packages-{{ checksum "yarn.lock" }}
+
+  - &save_yarn_cache
+    name: Save Yarn cache
+    key: yarn-{{ .Branch }}-packages-{{ checksum "yarn.lock" }}
+    paths:
+      - ~/.cache/yarn
+
+  - &run_yarn_install
+    name: Install dependencies
+    command: yarn install
+
+defaults: &defaults
+  working_directory: ~/algoliasearch-client-javascript
+  docker:
+    - image: circleci/node:8.16.1@sha256:0abb6642ddfa39c167140038a49241c3b4b0cb77a68e6bd56e5b3420e030dcb5
+
+version: 2
+jobs:
+  test_build:
+    <<: *defaults
+    steps:
+      - checkout
+      - run: *install_yarn_version
+      - restore_cache: *restore_yarn_cache
+      - run: *run_yarn_install
+      - save_cache: *save_yarn_cache
+      - run:
+          name: Build & Test packages size
+          command: yarn test:build
+
+  test_unit:
+    <<: *defaults
+    steps:
+      - checkout
+      - run: *install_yarn_version
+      - restore_cache: *restore_yarn_cache
+      - run: *run_yarn_install
+      - save_cache: *save_yarn_cache
+      - run:
+          name: Lint & Code styles
+          command: yarn test:lint
+      - run:
+          name: Type checking
+          command: yarn test:types
+      - run:
+          name: Unit Tests
+          command: yarn test:unit --maxWorkers=4
+
+workflows:
+  version: 2
+  ci:
+    jobs:
+      - test_build
+      - test_unit
