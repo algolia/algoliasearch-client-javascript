@@ -65,12 +65,13 @@
     "xhr-mock": "^2.4.1"
   },
   "scripts": {
-    "build": "lerna run build",
+    "build": "lerna run build && yarn test:size",
     "precommit": "lint-staged",
     "test:browser-local": "cp packages/algoliasearch-lite/dist/umd/algoliasearch-lite.min.js specs/fixtures/websites/algoliasearch-lite.com/. && wdio ./wdio.local.conf.js",
+    "test:lint": "eslint . --ext .js,.ts",
     "test:size": "bundlesize",
+    "test:types": "tsc",
     "test:unit": "jest --verbose",
-    "lint": "eslint . --ext .js,.ts",
     "lint:fix": "npm run lint -- --fix",
     "update": "find . -name a -exec rm -rf {} \\; && rm -f yarn.lock && yarn"
   },

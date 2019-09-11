@@ -1,19 +1,4 @@
-const credentials: CredentialsType = {
-  appId: `${process.env.ALGOLIA_APPLICATION_ID_1}`,
-  apiKey: `${process.env.ALGOLIA_SEARCH_KEY_1}`,
-};
-
-type Color = {
-  readonly color: string;
-  readonly value: string;
-};
-
-declare namespace WebdriverIOAsync {
-  type Browser = {
-    dataset(): readonly Color[];
-  };
-}
-
+// @ts-ignore
 browser.addCommand('dataset', () => {
   return [
     {

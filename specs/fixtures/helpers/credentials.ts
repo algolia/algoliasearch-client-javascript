@@ -1,11 +1,4 @@
-type CredentialsType = { readonly appId: string; readonly apiKey: string };
-
-declare namespace WebdriverIOAsync {
-  type Browser = {
-    credentials(): CredentialsType;
-  };
-}
-
+// @ts-ignore
 browser.addCommand('credentials', () => {
   return {
     appId: `${process.env.ALGOLIA_APPLICATION_ID_1}`,

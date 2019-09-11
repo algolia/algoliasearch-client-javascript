@@ -1,15 +1,21 @@
 describe('AlgoliaSearch Client - Lite', () => {
   it('navigates to algoliasearch-lite.com', async () => {
+    // @ts-ignore
     await browser.url('algoliasearch-lite.com');
   });
 
   it('performs SearchIndex::search', async () => {
+    // @ts-ignore
     const credentials = await browser.credentials();
+
+    // @ts-ignore
     const dataset = await browser.dataset();
 
+    // @ts-ignore
     const results = await browser.executeAsync(async (credentials, done) => {
+      // @ts-ignore
       const index = algoliasearch(credentials.appId, credentials.apiKey).initIndex(
-        'javascript-browser-testing-lite'
+        'javascript-browser-testing-lite',
       );
 
       done({
@@ -29,10 +35,13 @@ describe('AlgoliaSearch Client - Lite', () => {
   });
 
   it('performs SearchIndex::searchForFacetValues', async () => {
+    // @ts-ignore
     const credentials = await browser.credentials();
+    // @ts-ignore
     const results = await browser.executeAsync(async (credentials, done) => {
+      // @ts-ignore
       const index = algoliasearch(credentials.appId, credentials.apiKey).initIndex(
-        'javascript-browser-testing-lite'
+        'javascript-browser-testing-lite',
       );
 
       done({
