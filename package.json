@@ -66,7 +66,8 @@
   "scripts": {
     "build": "lerna run build",
     "precommit": "lint-staged",
-    "test": "jest --verbose",
+    "test:unit": "jest --verbose",
+    "test:browser-local": "cp packages/algoliasearch-lite/dist/umd/algoliasearch-lite.min.js specs/fixtures/websites/algoliasearch-lite.com/. && wdio ./wdio.local.conf.js",
     "lint": "eslint . --ext .js,.ts",
     "lint:fix": "npm run lint -- --fix",
     "update": "find . -name a -exec rm -rf {} \\; && rm -f yarn.lock && yarn"

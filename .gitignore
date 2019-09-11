@@ -3,3 +3,4 @@ node_modules
 dist
 .vscode
 *.test.ts.snap
+algoliasearch-lite.min.js

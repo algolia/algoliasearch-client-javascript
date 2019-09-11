@@ -1,2 +1,4 @@
 **/node_modules/**
 **/dist/**
+algoliasearch-lite.min.js
+specs/**
