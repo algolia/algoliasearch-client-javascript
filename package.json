@@ -20,7 +20,6 @@
     "@babel/preset-typescript": "^7.6.0",
     "@types/jest": "^24.0.18",
     "@types/node": "^12.7.2",
-    "@types/webdriverio": "^5.0.0",
     "@typescript-eslint/eslint-plugin": "^2.2.0",
     "@typescript-eslint/parser": "^2.2.0",
     "@wdio/cli": "^5.11.13",
@@ -72,9 +71,9 @@
     "test:size": "bundlesize",
     "test:build": "yarn build && yarn test:size",
     "test:types": "tsc",
-    "test:unit": "jest --verbose",
+    "test:unit": "lerna clean --yes && jest --verbose --updateSnapshot",
     "lint:fix": "npm run lint -- --fix",
-    "update": "find . -name a -exec rm -rf {} \\; && rm -f yarn.lock && yarn"
+    "update": "rm -rf node_modules && rm yarn.lock && yarn && lerna clean --yes"
   },
   "husky": {
     "hooks": {
