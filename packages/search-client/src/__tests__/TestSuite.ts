@@ -49,8 +49,8 @@ export class TestSuite {
     this.ensureEnvironmentVariables();
 
     const client = new SearchClient({
-      appId: `${process.env.ALGOLIA_APP_ID}`,
-      apiKey: `${process.env.ALGOLIA_API_KEY}`,
+      appId: `${process.env.ALGOLIA_APPLICATION_ID_1}`,
+      apiKey: `${process.env.ALGOLIA_ADMIN_KEY_1}`,
       transporter,
       userAgent: UserAgent.create('4.0.0'),
     });
@@ -110,7 +110,7 @@ export class TestSuite {
       process.env.ALGOLIA_APPLICATION_ID_1 === undefined ||
       process.env.ALGOLIA_ADMIN_KEY_1 === undefined
     ) {
-      throw new Error('You must setup `ALGOLIA_APP_ID` and `ALGOLIA_API_KEY`');
+      throw new Error('You must setup `ALGOLIA_APPLICATION_ID_1` and `ALGOLIA_ADMIN_KEY_1`');
     }
   }
 }
