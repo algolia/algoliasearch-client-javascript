@@ -4,4 +4,4 @@ import { algoliasearch } from './algoliasearch';
 (<any>window).algoliasearch = algoliasearch;
 
 export { algoliasearch } from './algoliasearch';
-export { SearchClient, SearchIndex } from './SearchClient';
+export { SearchClient } from './SearchClient';
