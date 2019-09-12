@@ -63,7 +63,7 @@ jobs:
           command: yarn test:unit --maxWorkers=4
 
   test_browser:
-      <<: *defaults
+    <<: *defaults
     steps:
       - checkout
       - run: *install_yarn_version
