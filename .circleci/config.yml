@@ -1,3 +1,8 @@
+	dependencies:
+	  post:
+		   - wget https://saucelabs.com/downloads/sc-latest-linux.tar.gz
+		   - tar -xzf sc-latest-linux.tar.gz
+
 aliases:
   - &install_yarn_version
     name: Install specific Yarn version
@@ -56,6 +61,15 @@ jobs:
       - run:
           name: Unit Tests
           command: yarn test:unit --maxWorkers=4
+
+  test_browser:
+      override:
+          - ./bin/sc -u $SAUCE_USERNAME -k $SAUCE_ACCESS_KEY -f ~/sc_ready:
+              background: true
+              pwd: sc-*-linux
+          # Wait for tunnel to be ready
+          - while [ ! -e ~/sc_ready ]; do sleep 1; done
+          - yarn test:browser-ci
 
 workflows:
   version: 2

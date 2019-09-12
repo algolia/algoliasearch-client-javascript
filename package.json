@@ -67,6 +67,7 @@
     "build": "lerna run build && yarn test:size",
     "precommit": "lint-staged",
     "test:browser-local": "cp -a packages/algoliasearch-lite/dist/umd/. specs/fixtures/websites/algoliasearch-lite.com/ && wdio ./wdio.local.conf.js",
+    "test:browser-ci": "cp -a packages/algoliasearch-lite/dist/umd/. specs/fixtures/websites/algoliasearch-lite.com/ && wdio ./wdio.saucelabs.conf.js",    
     "test:lint": "eslint . --ext .js,.ts",
     "test:size": "bundlesize",
     "test:build": "yarn build && yarn test:size",
