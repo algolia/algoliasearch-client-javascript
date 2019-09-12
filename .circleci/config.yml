@@ -77,3 +77,4 @@ workflows:
     jobs:
       - test_build
       - test_unit
+      - test_browser
