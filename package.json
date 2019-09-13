@@ -64,7 +64,7 @@
     "xhr-mock": "^2.4.1"
   },
   "scripts": {
-    "build": "lerna run build && yarn test:size",
+    "build": "lerna run build",
     "precommit": "lint-staged",
     "test:browser-local": "cp -a packages/algoliasearch-lite/dist/umd/. specs/fixtures/websites/algoliasearch-lite.com/ && wdio ./wdio.local.conf.js",
     "test:browser-ci": "cp -a packages/algoliasearch-lite/dist/umd/. specs/fixtures/websites/algoliasearch-lite.com/ && wdio ./wdio.saucelabs.conf.js",    

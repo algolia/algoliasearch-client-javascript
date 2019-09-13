@@ -85,6 +85,9 @@ jobs:
           command: wget --retry-connrefused --no-check-certificate -T 30 localhost:4445
       - run:
           name: Browser Tests
+          command: yarn build
+      - run:
+          name: Browser Tests
           command: yarn test:browser-ci
       - run:
           name: Wait for Sauce Connect to close the tunnel
