@@ -2,10 +2,10 @@ import { Host, Request, RequestOptions } from '.';
 
 export type Transporter = {
   // eslint-disable-next-line functional/prefer-readonly-type
-  readonly headers: { readonly [key: string]: string };
+  headers: { [key: string]: string };
 
   // eslint-disable-next-line functional/prefer-readonly-type,
-  readonly hosts: readonly Host[];
+  hosts: Host[];
 
   // eslint-disable-next-line functional/no-mixed-type
   readonly read: <TResponse>(
