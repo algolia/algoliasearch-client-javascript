@@ -17,13 +17,5 @@ module.exports = {
       browserName: 'chrome',
       browserVersion: '76.0',
     },
-    {
-      browserName: 'firefox',
-      browserVersion: '68.0',
-    },
-    {
-      browserName: 'internet explorer',
-      browserVersion: '11.285',
-    },
   ],
 };
