@@ -52,4 +52,20 @@ describe('The selection of headers', () => {
 
     verify(requester.send(deepEqual(requesterRequest))).once();
   });
+
+  it('Allows to add headers per read/write and override the default ones', async () => {
+    await transporter.read(transporterRequest, {
+      headers: {
+        'X-Algolia-Application-Id': 'foo',
+        'X-Default-Header': 'My custom header',
+      },
+    });
+
+    requesterRequest.headers = {
+      'X-Algolia-Application-Id': 'foo',
+      'X-Default-Header': 'My custom header',
+    };
+
+    verify(requester.send(deepEqual(requesterRequest))).once();
+  });
 });

@@ -141,7 +141,7 @@ export class Transporter implements TransporterContract {
         this.requester
           .send({
             data: Serializer.data({ ...request.data, ...requestOptions.data }),
-            headers: { ...requestOptions.headers, ...this.headers },
+            headers: { ...this.headers, ...requestOptions.headers },
             method: request.method,
             url: Serializer.url(host, request.path, requestOptions.queryParameters),
             timeout: (timeoutRetries + 1) * (requestOptions.timeout ? requestOptions.timeout : 0),
