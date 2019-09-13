@@ -72,8 +72,8 @@ jobs:
       - run:
           name: Download sauce-connect
           command: |
-            wget https://saucelabs.com/downloads/sc-latest-linux.tar.gz
-            tar -xzf sc-latest-linux.tar.gz
+            wget https://saucelabs.com/downloads/sc-4.5.4-linux.tar.gz
+            tar -xzf sc-4.5.4-linux.tar.gz
       - run:
           name: Starts tunnel
           command: |
