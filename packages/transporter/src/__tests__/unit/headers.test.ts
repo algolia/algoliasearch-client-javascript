@@ -21,11 +21,11 @@ const requesterRequest = Fixtures.requesterRequest();
 
 describe('The selection of headers', () => {
   it('Allows override default headers', async () => {
-    await transporter
-      .withHeaders({
-        'X-Algolia-Application-Id': 'foo',
-      })
-      .write(transporterRequest);
+    transporter.headers = {
+      'X-Algolia-Application-Id': 'foo',
+    };
+
+    await transporter.write(transporterRequest);
 
     requesterRequest.url = 'https://write.com/save';
     requesterRequest.timeout = 30;

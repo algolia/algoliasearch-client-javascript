@@ -18,9 +18,9 @@ export class SearchClient {
     this.appId = options.appId;
     this.apiKey = options.apiKey;
 
-    this.transporter = options.transporter
-      .withHosts(this.createHosts())
-      .withHeaders(this.createHeaders(options.userAgent));
+    this.transporter = options.transporter;
+    this.transporter.hosts = this.createHosts();
+    this.transporter.headers = this.createHeaders(options.userAgent);
   }
 
   public initIndex<TSearchIndex>(

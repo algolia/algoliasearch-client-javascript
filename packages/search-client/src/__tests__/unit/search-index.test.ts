@@ -21,9 +21,6 @@ import { SaveObjectsOptions } from '../../methods/types/SaveObjectsOptions';
 const transporterMock = mock(Transporter);
 const transporter = instance(transporterMock);
 
-when(transporterMock.withHeaders(anything())).thenReturn(transporter);
-when(transporterMock.withHosts(anything())).thenReturn(transporter);
-
 type SearchIndex = HasBatch &
   HasSaveObject &
   HasSaveObjects &

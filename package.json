@@ -66,6 +66,7 @@
   },
   "scripts": {
     "build": "lerna run build",
+    "lint": "eslint . --ext .js,.ts --fix",
     "precommit": "lint-staged",
     "test:browser-local": "cp -a packages/algoliasearch-lite/dist/umd/. specs/fixtures/websites/algoliasearch-lite.com/ && wdio ./wdio.local.conf.js",
     "test:browser-ci": "cp -a packages/algoliasearch-lite/dist/umd/. specs/fixtures/websites/algoliasearch-lite.com/ && wdio ./wdio.saucelabs.conf.js",
@@ -85,7 +86,7 @@
   "bundlesize": [
     {
       "path": "packages/algoliasearch-lite/dist/umd/algoliasearch-lite.min.js",
-      "maxSize": "3.28KB"
+      "maxSize": "3.06KB"
     }
   ],
   "workspaces": [

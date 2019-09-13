@@ -19,16 +19,17 @@ import { NullCache } from '../../cache-types/src';
 import { decide } from './concerns/decide';
 
 export class Transporter implements TransporterContract {
-  private readonly headers: { readonly [key: string]: string };
+  // eslint-disable-next-line functional/prefer-readonly-type
+  public hosts: Host[];
+
+  // eslint-disable-next-line functional/prefer-readonly-type
+  public headers: { [key: string]: string };
 
   private readonly logger: Logger;
 
   private readonly requester: Requester;
 
   private readonly timeouts: Timeouts;
-
-  // eslint-disable-next-line functional/prefer-readonly-type
-  private hosts: Host[];
 
   private readonly responseCache: Cache;
 
@@ -60,29 +61,6 @@ export class Transporter implements TransporterContract {
     this.hostsCache = options.hostsCache !== undefined ? options.hostsCache : new NullCache();
 
     this.requestCache = options.requestCache !== undefined ? options.requestCache : new NullCache();
-  }
-
-  public withHeaders(headers: { readonly [key: string]: string }): TransporterContract {
-    return new Transporter({
-      responseCache: this.responseCache,
-      headers,
-      hosts: this.hosts,
-      logger: this.logger,
-      requester: this.requester,
-      timeouts: this.timeouts,
-    });
-  }
-
-  // eslint-disable-next-line functional/prefer-readonly-type
-  public withHosts(hosts: Host[]): TransporterContract {
-    return new Transporter({
-      responseCache: this.responseCache,
-      hosts,
-      requester: this.requester,
-      logger: this.logger,
-      timeouts: this.timeouts,
-      headers: this.headers,
-    });
   }
 
   public read<TResponse>(request: Request, requestOptions?: RequestOptions): Promise<TResponse> {
