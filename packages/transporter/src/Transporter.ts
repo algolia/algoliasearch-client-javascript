@@ -150,7 +150,7 @@ export class Transporter implements TransporterContract {
             decide(host, response, {
               success: () => resolve(Deserializer.success<TResponse>(response)),
               retry: () => {
-                this.logger.info('Retriable failure', {
+                this.logger.error('Retriable failure', {
                   request,
                   response,
                   host,
