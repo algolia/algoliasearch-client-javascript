@@ -16,9 +16,9 @@ describe('request cache integration with cache drivers', () => {
 
   const expectedCalls = {
     'in-progress': {
-      [new NullCache().constructor.name]: 10,
-      [new InMemoryCache().constructor.name]: 1,
-      [new BrowserLocalStorageCache().constructor.name]: 1,
+      [new NullCache().constructor.name]: 13,
+      [new InMemoryCache().constructor.name]: 4,
+      [new BrowserLocalStorageCache().constructor.name]: 4,
     },
     resolved: {
       [new NullCache().constructor.name]: 10,
@@ -43,6 +43,12 @@ describe('request cache integration with cache drivers', () => {
 
       const responses = [];
       for (let callNumber = 1; callNumber <= 10; callNumber++) {
+        transporterRequest.data = {};
+        responses.push(transporter.read(transporterRequest));
+      }
+
+      for (let callNumber = 1; callNumber <= 3; callNumber++) {
+        transporterRequest.data = { callNumber };
         responses.push(transporter.read(transporterRequest));
       }
 

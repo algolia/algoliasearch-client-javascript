@@ -16,9 +16,9 @@ describe('response cache integration with cache drivers', () => {
 
   const expectedCalls = {
     '2xx': {
-      [new NullCache().constructor.name]: 10,
-      [new InMemoryCache().constructor.name]: 1,
-      [new BrowserLocalStorageCache().constructor.name]: 1,
+      [new NullCache().constructor.name]: 13,
+      [new InMemoryCache().constructor.name]: 4,
+      [new BrowserLocalStorageCache().constructor.name]: 4,
     },
     '4xx': {
       [new NullCache().constructor.name]: 10,
@@ -29,7 +29,6 @@ describe('response cache integration with cache drivers', () => {
 
   it('cache 2xx results', async () => {
     let requester: FakeRequester;
-
     for (let index = 0; index < drivers.length; index++) {
       when((requester = mock(FakeRequester)).send(anything())).thenResolve({
         content: JSON.stringify({ hits: [] }),
@@ -42,6 +41,13 @@ describe('response cache integration with cache drivers', () => {
       const transporter = Fixtures.transporter(requester, { responseCache: driver });
 
       for (let callNumber = 1; callNumber <= 10; callNumber++) {
+        transporterRequest.data = {};
+        await expect(transporter.read(transporterRequest)).resolves.toMatchObject({ hits: [] });
+      }
+
+      for (let callNumber = 1; callNumber <= 3; callNumber++) {
+        // Body is different every time, we should not cache here.
+        transporterRequest.data = { callNumber };
         await expect(transporter.read(transporterRequest)).resolves.toMatchObject({ hits: [] });
       }
 

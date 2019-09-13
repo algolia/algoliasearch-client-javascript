@@ -66,7 +66,7 @@ export class Transporter implements TransporterContract {
   public read<TResponse>(request: Request, requestOptions?: RequestOptions): Promise<TResponse> {
     const mappedRequestOptions = mapRequestOptions(requestOptions, this.timeouts.read);
 
-    const key = { ...request, ...mappedRequestOptions };
+    const key = { request, mappedRequestOptions: mapRequestOptions };
 
     return this.responseCache.get(
       key,
