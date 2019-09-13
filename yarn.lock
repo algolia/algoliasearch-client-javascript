@@ -11,12 +11,12 @@
 "@algolia/logger@file:packages/logger-console":
   version "4.0.0-alpha.0"
   dependencies:
-    "@algolia/logger-types" "file:../../Library/Caches/Yarn/v4/npm-@algolia-logger-4.0.0-alpha.0-20307ab2-4e41-41e8-912a-c11967c6150e-1568245689616/node_modules/@algolia/logger-types"
+    "@algolia/logger-types" "file:../../Library/Caches/Yarn/v4/npm-@algolia-logger-4.0.0-alpha.0-3aa39e9b-d0e6-4b49-b32a-813dfd971c88-1568323427228/node_modules/@algolia/logger-types"
 
 "@algolia/requester-browser-xhr@file:packages/requester-browser-xhr":
   version "4.0.0-alpha.0"
   dependencies:
-    "@algolia/requester-types" "file:../../Library/Caches/Yarn/v4/npm-@algolia-requester-browser-xhr-4.0.0-alpha.0-29e44e13-7df5-4cde-a107-9c24b8a3f0d6-1568245689618/node_modules/@algolia/requester-types"
+    "@algolia/requester-types" "file:../../Library/Caches/Yarn/v4/npm-@algolia-requester-browser-xhr-4.0.0-alpha.0-587bbce4-583c-4fa3-8648-ccfa9067a2fd-1568323427228/node_modules/@algolia/requester-types"
 
 "@algolia/requester-types@file:packages/requester-types":
   version "4.0.0-alpha.0"
@@ -24,15 +24,15 @@
 "@algolia/transporter-types@file:packages/transporter-types":
   version "4.0.0-alpha.0"
   dependencies:
-    "@algolia/requester-types" "file:../../Library/Caches/Yarn/v4/npm-@algolia-transporter-types-4.0.0-alpha.0-3871c150-8358-4fc3-a2c1-f7f2e05bd8df-1568245689617/node_modules/@algolia/requester-types"
+    "@algolia/requester-types" "file:../../Library/Caches/Yarn/v4/npm-@algolia-transporter-types-4.0.0-alpha.0-b22d0fbe-1daf-4023-88c8-1baae4e0b017-1568323427230/node_modules/@algolia/requester-types"
 
 "@algolia/transporter@file:packages/transporter":
   version "4.0.0-alpha.0"
   dependencies:
-    "@algolia/cache-types" "file:../../Library/Caches/Yarn/v4/npm-@algolia-transporter-4.0.0-alpha.0-416be5a9-dc1c-449c-bf7d-f8149a3550fc-1568245689619/node_modules/@algolia/cache-types"
-    "@algolia/logger-types" "file:../../Library/Caches/Yarn/v4/npm-@algolia-transporter-4.0.0-alpha.0-416be5a9-dc1c-449c-bf7d-f8149a3550fc-1568245689619/node_modules/@algolia/logger-types"
-    "@algolia/requester-types" "file:../../Library/Caches/Yarn/v4/npm-@algolia-transporter-4.0.0-alpha.0-416be5a9-dc1c-449c-bf7d-f8149a3550fc-1568245689619/node_modules/@algolia/requester-types"
-    "@algolia/transporter-types" "file:../../Library/Caches/Yarn/v4/npm-@algolia-transporter-4.0.0-alpha.0-416be5a9-dc1c-449c-bf7d-f8149a3550fc-1568245689619/node_modules/@algolia/transporter-types"
+    "@algolia/cache-types" "file:../../Library/Caches/Yarn/v4/npm-@algolia-transporter-4.0.0-alpha.0-3ae804ea-c120-4d82-8c3a-b86eff6ae1ca-1568323427229/node_modules/@algolia/cache-types"
+    "@algolia/logger-types" "file:../../Library/Caches/Yarn/v4/npm-@algolia-transporter-4.0.0-alpha.0-3ae804ea-c120-4d82-8c3a-b86eff6ae1ca-1568323427229/node_modules/@algolia/logger-types"
+    "@algolia/requester-types" "file:../../Library/Caches/Yarn/v4/npm-@algolia-transporter-4.0.0-alpha.0-3ae804ea-c120-4d82-8c3a-b86eff6ae1ca-1568323427229/node_modules/@algolia/requester-types"
+    "@algolia/transporter-types" "file:../../Library/Caches/Yarn/v4/npm-@algolia-transporter-4.0.0-alpha.0-3ae804ea-c120-4d82-8c3a-b86eff6ae1ca-1568323427229/node_modules/@algolia/transporter-types"
 
 "@babel/cli@^7.6.0":
   version "7.6.0"
@@ -1874,13 +1874,6 @@
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@types/stack-utils/-/stack-utils-1.0.1.tgz#0a851d3bd96498fa25c33ab7278ed3bd65f06c3e"
   integrity sha512-l42BggppR6zLmpfU6fq9HEa2oGPEI8yrSPL3GITjfRInppYFahObbIQOQK3UGxEnyQpltZLaPe75046NOZQikw==
-
-"@types/webdriverio@^5.0.0":
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/@types/webdriverio/-/webdriverio-5.0.0.tgz#9a46fbd8ba2f44ed40d1efa2e1bd8ac0cfd36a3f"
-  integrity sha512-x4XylDdijSMmhvpyFdQ6/Ow1CvJBY1Z38MnK3gAtGDy3MnR3AnI8CW9O5B8Q0PNLgLAMA466ghsolhb7+xaZ/Q==
-  dependencies:
-    webdriverio "*"
 
 "@types/yargs-parser@*":
   version "13.1.0"
@@ -9916,7 +9909,7 @@ webdriver@^5.12.1:
     lodash.merge "^4.6.1"
     request "^2.83.0"
 
-webdriverio@*, webdriverio@^5.12.5:
+webdriverio@^5.12.5:
   version "5.12.5"
   resolved "https://registry.yarnpkg.com/webdriverio/-/webdriverio-5.12.5.tgz#9fb4eb5b33497105b3a24e15d2b583f603ec19d9"
   integrity sha512-KTbhnN/GS7jVeIIeatC3O4aerFc+H1CQIY6DxELUsa7H5nOXj8Sejw0j0z3frxBGtdqYpAHPEZEPmJRtizVEsA==
