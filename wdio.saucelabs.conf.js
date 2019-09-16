@@ -20,6 +20,11 @@ exports.config = {
     {
       browserName: 'firefox',
       browserVersion: '68.0',
+      'sauce:options': {
+        // Force Selenium version on Firefox, solves an issue with `setValue`
+        // https://github.com/webdriverio/webdriverio/issues/3443
+        seleniumVersion: '3.11.0',
+      },
     },
     {
       browserName: 'internet explorer',

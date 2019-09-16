@@ -3,7 +3,6 @@
 const path = require('path');
 
 module.exports = {
-  headless: true,
   services: ['static-server'],
   staticServerFolders: [
     {

@@ -3,6 +3,7 @@
 const baseConfig = require('./wdio.base.conf');
 
 exports.config = {
+  headless: false,
   ...baseConfig,
   services: [...(baseConfig.services || []), 'selenium-standalone'],
   capabilities: [
