@@ -1,4 +1,9 @@
-// @ts-ignore
+declare namespace WebdriverIOAsync {
+  interface Browser {
+    credentials(): { appId: string; apiKey: string };
+  }
+}
+
 browser.addCommand('credentials', () => {
   return {
     appId: `${process.env.ALGOLIA_APPLICATION_ID_1}`,

@@ -1,4 +1,14 @@
-// @ts-ignore
+type Color = {
+  color: string;
+  value: string;
+};
+
+declare namespace WebdriverIOAsync {
+  interface Browser {
+    dataset(): Color[];
+  }
+}
+
 browser.addCommand('dataset', () => {
   return [
     {
