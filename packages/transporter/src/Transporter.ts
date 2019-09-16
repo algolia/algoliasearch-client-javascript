@@ -20,13 +20,13 @@ import { decide } from './concerns/decide';
 
 export class Transporter implements TransporterContract {
   // eslint-disable-next-line functional/prefer-readonly-type
-  public hosts: Host[];
+  public hosts!: Host[];
 
   // eslint-disable-next-line functional/prefer-readonly-type
-  public headers: { [key: string]: string };
+  public headers!: { [key: string]: string };
 
   // eslint-disable-next-line functional/prefer-readonly-type
-  public queryParameters: { [key: string]: string };
+  public queryParameters!: { [key: string]: string };
 
   private readonly logger: Logger;
 
@@ -41,20 +41,24 @@ export class Transporter implements TransporterContract {
   private readonly requestCache: Cache;
 
   public constructor(options: {
-    readonly headers: { readonly [key: string]: string };
-    readonly queryParameters: { readonly [key: string]: string };
+    // eslint-disable-next-line functional/prefer-readonly-type
+    headers?: { readonly [key: string]: string };
+    // eslint-disable-next-line functional/prefer-readonly-type
+    queryParameters?: { readonly [key: string]: string };
+    // eslint-disable-next-line functional/prefer-readonly-type
+    hosts?: Host[];
+
     readonly requester: Requester;
     readonly timeouts: Timeouts;
-    hosts: Host[]; // eslint-disable-line functional/prefer-readonly-type
-
     readonly logger?: Logger;
     readonly responseCache?: Cache;
     readonly hostsCache?: Cache;
     readonly requestCache?: Cache;
   }) {
-    this.headers = options.headers;
-    this.queryParameters = options.queryParameters;
-    this.hosts = options.hosts;
+    this.headers = options.headers !== undefined ? options.headers : {};
+    this.queryParameters = options.queryParameters !== undefined ? options.queryParameters : {};
+    this.hosts = options.hosts !== undefined ? options.hosts : [];
+
     this.requester = options.requester;
     this.timeouts = options.timeouts;
 
