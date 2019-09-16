@@ -4,6 +4,9 @@ export type Transporter = {
   // eslint-disable-next-line functional/prefer-readonly-type
   headers: { [key: string]: string };
 
+  // eslint-disable-next-line functional/prefer-readonly-type
+  queryParameters: { [key: string]: string };
+
   // eslint-disable-next-line functional/prefer-readonly-type,
   hosts: Host[];
 

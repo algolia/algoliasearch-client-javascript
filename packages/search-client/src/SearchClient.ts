@@ -20,7 +20,8 @@ export class SearchClient {
 
     this.transporter = options.transporter;
     this.transporter.hosts = this.createHosts();
-    this.transporter.headers = this.createHeaders(options.userAgent);
+    this.transporter.headers = this.createHeaders();
+    this.transporter.queryParameters = this.createQueryParameters(options.userAgent);
   }
 
   public initIndex<TSearchIndex>(
@@ -60,12 +61,17 @@ export class SearchClient {
       .map(host => new Host(host));
   }
 
-  private createHeaders(userAgent: UserAgent): { readonly [key: string]: string } {
+  private createHeaders(): { readonly [key: string]: string } {
     return {
-      'X-Algolia-Application-Id': this.appId,
-      'X-Algolia-API-Key': this.apiKey,
-      'Content-Type': 'application/json',
-      'User-Agent': userAgent.value,
+      'content-type': 'application/json',
+      'x-algolia-api-key': this.apiKey,
+      'x-algolia-application-id': this.appId,
+    };
+  }
+
+  private createQueryParameters(userAgent: UserAgent): { readonly [key: string]: string } {
+    return {
+      'x-algolia-agent': userAgent.value,
     };
   }
 }

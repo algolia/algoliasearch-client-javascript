@@ -25,6 +25,9 @@ export class Transporter implements TransporterContract {
   // eslint-disable-next-line functional/prefer-readonly-type
   public headers: { [key: string]: string };
 
+  // eslint-disable-next-line functional/prefer-readonly-type
+  public queryParameters: { [key: string]: string };
+
   private readonly logger: Logger;
 
   private readonly requester: Requester;
@@ -39,6 +42,7 @@ export class Transporter implements TransporterContract {
 
   public constructor(options: {
     readonly headers: { readonly [key: string]: string };
+    readonly queryParameters: { readonly [key: string]: string };
     readonly requester: Requester;
     readonly timeouts: Timeouts;
     hosts: Host[]; // eslint-disable-line functional/prefer-readonly-type
@@ -49,6 +53,7 @@ export class Transporter implements TransporterContract {
     readonly requestCache?: Cache;
   }) {
     this.headers = options.headers;
+    this.queryParameters = options.queryParameters;
     this.hosts = options.hosts;
     this.requester = options.requester;
     this.timeouts = options.timeouts;
@@ -143,7 +148,10 @@ export class Transporter implements TransporterContract {
             data: Serializer.data({ ...request.data, ...requestOptions.data }),
             headers: { ...this.headers, ...requestOptions.headers },
             method: request.method,
-            url: Serializer.url(host, request.path, requestOptions.queryParameters),
+            url: Serializer.url(host, request.path, {
+              ...this.queryParameters,
+              ...requestOptions.queryParameters,
+            }),
             timeout: (timeoutRetries + 1) * (requestOptions.timeout ? requestOptions.timeout : 0),
           })
           .then(response => {

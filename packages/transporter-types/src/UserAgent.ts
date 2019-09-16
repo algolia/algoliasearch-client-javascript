@@ -6,7 +6,7 @@ export class UserAgent {
   }
 
   public static create(version: string): UserAgent {
-    return new UserAgent(`Algolia for Javascript (${version})`);
+    return new UserAgent(`Algolia for JavaScript (${version})`);
   }
 
   public with(options: UserAgentOptions): UserAgent {

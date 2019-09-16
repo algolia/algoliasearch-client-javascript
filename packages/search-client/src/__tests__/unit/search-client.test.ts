@@ -10,7 +10,7 @@ const searchClient = new SearchClient({
   transporter: instance(transporterMock),
   appId: 'appId',
   apiKey: 'apiKey',
-  userAgent: UserAgent.create('4.0.0'),
+  userAgent: UserAgent.create('4.0.0-alpha.0'),
 });
 
 describe('Search Client', () => {
@@ -24,10 +24,13 @@ describe('Search Client', () => {
 
   it('Sets default headers', () => {
     expect(transporter.headers).toEqual({
-      'X-Algolia-Application-Id': 'appId',
-      'X-Algolia-API-Key': 'apiKey',
-      'Content-Type': 'application/json',
-      'User-Agent': 'Algolia for Javascript (4.0.0)',
+      'content-type': 'application/json',
+      'x-algolia-application-id': 'appId',
+      'x-algolia-api-key': 'apiKey',
+    });
+
+    expect(transporter.queryParameters).toEqual({
+      'x-algolia-agent': 'Algolia for JavaScript (4.0.0-alpha.0)',
     });
   });
 });
