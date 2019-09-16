@@ -1,4 +1,4 @@
-import { SearchClient } from '../..';
+import { SearchClient } from '../../..';
 import { Transporter } from '@algolia/transporter';
 import { instance, mock } from 'ts-mockito';
 import { UserAgent } from '@algolia/transporter-types';

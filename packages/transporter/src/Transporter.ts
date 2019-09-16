@@ -10,12 +10,12 @@ import {
   Call,
 } from '@algolia/transporter-types';
 
-import { Cache } from '@algolia/cache-types';
+import { Cache, NullCache } from '@algolia/cache-types';
 import { Deserializer } from './Deserializer';
 import { Logger, NullLogger } from '@algolia/logger-types';
 import { Requester } from '@algolia/requester-types';
 import { Serializer } from './Serializer';
-import { NullCache } from '../../cache-types/src';
+
 import { decide } from './concerns/decide';
 
 export class Transporter implements TransporterContract {

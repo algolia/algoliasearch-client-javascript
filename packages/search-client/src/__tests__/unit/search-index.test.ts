@@ -1,4 +1,4 @@
-import { SearchClient } from '../..';
+import { SearchClient } from '../../..';
 import { Transporter } from '@algolia/transporter';
 import { deepEqual, mock, when, instance, anything, spy, verify } from 'ts-mockito';
 import { saveObject, HasSaveObject } from '../../methods/index/saveObject';

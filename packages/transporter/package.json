@@ -2,7 +2,7 @@
   "name": "@algolia/transporter",
   "version": "4.0.0-alpha.0",
   "license": "MIT",
-  "main": "src/index.ts",
+  "main": "index.ts",
   "dependencies": {
     "@algolia/cache-types": "file:../cache-types",
     "@algolia/logger-types": "file:../logger-types",

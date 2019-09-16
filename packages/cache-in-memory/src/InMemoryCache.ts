@@ -1,5 +1,4 @@
-import { Cache } from '@algolia/cache-types';
-import { CacheEvents } from '../../cache-types/src';
+import { Cache, CacheEvents } from '@algolia/cache-types';
 
 export class InMemoryCache implements Cache {
   /* eslint-disable functional/immutable-data, no-param-reassign */

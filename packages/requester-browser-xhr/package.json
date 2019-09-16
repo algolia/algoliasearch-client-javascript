@@ -2,7 +2,7 @@
   "name": "@algolia/requester-browser-xhr",
   "version": "4.0.0-alpha.0",
   "license": "MIT",
-  "main": "src/index.ts",
+  "main": "index.ts",
   "dependencies": {
     "@algolia/requester-types": "file:../requester-types"
   }

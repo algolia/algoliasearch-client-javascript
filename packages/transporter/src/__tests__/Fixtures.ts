@@ -2,7 +2,7 @@ import { Requester, Request as RequesterRequest, Response, Method } from '@algol
 import { Transporter } from '../Transporter';
 import { Host, Call } from '@algolia/transporter-types';
 import { instance } from 'ts-mockito';
-import { NullLogger } from '../../../logger-types/src';
+import { NullLogger } from '@algolia/logger-types';
 
 export class FakeRequester implements Requester {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

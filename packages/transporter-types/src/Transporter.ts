@@ -1,4 +1,4 @@
-import { Host, Request, RequestOptions } from '.';
+import { Host, Request, RequestOptions } from '..';
 
 export type Transporter = {
   // eslint-disable-next-line functional/prefer-readonly-type

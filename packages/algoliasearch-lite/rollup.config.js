@@ -60,7 +60,7 @@ const createConfiguration = ({ input, name, minify = false } = {}) => ({
 
 export default [
   createConfiguration({
-    input: 'src/index.ts',
+    input: 'index.ts',
     name: 'algoliasearch-lite',
     minify: true,
   }),

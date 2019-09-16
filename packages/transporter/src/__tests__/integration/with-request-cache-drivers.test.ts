@@ -1,7 +1,7 @@
 import { Fixtures, FakeRequester } from '../Fixtures';
 import { mock, anything, when, verify } from 'ts-mockito';
-import { InMemoryCache } from '../../../../cache-in-memory/src';
-import { BrowserLocalStorageCache } from '../../../../cache-browser-local-storage/src';
+import { InMemoryCache } from '@algolia/cache-in-memory';
+import { BrowserLocalStorageCache } from '@algolia/cache-browser-local-storage';
 import { NullCache } from '@algolia/cache-types';
 
 const transporterRequest = Fixtures.transporterRequest();

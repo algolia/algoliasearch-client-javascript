@@ -1,4 +1,4 @@
-import { BrowserXhrRequester } from '../..';
+import { BrowserXhrRequester } from '../../..';
 import mock, { MockRequest, MockResponse } from 'xhr-mock';
 import { Method } from '@algolia/requester-types';
 import Fixtures from '../Fixtures';
