@@ -21,7 +21,7 @@ export class BrowserXhrRequester implements Requester {
       baseRequester.onerror = (): void => {
         if (baseRequester.status === 0) {
           resolve({
-            content: 'Network error',
+            content: baseRequester.responseText || 'Network request failed',
             status: baseRequester.status,
             isTimedOut: false,
           });

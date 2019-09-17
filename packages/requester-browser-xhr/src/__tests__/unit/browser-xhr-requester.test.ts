@@ -102,7 +102,7 @@ describe('Requester Browser Xhr', (): void => {
 });
 
 describe('Requester Browser Xhr on failures', (): void => {
-  it('Handles network errors', async () => {
+  it('resolves dns not found', async () => {
     const requester = new BrowserXhrRequester();
 
     const request = {
@@ -120,7 +120,19 @@ describe('Requester Browser Xhr on failures', (): void => {
     const response = await requester.send(request);
 
     expect(response.status).toBe(0);
-    expect(response.content).toBe('Network error');
+    expect(response.content).toBe('Network request failed');
+    expect(response.isTimedOut).toBe(false);
+  });
+
+  it('resolves general network errors', async () => {
+    const requester = new BrowserXhrRequester();
+
+    mock.post('https://algolia-dns.net/foo', () => Promise.reject(new Error('foo')));
+
+    const response = await requester.send(Fixtures.request());
+
+    expect(response.status).toBe(0);
+    expect(response.content).toBe('Network request failed');
     expect(response.isTimedOut).toBe(false);
   });
 });
