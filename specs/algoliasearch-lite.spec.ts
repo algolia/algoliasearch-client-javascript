@@ -8,16 +8,20 @@ describe('AlgoliaSearch Client - Lite', () => {
 
     const dataset = await browser.dataset();
 
-    const results = await browser.executeAsync(async (credentials, done) => {
+    const results = await browser.executeAsync(function(credentials, done) {
       // @ts-ignore
       const index = algoliasearch(credentials.appId, credentials.apiKey).initIndex(
-        'javascript-browser-testing-lite',
+        'javascript-browser-testing-lite'
       );
 
-      done({
-        all: await index.search(''),
-        first: await index.search('red'),
-        last: await index.search('black'),
+      Promise.all([index.search(''), index.search('red'), index.search('black')]).then(function(
+        responses
+      ) {
+        done({
+          all: responses[0],
+          first: responses[1],
+          last: responses[2]
+        });
       });
     }, credentials);
 
@@ -31,18 +35,22 @@ describe('AlgoliaSearch Client - Lite', () => {
   });
 
   it('performs SearchIndex::searchForFacetValues', async () => {
-    // @ts-ignore
     const credentials = await browser.credentials();
-    // @ts-ignore
-    const results = await browser.executeAsync(async (credentials, done) => {
+
+    const results = await browser.executeAsync(function(credentials, done) {
       // @ts-ignore
       const index = algoliasearch(credentials.appId, credentials.apiKey).initIndex(
-        'javascript-browser-testing-lite',
+        'javascript-browser-testing-lite'
       );
 
-      done({
-        red: await index.searchForFacetValues('color', 'red'),
-        green: await index.searchForFacetValues('color', 'green'),
+      Promise.all([
+        index.searchForFacetValues('color', 'red'),
+        index.searchForFacetValues('color', 'green')
+      ]).then(function(responses) {
+        done({
+          red: responses[0],
+          green: responses[1]
+        });
       });
     }, credentials);
 
