@@ -22,8 +22,6 @@ export class ConsoleLogger implements Logger {
   }
 
   public error(message: string, args: any): void {
-    if (LogLevel.Error >= this.logLevel) {
-      console.error(message, args);
-    }
+    console.error(message, args);
   }
 }
