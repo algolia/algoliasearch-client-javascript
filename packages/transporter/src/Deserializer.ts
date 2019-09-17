@@ -11,11 +11,7 @@ export class Deserializer {
     try {
       return JSON.parse(content);
     } catch (e) {
-      return {
-        name: ApiError.name,
-        message: content,
-        status,
-      };
+      return new ApiError(content, status);
     }
   }
 }
