@@ -1,9 +1,11 @@
 import { verify, deepEqual, anything, when, mock } from 'ts-mockito';
 import { Fixtures, FakeRequester } from '../Fixtures';
-import { Transporter } from '@algolia/transporter-types';
+import { Transporter as TransporterContract } from '@algolia/transporter-types';
+import { Transporter } from '../../Transporter';
+import { BrowserXhrRequester } from '@algolia/requester-browser-xhr';
 
 let requester: FakeRequester;
-let transporter: Transporter;
+let transporter: TransporterContract;
 
 beforeEach(() => {
   requester = mock(FakeRequester);
@@ -20,6 +22,20 @@ const transporterRequest = Fixtures.transporterRequest();
 const requesterRequest = Fixtures.requesterRequest();
 
 describe('Usage of query parameters', () => {
+  it('allows to created with query parameters', () => {
+    const testTransporter = new Transporter({
+      timeouts: {
+        read: 0,
+        write: 0,
+      },
+      requester: new BrowserXhrRequester(),
+      queryParameters: { foo: 'bar' },
+    });
+
+    expect(testTransporter).toBeInstanceOf(Transporter);
+    expect(testTransporter.queryParameters).toEqual({ foo: 'bar' });
+  });
+
   it('allows to set query parameters', async () => {
     transporter.queryParameters = {
       'x-foo': 'foo',

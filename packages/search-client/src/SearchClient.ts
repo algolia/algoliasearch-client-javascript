@@ -31,7 +31,7 @@ export class SearchClient {
     // eslint-disable-next-line functional/no-let
     let Index: any = SearchIndex;
 
-    if (options) {
+    if (options !== undefined) {
       options.methods.forEach((method): void => {
         Index = method(Index);
       });

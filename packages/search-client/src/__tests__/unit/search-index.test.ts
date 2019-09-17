@@ -18,11 +18,12 @@ import {
 } from '../../methods/index/searchForFacetValues';
 import { SaveObjectsOptions } from '../../methods/types/SaveObjectsOptions';
 import { getSettings, HasGetSettings } from '../../methods/index/getSettings';
+import { SearchIndex } from '../../SearchIndex';
 
 const transporterMock = mock(Transporter);
 const transporter = instance(transporterMock);
 
-type SearchIndex = HasBatch &
+type SearchIndexType = HasBatch &
   HasSaveObject &
   HasSaveObjects &
   HasGetObject &
@@ -35,7 +36,7 @@ const index = new SearchClient({
   appId: 'appId',
   apiKey: 'apiKey',
   userAgent: UserAgent.create('4.0.0'),
-}).initIndex<SearchIndex>('foo', {
+}).initIndex<SearchIndexType>('foo', {
   methods: [
     batch,
     saveObject,
@@ -51,6 +52,19 @@ const res: any = {
   objectIDs: ['1'],
   taskID: 1,
 };
+
+describe('initIndex', () => {
+  it('can be instanciated without options', () => {
+    expect(
+      new SearchClient({
+        transporter,
+        appId: 'appId',
+        apiKey: 'apiKey',
+        userAgent: UserAgent.create('4.0.0'),
+      }).initIndex<SearchIndex>('foo')
+    ).toBeInstanceOf(SearchIndex);
+  });
+});
 
 describe('SaveObject', () => {
   it('Proxies down to save objects', async () => {

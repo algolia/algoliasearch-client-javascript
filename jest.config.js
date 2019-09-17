@@ -7,5 +7,15 @@ module.exports = {
     '^.+\\.ts?$': 'ts-jest',
   },
   transformIgnorePatterns: [],
+  coverageReporters: ['text'],
+  collectCoverage: true,
   collectCoverageFrom: ['**/src/**/*.ts', '!**/src/__tests__/**/*.ts'],
+  coverageThreshold: {
+    global: {
+      branches: 100,
+      functions: 100,
+      lines: 100,
+      statements: 100,
+    },
+  },
 };

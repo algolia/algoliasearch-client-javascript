@@ -77,4 +77,25 @@ describe('The selection timeouts', () => {
     verify(requester.send(deepEqual(requesterRequest))).once();
     verify(requester.send(anything())).twice();
   });
+
+  it('allows no timeout to be used', async () => {
+    requester = mock(FakeRequester);
+    transporter = Fixtures.transporter(requester);
+
+    when(requester.send(anything())).thenResolve({
+      content: '{}',
+      status: 200,
+      isTimedOut: false,
+    });
+
+    await expect(
+      transporter.read(transporterRequest, {
+        timeout: 0,
+      })
+    ).resolves.toEqual({});
+
+    requesterRequest.timeout = 0;
+    requesterRequest.url = 'https://read.com/save';
+    verify(requester.send(deepEqual(requesterRequest))).once();
+  });
 });

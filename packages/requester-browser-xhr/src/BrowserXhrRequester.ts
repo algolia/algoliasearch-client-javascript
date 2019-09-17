@@ -9,7 +9,7 @@ export class BrowserXhrRequester implements Requester {
       baseRequester.timeout = 1000 * request.timeout;
 
       // eslint-disable-next-line functional/immutable-data
-      baseRequester.ontimeout = (): void => {
+      baseRequester.ontimeout = () => {
         resolve({
           content: baseRequester.statusText,
           status: baseRequester.status,
@@ -18,7 +18,8 @@ export class BrowserXhrRequester implements Requester {
       };
 
       // eslint-disable-next-line functional/immutable-data
-      baseRequester.onerror = (): void => {
+      baseRequester.onerror = () => {
+        // istanbul ignore next
         if (baseRequester.status === 0) {
           resolve({
             content: baseRequester.responseText || 'Network request failed',
@@ -29,7 +30,7 @@ export class BrowserXhrRequester implements Requester {
       };
 
       //  eslint-disable-next-line functional/immutable-data
-      baseRequester.onload = (): void => {
+      baseRequester.onload = () => {
         resolve({
           content: baseRequester.responseText,
           status: baseRequester.status,
@@ -39,13 +40,9 @@ export class BrowserXhrRequester implements Requester {
 
       baseRequester.open(request.method, request.url, true);
 
-      //  eslint-disable-next-line functional/no-loop-statement
-      for (const key in request.headers) {
-        if (request.headers.hasOwnProperty(key)) {
-          //  eslint-disable-next-line functional/immutable-data
-          baseRequester.setRequestHeader(key, request.headers[key]);
-        }
-      }
+      Object.keys(request.headers).forEach(key =>
+        baseRequester.setRequestHeader(key, request.headers[key])
+      );
 
       baseRequester.send(request.data);
     });
