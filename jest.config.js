@@ -2,7 +2,7 @@
 module.exports = {
   testMatch: ['**/__tests__/**/*.test.ts'],
   preset: 'ts-jest',
-  setupFilesAfterEnv: ['<rootDir>config/jest.js'],
+  setupFilesAfterEnv: ['<rootDir>config/jest.js', 'jest-mock-console/dist/setupTestFramework.js'],
   transform: {
     '^.+\\.ts?$': 'ts-jest',
   },
