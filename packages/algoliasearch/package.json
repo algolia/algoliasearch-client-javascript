@@ -1,8 +1,9 @@
 {
-  "name": "lightsearch",
+  "name": "@nunomaduro/lightsearch",
+  "private": false,
   "version": "4.0.0-alpha.0",
   "license": "MIT",
-  "description": "Thin & minimal low-level HTTP client to interact with Algolia's API",
+  "description": "test",
   "dependencies": {
     "@algolia/cache-in-memory": "file:../cache-in-memory",
     "@algolia/cache-browser-local-storage": "file:../cache-browser-local-storage",
@@ -19,6 +20,6 @@
     "release:clean": "rm -rf dist",
     "release:build": "mkdir -p dist && cp {package.json} dist && yarn build",
     "release:stable": "",
-    "release:alpha": "yarn publish --tag alpha --non-interactive"
+    "release:alpha": "yarn publish --tag alpha --dry-run --verbose --access public"
   }
 }

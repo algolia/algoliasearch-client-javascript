@@ -2,14 +2,6 @@
   "name": "algoliasearch-monorepo",
   "private": true,
   "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/algolia/algoliasearch-client-javascript.git"
-  },
-  "bugs": {
-    "url": "https://github.com/algolia/algoliasearch-client-javascript/issues"
-  },
-  "homepage": "https://www.algolia.com/doc/api-client/getting-started/install/javascript/",
   "devDependencies": {
     "@babel/cli": "^7.6.0",
     "@babel/core": "^7.6.0",
