@@ -1,9 +1,8 @@
 {
-  "name": "algoliasearch-lite",
+  "name": "lightsearch",
   "version": "4.0.0-alpha.0",
   "license": "MIT",
   "description": "Thin & minimal low-level HTTP client to interact with Algolia's API",
-  "main": "src/index.ts",
   "dependencies": {
     "@algolia/cache-in-memory": "file:../cache-in-memory",
     "@algolia/cache-browser-local-storage": "file:../cache-browser-local-storage",
@@ -16,6 +15,10 @@
   },
   "scripts": {
     "build": "yarn build:umd",
-    "build:umd": "BABEL_ENV=rollup rollup -c rollup.config.js"
+    "build:umd": "BABEL_ENV=rollup rollup -c rollup.config.js",
+    "release:clean": "rm -rf dist",
+    "release:build": "mkdir -p dist && cp {package.json} dist && yarn build",
+    "release:stable": "",
+    "release:alpha": "yarn publish --tag alpha --non-interactive"
   }
 }
