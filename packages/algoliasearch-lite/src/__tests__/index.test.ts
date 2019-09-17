@@ -8,6 +8,12 @@ describe('algoliasearch', () => {
     expect(client.appId).toBe('foo');
   });
 
+  it('creates an instance of the search index', () => {
+    const index = algoliasearch('foo', 'bar').initIndex('foo');
+    expect(index).toHaveProperty('search');
+    expect(index).toHaveProperty('searchForFacetValues');
+  });
+
   it('sets default user agents', () => {
     const client = algoliasearch('foo', 'bar');
 
