@@ -6,24 +6,24 @@ export class ConsoleLogger implements Logger {
   private readonly logLevel: LogLevelType;
 
   public constructor(logLevel: LogLevelType) {
-    this.logLevel = logLevel !== undefined ? LogLevel.Error : logLevel;
+    this.logLevel = logLevel;
   }
 
   public debug(message: string, args: any): void {
-    if (this.logLevel >= LogLevel.Debug) {
+    if (LogLevel.Debug >= this.logLevel) {
       console.debug(message, args);
     }
   }
 
   public info(message: string, args: any): void {
-    if (this.logLevel >= LogLevel.Info) {
+    if (LogLevel.Info >= this.logLevel) {
       console.info(message, args);
     }
   }
 
   public error(message: string, args: any): void {
-    if (this.logLevel >= LogLevel.Error) {
-      console.info(message, args);
+    if (LogLevel.Error >= this.logLevel) {
+      console.error(message, args);
     }
   }
 }
