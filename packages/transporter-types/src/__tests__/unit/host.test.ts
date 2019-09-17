@@ -13,7 +13,24 @@ describe('Host', () => {
     host.setAsDown();
 
     expect(host.isUp()).toBe(false);
+  });
 
-    // @todo test is up mocking the global date.
+  it('is up if TTL was expired', () => {
+    const host = new Host({
+      url: 'foo',
+      accept: Call.Any,
+    });
+
+    host.setAsDown();
+
+    host.downDate = host.downDate - 3000 + 10; // not up yet.
+
+    expect(host.isUp()).toBe(false);
+    expect(host.up).toBe(false);
+
+    host.downDate -= 20; // must be up now.
+
+    expect(host.isUp()).toBe(true);
+    expect(host.up).toBe(true);
   });
 });
