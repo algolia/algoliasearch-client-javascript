@@ -1,7 +1,6 @@
 import { Fixtures, FakeRequester } from '../Fixtures';
 import { when, anything, mock } from 'ts-mockito';
 import { Transporter } from '../../Transporter';
-import { ApiError } from '@algolia/transporter-types';
 
 let requester: FakeRequester;
 let transporter: Transporter;
@@ -60,10 +59,10 @@ describe('The deserializer', () => {
     try {
       await transporter.read(transporterRequest);
     } catch (e) {
-      expect(e).toStrictEqual({
+      expect(e).toEqual({
         message: 'String message for some reason',
+        name: 'ApiError',
         status: 404,
-        name: ApiError.name,
       });
     }
   });
