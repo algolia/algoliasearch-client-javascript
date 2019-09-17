@@ -16,6 +16,7 @@ import { HasGetObjects, getObjects } from '../methods/index/getObjects';
 import { HasSetSettings, setSettings } from '../methods/index/setSettings';
 import { getSettings, HasGetSettings } from '../methods/index/getSettings';
 import { UserAgent } from '@algolia/transporter-types';
+import { batch, HasBatch } from '../methods/index/batch';
 
 export class TestSuite {
   public readonly testName: string;
@@ -56,7 +57,8 @@ export class TestSuite {
     });
 
     const index = client.initIndex<
-      HasDelete &
+      HasBatch &
+        HasDelete &
         HasSearch &
         HasSearchForFacetValues &
         HasWaitTask &
@@ -68,6 +70,7 @@ export class TestSuite {
         HasGetSettings
     >(indexName === undefined ? this.makeIndexName() : indexName, {
       methods: [
+        batch,
         deleteIndex,
         getObject,
         getObjects,

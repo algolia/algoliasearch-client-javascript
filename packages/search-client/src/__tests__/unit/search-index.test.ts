@@ -17,6 +17,7 @@ import {
   searchForFacetValues,
 } from '../../methods/index/searchForFacetValues';
 import { SaveObjectsOptions } from '../../methods/types/SaveObjectsOptions';
+import { getSettings, HasGetSettings } from '../../methods/index/getSettings';
 
 const transporterMock = mock(Transporter);
 const transporter = instance(transporterMock);
@@ -26,6 +27,7 @@ type SearchIndex = HasBatch &
   HasSaveObjects &
   HasGetObject &
   HasGetObjects &
+  HasGetSettings &
   HasSearchForFacetValues;
 
 const index = new SearchClient({
@@ -34,7 +36,15 @@ const index = new SearchClient({
   apiKey: 'apiKey',
   userAgent: UserAgent.create('4.0.0'),
 }).initIndex<SearchIndex>('foo', {
-  methods: [batch, saveObject, saveObjects, getObject, getObjects, searchForFacetValues],
+  methods: [
+    batch,
+    saveObject,
+    saveObjects,
+    getObject,
+    getObjects,
+    getSettings,
+    searchForFacetValues,
+  ],
 });
 
 const res: any = {
@@ -170,6 +180,39 @@ describe('Get Object', () => {
     await index.getObject('bar', requestOptions);
 
     verify(transporterMock.read(anything(), requestOptions)).once();
+  });
+});
+
+describe('Get Settings', () => {
+  it('Passes getVersion=2 queryParameters', async () => {
+    const requestOptions = {
+      data: {},
+      timeout: undefined,
+      headers: {},
+      queryParameters: { getVersion: '2' },
+    };
+
+    await index.getSettings();
+    await index.getSettings({});
+
+    verify(transporterMock.read(anything(), deepEqual(requestOptions))).twice();
+  });
+
+  it('Passes getVersion=2 queryParameters and custom request options', async () => {
+    const requestOptions = {
+      data: {},
+      timeout: undefined,
+      headers: {},
+      queryParameters: { foo: 'bar', getVersion: '2' },
+    };
+
+    await index.getSettings({
+      queryParameters: {
+        foo: 'bar',
+      },
+    });
+
+    verify(transporterMock.read(anything(), deepEqual(requestOptions))).once();
   });
 });
 

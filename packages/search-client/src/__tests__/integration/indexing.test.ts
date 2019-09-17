@@ -32,6 +32,16 @@ test(testSuite.testName, async () => {
   });
   responses = responses.concat(response5and6);
 
+  const object7 = Faker.object('object7');
+  const response7 = index.batch([
+    {
+      action: 'addObject',
+      body: object7,
+    },
+  ]);
+
+  responses = responses.concat(response7);
+
   const remain1000objects = Faker.objects(1000);
 
   responses = responses.concat(
@@ -63,9 +73,7 @@ test(testSuite.testName, async () => {
     Object.assign(object6, { objectID: objectId6 })
   );
 
-  await expect(index.getObject(objectId6)).resolves.toStrictEqual(
-    Object.assign(object6, { objectID: objectId6 })
-  );
+  await expect(index.getObject('object7')).resolves.toStrictEqual(object7);
 
   await expect(
     index.getObjects(Array.from(Array(1000).keys()).map((objectId: number) => objectId.toString()))

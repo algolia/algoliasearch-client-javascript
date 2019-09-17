@@ -10,13 +10,11 @@ export const getSettings = <TSearchIndex extends ConstructorOf<SearchIndex>>(
 ) => {
   return class extends base implements HasGetSettings {
     public getSettings(requestOptions?: RequestOptions): Promise<IndexSettings> {
-      const options = mapRequestOptions(
-        Object.assign(requestOptions === undefined ? {} : requestOptions, {
-          queryParameters: {
-            getVersion: 2,
-          },
-        })
-      );
+      const options = mapRequestOptions(requestOptions !== undefined ? requestOptions : {});
+
+      // @ts-ignore
+      // eslint-disable-next-line functional/immutable-data
+      options.queryParameters.getVersion = '2';
 
       return this.transporter.read(
         {
