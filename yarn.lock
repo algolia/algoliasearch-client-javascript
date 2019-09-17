@@ -5,12 +5,12 @@
 "@algolia/cache-browser-local-storage@file:packages/cache-browser-local-storage":
   version "4.0.0-alpha.0"
   dependencies:
-    "@algolia/cache-types" "file:../../Library/Caches/Yarn/v4/npm-@algolia-cache-browser-local-storage-4.0.0-alpha.0-628895d0-a896-4e96-8313-977d07341bb5-1568638772351/node_modules/@algolia/cache-types"
+    "@algolia/cache-types" "file:../../Library/Caches/Yarn/v4/npm-@algolia-cache-browser-local-storage-4.0.0-alpha.0-e999a631-77db-4d6b-a15c-776a3a948c68-1568707630622/node_modules/@algolia/cache-types"
 
 "@algolia/cache-in-memory@file:packages/cache-in-memory":
   version "4.0.0-alpha.0"
   dependencies:
-    "@algolia/cache-types" "file:../../Library/Caches/Yarn/v4/npm-@algolia-cache-in-memory-4.0.0-alpha.0-a16b4875-4afe-4f20-9a3e-9009d0f38e94-1568638772352/node_modules/@algolia/cache-types"
+    "@algolia/cache-types" "file:../../Library/Caches/Yarn/v4/npm-@algolia-cache-in-memory-4.0.0-alpha.0-71300552-1a08-4c65-a443-c4f3128b8c90-1568707630626/node_modules/@algolia/cache-types"
 
 "@algolia/cache-types@file:packages/cache-types":
   version "4.0.0-alpha.0"
@@ -18,7 +18,7 @@
 "@algolia/logger-console@file:packages/logger-console":
   version "4.0.0-alpha.0"
   dependencies:
-    "@algolia/logger-types" "file:../../Library/Caches/Yarn/v4/npm-@algolia-logger-console-4.0.0-alpha.0-b7976532-06da-4e73-a445-b829f8751186-1568638772352/node_modules/@algolia/logger-types"
+    "@algolia/logger-types" "file:../../Library/Caches/Yarn/v4/npm-@algolia-logger-console-4.0.0-alpha.0-677eb5a0-6ae3-4f76-842b-b3123f087df9-1568707630623/node_modules/@algolia/logger-types"
 
 "@algolia/logger-types@file:packages/logger-types":
   version "4.0.0-alpha.0"
@@ -26,7 +26,7 @@
 "@algolia/requester-browser-xhr@file:packages/requester-browser-xhr":
   version "4.0.0-alpha.0"
   dependencies:
-    "@algolia/requester-types" "file:../../Library/Caches/Yarn/v4/npm-@algolia-requester-browser-xhr-4.0.0-alpha.0-618a0f91-70af-4346-a4bb-44fe4da719c5-1568638772356/node_modules/@algolia/requester-types"
+    "@algolia/requester-types" "file:../../Library/Caches/Yarn/v4/npm-@algolia-requester-browser-xhr-4.0.0-alpha.0-134b6017-861e-4c30-8a47-1750ced0794f-1568707630625/node_modules/@algolia/requester-types"
 
 "@algolia/requester-types@file:packages/requester-types":
   version "4.0.0-alpha.0"
@@ -34,15 +34,15 @@
 "@algolia/transporter-types@file:packages/transporter-types":
   version "4.0.0-alpha.0"
   dependencies:
-    "@algolia/requester-types" "file:../../Library/Caches/Yarn/v4/npm-@algolia-transporter-types-4.0.0-alpha.0-c13a688d-3cda-4f3c-86d2-ea4f2ea37189-1568638772356/node_modules/@algolia/requester-types"
+    "@algolia/requester-types" "file:../../Library/Caches/Yarn/v4/npm-@algolia-transporter-types-4.0.0-alpha.0-2dae79bb-413a-47e3-bfaf-938a5be24084-1568707630626/node_modules/@algolia/requester-types"
 
 "@algolia/transporter@file:packages/transporter":
   version "4.0.0-alpha.0"
   dependencies:
-    "@algolia/cache-types" "file:../../Library/Caches/Yarn/v4/npm-@algolia-transporter-4.0.0-alpha.0-436db4f4-ea74-4ffa-bfbe-1aa8fd8409e1-1568638772352/node_modules/@algolia/cache-types"
-    "@algolia/logger-types" "file:../../Library/Caches/Yarn/v4/npm-@algolia-transporter-4.0.0-alpha.0-436db4f4-ea74-4ffa-bfbe-1aa8fd8409e1-1568638772352/node_modules/@algolia/logger-types"
-    "@algolia/requester-types" "file:../../Library/Caches/Yarn/v4/npm-@algolia-transporter-4.0.0-alpha.0-436db4f4-ea74-4ffa-bfbe-1aa8fd8409e1-1568638772352/node_modules/@algolia/requester-types"
-    "@algolia/transporter-types" "file:../../Library/Caches/Yarn/v4/npm-@algolia-transporter-4.0.0-alpha.0-436db4f4-ea74-4ffa-bfbe-1aa8fd8409e1-1568638772352/node_modules/@algolia/transporter-types"
+    "@algolia/cache-types" "file:../../Library/Caches/Yarn/v4/npm-@algolia-transporter-4.0.0-alpha.0-427529a6-f7cb-408e-92d9-f32e176836ba-1568707630623/node_modules/@algolia/cache-types"
+    "@algolia/logger-types" "file:../../Library/Caches/Yarn/v4/npm-@algolia-transporter-4.0.0-alpha.0-427529a6-f7cb-408e-92d9-f32e176836ba-1568707630623/node_modules/@algolia/logger-types"
+    "@algolia/requester-types" "file:../../Library/Caches/Yarn/v4/npm-@algolia-transporter-4.0.0-alpha.0-427529a6-f7cb-408e-92d9-f32e176836ba-1568707630623/node_modules/@algolia/requester-types"
+    "@algolia/transporter-types" "file:../../Library/Caches/Yarn/v4/npm-@algolia-transporter-4.0.0-alpha.0-427529a6-f7cb-408e-92d9-f32e176836ba-1568707630623/node_modules/@algolia/transporter-types"
 
 "@babel/cli@^7.6.0":
   version "7.6.0"
@@ -5947,6 +5947,11 @@ jest-message-util@^24.9.0:
     micromatch "^3.1.10"
     slash "^2.0.0"
     stack-utils "^1.0.1"
+
+jest-mock-console@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/jest-mock-console/-/jest-mock-console-1.0.0.tgz#0ca2cbea3aa0af4893c8c5f3c2de45c3d4d15629"
+  integrity sha512-bN9UjH+Jd/5Gs+p9Xt9Mai4SoUQRFd3f+ZOSCjlcbuVRUhNvl1y9jvys6L7BUx+1Uz+3jOoaq1O+C6j3sSu7SQ==
 
 jest-mock@^24.9.0:
   version "24.9.0"
