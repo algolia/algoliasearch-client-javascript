@@ -19,6 +19,7 @@ export const search = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: TS
           data: {
             query,
           },
+          cacheable: true,
         },
         requestOptions
       );

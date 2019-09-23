@@ -61,6 +61,7 @@ export class Fixtures {
       method: Method.Post,
       path: 'save',
       data: {},
+      cacheable: false,
     };
   }
 

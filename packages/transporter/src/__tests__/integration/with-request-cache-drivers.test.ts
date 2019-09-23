@@ -7,6 +7,7 @@ import { BrowserLocalStorageCache } from '@algolia/cache-browser-local-storage';
 import { NullCache } from '@algolia/cache-types';
 
 const transporterRequest = Fixtures.transporterRequest();
+transporterRequest.cacheable = true;
 
 describe('request cache integration with cache drivers', () => {
   beforeEach(async () => {

@@ -10,6 +10,8 @@ const transporterRequest = Fixtures.transporterRequest();
 
 describe('response cache integration with cache drivers', () => {
   beforeEach(async () => {
+    transporterRequest.cacheable = true;
+
     // @ts-ignore
     // eslint-disable-next-line no-undef
     if (testing.isBrowser()) {
@@ -27,9 +29,9 @@ describe('response cache integration with cache drivers', () => {
 
   const expectedCalls = {
     '2xx': {
-      [new NullCache().constructor.name]: 13,
-      [new InMemoryCache().constructor.name]: 4,
-      [new BrowserLocalStorageCache().constructor.name]: 4,
+      [new NullCache().constructor.name]: 16,
+      [new InMemoryCache().constructor.name]: 7,
+      [new BrowserLocalStorageCache().constructor.name]: 7,
     },
     '4xx': {
       [new NullCache().constructor.name]: 10,
@@ -41,6 +43,8 @@ describe('response cache integration with cache drivers', () => {
   it('cache 2xx results', async () => {
     let requester: FakeRequester;
     for (let index = 0; index < drivers.length; index++) {
+      transporterRequest.cacheable = true;
+
       when((requester = mock(FakeRequester)).send(anything())).thenResolve({
         content: JSON.stringify({ hits: [] }),
         status: 200,
@@ -59,6 +63,13 @@ describe('response cache integration with cache drivers', () => {
       for (let callNumber = 1; callNumber <= 3; callNumber++) {
         // Body is different every time, we should not cache here.
         transporterRequest.data = { callNumber };
+        await expect(transporter.read(transporterRequest)).resolves.toMatchObject({ hits: [] });
+      }
+
+      for (let callNumber = 1; callNumber <= 3; callNumber++) {
+        // We are explicit saying that we don't want any type of cache.
+        transporterRequest.data = { callNumber };
+        transporterRequest.cacheable = false;
         await expect(transporter.read(transporterRequest)).resolves.toMatchObject({ hits: [] });
       }
 

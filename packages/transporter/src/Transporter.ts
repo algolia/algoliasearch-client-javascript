@@ -76,28 +76,36 @@ export class Transporter implements TransporterContract {
   public read<TResponse>(request: Request, requestOptions?: RequestOptions): Promise<TResponse> {
     const mappedRequestOptions = mapRequestOptions(requestOptions, this.timeouts.read);
 
-    const key = { request, mappedRequestOptions: mapRequestOptions };
+    const key = { request, mappedRequestOptions };
 
-    return this.responseCache.get(
-      key,
-      () =>
-        this.requestCache.get(key, () => {
-          const responsePromise = this.request<TResponse>(
-            this.hosts.filter(host => (host.accept & Call.Read) !== 0),
-            request,
-            mappedRequestOptions
-          );
+    const createRequest = (): Promise<TResponse> => {
+      return this.request<TResponse>(
+        this.hosts.filter(host => (host.accept & Call.Read) !== 0),
+        request,
+        mappedRequestOptions
+      );
+    };
 
-          return this.requestCache
-            .set(key, responsePromise)
-            .then(() =>
-              responsePromise.then(response => this.requestCache.delete(key).then(() => response))
-            );
-        }),
-      {
-        miss: response => this.responseCache.set(key, response),
-      }
-    );
+    return request.cacheable !== true
+      ? createRequest()
+      : this.responsesCache.get(
+          key,
+          () =>
+            this.requestsCache.get(key, () => {
+              const responsePromise = createRequest();
+
+              return this.requestsCache
+                .set(key, responsePromise)
+                .then(() =>
+                  responsePromise.then(response =>
+                    this.requestsCache.delete(key).then(() => response)
+                  )
+                );
+            }),
+          {
+            miss: response => this.responsesCache.set(key, response),
+          }
+        );
   }
 
   public write<TResponse>(request: Request, requestOptions?: RequestOptions): Promise<TResponse> {

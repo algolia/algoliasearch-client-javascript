@@ -22,6 +22,7 @@ export const searchForFacetValues = <TSearchIndex extends ConstructorOf<SearchIn
           data: {
             facetQuery,
           },
+          cacheable: true,
         },
         requestOptions
       );
