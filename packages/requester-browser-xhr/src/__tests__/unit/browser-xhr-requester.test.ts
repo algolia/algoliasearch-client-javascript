@@ -20,7 +20,7 @@ describe('status code handling', (): void => {
 
         expect(req.header('X-Algolia-Application-Id')).toEqual('ABCDE');
         expect(req.header('X-Algolia-API-Key')).toEqual('12345');
-        expect(req.header('Content-Type')).toEqual('application/json');
+        expect(req.header('Content-Type')).toEqual('application/x-www-form-urlencoded');
 
         expect(req.body()).toEqual(JSON.stringify({ foo: 'bar' }));
 
@@ -129,7 +129,7 @@ describe('error handling', (): void => {
       headers: {
         'X-Algolia-Application-Id': 'ABCDE',
         'X-Algolia-API-Key': '12345',
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/x-www-form-urlencoded',
       },
       data: JSON.stringify({ foo: 'bar' }),
       timeout: 2,

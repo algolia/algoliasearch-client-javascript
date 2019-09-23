@@ -18,7 +18,7 @@ describe('algoliasearch', () => {
     const client = algoliasearch('foo', 'bar');
 
     expect(client.transporter.headers).toEqual({
-      'content-type': 'application/json',
+      'content-type': 'application/x-www-form-urlencoded',
       'x-algolia-application-id': 'foo',
       'x-algolia-api-key': 'bar',
     });

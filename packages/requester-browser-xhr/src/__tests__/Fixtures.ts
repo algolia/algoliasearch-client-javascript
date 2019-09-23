@@ -8,7 +8,7 @@ export default class Fixtures {
       headers: {
         'X-Algolia-Application-Id': 'ABCDE',
         'X-Algolia-API-Key': '12345',
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/x-www-form-urlencoded',
       },
       data: JSON.stringify({ foo: 'bar' }),
       timeout: 2,

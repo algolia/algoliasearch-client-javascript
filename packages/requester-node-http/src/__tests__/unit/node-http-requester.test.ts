@@ -6,7 +6,7 @@ import * as nock from 'nock';
 const headers = {
   'x-algolia-application-id': 'ABCDE',
   'x-algolia-api-key': '12345',
-  'content-type': 'application/json',
+  'content-type': 'application/x-www-form-urlencoded',
 };
 
 describe('status code handling', (): void => {
@@ -126,7 +126,7 @@ describe('error handling', (): void => {
       headers: {
         'X-Algolia-Application-Id': 'ABCDE',
         'X-Algolia-API-Key': '12345',
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/x-www-form-urlencoded',
       },
       data: JSON.stringify({ foo: 'bar' }),
       timeout: 2,

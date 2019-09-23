@@ -24,7 +24,7 @@ describe('Search Client', () => {
 
   it('Sets default headers', () => {
     expect(transporter.headers).toEqual({
-      'content-type': 'application/json',
+      'content-type': 'application/x-www-form-urlencoded',
       'x-algolia-application-id': 'appId',
       'x-algolia-api-key': 'apiKey',
     });

@@ -63,7 +63,7 @@ export class SearchClient {
 
   private createHeaders(): { readonly [key: string]: string } {
     return {
-      'content-type': 'application/json',
+      'content-type': 'application/x-www-form-urlencoded',
       'x-algolia-api-key': this.apiKey,
       'x-algolia-application-id': this.appId,
     };
