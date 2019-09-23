@@ -38,6 +38,17 @@ export class TestSuite {
       // @ts-ignore
       // eslint-disable-next-line no-undef
       requester: testing.requester(),
+
+      // @ts-ignore
+      // eslint-disable-next-line no-undef
+      requestsCache: testing.requestsCache(),
+
+      // @ts-ignore
+      // eslint-disable-next-line no-undef
+      hostsCache: testing.hostsCache(),
+      // @ts-ignore
+      // eslint-disable-next-line no-undef
+      responsesCache: testing.responsesCache(),
       timeouts: {
         read: 2,
         write: 30,

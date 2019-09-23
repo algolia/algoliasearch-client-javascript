@@ -29,7 +29,7 @@ module.exports = {
         testEnvironment: 'jsdom',
         testPathIgnorePatterns: ['packages/requester-node-http/*'],
         globals: {
-          environment: 'jsdom',
+          environment: 'browser',
           isBrowser: true,
         },
       },

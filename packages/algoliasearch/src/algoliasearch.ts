@@ -17,8 +17,8 @@ export function algoliasearch(appId: string, apiKey: string): SearchClient {
       write: 30,
     },
     logger: new ConsoleLogger(LogLevel.Error),
-    responseCache: new InMemoryCache(),
-    requestCache: new InMemoryCache(),
+    responsesCache: new InMemoryCache(),
+    requestsCache: new InMemoryCache(),
     hostsCache: new BrowserLocalStorageCache(),
   });
 

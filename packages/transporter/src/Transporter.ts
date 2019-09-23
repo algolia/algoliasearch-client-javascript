@@ -34,11 +34,11 @@ export class Transporter implements TransporterContract {
 
   private readonly timeouts: Timeouts;
 
-  private readonly responseCache: Cache;
+  private readonly responsesCache: Cache;
 
   private readonly hostsCache: Cache;
 
-  private readonly requestCache: Cache;
+  private readonly requestsCache: Cache;
 
   public constructor(options: {
     // eslint-disable-next-line functional/prefer-readonly-type
@@ -51,9 +51,9 @@ export class Transporter implements TransporterContract {
     readonly requester: Requester;
     readonly timeouts: Timeouts;
     readonly logger?: Logger;
-    readonly responseCache?: Cache;
+    readonly responsesCache?: Cache;
     readonly hostsCache?: Cache;
-    readonly requestCache?: Cache;
+    readonly requestsCache?: Cache;
   }) {
     this.headers = options.headers !== undefined ? options.headers : {};
     this.queryParameters = options.queryParameters !== undefined ? options.queryParameters : {};
@@ -64,12 +64,13 @@ export class Transporter implements TransporterContract {
 
     this.logger = options.logger !== undefined ? options.logger : new NullLogger();
 
-    this.responseCache =
-      options.responseCache !== undefined ? options.responseCache : new NullCache();
+    this.responsesCache =
+      options.responsesCache !== undefined ? options.responsesCache : new NullCache();
 
     this.hostsCache = options.hostsCache !== undefined ? options.hostsCache : new NullCache();
 
-    this.requestCache = options.requestCache !== undefined ? options.requestCache : new NullCache();
+    this.requestsCache =
+      options.requestsCache !== undefined ? options.requestsCache : new NullCache();
   }
 
   public read<TResponse>(request: Request, requestOptions?: RequestOptions): Promise<TResponse> {

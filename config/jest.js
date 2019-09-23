@@ -1,22 +1,36 @@
 /* eslint functional/no-let: 0 */ // --> OFF
 /* eslint functional/immutable-data: 0 */ // --> OFF
+/* eslint no-undef: 0 */ // --> OFF
 jest.setTimeout(30000);
 
-global.testing = {
-  requester: () => {
-    let Requester;
+const NodeHttpRequester = require('../packages/requester-node-http').NodeHttpRequester;
+const BrowserXhrRequester = require('../packages/requester-browser-xhr').BrowserXhrRequester;
 
-    // eslint-disable-next-line no-undef
-    if (environment === 'node') {
-      Requester = require('../packages/requester-node-http').NodeHttpRequester;
-    } else {
-      Requester = require('../packages/requester-browser-xhr').BrowserXhrRequester;
-    }
+const NullCache = require('../packages/cache-types').NullCache;
+const InMemoryCache = require('../packages/cache-in-memory').InMemoryCache;
+const BrowserLocalStorageCache = require('../packages/cache-browser-local-storage')
+  .BrowserLocalStorageCache;
 
-    return new Requester();
+const drivers = {
+  node: {
+    Requester: NodeHttpRequester,
+    RequestsCache: NullCache,
+    HostsCache: NullCache,
+    ResponsesCache: NullCache,
   },
-  // eslint-disable-next-line no-undef,
+  browser: {
+    Requester: BrowserXhrRequester,
+    RequestsCache: InMemoryCache,
+    HostsCache: BrowserLocalStorageCache,
+    ResponsesCache: InMemoryCache,
+  },
+};
+
+global.testing = {
+  requester: () => new drivers[environment].Requester(),
+  requestsCache: () => new drivers[environment].RequestsCache(),
+  hostsCache: () => new drivers[environment].HostsCache(),
+  responsesCache: () => new drivers[environment].ResponsesCache(),
   environment: () => environment,
-  // eslint-disable-next-line no-undef,
   isBrowser: () => isBrowser,
 };

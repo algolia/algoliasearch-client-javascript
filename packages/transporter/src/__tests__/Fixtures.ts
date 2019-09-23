@@ -43,9 +43,9 @@ export class Fixtures {
       hosts: hosts.map(host => new Host(host)),
       requester: instance(requester),
       logger: new NullLogger(),
-      responseCache: options.responseCache,
+      responsesCache: options.responsesCache,
       hostsCache: options.hostsCache,
-      requestCache: options.requestCache,
+      requestsCache: options.requestsCache,
       timeouts: {
         read: 2,
         write: 30,

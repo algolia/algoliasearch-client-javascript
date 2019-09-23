@@ -49,7 +49,7 @@ describe('response cache integration with cache drivers', () => {
 
       const driver = new drivers[index]();
 
-      const transporter = Fixtures.transporter(requester, { responseCache: driver });
+      const transporter = Fixtures.transporter(requester, { responsesCache: driver });
 
       for (let callNumber = 1; callNumber <= 10; callNumber++) {
         transporterRequest.data = {};
@@ -78,7 +78,7 @@ describe('response cache integration with cache drivers', () => {
 
       const driver = new drivers[index]();
 
-      const transporter = Fixtures.transporter(requester, { responseCache: driver });
+      const transporter = Fixtures.transporter(requester, { responsesCache: driver });
 
       for (let callNumber = 1; callNumber <= 10; callNumber++) {
         await expect(transporter.read(transporterRequest)).rejects.toMatchObject({
