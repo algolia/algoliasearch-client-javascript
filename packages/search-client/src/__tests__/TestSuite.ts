@@ -1,4 +1,3 @@
-import { BrowserXhrRequester } from '@algolia/requester-browser-xhr';
 import { SearchClient } from '../..';
 import { SearchIndex } from '../SearchIndex';
 import { Transporter } from '@algolia/transporter';
@@ -35,10 +34,10 @@ export class TestSuite {
   }
 
   public makeIndex(indexName?: string) {
-    const requester = new BrowserXhrRequester();
-
     const transporter = new Transporter({
-      requester,
+      // @ts-ignore
+      // eslint-disable-next-line no-undef
+      requester: testing.requester(),
       timeouts: {
         read: 2,
         write: 30,
@@ -103,6 +102,9 @@ export class TestSuite {
       `_${`0${date.getHours()}`.slice(-2)}` +
       `:${`0${date.getMinutes()}`.slice(-2)}` +
       `:${`0${date.getSeconds()}`.slice(-2)}` +
+      // @ts-ignore
+      // eslint-disable-next-line no-undef
+      `_${testing.environment()}` +
       `_${travisJobNumber}` +
       `_${`${this.testName}_${this.indices.length}`}`
     );

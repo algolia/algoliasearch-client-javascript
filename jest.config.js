@@ -1,5 +1,6 @@
 /* eslint-disable import/no-commonjs, functional/immutable-data */
-module.exports = {
+
+const config = {
   testMatch: ['**/__tests__/**/*.test.ts'],
   preset: 'ts-jest',
   setupFilesAfterEnv: ['<rootDir>config/jest.js', 'jest-mock-console/dist/setupTestFramework.js'],
@@ -18,4 +19,36 @@ module.exports = {
       statements: 100,
     },
   },
+};
+
+module.exports = {
+  projects: [
+    Object.assign(
+      {
+        displayName: 'browser',
+        testEnvironment: 'jsdom',
+        testPathIgnorePatterns: ['packages/requester-node-http/*'],
+        globals: {
+          environment: 'jsdom',
+          isBrowser: true,
+        },
+      },
+      config
+    ),
+    Object.assign(
+      {
+        displayName: 'node',
+        testEnvironment: 'node',
+        testPathIgnorePatterns: [
+          'packages/requester-browser-xhr/*',
+          'packages/cache-browser-local-storage/*',
+        ],
+        globals: {
+          environment: 'node',
+          isBrowser: false,
+        },
+      },
+      config
+    ),
+  ],
 };

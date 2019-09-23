@@ -1,3 +1,5 @@
+/* eslint sonarjs/cognitive-complexity: 0 */ // --> OFF
+
 import { Fixtures, FakeRequester } from '../Fixtures';
 import { mock, anything, when, verify } from 'ts-mockito';
 import { InMemoryCache } from '@algolia/cache-in-memory';
@@ -8,11 +10,20 @@ const transporterRequest = Fixtures.transporterRequest();
 
 describe('request cache integration with cache drivers', () => {
   beforeEach(async () => {
-    // local storage has global state
-    await new BrowserLocalStorageCache().clear();
+    // @ts-ignore
+    // eslint-disable-next-line no-undef
+    if (testing.isBrowser()) {
+      await new BrowserLocalStorageCache().clear();
+    }
   });
 
-  const drivers = [NullCache, InMemoryCache, BrowserLocalStorageCache];
+  const drivers = [NullCache, InMemoryCache];
+
+  // @ts-ignore
+  // eslint-disable-next-line no-undef
+  if (testing.isBrowser()) {
+    drivers.push(BrowserLocalStorageCache);
+  }
 
   const expectedCalls = {
     'in-progress': {

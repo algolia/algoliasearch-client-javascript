@@ -7,5 +7,6 @@
     "strict": true,
     "allowSyntheticDefaultImports": true,
     "types": ["node", "webdriverio", "jest"]
-  }
+  },
+  "include": ["testing.d.ts"]
 }

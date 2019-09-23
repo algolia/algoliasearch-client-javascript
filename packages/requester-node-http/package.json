@@ -1,0 +1,9 @@
+{
+  "name": "@algolia/requester-node-http",
+  "version": "4.0.0-alpha.0",
+  "license": "MIT",
+  "main": "index.ts",
+  "dependencies": {
+    "@algolia/requester-types": "file:../requester-types"
+  }
+}

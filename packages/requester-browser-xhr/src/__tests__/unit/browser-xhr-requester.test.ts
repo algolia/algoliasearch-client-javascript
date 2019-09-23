@@ -3,11 +3,11 @@ import mock, { MockRequest, MockResponse } from 'xhr-mock';
 import { Method } from '@algolia/requester-types';
 import Fixtures from '../Fixtures';
 
-describe('Requester Browser Xhr', (): void => {
+describe('status code handling', (): void => {
   beforeEach(() => mock.setup());
   afterEach(() => mock.teardown());
 
-  it('It sends requests', async () => {
+  it('sends requests', async () => {
     const requester = new BrowserXhrRequester();
     const request = Fixtures.request();
 
@@ -31,7 +31,7 @@ describe('Requester Browser Xhr', (): void => {
     await requester.send(request);
   });
 
-  it('It resolves status 200', async () => {
+  it('resolves status 200', async () => {
     const requester = new BrowserXhrRequester();
     const body = JSON.stringify({ foo: 'bar' });
 
@@ -47,7 +47,7 @@ describe('Requester Browser Xhr', (): void => {
     expect(response.isTimedOut).toBe(false);
   });
 
-  it('It resolves status 300', async () => {
+  it('resolves status 300', async () => {
     const requester = new BrowserXhrRequester();
     const reason = 'Multiple Choices';
 
@@ -59,11 +59,11 @@ describe('Requester Browser Xhr', (): void => {
     const response = await requester.send(Fixtures.request());
 
     expect(response.status).toBe(300);
-    expect(response.content).toBe('');
+    expect(response.content).toBe(''); // No body returned here on xhr
     expect(response.isTimedOut).toBe(false);
   });
 
-  it('It resolves status 400', async () => {
+  it('resolves status 400', async () => {
     const requester = new BrowserXhrRequester();
 
     const body = { message: 'Invalid Application-Id or API-Key' };
@@ -80,28 +80,46 @@ describe('Requester Browser Xhr', (): void => {
     expect(response.isTimedOut).toBe(false);
   });
 
-  it('It resolves timeouts', async () => {
+  it('timouts if response dont appears before the timeout', async () => {
     const requester = new BrowserXhrRequester();
 
-    mock.get('https://algolia-dns.net/foo', () => new Promise(() => {}));
+    mock.post(
+      'https://algolia-dns.net/foo',
+      () => new Promise(resolve => setTimeout(() => resolve(), 2100))
+    );
 
-    const request = {
-      url: 'https://algolia-dns.net/foo',
-      method: Method.Get,
-      data: JSON.stringify({}),
-      headers: {},
-      timeout: 1,
-    };
-
-    const response = await requester.send(request);
+    const response = await requester.send(Fixtures.request());
 
     expect(response.status).toBe(0);
     expect(response.content).toBe('');
     expect(response.isTimedOut).toBe(true);
   });
+
+  it('do not timouts if response appears before the timeout', async () => {
+    const requester = new BrowserXhrRequester();
+
+    const res: MockResponse = new MockResponse();
+
+    // @ts-ignore
+    res._status = 200;
+
+    // @ts-ignore
+    res._body = '';
+
+    mock.post(
+      'https://algolia-dns.net/foo',
+      () => new Promise(resolve => setTimeout(() => resolve(res), 1900))
+    );
+
+    const response = await requester.send(Fixtures.request());
+
+    expect(response.status).toBe(200);
+    expect(response.content).toBe('');
+    expect(response.isTimedOut).toBe(false);
+  });
 });
 
-describe('Requester Browser Xhr on failures', (): void => {
+describe('error handling', (): void => {
   it('resolves dns not found', async () => {
     const requester = new BrowserXhrRequester();
 
@@ -127,7 +145,9 @@ describe('Requester Browser Xhr on failures', (): void => {
   it('resolves general network errors', async () => {
     const requester = new BrowserXhrRequester();
 
-    mock.post('https://algolia-dns.net/foo', () => Promise.reject(new Error('foo')));
+    mock.post('https://algolia-dns.net/foo', () =>
+      Promise.reject(new Error('This is a general error'))
+    );
 
     const response = await requester.send(Fixtures.request());
 
