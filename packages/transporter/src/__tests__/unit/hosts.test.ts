@@ -25,7 +25,9 @@ describe('The selection of hosts', (): void => {
     try {
       await transporter.read(transporterRequest);
     } catch (e) {
-      expect(e.message).toMatch('Unreachable hosts');
+      expect(e.message).toMatch(
+        'Unreachable hosts - your application id may be incorrect. If the error persists, contact support@algolia.com.'
+      );
 
       requesterRequest.timeout = 2;
       requesterRequest.url = 'https://read.com/save';
@@ -45,7 +47,9 @@ describe('The selection of hosts', (): void => {
     try {
       await transporter.write(transporterRequest);
     } catch (e) {
-      expect(e.message).toMatch('Unreachable hosts');
+      expect(e.message).toMatch(
+        'Unreachable hosts - your application id may be incorrect. If the error persists, contact support@algolia.com.'
+      );
 
       requesterRequest.timeout = 30;
       requesterRequest.url = 'https://read.com/save';

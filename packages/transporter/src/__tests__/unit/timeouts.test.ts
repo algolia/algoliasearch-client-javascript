@@ -66,7 +66,7 @@ describe('The selection timeouts', () => {
       isTimedOut: true,
     });
 
-    await expect(transporter.read(transporterRequest)).rejects.toEqual(RetryError.make());
+    await expect(transporter.read(transporterRequest)).rejects.toEqual(new RetryError());
 
     requesterRequest.timeout = 2;
     requesterRequest.url = 'https://read.com/save';

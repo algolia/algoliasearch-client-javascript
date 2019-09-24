@@ -151,7 +151,7 @@ export class Transporter implements TransporterContract {
         const host = hosts.pop(); // eslint-disable-line functional/immutable-data
 
         if (host === undefined) {
-          reject(RetryError.make());
+          reject(new RetryError());
 
           return;
         }

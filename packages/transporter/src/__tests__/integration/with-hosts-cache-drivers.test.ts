@@ -61,12 +61,14 @@ describe('hosts cache integration with cache drivers', () => {
         const transporter = Fixtures.transporter(requester, { hostsCache: driver });
 
         await expect(transporter.read(transporterRequest)).rejects.toMatchObject({
-          message: 'Unreachable hosts',
+          message:
+            'Unreachable hosts - your application id may be incorrect. If the error persists, contact support@algolia.com.',
           name: 'RetryError',
         });
 
         await expect(transporter.write(transporterRequest)).rejects.toMatchObject({
-          message: 'Unreachable hosts',
+          message:
+            'Unreachable hosts - your application id may be incorrect. If the error persists, contact support@algolia.com.',
           name: 'RetryError',
         });
 
