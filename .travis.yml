@@ -11,7 +11,7 @@ addons:
     direct_domains: "*.algolia.biz"
   hosts:
     - localhostfix.nossl # this domain is used in place of "localhost" which is blocked in Safari, we also do not use ".dev" which default to https in Chrome and Firefox
-script: 
+script:
   - "yarn run test-ci:${SCRIPT}"
 env:
   matrix:
@@ -19,7 +19,7 @@ env:
     - SCRIPT=bundlesize
     - SCRIPT=unit-node
     - SCRIPT=integration-node
-    - SCRIPT=unit-browsers          ZUUL_CONCURRENCY=2
+    - SCRIPT=unit-browsers          ZUUL_CONCURRENCY=4
     - SCRIPT=integration-browsers   ZUUL_CONCURRENCY=3
   global:
     # saucelabs credentials
