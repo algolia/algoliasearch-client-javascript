@@ -950,7 +950,7 @@ Index.prototype.findObject = function(findCallback, requestOptions, callback) {
 
       page += 1;
 
-      // paginate or has next page
+      // paginate if option was set and has next page
       if (!paginate || page >= result.nbPages) {
         throw new errors.ObjectNotFound('Object not found');
       }
