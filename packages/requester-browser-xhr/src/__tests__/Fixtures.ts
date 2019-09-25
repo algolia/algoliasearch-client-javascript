@@ -3,11 +3,9 @@ import { Method, Request } from '@algolia/requester-types';
 export default class Fixtures {
   public static request(): Request {
     return {
-      url: 'https://algolia-dns.net/foo',
+      url: 'https://algolia-dns.net/foo?x-algolia-header=bar',
       method: Method.Post,
       headers: {
-        'X-Algolia-Application-Id': 'ABCDE',
-        'X-Algolia-API-Key': '12345',
         'Content-Type': 'application/x-www-form-urlencoded',
       },
       data: JSON.stringify({ foo: 'bar' }),

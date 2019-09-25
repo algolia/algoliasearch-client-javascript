@@ -4,8 +4,6 @@ import Fixtures from '../Fixtures';
 import * as nock from 'nock';
 
 const headers = {
-  'x-algolia-application-id': 'ABCDE',
-  'x-algolia-api-key': '12345',
   'content-type': 'application/x-www-form-urlencoded',
 };
 
@@ -15,7 +13,7 @@ describe('status code handling', (): void => {
     const request = Fixtures.request();
     const body = JSON.stringify({ foo: 'bar' });
 
-    nock('https://algolia-dns.net', { reqheaders: headers })
+    nock('https://algolia-dns.net?x-algolia-header=foo', { reqheaders: headers })
       .post('/foo')
       .reply(200, body);
 
@@ -28,7 +26,7 @@ describe('status code handling', (): void => {
     const requester = new NodeHttpRequester();
     const body = JSON.stringify({ foo: 'bar' });
 
-    nock('https://algolia-dns.net', { reqheaders: headers })
+    nock('https://algolia-dns.net?x-algolia-header=foo', { reqheaders: headers })
       .post('/foo')
       .reply(200, body);
 
@@ -43,7 +41,7 @@ describe('status code handling', (): void => {
     const requester = new NodeHttpRequester();
     const reason = 'Multiple Choices';
 
-    nock('https://algolia-dns.net', { reqheaders: headers })
+    nock('https://algolia-dns.net?x-algolia-header=foo', { reqheaders: headers })
       .post('/foo')
       .reply(300, reason);
 
@@ -59,7 +57,7 @@ describe('status code handling', (): void => {
 
     const body = { message: 'Invalid Application-Id or API-Key' };
 
-    nock('https://algolia-dns.net', { reqheaders: headers })
+    nock('https://algolia-dns.net?x-algolia-header=foo', { reqheaders: headers })
       .post('/foo')
       .reply(400, JSON.stringify(body));
 
@@ -73,7 +71,7 @@ describe('status code handling', (): void => {
   it('timouts if response dont appears before the timeout', async () => {
     const requester = new NodeHttpRequester();
 
-    nock('https://algolia-dns.net', { reqheaders: headers })
+    nock('https://algolia-dns.net?x-algolia-header=foo', { reqheaders: headers })
       .post('/foo')
       .socketDelay(2100)
       .reply(200);
@@ -88,7 +86,7 @@ describe('status code handling', (): void => {
   it('do not timouts if response appears before the timeout', async () => {
     const requester = new NodeHttpRequester();
 
-    nock('https://algolia-dns.net', { reqheaders: headers })
+    nock('https://algolia-dns.net?x-algolia-header=foo', { reqheaders: headers })
       .post('/foo')
       .socketDelay(1900) // 3 seconds
       .reply(200);
@@ -103,7 +101,7 @@ describe('status code handling', (): void => {
   it('resolves response if returned before a timeout', async () => {
     const requester = new NodeHttpRequester();
 
-    nock('https://algolia-dns.net', { reqheaders: headers })
+    nock('https://algolia-dns.net?x-algolia-header=foo', { reqheaders: headers })
       .post('/foo')
       .socketDelay(3000) // 3 seconds
       .reply(200);
@@ -135,14 +133,14 @@ describe('error handling', (): void => {
     const response = await requester.send(request);
 
     expect(response.status).toBe(0);
-    expect(response.content).toBe('getaddrinfo ENOTFOUND this-dont-exist.algolia.com');
+    expect(response.content).toContain('ENOTFOUND');
     expect(response.isTimedOut).toBe(false);
   });
 
   it('resolves general network errors', async () => {
     const requester = new NodeHttpRequester();
 
-    nock('https://algolia-dns.net', { reqheaders: headers })
+    nock('https://algolia-dns.net?x-algolia-header=foo', { reqheaders: headers })
       .post('/foo')
       .replyWithError('This is a general error');
 

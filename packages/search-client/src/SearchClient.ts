@@ -20,6 +20,7 @@ export class SearchClient {
 
     this.transporter = options.transporter;
     this.transporter.hosts = this.createHosts();
+
     this.transporter.headers = this.createHeaders();
     this.transporter.queryParameters = this.createQueryParameters(options.userAgent);
   }
@@ -64,14 +65,14 @@ export class SearchClient {
   private createHeaders(): { readonly [key: string]: string } {
     return {
       'content-type': 'application/x-www-form-urlencoded',
-      'x-algolia-api-key': this.apiKey,
-      'x-algolia-application-id': this.appId,
     };
   }
 
   private createQueryParameters(userAgent: UserAgent): { readonly [key: string]: string } {
     return {
       'x-algolia-agent': userAgent.value,
+      'x-algolia-api-key': this.apiKey,
+      'x-algolia-application-id': this.appId,
     };
   }
 }

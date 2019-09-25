@@ -25,12 +25,12 @@ describe('Search Client', () => {
   it('Sets default headers', () => {
     expect(transporter.headers).toEqual({
       'content-type': 'application/x-www-form-urlencoded',
-      'x-algolia-application-id': 'appId',
-      'x-algolia-api-key': 'apiKey',
     });
 
     expect(transporter.queryParameters).toEqual({
       'x-algolia-agent': 'Algolia for JavaScript (4.0.0-alpha.0)',
+      'x-algolia-application-id': 'appId',
+      'x-algolia-api-key': 'apiKey',
     });
   });
 });

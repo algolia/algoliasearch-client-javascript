@@ -11,15 +11,13 @@ describe('status code handling', (): void => {
     const requester = new BrowserXhrRequester();
     const request = Fixtures.request();
 
-    expect.assertions(5);
+    expect.assertions(3);
 
     mock.post(
-      'https://algolia-dns.net/foo',
+      'https://algolia-dns.net/foo?x-algolia-header=bar',
       (req: MockRequest, res: MockResponse): MockResponse => {
         expect(req.method()).toEqual('POST');
 
-        expect(req.header('X-Algolia-Application-Id')).toEqual('ABCDE');
-        expect(req.header('X-Algolia-API-Key')).toEqual('12345');
         expect(req.header('Content-Type')).toEqual('application/x-www-form-urlencoded');
 
         expect(req.body()).toEqual(JSON.stringify({ foo: 'bar' }));
@@ -35,7 +33,7 @@ describe('status code handling', (): void => {
     const requester = new BrowserXhrRequester();
     const body = JSON.stringify({ foo: 'bar' });
 
-    mock.post('https://algolia-dns.net/foo', {
+    mock.post('https://algolia-dns.net/foo?x-algolia-header=bar', {
       status: 200,
       body,
     });
@@ -51,7 +49,7 @@ describe('status code handling', (): void => {
     const requester = new BrowserXhrRequester();
     const reason = 'Multiple Choices';
 
-    mock.post('https://algolia-dns.net/foo', {
+    mock.post('https://algolia-dns.net/foo?x-algolia-header=bar', {
       status: 300,
       reason,
     });
@@ -68,7 +66,7 @@ describe('status code handling', (): void => {
 
     const body = { message: 'Invalid Application-Id or API-Key' };
 
-    mock.post('https://algolia-dns.net/foo', {
+    mock.post('https://algolia-dns.net/foo?x-algolia-header=bar', {
       status: 400,
       body: JSON.stringify(body),
     });
@@ -84,7 +82,7 @@ describe('status code handling', (): void => {
     const requester = new BrowserXhrRequester();
 
     mock.post(
-      'https://algolia-dns.net/foo',
+      'https://algolia-dns.net/foo?x-algolia-header=bar',
       () => new Promise(resolve => setTimeout(() => resolve(), 2100))
     );
 
@@ -107,7 +105,7 @@ describe('status code handling', (): void => {
     res._body = '';
 
     mock.post(
-      'https://algolia-dns.net/foo',
+      'https://algolia-dns.net/foo?x-algolia-header=bar',
       () => new Promise(resolve => setTimeout(() => resolve(res), 1900))
     );
 
@@ -127,8 +125,6 @@ describe('error handling', (): void => {
       url: 'https://this-dont-exist.algolia.com',
       method: Method.Post,
       headers: {
-        'X-Algolia-Application-Id': 'ABCDE',
-        'X-Algolia-API-Key': '12345',
         'Content-Type': 'application/x-www-form-urlencoded',
       },
       data: JSON.stringify({ foo: 'bar' }),
@@ -145,7 +141,7 @@ describe('error handling', (): void => {
   it('resolves general network errors', async () => {
     const requester = new BrowserXhrRequester();
 
-    mock.post('https://algolia-dns.net/foo', () =>
+    mock.post('https://algolia-dns.net/foo?x-algolia-header=bar', () =>
       Promise.reject(new Error('This is a general error'))
     );
 
