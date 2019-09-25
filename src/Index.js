@@ -965,7 +965,7 @@ Index.prototype.findObject = function(findCallback, requestOptions, callback) {
     return promise;
   }
 
-  return promise
+  promise
     .then(function(res) {
       callback(null, res);
     })
