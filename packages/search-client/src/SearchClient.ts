@@ -1,6 +1,7 @@
 import { Transporter, Host, Call, UserAgent } from '@algolia/transporter-types';
 import { SearchIndex } from './SearchIndex';
 import { shuffle } from './helpers';
+import { AuthMode, AuthModeType, Auth } from '@algolia/auth';
 
 export class SearchClient {
   public readonly appId: string;
@@ -14,6 +15,7 @@ export class SearchClient {
     readonly apiKey: string;
     readonly transporter: Transporter;
     readonly userAgent: UserAgent;
+    readonly authMode?: AuthModeType;
   }) {
     this.appId = options.appId;
     this.apiKey = options.apiKey;
@@ -21,8 +23,21 @@ export class SearchClient {
     this.transporter = options.transporter;
     this.transporter.hosts = this.createHosts();
 
-    this.transporter.headers = this.createHeaders();
-    this.transporter.queryParameters = this.createQueryParameters(options.userAgent);
+    const auth = new Auth(
+      options.authMode !== undefined ? options.authMode : AuthMode.WithinHeaders,
+      this.appId,
+      this.apiKey
+    );
+
+    this.transporter.headers = {
+      ...auth.headers(),
+      ...{ 'content-type': 'application/x-www-form-urlencoded' },
+    };
+
+    this.transporter.queryParameters = {
+      ...auth.queryParameters(),
+      ...{ 'x-algolia-agent': options.userAgent.value },
+    };
   }
 
   public initIndex<TSearchIndex>(
@@ -60,19 +75,5 @@ export class SearchClient {
         ])
       )
       .map(host => new Host(host));
-  }
-
-  private createHeaders(): { readonly [key: string]: string } {
-    return {
-      'content-type': 'application/x-www-form-urlencoded',
-    };
-  }
-
-  private createQueryParameters(userAgent: UserAgent): { readonly [key: string]: string } {
-    return {
-      'x-algolia-agent': userAgent.value,
-      'x-algolia-api-key': this.apiKey,
-      'x-algolia-application-id': this.appId,
-    };
   }
 }
