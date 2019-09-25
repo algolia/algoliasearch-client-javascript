@@ -27,7 +27,10 @@ module.exports = {
       {
         displayName: 'browser',
         testEnvironment: 'jsdom',
-        testPathIgnorePatterns: ['packages/requester-node-http/*'],
+        testPathIgnorePatterns: [
+          'packages/requester-node-http/*',
+          'packages/algoliasearch/src/__tests__/node.test.ts',
+        ],
         globals: {
           environment: 'browser',
           isBrowser: true,
@@ -42,6 +45,7 @@ module.exports = {
         testPathIgnorePatterns: [
           'packages/requester-browser-xhr/*',
           'packages/cache-browser-local-storage/*',
+          'packages/algoliasearch/src/__tests__/algoliasearch-lite.test.ts',
         ],
         globals: {
           environment: 'node',

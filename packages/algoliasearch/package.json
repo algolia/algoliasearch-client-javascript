@@ -1,5 +1,10 @@
 {
   "name": "@nunomaduro/lightsearch",
+  "main": "index.ts",
+  "browser": {
+    "./index.ts": "./src/builds/algoliasearch-lite/index.ts",
+    "./lite.ts": "./src/builds/algoliasearch-lite/index.ts"
+  },
   "private": false,
   "version": "4.0.0-alpha.1",
   "license": "MIT",
