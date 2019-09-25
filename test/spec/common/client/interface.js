@@ -25,6 +25,7 @@ test('AlgoliaSearch client API spec', function(t) {
     'addUserKey',
     'addUserKeyWithValidity',
     'assignUserID',
+    'assignUserIDs',
     'batch',
     'clearCache',
     'copyIndex',
