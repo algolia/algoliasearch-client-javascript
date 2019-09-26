@@ -29,7 +29,8 @@ module.exports = {
   browsers: [{
     name: 'chrome',
     version: '-1..latest',
-    platform: 'Windows 10'
+    platform: 'Windows 10',
+    extendedDebugging: true
   },
   {
     name: 'firefox',
