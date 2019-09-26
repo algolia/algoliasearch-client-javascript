@@ -16,6 +16,7 @@ import { HasSetSettings, setSettings } from '../methods/index/setSettings';
 import { getSettings, HasGetSettings } from '../methods/index/getSettings';
 import { UserAgent } from '@algolia/transporter-types';
 import { batch, HasBatch } from '../methods/index/batch';
+import { AuthMode } from '@algolia/auth';
 
 export class TestSuite {
   public readonly testName: string;
@@ -59,11 +60,17 @@ export class TestSuite {
 
     this.ensureEnvironmentVariables();
 
+    const authMode =
+      // @ts-ignore
+      // eslint-disable-next-line no-undef
+      testing.environment() === 'node' ? AuthMode.WithinHeaders : AuthMode.WithinQueryParameters;
+
     const client = new SearchClient({
       appId: `${process.env.ALGOLIA_APPLICATION_ID_1}`,
       apiKey: `${process.env.ALGOLIA_ADMIN_KEY_1}`,
       transporter,
       userAgent: UserAgent.create('4.0.0'),
+      authMode,
     });
 
     const index = client.initIndex<

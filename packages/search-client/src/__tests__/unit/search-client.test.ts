@@ -2,6 +2,7 @@ import { SearchClient } from '../../..';
 import { Transporter } from '@algolia/transporter';
 import { instance, mock } from 'ts-mockito';
 import { UserAgent } from '@algolia/transporter-types';
+import { AuthMode } from '@algolia/auth';
 
 const transporterMock = mock(Transporter);
 const transporter = instance(transporterMock);
@@ -11,6 +12,7 @@ const searchClient = new SearchClient({
   appId: 'appId',
   apiKey: 'apiKey',
   userAgent: UserAgent.create('4.0.0-alpha.0'),
+  authMode: AuthMode.WithinQueryParameters,
 });
 
 describe('Search Client', () => {
