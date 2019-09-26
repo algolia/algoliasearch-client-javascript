@@ -25,6 +25,7 @@ test('AlgoliaSearch client API spec', function(t) {
     'addUserKey',
     'addUserKeyWithValidity',
     'assignUserID',
+    'assignUserIDs',
     'batch',
     'clearCache',
     'copyIndex',
@@ -74,7 +75,8 @@ test('AlgoliaSearch client API spec', function(t) {
     'disableSecuredAPIKey',
     'enableRateLimitForward',
     'useSecuredAPIKey',
-    'generateSecuredApiKey'
+    'generateSecuredApiKey',
+    'getSecuredApiKeyRemainingValidity'
   ]);
 
   expectedProperties = expectedProperties.sort();

@@ -547,6 +547,31 @@ AlgoliaSearch.prototype.assignUserID = function(data, callback) {
 };
 
 /**
+ * Assign a array of userIDs to a cluster.
+ *
+ * @param {Array} data.userIDs The array of userIDs to assign to a new cluster
+ * @param {string} data.cluster The cluster to assign the user to
+ * @return {Promise|undefined} Returns a promise if no callback given
+ * @example
+ * client.assignUserIDs({ cluster: 'c1-test', userIDs: ['some-user-1', 'some-user-2'] });
+ */
+AlgoliaSearch.prototype.assignUserIDs = function(data, callback) {
+  if (!data.userIDs || !data.cluster) {
+    throw new errors.AlgoliaSearchError('You have to provide both an array of userIDs and cluster', data);
+  }
+  return this._jsonRequest({
+    method: 'POST',
+    url: '/1/clusters/mapping/batch',
+    hostType: 'write',
+    body: {
+      cluster: data.cluster,
+      users: data.userIDs
+    },
+    callback: callback
+  });
+};
+
+/**
  * Get the top userIDs
  *
  * (the callback is the second argument)
@@ -732,6 +757,7 @@ AlgoliaSearch.prototype.disableRateLimitForward = notImplemented;
 AlgoliaSearch.prototype.useSecuredAPIKey = notImplemented;
 AlgoliaSearch.prototype.disableSecuredAPIKey = notImplemented;
 AlgoliaSearch.prototype.generateSecuredApiKey = notImplemented;
+AlgoliaSearch.prototype.getSecuredApiKeyRemainingValidity = notImplemented;
 
 function notImplemented() {
   var message = 'Not implemented in this environment.\n' +

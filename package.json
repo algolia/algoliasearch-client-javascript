@@ -32,7 +32,7 @@
   "bundlesize": [
     {
       "path": "./dist/algoliasearch.?(jquery|angular).min.js",
-      "maxSize": "19 kB"
+      "maxSize": "20 kB"
     },
     {
       "path": "./dist/algoliasearchLite.min.js",
