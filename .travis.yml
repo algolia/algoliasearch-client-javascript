@@ -19,7 +19,7 @@ env:
     - SCRIPT=bundlesize
     - SCRIPT=unit-node
     - SCRIPT=integration-node
-    - SCRIPT=unit-browsers          ZUUL_CONCURRENCY=1
+    - SCRIPT=unit-browsers          ZUUL_CONCURRENCY=4
     - SCRIPT=integration-browsers   ZUUL_CONCURRENCY=3
   global:
     # saucelabs credentials
