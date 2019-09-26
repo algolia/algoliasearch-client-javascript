@@ -16,5 +16,5 @@ function run() {
       'spec/common/**/*.js',
       'spec/browser/**/*.js'
     ]);
-  }, 1000);
+  }, 5000);
 }
