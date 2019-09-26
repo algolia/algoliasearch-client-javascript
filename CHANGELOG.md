@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## 3.35.0
+>2019-09-26
+
+* FEAT(remaining-validity): adds remaining valitity method (#778)
+  * `client.getSecuredApiKeyRemainingValidity('securedAPIKey')`: Gets remaining validity seconds of an secured API Key
+* FEAT(unit-testing-relevance): adds unit testing relevance methods (#777)
+  * `index.findObject(hit => hit.firstname == 'Jimmie')`: Find an object by the given condition
+  * `index.getObjectPosition(results, 'a-unique-identifier')`: Retrieve the given object position in the given results set
+* FEAT(adds-assign-user-ids): adds assignUserIDs method and tests (#783)
+  * `client.assignUserIDs({ cluster: 'c1-test', userIDs: ['some-user-1', 'some-user-2'] })`: Assign a array of userIDs to a cluster
+
 ## 3.34.0
 >2019-08-29
 
