@@ -6,3 +6,4 @@ dist
 *.test.ts.snap
 algoliasearch-lite.min.js
 algoliasearch-lite.min.js.map
+yarn.lock
