@@ -9,7 +9,6 @@ addons:
     # we don't want algolia.biz to go through sauce connect proxy but rather directly through the internet
     # to avoid bad behaviour in tests checking for algolia.biz blackhole dns
     direct_domains: "*.algolia.biz"
-    no_ssl_bump_domains: "all"
   hosts:
     - localhostfix.nossl # this domain is used in place of "localhost" which is blocked in Safari, we also do not use ".dev" which default to https in Chrome and Firefox
 script:
@@ -20,7 +19,7 @@ env:
     - SCRIPT=bundlesize
     - SCRIPT=unit-node
     - SCRIPT=integration-node
-    - SCRIPT=unit-browsers          ZUUL_CONCURRENCY=4
+    - SCRIPT=unit-browsers          ZUUL_CONCURRENCY=1
     - SCRIPT=integration-browsers   ZUUL_CONCURRENCY=3
   global:
     # saucelabs credentials
