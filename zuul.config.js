@@ -19,21 +19,17 @@ module.exports = {
   // only used when run with saucelabs
   // not activated when dev or phantom
   concurrency: process.env.ZUUL_CONCURRENCY || 4,
-  tunnel: {
-    type: 'ngrok',
-    bind_tls: true
-  },
   // if browser does not sends output in 120s since last output:
   // stop testing, something is wrong
   browser_output_timeout: 60 * 3 * 1000,
   browser_open_timeout: 60 * 6 * 1000,
   // we want to be notified something is wrong asap, so low retry
   browser_retries: 2,
+  tunnel: false,
   browsers: [{
     name: 'chrome',
     version: '-1..latest',
-    platform: 'Windows 10',
-    extendedDebugging: true
+    platform: 'Windows 10'
   },
   {
     name: 'firefox',
