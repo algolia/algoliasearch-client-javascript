@@ -1,7 +1,6 @@
 'use strict';
 
 var test = require('tape');
-var fauxJax = require('faux-jax');
 var bind = require('lodash-compat/function/bind');
 
 var createFixture = require('../../../utils/create-fixture');
@@ -23,9 +22,10 @@ var hits = [
   {company: 'Yahoo', name: 'Marissa Mayer'}
 ];
 
-fauxJax.install();
-
 test('findObject: no object was found when callback always return false', function(t) {
+  var fauxJax = require('faux-jax');
+  fauxJax.install();
+
   var index = fixture.index;
   t.plan(1);
 
@@ -38,6 +38,8 @@ test('findObject: no object was found when callback always return false', functi
         nbPages: 1
       })
     );
+
+    fauxJax.restore();
   });
 
   index
@@ -54,6 +56,9 @@ test('findObject: no object was found when callback always return false', functi
 });
 
 test('findObject: the first object is returned with a `position=0` and `page=0`', function(t) {
+  var fauxJax = require('faux-jax');
+  fauxJax.install();
+
   var index = fixture.index;
   t.plan(1);
 
@@ -66,6 +71,8 @@ test('findObject: the first object is returned with a `position=0` and `page=0`'
         nbPages: 1
       })
     );
+
+    fauxJax.restore();
   });
 
   index
@@ -83,6 +90,9 @@ test('findObject: the first object is returned with a `position=0` and `page=0`'
 });
 
 test('findObject: object not found with non matching query', function(t) {
+  var fauxJax = require('faux-jax');
+  fauxJax.install();
+
   var index = fixture.index;
   t.plan(1);
 
@@ -97,6 +107,8 @@ test('findObject: object not found with non matching query', function(t) {
         nbPages: 1
       })
     );
+
+    fauxJax.restore();
   });
 
   index
@@ -115,6 +127,9 @@ test('findObject: object not found with non matching query', function(t) {
 });
 
 test('findObject: object not found without pagination', function(t) {
+  var fauxJax = require('faux-jax');
+  fauxJax.install();
+
   var index = fixture.index;
   t.plan(1);
 
@@ -145,10 +160,15 @@ test('findObject: object not found without pagination', function(t) {
         name: 'AlgoliaSearchObjectNotFoundError',
         message: 'Object not found'
       });
+
+      fauxJax.restore();
     });
 });
 
 test('findObject: object found with pagination', function(t) {
+  var fauxJax = require('faux-jax');
+  fauxJax.install();
+
   var index = fixture.index;
   t.plan(1);
 
@@ -179,6 +199,8 @@ test('findObject: object found with pagination', function(t) {
         position: 7,
         page: 2
       });
+
+      fauxJax.restore();
     })
     .catch(t.fail, t);
 });
