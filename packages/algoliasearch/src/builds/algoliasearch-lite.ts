@@ -1,3 +1,4 @@
+import { AuthMode } from '@algolia/auth';
 import { BrowserXhrRequester } from '@algolia/requester-browser-xhr';
 import { Transporter } from '@algolia/transporter';
 import { UserAgent } from '@algolia/transporter-types';
@@ -11,7 +12,6 @@ import {
   HasSearchForFacetValues,
 } from '@algolia/search-client/src/methods/index/searchForFacetValues';
 import { SearchClient as BaseSearchClient } from '@algolia/search-client';
-import { AuthMode } from '@algolia/auth';
 
 type SearchIndex = BaseSearchClient & HasSearch & HasSearchForFacetValues;
 
