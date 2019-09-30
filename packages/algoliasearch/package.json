@@ -6,7 +6,7 @@
     "./lite.js": "./dist/algoliasearch-lite.umd.min.js"
   },
   "private": false,
-  "version": "4.0.0-alpha.4",
+  "version": "4.0.0-alpha.5",
   "license": "MIT",
   "description": "test",
   "scripts": {
@@ -15,6 +15,6 @@
     "release:clean": "rm -rf dist",
     "release:build": "mkdir -p dist && yarn build",
     "release:stable": "",
-    "release:alpha": "yarn publish --tag alpha --verbose --access public"
+    "release:alpha": "yarn publish --verbose --access public"
   }
 }
