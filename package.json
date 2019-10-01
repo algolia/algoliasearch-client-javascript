@@ -68,11 +68,11 @@
     "test:browser-local": "cp -a packages/algoliasearch/dist/algoliasearch-lite.umd.* specs/fixtures/websites/algoliasearch-lite.com/. && wdio ./wdio.local.conf.js",
     "test:browser-ci": "cp -a packages/algoliasearch/dist/algoliasearch-lite.umd.* specs/fixtures/websites/algoliasearch-lite.com/. && wdio ./wdio.saucelabs.conf.js",
     "test:lint": "eslint . --ext .js,.ts",
-    "test:local": "yarn lint && yarn test:lint && yarn test:types && yarn test:unit",
+    "test:local": "yarn clean && yarn lint && yarn test:lint && yarn test:types && yarn test:unit",
     "test:size": "bundlesize",
     "test:build": "yarn build && yarn test:size",
     "test:types": "tsc",
-    "test:unit": "lerna clean --yes && lerna link && yarn test:types && jest --verbose --updateSnapshot",
+    "test:unit": "jest --verbose --updateSnapshot",
     "update": "rm -rf node_modules && rm -f yarn.lock && yarn && lerna clean --yes",
     "release:clean": "lerna run release:clean",
     "release:build": "lerna run release:build"
