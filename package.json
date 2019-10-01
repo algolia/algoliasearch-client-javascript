@@ -67,11 +67,12 @@
     "test:lint": "eslint . --ext .js,.ts",
     "test:local": "yarn lint && yarn test:lint && yarn test:types && yarn test:unit",
     "test:size": "bundlesize",
-    "test:build": "yarn build && yarn test:size",
+    "test:build": "yarn build && yarn test:size && yarn release:clean",
     "test:types": "tsc",
     "test:unit": "lerna clean --yes && jest --verbose --updateSnapshot",
-    "lint:fix": "npm run lint -- --fix",
-    "update": "rm -rf node_modules && rm yarn.lock && yarn && lerna clean --yes"
+    "update": "rm -rf node_modules && rm yarn.lock && yarn && lerna clean --yes",
+    "release:clean": "lerna run release:clean",
+    "release:build": "lerna run release:build"
   },
   "husky": {
     "hooks": {

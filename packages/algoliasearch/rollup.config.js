@@ -21,7 +21,7 @@ const plugins = [
     runtimeHelpers: true,
   }),
   resolve({
-    browser: true,
+    browser: false,
     preferBuiltins: false,
     extensions: ['.ts', '.js'],
   }),
@@ -36,24 +36,23 @@ const plugins = [
   }),
 ];
 
-const createConfiguration = ({ input, name, minify = false } = {}) => ({
+const createConfiguration = ({ input, name, format, external } = {}) => ({
   input,
-  external: ['dom'],
+  external,
   output: {
-    file: `dist/umd/${name}${minify ? '.min' : ''}.js`,
+    file: `dist/${name}.js`,
     name: `AlgoliaSearch Lite${name}`,
-    format: 'umd',
+    format,
     banner: createLicence(),
     sourcemap: true,
   },
   plugins: plugins.concat(
     clear([
-      minify &&
-        uglify({
-          output: {
-            preamble: createLicence(),
-          },
-        }),
+      uglify({
+        output: {
+          preamble: createLicence(),
+        },
+      }),
     ])
   ),
 });
@@ -61,7 +60,14 @@ const createConfiguration = ({ input, name, minify = false } = {}) => ({
 export default [
   createConfiguration({
     input: 'src/builds/algoliasearch-lite.ts',
-    name: 'algoliasearch-lite',
-    minify: true,
+    name: 'algoliasearch-lite.umd',
+    format: 'umd',
+    external: ['dom'],
+  }),
+  createConfiguration({
+    input: 'src/builds/node.ts',
+    name: 'algoliasearch.cjs',
+    format: 'cjs',
+    external: ['https'],
   }),
 ];
