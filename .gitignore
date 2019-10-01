@@ -4,6 +4,5 @@ node_modules
 dist
 .vscode
 *.test.ts.snap
-algoliasearch-lite.min.js
-algoliasearch-lite.min.js.map
 yarn.lock
+specs/fixtures/websites/algoliasearch-lite.com/algoliasearch-lite.umd.js*
