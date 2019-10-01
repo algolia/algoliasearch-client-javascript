@@ -8,5 +8,6 @@
     "allowSyntheticDefaultImports": true,
     "types": ["node", "webdriverio", "jest"]
   },
+  "preserveSymlinks": true,
   "include": ["testing.d.ts"]
 }
