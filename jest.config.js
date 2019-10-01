@@ -22,6 +22,7 @@ const config = {
 };
 
 module.exports = {
+  globals: { 'ts-jest': { isolatedModules: true } },
   projects: [
     Object.assign(
       {

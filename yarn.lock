@@ -17,7 +17,7 @@
 "@algolia/transporter-types@file:packages/transporter-types":
   version "4.0.0-alpha.0"
   dependencies:
-    "@algolia/requester-types" "file:../../Library/Caches/Yarn/v4/npm-@algolia-transporter-types-4.0.0-alpha.0-2e60d616-0544-4b6f-aa26-a8beb5e104b7-1569937186167/node_modules/@algolia/requester-types"
+    "@algolia/requester-types" "file:../../Library/Caches/Yarn/v4/npm-@algolia-transporter-types-4.0.0-alpha.0-b0982881-a3a2-4c15-a88f-839446c90a26-1569940219815/node_modules/@algolia/requester-types"
 
 "@babel/cli@^7.6.0":
   version "7.6.2"
