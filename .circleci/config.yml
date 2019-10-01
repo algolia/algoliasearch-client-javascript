@@ -117,19 +117,19 @@ workflows:
   version: 2
   ci:
     jobs:
-      - test_unit
+      - test_unit:
           version: 8
-      - test_unit
+      - test_unit:
           version: 10
-      - test_unit
+      - test_unit:
           version: 11
-      - test_unit
+      - test_unit:
           version: 12
-      - test_lint
+      - test_lint:
           version: 12
-      - test_types
+      - test_types:
           version: 12
-      - test_build
+      - test_build:
           version: 12
-      - test_browser
+      - test_browser:
           version: 12
