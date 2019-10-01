@@ -72,7 +72,7 @@
     "test:size": "bundlesize",
     "test:build": "yarn build && yarn test:size",
     "test:types": "tsc",
-    "test:unit": "jest --verbose --updateSnapshot",
+    "test:unit": "lerna clean --yes && lerna link --force-local && jest --verbose --updateSnapshot",
     "update": "rm -rf node_modules && rm -f yarn.lock && yarn && lerna clean --yes",
     "release:clean": "lerna run release:clean",
     "release:build": "lerna run release:build"
