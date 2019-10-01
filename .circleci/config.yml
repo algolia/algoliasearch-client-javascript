@@ -28,9 +28,14 @@ defaults: &defaults
   docker:
     - image: circleci/node:<< parameters.version >>
 
-version: 2
+version: 2.1
 jobs:
   test_build:
+    parameters:
+      version:
+        type: string
+    docker:
+      - image: circleci/node:<< parameters.version >>
     <<: *defaults
     steps:
       - checkout
@@ -79,12 +84,13 @@ jobs:
           command: yarn test:unit --maxWorkers=4
 
   test_browser:
-    override:
-      - ./bin/sc -u $SAUCE_USERNAME -k $SAUCE_ACCESS_KEY -f ~/sc_ready:
-          background: true
-          pwd: sc-*-linux
     <<: *defaults
     steps:
+      - run:
+          name: Setup sauce labs
+          command: ./bin/sc -u $SAUCE_USERNAME -k $SAUCE_ACCESS_KEY -f ~/sc_ready
+          background: true
+          pwd: sc-*-linux
       - checkout
       - run: *install_yarn_version
       - restore_cache: *restore_yarn_cache
@@ -118,18 +124,18 @@ workflows:
   ci:
     jobs:
       - test_unit:
-          version: 8
+          version: '8'
       - test_unit:
-          version: 10
+          version: '10'
       - test_unit:
-          version: 11
+          version: '11'
       - test_unit:
-          version: 12
+          version: '12'
       - test_lint:
-          version: 12
+          version: '12'
       - test_types:
-          version: 12
+          version: '12'
       - test_build:
-          version: 12
+          version: '12'
       - test_browser:
-          version: 12
+          version: '12'
