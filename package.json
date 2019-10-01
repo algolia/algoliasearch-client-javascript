@@ -58,6 +58,9 @@
     "webdriverio": "^5.12.5",
     "xhr-mock": "^2.4.1"
   },
+  "engines": {
+    "node": ">=8"
+  },
   "scripts": {
     "build": "lerna run build",
     "lint": "eslint . --ext .js,.ts --fix",
