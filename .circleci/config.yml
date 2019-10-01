@@ -91,6 +91,9 @@ jobs:
           command: ./bin/sc -u $SAUCE_USERNAME -k $SAUCE_ACCESS_KEY -f ~/sc_ready
           background: true
           pwd: sc-*-linux
+      - run:
+          name: Move to repository folder
+          command: cd ~/algoliasearch-client-javascript
       - checkout
       - run: *install_yarn_version
       - restore_cache: *restore_yarn_cache
