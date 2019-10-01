@@ -23,7 +23,7 @@ class SearchClient extends BaseSearchClient {
   }
 }
 
-export function algoliasearch(appId: string, apiKey: string): SearchClient {
+export default function algoliasearch(appId: string, apiKey: string): SearchClient {
   const requester = new BrowserXhrRequester();
 
   const transporter = new Transporter({

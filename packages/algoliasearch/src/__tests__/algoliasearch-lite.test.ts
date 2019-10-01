@@ -1,4 +1,4 @@
-import { algoliasearch } from '../builds/algoliasearch-lite';
+import algoliasearch from '../builds/algoliasearch-lite';
 import { SearchClient } from '@algolia/search-client';
 
 describe('algoliasearch', () => {
