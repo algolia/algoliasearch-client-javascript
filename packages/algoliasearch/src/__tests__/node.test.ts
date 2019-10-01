@@ -23,8 +23,13 @@ describe('algoliasearch', () => {
       'x-algolia-api-key': 'bar',
     });
 
+    const nodeVersion = process.versions.node;
+
+    // eslint-disable-next-line radix
+    expect(parseInt(nodeVersion)).toBeGreaterThanOrEqual(8);
+
     expect(client.transporter.queryParameters).toEqual({
-      'x-algolia-agent': 'Algolia for JavaScript (4.0.0-alpha.0); Node.js (12.9.1)',
+      'x-algolia-agent': `Algolia for JavaScript (4.0.0-alpha.0); Node.js (${nodeVersion})`,
     });
   });
 });

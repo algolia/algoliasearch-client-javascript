@@ -22,8 +22,11 @@ aliases:
 
 defaults: &defaults
   working_directory: ~/algoliasearch-client-javascript
+  parameters:
+    version:
+      type: string
   docker:
-    - image: circleci/node:8.16.1@sha256:0abb6642ddfa39c167140038a49241c3b4b0cb77a68e6bd56e5b3420e030dcb5
+    - image: circleci/node:<< parameters.version >>
 
 version: 2
 jobs:
@@ -39,7 +42,7 @@ jobs:
           name: Build & Test packages size
           command: yarn test:build
 
-  test_unit:
+  test_lint:
     <<: *defaults
     steps:
       - checkout
@@ -48,11 +51,29 @@ jobs:
       - run: *run_yarn_install
       - save_cache: *save_yarn_cache
       - run:
-          name: Lint & Code styles
+          name: Lint tests
           command: yarn test:lint
+
+  test_types:
+    <<: *defaults
+    steps:
+      - checkout
+      - run: *install_yarn_version
+      - restore_cache: *restore_yarn_cache
+      - run: *run_yarn_install
+      - save_cache: *save_yarn_cache
       - run:
-          name: Type checking
+          name: Lint tests
           command: yarn test:types
+
+  test_unit:
+    <<: *defaults
+    steps:
+      - checkout
+      - run: *install_yarn_version
+      - restore_cache: *restore_yarn_cache
+      - run: *run_yarn_install
+      - save_cache: *save_yarn_cache
       - run:
           name: Unit Tests
           command: yarn test:unit --maxWorkers=4
@@ -96,6 +117,19 @@ workflows:
   version: 2
   ci:
     jobs:
-      - test_build
       - test_unit
+          version: 8
+      - test_unit
+          version: 10
+      - test_unit
+          version: 11
+      - test_unit
+          version: 12
+      - test_lint
+          version: 12
+      - test_types
+          version: 12
+      - test_build
+          version: 12
       - test_browser
+          version: 12
