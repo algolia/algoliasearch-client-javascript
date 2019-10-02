@@ -92,20 +92,6 @@ jobs:
       - run: *run_yarn_install
       - save_cache: *save_yarn_cache
       - run:
-          name: Download sauce-connect
-          command: |
-            wget https://saucelabs.com/downloads/sc-4.5.4-linux.tar.gz
-            tar -xzf sc-4.5.4-linux.tar.gz
-      - run:
-          name: Starts tunnel
-          command: |
-            cd sc-*-linux
-            ./bin/sc -u $SAUCE_USERNAME -k $SAUCE_ACCESS_KEY -f --tunnel-identifier ${CIRCLE_BUILD_NUM}
-          background: true
-      - run:
-          name: Wait for tunnel to be ready
-          command: wget --retry-connrefused --no-check-certificate -T 30 localhost:4445
-      - run:
           name: Browser tests
           command: yarn test:browser-ci
       - run:
