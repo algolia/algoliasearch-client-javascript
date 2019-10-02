@@ -7,7 +7,6 @@ const baseConfig = require('./wdio.base.conf');
 const sauceOptions = {
   recordVideo: false,
   recordScreenshots: false,
-  startConnect: true,
   tunnelIdentifier: process.env.CIRCLE_BUILD_NUM,
 };
 
@@ -16,7 +15,7 @@ exports.config = {
   services: [...(baseConfig.services || []), 'sauce'],
   user: process.env.SAUCE_USERNAME,
   key: process.env.SAUCE_ACCESS_KEY,
-  sauceConnect: true,
+  sauceConnect: false,
   maxInstances: 5,
   specFileRetries: 0,
   capabilities: [
