@@ -105,7 +105,7 @@ jobs:
           background: true
           command: |
             # startup saucelabs tunnel as background task (its a blocking command)
-            sc -u ${SAUCE_USERNAME} -k ${SAUCE_ACCESS_KEY} -f --tunnel-identifier ${CIRCLE_BUILD_NUM}
+            sc -u ${SAUCE_USERNAME} -k ${SAUCE_ACCESS_KEY} -f --tunnel-identifier ${CIRCLE_BUILD_NUM} &
             #wait for sauce tunnel up to 1 minute
             wget --retry-connrefused --no-check-certificate -T 60 localhost:4445
       - run:
