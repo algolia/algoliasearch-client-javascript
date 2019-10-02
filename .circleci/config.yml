@@ -29,6 +29,8 @@ defaults: &defaults
     - image: circleci/node:<< parameters.version >>
 
 version: 2.1
+orbs:
+  saucelabs: saucelabs/connect@volatile
 jobs:
   test_build:
     parameters:
