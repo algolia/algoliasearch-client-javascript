@@ -45,7 +45,7 @@
     "rollup-plugin-auto-external": "^2.0.0",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-commonjs": "^10.1.0",
-    "rollup-plugin-filesize": "6.0.1",
+    "rollup-plugin-filesize": "^6.2.0",
     "rollup-plugin-node-globals": "^1.4.0",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-replace": "^2.2.0",
@@ -85,7 +85,7 @@
   "bundlesize": [
     {
       "path": "packages/algoliasearch/dist/algoliasearch-lite.umd.js",
-      "maxSize": "3.70KB"
+      "maxSize": "3.73KB"
     }
   ],
   "workspaces": [
