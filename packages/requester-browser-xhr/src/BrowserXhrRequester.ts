@@ -5,22 +5,17 @@ export class BrowserXhrRequester implements Requester {
     return new Promise((resolve): void => {
       const baseRequester = new XMLHttpRequest();
 
-      // eslint-disable-next-line functional/immutable-data
-      baseRequester.timeout = 1000 * request.timeout;
-
-      // eslint-disable-next-line functional/immutable-data
-      baseRequester.ontimeout = () => {
-        resolve({
-          content: baseRequester.statusText,
-          status: baseRequester.status,
-          isTimedOut: true,
-        });
-      };
+      const timeoutHandler = setTimeout(() => {
+        baseRequester.abort();
+        resolve({ status: 0, content: '', isTimedOut: true });
+      }, request.timeout * 1000);
 
       // eslint-disable-next-line functional/immutable-data
       baseRequester.onerror = () => {
         // istanbul ignore next
         if (baseRequester.status === 0) {
+          clearTimeout(timeoutHandler);
+
           resolve({
             content: baseRequester.responseText || 'Network request failed',
             status: baseRequester.status,
@@ -31,6 +26,8 @@ export class BrowserXhrRequester implements Requester {
 
       //  eslint-disable-next-line functional/immutable-data
       baseRequester.onload = () => {
+        clearTimeout(timeoutHandler);
+
         resolve({
           content: baseRequester.responseText,
           status: baseRequester.status,
