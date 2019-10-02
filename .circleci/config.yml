@@ -109,7 +109,7 @@ jobs:
           name: Open Sauce Connect Proxy Tunnel
           command: |
             # startup saucelabs tunnel as background task (its a blocking command)
-            sc -u ${SAUCE_USERNAME} -k ${SAUCE_ACCESS_KEY} --tunnel-identifier ${CIRCLE_BUILD_NUM} -f "/tmp/sc_ready" 2>&1 &
+            sc -u $SAUCE_USERNAME -k $SAUCE_ACCESS_KEY -f "/tmp/sc_ready" 2>&1 &
             while [ ! -e "/tmp/sc_ready" ]; do sleep 1; done
       - run:
           name: Browser tests
