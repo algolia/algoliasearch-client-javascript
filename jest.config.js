@@ -22,7 +22,6 @@ const config = {
 };
 
 module.exports = {
-  globals: { 'ts-jest': { isolatedModules: true } },
   projects: [
     Object.assign(
       {
@@ -35,6 +34,7 @@ module.exports = {
         globals: {
           environment: 'browser',
           isBrowser: true,
+          'ts-jest': { isolatedModules: true },
         },
       },
       config
@@ -51,6 +51,7 @@ module.exports = {
         globals: {
           environment: 'node',
           isBrowser: false,
+          'ts-jest': { isolatedModules: true },
         },
       },
       config
