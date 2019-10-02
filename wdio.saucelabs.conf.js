@@ -7,6 +7,7 @@ const baseConfig = require('./wdio.base.conf');
 const sauceOptions = {
   recordVideo: false,
   recordScreenshots: false,
+  startConnect: true,
   tunnelIdentifier: process.env.CIRCLE_BUILD_NUM,
 };
 
