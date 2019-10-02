@@ -116,7 +116,7 @@ jobs:
           command: yarn test:browser-ci
       - run:
           name: Close Sauce Connect Tunnels
-          command: killall sc
+          command: pkill sc
 workflows:
   version: 2
   ci:
