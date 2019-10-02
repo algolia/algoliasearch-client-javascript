@@ -4,6 +4,7 @@ export class BrowserXhrRequester implements Requester {
   public send(request: Request): Promise<Response> {
     return new Promise((resolve): void => {
       const baseRequester = new XMLHttpRequest();
+      baseRequester.open(request.method, request.url, true);
 
       const timeoutHandler = setTimeout(() => {
         baseRequester.abort();
@@ -34,8 +35,6 @@ export class BrowserXhrRequester implements Requester {
           isTimedOut: false,
         });
       };
-
-      baseRequester.open(request.method, request.url, true);
 
       Object.keys(request.headers).forEach(key =>
         baseRequester.setRequestHeader(key, request.headers[key])
