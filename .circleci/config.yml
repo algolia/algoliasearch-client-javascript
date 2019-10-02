@@ -29,8 +29,6 @@ defaults: &defaults
     - image: circleci/node:<< parameters.version >>
 
 version: 2.1
-orbs:
-  sauce-connect: saucelabs/sauce-connect@1.0.1
 jobs:
   test_build:
     parameters:
@@ -45,6 +43,22 @@ jobs:
       - restore_cache: *restore_yarn_cache
       - run: *run_yarn_install
       - save_cache: *save_yarn_cache
+      - run:
+          name: Install Sauce Connect Proxy
+          command: |
+            cd /tmp
+            curl https://saucelabs.com/downloads/sc-4.5.4-linux.tar.gz -o saucelabs.tar.gz
+            tar -xzf saucelabs.tar.gz
+            chmod a+x sc-4.5.1-linux/bin/sc
+            sudo cp sc-4.5.1-linux/bin/sc /usr/local/bin
+            sc --version
+      - run:
+          name: Open Sauce Connect Proxy Tunnel
+          command: |
+            # startup saucelabs tunnel as background task (its a blocking command)
+            sc -u ${SAUCELABS_USER} -k ${SAUCELABS_KEY} -f --tunnel-identifier ${CIRCLE_BUILD_NUM}
+            #wait for sauce tunnel up to 1 minute
+            wget --retry-connrefused --no-check-certificate -T 60 localhost:4445
       - run:
           name: Build & Test packages size
           command: yarn test:build
