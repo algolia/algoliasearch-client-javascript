@@ -30,7 +30,7 @@ defaults: &defaults
 
 version: 2.1
 orbs:
-  saucelabs: saucelabs/connect@volatile
+  sauce-connect: saucelabs/sauce-connect@1.0.1
 jobs:
   test_build:
     parameters:
