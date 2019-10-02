@@ -7,6 +7,7 @@ const baseConfig = require('./wdio.base.conf');
 const sauceOptions = {
   recordVideo: false,
   recordScreenshots: false,
+  tunnelIdentifier: process.env.CIRCLE_BUILD_NUM,
 };
 
 exports.config = {
@@ -22,19 +23,16 @@ exports.config = {
       browserName: 'chrome',
       browserVersion: '76.0',
       'sauce:options': sauceOptions,
-      'tunnel-identifier': process.env.CIRCLE_BUILD_NUM,
     },
     {
       browserName: 'firefox',
       browserVersion: '68.0',
       'sauce:options': sauceOptions,
-      'tunnel-identifier': process.env.CIRCLE_BUILD_NUM,
     },
     {
       browserName: 'internet explorer',
       browserVersion: '11.285',
       'sauce:options': sauceOptions,
-      'tunnel-identifier': process.env.CIRCLE_BUILD_NUM,
     },
   ],
 };
