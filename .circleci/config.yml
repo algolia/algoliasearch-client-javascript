@@ -20,10 +20,6 @@ aliases:
     name: Install dependencies
     command: yarn install
 
-  - &run_api_key_dealer
-    name: Getting keys from API Key dealer
-    command: wget https://alg.li/algolia-keys && chmod +x algolia-keys && eval $(./algolia-keys export)
-
 defaults: &defaults
   working_directory: ~/algoliasearch-client-javascript
   parameters:
@@ -87,7 +83,6 @@ jobs:
       - restore_cache: *restore_yarn_cache
       - run: *run_yarn_install
       - save_cache: *save_yarn_cache
-      - run: *run_api_key_dealer
       - run:
           name: Unit Tests
           command: yarn test:unit --maxWorkers=4
@@ -101,7 +96,6 @@ jobs:
       - restore_cache: *restore_yarn_cache
       - run: *run_yarn_install
       - save_cache: *save_yarn_cache
-      - run: *run_api_key_dealer
       - run:
           name: Browser tests
           command: yarn test:browser-ci
