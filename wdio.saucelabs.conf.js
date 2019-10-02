@@ -28,10 +28,11 @@ exports.config = {
       browserVersion: '68.0',
       'sauce:options': sauceOptions,
     },
-    {
+    ...['8', '9', '10', '11'].map(version => ({
+      platform: 'Windows 7',
       browserName: 'internet explorer',
-      browserVersion: '11.285',
-      'sauce:options': sauceOptions,
-    },
+      version,
+      name: `Internet Explorer ${version} on Windows 7`,
+    })),
   ],
 };
