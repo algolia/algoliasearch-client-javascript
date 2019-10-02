@@ -97,26 +97,9 @@ jobs:
       - run: *run_yarn_install
       - save_cache: *save_yarn_cache
       - run:
-          name: Install Sauce Connect Proxy
-          command: |
-            cd /tmp
-            curl https://saucelabs.com/downloads/sc-4.5.4-linux.tar.gz -o saucelabs.tar.gz
-            tar -xzf saucelabs.tar.gz
-            chmod a+x sc-4.5.4-linux/bin/sc
-            sudo cp sc-4.5.4-linux/bin/sc /usr/local/bin
-            sc --version
-      - run:
-          name: Open Sauce Connect Proxy Tunnel
-          command: |
-            # startup saucelabs tunnel as background task (its a blocking command)
-            sc -u $SAUCE_USERNAME -k $SAUCE_ACCESS_KEY -i $CIRCLE_BUILD_NUM -f "/tmp/sc_ready" 2>&1 &
-            while [ ! -e "/tmp/sc_ready" ]; do sleep 1; done
-      - run:
           name: Browser tests
           command: yarn test:browser-ci
-      - run:
-          name: Close Sauce Connect Tunnels
-          command: killall sc
+
 workflows:
   version: 2
   ci:
