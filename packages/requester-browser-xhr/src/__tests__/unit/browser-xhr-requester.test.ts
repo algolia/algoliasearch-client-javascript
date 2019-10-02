@@ -1,7 +1,15 @@
 import { BrowserXhrRequester } from '../../..';
 import mock, { MockRequest, MockResponse } from 'xhr-mock';
-import { Method } from '@algolia/requester-types';
+import { Method, Request } from '@algolia/requester-types';
 import Fixtures from '../Fixtures';
+
+const timeoutRequest: Request = {
+  url: 'https://google.com:81/',
+  data: '',
+  headers: {},
+  method: 'POST',
+  timeout: 1,
+};
 
 describe('status code handling', (): void => {
   beforeEach(() => mock.setup());
@@ -77,43 +85,63 @@ describe('status code handling', (): void => {
     expect(response.content).toBe(JSON.stringify(body));
     expect(response.isTimedOut).toBe(false);
   });
+});
 
-  it('timouts if response dont appears before the timeout', async () => {
-    const requester = new BrowserXhrRequester();
+describe('timeout handling', () => {
+  const requester = new BrowserXhrRequester();
 
-    mock.post(
-      'https://algolia-dns.net/foo?x-algolia-header=bar',
-      () => new Promise(resolve => setTimeout(() => resolve(), 2100))
-    );
+  it('timouts if response dont appears before the timeout with the given 1 seconds timeout', async () => {
+    const before = Date.now();
+    await requester.send({
+      ...timeoutRequest,
+      ...{ timeout: 1 },
+    });
 
-    const response = await requester.send(Fixtures.request());
+    const now = Date.now();
+
+    expect(now - before).toBeGreaterThan(1000);
+    expect(now - before).toBeLessThan(1200);
+  });
+
+  it('timouts if response dont appears before the timeout with the given 2 seconds timeout', async () => {
+    const before = Date.now();
+    await requester.send({
+      ...timeoutRequest,
+      ...{ timeout: 2 },
+    });
+
+    const now = Date.now();
+
+    expect(now - before).toBeGreaterThan(2000);
+    expect(now - before).toBeLessThan(2200);
+  });
+
+  it('timouts with a response code 0 and no content', async () => {
+    const response = await requester.send(timeoutRequest);
 
     expect(response.status).toBe(0);
-    expect(response.content).toBe('');
+    expect(response.content).toContain('');
     expect(response.isTimedOut).toBe(true);
   });
 
-  it('do not timouts if response appears before the timeout', async () => {
-    const requester = new BrowserXhrRequester();
-
-    const res: MockResponse = new MockResponse();
+  it('do not timeouts if response appears before the timeout', async () => {
+    const request = Fixtures.request();
 
     // @ts-ignore
-    res._status = 200;
-
+    request.url = 'https://bh4d9od16a-dsn.algolia.net/1/indexes';
     // @ts-ignore
-    res._body = '';
+    request.method = 'GET';
 
-    mock.post(
-      'https://algolia-dns.net/foo?x-algolia-header=bar',
-      () => new Promise(resolve => setTimeout(() => resolve(res), 1900))
-    );
+    const response = await requester.send(request);
 
-    const response = await requester.send(Fixtures.request());
-
-    expect(response.status).toBe(200);
-    expect(response.content).toBe('');
     expect(response.isTimedOut).toBe(false);
+    expect(response.status).toBe(403);
+    expect(response.content).toBe(
+      JSON.stringify({
+        message: 'Invalid Application-ID or API key',
+        status: 403,
+      })
+    );
   });
 });
 

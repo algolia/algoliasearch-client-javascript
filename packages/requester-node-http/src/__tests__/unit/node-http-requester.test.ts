@@ -1,5 +1,5 @@
 import { NodeHttpRequester } from '../../..';
-import { Method } from '@algolia/requester-types';
+import { Method, Request } from '@algolia/requester-types';
 import Fixtures from '../Fixtures';
 import * as nock from 'nock';
 
@@ -7,7 +7,15 @@ const headers = {
   'content-type': 'application/x-www-form-urlencoded',
 };
 
-describe('status code handling', (): void => {
+const timeoutRequest: Request = {
+  url: 'https://google.com:81/',
+  data: '',
+  headers: {},
+  method: 'POST',
+  timeout: 1,
+};
+
+describe('status code handling', () => {
   it('sends requests', async () => {
     const requester = new NodeHttpRequester();
     const request = Fixtures.request();
@@ -67,50 +75,63 @@ describe('status code handling', (): void => {
     expect(response.content).toBe(JSON.stringify(body));
     expect(response.isTimedOut).toBe(false);
   });
+});
 
-  it('timouts if response dont appears before the timeout', async () => {
-    const requester = new NodeHttpRequester();
+describe('timeout handling', () => {
+  const requester = new NodeHttpRequester();
 
-    nock('https://algolia-dns.net?x-algolia-header=foo', { reqheaders: headers })
-      .post('/foo')
-      .socketDelay(2100)
-      .reply(200);
+  it('timouts if response dont appears before the timeout with the given 1 seconds timeout', async () => {
+    const before = Date.now();
+    await requester.send({
+      ...timeoutRequest,
+      ...{ timeout: 1 },
+    });
 
-    const response = await requester.send(Fixtures.request());
+    const now = Date.now();
+
+    expect(now - before).toBeGreaterThan(1000);
+    expect(now - before).toBeLessThan(1200);
+  });
+
+  it('timouts if response dont appears before the timeout with the given 2 seconds timeout', async () => {
+    const before = Date.now();
+    await requester.send({
+      ...timeoutRequest,
+      ...{ timeout: 2 },
+    });
+
+    const now = Date.now();
+
+    expect(now - before).toBeGreaterThan(2000);
+    expect(now - before).toBeLessThan(2200);
+  });
+
+  it('timouts with a response code 0 and no content', async () => {
+    const response = await requester.send(timeoutRequest);
 
     expect(response.status).toBe(0);
-    expect(response.content).toBe('');
+    expect(response.content).toContain('');
     expect(response.isTimedOut).toBe(true);
   });
 
-  it('do not timouts if response appears before the timeout', async () => {
-    const requester = new NodeHttpRequester();
+  it('do not timeouts if response appears before the timeout', async () => {
+    const request = Fixtures.request();
 
-    nock('https://algolia-dns.net?x-algolia-header=foo', { reqheaders: headers })
-      .post('/foo')
-      .socketDelay(1900) // 3 seconds
-      .reply(200);
+    // @ts-ignore
+    request.url = 'https://bh4d9od16a-dsn.algolia.net/1/indexes';
+    // @ts-ignore
+    request.method = 'GET';
 
-    const response = await requester.send(Fixtures.request());
+    const response = await requester.send(request);
 
-    expect(response.status).toBe(200);
-    expect(response.content).toBe('');
     expect(response.isTimedOut).toBe(false);
-  });
-
-  it('resolves response if returned before a timeout', async () => {
-    const requester = new NodeHttpRequester();
-
-    nock('https://algolia-dns.net?x-algolia-header=foo', { reqheaders: headers })
-      .post('/foo')
-      .socketDelay(3000) // 3 seconds
-      .reply(200);
-
-    const response = await requester.send(Fixtures.request());
-
-    expect(response.status).toBe(0);
-    expect(response.content).toBe('');
-    expect(response.isTimedOut).toBe(true);
+    expect(response.status).toBe(403);
+    expect(response.content).toBe(
+      JSON.stringify({
+        message: 'Invalid Application-ID or API key',
+        status: 403,
+      })
+    );
   });
 });
 
