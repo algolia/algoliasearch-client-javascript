@@ -102,6 +102,7 @@ jobs:
             sc --version
       - run:
           name: Open Sauce Connect Proxy Tunnel
+          background: true
           command: |
             # startup saucelabs tunnel as background task (its a blocking command)
             sc -u ${SAUCE_USERNAME} -k ${SAUCE_ACCESS_KEY} -f --tunnel-identifier ${CIRCLE_BUILD_NUM}
@@ -111,8 +112,8 @@ jobs:
           name: Browser tests
           command: yarn test:browser-ci
       - run:
-          name: Wait for Sauce Connect to close the tunnel
-          command: pkill sc
+          name: Close Sauce Connect Tunnels
+          command: killall sc
 workflows:
   version: 2
   ci:
