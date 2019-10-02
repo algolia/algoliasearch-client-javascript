@@ -106,9 +106,6 @@ jobs:
           name: Wait for tunnel to be ready
           command: wget --retry-connrefused --no-check-certificate -T 30 localhost:4445
       - run:
-          name: Builds the package
-          command: yarn build
-      - run:
           name: Browser tests
           command: yarn test:browser-ci
       - run:

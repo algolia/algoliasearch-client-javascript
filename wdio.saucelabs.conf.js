@@ -5,9 +5,6 @@ require('dotenv').config();
 const baseConfig = require('./wdio.base.conf');
 
 const sauceOptions = {
-  // Force Selenium version on Firefox, solves an issue with `setValue`
-  // https://github.com/webdriverio/webdriverio/issues/3443
-  seleniumVersion: '3.11.0',
   recordVideo: false,
   recordScreenshots: false,
 };
