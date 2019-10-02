@@ -107,12 +107,10 @@ jobs:
             # startup saucelabs tunnel as background task (its a blocking command)
             sc -u ${SAUCE_USERNAME} -k ${SAUCE_ACCESS_KEY} -f --tunnel-identifier ${CIRCLE_BUILD_NUM} &
             wget --retry-connrefused --no-check-certificate -T 60 localhost:4445
-
-            # wait for sauce tunnel up to 40 seconds
-            sleep 40
       - run:
           name: Browser tests
-          command: yarn test:browser-ci
+          # wait for sauce tunnel up to 40 seconds
+          command: sleep 40 && yarn test:browser-ci
       - run:
           name: Close Sauce Connect Tunnels
           command: killall sc
