@@ -109,9 +109,9 @@ export class TestSuite {
   private makeIndexName(): string {
     const date = new Date();
 
-    const travisJobNumber = process.env.TRAVIS_JOB_NUMBER
-      ? process.env.TRAVIS_JOB_NUMBER
-      : 'unknown';
+    const jobNumber = process.env.CIRCLE_BUILD_NUM ? process.env.CIRCLE_BUILD_NUM : 'unknown';
+
+    const nodeVersion = process.versions.node;
 
     return (
       `javascript_${date.getFullYear()}` +
@@ -123,7 +123,8 @@ export class TestSuite {
       // @ts-ignore
       // eslint-disable-next-line no-undef
       `_${testing.environment()}` +
-      `_${travisJobNumber}` +
+      `_${nodeVersion}` +
+      `_${jobNumber}` +
       `_${`${this.testName}_${this.indices.length}`}`
     );
   }
