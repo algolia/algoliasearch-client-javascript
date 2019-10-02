@@ -97,8 +97,8 @@ jobs:
             cd /tmp
             curl https://saucelabs.com/downloads/sc-4.5.4-linux.tar.gz -o saucelabs.tar.gz
             tar -xzf saucelabs.tar.gz
-            chmod a+x sc-4.5.1-linux/bin/sc
-            sudo cp sc-4.5.1-linux/bin/sc /usr/local/bin
+            chmod a+x sc-4.5.4-linux/bin/sc
+            sudo cp sc-4.5.4-linux/bin/sc /usr/local/bin
             sc --version
       - run:
           name: Open Sauce Connect Proxy Tunnel
