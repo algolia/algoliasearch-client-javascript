@@ -6,6 +6,10 @@ export class BrowserXhrRequester implements Requester {
       const baseRequester = new XMLHttpRequest();
       baseRequester.open(request.method, request.url, true);
 
+      Object.keys(request.headers).forEach(key =>
+        baseRequester.setRequestHeader(key, request.headers[key])
+      );
+
       const timeoutHandler = setTimeout(() => {
         baseRequester.abort();
         resolve({ status: 0, content: '', isTimedOut: true });
@@ -35,10 +39,6 @@ export class BrowserXhrRequester implements Requester {
           isTimedOut: false,
         });
       };
-
-      Object.keys(request.headers).forEach(key =>
-        baseRequester.setRequestHeader(key, request.headers[key])
-      );
 
       baseRequester.send(request.data);
     });
