@@ -1,4 +1,3 @@
-import { AuthMode } from '@algolia/auth';
 import { BrowserXhrRequester } from '@algolia/requester-browser-xhr';
 import { Transporter } from '@algolia/transporter';
 import { UserAgent } from '@algolia/transporter-types';
@@ -48,7 +47,6 @@ export default function algoliasearch(
     apiKey,
     transporter,
     userAgent: UserAgent.create('4.0.0-alpha.0').with({ segment: 'Browser' }),
-    authMode: AuthMode.WithinQueryParameters,
   });
 }
 
