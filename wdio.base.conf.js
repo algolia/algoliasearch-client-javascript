@@ -9,6 +9,10 @@ module.exports = {
       mount: '/algoliasearch-lite.com',
       path: './specs/fixtures/websites/algoliasearch-lite.com',
     },
+    {
+      mount: '/algoliasearch.com',
+      path: './specs/fixtures/websites/algoliasearch.com',
+    },
   ],
   staticServerPort: 5000,
   baseUrl: 'http://localhost:5000',
