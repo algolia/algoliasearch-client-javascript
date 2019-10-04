@@ -1,4 +1,4 @@
-/* eslint-disable import/no-commonjs, functional/immutable-data */
+/* eslint-disable import/no-commonjs, functional/immutable-data, sonarjs/no-duplicate-string */
 
 require('dotenv').config();
 
@@ -18,21 +18,41 @@ exports.config = {
   maxInstances: 5,
   specFileRetries: 0,
   capabilities: [
+    ...['7', '8.1'].map(platform => ({
+      platformName: `Windows ${platform}`,
+      browserName: 'internet explorer',
+      browserVersion: '11.0',
+      'sauce:options': sauceOptions,
+    })),
     {
+      platformName: 'Windows 10',
+      browserName: 'internet explorer',
+      browserVersion: '11.285',
+      'sauce:options': sauceOptions,
+    },
+    {
+      platformName: 'Windows 7',
       browserName: 'chrome',
       browserVersion: '76.0',
       'sauce:options': sauceOptions,
     },
     {
+      platformName: 'Windows 10',
+      browserName: 'chrome',
+      browserVersion: '77.0',
+      'sauce:options': sauceOptions,
+    },
+    {
+      platformName: 'Windows 7',
       browserName: 'firefox',
       browserVersion: '68.0',
       'sauce:options': sauceOptions,
     },
-    ...['8', '9', '10', '11'].map(version => ({
-      platform: 'Windows 7',
-      browserName: 'internet explorer',
-      version,
-      name: `Internet Explorer ${version} on Windows 7`,
-    })),
+    {
+      platformName: 'Windows 10',
+      browserName: 'firefox',
+      browserVersion: '69.0',
+      'sauce:options': sauceOptions,
+    },
   ],
 };
