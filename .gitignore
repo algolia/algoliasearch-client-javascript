@@ -4,4 +4,4 @@ node_modules
 dist
 .vscode
 *.test.ts.snap
-specs/fixtures/websites/algoliasearch-lite.com/algoliasearch-lite.umd.js*
+*algoliasearch-lite.umd.js*
