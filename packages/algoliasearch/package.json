@@ -3,7 +3,7 @@
   "main": "./dist/algoliasearch.cjs.js",
   "jsdelivr": "./dist/algoliasearch-lite.umd.js",
   "private": false,
-  "version": "4.0.0-alpha.6",
+  "version": "4.0.0-alpha.7",
   "license": "MIT",
   "description": "test",
   "scripts": {
