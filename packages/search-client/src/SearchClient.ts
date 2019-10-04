@@ -8,8 +8,6 @@ export class SearchClient {
 
   public readonly transporter: Transporter;
 
-  private readonly apiKey: string;
-
   public constructor(options: {
     readonly appId: string;
     readonly apiKey: string;
@@ -18,7 +16,6 @@ export class SearchClient {
     readonly authMode?: AuthModeType;
   }) {
     this.appId = options.appId;
-    this.apiKey = options.apiKey;
 
     this.transporter = options.transporter;
     this.transporter.hosts = this.createHosts();
@@ -26,7 +23,7 @@ export class SearchClient {
     const auth = new Auth(
       options.authMode !== undefined ? options.authMode : AuthMode.WithinHeaders,
       this.appId,
-      this.apiKey
+      options.apiKey
     );
 
     this.transporter.headers = {

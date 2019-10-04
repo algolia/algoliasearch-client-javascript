@@ -66,15 +66,15 @@
     "build": "lerna run build",
     "lint": "eslint . --ext .js,.ts --fix",
     "precommit": "lint-staged",
-    "test:browser-local": "yarn build && cp -a packages/algoliasearch/dist/algoliasearch-lite.umd.* specs/fixtures/websites/algoliasearch-lite.com/. && wdio ./wdio.local.conf.js",
-    "test:browser-ci": "yarn build && cp -a packages/algoliasearch/dist/algoliasearch-lite.umd.* specs/fixtures/websites/algoliasearch-lite.com/. && wdio ./wdio.saucelabs.conf.js",
+    "test:browser-locally": "yarn build && cp -a packages/algoliasearch/dist/algoliasearch-lite.umd.min* specs/fixtures/websites/algoliasearch-lite.com/. && wdio ./wdio.local.conf.js",
+    "test:browser-ci": "yarn build && cp -a packages/algoliasearch/dist/algoliasearch-lite.umd.min* specs/fixtures/websites/algoliasearch-lite.com/. && wdio ./wdio.saucelabs.conf.js",
     "test:lint": "eslint . --ext .js,.ts",
     "test:locally": "lerna clean --yes && yarn lint && yarn test:lint && yarn test:types && yarn test:unit",
     "test:size": "bundlesize",
     "test:build": "yarn build && yarn test:size",
     "test:types": "tsc",
     "test:unit": "lerna clean --yes && jest --verbose --updateSnapshot",
-    "playground": "yarn build && cp -a packages/algoliasearch/dist/algoliasearch-lite.umd.* playground/algoliasearch/. && yarn serve playground/algoliasearch",
+    "playground": "yarn build && cp -a packages/algoliasearch/dist/algoliasearch-lite.umd.min* playground/algoliasearch-lite/. && yarn serve playground/algoliasearch-lite",
     "update": "rm -rf node_modules && rm -f yarn.lock && yarn && lerna clean --yes",
     "release:clean": "lerna run release:clean",
     "release:build": "lerna run release:build"
@@ -86,7 +86,11 @@
   },
   "bundlesize": [
     {
-      "path": "packages/algoliasearch/dist/algoliasearch-lite.umd.js",
+      "path": "packages/algoliasearch/dist/algoliasearch-algoliasearch.umd.min.js",
+      "maxSize": "3.73KB"
+    },
+    {
+      "path": "packages/algoliasearch/dist/algoliasearch-algoliasearch-lite.umd.min.js",
       "maxSize": "3.73KB"
     }
   ],

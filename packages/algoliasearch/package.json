@@ -1,9 +1,9 @@
 {
   "name": "@nunomaduro/lightsearch",
-  "main": "./dist/algoliasearch.cjs.js",
-  "jsdelivr": "./dist/algoliasearch-lite.umd.js",
+  "main": "./dist/algoliasearch.cjs.min.js",
+  "jsdelivr": "./dist/algoliasearch-lite.umd.min.js",
   "private": false,
-  "version": "4.0.0-alpha.7",
+  "version": "4.0.0-alpha.8",
   "license": "MIT",
   "description": "test",
   "scripts": {

@@ -1,10 +1,10 @@
-import algoliasearch from '../builds/node';
+import algoliasearch from '../builds/algoliasearch';
 
 const clientApi = ['appId', 'transporter'];
 
 const indexApi = ['indexName', 'transporter', 'search', 'searchForFacetValues'];
 
-describe('node', () => {
+describe('algoliasearch', () => {
   it('respects client public api', () => {
     const client = algoliasearch('foo', 'bar');
 
@@ -22,17 +22,12 @@ describe('node', () => {
 
     expect(client.transporter.headers).toEqual({
       'content-type': 'application/x-www-form-urlencoded',
-      'x-algolia-application-id': 'foo',
-      'x-algolia-api-key': 'bar',
     });
 
-    const nodeVersion = process.versions.node;
-
-    // eslint-disable-next-line radix
-    expect(parseInt(nodeVersion)).toBeGreaterThanOrEqual(8);
-
     expect(client.transporter.queryParameters).toEqual({
-      'x-algolia-agent': `Algolia for JavaScript (4.0.0-alpha.0); Node.js (${nodeVersion})`,
+      'x-algolia-agent': 'Algolia for JavaScript (4.0.0-alpha.0); Browser',
+      'x-algolia-application-id': 'foo',
+      'x-algolia-api-key': 'bar',
     });
   });
 });

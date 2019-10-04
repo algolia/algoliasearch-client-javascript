@@ -10,6 +10,7 @@ import {
 } from '@algolia/search-client/src/methods/index/searchForFacetValues';
 import { SearchClient as BaseSearchClient } from '@algolia/search-client';
 import { NullCache } from '@algolia/cache-types';
+import { Options } from '../types';
 
 type SearchIndex = BaseSearchClient & HasSearch & HasSearchForFacetValues;
 
@@ -21,7 +22,11 @@ class SearchClient extends BaseSearchClient {
   }
 }
 
-export default function algoliasearch(appId: string, apiKey: string): SearchClient {
+export default function algoliasearch(
+  appId: string,
+  apiKey: string,
+  options: Options = {}
+): SearchClient {
   const requester = new NodeHttpRequester();
 
   const transporter = new Transporter({
@@ -30,7 +35,7 @@ export default function algoliasearch(appId: string, apiKey: string): SearchClie
       read: 2,
       write: 30,
     },
-    logger: new ConsoleLogger(LogLevel.Error),
+    logger: new ConsoleLogger(options.logLevel === undefined ? LogLevel.Error : options.logLevel),
     responsesCache: new NullCache(),
     requestsCache: new NullCache(),
     hostsCache: new NullCache(),

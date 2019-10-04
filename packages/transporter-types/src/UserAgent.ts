@@ -10,11 +10,18 @@ export class UserAgent {
   }
 
   public with(options: UserAgentOptions): UserAgent {
-    return new UserAgent(`${this.value}; ${options.segment} (${options.version})`);
+    // eslint-disable-next-line functional/no-let
+    let value = `${this.value}; ${options.segment}`;
+
+    if (options.version !== undefined) {
+      value += ` (${options.version})`;
+    }
+
+    return new UserAgent(value);
   }
 }
 
 export type UserAgentOptions = {
   readonly segment: string;
-  readonly version: string;
+  readonly version?: string;
 };
