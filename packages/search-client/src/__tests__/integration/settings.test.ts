@@ -86,7 +86,7 @@ test(testSuite.testName, async () => {
     await responses[i].wait();
   }
 
-  await expect(index.getSettings()).resolves.toMatchObject(settings1);
+  expect(await index.getSettings()).toMatchObject(settings1);
 
   const settings2 = {
     typoTolerance: 'min',
@@ -97,5 +97,5 @@ test(testSuite.testName, async () => {
 
   await index.setSettings(settings2).wait();
 
-  await expect(index.getSettings()).resolves.toMatchObject(settings2);
+  expect(await index.getSettings()).toMatchObject(settings2);
 });
