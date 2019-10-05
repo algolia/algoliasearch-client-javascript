@@ -19,7 +19,7 @@ test('deleteObject() without an objectID', function(t) {
   });
 });
 
-test('deleteObject(cb)  without an objectID, with a cb', function(t) {
+test('deleteObject(cb) without an objectID, with a cb', function(t) {
   t.plan(2);
   var createFixture = require('../../../utils/create-fixture');
   var fixture = createFixture();
@@ -34,8 +34,24 @@ test('deleteObject(cb)  without an objectID, with a cb', function(t) {
   });
 });
 
+test('deleteObject("") with an empty string', function(t) {
+  t.plan(2);
+  var bind = require('lodash-compat/function/bind');
 
-test('deleteObject(cb)  with bad type objectID', function(t) {
+  var createFixture = require('../../../utils/create-fixture');
+  var fixture = createFixture();
+  var index = fixture.index;
+
+  index.deleteObject('').then(bind(t.fail, t), function(err) {
+    t.ok(err instanceof Error, 'received an error');
+    t.equal(
+      err.message,
+      'Cannot delete an object without an objectID'
+    );
+  });
+});
+
+test('deleteObject(cb) with bad type objectID', function(t) {
   t.plan(2);
   var bind = require('lodash-compat/function/bind');
 
