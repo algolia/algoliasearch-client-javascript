@@ -10,8 +10,10 @@ export class AnalyticsClient {
   public constructor(options: AnalyticsClientOptions) {
     this.appId = options.appId;
     this.transporter = options.transporter;
+
+    const region = options.region !== undefined ? options.region : 'us';
     this.transporter.hosts = [
-      new Host({ url: `analytics.${options.region}.algolia.com`, accept: Call.Any }),
+      new Host({ url: `analytics.${region}.algolia.com`, accept: Call.Any }),
     ];
 
     const auth = new Auth(AuthMode.WithinHeaders, this.appId, options.apiKey);
@@ -44,5 +46,5 @@ type AnalyticsClientOptions = {
   readonly apiKey: string;
   readonly transporter: Transporter;
   readonly userAgent: UserAgent;
-  readonly region: string;
+  readonly region?: string;
 };

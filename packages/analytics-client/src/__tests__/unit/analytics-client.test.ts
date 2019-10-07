@@ -1,23 +1,25 @@
-import { AnalyticsClient } from '../../..';
 import { Transporter } from '@algolia/transporter';
 import { instance, mock } from 'ts-mockito';
 import { UserAgent } from '@algolia/transporter-types';
-import { AuthMode } from '@algolia/auth';
+import { createAnalyticsClient } from '../../AnalyticsClient';
 
 const transporterMock = mock(Transporter);
 const transporter = instance(transporterMock);
 
-const analyticsClient = new AnalyticsClient({
+const analyticsClient = createAnalyticsClient({
   transporter: instance(transporterMock),
   appId: 'appId',
   apiKey: 'apiKey',
   userAgent: UserAgent.create('4.0.0-alpha.0'),
-  authMode: AuthMode.WithinQueryParameters,
 });
 
 describe('Search Client', () => {
   it('Gives access to transporter', () => {
     expect(analyticsClient.transporter).toBe(transporter);
+  });
+
+  it('uses region', () => {
+    expect(analyticsClient.transporter.hosts[0].url).toBe('analytics.us.algolia.com');
   });
 
   it('Gives access to appId', () => {
