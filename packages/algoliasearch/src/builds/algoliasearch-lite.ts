@@ -12,7 +12,7 @@ import {
   HasSearchForFacetValues,
 } from '@algolia/search-client/src/methods/index/searchForFacetValues';
 import { SearchClient as BaseSearchClient } from '@algolia/search-client';
-import { Options } from '../types';
+import { AlgoliaSearchOptions } from '../types';
 
 type SearchIndex = BaseSearchClient & HasSearch & HasSearchForFacetValues;
 
@@ -27,7 +27,7 @@ class SearchClient extends BaseSearchClient {
 export default function algoliasearch(
   appId: string,
   apiKey: string,
-  options: Options = {}
+  options: AlgoliaSearchOptions = {}
 ): SearchClient {
   const requester = new BrowserXhrRequester();
 
