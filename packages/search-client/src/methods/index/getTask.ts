@@ -1,7 +1,7 @@
 import { RequestOptions } from '@algolia/transporter-types';
 import { SearchIndex } from '../../SearchIndex';
 import { Method } from '@algolia/requester-types';
-import { ConstructorOf } from '../../helpers';
+import { ConstructorOf } from '@algolia/support';
 import { TaskStatusResponse } from '../types/TaskStatusResponse';
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type

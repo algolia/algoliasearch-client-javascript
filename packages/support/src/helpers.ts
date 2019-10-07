@@ -15,3 +15,21 @@ export function shuffle<TData>(array: TData[]): TData[] {
 
 // eslint-disable-next-line functional/prefer-readonly-type
 export type ConstructorOf<TObject> = new (...input: any[]) => TObject;
+
+export function compose<TObject>(
+  objectConstructor: any,
+  options?: ComposableOptions
+): ConstructorOf<TObject> {
+  if (options !== undefined && options.methods !== undefined) {
+    options.methods.forEach((method): void => {
+      // eslint-disable-next-line no-param-reassign
+      objectConstructor = method(objectConstructor);
+    });
+  }
+
+  return objectConstructor;
+}
+
+export type ComposableOptions = {
+  readonly methods?: readonly Function[];
+};

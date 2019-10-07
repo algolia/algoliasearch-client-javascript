@@ -5,7 +5,7 @@ import { saveObject, HasSaveObject } from '../../methods/index/saveObject';
 import { batch, HasBatch } from '../../methods/index/batch';
 
 import { saveObjects, HasSaveObjects } from '../../methods/index/saveObjects';
-import { Faker } from '../Faker';
+import { Faker } from '@algolia/support/src/__tests__/Faker';
 import { RequestOptions, UserAgent } from '@algolia/transporter-types';
 
 import { HasGetObject, getObject } from '../../methods/index/getObject';

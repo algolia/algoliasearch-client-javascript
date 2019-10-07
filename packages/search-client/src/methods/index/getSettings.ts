@@ -1,7 +1,7 @@
 import { RequestOptions, mapRequestOptions } from '@algolia/transporter-types';
 import { SearchIndex } from '../../SearchIndex';
 import { Method } from '@algolia/requester-types';
-import { ConstructorOf } from '../../helpers';
+import { ConstructorOf } from '@algolia/support';
 import { IndexSettings } from '../types/IndexSettings';
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type

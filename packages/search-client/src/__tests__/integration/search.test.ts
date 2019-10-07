@@ -1,4 +1,4 @@
-import { TestSuite } from '../TestSuite';
+import { TestSuite } from '@algolia/support/src/__tests__/TestSuite';
 
 const testSuite = new TestSuite('search');
 

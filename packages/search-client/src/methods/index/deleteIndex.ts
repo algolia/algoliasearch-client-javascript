@@ -1,8 +1,8 @@
 import { RequestOptions } from '@algolia/transporter-types';
 import { SearchIndex } from '../../SearchIndex';
 import { Method } from '@algolia/requester-types';
-import { ConstructorOf } from '../../helpers';
-import { WaitablePromise } from '../../WaitablePromise';
+import { ConstructorOf, WaitablePromise } from '@algolia/support';
+
 import { waitTask } from './waitTask';
 import { DeleteResponse } from '../types/DeleteResponse';
 

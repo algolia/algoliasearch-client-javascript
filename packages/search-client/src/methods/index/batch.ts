@@ -1,9 +1,9 @@
 import { RequestOptions, popRequestOption } from '@algolia/transporter-types';
 import { SearchIndex } from '../../SearchIndex';
 import { Method } from '@algolia/requester-types';
-import { ConstructorOf } from '../../helpers';
+import { ConstructorOf, WaitablePromise } from '@algolia/support';
 import { HasWaitTask, waitTask } from './waitTask';
-import { WaitablePromise } from '../../WaitablePromise';
+
 import { BatchActionType } from '../types/BatchAction';
 import { BatchResponse } from '../types/BatchResponse';
 import { ChunkOptions } from '../types/ChunkOptions';

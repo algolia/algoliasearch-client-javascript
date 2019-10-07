@@ -1,5 +1,5 @@
-import { TestSuite } from '../TestSuite';
-import { Faker } from '../Faker';
+import { TestSuite } from '@algolia/support/src/__tests__/TestSuite';
+import { Faker } from '@algolia/support/src/__tests__/Faker';
 
 const testSuite = new TestSuite('settings');
 

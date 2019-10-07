@@ -1,7 +1,7 @@
 import { RequestOptions } from '@algolia/transporter-types';
 import { SearchIndex } from '../../SearchIndex';
 import { Method } from '@algolia/requester-types';
-import { ConstructorOf } from '../../helpers';
+import { ConstructorOf } from '@algolia/support';
 import { SearchOptions } from '../types/SearchOptions';
 import { SearchResponse } from '../types/SearchResponse';
 

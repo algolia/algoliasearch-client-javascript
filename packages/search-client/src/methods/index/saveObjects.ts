@@ -1,8 +1,8 @@
 import { RequestOptions, popRequestOption } from '@algolia/transporter-types';
 import { SearchIndex } from '../../SearchIndex';
-import { ConstructorOf } from '../../helpers';
+import { ConstructorOf, WaitablePromise } from '@algolia/support';
 import { MissingObjectID } from '../../errors/MissingObjectID';
-import { WaitablePromise } from '../../WaitablePromise';
+
 import { SaveObjectsOptions } from '../types/SaveObjectsOptions';
 import { BatchAction } from '../types/BatchAction';
 import { BatchResponse } from '../types/BatchResponse';

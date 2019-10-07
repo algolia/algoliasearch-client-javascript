@@ -1,6 +1,6 @@
 import { Transporter, Host, Call, UserAgent } from '@algolia/transporter-types';
 import { SearchIndex } from './SearchIndex';
-import { shuffle } from './helpers';
+import { shuffle, compose, ComposableOptions } from '@algolia/support';
 import { AuthMode, AuthModeType, Auth } from '@algolia/auth';
 
 export class SearchClient {
@@ -8,13 +8,7 @@ export class SearchClient {
 
   public readonly transporter: Transporter;
 
-  public constructor(options: {
-    readonly appId: string;
-    readonly apiKey: string;
-    readonly transporter: Transporter;
-    readonly userAgent: UserAgent;
-    readonly authMode?: AuthModeType;
-  }) {
+  public constructor(options: SearchClientOptions) {
     this.appId = options.appId;
 
     this.transporter = options.transporter;
@@ -37,18 +31,11 @@ export class SearchClient {
     };
   }
 
-  public initIndex<TSearchIndex>(
-    indexName: string,
-    options?: { readonly methods: readonly Function[] }
-  ): TSearchIndex {
-    // eslint-disable-next-line functional/no-let
-    let Index: any = SearchIndex;
-
-    if (options !== undefined) {
-      options.methods.forEach((method): void => {
-        Index = method(Index);
-      });
-    }
+  public initIndex<TSearchIndex>(indexName: string, options?: ComposableOptions): TSearchIndex {
+    const Index = compose<TSearchIndex>(
+      SearchIndex,
+      options
+    );
 
     return new Index({
       transporter: this.transporter,
@@ -74,3 +61,22 @@ export class SearchClient {
       .map(host => new Host(host));
   }
 }
+
+export const createSearchClient = <TSearchClient = SearchClient>(
+  options: SearchClientOptions & ComposableOptions
+): TSearchClient => {
+  const Client = compose<TSearchClient>(
+    SearchClient,
+    options
+  );
+
+  return new Client(options);
+};
+
+type SearchClientOptions = {
+  readonly appId: string;
+  readonly apiKey: string;
+  readonly transporter: Transporter;
+  readonly userAgent: UserAgent;
+  readonly authMode?: AuthModeType;
+};

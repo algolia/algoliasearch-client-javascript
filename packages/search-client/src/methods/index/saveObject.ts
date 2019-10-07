@@ -1,8 +1,8 @@
 import { RequestOptions } from '@algolia/transporter-types';
 import { SearchIndex } from '../../SearchIndex';
-import { ConstructorOf } from '../../helpers';
+import { ConstructorOf, WaitablePromise } from '@algolia/support';
 import { saveObjects } from './saveObjects';
-import { WaitablePromise } from '../../WaitablePromise';
+
 import { SaveObjectResponse } from '../types/SaveObjectResponse';
 import { SaveObjectsOptions } from '../types/SaveObjectsOptions';
 

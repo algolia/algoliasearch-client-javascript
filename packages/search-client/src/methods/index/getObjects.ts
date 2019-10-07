@@ -1,6 +1,6 @@
 import { RequestOptions, popRequestOption } from '@algolia/transporter-types';
 import { SearchIndex } from '../../SearchIndex';
-import { ConstructorOf } from '../../helpers';
+import { ConstructorOf } from '@algolia/support';
 import { Method } from '@algolia/requester-types';
 import { GetObjectsResponse } from '../types/GetObjectsResponse';
 import { GetObjectsOptions } from '../types/GetObjectsOptions';
