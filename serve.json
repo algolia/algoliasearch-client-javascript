@@ -1,0 +1,6 @@
+{
+  "rewrites": [
+    { "source": "", "destination": "/playground/algoliasearch/index.html" },
+    { "source": "/lite", "destination": "/playground/algoliasearch-lite/index.html" }
+  ]
+}
