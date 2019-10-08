@@ -3,14 +3,13 @@
     <img alt="Algolia for JavaScript" src="https://raw.githubusercontent.com/algolia/algoliasearch-client-common/master/banners/javascript.png" >
   </a>
 
-  <h4 align="center">The readme/code you are seeing it's part of upcoming release v4</h4>
+  <h4 align="center">The readme is meant for Algolia employees</h4>
 
 </p>
 
 You'd like to contribute? Before start, we want to let you know that your **feedback** is important to us! Please consider start using this `v4` today! Found a bug or see something that can improved? Report it here: [github.com/algolia/algoliasearch-client-javascript/issues](https://github.com/algolia/algoliasearch-client-javascript/issues).
 
-## Requeriments
-
+## Requirements
 
 - **Node** and **Yarn**: you can install both through the Homebrew package manager:
 
@@ -18,16 +17,17 @@ You'd like to contribute? Before start, we want to let you know that your **feed
 brew install node yarn
 ```
 
-
 ## Setup development locally
 
 First, **clone** Algolia JavaScript API Client:
 
 ```bash
 git clone https://github.com/algolia/algoliasearch-client-javascript
+cd algoliasearch-client-javascript
+git checkout release/v4.0.0
 ```
 
-Then, enter inside the repository folder, and **install dependencies**:
+Then, **install the dependencies**:
 
 ```js
 yarn install
@@ -47,28 +47,19 @@ Note that, you can run a very specific test doing:
 yarn test:unit -t "my test description"
 ```
 
-## Play with the client
+## Playground
 
-Algolia JavaScript API Client contains 3 builds that you can play with:
-
-- node:
-
-> Edit the file to update the code
+- Node:
 
 ```
+# Edit the file `playground/node/index.js`, then execute it:
 node playground/node/index.js
 ```
 
-- browser:
-
-> Use the console of the browser to insert code
+Browser:
 
 ```
-yarn playground 
-```
-
-- browser lite:
-
-```
-yarn playground 
+yarn playground
+# Visit `http://localhost:5000`
+# Visit `http://localhost:5000/lite` for the lite version
 ```
