@@ -1,5 +1,6 @@
 import { TestSuite } from '@algolia/support/src/__tests__/TestSuite';
 import { Faker } from '@algolia/support/src/__tests__/Faker';
+import { createMultiWaitable } from '@algolia/support/src/__tests__/helpers';
 
 const testSuite = new TestSuite('indexing');
 
@@ -50,9 +51,7 @@ test(testSuite.testName, async () => {
     })
   );
 
-  for (let i = 0; i < responses.length; i++) {
-    await responses[i].wait();
-  }
+  await createMultiWaitable(responses).wait();
 
   await expect(index.getObject('object1')).resolves.toStrictEqual(object1);
 

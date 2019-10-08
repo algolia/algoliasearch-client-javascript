@@ -1,5 +1,6 @@
 import { TestSuite } from '@algolia/support/src/__tests__/TestSuite';
 import { Faker } from '@algolia/support/src/__tests__/Faker';
+import { createMultiWaitable } from '@algolia/support/src/__tests__/helpers';
 
 const testSuite = new TestSuite('settings');
 
@@ -82,9 +83,7 @@ test(testSuite.testName, async () => {
 
   responses.push(index.setSettings(settings1));
 
-  for (let i = 0; i < responses.length; i++) {
-    await responses[i].wait();
-  }
+  await createMultiWaitable(responses).wait();
 
   expect(await index.getSettings()).toMatchObject(settings1);
 

@@ -1,4 +1,5 @@
 import { TestSuite } from '@algolia/support/src/__tests__/TestSuite';
+import { createMultiWaitable } from '@algolia/support/src/__tests__/helpers';
 
 const testSuite = new TestSuite('search');
 
@@ -34,9 +35,7 @@ test(testSuite.testName, async () => {
 
   responses.push(index.setSettings({ attributesForFaceting: ['searchable(company)'] }));
 
-  for (let i = 0; i < responses.length; i++) {
-    await responses[i].wait();
-  }
+  await createMultiWaitable(responses).wait();
 
   let searchResponse = await index.search('algolia');
 

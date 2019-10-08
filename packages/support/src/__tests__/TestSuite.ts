@@ -18,7 +18,9 @@ import { UserAgent } from '@algolia/transporter-types';
 import { batch, HasBatch } from '../../../search-client/src/methods/index/batch';
 import { AuthMode } from '@algolia/auth';
 import { createAnalyticsClient } from '../../../analytics-client';
-import { HasGetABTests, getAbTests } from '../../../analytics-client/src/methods/index/getABTests';
+import { HasGetABTests, getAbTests } from '../../../analytics-client/src/methods/client/getABTests';
+import { HasSendEvents, sendEvents } from '../../../insights-client/src/methods/client/sendEvents';
+import { createInsightsClient } from '../../../insights-client';
 
 export class TestSuite {
   public readonly testName: string;
@@ -27,6 +29,7 @@ export class TestSuite {
 
   public async cleanUp(): Promise<void> {
     for (const index of this.indices) {
+      // Indices must by deleted sequencially and waiting..
       await index.delete().wait();
     }
   }
@@ -93,13 +96,30 @@ export class TestSuite {
 
     type TAnalyticsClient = HasGetABTests;
 
-    return createAnalyticsClient({
+    return createAnalyticsClient<TAnalyticsClient>({
       appId: `${process.env.ALGOLIA_APPLICATION_ID_1}`,
       apiKey: `${process.env.ALGOLIA_ADMIN_KEY_1}`,
       transporter,
       userAgent: UserAgent.create('4.0.0'),
       region: 'us',
       methods: [getAbTests],
+    });
+  }
+
+  public makeInsights() {
+    const transporter = this.makeTransporter();
+
+    this.ensureEnvironmentVariables();
+
+    type TInsightsClient = HasSendEvents;
+
+    return createInsightsClient<TInsightsClient>({
+      appId: `${process.env.ALGOLIA_APPLICATION_ID_1}`,
+      apiKey: `${process.env.ALGOLIA_ADMIN_KEY_1}`,
+      transporter,
+      userAgent: UserAgent.create('4.0.0'),
+      region: 'us',
+      methods: [sendEvents],
     });
   }
 
