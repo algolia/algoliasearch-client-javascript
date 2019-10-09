@@ -1,5 +1,5 @@
 import { RequestOptions } from '@algolia/transporter-types';
-import { UserInsightsClient, UserInsightsClientOptions } from '../../UserInsightsClient';
+import { UserInsightsClient } from '../../UserInsightsClient';
 import { EventEnum } from '../types/EventType';
 import { ConstructorOf } from '@algolia/support';
 import { SendEventResponse } from '../types/SendEventResponse';
@@ -10,16 +10,16 @@ export const convertedObjectIDs = <TUserInsightsClient extends ConstructorOf<Use
 ) => {
   return class extends base implements HasConvertedObjectIDs {
     public convertedObjectIDs(
-      options: UserInsightsClientOptions,
+      event: ConvertedObjectIDsEvent,
       requestOptions?: RequestOptions
     ): Readonly<Promise<SendEventResponse>> {
       return this.client.sendEvent(
         {
           eventType: EventEnum.Click,
-          eventName: options.eventName,
-          index: options.indexName,
+          eventName: event.eventName,
+          index: event.indexName,
           userToken: this.userToken,
-          objectIDs: options.objectIDs,
+          objectIDs: event.objectIDs,
         },
         requestOptions
       );
@@ -29,7 +29,7 @@ export const convertedObjectIDs = <TUserInsightsClient extends ConstructorOf<Use
 
 export type HasConvertedObjectIDs = UserInsightsClient & {
   readonly convertedObjectIDs: (
-    options: UserInsightsClientOptions,
+    event: ConvertedObjectIDsEvent,
     requestOptions?: RequestOptions
   ) => Readonly<Promise<SendEventResponse>>;
 };

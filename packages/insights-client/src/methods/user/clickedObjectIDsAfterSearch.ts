@@ -1,5 +1,5 @@
 import { RequestOptions } from '@algolia/transporter-types';
-import { UserInsightsClient, UserInsightsClientOptions } from '../../UserInsightsClient';
+import { UserInsightsClient } from '../../UserInsightsClient';
 import { EventEnum } from '../types/EventType';
 import { ConstructorOf } from '@algolia/support';
 import { SendEventResponse } from '../types/SendEventResponse';
@@ -12,18 +12,18 @@ export const clickedObjectIDsAfterSearch = <
 ) => {
   return class extends base implements HasClickedObjectIDsAfterSearch {
     public clickedObjectIDsAfterSearch(
-      options: UserInsightsClientOptions,
+      event: ClickedObjectIDsAfterSearchEvent,
       requestOptions?: RequestOptions
     ): Readonly<Promise<SendEventResponse>> {
       return this.client.sendEvent(
         {
           eventType: EventEnum.Click,
-          eventName: options.eventName,
-          index: options.indexName,
+          eventName: event.eventName,
+          index: event.indexName,
           userToken: this.userToken,
-          objectIDs: options.objectIDs,
-          positions: options.positions,
-          queryID: options.queryID,
+          objectIDs: event.objectIDs,
+          positions: event.positions,
+          queryID: event.queryID,
         },
         requestOptions
       );
@@ -33,7 +33,7 @@ export const clickedObjectIDsAfterSearch = <
 
 export type HasClickedObjectIDsAfterSearch = UserInsightsClient & {
   readonly clickedObjectIDsAfterSearch: (
-    options: UserInsightsClientOptions,
+    event: ClickedObjectIDsAfterSearchEvent,
     requestOptions?: RequestOptions
   ) => Readonly<Promise<SendEventResponse>>;
 };

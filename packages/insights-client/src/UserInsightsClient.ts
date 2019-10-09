@@ -10,12 +10,3 @@ export class UserInsightsClient {
     this.userToken = userToken;
   }
 }
-
-export type UserInsightsClientOptions = {
-  readonly eventName: string;
-  readonly indexName: string;
-  readonly objectIDs?: readonly string[];
-  readonly positions?: readonly number[];
-  readonly filters?: readonly string[];
-  readonly queryID?: string;
-};

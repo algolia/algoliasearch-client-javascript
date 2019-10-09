@@ -1,5 +1,5 @@
 import { RequestOptions } from '@algolia/transporter-types';
-import { UserInsightsClient, UserInsightsClientOptions } from '../../UserInsightsClient';
+import { UserInsightsClient } from '../../UserInsightsClient';
 import { EventEnum } from '../../methods/types/EventType';
 import { ConstructorOf } from '@algolia/support';
 import { SendEventResponse } from '../types/SendEventResponse';
@@ -10,16 +10,16 @@ export const clickedObjectIDs = <TUserInsightsClient extends ConstructorOf<UserI
 ) => {
   return class extends base implements HasClickedObjectIDs {
     public clickedObjectIDs(
-      options: UserInsightsClientOptions,
+      event: ClickedObjectIDsEvent,
       requestOptions?: RequestOptions
     ): Readonly<Promise<SendEventResponse>> {
       return this.client.sendEvent(
         {
           eventType: EventEnum.Click,
-          eventName: options.eventName,
-          index: options.indexName,
+          eventName: event.eventName,
+          index: event.indexName,
           userToken: this.userToken,
-          objectIDs: options.objectIDs,
+          objectIDs: event.objectIDs,
         },
         requestOptions
       );
@@ -29,7 +29,7 @@ export const clickedObjectIDs = <TUserInsightsClient extends ConstructorOf<UserI
 
 export type HasClickedObjectIDs = UserInsightsClient & {
   readonly clickedObjectIDs: (
-    options: UserInsightsClientOptions,
+    event: ClickedObjectIDsEvent,
     requestOptions?: RequestOptions
   ) => Readonly<Promise<SendEventResponse>>;
 };

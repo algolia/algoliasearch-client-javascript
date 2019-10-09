@@ -33,12 +33,12 @@ export class InsightsClient {
     userToken: string,
     options?: ComposableOptions
   ): TUserInsightsClient {
-    const User = compose<TUserInsightsClient>(
+    const UserClient = compose<TUserInsightsClient>(
       UserInsightsClient,
       options
     );
 
-    return new User(this, userToken);
+    return new UserClient(this, userToken);
   }
 }
 
@@ -54,9 +54,10 @@ export const createInsightsClient = <TInsightsClient = InsightsClient>(
 };
 
 type InsightsClientOptions = {
-  readonly appId: string;
-  readonly apiKey: string;
-  readonly transporter: Transporter;
-  readonly userAgent: UserAgent;
-  readonly region?: string;
+  /* eslint-disable functional/prefer-readonly-type */
+  appId: string;
+  apiKey: string;
+  transporter: Transporter;
+  userAgent: UserAgent;
+  region?: string;
 };
