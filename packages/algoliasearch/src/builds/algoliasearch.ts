@@ -10,15 +10,52 @@ import {
   searchForFacetValues,
   HasSearchForFacetValues,
 } from '@algolia/search-client/src/methods/index/searchForFacetValues';
-import { SearchClient as BaseSearchClient } from '@algolia/search-client';
+import {
+  SearchClient as BaseSearchClient,
+  createSearchClient,
+  SearchClientOptions,
+} from '@algolia/search-client';
+import { createAnalyticsClient, AnalyticsClient } from '@algolia/analytics-client';
+import { createInsightsClient, InsightsClient } from '@algolia/insights-client';
 import { AlgoliaSearchOptions } from '../types';
 
 type SearchIndex = BaseSearchClient & HasSearch & HasSearchForFacetValues;
 
 class SearchClient extends BaseSearchClient {
+  private readonly apiKey: string;
+
+  private readonly userAgent: UserAgent;
+
+  public constructor(options: SearchClientOptions) {
+    super(options);
+
+    this.apiKey = options.apiKey;
+    this.userAgent = options.userAgent;
+  }
+
   public initIndex<TSearchIndex = SearchIndex>(indexName: string): TSearchIndex {
     return super.initIndex(indexName, {
       methods: [search, searchForFacetValues],
+    });
+  }
+
+  public initAnalytics(region: string): AnalyticsClient {
+    return createAnalyticsClient({
+      appId: this.appId,
+      apiKey: this.apiKey,
+      transporter: this.transporter,
+      userAgent: this.userAgent,
+      region,
+    });
+  }
+
+  public initInsights(region: string): InsightsClient {
+    return createInsightsClient({
+      appId: this.appId,
+      apiKey: this.apiKey,
+      transporter: this.transporter,
+      userAgent: this.userAgent,
+      region,
     });
   }
 }
@@ -42,7 +79,7 @@ export default function algoliasearch(
     hostsCache: new BrowserLocalStorageCache(),
   });
 
-  return new SearchClient({
+  return createSearchClient({
     appId,
     apiKey,
     transporter,
