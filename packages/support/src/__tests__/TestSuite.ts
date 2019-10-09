@@ -19,6 +19,7 @@ import { batch, HasBatch } from '../../../search-client/src/methods/index/batch'
 import { AuthMode } from '@algolia/auth';
 import { createAnalyticsClient } from '../../../analytics-client';
 import { HasGetABTests, getAbTests } from '../../../analytics-client/src/methods/client/getABTests';
+import { HasSendEvent, sendEvent } from '../../../insights-client/src/methods/client/sendEvent';
 import { HasSendEvents, sendEvents } from '../../../insights-client/src/methods/client/sendEvents';
 import { createInsightsClient } from '../../../insights-client';
 
@@ -111,7 +112,7 @@ export class TestSuite {
 
     this.ensureEnvironmentVariables();
 
-    type TInsightsClient = HasSendEvents;
+    type TInsightsClient = HasSendEvent & HasSendEvents;
 
     return createInsightsClient<TInsightsClient>({
       appId: `${process.env.ALGOLIA_APPLICATION_ID_1}`,
@@ -119,7 +120,7 @@ export class TestSuite {
       transporter,
       userAgent: UserAgent.create('4.0.0'),
       region: 'us',
-      methods: [sendEvents],
+      methods: [sendEvent, sendEvents],
     });
   }
 

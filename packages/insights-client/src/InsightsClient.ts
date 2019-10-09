@@ -1,6 +1,7 @@
 import { Transporter, Host, Call, UserAgent } from '@algolia/transporter-types';
 import { compose, ComposableOptions } from '@algolia/support';
 import { AuthMode, Auth } from '@algolia/auth';
+import { UserInsightsClient } from './UserInsightsClient';
 
 export class InsightsClient {
   public readonly appId: string;
@@ -26,6 +27,18 @@ export class InsightsClient {
       ...auth.queryParameters(),
       ...{ 'x-algolia-agent': options.userAgent.value },
     };
+  }
+
+  public user<TUserInsightsClient = UserInsightsClient>(
+    userToken: string,
+    options?: ComposableOptions
+  ): TUserInsightsClient {
+    const User = compose<TUserInsightsClient>(
+      UserInsightsClient,
+      options
+    );
+
+    return new User(this, userToken);
   }
 }
 
