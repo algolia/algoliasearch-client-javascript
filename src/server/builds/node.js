@@ -321,9 +321,7 @@ AlgoliaSearchNodeJS.prototype.generateSecuredApiKey = function generateSecuredAp
   return new Buffer(securedKey + searchParams).toString('base64');
 };
 
-AlgoliaSearchNodeJS.prototype.getSecuredApiKeyRemainingValidity = function getSecuredApiKeyRemainingValidity(
-  securedAPIKey,
-) {
+AlgoliaSearchNodeJS.prototype.getSecuredApiKeyRemainingValidity = function getSecuredApiKeyRemainingValidity(securedAPIKey) {
   var decodedString = new Buffer(securedAPIKey, 'base64').toString('ascii');
 
   var regex = /validUntil=(\d+)/;

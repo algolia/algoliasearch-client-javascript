@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 3.35.1
+>2019-10-08
+
+* FIX: extra comma on node v8 engine (#790)
+
 ## 3.35.0
 >2019-09-26
 
