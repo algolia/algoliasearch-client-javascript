@@ -1,1 +1,1 @@
-export { createSearchClient, SearchClient } from './src/SearchClient';
+export { createSearchClient, SearchClient, SearchClientOptions } from './src/SearchClient';

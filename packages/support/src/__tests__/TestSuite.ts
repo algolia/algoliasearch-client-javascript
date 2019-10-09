@@ -1,4 +1,4 @@
-import { SearchClient } from '../../../search-client';
+import { createSearchClient } from '../../../search-client';
 import { SearchIndex } from '../../../search-client/src/SearchIndex';
 import { Transporter } from '@algolia/transporter';
 import { HasSearch, search } from '../../../search-client/src/methods/index/search';
@@ -21,6 +21,18 @@ import { createAnalyticsClient } from '../../../analytics-client';
 import { HasGetABTests, getAbTests } from '../../../analytics-client/src/methods/client/getABTests';
 import { HasSendEvents, sendEvents } from '../../../insights-client/src/methods/client/sendEvents';
 import { createInsightsClient } from '../../../insights-client';
+import {
+  multipleBatch,
+  HasMultipleBatch,
+} from '../../../search-client/src/methods/client/multipleBatch';
+import {
+  multipleGetObjects,
+  HasMultipleGetObjects,
+} from '../../../search-client/src/methods/client/multipleGetObjects';
+import {
+  multipleQueries,
+  HasMultipleQueries,
+} from '../../../search-client/src/methods/client/multipleQueries';
 
 export class TestSuite {
   public readonly testName: string;
@@ -39,24 +51,29 @@ export class TestSuite {
     this.indices = [];
   }
 
-  public makeIndex(indexName?: string) {
-    const transporter = this.makeTransporter();
+  public makeClient() {
     this.ensureEnvironmentVariables();
+    const transporter = this.makeTransporter();
 
     const authMode =
       // @ts-ignore
       // eslint-disable-next-line no-undef
       testing.environment() === 'node' ? AuthMode.WithinHeaders : AuthMode.WithinQueryParameters;
 
-    const client = new SearchClient({
+    type TSearchClient = HasMultipleBatch & HasMultipleGetObjects & HasMultipleQueries;
+
+    return createSearchClient<TSearchClient>({
       appId: `${process.env.ALGOLIA_APPLICATION_ID_1}`,
       apiKey: `${process.env.ALGOLIA_ADMIN_KEY_1}`,
       transporter,
       userAgent: UserAgent.create('4.0.0'),
       authMode,
+      methods: [multipleBatch, multipleGetObjects, multipleQueries],
     });
+  }
 
-    const index = client.initIndex<
+  public makeIndex(indexName?: string) {
+    const index = this.makeClient().initIndex<
       HasBatch &
         HasDelete &
         HasSearch &
