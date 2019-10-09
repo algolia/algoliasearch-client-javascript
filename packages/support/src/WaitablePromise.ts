@@ -26,4 +26,4 @@ export class WaitablePromise<TResponse> extends Promise<TResponse> {
   }
 }
 
-export type OnWaitClosure<TResponse> = (result: TResponse) => Promise<void>;
+export type OnWaitClosure<TResponse> = (result: TResponse) => Promise<any>;
