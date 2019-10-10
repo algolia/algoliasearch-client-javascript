@@ -33,6 +33,27 @@ import {
   multipleQueries,
   HasMultipleQueries,
 } from '../../../search-client/src/methods/client/multipleQueries';
+import {
+  partialUpdateObject,
+  HasPartialUpdateObject,
+} from '../../../search-client/src/methods/index/partialUpdateObject';
+import {
+  partialUpdateObjects,
+  HasPartialUpdateObjects,
+} from '../../../search-client/src/methods/index/partialUpdateObjects';
+import {
+  deleteObject,
+  HasDeleteObject,
+} from '../../../search-client/src/methods/index/deleteObject';
+import { HasDeleteBy, deleteBy } from '../../../search-client/src/methods/index/deleteBy';
+import {
+  HasDeleteObjects,
+  deleteObjects,
+} from '../../../search-client/src/methods/index/deleteObjects';
+import {
+  clearObjects,
+  HasClearObjects,
+} from '../../../search-client/src/methods/index/clearObjects';
 
 export class TestSuite {
   public readonly testName: string;
@@ -84,7 +105,13 @@ export class TestSuite {
         HasGetObject &
         HasGetObjects &
         HasSetSettings &
-        HasGetSettings
+        HasGetSettings &
+        HasPartialUpdateObject &
+        HasPartialUpdateObjects &
+        HasDeleteObject &
+        HasDeleteBy &
+        HasDeleteObjects &
+        HasClearObjects
     >(indexName === undefined ? this.makeIndexName() : indexName, {
       methods: [
         batch,
@@ -98,6 +125,12 @@ export class TestSuite {
         waitTask,
         setSettings,
         getSettings,
+        partialUpdateObject,
+        partialUpdateObjects,
+        deleteObject,
+        deleteObjects,
+        deleteBy,
+        clearObjects,
       ],
     });
 

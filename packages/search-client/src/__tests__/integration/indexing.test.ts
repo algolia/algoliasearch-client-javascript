@@ -22,8 +22,16 @@ test(testSuite.testName, async () => {
 
   responses = responses.concat(index.saveObjects([]));
 
-  const object3 = Faker.object('object3');
-  const object4 = Faker.object('object4');
+  const object3 = {
+    ...Faker.object('object3'),
+    _tags: ['algolia'],
+  };
+
+  const object4 = {
+    ...Faker.object('object4'),
+    _tags: ['algolia'],
+  };
+
   responses = responses.concat(index.saveObjects([object3, object4]));
 
   const object5 = Faker.object();
@@ -52,6 +60,7 @@ test(testSuite.testName, async () => {
   );
 
   await createMultiWaitable(responses).wait();
+  responses = [];
 
   await expect(index.getObject('object1')).resolves.toStrictEqual(object1);
 
@@ -79,4 +88,47 @@ test(testSuite.testName, async () => {
   ).resolves.toStrictEqual({
     results: remain1000objects,
   });
+
+  // @todo missing browseObjects here...
+
+  const updatedObject1 = {
+    ...object1,
+    name: 'This is an altered name',
+  };
+
+  responses.push(index.partialUpdateObject(updatedObject1));
+
+  const updatedObject3 = {
+    ...object3,
+    bar: 40,
+  };
+
+  const updatedObject4 = {
+    ...object4,
+    foo: 30,
+  };
+
+  responses.push(index.partialUpdateObjects([updatedObject3, updatedObject4]));
+
+  await createMultiWaitable(responses).wait();
+  responses = [];
+
+  expect(await index.getObject('object1')).toEqual(updatedObject1);
+  expect(await index.getObject('object3')).toEqual(updatedObject3);
+  expect(await index.getObject('object4')).toEqual(updatedObject4);
+
+  await index.deleteObject('object1').wait();
+  expect((await index.search('', { cacheable: false })).nbHits).toBe(1006);
+
+  await index.deleteObject(objectId2).wait();
+  expect((await index.search('', { cacheable: false })).nbHits).toBe(1005);
+
+  await index.deleteBy({ tagFilters: ['algolia'] }).wait();
+  expect((await index.search('', { cacheable: false })).nbHits).toBe(1003);
+
+  await index.deleteObjects([objectId5, objectId6]).wait();
+  expect((await index.search('', { cacheable: false })).nbHits).toBe(1001);
+
+  await index.clearObjects().wait();
+  expect((await index.search('', { cacheable: false })).nbHits).toBe(0);
 });

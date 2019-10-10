@@ -86,7 +86,12 @@ export class Transporter implements TransporterContract {
       );
     };
 
-    return request.cacheable !== true
+    const cacheable =
+      mappedRequestOptions.cacheable !== undefined
+        ? mappedRequestOptions.cacheable
+        : request.cacheable;
+
+    return cacheable !== true
       ? createRequest()
       : this.responsesCache.get(
           key,

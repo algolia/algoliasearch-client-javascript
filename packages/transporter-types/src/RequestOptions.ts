@@ -1,4 +1,5 @@
 export type RequestOptions = {
+  readonly cacheable?: boolean;
   readonly timeout?: number;
   readonly headers?: { readonly [key: string]: string };
   readonly queryParameters?: { readonly [key: string]: string };
@@ -18,7 +19,7 @@ export function mapRequestOptions(
   const data: { [key: string]: string } = {};
 
   Object.keys(options).forEach(key => {
-    if (!['timeout', 'headers', 'queryParameters', 'data'].includes(key)) {
+    if (!['timeout', 'headers', 'queryParameters', 'data', 'cacheable'].includes(key)) {
       data[key] = options[key]; // eslint-disable-line functional/immutable-data
     }
   });
@@ -28,6 +29,7 @@ export function mapRequestOptions(
     timeout: options.timeout === undefined ? timeout : options.timeout,
     headers: options.headers === undefined ? {} : options.headers,
     queryParameters: options.queryParameters === undefined ? {} : options.queryParameters,
+    cacheable: options.cacheable,
   };
 }
 
@@ -49,7 +51,8 @@ export function popRequestOption<TRequestOption>(
 }
 
 export type MappedRequestOptions = {
-  readonly timeout?: number;
+  readonly cacheable: boolean | undefined;
+  readonly timeout: number | undefined;
   readonly data: { readonly [key: string]: string };
   readonly headers: { readonly [key: string]: string };
   readonly queryParameters: { readonly [key: string]: string };

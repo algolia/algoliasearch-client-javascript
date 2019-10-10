@@ -1,7 +1,7 @@
 /* eslint functional/no-let: 0 */ // --> OFF
 /* eslint functional/immutable-data: 0 */ // --> OFF
 /* eslint no-undef: 0 */ // --> OFF
-jest.setTimeout(30000);
+jest.setTimeout(60000);
 
 const NodeHttpRequester = require('../packages/requester-node-http').NodeHttpRequester;
 const BrowserXhrRequester = require('../packages/requester-browser-xhr').BrowserXhrRequester;

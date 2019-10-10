@@ -204,6 +204,7 @@ describe('Get Settings', () => {
       timeout: undefined,
       headers: {},
       queryParameters: { getVersion: '2' },
+      cacheable: undefined,
     };
 
     await index.getSettings();
@@ -218,6 +219,7 @@ describe('Get Settings', () => {
       timeout: undefined,
       headers: {},
       queryParameters: { foo: 'bar', getVersion: '2' },
+      cacheable: undefined,
     };
 
     await index.getSettings({
