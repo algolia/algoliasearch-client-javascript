@@ -63,6 +63,7 @@ import {
   getObjectPosition,
 } from '../../../search-client/src/methods/index/getObjectPosition';
 import { findObject, HasFindObject } from '../../../search-client/src/methods/index/findObject';
+import { exists, HasExists } from '../../../search-client/src/methods/index/exists';
 
 export class TestSuite {
   public readonly testName: string;
@@ -123,7 +124,8 @@ export class TestSuite {
         HasClearObjects &
         HasBrowseObjects &
         HasGetObjectPosition &
-        HasFindObject
+        HasFindObject &
+        HasExists
     >(indexName === undefined ? this.makeIndexName() : indexName, {
       methods: [
         batch,
@@ -146,6 +148,7 @@ export class TestSuite {
         browseObjects,
         getObjectPosition,
         findObject,
+        exists,
       ],
     });
 
