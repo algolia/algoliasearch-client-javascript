@@ -4,11 +4,12 @@ import { Method } from '@algolia/requester-types';
 import { ConstructorOf } from '@algolia/support';
 import { SearchOptions } from '../types/SearchOptions';
 import { SearchResponse } from '../types/SearchResponse';
+import { HitWithObjectID } from '../types/HitWithObjectID';
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const search = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: TSearchIndex) => {
   return class extends base implements HasSearch {
-    public search<THit>(
+    public search<THit extends HitWithObjectID>(
       query: string,
       requestOptions?: RequestOptions & SearchOptions
     ): Promise<SearchResponse<THit>> {
@@ -28,7 +29,7 @@ export const search = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: TS
 };
 
 export type HasSearch = {
-  readonly search: <THit>(
+  readonly search: <THit extends HitWithObjectID>(
     query: string,
     requestOptions?: RequestOptions & SearchOptions
   ) => Promise<SearchResponse<THit>>;
