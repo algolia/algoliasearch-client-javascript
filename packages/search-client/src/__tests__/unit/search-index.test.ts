@@ -20,6 +20,7 @@ import { SaveObjectsOptions } from '../../methods/types/SaveObjectsOptions';
 import { getSettings, HasGetSettings } from '../../methods/index/getSettings';
 import { SearchIndex } from '../../SearchIndex';
 import { findObject, HasFindObject } from '../../methods/index/findObject';
+import { exists, HasExists } from '../../methods/index/exists';
 
 const transporterMock = mock(Transporter);
 const transporter = instance(transporterMock);
@@ -31,7 +32,8 @@ type SearchIndexType = HasBatch &
   HasGetObjects &
   HasGetSettings &
   HasSearchForFacetValues &
-  HasFindObject;
+  HasFindObject &
+  HasExists;
 
 const index = new SearchClient({
   transporter,
@@ -48,6 +50,7 @@ const index = new SearchClient({
     getSettings,
     searchForFacetValues,
     findObject,
+    exists,
   ],
 });
 
@@ -56,7 +59,14 @@ const res: any = {
   taskID: 1,
 };
 
-when(transporterMock.read(anything())).thenResolve({});
+when(transporterMock.read(anything(), anything())).thenResolve({
+  hits: [
+    {
+      objectID: 1,
+      name: 'foo',
+    },
+  ],
+});
 
 describe('initIndex', () => {
   it('can be instanciated without options', () => {
@@ -274,5 +284,34 @@ describe('Get Objects', () => {
         requestOptions
       )
     ).once();
+  });
+});
+
+describe('find object', () => {
+  it('passes request options to search', async () => {
+    const requestOptions = {
+      timeout: 10,
+      page: 0,
+    };
+
+    await index.findObject(() => true, requestOptions);
+
+    verify(transporterMock.read(anything(), deepEqual(requestOptions))).once();
+  });
+});
+
+describe('exists', () => {
+  it('passes request options to getSettings', async () => {
+    const requestOptions = {
+      data: {},
+      timeout: 10,
+      headers: {},
+      queryParameters: { getVersion: '2' },
+      cacheable: undefined,
+    };
+
+    await index.exists(requestOptions);
+
+    verify(transporterMock.read(anything(), deepEqual(requestOptions))).once();
   });
 });
