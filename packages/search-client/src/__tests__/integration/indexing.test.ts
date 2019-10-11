@@ -64,27 +64,27 @@ test(testSuite.testName, async () => {
 
   await expect(index.getObject('object1')).resolves.toStrictEqual(object1);
 
-  const objectId2 = (await response2).objectID;
-  await expect(index.getObject(objectId2)).resolves.toStrictEqual(
-    Object.assign(object2, { objectID: objectId2 })
+  const objectID2 = (await response2).objectID;
+  await expect(index.getObject(objectID2)).resolves.toStrictEqual(
+    Object.assign(object2, { objectID: objectID2 })
   );
   await expect(index.getObject('object3')).resolves.toStrictEqual(object3);
   await expect(index.getObject('object4')).resolves.toStrictEqual(object4);
 
-  const objectId5 = (await response5and6)[0].objectIDs[0];
-  await expect(index.getObject(objectId5)).resolves.toStrictEqual(
-    Object.assign(object5, { objectID: objectId5 })
+  const objectID5 = (await response5and6)[0].objectIDs[0];
+  await expect(index.getObject(objectID5)).resolves.toStrictEqual(
+    Object.assign(object5, { objectID: objectID5 })
   );
 
-  const objectId6 = (await response5and6)[0].objectIDs[1];
-  await expect(index.getObject(objectId6)).resolves.toStrictEqual(
-    Object.assign(object6, { objectID: objectId6 })
+  const objectID6 = (await response5and6)[0].objectIDs[1];
+  await expect(index.getObject(objectID6)).resolves.toStrictEqual(
+    Object.assign(object6, { objectID: objectID6 })
   );
 
   await expect(index.getObject('object7')).resolves.toStrictEqual(object7);
 
   await expect(
-    index.getObjects(Array.from(Array(1000).keys()).map((objectId: number) => objectId.toString()))
+    index.getObjects(Array.from(Array(1000).keys()).map((objectID: number) => objectID.toString()))
   ).resolves.toStrictEqual({
     results: remain1000objects,
   });
@@ -127,13 +127,13 @@ test(testSuite.testName, async () => {
   await index.deleteObject('object1').wait();
   expect((await index.search('', { cacheable: false })).nbHits).toBe(1006);
 
-  await index.deleteObject(objectId2).wait();
+  await index.deleteObject(objectID2).wait();
   expect((await index.search('', { cacheable: false })).nbHits).toBe(1005);
 
   await index.deleteBy({ tagFilters: ['algolia'] }).wait();
   expect((await index.search('', { cacheable: false })).nbHits).toBe(1003);
 
-  await index.deleteObjects([objectId5, objectId6]).wait();
+  await index.deleteObjects([objectID5, objectID6]).wait();
   expect((await index.search('', { cacheable: false })).nbHits).toBe(1001);
 
   await index.clearObjects().wait();

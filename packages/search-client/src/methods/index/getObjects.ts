@@ -9,13 +9,13 @@ import { GetObjectsOptions } from '../types/GetObjectsOptions';
 export const getObjects = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: TSearchIndex) => {
   return class extends base implements HasGetObjects {
     public getObjects<TObject>(
-      objectIds: readonly string[],
+      objectIDs: readonly string[],
       requestOptions?: RequestOptions & GetObjectsOptions
     ): Promise<GetObjectsResponse<TObject>> {
-      const requests = objectIds.map(objectId => {
+      const requests = objectIDs.map(objectID => {
         return {
           indexName: this.indexName,
-          objectID: objectId,
+          objectID,
           attributesToRetrieve: popRequestOption(requestOptions, 'attributesToRetrieve', '*'),
         };
       });

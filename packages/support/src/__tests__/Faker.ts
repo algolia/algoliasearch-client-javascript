@@ -1,5 +1,5 @@
 export class Faker {
-  public static object(objectId?: string): object {
+  public static object(objectID?: string): object {
     let obj = {
       name: Math.random()
         .toString(36)
@@ -7,8 +7,8 @@ export class Faker {
       age: Math.floor(Math.random() * Math.floor(100)),
     };
 
-    if (objectId !== undefined) {
-      obj = Object.assign(obj, { objectID: objectId });
+    if (objectID !== undefined) {
+      obj = Object.assign(obj, { objectID });
     }
 
     return obj;
