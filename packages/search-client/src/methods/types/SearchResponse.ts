@@ -1,4 +1,6 @@
-export type SearchResponse<THit> = {
+import { HitWithObjectID } from './HitWithObjectID';
+
+export type SearchResponse<THit extends HitWithObjectID = HitWithObjectID> = {
   /* eslint-disable functional/prefer-readonly-type */
   hits: THit[];
   page: number;

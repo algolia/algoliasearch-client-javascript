@@ -1,5 +1,6 @@
 import { TestSuite } from '@algolia/support/src/__tests__/TestSuite';
 import { createMultiWaitable } from '@algolia/support/src/__tests__/helpers';
+import { ObjectNotFoundError } from '../../errors/ObjectNotFoundError';
 
 const testSuite = new TestSuite('search');
 
@@ -13,8 +14,8 @@ test(testSuite.testName, async () => {
   responses.push(
     index.saveObjects(
       [
-        { company: 'Algolia', name: 'Julien Lemoine' },
-        { company: 'Algolia', name: 'Nicolas Dessaigne' },
+        { objectID: 'julien-lemoine', company: 'Algolia', name: 'Julien Lemoine' },
+        { objectID: 'nicolas-dessaigne', company: 'Algolia', name: 'Nicolas Dessaigne' },
         { company: 'Amazon', name: 'Jeff Bezos' },
         { company: 'Apple', name: 'Steve Jobs' },
         { company: 'Apple', name: 'Steve Wozniak' },
@@ -40,6 +41,41 @@ test(testSuite.testName, async () => {
   let searchResponse = await index.search('algolia');
 
   expect(searchResponse.hits).toHaveLength(2);
+
+  expect(index.getObjectPosition(searchResponse, 'nicolas-dessaigne')).toBe(0);
+  expect(index.getObjectPosition(searchResponse, 'julien-lemoine')).toBe(1);
+  expect(index.getObjectPosition(searchResponse, '')).toBe(-1);
+
+  await expect(index.findObject(() => false)).rejects.toEqual(new ObjectNotFoundError());
+  expect(await index.findObject(() => true)).toMatchObject({
+    position: 0,
+    page: 0,
+  });
+
+  const cb = obj => obj.company === 'Apple';
+
+  await expect(index.findObject(cb, { query: 'algolia' })).rejects.toEqual(
+    new ObjectNotFoundError()
+  );
+
+  await expect(
+    index.findObject(cb, {
+      query: '',
+      paginate: false,
+      hitsPerPage: 5,
+    })
+  ).rejects.toEqual(new ObjectNotFoundError());
+
+  expect(
+    await index.findObject(cb, {
+      query: '',
+      paginate: true,
+      hitsPerPage: 5,
+    })
+  ).toMatchObject({
+    position: 0,
+    page: 2,
+  });
 
   searchResponse = await index.search('elon', {
     clickAnalytics: true,

@@ -27,7 +27,7 @@ export const search = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: TS
   };
 };
 
-export type HasSearch = SearchIndex & {
+export type HasSearch = {
   readonly search: <THit>(
     query: string,
     requestOptions?: RequestOptions & SearchOptions

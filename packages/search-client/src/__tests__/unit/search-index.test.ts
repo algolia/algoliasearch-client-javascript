@@ -19,6 +19,7 @@ import {
 import { SaveObjectsOptions } from '../../methods/types/SaveObjectsOptions';
 import { getSettings, HasGetSettings } from '../../methods/index/getSettings';
 import { SearchIndex } from '../../SearchIndex';
+import { findObject, HasFindObject } from '../../methods/index/findObject';
 
 const transporterMock = mock(Transporter);
 const transporter = instance(transporterMock);
@@ -29,7 +30,8 @@ type SearchIndexType = HasBatch &
   HasGetObject &
   HasGetObjects &
   HasGetSettings &
-  HasSearchForFacetValues;
+  HasSearchForFacetValues &
+  HasFindObject;
 
 const index = new SearchClient({
   transporter,
@@ -45,6 +47,7 @@ const index = new SearchClient({
     getObjects,
     getSettings,
     searchForFacetValues,
+    findObject,
   ],
 });
 
@@ -52,6 +55,8 @@ const res: any = {
   objectIDs: ['1'],
   taskID: 1,
 };
+
+when(transporterMock.read(anything())).thenResolve({});
 
 describe('initIndex', () => {
   it('can be instanciated without options', () => {
