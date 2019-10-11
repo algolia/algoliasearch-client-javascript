@@ -89,11 +89,7 @@ export const batch = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: TSe
           },
           requestOptions
         )
-      ).onWait(
-        (response: BatchResponse): Promise<void> => {
-          return this.waitTask(response.taskID);
-        }
-      );
+      ).onWait((response: BatchResponse): Promise<void> => this.waitTask(response.taskID));
     }
   };
 };
