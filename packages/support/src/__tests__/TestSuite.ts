@@ -54,6 +54,10 @@ import {
   clearObjects,
   HasClearObjects,
 } from '../../../search-client/src/methods/index/clearObjects';
+import {
+  browseObjects,
+  HasBrowseObjects,
+} from '../../../search-client/src/methods/index/browseObjects';
 
 export class TestSuite {
   public readonly testName: string;
@@ -111,7 +115,8 @@ export class TestSuite {
         HasDeleteObject &
         HasDeleteBy &
         HasDeleteObjects &
-        HasClearObjects
+        HasClearObjects &
+        HasBrowseObjects
     >(indexName === undefined ? this.makeIndexName() : indexName, {
       methods: [
         batch,
@@ -131,6 +136,7 @@ export class TestSuite {
         deleteObjects,
         deleteBy,
         clearObjects,
+        browseObjects,
       ],
     });
 

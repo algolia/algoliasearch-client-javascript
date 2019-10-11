@@ -117,6 +117,13 @@ test(testSuite.testName, async () => {
   expect(await index.getObject('object3')).toEqual(updatedObject3);
   expect(await index.getObject('object4')).toEqual(updatedObject4);
 
+  let objects1 = [];
+  await index.browseObjects({
+    batch: objectsBatch => (objects1 = objects1.concat(objectsBatch)),
+  });
+
+  expect(objects1.length).toBe(1007);
+
   await index.deleteObject('object1').wait();
   expect((await index.search('', { cacheable: false })).nbHits).toBe(1006);
 
@@ -131,4 +138,11 @@ test(testSuite.testName, async () => {
 
   await index.clearObjects().wait();
   expect((await index.search('', { cacheable: false })).nbHits).toBe(0);
+
+  let objects2 = [];
+  await index.browseObjects({
+    batch: objectsBatch => (objects2 = objects2.concat(objectsBatch)),
+  });
+
+  expect(objects2.length).toBe(0);
 });
