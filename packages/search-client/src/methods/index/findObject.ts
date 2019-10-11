@@ -5,6 +5,7 @@ import { FindObjectOptions } from '../types/FindObjectOptions';
 import { ObjectNotFoundError } from '../../errors/ObjectNotFoundError';
 import { FindObjectResponse } from '../types/FindObjectResponse';
 import { search, HasSearch } from './search';
+import { HitWithObjectID } from '../types/HitWithObjectID';
 
 /**
 
@@ -20,7 +21,7 @@ export const findObject = <TSearchIndex extends ConstructorOf<SearchIndex>>(base
   const Mixin: ConstructorOf<SearchIndex & HasSearch> = search(base);
 
   return class extends Mixin implements HasFindObject {
-    public findObject<TObject>(
+    public findObject<TObject extends HitWithObjectID>(
       callback: (object: TObject) => boolean,
       requestOptions?: FindObjectOptions & RequestOptions
     ): Readonly<Promise<FindObjectResponse<TObject>>> {
@@ -60,7 +61,7 @@ export const findObject = <TSearchIndex extends ConstructorOf<SearchIndex>>(base
 };
 
 export type HasFindObject = {
-  readonly findObject: <TObject>(
+  readonly findObject: <TObject extends HitWithObjectID>(
     callback: (object: TObject) => boolean,
     requestOptions?: FindObjectOptions & RequestOptions
   ) => Readonly<Promise<FindObjectResponse<TObject>>>;
