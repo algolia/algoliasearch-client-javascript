@@ -1,4 +1,4 @@
-export const Strategy: { readonly [key: string]: StrategyType } = {
+export const StrategyEnum: { readonly [key: string]: StrategyType } = {
   None: 'none',
   StopIfEnoughMatches: 'stopIfEnoughMatches',
 };

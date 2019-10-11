@@ -1,6 +1,6 @@
 import { TestSuite } from '@algolia/support/src/__tests__/TestSuite';
 import { BatchAction } from '../../methods/types/BatchAction';
-import { Strategy } from '../../methods/types/Strategy';
+import { StrategyEnum } from '../../methods/types/Strategy';
 
 const testSuite = new TestSuite('multiple_operations');
 
@@ -43,7 +43,7 @@ test(testSuite.testName, async () => {
       { indexName: index.indexName, params: 'query=&hitsPerPage=2' },
       { indexName: index2.indexName, params: 'query=&hitsPerPage=2' },
     ],
-    { strategy: Strategy.None }
+    { strategy: StrategyEnum.None }
   );
 
   expect(multipleQueriesResponse1.results[0].hits).toHaveLength(2);
@@ -54,7 +54,7 @@ test(testSuite.testName, async () => {
       { indexName: index.indexName, params: 'query=&hitsPerPage=2' },
       { indexName: index2.indexName, params: 'query=&hitsPerPage=2' },
     ],
-    { strategy: Strategy.StopIfEnoughMatches }
+    { strategy: StrategyEnum.StopIfEnoughMatches }
   );
 
   expect(multipleQueriesResponse2.results[0].hits).toHaveLength(2);
