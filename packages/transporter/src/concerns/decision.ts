@@ -18,25 +18,28 @@ const isSuccess = ({ status }: Response): boolean => {
   return ~~(status / 100) === 2;
 };
 
-export const decide = (host: Host, response: Response, outcomes: Outcomes): void => {
+export const decision = <TResponse>(
+  host: Host,
+  response: Response,
+  outcomes: Outcomes
+): Promise<TResponse> => {
   if (isRetryable(response)) {
     if (!response.isTimedOut) {
       host.setAsDown();
     }
 
-    return outcomes.retry();
+    return outcomes.retry<TResponse>();
   }
 
   if (isSuccess(response)) {
-    return outcomes.success();
+    return outcomes.success<TResponse>();
   }
 
-  return outcomes.fail();
+  return outcomes.fail<TResponse>();
 };
 
 type Outcomes = {
-  // eslint-disable-next-line @typescript-eslint/generic-type-naming
-  readonly fail: () => void;
-  readonly success: () => void;
-  readonly retry: () => void;
+  readonly fail: <TResponse>() => Promise<TResponse>;
+  readonly success: <TResponse>() => Promise<TResponse>;
+  readonly retry: <TResponse>() => Promise<TResponse>;
 };

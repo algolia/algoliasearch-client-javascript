@@ -16,13 +16,11 @@ export const saveObject = <TSearchIndex extends ConstructorOf<SearchIndex>>(base
       requestOptions?: RequestOptions & SaveObjectsOptions
     ): Readonly<WaitablePromise<SaveObjectResponse>> {
       return WaitablePromise.from<SaveObjectResponse>(
-        new Promise(resolve => {
-          this.saveObjects([object], requestOptions).then(response => {
-            resolve({
-              objectID: response[0].objectIDs[0],
-              taskID: response[0].taskID,
-            });
-          });
+        this.saveObjects([object], requestOptions).then(response => {
+          return {
+            objectID: response[0].objectIDs[0],
+            taskID: response[0].taskID,
+          };
         })
       ).onWait((result: SaveObjectResponse) => this.waitTask(result.taskID));
     }

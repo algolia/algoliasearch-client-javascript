@@ -4,7 +4,7 @@ export type Cache = {
     defaultValue: () => Promise<TValue>,
     events?: CacheEvents
   ) => Promise<TValue>;
-  readonly set: (key: object, value: any) => Promise<void>;
+  readonly set: <TValue>(key: object, value: TValue) => Promise<TValue>;
   readonly delete: (key: object) => Promise<void>;
   readonly clear: () => Promise<void>;
 };

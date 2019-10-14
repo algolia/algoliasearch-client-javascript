@@ -22,10 +22,10 @@ export class BrowserLocalStorageCache implements Cache {
     return promise.then((value: TValue) => miss(value)).then(() => promise);
   }
 
-  public set(key: object, value: any): Promise<void> {
+  public set<TValue>(key: object, value: TValue): Promise<TValue> {
     localStorage.setItem(JSON.stringify(key), JSON.stringify(value));
 
-    return Promise.resolve();
+    return Promise.resolve(value);
   }
 
   public delete(key: object): Promise<void> {

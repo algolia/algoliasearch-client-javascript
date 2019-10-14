@@ -1,15 +1,13 @@
 module.exports = {
-  plugins: ['functional', 'sonarjs', 'wdio', 'simple-import-sort'],
+  plugins: ['functional', 'sonarjs', 'wdio', 'simple-import-sort', 'promise'],
   extends: [
     'algolia/jest',
     'algolia/typescript',
     'plugin:functional/recommended',
     'plugin:sonarjs/recommended',
     'plugin:wdio/recommended',
+    'plugin:promise/recommended',
   ],
-  parserOptions: {
-    'max-len': { code: 120 },
-  },
   rules: {
     'simple-import-sort/sort': 'error',
     'max-len': [1, 120, 2, { ignoreComments: true }],

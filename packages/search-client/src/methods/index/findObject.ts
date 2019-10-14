@@ -36,6 +36,7 @@ export const findObject = <TSearchIndex extends ConstructorOf<SearchIndex>>(base
         return this.search<TObject>(query, { ...requestOptions, page }).then(result => {
           // eslint-disable-next-line functional/no-loop-statement
           for (const [position, hit] of Object.entries(result.hits)) {
+            // eslint-disable-next-line promise/no-callback-in-promise
             if (callback(hit)) {
               return {
                 object: hit,

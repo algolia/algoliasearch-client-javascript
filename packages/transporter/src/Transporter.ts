@@ -13,7 +13,7 @@ import {
   Transporter as TransporterContract,
 } from '@algolia/transporter-types';
 
-import { decide } from './concerns/decide';
+import { decision } from './concerns/decision';
 import { Deserializer } from './Deserializer';
 import { Serializer } from './Serializer';
 
@@ -90,26 +90,23 @@ export class Transporter implements TransporterContract {
         ? mappedRequestOptions.cacheable
         : request.cacheable;
 
-    return cacheable !== true
-      ? createRequest()
-      : this.responsesCache.get(
-          key,
-          () =>
-            this.requestsCache.get(key, () => {
-              const responsePromise = createRequest();
+    if (cacheable !== true) {
+      return createRequest();
+    }
 
-              return this.requestsCache
-                .set(key, responsePromise)
-                .then(() =>
-                  responsePromise.then(response =>
-                    this.requestsCache.delete(key).then(() => response)
-                  )
-                );
-            }),
-          {
-            miss: response => this.responsesCache.set(key, response),
-          }
-        );
+    return this.responsesCache.get(
+      key,
+      () =>
+        this.requestsCache.get(key, () =>
+          this.requestsCache
+            .set(key, createRequest())
+            // eslint-disable-next-line promise/no-nesting
+            .then(response => this.requestsCache.delete(key).then(() => response))
+        ),
+      {
+        miss: response => this.responsesCache.set(key, response),
+      }
+    );
   }
 
   public write<TResponse>(request: Request, requestOptions?: RequestOptions): Promise<TResponse> {
@@ -126,36 +123,32 @@ export class Transporter implements TransporterContract {
     request: Request,
     requestOptions: MappedRequestOptions
   ): Promise<TResponse> {
+    let timeoutRetries = 0; // eslint-disable-line functional/no-let
+
     return Promise.all(
-      hosts.map(host => {
-        return this.hostsCache
-          .get<Host>({ url: host.url }, () => Promise.resolve(host))
+      hosts.map(host =>
+        this.hostsCache
+          .get({ url: host.url }, () => Promise.resolve(host))
           .then((value: Host) => {
             // eslint-disable-next-line functional/immutable-data, no-param-reassign
             host.downDate = value.downDate;
-
             // eslint-disable-next-line functional/immutable-data, no-param-reassign
             host.up = value.up;
-          });
-      })
+
+            return;
+          })
+      )
     ).then(() => {
-      hosts = hosts.filter(host => host.isUp()).reverse(); // eslint-disable-line no-param-reassign
+      // eslint-disable-next-line no-param-reassign
+      hosts = hosts.filter(host => host.isUp()).reverse();
 
-      let timeoutRetries = 0; // eslint-disable-line functional/no-let
-
-      const retry = (
-        resolve: (response: TResponse) => void,
-        reject: (error: Error) => void
-      ): void => {
-        const host = hosts.pop(); // eslint-disable-line functional/immutable-data
-
+      const forEachHost = <TResponse>(host: Host | undefined): Promise<TResponse> => {
         if (host === undefined) {
-          reject(new RetryError());
-
-          return;
+          throw new RetryError();
         }
 
-        this.requester
+        // eslint-disable-next-line promise/no-nesting
+        return this.requester
           .send({
             data: Serializer.data(request, requestOptions),
             headers: { ...this.headers, ...requestOptions.headers },
@@ -166,9 +159,9 @@ export class Transporter implements TransporterContract {
             }),
             timeout: (timeoutRetries + 1) * (requestOptions.timeout ? requestOptions.timeout : 0),
           })
-          .then(response => {
-            decide(host, response, {
-              success: () => resolve(Deserializer.success<TResponse>(response)),
+          .then(response =>
+            decision(host, response, {
+              success: () => Deserializer.success(response),
               retry: () => {
                 this.logger.error('Retryable failure', {
                   request,
@@ -182,16 +175,23 @@ export class Transporter implements TransporterContract {
                   timeoutRetries++;
                 }
 
-                this.hostsCache.set({ url: host.url }, host).then(() => retry(resolve, reject));
+                return (
+                  // eslint-disable-next-line promise/no-nesting
+                  this.hostsCache
+                    .set({ url: host.url }, host)
+                    // eslint-disable-next-line functional/immutable-data
+                    .then(() => forEachHost(hosts.pop()))
+                );
               },
-              fail: () => reject(Deserializer.fail(response)),
-            });
-          });
-
-        return;
+              fail: () => {
+                throw Deserializer.fail(response);
+              },
+            })
+          );
       };
 
-      return new Promise((resolve, reject) => retry(resolve, reject));
+      // eslint-disable-next-line functional/immutable-data
+      return forEachHost(hosts.pop());
     });
   }
 }

@@ -14,8 +14,8 @@ export class NullCache implements Cache {
     return miss(value).then(() => value);
   }
 
-  public set(key: object, value: any): Promise<void> {
-    return Promise.resolve();
+  public set<TValue>(key: object, value: TValue): Promise<TValue> {
+    return Promise.resolve(value);
   }
 
   public delete(key: object): Promise<void> {
