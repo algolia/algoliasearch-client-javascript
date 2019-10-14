@@ -90,7 +90,7 @@ describe('timeout handling', () => {
 
     const now = Date.now();
 
-    expect(now - before).toBeGreaterThan(1000);
+    expect(now - before).toBeGreaterThan(999);
     expect(now - before).toBeLessThan(1200);
   });
 
@@ -103,7 +103,7 @@ describe('timeout handling', () => {
 
     const now = Date.now();
 
-    expect(now - before).toBeGreaterThan(2000);
+    expect(now - before).toBeGreaterThan(1999);
     expect(now - before).toBeLessThan(2200);
   });
 
