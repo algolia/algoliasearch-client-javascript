@@ -128,22 +128,17 @@ export class Transporter implements TransporterContract {
     requestOptions: MappedRequestOptions
   ): Promise<TResponse> {
     return Promise.all(
-      hosts.map(
-        host =>
-          new Promise(resolve => {
-            this.hostsCache
-              .get<Host>({ url: host.url }, () => Promise.resolve(host))
-              .then((value: Host) => {
-                // eslint-disable-next-line functional/immutable-data, no-param-reassign
-                host.downDate = value.downDate;
+      hosts.map(host => {
+        return this.hostsCache
+          .get<Host>({ url: host.url }, () => Promise.resolve(host))
+          .then((value: Host) => {
+            // eslint-disable-next-line functional/immutable-data, no-param-reassign
+            host.downDate = value.downDate;
 
-                // eslint-disable-next-line functional/immutable-data, no-param-reassign
-                host.up = value.up;
-              });
-
-            resolve();
-          })
-      )
+            // eslint-disable-next-line functional/immutable-data, no-param-reassign
+            host.up = value.up;
+          });
+      })
     ).then(() => {
       hosts = hosts.filter(host => host.isUp()).reverse(); // eslint-disable-line no-param-reassign
 
