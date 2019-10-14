@@ -1,13 +1,12 @@
 import { SynonymType } from './SynonymType';
 
 export type Synonym = {
-  /* eslint-disable functional/prefer-readonly-type */
-  objectID: string;
-  type: SynonymType;
-  synonyms?: string[];
-  input?: string;
-  word?: string;
-  corrections?: string[];
-  placeholder?: string;
-  replacements?: string[];
+  readonly objectID: string;
+  readonly type: SynonymType;
+  readonly synonyms?: readonly string[];
+  readonly input?: string;
+  readonly word?: string;
+  readonly corrections?: readonly string[];
+  readonly placeholder?: string;
+  readonly replacements?: readonly string[];
 };

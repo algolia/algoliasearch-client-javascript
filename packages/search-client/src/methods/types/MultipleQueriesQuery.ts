@@ -1,5 +1,4 @@
 export type MultipleQueriesQuery = {
-  /* eslint-disable functional/prefer-readonly-type */
-  indexName: string;
-  params: string;
+  readonly indexName: string;
+  readonly params: string;
 };

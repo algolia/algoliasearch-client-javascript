@@ -1,5 +1,4 @@
 export type PartialUpdateObjectResponse = {
-  /* eslint-disable functional/prefer-readonly-type */
-  taskID: number;
-  objectID: string;
+  readonly taskID: number;
+  readonly objectID: string;
 };

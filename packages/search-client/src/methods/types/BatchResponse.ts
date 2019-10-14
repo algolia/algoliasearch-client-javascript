@@ -1,5 +1,4 @@
 export type BatchResponse = {
-  /* eslint-disable functional/prefer-readonly-type */
-  taskID: number;
-  objectIDs: string[];
+  readonly taskID: number;
+  readonly objectIDs: readonly string[];
 };

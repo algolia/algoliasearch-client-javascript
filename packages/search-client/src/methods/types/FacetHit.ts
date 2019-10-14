@@ -1,6 +1,5 @@
 export type FacetHit = {
-  /* eslint-disable functional/prefer-readonly-type */
-  value: string;
-  highlighted: string;
-  count: number;
+  readonly value: string;
+  readonly highlighted: string;
+  readonly count: number;
 };

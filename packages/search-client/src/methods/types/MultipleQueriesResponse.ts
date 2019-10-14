@@ -1,6 +1,6 @@
+import { HitWithObjectID } from './HitWithObjectID';
 import { SearchResponse } from './SearchResponse';
 
-export type MultipleQueriesResponse<THit> = {
-  /* eslint-disable functional/prefer-readonly-type */
-  results: Array<SearchResponse<THit>>;
+export type MultipleQueriesResponse<THit extends HitWithObjectID> = {
+  readonly results: ReadonlyArray<SearchResponse<THit>>;
 };

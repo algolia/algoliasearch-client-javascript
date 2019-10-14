@@ -1,6 +1,5 @@
 export type MultipleGetObject = {
-  /* eslint-disable functional/prefer-readonly-type */
-  indexName: string;
-  objectID: string;
-  attributesToRetrieve?: string[];
+  readonly indexName: string;
+  readonly objectID: string;
+  readonly attributesToRetrieve?: readonly string[];
 };

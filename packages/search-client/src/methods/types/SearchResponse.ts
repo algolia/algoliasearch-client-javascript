@@ -1,38 +1,37 @@
 import { HitWithObjectID } from './HitWithObjectID';
 
 export type SearchResponse<THit extends HitWithObjectID = HitWithObjectID> = {
-  /* eslint-disable functional/prefer-readonly-type */
-  hits: THit[];
-  page: number;
-  length?: number;
-  offset?: number;
-  nbHits: number;
-  nbPages: number;
-  hitsPerPage: number;
-  processingTimeMs: number;
-  exhaustiveNbHits: boolean;
-  exhaustiveFacetsCount?: boolean;
-  facets?: { [key: string]: { [key: string]: number } };
-  facetsStats?: {
-    [key: string]: {
-      min: number;
-      max: number;
-      avg: number;
-      sum: number;
+  readonly hits: readonly THit[];
+  readonly page: number;
+  readonly length?: number;
+  readonly offset?: number;
+  readonly nbHits: number;
+  readonly nbPages: number;
+  readonly hitsPerPage: number;
+  readonly processingTimeMs: number;
+  readonly exhaustiveNbHits: boolean;
+  readonly exhaustiveFacetsCount?: boolean;
+  readonly facets?: { readonly [key: string]: { readonly [key: string]: number } };
+  readonly facetsStats?: {
+    readonly [key: string]: {
+      readonly min: number;
+      readonly max: number;
+      readonly avg: number;
+      readonly sum: number;
     };
   };
-  query: string;
-  queryAfterRemoval?: string;
-  params: string;
-  queryID?: string;
-  message?: string;
-  aroundLatLng?: string;
-  automaticRadius?: string;
-  serverUsed?: string;
-  index?: string;
-  indexUsed?: string;
-  abTestVariantID?: number;
-  parsedQuery?: string;
-  userData?: any;
-  appliedRules?: Array<{ [key: string]: any }>;
+  readonly query: string;
+  readonly queryAfterRemoval?: string;
+  readonly params: string;
+  readonly queryID?: string;
+  readonly message?: string;
+  readonly aroundLatLng?: string;
+  readonly automaticRadius?: string;
+  readonly serverUsed?: string;
+  readonly index?: string;
+  readonly indexUsed?: string;
+  readonly abTestVariantID?: number;
+  readonly parsedQuery?: string;
+  readonly userData?: any;
+  readonly appliedRules?: ReadonlyArray<{ readonly [key: string]: any }>;
 };

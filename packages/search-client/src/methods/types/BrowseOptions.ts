@@ -1,5 +1,5 @@
 export type BrowseOptions<TObject> = {
-  /* eslint-disable functional/prefer-readonly-type,functional/no-mixed-type */
-  batch?: (batch: TObject[]) => any;
-  hitsPerPage?: number;
+  readonly batch?: (batch: readonly TObject[]) => any;
+  // eslint-disable-next-line functional/no-mixed-type
+  readonly hitsPerPage?: number;
 };

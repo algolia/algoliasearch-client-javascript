@@ -1,5 +1,4 @@
 export type BrowseResponse<TObject> = {
-  /* eslint-disable functional/prefer-readonly-type */
-  hits: TObject[];
-  cursor?: string;
+  readonly hits: readonly TObject[];
+  readonly cursor?: string;
 };
