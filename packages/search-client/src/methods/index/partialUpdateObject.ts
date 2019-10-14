@@ -1,9 +1,10 @@
-import { RequestOptions } from '@algolia/transporter-types';
-import { SearchIndex } from '../../SearchIndex';
 import { ConstructorOf, WaitablePromise } from '@algolia/support';
-import { partialUpdateObjects } from './partialUpdateObjects';
+import { RequestOptions } from '@algolia/transporter-types';
+
+import { SearchIndex } from '../../SearchIndex';
 import { PartialUpdateObjectResponse } from '../types/PartialUpdateObjectResponse';
 import { PartialUpdateObjectsOptions } from '../types/PartialUpdateObjectsOptions';
+import { partialUpdateObjects } from './partialUpdateObjects';
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const partialUpdateObject = <TSearchIndex extends ConstructorOf<SearchIndex>>(

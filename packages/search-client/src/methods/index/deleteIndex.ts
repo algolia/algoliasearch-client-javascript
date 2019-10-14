@@ -1,10 +1,10 @@
-import { RequestOptions } from '@algolia/transporter-types';
-import { SearchIndex } from '../../SearchIndex';
 import { Method } from '@algolia/requester-types';
 import { ConstructorOf, WaitablePromise } from '@algolia/support';
+import { RequestOptions } from '@algolia/transporter-types';
 
-import { waitTask } from './waitTask';
+import { SearchIndex } from '../../SearchIndex';
 import { DeleteResponse } from '../types/DeleteResponse';
+import { waitTask } from './waitTask';
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const deleteIndex = <TSearchIndex extends ConstructorOf<SearchIndex>>(

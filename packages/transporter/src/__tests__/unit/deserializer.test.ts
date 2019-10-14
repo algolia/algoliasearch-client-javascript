@@ -1,6 +1,7 @@
-import { Fixtures, FakeRequester } from '../Fixtures';
-import { when, anything, mock } from 'ts-mockito';
+import { anything, mock, when } from 'ts-mockito';
+
 import { Transporter } from '../../Transporter';
+import { FakeRequester, Fixtures } from '../Fixtures';
 
 let requester: FakeRequester;
 let transporter: Transporter;

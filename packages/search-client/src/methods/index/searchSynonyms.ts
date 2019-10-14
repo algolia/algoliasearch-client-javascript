@@ -1,7 +1,8 @@
-import { RequestOptions } from '@algolia/transporter-types';
-import { SearchIndex } from '../../SearchIndex';
 import { Method } from '@algolia/requester-types';
 import { ConstructorOf } from '@algolia/support';
+import { RequestOptions } from '@algolia/transporter-types';
+
+import { SearchIndex } from '../../SearchIndex';
 import { SearchSynonymsOptions } from '../types/SearchSynonymsOptions';
 import { SearchSynonymsResponse } from '../types/SearchSynonymsResponse';
 

@@ -1,22 +1,23 @@
-import { BrowserXhrRequester } from '@algolia/requester-browser-xhr';
-import { Transporter } from '@algolia/transporter';
-import { UserAgent } from '@algolia/transporter-types';
+import { AnalyticsClient, createAnalyticsClient } from '@algolia/analytics-client';
+import { BrowserLocalStorageCache } from '@algolia/cache-browser-local-storage';
+import { InMemoryCache } from '@algolia/cache-in-memory';
+import { createInsightsClient, InsightsClient } from '@algolia/insights-client';
 import { ConsoleLogger } from '@algolia/logger-console';
 import { LogLevel } from '@algolia/logger-types';
-import { InMemoryCache } from '@algolia/cache-in-memory';
-import { BrowserLocalStorageCache } from '@algolia/cache-browser-local-storage';
-import { search, HasSearch } from '@algolia/search-client/src/methods/index/search';
+import { BrowserXhrRequester } from '@algolia/requester-browser-xhr';
 import {
-  searchForFacetValues,
-  HasSearchForFacetValues,
-} from '@algolia/search-client/src/methods/index/searchForFacetValues';
-import {
-  SearchClient as BaseSearchClient,
   createSearchClient,
+  SearchClient as BaseSearchClient,
   SearchClientOptions,
 } from '@algolia/search-client';
-import { createAnalyticsClient, AnalyticsClient } from '@algolia/analytics-client';
-import { createInsightsClient, InsightsClient } from '@algolia/insights-client';
+import { HasSearch, search } from '@algolia/search-client/src/methods/index/search';
+import {
+  HasSearchForFacetValues,
+  searchForFacetValues,
+} from '@algolia/search-client/src/methods/index/searchForFacetValues';
+import { Transporter } from '@algolia/transporter';
+import { UserAgent } from '@algolia/transporter-types';
+
 import { AlgoliaSearchOptions } from '../types';
 
 type SearchIndex = BaseSearchClient & HasSearch & HasSearchForFacetValues;

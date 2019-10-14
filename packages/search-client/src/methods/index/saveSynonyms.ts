@@ -1,10 +1,11 @@
-import { RequestOptions } from '@algolia/transporter-types';
-import { SearchIndex } from '../../SearchIndex';
+import { Method } from '@algolia/requester-types';
 import { ConstructorOf, WaitablePromise } from '@algolia/support';
-import { Synonym } from '../types/Synonym';
+import { RequestOptions } from '@algolia/transporter-types';
+
+import { SearchIndex } from '../../SearchIndex';
 import { SaveSynonymsOptions } from '../types/SaveSynonymsOptions';
 import { SaveSynonymsResponse } from '../types/SaveSynonymsResponse';
-import { Method } from '@algolia/requester-types';
+import { Synonym } from '../types/Synonym';
 import { waitTask } from './waitTask';
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type

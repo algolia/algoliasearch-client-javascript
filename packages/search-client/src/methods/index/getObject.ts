@@ -1,7 +1,8 @@
-import { RequestOptions } from '@algolia/transporter-types';
-import { SearchIndex } from '../../SearchIndex';
-import { ConstructorOf } from '@algolia/support';
 import { Method } from '@algolia/requester-types';
+import { ConstructorOf } from '@algolia/support';
+import { RequestOptions } from '@algolia/transporter-types';
+
+import { SearchIndex } from '../../SearchIndex';
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const getObject = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: TSearchIndex) => {

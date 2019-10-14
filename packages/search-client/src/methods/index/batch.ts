@@ -1,12 +1,13 @@
-import { RequestOptions, popRequestOption } from '@algolia/transporter-types';
-import { SearchIndex } from '../../SearchIndex';
 import { Method } from '@algolia/requester-types';
 import { ConstructorOf, WaitablePromise } from '@algolia/support';
-import { HasWaitTask, waitTask } from './waitTask';
+import { popRequestOption, RequestOptions } from '@algolia/transporter-types';
+
+import { SearchIndex } from '../../SearchIndex';
 import { BatchActionType } from '../types/BatchAction';
+import { BatchRequest } from '../types/BatchRequest';
 import { BatchResponse } from '../types/BatchResponse';
 import { ChunkOptions } from '../types/ChunkOptions';
-import { BatchRequest } from '../types/BatchRequest';
+import { HasWaitTask, waitTask } from './waitTask';
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const batch = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: TSearchIndex) => {

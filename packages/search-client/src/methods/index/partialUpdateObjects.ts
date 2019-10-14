@@ -1,10 +1,10 @@
-import { RequestOptions, popRequestOption } from '@algolia/transporter-types';
-import { SearchIndex } from '../../SearchIndex';
 import { ConstructorOf, WaitablePromise } from '@algolia/support';
+import { popRequestOption, RequestOptions } from '@algolia/transporter-types';
 
-import { PartialUpdateObjectsOptions } from '../types/PartialUpdateObjectsOptions';
+import { SearchIndex } from '../../SearchIndex';
 import { BatchAction } from '../types/BatchAction';
 import { BatchResponse } from '../types/BatchResponse';
+import { PartialUpdateObjectsOptions } from '../types/PartialUpdateObjectsOptions';
 import { batch } from './batch';
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type

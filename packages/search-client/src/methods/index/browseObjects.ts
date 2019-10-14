@@ -1,11 +1,12 @@
-import { RequestOptions } from '@algolia/transporter-types';
-import { SearchIndex } from '../../SearchIndex';
 import { Method } from '@algolia/requester-types';
 import { ConstructorOf } from '@algolia/support';
+import { RequestOptions } from '@algolia/transporter-types';
+
 import { BrowsablePromise } from '../../BrowsablePromise';
-import { SearchOptions } from '../types/SearchOptions';
+import { SearchIndex } from '../../SearchIndex';
 import { BrowseOptions } from '../types/BrowseOptions';
 import { BrowseResponse } from '../types/BrowseResponse';
+import { SearchOptions } from '../types/SearchOptions';
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const browseObjects = <TSearchIndex extends ConstructorOf<SearchIndex>>(

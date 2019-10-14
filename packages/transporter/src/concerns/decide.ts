@@ -1,5 +1,5 @@
-import { Host } from '@algolia/transporter-types';
 import { Response } from '@algolia/requester-types';
+import { Host } from '@algolia/transporter-types';
 
 const isNetworkError = ({ isTimedOut, status }: Response): boolean => {
   return !isTimedOut && ~~status === 0;

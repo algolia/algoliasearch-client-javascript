@@ -1,6 +1,7 @@
-import { BrowserXhrRequester } from '../../..';
-import mock, { MockRequest, MockResponse } from 'xhr-mock';
 import { Method, Request } from '@algolia/requester-types';
+import mock, { MockRequest, MockResponse } from 'xhr-mock';
+
+import { BrowserXhrRequester } from '../../..';
 import Fixtures from '../Fixtures';
 
 const timeoutRequest: Request = {

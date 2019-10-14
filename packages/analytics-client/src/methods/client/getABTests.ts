@@ -1,7 +1,8 @@
-import { RequestOptions } from '@algolia/transporter-types';
-import { AnalyticsClient } from '../../AnalyticsClient';
 import { Method } from '@algolia/requester-types';
 import { ConstructorOf } from '@algolia/support';
+import { RequestOptions } from '@algolia/transporter-types';
+
+import { AnalyticsClient } from '../../AnalyticsClient';
 import { GetABTestsOptions } from '../types/GetABTestsOptions';
 import { GetABTestsResponse } from '../types/GetABTestsResponse';
 

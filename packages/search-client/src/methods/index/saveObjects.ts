@@ -1,11 +1,11 @@
-import { RequestOptions, popRequestOption } from '@algolia/transporter-types';
-import { SearchIndex } from '../../SearchIndex';
 import { ConstructorOf, WaitablePromise } from '@algolia/support';
-import { MissingObjectIDError } from '../../errors/MissingObjectIDError';
+import { popRequestOption, RequestOptions } from '@algolia/transporter-types';
 
-import { SaveObjectsOptions } from '../types/SaveObjectsOptions';
+import { MissingObjectIDError } from '../../errors/MissingObjectIDError';
+import { SearchIndex } from '../../SearchIndex';
 import { BatchAction } from '../types/BatchAction';
 import { BatchResponse } from '../types/BatchResponse';
+import { SaveObjectsOptions } from '../types/SaveObjectsOptions';
 import { batch } from './batch';
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type

@@ -1,10 +1,11 @@
 /* eslint sonarjs/cognitive-complexity: 0 */ // --> OFF
 
-import { Fixtures, FakeRequester } from '../Fixtures';
-import { mock, anything, when, verify } from 'ts-mockito';
-import { InMemoryCache } from '@algolia/cache-in-memory';
 import { BrowserLocalStorageCache } from '@algolia/cache-browser-local-storage';
+import { InMemoryCache } from '@algolia/cache-in-memory';
 import { NullCache } from '@algolia/cache-types';
+import { anything, mock, verify, when } from 'ts-mockito';
+
+import { FakeRequester, Fixtures } from '../Fixtures';
 
 const transporterRequest = Fixtures.transporterRequest();
 transporterRequest.cacheable = true;

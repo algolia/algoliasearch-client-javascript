@@ -1,11 +1,12 @@
-import { RequestOptions, popRequestOption } from '@algolia/transporter-types';
-import { SearchIndex } from '../../SearchIndex';
 import { ConstructorOf } from '@algolia/support';
-import { FindObjectOptions } from '../types/FindObjectOptions';
+import { popRequestOption, RequestOptions } from '@algolia/transporter-types';
+
 import { ObjectNotFoundError } from '../../errors/ObjectNotFoundError';
+import { SearchIndex } from '../../SearchIndex';
+import { FindObjectOptions } from '../types/FindObjectOptions';
 import { FindObjectResponse } from '../types/FindObjectResponse';
-import { search, HasSearch } from './search';
 import { HitWithObjectID } from '../types/HitWithObjectID';
+import { HasSearch, search } from './search';
 
 /**
 

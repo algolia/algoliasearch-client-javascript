@@ -1,10 +1,11 @@
-import { RequestOptions } from '@algolia/transporter-types';
-import { SearchIndex } from '../../SearchIndex';
 import { Method } from '@algolia/requester-types';
 import { ConstructorOf, WaitablePromise } from '@algolia/support';
-import { waitTask } from './waitTask';
-import { DeleteResponse } from '../types/DeleteResponse';
+import { RequestOptions } from '@algolia/transporter-types';
+
+import { SearchIndex } from '../../SearchIndex';
 import { DeleteByFiltersOptions } from '../types/DeleteByFiltersOptions';
+import { DeleteResponse } from '../types/DeleteResponse';
+import { waitTask } from './waitTask';
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const deleteBy = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: TSearchIndex) => {

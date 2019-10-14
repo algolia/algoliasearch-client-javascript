@@ -1,8 +1,9 @@
-import { verify, deepEqual, anything, when, mock } from 'ts-mockito';
-import { Fixtures, FakeRequester } from '../Fixtures';
-import { Transporter as TransporterContract } from '@algolia/transporter-types';
-import { Transporter } from '../../Transporter';
 import { BrowserXhrRequester } from '@algolia/requester-browser-xhr';
+import { Transporter as TransporterContract } from '@algolia/transporter-types';
+import { anything, deepEqual, mock, verify, when } from 'ts-mockito';
+
+import { Transporter } from '../../Transporter';
+import { FakeRequester, Fixtures } from '../Fixtures';
 
 let requester: FakeRequester;
 let transporter: TransporterContract;

@@ -1,6 +1,6 @@
 /* eslint no-console: 0 */
 
-import { Logger, LogLevelType, LogLevel } from '@algolia/logger-types';
+import { Logger, LogLevel, LogLevelType } from '@algolia/logger-types';
 
 export class ConsoleLogger implements Logger {
   private readonly logLevel: LogLevelType;

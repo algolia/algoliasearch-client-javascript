@@ -1,5 +1,6 @@
-import { TestSuite } from '@algolia/support/src/__tests__/TestSuite';
 import { Faker } from '@algolia/support/src/__tests__/Faker';
+import { TestSuite } from '@algolia/support/src/__tests__/TestSuite';
+
 import { EventEnum } from '../../methods/types/EventType';
 
 const testSuite = new TestSuite('insights');

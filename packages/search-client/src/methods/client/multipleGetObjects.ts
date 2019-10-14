@@ -1,9 +1,10 @@
-import { RequestOptions } from '@algolia/transporter-types';
-import { SearchClient } from '../../SearchClient';
-import { ConstructorOf } from '@algolia/support';
 import { Method } from '@algolia/requester-types';
-import { MultipleGetObjectsResponse } from '../types/MultipleGetObjectsResponse';
+import { ConstructorOf } from '@algolia/support';
+import { RequestOptions } from '@algolia/transporter-types';
+
+import { SearchClient } from '../../SearchClient';
 import { MultipleGetObject } from '../types/MultipleGetObject';
+import { MultipleGetObjectsResponse } from '../types/MultipleGetObjectsResponse';
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const multipleGetObjects = <TSearchClient extends ConstructorOf<SearchClient>>(

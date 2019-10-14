@@ -1,83 +1,84 @@
-import { createSearchClient } from '../../../search-client';
-import { SearchIndex } from '../../../search-client/src/SearchIndex';
-import { Transporter } from '@algolia/transporter';
-import { HasSearch, search } from '../../../search-client/src/methods/index/search';
-import {
-  HasSearchForFacetValues,
-  searchForFacetValues,
-} from '../../../search-client/src/methods/index/searchForFacetValues';
-import { HasWaitTask, waitTask } from '../../../search-client/src/methods/index/waitTask';
-import { HasSaveObject, saveObject } from '../../../search-client/src/methods/index/saveObject';
-import { HasDelete, deleteIndex } from '../../../search-client/src/methods/index/deleteIndex';
-import { HasSaveObjects, saveObjects } from '../../../search-client/src/methods/index/saveObjects';
-import { HasGetObject, getObject } from '../../../search-client/src/methods/index/getObject';
-import { HasGetObjects, getObjects } from '../../../search-client/src/methods/index/getObjects';
-import { HasSetSettings, setSettings } from '../../../search-client/src/methods/index/setSettings';
-import { getSettings, HasGetSettings } from '../../../search-client/src/methods/index/getSettings';
-import { UserAgent } from '@algolia/transporter-types';
-import { batch, HasBatch } from '../../../search-client/src/methods/index/batch';
 import { AuthMode } from '@algolia/auth';
+import { Transporter } from '@algolia/transporter';
+import { UserAgent } from '@algolia/transporter-types';
+
 import { createAnalyticsClient } from '../../../analytics-client';
-import { HasGetABTests, getAbTests } from '../../../analytics-client/src/methods/client/getABTests';
-import { HasSendEvents, sendEvents } from '../../../insights-client/src/methods/client/sendEvents';
+import { getAbTests, HasGetABTests } from '../../../analytics-client/src/methods/client/getABTests';
 import { createInsightsClient } from '../../../insights-client';
+import { HasSendEvents, sendEvents } from '../../../insights-client/src/methods/client/sendEvents';
+import { createSearchClient } from '../../../search-client';
 import {
-  multipleBatch,
   HasMultipleBatch,
+  multipleBatch,
 } from '../../../search-client/src/methods/client/multipleBatch';
 import {
-  multipleGetObjects,
   HasMultipleGetObjects,
+  multipleGetObjects,
 } from '../../../search-client/src/methods/client/multipleGetObjects';
 import {
-  multipleQueries,
   HasMultipleQueries,
+  multipleQueries,
 } from '../../../search-client/src/methods/client/multipleQueries';
-import {
-  partialUpdateObject,
-  HasPartialUpdateObject,
-} from '../../../search-client/src/methods/index/partialUpdateObject';
-import {
-  partialUpdateObjects,
-  HasPartialUpdateObjects,
-} from '../../../search-client/src/methods/index/partialUpdateObjects';
-import {
-  deleteObject,
-  HasDeleteObject,
-} from '../../../search-client/src/methods/index/deleteObject';
-import { HasDeleteBy, deleteBy } from '../../../search-client/src/methods/index/deleteBy';
-import {
-  HasDeleteObjects,
-  deleteObjects,
-} from '../../../search-client/src/methods/index/deleteObjects';
-import {
-  clearObjects,
-  HasClearObjects,
-} from '../../../search-client/src/methods/index/clearObjects';
+import { batch, HasBatch } from '../../../search-client/src/methods/index/batch';
 import {
   browseObjects,
   HasBrowseObjects,
 } from '../../../search-client/src/methods/index/browseObjects';
 import {
-  HasGetObjectPosition,
-  getObjectPosition,
-} from '../../../search-client/src/methods/index/getObjectPosition';
-import { findObject, HasFindObject } from '../../../search-client/src/methods/index/findObject';
+  browseSynonyms,
+  HasBrowseSynonyms,
+} from '../../../search-client/src/methods/index/browseSynonyms';
+import {
+  clearObjects,
+  HasClearObjects,
+} from '../../../search-client/src/methods/index/clearObjects';
+import { deleteBy, HasDeleteBy } from '../../../search-client/src/methods/index/deleteBy';
+import { deleteIndex, HasDelete } from '../../../search-client/src/methods/index/deleteIndex';
+import {
+  deleteObject,
+  HasDeleteObject,
+} from '../../../search-client/src/methods/index/deleteObject';
+import {
+  deleteObjects,
+  HasDeleteObjects,
+} from '../../../search-client/src/methods/index/deleteObjects';
 import { exists, HasExists } from '../../../search-client/src/methods/index/exists';
+import { findObject, HasFindObject } from '../../../search-client/src/methods/index/findObject';
+import { getObject, HasGetObject } from '../../../search-client/src/methods/index/getObject';
+import {
+  getObjectPosition,
+  HasGetObjectPosition,
+} from '../../../search-client/src/methods/index/getObjectPosition';
+import { getObjects, HasGetObjects } from '../../../search-client/src/methods/index/getObjects';
+import { getSettings, HasGetSettings } from '../../../search-client/src/methods/index/getSettings';
+import { getSynonym, HasGetSynonym } from '../../../search-client/src/methods/index/getSynonym';
+import {
+  HasPartialUpdateObject,
+  partialUpdateObject,
+} from '../../../search-client/src/methods/index/partialUpdateObject';
+import {
+  HasPartialUpdateObjects,
+  partialUpdateObjects,
+} from '../../../search-client/src/methods/index/partialUpdateObjects';
+import { HasSaveObject, saveObject } from '../../../search-client/src/methods/index/saveObject';
+import { HasSaveObjects, saveObjects } from '../../../search-client/src/methods/index/saveObjects';
 import { HasSaveSynonym, saveSynonym } from '../../../search-client/src/methods/index/saveSynonym';
 import {
   HasSaveSynonyms,
   saveSynonyms,
 } from '../../../search-client/src/methods/index/saveSynonyms';
-import { getSynonym, HasGetSynonym } from '../../../search-client/src/methods/index/getSynonym';
+import { HasSearch, search } from '../../../search-client/src/methods/index/search';
 import {
-  searchSynonyms,
+  HasSearchForFacetValues,
+  searchForFacetValues,
+} from '../../../search-client/src/methods/index/searchForFacetValues';
+import {
   HasSearchSynonyms,
+  searchSynonyms,
 } from '../../../search-client/src/methods/index/searchSynonyms';
-import {
-  browseSynonyms,
-  HasBrowseSynonyms,
-} from '../../../search-client/src/methods/index/browseSynonyms';
+import { HasSetSettings, setSettings } from '../../../search-client/src/methods/index/setSettings';
+import { HasWaitTask, waitTask } from '../../../search-client/src/methods/index/waitTask';
+import { SearchIndex } from '../../../search-client/src/SearchIndex';
 
 export class TestSuite {
   public readonly testName: string;

@@ -1,5 +1,6 @@
-import { TestSuite } from '@algolia/support/src/__tests__/TestSuite';
 import { createMultiWaitable } from '@algolia/support/src/__tests__/helpers';
+import { TestSuite } from '@algolia/support/src/__tests__/TestSuite';
+
 import { ObjectNotFoundError } from '../../errors/ObjectNotFoundError';
 
 const testSuite = new TestSuite('search');

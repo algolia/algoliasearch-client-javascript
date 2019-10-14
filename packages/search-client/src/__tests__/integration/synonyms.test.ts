@@ -1,7 +1,8 @@
-import { TestSuite } from '@algolia/support/src/__tests__/TestSuite';
 import { createMultiWaitable } from '@algolia/support/src/__tests__/helpers';
-import { SynonymEnum } from '../../methods/types/SynonymType';
+import { TestSuite } from '@algolia/support/src/__tests__/TestSuite';
+
 import { Synonym } from '../../methods/types/Synonym';
+import { SynonymEnum } from '../../methods/types/SynonymType';
 
 const testSuite = new TestSuite('synonyms');
 

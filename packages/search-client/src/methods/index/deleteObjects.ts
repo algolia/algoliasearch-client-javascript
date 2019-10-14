@@ -1,10 +1,10 @@
-import { RequestOptions } from '@algolia/transporter-types';
-import { SearchIndex } from '../../SearchIndex';
 import { ConstructorOf, WaitablePromise } from '@algolia/support';
+import { RequestOptions } from '@algolia/transporter-types';
 
-import { ChunkOptions } from '../types/ChunkOptions';
+import { SearchIndex } from '../../SearchIndex';
 import { BatchAction } from '../types/BatchAction';
 import { BatchResponse } from '../types/BatchResponse';
+import { ChunkOptions } from '../types/ChunkOptions';
 import { batch } from './batch';
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type

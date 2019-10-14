@@ -1,6 +1,7 @@
 import { Transporter } from '@algolia/transporter';
-import { instance, mock } from 'ts-mockito';
 import { UserAgent } from '@algolia/transporter-types';
+import { instance, mock } from 'ts-mockito';
+
 import { createInsightsClient } from '../../InsightsClient';
 
 const transporterMock = mock(Transporter);

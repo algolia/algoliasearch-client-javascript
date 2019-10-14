@@ -1,7 +1,8 @@
-import { Transporter, Host, Call, UserAgent } from '@algolia/transporter-types';
+import { Auth, AuthMode, AuthModeType } from '@algolia/auth';
+import { ComposableOptions, compose, shuffle } from '@algolia/support';
+import { Call, Host, Transporter, UserAgent } from '@algolia/transporter-types';
+
 import { SearchIndex } from './SearchIndex';
-import { shuffle, compose, ComposableOptions } from '@algolia/support';
-import { AuthMode, AuthModeType, Auth } from '@algolia/auth';
 
 export class SearchClient {
   public readonly appId: string;

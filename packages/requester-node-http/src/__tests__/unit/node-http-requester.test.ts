@@ -1,7 +1,8 @@
-import { NodeHttpRequester } from '../../..';
 import { Method, Request } from '@algolia/requester-types';
-import Fixtures from '../Fixtures';
 import * as nock from 'nock';
+
+import { NodeHttpRequester } from '../../..';
+import Fixtures from '../Fixtures';
 
 const headers = {
   'content-type': 'application/x-www-form-urlencoded',

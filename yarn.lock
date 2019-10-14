@@ -20,7 +20,7 @@
 "@algolia/transporter-types@file:packages/transporter-types":
   version "4.0.0-alpha.0"
   dependencies:
-    "@algolia/requester-types" "file:../../Library/Caches/Yarn/v4/npm-@algolia-transporter-types-4.0.0-alpha.0-80f64311-bd5a-4a8f-9a0a-8e83702cdddd-1570708241341/node_modules/@algolia/requester-types"
+    "@algolia/requester-types" "file:../../Library/Caches/Yarn/v4/npm-@algolia-transporter-types-4.0.0-alpha.0-b8b006e1-344c-418e-a4e1-cc03c14a3ce4-1571052961315/node_modules/@algolia/requester-types"
 
 "@babel/cli@^7.6.0":
   version "7.6.3"
@@ -4159,6 +4159,13 @@ eslint-plugin-prettier@^3.1.0:
   integrity sha512-A+TZuHZ0KU0cnn56/9mfR7/KjUJ9QNVXUhwvRFSR7PGPe0zQR6PTkmyqg1AtUUEOzTqeRsUwyKFh0oVZKVCrtA==
   dependencies:
     prettier-linter-helpers "^1.0.0"
+
+eslint-plugin-simple-import-sort@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-simple-import-sort/-/eslint-plugin-simple-import-sort-4.0.0.tgz#048736c170b9b43f0a8c3ef85ba53881c389f3ff"
+  integrity sha512-QsxOMrXhhqvSiTmZafPc/lvSET9lhblaO2kaaSbFo1FVU/AW9mFQDXadiHJ5OqG6i0N6+Qd+RZ95iQbkg4p+0w==
+  dependencies:
+    validate-npm-package-name "^3.0.0"
 
 eslint-plugin-sonarjs@^0.4.0:
   version "0.4.0"

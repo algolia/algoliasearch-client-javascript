@@ -1,10 +1,10 @@
-import { RequestOptions } from '@algolia/transporter-types';
-import { SearchIndex } from '../../SearchIndex';
 import { ConstructorOf, WaitablePromise } from '@algolia/support';
-import { saveObjects } from './saveObjects';
+import { RequestOptions } from '@algolia/transporter-types';
 
+import { SearchIndex } from '../../SearchIndex';
 import { SaveObjectResponse } from '../types/SaveObjectResponse';
 import { SaveObjectsOptions } from '../types/SaveObjectsOptions';
+import { saveObjects } from './saveObjects';
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const saveObject = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: TSearchIndex) => {

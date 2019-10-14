@@ -1,6 +1,7 @@
-import { RequestOptions, ApiError } from '@algolia/transporter-types';
-import { SearchIndex } from '../../SearchIndex';
 import { ConstructorOf } from '@algolia/support';
+import { ApiError, RequestOptions } from '@algolia/transporter-types';
+
+import { SearchIndex } from '../../SearchIndex';
 import { getSettings, HasGetSettings } from './getSettings';
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type

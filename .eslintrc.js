@@ -1,5 +1,5 @@
 module.exports = {
-  plugins: ['functional', 'sonarjs', 'wdio'],
+  plugins: ['functional', 'sonarjs', 'wdio', 'simple-import-sort'],
   extends: [
     'algolia/jest',
     'algolia/typescript',
@@ -7,13 +7,12 @@ module.exports = {
     'plugin:sonarjs/recommended',
     'plugin:wdio/recommended',
   ],
+  parserOptions: {
+    'max-len': { code: 120 },
+  },
   rules: {
-    'max-len': [
-      'error',
-      {
-        code: 200,
-      },
-    ],
+    'simple-import-sort/sort': 'error',
+    'max-len': [1, 120, 2, { ignoreComments: true }],
     'prettier/prettier': [
       'error',
       {
@@ -34,7 +33,7 @@ module.exports = {
     'functional/no-this-expression': ['off'],
     'functional/no-class': ['off'],
     'functional/no-return-void': ['off'],
-    '@typescript-eslint/no-triple-slash-reference': ['off']
+    '@typescript-eslint/no-triple-slash-reference': ['off'],
   },
   settings: {
     'import/resolver': {

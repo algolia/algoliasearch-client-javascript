@@ -1,9 +1,10 @@
-import { RequestOptions } from '@algolia/transporter-types';
-import { InsightsClient } from '../../InsightsClient';
 import { Method } from '@algolia/requester-types';
 import { ConstructorOf } from '@algolia/support';
-import { SendEventsResponse } from '../types/SendEventsResponse';
+import { RequestOptions } from '@algolia/transporter-types';
+
+import { InsightsClient } from '../../InsightsClient';
 import { Event } from '../types/Event';
+import { SendEventsResponse } from '../types/SendEventsResponse';
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const sendEvents = <TInsightsClient extends ConstructorOf<InsightsClient>>(

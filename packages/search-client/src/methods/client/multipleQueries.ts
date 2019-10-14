@@ -1,10 +1,11 @@
-import { RequestOptions } from '@algolia/transporter-types';
-import { SearchClient } from '../../SearchClient';
-import { ConstructorOf } from '@algolia/support';
 import { Method } from '@algolia/requester-types';
-import { MultipleQueriesResponse } from '../types/MultipleQueriesResponse';
-import { MultipleQueriesQuery } from '../types/MultipleQueriesQuery';
+import { ConstructorOf } from '@algolia/support';
+import { RequestOptions } from '@algolia/transporter-types';
+
+import { SearchClient } from '../../SearchClient';
 import { MultipleQueriesOptions } from '../types/MultipleQueriesOptions';
+import { MultipleQueriesQuery } from '../types/MultipleQueriesQuery';
+import { MultipleQueriesResponse } from '../types/MultipleQueriesResponse';
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const multipleQueries = <TSearchClient extends ConstructorOf<SearchClient>>(

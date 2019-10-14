@@ -1,7 +1,8 @@
-import { SearchIndex } from '../../SearchIndex';
 import { ConstructorOf } from '@algolia/support';
-import { SearchResponse } from '../types/SearchResponse';
+
+import { SearchIndex } from '../../SearchIndex';
 import { HitWithObjectID } from '../types/HitWithObjectID';
+import { SearchResponse } from '../types/SearchResponse';
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const getObjectPosition = <TSearchIndex extends ConstructorOf<SearchIndex>>(

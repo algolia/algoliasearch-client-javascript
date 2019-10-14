@@ -1,8 +1,9 @@
-import { Requester, Request as RequesterRequest, Response, Method } from '@algolia/requester-types';
-import { Transporter } from '../Transporter';
-import { Host, Call } from '@algolia/transporter-types';
-import { instance } from 'ts-mockito';
 import { NullLogger } from '@algolia/logger-types';
+import { Method, Request as RequesterRequest, Requester, Response } from '@algolia/requester-types';
+import { Call, Host } from '@algolia/transporter-types';
+import { instance } from 'ts-mockito';
+
+import { Transporter } from '../Transporter';
 
 export class FakeRequester implements Requester {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

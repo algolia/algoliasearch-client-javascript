@@ -1,6 +1,7 @@
-import { verify, deepEqual, anything, when, mock } from 'ts-mockito';
-import { Fixtures, FakeRequester } from '../Fixtures';
-import { Transporter, RetryError } from '@algolia/transporter-types';
+import { RetryError, Transporter } from '@algolia/transporter-types';
+import { anything, deepEqual, mock, verify, when } from 'ts-mockito';
+
+import { FakeRequester, Fixtures } from '../Fixtures';
 
 let requester: FakeRequester;
 let transporter: Transporter;

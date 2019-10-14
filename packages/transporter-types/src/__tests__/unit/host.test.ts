@@ -1,5 +1,5 @@
-import { Host } from '../../Host';
 import { Call } from '../../Call';
+import { Host } from '../../Host';
 
 describe('Host', () => {
   it('Handles uptime', () => {

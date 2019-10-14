@@ -1,11 +1,12 @@
-import { RequestOptions } from '@algolia/transporter-types';
-import { SearchIndex } from '../../SearchIndex';
 import { ConstructorOf } from '@algolia/support';
+import { RequestOptions } from '@algolia/transporter-types';
+
 import { BrowsablePromise } from '../../BrowsablePromise';
+import { SearchIndex } from '../../SearchIndex';
 import { BrowseOptions } from '../types/BrowseOptions';
-import { Synonym } from '../types/Synonym';
 import { SearchSynonymsOptions } from '../types/SearchSynonymsOptions';
-import { searchSynonyms, HasSearchSynonyms } from './searchSynonyms';
+import { Synonym } from '../types/Synonym';
+import { HasSearchSynonyms, searchSynonyms } from './searchSynonyms';
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const browseSynonyms = <TSearchIndex extends ConstructorOf<SearchIndex>>(

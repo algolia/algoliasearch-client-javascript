@@ -1,15 +1,16 @@
-import { NodeHttpRequester } from '@algolia/requester-node-http';
-import { Transporter } from '@algolia/transporter';
-import { UserAgent } from '@algolia/transporter-types';
+import { NullCache } from '@algolia/cache-types';
 import { ConsoleLogger } from '@algolia/logger-console';
 import { LogLevel } from '@algolia/logger-types';
-import { search, HasSearch } from '@algolia/search-client/src/methods/index/search';
-import {
-  searchForFacetValues,
-  HasSearchForFacetValues,
-} from '@algolia/search-client/src/methods/index/searchForFacetValues';
+import { NodeHttpRequester } from '@algolia/requester-node-http';
 import { SearchClient as BaseSearchClient } from '@algolia/search-client';
-import { NullCache } from '@algolia/cache-types';
+import { HasSearch, search } from '@algolia/search-client/src/methods/index/search';
+import {
+  HasSearchForFacetValues,
+  searchForFacetValues,
+} from '@algolia/search-client/src/methods/index/searchForFacetValues';
+import { Transporter } from '@algolia/transporter';
+import { UserAgent } from '@algolia/transporter-types';
+
 import { AlgoliaSearchOptions } from '../types';
 
 type SearchIndex = BaseSearchClient & HasSearch & HasSearchForFacetValues;

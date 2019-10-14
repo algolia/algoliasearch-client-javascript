@@ -1,4 +1,5 @@
 import { TestSuite } from '@algolia/support/src/__tests__/TestSuite';
+
 import { BatchAction } from '../../methods/types/BatchAction';
 import { StrategyEnum } from '../../methods/types/Strategy';
 

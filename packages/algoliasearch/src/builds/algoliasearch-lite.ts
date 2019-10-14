@@ -1,17 +1,18 @@
 import { AuthMode } from '@algolia/auth';
-import { BrowserXhrRequester } from '@algolia/requester-browser-xhr';
-import { Transporter } from '@algolia/transporter';
-import { UserAgent } from '@algolia/transporter-types';
+import { BrowserLocalStorageCache } from '@algolia/cache-browser-local-storage';
+import { InMemoryCache } from '@algolia/cache-in-memory';
 import { ConsoleLogger } from '@algolia/logger-console';
 import { LogLevel } from '@algolia/logger-types';
-import { InMemoryCache } from '@algolia/cache-in-memory';
-import { BrowserLocalStorageCache } from '@algolia/cache-browser-local-storage';
-import { search, HasSearch } from '@algolia/search-client/src/methods/index/search';
-import {
-  searchForFacetValues,
-  HasSearchForFacetValues,
-} from '@algolia/search-client/src/methods/index/searchForFacetValues';
+import { BrowserXhrRequester } from '@algolia/requester-browser-xhr';
 import { SearchClient as BaseSearchClient } from '@algolia/search-client';
+import { HasSearch, search } from '@algolia/search-client/src/methods/index/search';
+import {
+  HasSearchForFacetValues,
+  searchForFacetValues,
+} from '@algolia/search-client/src/methods/index/searchForFacetValues';
+import { Transporter } from '@algolia/transporter';
+import { UserAgent } from '@algolia/transporter-types';
+
 import { AlgoliaSearchOptions } from '../types';
 
 type SearchIndex = BaseSearchClient & HasSearch & HasSearchForFacetValues;

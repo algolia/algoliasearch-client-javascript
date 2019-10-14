@@ -1,22 +1,21 @@
-import {
-  Host,
-  Transporter as TransporterContract,
-  Timeouts,
-  Request,
-  RequestOptions,
-  MappedRequestOptions,
-  RetryError,
-  mapRequestOptions,
-  Call,
-} from '@algolia/transporter-types';
-
 import { Cache, NullCache } from '@algolia/cache-types';
-import { Deserializer } from './Deserializer';
 import { Logger, NullLogger } from '@algolia/logger-types';
 import { Requester } from '@algolia/requester-types';
-import { Serializer } from './Serializer';
+import {
+  Call,
+  Host,
+  MappedRequestOptions,
+  mapRequestOptions,
+  Request,
+  RequestOptions,
+  RetryError,
+  Timeouts,
+  Transporter as TransporterContract,
+} from '@algolia/transporter-types';
 
 import { decide } from './concerns/decide';
+import { Deserializer } from './Deserializer';
+import { Serializer } from './Serializer';
 
 export class Transporter implements TransporterContract {
   // eslint-disable-next-line functional/prefer-readonly-type

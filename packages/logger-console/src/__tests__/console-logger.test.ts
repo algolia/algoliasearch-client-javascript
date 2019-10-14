@@ -1,8 +1,9 @@
 /* eslint no-console: 0 */
 
-import mockConsole from 'jest-mock-console';
-import { ConsoleLogger } from '../ConsoleLogger';
 import { LogLevel } from '@algolia/logger-types';
+import mockConsole from 'jest-mock-console';
+
+import { ConsoleLogger } from '../ConsoleLogger';
 
 describe('console logger', () => {
   beforeEach(() => {

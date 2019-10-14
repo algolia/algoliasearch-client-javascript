@@ -1,6 +1,6 @@
-import { Transporter, Host, Call, UserAgent } from '@algolia/transporter-types';
-import { compose, ComposableOptions } from '@algolia/support';
-import { AuthMode, Auth } from '@algolia/auth';
+import { Auth, AuthMode } from '@algolia/auth';
+import { ComposableOptions, compose } from '@algolia/support';
+import { Call, Host, Transporter, UserAgent } from '@algolia/transporter-types';
 
 export class AnalyticsClient {
   public readonly appId: string;

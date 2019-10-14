@@ -1,26 +1,25 @@
-import { SearchClient } from '../../..';
-import { Transporter } from '@algolia/transporter';
-import { deepEqual, mock, when, instance, anything, spy, verify } from 'ts-mockito';
-import { saveObject, HasSaveObject } from '../../methods/index/saveObject';
-import { batch, HasBatch } from '../../methods/index/batch';
-
-import { saveObjects, HasSaveObjects } from '../../methods/index/saveObjects';
-import { Faker } from '@algolia/support/src/__tests__/Faker';
-import { RequestOptions, UserAgent } from '@algolia/transporter-types';
-
-import { HasGetObject, getObject } from '../../methods/index/getObject';
-import { HasGetObjects, getObjects } from '../../methods/index/getObjects';
 import { Method } from '@algolia/requester-types';
-import { BatchAction } from '../../methods/types/BatchAction';
+import { Faker } from '@algolia/support/src/__tests__/Faker';
+import { Transporter } from '@algolia/transporter';
+import { RequestOptions, UserAgent } from '@algolia/transporter-types';
+import { anything, deepEqual, instance, mock, spy, verify, when } from 'ts-mockito';
+
+import { SearchClient } from '../../..';
+import { batch, HasBatch } from '../../methods/index/batch';
+import { exists, HasExists } from '../../methods/index/exists';
+import { findObject, HasFindObject } from '../../methods/index/findObject';
+import { getObject, HasGetObject } from '../../methods/index/getObject';
+import { getObjects, HasGetObjects } from '../../methods/index/getObjects';
+import { getSettings, HasGetSettings } from '../../methods/index/getSettings';
+import { HasSaveObject, saveObject } from '../../methods/index/saveObject';
+import { HasSaveObjects, saveObjects } from '../../methods/index/saveObjects';
 import {
   HasSearchForFacetValues,
   searchForFacetValues,
 } from '../../methods/index/searchForFacetValues';
+import { BatchAction } from '../../methods/types/BatchAction';
 import { SaveObjectsOptions } from '../../methods/types/SaveObjectsOptions';
-import { getSettings, HasGetSettings } from '../../methods/index/getSettings';
 import { SearchIndex } from '../../SearchIndex';
-import { findObject, HasFindObject } from '../../methods/index/findObject';
-import { exists, HasExists } from '../../methods/index/exists';
 
 const transporterMock = mock(Transporter);
 const transporter = instance(transporterMock);

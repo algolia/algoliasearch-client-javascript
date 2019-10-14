@@ -1,10 +1,11 @@
-import { RequestOptions } from '@algolia/transporter-types';
-import { SearchClient } from '../../SearchClient';
 import { Method } from '@algolia/requester-types';
 import { ConstructorOf, WaitablePromise } from '@algolia/support';
-import { MultipleBatchResponse } from '../types/MultipleBatchResponse';
+import { RequestOptions } from '@algolia/transporter-types';
+
+import { SearchClient } from '../../SearchClient';
 import { HasWaitTask, waitTask } from '../index/waitTask';
 import { BatchRequest } from '../types/BatchRequest';
+import { MultipleBatchResponse } from '../types/MultipleBatchResponse';
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const multipleBatch = <TSearchClient extends ConstructorOf<SearchClient>>(
