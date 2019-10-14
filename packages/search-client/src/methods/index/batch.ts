@@ -3,10 +3,10 @@ import { SearchIndex } from '../../SearchIndex';
 import { Method } from '@algolia/requester-types';
 import { ConstructorOf, WaitablePromise } from '@algolia/support';
 import { HasWaitTask, waitTask } from './waitTask';
-
 import { BatchActionType } from '../types/BatchAction';
 import { BatchResponse } from '../types/BatchResponse';
 import { ChunkOptions } from '../types/ChunkOptions';
+import { BatchRequest } from '../types/BatchRequest';
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const batch = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: TSearchIndex) => {
@@ -20,8 +20,7 @@ export const batch = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: TSe
     ): Readonly<WaitablePromise<readonly BatchResponse[]>> {
       return WaitablePromise.from<readonly BatchResponse[]>(
         new Promise(resolve => {
-          // eslint-disable-next-line functional/prefer-readonly-type
-          const responses: BatchResponse[] = [];
+          const responses: readonly BatchResponse[] = [];
 
           const batchSize = popRequestOption(requestOptions, 'batchSize', 1000);
 
@@ -51,7 +50,8 @@ export const batch = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: TSe
                 }),
                 requestOptions
               ).then(response => {
-                responses.push(response); // eslint-disable-line functional/immutable-data
+                // eslint-disable-next-line functional/immutable-data
+                responses.push(response);
 
                 index++;
                 batching(index);
@@ -99,9 +99,4 @@ export type HasBatch = HasWaitTask & {
     requests: readonly BatchRequest[],
     requestOptions?: RequestOptions
   ) => Readonly<WaitablePromise<BatchResponse>>;
-};
-
-export type BatchRequest = {
-  readonly action: BatchActionType;
-  readonly body: object;
 };
