@@ -1,3 +1,4 @@
+import { ApiError } from '@algolia/transporter-types';
 import { anything, deepEqual, mock, verify, when } from 'ts-mockito';
 
 import { FakeRequester, Fixtures, TestTransporter } from '../Fixtures';
@@ -110,10 +111,9 @@ describe('The retry strategy', () => {
       isTimedOut: false,
     });
 
-    await expect(transporter.write(transporterRequest)).rejects.toEqual({
-      message: 'Invalid Application ID',
-      status: 404,
-    });
+    await expect(transporter.write(transporterRequest)).rejects.toEqual(
+      new ApiError('Invalid Application ID', 404)
+    );
 
     verify(requester.send(anything())).once();
 

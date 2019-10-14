@@ -7,11 +7,16 @@ export class Deserializer {
   }
 
   public static fail({ content, status }: Response): ApiError {
+    // eslint-disable-next-line functional/no-let, functional/no-try-statement
+    let message = content;
+
     // eslint-disable-next-line functional/no-try-statement
     try {
-      return JSON.parse(content);
+      message = JSON.parse(content).message;
     } catch (e) {
-      return new ApiError(content, status);
+      // ..
     }
+
+    return new ApiError(message, status);
   }
 }

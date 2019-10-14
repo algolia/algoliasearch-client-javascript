@@ -1,3 +1,4 @@
+import { ApiError } from '@algolia/transporter-types';
 import { anything, mock, when } from 'ts-mockito';
 
 import { Transporter } from '../../Transporter';
@@ -32,20 +33,16 @@ describe('The deserializer', () => {
     expect(response).toStrictEqual({ hits: [{ name: 'Star Wars' }] });
   });
 
-  it('Deserializes fail responses', async () => {
+  it('deserializes fail responses', async () => {
     when(requester.send(anything())).thenResolve({
       content: JSON.stringify({ message: 'User not found', status: 404 }),
       status: 404,
       isTimedOut: false,
     });
 
-    expect.assertions(1);
-
-    try {
-      await transporter.read(transporterRequest);
-    } catch (e) {
-      expect(e).toStrictEqual({ message: 'User not found', status: 404 });
-    }
+    await expect(transporter.read(transporterRequest)).rejects.toEqual(
+      new ApiError('User not found', 404)
+    );
   });
 
   it('Deserializes fail non json responses', async () => {
@@ -55,16 +52,8 @@ describe('The deserializer', () => {
       isTimedOut: false,
     });
 
-    expect.assertions(1);
-
-    try {
-      await transporter.read(transporterRequest);
-    } catch (e) {
-      expect(e).toEqual({
-        message: 'String message for some reason',
-        name: 'ApiError',
-        status: 404,
-      });
-    }
+    await expect(transporter.read(transporterRequest)).rejects.toEqual(
+      new ApiError('String message for some reason', 404)
+    );
   });
 });
