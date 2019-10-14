@@ -163,7 +163,7 @@ export class Transporter implements TransporterContract {
 
         this.requester
           .send({
-            data: Serializer.data({ ...request.data, ...requestOptions.data }),
+            data: Serializer.data(request, requestOptions),
             headers: { ...this.headers, ...requestOptions.headers },
             method: request.method,
             url: Serializer.url(host, request.path, {

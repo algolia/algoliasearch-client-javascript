@@ -1,4 +1,4 @@
-import { Host } from '@algolia/transporter-types';
+import { Host, Request, RequestOptions } from '@algolia/transporter-types';
 
 export class Serializer {
   public static url(
@@ -17,7 +17,11 @@ export class Serializer {
     return url;
   }
 
-  public static data(data: object): string {
+  public static data(request: Request, requestOptions: RequestOptions): string {
+    const data = Array.isArray(request.data)
+      ? request.data
+      : { ...request.data, ...requestOptions.data };
+
     return JSON.stringify(data);
   }
 }

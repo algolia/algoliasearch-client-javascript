@@ -89,8 +89,6 @@ test(testSuite.testName, async () => {
     results: remain1000objects,
   });
 
-  // @todo missing browseObjects here...
-
   const updatedObject1 = {
     ...object1,
     name: 'This is an altered name',

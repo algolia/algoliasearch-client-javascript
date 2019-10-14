@@ -64,6 +64,20 @@ import {
 } from '../../../search-client/src/methods/index/getObjectPosition';
 import { findObject, HasFindObject } from '../../../search-client/src/methods/index/findObject';
 import { exists, HasExists } from '../../../search-client/src/methods/index/exists';
+import { HasSaveSynonym, saveSynonym } from '../../../search-client/src/methods/index/saveSynonym';
+import {
+  HasSaveSynonyms,
+  saveSynonyms,
+} from '../../../search-client/src/methods/index/saveSynonyms';
+import { getSynonym, HasGetSynonym } from '../../../search-client/src/methods/index/getSynonym';
+import {
+  searchSynonyms,
+  HasSearchSynonyms,
+} from '../../../search-client/src/methods/index/searchSynonyms';
+import {
+  browseSynonyms,
+  HasBrowseSynonyms,
+} from '../../../search-client/src/methods/index/browseSynonyms';
 
 export class TestSuite {
   public readonly testName: string;
@@ -125,7 +139,12 @@ export class TestSuite {
         HasBrowseObjects &
         HasGetObjectPosition &
         HasFindObject &
-        HasExists
+        HasExists &
+        HasSaveSynonym &
+        HasSaveSynonyms &
+        HasGetSynonym &
+        HasSearchSynonyms &
+        HasBrowseSynonyms
     >(indexName === undefined ? this.makeIndexName() : indexName, {
       methods: [
         batch,
@@ -149,6 +168,11 @@ export class TestSuite {
         getObjectPosition,
         findObject,
         exists,
+        saveSynonym,
+        saveSynonyms,
+        getSynonym,
+        searchSynonyms,
+        browseSynonyms,
       ],
     });
 
