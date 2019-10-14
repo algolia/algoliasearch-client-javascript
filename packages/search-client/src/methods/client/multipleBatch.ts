@@ -30,11 +30,9 @@ export const multipleBatch = <TSearchClient extends ConstructorOf<SearchClient>>
       ).onWait(response =>
         Promise.all(
           Object.keys(response.taskID).map(indexName => {
-            const index = this.initIndex<HasWaitTask>(indexName, {
+            return this.initIndex<HasWaitTask>(indexName, {
               methods: [waitTask],
-            });
-
-            return index.waitTask(response.taskID[indexName]);
+            }).waitTask(response.taskID[indexName]);
           })
         )
       );

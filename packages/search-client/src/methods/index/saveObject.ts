@@ -24,9 +24,7 @@ export const saveObject = <TSearchIndex extends ConstructorOf<SearchIndex>>(base
             });
           });
         })
-      ).onWait((result: SaveObjectResponse) => {
-        return this.waitTask(result.taskID);
-      });
+      ).onWait((result: SaveObjectResponse) => this.waitTask(result.taskID));
     }
   };
 };

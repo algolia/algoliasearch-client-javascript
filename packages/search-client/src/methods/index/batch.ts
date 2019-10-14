@@ -63,15 +63,9 @@ export const batch = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: TSe
 
           batching();
         })
-      ).onWait(
-        (responses: readonly BatchResponse[]): Promise<void> => {
-          return new Promise(resolve => {
-            Promise.all(responses.map(response => this.waitTask(response.taskID))).then(() => {
-              resolve();
-            });
-          });
-        }
-      );
+      ).onWait((responses: readonly BatchResponse[]) => {
+        return Promise.all(responses.map(response => this.waitTask(response.taskID)));
+      });
     }
 
     public batch(
