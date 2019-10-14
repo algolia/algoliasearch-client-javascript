@@ -1,5 +1,6 @@
 import { createMultiWaitable } from '@algolia/support/src/__tests__/helpers';
 import { TestSuite } from '@algolia/support/src/__tests__/TestSuite';
+import { ApiError } from '@algolia/transporter-types';
 
 import { Synonym } from '../../methods/types/Synonym';
 import { SynonymEnum } from '../../methods/types/SynonymType';
@@ -85,13 +86,13 @@ test(testSuite.testName, async () => {
     expect(synonyms).toContainEqual(synonym);
   });
 
-  /**
-   *    await index.deleteSynonym('gba').wait();
+  await index.deleteSynonym('gba').wait();
 
-  await expect(index.getSynonym('gba')).rejects.toEqual(new ApiError('foo', 404));
+  await expect(index.getSynonym('gba')).rejects.toEqual(
+    new ApiError('Synonym set does not exist', 404)
+  );
 
   await index.clearSynonyms().wait();
 
   expect((await index.searchSynonyms('')).nbHits).toEqual(0);
-   */
 });

@@ -1,4 +1,12 @@
 import { AuthMode } from '@algolia/auth';
+import {
+  clearSynonyms,
+  HasClearSynonyms,
+} from '@algolia/search-client/src/methods/index/clearSynonyms';
+import {
+  deleteSynonym,
+  HasDeleteSynonym,
+} from '@algolia/search-client/src/methods/index/deleteSynonym';
 import { Transporter } from '@algolia/transporter';
 import { UserAgent } from '@algolia/transporter-types';
 
@@ -145,7 +153,9 @@ export class TestSuite {
         HasSaveSynonyms &
         HasGetSynonym &
         HasSearchSynonyms &
-        HasBrowseSynonyms
+        HasBrowseSynonyms &
+        HasDeleteSynonym &
+        HasClearSynonyms
     >(indexName === undefined ? this.makeIndexName() : indexName, {
       methods: [
         batch,
@@ -174,6 +184,8 @@ export class TestSuite {
         getSynonym,
         searchSynonyms,
         browseSynonyms,
+        deleteSynonym,
+        clearSynonyms,
       ],
     });
 
