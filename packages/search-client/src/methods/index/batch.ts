@@ -17,61 +17,58 @@ export const batch = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: TSe
     public chunk(
       bodies: readonly object[],
       action: BatchActionType,
-      requestOptions?: RequestOptions & ChunkOptions
+      requestOptions?: RequestOptions & ChunkOptions,
     ): Readonly<WaitablePromise<readonly BatchResponse[]>> {
-      return WaitablePromise.from<readonly BatchResponse[]>(
-        new Promise(resolve => {
-          const responses: readonly BatchResponse[] = [];
+      // eslint-disable-next-line functional/prefer-readonly-type
+      const responses: BatchResponse[] = [];
 
-          const batchSize = popRequestOption(requestOptions, 'batchSize', 1000);
+      const batching = (lastIndex: number = 0) => {
+        // eslint-disable-next-line functional/prefer-readonly-type
+        const bodiesChunk: Array<Record<string, any>> = [];
+        // eslint-disable-next-line functional/no-let
+        let index: number;
 
-          const batching = (lastIndex: number = 0): void => {
-            // eslint-disable-next-line functional/prefer-readonly-type
-            const bodiesChunk: Array<Record<string, any>> = [];
-            // eslint-disable-next-line functional/no-let
-            let index: number;
+        /* eslint-disable-next-line functional/no-loop-statement */
+        for (index = lastIndex; index < bodies.length; index++) {
+          // eslint-disable-next-line functional/immutable-data
+          bodiesChunk.push(bodies[index]);
 
-            /* eslint-disable-next-line functional/no-loop-statement */
-            for (index = lastIndex; index < bodies.length; index++) {
-              // eslint-disable-next-line functional/immutable-data
-              bodiesChunk.push(bodies[index]);
+          if (bodiesChunk.length === batchSize) {
+            break;
+          }
+        }
 
-              if (bodiesChunk.length === batchSize) {
-                break;
-              }
-            }
+        if (bodiesChunk.length === 0) {
+          return responses;
+        }
 
-            if (bodiesChunk.length > 0) {
-              this.batch(
-                bodiesChunk.map(body => {
-                  return {
-                    action,
-                    body,
-                  };
-                }),
-                requestOptions
-              ).then(response => {
-                // eslint-disable-next-line functional/immutable-data
-                responses.push(response);
+        return this.batch(
+          bodiesChunk.map(body => {
+            return {
+              action,
+              body,
+            };
+          }),
+          requestOptions,
+        ).then(response => {
+          // eslint-disable-next-line functional/immutable-data
+          responses.push(response);
+          index++;
 
-                index++;
-                batching(index);
-              });
-            } else {
-              resolve(responses);
-            }
-          };
+          return batching(index);
+        });
+      };
 
-          batching();
-        })
-      ).onWait((responses: readonly BatchResponse[]) => {
+      const batchSize = popRequestOption(requestOptions, 'batchSize', 1000);
+
+      return WaitablePromise.from<readonly BatchResponse[]>(batching()).onWait(responses => {
         return Promise.all(responses.map(response => this.waitTask(response.taskID)));
       });
     }
 
     public batch(
       requests: readonly BatchRequest[],
-      requestOptions?: RequestOptions
+      requestOptions?: RequestOptions,
     ): Readonly<WaitablePromise<BatchResponse>> {
       return WaitablePromise.from<BatchResponse>(
         this.transporter.write<BatchResponse>(
@@ -82,8 +79,8 @@ export const batch = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: TSe
               requests,
             },
           },
-          requestOptions
-        )
+          requestOptions,
+        ),
       ).onWait((response: BatchResponse): Promise<void> => this.waitTask(response.taskID));
     }
   };
@@ -93,11 +90,11 @@ export type HasBatch = HasWaitTask & {
   readonly chunk: (
     bodies: readonly object[],
     action: BatchActionType,
-    requestOptions?: RequestOptions & ChunkOptions
+    requestOptions?: RequestOptions & ChunkOptions,
   ) => Readonly<WaitablePromise<readonly BatchResponse[]>>;
 
   readonly batch: (
     requests: readonly BatchRequest[],
-    requestOptions?: RequestOptions
+    requestOptions?: RequestOptions,
   ) => Readonly<WaitablePromise<BatchResponse>>;
 };
