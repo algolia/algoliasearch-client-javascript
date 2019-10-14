@@ -8,9 +8,9 @@ import { SaveObjectsOptions } from '../types/SaveObjectsOptions';
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const saveObject = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: TSearchIndex) => {
-  const Mixin = saveObjects(base);
+  const mixin = saveObjects(base);
 
-  return class extends Mixin implements HasSaveObject {
+  return class extends mixin implements HasSaveObject {
     public saveObject(
       object: object,
       requestOptions?: RequestOptions & SaveObjectsOptions

@@ -5,9 +5,9 @@ import { getSettings, HasGetSettings } from './getSettings';
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const exists = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: TSearchIndex) => {
-  const Mixin: ConstructorOf<SearchIndex & HasGetSettings> = getSettings(base);
+  const mixin: ConstructorOf<SearchIndex & HasGetSettings> = getSettings(base);
 
-  return class extends Mixin implements HasExists {
+  return class extends mixin implements HasExists {
     public exists(requestOptions?: RequestOptions): Promise<boolean> {
       return new Promise(resolve => {
         this.getSettings(requestOptions)

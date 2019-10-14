@@ -9,9 +9,9 @@ import { PartialUpdateObjectsOptions } from '../types/PartialUpdateObjectsOption
 export const partialUpdateObject = <TSearchIndex extends ConstructorOf<SearchIndex>>(
   base: TSearchIndex
 ) => {
-  const Mixin = partialUpdateObjects(base);
+  const mixin = partialUpdateObjects(base);
 
-  return class extends Mixin implements HasPartialUpdateObject {
+  return class extends mixin implements HasPartialUpdateObject {
     public partialUpdateObject(
       object: object,
       requestOptions?: RequestOptions & PartialUpdateObjectsOptions

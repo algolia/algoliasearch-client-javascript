@@ -11,9 +11,9 @@ import { waitTask } from './waitTask';
 export const saveSynonyms = <TSearchIndex extends ConstructorOf<SearchIndex>>(
   base: TSearchIndex
 ) => {
-  const Mixin = waitTask(base);
+  const mixin = waitTask(base);
 
-  return class extends Mixin implements HasSaveSynonyms {
+  return class extends mixin implements HasSaveSynonyms {
     public saveSynonyms(
       synonyms: readonly Synonym[],
       requestOptions?: SaveSynonymsOptions & RequestOptions

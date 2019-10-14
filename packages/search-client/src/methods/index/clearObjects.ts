@@ -9,9 +9,9 @@ import { waitTask } from './waitTask';
 export const clearObjects = <TSearchIndex extends ConstructorOf<SearchIndex>>(
   base: TSearchIndex
 ) => {
-  const Mixin = waitTask(base);
+  const mixin = waitTask(base);
 
-  return class extends Mixin implements HasClearObjects {
+  return class extends mixin implements HasClearObjects {
     public clearObjects(
       requestOptions?: RequestOptions
     ): Readonly<WaitablePromise<DeleteResponse>> {

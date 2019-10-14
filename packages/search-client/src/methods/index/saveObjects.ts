@@ -12,9 +12,9 @@ import { batch } from './batch';
 export const saveObjects = <TSearchIndex extends ConstructorOf<SearchIndex>>(
   base: TSearchIndex
 ) => {
-  const Mixin = batch(base);
+  const mixin = batch(base);
 
-  return class extends Mixin implements HasSaveObjects {
+  return class extends mixin implements HasSaveObjects {
     public saveObjects(
       objects: ReadonlyArray<Record<string, any>>,
       requestOptions?: RequestOptions & SaveObjectsOptions

@@ -10,9 +10,9 @@ import { ChunkOptions } from '../types/ChunkOptions';
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const batch = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: TSearchIndex) => {
-  const Mixin = waitTask(base);
+  const mixin = waitTask(base);
 
-  return class extends Mixin implements HasBatch {
+  return class extends mixin implements HasBatch {
     public chunk(
       bodies: readonly object[],
       action: BatchActionType,

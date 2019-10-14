@@ -8,9 +8,9 @@ import { deleteObjects } from './deleteObjects';
 export const deleteObject = <TSearchIndex extends ConstructorOf<SearchIndex>>(
   base: TSearchIndex
 ) => {
-  const Mixin = deleteObjects(base);
+  const mixin = deleteObjects(base);
 
-  return class extends Mixin implements HasDeleteObject {
+  return class extends mixin implements HasDeleteObject {
     public deleteObject(
       objectID: string,
       requestOptions?: RequestOptions

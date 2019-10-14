@@ -10,9 +10,9 @@ import { DeleteResponse } from '../types/DeleteResponse';
 export const deleteIndex = <TSearchIndex extends ConstructorOf<SearchIndex>>(
   base: TSearchIndex
 ) => {
-  const Mixin = waitTask(base);
+  const mixin = waitTask(base);
 
-  return class extends Mixin implements HasDelete {
+  return class extends mixin implements HasDelete {
     public delete(requestOptions?: RequestOptions): Readonly<WaitablePromise<DeleteResponse>> {
       return WaitablePromise.from<DeleteResponse>(
         this.transporter.write(

@@ -11,9 +11,9 @@ import { SetSettingsResponse } from '../types/SetSettingsResponse';
 export const setSettings = <TSearchIndex extends ConstructorOf<SearchIndex>>(
   base: TSearchIndex
 ) => {
-  const Mixin = waitTask(base);
+  const mixin = waitTask(base);
 
-  return class extends Mixin implements HasSetSettings {
+  return class extends mixin implements HasSetSettings {
     public setSettings(
       settings: IndexSettings,
       requestOptions?: RequestOptions

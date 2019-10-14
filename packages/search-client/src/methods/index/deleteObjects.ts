@@ -11,9 +11,9 @@ import { batch } from './batch';
 export const deleteObjects = <TSearchIndex extends ConstructorOf<SearchIndex>>(
   base: TSearchIndex
 ) => {
-  const Mixin = batch(base);
+  const mixin = batch(base);
 
-  return class extends Mixin implements HasDeleteObjects {
+  return class extends mixin implements HasDeleteObjects {
     public deleteObjects(
       objectIDs: readonly string[],
       requestOptions?: RequestOptions & ChunkOptions

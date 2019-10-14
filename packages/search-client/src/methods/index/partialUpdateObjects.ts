@@ -11,9 +11,9 @@ import { batch } from './batch';
 export const partialUpdateObjects = <TSearchIndex extends ConstructorOf<SearchIndex>>(
   base: TSearchIndex
 ) => {
-  const Mixin = batch(base);
+  const mixin = batch(base);
 
-  return class extends Mixin implements HasPartialUpdateObjects {
+  return class extends mixin implements HasPartialUpdateObjects {
     public partialUpdateObjects(
       objects: ReadonlyArray<Record<string, any>>,
       requestOptions?: RequestOptions & PartialUpdateObjectsOptions

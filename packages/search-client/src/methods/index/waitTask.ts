@@ -5,9 +5,9 @@ import { getTask, HasGetTask } from './getTask';
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const waitTask = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: TSearchIndex) => {
-  const Mixin: ConstructorOf<SearchIndex & HasGetTask> = getTask(base);
+  const mixin: ConstructorOf<SearchIndex & HasGetTask> = getTask(base);
 
-  return class extends Mixin implements HasWaitTask {
+  return class extends mixin implements HasWaitTask {
     public waitTask(taskID: number, requestOptions?: RequestOptions): Promise<void> {
       const retry = (resolve: Function): void => {
         this.getTask(taskID, requestOptions).then(response => {

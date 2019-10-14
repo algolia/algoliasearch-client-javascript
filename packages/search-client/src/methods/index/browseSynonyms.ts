@@ -11,9 +11,9 @@ import { searchSynonyms, HasSearchSynonyms } from './searchSynonyms';
 export const browseSynonyms = <TSearchIndex extends ConstructorOf<SearchIndex>>(
   base: TSearchIndex
 ) => {
-  const Mixin: ConstructorOf<SearchIndex & HasSearchSynonyms> = searchSynonyms(base);
+  const mixin: ConstructorOf<SearchIndex & HasSearchSynonyms> = searchSynonyms(base);
 
-  return class extends Mixin implements HasBrowseSynonyms {
+  return class extends mixin implements HasBrowseSynonyms {
     public browseSynonyms(
       requestOptions?: SearchSynonymsOptions & BrowseOptions<Synonym> & RequestOptions
     ): Readonly<BrowsablePromise<Synonym>> {

@@ -8,9 +8,9 @@ import { DeleteByFiltersOptions } from '../types/DeleteByFiltersOptions';
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const deleteBy = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: TSearchIndex) => {
-  const Mixin = waitTask(base);
+  const mixin = waitTask(base);
 
-  return class extends Mixin implements HasDeleteBy {
+  return class extends mixin implements HasDeleteBy {
     public deleteBy(
       filters: DeleteByFiltersOptions,
       requestOptions?: RequestOptions

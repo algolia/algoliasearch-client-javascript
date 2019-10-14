@@ -10,7 +10,7 @@ import { HitWithObjectID } from '../types/HitWithObjectID';
 /**
 
 export const deleteObject = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: TSearchIndex) => {
-  const Mixin = deleteObjects(base);
+  const mixin = deleteObjects(base);
 
   return class
 
@@ -18,9 +18,9 @@ export const deleteObject = <TSearchIndex extends ConstructorOf<SearchIndex>>(ba
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const findObject = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: TSearchIndex) => {
-  const Mixin: ConstructorOf<SearchIndex & HasSearch> = search(base);
+  const mixin: ConstructorOf<SearchIndex & HasSearch> = search(base);
 
-  return class extends Mixin implements HasFindObject {
+  return class extends mixin implements HasFindObject {
     public findObject<TObject extends HitWithObjectID>(
       callback: (object: TObject) => boolean,
       requestOptions?: FindObjectOptions & RequestOptions

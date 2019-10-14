@@ -10,9 +10,9 @@ import { Synonym } from '../types/Synonym';
 export const saveSynonym = <TSearchIndex extends ConstructorOf<SearchIndex>>(
   base: TSearchIndex
 ) => {
-  const Mixin: ConstructorOf<SearchIndex & HasSaveSynonyms> = saveSynonyms(base);
+  const mixin: ConstructorOf<SearchIndex & HasSaveSynonyms> = saveSynonyms(base);
 
-  return class extends Mixin implements HasSaveSynonym {
+  return class extends mixin implements HasSaveSynonym {
     public saveSynonym(
       synonym: Synonym,
       requestOptions?: RequestOptions & SaveSynonymsOptions
