@@ -8,7 +8,7 @@ const testSuite = new TestSuite('multiple_operations');
 afterAll(() => testSuite.cleanUp());
 
 test(testSuite.testName, async () => {
-  const client = testSuite.makeClient();
+  const client = testSuite.makeSearchClient();
 
   const index = testSuite.makeIndex();
   const index2 = testSuite.makeIndex(`${index.indexName}_dev`);

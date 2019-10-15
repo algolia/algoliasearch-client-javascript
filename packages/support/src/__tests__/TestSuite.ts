@@ -1,4 +1,14 @@
 import { AuthMode } from '@algolia/auth';
+import { copyIndex, HasCopyIndex } from '@algolia/search-client/src/methods/client/copyIndex';
+import {
+  copySettings,
+  HasCopySettings,
+} from '@algolia/search-client/src/methods/client/copySettings';
+import {
+  copySynonyms,
+  HasCopySynonyms,
+} from '@algolia/search-client/src/methods/client/copySynonyms';
+import { HasMoveIndex, moveIndex } from '@algolia/search-client/src/methods/client/moveIndex';
 import {
   clearSynonyms,
   HasClearSynonyms,
@@ -105,7 +115,7 @@ export class TestSuite {
     this.indices = [];
   }
 
-  public makeClient() {
+  public makeSearchClient() {
     this.ensureEnvironmentVariables();
     const transporter = this.makeTransporter();
 
@@ -114,7 +124,13 @@ export class TestSuite {
       // eslint-disable-next-line no-undef
       testing.environment() === 'node' ? AuthMode.WithinHeaders : AuthMode.WithinQueryParameters;
 
-    type TSearchClient = HasMultipleBatch & HasMultipleGetObjects & HasMultipleQueries;
+    type TSearchClient = HasMultipleBatch &
+      HasMultipleGetObjects &
+      HasMultipleQueries &
+      HasCopyIndex &
+      HasCopySettings &
+      HasCopySynonyms &
+      HasMoveIndex;
 
     return createSearchClient<TSearchClient>({
       appId: `${process.env.ALGOLIA_APPLICATION_ID_1}`,
@@ -122,12 +138,20 @@ export class TestSuite {
       transporter,
       userAgent: UserAgent.create('4.0.0'),
       authMode,
-      methods: [multipleBatch, multipleGetObjects, multipleQueries],
+      methods: [
+        multipleBatch,
+        multipleGetObjects,
+        multipleQueries,
+        copyIndex,
+        copySettings,
+        copySynonyms,
+        moveIndex,
+      ],
     });
   }
 
   public makeIndex(indexName?: string) {
-    const index = this.makeClient().initIndex<
+    const index = this.makeSearchClient().initIndex<
       HasBatch &
         HasDelete &
         HasSearch &
