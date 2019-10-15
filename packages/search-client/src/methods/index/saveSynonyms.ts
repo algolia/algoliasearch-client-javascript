@@ -1,6 +1,6 @@
 import { Method } from '@algolia/requester-types';
-import { ConstructorOf, WaitablePromise } from '@algolia/support';
-import { RequestOptions } from '@algolia/transporter-types';
+import { ConstructorOf, endpoint, WaitablePromise } from '@algolia/support';
+import { mapRequestOptions, popRequestOption, RequestOptions } from '@algolia/transporter-types';
 
 import { SearchIndex } from '../../SearchIndex';
 import { SaveSynonymsOptions } from '../types/SaveSynonymsOptions';
@@ -19,14 +19,29 @@ export const saveSynonyms = <TSearchIndex extends ConstructorOf<SearchIndex>>(
       synonyms: readonly Synonym[],
       requestOptions?: SaveSynonymsOptions & RequestOptions
     ): Readonly<WaitablePromise<SaveSynonymsResponse>> {
+      const forward = popRequestOption(requestOptions, 'forwardToReplicas', undefined);
+      const replace = popRequestOption(requestOptions, 'replaceExistingSynonyms', undefined);
+      const options = mapRequestOptions(requestOptions);
+      if (forward === true) {
+        // @ts-ignore
+        // eslint-disable-next-line functional/immutable-data
+        options.queryParameters.forwardToReplicas = '1';
+      }
+
+      if (replace === true) {
+        // @ts-ignore
+        // eslint-disable-next-line functional/immutable-data
+        options.queryParameters.replaceExistingSynonyms = '1';
+      }
+
       return WaitablePromise.from<SaveSynonymsResponse>(
         this.transporter.write<SaveSynonymsResponse>(
           {
             method: Method.Post,
-            path: `1/indexes/${this.indexName}/synonyms/batch`,
+            path: endpoint('1/indexes/%s/synonyms/batch', this.indexName),
             data: synonyms,
           },
-          requestOptions
+          options
         )
       ).onWait((response: SaveSynonymsResponse) => this.waitTask(response.taskID));
     }

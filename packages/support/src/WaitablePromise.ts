@@ -13,9 +13,10 @@ export class WaitablePromise<TResponse> extends Promise<TResponse> {
     return this;
   }
 
-  public wait(): Promise<TResponse> {
-    // eslint-disable-next-line promise/no-nesting
-    return this.then(response => this.onWaitClosure(response).then(() => response));
+  public wait(): Readonly<WaitablePromise<TResponse>> {
+    const promise = this.then(response => this.onWaitClosure(response).then(() => response));
+
+    return WaitablePromise.from<TResponse>(promise).onWait(() => Promise.resolve());
   }
 }
 

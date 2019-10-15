@@ -1,3 +1,4 @@
+import { endpoint } from '@algolia/support';
 import { Host, Request, RequestOptions } from '@algolia/transporter-types';
 
 export class Serializer {
@@ -11,7 +12,9 @@ export class Serializer {
 
     const queryParametersKeys = Object.keys(queryParameters);
     if (queryParametersKeys.length) {
-      url += `?${queryParametersKeys.map(key => `${key}=${queryParameters[key]}`).join('&')}`;
+      url += `?${queryParametersKeys
+        .map(key => endpoint('%s=%s', key, queryParameters[key]))
+        .join('&')}`;
     }
 
     return url;

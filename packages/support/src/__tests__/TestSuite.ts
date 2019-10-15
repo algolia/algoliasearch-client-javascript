@@ -17,6 +17,14 @@ import {
   deleteSynonym,
   HasDeleteSynonym,
 } from '@algolia/search-client/src/methods/index/deleteSynonym';
+import {
+  HasReplaceAllObjects,
+  replaceAllObjects,
+} from '@algolia/search-client/src/methods/index/replaceAllObjects';
+import {
+  HasReplaceAllSynonyms,
+  replaceAllSynonyms,
+} from '@algolia/search-client/src/methods/index/replaceAllSynonyms';
 import { Transporter } from '@algolia/transporter';
 import { UserAgent } from '@algolia/transporter-types';
 
@@ -179,7 +187,9 @@ export class TestSuite {
         HasSearchSynonyms &
         HasBrowseSynonyms &
         HasDeleteSynonym &
-        HasClearSynonyms
+        HasClearSynonyms &
+        HasReplaceAllObjects &
+        HasReplaceAllSynonyms
     >(indexName === undefined ? this.makeIndexName() : indexName, {
       methods: [
         batch,
@@ -210,6 +220,8 @@ export class TestSuite {
         browseSynonyms,
         deleteSynonym,
         clearSynonyms,
+        replaceAllObjects,
+        replaceAllSynonyms,
       ],
     });
 

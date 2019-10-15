@@ -36,13 +36,13 @@ export function mapRequestOptions(
 export function popRequestOption<TRequestOption>(
   requestOptions: RequestOptions | undefined,
   key: string,
-  defaultValue: TRequestOption
+  defaultValue: TRequestOption = undefined
 ): TRequestOption {
   if (requestOptions !== undefined && key in requestOptions) {
     const value: TRequestOption = requestOptions[key];
 
-    // @todo Fix mutability issue here...
-    delete requestOptions[key]; // eslint-disable-line no-param-reassign, functional/immutable-data
+    // eslint-disable-next-line no-param-reassign, functional/immutable-data
+    delete requestOptions[key];
 
     return value;
   }
