@@ -1,5 +1,5 @@
 import { Method } from '@algolia/requester-types';
-import { ConstructorOf } from '@algolia/support';
+import { ConstructorOf, endpoint } from '@algolia/support';
 import { RequestOptions } from '@algolia/transporter-types';
 
 import { SearchIndex } from '../../SearchIndex';
@@ -12,7 +12,7 @@ export const getTask = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: T
       return this.transporter.read(
         {
           method: Method.Get,
-          path: `1/indexes/${this.indexName}/task/${taskID}`,
+          path: endpoint(`1/indexes/%s/task/%s`, this.indexName, taskID.toString()),
         },
         requestOptions
       );
