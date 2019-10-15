@@ -24,7 +24,6 @@ export const multipleBatch = <TSearchClient extends ConstructorOf<SearchClient>>
             data: {
               requests,
             },
-            cacheable: true,
           },
           requestOptions
         )
