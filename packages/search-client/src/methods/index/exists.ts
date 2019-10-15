@@ -1,5 +1,5 @@
 import { ConstructorOf } from '@algolia/support';
-import { ApiError, RequestOptions } from '@algolia/transporter-types';
+import { RequestOptions } from '@algolia/transporter-types';
 
 import { SearchIndex } from '../../SearchIndex';
 import { getSettings, HasGetSettings } from './getSettings';
@@ -10,17 +10,15 @@ export const exists = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: TS
 
   return class extends mixin implements HasExists {
     public exists(requestOptions?: RequestOptions): Promise<boolean> {
-      return new Promise(resolve => {
-        this.getSettings(requestOptions)
-          .then(() => resolve(true))
-          .catch((err: ApiError) => {
-            if (err.status !== 404) {
-              throw err;
-            }
+      return this.getSettings(requestOptions)
+        .then(() => true)
+        .catch(error => {
+          if (error.status !== 404) {
+            throw error;
+          }
 
-            resolve(false);
-          });
-      });
+          return false;
+        });
     }
   };
 };
