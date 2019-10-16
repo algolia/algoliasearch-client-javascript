@@ -1,20 +1,102 @@
 import { Faker } from '@algolia/support/src/__tests__/Faker';
+import { createMultiWaitable } from '@algolia/support/src/__tests__/helpers';
 import { TestSuite } from '@algolia/support/src/__tests__/TestSuite';
+import { ApiError } from '@algolia/transporter-types';
+
+import { ABTest } from '../../methods/types/ABTest';
+import { Variant } from '../../methods/types/Variant';
+import { VariantResponse } from '../../methods/types/VariantResponse';
 
 const testSuite = new TestSuite('ab testing');
 
 afterAll(() => testSuite.cleanUp());
 
 test(testSuite.testName, async () => {
-  const index = testSuite.makeIndex();
+  const index1 = testSuite.makeIndex();
   const index2 = testSuite.makeIndex();
-  const responses: any = [];
+  const client = testSuite.makeSearchClient().initAnalytics();
+  const today = new Date();
+  const todayDate = `${today.getFullYear}-${today.getMonth}-${today.getDay}`;
 
-  responses.push(index.saveObject(Faker.object('one')));
-  responses.push(index2.saveObject(Faker.object('one')));
+  // Delete old AB tests
+  {
+    const oldABTests = (await client.getABTests()).abtests;
 
-  // @todo Keep working from here..
-  const client = testSuite.makeAnalytics();
-  const response = await client.getABTests();
-  expect(response.total).toBe(0);
+    await oldABTests
+      .filter(abtest => abtest.name.startsWith('js-') && !abtest.name.startsWith(`js-${todayDate}`))
+      .map(async abtest => {
+        await client.deleteABTest(abtest.abTestID);
+      });
+  }
+
+  // Create the two indices by adding a dummy object in each of them
+  const object = Faker.object('one');
+  await createMultiWaitable([index1.saveObject(object), index2.saveObject(object)] as any).wait();
+
+  const abTestName = testSuite.makeIndexName();
+  const abTest: ABTest = {
+    name: abTestName,
+    variants: [
+      { index: index1.indexName, trafficPercentage: 60, description: 'a description' },
+      { index: index2.indexName, trafficPercentage: 40 },
+    ],
+    endAt: new Date(today.getTime() + 24 * 3600 * 1000).toISOString(),
+  };
+
+  // Create the AB test
+  const abTestID = (await client.addABTest(abTest)).abTestID;
+
+  function compareVariants(got: readonly VariantResponse[], expected: Variant[]) {
+    const convertedVariants = got.map(v => {
+      const convertedVariant: Variant = {
+        index: v.index,
+        trafficPercentage: v.trafficPercentage,
+      };
+
+      if (v.description && v.description.length !== 0) {
+        convertedVariant.description = v.description;
+      }
+
+      return convertedVariant;
+    });
+
+    expect(convertedVariants).toEqual(expect.arrayContaining(expected));
+    expect(expected).toEqual(expect.arrayContaining(convertedVariants));
+  }
+
+  function compareDateStrings(got: string, expected: string) {
+    expect(new Date(got).getTime()).toBe(new Date(expected).getTime());
+  }
+
+  // Retrieve the AB test and check it corresponds to the original one
+  {
+    const found = await client.getABTest(abTestID);
+    expect(found.abTestID).toBe(abTestID);
+    expect(found.name).toBe(abTest.name);
+    compareDateStrings(found.endAt, abTest.endAt);
+    compareVariants(found.variants, abTest.variants);
+  }
+
+  // Find the AB test among all the existing AB tests and check it
+  // corresponds to the original one
+  {
+    const all = await client.getABTests();
+    const found = all.abtests.find(t => t.abTestID === abTestID);
+    expect(found.abTestID).toBe(abTestID);
+    expect(found.name).toBe(abTest.name);
+    compareDateStrings(found.endAt, abTest.endAt);
+    compareVariants(found.variants, abTest.variants);
+  }
+
+  // Stop the AB test
+  await client.stopABTest(abTestID).wait();
+
+  // Check the AB test still exists but is stopped
+  await expect(client.getABTest(abTestID)).resolves.toMatchObject({ status: 'stopped' });
+
+  // Delete the AB test
+  await client.deleteABTest(abTestID).wait();
+
+  // Check the AB test doesn't exist anymore
+  await expect(client.getABTest(abTestID)).rejects.toEqual(new ApiError('ABTestID not found', 404));
 });

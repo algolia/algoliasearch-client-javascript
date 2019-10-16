@@ -1,17 +1,9 @@
-import { SearchOptions } from './SearchOptions';
+import { SearchOptions } from '../../../../search-client/src/methods/types/SearchOptions';
 
 export type Variant = {
   /* eslint-disable functional/prefer-readonly-type */
   index: string;
-  trafficPercentage?: number;
-  description: string;
-  averageClickPostion?: number;
-  clickCount?: number;
-  clickThroughRate?: number;
-  conversionCount?: number;
-  conversionRate?: number;
-  noResultCount?: number;
-  searchCount?: number;
-  userCount?: number;
-  customSearchParameters: SearchOptions;
+  trafficPercentage: number;
+  description?: string;
+  customSearchParameters?: SearchOptions;
 };

@@ -11,6 +11,9 @@ export type Transporter = {
   hosts: Host[];
 
   // eslint-disable-next-line functional/no-mixed-type
+  readonly reset: () => Transporter;
+
+  // eslint-disable-next-line functional/no-mixed-type
   readonly read: <TResponse>(
     request: Request,
     requestOptions?: RequestOptions

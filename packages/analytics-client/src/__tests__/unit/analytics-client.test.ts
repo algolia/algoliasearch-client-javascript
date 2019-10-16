@@ -1,13 +1,15 @@
+import { SearchClient } from '@algolia/search-client';
 import { Transporter } from '@algolia/transporter';
 import { UserAgent } from '@algolia/transporter-types';
 import { instance, mock } from 'ts-mockito';
 
 import { createAnalyticsClient } from '../../AnalyticsClient';
 
+const searchClientMock = mock(SearchClient);
 const transporterMock = mock(Transporter);
 const transporter = instance(transporterMock);
 
-const analyticsClient = createAnalyticsClient({
+const analyticsClient = createAnalyticsClient(searchClientMock, {
   transporter: instance(transporterMock),
   appId: 'appId',
   apiKey: 'apiKey',

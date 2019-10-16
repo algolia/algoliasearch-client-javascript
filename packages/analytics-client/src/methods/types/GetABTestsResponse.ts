@@ -1,8 +1,7 @@
-import { ABTest } from './ABTest';
+import { GetABTestResponse } from './GetABTestResponse';
 
 export type GetABTestsResponse = {
-  /* eslint-disable functional/prefer-readonly-type */
-  count: number;
-  total: number;
-  abtests: ABTest[] | null;
+  readonly count: number;
+  readonly total: number;
+  readonly abtests: readonly GetABTestResponse[];
 };

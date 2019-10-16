@@ -39,6 +39,17 @@ export class Transporter implements TransporterContract {
 
   private readonly requestsCache: Cache;
 
+  public reset(): Transporter {
+    return new Transporter({
+      requester: this.requester,
+      timeouts: this.timeouts,
+      logger: this.logger,
+      responsesCache: this.responsesCache,
+      hostsCache: this.hostsCache,
+      requestsCache: this.requestsCache,
+    });
+  }
+
   public constructor(options: {
     // eslint-disable-next-line functional/prefer-readonly-type
     headers?: { readonly [key: string]: string };

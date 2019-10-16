@@ -7,12 +7,12 @@ import { GetABTestsOptions } from '../types/GetABTestsOptions';
 import { GetABTestsResponse } from '../types/GetABTestsResponse';
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export const getAbTests = <TAnalyticsClient extends ConstructorOf<AnalyticsClient>>(
+export const getABTests = <TAnalyticsClient extends ConstructorOf<AnalyticsClient>>(
   base: TAnalyticsClient
 ) => {
   return class extends base implements HasGetABTests {
     public getABTests(
-      requestOptions?: GetABTestsOptions & RequestOptions
+      requestOptions?: RequestOptions & GetABTestsOptions
     ): Readonly<Promise<GetABTestsResponse>> {
       return this.transporter.read(
         {
@@ -26,7 +26,5 @@ export const getAbTests = <TAnalyticsClient extends ConstructorOf<AnalyticsClien
 };
 
 export type HasGetABTests = AnalyticsClient & {
-  readonly getABTests: (
-    requestOptions?: RequestOptions & GetABTestsOptions
-  ) => Readonly<Promise<GetABTestsResponse>>;
+  readonly getABTests: (requestOptions?: RequestOptions) => Readonly<Promise<GetABTestsResponse>>;
 };
