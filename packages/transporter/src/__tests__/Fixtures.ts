@@ -72,7 +72,7 @@ export class Fixtures {
     };
 
     return {
-      data: '{}',
+      data: '',
       headers,
       method: Method.Post,
       url: 'https://specify-call-type.com/save',

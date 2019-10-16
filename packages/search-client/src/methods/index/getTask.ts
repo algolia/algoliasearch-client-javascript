@@ -12,7 +12,7 @@ export const getTask = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: T
       return this.transporter.read(
         {
           method: Method.Get,
-          path: endpoint(`1/indexes/%s/task/%s`, this.indexName, taskID.toString()),
+          path: endpoint('1/indexes/%s/task/%s', this.indexName, taskID.toString()),
         },
         requestOptions
       );

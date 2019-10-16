@@ -50,7 +50,7 @@ describe('Usage of query parameters', () => {
     verify(requester.send(deepEqual(requesterRequest))).once();
   });
 
-  it('Allows to add query parameters per read/write', async () => {
+  it('allows to add query parameters per read/write', async () => {
     await transporter.read(transporterRequest, {
       queryParameters: {
         'x-bar': 'bar',
@@ -63,7 +63,7 @@ describe('Usage of query parameters', () => {
     verify(requester.send(deepEqual(requesterRequest))).once();
   });
 
-  it('Allows to add query parameters per read/write and override the default ones', async () => {
+  it('allows to add query parameters per read/write and override the default ones', async () => {
     await transporter.read(transporterRequest, {
       queryParameters: {
         'x-foo': 'My custom foo',
@@ -71,7 +71,7 @@ describe('Usage of query parameters', () => {
       },
     });
 
-    requesterRequest.url = 'https://read.com/save?x-foo=My custom foo&x-bar=My custom bar';
+    requesterRequest.url = 'https://read.com/save?x-foo=My%20custom%20foo&x-bar=My%20custom%20bar';
     requesterRequest.timeout = 2;
 
     verify(requester.send(deepEqual(requesterRequest))).once();
