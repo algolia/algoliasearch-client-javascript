@@ -222,7 +222,8 @@ Index.prototype.saveObjects = function(objects, callback) {
 *  content: the server answer that contains 3 elements: createAt, taskId and objectID
 */
 Index.prototype.deleteObject = function(objectID, callback) {
-  if (!objectID || typeof objectID === 'function') {
+  var isValidObjectId = objectID && typeof objectID !== 'function';
+  if (!isValidObjectId) {
     var err = new errors.AlgoliaSearchError(
       'Cannot delete an object without an objectID'
     );
