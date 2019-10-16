@@ -1,5 +1,5 @@
 import { ConstructorOf, WaitablePromise } from '@algolia/support';
-import { mapRequestOptions, RequestOptions } from '@algolia/transporter-types';
+import { RequestOptions } from '@algolia/transporter-types';
 
 import { SearchIndex } from '../../SearchIndex';
 import { Rule } from '../types/Rule';
@@ -12,20 +12,17 @@ import { saveRules } from './saveRules';
 export const replaceAllRules = <TSearchIndex extends ConstructorOf<SearchIndex>>(
   base: TSearchIndex
 ) => {
-  const Mixin = saveRules(base);
+  const mixin = saveRules(base);
 
-  return class extends Mixin implements HasReplaceAllRules {
+  return class extends mixin implements HasReplaceAllRules {
     public replaceAllRules(
       rules: readonly Rule[],
       requestOptions?: RequestOptions & SaveRulesOptions
     ): Readonly<WaitablePromise<SaveRulesResponse>> {
-      const options = mapRequestOptions(requestOptions !== undefined ? requestOptions : {});
-
-      // @ts-ignore
-      // eslint-disable-next-line functional/immutable-data
-      options.queryParameters.clearExistingRules = '1';
-
-      return this.saveRules(rules, requestOptions);
+      return this.saveRules(rules, {
+        ...requestOptions,
+        clearExistingRules: true,
+      });
     }
   };
 };

@@ -1,14 +1,12 @@
 export type Edit = {
-  /* eslint-disable functional/prefer-readonly-type */
-
   /**
-   * Type of edit @see Enums.EditType
+   * Type of edit @see EditType
    */
-  type?: string;
+  readonly type?: string;
 
   /** Text or patterns to remove from the query string. */
-  delete?: string;
+  readonly delete?: string;
 
   /** Text that should be inserted in place of the removed text inside the query string. */
-  insert?: string;
+  readonly insert?: string;
 };

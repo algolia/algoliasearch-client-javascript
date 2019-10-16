@@ -121,5 +121,5 @@ test(testSuite.testName, async () => {
   await index.clearRules().wait();
 
   const searchResultAfterClear = await index.searchRules();
-  expect(searchResultAfterClear.nbHits).toBeNull();
+  expect(searchResultAfterClear.nbHits).toBe(0);
 });

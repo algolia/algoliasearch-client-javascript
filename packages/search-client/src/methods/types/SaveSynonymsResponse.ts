@@ -1,4 +1,4 @@
 export type SaveSynonymsResponse = {
-  readonly updatedAt: string;
+  readonly updatedAt: number;
   readonly taskID: number;
 };

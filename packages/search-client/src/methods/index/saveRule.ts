@@ -9,9 +9,9 @@ import { waitTask } from './waitTask';
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const saveRule = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: TSearchIndex) => {
-  const Mixin = waitTask(base);
+  const mixin = waitTask(base);
 
-  return class extends Mixin implements HasSaveRule {
+  return class extends mixin implements HasSaveRule {
     public saveRule(
       rule: Rule,
       requestOptions?: RequestOptions
@@ -20,7 +20,7 @@ export const saveRule = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: 
         this.transporter.write(
           {
             method: Method.Put,
-            path: endpoint(`1/indexes/%s/rules/%s`, this.indexName, rule.objectID),
+            path: endpoint('1/indexes/%s/rules/%s', this.indexName, rule.objectID),
             data: rule,
           },
           requestOptions
@@ -32,7 +32,7 @@ export const saveRule = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: 
 
 export type HasSaveRule = {
   readonly saveRule: (
-    rule?: Rule,
+    rule: Rule,
     requestOptions?: RequestOptions
   ) => Readonly<WaitablePromise<SaveRuleResponse>>;
 };

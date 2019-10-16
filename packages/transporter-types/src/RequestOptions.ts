@@ -36,7 +36,7 @@ export function mapRequestOptions(
 export function popRequestOption<TRequestOption>(
   requestOptions: RequestOptions | undefined,
   key: string,
-  defaultValue: TRequestOption = undefined
+  defaultValue: TRequestOption
 ): TRequestOption {
   if (requestOptions !== undefined && key in requestOptions) {
     const value: TRequestOption = requestOptions[key];

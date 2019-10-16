@@ -1,9 +1,7 @@
 export type ConsequencePromote = {
-  /* eslint-disable functional/prefer-readonly-type */
-
   /** Unique identifier of the object to promote. */
-  objectID?: string;
+  readonly objectID?: string;
 
   /** Promoted rank for the object (zero-based). */
-  position?: number;
+  readonly position?: number;
 };

@@ -1,6 +1,6 @@
 import { Method } from '@algolia/requester-types';
 import { ConstructorOf, endpoint, WaitablePromise } from '@algolia/support';
-import { RequestOptions } from '@algolia/transporter-types';
+import { mapRequestOptions, popRequestOption, RequestOptions } from '@algolia/transporter-types';
 
 import { SearchIndex } from '../../SearchIndex';
 import { Rule } from '../types/Rule';
@@ -10,21 +10,34 @@ import { waitTask } from './waitTask';
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const saveRules = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: TSearchIndex) => {
-  const Mixin = waitTask(base);
+  const mixin = waitTask(base);
 
-  return class extends Mixin implements HasSaveRules {
+  return class extends mixin implements HasSaveRules {
     public saveRules(
       rules: readonly Rule[],
       requestOptions?: RequestOptions & SaveRulesOptions
     ): Readonly<WaitablePromise<SaveRulesResponse>> {
+      const options = mapRequestOptions(requestOptions);
+      const clearExistingRules = popRequestOption<boolean>(
+        requestOptions,
+        'clearExistingRules',
+        false
+      );
+
+      if (clearExistingRules === true) {
+        // @ts-ignore
+        // eslint-disable-next-line functional/immutable-data
+        options.queryParameters.clearExistingRules = '1';
+      }
+
       return WaitablePromise.from<SaveRulesResponse>(
         this.transporter.write(
           {
             method: Method.Post,
-            path: endpoint(`1/indexes/%s/rules/batch`, this.indexName),
+            path: endpoint('1/indexes/%s/rules/batch', this.indexName),
             data: rules,
           },
-          requestOptions
+          options
         )
       ).onWait(response => this.waitTask(response.taskID));
     }

@@ -1,24 +1,22 @@
 export type SearchRulesOptions = {
-  /* eslint-disable functional/prefer-readonly-type */
-
   /** Full text query. */
-  query?: string;
+  readonly query?: string;
 
   /** When specified, restricts matches to rules with a specific anchoring type. When omitted, all anchoring types may match. */
-  anchoring?: string;
+  readonly anchoring?: string;
 
   /** Restricts matches to contextual rules with a specific context (exact match). */
-  context?: string;
+  readonly context?: string;
 
   /** Requested page (zero-based). */
-  page?: number;
+  readonly page?: number;
 
   /** Maximum number of hits in a page. Minimum is 1, maximum is 1000. */
-  hitsPerPage?: number;
+  readonly hitsPerPage?: number;
 
   /**
    * When specified, restricts matches to rules with a specific enabled status.
    * When absent (default), all rules are retrieved, regardless of their enabled status.
    */
-  enabled?: boolean;
+  readonly enabled?: boolean;
 };

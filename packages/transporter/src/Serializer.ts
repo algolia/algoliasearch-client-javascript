@@ -25,6 +25,10 @@ export class Serializer {
       ? request.data
       : { ...request.data, ...requestOptions.data };
 
+    if (data.constructor === Object && Object.entries(data).length === 0) {
+      return '';
+    }
+
     return JSON.stringify(data);
   }
 }

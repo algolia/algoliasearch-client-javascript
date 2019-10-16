@@ -1,5 +1,4 @@
 export type SaveRulesResponse = {
+  readonly updatedAt: number;
   readonly taskID: number;
-  readonly objectIDs: readonly string[];
-  readonly updatedAt: Date;
 };

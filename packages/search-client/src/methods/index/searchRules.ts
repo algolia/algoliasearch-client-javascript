@@ -15,7 +15,7 @@ export const searchRules = <TSearchIndex extends ConstructorOf<SearchIndex>>(
     public searchRules(
       query: string,
       requestOptions?: RequestOptions
-    ): Promise<SearchResponse<Rule>> {
+    ): Readonly<Promise<SearchResponse<Rule>>> {
       return this.transporter.read(
         {
           method: Method.Post,
