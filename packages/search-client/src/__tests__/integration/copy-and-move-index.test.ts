@@ -1,7 +1,7 @@
 import { createMultiWaitable } from '@algolia/support/src/__tests__/helpers';
 import { TestSuite } from '@algolia/support/src/__tests__/TestSuite';
 
-const testSuite = new TestSuite('copy_index');
+const testSuite = new TestSuite('copy_and_move_index');
 
 afterAll(() => testSuite.cleanUp());
 
