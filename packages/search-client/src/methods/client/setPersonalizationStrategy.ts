@@ -14,7 +14,7 @@ export const setPersonalizationStrategy = <TSearchClient extends ConstructorOf<S
     public setPersonalizationStrategy(
       personalizationStrategy: PersonalizationStrategy,
       requestOptions?: RequestOptions
-    ): Promise<SetPersonalizationStrategyResponse> {
+    ): Readonly<Promise<SetPersonalizationStrategyResponse>> {
       return this.transporter.write(
         {
           method: Method.Post,
@@ -31,5 +31,5 @@ export type HasSetPersonalizationStrategy = {
   readonly setPersonalizationStrategy: (
     personalizationStrategy: PersonalizationStrategy,
     requestOptions?: RequestOptions
-  ) => Promise<SetPersonalizationStrategyResponse>;
+  ) => Readonly<Promise<SetPersonalizationStrategyResponse>>;
 };

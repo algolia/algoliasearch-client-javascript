@@ -12,7 +12,7 @@ export const getPersonalizationStrategy = <TSearchClient extends ConstructorOf<S
   return class extends base implements HasGetPersonalizationStrategy {
     public getPersonalizationStrategy(
       requestOptions?: RequestOptions
-    ): Promise<GetPersonalizationStrategyResponse> {
+    ): Readonly<Promise<GetPersonalizationStrategyResponse>> {
       return this.transporter.read(
         {
           method: Method.Get,
