@@ -1,19 +1,25 @@
 import { AuthMode } from '@algolia/auth';
+import { Method } from '@algolia/requester-types';
 import { Transporter } from '@algolia/transporter';
 import { UserAgent } from '@algolia/transporter-types';
-import { instance, mock } from 'ts-mockito';
+import { deepEqual, instance, mock, verify } from 'ts-mockito';
 
-import { SearchClient } from '../../..';
+import {
+  HasSetPersonalizationStrategy,
+  setPersonalizationStrategy,
+} from '../../methods/client/setPersonalizationStrategy';
+import { createSearchClient } from '../../SearchClient';
 
 const transporterMock = mock(Transporter);
 const transporter = instance(transporterMock);
 
-const searchClient = new SearchClient({
+const searchClient = createSearchClient<HasSetPersonalizationStrategy>({
   transporter: instance(transporterMock),
   appId: 'appId',
   apiKey: 'apiKey',
   userAgent: UserAgent.create('4.0.0-alpha.0'),
   authMode: AuthMode.WithinQueryParameters,
+  methods: [setPersonalizationStrategy],
 });
 
 describe('Search Client', () => {
@@ -35,5 +41,33 @@ describe('Search Client', () => {
       'x-algolia-application-id': 'appId',
       'x-algolia-api-key': 'apiKey',
     });
+  });
+});
+
+describe('personalization', () => {
+  it('set personalization strategy', async () => {
+    const strategy = {
+      eventsScoring: {
+        'Add to cart': { score: 50, type: 'conversion' },
+        Purchase: { score: 100, type: 'conversion' },
+      },
+      facetsScoring: {
+        brand: { score: 100 },
+        categories: { score: 10 },
+      },
+    };
+
+    await searchClient.setPersonalizationStrategy(strategy, { foo: 'bar' });
+
+    verify(
+      transporterMock.write(
+        deepEqual({
+          method: Method.Post,
+          path: '1/recommendation/personalization/strategy',
+          data: strategy,
+        }),
+        deepEqual({ foo: 'bar' })
+      )
+    ).once();
   });
 });

@@ -8,7 +8,15 @@ import {
   copySynonyms,
   HasCopySynonyms,
 } from '@algolia/search-client/src/methods/client/copySynonyms';
+import {
+  getPersonalizationStrategy,
+  HasGetPersonalizationStrategy,
+} from '@algolia/search-client/src/methods/client/getPersonalizationStrategy';
 import { HasMoveIndex, moveIndex } from '@algolia/search-client/src/methods/client/moveIndex';
+import {
+  HasSetPersonalizationStrategy,
+  setPersonalizationStrategy,
+} from '@algolia/search-client/src/methods/client/setPersonalizationStrategy';
 import {
   clearSynonyms,
   HasClearSynonyms,
@@ -138,7 +146,9 @@ export class TestSuite {
       HasCopyIndex &
       HasCopySettings &
       HasCopySynonyms &
-      HasMoveIndex;
+      HasMoveIndex &
+      HasGetPersonalizationStrategy &
+      HasSetPersonalizationStrategy;
 
     return createSearchClient<TSearchClient>({
       appId: `${process.env.ALGOLIA_APPLICATION_ID_1}`,
@@ -154,6 +164,8 @@ export class TestSuite {
         copySettings,
         copySynonyms,
         moveIndex,
+        getPersonalizationStrategy,
+        setPersonalizationStrategy,
       ],
     });
   }
