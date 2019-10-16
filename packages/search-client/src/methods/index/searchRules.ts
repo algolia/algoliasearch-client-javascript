@@ -23,7 +23,6 @@ export const searchRules = <TSearchIndex extends ConstructorOf<SearchIndex>>(
           data: {
             query,
           },
-          cacheable: true,
         },
         requestOptions
       );

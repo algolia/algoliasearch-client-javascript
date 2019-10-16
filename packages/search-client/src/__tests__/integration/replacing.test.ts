@@ -62,5 +62,5 @@ test(testSuite.testName, async () => {
   );
 
   await expect(index.getRule('two')).resolves.toEqual(rule2);
-  await expect(index.getRule('one')).rejects.toEqual(new ApiError('Rule set does not exist', 404));
+  await expect(index.getRule('one')).rejects.toEqual(new ApiError('ObjectID does not exist', 404));
 });

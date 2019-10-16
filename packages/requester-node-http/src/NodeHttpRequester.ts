@@ -7,10 +7,12 @@ export class NodeHttpRequester implements Requester {
     return new Promise(resolve => {
       const url = URL.parse(request.url);
 
+      const path = url.query === null ? url.pathname : `${url.pathname}?${url.query}`;
+
       // eslint-disable-next-line functional/no-let
       const options: https.RequestOptions = {
         hostname: url.hostname,
-        path: url.pathname,
+        path,
         protocol: url.protocol,
         method: request.method,
         headers: request.headers,

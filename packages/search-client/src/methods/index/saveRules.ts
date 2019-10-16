@@ -27,7 +27,7 @@ export const saveRules = <TSearchIndex extends ConstructorOf<SearchIndex>>(base:
       if (clearExistingRules === true) {
         // @ts-ignore
         // eslint-disable-next-line functional/immutable-data
-        options.queryParameters.clearExistingRules = '1';
+        options.queryParameters.clearExistingRules = 'true';
       }
 
       return WaitablePromise.from<SaveRulesResponse>(

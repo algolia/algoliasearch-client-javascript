@@ -22,8 +22,9 @@ describe('status code handling', () => {
     const request = Fixtures.request();
     const body = JSON.stringify({ foo: 'bar' });
 
-    nock('https://algolia-dns.net?x-algolia-header=foo', { reqheaders: headers })
+    nock('https://algolia-dns.net', { reqheaders: headers })
       .post('/foo')
+      .query({ 'x-algolia-header': 'foo' })
       .reply(200, body);
 
     const response = await requester.send(request);
@@ -35,8 +36,9 @@ describe('status code handling', () => {
     const requester = new NodeHttpRequester();
     const body = JSON.stringify({ foo: 'bar' });
 
-    nock('https://algolia-dns.net?x-algolia-header=foo', { reqheaders: headers })
+    nock('https://algolia-dns.net', { reqheaders: headers })
       .post('/foo')
+      .query({ 'x-algolia-header': 'foo' })
       .reply(200, body);
 
     const response = await requester.send(Fixtures.request());
@@ -50,8 +52,9 @@ describe('status code handling', () => {
     const requester = new NodeHttpRequester();
     const reason = 'Multiple Choices';
 
-    nock('https://algolia-dns.net?x-algolia-header=foo', { reqheaders: headers })
+    nock('https://algolia-dns.net', { reqheaders: headers })
       .post('/foo')
+      .query({ 'x-algolia-header': 'foo' })
       .reply(300, reason);
 
     const response = await requester.send(Fixtures.request());
@@ -66,8 +69,9 @@ describe('status code handling', () => {
 
     const body = { message: 'Invalid Application-Id or API-Key' };
 
-    nock('https://algolia-dns.net?x-algolia-header=foo', { reqheaders: headers })
+    nock('https://algolia-dns.net', { reqheaders: headers })
       .post('/foo')
+      .query({ 'x-algolia-header': 'foo' })
       .reply(400, JSON.stringify(body));
 
     const response = await requester.send(Fixtures.request());
@@ -162,8 +166,9 @@ describe('error handling', (): void => {
   it('resolves general network errors', async () => {
     const requester = new NodeHttpRequester();
 
-    nock('https://algolia-dns.net?x-algolia-header=foo', { reqheaders: headers })
+    nock('https://algolia-dns.net', { reqheaders: headers })
       .post('/foo')
+      .query({ 'x-algolia-header': 'foo' })
       .replyWithError('This is a general error');
 
     const response = await requester.send(Fixtures.request());
