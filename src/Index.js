@@ -222,7 +222,7 @@ Index.prototype.saveObjects = function(objects, callback) {
 *  content: the server answer that contains 3 elements: createAt, taskId and objectID
 */
 Index.prototype.deleteObject = function(objectID, callback) {
-  var isValidObjectId = objectID && typeof objectID !== 'function';
+  var isValidObjectId = objectID !== null && objectID !== undefined && typeof objectID !== 'function';
   if (!isValidObjectId) {
     var err = new errors.AlgoliaSearchError(
       'Cannot delete an object without an objectID'
@@ -234,6 +234,12 @@ Index.prototype.deleteObject = function(objectID, callback) {
     }
 
     return this.as._promise.reject(err);
+  }
+
+  if (objectID === '') {
+    return this.as._promise.reject(
+      new errors.AlgoliaSearchError('ObjectID cannot be an empty string')
+    );
   }
 
   if (typeof objectID !== 'string' && typeof objectID !== 'number') {

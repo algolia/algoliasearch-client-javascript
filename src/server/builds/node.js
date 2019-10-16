@@ -322,7 +322,7 @@ AlgoliaSearchNodeJS.prototype.generateSecuredApiKey = function generateSecuredAp
 };
 
 AlgoliaSearchNodeJS.prototype.getSecuredApiKeyRemainingValidity = function getSecuredApiKeyRemainingValidity(
-  securedAPIKey
+  securedAPIKey,
 ) {
   var decodedString = new Buffer(securedAPIKey, 'base64').toString('ascii');
 

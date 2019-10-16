@@ -16,13 +16,39 @@ test('deleteObject("id") with a valid objectID', function(t) {
   fauxJax.install();
   fauxJax.on('request', function(req) {
     req.respond(200, {}, '{}');
+    fauxJax.restore();
   });
 
   index
     .deleteObject('valid-object-id')
     .then(function() {
       t.ok(algoliaSearchCore._jsonRequest.calledOnce, 'delete object request was called');
-      fauxJax.restore();
+      algoliaSearchCore._jsonRequest.restore();
+    })
+    .catch(bind(t.fail, t));
+});
+
+test('deleteObject(0) number 0 is a valid objectID', function(t) {
+  t.plan(1);
+  var fauxJax = require('faux-jax');
+  var sinon = require('sinon');
+  var bind = require('lodash-compat/function/bind');
+  var createFixture = require('../../../utils/create-fixture');
+  var fixture = createFixture();
+  var index = fixture.index;
+  var algoliaSearchCore = index.as;
+
+  sinon.spy(algoliaSearchCore, '_jsonRequest');
+  fauxJax.install();
+  fauxJax.on('request', function(req) {
+    req.respond(200, {}, '{}');
+    fauxJax.restore();
+  });
+
+  index
+    .deleteObject(0)
+    .then(function() {
+      t.ok(algoliaSearchCore._jsonRequest.calledOnce, 'delete object request was called');
       algoliaSearchCore._jsonRequest.restore();
     })
     .catch(bind(t.fail, t));
@@ -41,6 +67,7 @@ test('deleteObject("id", cb) with a valid objectID and a callback', function(t) 
   fauxJax.install();
   fauxJax.on('request', function(req) {
     req.respond(200, {}, '{}');
+    fauxJax.restore();
   });
 
   index
@@ -48,8 +75,6 @@ test('deleteObject("id", cb) with a valid objectID and a callback', function(t) 
       if (err) t.error(err);
       t.ok(algoliaSearchCore._jsonRequest.calledOnce, 'delete object request was called');
       t.ok(response);
-
-      fauxJax.restore();
       algoliaSearchCore._jsonRequest.restore();
     });
 });
@@ -98,7 +123,7 @@ test('deleteObject("") with an empty string', function(t) {
     t.ok(err instanceof Error, 'received an error');
     t.equal(
       err.message,
-      'Cannot delete an object without an objectID'
+      'ObjectID cannot be an empty string'
     );
   });
 });
