@@ -58,6 +58,7 @@ import {
   browseObjects,
   HasBrowseObjects,
 } from '../../../search-client/src/methods/index/browseObjects';
+import { browseRules, HasBrowseRules } from '../../../search-client/src/methods/index/browseRules';
 import {
   browseSynonyms,
   HasBrowseSynonyms,
@@ -66,6 +67,7 @@ import {
   clearObjects,
   HasClearObjects,
 } from '../../../search-client/src/methods/index/clearObjects';
+import { clearRules, HasClearRules } from '../../../search-client/src/methods/index/clearRules';
 import { deleteBy, HasDeleteBy } from '../../../search-client/src/methods/index/deleteBy';
 import { deleteIndex, HasDelete } from '../../../search-client/src/methods/index/deleteIndex';
 import {
@@ -76,6 +78,7 @@ import {
   deleteObjects,
   HasDeleteObjects,
 } from '../../../search-client/src/methods/index/deleteObjects';
+import { deleteRule, HasDeleteRule } from '../../../search-client/src/methods/index/deleteRule';
 import { exists, HasExists } from '../../../search-client/src/methods/index/exists';
 import { findObject, HasFindObject } from '../../../search-client/src/methods/index/findObject';
 import { getObject, HasGetObject } from '../../../search-client/src/methods/index/getObject';
@@ -84,6 +87,7 @@ import {
   HasGetObjectPosition,
 } from '../../../search-client/src/methods/index/getObjectPosition';
 import { getObjects, HasGetObjects } from '../../../search-client/src/methods/index/getObjects';
+import { getRule, HasGetRule } from '../../../search-client/src/methods/index/getRule';
 import { getSettings, HasGetSettings } from '../../../search-client/src/methods/index/getSettings';
 import { getSynonym, HasGetSynonym } from '../../../search-client/src/methods/index/getSynonym';
 import {
@@ -94,8 +98,14 @@ import {
   HasPartialUpdateObjects,
   partialUpdateObjects,
 } from '../../../search-client/src/methods/index/partialUpdateObjects';
+import {
+  HasReplaceAllRules,
+  replaceAllRules,
+} from '../../../search-client/src/methods/index/replaceAllRules';
 import { HasSaveObject, saveObject } from '../../../search-client/src/methods/index/saveObject';
 import { HasSaveObjects, saveObjects } from '../../../search-client/src/methods/index/saveObjects';
+import { HasSaveRule, saveRule } from '../../../search-client/src/methods/index/saveRule';
+import { HasSaveRules, saveRules } from '../../../search-client/src/methods/index/saveRules';
 import { HasSaveSynonym, saveSynonym } from '../../../search-client/src/methods/index/saveSynonym';
 import {
   HasSaveSynonyms,
@@ -106,6 +116,7 @@ import {
   HasSearchForFacetValues,
   searchForFacetValues,
 } from '../../../search-client/src/methods/index/searchForFacetValues';
+import { HasSearchRules, searchRules } from '../../../search-client/src/methods/index/searchRules';
 import {
   HasSearchSynonyms,
   searchSynonyms,
@@ -201,7 +212,15 @@ export class TestSuite {
         HasDeleteSynonym &
         HasClearSynonyms &
         HasReplaceAllObjects &
-        HasReplaceAllSynonyms
+        HasReplaceAllSynonyms &
+        HasSearchRules &
+        HasGetRule &
+        HasDeleteRule &
+        HasSaveRule &
+        HasSaveRules &
+        HasReplaceAllRules &
+        HasBrowseRules &
+        HasClearRules
     >(indexName === undefined ? this.makeIndexName() : indexName, {
       methods: [
         batch,
@@ -234,6 +253,14 @@ export class TestSuite {
         clearSynonyms,
         replaceAllObjects,
         replaceAllSynonyms,
+        searchRules,
+        getRule,
+        deleteRule,
+        saveRule,
+        saveRules,
+        replaceAllRules,
+        browseRules,
+        clearRules,
       ],
     });
 
