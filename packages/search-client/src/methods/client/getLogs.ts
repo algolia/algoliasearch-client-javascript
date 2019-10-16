@@ -11,7 +11,9 @@ export const getLogs = <TSearchClient extends ConstructorOf<SearchClient>>(base:
     public getLogs(requestOptions?: RequestOptions): Readonly<Promise<GetLogsResponse>> {
       const length = popRequestOption(requestOptions, 'length', 10);
       const offset = popRequestOption(requestOptions, 'offset', 0);
-      const type = popRequestOption(requestOptions, 'type', 0);
+
+      /** @todo Validate this request option. */
+      const type = popRequestOption(requestOptions, 'type', 'all');
 
       const options = mapRequestOptions(requestOptions);
 
