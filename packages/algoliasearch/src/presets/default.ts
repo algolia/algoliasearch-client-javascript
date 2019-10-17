@@ -15,6 +15,10 @@ import {
   getPersonalizationStrategy,
   HasGetPersonalizationStrategy,
 } from '@algolia/search-client/src/methods/client/getPersonalizationStrategy';
+import {
+  HasListClusters,
+  listClusters,
+} from '@algolia/search-client/src/methods/client/listClusters';
 import { HasListIndices, listIndices } from '@algolia/search-client/src/methods/client/listIndices';
 import { HasMoveIndex, moveIndex } from '@algolia/search-client/src/methods/client/moveIndex';
 import {
@@ -134,7 +138,8 @@ export type SearchClient = SearchClientPreset &
   HasGetPersonalizationStrategy &
   HasSetPersonalizationStrategy &
   HasListIndices &
-  HasGetLogs;
+  HasGetLogs &
+  HasListClusters;
 
 export type SearchIndex = HasBatch &
   HasDelete &
@@ -190,6 +195,7 @@ export const methods = {
     setPersonalizationStrategy,
     listIndices,
     getLogs,
+    listClusters,
   ],
   searchIndex: [
     batch,

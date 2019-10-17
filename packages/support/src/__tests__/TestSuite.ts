@@ -23,16 +23,16 @@ export class TestSuite {
     this.indices = [];
   }
 
-  public makeSearchClient() {
+  public makeSearchClient(
+    appIdEnv: string = 'ALGOLIA_APPLICATION_ID_1',
+    apiKeyEnv: string = 'ALGOLIA_ADMIN_KEY_1'
+  ) {
     const algoliasearch =
       // @ts-ignore
       // eslint-disable-next-line no-undef
       testing.environment() === 'node' ? algoliasearchForNode : algoliasearchForBrowser;
 
-    return algoliasearch(
-      `${process.env.ALGOLIA_APPLICATION_ID_1}`,
-      `${process.env.ALGOLIA_ADMIN_KEY_1}`
-    );
+    return algoliasearch(`${process.env[appIdEnv]}`, `${process.env[apiKeyEnv]}`);
   }
 
   public makeIndex(indexName?: string) {
