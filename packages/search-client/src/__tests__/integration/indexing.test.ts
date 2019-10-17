@@ -8,6 +8,11 @@ afterAll(() => testSuite.cleanUp());
 
 test(testSuite.testName, async () => {
   const index = testSuite.makeIndex();
+
+  await expect(index.saveObject(Faker.object(''))).rejects.toMatchObject({
+    status: 400,
+  });
+
   let responses: any = [];
 
   const object1 = Faker.object('object1');
