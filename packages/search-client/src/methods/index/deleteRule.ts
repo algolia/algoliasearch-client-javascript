@@ -1,5 +1,5 @@
 import { Method } from '@algolia/requester-types';
-import { ConstructorOf, endpoint, WaitablePromise } from '@algolia/support';
+import { ConstructorOf, encode, WaitablePromise } from '@algolia/support';
 import { RequestOptions } from '@algolia/transporter-types';
 
 import { SearchIndex } from '../../SearchIndex';
@@ -19,7 +19,7 @@ export const deleteRule = <TSearchIndex extends ConstructorOf<SearchIndex>>(base
         this.transporter.write(
           {
             method: Method.Delete,
-            path: endpoint('1/indexes/%s/rules/%s', this.indexName, objectID),
+            path: encode('1/indexes/%s/rules/%s', this.indexName, objectID),
           },
           requestOptions
         )

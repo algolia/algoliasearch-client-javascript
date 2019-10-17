@@ -1,5 +1,5 @@
 import { Method } from '@algolia/requester-types';
-import { ConstructorOf, endpoint, WaitablePromise } from '@algolia/support';
+import { ConstructorOf, encode, WaitablePromise } from '@algolia/support';
 import { RequestOptions } from '@algolia/transporter-types';
 
 import { SearchClient } from '../../SearchClient';
@@ -21,7 +21,7 @@ export const copyIndex = <TSearchClient extends ConstructorOf<SearchClient>>(
         this.transporter.write(
           {
             method: Method.Post,
-            path: endpoint('1/indexes/%s/operation', from),
+            path: encode('1/indexes/%s/operation', from),
             data: {
               operation: 'copy',
               destination: to,

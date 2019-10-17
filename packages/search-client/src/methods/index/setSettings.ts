@@ -1,5 +1,5 @@
 import { Method } from '@algolia/requester-types';
-import { ConstructorOf, WaitablePromise } from '@algolia/support';
+import { ConstructorOf, encode, WaitablePromise } from '@algolia/support';
 import { RequestOptions } from '@algolia/transporter-types';
 
 import { SearchIndex } from '../../SearchIndex';
@@ -22,7 +22,7 @@ export const setSettings = <TSearchIndex extends ConstructorOf<SearchIndex>>(
         this.transporter.write(
           {
             method: Method.Put,
-            path: `1/indexes/${this.indexName}/settings`,
+            path: encode('1/indexes/%s/settings', this.indexName),
             data: settings,
           },
           requestOptions

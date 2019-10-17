@@ -34,7 +34,7 @@ export type ComposableOptions = {
   readonly methods?: readonly Function[];
 };
 
-export function endpoint(format: string, ...args: readonly string[]): string {
+export function encode(format: string, ...args: readonly string[]): string {
   // eslint-disable-next-line functional/no-let
   let i = 0;
 

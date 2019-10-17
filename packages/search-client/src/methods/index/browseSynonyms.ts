@@ -26,16 +26,16 @@ export const browseSynonyms = <TSearchIndex extends ConstructorOf<SearchIndex>>(
         shouldStop: response => response.hits.length < hitsPerPage,
         request: (data: { readonly query: string }) => {
           return this.searchSynonyms(data.query, requestOptions).then(response => {
-            // eslint-disable-next-line functional/immutable-data,no-param-reassign
-            response.hits = response.hits.map(synonym => {
-              // @ts-ignore
-              // eslint-disable-next-line functional/immutable-data,no-param-reassign
-              delete synonym._highlightResult;
+            return {
+              ...response,
+              hits: response.hits.map(synonym => {
+                // @ts-ignore
+                // eslint-disable-next-line functional/immutable-data,no-param-reassign
+                delete synonym._highlightResult;
 
-              return synonym;
-            });
-
-            return response;
+                return synonym;
+              }),
+            };
           });
         },
       });

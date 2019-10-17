@@ -1,5 +1,5 @@
 import { Method } from '@algolia/requester-types';
-import { ConstructorOf, WaitablePromise } from '@algolia/support';
+import { ConstructorOf, encode, WaitablePromise } from '@algolia/support';
 import { RequestOptions } from '@algolia/transporter-types';
 
 import { SearchIndex } from '../../SearchIndex';
@@ -20,7 +20,7 @@ export const clearObjects = <TSearchIndex extends ConstructorOf<SearchIndex>>(
         this.transporter.write(
           {
             method: Method.Post,
-            path: `1/indexes/${this.indexName}/clear`,
+            path: encode('1/indexes/%s/clear', this.indexName),
           },
           requestOptions
         )

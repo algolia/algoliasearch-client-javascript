@@ -1,5 +1,5 @@
 import { Method } from '@algolia/requester-types';
-import { ConstructorOf, endpoint, WaitablePromise } from '@algolia/support';
+import { ConstructorOf, encode, WaitablePromise } from '@algolia/support';
 import { mapRequestOptions, popRequestOption, RequestOptions } from '@algolia/transporter-types';
 
 import { SearchIndex } from '../../SearchIndex';
@@ -38,7 +38,7 @@ export const saveSynonyms = <TSearchIndex extends ConstructorOf<SearchIndex>>(
         this.transporter.write<SaveSynonymsResponse>(
           {
             method: Method.Post,
-            path: endpoint('1/indexes/%s/synonyms/batch', this.indexName),
+            path: encode('1/indexes/%s/synonyms/batch', this.indexName),
             data: synonyms,
           },
           options

@@ -8,15 +8,6 @@ import { FindObjectResponse } from '../types/FindObjectResponse';
 import { HitWithObjectID } from '../types/HitWithObjectID';
 import { HasSearch, search } from './search';
 
-/**
-
-export const deleteObject = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: TSearchIndex) => {
-  const mixin = deleteObjects(base);
-
-  return class
-
- */
-
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const findObject = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: TSearchIndex) => {
   const mixin: ConstructorOf<SearchIndex & HasSearch> = search(base);

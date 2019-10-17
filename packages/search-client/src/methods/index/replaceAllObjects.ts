@@ -1,5 +1,5 @@
 import { Method } from '@algolia/requester-types';
-import { ConstructorOf, endpoint, WaitablePromise } from '@algolia/support';
+import { ConstructorOf, encode, WaitablePromise } from '@algolia/support';
 import { popRequestOption, RequestOptions } from '@algolia/transporter-types';
 
 import { SearchIndex } from '../../SearchIndex';
@@ -83,7 +83,7 @@ export const replaceAllObjects = <TSearchIndex extends ConstructorOf<SearchIndex
         this.transporter.write(
           {
             method: Method.Post,
-            path: endpoint('1/indexes/%s/operation', from),
+            path: encode('1/indexes/%s/operation', from),
             data: {
               operation: type,
               destination: to,

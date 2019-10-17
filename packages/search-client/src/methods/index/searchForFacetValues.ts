@@ -1,5 +1,5 @@
 import { Method } from '@algolia/requester-types';
-import { ConstructorOf } from '@algolia/support';
+import { ConstructorOf, encode } from '@algolia/support';
 import { RequestOptions } from '@algolia/transporter-types';
 
 import { SearchIndex } from '../../SearchIndex';
@@ -19,7 +19,7 @@ export const searchForFacetValues = <TSearchIndex extends ConstructorOf<SearchIn
       return this.transporter.read(
         {
           method: Method.Post,
-          path: `1/indexes/${this.indexName}/facets/${facetName}/query`,
+          path: encode('1/indexes/%s/facets/%s/query', this.indexName, facetName),
           data: {
             facetQuery,
           },

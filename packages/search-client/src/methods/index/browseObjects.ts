@@ -1,5 +1,5 @@
 import { Method } from '@algolia/requester-types';
-import { ConstructorOf } from '@algolia/support';
+import { ConstructorOf, encode } from '@algolia/support';
 import { RequestOptions } from '@algolia/transporter-types';
 
 import { BrowsablePromise } from '../../BrowsablePromise';
@@ -23,7 +23,7 @@ export const browseObjects = <TSearchIndex extends ConstructorOf<SearchIndex>>(
           this.transporter.read(
             {
               method: Method.Post,
-              path: `1/indexes/${this.indexName}/browse`,
+              path: encode('1/indexes/%s/browse', this.indexName),
               data,
             },
             requestOptions

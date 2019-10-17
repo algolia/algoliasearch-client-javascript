@@ -20,7 +20,7 @@ export const multipleBatch = <TSearchClient extends ConstructorOf<SearchClient>>
         this.transporter.write(
           {
             method: Method.Post,
-            path: `1/indexes/*/batch`,
+            path: '1/indexes/*/batch',
             data: {
               requests,
             },

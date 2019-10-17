@@ -1,5 +1,5 @@
 import { Method } from '@algolia/requester-types';
-import { ConstructorOf, endpoint, WaitablePromise } from '@algolia/support';
+import { ConstructorOf, encode, WaitablePromise } from '@algolia/support';
 import { RequestOptions } from '@algolia/transporter-types';
 
 import { SearchIndex } from '../../SearchIndex';
@@ -20,7 +20,7 @@ export const saveRule = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: 
         this.transporter.write(
           {
             method: Method.Put,
-            path: endpoint('1/indexes/%s/rules/%s', this.indexName, rule.objectID),
+            path: encode('1/indexes/%s/rules/%s', this.indexName, rule.objectID),
             data: rule,
           },
           requestOptions

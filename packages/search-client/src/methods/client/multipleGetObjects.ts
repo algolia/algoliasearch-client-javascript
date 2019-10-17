@@ -18,7 +18,7 @@ export const multipleGetObjects = <TSearchClient extends ConstructorOf<SearchCli
       return this.transporter.read(
         {
           method: Method.Post,
-          path: `1/indexes/*/objects`,
+          path: '1/indexes/*/objects',
           data: {
             requests,
           },

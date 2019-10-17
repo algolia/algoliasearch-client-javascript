@@ -1,5 +1,5 @@
 import { Method } from '@algolia/requester-types';
-import { ConstructorOf, endpoint, WaitablePromise } from '@algolia/support';
+import { ConstructorOf, encode, WaitablePromise } from '@algolia/support';
 import { popRequestOption, RequestOptions } from '@algolia/transporter-types';
 
 import { SearchIndex } from '../../SearchIndex';
@@ -75,7 +75,7 @@ export const batch = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: TSe
         this.transporter.write<BatchResponse>(
           {
             method: Method.Post,
-            path: endpoint('1/indexes/%s/batch', this.indexName),
+            path: encode('1/indexes/%s/batch', this.indexName),
             data: {
               requests,
             },

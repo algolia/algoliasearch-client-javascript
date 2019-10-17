@@ -3,7 +3,12 @@ export class WaitablePromise<TResponse> extends Promise<TResponse> {
   public onWaitClosure!: OnWaitClosure<TResponse>;
 
   public static from<TResponse>(promise: Promise<TResponse>): WaitablePromise<TResponse> {
-    return new WaitablePromise<TResponse>(resolve => resolve(promise));
+    const waitable = new WaitablePromise<TResponse>(resolve => resolve(promise));
+
+    // eslint-disable-next-line functional/immutable-data
+    waitable.onWaitClosure = () => Promise.resolve();
+
+    return waitable;
   }
 
   public onWait(onWaitClosure: OnWaitClosure<TResponse>): Readonly<this> {

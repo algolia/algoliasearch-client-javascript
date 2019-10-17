@@ -1,5 +1,5 @@
 import { Method } from '@algolia/requester-types';
-import { ConstructorOf } from '@algolia/support';
+import { ConstructorOf, encode } from '@algolia/support';
 import { RequestOptions } from '@algolia/transporter-types';
 
 import { SearchIndex } from '../../SearchIndex';
@@ -17,7 +17,7 @@ export const search = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: TS
       return this.transporter.read(
         {
           method: Method.Post,
-          path: `1/indexes/${this.indexName}/query`,
+          path: encode('1/indexes/%s/query', this.indexName),
           data: {
             query,
           },
