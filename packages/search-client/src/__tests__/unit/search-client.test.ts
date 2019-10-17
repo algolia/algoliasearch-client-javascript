@@ -1,3 +1,4 @@
+import { AuthMode } from '@algolia/auth';
 import { Method } from '@algolia/requester-types';
 import { Transporter } from '@algolia/transporter';
 import { UserAgent } from '@algolia/transporter-types';
@@ -13,6 +14,7 @@ const searchClient = createSearchClient({
   appId: 'foo',
   apiKey: 'bar',
   userAgent: UserAgent.create('4.0.0'),
+  authMode: AuthMode.WithinQueryParameters,
 });
 
 describe('Search Client', () => {
@@ -21,7 +23,7 @@ describe('Search Client', () => {
   });
 
   it('Gives access to appId', () => {
-    expect(searchClient.appId).toEqual('appId');
+    expect(searchClient.appId).toEqual('foo');
   });
 
   it('Sets default headers', () => {
@@ -30,9 +32,9 @@ describe('Search Client', () => {
     });
 
     expect(transporter.queryParameters).toEqual({
-      'x-algolia-agent': 'Algolia for JavaScript (4.0.0-alpha.0)',
-      'x-algolia-application-id': 'appId',
-      'x-algolia-api-key': 'apiKey',
+      'x-algolia-agent': 'Algolia for JavaScript (4.0.0)',
+      'x-algolia-application-id': 'foo',
+      'x-algolia-api-key': 'bar',
     });
   });
 });
