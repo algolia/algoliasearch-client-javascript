@@ -35,6 +35,7 @@ module.exports = {
           environment: 'browser',
           isBrowser: true,
           'ts-jest': { isolatedModules: true },
+          window: {},
         },
       },
       config
@@ -46,13 +47,14 @@ module.exports = {
         testPathIgnorePatterns: [
           'packages/requester-browser-xhr/*',
           'packages/cache-browser-local-storage/*',
-          'packages/algoliasearch/src/__tests__/algoliasearch.test.ts',
-          'packages/algoliasearch/src/__tests__/algoliasearch-lite.test.ts',
+          'packages/algoliasearch/src/__tests__/browser.test.ts',
+          'packages/algoliasearch/src/__tests__/browser-lite.test.ts',
         ],
         globals: {
           environment: 'node',
           isBrowser: false,
           'ts-jest': { isolatedModules: true },
+          window: {},
         },
       },
       config

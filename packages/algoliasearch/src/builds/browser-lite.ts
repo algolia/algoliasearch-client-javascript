@@ -4,26 +4,11 @@ import { InMemoryCache } from '@algolia/cache-in-memory';
 import { ConsoleLogger } from '@algolia/logger-console';
 import { LogLevel } from '@algolia/logger-types';
 import { BrowserXhrRequester } from '@algolia/requester-browser-xhr';
-import { SearchClient as BaseSearchClient } from '@algolia/search-client';
-import { HasSearch, search } from '@algolia/search-client/src/methods/index/search';
-import {
-  HasSearchForFacetValues,
-  searchForFacetValues,
-} from '@algolia/search-client/src/methods/index/searchForFacetValues';
 import { Transporter } from '@algolia/transporter';
 import { UserAgent } from '@algolia/transporter-types';
 
+import { createSearchClient, SearchClient } from '../presets/lite';
 import { AlgoliaSearchOptions } from '../types';
-
-type SearchIndex = BaseSearchClient & HasSearch & HasSearchForFacetValues;
-
-class SearchClient extends BaseSearchClient {
-  public initIndex<TSearchIndex = SearchIndex>(indexName: string): TSearchIndex {
-    return super.initIndex(indexName, {
-      methods: [search, searchForFacetValues],
-    });
-  }
-}
 
 export default function algoliasearch(
   appId: string,
@@ -44,7 +29,7 @@ export default function algoliasearch(
     hostsCache: new BrowserLocalStorageCache(),
   });
 
-  return new SearchClient({
+  return createSearchClient({
     appId,
     apiKey,
     transporter,

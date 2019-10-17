@@ -66,10 +66,10 @@ export class SearchClient {
   }
 }
 
-export const createSearchClient = <TSearchClient = SearchClient>(
+export const createSearchClient = <TSearchClient>(
   options: SearchClientOptions & ComposableOptions
-): TSearchClient => {
-  const Client = compose<TSearchClient>(
+): TSearchClient & SearchClient => {
+  const Client = compose<TSearchClient & SearchClient>(
     SearchClient,
     options
   );

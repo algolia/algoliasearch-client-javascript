@@ -1,7 +1,8 @@
-import { NullCache } from '@algolia/cache-types';
+import { BrowserLocalStorageCache } from '@algolia/cache-browser-local-storage';
+import { InMemoryCache } from '@algolia/cache-in-memory';
 import { ConsoleLogger } from '@algolia/logger-console';
 import { LogLevel } from '@algolia/logger-types';
-import { NodeHttpRequester } from '@algolia/requester-node-http';
+import { BrowserXhrRequester } from '@algolia/requester-browser-xhr';
 import { Transporter } from '@algolia/transporter';
 import { UserAgent } from '@algolia/transporter-types';
 
@@ -13,27 +14,27 @@ export default function algoliasearch(
   apiKey: string,
   options: AlgoliaSearchOptions = {}
 ): SearchClient {
-  const requester = new NodeHttpRequester();
+  const requester = new BrowserXhrRequester();
 
   const transporter = new Transporter({
     requester,
     timeouts: {
-      read: 2,
+      read: 1,
       write: 30,
     },
     logger: new ConsoleLogger(options.logLevel === undefined ? LogLevel.Error : options.logLevel),
-    responsesCache: new NullCache(),
-    requestsCache: new NullCache(),
-    hostsCache: new NullCache(),
+    responsesCache: new InMemoryCache(),
+    requestsCache: new InMemoryCache(),
+    hostsCache: new BrowserLocalStorageCache(),
   });
 
   return createSearchClient({
     appId,
     apiKey,
     transporter,
-    userAgent: UserAgent.create('4.0.0-alpha.0').with({
-      segment: 'Node.js',
-      version: process.versions.node,
-    }),
+    userAgent: UserAgent.create('4.0.0-alpha.0').with({ segment: 'Browser' }),
   });
 }
+
+// eslint-disable-next-line @typescript-eslint/consistent-type-assertions, functional/immutable-data
+(<any>window).algoliasearch = algoliasearch;

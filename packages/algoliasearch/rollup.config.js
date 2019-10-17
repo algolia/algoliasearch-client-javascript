@@ -59,13 +59,13 @@ const createConfiguration = ({ input, name, format, external } = {}) => ({
 
 export default [
   createConfiguration({
-    input: 'src/builds/algoliasearch.ts',
+    input: 'src/builds/browser.ts',
     name: 'algoliasearch.umd.min',
     format: 'umd',
     external: ['dom'],
   }),
   createConfiguration({
-    input: 'src/builds/algoliasearch-lite.ts',
+    input: 'src/builds/browser-lite.ts',
     name: 'algoliasearch-lite.umd.min',
     format: 'umd',
     external: ['dom'],

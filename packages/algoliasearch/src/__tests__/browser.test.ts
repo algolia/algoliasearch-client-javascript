@@ -1,17 +1,17 @@
-import algoliasearch from '../builds/algoliasearch-lite';
+import algoliasearch from '../builds/browser';
 
-describe('algolisearch lite', () => {
+describe('algoliasearch', () => {
   it('sets default user agents', () => {
     const client = algoliasearch('foo', 'bar');
 
     expect(client.transporter.headers).toEqual({
       'content-type': 'application/x-www-form-urlencoded',
+      'x-algolia-application-id': 'foo',
+      'x-algolia-api-key': 'bar',
     });
 
     expect(client.transporter.queryParameters).toEqual({
-      'x-algolia-agent': 'Algolia for JavaScript (4.0.0-alpha.0); Browser (lite)',
-      'x-algolia-application-id': 'foo',
-      'x-algolia-api-key': 'bar',
+      'x-algolia-agent': 'Algolia for JavaScript (4.0.0-alpha.0); Browser',
     });
   });
 });

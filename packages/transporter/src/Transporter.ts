@@ -163,7 +163,7 @@ export class Transporter implements TransporterContract {
             decision(host, response, {
               success: () => Deserializer.success(response),
               retry: () => {
-                this.logger.error('Retryable failure', {
+                this.logger.debug('Retryable failure', {
                   request,
                   response,
                   host,

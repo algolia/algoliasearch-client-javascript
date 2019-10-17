@@ -30,10 +30,10 @@ export class AnalyticsClient {
   }
 }
 
-export const createAnalyticsClient = <TAnalyticsClient = AnalyticsClient>(
+export const createAnalyticsClient = <TAnalyticsClient>(
   options: AnalyticsClientOptions & ComposableOptions
-): TAnalyticsClient => {
-  const Client = compose<TAnalyticsClient>(
+): TAnalyticsClient & AnalyticsClient => {
+  const Client = compose<TAnalyticsClient & AnalyticsClient>(
     AnalyticsClient,
     options
   );
