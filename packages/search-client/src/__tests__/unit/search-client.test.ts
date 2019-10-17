@@ -1,25 +1,18 @@
-import { AuthMode } from '@algolia/auth';
 import { Method } from '@algolia/requester-types';
 import { Transporter } from '@algolia/transporter';
 import { UserAgent } from '@algolia/transporter-types';
 import { deepEqual, instance, mock, verify } from 'ts-mockito';
 
-import {
-  HasSetPersonalizationStrategy,
-  setPersonalizationStrategy,
-} from '../../methods/client/setPersonalizationStrategy';
-import { createSearchClient } from '../../SearchClient';
+import { createSearchClient } from '../../../../algoliasearch/src/presets/default';
 
 const transporterMock = mock(Transporter);
 const transporter = instance(transporterMock);
 
-const searchClient = createSearchClient<HasSetPersonalizationStrategy>({
-  transporter: instance(transporterMock),
-  appId: 'appId',
-  apiKey: 'apiKey',
-  userAgent: UserAgent.create('4.0.0-alpha.0'),
-  authMode: AuthMode.WithinQueryParameters,
-  methods: [setPersonalizationStrategy],
+const searchClient = createSearchClient({
+  transporter,
+  appId: 'foo',
+  apiKey: 'bar',
+  userAgent: UserAgent.create('4.0.0'),
 });
 
 describe('Search Client', () => {

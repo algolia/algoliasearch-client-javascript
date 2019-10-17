@@ -22,7 +22,9 @@ export const deleteIndex = <TSearchIndex extends ConstructorOf<SearchIndex>>(
           },
           requestOptions
         )
-      ).onWait(response => this.waitTask(response.taskID));
+      ).onWait((response, waitRequestOptions) =>
+        this.waitTask(response.taskID, waitRequestOptions)
+      );
     }
   };
 };

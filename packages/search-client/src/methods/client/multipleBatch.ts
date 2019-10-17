@@ -27,12 +27,12 @@ export const multipleBatch = <TSearchClient extends ConstructorOf<SearchClient>>
           },
           requestOptions
         )
-      ).onWait(response =>
+      ).onWait((response, waitRequestOptions) =>
         Promise.all(
           Object.keys(response.taskID).map(indexName => {
             return this.initIndex<HasWaitTask>(indexName, {
               methods: [waitTask],
-            }).waitTask(response.taskID[indexName]);
+            }).waitTask(response.taskID[indexName], waitRequestOptions);
           })
         )
       );

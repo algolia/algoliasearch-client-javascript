@@ -24,7 +24,9 @@ export const partialUpdateObject = <TSearchIndex extends ConstructorOf<SearchInd
             taskID: response[0].taskID,
           };
         })
-      ).onWait(response => this.waitTask(response.taskID));
+      ).onWait((response, waitRequestOptions) =>
+        this.waitTask(response.taskID, waitRequestOptions)
+      );
     }
   };
 };

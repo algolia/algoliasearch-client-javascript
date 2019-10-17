@@ -43,7 +43,9 @@ export const saveSynonyms = <TSearchIndex extends ConstructorOf<SearchIndex>>(
           },
           options
         )
-      ).onWait((response: SaveSynonymsResponse) => this.waitTask(response.taskID));
+      ).onWait((response, waitRequestOptions) =>
+        this.waitTask(response.taskID, waitRequestOptions)
+      );
     }
   };
 };

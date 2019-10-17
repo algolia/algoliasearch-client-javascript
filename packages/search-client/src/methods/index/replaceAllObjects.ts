@@ -44,14 +44,16 @@ export const replaceAllObjects = <TSearchIndex extends ConstructorOf<SearchIndex
       // eslint-disable-next-line functional/immutable-data
       responses.push(copyWaitablePromise);
 
-      const result = (safe ? copyWaitablePromise.wait() : copyWaitablePromise)
+      const result = (safe ? copyWaitablePromise.wait(requestOptions) : copyWaitablePromise)
         .then(() => {
           const saveObjectsWaitablePromise = temporaryIndex.saveObjects(objects, requestOptions);
 
           // eslint-disable-next-line functional/immutable-data
           responses.push(saveObjectsWaitablePromise);
 
-          return safe ? saveObjectsWaitablePromise.wait() : saveObjectsWaitablePromise;
+          return safe
+            ? saveObjectsWaitablePromise.wait(requestOptions)
+            : saveObjectsWaitablePromise;
         })
         .then(() => {
           const moveWaitablePromise = this.operation(
@@ -64,12 +66,12 @@ export const replaceAllObjects = <TSearchIndex extends ConstructorOf<SearchIndex
           // eslint-disable-next-line functional/immutable-data
           responses.push(moveWaitablePromise);
 
-          return safe ? moveWaitablePromise.wait() : moveWaitablePromise;
+          return safe ? moveWaitablePromise.wait(requestOptions) : moveWaitablePromise;
         })
         .then(() => Promise.resolve());
 
-      return WaitablePromise.from<void>(result).onWait(() => {
-        return Promise.all(responses.map(response => response.wait()));
+      return WaitablePromise.from<void>(result).onWait((_, waitRequestOptions) => {
+        return Promise.all(responses.map(response => response.wait(waitRequestOptions)));
       });
     }
 
@@ -91,7 +93,9 @@ export const replaceAllObjects = <TSearchIndex extends ConstructorOf<SearchIndex
           },
           requestOptions
         )
-      ).onWait(response => this.waitTask(response.taskID));
+      ).onWait((response, waitRequestOptions) =>
+        this.waitTask(response.taskID, waitRequestOptions)
+      );
     }
   };
 };

@@ -23,7 +23,9 @@ export const deleteRule = <TSearchIndex extends ConstructorOf<SearchIndex>>(base
           },
           requestOptions
         )
-      ).onWait(response => this.waitTask(response.taskID));
+      ).onWait((response, waitRequestOptions) =>
+        this.waitTask(response.taskID, waitRequestOptions)
+      );
     }
   };
 };

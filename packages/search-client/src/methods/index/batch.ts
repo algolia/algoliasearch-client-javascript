@@ -62,8 +62,10 @@ export const batch = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: TSe
         });
       };
 
-      return WaitablePromise.from(forEachBatch()).onWait(batchResponses => {
-        return Promise.all(batchResponses.map(response => this.waitTask(response.taskID)));
+      return WaitablePromise.from(forEachBatch()).onWait((batchResponses, waitRequestOptions) => {
+        return Promise.all(
+          batchResponses.map(response => this.waitTask(response.taskID, waitRequestOptions))
+        );
       });
     }
 
@@ -82,7 +84,9 @@ export const batch = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: TSe
           },
           requestOptions
         )
-      ).onWait((response: BatchResponse) => this.waitTask(response.taskID));
+      ).onWait((response, waitRequestOptions) =>
+        this.waitTask(response.taskID, waitRequestOptions)
+      );
     }
   };
 };

@@ -28,10 +28,10 @@ export const moveIndex = <TSearchClient extends ConstructorOf<SearchClient>>(
           },
           requestOptions
         )
-      ).onWait(response => {
+      ).onWait((response, waitRequestOptions) => {
         return this.initIndex<HasWaitTask>(from, {
           methods: [waitTask],
-        }).waitTask(response.taskID);
+        }).waitTask(response.taskID, waitRequestOptions);
       });
     }
   };

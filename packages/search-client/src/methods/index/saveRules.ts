@@ -39,7 +39,9 @@ export const saveRules = <TSearchIndex extends ConstructorOf<SearchIndex>>(base:
           },
           options
         )
-      ).onWait(response => this.waitTask(response.taskID));
+      ).onWait((response, waitRequestOptions) =>
+        this.waitTask(response.taskID, waitRequestOptions)
+      );
     }
   };
 };

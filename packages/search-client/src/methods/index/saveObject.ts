@@ -22,7 +22,9 @@ export const saveObject = <TSearchIndex extends ConstructorOf<SearchIndex>>(base
             taskID: response[0].taskID,
           };
         })
-      ).onWait((result: SaveObjectResponse) => this.waitTask(result.taskID));
+      ).onWait((response, waitRequestOptions) =>
+        this.waitTask(response.taskID, waitRequestOptions)
+      );
     }
   };
 };

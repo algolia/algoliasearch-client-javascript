@@ -1,57 +1,23 @@
 import { Method } from '@algolia/requester-types';
+import { encode } from '@algolia/support';
 import { Faker } from '@algolia/support/src/__tests__/Faker';
 import { Transporter } from '@algolia/transporter';
 import { RequestOptions, UserAgent } from '@algolia/transporter-types';
 import { anything, deepEqual, instance, mock, spy, verify, when } from 'ts-mockito';
 
-import { SearchClient } from '../../..';
-import { batch, HasBatch } from '../../methods/index/batch';
-import { exists, HasExists } from '../../methods/index/exists';
-import { findObject, HasFindObject } from '../../methods/index/findObject';
-import { getObject, HasGetObject } from '../../methods/index/getObject';
-import { getObjects, HasGetObjects } from '../../methods/index/getObjects';
-import { getSettings, HasGetSettings } from '../../methods/index/getSettings';
-import { HasSaveObject, saveObject } from '../../methods/index/saveObject';
-import { HasSaveObjects, saveObjects } from '../../methods/index/saveObjects';
-import {
-  HasSearchForFacetValues,
-  searchForFacetValues,
-} from '../../methods/index/searchForFacetValues';
+import { createSearchClient } from '../../../../algoliasearch/src/presets/default';
 import { BatchAction } from '../../methods/types/BatchAction';
 import { SaveObjectsOptions } from '../../methods/types/SaveObjectsOptions';
-import { SearchIndex } from '../../SearchIndex';
 
 const transporterMock = mock(Transporter);
 const transporter = instance(transporterMock);
 
-type SearchIndexType = HasBatch &
-  HasSaveObject &
-  HasSaveObjects &
-  HasGetObject &
-  HasGetObjects &
-  HasGetSettings &
-  HasSearchForFacetValues &
-  HasFindObject &
-  HasExists;
-
-const index = new SearchClient({
+const index = createSearchClient({
   transporter,
-  appId: 'appId',
-  apiKey: 'apiKey',
+  appId: 'foo',
+  apiKey: 'bar',
   userAgent: UserAgent.create('4.0.0'),
-}).initIndex<SearchIndexType>('foo', {
-  methods: [
-    batch,
-    saveObject,
-    saveObjects,
-    getObject,
-    getObjects,
-    getSettings,
-    searchForFacetValues,
-    findObject,
-    exists,
-  ],
-});
+}).initIndex('foo');
 
 const res: any = {
   objectIDs: ['1'],
@@ -59,25 +25,13 @@ const res: any = {
 };
 
 when(transporterMock.read(anything(), anything())).thenResolve({
+  status: 'published',
   hits: [
     {
       objectID: 1,
       name: 'foo',
     },
   ],
-});
-
-describe('initIndex', () => {
-  it('can be instanciated without options', () => {
-    expect(
-      new SearchClient({
-        transporter,
-        appId: 'appId',
-        apiKey: 'apiKey',
-        userAgent: UserAgent.create('4.0.0'),
-      }).initIndex<SearchIndex>('foo')
-    ).toBeInstanceOf(SearchIndex);
-  });
 });
 
 describe('SaveObject', () => {
@@ -312,5 +266,29 @@ describe('exists', () => {
     await index.exists(requestOptions);
 
     verify(transporterMock.read(anything(), deepEqual(requestOptions))).once();
+  });
+});
+
+describe('wait task', () => {
+  it('passes request options to get task', async () => {
+    const requestOptions = {
+      data: {},
+      timeout: 10,
+      headers: {},
+      queryParameters: {},
+      cacheable: undefined,
+    };
+
+    await index.waitTask(1, requestOptions);
+
+    verify(
+      transporterMock.read(
+        deepEqual({
+          method: Method.Get,
+          path: encode('1/indexes/%s/task/%s', 'foo', '1'),
+        }),
+        deepEqual(requestOptions)
+      )
+    ).once();
   });
 });

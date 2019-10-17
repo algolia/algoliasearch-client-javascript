@@ -1,3 +1,5 @@
+import { RequestOptions } from '@algolia/transporter-types';
+
 export class WaitablePromise<TResponse> extends Promise<TResponse> {
   // eslint-disable-next-line functional/prefer-readonly-type
   public onWaitClosure!: OnWaitClosure<TResponse>;
@@ -18,11 +20,16 @@ export class WaitablePromise<TResponse> extends Promise<TResponse> {
     return this;
   }
 
-  public wait(): Readonly<WaitablePromise<TResponse>> {
-    const promise = this.then(response => this.onWaitClosure(response).then(() => response));
+  public wait(requestOptions?: RequestOptions): Readonly<WaitablePromise<TResponse>> {
+    const promise = this.then(response =>
+      this.onWaitClosure(response, requestOptions).then(() => response)
+    );
 
     return WaitablePromise.from<TResponse>(promise).onWait(() => Promise.resolve());
   }
 }
 
-export type OnWaitClosure<TResponse> = (result: TResponse) => Promise<any>;
+export type OnWaitClosure<TResponse> = (
+  result: TResponse,
+  requestOptions: RequestOptions
+) => Promise<any>;
