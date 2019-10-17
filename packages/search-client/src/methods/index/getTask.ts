@@ -8,7 +8,10 @@ import { TaskStatusResponse } from '../types/TaskStatusResponse';
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const getTask = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: TSearchIndex) => {
   return class extends base implements HasGetTask {
-    public getTask(taskID: number, requestOptions?: RequestOptions): Promise<TaskStatusResponse> {
+    public getTask(
+      taskID: number,
+      requestOptions?: RequestOptions
+    ): Readonly<Promise<TaskStatusResponse>> {
       return this.transporter.read(
         {
           method: Method.Get,
@@ -24,5 +27,5 @@ export type HasGetTask = {
   readonly getTask: (
     taskID: number,
     requestOptions?: RequestOptions
-  ) => Promise<TaskStatusResponse>;
+  ) => Readonly<Promise<TaskStatusResponse>>;
 };

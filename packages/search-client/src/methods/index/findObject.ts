@@ -5,7 +5,6 @@ import { ObjectNotFoundError } from '../../errors/ObjectNotFoundError';
 import { SearchIndex } from '../../SearchIndex';
 import { FindObjectOptions } from '../types/FindObjectOptions';
 import { FindObjectResponse } from '../types/FindObjectResponse';
-import { HitWithObjectID } from '../types/HitWithObjectID';
 import { HasSearch, search } from './search';
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
@@ -13,7 +12,7 @@ export const findObject = <TSearchIndex extends ConstructorOf<SearchIndex>>(base
   const mixin: ConstructorOf<SearchIndex & HasSearch> = search(base);
 
   return class extends mixin implements HasFindObject {
-    public findObject<TObject extends HitWithObjectID>(
+    public findObject<TObject>(
       callback: (object: TObject) => boolean,
       requestOptions?: FindObjectOptions & RequestOptions
     ): Readonly<Promise<FindObjectResponse<TObject>>> {
@@ -54,7 +53,7 @@ export const findObject = <TSearchIndex extends ConstructorOf<SearchIndex>>(base
 };
 
 export type HasFindObject = {
-  readonly findObject: <TObject extends HitWithObjectID>(
+  readonly findObject: <TObject>(
     callback: (object: TObject) => boolean,
     requestOptions?: FindObjectOptions & RequestOptions
   ) => Readonly<Promise<FindObjectResponse<TObject>>>;

@@ -1,7 +1,7 @@
 import { Request, Requester, Response } from '@algolia/requester-types';
 
 export class BrowserXhrRequester implements Requester {
-  public send(request: Request): Promise<Response> {
+  public send(request: Request): Readonly<Promise<Response>> {
     return new Promise((resolve): void => {
       const baseRequester = new XMLHttpRequest();
       baseRequester.open(request.method, request.url, true);

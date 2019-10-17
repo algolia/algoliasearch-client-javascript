@@ -25,7 +25,7 @@ export const batch = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: TSe
       const responses: BatchResponse[] = [];
 
       // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-      const forEachBatch = (lastIndex: number = 0): Promise<readonly BatchResponse[]> => {
+      const forEachBatch = (lastIndex: number = 0): Readonly<Promise<readonly BatchResponse[]>> => {
         // eslint-disable-next-line functional/prefer-readonly-type
         const bodiesChunk: Array<Record<string, any>> = [];
         // eslint-disable-next-line functional/no-let

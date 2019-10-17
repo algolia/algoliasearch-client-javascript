@@ -3,17 +3,16 @@ import { ConstructorOf, encode } from '@algolia/support';
 import { RequestOptions } from '@algolia/transporter-types';
 
 import { SearchIndex } from '../../SearchIndex';
-import { HitWithObjectID } from '../types/HitWithObjectID';
 import { SearchOptions } from '../types/SearchOptions';
 import { SearchResponse } from '../types/SearchResponse';
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const search = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: TSearchIndex) => {
   return class extends base implements HasSearch {
-    public search<THit extends HitWithObjectID>(
+    public search<TObject>(
       query: string,
       requestOptions?: RequestOptions & SearchOptions
-    ): Promise<SearchResponse<THit>> {
+    ): Readonly<Promise<SearchResponse<TObject>>> {
       return this.transporter.read(
         {
           method: Method.Post,
@@ -30,8 +29,8 @@ export const search = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: TS
 };
 
 export type HasSearch = {
-  readonly search: <THit extends HitWithObjectID>(
+  readonly search: <TObject>(
     query: string,
     requestOptions?: RequestOptions & SearchOptions
-  ) => Promise<SearchResponse<THit>>;
+  ) => Readonly<Promise<SearchResponse<TObject>>>;
 };

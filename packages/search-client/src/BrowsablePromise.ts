@@ -5,7 +5,7 @@ export class BrowsablePromise<TObject> extends Promise<TObject> {
   public static from<TObject>(
     options: {
       readonly shouldStop: (response: BrowseResponse<TObject>) => boolean;
-      readonly request: (data: object) => Promise<BrowseResponse<TObject>>;
+      readonly request: (data: object) => Readonly<Promise<BrowseResponse<TObject>>>;
     } & BrowseOptions<TObject>
   ): BrowsablePromise<TObject> {
     return new BrowsablePromise<TObject>(resolve => {

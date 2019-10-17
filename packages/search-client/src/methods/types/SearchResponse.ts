@@ -1,7 +1,7 @@
-import { HitWithObjectID } from './HitWithObjectID';
+import { ObjectWithObjectID } from './ObjectWithObjectID';
 
-export type SearchResponse<THit extends HitWithObjectID = HitWithObjectID> = {
-  readonly hits: readonly THit[];
+export type SearchResponse<TObject> = {
+  readonly hits: ReadonlyArray<TObject & ObjectWithObjectID>;
   readonly page: number;
   readonly length?: number;
   readonly offset?: number;

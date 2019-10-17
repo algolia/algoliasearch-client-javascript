@@ -10,7 +10,10 @@ export const waitTask = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: 
   const mixin: ConstructorOf<SearchIndex & HasGetTask> = getTask(base);
 
   return class extends mixin implements HasWaitTask {
-    public waitTask(taskID: number, requestOptions?: RequestOptions): Promise<TaskStatusResponse> {
+    public waitTask(
+      taskID: number,
+      requestOptions?: RequestOptions
+    ): Readonly<Promise<TaskStatusResponse>> {
       // eslint-disable-next-line functional/no-let
       let retriesCount = 0;
 
@@ -35,5 +38,5 @@ export type HasWaitTask = {
   readonly waitTask: (
     taskID: number,
     requestOptions?: RequestOptions
-  ) => Promise<TaskStatusResponse>;
+  ) => Readonly<Promise<TaskStatusResponse>>;
 };

@@ -1,6 +1,6 @@
-import { HitWithObjectID } from './HitWithObjectID';
+import { ObjectWithObjectID } from './ObjectWithObjectID';
 import { SearchResponse } from './SearchResponse';
 
-export type MultipleQueriesResponse<THit extends HitWithObjectID> = {
-  readonly results: ReadonlyArray<SearchResponse<THit>>;
+export type MultipleQueriesResponse<TObject> = {
+  readonly results: ReadonlyArray<SearchResponse<TObject & ObjectWithObjectID>>;
 };

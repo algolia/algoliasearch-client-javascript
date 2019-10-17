@@ -19,7 +19,7 @@ export const browseObjects = <TSearchIndex extends ConstructorOf<SearchIndex>>(
       return BrowsablePromise.from<TObject>({
         ...requestOptions,
         shouldStop: response => response.cursor === undefined,
-        request: (data: object): Promise<BrowseResponse<TObject>> =>
+        request: (data: object): Readonly<Promise<BrowseResponse<TObject>>> =>
           this.transporter.read(
             {
               method: Method.Post,

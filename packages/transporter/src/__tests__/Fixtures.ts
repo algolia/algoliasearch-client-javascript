@@ -7,7 +7,7 @@ import { Transporter } from '../Transporter';
 
 export class FakeRequester implements Requester {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  public send(request: RequesterRequest): Promise<Response> {
+  public send(request: RequesterRequest): Readonly<Promise<Response>> {
     return new Promise((resolve): void => {
       resolve({
         content: '{"hits": [{"name": "Star Wars"}]}',

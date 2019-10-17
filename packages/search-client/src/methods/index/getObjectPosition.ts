@@ -1,7 +1,6 @@
 import { ConstructorOf } from '@algolia/support';
 
 import { SearchIndex } from '../../SearchIndex';
-import { HitWithObjectID } from '../types/HitWithObjectID';
 import { SearchResponse } from '../types/SearchResponse';
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
@@ -23,8 +22,8 @@ export const getObjectPosition = <TSearchIndex extends ConstructorOf<SearchIndex
 };
 
 export type HasGetObjectPosition = {
-  readonly getObjectPosition: <THit extends HitWithObjectID>(
-    searchResponse: SearchResponse<THit>,
+  readonly getObjectPosition: <TObject>(
+    searchResponse: SearchResponse<TObject>,
     objectID: string
   ) => Readonly<number>;
 };

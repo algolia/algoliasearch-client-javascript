@@ -12,7 +12,7 @@ export const getObjects = <TSearchIndex extends ConstructorOf<SearchIndex>>(base
     public getObjects<TObject>(
       objectIDs: readonly string[],
       requestOptions?: RequestOptions & GetObjectsOptions
-    ): Promise<GetObjectsResponse<TObject>> {
+    ): Readonly<Promise<GetObjectsResponse<TObject>>> {
       const requests = objectIDs.map(objectID => {
         return {
           indexName: this.indexName,
@@ -39,5 +39,5 @@ export type HasGetObjects = {
   readonly getObjects: <TObject>(
     objectIDs: readonly string[],
     requestOptions?: RequestOptions & GetObjectsOptions
-  ) => Promise<GetObjectsResponse<TObject>>;
+  ) => Readonly<Promise<GetObjectsResponse<TObject>>>;
 };

@@ -14,7 +14,7 @@ export const searchSynonyms = <TSearchIndex extends ConstructorOf<SearchIndex>>(
     public searchSynonyms(
       query: string,
       requestOptions?: SearchSynonymsOptions & RequestOptions
-    ): Promise<SearchSynonymsResponse> {
+    ): Readonly<Promise<SearchSynonymsResponse>> {
       return this.transporter.read(
         {
           method: Method.Post,
@@ -33,5 +33,5 @@ export type HasSearchSynonyms = {
   readonly searchSynonyms: (
     query: string,
     requestOptions?: SearchSynonymsOptions & RequestOptions
-  ) => Promise<SearchSynonymsResponse>;
+  ) => Readonly<Promise<SearchSynonymsResponse>>;
 };

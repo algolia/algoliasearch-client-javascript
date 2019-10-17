@@ -7,7 +7,10 @@ import { SearchIndex } from '../../SearchIndex';
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const getObject = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: TSearchIndex) => {
   return class extends base implements HasGetObject {
-    public getObject<TObject>(objectID: string, requestOptions?: RequestOptions): Promise<TObject> {
+    public getObject<TObject>(
+      objectID: string,
+      requestOptions?: RequestOptions
+    ): Readonly<Promise<TObject>> {
       return this.transporter.read(
         {
           method: Method.Get,

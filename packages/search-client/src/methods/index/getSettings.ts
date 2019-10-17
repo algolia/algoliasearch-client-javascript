@@ -10,7 +10,7 @@ export const getSettings = <TSearchIndex extends ConstructorOf<SearchIndex>>(
   base: TSearchIndex
 ) => {
   return class extends base implements HasGetSettings {
-    public getSettings(requestOptions?: RequestOptions): Promise<IndexSettings> {
+    public getSettings(requestOptions?: RequestOptions): Readonly<Promise<IndexSettings>> {
       const options = mapRequestOptions(requestOptions !== undefined ? requestOptions : {});
 
       // @ts-ignore
@@ -29,5 +29,5 @@ export const getSettings = <TSearchIndex extends ConstructorOf<SearchIndex>>(
 };
 
 export type HasGetSettings = {
-  readonly getSettings: (requestOptions?: RequestOptions) => Promise<IndexSettings>;
+  readonly getSettings: (requestOptions?: RequestOptions) => Readonly<Promise<IndexSettings>>;
 };

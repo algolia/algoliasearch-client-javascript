@@ -8,7 +8,10 @@ import { Synonym } from '../types/Synonym';
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const getSynonym = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: TSearchIndex) => {
   return class extends base implements HasGetSynonym {
-    public getSynonym(objectID: string, requestOptions?: RequestOptions): Promise<Synonym> {
+    public getSynonym(
+      objectID: string,
+      requestOptions?: RequestOptions
+    ): Readonly<Promise<Synonym>> {
       return this.transporter.read(
         {
           method: Method.Get,

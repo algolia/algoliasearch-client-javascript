@@ -15,7 +15,7 @@ export const multipleQueries = <TSearchClient extends ConstructorOf<SearchClient
     public multipleQueries<TObject>(
       queries: readonly MultipleQueriesQuery[],
       requestOptions?: RequestOptions & MultipleQueriesOptions
-    ): Promise<MultipleQueriesResponse<TObject>> {
+    ): Readonly<Promise<MultipleQueriesResponse<TObject>>> {
       return this.transporter.read(
         {
           method: Method.Post,
@@ -34,5 +34,5 @@ export type HasMultipleQueries = {
   readonly multipleQueries: <TObject>(
     requests: readonly MultipleQueriesQuery[],
     requestOptions?: RequestOptions
-  ) => Promise<MultipleQueriesResponse<TObject>>;
+  ) => Readonly<Promise<MultipleQueriesResponse<TObject>>>;
 };

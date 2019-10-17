@@ -14,10 +14,10 @@ export type Transporter = {
   readonly read: <TResponse>(
     request: Request,
     requestOptions?: RequestOptions
-  ) => Promise<TResponse>;
+  ) => Readonly<Promise<TResponse>>;
 
   readonly write: <TResponse>(
     request: Request,
     requestOptions?: RequestOptions
-  ) => Promise<TResponse>;
+  ) => Readonly<Promise<TResponse>>;
 };

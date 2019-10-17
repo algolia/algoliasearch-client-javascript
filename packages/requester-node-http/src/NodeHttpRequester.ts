@@ -3,7 +3,7 @@ import * as https from 'https';
 import * as URL from 'url';
 
 export class NodeHttpRequester implements Requester {
-  public send(request: Request): Promise<Response> {
+  public send(request: Request): Readonly<Promise<Response>> {
     return new Promise(resolve => {
       const url = URL.parse(request.url);
 

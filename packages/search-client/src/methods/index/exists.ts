@@ -9,7 +9,7 @@ export const exists = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: TS
   const mixin: ConstructorOf<SearchIndex & HasGetSettings> = getSettings(base);
 
   return class extends mixin implements HasExists {
-    public exists(requestOptions?: RequestOptions): Promise<boolean> {
+    public exists(requestOptions?: RequestOptions): Readonly<Promise<boolean>> {
       return this.getSettings(requestOptions)
         .then(() => true)
         .catch(error => {
@@ -24,5 +24,5 @@ export const exists = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: TS
 };
 
 export type HasExists = {
-  readonly exists: (requestOptions?: RequestOptions) => Promise<boolean>;
+  readonly exists: (requestOptions?: RequestOptions) => Readonly<Promise<boolean>>;
 };

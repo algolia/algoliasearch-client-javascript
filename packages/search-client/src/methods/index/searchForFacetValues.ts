@@ -15,7 +15,7 @@ export const searchForFacetValues = <TSearchIndex extends ConstructorOf<SearchIn
       facetName: string,
       facetQuery: string,
       requestOptions?: RequestOptions & SearchOptions
-    ): Promise<SearchForFacetValuesResponse> {
+    ): Readonly<Promise<SearchForFacetValuesResponse>> {
       return this.transporter.read(
         {
           method: Method.Post,
@@ -36,5 +36,5 @@ export type HasSearchForFacetValues = SearchIndex & {
     facetName: string,
     facetQuery: string,
     requestOptions?: RequestOptions & SearchOptions
-  ) => Promise<SearchForFacetValuesResponse>;
+  ) => Readonly<Promise<SearchForFacetValuesResponse>>;
 };

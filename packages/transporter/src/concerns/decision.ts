@@ -22,7 +22,7 @@ export const decision = <TResponse>(
   host: Host,
   response: Response,
   outcomes: Outcomes
-): Promise<TResponse> => {
+): Readonly<Promise<TResponse>> => {
   if (isRetryable(response)) {
     if (!response.isTimedOut) {
       host.setAsDown();
@@ -39,7 +39,7 @@ export const decision = <TResponse>(
 };
 
 type Outcomes = {
-  readonly fail: <TResponse>() => Promise<TResponse>;
-  readonly success: <TResponse>() => Promise<TResponse>;
-  readonly retry: <TResponse>() => Promise<TResponse>;
+  readonly fail: <TResponse>() => Readonly<Promise<TResponse>>;
+  readonly success: <TResponse>() => Readonly<Promise<TResponse>>;
+  readonly retry: <TResponse>() => Readonly<Promise<TResponse>>;
 };

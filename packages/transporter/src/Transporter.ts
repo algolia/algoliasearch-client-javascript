@@ -72,12 +72,15 @@ export class Transporter implements TransporterContract {
       options.requestsCache !== undefined ? options.requestsCache : new NullCache();
   }
 
-  public read<TResponse>(request: Request, requestOptions?: RequestOptions): Promise<TResponse> {
+  public read<TResponse>(
+    request: Request,
+    requestOptions?: RequestOptions
+  ): Readonly<Promise<TResponse>> {
     const mappedRequestOptions = mapRequestOptions(requestOptions, this.timeouts.read);
 
     const key = { request, mappedRequestOptions };
 
-    const createRequest = (): Promise<TResponse> => {
+    const createRequest = (): Readonly<Promise<TResponse>> => {
       return this.request<TResponse>(
         this.hosts.filter(host => (host.accept & Call.Read) !== 0),
         request,
@@ -109,7 +112,10 @@ export class Transporter implements TransporterContract {
     );
   }
 
-  public write<TResponse>(request: Request, requestOptions?: RequestOptions): Promise<TResponse> {
+  public write<TResponse>(
+    request: Request,
+    requestOptions?: RequestOptions
+  ): Readonly<Promise<TResponse>> {
     return this.request(
       this.hosts.filter(host => (host.accept & Call.Write) !== 0),
       request,
@@ -122,7 +128,7 @@ export class Transporter implements TransporterContract {
     hosts: Host[],
     request: Request,
     requestOptions: MappedRequestOptions
-  ): Promise<TResponse> {
+  ): Readonly<Promise<TResponse>> {
     let timeoutRetries = 0; // eslint-disable-line functional/no-let
 
     return Promise.all(
@@ -142,7 +148,7 @@ export class Transporter implements TransporterContract {
       // eslint-disable-next-line no-param-reassign
       hosts = hosts.filter(host => host.isUp()).reverse();
 
-      const forEachHost = <TResponse>(host: Host | undefined): Promise<TResponse> => {
+      const forEachHost = <TResponse>(host: Host | undefined): Readonly<Promise<TResponse>> => {
         if (host === undefined) {
           throw new RetryError();
         }

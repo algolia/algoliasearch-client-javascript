@@ -14,7 +14,7 @@ export const multipleGetObjects = <TSearchClient extends ConstructorOf<SearchCli
     public multipleGetObjects<TObject>(
       requests: readonly MultipleGetObject[],
       requestOptions?: RequestOptions
-    ): Promise<MultipleGetObjectsResponse<TObject>> {
+    ): Readonly<Promise<MultipleGetObjectsResponse<TObject>>> {
       return this.transporter.read(
         {
           method: Method.Post,
@@ -33,5 +33,5 @@ export type HasMultipleGetObjects = {
   readonly multipleGetObjects: <TObject>(
     requests: readonly MultipleGetObject[],
     requestOptions?: RequestOptions
-  ) => Promise<MultipleGetObjectsResponse<TObject>>;
+  ) => Readonly<Promise<MultipleGetObjectsResponse<TObject>>>;
 };

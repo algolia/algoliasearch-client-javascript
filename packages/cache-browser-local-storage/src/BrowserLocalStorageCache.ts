@@ -5,9 +5,9 @@ export class BrowserLocalStorageCache implements Cache {
 
   public get<TValue>(
     key: object,
-    defaultValue: () => Promise<TValue>,
+    defaultValue: () => Readonly<Promise<TValue>>,
     events?: CacheEvents
-  ): Promise<TValue> {
+  ): Readonly<Promise<TValue>> {
     const keyAsString = JSON.stringify(key);
 
     const valueAsString = localStorage.getItem(keyAsString);
@@ -22,19 +22,19 @@ export class BrowserLocalStorageCache implements Cache {
     return promise.then((value: TValue) => miss(value)).then(() => promise);
   }
 
-  public set<TValue>(key: object, value: TValue): Promise<TValue> {
+  public set<TValue>(key: object, value: TValue): Readonly<Promise<TValue>> {
     localStorage.setItem(JSON.stringify(key), JSON.stringify(value));
 
     return Promise.resolve(value);
   }
 
-  public delete(key: object): Promise<void> {
+  public delete(key: object): Readonly<Promise<void>> {
     localStorage.removeItem(JSON.stringify(key));
 
     return Promise.resolve();
   }
 
-  public clear(): Promise<void> {
+  public clear(): Readonly<Promise<void>> {
     localStorage.clear();
 
     return Promise.resolve();
