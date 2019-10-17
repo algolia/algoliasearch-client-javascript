@@ -3,7 +3,7 @@ export class WaitablePromise<TResponse> extends Promise<TResponse> {
   public onWaitClosure!: OnWaitClosure<TResponse>;
 
   public static from<TResponse>(promise: Promise<TResponse>): WaitablePromise<TResponse> {
-    return new WaitablePromise<TResponse>(resolve => promise.then(response => resolve(response)));
+    return new WaitablePromise<TResponse>(resolve => resolve(promise));
   }
 
   public onWait(onWaitClosure: OnWaitClosure<TResponse>): Readonly<this> {
