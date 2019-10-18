@@ -47,8 +47,8 @@ test(testSuite.testName, async () => {
 
   const multipleQueriesResponse1 = await client.multipleQueries(
     [
-      { indexName: index.indexName, query: '', params: 'hitsPerPage=2' },
-      { indexName: index2.indexName, query: '', params: 'hitsPerPage=2' },
+      { indexName: index.indexName, query: '', params: { hitsPerPage: 2 } },
+      { indexName: index2.indexName, params: { hitsPerPage: 2 } },
     ],
     { strategy: StrategyEnum.None }
   );
@@ -58,8 +58,8 @@ test(testSuite.testName, async () => {
 
   const multipleQueriesResponse2 = await client.search(
     [
-      { indexName: index.indexName, query: '', params: 'hitsPerPage=2' },
-      { indexName: index2.indexName, query: '', params: 'hitsPerPage=2' },
+      { indexName: index.indexName, query: '', params: { hitsPerPage: 2 } },
+      { indexName: index2.indexName, params: { hitsPerPage: 2 } },
     ],
     { strategy: StrategyEnum.StopIfEnoughMatches }
   );

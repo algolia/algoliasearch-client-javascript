@@ -1,5 +1,5 @@
 import { Method } from '@algolia/requester-types';
-import { ConstructorOf } from '@algolia/support';
+import { ConstructorOf, encodeQueryParameters } from '@algolia/support';
 import { RequestOptions } from '@algolia/transporter-types';
 
 import { SearchClient } from '../../SearchClient';
@@ -16,12 +16,19 @@ export const multipleQueries = <TSearchClient extends ConstructorOf<SearchClient
       queries: readonly MultipleQueriesQuery[],
       requestOptions?: RequestOptions & MultipleQueriesOptions
     ): Readonly<Promise<MultipleQueriesResponse<TObject>>> {
+      const requests = queries.map(query => {
+        return {
+          ...query,
+          params: encodeQueryParameters(query.params),
+        };
+      });
+
       return this.transporter.read(
         {
           method: Method.Post,
           path: '1/indexes/*/queries',
           data: {
-            requests: queries,
+            requests,
           },
         },
         requestOptions

@@ -7,17 +7,22 @@ export class Serializer {
     path: string,
     queryParameters: { readonly [key: string]: string }
   ): string {
+    const queryParametersAsString = this.queryParameters(queryParameters);
+
     // eslint-disable-next-line functional/no-let
     let url = `https://${host.url}/${path}`;
 
-    const queryParametersKeys = Object.keys(queryParameters);
-    if (queryParametersKeys.length) {
-      url += `?${queryParametersKeys
-        .map(key => encode('%s=%s', key, queryParameters[key]))
-        .join('&')}`;
+    if (queryParametersAsString.length) {
+      url += '?';
     }
 
     return url;
+  }
+
+  public static queryParameters(parameters: { readonly [key: string]: string }): string {
+    const parametersKeys = Object.keys(parameters);
+
+    return `${parametersKeys.map(key => encode('%s=%s', key, parameters[key])).join('&')}`;
   }
 
   public static data(request: Request, requestOptions: RequestOptions): string {
