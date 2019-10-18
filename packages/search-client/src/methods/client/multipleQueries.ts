@@ -30,6 +30,7 @@ export const multipleQueries = <TSearchClient extends ConstructorOf<SearchClient
           data: {
             requests,
           },
+          cacheable: true,
         },
         requestOptions
       );

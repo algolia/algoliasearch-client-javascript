@@ -13,7 +13,7 @@ export class Serializer {
     let url = `https://${host.url}/${path}`;
 
     if (queryParametersAsString.length) {
-      url += '?';
+      url += `?${queryParametersAsString}`;
     }
 
     return url;
