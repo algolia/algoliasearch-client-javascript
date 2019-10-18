@@ -27,10 +27,22 @@ export const multipleQueries = <TSearchClient extends ConstructorOf<SearchClient
         requestOptions
       );
     }
+
+    public search<TObject>(
+      queries: readonly MultipleQueriesQuery[],
+      requestOptions?: RequestOptions & MultipleQueriesOptions
+    ): Readonly<Promise<MultipleQueriesResponse<TObject>>> {
+      return this.multipleQueries<TObject>(queries, requestOptions);
+    }
   };
 };
 
 export type HasMultipleQueries = {
+  readonly search: <TObject>(
+    requests: readonly MultipleQueriesQuery[],
+    requestOptions?: RequestOptions
+  ) => Readonly<Promise<MultipleQueriesResponse<TObject>>>;
+
   readonly multipleQueries: <TObject>(
     requests: readonly MultipleQueriesQuery[],
     requestOptions?: RequestOptions

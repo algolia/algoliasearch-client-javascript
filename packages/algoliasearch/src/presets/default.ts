@@ -34,6 +34,10 @@ import {
   multipleQueries,
 } from '@algolia/search-client/src/methods/client/multipleQueries';
 import {
+  HasMultipleSearchForFacetValues,
+  multipleSearchForFacetValues,
+} from '@algolia/search-client/src/methods/client/multipleSearchForFacetValues';
+import {
   HasSetPersonalizationStrategy,
   setPersonalizationStrategy,
 } from '@algolia/search-client/src/methods/client/setPersonalizationStrategy';
@@ -139,7 +143,8 @@ export type SearchClient = SearchClientPreset &
   HasSetPersonalizationStrategy &
   HasListIndices &
   HasGetLogs &
-  HasListClusters;
+  HasListClusters &
+  HasMultipleSearchForFacetValues;
 
 export type SearchIndex = HasBatch &
   HasDelete &
@@ -196,6 +201,7 @@ export const methods = {
     listIndices,
     getLogs,
     listClusters,
+    multipleSearchForFacetValues,
   ],
   searchIndex: [
     batch,

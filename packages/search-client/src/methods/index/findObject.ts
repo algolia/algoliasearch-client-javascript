@@ -5,6 +5,7 @@ import { ObjectNotFoundError } from '../../errors/ObjectNotFoundError';
 import { SearchIndex } from '../../SearchIndex';
 import { FindObjectOptions } from '../types/FindObjectOptions';
 import { FindObjectResponse } from '../types/FindObjectResponse';
+import { ObjectWithObjectID } from '../types/ObjectWithObjectID';
 import { HasSearch, search } from './search';
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
@@ -13,7 +14,7 @@ export const findObject = <TSearchIndex extends ConstructorOf<SearchIndex>>(base
 
   return class extends mixin implements HasFindObject {
     public findObject<TObject>(
-      callback: (object: TObject) => boolean,
+      callback: (object: TObject & ObjectWithObjectID) => boolean,
       requestOptions?: FindObjectOptions & RequestOptions
     ): Readonly<Promise<FindObjectResponse<TObject>>> {
       const paginate = popRequestOption(requestOptions, 'paginate', true);
@@ -54,7 +55,7 @@ export const findObject = <TSearchIndex extends ConstructorOf<SearchIndex>>(base
 
 export type HasFindObject = {
   readonly findObject: <TObject>(
-    callback: (object: TObject) => boolean,
+    callback: (object: TObject & ObjectWithObjectID) => boolean,
     requestOptions?: FindObjectOptions & RequestOptions
   ) => Readonly<Promise<FindObjectResponse<TObject>>>;
 };

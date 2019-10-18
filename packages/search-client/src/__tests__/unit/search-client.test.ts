@@ -1,8 +1,9 @@
 import { AuthMode } from '@algolia/auth';
 import { Method } from '@algolia/requester-types';
+import { encode } from '@algolia/support';
 import { Transporter } from '@algolia/transporter';
 import { UserAgent } from '@algolia/transporter-types';
-import { deepEqual, instance, mock, verify } from 'ts-mockito';
+import { anything, deepEqual, instance, mock, verify } from 'ts-mockito';
 
 import { createSearchClient } from '../../../../algoliasearch/src/presets/default';
 
@@ -64,5 +65,31 @@ describe('personalization', () => {
         deepEqual({ foo: 'bar' })
       )
     ).once();
+  });
+});
+
+describe('multiple search for facet values', () => {
+  it('allows to pass search params to the underlying search for facet values of index', async () => {
+    const query = {
+      indexName: 'foo',
+      params: {
+        facetName: 'firstname',
+        facetQuery: 'Jimmie',
+      },
+    };
+
+    await searchClient.searchForFacetValues([query, query]);
+
+    verify(
+      transporterMock.read(
+        deepEqual({
+          method: Method.Post,
+          path: encode('1/indexes/%s/facets/%s/query', 'foo', 'firstname'),
+          data: { facetQuery: 'Jimmie' },
+          cacheable: true,
+        }),
+        anything()
+      )
+    ).twice();
   });
 });
