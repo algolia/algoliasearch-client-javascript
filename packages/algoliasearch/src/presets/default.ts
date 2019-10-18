@@ -128,6 +128,7 @@ import {
 import { HasSetSettings, setSettings } from '@algolia/search-client/src/methods/index/setSettings';
 import { HasWaitTask, waitTask } from '@algolia/search-client/src/methods/index/waitTask';
 import { SearchClientOptions } from '@algolia/search-client/src/SearchClient';
+import { SearchIndex as SearchIndexPreset } from '@algolia/search-client/src/SearchIndex';
 import { compose } from '@algolia/support';
 import { UserAgent } from '@algolia/transporter-types';
 
@@ -146,7 +147,8 @@ export type SearchClient = SearchClientPreset &
   HasListClusters &
   HasMultipleSearchForFacetValues;
 
-export type SearchIndex = HasBatch &
+export type SearchIndex = SearchIndexPreset &
+  HasBatch &
   HasDelete &
   HasSearch &
   HasSearchForFacetValues &

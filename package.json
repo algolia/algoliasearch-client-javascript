@@ -89,11 +89,11 @@
   "bundlesize": [
     {
       "path": "packages/algoliasearch/dist/algoliasearch.umd.min.js",
-      "maxSize": "3.80KB"
+      "maxSize": "7.39KB"
     },
     {
       "path": "packages/algoliasearch/dist/algoliasearch-lite.umd.min.js",
-      "maxSize": "3.80KB"
+      "maxSize": "4.10KB"
     }
   ],
   "workspaces": [
