@@ -928,6 +928,9 @@ Index.prototype.findObject = function(findCallback, requestOptions, callback) {
   var paginate = requestOptions.paginate !== undefined ? requestOptions.paginate : true;
   var query = requestOptions.query !== undefined ? requestOptions.query : '';
 
+  delete requestOptions.paginate;
+  delete requestOptions.query;
+
   var that = this;
   var page = 0;
 

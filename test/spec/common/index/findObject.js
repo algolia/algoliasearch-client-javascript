@@ -94,9 +94,12 @@ test('findObject: object not found with non matching query', function(t) {
   fauxJax.install();
 
   var index = fixture.index;
-  t.plan(1);
+  t.plan(2);
 
   fauxJax.once('request', function(req) {
+    // Assert paginate/query got deleted from request options.
+    t.equal(req.requestBody, '{"params":"query=Algolia&page=0"}');
+
     req.respond(
       200,
       {},
@@ -131,10 +134,13 @@ test('findObject: object not found without pagination', function(t) {
   fauxJax.install();
 
   var index = fixture.index;
-  t.plan(1);
+  t.plan(2);
 
   var page = 0;
   fauxJax.once('request', function(req) {
+    // Assert paginate/query got deleted from request options.
+    t.equal(req.requestBody, '{"params":"query=&page=0"}');
+
     req.respond(
       200,
       {},
