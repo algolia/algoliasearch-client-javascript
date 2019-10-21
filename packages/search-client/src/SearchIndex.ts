@@ -1,4 +1,4 @@
-import { Transporter } from '@algolia/transporter-types';
+import { Transporter } from '@algolia/transporter';
 
 export class SearchIndex {
   public readonly transporter: Transporter;

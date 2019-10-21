@@ -1,4 +1,4 @@
-import { RequestOptions } from '@algolia/transporter-types';
+import { RequestOptions } from '@algolia/transporter';
 
 export class WaitablePromise<TResponse> extends Promise<TResponse> {
   // eslint-disable-next-line functional/prefer-readonly-type

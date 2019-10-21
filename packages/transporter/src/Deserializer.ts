@@ -1,5 +1,5 @@
 import { Response } from '@algolia/requester-types';
-import { ApiError } from '@algolia/transporter-types';
+import { ApiError } from '@algolia/transporter';
 
 export class Deserializer {
   public static success<TObject>({ content }: Response): TObject {

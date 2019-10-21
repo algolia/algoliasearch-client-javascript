@@ -130,7 +130,6 @@ import { HasWaitTask, waitTask } from '@algolia/search-client/src/methods/index/
 import { SearchClientOptions } from '@algolia/search-client/src/SearchClient';
 import { SearchIndex as SearchIndexPreset } from '@algolia/search-client/src/SearchIndex';
 import { compose } from '@algolia/support';
-import { UserAgent } from '@algolia/transporter-types';
 
 export type SearchClient = SearchClientPreset &
   HasMultipleBatch &
@@ -251,13 +250,10 @@ export const methods = {
 export class SearchClientPreset extends BaseSearchClient {
   private readonly apiKey: string;
 
-  private readonly userAgent: UserAgent;
-
   public constructor(options: SearchClientOptions) {
     super(options);
 
     this.apiKey = options.apiKey;
-    this.userAgent = options.userAgent;
   }
 
   public initIndex<TSearchIndex = SearchIndex>(indexName: string): TSearchIndex {

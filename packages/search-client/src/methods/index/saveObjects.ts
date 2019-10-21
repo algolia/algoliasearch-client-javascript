@@ -1,5 +1,5 @@
 import { ConstructorOf, WaitablePromise } from '@algolia/support';
-import { popRequestOption, RequestOptions } from '@algolia/transporter-types';
+import { popRequestOption, RequestOptions } from '@algolia/transporter';
 
 import { MissingObjectIDError } from '../../errors/MissingObjectIDError';
 import { SearchIndex } from '../../SearchIndex';

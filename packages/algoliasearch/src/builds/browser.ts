@@ -3,8 +3,7 @@ import { InMemoryCache } from '@algolia/cache-in-memory';
 import { ConsoleLogger } from '@algolia/logger-console';
 import { LogLevel } from '@algolia/logger-types';
 import { BrowserXhrRequester } from '@algolia/requester-browser-xhr';
-import { Transporter } from '@algolia/transporter';
-import { UserAgent } from '@algolia/transporter-types';
+import { Transporter, UserAgent } from '@algolia/transporter';
 
 import { createSearchClient, SearchClient } from '../presets/default';
 import { AlgoliaSearchOptions } from '../types';

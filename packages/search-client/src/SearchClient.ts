@@ -1,6 +1,6 @@
 import { Auth, AuthMode, AuthModeType } from '@algolia/auth';
 import { ComposableOptions, compose, shuffle } from '@algolia/support';
-import { Call, Host, Transporter, UserAgent } from '@algolia/transporter-types';
+import { Call, Host, Transporter, UserAgent } from '@algolia/transporter';
 
 import { SearchIndex } from './SearchIndex';
 
@@ -8,6 +8,8 @@ export class SearchClient {
   public readonly appId: string;
 
   public readonly transporter: Transporter;
+
+  public readonly userAgent: UserAgent;
 
   public constructor(options: SearchClientOptions) {
     this.appId = options.appId;
@@ -21,6 +23,8 @@ export class SearchClient {
       options.apiKey
     );
 
+    this.userAgent = options.userAgent;
+
     this.transporter.headers = {
       ...auth.headers(),
       ...{ 'content-type': 'application/x-www-form-urlencoded' },
@@ -28,8 +32,20 @@ export class SearchClient {
 
     this.transporter.queryParameters = {
       ...auth.queryParameters(),
-      ...{ 'x-algolia-agent': options.userAgent.value },
+      'x-algolia-agent': this.userAgent.value,
     };
+  }
+
+  public addUserAgent(segment: string, version?: string): void {
+    // eslint-disable-next-line functional/immutable-data
+    this.userAgent = this.userAgent.with({ segment, version });
+
+    // eslint-disable-next-line functional/immutable-data
+    this.transporter.queryParameters['x-algolia-agent'] = this.userAgent.value;
+  }
+
+  public addAlgoliaAgent(segment: string, version?: string): void {
+    this.addUserAgent(segment, version);
   }
 
   public initIndex<TSearchIndex>(

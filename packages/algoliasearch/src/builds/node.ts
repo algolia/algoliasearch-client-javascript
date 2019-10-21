@@ -2,8 +2,7 @@ import { NullCache } from '@algolia/cache-types';
 import { ConsoleLogger } from '@algolia/logger-console';
 import { LogLevel } from '@algolia/logger-types';
 import { NodeHttpRequester } from '@algolia/requester-node-http';
-import { Transporter } from '@algolia/transporter';
-import { UserAgent } from '@algolia/transporter-types';
+import { Transporter, UserAgent } from '@algolia/transporter';
 
 import { createSearchClient, SearchClient } from '../presets/default';
 import { AlgoliaSearchOptions } from '../types';

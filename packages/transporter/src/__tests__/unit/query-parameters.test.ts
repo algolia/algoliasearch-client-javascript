@@ -1,12 +1,11 @@
 import { BrowserXhrRequester } from '@algolia/requester-browser-xhr';
-import { Transporter as TransporterContract } from '@algolia/transporter-types';
 import { anything, deepEqual, mock, verify, when } from 'ts-mockito';
 
 import { Transporter } from '../../Transporter';
 import { FakeRequester, Fixtures } from '../Fixtures';
 
 let requester: FakeRequester;
-let transporter: TransporterContract;
+let transporter: Transporter;
 
 beforeEach(() => {
   requester = mock(FakeRequester);

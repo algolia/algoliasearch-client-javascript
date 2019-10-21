@@ -1,5 +1,5 @@
 import { ConstructorOf } from '@algolia/support';
-import { RequestOptions } from '@algolia/transporter-types';
+import { RequestOptions } from '@algolia/transporter';
 
 import { BrowsablePromise } from '../../BrowsablePromise';
 import { SearchIndex } from '../../SearchIndex';

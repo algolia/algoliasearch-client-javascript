@@ -1,6 +1,6 @@
 import { createMultiWaitable } from '@algolia/support/src/__tests__/helpers';
 import { TestSuite } from '@algolia/support/src/__tests__/TestSuite';
-import { ApiError } from '@algolia/transporter-types';
+import { ApiError } from '@algolia/transporter';
 
 import { Synonym } from '../../methods/types/Synonym';
 import { SynonymEnum } from '../../methods/types/SynonymType';

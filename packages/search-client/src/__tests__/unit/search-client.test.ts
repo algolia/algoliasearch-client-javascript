@@ -1,8 +1,7 @@
 import { AuthMode } from '@algolia/auth';
 import { Method } from '@algolia/requester-types';
 import { encode } from '@algolia/support';
-import { Transporter } from '@algolia/transporter';
-import { UserAgent } from '@algolia/transporter-types';
+import { Transporter, UserAgent } from '@algolia/transporter';
 import { anything, deepEqual, instance, mock, verify } from 'ts-mockito';
 
 import { createSearchClient } from '../../../../algoliasearch/src/presets/default';
@@ -17,6 +16,8 @@ const searchClient = createSearchClient({
   userAgent: UserAgent.create('4.0.0'),
   authMode: AuthMode.WithinQueryParameters,
 });
+
+searchClient.addUserAgent('react-instantsearch-server', '2.1');
 
 describe('Search Client', () => {
   it('Gives access to transporter', () => {
@@ -33,7 +34,7 @@ describe('Search Client', () => {
     });
 
     expect(transporter.queryParameters).toEqual({
-      'x-algolia-agent': 'Algolia for JavaScript (4.0.0)',
+      'x-algolia-agent': 'Algolia for JavaScript (4.0.0); react-instantsearch-server (2.1)',
       'x-algolia-application-id': 'foo',
       'x-algolia-api-key': 'bar',
     });
@@ -75,6 +76,7 @@ describe('multiple search for facet values', () => {
       params: {
         facetName: 'firstname',
         facetQuery: 'Jimmie',
+        something: 'else',
       },
     };
 

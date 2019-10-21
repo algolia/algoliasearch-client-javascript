@@ -1,6 +1,7 @@
 import { Cache, NullCache } from '@algolia/cache-types';
 import { Logger, NullLogger } from '@algolia/logger-types';
 import { Requester } from '@algolia/requester-types';
+
 import {
   Call,
   Host,
@@ -10,14 +11,12 @@ import {
   RequestOptions,
   RetryError,
   Timeouts,
-  Transporter as TransporterContract,
-} from '@algolia/transporter-types';
-
+} from '../';
 import { decision } from './concerns/decision';
 import { Deserializer } from './Deserializer';
 import { Serializer } from './Serializer';
 
-export class Transporter implements TransporterContract {
+export class Transporter {
   // eslint-disable-next-line functional/prefer-readonly-type
   public hosts!: Host[];
 
@@ -57,17 +56,12 @@ export class Transporter implements TransporterContract {
     this.headers = options.headers !== undefined ? options.headers : {};
     this.queryParameters = options.queryParameters !== undefined ? options.queryParameters : {};
     this.hosts = options.hosts !== undefined ? options.hosts : [];
-
     this.requester = options.requester;
     this.timeouts = options.timeouts;
-
     this.logger = options.logger !== undefined ? options.logger : new NullLogger();
-
     this.responsesCache =
       options.responsesCache !== undefined ? options.responsesCache : new NullCache();
-
     this.hostsCache = options.hostsCache !== undefined ? options.hostsCache : new NullCache();
-
     this.requestsCache =
       options.requestsCache !== undefined ? options.requestsCache : new NullCache();
   }

@@ -1,5 +1,5 @@
 import { encode } from '@algolia/support';
-import { Host, Request, RequestOptions } from '@algolia/transporter-types';
+import { Host, Request, RequestOptions } from '@algolia/transporter';
 
 export class Serializer {
   public static url(

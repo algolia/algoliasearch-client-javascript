@@ -1,5 +1,5 @@
 import { ConstructorOf } from '@algolia/support';
-import { popRequestOption, RequestOptions } from '@algolia/transporter-types';
+import { popRequestOption, RequestOptions } from '@algolia/transporter';
 
 import { ObjectNotFoundError } from '../../errors/ObjectNotFoundError';
 import { SearchIndex } from '../../SearchIndex';

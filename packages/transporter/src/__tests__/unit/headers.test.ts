@@ -1,4 +1,4 @@
-import { Transporter } from '@algolia/transporter-types';
+import { Transporter } from '@algolia/transporter';
 import { anything, deepEqual, mock, verify, when } from 'ts-mockito';
 
 import { FakeRequester, Fixtures } from '../Fixtures';
@@ -62,6 +62,7 @@ describe('The selection of headers', () => {
       },
     });
 
+    requesterRequest.url = 'https://read.com/save';
     requesterRequest.headers = {
       'X-Algolia-Application-Id': 'foo',
       'X-Default-Header': 'My custom header',

@@ -1,6 +1,6 @@
 import { Method } from '@algolia/requester-types';
 import { ConstructorOf } from '@algolia/support';
-import { mapRequestOptions, popRequestOption, RequestOptions } from '@algolia/transporter-types';
+import { mapRequestOptions, popRequestOption, RequestOptions } from '@algolia/transporter';
 
 import { SearchClient } from '../../SearchClient';
 import { GetLogsResponse } from '../types/GetLogsResponse';

@@ -1,6 +1,6 @@
 import { NullLogger } from '@algolia/logger-types';
 import { Method, Request as RequesterRequest, Requester, Response } from '@algolia/requester-types';
-import { Call, Host } from '@algolia/transporter-types';
+import { Call, Host } from '@algolia/transporter';
 import { instance } from 'ts-mockito';
 
 import { Transporter } from '../Transporter';

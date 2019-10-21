@@ -1,5 +1,4 @@
-import { Transporter } from '@algolia/transporter';
-import { UserAgent } from '@algolia/transporter-types';
+import { Transporter, UserAgent } from '@algolia/transporter';
 import { instance, mock } from 'ts-mockito';
 
 import { createAnalyticsClient } from '../../AnalyticsClient';

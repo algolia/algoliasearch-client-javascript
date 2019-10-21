@@ -1,6 +1,6 @@
 import { Method } from '@algolia/requester-types';
 import { ConstructorOf, encode, WaitablePromise } from '@algolia/support';
-import { mapRequestOptions, popRequestOption, RequestOptions } from '@algolia/transporter-types';
+import { mapRequestOptions, popRequestOption, RequestOptions } from '@algolia/transporter';
 
 import { SearchIndex } from '../../SearchIndex';
 import { SaveSynonymsOptions } from '../types/SaveSynonymsOptions';

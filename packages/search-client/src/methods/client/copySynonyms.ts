@@ -1,5 +1,5 @@
 import { ConstructorOf, WaitablePromise } from '@algolia/support';
-import { RequestOptions } from '@algolia/transporter-types';
+import { RequestOptions } from '@algolia/transporter';
 
 import { SearchClient } from '../../SearchClient';
 import { IndexOperationResponse } from '../types/IndexOperationResponse';

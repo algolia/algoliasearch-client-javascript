@@ -1,5 +1,5 @@
 import { ConstructorOf } from '@algolia/support';
-import { RequestOptions } from '@algolia/transporter-types';
+import { RequestOptions } from '@algolia/transporter';
 
 import { SearchClient } from '../../SearchClient';
 import { HasSearchForFacetValues, searchForFacetValues } from '../index/searchForFacetValues';

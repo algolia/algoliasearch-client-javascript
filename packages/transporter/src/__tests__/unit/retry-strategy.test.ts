@@ -1,4 +1,4 @@
-import { ApiError } from '@algolia/transporter-types';
+import { ApiError } from '@algolia/transporter';
 import { anything, deepEqual, mock, verify, when } from 'ts-mockito';
 
 import { FakeRequester, Fixtures, TestTransporter } from '../Fixtures';
