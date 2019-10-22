@@ -1,22 +1,16 @@
 import { Method } from '@algolia/requester-types';
 import { encode } from '@algolia/support';
 import { Faker } from '@algolia/support/src/__tests__/Faker';
-import { RequestOptions, Transporter, UserAgent } from '@algolia/transporter';
-import { anything, deepEqual, instance, mock, spy, verify, when } from 'ts-mockito';
+import { RequestOptions } from '@algolia/transporter';
+import { anything, deepEqual, spy, verify, when } from 'ts-mockito';
 
-import { createSearchClient } from '../../../../algoliasearch/src/presets/default';
+import algoliasearch from '../../../../algoliasearch/src/builds/browser';
 import { BatchAction } from '../../methods/types/BatchAction';
 import { SaveObjectsOptions } from '../../methods/types/SaveObjectsOptions';
 
-const transporterMock = mock(Transporter);
-const transporter = instance(transporterMock);
+const index = algoliasearch('appId', 'apiKey').initIndex('foo');
 
-const index = createSearchClient({
-  transporter,
-  appId: 'foo',
-  apiKey: 'bar',
-  userAgent: UserAgent.create('4.0.0'),
-}).initIndex('foo');
+const transporterMock = spy(index.transporter);
 
 const res: any = {
   objectIDs: ['1'],

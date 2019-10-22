@@ -1,15 +1,14 @@
-import { ApiError } from '@algolia/transporter';
+import { ApiError, Transporter } from '@algolia/transporter';
 import { anything, deepEqual, mock, verify, when } from 'ts-mockito';
 
-import { FakeRequester, Fixtures, TestTransporter } from '../Fixtures';
+import { FakeRequester, Fixtures } from '../Fixtures';
 
 let requester: FakeRequester;
-let transporter: TestTransporter;
+let transporter: Transporter;
 
 const transporterRequest = Fixtures.transporterRequest();
-const requesterRequest = Fixtures.requesterRequest();
 
-describe('The retry strategy', () => {
+describe('retry strategy', () => {
   beforeEach(() => {
     requester = mock(FakeRequester);
     transporter = Fixtures.transporter(requester);
@@ -22,10 +21,7 @@ describe('The retry strategy', () => {
   });
 
   it('Retries after a timeout', async () => {
-    requesterRequest.timeout = 30;
-    requesterRequest.url = 'https://write.com/save';
-
-    when(requester.send(deepEqual(requesterRequest))).thenResolve({
+    when(requester.send(deepEqual(Fixtures.writeRequest()))).thenResolve({
       content: '',
       status: 0,
       isTimedOut: true,
@@ -35,13 +31,11 @@ describe('The retry strategy', () => {
 
     verify(requester.send(anything())).twice();
 
-    expect(transporter._hosts.filter(host => host.isUp())).toHaveLength(3);
+    expect(transporter.hosts.filter(host => host.isUp())).toHaveLength(3);
   });
 
   it('Retries after a network error', async () => {
-    requesterRequest.timeout = 2;
-    requesterRequest.url = 'https://read.com/save';
-    when(requester.send(deepEqual(requesterRequest))).thenResolve({
+    when(requester.send(deepEqual(Fixtures.readRequest()))).thenResolve({
       content: '',
       status: 0,
       isTimedOut: false,
@@ -51,13 +45,11 @@ describe('The retry strategy', () => {
 
     verify(requester.send(anything())).twice();
 
-    expect(transporter._hosts.filter(host => host.isUp())).toHaveLength(2);
+    expect(transporter.hosts.filter(host => host.isUp())).toHaveLength(2);
   });
 
   it('Retries after a 1xx', async () => {
-    requesterRequest.timeout = 2;
-    requesterRequest.url = 'https://read.com/save';
-    when(requester.send(deepEqual(requesterRequest))).thenResolve({
+    when(requester.send(deepEqual(Fixtures.readRequest()))).thenResolve({
       content: '',
       status: 101,
       isTimedOut: false,
@@ -67,7 +59,7 @@ describe('The retry strategy', () => {
 
     verify(requester.send(anything())).twice();
 
-    expect(transporter._hosts.filter(host => host.isUp())).toHaveLength(2);
+    expect(transporter.hosts.filter(host => host.isUp())).toHaveLength(2);
   });
 
   it("Don't retry after a 2xx", async () => {
@@ -80,13 +72,11 @@ describe('The retry strategy', () => {
     expect(response.hits[0].name).toBe('Star Wars');
     verify(requester.send(anything())).once();
 
-    expect(transporter._hosts.filter(host => host.isUp())).toHaveLength(3);
+    expect(transporter.hosts.filter(host => host.isUp())).toHaveLength(3);
   });
 
   it('Retries after a 3xx', async () => {
-    requesterRequest.timeout = 2;
-    requesterRequest.url = 'https://read.com/save';
-    when(requester.send(deepEqual(requesterRequest))).thenResolve({
+    when(requester.send(deepEqual(Fixtures.readRequest()))).thenResolve({
       content: '',
       status: 300,
       isTimedOut: false,
@@ -96,13 +86,11 @@ describe('The retry strategy', () => {
 
     verify(requester.send(anything())).twice();
 
-    expect(transporter._hosts.filter(host => host.isUp())).toHaveLength(2);
+    expect(transporter.hosts.filter(host => host.isUp())).toHaveLength(2);
   });
 
   it('Dont retry after a 4xx', async () => {
-    requesterRequest.timeout = 30;
-    requesterRequest.url = 'https://write.com/save';
-    when(requester.send(deepEqual(requesterRequest))).thenResolve({
+    when(requester.send(deepEqual(Fixtures.writeRequest()))).thenResolve({
       content: JSON.stringify({
         message: 'Invalid Application ID',
         status: 404,
@@ -117,13 +105,11 @@ describe('The retry strategy', () => {
 
     verify(requester.send(anything())).once();
 
-    expect(transporter._hosts.filter(host => host.isUp())).toHaveLength(3);
+    expect(transporter.hosts.filter(host => host.isUp())).toHaveLength(3);
   });
 
   it('Retries after a 5xx', async () => {
-    requesterRequest.timeout = 30;
-    requesterRequest.url = 'https://write.com/save';
-    when(requester.send(deepEqual(requesterRequest))).thenResolve({
+    when(requester.send(deepEqual(Fixtures.writeRequest()))).thenResolve({
       content: '',
       status: 500,
       isTimedOut: false,
@@ -133,6 +119,6 @@ describe('The retry strategy', () => {
 
     verify(requester.send(anything())).twice();
 
-    expect(transporter._hosts.filter(host => host.isUp())).toHaveLength(2);
+    expect(transporter.hosts.filter(host => host.isUp())).toHaveLength(2);
   });
 });

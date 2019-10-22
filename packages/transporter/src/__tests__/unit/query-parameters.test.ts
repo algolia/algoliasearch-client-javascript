@@ -1,4 +1,3 @@
-import { BrowserXhrRequester } from '@algolia/requester-browser-xhr';
 import { anything, deepEqual, mock, verify, when } from 'ts-mockito';
 
 import { Transporter } from '../../Transporter';
@@ -19,34 +18,22 @@ beforeEach(() => {
 });
 
 const transporterRequest = Fixtures.transporterRequest();
-const requesterRequest = Fixtures.requesterRequest();
 
 describe('Usage of query parameters', () => {
-  it('allows to created with query parameters', () => {
-    const testTransporter = new Transporter({
-      timeouts: {
-        read: 0,
-        write: 0,
-      },
-      requester: new BrowserXhrRequester(),
-      queryParameters: { foo: 'bar' },
-    });
-
-    expect(testTransporter).toBeInstanceOf(Transporter);
-    expect(testTransporter.queryParameters).toEqual({ foo: 'bar' });
-  });
-
   it('allows to set query parameters', async () => {
-    transporter.queryParameters = {
-      'x-foo': 'foo',
-    };
+    transporter.addQueryParameters({ 'x-foo': 'foo' });
 
     await transporter.write(transporterRequest);
 
-    requesterRequest.url = 'https://write.com/save?x-foo=foo';
-    requesterRequest.timeout = 30;
-
-    verify(requester.send(deepEqual(requesterRequest))).once();
+    verify(
+      requester.send(
+        deepEqual(
+          Fixtures.writeRequest({
+            url: 'https://write.com/save?x-foo=foo',
+          })
+        )
+      )
+    ).once();
   });
 
   it('allows to add query parameters per read/write', async () => {
@@ -56,10 +43,15 @@ describe('Usage of query parameters', () => {
       },
     });
 
-    requesterRequest.url = 'https://read.com/save?x-bar=bar';
-    requesterRequest.timeout = 2;
-
-    verify(requester.send(deepEqual(requesterRequest))).once();
+    verify(
+      requester.send(
+        deepEqual(
+          Fixtures.readRequest({
+            url: 'https://read.com/save?x-bar=bar',
+          })
+        )
+      )
+    ).once();
   });
 
   it('allows to add query parameters per read/write and override the default ones', async () => {
@@ -70,9 +62,14 @@ describe('Usage of query parameters', () => {
       },
     });
 
-    requesterRequest.url = 'https://read.com/save?x-foo=My%20custom%20foo&x-bar=My%20custom%20bar';
-    requesterRequest.timeout = 2;
-
-    verify(requester.send(deepEqual(requesterRequest))).once();
+    verify(
+      requester.send(
+        deepEqual(
+          Fixtures.readRequest({
+            url: 'https://read.com/save?x-foo=My%20custom%20foo&x-bar=My%20custom%20bar',
+          })
+        )
+      )
+    ).once();
   });
 });

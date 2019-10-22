@@ -7,16 +7,9 @@ export class Host {
   // eslint-disable-next-line functional/prefer-readonly-type
   public downDate: number = 0;
 
-  public readonly url: string;
-
-  public readonly accept: CallType;
-
   private static readonly TTL = 3000;
 
-  public constructor(options: { readonly url: string; readonly accept: CallType }) {
-    this.url = options.url;
-    this.accept = options.accept;
-  }
+  public constructor(public readonly url: string, public readonly accept: CallType) {}
 
   public setAsDown(): void {
     // eslint-disable-next-line functional/immutable-data

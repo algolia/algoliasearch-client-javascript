@@ -1,37 +1,31 @@
 import { Auth, AuthMode } from '@algolia/auth';
 import { ComposableOptions, compose } from '@algolia/support';
-import { Call, Host, Transporter, UserAgent } from '@algolia/transporter';
+import { Call, Transporter, TransporterOptions } from '@algolia/transporter';
 
 export class AnalyticsClient {
   public readonly appId: string;
 
   public readonly transporter: Transporter;
 
-  public constructor(options: AnalyticsClientOptions) {
+  public constructor(options: AnalyticsClientOptions & TransporterOptions) {
     this.appId = options.appId;
-    this.transporter = options.transporter;
 
     const region = options.region !== undefined ? options.region : 'us';
-    this.transporter.hosts = [
-      new Host({ url: `analytics.${region}.algolia.com`, accept: Call.Any }),
-    ];
-
     const auth = new Auth(AuthMode.WithinHeaders, this.appId, options.apiKey);
 
-    this.transporter.headers = {
+    this.transporter = new Transporter(options);
+
+    this.transporter.setHosts([{ url: `analytics.${region}.algolia.com`, accept: Call.Any }]);
+    this.transporter.addHeaders({
       ...auth.headers(),
       ...{ 'content-type': 'application/json' },
-    };
-
-    this.transporter.queryParameters = {
-      ...auth.queryParameters(),
-      ...{ 'x-algolia-agent': options.userAgent.value },
-    };
+    });
+    this.transporter.addQueryParameters(auth.queryParameters());
   }
 }
 
 export const createAnalyticsClient = <TAnalyticsClient>(
-  options: AnalyticsClientOptions & ComposableOptions
+  options: AnalyticsClientOptions & TransporterOptions & ComposableOptions
 ): TAnalyticsClient & AnalyticsClient => {
   const Client = compose<TAnalyticsClient & AnalyticsClient>(
     AnalyticsClient,
@@ -44,7 +38,5 @@ export const createAnalyticsClient = <TAnalyticsClient>(
 type AnalyticsClientOptions = {
   readonly appId: string;
   readonly apiKey: string;
-  readonly transporter: Transporter;
-  readonly userAgent: UserAgent;
   readonly region?: string;
 };

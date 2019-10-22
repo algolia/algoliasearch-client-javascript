@@ -4,7 +4,7 @@ import { InMemoryCache } from '@algolia/cache-in-memory';
 import { ConsoleLogger } from '@algolia/logger-console';
 import { LogLevel } from '@algolia/logger-types';
 import { BrowserXhrRequester } from '@algolia/requester-browser-xhr';
-import { Transporter, UserAgent } from '@algolia/transporter';
+import { UserAgent } from '@algolia/transporter';
 
 import { createSearchClient, SearchClient } from '../presets/lite';
 import { AlgoliaSearchOptions } from '../types';
@@ -14,10 +14,10 @@ export default function algoliasearch(
   apiKey: string,
   options: AlgoliaSearchOptions = {}
 ): SearchClient {
-  const requester = new BrowserXhrRequester();
-
-  const transporter = new Transporter({
-    requester,
+  return createSearchClient({
+    appId,
+    apiKey,
+    requester: new BrowserXhrRequester(),
     timeouts: {
       read: 1,
       write: 30,
@@ -26,12 +26,6 @@ export default function algoliasearch(
     responsesCache: new InMemoryCache(),
     requestsCache: new InMemoryCache(),
     hostsCache: new BrowserLocalStorageCache(),
-  });
-
-  return createSearchClient({
-    appId,
-    apiKey,
-    transporter,
     userAgent: UserAgent.create('4.0.0-alpha.0').with({ segment: 'Browser', version: 'lite' }),
     authMode: AuthMode.WithinQueryParameters,
   });

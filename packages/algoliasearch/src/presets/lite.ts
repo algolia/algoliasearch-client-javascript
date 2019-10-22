@@ -15,6 +15,7 @@ import {
 import { SearchClientOptions } from '@algolia/search-client/src/SearchClient';
 import { SearchIndex as SearchIndexPreset } from '@algolia/search-client/src/SearchIndex';
 import { compose } from '@algolia/support';
+import { TransporterOptions } from '@algolia/transporter';
 
 export type SearchClient = SearchClientPreset &
   HasMultipleQueries &
@@ -35,7 +36,9 @@ export class SearchClientPreset extends BaseSearchClient {
   }
 }
 
-export const createSearchClient = (options: SearchClientOptions): SearchClient => {
+export const createSearchClient = (
+  options: SearchClientOptions & TransporterOptions
+): SearchClient => {
   const Client = compose<SearchClient>(
     SearchClientPreset,
     { methods: methods.searchClient }

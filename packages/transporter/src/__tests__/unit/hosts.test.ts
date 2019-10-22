@@ -1,6 +1,7 @@
 import { Transporter } from '@algolia/transporter';
 import { anything, deepEqual, mock, verify, when } from 'ts-mockito';
 
+import { RetryError } from '../../errors/RetryError';
 import { FakeRequester, Fixtures } from '../Fixtures';
 
 let requester: FakeRequester;
@@ -18,49 +19,39 @@ beforeEach(() => {
 });
 
 const transporterRequest = Fixtures.transporterRequest();
-const requesterRequest = Fixtures.requesterRequest();
 
 describe('The selection of hosts', (): void => {
   it('Select only readable hosts when calling the `read` method', async () => {
-    expect.assertions(1);
-    try {
-      await transporter.read(transporterRequest);
-    } catch (e) {
-      expect(e.message).toMatch(
-        'Unreachable hosts - your application id may be incorrect. If the error persists, contact support@algolia.com.'
-      );
+    await expect(transporter.read(transporterRequest)).rejects.toEqual(new RetryError());
 
-      requesterRequest.timeout = 2;
-      requesterRequest.url = 'https://read.com/save';
-      verify(requester.send(deepEqual(requesterRequest))).once();
-
-      requesterRequest.url = 'https://write.com/save';
-      verify(requester.send(deepEqual(requesterRequest))).never();
-
-      requesterRequest.url = 'https://read-and-write.com/save';
-      verify(requester.send(deepEqual(requesterRequest))).once();
-    }
+    verify(requester.send(deepEqual(Fixtures.readRequest()))).once();
+    verify(requester.send(deepEqual(Fixtures.writeRequest()))).never();
+    verify(
+      requester.send(
+        deepEqual(
+          Fixtures.writeAndWriteRequest({
+            timeout: 2,
+            url: 'https://read-and-write.com/save',
+          })
+        )
+      )
+    ).once();
   });
 
   it('Select only writable hosts when calling the `write` method', async () => {
-    expect.assertions(1);
+    await expect(transporter.write(transporterRequest)).rejects.toEqual(new RetryError());
 
-    try {
-      await transporter.write(transporterRequest);
-    } catch (e) {
-      expect(e.message).toMatch(
-        'Unreachable hosts - your application id may be incorrect. If the error persists, contact support@algolia.com.'
-      );
-
-      requesterRequest.timeout = 30;
-      requesterRequest.url = 'https://read.com/save';
-      verify(requester.send(deepEqual(requesterRequest))).never();
-
-      requesterRequest.url = 'https://write.com/save';
-      verify(requester.send(deepEqual(requesterRequest))).once();
-
-      requesterRequest.url = 'https://read-and-write.com/save';
-      verify(requester.send(deepEqual(requesterRequest))).once();
-    }
+    verify(requester.send(deepEqual(Fixtures.readRequest()))).never();
+    verify(requester.send(deepEqual(Fixtures.writeRequest()))).once();
+    verify(
+      requester.send(
+        deepEqual(
+          Fixtures.writeRequest({
+            timeout: 30,
+            url: 'https://read-and-write.com/save',
+          })
+        )
+      )
+    ).once();
   });
 });

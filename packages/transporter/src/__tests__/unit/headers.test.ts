@@ -18,23 +18,27 @@ beforeEach(() => {
 });
 
 const transporterRequest = Fixtures.transporterRequest();
-const requesterRequest = Fixtures.requesterRequest();
 
 describe('The selection of headers', () => {
-  it('Allows override default headers', async () => {
-    transporter.headers = {
+  it('Allows add extra headers', async () => {
+    transporter.addHeaders({
       'X-Algolia-Application-Id': 'foo',
-    };
+    });
 
     await transporter.write(transporterRequest);
 
-    requesterRequest.url = 'https://write.com/save';
-    requesterRequest.timeout = 30;
-    requesterRequest.headers = {
-      'X-Algolia-Application-Id': 'foo',
-    };
-
-    verify(requester.send(deepEqual(requesterRequest))).once();
+    verify(
+      requester.send(
+        deepEqual(
+          Fixtures.writeRequest({
+            headers: {
+              'X-Default-Header': 'Default value',
+              'X-Algolia-Application-Id': 'foo',
+            },
+          })
+        )
+      )
+    ).once();
   });
 
   it('Allows to add headers per read/write', async () => {
@@ -44,14 +48,18 @@ describe('The selection of headers', () => {
       },
     });
 
-    requesterRequest.url = 'https://read.com/save';
-    requesterRequest.timeout = 2;
-    requesterRequest.headers = {
-      'X-Algolia-Application-Id': 'foo',
-      'X-Default-Header': 'Default value',
-    };
-
-    verify(requester.send(deepEqual(requesterRequest))).once();
+    verify(
+      requester.send(
+        deepEqual(
+          Fixtures.readRequest({
+            headers: {
+              'X-Algolia-Application-Id': 'foo',
+              'X-Default-Header': 'Default value',
+            },
+          })
+        )
+      )
+    ).once();
   });
 
   it('Allows to add headers per read/write and override the default ones', async () => {
@@ -62,12 +70,17 @@ describe('The selection of headers', () => {
       },
     });
 
-    requesterRequest.url = 'https://read.com/save';
-    requesterRequest.headers = {
-      'X-Algolia-Application-Id': 'foo',
-      'X-Default-Header': 'My custom header',
-    };
-
-    verify(requester.send(deepEqual(requesterRequest))).once();
+    verify(
+      requester.send(
+        deepEqual(
+          Fixtures.readRequest({
+            headers: {
+              'X-Algolia-Application-Id': 'foo',
+              'X-Default-Header': 'My custom header',
+            },
+          })
+        )
+      )
+    ).once();
   });
 });

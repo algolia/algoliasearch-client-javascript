@@ -1,5 +1,3 @@
-/* eslint sonarjs/cognitive-complexity: 0 */ // --> OFF
-
 import { BrowserLocalStorageCache } from '@algolia/cache-browser-local-storage';
 import { InMemoryCache } from '@algolia/cache-in-memory';
 import { Cache, NullCache } from '@algolia/cache-types';

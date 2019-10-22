@@ -18,42 +18,47 @@ beforeEach(() => {
 });
 
 const transporterRequest = Fixtures.transporterRequest();
-const requesterRequest = Fixtures.requesterRequest();
 
-describe('The selection timeouts', () => {
+describe('the timeouts selection', () => {
   it('Uses read default value', async () => {
     await transporter.read(transporterRequest);
 
-    requesterRequest.timeout = 2;
-    requesterRequest.url = 'https://read.com/save';
-    verify(requester.send(deepEqual(requesterRequest))).once();
+    verify(requester.send(deepEqual(Fixtures.readRequest()))).once();
     verify(requester.send(anything())).once();
   });
 
   it('Uses write default value', async () => {
     await transporter.write(transporterRequest);
-
-    requesterRequest.timeout = 30;
-    requesterRequest.url = 'https://write.com/save';
-    verify(requester.send(deepEqual(requesterRequest))).once();
+    verify(requester.send(deepEqual(Fixtures.writeRequest()))).once();
     verify(requester.send(anything())).once();
   });
 
   it('Uses overrides read default value with request options', async () => {
     await transporter.read(transporterRequest, { timeout: 5 });
 
-    requesterRequest.timeout = 5;
-    requesterRequest.url = 'https://read.com/save';
-    verify(requester.send(deepEqual(requesterRequest))).once();
+    verify(
+      requester.send(
+        deepEqual(
+          Fixtures.readRequest({
+            timeout: 5,
+          })
+        )
+      )
+    ).once();
     verify(requester.send(anything())).once();
   });
 
   it('Uses overrides write default value with request options', async () => {
     await transporter.write(transporterRequest, { timeout: 25 });
-
-    requesterRequest.timeout = 25;
-    requesterRequest.url = 'https://write.com/save';
-    verify(requester.send(deepEqual(requesterRequest))).once();
+    verify(
+      requester.send(
+        deepEqual(
+          Fixtures.writeRequest({
+            timeout: 25,
+          })
+        )
+      )
+    ).once();
     verify(requester.send(anything())).once();
   });
 
@@ -69,13 +74,17 @@ describe('The selection timeouts', () => {
 
     await expect(transporter.read(transporterRequest)).rejects.toEqual(new RetryError());
 
-    requesterRequest.timeout = 2;
-    requesterRequest.url = 'https://read.com/save';
-    verify(requester.send(deepEqual(requesterRequest))).once();
-
-    requesterRequest.timeout = 4;
-    requesterRequest.url = 'https://read-and-write.com/save';
-    verify(requester.send(deepEqual(requesterRequest))).once();
+    verify(requester.send(deepEqual(Fixtures.readRequest()))).once();
+    verify(
+      requester.send(
+        deepEqual(
+          Fixtures.readRequest({
+            url: 'https://read-and-write.com/save',
+            timeout: 4,
+          })
+        )
+      )
+    ).once();
     verify(requester.send(anything())).twice();
   });
 
@@ -95,8 +104,14 @@ describe('The selection timeouts', () => {
       })
     ).resolves.toEqual({});
 
-    requesterRequest.timeout = 0;
-    requesterRequest.url = 'https://read.com/save';
-    verify(requester.send(deepEqual(requesterRequest))).once();
+    verify(
+      requester.send(
+        deepEqual(
+          Fixtures.readRequest({
+            timeout: 0,
+          })
+        )
+      )
+    ).once();
   });
 });

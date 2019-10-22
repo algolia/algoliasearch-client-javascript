@@ -1,24 +1,15 @@
-import { Transporter, UserAgent } from '@algolia/transporter';
-import { instance, mock } from 'ts-mockito';
+import { Transporter } from '@algolia/transporter';
 
-import { createAnalyticsClient } from '../../AnalyticsClient';
+import algoliasearch from '../../../../algoliasearch/src/builds/browser';
 
-const transporterMock = mock(Transporter);
-const transporter = instance(transporterMock);
-
-const analyticsClient = createAnalyticsClient({
-  transporter: instance(transporterMock),
-  appId: 'appId',
-  apiKey: 'apiKey',
-  userAgent: UserAgent.create('4.0.0-alpha.0'),
-});
+const analyticsClient = algoliasearch('appId', 'apiKey').initAnalytics();
 
 describe('Search Client', () => {
   it('Gives access to transporter', () => {
-    expect(analyticsClient.transporter).toBe(transporter);
+    expect(analyticsClient.transporter).toBeInstanceOf(Transporter);
   });
 
-  it('uses region', () => {
+  it('uses region to define the host', () => {
     expect(analyticsClient.transporter.hosts[0].url).toBe('analytics.us.algolia.com');
   });
 
@@ -27,14 +18,12 @@ describe('Search Client', () => {
   });
 
   it('Sets default headers', () => {
-    expect(transporter.headers).toEqual({
+    expect(analyticsClient.transporter.headers).toEqual({
       'content-type': 'application/json',
       'x-algolia-application-id': 'appId',
       'x-algolia-api-key': 'apiKey',
     });
 
-    expect(transporter.queryParameters).toEqual({
-      'x-algolia-agent': 'Algolia for JavaScript (4.0.0-alpha.0)',
-    });
+    expect(analyticsClient.transporter.queryParameters).toEqual({});
   });
 });
