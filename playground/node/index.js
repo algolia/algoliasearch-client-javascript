@@ -1,4 +1,3 @@
-const algoliasearch = require('../../packages/algoliasearch/dist/algoliasearch.cjs.min');
+const algoliasearch = require ('../../packages/algoliasearch');
 
-const index = algoliasearch()
-
+const client = algoliasearch('appId', 'apiKey');
