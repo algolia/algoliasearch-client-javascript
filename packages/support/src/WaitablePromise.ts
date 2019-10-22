@@ -31,5 +31,5 @@ export class WaitablePromise<TResponse> extends Promise<TResponse> {
 
 export type OnWaitClosure<TResponse> = (
   result: TResponse,
-  requestOptions: RequestOptions
+  requestOptions?: RequestOptions
 ) => Readonly<Promise<any>>;

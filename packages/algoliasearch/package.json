@@ -11,6 +11,7 @@
   "license": "MIT",
   "description": "test",
   "scripts": {
+    "test:types": "tsc -p tsconfig.test.json --noEmit",
     "build": "yarn build:umd",
     "build:umd": "BABEL_ENV=rollup rollup -c rollup.config.js",
     "release:clean": "rm -rf dist",

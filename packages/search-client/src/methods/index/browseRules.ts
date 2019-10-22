@@ -4,6 +4,7 @@ import { RequestOptions } from '@algolia/transporter';
 import { BrowsablePromise } from '../../BrowsablePromise';
 import { SearchIndex } from '../../SearchIndex';
 import { BrowseOptions } from '../types/BrowseOptions';
+import { BrowseResponse } from '../types/BrowseResponse';
 import { Rule } from '../types/Rule';
 import { SearchRulesOptions } from '../types/SearchRulesOptions';
 import { HasSearchRules, searchRules } from './searchRules';
@@ -18,25 +19,29 @@ export const browseRules = <TSearchIndex extends ConstructorOf<SearchIndex>>(
     public browseRules(
       requestOptions?: SearchRulesOptions & BrowseOptions<Rule> & RequestOptions
     ): Readonly<BrowsablePromise<Rule>> {
-      const hitsPerPage =
-        requestOptions.hitsPerPage === undefined ? 1000 : requestOptions.hitsPerPage;
+      const options = {
+        hitsPerPage: 1000,
+        ...requestOptions,
+      };
 
       return BrowsablePromise.from<Rule>({
-        ...requestOptions,
-        shouldStop: response => response.hits.length < hitsPerPage,
-        request: (data: { readonly query: string }) => {
-          return this.searchRules(data.query, requestOptions).then(response => {
-            return {
-              ...response,
-              hits: response.hits.map(rule => {
-                // @ts-ignore
-                // eslint-disable-next-line functional/immutable-data,no-param-reassign
-                delete rule._highlightResult;
+        ...options,
+        shouldStop: response => response.hits.length < options.hitsPerPage,
+        request: data => {
+          return this.searchRules('', { ...requestOptions, ...data }).then(
+            (response): BrowseResponse<Rule> => {
+              return {
+                ...response,
+                hits: response.hits.map(rule => {
+                  // @ts-ignore
+                  // eslint-disable-next-line functional/immutable-data,no-param-reassign
+                  delete rule._highlightResult;
 
-                return rule;
-              }),
-            };
-          });
+                  return rule;
+                }),
+              };
+            }
+          );
         },
       });
     }

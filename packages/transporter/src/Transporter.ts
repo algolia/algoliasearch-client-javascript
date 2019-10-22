@@ -44,7 +44,13 @@ export class Transporter {
   private readonly timeouts: Timeouts;
 
   public constructor(options: TransporterOptions) {
-    Object.assign(this, options);
+    this.hostsCache = options.hostsCache;
+    this.logger = options.logger;
+    this.requester = options.requester;
+    this.requestsCache = options.requestsCache;
+    this.responsesCache = options.responsesCache;
+    this.timeouts = options.timeouts;
+    this.userAgent = options.userAgent;
   }
 
   public addHeaders(headers: { readonly [key: string]: string }): void {

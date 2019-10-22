@@ -1,3 +1,4 @@
+import { SearchOptions } from '@algolia/analytics-client/src/methods/types/SearchOptions';
 import { ConstructorOf } from '@algolia/support';
 import { RequestOptions } from '@algolia/transporter';
 
@@ -14,21 +15,26 @@ export const multipleSearchForFacetValues = <TSearchClient extends ConstructorOf
     public multipleSearchForFacetValues(
       queries: ReadonlyArray<{
         readonly indexName: string;
-        readonly params: SearchForFacetValuesQueryParams;
+        readonly params: SearchForFacetValuesQueryParams & SearchOptions;
       }>,
       requestOptions?: RequestOptions
     ): Readonly<Promise<readonly SearchForFacetValuesResponse[]>> {
       return Promise.all(
         queries.map(query => {
-          const params = Object.keys(query.params)
-            .filter(key => !['facetName', 'facetQuery'].includes(key))
-            .map(key => {
-              return query.params[key];
-            });
+          const params = Object.assign({}, query.params);
+          const facetName = params.facetName;
+          const facetQuery = params.facetQuery;
+
+          // @ts-ignore
+          // eslint-disable-next-line functional/immutable-data, no-param-reassign
+          delete params.facetName;
+          // @ts-ignore
+          // eslint-disable-next-line functional/immutable-data, no-param-reassign
+          delete params.facetQuery;
 
           return this.initIndex<HasSearchForFacetValues>(query.indexName, {
             methods: [searchForFacetValues],
-          }).searchForFacetValues(query.params.facetName, query.params.facetQuery, {
+          }).searchForFacetValues(facetName, facetQuery, {
             ...requestOptions,
             ...params,
           });

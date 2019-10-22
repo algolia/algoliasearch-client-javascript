@@ -32,7 +32,7 @@ export const searchRules = <TSearchIndex extends ConstructorOf<SearchIndex>>(
 
 export type HasSearchRules = {
   readonly searchRules: (
-    query?: string,
+    query: string,
     requestOptions?: SearchRulesOptions & RequestOptions
   ) => Readonly<Promise<SearchResponse<Rule>>>;
 };

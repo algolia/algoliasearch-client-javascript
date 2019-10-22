@@ -79,7 +79,7 @@ export const replaceAllObjects = <TSearchIndex extends ConstructorOf<SearchIndex
       from: string,
       to: string,
       type: string,
-      requestOptions: RequestOptions
+      requestOptions?: RequestOptions
     ): Readonly<WaitablePromise<IndexOperationResponse>> {
       return WaitablePromise.from<IndexOperationResponse>(
         this.transporter.write(

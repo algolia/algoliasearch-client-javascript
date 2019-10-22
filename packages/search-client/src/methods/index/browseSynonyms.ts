@@ -4,6 +4,7 @@ import { RequestOptions } from '@algolia/transporter';
 import { BrowsablePromise } from '../../BrowsablePromise';
 import { SearchIndex } from '../../SearchIndex';
 import { BrowseOptions } from '../types/BrowseOptions';
+import { BrowseResponse } from '../types/BrowseResponse';
 import { SearchSynonymsOptions } from '../types/SearchSynonymsOptions';
 import { Synonym } from '../types/Synonym';
 import { HasSearchSynonyms, searchSynonyms } from './searchSynonyms';
@@ -18,25 +19,29 @@ export const browseSynonyms = <TSearchIndex extends ConstructorOf<SearchIndex>>(
     public browseSynonyms(
       requestOptions?: SearchSynonymsOptions & BrowseOptions<Synonym> & RequestOptions
     ): Readonly<BrowsablePromise<Synonym>> {
-      const hitsPerPage =
-        requestOptions.hitsPerPage === undefined ? 1000 : requestOptions.hitsPerPage;
+      const options = {
+        hitsPerPage: 1000,
+        ...requestOptions,
+      };
 
       return BrowsablePromise.from<Synonym>({
-        ...requestOptions,
-        shouldStop: response => response.hits.length < hitsPerPage,
-        request: (data: { readonly query: string }) => {
-          return this.searchSynonyms(data.query, requestOptions).then(response => {
-            return {
-              ...response,
-              hits: response.hits.map(synonym => {
-                // @ts-ignore
-                // eslint-disable-next-line functional/immutable-data,no-param-reassign
-                delete synonym._highlightResult;
+        ...options,
+        shouldStop: response => response.hits.length < options.hitsPerPage,
+        request: data => {
+          return this.searchSynonyms('', { ...requestOptions, ...data }).then(
+            (response): BrowseResponse<Synonym> => {
+              return {
+                ...response,
+                hits: response.hits.map(synonym => {
+                  // @ts-ignore
+                  // eslint-disable-next-line functional/immutable-data,no-param-reassign
+                  delete synonym._highlightResult;
 
-                return synonym;
-              }),
-            };
-          });
+                  return synonym;
+                }),
+              };
+            }
+          );
         },
       });
     }

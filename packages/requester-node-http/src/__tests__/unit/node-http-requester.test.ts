@@ -1,5 +1,5 @@
 import { Method, Request } from '@algolia/requester-types';
-import * as nock from 'nock';
+import nock from 'nock';
 
 import { NodeHttpRequester } from '../../..';
 import Fixtures from '../Fixtures';

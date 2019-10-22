@@ -1,6 +1,6 @@
 import { ObjectWithObjectID } from './ObjectWithObjectID';
 
-export type SearchResponse<TObject> = {
+export type SearchResponse<TObject = {}> = {
   readonly hits: ReadonlyArray<TObject & ObjectWithObjectID>;
   readonly page: number;
   readonly length?: number;

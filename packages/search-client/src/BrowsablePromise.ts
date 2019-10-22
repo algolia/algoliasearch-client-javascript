@@ -5,14 +5,16 @@ export class BrowsablePromise<TObject> extends Promise<TObject> {
   public static from<TObject>(
     options: {
       readonly shouldStop: (response: BrowseResponse<TObject>) => boolean;
-      readonly request: (data: object) => Readonly<Promise<BrowseResponse<TObject>>>;
+      readonly request: (data: {
+        readonly page: number;
+      }) => Readonly<Promise<BrowseResponse<TObject>>>;
     } & BrowseOptions<TObject>
   ): BrowsablePromise<TObject> {
     return new BrowsablePromise<TObject>(resolve => {
       const data = { page: 0 };
 
       // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-      const browse = () => {
+      const browse = (): Promise<void> => {
         return options.request(data).then(response => {
           if (options.batch !== undefined) {
             options.batch(response.hits);
