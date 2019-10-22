@@ -1,4 +1,4 @@
-import { CallType } from '@algolia/transporter/src/Call';
+import { CallType } from '../';
 
 export class Host {
   // eslint-disable-next-line functional/prefer-readonly-type

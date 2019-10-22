@@ -75,7 +75,7 @@ export const replaceAllObjects = <TSearchIndex extends ConstructorOf<SearchIndex
       });
     }
 
-    private operation(
+    public operation(
       from: string,
       to: string,
       type: string,

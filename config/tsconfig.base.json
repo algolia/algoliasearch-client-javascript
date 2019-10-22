@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "noEmit": true,
     "declaration": true,
     "declarationMap": false,
     "esModuleInterop": true,
@@ -19,6 +20,6 @@
     "rootDir": "../."
   },
   "preserveSymlinks": true,
-  "include": ["../**/src/**/*.ts"],
-  "exclude": ["../**/__tests__/**/*.ts", "../**/node_modules/**", "../**/specs/**/*.ts"]
+  "include": ["../packages/**/src/**/*.ts"],
+  "exclude": ["../packages/**/src/__tests__/**/*.ts", "**/node_modules/**"]
 }

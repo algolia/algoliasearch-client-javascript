@@ -1,6 +1,10 @@
 {
   "extends": "../../config/tsconfig.base.json",
   "compilerOptions": {
+    "allowJs": false,
+    "noEmit": false,
+    "emitDeclarationOnly": true,
+    "module": "amd",
     "outFile": "dist/index.d.ts",
   }
 }

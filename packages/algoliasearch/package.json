@@ -8,13 +8,12 @@
   },
   "jsdelivr": "./dist/algoliasearch.umd.min.js",
   "private": false,
-  "version": "4.0.0-alpha.13",
+  "version": "4.0.0-alpha.14",
   "license": "MIT",
   "description": "test",
   "scripts": {
-    "build": "tsc & BABEL_ENV=rollup rollup -c rollup.config.js",
+    "release:build": "tsc && BABEL_ENV=rollup rollup -c rollup.config.js",
     "release:clean": "rm -rf dist",
-    "release:build": "mkdir -p dist && yarn build",
     "release:alpha": "yarn publish --verbose --access public",
     "release:stable": ""
   }

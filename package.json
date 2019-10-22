@@ -80,8 +80,8 @@
     "update": "rm -rf node_modules && rm -f yarn.lock && yarn && lerna clean --yes",
     "release:clean": "lerna run release:clean",
     "release:build": "lerna run release:build",
-    "release:alpha": "lerna run release:alpha",
-    "release:stable": "lerna run release:stable"
+    "release:alpha": "cd packages/algoliasearch && yarn release:alpha && cd ../../",
+    "release:stable": "cd packages/algoliasearch && lerna run release:stable && cd ../../"
   },
   "husky": {
     "hooks": {
