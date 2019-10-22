@@ -74,12 +74,14 @@
     "test:locally": "lerna clean --yes && yarn lint && yarn test:types && yarn test:unit",
     "test:size": "bundlesize",
     "test:build": "yarn build && yarn test:size",
-    "test:types": "lerna run tsc",
+    "test:types": "yarn tsc",
     "test:unit": "lerna clean --yes && jest --verbose --updateSnapshot",
     "playground": "yarn build && ./scripts/prepare-playground.sh && yarn serve",
     "update": "rm -rf node_modules && rm -f yarn.lock && yarn && lerna clean --yes",
     "release:clean": "lerna run release:clean",
-    "release:build": "lerna run release:build"
+    "release:build": "lerna run release:build",
+    "release:alpha": "lerna run release:alpha",
+    "release:stable": "lerna run release:stable"
   },
   "husky": {
     "hooks": {

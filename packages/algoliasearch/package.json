@@ -1,6 +1,7 @@
 {
   "name": "@nunomaduro/lightsearch",
   "main": "index.js",
+  "typings": "./dist/index.d.ts",
   "browser": {
     "./index.js": "./dist/algoliasearch.umd.min.js",
     "./lite.js": "./dist/algoliasearch-lite.umd.min.js"
@@ -11,12 +12,10 @@
   "license": "MIT",
   "description": "test",
   "scripts": {
-    "test:types": "tsc -p tsconfig.test.json --noEmit",
-    "build": "yarn build:umd",
-    "build:umd": "BABEL_ENV=rollup rollup -c rollup.config.js",
+    "build": "tsc & BABEL_ENV=rollup rollup -c rollup.config.js",
     "release:clean": "rm -rf dist",
     "release:build": "mkdir -p dist && yarn build",
-    "release:stable": "",
-    "release:alpha": "yarn publish --verbose --access public"
+    "release:alpha": "yarn publish --verbose --access public",
+    "release:stable": ""
   }
 }
