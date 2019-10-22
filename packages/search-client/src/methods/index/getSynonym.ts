@@ -24,7 +24,7 @@ export const getSynonym = <TSearchIndex extends ConstructorOf<SearchIndex>>(base
 };
 
 export type HasGetSynonym = {
-  readonly getSynonym: <TObject>(
+  readonly getSynonym: (
     objectID: string,
     requestOptions?: RequestOptions
   ) => Readonly<Promise<Synonym>>;
