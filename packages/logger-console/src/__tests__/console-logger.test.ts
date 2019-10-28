@@ -3,7 +3,7 @@
 import { LogLevel } from '@algolia/logger-types';
 import mockConsole from 'jest-mock-console';
 
-import { ConsoleLogger } from '../ConsoleLogger';
+import { createConsoleLogger } from '../createConsoleLogger';
 
 describe('console logger', () => {
   beforeEach(() => {
@@ -11,7 +11,7 @@ describe('console logger', () => {
   });
 
   it('respects log level type debug', () => {
-    const logger = new ConsoleLogger(LogLevel.Debug);
+    const logger = createConsoleLogger(LogLevel.Debug);
 
     logger.debug('foo', {});
     logger.info('foo', {});
@@ -23,7 +23,7 @@ describe('console logger', () => {
   });
 
   it('respects log level type info', () => {
-    const logger = new ConsoleLogger(LogLevel.Info);
+    const logger = createConsoleLogger(LogLevel.Info);
 
     logger.debug('foo', {});
     logger.info('foo', {});
@@ -35,7 +35,7 @@ describe('console logger', () => {
   });
 
   it('respects log level type error', () => {
-    const logger = new ConsoleLogger(LogLevel.Error);
+    const logger = createConsoleLogger(LogLevel.Error);
 
     logger.debug('foo', {});
     logger.info('foo', {});

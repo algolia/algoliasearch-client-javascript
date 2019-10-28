@@ -1,5 +1,5 @@
 import { createNullCache } from '@algolia/cache-types';
-import { ConsoleLogger } from '@algolia/logger-console';
+import { createConsoleLogger } from '@algolia/logger-console';
 import { LogLevel } from '@algolia/logger-types';
 import { NodeHttpRequester } from '@algolia/requester-node-http';
 import { UserAgent } from '@algolia/transporter';
@@ -21,7 +21,7 @@ export default function algoliasearch(
       write: 30,
     },
     requester: new NodeHttpRequester(),
-    logger: new ConsoleLogger(options.logLevel === undefined ? LogLevel.Error : options.logLevel),
+    logger: createConsoleLogger(options.logLevel === undefined ? LogLevel.Error : options.logLevel),
     responsesCache: createNullCache(),
     requestsCache: createNullCache(),
     hostsCache: createNullCache(),
