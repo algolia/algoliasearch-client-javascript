@@ -2,9 +2,9 @@ import { Method } from '@algolia/requester-types';
 import { encode } from '@algolia/support';
 import { RequestOptions } from '@algolia/transporter';
 
-import { SearchIndex } from '../types/SearchIndex';
-import { SearchOptions } from '../types/SearchOptions';
-import { SearchResponse } from '../types/SearchResponse';
+import { SearchIndex } from '../../types/SearchIndex';
+import { SearchOptions } from '../../types/SearchOptions';
+import { SearchResponse } from '../../types/SearchResponse';
 
 export const search = <TSearchIndex extends SearchIndex>(
   base: TSearchIndex

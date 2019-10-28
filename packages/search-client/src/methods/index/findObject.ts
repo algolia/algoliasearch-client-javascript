@@ -1,10 +1,10 @@
 import { popRequestOption, RequestOptions } from '@algolia/transporter';
 
 import { ObjectNotFoundError } from '../../errors/ObjectNotFoundError';
-import { FindObjectOptions } from '../types/FindObjectOptions';
-import { FindObjectResponse } from '../types/FindObjectResponse';
-import { ObjectWithObjectID } from '../types/ObjectWithObjectID';
-import { SearchIndex } from '../types/SearchIndex';
+import { FindObjectOptions } from '../../types/FindObjectOptions';
+import { FindObjectResponse } from '../../types/FindObjectResponse';
+import { ObjectWithObjectID } from '../../types/ObjectWithObjectID';
+import { SearchIndex } from '../../types/SearchIndex';
 import { HasSearch, search } from './search';
 
 export const findObject = <TSearchIndex extends SearchIndex>(

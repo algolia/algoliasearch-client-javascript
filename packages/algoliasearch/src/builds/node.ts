@@ -5,7 +5,7 @@ import { NodeHttpRequester } from '@algolia/requester-node-http';
 import { UserAgent } from '@algolia/transporter';
 
 import { createSearchClient } from '../presets/default';
-import { AlgoliaSearchOptions } from '../types';
+import { AlgoliaSearchOptions } from '../types/AlgoliaSearchOptions';
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export default function algoliasearch(

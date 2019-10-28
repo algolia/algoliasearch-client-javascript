@@ -1,5 +1,5 @@
-import { BrowseOptions } from './methods/types/BrowseOptions';
-import { BrowseResponse } from './methods/types/BrowseResponse';
+import { BrowseOptions } from './types/BrowseOptions';
+import { BrowseResponse } from './types/BrowseResponse';
 
 export class BrowsablePromise<TObject> extends Promise<TObject> {
   public static from<TObject>(

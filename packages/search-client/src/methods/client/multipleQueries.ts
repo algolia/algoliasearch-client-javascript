@@ -2,9 +2,9 @@ import { Method } from '@algolia/requester-types';
 import { encodeQueryParameters } from '@algolia/support';
 import { RequestOptions, TransporterAware } from '@algolia/transporter';
 
-import { MultipleQueriesOptions } from '../types/MultipleQueriesOptions';
-import { MultipleQueriesQuery } from '../types/MultipleQueriesQuery';
-import { MultipleQueriesResponse } from '../types/MultipleQueriesResponse';
+import { MultipleQueriesOptions } from '../../types/MultipleQueriesOptions';
+import { MultipleQueriesQuery } from '../../types/MultipleQueriesQuery';
+import { MultipleQueriesResponse } from '../../types/MultipleQueriesResponse';
 
 export const multipleQueries = <TClient extends TransporterAware>(
   base: TClient

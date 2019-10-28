@@ -3,9 +3,9 @@ import { encode, WaitablePromise } from '@algolia/support';
 import { RequestOptions } from '@algolia/transporter';
 import { TransporterAware } from '@algolia/transporter/src/TransporterAware';
 
+import { CopyIndexOptions } from '../../types/CopyIndexOptions';
+import { IndexOperationResponse } from '../../types/IndexOperationResponse';
 import { HasWaitTask, waitTask } from '../index/waitTask';
-import { CopyIndexOptions } from '../types/CopyIndexOptions';
-import { IndexOperationResponse } from '../types/IndexOperationResponse';
 import { initIndex } from './initIndex';
 
 export const copyIndex = <TClient extends TransporterAware>(

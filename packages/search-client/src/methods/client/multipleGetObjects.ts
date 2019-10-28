@@ -1,8 +1,8 @@
 import { Method } from '@algolia/requester-types';
 import { RequestOptions, TransporterAware } from '@algolia/transporter';
 
-import { MultipleGetObject } from '../types/MultipleGetObject';
-import { MultipleGetObjectsResponse } from '../types/MultipleGetObjectsResponse';
+import { MultipleGetObject } from '../../types/MultipleGetObject';
+import { MultipleGetObjectsResponse } from '../../types/MultipleGetObjectsResponse';
 
 export const multipleGetObjects = <TClient extends TransporterAware>(
   base: TClient

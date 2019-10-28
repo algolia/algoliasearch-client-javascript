@@ -1,10 +1,10 @@
 import { WaitablePromise } from '@algolia/support';
 import { RequestOptions } from '@algolia/transporter';
 
-import { SaveSynonymsOptions } from '../types/SaveSynonymsOptions';
-import { SaveSynonymsResponse } from '../types/SaveSynonymsResponse';
-import { SearchIndex } from '../types/SearchIndex';
-import { Synonym } from '../types/Synonym';
+import { SaveSynonymsOptions } from '../../types/SaveSynonymsOptions';
+import { SaveSynonymsResponse } from '../../types/SaveSynonymsResponse';
+import { SearchIndex } from '../../types/SearchIndex';
+import { Synonym } from '../../types/Synonym';
 import { HasSaveSynonyms, saveSynonyms } from './saveSynonyms';
 
 export const saveSynonym = <TSearchIndex extends SearchIndex>(

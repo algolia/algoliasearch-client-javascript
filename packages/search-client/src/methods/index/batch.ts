@@ -2,11 +2,11 @@ import { Method } from '@algolia/requester-types';
 import { encode, WaitablePromise } from '@algolia/support';
 import { popRequestOption, RequestOptions } from '@algolia/transporter';
 
-import { BatchActionType } from '../types/BatchAction';
-import { BatchRequest } from '../types/BatchRequest';
-import { BatchResponse } from '../types/BatchResponse';
-import { ChunkOptions } from '../types/ChunkOptions';
-import { SearchIndex } from '../types/SearchIndex';
+import { BatchActionType } from '../../types/BatchAction';
+import { BatchRequest } from '../../types/BatchRequest';
+import { BatchResponse } from '../../types/BatchResponse';
+import { ChunkOptions } from '../../types/ChunkOptions';
+import { SearchIndex } from '../../types/SearchIndex';
 import { HasWaitTask, waitTask } from './waitTask';
 
 export const batch = <TSearchIndex extends SearchIndex>(

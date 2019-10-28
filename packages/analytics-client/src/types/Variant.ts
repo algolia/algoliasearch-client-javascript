@@ -1,4 +1,4 @@
-import { SearchOptions } from '../../../../search-client/src/methods/types/SearchOptions';
+import { SearchOptions } from '../../../search-client/src/types/SearchOptions';
 
 export type Variant = {
   /**

@@ -1,11 +1,11 @@
 import { RequestOptions } from '@algolia/transporter';
 
 import { BrowsablePromise } from '../../BrowsablePromise';
-import { BrowseOptions } from '../types/BrowseOptions';
-import { BrowseResponse } from '../types/BrowseResponse';
-import { SearchIndex } from '../types/SearchIndex';
-import { SearchSynonymsOptions } from '../types/SearchSynonymsOptions';
-import { Synonym } from '../types/Synonym';
+import { BrowseOptions } from '../../types/BrowseOptions';
+import { BrowseResponse } from '../../types/BrowseResponse';
+import { SearchIndex } from '../../types/SearchIndex';
+import { SearchSynonymsOptions } from '../../types/SearchSynonymsOptions';
+import { Synonym } from '../../types/Synonym';
 import { HasSearchSynonyms, searchSynonyms } from './searchSynonyms';
 
 export const browseSynonyms = <TSearchIndex extends SearchIndex>(

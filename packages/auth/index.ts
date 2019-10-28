@@ -1,1 +1,2 @@
-export * from './src/Auth';
+export * from './src/createAuth';
+export * from './src/types/AuthModeType';

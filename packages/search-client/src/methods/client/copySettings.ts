@@ -1,8 +1,8 @@
 import { WaitablePromise } from '@algolia/support';
 import { RequestOptions, TransporterAware } from '@algolia/transporter';
 
-import { IndexOperationResponse } from '../types/IndexOperationResponse';
-import { ScopeEnum } from '../types/ScopeType';
+import { IndexOperationResponse } from '../../types/IndexOperationResponse';
+import { ScopeEnum } from '../../types/ScopeType';
 import { copyIndex, HasCopyIndex } from './copyIndex';
 
 export const copySettings = <TClient extends TransporterAware>(

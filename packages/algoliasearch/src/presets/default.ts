@@ -1,12 +1,9 @@
 import { createAnalyticsClient } from '@algolia/analytics-client';
-import { addABTest, HasAddABTest } from '@algolia/analytics-client/src/methods/client/addABTest';
-import {
-  deleteABTest,
-  HasDeleteABTest,
-} from '@algolia/analytics-client/src/methods/client/deleteABTest';
-import { getABTest, HasGetABTest } from '@algolia/analytics-client/src/methods/client/getABTest';
-import { getABTests, HasGetABTests } from '@algolia/analytics-client/src/methods/client/getABTests';
-import { HasStopABTest, stopABTest } from '@algolia/analytics-client/src/methods/client/stopABTest';
+import { addABTest, HasAddABTest } from '@algolia/analytics-client/src/methods/addABTest';
+import { deleteABTest, HasDeleteABTest } from '@algolia/analytics-client/src/methods/deleteABTest';
+import { getABTest, HasGetABTest } from '@algolia/analytics-client/src/methods/getABTest';
+import { getABTests, HasGetABTests } from '@algolia/analytics-client/src/methods/getABTests';
+import { HasStopABTest, stopABTest } from '@algolia/analytics-client/src/methods/stopABTest';
 import { createSearchClient as baseCreateSearchClient } from '@algolia/search-client';
 import { SearchClientOptions } from '@algolia/search-client/src/createSearchClient';
 import { copyIndex, HasCopyIndex } from '@algolia/search-client/src/methods/client/copyIndex';
@@ -136,7 +133,7 @@ import {
 } from '@algolia/search-client/src/methods/index/searchSynonyms';
 import { HasSetSettings, setSettings } from '@algolia/search-client/src/methods/index/setSettings';
 import { HasWaitTask, waitTask } from '@algolia/search-client/src/methods/index/waitTask';
-import { SearchIndex as SearchIndexPreset } from '@algolia/search-client/src/methods/types/SearchIndex';
+import { SearchIndex as SearchIndexPreset } from '@algolia/search-client/src/types/SearchIndex';
 import { TransporterAware, TransporterOptions } from '@algolia/transporter';
 
 export type SearchClient = TransporterAware &

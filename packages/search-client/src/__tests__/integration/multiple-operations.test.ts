@@ -1,8 +1,8 @@
 import { createMultiWaitable } from '@algolia/support/src/__tests__/helpers';
 import { TestSuite } from '@algolia/support/src/__tests__/TestSuite';
 
-import { BatchAction } from '../../methods/types/BatchAction';
-import { StrategyEnum } from '../../methods/types/StrategyType';
+import { BatchAction } from '../../types/BatchAction';
+import { StrategyEnum } from '../../types/StrategyType';
 
 const testSuite = new TestSuite('multiple_operations');
 

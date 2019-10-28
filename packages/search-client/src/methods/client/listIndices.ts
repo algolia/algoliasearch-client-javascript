@@ -1,7 +1,7 @@
 import { Method } from '@algolia/requester-types';
 import { RequestOptions, TransporterAware } from '@algolia/transporter';
 
-import { ListIndicesResponse } from '../types/ListIndicesResponse';
+import { ListIndicesResponse } from '../../types/ListIndicesResponse';
 
 export const listIndices = <TClient extends TransporterAware>(
   base: TClient

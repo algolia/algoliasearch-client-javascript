@@ -1,7 +1,7 @@
 import { Method } from '@algolia/requester-types';
 import { RequestOptions, TransporterAware } from '@algolia/transporter';
 
-import { GetPersonalizationStrategyResponse } from '../types/GetPersonalizationStrategyResponse';
+import { GetPersonalizationStrategyResponse } from '../../types/GetPersonalizationStrategyResponse';
 
 export const getPersonalizationStrategy = <TClient extends TransporterAware>(
   base: TClient

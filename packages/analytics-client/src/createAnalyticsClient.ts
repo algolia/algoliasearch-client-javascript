@@ -1,4 +1,4 @@
-import { Auth, AuthMode } from '@algolia/auth';
+import { AuthMode, createAuth } from '@algolia/auth';
 import { ComposableOptions, compose } from '@algolia/support';
 import { Call, Transporter, TransporterOptions } from '@algolia/transporter';
 import { TransporterAware } from '@algolia/transporter/src/TransporterAware';
@@ -8,7 +8,7 @@ export const createAnalyticsClient = <TClient>(
   options: AnalyticsClientOptions & TransporterOptions & ComposableOptions
 ) => {
   const region = options.region !== undefined ? options.region : 'us';
-  const auth = new Auth(AuthMode.WithinHeaders, options.appId, options.apiKey);
+  const auth = createAuth(AuthMode.WithinHeaders, options.appId, options.apiKey);
 
   const transporter = new Transporter(options);
 

@@ -1,9 +1,9 @@
 import { createMultiWaitable } from '@algolia/support/src/__tests__/helpers';
 import { TestSuite } from '@algolia/support/src/__tests__/TestSuite';
 
-import { EditEnum } from '../../methods/types/EditType';
-import { IndexSettings } from '../../methods/types/IndexSettings';
-import { Rule } from '../../methods/types/Rule';
+import { EditEnum } from '../../types/EditType';
+import { IndexSettings } from '../../types/IndexSettings';
+import { Rule } from '../../types/Rule';
 
 const testSuite = new TestSuite('rules');
 

@@ -2,8 +2,8 @@ import { createMultiWaitable } from '@algolia/support/src/__tests__/helpers';
 import { TestSuite } from '@algolia/support/src/__tests__/TestSuite';
 import { ApiError } from '@algolia/transporter';
 
-import { Rule } from '../../methods/types/Rule';
-import { Synonym } from '../../methods/types/Synonym';
+import { Rule } from '../../types/Rule';
+import { Synonym } from '../../types/Synonym';
 
 const testSuite = new TestSuite('replacing');
 

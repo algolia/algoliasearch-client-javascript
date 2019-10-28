@@ -2,9 +2,9 @@ import { Method } from '@algolia/requester-types';
 import { WaitablePromise } from '@algolia/support';
 import { RequestOptions, TransporterAware } from '@algolia/transporter';
 
+import { BatchRequest } from '../../types/BatchRequest';
+import { MultipleBatchResponse } from '../../types/MultipleBatchResponse';
 import { HasWaitTask, waitTask } from '../index/waitTask';
-import { BatchRequest } from '../types/BatchRequest';
-import { MultipleBatchResponse } from '../types/MultipleBatchResponse';
 import { HasInitIndex, initIndex } from './initIndex';
 
 export const multipleBatch = <TClient extends TransporterAware>(

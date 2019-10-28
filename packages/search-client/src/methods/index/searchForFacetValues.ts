@@ -2,9 +2,9 @@ import { Method } from '@algolia/requester-types';
 import { encode } from '@algolia/support';
 import { RequestOptions } from '@algolia/transporter';
 
-import { SearchForFacetValuesResponse } from '../types/SearchForFacetValuesResponse';
-import { SearchIndex } from '../types/SearchIndex';
-import { SearchOptions } from '../types/SearchOptions';
+import { SearchForFacetValuesResponse } from '../../types/SearchForFacetValuesResponse';
+import { SearchIndex } from '../../types/SearchIndex';
+import { SearchOptions } from '../../types/SearchOptions';
 
 export const searchForFacetValues = <TSearchIndex extends SearchIndex>(
   base: TSearchIndex

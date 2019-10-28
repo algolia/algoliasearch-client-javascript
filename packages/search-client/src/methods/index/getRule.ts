@@ -2,8 +2,8 @@ import { Method } from '@algolia/requester-types';
 import { encode } from '@algolia/support';
 import { RequestOptions } from '@algolia/transporter';
 
-import { Rule } from '../types/Rule';
-import { SearchIndex } from '../types/SearchIndex';
+import { Rule } from '../../types/Rule';
+import { SearchIndex } from '../../types/SearchIndex';
 
 export const getRule = <TSearchIndex extends SearchIndex>(
   base: TSearchIndex

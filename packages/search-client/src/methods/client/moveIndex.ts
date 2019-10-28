@@ -2,8 +2,8 @@ import { Method } from '@algolia/requester-types';
 import { encode, WaitablePromise } from '@algolia/support';
 import { RequestOptions, TransporterAware } from '@algolia/transporter';
 
+import { IndexOperationResponse } from '../../types/IndexOperationResponse';
 import { HasWaitTask, waitTask } from '../index/waitTask';
-import { IndexOperationResponse } from '../types/IndexOperationResponse';
 import { HasInitIndex, initIndex } from './initIndex';
 
 export const moveIndex = <TClient extends TransporterAware>(

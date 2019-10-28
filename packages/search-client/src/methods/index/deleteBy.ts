@@ -2,9 +2,9 @@ import { Method } from '@algolia/requester-types';
 import { encode, WaitablePromise } from '@algolia/support';
 import { RequestOptions } from '@algolia/transporter';
 
-import { DeleteByFiltersOptions } from '../types/DeleteByFiltersOptions';
-import { DeleteResponse } from '../types/DeleteResponse';
-import { SearchIndex } from '../types/SearchIndex';
+import { DeleteByFiltersOptions } from '../../types/DeleteByFiltersOptions';
+import { DeleteResponse } from '../../types/DeleteResponse';
+import { SearchIndex } from '../../types/SearchIndex';
 import { HasWaitTask, waitTask } from './waitTask';
 
 export const deleteBy = <TSearchIndex extends SearchIndex>(

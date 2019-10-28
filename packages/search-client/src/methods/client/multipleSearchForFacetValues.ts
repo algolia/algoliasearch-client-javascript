@@ -1,9 +1,9 @@
 import { RequestOptions, TransporterAware } from '@algolia/transporter';
 
+import { SearchForFacetValuesQueryParams } from '../../types/SearchForFacetValuesQueryParams';
+import { SearchForFacetValuesResponse } from '../../types/SearchForFacetValuesResponse';
+import { SearchOptions } from '../../types/SearchOptions';
 import { HasSearchForFacetValues, searchForFacetValues } from '../index/searchForFacetValues';
-import { SearchForFacetValuesQueryParams } from '../types/SearchForFacetValuesQueryParams';
-import { SearchForFacetValuesResponse } from '../types/SearchForFacetValuesResponse';
-import { SearchOptions } from '../types/SearchOptions';
 import { initIndex } from './initIndex';
 
 export const multipleSearchForFacetValues = <TClient extends TransporterAware>(

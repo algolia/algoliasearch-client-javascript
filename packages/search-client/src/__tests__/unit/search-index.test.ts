@@ -6,8 +6,8 @@ import { anything, deepEqual, spy, verify, when } from 'ts-mockito';
 
 import algoliasearch from '../../../../algoliasearch/src/builds/browser';
 import { SearchIndex } from '../../../../algoliasearch/src/presets/default';
-import { BatchAction } from '../../methods/types/BatchAction';
-import { SaveObjectsOptions } from '../../methods/types/SaveObjectsOptions';
+import { BatchAction } from '../../types/BatchAction';
+import { SaveObjectsOptions } from '../../types/SaveObjectsOptions';
 
 let index: SearchIndex;
 let transporterMock: Transporter;

@@ -1,7 +1,7 @@
 import { ComposableOptions, compose } from '@algolia/support';
 import { TransporterAware } from '@algolia/transporter/src/TransporterAware';
 
-import { SearchIndex } from '../types/SearchIndex';
+import { SearchIndex } from '../../types/SearchIndex';
 
 export const initIndex = <TClient extends TransporterAware>(
   base: TClient

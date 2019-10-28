@@ -1,4 +1,4 @@
-import { Auth, AuthMode, AuthModeType } from '@algolia/auth';
+import { AuthMode, AuthModeType, createAuth } from '@algolia/auth';
 import { ComposableOptions, compose, shuffle } from '@algolia/support';
 import { Call, Transporter, TransporterOptions } from '@algolia/transporter';
 
@@ -21,7 +21,7 @@ export const createSearchClient = <TClient>(
     )
   );
 
-  const auth = new Auth(
+  const auth = createAuth(
     options.authMode !== undefined ? options.authMode : AuthMode.WithinHeaders,
     appId,
     options.apiKey

@@ -2,9 +2,9 @@ import { Method } from '@algolia/requester-types';
 import { encode, WaitablePromise } from '@algolia/support';
 import { popRequestOption, RequestOptions } from '@algolia/transporter';
 
-import { IndexOperationResponse } from '../types/IndexOperationResponse';
-import { ReplaceAllObjectsOptions } from '../types/ReplaceAllObjectsOptions';
-import { SearchIndex } from '../types/SearchIndex';
+import { IndexOperationResponse } from '../../types/IndexOperationResponse';
+import { ReplaceAllObjectsOptions } from '../../types/ReplaceAllObjectsOptions';
+import { SearchIndex } from '../../types/SearchIndex';
 import { saveObjects } from './saveObjects';
 import { HasWaitTask, waitTask } from './waitTask';
 

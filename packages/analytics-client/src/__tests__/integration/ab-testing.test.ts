@@ -3,8 +3,8 @@ import { createMultiWaitable } from '@algolia/support/src/__tests__/helpers';
 import { TestSuite } from '@algolia/support/src/__tests__/TestSuite';
 import { ApiError } from '@algolia/transporter';
 
-import { ABTest } from '../../methods/types/ABTest';
-import { Variant } from '../../methods/types/Variant';
+import { ABTest } from '../../types/ABTest';
+import { Variant } from '../../types/Variant';
 
 const testSuite = new TestSuite('ab_testing');
 

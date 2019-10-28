@@ -1,7 +1,7 @@
 import { Method } from '@algolia/requester-types';
 import { RequestOptions, TransporterAware } from '@algolia/transporter';
 
-import { ListClustersResponse } from '../types/ListClustersResponse';
+import { ListClustersResponse } from '../../types/ListClustersResponse';
 
 export const listClusters = <TClient extends TransporterAware>(
   base: TClient

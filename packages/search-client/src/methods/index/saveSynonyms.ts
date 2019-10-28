@@ -2,10 +2,10 @@ import { Method } from '@algolia/requester-types';
 import { encode, WaitablePromise } from '@algolia/support';
 import { mapRequestOptions, popRequestOption, RequestOptions } from '@algolia/transporter';
 
-import { SaveSynonymsOptions } from '../types/SaveSynonymsOptions';
-import { SaveSynonymsResponse } from '../types/SaveSynonymsResponse';
-import { SearchIndex } from '../types/SearchIndex';
-import { Synonym } from '../types/Synonym';
+import { SaveSynonymsOptions } from '../../types/SaveSynonymsOptions';
+import { SaveSynonymsResponse } from '../../types/SaveSynonymsResponse';
+import { SearchIndex } from '../../types/SearchIndex';
+import { Synonym } from '../../types/Synonym';
 import { HasWaitTask, waitTask } from './waitTask';
 
 export const saveSynonyms = <TSearchIndex extends SearchIndex>(

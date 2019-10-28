@@ -6,7 +6,7 @@ import {
   TransporterAware,
 } from '@algolia/transporter';
 
-import { GetLogsResponse } from '../types/GetLogsResponse';
+import { GetLogsResponse } from '../../types/GetLogsResponse';
 
 export const getLogs = <TClient extends TransporterAware>(base: TClient): TClient & HasGetLogs => {
   return {

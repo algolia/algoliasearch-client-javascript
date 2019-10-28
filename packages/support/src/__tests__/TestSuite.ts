@@ -1,5 +1,5 @@
 import { HasDelete } from '@algolia/search-client/src/methods/index/deleteIndex';
-import { SearchIndex } from '@algolia/search-client/src/methods/types/SearchIndex';
+import { SearchIndex } from '@algolia/search-client/src/types/SearchIndex';
 
 import algoliasearchForBrowser from '../../../algoliasearch/src/builds/browser';
 import algoliasearchForNode from '../../../algoliasearch/src/builds/node';

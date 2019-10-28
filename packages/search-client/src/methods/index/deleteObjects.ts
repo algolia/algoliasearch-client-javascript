@@ -1,10 +1,10 @@
 import { WaitablePromise } from '@algolia/support';
 import { RequestOptions } from '@algolia/transporter';
 
-import { BatchAction } from '../types/BatchAction';
-import { BatchResponse } from '../types/BatchResponse';
-import { ChunkOptions } from '../types/ChunkOptions';
-import { SearchIndex } from '../types/SearchIndex';
+import { BatchAction } from '../../types/BatchAction';
+import { BatchResponse } from '../../types/BatchResponse';
+import { ChunkOptions } from '../../types/ChunkOptions';
+import { SearchIndex } from '../../types/SearchIndex';
 import { batch, HasBatch } from './batch';
 
 export const deleteObjects = <TSearchIndex extends SearchIndex>(
