@@ -1,13 +1,12 @@
 import { Method } from '@algolia/requester-types';
-import { RequestOptions } from '@algolia/transporter';
+import { RequestOptions, TransporterAware } from '@algolia/transporter';
 
-import { SearchClient } from '../../SearchClient';
 import { MultipleGetObject } from '../types/MultipleGetObject';
 import { MultipleGetObjectsResponse } from '../types/MultipleGetObjectsResponse';
 
-export const multipleGetObjects = <TSearchClient extends SearchClient>(
-  base: TSearchClient
-): TSearchClient & HasMultipleGetObjects => {
+export const multipleGetObjects = <TClient extends TransporterAware>(
+  base: TClient
+): TClient & HasMultipleGetObjects => {
   return {
     ...base,
     multipleGetObjects<TObject>(

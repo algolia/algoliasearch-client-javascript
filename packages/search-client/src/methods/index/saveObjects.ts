@@ -2,10 +2,10 @@ import { WaitablePromise } from '@algolia/support';
 import { popRequestOption, RequestOptions } from '@algolia/transporter';
 
 import { MissingObjectIDError } from '../../errors/MissingObjectIDError';
-import { SearchIndex } from '../../SearchIndex';
 import { BatchAction } from '../types/BatchAction';
 import { BatchResponse } from '../types/BatchResponse';
 import { SaveObjectsOptions } from '../types/SaveObjectsOptions';
+import { SearchIndex } from '../types/SearchIndex';
 import { batch, HasBatch } from './batch';
 
 export const saveObjects = <TSearchIndex extends SearchIndex>(

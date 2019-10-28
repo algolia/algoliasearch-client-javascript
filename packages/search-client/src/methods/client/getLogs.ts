@@ -1,12 +1,14 @@
 import { Method } from '@algolia/requester-types';
-import { mapRequestOptions, popRequestOption, RequestOptions } from '@algolia/transporter';
+import {
+  mapRequestOptions,
+  popRequestOption,
+  RequestOptions,
+  TransporterAware,
+} from '@algolia/transporter';
 
-import { SearchClient } from '../../SearchClient';
 import { GetLogsResponse } from '../types/GetLogsResponse';
 
-export const getLogs = <TSearchClient extends SearchClient>(
-  base: TSearchClient
-): TSearchClient & HasGetLogs => {
+export const getLogs = <TClient extends TransporterAware>(base: TClient): TClient & HasGetLogs => {
   return {
     ...base,
     getLogs(requestOptions?: RequestOptions): Readonly<Promise<GetLogsResponse>> {

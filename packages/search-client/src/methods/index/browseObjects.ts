@@ -3,9 +3,9 @@ import { encode } from '@algolia/support';
 import { RequestOptions } from '@algolia/transporter';
 
 import { BrowsablePromise } from '../../BrowsablePromise';
-import { SearchIndex } from '../../SearchIndex';
 import { BrowseOptions } from '../types/BrowseOptions';
 import { BrowseResponse } from '../types/BrowseResponse';
+import { SearchIndex } from '../types/SearchIndex';
 import { SearchOptions } from '../types/SearchOptions';
 
 export const browseObjects = <TSearchIndex extends SearchIndex>(

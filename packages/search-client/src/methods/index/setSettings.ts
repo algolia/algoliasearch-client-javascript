@@ -2,8 +2,8 @@ import { Method } from '@algolia/requester-types';
 import { encode, WaitablePromise } from '@algolia/support';
 import { RequestOptions } from '@algolia/transporter';
 
-import { SearchIndex } from '../../SearchIndex';
 import { IndexSettings } from '../types/IndexSettings';
+import { SearchIndex } from '../types/SearchIndex';
 import { SetSettingsResponse } from '../types/SetSettingsResponse';
 import { HasWaitTask, waitTask } from './waitTask';
 

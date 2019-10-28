@@ -1,8 +1,8 @@
 import { WaitablePromise } from '@algolia/support';
 import { RequestOptions } from '@algolia/transporter';
 
-import { SearchIndex } from '../../SearchIndex';
 import { DeleteResponse } from '../types/DeleteResponse';
+import { SearchIndex } from '../types/SearchIndex';
 import { deleteObjects, HasDeleteObjects } from './deleteObjects';
 import { HasWaitTask } from './waitTask';
 

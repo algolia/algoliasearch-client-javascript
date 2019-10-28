@@ -2,9 +2,9 @@ import { Method } from '@algolia/requester-types';
 import { encode, WaitablePromise } from '@algolia/support';
 import { RequestOptions } from '@algolia/transporter';
 
-import { SearchIndex } from '../../SearchIndex';
 import { Rule } from '../types/Rule';
 import { SaveRuleResponse } from '../types/SaveRuleResponse';
+import { SearchIndex } from '../types/SearchIndex';
 import { HasWaitTask, waitTask } from './waitTask';
 
 export const saveRule = <TSearchIndex extends SearchIndex>(

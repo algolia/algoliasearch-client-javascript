@@ -2,8 +2,8 @@ import { Method } from '@algolia/requester-types';
 import { encode } from '@algolia/support';
 import { RequestOptions } from '@algolia/transporter';
 
-import { SearchIndex } from '../../SearchIndex';
 import { Rule } from '../types/Rule';
+import { SearchIndex } from '../types/SearchIndex';
 import { SearchResponse } from '../types/SearchResponse';
 import { SearchRulesOptions } from '../types/SearchRulesOptions';
 

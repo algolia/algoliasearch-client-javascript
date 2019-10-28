@@ -2,9 +2,9 @@ import { Method } from '@algolia/requester-types';
 import { encode, WaitablePromise } from '@algolia/support';
 import { RequestOptions } from '@algolia/transporter';
 
-import { SearchIndex } from '../../SearchIndex';
 import { DeleteResponse } from '../types/DeleteResponse';
 import { DeleteSynonymOptions } from '../types/DeleteSynonymOptions';
+import { SearchIndex } from '../types/SearchIndex';
 import { HasWaitTask, waitTask } from './waitTask';
 
 export const deleteSynonym = <TSearchIndex extends SearchIndex>(

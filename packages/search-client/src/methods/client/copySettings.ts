@@ -1,14 +1,13 @@
 import { WaitablePromise } from '@algolia/support';
-import { RequestOptions } from '@algolia/transporter';
+import { RequestOptions, TransporterAware } from '@algolia/transporter';
 
-import { SearchClient } from '../../SearchClient';
 import { IndexOperationResponse } from '../types/IndexOperationResponse';
 import { ScopeEnum } from '../types/ScopeType';
 import { copyIndex, HasCopyIndex } from './copyIndex';
 
-export const copySettings = <TSearchClient extends SearchClient>(
-  base: TSearchClient
-): TSearchClient & HasCopyIndex & HasCopySettings => {
+export const copySettings = <TClient extends TransporterAware>(
+  base: TClient
+): TClient & HasCopyIndex & HasCopySettings => {
   return {
     ...copyIndex(base),
     copySettings(
@@ -24,7 +23,7 @@ export const copySettings = <TSearchClient extends SearchClient>(
   };
 };
 
-export type HasCopySettings = SearchClient & {
+export type HasCopySettings = {
   readonly copySettings: (
     from: string,
     to: string,

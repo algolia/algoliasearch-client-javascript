@@ -2,8 +2,8 @@ import { Method } from '@algolia/requester-types';
 import { encode } from '@algolia/support';
 import { mapRequestOptions, RequestOptions } from '@algolia/transporter';
 
-import { SearchIndex } from '../../SearchIndex';
 import { IndexSettings } from '../types/IndexSettings';
+import { SearchIndex } from '../types/SearchIndex';
 
 export const getSettings = <TSearchIndex extends SearchIndex>(
   base: TSearchIndex

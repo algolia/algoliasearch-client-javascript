@@ -7,10 +7,8 @@ import {
 import { getABTest, HasGetABTest } from '@algolia/analytics-client/src/methods/client/getABTest';
 import { getABTests, HasGetABTests } from '@algolia/analytics-client/src/methods/client/getABTests';
 import { HasStopABTest, stopABTest } from '@algolia/analytics-client/src/methods/client/stopABTest';
-import {
-  createSearchClient as baseCreateSearchClient,
-  SearchClient as BaseSearchClient,
-} from '@algolia/search-client';
+import { createSearchClient as baseCreateSearchClient } from '@algolia/search-client';
+import { SearchClientOptions } from '@algolia/search-client/src/createSearchClient';
 import { copyIndex, HasCopyIndex } from '@algolia/search-client/src/methods/client/copyIndex';
 import {
   copySettings,
@@ -25,6 +23,7 @@ import {
   getPersonalizationStrategy,
   HasGetPersonalizationStrategy,
 } from '@algolia/search-client/src/methods/client/getPersonalizationStrategy';
+import { initIndex } from '@algolia/search-client/src/methods/client/initIndex';
 import {
   HasListClusters,
   listClusters,
@@ -137,11 +136,10 @@ import {
 } from '@algolia/search-client/src/methods/index/searchSynonyms';
 import { HasSetSettings, setSettings } from '@algolia/search-client/src/methods/index/setSettings';
 import { HasWaitTask, waitTask } from '@algolia/search-client/src/methods/index/waitTask';
-import { SearchClientOptions } from '@algolia/search-client/src/SearchClient';
-import { SearchIndex as SearchIndexPreset } from '@algolia/search-client/src/SearchIndex';
-import { TransporterOptions } from '@algolia/transporter';
+import { SearchIndex as SearchIndexPreset } from '@algolia/search-client/src/methods/types/SearchIndex';
+import { TransporterAware, TransporterOptions } from '@algolia/transporter';
 
-export type SearchClient = BaseSearchClient &
+export type SearchClient = TransporterAware &
   HasMultipleBatch &
   HasMultipleGetObjects &
   HasMultipleQueries &
@@ -265,12 +263,10 @@ export const methods = {
 export const createSearchClient = (options: SearchClientOptions & TransporterOptions) => {
   const base = baseCreateSearchClient<SearchClient>({ ...options, methods: methods.searchClient });
 
-  const initIndex = base.initIndex;
-
   return {
     ...base,
     initIndex<TSearchIndex = SearchIndex>(indexName: string): TSearchIndex {
-      return initIndex.bind(this)(indexName, {
+      return initIndex(this).initIndex(indexName, {
         methods: methods.searchIndex,
       });
     },

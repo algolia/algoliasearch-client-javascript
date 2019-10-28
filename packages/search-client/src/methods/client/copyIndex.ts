@@ -1,15 +1,16 @@
 import { Method } from '@algolia/requester-types';
 import { encode, WaitablePromise } from '@algolia/support';
 import { RequestOptions } from '@algolia/transporter';
+import { TransporterAware } from '@algolia/transporter/src/TransporterAware';
 
-import { SearchClient } from '../../SearchClient';
 import { HasWaitTask, waitTask } from '../index/waitTask';
 import { CopyIndexOptions } from '../types/CopyIndexOptions';
 import { IndexOperationResponse } from '../types/IndexOperationResponse';
+import { initIndex } from './initIndex';
 
-export const copyIndex = <TSearchClient extends SearchClient>(
-  base: TSearchClient
-): TSearchClient & HasCopyIndex => {
+export const copyIndex = <TClient extends TransporterAware>(
+  base: TClient
+): TClient & HasCopyIndex => {
   return {
     ...base,
     copyIndex(
@@ -30,9 +31,11 @@ export const copyIndex = <TSearchClient extends SearchClient>(
           requestOptions
         )
       ).onWait((response, waitRequestOptions) => {
-        return this.initIndex<HasWaitTask>(from, {
-          methods: [waitTask],
-        }).waitTask(response.taskID, waitRequestOptions);
+        return initIndex(this)
+          .initIndex<HasWaitTask>(from, {
+            methods: [waitTask],
+          })
+          .waitTask(response.taskID, waitRequestOptions);
       });
     },
   };

@@ -1,4 +1,5 @@
 export * from './src/Transporter';
+export * from './src/TransporterAware';
 export * from './src/UserAgent';
 export * from './src/Call';
 export * from './src/errors/ApiError';

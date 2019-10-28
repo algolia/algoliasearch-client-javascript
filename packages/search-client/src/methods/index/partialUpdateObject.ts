@@ -1,9 +1,9 @@
 import { WaitablePromise } from '@algolia/support';
 import { RequestOptions } from '@algolia/transporter';
 
-import { SearchIndex } from '../../SearchIndex';
 import { PartialUpdateObjectResponse } from '../types/PartialUpdateObjectResponse';
 import { PartialUpdateObjectsOptions } from '../types/PartialUpdateObjectsOptions';
+import { SearchIndex } from '../types/SearchIndex';
 import { HasPartialUpdateObjects, partialUpdateObjects } from './partialUpdateObjects';
 import { HasWaitTask } from './waitTask';
 

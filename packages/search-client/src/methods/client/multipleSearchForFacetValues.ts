@@ -1,14 +1,14 @@
-import { RequestOptions } from '@algolia/transporter';
+import { RequestOptions, TransporterAware } from '@algolia/transporter';
 
-import { SearchClient } from '../../SearchClient';
 import { HasSearchForFacetValues, searchForFacetValues } from '../index/searchForFacetValues';
 import { SearchForFacetValuesQueryParams } from '../types/SearchForFacetValuesQueryParams';
 import { SearchForFacetValuesResponse } from '../types/SearchForFacetValuesResponse';
 import { SearchOptions } from '../types/SearchOptions';
+import { initIndex } from './initIndex';
 
-export const multipleSearchForFacetValues = <TSearchClient extends SearchClient>(
-  base: TSearchClient
-): TSearchClient & HasMultipleSearchForFacetValues => {
+export const multipleSearchForFacetValues = <TClient extends TransporterAware>(
+  base: TClient
+): TClient & HasMultipleSearchForFacetValues => {
   return {
     ...base,
     multipleSearchForFacetValues(
@@ -31,12 +31,14 @@ export const multipleSearchForFacetValues = <TSearchClient extends SearchClient>
           // eslint-disable-next-line functional/immutable-data, no-param-reassign
           delete params.facetQuery;
 
-          return this.initIndex<HasSearchForFacetValues>(query.indexName, {
-            methods: [searchForFacetValues],
-          }).searchForFacetValues(facetName, facetQuery, {
-            ...requestOptions,
-            ...params,
-          });
+          return initIndex(this)
+            .initIndex<HasSearchForFacetValues>(query.indexName, {
+              methods: [searchForFacetValues],
+            })
+            .searchForFacetValues(facetName, facetQuery, {
+              ...requestOptions,
+              ...params,
+            });
         })
       );
     },

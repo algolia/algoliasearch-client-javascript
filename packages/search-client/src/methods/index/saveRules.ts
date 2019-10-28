@@ -2,10 +2,10 @@ import { Method } from '@algolia/requester-types';
 import { encode, WaitablePromise } from '@algolia/support';
 import { mapRequestOptions, popRequestOption, RequestOptions } from '@algolia/transporter';
 
-import { SearchIndex } from '../../SearchIndex';
 import { Rule } from '../types/Rule';
 import { SaveRulesOptions } from '../types/SaveRulesOptions';
 import { SaveRulesResponse } from '../types/SaveRulesResponse';
+import { SearchIndex } from '../types/SearchIndex';
 import { HasWaitTask, waitTask } from './waitTask';
 
 export const saveRules = <TSearchIndex extends SearchIndex>(

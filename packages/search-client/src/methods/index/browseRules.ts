@@ -1,10 +1,10 @@
 import { RequestOptions } from '@algolia/transporter';
 
 import { BrowsablePromise } from '../../BrowsablePromise';
-import { SearchIndex } from '../../SearchIndex';
 import { BrowseOptions } from '../types/BrowseOptions';
 import { BrowseResponse } from '../types/BrowseResponse';
 import { Rule } from '../types/Rule';
+import { SearchIndex } from '../types/SearchIndex';
 import { SearchRulesOptions } from '../types/SearchRulesOptions';
 import { HasSearchRules, searchRules } from './searchRules';
 

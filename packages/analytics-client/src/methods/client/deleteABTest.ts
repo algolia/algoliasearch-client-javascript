@@ -1,13 +1,13 @@
 import { Method } from '@algolia/requester-types';
 import { encode } from '@algolia/support';
 import { RequestOptions } from '@algolia/transporter';
+import { TransporterAware } from '@algolia/transporter/src/TransporterAware';
 
-import { AnalyticsClient } from '../../AnalyticsClient';
 import { DeleteABTestResponse } from '../types/DeleteABTestResponse';
 
-export const deleteABTest = <TAnalyticsClient extends AnalyticsClient>(
-  base: TAnalyticsClient
-): TAnalyticsClient & HasDeleteABTest => {
+export const deleteABTest = <TClient extends TransporterAware>(
+  base: TClient
+): TClient & HasDeleteABTest => {
   return {
     ...base,
     deleteABTest(

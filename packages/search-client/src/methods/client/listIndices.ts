@@ -1,12 +1,11 @@
 import { Method } from '@algolia/requester-types';
-import { RequestOptions } from '@algolia/transporter';
+import { RequestOptions, TransporterAware } from '@algolia/transporter';
 
-import { SearchClient } from '../../SearchClient';
 import { ListIndicesResponse } from '../types/ListIndicesResponse';
 
-export const listIndices = <TSearchClient extends SearchClient>(
-  base: TSearchClient
-): TSearchClient & HasListIndices => {
+export const listIndices = <TClient extends TransporterAware>(
+  base: TClient
+): TClient & HasListIndices => {
   return {
     ...base,
     listIndices(requestOptions?: RequestOptions): Readonly<Promise<ListIndicesResponse>> {

@@ -2,9 +2,9 @@ import { Method } from '@algolia/requester-types';
 import { encode, WaitablePromise } from '@algolia/support';
 import { popRequestOption, RequestOptions } from '@algolia/transporter';
 
-import { SearchIndex } from '../../SearchIndex';
 import { IndexOperationResponse } from '../types/IndexOperationResponse';
 import { ReplaceAllObjectsOptions } from '../types/ReplaceAllObjectsOptions';
+import { SearchIndex } from '../types/SearchIndex';
 import { saveObjects } from './saveObjects';
 import { HasWaitTask, waitTask } from './waitTask';
 
@@ -46,18 +46,15 @@ export const replaceAllObjects = <TSearchIndex extends SearchIndex>(
         .toString(36)
         .substring(7);
 
-      const temporaryIndexName = `${this.indexName}_tmp_${randomSuffix}`;
-      const temporaryIndex = saveObjects(
-        new SearchIndex({
-          transporter: this.transporter,
-          indexName: temporaryIndexName,
-        })
-      );
+      const temporaryIndex = saveObjects({
+        transporter: this.transporter,
+        indexName: `${this.indexName}_tmp_${randomSuffix}`,
+      });
 
       // eslint-disable-next-line prefer-const, functional/no-let, functional/prefer-readonly-type
       let responses: Array<Readonly<WaitablePromise<any>>> = [];
 
-      const copyWaitablePromise = operation(this.indexName, temporaryIndexName, 'copy', {
+      const copyWaitablePromise = operation(this.indexName, temporaryIndex.indexName, 'copy', {
         ...requestOptions,
         scope: ['settings', 'synonyms', 'rules'],
       });

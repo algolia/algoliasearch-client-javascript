@@ -1,16 +1,16 @@
 import { Method } from '@algolia/requester-types';
 import { encode, WaitablePromise } from '@algolia/support';
-import { RequestOptions } from '@algolia/transporter';
+import { RequestOptions, TransporterAware } from '@algolia/transporter';
 
-import { SearchClient } from '../../SearchClient';
 import { HasWaitTask, waitTask } from '../index/waitTask';
 import { IndexOperationResponse } from '../types/IndexOperationResponse';
+import { HasInitIndex, initIndex } from './initIndex';
 
-export const moveIndex = <TSearchClient extends SearchClient>(
-  base: TSearchClient
-): TSearchClient & HasMoveIndex => {
+export const moveIndex = <TClient extends TransporterAware>(
+  base: TClient
+): TClient & HasInitIndex & HasMoveIndex => {
   return {
-    ...base,
+    ...initIndex(base),
     moveIndex(
       from: string,
       to: string,
@@ -37,7 +37,7 @@ export const moveIndex = <TSearchClient extends SearchClient>(
   };
 };
 
-export type HasMoveIndex = SearchClient & {
+export type HasMoveIndex = {
   readonly moveIndex: (
     from: string,
     to: string,

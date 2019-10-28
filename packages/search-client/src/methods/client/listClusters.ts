@@ -1,12 +1,11 @@
 import { Method } from '@algolia/requester-types';
-import { RequestOptions } from '@algolia/transporter';
+import { RequestOptions, TransporterAware } from '@algolia/transporter';
 
-import { SearchClient } from '../../SearchClient';
 import { ListClustersResponse } from '../types/ListClustersResponse';
 
-export const listClusters = <TSearchClient extends SearchClient>(
-  base: TSearchClient
-): TSearchClient & HasListClusters => {
+export const listClusters = <TClient extends TransporterAware>(
+  base: TClient
+): TClient & HasListClusters => {
   return {
     ...base,
     listClusters(requestOptions?: RequestOptions): Readonly<Promise<ListClustersResponse>> {

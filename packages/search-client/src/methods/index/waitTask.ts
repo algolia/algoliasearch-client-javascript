@@ -1,6 +1,6 @@
 import { RequestOptions } from '@algolia/transporter';
 
-import { SearchIndex } from '../../SearchIndex';
+import { SearchIndex } from '../types/SearchIndex';
 import { TaskStatusResponse } from '../types/TaskStatusResponse';
 import { getTask, HasGetTask } from './getTask';
 

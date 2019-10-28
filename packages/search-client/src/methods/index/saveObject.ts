@@ -1,9 +1,9 @@
 import { WaitablePromise } from '@algolia/support';
 import { RequestOptions } from '@algolia/transporter';
 
-import { SearchIndex } from '../../SearchIndex';
 import { SaveObjectResponse } from '../types/SaveObjectResponse';
 import { SaveObjectsOptions } from '../types/SaveObjectsOptions';
+import { SearchIndex } from '../types/SearchIndex';
 import { HasSaveObjects, saveObjects } from './saveObjects';
 import { HasWaitTask } from './waitTask';
 

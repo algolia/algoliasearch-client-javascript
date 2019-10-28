@@ -2,7 +2,7 @@ import { Method } from '@algolia/requester-types';
 import { encode } from '@algolia/support';
 import { RequestOptions } from '@algolia/transporter';
 
-import { SearchIndex } from '../../SearchIndex';
+import { SearchIndex } from '../types/SearchIndex';
 import { Synonym } from '../types/Synonym';
 
 export const getSynonym = <TSearchIndex extends SearchIndex>(

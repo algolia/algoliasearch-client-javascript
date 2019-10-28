@@ -1,9 +1,9 @@
 import { Method } from '@algolia/requester-types';
 import { popRequestOption, RequestOptions } from '@algolia/transporter';
 
-import { SearchIndex } from '../../SearchIndex';
 import { GetObjectsOptions } from '../types/GetObjectsOptions';
 import { GetObjectsResponse } from '../types/GetObjectsResponse';
+import { SearchIndex } from '../types/SearchIndex';
 
 export const getObjects = <TSearchIndex extends SearchIndex>(
   base: TSearchIndex

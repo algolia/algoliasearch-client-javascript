@@ -1,15 +1,14 @@
 import { Method } from '@algolia/requester-types';
 import { encodeQueryParameters } from '@algolia/support';
-import { RequestOptions } from '@algolia/transporter';
+import { RequestOptions, TransporterAware } from '@algolia/transporter';
 
-import { SearchClient } from '../../SearchClient';
 import { MultipleQueriesOptions } from '../types/MultipleQueriesOptions';
 import { MultipleQueriesQuery } from '../types/MultipleQueriesQuery';
 import { MultipleQueriesResponse } from '../types/MultipleQueriesResponse';
 
-export const multipleQueries = <TSearchClient extends SearchClient>(
-  base: TSearchClient
-): TSearchClient & HasMultipleQueries => {
+export const multipleQueries = <TClient extends TransporterAware>(
+  base: TClient
+): TClient & HasMultipleQueries => {
   return {
     ...base,
     multipleQueries<TObject>(

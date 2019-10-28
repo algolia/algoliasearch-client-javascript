@@ -1,1 +1,1 @@
-export { createAnalyticsClient, AnalyticsClient } from './src/AnalyticsClient';
+export { createAnalyticsClient } from './src/createAnalyticsClient';

@@ -1,13 +1,12 @@
 import { Method } from '@algolia/requester-types';
-import { RequestOptions } from '@algolia/transporter';
+import { RequestOptions, TransporterAware } from '@algolia/transporter';
 
-import { SearchClient } from '../../SearchClient';
 import { PersonalizationStrategy } from '../types/PersonalizationStrategy';
 import { SetPersonalizationStrategyResponse } from '../types/SetPersonalizationStrategyResponse';
 
-export const setPersonalizationStrategy = <TSearchClient extends SearchClient>(
-  base: TSearchClient
-): TSearchClient & HasSetPersonalizationStrategy => {
+export const setPersonalizationStrategy = <TClient extends TransporterAware>(
+  base: TClient
+): TClient & HasSetPersonalizationStrategy => {
   return {
     ...base,
     setPersonalizationStrategy(

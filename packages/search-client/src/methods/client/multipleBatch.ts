@@ -1,17 +1,17 @@
 import { Method } from '@algolia/requester-types';
 import { WaitablePromise } from '@algolia/support';
-import { RequestOptions } from '@algolia/transporter';
+import { RequestOptions, TransporterAware } from '@algolia/transporter';
 
-import { SearchClient } from '../../SearchClient';
 import { HasWaitTask, waitTask } from '../index/waitTask';
 import { BatchRequest } from '../types/BatchRequest';
 import { MultipleBatchResponse } from '../types/MultipleBatchResponse';
+import { HasInitIndex, initIndex } from './initIndex';
 
-export const multipleBatch = <TSearchClient extends SearchClient>(
-  base: TSearchClient
-): TSearchClient & HasMultipleBatch => {
+export const multipleBatch = <TClient extends TransporterAware>(
+  base: TClient
+): TClient & HasInitIndex & HasMultipleBatch => {
   return {
-    ...base,
+    ...initIndex(base),
     multipleBatch(
       requests: readonly BatchRequest[],
       requestOptions?: RequestOptions
@@ -40,7 +40,7 @@ export const multipleBatch = <TSearchClient extends SearchClient>(
   };
 };
 
-export type HasMultipleBatch = SearchClient & {
+export type HasMultipleBatch = {
   readonly multipleBatch: (
     requests: readonly BatchRequest[],
     requestOptions?: RequestOptions
