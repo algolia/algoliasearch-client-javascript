@@ -1,13 +1,18 @@
 import { Variant } from './Variant';
 
 export type ABTest = {
-  /* eslint-disable functional/prefer-readonly-type */
-  name: string;
-  status: string;
-  variants: Variant[];
-  endAt: Date | string | null;
-  createAt: Date | string | null;
-  abTestID: number | null;
-  clickSignificance: number | null;
-  conversionSignificance: number | null;
+  /**
+   * The ab test name.
+   */
+  readonly name: string;
+
+  /**
+   * The ab test list of variants.
+   */
+  readonly variants: readonly Variant[];
+
+  /**
+   * The ab test end date, if any.
+   */
+  readonly endAt: string;
 };

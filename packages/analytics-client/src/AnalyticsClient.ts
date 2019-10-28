@@ -3,15 +3,11 @@ import { ComposableOptions, compose } from '@algolia/support';
 import { Call, Transporter, TransporterOptions } from '@algolia/transporter';
 
 export class AnalyticsClient {
-  public readonly appId: string;
-
   public readonly transporter: Transporter;
 
   public constructor(options: AnalyticsClientOptions & TransporterOptions) {
-    this.appId = options.appId;
-
     const region = options.region !== undefined ? options.region : 'us';
-    const auth = new Auth(AuthMode.WithinHeaders, this.appId, options.apiKey);
+    const auth = new Auth(AuthMode.WithinHeaders, options.appId, options.apiKey);
 
     this.transporter = new Transporter(options);
 

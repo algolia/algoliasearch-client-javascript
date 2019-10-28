@@ -53,6 +53,18 @@ export class Transporter {
     this.userAgent = options.userAgent;
   }
 
+  public reset(): Transporter {
+    return new Transporter({
+      requester: this.requester,
+      timeouts: this.timeouts,
+      logger: this.logger,
+      responsesCache: this.responsesCache,
+      hostsCache: this.hostsCache,
+      requestsCache: this.requestsCache,
+      userAgent: this.userAgent,
+    });
+  }
+
   public addHeaders(headers: { readonly [key: string]: string }): void {
     // eslint-disable-next-line functional/immutable-data
     this.headers = Object.assign(this.headers, headers);

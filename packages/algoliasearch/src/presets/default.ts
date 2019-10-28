@@ -1,5 +1,12 @@
 import { createAnalyticsClient } from '@algolia/analytics-client';
-import { getAbTests, HasGetABTests } from '@algolia/analytics-client/src/methods/client/getABTests';
+import { addABTest, HasAddABTest } from '@algolia/analytics-client/src/methods/client/addABTest';
+import {
+  deleteABTest,
+  HasDeleteABTest,
+} from '@algolia/analytics-client/src/methods/client/deleteABTest';
+import { getABTest, HasGetABTest } from '@algolia/analytics-client/src/methods/client/getABTest';
+import { getABTests, HasGetABTests } from '@algolia/analytics-client/src/methods/client/getABTests';
+import { HasStopABTest, stopABTest } from '@algolia/analytics-client/src/methods/client/stopABTest';
 import { SearchClient as BaseSearchClient } from '@algolia/search-client';
 import { copyIndex, HasCopyIndex } from '@algolia/search-client/src/methods/client/copyIndex';
 import {
@@ -187,7 +194,11 @@ export type SearchIndex = SearchIndexPreset &
   HasBrowseRules &
   HasClearRules;
 
-export type AnalyticsClient = HasGetABTests;
+export type AnalyticsClient = HasAddABTest &
+  HasGetABTest &
+  HasGetABTests &
+  HasStopABTest &
+  HasDeleteABTest;
 
 export const methods = {
   searchClient: [
@@ -245,7 +256,7 @@ export const methods = {
     browseRules,
     clearRules,
   ],
-  analyticsClient: [getAbTests],
+  analyticsClient: [addABTest, getABTest, getABTests, stopABTest, deleteABTest],
 };
 
 export class SearchClientPreset extends BaseSearchClient {
@@ -263,6 +274,7 @@ export class SearchClientPreset extends BaseSearchClient {
     return createAnalyticsClient({
       ...this.options,
       region,
+      methods: methods.analyticsClient,
     });
   }
 }

@@ -45,27 +45,49 @@ export class TestSuite {
     return index;
   }
 
-  private makeIndexName(): string {
-    const date = new Date();
+  public makeIndexName(): string {
+    const instanceName = this.makeInstanceName();
+    const dateTime = this.makeDateTime();
 
-    const jobNumber = process.env.CIRCLE_BUILD_NUM ? process.env.CIRCLE_BUILD_NUM : 'unknown';
+    return `javascript_${dateTime}_${instanceName}_${this.testName}_${this.indices.length}`;
+  }
 
+  public makeDateTime(): string {
+    const now = new Date();
+
+    const makeTwoDigitsString = function(n: number): string {
+      return `0${n}`.slice(-2);
+    };
+
+    const date =
+      `${now.getFullYear()}-` +
+      `${makeTwoDigitsString(now.getMonth() + 1)}-` +
+      `${makeTwoDigitsString(now.getDate())}`;
+
+    const time =
+      `${makeTwoDigitsString(now.getHours())}:` +
+      `${makeTwoDigitsString(now.getMinutes())}:` +
+      `${makeTwoDigitsString(now.getSeconds())}`;
+
+    return `${date}-${time}`;
+  }
+
+  public makeInstanceName(): string {
+    // @ts-ignore
+    // eslint-disable-next-line no-undef
+    const environment = testing.environment();
     const nodeVersion = process.versions.node;
+    const jobNumber = process.env.CIRCLE_BUILD_NUM;
+    const user = process.env.USER;
 
-    return (
-      `javascript_${date.getFullYear()}` +
-      `-${`0${date.getMonth() + 1}`.slice(-2)}` +
-      `-${`0${date.getDate()}`.slice(-2)}` +
-      `_${`0${date.getHours()}`.slice(-2)}` +
-      `:${`0${date.getMinutes()}`.slice(-2)}` +
-      `:${`0${date.getSeconds()}`.slice(-2)}` +
-      // @ts-ignore
-      // eslint-disable-next-line no-undef
-      `_${testing.environment()}` +
-      `_${nodeVersion}` +
-      `_${jobNumber}` +
-      `_${`${this.testName}_${this.indices.length}`}`
-    );
+    if (jobNumber) {
+      return `${environment}_${jobNumber}_${user}`;
+    }
+    if (user) {
+      return `${environment}_${nodeVersion}_${user}`;
+    }
+
+    return `${environment}_${nodeVersion}_unknown`;
   }
 
   private ensureEnvironmentVariables(): void {

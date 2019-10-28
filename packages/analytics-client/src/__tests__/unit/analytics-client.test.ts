@@ -13,10 +13,6 @@ describe('Search Client', () => {
     expect(analyticsClient.transporter.hosts[0].url).toBe('analytics.us.algolia.com');
   });
 
-  it('Gives access to appId', () => {
-    expect(analyticsClient.appId).toEqual('appId');
-  });
-
   it('Sets default headers', () => {
     expect(analyticsClient.transporter.headers).toEqual({
       'content-type': 'application/json',
