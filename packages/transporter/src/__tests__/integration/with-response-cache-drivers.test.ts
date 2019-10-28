@@ -1,8 +1,8 @@
 /* eslint sonarjs/cognitive-complexity: 0 */ // --> OFF
 
-import { BrowserLocalStorageCache } from '@algolia/cache-browser-local-storage';
-import { InMemoryCache } from '@algolia/cache-in-memory';
-import { NullCache } from '@algolia/cache-types';
+import { createBrowserLocalStorageCache } from '@algolia/cache-browser-local-storage';
+import { createInMemoryCache } from '@algolia/cache-in-memory';
+import { createNullCache } from '@algolia/cache-types';
 import { anything, mock, verify, when } from 'ts-mockito';
 
 import { FakeRequester, Fixtures } from '../Fixtures';
@@ -16,28 +16,28 @@ describe('response cache integration with cache drivers', () => {
     // @ts-ignore
     // eslint-disable-next-line no-undef
     if (testing.isBrowser()) {
-      await new BrowserLocalStorageCache().clear();
+      await createBrowserLocalStorageCache().clear();
     }
   });
 
-  const drivers = [NullCache, InMemoryCache];
+  const drivers = [createNullCache, createInMemoryCache];
 
   // @ts-ignore
   // eslint-disable-next-line no-undef
   if (testing.isBrowser()) {
-    drivers.push(BrowserLocalStorageCache);
+    drivers.push(createBrowserLocalStorageCache);
   }
 
   const expectedCalls = {
     '2xx': {
-      [new NullCache().constructor.name]: 16,
-      [new InMemoryCache().constructor.name]: 7,
-      [new BrowserLocalStorageCache().constructor.name]: 7,
+      [createNullCache.name]: 16,
+      [createInMemoryCache.name]: 7,
+      [createBrowserLocalStorageCache.name]: 7,
     },
     '4xx': {
-      [new NullCache().constructor.name]: 10,
-      [new InMemoryCache().constructor.name]: 10,
-      [new BrowserLocalStorageCache().constructor.name]: 10,
+      [createNullCache.name]: 10,
+      [createInMemoryCache.name]: 10,
+      [createBrowserLocalStorageCache.name]: 10,
     },
   };
 
@@ -52,7 +52,7 @@ describe('response cache integration with cache drivers', () => {
         isTimedOut: false,
       });
 
-      const driver = new drivers[index]();
+      const driver = drivers[index]();
 
       const transporter = Fixtures.transporter(requester, { responsesCache: driver });
 
@@ -74,7 +74,7 @@ describe('response cache integration with cache drivers', () => {
         await expect(transporter.read(transporterRequest)).resolves.toMatchObject({ hits: [] });
       }
 
-      verify(requester.send(anything())).times(expectedCalls['2xx'][driver.constructor.name]);
+      verify(requester.send(anything())).times(expectedCalls['2xx'][drivers[index].name]);
     }
   });
 
@@ -88,7 +88,7 @@ describe('response cache integration with cache drivers', () => {
         isTimedOut: false,
       });
 
-      const driver = new drivers[index]();
+      const driver = drivers[index]();
 
       const transporter = Fixtures.transporter(requester, { responsesCache: driver });
 
@@ -98,7 +98,7 @@ describe('response cache integration with cache drivers', () => {
         });
       }
 
-      verify(requester.send(anything())).times(expectedCalls['4xx'][driver.constructor.name]);
+      verify(requester.send(anything())).times(expectedCalls['4xx'][drivers[index].name]);
     }
   });
 });

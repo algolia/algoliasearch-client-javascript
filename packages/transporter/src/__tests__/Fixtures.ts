@@ -1,4 +1,4 @@
-import { NullCache } from '@algolia/cache-types';
+import { createNullCache } from '@algolia/cache-types';
 import { Method, Request as RequesterRequest, Requester, Response } from '@algolia/requester-types';
 import { encode } from '@algolia/support';
 import { Call } from '@algolia/transporter';
@@ -35,9 +35,9 @@ export class Fixtures {
     ]);
 
     transporter.requester = instance(requester);
-    transporter.hostsCache = new NullCache();
-    transporter.requestsCache = new NullCache();
-    transporter.responsesCache = new NullCache();
+    transporter.hostsCache = createNullCache();
+    transporter.requestsCache = createNullCache();
+    transporter.responsesCache = createNullCache();
     transporter.headers = {
       'X-Default-Header': 'Default value',
     };

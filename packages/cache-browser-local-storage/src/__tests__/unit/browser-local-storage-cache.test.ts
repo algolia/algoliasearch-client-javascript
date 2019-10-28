@@ -1,8 +1,8 @@
-import { BrowserLocalStorageCache } from '../../BrowserLocalStorageCache';
+import { createBrowserLocalStorageCache } from '../../createBrowserLocalStorageCache';
 
 describe('browser local storage cache', () => {
   it('sets/gets values', async () => {
-    const cache = new BrowserLocalStorageCache();
+    const cache = createBrowserLocalStorageCache();
 
     const defaultValue = () => Promise.resolve({ bar: 1 });
 
@@ -28,7 +28,7 @@ describe('browser local storage cache', () => {
   });
 
   it('deletes keys', async () => {
-    const cache = new BrowserLocalStorageCache();
+    const cache = createBrowserLocalStorageCache();
     await cache.set({ key: 'foo' }, { bar: 1 });
 
     await cache.delete({ key: 'foo' });
@@ -47,7 +47,7 @@ describe('browser local storage cache', () => {
   });
 
   it('allows to be clear', async () => {
-    const cache = new BrowserLocalStorageCache();
+    const cache = createBrowserLocalStorageCache();
     await cache.set({ key: 1 }, { 'set-1': 1 });
     await cache.set({ key: 2 }, { 'set-2': 2 });
 

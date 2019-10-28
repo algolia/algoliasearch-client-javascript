@@ -1,8 +1,8 @@
 /* eslint sonarjs/cognitive-complexity: 0 */ // --> OFF
 
-import { BrowserLocalStorageCache } from '@algolia/cache-browser-local-storage';
-import { InMemoryCache } from '@algolia/cache-in-memory';
-import { NullCache } from '@algolia/cache-types';
+import { createBrowserLocalStorageCache } from '@algolia/cache-browser-local-storage';
+import { createInMemoryCache } from '@algolia/cache-in-memory';
+import { createNullCache } from '@algolia/cache-types';
 import { anything, mock, verify, when } from 'ts-mockito';
 
 import { FakeRequester, Fixtures } from '../Fixtures';
@@ -10,33 +10,33 @@ import { FakeRequester, Fixtures } from '../Fixtures';
 const transporterRequest = Fixtures.transporterRequest();
 transporterRequest.cacheable = true;
 
+const drivers = [createNullCache, createInMemoryCache];
+
+// @ts-ignore
+// eslint-disable-next-line no-undef
+if (testing.isBrowser()) {
+  drivers.push(createBrowserLocalStorageCache);
+}
+
 describe('request cache integration with cache drivers', () => {
   beforeEach(async () => {
     // @ts-ignore
     // eslint-disable-next-line no-undef
     if (testing.isBrowser()) {
-      await new BrowserLocalStorageCache().clear();
+      await createBrowserLocalStorageCache().clear();
     }
   });
 
-  const drivers = [NullCache, InMemoryCache];
-
-  // @ts-ignore
-  // eslint-disable-next-line no-undef
-  if (testing.isBrowser()) {
-    drivers.push(BrowserLocalStorageCache);
-  }
-
   const expectedCalls = {
     'in-progress': {
-      [new NullCache().constructor.name]: 13,
-      [new InMemoryCache().constructor.name]: 4,
-      [new BrowserLocalStorageCache().constructor.name]: 4,
+      [createNullCache.name]: 13,
+      [createInMemoryCache.name]: 4,
+      [createBrowserLocalStorageCache.name]: 4,
     },
     resolved: {
-      [new NullCache().constructor.name]: 10,
-      [new InMemoryCache().constructor.name]: 10,
-      [new BrowserLocalStorageCache().constructor.name]: 10,
+      [createNullCache.name]: 10,
+      [createInMemoryCache.name]: 10,
+      [createBrowserLocalStorageCache.name]: 10,
     },
   };
 
@@ -50,7 +50,7 @@ describe('request cache integration with cache drivers', () => {
         isTimedOut: false,
       });
 
-      const driver = new drivers[index]();
+      const driver = drivers[index]();
 
       const transporter = Fixtures.transporter(requester, { requestsCache: driver });
 
@@ -69,9 +69,7 @@ describe('request cache integration with cache drivers', () => {
         await responses[responsesNumber];
       }
 
-      verify(requester.send(anything())).times(
-        expectedCalls['in-progress'][driver.constructor.name]
-      );
+      verify(requester.send(anything())).times(expectedCalls['in-progress'][drivers[index].name]);
     }
   });
 
@@ -85,7 +83,7 @@ describe('request cache integration with cache drivers', () => {
         isTimedOut: false,
       });
 
-      const driver = new drivers[index]();
+      const driver = drivers[index]();
 
       const transporter = Fixtures.transporter(requester, { requestsCache: driver });
 
@@ -93,7 +91,7 @@ describe('request cache integration with cache drivers', () => {
         await expect(transporter.read(transporterRequest)).resolves.toMatchObject({ hits: [] });
       }
 
-      verify(requester.send(anything())).times(expectedCalls.resolved[driver.constructor.name]);
+      verify(requester.send(anything())).times(expectedCalls.resolved[drivers[index].name]);
     }
   });
 });

@@ -1,50 +1,49 @@
-import { BrowserLocalStorageCache } from '@algolia/cache-browser-local-storage';
-import { InMemoryCache } from '@algolia/cache-in-memory';
-import { Cache, NullCache } from '@algolia/cache-types';
+import { createBrowserLocalStorageCache } from '@algolia/cache-browser-local-storage';
+import { createInMemoryCache } from '@algolia/cache-in-memory';
+import { createNullCache } from '@algolia/cache-types';
 import { anything, mock, verify, when } from 'ts-mockito';
 
 import { FakeRequester, Fixtures } from '../Fixtures';
 
 const transporterRequest = Fixtures.transporterRequest();
+const drivers = [createNullCache, createInMemoryCache];
 
-let drivers: Cache[] = [];
+// @ts-ignore
+// eslint-disable-next-line no-undef
+if (testing.isBrowser()) {
+  drivers.push(createBrowserLocalStorageCache);
+}
 
 describe('hosts cache integration with cache drivers', () => {
   beforeEach(async () => {
     // @ts-ignore
     // eslint-disable-next-line no-undef
     if (testing.isBrowser()) {
-      await new BrowserLocalStorageCache().clear();
-    }
-
-    drivers = [new NullCache(), new InMemoryCache()];
-
-    // @ts-ignore
-    // eslint-disable-next-line no-undef
-    if (testing.isBrowser()) {
-      drivers.push(new BrowserLocalStorageCache());
+      await createBrowserLocalStorageCache().clear();
     }
   });
 
   const expectedCalls = [
     {
-      [new NullCache().constructor.name]: 3,
-      [new InMemoryCache().constructor.name]: 3,
-      [new BrowserLocalStorageCache().constructor.name]: 3,
+      [createNullCache.name]: 3,
+      [createInMemoryCache.name]: 3,
+      [createBrowserLocalStorageCache.name]: 3,
     },
     {
-      [new NullCache().constructor.name]: 3,
-      [new InMemoryCache().constructor.name]: 0,
-      [new BrowserLocalStorageCache().constructor.name]: 0,
+      [createNullCache.name]: 3,
+      [createInMemoryCache.name]: 0,
+      [createBrowserLocalStorageCache.name]: 0,
     },
     {
-      [new NullCache().constructor.name]: 3,
-      [new InMemoryCache().constructor.name]: 0,
-      [new BrowserLocalStorageCache().constructor.name]: 0,
+      [createNullCache.name]: 3,
+      [createInMemoryCache.name]: 0,
+      [createBrowserLocalStorageCache.name]: 0,
     },
   ];
 
   it('preserve hosts state between calls', async () => {
+    const driversCreated = drivers.map(driver => driver());
+
     for (let callsNumber = 0; callsNumber < 2; callsNumber++) {
       for (let index = 0; index < drivers.length; index++) {
         let requester: FakeRequester;
@@ -55,9 +54,7 @@ describe('hosts cache integration with cache drivers', () => {
           isTimedOut: false,
         });
 
-        const driver = drivers[index];
-
-        const transporter = Fixtures.transporter(requester, { hostsCache: driver });
+        const transporter = Fixtures.transporter(requester, { hostsCache: driversCreated[index] });
 
         const message =
           // eslint-disable-next-line max-len
@@ -73,9 +70,7 @@ describe('hosts cache integration with cache drivers', () => {
           name: 'RetryError',
         });
 
-        verify(requester.send(anything())).times(
-          expectedCalls[callsNumber][driver.constructor.name]
-        );
+        verify(requester.send(anything())).times(expectedCalls[callsNumber][drivers[index].name]);
       }
     }
   });

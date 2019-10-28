@@ -1,8 +1,8 @@
-import { NullCache } from '../../NullCache';
+import { createNullCache } from '../../../';
 
 describe('null cache', () => {
   it('does not set value', async () => {
-    const cache = new NullCache();
+    const cache = createNullCache();
 
     await cache.set({ key: 'key' }, { foo: 10 });
 
@@ -25,7 +25,7 @@ describe('null cache', () => {
   });
 
   it('returns default value', async () => {
-    const cache = new NullCache();
+    const cache = createNullCache();
 
     const defaultValue = Promise.resolve({
       foo: 12,
@@ -45,7 +45,7 @@ describe('null cache', () => {
   });
 
   it('resolves a empty promise on clear', async () => {
-    const cache = new NullCache();
+    const cache = createNullCache();
 
     const res = await cache.clear();
 

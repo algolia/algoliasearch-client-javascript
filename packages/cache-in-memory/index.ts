@@ -1,1 +1,1 @@
-export * from './src/InMemoryCache';
+export * from './src/createInMemoryCache';

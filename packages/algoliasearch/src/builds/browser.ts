@@ -1,5 +1,5 @@
-import { BrowserLocalStorageCache } from '@algolia/cache-browser-local-storage';
-import { InMemoryCache } from '@algolia/cache-in-memory';
+import { createBrowserLocalStorageCache } from '@algolia/cache-browser-local-storage';
+import { createInMemoryCache } from '@algolia/cache-in-memory';
 import { ConsoleLogger } from '@algolia/logger-console';
 import { LogLevel } from '@algolia/logger-types';
 import { createBrowserXhrRequester } from '@algolia/requester-browser-xhr';
@@ -23,9 +23,9 @@ export default function algoliasearch(
     },
     requester: createBrowserXhrRequester(),
     logger: new ConsoleLogger(options.logLevel === undefined ? LogLevel.Error : options.logLevel),
-    responsesCache: new InMemoryCache(),
-    requestsCache: new InMemoryCache(),
-    hostsCache: new BrowserLocalStorageCache(),
+    responsesCache: createInMemoryCache(),
+    requestsCache: createInMemoryCache(),
+    hostsCache: createBrowserLocalStorageCache(),
     userAgent: UserAgent.create('4.0.0-alpha.0').with({ segment: 'Browser' }),
   });
 }
