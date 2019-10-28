@@ -1,6 +1,6 @@
 import { Auth, AuthMode, AuthModeType } from '@algolia/auth';
 import { ComposableOptions, compose, shuffle } from '@algolia/support';
-import { Call, Host, Transporter, UserAgent } from '@algolia/transporter-types';
+import { Call, Transporter, TransporterOptions } from '@algolia/transporter';
 
 import { SearchIndex } from './SearchIndex';
 
@@ -9,11 +9,21 @@ export class SearchClient {
 
   public readonly transporter: Transporter;
 
-  public constructor(options: SearchClientOptions) {
+  public constructor(options: SearchClientOptions & TransporterOptions) {
     this.appId = options.appId;
-
-    this.transporter = options.transporter;
-    this.transporter.hosts = this.createHosts();
+    this.transporter = new Transporter(options);
+    this.transporter.setHosts(
+      [
+        { url: `${this.appId}-dsn.algolia.net`, accept: Call.Read },
+        { url: `${this.appId}.algolia.net`, accept: Call.Write },
+      ].concat(
+        shuffle([
+          { url: `${this.appId}-1.algolianet.com`, accept: Call.Any },
+          { url: `${this.appId}-2.algolianet.com`, accept: Call.Any },
+          { url: `${this.appId}-3.algolianet.com`, accept: Call.Any },
+        ])
+      )
+    );
 
     const auth = new Auth(
       options.authMode !== undefined ? options.authMode : AuthMode.WithinHeaders,
@@ -21,15 +31,16 @@ export class SearchClient {
       options.apiKey
     );
 
-    this.transporter.headers = {
+    this.transporter.addHeaders({
       ...auth.headers(),
       ...{ 'content-type': 'application/x-www-form-urlencoded' },
-    };
+    });
 
-    this.transporter.queryParameters = {
-      ...auth.queryParameters(),
-      ...{ 'x-algolia-agent': options.userAgent.value },
-    };
+    this.transporter.addQueryParameters(auth.queryParameters());
+  }
+
+  public addAlgoliaAgent(segment: string, version?: string): void {
+    this.transporter.addUserAgent(segment, version);
   }
 
   public initIndex<TSearchIndex>(
@@ -46,28 +57,10 @@ export class SearchClient {
       indexName,
     });
   }
-
-  // eslint-disable-next-line functional/prefer-readonly-type
-  private createHosts(): Host[] {
-    const hosts = [
-      { url: `${this.appId}-dsn.algolia.net`, accept: Call.Read },
-      { url: `${this.appId}.algolia.net`, accept: Call.Write },
-    ];
-
-    return hosts
-      .concat(
-        shuffle([
-          { url: `${this.appId}-1.algolianet.com`, accept: Call.Any },
-          { url: `${this.appId}-2.algolianet.com`, accept: Call.Any },
-          { url: `${this.appId}-3.algolianet.com`, accept: Call.Any },
-        ])
-      )
-      .map(host => new Host(host));
-  }
 }
 
 export const createSearchClient = <TSearchClient>(
-  options: SearchClientOptions & ComposableOptions
+  options: SearchClientOptions & TransporterOptions & ComposableOptions
 ): TSearchClient & SearchClient => {
   const Client = compose<TSearchClient & SearchClient>(
     SearchClient,
@@ -80,7 +73,5 @@ export const createSearchClient = <TSearchClient>(
 export type SearchClientOptions = {
   readonly appId: string;
   readonly apiKey: string;
-  readonly transporter: Transporter;
-  readonly userAgent: UserAgent;
   readonly authMode?: AuthModeType;
 };

@@ -7,6 +7,6 @@
     "@algolia/cache-types": "file:../cache-types",
     "@algolia/logger-types": "file:../logger-types",
     "@algolia/requester-types": "file:../requester-types",
-    "@algolia/transporter-types": "file:../transporter-types"
+    "@algolia/transporter": "file:../transporter"
   }
 }

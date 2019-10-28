@@ -1,6 +1,7 @@
-import { ConsequenceParams, SearchOptions } from './ConsequenceParams';
+import { ConsequenceParams } from './ConsequenceParams';
 import { ConsequencePromote } from './ConsequencePromote';
 import { Hide } from './Hide';
+import { SearchOptions } from './SearchOptions';
 
 export type Consequence = {
   /** Additional search parameters. Any valid search parameter is allowed. */

@@ -1,6 +1,6 @@
 import { Method } from '@algolia/requester-types';
 import { ConstructorOf, encode, WaitablePromise } from '@algolia/support';
-import { popRequestOption, RequestOptions } from '@algolia/transporter-types';
+import { popRequestOption, RequestOptions } from '@algolia/transporter';
 
 import { SearchIndex } from '../../SearchIndex';
 import { IndexOperationResponse } from '../types/IndexOperationResponse';
@@ -75,11 +75,11 @@ export const replaceAllObjects = <TSearchIndex extends ConstructorOf<SearchIndex
       });
     }
 
-    private operation(
+    public operation(
       from: string,
       to: string,
       type: string,
-      requestOptions: RequestOptions
+      requestOptions?: RequestOptions
     ): Readonly<WaitablePromise<IndexOperationResponse>> {
       return WaitablePromise.from<IndexOperationResponse>(
         this.transporter.write(

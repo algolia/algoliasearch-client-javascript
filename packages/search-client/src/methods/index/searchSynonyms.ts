@@ -1,6 +1,6 @@
 import { Method } from '@algolia/requester-types';
 import { ConstructorOf, encode } from '@algolia/support';
-import { RequestOptions } from '@algolia/transporter-types';
+import { RequestOptions } from '@algolia/transporter';
 
 import { SearchIndex } from '../../SearchIndex';
 import { SearchSynonymsOptions } from '../types/SearchSynonymsOptions';

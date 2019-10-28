@@ -1,4 +1,4 @@
-import { ApiError } from '@algolia/transporter-types';
+import { ApiError } from '@algolia/transporter';
 import { anything, mock, when } from 'ts-mockito';
 
 import { Transporter } from '../../Transporter';

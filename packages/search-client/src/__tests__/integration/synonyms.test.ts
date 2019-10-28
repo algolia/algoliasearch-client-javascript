@@ -1,6 +1,6 @@
 import { createMultiWaitable } from '@algolia/support/src/__tests__/helpers';
 import { TestSuite } from '@algolia/support/src/__tests__/TestSuite';
-import { ApiError } from '@algolia/transporter-types';
+import { ApiError } from '@algolia/transporter';
 
 import { Synonym } from '../../methods/types/Synonym';
 import { SynonymEnum } from '../../methods/types/SynonymType';
@@ -77,14 +77,24 @@ test(testSuite.testName, async () => {
 
   expect((await index.searchSynonyms('')).nbHits).toEqual(5);
 
-  let synonyms1 = [];
+  let synonymsFromBrowse = [];
   await index.browseSynonyms({
-    batch: synonymsBatch => (synonyms1 = synonyms1.concat(synonymsBatch)),
+    batch: synonymsBatch => (synonymsFromBrowse = synonymsFromBrowse.concat(synonymsBatch)),
   });
 
-  synonyms1.forEach(synonym => {
+  expect(synonymsFromBrowse).toHaveLength(5);
+
+  synonymsFromBrowse.forEach(synonym => {
     expect(synonyms).toContainEqual(synonym);
   });
+
+  let emptySynonyms = [];
+  await index.browseSynonyms({
+    query: 'GHJKLHGHJKLKJH',
+    batch: synomyBatch => (emptySynonyms = emptySynonyms.concat(synomyBatch)),
+  });
+
+  expect(emptySynonyms).toHaveLength(0);
 
   await index.deleteSynonym('gba').wait();
 

@@ -22,8 +22,8 @@ export const getObjectPosition = <TSearchIndex extends ConstructorOf<SearchIndex
 };
 
 export type HasGetObjectPosition = {
-  readonly getObjectPosition: <TObject>(
-    searchResponse: SearchResponse<TObject>,
+  readonly getObjectPosition: (
+    searchResponse: SearchResponse,
     objectID: string
   ) => Readonly<number>;
 };

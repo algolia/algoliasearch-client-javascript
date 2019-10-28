@@ -1,5 +1,5 @@
 import { ConstructorOf, WaitablePromise } from '@algolia/support';
-import { popRequestOption, RequestOptions } from '@algolia/transporter-types';
+import { popRequestOption, RequestOptions } from '@algolia/transporter';
 
 import { SearchIndex } from '../../SearchIndex';
 import { BatchAction } from '../types/BatchAction';

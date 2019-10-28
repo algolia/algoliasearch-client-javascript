@@ -1,6 +1,6 @@
 import { Method } from '@algolia/requester-types';
 import { ConstructorOf, WaitablePromise } from '@algolia/support';
-import { RequestOptions } from '@algolia/transporter-types';
+import { RequestOptions } from '@algolia/transporter';
 
 import { HasWaitTask, waitTask } from '../../../../search-client/src/methods/index/waitTask';
 import { AnalyticsClient } from '../../AnalyticsClient';

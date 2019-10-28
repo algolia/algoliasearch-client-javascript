@@ -1,9 +1,5 @@
 export class UserAgent {
-  public readonly value: string;
-
-  private constructor(value: string) {
-    this.value = value;
-  }
+  private constructor(public readonly value: string) {}
 
   public static create(version: string): UserAgent {
     return new UserAgent(`Algolia for JavaScript (${version})`);

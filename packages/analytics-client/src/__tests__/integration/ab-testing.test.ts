@@ -1,7 +1,7 @@
 import { Faker } from '@algolia/support/src/__tests__/Faker';
 import { createMultiWaitable } from '@algolia/support/src/__tests__/helpers';
 import { TestSuite } from '@algolia/support/src/__tests__/TestSuite';
-import { ApiError } from '@algolia/transporter-types';
+import { ApiError } from '@algolia/transporter';
 
 import { ABTest } from '../../methods/types/ABTest';
 import { Variant } from '../../methods/types/Variant';

@@ -1,13 +1,6 @@
 {
+  "extends": "./config/tsconfig.base.json",
   "compilerOptions": {
-    "target": "ESNEXT",
-    "module": "es2015",
-    "moduleResolution": "node",
-    "noEmit": true,
-    "strict": true,
-    "allowSyntheticDefaultImports": true,
-    "types": ["node", "webdriverio", "jest"]
-  },
-  "preserveSymlinks": true,
-  "include": ["testing.d.ts"]
+    "noEmit": true
+  }
 }

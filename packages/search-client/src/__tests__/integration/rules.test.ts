@@ -5,7 +5,7 @@ import { EditEnum } from '../../methods/types/EditType';
 import { IndexSettings } from '../../methods/types/IndexSettings';
 import { Rule } from '../../methods/types/Rule';
 
-const testSuite = new TestSuite('query_rules');
+const testSuite = new TestSuite('rules');
 
 afterAll(() => testSuite.cleanUp());
 
@@ -78,7 +78,7 @@ test(testSuite.testName, async () => {
 
   expect((await index.search('', { ruleContexts: ['summer'] })).hits.length).toEqual(1);
 
-  const searchResult = await index.searchRules();
+  const searchResult = await index.searchRules('');
   expect(searchResult.nbHits).toEqual(4);
   expect(
     searchResult.hits.find((rule: Rule) => rule.objectID === ruleToSave.objectID)
@@ -112,9 +112,17 @@ test(testSuite.testName, async () => {
     rulesFromBrowse.find((rule: Rule) => rule.objectID === ruleToSave4.objectID)
   ).toMatchObject(ruleToSave4);
 
+  let emptyRules = [];
+  await index.browseRules({
+    query: 'FGHJKLVFGBHJKJHBGVF',
+    batch: ruleBatch => (emptyRules = emptyRules.concat(ruleBatch)),
+  });
+
+  expect(emptyRules).toHaveLength(0);
+
   await index.deleteRule(ruleToSave.objectID).wait();
 
-  const searchResultAfterDelete = await index.searchRules();
+  const searchResultAfterDelete = await index.searchRules('');
   expect(searchResultAfterDelete.nbHits).toEqual(3);
   expect(searchResultAfterDelete.hits).not.toContain(ruleToSave);
 

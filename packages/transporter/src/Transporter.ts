@@ -1,8 +1,10 @@
-import { Cache, NullCache } from '@algolia/cache-types';
-import { Logger, NullLogger } from '@algolia/logger-types';
+import { Cache } from '@algolia/cache-types';
+import { Logger } from '@algolia/logger-types';
 import { Requester } from '@algolia/requester-types';
+
 import {
   Call,
+  CallType,
   Host,
   MappedRequestOptions,
   mapRequestOptions,
@@ -10,34 +12,46 @@ import {
   RequestOptions,
   RetryError,
   Timeouts,
-  Transporter as TransporterContract,
-} from '@algolia/transporter-types';
-
+} from '../';
 import { decision } from './concerns/decision';
 import { Deserializer } from './Deserializer';
 import { Serializer } from './Serializer';
+import { UserAgent } from './UserAgent';
 
-export class Transporter implements TransporterContract {
+export class Transporter {
   // eslint-disable-next-line functional/prefer-readonly-type
-  public hosts!: Host[];
-
-  // eslint-disable-next-line functional/prefer-readonly-type
-  public headers!: { [key: string]: string };
+  private hosts: Host[] = [];
 
   // eslint-disable-next-line functional/prefer-readonly-type
-  public queryParameters!: { [key: string]: string };
+  private headers: { [key: string]: string } = {};
+
+  // eslint-disable-next-line functional/prefer-readonly-type
+  private queryParameters: { [key: string]: string } = {};
+
+  // eslint-disable-next-line functional/prefer-readonly-type
+  private userAgent: UserAgent;
+
+  private readonly hostsCache: Cache;
 
   private readonly logger: Logger;
 
   private readonly requester: Requester;
 
-  private readonly timeouts: Timeouts;
+  private readonly requestsCache: Cache;
 
   private readonly responsesCache: Cache;
 
-  private readonly hostsCache: Cache;
+  private readonly timeouts: Timeouts;
 
-  private readonly requestsCache: Cache;
+  public constructor(options: TransporterOptions) {
+    this.hostsCache = options.hostsCache;
+    this.logger = options.logger;
+    this.requester = options.requester;
+    this.requestsCache = options.requestsCache;
+    this.responsesCache = options.responsesCache;
+    this.timeouts = options.timeouts;
+    this.userAgent = options.userAgent;
+  }
 
   public reset(): Transporter {
     return new Transporter({
@@ -47,40 +61,28 @@ export class Transporter implements TransporterContract {
       responsesCache: this.responsesCache,
       hostsCache: this.hostsCache,
       requestsCache: this.requestsCache,
+      userAgent: this.userAgent,
     });
   }
 
-  public constructor(options: {
-    // eslint-disable-next-line functional/prefer-readonly-type
-    headers?: { readonly [key: string]: string };
-    // eslint-disable-next-line functional/prefer-readonly-type
-    queryParameters?: { readonly [key: string]: string };
-    // eslint-disable-next-line functional/prefer-readonly-type
-    hosts?: Host[];
+  public addHeaders(headers: { readonly [key: string]: string }): void {
+    // eslint-disable-next-line functional/immutable-data
+    this.headers = Object.assign(this.headers, headers);
+  }
 
-    readonly requester: Requester;
-    readonly timeouts: Timeouts;
-    readonly logger?: Logger;
-    readonly responsesCache?: Cache;
-    readonly hostsCache?: Cache;
-    readonly requestsCache?: Cache;
-  }) {
-    this.headers = options.headers !== undefined ? options.headers : {};
-    this.queryParameters = options.queryParameters !== undefined ? options.queryParameters : {};
-    this.hosts = options.hosts !== undefined ? options.hosts : [];
+  public addQueryParameters(queryParameters: { readonly [key: string]: string }): void {
+    // eslint-disable-next-line functional/immutable-data
+    this.queryParameters = Object.assign(this.queryParameters, queryParameters);
+  }
 
-    this.requester = options.requester;
-    this.timeouts = options.timeouts;
+  public addUserAgent(segment: string, version?: string): void {
+    // eslint-disable-next-line functional/immutable-data
+    this.userAgent = this.userAgent.with({ segment, version });
+  }
 
-    this.logger = options.logger !== undefined ? options.logger : new NullLogger();
-
-    this.responsesCache =
-      options.responsesCache !== undefined ? options.responsesCache : new NullCache();
-
-    this.hostsCache = options.hostsCache !== undefined ? options.hostsCache : new NullCache();
-
-    this.requestsCache =
-      options.requestsCache !== undefined ? options.requestsCache : new NullCache();
+  public setHosts(hosts: ReadonlyArray<{ readonly url: string; readonly accept: CallType }>): void {
+    // eslint-disable-next-line functional/immutable-data
+    this.hosts = hosts.map(host => new Host(host.url, host.accept));
   }
 
   public read<TResponse>(
@@ -114,7 +116,6 @@ export class Transporter implements TransporterContract {
         this.requestsCache.get(key, () =>
           this.requestsCache
             .set(key, createRequest())
-            // eslint-disable-next-line promise/no-nesting
             .then(response => this.requestsCache.delete(key).then(() => response))
         ),
       {
@@ -164,7 +165,6 @@ export class Transporter implements TransporterContract {
           throw new RetryError();
         }
 
-        // eslint-disable-next-line promise/no-nesting
         return this.requester
           .send({
             data: Serializer.data(request, requestOptions),
@@ -173,6 +173,7 @@ export class Transporter implements TransporterContract {
             url: Serializer.url(host, request.path, {
               ...this.queryParameters,
               ...requestOptions.queryParameters,
+              'x-algolia-agent': this.userAgent.value,
             }),
             timeout: (timeoutRetries + 1) * (requestOptions.timeout ? requestOptions.timeout : 0),
           })
@@ -193,7 +194,6 @@ export class Transporter implements TransporterContract {
                 }
 
                 return (
-                  // eslint-disable-next-line promise/no-nesting
                   this.hostsCache
                     .set({ url: host.url }, host)
                     // eslint-disable-next-line functional/immutable-data
@@ -212,3 +212,13 @@ export class Transporter implements TransporterContract {
     });
   }
 }
+
+export type TransporterOptions = {
+  readonly hostsCache: Cache;
+  readonly logger: Logger;
+  readonly requester: Requester;
+  readonly requestsCache: Cache;
+  readonly responsesCache: Cache;
+  readonly timeouts: Timeouts;
+  readonly userAgent: UserAgent;
+};

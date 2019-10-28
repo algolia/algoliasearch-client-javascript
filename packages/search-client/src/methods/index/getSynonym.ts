@@ -1,6 +1,6 @@
 import { Method } from '@algolia/requester-types';
 import { ConstructorOf, encode } from '@algolia/support';
-import { RequestOptions } from '@algolia/transporter-types';
+import { RequestOptions } from '@algolia/transporter';
 
 import { SearchIndex } from '../../SearchIndex';
 import { Synonym } from '../types/Synonym';
@@ -24,7 +24,7 @@ export const getSynonym = <TSearchIndex extends ConstructorOf<SearchIndex>>(base
 };
 
 export type HasGetSynonym = {
-  readonly getSynonym: <TObject>(
+  readonly getSynonym: (
     objectID: string,
     requestOptions?: RequestOptions
   ) => Readonly<Promise<Synonym>>;
