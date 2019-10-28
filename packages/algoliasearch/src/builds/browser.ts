@@ -2,25 +2,26 @@ import { BrowserLocalStorageCache } from '@algolia/cache-browser-local-storage';
 import { InMemoryCache } from '@algolia/cache-in-memory';
 import { ConsoleLogger } from '@algolia/logger-console';
 import { LogLevel } from '@algolia/logger-types';
-import { BrowserXhrRequester } from '@algolia/requester-browser-xhr';
+import { createBrowserXhrRequester } from '@algolia/requester-browser-xhr';
 import { UserAgent } from '@algolia/transporter';
 
-import { createSearchClient, SearchClient } from '../presets/default';
+import { createSearchClient } from '../presets/default';
 import { AlgoliaSearchOptions } from '../types';
 
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export default function algoliasearch(
   appId: string,
   apiKey: string,
   options: AlgoliaSearchOptions = {}
-): SearchClient {
+) {
   return createSearchClient({
     appId,
     apiKey,
-    requester: new BrowserXhrRequester(),
     timeouts: {
       read: 1,
       write: 30,
     },
+    requester: createBrowserXhrRequester(),
     logger: new ConsoleLogger(options.logLevel === undefined ? LogLevel.Error : options.logLevel),
     responsesCache: new InMemoryCache(),
     requestsCache: new InMemoryCache(),

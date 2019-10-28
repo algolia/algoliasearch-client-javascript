@@ -7,7 +7,10 @@ import {
 import { getABTest, HasGetABTest } from '@algolia/analytics-client/src/methods/client/getABTest';
 import { getABTests, HasGetABTests } from '@algolia/analytics-client/src/methods/client/getABTests';
 import { HasStopABTest, stopABTest } from '@algolia/analytics-client/src/methods/client/stopABTest';
-import { SearchClient as BaseSearchClient } from '@algolia/search-client';
+import {
+  createSearchClient as baseCreateSearchClient,
+  SearchClient as BaseSearchClient,
+} from '@algolia/search-client';
 import { copyIndex, HasCopyIndex } from '@algolia/search-client/src/methods/client/copyIndex';
 import {
   copySettings,
@@ -136,10 +139,9 @@ import { HasSetSettings, setSettings } from '@algolia/search-client/src/methods/
 import { HasWaitTask, waitTask } from '@algolia/search-client/src/methods/index/waitTask';
 import { SearchClientOptions } from '@algolia/search-client/src/SearchClient';
 import { SearchIndex as SearchIndexPreset } from '@algolia/search-client/src/SearchIndex';
-import { compose } from '@algolia/support';
 import { TransporterOptions } from '@algolia/transporter';
 
-export type SearchClient = SearchClientPreset &
+export type SearchClient = BaseSearchClient &
   HasMultipleBatch &
   HasMultipleGetObjects &
   HasMultipleQueries &
@@ -259,31 +261,25 @@ export const methods = {
   analyticsClient: [addABTest, getABTest, getABTests, stopABTest, deleteABTest],
 };
 
-export class SearchClientPreset extends BaseSearchClient {
-  public constructor(private readonly options: SearchClientOptions & TransporterOptions) {
-    super(options);
-  }
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+export const createSearchClient = (options: SearchClientOptions & TransporterOptions) => {
+  const base = baseCreateSearchClient<SearchClient>({ ...options, methods: methods.searchClient });
 
-  public initIndex<TSearchIndex = SearchIndex>(indexName: string): TSearchIndex {
-    return super.initIndex(indexName, {
-      methods: methods.searchIndex,
-    });
-  }
+  const initIndex = base.initIndex;
 
-  public initAnalytics(region?: string): AnalyticsClient {
-    return createAnalyticsClient({
-      ...this.options,
-      region,
-      methods: methods.analyticsClient,
-    });
-  }
-}
-
-export const createSearchClient = (
-  options: SearchClientOptions & TransporterOptions
-): SearchClient => {
-  return compose<SearchClient>(
-    new SearchClientPreset(options),
-    { methods: methods.searchClient }
-  );
+  return {
+    ...base,
+    initIndex<TSearchIndex = SearchIndex>(indexName: string): TSearchIndex {
+      return initIndex.bind(this)(indexName, {
+        methods: methods.searchIndex,
+      });
+    },
+    initAnalytics(region?: string): AnalyticsClient {
+      return createAnalyticsClient({
+        ...options,
+        region,
+        methods: methods.analyticsClient,
+      });
+    },
+  };
 };

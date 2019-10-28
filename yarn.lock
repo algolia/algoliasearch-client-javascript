@@ -20,10 +20,10 @@
 "@algolia/transporter@file:packages/transporter":
   version "4.0.0-alpha.0"
   dependencies:
-    "@algolia/cache-types" "file:../../Library/Caches/Yarn/v4/npm-@algolia-transporter-4.0.0-alpha.0-201b2f85-91ff-490f-a704-09d7c130e5f3-1572264472967/node_modules/@algolia/cache-types"
-    "@algolia/logger-types" "file:../../Library/Caches/Yarn/v4/npm-@algolia-transporter-4.0.0-alpha.0-201b2f85-91ff-490f-a704-09d7c130e5f3-1572264472967/node_modules/@algolia/logger-types"
-    "@algolia/requester-types" "file:../../Library/Caches/Yarn/v4/npm-@algolia-transporter-4.0.0-alpha.0-201b2f85-91ff-490f-a704-09d7c130e5f3-1572264472967/node_modules/@algolia/requester-types"
-    "@algolia/transporter" "file:../../Library/Caches/Yarn/v4/npm-@algolia-transporter-4.0.0-alpha.0-201b2f85-91ff-490f-a704-09d7c130e5f3-1572264472967/node_modules/@algolia/transporter"
+    "@algolia/cache-types" "file:../../Library/Caches/Yarn/v4/npm-@algolia-transporter-4.0.0-alpha.0-78519f72-3fa4-4b76-bab3-2dd40fdacdb8-1572275208273/node_modules/@algolia/cache-types"
+    "@algolia/logger-types" "file:../../Library/Caches/Yarn/v4/npm-@algolia-transporter-4.0.0-alpha.0-78519f72-3fa4-4b76-bab3-2dd40fdacdb8-1572275208273/node_modules/@algolia/logger-types"
+    "@algolia/requester-types" "file:../../Library/Caches/Yarn/v4/npm-@algolia-transporter-4.0.0-alpha.0-78519f72-3fa4-4b76-bab3-2dd40fdacdb8-1572275208273/node_modules/@algolia/requester-types"
+    "@algolia/transporter" "file:../../Library/Caches/Yarn/v4/npm-@algolia-transporter-4.0.0-alpha.0-78519f72-3fa4-4b76-bab3-2dd40fdacdb8-1572275208273/node_modules/@algolia/transporter"
 
 "@babel/cli@^7.6.0":
   version "7.6.4"

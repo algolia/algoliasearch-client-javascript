@@ -1,4 +1,4 @@
-import { SearchClient as BaseSearchClient } from '@algolia/search-client';
+import { createSearchClient as baseCreateSearchClient } from '@algolia/search-client';
 import {
   HasMultipleQueries,
   multipleQueries,
@@ -14,12 +14,9 @@ import {
 } from '@algolia/search-client/src/methods/index/searchForFacetValues';
 import { SearchClientOptions } from '@algolia/search-client/src/SearchClient';
 import { SearchIndex as SearchIndexPreset } from '@algolia/search-client/src/SearchIndex';
-import { compose } from '@algolia/support';
 import { TransporterOptions } from '@algolia/transporter';
 
-export type SearchClient = SearchClientPreset &
-  HasMultipleQueries &
-  HasMultipleSearchForFacetValues;
+export type SearchClient = HasMultipleQueries & HasMultipleSearchForFacetValues;
 
 export type SearchIndex = SearchIndexPreset & HasSearch & HasSearchForFacetValues;
 
@@ -28,19 +25,18 @@ export const methods = {
   searchIndex: [search, searchForFacetValues],
 };
 
-export class SearchClientPreset extends BaseSearchClient {
-  public initIndex<TSearchIndex = SearchIndex>(indexName: string): TSearchIndex {
-    return super.initIndex<TSearchIndex>(indexName, {
-      methods: methods.searchIndex,
-    });
-  }
-}
+// eslint-disable-next-line
+export const createSearchClient = (options: SearchClientOptions & TransporterOptions) => {
+  const base = baseCreateSearchClient<SearchClient>({ ...options, methods: methods.searchClient });
 
-export const createSearchClient = (
-  options: SearchClientOptions & TransporterOptions
-): SearchClient => {
-  return compose<SearchClient>(
-    new SearchClientPreset(options),
-    { methods: methods.searchClient }
-  );
+  const initIndex = base.initIndex;
+
+  return {
+    ...base,
+    initIndex<TSearchIndex = SearchIndex>(indexName: string): TSearchIndex {
+      return initIndex.bind(this)(indexName, {
+        methods: methods.searchIndex,
+      });
+    },
+  };
 };

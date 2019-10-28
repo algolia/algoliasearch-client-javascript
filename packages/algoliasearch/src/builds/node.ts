@@ -4,14 +4,15 @@ import { LogLevel } from '@algolia/logger-types';
 import { NodeHttpRequester } from '@algolia/requester-node-http';
 import { UserAgent } from '@algolia/transporter';
 
-import { createSearchClient, SearchClient } from '../presets/default';
+import { createSearchClient } from '../presets/default';
 import { AlgoliaSearchOptions } from '../types';
 
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export default function algoliasearch(
   appId: string,
   apiKey: string,
   options: AlgoliaSearchOptions = {}
-): SearchClient {
+) {
   return createSearchClient({
     appId,
     apiKey,

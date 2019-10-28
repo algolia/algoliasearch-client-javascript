@@ -3,21 +3,22 @@ import { BrowserLocalStorageCache } from '@algolia/cache-browser-local-storage';
 import { InMemoryCache } from '@algolia/cache-in-memory';
 import { ConsoleLogger } from '@algolia/logger-console';
 import { LogLevel } from '@algolia/logger-types';
-import { BrowserXhrRequester } from '@algolia/requester-browser-xhr';
+import { createBrowserXhrRequester } from '@algolia/requester-browser-xhr';
 import { UserAgent } from '@algolia/transporter';
 
-import { createSearchClient, SearchClient } from '../presets/lite';
+import { createSearchClient } from '../presets/lite';
 import { AlgoliaSearchOptions } from '../types';
 
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export default function algoliasearch(
   appId: string,
   apiKey: string,
   options: AlgoliaSearchOptions = {}
-): SearchClient {
+) {
   return createSearchClient({
     appId,
     apiKey,
-    requester: new BrowserXhrRequester(),
+    requester: createBrowserXhrRequester(),
     timeouts: {
       read: 1,
       write: 30,
