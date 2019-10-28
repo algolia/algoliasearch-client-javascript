@@ -1,8 +1,7 @@
 import { Method } from '@algolia/requester-types';
-import { ConstructorOf, WaitablePromise } from '@algolia/support';
+import { ConstructorOf, encode } from '@algolia/support';
 import { RequestOptions } from '@algolia/transporter';
 
-import { HasWaitTask, waitTask } from '../../../../search-client/src/methods/index/waitTask';
 import { AnalyticsClient } from '../../AnalyticsClient';
 import { DeleteABTestResponse } from '../types/DeleteABTestResponse';
 
@@ -12,29 +11,23 @@ export const deleteABTest = <TAnalyticsClient extends ConstructorOf<AnalyticsCli
 ) => {
   return class extends base implements HasDeleteABTest {
     public deleteABTest(
-      id: number,
+      abTestID: number,
       requestOptions?: RequestOptions
-    ): Readonly<WaitablePromise<DeleteABTestResponse>> {
-      return WaitablePromise.from<DeleteABTestResponse>(
-        this.transporter.read(
-          {
-            method: Method.Delete,
-            path: `2/abtests/${id}`,
-          },
-          requestOptions
-        )
-      ).onWait(response =>
-        this.searchClient
-          .initIndex<HasWaitTask>(response.index, { methods: [waitTask] })
-          .waitTask(response.taskID)
+    ): Readonly<Promise<DeleteABTestResponse>> {
+      return this.transporter.write(
+        {
+          method: Method.Delete,
+          path: encode('2/abtests/%s', abTestID),
+        },
+        requestOptions
       );
     }
   };
 };
 
-export type HasDeleteABTest = AnalyticsClient & {
+export type HasDeleteABTest = {
   readonly deleteABTest: (
-    id: number,
+    abTestId: number,
     requestOptions?: RequestOptions
-  ) => Readonly<WaitablePromise<DeleteABTestResponse>>;
+  ) => Readonly<Promise<DeleteABTestResponse>>;
 };

@@ -271,7 +271,7 @@ export class SearchClientPreset extends BaseSearchClient {
   }
 
   public initAnalytics(region?: string): AnalyticsClient {
-    return createAnalyticsClient(this, {
+    return createAnalyticsClient({
       ...this.options,
       region,
       methods: methods.analyticsClient,

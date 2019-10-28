@@ -1,8 +1,7 @@
 import { Method } from '@algolia/requester-types';
-import { ConstructorOf, WaitablePromise } from '@algolia/support';
+import { ConstructorOf, encode } from '@algolia/support';
 import { RequestOptions } from '@algolia/transporter';
 
-import { HasWaitTask, waitTask } from '../../../../search-client/src/methods/index/waitTask';
 import { AnalyticsClient } from '../../AnalyticsClient';
 import { StopABTestResponse } from '../types/StopABTestResponse';
 
@@ -12,29 +11,23 @@ export const stopABTest = <TAnalyticsClient extends ConstructorOf<AnalyticsClien
 ) => {
   return class extends base implements HasStopABTest {
     public stopABTest(
-      id: number,
+      abTestID: number,
       requestOptions?: RequestOptions
-    ): Readonly<WaitablePromise<StopABTestResponse>> {
-      return WaitablePromise.from<StopABTestResponse>(
-        this.transporter.write(
-          {
-            method: Method.Post,
-            path: `2/abtests/${id}/stop`,
-          },
-          requestOptions
-        )
-      ).onWait(response =>
-        this.searchClient
-          .initIndex<HasWaitTask>(response.index, { methods: [waitTask] })
-          .waitTask(response.taskID)
+    ): Readonly<Promise<StopABTestResponse>> {
+      return this.transporter.write(
+        {
+          method: Method.Post,
+          path: encode('2/abtests/%s/stop', abTestID),
+        },
+        requestOptions
       );
     }
   };
 };
 
-export type HasStopABTest = AnalyticsClient & {
+export type HasStopABTest = {
   readonly stopABTest: (
     id: number,
     requestOptions?: RequestOptions
-  ) => Readonly<WaitablePromise<StopABTestResponse>>;
+  ) => Readonly<Promise<StopABTestResponse>>;
 };

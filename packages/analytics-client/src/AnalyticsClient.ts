@@ -2,24 +2,12 @@ import { Auth, AuthMode } from '@algolia/auth';
 import { ComposableOptions, compose } from '@algolia/support';
 import { Call, Transporter, TransporterOptions } from '@algolia/transporter';
 
-import { SearchClient } from '../../search-client';
-
 export class AnalyticsClient {
-  public readonly appId: string;
-
   public readonly transporter: Transporter;
 
-  public readonly searchClient: SearchClient;
-
-  public constructor(
-    searchClient: SearchClient,
-    options: AnalyticsClientOptions & TransporterOptions
-  ) {
-    this.appId = options.appId;
-    this.searchClient = searchClient;
-
+  public constructor(options: AnalyticsClientOptions & TransporterOptions) {
     const region = options.region !== undefined ? options.region : 'us';
-    const auth = new Auth(AuthMode.WithinHeaders, this.appId, options.apiKey);
+    const auth = new Auth(AuthMode.WithinHeaders, options.appId, options.apiKey);
 
     this.transporter = new Transporter(options);
 
@@ -33,7 +21,6 @@ export class AnalyticsClient {
 }
 
 export const createAnalyticsClient = <TAnalyticsClient>(
-  searchClient: SearchClient,
   options: AnalyticsClientOptions & TransporterOptions & ComposableOptions
 ): TAnalyticsClient & AnalyticsClient => {
   const Client = compose<TAnalyticsClient & AnalyticsClient>(
@@ -41,7 +28,7 @@ export const createAnalyticsClient = <TAnalyticsClient>(
     options
   );
 
-  return new Client(searchClient, options);
+  return new Client(options);
 };
 
 type AnalyticsClientOptions = {

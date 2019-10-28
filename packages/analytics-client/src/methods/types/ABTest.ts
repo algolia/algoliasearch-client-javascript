@@ -1,8 +1,18 @@
 import { Variant } from './Variant';
 
 export type ABTest = {
-  /* eslint-disable functional/prefer-readonly-type */
-  name: string;
-  endAt: string;
-  variants: Variant[];
+  /**
+   * The ab test name.
+   */
+  readonly name: string;
+
+  /**
+   * The ab test list of variants.
+   */
+  readonly variants: readonly Variant[];
+
+  /**
+   * The ab test end date, if any.
+   */
+  readonly endAt: string;
 };

@@ -1,5 +1,11 @@
 export type GetABTestsOptions = {
-  /* eslint-disable functional/prefer-readonly-type */
-  offset?: number;
-  limit?: number;
+  /**
+   * The number of ab tests to skip from the biginning of the list.
+   */
+  readonly offset?: number;
+
+  /**
+   *  The limit of the number of ab tests returned.
+   */
+  readonly limit?: number;
 };

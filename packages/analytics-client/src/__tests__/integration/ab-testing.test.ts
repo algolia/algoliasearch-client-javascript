@@ -5,9 +5,8 @@ import { ApiError } from '@algolia/transporter';
 
 import { ABTest } from '../../methods/types/ABTest';
 import { Variant } from '../../methods/types/Variant';
-import { VariantResponse } from '../../methods/types/VariantResponse';
 
-const testSuite = new TestSuite('ab testing');
+const testSuite = new TestSuite('ab_testing');
 
 afterAll(() => testSuite.cleanUp());
 
@@ -43,10 +42,9 @@ test(testSuite.testName, async () => {
     endAt: new Date(today.getTime() + 24 * 3600 * 1000).toISOString(),
   };
 
-  // Create the AB test
   const abTestID = (await client.addABTest(abTest)).abTestID;
 
-  function compareVariants(got: readonly VariantResponse[], expected: Variant[]) {
+  const compareVariants = (got: readonly Variant[], expected: Variant[]) => {
     const convertedVariants = got.map(v => {
       const convertedVariant: Variant = {
         index: v.index,
@@ -62,11 +60,11 @@ test(testSuite.testName, async () => {
 
     expect(convertedVariants).toEqual(expect.arrayContaining(expected));
     expect(expected).toEqual(expect.arrayContaining(convertedVariants));
-  }
+  };
 
-  function compareDateStrings(got: string, expected: string) {
+  const compareDateStrings = (got: string, expected: string) => {
     expect(new Date(got).getTime()).toBe(new Date(expected).getTime());
-  }
+  };
 
   // Retrieve the AB test and check it corresponds to the original one
   {
@@ -89,13 +87,15 @@ test(testSuite.testName, async () => {
   }
 
   // Stop the AB test
-  await client.stopABTest(abTestID).wait();
+  const stopABTestResponse = await client.stopABTest(abTestID);
+  await index1.waitTask(stopABTestResponse.taskID);
 
   // Check the AB test still exists but is stopped
   await expect(client.getABTest(abTestID)).resolves.toMatchObject({ status: 'stopped' });
 
   // Delete the AB test
-  await client.deleteABTest(abTestID).wait();
+  const deleteABTestResponse = await client.deleteABTest(abTestID);
+  await index1.waitTask(deleteABTestResponse.taskID);
 
   // Check the AB test doesn't exist anymore
   await expect(client.getABTest(abTestID)).rejects.toEqual(new ApiError('ABTestID not found', 404));

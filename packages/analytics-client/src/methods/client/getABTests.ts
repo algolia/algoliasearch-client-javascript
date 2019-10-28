@@ -17,7 +17,7 @@ export const getABTests = <TAnalyticsClient extends ConstructorOf<AnalyticsClien
       return this.transporter.read(
         {
           method: Method.Get,
-          path: `2/abtests`,
+          path: '2/abtests',
         },
         requestOptions
       );
@@ -25,6 +25,6 @@ export const getABTests = <TAnalyticsClient extends ConstructorOf<AnalyticsClien
   };
 };
 
-export type HasGetABTests = AnalyticsClient & {
+export type HasGetABTests = {
   readonly getABTests: (requestOptions?: RequestOptions) => Readonly<Promise<GetABTestsResponse>>;
 };

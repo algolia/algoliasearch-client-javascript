@@ -1,5 +1,5 @@
 import { Method } from '@algolia/requester-types';
-import { ConstructorOf } from '@algolia/support';
+import { ConstructorOf, encode } from '@algolia/support';
 import { RequestOptions } from '@algolia/transporter';
 
 import { AnalyticsClient } from '../../AnalyticsClient';
@@ -11,13 +11,13 @@ export const getABTest = <TAnalyticsClient extends ConstructorOf<AnalyticsClient
 ) => {
   return class extends base implements HasGetABTest {
     public getABTest(
-      id: number,
+      abTestID: number,
       requestOptions?: RequestOptions
     ): Readonly<Promise<GetABTestResponse>> {
       return this.transporter.read(
         {
           method: Method.Get,
-          path: `2/abtests/${id}`,
+          path: encode('2/abtests/%s', abTestID),
         },
         requestOptions
       );
@@ -25,9 +25,9 @@ export const getABTest = <TAnalyticsClient extends ConstructorOf<AnalyticsClient
   };
 };
 
-export type HasGetABTest = AnalyticsClient & {
+export type HasGetABTest = {
   readonly getABTest: (
-    id: number,
+    abTestID: number,
     requestOptions?: RequestOptions
   ) => Readonly<Promise<GetABTestResponse>>;
 };
