@@ -1,7 +1,7 @@
 import { Method, Request } from '@algolia/requester-types';
 import nock from 'nock';
 
-import { NodeHttpRequester } from '../../..';
+import { createNodeHttpRequester } from '../../..';
 import Fixtures from '../Fixtures';
 
 const headers = {
@@ -18,7 +18,7 @@ const timeoutRequest: Request = {
 
 describe('status code handling', () => {
   it('sends requests', async () => {
-    const requester = new NodeHttpRequester();
+    const requester = createNodeHttpRequester();
     const request = Fixtures.request();
     const body = JSON.stringify({ foo: 'bar' });
 
@@ -33,7 +33,7 @@ describe('status code handling', () => {
   });
 
   it('resolves status 200', async () => {
-    const requester = new NodeHttpRequester();
+    const requester = createNodeHttpRequester();
     const body = JSON.stringify({ foo: 'bar' });
 
     nock('https://algolia-dns.net', { reqheaders: headers })
@@ -49,7 +49,7 @@ describe('status code handling', () => {
   });
 
   it('resolves status 300', async () => {
-    const requester = new NodeHttpRequester();
+    const requester = createNodeHttpRequester();
     const reason = 'Multiple Choices';
 
     nock('https://algolia-dns.net', { reqheaders: headers })
@@ -65,7 +65,7 @@ describe('status code handling', () => {
   });
 
   it('resolves status 400', async () => {
-    const requester = new NodeHttpRequester();
+    const requester = createNodeHttpRequester();
 
     const body = { message: 'Invalid Application-Id or API-Key' };
 
@@ -83,7 +83,7 @@ describe('status code handling', () => {
 });
 
 describe('timeout handling', () => {
-  const requester = new NodeHttpRequester();
+  const requester = createNodeHttpRequester();
 
   it('timouts if response dont appears before the timeout with the given 1 seconds timeout', async () => {
     const before = Date.now();
@@ -142,7 +142,7 @@ describe('timeout handling', () => {
 
 describe('error handling', (): void => {
   it('resolves dns not found', async () => {
-    const requester = new NodeHttpRequester();
+    const requester = createNodeHttpRequester();
 
     const request = {
       url: 'https://this-dont-exist.algolia.com',
@@ -164,7 +164,7 @@ describe('error handling', (): void => {
   });
 
   it('resolves general network errors', async () => {
-    const requester = new NodeHttpRequester();
+    const requester = createNodeHttpRequester();
 
     nock('https://algolia-dns.net', { reqheaders: headers })
       .post('/foo')
