@@ -8,7 +8,7 @@
   },
   "jsdelivr": "./dist/algoliasearch.umd.min.js",
   "private": false,
-  "version": "4.0.0-alpha.14",
+  "version": "4.0.0-alpha.15",
   "license": "MIT",
   "description": "test",
   "scripts": {

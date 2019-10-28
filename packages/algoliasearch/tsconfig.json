@@ -4,7 +4,7 @@
     "allowJs": false,
     "noEmit": false,
     "emitDeclarationOnly": true,
-    "module": "amd",
-    "outFile": "dist/index.d.ts",
+    "module": "es2015",
+    "outFile": "dist/index.d.ts"
   }
 }
