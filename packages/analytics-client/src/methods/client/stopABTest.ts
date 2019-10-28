@@ -1,16 +1,16 @@
 import { Method } from '@algolia/requester-types';
-import { ConstructorOf, encode } from '@algolia/support';
+import { encode } from '@algolia/support';
 import { RequestOptions } from '@algolia/transporter';
 
 import { AnalyticsClient } from '../../AnalyticsClient';
 import { StopABTestResponse } from '../types/StopABTestResponse';
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export const stopABTest = <TAnalyticsClient extends ConstructorOf<AnalyticsClient>>(
+export const stopABTest = <TAnalyticsClient extends AnalyticsClient>(
   base: TAnalyticsClient
-) => {
-  return class extends base implements HasStopABTest {
-    public stopABTest(
+): TAnalyticsClient & HasStopABTest => {
+  return {
+    ...base,
+    stopABTest(
       abTestID: number,
       requestOptions?: RequestOptions
     ): Readonly<Promise<StopABTestResponse>> {
@@ -21,7 +21,7 @@ export const stopABTest = <TAnalyticsClient extends ConstructorOf<AnalyticsClien
         },
         requestOptions
       );
-    }
+    },
   };
 };
 

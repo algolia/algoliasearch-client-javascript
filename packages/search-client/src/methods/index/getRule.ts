@@ -1,14 +1,16 @@
 import { Method } from '@algolia/requester-types';
-import { ConstructorOf, encode } from '@algolia/support';
+import { encode } from '@algolia/support';
 import { RequestOptions } from '@algolia/transporter';
 
 import { SearchIndex } from '../../SearchIndex';
 import { Rule } from '../types/Rule';
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export const getRule = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: TSearchIndex) => {
-  return class extends base implements HasGetRule {
-    public getRule(objectID: string, requestOptions?: RequestOptions): Readonly<Promise<Rule>> {
+export const getRule = <TSearchIndex extends SearchIndex>(
+  base: TSearchIndex
+): TSearchIndex & HasGetRule => {
+  return {
+    ...base,
+    getRule(objectID: string, requestOptions?: RequestOptions): Readonly<Promise<Rule>> {
       return this.transporter.read(
         {
           method: Method.Get,
@@ -16,7 +18,7 @@ export const getRule = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: T
         },
         requestOptions
       );
-    }
+    },
   };
 };
 

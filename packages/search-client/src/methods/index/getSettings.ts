@@ -1,16 +1,16 @@
 import { Method } from '@algolia/requester-types';
-import { ConstructorOf, encode } from '@algolia/support';
+import { encode } from '@algolia/support';
 import { mapRequestOptions, RequestOptions } from '@algolia/transporter';
 
 import { SearchIndex } from '../../SearchIndex';
 import { IndexSettings } from '../types/IndexSettings';
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export const getSettings = <TSearchIndex extends ConstructorOf<SearchIndex>>(
+export const getSettings = <TSearchIndex extends SearchIndex>(
   base: TSearchIndex
-) => {
-  return class extends base implements HasGetSettings {
-    public getSettings(requestOptions?: RequestOptions): Readonly<Promise<IndexSettings>> {
+): TSearchIndex & HasGetSettings => {
+  return {
+    ...base,
+    getSettings(requestOptions?: RequestOptions): Readonly<Promise<IndexSettings>> {
       const options = mapRequestOptions(requestOptions !== undefined ? requestOptions : {});
 
       // @ts-ignore
@@ -24,7 +24,7 @@ export const getSettings = <TSearchIndex extends ConstructorOf<SearchIndex>>(
         },
         options
       );
-    }
+    },
   };
 };
 

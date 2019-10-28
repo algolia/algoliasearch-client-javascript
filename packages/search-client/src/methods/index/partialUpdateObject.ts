@@ -1,19 +1,18 @@
-import { ConstructorOf, WaitablePromise } from '@algolia/support';
+import { WaitablePromise } from '@algolia/support';
 import { RequestOptions } from '@algolia/transporter';
 
 import { SearchIndex } from '../../SearchIndex';
 import { PartialUpdateObjectResponse } from '../types/PartialUpdateObjectResponse';
 import { PartialUpdateObjectsOptions } from '../types/PartialUpdateObjectsOptions';
-import { partialUpdateObjects } from './partialUpdateObjects';
+import { HasPartialUpdateObjects, partialUpdateObjects } from './partialUpdateObjects';
+import { HasWaitTask } from './waitTask';
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export const partialUpdateObject = <TSearchIndex extends ConstructorOf<SearchIndex>>(
+export const partialUpdateObject = <TSearchIndex extends SearchIndex>(
   base: TSearchIndex
-) => {
-  const mixin = partialUpdateObjects(base);
-
-  return class extends mixin implements HasPartialUpdateObject {
-    public partialUpdateObject(
+): TSearchIndex & HasWaitTask & HasPartialUpdateObjects & HasPartialUpdateObject => {
+  return {
+    ...partialUpdateObjects(base),
+    partialUpdateObject(
       object: object,
       requestOptions?: RequestOptions & PartialUpdateObjectsOptions
     ): Readonly<WaitablePromise<PartialUpdateObjectResponse>> {
@@ -27,7 +26,7 @@ export const partialUpdateObject = <TSearchIndex extends ConstructorOf<SearchInd
       ).onWait((response, waitRequestOptions) =>
         this.waitTask(response.taskID, waitRequestOptions)
       );
-    }
+    },
   };
 };
 

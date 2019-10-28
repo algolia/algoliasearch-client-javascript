@@ -1,16 +1,15 @@
 import { Method } from '@algolia/requester-types';
-import { ConstructorOf } from '@algolia/support';
 import { RequestOptions } from '@algolia/transporter';
 
 import { SearchClient } from '../../SearchClient';
 import { ListIndicesResponse } from '../types/ListIndicesResponse';
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export const listIndices = <TSearchClient extends ConstructorOf<SearchClient>>(
+export const listIndices = <TSearchClient extends SearchClient>(
   base: TSearchClient
-) => {
-  return class extends base implements HasListIndices {
-    public listIndices(requestOptions?: RequestOptions): Readonly<Promise<ListIndicesResponse>> {
+): TSearchClient & HasListIndices => {
+  return {
+    ...base,
+    listIndices(requestOptions?: RequestOptions): Readonly<Promise<ListIndicesResponse>> {
       return this.transporter.read(
         {
           method: Method.Get,
@@ -18,7 +17,7 @@ export const listIndices = <TSearchClient extends ConstructorOf<SearchClient>>(
         },
         requestOptions
       );
-    }
+    },
   };
 };
 

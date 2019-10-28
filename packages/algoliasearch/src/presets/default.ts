@@ -282,10 +282,8 @@ export class SearchClientPreset extends BaseSearchClient {
 export const createSearchClient = (
   options: SearchClientOptions & TransporterOptions
 ): SearchClient => {
-  const Client = compose<SearchClient>(
-    SearchClientPreset,
+  return compose<SearchClient>(
+    new SearchClientPreset(options),
     { methods: methods.searchClient }
   );
-
-  return new Client(options);
 };

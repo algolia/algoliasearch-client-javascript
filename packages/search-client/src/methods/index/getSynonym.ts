@@ -1,17 +1,16 @@
 import { Method } from '@algolia/requester-types';
-import { ConstructorOf, encode } from '@algolia/support';
+import { encode } from '@algolia/support';
 import { RequestOptions } from '@algolia/transporter';
 
 import { SearchIndex } from '../../SearchIndex';
 import { Synonym } from '../types/Synonym';
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export const getSynonym = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: TSearchIndex) => {
-  return class extends base implements HasGetSynonym {
-    public getSynonym(
-      objectID: string,
-      requestOptions?: RequestOptions
-    ): Readonly<Promise<Synonym>> {
+export const getSynonym = <TSearchIndex extends SearchIndex>(
+  base: TSearchIndex
+): TSearchIndex & HasGetSynonym => {
+  return {
+    ...base,
+    getSynonym(objectID: string, requestOptions?: RequestOptions): Readonly<Promise<Synonym>> {
       return this.transporter.read(
         {
           method: Method.Get,
@@ -19,7 +18,7 @@ export const getSynonym = <TSearchIndex extends ConstructorOf<SearchIndex>>(base
         },
         requestOptions
       );
-    }
+    },
   };
 };
 

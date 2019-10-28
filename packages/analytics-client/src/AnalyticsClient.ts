@@ -23,12 +23,10 @@ export class AnalyticsClient {
 export const createAnalyticsClient = <TAnalyticsClient>(
   options: AnalyticsClientOptions & TransporterOptions & ComposableOptions
 ): TAnalyticsClient & AnalyticsClient => {
-  const Client = compose<TAnalyticsClient & AnalyticsClient>(
-    AnalyticsClient,
+  return compose<TAnalyticsClient & AnalyticsClient>(
+    new AnalyticsClient(options),
     options
   );
-
-  return new Client(options);
 };
 
 type AnalyticsClientOptions = {

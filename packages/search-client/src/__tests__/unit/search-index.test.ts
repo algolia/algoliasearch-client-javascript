@@ -1,30 +1,36 @@
 import { Method } from '@algolia/requester-types';
 import { encode } from '@algolia/support';
 import { Faker } from '@algolia/support/src/__tests__/Faker';
-import { RequestOptions } from '@algolia/transporter';
+import { RequestOptions, Transporter } from '@algolia/transporter';
 import { anything, deepEqual, spy, verify, when } from 'ts-mockito';
 
 import algoliasearch from '../../../../algoliasearch/src/builds/browser';
+import { SearchIndex } from '../../../../algoliasearch/src/presets/default';
 import { BatchAction } from '../../methods/types/BatchAction';
 import { SaveObjectsOptions } from '../../methods/types/SaveObjectsOptions';
 
-const index = algoliasearch('appId', 'apiKey').initIndex('foo');
-
-const transporterMock = spy(index.transporter);
+let index: SearchIndex;
+let transporterMock: Transporter;
 
 const res: any = {
   objectIDs: ['1'],
   taskID: 1,
 };
 
-when(transporterMock.read(anything(), anything())).thenResolve({
-  status: 'published',
-  hits: [
-    {
-      objectID: 1,
-      name: 'foo',
-    },
-  ],
+beforeEach(() => {
+  index = algoliasearch('appId', 'apiKey').initIndex('foo');
+
+  transporterMock = spy(index.transporter);
+
+  when(transporterMock.read(anything(), anything())).thenResolve({
+    status: 'published',
+    hits: [
+      {
+        objectID: 1,
+        name: 'foo',
+      },
+    ],
+  });
 });
 
 describe('SaveObject', () => {

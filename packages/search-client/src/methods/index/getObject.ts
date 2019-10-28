@@ -1,13 +1,15 @@
 import { Method } from '@algolia/requester-types';
-import { ConstructorOf, encode } from '@algolia/support';
+import { encode } from '@algolia/support';
 import { RequestOptions } from '@algolia/transporter';
 
 import { SearchIndex } from '../../SearchIndex';
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export const getObject = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: TSearchIndex) => {
-  return class extends base implements HasGetObject {
-    public getObject<TObject>(
+export const getObject = <TSearchIndex extends SearchIndex>(
+  base: TSearchIndex
+): TSearchIndex & HasGetObject => {
+  return {
+    ...base,
+    getObject<TObject>(
       objectID: string,
       requestOptions?: RequestOptions
     ): Readonly<Promise<TObject>> {
@@ -18,7 +20,7 @@ export const getObject = <TSearchIndex extends ConstructorOf<SearchIndex>>(base:
         },
         requestOptions
       );
-    }
+    },
   };
 };
 

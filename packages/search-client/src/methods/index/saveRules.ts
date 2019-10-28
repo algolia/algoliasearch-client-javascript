@@ -1,19 +1,19 @@
 import { Method } from '@algolia/requester-types';
-import { ConstructorOf, encode, WaitablePromise } from '@algolia/support';
+import { encode, WaitablePromise } from '@algolia/support';
 import { mapRequestOptions, popRequestOption, RequestOptions } from '@algolia/transporter';
 
 import { SearchIndex } from '../../SearchIndex';
 import { Rule } from '../types/Rule';
 import { SaveRulesOptions } from '../types/SaveRulesOptions';
 import { SaveRulesResponse } from '../types/SaveRulesResponse';
-import { waitTask } from './waitTask';
+import { HasWaitTask, waitTask } from './waitTask';
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export const saveRules = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: TSearchIndex) => {
-  const mixin = waitTask(base);
-
-  return class extends mixin implements HasSaveRules {
-    public saveRules(
+export const saveRules = <TSearchIndex extends SearchIndex>(
+  base: TSearchIndex
+): TSearchIndex & HasWaitTask & HasSaveRules => {
+  return {
+    ...waitTask(base),
+    saveRules(
       rules: readonly Rule[],
       requestOptions?: RequestOptions & SaveRulesOptions
     ): Readonly<WaitablePromise<SaveRulesResponse>> {
@@ -42,7 +42,7 @@ export const saveRules = <TSearchIndex extends ConstructorOf<SearchIndex>>(base:
       ).onWait((response, waitRequestOptions) =>
         this.waitTask(response.taskID, waitRequestOptions)
       );
-    }
+    },
   };
 };
 

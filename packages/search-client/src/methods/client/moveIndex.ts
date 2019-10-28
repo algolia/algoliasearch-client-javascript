@@ -1,17 +1,17 @@
 import { Method } from '@algolia/requester-types';
-import { ConstructorOf, encode, WaitablePromise } from '@algolia/support';
+import { encode, WaitablePromise } from '@algolia/support';
 import { RequestOptions } from '@algolia/transporter';
 
 import { SearchClient } from '../../SearchClient';
 import { HasWaitTask, waitTask } from '../index/waitTask';
 import { IndexOperationResponse } from '../types/IndexOperationResponse';
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export const moveIndex = <TSearchClient extends ConstructorOf<SearchClient>>(
+export const moveIndex = <TSearchClient extends SearchClient>(
   base: TSearchClient
-) => {
-  return class extends base implements HasMoveIndex {
-    public moveIndex(
+): TSearchClient & HasMoveIndex => {
+  return {
+    ...base,
+    moveIndex(
       from: string,
       to: string,
       requestOptions?: RequestOptions
@@ -33,7 +33,7 @@ export const moveIndex = <TSearchClient extends ConstructorOf<SearchClient>>(
           methods: [waitTask],
         }).waitTask(response.taskID, waitRequestOptions);
       });
-    }
+    },
   };
 };
 

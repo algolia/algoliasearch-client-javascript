@@ -13,7 +13,6 @@ export class BrowsablePromise<TObject> extends Promise<TObject> {
     return new BrowsablePromise<TObject>(resolve => {
       const data = { page: 0 };
 
-      // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
       const browse = (): Promise<void> => {
         return options.request(data).then(response => {
           if (options.batch !== undefined) {

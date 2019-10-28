@@ -1,16 +1,16 @@
 import { Method } from '@algolia/requester-types';
-import { ConstructorOf, encode } from '@algolia/support';
+import { encode } from '@algolia/support';
 import { RequestOptions } from '@algolia/transporter';
 
 import { AnalyticsClient } from '../../AnalyticsClient';
 import { DeleteABTestResponse } from '../types/DeleteABTestResponse';
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export const deleteABTest = <TAnalyticsClient extends ConstructorOf<AnalyticsClient>>(
+export const deleteABTest = <TAnalyticsClient extends AnalyticsClient>(
   base: TAnalyticsClient
-) => {
-  return class extends base implements HasDeleteABTest {
-    public deleteABTest(
+): TAnalyticsClient & HasDeleteABTest => {
+  return {
+    ...base,
+    deleteABTest(
       abTestID: number,
       requestOptions?: RequestOptions
     ): Readonly<Promise<DeleteABTestResponse>> {
@@ -21,7 +21,7 @@ export const deleteABTest = <TAnalyticsClient extends ConstructorOf<AnalyticsCli
         },
         requestOptions
       );
-    }
+    },
   };
 };
 

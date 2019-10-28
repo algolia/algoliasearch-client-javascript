@@ -1,5 +1,5 @@
 import { Method } from '@algolia/requester-types';
-import { ConstructorOf, encode } from '@algolia/support';
+import { encode } from '@algolia/support';
 import { RequestOptions } from '@algolia/transporter';
 
 import { SearchIndex } from '../../SearchIndex';
@@ -7,12 +7,12 @@ import { Rule } from '../types/Rule';
 import { SearchResponse } from '../types/SearchResponse';
 import { SearchRulesOptions } from '../types/SearchRulesOptions';
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export const searchRules = <TSearchIndex extends ConstructorOf<SearchIndex>>(
+export const searchRules = <TSearchIndex extends SearchIndex>(
   base: TSearchIndex
-) => {
-  return class extends base implements HasSearchRules {
-    public searchRules(
+): TSearchIndex & HasSearchRules => {
+  return {
+    ...base,
+    searchRules(
       query: string,
       requestOptions?: RequestOptions
     ): Readonly<Promise<SearchResponse<Rule>>> {
@@ -26,7 +26,7 @@ export const searchRules = <TSearchIndex extends ConstructorOf<SearchIndex>>(
         },
         requestOptions
       );
-    }
+    },
   };
 };
 

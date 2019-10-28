@@ -1,16 +1,15 @@
 import { Method } from '@algolia/requester-types';
-import { ConstructorOf } from '@algolia/support';
 import { RequestOptions } from '@algolia/transporter';
 
 import { SearchClient } from '../../SearchClient';
 import { GetPersonalizationStrategyResponse } from '../types/GetPersonalizationStrategyResponse';
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export const getPersonalizationStrategy = <TSearchClient extends ConstructorOf<SearchClient>>(
+export const getPersonalizationStrategy = <TSearchClient extends SearchClient>(
   base: TSearchClient
-) => {
-  return class extends base implements HasGetPersonalizationStrategy {
-    public getPersonalizationStrategy(
+): TSearchClient & HasGetPersonalizationStrategy => {
+  return {
+    ...base,
+    getPersonalizationStrategy(
       requestOptions?: RequestOptions
     ): Readonly<Promise<GetPersonalizationStrategyResponse>> {
       return this.transporter.read(
@@ -20,7 +19,7 @@ export const getPersonalizationStrategy = <TSearchClient extends ConstructorOf<S
         },
         requestOptions
       );
-    }
+    },
   };
 };
 

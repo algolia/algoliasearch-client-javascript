@@ -1,20 +1,18 @@
 import { Method } from '@algolia/requester-types';
-import { ConstructorOf, encode, WaitablePromise } from '@algolia/support';
+import { encode, WaitablePromise } from '@algolia/support';
 import { RequestOptions } from '@algolia/transporter';
 
 import { SearchIndex } from '../../SearchIndex';
 import { DeleteResponse } from '../types/DeleteResponse';
 import { DeleteSynonymOptions } from '../types/DeleteSynonymOptions';
-import { waitTask } from './waitTask';
+import { HasWaitTask, waitTask } from './waitTask';
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export const deleteSynonym = <TSearchIndex extends ConstructorOf<SearchIndex>>(
+export const deleteSynonym = <TSearchIndex extends SearchIndex>(
   base: TSearchIndex
-) => {
-  const mixin = waitTask(base);
-
-  return class extends mixin implements HasDeleteSynonym {
-    public deleteSynonym(
+): TSearchIndex & HasWaitTask & HasDeleteSynonym => {
+  return {
+    ...waitTask(base),
+    deleteSynonym(
       objectID: string,
       requestOptions?: DeleteSynonymOptions & RequestOptions
     ): Readonly<WaitablePromise<DeleteResponse>> {
@@ -29,7 +27,7 @@ export const deleteSynonym = <TSearchIndex extends ConstructorOf<SearchIndex>>(
       ).onWait((response, waitRequestOptions) =>
         this.waitTask(response.taskID, waitRequestOptions)
       );
-    }
+    },
   };
 };
 

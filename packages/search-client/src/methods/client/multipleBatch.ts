@@ -1,5 +1,5 @@
 import { Method } from '@algolia/requester-types';
-import { ConstructorOf, WaitablePromise } from '@algolia/support';
+import { WaitablePromise } from '@algolia/support';
 import { RequestOptions } from '@algolia/transporter';
 
 import { SearchClient } from '../../SearchClient';
@@ -7,12 +7,12 @@ import { HasWaitTask, waitTask } from '../index/waitTask';
 import { BatchRequest } from '../types/BatchRequest';
 import { MultipleBatchResponse } from '../types/MultipleBatchResponse';
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export const multipleBatch = <TSearchClient extends ConstructorOf<SearchClient>>(
+export const multipleBatch = <TSearchClient extends SearchClient>(
   base: TSearchClient
-) => {
-  return class extends base implements HasMultipleBatch {
-    public multipleBatch(
+): TSearchClient & HasMultipleBatch => {
+  return {
+    ...base,
+    multipleBatch(
       requests: readonly BatchRequest[],
       requestOptions?: RequestOptions
     ): Readonly<WaitablePromise<MultipleBatchResponse>> {
@@ -36,7 +36,7 @@ export const multipleBatch = <TSearchClient extends ConstructorOf<SearchClient>>
           })
         )
       );
-    }
+    },
   };
 };
 

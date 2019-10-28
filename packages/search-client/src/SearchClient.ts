@@ -47,27 +47,23 @@ export class SearchClient {
     indexName: string,
     options?: ComposableOptions
   ): TSearchIndex & SearchIndex {
-    const Index = compose<TSearchIndex & SearchIndex>(
-      SearchIndex,
+    return compose<TSearchIndex & SearchIndex>(
+      new SearchIndex({
+        transporter: this.transporter,
+        indexName,
+      }),
       options
     );
-
-    return new Index({
-      transporter: this.transporter,
-      indexName,
-    });
   }
 }
 
 export const createSearchClient = <TSearchClient>(
   options: SearchClientOptions & TransporterOptions & ComposableOptions
 ): TSearchClient & SearchClient => {
-  const Client = compose<TSearchClient & SearchClient>(
-    SearchClient,
+  return compose<TSearchClient & SearchClient>(
+    new SearchClient(options),
     options
   );
-
-  return new Client(options);
 };
 
 export type SearchClientOptions = {

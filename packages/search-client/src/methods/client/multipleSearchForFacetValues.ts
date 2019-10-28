@@ -1,4 +1,3 @@
-import { ConstructorOf } from '@algolia/support';
 import { RequestOptions } from '@algolia/transporter';
 
 import { SearchClient } from '../../SearchClient';
@@ -7,12 +6,12 @@ import { SearchForFacetValuesQueryParams } from '../types/SearchForFacetValuesQu
 import { SearchForFacetValuesResponse } from '../types/SearchForFacetValuesResponse';
 import { SearchOptions } from '../types/SearchOptions';
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export const multipleSearchForFacetValues = <TSearchClient extends ConstructorOf<SearchClient>>(
+export const multipleSearchForFacetValues = <TSearchClient extends SearchClient>(
   base: TSearchClient
-) => {
-  return class extends base implements HasMultipleSearchForFacetValues {
-    public multipleSearchForFacetValues(
+): TSearchClient & HasMultipleSearchForFacetValues => {
+  return {
+    ...base,
+    multipleSearchForFacetValues(
       queries: ReadonlyArray<{
         readonly indexName: string;
         readonly params: SearchForFacetValuesQueryParams & SearchOptions;
@@ -40,9 +39,9 @@ export const multipleSearchForFacetValues = <TSearchClient extends ConstructorOf
           });
         })
       );
-    }
+    },
 
-    public searchForFacetValues(
+    searchForFacetValues(
       queries: ReadonlyArray<{
         readonly indexName: string;
         readonly params: SearchForFacetValuesQueryParams;
@@ -50,7 +49,7 @@ export const multipleSearchForFacetValues = <TSearchClient extends ConstructorOf
       requestOptions?: RequestOptions
     ): Readonly<Promise<readonly SearchForFacetValuesResponse[]>> {
       return this.multipleSearchForFacetValues(queries, requestOptions);
-    }
+    },
   };
 };
 

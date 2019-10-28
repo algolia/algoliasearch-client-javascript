@@ -1,20 +1,18 @@
-import { ConstructorOf, WaitablePromise } from '@algolia/support';
+import { WaitablePromise } from '@algolia/support';
 import { RequestOptions } from '@algolia/transporter';
 
 import { SearchIndex } from '../../SearchIndex';
 import { BatchAction } from '../types/BatchAction';
 import { BatchResponse } from '../types/BatchResponse';
 import { ChunkOptions } from '../types/ChunkOptions';
-import { batch } from './batch';
+import { batch, HasBatch } from './batch';
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export const deleteObjects = <TSearchIndex extends ConstructorOf<SearchIndex>>(
+export const deleteObjects = <TSearchIndex extends SearchIndex>(
   base: TSearchIndex
-) => {
-  const mixin = batch(base);
-
-  return class extends mixin implements HasDeleteObjects {
-    public deleteObjects(
+): TSearchIndex & HasBatch & HasDeleteObjects => {
+  return {
+    ...batch(base),
+    deleteObjects(
       objectIDs: readonly string[],
       requestOptions?: RequestOptions & ChunkOptions
     ): Readonly<WaitablePromise<readonly BatchResponse[]>> {
@@ -23,7 +21,7 @@ export const deleteObjects = <TSearchIndex extends ConstructorOf<SearchIndex>>(
       });
 
       return this.chunk(objects, BatchAction.DeleteObject, requestOptions);
-    }
+    },
   };
 };
 

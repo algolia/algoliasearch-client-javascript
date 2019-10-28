@@ -1,5 +1,5 @@
 import { Method } from '@algolia/requester-types';
-import { ConstructorOf, encode, WaitablePromise } from '@algolia/support';
+import { encode, WaitablePromise } from '@algolia/support';
 import { popRequestOption, RequestOptions } from '@algolia/transporter';
 
 import { SearchIndex } from '../../SearchIndex';
@@ -8,17 +8,38 @@ import { ReplaceAllObjectsOptions } from '../types/ReplaceAllObjectsOptions';
 import { saveObjects } from './saveObjects';
 import { HasWaitTask, waitTask } from './waitTask';
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export const replaceAllObjects = <TSearchIndex extends ConstructorOf<SearchIndex>>(
+export const replaceAllObjects = <TSearchIndex extends SearchIndex>(
   base: TSearchIndex
-) => {
-  const mixin: ConstructorOf<SearchIndex & HasWaitTask> = waitTask(base);
-
-  return class extends mixin implements HasReplaceAllObjects {
-    public replaceAllObjects(
+): TSearchIndex & HasWaitTask & HasReplaceAllObjects => {
+  return {
+    ...waitTask(base),
+    replaceAllObjects(
       objects: readonly object[],
       requestOptions?: ReplaceAllObjectsOptions & RequestOptions
     ): Readonly<WaitablePromise<void>> {
+      const operation = (
+        from: string,
+        to: string,
+        type: string,
+        operatioRequestOptions?: RequestOptions
+      ): Readonly<WaitablePromise<IndexOperationResponse>> => {
+        return WaitablePromise.from<IndexOperationResponse>(
+          this.transporter.write(
+            {
+              method: Method.Post,
+              path: encode('1/indexes/%s/operation', from),
+              data: {
+                operation: type,
+                destination: to,
+              },
+            },
+            operatioRequestOptions
+          )
+        ).onWait((response, waitRequestOptions) =>
+          this.waitTask(response.taskID, waitRequestOptions)
+        );
+      };
+
       const safe = popRequestOption(requestOptions, 'safe', false);
 
       const randomSuffix = Math.random()
@@ -26,17 +47,17 @@ export const replaceAllObjects = <TSearchIndex extends ConstructorOf<SearchIndex
         .substring(7);
 
       const temporaryIndexName = `${this.indexName}_tmp_${randomSuffix}`;
-      const TemporaryIndexConstructor = saveObjects(SearchIndex);
-
-      const temporaryIndex = new TemporaryIndexConstructor({
-        transporter: this.transporter,
-        indexName: temporaryIndexName,
-      });
+      const temporaryIndex = saveObjects(
+        new SearchIndex({
+          transporter: this.transporter,
+          indexName: temporaryIndexName,
+        })
+      );
 
       // eslint-disable-next-line prefer-const, functional/no-let, functional/prefer-readonly-type
       let responses: Array<Readonly<WaitablePromise<any>>> = [];
 
-      const copyWaitablePromise = this.operation(this.indexName, temporaryIndexName, 'copy', {
+      const copyWaitablePromise = operation(this.indexName, temporaryIndexName, 'copy', {
         ...requestOptions,
         scope: ['settings', 'synonyms', 'rules'],
       });
@@ -56,7 +77,7 @@ export const replaceAllObjects = <TSearchIndex extends ConstructorOf<SearchIndex
             : saveObjectsWaitablePromise;
         })
         .then(() => {
-          const moveWaitablePromise = this.operation(
+          const moveWaitablePromise = operation(
             temporaryIndex.indexName,
             this.indexName,
             'move',
@@ -73,30 +94,7 @@ export const replaceAllObjects = <TSearchIndex extends ConstructorOf<SearchIndex
       return WaitablePromise.from<void>(result).onWait((_, waitRequestOptions) => {
         return Promise.all(responses.map(response => response.wait(waitRequestOptions)));
       });
-    }
-
-    public operation(
-      from: string,
-      to: string,
-      type: string,
-      requestOptions?: RequestOptions
-    ): Readonly<WaitablePromise<IndexOperationResponse>> {
-      return WaitablePromise.from<IndexOperationResponse>(
-        this.transporter.write(
-          {
-            method: Method.Post,
-            path: encode('1/indexes/%s/operation', from),
-            data: {
-              operation: type,
-              destination: to,
-            },
-          },
-          requestOptions
-        )
-      ).onWait((response, waitRequestOptions) =>
-        this.waitTask(response.taskID, waitRequestOptions)
-      );
-    }
+    },
   };
 };
 

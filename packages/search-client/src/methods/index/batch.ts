@@ -1,5 +1,5 @@
 import { Method } from '@algolia/requester-types';
-import { ConstructorOf, encode, WaitablePromise } from '@algolia/support';
+import { encode, WaitablePromise } from '@algolia/support';
 import { popRequestOption, RequestOptions } from '@algolia/transporter';
 
 import { SearchIndex } from '../../SearchIndex';
@@ -9,12 +9,12 @@ import { BatchResponse } from '../types/BatchResponse';
 import { ChunkOptions } from '../types/ChunkOptions';
 import { HasWaitTask, waitTask } from './waitTask';
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export const batch = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: TSearchIndex) => {
-  const mixin = waitTask(base);
-
-  return class extends mixin implements HasBatch {
-    public chunk(
+export const batch = <TSearchIndex extends SearchIndex>(
+  base: TSearchIndex
+): TSearchIndex & HasWaitTask & HasBatch => {
+  return {
+    ...waitTask(base),
+    chunk(
       bodies: readonly object[],
       action: BatchActionType,
       requestOptions?: RequestOptions & ChunkOptions
@@ -24,7 +24,6 @@ export const batch = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: TSe
       // eslint-disable-next-line functional/prefer-readonly-type
       const responses: BatchResponse[] = [];
 
-      // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
       const forEachBatch = (lastIndex: number = 0): Readonly<Promise<readonly BatchResponse[]>> => {
         // eslint-disable-next-line functional/prefer-readonly-type
         const bodiesChunk: Array<Record<string, any>> = [];
@@ -67,9 +66,9 @@ export const batch = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: TSe
           batchResponses.map(response => this.waitTask(response.taskID, waitRequestOptions))
         );
       });
-    }
+    },
 
-    public batch(
+    batch(
       requests: readonly BatchRequest[],
       requestOptions?: RequestOptions
     ): Readonly<WaitablePromise<BatchResponse>> {
@@ -87,7 +86,7 @@ export const batch = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: TSe
       ).onWait((response, waitRequestOptions) =>
         this.waitTask(response.taskID, waitRequestOptions)
       );
-    }
+    },
   };
 };
 

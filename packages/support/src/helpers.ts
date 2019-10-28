@@ -13,21 +13,15 @@ export function shuffle<TData>(array: TData[]): TData[] {
   return array;
 }
 
-// eslint-disable-next-line functional/prefer-readonly-type
-export type ConstructorOf<TObject> = new (...input: any[]) => TObject;
-
-export function compose<TObject>(
-  objectConstructor: any,
-  options?: ComposableOptions
-): ConstructorOf<TObject> {
+export function compose<TObject>(obj: any, options?: ComposableOptions): TObject {
   if (options !== undefined && options.methods !== undefined) {
-    options.methods.forEach((method): void => {
-      // eslint-disable-next-line no-param-reassign
-      objectConstructor = method(objectConstructor);
+    options.methods.forEach(method => {
+      // eslint-disable-next-line
+      Object.assign(obj, method(obj));
     });
   }
 
-  return objectConstructor;
+  return obj;
 }
 
 export type ComposableOptions = {

@@ -1,4 +1,3 @@
-import { ConstructorOf } from '@algolia/support';
 import { RequestOptions } from '@algolia/transporter';
 
 import { BrowsablePromise } from '../../BrowsablePromise';
@@ -9,14 +8,12 @@ import { Rule } from '../types/Rule';
 import { SearchRulesOptions } from '../types/SearchRulesOptions';
 import { HasSearchRules, searchRules } from './searchRules';
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export const browseRules = <TSearchIndex extends ConstructorOf<SearchIndex>>(
+export const browseRules = <TSearchIndex extends SearchIndex>(
   base: TSearchIndex
-) => {
-  const mixin: ConstructorOf<SearchIndex & HasSearchRules> = searchRules(base);
-
-  return class extends mixin implements HasBrowseRules {
-    public browseRules(
+): TSearchIndex & HasSearchRules & HasBrowseRules => {
+  return {
+    ...searchRules(base),
+    browseRules(
       requestOptions?: SearchRulesOptions & BrowseOptions<Rule> & RequestOptions
     ): Readonly<BrowsablePromise<Rule>> {
       const options = {
@@ -44,7 +41,7 @@ export const browseRules = <TSearchIndex extends ConstructorOf<SearchIndex>>(
           );
         },
       });
-    }
+    },
   };
 };
 

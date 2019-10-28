@@ -1,17 +1,17 @@
 import { Method } from '@algolia/requester-types';
-import { ConstructorOf, encode } from '@algolia/support';
+import { encode } from '@algolia/support';
 import { RequestOptions } from '@algolia/transporter';
 
 import { SearchIndex } from '../../SearchIndex';
 import { SearchForFacetValuesResponse } from '../types/SearchForFacetValuesResponse';
 import { SearchOptions } from '../types/SearchOptions';
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export const searchForFacetValues = <TSearchIndex extends ConstructorOf<SearchIndex>>(
+export const searchForFacetValues = <TSearchIndex extends SearchIndex>(
   base: TSearchIndex
-) => {
-  return class extends base implements HasSearchForFacetValues {
-    public searchForFacetValues(
+): TSearchIndex & HasSearchForFacetValues => {
+  return {
+    ...base,
+    searchForFacetValues(
       facetName: string,
       facetQuery: string,
       requestOptions?: RequestOptions & SearchOptions
@@ -27,7 +27,7 @@ export const searchForFacetValues = <TSearchIndex extends ConstructorOf<SearchIn
         },
         requestOptions
       );
-    }
+    },
   };
 };
 

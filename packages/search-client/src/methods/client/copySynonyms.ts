@@ -1,4 +1,4 @@
-import { ConstructorOf, WaitablePromise } from '@algolia/support';
+import { WaitablePromise } from '@algolia/support';
 import { RequestOptions } from '@algolia/transporter';
 
 import { SearchClient } from '../../SearchClient';
@@ -6,14 +6,12 @@ import { IndexOperationResponse } from '../types/IndexOperationResponse';
 import { ScopeEnum } from '../types/ScopeType';
 import { copyIndex, HasCopyIndex } from './copyIndex';
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export const copySynonyms = <TSearchClient extends ConstructorOf<SearchClient>>(
+export const copySynonyms = <TSearchClient extends SearchClient>(
   base: TSearchClient
-) => {
-  const mixin: ConstructorOf<SearchClient & HasCopyIndex> = copyIndex(base);
-
-  return class extends mixin implements HasCopySynonyms {
-    public copySynonyms(
+): TSearchClient & HasCopyIndex & HasCopySynonyms => {
+  return {
+    ...copyIndex(base),
+    copySynonyms(
       from: string,
       to: string,
       requestOptions?: RequestOptions
@@ -22,7 +20,7 @@ export const copySynonyms = <TSearchClient extends ConstructorOf<SearchClient>>(
         ...(requestOptions === undefined ? {} : requestOptions),
         scope: [ScopeEnum.Synonyms],
       });
-    }
+    },
   };
 };
 

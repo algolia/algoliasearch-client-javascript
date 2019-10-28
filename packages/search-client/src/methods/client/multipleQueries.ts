@@ -1,5 +1,5 @@
 import { Method } from '@algolia/requester-types';
-import { ConstructorOf, encodeQueryParameters } from '@algolia/support';
+import { encodeQueryParameters } from '@algolia/support';
 import { RequestOptions } from '@algolia/transporter';
 
 import { SearchClient } from '../../SearchClient';
@@ -7,12 +7,12 @@ import { MultipleQueriesOptions } from '../types/MultipleQueriesOptions';
 import { MultipleQueriesQuery } from '../types/MultipleQueriesQuery';
 import { MultipleQueriesResponse } from '../types/MultipleQueriesResponse';
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export const multipleQueries = <TSearchClient extends ConstructorOf<SearchClient>>(
+export const multipleQueries = <TSearchClient extends SearchClient>(
   base: TSearchClient
-) => {
-  return class extends base implements HasMultipleQueries {
-    public multipleQueries<TObject>(
+): TSearchClient & HasMultipleQueries => {
+  return {
+    ...base,
+    multipleQueries<TObject>(
       queries: readonly MultipleQueriesQuery[],
       requestOptions?: RequestOptions & MultipleQueriesOptions
     ): Readonly<Promise<MultipleQueriesResponse<TObject>>> {
@@ -34,14 +34,14 @@ export const multipleQueries = <TSearchClient extends ConstructorOf<SearchClient
         },
         requestOptions
       );
-    }
+    },
 
-    public search<TObject>(
+    search<TObject>(
       queries: readonly MultipleQueriesQuery[],
       requestOptions?: RequestOptions & MultipleQueriesOptions
     ): Readonly<Promise<MultipleQueriesResponse<TObject>>> {
       return this.multipleQueries<TObject>(queries, requestOptions);
-    }
+    },
   };
 };
 

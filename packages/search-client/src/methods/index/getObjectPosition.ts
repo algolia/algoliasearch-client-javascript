@@ -1,14 +1,12 @@
-import { ConstructorOf } from '@algolia/support';
-
 import { SearchIndex } from '../../SearchIndex';
 import { SearchResponse } from '../types/SearchResponse';
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export const getObjectPosition = <TSearchIndex extends ConstructorOf<SearchIndex>>(
+export const getObjectPosition = <TSearchIndex extends SearchIndex>(
   base: TSearchIndex
-) => {
-  return class extends base implements HasGetObjectPosition {
-    public getObjectPosition(searchResponse: SearchResponse, objectID: string): number {
+): TSearchIndex & HasGetObjectPosition => {
+  return {
+    ...base,
+    getObjectPosition(searchResponse: SearchResponse, objectID: string): number {
       // eslint-disable-next-line functional/no-loop-statement
       for (const [position, hit] of Object.entries(searchResponse.hits)) {
         if (hit.objectID === objectID) {
@@ -17,7 +15,7 @@ export const getObjectPosition = <TSearchIndex extends ConstructorOf<SearchIndex
       }
 
       return -1;
-    }
+    },
   };
 };
 

@@ -1,19 +1,17 @@
 import { Method } from '@algolia/requester-types';
-import { ConstructorOf, encode, WaitablePromise } from '@algolia/support';
+import { encode, WaitablePromise } from '@algolia/support';
 import { RequestOptions } from '@algolia/transporter';
 
 import { SearchIndex } from '../../SearchIndex';
 import { DeleteResponse } from '../types/DeleteResponse';
-import { waitTask } from './waitTask';
+import { HasWaitTask, waitTask } from './waitTask';
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export const deleteIndex = <TSearchIndex extends ConstructorOf<SearchIndex>>(
+export const deleteIndex = <TSearchIndex extends SearchIndex>(
   base: TSearchIndex
-) => {
-  const mixin = waitTask(base);
-
-  return class extends mixin implements HasDelete {
-    public delete(requestOptions?: RequestOptions): Readonly<WaitablePromise<DeleteResponse>> {
+): TSearchIndex & HasWaitTask & HasDelete => {
+  return {
+    ...waitTask(base),
+    delete(requestOptions?: RequestOptions): Readonly<WaitablePromise<DeleteResponse>> {
       return WaitablePromise.from<DeleteResponse>(
         this.transporter.write(
           {
@@ -25,7 +23,7 @@ export const deleteIndex = <TSearchIndex extends ConstructorOf<SearchIndex>>(
       ).onWait((response, waitRequestOptions) =>
         this.waitTask(response.taskID, waitRequestOptions)
       );
-    }
+    },
   };
 };
 

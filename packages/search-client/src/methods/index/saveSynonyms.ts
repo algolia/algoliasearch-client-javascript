@@ -1,21 +1,19 @@
 import { Method } from '@algolia/requester-types';
-import { ConstructorOf, encode, WaitablePromise } from '@algolia/support';
+import { encode, WaitablePromise } from '@algolia/support';
 import { mapRequestOptions, popRequestOption, RequestOptions } from '@algolia/transporter';
 
 import { SearchIndex } from '../../SearchIndex';
 import { SaveSynonymsOptions } from '../types/SaveSynonymsOptions';
 import { SaveSynonymsResponse } from '../types/SaveSynonymsResponse';
 import { Synonym } from '../types/Synonym';
-import { waitTask } from './waitTask';
+import { HasWaitTask, waitTask } from './waitTask';
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export const saveSynonyms = <TSearchIndex extends ConstructorOf<SearchIndex>>(
+export const saveSynonyms = <TSearchIndex extends SearchIndex>(
   base: TSearchIndex
-) => {
-  const mixin = waitTask(base);
-
-  return class extends mixin implements HasSaveSynonyms {
-    public saveSynonyms(
+): TSearchIndex & HasWaitTask & HasSaveSynonyms => {
+  return {
+    ...waitTask(base),
+    saveSynonyms(
       synonyms: readonly Synonym[],
       requestOptions?: SaveSynonymsOptions & RequestOptions
     ): Readonly<WaitablePromise<SaveSynonymsResponse>> {
@@ -46,7 +44,7 @@ export const saveSynonyms = <TSearchIndex extends ConstructorOf<SearchIndex>>(
       ).onWait((response, waitRequestOptions) =>
         this.waitTask(response.taskID, waitRequestOptions)
       );
-    }
+    },
   };
 };
 

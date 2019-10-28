@@ -1,17 +1,16 @@
 import { Method } from '@algolia/requester-types';
-import { ConstructorOf } from '@algolia/support';
 import { RequestOptions } from '@algolia/transporter';
 
 import { SearchClient } from '../../SearchClient';
 import { MultipleGetObject } from '../types/MultipleGetObject';
 import { MultipleGetObjectsResponse } from '../types/MultipleGetObjectsResponse';
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export const multipleGetObjects = <TSearchClient extends ConstructorOf<SearchClient>>(
+export const multipleGetObjects = <TSearchClient extends SearchClient>(
   base: TSearchClient
-) => {
-  return class extends base implements HasMultipleGetObjects {
-    public multipleGetObjects<TObject>(
+): TSearchClient & HasMultipleGetObjects => {
+  return {
+    ...base,
+    multipleGetObjects<TObject>(
       requests: readonly MultipleGetObject[],
       requestOptions?: RequestOptions
     ): Readonly<Promise<MultipleGetObjectsResponse<TObject>>> {
@@ -25,7 +24,7 @@ export const multipleGetObjects = <TSearchClient extends ConstructorOf<SearchCli
         },
         requestOptions
       );
-    }
+    },
   };
 };
 

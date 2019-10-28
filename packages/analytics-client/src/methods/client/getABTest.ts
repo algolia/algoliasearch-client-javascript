@@ -1,16 +1,16 @@
 import { Method } from '@algolia/requester-types';
-import { ConstructorOf, encode } from '@algolia/support';
+import { encode } from '@algolia/support';
 import { RequestOptions } from '@algolia/transporter';
 
 import { AnalyticsClient } from '../../AnalyticsClient';
 import { GetABTestResponse } from '../types/GetABTestResponse';
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export const getABTest = <TAnalyticsClient extends ConstructorOf<AnalyticsClient>>(
+export const getABTest = <TAnalyticsClient extends AnalyticsClient>(
   base: TAnalyticsClient
-) => {
-  return class extends base implements HasGetABTest {
-    public getABTest(
+): TAnalyticsClient & HasGetABTest => {
+  return {
+    ...base,
+    getABTest(
       abTestID: number,
       requestOptions?: RequestOptions
     ): Readonly<Promise<GetABTestResponse>> {
@@ -21,7 +21,7 @@ export const getABTest = <TAnalyticsClient extends ConstructorOf<AnalyticsClient
         },
         requestOptions
       );
-    }
+    },
   };
 };
 

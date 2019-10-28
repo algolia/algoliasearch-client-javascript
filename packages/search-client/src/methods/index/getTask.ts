@@ -1,14 +1,16 @@
 import { Method } from '@algolia/requester-types';
-import { ConstructorOf, encode } from '@algolia/support';
+import { encode } from '@algolia/support';
 import { RequestOptions } from '@algolia/transporter';
 
 import { SearchIndex } from '../../SearchIndex';
 import { TaskStatusResponse } from '../types/TaskStatusResponse';
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export const getTask = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: TSearchIndex) => {
-  return class extends base implements HasGetTask {
-    public getTask(
+export const getTask = <TSearchIndex extends SearchIndex>(
+  base: TSearchIndex
+): TSearchIndex & HasGetTask => {
+  return {
+    ...base,
+    getTask(
       taskID: number,
       requestOptions?: RequestOptions
     ): Readonly<Promise<TaskStatusResponse>> {
@@ -19,7 +21,7 @@ export const getTask = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: T
         },
         requestOptions
       );
-    }
+    },
   };
 };
 

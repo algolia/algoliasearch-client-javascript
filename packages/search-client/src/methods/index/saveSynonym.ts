@@ -1,4 +1,4 @@
-import { ConstructorOf, WaitablePromise } from '@algolia/support';
+import { WaitablePromise } from '@algolia/support';
 import { RequestOptions } from '@algolia/transporter';
 
 import { SearchIndex } from '../../SearchIndex';
@@ -7,19 +7,17 @@ import { SaveSynonymsResponse } from '../types/SaveSynonymsResponse';
 import { Synonym } from '../types/Synonym';
 import { HasSaveSynonyms, saveSynonyms } from './saveSynonyms';
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export const saveSynonym = <TSearchIndex extends ConstructorOf<SearchIndex>>(
+export const saveSynonym = <TSearchIndex extends SearchIndex>(
   base: TSearchIndex
-) => {
-  const mixin: ConstructorOf<SearchIndex & HasSaveSynonyms> = saveSynonyms(base);
-
-  return class extends mixin implements HasSaveSynonym {
-    public saveSynonym(
+): TSearchIndex & HasSaveSynonyms => {
+  return {
+    ...saveSynonyms(base),
+    saveSynonym(
       synonym: Synonym,
       requestOptions?: RequestOptions & SaveSynonymsOptions
     ): Readonly<WaitablePromise<SaveSynonymsResponse>> {
       return this.saveSynonyms([synonym], requestOptions);
-    }
+    },
   };
 };
 

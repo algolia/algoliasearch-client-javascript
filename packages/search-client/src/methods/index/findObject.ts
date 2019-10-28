@@ -1,4 +1,3 @@
-import { ConstructorOf } from '@algolia/support';
 import { popRequestOption, RequestOptions } from '@algolia/transporter';
 
 import { ObjectNotFoundError } from '../../errors/ObjectNotFoundError';
@@ -8,12 +7,12 @@ import { FindObjectResponse } from '../types/FindObjectResponse';
 import { ObjectWithObjectID } from '../types/ObjectWithObjectID';
 import { HasSearch, search } from './search';
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export const findObject = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: TSearchIndex) => {
-  const mixin: ConstructorOf<SearchIndex & HasSearch> = search(base);
-
-  return class extends mixin implements HasFindObject {
-    public findObject<TObject>(
+export const findObject = <TSearchIndex extends SearchIndex>(
+  base: TSearchIndex
+): TSearchIndex & HasSearch & HasFindObject => {
+  return {
+    ...search(base),
+    findObject<TObject>(
       callback: (object: TObject & ObjectWithObjectID) => boolean,
       requestOptions?: FindObjectOptions & RequestOptions
     ): Readonly<Promise<FindObjectResponse<TObject>>> {
@@ -49,7 +48,7 @@ export const findObject = <TSearchIndex extends ConstructorOf<SearchIndex>>(base
       };
 
       return forEachPage();
-    }
+    },
   };
 };
 

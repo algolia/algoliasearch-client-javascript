@@ -1,4 +1,4 @@
-import { ConstructorOf, WaitablePromise } from '@algolia/support';
+import { WaitablePromise } from '@algolia/support';
 import { popRequestOption, RequestOptions } from '@algolia/transporter';
 
 import { MissingObjectIDError } from '../../errors/MissingObjectIDError';
@@ -6,16 +6,14 @@ import { SearchIndex } from '../../SearchIndex';
 import { BatchAction } from '../types/BatchAction';
 import { BatchResponse } from '../types/BatchResponse';
 import { SaveObjectsOptions } from '../types/SaveObjectsOptions';
-import { batch } from './batch';
+import { batch, HasBatch } from './batch';
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export const saveObjects = <TSearchIndex extends ConstructorOf<SearchIndex>>(
+export const saveObjects = <TSearchIndex extends SearchIndex>(
   base: TSearchIndex
-) => {
-  const mixin = batch(base);
-
-  return class extends mixin implements HasSaveObjects {
-    public saveObjects(
+): TSearchIndex & HasBatch & HasSaveObjects => {
+  return {
+    ...batch(base),
+    saveObjects(
       objects: ReadonlyArray<Record<string, any>>,
       requestOptions?: RequestOptions & SaveObjectsOptions
     ): Readonly<WaitablePromise<readonly BatchResponse[]>> {
@@ -34,7 +32,7 @@ export const saveObjects = <TSearchIndex extends ConstructorOf<SearchIndex>>(
       }
 
       return this.chunk(objects, action, requestOptions);
-    }
+    },
   };
 };
 

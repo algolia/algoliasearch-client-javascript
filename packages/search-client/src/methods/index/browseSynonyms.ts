@@ -1,4 +1,3 @@
-import { ConstructorOf } from '@algolia/support';
 import { RequestOptions } from '@algolia/transporter';
 
 import { BrowsablePromise } from '../../BrowsablePromise';
@@ -9,14 +8,12 @@ import { SearchSynonymsOptions } from '../types/SearchSynonymsOptions';
 import { Synonym } from '../types/Synonym';
 import { HasSearchSynonyms, searchSynonyms } from './searchSynonyms';
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export const browseSynonyms = <TSearchIndex extends ConstructorOf<SearchIndex>>(
+export const browseSynonyms = <TSearchIndex extends SearchIndex>(
   base: TSearchIndex
-) => {
-  const mixin: ConstructorOf<SearchIndex & HasSearchSynonyms> = searchSynonyms(base);
-
-  return class extends mixin implements HasBrowseSynonyms {
-    public browseSynonyms(
+): TSearchIndex & HasSearchSynonyms & HasBrowseSynonyms => {
+  return {
+    ...searchSynonyms(base),
+    browseSynonyms(
       requestOptions?: SearchSynonymsOptions & BrowseOptions<Synonym> & RequestOptions
     ): Readonly<BrowsablePromise<Synonym>> {
       const options = {
@@ -44,7 +41,7 @@ export const browseSynonyms = <TSearchIndex extends ConstructorOf<SearchIndex>>(
           );
         },
       });
-    }
+    },
   };
 };
 

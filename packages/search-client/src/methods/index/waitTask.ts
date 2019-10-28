@@ -1,16 +1,15 @@
-import { ConstructorOf } from '@algolia/support';
 import { RequestOptions } from '@algolia/transporter';
 
 import { SearchIndex } from '../../SearchIndex';
 import { TaskStatusResponse } from '../types/TaskStatusResponse';
 import { getTask, HasGetTask } from './getTask';
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export const waitTask = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: TSearchIndex) => {
-  const mixin: ConstructorOf<SearchIndex & HasGetTask> = getTask(base);
-
-  return class extends mixin implements HasWaitTask {
-    public waitTask(
+export const waitTask = <TSearchIndex extends SearchIndex>(
+  base: TSearchIndex
+): TSearchIndex & HasGetTask & HasWaitTask => {
+  return {
+    ...getTask(base),
+    waitTask(
       taskID: number,
       requestOptions?: RequestOptions
     ): Readonly<Promise<TaskStatusResponse>> {
@@ -30,7 +29,7 @@ export const waitTask = <TSearchIndex extends ConstructorOf<SearchIndex>>(base: 
 
         return response;
       });
-    }
+    },
   };
 };
 
