@@ -8,7 +8,8 @@ import { decision } from './decision';
 // eslint-disable-next-line max-params
 export function execute<TResponse>(
   transporter: ReturnType<typeof createTransporter>,
-  hosts: ReadonlyArray<ReturnType<typeof createHost>>,
+  // eslint-disable-next-line functional/prefer-readonly-type
+  hosts: Array<ReturnType<typeof createHost>>,
   request: Request,
   requestOptions: MappedRequestOptions
 ): Readonly<Promise<TResponse>> {

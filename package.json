@@ -65,7 +65,6 @@
     "node": ">=8"
   },
   "scripts": {
-    "build": "lerna run build",
     "lint": "eslint . --ext .js,.ts --fix",
     "precommit": "lint-staged",
     "test:browser-locally": "yarn build && ./scripts/prepare-test-browser.sh && wdio ./wdio.local.conf.js",
@@ -91,11 +90,11 @@
   "bundlesize": [
     {
       "path": "packages/algoliasearch/dist/algoliasearch.umd.min.js",
-      "maxSize": "7.39KB"
+      "maxSize": "7.26KB"
     },
     {
       "path": "packages/algoliasearch/dist/algoliasearch-lite.umd.min.js",
-      "maxSize": "4.10KB"
+      "maxSize": "4.08KB"
     }
   ],
   "workspaces": [
