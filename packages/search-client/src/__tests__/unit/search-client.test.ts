@@ -1,14 +1,9 @@
 import { Method } from '@algolia/requester-types';
-import { Transporter } from '@algolia/transporter';
-import { anything, deepEqual, instance, mock, verify } from 'ts-mockito';
+import { anything, deepEqual, spy, verify, when } from 'ts-mockito';
 
 import algoliasearch from '../../../../algoliasearch/src/builds/browser';
 
-describe('Search Client', () => {
-  it('Gives access to transporter', () => {
-    expect(algoliasearch('appId', 'apiKey').transporter).toBeInstanceOf(Transporter);
-  });
-
+describe('search client', () => {
   it('Gives access to appId', () => {
     expect(algoliasearch('appId', 'apiKey').appId).toEqual('appId');
   });
@@ -16,8 +11,8 @@ describe('Search Client', () => {
 
 describe('personalization', () => {
   const client = algoliasearch('appId', 'apiKey');
-  const transporterMock = mock(Transporter);
-  client.transporter = instance(transporterMock);
+  const transporterMock = spy(client.transporter);
+  when(transporterMock.write(anything(), anything())).thenResolve({});
 
   it('set personalization strategy', async () => {
     const strategy = {
@@ -49,8 +44,8 @@ describe('personalization', () => {
 describe('multiple search for facet values', () => {
   it('allows to pass search params to the underlying search for facet values of index', async () => {
     const client = algoliasearch('appId', 'apiKey');
-    const transporterMock = mock(Transporter);
-    client.transporter = instance(transporterMock);
+    const transporterMock = spy(client.transporter);
+    when(transporterMock.read(anything(), anything())).thenResolve({});
 
     const query = {
       indexName: 'foo',

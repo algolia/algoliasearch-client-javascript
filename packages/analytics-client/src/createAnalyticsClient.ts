@@ -1,7 +1,11 @@
 import { AuthMode, createAuth } from '@algolia/auth';
 import { ComposableOptions, compose } from '@algolia/support';
-import { Call, Transporter, TransporterOptions } from '@algolia/transporter';
-import { TransporterAware } from '@algolia/transporter/src/TransporterAware';
+import {
+  Call,
+  createTransporter,
+  TransporterAware,
+  TransporterOptions,
+} from '@algolia/transporter';
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const createAnalyticsClient = <TClient>(
@@ -10,7 +14,7 @@ export const createAnalyticsClient = <TClient>(
   const region = options.region !== undefined ? options.region : 'us';
   const auth = createAuth(AuthMode.WithinHeaders, options.appId, options.apiKey);
 
-  const transporter = new Transporter(options);
+  const transporter = createTransporter(options);
 
   transporter.setHosts([{ url: `analytics.${region}.algolia.com`, accept: Call.Any }]);
   transporter.addHeaders({

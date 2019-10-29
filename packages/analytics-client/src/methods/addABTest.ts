@@ -1,6 +1,5 @@
 import { Method } from '@algolia/requester-types';
-import { RequestOptions } from '@algolia/transporter';
-import { TransporterAware } from '@algolia/transporter/src/TransporterAware';
+import { RequestOptions, TransporterAware } from '@algolia/transporter';
 
 import { ABTest } from '../types/ABTest';
 import { AddABTestResponse } from '../types/AddABTestResponse';

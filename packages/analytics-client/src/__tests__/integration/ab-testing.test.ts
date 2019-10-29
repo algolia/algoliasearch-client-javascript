@@ -1,7 +1,7 @@
 import { Faker } from '@algolia/support/src/__tests__/Faker';
 import { createMultiWaitable } from '@algolia/support/src/__tests__/helpers';
 import { TestSuite } from '@algolia/support/src/__tests__/TestSuite';
-import { ApiError } from '@algolia/transporter';
+import { createApiError } from '@algolia/transporter/src/errors/createApiError';
 
 import { ABTest } from '../../types/ABTest';
 import { Variant } from '../../types/Variant';
@@ -98,5 +98,7 @@ test(testSuite.testName, async () => {
   await index1.waitTask(deleteABTestResponse.taskID);
 
   // Check the AB test doesn't exist anymore
-  await expect(client.getABTest(abTestID)).rejects.toEqual(new ApiError('ABTestID not found', 404));
+  await expect(client.getABTest(abTestID)).rejects.toEqual(
+    createApiError('ABTestID not found', 404)
+  );
 });

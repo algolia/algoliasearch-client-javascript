@@ -1,6 +1,6 @@
-import { Transporter } from '@algolia/transporter';
+import { createTransporter } from '@algolia/transporter';
 
 export type SearchIndex = {
-  readonly transporter: Transporter;
+  readonly transporter: ReturnType<typeof createTransporter>;
   readonly indexName: string;
 };

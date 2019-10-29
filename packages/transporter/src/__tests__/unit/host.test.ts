@@ -1,12 +1,9 @@
-import { Call } from '../../Call';
-import { Host } from '../../Host';
+import { createHost } from '../../createHost';
+import { Call } from '../../types/Call';
 
 describe('Host', () => {
   it('Handles uptime', () => {
-    const host = new Host({
-      url: 'foo',
-      accept: Call.Any,
-    });
+    const host = createHost('foo', Call.Any);
 
     expect(host.isUp()).toBe(true);
 
@@ -16,10 +13,7 @@ describe('Host', () => {
   });
 
   it('is up if TTL was expired', () => {
-    const host = new Host({
-      url: 'foo',
-      accept: Call.Any,
-    });
+    const host = createHost('foo', Call.Any);
 
     host.setAsDown();
 

@@ -1,6 +1,6 @@
 import { createMultiWaitable } from '@algolia/support/src/__tests__/helpers';
 import { TestSuite } from '@algolia/support/src/__tests__/TestSuite';
-import { ApiError } from '@algolia/transporter';
+import { createApiError } from '@algolia/transporter/src/errors/createApiError';
 
 import { Rule } from '../../types/Rule';
 import { Synonym } from '../../types/Synonym';
@@ -52,15 +52,17 @@ test(testSuite.testName, async () => {
   await index.replaceAllRules([rule2]).wait();
 
   await expect(index.getObject('one')).rejects.toEqual(
-    new ApiError('ObjectID does not exist', 404)
+    createApiError('ObjectID does not exist', 404)
   );
   await expect(index.getObject('two')).resolves.toEqual({ objectID: 'two' });
 
   await expect(index.getSynonym('two')).resolves.toEqual(synonym2);
   await expect(index.getSynonym('one')).rejects.toEqual(
-    new ApiError('Synonym set does not exist', 404)
+    createApiError('Synonym set does not exist', 404)
   );
 
   await expect(index.getRule('two')).resolves.toEqual(rule2);
-  await expect(index.getRule('one')).rejects.toEqual(new ApiError('ObjectID does not exist', 404));
+  await expect(index.getRule('one')).rejects.toEqual(
+    createApiError('ObjectID does not exist', 404)
+  );
 });

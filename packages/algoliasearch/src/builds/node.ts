@@ -2,7 +2,7 @@ import { createNullCache } from '@algolia/cache-types';
 import { createConsoleLogger } from '@algolia/logger-console';
 import { LogLevel } from '@algolia/logger-types';
 import { createNodeHttpRequester } from '@algolia/requester-node-http';
-import { UserAgent } from '@algolia/transporter';
+import { createUserAgent } from '@algolia/transporter';
 
 import { createSearchClient } from '../presets/default';
 import { AlgoliaSearchOptions } from '../types/AlgoliaSearchOptions';
@@ -25,7 +25,7 @@ export default function algoliasearch(
     responsesCache: createNullCache(),
     requestsCache: createNullCache(),
     hostsCache: createNullCache(),
-    userAgent: UserAgent.create('4.0.0-alpha.0').with({
+    userAgent: createUserAgent('4.0.0-alpha.0').with({
       segment: 'Node.js',
       version: process.versions.node,
     }),

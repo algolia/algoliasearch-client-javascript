@@ -5,7 +5,7 @@ import { Call } from '@algolia/transporter';
 import { instance } from 'ts-mockito';
 
 import algoliasearch from '../../../algoliasearch/src/builds/browser';
-import { Transporter } from '../Transporter';
+import { createTransporter } from '../createTransporter';
 
 export class FakeRequester implements Requester {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -25,7 +25,10 @@ export class Fixtures {
     return new FakeRequester();
   }
 
-  public static transporter(requester: Requester, options: any = {}): Transporter {
+  public static transporter(
+    requester: Requester,
+    options: any = {}
+  ): ReturnType<typeof createTransporter> {
     const transporter = algoliasearch('appId', 'apiKey').transporter;
 
     transporter.setHosts([

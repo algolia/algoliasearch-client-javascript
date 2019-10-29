@@ -1,11 +1,11 @@
-import { Transporter } from '@algolia/transporter';
+import { createTransporter } from '@algolia/transporter';
 import { anything, deepEqual, mock, verify, when } from 'ts-mockito';
 
-import { RetryError } from '../../errors/RetryError';
+import { createRetryError } from '../../errors/createRetryError';
 import { FakeRequester, Fixtures } from '../Fixtures';
 
 let requester: FakeRequester;
-let transporter: Transporter;
+let transporter: ReturnType<typeof createTransporter>;
 
 beforeEach(() => {
   requester = mock(FakeRequester);
@@ -22,7 +22,7 @@ const transporterRequest = Fixtures.transporterRequest();
 
 describe('The selection of hosts', (): void => {
   it('Select only readable hosts when calling the `read` method', async () => {
-    await expect(transporter.read(transporterRequest)).rejects.toEqual(new RetryError());
+    await expect(transporter.read(transporterRequest)).rejects.toEqual(createRetryError());
 
     verify(requester.send(deepEqual(Fixtures.readRequest()))).once();
     verify(requester.send(deepEqual(Fixtures.writeRequest()))).never();
@@ -39,7 +39,7 @@ describe('The selection of hosts', (): void => {
   });
 
   it('Select only writable hosts when calling the `write` method', async () => {
-    await expect(transporter.write(transporterRequest)).rejects.toEqual(new RetryError());
+    await expect(transporter.write(transporterRequest)).rejects.toEqual(createRetryError());
 
     verify(requester.send(deepEqual(Fixtures.readRequest()))).never();
     verify(requester.send(deepEqual(Fixtures.writeRequest()))).once();

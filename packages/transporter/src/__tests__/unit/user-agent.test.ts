@@ -1,13 +1,13 @@
-import { UserAgent } from '../../UserAgent';
+import { createUserAgent } from '../../createUserAgent';
 
 describe('UserAgent', () => {
   it('contains a default value', () => {
-    expect(UserAgent.create('1.0.0').value).toEqual('Algolia for JavaScript (1.0.0)');
+    expect(createUserAgent('1.0.0').value).toEqual('Algolia for JavaScript (1.0.0)');
   });
 
   it('allows to add other api clients', () => {
     expect(
-      UserAgent.create('1.0.0').with({
+      createUserAgent('1.0.0').with({
         segment: 'React Native',
         version: '2.0.0',
       }).value

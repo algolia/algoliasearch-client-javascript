@@ -1,13 +1,13 @@
 import { AuthMode, AuthModeType, createAuth } from '@algolia/auth';
 import { ComposableOptions, compose, shuffle } from '@algolia/support';
-import { Call, Transporter, TransporterOptions } from '@algolia/transporter';
+import { Call, createTransporter, TransporterOptions } from '@algolia/transporter';
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const createSearchClient = <TClient>(
   options: SearchClientOptions & TransporterOptions & ComposableOptions
 ) => {
   const appId = options.appId;
-  const transporter = new Transporter(options);
+  const transporter = createTransporter(options);
   transporter.setHosts(
     [
       { url: `${appId}-dsn.algolia.net`, accept: Call.Read },

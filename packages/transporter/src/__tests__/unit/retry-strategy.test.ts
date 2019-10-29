@@ -1,10 +1,11 @@
-import { ApiError, Transporter } from '@algolia/transporter';
+import { createTransporter } from '@algolia/transporter';
 import { anything, deepEqual, mock, verify, when } from 'ts-mockito';
 
+import { createApiError } from '../../errors/createApiError';
 import { FakeRequester, Fixtures } from '../Fixtures';
 
 let requester: FakeRequester;
-let transporter: Transporter;
+let transporter: ReturnType<typeof createTransporter>;
 
 const transporterRequest = Fixtures.transporterRequest();
 
@@ -100,7 +101,7 @@ describe('retry strategy', () => {
     });
 
     await expect(transporter.write(transporterRequest)).rejects.toEqual(
-      new ApiError('Invalid Application ID', 404)
+      createApiError('Invalid Application ID', 404)
     );
 
     verify(requester.send(anything())).once();

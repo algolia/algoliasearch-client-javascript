@@ -3,7 +3,7 @@ import { createInMemoryCache } from '@algolia/cache-in-memory';
 import { createConsoleLogger } from '@algolia/logger-console';
 import { LogLevel } from '@algolia/logger-types';
 import { createBrowserXhrRequester } from '@algolia/requester-browser-xhr';
-import { UserAgent } from '@algolia/transporter';
+import { createUserAgent } from '@algolia/transporter';
 
 import { createSearchClient } from '../presets/default';
 import { AlgoliaSearchOptions } from '../types/AlgoliaSearchOptions';
@@ -26,7 +26,7 @@ export default function algoliasearch(
     responsesCache: createInMemoryCache(),
     requestsCache: createInMemoryCache(),
     hostsCache: createBrowserLocalStorageCache(),
-    userAgent: UserAgent.create('4.0.0-alpha.0').with({ segment: 'Browser' }),
+    userAgent: createUserAgent('4.0.0-alpha.0').with({ segment: 'Browser' }),
   });
 }
 

@@ -1,10 +1,11 @@
-import { RetryError, Transporter } from '@algolia/transporter';
+import { createTransporter } from '@algolia/transporter';
 import { anything, deepEqual, mock, verify, when } from 'ts-mockito';
 
+import { createRetryError } from '../../errors/createRetryError';
 import { FakeRequester, Fixtures } from '../Fixtures';
 
 let requester: FakeRequester;
-let transporter: Transporter;
+let transporter: ReturnType<typeof createTransporter>;
 
 beforeEach(() => {
   requester = mock(FakeRequester);
@@ -72,7 +73,7 @@ describe('the timeouts selection', () => {
       isTimedOut: true,
     });
 
-    await expect(transporter.read(transporterRequest)).rejects.toEqual(new RetryError());
+    await expect(transporter.read(transporterRequest)).rejects.toEqual(createRetryError());
 
     verify(requester.send(deepEqual(Fixtures.readRequest()))).once();
     verify(

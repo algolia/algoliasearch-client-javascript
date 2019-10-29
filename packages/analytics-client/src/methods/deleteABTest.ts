@@ -1,7 +1,6 @@
 import { Method } from '@algolia/requester-types';
 import { encode } from '@algolia/support';
-import { RequestOptions } from '@algolia/transporter';
-import { TransporterAware } from '@algolia/transporter/src/TransporterAware';
+import { RequestOptions, TransporterAware } from '@algolia/transporter';
 
 import { DeleteABTestResponse } from '../types/DeleteABTestResponse';
 

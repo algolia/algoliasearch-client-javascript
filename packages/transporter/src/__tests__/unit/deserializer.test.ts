@@ -1,11 +1,11 @@
-import { ApiError } from '@algolia/transporter';
 import { anything, mock, when } from 'ts-mockito';
 
-import { Transporter } from '../../Transporter';
+import { createTransporter } from '../../createTransporter';
+import { createApiError } from '../../errors/createApiError';
 import { FakeRequester, Fixtures } from '../Fixtures';
 
 let requester: FakeRequester;
-let transporter: Transporter;
+let transporter: ReturnType<typeof createTransporter>;
 
 beforeEach(() => {
   requester = mock(FakeRequester);
@@ -41,7 +41,7 @@ describe('The deserializer', () => {
     });
 
     await expect(transporter.read(transporterRequest)).rejects.toEqual(
-      new ApiError('User not found', 404)
+      createApiError('User not found', 404)
     );
   });
 
@@ -53,7 +53,7 @@ describe('The deserializer', () => {
     });
 
     await expect(transporter.read(transporterRequest)).rejects.toEqual(
-      new ApiError('String message for some reason', 404)
+      createApiError('String message for some reason', 404)
     );
   });
 });
