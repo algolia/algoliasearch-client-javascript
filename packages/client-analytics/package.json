@@ -1,0 +1,13 @@
+{
+  "name": "@algolia/client-analytics",
+  "version": "4.0.0-alpha.0",
+  "license": "MIT",
+  "main": "index.ts",
+  "dependencies": {
+    "@algolia/auth": "file:../auth",
+    "@algolia/logger-common": "file:../logger-common",
+    "@algolia/transporter": "file:../transporter",
+    "@algolia/requester-common": "file:../requester-common",
+    "@algolia/client-common": "file:../client-common"
+  }
+}

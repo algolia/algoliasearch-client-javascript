@@ -4,6 +4,6 @@
   "license": "MIT",
   "main": "index.ts",
   "dependencies": {
-    "@algolia/logger-types": "file:../logger-types"
+    "@algolia/logger-common": "file:../logger-common"
   }
 }

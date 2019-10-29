@@ -4,9 +4,9 @@
   "license": "MIT",
   "main": "index.ts",
   "dependencies": {
-    "@algolia/cache-types": "file:../cache-types",
-    "@algolia/logger-types": "file:../logger-types",
-    "@algolia/requester-types": "file:../requester-types",
+    "@algolia/cache-common": "file:../cache-common",
+    "@algolia/logger-common": "file:../logger-common",
+    "@algolia/requester-common": "file:../requester-common",
     "@algolia/transporter": "file:../transporter"
   }
 }

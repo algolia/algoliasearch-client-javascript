@@ -4,6 +4,6 @@
   "license": "MIT",
   "main": "index.ts",
   "dependencies": {
-    "@algolia/requester-types": "file:../requester-types"
+    "@algolia/requester-common": "file:../requester-common"
   }
 }

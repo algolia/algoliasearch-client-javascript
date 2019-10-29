@@ -1,6 +1,6 @@
-import { createNullCache } from '@algolia/cache-types';
+import { createNullCache } from '@algolia/cache-common';
+import { LogLevel } from '@algolia/logger-common/src/types/LogLevelType';
 import { createConsoleLogger } from '@algolia/logger-console';
-import { LogLevel } from '@algolia/logger-types/src/types/LogLevelType';
 import { createNodeHttpRequester } from '@algolia/requester-node-http';
 import { createUserAgent } from '@algolia/transporter';
 

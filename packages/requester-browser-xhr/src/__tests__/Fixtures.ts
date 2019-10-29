@@ -1,4 +1,4 @@
-import { Method, Request } from '@algolia/requester-types';
+import { Method, Request } from '@algolia/requester-common';
 
 export default class Fixtures {
   public static request(): Request {

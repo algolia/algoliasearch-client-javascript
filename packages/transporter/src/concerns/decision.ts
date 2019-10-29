@@ -1,4 +1,4 @@
-import { Response } from '@algolia/requester-types/src/types/Response';
+import { Response } from '@algolia/requester-common/src/types/Response';
 
 import { createHost } from '../createHost';
 

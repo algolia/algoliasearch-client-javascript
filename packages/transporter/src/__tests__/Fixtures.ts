@@ -1,9 +1,9 @@
-import { createNullCache } from '@algolia/cache-types';
-import { Method } from '@algolia/requester-types/src/types/Method';
-import { Request as RequesterRequest } from '@algolia/requester-types/src/types/Request';
-import { Requester } from '@algolia/requester-types/src/types/Requester';
-import { Response } from '@algolia/requester-types/src/types/Response';
-import { encode } from '@algolia/support';
+import { createNullCache } from '@algolia/cache-common';
+import { encode } from '@algolia/client-common';
+import { Method } from '@algolia/requester-common/src/types/Method';
+import { Request as RequesterRequest } from '@algolia/requester-common/src/types/Request';
+import { Requester } from '@algolia/requester-common/src/types/Requester';
+import { Response } from '@algolia/requester-common/src/types/Response';
 import { Call } from '@algolia/transporter';
 import { instance } from 'ts-mockito';
 

@@ -1,8 +1,8 @@
 /* eslint sonarjs/cognitive-complexity: 0 */ // --> OFF
 
 import { createBrowserLocalStorageCache } from '@algolia/cache-browser-local-storage';
+import { createNullCache } from '@algolia/cache-common';
 import { createInMemoryCache } from '@algolia/cache-in-memory';
-import { createNullCache } from '@algolia/cache-types';
 import { anything, mock, verify, when } from 'ts-mockito';
 
 import { FakeRequester, Fixtures } from '../Fixtures';

@@ -1,6 +1,6 @@
-import { Cache } from '@algolia/cache-types/src/types/Cache';
-import { Logger } from '@algolia/logger-types/src/types/Logger';
-import { Requester } from '@algolia/requester-types/src/types/Requester';
+import { Cache } from '@algolia/cache-common/src/types/Cache';
+import { Logger } from '@algolia/logger-common/src/types/Logger';
+import { Requester } from '@algolia/requester-common/src/types/Requester';
 
 import { createUserAgent, Timeouts } from '../..';
 

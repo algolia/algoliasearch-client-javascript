@@ -1,6 +1,0 @@
-{
-  "name": "@algolia/logger-types",
-  "version": "4.0.0-alpha.0",
-  "license": "MIT",
-  "main": "index.ts"
-}

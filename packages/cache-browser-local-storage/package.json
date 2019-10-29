@@ -4,6 +4,6 @@
   "license": "MIT",
   "main": "index.ts",
   "dependencies": {
-    "@algolia/cache-types": "file:../cache-types"
+    "@algolia/cache-common": "file:../cache-common"
   }
 }

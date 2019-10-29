@@ -1,0 +1,6 @@
+{
+  "name": "@algolia/cache-common",
+  "version": "4.0.0-alpha.0",
+  "license": "MIT",
+  "main": "index.ts"
+}

@@ -1,5 +1,5 @@
-import { Method } from '@algolia/requester-types/src/types/Method';
-import { Request } from '@algolia/requester-types/src/types/Request';
+import { Method } from '@algolia/requester-common/src/types/Method';
+import { Request } from '@algolia/requester-common/src/types/Request';
 import mock, { MockRequest, MockResponse } from 'xhr-mock';
 
 import { createBrowserXhrRequester } from '../../..';
