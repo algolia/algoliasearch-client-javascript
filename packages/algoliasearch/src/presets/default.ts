@@ -134,7 +134,8 @@ import {
 import { HasSetSettings, setSettings } from '@algolia/client-search/src/methods/index/setSettings';
 import { HasWaitTask, waitTask } from '@algolia/client-search/src/methods/index/waitTask';
 import { SearchIndex as SearchIndexPreset } from '@algolia/client-search/src/types/SearchIndex';
-import { TransporterAware, TransporterOptions } from '@algolia/transporter';
+import { TransporterAware } from '@algolia/transporter/src/types/TransporterAware';
+import { TransporterOptions } from '@algolia/transporter/src/types/TransporterOptions';
 
 export type SearchClient = TransporterAware &
   HasMultipleBatch &

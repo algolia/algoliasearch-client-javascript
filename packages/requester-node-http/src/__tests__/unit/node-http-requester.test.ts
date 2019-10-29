@@ -4,7 +4,6 @@ import nock from 'nock';
 
 import { createNodeHttpRequester } from '../../..';
 import Fixtures from '../Fixtures';
-
 const headers = {
   'content-type': 'application/x-www-form-urlencoded',
 };

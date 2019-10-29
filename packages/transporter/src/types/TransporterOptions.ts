@@ -2,7 +2,8 @@ import { Cache } from '@algolia/cache-common/src/types/Cache';
 import { Logger } from '@algolia/logger-common/src/types/Logger';
 import { Requester } from '@algolia/requester-common/src/types/Requester';
 
-import { createUserAgent, Timeouts } from '../..';
+import { createUserAgent } from '../createUserAgent';
+import { Timeouts } from '../types/Timeouts';
 
 export type TransporterOptions = {
   readonly hostsCache: Cache;

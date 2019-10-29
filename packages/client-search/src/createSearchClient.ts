@@ -2,7 +2,9 @@ import { createAuth } from '@algolia/auth';
 import { AuthMode, AuthModeType } from '@algolia/auth/src/types/AuthModeType';
 import { compose, shuffle } from '@algolia/client-common';
 import { ComposableOptions } from '@algolia/client-common/src/types/ComposableOptions';
-import { Call, createTransporter, TransporterOptions } from '@algolia/transporter';
+import { createTransporter } from '@algolia/transporter';
+import { Call } from '@algolia/transporter/src/types/Call';
+import { TransporterOptions } from '@algolia/transporter/src/types/TransporterOptions';
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const createSearchClient = <TClient>(

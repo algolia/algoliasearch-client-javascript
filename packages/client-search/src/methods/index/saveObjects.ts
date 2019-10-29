@@ -1,5 +1,6 @@
 import { WaitablePromise } from '@algolia/client-common/src/types/WaitablePromise';
-import { popRequestOption, RequestOptions } from '@algolia/transporter';
+import { popRequestOption } from '@algolia/transporter/src/request-options';
+import { RequestOptions } from '@algolia/transporter/src/types/RequestOptions';
 
 import { createMissingObjectIDError } from '../../errors/createMissingObjectIDError';
 import { BatchAction } from '../../types/BatchAction';

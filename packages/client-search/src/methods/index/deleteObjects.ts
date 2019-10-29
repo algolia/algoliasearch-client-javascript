@@ -1,5 +1,5 @@
 import { WaitablePromise } from '@algolia/client-common/src/types/WaitablePromise';
-import { RequestOptions } from '@algolia/transporter';
+import { RequestOptions } from '@algolia/transporter/src/types/RequestOptions';
 
 import { BatchAction } from '../../types/BatchAction';
 import { BatchResponse } from '../../types/BatchResponse';

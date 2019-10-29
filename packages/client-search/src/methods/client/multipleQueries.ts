@@ -1,6 +1,7 @@
 import { encodeQueryParameters } from '@algolia/client-common';
 import { Method } from '@algolia/requester-common/src/types/Method';
-import { RequestOptions, TransporterAware } from '@algolia/transporter';
+import { RequestOptions } from '@algolia/transporter/src/types/RequestOptions';
+import { TransporterAware } from '@algolia/transporter/src/types/TransporterAware';
 
 import { MultipleQueriesOptions } from '../../types/MultipleQueriesOptions';
 import { MultipleQueriesQuery } from '../../types/MultipleQueriesQuery';

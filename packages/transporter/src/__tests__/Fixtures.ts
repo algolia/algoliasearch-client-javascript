@@ -4,11 +4,11 @@ import { Method } from '@algolia/requester-common/src/types/Method';
 import { Request as RequesterRequest } from '@algolia/requester-common/src/types/Request';
 import { Requester } from '@algolia/requester-common/src/types/Requester';
 import { Response } from '@algolia/requester-common/src/types/Response';
-import { Call } from '@algolia/transporter';
 import { instance } from 'ts-mockito';
 
 import algoliasearch from '../../../algoliasearch/src/builds/browser';
 import { createTransporter } from '../createTransporter';
+import { Call } from '../types/Call';
 
 export class FakeRequester implements Requester {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

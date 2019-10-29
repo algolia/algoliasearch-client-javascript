@@ -1,4 +1,5 @@
-import { RequestOptions, TransporterAware } from '@algolia/transporter';
+import { RequestOptions } from '@algolia/transporter/src/types/RequestOptions';
+import { TransporterAware } from '@algolia/transporter/src/types/TransporterAware';
 
 import { SearchForFacetValuesQueryParams } from '../../types/SearchForFacetValuesQueryParams';
 import { SearchForFacetValuesResponse } from '../../types/SearchForFacetValuesResponse';

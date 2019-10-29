@@ -1,7 +1,7 @@
 import { encode } from '@algolia/client-common';
 import { Faker } from '@algolia/client-common/src/__tests__/Faker';
 import { Method } from '@algolia/requester-common/src/types/Method';
-import { RequestOptions } from '@algolia/transporter';
+import { RequestOptions } from '@algolia/transporter/src/types/RequestOptions';
 import { anything, deepEqual, spy, verify, when } from 'ts-mockito';
 
 import algoliasearch from '../../../../algoliasearch/src/builds/browser';

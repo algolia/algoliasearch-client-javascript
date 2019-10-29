@@ -1,6 +1,6 @@
 import { compose } from '@algolia/client-common';
 import { ComposableOptions } from '@algolia/client-common/src/types/ComposableOptions';
-import { TransporterAware } from '@algolia/transporter';
+import { TransporterAware } from '@algolia/transporter/src/types/TransporterAware';
 
 import { SearchIndex } from '../../types/SearchIndex';
 

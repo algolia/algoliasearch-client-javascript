@@ -1,8 +1,11 @@
-import { Call, CallType, mapRequestOptions, Request, RequestOptions } from '..';
+import { mapRequestOptions } from '..';
 import { execute } from './concerns/execute';
 import { createHost } from './createHost';
+import { Call, CallType } from './types/Call';
 import { Headers } from './types/Headers';
 import { QueryParameters } from './types/QueryParameters';
+import { Request } from './types/Request';
+import { RequestOptions } from './types/RequestOptions';
 import { TransporterOptions } from './types/TransporterOptions';
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type

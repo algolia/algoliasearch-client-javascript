@@ -14,7 +14,7 @@ import {
   HasSearchForFacetValues,
   searchForFacetValues,
 } from '@algolia/client-search/src/methods/index/searchForFacetValues';
-import { TransporterOptions } from '@algolia/transporter';
+import { TransporterOptions } from '@algolia/transporter/src/types/TransporterOptions';
 
 export type SearchClient = HasMultipleQueries & HasMultipleSearchForFacetValues;
 

@@ -1,7 +1,7 @@
 import { createWaitablePromise, encode } from '@algolia/client-common';
 import { WaitablePromise } from '@algolia/client-common/src/types/WaitablePromise';
 import { Method } from '@algolia/requester-common/src/types/Method';
-import { RequestOptions } from '@algolia/transporter';
+import { RequestOptions } from '@algolia/transporter/src/types/RequestOptions';
 
 import { IndexSettings } from '../../types/IndexSettings';
 import { SearchIndex } from '../../types/SearchIndex';

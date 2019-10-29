@@ -1,5 +1,5 @@
 import { WaitablePromise } from '@algolia/client-common/src/types/WaitablePromise';
-import { RequestOptions } from '@algolia/transporter';
+import { RequestOptions } from '@algolia/transporter/src/types/RequestOptions';
 
 import { SaveSynonymsResponse } from '../../types/SaveSynonymsResponse';
 import { SearchIndex } from '../../types/SearchIndex';

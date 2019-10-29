@@ -1,4 +1,4 @@
-import { RequestOptions } from '@algolia/transporter';
+import { RequestOptions } from '@algolia/transporter/src/types/RequestOptions';
 
 import { SearchIndex } from '../../types/SearchIndex';
 import { getSettings, HasGetSettings } from './getSettings';

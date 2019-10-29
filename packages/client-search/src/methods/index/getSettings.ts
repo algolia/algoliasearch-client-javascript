@@ -1,6 +1,7 @@
 import { encode } from '@algolia/client-common';
 import { Method } from '@algolia/requester-common/src/types/Method';
-import { mapRequestOptions, RequestOptions } from '@algolia/transporter';
+import { mapRequestOptions } from '@algolia/transporter';
+import { RequestOptions } from '@algolia/transporter/src/types/RequestOptions';
 
 import { IndexSettings } from '../../types/IndexSettings';
 import { SearchIndex } from '../../types/SearchIndex';

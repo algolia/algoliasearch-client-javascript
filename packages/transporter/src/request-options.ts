@@ -1,4 +1,5 @@
-import { MappedRequestOptions, RequestOptions } from '..';
+import { MappedRequestOptions } from './types/MappedRequestOptions';
+import { RequestOptions } from './types/RequestOptions';
 
 export function mapRequestOptions(
   requestOptions: RequestOptions | undefined,

@@ -1,7 +1,9 @@
 import { createWaitablePromise, encode } from '@algolia/client-common';
 import { WaitablePromise } from '@algolia/client-common/src/types/WaitablePromise';
 import { Method } from '@algolia/requester-common/src/types/Method';
-import { mapRequestOptions, popRequestOption, RequestOptions } from '@algolia/transporter';
+import { mapRequestOptions } from '@algolia/transporter';
+import { popRequestOption } from '@algolia/transporter/src/request-options';
+import { RequestOptions } from '@algolia/transporter/src/types/RequestOptions';
 
 import { SaveSynonymsOptions } from '../../types/SaveSynonymsOptions';
 import { SaveSynonymsResponse } from '../../types/SaveSynonymsResponse';

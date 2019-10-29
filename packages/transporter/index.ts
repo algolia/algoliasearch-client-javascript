@@ -1,10 +1,3 @@
-export * from './src/createTransporter';
-export * from './src/request-options';
-export * from './src/types/TransporterAware';
-export * from './src/createUserAgent';
-export * from './src/types/Call';
-export * from './src/types/Request';
-export * from './src/types/RequestOptions';
-export * from './src/types/MappedRequestOptions';
-export * from './src/types/Timeouts';
-export * from './src/types/TransporterOptions';
+export { createTransporter } from './src/createTransporter';
+export { createUserAgent } from './src/createUserAgent';
+export { mapRequestOptions } from './src/request-options';

@@ -1,10 +1,8 @@
 import { Method } from '@algolia/requester-common/src/types/Method';
-import {
-  mapRequestOptions,
-  popRequestOption,
-  RequestOptions,
-  TransporterAware,
-} from '@algolia/transporter';
+import { mapRequestOptions } from '@algolia/transporter';
+import { popRequestOption } from '@algolia/transporter/src/request-options';
+import { RequestOptions } from '@algolia/transporter/src/types/RequestOptions';
+import { TransporterAware } from '@algolia/transporter/src/types/TransporterAware';
 
 import { GetLogsResponse } from '../../types/GetLogsResponse';
 

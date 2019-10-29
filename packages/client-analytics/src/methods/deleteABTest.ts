@@ -1,6 +1,7 @@
 import { encode } from '@algolia/client-common';
 import { Method } from '@algolia/requester-common/src/types/Method';
-import { RequestOptions, TransporterAware } from '@algolia/transporter';
+import { RequestOptions } from '@algolia/transporter/src/types/RequestOptions';
+import { TransporterAware } from '@algolia/transporter/src/types/TransporterAware';
 
 import { DeleteABTestResponse } from '../types/DeleteABTestResponse';
 

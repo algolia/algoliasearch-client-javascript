@@ -1,8 +1,10 @@
-import { createTransporter, MappedRequestOptions, Request } from '../..';
+import { createTransporter } from '../..';
 import { createHost } from '../createHost';
 import { deserializeFailure, deserializeSuccess } from '../deserializer';
 import { createRetryError } from '../errors/createRetryError';
 import { serializeData, serializeUrl } from '../serializer';
+import { MappedRequestOptions } from '../types/MappedRequestOptions';
+import { Request } from '../types/Request';
 import { decision } from './decision';
 
 // eslint-disable-next-line max-params

@@ -2,12 +2,10 @@ import { createAuth } from '@algolia/auth';
 import { AuthMode } from '@algolia/auth/src/types/AuthModeType';
 import { compose } from '@algolia/client-common';
 import { ComposableOptions } from '@algolia/client-common/src/types/ComposableOptions';
-import {
-  Call,
-  createTransporter,
-  TransporterAware,
-  TransporterOptions,
-} from '@algolia/transporter';
+import { createTransporter } from '@algolia/transporter';
+import { Call } from '@algolia/transporter/src/types/Call';
+import { TransporterAware } from '@algolia/transporter/src/types/TransporterAware';
+import { TransporterOptions } from '@algolia/transporter/src/types/TransporterOptions';
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const createAnalyticsClient = <TClient>(
