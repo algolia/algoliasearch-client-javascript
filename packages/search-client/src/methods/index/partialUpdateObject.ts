@@ -1,4 +1,5 @@
-import { WaitablePromise } from '@algolia/support';
+import { createWaitablePromise } from '@algolia/support';
+import { WaitablePromise } from '@algolia/support/src/types/WaitablePromise';
 import { RequestOptions } from '@algolia/transporter';
 
 import { PartialUpdateObjectResponse } from '../../types/PartialUpdateObjectResponse';
@@ -16,7 +17,7 @@ export const partialUpdateObject = <TSearchIndex extends SearchIndex>(
       object: object,
       requestOptions?: RequestOptions & PartialUpdateObjectsOptions
     ): Readonly<WaitablePromise<PartialUpdateObjectResponse>> {
-      return WaitablePromise.from<PartialUpdateObjectResponse>(
+      return createWaitablePromise<PartialUpdateObjectResponse>(
         this.partialUpdateObjects([object], requestOptions).then(response => {
           return {
             objectID: response[0].objectIDs[0],

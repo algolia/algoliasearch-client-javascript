@@ -1,5 +1,6 @@
 import { Method } from '@algolia/requester-types';
-import { WaitablePromise } from '@algolia/support';
+import { createWaitablePromise } from '@algolia/support';
+import { WaitablePromise } from '@algolia/support/src/types/WaitablePromise';
 import { RequestOptions, TransporterAware } from '@algolia/transporter';
 
 import { BatchRequest } from '../../types/BatchRequest';
@@ -16,7 +17,7 @@ export const multipleBatch = <TClient extends TransporterAware>(
       requests: readonly BatchRequest[],
       requestOptions?: RequestOptions
     ): Readonly<WaitablePromise<MultipleBatchResponse>> {
-      return WaitablePromise.from<MultipleBatchResponse>(
+      return createWaitablePromise<MultipleBatchResponse>(
         this.transporter.write(
           {
             method: Method.Post,

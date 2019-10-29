@@ -1,5 +1,6 @@
 import { Method } from '@algolia/requester-types';
-import { encode, WaitablePromise } from '@algolia/support';
+import { createWaitablePromise, encode } from '@algolia/support';
+import { WaitablePromise } from '@algolia/support/src/types/WaitablePromise';
 import { RequestOptions } from '@algolia/transporter';
 
 import { DeleteResponse } from '../../types/DeleteResponse';
@@ -15,7 +16,7 @@ export const deleteRule = <TSearchIndex extends SearchIndex>(
       objectID: string,
       requestOptions?: RequestOptions
     ): Readonly<WaitablePromise<DeleteResponse>> {
-      return WaitablePromise.from<DeleteResponse>(
+      return createWaitablePromise<DeleteResponse>(
         this.transporter.write(
           {
             method: Method.Delete,

@@ -1,5 +1,6 @@
 import { Method } from '@algolia/requester-types';
-import { encode, WaitablePromise } from '@algolia/support';
+import { createWaitablePromise, encode } from '@algolia/support';
+import { WaitablePromise } from '@algolia/support/src/types/WaitablePromise';
 import { RequestOptions } from '@algolia/transporter';
 
 import { IndexSettings } from '../../types/IndexSettings';
@@ -16,7 +17,7 @@ export const setSettings = <TSearchIndex extends SearchIndex>(
       settings: IndexSettings,
       requestOptions?: RequestOptions
     ): Readonly<WaitablePromise<SetSettingsResponse>> {
-      return WaitablePromise.from<SetSettingsResponse>(
+      return createWaitablePromise<SetSettingsResponse>(
         this.transporter.write(
           {
             method: Method.Put,

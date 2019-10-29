@@ -1,5 +1,6 @@
 import { Method } from '@algolia/requester-types';
-import { encode, WaitablePromise } from '@algolia/support';
+import { createWaitablePromise, encode } from '@algolia/support';
+import { WaitablePromise } from '@algolia/support/src/types/WaitablePromise';
 import { popRequestOption, RequestOptions } from '@algolia/transporter';
 
 import { IndexOperationResponse } from '../../types/IndexOperationResponse';
@@ -23,7 +24,7 @@ export const replaceAllObjects = <TSearchIndex extends SearchIndex>(
         type: string,
         operatioRequestOptions?: RequestOptions
       ): Readonly<WaitablePromise<IndexOperationResponse>> => {
-        return WaitablePromise.from<IndexOperationResponse>(
+        return createWaitablePromise<IndexOperationResponse>(
           this.transporter.write(
             {
               method: Method.Post,
@@ -88,7 +89,7 @@ export const replaceAllObjects = <TSearchIndex extends SearchIndex>(
         })
         .then(() => Promise.resolve());
 
-      return WaitablePromise.from<void>(result).onWait((_, waitRequestOptions) => {
+      return createWaitablePromise<void>(result).onWait((_, waitRequestOptions) => {
         return Promise.all(responses.map(response => response.wait(waitRequestOptions)));
       });
     },

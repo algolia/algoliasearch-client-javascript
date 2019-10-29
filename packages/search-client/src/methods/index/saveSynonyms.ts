@@ -1,5 +1,6 @@
 import { Method } from '@algolia/requester-types';
-import { encode, WaitablePromise } from '@algolia/support';
+import { createWaitablePromise, encode } from '@algolia/support';
+import { WaitablePromise } from '@algolia/support/src/types/WaitablePromise';
 import { mapRequestOptions, popRequestOption, RequestOptions } from '@algolia/transporter';
 
 import { SaveSynonymsOptions } from '../../types/SaveSynonymsOptions';
@@ -32,7 +33,7 @@ export const saveSynonyms = <TSearchIndex extends SearchIndex>(
         options.queryParameters.replaceExistingSynonyms = '1';
       }
 
-      return WaitablePromise.from<SaveSynonymsResponse>(
+      return createWaitablePromise<SaveSynonymsResponse>(
         this.transporter.write<SaveSynonymsResponse>(
           {
             method: Method.Post,

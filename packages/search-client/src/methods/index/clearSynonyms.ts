@@ -1,5 +1,6 @@
 import { Method } from '@algolia/requester-types';
-import { encode, WaitablePromise } from '@algolia/support';
+import { createWaitablePromise, encode } from '@algolia/support';
+import { WaitablePromise } from '@algolia/support/src/types/WaitablePromise';
 import { RequestOptions } from '@algolia/transporter';
 
 import { ClearSynonymsOptions } from '../../types/clearSynonymsOptions';
@@ -15,7 +16,7 @@ export const clearSynonyms = <TSearchIndex extends SearchIndex>(
     clearSynonyms(
       requestOptions?: ClearSynonymsOptions & RequestOptions
     ): Readonly<WaitablePromise<DeleteResponse>> {
-      return WaitablePromise.from<DeleteResponse>(
+      return createWaitablePromise<DeleteResponse>(
         this.transporter.write(
           {
             method: Method.Post,

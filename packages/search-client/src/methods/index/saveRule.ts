@@ -1,5 +1,6 @@
 import { Method } from '@algolia/requester-types';
-import { encode, WaitablePromise } from '@algolia/support';
+import { createWaitablePromise, encode } from '@algolia/support';
+import { WaitablePromise } from '@algolia/support/src/types/WaitablePromise';
 import { RequestOptions } from '@algolia/transporter';
 
 import { Rule } from '../../types/Rule';
@@ -16,7 +17,7 @@ export const saveRule = <TSearchIndex extends SearchIndex>(
       rule: Rule,
       requestOptions?: RequestOptions
     ): Readonly<WaitablePromise<SaveRuleResponse>> {
-      return WaitablePromise.from<SaveRuleResponse>(
+      return createWaitablePromise<SaveRuleResponse>(
         this.transporter.write(
           {
             method: Method.Put,

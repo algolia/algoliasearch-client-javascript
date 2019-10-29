@@ -1,4 +1,4 @@
-import { WaitablePromise } from '../../WaitablePromise';
+import { createWaitablePromise } from '../../..';
 
 const original = { foo: 'bar' };
 
@@ -9,13 +9,13 @@ class FooError {
 describe('awaitable promise', () => {
   it('resolves the original response without wait', async () => {
     const response = new Promise(resolve => resolve(original));
-    const waitablePromise = WaitablePromise.from(response);
+    const waitablePromise = createWaitablePromise(response);
     await expect(waitablePromise).resolves.toBe(original);
   });
 
   it('resolves the original response after wait', async () => {
     const response = new Promise(resolve => resolve(original));
-    const waitablePromise = WaitablePromise.from(response);
+    const waitablePromise = createWaitablePromise(response);
     await expect(waitablePromise.wait()).resolves.toBe(original);
   });
 
@@ -23,13 +23,13 @@ describe('awaitable promise', () => {
     const response = new Promise(() => {
       throw new FooError();
     });
-    const waitablePromise = WaitablePromise.from(response);
+    const waitablePromise = createWaitablePromise(response);
     await expect(waitablePromise).rejects.toEqual({ message: 'Bar not found' });
   });
 
   it('gets the rejection of the wait promise', async () => {
     const response = new Promise(resolve => resolve(original));
-    const waitablePromise = WaitablePromise.from(response);
+    const waitablePromise = createWaitablePromise(response);
     waitablePromise.onWait(() => {
       throw new FooError();
     });

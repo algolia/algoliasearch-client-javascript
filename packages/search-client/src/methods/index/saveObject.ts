@@ -1,4 +1,5 @@
-import { WaitablePromise } from '@algolia/support';
+import { createWaitablePromise } from '@algolia/support';
+import { WaitablePromise } from '@algolia/support/src/types/WaitablePromise';
 import { RequestOptions } from '@algolia/transporter';
 
 import { SaveObjectResponse } from '../../types/SaveObjectResponse';
@@ -16,8 +17,8 @@ export const saveObject = <TSearchIndex extends SearchIndex>(
       object: object,
       requestOptions?: RequestOptions & SaveObjectsOptions
     ): Readonly<WaitablePromise<SaveObjectResponse>> {
-      return WaitablePromise.from<SaveObjectResponse>(
-        this.saveObjects([object], requestOptions).then(response => {
+      return createWaitablePromise<SaveObjectResponse>(
+        this.saveObjects([object], requestOptions).then<SaveObjectResponse>(response => {
           return {
             objectID: response[0].objectIDs[0],
             taskID: response[0].taskID,

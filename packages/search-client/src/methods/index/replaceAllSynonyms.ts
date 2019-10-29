@@ -1,4 +1,4 @@
-import { WaitablePromise } from '@algolia/support';
+import { WaitablePromise } from '@algolia/support/src/types/WaitablePromise';
 import { RequestOptions } from '@algolia/transporter';
 
 import { SaveSynonymsResponse } from '../../types/SaveSynonymsResponse';

@@ -1,5 +1,6 @@
 import { Method } from '@algolia/requester-types';
-import { encode, WaitablePromise } from '@algolia/support';
+import { createWaitablePromise, encode } from '@algolia/support';
+import { WaitablePromise } from '@algolia/support/src/types/WaitablePromise';
 import { popRequestOption, RequestOptions } from '@algolia/transporter';
 
 import { BatchActionType } from '../../types/BatchAction';
@@ -61,7 +62,7 @@ export const batch = <TSearchIndex extends SearchIndex>(
         });
       };
 
-      return WaitablePromise.from(forEachBatch()).onWait((batchResponses, waitRequestOptions) => {
+      return createWaitablePromise(forEachBatch()).onWait((batchResponses, waitRequestOptions) => {
         return Promise.all(
           batchResponses.map(response => this.waitTask(response.taskID, waitRequestOptions))
         );
@@ -72,7 +73,7 @@ export const batch = <TSearchIndex extends SearchIndex>(
       requests: readonly BatchRequest[],
       requestOptions?: RequestOptions
     ): Readonly<WaitablePromise<BatchResponse>> {
-      return WaitablePromise.from<BatchResponse>(
+      return createWaitablePromise<BatchResponse>(
         this.transporter.write<BatchResponse>(
           {
             method: Method.Post,

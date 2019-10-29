@@ -1,4 +1,5 @@
-import { WaitablePromise } from '@algolia/support';
+import { createWaitablePromise } from '@algolia/support';
+import { WaitablePromise } from '@algolia/support/src/types/WaitablePromise';
 import { RequestOptions } from '@algolia/transporter';
 
 import { DeleteResponse } from '../../types/DeleteResponse';
@@ -15,7 +16,7 @@ export const deleteObject = <TSearchIndex extends SearchIndex>(
       objectID: string,
       requestOptions?: RequestOptions
     ): Readonly<WaitablePromise<DeleteResponse>> {
-      return WaitablePromise.from<DeleteResponse>(
+      return createWaitablePromise<DeleteResponse>(
         this.deleteObjects([objectID], requestOptions).then(response => {
           return { taskID: response[0].taskID };
         })

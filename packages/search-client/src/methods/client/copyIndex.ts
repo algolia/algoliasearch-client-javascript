@@ -1,5 +1,6 @@
 import { Method } from '@algolia/requester-types';
-import { encode, WaitablePromise } from '@algolia/support';
+import { createWaitablePromise, encode } from '@algolia/support';
+import { WaitablePromise } from '@algolia/support/src/types/WaitablePromise';
 import { RequestOptions } from '@algolia/transporter';
 import { TransporterAware } from '@algolia/transporter/src/TransporterAware';
 
@@ -18,7 +19,7 @@ export const copyIndex = <TClient extends TransporterAware>(
       to: string,
       requestOptions?: CopyIndexOptions & RequestOptions
     ): Readonly<WaitablePromise<IndexOperationResponse>> {
-      return WaitablePromise.from<IndexOperationResponse>(
+      return createWaitablePromise<IndexOperationResponse>(
         this.transporter.write(
           {
             method: Method.Post,
