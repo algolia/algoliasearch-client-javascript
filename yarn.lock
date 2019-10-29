@@ -20,10 +20,10 @@
 "@algolia/transporter@file:packages/transporter":
   version "4.0.0-alpha.0"
   dependencies:
-    "@algolia/cache-common" "file:../../Library/Caches/Yarn/v4/npm-@algolia-transporter-4.0.0-alpha.0-bd3aa303-3110-4839-bd98-5d0e1d6a570c-1572377468123/node_modules/@algolia/cache-common"
-    "@algolia/logger-common" "file:../../Library/Caches/Yarn/v4/npm-@algolia-transporter-4.0.0-alpha.0-bd3aa303-3110-4839-bd98-5d0e1d6a570c-1572377468123/node_modules/@algolia/logger-common"
-    "@algolia/requester-common" "file:../../Library/Caches/Yarn/v4/npm-@algolia-transporter-4.0.0-alpha.0-bd3aa303-3110-4839-bd98-5d0e1d6a570c-1572377468123/node_modules/@algolia/requester-common"
-    "@algolia/transporter" "file:../../Library/Caches/Yarn/v4/npm-@algolia-transporter-4.0.0-alpha.0-bd3aa303-3110-4839-bd98-5d0e1d6a570c-1572377468123/node_modules/@algolia/transporter"
+    "@algolia/cache-common" "file:../../Library/Caches/Yarn/v4/npm-@algolia-transporter-4.0.0-alpha.0-02d20538-26ef-4b12-999d-2f70ec410587-1572378522813/node_modules/@algolia/cache-common"
+    "@algolia/logger-common" "file:../../Library/Caches/Yarn/v4/npm-@algolia-transporter-4.0.0-alpha.0-02d20538-26ef-4b12-999d-2f70ec410587-1572378522813/node_modules/@algolia/logger-common"
+    "@algolia/requester-common" "file:../../Library/Caches/Yarn/v4/npm-@algolia-transporter-4.0.0-alpha.0-02d20538-26ef-4b12-999d-2f70ec410587-1572378522813/node_modules/@algolia/requester-common"
+    "@algolia/transporter" "file:../../Library/Caches/Yarn/v4/npm-@algolia-transporter-4.0.0-alpha.0-02d20538-26ef-4b12-999d-2f70ec410587-1572378522813/node_modules/@algolia/transporter"
 
 "@babel/cli@^7.6.0":
   version "7.6.4"
