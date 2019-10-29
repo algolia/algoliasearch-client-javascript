@@ -5,6 +5,6 @@
     "noEmit": false,
     "emitDeclarationOnly": true,
     "module": "es2015",
-    "outFile": "dist/index.d.ts"
+    "outFile": "dist/types.d.ts"
   }
 }

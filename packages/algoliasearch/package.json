@@ -1,7 +1,7 @@
 {
   "name": "@nunomaduro/lightsearch",
   "main": "index.js",
-  "typings": "./dist/index.d.ts",
+  "types": "./dist/types.d.ts",
   "browser": {
     "./index.js": "./dist/algoliasearch.umd.min.js",
     "./lite.js": "./dist/algoliasearch-lite.umd.min.js"
