@@ -4,6 +4,7 @@ import { deleteABTest, HasDeleteABTest } from '@algolia/client-analytics/src/met
 import { getABTest, HasGetABTest } from '@algolia/client-analytics/src/methods/getABTest';
 import { getABTests, HasGetABTests } from '@algolia/client-analytics/src/methods/getABTests';
 import { HasStopABTest, stopABTest } from '@algolia/client-analytics/src/methods/stopABTest';
+import { AnalyticsClient as BaseAnalyticsClient } from '@algolia/client-analytics/src/types/AnalyticsClient';
 import { createSearchClient as baseCreateSearchClient } from '@algolia/client-search';
 import { SearchClientOptions } from '@algolia/client-search/src/createSearchClient';
 import { copyIndex, HasCopyIndex } from '@algolia/client-search/src/methods/client/copyIndex';
@@ -20,7 +21,7 @@ import {
   getPersonalizationStrategy,
   HasGetPersonalizationStrategy,
 } from '@algolia/client-search/src/methods/client/getPersonalizationStrategy';
-import { initIndex } from '@algolia/client-search/src/methods/client/initIndex';
+import { HasInitIndex, initIndex } from '@algolia/client-search/src/methods/client/initIndex';
 import {
   HasListClusters,
   listClusters,
@@ -133,11 +134,13 @@ import {
 } from '@algolia/client-search/src/methods/index/searchSynonyms';
 import { HasSetSettings, setSettings } from '@algolia/client-search/src/methods/index/setSettings';
 import { HasWaitTask, waitTask } from '@algolia/client-search/src/methods/index/waitTask';
+import { SearchClient as BaseSearchClient } from '@algolia/client-search/src/types/SearchClient';
 import { SearchIndex as SearchIndexPreset } from '@algolia/client-search/src/types/SearchIndex';
-import { TransporterAware } from '@algolia/transporter/src/types/TransporterAware';
 import { TransporterOptions } from '@algolia/transporter/src/types/TransporterOptions';
 
-export type SearchClient = TransporterAware &
+export type SearchClient = BaseSearchClient &
+  HasInitIndex &
+  HasInitAnalytics &
   HasMultipleBatch &
   HasMultipleGetObjects &
   HasMultipleQueries &
@@ -192,7 +195,8 @@ export type SearchIndex = SearchIndexPreset &
   HasBrowseRules &
   HasClearRules;
 
-export type AnalyticsClient = HasAddABTest &
+export type AnalyticsClient = BaseAnalyticsClient &
+  HasAddABTest &
   HasGetABTest &
   HasGetABTests &
   HasStopABTest &
@@ -257,8 +261,9 @@ export const methods = {
   analyticsClient: [addABTest, getABTest, getABTests, stopABTest, deleteABTest],
 };
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export const createSearchClient = (options: SearchClientOptions & TransporterOptions) => {
+export const createSearchClient = (
+  options: SearchClientOptions & TransporterOptions
+): SearchClient => {
   const base = baseCreateSearchClient<SearchClient>({ ...options, methods: methods.searchClient });
 
   return {
@@ -276,4 +281,8 @@ export const createSearchClient = (options: SearchClientOptions & TransporterOpt
       });
     },
   };
+};
+
+export type HasInitAnalytics = {
+  readonly initAnalytics: (region?: string) => AnalyticsClient;
 };

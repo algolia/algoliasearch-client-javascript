@@ -1,6 +1,6 @@
 import { createSearchClient as baseCreateSearchClient } from '@algolia/client-search';
 import { SearchClientOptions } from '@algolia/client-search/src/createSearchClient';
-import { initIndex } from '@algolia/client-search/src/methods/client/initIndex';
+import { HasInitIndex, initIndex } from '@algolia/client-search/src/methods/client/initIndex';
 import {
   HasMultipleQueries,
   multipleQueries,
@@ -14,9 +14,13 @@ import {
   HasSearchForFacetValues,
   searchForFacetValues,
 } from '@algolia/client-search/src/methods/index/searchForFacetValues';
+import { SearchClient as BaseSearchClient } from '@algolia/client-search/src/types/SearchClient';
 import { TransporterOptions } from '@algolia/transporter/src/types/TransporterOptions';
 
-export type SearchClient = HasMultipleQueries & HasMultipleSearchForFacetValues;
+export type SearchClient = BaseSearchClient &
+  HasInitIndex &
+  HasMultipleQueries &
+  HasMultipleSearchForFacetValues;
 
 export type SearchIndex = HasSearch & HasSearchForFacetValues;
 
@@ -25,8 +29,9 @@ export const methods = {
   searchIndex: [search, searchForFacetValues],
 };
 
-// eslint-disable-next-line
-export const createSearchClient = (options: SearchClientOptions & TransporterOptions) => {
+export const createSearchClient = (
+  options: SearchClientOptions & TransporterOptions
+): SearchClient => {
   const base = baseCreateSearchClient<SearchClient>({ ...options, methods: methods.searchClient });
 
   return {

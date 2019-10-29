@@ -6,10 +6,11 @@ import { createTransporter } from '@algolia/transporter';
 import { CallEnum } from '@algolia/transporter/src/types/CallType';
 import { TransporterOptions } from '@algolia/transporter/src/types/TransporterOptions';
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+import { SearchClient } from './types/SearchClient';
+
 export const createSearchClient = <TClient>(
   options: SearchClientOptions & TransporterOptions & ComposableOptions
-) => {
+): SearchClient & TClient => {
   const appId = options.appId;
   const transporter = createTransporter(options);
   transporter.setHosts(
@@ -46,7 +47,7 @@ export const createSearchClient = <TClient>(
     },
   };
 
-  return compose<TClient & typeof base>(
+  return compose<SearchClient & TClient>(
     base,
     options
   );

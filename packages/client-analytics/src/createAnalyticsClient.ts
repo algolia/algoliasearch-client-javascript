@@ -4,13 +4,13 @@ import { compose } from '@algolia/client-common';
 import { ComposableOptions } from '@algolia/client-common/src/types/ComposableOptions';
 import { createTransporter } from '@algolia/transporter';
 import { CallEnum } from '@algolia/transporter/src/types/CallType';
-import { TransporterAware } from '@algolia/transporter/src/types/TransporterAware';
 import { TransporterOptions } from '@algolia/transporter/src/types/TransporterOptions';
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+import { AnalyticsClient } from './types/AnalyticsClient';
+
 export const createAnalyticsClient = <TClient>(
   options: AnalyticsClientOptions & TransporterOptions & ComposableOptions
-) => {
+): AnalyticsClient & TClient => {
   const region = options.region !== undefined ? options.region : 'us';
   const auth = createAuth(AuthMode.WithinHeaders, options.appId, options.apiKey);
 
@@ -23,7 +23,7 @@ export const createAnalyticsClient = <TClient>(
   });
   transporter.addQueryParameters(auth.queryParameters());
 
-  return compose<TClient & TransporterAware>(
+  return compose<TClient & AnalyticsClient>(
     { transporter },
     options
   );
