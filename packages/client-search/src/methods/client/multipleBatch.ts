@@ -1,6 +1,6 @@
 import { createWaitablePromise } from '@algolia/client-common';
 import { WaitablePromise } from '@algolia/client-common/src/types/WaitablePromise';
-import { Method } from '@algolia/requester-common/src/types/Method';
+import { MethodEnum } from '@algolia/requester-common/src/types/MethodType';
 import { RequestOptions } from '@algolia/transporter/src/types/RequestOptions';
 import { TransporterAware } from '@algolia/transporter/src/types/TransporterAware';
 
@@ -21,7 +21,7 @@ export const multipleBatch = <TClient extends TransporterAware>(
       return createWaitablePromise<MultipleBatchResponse>(
         this.transporter.write(
           {
-            method: Method.Post,
+            method: MethodEnum.Post,
             path: '1/indexes/*/batch',
             data: {
               requests,

@@ -1,7 +1,7 @@
 import { mapRequestOptions } from '..';
 import { execute } from './concerns/execute';
 import { createHost } from './createHost';
-import { Call, CallType } from './types/Call';
+import { CallEnum, CallType } from './types/CallType';
 import { Headers } from './types/Headers';
 import { QueryParameters } from './types/QueryParameters';
 import { Request } from './types/Request';
@@ -44,7 +44,7 @@ export function createTransporter(options: TransporterOptions) {
       const createRequest = (): Readonly<Promise<TResponse>> => {
         return execute<TResponse>(
           this,
-          this.hosts.filter(host => (host.accept & Call.Read) !== 0),
+          this.hosts.filter(host => (host.accept & CallEnum.Read) !== 0),
           request,
           mappedRequestOptions
         );
@@ -78,7 +78,7 @@ export function createTransporter(options: TransporterOptions) {
     ): Readonly<Promise<TResponse>> {
       return execute<TResponse>(
         this,
-        this.hosts.filter(host => (host.accept & Call.Write) !== 0),
+        this.hosts.filter(host => (host.accept & CallEnum.Write) !== 0),
         request,
         mapRequestOptions(requestOptions, this.timeouts.write)
       );

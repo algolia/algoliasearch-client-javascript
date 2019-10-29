@@ -3,7 +3,7 @@ import { AuthMode, AuthModeType } from '@algolia/auth/src/types/AuthModeType';
 import { compose, shuffle } from '@algolia/client-common';
 import { ComposableOptions } from '@algolia/client-common/src/types/ComposableOptions';
 import { createTransporter } from '@algolia/transporter';
-import { Call } from '@algolia/transporter/src/types/Call';
+import { CallEnum } from '@algolia/transporter/src/types/CallType';
 import { TransporterOptions } from '@algolia/transporter/src/types/TransporterOptions';
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
@@ -14,13 +14,13 @@ export const createSearchClient = <TClient>(
   const transporter = createTransporter(options);
   transporter.setHosts(
     [
-      { url: `${appId}-dsn.algolia.net`, accept: Call.Read },
-      { url: `${appId}.algolia.net`, accept: Call.Write },
+      { url: `${appId}-dsn.algolia.net`, accept: CallEnum.Read },
+      { url: `${appId}.algolia.net`, accept: CallEnum.Write },
     ].concat(
       shuffle([
-        { url: `${appId}-1.algolianet.com`, accept: Call.Any },
-        { url: `${appId}-2.algolianet.com`, accept: Call.Any },
-        { url: `${appId}-3.algolianet.com`, accept: Call.Any },
+        { url: `${appId}-1.algolianet.com`, accept: CallEnum.Any },
+        { url: `${appId}-2.algolianet.com`, accept: CallEnum.Any },
+        { url: `${appId}-3.algolianet.com`, accept: CallEnum.Any },
       ])
     )
   );

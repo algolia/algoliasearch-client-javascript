@@ -1,5 +1,5 @@
 import { encode } from '@algolia/client-common';
-import { Method } from '@algolia/requester-common/src/types/Method';
+import { MethodEnum } from '@algolia/requester-common/src/types/MethodType';
 import { RequestOptions } from '@algolia/transporter/src/types/RequestOptions';
 
 import { SearchIndex } from '../../types/SearchIndex';
@@ -15,7 +15,7 @@ export const getObject = <TSearchIndex extends SearchIndex>(
     ): Readonly<Promise<TObject>> {
       return this.transporter.read(
         {
-          method: Method.Get,
+          method: MethodEnum.Get,
           path: encode('1/indexes/%s/%s', this.indexName, objectID),
         },
         requestOptions

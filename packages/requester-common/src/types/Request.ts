@@ -1,4 +1,4 @@
-import { MethodType } from './Method';
+import { MethodType } from './MethodType';
 
 export type Request = {
   readonly data: string;

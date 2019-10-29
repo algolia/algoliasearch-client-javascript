@@ -3,7 +3,7 @@ import { popRequestOption } from '@algolia/transporter/src/request-options';
 import { RequestOptions } from '@algolia/transporter/src/types/RequestOptions';
 
 import { createMissingObjectIDError } from '../../errors/createMissingObjectIDError';
-import { BatchAction } from '../../types/BatchAction';
+import { BatchActionEnum } from '../../types/BatchActionType';
 import { BatchResponse } from '../../types/BatchResponse';
 import { SaveObjectsOptions } from '../../types/SaveObjectsOptions';
 import { SearchIndex } from '../../types/SearchIndex';
@@ -25,10 +25,10 @@ export const saveObjects = <TSearchIndex extends SearchIndex>(
       );
 
       const action = autoGenerateObjectIDIfNotExist
-        ? BatchAction.AddObject
-        : BatchAction.UpdateObject;
+        ? BatchActionEnum.AddObject
+        : BatchActionEnum.UpdateObject;
 
-      if (action === BatchAction.UpdateObject) {
+      if (action === BatchActionEnum.UpdateObject) {
         ensureObjectIdsWithin(objects);
       }
 

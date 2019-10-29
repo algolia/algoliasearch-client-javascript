@@ -1,4 +1,4 @@
-import { Method } from '@algolia/requester-common/src/types/Method';
+import { MethodEnum } from '@algolia/requester-common/src/types/MethodType';
 import { RequestOptions } from '@algolia/transporter/src/types/RequestOptions';
 import { TransporterAware } from '@algolia/transporter/src/types/TransporterAware';
 
@@ -12,7 +12,7 @@ export const listClusters = <TClient extends TransporterAware>(
     listClusters(requestOptions?: RequestOptions): Readonly<Promise<ListClustersResponse>> {
       return this.transporter.read(
         {
-          method: Method.Get,
+          method: MethodEnum.Get,
           path: '1/clusters',
         },
         requestOptions

@@ -1,6 +1,6 @@
 import { createWaitablePromise, encode } from '@algolia/client-common';
 import { WaitablePromise } from '@algolia/client-common/src/types/WaitablePromise';
-import { Method } from '@algolia/requester-common/src/types/Method';
+import { MethodEnum } from '@algolia/requester-common/src/types/MethodType';
 import { RequestOptions } from '@algolia/transporter/src/types/RequestOptions';
 import { TransporterAware } from '@algolia/transporter/src/types/TransporterAware';
 
@@ -22,7 +22,7 @@ export const copyIndex = <TClient extends TransporterAware>(
       return createWaitablePromise<IndexOperationResponse>(
         this.transporter.write(
           {
-            method: Method.Post,
+            method: MethodEnum.Post,
             path: encode('1/indexes/%s/operation', from),
             data: {
               operation: 'copy',

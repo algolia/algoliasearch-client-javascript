@@ -1,6 +1,6 @@
 /* eslint no-console: 0 */
 
-import { LogLevel } from '@algolia/logger-common/src/types/LogLevelType';
+import { LogLevelEnum } from '@algolia/logger-common/src/types/LogLevelType';
 import mockConsole from 'jest-mock-console';
 
 import { createConsoleLogger } from '../createConsoleLogger';
@@ -11,7 +11,7 @@ describe('console logger', () => {
   });
 
   it('respects log level type debug', () => {
-    const logger = createConsoleLogger(LogLevel.Debug);
+    const logger = createConsoleLogger(LogLevelEnum.Debug);
 
     logger.debug('foo', {});
     logger.info('foo', {});
@@ -23,7 +23,7 @@ describe('console logger', () => {
   });
 
   it('respects log level type info', () => {
-    const logger = createConsoleLogger(LogLevel.Info);
+    const logger = createConsoleLogger(LogLevelEnum.Info);
 
     logger.debug('foo', {});
     logger.info('foo', {});
@@ -35,7 +35,7 @@ describe('console logger', () => {
   });
 
   it('respects log level type error', () => {
-    const logger = createConsoleLogger(LogLevel.Error);
+    const logger = createConsoleLogger(LogLevelEnum.Error);
 
     logger.debug('foo', {});
     logger.info('foo', {});

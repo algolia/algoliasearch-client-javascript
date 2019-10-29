@@ -1,4 +1,4 @@
-export const BatchAction: { readonly [key: string]: BatchActionType } = {
+export const BatchActionEnum: { readonly [key: string]: BatchActionType } = {
   AddObject: 'addObject',
   UpdateObject: 'updateObject',
   PartialUpdateObject: 'partialUpdateObject',

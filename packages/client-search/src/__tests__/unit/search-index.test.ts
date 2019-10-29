@@ -1,12 +1,12 @@
 import { encode } from '@algolia/client-common';
 import { Faker } from '@algolia/client-common/src/__tests__/Faker';
-import { Method } from '@algolia/requester-common/src/types/Method';
+import { MethodEnum } from '@algolia/requester-common/src/types/MethodType';
 import { RequestOptions } from '@algolia/transporter/src/types/RequestOptions';
 import { anything, deepEqual, spy, verify, when } from 'ts-mockito';
 
 import algoliasearch from '../../../../algoliasearch/src/builds/browser';
 import { SearchIndex } from '../../../../algoliasearch/src/presets/default';
-import { BatchAction } from '../../types/BatchAction';
+import { BatchActionEnum } from '../../types/BatchActionType';
 import { SaveObjectsOptions } from '../../types/SaveObjectsOptions';
 
 let index: SearchIndex;
@@ -70,7 +70,7 @@ describe('SaveObjects', () => {
 
     await index.saveObjects(objects, requestOptions);
 
-    verify(indexSpy.chunk(objects, BatchAction.AddObject, requestOptions)).once();
+    verify(indexSpy.chunk(objects, BatchActionEnum.AddObject, requestOptions)).once();
   });
 
   it('Uses updateObject when `autoGenerateObjectIDIfNotExist` is not set', async () => {
@@ -81,7 +81,7 @@ describe('SaveObjects', () => {
 
     await index.saveObjects(objects);
 
-    verify(indexSpy.chunk(objects, BatchAction.UpdateObject, undefined)).once();
+    verify(indexSpy.chunk(objects, BatchActionEnum.UpdateObject, undefined)).once();
   });
 
   it('Validates the object id when `autoGenerateObjectIDIfNotExist` is !== true', async () => {
@@ -111,8 +111,8 @@ describe('Chunk', () => {
   it("Don't call batch when no objects", async () => {
     const indexSpy = spy(index);
 
-    await index.chunk([], BatchAction.AddObject);
-    await index.chunk([], BatchAction.UpdateObject);
+    await index.chunk([], BatchActionEnum.AddObject);
+    await index.chunk([], BatchActionEnum.UpdateObject);
 
     verify(indexSpy.batch(anything())).never();
   });
@@ -122,8 +122,8 @@ describe('Chunk', () => {
 
     when(indexSpy.batch(anything(), anything())).thenResolve(res);
 
-    await index.chunk([Faker.object()], BatchAction.AddObject);
-    await index.chunk(Faker.objects(1001), BatchAction.UpdateObject);
+    await index.chunk([Faker.object()], BatchActionEnum.AddObject);
+    await index.chunk(Faker.objects(1001), BatchActionEnum.UpdateObject);
 
     verify(indexSpy.batch(anything(), anything())).times(3);
   });
@@ -133,8 +133,8 @@ describe('Chunk', () => {
 
     when(indexSpy.batch(anything(), anything())).thenResolve(res);
 
-    await index.chunk([Faker.object()], BatchAction.AddObject);
-    await index.chunk(Faker.objects(1001), BatchAction.UpdateObject, {
+    await index.chunk([Faker.object()], BatchActionEnum.AddObject);
+    await index.chunk(Faker.objects(1001), BatchActionEnum.UpdateObject, {
       batchSize: 100,
     });
 
@@ -146,7 +146,7 @@ describe('Chunk', () => {
 
     when(indexSpy.batch(anything(), anything())).thenResolve(res);
 
-    await index.chunk(Faker.objects(1000), BatchAction.UpdateObject);
+    await index.chunk(Faker.objects(1000), BatchActionEnum.UpdateObject);
 
     verify(indexSpy.batch(anything(), anything())).once();
   });
@@ -221,7 +221,7 @@ describe('Get Objects', () => {
     verify(
       transporterMock.read(
         deepEqual({
-          method: Method.Post,
+          method: MethodEnum.Post,
           path: `1/indexes/*/objects`,
           data: {
             requests: [
@@ -283,7 +283,7 @@ describe('wait task', () => {
     verify(
       transporterMock.read(
         deepEqual({
-          method: Method.Get,
+          method: MethodEnum.Get,
           path: encode('1/indexes/%s/task/%s', 'foo', '1'),
         }),
         deepEqual(requestOptions)

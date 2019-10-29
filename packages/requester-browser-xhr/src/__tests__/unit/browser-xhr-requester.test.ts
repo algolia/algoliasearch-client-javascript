@@ -1,4 +1,4 @@
-import { Method } from '@algolia/requester-common/src/types/Method';
+import { MethodEnum } from '@algolia/requester-common/src/types/MethodType';
 import { Request } from '@algolia/requester-common/src/types/Request';
 import mock, { MockRequest, MockResponse } from 'xhr-mock';
 
@@ -153,7 +153,7 @@ describe('error handling', (): void => {
 
     const request = {
       url: 'https://this-dont-exist.algolia.com',
-      method: Method.Post,
+      method: MethodEnum.Post,
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
       },

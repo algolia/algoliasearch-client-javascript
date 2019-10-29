@@ -1,4 +1,4 @@
-import { Method } from '@algolia/requester-common/src/types/Method';
+import { MethodEnum } from '@algolia/requester-common/src/types/MethodType';
 import { popRequestOption } from '@algolia/transporter/src/request-options';
 import { RequestOptions } from '@algolia/transporter/src/types/RequestOptions';
 
@@ -25,7 +25,7 @@ export const getObjects = <TSearchIndex extends SearchIndex>(
 
       return this.transporter.read(
         {
-          method: Method.Post,
+          method: MethodEnum.Post,
           path: '1/indexes/*/objects',
           data: {
             requests,

@@ -1,6 +1,6 @@
 import { createWaitablePromise, encode } from '@algolia/client-common';
 import { WaitablePromise } from '@algolia/client-common/src/types/WaitablePromise';
-import { Method } from '@algolia/requester-common/src/types/Method';
+import { MethodEnum } from '@algolia/requester-common/src/types/MethodType';
 import { RequestOptions } from '@algolia/transporter/src/types/RequestOptions';
 
 import { DeleteResponse } from '../../types/DeleteResponse';
@@ -16,7 +16,7 @@ export const clearObjects = <TSearchIndex extends SearchIndex>(
       return createWaitablePromise<DeleteResponse>(
         this.transporter.write(
           {
-            method: Method.Post,
+            method: MethodEnum.Post,
             path: encode('1/indexes/%s/clear', this.indexName),
           },
           requestOptions

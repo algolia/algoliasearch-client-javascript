@@ -1,5 +1,5 @@
 import { encode } from '@algolia/client-common';
-import { Method } from '@algolia/requester-common/src/types/Method';
+import { MethodEnum } from '@algolia/requester-common/src/types/MethodType';
 import { RequestOptions } from '@algolia/transporter/src/types/RequestOptions';
 
 import { SearchForFacetValuesResponse } from '../../types/SearchForFacetValuesResponse';
@@ -18,7 +18,7 @@ export const searchForFacetValues = <TSearchIndex extends SearchIndex>(
     ): Readonly<Promise<SearchForFacetValuesResponse>> {
       return this.transporter.read(
         {
-          method: Method.Post,
+          method: MethodEnum.Post,
           path: encode('1/indexes/%s/facets/%s/query', this.indexName, facetName),
           data: {
             facetQuery,

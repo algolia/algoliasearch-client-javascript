@@ -1,5 +1,5 @@
 import { encode } from '@algolia/client-common';
-import { Method } from '@algolia/requester-common/src/types/Method';
+import { MethodEnum } from '@algolia/requester-common/src/types/MethodType';
 import { RequestOptions } from '@algolia/transporter/src/types/RequestOptions';
 
 import { createBrowsablePromise } from '../../createBrowsablePromise';
@@ -22,7 +22,7 @@ export const browseObjects = <TSearchIndex extends SearchIndex>(
         request: (data: object): Readonly<Promise<BrowseResponse<TObject>>> =>
           this.transporter.read(
             {
-              method: Method.Post,
+              method: MethodEnum.Post,
               path: encode('1/indexes/%s/browse', this.indexName),
               data,
             },

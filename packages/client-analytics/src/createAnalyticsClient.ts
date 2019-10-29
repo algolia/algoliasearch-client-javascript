@@ -3,7 +3,7 @@ import { AuthMode } from '@algolia/auth/src/types/AuthModeType';
 import { compose } from '@algolia/client-common';
 import { ComposableOptions } from '@algolia/client-common/src/types/ComposableOptions';
 import { createTransporter } from '@algolia/transporter';
-import { Call } from '@algolia/transporter/src/types/Call';
+import { CallEnum } from '@algolia/transporter/src/types/CallType';
 import { TransporterAware } from '@algolia/transporter/src/types/TransporterAware';
 import { TransporterOptions } from '@algolia/transporter/src/types/TransporterOptions';
 
@@ -16,7 +16,7 @@ export const createAnalyticsClient = <TClient>(
 
   const transporter = createTransporter(options);
 
-  transporter.setHosts([{ url: `analytics.${region}.algolia.com`, accept: Call.Any }]);
+  transporter.setHosts([{ url: `analytics.${region}.algolia.com`, accept: CallEnum.Any }]);
   transporter.addHeaders({
     ...auth.headers(),
     ...{ 'content-type': 'application/json' },

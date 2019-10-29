@@ -1,4 +1,4 @@
-import { Method } from '@algolia/requester-common/src/types/Method';
+import { MethodEnum } from '@algolia/requester-common/src/types/MethodType';
 import { anything, deepEqual, spy, verify, when } from 'ts-mockito';
 
 import algoliasearch from '../../../../algoliasearch/src/builds/browser';
@@ -31,7 +31,7 @@ describe('personalization', () => {
     verify(
       transporterMock.write(
         deepEqual({
-          method: Method.Post,
+          method: MethodEnum.Post,
           path: '1/recommendation/personalization/strategy',
           data: strategy,
         }),

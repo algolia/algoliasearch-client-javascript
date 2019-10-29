@@ -1,6 +1,6 @@
 import { createWaitablePromise, encode } from '@algolia/client-common';
 import { WaitablePromise } from '@algolia/client-common/src/types/WaitablePromise';
-import { Method } from '@algolia/requester-common/src/types/Method';
+import { MethodEnum } from '@algolia/requester-common/src/types/MethodType';
 import { popRequestOption } from '@algolia/transporter/src/request-options';
 import { RequestOptions } from '@algolia/transporter/src/types/RequestOptions';
 
@@ -28,7 +28,7 @@ export const replaceAllObjects = <TSearchIndex extends SearchIndex>(
         return createWaitablePromise<IndexOperationResponse>(
           this.transporter.write(
             {
-              method: Method.Post,
+              method: MethodEnum.Post,
               path: encode('1/indexes/%s/operation', from),
               data: {
                 operation: type,

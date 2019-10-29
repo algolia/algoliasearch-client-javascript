@@ -1,4 +1,4 @@
-import { Method } from '@algolia/requester-common/src/types/Method';
+import { MethodEnum } from '@algolia/requester-common/src/types/MethodType';
 import { RequestOptions } from '@algolia/transporter/src/types/RequestOptions';
 import { TransporterAware } from '@algolia/transporter/src/types/TransporterAware';
 
@@ -16,7 +16,7 @@ export const addABTest = <TClient extends TransporterAware>(
     ): Readonly<Promise<AddABTestResponse>> {
       return this.transporter.write(
         {
-          method: Method.Post,
+          method: MethodEnum.Post,
           path: '2/abtests',
           data: abTest,
         },

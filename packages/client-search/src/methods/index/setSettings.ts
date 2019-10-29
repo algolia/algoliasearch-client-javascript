@@ -1,6 +1,6 @@
 import { createWaitablePromise, encode } from '@algolia/client-common';
 import { WaitablePromise } from '@algolia/client-common/src/types/WaitablePromise';
-import { Method } from '@algolia/requester-common/src/types/Method';
+import { MethodEnum } from '@algolia/requester-common/src/types/MethodType';
 import { RequestOptions } from '@algolia/transporter/src/types/RequestOptions';
 
 import { IndexSettings } from '../../types/IndexSettings';
@@ -20,7 +20,7 @@ export const setSettings = <TSearchIndex extends SearchIndex>(
       return createWaitablePromise<SetSettingsResponse>(
         this.transporter.write(
           {
-            method: Method.Put,
+            method: MethodEnum.Put,
             path: encode('1/indexes/%s/settings', this.indexName),
             data: settings,
           },

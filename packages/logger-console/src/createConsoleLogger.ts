@@ -1,18 +1,18 @@
 /* eslint no-console: 0 */
 
 import { Logger } from '@algolia/logger-common/src/types/Logger';
-import { LogLevel, LogLevelType } from '@algolia/logger-common/src/types/LogLevelType';
+import { LogLevelEnum, LogLevelType } from '@algolia/logger-common/src/types/LogLevelType';
 
 export function createConsoleLogger(logLevel: LogLevelType): Logger {
   return {
     debug(message: string, args: any): void {
-      if (LogLevel.Debug >= logLevel) {
+      if (LogLevelEnum.Debug >= logLevel) {
         console.debug(message, args);
       }
     },
 
     info(message: string, args: any): void {
-      if (LogLevel.Info >= logLevel) {
+      if (LogLevelEnum.Info >= logLevel) {
         console.info(message, args);
       }
     },

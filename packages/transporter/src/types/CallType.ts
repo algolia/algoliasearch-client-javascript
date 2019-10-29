@@ -1,4 +1,4 @@
-export const Call: { readonly [key: string]: CallType } = {
+export const CallEnum: { readonly [key: string]: CallType } = {
   Read: 1,
   Write: 2,
   Any: 3,

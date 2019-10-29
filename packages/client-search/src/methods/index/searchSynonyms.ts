@@ -1,5 +1,5 @@
 import { encode } from '@algolia/client-common';
-import { Method } from '@algolia/requester-common/src/types/Method';
+import { MethodEnum } from '@algolia/requester-common/src/types/MethodType';
 import { RequestOptions } from '@algolia/transporter/src/types/RequestOptions';
 
 import { SearchIndex } from '../../types/SearchIndex';
@@ -17,7 +17,7 @@ export const searchSynonyms = <TSearchIndex extends SearchIndex>(
     ): Readonly<Promise<SearchSynonymsResponse>> {
       return this.transporter.read(
         {
-          method: Method.Post,
+          method: MethodEnum.Post,
           path: encode('1/indexes/%s/synonyms/search', this.indexName),
           data: {
             query,

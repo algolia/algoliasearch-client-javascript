@@ -1,5 +1,5 @@
 import { encode } from '@algolia/client-common';
-import { Method } from '@algolia/requester-common/src/types/Method';
+import { MethodEnum } from '@algolia/requester-common/src/types/MethodType';
 import { RequestOptions } from '@algolia/transporter/src/types/RequestOptions';
 import { TransporterAware } from '@algolia/transporter/src/types/TransporterAware';
 
@@ -16,7 +16,7 @@ export const stopABTest = <TClient extends TransporterAware>(
     ): Readonly<Promise<StopABTestResponse>> {
       return this.transporter.write(
         {
-          method: Method.Post,
+          method: MethodEnum.Post,
           path: encode('2/abtests/%s/stop', abTestID),
         },
         requestOptions

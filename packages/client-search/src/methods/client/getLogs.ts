@@ -1,4 +1,4 @@
-import { Method } from '@algolia/requester-common/src/types/Method';
+import { MethodEnum } from '@algolia/requester-common/src/types/MethodType';
 import { mapRequestOptions } from '@algolia/transporter';
 import { popRequestOption } from '@algolia/transporter/src/request-options';
 import { RequestOptions } from '@algolia/transporter/src/types/RequestOptions';
@@ -32,7 +32,7 @@ export const getLogs = <TClient extends TransporterAware>(base: TClient): TClien
 
       return this.transporter.read(
         {
-          method: Method.Get,
+          method: MethodEnum.Get,
           path: '1/logs',
         },
         options

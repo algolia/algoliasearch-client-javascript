@@ -1,4 +1,4 @@
-import { Method } from '@algolia/requester-common/src/types/Method';
+import { MethodEnum } from '@algolia/requester-common/src/types/MethodType';
 import { Request } from '@algolia/requester-common/src/types/Request';
 import nock from 'nock';
 
@@ -146,7 +146,7 @@ describe('error handling', (): void => {
 
     const request = {
       url: 'https://this-dont-exist.algolia.com',
-      method: Method.Post,
+      method: MethodEnum.Post,
       headers: {
         'X-Algolia-Application-Id': 'ABCDE',
         'X-Algolia-API-Key': '12345',

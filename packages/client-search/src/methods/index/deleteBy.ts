@@ -1,6 +1,6 @@
 import { createWaitablePromise, encode } from '@algolia/client-common';
 import { WaitablePromise } from '@algolia/client-common/src/types/WaitablePromise';
-import { Method } from '@algolia/requester-common/src/types/Method';
+import { MethodEnum } from '@algolia/requester-common/src/types/MethodType';
 import { RequestOptions } from '@algolia/transporter/src/types/RequestOptions';
 
 import { DeleteByFiltersOptions } from '../../types/DeleteByFiltersOptions';
@@ -20,7 +20,7 @@ export const deleteBy = <TSearchIndex extends SearchIndex>(
       return createWaitablePromise<DeleteResponse>(
         this.transporter.write(
           {
-            method: Method.Post,
+            method: MethodEnum.Post,
             path: encode('1/indexes/%s/deleteByQuery', this.indexName),
             data: filters,
           },

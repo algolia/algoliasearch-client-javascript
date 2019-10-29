@@ -1,5 +1,5 @@
 import { encodeQueryParameters } from '@algolia/client-common';
-import { Method } from '@algolia/requester-common/src/types/Method';
+import { MethodEnum } from '@algolia/requester-common/src/types/MethodType';
 import { RequestOptions } from '@algolia/transporter/src/types/RequestOptions';
 import { TransporterAware } from '@algolia/transporter/src/types/TransporterAware';
 
@@ -25,7 +25,7 @@ export const multipleQueries = <TClient extends TransporterAware>(
 
       return this.transporter.read(
         {
-          method: Method.Post,
+          method: MethodEnum.Post,
           path: '1/indexes/*/queries',
           data: {
             requests,

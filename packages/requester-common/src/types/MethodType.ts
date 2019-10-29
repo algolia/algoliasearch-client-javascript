@@ -1,4 +1,4 @@
-export const Method: { readonly [key: string]: MethodType } = {
+export const MethodEnum: { readonly [key: string]: MethodType } = {
   Delete: 'DELETE',
   Get: 'GET',
   Post: 'POST',

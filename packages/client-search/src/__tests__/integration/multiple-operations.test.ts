@@ -1,7 +1,7 @@
 import { createMultiWaitable } from '@algolia/client-common/src/__tests__/helpers';
 import { TestSuite } from '@algolia/client-common/src/__tests__/TestSuite';
 
-import { BatchAction } from '../../types/BatchAction';
+import { BatchActionEnum } from '../../types/BatchActionType';
 import { StrategyEnum } from '../../types/StrategyType';
 
 const testSuite = new TestSuite('multiple_operations');
@@ -15,10 +15,26 @@ test(testSuite.testName, async () => {
   const index2 = testSuite.makeIndex(`${index.indexName}_dev`);
 
   const queries = [
-    { indexName: index.indexName, action: BatchAction.AddObject, body: { firstname: 'Jimmie' } },
-    { indexName: index.indexName, action: BatchAction.AddObject, body: { firstname: 'Jimmie' } },
-    { indexName: index2.indexName, action: BatchAction.AddObject, body: { firstname: 'Jimmie' } },
-    { indexName: index2.indexName, action: BatchAction.AddObject, body: { firstname: 'Jimmie' } },
+    {
+      indexName: index.indexName,
+      action: BatchActionEnum.AddObject,
+      body: { firstname: 'Jimmie' },
+    },
+    {
+      indexName: index.indexName,
+      action: BatchActionEnum.AddObject,
+      body: { firstname: 'Jimmie' },
+    },
+    {
+      indexName: index2.indexName,
+      action: BatchActionEnum.AddObject,
+      body: { firstname: 'Jimmie' },
+    },
+    {
+      indexName: index2.indexName,
+      action: BatchActionEnum.AddObject,
+      body: { firstname: 'Jimmie' },
+    },
   ];
 
   createMultiWaitable([

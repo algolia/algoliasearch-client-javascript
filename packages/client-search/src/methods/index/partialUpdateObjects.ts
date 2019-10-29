@@ -2,7 +2,7 @@ import { WaitablePromise } from '@algolia/client-common/src/types/WaitablePromis
 import { popRequestOption } from '@algolia/transporter/src/request-options';
 import { RequestOptions } from '@algolia/transporter/src/types/RequestOptions';
 
-import { BatchAction } from '../../types/BatchAction';
+import { BatchActionEnum } from '../../types/BatchActionType';
 import { BatchResponse } from '../../types/BatchResponse';
 import { PartialUpdateObjectsOptions } from '../../types/PartialUpdateObjectsOptions';
 import { SearchIndex } from '../../types/SearchIndex';
@@ -20,8 +20,8 @@ export const partialUpdateObjects = <TSearchIndex extends SearchIndex>(
       const createIfNotExists = popRequestOption(requestOptions, 'createIfNotExists', false);
 
       const action = createIfNotExists
-        ? BatchAction.PartialUpdateObject
-        : BatchAction.PartialUpdateObjectNoCreate;
+        ? BatchActionEnum.PartialUpdateObject
+        : BatchActionEnum.PartialUpdateObjectNoCreate;
 
       return this.chunk(objects, action, requestOptions);
     },

@@ -1,4 +1,4 @@
-import { BatchActionType } from './BatchAction';
+import { BatchActionType } from './BatchActionType';
 
 export type BatchRequest = {
   readonly action: BatchActionType;

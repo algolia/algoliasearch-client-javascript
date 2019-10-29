@@ -1,7 +1,7 @@
 import { WaitablePromise } from '@algolia/client-common/src/types/WaitablePromise';
 import { RequestOptions } from '@algolia/transporter/src/types/RequestOptions';
 
-import { BatchAction } from '../../types/BatchAction';
+import { BatchActionEnum } from '../../types/BatchActionType';
 import { BatchResponse } from '../../types/BatchResponse';
 import { ChunkOptions } from '../../types/ChunkOptions';
 import { SearchIndex } from '../../types/SearchIndex';
@@ -20,7 +20,7 @@ export const deleteObjects = <TSearchIndex extends SearchIndex>(
         return { objectID };
       });
 
-      return this.chunk(objects, BatchAction.DeleteObject, requestOptions);
+      return this.chunk(objects, BatchActionEnum.DeleteObject, requestOptions);
     },
   };
 };

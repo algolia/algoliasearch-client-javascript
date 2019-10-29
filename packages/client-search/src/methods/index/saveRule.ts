@@ -1,6 +1,6 @@
 import { createWaitablePromise, encode } from '@algolia/client-common';
 import { WaitablePromise } from '@algolia/client-common/src/types/WaitablePromise';
-import { Method } from '@algolia/requester-common/src/types/Method';
+import { MethodEnum } from '@algolia/requester-common/src/types/MethodType';
 import { RequestOptions } from '@algolia/transporter/src/types/RequestOptions';
 
 import { Rule } from '../../types/Rule';
@@ -20,7 +20,7 @@ export const saveRule = <TSearchIndex extends SearchIndex>(
       return createWaitablePromise<SaveRuleResponse>(
         this.transporter.write(
           {
-            method: Method.Put,
+            method: MethodEnum.Put,
             path: encode('1/indexes/%s/rules/%s', this.indexName, rule.objectID),
             data: rule,
           },

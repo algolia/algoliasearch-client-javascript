@@ -1,6 +1,6 @@
 import { createNullCache } from '@algolia/cache-common';
 import { encode } from '@algolia/client-common';
-import { Method } from '@algolia/requester-common/src/types/Method';
+import { MethodEnum } from '@algolia/requester-common/src/types/MethodType';
 import { Request as RequesterRequest } from '@algolia/requester-common/src/types/Request';
 import { Requester } from '@algolia/requester-common/src/types/Requester';
 import { Response } from '@algolia/requester-common/src/types/Response';
@@ -8,7 +8,7 @@ import { instance } from 'ts-mockito';
 
 import algoliasearch from '../../../algoliasearch/src/builds/browser';
 import { createTransporter } from '../createTransporter';
-import { Call } from '../types/Call';
+import { CallEnum } from '../types/CallType';
 
 export class FakeRequester implements Requester {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -35,9 +35,9 @@ export class Fixtures {
     const transporter = algoliasearch('appId', 'apiKey').transporter;
 
     transporter.setHosts([
-      { url: 'read.com', accept: Call.Read },
-      { url: 'write.com', accept: Call.Write },
-      { url: 'read-and-write.com', accept: Call.Any },
+      { url: 'read.com', accept: CallEnum.Read },
+      { url: 'write.com', accept: CallEnum.Write },
+      { url: 'read-and-write.com', accept: CallEnum.Any },
     ]);
 
     transporter.requester = instance(requester);
@@ -62,7 +62,7 @@ export class Fixtures {
 
   public static transporterRequest() {
     return {
-      method: Method.Post,
+      method: MethodEnum.Post,
       path: 'save',
       data: {},
       cacheable: false,
@@ -96,7 +96,7 @@ export class Fixtures {
     return {
       data: '',
       headers,
-      method: Method.Post,
+      method: MethodEnum.Post,
       timeout: 2,
       ...options,
     };

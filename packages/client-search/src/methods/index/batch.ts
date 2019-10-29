@@ -1,10 +1,10 @@
 import { createWaitablePromise, encode } from '@algolia/client-common';
 import { WaitablePromise } from '@algolia/client-common/src/types/WaitablePromise';
-import { Method } from '@algolia/requester-common/src/types/Method';
+import { MethodEnum } from '@algolia/requester-common/src/types/MethodType';
 import { popRequestOption } from '@algolia/transporter/src/request-options';
 import { RequestOptions } from '@algolia/transporter/src/types/RequestOptions';
 
-import { BatchActionType } from '../../types/BatchAction';
+import { BatchActionType } from '../../types/BatchActionType';
 import { BatchRequest } from '../../types/BatchRequest';
 import { BatchResponse } from '../../types/BatchResponse';
 import { ChunkOptions } from '../../types/ChunkOptions';
@@ -77,7 +77,7 @@ export const batch = <TSearchIndex extends SearchIndex>(
       return createWaitablePromise<BatchResponse>(
         this.transporter.write<BatchResponse>(
           {
-            method: Method.Post,
+            method: MethodEnum.Post,
             path: encode('1/indexes/%s/batch', this.indexName),
             data: {
               requests,
