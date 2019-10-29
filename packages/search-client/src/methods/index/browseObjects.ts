@@ -2,7 +2,7 @@ import { Method } from '@algolia/requester-types';
 import { encode } from '@algolia/support';
 import { RequestOptions } from '@algolia/transporter';
 
-import { BrowsablePromise } from '../../BrowsablePromise';
+import { createBrowsablePromise } from '../../createBrowsablePromise';
 import { BrowseOptions } from '../../types/BrowseOptions';
 import { BrowseResponse } from '../../types/BrowseResponse';
 import { SearchIndex } from '../../types/SearchIndex';
@@ -15,8 +15,8 @@ export const browseObjects = <TSearchIndex extends SearchIndex>(
     ...base,
     browseObjects<TObject extends object>(
       requestOptions?: SearchOptions & BrowseOptions<TObject> & RequestOptions
-    ): Readonly<BrowsablePromise<TObject>> {
-      return BrowsablePromise.from<TObject>({
+    ): Readonly<Promise<void>> {
+      return createBrowsablePromise<TObject>({
         ...requestOptions,
         shouldStop: response => response.cursor === undefined,
         request: (data: object): Readonly<Promise<BrowseResponse<TObject>>> =>
@@ -36,5 +36,5 @@ export const browseObjects = <TSearchIndex extends SearchIndex>(
 export type HasBrowseObjects = {
   readonly browseObjects: <TObject extends object>(
     requestOptions?: SearchOptions & BrowseOptions<TObject> & RequestOptions
-  ) => Readonly<BrowsablePromise<TObject>>;
+  ) => Readonly<Promise<void>>;
 };

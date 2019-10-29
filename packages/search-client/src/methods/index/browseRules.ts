@@ -1,6 +1,6 @@
 import { RequestOptions } from '@algolia/transporter';
 
-import { BrowsablePromise } from '../../BrowsablePromise';
+import { createBrowsablePromise } from '../../createBrowsablePromise';
 import { BrowseOptions } from '../../types/BrowseOptions';
 import { BrowseResponse } from '../../types/BrowseResponse';
 import { Rule } from '../../types/Rule';
@@ -15,13 +15,13 @@ export const browseRules = <TSearchIndex extends SearchIndex>(
     ...searchRules(base),
     browseRules(
       requestOptions?: SearchRulesOptions & BrowseOptions<Rule> & RequestOptions
-    ): Readonly<BrowsablePromise<Rule>> {
+    ): Readonly<Promise<void>> {
       const options = {
         hitsPerPage: 1000,
         ...requestOptions,
       };
 
-      return BrowsablePromise.from<Rule>({
+      return createBrowsablePromise<Rule>({
         ...options,
         shouldStop: response => response.hits.length < options.hitsPerPage,
         request: data => {
@@ -48,5 +48,5 @@ export const browseRules = <TSearchIndex extends SearchIndex>(
 export type HasBrowseRules = {
   readonly browseRules: (
     requestOptions?: SearchRulesOptions & BrowseOptions<Rule> & RequestOptions
-  ) => Readonly<BrowsablePromise<Rule>>;
+  ) => Readonly<Promise<void>>;
 };

@@ -1,6 +1,6 @@
 import { RequestOptions } from '@algolia/transporter';
 
-import { BrowsablePromise } from '../../BrowsablePromise';
+import { createBrowsablePromise } from '../../createBrowsablePromise';
 import { BrowseOptions } from '../../types/BrowseOptions';
 import { BrowseResponse } from '../../types/BrowseResponse';
 import { SearchIndex } from '../../types/SearchIndex';
@@ -15,13 +15,13 @@ export const browseSynonyms = <TSearchIndex extends SearchIndex>(
     ...searchSynonyms(base),
     browseSynonyms(
       requestOptions?: SearchSynonymsOptions & BrowseOptions<Synonym> & RequestOptions
-    ): Readonly<BrowsablePromise<Synonym>> {
+    ): Readonly<Promise<void>> {
       const options = {
         hitsPerPage: 1000,
         ...requestOptions,
       };
 
-      return BrowsablePromise.from<Synonym>({
+      return createBrowsablePromise<Synonym>({
         ...options,
         shouldStop: response => response.hits.length < options.hitsPerPage,
         request: data => {
@@ -48,5 +48,5 @@ export const browseSynonyms = <TSearchIndex extends SearchIndex>(
 export type HasBrowseSynonyms = {
   readonly browseSynonyms: (
     requestOptions?: SearchSynonymsOptions & BrowseOptions<Synonym> & RequestOptions
-  ) => Readonly<BrowsablePromise<Synonym>>;
+  ) => Readonly<Promise<void>>;
 };
