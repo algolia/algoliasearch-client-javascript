@@ -67,8 +67,8 @@
   "scripts": {
     "lint": "eslint . --ext .js,.ts --fix",
     "precommit": "lint-staged",
-    "test:browser-locally": "yarn build && ./scripts/prepare-test-browser.sh && wdio ./wdio.local.conf.js",
-    "test:browser-ci": "yarn build && ./scripts/prepare-test-browser.sh && wdio ./wdio.saucelabs.conf.js",
+    "test:browser-locally": "yarn release:build && ./scripts/prepare-test-browser.sh && wdio ./wdio.local.conf.js",
+    "test:browser-ci": "yarn release:build && ./scripts/prepare-test-browser.sh && wdio ./wdio.saucelabs.conf.js",
     "test:lint": "eslint . --ext .js,.ts",
     "test:locally": "lerna clean --yes && yarn lint && yarn test:types && yarn test:unit",
     "test:size": "bundlesize",
