@@ -1,0 +1,7 @@
+# This is an example with only required properties:
+version: 1
+update_configs:
+  - package_manager: "javascript"
+    directory: "/"
+    update_schedule: "live"
+    target_branch: release/v4.0.0
