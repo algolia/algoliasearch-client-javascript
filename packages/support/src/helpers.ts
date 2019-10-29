@@ -1,3 +1,5 @@
+import { ComposableOptions } from './types/ComposableOptions';
+
 // eslint-disable-next-line functional/prefer-readonly-type
 export function shuffle<TData>(array: TData[]): TData[] {
   let c = array.length - 1; // eslint-disable-line functional/no-let
@@ -23,10 +25,6 @@ export function compose<TObject>(obj: any, options?: ComposableOptions): TObject
 
   return obj;
 }
-
-export type ComposableOptions = {
-  readonly methods?: readonly Function[];
-};
 
 export function encode(format: string, ...args: readonly any[]): string {
   // eslint-disable-next-line functional/no-let

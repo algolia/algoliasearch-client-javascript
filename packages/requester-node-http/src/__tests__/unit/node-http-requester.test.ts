@@ -1,4 +1,5 @@
-import { Method, Request } from '@algolia/requester-types';
+import { Method } from '@algolia/requester-types/src/types/Method';
+import { Request } from '@algolia/requester-types/src/types/Request';
 import nock from 'nock';
 
 import { createNodeHttpRequester } from '../../..';

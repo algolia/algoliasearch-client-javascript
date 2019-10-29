@@ -1,4 +1,5 @@
-import { ComposableOptions, compose } from '@algolia/support';
+import { compose } from '@algolia/support';
+import { ComposableOptions } from '@algolia/support/src/types/ComposableOptions';
 import { TransporterAware } from '@algolia/transporter';
 
 import { SearchIndex } from '../../types/SearchIndex';

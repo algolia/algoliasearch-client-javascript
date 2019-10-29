@@ -1,4 +1,4 @@
-import { Method } from '@algolia/requester-types';
+import { Method } from '@algolia/requester-types/src/types/Method';
 import { createWaitablePromise } from '@algolia/support';
 import { WaitablePromise } from '@algolia/support/src/types/WaitablePromise';
 import { RequestOptions, TransporterAware } from '@algolia/transporter';

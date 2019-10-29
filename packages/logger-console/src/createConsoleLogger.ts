@@ -1,6 +1,7 @@
 /* eslint no-console: 0 */
 
-import { Logger, LogLevel, LogLevelType } from '@algolia/logger-types';
+import { Logger } from '@algolia/logger-types/src/types/Logger';
+import { LogLevel, LogLevelType } from '@algolia/logger-types/src/types/LogLevelType';
 
 export function createConsoleLogger(logLevel: LogLevelType): Logger {
   return {

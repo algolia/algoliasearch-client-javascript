@@ -1,4 +1,4 @@
-import { Response } from '@algolia/requester-types';
+import { Response } from '@algolia/requester-types/src/types/Response';
 
 import { createApiError } from './errors/createApiError';
 

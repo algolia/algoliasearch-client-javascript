@@ -1,7 +1,7 @@
-/* eslint @typescript-eslint/no-unused-vars: 0 */ // --> OFF
-import { Cache, CacheEvents } from './..';
+import { Cache } from './types/Cache';
+import { CacheEvents } from './types/CacheEvents';
 
-export function createNullCache(): Cache {
+/* eslint @typescript-eslint/no-unused-vars: 0 */ export function createNullCache(): Cache {
   return {
     get<TValue>(
       key: object,

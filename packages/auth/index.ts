@@ -1,2 +1,1 @@
-export * from './src/createAuth';
-export * from './src/types/AuthModeType';
+export { createAuth } from './src/createAuth';

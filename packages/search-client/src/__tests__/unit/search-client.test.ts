@@ -1,4 +1,4 @@
-import { Method } from '@algolia/requester-types';
+import { Method } from '@algolia/requester-types/src/types/Method';
 import { anything, deepEqual, spy, verify, when } from 'ts-mockito';
 
 import algoliasearch from '../../../../algoliasearch/src/builds/browser';

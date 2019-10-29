@@ -1,1 +1,1 @@
-export * from './src/createBrowserLocalStorageCache';
+export { createBrowserLocalStorageCache } from './src/createBrowserLocalStorageCache';

@@ -1,5 +1,7 @@
-import { AuthMode, AuthModeType, createAuth } from '@algolia/auth';
-import { ComposableOptions, compose, shuffle } from '@algolia/support';
+import { createAuth } from '@algolia/auth';
+import { AuthMode, AuthModeType } from '@algolia/auth/src/types/AuthModeType';
+import { compose, shuffle } from '@algolia/support';
+import { ComposableOptions } from '@algolia/support/src/types/ComposableOptions';
 import { Call, createTransporter, TransporterOptions } from '@algolia/transporter';
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type

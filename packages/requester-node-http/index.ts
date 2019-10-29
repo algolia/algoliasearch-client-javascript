@@ -1,1 +1,1 @@
-export * from './src/createNodeHttpRequester';
+export { createNodeHttpRequester } from './src/createNodeHttpRequester';

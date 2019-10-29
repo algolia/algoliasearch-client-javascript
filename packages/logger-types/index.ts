@@ -1,3 +1,1 @@
-export * from './src/types/LogLevelType';
-export * from './src/types/Logger';
-export * from './src/createNullLogger';
+export { createNullLogger } from './src/createNullLogger';

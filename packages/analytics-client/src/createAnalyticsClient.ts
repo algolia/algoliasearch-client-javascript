@@ -1,5 +1,7 @@
-import { AuthMode, createAuth } from '@algolia/auth';
-import { ComposableOptions, compose } from '@algolia/support';
+import { createAuth } from '@algolia/auth';
+import { AuthMode } from '@algolia/auth/src/types/AuthModeType';
+import { compose } from '@algolia/support';
+import { ComposableOptions } from '@algolia/support/src/types/ComposableOptions';
 import {
   Call,
   createTransporter,

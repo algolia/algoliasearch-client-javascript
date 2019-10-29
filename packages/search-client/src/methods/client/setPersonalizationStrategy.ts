@@ -1,4 +1,4 @@
-import { Method } from '@algolia/requester-types';
+import { Method } from '@algolia/requester-types/src/types/Method';
 import { RequestOptions, TransporterAware } from '@algolia/transporter';
 
 import { PersonalizationStrategy } from '../../types/PersonalizationStrategy';

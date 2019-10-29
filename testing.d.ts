@@ -1,5 +1,5 @@
 import { Cache } from '@algolia/cache-types';
-import { Requester } from '@algolia/requester-types';
+import { Requester } from '@algolia/requester-types/src/types/Requester';
 
 declare const testing: {
   readonly requester: () => Requester;

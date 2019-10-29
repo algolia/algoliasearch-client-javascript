@@ -1,4 +1,4 @@
-import { Method } from '@algolia/requester-types';
+import { Method } from '@algolia/requester-types/src/types/Method';
 import { popRequestOption, RequestOptions } from '@algolia/transporter';
 
 import { GetObjectsOptions } from '../../types/GetObjectsOptions';

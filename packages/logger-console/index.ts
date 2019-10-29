@@ -1,1 +1,1 @@
-export * from './src/createConsoleLogger';
+export { createConsoleLogger } from './src/createConsoleLogger';

@@ -1,1 +1,1 @@
-export * from './src/createBrowserXhrRequester';
+export { createBrowserXhrRequester } from './src/createBrowserXhrRequester';
