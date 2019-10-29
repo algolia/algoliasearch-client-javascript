@@ -1,6 +1,6 @@
 import { popRequestOption, RequestOptions } from '@algolia/transporter';
 
-import { ObjectNotFoundError } from '../../errors/ObjectNotFoundError';
+import { createObjectNotFoundError } from '../../errors/createObjectNotFoundError';
 import { FindObjectOptions } from '../../types/FindObjectOptions';
 import { FindObjectResponse } from '../../types/FindObjectResponse';
 import { ObjectWithObjectID } from '../../types/ObjectWithObjectID';
@@ -40,7 +40,7 @@ export const findObject = <TSearchIndex extends SearchIndex>(
 
           // paginate if option was set and has next page
           if (!paginate || page >= result.nbPages) {
-            throw new ObjectNotFoundError();
+            throw createObjectNotFoundError();
           }
 
           return forEachPage();

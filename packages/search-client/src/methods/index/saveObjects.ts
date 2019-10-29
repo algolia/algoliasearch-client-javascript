@@ -1,7 +1,7 @@
 import { WaitablePromise } from '@algolia/support/src/types/WaitablePromise';
 import { popRequestOption, RequestOptions } from '@algolia/transporter';
 
-import { MissingObjectIDError } from '../../errors/MissingObjectIDError';
+import { createMissingObjectIDError } from '../../errors/createMissingObjectIDError';
 import { BatchAction } from '../../types/BatchAction';
 import { BatchResponse } from '../../types/BatchResponse';
 import { SaveObjectsOptions } from '../../types/SaveObjectsOptions';
@@ -46,7 +46,7 @@ export type HasSaveObjects = {
 function ensureObjectIdsWithin(objects: readonly object[]): void {
   objects.forEach((object: object) => {
     if (!object.hasOwnProperty('objectID')) {
-      throw new MissingObjectIDError(
+      throw createMissingObjectIDError(
         '. All objects must have an unique objectID ' +
           '(like a primary key) to be valid. ' +
           'Algolia is also able to generate objectIDs ' +
