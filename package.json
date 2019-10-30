@@ -65,10 +65,11 @@
     "node": ">=8"
   },
   "scripts": {
+    "build": "lerna run build",
     "lint": "eslint . --ext .js,.ts --fix",
     "precommit": "lint-staged",
-    "test:browser-locally": "yarn release:build && ./scripts/prepare-test-browser.sh && wdio ./wdio.local.conf.js",
-    "test:browser-ci": "yarn release:build && ./scripts/prepare-test-browser.sh && wdio ./wdio.saucelabs.conf.js",
+    "test:browser-locally": "yarn build && ./scripts/prepare-test-browser.sh && wdio ./wdio.local.conf.js",
+    "test:browser-ci": "yarn build && ./scripts/prepare-test-browser.sh && wdio ./wdio.saucelabs.conf.js",
     "test:lint": "eslint . --ext .js,.ts",
     "test:locally": "lerna clean --yes && yarn lint && yarn test:types && yarn test:unit",
     "test:size": "bundlesize",
@@ -78,7 +79,6 @@
     "playground": "yarn build && ./scripts/prepare-playground.sh && yarn serve",
     "update": "rm -rf node_modules && rm -f yarn.lock && yarn && lerna clean --yes",
     "release:clean": "lerna run release:clean",
-    "release:build": "lerna run release:build",
     "release:alpha": "cd packages/algoliasearch && yarn release:alpha && cd ../../",
     "release:stable": "cd packages/algoliasearch && lerna run release:stable && cd ../../"
   },
@@ -90,11 +90,11 @@
   "bundlesize": [
     {
       "path": "packages/algoliasearch/dist/algoliasearch.umd.min.js",
-      "maxSize": "7.26KB"
+      "maxSize": "5.96KB"
     },
     {
       "path": "packages/algoliasearch/dist/algoliasearch-lite.umd.min.js",
-      "maxSize": "4.08KB"
+      "maxSize": "3.21KB"
     }
   ],
   "workspaces": [
