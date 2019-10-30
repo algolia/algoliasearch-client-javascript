@@ -1,6 +1,6 @@
-import { AuthMode } from '@algolia/auth/src/types/AuthModeType';
 import { createBrowserLocalStorageCache } from '@algolia/cache-browser-local-storage';
 import { createInMemoryCache } from '@algolia/cache-in-memory';
+import { AuthMode } from '@algolia/client-common/src/types/AuthModeType';
 import { LogLevelEnum } from '@algolia/logger-common/src/types/LogLevelType';
 import { createConsoleLogger } from '@algolia/logger-console';
 import { createBrowserXhrRequester } from '@algolia/requester-browser-xhr';

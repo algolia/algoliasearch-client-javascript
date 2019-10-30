@@ -1,6 +1,5 @@
-import { createAuth } from '@algolia/auth';
-import { AuthMode } from '@algolia/auth/src/types/AuthModeType';
-import { compose } from '@algolia/client-common';
+import { compose, createAuth } from '@algolia/client-common';
+import { AuthMode } from '@algolia/client-common/src/types/AuthModeType';
 import { ComposableOptions } from '@algolia/client-common/src/types/ComposableOptions';
 import { createTransporter } from '@algolia/transporter';
 import { CallEnum } from '@algolia/transporter/src/types/CallType';
