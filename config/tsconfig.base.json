@@ -20,6 +20,6 @@
     "rootDir": "../."
   },
   "preserveSymlinks": true,
-  "include": ["../packages/**/src/**/*.ts"],
+  "include": ["../packages/**/src/**/*.ts", "../packages/algoliasearch/src/aliases.d.ts"],
   "exclude": ["../packages/**/src/__tests__/**/*.ts", "**/node_modules/**"]
 }

@@ -1,6 +1,6 @@
-import { mapRequestOptions } from '..';
 import { execute } from './concerns/execute';
 import { createHost } from './createHost';
+import { mapRequestOptions } from './request-options';
 import { CallEnum, CallType } from './types/CallType';
 import { Headers } from './types/Headers';
 import { QueryParameters } from './types/QueryParameters';

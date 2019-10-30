@@ -12,7 +12,7 @@
   "license": "MIT",
   "description": "test",
   "scripts": {
-    "release:build": "tsc && BABEL_ENV=rollup rollup -c rollup.config.js",
+    "release:build": "tsc && BABEL_ENV=rollup rollup -c rollup.config.js && ./scripts/release-build.sh",
     "release:clean": "rm -rf dist",
     "release:alpha": "yarn publish --verbose --access public",
     "release:stable": ""
