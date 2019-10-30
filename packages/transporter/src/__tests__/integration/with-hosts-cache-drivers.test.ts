@@ -58,7 +58,7 @@ describe('hosts cache integration with cache drivers', () => {
 
         const message =
           // eslint-disable-next-line max-len
-          'Unreachable hosts - your application id may be incorrect. If the error persists, contact client-common@algolia.com.';
+          'Unreachable hosts - your application id may be incorrect. If the error persists, contact support@algolia.com.';
 
         await expect(transporter.read(transporterRequest)).rejects.toMatchObject({
           message,
