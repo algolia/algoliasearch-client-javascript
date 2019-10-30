@@ -1,6 +1,6 @@
 import { createSearchClient as baseCreateSearchClient } from '@algolia/client-search';
 import { SearchClientOptions } from '@algolia/client-search/src/createSearchClient';
-import { HasInitIndex, initIndex } from '@algolia/client-search/src/methods/client/initIndex';
+import { initIndex } from '@algolia/client-search/src/methods/client/initIndex';
 import {
   HasMultipleQueries,
   multipleQueries,
@@ -42,4 +42,8 @@ export const createSearchClient = (
       });
     },
   };
+};
+
+export type HasInitIndex = {
+  readonly initIndex: (indexName: string) => SearchIndex;
 };

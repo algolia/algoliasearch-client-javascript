@@ -21,7 +21,7 @@ import {
   getPersonalizationStrategy,
   HasGetPersonalizationStrategy,
 } from '@algolia/client-search/src/methods/client/getPersonalizationStrategy';
-import { HasInitIndex, initIndex } from '@algolia/client-search/src/methods/client/initIndex';
+import { initIndex } from '@algolia/client-search/src/methods/client/initIndex';
 import {
   HasListClusters,
   listClusters,
@@ -285,4 +285,8 @@ export const createSearchClient = (
 
 export type HasInitAnalytics = {
   readonly initAnalytics: (region?: string) => AnalyticsClient;
+};
+
+export type HasInitIndex = {
+  readonly initIndex: (indexName: string) => SearchIndex;
 };
