@@ -1,9 +1,10 @@
-import { compose, createAuth, shuffle } from '@algolia/client-common';
-import { AuthMode, AuthModeType } from '@algolia/client-common/src/types/AuthModeType';
-import { ComposableOptions } from '@algolia/client-common/src/types/ComposableOptions';
-import { createTransporter } from '@algolia/transporter';
-import { CallEnum } from '@algolia/transporter/src/types/CallType';
-import { TransporterOptions } from '@algolia/transporter/src/types/TransporterOptions';
+import { createAuth } from '@algolia/client-common/createAuth';
+import { compose, shuffle } from '@algolia/client-common/helpers';
+import { AuthMode, AuthModeType } from '@algolia/client-common/types/AuthModeType';
+import { ComposableOptions } from '@algolia/client-common/types/ComposableOptions';
+import { createTransporter } from '@algolia/transporter/createTransporter';
+import { CallEnum } from '@algolia/transporter/types/CallType';
+import { TransporterOptions } from '@algolia/transporter/types/TransporterOptions';
 
 import { SearchClient } from './types/SearchClient';
 

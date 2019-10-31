@@ -1,5 +1,4 @@
 {
-  "name": "algoliasearch-monorepo",
   "private": true,
   "license": "MIT",
   "devDependencies": {

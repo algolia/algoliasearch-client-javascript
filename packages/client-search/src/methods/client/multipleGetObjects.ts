@@ -1,6 +1,6 @@
-import { MethodEnum } from '@algolia/requester-common/src/types/MethodType';
-import { RequestOptions } from '@algolia/transporter/src/types/RequestOptions';
-import { TransporterAware } from '@algolia/transporter/src/types/TransporterAware';
+import { MethodEnum } from '@algolia/requester-common/types/MethodType';
+import { RequestOptions } from '@algolia/transporter/types/RequestOptions';
+import { TransporterAware } from '@algolia/transporter/types/TransporterAware';
 
 import { MultipleGetObject } from '../../types/MultipleGetObject';
 import { MultipleGetObjectsResponse } from '../../types/MultipleGetObjectsResponse';

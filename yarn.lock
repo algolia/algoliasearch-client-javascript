@@ -2,26 +2,6 @@
 # yarn lockfile v1
 
 
-"@algolia/cache-common@file:packages/cache-common":
-  version "4.0.0-alpha.0"
-
-"@algolia/client-common@file:packages/client-common":
-  version "4.0.0-alpha.0"
-
-"@algolia/logger-common@file:packages/logger-common":
-  version "4.0.0-alpha.0"
-
-"@algolia/requester-common@file:packages/requester-common":
-  version "4.0.0-alpha.0"
-
-"@algolia/transporter@file:packages/transporter":
-  version "4.0.0-alpha.0"
-  dependencies:
-    "@algolia/cache-common" "file:../../Library/Caches/Yarn/v4/npm-@algolia-transporter-4.0.0-alpha.0-c20ad09d-f754-4859-b897-51df0811fee5-1572463892712/node_modules/@algolia/cache-common"
-    "@algolia/logger-common" "file:../../Library/Caches/Yarn/v4/npm-@algolia-transporter-4.0.0-alpha.0-c20ad09d-f754-4859-b897-51df0811fee5-1572463892712/node_modules/@algolia/logger-common"
-    "@algolia/requester-common" "file:../../Library/Caches/Yarn/v4/npm-@algolia-transporter-4.0.0-alpha.0-c20ad09d-f754-4859-b897-51df0811fee5-1572463892712/node_modules/@algolia/requester-common"
-    "@algolia/transporter" "file:../../Library/Caches/Yarn/v4/npm-@algolia-transporter-4.0.0-alpha.0-c20ad09d-f754-4859-b897-51df0811fee5-1572463892712/node_modules/@algolia/transporter"
-
 "@babel/cli@^7.6.0":
   version "7.6.4"
   resolved "https://registry.yarnpkg.com/@babel/cli/-/cli-7.6.4.tgz#9b35a4e15fa7d8f487418aaa8229c8b0bc815f20"
@@ -4104,6 +4084,11 @@ eslint-config-prettier@^6.1.0:
   integrity sha512-cjXp8SbO9VFGW/Z7mbTydqS9to8Z58E5aYhj3e1+Hx7lS9s6gL5ILKNpCqZAFOVYRcSkWPFYljHrEh8QFEK5EQ==
   dependencies:
     get-stdin "^6.0.0"
+
+eslint-import-resolver-alias@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/eslint-import-resolver-alias/-/eslint-import-resolver-alias-1.1.2.tgz#297062890e31e4d6651eb5eba9534e1f6e68fc97"
+  integrity sha512-WdviM1Eu834zsfjHtcGHtGfcu+F30Od3V7I9Fi57uhBEwPkjDcii7/yW8jAT+gOhn4P/vOxxNAXbFAKsrrc15w==
 
 eslint-import-resolver-node@^0.3.2:
   version "0.3.2"

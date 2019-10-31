@@ -1,0 +1,1 @@
+export { createSearchClient } from './createSearchClient';

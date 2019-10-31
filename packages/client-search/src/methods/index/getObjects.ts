@@ -1,6 +1,6 @@
-import { MethodEnum } from '@algolia/requester-common/src/types/MethodType';
-import { popRequestOption } from '@algolia/transporter/src/request-options';
-import { RequestOptions } from '@algolia/transporter/src/types/RequestOptions';
+import { MethodEnum } from '@algolia/requester-common/types/MethodType';
+import { popRequestOption } from '@algolia/transporter/request-options';
+import { RequestOptions } from '@algolia/transporter/types/RequestOptions';
 
 import { GetObjectsOptions } from '../../types/GetObjectsOptions';
 import { GetObjectsResponse } from '../../types/GetObjectsResponse';

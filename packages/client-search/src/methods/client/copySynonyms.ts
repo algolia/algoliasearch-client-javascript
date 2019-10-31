@@ -1,6 +1,6 @@
-import { WaitablePromise } from '@algolia/client-common/src/types/WaitablePromise';
-import { RequestOptions } from '@algolia/transporter/src/types/RequestOptions';
-import { TransporterAware } from '@algolia/transporter/src/types/TransporterAware';
+import { WaitablePromise } from '@algolia/client-common/types/WaitablePromise';
+import { RequestOptions } from '@algolia/transporter/types/RequestOptions';
+import { TransporterAware } from '@algolia/transporter/types/TransporterAware';
 
 import { IndexOperationResponse } from '../../types/IndexOperationResponse';
 import { ScopeEnum } from '../../types/ScopeType';

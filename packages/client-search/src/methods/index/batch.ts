@@ -1,8 +1,9 @@
-import { createWaitablePromise, encode } from '@algolia/client-common';
-import { WaitablePromise } from '@algolia/client-common/src/types/WaitablePromise';
-import { MethodEnum } from '@algolia/requester-common/src/types/MethodType';
-import { popRequestOption } from '@algolia/transporter/src/request-options';
-import { RequestOptions } from '@algolia/transporter/src/types/RequestOptions';
+import { createWaitablePromise } from '@algolia/client-common/createWaitablePromise';
+import { encode } from '@algolia/client-common/helpers';
+import { WaitablePromise } from '@algolia/client-common/types/WaitablePromise';
+import { MethodEnum } from '@algolia/requester-common/types/MethodType';
+import { popRequestOption } from '@algolia/transporter/request-options';
+import { RequestOptions } from '@algolia/transporter/types/RequestOptions';
 
 import { BatchActionType } from '../../types/BatchActionType';
 import { BatchRequest } from '../../types/BatchRequest';

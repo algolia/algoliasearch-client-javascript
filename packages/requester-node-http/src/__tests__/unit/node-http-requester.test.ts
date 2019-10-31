@@ -1,8 +1,8 @@
-import { MethodEnum } from '@algolia/requester-common/src/types/MethodType';
-import { Request } from '@algolia/requester-common/src/types/Request';
+import { MethodEnum } from '@algolia/requester-common/types/MethodType';
+import { Request } from '@algolia/requester-common/types/Request';
 import nock from 'nock';
 
-import { createNodeHttpRequester } from '../../..';
+import { createNodeHttpRequester } from '../..';
 import Fixtures from '../Fixtures';
 const headers = {
   'content-type': 'application/x-www-form-urlencoded',

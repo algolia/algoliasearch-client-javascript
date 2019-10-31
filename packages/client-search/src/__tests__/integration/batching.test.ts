@@ -1,4 +1,4 @@
-import { TestSuite } from '@algolia/client-common/src/__tests__/TestSuite';
+import { TestSuite } from '@algolia/client-common/__tests__/TestSuite';
 
 const testSuite = new TestSuite('batching');
 

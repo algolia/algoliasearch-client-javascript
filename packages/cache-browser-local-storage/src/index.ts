@@ -1,0 +1,1 @@
+export { createBrowserLocalStorageCache } from './createBrowserLocalStorageCache';

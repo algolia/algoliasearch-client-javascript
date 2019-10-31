@@ -1,4 +1,4 @@
-import { TransporterAware } from '@algolia/transporter/src/types/TransporterAware';
+import { TransporterAware } from '@algolia/transporter/types/TransporterAware';
 
 export type SearchIndex = {
   readonly indexName: string;

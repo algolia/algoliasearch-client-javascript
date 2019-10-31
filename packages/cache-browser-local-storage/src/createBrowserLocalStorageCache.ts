@@ -1,5 +1,5 @@
-import { Cache } from '@algolia/cache-common/src/types/Cache';
-import { CacheEvents } from '@algolia/cache-common/src/types/CacheEvents';
+import { Cache } from '@algolia/cache-common/types/Cache';
+import { CacheEvents } from '@algolia/cache-common/types/CacheEvents';
 
 export function createBrowserLocalStorageCache(): Cache {
   /* eslint-disable functional/immutable-data, no-param-reassign */

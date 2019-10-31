@@ -1,4 +1,4 @@
-import { createNullCache } from '../../../';
+import { createNullCache } from '../..';
 
 describe('null cache', () => {
   it('does not set value', async () => {

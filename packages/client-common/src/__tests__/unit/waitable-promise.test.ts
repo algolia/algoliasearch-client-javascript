@@ -1,4 +1,4 @@
-import { createWaitablePromise } from '../../..';
+import { createWaitablePromise } from '../..';
 
 const original = { foo: 'bar' };
 

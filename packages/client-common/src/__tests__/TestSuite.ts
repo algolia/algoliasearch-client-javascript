@@ -1,8 +1,7 @@
-import { HasDelete } from '@algolia/client-search/src/methods/index/deleteIndex';
-import { SearchIndex } from '@algolia/client-search/src/types/SearchIndex';
-
-import algoliasearchForBrowser from '../../../algoliasearch/src/builds/browser';
-import algoliasearchForNode from '../../../algoliasearch/src/builds/node';
+import { HasDelete } from '@algolia/client-search/methods/index/deleteIndex';
+import { SearchIndex } from '@algolia/client-search/types/SearchIndex';
+import algoliasearchForBrowser from 'algoliasearch/builds/browser';
+import algoliasearchForNode from 'algoliasearch/builds/node';
 
 export class TestSuite {
   public readonly testName: string;

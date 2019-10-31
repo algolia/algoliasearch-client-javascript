@@ -35,6 +35,24 @@ module.exports = {
   },
   settings: {
     'import/resolver': {
+      "alias" : {
+        "map" : [
+          ["^algoliasearch", "./packages/algoliasearch/src"],
+          ["@algolia/cache-browser-local-storage", "./packages/cache-browser-local-storage/src"],
+          ["@algolia/cache-common", "./packages/cache-common/src"],
+          ["@algolia/cache-in-memory", "./packages/cache-in-memory/src"],
+          ["@algolia/client-analytics", "./packages/client-analytics/src"],
+          ["@algolia/client-common", "./packages/client-common/src"],
+          ["@algolia/client-search", "./packages/client-search/src"],
+          ["@algolia/logger-common", "./packages/logger-common/src"],
+          ["@algolia/logger-console", "./packages/logger-console/src"],
+          ["@algolia/requester-browser-xhr", "./packages/requester-browser-xhr/src"],
+          ["@algolia/requester-common", "./packages/requester-common/src"],
+          ["@algolia/requester-node-http", "./packages/requester-node-http/src"],
+          ["@algolia/transporter", "./packages/transporter/src"],
+        ],
+        "extensions": [".ts"]
+      },
       node: {
         extensions: ['.ts'],
       },

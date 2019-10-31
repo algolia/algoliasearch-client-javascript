@@ -1,6 +1,6 @@
-import { Faker } from '@algolia/client-common/src/__tests__/Faker';
-import { createMultiWaitable } from '@algolia/client-common/src/__tests__/helpers';
-import { TestSuite } from '@algolia/client-common/src/__tests__/TestSuite';
+import { Faker } from '@algolia/client-common/__tests__/Faker';
+import { createMultiWaitable } from '@algolia/client-common/__tests__/helpers';
+import { TestSuite } from '@algolia/client-common/__tests__/TestSuite';
 
 const testSuite = new TestSuite('settings');
 

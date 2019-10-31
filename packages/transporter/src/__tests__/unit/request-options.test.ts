@@ -1,4 +1,4 @@
-import { mapRequestOptions } from '../../..';
+import { mapRequestOptions } from '../..';
 
 describe('RequestOptions implementation', () => {
   it('Has default values', () => {

@@ -1,4 +1,4 @@
-import { encode } from '@algolia/client-common';
+import { encode } from '@algolia/client-common/helpers';
 
 import { createHost } from './createHost';
 import { Request } from './types/Request';

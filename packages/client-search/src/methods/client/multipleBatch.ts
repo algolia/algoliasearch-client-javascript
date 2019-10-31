@@ -1,8 +1,8 @@
-import { createWaitablePromise } from '@algolia/client-common';
-import { WaitablePromise } from '@algolia/client-common/src/types/WaitablePromise';
-import { MethodEnum } from '@algolia/requester-common/src/types/MethodType';
-import { RequestOptions } from '@algolia/transporter/src/types/RequestOptions';
-import { TransporterAware } from '@algolia/transporter/src/types/TransporterAware';
+import { createWaitablePromise } from '@algolia/client-common/createWaitablePromise';
+import { WaitablePromise } from '@algolia/client-common/types/WaitablePromise';
+import { MethodEnum } from '@algolia/requester-common/types/MethodType';
+import { RequestOptions } from '@algolia/transporter/types/RequestOptions';
+import { TransporterAware } from '@algolia/transporter/types/TransporterAware';
 
 import { BatchRequest } from '../../types/BatchRequest';
 import { MultipleBatchResponse } from '../../types/MultipleBatchResponse';

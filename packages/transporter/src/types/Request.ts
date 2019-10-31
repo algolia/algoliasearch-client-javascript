@@ -1,4 +1,4 @@
-import { MethodType } from '@algolia/requester-common/src/types/MethodType';
+import { MethodType } from '@algolia/requester-common/types/MethodType';
 
 export type Request = {
   readonly method: MethodType;

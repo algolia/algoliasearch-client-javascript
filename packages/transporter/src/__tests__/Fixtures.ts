@@ -1,12 +1,12 @@
-import { createNullCache } from '@algolia/cache-common';
-import { encode } from '@algolia/client-common';
-import { MethodEnum } from '@algolia/requester-common/src/types/MethodType';
-import { Request as RequesterRequest } from '@algolia/requester-common/src/types/Request';
-import { Requester } from '@algolia/requester-common/src/types/Requester';
-import { Response } from '@algolia/requester-common/src/types/Response';
+import { createNullCache } from '@algolia/cache-common/createNullCache';
+import { encode } from '@algolia/client-common/helpers';
+import { MethodEnum } from '@algolia/requester-common/types/MethodType';
+import { Request as RequesterRequest } from '@algolia/requester-common/types/Request';
+import { Requester } from '@algolia/requester-common/types/Requester';
+import { Response } from '@algolia/requester-common/types/Response';
+import algoliasearch from 'algoliasearch/builds/browser';
 import { instance } from 'ts-mockito';
 
-import algoliasearch from '../../../algoliasearch/src/builds/browser';
 import { createTransporter } from '../createTransporter';
 import { CallEnum } from '../types/CallType';
 

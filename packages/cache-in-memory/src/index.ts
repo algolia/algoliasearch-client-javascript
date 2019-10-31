@@ -1,0 +1,1 @@
+export { createInMemoryCache } from './createInMemoryCache';

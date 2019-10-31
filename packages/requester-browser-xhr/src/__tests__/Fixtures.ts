@@ -1,5 +1,5 @@
-import { MethodEnum } from '@algolia/requester-common/src/types/MethodType';
-import { Request } from '@algolia/requester-common/src/types/Request';
+import { MethodEnum } from '@algolia/requester-common/types/MethodType';
+import { Request } from '@algolia/requester-common/types/Request';
 
 export default class Fixtures {
   public static request(): Request {

@@ -1,6 +1,6 @@
-import { createMultiWaitable } from '@algolia/client-common/src/__tests__/helpers';
-import { TestSuite } from '@algolia/client-common/src/__tests__/TestSuite';
-import { createApiError } from '@algolia/transporter/src/errors/createApiError';
+import { createMultiWaitable } from '@algolia/client-common/__tests__/helpers';
+import { TestSuite } from '@algolia/client-common/__tests__/TestSuite';
+import { createApiError } from '@algolia/transporter/errors/createApiError';
 
 import { Synonym } from '../../types/Synonym';
 import { SynonymEnum } from '../../types/SynonymType';

@@ -1,6 +1,6 @@
-import { createWaitablePromise } from '@algolia/client-common';
-import { WaitablePromise } from '@algolia/client-common/src/types/WaitablePromise';
-import { RequestOptions } from '@algolia/transporter/src/types/RequestOptions';
+import { createWaitablePromise } from '@algolia/client-common/createWaitablePromise';
+import { WaitablePromise } from '@algolia/client-common/types/WaitablePromise';
+import { RequestOptions } from '@algolia/transporter/types/RequestOptions';
 
 import { SaveObjectResponse } from '../../types/SaveObjectResponse';
 import { SaveObjectsOptions } from '../../types/SaveObjectsOptions';

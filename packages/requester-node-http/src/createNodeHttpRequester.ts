@@ -1,6 +1,6 @@
-import { Request } from '@algolia/requester-common/src/types/Request';
-import { Requester } from '@algolia/requester-common/src/types/Requester';
-import { Response } from '@algolia/requester-common/src/types/Response';
+import { Request } from '@algolia/requester-common/types/Request';
+import { Requester } from '@algolia/requester-common/types/Requester';
+import { Response } from '@algolia/requester-common/types/Response';
 import * as https from 'https';
 import * as URL from 'url';
 

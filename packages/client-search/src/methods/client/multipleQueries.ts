@@ -1,7 +1,7 @@
-import { encodeQueryParameters } from '@algolia/client-common';
-import { MethodEnum } from '@algolia/requester-common/src/types/MethodType';
-import { RequestOptions } from '@algolia/transporter/src/types/RequestOptions';
-import { TransporterAware } from '@algolia/transporter/src/types/TransporterAware';
+import { encodeQueryParameters } from '@algolia/client-common/helpers';
+import { MethodEnum } from '@algolia/requester-common/types/MethodType';
+import { RequestOptions } from '@algolia/transporter/types/RequestOptions';
+import { TransporterAware } from '@algolia/transporter/types/TransporterAware';
 
 import { MultipleQueriesOptions } from '../../types/MultipleQueriesOptions';
 import { MultipleQueriesQuery } from '../../types/MultipleQueriesQuery';

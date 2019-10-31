@@ -1,7 +1,6 @@
-import { MethodEnum } from '@algolia/requester-common/src/types/MethodType';
+import { MethodEnum } from '@algolia/requester-common/types/MethodType';
+import algoliasearch from 'algoliasearch/builds/browser';
 import { anything, deepEqual, spy, verify, when } from 'ts-mockito';
-
-import algoliasearch from '../../../../algoliasearch/src/builds/browser';
 
 describe('search client', () => {
   it('Gives access to appId', () => {

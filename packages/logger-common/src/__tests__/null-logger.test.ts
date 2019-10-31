@@ -2,7 +2,7 @@
 
 import mockConsole from 'jest-mock-console';
 
-import { createNullLogger } from '../src/createNullLogger';
+import { createNullLogger } from '../createNullLogger';
 
 describe('null logger', () => {
   it('has a null behavior', () => {

@@ -1,8 +1,7 @@
-import { MethodEnum } from '@algolia/requester-common/src/types/MethodType';
-import { mapRequestOptions } from '@algolia/transporter';
-import { popRequestOption } from '@algolia/transporter/src/request-options';
-import { RequestOptions } from '@algolia/transporter/src/types/RequestOptions';
-import { TransporterAware } from '@algolia/transporter/src/types/TransporterAware';
+import { MethodEnum } from '@algolia/requester-common/types/MethodType';
+import { mapRequestOptions, popRequestOption } from '@algolia/transporter/request-options';
+import { RequestOptions } from '@algolia/transporter/types/RequestOptions';
+import { TransporterAware } from '@algolia/transporter/types/TransporterAware';
 
 import { GetLogsResponse } from '../../types/GetLogsResponse';
 

@@ -16,5 +16,19 @@
     "release:clean": "rm -rf dist",
     "release:alpha": "yarn publish --verbose --access public",
     "release:stable": ""
+  },
+  "dependencies": {
+    "@algolia/cache-browser-local-storage": "4.0.0-alpha.18",
+    "@algolia/cache-common": "4.0.0-alpha.18",
+    "@algolia/cache-in-memory": "4.0.0-alpha.18",
+    "@algolia/client-analytics": "4.0.0-alpha.18",
+    "@algolia/client-common": "4.0.0-alpha.18",
+    "@algolia/client-search": "4.0.0-alpha.18",
+    "@algolia/logger-common": "4.0.0-alpha.18",
+    "@algolia/logger-console": "4.0.0-alpha.18",
+    "@algolia/requester-browser-xhr": "4.0.0-alpha.18",
+    "@algolia/requester-common": "4.0.0-alpha.18",
+    "@algolia/requester-node-http": "4.0.0-alpha.18",
+    "@algolia/transporter": "4.0.0-alpha.18"
   }
 }

@@ -1,4 +1,4 @@
-import { RequestOptions } from '@algolia/transporter/src/types/RequestOptions';
+import { RequestOptions } from '@algolia/transporter/types/RequestOptions';
 
 import { createBrowsablePromise } from '../../createBrowsablePromise';
 import { BrowseOptions } from '../../types/BrowseOptions';

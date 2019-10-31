@@ -1,4 +1,4 @@
-import { createTransporter } from '../..';
+import { createTransporter } from '..';
 import { createHost } from '../createHost';
 import { deserializeFailure, deserializeSuccess } from '../deserializer';
 import { createRetryError } from '../errors/createRetryError';

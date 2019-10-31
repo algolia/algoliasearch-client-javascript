@@ -1,4 +1,4 @@
-import { RequestOptions } from '@algolia/transporter/src/types/RequestOptions';
+import { RequestOptions } from '@algolia/transporter/types/RequestOptions';
 
 import { OnWaitClosure } from './types/OnWaitClosure';
 import { WaitablePromise } from './types/WaitablePromise';

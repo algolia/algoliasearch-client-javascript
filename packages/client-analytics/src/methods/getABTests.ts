@@ -1,6 +1,6 @@
-import { MethodEnum } from '@algolia/requester-common/src/types/MethodType';
-import { RequestOptions } from '@algolia/transporter/src/types/RequestOptions';
-import { TransporterAware } from '@algolia/transporter/src/types/TransporterAware';
+import { MethodEnum } from '@algolia/requester-common/types/MethodType';
+import { RequestOptions } from '@algolia/transporter/types/RequestOptions';
+import { TransporterAware } from '@algolia/transporter/types/TransporterAware';
 
 import { GetABTestsOptions } from '../types/GetABTestsOptions';
 import { GetABTestsResponse } from '../types/GetABTestsResponse';

@@ -1,10 +1,10 @@
-import { Transporter } from '@algolia/transporter';
 import { anything, deepEqual, mock, verify, when } from 'ts-mockito';
 
+import { createTransporter } from '../../createTransporter';
 import { FakeRequester, Fixtures } from '../Fixtures';
 
 let requester: FakeRequester;
-let transporter: Transporter;
+let transporter: ReturnType<typeof createTransporter>;
 
 beforeEach(() => {
   requester = mock(FakeRequester);

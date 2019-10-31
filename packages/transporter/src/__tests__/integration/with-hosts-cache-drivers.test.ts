@@ -1,6 +1,6 @@
-import { createBrowserLocalStorageCache } from '@algolia/cache-browser-local-storage';
-import { createNullCache } from '@algolia/cache-common';
-import { createInMemoryCache } from '@algolia/cache-in-memory';
+import { createBrowserLocalStorageCache } from '@algolia/cache-browser-local-storage/createBrowserLocalStorageCache';
+import { createNullCache } from '@algolia/cache-common/createNullCache';
+import { createInMemoryCache } from '@algolia/cache-in-memory/createInMemoryCache';
 import { anything, mock, verify, when } from 'ts-mockito';
 
 import { FakeRequester, Fixtures } from '../Fixtures';

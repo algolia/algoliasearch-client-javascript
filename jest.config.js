@@ -1,4 +1,7 @@
 /* eslint-disable import/no-commonjs, functional/immutable-data */
+const { pathsToModuleNameMapper } = require('ts-jest/utils');
+
+const { compilerOptions } = require('./tsconfig');
 
 const config = {
   testMatch: ['**/__tests__/**/*.test.ts'],
@@ -7,10 +10,12 @@ const config = {
   transform: {
     '^.+\\.ts?$': 'ts-jest',
   },
+  moduleFileExtensions: ['js', 'ts'],
+  moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, { prefix: '<rootDir>/' }),
   transformIgnorePatterns: [],
   coverageReporters: ['text'],
   collectCoverage: true,
-  collectCoverageFrom: ['**/src/**/*.ts', '!**/src/__tests__/**/*.ts'],
+  collectCoverageFrom: ['**/src*/*.ts', '!**/src/__tests__/**/*.ts'],
   coverageThreshold: {
     global: {
       branches: 100,

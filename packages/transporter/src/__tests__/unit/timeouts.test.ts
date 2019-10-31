@@ -1,4 +1,4 @@
-import { createTransporter } from '@algolia/transporter';
+import { createTransporter } from '@algolia/transporter/createTransporter';
 import { anything, deepEqual, mock, verify, when } from 'ts-mockito';
 
 import { createRetryError } from '../../errors/createRetryError';

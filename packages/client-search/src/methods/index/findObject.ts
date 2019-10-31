@@ -1,5 +1,5 @@
-import { popRequestOption } from '@algolia/transporter/src/request-options';
-import { RequestOptions } from '@algolia/transporter/src/types/RequestOptions';
+import { popRequestOption } from '@algolia/transporter/request-options';
+import { RequestOptions } from '@algolia/transporter/types/RequestOptions';
 
 import { createObjectNotFoundError } from '../../errors/createObjectNotFoundError';
 import { FindObjectOptions } from '../../types/FindObjectOptions';

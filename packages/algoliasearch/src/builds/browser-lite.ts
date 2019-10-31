@@ -1,10 +1,10 @@
-import { createBrowserLocalStorageCache } from '@algolia/cache-browser-local-storage';
-import { createInMemoryCache } from '@algolia/cache-in-memory';
-import { AuthMode } from '@algolia/client-common/src/types/AuthModeType';
-import { LogLevelEnum } from '@algolia/logger-common/src/types/LogLevelType';
-import { createConsoleLogger } from '@algolia/logger-console';
-import { createBrowserXhrRequester } from '@algolia/requester-browser-xhr';
-import { createUserAgent } from '@algolia/transporter';
+import { createBrowserLocalStorageCache } from '@algolia/cache-browser-local-storage/createBrowserLocalStorageCache';
+import { createInMemoryCache } from '@algolia/cache-in-memory/createInMemoryCache';
+import { AuthMode } from '@algolia/client-common/types/AuthModeType';
+import { LogLevelEnum } from '@algolia/logger-common/types/LogLevelType';
+import { createConsoleLogger } from '@algolia/logger-console/createConsoleLogger';
+import { createBrowserXhrRequester } from '@algolia/requester-browser-xhr/createBrowserXhrRequester';
+import { createUserAgent } from '@algolia/transporter/createUserAgent';
 
 import { createSearchClient, SearchClient } from '../presets/lite';
 import { AlgoliaSearchOptions } from '../types/AlgoliaSearchOptions';

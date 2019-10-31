@@ -1,8 +1,8 @@
-import { MethodEnum } from '@algolia/requester-common/src/types/MethodType';
-import { Request } from '@algolia/requester-common/src/types/Request';
+import { MethodEnum } from '@algolia/requester-common/types/MethodType';
+import { Request } from '@algolia/requester-common/types/Request';
 import mock, { MockRequest, MockResponse } from 'xhr-mock';
 
-import { createBrowserXhrRequester } from '../../..';
+import { createBrowserXhrRequester } from '../..';
 import Fixtures from '../Fixtures';
 
 const timeoutRequest: Request = {
