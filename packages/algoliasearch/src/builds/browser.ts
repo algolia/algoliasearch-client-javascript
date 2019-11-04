@@ -31,5 +31,7 @@ export default function algoliasearch(
   });
 }
 
+export * from '../index';
+
 // eslint-disable-next-line @typescript-eslint/consistent-type-assertions, functional/immutable-data
 (<any>window).algoliasearch = algoliasearch;
