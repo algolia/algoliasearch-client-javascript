@@ -1,10 +1,10 @@
 import { Cache } from './types/Cache';
 import { CacheEvents } from './types/CacheEvents';
 
-/* eslint @typescript-eslint/no-unused-vars: 0 */ export function createNullCache(): Cache {
+export function createNullCache(): Cache {
   return {
     get<TValue>(
-      key: object,
+      _key: object,
       defaultValue: () => Readonly<Promise<TValue>>,
       events?: CacheEvents
     ): Readonly<Promise<TValue>> {
@@ -15,11 +15,11 @@ import { CacheEvents } from './types/CacheEvents';
       return miss(value).then(() => value);
     },
 
-    set<TValue>(key: object, value: TValue): Readonly<Promise<TValue>> {
+    set<TValue>(_key: object, value: TValue): Readonly<Promise<TValue>> {
       return Promise.resolve(value);
     },
 
-    delete(key: object): Readonly<Promise<void>> {
+    delete(_key: object): Readonly<Promise<void>> {
       return Promise.resolve();
     },
 
