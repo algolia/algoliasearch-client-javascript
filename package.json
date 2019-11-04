@@ -9,6 +9,7 @@
     "@babel/plugin-transform-runtime": "^7.6.0",
     "@babel/preset-env": "^7.4.5",
     "@babel/preset-typescript": "^7.6.0",
+    "@microsoft/api-extractor": "^7.5.2",
     "@types/jest": "^24.0.18",
     "@types/node": "^12.7.2",
     "@typescript-eslint/eslint-plugin": "^2.2.0",
@@ -27,6 +28,7 @@
     "eslint": "^6.2.2",
     "eslint-config-algolia": "^14.0.0",
     "eslint-config-prettier": "^6.1.0",
+    "eslint-import-resolver-alias": "^1.1.2",
     "eslint-plugin-functional": "^1.0.0-rc.2",
     "eslint-plugin-import": "^2.18.0",
     "eslint-plugin-jest": "^22.15.2",
@@ -43,14 +45,18 @@
     "nock": "^11.3.4",
     "prettier": "^1.18.2",
     "rollup": "^1.20.3",
+    "rollup-plugin-alias": "^2.2.0",
     "rollup-plugin-auto-external": "^2.0.0",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-filesize": "6.0.1",
+    "rollup-plugin-json": "^4.0.0",
+    "rollup-plugin-node-builtins": "^2.1.2",
     "rollup-plugin-node-globals": "^1.4.0",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-replace": "^2.2.0",
-    "rollup-plugin-typescript2": "^0.24.0",
+    "rollup-plugin-terser": "^5.1.2",
+    "rollup-plugin-typescript2": "^0.24.3",
     "rollup-plugin-uglify": "^6.0.3",
     "serve": "^11.2.0",
     "ts-jest": "^24.0.2",
@@ -64,11 +70,11 @@
     "node": ">=8"
   },
   "scripts": {
-    "build": "lerna run build",
+    "build": "node scripts/build.js",
     "lint": "eslint . --ext .js,.ts --fix",
     "precommit": "lint-staged",
-    "test:browser-locally": "yarn build && ./scripts/prepare-test-browser.sh && wdio ./wdio.local.conf.js",
-    "test:browser-ci": "yarn build && ./scripts/prepare-test-browser.sh && wdio ./wdio.saucelabs.conf.js",
+    "test:browser-locally": "./scripts/prepare-test-browser.sh && wdio ./wdio.local.conf.js",
+    "test:browser-ci": "./scripts/prepare-test-browser.sh && wdio ./wdio.saucelabs.conf.js",
     "test:lint": "eslint . --ext .js,.ts",
     "test:locally": "lerna clean --yes && yarn lint && yarn test:types && yarn test:unit",
     "test:size": "bundlesize",
@@ -77,7 +83,6 @@
     "test:unit": "lerna clean --yes && jest --verbose --updateSnapshot",
     "playground": "yarn build && ./scripts/prepare-playground.sh && yarn serve",
     "update": "rm -rf node_modules && rm -f yarn.lock && yarn && lerna clean --yes",
-    "release:clean": "lerna run release:clean",
     "release:alpha": "cd packages/algoliasearch && yarn release:alpha && cd ../../",
     "release:stable": "cd packages/algoliasearch && lerna run release:stable && cd ../../"
   },
@@ -88,12 +93,20 @@
   },
   "bundlesize": [
     {
-      "path": "packages/algoliasearch/dist/algoliasearch.umd.min.js",
-      "maxSize": "5.96KB"
+      "path": "packages/algoliasearch/dist/algoliasearch.umd.js",
+      "maxSize": "5.24KB"
     },
     {
-      "path": "packages/algoliasearch/dist/algoliasearch-lite.umd.min.js",
-      "maxSize": "3.21KB"
+      "path": "packages/algoliasearch/dist/algoliasearch.esm-browser.js",
+      "maxSize": "5.16KB"
+    },
+    {
+      "path": "packages/algoliasearch/dist/algoliasearch-lite.umd.js",
+      "maxSize": "2.81KB"
+    },
+    {
+      "path": "packages/algoliasearch/dist/algoliasearch-lite.esm-browser.js",
+      "maxSize": "2.73KB"
     }
   ],
   "workspaces": [

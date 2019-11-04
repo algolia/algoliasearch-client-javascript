@@ -1,14 +1,10 @@
 {
-  "extends": "../../config/tsconfig.base.json",
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "client-search": ["../client-search"]
-    },
-    "allowJs": false,
+    "declaration": true,
     "noEmit": false,
+    "allowJs": false,
     "emitDeclarationOnly": true,
-    "module": "es2015",
     "outFile": "dist/types.d.ts"
   }
 }

@@ -1,5 +1,4 @@
-import { createAuth } from '@algolia/client-common/createAuth';
-import { compose } from '@algolia/client-common/helpers';
+import { compose, createAuth } from '@algolia/client-common';
 import { AuthMode } from '@algolia/client-common/types/AuthModeType';
 import { ComposableOptions } from '@algolia/client-common/types/ComposableOptions';
 import { createTransporter } from '@algolia/transporter/createTransporter';

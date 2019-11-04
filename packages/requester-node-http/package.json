@@ -1,6 +1,11 @@
 {
   "name": "@algolia/requester-node-http",
   "version": "4.0.0-alpha.18",
+  "files": [
+    "index.js",
+    "dist"
+  ],
+  "types": "dist/requester-node-http.d.ts",
   "license": "MIT",
   "main": "index.ts",
   "dependencies": {

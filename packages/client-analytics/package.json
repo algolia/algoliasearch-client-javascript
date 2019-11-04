@@ -1,8 +1,13 @@
 {
   "name": "@algolia/client-analytics",
   "version": "4.0.0-alpha.18",
+  "files": [
+    "index.js",
+    "dist"
+  ],
+  "types": "dist/client-analytics.d.ts",
   "license": "MIT",
-  "main": "index.ts",
+  "main": "index.js",
   "dependencies": {
     "@algolia/logger-common": "4.0.0-alpha.18",
     "@algolia/transporter": "4.0.0-alpha.18",

@@ -1,8 +1,13 @@
 {
   "name": "@algolia/transporter",
   "version": "4.0.0-alpha.18",
+  "files": [
+    "index.js",
+    "dist"
+  ],
+  "types": "dist/transporter.d.ts",
   "license": "MIT",
-  "main": "index.ts",
+  "main": "index.js",
   "dependencies": {
     "@algolia/cache-common": "4.0.0-alpha.18",
     "@algolia/logger-common": "4.0.0-alpha.18",

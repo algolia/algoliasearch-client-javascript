@@ -1,18 +1,21 @@
 {
   "name": "@nunomaduro/lightsearch",
-  "main": "index.js",
-  "types": "./dist/types.d.ts",
-  "browser": {
-    "./index.js": "./dist/algoliasearch.umd.min.js",
-    "./lite.js": "./dist/algoliasearch-lite.umd.min.js"
-  },
-  "jsdelivr": "./dist/algoliasearch.umd.min.js",
-  "private": false,
   "version": "4.0.0-alpha.18",
+  "main": "index.js",
+  "files": [
+    "index.js",
+    "dist"
+  ],
+  "types": "dist/algoliasearch.d.ts",
+  "browser": {
+    "./index.js": "./dist/algoliasearch.umd.js",
+    "./lite.js": "./dist/algoliasearch-lite.umd.js"
+  },
+  "jsdelivr": "./dist/algoliasearch.umd.js",
+  "private": false,
   "license": "MIT",
   "description": "test",
   "scripts": {
-    "build": "tsc && BABEL_ENV=rollup rollup -c rollup.config.js && ./scripts/release-build.sh",
     "release:clean": "rm -rf dist",
     "release:alpha": "yarn publish --verbose --access public",
     "release:stable": ""

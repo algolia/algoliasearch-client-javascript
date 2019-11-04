@@ -6,10 +6,11 @@ import { Headers } from './types/Headers';
 import { QueryParameters } from './types/QueryParameters';
 import { Request } from './types/Request';
 import { RequestOptions } from './types/RequestOptions';
+import { Transporter } from './types/Transporter';
 import { TransporterOptions } from './types/TransporterOptions';
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export function createTransporter(options: TransporterOptions) {
+export function createTransporter(options: TransporterOptions): Transporter {
   return {
     ...options,
     // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
@@ -18,6 +19,7 @@ export function createTransporter(options: TransporterOptions) {
     queryParameters: {} as QueryParameters,
     hosts: [] as ReadonlyArray<ReturnType<typeof createHost>>,
     addUserAgent(segment: string, version?: string): void {
+      // @ts-ignore
       // eslint-disable-next-line functional/immutable-data
       this.userAgent = options.userAgent.with({ segment, version });
     },
@@ -30,6 +32,7 @@ export function createTransporter(options: TransporterOptions) {
       Object.assign(this.queryParameters, queryParameters);
     },
     setHosts(values: ReadonlyArray<{ readonly url: string; readonly accept: CallType }>): void {
+      // @ts-ignore
       // eslint-disable-next-line functional/immutable-data
       this.hosts = values.map(host => createHost(host.url, host.accept));
     },

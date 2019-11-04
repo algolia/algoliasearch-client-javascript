@@ -1,8 +1,13 @@
 {
   "name": "@algolia/requester-browser-xhr",
   "version": "4.0.0-alpha.18",
+  "files": [
+    "index.js",
+    "dist"
+  ],
+  "types": "dist/requester-browser-xhr.d.ts",
   "license": "MIT",
-  "main": "index.ts",
+  "main": "index.js",
   "dependencies": {
     "@algolia/requester-common": "4.0.0-alpha.18"
   }

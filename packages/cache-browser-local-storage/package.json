@@ -1,8 +1,13 @@
 {
   "name": "@algolia/cache-browser-local-storage",
   "version": "4.0.0-alpha.18",
+  "files": [
+    "index.js",
+    "dist"
+  ],
+  "types": "dist/cache-browser-local-storage.d.ts",
   "license": "MIT",
-  "main": "index.ts",
+  "main": "index.js",
   "dependencies": {
     "@algolia/cache-common": "4.0.0-alpha.18"
   }

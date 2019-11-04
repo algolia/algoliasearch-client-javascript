@@ -1,8 +1,13 @@
 {
   "name": "@algolia/cache-in-memory",
   "version": "4.0.0-alpha.18",
+  "files": [
+    "index.js",
+    "dist"
+  ],
+  "types": "dist/cache-in-memory.d.ts",
   "license": "MIT",
-  "main": "index.ts",
+  "main": "index.js",
   "dependencies": {
     "@algolia/cache-common": "4.0.0-alpha.18"
   }
