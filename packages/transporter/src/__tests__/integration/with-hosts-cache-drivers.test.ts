@@ -1,11 +1,12 @@
 import { createBrowserLocalStorageCache } from '@algolia/cache-browser-local-storage/createBrowserLocalStorageCache';
 import { createNullCache } from '@algolia/cache-common/createNullCache';
 import { createInMemoryCache } from '@algolia/cache-in-memory/createInMemoryCache';
-import { anything, mock, verify, when } from 'ts-mockito';
+import { Requester } from '@algolia/requester-common';
+import { anything, spy, verify, when } from 'ts-mockito';
 
-import { FakeRequester, Fixtures } from '../Fixtures';
+import { createFakeRequester, createFixtures } from '../Fixtures';
 
-const transporterRequest = Fixtures.transporterRequest();
+const transporterRequest = createFixtures().transporterRequest();
 const drivers = [createNullCache, createInMemoryCache];
 
 // @ts-ignore
@@ -46,15 +47,17 @@ describe('hosts cache integration with cache drivers', () => {
 
     for (let callsNumber = 0; callsNumber < 2; callsNumber++) {
       for (let index = 0; index < drivers.length; index++) {
-        let requester: FakeRequester;
+        let requester: Requester;
 
-        when((requester = mock(FakeRequester)).send(anything())).thenResolve({
+        when((requester = spy(createFakeRequester())).send(anything())).thenResolve({
           content: JSON.stringify({ hits: [] }),
           status: 500,
           isTimedOut: false,
         });
 
-        const transporter = Fixtures.transporter(requester, { hostsCache: driversCreated[index] });
+        const transporter = createFixtures().transporter(requester, {
+          hostsCache: driversCreated[index],
+        });
 
         const message =
           // eslint-disable-next-line max-len

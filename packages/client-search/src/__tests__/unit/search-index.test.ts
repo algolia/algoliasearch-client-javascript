@@ -1,9 +1,8 @@
-import { Faker } from '@algolia/client-common/__tests__/Faker';
-import { encode } from '@algolia/client-common/helpers';
-import { MethodEnum } from '@algolia/requester-common/types/MethodType';
-import { RequestOptions } from '@algolia/transporter/types/RequestOptions';
-import algoliasearch from 'algoliasearch/builds/browser';
-import { SearchIndex } from 'algoliasearch/presets/default';
+import { encode } from '@algolia/client-common';
+import { createFaker } from '@algolia/client-common/__tests__/createFaker';
+import { MethodEnum } from '@algolia/requester-common';
+import { RequestOptions, Transporter } from '@algolia/transporter';
+import algoliasearch, { SearchIndex } from 'algoliasearch/builds/browser';
 import { anything, deepEqual, spy, verify, when } from 'ts-mockito';
 
 import { BatchActionEnum } from '../../types/BatchActionType';
@@ -37,7 +36,7 @@ describe('SaveObject', () => {
   it('Proxies down to save objects', async () => {
     const indexSpy = spy(index);
 
-    const obj = Faker.object();
+    const obj = createFaker().object();
     const requestoptions = {
       timeout: 1,
     };
@@ -61,7 +60,7 @@ describe('SaveObject', () => {
 describe('SaveObjects', () => {
   it('Uses addObject when `autoGenerateObjectIDIfNotExist` is true', async () => {
     const indexSpy = spy(index);
-    const objects = [Faker.object()];
+    const objects = [createFaker().object()];
     const requestOptions: RequestOptions & SaveObjectsOptions = {
       autoGenerateObjectIDIfNotExist: true,
     };
@@ -75,7 +74,7 @@ describe('SaveObjects', () => {
 
   it('Uses updateObject when `autoGenerateObjectIDIfNotExist` is not set', async () => {
     const indexSpy = spy(index);
-    const objects = [Faker.object('myObjectID')];
+    const objects = [createFaker().object('myObjectID')];
 
     when(indexSpy.chunk(anything(), anything(), anything())).thenResolve(res);
 
@@ -122,8 +121,8 @@ describe('Chunk', () => {
 
     when(indexSpy.batch(anything(), anything())).thenResolve(res);
 
-    await index.chunk([Faker.object()], BatchActionEnum.AddObject);
-    await index.chunk(Faker.objects(1001), BatchActionEnum.UpdateObject);
+    await index.chunk([createFaker().object()], BatchActionEnum.AddObject);
+    await index.chunk(createFaker().objects(1001), BatchActionEnum.UpdateObject);
 
     verify(indexSpy.batch(anything(), anything())).times(3);
   });
@@ -133,8 +132,8 @@ describe('Chunk', () => {
 
     when(indexSpy.batch(anything(), anything())).thenResolve(res);
 
-    await index.chunk([Faker.object()], BatchActionEnum.AddObject);
-    await index.chunk(Faker.objects(1001), BatchActionEnum.UpdateObject, {
+    await index.chunk([createFaker().object()], BatchActionEnum.AddObject);
+    await index.chunk(createFaker().objects(1001), BatchActionEnum.UpdateObject, {
       batchSize: 100,
     });
 
@@ -146,7 +145,7 @@ describe('Chunk', () => {
 
     when(indexSpy.batch(anything(), anything())).thenResolve(res);
 
-    await index.chunk(Faker.objects(1000), BatchActionEnum.UpdateObject);
+    await index.chunk(createFaker().objects(1000), BatchActionEnum.UpdateObject);
 
     verify(indexSpy.batch(anything(), anything())).once();
   });

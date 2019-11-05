@@ -1,4 +1,4 @@
-import { Faker } from '@algolia/client-common/__tests__/Faker';
+import { createFaker } from '@algolia/client-common/__tests__/createFaker';
 import { createMultiWaitable } from '@algolia/client-common/__tests__/helpers';
 import { TestSuite } from '@algolia/client-common/__tests__/TestSuite';
 
@@ -14,7 +14,7 @@ test(testSuite.testName, async () => {
 
   const responses: any = [];
 
-  responses.push(index.saveObject(Faker.object('foo')));
+  responses.push(index.saveObject(createFaker().object('foo')));
 
   const settings1 = {
     searchableAttributes: [

@@ -1,8 +1,8 @@
-import { Faker } from '@algolia/client-common/__tests__/Faker';
 import { createMultiWaitable } from '@algolia/client-common/__tests__/helpers';
 import { TestSuite } from '@algolia/client-common/__tests__/TestSuite';
 import { createApiError } from '@algolia/transporter/errors/createApiError';
 
+import { createFaker } from '../../../../client-common/src/__tests__/createFaker';
 import { ABTest } from '../../types/ABTest';
 import { Variant } from '../../types/Variant';
 
@@ -29,7 +29,7 @@ test(testSuite.testName, async () => {
   }
 
   // Create the two indices by adding a dummy object in each of them
-  const object = Faker.object('one');
+  const object = createFaker().object('one');
   await createMultiWaitable([index1.saveObject(object), index2.saveObject(object)] as any).wait();
 
   const abTestName = testSuite.makeIndexName();

@@ -1,14 +1,15 @@
-import { anything, deepEqual, mock, verify, when } from 'ts-mockito';
+import { Requester } from '@algolia/requester-common';
+import { anything, deepEqual, spy, verify, when } from 'ts-mockito';
 
-import { createTransporter } from '../../createTransporter';
-import { FakeRequester, Fixtures } from '../Fixtures';
+import { Transporter } from '../../types';
+import { createFakeRequester, createFixtures } from '../Fixtures';
 
-let requester: FakeRequester;
-let transporter: ReturnType<typeof createTransporter>;
+let requester: Requester;
+let transporter: Transporter;
 
 beforeEach(() => {
-  requester = mock(FakeRequester);
-  transporter = Fixtures.transporter(requester);
+  requester = spy(createFakeRequester());
+  transporter = createFixtures().transporter(requester);
 
   when(requester.send(anything())).thenResolve({
     content: '{}',
@@ -17,7 +18,7 @@ beforeEach(() => {
   });
 });
 
-const transporterRequest = Fixtures.transporterRequest();
+const transporterRequest = createFixtures().transporterRequest();
 
 describe('Usage of query parameters', () => {
   it('allows to set query parameters', async () => {
@@ -28,7 +29,7 @@ describe('Usage of query parameters', () => {
     verify(
       requester.send(
         deepEqual(
-          Fixtures.writeRequest({
+          createFixtures().writeRequest({
             url: 'https://write.com/save?x-foo=foo',
           })
         )
@@ -46,7 +47,7 @@ describe('Usage of query parameters', () => {
     verify(
       requester.send(
         deepEqual(
-          Fixtures.readRequest({
+          createFixtures().readRequest({
             url: 'https://read.com/save?x-bar=bar',
           })
         )
@@ -65,7 +66,7 @@ describe('Usage of query parameters', () => {
     verify(
       requester.send(
         deepEqual(
-          Fixtures.readRequest({
+          createFixtures().readRequest({
             url: 'https://read.com/save?x-foo=My%20custom%20foo&x-bar=My%20custom%20bar',
           })
         )

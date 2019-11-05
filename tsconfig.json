@@ -49,9 +49,5 @@
       "@algolia/transporter/*": ["packages/transporter/src/*"]
     }
   },
-  "include": ["packages/**/src/**/*.ts"],
-  "exclude": [
-    "packages/**/__tests__/**/*.ts",
-    "packages/**/dist"
-  ]
+  "include": ["packages/**/src/**/*.ts"]
 }

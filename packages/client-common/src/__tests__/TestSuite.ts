@@ -3,6 +3,7 @@ import { SearchIndex } from '@algolia/client-search/types/SearchIndex';
 import algoliasearchForBrowser from 'algoliasearch/builds/browser';
 import algoliasearchForNode from 'algoliasearch/builds/node';
 
+/* eslint functional/no-class: 0 */
 export class TestSuite {
   public readonly testName: string;
 

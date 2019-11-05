@@ -1,15 +1,16 @@
-import { createTransporter } from '@algolia/transporter/createTransporter';
-import { anything, deepEqual, mock, verify, when } from 'ts-mockito';
+import { Requester } from '@algolia/requester-common';
+import { anything, deepEqual, spy, verify, when } from 'ts-mockito';
 
 import { createRetryError } from '../../errors/createRetryError';
-import { FakeRequester, Fixtures } from '../Fixtures';
+import { Transporter } from '../../types';
+import { createFakeRequester, createFixtures } from '../Fixtures';
 
-let requester: FakeRequester;
-let transporter: ReturnType<typeof createTransporter>;
+let requester: Requester;
+let transporter: Transporter;
 
 beforeEach(() => {
-  requester = mock(FakeRequester);
-  transporter = Fixtures.transporter(requester);
+  requester = spy(createFakeRequester());
+  transporter = createFixtures().transporter(requester);
 
   when(requester.send(anything())).thenResolve({
     content: '{}',
@@ -18,18 +19,18 @@ beforeEach(() => {
   });
 });
 
-const transporterRequest = Fixtures.transporterRequest();
+const transporterRequest = createFixtures().transporterRequest();
 
 describe('The selection of hosts', (): void => {
   it('Select only readable hosts when calling the `read` method', async () => {
     await expect(transporter.read(transporterRequest)).rejects.toEqual(createRetryError());
 
-    verify(requester.send(deepEqual(Fixtures.readRequest()))).once();
-    verify(requester.send(deepEqual(Fixtures.writeRequest()))).never();
+    verify(requester.send(deepEqual(createFixtures().readRequest()))).once();
+    verify(requester.send(deepEqual(createFixtures().writeRequest()))).never();
     verify(
       requester.send(
         deepEqual(
-          Fixtures.writeAndWriteRequest({
+          createFixtures().writeAndWriteRequest({
             timeout: 2,
             url: 'https://read-and-write.com/save',
           })
@@ -41,12 +42,12 @@ describe('The selection of hosts', (): void => {
   it('Select only writable hosts when calling the `write` method', async () => {
     await expect(transporter.write(transporterRequest)).rejects.toEqual(createRetryError());
 
-    verify(requester.send(deepEqual(Fixtures.readRequest()))).never();
-    verify(requester.send(deepEqual(Fixtures.writeRequest()))).once();
+    verify(requester.send(deepEqual(createFixtures().readRequest()))).never();
+    verify(requester.send(deepEqual(createFixtures().writeRequest()))).once();
     verify(
       requester.send(
         deepEqual(
-          Fixtures.writeRequest({
+          createFixtures().writeRequest({
             timeout: 30,
             url: 'https://read-and-write.com/save',
           })

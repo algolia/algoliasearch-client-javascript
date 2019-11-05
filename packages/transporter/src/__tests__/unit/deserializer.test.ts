@@ -1,18 +1,19 @@
-import { anything, mock, when } from 'ts-mockito';
+import { Requester } from '@algolia/requester-common';
+import { anything, spy, when } from 'ts-mockito';
 
-import { createTransporter } from '../../createTransporter';
 import { createApiError } from '../../errors/createApiError';
-import { FakeRequester, Fixtures } from '../Fixtures';
+import { Transporter } from '../../types';
+import { createFakeRequester, createFixtures } from '../Fixtures';
 
-let requester: FakeRequester;
-let transporter: ReturnType<typeof createTransporter>;
+let requester: Requester;
+let transporter: Transporter;
 
 beforeEach(() => {
-  requester = mock(FakeRequester);
-  transporter = Fixtures.transporter(requester);
+  requester = spy(createFakeRequester());
+  transporter = createFixtures().transporter(requester);
 });
 
-const transporterRequest = Fixtures.transporterRequest();
+const transporterRequest = createFixtures().transporterRequest();
 
 describe('The deserializer', () => {
   it('Deserializes success responses', async () => {

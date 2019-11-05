@@ -1,14 +1,15 @@
-import { anything, deepEqual, mock, verify, when } from 'ts-mockito';
+import { Requester } from '@algolia/requester-common';
+import { anything, deepEqual, spy, verify, when } from 'ts-mockito';
 
-import { createTransporter } from '../../createTransporter';
-import { FakeRequester, Fixtures } from '../Fixtures';
+import { Transporter } from '../../types';
+import { createFakeRequester, createFixtures } from '../Fixtures';
 
-let requester: FakeRequester;
-let transporter: ReturnType<typeof createTransporter>;
+let requester: Requester;
+let transporter: Transporter;
 
 beforeEach(() => {
-  requester = mock(FakeRequester);
-  transporter = Fixtures.transporter(requester);
+  requester = spy(createFakeRequester());
+  transporter = createFixtures().transporter(requester);
 
   when(requester.send(anything())).thenResolve({
     content: '{}',
@@ -17,7 +18,7 @@ beforeEach(() => {
   });
 });
 
-const transporterRequest = Fixtures.transporterRequest();
+const transporterRequest = createFixtures().transporterRequest();
 
 describe('The selection of headers', () => {
   it('Allows add extra headers', async () => {
@@ -30,7 +31,7 @@ describe('The selection of headers', () => {
     verify(
       requester.send(
         deepEqual(
-          Fixtures.writeRequest({
+          createFixtures().writeRequest({
             headers: {
               'X-Default-Header': 'Default value',
               'X-Algolia-Application-Id': 'foo',
@@ -51,7 +52,7 @@ describe('The selection of headers', () => {
     verify(
       requester.send(
         deepEqual(
-          Fixtures.readRequest({
+          createFixtures().readRequest({
             headers: {
               'X-Algolia-Application-Id': 'foo',
               'X-Default-Header': 'Default value',
@@ -73,7 +74,7 @@ describe('The selection of headers', () => {
     verify(
       requester.send(
         deepEqual(
-          Fixtures.readRequest({
+          createFixtures().readRequest({
             headers: {
               'X-Algolia-Application-Id': 'foo',
               'X-Default-Header': 'My custom header',

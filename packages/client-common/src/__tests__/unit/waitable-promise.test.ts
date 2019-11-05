@@ -2,9 +2,9 @@ import { createWaitablePromise } from '../..';
 
 const original = { foo: 'bar' };
 
-class FooError {
-  public readonly message = 'Bar not found';
-}
+const fooError = {
+  message: 'Bar not found',
+};
 
 describe('awaitable promise', () => {
   it('resolves the original response without wait', async () => {
@@ -21,7 +21,7 @@ describe('awaitable promise', () => {
 
   it('gets the rejection of the original promise', async () => {
     const response = new Promise(() => {
-      throw new FooError();
+      throw fooError;
     });
     const waitablePromise = createWaitablePromise(response);
     await expect(waitablePromise).rejects.toEqual({ message: 'Bar not found' });
@@ -31,7 +31,7 @@ describe('awaitable promise', () => {
     const response = new Promise(resolve => resolve(original));
     const waitablePromise = createWaitablePromise(response);
     waitablePromise.onWait(() => {
-      throw new FooError();
+      throw fooError;
     });
     await expect(waitablePromise.wait()).rejects.toEqual({ message: 'Bar not found' });
   });

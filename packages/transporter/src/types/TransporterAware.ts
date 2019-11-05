@@ -1,5 +1,5 @@
-import { createTransporter } from '../createTransporter';
+import { Transporter } from './Transporter';
 
 export type TransporterAware = {
-  readonly transporter: ReturnType<typeof createTransporter>;
+  readonly transporter: Transporter;
 };

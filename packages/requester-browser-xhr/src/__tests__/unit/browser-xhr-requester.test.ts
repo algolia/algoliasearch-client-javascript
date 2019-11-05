@@ -1,10 +1,7 @@
-import { MethodEnum } from '@algolia/requester-common/types/MethodType';
-import { Request } from '@algolia/requester-common/types/Request';
+import { MethodEnum, Request } from '@algolia/requester-common';
 import mock, { MockRequest, MockResponse } from 'xhr-mock';
 
 import { createBrowserXhrRequester } from '../..';
-import Fixtures from '../Fixtures';
-
 const timeoutRequest: Request = {
   url: 'https://google.com:81/',
   data: '',
@@ -13,13 +10,22 @@ const timeoutRequest: Request = {
   timeout: 1,
 };
 
+const requestStub = {
+  url: 'https://algolia-dns.net/foo?x-algolia-header=bar',
+  method: MethodEnum.Post,
+  headers: {
+    'Content-Type': 'application/x-www-form-urlencoded',
+  },
+  data: JSON.stringify({ foo: 'bar' }),
+  timeout: 2,
+};
+
 describe('status code handling', (): void => {
   beforeEach(() => mock.setup());
   afterEach(() => mock.teardown());
 
   it('sends requests', async () => {
     const requester = createBrowserXhrRequester();
-    const request = Fixtures.request();
 
     expect.assertions(3);
 
@@ -36,7 +42,7 @@ describe('status code handling', (): void => {
       }
     );
 
-    await requester.send(request);
+    await requester.send(requestStub);
   });
 
   it('resolves status 200', async () => {
@@ -48,7 +54,7 @@ describe('status code handling', (): void => {
       body,
     });
 
-    const response = await requester.send(Fixtures.request());
+    const response = await requester.send(requestStub);
 
     expect(response.status).toBe(200);
     expect(response.content).toBe(body);
@@ -64,7 +70,7 @@ describe('status code handling', (): void => {
       reason,
     });
 
-    const response = await requester.send(Fixtures.request());
+    const response = await requester.send(requestStub);
 
     expect(response.status).toBe(300);
     expect(response.content).toBe(''); // No body returned here on xhr
@@ -81,7 +87,7 @@ describe('status code handling', (): void => {
       body: JSON.stringify(body),
     });
 
-    const response = await requester.send(Fixtures.request());
+    const response = await requester.send(requestStub);
 
     expect(response.status).toBe(400);
     expect(response.content).toBe(JSON.stringify(body));
@@ -127,11 +133,9 @@ describe('timeout handling', () => {
   });
 
   it('do not timeouts if response appears before the timeout', async () => {
-    const request = Fixtures.request();
+    const request = Object.assign({}, requestStub);
 
-    // @ts-ignore
     request.url = 'https://bh4d9od16a-dsn.algolia.net/1/indexes';
-    // @ts-ignore
     request.method = 'GET';
 
     const response = await requester.send(request);
@@ -175,7 +179,7 @@ describe('error handling', (): void => {
       Promise.reject(new Error('This is a general error'))
     );
 
-    const response = await requester.send(Fixtures.request());
+    const response = await requester.send(requestStub);
 
     expect(response.status).toBe(0);
     expect(response.content).toBe('Network request failed');

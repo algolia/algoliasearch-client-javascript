@@ -1,9 +1,5 @@
 import { compose, encode } from '../../helpers';
 
-class Client {
-  public foo = 'bar';
-}
-
 describe('helpers', () => {
   it('encodes url', () => {
     const encodedString = encode('foo/%s/bar/%s', ' 1 ', ' e ');
@@ -12,7 +8,11 @@ describe('helpers', () => {
   });
 
   it('composes objects', () => {
-    const getFoo = (base: Client) => {
+    const client = {
+      foo: 'bar',
+    };
+
+    const getFoo = (base: typeof client) => {
       return {
         ...base,
         getFoo(): string {
@@ -21,7 +21,7 @@ describe('helpers', () => {
       };
     };
 
-    const setFoo = (base: Client) => {
+    const setFoo = (base: typeof client) => {
       return {
         ...base,
         setFoo(value: string): void {
@@ -31,7 +31,7 @@ describe('helpers', () => {
     };
 
     const obj = compose(
-      new Client(),
+      client,
       {
         methods: [setFoo, getFoo],
       }

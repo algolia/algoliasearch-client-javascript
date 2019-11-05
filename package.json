@@ -31,7 +31,7 @@
     "eslint-config-prettier": "^6.1.0",
     "eslint-import-resolver-alias": "^1.1.2",
     "eslint-plugin-functional": "^1.0.0-rc.2",
-    "eslint-plugin-import": "^2.18.0",
+    "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-jest": "^22.15.2",
     "eslint-plugin-prettier": "^3.1.0",
     "eslint-plugin-promise": "^4.2.1",

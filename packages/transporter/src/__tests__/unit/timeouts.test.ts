@@ -1,15 +1,16 @@
-import { createTransporter } from '@algolia/transporter/createTransporter';
-import { anything, deepEqual, mock, verify, when } from 'ts-mockito';
+import { Requester } from '@algolia/requester-common';
+import { anything, deepEqual, spy, verify, when } from 'ts-mockito';
 
 import { createRetryError } from '../../errors/createRetryError';
-import { FakeRequester, Fixtures } from '../Fixtures';
+import { Transporter } from '../../types';
+import { createFakeRequester, createFixtures } from '../Fixtures';
 
-let requester: FakeRequester;
-let transporter: ReturnType<typeof createTransporter>;
+let requester: Requester;
+let transporter: Transporter;
 
 beforeEach(() => {
-  requester = mock(FakeRequester);
-  transporter = Fixtures.transporter(requester);
+  requester = spy(createFakeRequester());
+  transporter = createFixtures().transporter(requester);
 
   when(requester.send(anything())).thenResolve({
     content: '{}',
@@ -18,19 +19,19 @@ beforeEach(() => {
   });
 });
 
-const transporterRequest = Fixtures.transporterRequest();
+const transporterRequest = createFixtures().transporterRequest();
 
 describe('the timeouts selection', () => {
   it('Uses read default value', async () => {
     await transporter.read(transporterRequest);
 
-    verify(requester.send(deepEqual(Fixtures.readRequest()))).once();
+    verify(requester.send(deepEqual(createFixtures().readRequest()))).once();
     verify(requester.send(anything())).once();
   });
 
   it('Uses write default value', async () => {
     await transporter.write(transporterRequest);
-    verify(requester.send(deepEqual(Fixtures.writeRequest()))).once();
+    verify(requester.send(deepEqual(createFixtures().writeRequest()))).once();
     verify(requester.send(anything())).once();
   });
 
@@ -40,7 +41,7 @@ describe('the timeouts selection', () => {
     verify(
       requester.send(
         deepEqual(
-          Fixtures.readRequest({
+          createFixtures().readRequest({
             timeout: 5,
           })
         )
@@ -54,7 +55,7 @@ describe('the timeouts selection', () => {
     verify(
       requester.send(
         deepEqual(
-          Fixtures.writeRequest({
+          createFixtures().writeRequest({
             timeout: 25,
           })
         )
@@ -64,8 +65,8 @@ describe('the timeouts selection', () => {
   });
 
   it('Increases timeout based on number of retries', async () => {
-    requester = mock(FakeRequester);
-    transporter = Fixtures.transporter(requester);
+    requester = spy(createFakeRequester());
+    transporter = createFixtures().transporter(requester);
 
     when(requester.send(anything())).thenResolve({
       content: '{}',
@@ -75,11 +76,11 @@ describe('the timeouts selection', () => {
 
     await expect(transporter.read(transporterRequest)).rejects.toEqual(createRetryError());
 
-    verify(requester.send(deepEqual(Fixtures.readRequest()))).once();
+    verify(requester.send(deepEqual(createFixtures().readRequest()))).once();
     verify(
       requester.send(
         deepEqual(
-          Fixtures.readRequest({
+          createFixtures().readRequest({
             url: 'https://read-and-write.com/save',
             timeout: 4,
           })
@@ -90,8 +91,8 @@ describe('the timeouts selection', () => {
   });
 
   it('allows no timeout to be used', async () => {
-    requester = mock(FakeRequester);
-    transporter = Fixtures.transporter(requester);
+    requester = spy(createFakeRequester());
+    transporter = createFixtures().transporter(requester);
 
     when(requester.send(anything())).thenResolve({
       content: '{}',
@@ -108,7 +109,7 @@ describe('the timeouts selection', () => {
     verify(
       requester.send(
         deepEqual(
-          Fixtures.readRequest({
+          createFixtures().readRequest({
             timeout: 0,
           })
         )

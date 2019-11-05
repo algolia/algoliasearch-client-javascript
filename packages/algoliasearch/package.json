@@ -15,11 +15,6 @@
   "private": false,
   "license": "MIT",
   "description": "test",
-  "scripts": {
-    "release:clean": "rm -rf dist",
-    "release:alpha": "yarn publish --verbose --access public",
-    "release:stable": ""
-  },
   "dependencies": {
     "@algolia/cache-browser-local-storage": "4.0.0-alpha.18",
     "@algolia/cache-common": "4.0.0-alpha.18",

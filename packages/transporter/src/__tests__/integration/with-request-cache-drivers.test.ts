@@ -3,11 +3,12 @@
 import { createBrowserLocalStorageCache } from '@algolia/cache-browser-local-storage/createBrowserLocalStorageCache';
 import { createNullCache } from '@algolia/cache-common/createNullCache';
 import { createInMemoryCache } from '@algolia/cache-in-memory/createInMemoryCache';
-import { anything, mock, verify, when } from 'ts-mockito';
+import { Requester } from '@algolia/requester-common';
+import { anything, spy, verify, when } from 'ts-mockito';
 
-import { FakeRequester, Fixtures } from '../Fixtures';
+import { createFakeRequester, createFixtures } from '../Fixtures';
 
-const transporterRequest = Fixtures.transporterRequest();
+const transporterRequest = createFixtures().transporterRequest();
 transporterRequest.cacheable = true;
 
 const drivers = [createNullCache, createInMemoryCache];
@@ -41,10 +42,10 @@ describe('request cache integration with cache drivers', () => {
   };
 
   it('cache read requests in progress', async () => {
-    let requester: FakeRequester;
+    let requester: Requester;
 
     for (let index = 0; index < drivers.length; index++) {
-      when((requester = mock(FakeRequester)).send(anything())).thenResolve({
+      when((requester = spy(createFakeRequester())).send(anything())).thenResolve({
         content: JSON.stringify({ hits: [] }),
         status: 200,
         isTimedOut: false,
@@ -52,7 +53,7 @@ describe('request cache integration with cache drivers', () => {
 
       const driver = drivers[index]();
 
-      const transporter = Fixtures.transporter(requester, { requestsCache: driver });
+      const transporter = createFixtures().transporter(requester, { requestsCache: driver });
 
       const responses = [];
       for (let callNumber = 1; callNumber <= 10; callNumber++) {
@@ -74,10 +75,10 @@ describe('request cache integration with cache drivers', () => {
   });
 
   it('do not cache read requests resolved', async () => {
-    let requester: FakeRequester;
+    let requester: Requester;
 
     for (let index = 0; index < drivers.length; index++) {
-      when((requester = mock(FakeRequester)).send(anything())).thenResolve({
+      when((requester = spy(createFakeRequester())).send(anything())).thenResolve({
         content: JSON.stringify({ hits: [] }),
         status: 200,
         isTimedOut: false,
@@ -85,7 +86,7 @@ describe('request cache integration with cache drivers', () => {
 
       const driver = drivers[index]();
 
-      const transporter = Fixtures.transporter(requester, { requestsCache: driver });
+      const transporter = createFixtures().transporter(requester, { requestsCache: driver });
 
       for (let callNumber = 1; callNumber <= 10; callNumber++) {
         await expect(transporter.read(transporterRequest)).resolves.toMatchObject({ hits: [] });

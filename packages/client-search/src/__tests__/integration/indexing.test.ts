@@ -1,4 +1,4 @@
-import { Faker } from '@algolia/client-common/__tests__/Faker';
+import { createFaker } from '@algolia/client-common/__tests__/createFaker';
 import { createMultiWaitable } from '@algolia/client-common/__tests__/helpers';
 import { TestSuite } from '@algolia/client-common/__tests__/TestSuite';
 
@@ -9,16 +9,16 @@ afterAll(() => testSuite.cleanUp());
 test(testSuite.testName, async () => {
   const index = testSuite.makeIndex();
 
-  await expect(index.saveObject(Faker.object(''))).rejects.toMatchObject({
+  await expect(index.saveObject(createFaker().object(''))).rejects.toMatchObject({
     status: 400,
   });
 
   let responses: any = [];
 
-  const object1 = Faker.object('object1');
+  const object1 = createFaker().object('object1');
   responses.push(index.saveObject(object1));
 
-  const object2 = Faker.object();
+  const object2 = createFaker().object();
   const response2 = index.saveObject(object2, {
     autoGenerateObjectIDIfNotExist: true,
   });
@@ -28,25 +28,25 @@ test(testSuite.testName, async () => {
   responses = responses.concat(index.saveObjects([]));
 
   const object3 = {
-    ...Faker.object('object3'),
+    ...createFaker().object('object3'),
     _tags: ['algolia'],
   };
 
   const object4 = {
-    ...Faker.object('object4'),
+    ...createFaker().object('object4'),
     _tags: ['algolia'],
   };
 
   responses = responses.concat(index.saveObjects([object3, object4]));
 
-  const object5 = Faker.object();
-  const object6 = Faker.object();
+  const object5 = createFaker().object();
+  const object6 = createFaker().object();
   const response5and6 = index.saveObjects([object5, object6], {
     autoGenerateObjectIDIfNotExist: true,
   });
   responses = responses.concat(response5and6);
 
-  const object7 = Faker.object('object7');
+  const object7 = createFaker().object('object7');
   const response7 = index.batch([
     {
       action: 'addObject',
@@ -56,7 +56,7 @@ test(testSuite.testName, async () => {
 
   responses = responses.concat(response7);
 
-  const remain1000objects = Faker.objects(1000);
+  const remain1000objects = createFaker().objects(1000);
 
   responses = responses.concat(
     index.saveObjects(remain1000objects, {

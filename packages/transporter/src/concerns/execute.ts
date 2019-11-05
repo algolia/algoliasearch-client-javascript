@@ -1,15 +1,15 @@
-import { createTransporter } from '..';
 import { createHost } from '../createHost';
 import { deserializeFailure, deserializeSuccess } from '../deserializer';
 import { createRetryError } from '../errors/createRetryError';
 import { serializeData, serializeUrl } from '../serializer';
+import { Transporter } from '../types';
 import { MappedRequestOptions } from '../types/MappedRequestOptions';
 import { Request } from '../types/Request';
 import { decision } from './decision';
 
 // eslint-disable-next-line max-params
 export function execute<TResponse>(
-  transporter: ReturnType<typeof createTransporter>,
+  transporter: Transporter,
   // eslint-disable-next-line functional/prefer-readonly-type
   hosts: Array<ReturnType<typeof createHost>>,
   request: Request,

@@ -29,7 +29,6 @@ module.exports = {
     'functional/no-throw-statement': ['off'],
     'functional/functional-parameters': ['off'],
     'functional/no-this-expression': ['off'],
-    'functional/no-class': ['off'],
     'functional/no-return-void': ['off'],
     '@typescript-eslint/no-triple-slash-reference': ['off'],
   },

@@ -1,18 +1,19 @@
-import { createTransporter } from '@algolia/transporter/createTransporter';
-import { anything, deepEqual, mock, verify, when } from 'ts-mockito';
+import { Requester } from '@algolia/requester-common';
+import { anything, deepEqual, spy, verify, when } from 'ts-mockito';
 
 import { createApiError } from '../../errors/createApiError';
-import { FakeRequester, Fixtures } from '../Fixtures';
+import { Transporter } from '../../types';
+import { createFakeRequester, createFixtures } from '../Fixtures';
 
-let requester: FakeRequester;
-let transporter: ReturnType<typeof createTransporter>;
+let requester: Requester;
+let transporter: Transporter;
 
-const transporterRequest = Fixtures.transporterRequest();
+const transporterRequest = createFixtures().transporterRequest();
 
 describe('retry strategy', () => {
   beforeEach(() => {
-    requester = mock(FakeRequester);
-    transporter = Fixtures.transporter(requester);
+    requester = spy(createFakeRequester());
+    transporter = createFixtures().transporter(requester);
 
     when(requester.send(anything())).thenResolve({
       content: '{"hits": [{"name": "Star Wars"}]}',
@@ -22,7 +23,7 @@ describe('retry strategy', () => {
   });
 
   it('Retries after a timeout', async () => {
-    when(requester.send(deepEqual(Fixtures.writeRequest()))).thenResolve({
+    when(requester.send(deepEqual(createFixtures().writeRequest()))).thenResolve({
       content: '',
       status: 0,
       isTimedOut: true,
@@ -36,7 +37,7 @@ describe('retry strategy', () => {
   });
 
   it('Retries after a network error', async () => {
-    when(requester.send(deepEqual(Fixtures.readRequest()))).thenResolve({
+    when(requester.send(deepEqual(createFixtures().readRequest()))).thenResolve({
       content: '',
       status: 0,
       isTimedOut: false,
@@ -50,7 +51,7 @@ describe('retry strategy', () => {
   });
 
   it('Retries after a 1xx', async () => {
-    when(requester.send(deepEqual(Fixtures.readRequest()))).thenResolve({
+    when(requester.send(deepEqual(createFixtures().readRequest()))).thenResolve({
       content: '',
       status: 101,
       isTimedOut: false,
@@ -77,7 +78,7 @@ describe('retry strategy', () => {
   });
 
   it('Retries after a 3xx', async () => {
-    when(requester.send(deepEqual(Fixtures.readRequest()))).thenResolve({
+    when(requester.send(deepEqual(createFixtures().readRequest()))).thenResolve({
       content: '',
       status: 300,
       isTimedOut: false,
@@ -91,7 +92,7 @@ describe('retry strategy', () => {
   });
 
   it('Dont retry after a 4xx', async () => {
-    when(requester.send(deepEqual(Fixtures.writeRequest()))).thenResolve({
+    when(requester.send(deepEqual(createFixtures().writeRequest()))).thenResolve({
       content: JSON.stringify({
         message: 'Invalid Application ID',
         status: 404,
@@ -110,7 +111,7 @@ describe('retry strategy', () => {
   });
 
   it('Retries after a 5xx', async () => {
-    when(requester.send(deepEqual(Fixtures.writeRequest()))).thenResolve({
+    when(requester.send(deepEqual(createFixtures().writeRequest()))).thenResolve({
       content: '',
       status: 500,
       isTimedOut: false,

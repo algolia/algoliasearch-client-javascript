@@ -1,8 +1,8 @@
-import { createNullCache } from '@algolia/cache-common/createNullCache';
-import { LogLevelEnum } from '@algolia/logger-common/types/LogLevelType';
-import { createConsoleLogger } from '@algolia/logger-console/createConsoleLogger';
-import { createNodeHttpRequester } from '@algolia/requester-node-http/createNodeHttpRequester';
-import { createUserAgent } from '@algolia/transporter/createUserAgent';
+import { createNullCache } from '@algolia/cache-common';
+import { LogLevelEnum } from '@algolia/logger-common';
+import { createConsoleLogger } from '@algolia/logger-console';
+import { createNodeHttpRequester } from '@algolia/requester-node-http';
+import { createUserAgent } from '@algolia/transporter';
 
 import { createSearchClient, SearchClient } from '../presets/default';
 import { AlgoliaSearchOptions } from '../types/AlgoliaSearchOptions';
@@ -33,4 +33,5 @@ export default function algoliasearch(
   });
 }
 
-export * from '../index';
+export * from '../types';
+export * from '../presets/default';
