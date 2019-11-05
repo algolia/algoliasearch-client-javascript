@@ -12,7 +12,7 @@ async function buildDefinitions() {
   await Promise.all(targets.map(target => fs.remove(`packages/${target}/dist`)));
   await Promise.all(
     targets.map(target =>
-      execa(`rollup`, ['-c', '--environment', [`TARGET:${target}`].filter(Boolean).join(',')], {
+      execa(`rollup`, ['-c', '--environment', [`TARGET:${target}`].join(',')], {
         stdio: 'inherit',
       })
     )
