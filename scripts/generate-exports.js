@@ -8,6 +8,7 @@ const exclude = {
   algoliasearch: 'builds|presets',
   transporter: 'concerns|deserializer|serializer',
 };
+
 generateExports();
 async function generateExports() {
   await Promise.all(
