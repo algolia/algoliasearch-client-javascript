@@ -1,15 +1,16 @@
 import { Requester } from '@algolia/requester-common';
 import { anything, deepEqual, spy, verify, when } from 'ts-mockito';
 
-import { Transporter } from '../../types';
-import { createFakeRequester, createFixtures } from '../Fixtures';
+import { Transporter } from '../..';
+import { createFakeRequester, createFixtures } from '../fixtures';
 
 let requester: Requester;
 let transporter: Transporter;
 
 beforeEach(() => {
-  requester = spy(createFakeRequester());
-  transporter = createFixtures().transporter(requester);
+  const instance = createFakeRequester();
+  requester = spy(instance);
+  transporter = createFixtures().transporter(instance);
 
   when(requester.send(anything())).thenResolve({
     content: '{}',

@@ -1,10 +1,9 @@
-import { createMultiWaitable } from '@algolia/client-common/__tests__/helpers';
-import { TestSuite } from '@algolia/client-common/__tests__/TestSuite';
-import { createApiError } from '@algolia/transporter/errors/createApiError';
+import { createApiError } from '@algolia/transporter';
 
+import { ABTest, Variant } from '../..';
 import { createFaker } from '../../../../client-common/src/__tests__/createFaker';
-import { ABTest } from '../../types/ABTest';
-import { Variant } from '../../types/Variant';
+import { createMultiWaitable } from '../../../../client-common/src/__tests__/helpers';
+import { TestSuite } from '../../../../client-common/src/__tests__/TestSuite';
 
 const testSuite = new TestSuite('ab_testing');
 

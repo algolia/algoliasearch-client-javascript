@@ -1,4 +1,4 @@
-import { VariantResponse } from './VariantResponse';
+import { VariantResponse } from '.';
 
 export type GetABTestResponse = {
   /**

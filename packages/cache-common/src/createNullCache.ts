@@ -1,5 +1,4 @@
-import { Cache } from './types/Cache';
-import { CacheEvents } from './types/CacheEvents';
+import { Cache, CacheEvents } from '.';
 
 export function createNullCache(): Cache {
   return {

@@ -1,5 +1,4 @@
-import { BrowseOptions } from './types/BrowseOptions';
-import { BrowseResponse } from './types/BrowseResponse';
+import { BrowseOptions, BrowseResponse } from '.';
 
 export function createBrowsablePromise<TObject>(
   options: {

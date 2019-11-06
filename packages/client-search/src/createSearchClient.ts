@@ -1,12 +1,14 @@
-import { createAuth } from '@algolia/client-common/createAuth';
-import { compose, shuffle } from '@algolia/client-common/helpers';
-import { AuthMode, AuthModeType } from '@algolia/client-common/types/AuthModeType';
-import { ComposableOptions } from '@algolia/client-common/types/ComposableOptions';
-import { createTransporter } from '@algolia/transporter/createTransporter';
-import { CallEnum } from '@algolia/transporter/types/CallType';
-import { TransporterOptions } from '@algolia/transporter/types/TransporterOptions';
+import {
+  AuthMode,
+  AuthModeType,
+  ComposableOptions,
+  compose,
+  createAuth,
+  shuffle,
+} from '@algolia/client-common';
+import { CallEnum, createTransporter, TransporterOptions } from '@algolia/transporter';
 
-import { SearchClient } from './types/SearchClient';
+import { SearchClient } from '.';
 
 export const createSearchClient = <TClient>(
   options: SearchClientOptions & TransporterOptions & ComposableOptions

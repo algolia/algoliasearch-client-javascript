@@ -1,4 +1,4 @@
-import { Log } from './Log';
+import { Log } from '.';
 
 export type GetLogsResponse = {
   /** List of logs */

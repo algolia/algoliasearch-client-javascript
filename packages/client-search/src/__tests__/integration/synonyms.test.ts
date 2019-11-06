@@ -1,9 +1,8 @@
-import { createMultiWaitable } from '@algolia/client-common/__tests__/helpers';
-import { TestSuite } from '@algolia/client-common/__tests__/TestSuite';
-import { createApiError } from '@algolia/transporter/errors/createApiError';
+import { createApiError } from '@algolia/transporter';
 
-import { Synonym } from '../../types/Synonym';
-import { SynonymEnum } from '../../types/SynonymType';
+import { Synonym, SynonymEnum } from '../..';
+import { createMultiWaitable } from '../../../../client-common/src/__tests__/helpers';
+import { TestSuite } from '../../../../client-common/src/__tests__/TestSuite';
 
 const testSuite = new TestSuite('synonyms');
 

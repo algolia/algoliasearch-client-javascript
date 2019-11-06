@@ -1,11 +1,8 @@
-import { WaitablePromise } from '@algolia/client-common/types/WaitablePromise';
-import { RequestOptions } from '@algolia/transporter/types/RequestOptions';
+import { WaitablePromise } from '@algolia/client-common';
+import { RequestOptions } from '@algolia/transporter';
 
-import { BatchActionEnum } from '../../types/BatchActionType';
-import { BatchResponse } from '../../types/BatchResponse';
-import { ChunkOptions } from '../../types/ChunkOptions';
-import { SearchIndex } from '../../types/SearchIndex';
-import { batch, HasBatch } from './batch';
+import { BatchActionEnum, BatchResponse, ChunkOptions, SearchIndex } from '../..';
+import { batch, HasBatch } from '.';
 
 export const deleteObjects = <TSearchIndex extends SearchIndex>(
   base: TSearchIndex

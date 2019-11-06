@@ -1,6 +1,4 @@
-import { Request } from '@algolia/requester-common/types/Request';
-import { Requester } from '@algolia/requester-common/types/Requester';
-import { Response } from '@algolia/requester-common/types/Response';
+import { Request, Requester, Response } from '@algolia/requester-common';
 
 export function createBrowserXhrRequester(): Requester {
   return {

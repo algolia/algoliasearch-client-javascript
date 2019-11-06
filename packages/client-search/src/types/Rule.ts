@@ -1,6 +1,4 @@
-import { Condition } from './Condition';
-import { Consequence } from './Consequence';
-import { TimeRange } from './TimeRange';
+import { Condition, Consequence, TimeRange } from '.';
 
 export type Rule = {
   /** Unique identifier for the rule (format: [A-Za-z0-9_-]+). */

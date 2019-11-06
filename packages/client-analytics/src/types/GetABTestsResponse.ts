@@ -1,4 +1,4 @@
-import { GetABTestResponse } from './GetABTestResponse';
+import { GetABTestResponse } from '.';
 
 export type GetABTestsResponse = {
   /**

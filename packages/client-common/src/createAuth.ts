@@ -1,4 +1,4 @@
-import { AuthMode, AuthModeType } from './types/AuthModeType';
+import { AuthMode, AuthModeType } from '.';
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function createAuth(authMode: AuthModeType, appId: string, apiKey: string) {

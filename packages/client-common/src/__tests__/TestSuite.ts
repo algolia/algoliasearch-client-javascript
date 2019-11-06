@@ -1,7 +1,7 @@
-import { HasDelete } from '@algolia/client-search/methods/index/deleteIndex';
-import { SearchIndex } from '@algolia/client-search/types/SearchIndex';
-import algoliasearchForBrowser from 'algoliasearch/builds/browser';
-import algoliasearchForNode from 'algoliasearch/builds/node';
+import { HasDelete, SearchIndex } from '@algolia/client-search';
+
+import algoliasearchForBrowser from '../../../algoliasearch/src/builds/browser';
+import algoliasearchForNode from '../../../algoliasearch/src/builds/node';
 
 /* eslint functional/no-class: 0 */
 export class TestSuite {

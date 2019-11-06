@@ -1,5 +1,4 @@
-import { Cache } from '@algolia/cache-common/types/Cache';
-import { CacheEvents } from '@algolia/cache-common/types/CacheEvents';
+import { Cache, CacheEvents } from '@algolia/cache-common';
 
 export function createInMemoryCache(): Cache {
   /* eslint-disable functional/immutable-data, functional/no-let, functional/prefer-readonly-type */

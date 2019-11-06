@@ -1,5 +1,4 @@
-import { AutomaticFacetFilter } from './AutomaticFacetFilter';
-import { ConsequenceQuery } from './ConsequenceQuery';
+import { AutomaticFacetFilter, ConsequenceQuery } from '.';
 
 export type ConsequenceParams = {
   /**

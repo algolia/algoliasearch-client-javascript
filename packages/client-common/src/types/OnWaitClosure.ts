@@ -1,4 +1,4 @@
-import { RequestOptions } from '@algolia/transporter/types/RequestOptions';
+import { RequestOptions } from '@algolia/transporter';
 
 export type OnWaitClosure<TResponse> = (
   result: TResponse,

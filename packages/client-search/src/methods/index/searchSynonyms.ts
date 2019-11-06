@@ -1,10 +1,8 @@
-import { encode } from '@algolia/client-common/helpers';
-import { MethodEnum } from '@algolia/requester-common/types/MethodType';
-import { RequestOptions } from '@algolia/transporter/types/RequestOptions';
+import { encode } from '@algolia/client-common';
+import { MethodEnum } from '@algolia/requester-common';
+import { RequestOptions } from '@algolia/transporter';
 
-import { SearchIndex } from '../../types/SearchIndex';
-import { SearchSynonymsOptions } from '../../types/SearchSynonymsOptions';
-import { SearchSynonymsResponse } from '../../types/SearchSynonymsResponse';
+import { SearchIndex, SearchSynonymsOptions, SearchSynonymsResponse } from '../..';
 
 export const searchSynonyms = <TSearchIndex extends SearchIndex>(
   base: TSearchIndex

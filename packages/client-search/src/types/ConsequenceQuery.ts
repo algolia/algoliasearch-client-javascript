@@ -1,4 +1,4 @@
-import { Edit } from './Edit';
+import { Edit } from '.';
 
 export type ConsequenceQuery = {
   /** List of edits */

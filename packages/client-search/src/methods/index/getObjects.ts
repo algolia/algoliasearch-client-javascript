@@ -1,10 +1,7 @@
-import { MethodEnum } from '@algolia/requester-common/types/MethodType';
-import { popRequestOption } from '@algolia/transporter/request-options';
-import { RequestOptions } from '@algolia/transporter/types/RequestOptions';
+import { MethodEnum } from '@algolia/requester-common';
+import { popRequestOption, RequestOptions } from '@algolia/transporter';
 
-import { GetObjectsOptions } from '../../types/GetObjectsOptions';
-import { GetObjectsResponse } from '../../types/GetObjectsResponse';
-import { SearchIndex } from '../../types/SearchIndex';
+import { GetObjectsOptions, GetObjectsResponse, SearchIndex } from '../..';
 
 export const getObjects = <TSearchIndex extends SearchIndex>(
   base: TSearchIndex

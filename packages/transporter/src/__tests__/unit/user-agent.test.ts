@@ -1,4 +1,4 @@
-import { createUserAgent } from '../../createUserAgent';
+import { createUserAgent } from '../..';
 
 describe('UserAgent', () => {
   it('contains a default value', () => {

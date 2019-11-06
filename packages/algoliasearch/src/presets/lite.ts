@@ -1,23 +1,18 @@
 import {
   createSearchClient as baseCreateSearchClient,
-  SearchClientOptions,
-} from '@algolia/client-search/createSearchClient';
-import { initIndex } from '@algolia/client-search/methods/client/initIndex';
-import {
   HasMultipleQueries,
-  multipleQueries,
-} from '@algolia/client-search/methods/client/multipleQueries';
-import {
   HasMultipleSearchForFacetValues,
-  multipleSearchForFacetValues,
-} from '@algolia/client-search/methods/client/multipleSearchForFacetValues';
-import { HasSearch, search } from '@algolia/client-search/methods/index/search';
-import {
+  HasSearch,
   HasSearchForFacetValues,
+  initIndex,
+  multipleQueries,
+  multipleSearchForFacetValues,
+  search,
+  SearchClient as BaseSearchClient,
+  SearchClientOptions,
   searchForFacetValues,
-} from '@algolia/client-search/methods/index/searchForFacetValues';
-import { SearchClient as BaseSearchClient } from '@algolia/client-search/types/SearchClient';
-import { TransporterOptions } from '@algolia/transporter/types/TransporterOptions';
+} from '@algolia/client-search';
+import { TransporterOptions } from '@algolia/transporter';
 
 export type SearchClient = BaseSearchClient &
   HasInitIndex &

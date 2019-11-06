@@ -1,9 +1,12 @@
-import { MethodEnum } from '@algolia/requester-common/types/MethodType';
-import { mapRequestOptions, popRequestOption } from '@algolia/transporter/request-options';
-import { RequestOptions } from '@algolia/transporter/types/RequestOptions';
-import { TransporterAware } from '@algolia/transporter/types/TransporterAware';
+import { MethodEnum } from '@algolia/requester-common';
+import {
+  mapRequestOptions,
+  popRequestOption,
+  RequestOptions,
+  TransporterAware,
+} from '@algolia/transporter';
 
-import { GetLogsResponse } from '../../types/GetLogsResponse';
+import { GetLogsResponse } from '../..';
 
 export const getLogs = <TClient extends TransporterAware>(base: TClient): TClient & HasGetLogs => {
   return {

@@ -1,6 +1,6 @@
-import { Response } from '@algolia/requester-common/types/Response';
+import { Response } from '@algolia/requester-common';
 
-import { createApiError } from './errors/createApiError';
+import { createApiError } from '.';
 
 export function deserializeSuccess<TObject>({ content }: Response): TObject {
   return JSON.parse(content);

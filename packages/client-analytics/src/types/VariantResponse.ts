@@ -1,4 +1,4 @@
-import { SearchOptions } from '@algolia/client-search/types/SearchOptions';
+import { SearchOptions } from '@algolia/client-search';
 
 import { Variant } from './Variant';
 

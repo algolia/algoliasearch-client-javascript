@@ -1,4 +1,4 @@
-import { Indice } from './Indice';
+import { Indice } from '.';
 
 export type ListIndicesResponse = {
   /** Number of pages */

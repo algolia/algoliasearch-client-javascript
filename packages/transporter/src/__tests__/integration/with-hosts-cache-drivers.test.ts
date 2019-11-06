@@ -1,10 +1,9 @@
-import { createBrowserLocalStorageCache } from '@algolia/cache-browser-local-storage/createBrowserLocalStorageCache';
-import { createNullCache } from '@algolia/cache-common/createNullCache';
-import { createInMemoryCache } from '@algolia/cache-in-memory/createInMemoryCache';
-import { Requester } from '@algolia/requester-common';
+import { createBrowserLocalStorageCache } from '@algolia/cache-browser-local-storage';
+import { createNullCache } from '@algolia/cache-common';
+import { createInMemoryCache } from '@algolia/cache-in-memory';
 import { anything, spy, verify, when } from 'ts-mockito';
 
-import { createFakeRequester, createFixtures } from '../Fixtures';
+import { createFakeRequester, createFixtures } from '../fixtures';
 
 const transporterRequest = createFixtures().transporterRequest();
 const drivers = [createNullCache, createInMemoryCache];
@@ -47,9 +46,10 @@ describe('hosts cache integration with cache drivers', () => {
 
     for (let callsNumber = 0; callsNumber < 2; callsNumber++) {
       for (let index = 0; index < drivers.length; index++) {
-        let requester: Requester;
+        const requester = createFakeRequester();
+        const requesterMock = spy(requester);
 
-        when((requester = spy(createFakeRequester())).send(anything())).thenResolve({
+        when(requesterMock.send(anything())).thenResolve({
           content: JSON.stringify({ hits: [] }),
           status: 500,
           isTimedOut: false,
@@ -73,7 +73,9 @@ describe('hosts cache integration with cache drivers', () => {
           name: 'RetryError',
         });
 
-        verify(requester.send(anything())).times(expectedCalls[callsNumber][drivers[index].name]);
+        verify(requesterMock.send(anything())).times(
+          expectedCalls[callsNumber][drivers[index].name]
+        );
       }
     }
   });

@@ -1,5 +1,4 @@
-import { EventScoring } from './EventScoring';
-import { FacetScoring } from './FacetScoring';
+import { EventScoring, FacetScoring } from '.';
 
 export type GetPersonalizationStrategyResponse = {
   readonly eventsScoring: { readonly [key: string]: EventScoring };

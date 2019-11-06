@@ -1,5 +1,4 @@
-import { createHost } from '../../createHost';
-import { CallEnum } from '../../types/CallType';
+import { CallEnum, createHost } from '../..';
 
 describe('Host', () => {
   it('Handles uptime', () => {

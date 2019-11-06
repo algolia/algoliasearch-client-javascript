@@ -1,16 +1,10 @@
 /* eslint functional/no-mixed-type: 0 */
-import { Cache } from '@algolia/cache-common/types/Cache';
-import { Logger } from '@algolia/logger-common/types/Logger';
-import { Requester } from '@algolia/requester-common/types/Requester';
+import { Cache } from '@algolia/cache-common';
+import { Logger } from '@algolia/logger-common';
+import { Requester } from '@algolia/requester-common';
 
-import { createHost } from '../createHost';
-import { createUserAgent } from '../createUserAgent';
-import { CallType } from './CallType';
-import { Headers } from './Headers';
-import { QueryParameters } from './QueryParameters';
-import { Request } from './Request';
-import { RequestOptions } from './RequestOptions';
-import { Timeouts } from './Timeouts';
+import { createHost, createUserAgent } from '..';
+import { CallType, Headers, QueryParameters, Request, RequestOptions, Timeouts } from '.';
 
 export type Transporter = {
   readonly hostsCache: Cache;

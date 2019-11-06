@@ -1,15 +1,9 @@
-import { createWaitablePromise } from '@algolia/client-common/createWaitablePromise';
-import { encode } from '@algolia/client-common/helpers';
-import { WaitablePromise } from '@algolia/client-common/types/WaitablePromise';
-import { MethodEnum } from '@algolia/requester-common/types/MethodType';
-import { mapRequestOptions, popRequestOption } from '@algolia/transporter/request-options';
-import { RequestOptions } from '@algolia/transporter/types/RequestOptions';
+import { createWaitablePromise, encode, WaitablePromise } from '@algolia/client-common';
+import { MethodEnum } from '@algolia/requester-common';
+import { mapRequestOptions, popRequestOption, RequestOptions } from '@algolia/transporter';
 
-import { SaveSynonymsOptions } from '../../types/SaveSynonymsOptions';
-import { SaveSynonymsResponse } from '../../types/SaveSynonymsResponse';
-import { SearchIndex } from '../../types/SearchIndex';
-import { Synonym } from '../../types/Synonym';
-import { HasWaitTask, waitTask } from './waitTask';
+import { SaveSynonymsOptions, SaveSynonymsResponse, SearchIndex, Synonym } from '../..';
+import { HasWaitTask, waitTask } from '.';
 
 export const saveSynonyms = <TSearchIndex extends SearchIndex>(
   base: TSearchIndex

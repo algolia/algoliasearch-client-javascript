@@ -6,7 +6,7 @@ import { createBrowserXhrRequester } from '@algolia/requester-browser-xhr';
 import { createUserAgent } from '@algolia/transporter';
 
 import { createSearchClient, SearchClient } from '../presets/default';
-import { AlgoliaSearchOptions } from '../types/AlgoliaSearchOptions';
+import { AlgoliaSearchOptions } from '../types';
 
 export default function algoliasearch(
   appId: string,

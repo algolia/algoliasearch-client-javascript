@@ -1,12 +1,11 @@
 import { encode } from '@algolia/client-common';
-import { createFaker } from '@algolia/client-common/__tests__/createFaker';
 import { MethodEnum } from '@algolia/requester-common';
 import { RequestOptions, Transporter } from '@algolia/transporter';
-import algoliasearch, { SearchIndex } from 'algoliasearch/builds/browser';
 import { anything, deepEqual, spy, verify, when } from 'ts-mockito';
 
-import { BatchActionEnum } from '../../types/BatchActionType';
-import { SaveObjectsOptions } from '../../types/SaveObjectsOptions';
+import { BatchActionEnum, SaveObjectsOptions } from '../..';
+import algoliasearch, { SearchIndex } from '../../../../algoliasearch/src/builds/browser';
+import { createFaker } from '../../../../client-common/src/__tests__/createFaker';
 
 let index: SearchIndex;
 let transporterMock: Transporter;

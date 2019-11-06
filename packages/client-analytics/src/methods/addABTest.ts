@@ -1,9 +1,7 @@
-import { MethodEnum } from '@algolia/requester-common/types/MethodType';
-import { RequestOptions } from '@algolia/transporter/types/RequestOptions';
-import { TransporterAware } from '@algolia/transporter/types/TransporterAware';
+import { MethodEnum } from '@algolia/requester-common';
+import { RequestOptions, TransporterAware } from '@algolia/transporter';
 
-import { ABTest } from '../types/ABTest';
-import { AddABTestResponse } from '../types/AddABTestResponse';
+import { ABTest, AddABTestResponse } from '..';
 
 export const addABTest = <TClient extends TransporterAware>(
   base: TClient

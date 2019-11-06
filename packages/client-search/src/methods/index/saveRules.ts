@@ -1,15 +1,9 @@
-import { createWaitablePromise } from '@algolia/client-common/createWaitablePromise';
-import { encode } from '@algolia/client-common/helpers';
-import { WaitablePromise } from '@algolia/client-common/types/WaitablePromise';
-import { MethodEnum } from '@algolia/requester-common/types/MethodType';
-import { mapRequestOptions, popRequestOption } from '@algolia/transporter/request-options';
-import { RequestOptions } from '@algolia/transporter/types/RequestOptions';
+import { createWaitablePromise, encode, WaitablePromise } from '@algolia/client-common';
+import { MethodEnum } from '@algolia/requester-common';
+import { mapRequestOptions, popRequestOption, RequestOptions } from '@algolia/transporter';
 
-import { Rule } from '../../types/Rule';
-import { SaveRulesOptions } from '../../types/SaveRulesOptions';
-import { SaveRulesResponse } from '../../types/SaveRulesResponse';
-import { SearchIndex } from '../../types/SearchIndex';
-import { HasWaitTask, waitTask } from './waitTask';
+import { Rule, SaveRulesOptions, SaveRulesResponse, SearchIndex } from '../..';
+import { HasWaitTask, waitTask } from '.';
 
 export const saveRules = <TSearchIndex extends SearchIndex>(
   base: TSearchIndex

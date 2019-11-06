@@ -1,10 +1,8 @@
-import { WaitablePromise } from '@algolia/client-common/types/WaitablePromise';
-import { RequestOptions } from '@algolia/transporter/types/RequestOptions';
+import { WaitablePromise } from '@algolia/client-common';
+import { RequestOptions } from '@algolia/transporter';
 
-import { SaveSynonymsResponse } from '../../types/SaveSynonymsResponse';
-import { SearchIndex } from '../../types/SearchIndex';
-import { Synonym } from '../../types/Synonym';
-import { HasSaveSynonyms, saveSynonyms } from './saveSynonyms';
+import { SaveSynonymsResponse, SearchIndex, Synonym } from '../..';
+import { HasSaveSynonyms, saveSynonyms } from '.';
 
 export const replaceAllSynonyms = <TSearchIndex extends SearchIndex>(
   base: TSearchIndex

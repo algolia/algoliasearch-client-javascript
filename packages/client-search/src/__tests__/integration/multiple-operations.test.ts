@@ -1,8 +1,6 @@
-import { createMultiWaitable } from '@algolia/client-common/__tests__/helpers';
-import { TestSuite } from '@algolia/client-common/__tests__/TestSuite';
-
-import { BatchActionEnum } from '../../types/BatchActionType';
-import { StrategyEnum } from '../../types/StrategyType';
+import { BatchActionEnum, StrategyEnum } from '../..';
+import { createMultiWaitable } from '../../../../client-common/src/__tests__/helpers';
+import { TestSuite } from '../../../../client-common/src/__tests__/TestSuite';
 
 const testSuite = new TestSuite('multiple_operations');
 

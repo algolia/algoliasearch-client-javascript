@@ -1,5 +1,4 @@
-import { MethodEnum } from '@algolia/requester-common/types/MethodType';
-import { Request } from '@algolia/requester-common/types/Request';
+import { MethodEnum, Request } from '@algolia/requester-common';
 import nock from 'nock';
 
 import { createNodeHttpRequester } from '../..';

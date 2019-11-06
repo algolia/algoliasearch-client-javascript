@@ -1,5 +1,4 @@
-import { Request } from './Request';
-import { Response } from './Response';
+import { Request, Response } from '.';
 
 export type Requester = {
   readonly send: (request: Request) => Readonly<Promise<Response>>;

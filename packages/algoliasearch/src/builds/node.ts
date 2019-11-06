@@ -5,7 +5,7 @@ import { createNodeHttpRequester } from '@algolia/requester-node-http';
 import { createUserAgent } from '@algolia/transporter';
 
 import { createSearchClient, SearchClient } from '../presets/default';
-import { AlgoliaSearchOptions } from '../types/AlgoliaSearchOptions';
+import { AlgoliaSearchOptions } from '../types';
 
 export default function algoliasearch(
   appId: string,
@@ -34,4 +34,4 @@ export default function algoliasearch(
 }
 
 export * from '../types';
-export * from '../presets/default';
+export { SearchIndex, SearchClient } from '../presets/default';

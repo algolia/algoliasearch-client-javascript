@@ -1,12 +1,14 @@
-import { encode } from '@algolia/client-common/helpers';
-import { MethodEnum } from '@algolia/requester-common/types/MethodType';
-import { RequestOptions } from '@algolia/transporter/types/RequestOptions';
+import { encode } from '@algolia/client-common';
+import { MethodEnum } from '@algolia/requester-common';
+import { RequestOptions } from '@algolia/transporter';
 
-import { createBrowsablePromise } from '../../createBrowsablePromise';
-import { BrowseOptions } from '../../types/BrowseOptions';
-import { BrowseResponse } from '../../types/BrowseResponse';
-import { SearchIndex } from '../../types/SearchIndex';
-import { SearchOptions } from '../../types/SearchOptions';
+import {
+  BrowseOptions,
+  BrowseResponse,
+  createBrowsablePromise,
+  SearchIndex,
+  SearchOptions,
+} from '../..';
 
 export const browseObjects = <TSearchIndex extends SearchIndex>(
   base: TSearchIndex

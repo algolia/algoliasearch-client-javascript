@@ -1,10 +1,8 @@
-import { encode } from '@algolia/client-common/helpers';
-import { MethodEnum } from '@algolia/requester-common/types/MethodType';
-import { mapRequestOptions } from '@algolia/transporter/request-options';
-import { RequestOptions } from '@algolia/transporter/types/RequestOptions';
+import { encode } from '@algolia/client-common';
+import { MethodEnum } from '@algolia/requester-common';
+import { mapRequestOptions, RequestOptions } from '@algolia/transporter';
 
-import { IndexSettings } from '../../types/IndexSettings';
-import { SearchIndex } from '../../types/SearchIndex';
+import { IndexSettings, SearchIndex } from '../..';
 
 export const getSettings = <TSearchIndex extends SearchIndex>(
   base: TSearchIndex

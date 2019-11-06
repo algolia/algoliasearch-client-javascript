@@ -1,12 +1,8 @@
-import { WaitablePromise } from '@algolia/client-common/types/WaitablePromise';
-import { RequestOptions } from '@algolia/transporter/types/RequestOptions';
+import { WaitablePromise } from '@algolia/client-common';
+import { RequestOptions } from '@algolia/transporter';
 
-import { Rule } from '../../types/Rule';
-import { SaveObjectsOptions } from '../../types/SaveObjectsOptions';
-import { SaveRulesOptions } from '../../types/SaveRulesOptions';
-import { SaveRulesResponse } from '../../types/SaveRulesResponse';
-import { SearchIndex } from '../../types/SearchIndex';
-import { HasSaveRules, saveRules } from './saveRules';
+import { Rule, SaveObjectsOptions, SaveRulesOptions, SaveRulesResponse, SearchIndex } from '../..';
+import { HasSaveRules, saveRules } from '.';
 
 export const replaceAllRules = <TSearchIndex extends SearchIndex>(
   base: TSearchIndex

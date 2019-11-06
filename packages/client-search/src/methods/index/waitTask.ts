@@ -1,8 +1,7 @@
-import { RequestOptions } from '@algolia/transporter/types/RequestOptions';
+import { RequestOptions } from '@algolia/transporter';
 
-import { SearchIndex } from '../../types/SearchIndex';
-import { TaskStatusResponse } from '../../types/TaskStatusResponse';
-import { getTask, HasGetTask } from './getTask';
+import { SearchIndex, TaskStatusResponse } from '../..';
+import { getTask, HasGetTask } from '.';
 
 export const waitTask = <TSearchIndex extends SearchIndex>(
   base: TSearchIndex

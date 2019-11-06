@@ -1,18 +1,18 @@
 import { Requester } from '@algolia/requester-common';
 import { anything, deepEqual, spy, verify, when } from 'ts-mockito';
 
-import { createRetryError } from '../../errors/createRetryError';
-import { Transporter } from '../../types';
-import { createFakeRequester, createFixtures } from '../Fixtures';
+import { createRetryError, Transporter } from '../..';
+import { createFakeRequester, createFixtures } from '../fixtures';
 
-let requester: Requester;
+let requesterMock: Requester;
 let transporter: Transporter;
 
 beforeEach(() => {
-  requester = spy(createFakeRequester());
+  const requester = createFakeRequester();
+  requesterMock = spy(requester);
   transporter = createFixtures().transporter(requester);
 
-  when(requester.send(anything())).thenResolve({
+  when(requesterMock.send(anything())).thenResolve({
     content: '{}',
     status: 200,
     isTimedOut: false,
@@ -25,21 +25,21 @@ describe('the timeouts selection', () => {
   it('Uses read default value', async () => {
     await transporter.read(transporterRequest);
 
-    verify(requester.send(deepEqual(createFixtures().readRequest()))).once();
-    verify(requester.send(anything())).once();
+    verify(requesterMock.send(deepEqual(createFixtures().readRequest()))).once();
+    verify(requesterMock.send(anything())).once();
   });
 
   it('Uses write default value', async () => {
     await transporter.write(transporterRequest);
-    verify(requester.send(deepEqual(createFixtures().writeRequest()))).once();
-    verify(requester.send(anything())).once();
+    verify(requesterMock.send(deepEqual(createFixtures().writeRequest()))).once();
+    verify(requesterMock.send(anything())).once();
   });
 
   it('Uses overrides read default value with request options', async () => {
     await transporter.read(transporterRequest, { timeout: 5 });
 
     verify(
-      requester.send(
+      requesterMock.send(
         deepEqual(
           createFixtures().readRequest({
             timeout: 5,
@@ -47,13 +47,13 @@ describe('the timeouts selection', () => {
         )
       )
     ).once();
-    verify(requester.send(anything())).once();
+    verify(requesterMock.send(anything())).once();
   });
 
   it('Uses overrides write default value with request options', async () => {
     await transporter.write(transporterRequest, { timeout: 25 });
     verify(
-      requester.send(
+      requesterMock.send(
         deepEqual(
           createFixtures().writeRequest({
             timeout: 25,
@@ -61,14 +61,11 @@ describe('the timeouts selection', () => {
         )
       )
     ).once();
-    verify(requester.send(anything())).once();
+    verify(requesterMock.send(anything())).once();
   });
 
   it('Increases timeout based on number of retries', async () => {
-    requester = spy(createFakeRequester());
-    transporter = createFixtures().transporter(requester);
-
-    when(requester.send(anything())).thenResolve({
+    when(requesterMock.send(anything())).thenResolve({
       content: '{}',
       status: 500,
       isTimedOut: true,
@@ -76,9 +73,9 @@ describe('the timeouts selection', () => {
 
     await expect(transporter.read(transporterRequest)).rejects.toEqual(createRetryError());
 
-    verify(requester.send(deepEqual(createFixtures().readRequest()))).once();
+    verify(requesterMock.send(deepEqual(createFixtures().readRequest()))).once();
     verify(
-      requester.send(
+      requesterMock.send(
         deepEqual(
           createFixtures().readRequest({
             url: 'https://read-and-write.com/save',
@@ -87,14 +84,11 @@ describe('the timeouts selection', () => {
         )
       )
     ).once();
-    verify(requester.send(anything())).twice();
+    verify(requesterMock.send(anything())).twice();
   });
 
   it('allows no timeout to be used', async () => {
-    requester = spy(createFakeRequester());
-    transporter = createFixtures().transporter(requester);
-
-    when(requester.send(anything())).thenResolve({
+    when(requesterMock.send(anything())).thenResolve({
       content: '{}',
       status: 200,
       isTimedOut: false,
@@ -107,7 +101,7 @@ describe('the timeouts selection', () => {
     ).resolves.toEqual({});
 
     verify(
-      requester.send(
+      requesterMock.send(
         deepEqual(
           createFixtures().readRequest({
             timeout: 0,

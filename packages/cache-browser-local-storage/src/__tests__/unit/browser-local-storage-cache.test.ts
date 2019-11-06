@@ -1,4 +1,4 @@
-import { createBrowserLocalStorageCache } from '../../createBrowserLocalStorageCache';
+import { createBrowserLocalStorageCache } from '../..';
 
 describe('browser local storage cache', () => {
   it('sets/gets values', async () => {

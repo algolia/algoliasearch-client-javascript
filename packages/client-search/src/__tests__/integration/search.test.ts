@@ -1,7 +1,6 @@
-import { createMultiWaitable } from '@algolia/client-common/__tests__/helpers';
-import { TestSuite } from '@algolia/client-common/__tests__/TestSuite';
-
-import { createObjectNotFoundError } from '../../errors/createObjectNotFoundError';
+import { createObjectNotFoundError } from '../..';
+import { createMultiWaitable } from '../../../../client-common/src/__tests__/helpers';
+import { TestSuite } from '../../../../client-common/src/__tests__/TestSuite';
 
 const testSuite = new TestSuite('search');
 

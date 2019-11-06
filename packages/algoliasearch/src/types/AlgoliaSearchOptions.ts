@@ -1,4 +1,4 @@
-import { LogLevelType } from '@algolia/logger-common/types/LogLevelType';
+import { LogLevelType } from '@algolia/logger-common';
 
 export type AlgoliaSearchOptions = {
   readonly logLevel?: LogLevelType;

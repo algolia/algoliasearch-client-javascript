@@ -1,13 +1,14 @@
-import { WaitablePromise } from '@algolia/client-common/types/WaitablePromise';
-import { popRequestOption } from '@algolia/transporter/request-options';
-import { RequestOptions } from '@algolia/transporter/types/RequestOptions';
+import { WaitablePromise } from '@algolia/client-common';
+import { popRequestOption, RequestOptions } from '@algolia/transporter';
 
-import { createMissingObjectIDError } from '../../errors/createMissingObjectIDError';
-import { BatchActionEnum } from '../../types/BatchActionType';
-import { BatchResponse } from '../../types/BatchResponse';
-import { SaveObjectsOptions } from '../../types/SaveObjectsOptions';
-import { SearchIndex } from '../../types/SearchIndex';
-import { batch, HasBatch } from './batch';
+import {
+  BatchActionEnum,
+  BatchResponse,
+  createMissingObjectIDError,
+  SaveObjectsOptions,
+  SearchIndex,
+} from '../..';
+import { batch, HasBatch } from '.';
 
 export const saveObjects = <TSearchIndex extends SearchIndex>(
   base: TSearchIndex

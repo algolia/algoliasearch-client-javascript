@@ -1,8 +1,6 @@
-import { encode } from '@algolia/client-common/helpers';
+import { encode } from '@algolia/client-common';
 
-import { createHost } from './createHost';
-import { Request } from './types/Request';
-import { RequestOptions } from './types/RequestOptions';
+import { createHost, Request, RequestOptions } from '.';
 
 export function serializeUrl(
   host: ReturnType<typeof createHost>,

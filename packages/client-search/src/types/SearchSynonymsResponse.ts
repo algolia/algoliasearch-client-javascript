@@ -1,4 +1,4 @@
-import { Synonym } from './Synonym';
+import { Synonym } from '.';
 
 export type SearchSynonymsResponse = {
   readonly hits: readonly Synonym[];

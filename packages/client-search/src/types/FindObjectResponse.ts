@@ -1,4 +1,4 @@
-import { ObjectWithObjectID } from './ObjectWithObjectID';
+import { ObjectWithObjectID } from '.';
 
 export type FindObjectResponse<TObject> = {
   readonly object: TObject & ObjectWithObjectID;

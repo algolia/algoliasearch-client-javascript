@@ -1,5 +1,4 @@
-import { SearchIndex } from '../../types/SearchIndex';
-import { SearchResponse } from '../../types/SearchResponse';
+import { SearchIndex, SearchResponse } from '../..';
 
 export const getObjectPosition = <TSearchIndex extends SearchIndex>(
   base: TSearchIndex

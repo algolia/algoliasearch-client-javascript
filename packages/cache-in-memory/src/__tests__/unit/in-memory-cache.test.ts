@@ -1,4 +1,4 @@
-import { createInMemoryCache } from '../../createInMemoryCache';
+import { createInMemoryCache } from '../..';
 
 describe('in memory cache', () => {
   it('sets/gets values', async () => {

@@ -1,7 +1,7 @@
-import { RequestOptions } from '@algolia/transporter/types/RequestOptions';
+import { RequestOptions } from '@algolia/transporter';
 
-import { SearchIndex } from '../../types/SearchIndex';
-import { getSettings, HasGetSettings } from './getSettings';
+import { SearchIndex } from '../..';
+import { getSettings, HasGetSettings } from '.';
 
 export const exists = <TSearchIndex extends SearchIndex>(
   base: TSearchIndex

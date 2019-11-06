@@ -1,9 +1,7 @@
-import { MethodEnum } from '@algolia/requester-common/types/MethodType';
-import { RequestOptions } from '@algolia/transporter/types/RequestOptions';
-import { TransporterAware } from '@algolia/transporter/types/TransporterAware';
+import { MethodEnum } from '@algolia/requester-common';
+import { RequestOptions, TransporterAware } from '@algolia/transporter';
 
-import { MultipleGetObject } from '../../types/MultipleGetObject';
-import { MultipleGetObjectsResponse } from '../../types/MultipleGetObjectsResponse';
+import { MultipleGetObject, MultipleGetObjectsResponse } from '../..';
 
 export const multipleGetObjects = <TClient extends TransporterAware>(
   base: TClient

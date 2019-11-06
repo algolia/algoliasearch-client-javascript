@@ -1,4 +1,4 @@
-import { FacetHit } from './FacetHit';
+import { FacetHit } from '.';
 
 export type SearchForFacetValuesResponse = {
   readonly facetHits: readonly FacetHit[];

@@ -1,21 +1,21 @@
 import { Requester } from '@algolia/requester-common';
 import { anything, deepEqual, spy, verify, when } from 'ts-mockito';
 
-import { createApiError } from '../../errors/createApiError';
-import { Transporter } from '../../types';
-import { createFakeRequester, createFixtures } from '../Fixtures';
+import { createApiError, Transporter } from '../..';
+import { createFakeRequester, createFixtures } from '../fixtures';
 
-let requester: Requester;
+let requesterMock: Requester;
 let transporter: Transporter;
 
 const transporterRequest = createFixtures().transporterRequest();
 
 describe('retry strategy', () => {
   beforeEach(() => {
-    requester = spy(createFakeRequester());
+    const requester = createFakeRequester();
+    requesterMock = spy(requester);
     transporter = createFixtures().transporter(requester);
 
-    when(requester.send(anything())).thenResolve({
+    when(requesterMock.send(anything())).thenResolve({
       content: '{"hits": [{"name": "Star Wars"}]}',
       status: 200,
       isTimedOut: false,
@@ -23,7 +23,7 @@ describe('retry strategy', () => {
   });
 
   it('Retries after a timeout', async () => {
-    when(requester.send(deepEqual(createFixtures().writeRequest()))).thenResolve({
+    when(requesterMock.send(deepEqual(createFixtures().writeRequest()))).thenResolve({
       content: '',
       status: 0,
       isTimedOut: true,
@@ -31,13 +31,13 @@ describe('retry strategy', () => {
 
     await transporter.write(transporterRequest, {});
 
-    verify(requester.send(anything())).twice();
+    verify(requesterMock.send(anything())).twice();
 
     expect(transporter.hosts.filter(host => host.isUp())).toHaveLength(3);
   });
 
   it('Retries after a network error', async () => {
-    when(requester.send(deepEqual(createFixtures().readRequest()))).thenResolve({
+    when(requesterMock.send(deepEqual(createFixtures().readRequest()))).thenResolve({
       content: '',
       status: 0,
       isTimedOut: false,
@@ -45,13 +45,13 @@ describe('retry strategy', () => {
 
     await transporter.read(transporterRequest, {});
 
-    verify(requester.send(anything())).twice();
+    verify(requesterMock.send(anything())).twice();
 
     expect(transporter.hosts.filter(host => host.isUp())).toHaveLength(2);
   });
 
   it('Retries after a 1xx', async () => {
-    when(requester.send(deepEqual(createFixtures().readRequest()))).thenResolve({
+    when(requesterMock.send(deepEqual(createFixtures().readRequest()))).thenResolve({
       content: '',
       status: 101,
       isTimedOut: false,
@@ -59,7 +59,7 @@ describe('retry strategy', () => {
 
     await transporter.read(transporterRequest);
 
-    verify(requester.send(anything())).twice();
+    verify(requesterMock.send(anything())).twice();
 
     expect(transporter.hosts.filter(host => host.isUp())).toHaveLength(2);
   });
@@ -72,13 +72,13 @@ describe('retry strategy', () => {
     const response = await transporter.read<SearchResponse>(transporterRequest, {});
 
     expect(response.hits[0].name).toBe('Star Wars');
-    verify(requester.send(anything())).once();
+    verify(requesterMock.send(anything())).once();
 
     expect(transporter.hosts.filter(host => host.isUp())).toHaveLength(3);
   });
 
   it('Retries after a 3xx', async () => {
-    when(requester.send(deepEqual(createFixtures().readRequest()))).thenResolve({
+    when(requesterMock.send(deepEqual(createFixtures().readRequest()))).thenResolve({
       content: '',
       status: 300,
       isTimedOut: false,
@@ -86,13 +86,13 @@ describe('retry strategy', () => {
 
     await transporter.read(transporterRequest);
 
-    verify(requester.send(anything())).twice();
+    verify(requesterMock.send(anything())).twice();
 
     expect(transporter.hosts.filter(host => host.isUp())).toHaveLength(2);
   });
 
   it('Dont retry after a 4xx', async () => {
-    when(requester.send(deepEqual(createFixtures().writeRequest()))).thenResolve({
+    when(requesterMock.send(deepEqual(createFixtures().writeRequest()))).thenResolve({
       content: JSON.stringify({
         message: 'Invalid Application ID',
         status: 404,
@@ -105,13 +105,13 @@ describe('retry strategy', () => {
       createApiError('Invalid Application ID', 404)
     );
 
-    verify(requester.send(anything())).once();
+    verify(requesterMock.send(anything())).once();
 
     expect(transporter.hosts.filter(host => host.isUp())).toHaveLength(3);
   });
 
   it('Retries after a 5xx', async () => {
-    when(requester.send(deepEqual(createFixtures().writeRequest()))).thenResolve({
+    when(requesterMock.send(deepEqual(createFixtures().writeRequest()))).thenResolve({
       content: '',
       status: 500,
       isTimedOut: false,
@@ -119,7 +119,7 @@ describe('retry strategy', () => {
 
     await transporter.write(transporterRequest, {});
 
-    verify(requester.send(anything())).twice();
+    verify(requesterMock.send(anything())).twice();
 
     expect(transporter.hosts.filter(host => host.isUp())).toHaveLength(2);
   });

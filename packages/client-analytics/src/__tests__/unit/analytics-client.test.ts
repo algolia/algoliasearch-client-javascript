@@ -1,4 +1,4 @@
-import algoliasearch from 'algoliasearch/builds/browser';
+import algoliasearch from '../../../../algoliasearch/src/builds/node';
 
 const analyticsClient = algoliasearch('appId', 'apiKey').initAnalytics();
 

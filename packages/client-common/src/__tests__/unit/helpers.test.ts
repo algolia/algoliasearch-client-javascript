@@ -1,4 +1,4 @@
-import { compose, encode } from '../../helpers';
+import { compose, encode } from '../..';
 
 describe('helpers', () => {
   it('encodes url', () => {

@@ -1,13 +1,9 @@
-import { createWaitablePromise } from '@algolia/client-common/createWaitablePromise';
-import { encode } from '@algolia/client-common/helpers';
-import { WaitablePromise } from '@algolia/client-common/types/WaitablePromise';
-import { MethodEnum } from '@algolia/requester-common/types/MethodType';
-import { RequestOptions } from '@algolia/transporter/types/RequestOptions';
+import { createWaitablePromise, encode, WaitablePromise } from '@algolia/client-common';
+import { MethodEnum } from '@algolia/requester-common';
+import { RequestOptions } from '@algolia/transporter';
 
-import { IndexSettings } from '../../types/IndexSettings';
-import { SearchIndex } from '../../types/SearchIndex';
-import { SetSettingsResponse } from '../../types/SetSettingsResponse';
-import { HasWaitTask, waitTask } from './waitTask';
+import { IndexSettings, SearchIndex, SetSettingsResponse } from '../..';
+import { HasWaitTask, waitTask } from '.';
 
 export const setSettings = <TSearchIndex extends SearchIndex>(
   base: TSearchIndex

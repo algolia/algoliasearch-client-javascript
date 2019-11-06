@@ -1,4 +1,4 @@
-import { CallType } from './types/CallType';
+import { CallType } from '.';
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function createHost(url: string, accept: CallType) {

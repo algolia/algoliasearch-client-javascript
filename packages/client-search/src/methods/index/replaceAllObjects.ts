@@ -1,15 +1,9 @@
-import { createWaitablePromise } from '@algolia/client-common/createWaitablePromise';
-import { encode } from '@algolia/client-common/helpers';
-import { WaitablePromise } from '@algolia/client-common/types/WaitablePromise';
-import { MethodEnum } from '@algolia/requester-common/types/MethodType';
-import { popRequestOption } from '@algolia/transporter/request-options';
-import { RequestOptions } from '@algolia/transporter/types/RequestOptions';
+import { createWaitablePromise, encode, WaitablePromise } from '@algolia/client-common';
+import { MethodEnum } from '@algolia/requester-common';
+import { popRequestOption, RequestOptions } from '@algolia/transporter';
 
-import { IndexOperationResponse } from '../../types/IndexOperationResponse';
-import { ReplaceAllObjectsOptions } from '../../types/ReplaceAllObjectsOptions';
-import { SearchIndex } from '../../types/SearchIndex';
-import { saveObjects } from './saveObjects';
-import { HasWaitTask, waitTask } from './waitTask';
+import { IndexOperationResponse, ReplaceAllObjectsOptions, SearchIndex } from '../..';
+import { HasWaitTask, saveObjects, waitTask } from '.';
 
 export const replaceAllObjects = <TSearchIndex extends SearchIndex>(
   base: TSearchIndex

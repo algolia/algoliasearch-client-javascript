@@ -1,4 +1,4 @@
-import { WaitablePromise } from '../types/WaitablePromise';
+import { WaitablePromise } from '../..';
 
 export function createMultiWaitable(responses: Array<WaitablePromise<any>>): MultiWaitable {
   return {

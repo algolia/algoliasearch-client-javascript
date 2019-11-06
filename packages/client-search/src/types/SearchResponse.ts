@@ -1,4 +1,4 @@
-import { ObjectWithObjectID } from './ObjectWithObjectID';
+import { ObjectWithObjectID } from '.';
 
 export type SearchResponse<TObject = {}> = {
   readonly hits: ReadonlyArray<TObject & ObjectWithObjectID>;

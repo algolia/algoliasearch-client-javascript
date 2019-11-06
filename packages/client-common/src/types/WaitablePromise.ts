@@ -1,6 +1,6 @@
-import { RequestOptions } from '@algolia/transporter/types/RequestOptions';
+import { RequestOptions } from '@algolia/transporter';
 
-import { OnWaitClosure } from './OnWaitClosure';
+import { OnWaitClosure } from '.';
 
 export type WaitablePromise<TResponse> = Readonly<Promise<TResponse>> & {
   readonly onWait: (

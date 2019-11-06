@@ -1,126 +1,127 @@
-import { createAnalyticsClient } from '@algolia/client-analytics/createAnalyticsClient';
-import { addABTest, HasAddABTest } from '@algolia/client-analytics/methods/addABTest';
-import { deleteABTest, HasDeleteABTest } from '@algolia/client-analytics/methods/deleteABTest';
-import { getABTest, HasGetABTest } from '@algolia/client-analytics/methods/getABTest';
-import { getABTests, HasGetABTests } from '@algolia/client-analytics/methods/getABTests';
-import { HasStopABTest, stopABTest } from '@algolia/client-analytics/methods/stopABTest';
-import { AnalyticsClient as BaseAnalyticsClient } from '@algolia/client-analytics/types/AnalyticsClient';
 import {
-  createSearchClient as baseCreateSearchClient,
-  SearchClientOptions,
-} from '@algolia/client-search/createSearchClient';
-import { copyIndex, HasCopyIndex } from '@algolia/client-search/methods/client/copyIndex';
-import { copySettings, HasCopySettings } from '@algolia/client-search/methods/client/copySettings';
-import { copySynonyms, HasCopySynonyms } from '@algolia/client-search/methods/client/copySynonyms';
-import { getLogs, HasGetLogs } from '@algolia/client-search/methods/client/getLogs';
+  addABTest,
+  AnalyticsClient as BaseAnalyticsClient,
+  createAnalyticsClient,
+  deleteABTest,
+  getABTest,
+  getABTests,
+  HasAddABTest,
+  HasDeleteABTest,
+  HasGetABTest,
+  HasGetABTests,
+  HasStopABTest,
+  stopABTest,
+} from '@algolia/client-analytics';
 import {
-  getPersonalizationStrategy,
-  HasGetPersonalizationStrategy,
-} from '@algolia/client-search/methods/client/getPersonalizationStrategy';
-import { initIndex } from '@algolia/client-search/methods/client/initIndex';
-import { HasListClusters, listClusters } from '@algolia/client-search/methods/client/listClusters';
-import { HasListIndices, listIndices } from '@algolia/client-search/methods/client/listIndices';
-import { HasMoveIndex, moveIndex } from '@algolia/client-search/methods/client/moveIndex';
-import {
-  HasMultipleBatch,
-  multipleBatch,
-} from '@algolia/client-search/methods/client/multipleBatch';
-import {
-  HasMultipleGetObjects,
-  multipleGetObjects,
-} from '@algolia/client-search/methods/client/multipleGetObjects';
-import {
-  HasMultipleQueries,
-  multipleQueries,
-} from '@algolia/client-search/methods/client/multipleQueries';
-import {
-  HasMultipleSearchForFacetValues,
-  multipleSearchForFacetValues,
-} from '@algolia/client-search/methods/client/multipleSearchForFacetValues';
-import {
-  HasSetPersonalizationStrategy,
-  setPersonalizationStrategy,
-} from '@algolia/client-search/methods/client/setPersonalizationStrategy';
-import { batch, HasBatch } from '@algolia/client-search/methods/index/batch';
-import {
+  batch,
   browseObjects,
-  HasBrowseObjects,
-} from '@algolia/client-search/methods/index/browseObjects';
-import { browseRules, HasBrowseRules } from '@algolia/client-search/methods/index/browseRules';
-import {
+  browseRules,
   browseSynonyms,
-  HasBrowseSynonyms,
-} from '@algolia/client-search/methods/index/browseSynonyms';
-import { clearObjects, HasClearObjects } from '@algolia/client-search/methods/index/clearObjects';
-import { clearRules, HasClearRules } from '@algolia/client-search/methods/index/clearRules';
-import {
+  clearObjects,
+  clearRules,
   clearSynonyms,
-  HasClearSynonyms,
-} from '@algolia/client-search/methods/index/clearSynonyms';
-import { deleteBy, HasDeleteBy } from '@algolia/client-search/methods/index/deleteBy';
-import { deleteIndex, HasDelete } from '@algolia/client-search/methods/index/deleteIndex';
-import { deleteObject, HasDeleteObject } from '@algolia/client-search/methods/index/deleteObject';
-import {
+  copyIndex,
+  copySettings,
+  copySynonyms,
+  createSearchClient as baseCreateSearchClient,
+  deleteBy,
+  deleteIndex,
+  deleteObject,
   deleteObjects,
-  HasDeleteObjects,
-} from '@algolia/client-search/methods/index/deleteObjects';
-import { deleteRule, HasDeleteRule } from '@algolia/client-search/methods/index/deleteRule';
-import {
+  deleteRule,
   deleteSynonym,
-  HasDeleteSynonym,
-} from '@algolia/client-search/methods/index/deleteSynonym';
-import { exists, HasExists } from '@algolia/client-search/methods/index/exists';
-import { findObject, HasFindObject } from '@algolia/client-search/methods/index/findObject';
-import { getObject, HasGetObject } from '@algolia/client-search/methods/index/getObject';
-import {
+  exists,
+  findObject,
+  getLogs,
+  getObject,
   getObjectPosition,
+  getObjects,
+  getPersonalizationStrategy,
+  getRule,
+  getSettings,
+  getSynonym,
+  HasBatch,
+  HasBrowseObjects,
+  HasBrowseRules,
+  HasBrowseSynonyms,
+  HasClearObjects,
+  HasClearRules,
+  HasClearSynonyms,
+  HasCopyIndex,
+  HasCopySettings,
+  HasCopySynonyms,
+  HasDelete,
+  HasDeleteBy,
+  HasDeleteObject,
+  HasDeleteObjects,
+  HasDeleteRule,
+  HasDeleteSynonym,
+  HasExists,
+  HasFindObject,
+  HasGetLogs,
+  HasGetObject,
   HasGetObjectPosition,
-} from '@algolia/client-search/methods/index/getObjectPosition';
-import { getObjects, HasGetObjects } from '@algolia/client-search/methods/index/getObjects';
-import { getRule, HasGetRule } from '@algolia/client-search/methods/index/getRule';
-import { getSettings, HasGetSettings } from '@algolia/client-search/methods/index/getSettings';
-import { getSynonym, HasGetSynonym } from '@algolia/client-search/methods/index/getSynonym';
-import {
+  HasGetObjects,
+  HasGetPersonalizationStrategy,
+  HasGetRule,
+  HasGetSettings,
+  HasGetSynonym,
+  HasListClusters,
+  HasListIndices,
+  HasMoveIndex,
+  HasMultipleBatch,
+  HasMultipleGetObjects,
+  HasMultipleQueries,
+  HasMultipleSearchForFacetValues,
   HasPartialUpdateObject,
-  partialUpdateObject,
-} from '@algolia/client-search/methods/index/partialUpdateObject';
-import {
   HasPartialUpdateObjects,
-  partialUpdateObjects,
-} from '@algolia/client-search/methods/index/partialUpdateObjects';
-import {
   HasReplaceAllObjects,
-  replaceAllObjects,
-} from '@algolia/client-search/methods/index/replaceAllObjects';
-import {
   HasReplaceAllRules,
-  replaceAllRules,
-} from '@algolia/client-search/methods/index/replaceAllRules';
-import {
   HasReplaceAllSynonyms,
-  replaceAllSynonyms,
-} from '@algolia/client-search/methods/index/replaceAllSynonyms';
-import { HasSaveObject, saveObject } from '@algolia/client-search/methods/index/saveObject';
-import { HasSaveObjects, saveObjects } from '@algolia/client-search/methods/index/saveObjects';
-import { HasSaveRule, saveRule } from '@algolia/client-search/methods/index/saveRule';
-import { HasSaveRules, saveRules } from '@algolia/client-search/methods/index/saveRules';
-import { HasSaveSynonym, saveSynonym } from '@algolia/client-search/methods/index/saveSynonym';
-import { HasSaveSynonyms, saveSynonyms } from '@algolia/client-search/methods/index/saveSynonyms';
-import { HasSearch, search } from '@algolia/client-search/methods/index/search';
-import {
+  HasSaveObject,
+  HasSaveObjects,
+  HasSaveRule,
+  HasSaveRules,
+  HasSaveSynonym,
+  HasSaveSynonyms,
+  HasSearch,
   HasSearchForFacetValues,
-  searchForFacetValues,
-} from '@algolia/client-search/methods/index/searchForFacetValues';
-import { HasSearchRules, searchRules } from '@algolia/client-search/methods/index/searchRules';
-import {
+  HasSearchRules,
   HasSearchSynonyms,
+  HasSetPersonalizationStrategy,
+  HasSetSettings,
+  HasWaitTask,
+  initIndex,
+  listClusters,
+  listIndices,
+  moveIndex,
+  multipleBatch,
+  multipleGetObjects,
+  multipleQueries,
+  multipleSearchForFacetValues,
+  partialUpdateObject,
+  partialUpdateObjects,
+  replaceAllObjects,
+  replaceAllRules,
+  replaceAllSynonyms,
+  saveObject,
+  saveObjects,
+  saveRule,
+  saveRules,
+  saveSynonym,
+  saveSynonyms,
+  search,
+  SearchClient as BaseSearchClient,
+  SearchClientOptions,
+  searchForFacetValues,
+  SearchIndex as SearchIndexPreset,
+  searchRules,
   searchSynonyms,
-} from '@algolia/client-search/methods/index/searchSynonyms';
-import { HasSetSettings, setSettings } from '@algolia/client-search/methods/index/setSettings';
-import { HasWaitTask, waitTask } from '@algolia/client-search/methods/index/waitTask';
-import { SearchClient as BaseSearchClient } from '@algolia/client-search/types/SearchClient';
-import { SearchIndex as SearchIndexPreset } from '@algolia/client-search/types/SearchIndex';
-import { TransporterOptions } from '@algolia/transporter/types/TransporterOptions';
+  setPersonalizationStrategy,
+  setSettings,
+  waitTask,
+} from '@algolia/client-search';
+import { TransporterOptions } from '@algolia/transporter';
 
 export type SearchClient = BaseSearchClient &
   HasInitIndex &

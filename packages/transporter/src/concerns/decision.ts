@@ -1,6 +1,6 @@
-import { Response } from '@algolia/requester-common/types/Response';
+import { Response } from '@algolia/requester-common';
 
-import { createHost } from '../createHost';
+import { createHost } from '..';
 
 const isNetworkError = ({ isTimedOut, status }: Response): boolean => {
   return !isTimedOut && ~~status === 0;

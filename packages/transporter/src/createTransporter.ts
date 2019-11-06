@@ -1,15 +1,17 @@
+import {
+  CallEnum,
+  CallType,
+  createHost,
+  Headers,
+  mapRequestOptions,
+  QueryParameters,
+  Request,
+  RequestOptions,
+  Transporter,
+  TransporterOptions,
+} from '.';
 import { execute } from './concerns/execute';
-import { createHost } from './createHost';
-import { mapRequestOptions } from './request-options';
-import { CallEnum, CallType } from './types/CallType';
-import { Headers } from './types/Headers';
-import { QueryParameters } from './types/QueryParameters';
-import { Request } from './types/Request';
-import { RequestOptions } from './types/RequestOptions';
-import { Transporter } from './types/Transporter';
-import { TransporterOptions } from './types/TransporterOptions';
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function createTransporter(options: TransporterOptions): Transporter {
   return {
     ...options,

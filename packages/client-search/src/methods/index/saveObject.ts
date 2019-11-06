@@ -1,12 +1,9 @@
-import { createWaitablePromise } from '@algolia/client-common/createWaitablePromise';
-import { WaitablePromise } from '@algolia/client-common/types/WaitablePromise';
-import { RequestOptions } from '@algolia/transporter/types/RequestOptions';
+import { createWaitablePromise, WaitablePromise } from '@algolia/client-common';
+import { RequestOptions } from '@algolia/transporter';
 
-import { SaveObjectResponse } from '../../types/SaveObjectResponse';
-import { SaveObjectsOptions } from '../../types/SaveObjectsOptions';
-import { SearchIndex } from '../../types/SearchIndex';
+import { SaveObjectResponse, SaveObjectsOptions, SearchIndex } from '../..';
+import { HasWaitTask } from '.';
 import { HasSaveObjects, saveObjects } from './saveObjects';
-import { HasWaitTask } from './waitTask';
 
 export const saveObject = <TSearchIndex extends SearchIndex>(
   base: TSearchIndex

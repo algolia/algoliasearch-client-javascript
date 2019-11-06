@@ -1,4 +1,4 @@
-import { Logger } from './types/Logger';
+import { Logger } from '.';
 
 export function createNullLogger(): Logger {
   /* eslint @typescript-eslint/no-unused-vars: 0 */

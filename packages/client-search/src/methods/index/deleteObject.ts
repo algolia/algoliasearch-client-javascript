@@ -1,11 +1,8 @@
-import { createWaitablePromise } from '@algolia/client-common/createWaitablePromise';
-import { WaitablePromise } from '@algolia/client-common/types/WaitablePromise';
-import { RequestOptions } from '@algolia/transporter/types/RequestOptions';
+import { createWaitablePromise, WaitablePromise } from '@algolia/client-common';
+import { RequestOptions } from '@algolia/transporter';
 
-import { DeleteResponse } from '../../types/DeleteResponse';
-import { SearchIndex } from '../../types/SearchIndex';
-import { deleteObjects, HasDeleteObjects } from './deleteObjects';
-import { HasWaitTask } from './waitTask';
+import { DeleteResponse, SearchIndex } from '../..';
+import { deleteObjects, HasDeleteObjects, HasWaitTask } from '.';
 
 export const deleteObject = <TSearchIndex extends SearchIndex>(
   base: TSearchIndex

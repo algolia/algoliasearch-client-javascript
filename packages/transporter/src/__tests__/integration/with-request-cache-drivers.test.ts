@@ -1,12 +1,11 @@
 /* eslint sonarjs/cognitive-complexity: 0 */ // --> OFF
 
-import { createBrowserLocalStorageCache } from '@algolia/cache-browser-local-storage/createBrowserLocalStorageCache';
-import { createNullCache } from '@algolia/cache-common/createNullCache';
-import { createInMemoryCache } from '@algolia/cache-in-memory/createInMemoryCache';
-import { Requester } from '@algolia/requester-common';
+import { createBrowserLocalStorageCache } from '@algolia/cache-browser-local-storage';
+import { createNullCache } from '@algolia/cache-common';
+import { createInMemoryCache } from '@algolia/cache-in-memory';
 import { anything, spy, verify, when } from 'ts-mockito';
 
-import { createFakeRequester, createFixtures } from '../Fixtures';
+import { createFakeRequester, createFixtures } from '../fixtures';
 
 const transporterRequest = createFixtures().transporterRequest();
 transporterRequest.cacheable = true;
@@ -42,10 +41,11 @@ describe('request cache integration with cache drivers', () => {
   };
 
   it('cache read requests in progress', async () => {
-    let requester: Requester;
-
     for (let index = 0; index < drivers.length; index++) {
-      when((requester = spy(createFakeRequester())).send(anything())).thenResolve({
+      const requester = createFakeRequester();
+      const requesterMock = spy(requester);
+
+      when(requesterMock.send(anything())).thenResolve({
         content: JSON.stringify({ hits: [] }),
         status: 200,
         isTimedOut: false,
@@ -70,15 +70,18 @@ describe('request cache integration with cache drivers', () => {
         await responses[responsesNumber];
       }
 
-      verify(requester.send(anything())).times(expectedCalls['in-progress'][drivers[index].name]);
+      verify(requesterMock.send(anything())).times(
+        expectedCalls['in-progress'][drivers[index].name]
+      );
     }
   });
 
   it('do not cache read requests resolved', async () => {
-    let requester: Requester;
-
     for (let index = 0; index < drivers.length; index++) {
-      when((requester = spy(createFakeRequester())).send(anything())).thenResolve({
+      const requester = createFakeRequester();
+      const requesterMock = spy(requester);
+
+      when(requesterMock.send(anything())).thenResolve({
         content: JSON.stringify({ hits: [] }),
         status: 200,
         isTimedOut: false,
@@ -92,7 +95,7 @@ describe('request cache integration with cache drivers', () => {
         await expect(transporter.read(transporterRequest)).resolves.toMatchObject({ hits: [] });
       }
 
-      verify(requester.send(anything())).times(expectedCalls.resolved[drivers[index].name]);
+      verify(requesterMock.send(anything())).times(expectedCalls.resolved[drivers[index].name]);
     }
   });
 });

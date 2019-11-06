@@ -1,15 +1,15 @@
 import { Requester } from '@algolia/requester-common';
 import { anything, spy, when } from 'ts-mockito';
 
-import { createApiError } from '../../errors/createApiError';
-import { Transporter } from '../../types';
-import { createFakeRequester, createFixtures } from '../Fixtures';
+import { createApiError, Transporter } from '../..';
+import { createFakeRequester, createFixtures } from '../fixtures';
 
-let requester: Requester;
+let requesterMock: Requester;
 let transporter: Transporter;
 
 beforeEach(() => {
-  requester = spy(createFakeRequester());
+  const requester = createFakeRequester();
+  requesterMock = spy(requester);
   transporter = createFixtures().transporter(requester);
 });
 
@@ -23,7 +23,7 @@ describe('The deserializer', () => {
       }>;
     };
 
-    when(requester.send(anything())).thenResolve({
+    when(requesterMock.send(anything())).thenResolve({
       content: JSON.stringify({ hits: [{ name: 'Star Wars' }] }),
       status: 200,
       isTimedOut: false,
@@ -35,7 +35,7 @@ describe('The deserializer', () => {
   });
 
   it('deserializes fail responses', async () => {
-    when(requester.send(anything())).thenResolve({
+    when(requesterMock.send(anything())).thenResolve({
       content: JSON.stringify({ message: 'User not found', status: 404 }),
       status: 404,
       isTimedOut: false,
@@ -47,7 +47,7 @@ describe('The deserializer', () => {
   });
 
   it('Deserializes fail non json responses', async () => {
-    when(requester.send(anything())).thenResolve({
+    when(requesterMock.send(anything())).thenResolve({
       content: 'String message for some reason',
       status: 404,
       isTimedOut: false,

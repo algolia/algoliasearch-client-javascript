@@ -1,4 +1,4 @@
-import { SearchOptions } from './SearchOptions';
+import { SearchOptions } from '.';
 
 export type MultipleQueriesQuery = {
   readonly indexName: string;

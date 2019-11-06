@@ -1,4 +1,4 @@
-import { CacheEvents } from './CacheEvents';
+import { CacheEvents } from '.';
 
 export type Cache = {
   readonly get: <TValue>(

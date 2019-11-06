@@ -1,13 +1,10 @@
-import { createWaitablePromise } from '@algolia/client-common/createWaitablePromise';
-import { encode } from '@algolia/client-common/helpers';
-import { WaitablePromise } from '@algolia/client-common/types/WaitablePromise';
-import { MethodEnum } from '@algolia/requester-common/types/MethodType';
-import { RequestOptions } from '@algolia/transporter/types/RequestOptions';
-import { TransporterAware } from '@algolia/transporter/types/TransporterAware';
+import { createWaitablePromise, encode, WaitablePromise } from '@algolia/client-common';
+import { MethodEnum } from '@algolia/requester-common';
+import { RequestOptions, TransporterAware } from '@algolia/transporter';
 
-import { IndexOperationResponse } from '../../types/IndexOperationResponse';
-import { HasWaitTask, waitTask } from '../index/waitTask';
-import { HasInitIndex, initIndex } from './initIndex';
+import { HasWaitTask, waitTask } from '..';
+import { IndexOperationResponse } from '../..';
+import { HasInitIndex, initIndex } from '.';
 
 export const moveIndex = <TClient extends TransporterAware>(
   base: TClient

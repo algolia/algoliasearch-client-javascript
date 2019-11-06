@@ -1,13 +1,10 @@
-import { createWaitablePromise } from '@algolia/client-common/createWaitablePromise';
-import { WaitablePromise } from '@algolia/client-common/types/WaitablePromise';
-import { MethodEnum } from '@algolia/requester-common/types/MethodType';
-import { RequestOptions } from '@algolia/transporter/types/RequestOptions';
-import { TransporterAware } from '@algolia/transporter/types/TransporterAware';
+import { createWaitablePromise, WaitablePromise } from '@algolia/client-common';
+import { MethodEnum } from '@algolia/requester-common';
+import { RequestOptions, TransporterAware } from '@algolia/transporter';
 
-import { BatchRequest } from '../../types/BatchRequest';
-import { MultipleBatchResponse } from '../../types/MultipleBatchResponse';
-import { HasWaitTask, waitTask } from '../index/waitTask';
-import { HasInitIndex, initIndex } from './initIndex';
+import { HasWaitTask, waitTask } from '..';
+import { BatchRequest, MultipleBatchResponse } from '../..';
+import { HasInitIndex, initIndex } from '.';
 
 export const multipleBatch = <TClient extends TransporterAware>(
   base: TClient

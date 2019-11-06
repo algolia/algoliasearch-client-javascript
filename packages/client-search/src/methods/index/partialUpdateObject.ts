@@ -1,12 +1,8 @@
-import { createWaitablePromise } from '@algolia/client-common/createWaitablePromise';
-import { WaitablePromise } from '@algolia/client-common/types/WaitablePromise';
-import { RequestOptions } from '@algolia/transporter/types/RequestOptions';
+import { createWaitablePromise, WaitablePromise } from '@algolia/client-common';
+import { RequestOptions } from '@algolia/transporter';
 
-import { PartialUpdateObjectResponse } from '../../types/PartialUpdateObjectResponse';
-import { PartialUpdateObjectsOptions } from '../../types/PartialUpdateObjectsOptions';
-import { SearchIndex } from '../../types/SearchIndex';
-import { HasPartialUpdateObjects, partialUpdateObjects } from './partialUpdateObjects';
-import { HasWaitTask } from './waitTask';
+import { PartialUpdateObjectResponse, PartialUpdateObjectsOptions, SearchIndex } from '../..';
+import { HasPartialUpdateObjects, HasWaitTask, partialUpdateObjects } from '.';
 
 export const partialUpdateObject = <TSearchIndex extends SearchIndex>(
   base: TSearchIndex

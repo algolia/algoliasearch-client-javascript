@@ -1,4 +1,4 @@
-import { ComposableOptions } from './types/ComposableOptions';
+import { ComposableOptions } from '.';
 
 // eslint-disable-next-line functional/prefer-readonly-type
 export function shuffle<TData>(array: TData[]): TData[] {

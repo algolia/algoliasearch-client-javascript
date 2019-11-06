@@ -1,9 +1,6 @@
-import { createMultiWaitable } from '@algolia/client-common/__tests__/helpers';
-import { TestSuite } from '@algolia/client-common/__tests__/TestSuite';
-
-import { EditEnum } from '../../types/EditType';
-import { IndexSettings } from '../../types/IndexSettings';
-import { Rule } from '../../types/Rule';
+import { EditEnum, IndexSettings, Rule } from '../..';
+import { createMultiWaitable } from '../../../../client-common/src/__tests__/helpers';
+import { TestSuite } from '../../../../client-common/src/__tests__/TestSuite';
 
 const testSuite = new TestSuite('rules');
 

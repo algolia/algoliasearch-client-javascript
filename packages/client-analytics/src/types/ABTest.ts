@@ -1,4 +1,4 @@
-import { Variant } from './Variant';
+import { Variant } from '.';
 
 export type ABTest = {
   /**

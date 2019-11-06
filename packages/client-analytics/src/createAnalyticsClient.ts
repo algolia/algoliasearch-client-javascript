@@ -1,11 +1,7 @@
-import { compose, createAuth } from '@algolia/client-common';
-import { AuthMode } from '@algolia/client-common/types/AuthModeType';
-import { ComposableOptions } from '@algolia/client-common/types/ComposableOptions';
-import { createTransporter } from '@algolia/transporter/createTransporter';
-import { CallEnum } from '@algolia/transporter/types/CallType';
-import { TransporterOptions } from '@algolia/transporter/types/TransporterOptions';
+import { AuthMode, ComposableOptions, compose, createAuth } from '@algolia/client-common';
+import { CallEnum, createTransporter, TransporterOptions } from '@algolia/transporter';
 
-import { AnalyticsClient } from './types/AnalyticsClient';
+import { AnalyticsClient } from '.';
 
 export const createAnalyticsClient = <TClient>(
   options: AnalyticsClientOptions & TransporterOptions & ComposableOptions

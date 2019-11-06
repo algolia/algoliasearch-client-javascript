@@ -1,11 +1,7 @@
-import { popRequestOption } from '@algolia/transporter/request-options';
-import { RequestOptions } from '@algolia/transporter/types/RequestOptions';
+import { popRequestOption, RequestOptions } from '@algolia/transporter';
 
+import { FindObjectOptions, FindObjectResponse, ObjectWithObjectID, SearchIndex } from '../..';
 import { createObjectNotFoundError } from '../../errors/createObjectNotFoundError';
-import { FindObjectOptions } from '../../types/FindObjectOptions';
-import { FindObjectResponse } from '../../types/FindObjectResponse';
-import { ObjectWithObjectID } from '../../types/ObjectWithObjectID';
-import { SearchIndex } from '../../types/SearchIndex';
 import { HasSearch, search } from './search';
 
 export const findObject = <TSearchIndex extends SearchIndex>(

@@ -1,8 +1,7 @@
-import { MethodEnum } from '@algolia/requester-common/types/MethodType';
-import { RequestOptions } from '@algolia/transporter/types/RequestOptions';
-import { TransporterAware } from '@algolia/transporter/types/TransporterAware';
+import { MethodEnum } from '@algolia/requester-common';
+import { RequestOptions, TransporterAware } from '@algolia/transporter';
 
-import { ListIndicesResponse } from '../../types/ListIndicesResponse';
+import { ListIndicesResponse } from '../..';
 
 export const listIndices = <TClient extends TransporterAware>(
   base: TClient

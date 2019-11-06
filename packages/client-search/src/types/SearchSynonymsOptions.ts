@@ -1,4 +1,4 @@
-import { SynonymType } from './SynonymType';
+import { SynonymType } from '.';
 
 export type SearchSynonymsOptions = {
   readonly query?: string;
