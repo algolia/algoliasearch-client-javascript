@@ -34,7 +34,7 @@ export default function algoliasearch(
 }
 
 export * from '../types';
-export * from '../presets/lite';
+export { SearchIndex, SearchClient } from '../presets/lite';
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-assertions, functional/immutable-data
 (<any>window).algoliasearch = algoliasearch;
