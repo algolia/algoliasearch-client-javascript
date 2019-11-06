@@ -135,8 +135,10 @@ packagesConfig
             }),
           ]
         : [];
+
       let dependencies = require(packageResolve('package.json')).dependencies;
-      if (dependencies === undefined) {
+
+      if (isBrowserBuild || dependencies === undefined) {
         dependencies = [];
       }
 

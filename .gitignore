@@ -4,4 +4,3 @@ node_modules
 dist
 .vscode
 *.test.ts.snap
-*min.js*
