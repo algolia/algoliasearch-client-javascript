@@ -4,3 +4,4 @@ node_modules
 dist
 .vscode
 *.test.ts.snap
+*.umd.js
