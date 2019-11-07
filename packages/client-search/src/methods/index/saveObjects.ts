@@ -48,14 +48,7 @@ export type HasSaveObjects = {
 function ensureObjectIdsWithin(objects: readonly object[]): void {
   objects.forEach((object: object) => {
     if (!object.hasOwnProperty('objectID')) {
-      throw createMissingObjectIDError(
-        '. All objects must have an unique objectID ' +
-          '(like a primary key) to be valid. ' +
-          'Algolia is also able to generate objectIDs ' +
-          "automatically but *it's not recommended*. " +
-          'To do it, use `saveObjects(objects, ' +
-          "{'autoGenerateObjectIDIfNotExist': true})`."
-      );
+      throw createMissingObjectIDError();
     }
   });
 }
