@@ -53,21 +53,22 @@ export function execute<TResponse>(
           decision(host, response, {
             success: () => deserializeSuccess(response),
             retry: () => {
-              transporter.logger.debug('Retryable failure', {
-                request,
-                response,
-                host,
-                triesLeft: hosts.length,
-                timeoutRetries,
-              });
-
-              if (response.isTimedOut) {
-                timeoutRetries++;
-              }
-
               return (
-                transporter.hostsCache
-                  .set({ url: host.url }, host)
+                transporter.logger
+                  .debug('Retryable failure', {
+                    request,
+                    response,
+                    host,
+                    triesLeft: hosts.length,
+                    timeoutRetries,
+                  })
+                  .then(() => {
+                    if (response.isTimedOut) {
+                      timeoutRetries++;
+                    }
+
+                    return transporter.hostsCache.set({ url: host.url }, host);
+                  })
                   // eslint-disable-next-line functional/immutable-data
                   .then(() => forEachHost(hosts.pop()))
               );

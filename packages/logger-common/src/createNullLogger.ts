@@ -4,8 +4,14 @@ export function createNullLogger(): Logger {
   /* eslint @typescript-eslint/no-unused-vars: 0 */
 
   return {
-    debug(message: string, args: any): void {},
-    info(message: string, args: any): void {},
-    error(message: string, args: any): void {},
+    debug(message: string, args: any): Readonly<Promise<void>> {
+      return Promise.resolve();
+    },
+    info(message: string, args: any): Readonly<Promise<void>> {
+      return Promise.resolve();
+    },
+    error(message: string, args: any): Readonly<Promise<void>> {
+      return Promise.resolve();
+    },
   };
 }

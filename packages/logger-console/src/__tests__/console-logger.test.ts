@@ -10,36 +10,36 @@ describe('console logger', () => {
     mockConsole(['debug', 'info', 'error']);
   });
 
-  it('respects log level type debug', () => {
+  it('respects log level type debug', async () => {
     const logger = createConsoleLogger(LogLevelEnum.Debug);
 
-    logger.debug('foo', {});
-    logger.info('foo', {});
-    logger.error('foo', {});
+    await logger.debug('foo', {});
+    await logger.info('foo', {});
+    await logger.error('foo', {});
 
     expect(console.debug).toHaveBeenCalledTimes(1);
     expect(console.info).toHaveBeenCalledTimes(1);
     expect(console.error).toHaveBeenCalledTimes(1);
   });
 
-  it('respects log level type info', () => {
+  it('respects log level type info', async () => {
     const logger = createConsoleLogger(LogLevelEnum.Info);
 
-    logger.debug('foo', {});
-    logger.info('foo', {});
-    logger.error('foo', {});
+    await logger.debug('foo', {});
+    await logger.info('foo', {});
+    await logger.error('foo', {});
 
     expect(console.debug).toHaveBeenCalledTimes(0);
     expect(console.info).toHaveBeenCalledTimes(1);
     expect(console.error).toHaveBeenCalledTimes(1);
   });
 
-  it('respects log level type error', () => {
+  it('respects log level type error', async () => {
     const logger = createConsoleLogger(LogLevelEnum.Error);
 
-    logger.debug('foo', {});
-    logger.info('foo', {});
-    logger.error('foo', {});
+    await logger.debug('foo', {});
+    await logger.info('foo', {});
+    await logger.error('foo', {});
 
     expect(console.debug).toHaveBeenCalledTimes(0);
     expect(console.info).toHaveBeenCalledTimes(0);
