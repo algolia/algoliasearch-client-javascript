@@ -15,8 +15,8 @@ beforeEach(() => {
 
 const transporterRequest = createFixtures().transporterRequest();
 
-describe('The deserializer', () => {
-  it('Deserializes success responses', async () => {
+describe('deserializer', () => {
+  it('deserializes success responses', async () => {
     type SearchResponse = {
       readonly hits: ReadonlyArray<{
         readonly name: string;
@@ -46,7 +46,7 @@ describe('The deserializer', () => {
     );
   });
 
-  it('Deserializes fail non json responses', async () => {
+  it('deserializes fail non json responses', async () => {
     when(requesterMock.send(anything())).thenResolve({
       content: 'String message for some reason',
       status: 404,

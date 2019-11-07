@@ -31,7 +31,7 @@ beforeEach(() => {
   });
 });
 
-describe('SaveObject', () => {
+describe('save objects', () => {
   it('Proxies down to save objects', async () => {
     const indexSpy = spy(index);
 
@@ -54,9 +54,7 @@ describe('SaveObject', () => {
     expect(response.objectID).toBe('1');
     expect(response.taskID).toBe(2);
   });
-});
 
-describe('SaveObjects', () => {
   it('Uses addObject when `autoGenerateObjectIDIfNotExist` is true', async () => {
     const indexSpy = spy(index);
     const objects = [createFaker().object()];
@@ -105,7 +103,7 @@ describe('SaveObjects', () => {
   });
 });
 
-describe('Chunk', () => {
+describe('chunk', () => {
   it("Don't call batch when no objects", async () => {
     const indexSpy = spy(index);
 
@@ -150,7 +148,7 @@ describe('Chunk', () => {
   });
 });
 
-describe('Get Object', () => {
+describe('get object', () => {
   it('Passes request options to transporter', async () => {
     const requestOptions = {
       timeout: 2,
@@ -162,7 +160,7 @@ describe('Get Object', () => {
   });
 });
 
-describe('Get Settings', () => {
+describe('get settings', () => {
   it('Passes getVersion=2 queryParameters', async () => {
     const requestOptions = {
       data: {},
@@ -197,7 +195,7 @@ describe('Get Settings', () => {
   });
 });
 
-describe('Get Objects', () => {
+describe('get objects', () => {
   it('Passes request options to transporter', async () => {
     const requestOptions = {
       timeout: 2,

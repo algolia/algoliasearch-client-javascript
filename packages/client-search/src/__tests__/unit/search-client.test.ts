@@ -4,7 +4,7 @@ import { anything, deepEqual, spy, verify, when } from 'ts-mockito';
 import algoliasearch from '../../../../algoliasearch/src/builds/browser';
 
 describe('search client', () => {
-  it('Gives access to appId', () => {
+  it('gives access to appId', () => {
     expect(algoliasearch('appId', 'apiKey').appId).toEqual('appId');
   });
 });

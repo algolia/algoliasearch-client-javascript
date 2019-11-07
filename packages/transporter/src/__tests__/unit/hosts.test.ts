@@ -21,8 +21,8 @@ beforeEach(() => {
 
 const transporterRequest = createFixtures().transporterRequest();
 
-describe('The selection of hosts', (): void => {
-  it('Select only readable hosts when calling the `read` method', async () => {
+describe('selection of hosts', (): void => {
+  it('select only readable hosts when calling the `read` method', async () => {
     await expect(transporter.read(transporterRequest)).rejects.toEqual(createRetryError());
 
     verify(requesterMock.send(deepEqual(createFixtures().readRequest()))).once();
@@ -39,7 +39,7 @@ describe('The selection of hosts', (): void => {
     ).once();
   });
 
-  it('Select only writable hosts when calling the `write` method', async () => {
+  it('select only writable hosts when calling the `write` method', async () => {
     await expect(transporter.write(transporterRequest)).rejects.toEqual(createRetryError());
 
     verify(requesterMock.send(deepEqual(createFixtures().readRequest()))).never();

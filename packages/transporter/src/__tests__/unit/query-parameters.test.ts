@@ -21,7 +21,7 @@ beforeEach(() => {
 
 const transporterRequest = createFixtures().transporterRequest();
 
-describe('Usage of query parameters', () => {
+describe('usage of query parameters', () => {
   it('allows to set query parameters', async () => {
     transporter.addQueryParameters({ 'x-foo': 'foo' });
 

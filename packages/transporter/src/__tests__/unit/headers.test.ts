@@ -21,8 +21,8 @@ beforeEach(() => {
 
 const transporterRequest = createFixtures().transporterRequest();
 
-describe('The selection of headers', () => {
-  it('Allows add extra headers', async () => {
+describe('selection of headers', () => {
+  it('allows add extra headers', async () => {
     transporter.addHeaders({
       'X-Algolia-Application-Id': 'foo',
     });
@@ -43,7 +43,7 @@ describe('The selection of headers', () => {
     ).once();
   });
 
-  it('Allows to add headers per read/write', async () => {
+  it('allows to add headers per read/write', async () => {
     await transporter.read(transporterRequest, {
       headers: {
         'X-Algolia-Application-Id': 'foo',
@@ -64,7 +64,7 @@ describe('The selection of headers', () => {
     ).once();
   });
 
-  it('Allows to add headers per read/write and override the default ones', async () => {
+  it('allows to add headers per read/write and override the default ones', async () => {
     await transporter.read(transporterRequest, {
       headers: {
         'X-Algolia-Application-Id': 'foo',

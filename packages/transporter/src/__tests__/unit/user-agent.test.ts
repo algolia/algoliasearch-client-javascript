@@ -1,6 +1,6 @@
 import { createUserAgent } from '../..';
 
-describe('UserAgent', () => {
+describe('user agent', () => {
   it('contains a default value', () => {
     expect(createUserAgent('1.0.0').value).toEqual('Algolia for JavaScript (1.0.0)');
   });

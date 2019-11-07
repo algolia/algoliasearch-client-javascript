@@ -1,7 +1,7 @@
 import { mapRequestOptions } from '../..';
 
-describe('RequestOptions implementation', () => {
-  it('Has default values', () => {
+describe('request options', () => {
+  it('has default values', () => {
     const result = mapRequestOptions(undefined);
 
     expect(result.data).toEqual({});
@@ -10,7 +10,7 @@ describe('RequestOptions implementation', () => {
     expect(result.timeout).toEqual(undefined);
   });
 
-  it('Map values', () => {
+  it('map values', () => {
     const result = mapRequestOptions({
       extra: 'two',
       'another-extra': 'four',

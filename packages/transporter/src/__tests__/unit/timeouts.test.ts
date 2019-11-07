@@ -22,20 +22,20 @@ beforeEach(() => {
 const transporterRequest = createFixtures().transporterRequest();
 
 describe('the timeouts selection', () => {
-  it('Uses read default value', async () => {
+  it('uses read default value', async () => {
     await transporter.read(transporterRequest);
 
     verify(requesterMock.send(deepEqual(createFixtures().readRequest()))).once();
     verify(requesterMock.send(anything())).once();
   });
 
-  it('Uses write default value', async () => {
+  it('uses write default value', async () => {
     await transporter.write(transporterRequest);
     verify(requesterMock.send(deepEqual(createFixtures().writeRequest()))).once();
     verify(requesterMock.send(anything())).once();
   });
 
-  it('Uses overrides read default value with request options', async () => {
+  it('uses overrides read default value with request options', async () => {
     await transporter.read(transporterRequest, { timeout: 5 });
 
     verify(
@@ -50,7 +50,7 @@ describe('the timeouts selection', () => {
     verify(requesterMock.send(anything())).once();
   });
 
-  it('Uses overrides write default value with request options', async () => {
+  it('uses overrides write default value with request options', async () => {
     await transporter.write(transporterRequest, { timeout: 25 });
     verify(
       requesterMock.send(

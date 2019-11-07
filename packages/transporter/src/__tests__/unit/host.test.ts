@@ -1,7 +1,7 @@
 import { CallEnum, createHost } from '../..';
 
-describe('Host', () => {
-  it('Handles uptime', () => {
+describe('host', () => {
+  it('handles uptime', () => {
     const host = createHost('foo', CallEnum.Any);
 
     expect(host.isUp()).toBe(true);

@@ -22,7 +22,7 @@ describe('retry strategy', () => {
     });
   });
 
-  it('Retries after a timeout', async () => {
+  it('retries after a timeout', async () => {
     when(requesterMock.send(deepEqual(createFixtures().writeRequest()))).thenResolve({
       content: '',
       status: 0,
@@ -36,7 +36,7 @@ describe('retry strategy', () => {
     expect(transporter.hosts.filter(host => host.isUp())).toHaveLength(3);
   });
 
-  it('Retries after a network error', async () => {
+  it('retries after a network error', async () => {
     when(requesterMock.send(deepEqual(createFixtures().readRequest()))).thenResolve({
       content: '',
       status: 0,
@@ -50,7 +50,7 @@ describe('retry strategy', () => {
     expect(transporter.hosts.filter(host => host.isUp())).toHaveLength(2);
   });
 
-  it('Retries after a 1xx', async () => {
+  it('retries after a 1xx', async () => {
     when(requesterMock.send(deepEqual(createFixtures().readRequest()))).thenResolve({
       content: '',
       status: 101,
@@ -64,7 +64,7 @@ describe('retry strategy', () => {
     expect(transporter.hosts.filter(host => host.isUp())).toHaveLength(2);
   });
 
-  it("Don't retry after a 2xx", async () => {
+  it('do not retry after a 2xx', async () => {
     type SearchResponse = {
       readonly hits: ReadonlyArray<{ readonly name: string }>;
     };
@@ -77,7 +77,7 @@ describe('retry strategy', () => {
     expect(transporter.hosts.filter(host => host.isUp())).toHaveLength(3);
   });
 
-  it('Retries after a 3xx', async () => {
+  it('retries after a 3xx', async () => {
     when(requesterMock.send(deepEqual(createFixtures().readRequest()))).thenResolve({
       content: '',
       status: 300,
@@ -91,7 +91,7 @@ describe('retry strategy', () => {
     expect(transporter.hosts.filter(host => host.isUp())).toHaveLength(2);
   });
 
-  it('Dont retry after a 4xx', async () => {
+  it('do not retry after a 4xx', async () => {
     when(requesterMock.send(deepEqual(createFixtures().writeRequest()))).thenResolve({
       content: JSON.stringify({
         message: 'Invalid Application ID',
@@ -110,7 +110,7 @@ describe('retry strategy', () => {
     expect(transporter.hosts.filter(host => host.isUp())).toHaveLength(3);
   });
 
-  it('Retries after a 5xx', async () => {
+  it('retries after a 5xx', async () => {
     when(requesterMock.send(deepEqual(createFixtures().writeRequest()))).thenResolve({
       content: '',
       status: 500,

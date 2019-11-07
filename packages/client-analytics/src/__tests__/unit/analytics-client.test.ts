@@ -7,7 +7,7 @@ describe('analytics client', () => {
     expect(analyticsClient.transporter.hosts[0].url).toBe('analytics.us.algolia.com');
   });
 
-  it('Sets default headers', () => {
+  it('sets default headers', () => {
     expect(analyticsClient.transporter.headers).toEqual({
       'content-type': 'application/json',
       'x-algolia-application-id': 'appId',

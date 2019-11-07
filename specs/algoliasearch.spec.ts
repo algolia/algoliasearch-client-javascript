@@ -1,4 +1,4 @@
-describe('AlgoliaSearch Client - algoliasearch', () => {
+describe('algoliasearch api client - algoliasearch', () => {
   it('navigates to algoliasearch.com', async () => {
     await browser.url('algoliasearch.com');
   });
