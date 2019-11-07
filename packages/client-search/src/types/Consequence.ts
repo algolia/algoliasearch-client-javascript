@@ -1,4 +1,4 @@
-import { ConsequenceParams, ConsequencePromote, Hide, SearchOptions } from '.';
+import { ConsequenceParams, ConsequencePromote, SearchOptions } from '.';
 
 export type Consequence = {
   /** Additional search parameters. Any valid search parameter is allowed. */
@@ -8,7 +8,7 @@ export type Consequence = {
   readonly promote?: readonly ConsequencePromote[];
 
   /** Objects to hide from hits. */
-  readonly hide?: readonly Hide[];
+  readonly hide?: ReadonlyArray<{ readonly objectID?: string }>;
 
   /**
    * Custom JSON object that will be appended to the userData array in the response.
