@@ -1,6 +1,6 @@
 {
   "name": "@algolia/cache-browser-local-storage",
-  "description": "Promise-based cache interface for browser using local storage.",
+  "description": "Promise-based cache library for browser using local storage.",
   "version": "4.0.0-alpha.18",
   "files": [
     "index.js",

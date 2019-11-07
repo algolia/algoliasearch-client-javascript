@@ -1,6 +1,6 @@
 {
   "name": "@algolia/cache-common",
-  "description": "Common interface for promise-based caching libraries",
+  "description": "Common interfaces for promise-based caching libraries",
   "version": "4.0.0-alpha.18",
   "files": [
     "index.js",

@@ -1,5 +1,6 @@
 {
   "name": "@algolia/logger-console",
+  "description": "Promise-based log library using console log.",
   "version": "4.0.0-alpha.18",
   "files": [
     "index.js",

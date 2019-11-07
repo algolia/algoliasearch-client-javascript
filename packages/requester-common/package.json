@@ -1,5 +1,6 @@
 {
   "name": "@algolia/requester-common",
+  "description": "Common interfaces for promise-based request libraries",
   "version": "4.0.0-alpha.18",
   "files": [
     "index.js",

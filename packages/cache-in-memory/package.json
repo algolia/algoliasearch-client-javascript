@@ -1,5 +1,6 @@
 {
   "name": "@algolia/cache-in-memory",
+  "description": "Promise-based cache library using memory.",
   "version": "4.0.0-alpha.18",
   "files": [
     "index.js",

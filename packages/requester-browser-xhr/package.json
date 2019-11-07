@@ -1,6 +1,6 @@
 {
   "name": "@algolia/requester-browser-xhr",
-  "description": "The Algolia promise-based cache interface for browser",
+  "description": "Promise-based request library for browser using xhr.",
   "version": "4.0.0-alpha.18",
   "files": [
     "index.js",
