@@ -5,6 +5,7 @@
 export * from './ABTest';
 export * from './AddABTestResponse';
 export * from './AnalyticsClient';
+export * from './AnalyticsClientOptions';
 export * from './DeleteABTestResponse';
 export * from './GetABTestResponse';
 export * from './GetABTestsOptions';
