@@ -80,10 +80,10 @@
     "test:lint": "eslint . --ext .js,.ts",
     "test:locally": "lerna clean --yes && yarn lint && yarn test:types && yarn test:unit",
     "test:size": "bundlesize",
-    "test:build": "yarn build && yarn test:size",
+    "test:build": "yarn test:size",
     "test:types": "yarn tsc",
     "test:unit": "lerna clean --yes && jest --verbose --updateSnapshot",
-    "playground": "yarn build && ./scripts/prepare-playground.sh && yarn serve",
+    "playground": "./scripts/prepare-playground.sh && yarn serve",
     "update": "rm -rf node_modules && rm -f yarn.lock && yarn && lerna clean --yes",
     "release:alpha": "cd packages/algoliasearch && yarn release:alpha && cd ../../",
     "release:stable": "cd packages/algoliasearch && lerna run release:stable && cd ../../"
