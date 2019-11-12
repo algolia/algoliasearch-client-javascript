@@ -49,10 +49,7 @@ export const createSearchClient = <TClient>(
     },
   };
 
-  return compose<SearchClient & TClient>(
-    base,
-    options
-  );
+  return compose<SearchClient & TClient>(base, options);
 };
 
 export type SearchClientOptions = {

@@ -130,8 +130,21 @@ packagesConfig
       const transpilerPlugins = isUmdBuild
         ? [
             babel({
-              rootMode: 'upward',
-              runtimeHelpers: true,
+              // rootMode: 'upward',
+              // runtimeHelpers: true,
+              babelrc: false,
+              extensions: ['.ts'],
+              presets: [
+                [
+                  '@babel/preset-env',
+                  {
+                    modules: false,
+                    targets: {
+                      browsers: ['last 2 versions', 'ie >= 11'],
+                    },
+                  },
+                ],
+              ],
             }),
           ]
         : [];

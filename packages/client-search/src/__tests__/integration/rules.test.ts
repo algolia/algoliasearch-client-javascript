@@ -32,7 +32,10 @@ test(testSuite.testName, async () => {
     consequence: {
       params: { automaticFacetFilters: [{ facet: 'brand', disjunctive: true, score: 42 }] },
     },
-    validity: [{ from: 1532439300, until: 1532525700 }, { from: 1532612100, until: 1532698500 }],
+    validity: [
+      { from: 1532439300, until: 1532525700 },
+      { from: 1532612100, until: 1532698500 },
+    ],
     description: 'Automatic apply the faceting on `brand` if a brand value is found in the query',
   };
 

@@ -4,9 +4,6 @@
   "devDependencies": {
     "@babel/cli": "^7.6.0",
     "@babel/core": "^7.6.0",
-    "@babel/plugin-proposal-class-properties": "^7.5.5",
-    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
-    "@babel/plugin-transform-runtime": "^7.6.0",
     "@babel/preset-env": "^7.4.5",
     "@babel/preset-typescript": "^7.6.0",
     "@microsoft/api-extractor": "^7.5.2",

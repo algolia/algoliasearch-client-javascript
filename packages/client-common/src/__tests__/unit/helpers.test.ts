@@ -30,12 +30,9 @@ describe('helpers', () => {
       };
     };
 
-    const obj = compose(
-      client,
-      {
-        methods: [setFoo, getFoo],
-      }
-    );
+    const obj = compose(client, {
+      methods: [setFoo, getFoo],
+    });
 
     expect(Object.getOwnPropertyNames(obj)).toEqual(['foo', 'setFoo', 'getFoo']);
   });

@@ -18,8 +18,5 @@ export const createAnalyticsClient = <TClient>(
   });
   transporter.addQueryParameters(auth.queryParameters());
 
-  return compose<TClient & AnalyticsClient>(
-    { transporter },
-    options
-  );
+  return compose<TClient & AnalyticsClient>({ transporter }, options);
 };
