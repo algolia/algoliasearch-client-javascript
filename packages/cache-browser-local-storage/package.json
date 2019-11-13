@@ -1,15 +1,17 @@
 {
   "name": "@algolia/cache-browser-local-storage",
+  "version": "4.0.0-alpha.20",
+  "private": false,
   "description": "Promise-based cache library for browser using local storage.",
-  "version": "4.0.0-alpha.18",
+  "license": "MIT",
   "files": [
     "index.js",
     "dist"
   ],
-  "types": "dist/cache-browser-local-storage.d.ts",
-  "license": "MIT",
   "main": "index.js",
+  "module": "dist/cache-browser-local-storage.esm.js",
+  "types": "dist/cache-browser-local-storage.d.ts",
   "dependencies": {
-    "@algolia/cache-common": "4.0.0-alpha.18"
+    "@algolia/cache-common": "4.0.0-alpha.20"
   }
 }

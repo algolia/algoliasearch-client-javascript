@@ -1,12 +1,14 @@
 {
   "name": "@algolia/requester-common",
+  "version": "4.0.0-alpha.20",
+  "private": false,
   "description": "Common interfaces for promise-based request libraries",
-  "version": "4.0.0-alpha.18",
+  "license": "MIT",
   "files": [
     "index.js",
     "dist"
   ],
-  "types": "dist/requester-common.d.ts",
-  "license": "MIT",
-  "main": "index.js"
+  "main": "index.js",
+  "module": "dist/requester-common.esm.js",
+  "types": "dist/requester-common.d.ts"
 }

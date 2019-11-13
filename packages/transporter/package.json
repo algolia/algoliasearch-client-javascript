@@ -1,18 +1,20 @@
 {
   "name": "@algolia/transporter",
+  "version": "4.0.0-alpha.20",
+  "private": false,
   "description": "Promise-based transporter layer with embedded retry strategy.",
-  "version": "4.0.0-alpha.18",
+  "license": "MIT",
   "files": [
     "index.js",
     "dist"
   ],
-  "types": "dist/transporter.d.ts",
-  "license": "MIT",
   "main": "index.js",
+  "module": "dist/transporter.esm.js",
+  "types": "dist/transporter.d.ts",
   "dependencies": {
-    "@algolia/cache-common": "4.0.0-alpha.18",
-    "@algolia/logger-common": "4.0.0-alpha.18",
-    "@algolia/requester-common": "4.0.0-alpha.18",
-    "@algolia/transporter": "4.0.0-alpha.18"
+    "@algolia/cache-common": "4.0.0-alpha.20",
+    "@algolia/logger-common": "4.0.0-alpha.20",
+    "@algolia/requester-common": "4.0.0-alpha.20",
+    "@algolia/transporter": "4.0.0-alpha.20"
   }
 }

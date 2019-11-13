@@ -5,4 +5,5 @@
 export * from './createAuth';
 export * from './createWaitablePromise';
 export * from './helpers';
+export * from './version';
 export * from './types/index';

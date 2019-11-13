@@ -1,11 +1,13 @@
 {
   "name": "@algolia/client-common",
-  "version": "4.0.0-alpha.18",
+  "version": "4.0.0-alpha.20",
+  "private": false,
+  "license": "MIT",
   "files": [
     "index.js",
     "dist"
   ],
-  "types": "dist/client-common.d.ts",
-  "license": "MIT",
-  "main": "index.js"
+  "main": "index.js",
+  "module": "dist/client-common.esm.js",
+  "types": "dist/client-common.d.ts"
 }

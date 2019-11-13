@@ -9,6 +9,7 @@ import {
 
 import { CallEnum, Transporter } from '..';
 import algoliasearch from '../../../algoliasearch/src/builds/browser';
+import { version } from '../../../client-common/src/version';
 
 export function createFakeRequester(): Requester {
   return {
@@ -90,7 +91,7 @@ export function createFixtures() {
         // eslint-disable-next-line no-param-reassign
         options.url +=
           (options.url.includes('?') ? '&' : '?') +
-          encode('%s=%s', 'x-algolia-agent', 'Algolia for JavaScript (4.0.0-alpha.0); Browser');
+          encode('%s=%s', 'x-algolia-agent', `Algolia for JavaScript (${version}); Browser`);
       }
 
       return {

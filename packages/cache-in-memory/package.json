@@ -1,15 +1,17 @@
 {
   "name": "@algolia/cache-in-memory",
+  "version": "4.0.0-alpha.20",
+  "private": false,
   "description": "Promise-based cache library using memory.",
-  "version": "4.0.0-alpha.18",
+  "license": "MIT",
   "files": [
     "index.js",
     "dist"
   ],
-  "types": "dist/cache-in-memory.d.ts",
-  "license": "MIT",
   "main": "index.js",
+  "module": "dist/cache-in-memory.esm.js",
+  "types": "dist/cache-in-memory.d.ts",
   "dependencies": {
-    "@algolia/cache-common": "4.0.0-alpha.18"
+    "@algolia/cache-common": "4.0.0-alpha.20"
   }
 }

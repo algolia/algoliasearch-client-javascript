@@ -1,3 +1,5 @@
+import { version } from '@algolia/client-common';
+
 import algoliasearch from '../builds/browser';
 
 const client = algoliasearch('appId', 'apiKey');
@@ -17,7 +19,7 @@ describe('algoliasearch for browser', () => {
 
   it('sets default user agent', () => {
     expect(client.transporter.userAgent.value).toEqual(
-      'Algolia for JavaScript (4.0.0-alpha.0); Browser'
+      `Algolia for JavaScript (${version}); Browser`
     );
   });
 });

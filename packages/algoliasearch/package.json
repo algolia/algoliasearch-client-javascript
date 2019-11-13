@@ -1,32 +1,32 @@
 {
   "name": "@nunomaduro/lightsearch",
-  "version": "4.0.0-alpha.18",
-  "main": "index.js",
+  "version": "4.0.0-alpha.20",
+  "private": false,
+  "description": "test",
+  "license": "MIT",
   "files": [
     "index.js",
     "dist"
   ],
-  "types": "dist/algoliasearch.d.ts",
+  "main": "index.js",
   "browser": {
     "./index.js": "./dist/algoliasearch.umd.js",
     "./lite.js": "./dist/algoliasearch-lite.umd.js"
   },
-  "jsdelivr": "./dist/algoliasearch.umd.js",
-  "private": false,
-  "license": "MIT",
-  "description": "test",
+  "types": "dist/algoliasearch.d.ts",
   "dependencies": {
-    "@algolia/cache-browser-local-storage": "4.0.0-alpha.18",
-    "@algolia/cache-common": "4.0.0-alpha.18",
-    "@algolia/cache-in-memory": "4.0.0-alpha.18",
-    "@algolia/client-analytics": "4.0.0-alpha.18",
-    "@algolia/client-common": "4.0.0-alpha.18",
-    "@algolia/client-search": "4.0.0-alpha.18",
-    "@algolia/logger-common": "4.0.0-alpha.18",
-    "@algolia/logger-console": "4.0.0-alpha.18",
-    "@algolia/requester-browser-xhr": "4.0.0-alpha.18",
-    "@algolia/requester-common": "4.0.0-alpha.18",
-    "@algolia/requester-node-http": "4.0.0-alpha.18",
-    "@algolia/transporter": "4.0.0-alpha.18"
-  }
+    "@algolia/cache-browser-local-storage": "4.0.0-alpha.20",
+    "@algolia/cache-common": "4.0.0-alpha.20",
+    "@algolia/cache-in-memory": "4.0.0-alpha.20",
+    "@algolia/client-analytics": "4.0.0-alpha.20",
+    "@algolia/client-common": "4.0.0-alpha.20",
+    "@algolia/client-search": "4.0.0-alpha.20",
+    "@algolia/logger-common": "4.0.0-alpha.20",
+    "@algolia/logger-console": "4.0.0-alpha.20",
+    "@algolia/requester-browser-xhr": "4.0.0-alpha.20",
+    "@algolia/requester-common": "4.0.0-alpha.20",
+    "@algolia/requester-node-http": "4.0.0-alpha.20",
+    "@algolia/transporter": "4.0.0-alpha.20"
+  },
+  "jsdelivr": "./dist/algoliasearch.umd.js"
 }

@@ -1,12 +1,14 @@
 {
   "name": "@algolia/cache-common",
+  "version": "4.0.0-alpha.20",
+  "private": false,
   "description": "Common interfaces for promise-based caching libraries",
-  "version": "4.0.0-alpha.18",
+  "license": "MIT",
   "files": [
     "index.js",
     "dist"
   ],
-  "types": "dist/cache-common.d.ts",
-  "license": "MIT",
-  "main": "index.js"
+  "main": "index.js",
+  "module": "dist/cache-common.esm.js",
+  "types": "dist/cache-common.d.ts"
 }

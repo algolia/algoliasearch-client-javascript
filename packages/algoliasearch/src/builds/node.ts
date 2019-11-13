@@ -1,4 +1,5 @@
 import { createNullCache } from '@algolia/cache-common';
+import { version } from '@algolia/client-common';
 import { LogLevelEnum } from '@algolia/logger-common';
 import { createConsoleLogger } from '@algolia/logger-console';
 import { createNodeHttpRequester } from '@algolia/requester-node-http';
@@ -26,7 +27,7 @@ export default function algoliasearch(
     responsesCache: createNullCache(),
     requestsCache: createNullCache(),
     hostsCache: createNullCache(),
-    userAgent: createUserAgent('4.0.0-alpha.0').with({
+    userAgent: createUserAgent(version).with({
       segment: 'Node.js',
       version: process.versions.node,
     }),

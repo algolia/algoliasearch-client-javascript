@@ -1,6 +1,6 @@
 import { createBrowserLocalStorageCache } from '@algolia/cache-browser-local-storage';
 import { createInMemoryCache } from '@algolia/cache-in-memory';
-import { AuthMode } from '@algolia/client-common';
+import { AuthMode, version } from '@algolia/client-common';
 import { LogLevelEnum } from '@algolia/logger-common';
 import { createConsoleLogger } from '@algolia/logger-console';
 import { createBrowserXhrRequester } from '@algolia/requester-browser-xhr';
@@ -28,7 +28,7 @@ export default function algoliasearch(
     responsesCache: createInMemoryCache(),
     requestsCache: createInMemoryCache(),
     hostsCache: createBrowserLocalStorageCache(),
-    userAgent: createUserAgent('4.0.0-alpha.0').with({ segment: 'Browser', version: 'lite' }),
+    userAgent: createUserAgent(version).with({ segment: 'Browser', version: 'lite' }),
     authMode: AuthMode.WithinQueryParameters,
   });
 }

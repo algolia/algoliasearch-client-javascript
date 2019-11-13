@@ -1,3 +1,5 @@
+import { version } from '@algolia/client-common';
+
 import algoliasearch from '../builds/node';
 
 const client = algoliasearch('appId', 'apiKey');
@@ -19,7 +21,7 @@ describe('algoliasearch for node', () => {
     const nodeVersion = process.versions.node;
 
     expect(client.transporter.userAgent.value).toEqual(
-      `Algolia for JavaScript (4.0.0-alpha.0); Node.js (${nodeVersion})`
+      `Algolia for JavaScript (${version}); Node.js (${nodeVersion})`
     );
   });
 });
