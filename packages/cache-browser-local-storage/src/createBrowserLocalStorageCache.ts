@@ -2,8 +2,8 @@ import { Cache, CacheEvents } from '@algolia/cache-common';
 import { createNullLogger, Logger } from '@algolia/logger-common';
 
 export function createBrowserLocalStorageCache(
-  storage: Storage = window.localStorage,
-  logger: Logger = createNullLogger()
+  logger: Logger = createNullLogger(),
+  storage: Storage = window.localStorage
 ): Cache {
   /* eslint-disable functional/immutable-data, no-param-reassign, functional/no-try-statement */
 

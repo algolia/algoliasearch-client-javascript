@@ -1,6 +1,8 @@
+import { createNullLogger } from '@algolia/logger-common';
+
 import { createBrowserLocalStorageCache } from '../..';
 
-const notAvailableStorage = {
+const notAvailableStorage: Storage = {
   setItem(_key, _value) {
     throw new Error('Component is not available');
   },
@@ -92,7 +94,7 @@ describe('browser local storage cache', () => {
   });
 
   it('do not throws localstorage related exceptions', async () => {
-    const cache = createBrowserLocalStorageCache(notAvailableStorage);
+    const cache = createBrowserLocalStorageCache(createNullLogger(), notAvailableStorage);
     const key = { foo: 'bar' };
     const value = 'foo';
     const fallback = 'bar';

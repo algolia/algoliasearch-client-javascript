@@ -14,6 +14,10 @@ export default function algoliasearch(
   apiKey: string,
   options: AlgoliaSearchOptions = {}
 ): SearchClient {
+  const logger = createConsoleLogger(
+    options.logLevel === undefined ? LogLevelEnum.Error : options.logLevel
+  );
+
   return createSearchClient({
     appId,
     apiKey,
@@ -22,12 +26,10 @@ export default function algoliasearch(
       read: 1,
       write: 30,
     },
-    logger: createConsoleLogger(
-      options.logLevel === undefined ? LogLevelEnum.Error : options.logLevel
-    ),
+    logger,
     responsesCache: createInMemoryCache(),
     requestsCache: createInMemoryCache(),
-    hostsCache: createBrowserLocalStorageCache(),
+    hostsCache: createBrowserLocalStorageCache(logger),
     userAgent: createUserAgent(version).with({ segment: 'Browser', version: 'lite' }),
     authMode: AuthMode.WithinQueryParameters,
   });
