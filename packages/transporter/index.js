@@ -1,2 +1,2 @@
 // eslint-disable-next-line functional/immutable-data, import/no-commonjs
-module.exports = require('./dist/transpoter.cjs.js');
+module.exports = require('./dist/transporter.cjs.js');
