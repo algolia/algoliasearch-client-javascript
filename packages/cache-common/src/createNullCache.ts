@@ -5,7 +5,9 @@ export function createNullCache(): Cache {
     get<TValue>(
       _key: object,
       defaultValue: () => Readonly<Promise<TValue>>,
-      events?: CacheEvents
+      events: CacheEvents = {
+        miss: () => Promise.resolve(),
+      }
     ): Readonly<Promise<TValue>> {
       const value = defaultValue();
 

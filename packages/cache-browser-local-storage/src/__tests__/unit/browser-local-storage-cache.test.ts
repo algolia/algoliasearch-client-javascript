@@ -1,5 +1,23 @@
 import { createBrowserLocalStorageCache } from '../..';
 
+const notAvailableStorage = {
+  setItem(_key, _value) {
+    throw new Error('Component is not available');
+  },
+  getItem(_key) {
+    throw new Error('Component is not available');
+  },
+  removeItem(_key) {
+    throw new Error('Component is not available');
+  },
+  get length() {
+    throw new Error('Component is not available');
+  },
+  key(_i) {
+    throw new Error('Component is not available');
+  },
+};
+
 describe('browser local storage cache', () => {
   it('sets/gets values', async () => {
     const cache = createBrowserLocalStorageCache();
@@ -71,5 +89,17 @@ describe('browser local storage cache', () => {
     ).toMatchObject({ 'get-2': 2 });
 
     expect(missMock.mock.calls.length).toBe(2);
+  });
+
+  it('do not throws localstorage related exceptions', async () => {
+    const cache = createBrowserLocalStorageCache(notAvailableStorage);
+    const key = { foo: 'bar' };
+    const value = 'foo';
+    const fallback = 'bar';
+
+    await cache.clear();
+    await cache.delete(key);
+    await cache.set(key, value);
+    await expect(cache.get(key, () => Promise.resolve(fallback))).resolves.toBe(fallback);
   });
 });

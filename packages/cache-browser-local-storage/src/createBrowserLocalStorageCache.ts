@@ -1,42 +1,65 @@
 import { Cache, CacheEvents } from '@algolia/cache-common';
+import { createNullLogger, Logger } from '@algolia/logger-common';
 
-export function createBrowserLocalStorageCache(): Cache {
-  /* eslint-disable functional/immutable-data, no-param-reassign */
+export function createBrowserLocalStorageCache(
+  storage: Storage = window.localStorage,
+  logger: Logger = createNullLogger()
+): Cache {
+  /* eslint-disable functional/immutable-data, no-param-reassign, functional/no-try-statement */
+
+  const debugMessage = 'LocalStorage is not available or json could not be decoded.';
 
   return {
     get<TValue>(
       key: object,
       defaultValue: () => Readonly<Promise<TValue>>,
-      events?: CacheEvents
+      events: CacheEvents = {
+        miss: () => Promise.resolve(),
+      }
     ): Readonly<Promise<TValue>> {
-      const keyAsString = JSON.stringify(key);
+      try {
+        const keyAsString = JSON.stringify(key);
 
-      const valueAsString = localStorage.getItem(keyAsString);
+        const valueAsString = storage.getItem(keyAsString);
 
-      if (valueAsString !== null) {
-        return Promise.resolve(JSON.parse(valueAsString));
+        if (valueAsString !== null) {
+          return Promise.resolve(JSON.parse(valueAsString));
+        }
+      } catch (e) {
+        logger.debug(debugMessage);
       }
 
       const promise = defaultValue();
-      const miss = (events && events.miss) || (() => Promise.resolve());
 
-      return promise.then((value: TValue) => miss(value)).then(() => promise);
+      return promise.then((value: TValue) => events.miss(value)).then(() => promise);
     },
 
     set<TValue>(key: object, value: TValue): Readonly<Promise<TValue>> {
-      localStorage.setItem(JSON.stringify(key), JSON.stringify(value));
+      try {
+        storage.setItem(JSON.stringify(key), JSON.stringify(value));
+      } catch (e) {
+        logger.debug(debugMessage);
+      }
 
       return Promise.resolve(value);
     },
 
     delete(key: object): Readonly<Promise<void>> {
-      localStorage.removeItem(JSON.stringify(key));
+      try {
+        storage.removeItem(JSON.stringify(key));
+      } catch (e) {
+        logger.debug(debugMessage);
+      }
 
       return Promise.resolve();
     },
 
     clear(): Readonly<Promise<void>> {
-      localStorage.clear();
+      try {
+        storage.clear();
+      } catch (e) {
+        logger.debug(debugMessage);
+      }
 
       return Promise.resolve();
     },

@@ -8,7 +8,9 @@ export function createInMemoryCache(): Cache {
     get<TValue>(
       key: object,
       defaultValue: () => Readonly<Promise<TValue>>,
-      events?: CacheEvents
+      events: CacheEvents = {
+        miss: () => Promise.resolve(),
+      }
     ): Readonly<Promise<TValue>> {
       const keyAsString = JSON.stringify(key);
 
