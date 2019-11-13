@@ -10,7 +10,7 @@ export function mapRequestOptions(
   const data: { [key: string]: string } = {};
 
   Object.keys(options).forEach(key => {
-    if (!['timeout', 'headers', 'queryParameters', 'data', 'cacheable'].includes(key)) {
+    if (['timeout', 'headers', 'queryParameters', 'data', 'cacheable'].indexOf(key) === -1) {
       data[key] = options[key]; // eslint-disable-line functional/immutable-data
     }
   });
