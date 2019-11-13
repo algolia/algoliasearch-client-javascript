@@ -34,6 +34,24 @@ describe('deserializer', () => {
     expect(response).toStrictEqual({ hits: [{ name: 'Star Wars' }] });
   });
 
+  it('handles deserialization errors', async () => {
+    when(requesterMock.send(anything())).thenResolve({
+      content: 'Non json string',
+      status: 200,
+      isTimedOut: false,
+    });
+
+    await expect(transporter.read(transporterRequest)).rejects.toEqual({
+      name: 'DeserializationError',
+      message: 'Unexpected token N in JSON at position 0',
+      response: {
+        content: 'Non json string',
+        status: 200,
+        isTimedOut: false,
+      },
+    });
+  });
+
   it('deserializes fail responses', async () => {
     when(requesterMock.send(anything())).thenResolve({
       content: JSON.stringify({ message: 'User not found', status: 404 }),
