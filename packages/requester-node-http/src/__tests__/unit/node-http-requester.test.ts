@@ -150,7 +150,7 @@ describe('error handling', (): void => {
     const requester = createNodeHttpRequester();
 
     const request = {
-      url: 'https://this-dont-exist.algolia.com',
+      url: 'https://foo-dsn.algolia.biz/',
       method: MethodEnum.Post,
       headers: {
         'X-Algolia-Application-Id': 'ABCDE',
@@ -164,7 +164,7 @@ describe('error handling', (): void => {
     const response = await requester.send(request);
 
     expect(response.status).toBe(0);
-    expect(response.content).toContain('ENOTFOUND');
+    expect(response.content).toContain('');
     expect(response.isTimedOut).toBe(false);
   });
 

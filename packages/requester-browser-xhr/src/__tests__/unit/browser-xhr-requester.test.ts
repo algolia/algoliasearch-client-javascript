@@ -156,7 +156,7 @@ describe('error handling', (): void => {
     const requester = createBrowserXhrRequester();
 
     const request = {
-      url: 'https://this-dont-exist.algolia.com',
+      url: 'https://foo-dsn.algolia.biz/',
       method: MethodEnum.Post,
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
