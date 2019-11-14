@@ -6,8 +6,7 @@ import { decision } from './decision';
 // eslint-disable-next-line max-params
 export function execute<TResponse>(
   transporter: Transporter,
-  // eslint-disable-next-line functional/prefer-readonly-type
-  hosts: Array<ReturnType<typeof createHost>>,
+  hosts: ReadonlyArray<ReturnType<typeof createHost>>,
   request: Request,
   requestOptions: MappedRequestOptions
 ): Readonly<Promise<TResponse>> {
@@ -18,17 +17,15 @@ export function execute<TResponse>(
       transporter.hostsCache
         .get({ url: host.url }, () => Promise.resolve(host))
         .then((value: ReturnType<typeof createHost>) => {
-          // eslint-disable-next-line functional/immutable-data, no-param-reassign
-          host.downDate = value.downDate;
-          // eslint-disable-next-line functional/immutable-data, no-param-reassign
-          host.up = value.up;
-
-          return;
+          // eslint-disable-next-line functional/immutable-data
+          return Object.assign(host, {
+            downDate: value.downDate,
+            up: value.up,
+          });
         })
     )
-  ).then(() => {
-    // eslint-disable-next-line no-param-reassign
-    hosts = hosts.filter(host => host.isUp()).reverse();
+  ).then(statefulHosts => {
+    const statefulHostsAvailable = statefulHosts.filter(host => host.isUp()).reverse();
 
     const forEachHost = <TResponse>(
       host?: ReturnType<typeof createHost>
@@ -59,7 +56,7 @@ export function execute<TResponse>(
                     request,
                     response,
                     host,
-                    triesLeft: hosts.length,
+                    triesLeft: statefulHostsAvailable.length,
                     timeoutRetries,
                   })
                   .then(() => {
@@ -70,7 +67,7 @@ export function execute<TResponse>(
                     return transporter.hostsCache.set({ url: host.url }, host);
                   })
                   // eslint-disable-next-line functional/immutable-data
-                  .then(() => forEachHost(hosts.pop()))
+                  .then(() => forEachHost(statefulHostsAvailable.pop()))
               );
             },
             fail: () => {
@@ -81,6 +78,6 @@ export function execute<TResponse>(
     };
 
     // eslint-disable-next-line functional/immutable-data
-    return forEachHost(hosts.pop());
+    return forEachHost(statefulHostsAvailable.pop());
   });
 }
