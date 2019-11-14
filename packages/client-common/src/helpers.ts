@@ -1,4 +1,4 @@
-import { ComposableOptions } from '.';
+import { DecorateOptions } from '.';
 
 // eslint-disable-next-line functional/prefer-readonly-type
 export function shuffle<TData>(array: TData[]): TData[] {
@@ -15,7 +15,7 @@ export function shuffle<TData>(array: TData[]): TData[] {
   return array;
 }
 
-export function compose<TObject>(obj: any, options?: ComposableOptions): TObject {
+export function decorate<TObject>(obj: any, options?: DecorateOptions): TObject {
   if (options !== undefined && options.methods !== undefined) {
     options.methods.forEach(method => {
       // eslint-disable-next-line

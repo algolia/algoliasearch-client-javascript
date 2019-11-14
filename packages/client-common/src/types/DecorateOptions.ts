@@ -1,3 +1,3 @@
-export type ComposableOptions = {
+export type DecorateOptions = {
   readonly methods?: readonly Function[];
 };

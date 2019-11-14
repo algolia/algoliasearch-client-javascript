@@ -3,6 +3,6 @@
  */
 
 export * from './AuthModeType';
-export * from './ComposableOptions';
+export * from './DecorateOptions';
 export * from './OnWaitClosure';
 export * from './WaitablePromise';

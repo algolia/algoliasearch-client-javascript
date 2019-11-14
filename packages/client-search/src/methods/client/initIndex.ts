@@ -1,4 +1,4 @@
-import { ComposableOptions, compose } from '@algolia/client-common';
+import { decorate, DecorateOptions } from '@algolia/client-common';
 import { TransporterAware } from '@algolia/transporter';
 
 import { SearchIndex } from '../..';
@@ -8,8 +8,8 @@ export const initIndex = <TClient extends TransporterAware>(
 ): TClient & HasInitIndex => {
   return {
     ...base,
-    initIndex<TIndex>(indexName: string, options?: ComposableOptions): SearchIndex & TIndex {
-      return compose<TIndex & SearchIndex>(
+    initIndex<TIndex>(indexName: string, options?: DecorateOptions): SearchIndex & TIndex {
+      return decorate<TIndex & SearchIndex>(
         {
           transporter: this.transporter,
           indexName,
@@ -23,6 +23,6 @@ export const initIndex = <TClient extends TransporterAware>(
 export type HasInitIndex = {
   readonly initIndex: <TIndex>(
     indexName: string,
-    options?: ComposableOptions
+    options?: DecorateOptions
   ) => SearchIndex & TIndex;
 };

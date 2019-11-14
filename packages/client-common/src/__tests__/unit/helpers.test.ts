@@ -1,4 +1,4 @@
-import { compose, encode } from '../..';
+import { decorate, encode } from '../..';
 
 describe('helpers', () => {
   it('encodes url', () => {
@@ -7,7 +7,7 @@ describe('helpers', () => {
     expect(encodedString).toBe('foo/%201%20/bar/%20e%20');
   });
 
-  it('composes objects', () => {
+  it('decorates objects', () => {
     const client = {
       foo: 'bar',
     };
@@ -30,7 +30,7 @@ describe('helpers', () => {
       };
     };
 
-    const obj = compose(client, {
+    const obj = decorate(client, {
       methods: [setFoo, getFoo],
     });
 
