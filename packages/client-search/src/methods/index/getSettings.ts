@@ -10,7 +10,7 @@ export const getSettings = <TSearchIndex extends SearchIndex>(
   return {
     ...base,
     getSettings(requestOptions?: RequestOptions): Readonly<Promise<IndexSettings>> {
-      const options = mapRequestOptions(requestOptions !== undefined ? requestOptions : {});
+      const options = mapRequestOptions(requestOptions);
 
       // @ts-ignore
       // eslint-disable-next-line functional/immutable-data

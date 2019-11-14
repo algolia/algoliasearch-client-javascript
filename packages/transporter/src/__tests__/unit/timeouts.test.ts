@@ -87,7 +87,7 @@ describe('the timeouts selection', () => {
     verify(requesterMock.send(anything())).twice();
   });
 
-  it('allows no timeout to be used', async () => {
+  it('proxies to default timeout when timeout is 0', async () => {
     when(requesterMock.send(anything())).thenResolve({
       content: '{}',
       status: 200,
@@ -100,14 +100,6 @@ describe('the timeouts selection', () => {
       })
     ).resolves.toEqual({});
 
-    verify(
-      requesterMock.send(
-        deepEqual(
-          createFixtures().readRequest({
-            timeout: 0,
-          })
-        )
-      )
-    ).once();
+    verify(requesterMock.send(deepEqual(createFixtures().readRequest()))).once();
   });
 });

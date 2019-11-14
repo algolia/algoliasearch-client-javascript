@@ -6,7 +6,7 @@ import { AnalyticsClient, AnalyticsClientOptions } from '.';
 export const createAnalyticsClient = <TClient>(
   options: AnalyticsClientOptions & TransporterOptions & DecorateOptions
 ): AnalyticsClient & TClient => {
-  const region = options.region !== undefined ? options.region : 'us';
+  const region = options.region || 'us';
   const auth = createAuth(AuthMode.WithinHeaders, options.appId, options.apiKey);
 
   const transporter = createTransporter(options);

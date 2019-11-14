@@ -15,8 +15,8 @@ export function shuffle<TData>(array: TData[]): TData[] {
   return array;
 }
 
-export function decorate<TObject>(obj: any, options?: DecorateOptions): TObject {
-  if (options !== undefined && options.methods !== undefined) {
+export function decorate<TObject>(obj: any, options: DecorateOptions = {}): TObject {
+  if (options.methods !== undefined) {
     options.methods.forEach(method => {
       // eslint-disable-next-line
       Object.assign(obj, method(obj));

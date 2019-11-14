@@ -21,9 +21,7 @@ export default function algoliasearch(
       write: 30,
     },
     requester: createNodeHttpRequester(),
-    logger: createConsoleLogger(
-      options.logLevel === undefined ? LogLevelEnum.Error : options.logLevel
-    ),
+    logger: createConsoleLogger(options.logLevel || LogLevelEnum.Error),
     responsesCache: createNullCache(),
     requestsCache: createNullCache(),
     hostsCache: createNullCache(),

@@ -1,10 +1,10 @@
 import { MappedRequestOptions, RequestOptions } from '.';
 
 export function mapRequestOptions(
-  requestOptions: RequestOptions | undefined,
-  timeout?: number | undefined
+  requestOptions?: RequestOptions,
+  timeout?: number
 ): MappedRequestOptions {
-  const options: RequestOptions = requestOptions === undefined ? {} : requestOptions;
+  const options: RequestOptions = requestOptions || {};
 
   // eslint-disable-next-line functional/prefer-readonly-type
   const data: { [key: string]: string } = {};
@@ -17,9 +17,9 @@ export function mapRequestOptions(
 
   return {
     data,
-    timeout: options.timeout === undefined ? timeout : options.timeout,
-    headers: options.headers === undefined ? {} : options.headers,
-    queryParameters: options.queryParameters === undefined ? {} : options.queryParameters,
+    timeout: options.timeout || timeout,
+    headers: options.headers || {},
+    queryParameters: options.queryParameters || {},
     cacheable: options.cacheable,
   };
 }

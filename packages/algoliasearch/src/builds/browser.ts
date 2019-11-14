@@ -14,9 +14,7 @@ export default function algoliasearch(
   apiKey: string,
   options: AlgoliaSearchOptions = {}
 ): SearchClient {
-  const logger = createConsoleLogger(
-    options.logLevel === undefined ? LogLevelEnum.Error : options.logLevel
-  );
+  const logger = createConsoleLogger(options.logLevel || LogLevelEnum.Error);
 
   return createSearchClient({
     appId,

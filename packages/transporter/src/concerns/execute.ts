@@ -31,7 +31,7 @@ export function execute<TResponse>(
     hosts = hosts.filter(host => host.isUp()).reverse();
 
     const forEachHost = <TResponse>(
-      host: ReturnType<typeof createHost> | undefined
+      host?: ReturnType<typeof createHost>
     ): Readonly<Promise<TResponse>> => {
       if (host === undefined) {
         throw createRetryError();
