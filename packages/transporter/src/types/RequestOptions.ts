@@ -18,7 +18,7 @@ export type RequestOptions = {
   /**
    * Specific query parameters for the request.
    */
-  readonly queryParameters?: { readonly [key: string]: string };
+  readonly queryParameters?: { readonly [key: string]: any };
 
   // eslint-disable-next-line functional/no-mixed-type, functional/prefer-readonly-type
   [key: string]: any;

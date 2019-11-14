@@ -32,9 +32,3 @@ export function encode(format: string, ...args: readonly any[]): string {
 
   return format.replace(/%s/g, () => encodeURIComponent(args[i++]));
 }
-
-export function encodeQueryParameters(parameters: { readonly [key: string]: any }): string {
-  const parametersKeys = Object.keys(parameters);
-
-  return `${parametersKeys.map(key => encode('%s=%s', key, parameters[key])).join('&')}`;
-}

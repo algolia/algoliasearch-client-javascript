@@ -6,7 +6,7 @@ const targets = fs.readdirSync('packages').filter(f => fs.statSync(`packages/${f
 const exclude = {
   all: '__tests__',
   algoliasearch: 'builds|presets',
-  transporter: 'concerns|deserializer|serializer',
+  transporter: 'concerns',
 };
 
 generateExports();

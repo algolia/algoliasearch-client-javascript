@@ -19,10 +19,20 @@ export function serializeUrl(
   return url;
 }
 
-export function serializeQueryParameters(parameters: { readonly [key: string]: string }): string {
-  const parametersKeys = Object.keys(parameters);
+export function serializeQueryParameters(parameters: { readonly [key: string]: any }): string {
+  const isObjectOrArray = (value: any): boolean =>
+    Object.prototype.toString.call(value) === '[object Object]' ||
+    Object.prototype.toString.call(value) === '[object Array]';
 
-  return `${parametersKeys.map(key => encode('%s=%s', key, parameters[key])).join('&')}`;
+  return Object.keys(parameters)
+    .map(key =>
+      encode(
+        '%s=%s',
+        key,
+        isObjectOrArray(parameters[key]) ? JSON.stringify(parameters[key]) : parameters[key]
+      )
+    )
+    .join('&');
 }
 
 export function serializeData(request: Request, requestOptions: RequestOptions): string {

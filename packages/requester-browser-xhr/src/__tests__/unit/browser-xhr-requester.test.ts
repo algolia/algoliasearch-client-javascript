@@ -2,6 +2,9 @@ import { MethodEnum, Request } from '@algolia/requester-common';
 import mock, { MockRequest, MockResponse } from 'xhr-mock';
 
 import { createBrowserXhrRequester } from '../..';
+
+const requester = createBrowserXhrRequester();
+
 const timeoutRequest: Request = {
   url: 'https://google.com:81/',
   data: '',
@@ -20,13 +23,11 @@ const requestStub = {
   timeout: 2,
 };
 
-describe('status code handling', (): void => {
+describe('status code handling', () => {
   beforeEach(() => mock.setup());
   afterEach(() => mock.teardown());
 
   it('sends requests', async () => {
-    const requester = createBrowserXhrRequester();
-
     expect.assertions(3);
 
     mock.post(
@@ -46,7 +47,6 @@ describe('status code handling', (): void => {
   });
 
   it('resolves status 200', async () => {
-    const requester = createBrowserXhrRequester();
     const body = JSON.stringify({ foo: 'bar' });
 
     mock.post('https://algolia-dns.net/foo?x-algolia-header=bar', {
@@ -62,7 +62,6 @@ describe('status code handling', (): void => {
   });
 
   it('resolves status 300', async () => {
-    const requester = createBrowserXhrRequester();
     const reason = 'Multiple Choices';
 
     mock.post('https://algolia-dns.net/foo?x-algolia-header=bar', {
@@ -78,8 +77,6 @@ describe('status code handling', (): void => {
   });
 
   it('resolves status 400', async () => {
-    const requester = createBrowserXhrRequester();
-
     const body = { message: 'Invalid Application-Id or API-Key' };
 
     mock.post('https://algolia-dns.net/foo?x-algolia-header=bar', {
@@ -96,8 +93,6 @@ describe('status code handling', (): void => {
 });
 
 describe('timeout handling', () => {
-  const requester = createBrowserXhrRequester();
-
   it('timouts if response dont appears before the timeout with the given 1 seconds timeout', async () => {
     const before = Date.now();
     await requester.send({
@@ -151,12 +146,10 @@ describe('timeout handling', () => {
   });
 });
 
-describe('error handling', (): void => {
+describe('error handling', () => {
   it('resolves dns not found', async () => {
-    const requester = createBrowserXhrRequester();
-
     const request = {
-      url: 'https://foo-dsn.algolia.biz/',
+      url: 'https://this-dont-exist.algolia.com',
       method: MethodEnum.Post,
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -173,8 +166,6 @@ describe('error handling', (): void => {
   });
 
   it('resolves general network errors', async () => {
-    const requester = createBrowserXhrRequester();
-
     mock.post('https://algolia-dns.net/foo?x-algolia-header=bar', () =>
       Promise.reject(new Error('This is a general error'))
     );

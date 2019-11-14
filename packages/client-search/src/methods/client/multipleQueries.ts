@@ -1,6 +1,5 @@
-import { encodeQueryParameters } from '@algolia/client-common';
 import { MethodEnum } from '@algolia/requester-common';
-import { RequestOptions, TransporterAware } from '@algolia/transporter';
+import { RequestOptions, serializeQueryParameters, TransporterAware } from '@algolia/transporter';
 
 import { MultipleQueriesOptions, MultipleQueriesQuery, MultipleQueriesResponse } from '../..';
 
@@ -16,7 +15,7 @@ export const multipleQueries = <TClient extends TransporterAware>(
       const requests = queries.map(query => {
         return {
           ...query,
-          params: encodeQueryParameters(query.params),
+          params: serializeQueryParameters(query.params || {}),
         };
       });
 

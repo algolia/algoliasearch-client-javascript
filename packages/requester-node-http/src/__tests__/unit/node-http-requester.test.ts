@@ -2,6 +2,9 @@ import { MethodEnum, Request } from '@algolia/requester-common';
 import nock from 'nock';
 
 import { createNodeHttpRequester } from '../..';
+
+const requester = createNodeHttpRequester();
+
 const headers = {
   'content-type': 'application/x-www-form-urlencoded',
 };
@@ -26,7 +29,6 @@ const requestStub = {
 
 describe('status code handling', () => {
   it('sends requests', async () => {
-    const requester = createNodeHttpRequester();
     const body = JSON.stringify({ foo: 'bar' });
 
     nock('https://algolia-dns.net', { reqheaders: headers })
@@ -40,7 +42,6 @@ describe('status code handling', () => {
   });
 
   it('resolves status 200', async () => {
-    const requester = createNodeHttpRequester();
     const body = JSON.stringify({ foo: 'bar' });
 
     nock('https://algolia-dns.net', { reqheaders: headers })
@@ -56,7 +57,6 @@ describe('status code handling', () => {
   });
 
   it('resolves status 300', async () => {
-    const requester = createNodeHttpRequester();
     const reason = 'Multiple Choices';
 
     nock('https://algolia-dns.net', { reqheaders: headers })
@@ -72,8 +72,6 @@ describe('status code handling', () => {
   });
 
   it('resolves status 400', async () => {
-    const requester = createNodeHttpRequester();
-
     const body = { message: 'Invalid Application-Id or API-Key' };
 
     nock('https://algolia-dns.net', { reqheaders: headers })
@@ -90,8 +88,6 @@ describe('status code handling', () => {
 });
 
 describe('timeout handling', () => {
-  const requester = createNodeHttpRequester();
-
   it('timouts if response dont appears before the timeout with the given 1 seconds timeout', async () => {
     const before = Date.now();
     await requester.send({
@@ -147,10 +143,8 @@ describe('timeout handling', () => {
 
 describe('error handling', (): void => {
   it('resolves dns not found', async () => {
-    const requester = createNodeHttpRequester();
-
     const request = {
-      url: 'https://foo-dsn.algolia.biz/',
+      url: 'https://this-dont-exist.algolia.com',
       method: MethodEnum.Post,
       headers: {
         'X-Algolia-Application-Id': 'ABCDE',
@@ -169,8 +163,6 @@ describe('error handling', (): void => {
   });
 
   it('resolves general network errors', async () => {
-    const requester = createNodeHttpRequester();
-
     nock('https://algolia-dns.net', { reqheaders: headers })
       .post('/foo')
       .query({ 'x-algolia-header': 'foo' })

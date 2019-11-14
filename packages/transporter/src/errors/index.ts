@@ -3,4 +3,5 @@
  */
 
 export * from './createApiError';
+export * from './createDeserializationError';
 export * from './createRetryError';
