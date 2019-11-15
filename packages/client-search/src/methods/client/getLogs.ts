@@ -20,17 +20,12 @@ export const getLogs = <TClient extends TransporterAware>(base: TClient): TClien
 
       const options = mapRequestOptions(requestOptions);
 
-      // @ts-ignore
       // eslint-disable-next-line functional/immutable-data
       options.queryParameters.type = type;
-
-      // @ts-ignore
       // eslint-disable-next-line functional/immutable-data
-      options.queryParameters.length = length;
-
-      // @ts-ignore
+      options.queryParameters.length = length.toString();
       // eslint-disable-next-line functional/immutable-data
-      options.queryParameters.offset = offset;
+      options.queryParameters.offset = offset.toString();
 
       return this.transporter.read(
         {

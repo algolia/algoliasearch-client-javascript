@@ -1,6 +1,7 @@
 import { createHost, createRetryError, MappedRequestOptions, Request, Transporter } from '..';
 import { deserializeFailure, deserializeSuccess } from '../deserializer';
 import { serializeData, serializeUrl } from '../serializer';
+import { StackFrame } from '../types/StackFrame';
 import { decision } from './decision';
 
 // eslint-disable-next-line max-params
@@ -27,54 +28,60 @@ export function execute<TResponse>(
   ).then(statefulHosts => {
     const statefulHostsAvailable = statefulHosts.filter(host => host.isUp()).reverse();
 
+    // eslint-disable-next-line functional/prefer-readonly-type
+    const stackTrace: StackFrame[] = [];
+
     const forEachHost = <TResponse>(
       host?: ReturnType<typeof createHost>
     ): Readonly<Promise<TResponse>> => {
       if (host === undefined) {
-        throw createRetryError();
+        throw createRetryError(stackTrace);
       }
 
-      return transporter.requester
-        .send({
-          data: serializeData(request, requestOptions),
-          headers: { ...transporter.headers, ...requestOptions.headers },
-          method: request.method,
-          url: serializeUrl(host, request.path, {
-            ...transporter.queryParameters,
-            ...requestOptions.queryParameters,
-            'x-algolia-agent': transporter.userAgent.value,
-          }),
-          timeout: (timeoutRetries + 1) * (requestOptions.timeout ? requestOptions.timeout : 0),
-        })
-        .then(response =>
-          decision(host, response, {
-            success: () => deserializeSuccess(response),
-            retry: () => {
-              return (
-                transporter.logger
-                  .debug('Retryable failure', {
-                    request,
-                    response,
-                    host,
-                    triesLeft: statefulHostsAvailable.length,
-                    timeoutRetries,
-                  })
-                  .then(() => {
-                    if (response.isTimedOut) {
-                      timeoutRetries++;
-                    }
+      const payload = {
+        data: serializeData(request, requestOptions),
+        headers: { ...transporter.headers, ...requestOptions.headers },
+        method: request.method,
+        url: serializeUrl(host, request.path, {
+          ...transporter.queryParameters,
+          ...requestOptions.queryParameters,
+          'x-algolia-agent': transporter.userAgent.value,
+        }),
+        timeout: (timeoutRetries + 1) * (requestOptions.timeout ? requestOptions.timeout : 0),
+      };
 
-                    return transporter.hostsCache.set({ url: host.url }, host);
-                  })
-                  // eslint-disable-next-line functional/immutable-data
-                  .then(() => forEachHost(statefulHostsAvailable.pop()))
-              );
-            },
-            fail: () => {
-              throw deserializeFailure(response);
-            },
-          })
-        );
+      return transporter.requester.send(payload).then(response =>
+        decision(host, response, {
+          success: () => deserializeSuccess(response),
+          retry: () => {
+            // eslint-disable-next-line functional/immutable-data
+            stackTrace.push({
+              request: payload,
+              response,
+              host,
+              triesLeft: statefulHostsAvailable.length,
+              timeoutRetries,
+            });
+
+            return (
+              transporter.logger
+                .debug('Retryable failure', stackTrace[stackTrace.length - 1])
+                .then(() => {
+                  if (response.isTimedOut) {
+                    timeoutRetries++;
+                  }
+
+                  return transporter.hostsCache.set({ url: host.url }, host);
+                })
+                // eslint-disable-next-line functional/immutable-data
+                .then(() => forEachHost(statefulHostsAvailable.pop()))
+            );
+          },
+          fail: () => {
+            throw deserializeFailure(response);
+          },
+        })
+      );
     };
 
     // eslint-disable-next-line functional/immutable-data

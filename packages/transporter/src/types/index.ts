@@ -8,6 +8,7 @@ export * from './MappedRequestOptions';
 export * from './QueryParameters';
 export * from './Request';
 export * from './RequestOptions';
+export * from './StackFrame';
 export * from './Timeouts';
 export * from './Transporter';
 export * from './TransporterAware';

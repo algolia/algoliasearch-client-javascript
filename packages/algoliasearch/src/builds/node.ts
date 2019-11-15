@@ -5,7 +5,7 @@ import { createConsoleLogger } from '@algolia/logger-console';
 import { createNodeHttpRequester } from '@algolia/requester-node-http';
 import { createUserAgent } from '@algolia/transporter';
 
-import { createSearchClient, SearchClient } from '../presets/default';
+import { createSearchClient, SearchClient } from '../presets/node';
 import { AlgoliaSearchOptions } from '../types';
 
 export default function algoliasearch(
@@ -33,4 +33,4 @@ export default function algoliasearch(
 }
 
 export * from '../types';
-export { SearchIndex, SearchClient } from '../presets/default';
+export { SearchClient, SearchIndex } from '../presets/node';

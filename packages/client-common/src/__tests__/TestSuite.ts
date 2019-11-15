@@ -1,13 +1,14 @@
-import { HasDelete, SearchIndex } from '@algolia/client-search';
-
 import algoliasearchForBrowser from '../../../algoliasearch/src/builds/browser';
-import algoliasearchForNode from '../../../algoliasearch/src/builds/node';
+import algoliasearchForNode, {
+  SearchClient,
+  SearchIndex,
+} from '../../../algoliasearch/src/builds/node';
 
 /* eslint functional/no-class: 0 */
 export class TestSuite {
   public readonly testName: string;
 
-  public indices: Array<SearchIndex & HasDelete>;
+  public indices: SearchIndex[];
 
   public async cleanUp(): Promise<void> {
     for (const index of this.indices) {
@@ -26,7 +27,7 @@ export class TestSuite {
   public makeSearchClient(
     appIdEnv: string = 'ALGOLIA_APPLICATION_ID_1',
     apiKeyEnv: string = 'ALGOLIA_ADMIN_KEY_1'
-  ) {
+  ): SearchClient {
     const algoliasearch =
       // @ts-ignore
       // eslint-disable-next-line no-undef

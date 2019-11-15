@@ -1,7 +1,12 @@
 export type MappedRequestOptions = {
   readonly cacheable: boolean | undefined;
   readonly timeout: number | undefined;
-  readonly data: { readonly [key: string]: string };
-  readonly headers: { readonly [key: string]: string };
-  readonly queryParameters: { readonly [key: string]: string };
+  // eslint-disable-next-line functional/prefer-readonly-type
+  readonly data: { [key: string]: string };
+
+  // eslint-disable-next-line functional/prefer-readonly-type
+  readonly headers: { [key: string]: string };
+
+  // eslint-disable-next-line functional/prefer-readonly-type
+  readonly queryParameters: { [key: string]: string };
 };

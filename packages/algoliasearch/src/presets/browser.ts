@@ -114,7 +114,7 @@ import {
   SearchClient as BaseSearchClient,
   SearchClientOptions,
   searchForFacetValues,
-  SearchIndex as SearchIndexPreset,
+  SearchIndex as BaseSearchIndex,
   searchRules,
   searchSynonyms,
   setPersonalizationStrategy,
@@ -140,7 +140,7 @@ export type SearchClient = BaseSearchClient &
   HasListClusters &
   HasMultipleSearchForFacetValues;
 
-export type SearchIndex = SearchIndexPreset &
+export type SearchIndex = BaseSearchIndex &
   HasBatch &
   HasDelete &
   HasSearch &

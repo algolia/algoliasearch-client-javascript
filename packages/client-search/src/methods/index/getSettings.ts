@@ -12,7 +12,6 @@ export const getSettings = <TSearchIndex extends SearchIndex>(
     getSettings(requestOptions?: RequestOptions): Readonly<Promise<IndexSettings>> {
       const options = mapRequestOptions(requestOptions);
 
-      // @ts-ignore
       // eslint-disable-next-line functional/immutable-data
       options.queryParameters.getVersion = '2';
 

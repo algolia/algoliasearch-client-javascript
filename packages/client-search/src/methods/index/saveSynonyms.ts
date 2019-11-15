@@ -18,13 +18,11 @@ export const saveSynonyms = <TSearchIndex extends SearchIndex>(
       const replace = popRequestOption(requestOptions, 'replaceExistingSynonyms', undefined);
       const options = mapRequestOptions(requestOptions);
       if (forward === true) {
-        // @ts-ignore
         // eslint-disable-next-line functional/immutable-data
         options.queryParameters.forwardToReplicas = '1';
       }
 
       if (replace === true) {
-        // @ts-ignore
         // eslint-disable-next-line functional/immutable-data
         options.queryParameters.replaceExistingSynonyms = '1';
       }

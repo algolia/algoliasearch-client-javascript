@@ -6,7 +6,7 @@ import { createConsoleLogger } from '@algolia/logger-console';
 import { createBrowserXhrRequester } from '@algolia/requester-browser-xhr';
 import { createUserAgent } from '@algolia/transporter';
 
-import { createSearchClient, SearchClient } from '../presets/default';
+import { createSearchClient, SearchClient } from '../presets/browser';
 import { AlgoliaSearchOptions } from '../types';
 
 export default function algoliasearch(
@@ -33,7 +33,7 @@ export default function algoliasearch(
 }
 
 export * from '../types';
-export { SearchIndex, SearchClient } from '../presets/default';
+export { SearchClient, SearchIndex } from '../presets/browser';
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-assertions, functional/immutable-data
 (<any>window).algoliasearch = algoliasearch;

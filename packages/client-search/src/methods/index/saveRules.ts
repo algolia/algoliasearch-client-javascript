@@ -22,7 +22,6 @@ export const saveRules = <TSearchIndex extends SearchIndex>(
       );
 
       if (clearExistingRules === true) {
-        // @ts-ignore
         // eslint-disable-next-line functional/immutable-data
         options.queryParameters.clearExistingRules = 'true';
       }
