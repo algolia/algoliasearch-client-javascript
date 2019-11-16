@@ -1,13 +1,21 @@
 export type Cluster = {
-  /** The cluster name */
+  /**
+   * The cluster name
+   */
   readonly clusterName: string;
 
-  /** Number of records in the cluster. */
+  /**
+   * Number of records in the cluster.
+   */
   readonly nbRecords: number;
 
-  /** Number of users assign to the cluster. */
+  /**
+   * Number of users assign to the cluster.
+   */
   readonly nbUserIDs: number;
 
-  /** Data size taken by all the users assigned to the cluster. */
+  /**
+   * Data size taken by all the users assigned to the cluster.
+   */
   readonly dataSize: number;
 };

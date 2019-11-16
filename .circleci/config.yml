@@ -97,6 +97,9 @@ jobs:
       - run: *run_yarn_install
       - save_cache: *save_yarn_cache
       - run:
+          name: Build
+          command: yarn build
+      - run:
           name: Browser tests
           command: yarn test:browser-ci
 

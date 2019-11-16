@@ -7,6 +7,7 @@ afterAll(() => testSuite.cleanUp());
 test(testSuite.testName, async () => {
   const client = testSuite.makeSearchClient('ALGOLIA_APPLICATION_ID_MCM', 'ALGOLIA_ADMIN_KEY_MCM');
   const response = await client.listClusters();
+
   expect(response.clusters).toHaveLength(2);
   const prefix = testSuite.makeIndexName();
   const firstClusterName = response.clusters[0].clusterName;
