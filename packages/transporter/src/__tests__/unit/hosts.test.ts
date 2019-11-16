@@ -23,7 +23,11 @@ const transporterRequest = createFixtures().transporterRequest();
 
 describe('selection of hosts', (): void => {
   it('select only readable hosts when calling the `read` method', async () => {
-    await expect(transporter.read(transporterRequest)).rejects.toEqual(createRetryError());
+    await expect(transporter.read(transporterRequest)).rejects.toContain({
+      name: 'RetryError',
+      message:
+        'Unreachable hosts - your application id may be incorrect. If the error persists, contact support@algolia.com.',
+    });
 
     verify(requesterMock.send(deepEqual(createFixtures().readRequest()))).once();
     verify(requesterMock.send(deepEqual(createFixtures().writeRequest()))).never();

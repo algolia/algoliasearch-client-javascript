@@ -24,10 +24,10 @@ export function mapRequestOptions(
   };
 }
 
-export function popRequestOption<TRequestOption>(
+export function popRequestOption<TRequestOption = undefined>(
   requestOptions: RequestOptions | undefined,
   key: string,
-  defaultValue: TRequestOption
+  defaultValue?: TRequestOption
 ): TRequestOption {
   if (requestOptions !== undefined && key in requestOptions) {
     const value: TRequestOption = requestOptions[key];
@@ -38,5 +38,5 @@ export function popRequestOption<TRequestOption>(
     return value;
   }
 
-  return defaultValue;
+  return defaultValue as TRequestOption;
 }

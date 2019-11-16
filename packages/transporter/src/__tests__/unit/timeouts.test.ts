@@ -1,7 +1,7 @@
 import { Requester } from '@algolia/requester-common';
 import { anything, deepEqual, spy, verify, when } from 'ts-mockito';
 
-import { createRetryError, Transporter } from '../..';
+import { Transporter } from '../..';
 import { createFakeRequester, createFixtures } from '../fixtures';
 
 let requesterMock: Requester;
@@ -71,7 +71,11 @@ describe('the timeouts selection', () => {
       isTimedOut: true,
     });
 
-    await expect(transporter.read(transporterRequest)).rejects.toEqual(createRetryError());
+    await expect(transporter.read(transporterRequest)).rejects.toContain({
+      name: 'RetryError',
+      message:
+        'Unreachable hosts - your application id may be incorrect. If the error persists, contact support@algolia.com.',
+    });
 
     verify(requesterMock.send(deepEqual(createFixtures().readRequest()))).once();
     verify(

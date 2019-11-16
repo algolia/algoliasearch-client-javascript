@@ -7,10 +7,16 @@ import {
   HasAssignUserID,
   HasAssignUserIDs,
   HasGetUserID,
+  HasListUserIDs,
+  HasRemoveUserID,
   HasSearchUserIDs,
+  HasTopUserIDs,
   initIndex,
+  listUserIDs,
+  removeUserID,
   SearchClientOptions,
   searchUserIDs,
+  topUserIDs,
 } from '@algolia/client-search';
 import { TransporterOptions } from '@algolia/transporter';
 
@@ -25,7 +31,10 @@ export type SearchClient = BrowserSearchClient &
   HasAssignUserID &
   HasAssignUserIDs &
   HasSearchUserIDs &
-  HasGetUserID;
+  HasGetUserID &
+  HasListUserIDs &
+  HasTopUserIDs &
+  HasRemoveUserID;
 
 export type SearchIndex = BrowserSearchIndex;
 
@@ -34,7 +43,15 @@ export type AnalyticsClient = BrowserAnalyticsClient;
 export const methods = {
   searchClient: [
     ...browserMethods.searchClient,
-    ...[assignUserID, assignUserIDs, getUserID, searchUserIDs],
+    ...[
+      assignUserID,
+      assignUserIDs,
+      getUserID,
+      searchUserIDs,
+      listUserIDs,
+      topUserIDs,
+      removeUserID,
+    ],
   ],
   searchIndex: browserMethods.searchIndex,
   analyticsClient: browserMethods.analyticsClient,

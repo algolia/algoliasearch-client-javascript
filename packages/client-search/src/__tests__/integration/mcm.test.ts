@@ -55,6 +55,51 @@ test(testSuite.testName, async () => {
     expect(searchUserIDsResponses[number].nbHits).toBe(1);
     expect(searchUserIDsResponses[number].page).toBe(0);
     expect(searchUserIDsResponses[number]).toHaveProperty('updatedAt');
+    expect(searchUserIDsResponses[number].hits[0].userID).toEqual(userId(number));
     expect(searchUserIDsResponses[number].hits[0].clusterName).toEqual(firstClusterName);
   });
+
+  const listUserIDsResponse = await client.listUserIDs();
+
+  expect(listUserIDsResponse.userIDs.length > 0).toBe(true);
+  expect(Object.keys(listUserIDsResponse.userIDs[0])).toEqual([
+    'userID',
+    'clusterName',
+    'nbRecords',
+    'dataSize',
+  ]);
+
+  const topUserIDsResponse = await client.topUserIDs();
+
+  expect(topUserIDsResponse.topUsers[firstClusterName].length > 0).toBe(true);
+  expect(Object.keys(topUserIDsResponse.topUsers[firstClusterName][0])).toEqual([
+    'userID',
+    'nbRecords',
+    'dataSize',
+  ]);
+
+  const removeUserID = async (number: number) => {
+    // eslint-disable-next-line no-constant-condition
+    while (true) {
+      try {
+        return await client.removeUserID(userId(number));
+      } catch (e) {
+        if (e.status !== 404 && e.message !== 'Mapping does not exist for this userID') {
+          throw e;
+        }
+      }
+    }
+  };
+
+  const removeUserIDResponses = await Promise.all(
+    [0, 1, 2].map(number => {
+      return removeUserID(number);
+    })
+  );
+
+  removeUserIDResponses.forEach(removeUserIDResponse => {
+    expect(removeUserIDResponse).toHaveProperty('deletedAt');
+  });
+
+  // @todo remove past users ids.
 });
