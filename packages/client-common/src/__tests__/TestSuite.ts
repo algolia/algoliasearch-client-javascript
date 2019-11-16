@@ -82,9 +82,8 @@ export class TestSuite {
     const user = process.env.USER;
 
     if (jobNumber) {
-      return `${environment}_${jobNumber}_${user}`;
-    }
-    if (user) {
+      return `${environment}_${nodeVersion}_${jobNumber}`;
+    } else if (user) {
       return `${environment}_${nodeVersion}_${user}`;
     }
 
