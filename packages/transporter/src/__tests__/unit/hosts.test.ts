@@ -1,7 +1,7 @@
 import { Requester } from '@algolia/requester-common';
 import { anything, deepEqual, spy, verify, when } from 'ts-mockito';
 
-import { createRetryError, Transporter } from '../..';
+import { Transporter } from '../..';
 import { createFakeRequester, createFixtures } from '../fixtures';
 
 let requesterMock: Requester;
@@ -23,10 +23,8 @@ const transporterRequest = createFixtures().transporterRequest();
 
 describe('selection of hosts', (): void => {
   it('select only readable hosts when calling the `read` method', async () => {
-    await expect(transporter.read(transporterRequest)).rejects.toContain({
+    await expect(transporter.read(transporterRequest)).rejects.toMatchObject({
       name: 'RetryError',
-      message:
-        'Unreachable hosts - your application id may be incorrect. If the error persists, contact support@algolia.com.',
     });
 
     verify(requesterMock.send(deepEqual(createFixtures().readRequest()))).once();
@@ -44,7 +42,9 @@ describe('selection of hosts', (): void => {
   });
 
   it('select only writable hosts when calling the `write` method', async () => {
-    await expect(transporter.write(transporterRequest)).rejects.toEqual(createRetryError());
+    await expect(transporter.write(transporterRequest)).rejects.toMatchObject({
+      name: 'RetryError',
+    });
 
     verify(requesterMock.send(deepEqual(createFixtures().readRequest()))).never();
     verify(requesterMock.send(deepEqual(createFixtures().writeRequest()))).once();

@@ -71,7 +71,7 @@ describe('the timeouts selection', () => {
       isTimedOut: true,
     });
 
-    await expect(transporter.read(transporterRequest)).rejects.toContain({
+    await expect(transporter.read(transporterRequest)).rejects.toMatchObject({
       name: 'RetryError',
       message:
         'Unreachable hosts - your application id may be incorrect. If the error persists, contact support@algolia.com.',
