@@ -40,6 +40,7 @@ module.exports = {
           ["@algolia/cache-browser-local-storage", "./packages/cache-browser-local-storage/src"],
           ["@algolia/cache-common", "./packages/cache-common/src"],
           ["@algolia/cache-in-memory", "./packages/cache-in-memory/src"],
+          ["@algolia/client-account", "./packages/client-account/src"],
           ["@algolia/client-analytics", "./packages/client-analytics/src"],
           ["@algolia/client-common", "./packages/client-common/src"],
           ["@algolia/client-search", "./packages/client-search/src"],

@@ -1,0 +1,16 @@
+{
+  "name": "@algolia/client-account",
+  "version": "4.0.0-alpha.20",
+  "private": false,
+  "license": "MIT",
+  "files": [
+    "index.js",
+    "dist"
+  ],
+  "main": "index.js",
+  "module": "dist/client-account.esm.js",
+  "types": "dist/client-account.d.ts",
+  "dependencies": {
+    "@algolia/client-search": "4.0.0-alpha.20"
+  }
+}

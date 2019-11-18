@@ -22,6 +22,7 @@ if (!process.env.TARGET) {
 const packagesConfig = [
   'cache-common',
   'cache-in-memory',
+  'client-account',
   'client-analytics',
   'client-common',
   'client-search',
