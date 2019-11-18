@@ -1,10 +1,10 @@
 import { encode } from '@algolia/client-common';
 import { MethodEnum } from '@algolia/requester-common';
-import { RequestOptions, TransporterAware } from '@algolia/transporter';
+import { RequestOptions } from '@algolia/transporter';
 
-import { DeleteABTestResponse } from '..';
+import { AnalyticsClient, DeleteABTestResponse } from '..';
 
-export const deleteABTest = <TClient extends TransporterAware>(
+export const deleteABTest = <TClient extends AnalyticsClient>(
   base: TClient
 ): TClient & HasDeleteABTest => {
   return {

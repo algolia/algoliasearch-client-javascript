@@ -1,10 +1,10 @@
 import { encode } from '@algolia/client-common';
 import { MethodEnum } from '@algolia/requester-common';
-import { RequestOptions, TransporterAware } from '@algolia/transporter';
+import { RequestOptions } from '@algolia/transporter';
 
-import { StopABTestResponse } from '..';
+import { AnalyticsClient, StopABTestResponse } from '..';
 
-export const stopABTest = <TClient extends TransporterAware>(
+export const stopABTest = <TClient extends AnalyticsClient>(
   base: TClient
 ): TClient & HasStopABTest => {
   return {

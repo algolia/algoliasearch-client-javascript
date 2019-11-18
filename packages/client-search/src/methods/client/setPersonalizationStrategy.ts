@@ -1,9 +1,9 @@
 import { MethodEnum } from '@algolia/requester-common';
-import { RequestOptions, TransporterAware } from '@algolia/transporter';
+import { RequestOptions } from '@algolia/transporter';
 
-import { PersonalizationStrategy, SetPersonalizationStrategyResponse } from '../..';
+import { PersonalizationStrategy, SearchClient, SetPersonalizationStrategyResponse } from '../..';
 
-export const setPersonalizationStrategy = <TClient extends TransporterAware>(
+export const setPersonalizationStrategy = <TClient extends SearchClient>(
   base: TClient
 ): TClient & HasSetPersonalizationStrategy => {
   return {

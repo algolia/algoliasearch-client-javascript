@@ -1,9 +1,9 @@
 import { MethodEnum } from '@algolia/requester-common';
-import { RequestOptions, TransporterAware } from '@algolia/transporter';
+import { RequestOptions } from '@algolia/transporter';
 
-import { AssignUserIDsResponse } from '../..';
+import { AssignUserIDsResponse, SearchClient } from '../..';
 
-export const assignUserIDs = <TClient extends TransporterAware>(
+export const assignUserIDs = <TClient extends SearchClient>(
   base: TClient
 ): TClient & HasAssignUserIDs => {
   return {

@@ -1,14 +1,15 @@
-import { RequestOptions, TransporterAware } from '@algolia/transporter';
+import { RequestOptions } from '@algolia/transporter';
 
 import { HasSearchForFacetValues, searchForFacetValues } from '..';
 import {
+  SearchClient,
   SearchForFacetValuesQueryParams,
   SearchForFacetValuesResponse,
   SearchOptions,
 } from '../..';
 import { initIndex } from '.';
 
-export const multipleSearchForFacetValues = <TClient extends TransporterAware>(
+export const multipleSearchForFacetValues = <TClient extends SearchClient>(
   base: TClient
 ): TClient & HasMultipleSearchForFacetValues => {
   return {
@@ -33,7 +34,7 @@ export const multipleSearchForFacetValues = <TClient extends TransporterAware>(
           // eslint-disable-next-line functional/immutable-data, no-param-reassign
           delete params.facetQuery;
 
-          return initIndex(this)
+          return initIndex(base)
             .initIndex<HasSearchForFacetValues>(query.indexName, {
               methods: [searchForFacetValues],
             })

@@ -1,7 +1,8 @@
+import { TestSuite } from '@algolia/client-common/src/__tests__/TestSuite';
 import { MethodEnum } from '@algolia/requester-common';
 import { anything, deepEqual, spy, verify, when } from 'ts-mockito';
 
-import algoliasearch from '../../../../algoliasearch/src/builds/browser';
+const algoliasearch = new TestSuite().algoliasearch;
 
 describe('search client', () => {
   it('gives access to appId', () => {

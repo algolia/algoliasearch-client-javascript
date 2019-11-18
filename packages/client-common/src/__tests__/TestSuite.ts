@@ -1,14 +1,22 @@
-import algoliasearchForBrowser from '../../../algoliasearch/src/builds/browser';
-import algoliasearchForNode, {
-  SearchClient,
-  SearchIndex,
-} from '../../../algoliasearch/src/builds/node';
+import { HasDelete } from '@algolia/client-search';
+
+import { default as algoliasearchForBrowser } from '../../../algoliasearch/src/builds/browser';
+import { default as algoliasearchForNode } from '../../../algoliasearch/src/builds/node';
 
 /* eslint functional/no-class: 0 */
 export class TestSuite {
   public readonly testName: string;
 
-  public indices: SearchIndex[];
+  // @ts-ignore
+  // eslint-disable-next-line no-undef
+  public readonly isBrowser: boolean = testing.isBrowser();
+
+  // @ts-ignore
+  public readonly algoliasearch: typeof algoliasearchForNode = this.isBrowser
+    ? algoliasearchForBrowser
+    : algoliasearchForNode;
+
+  public indices: HasDelete[];
 
   public async cleanUp(): Promise<void> {
     for (const index of this.indices) {
@@ -17,7 +25,7 @@ export class TestSuite {
     }
   }
 
-  public constructor(testName: string) {
+  public constructor(testName?: string) {
     this.ensureEnvironmentVariables();
 
     this.testName = testName;
@@ -27,13 +35,8 @@ export class TestSuite {
   public makeSearchClient(
     appIdEnv: string = 'ALGOLIA_APPLICATION_ID_1',
     apiKeyEnv: string = 'ALGOLIA_ADMIN_KEY_1'
-  ): SearchClient {
-    const algoliasearch =
-      // @ts-ignore
-      // eslint-disable-next-line no-undef
-      testing.environment() === 'node' ? algoliasearchForNode : algoliasearchForBrowser;
-
-    return algoliasearch(`${process.env[appIdEnv]}`, `${process.env[apiKeyEnv]}`);
+  ) {
+    return this.algoliasearch(`${process.env[appIdEnv]}`, `${process.env[apiKeyEnv]}`);
   }
 
   public makeIndex(indexName?: string) {
@@ -93,9 +96,13 @@ export class TestSuite {
   private ensureEnvironmentVariables(): void {
     if (
       process.env.ALGOLIA_APPLICATION_ID_1 === undefined ||
-      process.env.ALGOLIA_ADMIN_KEY_1 === undefined
+      process.env.ALGOLIA_ADMIN_KEY_1 === undefined ||
+      process.env.ALGOLIA_APPLICATION_ID_2 === undefined ||
+      process.env.ALGOLIA_ADMIN_KEY_2 === undefined
     ) {
-      throw new Error('You must setup `ALGOLIA_APPLICATION_ID_1` and `ALGOLIA_ADMIN_KEY_1`');
+      throw new Error(
+        'You must setup `ALGOLIA_APPLICATION_ID_1`, `ALGOLIA_ADMIN_KEY_1`, `ALGOLIA_APPLICATION_ID_2` and `ALGOLIA_ADMIN_KEY_2`'
+      );
     }
   }
 }

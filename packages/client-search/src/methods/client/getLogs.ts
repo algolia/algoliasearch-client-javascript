@@ -1,14 +1,9 @@
 import { MethodEnum } from '@algolia/requester-common';
-import {
-  mapRequestOptions,
-  popRequestOption,
-  RequestOptions,
-  TransporterAware,
-} from '@algolia/transporter';
+import { mapRequestOptions, popRequestOption, RequestOptions } from '@algolia/transporter';
 
-import { GetLogsResponse } from '../..';
+import { GetLogsResponse, SearchClient } from '../..';
 
-export const getLogs = <TClient extends TransporterAware>(base: TClient): TClient & HasGetLogs => {
+export const getLogs = <TClient extends SearchClient>(base: TClient): TClient & HasGetLogs => {
   return {
     ...base,
     getLogs(requestOptions?: RequestOptions): Readonly<Promise<GetLogsResponse>> {

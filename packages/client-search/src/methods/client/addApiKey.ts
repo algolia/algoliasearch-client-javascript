@@ -5,20 +5,13 @@ import {
   WaitablePromise,
 } from '@algolia/client-common';
 import { MethodEnum } from '@algolia/requester-common';
-import {
-  createApiError,
-  popRequestOption,
-  RequestOptions,
-  TransporterAware,
-} from '@algolia/transporter';
+import { createApiError, popRequestOption, RequestOptions } from '@algolia/transporter';
 
 import { AddApiKeyOptions, AddApiKeyResponse } from '../..';
-import { GetApiKeyResponse } from '../../types';
+import { GetApiKeyResponse, SearchClient } from '../../types';
 import { getApiKey } from '.';
 
-export const addApiKey = <TClient extends TransporterAware>(
-  base: TClient
-): TClient & HasAddApiKey => {
+export const addApiKey = <TClient extends SearchClient>(base: TClient): TClient & HasAddApiKey => {
   return {
     ...base,
     addApiKey(

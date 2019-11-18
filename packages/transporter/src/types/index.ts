@@ -11,5 +11,4 @@ export * from './RequestOptions';
 export * from './StackFrame';
 export * from './Timeouts';
 export * from './Transporter';
-export * from './TransporterAware';
 export * from './TransporterOptions';

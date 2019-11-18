@@ -1,9 +1,14 @@
 import { MethodEnum } from '@algolia/requester-common';
-import { RequestOptions, serializeQueryParameters, TransporterAware } from '@algolia/transporter';
+import { RequestOptions, serializeQueryParameters } from '@algolia/transporter';
 
-import { MultipleQueriesOptions, MultipleQueriesQuery, MultipleQueriesResponse } from '../..';
+import {
+  MultipleQueriesOptions,
+  MultipleQueriesQuery,
+  MultipleQueriesResponse,
+  SearchClient,
+} from '../..';
 
-export const multipleQueries = <TClient extends TransporterAware>(
+export const multipleQueries = <TClient extends SearchClient>(
   base: TClient
 ): TClient & HasMultipleQueries => {
   return {

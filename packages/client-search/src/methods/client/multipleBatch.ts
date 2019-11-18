@@ -1,12 +1,12 @@
 import { createWaitablePromise, WaitablePromise } from '@algolia/client-common';
 import { MethodEnum } from '@algolia/requester-common';
-import { RequestOptions, TransporterAware } from '@algolia/transporter';
+import { RequestOptions } from '@algolia/transporter';
 
 import { HasWaitTask, waitTask } from '..';
-import { BatchRequest, MultipleBatchResponse } from '../..';
+import { BatchRequest, MultipleBatchResponse, SearchClient } from '../..';
 import { HasInitIndex, initIndex } from '.';
 
-export const multipleBatch = <TClient extends TransporterAware>(
+export const multipleBatch = <TClient extends SearchClient>(
   base: TClient
 ): TClient & HasInitIndex & HasMultipleBatch => {
   return {

@@ -1,9 +1,9 @@
 import { MethodEnum } from '@algolia/requester-common';
-import { RequestOptions, TransporterAware } from '@algolia/transporter';
+import { RequestOptions } from '@algolia/transporter';
 
-import { MultipleGetObject, MultipleGetObjectsResponse } from '../..';
+import { MultipleGetObject, MultipleGetObjectsResponse, SearchClient } from '../..';
 
-export const multipleGetObjects = <TClient extends TransporterAware>(
+export const multipleGetObjects = <TClient extends SearchClient>(
   base: TClient
 ): TClient & HasMultipleGetObjects => {
   return {

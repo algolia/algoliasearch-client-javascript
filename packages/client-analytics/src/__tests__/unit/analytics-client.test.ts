@@ -1,6 +1,6 @@
-import algoliasearch from '../../../../algoliasearch/src/builds/node';
+import { TestSuite } from '@algolia/client-common/src/__tests__/TestSuite';
 
-const analyticsClient = algoliasearch('appId', 'apiKey').initAnalytics();
+const analyticsClient = new TestSuite().algoliasearch('appId', 'apiKey').initAnalytics();
 
 describe('analytics client', () => {
   it('uses region to define the host', () => {

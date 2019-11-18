@@ -10,19 +10,14 @@ export function createNodeHttpRequester(): Requester {
 
         const path = url.query === null ? url.pathname : `${url.pathname}?${url.query}`;
 
-        // eslint-disable-next-line functional/no-let
         const options: https.RequestOptions = {
-          hostname: url.hostname,
-          path,
-          protocol: url.protocol,
+          hostname: url.hostname || '',
+          path: path || '',
+          protocol: url.protocol || '',
           method: request.method,
           headers: request.headers,
+          ...(url.port !== undefined ? { port: url.port || '' } : {}),
         };
-
-        if (url.port !== undefined) {
-          // eslint-disable-next-line functional/immutable-data
-          options.port = url.port;
-        }
 
         // eslint-disable-next-line functional/no-let, prefer-const
         let timeoutHandler: NodeJS.Timeout;

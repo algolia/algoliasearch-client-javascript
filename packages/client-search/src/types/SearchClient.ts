@@ -1,5 +1,6 @@
-import { TransporterAware } from '@algolia/transporter';
+import { Transporter } from '@algolia/transporter';
 
 export type SearchClient = {
   readonly appId: string;
-} & TransporterAware;
+  readonly transporter: Transporter;
+};

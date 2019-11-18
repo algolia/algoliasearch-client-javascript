@@ -1,9 +1,9 @@
 import { MethodEnum } from '@algolia/requester-common';
-import { mapRequestOptions, RequestOptions, TransporterAware } from '@algolia/transporter';
+import { mapRequestOptions, RequestOptions } from '@algolia/transporter';
 
-import { RemoveUserIDResponse } from '../..';
+import { RemoveUserIDResponse, SearchClient } from '../..';
 
-export const removeUserID = <TClient extends TransporterAware>(
+export const removeUserID = <TClient extends SearchClient>(
   base: TClient
 ): TClient & HasRemoveUserID => {
   return {

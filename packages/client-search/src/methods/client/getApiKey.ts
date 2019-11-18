@@ -1,12 +1,10 @@
 import { encode } from '@algolia/client-common';
 import { MethodEnum } from '@algolia/requester-common';
-import { RequestOptions, TransporterAware } from '@algolia/transporter';
+import { RequestOptions } from '@algolia/transporter';
 
-import { GetApiKeyResponse } from '../..';
+import { GetApiKeyResponse, SearchClient } from '../..';
 
-export const getApiKey = <TClient extends TransporterAware>(
-  base: TClient
-): TClient & HasGetApiKey => {
+export const getApiKey = <TClient extends SearchClient>(base: TClient): TClient & HasGetApiKey => {
   return {
     ...base,
     getApiKey(

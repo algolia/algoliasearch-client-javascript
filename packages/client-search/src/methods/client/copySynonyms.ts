@@ -1,10 +1,10 @@
 import { WaitablePromise } from '@algolia/client-common';
-import { RequestOptions, TransporterAware } from '@algolia/transporter';
+import { RequestOptions } from '@algolia/transporter';
 
-import { IndexOperationResponse, ScopeEnum } from '../..';
+import { IndexOperationResponse, ScopeEnum, SearchClient } from '../..';
 import { copyIndex, HasCopyIndex } from './copyIndex';
 
-export const copySynonyms = <TClient extends TransporterAware>(
+export const copySynonyms = <TClient extends SearchClient>(
   base: TClient
 ): TClient & HasCopyIndex & HasCopySynonyms => {
   return {

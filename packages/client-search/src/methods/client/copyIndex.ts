@@ -1,14 +1,12 @@
 import { createWaitablePromise, encode, WaitablePromise } from '@algolia/client-common';
 import { MethodEnum } from '@algolia/requester-common';
-import { RequestOptions, TransporterAware } from '@algolia/transporter';
+import { RequestOptions } from '@algolia/transporter';
 
 import { HasWaitTask, waitTask } from '..';
-import { CopyIndexOptions, IndexOperationResponse } from '../..';
+import { CopyIndexOptions, IndexOperationResponse, SearchClient } from '../..';
 import { initIndex } from '.';
 
-export const copyIndex = <TClient extends TransporterAware>(
-  base: TClient
-): TClient & HasCopyIndex => {
+export const copyIndex = <TClient extends SearchClient>(base: TClient): TClient & HasCopyIndex => {
   return {
     ...base,
     copyIndex(

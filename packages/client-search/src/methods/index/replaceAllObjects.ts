@@ -44,6 +44,7 @@ export const replaceAllObjects = <TSearchIndex extends SearchIndex>(
         .substring(7);
 
       const temporaryIndex = saveObjects({
+        appId: this.appId,
         transporter: this.transporter,
         indexName: `${this.indexName}_tmp_${randomSuffix}`,
       });

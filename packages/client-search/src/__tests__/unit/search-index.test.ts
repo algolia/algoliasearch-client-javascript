@@ -1,12 +1,14 @@
 import { encode } from '@algolia/client-common';
+import { TestSuite } from '@algolia/client-common/src/__tests__/TestSuite';
 import { MethodEnum } from '@algolia/requester-common';
 import { RequestOptions, Transporter } from '@algolia/transporter';
 import { anything, deepEqual, spy, verify, when } from 'ts-mockito';
 
 import { BatchActionEnum, SaveObjectsOptions } from '../..';
-import algoliasearch, { SearchIndex } from '../../../../algoliasearch/src/builds/browser';
+import { SearchIndex } from '../../../../algoliasearch/src/builds/browser';
 import { createFaker } from '../../../../client-common/src/__tests__/createFaker';
 
+const algoliasearch = new TestSuite().algoliasearch;
 let index: SearchIndex;
 let transporterMock: Transporter;
 

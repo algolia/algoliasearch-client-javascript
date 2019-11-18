@@ -1,14 +1,9 @@
 import { MethodEnum } from '@algolia/requester-common';
-import {
-  mapRequestOptions,
-  popRequestOption,
-  RequestOptions,
-  TransporterAware,
-} from '@algolia/transporter';
+import { mapRequestOptions, popRequestOption, RequestOptions } from '@algolia/transporter';
 
-import { ListUserIDsOptions, ListUserIDsResponse } from '../..';
+import { ListUserIDsOptions, ListUserIDsResponse, SearchClient } from '../..';
 
-export const listUserIDs = <TClient extends TransporterAware>(
+export const listUserIDs = <TClient extends SearchClient>(
   base: TClient
 ): TClient & HasListUserIDs => {
   return {

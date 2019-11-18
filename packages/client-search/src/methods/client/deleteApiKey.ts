@@ -6,13 +6,13 @@ import {
   WaitablePromise,
 } from '@algolia/client-common';
 import { MethodEnum } from '@algolia/requester-common';
-import { createApiError, RequestOptions, TransporterAware } from '@algolia/transporter';
+import { createApiError, RequestOptions } from '@algolia/transporter';
 
 import { DeleteApiKeyResponse } from '../..';
-import { GetApiKeyResponse } from '../../types';
+import { GetApiKeyResponse, SearchClient } from '../../types';
 import { getApiKey } from '.';
 
-export const deleteApiKey = <TClient extends TransporterAware>(
+export const deleteApiKey = <TClient extends SearchClient>(
   base: TClient
 ): TClient & HasDeleteApiKey => {
   return {
