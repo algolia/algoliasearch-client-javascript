@@ -35,21 +35,19 @@ test(testSuite.testName, async () => {
       try {
         return await client.getUserID(userID(number));
       } catch (e) {
-        if (e.status !== 404 && e.message !== 'Mapping does not exist for this userID') {
-          throw e;
-        }
+        // @todo Be more specific here.
       }
     }
   };
 
-  const getUserIDResponses = await Promise.all([0, 1, 2].map(number => waitUserID(number)));
-  expect(getUserIDResponses).toHaveLength(3);
-  [0, 1, 2].forEach(number => {
-    expect(getUserIDResponses[number].userID).toBe(userID(number));
-    expect(getUserIDResponses[number].clusterName).toBe(firstClusterName);
-    expect(getUserIDResponses[number].nbRecords).toBe(0);
-    expect(getUserIDResponses[number].dataSize).toBe(0);
-  });
+  for (let number = 0; number < 3; number++) {
+    expect(await waitUserID(number)).toMatchObject({
+      userID: userID(number),
+      clusterName: firstClusterName,
+      nbRecords: 0,
+      dataSize: 0,
+    });
+  }
 
   const searchUserIDsResponses = await Promise.all(
     [0, 1, 2].map(number => client.searchUserIDs(userID(number), { cluster: firstClusterName }))
@@ -88,9 +86,7 @@ test(testSuite.testName, async () => {
       try {
         return await client.removeUserID(userID(number));
       } catch (e) {
-        if (e.status !== 404 && e.message !== 'Mapping does not exist for this userID') {
-          throw e;
-        }
+        // @todo Be more specific here...
       }
     }
   };
