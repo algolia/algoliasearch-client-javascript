@@ -5,7 +5,7 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "node scripts/build.js",
+    "build": "node --max-old-space-size=4096 scripts/build.js",
     "generate-exports": "node scripts/generate-exports",
     "lint": "eslint . --ext .js,.ts --fix && node ./scripts/sort-package-json.js",
     "playground": "./scripts/prepare-playground.sh && yarn serve",
