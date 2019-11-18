@@ -3,6 +3,7 @@
  */
 
 export * from './createAuth';
+export * from './createRetryablePromise';
 export * from './createWaitablePromise';
 export * from './helpers';
 export * from './version';

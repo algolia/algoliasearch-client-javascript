@@ -13,6 +13,7 @@ import {
   stopABTest,
 } from '@algolia/client-analytics';
 import {
+  addApiKey,
   batch,
   browseObjects,
   browseRules,
@@ -24,6 +25,7 @@ import {
   copySettings,
   copySynonyms,
   createSearchClient as baseCreateSearchClient,
+  deleteApiKey,
   deleteBy,
   deleteIndex,
   deleteObject,
@@ -32,6 +34,7 @@ import {
   deleteSynonym,
   exists,
   findObject,
+  getApiKey,
   getLogs,
   getObject,
   getObjectPosition,
@@ -40,6 +43,7 @@ import {
   getRule,
   getSettings,
   getSynonym,
+  HasAddApiKey,
   HasBatch,
   HasBrowseObjects,
   HasBrowseRules,
@@ -51,6 +55,7 @@ import {
   HasCopySettings,
   HasCopySynonyms,
   HasDelete,
+  HasDeleteApiKey,
   HasDeleteBy,
   HasDeleteObject,
   HasDeleteObjects,
@@ -58,6 +63,7 @@ import {
   HasDeleteSynonym,
   HasExists,
   HasFindObject,
+  HasGetApiKey,
   HasGetLogs,
   HasGetObject,
   HasGetObjectPosition,
@@ -66,6 +72,7 @@ import {
   HasGetRule,
   HasGetSettings,
   HasGetSynonym,
+  HasListApiKeys,
   HasListClusters,
   HasListIndices,
   HasMoveIndex,
@@ -78,6 +85,7 @@ import {
   HasReplaceAllObjects,
   HasReplaceAllRules,
   HasReplaceAllSynonyms,
+  HasRestoreApiKey,
   HasSaveObject,
   HasSaveObjects,
   HasSaveRule,
@@ -90,8 +98,10 @@ import {
   HasSearchSynonyms,
   HasSetPersonalizationStrategy,
   HasSetSettings,
+  HasUpdateApiKey,
   HasWaitTask,
   initIndex,
+  listApiKeys,
   listClusters,
   listIndices,
   moveIndex,
@@ -104,6 +114,7 @@ import {
   replaceAllObjects,
   replaceAllRules,
   replaceAllSynonyms,
+  restoreApiKey,
   saveObject,
   saveObjects,
   saveRule,
@@ -119,6 +130,7 @@ import {
   searchSynonyms,
   setPersonalizationStrategy,
   setSettings,
+  updateApiKey,
   waitTask,
 } from '@algolia/client-search';
 import { TransporterOptions } from '@algolia/transporter';
@@ -138,7 +150,13 @@ export type SearchClient = BaseSearchClient &
   HasListIndices &
   HasGetLogs &
   HasListClusters &
-  HasMultipleSearchForFacetValues;
+  HasMultipleSearchForFacetValues &
+  HasAddApiKey &
+  HasGetApiKey &
+  HasListApiKeys &
+  HasUpdateApiKey &
+  HasDeleteApiKey &
+  HasRestoreApiKey;
 
 export type SearchIndex = BaseSearchIndex &
   HasBatch &
@@ -202,6 +220,12 @@ export const methods = {
     getLogs,
     listClusters,
     multipleSearchForFacetValues,
+    getApiKey,
+    addApiKey,
+    listApiKeys,
+    updateApiKey,
+    deleteApiKey,
+    restoreApiKey,
   ],
   searchIndex: [
     batch,
