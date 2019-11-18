@@ -1,3 +1,5 @@
+/* eslint sonarjs/cognitive-complexity: 0 */ // --> OFF
+
 import { TestSuite } from '../../../../client-common/src/__tests__/TestSuite';
 
 const testSuite = new TestSuite('mcm');
@@ -11,26 +13,27 @@ test(testSuite.testName, async () => {
   expect(response.clusters).toHaveLength(2);
   const prefix = testSuite.makeIndexName();
   const firstClusterName = response.clusters[0].clusterName;
-  const userId = (number: number) =>
+  const userID = (number: number) =>
     `${prefix}-${number}`
       .replace(/_/g, '-')
       .replace(/:/g, '-')
       .replace(/\./g, '-');
 
-  const assignUserIDResponse = await client.assignUserID(userId(0), firstClusterName);
+  const assignUserIDResponse = await client.assignUserID(userID(0), firstClusterName);
   expect(assignUserIDResponse).toHaveProperty('createdAt');
 
   const assignUserIDsResponse = await client.assignUserIDs(
-    [userId(1), userId(2)],
+    [userID(1), userID(2)],
     firstClusterName
   );
+
   expect(assignUserIDsResponse).toHaveProperty('createdAt');
 
   const waitUserID = async (number: number) => {
     // eslint-disable-next-line no-constant-condition
     while (true) {
       try {
-        return await client.getUserID(userId(number));
+        return await client.getUserID(userID(number));
       } catch (e) {
         if (e.status !== 404 && e.message !== 'Mapping does not exist for this userID') {
           throw e;
@@ -42,21 +45,21 @@ test(testSuite.testName, async () => {
   const getUserIDResponses = await Promise.all([0, 1, 2].map(number => waitUserID(number)));
   expect(getUserIDResponses).toHaveLength(3);
   [0, 1, 2].forEach(number => {
-    expect(getUserIDResponses[number].userID).toBe(userId(number));
+    expect(getUserIDResponses[number].userID).toBe(userID(number));
     expect(getUserIDResponses[number].clusterName).toBe(firstClusterName);
     expect(getUserIDResponses[number].nbRecords).toBe(0);
     expect(getUserIDResponses[number].dataSize).toBe(0);
   });
 
   const searchUserIDsResponses = await Promise.all(
-    [0, 1, 2].map(number => client.searchUserIDs(userId(number), { cluster: firstClusterName }))
+    [0, 1, 2].map(number => client.searchUserIDs(userID(number), { cluster: firstClusterName }))
   );
 
   [0, 1, 2].forEach(number => {
     expect(searchUserIDsResponses[number].nbHits).toBe(1);
     expect(searchUserIDsResponses[number].page).toBe(0);
     expect(searchUserIDsResponses[number]).toHaveProperty('updatedAt');
-    expect(searchUserIDsResponses[number].hits[0].userID).toEqual(userId(number));
+    expect(searchUserIDsResponses[number].hits[0].userID).toEqual(userID(number));
     expect(searchUserIDsResponses[number].hits[0].clusterName).toEqual(firstClusterName);
   });
 
@@ -83,7 +86,7 @@ test(testSuite.testName, async () => {
     // eslint-disable-next-line no-constant-condition
     while (true) {
       try {
-        return await client.removeUserID(userId(number));
+        return await client.removeUserID(userID(number));
       } catch (e) {
         if (e.status !== 404 && e.message !== 'Mapping does not exist for this userID') {
           throw e;
@@ -92,15 +95,16 @@ test(testSuite.testName, async () => {
     }
   };
 
-  const removeUserIDResponses = await Promise.all(
-    [0, 1, 2].map(number => {
-      return removeUserID(number);
-    })
-  );
+  for (let number = 0; number < 3; number++) {
+    expect(await removeUserID(number)).toHaveProperty('deletedAt');
+  }
 
-  removeUserIDResponses.forEach(removeUserIDResponse => {
-    expect(removeUserIDResponse).toHaveProperty('deletedAt');
-  });
-
+  for (let number = 0; number < 3; number++) {
+    await expect(client.getUserID(userID(number))).rejects.toEqual({
+      message: 'Mapping does not exist for this userID',
+      name: 'ApiError',
+      status: 404,
+    });
+  }
   // @todo remove past users ids.
 });
