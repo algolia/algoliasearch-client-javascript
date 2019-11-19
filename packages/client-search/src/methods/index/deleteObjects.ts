@@ -1,14 +1,14 @@
-import { WaitablePromise } from '@algolia/client-common';
+import { addMethod, WaitablePromise } from '@algolia/client-common';
 import { RequestOptions } from '@algolia/transporter';
 
 import { BatchActionEnum, BatchResponse, ChunkOptions, SearchIndex } from '../..';
-import { batch, HasBatch } from '.';
+import { batch } from '.';
 
 export const deleteObjects = <TSearchIndex extends SearchIndex>(
   base: TSearchIndex
-): TSearchIndex & HasBatch & HasDeleteObjects => {
+): TSearchIndex & HasDeleteObjects => {
   return {
-    ...batch(base),
+    ...base,
     deleteObjects(
       objectIDs: readonly string[],
       requestOptions?: RequestOptions & ChunkOptions
@@ -17,7 +17,7 @@ export const deleteObjects = <TSearchIndex extends SearchIndex>(
         return { objectID };
       });
 
-      return this.chunk(objects, BatchActionEnum.DeleteObject, requestOptions);
+      return addMethod(base, batch).chunk(objects, BatchActionEnum.DeleteObject, requestOptions);
     },
   };
 };

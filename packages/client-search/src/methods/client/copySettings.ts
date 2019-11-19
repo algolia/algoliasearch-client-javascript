@@ -1,20 +1,20 @@
-import { WaitablePromise } from '@algolia/client-common';
+import { addMethod, WaitablePromise } from '@algolia/client-common';
 import { RequestOptions } from '@algolia/transporter';
 
 import { IndexOperationResponse, ScopeEnum, SearchClient } from '../..';
-import { copyIndex, HasCopyIndex } from '.';
+import { copyIndex } from '.';
 
 export const copySettings = <TClient extends SearchClient>(
   base: TClient
-): TClient & HasCopyIndex & HasCopySettings => {
+): TClient & HasCopySettings => {
   return {
-    ...copyIndex(base),
+    ...base,
     copySettings(
       from: string,
       to: string,
       requestOptions?: RequestOptions
     ): Readonly<WaitablePromise<IndexOperationResponse>> {
-      return this.copyIndex(from, to, {
+      return addMethod(base, copyIndex).copyIndex(from, to, {
         ...(requestOptions === undefined ? {} : requestOptions),
         scope: [ScopeEnum.Settings],
       });

@@ -1,3 +1,4 @@
+import { addMethod } from '@algolia/client-common';
 import { RequestOptions } from '@algolia/transporter';
 
 import {
@@ -8,13 +9,13 @@ import {
   SearchIndex,
   SearchRulesOptions,
 } from '../..';
-import { HasSearchRules, searchRules } from '.';
+import { searchRules } from '.';
 
 export const browseRules = <TSearchIndex extends SearchIndex>(
   base: TSearchIndex
-): TSearchIndex & HasSearchRules & HasBrowseRules => {
+): TSearchIndex & HasBrowseRules => {
   return {
-    ...searchRules(base),
+    ...base,
     browseRules(
       requestOptions?: SearchRulesOptions & BrowseOptions<Rule> & RequestOptions
     ): Readonly<Promise<void>> {
@@ -27,20 +28,22 @@ export const browseRules = <TSearchIndex extends SearchIndex>(
         ...options,
         shouldStop: response => response.hits.length < options.hitsPerPage,
         request: data => {
-          return this.searchRules('', { ...requestOptions, ...data }).then(
-            (response): BrowseResponse<Rule> => {
-              return {
-                ...response,
-                hits: response.hits.map(rule => {
-                  // @ts-ignore
-                  // eslint-disable-next-line functional/immutable-data,no-param-reassign
-                  delete rule._highlightResult;
+          return addMethod(base, searchRules)
+            .searchRules('', { ...requestOptions, ...data })
+            .then(
+              (response): BrowseResponse<Rule> => {
+                return {
+                  ...response,
+                  hits: response.hits.map(rule => {
+                    // @ts-ignore
+                    // eslint-disable-next-line functional/immutable-data,no-param-reassign
+                    delete rule._highlightResult;
 
-                  return rule;
-                }),
-              };
-            }
-          );
+                    return rule;
+                  }),
+                };
+              }
+            );
         },
       });
     },

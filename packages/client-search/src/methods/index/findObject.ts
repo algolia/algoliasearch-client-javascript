@@ -1,14 +1,15 @@
+import { addMethod } from '@algolia/client-common';
 import { popRequestOption, RequestOptions } from '@algolia/transporter';
 
 import { FindObjectOptions, FindObjectResponse, ObjectWithObjectID, SearchIndex } from '../..';
 import { createObjectNotFoundError } from '../../errors/createObjectNotFoundError';
-import { HasSearch, search } from './search';
+import { search } from './search';
 
 export const findObject = <TSearchIndex extends SearchIndex>(
   base: TSearchIndex
-): TSearchIndex & HasSearch & HasFindObject => {
+): TSearchIndex & HasFindObject => {
   return {
-    ...search(base),
+    ...base,
     findObject<TObject>(
       callback: (object: TObject & ObjectWithObjectID) => boolean,
       requestOptions?: FindObjectOptions & RequestOptions
@@ -20,28 +21,30 @@ export const findObject = <TSearchIndex extends SearchIndex>(
       let page = 0;
 
       const forEachPage = (): Readonly<Promise<FindObjectResponse<TObject>>> => {
-        return this.search<TObject>(query, { ...requestOptions, page }).then(result => {
-          // eslint-disable-next-line functional/no-loop-statement
-          for (const [position, hit] of Object.entries(result.hits)) {
-            // eslint-disable-next-line promise/no-callback-in-promise
-            if (callback(hit)) {
-              return {
-                object: hit,
-                position: parseInt(position, 10),
-                page,
-              };
+        return addMethod(base, search)
+          .search<TObject>(query, { ...requestOptions, page })
+          .then(result => {
+            // eslint-disable-next-line functional/no-loop-statement
+            for (const [position, hit] of Object.entries(result.hits)) {
+              // eslint-disable-next-line promise/no-callback-in-promise
+              if (callback(hit)) {
+                return {
+                  object: hit,
+                  position: parseInt(position, 10),
+                  page,
+                };
+              }
             }
-          }
 
-          page++;
+            page++;
 
-          // paginate if option was set and has next page
-          if (!paginate || page >= result.nbPages) {
-            throw createObjectNotFoundError();
-          }
+            // paginate if option was set and has next page
+            if (!paginate || page >= result.nbPages) {
+              throw createObjectNotFoundError();
+            }
 
-          return forEachPage();
-        });
+            return forEachPage();
+          });
       };
 
       return forEachPage();

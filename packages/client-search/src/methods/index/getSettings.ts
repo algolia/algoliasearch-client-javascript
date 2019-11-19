@@ -15,10 +15,10 @@ export const getSettings = <TSearchIndex extends SearchIndex>(
       // eslint-disable-next-line functional/immutable-data
       options.queryParameters.getVersion = '2';
 
-      return this.transporter.read(
+      return base.transporter.read(
         {
           method: MethodEnum.Get,
-          path: encode('1/indexes/%s/settings', this.indexName),
+          path: encode('1/indexes/%s/settings', base.indexName),
         },
         options
       );

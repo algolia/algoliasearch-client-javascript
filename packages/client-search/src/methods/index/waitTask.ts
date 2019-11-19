@@ -1,40 +1,24 @@
+import { addMethod, createRetryablePromise } from '@algolia/client-common';
 import { RequestOptions } from '@algolia/transporter';
 
-import { SearchIndex, TaskStatusResponse } from '../..';
-import { getTask, HasGetTask } from '.';
+import { SearchIndex } from '../..';
+import { getTask } from '.';
 
 export const waitTask = <TSearchIndex extends SearchIndex>(
   base: TSearchIndex
-): TSearchIndex & HasGetTask & HasWaitTask => {
+): TSearchIndex & HasWaitTask => {
   return {
-    ...getTask(base),
-    waitTask(
-      taskID: number,
-      requestOptions?: RequestOptions
-    ): Readonly<Promise<TaskStatusResponse>> {
-      // eslint-disable-next-line functional/no-let
-      let retriesCount = 0;
-
-      return this.getTask(taskID, requestOptions).then(response => {
-        if (response.status !== 'published') {
-          retriesCount++;
-
-          return new Promise<TaskStatusResponse>(resolve => {
-            setTimeout(() => {
-              resolve(this.waitTask(taskID, requestOptions));
-            }, Math.min(100 * retriesCount, 1000));
-          });
-        }
-
-        return response;
+    ...base,
+    waitTask(taskID: number, requestOptions?: RequestOptions): Readonly<Promise<void>> {
+      return createRetryablePromise(retry => {
+        return addMethod(base, getTask)
+          .getTask(taskID, requestOptions)
+          .then(response => (response.status !== 'published' ? retry() : undefined));
       });
     },
   };
 };
 
 export type HasWaitTask = {
-  readonly waitTask: (
-    taskID: number,
-    requestOptions?: RequestOptions
-  ) => Readonly<Promise<TaskStatusResponse>>;
+  readonly waitTask: (taskID: number, requestOptions?: RequestOptions) => Readonly<Promise<void>>;
 };

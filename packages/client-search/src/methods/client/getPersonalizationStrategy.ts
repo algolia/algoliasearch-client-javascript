@@ -11,7 +11,7 @@ export const getPersonalizationStrategy = <TClient extends SearchClient>(
     getPersonalizationStrategy(
       requestOptions?: RequestOptions
     ): Readonly<Promise<GetPersonalizationStrategyResponse>> {
-      return this.transporter.read(
+      return base.transporter.read(
         {
           method: MethodEnum.Get,
           path: '1/recommendation/personalization/strategy',

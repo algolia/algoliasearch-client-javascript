@@ -11,7 +11,7 @@ export const getApiKey = <TClient extends SearchClient>(base: TClient): TClient 
       apiKey: string,
       requestOptions?: RequestOptions
     ): Readonly<Promise<GetApiKeyResponse>> {
-      return this.transporter.read(
+      return base.transporter.read(
         {
           method: MethodEnum.Get,
           path: encode('1/keys/%s', apiKey),

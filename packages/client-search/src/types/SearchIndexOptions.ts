@@ -1,3 +1,3 @@
-export type DecorateOptions = {
+export type SearchIndexOptions = {
   readonly methods?: readonly Function[];
 };

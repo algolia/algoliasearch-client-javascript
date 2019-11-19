@@ -13,10 +13,10 @@ export const getObject = <TSearchIndex extends SearchIndex>(
       objectID: string,
       requestOptions?: RequestOptions
     ): Readonly<Promise<TObject>> {
-      return this.transporter.read(
+      return base.transporter.read(
         {
           method: MethodEnum.Get,
-          path: encode('1/indexes/%s/%s', this.indexName, objectID),
+          path: encode('1/indexes/%s/%s', base.indexName, objectID),
         },
         requestOptions
       );

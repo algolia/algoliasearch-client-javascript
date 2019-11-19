@@ -1,15 +1,15 @@
-import { createWaitablePromise, encode, WaitablePromise } from '@algolia/client-common';
+import { addMethod, createWaitablePromise, encode, WaitablePromise } from '@algolia/client-common';
 import { MethodEnum } from '@algolia/requester-common';
 import { popRequestOption, RequestOptions } from '@algolia/transporter';
 
 import { IndexOperationResponse, ReplaceAllObjectsOptions, SearchIndex } from '../..';
-import { HasWaitTask, saveObjects, waitTask } from '.';
+import { saveObjects, waitTask } from '.';
 
 export const replaceAllObjects = <TSearchIndex extends SearchIndex>(
   base: TSearchIndex
-): TSearchIndex & HasWaitTask & HasReplaceAllObjects => {
+): TSearchIndex & HasReplaceAllObjects => {
   return {
-    ...waitTask(base),
+    ...base,
     replaceAllObjects(
       objects: readonly object[],
       requestOptions?: ReplaceAllObjectsOptions & RequestOptions
@@ -21,7 +21,7 @@ export const replaceAllObjects = <TSearchIndex extends SearchIndex>(
         operatioRequestOptions?: RequestOptions
       ): Readonly<WaitablePromise<IndexOperationResponse>> => {
         return createWaitablePromise<IndexOperationResponse>(
-          this.transporter.write(
+          base.transporter.write(
             {
               method: MethodEnum.Post,
               path: encode('1/indexes/%s/operation', from),
@@ -33,7 +33,7 @@ export const replaceAllObjects = <TSearchIndex extends SearchIndex>(
             operatioRequestOptions
           )
         ).onWait((response, waitRequestOptions) =>
-          this.waitTask(response.taskID, waitRequestOptions)
+          addMethod(base, waitTask).waitTask(response.taskID, waitRequestOptions)
         );
       };
 
@@ -44,15 +44,15 @@ export const replaceAllObjects = <TSearchIndex extends SearchIndex>(
         .substring(7);
 
       const temporaryIndex = saveObjects({
-        appId: this.appId,
-        transporter: this.transporter,
-        indexName: `${this.indexName}_tmp_${randomSuffix}`,
+        appId: base.appId,
+        transporter: base.transporter,
+        indexName: `${base.indexName}_tmp_${randomSuffix}`,
       });
 
       // eslint-disable-next-line prefer-const, functional/no-let, functional/prefer-readonly-type
       let responses: Array<Readonly<WaitablePromise<any>>> = [];
 
-      const copyWaitablePromise = operation(this.indexName, temporaryIndex.indexName, 'copy', {
+      const copyWaitablePromise = operation(base.indexName, temporaryIndex.indexName, 'copy', {
         ...requestOptions,
         scope: ['settings', 'synonyms', 'rules'],
       });
@@ -74,7 +74,7 @@ export const replaceAllObjects = <TSearchIndex extends SearchIndex>(
         .then(() => {
           const moveWaitablePromise = operation(
             temporaryIndex.indexName,
-            this.indexName,
+            base.indexName,
             'move',
             requestOptions
           );

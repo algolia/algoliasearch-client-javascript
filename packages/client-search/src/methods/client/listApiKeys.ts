@@ -9,7 +9,7 @@ export const listApiKeys = <TClient extends SearchClient>(
   return {
     ...base,
     listApiKeys(requestOptions?: RequestOptions): Readonly<Promise<ListApiKeysResponse>> {
-      return this.transporter.read(
+      return base.transporter.read(
         {
           method: MethodEnum.Get,
           path: '1/keys',

@@ -2,18 +2,18 @@ import { WaitablePromise } from '@algolia/client-common';
 import { RequestOptions } from '@algolia/transporter';
 
 import { SaveSynonymsOptions, SaveSynonymsResponse, SearchIndex, Synonym } from '../..';
-import { HasSaveSynonyms, saveSynonyms } from '.';
+import { saveSynonyms } from '.';
 
 export const saveSynonym = <TSearchIndex extends SearchIndex>(
   base: TSearchIndex
-): TSearchIndex & HasSaveSynonyms => {
+): TSearchIndex & HasSaveSynonym => {
   return {
-    ...saveSynonyms(base),
+    ...base,
     saveSynonym(
       synonym: Synonym,
       requestOptions?: RequestOptions & SaveSynonymsOptions
     ): Readonly<WaitablePromise<SaveSynonymsResponse>> {
-      return this.saveSynonyms([synonym], requestOptions);
+      return saveSynonyms(base).saveSynonyms([synonym], requestOptions);
     },
   };
 };

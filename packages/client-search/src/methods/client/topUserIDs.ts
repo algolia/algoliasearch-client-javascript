@@ -9,7 +9,7 @@ export const topUserIDs = <TClient extends SearchClient>(
   return {
     ...base,
     topUserIDs(requestOptions?: RequestOptions): Readonly<Promise<TopUserIDsResponse>> {
-      return this.transporter.read(
+      return base.transporter.read(
         {
           method: MethodEnum.Get,
           path: '1/clusters/mapping/top',

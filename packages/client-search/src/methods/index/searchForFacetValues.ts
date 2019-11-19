@@ -14,10 +14,10 @@ export const searchForFacetValues = <TSearchIndex extends SearchIndex>(
       facetQuery: string,
       requestOptions?: RequestOptions & SearchOptions
     ): Readonly<Promise<SearchForFacetValuesResponse>> {
-      return this.transporter.read(
+      return base.transporter.read(
         {
           method: MethodEnum.Post,
-          path: encode('1/indexes/%s/facets/%s/query', this.indexName, facetName),
+          path: encode('1/indexes/%s/facets/%s/query', base.indexName, facetName),
           data: {
             facetQuery,
           },

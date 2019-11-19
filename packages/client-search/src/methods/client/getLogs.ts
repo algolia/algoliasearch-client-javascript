@@ -22,7 +22,7 @@ export const getLogs = <TClient extends SearchClient>(base: TClient): TClient & 
       // eslint-disable-next-line functional/immutable-data
       options.queryParameters.offset = offset.toString();
 
-      return this.transporter.read(
+      return base.transporter.read(
         {
           method: MethodEnum.Get,
           path: '1/logs',

@@ -13,7 +13,7 @@ export const addABTest = <TClient extends AnalyticsClient>(
       abTest: ABTest,
       requestOptions?: RequestOptions
     ): Readonly<Promise<AddABTestResponse>> {
-      return this.transporter.write(
+      return base.transporter.write(
         {
           method: MethodEnum.Post,
           path: '2/abtests',

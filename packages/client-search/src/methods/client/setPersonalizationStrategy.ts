@@ -12,7 +12,7 @@ export const setPersonalizationStrategy = <TClient extends SearchClient>(
       personalizationStrategy: PersonalizationStrategy,
       requestOptions?: RequestOptions
     ): Readonly<Promise<SetPersonalizationStrategyResponse>> {
-      return this.transporter.write(
+      return base.transporter.write(
         {
           method: MethodEnum.Post,
           path: '1/recommendation/personalization/strategy',

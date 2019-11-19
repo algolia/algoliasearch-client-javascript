@@ -1,11 +1,11 @@
-import { AuthMode, createAuth, decorate, DecorateOptions } from '@algolia/client-common';
+import { addMethods, AuthMode, createAuth } from '@algolia/client-common';
 import { CallEnum, createTransporter, TransporterOptions } from '@algolia/transporter';
 
 import { AnalyticsClient, AnalyticsClientOptions } from '.';
 
-export const createAnalyticsClient = <TClient>(
-  options: AnalyticsClientOptions & TransporterOptions & DecorateOptions
-): AnalyticsClient & TClient => {
+export const createAnalyticsClient = <TAnalyticsClient>(
+  options: AnalyticsClientOptions & TransporterOptions
+): AnalyticsClient & TAnalyticsClient => {
   const region = options.region || 'us';
   const auth = createAuth(AuthMode.WithinHeaders, options.appId, options.apiKey);
 
@@ -18,5 +18,5 @@ export const createAnalyticsClient = <TClient>(
   });
   transporter.addQueryParameters(auth.queryParameters());
 
-  return decorate<TClient & AnalyticsClient>({ transporter }, options);
+  return addMethods({ transporter }, options.methods);
 };

@@ -1,26 +1,26 @@
-import { createWaitablePromise, encode, WaitablePromise } from '@algolia/client-common';
+import { addMethod, createWaitablePromise, encode, WaitablePromise } from '@algolia/client-common';
 import { MethodEnum } from '@algolia/requester-common';
 import { RequestOptions } from '@algolia/transporter';
 
 import { DeleteResponse, SearchIndex } from '../..';
-import { HasWaitTask, waitTask } from '.';
+import { waitTask } from '.';
 
 export const deleteIndex = <TSearchIndex extends SearchIndex>(
   base: TSearchIndex
-): TSearchIndex & HasWaitTask & HasDelete => {
+): TSearchIndex & HasDelete => {
   return {
-    ...waitTask(base),
+    ...base,
     delete(requestOptions?: RequestOptions): Readonly<WaitablePromise<DeleteResponse>> {
       return createWaitablePromise<DeleteResponse>(
-        this.transporter.write(
+        base.transporter.write(
           {
             method: MethodEnum.Delete,
-            path: encode('1/indexes/%s', this.indexName),
+            path: encode('1/indexes/%s', base.indexName),
           },
           requestOptions
         )
       ).onWait((response, waitRequestOptions) =>
-        this.waitTask(response.taskID, waitRequestOptions)
+        addMethod(base, waitTask).waitTask(response.taskID, waitRequestOptions)
       );
     },
   };

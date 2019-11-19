@@ -8,7 +8,7 @@ export const getUserID = <TClient extends SearchClient>(base: TClient): TClient 
   return {
     ...base,
     getUserID(userID: string, requestOptions?: RequestOptions): Readonly<Promise<UserIDResponse>> {
-      return this.transporter.read(
+      return base.transporter.read(
         {
           method: MethodEnum.Get,
           path: encode('1/clusters/mapping/%s', userID),

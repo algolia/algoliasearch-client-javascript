@@ -1,4 +1,4 @@
-import { createWaitablePromise, encode, WaitablePromise } from '@algolia/client-common';
+import { addMethod, createWaitablePromise, encode, WaitablePromise } from '@algolia/client-common';
 import { MethodEnum } from '@algolia/requester-common';
 import { RequestOptions } from '@algolia/transporter';
 
@@ -27,7 +27,7 @@ export const moveIndex = <TClient extends SearchClient>(base: TClient): TClient 
           requestOptions
         )
       ).onWait((response, waitRequestOptions) => {
-        return initIndex(base)
+        return addMethod(base, initIndex)
           .initIndex<HasWaitTask>(from, {
             methods: [waitTask],
           })

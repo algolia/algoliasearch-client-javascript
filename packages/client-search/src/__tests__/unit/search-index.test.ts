@@ -34,56 +34,62 @@ beforeEach(() => {
 });
 
 describe('save objects', () => {
-  it('Proxies down to save objects', async () => {
-    const indexSpy = spy(index);
-
+  it('save object proxies down to save objects', async () => {
     const obj = createFaker().object();
-    const requestoptions = {
+    const requestOptions = {
+      autoGenerateObjectIDIfNotExist: true,
       timeout: 1,
     };
 
-    const resSaveObject: any = [
-      {
-        objectIDs: ['1'],
-        taskID: 2,
-      },
-    ];
+    const request = {
+      method: MethodEnum.Post,
+      path: '1/indexes/foo/batch',
+      data: { requests: [{ action: 'addObject', body: obj }] },
+    };
 
-    when(indexSpy.saveObjects(deepEqual([obj]), requestoptions)).thenResolve(resSaveObject);
+    when(transporterMock.write(deepEqual(request), requestOptions)).thenResolve(res);
 
-    const response = await index.saveObject(obj, requestoptions);
+    await index.saveObject(obj, requestOptions);
 
-    expect(response.objectID).toBe('1');
-    expect(response.taskID).toBe(2);
+    verify(transporterMock.write(deepEqual(request), requestOptions)).once();
   });
 
-  it('Uses addObject when `autoGenerateObjectIDIfNotExist` is true', async () => {
-    const indexSpy = spy(index);
+  it('uses addObject when `autoGenerateObjectIDIfNotExist` is true', async () => {
     const objects = [createFaker().object()];
     const requestOptions: RequestOptions & SaveObjectsOptions = {
       autoGenerateObjectIDIfNotExist: true,
     };
 
-    when(indexSpy.chunk(anything(), anything(), anything())).thenResolve(res);
+    const request = {
+      method: MethodEnum.Post,
+      path: '1/indexes/foo/batch',
+      data: { requests: [{ action: 'addObject', body: objects[0] }] },
+    };
+
+    when(transporterMock.write(deepEqual(request), requestOptions)).thenResolve(res);
 
     await index.saveObjects(objects, requestOptions);
 
-    verify(indexSpy.chunk(objects, BatchActionEnum.AddObject, requestOptions)).once();
+    verify(transporterMock.write(deepEqual(request), requestOptions)).once();
   });
 
-  it('Uses updateObject when `autoGenerateObjectIDIfNotExist` is not set', async () => {
-    const indexSpy = spy(index);
+  it('uses updateObject when `autoGenerateObjectIDIfNotExist` is not set', async () => {
     const objects = [createFaker().object('myObjectID')];
 
-    when(indexSpy.chunk(anything(), anything(), anything())).thenResolve(res);
+    const request = {
+      method: MethodEnum.Post,
+      path: '1/indexes/foo/batch',
+      data: { requests: [{ action: 'updateObject', body: objects[0] }] },
+    };
+
+    when(transporterMock.write(deepEqual(request), undefined)).thenResolve(res);
 
     await index.saveObjects(objects);
 
-    verify(indexSpy.chunk(objects, BatchActionEnum.UpdateObject, undefined)).once();
+    verify(transporterMock.write(deepEqual(request), undefined)).once();
   });
 
-  it('Validates the object id when `autoGenerateObjectIDIfNotExist` is !== true', async () => {
-    const indexSpy = spy(index);
+  it('validates the object id when `autoGenerateObjectIDIfNotExist` is !== true', async () => {
     const objects = [{ noObjectId: true }];
 
     expect.assertions(1);
@@ -101,7 +107,7 @@ describe('save objects', () => {
       );
     }
 
-    verify(indexSpy.chunk(anything(), anything(), anything())).never();
+    verify(transporterMock.write(anything(), anything())).never();
   });
 });
 
@@ -115,7 +121,7 @@ describe('chunk', () => {
     verify(indexSpy.batch(anything())).never();
   });
 
-  it('Call batch when there is objects with default batch size', async () => {
+  it('call batch when there is objects with default batch size', async () => {
     const indexSpy = spy(index);
 
     when(indexSpy.batch(anything(), anything())).thenResolve(res);
@@ -126,7 +132,7 @@ describe('chunk', () => {
     verify(indexSpy.batch(anything(), anything())).times(3);
   });
 
-  it('Call batch when there is objects with a given batch size', async () => {
+  it('call batch when there is objects with a given batch size', async () => {
     const indexSpy = spy(index);
 
     when(indexSpy.batch(anything(), anything())).thenResolve(res);

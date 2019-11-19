@@ -1,22 +1,22 @@
-import { createWaitablePromise, WaitablePromise } from '@algolia/client-common';
+import { addMethod, createWaitablePromise, WaitablePromise } from '@algolia/client-common';
 import { MethodEnum } from '@algolia/requester-common';
 import { RequestOptions } from '@algolia/transporter';
 
 import { HasWaitTask, waitTask } from '..';
 import { BatchRequest, MultipleBatchResponse, SearchClient } from '../..';
-import { HasInitIndex, initIndex } from '.';
+import { initIndex } from '.';
 
 export const multipleBatch = <TClient extends SearchClient>(
   base: TClient
-): TClient & HasInitIndex & HasMultipleBatch => {
+): TClient & HasMultipleBatch => {
   return {
-    ...initIndex(base),
+    ...base,
     multipleBatch(
       requests: readonly BatchRequest[],
       requestOptions?: RequestOptions
     ): Readonly<WaitablePromise<MultipleBatchResponse>> {
       return createWaitablePromise<MultipleBatchResponse>(
-        this.transporter.write(
+        base.transporter.write(
           {
             method: MethodEnum.Post,
             path: '1/indexes/*/batch',
@@ -29,9 +29,11 @@ export const multipleBatch = <TClient extends SearchClient>(
       ).onWait((response, waitRequestOptions) =>
         Promise.all(
           Object.keys(response.taskID).map(indexName => {
-            return this.initIndex<HasWaitTask>(indexName, {
-              methods: [waitTask],
-            }).waitTask(response.taskID[indexName], waitRequestOptions);
+            return addMethod(base, initIndex)
+              .initIndex<HasWaitTask>(indexName, {
+                methods: [waitTask],
+              })
+              .waitTask(response.taskID[indexName], waitRequestOptions);
           })
         )
       );

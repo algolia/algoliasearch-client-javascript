@@ -13,7 +13,7 @@ export const stopABTest = <TClient extends AnalyticsClient>(
       abTestID: number,
       requestOptions?: RequestOptions
     ): Readonly<Promise<StopABTestResponse>> {
-      return this.transporter.write(
+      return base.transporter.write(
         {
           method: MethodEnum.Post,
           path: encode('2/abtests/%s/stop', abTestID),

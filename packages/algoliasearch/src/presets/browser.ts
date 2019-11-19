@@ -12,6 +12,7 @@ import {
   HasStopABTest,
   stopABTest,
 } from '@algolia/client-analytics';
+import { addMethod } from '@algolia/client-common';
 import {
   addApiKey,
   batch,
@@ -278,7 +279,7 @@ export const createSearchClient = (
   return {
     ...base,
     initIndex<TSearchIndex = SearchIndex>(indexName: string): TSearchIndex {
-      return initIndex(this).initIndex(indexName, {
+      return addMethod(base, initIndex).initIndex(indexName, {
         methods: methods.searchIndex,
       });
     },

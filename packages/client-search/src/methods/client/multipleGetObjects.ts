@@ -12,7 +12,7 @@ export const multipleGetObjects = <TClient extends SearchClient>(
       requests: readonly MultipleGetObject[],
       requestOptions?: RequestOptions
     ): Readonly<Promise<MultipleGetObjectsResponse<TObject>>> {
-      return this.transporter.read(
+      return base.transporter.read(
         {
           method: MethodEnum.Post,
           path: '1/indexes/*/objects',

@@ -1,5 +1,3 @@
-import { DecorateOptions } from '.';
-
 // eslint-disable-next-line functional/prefer-readonly-type
 export function shuffle<TData>(array: TData[]): TData[] {
   let c = array.length - 1; // eslint-disable-line functional/no-let
@@ -15,15 +13,18 @@ export function shuffle<TData>(array: TData[]): TData[] {
   return array;
 }
 
-export function decorate<TObject>(obj: any, options: DecorateOptions = {}): TObject {
-  if (options.methods !== undefined) {
-    options.methods.forEach(method => {
-      // eslint-disable-next-line
-      Object.assign(obj, method(obj));
-    });
-  }
+export function addMethods<TClient>(base: any, methods: readonly Function[] = []): TClient {
+  // eslint-disable-next-line no-param-reassign
+  methods.forEach(method => (base = method(base)));
 
-  return obj;
+  return base;
+}
+
+export function addMethod<TBase, TFunctionReturnType>(
+  obj: TBase,
+  method: (base: TBase) => TFunctionReturnType
+): TFunctionReturnType {
+  return addMethods(obj, [method]);
 }
 
 export function encode(format: string, ...args: readonly any[]): string {

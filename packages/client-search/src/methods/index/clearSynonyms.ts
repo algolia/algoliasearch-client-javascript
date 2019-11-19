@@ -1,28 +1,28 @@
-import { createWaitablePromise, encode, WaitablePromise } from '@algolia/client-common';
+import { addMethod, createWaitablePromise, encode, WaitablePromise } from '@algolia/client-common';
 import { MethodEnum } from '@algolia/requester-common';
 import { RequestOptions } from '@algolia/transporter';
 
 import { ClearSynonymsOptions, DeleteResponse, SearchIndex } from '../..';
-import { HasWaitTask, waitTask } from '.';
+import { waitTask } from '.';
 
 export const clearSynonyms = <TSearchIndex extends SearchIndex>(
   base: TSearchIndex
-): TSearchIndex & HasWaitTask & HasClearSynonyms => {
+): TSearchIndex & HasClearSynonyms => {
   return {
-    ...waitTask(base),
+    ...base,
     clearSynonyms(
       requestOptions?: ClearSynonymsOptions & RequestOptions
     ): Readonly<WaitablePromise<DeleteResponse>> {
       return createWaitablePromise<DeleteResponse>(
-        this.transporter.write(
+        base.transporter.write(
           {
             method: MethodEnum.Post,
-            path: encode('1/indexes/%s/synonyms/clear', this.indexName),
+            path: encode('1/indexes/%s/synonyms/clear', base.indexName),
           },
           requestOptions
         )
       ).onWait((response, waitRequestOptions) =>
-        this.waitTask(response.taskID, waitRequestOptions)
+        addMethod(base, waitTask).waitTask(response.taskID, waitRequestOptions)
       );
     },
   };

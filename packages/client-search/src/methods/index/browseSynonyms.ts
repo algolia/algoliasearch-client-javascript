@@ -1,3 +1,4 @@
+import { addMethod } from '@algolia/client-common';
 import { RequestOptions } from '@algolia/transporter';
 
 import {
@@ -8,13 +9,13 @@ import {
   SearchSynonymsOptions,
   Synonym,
 } from '../..';
-import { HasSearchSynonyms, searchSynonyms } from '.';
+import { searchSynonyms } from '.';
 
 export const browseSynonyms = <TSearchIndex extends SearchIndex>(
   base: TSearchIndex
-): TSearchIndex & HasSearchSynonyms & HasBrowseSynonyms => {
+): TSearchIndex & HasBrowseSynonyms => {
   return {
-    ...searchSynonyms(base),
+    ...base,
     browseSynonyms(
       requestOptions?: SearchSynonymsOptions & BrowseOptions<Synonym> & RequestOptions
     ): Readonly<Promise<void>> {
@@ -27,20 +28,22 @@ export const browseSynonyms = <TSearchIndex extends SearchIndex>(
         ...options,
         shouldStop: response => response.hits.length < options.hitsPerPage,
         request: data => {
-          return this.searchSynonyms('', { ...requestOptions, ...data }).then(
-            (response): BrowseResponse<Synonym> => {
-              return {
-                ...response,
-                hits: response.hits.map(synonym => {
-                  // @ts-ignore
-                  // eslint-disable-next-line functional/immutable-data,no-param-reassign
-                  delete synonym._highlightResult;
+          return addMethod(base, searchSynonyms)
+            .searchSynonyms('', { ...requestOptions, ...data })
+            .then(
+              (response): BrowseResponse<Synonym> => {
+                return {
+                  ...response,
+                  hits: response.hits.map(synonym => {
+                    // @ts-ignore
+                    // eslint-disable-next-line functional/immutable-data,no-param-reassign
+                    delete synonym._highlightResult;
 
-                  return synonym;
-                }),
-              };
-            }
-          );
+                    return synonym;
+                  }),
+                };
+              }
+            );
         },
       });
     },

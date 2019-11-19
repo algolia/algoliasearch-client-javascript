@@ -1,4 +1,5 @@
 import { createAnalyticsClient } from '@algolia/client-analytics';
+import { addMethod } from '@algolia/client-common';
 import {
   assignUserID,
   assignUserIDs,
@@ -65,7 +66,7 @@ export const createSearchClient = (
   return {
     ...base,
     initIndex<TSearchIndex = SearchIndex>(indexName: string): TSearchIndex {
-      return initIndex(base).initIndex(indexName, {
+      return addMethod(base, initIndex).initIndex(indexName, {
         methods: methods.searchIndex,
       });
     },

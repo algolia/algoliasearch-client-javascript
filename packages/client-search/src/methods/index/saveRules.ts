@@ -1,15 +1,15 @@
-import { createWaitablePromise, encode, WaitablePromise } from '@algolia/client-common';
+import { addMethod, createWaitablePromise, encode, WaitablePromise } from '@algolia/client-common';
 import { MethodEnum } from '@algolia/requester-common';
 import { mapRequestOptions, popRequestOption, RequestOptions } from '@algolia/transporter';
 
 import { Rule, SaveRulesOptions, SaveRulesResponse, SearchIndex } from '../..';
-import { HasWaitTask, waitTask } from '.';
+import { waitTask } from '.';
 
 export const saveRules = <TSearchIndex extends SearchIndex>(
   base: TSearchIndex
-): TSearchIndex & HasWaitTask & HasSaveRules => {
+): TSearchIndex & HasSaveRules => {
   return {
-    ...waitTask(base),
+    ...base,
     saveRules(
       rules: readonly Rule[],
       requestOptions?: RequestOptions & SaveRulesOptions
@@ -27,16 +27,16 @@ export const saveRules = <TSearchIndex extends SearchIndex>(
       }
 
       return createWaitablePromise<SaveRulesResponse>(
-        this.transporter.write(
+        base.transporter.write(
           {
             method: MethodEnum.Post,
-            path: encode('1/indexes/%s/rules/batch', this.indexName),
+            path: encode('1/indexes/%s/rules/batch', base.indexName),
             data: rules,
           },
           options
         )
       ).onWait((response, waitRequestOptions) =>
-        this.waitTask(response.taskID, waitRequestOptions)
+        addMethod(base, waitTask).waitTask(response.taskID, waitRequestOptions)
       );
     },
   };

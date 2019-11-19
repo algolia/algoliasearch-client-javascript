@@ -1,14 +1,14 @@
-import { WaitablePromise } from '@algolia/client-common';
+import { addMethod, WaitablePromise } from '@algolia/client-common';
 import { popRequestOption, RequestOptions } from '@algolia/transporter';
 
 import { BatchActionEnum, BatchResponse, PartialUpdateObjectsOptions, SearchIndex } from '../..';
-import { batch, HasBatch } from '.';
+import { batch } from '.';
 
 export const partialUpdateObjects = <TSearchIndex extends SearchIndex>(
   base: TSearchIndex
-): TSearchIndex & HasBatch & HasPartialUpdateObjects => {
+): TSearchIndex & HasPartialUpdateObjects => {
   return {
-    ...batch(base),
+    ...base,
     partialUpdateObjects(
       objects: ReadonlyArray<Record<string, any>>,
       requestOptions?: RequestOptions & PartialUpdateObjectsOptions
@@ -19,7 +19,7 @@ export const partialUpdateObjects = <TSearchIndex extends SearchIndex>(
         ? BatchActionEnum.PartialUpdateObject
         : BatchActionEnum.PartialUpdateObjectNoCreate;
 
-      return this.chunk(objects, action, requestOptions);
+      return addMethod(base, batch).chunk(objects, action, requestOptions);
     },
   };
 };

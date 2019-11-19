@@ -1,4 +1,4 @@
-import { createWaitablePromise, encode, WaitablePromise } from '@algolia/client-common';
+import { addMethod, createWaitablePromise, encode, WaitablePromise } from '@algolia/client-common';
 import { MethodEnum } from '@algolia/requester-common';
 import { RequestOptions } from '@algolia/transporter';
 
@@ -15,7 +15,7 @@ export const copyIndex = <TClient extends SearchClient>(base: TClient): TClient 
       requestOptions?: CopyIndexOptions & RequestOptions
     ): Readonly<WaitablePromise<IndexOperationResponse>> {
       return createWaitablePromise<IndexOperationResponse>(
-        this.transporter.write(
+        base.transporter.write(
           {
             method: MethodEnum.Post,
             path: encode('1/indexes/%s/operation', from),
@@ -27,7 +27,7 @@ export const copyIndex = <TClient extends SearchClient>(base: TClient): TClient 
           requestOptions
         )
       ).onWait((response, waitRequestOptions) => {
-        return initIndex(this)
+        return addMethod(base, initIndex)
           .initIndex<HasWaitTask>(from, {
             methods: [waitTask],
           })

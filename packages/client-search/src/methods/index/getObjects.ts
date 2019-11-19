@@ -14,13 +14,13 @@ export const getObjects = <TSearchIndex extends SearchIndex>(
     ): Readonly<Promise<GetObjectsResponse<TObject>>> {
       const requests = objectIDs.map(objectID => {
         return {
-          indexName: this.indexName,
+          indexName: base.indexName,
           objectID,
           attributesToRetrieve: popRequestOption(requestOptions, 'attributesToRetrieve', '*'),
         };
       });
 
-      return this.transporter.read(
+      return base.transporter.read(
         {
           method: MethodEnum.Post,
           path: '1/indexes/*/objects',

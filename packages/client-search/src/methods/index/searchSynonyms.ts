@@ -13,10 +13,10 @@ export const searchSynonyms = <TSearchIndex extends SearchIndex>(
       query: string,
       requestOptions?: SearchSynonymsOptions & RequestOptions
     ): Readonly<Promise<SearchSynonymsResponse>> {
-      return this.transporter.read(
+      return base.transporter.read(
         {
           method: MethodEnum.Post,
-          path: encode('1/indexes/%s/synonyms/search', this.indexName),
+          path: encode('1/indexes/%s/synonyms/search', base.indexName),
           data: {
             query,
           },

@@ -1,28 +1,30 @@
-import { createWaitablePromise, WaitablePromise } from '@algolia/client-common';
+import { addMethod, createWaitablePromise, WaitablePromise } from '@algolia/client-common';
 import { RequestOptions } from '@algolia/transporter';
 
 import { SaveObjectResponse, SaveObjectsOptions, SearchIndex } from '../..';
-import { HasWaitTask } from '.';
-import { HasSaveObjects, saveObjects } from './saveObjects';
+import { waitTask } from '.';
+import { saveObjects } from './saveObjects';
 
 export const saveObject = <TSearchIndex extends SearchIndex>(
   base: TSearchIndex
-): TSearchIndex & HasWaitTask & HasSaveObjects & HasSaveObject => {
+): TSearchIndex & HasSaveObject => {
   return {
-    ...saveObjects(base),
+    ...base,
     saveObject(
       object: object,
       requestOptions?: RequestOptions & SaveObjectsOptions
     ): Readonly<WaitablePromise<SaveObjectResponse>> {
       return createWaitablePromise<SaveObjectResponse>(
-        this.saveObjects([object], requestOptions).then<SaveObjectResponse>(response => {
-          return {
-            objectID: response[0].objectIDs[0],
-            taskID: response[0].taskID,
-          };
-        })
+        addMethod(base, saveObjects)
+          .saveObjects([object], requestOptions)
+          .then<SaveObjectResponse>(response => {
+            return {
+              objectID: response[0].objectIDs[0],
+              taskID: response[0].taskID,
+            };
+          })
       ).onWait((response, waitRequestOptions) =>
-        this.waitTask(response.taskID, waitRequestOptions)
+        addMethod(base, waitTask).waitTask(response.taskID, waitRequestOptions)
       );
     },
   };

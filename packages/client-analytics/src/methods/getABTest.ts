@@ -13,7 +13,7 @@ export const getABTest = <TClient extends AnalyticsClient>(
       abTestID: number,
       requestOptions?: RequestOptions
     ): Readonly<Promise<GetABTestResponse>> {
-      return this.transporter.read(
+      return base.transporter.read(
         {
           method: MethodEnum.Get,
           path: encode('2/abtests/%s', abTestID),

@@ -13,7 +13,7 @@ export const deleteABTest = <TClient extends AnalyticsClient>(
       abTestID: number,
       requestOptions?: RequestOptions
     ): Readonly<Promise<DeleteABTestResponse>> {
-      return this.transporter.write(
+      return base.transporter.write(
         {
           method: MethodEnum.Delete,
           path: encode('2/abtests/%s', abTestID),

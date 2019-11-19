@@ -9,7 +9,7 @@ export const listIndices = <TClient extends SearchClient>(
   return {
     ...base,
     listIndices(requestOptions?: RequestOptions): Readonly<Promise<ListIndicesResponse>> {
-      return this.transporter.read(
+      return base.transporter.read(
         {
           method: MethodEnum.Get,
           path: '1/indexes',

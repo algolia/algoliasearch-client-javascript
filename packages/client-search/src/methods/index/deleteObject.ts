@@ -1,24 +1,26 @@
-import { createWaitablePromise, WaitablePromise } from '@algolia/client-common';
+import { addMethod, createWaitablePromise, WaitablePromise } from '@algolia/client-common';
 import { RequestOptions } from '@algolia/transporter';
 
 import { DeleteResponse, SearchIndex } from '../..';
-import { deleteObjects, HasDeleteObjects, HasWaitTask } from '.';
+import { deleteObjects, waitTask } from '.';
 
 export const deleteObject = <TSearchIndex extends SearchIndex>(
   base: TSearchIndex
-): TSearchIndex & HasWaitTask & HasDeleteObjects & HasDeleteObject => {
+): TSearchIndex & HasDeleteObject => {
   return {
-    ...deleteObjects(base),
+    ...base,
     deleteObject(
       objectID: string,
       requestOptions?: RequestOptions
     ): Readonly<WaitablePromise<DeleteResponse>> {
       return createWaitablePromise<DeleteResponse>(
-        this.deleteObjects([objectID], requestOptions).then(response => {
-          return { taskID: response[0].taskID };
-        })
+        addMethod(base, deleteObjects)
+          .deleteObjects([objectID], requestOptions)
+          .then(response => {
+            return { taskID: response[0].taskID };
+          })
       ).onWait((response, waitRequestOptions) =>
-        this.waitTask(response.taskID, waitRequestOptions)
+        addMethod(base, waitTask).waitTask(response.taskID, waitRequestOptions)
       );
     },
   };

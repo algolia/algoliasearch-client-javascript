@@ -1,4 +1,4 @@
-import { WaitablePromise } from '@algolia/client-common';
+import { addMethod, WaitablePromise } from '@algolia/client-common';
 import { popRequestOption, RequestOptions } from '@algolia/transporter';
 
 import {
@@ -8,13 +8,13 @@ import {
   SaveObjectsOptions,
   SearchIndex,
 } from '../..';
-import { batch, HasBatch } from '.';
+import { batch } from '.';
 
 export const saveObjects = <TSearchIndex extends SearchIndex>(
   base: TSearchIndex
-): TSearchIndex & HasBatch & HasSaveObjects => {
+): TSearchIndex & HasSaveObjects => {
   return {
-    ...batch(base),
+    ...base,
     saveObjects(
       objects: ReadonlyArray<Record<string, any>>,
       requestOptions?: RequestOptions & SaveObjectsOptions
@@ -33,7 +33,7 @@ export const saveObjects = <TSearchIndex extends SearchIndex>(
         ensureObjectIdsWithin(objects);
       }
 
-      return this.chunk(objects, action, requestOptions);
+      return addMethod(base, batch).chunk(objects, action, requestOptions);
     },
   };
 };

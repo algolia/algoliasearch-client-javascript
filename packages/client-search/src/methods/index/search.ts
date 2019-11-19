@@ -13,10 +13,10 @@ export const search = <TSearchIndex extends SearchIndex>(
       query: string,
       requestOptions?: RequestOptions & SearchOptions
     ): Readonly<Promise<SearchResponse<TObject>>> {
-      return this.transporter.read(
+      return base.transporter.read(
         {
           method: MethodEnum.Post,
-          path: encode('1/indexes/%s/query', this.indexName),
+          path: encode('1/indexes/%s/query', base.indexName),
           data: {
             query,
           },

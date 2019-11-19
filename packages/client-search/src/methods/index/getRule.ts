@@ -10,10 +10,10 @@ export const getRule = <TSearchIndex extends SearchIndex>(
   return {
     ...base,
     getRule(objectID: string, requestOptions?: RequestOptions): Readonly<Promise<Rule>> {
-      return this.transporter.read(
+      return base.transporter.read(
         {
           method: MethodEnum.Get,
-          path: encode('1/indexes/%s/rules/%s', this.indexName, objectID),
+          path: encode('1/indexes/%s/rules/%s', base.indexName, objectID),
         },
         requestOptions
       );

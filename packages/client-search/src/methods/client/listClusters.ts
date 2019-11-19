@@ -9,7 +9,7 @@ export const listClusters = <TClient extends SearchClient>(
   return {
     ...base,
     listClusters(requestOptions?: RequestOptions): Readonly<Promise<ListClustersResponse>> {
-      return this.transporter.read(
+      return base.transporter.read(
         {
           method: MethodEnum.Get,
           path: '1/clusters',

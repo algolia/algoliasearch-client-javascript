@@ -1,15 +1,17 @@
+import { addMethod } from '@algolia/client-common';
 import { RequestOptions } from '@algolia/transporter';
 
 import { SearchIndex } from '../..';
-import { getSettings, HasGetSettings } from '.';
+import { getSettings } from '.';
 
 export const exists = <TSearchIndex extends SearchIndex>(
   base: TSearchIndex
-): TSearchIndex & HasGetSettings & HasExists => {
+): TSearchIndex & HasExists => {
   return {
-    ...getSettings(base),
+    ...base,
     exists(requestOptions?: RequestOptions): Readonly<Promise<boolean>> {
-      return this.getSettings(requestOptions)
+      return addMethod(base, getSettings)
+        .getSettings(requestOptions)
         .then(() => true)
         .catch(error => {
           if (error.status !== 404) {

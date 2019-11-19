@@ -11,7 +11,7 @@ export const getABTests = <TClient extends AnalyticsClient>(
     getABTests(
       requestOptions?: RequestOptions & GetABTestsOptions
     ): Readonly<Promise<GetABTestsResponse>> {
-      return this.transporter.read(
+      return base.transporter.read(
         {
           method: MethodEnum.Get,
           path: '2/abtests',

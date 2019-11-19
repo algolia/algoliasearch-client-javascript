@@ -1,15 +1,15 @@
-import { createWaitablePromise, encode, WaitablePromise } from '@algolia/client-common';
+import { addMethod, createWaitablePromise, encode, WaitablePromise } from '@algolia/client-common';
 import { MethodEnum } from '@algolia/requester-common';
 import { popRequestOption, RequestOptions } from '@algolia/transporter';
 
 import { BatchActionType, BatchRequest, BatchResponse, ChunkOptions, SearchIndex } from '../..';
-import { HasWaitTask, waitTask } from '.';
+import { waitTask } from '.';
 
 export const batch = <TSearchIndex extends SearchIndex>(
   base: TSearchIndex
-): TSearchIndex & HasWaitTask & HasBatch => {
+): TSearchIndex & HasBatch => {
   return {
-    ...waitTask(base),
+    ...base,
     chunk(
       bodies: readonly object[],
       action: BatchActionType,
@@ -59,7 +59,9 @@ export const batch = <TSearchIndex extends SearchIndex>(
 
       return createWaitablePromise(forEachBatch()).onWait((batchResponses, waitRequestOptions) => {
         return Promise.all(
-          batchResponses.map(response => this.waitTask(response.taskID, waitRequestOptions))
+          batchResponses.map(response =>
+            addMethod(base, waitTask).waitTask(response.taskID, waitRequestOptions)
+          )
         );
       });
     },
@@ -69,10 +71,10 @@ export const batch = <TSearchIndex extends SearchIndex>(
       requestOptions?: RequestOptions
     ): Readonly<WaitablePromise<BatchResponse>> {
       return createWaitablePromise<BatchResponse>(
-        this.transporter.write<BatchResponse>(
+        base.transporter.write<BatchResponse>(
           {
             method: MethodEnum.Post,
-            path: encode('1/indexes/%s/batch', this.indexName),
+            path: encode('1/indexes/%s/batch', base.indexName),
             data: {
               requests,
             },
@@ -80,13 +82,13 @@ export const batch = <TSearchIndex extends SearchIndex>(
           requestOptions
         )
       ).onWait((response, waitRequestOptions) =>
-        this.waitTask(response.taskID, waitRequestOptions)
+        addMethod(base, waitTask).waitTask(response.taskID, waitRequestOptions)
       );
     },
   };
 };
 
-export type HasBatch = HasWaitTask & {
+export type HasBatch = {
   readonly chunk: (
     bodies: readonly object[],
     action: BatchActionType,

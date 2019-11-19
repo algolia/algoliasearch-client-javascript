@@ -1,4 +1,4 @@
-import { decorate, encode } from '../..';
+import { addMethods, encode } from '../..';
 
 describe('helpers', () => {
   it('encodes url', () => {
@@ -7,7 +7,7 @@ describe('helpers', () => {
     expect(encodedString).toBe('foo/%201%20/bar/%20e%20');
   });
 
-  it('decorates objects', () => {
+  it('adds objects', () => {
     const client = {
       foo: 'bar',
     };
@@ -16,7 +16,7 @@ describe('helpers', () => {
       return {
         ...base,
         getFoo(): string {
-          return this.foo;
+          return base.foo;
         },
       };
     };
@@ -25,14 +25,13 @@ describe('helpers', () => {
       return {
         ...base,
         setFoo(value: string): void {
-          this.foo = value;
+          // eslint-disable-next-line no-param-reassign
+          base.foo = value;
         },
       };
     };
 
-    const obj = decorate(client, {
-      methods: [setFoo, getFoo],
-    });
+    const obj = addMethods(client, [setFoo, getFoo]);
 
     expect(Object.getOwnPropertyNames(obj)).toEqual(['foo', 'setFoo', 'getFoo']);
   });

@@ -1,3 +1,4 @@
+import { addMethod } from '@algolia/client-common';
 import {
   createSearchClient as baseCreateSearchClient,
   HasMultipleQueries,
@@ -34,7 +35,7 @@ export const createSearchClient = (
   return {
     ...base,
     initIndex<TSearchIndex = SearchIndex>(indexName: string): TSearchIndex {
-      return initIndex(this).initIndex(indexName, {
+      return addMethod(base, initIndex).initIndex(indexName, {
         methods: methods.searchIndex,
       });
     },

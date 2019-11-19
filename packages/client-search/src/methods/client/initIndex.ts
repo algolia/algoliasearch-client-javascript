@@ -1,19 +1,20 @@
-import { decorate, DecorateOptions } from '@algolia/client-common';
+import { addMethods } from '@algolia/client-common';
 
 import { SearchIndex } from '../..';
 import { SearchClient } from '../../types';
+import { SearchIndexOptions } from '../../types/SearchIndexOptions';
 
 export const initIndex = <TClient extends SearchClient>(base: TClient): TClient & HasInitIndex => {
   return {
     ...base,
-    initIndex<TIndex>(indexName: string, options?: DecorateOptions): SearchIndex & TIndex {
-      return decorate<TIndex & SearchIndex>(
+    initIndex<TIndex>(indexName: string, options: SearchIndexOptions = {}): SearchIndex & TIndex {
+      return addMethods(
         {
-          transporter: this.transporter,
+          transporter: base.transporter,
           appId: base.appId,
           indexName,
         },
-        options
+        options.methods
       );
     },
   };
@@ -22,6 +23,6 @@ export const initIndex = <TClient extends SearchClient>(base: TClient): TClient 
 export type HasInitIndex = {
   readonly initIndex: <TIndex>(
     indexName: string,
-    options?: DecorateOptions
+    options?: SearchIndexOptions
   ) => SearchIndex & TIndex;
 };

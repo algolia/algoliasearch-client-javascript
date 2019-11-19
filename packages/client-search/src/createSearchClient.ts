@@ -1,18 +1,11 @@
-import {
-  AuthMode,
-  AuthModeType,
-  createAuth,
-  decorate,
-  DecorateOptions,
-  shuffle,
-} from '@algolia/client-common';
+import { addMethods, AuthMode, createAuth, shuffle } from '@algolia/client-common';
 import { CallEnum, createTransporter, TransporterOptions } from '@algolia/transporter';
 
-import { SearchClient } from '.';
+import { SearchClient, SearchClientOptions } from '.';
 
-export const createSearchClient = <TClient>(
-  options: SearchClientOptions & TransporterOptions & DecorateOptions
-): SearchClient & TClient => {
+export const createSearchClient = <TSearchClient>(
+  options: SearchClientOptions & TransporterOptions
+): SearchClient & TSearchClient => {
   const appId = options.appId;
   const transporter = createTransporter(options);
   transporter.setHosts(
@@ -49,11 +42,5 @@ export const createSearchClient = <TClient>(
     },
   };
 
-  return decorate<SearchClient & TClient>(base, options);
-};
-
-export type SearchClientOptions = {
-  readonly appId: string;
-  readonly apiKey: string;
-  readonly authMode?: AuthModeType;
+  return addMethods(base, options.methods);
 };

@@ -13,10 +13,10 @@ export const getTask = <TSearchIndex extends SearchIndex>(
       taskID: number,
       requestOptions?: RequestOptions
     ): Readonly<Promise<TaskStatusResponse>> {
-      return this.transporter.read(
+      return base.transporter.read(
         {
           method: MethodEnum.Get,
-          path: encode('1/indexes/%s/task/%s', this.indexName, taskID.toString()),
+          path: encode('1/indexes/%s/task/%s', base.indexName, taskID.toString()),
         },
         requestOptions
       );

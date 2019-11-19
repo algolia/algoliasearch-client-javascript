@@ -25,7 +25,7 @@ export const listUserIDs = <TClient extends SearchClient>(
         options.queryParameters.hitsPerPage = hitsPerPage.toString();
       }
 
-      return this.transporter.read(
+      return base.transporter.read(
         {
           method: MethodEnum.Get,
           path: '1/clusters/mapping',

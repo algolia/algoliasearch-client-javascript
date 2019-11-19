@@ -22,10 +22,10 @@ export const browseObjects = <TSearchIndex extends SearchIndex>(
         ...requestOptions,
         shouldStop: response => response.cursor === undefined,
         request: (data: object): Readonly<Promise<BrowseResponse<TObject>>> =>
-          this.transporter.read(
+          base.transporter.read(
             {
               method: MethodEnum.Post,
-              path: encode('1/indexes/%s/browse', this.indexName),
+              path: encode('1/indexes/%s/browse', base.indexName),
               data,
             },
             requestOptions
