@@ -1,7 +1,10 @@
 export type CreateClient<TClient, TOptions> = <
-  TMethods extends { readonly [key: string]: (base: TClient) => (...args: any) => any },
-  TKey extends keyof TMethods,
-  TValue extends TMethods[TKey]
+  TMethods extends {
+    readonly [key: string]: (base: TClient) => (...args: any) => any;
+  }
 >(
   options: TOptions & { readonly methods?: TMethods }
-) => TClient & { [key in TKey extends string ? TKey : never]: ReturnType<TValue> }; // eslint-disable-line @typescript-eslint/generic-type-naming
+) => TClient &
+  {
+    [key in keyof TMethods extends string ? keyof TMethods : never]: ReturnType<TMethods[key]>; // eslint-disable-line @typescript-eslint/generic-type-naming
+  };

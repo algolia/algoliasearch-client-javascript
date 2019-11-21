@@ -15,16 +15,14 @@ export function shuffle<TData>(array: TData[]): TData[] {
 
 type GenericObject = { readonly [key: string]: any };
 
-export function addMethods<
-  TBase,
-  TMethods extends GenericObject,
-  TKey extends keyof TMethods,
-  TValue extends TMethods[TKey]
->(
+export function addMethods<TBase, TMethods extends GenericObject>(
   base: TBase,
   methods?: TMethods
-  // eslint-disable-next-line @typescript-eslint/generic-type-naming
-): TBase & { [key in TKey extends string ? TKey : never]: ReturnType<TValue> } {
+): TBase &
+  {
+    // eslint-disable-next-line @typescript-eslint/generic-type-naming
+    [key in keyof TMethods extends string ? keyof TMethods : never]: ReturnType<TMethods[key]>;
+  } {
   Object.keys(methods !== undefined ? methods : {}).forEach(key => {
     // @ts-ignore
     // eslint-disable-next-line functional/immutable-data, no-param-reassign

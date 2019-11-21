@@ -1,10 +1,13 @@
 import { SearchIndex } from '.';
 
 export type CreateIndex = <
-  TMethods extends { readonly [key: string]: (base: SearchIndex) => (...args: any) => any },
-  TKey extends keyof TMethods,
-  TValue extends TMethods[TKey]
+  TMethods extends {
+    readonly [key: string]: (base: SearchIndex) => (...args: any) => any;
+  }
 >(
   indexName: string,
   options?: { readonly methods?: TMethods }
-) => SearchIndex & { [key in TKey extends string ? TKey : never]: ReturnType<TValue> }; // eslint-disable-line @typescript-eslint/generic-type-naming
+) => SearchIndex &
+  {
+    [key in keyof TMethods extends string ? keyof TMethods : never]: ReturnType<TMethods[key]>; // eslint-disable-line @typescript-eslint/generic-type-naming
+  };
