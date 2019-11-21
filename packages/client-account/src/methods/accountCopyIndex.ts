@@ -34,10 +34,10 @@ export const accountCopyIndex = (
         throw createDestinationIndiceExistsError();
       }
     })
-    .then(() =>
-      getSettings(source)()
-        // eslint-disable-next-line functional/immutable-data
-        .then(settings => responses.push(setSettings(destination)(settings, requestOptions)))
+    .then(() => getSettings(source)())
+    .then(settings =>
+      // eslint-disable-next-line functional/immutable-data
+      responses.push(setSettings(destination)(settings, requestOptions))
     )
     .then(() =>
       browseRules(source)({
