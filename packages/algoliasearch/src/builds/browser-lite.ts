@@ -7,7 +7,6 @@ import {
   multipleQueries,
   multipleSearchForFacetValues,
   search,
-  SearchClient,
   searchForFacetValues,
 } from '@algolia/client-search';
 import { LogLevelEnum } from '@algolia/logger-common';
@@ -47,7 +46,7 @@ export default function algoliasearch(
       searchForFacetValues: multipleSearchForFacetValues,
       multipleQueries,
       multipleSearchForFacetValues,
-      initIndex: (base: SearchClient) => (indexName: string) => {
+      initIndex: base => (indexName: string) => {
         return initIndex(base)(indexName, {
           methods: { search, searchForFacetValues },
         });

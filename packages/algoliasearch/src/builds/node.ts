@@ -193,5 +193,3 @@ export default function algoliasearch(appId: string, apiKey: string) {
 }
 
 export * from '../types';
-
-export type SearchClient = {};
