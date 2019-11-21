@@ -19,7 +19,9 @@ const res: any = {
 };
 
 beforeEach(() => {
-  index = addMethods(algoliasearch('appId', 'apiKey').initIndex('foo'), { chunk });
+  index = addMethods(algoliasearch('appId', 'apiKey').initIndex('foo'), {
+    chunk,
+  });
 
   transporterMock = spy(index.transporter);
 
@@ -95,18 +97,15 @@ describe('save objects', () => {
 
     expect.assertions(1);
 
-    try {
-      await index.saveObjects(objects);
-    } catch (e) {
-      expect(e.message).toBe(
+    await expect(index.saveObjects(objects)).rejects.toMatchObject({
+      message:
         '. All objects must have an unique objectID ' +
-          '(like a primary key) to be valid. ' +
-          'Algolia is also able to generate objectIDs ' +
-          "automatically but *it's not recommended*. " +
-          'To do it, use `saveObjects(objects, ' +
-          "{'autoGenerateObjectIDIfNotExist': true})`."
-      );
-    }
+        '(like a primary key) to be valid. ' +
+        'Algolia is also able to generate objectIDs ' +
+        "automatically but *it's not recommended*. " +
+        'To do it, use `saveObjects(objects, ' +
+        "{'autoGenerateObjectIDIfNotExist': true})`.",
+    });
 
     verify(transporterMock.write(anything(), anything())).never();
   });
