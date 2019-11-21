@@ -9,6 +9,7 @@ export * from './copyIndex';
 export * from './copySettings';
 export * from './copySynonyms';
 export * from './deleteApiKey';
+export * from './generateSecuredApiKey';
 export * from './getApiKey';
 export * from './getLogs';
 export * from './getPersonalizationStrategy';

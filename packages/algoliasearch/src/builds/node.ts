@@ -32,6 +32,7 @@ import {
   deleteSynonym,
   exists,
   findObject,
+  generateSecuredApiKey,
   getApiKey,
   getLogs,
   getObject,
@@ -129,8 +130,9 @@ export default function algoliasearch(appId: string, apiKey: string) {
       getUserID,
       searchUserIDs,
       listUserIDs,
-      topUserIDs: getTopUserIDs,
+      getTopUserIDs,
       removeUserID,
+      generateSecuredApiKey,
       initIndex: base => (indexName: string) => {
         return initIndex(base)(indexName, {
           methods: {

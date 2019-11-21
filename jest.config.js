@@ -36,6 +36,7 @@ module.exports = {
           'packages/requester-node-http/*',
           'packages/algoliasearch/src/__tests__/node.test.ts',
           'packages/client-search/src/__tests__/integration/mcm.test.ts',
+          'packages/client-search/src/__tests__/integration/secured-api-keys.test.ts',
         ],
         globals: {
           environment: 'browser',
