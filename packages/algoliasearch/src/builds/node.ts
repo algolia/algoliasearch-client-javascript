@@ -1,21 +1,87 @@
 import { createNullCache } from '@algolia/cache-common';
-import { createAnalyticsClient } from '@algolia/client-analytics';
-import { addMethods, version } from '@algolia/client-common';
-import { createSearchClient, initIndex } from '@algolia/client-search';
-import { LogLevelEnum } from '@algolia/logger-common';
-import { createConsoleLogger } from '@algolia/logger-console';
+import {
+  addABTest,
+  createAnalyticsClient,
+  deleteABTest,
+  getABTest,
+  getABTests,
+  stopABTest,
+} from '@algolia/client-analytics';
+import { version } from '@algolia/client-common';
+import {
+  addApiKey,
+  assignUserID,
+  assignUserIDs,
+  batch,
+  browseObjects,
+  browseRules,
+  browseSynonyms,
+  clearObjects,
+  clearRules,
+  clearSynonyms,
+  copyIndex,
+  copySettings,
+  copySynonyms,
+  createSearchClient,
+  deleteApiKey,
+  deleteBy,
+  deleteIndex,
+  deleteObject,
+  deleteObjects,
+  deleteRule,
+  deleteSynonym,
+  exists,
+  findObject,
+  getApiKey,
+  getLogs,
+  getObject,
+  getObjectPosition,
+  getObjects,
+  getPersonalizationStrategy,
+  getRule,
+  getSettings,
+  getSynonym,
+  getUserID,
+  initIndex,
+  listApiKeys,
+  listClusters,
+  listIndices,
+  listUserIDs,
+  moveIndex,
+  multipleBatch,
+  multipleGetObjects,
+  multipleQueries,
+  multipleSearchForFacetValues,
+  partialUpdateObject,
+  partialUpdateObjects,
+  removeUserID,
+  replaceAllObjects,
+  replaceAllRules,
+  replaceAllSynonyms,
+  restoreApiKey,
+  saveObject,
+  saveObjects,
+  saveRule,
+  saveRules,
+  saveSynonym,
+  saveSynonyms,
+  search,
+  searchForFacetValues,
+  searchRules,
+  searchSynonyms,
+  searchUserIDs,
+  setPersonalizationStrategy,
+  setSettings,
+  topUserIDs,
+  updateApiKey,
+  waitTask,
+} from '@algolia/client-search';
+import { createNullLogger } from '@algolia/logger-common';
 import { createNodeHttpRequester } from '@algolia/requester-node-http';
 import { createUserAgent } from '@algolia/transporter';
 
-import { methods } from '../presets/node';
-import { AlgoliaSearchOptions } from '../types';
-
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export default function algoliasearch(
-  appId: string,
-  apiKey: string,
-  options: AlgoliaSearchOptions = {}
-) {
+export default function algoliasearch(appId: string, apiKey: string) {
   const clientOptions = {
     appId,
     apiKey,
@@ -24,7 +90,7 @@ export default function algoliasearch(
       write: 30,
     },
     requester: createNodeHttpRequester(),
-    logger: createConsoleLogger(options.logLevel || LogLevelEnum.Error),
+    logger: createNullLogger(),
     responsesCache: createNullCache(),
     requestsCache: createNullCache(),
     hostsCache: createNullCache(),
@@ -34,21 +100,98 @@ export default function algoliasearch(
     }),
   };
 
-  const base = createSearchClient(clientOptions);
-
-  return addMethods(base, {
-    ...methods.searchClient,
-    initIndex: () => (indexName: string) => {
-      return addMethods(initIndex(base)(indexName), methods.searchIndex);
-    },
-    initAnalytics: () => (region?: string) => {
-      return createAnalyticsClient({
-        ...clientOptions,
-        region,
-        methods: methods.analyticsClient,
-      });
+  return createSearchClient({
+    ...clientOptions,
+    methods: {
+      search: multipleQueries,
+      searchForFacetValues: multipleSearchForFacetValues,
+      multipleBatch,
+      multipleGetObjects,
+      multipleQueries,
+      copyIndex,
+      copySettings,
+      copySynonyms,
+      moveIndex,
+      getPersonalizationStrategy,
+      setPersonalizationStrategy,
+      listIndices,
+      getLogs,
+      listClusters,
+      multipleSearchForFacetValues,
+      getApiKey,
+      addApiKey,
+      listApiKeys,
+      updateApiKey,
+      deleteApiKey,
+      restoreApiKey,
+      assignUserID,
+      assignUserIDs,
+      getUserID,
+      searchUserIDs,
+      listUserIDs,
+      topUserIDs,
+      removeUserID,
+      initIndex: base => (indexName: string) => {
+        return initIndex(base)(indexName, {
+          methods: {
+            batch,
+            delete: deleteIndex,
+            getObject,
+            getObjects,
+            saveObject,
+            saveObjects,
+            search,
+            searchForFacetValues,
+            waitTask,
+            setSettings,
+            getSettings,
+            partialUpdateObject,
+            partialUpdateObjects,
+            deleteObject,
+            deleteObjects,
+            deleteBy,
+            clearObjects,
+            browseObjects,
+            getObjectPosition,
+            findObject,
+            exists,
+            saveSynonym,
+            saveSynonyms,
+            getSynonym,
+            searchSynonyms,
+            browseSynonyms,
+            deleteSynonym,
+            clearSynonyms,
+            replaceAllObjects,
+            replaceAllSynonyms,
+            searchRules,
+            getRule,
+            deleteRule,
+            saveRule,
+            saveRules,
+            replaceAllRules,
+            browseRules,
+            clearRules,
+          },
+        });
+      },
+      initAnalytics: () => (region?: string) => {
+        return createAnalyticsClient({
+          ...clientOptions,
+          region,
+          methods: {
+            addABTest,
+            getABTest,
+            getABTests,
+            stopABTest,
+            deleteABTest,
+          },
+        });
+      },
     },
   });
 }
 
 export * from '../types';
+
+export type SearchClient = {};

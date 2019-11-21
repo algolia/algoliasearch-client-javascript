@@ -1,13 +1,20 @@
 import { createBrowserLocalStorageCache } from '@algolia/cache-browser-local-storage';
 import { createInMemoryCache } from '@algolia/cache-in-memory';
-import { addMethods, AuthMode, version } from '@algolia/client-common';
-import { createSearchClient, initIndex } from '@algolia/client-search';
+import { AuthMode, version } from '@algolia/client-common';
+import {
+  createSearchClient,
+  initIndex,
+  multipleQueries,
+  multipleSearchForFacetValues,
+  search,
+  SearchClient,
+  searchForFacetValues,
+} from '@algolia/client-search';
 import { LogLevelEnum } from '@algolia/logger-common';
 import { createConsoleLogger } from '@algolia/logger-console';
 import { createBrowserXhrRequester } from '@algolia/requester-browser-xhr';
 import { createUserAgent } from '@algolia/transporter';
 
-import { methods } from '../presets/browser';
 import { AlgoliaSearchOptions } from '../types';
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
@@ -18,7 +25,7 @@ export default function algoliasearch(
 ) {
   const logger = createConsoleLogger(options.logLevel || LogLevelEnum.Error);
 
-  const base = createSearchClient({
+  return createSearchClient({
     appId,
     apiKey,
     timeouts: {
@@ -35,12 +42,16 @@ export default function algoliasearch(
       version: 'lite',
     }),
     authMode: AuthMode.WithinQueryParameters,
-  });
-
-  return addMethods(base, {
-    ...methods.searchClient,
-    initIndex: () => (indexName: string) => {
-      return addMethods(initIndex(base)(indexName), methods.searchIndex);
+    methods: {
+      search: multipleQueries,
+      searchForFacetValues: multipleSearchForFacetValues,
+      multipleQueries,
+      multipleSearchForFacetValues,
+      initIndex: (base: SearchClient) => (indexName: string) => {
+        return initIndex(base)(indexName, {
+          methods: { search, searchForFacetValues },
+        });
+      },
     },
   });
 }
