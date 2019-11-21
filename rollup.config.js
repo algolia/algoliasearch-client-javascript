@@ -1,11 +1,11 @@
 /* eslint-disable functional/immutable-data, functional/no-let, no-param-reassign */
 
+import alias from '@rollup/plugin-alias';
+import json from '@rollup/plugin-json';
 import fs from 'fs';
 import path from 'path';
-import alias from 'rollup-plugin-alias';
 import babel from 'rollup-plugin-babel';
 import filesize from 'rollup-plugin-filesize';
-import json from 'rollup-plugin-json';
 import builtins from 'rollup-plugin-node-builtins';
 import globals from 'rollup-plugin-node-globals';
 import { terser } from 'rollup-plugin-terser';
