@@ -33,8 +33,6 @@ export const accountCopyIndex = (
       if (res) {
         throw createDestinationIndiceExistsError();
       }
-
-      return;
     })
     .then(() =>
       getSettings(source)()
