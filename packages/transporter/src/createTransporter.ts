@@ -83,12 +83,14 @@ export function createTransporter(options: TransporterOptions): Transporter {
 
       return transporter.responsesCache.get(
         key,
-        () =>
-          transporter.requestsCache.get(key, () =>
-            transporter.requestsCache
+        () => {
+          return transporter.requestsCache.get(key, () => {
+            return transporter.requestsCache
               .set(key, createRequest())
-              .then(response => transporter.requestsCache.delete(key).then(() => response))
-          ),
+              .then(response => Promise.all([transporter.requestsCache.delete(key), response]))
+              .then(promiseResults => promiseResults[1]);
+          });
+        },
         {
           miss: response => transporter.responsesCache.set(key, response),
         }

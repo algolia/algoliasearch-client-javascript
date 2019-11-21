@@ -18,7 +18,9 @@ export function createWaitablePromise<TResponse>(
 
     wait(requestOptions?: RequestOptions): Readonly<WaitablePromise<TResponse>> {
       return createWaitablePromise<TResponse>(
-        promise.then(response => onWait(response, requestOptions).then(() => response))
+        promise
+          .then(response => Promise.all([onWait(response, requestOptions), response]))
+          .then(promiseResults => promiseResults[1])
       );
     },
   }) as WaitablePromise<TResponse>;
