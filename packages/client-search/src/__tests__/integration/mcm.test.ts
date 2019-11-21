@@ -71,10 +71,10 @@ test(testSuite.testName, async () => {
     'dataSize',
   ]);
 
-  const topUserIDsResponse = await client.topUserIDs();
+  const getTopUserIDsResponse = await client.topUserIDs();
 
-  expect(topUserIDsResponse.topUsers[firstClusterName].length > 0).toBe(true);
-  expect(Object.keys(topUserIDsResponse.topUsers[firstClusterName][0])).toEqual([
+  expect(getTopUserIDsResponse.topUsers[firstClusterName].length > 0).toBe(true);
+  expect(Object.keys(getTopUserIDsResponse.topUsers[firstClusterName][0])).toEqual([
     'userID',
     'nbRecords',
     'dataSize',

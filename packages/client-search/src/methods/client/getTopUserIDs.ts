@@ -1,10 +1,10 @@
 import { MethodEnum } from '@algolia/requester-common';
 import { RequestOptions } from '@algolia/transporter';
 
-import { SearchClient, TopUserIDsResponse } from '../..';
+import { GetTopUserIDsResponse, SearchClient } from '../..';
 
-export const topUserIDs = (base: SearchClient) => {
-  return (requestOptions?: RequestOptions): Readonly<Promise<TopUserIDsResponse>> => {
+export const getTopUserIDs = (base: SearchClient) => {
+  return (requestOptions?: RequestOptions): Readonly<Promise<GetTopUserIDsResponse>> => {
     return base.transporter.read(
       {
         method: MethodEnum.Get,

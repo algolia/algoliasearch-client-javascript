@@ -1,6 +1,6 @@
 import { UserIDResponse } from '.';
 
-export type TopUserIDsResponse = {
+export type GetTopUserIDsResponse = {
   /**
    * List of users id
    */

@@ -41,6 +41,7 @@ import {
   getRule,
   getSettings,
   getSynonym,
+  getTopUserIDs,
   getUserID,
   initIndex,
   listApiKeys,
@@ -72,7 +73,6 @@ import {
   searchUserIDs,
   setPersonalizationStrategy,
   setSettings,
-  topUserIDs,
   updateApiKey,
   waitTask,
 } from '@algolia/client-search';
@@ -129,7 +129,7 @@ export default function algoliasearch(appId: string, apiKey: string) {
       getUserID,
       searchUserIDs,
       listUserIDs,
-      topUserIDs,
+      topUserIDs: getTopUserIDs,
       removeUserID,
       initIndex: base => (indexName: string) => {
         return initIndex(base)(indexName, {
