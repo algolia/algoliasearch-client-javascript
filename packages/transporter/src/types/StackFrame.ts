@@ -1,11 +1,11 @@
 import { Request, Response } from '@algolia/requester-common';
 
-import { createHost } from '../createHost';
+import { Host } from './Host';
 
 export type StackFrame = {
   readonly request: Request;
   readonly response: Response;
-  readonly host: ReturnType<typeof createHost>;
+  readonly host: Host;
   readonly triesLeft: number;
   readonly timeoutRetries: number;
 };

@@ -27,8 +27,8 @@ module.exports = {
     'functional/no-expression-statement': ['off'],
     'functional/no-conditional-statement': ['off'],
     'functional/no-throw-statement': ['off'],
+    'functional/no-mixed-type': ['off'],
     'functional/functional-parameters': ['off'],
-    'functional/no-this-expression': ['off'],
     'functional/no-return-void': ['off'],
     '@typescript-eslint/no-triple-slash-reference': ['off'],
   },
@@ -64,6 +64,7 @@ module.exports = {
       rules: {
         'functional/immutable-data': 0,
         'functional/no-let': 0,
+        'functional/no-this-expression': 0,
         'functional/no-loop-statement': 0,
         'functional/no-try-statement': 0,
         '@typescript-eslint/explicit-function-return-type': 0,

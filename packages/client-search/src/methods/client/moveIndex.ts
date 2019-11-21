@@ -1,46 +1,33 @@
-import { addMethod, createWaitablePromise, encode, WaitablePromise } from '@algolia/client-common';
+import { createWaitablePromise, encode, WaitablePromise } from '@algolia/client-common';
 import { MethodEnum } from '@algolia/requester-common';
 import { RequestOptions } from '@algolia/transporter';
 
-import { HasWaitTask, waitTask } from '..';
+import { waitTask } from '..';
 import { IndexOperationResponse, SearchClient } from '../..';
 import { initIndex } from '.';
 
-export const moveIndex = <TClient extends SearchClient>(base: TClient): TClient & HasMoveIndex => {
-  return {
-    ...base,
-    moveIndex(
-      from: string,
-      to: string,
-      requestOptions?: RequestOptions
-    ): Readonly<WaitablePromise<IndexOperationResponse>> {
-      return createWaitablePromise<IndexOperationResponse>(
-        base.transporter.write(
-          {
-            method: MethodEnum.Post,
-            path: encode('1/indexes/%s/operation', from),
-            data: {
-              operation: 'move',
-              destination: to,
-            },
-          },
-          requestOptions
-        )
-      ).onWait((response, waitRequestOptions) => {
-        return addMethod(base, initIndex)
-          .initIndex<HasWaitTask>(from, {
-            methods: [waitTask],
-          })
-          .waitTask(response.taskID, waitRequestOptions);
-      });
-    },
-  };
-};
-
-export type HasMoveIndex = {
-  readonly moveIndex: (
+export const moveIndex = (base: SearchClient) => {
+  return (
     from: string,
     to: string,
     requestOptions?: RequestOptions
-  ) => Readonly<WaitablePromise<IndexOperationResponse>>;
+  ): Readonly<WaitablePromise<IndexOperationResponse>> => {
+    return createWaitablePromise<IndexOperationResponse>(
+      base.transporter.write(
+        {
+          method: MethodEnum.Post,
+          path: encode('1/indexes/%s/operation', from),
+          data: {
+            operation: 'move',
+            destination: to,
+          },
+        },
+        requestOptions
+      )
+    ).onWait((response, waitRequestOptions) => {
+      return initIndex(base)(from, {
+        methods: { waitTask },
+      }).waitTask(response.taskID, waitRequestOptions);
+    });
+  };
 };

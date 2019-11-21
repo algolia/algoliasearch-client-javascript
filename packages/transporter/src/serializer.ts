@@ -1,9 +1,10 @@
 import { encode } from '@algolia/client-common';
 
-import { createHost, Request, RequestOptions } from '.';
+import { Request, RequestOptions } from '.';
+import { Host } from './types';
 
 export function serializeUrl(
-  host: ReturnType<typeof createHost>,
+  host: Host,
   path: string,
   queryParameters: { readonly [key: string]: string }
 ): string {

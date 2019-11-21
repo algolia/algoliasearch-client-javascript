@@ -1,6 +1,6 @@
 import { Response } from '@algolia/requester-common';
 
-import { createHost } from '..';
+import { Host } from '../types';
 
 const isNetworkError = ({ isTimedOut, status }: Response): boolean => {
   return !isTimedOut && ~~status === 0;
@@ -20,7 +20,7 @@ const isSuccess = ({ status }: Response): boolean => {
 };
 
 export const decision = <TResponse>(
-  host: ReturnType<typeof createHost>,
+  host: Host,
   response: Response,
   outcomes: Outcomes
 ): Readonly<Promise<TResponse>> => {

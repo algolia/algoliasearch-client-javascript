@@ -1,33 +1,20 @@
 import { MethodEnum } from '@algolia/requester-common';
 import { RequestOptions } from '@algolia/transporter';
 
-import { ABTest, AddABTestResponse } from '..';
-import { AnalyticsClient } from '../types';
+import { ABTest, AddABTestResponse, AnalyticsClient } from '..';
 
-export const addABTest = <TClient extends AnalyticsClient>(
-  base: TClient
-): TClient & HasAddABTest => {
-  return {
-    ...base,
-    addABTest(
-      abTest: ABTest,
-      requestOptions?: RequestOptions
-    ): Readonly<Promise<AddABTestResponse>> {
-      return base.transporter.write(
-        {
-          method: MethodEnum.Post,
-          path: '2/abtests',
-          data: abTest,
-        },
-        requestOptions
-      );
-    },
-  };
-};
-
-export type HasAddABTest = {
-  readonly addABTest: (
+export const addABTest = (base: AnalyticsClient) => {
+  return (
     abTest: ABTest,
     requestOptions?: RequestOptions
-  ) => Readonly<Promise<AddABTestResponse>>;
+  ): Readonly<Promise<AddABTestResponse>> => {
+    return base.transporter.write(
+      {
+        method: MethodEnum.Post,
+        path: '2/abtests',
+        data: abTest,
+      },
+      requestOptions
+    );
+  };
 };

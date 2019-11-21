@@ -4,5 +4,4 @@ export type SearchClientOptions = {
   readonly appId: string;
   readonly apiKey: string;
   readonly authMode?: AuthModeType;
-  readonly methods?: readonly Function[];
 };

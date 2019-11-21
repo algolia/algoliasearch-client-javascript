@@ -7,7 +7,7 @@ describe('user agent', () => {
 
   it('allows to add other api clients', () => {
     expect(
-      createUserAgent('1.0.0').with({
+      createUserAgent('1.0.0').add({
         segment: 'React Native',
         version: '2.0.0',
       }).value

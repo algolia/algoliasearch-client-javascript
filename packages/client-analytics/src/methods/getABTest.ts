@@ -4,29 +4,17 @@ import { RequestOptions } from '@algolia/transporter';
 
 import { AnalyticsClient, GetABTestResponse } from '..';
 
-export const getABTest = <TClient extends AnalyticsClient>(
-  base: TClient
-): TClient & HasGetABTest => {
-  return {
-    ...base,
-    getABTest(
-      abTestID: number,
-      requestOptions?: RequestOptions
-    ): Readonly<Promise<GetABTestResponse>> {
-      return base.transporter.read(
-        {
-          method: MethodEnum.Get,
-          path: encode('2/abtests/%s', abTestID),
-        },
-        requestOptions
-      );
-    },
-  };
-};
-
-export type HasGetABTest = {
-  readonly getABTest: (
+export const getABTest = (base: AnalyticsClient) => {
+  return (
     abTestID: number,
     requestOptions?: RequestOptions
-  ) => Readonly<Promise<GetABTestResponse>>;
+  ): Readonly<Promise<GetABTestResponse>> => {
+    return base.transporter.read(
+      {
+        method: MethodEnum.Get,
+        path: encode('2/abtests/%s', abTestID),
+      },
+      requestOptions
+    );
+  };
 };

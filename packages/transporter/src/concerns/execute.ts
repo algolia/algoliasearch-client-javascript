@@ -1,4 +1,4 @@
-import { createHost, createRetryError, MappedRequestOptions, Request, Transporter } from '..';
+import { createRetryError, Host, MappedRequestOptions, Request, Transporter } from '..';
 import { deserializeFailure, deserializeSuccess } from '../deserializer';
 import { serializeData, serializeUrl } from '../serializer';
 import { StackFrame } from '../types/StackFrame';
@@ -7,7 +7,7 @@ import { decision } from './decision';
 // eslint-disable-next-line max-params
 export function execute<TResponse>(
   transporter: Transporter,
-  hosts: ReadonlyArray<ReturnType<typeof createHost>>,
+  hosts: readonly Host[],
   request: Request,
   requestOptions: MappedRequestOptions
 ): Readonly<Promise<TResponse>> {
@@ -17,7 +17,7 @@ export function execute<TResponse>(
     hosts.map(host =>
       transporter.hostsCache
         .get({ url: host.url }, () => Promise.resolve(host))
-        .then((value: ReturnType<typeof createHost>) => {
+        .then((value: Host) => {
           // eslint-disable-next-line functional/immutable-data
           return Object.assign(host, {
             downDate: value.downDate,
@@ -31,9 +31,7 @@ export function execute<TResponse>(
     // eslint-disable-next-line functional/prefer-readonly-type
     const stackTrace: StackFrame[] = [];
 
-    const forEachHost = <TResponse>(
-      host?: ReturnType<typeof createHost>
-    ): Readonly<Promise<TResponse>> => {
+    const forEachHost = <TResponse>(host?: Host): Readonly<Promise<TResponse>> => {
       if (host === undefined) {
         throw createRetryError(stackTrace);
       }

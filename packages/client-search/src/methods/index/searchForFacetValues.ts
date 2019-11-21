@@ -4,35 +4,22 @@ import { RequestOptions } from '@algolia/transporter';
 
 import { SearchForFacetValuesResponse, SearchIndex, SearchOptions } from '../..';
 
-export const searchForFacetValues = <TSearchIndex extends SearchIndex>(
-  base: TSearchIndex
-): TSearchIndex & HasSearchForFacetValues => {
-  return {
-    ...base,
-    searchForFacetValues(
-      facetName: string,
-      facetQuery: string,
-      requestOptions?: RequestOptions & SearchOptions
-    ): Readonly<Promise<SearchForFacetValuesResponse>> {
-      return base.transporter.read(
-        {
-          method: MethodEnum.Post,
-          path: encode('1/indexes/%s/facets/%s/query', base.indexName, facetName),
-          data: {
-            facetQuery,
-          },
-          cacheable: true,
-        },
-        requestOptions
-      );
-    },
-  };
-};
-
-export type HasSearchForFacetValues = SearchIndex & {
-  readonly searchForFacetValues: (
+export const searchForFacetValues = (base: SearchIndex) => {
+  return (
     facetName: string,
     facetQuery: string,
     requestOptions?: RequestOptions & SearchOptions
-  ) => Readonly<Promise<SearchForFacetValuesResponse>>;
+  ): Readonly<Promise<SearchForFacetValuesResponse>> => {
+    return base.transporter.read(
+      {
+        method: MethodEnum.Post,
+        path: encode('1/indexes/%s/facets/%s/query', base.indexName, facetName),
+        data: {
+          facetQuery,
+        },
+        cacheable: true,
+      },
+      requestOptions
+    );
+  };
 };

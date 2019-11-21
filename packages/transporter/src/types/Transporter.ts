@@ -1,10 +1,10 @@
-/* eslint functional/no-mixed-type: 0 */
 import { Cache } from '@algolia/cache-common';
 import { Logger } from '@algolia/logger-common';
 import { Requester } from '@algolia/requester-common';
 
-import { createHost, createUserAgent } from '..';
+import { createUserAgent } from '..';
 import { CallType, Headers, QueryParameters, Request, RequestOptions, Timeouts } from '.';
+import { Host } from './Host';
 
 export type Transporter = {
   readonly hostsCache: Cache;
@@ -16,7 +16,7 @@ export type Transporter = {
   readonly userAgent: ReturnType<typeof createUserAgent>;
   readonly headers: Headers;
   readonly queryParameters: QueryParameters;
-  readonly hosts: ReadonlyArray<ReturnType<typeof createHost>>;
+  readonly hosts: readonly Host[];
   readonly addUserAgent: (segment: string, version?: string) => void;
   readonly addHeaders: (headers: Headers) => void;
   readonly addQueryParameters: (queryParameters: QueryParameters) => void;

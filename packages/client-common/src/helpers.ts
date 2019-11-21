@@ -13,18 +13,26 @@ export function shuffle<TData>(array: TData[]): TData[] {
   return array;
 }
 
-export function addMethods<TClient>(base: any, methods: readonly Function[] = []): TClient {
-  // eslint-disable-next-line no-param-reassign
-  methods.forEach(method => (base = method(base)));
+type GenericObject = { readonly [key: string]: any };
 
+export function addMethods<
+  TBase,
+  TMethods extends GenericObject,
+  TKey extends keyof TMethods,
+  TValue extends TMethods[TKey]
+>(
+  base: TBase,
+  methods?: TMethods
+  // eslint-disable-next-line @typescript-eslint/generic-type-naming
+): TBase & { [key in TKey extends string ? TKey : never]: ReturnType<TValue> } {
+  Object.keys(methods !== undefined ? methods : {}).forEach(key => {
+    // @ts-ignore
+    // eslint-disable-next-line functional/immutable-data, no-param-reassign
+    base[key] = methods[key](base);
+  });
+
+  // @ts-ignore
   return base;
-}
-
-export function addMethod<TBase, TFunctionReturnType>(
-  obj: TBase,
-  method: (base: TBase) => TFunctionReturnType
-): TFunctionReturnType {
-  return addMethods(obj, [method]);
 }
 
 export function encode(format: string, ...args: readonly any[]): string {

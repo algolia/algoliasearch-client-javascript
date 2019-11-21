@@ -1,4 +1,4 @@
-import { encode } from '@algolia/client-common';
+import { addMethods, encode } from '@algolia/client-common';
 import { TestSuite } from '@algolia/client-common/src/__tests__/TestSuite';
 import { MethodEnum } from '@algolia/requester-common';
 import { RequestOptions, Transporter } from '@algolia/transporter';
@@ -7,6 +7,7 @@ import { anything, deepEqual, spy, verify, when } from 'ts-mockito';
 import { BatchActionEnum, SaveObjectsOptions } from '../..';
 import { SearchIndex } from '../../../../algoliasearch/src/builds/browser';
 import { createFaker } from '../../../../client-common/src/__tests__/createFaker';
+import { chunk } from '../../methods';
 
 const algoliasearch = new TestSuite().algoliasearch;
 let index: SearchIndex;
@@ -18,7 +19,7 @@ const res: any = {
 };
 
 beforeEach(() => {
-  index = algoliasearch('appId', 'apiKey').initIndex('foo');
+  index = addMethods(algoliasearch('appId', 'apiKey').initIndex('foo'), { chunk });
 
   transporterMock = spy(index.transporter);
 

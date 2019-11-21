@@ -4,28 +4,19 @@ import { mapRequestOptions, RequestOptions } from '@algolia/transporter';
 
 import { IndexSettings, SearchIndex } from '../..';
 
-export const getSettings = <TSearchIndex extends SearchIndex>(
-  base: TSearchIndex
-): TSearchIndex & HasGetSettings => {
-  return {
-    ...base,
-    getSettings(requestOptions?: RequestOptions): Readonly<Promise<IndexSettings>> {
-      const options = mapRequestOptions(requestOptions);
+export const getSettings = (base: SearchIndex) => {
+  return (requestOptions?: RequestOptions): Readonly<Promise<IndexSettings>> => {
+    const options = mapRequestOptions(requestOptions);
 
-      // eslint-disable-next-line functional/immutable-data
-      options.queryParameters.getVersion = '2';
+    // eslint-disable-next-line functional/immutable-data
+    options.queryParameters.getVersion = '2';
 
-      return base.transporter.read(
-        {
-          method: MethodEnum.Get,
-          path: encode('1/indexes/%s/settings', base.indexName),
-        },
-        options
-      );
-    },
+    return base.transporter.read(
+      {
+        method: MethodEnum.Get,
+        path: encode('1/indexes/%s/settings', base.indexName),
+      },
+      options
+    );
   };
-};
-
-export type HasGetSettings = {
-  readonly getSettings: (requestOptions?: RequestOptions) => Readonly<Promise<IndexSettings>>;
 };

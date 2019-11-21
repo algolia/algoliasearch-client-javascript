@@ -4,29 +4,17 @@ import { RequestOptions } from '@algolia/transporter';
 
 import { AnalyticsClient, DeleteABTestResponse } from '..';
 
-export const deleteABTest = <TClient extends AnalyticsClient>(
-  base: TClient
-): TClient & HasDeleteABTest => {
-  return {
-    ...base,
-    deleteABTest(
-      abTestID: number,
-      requestOptions?: RequestOptions
-    ): Readonly<Promise<DeleteABTestResponse>> {
-      return base.transporter.write(
-        {
-          method: MethodEnum.Delete,
-          path: encode('2/abtests/%s', abTestID),
-        },
-        requestOptions
-      );
-    },
-  };
-};
-
-export type HasDeleteABTest = {
-  readonly deleteABTest: (
-    abTestId: number,
+export const deleteABTest = (base: AnalyticsClient) => {
+  return (
+    abTestID: number,
     requestOptions?: RequestOptions
-  ) => Readonly<Promise<DeleteABTestResponse>>;
+  ): Readonly<Promise<DeleteABTestResponse>> => {
+    return base.transporter.write(
+      {
+        method: MethodEnum.Delete,
+        path: encode('2/abtests/%s', abTestID),
+      },
+      requestOptions
+    );
+  };
 };

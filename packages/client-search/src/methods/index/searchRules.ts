@@ -4,32 +4,20 @@ import { RequestOptions } from '@algolia/transporter';
 
 import { Rule, SearchIndex, SearchResponse, SearchRulesOptions } from '../..';
 
-export const searchRules = <TSearchIndex extends SearchIndex>(
-  base: TSearchIndex
-): TSearchIndex & HasSearchRules => {
-  return {
-    ...base,
-    searchRules(
-      query: string,
-      requestOptions?: RequestOptions
-    ): Readonly<Promise<SearchResponse<Rule>>> {
-      return base.transporter.read(
-        {
-          method: MethodEnum.Post,
-          path: encode('1/indexes/%s/rules/search', base.indexName),
-          data: {
-            query,
-          },
-        },
-        requestOptions
-      );
-    },
-  };
-};
-
-export type HasSearchRules = {
-  readonly searchRules: (
+export const searchRules = (base: SearchIndex) => {
+  return (
     query: string,
-    requestOptions?: SearchRulesOptions & RequestOptions
-  ) => Readonly<Promise<SearchResponse<Rule>>>;
+    requestOptions?: RequestOptions & SearchRulesOptions
+  ): Readonly<Promise<SearchResponse<Rule>>> => {
+    return base.transporter.read(
+      {
+        method: MethodEnum.Post,
+        path: encode('1/indexes/%s/rules/search', base.indexName),
+        data: {
+          query,
+        },
+      },
+      requestOptions
+    );
+  };
 };

@@ -10,33 +10,22 @@ import {
   SearchOptions,
 } from '../..';
 
-export const browseObjects = <TSearchIndex extends SearchIndex>(
-  base: TSearchIndex
-): TSearchIndex & HasBrowseObjects => {
-  return {
-    ...base,
-    browseObjects<TObject extends object>(
-      requestOptions?: SearchOptions & BrowseOptions<TObject> & RequestOptions
-    ): Readonly<Promise<void>> {
-      return createBrowsablePromise<TObject>({
-        ...requestOptions,
-        shouldStop: response => response.cursor === undefined,
-        request: (data: object): Readonly<Promise<BrowseResponse<TObject>>> =>
-          base.transporter.read(
-            {
-              method: MethodEnum.Post,
-              path: encode('1/indexes/%s/browse', base.indexName),
-              data,
-            },
-            requestOptions
-          ),
-      });
-    },
-  };
-};
-
-export type HasBrowseObjects = {
-  readonly browseObjects: <TObject extends object>(
+export const browseObjects = (base: SearchIndex) => {
+  return <TObject extends object>(
     requestOptions?: SearchOptions & BrowseOptions<TObject> & RequestOptions
-  ) => Readonly<Promise<void>>;
+  ): Readonly<Promise<void>> => {
+    return createBrowsablePromise<TObject>({
+      ...requestOptions,
+      shouldStop: response => response.cursor === undefined,
+      request: (data: object): Readonly<Promise<BrowseResponse<TObject>>> =>
+        base.transporter.read(
+          {
+            method: MethodEnum.Post,
+            path: encode('1/indexes/%s/browse', base.indexName),
+            data,
+          },
+          requestOptions
+        ),
+    });
+  };
 };

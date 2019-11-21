@@ -3,36 +3,29 @@ import { mapRequestOptions, popRequestOption, RequestOptions } from '@algolia/tr
 
 import { GetLogsResponse, SearchClient } from '../..';
 
-export const getLogs = <TClient extends SearchClient>(base: TClient): TClient & HasGetLogs => {
-  return {
-    ...base,
-    getLogs(requestOptions?: RequestOptions): Readonly<Promise<GetLogsResponse>> {
-      const length = popRequestOption(requestOptions, 'length', 10);
-      const offset = popRequestOption(requestOptions, 'offset', 0);
+export const getLogs = (base: SearchClient) => {
+  return (requestOptions?: RequestOptions): Readonly<Promise<GetLogsResponse>> => {
+    const length = popRequestOption(requestOptions, 'length', 10);
+    const offset = popRequestOption(requestOptions, 'offset', 0);
 
-      /** @todo Validate this request option. */
-      const type = popRequestOption(requestOptions, 'type', 'all');
+    /** @todo Validate this request option. */
+    const type = popRequestOption(requestOptions, 'type', 'all');
 
-      const options = mapRequestOptions(requestOptions);
+    const options = mapRequestOptions(requestOptions);
 
-      // eslint-disable-next-line functional/immutable-data
-      options.queryParameters.type = type;
-      // eslint-disable-next-line functional/immutable-data
-      options.queryParameters.length = length.toString();
-      // eslint-disable-next-line functional/immutable-data
-      options.queryParameters.offset = offset.toString();
+    // eslint-disable-next-line functional/immutable-data
+    options.queryParameters.type = type;
+    // eslint-disable-next-line functional/immutable-data
+    options.queryParameters.length = length.toString();
+    // eslint-disable-next-line functional/immutable-data
+    options.queryParameters.offset = offset.toString();
 
-      return base.transporter.read(
-        {
-          method: MethodEnum.Get,
-          path: '1/logs',
-        },
-        options
-      );
-    },
+    return base.transporter.read(
+      {
+        method: MethodEnum.Get,
+        path: '1/logs',
+      },
+      options
+    );
   };
-};
-
-export type HasGetLogs = {
-  readonly getLogs: (requestOptions?: RequestOptions) => Readonly<Promise<GetLogsResponse>>;
 };

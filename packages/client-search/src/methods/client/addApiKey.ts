@@ -7,58 +7,49 @@ import {
 import { MethodEnum } from '@algolia/requester-common';
 import { createApiError, popRequestOption, RequestOptions } from '@algolia/transporter';
 
-import { AddApiKeyOptions, AddApiKeyResponse } from '../..';
-import { GetApiKeyResponse, SearchClient } from '../../types';
-import { getApiKey } from '.';
+import {
+  AddApiKeyOptions,
+  AddApiKeyResponse,
+  getApiKey,
+  GetApiKeyResponse,
+  SearchClient,
+} from '../..';
 
-export const addApiKey = <TClient extends SearchClient>(base: TClient): TClient & HasAddApiKey => {
-  return {
-    ...base,
-    addApiKey(
-      acl: readonly string[],
-      requestOptions?: AddApiKeyOptions & RequestOptions
-    ): Readonly<WaitablePromise<AddApiKeyResponse>> {
-      const queryParameters = popRequestOption<string | undefined>(
-        requestOptions,
-        'queryParameters'
-      );
-
-      const data = {
-        acl,
-        ...(queryParameters !== undefined ? { queryParameters } : {}),
-      };
-
-      const wait: OnWaitClosure<AddApiKeyResponse> = (response, waitRequestOptions) => {
-        return createRetryablePromise<GetApiKeyResponse>(retry => {
-          return getApiKey(base)
-            .getApiKey(response.key, waitRequestOptions)
-            .catch((apiError: ReturnType<typeof createApiError>) => {
-              if (apiError.status === 404) {
-                throw apiError;
-              }
-
-              return retry();
-            });
-        });
-      };
-
-      return createWaitablePromise(
-        base.transporter.write<AddApiKeyResponse>(
-          {
-            method: MethodEnum.Post,
-            path: '1/keys',
-            data,
-          },
-          requestOptions
-        )
-      ).onWait(wait);
-    },
-  };
-};
-
-export type HasAddApiKey = {
-  readonly addApiKey: (
+export const addApiKey = (base: SearchClient) => {
+  return (
     acl: readonly string[],
     requestOptions?: AddApiKeyOptions & RequestOptions
-  ) => Readonly<WaitablePromise<AddApiKeyResponse>>;
+  ): Readonly<WaitablePromise<AddApiKeyResponse>> => {
+    const queryParameters = popRequestOption<string | undefined>(requestOptions, 'queryParameters');
+
+    const data = {
+      acl,
+      ...(queryParameters !== undefined ? { queryParameters } : {}),
+    };
+
+    const wait: OnWaitClosure<AddApiKeyResponse> = (response, waitRequestOptions) => {
+      return createRetryablePromise<GetApiKeyResponse>(retry => {
+        return getApiKey(base)(response.key, waitRequestOptions).catch(
+          (apiError: ReturnType<typeof createApiError>) => {
+            if (apiError.status === 404) {
+              throw apiError;
+            }
+
+            return retry();
+          }
+        );
+      });
+    };
+
+    return createWaitablePromise(
+      base.transporter.write<AddApiKeyResponse>(
+        {
+          method: MethodEnum.Post,
+          path: '1/keys',
+          data,
+        },
+        requestOptions
+      )
+    ).onWait(wait);
+  };
 };

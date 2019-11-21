@@ -11,45 +11,62 @@ import {
   TransporterOptions,
 } from '.';
 import { execute } from './concerns/execute';
+import { Host } from './types';
 
 export function createTransporter(options: TransporterOptions): Transporter {
-  return {
-    ...options,
+  const {
+    hostsCache,
+    logger,
+    requester,
+    requestsCache,
+    responsesCache,
+    timeouts,
+    userAgent,
+  } = options;
+
+  const transporter: Transporter = {
+    hostsCache,
+    logger,
+    requester,
+    requestsCache,
+    responsesCache,
+    timeouts,
+    userAgent,
     // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
     headers: {} as Headers,
     // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
     queryParameters: {} as QueryParameters,
-    hosts: [] as ReadonlyArray<ReturnType<typeof createHost>>,
+    hosts: [] as readonly Host[],
     addUserAgent(segment: string, version?: string): void {
       // @ts-ignore
       // eslint-disable-next-line functional/immutable-data
-      this.userAgent = options.userAgent.with({ segment, version });
+      transporter.userAgent = options.userAgent.add({ segment, version });
     },
     addHeaders(headers: Headers): void {
       // eslint-disable-next-line functional/immutable-data
-      Object.assign(this.headers, headers);
+      Object.assign(transporter.headers, headers);
     },
     addQueryParameters(queryParameters: QueryParameters): void {
       // eslint-disable-next-line functional/immutable-data
-      Object.assign(this.queryParameters, queryParameters);
+      Object.assign(transporter.queryParameters, queryParameters);
     },
     setHosts(values: ReadonlyArray<{ readonly url: string; readonly accept: CallType }>): void {
       // @ts-ignore
       // eslint-disable-next-line functional/immutable-data
-      this.hosts = values.map(host => createHost(host.url, host.accept));
+      transporter.hosts = values.map(host => createHost(host.url, host.accept));
     },
     read<TResponse>(
       request: Request,
       requestOptions?: RequestOptions
     ): Readonly<Promise<TResponse>> {
-      const mappedRequestOptions = mapRequestOptions(requestOptions, this.timeouts.read);
+      const mappedRequestOptions = mapRequestOptions(requestOptions, transporter.timeouts.read);
 
       const key = { request, mappedRequestOptions };
 
       const createRequest = (): Readonly<Promise<TResponse>> => {
         return execute<TResponse>(
-          this,
-          this.hosts.filter(host => (host.accept & CallEnum.Read) !== 0),
+          transporter,
+          transporter.hosts.filter(host => (host.accept & CallEnum.Read) !== 0),
           request,
           mappedRequestOptions
         );
@@ -64,16 +81,16 @@ export function createTransporter(options: TransporterOptions): Transporter {
         return createRequest();
       }
 
-      return this.responsesCache.get(
+      return transporter.responsesCache.get(
         key,
         () =>
-          this.requestsCache.get(key, () =>
-            this.requestsCache
+          transporter.requestsCache.get(key, () =>
+            transporter.requestsCache
               .set(key, createRequest())
-              .then(response => this.requestsCache.delete(key).then(() => response))
+              .then(response => transporter.requestsCache.delete(key).then(() => response))
           ),
         {
-          miss: response => this.responsesCache.set(key, response),
+          miss: response => transporter.responsesCache.set(key, response),
         }
       );
     },
@@ -82,11 +99,13 @@ export function createTransporter(options: TransporterOptions): Transporter {
       requestOptions?: RequestOptions
     ): Readonly<Promise<TResponse>> {
       return execute<TResponse>(
-        this,
-        this.hosts.filter(host => (host.accept & CallEnum.Write) !== 0),
+        transporter,
+        transporter.hosts.filter(host => (host.accept & CallEnum.Write) !== 0),
         request,
-        mapRequestOptions(requestOptions, this.timeouts.write)
+        mapRequestOptions(requestOptions, transporter.timeouts.write)
       );
     },
   };
+
+  return transporter;
 }

@@ -13,25 +13,17 @@ describe('helpers', () => {
     };
 
     const getFoo = (base: typeof client) => {
-      return {
-        ...base,
-        getFoo(): string {
-          return base.foo;
-        },
-      };
+      return (): string => base.foo;
     };
 
     const setFoo = (base: typeof client) => {
-      return {
-        ...base,
-        setFoo(value: string): void {
-          // eslint-disable-next-line no-param-reassign
-          base.foo = value;
-        },
+      return (value: string): void => {
+        // eslint-disable-next-line no-param-reassign
+        base.foo = value;
       };
     };
 
-    const obj = addMethods(client, [setFoo, getFoo]);
+    const obj = addMethods(client, { setFoo, getFoo });
 
     expect(Object.getOwnPropertyNames(obj)).toEqual(['foo', 'setFoo', 'getFoo']);
   });

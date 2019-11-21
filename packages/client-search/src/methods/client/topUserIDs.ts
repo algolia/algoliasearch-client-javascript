@@ -3,23 +3,14 @@ import { RequestOptions } from '@algolia/transporter';
 
 import { SearchClient, TopUserIDsResponse } from '../..';
 
-export const topUserIDs = <TClient extends SearchClient>(
-  base: TClient
-): TClient & HasTopUserIDs => {
-  return {
-    ...base,
-    topUserIDs(requestOptions?: RequestOptions): Readonly<Promise<TopUserIDsResponse>> {
-      return base.transporter.read(
-        {
-          method: MethodEnum.Get,
-          path: '1/clusters/mapping/top',
-        },
-        requestOptions
-      );
-    },
+export const topUserIDs = (base: SearchClient) => {
+  return (requestOptions?: RequestOptions): Readonly<Promise<TopUserIDsResponse>> => {
+    return base.transporter.read(
+      {
+        method: MethodEnum.Get,
+        path: '1/clusters/mapping/top',
+      },
+      requestOptions
+    );
   };
-};
-
-export type HasTopUserIDs = {
-  readonly topUserIDs: (requestOptions?: RequestOptions) => Readonly<Promise<TopUserIDsResponse>>;
 };

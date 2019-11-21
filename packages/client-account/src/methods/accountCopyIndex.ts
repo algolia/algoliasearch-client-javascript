@@ -1,74 +1,62 @@
 import { createWaitablePromise, WaitablePromise } from '@algolia/client-common';
 import {
-  HasBrowseObjects,
-  HasBrowseRules,
-  HasBrowseSynonyms,
-  HasExists,
-  HasGetSettings,
-  HasSaveObjects,
-  HasSaveRules,
-  HasSaveSynonyms,
-  HasSetSettings,
-  SearchIndex as BaseSearchIndex,
+  browseObjects,
+  browseRules,
+  browseSynonyms,
+  exists,
+  getSettings,
+  saveObjects,
+  saveRules,
+  saveSynonyms,
+  SearchIndex,
+  setSettings,
 } from '@algolia/client-search';
 import { RequestOptions } from '@algolia/transporter';
 
 import { createIndicesInSameAppError } from '..';
 import { createDestinationIndiceExistsError } from '../errors/createDestinationIndiceExistsError';
 
-type SourceSearchIndex = BaseSearchIndex &
-  HasGetSettings &
-  HasBrowseSynonyms &
-  HasBrowseRules &
-  HasBrowseObjects;
-
-type DestinationSearchIndex = BaseSearchIndex &
-  HasSetSettings &
-  HasSaveSynonyms &
-  HasSaveRules &
-  HasSaveObjects &
-  HasExists;
-
 export const accountCopyIndex = (
-  source: SourceSearchIndex,
-  destination: DestinationSearchIndex,
+  source: SearchIndex,
+  destination: SearchIndex,
   requestOptions: RequestOptions
 ): WaitablePromise<void> => {
   // eslint-disable-next-line functional/prefer-readonly-type
   const responses: Array<WaitablePromise<any>> = [];
 
-  const promise = destination
-    .exists()
-    .then(exists => {
+  const promise = exists(destination)()
+    .then(res => {
       if (source.appId === destination.appId) {
         throw createIndicesInSameAppError(source.appId);
       }
 
-      if (exists) {
+      if (res) {
         throw createDestinationIndiceExistsError();
       }
 
       return;
     })
-    .then(() => source.getSettings())
-    // eslint-disable-next-line functional/immutable-data
-    .then(settings => responses.push(destination.setSettings(settings, requestOptions)))
     .then(() =>
-      source.browseRules({
+      getSettings(source)()
         // eslint-disable-next-line functional/immutable-data
-        batch: rules => responses.push(destination.saveRules(rules, requestOptions)),
+        .then(settings => responses.push(setSettings(destination)(settings, requestOptions)))
+    )
+    .then(() =>
+      browseRules(source)({
+        // eslint-disable-next-line functional/immutable-data
+        batch: rules => responses.push(saveRules(destination)(rules, requestOptions)),
       })
     )
     .then(() =>
-      source.browseSynonyms({
+      browseSynonyms(source)({
         // eslint-disable-next-line functional/immutable-data
-        batch: synonyms => responses.push(destination.saveSynonyms(synonyms, requestOptions)),
+        batch: synonyms => responses.push(saveSynonyms(destination)(synonyms, requestOptions)),
       })
     )
     .then(() =>
-      source.browseObjects({
+      browseObjects(source)({
         // eslint-disable-next-line functional/immutable-data
-        batch: objects => responses.push(destination.saveObjects(objects, requestOptions)),
+        batch: objects => responses.push(saveObjects(destination)(objects, requestOptions)),
       })
     )
     .then(() => Promise.resolve());

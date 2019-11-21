@@ -1,28 +1,29 @@
-import { CallType } from '.';
+import { CallType, Host } from '.';
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export function createHost(url: string, accept: CallType) {
+export function createHost(url: string, accept: CallType): Host {
   const ttl = 3000;
 
-  return {
+  const host: Host = {
     url,
     accept,
     downDate: 0,
     up: true,
     setAsDown(): void {
       // eslint-disable-next-line functional/immutable-data
-      this.downDate = Date.now();
+      host.downDate = Date.now();
       // eslint-disable-next-line functional/immutable-data
-      this.up = false;
+      host.up = false;
     },
 
     isUp(): boolean {
-      if (!this.up && Date.now() - this.downDate > ttl) {
+      if (!host.up && Date.now() - host.downDate > ttl) {
         // eslint-disable-next-line functional/immutable-data
-        this.up = true;
+        host.up = true;
       }
 
-      return this.up;
+      return host.up;
     },
   };
+
+  return host;
 }

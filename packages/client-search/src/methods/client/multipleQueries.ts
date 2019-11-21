@@ -8,10 +8,8 @@ import {
   SearchClient,
 } from '../..';
 
-export const multipleQueries = <TClient extends SearchClient>(
-  base: TClient
-): TClient & HasMultipleQueries => {
-  const multipleQueriesFunction = <TObject>(
+export const multipleQueries = (base: SearchClient) => {
+  return <TObject>(
     queries: readonly MultipleQueriesQuery[],
     requestOptions?: RequestOptions & MultipleQueriesOptions
   ): Readonly<Promise<MultipleQueriesResponse<TObject>>> => {
@@ -34,22 +32,4 @@ export const multipleQueries = <TClient extends SearchClient>(
       requestOptions
     );
   };
-
-  return {
-    ...base,
-    multipleQueries: multipleQueriesFunction,
-    search: multipleQueriesFunction,
-  };
-};
-
-export type HasMultipleQueries = {
-  readonly search: <TObject>(
-    requests: readonly MultipleQueriesQuery[],
-    requestOptions?: RequestOptions
-  ) => Readonly<Promise<MultipleQueriesResponse<TObject>>>;
-
-  readonly multipleQueries: <TObject>(
-    requests: readonly MultipleQueriesQuery[],
-    requestOptions?: RequestOptions
-  ) => Readonly<Promise<MultipleQueriesResponse<TObject>>>;
 };

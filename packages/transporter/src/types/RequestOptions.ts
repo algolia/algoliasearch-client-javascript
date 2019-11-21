@@ -23,6 +23,6 @@ export type RequestOptions = {
     [key: string]: any;
   };
 
-  // eslint-disable-next-line functional/no-mixed-type, functional/prefer-readonly-type
+  // eslint-disable-next-line functional/prefer-readonly-type
   [key: string]: any;
 };
