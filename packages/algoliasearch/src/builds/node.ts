@@ -40,6 +40,7 @@ import {
   getObjects,
   getPersonalizationStrategy,
   getRule,
+  getSecuredApiKeyRemainingValidity,
   getSettings,
   getSynonym,
   getTopUserIDs,
@@ -133,6 +134,7 @@ export default function algoliasearch(appId: string, apiKey: string) {
       getTopUserIDs,
       removeUserID,
       generateSecuredApiKey,
+      getSecuredApiKeyRemainingValidity,
       initIndex: base => (indexName: string) => {
         return initIndex(base)(indexName, {
           methods: {

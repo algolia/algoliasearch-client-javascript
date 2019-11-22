@@ -4,3 +4,4 @@
 
 export * from './createMissingObjectIDError';
 export * from './createObjectNotFoundError';
+export * from './createValidUntilNotFoundError';

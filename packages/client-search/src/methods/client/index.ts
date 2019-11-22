@@ -13,6 +13,7 @@ export * from './generateSecuredApiKey';
 export * from './getApiKey';
 export * from './getLogs';
 export * from './getPersonalizationStrategy';
+export * from './getSecuredApiKeyRemainingValidity';
 export * from './getTopUserIDs';
 export * from './getUserID';
 export * from './initIndex';

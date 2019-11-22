@@ -37,4 +37,20 @@ test(testSuite.testName, async () => {
     name: 'ApiError',
     status: 403,
   });
+
+  expect(client.getSecuredApiKeyRemainingValidity(securedApiKey)).toBeGreaterThan(0);
+
+  const expiredSecuredApiKey = await client.generateSecuredApiKey(
+    process.env.ALGOLIA_SEARCH_KEY_1,
+    {
+      validUntil: Math.round(new Date().getTime() / 1000) - 60,
+      restrictIndices: index1.indexName,
+    }
+  );
+
+  expect(client.getSecuredApiKeyRemainingValidity(expiredSecuredApiKey)).toBeLessThan(0);
+
+  expect(() => client.getSecuredApiKeyRemainingValidity('azdza')).toThrow(
+    'ValidUntil not found in given secured api key.'
+  );
 });
