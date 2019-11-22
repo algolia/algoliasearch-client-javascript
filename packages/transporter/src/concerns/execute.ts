@@ -45,21 +45,23 @@ export function execute<TResponse>(
     const decisions: Outcomes<TResponse> = {
       onSucess: response => deserializeSuccess(response),
       onRetry: response => {
-        // eslint-disable-next-line functional/immutable-data
-        stackTrace.push({
+        const stackFrame: StackFrame = {
           request: payload,
           response,
           host,
           triesLeft: hosts.length,
           timeoutRetries,
-        });
+        };
+
+        // eslint-disable-next-line functional/immutable-data
+        stackTrace.push(stackFrame);
 
         if (response.isTimedOut) {
           timeoutRetries++;
         }
 
         return Promise.all([
-          transporter.logger.debug('Retryable failure', stackTrace[stackTrace.length - 1]),
+          transporter.logger.debug('Retryable failure', stackFrame),
           transporter.hostsCache.set({ url: host.url }, host),
         ]).then(() => retry(hosts));
       },
