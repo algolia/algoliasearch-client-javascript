@@ -1,4 +1,4 @@
-import { WaitablePromise } from '@algolia/client-common';
+import { createWaitablePromise, WaitablePromise } from '@algolia/client-common';
 import { popRequestOption, RequestOptions } from '@algolia/transporter';
 
 import {
@@ -26,17 +26,14 @@ export const saveObjects = (base: SearchIndex) => {
       : BatchActionEnum.UpdateObject;
 
     if (action === BatchActionEnum.UpdateObject) {
-      ensureObjectIdsWithin(objects);
+      // eslint-disable-next-line functional/no-loop-statement
+      for (const object of objects) {
+        if (object.objectID === undefined) {
+          return createWaitablePromise(Promise.reject(createMissingObjectIDError()));
+        }
+      }
     }
 
     return chunk(base)(objects, action, requestOptions);
   };
 };
-
-function ensureObjectIdsWithin(objects: readonly object[]): void {
-  objects.forEach((object: object) => {
-    if (!object.hasOwnProperty('objectID')) {
-      throw createMissingObjectIDError();
-    }
-  });
-}

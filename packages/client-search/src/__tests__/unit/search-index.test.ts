@@ -5,12 +5,11 @@ import { RequestOptions, Transporter } from '@algolia/transporter';
 import { anything, deepEqual, spy, verify, when } from 'ts-mockito';
 
 import { BatchActionEnum, SaveObjectsOptions } from '../..';
-import { SearchIndex } from '../../../../algoliasearch/src/builds/browser';
 import { createFaker } from '../../../../client-common/src/__tests__/createFaker';
 import { chunk } from '../../methods';
 
 const algoliasearch = new TestSuite().algoliasearch;
-let index: SearchIndex;
+let index: any;
 let transporterMock: Transporter;
 
 const res: any = {
@@ -87,19 +86,21 @@ describe('save objects', () => {
 
     when(transporterMock.write(deepEqual(request), undefined)).thenResolve(res);
 
-    await index.saveObjects(objects);
-
+    await expect(index.saveObjects(objects)).resolves.toMatchObject([
+      {
+        objectIDs: ['1'],
+        taskID: 1,
+      },
+    ]);
     verify(transporterMock.write(deepEqual(request), undefined)).once();
   });
 
   it('validates the object id when `autoGenerateObjectIDIfNotExist` is !== true', async () => {
     const objects = [{ noObjectId: true }];
 
-    expect.assertions(1);
-
     await expect(index.saveObjects(objects)).rejects.toMatchObject({
       message:
-        '. All objects must have an unique objectID ' +
+        'All objects must have an unique objectID ' +
         '(like a primary key) to be valid. ' +
         'Algolia is also able to generate objectIDs ' +
         "automatically but *it's not recommended*. " +
@@ -113,46 +114,38 @@ describe('save objects', () => {
 
 describe('chunk', () => {
   it("Don't call batch when no objects", async () => {
-    const indexSpy = spy(index);
-
     await index.chunk([], BatchActionEnum.AddObject);
     await index.chunk([], BatchActionEnum.UpdateObject);
 
-    verify(indexSpy.batch(anything())).never();
+    verify(transporterMock.write(anything(), anything())).never();
   });
 
   it('call batch when there is objects with default batch size', async () => {
-    const indexSpy = spy(index);
-
-    when(indexSpy.batch(anything(), anything())).thenResolve(res);
+    when(transporterMock.write(anything(), anything())).thenResolve();
 
     await index.chunk([createFaker().object()], BatchActionEnum.AddObject);
     await index.chunk(createFaker().objects(1001), BatchActionEnum.UpdateObject);
 
-    verify(indexSpy.batch(anything(), anything())).times(3);
+    verify(transporterMock.write(anything(), anything())).times(3);
   });
 
   it('call batch when there is objects with a given batch size', async () => {
-    const indexSpy = spy(index);
-
-    when(indexSpy.batch(anything(), anything())).thenResolve(res);
+    when(transporterMock.write(anything(), anything())).thenResolve();
 
     await index.chunk([createFaker().object()], BatchActionEnum.AddObject);
     await index.chunk(createFaker().objects(1001), BatchActionEnum.UpdateObject, {
       batchSize: 100,
     });
 
-    verify(indexSpy.batch(anything(), anything())).times(12);
+    verify(transporterMock.write(anything(), anything())).times(12);
   });
 
   it('Does not perform one extra call when size of objects is the same as batch size', async () => {
-    const indexSpy = spy(index);
-
-    when(indexSpy.batch(anything(), anything())).thenResolve(res);
+    when(transporterMock.write(anything(), anything())).thenResolve();
 
     await index.chunk(createFaker().objects(1000), BatchActionEnum.UpdateObject);
 
-    verify(indexSpy.batch(anything(), anything())).once();
+    verify(transporterMock.write(anything(), anything())).once();
   });
 });
 
