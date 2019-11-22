@@ -1,5 +1,6 @@
 import { TestSuite } from '@algolia/client-common/src/__tests__/TestSuite';
 import { MethodEnum } from '@algolia/requester-common';
+import { mapRequestOptions } from '@algolia/transporter';
 import { anything, deepEqual, spy, verify, when } from 'ts-mockito';
 
 const algoliasearch = new TestSuite().algoliasearch;
@@ -61,4 +62,14 @@ describe('multiple search for facet values', () => {
 
     verify(transporterMock.read(anything(), anything())).twice();
   });
+});
+
+test('get logs', async () => {
+  const client = algoliasearch('appId', 'apiKey');
+  const transporterMock = spy(client.transporter);
+  when(transporterMock.read(anything(), anything())).thenResolve({});
+
+  await client.getLogs();
+
+  verify(transporterMock.read(anything(), deepEqual(mapRequestOptions(undefined)))).once();
 });

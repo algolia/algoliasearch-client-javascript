@@ -8,5 +8,5 @@ export type MappedRequestOptions = {
   readonly headers: { [key: string]: string };
 
   // eslint-disable-next-line functional/prefer-readonly-type
-  readonly queryParameters: { [key: string]: string };
+  readonly queryParameters: { [key: string]: any };
 };
