@@ -6,7 +6,7 @@ import {
   WaitablePromise,
 } from '@algolia/client-common';
 import { MethodEnum } from '@algolia/requester-common';
-import { createApiError, RequestOptions } from '@algolia/transporter';
+import { ApiError, RequestOptions } from '@algolia/transporter';
 
 import { DeleteApiKeyResponse, getApiKey, GetApiKeyResponse, SearchClient } from '../..';
 
@@ -18,7 +18,7 @@ export const deleteApiKey = (base: SearchClient) => {
     const wait: OnWaitClosure<DeleteApiKeyResponse> = (_, waitRequestOptions) => {
       return createRetryablePromise<GetApiKeyResponse>(retry => {
         return getApiKey(base)(apiKey, waitRequestOptions)
-          .catch((apiError: ReturnType<typeof createApiError>) => {
+          .catch((apiError: ApiError) => {
             if (apiError.status !== 404) {
               throw apiError;
             }

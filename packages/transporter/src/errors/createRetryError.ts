@@ -1,8 +1,6 @@
-import { StackFrame } from '../types';
+import { RetryError, StackFrame } from '..';
 
-export function createRetryError(
-  stackTrace: readonly StackFrame[]
-): Error & { readonly stackTrace: readonly StackFrame[] } {
+export function createRetryError(stackTrace: readonly StackFrame[]): RetryError {
   return {
     name: 'RetryError',
     message:

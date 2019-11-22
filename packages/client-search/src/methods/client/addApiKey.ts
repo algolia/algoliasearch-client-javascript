@@ -5,7 +5,7 @@ import {
   WaitablePromise,
 } from '@algolia/client-common';
 import { MethodEnum } from '@algolia/requester-common';
-import { createApiError, popRequestOption, RequestOptions } from '@algolia/transporter';
+import { ApiError, popRequestOption, RequestOptions } from '@algolia/transporter';
 
 import {
   AddApiKeyOptions,
@@ -29,15 +29,13 @@ export const addApiKey = (base: SearchClient) => {
 
     const wait: OnWaitClosure<AddApiKeyResponse> = (response, waitRequestOptions) => {
       return createRetryablePromise<GetApiKeyResponse>(retry => {
-        return getApiKey(base)(response.key, waitRequestOptions).catch(
-          (apiError: ReturnType<typeof createApiError>) => {
-            if (apiError.status === 404) {
-              throw apiError;
-            }
-
-            return retry();
+        return getApiKey(base)(response.key, waitRequestOptions).catch((apiError: ApiError) => {
+          if (apiError.status === 404) {
+            throw apiError;
           }
-        );
+
+          return retry();
+        });
       });
     };
 

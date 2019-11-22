@@ -4,3 +4,4 @@
 
 export * from './errors/index';
 export * from './methods/index';
+export * from './types/index';

@@ -1,11 +1,18 @@
-import { createRetryError, Host, MappedRequestOptions, Request, Transporter } from '..';
-import { deserializeFailure, deserializeSuccess } from '../deserializer';
-import { serializeData, serializeUrl } from '../serializer';
-import { StackFrame } from '../types/StackFrame';
+import {
+  createRetryError,
+  deserializeFailure,
+  deserializeSuccess,
+  Host,
+  MappedRequestOptions,
+  Request,
+  serializeData,
+  serializeUrl,
+  StackFrame,
+  Transporter,
+} from '..';
 import { decision, Outcomes } from './decision';
 import { getAvailableHosts } from './getAvailableHosts';
 
-// eslint-disable-next-line max-params
 export function execute<TResponse>(
   transporter: Transporter,
   statelessHosts: readonly Host[],

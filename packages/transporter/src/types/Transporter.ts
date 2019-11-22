@@ -2,9 +2,16 @@ import { Cache } from '@algolia/cache-common';
 import { Logger } from '@algolia/logger-common';
 import { Requester } from '@algolia/requester-common';
 
-import { createUserAgent } from '..';
-import { CallType, Headers, QueryParameters, Request, RequestOptions, Timeouts } from '.';
-import { Host } from './Host';
+import {
+  CallType,
+  Headers,
+  Host,
+  QueryParameters,
+  Request,
+  RequestOptions,
+  Timeouts,
+  UserAgent,
+} from '.';
 
 export type Transporter = {
   readonly hostsCache: Cache;
@@ -13,7 +20,7 @@ export type Transporter = {
   readonly requestsCache: Cache;
   readonly responsesCache: Cache;
   readonly timeouts: Timeouts;
-  readonly userAgent: ReturnType<typeof createUserAgent>;
+  readonly userAgent: UserAgent;
   readonly headers: Headers;
   readonly queryParameters: QueryParameters;
   readonly hosts: readonly Host[];
