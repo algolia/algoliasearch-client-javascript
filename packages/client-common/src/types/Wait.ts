@@ -1,6 +1,6 @@
 import { RequestOptions } from '@algolia/transporter';
 
-export type OnWaitClosure<TResponse> = (
+export type Wait<TResponse> = (
   result: TResponse,
   requestOptions?: RequestOptions
 ) => Readonly<Promise<any>>;

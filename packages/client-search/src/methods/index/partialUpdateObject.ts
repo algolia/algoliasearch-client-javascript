@@ -15,7 +15,8 @@ export const partialUpdateObject = (base: SearchIndex) => {
           objectID: response[0].objectIDs[0],
           taskID: response[0].taskID,
         };
-      })
-    ).onWait((response, waitRequestOptions) => waitTask(base)(response.taskID, waitRequestOptions));
+      }),
+      (response, waitRequestOptions) => waitTask(base)(response.taskID, waitRequestOptions)
+    );
   };
 };

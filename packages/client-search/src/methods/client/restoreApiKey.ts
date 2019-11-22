@@ -2,7 +2,7 @@ import {
   createRetryablePromise,
   createWaitablePromise,
   encode,
-  OnWaitClosure,
+  Wait,
   WaitablePromise,
 } from '@algolia/client-common';
 import { MethodEnum } from '@algolia/requester-common';
@@ -15,7 +15,7 @@ export const restoreApiKey = (base: SearchClient) => {
     apiKey: string,
     requestOptions?: RequestOptions
   ): Readonly<WaitablePromise<RestoreApiKeyResponse>> => {
-    const wait: OnWaitClosure<RestoreApiKeyResponse> = (_, waitRequestOptions) => {
+    const wait: Wait<RestoreApiKeyResponse> = (_, waitRequestOptions) => {
       return createRetryablePromise(retry => {
         return getApiKey(base)(apiKey, waitRequestOptions).catch((apiError: ApiError) => {
           if (apiError.status !== 404) {
@@ -34,7 +34,8 @@ export const restoreApiKey = (base: SearchClient) => {
           path: encode('1/keys/%s/restore', apiKey),
         },
         requestOptions
-      )
-    ).onWait(wait);
+      ),
+      wait
+    );
   };
 };

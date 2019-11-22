@@ -16,7 +16,8 @@ export const deleteRule = (base: SearchIndex) => {
           path: encode('1/indexes/%s/rules/%s', base.indexName, objectID),
         },
         requestOptions
-      )
-    ).onWait((response, waitRequestOptions) => waitTask(base)(response.taskID, waitRequestOptions));
+      ),
+      (response, waitRequestOptions) => waitTask(base)(response.taskID, waitRequestOptions)
+    );
   };
 };

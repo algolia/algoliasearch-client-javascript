@@ -1,25 +1,19 @@
 import { RequestOptions } from '@algolia/transporter';
 
-import { OnWaitClosure, WaitablePromise } from '.';
+import { Wait, WaitablePromise } from '.';
 
 export function createWaitablePromise<TResponse>(
-  promise: Readonly<Promise<TResponse>>
+  promise: Readonly<Promise<TResponse>>,
+  wait: Wait<TResponse> = (_response, _requestOptions) => {
+    return Promise.resolve();
+  }
 ): Readonly<WaitablePromise<TResponse>> {
-  // eslint-disable-next-line functional/no-let
-  let onWait: OnWaitClosure<TResponse> = (_response, _requestOptions) => Promise.resolve();
-
   // eslint-disable-next-line functional/immutable-data
   return Object.assign(promise, {
-    onWait(onWaitClosure: OnWaitClosure<TResponse>): Readonly<WaitablePromise<TResponse>> {
-      onWait = onWaitClosure;
-
-      return promise as WaitablePromise<TResponse>;
-    },
-
-    wait(requestOptions?: RequestOptions): Readonly<WaitablePromise<TResponse>> {
+    wait: (requestOptions?: RequestOptions): Readonly<WaitablePromise<TResponse>> => {
       return createWaitablePromise<TResponse>(
         promise
-          .then(response => Promise.all([onWait(response, requestOptions), response]))
+          .then(response => Promise.all([wait(response, requestOptions), response]))
           .then(promiseResults => promiseResults[1])
       );
     },

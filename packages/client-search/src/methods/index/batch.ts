@@ -1,4 +1,4 @@
-import { createWaitablePromise, encode, WaitablePromise } from '@algolia/client-common';
+import { createWaitablePromise, encode, Wait, WaitablePromise } from '@algolia/client-common';
 import { MethodEnum } from '@algolia/requester-common';
 import { RequestOptions } from '@algolia/transporter';
 
@@ -9,6 +9,10 @@ export const batch = (base: SearchIndex) => {
     requests: readonly BatchRequest[],
     requestOptions?: RequestOptions
   ): Readonly<WaitablePromise<BatchResponse>> => {
+    const wait: Wait<BatchResponse> = (response, waitRequestOptions) => {
+      return waitTask(base)(response.taskID, waitRequestOptions);
+    };
+
     return createWaitablePromise<BatchResponse>(
       base.transporter.write<BatchResponse>(
         {
@@ -19,7 +23,8 @@ export const batch = (base: SearchIndex) => {
           },
         },
         requestOptions
-      )
-    ).onWait((response, waitRequestOptions) => waitTask(base)(response.taskID, waitRequestOptions));
+      ),
+      wait
+    );
   };
 };

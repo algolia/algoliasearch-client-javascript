@@ -27,9 +27,8 @@ export const replaceAllObjects = (base: SearchIndex) => {
             },
           },
           operatioRequestOptions
-        )
-      ).onWait((response, waitRequestOptions) =>
-        waitTask(base)(response.taskID, waitRequestOptions)
+        ),
+        (response, waitRequestOptions) => waitTask(base)(response.taskID, waitRequestOptions)
       );
     };
 
@@ -82,7 +81,7 @@ export const replaceAllObjects = (base: SearchIndex) => {
       })
       .then(() => Promise.resolve());
 
-    return createWaitablePromise<void>(result).onWait((_, waitRequestOptions) => {
+    return createWaitablePromise<void>(result, (_, waitRequestOptions) => {
       return Promise.all(responses.map(response => response.wait(waitRequestOptions)));
     });
   };

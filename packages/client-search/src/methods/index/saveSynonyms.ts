@@ -31,7 +31,8 @@ export const saveSynonyms = (base: SearchIndex) => {
           data: synonyms,
         },
         options
-      )
-    ).onWait((response, waitRequestOptions) => waitTask(base)(response.taskID, waitRequestOptions));
+      ),
+      (response, waitRequestOptions) => waitTask(base)(response.taskID, waitRequestOptions)
+    );
   };
 };

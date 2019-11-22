@@ -51,7 +51,7 @@ export const chunk = (base: SearchIndex) => {
       });
     };
 
-    return createWaitablePromise(forEachBatch()).onWait((batchResponses, waitRequestOptions) => {
+    return createWaitablePromise(forEachBatch(), (batchResponses, waitRequestOptions) => {
       return Promise.all(
         batchResponses.map(response => waitTask(base)(response.taskID, waitRequestOptions))
       );

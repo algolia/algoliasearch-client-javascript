@@ -11,7 +11,8 @@ export const deleteObject = (base: SearchIndex) => {
     return createWaitablePromise<DeleteResponse>(
       deleteObjects(base)([objectID], requestOptions).then(response => {
         return { taskID: response[0].taskID };
-      })
-    ).onWait((response, waitRequestOptions) => waitTask(base)(response.taskID, waitRequestOptions));
+      }),
+      (response, waitRequestOptions) => waitTask(base)(response.taskID, waitRequestOptions)
+    );
   };
 };

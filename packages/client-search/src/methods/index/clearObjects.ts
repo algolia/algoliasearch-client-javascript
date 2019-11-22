@@ -14,7 +14,8 @@ export const clearObjects = (base: SearchIndex) => {
           path: encode('1/indexes/%s/clear', base.indexName),
         },
         requestOptions
-      )
-    ).onWait((response, waitRequestOptions) => waitTask(base)(response.taskID, waitRequestOptions));
+      ),
+      (response, waitRequestOptions) => waitTask(base)(response.taskID, waitRequestOptions)
+    );
   };
 };

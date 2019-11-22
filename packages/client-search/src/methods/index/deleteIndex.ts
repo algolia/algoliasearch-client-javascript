@@ -14,7 +14,8 @@ export const deleteIndex = (base: SearchIndex) => {
           path: encode('1/indexes/%s', base.indexName),
         },
         requestOptions
-      )
-    ).onWait((response, waitRequestOptions) => waitTask(base)(response.taskID, waitRequestOptions));
+      ),
+      (response, waitRequestOptions) => waitTask(base)(response.taskID, waitRequestOptions)
+    );
   };
 };

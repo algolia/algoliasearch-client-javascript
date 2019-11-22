@@ -29,8 +29,7 @@ describe('awaitable promise', () => {
 
   it('gets the rejection of the wait promise', async () => {
     const response = new Promise(resolve => resolve(original));
-    const waitablePromise = createWaitablePromise(response);
-    waitablePromise.onWait(() => {
+    const waitablePromise = createWaitablePromise(response, () => {
       throw fooError;
     });
     await expect(waitablePromise.wait()).rejects.toEqual({ message: 'Bar not found' });

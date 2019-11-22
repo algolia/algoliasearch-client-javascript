@@ -4,5 +4,5 @@
 
 export * from './AuthModeType';
 export * from './CreateClient';
-export * from './OnWaitClosure';
+export * from './Wait';
 export * from './WaitablePromise';

@@ -17,7 +17,8 @@ export const saveRule = (base: SearchIndex) => {
           data: rule,
         },
         requestOptions
-      )
-    ).onWait((response, waitRequestOptions) => waitTask(base)(response.taskID, waitRequestOptions));
+      ),
+      (response, waitRequestOptions) => waitTask(base)(response.taskID, waitRequestOptions)
+    );
   };
 };

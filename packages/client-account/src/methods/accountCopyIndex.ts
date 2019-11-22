@@ -59,7 +59,7 @@ export const accountCopyIndex = (
     )
     .then(() => Promise.resolve());
 
-  return createWaitablePromise(promise).onWait(() =>
+  return createWaitablePromise(promise, () =>
     Promise.all(responses.map(response => response.wait()))
   );
 };

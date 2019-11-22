@@ -1,10 +1,8 @@
-import { createWaitablePromise, encode, WaitablePromise } from '@algolia/client-common';
+import { createWaitablePromise, encode, Wait, WaitablePromise } from '@algolia/client-common';
 import { MethodEnum } from '@algolia/requester-common';
 import { RequestOptions } from '@algolia/transporter';
 
-import { waitTask } from '..';
-import { IndexOperationResponse, SearchClient } from '../..';
-import { initIndex } from '.';
+import { IndexOperationResponse, initIndex, SearchClient, waitTask } from '../..';
 
 export const moveIndex = (base: SearchClient) => {
   return (
@@ -12,6 +10,12 @@ export const moveIndex = (base: SearchClient) => {
     to: string,
     requestOptions?: RequestOptions
   ): Readonly<WaitablePromise<IndexOperationResponse>> => {
+    const wait: Wait<IndexOperationResponse> = (response, waitRequestOptions) => {
+      return initIndex(base)(from, {
+        methods: { waitTask },
+      }).waitTask(response.taskID, waitRequestOptions);
+    };
+
     return createWaitablePromise<IndexOperationResponse>(
       base.transporter.write(
         {
@@ -23,11 +27,8 @@ export const moveIndex = (base: SearchClient) => {
           },
         },
         requestOptions
-      )
-    ).onWait((response, waitRequestOptions) => {
-      return initIndex(base)(from, {
-        methods: { waitTask },
-      }).waitTask(response.taskID, waitRequestOptions);
-    });
+      ),
+      wait
+    );
   };
 };

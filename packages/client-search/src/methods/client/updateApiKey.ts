@@ -2,7 +2,7 @@ import {
   createRetryablePromise,
   createWaitablePromise,
   encode,
-  OnWaitClosure,
+  Wait,
   WaitablePromise,
 } from '@algolia/client-common';
 import { MethodEnum } from '@algolia/requester-common';
@@ -32,7 +32,7 @@ export const updateApiKey = (base: SearchClient) => {
       'maxHitsPerQuery',
     ];
 
-    const wait: OnWaitClosure<UpdateApiKeyResponse> = (_, waitRequestOptions) =>
+    const wait: Wait<UpdateApiKeyResponse> = (_, waitRequestOptions) =>
       createRetryablePromise(retry => {
         return getApiKey(base)(apiKey, waitRequestOptions).then(getApiKeyResponse => {
           const changed = Object.keys(updatedFields)
@@ -54,7 +54,8 @@ export const updateApiKey = (base: SearchClient) => {
           data,
         },
         requestOptions
-      )
-    ).onWait(wait);
+      ),
+      wait
+    );
   };
 };

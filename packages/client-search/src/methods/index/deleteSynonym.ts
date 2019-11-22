@@ -17,7 +17,8 @@ export const deleteSynonym = (base: SearchIndex) => {
           path: encode('1/indexes/%s/synonyms/%s', base.indexName, objectID),
         },
         requestOptions
-      )
-    ).onWait((response, waitRequestOptions) => waitTask(base)(response.taskID, waitRequestOptions));
+      ),
+      (response, waitRequestOptions) => waitTask(base)(response.taskID, waitRequestOptions)
+    );
   };
 };

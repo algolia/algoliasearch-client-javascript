@@ -1,4 +1,4 @@
-import { createWaitablePromise, WaitablePromise } from '@algolia/client-common';
+import { createWaitablePromise, Wait, WaitablePromise } from '@algolia/client-common';
 import { MethodEnum } from '@algolia/requester-common';
 import { RequestOptions } from '@algolia/transporter';
 
@@ -9,6 +9,16 @@ export const multipleBatch = (base: SearchClient) => {
     requests: readonly BatchRequest[],
     requestOptions?: RequestOptions
   ): Readonly<WaitablePromise<MultipleBatchResponse>> => {
+    const wait: Wait<MultipleBatchResponse> = (response, waitRequestOptions) => {
+      return Promise.all(
+        Object.keys(response.taskID).map(indexName => {
+          return initIndex(base)(indexName, {
+            methods: { waitTask },
+          }).waitTask(response.taskID[indexName], waitRequestOptions);
+        })
+      );
+    };
+
     return createWaitablePromise<MultipleBatchResponse>(
       base.transporter.write(
         {
@@ -19,15 +29,8 @@ export const multipleBatch = (base: SearchClient) => {
           },
         },
         requestOptions
-      )
-    ).onWait((response, waitRequestOptions) =>
-      Promise.all(
-        Object.keys(response.taskID).map(indexName => {
-          return initIndex(base)(indexName, {
-            methods: { waitTask },
-          }).waitTask(response.taskID[indexName], waitRequestOptions);
-        })
-      )
+      ),
+      wait
     );
   };
 };
