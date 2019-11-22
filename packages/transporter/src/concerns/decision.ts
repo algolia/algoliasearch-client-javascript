@@ -1,6 +1,6 @@
 import { Response } from '@algolia/requester-common';
 
-import { Host } from '../types';
+import { Host } from '..';
 
 const isNetworkError = ({ isTimedOut, status }: Response): boolean => {
   return !isTimedOut && ~~status === 0;
@@ -22,25 +22,25 @@ const isSuccess = ({ status }: Response): boolean => {
 export const decision = <TResponse>(
   host: Host,
   response: Response,
-  outcomes: Outcomes
+  outcomes: Outcomes<TResponse>
 ): Readonly<Promise<TResponse>> => {
   if (isRetryable(response)) {
     if (!response.isTimedOut) {
       host.setAsDown();
     }
 
-    return outcomes.retry<TResponse>();
+    return outcomes.onRetry(response);
   }
 
   if (isSuccess(response)) {
-    return outcomes.success<TResponse>();
+    return outcomes.onSucess(response);
   }
 
-  return outcomes.fail<TResponse>();
+  return outcomes.onFail(response);
 };
 
-type Outcomes = {
-  readonly fail: <TResponse>() => Readonly<Promise<TResponse>>;
-  readonly success: <TResponse>() => Readonly<Promise<TResponse>>;
-  readonly retry: <TResponse>() => Readonly<Promise<TResponse>>;
+export type Outcomes<TResponse> = {
+  readonly onFail: (response: Response) => Readonly<Promise<never>>;
+  readonly onSucess: (response: Response) => Readonly<Promise<TResponse>>;
+  readonly onRetry: (response: Response) => Readonly<Promise<TResponse>>;
 };
