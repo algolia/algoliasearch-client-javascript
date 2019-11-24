@@ -11,8 +11,6 @@ import globals from 'rollup-plugin-node-globals';
 import { terser } from 'rollup-plugin-terser';
 import ts from 'rollup-plugin-typescript2';
 
-const browserPackages = ['cache-browser-local-storage', 'requester-browser-xhr'];
-const nodePackages = ['requester-node-http'];
 const defaultInput = 'src/index.ts';
 
 if (!process.env.TARGET) {
@@ -25,7 +23,6 @@ const packagesConfig = [
   'client-account',
   'client-analytics',
   'client-common',
-  'client-search',
   'logger-common',
   'logger-console',
   'requester-common',
@@ -39,7 +36,15 @@ const packagesConfig = [
   };
 });
 
-browserPackages.forEach(packageId => {
+packagesConfig.push({
+  output: 'client-search',
+  package: 'client-search',
+  input: defaultInput,
+  formats: ['esm', 'cjs'],
+  external: ['crypto'],
+});
+
+['cache-browser-local-storage', 'requester-browser-xhr'].forEach(packageId => {
   packagesConfig.push({
     output: packageId,
     package: packageId,
@@ -49,14 +54,12 @@ browserPackages.forEach(packageId => {
   });
 });
 
-nodePackages.forEach(packageId => {
-  packagesConfig.push({
-    output: packageId,
-    package: packageId,
-    input: defaultInput,
-    formats: ['esm', 'cjs'],
-    external: ['https'],
-  });
+packagesConfig.push({
+  output: 'requester-node-http',
+  package: 'requester-node-http',
+  input: defaultInput,
+  formats: ['esm', 'cjs'],
+  external: ['https'],
 });
 
 packagesConfig.push({
@@ -81,10 +84,7 @@ const packagesDir = path.resolve(__dirname, 'packages');
 const aliasOptions = { resolve: ['.ts'] };
 
 fs.readdirSync(packagesDir).forEach(dir => {
-  if (dir === 'algoliasearch') {
-    return;
-  }
-  if (fs.statSync(path.resolve(packagesDir, dir)).isDirectory()) {
+  if (dir !== 'algoliasearch' && fs.statSync(path.resolve(packagesDir, dir)).isDirectory()) {
     aliasOptions[`@algolia/${dir}`] = path.resolve(packagesDir, `${dir}/index`);
   }
 });
@@ -172,6 +172,8 @@ packagesConfig
             tsconfig: path.resolve(__dirname, 'tsconfig.json'),
             cacheRoot: path.resolve(__dirname, 'node_modules/.rts2_cache'),
             tsconfigOverride: {
+              include: ['packages/**/src/**/*.ts'],
+              exclude: ['packages/**/src/__tests__/**/*.ts'],
               compilerOptions: {
                 declaration: !hasTSChecked,
                 declarationMap: !hasTSChecked,
