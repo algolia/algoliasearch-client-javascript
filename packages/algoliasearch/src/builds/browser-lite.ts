@@ -5,23 +5,31 @@ import {
   createSearchClient,
   initIndex,
   multipleQueries,
+  MultipleQueriesOptions,
+  MultipleQueriesQuery,
+  MultipleQueriesResponse,
   multipleSearchForFacetValues,
   search,
+  SearchClient as BaseSearchClient,
   searchForFacetValues,
+  SearchForFacetValuesQueryParams,
+  SearchForFacetValuesResponse,
+  SearchIndex as BaseSearchIndex,
+  SearchOptions,
+  SearchResponse,
 } from '@algolia/client-search';
 import { LogLevelEnum } from '@algolia/logger-common';
 import { createConsoleLogger } from '@algolia/logger-console';
 import { createBrowserXhrRequester } from '@algolia/requester-browser-xhr';
-import { createUserAgent } from '@algolia/transporter';
+import { createUserAgent, RequestOptions } from '@algolia/transporter';
 
 import { AlgoliaSearchOptions } from '../types';
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export default function algoliasearch(
   appId: string,
   apiKey: string,
   options: AlgoliaSearchOptions = {}
-) {
+): SearchClient {
   const logger = createConsoleLogger(options.logLevel || LogLevelEnum.Error);
 
   return createSearchClient({
@@ -46,7 +54,7 @@ export default function algoliasearch(
       searchForFacetValues: multipleSearchForFacetValues,
       multipleQueries,
       multipleSearchForFacetValues,
-      initIndex: base => (indexName: string) => {
+      initIndex: base => (indexName: string): SearchIndex => {
         return initIndex(base)(indexName, {
           methods: { search, searchForFacetValues },
         });
@@ -55,8 +63,32 @@ export default function algoliasearch(
   });
 }
 
-export type SearchClient = ReturnType<typeof algoliasearch>;
-export type SearchIndex = ReturnType<SearchClient['initIndex']>;
+export type SearchIndex = BaseSearchIndex & {
+  readonly search: <TObject>(
+    query: string,
+    requestOptions?: RequestOptions & SearchOptions
+  ) => Readonly<Promise<SearchResponse<TObject>>>;
+  readonly searchForFacetValues: (
+    facetName: string,
+    facetQuery: string,
+    requestOptions?: RequestOptions & SearchOptions
+  ) => Readonly<Promise<SearchForFacetValuesResponse>>;
+};
+
+export type SearchClient = BaseSearchClient & {
+  readonly initIndex: (indexName: string) => SearchIndex;
+  readonly search: <TObject>(
+    queries: readonly MultipleQueriesQuery[],
+    requestOptions?: RequestOptions & MultipleQueriesOptions
+  ) => Readonly<Promise<MultipleQueriesResponse<TObject>>>;
+  readonly searchForFacetValues: (
+    queries: ReadonlyArray<{
+      readonly indexName: string;
+      readonly params: SearchForFacetValuesQueryParams & SearchOptions;
+    }>,
+    requestOptions?: RequestOptions
+  ) => Readonly<Promise<readonly SearchForFacetValuesResponse[]>>;
+};
 
 export * from '../types';
 
