@@ -22,7 +22,7 @@ export const browseRules = (base: SearchIndex) => {
     return createBrowsablePromise<Rule>({
       ...options,
       shouldStop: response => response.hits.length < options.hitsPerPage,
-      request: data => {
+      request(data) {
         return searchRules(base)('', { ...requestOptions, ...data }).then(
           (response): BrowseResponse<Rule> => {
             return {

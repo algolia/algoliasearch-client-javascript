@@ -51,7 +51,7 @@ export function execute<TResponse>(
 
     const decisions: Outcomes<TResponse> = {
       onSucess: response => deserializeSuccess(response),
-      onRetry: response => {
+      onRetry(response) {
         const stackFrame: StackFrame = {
           request: payload,
           response,
@@ -72,7 +72,7 @@ export function execute<TResponse>(
           transporter.hostsCache.set({ url: host.url }, host),
         ]).then(() => retry(hosts));
       },
-      onFail: response => {
+      onFail(response) {
         throw deserializeFailure(response);
       },
     };

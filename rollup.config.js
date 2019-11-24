@@ -189,7 +189,7 @@ packagesConfig
           }),
         ],
         output,
-        onwarn: (msg, warn) => {
+        onwarn(msg, warn) {
           if (!/Circular/.test(msg)) {
             warn(msg);
           }

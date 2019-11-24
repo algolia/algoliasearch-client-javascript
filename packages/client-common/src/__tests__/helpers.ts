@@ -4,7 +4,7 @@ export function createMultiWaitable(
   responses: Array<Readonly<WaitablePromise<any>>>
 ): MultiWaitable {
   return {
-    wait: async () => {
+    async wait() {
       for (let i = 0; i < responses.length; i++) {
         await responses[i].wait();
       }

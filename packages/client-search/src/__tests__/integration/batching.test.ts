@@ -33,7 +33,7 @@ test(testSuite.testName, async () => {
 
   let objects: ObjectWithObjectID[] = [];
   await index.browseObjects({
-    batch: objectsBatch => {
+    batch(objectsBatch) {
       objects = objects.concat(objectsBatch);
     },
   });

@@ -1,7 +1,6 @@
-import { AuthMode, AuthModeType } from '.';
+import { Auth, AuthMode, AuthModeType } from '.';
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export function createAuth(authMode: AuthModeType, appId: string, apiKey: string) {
+export function createAuth(authMode: AuthModeType, appId: string, apiKey: string): Auth {
   const credentials = {
     'x-algolia-api-key': apiKey,
     'x-algolia-application-id': appId,

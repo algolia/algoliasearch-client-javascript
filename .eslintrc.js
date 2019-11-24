@@ -19,6 +19,11 @@ module.exports = {
         printWidth: 100
       }
     ],
+    "object-shorthand": [
+      "error",
+      "always",
+      { avoidExplicitReturnArrows: true }
+    ],
     "lines-between-class-members": ["error", "always"],
     "newline-before-return": ["error"],
     "import/no-extraneous-dependencies": [

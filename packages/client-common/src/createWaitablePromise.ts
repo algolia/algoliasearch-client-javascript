@@ -10,7 +10,7 @@ export function createWaitablePromise<TResponse>(
 ): Readonly<WaitablePromise<TResponse>> {
   // eslint-disable-next-line functional/immutable-data
   return Object.assign(promise, {
-    wait: (requestOptions?: RequestOptions): Readonly<WaitablePromise<TResponse>> => {
+    wait(requestOptions?: RequestOptions): Readonly<WaitablePromise<TResponse>> {
       return createWaitablePromise<TResponse>(
         promise
           .then(response => Promise.all([wait(response, requestOptions), response]))

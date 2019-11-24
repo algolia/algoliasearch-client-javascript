@@ -22,7 +22,7 @@ export const browseSynonyms = (base: SearchIndex) => {
     return createBrowsablePromise<Synonym>({
       ...options,
       shouldStop: response => response.hits.length < options.hitsPerPage,
-      request: data => {
+      request(data) {
         return searchSynonyms(base)('', { ...requestOptions, ...data }).then(
           (response): BrowseResponse<Synonym> => {
             return {
