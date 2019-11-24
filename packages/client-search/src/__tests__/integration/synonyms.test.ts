@@ -76,7 +76,7 @@ test(testSuite.testName, async () => {
 
   expect((await index.searchSynonyms('')).nbHits).toEqual(5);
 
-  let synonymsFromBrowse = [];
+  let synonymsFromBrowse: Synonym[] = [];
   await index.browseSynonyms({
     batch: synonymsBatch => (synonymsFromBrowse = synonymsFromBrowse.concat(synonymsBatch)),
   });
@@ -87,7 +87,7 @@ test(testSuite.testName, async () => {
     expect(synonyms).toContainEqual(synonym);
   });
 
-  let emptySynonyms = [];
+  let emptySynonyms: Synonym[] = [];
   await index.browseSynonyms({
     query: 'GHJKLHGHJKLKJH',
     batch: synomyBatch => (emptySynonyms = emptySynonyms.concat(synomyBatch)),

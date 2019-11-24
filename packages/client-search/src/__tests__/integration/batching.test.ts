@@ -1,4 +1,5 @@
 import { TestSuite } from '../../../../client-common/src/__tests__/TestSuite';
+import { ObjectWithObjectID } from '../../types';
 
 const testSuite = new TestSuite('batching');
 
@@ -30,7 +31,7 @@ test(testSuite.testName, async () => {
 
   expect((await index.search('', { cacheable: false })).nbHits).toBe(6);
 
-  let objects = [];
+  let objects: ObjectWithObjectID[] = [];
   await index.browseObjects({
     batch: objectsBatch => {
       objects = objects.concat(objectsBatch);

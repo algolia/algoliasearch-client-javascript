@@ -18,7 +18,8 @@ import {
 export const addApiKey = (base: SearchClient) => {
   return (
     acl: readonly string[],
-    requestOptions?: AddApiKeyOptions & RequestOptions
+    requestOptions?: AddApiKeyOptions &
+      Pick<RequestOptions, Exclude<keyof RequestOptions, 'queryParameters'>>
   ): Readonly<WaitablePromise<AddApiKeyResponse>> => {
     const queryParameters = popRequestOption<string | undefined>(requestOptions, 'queryParameters');
 

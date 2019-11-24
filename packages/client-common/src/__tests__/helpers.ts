@@ -1,6 +1,8 @@
 import { WaitablePromise } from '../..';
 
-export function createMultiWaitable(responses: Array<WaitablePromise<any>>): MultiWaitable {
+export function createMultiWaitable(
+  responses: Array<Readonly<WaitablePromise<any>>>
+): MultiWaitable {
   return {
     wait: async () => {
       for (let i = 0; i < responses.length; i++) {

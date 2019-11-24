@@ -9,9 +9,10 @@ import {
   SearchIndex,
   SearchOptions,
 } from '../..';
+import { ObjectWithObjectID } from '../../types';
 
 export const browseObjects = (base: SearchIndex) => {
-  return <TObject extends object>(
+  return <TObject extends ObjectWithObjectID>(
     requestOptions?: SearchOptions & BrowseOptions<TObject> & RequestOptions
   ): Readonly<Promise<void>> => {
     return createBrowsablePromise<TObject>({

@@ -1,14 +1,13 @@
-import { HasDelete } from '@algolia/client-search';
-
 import { default as algoliasearchForBrowser } from '../../../algoliasearch/src/builds/browser';
-import { default as algoliasearchForNode } from '../../../algoliasearch/src/builds/node';
+import {
+  default as algoliasearchForNode,
+  SearchIndex,
+} from '../../../algoliasearch/src/builds/node';
 
 /* eslint functional/no-class: 0 */
 export class TestSuite {
   public readonly testName: string;
 
-  // @ts-ignore
-  // eslint-disable-next-line no-undef
   public readonly isBrowser: boolean = testing.isBrowser();
 
   // @ts-ignore
@@ -16,7 +15,7 @@ export class TestSuite {
     ? algoliasearchForBrowser
     : algoliasearchForNode;
 
-  public indices: HasDelete[];
+  public indices: SearchIndex[];
 
   public async cleanUp(): Promise<void> {
     for (const index of this.indices) {
@@ -28,7 +27,7 @@ export class TestSuite {
   public constructor(testName?: string) {
     this.ensureEnvironmentVariables();
 
-    this.testName = testName;
+    this.testName = testName || '';
     this.indices = [];
   }
 
@@ -77,8 +76,6 @@ export class TestSuite {
   }
 
   public makeInstanceName(): string {
-    // @ts-ignore
-    // eslint-disable-next-line no-undef
     const environment = testing.environment();
     const nodeVersion = process.versions.node;
     const jobNumber = process.env.CIRCLE_BUILD_NUM;

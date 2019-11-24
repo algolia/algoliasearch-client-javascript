@@ -1,6 +1,7 @@
 import { createFaker } from '../../../../client-common/src/__tests__/createFaker';
 import { createMultiWaitable } from '../../../../client-common/src/__tests__/helpers';
 import { TestSuite } from '../../../../client-common/src/__tests__/TestSuite';
+import { ObjectWithObjectID } from '../../types';
 
 const testSuite = new TestSuite('indexing');
 
@@ -120,7 +121,7 @@ test(testSuite.testName, async () => {
   expect(await index.getObject('object3')).toEqual(updatedObject3);
   expect(await index.getObject('object4')).toEqual(updatedObject4);
 
-  let objects1 = [];
+  let objects1: ObjectWithObjectID[] = [];
   await index.browseObjects({
     batch: objectsBatch => (objects1 = objects1.concat(objectsBatch)),
   });
@@ -142,7 +143,7 @@ test(testSuite.testName, async () => {
   await index.clearObjects().wait();
   expect((await index.search('', { cacheable: false })).nbHits).toBe(0);
 
-  let objects2 = [];
+  let objects2: ObjectWithObjectID[] = [];
   await index.browseObjects({
     batch: objectsBatch => (objects2 = objects2.concat(objectsBatch)),
   });

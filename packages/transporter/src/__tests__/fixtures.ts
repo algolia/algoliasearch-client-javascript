@@ -41,24 +41,21 @@ export function createFixtures() {
         { url: 'read-and-write.com', accept: CallEnum.Any },
       ]);
 
-      transporter.requester = requester;
-      transporter.hostsCache = createNullCache();
-      transporter.requestsCache = createNullCache();
-      transporter.responsesCache = createNullCache();
-      transporter.headers = {
-        'X-Default-Header': 'Default value',
-      };
-      transporter.queryParameters = {};
-      transporter.timeouts = {
-        read: 2,
-        write: 30,
-      };
-
-      Object.keys(options).forEach(property => {
-        transporter[property] = options[property];
+      return Object.assign(transporter, {
+        requester,
+        hostsCache: createNullCache(),
+        requestsCache: createNullCache(),
+        responsesCache: createNullCache(),
+        headers: {
+          'X-Default-Header': 'Default value',
+        },
+        queryParameters: {},
+        timeouts: {
+          read: 2,
+          write: 30,
+        },
+        ...options,
       });
-
-      return transporter;
     },
 
     transporterRequest() {
@@ -71,15 +68,26 @@ export function createFixtures() {
     },
 
     readRequest(options: any = {}) {
-      return this.request({ timeout: 2, url: 'https://read.com/save', ...options });
+      return this.request({
+        timeout: 2,
+        url: 'https://read.com/save',
+        ...options,
+      });
     },
 
     writeRequest(options: any = {}) {
-      return this.request({ timeout: 30, url: 'https://write.com/save', ...options });
+      return this.request({
+        timeout: 30,
+        url: 'https://write.com/save',
+        ...options,
+      });
     },
 
     writeAndWriteRequest(options: any = {}) {
-      return this.request({ url: 'https://read-and-write.com/save', ...options });
+      return this.request({
+        url: 'https://read-and-write.com/save',
+        ...options,
+      });
     },
 
     request(options: any = {}) {

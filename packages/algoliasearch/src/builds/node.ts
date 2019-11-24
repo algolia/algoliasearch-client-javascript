@@ -196,4 +196,8 @@ export default function algoliasearch(appId: string, apiKey: string) {
   });
 }
 
+export type SearchClient = ReturnType<typeof algoliasearch>;
+export type SearchIndex = ReturnType<SearchClient['initIndex']>;
+export type AnalyticsClient = ReturnType<SearchClient['initAnalytics']>;
+
 export * from '../types';

@@ -9,7 +9,7 @@ export type SecuredApiKeyRestrictions = SearchOptions & {
   /**
    * List of index names that can be queried.
    */
-  readonly restrictIndices?: readonly string[];
+  readonly restrictIndices?: readonly string[] | string;
 
   /**
    * IPv4 network allowed to use the generated key. This is used for more protection against API key leaking and reuse.

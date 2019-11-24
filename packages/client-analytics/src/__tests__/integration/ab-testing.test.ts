@@ -9,7 +9,8 @@ const testSuite = new TestSuite('ab_testing');
 
 afterAll(() => testSuite.cleanUp());
 
-test(testSuite.testName, async () => {
+// eslint-disable-next-line jest/no-test-callback
+test(testSuite.testName, async done => {
   const index1 = testSuite.makeIndex();
   const index2 = testSuite.makeIndex();
   const client = testSuite.makeSearchClient().initAnalytics();
@@ -35,7 +36,11 @@ test(testSuite.testName, async () => {
   const abTest: ABTest = {
     name: abTestName,
     variants: [
-      { index: index1.indexName, trafficPercentage: 60, description: 'a description' },
+      {
+        index: index1.indexName,
+        trafficPercentage: 60,
+        description: 'a description',
+      },
       { index: index2.indexName, trafficPercentage: 40 },
     ],
     endAt: new Date(today.getTime() + 24 * 3600 * 1000).toISOString(),
@@ -43,21 +48,21 @@ test(testSuite.testName, async () => {
 
   const abTestID = (await client.addABTest(abTest)).abTestID;
 
-  const compareVariants = (got: readonly Variant[], expected: Variant[]) => {
+  const compareVariants = (got: readonly Variant[], expected: readonly Variant[]) => {
     const convertedVariants = got.map(v => {
-      const convertedVariant: Variant = {
+      const hasDescription = v.description && v.description.length !== 0;
+
+      return {
         index: v.index,
         trafficPercentage: v.trafficPercentage,
+        ...(hasDescription ? { description: v.description } : {}),
       };
-
-      if (v.description && v.description.length !== 0) {
-        convertedVariant.description = v.description;
-      }
-
-      return convertedVariant;
     });
 
-    expect(convertedVariants).toEqual(expect.arrayContaining(expected));
+    expect(convertedVariants).toEqual(
+      // @ts-ignore
+      expect.arrayContaining<Variant>(expected)
+    );
     expect(expected).toEqual(expect.arrayContaining(convertedVariants));
   };
 
@@ -78,7 +83,8 @@ test(testSuite.testName, async () => {
   // corresponds to the original one
   {
     const all = await client.getABTests();
-    const found = all.abtests.find(t => t.abTestID === abTestID);
+    const found = all.abtests.find(t => t.abTestID === abTestID) || done.fail('AB test not found.');
+
     expect(found.abTestID).toBe(abTestID);
     expect(found.name).toBe(abTest.name);
     compareDateStrings(found.endAt, abTest.endAt);
@@ -90,7 +96,9 @@ test(testSuite.testName, async () => {
   await index1.waitTask(stopABTestResponse.taskID);
 
   // Check the AB test still exists but is stopped
-  await expect(client.getABTest(abTestID)).resolves.toMatchObject({ status: 'stopped' });
+  await expect(client.getABTest(abTestID)).resolves.toMatchObject({
+    status: 'stopped',
+  });
 
   // Delete the AB test
   const deleteABTestResponse = await client.deleteABTest(abTestID);

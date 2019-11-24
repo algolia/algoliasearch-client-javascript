@@ -19,7 +19,7 @@ import { createDestinationIndiceExistsError } from '../errors/createDestinationI
 export const accountCopyIndex = (
   source: SearchIndex,
   destination: SearchIndex,
-  requestOptions: RequestOptions
+  requestOptions?: RequestOptions
 ): WaitablePromise<void> => {
   // eslint-disable-next-line functional/prefer-readonly-type
   const responses: Array<WaitablePromise<any>> = [];

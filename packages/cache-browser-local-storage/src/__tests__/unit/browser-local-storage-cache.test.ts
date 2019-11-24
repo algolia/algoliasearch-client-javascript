@@ -12,10 +12,14 @@ const notAvailableStorage: Storage = {
   removeItem(_key) {
     throw new Error('Component is not available');
   },
+  // @ts-ignore
   get length() {
     throw new Error('Component is not available');
   },
   key(_i) {
+    throw new Error('Component is not available');
+  },
+  clear() {
     throw new Error('Component is not available');
   },
 };

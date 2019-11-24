@@ -55,6 +55,9 @@ export default function algoliasearch(
   });
 }
 
+export type SearchClient = ReturnType<typeof algoliasearch>;
+export type SearchIndex = ReturnType<SearchClient['initIndex']>;
+
 export * from '../types';
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-assertions, functional/immutable-data

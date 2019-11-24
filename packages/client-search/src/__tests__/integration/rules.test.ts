@@ -93,7 +93,7 @@ test(testSuite.testName, async () => {
     searchResult.hits.find((rule: Rule) => rule.objectID === ruleToSave4.objectID)
   ).toMatchObject(ruleToSave4);
 
-  let rulesFromBrowse = [];
+  let rulesFromBrowse: Rule[] = [];
   await index.browseRules({
     batch: rulesBatch => (rulesFromBrowse = rulesFromBrowse.concat(rulesBatch)),
   });
@@ -112,7 +112,7 @@ test(testSuite.testName, async () => {
     rulesFromBrowse.find((rule: Rule) => rule.objectID === ruleToSave4.objectID)
   ).toMatchObject(ruleToSave4);
 
-  let emptyRules = [];
+  let emptyRules: Rule[] = [];
   await index.browseRules({
     query: 'FGHJKLVFGBHJKJHBGVF',
     batch: ruleBatch => (emptyRules = emptyRules.concat(ruleBatch)),
@@ -128,6 +128,6 @@ test(testSuite.testName, async () => {
 
   await index.clearRules().wait();
 
-  const searchResultAfterClear = await index.searchRules();
+  const searchResultAfterClear = await index.searchRules('');
   expect(searchResultAfterClear.nbHits).toBe(0);
 });

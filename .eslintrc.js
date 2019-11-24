@@ -86,5 +86,9 @@ module.exports = {
         "jest/expect-expect": 0
       }
     }
-  ]
+  ],
+  globals: {
+    testing: "readonly",
+    browser: "readonly"
+  }
 };

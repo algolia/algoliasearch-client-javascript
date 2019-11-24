@@ -14,8 +14,16 @@ test(testSuite.testName, async () => {
   responses.push(
     index.saveObjects(
       [
-        { objectID: 'julien-lemoine', company: 'Algolia', name: 'Julien Lemoine' },
-        { objectID: 'nicolas-dessaigne', company: 'Algolia', name: 'Nicolas Dessaigne' },
+        {
+          objectID: 'julien-lemoine',
+          company: 'Algolia',
+          name: 'Julien Lemoine',
+        },
+        {
+          objectID: 'nicolas-dessaigne',
+          company: 'Algolia',
+          name: 'Nicolas Dessaigne',
+        },
         { company: 'Amazon', name: 'Jeff Bezos' },
         { company: 'Apple', name: 'Steve Jobs' },
         { company: 'Apple', name: 'Steve Wozniak' },
@@ -38,7 +46,12 @@ test(testSuite.testName, async () => {
 
   await createMultiWaitable(responses).wait();
 
-  let searchResponse = await index.search('algolia');
+  type TObject = {
+    company: string;
+    name: string;
+  };
+
+  let searchResponse = await index.search<TObject>('algolia');
 
   expect(searchResponse.hits).toHaveLength(2);
 
@@ -52,7 +65,7 @@ test(testSuite.testName, async () => {
     page: 0,
   });
 
-  const cb = obj => obj.company === 'Apple';
+  const cb = (obj: any) => obj.company === 'Apple';
 
   await expect(index.findObject(cb, { query: 'algolia' })).rejects.toEqual(
     createObjectNotFoundError()

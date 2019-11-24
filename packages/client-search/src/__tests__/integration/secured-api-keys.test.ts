@@ -12,7 +12,7 @@ test(testSuite.testName, async () => {
   const index2 = testSuite.makeIndex();
 
   await index1.saveObject({ objectID: 'one' }).wait();
-  const securedApiKey = await client.generateSecuredApiKey(process.env.ALGOLIA_SEARCH_KEY_1, {
+  const securedApiKey = await client.generateSecuredApiKey(process.env.ALGOLIA_SEARCH_KEY_1 || '', {
     validUntil: Math.round(new Date().getTime() / 1000) + 60,
     restrictIndices: index1.indexName,
   });
@@ -41,7 +41,7 @@ test(testSuite.testName, async () => {
   expect(client.getSecuredApiKeyRemainingValidity(securedApiKey)).toBeGreaterThan(0);
 
   const expiredSecuredApiKey = await client.generateSecuredApiKey(
-    process.env.ALGOLIA_SEARCH_KEY_1,
+    process.env.ALGOLIA_SEARCH_KEY_1 || '',
     {
       validUntil: Math.round(new Date().getTime() / 1000) - 60,
       restrictIndices: index1.indexName,

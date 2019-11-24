@@ -59,7 +59,7 @@
     "eslint-plugin-jest": "^23.0.4",
     "eslint-plugin-prettier": "^3.1.0",
     "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-simple-import-sort": "^4.0.0",
+    "eslint-plugin-simple-import-sort": "^5.0.0",
     "eslint-plugin-sonarjs": "^0.5.0",
     "eslint-plugin-wdio": "^5.12.1",
     "husky": "^3.0.4",
@@ -96,19 +96,19 @@
   "bundlesize": [
     {
       "path": "packages/algoliasearch/dist/algoliasearch.umd.js",
-      "maxSize": "5.24KB"
+      "maxSize": "6.55KB"
     },
     {
       "path": "packages/algoliasearch/dist/algoliasearch.esm-browser.js",
-      "maxSize": "5.16KB"
+      "maxSize": "5.62KB"
     },
     {
       "path": "packages/algoliasearch/dist/algoliasearch-lite.umd.js",
-      "maxSize": "2.81KB"
+      "maxSize": "3.45KB"
     },
     {
       "path": "packages/algoliasearch/dist/algoliasearch-lite.esm-browser.js",
-      "maxSize": "2.73KB"
+      "maxSize": "2.91KB"
     }
   ]
 }

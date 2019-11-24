@@ -2,7 +2,7 @@ import { UserIDResponse } from '.';
 
 export type GetTopUserIDsResponse = {
   /**
-   * List of users id
+   * Mapping of cluster names to top users.
    */
-  readonly userIDs: readonly UserIDResponse[];
+  readonly topUsers: { readonly [key: string]: readonly UserIDResponse[] };
 };
