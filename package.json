@@ -107,7 +107,7 @@
     "eslint": "^1.7.3",
     "eslint-config-airbnb": "^0.1.0",
     "eslint-config-algolia": "4.2.0",
-    "eslint-plugin-react": "^3.6.3",
+    "eslint-plugin-react": "^5.2.2",
     "express": "^4.15.3",
     "faux-jax": "^5.0.6",
     "http-proxy": "^1.13.3",
