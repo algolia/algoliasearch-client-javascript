@@ -17,10 +17,16 @@ async function buildDefinitions() {
       })
     )
   );
-  await Promise.all(targets.map(target => buildDefinition(target)));
+  await Promise.all(
+    targets.map(target => buildDefinition(target)).concat(buildDefinition('algoliasearch', 'lite'))
+  );
+
+  await Promise.all(
+    targets.map(target => fs.remove(path.resolve(`packages/${target}/dist/packages`)))
+  );
 }
 
-async function buildDefinition(target) {
+async function buildDefinition(target, config = '') {
   const pkgDir = path.resolve(`packages/${target}`);
   const pkg = require(`${pkgDir}/package.json`);
 
@@ -30,7 +36,10 @@ async function buildDefinition(target) {
   // build types
   const { Extractor, ExtractorConfig } = require('@microsoft/api-extractor');
 
-  const extractorConfigPath = path.resolve(pkgDir, `api-extractor.json`);
+  const extractorConfigPath = path.resolve(
+    pkgDir,
+    `api-extractor${config ? `-${config}` : ''}.json`
+  );
   const extractorConfig = ExtractorConfig.loadFileAndPrepare(extractorConfigPath);
   const result = Extractor.invoke(extractorConfig, {
     localBuild: true,
@@ -38,7 +47,6 @@ async function buildDefinition(target) {
   });
 
   if (result.succeeded) {
-    // concat additional d.ts to rolled-up dts (mostly for JSX)
     if (pkg.buildOptions && pkg.buildOptions.dts) {
       const dtsPath = path.resolve(pkgDir, pkg.types);
       const existing = await fs.readFile(dtsPath, 'utf-8');
@@ -58,6 +66,4 @@ async function buildDefinition(target) {
     // eslint-disable-next-line functional/immutable-data
     process.exitCode = 1;
   }
-
-  await fs.remove(`${pkgDir}/dist/packages`);
 }

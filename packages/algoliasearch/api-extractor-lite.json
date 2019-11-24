@@ -1,0 +1,7 @@
+{
+  "extends": "../../api-extractor.json",
+  "mainEntryPointFilePath": "./dist/packages/algoliasearch/src/builds/browser-lite.d.ts",
+  "dtsRollup": {
+    "untrimmedFilePath": "./dist/algoliasearch-lite.d.ts"
+  }
+}

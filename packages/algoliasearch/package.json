@@ -13,7 +13,7 @@
     "./index.js": "./dist/algoliasearch.umd.js",
     "./lite.js": "./dist/algoliasearch-lite.umd.js"
   },
-  "types": "dist/algoliasearch.d.ts",
+  "types": "index.d.ts",
   "dependencies": {
     "@algolia/cache-browser-local-storage": "4.0.0-alpha.20",
     "@algolia/cache-common": "4.0.0-alpha.20",
