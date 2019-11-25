@@ -1,7 +1,7 @@
 import { CallType, Host } from '.';
 
 export function createHost(url: string, accept: CallType): Host {
-  const ttl = 3000;
+  const ttl = 300 * 1000;
 
   const host: Host = {
     url,
