@@ -17,10 +17,16 @@ describe('user agent', () => {
       }).value
     ).toEqual('Algolia for JavaScript (1.0.0); JS Helper (2.0.0)');
 
+    expect(userAgent.value).toEqual('Algolia for JavaScript (1.0.0); JS Helper (2.0.0)');
+
     expect(
       userAgent.add({
         segment: 'React Native (3.0.0)',
       }).value
     ).toEqual('Algolia for JavaScript (1.0.0); JS Helper (2.0.0); React Native (3.0.0)');
+
+    expect(userAgent.value).toEqual(
+      'Algolia for JavaScript (1.0.0); JS Helper (2.0.0); React Native (3.0.0)'
+    );
   });
 });

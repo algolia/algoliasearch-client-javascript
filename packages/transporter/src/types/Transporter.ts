@@ -23,7 +23,10 @@ export type Transporter = {
   readonly userAgent: UserAgent;
   readonly headers: Headers;
   readonly queryParameters: QueryParameters;
-  readonly hosts: readonly Host[];
+  /**
+   * @readonly
+   */
+  hosts: readonly Host[]; // eslint-disable-line functional/prefer-readonly-type
   readonly addHeaders: (headers: Headers) => void;
   readonly addQueryParameters: (queryParameters: QueryParameters) => void;
   readonly setHosts: (

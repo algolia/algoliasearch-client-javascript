@@ -46,7 +46,6 @@ export function createTransporter(options: TransporterOptions): Transporter {
       Object.assign(transporter.queryParameters, queryParameters);
     },
     setHosts(values: ReadonlyArray<{ readonly url: string; readonly accept: CallType }>): void {
-      // @ts-ignore
       // eslint-disable-next-line functional/immutable-data
       transporter.hosts = values.map(host => createHost(host.url, host.accept));
     },
