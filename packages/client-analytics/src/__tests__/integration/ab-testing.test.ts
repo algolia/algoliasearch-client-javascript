@@ -10,7 +10,7 @@ const testSuite = new TestSuite('ab_testing');
 afterAll(() => testSuite.cleanUp());
 
 // eslint-disable-next-line jest/no-test-callback
-test(testSuite.testName, async done => {
+test(testSuite.testName, async () => {
   const index1 = testSuite.makeIndex();
   const index2 = testSuite.makeIndex();
   const client = testSuite.makeSearchClient().initAnalytics();
@@ -83,7 +83,10 @@ test(testSuite.testName, async done => {
   // corresponds to the original one
   {
     const all = await client.getABTests();
-    const found = all.abtests.find(t => t.abTestID === abTestID) || done.fail('AB test not found.');
+    const found = all.abtests.find(t => t.abTestID === abTestID);
+    if (found === undefined) {
+      throw new Error('Ab test not found.');
+    }
 
     expect(found.abTestID).toBe(abTestID);
     expect(found.name).toBe(abTest.name);
