@@ -6,11 +6,21 @@ describe('user agent', () => {
   });
 
   it('allows to add other api clients', () => {
+    const userAgent = createUserAgent('1.0.0');
+
+    expect(userAgent.value).toEqual('Algolia for JavaScript (1.0.0)');
+
     expect(
-      createUserAgent('1.0.0').add({
-        segment: 'React Native',
+      userAgent.add({
+        segment: 'JS Helper',
         version: '2.0.0',
       }).value
-    ).toEqual('Algolia for JavaScript (1.0.0); React Native (2.0.0)');
+    ).toEqual('Algolia for JavaScript (1.0.0); JS Helper (2.0.0)');
+
+    expect(
+      userAgent.add({
+        segment: 'React Native (3.0.0)',
+      }).value
+    ).toEqual('Algolia for JavaScript (1.0.0); JS Helper (2.0.0); React Native (3.0.0)');
   });
 });

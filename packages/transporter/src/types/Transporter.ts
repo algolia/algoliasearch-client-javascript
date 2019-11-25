@@ -24,7 +24,6 @@ export type Transporter = {
   readonly headers: Headers;
   readonly queryParameters: QueryParameters;
   readonly hosts: readonly Host[];
-  readonly addUserAgent: (segment: string, version?: string) => void;
   readonly addHeaders: (headers: Headers) => void;
   readonly addQueryParameters: (queryParameters: QueryParameters) => void;
   readonly setHosts: (

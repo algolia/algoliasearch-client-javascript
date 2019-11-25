@@ -37,11 +37,6 @@ export function createTransporter(options: TransporterOptions): Transporter {
     // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
     queryParameters: {} as QueryParameters,
     hosts: [] as readonly Host[],
-    addUserAgent(segment: string, version?: string): void {
-      // @ts-ignore
-      // eslint-disable-next-line functional/immutable-data
-      transporter.userAgent = options.userAgent.add({ segment, version });
-    },
     addHeaders(headers: Headers): void {
       // eslint-disable-next-line functional/immutable-data
       Object.assign(transporter.headers, headers);

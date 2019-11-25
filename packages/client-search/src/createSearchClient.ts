@@ -39,7 +39,7 @@ export const createSearchClient: CreateClient<
     transporter,
     appId,
     addAlgoliaAgent(segment: string, version?: string): void {
-      transporter.addUserAgent(segment, version);
+      transporter.userAgent.add({ segment, version });
     },
   };
 
