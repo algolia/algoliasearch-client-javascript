@@ -3,6 +3,7 @@
 import { createBrowserLocalStorageCache } from '@algolia/cache-browser-local-storage';
 import { createNullCache } from '@algolia/cache-common';
 import { createInMemoryCache } from '@algolia/cache-in-memory';
+import { version } from '@algolia/client-common/src';
 import { anything, spy, verify, when } from 'ts-mockito';
 
 import { createFakeRequester, createFixtures } from '../fixtures';
@@ -12,10 +13,12 @@ transporterRequest.cacheable = true;
 
 const drivers = [createNullCache, createInMemoryCache];
 
+const createBrowserLocalStorageCacheFunction = () => createBrowserLocalStorageCache(version);
+
 // @ts-ignore
 // eslint-disable-next-line no-undef
 if (testing.isBrowser()) {
-  drivers.push(createBrowserLocalStorageCache);
+  drivers.push(createBrowserLocalStorageCacheFunction);
 }
 
 describe('request cache integration with cache drivers', () => {
@@ -23,7 +26,7 @@ describe('request cache integration with cache drivers', () => {
     // @ts-ignore
     // eslint-disable-next-line no-undef
     if (testing.isBrowser()) {
-      await createBrowserLocalStorageCache().clear();
+      await createBrowserLocalStorageCache(version).clear();
     }
   });
 
@@ -31,12 +34,12 @@ describe('request cache integration with cache drivers', () => {
     'in-progress': {
       [createNullCache.name]: 13,
       [createInMemoryCache.name]: 4,
-      [createBrowserLocalStorageCache.name]: 4,
+      [createBrowserLocalStorageCacheFunction.name]: 4,
     },
     resolved: {
       [createNullCache.name]: 10,
       [createInMemoryCache.name]: 10,
-      [createBrowserLocalStorageCache.name]: 10,
+      [createBrowserLocalStorageCacheFunction.name]: 10,
     },
   };
 

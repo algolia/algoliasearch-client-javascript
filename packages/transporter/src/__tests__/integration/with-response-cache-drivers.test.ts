@@ -3,6 +3,7 @@
 import { createBrowserLocalStorageCache } from '@algolia/cache-browser-local-storage';
 import { createNullCache } from '@algolia/cache-common';
 import { createInMemoryCache } from '@algolia/cache-in-memory';
+import { version } from '@algolia/client-common/src';
 import { anything, spy, verify, when } from 'ts-mockito';
 
 import { createFakeRequester, createFixtures } from '../fixtures';
@@ -16,28 +17,29 @@ describe('response cache integration with cache drivers', () => {
     // @ts-ignore
     // eslint-disable-next-line no-undef
     if (testing.isBrowser()) {
-      await createBrowserLocalStorageCache().clear();
+      await createBrowserLocalStorageCache(version).clear();
     }
   });
 
   const drivers = [createNullCache, createInMemoryCache];
+  const createBrowserLocalStorageCacheFunction = () => createBrowserLocalStorageCache(version);
 
   // @ts-ignore
   // eslint-disable-next-line no-undef
   if (testing.isBrowser()) {
-    drivers.push(createBrowserLocalStorageCache);
+    drivers.push(createBrowserLocalStorageCacheFunction);
   }
 
   const expectedCalls = {
     '2xx': {
       [createNullCache.name]: 16,
       [createInMemoryCache.name]: 7,
-      [createBrowserLocalStorageCache.name]: 7,
+      [createBrowserLocalStorageCacheFunction.name]: 7,
     },
     '4xx': {
       [createNullCache.name]: 10,
       [createInMemoryCache.name]: 10,
-      [createBrowserLocalStorageCache.name]: 10,
+      [createBrowserLocalStorageCacheFunction.name]: 10,
     },
   };
 

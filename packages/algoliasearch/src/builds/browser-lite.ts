@@ -43,7 +43,7 @@ export default function algoliasearch(
     logger,
     responsesCache: createInMemoryCache(),
     requestsCache: createInMemoryCache(),
-    hostsCache: createBrowserLocalStorageCache(logger),
+    hostsCache: createBrowserLocalStorageCache(version, logger),
     userAgent: createUserAgent(version).add({
       segment: 'Browser',
       version: 'lite',

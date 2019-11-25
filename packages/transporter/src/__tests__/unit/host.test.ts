@@ -16,7 +16,7 @@ describe('host', () => {
 
     host.setAsDown();
 
-    host.downDate = host.downDate - 3000 + 10; // not up yet.
+    host.downDate = host.downDate - 300 * 1000 + 10; // not up yet.
 
     expect(host.isUp()).toBe(false);
     expect(host.up).toBe(false);
