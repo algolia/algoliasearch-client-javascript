@@ -10,7 +10,14 @@ const targets = fs.readdirSync('packages').filter(f => fs.statSync(`packages/${f
 run();
 
 async function run() {
-  await Promise.all(targets.map(target => build(target)));
+  if (process.env.CIRCLE_BUILD_NUM) {
+    // eslint-disable-next-line functional/no-loop-statement
+    for (const target of targets) {
+      await build(target);
+    }
+  } else {
+    await Promise.all(targets.map(target => build(target)));
+  }
 }
 
 async function build(target) {
