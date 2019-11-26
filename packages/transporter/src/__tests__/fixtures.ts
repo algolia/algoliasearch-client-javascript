@@ -9,7 +9,7 @@ import {
 
 import { CallEnum, Transporter } from '..';
 import algoliasearch from '../../../algoliasearch/src/builds/browser';
-import version from '../../../client-common/src/version';
+import { version } from '../../../client-common/src/version';
 
 export function createFakeRequester(): Requester {
   return {

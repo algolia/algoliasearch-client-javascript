@@ -1,4 +1,4 @@
-import version from '@algolia/client-common/src';
+import { version } from '@algolia/client-common/src';
 import { createNullLogger } from '@algolia/logger-common';
 
 import { createBrowserLocalStorageCache } from '../..';
