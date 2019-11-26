@@ -1,4 +1,4 @@
-/* eslint-disable no-console, import/no-commonjs*/
+/* eslint-disable no-console, import/no-commonjs, functional/no-try-statement, functional/immutable-data*/
 
 const fs = require('fs-extra');
 const path = require('path');
@@ -6,17 +6,25 @@ const chalk = require('chalk');
 const execa = require('execa');
 
 const targets = fs.readdirSync('packages').filter(f => fs.statSync(`packages/${f}`).isDirectory());
-buildDefinitions();
+run();
 
-async function buildDefinitions() {
+async function run() {
   await Promise.all(targets.map(target => fs.remove(`packages/${target}/dist`)));
-  await Promise.all(
-    targets.map(target =>
-      execa(`rollup`, ['-c', '--environment', [`TARGET:${target}`].join(',')], {
-        stdio: 'inherit',
-      })
-    )
-  );
+
+  try {
+    await Promise.all(
+      targets.map(target =>
+        execa(`rollup`, ['-c', '--environment', [`TARGET:${target}`].join(',')], {
+          stdio: 'inherit',
+        })
+      )
+    );
+  } catch (e) {
+    console.error(e);
+    process.exitCode = 1;
+
+    return;
+  }
   await Promise.all(
     targets.map(target => buildDefinition(target)).concat(buildDefinition('algoliasearch', 'lite'))
   );
@@ -63,7 +71,7 @@ async function buildDefinition(target, config = '') {
       `API Extractor completed with ${result.errorCount} errors` +
         ` and ${result.warningCount} warnings`
     );
-    // eslint-disable-next-line functional/immutable-data
+
     process.exitCode = 1;
   }
 }
