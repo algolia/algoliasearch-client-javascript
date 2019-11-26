@@ -6,32 +6,27 @@ const chalk = require('chalk');
 const execa = require('execa');
 
 const targets = fs.readdirSync('packages').filter(f => fs.statSync(`packages/${f}`).isDirectory());
+
 run();
 
 async function run() {
-  await Promise.all(targets.map(target => fs.remove(`packages/${target}/dist`)));
+  await Promise.all(targets.map(target => build(target)));
+}
 
-  try {
-    await Promise.all(
-      targets.map(target =>
-        execa(`rollup`, ['-c', '--environment', [`TARGET:${target}`].join(',')], {
-          stdio: 'inherit',
-        })
-      )
-    );
-  } catch (e) {
-    console.error(e);
-    process.exitCode = 1;
+async function build(target) {
+  await fs.remove(`packages/${target}/dist`);
 
-    return;
+  await execa(`rollup`, ['-c', '--environment', [`TARGET:${target}`].join(',')], {
+    stdio: 'inherit',
+  });
+
+  await buildDefinition(target);
+
+  if (target === 'algoliasearch') {
+    await buildDefinition('algoliasearch', 'lite');
   }
-  await Promise.all(
-    targets.map(target => buildDefinition(target)).concat(buildDefinition('algoliasearch', 'lite'))
-  );
 
-  await Promise.all(
-    targets.map(target => fs.remove(path.resolve(`packages/${target}/dist/packages`)))
-  );
+  await fs.remove(path.resolve(`packages/${target}/dist/packages`));
 }
 
 async function buildDefinition(target, config = '') {
