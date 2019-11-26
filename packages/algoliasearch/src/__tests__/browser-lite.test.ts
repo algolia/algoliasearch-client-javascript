@@ -1,4 +1,4 @@
-import { version } from '@algolia/client-common';
+import version from '@algolia/client-common';
 
 import algoliasearch from '../builds/browser-lite';
 

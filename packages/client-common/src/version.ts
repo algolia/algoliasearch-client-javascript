@@ -1,1 +1,1 @@
-export const version = '4.0.0-alpha.20';
+export default '4.0.0-alpha.20';
