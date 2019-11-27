@@ -22,7 +22,7 @@ if [ "$currentBranch" != "$releaseBranch" ]; then
   exit 1
 fi
 
-if [[ "$(git diff --cached --numstat)" != "0" ]]; then
+if [[ "$(git diff --cached --numstat | wc -l)" != "0" ]]; then
   printf "\n${RED}[ERROR]${NC} Working tree is not clean.\n"
   exit 1
 fi
