@@ -20,7 +20,7 @@ export function createBrowserLocalStorageCache(
     get<TValue>(
       key: object,
       defaultValue: () => Readonly<Promise<TValue>>,
-      events: CacheEvents = {
+      events: CacheEvents<TValue> = {
         miss: () => Promise.resolve(),
       }
     ): Readonly<Promise<TValue>> {

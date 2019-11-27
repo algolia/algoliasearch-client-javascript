@@ -41,6 +41,11 @@ describe('request cache integration with cache drivers', () => {
       [createInMemoryCache.name]: 10,
       [createBrowserLocalStorageCacheFunction.name]: 10,
     },
+    rejected: {
+      [createNullCache.name]: 10,
+      [createInMemoryCache.name]: 10,
+      [createBrowserLocalStorageCacheFunction.name]: 10,
+    },
   };
 
   it('cache read requests in progress', async () => {
@@ -56,7 +61,9 @@ describe('request cache integration with cache drivers', () => {
 
       const driver = drivers[index]();
 
-      const transporter = createFixtures().transporter(requester, { requestsCache: driver });
+      const transporter = createFixtures().transporter(requester, {
+        requestsCache: driver,
+      });
 
       const responses = [];
       for (let callNumber = 1; callNumber <= 10; callNumber++) {
@@ -92,10 +99,41 @@ describe('request cache integration with cache drivers', () => {
 
       const driver = drivers[index]();
 
-      const transporter = createFixtures().transporter(requester, { requestsCache: driver });
+      const transporter = createFixtures().transporter(requester, {
+        requestsCache: driver,
+      });
 
       for (let callNumber = 1; callNumber <= 10; callNumber++) {
         await expect(transporter.read(transporterRequest)).resolves.toMatchObject({ hits: [] });
+      }
+
+      verify(requesterMock.send(anything())).times(expectedCalls.resolved[drivers[index].name]);
+    }
+  });
+
+  it('do not cache read requests rejected', async () => {
+    for (let index = 0; index < drivers.length; index++) {
+      const requester = createFakeRequester();
+      const requesterMock = spy(requester);
+
+      when(requesterMock.send(anything())).thenResolve({
+        content: 'Unreachable hosts - your application id...',
+        status: 403,
+        isTimedOut: false,
+      });
+
+      const driver = drivers[index]();
+
+      const transporter = createFixtures().transporter(requester, {
+        requestsCache: driver,
+      });
+
+      for (let callNumber = 1; callNumber <= 10; callNumber++) {
+        await expect(transporter.read(transporterRequest)).rejects.toMatchObject({
+          name: 'ApiError',
+          message: 'Unreachable hosts - your application id...',
+          status: 403,
+        });
       }
 
       verify(requesterMock.send(anything())).times(expectedCalls.resolved[drivers[index].name]);

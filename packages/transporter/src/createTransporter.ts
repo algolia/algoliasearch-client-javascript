@@ -81,8 +81,8 @@ export function createTransporter(options: TransporterOptions): Transporter {
           return transporter.requestsCache.get(key, () => {
             return transporter.requestsCache
               .set(key, createRequest())
-              .then(response => Promise.all([transporter.requestsCache.delete(key), response]))
-              .then(promiseResults => promiseResults[1]);
+              .finally(() => transporter.requestsCache.delete(key))
+              .then(result => result);
           });
         },
         {
