@@ -31,7 +31,5 @@ module.exports = {
       ignore: [],
       project: path.join(__dirname, './tsconfig.json'),
     });
-    require('./specs/fixtures/helpers/credentials');
-    require('./specs/fixtures/helpers/dataset');
   },
 };
