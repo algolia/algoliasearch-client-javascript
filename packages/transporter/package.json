@@ -14,7 +14,6 @@
   "dependencies": {
     "@algolia/cache-common": "4.0.0-beta.2",
     "@algolia/logger-common": "4.0.0-beta.2",
-    "@algolia/requester-common": "4.0.0-beta.2",
-    "@algolia/transporter": "4.0.0-beta.2"
+    "@algolia/requester-common": "4.0.0-beta.2"
   }
 }
