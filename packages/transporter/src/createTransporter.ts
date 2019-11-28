@@ -79,10 +79,17 @@ export function createTransporter(options: TransporterOptions): Transporter {
         key,
         () => {
           return transporter.requestsCache.get(key, () => {
-            return transporter.requestsCache
-              .set(key, createRequest())
-              .finally(() => transporter.requestsCache.delete(key))
-              .then(result => result);
+            return (
+              transporter.requestsCache
+                .set(key, createRequest())
+                .then(
+                  response => Promise.all([transporter.requestsCache.delete(key), response]),
+                  (err: Error) =>
+                    Promise.all([transporter.requestsCache.delete(key), Promise.reject(err)])
+                )
+                // @todo Maybe remove this alias, and understand why we need it.
+                .then(promiseResults => promiseResults[1] as TResponse)
+            );
           });
         },
         {
