@@ -11,6 +11,7 @@
     "playground": "./scripts/prepare-playground.sh && yarn serve",
     "precommit": "yarn lint && yarn test:types",
     "release": "./scripts/release.sh",
+    "release-publish": "lerna exec --concurrency 1 -- npm publish --verbose --tag beta",
     "test:browser-ci": "./scripts/prepare-test-browser.sh && wdio ./wdio.saucelabs.conf.js",
     "test:browser-locally": "./scripts/prepare-test-browser.sh && wdio ./wdio.local.conf.js",
     "test:build": "yarn test:size",
@@ -19,8 +20,7 @@
     "test:size": "bundlesize",
     "test:types": "yarn tsc",
     "test:unit": "lerna clean --yes && jest --verbose --updateSnapshot",
-    "update": "rm -rf node_modules && rm -f yarn.lock && yarn && lerna clean --yes",
-    "release-publish": "lerna exec --concurrency 1 -- npm publish --verbose --tag beta"
+    "update": "rm -rf node_modules && rm -f yarn.lock && yarn && lerna clean --yes"
   },
   "husky": {
     "hooks": {
