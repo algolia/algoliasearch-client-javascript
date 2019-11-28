@@ -1,6 +1,6 @@
 {
   "name": "@algolia/client-analytics",
-  "version": "4.0.0-beta.1",
+  "version": "4.0.0-beta.2",
   "private": false,
   "license": "MIT",
   "files": [
@@ -11,9 +11,9 @@
   "module": "dist/client-analytics.esm.js",
   "types": "dist/client-analytics.d.ts",
   "dependencies": {
-    "@algolia/client-common": "4.0.0-beta.1",
-    "@algolia/logger-common": "4.0.0-beta.1",
-    "@algolia/requester-common": "4.0.0-beta.1",
-    "@algolia/transporter": "4.0.0-beta.1"
+    "@algolia/client-common": "4.0.0-beta.2",
+    "@algolia/logger-common": "4.0.0-beta.2",
+    "@algolia/requester-common": "4.0.0-beta.2",
+    "@algolia/transporter": "4.0.0-beta.2"
   }
 }
