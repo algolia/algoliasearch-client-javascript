@@ -1,6 +1,6 @@
 {
   "name": "@algolia/requester-browser-xhr",
-  "version": "4.0.0-beta.3",
+  "version": "4.0.0-beta.4",
   "private": false,
   "description": "Promise-based request library for browser using xhr.",
   "license": "MIT",
@@ -12,6 +12,6 @@
   "module": "dist/requester-browser-xhr.esm.js",
   "types": "dist/requester-browser-xhr.d.ts",
   "dependencies": {
-    "@algolia/requester-common": "4.0.0-beta.3"
+    "@algolia/requester-common": "4.0.0-beta.4"
   }
 }
