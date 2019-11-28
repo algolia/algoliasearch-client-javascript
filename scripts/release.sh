@@ -8,6 +8,11 @@ printf "\n"
 
 set -e
 
+if [[ $npm_config_user_agent != npm* ]]; then
+  echo "You ran this script differently than with 'npm run release'"
+  exit 1
+fi
+
 printf "\n${GREEN}You are about the start a release process${NC}\n"
 
 printf "\n${RED}[ACTION]${NC} Changes on changelog are not part of this release process.\n"
