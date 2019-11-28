@@ -77,7 +77,7 @@ yarn lerna version $newVersion --no-git-tag-version --no-push
 yarn install
 yarn build
 
-git add CHANGELOG.md lerna.json packages/cache-browser-local-storage/package.json packages/cache-common/package.json packages/cache-in-memory/package.json packages/client-account/package.json packages/client-analytics/package.json packages/client-common/package.json packages/client-common/src/version.ts packages/client-search/package.json packages/logger-common/package.json packages/logger-console/package.json packages/requester-browser-xhr/package.json packages/requester-common/package.json packages/requester-node-http/package.json packages/transporter/package.json
+git add lerna.json packages/algoliasearch/package.json packages/cache-browser-local-storage/package.json packages/cache-common/package.json packages/cache-in-memory/package.json packages/client-account/package.json packages/client-analytics/package.json packages/client-common/package.json packages/client-common/src/version.ts packages/client-search/package.json packages/logger-common/package.json packages/logger-console/package.json packages/requester-browser-xhr/package.json packages/requester-common/package.json packages/requester-node-http/package.json packages/transporter/package.json
 
 if [[ -n $(git status --porcelain) ]]; then
   printf "\n${RED}[ERROR]${NC} there is unstaged files.\n"
