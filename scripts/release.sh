@@ -101,7 +101,7 @@ if [[ ! $REPLY =~ ^[Yy]$ ]]; then exit 1; fi
 git tag "$newVersion"
 
 printf "\n${GREEN}[INFO]${NC} push code and tag\n" 
-git push origin master
+git push origin $releaseBranch
 git push origin --tags
 printf "\n${GREEN}[INFO]${NC} pushed to GitHub\n"
 
@@ -109,7 +109,7 @@ read -p "Can we publish"
 if [[ ! $REPLY =~ ^[Yy]$ ]]; then exit 1; fi
 
 printf "\n${GREEN}[INFO]${NC} pushing package to NPM\n"
-lerna run publish --npm-client npm -- --verbose --tag beta
+yarn release-publish
 printf "\n${GREEN}[INFO]${NC} package was published to NPM\n"
 
 printf "\n${GREEN}[INFO]${NC} All done!\n\n"
