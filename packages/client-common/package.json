@@ -1,6 +1,6 @@
 {
   "name": "@algolia/client-common",
-  "version": "4.0.0-alpha.20",
+  "version": "4.0.0-beta.0",
   "private": false,
   "license": "MIT",
   "files": [

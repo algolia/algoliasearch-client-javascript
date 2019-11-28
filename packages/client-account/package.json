@@ -1,6 +1,6 @@
 {
   "name": "@algolia/client-account",
-  "version": "4.0.0-alpha.20",
+  "version": "4.0.0-beta.0",
   "private": false,
   "license": "MIT",
   "files": [
@@ -11,6 +11,6 @@
   "module": "dist/client-account.esm.js",
   "types": "dist/client-account.d.ts",
   "dependencies": {
-    "@algolia/client-search": "4.0.0-alpha.20"
+    "@algolia/client-search": "4.0.0-beta.0"
   }
 }
