@@ -71,7 +71,7 @@ echo "export const version = '$newVersion';" > $versionFilePath;
 printf "\n"
 
 # update version in packages & dependencies
-yarn lerna version $newVersion --no-git-tag-version --no-push
+yarn lerna version $newVersion --no-git-tag-version --no-push --exact
 
 # build the dist
 yarn install
