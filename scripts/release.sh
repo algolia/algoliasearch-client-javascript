@@ -91,9 +91,9 @@ if [[ ! $REPLY =~ ^[Yy]$ ]]; then exit 1; fi
 
 printf "\n${GREEN}[INFO]${NC} committing changes\n" 
 
-read -p "git commit -m \"release: \" -m \"$newVersion\""
+read -p "git commit -m \"release: $newVersion\""
 if [[ ! $REPLY =~ ^[Yy]$ ]]; then exit 1; fi
-git commit -m "release: " -m "$newVersion"
+git commit -m "release: $newVersion"
 printf "\n${GREEN}[INFO]${NC} creating tag ${newVersion}\n" 
 
 read -p "git tag \"$newVersion\""
