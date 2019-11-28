@@ -74,10 +74,10 @@ printf "\n"
 yarn lerna version $newVersion --no-git-tag-version --no-push
 
 # build the dist
-#@todo yarn install
-#@todo yarn build
+yarn install
+yarn build
 
-#@todo git add CHANGELOG.md lerna.json packages/cache-browser-local-storage/package.json packages/cache-common/package.json packages/cache-in-memory/package.json packages/client-account/package.json packages/client-analytics/package.json packages/client-common/package.json packages/client-common/src/version.ts packages/client-search/package.json packages/logger-common/package.json packages/logger-console/package.json packages/requester-browser-xhr/package.json packages/requester-common/package.json packages/requester-node-http/package.json packages/transporter/package.json
+git add CHANGELOG.md lerna.json packages/cache-browser-local-storage/package.json packages/cache-common/package.json packages/cache-in-memory/package.json packages/client-account/package.json packages/client-analytics/package.json packages/client-common/package.json packages/client-common/src/version.ts packages/client-search/package.json packages/logger-common/package.json packages/logger-console/package.json packages/requester-browser-xhr/package.json packages/requester-common/package.json packages/requester-node-http/package.json packages/transporter/package.json
 
 if [[ -n $(git status --porcelain) ]]; then
   printf "\n${RED}[ERROR]${NC} there is unstaged files.\n"
@@ -90,16 +90,26 @@ read -p "=> when ready, press [Y/y] to push to github and publish the package. (
 if [[ ! $REPLY =~ ^[Yy]$ ]]; then exit 1; fi
 
 printf "\n${GREEN}[INFO]${NC} committing changes\n" 
-#@todo git commit -m "release: " -m "`$newVersion`"
+
+read -p "git commit -m \"release: \" -m \"$newVersion\""
+if [[ ! $REPLY =~ ^[Yy]$ ]]; then exit 1; fi
+git commit -m "release: " -m "$newVersion"
 printf "\n${GREEN}[INFO]${NC} creating tag ${newVersion}\n" 
-#@todo git tag "$newVersion"
+
+read -p "git tag \"$newVersion\""
+if [[ ! $REPLY =~ ^[Yy]$ ]]; then exit 1; fi
+git tag "$newVersion"
+
 printf "\n${GREEN}[INFO]${NC} push code and tag\n" 
-#@todo git push origin master
-#@todo git push origin --tags
+git push origin master
+git push origin --tags
 printf "\n${GREEN}[INFO]${NC} pushed to GitHub\n"
 
+read -p "Can we publish"
+if [[ ! $REPLY =~ ^[Yy]$ ]]; then exit 1; fi
+
 printf "\n${GREEN}[INFO]${NC} pushing package to NPM\n"
-#@todo lerna run publish --no-git-tag-version --verbose --no-push --access public --tag beta
+lerna run publish --npm-client npm -- --verbose --access public --tag beta
 printf "\n${GREEN}[INFO]${NC} package was published to NPM\n"
 
 printf "\n${GREEN}[INFO]${NC} All done!\n\n"
