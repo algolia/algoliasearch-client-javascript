@@ -5,8 +5,11 @@
   "description": "test",
   "license": "MIT",
   "files": [
+    "dist",
     "index.js",
-    "dist"
+    "index.d.ts",
+    "lite.js",
+    "lite.d.ts"
   ],
   "main": "index.js",
   "browser": {

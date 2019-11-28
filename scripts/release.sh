@@ -109,7 +109,7 @@ read -p "Can we publish"
 if [[ ! $REPLY =~ ^[Yy]$ ]]; then exit 1; fi
 
 printf "\n${GREEN}[INFO]${NC} pushing package to NPM\n"
-yarn release-publish
+npm run release-publish
 printf "\n${GREEN}[INFO]${NC} package was published to NPM\n"
 
 printf "\n${GREEN}[INFO]${NC} All done!\n\n"
