@@ -9,9 +9,8 @@ export function serializeUrl(
   queryParameters: { readonly [key: string]: string }
 ): string {
   const queryParametersAsString = serializeQueryParameters(queryParameters);
-
   // eslint-disable-next-line functional/no-let
-  let url = `https://${host.url}/${path}`;
+  let url = `https://${host.url}/${path.charAt(0) === '/' ? path.substr(1) : path}`;
 
   if (queryParametersAsString.length) {
     url += `?${queryParametersAsString}`;

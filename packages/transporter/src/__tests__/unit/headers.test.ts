@@ -4,15 +4,15 @@ import { anything, deepEqual, spy, verify, when } from 'ts-mockito';
 import { Transporter } from '../..';
 import { createFakeRequester, createFixtures } from '../fixtures';
 
-let requester: Requester;
+let requesterMock: Requester;
 let transporter: Transporter;
 
 beforeEach(() => {
-  const instance = createFakeRequester();
-  requester = spy(instance);
-  transporter = createFixtures().transporter(instance);
+  const requester = createFakeRequester();
+  requesterMock = spy(requester);
+  transporter = createFixtures().transporter(requester);
 
-  when(requester.send(anything())).thenResolve({
+  when(requesterMock.send(anything())).thenResolve({
     content: '{}',
     status: 200,
     isTimedOut: false,
@@ -30,7 +30,7 @@ describe('selection of headers', () => {
     await transporter.write(transporterRequest);
 
     verify(
-      requester.send(
+      requesterMock.send(
         deepEqual(
           createFixtures().writeRequest({
             headers: {
@@ -51,7 +51,7 @@ describe('selection of headers', () => {
     });
 
     verify(
-      requester.send(
+      requesterMock.send(
         deepEqual(
           createFixtures().readRequest({
             headers: {
@@ -73,7 +73,7 @@ describe('selection of headers', () => {
     });
 
     verify(
-      requester.send(
+      requesterMock.send(
         deepEqual(
           createFixtures().readRequest({
             headers: {
