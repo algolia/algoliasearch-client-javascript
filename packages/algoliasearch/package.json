@@ -32,5 +32,6 @@
     "@algolia/requester-node-http": "4.0.0-beta.4",
     "@algolia/transporter": "4.0.0-beta.4"
   },
-  "jsdelivr": "./dist/algoliasearch.umd.js"
+  "jsdelivr": "./dist/algoliasearch.umd.js",
+  "unpkg": "./dist/algoliasearch.umd.js"
 }
