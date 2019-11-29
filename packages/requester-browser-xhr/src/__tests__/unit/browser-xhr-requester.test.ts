@@ -90,6 +90,24 @@ describe('status code handling', () => {
     expect(response.content).toBe(JSON.stringify(body));
     expect(response.isTimedOut).toBe(false);
   });
+
+  it('handles the protocol', async () => {
+    const body = JSON.stringify({ foo: 'bar' });
+
+    mock.post('http://localhost/', {
+      status: 200,
+      body,
+    });
+
+    const response = await requester.send({
+      ...requestStub,
+      url: 'http://localhost',
+    });
+
+    expect(response.status).toBe(200);
+    expect(response.content).toBe('{"foo":"bar"}');
+    expect(response.isTimedOut).toBe(false);
+  });
 });
 
 describe('timeout handling', () => {

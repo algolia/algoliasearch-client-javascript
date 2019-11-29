@@ -1,8 +1,9 @@
 import {
   CallEnum,
-  CallType,
   createHost,
   Headers,
+  Host,
+  HostOptions,
   mapRequestOptions,
   QueryParameters,
   Request,
@@ -11,7 +12,6 @@ import {
   TransporterOptions,
 } from '.';
 import { execute } from './concerns/execute';
-import { Host } from './types';
 
 export function createTransporter(options: TransporterOptions): Transporter {
   const {
@@ -45,9 +45,9 @@ export function createTransporter(options: TransporterOptions): Transporter {
       // eslint-disable-next-line functional/immutable-data
       Object.assign(transporter.queryParameters, queryParameters);
     },
-    setHosts(values: ReadonlyArray<{ readonly url: string; readonly accept: CallType }>): void {
+    setHosts(values: readonly HostOptions[]): void {
       // eslint-disable-next-line functional/immutable-data
-      transporter.hosts = values.map(host => createHost(host.url, host.accept));
+      transporter.hosts = values.map(hostOptions => createHost(hostOptions));
     },
     read<TResponse>(
       request: Request,

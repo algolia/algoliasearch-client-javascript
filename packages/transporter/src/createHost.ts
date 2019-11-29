@@ -1,12 +1,13 @@
-import { CallType, Host } from '.';
+import { Host, HostOptions } from '.';
 
 // If an host is down, it will remain down for 5 mins.
 const DOWNTIME = 5 * 60 * 1000;
 
-export function createHost(url: string, accept: CallType): Host {
+export function createHost(options: HostOptions): Host {
   const host: Host = {
-    url,
-    accept,
+    protocol: options.protocol || 'https',
+    url: options.url,
+    accept: options.accept,
     downDate: 0,
     up: true,
     setAsDown(): void {

@@ -2,6 +2,7 @@ import { Requester } from '@algolia/requester-common';
 import { anything, deepEqual, spy, verify, when } from 'ts-mockito';
 
 import { serializeQueryParameters, Transporter } from '../..';
+import { CallEnum } from '../../types';
 import { createFakeRequester, createFixtures } from '../fixtures';
 
 let requesterMock: Requester;
@@ -20,7 +21,7 @@ beforeEach(() => {
 });
 
 describe('serializer', () => {
-  it('serializes path with / and witout / ', async () => {
+  it('serializes url with / and witout / ', async () => {
     const transporterRequest = createFixtures().transporterRequest();
     await transporter.write(transporterRequest);
     await transporter.write({
@@ -29,6 +30,29 @@ describe('serializer', () => {
     });
 
     verify(requesterMock.send(deepEqual(createFixtures().writeRequest()))).twice();
+  });
+
+  it('serializes url protocol', async () => {
+    const transporterRequest = createFixtures().transporterRequest();
+    transporter.setHosts([
+      {
+        protocol: 'http',
+        url: 'localhost.com',
+        accept: CallEnum.Read,
+      },
+    ]);
+
+    await transporter.read(transporterRequest);
+
+    verify(
+      requesterMock.send(
+        deepEqual(
+          createFixtures().readRequest({
+            url: 'http://localhost.com/save',
+          })
+        )
+      )
+    ).once();
   });
 
   it('serializes query parameters', () => {

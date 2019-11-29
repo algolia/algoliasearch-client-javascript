@@ -3,9 +3,9 @@ import { Logger } from '@algolia/logger-common';
 import { Requester } from '@algolia/requester-common';
 
 import {
-  CallType,
   Headers,
   Host,
+  HostOptions,
   QueryParameters,
   Request,
   RequestOptions,
@@ -29,9 +29,7 @@ export type Transporter = {
   hosts: readonly Host[]; // eslint-disable-line functional/prefer-readonly-type
   readonly addHeaders: (headers: Headers) => void;
   readonly addQueryParameters: (queryParameters: QueryParameters) => void;
-  readonly setHosts: (
-    values: ReadonlyArray<{ readonly url: string; readonly accept: CallType }>
-  ) => void;
+  readonly setHosts: (values: readonly HostOptions[]) => void;
   readonly read: <TResponse>(
     request: Request,
     requestOptions?: RequestOptions

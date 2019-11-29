@@ -10,7 +10,7 @@ export function serializeUrl(
 ): string {
   const queryParametersAsString = serializeQueryParameters(queryParameters);
   // eslint-disable-next-line functional/no-let
-  let url = `https://${host.url}/${path.charAt(0) === '/' ? path.substr(1) : path}`;
+  let url = `${host.protocol}://${host.url}/${path.charAt(0) === '/' ? path.substr(1) : path}`;
 
   if (queryParametersAsString.length) {
     url += `?${queryParametersAsString}`;

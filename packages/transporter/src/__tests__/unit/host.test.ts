@@ -2,7 +2,10 @@ import { CallEnum, createHost } from '../..';
 
 describe('host', () => {
   it('handles uptime', () => {
-    const host = createHost('foo', CallEnum.Any);
+    const host = createHost({
+      url: 'foo',
+      accept: CallEnum.Any,
+    });
 
     expect(host.isUp()).toBe(true);
 
@@ -12,7 +15,10 @@ describe('host', () => {
   });
 
   it('is up if TTL was expired', () => {
-    const host = createHost('foo', CallEnum.Any);
+    const host = createHost({
+      url: 'foo',
+      accept: CallEnum.Any,
+    });
 
     host.setAsDown();
 

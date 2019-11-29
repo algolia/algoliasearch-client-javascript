@@ -7,6 +7,7 @@ export * from './CallType';
 export * from './DeserializationError';
 export * from './Headers';
 export * from './Host';
+export * from './HostOptions';
 export * from './MappedRequestOptions';
 export * from './QueryParameters';
 export * from './Request';

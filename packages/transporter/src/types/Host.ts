@@ -5,6 +5,7 @@ export type Host = {
   downDate: number;
   /* eslint-disable functional/prefer-readonly-type */
   up: boolean;
+  readonly protocol: string;
   readonly url: string;
   readonly accept: CallType;
   readonly setAsDown: () => void;
