@@ -1,6 +1,6 @@
 aliases:
   - &removes_npmrc
-    name: Setup environment variables
+    name: Removes npmrc
     command: |
       rm .npmrc
 
