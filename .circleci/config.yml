@@ -1,8 +1,8 @@
 aliases:
-  - &environment_variables
+  - &removes_npmrc
     name: Setup environment variables
     command: |
-      export NPM_TOKEN=""
+      rm .npmrc
 
   - &install_yarn_version
     name: Install specific Yarn version
@@ -45,7 +45,7 @@ jobs:
     <<: *defaults
     steps:
       - checkout
-      - run: *environment_variables
+      - run: *removes_npmrc
       - run: *install_yarn_version
       - restore_cache: *restore_yarn_cache
       - run: *run_yarn_install
@@ -59,7 +59,7 @@ jobs:
     <<: *defaults
     steps:
       - checkout
-      - run: *environment_variables
+      - run: *removes_npmrc
       - run: *install_yarn_version
       - restore_cache: *restore_yarn_cache
       - run: *run_yarn_install
@@ -73,7 +73,7 @@ jobs:
     <<: *defaults
     steps:
       - checkout
-      - run: *environment_variables
+      - run: *removes_npmrc
       - run: *install_yarn_version
       - restore_cache: *restore_yarn_cache
       - run: *run_yarn_install
@@ -87,7 +87,7 @@ jobs:
     <<: *defaults
     steps:
       - checkout
-      - run: *environment_variables
+      - run: *removes_npmrc
       - run: *install_yarn_version
       - restore_cache: *restore_yarn_cache
       - run: *run_yarn_install
@@ -101,7 +101,7 @@ jobs:
     <<: *defaults
     steps:
       - checkout
-      - run: *environment_variables
+      - run: *removes_npmrc
       - run: *install_yarn_version
       - restore_cache: *restore_yarn_cache
       - run: *run_yarn_install
