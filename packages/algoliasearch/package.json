@@ -11,6 +11,7 @@
     "lite.js",
     "lite.d.ts"
   ],
+  "sideEffects": false,
   "main": "index.js",
   "browser": {
     "./index.js": "./dist/algoliasearch.umd.js",

@@ -8,6 +8,7 @@
     "index.js",
     "dist"
   ],
+  "sideEffects": false,
   "main": "index.js",
   "module": "dist/cache-browser-local-storage.esm.js",
   "types": "dist/cache-browser-local-storage.d.ts",

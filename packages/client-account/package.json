@@ -7,6 +7,7 @@
     "index.js",
     "dist"
   ],
+  "sideEffects": false,
   "main": "index.js",
   "module": "dist/client-account.esm.js",
   "types": "dist/client-account.d.ts",

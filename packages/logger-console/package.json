@@ -8,6 +8,7 @@
     "index.js",
     "dist"
   ],
+  "sideEffects": false,
   "main": "index.js",
   "module": "dist/logger-console.esm.js",
   "types": "dist/logger-console.d.ts",

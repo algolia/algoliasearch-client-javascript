@@ -8,6 +8,7 @@
     "index.js",
     "dist"
   ],
+  "sideEffects": false,
   "main": "index.js",
   "module": "dist/requester-common.esm.js",
   "types": "dist/requester-common.d.ts"

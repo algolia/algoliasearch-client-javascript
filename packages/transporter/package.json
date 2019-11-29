@@ -8,6 +8,7 @@
     "index.js",
     "dist"
   ],
+  "sideEffects": false,
   "main": "index.js",
   "module": "dist/transporter.esm.js",
   "types": "dist/transporter.d.ts",

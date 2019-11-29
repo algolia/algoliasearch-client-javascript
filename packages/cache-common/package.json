@@ -8,6 +8,7 @@
     "index.js",
     "dist"
   ],
+  "sideEffects": false,
   "main": "index.js",
   "module": "dist/cache-common.esm.js",
   "types": "dist/cache-common.d.ts"

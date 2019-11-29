@@ -8,6 +8,7 @@
     "index.js",
     "dist"
   ],
+  "sideEffects": false,
   "main": "index.js",
   "module": "dist/requester-browser-xhr.esm.js",
   "types": "dist/requester-browser-xhr.d.ts",

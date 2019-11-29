@@ -7,6 +7,7 @@
     "index.js",
     "dist"
   ],
+  "sideEffects": false,
   "main": "index.js",
   "module": "dist/client-search.esm.js",
   "types": "dist/client-search.d.ts",
