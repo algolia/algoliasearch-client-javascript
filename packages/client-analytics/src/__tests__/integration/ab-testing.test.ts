@@ -21,13 +21,14 @@ test(testSuite.testName, async () => {
   {
     const oldABTests = (await client.getABTests()).abtests;
 
-    await oldABTests
-      .filter(abtest => abtest.name.startsWith('js-') && !abtest.name.startsWith(`js-${todayDate}`))
-      .map(async abtest => {
-        await client.deleteABTest(abtest.abTestID);
-      });
+    await Promise.all(
+      oldABTests
+        .filter(
+          abtest => abtest.name.startsWith('js-') && !abtest.name.startsWith(`js-${todayDate}`)
+        )
+        .map(abtest => client.deleteABTest(abtest.abTestID))
+    );
   }
-
   // Create the two indices by adding a dummy object in each of them
   const object = createFaker().object('one');
   await createMultiWaitable([index1.saveObject(object), index2.saveObject(object)] as any).wait();
