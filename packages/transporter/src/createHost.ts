@@ -1,8 +1,9 @@
 import { CallType, Host } from '.';
 
-export function createHost(url: string, accept: CallType): Host {
-  const ttl = 300 * 1000;
+// If an host is down, it will remain down for 5 mins.
+const DOWNTIME = 5 * 60 * 1000;
 
+export function createHost(url: string, accept: CallType): Host {
   const host: Host = {
     url,
     accept,
@@ -16,7 +17,7 @@ export function createHost(url: string, accept: CallType): Host {
     },
 
     isUp(): boolean {
-      if (!host.up && Date.now() - host.downDate > ttl) {
+      if (!host.up && Date.now() - host.downDate > DOWNTIME) {
         // eslint-disable-next-line functional/immutable-data
         host.up = true;
       }
