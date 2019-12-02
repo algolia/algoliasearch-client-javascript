@@ -5,5 +5,6 @@ export type Request = {
   readonly headers: { readonly [key: string]: string };
   readonly method: MethodType;
   readonly url: string;
-  readonly timeout: number;
+  readonly connectTimeout: number;
+  readonly socketTimeout: number;
 };

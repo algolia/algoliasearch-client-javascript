@@ -37,6 +37,8 @@ export function execute<TResponse>(
       throw createRetryError(stackTrace);
     }
 
+    const timeoutAdjuster = timeoutRetries + 1;
+
     const payload = {
       data,
       headers,
@@ -46,7 +48,8 @@ export function execute<TResponse>(
         ...requestOptions.queryParameters,
         'x-algolia-agent': transporter.userAgent.value,
       }),
-      timeout: (timeoutRetries + 1) * (requestOptions.timeout ? requestOptions.timeout : 0),
+      connectTimeout: timeoutAdjuster * transporter.timeouts.connect,
+      socketTimeout: timeoutAdjuster * (requestOptions.timeout || 0),
     };
 
     const decisions: Outcomes<TResponse> = {

@@ -2,6 +2,7 @@ import { createNullCache } from '@algolia/cache-common';
 import { encode } from '@algolia/client-common';
 import {
   MethodEnum,
+  Request,
   Request as RequesterRequest,
   Requester,
   Response,
@@ -53,6 +54,7 @@ export function createFixtures() {
         timeouts: {
           read: 2,
           write: 30,
+          connect: 1,
         },
         ...options,
       });
@@ -69,7 +71,8 @@ export function createFixtures() {
 
     readRequest(options: any = {}) {
       return this.request({
-        timeout: 2,
+        connectTimeout: 1,
+        socketTimeout: 2,
         url: 'https://read.com/save',
         ...options,
       });
@@ -77,7 +80,8 @@ export function createFixtures() {
 
     writeRequest(options: any = {}) {
       return this.request({
-        timeout: 30,
+        connectTimeout: 1,
+        socketTimeout: 30,
         url: 'https://write.com/save',
         ...options,
       });
@@ -90,7 +94,7 @@ export function createFixtures() {
       });
     },
 
-    request(options: any = {}) {
+    request(options: any = {}): Request {
       const headers: { readonly [key: string]: string } = {
         'X-Default-Header': 'Default value',
       };
@@ -106,7 +110,8 @@ export function createFixtures() {
         data: '',
         headers,
         method: MethodEnum.Post,
-        timeout: 2,
+        connectTimeout: 1,
+        socketTimeout: 2,
         ...options,
       };
     },

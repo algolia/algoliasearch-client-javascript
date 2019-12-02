@@ -19,7 +19,7 @@
     "test:locally": "lerna clean --yes && yarn lint && yarn test:types && yarn test:unit",
     "test:size": "bundlesize",
     "test:types": "yarn tsc",
-    "test:unit": "lerna clean --yes && jest --verbose --updateSnapshot",
+    "test:unit": "./scripts/prepare-test-unit.sh && lerna clean --yes && jest --verbose --updateSnapshot",
     "update": "rm -rf node_modules && rm -f yarn.lock && yarn && lerna clean --yes"
   },
   "husky": {

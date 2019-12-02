@@ -36,7 +36,8 @@ export default function algoliasearch(
     appId,
     apiKey,
     timeouts: {
-      read: 1,
+      connect: 1,
+      read: 2,
       write: 30,
     },
     requester: createBrowserXhrRequester(),

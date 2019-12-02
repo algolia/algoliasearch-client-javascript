@@ -42,7 +42,7 @@ describe('the timeouts selection', () => {
       requesterMock.send(
         deepEqual(
           createFixtures().readRequest({
-            timeout: 5,
+            socketTimeout: 5,
           })
         )
       )
@@ -56,7 +56,7 @@ describe('the timeouts selection', () => {
       requesterMock.send(
         deepEqual(
           createFixtures().writeRequest({
-            timeout: 25,
+            socketTimeout: 25,
           })
         )
       )
@@ -83,7 +83,8 @@ describe('the timeouts selection', () => {
         deepEqual(
           createFixtures().readRequest({
             url: 'https://read-and-write.com/save',
-            timeout: 4,
+            connectTimeout: 2,
+            socketTimeout: 4,
           })
         )
       )

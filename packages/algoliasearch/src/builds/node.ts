@@ -160,7 +160,8 @@ export default function algoliasearch(appId: string, apiKey: string): SearchClie
     appId,
     apiKey,
     timeouts: {
-      read: 2,
+      connect: 2,
+      read: 5,
       write: 30,
     },
     requester: createNodeHttpRequester(),

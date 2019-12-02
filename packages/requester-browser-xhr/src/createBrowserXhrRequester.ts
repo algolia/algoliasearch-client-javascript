@@ -11,16 +11,38 @@ export function createBrowserXhrRequester(): Requester {
           baseRequester.setRequestHeader(key, request.headers[key])
         );
 
-        const timeoutHandler = setTimeout(() => {
-          baseRequester.abort();
-          resolve({ status: 0, content: '', isTimedOut: true });
-        }, request.timeout * 1000);
+        const createTimeout = (timeout: number, content: string): NodeJS.Timeout => {
+          return setTimeout(() => {
+            baseRequester.abort();
+
+            resolve({
+              status: 0,
+              content,
+              isTimedOut: true,
+            });
+          }, timeout * 1000);
+        };
+
+        const connectTimeout = createTimeout(request.connectTimeout, 'Connection timeout');
+
+        // eslint-disable-next-line functional/no-let
+        let socketTimeout: NodeJS.Timeout | undefined;
+
+        // eslint-disable-next-line functional/immutable-data
+        baseRequester.onreadystatechange = () => {
+          if (baseRequester.readyState > baseRequester.OPENED && socketTimeout === undefined) {
+            clearTimeout(connectTimeout);
+
+            socketTimeout = createTimeout(request.socketTimeout, 'Socket timeout');
+          }
+        };
 
         // eslint-disable-next-line functional/immutable-data
         baseRequester.onerror = () => {
           // istanbul ignore next
           if (baseRequester.status === 0) {
-            clearTimeout(timeoutHandler);
+            clearTimeout(connectTimeout);
+            clearTimeout(socketTimeout as NodeJS.Timeout);
 
             resolve({
               content: baseRequester.responseText || 'Network request failed',
@@ -32,7 +54,8 @@ export function createBrowserXhrRequester(): Requester {
 
         //  eslint-disable-next-line functional/immutable-data
         baseRequester.onload = () => {
-          clearTimeout(timeoutHandler);
+          clearTimeout(connectTimeout);
+          clearTimeout(socketTimeout as NodeJS.Timeout);
 
           resolve({
             content: baseRequester.responseText,

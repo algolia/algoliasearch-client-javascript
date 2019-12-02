@@ -1,4 +1,5 @@
 import { Request, Requester, Response } from '@algolia/requester-common';
+import * as http from 'http';
 import * as https from 'https';
 import * as URL from 'url';
 
@@ -13,37 +14,54 @@ export function createNodeHttpRequester(): Requester {
         const options: https.RequestOptions = {
           hostname: url.hostname || '',
           path: path || '',
-          protocol: url.protocol || '',
           method: request.method,
           headers: request.headers,
           ...(url.port !== undefined ? { port: url.port || '' } : {}),
         };
 
-        // eslint-disable-next-line functional/no-let, prefer-const
-        let timeoutHandler: NodeJS.Timeout;
-
-        const req = https.request(options, response => {
+        const req = (url.protocol === 'https:' ? https : http).request(options, response => {
           // eslint-disable-next-line functional/no-let
           let content = '';
 
           response.on('data', chunk => (content += chunk));
 
           response.on('end', () => {
-            clearTimeout(timeoutHandler);
+            // eslint-disable-next-line @typescript-eslint/no-use-before-define
+            clearTimeout(connectTimeout);
+            // eslint-disable-next-line @typescript-eslint/no-use-before-define
+            clearTimeout(socketTimeout as NodeJS.Timeout);
 
             const status = response.statusCode === undefined ? 0 : response.statusCode;
             resolve({ status, content, isTimedOut: false });
           });
         });
 
-        timeoutHandler = setTimeout(() => {
-          req.abort();
-          resolve({ status: 0, content: '', isTimedOut: true });
-        }, request.timeout * 1000);
+        const createTimeout = (timeout: number, content: string): NodeJS.Timeout => {
+          return setTimeout(() => {
+            req.abort();
+
+            resolve({
+              status: 0,
+              content,
+              isTimedOut: true,
+            });
+          }, timeout * 1000);
+        };
+
+        const connectTimeout = createTimeout(request.connectTimeout, 'Connection timeout');
+
+        // eslint-disable-next-line functional/no-let
+        let socketTimeout: NodeJS.Timeout | undefined;
 
         req.on('error', error => {
-          clearTimeout(timeoutHandler);
+          clearTimeout(connectTimeout);
+          clearTimeout(socketTimeout as NodeJS.Timeout);
           resolve({ status: 0, content: error.message, isTimedOut: false });
+        });
+
+        req.once('response', () => {
+          clearTimeout(connectTimeout);
+          socketTimeout = createTimeout(request.socketTimeout, 'Socket timeout');
         });
 
         req.write(request.data);

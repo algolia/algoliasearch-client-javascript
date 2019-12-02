@@ -6,11 +6,12 @@ import { createBrowserXhrRequester } from '../..';
 const requester = createBrowserXhrRequester();
 
 const timeoutRequest: Request = {
-  url: 'https://google.com:81/',
+  url: 'missing-url-here',
   data: '',
   headers: {},
-  method: 'POST',
-  timeout: 1,
+  method: 'GET',
+  socketTimeout: 2,
+  connectTimeout: 1,
 };
 
 const requestStub = {
@@ -20,7 +21,8 @@ const requestStub = {
     'Content-Type': 'application/x-www-form-urlencoded',
   },
   data: JSON.stringify({ foo: 'bar' }),
-  timeout: 2,
+  socketTimeout: 1,
+  connectTimeout: 2,
 };
 
 describe('status code handling', () => {
@@ -111,56 +113,82 @@ describe('status code handling', () => {
 });
 
 describe('timeout handling', () => {
-  it('timouts if response dont appears before the timeout with the given 1 seconds timeout', async () => {
+  it('connection timeouts if response dont appears before the timeout with the given 1 seconds connection timeout', async () => {
     const before = Date.now();
-    await requester.send({
+    const response = await requester.send({
       ...timeoutRequest,
-      ...{ timeout: 1 },
+      ...{ connectTimeout: 1, url: 'http://192.0.2.10' },
     });
 
     const now = Date.now();
 
+    expect(response.content).toBe('Connection timeout');
     expect(now - before).toBeGreaterThan(999);
     expect(now - before).toBeLessThan(1200);
   });
 
-  it('timouts if response dont appears before the timeout with the given 2 seconds timeout', async () => {
+  it('connection timeouts if response dont appears before the timeout with the given 2 seconds connection timeout', async () => {
     const before = Date.now();
-    await requester.send({
+    const response = await requester.send({
       ...timeoutRequest,
-      ...{ timeout: 2 },
+      ...{ connectTimeout: 2, url: 'http://192.0.2.10/' },
+    });
+
+    const now = Date.now();
+
+    expect(response.content).toBe('Connection timeout');
+    expect(now - before).toBeGreaterThan(1999);
+    expect(now - before).toBeLessThan(2200);
+  });
+
+  it('socket timeouts if response dont appears before the timeout with 2 seconds timeout', async () => {
+    const before = Date.now();
+
+    const response = await requester.send({
+      ...timeoutRequest,
+      ...{ socketTimeout: 2, url: 'http://localhost:1111/' },
     });
 
     const now = Date.now();
 
     expect(now - before).toBeGreaterThan(1999);
     expect(now - before).toBeLessThan(2200);
+    expect(response.content).toBe('Socket timeout');
   });
 
-  it('timouts with a response code 0 and no content', async () => {
-    const response = await requester.send(timeoutRequest);
+  it('socket timeouts if response dont appears before the timeout with 3 seconds timeout', async () => {
+    const before = Date.now();
+    const response = await requester.send({
+      ...timeoutRequest,
+      ...{
+        socketTimeout: 3,
+        url: 'http://localhost:1111',
+      },
+    });
 
-    expect(response.status).toBe(0);
-    expect(response.content).toContain('');
-    expect(response.isTimedOut).toBe(true);
+    const now = Date.now();
+
+    expect(response.content).toBe('Socket timeout');
+    expect(now - before).toBeGreaterThan(2999);
+    expect(now - before).toBeLessThan(3200);
   });
 
   it('do not timeouts if response appears before the timeout', async () => {
     const request = Object.assign({}, requestStub);
+    const before = Date.now();
+    const response = await requester.send({
+      ...request,
+      url: 'http://localhost:1111',
+      socketTimeout: 6, // the fake server sleeps for 5 seconds...
+    });
 
-    request.url = 'https://bh4d9od16a-dsn.algolia.net/1/indexes';
-    request.method = 'GET';
-
-    const response = await requester.send(request);
+    const now = Date.now();
 
     expect(response.isTimedOut).toBe(false);
-    expect(response.status).toBe(403);
-    expect(response.content).toBe(
-      JSON.stringify({
-        message: 'Invalid Application-ID or API key',
-        status: 403,
-      })
-    );
+    expect(response.status).toBe(200);
+    expect(response.content).toBe('{}');
+    expect(now - before).toBeGreaterThan(4999);
+    expect(now - before).toBeLessThan(5200);
   });
 });
 
@@ -173,7 +201,8 @@ describe('error handling', () => {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
       data: JSON.stringify({ foo: 'bar' }),
-      timeout: 2,
+      socketTimeout: 2,
+      connectTimeout: 1,
     };
 
     const response = await requester.send(request);
