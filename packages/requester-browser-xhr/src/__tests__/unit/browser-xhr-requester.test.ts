@@ -137,7 +137,7 @@ describe('timeout handling', () => {
     const now = Date.now();
 
     expect(response.content).toBe('Connection timeout');
-    expect(now - before).toBeGreaterThan(1999);
+    expect(now - before).toBeGreaterThan(1990);
     expect(now - before).toBeLessThan(2200);
   });
 
@@ -151,7 +151,7 @@ describe('timeout handling', () => {
 
     const now = Date.now();
 
-    expect(now - before).toBeGreaterThan(1999);
+    expect(now - before).toBeGreaterThan(1990);
     expect(now - before).toBeLessThan(2200);
     expect(response.content).toBe('Socket timeout');
   });
