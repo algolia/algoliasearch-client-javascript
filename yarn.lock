@@ -9633,9 +9633,9 @@ sort-object-keys@^1.1.2:
   integrity sha1-06bEjcKsl+a8lDZ2luA/bQnTeVI=
 
 sort-package-json@^1.23.1:
-  version "1.23.1"
-  resolved "https://registry.yarnpkg.com/sort-package-json/-/sort-package-json-1.23.1.tgz#7882349ad885ee6d82ff57af4184f9d6e9159e1d"
-  integrity sha512-dg6XChDHL+V1gPBLW4fDWsip5T94wpDVlowm8gxXsxQMxX2271zw8JM1RRbJSIrN80/UlwlRdBVkk2SuiuZ2cw==
+  version "1.27.0"
+  resolved "https://registry.yarnpkg.com/sort-package-json/-/sort-package-json-1.27.0.tgz#0f0038b6635458ffe60ad9f15976de38049b009e"
+  integrity sha512-wNQIH1/MVHE41XQb+yWv7iDwYhtRsLAVgJ0Zova5osALuHQz7zOLDn4UI/Gs55nHeXsS559HTlbuaWzHsCfQHg==
   dependencies:
     detect-indent "^6.0.0"
     glob "^7.1.6"
