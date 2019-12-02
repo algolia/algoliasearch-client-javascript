@@ -75,8 +75,19 @@ packagesConfig.push({
     output: build === 'browser' ? 'algoliasearch' : 'algoliasearch-lite',
     package: 'algoliasearch',
     input: `src/builds/${build}.ts`,
-    formats: ['umd', 'esm', 'esm-browser'],
+    formats: ['esm', 'esm-browser'],
     external: ['dom'],
+  });
+
+  packagesConfig.push({
+    output: build === 'browser' ? 'algoliasearch' : 'algoliasearch-lite',
+    package: 'algoliasearch',
+    input: `src/builds/${build}.ts`,
+    formats: ['umd'],
+    external: ['dom'],
+    globals: {
+      algoliasearch: 'algoliasearch',
+    },
   });
 });
 
@@ -111,7 +122,6 @@ packagesConfig
       umd: {
         file: `dist/${packageConfig.output}.umd.js`,
         format: `umd`,
-        name: 'main',
       },
       'esm-browser': {
         file: `dist/${packageConfig.output}.esm-browser.js`,
@@ -122,10 +132,12 @@ packagesConfig
     packageConfig.formats.forEach(format => {
       const output = bundlers[format];
 
-      output.name = 'main'; // @todo check this...
       output.file = packageResolve(`${output.file}`);
 
       const isUmdBuild = /\.umd.js$/.test(output.file);
+      if (isUmdBuild) {
+        output.name = 'algoliasearch';
+      }
       const isBrowserBuild = /\.umd.js$/.test(output.file) || /esm-browser.js$/.test(output.file);
       const compressorPlugins = isBrowserBuild ? [terser()] : [];
       const transpilerPlugins = isUmdBuild
