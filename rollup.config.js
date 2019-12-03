@@ -13,6 +13,11 @@ import ts from 'rollup-plugin-typescript2';
 
 const defaultInput = 'src/index.ts';
 
+const version = require('./lerna.json').version;
+const algolia = '© Algolia, inc.';
+const link = 'https://github.com/algolia/algoliasearch-client-javascript';
+const createLicence = name => `/*! ${name} | ${version} | ${algolia} | ${link} */`;
+
 if (!process.env.TARGET) {
   throw new Error('TARGET package must be specified via --environment flag.');
 }
@@ -112,19 +117,19 @@ packagesConfig
 
     const bundlers = {
       esm: {
-        file: `dist/${packageConfig.output}.esm.js`,
+        file: `${packageConfig.output}.esm.js`,
         format: `es`,
       },
       cjs: {
-        file: `dist/${packageConfig.output}.cjs.js`,
+        file: `${packageConfig.output}.cjs.js`,
         format: `cjs`,
       },
       umd: {
-        file: `dist/${packageConfig.output}.umd.js`,
+        file: `${packageConfig.output}.umd.js`,
         format: `umd`,
       },
       'esm-browser': {
-        file: `dist/${packageConfig.output}.esm-browser.js`,
+        file: `${packageConfig.output}.esm-browser.js`,
         format: `es`,
       },
     };
@@ -132,19 +137,19 @@ packagesConfig
     packageConfig.formats.forEach(format => {
       const output = bundlers[format];
 
-      output.file = packageResolve(`${output.file}`);
-
       const isUmdBuild = /\.umd.js$/.test(output.file);
       if (isUmdBuild) {
         output.name = 'algoliasearch';
+        output.banner = createLicence(output.file);
       }
+
+      output.file = packageResolve(`dist/${output.file}`);
+
       const isBrowserBuild = /\.umd.js$/.test(output.file) || /esm-browser.js$/.test(output.file);
       const compressorPlugins = isBrowserBuild ? [terser()] : [];
       const transpilerPlugins = isUmdBuild
         ? [
             babel({
-              // rootMode: 'upward',
-              // runtimeHelpers: true,
               babelrc: false,
               extensions: ['.ts'],
               presets: [
