@@ -1,13 +1,19 @@
 import { WaitablePromise } from '@algolia/client-common';
 import { popRequestOption, RequestOptions } from '@algolia/transporter';
 
-import { BatchActionEnum, BatchResponse, PartialUpdateObjectsOptions, SearchIndex } from '../..';
+import {
+  BatchActionEnum,
+  BatchResponse,
+  ChunkOptions,
+  PartialUpdateObjectsOptions,
+  SearchIndex,
+} from '../..';
 import { chunk } from '.';
 
 export const partialUpdateObjects = (base: SearchIndex) => {
   return (
     objects: ReadonlyArray<Record<string, any>>,
-    requestOptions?: RequestOptions & PartialUpdateObjectsOptions
+    requestOptions?: RequestOptions & ChunkOptions & PartialUpdateObjectsOptions
   ): Readonly<WaitablePromise<readonly BatchResponse[]>> => {
     const createIfNotExists = popRequestOption(requestOptions, 'createIfNotExists', false);
 

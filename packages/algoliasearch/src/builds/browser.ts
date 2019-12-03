@@ -91,6 +91,7 @@ import {
   partialUpdateObject,
   PartialUpdateObjectResponse,
   partialUpdateObjects,
+  PartialUpdateObjectsOptions,
   PersonalizationStrategy,
   replaceAllObjects,
   ReplaceAllObjectsOptions,
@@ -102,6 +103,7 @@ import {
   saveObject,
   SaveObjectResponse,
   saveObjects,
+  SaveObjectsOptions,
   saveRule,
   SaveRuleResponse,
   saveRules,
@@ -130,6 +132,7 @@ import {
   SetSettingsResponse,
   Synonym,
   updateApiKey,
+  UpdateApiKeyOptions,
   UpdateApiKeyResponse,
   waitTask,
 } from '@algolia/client-search';
@@ -295,17 +298,11 @@ export type SearchIndex = BaseSearchIndex & {
   ) => Readonly<Promise<GetObjectsResponse<TObject>>>;
   readonly saveObject: (
     object: object,
-    requestOptions?: RequestOptions &
-      ChunkOptions & {
-        readonly autoGenerateObjectIDIfNotExist?: boolean;
-      }
+    requestOptions?: RequestOptions & ChunkOptions & SaveObjectsOptions
   ) => Readonly<WaitablePromise<SaveObjectResponse>>;
   readonly saveObjects: (
     objects: ReadonlyArray<Record<string, any>>,
-    requestOptions?: RequestOptions &
-      ChunkOptions & {
-        readonly autoGenerateObjectIDIfNotExist?: boolean;
-      }
+    requestOptions?: RequestOptions & ChunkOptions & SaveObjectsOptions
   ) => Readonly<WaitablePromise<readonly BatchResponse[]>>;
   readonly waitTask: (taskID: number, requestOptions?: RequestOptions) => Readonly<Promise<void>>;
   readonly setSettings: (
@@ -315,17 +312,11 @@ export type SearchIndex = BaseSearchIndex & {
   readonly getSettings: (requestOptions?: RequestOptions) => Readonly<Promise<IndexSettings>>;
   readonly partialUpdateObject: (
     object: object,
-    requestOptions?: RequestOptions &
-      ChunkOptions & {
-        readonly createIfNotExists?: boolean;
-      }
+    requestOptions?: RequestOptions & ChunkOptions & PartialUpdateObjectsOptions
   ) => Readonly<WaitablePromise<PartialUpdateObjectResponse>>;
   readonly partialUpdateObjects: (
     objects: ReadonlyArray<Record<string, any>>,
-    requestOptions?: RequestOptions &
-      ChunkOptions & {
-        readonly createIfNotExists?: boolean;
-      }
+    requestOptions?: RequestOptions & ChunkOptions & PartialUpdateObjectsOptions
   ) => Readonly<WaitablePromise<readonly BatchResponse[]>>;
   readonly deleteObject: (
     objectID: string,
@@ -484,12 +475,14 @@ export type SearchClient = BaseSearchClient & {
   ) => Readonly<Promise<GetApiKeyResponse>>;
   readonly addApiKey: (
     acl: readonly string[],
-    requestOptions?: AddApiKeyOptions & Pick<RequestOptions, string | number>
+    requestOptions?: AddApiKeyOptions &
+      Pick<RequestOptions, Exclude<keyof RequestOptions, 'queryParameters'>>
   ) => Readonly<WaitablePromise<AddApiKeyResponse>>;
   readonly listApiKeys: (requestOptions?: RequestOptions) => Readonly<Promise<ListApiKeysResponse>>;
   readonly updateApiKey: (
     apiKey: string,
-    requestOptions?: AddApiKeyOptions & Pick<RequestOptions, string | number>
+    requestOptions?: UpdateApiKeyOptions &
+      Pick<RequestOptions, Exclude<keyof RequestOptions, 'queryParameters'>>
   ) => Readonly<WaitablePromise<UpdateApiKeyResponse>>;
   readonly deleteApiKey: (
     apiKey: string,

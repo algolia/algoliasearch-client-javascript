@@ -1,5 +1,3 @@
-import { ChunkOptions } from '.';
-
-export type SaveObjectsOptions = ChunkOptions & {
+export type SaveObjectsOptions = {
   readonly autoGenerateObjectIDIfNotExist?: boolean;
 };

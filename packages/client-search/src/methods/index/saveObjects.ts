@@ -7,13 +7,14 @@ import {
   createMissingObjectIDError,
   SaveObjectsOptions,
   SearchIndex,
+  ChunkOptions,
 } from '../..';
 import { chunk } from '.';
 
 export const saveObjects = (base: SearchIndex) => {
   return (
     objects: ReadonlyArray<Record<string, any>>,
-    requestOptions?: RequestOptions & SaveObjectsOptions
+    requestOptions?: RequestOptions & ChunkOptions & SaveObjectsOptions
   ): Readonly<WaitablePromise<readonly BatchResponse[]>> => {
     const autoGenerateObjectIDIfNotExist = popRequestOption(
       requestOptions,

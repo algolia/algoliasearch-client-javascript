@@ -1,14 +1,19 @@
 import { createWaitablePromise, WaitablePromise } from '@algolia/client-common';
 import { RequestOptions } from '@algolia/transporter';
 
-import { SaveObjectResponse, SaveObjectsOptions, SearchIndex } from '../..';
-import { waitTask } from '.';
-import { saveObjects } from './saveObjects';
+import {
+  ChunkOptions,
+  SaveObjectResponse,
+  saveObjects,
+  SaveObjectsOptions,
+  SearchIndex,
+  waitTask,
+} from '../..';
 
 export const saveObject = (base: SearchIndex) => {
   return (
     object: object,
-    requestOptions?: RequestOptions & SaveObjectsOptions
+    requestOptions?: RequestOptions & ChunkOptions & SaveObjectsOptions
   ): Readonly<WaitablePromise<SaveObjectResponse>> => {
     return createWaitablePromise<SaveObjectResponse>(
       saveObjects(base)([object], requestOptions).then<SaveObjectResponse>(response => {

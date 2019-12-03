@@ -1,13 +1,18 @@
 import { createWaitablePromise, WaitablePromise } from '@algolia/client-common';
 import { RequestOptions } from '@algolia/transporter';
 
-import { PartialUpdateObjectResponse, PartialUpdateObjectsOptions, SearchIndex } from '../..';
+import {
+  ChunkOptions,
+  PartialUpdateObjectResponse,
+  PartialUpdateObjectsOptions,
+  SearchIndex,
+} from '../..';
 import { partialUpdateObjects, waitTask } from '.';
 
 export const partialUpdateObject = (base: SearchIndex) => {
   return (
     object: object,
-    requestOptions?: RequestOptions & PartialUpdateObjectsOptions
+    requestOptions?: RequestOptions & ChunkOptions & PartialUpdateObjectsOptions
   ): Readonly<WaitablePromise<PartialUpdateObjectResponse>> => {
     return createWaitablePromise<PartialUpdateObjectResponse>(
       partialUpdateObjects(base)([object], requestOptions).then(response => {

@@ -1,5 +1,3 @@
-import { ChunkOptions } from '.';
-
-export type PartialUpdateObjectsOptions = ChunkOptions & {
+export type PartialUpdateObjectsOptions = {
   readonly createIfNotExists?: boolean;
 };
