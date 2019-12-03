@@ -4,10 +4,10 @@ import { popRequestOption, RequestOptions } from '@algolia/transporter';
 import {
   BatchActionEnum,
   BatchResponse,
+  ChunkOptions,
   createMissingObjectIDError,
   SaveObjectsOptions,
   SearchIndex,
-  ChunkOptions,
 } from '../..';
 import { chunk } from '.';
 
