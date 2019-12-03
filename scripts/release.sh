@@ -41,11 +41,6 @@ git fetch origin --tags
 currentVersion=`cat lerna.json | jq -r '.version'`
 gitCurrentVersion=`git describe --abbrev=0`
 
-if [ "$gitCurrentVersion" != "$releaseBranch" ]; then
-  printf "\n${RED}[ERROR]${NC} Git version does not match lerna.json version.\n"
-  # exit 1
-fi
-
 printf "\n${RED}[ACTION]${NC} Checking CI status is an manual step! Check here: https://circleci.com/gh/algolia\n"
 read -p "Is the latest commit a success? If yes, are you sure? (y/n): "
 if [[ ! $REPLY =~ ^[Yy]$ ]]; then exit 1; fi
