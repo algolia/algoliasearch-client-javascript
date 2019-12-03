@@ -39,9 +39,7 @@ export class TestSuite {
   }
 
   public makeIndex(indexName?: string) {
-    const index = this.makeSearchClient().initIndex(
-      indexName === undefined ? this.makeIndexName() : indexName
-    );
+    const index = this.makeSearchClient().initIndex(indexName || this.makeIndexName());
 
     this.indices.push(index);
 
