@@ -13,9 +13,12 @@ export function shuffle<TData>(array: TData[]): TData[] {
   return array;
 }
 
-type GenericObject = { readonly [key: string]: any };
-
-export function addMethods<TBase, TMethods extends GenericObject>(
+export function addMethods<
+  TBase,
+  TMethods extends {
+    readonly [key: string]: (base: TBase) => (...args: any) => any;
+  }
+>(
   base: TBase,
   methods?: TMethods
 ): TBase &
