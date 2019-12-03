@@ -9,7 +9,7 @@
     "generate-exports": "node scripts/generate-exports",
     "lint": "eslint . --ext .js,.ts --fix && node ./scripts/sort-package-json.js",
     "playground": "./scripts/prepare-playground.sh && yarn serve",
-    "precommit": "yarn test:lint && yarn test:types",
+    "pre-commit": "yarn test:lint && yarn test:types",
     "release": "./scripts/release.sh",
     "release-publish": "lerna exec --concurrency 1 -- npm publish --verbose --tag beta",
     "test:browser-ci": "./scripts/prepare-test-browser.sh && wdio ./wdio.saucelabs.conf.js",
@@ -24,7 +24,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn precommit"
+      "pre-commit": "yarn pre-commit"
     }
   },
   "devDependencies": {
