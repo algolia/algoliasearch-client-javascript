@@ -52,7 +52,7 @@ jobs:
       - save_cache: *save_yarn_cache
       - run:
           name: Build & Test packages size
-          command: yarn build && yarn test:build
+          command: yarn build && yarn test:size
 
   test_lint:
     description: Testing coding style

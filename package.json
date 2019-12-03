@@ -14,7 +14,6 @@
     "release-publish": "lerna exec --concurrency 1 -- npm publish --verbose --tag beta",
     "test:browser-ci": "./scripts/prepare-test-browser.sh && wdio ./wdio.saucelabs.conf.js",
     "test:browser-locally": "./scripts/prepare-test-browser.sh && wdio ./wdio.local.conf.js",
-    "test:build": "yarn test:size",
     "test:lint": "eslint . --ext .js,.ts",
     "test:locally": "lerna clean --yes && yarn lint && yarn test:types && yarn test:unit",
     "test:size": "bundlesize",
@@ -96,19 +95,19 @@
   "bundlesize": [
     {
       "path": "packages/algoliasearch/dist/algoliasearch.umd.js",
-      "maxSize": "6.55KB"
+      "maxSize": "6.77KB"
     },
     {
       "path": "packages/algoliasearch/dist/algoliasearch.esm-browser.js",
-      "maxSize": "5.62KB"
+      "maxSize": "5.77KB"
     },
     {
       "path": "packages/algoliasearch/dist/algoliasearch-lite.umd.js",
-      "maxSize": "3.45KB"
+      "maxSize": "3.67KB"
     },
     {
       "path": "packages/algoliasearch/dist/algoliasearch-lite.esm-browser.js",
-      "maxSize": "2.91KB"
+      "maxSize": "3.06KB"
     }
   ]
 }
