@@ -88,27 +88,15 @@ printf "\n\nAfter this, we are going to push changes, tag them, and publish the 
 read -p "=> when ready, press [Y/y] to push to github and publish the package. (y/n): "
 if [[ ! $REPLY =~ ^[Yy]$ ]]; then exit 1; fi
 
-printf "\n${GREEN}[INFO]${NC} committing changes\n" 
-
-read -p "git commit -m \"release: $newVersion\""
-if [[ ! $REPLY =~ ^[Yy]$ ]]; then exit 1; fi
+printf "\n${GREEN}[INFO]${NC} Committing changes" 
 git commit -m "release: $newVersion"
-printf "\n${GREEN}[INFO]${NC} creating tag ${newVersion}\n" 
 
-read -p "git tag \"$newVersion\""
-if [[ ! $REPLY =~ ^[Yy]$ ]]; then exit 1; fi
+printf "\n${GREEN}[INFO]${NC} Creating tag and pushing it" 
 git tag "$newVersion"
-
-printf "\n${GREEN}[INFO]${NC} push code and tag\n" 
 git push origin $releaseBranch
 git push origin --tags
-printf "\n${GREEN}[INFO]${NC} pushed to GitHub\n"
-
-read -p "Can we publish"
-if [[ ! $REPLY =~ ^[Yy]$ ]]; then exit 1; fi
 
 printf "\n${GREEN}[INFO]${NC} pushing package to NPM\n"
 npm run release-publish
-printf "\n${GREEN}[INFO]${NC} package was published to NPM\n"
 
 printf "\n${GREEN}[INFO]${NC} All done!\n\n"
