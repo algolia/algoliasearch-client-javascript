@@ -39,7 +39,6 @@ git pull origin $releaseBranch
 git fetch origin --tags
 
 currentVersion=`cat lerna.json | jq -r '.version'`
-gitCurrentVersion=`git describe --abbrev=0`
 
 printf "\n${RED}[ACTION]${NC} Checking CI status is an manual step! Check here: https://circleci.com/gh/algolia\n"
 read -p "Is the latest commit a success? If yes, are you sure? (y/n): "
