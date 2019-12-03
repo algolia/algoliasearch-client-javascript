@@ -1,0 +1,7 @@
+branches:
+  only:
+    - master
+    - develop
+    - release/4.0.0
+script: 
+  - "print"
