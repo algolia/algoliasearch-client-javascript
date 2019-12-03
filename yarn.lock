@@ -2070,9 +2070,9 @@
     selenium-standalone "^6.15.1"
 
 "@wdio/spec-reporter@^5.11.7":
-  version "5.16.5"
-  resolved "https://registry.yarnpkg.com/@wdio/spec-reporter/-/spec-reporter-5.16.5.tgz#488ddb2d23480b8425f3df590dd7cacde6ad633a"
-  integrity sha512-W4o/75lxKIzRBh0vlyBH7kGfXv1EwALy0A2p2qwGg+Anx4BPKrtYgx+ncnIGrE5tnumldl6ep2wHkYNw8B7zWA==
+  version "5.16.11"
+  resolved "https://registry.yarnpkg.com/@wdio/spec-reporter/-/spec-reporter-5.16.11.tgz#5eaaef37a02f076bf1ebb4452d5e7dad0db558ca"
+  integrity sha512-UFqgq2VRgFxGBeIPufITKFZdrw6IuT/PN3uAoxWwoazicy0ghcOOwtVQpXsi0MIC6T3GsWIPdRgVhzk73l1U8w==
   dependencies:
     "@wdio/reporter" "5.15.2"
     chalk "^3.0.0"
