@@ -1,6 +1,6 @@
 {
   "name": "@algolia/cache-in-memory",
-  "version": "4.0.0-beta.8",
+  "version": "4.0.0-beta.9",
   "private": false,
   "description": "Promise-based cache library using memory.",
   "license": "MIT",
@@ -13,6 +13,6 @@
   "module": "dist/cache-in-memory.esm.js",
   "types": "dist/cache-in-memory.d.ts",
   "dependencies": {
-    "@algolia/cache-common": "4.0.0-beta.8"
+    "@algolia/cache-common": "4.0.0-beta.9"
   }
 }
