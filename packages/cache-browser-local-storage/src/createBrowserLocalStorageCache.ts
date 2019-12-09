@@ -1,14 +1,15 @@
 import { Cache, CacheEvents } from '@algolia/cache-common';
-import { createNullLogger, Logger } from '@algolia/logger-common';
+import { createNullLogger } from '@algolia/logger-common';
 
-export function createBrowserLocalStorageCache(
-  version: string,
-  logger: Logger = createNullLogger(),
-  storage: Storage = window.localStorage
-): Cache {
+import { BrowserLocalStorageOptions } from '.';
+
+export function createBrowserLocalStorageCache(options: BrowserLocalStorageOptions): Cache {
   /* eslint-disable functional/immutable-data, no-param-reassign, functional/no-try-statement */
 
-  const namespaceKey = `algoliasearch-client-js-${version}`;
+  const storage = options.storage || window.localStorage;
+  const logger = options.logger || createNullLogger();
+
+  const namespaceKey = `algoliasearch-client-js-${options.version}`;
   const debugMessage = 'LocalStorage is not available or json could not be decoded.';
 
   // eslint-disable-next-line functional/prefer-readonly-type

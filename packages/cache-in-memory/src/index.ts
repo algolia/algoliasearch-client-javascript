@@ -3,3 +3,4 @@
  */
 
 export * from './createInMemoryCache';
+export * from './types/index';

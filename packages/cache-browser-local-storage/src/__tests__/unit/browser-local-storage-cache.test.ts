@@ -26,10 +26,10 @@ const notAvailableStorage: Storage = {
 };
 
 describe('browser local storage cache', () => {
-  beforeEach(async () => await createBrowserLocalStorageCache(version).clear());
+  beforeEach(async () => await createBrowserLocalStorageCache({ version }).clear());
 
   it('sets/gets values', async () => {
-    const cache = createBrowserLocalStorageCache(version);
+    const cache = createBrowserLocalStorageCache({ version });
 
     const defaultValue = () => Promise.resolve({ bar: 1 });
 
@@ -55,7 +55,7 @@ describe('browser local storage cache', () => {
   });
 
   it('deletes keys', async () => {
-    const cache = createBrowserLocalStorageCache(version);
+    const cache = createBrowserLocalStorageCache({ version });
     await cache.set({ key: 'foo' }, { bar: 1 });
 
     await cache.delete({ key: 'foo' });
@@ -74,7 +74,7 @@ describe('browser local storage cache', () => {
   });
 
   it('allows to be clear', async () => {
-    const cache = createBrowserLocalStorageCache(version);
+    const cache = createBrowserLocalStorageCache({ version });
     await cache.set({ key: 1 }, { 'set-1': 1 });
     await cache.set({ key: 2 }, { 'set-2': 2 });
 
@@ -107,7 +107,11 @@ describe('browser local storage cache', () => {
   });
 
   it('do not throws localstorage related exceptions', async () => {
-    const cache = createBrowserLocalStorageCache(version, createNullLogger(), notAvailableStorage);
+    const cache = createBrowserLocalStorageCache({
+      version,
+      logger: createNullLogger(),
+      storage: notAvailableStorage,
+    });
     const key = { foo: 'bar' };
     const value = 'foo';
     const fallback = 'bar';
@@ -119,7 +123,10 @@ describe('browser local storage cache', () => {
   });
 
   it('creates a namespace within local storage', async () => {
-    const cache = createBrowserLocalStorageCache(version, createNullLogger());
+    const cache = createBrowserLocalStorageCache({
+      version,
+      logger: createNullLogger(),
+    });
     const key = { foo: 'bar' };
     const value = 'foo';
     expect(localStorage.getItem(`algoliasearch-client-js-${version}`)).toBeNull();

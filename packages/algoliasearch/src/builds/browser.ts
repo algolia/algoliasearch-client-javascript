@@ -161,8 +161,8 @@ export default function algoliasearch(
     requester: createBrowserXhrRequester(),
     logger,
     responsesCache: createInMemoryCache(),
-    requestsCache: createInMemoryCache(),
-    hostsCache: createBrowserLocalStorageCache(version, logger),
+    requestsCache: createInMemoryCache({ serializable: false }),
+    hostsCache: createBrowserLocalStorageCache({ version, logger }),
     userAgent: createUserAgent(version).add({ segment: 'Browser' }),
   };
 

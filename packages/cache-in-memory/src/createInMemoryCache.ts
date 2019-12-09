@@ -1,6 +1,8 @@
 import { Cache, CacheEvents } from '@algolia/cache-common';
 
-export function createInMemoryCache(): Cache {
+import { InMemoryCacheOptions } from '.';
+
+export function createInMemoryCache(options: InMemoryCacheOptions = { serializable: true }): Cache {
   /* eslint-disable functional/immutable-data, functional/no-let, functional/prefer-readonly-type */
   let cache: { [key: string]: any } = {};
 
@@ -15,7 +17,9 @@ export function createInMemoryCache(): Cache {
       const keyAsString = JSON.stringify(key);
 
       if (keyAsString in cache) {
-        return Promise.resolve(JSON.parse(cache[keyAsString]));
+        return Promise.resolve(
+          options.serializable ? JSON.parse(cache[keyAsString]) : cache[keyAsString]
+        );
       }
 
       const promise = defaultValue();
@@ -25,7 +29,7 @@ export function createInMemoryCache(): Cache {
     },
 
     set<TValue>(key: object, value: TValue): Readonly<Promise<TValue>> {
-      cache[JSON.stringify(key)] = JSON.stringify(value);
+      cache[JSON.stringify(key)] = options.serializable ? JSON.stringify(value) : value;
 
       return Promise.resolve(value);
     },

@@ -3,3 +3,4 @@
  */
 
 export * from './createBrowserLocalStorageCache';
+export * from './types/index';

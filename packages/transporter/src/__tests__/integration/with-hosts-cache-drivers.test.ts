@@ -9,7 +9,7 @@ import { createFakeRequester, createFixtures } from '../fixtures';
 const transporterRequest = createFixtures().transporterRequest();
 const drivers = [createNullCache, createInMemoryCache];
 
-const createBrowserLocalStorageCacheFunction = () => createBrowserLocalStorageCache(version);
+const createBrowserLocalStorageCacheFunction = () => createBrowserLocalStorageCache({ version });
 
 // @ts-ignore
 // eslint-disable-next-line no-undef
@@ -22,7 +22,7 @@ describe('hosts cache integration with cache drivers', () => {
     // @ts-ignore
     // eslint-disable-next-line no-undef
     if (testing.isBrowser()) {
-      await createBrowserLocalStorageCache(version).clear();
+      await createBrowserLocalStorageCache({ version }).clear();
     }
   });
 

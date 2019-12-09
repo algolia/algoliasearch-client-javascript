@@ -84,8 +84,7 @@ export function createTransporter(options: TransporterOptions): Transporter {
                 .set(key, createRequest())
                 .then(
                   response => Promise.all([transporter.requestsCache.delete(key), response]),
-                  (err: Error) =>
-                    Promise.all([transporter.requestsCache.delete(key), Promise.reject(err)])
+                  err => Promise.all([transporter.requestsCache.delete(key), Promise.reject(err)])
                 )
                 // @todo Maybe remove this alias, and understand why we need it.
                 .then(promiseResults => promiseResults[1] as TResponse)
