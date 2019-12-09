@@ -94,7 +94,7 @@ describe('timeout handling', () => {
     const before = Date.now();
     const response = await requester.send({
       ...timeoutRequest,
-      ...{ connectTimeout: 1, url: 'http://192.0.2.10' },
+      ...{ connectTimeout: 1, url: 'http://www.google.com:81' },
     });
 
     const now = Date.now();
@@ -108,7 +108,7 @@ describe('timeout handling', () => {
     const before = Date.now();
     const response = await requester.send({
       ...timeoutRequest,
-      ...{ connectTimeout: 2, url: 'http://192.0.2.10/' },
+      ...{ connectTimeout: 2, url: 'http://www.google.com:81' },
     });
 
     const now = Date.now();
