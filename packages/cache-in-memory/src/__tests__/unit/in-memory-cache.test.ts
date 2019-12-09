@@ -27,6 +27,21 @@ describe('in memory cache', () => {
     expect(missMock.mock.calls.length).toBe(1);
   });
 
+  it('getted values do not have references to the value on cache', async () => {
+    const cache = createInMemoryCache();
+
+    const key = { foo: 'bar' };
+    const obj = { 1: 2 };
+
+    await cache.set(key, obj);
+    const gettedValue = await cache.get(key, () => Promise.resolve({ 1: 3 }));
+    gettedValue[1] = 4;
+
+    expect(await cache.get(key, () => Promise.resolve({ 1: 3 }))).toEqual({
+      1: 2,
+    });
+  });
+
   it('deletes keys', async () => {
     const cache = createInMemoryCache();
     await cache.set({ key: 'foo' }, { bar: 1 });

@@ -15,7 +15,7 @@ export function createInMemoryCache(): Cache {
       const keyAsString = JSON.stringify(key);
 
       if (keyAsString in cache) {
-        return Promise.resolve(cache[keyAsString]);
+        return Promise.resolve(Object.assign({}, cache[keyAsString]));
       }
 
       const promise = defaultValue();
