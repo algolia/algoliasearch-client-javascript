@@ -29,4 +29,21 @@ describe('user agent', () => {
       'Algolia for JavaScript (1.0.0); JS Helper (2.0.0); React Native (3.0.0)'
     );
   });
+
+  it('is idempotent', () => {
+    const userAgent = createUserAgent('1.0.0');
+
+    expect(
+      userAgent.add({
+        segment: 'React Native (3.0.0)',
+      }).value
+    ).toEqual('Algolia for JavaScript (1.0.0); React Native (3.0.0)');
+
+    expect(
+      userAgent.add({
+        segment: 'React Native',
+        version: '3.0.0',
+      }).value
+    ).toEqual('Algolia for JavaScript (1.0.0); React Native (3.0.0)');
+  });
 });
