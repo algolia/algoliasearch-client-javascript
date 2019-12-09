@@ -1,6 +1,6 @@
 {
   "name": "@algolia/client-search",
-  "version": "4.0.0-beta.7",
+  "version": "4.0.0-beta.8",
   "private": false,
   "license": "MIT",
   "files": [
@@ -12,9 +12,9 @@
   "module": "dist/client-search.esm.js",
   "types": "dist/client-search.d.ts",
   "dependencies": {
-    "@algolia/client-common": "4.0.0-beta.7",
-    "@algolia/logger-common": "4.0.0-beta.7",
-    "@algolia/requester-common": "4.0.0-beta.7",
-    "@algolia/transporter": "4.0.0-beta.7"
+    "@algolia/client-common": "4.0.0-beta.8",
+    "@algolia/logger-common": "4.0.0-beta.8",
+    "@algolia/requester-common": "4.0.0-beta.8",
+    "@algolia/transporter": "4.0.0-beta.8"
   }
 }
