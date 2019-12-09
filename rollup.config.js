@@ -13,6 +13,7 @@ import ts from 'rollup-plugin-typescript2';
 
 const defaultInput = 'src/index.ts';
 
+// eslint-disable-next-line import/no-commonjs
 const version = require('./lerna.json').version;
 const algolia = '© Algolia, inc.';
 const link = 'https://github.com/algolia/algoliasearch-client-javascript';

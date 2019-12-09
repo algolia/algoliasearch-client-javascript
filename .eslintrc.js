@@ -30,6 +30,7 @@ module.exports = {
       "error",
       { packageDir: "./", devDependencies: true }
     ],
+    "import/extensions": ["off"],
     "no-bitwise": ["off"],
     "import/no-extraneous-dependencies": ["off"],
     "functional/no-expression-statement": ["off"],
