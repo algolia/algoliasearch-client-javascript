@@ -1,6 +1,6 @@
 {
   "name": "algoliasearch",
-  "version": "4.0.0-beta.6",
+  "version": "4.0.0-beta.7",
   "private": false,
   "description": "test",
   "license": "MIT",
@@ -21,17 +21,17 @@
   },
   "types": "index.d.ts",
   "dependencies": {
-    "@algolia/cache-browser-local-storage": "4.0.0-beta.6",
-    "@algolia/cache-common": "4.0.0-beta.6",
-    "@algolia/cache-in-memory": "4.0.0-beta.6",
-    "@algolia/client-analytics": "4.0.0-beta.6",
-    "@algolia/client-common": "4.0.0-beta.6",
-    "@algolia/client-search": "4.0.0-beta.6",
-    "@algolia/logger-common": "4.0.0-beta.6",
-    "@algolia/logger-console": "4.0.0-beta.6",
-    "@algolia/requester-browser-xhr": "4.0.0-beta.6",
-    "@algolia/requester-common": "4.0.0-beta.6",
-    "@algolia/requester-node-http": "4.0.0-beta.6",
-    "@algolia/transporter": "4.0.0-beta.6"
+    "@algolia/cache-browser-local-storage": "4.0.0-beta.7",
+    "@algolia/cache-common": "4.0.0-beta.7",
+    "@algolia/cache-in-memory": "4.0.0-beta.7",
+    "@algolia/client-analytics": "4.0.0-beta.7",
+    "@algolia/client-common": "4.0.0-beta.7",
+    "@algolia/client-search": "4.0.0-beta.7",
+    "@algolia/logger-common": "4.0.0-beta.7",
+    "@algolia/logger-console": "4.0.0-beta.7",
+    "@algolia/requester-browser-xhr": "4.0.0-beta.7",
+    "@algolia/requester-common": "4.0.0-beta.7",
+    "@algolia/requester-node-http": "4.0.0-beta.7",
+    "@algolia/transporter": "4.0.0-beta.7"
   }
 }
