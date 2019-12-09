@@ -15,7 +15,7 @@ export function createInMemoryCache(): Cache {
       const keyAsString = JSON.stringify(key);
 
       if (keyAsString in cache) {
-        return Promise.resolve(Object.assign({}, cache[keyAsString]));
+        return Promise.resolve(JSON.parse(cache[keyAsString]));
       }
 
       const promise = defaultValue();
@@ -25,7 +25,7 @@ export function createInMemoryCache(): Cache {
     },
 
     set<TValue>(key: object, value: TValue): Readonly<Promise<TValue>> {
-      cache[JSON.stringify(key)] = value;
+      cache[JSON.stringify(key)] = JSON.stringify(value);
 
       return Promise.resolve(value);
     },

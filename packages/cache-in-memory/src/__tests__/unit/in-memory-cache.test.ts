@@ -31,14 +31,15 @@ describe('in memory cache', () => {
     const cache = createInMemoryCache();
 
     const key = { foo: 'bar' };
-    const obj = { 1: 2 };
+    const obj = { 1: { 2: 'bar' } };
+    const defaultObj = { 1: { 2: 'too' } };
 
     await cache.set(key, obj);
-    const gettedValue = await cache.get(key, () => Promise.resolve({ 1: 3 }));
-    gettedValue[1] = 4;
+    const gettedValue = await cache.get(key, () => Promise.resolve(defaultObj));
+    gettedValue[1][2] = 'foo';
 
-    expect(await cache.get(key, () => Promise.resolve({ 1: 3 }))).toEqual({
-      1: 2,
+    expect(await cache.get(key, () => Promise.resolve(defaultObj))).toEqual({
+      1: { 2: 'bar' },
     });
   });
 
