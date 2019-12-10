@@ -125,11 +125,13 @@ workflows:
           version: '11'
       - test_unit:
           version: '12'
+      - test_unit:
+          version: '13'
       - test_lint:
-          version: '12'
+          version: '13'
       - test_types:
-          version: '12'
+          version: '13'
       - test_build:
-          version: '12'
+          version: '13'
       - test_browser:
-          version: '12'
+          version: '13'
