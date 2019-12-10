@@ -90,7 +90,8 @@
     "xhr-mock": "^2.4.1"
   },
   "engines": {
-    "node": ">=8"
+    "yarn": ">= 1.7.3",
+    "node": ">= 13.3.0"
   },
   "bundlesize": [
     {
