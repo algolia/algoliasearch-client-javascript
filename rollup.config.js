@@ -71,18 +71,17 @@ packagesConfig.push({
   output: 'algoliasearch',
   package: 'algoliasearch',
   input: `src/builds/node.ts`,
-  formats: ['cjs', 'esm'],
-});
-
-packagesConfig.push({
-  output: 'algoliasearch',
-  package: 'algoliasearch',
-  input: `src/builds/browser.ts`,
-  formats: ['esm-browser'],
-  external: ['dom'],
+  formats: ['cjs'],
 });
 
 ['browser', 'browser-lite'].forEach(build => {
+  packagesConfig.push({
+    output: build === 'browser' ? 'algoliasearch' : 'algoliasearch-lite',
+    package: 'algoliasearch',
+    input: `src/builds/${build}.ts`,
+    formats: ['esm'],
+  });
+
   packagesConfig.push({
     output: build === 'browser' ? 'algoliasearch' : 'algoliasearch-lite',
     package: 'algoliasearch',
@@ -117,10 +116,6 @@ packagesConfig
     const bundlers = {
       esm: {
         file: `${packageConfig.output}.esm.js`,
-        format: `es`,
-      },
-      'esm-browser': {
-        file: `${packageConfig.output}.esm-browser.js`,
         format: `es`,
       },
       cjs: {
