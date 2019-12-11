@@ -101,16 +101,8 @@
       "maxSize": "6.78KB"
     },
     {
-      "path": "packages/algoliasearch/dist/algoliasearch.esm-browser.js",
-      "maxSize": "5.78KB"
-    },
-    {
       "path": "packages/algoliasearch/dist/algoliasearch-lite.umd.js",
       "maxSize": "3.68KB"
-    },
-    {
-      "path": "packages/algoliasearch/dist/algoliasearch-lite.esm-browser.js",
-      "maxSize": "3.07KB"
     }
   ]
 }
