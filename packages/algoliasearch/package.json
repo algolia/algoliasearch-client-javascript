@@ -2,7 +2,7 @@
   "name": "algoliasearch",
   "version": "4.0.0-beta.9",
   "private": false,
-  "description": "test",
+  "description": "A fully-featured and blazing-fast JavaScript API client to interact with Algolia API.",
   "license": "MIT",
   "files": [
     "dist",
