@@ -42,7 +42,7 @@ describe('response cache integration with cache drivers', () => {
       [createBrowserLocalStorageCacheFunction.name]: 10,
     },
     '2xx-mutate-transporter': {
-      [createNullCache.name]: 4,
+      [createNullCache.name]: 5,
       [createInMemoryCache.name]: 3,
       [createBrowserLocalStorageCacheFunction.name]: 3,
     },
@@ -134,9 +134,11 @@ describe('response cache integration with cache drivers', () => {
         'new header': 'new header value',
       });
       await expect(transporter.read(transporterRequest)).resolves.toMatchObject({ hits: [] });
+
       transporter.addQueryParameters({
         'new query parameter': 'new query parameter value',
       });
+      await expect(transporter.read(transporterRequest)).resolves.toMatchObject({ hits: [] });
       await expect(transporter.read(transporterRequest)).resolves.toMatchObject({ hits: [] });
 
       verify(requesterMock.send(anything())).times(
