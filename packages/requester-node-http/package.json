@@ -9,7 +9,7 @@
     "dist"
   ],
   "sideEffects": false,
-  "main": "index.ts",
+  "main": "index.js",
   "module": "dist/requester-node-http.esm.js",
   "types": "dist/requester-node-http.d.ts",
   "dependencies": {
