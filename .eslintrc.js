@@ -32,7 +32,6 @@ module.exports = {
     ],
     "import/extensions": ["off"],
     "no-bitwise": ["off"],
-    "import/no-extraneous-dependencies": ["off"],
     "functional/no-expression-statement": ["off"],
     "functional/no-conditional-statement": ["off"],
     "functional/no-throw-statement": ["off"],
@@ -82,6 +81,7 @@ module.exports = {
       files: ["**/__tests__/**"],
       rules: {
         "functional/immutable-data": 0,
+        "import/no-extraneous-dependencies": 0,
         "functional/no-let": 0,
         "functional/no-this-expression": 0,
         "functional/no-loop-statement": 0,
