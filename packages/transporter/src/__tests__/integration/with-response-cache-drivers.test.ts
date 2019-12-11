@@ -41,6 +41,11 @@ describe('response cache integration with cache drivers', () => {
       [createInMemoryCache.name]: 10,
       [createBrowserLocalStorageCacheFunction.name]: 10,
     },
+    '2xx-mutate-transporter': {
+      [createNullCache.name]: 4,
+      [createInMemoryCache.name]: 3,
+      [createBrowserLocalStorageCacheFunction.name]: 3,
+    },
   };
 
   it('cache 2xx results', async () => {
@@ -103,6 +108,40 @@ describe('response cache integration with cache drivers', () => {
       }
 
       verify(requesterMock.send(anything())).times(expectedCalls['4xx'][drivers[index].name]);
+    }
+  });
+
+  it('transporter query parameters and headers are part of the cache key', async () => {
+    for (let index = 0; index < drivers.length; index++) {
+      transporterRequest.cacheable = true;
+      const requester = createFakeRequester();
+      const requesterMock = spy(requester);
+
+      when(requesterMock.send(anything())).thenResolve({
+        content: JSON.stringify({ hits: [] }),
+        status: 200,
+        isTimedOut: false,
+      });
+
+      const driver = drivers[index]();
+
+      const transporter = createFixtures().transporter(requester, { responsesCache: driver });
+
+      await expect(transporter.read(transporterRequest)).resolves.toMatchObject({ hits: [] });
+      await expect(transporter.read(transporterRequest)).resolves.toMatchObject({ hits: [] });
+
+      transporter.addHeaders({
+        'new header': 'new header value',
+      });
+      await expect(transporter.read(transporterRequest)).resolves.toMatchObject({ hits: [] });
+      transporter.addQueryParameters({
+        'new query parameter': 'new query parameter value',
+      });
+      await expect(transporter.read(transporterRequest)).resolves.toMatchObject({ hits: [] });
+
+      verify(requesterMock.send(anything())).times(
+        expectedCalls['2xx-mutate-transporter'][drivers[index].name]
+      );
     }
   });
 });

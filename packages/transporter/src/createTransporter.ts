@@ -55,7 +55,14 @@ export function createTransporter(options: TransporterOptions): Transporter {
     ): Readonly<Promise<TResponse>> {
       const mappedRequestOptions = mapRequestOptions(requestOptions, transporter.timeouts.read);
 
-      const key = { request, mappedRequestOptions };
+      const key = {
+        request,
+        mappedRequestOptions,
+        transporter: {
+          queryParameters: transporter.queryParameters,
+          headers: transporter.headers,
+        },
+      };
 
       const createRequest = (): Readonly<Promise<TResponse>> => {
         return execute<TResponse>(
