@@ -15,7 +15,6 @@
   "main": "index.js",
   "jsdelivr": "./dist/algoliasearch.umd.js",
   "unpkg": "./dist/algoliasearch.umd.js",
-  "module": "./dist/algoliasearch.esm-browser.js",
   "browser": {
     "./index.js": "./dist/algoliasearch.umd.js",
     "./lite.js": "./dist/algoliasearch-lite.umd.js"

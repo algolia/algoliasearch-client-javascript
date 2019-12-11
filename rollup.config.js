@@ -79,13 +79,6 @@ packagesConfig.push({
     output: build === 'browser' ? 'algoliasearch' : 'algoliasearch-lite',
     package: 'algoliasearch',
     input: `src/builds/${build}.ts`,
-    formats: ['esm'],
-  });
-
-  packagesConfig.push({
-    output: build === 'browser' ? 'algoliasearch' : 'algoliasearch-lite',
-    package: 'algoliasearch',
-    input: `src/builds/${build}.ts`,
     formats: ['umd'],
     external: ['dom'],
     globals: {
