@@ -1,4 +1,5 @@
-import { createApiError } from '@algolia/transporter';
+import { createRetryablePromise } from '@algolia/client-common';
+import { createApiError, Transporter } from '@algolia/transporter';
 
 import { ABTest, Variant } from '../..';
 import { createFaker } from '../../../../client-common/src/__tests__/createFaker';
@@ -9,11 +10,30 @@ const testSuite = new TestSuite('ab_testing');
 
 afterAll(() => testSuite.cleanUp());
 
-// eslint-disable-next-line jest/no-test-callback
+const createRetryableTransporter = (client: Transporter): Transporter => {
+  return new Proxy(client, {
+    get(obj: any, method: string) {
+      return (...args: any) => {
+        return createRetryablePromise(retry => {
+          return obj[method](...args).catch((err: Error) => {
+            if (err.message === 'Too Many Requests') {
+              return retry();
+            }
+
+            throw err;
+          });
+        });
+      };
+    },
+  });
+};
+
 test(testSuite.testName, async () => {
   const index1 = testSuite.makeIndex();
   const index2 = testSuite.makeIndex();
   const client = testSuite.makeSearchClient().initAnalytics();
+  // @ts-ignore
+  client.transporter = createRetryableTransporter(client.transporter);
   const today = new Date();
   const todayDate = `${today.getFullYear}-${today.getMonth}-${today.getDay}`;
 
