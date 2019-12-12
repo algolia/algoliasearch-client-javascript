@@ -1,9 +1,13 @@
 import { MethodEnum } from '@algolia/requester-common';
 import { RequestOptions } from '@algolia/transporter';
 
-import { PersonalizationStrategy, SearchClient, SetPersonalizationStrategyResponse } from '../..';
+import {
+  PersonalizationStrategy,
+  RecommendationClient,
+  SetPersonalizationStrategyResponse,
+} from '..';
 
-export const setPersonalizationStrategy = (base: SearchClient) => {
+export const setPersonalizationStrategy = (base: RecommendationClient) => {
   return (
     personalizationStrategy: PersonalizationStrategy,
     requestOptions?: RequestOptions
@@ -11,7 +15,7 @@ export const setPersonalizationStrategy = (base: SearchClient) => {
     return base.transporter.write(
       {
         method: MethodEnum.Post,
-        path: '1/recommendation/personalization/strategy',
+        path: '1/strategies/personalization',
         data: personalizationStrategy,
       },
       requestOptions

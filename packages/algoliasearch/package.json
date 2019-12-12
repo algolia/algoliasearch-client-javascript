@@ -26,6 +26,7 @@
     "@algolia/cache-in-memory": "4.0.0-beta.9",
     "@algolia/client-analytics": "4.0.0-beta.9",
     "@algolia/client-common": "4.0.0-beta.9",
+    "@algolia/client-recommendation": "4.0.0-beta.9",
     "@algolia/client-search": "4.0.0-beta.9",
     "@algolia/logger-common": "4.0.0-beta.9",
     "@algolia/logger-console": "4.0.0-beta.9",

@@ -1,0 +1,19 @@
+{
+  "name": "@algolia/client-recommendation",
+  "version": "4.0.0-beta.9",
+  "private": false,
+  "license": "MIT",
+  "files": [
+    "index.js",
+    "dist"
+  ],
+  "sideEffects": false,
+  "main": "index.js",
+  "module": "dist/client-recommendation.esm.js",
+  "types": "dist/client-recommendation.d.ts",
+  "dependencies": {
+    "@algolia/client-common": "4.0.0-beta.9",
+    "@algolia/requester-common": "4.0.0-beta.9",
+    "@algolia/transporter": "4.0.0-beta.9"
+  }
+}

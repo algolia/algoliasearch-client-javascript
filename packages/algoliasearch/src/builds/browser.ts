@@ -18,6 +18,15 @@ import {
 } from '@algolia/client-analytics';
 import { version, WaitablePromise } from '@algolia/client-common';
 import {
+  createRecommendationClient,
+  getPersonalizationStrategy,
+  GetPersonalizationStrategyResponse,
+  PersonalizationStrategy,
+  RecommendationClient as BaseRecommendationClient,
+  setPersonalizationStrategy,
+  SetPersonalizationStrategyResponse,
+} from '@algolia/client-recommendation';
+import {
   addApiKey,
   AddApiKeyOptions,
   AddApiKeyResponse,
@@ -62,8 +71,6 @@ import {
   getObjects,
   GetObjectsOptions,
   GetObjectsResponse,
-  getPersonalizationStrategy,
-  GetPersonalizationStrategyResponse,
   getRule,
   getSettings,
   getSynonym,
@@ -92,7 +99,6 @@ import {
   PartialUpdateObjectResponse,
   partialUpdateObjects,
   PartialUpdateObjectsOptions,
-  PersonalizationStrategy,
   replaceAllObjects,
   ReplaceAllObjectsOptions,
   replaceAllRules,
@@ -126,8 +132,6 @@ import {
   searchSynonyms,
   SearchSynonymsOptions,
   SearchSynonymsResponse,
-  setPersonalizationStrategy,
-  SetPersonalizationStrategyResponse,
   setSettings,
   SetSettingsResponse,
   Synonym,
@@ -178,8 +182,6 @@ export default function algoliasearch(
       copySettings,
       copySynonyms,
       moveIndex,
-      getPersonalizationStrategy,
-      setPersonalizationStrategy,
       listIndices,
       getLogs,
       listClusters,
@@ -247,9 +249,29 @@ export default function algoliasearch(
           },
         });
       },
+      initRecommendation: () => (region?: string): RecommendationClient => {
+        return createRecommendationClient({
+          ...clientOptions,
+          region,
+          methods: {
+            getPersonalizationStrategy,
+            setPersonalizationStrategy,
+          },
+        });
+      },
     },
   });
 }
+
+export type RecommendationClient = BaseRecommendationClient & {
+  readonly getPersonalizationStrategy: (
+    requestOptions?: RequestOptions
+  ) => Readonly<Promise<GetPersonalizationStrategyResponse>>;
+  readonly setPersonalizationStrategy: (
+    personalizationStrategy: PersonalizationStrategy,
+    requestOptions?: RequestOptions
+  ) => Readonly<Promise<SetPersonalizationStrategyResponse>>;
+};
 
 export type AnalyticsClient = BaseAnalyticsClient & {
   readonly addABTest: (
@@ -450,13 +472,6 @@ export type SearchClient = BaseSearchClient & {
     to: string,
     requestOptions?: RequestOptions
   ) => Readonly<WaitablePromise<IndexOperationResponse>>;
-  readonly getPersonalizationStrategy: (
-    requestOptions?: RequestOptions
-  ) => Readonly<Promise<GetPersonalizationStrategyResponse>>;
-  readonly setPersonalizationStrategy: (
-    personalizationStrategy: PersonalizationStrategy,
-    requestOptions?: RequestOptions
-  ) => Readonly<Promise<SetPersonalizationStrategyResponse>>;
   readonly listIndices: (requestOptions?: RequestOptions) => Readonly<Promise<ListIndicesResponse>>;
   readonly getLogs: (requestOptions?: RequestOptions) => Readonly<Promise<GetLogsResponse>>;
   readonly listClusters: (
@@ -493,6 +508,7 @@ export type SearchClient = BaseSearchClient & {
     requestOptions?: RequestOptions
   ) => Readonly<WaitablePromise<RestoreApiKeyResponse>>;
   readonly initAnalytics: (region?: string) => AnalyticsClient;
+  readonly initRecommendation: (region?: string) => RecommendationClient;
 };
 
 export * from '../types';

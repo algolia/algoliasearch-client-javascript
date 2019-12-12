@@ -47,6 +47,13 @@ export class TestSuite {
     return this.algoliasearch(`${process.env[appIdEnv]}`, `${process.env[apiKeyEnv]}`);
   }
 
+  public makeRecommendationClient(
+    appIdEnv: string = 'ALGOLIA_APPLICATION_ID_1',
+    apiKeyEnv: string = 'ALGOLIA_ADMIN_KEY_1'
+  ) {
+    return this.makeSearchClient(appIdEnv, apiKeyEnv).initRecommendation();
+  }
+
   public makeIndex(indexName?: string) {
     const index = this.makeSearchClient().initIndex(indexName || this.makeIndexName());
 
