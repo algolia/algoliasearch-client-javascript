@@ -45,7 +45,7 @@ describe('personalization', () => {
       transporterMock.write(
         deepEqual({
           method: MethodEnum.Post,
-          path: '1/recommendation/personalization/strategy',
+          path: '1/strategies/personalization',
           data: personalizationStrategy,
         }),
         deepEqual({ foo: 'bar' })
