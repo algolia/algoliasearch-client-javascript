@@ -16,7 +16,10 @@ const createRetryableTransporter = (client: Transporter): Transporter => {
       return (...args: any) => {
         return createRetryablePromise(retry => {
           return obj[method](...args).catch((err: Error) => {
-            if (err.message === 'Too Many Requests') {
+            if (
+              err.message === 'Too Many Requests' ||
+              err.message === 'Remote side is unreachable'
+            ) {
               return retry();
             }
 
