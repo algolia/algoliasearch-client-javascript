@@ -20,16 +20,8 @@ export class TestSuite {
   public async cleanUp(): Promise<void> {
     for (const index of this.indices) {
       // Indices must by deleted sequencially and waiting..
-      try {
-        await index.delete().wait();
-      } catch (error) {
-        // eslint-disable-next-line no-console
-        console.log(index.indexName);
 
-        // eslint-disable-next-line no-console
-        console.log(error);
-        await index.delete().wait();
-      }
+      await index.delete().wait();
     }
   }
 
