@@ -1,3 +1,4 @@
+import { createRetryablePromise } from '..';
 import { default as algoliasearchForBrowser } from '../../../algoliasearch/src/builds/browser';
 import {
   default as algoliasearchForNode,
@@ -19,9 +20,19 @@ export class TestSuite {
 
   public async cleanUp(): Promise<void> {
     for (const index of this.indices) {
-      // Indices must by deleted sequencially and waiting..
+      await createRetryablePromise(retry => {
+        return index
+          .delete()
+          .wait()
+          .catch((err: Error) => {
+            const errAbTest = 'cannot delete with an index under AB testing index as destination';
+            if (err.message === errAbTest) {
+              return retry();
+            }
 
-      await index.delete().wait();
+            throw err;
+          });
+      });
     }
   }
 
