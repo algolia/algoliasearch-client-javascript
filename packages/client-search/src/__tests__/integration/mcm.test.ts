@@ -1,13 +1,38 @@
 /* eslint sonarjs/cognitive-complexity: 0 */ // --> OFF
 
+import { createRetryablePromise } from '@algolia/client-common';
+import { Transporter } from '@algolia/transporter';
+
 import { TestSuite } from '../../../../client-common/src/__tests__/TestSuite';
 
 const testSuite = new TestSuite('mcm');
 
 afterAll(() => testSuite.cleanUp());
 
+const createRetryableTransporter = (client: Transporter): Transporter => {
+  return new Proxy(client, {
+    get(obj: any, method: string) {
+      return (...args: any) => {
+        return createRetryablePromise(retry => {
+          return obj[method](...args).catch((err: Error) => {
+            if (err.message === 'Remote side is unreachable') {
+              return retry();
+            }
+
+            throw err;
+          });
+        });
+      };
+    },
+  });
+};
+
 test(testSuite.testName, async () => {
   const client = testSuite.makeSearchClient('ALGOLIA_APPLICATION_ID_MCM', 'ALGOLIA_ADMIN_KEY_MCM');
+
+  // @ts-ignore
+  client.transporter = createRetryableTransporter(client.transporter);
+
   const response = await client.listClusters();
 
   expect(response.clusters).toHaveLength(2);
