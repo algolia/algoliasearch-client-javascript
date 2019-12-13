@@ -1,4 +1,5 @@
 import { createNullCache } from '@algolia/cache-common';
+import { createInMemoryCache } from '@algolia/cache-in-memory';
 import { encode } from '@algolia/client-common';
 import {
   MethodEnum,
@@ -44,7 +45,7 @@ export function createFixtures() {
 
       return Object.assign(transporter, {
         requester,
-        hostsCache: createNullCache(),
+        hostsCache: createInMemoryCache(),
         requestsCache: createNullCache(),
         responsesCache: createNullCache(),
         headers: {
@@ -87,7 +88,7 @@ export function createFixtures() {
       });
     },
 
-    writeAndWriteRequest(options: any = {}) {
+    readAndWriteRequest(options: any = {}) {
       return this.request({
         url: 'https://read-and-write.com/save',
         ...options,

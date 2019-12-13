@@ -4,11 +4,11 @@ import { Requester } from '@algolia/requester-common';
 
 import {
   Headers,
-  Host,
   HostOptions,
   QueryParameters,
   Request,
   RequestOptions,
+  StatelessHost,
   Timeouts,
   UserAgent,
 } from '.';
@@ -26,7 +26,7 @@ export type Transporter = {
   /**
    * @readonly
    */
-  hosts: readonly Host[]; // eslint-disable-line functional/prefer-readonly-type
+  hosts: readonly StatelessHost[]; // eslint-disable-line functional/prefer-readonly-type
   readonly addHeaders: (headers: Headers) => void;
   readonly addQueryParameters: (queryParameters: QueryParameters) => void;
   readonly setHosts: (values: readonly HostOptions[]) => void;

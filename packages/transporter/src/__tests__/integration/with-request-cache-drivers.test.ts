@@ -13,14 +13,6 @@ transporterRequest.cacheable = true;
 
 const drivers = [createNullCache, createInMemoryCache];
 
-const createBrowserLocalStorageCacheFunction = () => createBrowserLocalStorageCache({ version });
-
-// @ts-ignore
-// eslint-disable-next-line no-undef
-if (testing.isBrowser()) {
-  drivers.push(createBrowserLocalStorageCacheFunction);
-}
-
 describe('request cache integration with cache drivers', () => {
   beforeEach(async () => {
     // @ts-ignore
@@ -34,17 +26,14 @@ describe('request cache integration with cache drivers', () => {
     'in-progress': {
       [createNullCache.name]: 13,
       [createInMemoryCache.name]: 4,
-      [createBrowserLocalStorageCacheFunction.name]: 4,
     },
     resolved: {
       [createNullCache.name]: 10,
       [createInMemoryCache.name]: 10,
-      [createBrowserLocalStorageCacheFunction.name]: 10,
     },
     rejected: {
       [createNullCache.name]: 10,
       [createInMemoryCache.name]: 10,
-      [createBrowserLocalStorageCacheFunction.name]: 10,
     },
   };
 

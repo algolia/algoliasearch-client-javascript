@@ -2,7 +2,6 @@ import {
   createRetryError,
   deserializeFailure,
   deserializeSuccess,
-  Host,
   MappedRequestOptions,
   Request,
   serializeData,
@@ -10,12 +9,14 @@ import {
   StackFrame,
   Transporter,
 } from '..';
+import { createUnavailableStatefullHost } from '../createStatefullHost';
+import { StatelessHost } from '../types';
 import { decision, Outcomes } from './decision';
 import { getAvailableHosts } from './getAvailableHosts';
 
 export function execute<TResponse>(
   transporter: Transporter,
-  statelessHosts: readonly Host[],
+  statelessHosts: readonly StatelessHost[],
   request: Request,
   requestOptions: MappedRequestOptions
 ): Readonly<Promise<TResponse>> {
@@ -29,7 +30,7 @@ export function execute<TResponse>(
   const headers = { ...transporter.headers, ...requestOptions.headers };
   const method = request.method;
 
-  const retry = (hosts: Host[]): Readonly<Promise<TResponse>> => {
+  const retry = (hosts: StatelessHost[]): Readonly<Promise<TResponse>> => {
     // eslint-disable-next-line functional/immutable-data
     const host = hosts.pop();
 
@@ -66,13 +67,20 @@ export function execute<TResponse>(
         // eslint-disable-next-line functional/immutable-data
         stackTrace.push(stackFrame);
 
+        // eslint-disable-next-line functional/no-let
+        let cachePromise: Readonly<Promise<any>>;
+
         if (response.isTimedOut) {
+          cachePromise = Promise.resolve();
           timeoutRetries++;
+        } else {
+          // set host as down.
+          cachePromise = transporter.hostsCache.set(host, createUnavailableStatefullHost(host));
         }
 
         return Promise.all([
           transporter.logger.debug('Retryable failure', stackFrame),
-          transporter.hostsCache.set({ url: host.url }, host),
+          cachePromise,
         ]).then(() => retry(hosts));
       },
       onFail(response) {
@@ -81,9 +89,12 @@ export function execute<TResponse>(
     };
 
     return transporter.requester.send(payload).then(response => {
-      return decision(host, response, decisions);
+      return decision(response, decisions);
     });
   };
 
-  return getAvailableHosts(transporter.hostsCache, statelessHosts).then(hosts => retry(hosts));
+  return getAvailableHosts(transporter.hostsCache, statelessHosts).then(hosts =>
+    // eslint-disable-next-line functional/immutable-data
+    retry(hosts.reverse())
+  );
 }

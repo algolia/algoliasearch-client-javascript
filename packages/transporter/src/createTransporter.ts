@@ -1,13 +1,13 @@
 import {
   CallEnum,
-  createHost,
+  createStatelessHost,
   Headers,
-  Host,
   HostOptions,
   mapRequestOptions,
   QueryParameters,
   Request,
   RequestOptions,
+  StatelessHost,
   Transporter,
   TransporterOptions,
 } from '.';
@@ -36,7 +36,7 @@ export function createTransporter(options: TransporterOptions): Transporter {
     headers: {} as Headers,
     // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
     queryParameters: {} as QueryParameters,
-    hosts: [] as readonly Host[],
+    hosts: [] as readonly StatelessHost[],
     addHeaders(headers: Headers): void {
       // eslint-disable-next-line functional/immutable-data
       Object.assign(transporter.headers, headers);
@@ -47,7 +47,7 @@ export function createTransporter(options: TransporterOptions): Transporter {
     },
     setHosts(values: readonly HostOptions[]): void {
       // eslint-disable-next-line functional/immutable-data
-      transporter.hosts = values.map(hostOptions => createHost(hostOptions));
+      transporter.hosts = values.map(hostOptions => createStatelessHost(hostOptions));
     },
     read<TResponse>(
       request: Request,
@@ -94,7 +94,7 @@ export function createTransporter(options: TransporterOptions): Transporter {
                   err => Promise.all([transporter.requestsCache.delete(key), Promise.reject(err)])
                 )
                 // @todo Maybe remove this alias, and understand why we need it.
-                .then(promiseResults => promiseResults[1] as TResponse)
+                .then(([_, response]) => response as TResponse)
             );
           });
         },

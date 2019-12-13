@@ -1,23 +1,30 @@
 import { Cache } from '@algolia/cache-common';
 
-import { Host } from '..';
+import { isStatefullHostUp, StatelessHost } from '..';
+import { createAvailableStatefullHost } from '../createStatefullHost';
+import { createStatelessHost } from '../createStatelessHost';
 
 export function getAvailableHosts(
   hostsCache: Cache,
-  statelessHosts: readonly Host[]
-  /* eslint-disable functional/prefer-readonly-type */
-): Readonly<Promise<Host[]>> {
+  statelessHosts: readonly StatelessHost[]
+  // eslint-disable-next-line functional/prefer-readonly-type
+): Readonly<Promise<StatelessHost[]>> {
   return Promise.all(
-    statelessHosts.map(host =>
-      hostsCache
-        .get({ url: host.url }, () => Promise.resolve(host))
-        .then((hit: Host) => {
-          // eslint-disable-next-line functional/immutable-data
-          return Object.assign(host, {
-            downDate: hit.downDate,
-            up: hit.up,
-          });
-        })
-    )
-  ).then(statefulHosts => statefulHosts.filter(host => host.isUp()).reverse());
+    statelessHosts.map(statelessHost => {
+      return hostsCache.get(statelessHost, () => {
+        return Promise.resolve(createAvailableStatefullHost(statelessHost));
+      });
+    })
+  ).then(statefulHosts => {
+    const availableStatelessHosts = statefulHosts
+      .filter(host => isStatefullHostUp(host))
+      .map(host => createStatelessHost(host));
+
+    if (availableStatelessHosts.length > 0) {
+      return availableStatelessHosts;
+    }
+
+    // If no hosts availabe we return the original list of hosts.
+    return statelessHosts.map(host => host);
+  });
 }

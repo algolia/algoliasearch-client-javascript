@@ -32,7 +32,7 @@ describe('selection of hosts', (): void => {
     verify(
       requesterMock.send(
         deepEqual(
-          createFixtures().writeAndWriteRequest({
+          createFixtures().readAndWriteRequest({
             socketTimeout: 2,
             url: 'https://read-and-write.com/save',
           })

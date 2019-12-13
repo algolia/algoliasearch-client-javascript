@@ -1,11 +1,11 @@
 import { Request, Response } from '@algolia/requester-common';
 
-import { Host } from './Host';
+import { StatelessHost } from './StatelessHost';
 
 export type StackFrame = {
   readonly request: Request;
   readonly response: Response;
-  readonly host: Host;
+  readonly host: StatelessHost;
   readonly triesLeft: number;
   readonly timeoutRetries: number;
 };

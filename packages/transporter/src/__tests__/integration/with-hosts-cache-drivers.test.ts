@@ -28,19 +28,21 @@ describe('hosts cache integration with cache drivers', () => {
 
   const expectedCalls = [
     {
-      [createNullCache.name]: 3,
+      [createNullCache.name]: 4,
       [createInMemoryCache.name]: 3,
       [createBrowserLocalStorageCacheFunction.name]: 3,
     },
     {
-      [createNullCache.name]: 3,
-      [createInMemoryCache.name]: 0,
-      [createBrowserLocalStorageCacheFunction.name]: 0,
+      [createNullCache.name]: 4,
+      // all down.
+      [createInMemoryCache.name]: 4,
+      [createBrowserLocalStorageCacheFunction.name]: 4,
     },
     {
-      [createNullCache.name]: 3,
-      [createInMemoryCache.name]: 0,
-      [createBrowserLocalStorageCacheFunction.name]: 0,
+      [createNullCache.name]: 4,
+      // all down.
+      [createInMemoryCache.name]: 4,
+      [createBrowserLocalStorageCacheFunction.name]: 4,
     },
   ];
 
