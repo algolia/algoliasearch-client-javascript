@@ -4,3 +4,4 @@
 
 export * from './Cache';
 export * from './CacheEvents';
+export * from './FallbackableCacheOptions';

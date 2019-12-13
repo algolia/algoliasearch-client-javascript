@@ -1,4 +1,5 @@
 import { createBrowserLocalStorageCache } from '@algolia/cache-browser-local-storage';
+import { createFallbackableCache } from '@algolia/cache-common';
 import { createInMemoryCache } from '@algolia/cache-in-memory';
 import {
   ABTest,
@@ -166,7 +167,9 @@ export default function algoliasearch(
     logger,
     responsesCache: createInMemoryCache(),
     requestsCache: createInMemoryCache({ serializable: false }),
-    hostsCache: createBrowserLocalStorageCache({ version, logger }),
+    hostsCache: createFallbackableCache({
+      caches: [createBrowserLocalStorageCache({ version }), createInMemoryCache()],
+    }),
     userAgent: createUserAgent(version).add({ segment: 'Browser' }),
   };
 

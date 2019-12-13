@@ -1,4 +1,5 @@
 import { createNullCache } from '@algolia/cache-common';
+import { createInMemoryCache } from '@algolia/cache-in-memory';
 import {
   ABTest,
   addABTest,
@@ -175,7 +176,7 @@ export default function algoliasearch(appId: string, apiKey: string): SearchClie
     logger: createNullLogger(),
     responsesCache: createNullCache(),
     requestsCache: createNullCache(),
-    hostsCache: createNullCache(),
+    hostsCache: createInMemoryCache(),
     userAgent: createUserAgent(version).add({
       segment: 'Node.js',
       version: process.versions.node,

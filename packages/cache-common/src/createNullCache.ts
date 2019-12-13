@@ -12,10 +12,8 @@ export function createNullCache(): Cache {
       const value = defaultValue();
 
       return value
-        .then(result => {
-          return Promise.all([events.miss(result), result]);
-        })
-        .then(results => results[1]);
+        .then(result => Promise.all([result, events.miss(result)]))
+        .then(([result]) => result);
     },
 
     set<TValue>(_key: object, value: TValue): Readonly<Promise<TValue>> {

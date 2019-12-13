@@ -1,29 +1,14 @@
 import { version } from '@algolia/client-common';
-import { createNullLogger } from '@algolia/logger-common';
 
 import { createBrowserLocalStorageCache } from '../..';
 
-const notAvailableStorage: Storage = {
-  setItem(_key, _value) {
-    throw new Error('Component is not available');
+const notAvailableStorage: Storage = new Proxy(window.localStorage || {}, {
+  get() {
+    return () => {
+      throw new Error('Component is not available');
+    };
   },
-  getItem(_key) {
-    throw new Error('Component is not available');
-  },
-  removeItem(_key) {
-    throw new Error('Component is not available');
-  },
-  // @ts-ignore
-  get length() {
-    throw new Error('Component is not available');
-  },
-  key(_i) {
-    throw new Error('Component is not available');
-  },
-  clear() {
-    throw new Error('Component is not available');
-  },
-};
+});
 
 describe('browser local storage cache', () => {
   beforeEach(async () => await createBrowserLocalStorageCache({ version }).clear());
@@ -106,26 +91,26 @@ describe('browser local storage cache', () => {
     expect(missMock.mock.calls.length).toBe(2);
   });
 
-  it('do not throws localstorage related exceptions', async () => {
+  it('do throws localstorage related exceptions', async () => {
     const cache = createBrowserLocalStorageCache({
       version,
-      logger: createNullLogger(),
-      storage: notAvailableStorage,
+      localStorage: notAvailableStorage,
     });
     const key = { foo: 'bar' };
     const value = 'foo';
     const fallback = 'bar';
 
-    await cache.clear();
-    await cache.delete(key);
-    await cache.set(key, value);
-    await expect(cache.get(key, () => Promise.resolve(fallback))).resolves.toBe(fallback);
+    const message = 'Component is not available';
+    await expect(cache.clear()).rejects.toEqual(new Error(message));
+    await expect(cache.delete(key)).rejects.toEqual(new Error(message));
+    await expect(cache.set(key, value)).rejects.toEqual(new Error(message));
+    await expect(cache.get(key, () => Promise.resolve(fallback))).rejects.toEqual(
+      new Error(message)
+    );
   });
-
   it('creates a namespace within local storage', async () => {
     const cache = createBrowserLocalStorageCache({
       version,
-      logger: createNullLogger(),
     });
     const key = { foo: 'bar' };
     const value = 'foo';
