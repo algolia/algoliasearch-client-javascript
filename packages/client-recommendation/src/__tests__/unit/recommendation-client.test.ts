@@ -2,7 +2,7 @@ import { TestSuite } from '@algolia/client-common/src/__tests__/TestSuite';
 import { MethodEnum } from '@algolia/requester-common';
 import { anything, deepEqual, spy, verify, when } from 'ts-mockito';
 
-import { PersonalizationStrategy } from '../../types';
+import { PersonalizationStrategy, SetPersonalizationStrategyResponse } from '../../types';
 
 const recommendationClient = new TestSuite().algoliasearch('appId', 'apiKey').initRecommendation();
 
@@ -23,23 +23,31 @@ describe('recommendation client', () => {
 });
 
 describe('personalization', () => {
-  const transporterMock = spy(recommendationClient.transporter);
-  when(transporterMock.write(anything(), anything())).thenResolve({});
+  const personalizationStrategy: PersonalizationStrategy = {
+    eventsScoring: [
+      { eventName: 'Add to cart', eventType: 'conversion', score: 50 },
+      { eventName: 'Purchase', eventType: 'conversion', score: 100 },
+    ],
+    facetsScoring: [
+      { facetName: 'brand', score: 100 },
+      { facetName: 'categories', score: 10 },
+    ],
+    personalizationImpact: 0,
+  };
 
   it('set personalization strategy', async () => {
-    const personalizationStrategy: PersonalizationStrategy = {
-      eventsScoring: [
-        { eventName: 'Add to cart', eventType: 'conversion', score: 50 },
-        { eventName: 'Purchase', eventType: 'conversion', score: 100 },
-      ],
-      facetsScoring: [
-        { facetName: 'brand', score: 100 },
-        { facetName: 'categories', score: 10 },
-      ],
-      personalizationImpact: 0,
+    const transporterMock = spy(recommendationClient.transporter);
+    const response: SetPersonalizationStrategyResponse = {
+      status: 200,
+      message: 'Strategy was successfully updated',
     };
+    when(transporterMock.write(anything(), anything())).thenResolve(response);
 
-    await recommendationClient.setPersonalizationStrategy(personalizationStrategy, { foo: 'bar' });
+    const setPersonalizationStrategyResponse = await recommendationClient.setPersonalizationStrategy(
+      personalizationStrategy,
+      { foo: 'bar' }
+    );
+    expect(setPersonalizationStrategyResponse).toEqual(response);
 
     verify(
       transporterMock.write(
@@ -51,5 +59,24 @@ describe('personalization', () => {
         deepEqual({ foo: 'bar' })
       )
     ).once();
+  });
+
+  it('get personalization strategy', async () => {
+    const transporterMock = spy(recommendationClient.transporter);
+    when(transporterMock.read(anything(), anything())).thenResolve(personalizationStrategy);
+
+    const getPersonalizationStrategyResponse = await recommendationClient.getPersonalizationStrategy();
+
+    verify(
+      transporterMock.read(
+        deepEqual({
+          method: MethodEnum.Get,
+          path: '1/strategies/personalization',
+        }),
+        anything()
+      )
+    ).once();
+
+    expect(getPersonalizationStrategyResponse).toEqual(personalizationStrategy);
   });
 });
