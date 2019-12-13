@@ -1,3 +1,4 @@
+import { createNullCache } from '@algolia/cache-common';
 import { addMethods, AuthMode, createAuth, CreateClient } from '@algolia/client-common';
 import { CallEnum, createTransporter, TransporterOptions } from '@algolia/transporter';
 
@@ -10,7 +11,12 @@ export const createAnalyticsClient: CreateClient<
   const region = options.region || 'us';
   const auth = createAuth(AuthMode.WithinHeaders, options.appId, options.apiKey);
 
-  const transporter = createTransporter(options);
+  const transporter = createTransporter({
+    ...options,
+    // No retry strategy on recommendation client
+    hostsCache: createNullCache(),
+  });
+
   const appId = options.appId;
 
   transporter.setHosts([{ url: `analytics.${region}.algolia.com`, accept: CallEnum.Any }]);

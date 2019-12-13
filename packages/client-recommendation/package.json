@@ -12,6 +12,7 @@
   "module": "dist/client-recommendation.esm.js",
   "types": "dist/client-recommendation.d.ts",
   "dependencies": {
+    "@algolia/cache-common": "4.0.0-beta.9",
     "@algolia/client-common": "4.0.0-beta.9",
     "@algolia/requester-common": "4.0.0-beta.9",
     "@algolia/transporter": "4.0.0-beta.9"
