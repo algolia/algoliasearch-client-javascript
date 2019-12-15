@@ -1,9 +1,9 @@
 import {
   CallEnum,
+  createMappedRequestOptions,
   createStatelessHost,
   Headers,
   HostOptions,
-  mapRequestOptions,
   QueryParameters,
   Request,
   RequestOptions,
@@ -53,7 +53,10 @@ export function createTransporter(options: TransporterOptions): Transporter {
       request: Request,
       requestOptions?: RequestOptions
     ): Readonly<Promise<TResponse>> {
-      const mappedRequestOptions = mapRequestOptions(requestOptions, transporter.timeouts.read);
+      const mappedRequestOptions = createMappedRequestOptions(
+        requestOptions,
+        transporter.timeouts.read
+      );
 
       const key = {
         request,
@@ -111,7 +114,7 @@ export function createTransporter(options: TransporterOptions): Transporter {
         transporter,
         transporter.hosts.filter(host => (host.accept & CallEnum.Write) !== 0),
         request,
-        mapRequestOptions(requestOptions, transporter.timeouts.write)
+        createMappedRequestOptions(requestOptions, transporter.timeouts.write)
       );
     },
   };

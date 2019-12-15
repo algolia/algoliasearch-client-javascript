@@ -1,7 +1,7 @@
 import { addMethods, encode } from '@algolia/client-common';
 import { TestSuite } from '@algolia/client-common/src/__tests__/TestSuite';
 import { MethodEnum } from '@algolia/requester-common';
-import { mapRequestOptions, RequestOptions, Transporter } from '@algolia/transporter';
+import { createMappedRequestOptions, RequestOptions, Transporter } from '@algolia/transporter';
 import { anything, deepEqual, spy, verify, when } from 'ts-mockito';
 
 import { BatchActionEnum, SaveObjectsOptions } from '../..';
@@ -157,7 +157,9 @@ describe('get object', () => {
 
     await index.getObject('bar', requestOptions);
 
-    verify(transporterMock.read(anything(), deepEqual(mapRequestOptions(requestOptions)))).once();
+    verify(
+      transporterMock.read(anything(), deepEqual(createMappedRequestOptions(requestOptions)))
+    ).once();
   });
 });
 

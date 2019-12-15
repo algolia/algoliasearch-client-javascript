@@ -1,5 +1,5 @@
 import { MethodEnum } from '@algolia/requester-common';
-import { mapRequestOptions, RequestOptions } from '@algolia/transporter';
+import { createMappedRequestOptions, RequestOptions } from '@algolia/transporter';
 
 import { AssignUserIDResponse, SearchClient } from '../..';
 
@@ -9,7 +9,7 @@ export const assignUserID = (base: SearchClient) => {
     clusterName: string,
     requestOptions?: RequestOptions
   ): Readonly<Promise<AssignUserIDResponse>> => {
-    const mappedRequestOptions = mapRequestOptions(requestOptions);
+    const mappedRequestOptions = createMappedRequestOptions(requestOptions);
 
     // eslint-disable-next-line functional/immutable-data
     mappedRequestOptions.headers['X-Algolia-User-ID'] = userID;

@@ -7,7 +7,7 @@ export * from './createStatelessHost';
 export * from './createTransporter';
 export * from './createUserAgent';
 export * from './deserializer';
-export * from './request-options';
+export * from './createMappedRequestOptions';
 export * from './serializer';
 export * from './errors/index';
 export * from './types/index';

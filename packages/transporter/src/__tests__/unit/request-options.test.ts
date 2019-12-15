@@ -1,8 +1,8 @@
-import { mapRequestOptions } from '../..';
+import { createMappedRequestOptions } from '../..';
 
 describe('request options', () => {
   it('has default values', () => {
-    const result = mapRequestOptions(undefined);
+    const result = createMappedRequestOptions(undefined);
 
     expect(result.data).toEqual({});
     expect(result.headers).toEqual({});
@@ -11,7 +11,7 @@ describe('request options', () => {
   });
 
   it('map values', () => {
-    const result = mapRequestOptions({
+    const result = createMappedRequestOptions({
       extra: 'two',
       'another-extra': 'four',
       timeout: 2,

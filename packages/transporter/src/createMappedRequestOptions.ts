@@ -1,6 +1,6 @@
 import { MappedRequestOptions, RequestOptions } from '.';
 
-export function mapRequestOptions(
+export function createMappedRequestOptions(
   requestOptions?: RequestOptions,
   timeout?: number
 ): MappedRequestOptions {

@@ -1,5 +1,5 @@
 import { MethodEnum } from '@algolia/requester-common';
-import { mapRequestOptions, RequestOptions } from '@algolia/transporter';
+import { createMappedRequestOptions, RequestOptions } from '@algolia/transporter';
 
 import { RemoveUserIDResponse, SearchClient } from '../..';
 
@@ -8,7 +8,7 @@ export const removeUserID = (base: SearchClient) => {
     userID: string,
     requestOptions?: RequestOptions
   ): Readonly<Promise<RemoveUserIDResponse>> => {
-    const mappedRequestOptions = mapRequestOptions(requestOptions);
+    const mappedRequestOptions = createMappedRequestOptions(requestOptions);
 
     // eslint-disable-next-line functional/immutable-data
     mappedRequestOptions.headers['X-Algolia-User-ID'] = userID;

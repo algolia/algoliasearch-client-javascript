@@ -1,12 +1,12 @@
 import { encode } from '@algolia/client-common';
 import { MethodEnum } from '@algolia/requester-common';
-import { mapRequestOptions, RequestOptions } from '@algolia/transporter';
+import { createMappedRequestOptions, RequestOptions } from '@algolia/transporter';
 
 import { SearchIndex, Settings } from '../..';
 
 export const getSettings = (base: SearchIndex) => {
   return (requestOptions?: RequestOptions): Readonly<Promise<Settings>> => {
-    const mappedRequestOptions = mapRequestOptions(requestOptions);
+    const mappedRequestOptions = createMappedRequestOptions(requestOptions);
 
     // eslint-disable-next-line functional/immutable-data
     mappedRequestOptions.queryParameters.getVersion = '2';
