@@ -41,6 +41,7 @@ import {
   ChunkOptions,
   clearObjects,
   clearRules,
+  ClearRulesOptions,
   clearSynonyms,
   ClearSynonymsOptions,
   copyIndex,
@@ -68,6 +69,7 @@ import {
   getLogs,
   GetLogsResponse,
   getObject,
+  GetObjectOptions,
   getObjectPosition,
   getObjects,
   GetObjectsOptions,
@@ -317,7 +319,7 @@ export type SearchIndex = BaseSearchIndex & {
   readonly delete: (requestOptions?: RequestOptions) => Readonly<WaitablePromise<DeleteResponse>>;
   readonly getObject: <TObject>(
     objectID: string,
-    requestOptions?: RequestOptions
+    requestOptions?: RequestOptions & GetObjectOptions
   ) => Readonly<Promise<TObject & ObjectWithObjectID>>;
   readonly getObjects: <TObject>(
     objectIDs: readonly string[],
@@ -429,7 +431,7 @@ export type SearchIndex = BaseSearchIndex & {
     requestOptions?: SearchRulesOptions & BrowseOptions<Rule> & RequestOptions
   ) => Readonly<Promise<void>>;
   readonly clearRules: (
-    requestOptions?: RequestOptions
+    requestOptions?: RequestOptions & ClearRulesOptions
   ) => Readonly<WaitablePromise<DeleteResponse>>;
 };
 

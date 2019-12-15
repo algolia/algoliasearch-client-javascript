@@ -1,5 +1,5 @@
 import { createWaitablePromise, WaitablePromise } from '@algolia/client-common';
-import { popRequestOption, RequestOptions } from '@algolia/transporter';
+import { RequestOptions } from '@algolia/transporter';
 
 import {
   BatchActionEnum,
@@ -16,11 +16,7 @@ export const saveObjects = (base: SearchIndex) => {
     objects: ReadonlyArray<{ readonly [key: string]: any }>,
     requestOptions?: RequestOptions & ChunkOptions & SaveObjectsOptions
   ): Readonly<WaitablePromise<readonly BatchResponse[]>> => {
-    const autoGenerateObjectIDIfNotExist = popRequestOption(
-      requestOptions,
-      'autoGenerateObjectIDIfNotExist',
-      false
-    );
+    const { autoGenerateObjectIDIfNotExist, ...options } = requestOptions || {};
 
     const action = autoGenerateObjectIDIfNotExist
       ? BatchActionEnum.AddObject
@@ -35,6 +31,6 @@ export const saveObjects = (base: SearchIndex) => {
       }
     }
 
-    return chunk(base)(objects, action, requestOptions);
+    return chunk(base)(objects, action, options);
   };
 };

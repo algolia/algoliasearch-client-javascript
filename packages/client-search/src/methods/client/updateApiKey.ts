@@ -6,10 +6,15 @@ import {
   WaitablePromise,
 } from '@algolia/client-common';
 import { MethodEnum } from '@algolia/requester-common';
-import { popRequestOption, RequestOptions } from '@algolia/transporter';
+import { RequestOptions } from '@algolia/transporter';
 
-import { getApiKey, SearchClient, UpdateApiKeyOptions, UpdateApiKeyResponse } from '../..';
-import { GetApiKeyResponse } from '../../types';
+import {
+  getApiKey,
+  GetApiKeyResponse,
+  SearchClient,
+  UpdateApiKeyOptions,
+  UpdateApiKeyResponse,
+} from '../..';
 
 export const updateApiKey = (base: SearchClient) => {
   return (
@@ -18,9 +23,7 @@ export const updateApiKey = (base: SearchClient) => {
       Pick<RequestOptions, Exclude<keyof RequestOptions, 'queryParameters'>>
   ): Readonly<WaitablePromise<UpdateApiKeyResponse>> => {
     const updatedFields = Object.assign({}, requestOptions);
-
-    const queryParameters = popRequestOption<string | undefined>(requestOptions, 'queryParameters');
-
+    const { queryParameters, ...options } = requestOptions || {};
     const data = queryParameters ? { queryParameters } : {};
 
     const apiKeyFields = [
@@ -38,8 +41,11 @@ export const updateApiKey = (base: SearchClient) => {
       return Object.keys(updatedFields)
         .filter(updatedField => apiKeyFields.indexOf(updatedField) !== -1)
         .every(updatedField => {
-          // @ts-ignore
-          return getApiKeyResponse[updatedField] === updatedFields[updatedField];
+          return (
+            // @ts-ignore
+
+            getApiKeyResponse[updatedField] === updatedFields[updatedField]
+          );
         });
     };
 
@@ -57,7 +63,7 @@ export const updateApiKey = (base: SearchClient) => {
           path: encode('1/keys/%s', apiKey),
           data,
         },
-        requestOptions
+        options
       ),
       wait
     );

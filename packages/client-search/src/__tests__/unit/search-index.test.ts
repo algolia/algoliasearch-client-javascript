@@ -1,7 +1,7 @@
 import { addMethods, encode } from '@algolia/client-common';
 import { TestSuite } from '@algolia/client-common/src/__tests__/TestSuite';
 import { MethodEnum } from '@algolia/requester-common';
-import { RequestOptions, Transporter } from '@algolia/transporter';
+import { mapRequestOptions, RequestOptions, Transporter } from '@algolia/transporter';
 import { anything, deepEqual, spy, verify, when } from 'ts-mockito';
 
 import { BatchActionEnum, SaveObjectsOptions } from '../..';
@@ -49,11 +49,11 @@ describe('save objects', () => {
       data: { requests: [{ action: 'addObject', body: obj }] },
     };
 
-    when(transporterMock.write(deepEqual(request), requestOptions)).thenResolve(res);
+    when(transporterMock.write(deepEqual(request), deepEqual({ timeout: 1 }))).thenResolve(res);
 
     await index.saveObject(obj, requestOptions);
 
-    verify(transporterMock.write(deepEqual(request), requestOptions)).once();
+    verify(transporterMock.write(deepEqual(request), deepEqual({ timeout: 1 }))).once();
   });
 
   it('uses addObject when `autoGenerateObjectIDIfNotExist` is true', async () => {
@@ -68,11 +68,11 @@ describe('save objects', () => {
       data: { requests: [{ action: 'addObject', body: objects[0] }] },
     };
 
-    when(transporterMock.write(deepEqual(request), requestOptions)).thenResolve(res);
+    when(transporterMock.write(deepEqual(request), deepEqual({}))).thenResolve(res);
 
     await index.saveObjects(objects, requestOptions);
 
-    verify(transporterMock.write(deepEqual(request), requestOptions)).once();
+    verify(transporterMock.write(deepEqual(request), deepEqual({}))).once();
   });
 
   it('uses updateObject when `autoGenerateObjectIDIfNotExist` is not set', async () => {
@@ -84,7 +84,7 @@ describe('save objects', () => {
       data: { requests: [{ action: 'updateObject', body: objects[0] }] },
     };
 
-    when(transporterMock.write(deepEqual(request), undefined)).thenResolve(res);
+    when(transporterMock.write(deepEqual(request), deepEqual({}))).thenResolve(res);
 
     await expect(index.saveObjects(objects)).resolves.toMatchObject([
       {
@@ -92,7 +92,7 @@ describe('save objects', () => {
         taskID: 1,
       },
     ]);
-    verify(transporterMock.write(deepEqual(request), undefined)).once();
+    verify(transporterMock.write(deepEqual(request), deepEqual({}))).once();
   });
 
   it('validates the object id when `autoGenerateObjectIDIfNotExist` is !== true', async () => {
@@ -157,7 +157,7 @@ describe('get object', () => {
 
     await index.getObject('bar', requestOptions);
 
-    verify(transporterMock.read(anything(), requestOptions)).once();
+    verify(transporterMock.read(anything(), deepEqual(mapRequestOptions(requestOptions)))).once();
   });
 });
 
@@ -204,7 +204,7 @@ describe('get objects', () => {
 
     await index.getObjects(['bar'], requestOptions);
 
-    verify(transporterMock.read(anything(), requestOptions)).once();
+    verify(transporterMock.read(anything(), deepEqual(requestOptions))).once();
   });
 
   it('Allows to pass `attributesToRetrieve`', async () => {
@@ -230,7 +230,7 @@ describe('get objects', () => {
             ],
           },
         }),
-        requestOptions
+        deepEqual({ timeout: 2 })
       )
     ).once();
   });

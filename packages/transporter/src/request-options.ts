@@ -23,20 +23,3 @@ export function mapRequestOptions(
     cacheable: options.cacheable,
   };
 }
-
-export function popRequestOption<TRequestOption = undefined>(
-  requestOptions: RequestOptions | undefined,
-  key: string,
-  defaultValue?: TRequestOption
-): TRequestOption {
-  if (requestOptions !== undefined && key in requestOptions) {
-    const value: TRequestOption = requestOptions[key];
-
-    // eslint-disable-next-line no-param-reassign, functional/immutable-data
-    delete requestOptions[key];
-
-    return value;
-  }
-
-  return defaultValue as TRequestOption;
-}

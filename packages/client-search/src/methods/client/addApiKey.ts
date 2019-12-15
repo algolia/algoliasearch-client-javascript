@@ -5,7 +5,7 @@ import {
   WaitablePromise,
 } from '@algolia/client-common';
 import { MethodEnum } from '@algolia/requester-common';
-import { ApiError, popRequestOption, RequestOptions } from '@algolia/transporter';
+import { ApiError, RequestOptions } from '@algolia/transporter';
 
 import {
   AddApiKeyOptions,
@@ -21,7 +21,7 @@ export const addApiKey = (base: SearchClient) => {
     requestOptions?: AddApiKeyOptions &
       Pick<RequestOptions, Exclude<keyof RequestOptions, 'queryParameters'>>
   ): Readonly<WaitablePromise<AddApiKeyResponse>> => {
-    const queryParameters = popRequestOption<string | undefined>(requestOptions, 'queryParameters');
+    const { queryParameters, ...options } = requestOptions || {};
 
     const data = {
       acl,
@@ -47,7 +47,7 @@ export const addApiKey = (base: SearchClient) => {
           path: '1/keys',
           data,
         },
-        requestOptions
+        options
       ),
       wait
     );

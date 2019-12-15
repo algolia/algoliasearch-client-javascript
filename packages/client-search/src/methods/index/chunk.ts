@@ -1,5 +1,5 @@
 import { createWaitablePromise, WaitablePromise } from '@algolia/client-common';
-import { popRequestOption, RequestOptions } from '@algolia/transporter';
+import { RequestOptions } from '@algolia/transporter';
 
 import { batch, BatchActionType, BatchResponse, ChunkOptions, SearchIndex, waitTask } from '../..';
 
@@ -9,7 +9,7 @@ export const chunk = (base: SearchIndex) => {
     action: BatchActionType,
     requestOptions?: RequestOptions & ChunkOptions
   ): Readonly<WaitablePromise<readonly BatchResponse[]>> => {
-    const batchSize = popRequestOption(requestOptions, 'batchSize', 1000);
+    const { batchSize, ...options } = requestOptions || {};
 
     // eslint-disable-next-line functional/prefer-readonly-type
     const responses: BatchResponse[] = [];
@@ -25,7 +25,7 @@ export const chunk = (base: SearchIndex) => {
         // eslint-disable-next-line functional/immutable-data
         bodiesChunk.push(bodies[index]);
 
-        if (bodiesChunk.length === batchSize) {
+        if (bodiesChunk.length === (batchSize || 1000)) {
           break;
         }
       }
@@ -41,7 +41,7 @@ export const chunk = (base: SearchIndex) => {
             body,
           };
         }),
-        requestOptions
+        options
       ).then(response => {
         // eslint-disable-next-line functional/immutable-data
         responses.push(response);

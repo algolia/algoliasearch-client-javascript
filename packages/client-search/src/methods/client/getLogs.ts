@@ -1,29 +1,23 @@
 import { MethodEnum } from '@algolia/requester-common';
-import { mapRequestOptions, popRequestOption, RequestOptions } from '@algolia/transporter';
+import { mapRequestOptions, RequestOptions } from '@algolia/transporter';
 
 import { GetLogsResponse, SearchClient } from '../..';
 
 export const getLogs = (base: SearchClient) => {
   return (requestOptions?: RequestOptions): Readonly<Promise<GetLogsResponse>> => {
-    const length = popRequestOption<number | undefined>(requestOptions, 'length');
-    const offset = popRequestOption<number | undefined>(requestOptions, 'offset');
-    const type = popRequestOption<string | undefined>(requestOptions, 'type');
+    const { length, offset, type, ...options } = requestOptions || {};
+    const mappedRequestOptions = mapRequestOptions(options);
 
-    const options = mapRequestOptions(requestOptions);
-
-    if (length !== undefined) {
-      // eslint-disable-next-line functional/immutable-data
-      options.queryParameters.length = length;
+    if (length) {
+      mappedRequestOptions.queryParameters.length = length; // eslint-disable-line functional/immutable-data
     }
 
-    if (offset !== undefined) {
-      // eslint-disable-next-line functional/immutable-data
-      options.queryParameters.offset = offset;
+    if (offset) {
+      mappedRequestOptions.queryParameters.offset = offset; // eslint-disable-line functional/immutable-data
     }
 
-    if (type !== undefined) {
-      // eslint-disable-next-line functional/immutable-data
-      options.queryParameters.type = type;
+    if (type) {
+      mappedRequestOptions.queryParameters.type = type; // eslint-disable-line functional/immutable-data
     }
 
     return base.transporter.read(
@@ -31,7 +25,7 @@ export const getLogs = (base: SearchClient) => {
         method: MethodEnum.Get,
         path: '1/logs',
       },
-      options
+      mappedRequestOptions
     );
   };
 };

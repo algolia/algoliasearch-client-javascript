@@ -1,5 +1,5 @@
 import { MethodEnum } from '@algolia/requester-common';
-import { popRequestOption, RequestOptions } from '@algolia/transporter';
+import { RequestOptions } from '@algolia/transporter';
 
 import { GetObjectsOptions, GetObjectsResponse, SearchIndex } from '../..';
 
@@ -8,9 +8,9 @@ export const getObjects = (base: SearchIndex) => {
     objectIDs: readonly string[],
     requestOptions?: RequestOptions & GetObjectsOptions
   ): Readonly<Promise<GetObjectsResponse<TObject>>> => {
-    const requests = objectIDs.map(objectID => {
-      const attributesToRetrieve = popRequestOption(requestOptions, 'attributesToRetrieve');
+    const { attributesToRetrieve, ...options } = requestOptions || {};
 
+    const requests = objectIDs.map(objectID => {
       return {
         indexName: base.indexName,
         objectID,
@@ -26,7 +26,7 @@ export const getObjects = (base: SearchIndex) => {
           requests,
         },
       },
-      requestOptions
+      options
     );
   };
 };

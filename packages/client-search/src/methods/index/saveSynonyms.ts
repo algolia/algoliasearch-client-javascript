@@ -1,6 +1,6 @@
 import { createWaitablePromise, encode, WaitablePromise } from '@algolia/client-common';
 import { MethodEnum } from '@algolia/requester-common';
-import { mapRequestOptions, popRequestOption, RequestOptions } from '@algolia/transporter';
+import { mapRequestOptions, RequestOptions } from '@algolia/transporter';
 
 import { SaveSynonymsOptions, SaveSynonymsResponse, SearchIndex, Synonym } from '../..';
 import { waitTask } from '.';
@@ -10,17 +10,15 @@ export const saveSynonyms = (base: SearchIndex) => {
     synonyms: readonly Synonym[],
     requestOptions?: SaveSynonymsOptions & RequestOptions
   ): Readonly<WaitablePromise<SaveSynonymsResponse>> => {
-    const forward = popRequestOption(requestOptions, 'forwardToReplicas');
-    const replace = popRequestOption(requestOptions, 'replaceExistingSynonyms');
-    const options = mapRequestOptions(requestOptions);
-    if (forward === true) {
-      // eslint-disable-next-line functional/immutable-data
-      options.queryParameters.forwardToReplicas = '1';
+    const { forwardToReplicas, replaceExistingSynonyms, ...options } = requestOptions || {};
+    const mappedRequestOptions = mapRequestOptions(options);
+
+    if (forwardToReplicas) {
+      mappedRequestOptions.queryParameters.forwardToReplicas = 1; // eslint-disable-line functional/immutable-data
     }
 
-    if (replace === true) {
-      // eslint-disable-next-line functional/immutable-data
-      options.queryParameters.replaceExistingSynonyms = '1';
+    if (replaceExistingSynonyms) {
+      mappedRequestOptions.queryParameters.replaceExistingSynonyms = 1; // eslint-disable-line functional/immutable-data
     }
 
     return createWaitablePromise<SaveSynonymsResponse>(
@@ -30,7 +28,7 @@ export const saveSynonyms = (base: SearchIndex) => {
           path: encode('1/indexes/%s/synonyms/batch', base.indexName),
           data: synonyms,
         },
-        options
+        mappedRequestOptions
       ),
       (response, waitRequestOptions) => waitTask(base)(response.taskID, waitRequestOptions)
     );

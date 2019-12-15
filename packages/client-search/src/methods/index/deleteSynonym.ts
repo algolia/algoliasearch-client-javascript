@@ -1,20 +1,19 @@
 import { createWaitablePromise, encode, WaitablePromise } from '@algolia/client-common';
 import { MethodEnum } from '@algolia/requester-common';
-import { mapRequestOptions, popRequestOption, RequestOptions } from '@algolia/transporter';
+import { mapRequestOptions, RequestOptions } from '@algolia/transporter';
 
-import { DeleteResponse, DeleteSynonymOptions, SearchIndex } from '../..';
-import { waitTask } from '.';
+import { DeleteResponse, DeleteSynonymOptions, SearchIndex, waitTask } from '../..';
 
 export const deleteSynonym = (base: SearchIndex) => {
   return (
     objectID: string,
-    requestOptions?: DeleteSynonymOptions & RequestOptions
+    requestOptions?: RequestOptions & DeleteSynonymOptions
   ): Readonly<WaitablePromise<DeleteResponse>> => {
-    const options = mapRequestOptions(requestOptions);
-    const forward = popRequestOption(requestOptions, 'forwardToReplicas');
-    if (forward === true) {
-      // eslint-disable-next-line functional/immutable-data
-      options.queryParameters.forwardToReplicas = '1';
+    const { forwardToReplicas, ...options } = requestOptions || {};
+
+    const mappedRequestOptions = mapRequestOptions(options);
+    if (forwardToReplicas) {
+      mappedRequestOptions.queryParameters.forwardToReplicas = 1; // eslint-disable-line functional/immutable-data
     }
 
     return createWaitablePromise<DeleteResponse>(
@@ -23,7 +22,7 @@ export const deleteSynonym = (base: SearchIndex) => {
           method: MethodEnum.Delete,
           path: encode('1/indexes/%s/synonyms/%s', base.indexName, objectID),
         },
-        options
+        mappedRequestOptions
       ),
       (response, waitRequestOptions) => waitTask(base)(response.taskID, waitRequestOptions)
     );

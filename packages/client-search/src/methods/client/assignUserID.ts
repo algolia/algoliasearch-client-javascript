@@ -9,10 +9,10 @@ export const assignUserID = (base: SearchClient) => {
     clusterName: string,
     requestOptions?: RequestOptions
   ): Readonly<Promise<AssignUserIDResponse>> => {
-    const options = mapRequestOptions(requestOptions);
+    const mappedRequestOptions = mapRequestOptions(requestOptions);
 
     // eslint-disable-next-line functional/immutable-data
-    options.headers['X-Algolia-User-ID'] = userID;
+    mappedRequestOptions.headers['X-Algolia-User-ID'] = userID;
 
     return base.transporter.write(
       {
@@ -22,7 +22,7 @@ export const assignUserID = (base: SearchClient) => {
           cluster: clusterName,
         },
       },
-      options
+      mappedRequestOptions
     );
   };
 };

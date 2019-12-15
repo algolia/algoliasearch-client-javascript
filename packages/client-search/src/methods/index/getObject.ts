@@ -1,14 +1,27 @@
-import { RequestOptions } from '@algolia/transporter';
+import { encode } from '@algolia/client-common';
+import { MethodEnum } from '@algolia/requester-common';
+import { mapRequestOptions, RequestOptions } from '@algolia/transporter';
 
-import { getObjects, GetObjectsOptions, ObjectWithObjectID, SearchIndex } from '../..';
+import { ObjectWithObjectID, SearchIndex } from '../..';
+import { GetObjectOptions } from '../../types/GetObjectOptions';
 
 export const getObject = (base: SearchIndex) => {
   return <TObject>(
     objectID: string,
-    requestOptions?: RequestOptions & GetObjectsOptions
+    requestOptions?: RequestOptions & GetObjectOptions
   ): Readonly<Promise<TObject & ObjectWithObjectID>> => {
-    return getObjects(base)<TObject>([objectID], requestOptions).then(
-      response => response.results[0]
+    const { attributesToRetrieve, ...options } = requestOptions || {};
+    const mappedRequestOptions = mapRequestOptions(options);
+    if (attributesToRetrieve) {
+      mappedRequestOptions.queryParameters.attributesToRetrieve = attributesToRetrieve; // eslint-disable-line functional/immutable-data
+    }
+
+    return base.transporter.read(
+      {
+        method: MethodEnum.Get,
+        path: encode('1/indexes/%s/%s', base.indexName, objectID),
+      },
+      mappedRequestOptions
     );
   };
 };
