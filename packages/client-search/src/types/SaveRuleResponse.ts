@@ -1,4 +1,3 @@
-export type SaveRuleResponse = {
-  readonly updatedAt: number;
-  readonly taskID: number;
-};
+import { SaveRulesResponse } from '.';
+
+export type SaveRuleResponse = SaveRulesResponse;

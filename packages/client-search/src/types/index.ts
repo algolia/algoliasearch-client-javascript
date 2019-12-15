@@ -56,6 +56,7 @@ export * from './SaveObjectsOptions';
 export * from './SaveRuleResponse';
 export * from './SaveRulesOptions';
 export * from './SaveRulesResponse';
+export * from './SaveSynonymResponse';
 export * from './SaveSynonymsOptions';
 export * from './SaveSynonymsResponse';
 export * from './SearchClient';

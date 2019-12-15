@@ -130,6 +130,7 @@ import {
   SaveRulesOptions,
   SaveRulesResponse,
   saveSynonym,
+  SaveSynonymResponse,
   saveSynonyms,
   SaveSynonymsOptions,
   SaveSynonymsResponse,
@@ -336,7 +337,7 @@ export type SearchIndex = BaseSearchIndex & {
   readonly getObject: <TObject>(
     objectID: string,
     requestOptions?: RequestOptions
-  ) => Readonly<Promise<TObject>>;
+  ) => Readonly<Promise<TObject & ObjectWithObjectID>>;
   readonly getObjects: <TObject>(
     objectIDs: readonly string[],
     requestOptions?: RequestOptions & GetObjectsOptions
@@ -378,7 +379,7 @@ export type SearchIndex = BaseSearchIndex & {
   readonly clearObjects: (
     requestOptions?: RequestOptions
   ) => Readonly<WaitablePromise<DeleteResponse>>;
-  readonly browseObjects: <TObject extends ObjectWithObjectID>(
+  readonly browseObjects: <TObject>(
     requestOptions?: SearchOptions & BrowseOptions<TObject> & RequestOptions
   ) => Readonly<Promise<void>>;
   readonly getObjectPosition: (searchResponse: SearchResponse<{}>, objectID: string) => number;
@@ -390,7 +391,7 @@ export type SearchIndex = BaseSearchIndex & {
   readonly saveSynonym: (
     synonym: Synonym,
     requestOptions?: RequestOptions & SaveSynonymsOptions
-  ) => Readonly<WaitablePromise<SaveSynonymsResponse>>;
+  ) => Readonly<WaitablePromise<SaveSynonymResponse>>;
   readonly saveSynonyms: (
     synonyms: readonly Synonym[],
     requestOptions?: SaveSynonymsOptions & RequestOptions
