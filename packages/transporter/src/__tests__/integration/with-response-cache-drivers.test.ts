@@ -11,13 +11,11 @@ import { createFakeRequester, createFixtures } from '../fixtures';
 const transporterRequest = createFixtures().transporterRequest();
 
 describe('response cache integration with cache drivers', () => {
-  beforeEach(async () => {
+  beforeEach(() => {
     transporterRequest.cacheable = true;
 
-    // @ts-ignore
-    // eslint-disable-next-line no-undef
     if (testing.isBrowser()) {
-      await createBrowserLocalStorageCache({ version }).clear();
+      window.localStorage.clear();
     }
   });
 

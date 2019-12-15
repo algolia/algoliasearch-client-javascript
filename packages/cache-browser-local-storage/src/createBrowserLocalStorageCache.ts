@@ -55,9 +55,5 @@ export function createBrowserLocalStorageCache(options: BrowserLocalStorageOptio
         storage.setItem(namespaceKey, JSON.stringify(namespace));
       });
     },
-
-    clear(): Readonly<Promise<void>> {
-      return Promise.resolve().then(() => storage.removeItem(namespaceKey));
-    },
   };
 }

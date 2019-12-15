@@ -4,7 +4,7 @@ import { InMemoryCacheOptions } from '.';
 
 export function createInMemoryCache(options: InMemoryCacheOptions = { serializable: true }): Cache {
   /* eslint-disable functional/immutable-data, functional/no-let, functional/prefer-readonly-type */
-  let cache: { [key: string]: any } = {};
+  const cache: { [key: string]: any } = {};
 
   return {
     get<TValue>(
@@ -36,12 +36,6 @@ export function createInMemoryCache(options: InMemoryCacheOptions = { serializab
 
     delete(key: object): Readonly<Promise<void>> {
       delete cache[JSON.stringify(key)];
-
-      return Promise.resolve();
-    },
-
-    clear(): Readonly<Promise<void>> {
-      cache = {};
 
       return Promise.resolve();
     },

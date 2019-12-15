@@ -43,12 +43,4 @@ describe('null cache', () => {
 
     expect(missMock.mock.calls.length).toBe(1);
   });
-
-  it('resolves a empty promise on clear', async () => {
-    const cache = createNullCache();
-
-    const res = await cache.clear();
-
-    expect(res).toBeUndefined();
-  });
 });

@@ -18,11 +18,9 @@ if (testing.isBrowser()) {
 }
 
 describe('hosts cache integration with cache drivers', () => {
-  beforeEach(async () => {
-    // @ts-ignore
-    // eslint-disable-next-line no-undef
+  beforeEach(() => {
     if (testing.isBrowser()) {
-      await createBrowserLocalStorageCache({ version }).clear();
+      window.localStorage.clear();
     }
   });
 

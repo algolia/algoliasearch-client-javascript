@@ -1,9 +1,7 @@
 /* eslint sonarjs/cognitive-complexity: 0 */ // --> OFF
 
-import { createBrowserLocalStorageCache } from '@algolia/cache-browser-local-storage';
 import { createNullCache } from '@algolia/cache-common';
 import { createInMemoryCache } from '@algolia/cache-in-memory';
-import { version } from '@algolia/client-common';
 import { anything, spy, verify, when } from 'ts-mockito';
 
 import { createFakeRequester, createFixtures } from '../fixtures';
@@ -14,11 +12,9 @@ transporterRequest.cacheable = true;
 const drivers = [createNullCache, createInMemoryCache];
 
 describe('request cache integration with cache drivers', () => {
-  beforeEach(async () => {
-    // @ts-ignore
-    // eslint-disable-next-line no-undef
+  beforeEach(() => {
     if (testing.isBrowser()) {
-      await createBrowserLocalStorageCache({ version }).clear();
+      window.localStorage.clear();
     }
   });
 
