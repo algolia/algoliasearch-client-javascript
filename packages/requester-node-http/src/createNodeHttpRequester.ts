@@ -23,13 +23,17 @@ export function createNodeHttpRequester(): Requester {
           // eslint-disable-next-line functional/no-let
           let content = '';
 
-          response.on('data', chunk => (content += chunk));
+          response.on('data', chunk => {
+            content += chunk;
+            // eslint-disable-next-line @typescript-eslint/no-use-before-define
+            clearTimeout(timeout);
+            // eslint-disable-next-line @typescript-eslint/no-use-before-define
+            timeout = createTimeout(request.socketTimeout, 'Socket timeout');
+          });
 
           response.on('end', () => {
             // eslint-disable-next-line @typescript-eslint/no-use-before-define
-            clearTimeout(connectTimeout);
-            // eslint-disable-next-line @typescript-eslint/no-use-before-define
-            clearTimeout(socketTimeout as NodeJS.Timeout);
+            clearTimeout(timeout);
 
             const status = response.statusCode === undefined ? 0 : response.statusCode;
             resolve({ status, content, isTimedOut: false });
@@ -48,20 +52,17 @@ export function createNodeHttpRequester(): Requester {
           }, timeout * 1000);
         };
 
-        const connectTimeout = createTimeout(request.connectTimeout, 'Connection timeout');
-
         // eslint-disable-next-line functional/no-let
-        let socketTimeout: NodeJS.Timeout | undefined;
+        let timeout = createTimeout(request.connectTimeout, 'Connection timeout');
 
         req.on('error', error => {
-          clearTimeout(connectTimeout);
-          clearTimeout(socketTimeout as NodeJS.Timeout);
+          clearTimeout(timeout);
           resolve({ status: 0, content: error.message, isTimedOut: false });
         });
 
         req.once('response', () => {
-          clearTimeout(connectTimeout);
-          socketTimeout = createTimeout(request.socketTimeout, 'Socket timeout');
+          clearTimeout(timeout);
+          timeout = createTimeout(request.socketTimeout, 'Socket timeout');
         });
 
         req.write(request.data);

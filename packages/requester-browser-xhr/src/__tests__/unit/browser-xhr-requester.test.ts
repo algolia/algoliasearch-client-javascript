@@ -151,8 +151,8 @@ describe('timeout handling', () => {
 
     const now = Date.now();
 
-    expect(now - before).toBeGreaterThan(1990);
-    expect(now - before).toBeLessThan(2200);
+    expect(now - before).toBeGreaterThan(2990);
+    expect(now - before).toBeLessThan(3200);
     expect(response.content).toBe('Socket timeout');
   });
 
@@ -169,8 +169,8 @@ describe('timeout handling', () => {
     const now = Date.now();
 
     expect(response.content).toBe('Socket timeout');
-    expect(now - before).toBeGreaterThan(2999);
-    expect(now - before).toBeLessThan(3200);
+    expect(now - before).toBeGreaterThan(3999);
+    expect(now - before).toBeLessThan(4200);
   });
 
   it('do not timeouts if response appears before the timeout', async () => {
@@ -186,7 +186,7 @@ describe('timeout handling', () => {
 
     expect(response.isTimedOut).toBe(false);
     expect(response.status).toBe(200);
-    expect(response.content).toBe('{}');
+    expect(response.content).toBe('{"foo": "bar"}');
     expect(now - before).toBeGreaterThan(4999);
     expect(now - before).toBeLessThan(5200);
   });
