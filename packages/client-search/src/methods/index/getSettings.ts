@@ -2,10 +2,10 @@ import { encode } from '@algolia/client-common';
 import { MethodEnum } from '@algolia/requester-common';
 import { mapRequestOptions, RequestOptions } from '@algolia/transporter';
 
-import { IndexSettings, SearchIndex } from '../..';
+import { SearchIndex, Settings } from '../..';
 
 export const getSettings = (base: SearchIndex) => {
-  return (requestOptions?: RequestOptions): Readonly<Promise<IndexSettings>> => {
+  return (requestOptions?: RequestOptions): Readonly<Promise<Settings>> => {
     const options = mapRequestOptions(requestOptions);
 
     // eslint-disable-next-line functional/immutable-data

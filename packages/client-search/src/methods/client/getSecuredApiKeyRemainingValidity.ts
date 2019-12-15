@@ -1,7 +1,7 @@
 import { createValidUntilNotFoundError } from '../..';
 
 export const getSecuredApiKeyRemainingValidity = () => {
-  return (securedApiKey: string) => {
+  return (securedApiKey: string): number => {
     const decodedString = Buffer.from(securedApiKey, 'base64').toString('ascii');
     const regex = /validUntil=(\d+)/;
     const match = decodedString.match(regex);

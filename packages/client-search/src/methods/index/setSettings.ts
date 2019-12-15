@@ -1,15 +1,22 @@
 import { createWaitablePromise, encode, WaitablePromise } from '@algolia/client-common';
 import { MethodEnum } from '@algolia/requester-common';
-import { RequestOptions } from '@algolia/transporter';
+import { mapRequestOptions, popRequestOption, RequestOptions } from '@algolia/transporter';
 
-import { IndexSettings, SearchIndex, SetSettingsResponse } from '../..';
+import { SearchIndex, SetSettingsOptions, SetSettingsResponse, Settings } from '../..';
 import { waitTask } from '.';
 
 export const setSettings = (base: SearchIndex) => {
   return (
-    settings: IndexSettings,
-    requestOptions?: RequestOptions
+    settings: Settings,
+    requestOptions?: RequestOptions & SetSettingsOptions
   ): Readonly<WaitablePromise<SetSettingsResponse>> => {
+    const options = mapRequestOptions(requestOptions);
+    const forward = popRequestOption(requestOptions, 'forwardToReplicas');
+    if (forward === true) {
+      // eslint-disable-next-line functional/immutable-data
+      options.queryParameters.forwardToReplicas = '1';
+    }
+
     return createWaitablePromise<SetSettingsResponse>(
       base.transporter.write(
         {
@@ -17,7 +24,7 @@ export const setSettings = (base: SearchIndex) => {
           path: encode('1/indexes/%s/settings', base.indexName),
           data: settings,
         },
-        requestOptions
+        options
       ),
       (response, waitRequestOptions) => waitTask(base)(response.taskID, waitRequestOptions)
     );

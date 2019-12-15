@@ -6,10 +6,10 @@ import {
   BrowseOptions,
   BrowseResponse,
   createBrowsablePromise,
+  ObjectWithObjectID,
   SearchIndex,
   SearchOptions,
 } from '../..';
-import { ObjectWithObjectID } from '../../types';
 
 export const browseObjects = (base: SearchIndex) => {
   return <TObject extends ObjectWithObjectID>(

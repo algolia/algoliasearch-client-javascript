@@ -1,3 +1,5 @@
+import { Settings } from '@algolia/client-search';
+
 import { createFaker } from '../../../../client-common/src/__tests__/createFaker';
 import { createMultiWaitable } from '../../../../client-common/src/__tests__/helpers';
 import { TestSuite } from '../../../../client-common/src/__tests__/TestSuite';
@@ -16,7 +18,7 @@ test(testSuite.testName, async () => {
 
   responses.push(index.saveObject(createFaker().object('foo')));
 
-  const settings1 = {
+  const settings1: Settings = {
     searchableAttributes: [
       'attribute1',
       'attribute2',

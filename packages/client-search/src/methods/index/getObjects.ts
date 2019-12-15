@@ -9,10 +9,12 @@ export const getObjects = (base: SearchIndex) => {
     requestOptions?: RequestOptions & GetObjectsOptions
   ): Readonly<Promise<GetObjectsResponse<TObject>>> => {
     const requests = objectIDs.map(objectID => {
+      const attributesToRetrieve = popRequestOption(requestOptions, 'attributesToRetrieve');
+
       return {
         indexName: base.indexName,
         objectID,
-        attributesToRetrieve: popRequestOption(requestOptions, 'attributesToRetrieve', '*'),
+        ...(attributesToRetrieve ? { attributesToRetrieve } : {}),
       };
     });
 

@@ -2,11 +2,17 @@ import { createWaitablePromise, Wait, WaitablePromise } from '@algolia/client-co
 import { MethodEnum } from '@algolia/requester-common';
 import { RequestOptions } from '@algolia/transporter';
 
-import { BatchRequest, initIndex, MultipleBatchResponse, SearchClient, waitTask } from '../..';
+import {
+  initIndex,
+  MultipleBatchRequest,
+  MultipleBatchResponse,
+  SearchClient,
+  waitTask,
+} from '../..';
 
 export const multipleBatch = (base: SearchClient) => {
   return (
-    requests: readonly BatchRequest[],
+    requests: readonly MultipleBatchRequest[],
     requestOptions?: RequestOptions
   ): Readonly<WaitablePromise<MultipleBatchResponse>> => {
     const wait: Wait<MultipleBatchResponse> = (response, waitRequestOptions) => {

@@ -1,4 +1,4 @@
-import { EditEnum, IndexSettings, Rule } from '../..';
+import { Rule, Settings } from '../..';
 import { createMultiWaitable } from '../../../../client-common/src/__tests__/helpers';
 import { TestSuite } from '../../../../client-common/src/__tests__/TestSuite';
 
@@ -19,7 +19,7 @@ test(testSuite.testName, async () => {
     ])
   );
 
-  const settings: IndexSettings = {
+  const settings: Settings = {
     attributesForFaceting: ['brand', 'model'],
   };
 
@@ -48,8 +48,8 @@ test(testSuite.testName, async () => {
       params: {
         query: {
           edits: [
-            { type: EditEnum.Remove, delete: 'mobile' },
-            { type: EditEnum.Replace, delete: 'phone', insert: 'ihpone' },
+            { type: 'remove', delete: 'mobile' },
+            { type: 'replace', delete: 'phone', insert: 'ihpone' },
           ],
         },
       },

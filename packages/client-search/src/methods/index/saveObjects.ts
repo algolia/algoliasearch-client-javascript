@@ -4,16 +4,16 @@ import { popRequestOption, RequestOptions } from '@algolia/transporter';
 import {
   BatchActionEnum,
   BatchResponse,
+  chunk,
   ChunkOptions,
   createMissingObjectIDError,
   SaveObjectsOptions,
   SearchIndex,
 } from '../..';
-import { chunk } from '.';
 
 export const saveObjects = (base: SearchIndex) => {
   return (
-    objects: ReadonlyArray<Record<string, any>>,
+    objects: ReadonlyArray<{ readonly [key: string]: any }>,
     requestOptions?: RequestOptions & ChunkOptions & SaveObjectsOptions
   ): Readonly<WaitablePromise<readonly BatchResponse[]>> => {
     const autoGenerateObjectIDIfNotExist = popRequestOption(

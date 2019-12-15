@@ -10,8 +10,8 @@ export const saveSynonyms = (base: SearchIndex) => {
     synonyms: readonly Synonym[],
     requestOptions?: SaveSynonymsOptions & RequestOptions
   ): Readonly<WaitablePromise<SaveSynonymsResponse>> => {
-    const forward = popRequestOption(requestOptions, 'forwardToReplicas', undefined);
-    const replace = popRequestOption(requestOptions, 'replaceExistingSynonyms', undefined);
+    const forward = popRequestOption(requestOptions, 'forwardToReplicas');
+    const replace = popRequestOption(requestOptions, 'replaceExistingSynonyms');
     const options = mapRequestOptions(requestOptions);
     if (forward === true) {
       // eslint-disable-next-line functional/immutable-data

@@ -1,6 +1,7 @@
 import { BatchActionEnum, StrategyEnum } from '../..';
 import { createMultiWaitable } from '../../../../client-common/src/__tests__/helpers';
 import { TestSuite } from '../../../../client-common/src/__tests__/TestSuite';
+import { MultipleBatchRequest } from '../../types';
 
 const testSuite = new TestSuite('multiple_operations');
 
@@ -12,7 +13,7 @@ test(testSuite.testName, async () => {
   const index = testSuite.makeIndex();
   const index2 = testSuite.makeIndex(`${index.indexName}_dev`);
 
-  const queries = [
+  const queries: MultipleBatchRequest[] = [
     {
       indexName: index.indexName,
       action: BatchActionEnum.AddObject,

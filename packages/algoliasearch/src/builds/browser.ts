@@ -76,7 +76,6 @@ import {
   getSettings,
   getSynonym,
   IndexOperationResponse,
-  IndexSettings,
   initIndex,
   listApiKeys,
   ListApiKeysResponse,
@@ -86,6 +85,7 @@ import {
   ListIndicesResponse,
   moveIndex,
   multipleBatch,
+  MultipleBatchRequest,
   MultipleBatchResponse,
   MultipleGetObject,
   multipleGetObjects,
@@ -135,6 +135,7 @@ import {
   SearchSynonymsResponse,
   setSettings,
   SetSettingsResponse,
+  Settings,
   Synonym,
   updateApiKey,
   UpdateApiKeyOptions,
@@ -326,15 +327,15 @@ export type SearchIndex = BaseSearchIndex & {
     requestOptions?: RequestOptions & ChunkOptions & SaveObjectsOptions
   ) => Readonly<WaitablePromise<SaveObjectResponse>>;
   readonly saveObjects: (
-    objects: ReadonlyArray<Record<string, any>>,
+    objects: ReadonlyArray<{ readonly [key: string]: any }>,
     requestOptions?: RequestOptions & ChunkOptions & SaveObjectsOptions
   ) => Readonly<WaitablePromise<readonly BatchResponse[]>>;
   readonly waitTask: (taskID: number, requestOptions?: RequestOptions) => Readonly<Promise<void>>;
   readonly setSettings: (
-    settings: IndexSettings,
+    settings: Settings,
     requestOptions?: RequestOptions
   ) => Readonly<WaitablePromise<SetSettingsResponse>>;
-  readonly getSettings: (requestOptions?: RequestOptions) => Readonly<Promise<IndexSettings>>;
+  readonly getSettings: (requestOptions?: RequestOptions) => Readonly<Promise<Settings>>;
   readonly partialUpdateObject: (
     object: object,
     requestOptions?: RequestOptions & ChunkOptions & PartialUpdateObjectsOptions
@@ -394,12 +395,13 @@ export type SearchIndex = BaseSearchIndex & {
     requestOptions?: ClearSynonymsOptions & RequestOptions
   ) => Readonly<WaitablePromise<DeleteResponse>>;
   readonly replaceAllObjects: (
-    objects: readonly object[],
+    objects: ReadonlyArray<{ readonly [key: string]: any }>,
     requestOptions?: ReplaceAllObjectsOptions & RequestOptions
   ) => Readonly<WaitablePromise<void>>;
   readonly replaceAllSynonyms: (
     synonyms: readonly Synonym[],
-    requestOptions?: RequestOptions
+    requestOptions?: RequestOptions &
+      Pick<SaveSynonymsOptions, Exclude<keyof SaveSynonymsOptions, 'replaceExistingSynonyms'>>
   ) => Readonly<WaitablePromise<SaveSynonymsResponse>>;
   readonly searchRules: (
     query: string,
@@ -412,7 +414,7 @@ export type SearchIndex = BaseSearchIndex & {
   ) => Readonly<WaitablePromise<DeleteResponse>>;
   readonly saveRule: (
     rule: Rule,
-    requestOptions?: RequestOptions
+    requestOptions?: RequestOptions & SaveRulesOptions
   ) => Readonly<WaitablePromise<SaveRuleResponse>>;
   readonly saveRules: (
     rules: readonly Rule[],
@@ -444,7 +446,7 @@ export type SearchClient = BaseSearchClient & {
     requestOptions?: RequestOptions
   ) => Readonly<Promise<readonly SearchForFacetValuesResponse[]>>;
   readonly multipleBatch: (
-    requests: readonly BatchRequest[],
+    requests: readonly MultipleBatchRequest[],
     requestOptions?: RequestOptions
   ) => Readonly<WaitablePromise<MultipleBatchResponse>>;
   readonly multipleGetObjects: <TObject>(
