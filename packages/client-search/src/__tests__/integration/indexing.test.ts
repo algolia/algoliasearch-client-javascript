@@ -89,6 +89,15 @@ test(testSuite.testName, async () => {
 
   await expect(index.getObject('object7')).resolves.toStrictEqual(object7);
 
+  // Do not contains age.
+  await expect(
+    index.getObject('object7', {
+      attributesToRetrieve: ['objectID'],
+    })
+  ).resolves.toStrictEqual({
+    objectID: 'object7',
+  });
+
   await expect(
     index.getObjects(Array.from(Array(1000).keys()).map((objectID: number) => objectID.toString()))
   ).resolves.toStrictEqual({

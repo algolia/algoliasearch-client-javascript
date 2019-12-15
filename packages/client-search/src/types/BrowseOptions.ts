@@ -1,3 +1,5 @@
+import { ObjectWithObjectID } from './ObjectWithObjectID';
+
 export type BrowseOptions<TObject> = {
-  readonly batch?: (batch: readonly TObject[]) => any;
+  readonly batch?: (batch: ReadonlyArray<TObject & ObjectWithObjectID>) => any;
 };

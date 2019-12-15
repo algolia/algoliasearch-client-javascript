@@ -6,13 +6,12 @@ import {
   BrowseOptions,
   BrowseResponse,
   createBrowsablePromise,
-  ObjectWithObjectID,
   SearchIndex,
   SearchOptions,
 } from '../..';
 
 export const browseObjects = (base: SearchIndex) => {
-  return <TObject extends ObjectWithObjectID>(
+  return <TObject>(
     requestOptions?: SearchOptions & BrowseOptions<TObject> & RequestOptions
   ): Readonly<Promise<void>> => {
     return createBrowsablePromise<TObject>({

@@ -1,3 +1,5 @@
+import { ObjectWithObjectID } from '.';
+
 export type GetObjectsResponse<TObject> = {
-  readonly results: readonly TObject[];
+  readonly results: ReadonlyArray<TObject & ObjectWithObjectID>;
 };
