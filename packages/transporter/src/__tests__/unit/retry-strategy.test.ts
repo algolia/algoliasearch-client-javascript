@@ -204,7 +204,7 @@ describe('retry strategy', () => {
     // Set one host down.
     await transporter.hostsCache.set(transporter.hosts[0], {
       ...createUnavailableStatefullHost(transporter.hosts[0]),
-      downDate: Date.now() - 300 * 1000 + 10,
+      lastDownDate: Date.now() - 300 * 1000 + 10,
     });
 
     expect(await getAvailableHosts(transporter.hostsCache, transporter.hosts)).toHaveLength(2);
@@ -212,7 +212,7 @@ describe('retry strategy', () => {
     await transporter.hostsCache.set(transporter.hosts[0], {
       protocol: 'https',
       url: 'read.com',
-      downDate: Date.now() - 300 * 1000 - 20,
+      lastDownDate: Date.now() - 300 * 1000 - 20,
     });
     await expect(
       getAvailableHosts(transporter.hostsCache, transporter.hosts)
@@ -278,7 +278,7 @@ describe('retry strategy', () => {
 
     await transporter.hostsCache.set(transporter.hosts[0], {
       ...createUnavailableStatefullHost(transporter.hosts[0]),
-      downDate: Date.now() - 60 * 5 * 1000 - 20,
+      lastDownDate: Date.now() - 60 * 5 * 1000 - 20,
     });
 
     await expect(
