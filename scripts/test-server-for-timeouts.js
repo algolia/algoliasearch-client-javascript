@@ -12,6 +12,12 @@ http
 
     response.write('{');
 
+    response.write('{"foo":');
+
+    setTimeout(() => {
+      response.write(' "bar"');
+    }, 1000);
+
     setTimeout(() => {
       response.write('}');
       response.end();

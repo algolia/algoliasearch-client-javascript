@@ -186,7 +186,7 @@ describe('timeout handling', () => {
 
     expect(response.isTimedOut).toBe(false);
     expect(response.status).toBe(200);
-    expect(response.content).toBe('{}');
+    expect(response.content).toBe('{"foo": "bar"');
     expect(now - before).toBeGreaterThan(4999);
     expect(now - before).toBeLessThan(5200);
   });
