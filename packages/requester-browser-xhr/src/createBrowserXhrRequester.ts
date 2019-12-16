@@ -23,17 +23,17 @@ export function createBrowserXhrRequester(): Requester {
           }, timeout * 1000);
         };
 
+        const connectTimeout = createTimeout(request.connectTimeout, 'Connection timeout');
+
         // eslint-disable-next-line functional/no-let
-        let timeout = createTimeout(request.connectTimeout, 'Connection timeout');
+        let socketTimeout: NodeJS.Timeout | undefined;
 
         // eslint-disable-next-line functional/immutable-data
         baseRequester.onreadystatechange = () => {
-          if (baseRequester.readyState === baseRequester.DONE) {
-            clearTimeout(timeout);
-          } else if (baseRequester.readyState >= baseRequester.OPENED) {
-            clearTimeout(timeout);
+          if (baseRequester.readyState > baseRequester.OPENED && socketTimeout === undefined) {
+            clearTimeout(connectTimeout);
 
-            timeout = createTimeout(request.socketTimeout, 'Socket timeout');
+            socketTimeout = createTimeout(request.socketTimeout, 'Socket timeout');
           }
         };
 
@@ -41,6 +41,9 @@ export function createBrowserXhrRequester(): Requester {
         baseRequester.onerror = () => {
           // istanbul ignore next
           if (baseRequester.status === 0) {
+            clearTimeout(connectTimeout);
+            clearTimeout(socketTimeout as NodeJS.Timeout);
+
             resolve({
               content: baseRequester.responseText || 'Network request failed',
               status: baseRequester.status,
@@ -51,6 +54,9 @@ export function createBrowserXhrRequester(): Requester {
 
         //  eslint-disable-next-line functional/immutable-data
         baseRequester.onload = () => {
+          clearTimeout(connectTimeout);
+          clearTimeout(socketTimeout as NodeJS.Timeout);
+
           resolve({
             content: baseRequester.responseText,
             status: baseRequester.status,

@@ -10,11 +10,7 @@ http
       'X-Powered-By': 'nodejs',
     });
 
-    response.write('{"foo":');
-
-    setTimeout(() => {
-      response.write(' "bar"');
-    }, 1000);
+    response.write('{');
 
     setTimeout(() => {
       response.write('}');
