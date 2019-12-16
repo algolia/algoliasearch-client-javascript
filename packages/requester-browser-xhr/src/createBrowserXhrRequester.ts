@@ -26,14 +26,14 @@ export function createBrowserXhrRequester(): Requester {
         const connectTimeout = createTimeout(request.connectTimeout, 'Connection timeout');
 
         // eslint-disable-next-line functional/no-let
-        let socketTimeout: NodeJS.Timeout | undefined;
+        let responseTimeout: NodeJS.Timeout | undefined;
 
         // eslint-disable-next-line functional/immutable-data
         baseRequester.onreadystatechange = () => {
-          if (baseRequester.readyState > baseRequester.OPENED && socketTimeout === undefined) {
+          if (baseRequester.readyState > baseRequester.OPENED && responseTimeout === undefined) {
             clearTimeout(connectTimeout);
 
-            socketTimeout = createTimeout(request.socketTimeout, 'Socket timeout');
+            responseTimeout = createTimeout(request.responseTimeout, 'Socket timeout');
           }
         };
 
@@ -42,7 +42,7 @@ export function createBrowserXhrRequester(): Requester {
           // istanbul ignore next
           if (baseRequester.status === 0) {
             clearTimeout(connectTimeout);
-            clearTimeout(socketTimeout as NodeJS.Timeout);
+            clearTimeout(responseTimeout as NodeJS.Timeout);
 
             resolve({
               content: baseRequester.responseText || 'Network request failed',
@@ -55,7 +55,7 @@ export function createBrowserXhrRequester(): Requester {
         //  eslint-disable-next-line functional/immutable-data
         baseRequester.onload = () => {
           clearTimeout(connectTimeout);
-          clearTimeout(socketTimeout as NodeJS.Timeout);
+          clearTimeout(responseTimeout as NodeJS.Timeout);
 
           resolve({
             content: baseRequester.responseText,

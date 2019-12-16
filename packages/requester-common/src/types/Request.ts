@@ -6,5 +6,5 @@ export type Request = {
   readonly method: MethodType;
   readonly url: string;
   readonly connectTimeout: number;
-  readonly socketTimeout: number;
+  readonly responseTimeout: number;
 };

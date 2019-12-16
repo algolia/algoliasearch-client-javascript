@@ -50,7 +50,7 @@ export function execute<TResponse>(
         'x-algolia-agent': transporter.userAgent.value,
       }),
       connectTimeout: timeoutAdjuster * transporter.timeouts.connect,
-      socketTimeout: timeoutAdjuster * (requestOptions.timeout || 0),
+      responseTimeout: timeoutAdjuster * (requestOptions.timeout || 0),
     };
 
     const decisions: Outcomes<TResponse> = {

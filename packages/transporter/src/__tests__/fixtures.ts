@@ -73,7 +73,7 @@ export function createFixtures() {
     readRequest(options: any = {}) {
       return this.request({
         connectTimeout: 1,
-        socketTimeout: 2,
+        responseTimeout: 2,
         url: 'https://read.com/save',
         ...options,
       });
@@ -82,7 +82,7 @@ export function createFixtures() {
     writeRequest(options: any = {}) {
       return this.request({
         connectTimeout: 1,
-        socketTimeout: 30,
+        responseTimeout: 30,
         url: 'https://write.com/save',
         ...options,
       });
@@ -112,7 +112,7 @@ export function createFixtures() {
         headers,
         method: MethodEnum.Post,
         connectTimeout: 1,
-        socketTimeout: 2,
+        responseTimeout: 2,
         ...options,
       };
     },

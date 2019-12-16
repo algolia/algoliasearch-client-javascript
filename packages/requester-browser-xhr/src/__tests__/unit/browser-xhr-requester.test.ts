@@ -10,7 +10,7 @@ const timeoutRequest: Request = {
   data: '',
   headers: {},
   method: 'GET',
-  socketTimeout: 2,
+  responseTimeout: 2,
   connectTimeout: 1,
 };
 
@@ -21,7 +21,7 @@ const requestStub = {
     'Content-Type': 'application/x-www-form-urlencoded',
   },
   data: JSON.stringify({ foo: 'bar' }),
-  socketTimeout: 1,
+  responseTimeout: 1,
   connectTimeout: 2,
 };
 
@@ -146,7 +146,7 @@ describe('timeout handling', () => {
 
     const response = await requester.send({
       ...timeoutRequest,
-      ...{ socketTimeout: 2, url: 'http://localhost:1111/' },
+      ...{ responseTimeout: 2, url: 'http://localhost:1111/' },
     });
 
     const now = Date.now();
@@ -161,7 +161,7 @@ describe('timeout handling', () => {
     const response = await requester.send({
       ...timeoutRequest,
       ...{
-        socketTimeout: 3,
+        responseTimeout: 3,
         url: 'http://localhost:1111',
       },
     });
@@ -179,7 +179,7 @@ describe('timeout handling', () => {
     const response = await requester.send({
       ...request,
       url: 'http://localhost:1111',
-      socketTimeout: 6, // the fake server sleeps for 5 seconds...
+      responseTimeout: 6, // the fake server sleeps for 5 seconds...
     });
 
     const now = Date.now();
@@ -201,7 +201,7 @@ describe('error handling', () => {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
       data: JSON.stringify({ foo: 'bar' }),
-      socketTimeout: 2,
+      responseTimeout: 2,
       connectTimeout: 1,
     };
 
