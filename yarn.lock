@@ -4158,9 +4158,9 @@ dot-prop@^4.2.0:
     is-obj "^1.0.0"
 
 dotenv-extended@^2.4.0:
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/dotenv-extended/-/dotenv-extended-2.5.0.tgz#2ba3b42004269a7cecc0da116a2811af9e48eaa9"
-  integrity sha512-aKpPeUHkE8sxGq2AQWresyXNXfM/KdoMOdDXN60V72YJUr+TnhZTVVZ4PHCBAX0NFLy0ZmnJIpFaNaafT/EG5g==
+  version "2.7.0"
+  resolved "https://registry.yarnpkg.com/dotenv-extended/-/dotenv-extended-2.7.0.tgz#117fb5239e8f0d7d0b5c349aac72507698c86b44"
+  integrity sha512-FFzoISb3oyCVpaXgbqAJbAJcPSizqsXzwD8Cfi9yvYVBU58gurr4TGTI5our1e9DJ0kLYLVOQhqtChfIAwPvKg==
   dependencies:
     "@types/dotenv" "^6.1.1"
     auto-parse "^1.3.0"
