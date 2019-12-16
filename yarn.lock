@@ -1958,9 +1958,9 @@
     tsutils "^3.17.1"
 
 "@wdio/cli@^5.11.13":
-  version "5.16.15"
-  resolved "https://registry.yarnpkg.com/@wdio/cli/-/cli-5.16.15.tgz#545ad3aa8565a82861bb55804cb4d594d2d14744"
-  integrity sha512-5jwo6/++a1iNV7nAJ7dvom8LMaInnj4b4lRObkjWsG0VGqw0fYdHaZNVHyuLGFiIVbR+WMj87kw/tNm+AQtUcQ==
+  version "5.16.16"
+  resolved "https://registry.yarnpkg.com/@wdio/cli/-/cli-5.16.16.tgz#c5c1552608fbb69899b350c149d03273c0128a01"
+  integrity sha512-l/aPZAJ0svdbC96HiZLPef4wbA1ETl+w7ome3r09nBfx1eqgzB0HTUtNlzeUErhqd8eICCWkZOiuasTVPK8iLw==
   dependencies:
     "@wdio/config" "5.16.11"
     "@wdio/logger" "5.16.10"
