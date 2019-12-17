@@ -80,7 +80,7 @@ if [[ -n $(git diff --exit-code) ]]; then
 fi
 
 # build the dist
-yarn install
+yarn install --pure-lockfile
 
 if [[ -n $(git diff --exit-code) ]]; then
   printf "\n${RED}[ERROR]${NC} there is unstaged files.\n"

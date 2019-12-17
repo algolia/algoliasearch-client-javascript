@@ -23,7 +23,7 @@ aliases:
 
   - &run_yarn_install
     name: Install dependencies
-    command: yarn install
+    command: yarn install --pure-lockfile
 
 defaults: &defaults
   working_directory: ~/algoliasearch-client-javascript

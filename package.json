@@ -19,7 +19,7 @@
     "test:size": "bundlesize",
     "test:types": "yarn tsc",
     "test:unit": "./scripts/prepare-test-unit.sh && lerna clean --yes && jest --verbose --updateSnapshot",
-    "update": "rm -rf node_modules && rm -f yarn.lock && yarn && lerna clean --yes"
+    "update": "rm -rf node_modules && rm -f yarn.lock && lerna clean --yes && yarn install"
   },
   "husky": {
     "hooks": {
