@@ -17,7 +17,7 @@ const isSuccess = ({ status }: Response): boolean => {
   return ~~(status / 100) === 2;
 };
 
-export const decision = <TResponse>(
+export const retryDecision = <TResponse>(
   response: Response,
   outcomes: Outcomes<TResponse>
 ): Readonly<Promise<TResponse>> => {

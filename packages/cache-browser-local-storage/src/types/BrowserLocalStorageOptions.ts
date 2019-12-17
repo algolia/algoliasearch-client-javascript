@@ -1,5 +1,5 @@
 export type BrowserLocalStorageOptions = {
-  readonly version: string;
+  readonly key: string;
   readonly localStorage?: Storage;
   readonly fallback?: Cache;
 };

@@ -3,7 +3,7 @@ import { Cache, CacheEvents } from '.';
 export function createNullCache(): Cache {
   return {
     get<TValue>(
-      _key: object,
+      _key: object | string,
       defaultValue: () => Readonly<Promise<TValue>>,
       events: CacheEvents<TValue> = {
         miss: () => Promise.resolve(),
@@ -16,11 +16,11 @@ export function createNullCache(): Cache {
         .then(([result]) => result);
     },
 
-    set<TValue>(_key: object, value: TValue): Readonly<Promise<TValue>> {
+    set<TValue>(_key: object | string, value: TValue): Readonly<Promise<TValue>> {
       return Promise.resolve(value);
     },
 
-    delete(_key: object): Readonly<Promise<void>> {
+    delete(_key: object | string): Readonly<Promise<void>> {
       return Promise.resolve();
     },
   };

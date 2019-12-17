@@ -3,10 +3,10 @@ import { Cache, CacheEvents } from '@algolia/cache-common';
 import { BrowserLocalStorageOptions } from '.';
 
 export function createBrowserLocalStorageCache(options: BrowserLocalStorageOptions): Cache {
-  /* eslint-disable functional/immutable-data, no-param-reassign, functional/no-try-statement */
+  /* eslint-disable functional/immutable-data */
 
   const storage = options.localStorage || window.localStorage;
-  const namespaceKey = `algoliasearch-client-js-${options.version}`;
+  const namespaceKey = `algoliasearch-client-js-${options.key}`;
 
   // eslint-disable-next-line functional/prefer-readonly-type
   const getNamespace = <TValue>(): { [key: string]: TValue } => {
@@ -15,7 +15,7 @@ export function createBrowserLocalStorageCache(options: BrowserLocalStorageOptio
 
   return {
     get<TValue>(
-      key: object,
+      key: object | string,
       defaultValue: () => Readonly<Promise<TValue>>,
       events: CacheEvents<TValue> = {
         miss: () => Promise.resolve(),
@@ -34,7 +34,7 @@ export function createBrowserLocalStorageCache(options: BrowserLocalStorageOptio
         .then(([value]) => value);
     },
 
-    set<TValue>(key: object, value: TValue): Readonly<Promise<TValue>> {
+    set<TValue>(key: object | string, value: TValue): Readonly<Promise<TValue>> {
       return Promise.resolve().then(() => {
         const namespace = getNamespace();
 
@@ -46,7 +46,7 @@ export function createBrowserLocalStorageCache(options: BrowserLocalStorageOptio
       });
     },
 
-    delete(key: object): Readonly<Promise<void>> {
+    delete(key: object | string): Readonly<Promise<void>> {
       return Promise.resolve().then(() => {
         const namespace = getNamespace();
 

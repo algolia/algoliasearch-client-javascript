@@ -7,5 +7,4 @@ export type StackFrame = {
   readonly response: Response;
   readonly host: StatelessHost;
   readonly triesLeft: number;
-  readonly timeoutRetries: number;
 };

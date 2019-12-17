@@ -13,7 +13,7 @@ export * from './Request';
 export * from './RequestOptions';
 export * from './RetryError';
 export * from './StackFrame';
-export * from './StatefullHost';
+export * from './StatefulHost';
 export * from './StatelessHost';
 export * from './Timeouts';
 export * from './Transporter';

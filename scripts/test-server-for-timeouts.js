@@ -12,7 +12,7 @@ http
 
     response.write('{');
 
-    response.write('{"foo":');
+    response.write('"foo":');
 
     setTimeout(() => {
       response.write(' "bar"');

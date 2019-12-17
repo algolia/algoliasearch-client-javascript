@@ -1,9 +1,10 @@
 import { Requester } from '@algolia/requester-common';
 import { anything, deepEqual, spy, verify, when } from 'ts-mockito';
 
-import { createApiError, Transporter } from '../..';
-import { getAvailableHosts } from '../../concerns/getAvailableHosts';
-import { createUnavailableStatefullHost } from '../../createStatefullHost';
+import { createApiError, createStatefulHost, Transporter } from '../..';
+import { createRetryableOptions } from '../../concerns/createRetryableOptions';
+import { createStatelessHost } from '../../createStatelessHost';
+import { CallEnum, HostStatusEnum } from '../../types';
 import { createFakeRequester, createFixtures } from '../fixtures';
 
 let requesterMock: Requester;
@@ -35,9 +36,14 @@ describe('retry strategy', () => {
 
     await transporter.write(transporterRequest, {});
 
+    const expectationHost = createStatefulHost(transporter.hosts[1], HostStatusEnum.Timeouted);
+
+    // @ts-ignore
+    delete expectationHost.lastUpdate;
+
     await expect(
       transporter.hostsCache.get<any>(transporter.hosts[1], defaultHost)
-    ).resolves.toBeUndefined();
+    ).resolves.toMatchObject(expectationHost);
     await expect(
       transporter.hostsCache.get<any>(transporter.hosts[0], defaultHost)
     ).resolves.toBeUndefined();
@@ -203,86 +209,110 @@ describe('retry strategy', () => {
   it('respects TTL', async () => {
     // Set one host down.
     await transporter.hostsCache.set(transporter.hosts[0], {
-      ...createUnavailableStatefullHost(transporter.hosts[0]),
-      lastDownDate: Date.now() - 300 * 1000 + 10,
+      ...createStatefulHost(transporter.hosts[0], HostStatusEnum.Down),
+      lastUpdate: Date.now() - 60 * 2 * 1000 + 10, // should be down
     });
 
-    expect(await getAvailableHosts(transporter.hostsCache, transporter.hosts)).toHaveLength(2);
+    expect(
+      (await createRetryableOptions(transporter.hostsCache, transporter.hosts)).statelessHosts
+    ).toHaveLength(2);
 
     await transporter.hostsCache.set(transporter.hosts[0], {
-      protocol: 'https',
-      url: 'read.com',
-      lastDownDate: Date.now() - 300 * 1000 - 20,
+      ...createStatefulHost(
+        createStatelessHost({
+          protocol: 'https',
+          url: 'read.com',
+          accept: CallEnum.Any,
+        })
+      ),
+      lastUpdate: Date.now() - 60 * 2 * 1000 - 20,
     });
-    await expect(
-      getAvailableHosts(transporter.hostsCache, transporter.hosts)
-    ).resolves.toHaveLength(3);
+    expect(
+      (await createRetryableOptions(transporter.hostsCache, transporter.hosts)).statelessHosts
+    ).toHaveLength(3);
   });
 
   it('respests hosts order', async () => {
     // Default
-    expect((await getAvailableHosts(transporter.hostsCache, transporter.hosts))[0]).toEqual(
-      transporter.hosts[0]
-    );
+    expect(
+      (await createRetryableOptions(transporter.hostsCache, transporter.hosts)).statelessHosts[0]
+    ).toEqual(transporter.hosts[0]);
 
     // Remove one host
     await transporter.hostsCache.set(
       transporter.hosts[0],
-      createUnavailableStatefullHost(transporter.hosts[0])
+      createStatefulHost(transporter.hosts[0], HostStatusEnum.Down)
     );
-    expect((await getAvailableHosts(transporter.hostsCache, transporter.hosts))[0]).toEqual(
-      transporter.hosts[1]
-    );
-    await expect(
-      getAvailableHosts(transporter.hostsCache, transporter.hosts)
-    ).resolves.toHaveLength(2);
+    expect(
+      (await createRetryableOptions(transporter.hostsCache, transporter.hosts)).statelessHosts[0]
+    ).toEqual(transporter.hosts[1]);
+
+    expect(
+      (await createRetryableOptions(transporter.hostsCache, transporter.hosts)).statelessHosts
+    ).toHaveLength(2);
 
     // Remove all down
     await transporter.hostsCache.set(
       transporter.hosts[1],
-      createUnavailableStatefullHost(transporter.hosts[1])
+      createStatefulHost(transporter.hosts[1], HostStatusEnum.Down)
     );
     await transporter.hostsCache.set(
       transporter.hosts[2],
-      createUnavailableStatefullHost(transporter.hosts[2])
+      createStatefulHost(transporter.hosts[2], HostStatusEnum.Down)
     );
-    expect((await getAvailableHosts(transporter.hostsCache, transporter.hosts))[0]).toEqual(
-      transporter.hosts[0]
-    );
-    await expect(
-      getAvailableHosts(transporter.hostsCache, transporter.hosts)
-    ).resolves.toHaveLength(3);
+    expect(
+      (await createRetryableOptions(transporter.hostsCache, transporter.hosts)).statelessHosts[0]
+    ).toEqual(transporter.hosts[0]);
+    expect(
+      (await createRetryableOptions(transporter.hostsCache, transporter.hosts)).statelessHosts
+    ).toHaveLength(3);
   });
 
   it('gives all hosts when all are down', async () => {
     await transporter.hostsCache.set(
       transporter.hosts[0],
-      createUnavailableStatefullHost(transporter.hosts[0])
+      createStatefulHost(transporter.hosts[0], HostStatusEnum.Down)
     );
     await transporter.hostsCache.set(
       transporter.hosts[1],
-      createUnavailableStatefullHost(transporter.hosts[1])
+      createStatefulHost(transporter.hosts[1], HostStatusEnum.Down)
     );
     await transporter.hostsCache.set(
       transporter.hosts[2],
-      createUnavailableStatefullHost(transporter.hosts[2])
+      createStatefulHost(transporter.hosts[2], HostStatusEnum.Down)
     );
-    await expect(
-      getAvailableHosts(transporter.hostsCache, transporter.hosts)
-    ).resolves.toHaveLength(3);
+
+    expect(
+      (await createRetryableOptions(transporter.hostsCache, transporter.hosts)).statelessHosts
+    ).toHaveLength(3);
+
+    await transporter.hostsCache.set(transporter.hosts[0], {
+      ...createStatefulHost(transporter.hosts[0], HostStatusEnum.Down),
+      lastUpdate: Date.now() - 60 * 2 * 1000 - 20, // should be up
+    });
+
+    expect(
+      (await createRetryableOptions(transporter.hostsCache, transporter.hosts)).statelessHosts
+    ).toHaveLength(1);
 
     await transporter.hostsCache.set(
       transporter.hosts[0],
-      createUnavailableStatefullHost(transporter.hosts[0])
+      createStatefulHost(transporter.hosts[0], HostStatusEnum.Timeouted)
     );
 
-    await transporter.hostsCache.set(transporter.hosts[0], {
-      ...createUnavailableStatefullHost(transporter.hosts[0]),
-      lastDownDate: Date.now() - 60 * 5 * 1000 - 20,
-    });
+    expect(
+      (await createRetryableOptions(transporter.hostsCache, transporter.hosts)).statelessHosts
+    ).toHaveLength(1);
+  });
 
-    await expect(
-      getAvailableHosts(transporter.hostsCache, transporter.hosts)
-    ).resolves.toHaveLength(1);
+  it('sets timeouted hosts on the end of the list', async () => {
+    await transporter.hostsCache.set(
+      transporter.hosts[0],
+      createStatefulHost(transporter.hosts[0], HostStatusEnum.Timeouted)
+    );
+
+    expect(
+      (await createRetryableOptions(transporter.hostsCache, transporter.hosts)).statelessHosts[0]
+    ).toEqual(transporter.hosts[1]);
   });
 });

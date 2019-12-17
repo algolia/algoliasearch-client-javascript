@@ -8,7 +8,7 @@ export function createInMemoryCache(options: InMemoryCacheOptions = { serializab
 
   return {
     get<TValue>(
-      key: object,
+      key: object | string,
       defaultValue: () => Readonly<Promise<TValue>>,
       events: CacheEvents<TValue> = {
         miss: () => Promise.resolve(),
@@ -28,13 +28,13 @@ export function createInMemoryCache(options: InMemoryCacheOptions = { serializab
       return promise.then((value: TValue) => miss(value)).then(() => promise);
     },
 
-    set<TValue>(key: object, value: TValue): Readonly<Promise<TValue>> {
+    set<TValue>(key: object | string, value: TValue): Readonly<Promise<TValue>> {
       cache[JSON.stringify(key)] = options.serializable ? JSON.stringify(value) : value;
 
       return Promise.resolve(value);
     },
 
-    delete(key: object): Readonly<Promise<void>> {
+    delete(key: object | string): Readonly<Promise<void>> {
       delete cache[JSON.stringify(key)];
 
       return Promise.resolve();

@@ -20,7 +20,8 @@ describe('response cache integration with cache drivers', () => {
   });
 
   const drivers = [createNullCache, createInMemoryCache];
-  const createBrowserLocalStorageCacheFunction = () => createBrowserLocalStorageCache({ version });
+  const createBrowserLocalStorageCacheFunction = () =>
+    createBrowserLocalStorageCache({ key: version });
 
   // @ts-ignore
   // eslint-disable-next-line no-undef

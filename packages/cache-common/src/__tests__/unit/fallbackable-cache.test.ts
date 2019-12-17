@@ -57,7 +57,7 @@ describe('fallbackable cache', () => {
       const cache = createFallbackableCache({
         caches: [
           createBrowserLocalStorageCache({
-            version,
+            key: version,
             localStorage: {} as any, // this will make the cache fail, and normally we fallback on in memory cache
           }),
           createInMemoryCache(),
@@ -75,7 +75,7 @@ describe('fallbackable cache', () => {
       const cache = createFallbackableCache({
         caches: [
           createBrowserLocalStorageCache({
-            version,
+            key: version,
             localStorage: {} as any, // this will make the cache fail due an type error, and normally we fallback on in memory cache
           }),
         ],
@@ -92,11 +92,11 @@ describe('fallbackable cache', () => {
       const cache = createFallbackableCache({
         caches: [
           createBrowserLocalStorageCache({
-            version,
+            key: version,
             localStorage: {} as any, // this will make the cache fail due an type error, and normally we fallback on in memory cache
           }),
           createBrowserLocalStorageCache({
-            version,
+            key: version,
             localStorage: notAvailableStorage, // this will make the cache fail due localStorage not available
           }),
           createInMemoryCache(),

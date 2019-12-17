@@ -9,7 +9,8 @@ import { createFakeRequester, createFixtures } from '../fixtures';
 const transporterRequest = createFixtures().transporterRequest();
 const drivers = [createNullCache, createInMemoryCache];
 
-const createBrowserLocalStorageCacheFunction = () => createBrowserLocalStorageCache({ version });
+const createBrowserLocalStorageCacheFunction = () =>
+  createBrowserLocalStorageCache({ key: version });
 
 // @ts-ignore
 // eslint-disable-next-line no-undef

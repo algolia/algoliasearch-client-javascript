@@ -1,28 +1,34 @@
 export type RequestOptions = {
   /**
-   * If the given request should be stored within the cache. By default, only
-   * [search] and [searchForFacetValues] requests are stored.
+   * If the given request should persist on cache. Keep in mind, that
+   * some methods may have this option enabled by default.
    */
   readonly cacheable?: boolean;
 
   /**
-   * A specific timeout for the request.
+   * Custom timeout for the request. Note that, in normal situacions
+   * the given timeout will be applied. But the transporter layer may
+   * increase this timeout if there is need for it.
    */
   readonly timeout?: number;
 
   /**
-   * A specific headers for the request.
+   * Custom headers for the request. This headers are
+   * going to be merged the transporter headers.
    */
   readonly headers?: { readonly [key: string]: string };
 
   /**
-   * Specific query parameters for the request.
+   * Custom query paramters for the request. This query parameters are
+   * going to be merged the transporter query parameters.
    */
   readonly queryParameters?: {
-    // eslint-disable-next-line functional/prefer-readonly-type
-    [key: string]: any;
+    [key: string]: any; // eslint-disable-line functional/prefer-readonly-type
   };
 
-  // eslint-disable-next-line functional/prefer-readonly-type
-  [key: string]: any;
+  /**
+   * Additional request body values. It's only taken in
+   * consideration in `POST` and `PUT` requests.
+   */
+  [key: string]: any; // eslint-disable-line functional/prefer-readonly-type
 };

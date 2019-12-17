@@ -34,7 +34,7 @@ describe('selection of hosts', (): void => {
         deepEqual(
           createFixtures().readAndWriteRequest({
             responseTimeout: 2,
-            url: 'read-and-write.com/save',
+            url: 'https://read-and-write.com/save',
           })
         )
       )
@@ -53,7 +53,7 @@ describe('selection of hosts', (): void => {
         deepEqual(
           createFixtures().writeRequest({
             responseTimeout: 30,
-            url: 'read-and-write.com/save',
+            url: 'https://read-and-write.com/save',
           })
         )
       )

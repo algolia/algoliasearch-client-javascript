@@ -14,7 +14,7 @@ describe('browser local storage cache', () => {
   beforeEach(() => window.localStorage.clear());
 
   it('sets/gets values', async () => {
-    const cache = createBrowserLocalStorageCache({ version });
+    const cache = createBrowserLocalStorageCache({ key: version });
 
     const defaultValue = () => Promise.resolve({ bar: 1 });
 
@@ -40,7 +40,7 @@ describe('browser local storage cache', () => {
   });
 
   it('deletes keys', async () => {
-    const cache = createBrowserLocalStorageCache({ version });
+    const cache = createBrowserLocalStorageCache({ key: version });
     await cache.set({ key: 'foo' }, { bar: 1 });
 
     await cache.delete({ key: 'foo' });
@@ -60,7 +60,7 @@ describe('browser local storage cache', () => {
 
   it('do throws localstorage related exceptions', async () => {
     const cache = createBrowserLocalStorageCache({
-      version,
+      key: version,
       localStorage: notAvailableStorage,
     });
     const key = { foo: 'bar' };
@@ -76,7 +76,7 @@ describe('browser local storage cache', () => {
   });
   it('creates a namespace within local storage', async () => {
     const cache = createBrowserLocalStorageCache({
-      version,
+      key: version,
     });
     const key = { foo: 'bar' };
     const value = 'foo';

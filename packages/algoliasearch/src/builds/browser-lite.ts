@@ -46,7 +46,10 @@ export default function algoliasearch(
     responsesCache: createInMemoryCache(),
     requestsCache: createInMemoryCache({ serializable: false }),
     hostsCache: createFallbackableCache({
-      caches: [createBrowserLocalStorageCache({ version }), createInMemoryCache()],
+      caches: [
+        createBrowserLocalStorageCache({ key: `${version}-${appId}` }),
+        createInMemoryCache(),
+      ],
     }),
     userAgent: createUserAgent(version).add({
       segment: 'Browser',

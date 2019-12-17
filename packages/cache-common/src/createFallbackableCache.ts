@@ -13,7 +13,7 @@ export function createFallbackableCache(options: FallbackableCacheOptions): Cach
 
   return {
     get<TValue>(
-      key: object,
+      key: object | string,
       defaultValue: () => Readonly<Promise<TValue>>,
       events: CacheEvents<TValue> = {
         miss: () => Promise.resolve(),
@@ -24,13 +24,13 @@ export function createFallbackableCache(options: FallbackableCacheOptions): Cach
       });
     },
 
-    set<TValue>(key: object, value: TValue): Readonly<Promise<TValue>> {
+    set<TValue>(key: object | string, value: TValue): Readonly<Promise<TValue>> {
       return current.set(key, value).catch(() => {
         return createFallbackableCache({ caches }).set(key, value);
       });
     },
 
-    delete(key: object): Readonly<Promise<void>> {
+    delete(key: object | string): Readonly<Promise<void>> {
       return current.delete(key).catch(() => {
         return createFallbackableCache({ caches }).delete(key);
       });
