@@ -1,6 +1,6 @@
 {
   "name": "@algolia/requester-common",
-  "version": "4.0.0-beta.9",
+  "version": "4.0.0-beta.10",
   "private": false,
   "description": "Common interfaces for promise-based request libraries",
   "license": "MIT",

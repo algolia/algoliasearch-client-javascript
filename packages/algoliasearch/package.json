@@ -1,6 +1,6 @@
 {
   "name": "algoliasearch",
-  "version": "4.0.0-beta.9",
+  "version": "4.0.0-beta.10",
   "private": false,
   "description": "A fully-featured and blazing-fast JavaScript API client to interact with Algolia API.",
   "license": "MIT",
@@ -21,18 +21,18 @@
   },
   "types": "index.d.ts",
   "dependencies": {
-    "@algolia/cache-browser-local-storage": "4.0.0-beta.9",
-    "@algolia/cache-common": "4.0.0-beta.9",
-    "@algolia/cache-in-memory": "4.0.0-beta.9",
-    "@algolia/client-analytics": "4.0.0-beta.9",
-    "@algolia/client-common": "4.0.0-beta.9",
-    "@algolia/client-recommendation": "4.0.0-beta.9",
-    "@algolia/client-search": "4.0.0-beta.9",
-    "@algolia/logger-common": "4.0.0-beta.9",
-    "@algolia/logger-console": "4.0.0-beta.9",
-    "@algolia/requester-browser-xhr": "4.0.0-beta.9",
-    "@algolia/requester-common": "4.0.0-beta.9",
-    "@algolia/requester-node-http": "4.0.0-beta.9",
-    "@algolia/transporter": "4.0.0-beta.9"
+    "@algolia/cache-browser-local-storage": "4.0.0-beta.10",
+    "@algolia/cache-common": "4.0.0-beta.10",
+    "@algolia/cache-in-memory": "4.0.0-beta.10",
+    "@algolia/client-analytics": "4.0.0-beta.10",
+    "@algolia/client-common": "4.0.0-beta.10",
+    "@algolia/client-recommendation": "4.0.0-beta.10",
+    "@algolia/client-search": "4.0.0-beta.10",
+    "@algolia/logger-common": "4.0.0-beta.10",
+    "@algolia/logger-console": "4.0.0-beta.10",
+    "@algolia/requester-browser-xhr": "4.0.0-beta.10",
+    "@algolia/requester-common": "4.0.0-beta.10",
+    "@algolia/requester-node-http": "4.0.0-beta.10",
+    "@algolia/transporter": "4.0.0-beta.10"
   }
 }
