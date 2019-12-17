@@ -79,7 +79,10 @@ test(testSuite.testName, async () => {
     responseFields: ['hits', 'hitsPerPage'],
     maxFacetHits: 100,
     camelCaseAttributes: ['attribute1', 'attribute2'],
-    decompoundedAttributes: { de: ['attribute1', 'attribute2'], fi: ['attribute3'] },
+    decompoundedAttributes: {
+      de: ['attribute1', 'attribute2'],
+      fi: ['attribute3'],
+    },
     keepDiacriticsOnCharacters: 'øé',
   };
 
@@ -89,7 +92,7 @@ test(testSuite.testName, async () => {
 
   expect(await index.getSettings()).toMatchObject(settings1);
 
-  const settings2 = {
+  const settings2: Settings = {
     typoTolerance: 'min',
     ignorePlurals: ['en', 'fr'],
     removeStopWords: ['en', 'fr'],

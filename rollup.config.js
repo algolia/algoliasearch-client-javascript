@@ -6,6 +6,7 @@ import fs from 'fs';
 import path from 'path';
 import babel from 'rollup-plugin-babel';
 import filesize from 'rollup-plugin-filesize';
+import ignore from 'rollup-plugin-ignore';
 import globals from 'rollup-plugin-node-globals';
 import { terser } from 'rollup-plugin-terser';
 import ts from 'rollup-plugin-typescript2';
@@ -80,11 +81,20 @@ packagesConfig.push({
     output: build === 'browser' ? 'algoliasearch' : 'algoliasearch-lite',
     package: 'algoliasearch',
     input: `src/builds/${build}.ts`,
+    formats: ['esm'],
+    ignore: ['crypto'],
+  });
+
+  packagesConfig.push({
+    output: build === 'browser' ? 'algoliasearch' : 'algoliasearch-lite',
+    package: 'algoliasearch',
+    input: `src/builds/${build}.ts`,
     formats: ['umd'],
     external: ['dom'],
     globals: {
       algoliasearch: 'algoliasearch',
     },
+    ignore: ['crypto'],
   });
 });
 
@@ -170,6 +180,7 @@ packagesConfig
           globals({
             global: true,
           }),
+          ignore(packageConfig.ignore || []),
           ts({
             check: !hasTSChecked,
             tsconfig: path.resolve(__dirname, 'tsconfig.json'),
