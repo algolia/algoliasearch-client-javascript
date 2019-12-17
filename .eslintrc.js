@@ -32,6 +32,7 @@ module.exports = {
     ],
     "import/extensions": ["off"],
     "no-bitwise": ["off"],
+    "valid-jsdoc": ["off"],
     "functional/no-expression-statement": ["off"],
     "functional/no-conditional-statement": ["off"],
     "functional/no-throw-statement": ["off"],
