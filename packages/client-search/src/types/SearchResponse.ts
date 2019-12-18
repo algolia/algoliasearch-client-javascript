@@ -8,7 +8,7 @@ export type SearchResponse<TObject = {}> = {
   readonly nbHits: number;
   readonly nbPages: number;
   readonly hitsPerPage: number;
-  readonly processingTimeMs: number;
+  readonly processingTimeMS: number;
   readonly exhaustiveNbHits: boolean;
   readonly exhaustiveFacetsCount?: boolean;
   readonly facets?: { readonly [key: string]: { readonly [key: string]: number } };

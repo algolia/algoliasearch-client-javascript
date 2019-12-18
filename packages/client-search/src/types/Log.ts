@@ -30,7 +30,7 @@ export type Log = {
   readonly numberOfApiCalls: string;
 
   /** Processing time for the query. This does not include network time. */
-  readonly processingTimeMs: string;
+  readonly processingTimeMS: string;
 
   /** Number of hits returned for the query. */
   readonly numberOfQueryHits: string;
