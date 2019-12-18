@@ -1,4 +1,4 @@
-import { TestSuite } from '@algolia/client-common/src/__tests__/TestSuite';
+import { TestSuite } from '../../../../client-common/src/__tests__/TestSuite';
 
 const analyticsClient = new TestSuite().algoliasearch('appId', 'apiKey').initAnalytics();
 

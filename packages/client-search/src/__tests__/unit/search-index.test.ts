@@ -1,11 +1,11 @@
 import { addMethods, encode } from '@algolia/client-common';
-import { TestSuite } from '@algolia/client-common/src/__tests__/TestSuite';
 import { MethodEnum } from '@algolia/requester-common';
 import { createMappedRequestOptions, RequestOptions, Transporter } from '@algolia/transporter';
 import { anything, deepEqual, spy, verify, when } from 'ts-mockito';
 
 import { BatchActionEnum, SaveObjectsOptions } from '../..';
 import { createFaker } from '../../../../client-common/src/__tests__/createFaker';
+import { TestSuite } from '../../../../client-common/src/__tests__/TestSuite';
 import { chunk } from '../../methods';
 
 const algoliasearch = new TestSuite().algoliasearch;

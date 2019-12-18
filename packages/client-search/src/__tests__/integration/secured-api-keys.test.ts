@@ -1,6 +1,6 @@
 /* eslint sonarjs/cognitive-complexity: 0 */ // --> OFF
 
-import { TestSuite } from '@algolia/client-common/src/__tests__/TestSuite';
+import { TestSuite } from '../../../../client-common/src/__tests__/TestSuite';
 
 const testSuite = new TestSuite('secured_api_keys');
 

@@ -1,7 +1,8 @@
 import { accountCopyIndex } from '@algolia/client-account';
-import { createMultiWaitable } from '@algolia/client-common/src/__tests__/helpers';
-import { TestSuite } from '@algolia/client-common/src/__tests__/TestSuite';
 import { Rule, Synonym } from '@algolia/client-search';
+
+import { createMultiWaitable } from '../../../../client-common/src/__tests__/helpers';
+import { TestSuite } from '../../../../client-common/src/__tests__/TestSuite';
 
 const testSuite = new TestSuite('account_copy_index');
 

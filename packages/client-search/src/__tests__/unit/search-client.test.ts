@@ -1,6 +1,7 @@
-import { TestSuite } from '@algolia/client-common/src/__tests__/TestSuite';
 import { createMappedRequestOptions } from '@algolia/transporter';
 import { anything, deepEqual, spy, verify, when } from 'ts-mockito';
+
+import { TestSuite } from '../../../../client-common/src/__tests__/TestSuite';
 
 const algoliasearch = new TestSuite().algoliasearch;
 
