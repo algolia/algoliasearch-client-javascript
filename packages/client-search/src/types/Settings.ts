@@ -5,7 +5,7 @@ export type Settings = {
   readonly searchableAttributes?: readonly string[];
 
   /**
-   * @deprecated
+   * @deprecated Use `searchableAttributes` instead.
    */
   readonly attributesToIndex?: readonly string[];
 
@@ -40,7 +40,7 @@ export type Settings = {
   readonly replicas?: readonly string[];
 
   /**
-   * @deprecated
+   * @deprecated Use `replicas` instead.
    */
   readonly slaves?: readonly string[];
 
