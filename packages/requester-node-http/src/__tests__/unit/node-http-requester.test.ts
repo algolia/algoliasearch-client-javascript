@@ -167,6 +167,30 @@ describe('timeout handling', () => {
     expect(now - before).toBeGreaterThan(4999);
     expect(now - before).toBeLessThan(5200);
   });
+
+  it('can be destroyed', async () => {
+    // Can be destroyed without being used.
+    await expect(requester.destroy()).resolves.toBeUndefined();
+
+    await requester.send({
+      ...requestStub,
+      url: 'http://localhost:1111',
+      responseTimeout: 6, // the fake server sleeps for 5 seconds...
+    });
+
+    // Can be destroyed after being used.
+    await expect(requester.destroy()).resolves.toBeUndefined();
+
+    // Can be destroyed more than once.
+    await expect(requester.destroy()).resolves.toBeUndefined();
+
+    // Can perform requests after being destroyed
+    await requester.send({
+      ...requestStub,
+      url: 'http://localhost:1111',
+      responseTimeout: 6, // the fake server sleeps for 5 seconds...
+    });
+  });
 });
 
 describe('error handling', (): void => {
