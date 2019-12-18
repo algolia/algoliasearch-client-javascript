@@ -1,9 +1,15 @@
-import { Request, Requester, Response } from '@algolia/requester-common';
+/* eslint sonarjs/cognitive-complexity: 0 */ // -->
+
+import { Destroyable, Request, Requester, Response } from '@algolia/requester-common';
 import * as http from 'http';
 import * as https from 'https';
 import * as URL from 'url';
 
-export function createNodeHttpRequester(): Requester {
+export function createNodeHttpRequester(): Requester & Destroyable {
+  const agentOptions = { keepAlive: true };
+  const httpAgent = new http.Agent(agentOptions);
+  const httpsAgent = new https.Agent(agentOptions);
+
   return {
     send(request: Request): Readonly<Promise<Response>> {
       return new Promise(resolve => {
@@ -12,6 +18,7 @@ export function createNodeHttpRequester(): Requester {
         const path = url.query === null ? url.pathname : `${url.pathname}?${url.query}`;
 
         const options: https.RequestOptions = {
+          agent: url.protocol === 'https:' ? httpsAgent : httpAgent,
           hostname: url.hostname || '',
           path: path || '',
           method: request.method,
@@ -70,6 +77,13 @@ export function createNodeHttpRequester(): Requester {
 
         req.end();
       });
+    },
+
+    destroy() {
+      httpAgent.destroy();
+      httpsAgent.destroy();
+
+      return Promise.resolve();
     },
   };
 }
