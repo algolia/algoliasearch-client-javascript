@@ -30,7 +30,9 @@ test(testSuite.testName, async () => {
     enabled: false,
     condition: { anchoring: 'is', pattern: '{facet:brand}' },
     consequence: {
-      params: { automaticFacetFilters: [{ facet: 'brand', disjunctive: true, score: 42 }] },
+      params: {
+        automaticFacetFilters: [{ facet: 'brand', disjunctive: true, score: 42 }],
+      },
     },
     validity: [
       { from: 1532439300, until: 1532525700 },
@@ -126,7 +128,7 @@ test(testSuite.testName, async () => {
   expect(searchResultAfterDelete.nbHits).toEqual(3);
   expect(searchResultAfterDelete.hits).not.toContain(ruleToSave);
 
-  await index.clearRules().wait();
+  await expect(index.clearRules().wait()).resolves.toHaveProperty('taskID');
 
   const searchResultAfterClear = await index.searchRules('');
   expect(searchResultAfterClear.nbHits).toBe(0);

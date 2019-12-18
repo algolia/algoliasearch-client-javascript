@@ -11,6 +11,7 @@ export const setSettings = (base: SearchIndex) => {
   ): Readonly<WaitablePromise<SetSettingsResponse>> => {
     const { forwardToReplicas, ...options } = requestOptions || {};
     const mappedRequestOptions = createMappedRequestOptions(options);
+
     if (forwardToReplicas) {
       mappedRequestOptions.queryParameters.forwardToReplicas = 1; // eslint-disable-line functional/immutable-data
     }

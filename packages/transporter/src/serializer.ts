@@ -34,14 +34,17 @@ export function serializeQueryParameters(parameters: { readonly [key: string]: a
     .join('&');
 }
 
-export function serializeData(request: Request, requestOptions: RequestOptions): string {
+export function serializeData(
+  request: Request,
+  requestOptions: RequestOptions
+): string | undefined {
+  if (request.data === undefined && requestOptions.data === undefined) {
+    return undefined;
+  }
+
   const data = Array.isArray(request.data)
     ? request.data
     : { ...request.data, ...requestOptions.data };
-
-  if (data.constructor === Object && Object.entries(data).length === 0) {
-    return '';
-  }
 
   return JSON.stringify(data);
 }

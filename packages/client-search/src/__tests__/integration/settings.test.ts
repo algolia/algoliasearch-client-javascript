@@ -16,6 +16,8 @@ test(testSuite.testName, async () => {
 
   const responses: any = [];
 
+  await index.setSettings({});
+
   responses.push(index.saveObject(createFaker().object('foo')));
 
   const settings1: Settings = {

@@ -108,7 +108,7 @@ export function createFixtures() {
       }
 
       return {
-        data: '',
+        data: '{}',
         headers,
         method: MethodEnum.Post,
         connectTimeout: 1,

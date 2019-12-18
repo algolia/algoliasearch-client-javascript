@@ -164,9 +164,9 @@ describe('get object', () => {
 });
 
 describe('get settings', () => {
-  it('Passes getVersion=2 queryParameters', async () => {
+  it('Passes getVersion=2 queryParameters without custom request options', async () => {
     const requestOptions = {
-      data: {},
+      data: undefined,
       timeout: undefined,
       headers: {},
       queryParameters: { getVersion: '2' },
@@ -181,7 +181,7 @@ describe('get settings', () => {
 
   it('Passes getVersion=2 queryParameters and custom request options', async () => {
     const requestOptions = {
-      data: {},
+      data: undefined,
       timeout: undefined,
       headers: {},
       queryParameters: { foo: 'bar', getVersion: '2' },
@@ -253,8 +253,10 @@ describe('find object', () => {
 
 describe('exists', () => {
   it('passes request options to getSettings', async () => {
-    const requestOptions = {
-      data: {},
+    const requestOptions: RequestOptions = {
+      data: {
+        foo: 'bar',
+      },
       timeout: 10,
       headers: {},
       queryParameters: { getVersion: '2' },

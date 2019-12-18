@@ -64,7 +64,9 @@ export function createNodeHttpRequester(): Requester {
           responseTimeout = createTimeout(request.responseTimeout, 'Socket timeout');
         });
 
-        req.write(request.data);
+        if (request.data !== undefined) {
+          req.write(request.data);
+        }
 
         req.end();
       });

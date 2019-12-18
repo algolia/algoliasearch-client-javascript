@@ -65,7 +65,7 @@ describe('the timeouts selection', () => {
     verify(requesterMock.send(anything())).once();
   });
 
-  it('Increases timeout based on number of retries', async () => {
+  it('increases timeout based on number of retries', async () => {
     when(requesterMock.send(anything())).thenResolve({
       content: '{}',
       status: 500,
