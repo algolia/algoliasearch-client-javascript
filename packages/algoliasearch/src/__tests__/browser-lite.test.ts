@@ -1,6 +1,6 @@
 import { version } from '@algolia/client-common';
 
-import algoliasearch from '../builds/browser-lite';
+import algoliasearch from '../builds/browserLite';
 
 const client = algoliasearch('appId', 'apiKey');
 

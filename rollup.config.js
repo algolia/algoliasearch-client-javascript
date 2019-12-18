@@ -76,7 +76,7 @@ packagesConfig.push({
   formats: ['cjs'],
 });
 
-['browser', 'browser-lite'].forEach(build => {
+['browser', 'browserLite'].forEach(build => {
   packagesConfig.push({
     output: build === 'browser' ? 'algoliasearch' : 'algoliasearch-lite',
     package: 'algoliasearch',
