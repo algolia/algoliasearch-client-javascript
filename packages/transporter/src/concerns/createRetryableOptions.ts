@@ -46,7 +46,7 @@ export function createRetryableOptions(
          *
          * Note that, the very next request, we start from the previous timeout
          *
-         *  6 (timeouted) > 7 (timeouted) > 8 ...
+         *  5 (timeouted) > 6 (timeouted) > 7 ...
          *
          * This strategy may need to be reviewed, but is the strategy on the our
          * current v3 version.
