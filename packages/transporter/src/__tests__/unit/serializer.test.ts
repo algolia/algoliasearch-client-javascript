@@ -21,7 +21,7 @@ beforeEach(() => {
 });
 
 describe('serializer', () => {
-  it('serializes url with / and witout / ', async () => {
+  it('serializes url with / ', async () => {
     const transporterRequest = createFixtures().transporterRequest();
     await transporter.write(transporterRequest);
     await transporter.write({

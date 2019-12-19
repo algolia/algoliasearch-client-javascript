@@ -15,7 +15,7 @@ const config = {
   transformIgnorePatterns: [],
   coverageReporters: ['text'],
   collectCoverage: true,
-  collectCoverageFrom: ['**/src*/*.ts', '!**/src/__tests__/**/*.ts'],
+  collectCoverageFrom: ['**/src*/*.ts', '!**/src/__tests__/*.ts'],
   coverageThreshold: {
     global: {
       branches: 100,

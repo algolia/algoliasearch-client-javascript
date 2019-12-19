@@ -19,8 +19,8 @@ export function createNodeHttpRequester(): Requester & Destroyable {
 
         const options: https.RequestOptions = {
           agent: url.protocol === 'https:' ? httpsAgent : httpAgent,
-          hostname: url.hostname || '',
-          path: path || '',
+          hostname: url.hostname,
+          path,
           method: request.method,
           headers: request.headers,
           ...(url.port !== undefined ? { port: url.port || '' } : {}),
@@ -38,8 +38,11 @@ export function createNodeHttpRequester(): Requester & Destroyable {
             // eslint-disable-next-line @typescript-eslint/no-use-before-define
             clearTimeout(responseTimeout as NodeJS.Timeout);
 
-            const status = response.statusCode === undefined ? 0 : response.statusCode;
-            resolve({ status, content, isTimedOut: false });
+            resolve({
+              status: response.statusCode || 0,
+              content,
+              isTimedOut: false,
+            });
           });
         });
 
