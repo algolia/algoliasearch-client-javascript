@@ -81,7 +81,7 @@ packagesConfig.push({
     output: build === 'browser' ? 'algoliasearch' : 'algoliasearch-lite',
     package: 'algoliasearch',
     input: `src/builds/${build}.ts`,
-    formats: ['esm'],
+    formats: ['esm-browser'],
     ignore: ['crypto'],
   });
 
@@ -122,6 +122,10 @@ packagesConfig
         file: `${packageConfig.output}.esm.js`,
         format: `es`,
       },
+      'esm-browser': {
+        file: `${packageConfig.output}.esm.browser.js`,
+        format: `es`,
+      },
       cjs: {
         file: `${packageConfig.output}.cjs.js`,
         format: `cjs`,
@@ -136,6 +140,8 @@ packagesConfig
       const output = bundlers[format];
 
       const isUmdBuild = /\.umd.js$/.test(output.file);
+      const isEsmBrowserBuild = /\.esm.browser.js$/.test(output.file);
+
       if (isUmdBuild) {
         output.name = 'algoliasearch';
         output.banner = createLicence(output.file);
@@ -166,7 +172,7 @@ packagesConfig
 
       let dependencies = require(packageResolve('package.json')).dependencies;
 
-      if (isUmdBuild || dependencies === undefined) {
+      if (isUmdBuild || isEsmBrowserBuild || dependencies === undefined) {
         dependencies = [];
       }
 
