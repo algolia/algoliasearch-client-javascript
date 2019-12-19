@@ -18,6 +18,12 @@ exports.config = {
   maxInstances: 5,
   specFileRetries: 0,
   capabilities: [
+    {
+      platformName: `Windows 7`,
+      browserName: 'internet explorer',
+      browserVersion: 'latest',
+      'sauce:options': sauceOptions,
+    },
     ...['7', '8.1'].map(platform => ({
       platformName: `Windows ${platform}`,
       browserName: 'internet explorer',
