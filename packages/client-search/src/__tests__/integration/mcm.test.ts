@@ -1,7 +1,7 @@
 /* eslint sonarjs/cognitive-complexity: 0 */ // --> OFF
 
 import { createRetryablePromise } from '@algolia/client-common';
-import { Transporter } from '@algolia/transporter';
+import { ApiError, Transporter } from '@algolia/transporter';
 
 import { TestSuite } from '../../../../client-common/src/__tests__/TestSuite';
 
@@ -14,8 +14,8 @@ const createRetryableTransporter = (client: Transporter): Transporter => {
     get(obj: any, method: string) {
       return (...args: any) => {
         return createRetryablePromise(retry => {
-          return obj[method](...args).catch((err: Error) => {
-            if (err.message === 'Remote side is unreachable') {
+          return obj[method](...args).catch((err: ApiError) => {
+            if (err.status === 500 && err.message === 'Remote side is unreachable') {
               return retry();
             }
 
