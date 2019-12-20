@@ -1,6 +1,6 @@
 {
   "name": "@algolia/client-recommendation",
-  "version": "4.0.0-beta.10",
+  "version": "4.0.0-beta.11",
   "private": false,
   "license": "MIT",
   "files": [
@@ -12,9 +12,9 @@
   "module": "dist/client-recommendation.esm.js",
   "types": "dist/client-recommendation.d.ts",
   "dependencies": {
-    "@algolia/cache-common": "4.0.0-beta.10",
-    "@algolia/client-common": "4.0.0-beta.10",
-    "@algolia/requester-common": "4.0.0-beta.10",
-    "@algolia/transporter": "4.0.0-beta.10"
+    "@algolia/cache-common": "4.0.0-beta.11",
+    "@algolia/client-common": "4.0.0-beta.11",
+    "@algolia/requester-common": "4.0.0-beta.11",
+    "@algolia/transporter": "4.0.0-beta.11"
   }
 }

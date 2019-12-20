@@ -1,6 +1,6 @@
 {
   "name": "@algolia/requester-node-http",
-  "version": "4.0.0-beta.10",
+  "version": "4.0.0-beta.11",
   "private": false,
   "description": "Promise-based request library for node using the native http module.",
   "license": "MIT",
@@ -13,6 +13,6 @@
   "module": "dist/requester-node-http.esm.js",
   "types": "dist/requester-node-http.d.ts",
   "dependencies": {
-    "@algolia/requester-common": "4.0.0-beta.10"
+    "@algolia/requester-common": "4.0.0-beta.11"
   }
 }

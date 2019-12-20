@@ -1,6 +1,6 @@
 {
   "name": "@algolia/logger-console",
-  "version": "4.0.0-beta.10",
+  "version": "4.0.0-beta.11",
   "private": false,
   "description": "Promise-based log library using console log.",
   "license": "MIT",
@@ -13,6 +13,6 @@
   "module": "dist/logger-console.esm.js",
   "types": "dist/logger-console.d.ts",
   "dependencies": {
-    "@algolia/logger-common": "4.0.0-beta.10"
+    "@algolia/logger-common": "4.0.0-beta.11"
   }
 }
