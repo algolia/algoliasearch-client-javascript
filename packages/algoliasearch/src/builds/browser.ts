@@ -31,6 +31,10 @@ import {
   addApiKey,
   AddApiKeyOptions,
   AddApiKeyResponse,
+  assignUserID,
+  AssignUserIDResponse,
+  assignUserIDs,
+  AssignUserIDsResponse,
   batch,
   BatchRequest,
   BatchResponse,
@@ -77,6 +81,9 @@ import {
   getRule,
   getSettings,
   getSynonym,
+  getTopUserIDs,
+  GetTopUserIDsResponse,
+  getUserID,
   IndexOperationResponse,
   initIndex,
   listApiKeys,
@@ -85,6 +92,9 @@ import {
   ListClustersResponse,
   listIndices,
   ListIndicesResponse,
+  listUserIDs,
+  ListUserIDsOptions,
+  ListUserIDsResponse,
   moveIndex,
   multipleBatch,
   MultipleBatchRequest,
@@ -102,6 +112,8 @@ import {
   PartialUpdateObjectResponse,
   partialUpdateObjects,
   PartialUpdateObjectsOptions,
+  removeUserID,
+  RemoveUserIDResponse,
   replaceAllObjects,
   ReplaceAllObjectsOptions,
   replaceAllRules,
@@ -136,6 +148,9 @@ import {
   searchSynonyms,
   SearchSynonymsOptions,
   SearchSynonymsResponse,
+  searchUserIDs,
+  SearchUserIDsOptions,
+  SearchUserIDsResponse,
   setSettings,
   SetSettingsResponse,
   Settings,
@@ -143,6 +158,7 @@ import {
   updateApiKey,
   UpdateApiKeyOptions,
   UpdateApiKeyResponse,
+  UserIDResponse,
   waitTask,
 } from '@algolia/client-search';
 import { LogLevelEnum } from '@algolia/logger-common';
@@ -202,6 +218,13 @@ export default function algoliasearch(
       updateApiKey,
       deleteApiKey,
       restoreApiKey,
+      assignUserID,
+      assignUserIDs,
+      getUserID,
+      searchUserIDs,
+      listUserIDs,
+      getTopUserIDs,
+      removeUserID,
       initIndex: base => (indexName: string): SearchIndex => {
         return initIndex(base)(indexName, {
           methods: {
@@ -518,6 +541,34 @@ export type SearchClient = BaseSearchClient & {
     apiKey: string,
     requestOptions?: RequestOptions
   ) => Readonly<WaitablePromise<RestoreApiKeyResponse>>;
+  readonly assignUserID: (
+    userID: string,
+    clusterName: string,
+    requestOptions?: RequestOptions
+  ) => Readonly<Promise<AssignUserIDResponse>>;
+  readonly assignUserIDs: (
+    userIDs: readonly string[],
+    clusterName: string,
+    requestOptions?: RequestOptions
+  ) => Readonly<Promise<AssignUserIDsResponse>>;
+  readonly getUserID: (
+    userID: string,
+    requestOptions?: RequestOptions
+  ) => Readonly<Promise<UserIDResponse>>;
+  readonly searchUserIDs: (
+    query: string,
+    requestOptions?: SearchUserIDsOptions & RequestOptions
+  ) => Readonly<Promise<SearchUserIDsResponse>>;
+  readonly listUserIDs: (
+    requestOptions?: ListUserIDsOptions & RequestOptions
+  ) => Readonly<Promise<ListUserIDsResponse>>;
+  readonly getTopUserIDs: (
+    requestOptions?: RequestOptions
+  ) => Readonly<Promise<GetTopUserIDsResponse>>;
+  readonly removeUserID: (
+    userID: string,
+    requestOptions?: RequestOptions
+  ) => Readonly<Promise<RemoveUserIDResponse>>;
   readonly initAnalytics: (region?: string) => AnalyticsClient;
   readonly initRecommendation: (region?: string) => RecommendationClient;
 };
