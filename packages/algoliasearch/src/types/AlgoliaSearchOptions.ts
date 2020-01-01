@@ -1,15 +1,14 @@
-import { LogLevelType } from '@algolia/logger-common';
+import { AnalyticsClientOptions } from '@algolia/client-analytics';
+import { RecommendationClientOptions } from '@algolia/client-recommendation';
+import { SearchClientOptions } from '@algolia/client-search';
+import { TransporterOptions } from '@algolia/transporter';
 
-export type AlgoliaSearchOptions = {
-  /**
-   * The log level type.
-   *
-   * @example
-   * ```
-   * algoliasearch('appId', 'apiKey', {
-   *   logLevel: LogLevelEnum.Debug
-   * });
-   * ```
-   */
-  readonly logLevel?: LogLevelType;
-};
+type Options = SearchClientOptions &
+  AnalyticsClientOptions &
+  RecommendationClientOptions &
+  Partial<TransporterOptions>;
+
+export type AlgoliaSearchOptions = Pick<
+  Options,
+  Exclude<keyof Options, 'appId'> & Exclude<keyof Options, 'apiKey'>
+>;

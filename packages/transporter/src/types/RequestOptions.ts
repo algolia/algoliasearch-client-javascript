@@ -1,7 +1,7 @@
 export type RequestOptions = {
   /**
-   * If the given request should persist on cache. Keep in mind, that
-   * some methods may have this option enabled by default.
+   * If the given request should persist on the cache. Keep in mind,
+   * that some methods may have this option enabled by default.
    */
   readonly cacheable?: boolean;
 

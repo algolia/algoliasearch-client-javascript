@@ -167,25 +167,34 @@ import { createNullLogger } from '@algolia/logger-common';
 import { createNodeHttpRequester } from '@algolia/requester-node-http';
 import { createUserAgent, RequestOptions } from '@algolia/transporter';
 
-export default function algoliasearch(appId: string, apiKey: string): SearchClient {
-  const clientOptions = {
-    appId,
-    apiKey,
-    timeouts: {
-      connect: 2,
-      read: 5,
-      write: 30,
+import { AlgoliaSearchOptions } from '../types';
+
+export default function algoliasearch(
+  appId: string,
+  apiKey: string,
+  options?: AlgoliaSearchOptions
+): SearchClient {
+  const clientOptions = Object.assign(
+    {
+      appId,
+      apiKey,
+      timeouts: {
+        connect: 2,
+        read: 5,
+        write: 30,
+      },
+      requester: createNodeHttpRequester(),
+      logger: createNullLogger(),
+      responsesCache: createNullCache(),
+      requestsCache: createNullCache(),
+      hostsCache: createInMemoryCache(),
+      userAgent: createUserAgent(version).add({
+        segment: 'Node.js',
+        version: process.versions.node,
+      }),
     },
-    requester: createNodeHttpRequester(),
-    logger: createNullLogger(),
-    responsesCache: createNullCache(),
-    requestsCache: createNullCache(),
-    hostsCache: createInMemoryCache(),
-    userAgent: createUserAgent(version).add({
-      segment: 'Node.js',
-      version: process.versions.node,
-    }),
-  };
+    options
+  );
 
   return createSearchClient({
     ...clientOptions,
