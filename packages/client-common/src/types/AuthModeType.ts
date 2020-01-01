@@ -1,5 +1,12 @@
 export const AuthMode: { readonly [key: string]: AuthModeType } = {
+  /**
+   * If auth credentials should be in query parameters.
+   */
   WithinQueryParameters: 0,
+
+  /**
+   * If auth credentials should be in headers.
+   */
   WithinHeaders: 1,
 };
 

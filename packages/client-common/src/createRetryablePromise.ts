@@ -1,8 +1,7 @@
 export function createRetryablePromise<TResponse>(
   callback: (retry: () => Promise<TResponse>) => Promise<TResponse>
 ): Promise<TResponse> {
-  // eslint-disable-next-line functional/no-let
-  let retriesCount = 0;
+  let retriesCount = 0; // eslint-disable-line functional/no-let
 
   const retry = (): Promise<TResponse> => {
     retriesCount++;

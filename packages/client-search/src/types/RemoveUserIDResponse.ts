@@ -1,6 +1,6 @@
 export type RemoveUserIDResponse = {
   /**
-   * Date of deletion
+   * When the given `userID` got removed.
    */
   readonly deletedAt: string;
 };

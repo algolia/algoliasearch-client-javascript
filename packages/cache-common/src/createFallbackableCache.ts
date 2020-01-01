@@ -4,8 +4,7 @@ import { FallbackableCacheOptions } from './types/FallbackableCacheOptions';
 // @todo Add logger on options to debug when caches go wrong.
 export function createFallbackableCache(options: FallbackableCacheOptions): Cache {
   const caches = [...options.caches];
-  // eslint-disable-next-line functional/immutable-data
-  const current = caches.shift();
+  const current = caches.shift(); // eslint-disable-line functional/immutable-data
 
   if (current === undefined) {
     return createNullCache();

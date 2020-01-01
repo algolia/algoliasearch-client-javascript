@@ -1,6 +1,13 @@
 import { RequestOptions } from '@algolia/transporter';
 
 export type Wait<TResponse> = (
-  result: TResponse,
+  /**
+   * The original response.
+   */
+  response: TResponse,
+
+  /**
+   * The custom request options.
+   */
   requestOptions?: RequestOptions
 ) => Readonly<Promise<any>>;
