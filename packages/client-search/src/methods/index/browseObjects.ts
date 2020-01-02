@@ -17,7 +17,7 @@ export const browseObjects = (base: SearchIndex) => {
     return createBrowsablePromise<TObject>({
       ...requestOptions,
       shouldStop: response => response.cursor === undefined,
-      request: (data: object): Readonly<Promise<BrowseResponse<TObject>>> =>
+      request: (data: Record<string, any>): Readonly<Promise<BrowseResponse<TObject>>> =>
         base.transporter.read(
           {
             method: MethodEnum.Post,

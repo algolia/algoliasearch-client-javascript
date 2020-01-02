@@ -42,6 +42,7 @@ import {
   BrowseOptions,
   browseRules,
   browseSynonyms,
+  ChunkedBatchResponse,
   ChunkOptions,
   clearObjects,
   clearRules,
@@ -353,13 +354,13 @@ export type SearchIndex = BaseSearchIndex & {
     requestOptions?: RequestOptions & GetObjectsOptions
   ) => Readonly<Promise<GetObjectsResponse<TObject>>>;
   readonly saveObject: (
-    object: object,
+    object: Record<string, any>,
     requestOptions?: RequestOptions & ChunkOptions & SaveObjectsOptions
   ) => Readonly<WaitablePromise<SaveObjectResponse>>;
   readonly saveObjects: (
-    objects: ReadonlyArray<{ readonly [key: string]: any }>,
+    objects: ReadonlyArray<Record<string, any>>,
     requestOptions?: RequestOptions & ChunkOptions & SaveObjectsOptions
-  ) => Readonly<WaitablePromise<readonly BatchResponse[]>>;
+  ) => Readonly<WaitablePromise<ChunkedBatchResponse>>;
   readonly waitTask: (taskID: number, requestOptions?: RequestOptions) => Readonly<Promise<void>>;
   readonly setSettings: (
     settings: Settings,
@@ -367,13 +368,13 @@ export type SearchIndex = BaseSearchIndex & {
   ) => Readonly<WaitablePromise<SetSettingsResponse>>;
   readonly getSettings: (requestOptions?: RequestOptions) => Readonly<Promise<Settings>>;
   readonly partialUpdateObject: (
-    object: object,
+    object: Record<string, any>,
     requestOptions?: RequestOptions & ChunkOptions & PartialUpdateObjectsOptions
   ) => Readonly<WaitablePromise<PartialUpdateObjectResponse>>;
   readonly partialUpdateObjects: (
     objects: ReadonlyArray<Record<string, any>>,
     requestOptions?: RequestOptions & ChunkOptions & PartialUpdateObjectsOptions
-  ) => Readonly<WaitablePromise<readonly BatchResponse[]>>;
+  ) => Readonly<WaitablePromise<ChunkedBatchResponse>>;
   readonly deleteObject: (
     objectID: string,
     requestOptions?: RequestOptions
@@ -381,7 +382,7 @@ export type SearchIndex = BaseSearchIndex & {
   readonly deleteObjects: (
     objectIDs: readonly string[],
     requestOptions?: RequestOptions & ChunkOptions
-  ) => Readonly<WaitablePromise<readonly BatchResponse[]>>;
+  ) => Readonly<WaitablePromise<ChunkedBatchResponse>>;
   readonly deleteBy: (
     filters: DeleteByFiltersOptions,
     requestOptions?: RequestOptions

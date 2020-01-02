@@ -3,8 +3,8 @@ import { RequestOptions } from '@algolia/transporter';
 
 import {
   BatchActionEnum,
-  BatchResponse,
-  chunk,
+  chunkedBatch,
+  ChunkedBatchResponse,
   ChunkOptions,
   PartialUpdateObjectsOptions,
   SearchIndex,
@@ -14,13 +14,13 @@ export const partialUpdateObjects = (base: SearchIndex) => {
   return (
     objects: ReadonlyArray<Record<string, any>>,
     requestOptions?: RequestOptions & ChunkOptions & PartialUpdateObjectsOptions
-  ): Readonly<WaitablePromise<readonly BatchResponse[]>> => {
+  ): Readonly<WaitablePromise<ChunkedBatchResponse>> => {
     const { createIfNotExists, ...options } = requestOptions || {};
 
     const action = createIfNotExists
       ? BatchActionEnum.PartialUpdateObject
       : BatchActionEnum.PartialUpdateObjectNoCreate;
 
-    return chunk(base)(objects, action, options);
+    return chunkedBatch(base)(objects, action, options);
   };
 };

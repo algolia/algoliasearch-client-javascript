@@ -6,7 +6,7 @@ export * from './batch';
 export * from './browseObjects';
 export * from './browseRules';
 export * from './browseSynonyms';
-export * from './chunk';
+export * from './chunkedBatch';
 export * from './clearObjects';
 export * from './clearRules';
 export * from './clearSynonyms';

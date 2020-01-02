@@ -6,7 +6,7 @@ import { anything, deepEqual, spy, verify, when } from 'ts-mockito';
 import { BatchActionEnum, SaveObjectsOptions } from '../..';
 import { createFaker } from '../../../../client-common/src/__tests__/createFaker';
 import { TestSuite } from '../../../../client-common/src/__tests__/TestSuite';
-import { chunk } from '../../methods';
+import { chunkedBatch } from '../../methods';
 
 const algoliasearch = new TestSuite().algoliasearch;
 let index: any;
@@ -14,12 +14,12 @@ let transporterMock: Transporter;
 
 const res: any = {
   objectIDs: ['1'],
-  taskID: 1,
+  taskID: '1',
 };
 
 beforeEach(() => {
   index = addMethods(algoliasearch('appId', 'apiKey').initIndex('foo'), {
-    chunk,
+    chunkedBatch,
   });
 
   transporterMock = spy(index.transporter);
@@ -76,7 +76,7 @@ describe('save objects', () => {
   });
 
   it('uses updateObject when `autoGenerateObjectIDIfNotExist` is not set', async () => {
-    const objects = [createFaker().object('myObjectID')];
+    const objects = [createFaker().object('1')];
 
     const request = {
       method: MethodEnum.Post,
@@ -86,12 +86,10 @@ describe('save objects', () => {
 
     when(transporterMock.write(deepEqual(request), deepEqual({}))).thenResolve(res);
 
-    await expect(index.saveObjects(objects)).resolves.toMatchObject([
-      {
-        objectIDs: ['1'],
-        taskID: 1,
-      },
-    ]);
+    await expect(index.saveObjects(objects)).resolves.toMatchObject({
+      objectIDs: ['1'],
+      taskIDs: ['1'],
+    });
     verify(transporterMock.write(deepEqual(request), deepEqual({}))).once();
   });
 
@@ -112,28 +110,34 @@ describe('save objects', () => {
   });
 });
 
-describe('chunk', () => {
+describe('chunked batch', () => {
   it("Don't call batch when no objects", async () => {
-    await index.chunk([], BatchActionEnum.AddObject);
-    await index.chunk([], BatchActionEnum.UpdateObject);
+    await index.chunkedBatch([], BatchActionEnum.AddObject);
+    await index.chunkedBatch([], BatchActionEnum.UpdateObject);
 
     verify(transporterMock.write(anything(), anything())).never();
   });
 
   it('call batch when there is objects with default batch size', async () => {
-    when(transporterMock.write(anything(), anything())).thenResolve();
+    when(transporterMock.write(anything(), anything())).thenResolve({
+      taskID: 1,
+      objectIDs: [1],
+    });
 
-    await index.chunk([createFaker().object()], BatchActionEnum.AddObject);
-    await index.chunk(createFaker().objects(1001), BatchActionEnum.UpdateObject);
+    await index.chunkedBatch([createFaker().object()], BatchActionEnum.AddObject);
+    await index.chunkedBatch(createFaker().objects(1001), BatchActionEnum.UpdateObject);
 
     verify(transporterMock.write(anything(), anything())).times(3);
   });
 
   it('call batch when there is objects with a given batch size', async () => {
-    when(transporterMock.write(anything(), anything())).thenResolve();
+    when(transporterMock.write(anything(), anything())).thenResolve({
+      taskID: 1,
+      objectIDs: [1],
+    });
 
-    await index.chunk([createFaker().object()], BatchActionEnum.AddObject);
-    await index.chunk(createFaker().objects(1001), BatchActionEnum.UpdateObject, {
+    await index.chunkedBatch([createFaker().object()], BatchActionEnum.AddObject);
+    await index.chunkedBatch(createFaker().objects(1001), BatchActionEnum.UpdateObject, {
       batchSize: 100,
     });
 
@@ -141,9 +145,12 @@ describe('chunk', () => {
   });
 
   it('Does not perform one extra call when size of objects is the same as batch size', async () => {
-    when(transporterMock.write(anything(), anything())).thenResolve();
+    when(transporterMock.write(anything(), anything())).thenResolve({
+      taskID: 1,
+      objectIDs: [1],
+    });
 
-    await index.chunk(createFaker().objects(1000), BatchActionEnum.UpdateObject);
+    await index.chunkedBatch(createFaker().objects(1000), BatchActionEnum.UpdateObject);
 
     verify(transporterMock.write(anything(), anything())).once();
   });

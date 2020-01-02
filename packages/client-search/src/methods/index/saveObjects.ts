@@ -3,8 +3,8 @@ import { RequestOptions } from '@algolia/transporter';
 
 import {
   BatchActionEnum,
-  BatchResponse,
-  chunk,
+  chunkedBatch,
+  ChunkedBatchResponse,
   ChunkOptions,
   createMissingObjectIDError,
   SaveObjectsOptions,
@@ -15,7 +15,7 @@ export const saveObjects = (base: SearchIndex) => {
   return (
     objects: ReadonlyArray<{ readonly [key: string]: any }>,
     requestOptions?: RequestOptions & ChunkOptions & SaveObjectsOptions
-  ): Readonly<WaitablePromise<readonly BatchResponse[]>> => {
+  ): Readonly<WaitablePromise<ChunkedBatchResponse>> => {
     const { autoGenerateObjectIDIfNotExist, ...options } = requestOptions || {};
 
     const action = autoGenerateObjectIDIfNotExist
@@ -31,6 +31,6 @@ export const saveObjects = (base: SearchIndex) => {
       }
     }
 
-    return chunk(base)(objects, action, options);
+    return chunkedBatch(base)(objects, action, options);
   };
 };

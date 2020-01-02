@@ -12,6 +12,7 @@ export * from './BatchResponse';
 export * from './BrowseOptions';
 export * from './BrowseResponse';
 export * from './ChunkOptions';
+export * from './ChunkedBatchResponse';
 export * from './ClearRulesOptions';
 export * from './ClearSynonymsOptions';
 export * from './Cluster';

@@ -11,14 +11,14 @@ import { partialUpdateObjects, waitTask } from '.';
 
 export const partialUpdateObject = (base: SearchIndex) => {
   return (
-    object: object,
+    object: Record<string, any>,
     requestOptions?: RequestOptions & ChunkOptions & PartialUpdateObjectsOptions
   ): Readonly<WaitablePromise<PartialUpdateObjectResponse>> => {
     return createWaitablePromise<PartialUpdateObjectResponse>(
       partialUpdateObjects(base)([object], requestOptions).then(response => {
         return {
-          objectID: response[0].objectIDs[0],
-          taskID: response[0].taskID,
+          objectID: response.objectIDs[0],
+          taskID: response.taskIDs[0],
         };
       }),
       (response, waitRequestOptions) => waitTask(base)(response.taskID, waitRequestOptions)

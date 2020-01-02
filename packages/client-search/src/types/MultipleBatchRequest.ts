@@ -14,5 +14,5 @@ export type MultipleBatchRequest = {
   /**
    * The body associated with the request.
    */
-  readonly body: object;
+  readonly body: Record<string, any>;
 };

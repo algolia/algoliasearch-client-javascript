@@ -14,7 +14,7 @@ export type Request = {
   /**
    * The data to transfer to the server.
    */
-  readonly data?: object | readonly object[];
+  readonly data?: Record<string, any> | ReadonlyArray<Record<string, any>>;
 
   /**
    * If the response should persist on cache.

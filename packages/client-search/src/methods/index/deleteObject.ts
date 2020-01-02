@@ -10,7 +10,7 @@ export const deleteObject = (base: SearchIndex) => {
   ): Readonly<WaitablePromise<DeleteResponse>> => {
     return createWaitablePromise<DeleteResponse>(
       deleteObjects(base)([objectID], requestOptions).then(response => {
-        return { taskID: response[0].taskID };
+        return { taskID: response.taskIDs[0] };
       }),
       (response, waitRequestOptions) => waitTask(base)(response.taskID, waitRequestOptions)
     );

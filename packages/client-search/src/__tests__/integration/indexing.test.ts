@@ -77,12 +77,12 @@ test(testSuite.testName, async () => {
   await expect(index.getObject('object3')).resolves.toStrictEqual(object3);
   await expect(index.getObject('object4')).resolves.toStrictEqual(object4);
 
-  const objectID5 = (await response5and6)[0].objectIDs[0];
+  const objectID5 = (await response5and6).objectIDs[0];
   await expect(index.getObject(objectID5)).resolves.toStrictEqual(
     Object.assign(object5, { objectID: objectID5 })
   );
 
-  const objectID6 = (await response5and6)[0].objectIDs[1];
+  const objectID6 = (await response5and6).objectIDs[1];
   await expect(index.getObject(objectID6)).resolves.toStrictEqual(
     Object.assign(object6, { objectID: objectID6 })
   );

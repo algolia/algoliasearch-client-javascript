@@ -1,6 +1,6 @@
 export function createFaker() {
   return {
-    object(objectID?: string): object {
+    object(objectID?: string): Record<string, any> {
       let obj = {
         name: Math.random()
           .toString(36)

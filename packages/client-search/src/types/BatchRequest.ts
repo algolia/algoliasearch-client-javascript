@@ -10,5 +10,5 @@ export type BatchRequest = {
    * The body of the given `action`. Note that, bodies difer
    * depending of the action.
    */
-  readonly body: object;
+  readonly body: Record<string, any>;
 };
