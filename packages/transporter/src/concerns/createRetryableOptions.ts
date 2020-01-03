@@ -16,7 +16,6 @@ export type RetryableOptions = {
 export function createRetryableOptions(
   hostsCache: Cache,
   statelessHosts: readonly StatelessHost[]
-  // eslint-disable-next-line functional/prefer-readonly-type
 ): Readonly<Promise<RetryableOptions>> {
   return Promise.all(
     statelessHosts.map(statelessHost => {

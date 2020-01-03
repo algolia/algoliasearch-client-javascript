@@ -113,7 +113,7 @@ describe('status code handling', () => {
 });
 
 describe('timeout handling', () => {
-  it('connection timeouts if response dont appears before the timeout with the given 1 seconds connection timeout', async () => {
+  it('connection timeouts with the given 1 seconds connection timeout', async () => {
     const before = Date.now();
     const response = await requester.send({
       ...timeoutRequest,
@@ -127,7 +127,7 @@ describe('timeout handling', () => {
     expect(now - before).toBeLessThan(1200);
   });
 
-  it('connection timeouts if response dont appears before the timeout with the given 2 seconds connection timeout', async () => {
+  it('conection timeouts with the given 2 seconds connection timeout', async () => {
     const before = Date.now();
     const response = await requester.send({
       ...timeoutRequest,

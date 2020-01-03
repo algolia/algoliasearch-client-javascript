@@ -2,3 +2,4 @@
 playground/**
 **/dist/**
 specs/**
+coverage/**

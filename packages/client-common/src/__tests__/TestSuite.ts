@@ -108,15 +108,20 @@ export class TestSuite {
   }
 
   private ensureEnvironmentVariables(): void {
-    if (
-      process.env.ALGOLIA_APPLICATION_ID_1 === undefined ||
-      process.env.ALGOLIA_ADMIN_KEY_1 === undefined ||
-      process.env.ALGOLIA_APPLICATION_ID_2 === undefined ||
-      process.env.ALGOLIA_ADMIN_KEY_2 === undefined
-    ) {
-      throw new Error(
-        'You must setup `ALGOLIA_APPLICATION_ID_1`, `ALGOLIA_ADMIN_KEY_1`, `ALGOLIA_APPLICATION_ID_2` and `ALGOLIA_ADMIN_KEY_2`'
-      );
-    }
+    const envs = [
+      'ALGOLIA_APPLICATION_ID_1',
+      'ALGOLIA_APPLICATION_ID_2',
+      'ALGOLIA_ADMIN_KEY_1',
+      'ALGOLIA_ADMIN_KEY_2',
+      'ALGOLIA_APPLICATION_ID_MCM',
+      'ALGOLIA_ADMIN_KEY_MCM',
+      'ALGOLIA_SEARCH_KEY_1',
+    ];
+
+    envs.forEach(env => {
+      if (process.env[env] === undefined) {
+        throw new Error(`Missing '${env}' environment variable.`);
+      }
+    });
   }
 }

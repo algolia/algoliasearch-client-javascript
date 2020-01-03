@@ -1,4 +1,4 @@
-/* eslint-disable no-console, import/no-commonjs, functional/no-try-statement, functional/immutable-data*/
+/* eslint-disable no-console, import/no-commonjs, functional/immutable-data*/
 
 const fs = require('fs-extra');
 const path = require('path');

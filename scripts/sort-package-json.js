@@ -1,4 +1,4 @@
-/* eslint-disable no-console, import/no-commonjs*/
+/* eslint-disable import/no-commonjs*/
 
 const execa = require('execa');
 const targets = require('./packages');

@@ -80,7 +80,7 @@ export function retryableRequest<TResponse>(
          * timeouts so we can increase the timeout later.
          */
         if (response.isTimedOut) {
-          timeoutsCount++; // eslint-disable-line no-param-reassign
+          timeoutsCount++;
         }
 
         return Promise.all([

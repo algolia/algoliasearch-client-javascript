@@ -1,4 +1,4 @@
-/* eslint-disable functional/immutable-data, functional/no-let, no-param-reassign */
+/* eslint-disable functional/immutable-data, functional/no-let */
 
 import alias from '@rollup/plugin-alias';
 import json from '@rollup/plugin-json';

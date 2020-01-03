@@ -12,8 +12,6 @@ const drivers = [createNullCache, createInMemoryCache];
 const createBrowserLocalStorageCacheFunction = () =>
   createBrowserLocalStorageCache({ key: version });
 
-// @ts-ignore
-// eslint-disable-next-line no-undef
 if (testing.isBrowser()) {
   drivers.push(createBrowserLocalStorageCacheFunction);
 }

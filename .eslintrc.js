@@ -9,6 +9,7 @@ module.exports = {
     "plugin:promise/recommended"
   ],
   rules: {
+    "eslint-comments/disable-enable-pair": ["error", { allowWholeFile: true }],
     "simple-import-sort/sort": "error",
     "max-len": [1, 120, 2, { ignoreComments: true }],
     "prettier/prettier": [
@@ -57,7 +58,10 @@ module.exports = {
           ["@algolia/client-analytics", "./packages/client-analytics/src"],
           ["@algolia/client-common", "./packages/client-common/src"],
           ["@algolia/client-search", "./packages/client-search/src"],
-          ["@algolia/client-recommendation", "./packages/client-recommendation/src"],
+          [
+            "@algolia/client-recommendation",
+            "./packages/client-recommendation/src"
+          ],
           ["@algolia/logger-common", "./packages/logger-common/src"],
           ["@algolia/logger-console", "./packages/logger-console/src"],
           [

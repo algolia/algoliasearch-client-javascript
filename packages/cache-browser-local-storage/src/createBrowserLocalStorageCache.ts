@@ -3,8 +3,6 @@ import { Cache, CacheEvents } from '@algolia/cache-common';
 import { BrowserLocalStorageOptions } from '.';
 
 export function createBrowserLocalStorageCache(options: BrowserLocalStorageOptions): Cache {
-  /* eslint-disable functional/immutable-data */
-
   const storage = options.localStorage || window.localStorage;
   const namespaceKey = `algoliasearch-client-js-${options.key}`;
 
@@ -38,6 +36,7 @@ export function createBrowserLocalStorageCache(options: BrowserLocalStorageOptio
       return Promise.resolve().then(() => {
         const namespace = getNamespace();
 
+        // eslint-disable-next-line functional/immutable-data
         namespace[JSON.stringify(key)] = value;
 
         storage.setItem(namespaceKey, JSON.stringify(namespace));
@@ -50,6 +49,7 @@ export function createBrowserLocalStorageCache(options: BrowserLocalStorageOptio
       return Promise.resolve().then(() => {
         const namespace = getNamespace();
 
+        // eslint-disable-next-line functional/immutable-data
         delete namespace[JSON.stringify(key)];
 
         storage.setItem(namespaceKey, JSON.stringify(namespace));
