@@ -2,21 +2,29 @@ import { createWaitablePromise, encode, WaitablePromise } from '@algolia/client-
 import { MethodEnum } from '@algolia/requester-common';
 import { RequestOptions } from '@algolia/transporter';
 
-import { IndexOperationResponse, ReplaceAllObjectsOptions, SearchIndex } from '../..';
-import { saveObjects, waitTask } from '.';
+import {
+  ChunkedBatchResponse,
+  ChunkOptions,
+  IndexOperationResponse,
+  ReplaceAllObjectsOptions,
+  saveObjects,
+  SaveObjectsOptions,
+  SearchIndex,
+  waitTask,
+} from '../..';
 
 export const replaceAllObjects = (base: SearchIndex) => {
   return (
     objects: ReadonlyArray<Readonly<Record<string, any>>>,
-    requestOptions?: ReplaceAllObjectsOptions & RequestOptions
-  ): Readonly<WaitablePromise<void>> => {
-    const { safe, ...options } = requestOptions || {};
+    requestOptions?: ReplaceAllObjectsOptions & ChunkOptions & SaveObjectsOptions & RequestOptions
+  ): Readonly<WaitablePromise<ChunkedBatchResponse>> => {
+    const { safe, autoGenerateObjectIDIfNotExist, batchSize, ...options } = requestOptions || {};
 
     const operation = (
       from: string,
       to: string,
       type: string,
-      operatioRequestOptions?: RequestOptions
+      operationRequestOptions?: RequestOptions
     ): Readonly<WaitablePromise<IndexOperationResponse>> => {
       return createWaitablePromise<IndexOperationResponse>(
         base.transporter.write(
@@ -28,7 +36,7 @@ export const replaceAllObjects = (base: SearchIndex) => {
               destination: to,
             },
           },
-          operatioRequestOptions
+          operationRequestOptions
         ),
         (response, waitRequestOptions) => waitTask(base)(response.taskID, waitRequestOptions)
       );
@@ -46,8 +54,13 @@ export const replaceAllObjects = (base: SearchIndex) => {
       indexName: temporaryIndexName,
     });
 
+    // @ts-ignore
     // eslint-disable-next-line prefer-const, functional/no-let, functional/prefer-readonly-type
-    let responses: Array<Readonly<WaitablePromise<any>>> = [];
+    let responses: [
+      WaitablePromise<IndexOperationResponse>,
+      WaitablePromise<ChunkedBatchResponse>,
+      WaitablePromise<IndexOperationResponse>
+    ] = [];
 
     const copyWaitablePromise = operation(base.indexName, temporaryIndexName, 'copy', {
       ...options,
@@ -57,9 +70,16 @@ export const replaceAllObjects = (base: SearchIndex) => {
     // eslint-disable-next-line functional/immutable-data
     responses.push(copyWaitablePromise);
 
-    const result = (safe ? copyWaitablePromise.wait(options) : copyWaitablePromise)
+    const result: Promise<ChunkedBatchResponse> = (safe
+      ? copyWaitablePromise.wait(options)
+      : copyWaitablePromise
+    )
       .then(() => {
-        const saveObjectsWaitablePromise = saveObjectsInTemporary(objects, options);
+        const saveObjectsWaitablePromise = saveObjectsInTemporary(objects, {
+          ...options,
+          autoGenerateObjectIDIfNotExist,
+          batchSize,
+        });
 
         // eslint-disable-next-line functional/immutable-data
         responses.push(saveObjectsWaitablePromise);
@@ -74,10 +94,18 @@ export const replaceAllObjects = (base: SearchIndex) => {
 
         return safe ? moveWaitablePromise.wait(options) : moveWaitablePromise;
       })
-      .then(() => Promise.resolve());
+      .then(() => Promise.all(responses))
+      .then(([copyResponse, saveObjectsResponse, moveResponse]) => {
+        return {
+          objectIDs: saveObjectsResponse.objectIDs,
+          taskIDs: [copyResponse.taskID, ...saveObjectsResponse.taskIDs, moveResponse.taskID],
+        };
+      });
 
-    return createWaitablePromise<void>(result, (_, waitRequestOptions) => {
-      return Promise.all(responses.map(response => response.wait(waitRequestOptions)));
+    return createWaitablePromise(result, (_, waitRequestOptions) => {
+      return Promise.all(
+        responses.map(response => response.wait(waitRequestOptions) as WaitablePromise<any>)
+      );
     });
   };
 };

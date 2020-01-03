@@ -6,7 +6,6 @@ export function createMissingObjectIDError(): Error {
       '(like a primary key) to be valid. ' +
       'Algolia is also able to generate objectIDs ' +
       "automatically but *it's not recommended*. " +
-      'To do it, use `saveObjects(objects, ' +
-      "{'autoGenerateObjectIDIfNotExist': true})`.",
+      "To do it, use the `{'autoGenerateObjectIDIfNotExist': true}` option.",
   };
 }

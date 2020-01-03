@@ -428,8 +428,8 @@ export type SearchIndex = BaseSearchIndex & {
   ) => Readonly<WaitablePromise<DeleteResponse>>;
   readonly replaceAllObjects: (
     objects: ReadonlyArray<Readonly<Record<string, any>>>,
-    requestOptions?: ReplaceAllObjectsOptions & RequestOptions
-  ) => Readonly<WaitablePromise<void>>;
+    requestOptions?: ReplaceAllObjectsOptions & ChunkOptions & SaveObjectsOptions & RequestOptions
+  ) => Readonly<WaitablePromise<ChunkedBatchResponse>>;
   readonly replaceAllSynonyms: (
     synonyms: readonly Synonym[],
     requestOptions?: RequestOptions &
