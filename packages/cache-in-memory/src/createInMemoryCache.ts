@@ -3,8 +3,7 @@ import { Cache, CacheEvents } from '@algolia/cache-common';
 import { InMemoryCacheOptions } from '.';
 
 export function createInMemoryCache(options: InMemoryCacheOptions = { serializable: true }): Cache {
-  // eslint-disable-next-line functional/prefer-readonly-type
-  const cache: { [key: string]: any } = {};
+  const cache: Record<string, any> = {};
 
   return {
     get<TValue>(

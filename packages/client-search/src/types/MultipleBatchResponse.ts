@@ -7,5 +7,5 @@ export type MultipleBatchResponse = {
   /**
    * The operation task id. May be used to perform a wait task.
    */
-  readonly taskID: { readonly [key: string]: number };
+  readonly taskID: Readonly<Record<string, number>>;
 };

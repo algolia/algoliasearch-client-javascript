@@ -1,4 +1,4 @@
-export const MethodEnum: { readonly [key: string]: MethodType } = {
+export const MethodEnum: Readonly<Record<string, MethodType>> = {
   Delete: 'DELETE',
   Get: 'GET',
   Post: 'POST',

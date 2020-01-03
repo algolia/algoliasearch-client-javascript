@@ -5,7 +5,7 @@ import { Request, RequestOptions, StatelessHost } from '.';
 export function serializeUrl(
   host: StatelessHost,
   path: string,
-  queryParameters: { readonly [key: string]: string }
+  queryParameters: Readonly<Record<string, string>>
 ): string {
   const queryParametersAsString = serializeQueryParameters(queryParameters);
   // eslint-disable-next-line functional/no-let
@@ -18,7 +18,7 @@ export function serializeUrl(
   return url;
 }
 
-export function serializeQueryParameters(parameters: { readonly [key: string]: any }): string {
+export function serializeQueryParameters(parameters: Readonly<Record<string, any>>): string {
   const isObjectOrArray = (value: any): boolean =>
     Object.prototype.toString.call(value) === '[object Object]' ||
     Object.prototype.toString.call(value) === '[object Array]';

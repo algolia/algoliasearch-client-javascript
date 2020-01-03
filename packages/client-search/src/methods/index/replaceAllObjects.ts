@@ -7,7 +7,7 @@ import { saveObjects, waitTask } from '.';
 
 export const replaceAllObjects = (base: SearchIndex) => {
   return (
-    objects: ReadonlyArray<{ readonly [key: string]: any }>,
+    objects: ReadonlyArray<Readonly<Record<string, any>>>,
     requestOptions?: ReplaceAllObjectsOptions & RequestOptions
   ): Readonly<WaitablePromise<void>> => {
     const { safe, ...options } = requestOptions || {};

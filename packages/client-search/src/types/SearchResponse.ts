@@ -12,15 +12,18 @@ export type SearchResponse<TObject = {}> = {
   readonly processingTimeMS: number;
   readonly exhaustiveNbHits: boolean;
   readonly exhaustiveFacetsCount?: boolean;
-  readonly facets?: { readonly [key: string]: { readonly [key: string]: number } };
-  readonly facetsStats?: {
-    readonly [key: string]: {
-      readonly min: number;
-      readonly max: number;
-      readonly avg: number;
-      readonly sum: number;
-    };
-  };
+  readonly facets?: Readonly<Record<string, Readonly<Record<string, number>>>>;
+  readonly facetsStats?: Readonly<
+    Record<
+      string,
+      {
+        readonly min: number;
+        readonly max: number;
+        readonly avg: number;
+        readonly sum: number;
+      }
+    >
+  >;
   readonly query: string;
   readonly queryAfterRemoval?: string;
   readonly params: string;
@@ -34,5 +37,5 @@ export type SearchResponse<TObject = {}> = {
   readonly abTestVariantID?: number;
   readonly parsedQuery?: string;
   readonly userData?: any;
-  readonly appliedRules?: ReadonlyArray<{ readonly [key: string]: any }>;
+  readonly appliedRules?: ReadonlyArray<Readonly<Record<string, any>>>;
 };

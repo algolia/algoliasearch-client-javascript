@@ -1,4 +1,4 @@
-export const AuthMode: { readonly [key: string]: AuthModeType } = {
+export const AuthMode: Readonly<Record<string, AuthModeType>> = {
   /**
    * If auth credentials should be in query parameters.
    */

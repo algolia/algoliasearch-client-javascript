@@ -4,7 +4,7 @@ export type Request = {
   /**
    * The headers of the request.
    */
-  readonly headers: { readonly [key: string]: string };
+  readonly headers: Readonly<Record<string, string>>;
 
   /**
    * The method of the request. `GET`, etc.

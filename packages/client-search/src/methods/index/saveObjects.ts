@@ -13,7 +13,7 @@ import {
 
 export const saveObjects = (base: SearchIndex) => {
   return (
-    objects: ReadonlyArray<{ readonly [key: string]: any }>,
+    objects: ReadonlyArray<Readonly<Record<string, any>>>,
     requestOptions?: RequestOptions & ChunkOptions & SaveObjectsOptions
   ): Readonly<WaitablePromise<ChunkedBatchResponse>> => {
     const { autoGenerateObjectIDIfNotExist, ...options } = requestOptions || {};

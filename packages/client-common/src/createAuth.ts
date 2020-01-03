@@ -7,11 +7,11 @@ export function createAuth(authMode: AuthModeType, appId: string, apiKey: string
   };
 
   return {
-    headers(): { readonly [key: string]: string } {
+    headers(): Readonly<Record<string, string>> {
       return authMode === AuthMode.WithinHeaders ? credentials : {};
     },
 
-    queryParameters(): { readonly [key: string]: string } {
+    queryParameters(): Readonly<Record<string, string>> {
       return authMode === AuthMode.WithinQueryParameters ? credentials : {};
     },
   };

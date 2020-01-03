@@ -12,7 +12,7 @@ import {
 
 export const saveObject = (base: SearchIndex) => {
   return (
-    object: Record<string, any>,
+    object: Readonly<Record<string, any>>,
     requestOptions?: RequestOptions & ChunkOptions & SaveObjectsOptions
   ): Readonly<WaitablePromise<SaveObjectResponse>> => {
     return createWaitablePromise<SaveObjectResponse>(

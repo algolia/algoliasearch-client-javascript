@@ -355,11 +355,11 @@ export type SearchIndex = BaseSearchIndex & {
     requestOptions?: RequestOptions & GetObjectsOptions
   ) => Readonly<Promise<GetObjectsResponse<TObject>>>;
   readonly saveObject: (
-    object: Record<string, any>,
+    object: Readonly<Record<string, any>>,
     requestOptions?: RequestOptions & ChunkOptions & SaveObjectsOptions
   ) => Readonly<WaitablePromise<SaveObjectResponse>>;
   readonly saveObjects: (
-    objects: ReadonlyArray<Record<string, any>>,
+    objects: ReadonlyArray<Readonly<Record<string, any>>>,
     requestOptions?: RequestOptions & ChunkOptions & SaveObjectsOptions
   ) => Readonly<WaitablePromise<ChunkedBatchResponse>>;
   readonly waitTask: (taskID: number, requestOptions?: RequestOptions) => Readonly<Promise<void>>;
@@ -427,7 +427,7 @@ export type SearchIndex = BaseSearchIndex & {
     requestOptions?: ClearSynonymsOptions & RequestOptions
   ) => Readonly<WaitablePromise<DeleteResponse>>;
   readonly replaceAllObjects: (
-    objects: ReadonlyArray<{ readonly [key: string]: any }>,
+    objects: ReadonlyArray<Readonly<Record<string, any>>>,
     requestOptions?: ReplaceAllObjectsOptions & RequestOptions
   ) => Readonly<WaitablePromise<void>>;
   readonly replaceAllSynonyms: (

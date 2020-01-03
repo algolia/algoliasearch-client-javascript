@@ -12,15 +12,15 @@ export type MappedRequestOptions = {
   /**
    * The headers of the request.
    */
-  readonly headers: { [key: string]: string }; // eslint-disable-line functional/prefer-readonly-type
+  readonly headers: Record<string, string>;
 
   /**
    * The query parameters of the request.
    */
-  readonly queryParameters: { [key: string]: any }; // eslint-disable-line functional/prefer-readonly-type
+  readonly queryParameters: Record<string, any>;
 
   /**
    * The data to be transfered to the server.
    */
-  readonly data?: { [key: string]: string }; // eslint-disable-line functional/prefer-readonly-type
+  readonly data?: Record<string, string>;
 };

@@ -1,4 +1,4 @@
-export const StrategyEnum: { readonly [key: string]: StrategyType } = {
+export const StrategyEnum: Readonly<Record<string, StrategyType>> = {
   None: 'none',
   StopIfEnoughMatches: 'stopIfEnoughMatches',
 };

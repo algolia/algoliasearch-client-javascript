@@ -1,6 +1,6 @@
 import { StatelessHost } from '.';
 
-export const HostStatusEnum: { readonly [key: string]: HostStatusType } = {
+export const HostStatusEnum: Readonly<Record<string, HostStatusType>> = {
   Up: 1,
   Down: 2,
   Timeouted: 3,

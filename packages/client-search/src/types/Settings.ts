@@ -261,9 +261,7 @@ export type Settings = {
   /**
    * Specify on which attributes in your index Algolia should apply word-splitting (“decompounding”)
    */
-  readonly decompoundedAttributes?: {
-    readonly [key: string]: readonly string[];
-  };
+  readonly decompoundedAttributes?: Readonly<Record<string, readonly string[]>>;
 
   /**
    * Characters that should not be automatically normalized by the search engine.
@@ -274,7 +272,7 @@ export type Settings = {
   /**
    * Overrides Algolia's default normalization.
    */
-  readonly customNormalization?: { readonly [key: string]: { readonly [key: string]: string } };
+  readonly customNormalization?: Readonly<Record<string, Readonly<Record<string, string>>>>;
 
   /**
    * Custom userData that could be added to the Settings.

@@ -1,1 +1,1 @@
-export type Headers = { readonly [key: string]: string };
+export type Headers = Readonly<Record<string, string>>;

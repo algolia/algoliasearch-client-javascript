@@ -6,8 +6,7 @@ export function createBrowserLocalStorageCache(options: BrowserLocalStorageOptio
   const storage = options.localStorage || window.localStorage;
   const namespaceKey = `algoliasearch-client-js-${options.key}`;
 
-  // eslint-disable-next-line functional/prefer-readonly-type
-  const getNamespace = <TValue>(): { [key: string]: TValue } => {
+  const getNamespace = <TValue>(): Record<string, TValue> => {
     return JSON.parse(storage.getItem(namespaceKey) || '{}');
   };
 

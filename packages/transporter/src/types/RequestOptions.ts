@@ -16,23 +16,19 @@ export type RequestOptions = {
    * Custom headers for the request. This headers are
    * going to be merged the transporter headers.
    */
-  readonly headers?: { readonly [key: string]: string };
+  readonly headers?: Readonly<Record<string, string>>;
 
   /**
    * Custom query parameters for the request. This query parameters are
    * going to be merged the transporter query parameters.
    */
-  readonly queryParameters?: {
-    [key: string]: any; // eslint-disable-line functional/prefer-readonly-type
-  };
+  readonly queryParameters?: Record<string, any>;
 
   /**
    * Custom data for the request. This data are
    * going to be merged the transporter data.
    */
-  readonly data?: {
-    [key: string]: any; // eslint-disable-line functional/prefer-readonly-type
-  };
+  readonly data?: Record<string, any>;
 
   /**
    * Additional request body values. It's only taken in

@@ -96,7 +96,7 @@ export function createFixtures() {
     },
 
     request(options: any = {}): Request {
-      const headers: { readonly [key: string]: string } = {
+      const headers: Readonly<Record<string, string>> = {
         'X-Default-Header': 'Default value',
       };
 

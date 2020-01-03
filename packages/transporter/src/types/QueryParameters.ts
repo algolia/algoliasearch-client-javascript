@@ -1,1 +1,1 @@
-export type QueryParameters = { readonly [key: string]: string };
+export type QueryParameters = Readonly<Record<string, string>>;

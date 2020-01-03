@@ -1,4 +1,4 @@
-export const SynonymEnum: { readonly [key: string]: SynonymType } = {
+export const SynonymEnum: Readonly<Record<string, SynonymType>> = {
   Synonym: 'synonym',
   OneWaySynonym: 'oneWaySynonym',
   AltCorrection1: 'altCorrection1',

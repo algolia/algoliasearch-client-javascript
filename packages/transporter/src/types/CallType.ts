@@ -1,4 +1,4 @@
-export const CallEnum: { readonly [key: string]: CallType } = {
+export const CallEnum: Readonly<Record<string, CallType>> = {
   /**
    * If the host is read only.
    */

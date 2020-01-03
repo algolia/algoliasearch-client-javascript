@@ -1,4 +1,4 @@
-export const ScopeEnum: { readonly [key: string]: ScopeType } = {
+export const ScopeEnum: Readonly<Record<string, ScopeType>> = {
   Settings: 'settings',
   Synonyms: 'synonyms',
   Rules: 'rules',

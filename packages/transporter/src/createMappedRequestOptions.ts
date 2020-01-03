@@ -6,8 +6,7 @@ export function createMappedRequestOptions(
 ): MappedRequestOptions {
   const options: RequestOptions = requestOptions || {};
 
-  // eslint-disable-next-line functional/prefer-readonly-type
-  const data: { [key: string]: string } = options.data || {};
+  const data: Record<string, string> = options.data || {};
 
   Object.keys(options).forEach(key => {
     if (['timeout', 'headers', 'queryParameters', 'data', 'cacheable'].indexOf(key) === -1) {
