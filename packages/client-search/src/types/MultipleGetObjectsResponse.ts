@@ -1,6 +1,8 @@
-export type MultipleGetObjectsResponse<TResult> = {
+import { ObjectWithObjectID } from '.';
+
+export type MultipleGetObjectsResponse<TObject> = {
   /**
    * The list of objects.
    */
-  readonly results: readonly TResult[];
+  readonly results: ReadonlyArray<TObject & ObjectWithObjectID>;
 };

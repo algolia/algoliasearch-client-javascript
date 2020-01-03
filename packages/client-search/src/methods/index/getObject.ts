@@ -2,8 +2,7 @@ import { encode } from '@algolia/client-common';
 import { MethodEnum } from '@algolia/requester-common';
 import { createMappedRequestOptions, RequestOptions } from '@algolia/transporter';
 
-import { ObjectWithObjectID, SearchIndex } from '../..';
-import { GetObjectOptions } from '../../types/GetObjectOptions';
+import { GetObjectOptions, ObjectWithObjectID, SearchIndex } from '../..';
 
 export const getObject = (base: SearchIndex) => {
   return <TObject>(
