@@ -1,10 +1,8 @@
-import { SynonymType } from '.';
-
 export type SearchSynonymsOptions = {
   /**
    * The synonym type.
    */
-  readonly type?: SynonymType | readonly SynonymType[];
+  readonly type?: string;
 
   /**
    * Page to retrieve.
