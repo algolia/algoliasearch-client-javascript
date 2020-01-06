@@ -7,7 +7,7 @@ const testSuite = new TestSuite('api_keys');
 afterAll(() => testSuite.cleanUp());
 
 test(testSuite.testName, async () => {
-  const client = testSuite.makeSearchClient('ALGOLIA_APPLICATION_ID_MCM', 'ALGOLIA_ADMIN_KEY_MCM');
+  const client = testSuite.makeSearchClient();
   const apiKeyOptions = {
     description: 'A description',
     indexes: ['index'],
