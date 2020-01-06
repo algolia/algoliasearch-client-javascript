@@ -51,6 +51,7 @@ import {
   ClearSynonymsOptions,
   copyIndex,
   CopyIndexOptions,
+  copyRules,
   copySettings,
   copySynonyms,
   createSearchClient,
@@ -209,6 +210,7 @@ export default function algoliasearch(
       copyIndex,
       copySettings,
       copySynonyms,
+      copyRules,
       moveIndex,
       listIndices,
       getLogs,
@@ -494,6 +496,11 @@ export type SearchClient = BaseSearchClient & {
     requestOptions?: CopyIndexOptions & RequestOptions
   ) => Readonly<WaitablePromise<IndexOperationResponse>>;
   readonly copySettings: (
+    from: string,
+    to: string,
+    requestOptions?: RequestOptions
+  ) => Readonly<WaitablePromise<IndexOperationResponse>>;
+  readonly copyRules: (
     from: string,
     to: string,
     requestOptions?: RequestOptions

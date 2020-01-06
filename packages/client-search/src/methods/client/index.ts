@@ -6,6 +6,7 @@ export * from './addApiKey';
 export * from './assignUserID';
 export * from './assignUserIDs';
 export * from './copyIndex';
+export * from './copyRules';
 export * from './copySettings';
 export * from './copySynonyms';
 export * from './deleteApiKey';

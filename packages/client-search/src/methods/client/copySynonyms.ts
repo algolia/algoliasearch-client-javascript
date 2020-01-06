@@ -10,7 +10,7 @@ export const copySynonyms = (base: SearchClient) => {
     requestOptions?: RequestOptions
   ): Readonly<WaitablePromise<IndexOperationResponse>> => {
     return copyIndex(base)(from, to, {
-      ...(requestOptions === undefined ? {} : requestOptions),
+      ...requestOptions,
       scope: [ScopeEnum.Synonyms],
     });
   };

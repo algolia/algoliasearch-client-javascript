@@ -12,7 +12,7 @@ export const replaceAllSynonyms = (base: SearchIndex) => {
       Pick<SaveSynonymsOptions, Exclude<keyof SaveSynonymsOptions, 'replaceExistingSynonyms'>>
   ): Readonly<WaitablePromise<SaveSynonymsResponse>> => {
     return saveSynonyms(base)(synonyms, {
-      ...(requestOptions === undefined ? {} : requestOptions),
+      ...requestOptions,
       replaceExistingSynonyms: true,
     });
   };

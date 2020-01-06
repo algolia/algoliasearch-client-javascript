@@ -3,7 +3,7 @@ import { RequestOptions } from '@algolia/transporter';
 
 import { copyIndex, IndexOperationResponse, ScopeEnum, SearchClient } from '../..';
 
-export const copySettings = (base: SearchClient) => {
+export const copyRules = (base: SearchClient) => {
   return (
     from: string,
     to: string,
@@ -11,7 +11,7 @@ export const copySettings = (base: SearchClient) => {
   ): Readonly<WaitablePromise<IndexOperationResponse>> => {
     return copyIndex(base)(from, to, {
       ...requestOptions,
-      scope: [ScopeEnum.Settings],
+      scope: [ScopeEnum.Rules],
     });
   };
 };
