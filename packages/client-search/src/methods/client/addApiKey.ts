@@ -31,7 +31,7 @@ export const addApiKey = (base: SearchClient) => {
     const wait: Wait<AddApiKeyResponse> = (response, waitRequestOptions) => {
       return createRetryablePromise<GetApiKeyResponse>(retry => {
         return getApiKey(base)(response.key, waitRequestOptions).catch((apiError: ApiError) => {
-          if (apiError.status === 404) {
+          if (apiError.status !== 404) {
             throw apiError;
           }
 

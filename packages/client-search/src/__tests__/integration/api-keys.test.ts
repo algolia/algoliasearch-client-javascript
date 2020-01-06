@@ -25,6 +25,7 @@ test(testSuite.testName, async () => {
   const getApiKeyResponse = await client.getApiKey(addApiKeyResponse.key);
   const apiKeyOptionsWithoutValidity = Object.assign({}, apiKeyOptions);
   delete apiKeyOptionsWithoutValidity.validity;
+
   expect(getApiKeyResponse).toMatchObject(apiKeyOptionsWithoutValidity);
   expect(getApiKeyResponse.value).toEqual(addApiKeyResponse.key);
   expect(getApiKeyResponse.acl).toEqual(['search']);
@@ -50,14 +51,14 @@ test(testSuite.testName, async () => {
     queryParameters: 'typoTolerance=min',
   });
 
-  const deleteApiKeyResponse = await client.deleteApiKey(addApiKeyResponse.key);
+  const deleteApiKeyResponse = await client.deleteApiKey(addApiKeyResponse.key).wait();
   expect(Object.keys(deleteApiKeyResponse)).toEqual(['deletedAt']);
 
   await expect(client.getApiKey(addApiKeyResponse.key)).rejects.toMatchObject(
     createApiError('Key does not exist', 404)
   );
 
-  const restoreApiKeyResponse = await client.restoreApiKey(addApiKeyResponse.key);
+  const restoreApiKeyResponse = await client.restoreApiKey(addApiKeyResponse.key).wait();
   expect(Object.keys(restoreApiKeyResponse)).toEqual(['createdAt']);
 
   const restoredGetApiKeyResponse = await client.getApiKey(addApiKeyResponse.key);
@@ -66,6 +67,6 @@ test(testSuite.testName, async () => {
     queryParameters: 'typoTolerance=min',
   });
 
-  const deleteAgainApiKeyResponse = await client.deleteApiKey(addApiKeyResponse.key);
+  const deleteAgainApiKeyResponse = await client.deleteApiKey(addApiKeyResponse.key).wait();
   expect(Object.keys(deleteAgainApiKeyResponse)).toEqual(['deletedAt']);
 });

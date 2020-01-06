@@ -8,7 +8,7 @@ import {
 import { MethodEnum } from '@algolia/requester-common';
 import { ApiError, RequestOptions } from '@algolia/transporter';
 
-import { DeleteApiKeyResponse, getApiKey, GetApiKeyResponse, SearchClient } from '../..';
+import { DeleteApiKeyResponse, getApiKey, SearchClient } from '../..';
 
 export const deleteApiKey = (base: SearchClient) => {
   return (
@@ -16,14 +16,14 @@ export const deleteApiKey = (base: SearchClient) => {
     requestOptions?: RequestOptions
   ): Readonly<WaitablePromise<DeleteApiKeyResponse>> => {
     const wait: Wait<DeleteApiKeyResponse> = (_, waitRequestOptions) => {
-      return createRetryablePromise<GetApiKeyResponse>(retry => {
+      return createRetryablePromise(retry => {
         return getApiKey(base)(apiKey, waitRequestOptions)
+          .then(retry)
           .catch((apiError: ApiError) => {
             if (apiError.status !== 404) {
               throw apiError;
             }
-          })
-          .then(retry);
+          });
       });
     };
 
