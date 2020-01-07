@@ -16,7 +16,7 @@ import {
   stopABTest,
   StopABTestResponse,
 } from '@algolia/client-analytics';
-import { version, WaitablePromise } from '@algolia/client-common';
+import { destroy, version, WaitablePromise } from '@algolia/client-common';
 import {
   createRecommendationClient,
   getPersonalizationStrategy,
@@ -166,6 +166,7 @@ import {
   waitTask,
 } from '@algolia/client-search';
 import { createNullLogger } from '@algolia/logger-common';
+import { Destroyable } from '@algolia/requester-common';
 import { createNodeHttpRequester } from '@algolia/requester-node-http';
 import { createUserAgent, RequestOptions } from '@algolia/transporter';
 
@@ -228,6 +229,7 @@ export default function algoliasearch(
       removeUserID,
       generateSecuredApiKey,
       getSecuredApiKeyRemainingValidity,
+      destroy,
       initIndex: base => (indexName: string): SearchIndex => {
         return initIndex(base)(indexName, {
           methods: {
@@ -586,6 +588,6 @@ export type SearchClient = BaseSearchClient & {
   readonly getSecuredApiKeyRemainingValidity: (securedApiKey: string) => number;
   readonly initAnalytics: (options?: InitAnalyticsOptions) => AnalyticsClient;
   readonly initRecommendation: (options?: InitRecommendationOptions) => RecommendationClient;
-};
+} & Destroyable;
 
 export * from '../types';

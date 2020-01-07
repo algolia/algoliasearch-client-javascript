@@ -7,4 +7,5 @@ export * from './createRetryablePromise';
 export * from './createWaitablePromise';
 export * from './helpers';
 export * from './version';
+export * from './methods/index';
 export * from './types/index';

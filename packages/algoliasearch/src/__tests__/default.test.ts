@@ -137,4 +137,10 @@ describe('default preset', () => {
     expect(recommendation.transporter.hostsCache).not.toBe(client.transporter.hostsCache);
     expect(recommendation.transporter.userAgent).toBe(client.transporter.userAgent);
   });
+
+  it('can be destroyed', () => {
+    if (!testing.isBrowser()) {
+      expect(client).toHaveProperty('destroy');
+    }
+  });
 });
