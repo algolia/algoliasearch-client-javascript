@@ -1,4 +1,3 @@
-import { createNullCache } from '@algolia/cache-common';
 import {
   addMethods,
   AuthMode,
@@ -30,8 +29,6 @@ export const createAnalyticsClient: CreateClient<
       ...auth.queryParameters(),
       ...options.queryParameters,
     },
-    // No retry strategy on recommendation client
-    hostsCache: createNullCache(),
   });
 
   const appId = options.appId;
