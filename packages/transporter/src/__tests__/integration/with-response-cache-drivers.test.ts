@@ -127,14 +127,16 @@ describe('response cache integration with cache drivers', () => {
       await expect(transporter.read(transporterRequest)).resolves.toMatchObject({ hits: [] });
       await expect(transporter.read(transporterRequest)).resolves.toMatchObject({ hits: [] });
 
-      transporter.addHeaders({
+      Object.assign(transporter.headers, {
         'new header': 'new header value',
       });
+
       await expect(transporter.read(transporterRequest)).resolves.toMatchObject({ hits: [] });
 
-      transporter.addQueryParameters({
+      Object.assign(transporter.queryParameters, {
         'new query parameter': 'new query parameter value',
       });
+
       await expect(transporter.read(transporterRequest)).resolves.toMatchObject({ hits: [] });
       await expect(transporter.read(transporterRequest)).resolves.toMatchObject({ hits: [] });
 

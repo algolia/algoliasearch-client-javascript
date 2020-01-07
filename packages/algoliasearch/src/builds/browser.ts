@@ -168,39 +168,37 @@ import { createConsoleLogger } from '@algolia/logger-console';
 import { createBrowserXhrRequester } from '@algolia/requester-browser-xhr';
 import { createUserAgent, RequestOptions } from '@algolia/transporter';
 
-import { AlgoliaSearchOptions } from '../types';
+import { AlgoliaSearchOptions, InitAnalyticsOptions, InitRecommendationOptions } from '../types';
 
 export default function algoliasearch(
   appId: string,
   apiKey: string,
   options?: AlgoliaSearchOptions
 ): SearchClient {
-  const clientOptions = Object.assign(
-    {
-      appId,
-      apiKey,
-      timeouts: {
-        connect: 1,
-        read: 2,
-        write: 30,
-      },
-      requester: createBrowserXhrRequester(),
-      logger: createConsoleLogger(LogLevelEnum.Error),
-      responsesCache: createInMemoryCache(),
-      requestsCache: createInMemoryCache({ serializable: false }),
-      hostsCache: createFallbackableCache({
-        caches: [
-          createBrowserLocalStorageCache({ key: `${version}-${appId}` }),
-          createInMemoryCache(),
-        ],
-      }),
-      userAgent: createUserAgent(version).add({ segment: 'Browser' }),
+  const commonOptions = {
+    appId,
+    apiKey,
+    timeouts: {
+      connect: 1,
+      read: 2,
+      write: 30,
     },
-    options
-  );
+    requester: createBrowserXhrRequester(),
+    logger: createConsoleLogger(LogLevelEnum.Error),
+    responsesCache: createInMemoryCache(),
+    requestsCache: createInMemoryCache({ serializable: false }),
+    hostsCache: createFallbackableCache({
+      caches: [
+        createBrowserLocalStorageCache({ key: `${version}-${appId}` }),
+        createInMemoryCache(),
+      ],
+    }),
+    userAgent: createUserAgent(version).add({ segment: 'Browser' }),
+  };
 
   return createSearchClient({
-    ...clientOptions,
+    ...commonOptions,
+    ...options,
     methods: {
       search: multipleQueries,
       searchForFacetValues: multipleSearchForFacetValues,
@@ -273,10 +271,10 @@ export default function algoliasearch(
           },
         });
       },
-      initAnalytics: () => (region?: string): AnalyticsClient => {
+      initAnalytics: () => (clientOptions?: InitAnalyticsOptions): AnalyticsClient => {
         return createAnalyticsClient({
+          ...commonOptions,
           ...clientOptions,
-          region,
           methods: {
             addABTest,
             getABTest,
@@ -286,10 +284,12 @@ export default function algoliasearch(
           },
         });
       },
-      initRecommendation: () => (region?: string): RecommendationClient => {
+      initRecommendation: () => (
+        clientOptions?: InitRecommendationOptions
+      ): RecommendationClient => {
         return createRecommendationClient({
+          ...commonOptions,
           ...clientOptions,
-          region,
           methods: {
             getPersonalizationStrategy,
             setPersonalizationStrategy,
@@ -578,8 +578,8 @@ export type SearchClient = BaseSearchClient & {
     userID: string,
     requestOptions?: RequestOptions
   ) => Readonly<Promise<RemoveUserIDResponse>>;
-  readonly initAnalytics: (region?: string) => AnalyticsClient;
-  readonly initRecommendation: (region?: string) => RecommendationClient;
+  readonly initAnalytics: (options?: InitAnalyticsOptions) => AnalyticsClient;
+  readonly initRecommendation: (options?: InitRecommendationOptions) => RecommendationClient;
 };
 
 export * from '../types';

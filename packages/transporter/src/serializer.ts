@@ -1,7 +1,7 @@
 import { encode } from '@algolia/client-common';
 import { MethodEnum } from '@algolia/requester-common';
 
-import { Request, RequestOptions, StatelessHost } from '.';
+import { Headers, Request, RequestOptions, StatelessHost, Transporter } from '.';
 
 export function serializeUrl(
   host: StatelessHost,
@@ -51,4 +51,25 @@ export function serializeData(
     : { ...request.data, ...requestOptions.data };
 
   return JSON.stringify(data);
+}
+
+export function serializeHeaders(
+  transporter: Transporter,
+  requestOptions: RequestOptions
+): Headers {
+  const headers: Headers = {
+    ...transporter.headers,
+    ...requestOptions.headers,
+  };
+  const serializedHeaders: Headers = {};
+
+  Object.keys(headers).forEach(header => {
+    const value = headers[header];
+
+    // @ts-ignore
+    // eslint-disable-next-line functional/immutable-data
+    serializedHeaders[header.toLowerCase()] = value;
+  });
+
+  return serializedHeaders;
 }

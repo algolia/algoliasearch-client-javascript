@@ -34,7 +34,6 @@ module.exports = {
         testEnvironment: 'jsdom',
         testPathIgnorePatterns: [
           'packages/requester-node-http/*',
-          'packages/algoliasearch/src/__tests__/node.test.ts',
           'packages/client-search/src/__tests__/integration/secured-api-keys.test.ts',
           'packages/client-search/src/__tests__/integration/mcm.test.ts',
         ],
@@ -54,8 +53,6 @@ module.exports = {
         testPathIgnorePatterns: [
           'packages/requester-browser-xhr/*',
           'packages/cache-browser-local-storage/*',
-          'packages/algoliasearch/src/__tests__/browser.test.ts',
-          'packages/algoliasearch/src/__tests__/browser-lite.test.ts',
           'packages/client-search/src/__tests__/integration/mcm.test.ts',
         ],
         globals: {

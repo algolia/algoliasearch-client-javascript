@@ -31,36 +31,34 @@ export default function algoliasearch(
   apiKey: string,
   options?: AlgoliaSearchOptions
 ): SearchClient {
-  const clientOptions = Object.assign(
-    {
-      appId,
-      apiKey,
-      timeouts: {
-        connect: 1,
-        read: 2,
-        write: 30,
-      },
-      requester: createBrowserXhrRequester(),
-      logger: createConsoleLogger(LogLevelEnum.Error),
-      responsesCache: createInMemoryCache(),
-      requestsCache: createInMemoryCache({ serializable: false }),
-      hostsCache: createFallbackableCache({
-        caches: [
-          createBrowserLocalStorageCache({ key: `${version}-${appId}` }),
-          createInMemoryCache(),
-        ],
-      }),
-      userAgent: createUserAgent(version).add({
-        segment: 'Browser',
-        version: 'lite',
-      }),
-      authMode: AuthMode.WithinQueryParameters,
+  const commonOptions = {
+    appId,
+    apiKey,
+    timeouts: {
+      connect: 1,
+      read: 2,
+      write: 30,
     },
-    options
-  );
+    requester: createBrowserXhrRequester(),
+    logger: createConsoleLogger(LogLevelEnum.Error),
+    responsesCache: createInMemoryCache(),
+    requestsCache: createInMemoryCache({ serializable: false }),
+    hostsCache: createFallbackableCache({
+      caches: [
+        createBrowserLocalStorageCache({ key: `${version}-${appId}` }),
+        createInMemoryCache(),
+      ],
+    }),
+    userAgent: createUserAgent(version).add({
+      segment: 'Browser',
+      version: 'lite',
+    }),
+    authMode: AuthMode.WithinQueryParameters,
+  };
 
   return createSearchClient({
-    ...clientOptions,
+    ...commonOptions,
+    ...options,
     methods: {
       search: multipleQueries,
       searchForFacetValues: multipleSearchForFacetValues,

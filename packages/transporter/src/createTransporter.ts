@@ -2,12 +2,8 @@ import {
   CallEnum,
   createMappedRequestOptions,
   createStatelessHost,
-  Headers,
-  HostOptions,
-  QueryParameters,
   Request,
   RequestOptions,
-  StatelessHost,
   Transporter,
   TransporterOptions,
 } from '.';
@@ -22,6 +18,9 @@ export function createTransporter(options: TransporterOptions): Transporter {
     responsesCache,
     timeouts,
     userAgent,
+    hosts,
+    queryParameters,
+    headers,
   } = options;
 
   const transporter: Transporter = {
@@ -32,23 +31,9 @@ export function createTransporter(options: TransporterOptions): Transporter {
     responsesCache,
     timeouts,
     userAgent,
-    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-    headers: {} as Headers,
-    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-    queryParameters: {} as QueryParameters,
-    hosts: [] as readonly StatelessHost[],
-    addHeaders(headers: Headers): void {
-      // eslint-disable-next-line functional/immutable-data
-      Object.assign(transporter.headers, headers);
-    },
-    addQueryParameters(queryParameters: QueryParameters): void {
-      // eslint-disable-next-line functional/immutable-data
-      Object.assign(transporter.queryParameters, queryParameters);
-    },
-    setHosts(values: readonly HostOptions[]): void {
-      // eslint-disable-next-line functional/immutable-data
-      transporter.hosts = values.map(hostOptions => createStatelessHost(hostOptions));
-    },
+    headers,
+    queryParameters,
+    hosts: hosts.map(host => createStatelessHost(host)),
     read<TResponse>(
       request: Request,
       requestOptions?: RequestOptions

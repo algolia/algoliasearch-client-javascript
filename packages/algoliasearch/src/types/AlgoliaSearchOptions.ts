@@ -1,14 +1,18 @@
 import { AnalyticsClientOptions } from '@algolia/client-analytics';
+import { ClientTransporterOptions } from '@algolia/client-common';
 import { RecommendationClientOptions } from '@algolia/client-recommendation';
 import { SearchClientOptions } from '@algolia/client-search';
-import { TransporterOptions } from '@algolia/transporter';
 
-type Options = SearchClientOptions &
-  AnalyticsClientOptions &
-  RecommendationClientOptions &
-  Partial<TransporterOptions>;
-
-export type AlgoliaSearchOptions = Pick<
-  Options,
-  Exclude<keyof Options, 'appId'> & Exclude<keyof Options, 'apiKey'>
+type WithoutCredentials<TClient> = Pick<
+  TClient,
+  Exclude<keyof TClient, 'appId'> & Exclude<keyof TClient, 'apiKey'>
 >;
+
+export type AlgoliaSearchOptions = Partial<ClientTransporterOptions> &
+  WithoutCredentials<SearchClientOptions>;
+
+export type InitAnalyticsOptions = Partial<ClientTransporterOptions> &
+  WithoutCredentials<AnalyticsClientOptions>;
+
+export type InitRecommendationOptions = Partial<ClientTransporterOptions> &
+  WithoutCredentials<RecommendationClientOptions>;

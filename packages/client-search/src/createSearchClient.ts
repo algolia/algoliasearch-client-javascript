@@ -1,16 +1,29 @@
-import { addMethods, AuthMode, createAuth, CreateClient, shuffle } from '@algolia/client-common';
-import { CallEnum, createTransporter, TransporterOptions } from '@algolia/transporter';
+import {
+  addMethods,
+  AuthMode,
+  ClientTransporterOptions,
+  createAuth,
+  CreateClient,
+  shuffle,
+} from '@algolia/client-common';
+import { CallEnum, createTransporter } from '@algolia/transporter';
 
 import { SearchClient, SearchClientOptions } from './types';
 
 export const createSearchClient: CreateClient<
   SearchClient,
-  SearchClientOptions & TransporterOptions
+  SearchClientOptions & ClientTransporterOptions
 > = options => {
   const appId = options.appId;
-  const transporter = createTransporter(options);
-  transporter.setHosts(
-    [
+
+  const auth = createAuth(
+    options.authMode !== undefined ? options.authMode : AuthMode.WithinHeaders,
+    appId,
+    options.apiKey
+  );
+
+  const transporter = createTransporter({
+    hosts: [
       { url: `${appId}-dsn.algolia.net`, accept: CallEnum.Read },
       { url: `${appId}.algolia.net`, accept: CallEnum.Write },
     ].concat(
@@ -19,21 +32,19 @@ export const createSearchClient: CreateClient<
         { url: `${appId}-2.algolianet.com`, accept: CallEnum.Any },
         { url: `${appId}-3.algolianet.com`, accept: CallEnum.Any },
       ])
-    )
-  );
+    ),
+    ...options,
+    headers: {
+      ...auth.headers(),
+      ...{ 'content-type': 'application/x-www-form-urlencoded' },
+      ...options.headers,
+    },
 
-  const auth = createAuth(
-    options.authMode !== undefined ? options.authMode : AuthMode.WithinHeaders,
-    appId,
-    options.apiKey
-  );
-
-  transporter.addHeaders({
-    ...auth.headers(),
-    ...{ 'content-type': 'application/x-www-form-urlencoded' },
+    queryParameters: {
+      ...auth.queryParameters(),
+      ...options.queryParameters,
+    },
   });
-
-  transporter.addQueryParameters(auth.queryParameters());
 
   const base = {
     transporter,

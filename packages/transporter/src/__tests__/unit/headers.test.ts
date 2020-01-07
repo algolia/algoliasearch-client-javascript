@@ -23,8 +23,8 @@ const transporterRequest = createFixtures().transporterRequest();
 
 describe('selection of headers', () => {
   it('allows add extra headers', async () => {
-    transporter.addHeaders({
-      'X-Algolia-Application-Id': 'foo',
+    Object.assign(transporter.headers, {
+      'X-Algolia-Signature': 'signature',
     });
 
     await transporter.write(transporterRequest);
@@ -34,8 +34,11 @@ describe('selection of headers', () => {
         deepEqual(
           createFixtures().writeRequest({
             headers: {
-              'X-Default-Header': 'Default value',
-              'X-Algolia-Application-Id': 'foo',
+              'x-algolia-api-key': 'apiKey',
+              'x-algolia-application-id': 'appId',
+              'content-type': 'application/x-www-form-urlencoded',
+              'x-default-header': 'Default value',
+              'x-algolia-signature': 'signature',
             },
           })
         )
@@ -55,8 +58,10 @@ describe('selection of headers', () => {
         deepEqual(
           createFixtures().readRequest({
             headers: {
-              'X-Algolia-Application-Id': 'foo',
-              'X-Default-Header': 'Default value',
+              'x-algolia-application-id': 'foo',
+              'x-default-header': 'Default value',
+              'x-algolia-api-key': 'apiKey',
+              'content-type': 'application/x-www-form-urlencoded',
             },
           })
         )
@@ -77,8 +82,10 @@ describe('selection of headers', () => {
         deepEqual(
           createFixtures().readRequest({
             headers: {
-              'X-Algolia-Application-Id': 'foo',
-              'X-Default-Header': 'My custom header',
+              'x-algolia-api-key': 'apiKey',
+              'x-algolia-application-id': 'foo',
+              'content-type': 'application/x-www-form-urlencoded',
+              'x-default-header': 'My custom header',
             },
           })
         )

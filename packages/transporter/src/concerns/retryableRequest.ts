@@ -9,6 +9,7 @@ import {
   MappedRequestOptions,
   Request,
   serializeData,
+  serializeHeaders,
   serializeUrl,
   StackFrame,
   StatelessHost,
@@ -29,7 +30,7 @@ export function retryableRequest<TResponse>(
    * First we prepare the payload that do not depend from hosts.
    */
   const data = serializeData(request, requestOptions);
-  const headers = { ...transporter.headers, ...requestOptions.headers };
+  const headers = serializeHeaders(transporter, requestOptions);
   const method = request.method;
 
   // On `GET`, the data is proxied to query parameters.

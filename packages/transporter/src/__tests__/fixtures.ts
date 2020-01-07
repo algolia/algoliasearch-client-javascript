@@ -35,15 +35,12 @@ export function createFixtures() {
     },
 
     transporter(requester: Requester, options: any = {}): Transporter {
-      const transporter = algoliasearch('appId', 'apiKey').transporter;
-
-      transporter.setHosts([
-        { url: 'read.com', accept: CallEnum.Read },
-        { url: 'write.com', accept: CallEnum.Write },
-        { url: 'read-and-write.com', accept: CallEnum.Any },
-      ]);
-
-      return Object.assign(transporter, {
+      return algoliasearch('appId', 'apiKey', {
+        hosts: [
+          { url: 'read.com', accept: CallEnum.Read },
+          { url: 'write.com', accept: CallEnum.Write },
+          { url: 'read-and-write.com', accept: CallEnum.Any },
+        ],
         requester,
         hostsCache: createInMemoryCache(),
         requestsCache: createNullCache(),
@@ -58,7 +55,7 @@ export function createFixtures() {
           connect: 1,
         },
         ...options,
-      });
+      }).transporter;
     },
 
     transporterRequest() {
@@ -97,7 +94,10 @@ export function createFixtures() {
 
     request(options: any = {}): Request {
       const headers: Readonly<Record<string, string>> = {
-        'X-Default-Header': 'Default value',
+        'x-algolia-api-key': 'apiKey',
+        'x-algolia-application-id': 'appId',
+        'content-type': 'application/x-www-form-urlencoded',
+        'x-default-header': 'Default value',
       };
 
       if (options.url !== undefined) {

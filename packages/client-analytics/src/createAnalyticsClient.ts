@@ -1,30 +1,40 @@
 import { createNullCache } from '@algolia/cache-common';
-import { addMethods, AuthMode, createAuth, CreateClient } from '@algolia/client-common';
-import { CallEnum, createTransporter, TransporterOptions } from '@algolia/transporter';
+import {
+  addMethods,
+  AuthMode,
+  ClientTransporterOptions,
+  createAuth,
+  CreateClient,
+} from '@algolia/client-common';
+import { CallEnum, createTransporter } from '@algolia/transporter';
 
 import { AnalyticsClient, AnalyticsClientOptions } from '.';
 
 export const createAnalyticsClient: CreateClient<
   AnalyticsClient,
-  AnalyticsClientOptions & TransporterOptions
+  AnalyticsClientOptions & ClientTransporterOptions
 > = options => {
   const region = options.region || 'us';
   const auth = createAuth(AuthMode.WithinHeaders, options.appId, options.apiKey);
 
   const transporter = createTransporter({
+    hosts: [{ url: `analytics.${region}.algolia.com`, accept: CallEnum.Any }],
     ...options,
+    headers: {
+      ...auth.headers(),
+      ...{ 'content-type': 'application/json' },
+      ...options.headers,
+    },
+
+    queryParameters: {
+      ...auth.queryParameters(),
+      ...options.queryParameters,
+    },
     // No retry strategy on recommendation client
     hostsCache: createNullCache(),
   });
 
   const appId = options.appId;
-
-  transporter.setHosts([{ url: `analytics.${region}.algolia.com`, accept: CallEnum.Any }]);
-  transporter.addHeaders({
-    ...auth.headers(),
-    ...{ 'content-type': 'application/json' },
-  });
-  transporter.addQueryParameters(auth.queryParameters());
 
   return addMethods({ appId, transporter }, options.methods);
 };

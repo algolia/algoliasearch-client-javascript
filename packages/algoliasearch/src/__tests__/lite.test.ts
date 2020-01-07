@@ -1,12 +1,12 @@
 import { createInMemoryCache } from '@algolia/cache-in-memory';
 import { version } from '@algolia/client-common';
-import { createUserAgent } from '@algolia/transporter';
+import { CallEnum, createStatelessHost, createUserAgent } from '@algolia/transporter';
 
 import algoliasearch from '../builds/browserLite';
 
 const client = algoliasearch('appId', 'apiKey');
 
-describe('algoliasearch for browser lite', () => {
+describe('lite preset', () => {
   it('sets default headers', () => {
     expect(client.transporter.headers).toEqual({
       'content-type': 'application/x-www-form-urlencoded',
@@ -39,6 +39,13 @@ describe('algoliasearch for browser lite', () => {
         read: 46,
         write: 47,
       },
+      queryParameters: {
+        queryParameter: 'bar',
+      },
+      headers: {
+        header: 'foo',
+      },
+      hosts: [{ accept: CallEnum.Any, url: 'foo.com' }],
     });
 
     expect(customClient.transporter.hostsCache).toBe(cache);
@@ -47,5 +54,17 @@ describe('algoliasearch for browser lite', () => {
     expect(customClient.transporter.timeouts.connect).toBe(45);
     expect(customClient.transporter.timeouts.read).toBe(46);
     expect(customClient.transporter.timeouts.write).toBe(47);
+    expect(customClient.transporter.queryParameters).toEqual({
+      'x-algolia-application-id': 'appId',
+      'x-algolia-api-key': 'apiKey',
+      queryParameter: 'bar',
+    });
+    expect(customClient.transporter.headers).toEqual({
+      'content-type': 'application/x-www-form-urlencoded',
+      header: 'foo',
+    });
+    expect(customClient.transporter.hosts).toEqual([
+      createStatelessHost({ accept: CallEnum.Any, url: 'foo.com' }),
+    ]);
   });
 });

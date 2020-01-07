@@ -2,7 +2,7 @@ import { Cache } from '@algolia/cache-common';
 import { Logger } from '@algolia/logger-common';
 import { Requester } from '@algolia/requester-common';
 
-import { Timeouts, UserAgent } from '..';
+import { Headers, HostOptions, QueryParameters, Timeouts, UserAgent } from '..';
 
 export type TransporterOptions = {
   /**
@@ -44,6 +44,25 @@ export type TransporterOptions = {
    * retry strategy.
    */
   readonly timeouts: Timeouts;
+
+  /**
+   * The hosts used by the requester.
+   */
+  readonly hosts: readonly HostOptions[];
+
+  /**
+   * The headers used by the requester. The transporter
+   * layer may add some extra headers during the request
+   * for the user agent, and others.
+   */
+  readonly headers: Headers;
+
+  /**
+   * The query parameters used by the requester. The transporter
+   * layer may add some extra headers during the request
+   * for the user agent, and others.
+   */
+  readonly queryParameters: QueryParameters;
 
   /**
    * The user agent used. Sent on query parameters.

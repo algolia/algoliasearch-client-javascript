@@ -1,7 +1,7 @@
 import { Requester } from '@algolia/requester-common';
 import { anything, deepEqual, spy, verify, when } from 'ts-mockito';
 
-import { serializeQueryParameters, Transporter } from '../..';
+import { createStatelessHost, serializeQueryParameters, Transporter } from '../..';
 import { CallEnum } from '../../types';
 import { createFakeRequester, createFixtures } from '../fixtures';
 
@@ -34,13 +34,14 @@ describe('serializer', () => {
 
   it('serializes url protocol', async () => {
     const transporterRequest = createFixtures().transporterRequest();
-    transporter.setHosts([
+
+    transporter.hosts = [
       {
         protocol: 'http',
         url: 'localhost.com',
         accept: CallEnum.Read,
       },
-    ]);
+    ].map(host => createStatelessHost(host));
 
     await transporter.read(transporterRequest);
 

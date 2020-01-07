@@ -23,7 +23,7 @@ const transporterRequest = createFixtures().transporterRequest();
 
 describe('usage of query parameters', () => {
   it('allows to set query parameters', async () => {
-    transporter.addQueryParameters({ 'x-foo': 'foo' });
+    Object.assign(transporter.queryParameters, { 'x-foo': 'foo' });
 
     await transporter.write(transporterRequest);
 

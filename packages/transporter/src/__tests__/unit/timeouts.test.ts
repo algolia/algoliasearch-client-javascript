@@ -2,6 +2,7 @@ import { Requester } from '@algolia/requester-common';
 import { anything, deepEqual, spy, verify, when } from 'ts-mockito';
 
 import { createStatefulHost, Transporter } from '../..';
+import { createStatelessHost } from '../../createStatelessHost';
 import { CallEnum, HostStatusEnum } from '../../types';
 import { createFakeRequester, createFixtures } from '../fixtures';
 
@@ -62,7 +63,6 @@ describe('the timeouts selection', () => {
         )
       )
     ).once();
-    verify(requesterMock.send(anything())).once();
   });
 
   it('increases timeout based on number of retries', async () => {
@@ -71,10 +71,12 @@ describe('the timeouts selection', () => {
       status: 500,
       isTimedOut: true,
     });
-    transporter.setHosts([
+
+    // @ts-ignore
+    transporter.hosts = [
       ...transporter.hosts,
       { url: 'another-read-host.com', accept: CallEnum.Read },
-    ]);
+    ].map(host => createStatelessHost(host));
 
     const assertRequest = (request: object) => {
       return verify(requesterMock.send(deepEqual(createFixtures().readRequest(request)))).once();

@@ -169,37 +169,35 @@ import { createNullLogger } from '@algolia/logger-common';
 import { createNodeHttpRequester } from '@algolia/requester-node-http';
 import { createUserAgent, RequestOptions } from '@algolia/transporter';
 
-import { AlgoliaSearchOptions } from '../types';
+import { AlgoliaSearchOptions, InitAnalyticsOptions, InitRecommendationOptions } from '../types';
 
 export default function algoliasearch(
   appId: string,
   apiKey: string,
   options?: AlgoliaSearchOptions
 ): SearchClient {
-  const clientOptions = Object.assign(
-    {
-      appId,
-      apiKey,
-      timeouts: {
-        connect: 2,
-        read: 5,
-        write: 30,
-      },
-      requester: createNodeHttpRequester(),
-      logger: createNullLogger(),
-      responsesCache: createNullCache(),
-      requestsCache: createNullCache(),
-      hostsCache: createInMemoryCache(),
-      userAgent: createUserAgent(version).add({
-        segment: 'Node.js',
-        version: process.versions.node,
-      }),
+  const commonOptions = {
+    appId,
+    apiKey,
+    timeouts: {
+      connect: 2,
+      read: 5,
+      write: 30,
     },
-    options
-  );
+    requester: createNodeHttpRequester(),
+    logger: createNullLogger(),
+    responsesCache: createNullCache(),
+    requestsCache: createNullCache(),
+    hostsCache: createInMemoryCache(),
+    userAgent: createUserAgent(version).add({
+      segment: 'Node.js',
+      version: process.versions.node,
+    }),
+  };
 
   return createSearchClient({
-    ...clientOptions,
+    ...commonOptions,
+    ...options,
     methods: {
       search: multipleQueries,
       searchForFacetValues: multipleSearchForFacetValues,
@@ -274,10 +272,10 @@ export default function algoliasearch(
           },
         });
       },
-      initAnalytics: () => (region?: string): AnalyticsClient => {
+      initAnalytics: () => (clientOptions?: InitAnalyticsOptions): AnalyticsClient => {
         return createAnalyticsClient({
+          ...commonOptions,
           ...clientOptions,
-          region,
           methods: {
             addABTest,
             getABTest,
@@ -287,10 +285,12 @@ export default function algoliasearch(
           },
         });
       },
-      initRecommendation: () => (region?: string): RecommendationClient => {
+      initRecommendation: () => (
+        clientOptions?: InitRecommendationOptions
+      ): RecommendationClient => {
         return createRecommendationClient({
+          ...commonOptions,
           ...clientOptions,
-          region,
           methods: {
             getPersonalizationStrategy,
             setPersonalizationStrategy,
@@ -584,8 +584,8 @@ export type SearchClient = BaseSearchClient & {
     restrictions: SecuredApiKeyRestrictions
   ) => string;
   readonly getSecuredApiKeyRemainingValidity: (securedApiKey: string) => number;
-  readonly initAnalytics: (region?: string) => AnalyticsClient;
-  readonly initRecommendation: (region?: string) => RecommendationClient;
+  readonly initAnalytics: (options?: InitAnalyticsOptions) => AnalyticsClient;
+  readonly initRecommendation: (options?: InitRecommendationOptions) => RecommendationClient;
 };
 
 export * from '../types';
