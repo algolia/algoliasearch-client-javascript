@@ -10,6 +10,7 @@ afterAll(() => testSuite.cleanUp());
 
 test(testSuite.testName, async () => {
   const index = testSuite.makeIndex();
+  await index.saveObject(createFaker().object('foo')).wait();
 
   const replica1 = testSuite.makeIndex(`${index.indexName}_replica1`);
   const replica2 = testSuite.makeIndex(`${index.indexName}_replica2`);
@@ -17,8 +18,6 @@ test(testSuite.testName, async () => {
   const responses: any = [];
 
   await index.setSettings({});
-
-  responses.push(index.saveObject(createFaker().object('foo')));
 
   const settings1: Settings = {
     searchableAttributes: [
