@@ -128,11 +128,11 @@ describe('default preset', () => {
     const recommendation = client.initRecommendation();
 
     expect(analytics.transporter).not.toBe(client.transporter);
-    expect(analytics.transporter.hostsCache).not.toBe(client.transporter.hostsCache);
+    expect(analytics.transporter.hostsCache).toBe(client.transporter.hostsCache);
     expect(analytics.transporter.userAgent).toBe(client.transporter.userAgent);
 
     expect(recommendation.transporter).not.toBe(client.transporter);
-    expect(recommendation.transporter.hostsCache).not.toBe(client.transporter.hostsCache);
+    expect(recommendation.transporter.hostsCache).toBe(client.transporter.hostsCache);
     expect(recommendation.transporter.userAgent).toBe(client.transporter.userAgent);
   });
 
