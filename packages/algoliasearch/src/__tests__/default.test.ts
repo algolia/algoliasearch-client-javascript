@@ -61,15 +61,13 @@ describe('default preset', () => {
     expect(client.transporter.timeouts).toBe(analytics.transporter.timeouts);
     expect(client.transporter.userAgent).toBe(analytics.transporter.userAgent);
     expect(client.transporter.responsesCache).toBe(analytics.transporter.responsesCache);
-    expect(client.transporter.hostsCache).not.toBe(analytics.transporter.hostsCache);
+    expect(client.transporter.hostsCache).toBe(analytics.transporter.hostsCache);
 
     // Then, on custom options, only the search client is impacted
     expect(client.transporter.hostsCache).not.toBe(cache);
     expect(customClient.transporter.hostsCache).toBe(cache);
     expect(customClient.initAnalytics().transporter.hostsCache).not.toBe(cache);
-    expect(customClient.initAnalytics({ hostsCache: cache }).transporter.hostsCache).not.toBe(
-      cache // no retry on analytics
-    );
+    expect(customClient.initAnalytics({ hostsCache: cache }).transporter.hostsCache).toBe(cache);
 
     expect(client.transporter.requestsCache).not.toBe(cache);
     expect(customClient.transporter.requestsCache).toBe(cache);
