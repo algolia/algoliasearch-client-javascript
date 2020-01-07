@@ -1,4 +1,5 @@
 import { encode } from '@algolia/client-common';
+import { MethodEnum } from '@algolia/requester-common';
 
 import { Request, RequestOptions, StatelessHost } from '.';
 
@@ -38,7 +39,10 @@ export function serializeData(
   request: Request,
   requestOptions: RequestOptions
 ): string | undefined {
-  if (request.data === undefined && requestOptions.data === undefined) {
+  if (
+    request.method === MethodEnum.Get ||
+    (request.data === undefined && requestOptions.data === undefined)
+  ) {
     return undefined;
   }
 

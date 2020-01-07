@@ -1,5 +1,8 @@
+import { MethodEnum } from '@algolia/requester-common';
+
 import {
   createRetryError,
+  createStatefulHost,
   deserializeFailure,
   deserializeSuccess,
   HostStatusEnum,
@@ -11,7 +14,6 @@ import {
   StatelessHost,
   Transporter,
 } from '..';
-import { createStatefulHost } from '../createStatefulHost';
 import { createRetryableOptions } from './createRetryableOptions';
 import { Outcomes, retryDecision } from './retryDecision';
 
@@ -29,10 +31,21 @@ export function retryableRequest<TResponse>(
   const data = serializeData(request, requestOptions);
   const headers = { ...transporter.headers, ...requestOptions.headers };
   const method = request.method;
+
+  // On `GET`, the data is proxied to query parameters.
+  const dataQueryParameters: Record<string, any> =
+    request.method !== MethodEnum.Get
+      ? {}
+      : {
+          ...request.data,
+          ...requestOptions.data,
+        };
+
   const queryParameters = {
-    ...transporter.queryParameters,
-    ...requestOptions.queryParameters,
     'x-algolia-agent': transporter.userAgent.value,
+    ...transporter.queryParameters,
+    ...dataQueryParameters,
+    ...requestOptions.queryParameters,
   };
 
   let timeoutsCount = 0; // eslint-disable-line functional/no-let

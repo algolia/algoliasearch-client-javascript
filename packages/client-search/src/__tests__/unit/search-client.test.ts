@@ -1,5 +1,4 @@
-import { createMappedRequestOptions } from '@algolia/transporter';
-import { anything, deepEqual, spy, verify, when } from 'ts-mockito';
+import { anything, spy, verify, when } from 'ts-mockito';
 
 import { TestSuite } from '../../../../client-common/src/__tests__/TestSuite';
 
@@ -39,5 +38,5 @@ test('get logs', async () => {
 
   await client.getLogs();
 
-  verify(transporterMock.read(anything(), deepEqual(createMappedRequestOptions(undefined)))).once();
+  verify(transporterMock.read(anything(), undefined)).once();
 });

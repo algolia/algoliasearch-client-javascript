@@ -101,10 +101,19 @@ export function createFixtures() {
       };
 
       if (options.url !== undefined) {
+        const userAgent = encode(
+          '%s=%s',
+          'x-algolia-agent',
+          `Algolia for JavaScript (${version}); Browser`
+        );
+
+        const hasQueryParametersAlready = options.url.includes('?');
+
         // eslint-disable-next-line no-param-reassign
-        options.url +=
-          (options.url.includes('?') ? '&' : '?') +
-          encode('%s=%s', 'x-algolia-agent', `Algolia for JavaScript (${version}); Browser`);
+        options.url = options.url.replace(
+          `.com/save${hasQueryParametersAlready ? '?' : ''}`,
+          `.com/save?${userAgent}${hasQueryParametersAlready ? '&' : ''}`
+        );
       }
 
       return {

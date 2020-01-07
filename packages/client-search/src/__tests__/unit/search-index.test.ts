@@ -1,6 +1,6 @@
 import { addMethods, encode } from '@algolia/client-common';
 import { MethodEnum } from '@algolia/requester-common';
-import { createMappedRequestOptions, RequestOptions, Transporter } from '@algolia/transporter';
+import { RequestOptions, Transporter } from '@algolia/transporter';
 import { anything, deepEqual, spy, verify, when } from 'ts-mockito';
 
 import { BatchActionEnum, SaveObjectsOptions } from '../..';
@@ -163,35 +163,30 @@ describe('get object', () => {
 
     await index.getObject('bar', requestOptions);
 
-    verify(
-      transporterMock.read(anything(), deepEqual(createMappedRequestOptions(requestOptions)))
-    ).once();
+    verify(transporterMock.read(anything(), deepEqual(requestOptions))).once();
   });
 });
 
 describe('get settings', () => {
-  it('Passes getVersion=2 queryParameters without custom request options', async () => {
-    const requestOptions = {
-      data: undefined,
-      timeout: undefined,
-      headers: {},
-      queryParameters: { getVersion: '2' },
-      cacheable: undefined,
-    };
+  const request = {
+    method: MethodEnum.Get,
+    path: '1/indexes/foo/settings',
+    data: {
+      getVersion: 2,
+    },
+  };
 
+  it('Passes getVersion=2 queryParameters without custom request options', async () => {
     await index.getSettings();
     await index.getSettings({});
 
-    verify(transporterMock.read(anything(), deepEqual(requestOptions))).twice();
+    verify(transporterMock.read(deepEqual(request), undefined)).once();
+    verify(transporterMock.read(deepEqual(request), deepEqual({}))).once();
   });
 
   it('Passes getVersion=2 queryParameters and custom request options', async () => {
     const requestOptions = {
-      data: undefined,
-      timeout: undefined,
-      headers: {},
-      queryParameters: { foo: 'bar', getVersion: '2' },
-      cacheable: undefined,
+      queryParameters: { foo: 'bar' },
     };
 
     await index.getSettings({
@@ -200,7 +195,7 @@ describe('get settings', () => {
       },
     });
 
-    verify(transporterMock.read(anything(), deepEqual(requestOptions))).once();
+    verify(transporterMock.read(deepEqual(request), deepEqual(requestOptions))).once();
   });
 });
 

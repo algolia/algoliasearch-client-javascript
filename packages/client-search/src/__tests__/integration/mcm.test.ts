@@ -96,6 +96,20 @@ test(testSuite.testName, async () => {
     'dataSize',
   ]);
 
+  expect(
+    await client.listUserIDs({
+      hitsPerPage: 1,
+    })
+  ).toHaveLength(1);
+
+  expect(listUserIDsResponse.userIDs.length > 0).toBe(true);
+  expect(Object.keys(listUserIDsResponse.userIDs[0])).toEqual([
+    'userID',
+    'clusterName',
+    'nbRecords',
+    'dataSize',
+  ]);
+
   const getTopUserIDsResponse = await client.getTopUserIDs();
 
   expect(getTopUserIDsResponse.topUsers[firstClusterName].length > 0).toBe(true);
