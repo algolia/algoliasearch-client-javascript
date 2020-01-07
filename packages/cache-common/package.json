@@ -1,6 +1,6 @@
 {
   "name": "@algolia/cache-common",
-  "version": "4.0.0-beta.11",
+  "version": "4.0.0-beta.12",
   "private": false,
   "description": "Common interfaces for promise-based caching libraries",
   "license": "MIT",
