@@ -17,7 +17,7 @@ test(testSuite.testName, async () => {
 
   const responses: any = [];
 
-  await index.setSettings({});
+  await index.setSettings({}).wait();
 
   const settings1: Settings = {
     searchableAttributes: [
