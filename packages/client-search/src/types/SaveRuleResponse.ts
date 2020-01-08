@@ -1,3 +1,11 @@
-import { SaveRulesResponse } from '.';
+export type SaveRuleResponse = {
+  /**
+   * When the given rules got saved.
+   */
+  readonly updatedAt: number;
 
-export type SaveRuleResponse = SaveRulesResponse;
+  /**
+   * The operation task id. May be used to perform a wait task.
+   */
+  readonly taskID: number;
+};

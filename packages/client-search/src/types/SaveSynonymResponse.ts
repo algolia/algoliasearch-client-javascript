@@ -1,3 +1,11 @@
-import { SaveSynonymsResponse } from '.';
+export type SaveSynonymResponse = {
+  /**
+   * When the given synonyms got saved.
+   */
+  readonly updatedAt: number;
 
-export type SaveSynonymResponse = SaveSynonymsResponse;
+  /**
+   * The operation task id. May be used to perform a wait task.
+   */
+  readonly taskID: number;
+};

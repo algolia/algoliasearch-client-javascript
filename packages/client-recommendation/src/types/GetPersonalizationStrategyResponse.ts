@@ -1,3 +1,23 @@
-import { PersonalizationStrategy } from './PersonalizationStrategy';
+export type GetPersonalizationStrategyResponse = {
+  /**
+   * Events scoring
+   */
+  readonly eventsScoring: ReadonlyArray<{
+    readonly eventName: string;
+    readonly eventType: string;
+    readonly score: number;
+  }>;
 
-export type GetPersonalizationStrategyResponse = PersonalizationStrategy;
+  /**
+   * Facets scoring
+   */
+  readonly facetsScoring: ReadonlyArray<{
+    readonly facetName: string;
+    readonly score: number;
+  }>;
+
+  /**
+   * Personalization impact
+   */
+  readonly personalizationImpact: number;
+};
