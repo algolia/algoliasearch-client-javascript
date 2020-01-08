@@ -19,7 +19,7 @@ export type SearchOptions = {
   /**
    * Create filters for ranking purposes, where records that match the filter are ranked highest.
    */
-  readonly optionalFilters?: string | readonly string[] | ReadonlyArray<readonly string[]>;
+  readonly optionalFilters?: string | readonly string[] | ReadonlyArray<readonly string[] | string>;
 
   /**
    * Filter on numeric attributes.
