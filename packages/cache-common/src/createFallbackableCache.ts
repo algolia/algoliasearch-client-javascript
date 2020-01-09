@@ -34,5 +34,11 @@ export function createFallbackableCache(options: FallbackableCacheOptions): Cach
         return createFallbackableCache({ caches }).delete(key);
       });
     },
+
+    clear(): Readonly<Promise<void>> {
+      return current.clear().catch(() => {
+        return createFallbackableCache({ caches }).clear();
+      });
+    },
   };
 }

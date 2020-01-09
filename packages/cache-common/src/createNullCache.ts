@@ -23,5 +23,9 @@ export function createNullCache(): Cache {
     delete(_key: object | string): Readonly<Promise<void>> {
       return Promise.resolve();
     },
+
+    clear(): Readonly<Promise<void>> {
+      return Promise.resolve();
+    },
   };
 }

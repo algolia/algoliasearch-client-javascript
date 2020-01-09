@@ -61,4 +61,42 @@ describe('in memory cache', () => {
 
     expect(missMock.mock.calls.length).toBe(1);
   });
+
+  it('can be cleared', async () => {
+    const cache = createInMemoryCache();
+    await cache.set({ key: 'foo' }, { bar: 1 });
+
+    await cache.clear();
+
+    const defaultValue = () => Promise.resolve({ bar: 2 });
+
+    const missMock = jest.fn();
+
+    expect(
+      await cache.get({ key: 'foo' }, defaultValue, {
+        miss: () => Promise.resolve(missMock()),
+      })
+    ).toMatchObject({ bar: 2 });
+
+    expect(missMock.mock.calls.length).toBe(1);
+  });
+
+  it('do not force promise based api for clearing cache', async () => {
+    const cache = createInMemoryCache();
+    cache.set({ key: 'foo' }, { bar: 1 });
+
+    cache.clear();
+
+    const defaultValue = () => Promise.resolve({ bar: 2 });
+
+    const missMock = jest.fn();
+
+    expect(
+      await cache.get({ key: 'foo' }, defaultValue, {
+        miss: () => Promise.resolve(missMock()),
+      })
+    ).toMatchObject({ bar: 2 });
+
+    expect(missMock.mock.calls.length).toBe(1);
+  });
 });

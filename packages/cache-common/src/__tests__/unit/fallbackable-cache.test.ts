@@ -107,6 +107,11 @@ describe('fallbackable cache', () => {
       expect(await cache.get(key, () => Promise.resolve({ 5: 6 }))).toEqual({
         3: 4,
       });
+
+      await cache.clear();
+      expect(await cache.get(key, () => Promise.resolve({ 5: 6 }))).toEqual({
+        5: 6,
+      });
     }
   });
 });

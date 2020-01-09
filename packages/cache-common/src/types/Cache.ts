@@ -19,4 +19,9 @@ export type Cache = {
    * Deletes the given `key`.
    */
   readonly delete: (key: object | string) => Readonly<Promise<void>>;
+
+  /**
+   * Clears the cache.
+   */
+  readonly clear: () => Readonly<Promise<void>>;
 };

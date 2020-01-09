@@ -1,9 +1,9 @@
 import { createNullCache } from '../..';
 
 describe('null cache', () => {
-  it('does not set value', async () => {
-    const cache = createNullCache();
+  const cache = createNullCache();
 
+  it('does not set value', async () => {
     await cache.set({ key: 'key' }, { foo: 10 });
 
     const defaultValue = Promise.resolve({
@@ -25,8 +25,6 @@ describe('null cache', () => {
   });
 
   it('returns default value', async () => {
-    const cache = createNullCache();
-
     const defaultValue = Promise.resolve({
       foo: 12,
     });
@@ -42,5 +40,13 @@ describe('null cache', () => {
     });
 
     expect(missMock.mock.calls.length).toBe(1);
+  });
+
+  it('can be deleted', async () => {
+    await cache.delete('foo');
+  });
+
+  it('can be cleared', async () => {
+    await cache.clear();
   });
 });

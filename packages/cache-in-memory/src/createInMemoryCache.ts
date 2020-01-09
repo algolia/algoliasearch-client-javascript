@@ -3,7 +3,8 @@ import { Cache, CacheEvents } from '@algolia/cache-common';
 import { InMemoryCacheOptions } from '.';
 
 export function createInMemoryCache(options: InMemoryCacheOptions = { serializable: true }): Cache {
-  const cache: Record<string, any> = {};
+  // eslint-disable-next-line functional/no-let
+  let cache: Record<string, any> = {};
 
   return {
     get<TValue>(
@@ -37,6 +38,12 @@ export function createInMemoryCache(options: InMemoryCacheOptions = { serializab
     delete(key: object | string): Readonly<Promise<void>> {
       // eslint-disable-next-line functional/immutable-data
       delete cache[JSON.stringify(key)];
+
+      return Promise.resolve();
+    },
+
+    clear(): Readonly<Promise<void>> {
+      cache = {};
 
       return Promise.resolve();
     },
