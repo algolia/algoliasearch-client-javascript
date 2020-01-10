@@ -4,7 +4,7 @@ import * as crypto from 'crypto';
 import { SecuredApiKeyRestrictions } from '../..';
 
 export const generateSecuredApiKey = () => {
-  return (parentApiKey: string, restrictions: SecuredApiKeyRestrictions) => {
+  return (parentApiKey: string, restrictions: SecuredApiKeyRestrictions): string => {
     const queryParameters = serializeQueryParameters(restrictions);
 
     const securedKey = crypto
