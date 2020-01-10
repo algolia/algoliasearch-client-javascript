@@ -40,16 +40,18 @@ test(testSuite.testName, async () => {
 
   let replaceAllObjectsResponse: ChunkedBatchResponse;
 
-  replaceAllObjectsResponse = await index.replaceAllObjects([{ objectID: 'two' }], {
-    safe: true,
-  });
+  replaceAllObjectsResponse = await index.replaceAllObjects([{ objectID: 'two' }]);
+
+  responses.push(replaceAllObjectsResponse);
 
   const synonym2: Synonym = {
     objectID: 'two',
     type: 'synonym',
     synonyms: ['one', 'two'],
   };
-  await index.replaceAllSynonyms([synonym2]).wait();
+
+  const replaceAllSynonymsResponse = await index.replaceAllSynonyms([synonym2]);
+  responses.push(replaceAllSynonymsResponse);
 
   const rule2: Rule = {
     objectID: 'two',
@@ -63,7 +65,10 @@ test(testSuite.testName, async () => {
     },
   };
 
-  await index.replaceAllRules([rule2]).wait();
+  const replaceAllRulesResponse = await index.replaceAllRules([rule2]);
+  responses.push(replaceAllRulesResponse);
+
+  await createMultiWaitable(responses).wait();
 
   await expect(index.getObject('one')).rejects.toEqual(
     createApiError('ObjectID does not exist', 404)
@@ -86,7 +91,7 @@ test(testSuite.testName, async () => {
   replaceAllObjectsResponse = await index.replaceAllObjects(
     [{ withoutObjectID: 'three' }, { withoutObjectID: 'four' }],
     {
-      safe: true,
+      safe: true, // should wait task
       autoGenerateObjectIDIfNotExist: true,
       batchSize: 1,
     }
