@@ -20,7 +20,7 @@
     "types": ["jest", "node", "webdriverio"],
     "rootDir": ".",
     "paths": {
-      "algoliasearch": ["packages/algoliasearch/src"],
+      "algoliasearch": ["packages/algoliasearch/src/builds/node"],
       "@algolia/*": ["packages/*/src"]
     }
   },
