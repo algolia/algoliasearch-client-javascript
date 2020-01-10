@@ -1,7 +1,6 @@
 import { Settings } from '@algolia/client-search';
 
 import { createFaker } from '../../../../client-common/src/__tests__/createFaker';
-import { createMultiWaitable } from '../../../../client-common/src/__tests__/helpers';
 import { TestSuite } from '../../../../client-common/src/__tests__/TestSuite';
 
 const testSuite = new TestSuite('settings');
@@ -17,8 +16,6 @@ test(testSuite.testName, async () => {
 
   // eslint-disable-next-line no-console
   console.log(index.indexName, replica1.indexName, replica2.indexName);
-
-  const responses: any = [];
 
   await index.setSettings({}).wait();
 
@@ -90,9 +87,7 @@ test(testSuite.testName, async () => {
     keepDiacriticsOnCharacters: 'øé',
   };
 
-  responses.push(index.setSettings(settings1));
-
-  await createMultiWaitable(responses).wait();
+  await index.setSettings(settings1).wait();
 
   expect(await index.getSettings()).toMatchObject(settings1);
 
