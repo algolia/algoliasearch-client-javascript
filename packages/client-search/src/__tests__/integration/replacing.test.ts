@@ -3,7 +3,6 @@ import { createApiError } from '@algolia/transporter';
 import { Rule, Synonym } from '../..';
 import { createMultiWaitable } from '../../../../client-common/src/__tests__/helpers';
 import { TestSuite } from '../../../../client-common/src/__tests__/TestSuite';
-import { ChunkedBatchResponse } from '../../types';
 
 const testSuite = new TestSuite('replacing');
 
@@ -38,11 +37,7 @@ test(testSuite.testName, async () => {
   await createMultiWaitable(responses).wait();
   responses = [];
 
-  let replaceAllObjectsResponse: ChunkedBatchResponse;
-
-  replaceAllObjectsResponse = await index.replaceAllObjects([{ objectID: 'two' }]);
-
-  responses.push(replaceAllObjectsResponse);
+  let replaceAllObjectsResponse = await index.replaceAllObjects([{ objectID: 'two' }]).wait();
 
   const synonym2: Synonym = {
     objectID: 'two',
@@ -50,8 +45,7 @@ test(testSuite.testName, async () => {
     synonyms: ['one', 'two'],
   };
 
-  const replaceAllSynonymsResponse = await index.replaceAllSynonyms([synonym2]);
-  responses.push(replaceAllSynonymsResponse);
+  responses.push(index.replaceAllSynonyms([synonym2]));
 
   const rule2: Rule = {
     objectID: 'two',
@@ -65,8 +59,7 @@ test(testSuite.testName, async () => {
     },
   };
 
-  const replaceAllRulesResponse = await index.replaceAllRules([rule2]);
-  responses.push(replaceAllRulesResponse);
+  responses.push(index.replaceAllRules([rule2]));
 
   await createMultiWaitable(responses).wait();
 

@@ -31,22 +31,24 @@ const createRetryableTransporter = (client: Transporter): Transporter => {
 test(testSuite.testName, async () => {
   const index1 = testSuite.makeIndex();
   const index2 = testSuite.makeIndex();
-  const client = testSuite.makeSearchClient().initAnalytics();
+  const client = testSuite.makeSearchClient();
+  const analytics = client.initAnalytics();
+
   // @ts-ignore
-  client.transporter = createRetryableTransporter(client.transporter);
+  analytics.transporter = createRetryableTransporter(analytics.transporter);
   const today = new Date();
   const todayDate = `${today.getFullYear}-${today.getMonth}-${today.getDay}`;
 
   // Delete old AB tests
   {
-    const oldABTests = (await client.getABTests()).abtests;
+    const oldABTests = (await analytics.getABTests()).abtests;
 
     await Promise.all(
       oldABTests
         .filter(
           abtest => abtest.name.startsWith('js-') && !abtest.name.startsWith(`js-${todayDate}`)
         )
-        .map(abtest => client.deleteABTest(abtest.abTestID))
+        .map(abtest => analytics.deleteABTest(abtest.abTestID))
     );
   }
   // Create the two indices by adding a dummy object in each of them
@@ -67,7 +69,9 @@ test(testSuite.testName, async () => {
     endAt: new Date(today.getTime() + 24 * 3600 * 1000).toISOString(),
   };
 
-  const abTestID = (await client.addABTest(abTest)).abTestID;
+  const addABTestResponse = await analytics.addABTest(abTest);
+  const abTestID = addABTestResponse.abTestID;
+  await client.initIndex(addABTestResponse.index).waitTask(addABTestResponse.taskID);
 
   const compareVariants = (got: readonly Variant[], expected: readonly Variant[]) => {
     const convertedVariants = got.map(v => {
@@ -93,7 +97,7 @@ test(testSuite.testName, async () => {
 
   // Retrieve the AB test and check it corresponds to the original one
   {
-    const found = await client.getABTest(abTestID);
+    const found = await analytics.getABTest(abTestID);
     expect(found.abTestID).toBe(abTestID);
     expect(found.name).toBe(abTest.name);
     compareDateStrings(found.endAt, abTest.endAt);
@@ -103,7 +107,7 @@ test(testSuite.testName, async () => {
   // Find the AB test among all the existing AB tests and check it
   // corresponds to the original one
   {
-    const all = await client.getABTests();
+    const all = await analytics.getABTests();
     const found = all.abtests.find(t => t.abTestID === abTestID);
     if (found === undefined) {
       throw new Error('Ab test not found.');
@@ -116,20 +120,20 @@ test(testSuite.testName, async () => {
   }
 
   // Stop the AB test
-  const stopABTestResponse = await client.stopABTest(abTestID);
+  const stopABTestResponse = await analytics.stopABTest(abTestID);
   await index1.waitTask(stopABTestResponse.taskID);
 
   // Check the AB test still exists but is stopped
-  await expect(client.getABTest(abTestID)).resolves.toMatchObject({
+  await expect(analytics.getABTest(abTestID)).resolves.toMatchObject({
     status: 'stopped',
   });
 
   // Delete the AB test
-  const deleteABTestResponse = await client.deleteABTest(abTestID);
+  const deleteABTestResponse = await analytics.deleteABTest(abTestID);
   await index1.waitTask(deleteABTestResponse.taskID);
 
   // Check the AB test doesn't exist anymore
-  await expect(client.getABTest(abTestID)).rejects.toEqual(
+  await expect(analytics.getABTest(abTestID)).rejects.toEqual(
     createApiError('ABTestID not found', 404)
   );
 });
