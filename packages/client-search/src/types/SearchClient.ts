@@ -17,7 +17,7 @@ export type SearchClient = {
   readonly addAlgoliaAgent: (segment: string, version?: string) => void;
 
   /**
-   * clears request & response caches
+   * Clears both requests and responses caches.
    */
-  readonly clearCache: () => Promise<void>;
+  readonly clearCache: () => Readonly<Promise<void>>;
 };

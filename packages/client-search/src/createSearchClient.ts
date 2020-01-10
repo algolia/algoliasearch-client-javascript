@@ -52,7 +52,7 @@ export const createSearchClient: CreateClient<
     addAlgoliaAgent(segment: string, version?: string): void {
       transporter.userAgent.add({ segment, version });
     },
-    clearCache(): Promise<void> {
+    clearCache(): Readonly<Promise<void>> {
       return Promise.all([
         transporter.requestsCache.clear(),
         transporter.responsesCache.clear(),
