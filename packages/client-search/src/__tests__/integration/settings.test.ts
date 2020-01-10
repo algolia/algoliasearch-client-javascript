@@ -15,6 +15,9 @@ test(testSuite.testName, async () => {
   const replica1 = testSuite.makeIndex(`${index.indexName}_replica1`);
   const replica2 = testSuite.makeIndex(`${index.indexName}_replica2`);
 
+  // eslint-disable-next-line no-console
+  console.log(index.indexName, replica1.indexName, replica2.indexName);
+
   const responses: any = [];
 
   await index.setSettings({}).wait();
