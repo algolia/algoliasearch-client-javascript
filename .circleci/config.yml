@@ -94,7 +94,7 @@ jobs:
       - save_cache: *save_yarn_cache
       - run:
           name: Unit Tests
-          command: yarn test:unit --maxWorkers=4
+          command: yarn test:unit --maxWorkers=4 -t "settings"
 
   test_browser:
     description: Testing code within browsers
