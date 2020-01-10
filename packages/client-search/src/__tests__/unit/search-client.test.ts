@@ -40,3 +40,70 @@ test('get logs', async () => {
 
   verify(transporterMock.read(anything(), undefined)).once();
 });
+
+test('clearCache', async () => {
+  const client = algoliasearch('appId', 'apiKey');
+
+  client.transporter.requestsCache.set('bla', 'blo');
+  client.transporter.responsesCache.set('bla', 'blo');
+
+  if (testing.isBrowser()) {
+    await expect(
+      client.transporter.requestsCache.get('bla', () => Promise.resolve('wrong'))
+    ).resolves.toBe('blo');
+    await expect(
+      client.transporter.responsesCache.get('bla', () => Promise.resolve('wrong'))
+    ).resolves.toBe('blo');
+  } else {
+    // node uses a null cache, so these assertions don't make sense there
+    await expect(
+      client.transporter.requestsCache.get('bla', () => Promise.resolve('wrong'))
+    ).resolves.toBe('wrong');
+    await expect(
+      client.transporter.responsesCache.get('bla', () => Promise.resolve('wrong'))
+    ).resolves.toBe('wrong');
+  }
+
+  await client.clearCache();
+
+  await expect(
+    client.transporter.requestsCache.get('bla', () => Promise.resolve('wrong'))
+  ).resolves.toBe('wrong');
+  await expect(
+    client.transporter.responsesCache.get('bla', () => Promise.resolve('wrong'))
+  ).resolves.toBe('wrong');
+});
+
+test('clearCache without promise', async () => {
+  const client = algoliasearch('appId', 'apiKey');
+
+  client.transporter.requestsCache.set('bla', 'blo');
+  client.transporter.responsesCache.set('bla', 'blo');
+
+  if (testing.isBrowser()) {
+    await expect(
+      client.transporter.requestsCache.get('bla', () => Promise.resolve('wrong'))
+    ).resolves.toBe('blo');
+    await expect(
+      client.transporter.responsesCache.get('bla', () => Promise.resolve('wrong'))
+    ).resolves.toBe('blo');
+  } else {
+    // node uses a null cache, so these assertions don't make sense there
+    await expect(
+      client.transporter.requestsCache.get('bla', () => Promise.resolve('wrong'))
+    ).resolves.toBe('wrong');
+    await expect(
+      client.transporter.responsesCache.get('bla', () => Promise.resolve('wrong'))
+    ).resolves.toBe('wrong');
+  }
+
+  // no await, since default memory caches _actually_ are instant
+  client.clearCache();
+
+  await expect(
+    client.transporter.requestsCache.get('bla', () => Promise.resolve('wrong'))
+  ).resolves.toBe('wrong');
+  await expect(
+    client.transporter.responsesCache.get('bla', () => Promise.resolve('wrong'))
+  ).resolves.toBe('wrong');
+});

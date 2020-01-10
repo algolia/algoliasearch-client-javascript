@@ -15,4 +15,9 @@ export type SearchClient = {
    * Mutates the transporter, adding the given user agent.
    */
   readonly addAlgoliaAgent: (segment: string, version?: string) => void;
+
+  /**
+   * clears request & response caches
+   */
+  readonly clearCache: () => Promise<void>;
 };
