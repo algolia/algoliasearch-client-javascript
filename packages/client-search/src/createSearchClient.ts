@@ -52,6 +52,12 @@ export const createSearchClient: CreateClient<
     addAlgoliaAgent(segment: string, version?: string): void {
       transporter.userAgent.add({ segment, version });
     },
+    clearCache(): Promise<void> {
+      return Promise.all([
+        transporter.requestsCache.clear(),
+        transporter.responsesCache.clear(),
+      ]).then(() => undefined);
+    },
   };
 
   return addMethods(base, options.methods);
