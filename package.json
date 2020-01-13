@@ -30,7 +30,7 @@
     "@babel/cli": "7.7.7",
     "@babel/core": "7.7.7",
     "@babel/preset-env": "7.7.7",
-    "@babel/preset-typescript": "7.7.7",
+    "@babel/preset-typescript": "7.8.0",
     "@microsoft/api-extractor": "7.7.2",
     "@rollup/plugin-alias": "3.0.0",
     "@rollup/plugin-json": "4.0.1",
