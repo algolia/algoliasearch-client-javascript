@@ -10,4 +10,9 @@ export type RecommendationClient = {
    * The underlying transporter.
    */
   readonly transporter: Transporter;
+
+  /**
+   * The client version.
+   */
+  readonly version: string;
 };

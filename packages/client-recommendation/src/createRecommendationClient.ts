@@ -4,6 +4,7 @@ import {
   ClientTransporterOptions,
   createAuth,
   CreateClient,
+  version,
 } from '@algolia/client-common';
 import { CallEnum, createTransporter } from '@algolia/transporter';
 
@@ -31,5 +32,5 @@ export const createRecommendationClient: CreateClient<
     },
   });
 
-  return addMethods({ appId: options.appId, transporter }, options.methods);
+  return addMethods({ appId: options.appId, transporter, version }, options.methods);
 };

@@ -1,3 +1,4 @@
+import { version } from '@algolia/client-common';
 import { MethodEnum } from '@algolia/requester-common';
 import { anything, deepEqual, spy, verify, when } from 'ts-mockito';
 
@@ -9,6 +10,11 @@ const recommendationClient = new TestSuite().algoliasearch('appId', 'apiKey').in
 describe('recommendation client', () => {
   it('uses region to define the host', () => {
     expect(recommendationClient.transporter.hosts[0].url).toBe('recommendation.us.algolia.com');
+  });
+
+  it('has version', () => {
+    expect(recommendationClient.version).toBe(version);
+    expect(recommendationClient.version.startsWith('4.')).toBe(true);
   });
 
   it('sets default headers', () => {

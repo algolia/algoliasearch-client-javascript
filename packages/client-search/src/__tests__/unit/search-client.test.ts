@@ -1,3 +1,4 @@
+import { version } from '@algolia/client-common';
 import { anything, spy, verify, when } from 'ts-mockito';
 
 import { TestSuite } from '../../../../client-common/src/__tests__/TestSuite';
@@ -7,6 +8,11 @@ const algoliasearch = new TestSuite().algoliasearch;
 describe('search client', () => {
   it('gives access to appId', () => {
     expect(algoliasearch('appId', 'apiKey').appId).toEqual('appId');
+  });
+
+  it('has version', () => {
+    expect(algoliasearch('appId', 'apiKey').version).toBe(version);
+    expect(algoliasearch('appId', 'apiKey').version.startsWith('4.')).toBe(true);
   });
 });
 

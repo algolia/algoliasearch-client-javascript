@@ -4,6 +4,7 @@ import {
   ClientTransporterOptions,
   createAuth,
   CreateClient,
+  version,
 } from '@algolia/client-common';
 import { CallEnum, createTransporter } from '@algolia/transporter';
 
@@ -33,5 +34,5 @@ export const createAnalyticsClient: CreateClient<
 
   const appId = options.appId;
 
-  return addMethods({ appId, transporter }, options.methods);
+  return addMethods({ appId, transporter, version }, options.methods);
 };
