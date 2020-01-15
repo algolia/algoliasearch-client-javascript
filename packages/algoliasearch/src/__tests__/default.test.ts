@@ -8,6 +8,11 @@ const algoliasearch = new TestSuite('search').algoliasearch;
 const client = algoliasearch('appId', 'apiKey');
 
 describe('default preset', () => {
+  it('exposes the version on the constructor', () => {
+    expect(algoliasearch.version).toBe(version);
+    expect(algoliasearch.version.startsWith('4.')).toBe(true);
+  });
+
   it('sets default headers', () => {
     expect(client.transporter.headers).toEqual({
       'content-type': 'application/x-www-form-urlencoded',

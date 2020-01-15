@@ -7,6 +7,11 @@ import algoliasearch from '../builds/browserLite';
 const client = algoliasearch('appId', 'apiKey');
 
 describe('lite preset', () => {
+  it('exposes the version on the constructor', () => {
+    expect(algoliasearch.version).toBe(version);
+    expect(algoliasearch.version.startsWith('4.')).toBe(true);
+  });
+
   it('sets default headers', () => {
     expect(client.transporter.headers).toEqual({
       'content-type': 'application/x-www-form-urlencoded',
