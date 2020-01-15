@@ -13,8 +13,7 @@ import {
 } from '@algolia/client-search';
 import { RequestOptions } from '@algolia/transporter';
 
-import { createIndicesInSameAppError } from '..';
-import { createDestinationIndiceExistsError } from '../errors/createDestinationIndiceExistsError';
+import { createDestinationIndiceExistsError, createIndicesInSameAppError } from '..';
 
 export const accountCopyIndex = (
   source: SearchIndex,
