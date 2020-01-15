@@ -300,6 +300,9 @@ export default function algoliasearch(
   });
 }
 
+// eslint-disable-next-line functional/immutable-data
+algoliasearch.version = version;
+
 export type RecommendationClient = BaseRecommendationClient & {
   readonly getPersonalizationStrategy: (
     requestOptions?: RequestOptions
