@@ -5,7 +5,6 @@ import {
   createAuth,
   CreateClient,
   shuffle,
-  version as ClientVersion,
 } from '@algolia/client-common';
 import { CallEnum, createTransporter } from '@algolia/transporter';
 
@@ -50,7 +49,6 @@ export const createSearchClient: CreateClient<
   const base = {
     transporter,
     appId,
-    version: ClientVersion,
     addAlgoliaAgent(segment: string, version?: string): void {
       transporter.userAgent.add({ segment, version });
     },

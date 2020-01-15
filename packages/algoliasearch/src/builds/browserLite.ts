@@ -73,6 +73,8 @@ export default function algoliasearch(
   });
 }
 
+export { version } from '@algolia/client-common';
+
 export type SearchIndex = BaseSearchIndex & {
   readonly search: <TObject>(
     query: string,

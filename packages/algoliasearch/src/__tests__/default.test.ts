@@ -5,9 +5,15 @@ import { CallEnum, createStatelessHost, createUserAgent } from '@algolia/transpo
 import { TestSuite } from '../../../client-common/src/__tests__/TestSuite';
 
 const algoliasearch = new TestSuite('search').algoliasearch;
+const presetVersion = new TestSuite('search').version;
 const client = algoliasearch('appId', 'apiKey');
 
 describe('default preset', () => {
+  it('exports the version', () => {
+    expect(presetVersion).toBe(version);
+    expect(presetVersion.startsWith('4.')).toBe(true);
+  });
+
   it('sets default headers', () => {
     expect(client.transporter.headers).toEqual({
       'content-type': 'application/x-www-form-urlencoded',

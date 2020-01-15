@@ -2,11 +2,16 @@ import { createInMemoryCache } from '@algolia/cache-in-memory';
 import { version } from '@algolia/client-common';
 import { CallEnum, createStatelessHost, createUserAgent } from '@algolia/transporter';
 
-import algoliasearch from '../builds/browserLite';
+import algoliasearch, { version as presetVersion } from '../builds/browserLite';
 
 const client = algoliasearch('appId', 'apiKey');
 
 describe('lite preset', () => {
+  it('exports the version', () => {
+    expect(presetVersion).toBe(version);
+    expect(presetVersion.startsWith('4.')).toBe(true);
+  });
+
   it('sets default headers', () => {
     expect(client.transporter.headers).toEqual({
       'content-type': 'application/x-www-form-urlencoded',

@@ -1,8 +1,12 @@
 import { createRetryablePromise } from '..';
-import { default as algoliasearchForBrowser } from '../../../algoliasearch/src/builds/browser';
+import {
+  default as algoliasearchForBrowser,
+  version as versionForBrowser,
+} from '../../../algoliasearch/src/builds/browser';
 import {
   default as algoliasearchForNode,
   SearchIndex,
+  version as versionForNode,
 } from '../../../algoliasearch/src/builds/node';
 
 /* eslint functional/no-class: 0 */
@@ -15,6 +19,11 @@ export class TestSuite {
   public readonly algoliasearch: typeof algoliasearchForNode = this.isBrowser
     ? algoliasearchForBrowser
     : algoliasearchForNode;
+
+  // @ts-ignore
+  public readonly version: typeof versionForNode = this.isBrowser
+    ? versionForNode
+    : versionForBrowser;
 
   public indices: SearchIndex[];
 

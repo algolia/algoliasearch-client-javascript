@@ -300,6 +300,8 @@ export default function algoliasearch(
   });
 }
 
+export { version } from '@algolia/client-common';
+
 export type RecommendationClient = BaseRecommendationClient & {
   readonly getPersonalizationStrategy: (
     requestOptions?: RequestOptions
