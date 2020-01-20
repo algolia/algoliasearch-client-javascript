@@ -83,7 +83,7 @@
     "ts-mockito": "2.5.0",
     "ts-node": "8.6.2",
     "typescript": "3.7.4",
-    "webdriverio": "5.18.5",
+    "webdriverio": "5.18.6",
     "xhr-mock": "2.5.1"
   },
   "engines": {
