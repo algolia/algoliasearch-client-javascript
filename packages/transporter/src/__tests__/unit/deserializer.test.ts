@@ -103,7 +103,7 @@ describe('deserializer', () => {
             data: '{}',
             headers: {
               'content-type': 'application/x-www-form-urlencoded',
-              'x-algolia-api-key': 'xxxx',
+              'x-algolia-api-key': '*****',
               'x-algolia-application-id': 'appId',
               'x-default-header': 'Default value',
             },

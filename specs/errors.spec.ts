@@ -15,7 +15,7 @@ const version = require("../lerna.json").version;
         preset === "algoliasearch.com"
           ? {
               "content-type": "application/x-www-form-urlencoded",
-              "x-algolia-api-key": "xxxx",
+              "x-algolia-api-key": "*****",
               "x-algolia-application-id": "NOCTT5TZUU"
             }
           : {

@@ -10,7 +10,7 @@ export function stackFrameWithoutCredentials(stackFrame: StackFrame): StackFrame
   const modifiedHeaders: Readonly<Record<string, string>> = stackFrame.request.headers[
     'x-algolia-api-key'
   ]
-    ? { 'x-algolia-api-key': 'xxxx' }
+    ? { 'x-algolia-api-key': '*****' }
     : {};
 
   return {
