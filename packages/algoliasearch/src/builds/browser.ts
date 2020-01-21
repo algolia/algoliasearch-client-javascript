@@ -300,7 +300,8 @@ export default function algoliasearch(
   });
 }
 
-export { version } from '@algolia/client-common';
+// eslint-disable-next-line functional/immutable-data
+algoliasearch.version = version;
 
 export type RecommendationClient = BaseRecommendationClient & {
   readonly getPersonalizationStrategy: (
