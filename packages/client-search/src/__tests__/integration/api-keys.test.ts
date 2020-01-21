@@ -1,5 +1,3 @@
-import { createApiError } from '@algolia/transporter';
-
 import { TestSuite } from '../../../../client-common/src/__tests__/TestSuite';
 
 const testSuite = new TestSuite('api_keys');
@@ -54,9 +52,11 @@ test(testSuite.testName, async () => {
   const deleteApiKeyResponse = await client.deleteApiKey(addApiKeyResponse.key).wait();
   expect(Object.keys(deleteApiKeyResponse)).toEqual(['deletedAt']);
 
-  await expect(client.getApiKey(addApiKeyResponse.key)).rejects.toMatchObject(
-    createApiError('Key does not exist', 404)
-  );
+  await expect(client.getApiKey(addApiKeyResponse.key)).rejects.toMatchObject({
+    name: 'ApiError',
+    message: 'Key does not exist',
+    status: 404,
+  });
 
   const restoreApiKeyResponse = await client.restoreApiKey(addApiKeyResponse.key).wait();
   expect(Object.keys(restoreApiKeyResponse)).toEqual(['createdAt']);

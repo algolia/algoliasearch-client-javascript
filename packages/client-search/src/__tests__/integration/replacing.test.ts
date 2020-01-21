@@ -1,5 +1,3 @@
-import { createApiError } from '@algolia/transporter';
-
 import { Rule, Synonym } from '../..';
 import { createMultiWaitable } from '../../../../client-common/src/__tests__/helpers';
 import { TestSuite } from '../../../../client-common/src/__tests__/TestSuite';
@@ -63,20 +61,27 @@ test(testSuite.testName, async () => {
 
   await createMultiWaitable(responses).wait();
 
-  await expect(index.getObject('one')).rejects.toEqual(
-    createApiError('ObjectID does not exist', 404)
-  );
+  await expect(index.getObject('one')).rejects.toMatchObject({
+    name: 'ApiError',
+    message: 'ObjectID does not exist',
+    status: 404,
+  });
+
   await expect(index.getObject('two')).resolves.toEqual({ objectID: 'two' });
 
   await expect(index.getSynonym('two')).resolves.toEqual(synonym2);
-  await expect(index.getSynonym('one')).rejects.toEqual(
-    createApiError('Synonym set does not exist', 404)
-  );
+  await expect(index.getSynonym('one')).rejects.toMatchObject({
+    name: 'ApiError',
+    message: 'Synonym set does not exist',
+    status: 404,
+  });
 
   await expect(index.getRule('two')).resolves.toEqual(rule2);
-  await expect(index.getRule('one')).rejects.toEqual(
-    createApiError('ObjectID does not exist', 404)
-  );
+  await expect(index.getRule('one')).rejects.toMatchObject({
+    name: 'ApiError',
+    message: 'ObjectID does not exist',
+    status: 404,
+  });
 
   expect(replaceAllObjectsResponse.objectIDs).toEqual(['two']);
   expect(replaceAllObjectsResponse.taskIDs).toHaveLength(3);

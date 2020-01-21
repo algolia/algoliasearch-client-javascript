@@ -1,7 +1,7 @@
 import { Requester } from '@algolia/requester-common';
 import { anything, deepEqual, spy, verify, when } from 'ts-mockito';
 
-import { createApiError, createStatefulHost, Transporter } from '../..';
+import { createStatefulHost, Transporter } from '../..';
 import { createRetryableOptions } from '../../concerns/createRetryableOptions';
 import { createStatelessHost } from '../../createStatelessHost';
 import { CallEnum, HostStatusEnum } from '../../types';
@@ -151,9 +151,11 @@ describe('retry strategy', () => {
       isTimedOut: false,
     });
 
-    await expect(transporter.write(transporterRequest)).rejects.toEqual(
-      createApiError('Invalid Application ID', 404)
-    );
+    await expect(transporter.write(transporterRequest)).rejects.toMatchObject({
+      name: 'ApiError',
+      message: 'Invalid Application ID',
+      status: 404,
+    });
 
     verify(requesterMock.send(anything())).once();
 

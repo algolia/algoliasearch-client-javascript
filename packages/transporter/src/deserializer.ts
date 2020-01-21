@@ -1,7 +1,6 @@
 import { Response } from '@algolia/requester-common';
 
-import { createApiError } from '.';
-import { createDeserializationError } from './errors/createDeserializationError';
+import { createApiError, createDeserializationError, StackFrame } from '.';
 
 export function deserializeSuccess<TObject>(response: Response): TObject {
   // eslint-disable-next-line functional/no-try-statement
@@ -12,7 +11,10 @@ export function deserializeSuccess<TObject>(response: Response): TObject {
   }
 }
 
-export function deserializeFailure({ content, status }: Response): Error {
+export function deserializeFailure(
+  { content, status }: Response,
+  stackFrame: readonly StackFrame[]
+): Error {
   // eslint-disable-next-line functional/no-let
   let message = content;
 
@@ -23,5 +25,5 @@ export function deserializeFailure({ content, status }: Response): Error {
     // ..
   }
 
-  return createApiError(message, status);
+  return createApiError(message, status, stackFrame);
 }

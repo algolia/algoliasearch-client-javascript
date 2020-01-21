@@ -1,5 +1,3 @@
-import { createApiError } from '@algolia/transporter';
-
 import { Synonym, SynonymEnum } from '../..';
 import { createMultiWaitable } from '../../../../client-common/src/__tests__/helpers';
 import { TestSuite } from '../../../../client-common/src/__tests__/TestSuite';
@@ -97,9 +95,11 @@ test(testSuite.testName, async () => {
 
   await index.deleteSynonym('gba').wait();
 
-  await expect(index.getSynonym('gba')).rejects.toEqual(
-    createApiError('Synonym set does not exist', 404)
-  );
+  await expect(index.getSynonym('gba')).rejects.toMatchObject({
+    name: 'ApiError',
+    message: 'Synonym set does not exist',
+    status: 404,
+  });
 
   await index.clearSynonyms().wait();
 

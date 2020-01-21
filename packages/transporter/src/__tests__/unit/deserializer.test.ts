@@ -1,7 +1,7 @@
 import { Requester } from '@algolia/requester-common';
 import { anything, spy, when } from 'ts-mockito';
 
-import { createApiError, Transporter } from '../..';
+import { Transporter } from '../..';
 import { createFakeRequester, createFixtures } from '../fixtures';
 
 let requesterMock: Requester;
@@ -59,9 +59,11 @@ describe('deserializer', () => {
       isTimedOut: false,
     });
 
-    await expect(transporter.read(transporterRequest)).rejects.toEqual(
-      createApiError('User not found', 404)
-    );
+    await expect(transporter.read(transporterRequest)).rejects.toMatchObject({
+      name: 'ApiError',
+      message: 'User not found',
+      status: 404,
+    });
   });
 
   it('deserializes fail non json responses', async () => {
@@ -71,8 +73,53 @@ describe('deserializer', () => {
       isTimedOut: false,
     });
 
-    await expect(transporter.read(transporterRequest)).rejects.toEqual(
-      createApiError('String message for some reason', 404)
-    );
+    await expect(transporter.read(transporterRequest)).rejects.toMatchObject({
+      name: 'ApiError',
+      message: 'String message for some reason',
+      status: 404,
+    });
+  });
+
+  it('includes stack trace', async () => {
+    when(requesterMock.send(anything())).thenResolve({
+      content: 'Server error',
+      status: 404,
+      isTimedOut: false,
+    });
+
+    await expect(transporter.read(transporterRequest)).rejects.toEqual({
+      name: 'ApiError',
+      message: 'Server error',
+      status: 404,
+      stackTrace: [
+        {
+          host: {
+            accept: 1,
+            protocol: 'https',
+            url: 'read.com',
+          },
+          request: {
+            connectTimeout: 1,
+            data: '{}',
+            headers: {
+              'content-type': 'application/x-www-form-urlencoded',
+              'x-algolia-api-key': 'xxxx',
+              'x-algolia-application-id': 'appId',
+              'x-default-header': 'Default value',
+            },
+            method: 'POST',
+            responseTimeout: 2,
+            url:
+              'https://read.com/save?x-algolia-agent=Algolia%20for%20JavaScript%20(4.0.0-beta.14)%3B%20Browser',
+          },
+          response: {
+            content: 'Server error',
+            isTimedOut: false,
+            status: 404,
+          },
+          triesLeft: 1,
+        },
+      ],
+    });
   });
 });

@@ -9,5 +9,6 @@ export * from './createTransporter';
 export * from './createUserAgent';
 export * from './deserializer';
 export * from './serializer';
+export * from './stackTrace';
 export * from './errors/index';
 export * from './types/index';

@@ -1,5 +1,5 @@
 import { createRetryablePromise } from '@algolia/client-common';
-import { createApiError, Transporter } from '@algolia/transporter';
+import { Transporter } from '@algolia/transporter';
 
 import { ABTest, Variant } from '../..';
 import { createFaker } from '../../../../client-common/src/__tests__/createFaker';
@@ -133,7 +133,9 @@ test(testSuite.testName, async () => {
   await index1.waitTask(deleteABTestResponse.taskID);
 
   // Check the AB test doesn't exist anymore
-  await expect(analytics.getABTest(abTestID)).rejects.toEqual(
-    createApiError('ABTestID not found', 404)
-  );
+  await expect(analytics.getABTest(abTestID)).rejects.toMatchObject({
+    name: 'ApiError',
+    message: 'ABTestID not found',
+    status: 404,
+  });
 });

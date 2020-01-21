@@ -1,4 +1,4 @@
-import { MethodEnum } from '@algolia/requester-common';
+import { MethodEnum, Response } from '@algolia/requester-common';
 
 import {
   createRetryError,
@@ -12,6 +12,8 @@ import {
   serializeHeaders,
   serializeUrl,
   StackFrame,
+  stackFrameWithoutCredentials,
+  stackTraceWithoutCredentials,
   StatelessHost,
   Transporter,
 } from '..';
@@ -60,7 +62,7 @@ export function retryableRequest<TResponse>(
      */
     const host = hosts.pop(); // eslint-disable-line functional/immutable-data
     if (host === undefined) {
-      throw createRetryError(stackTrace);
+      throw createRetryError(stackTraceWithoutCredentials(stackTrace));
     }
 
     const payload = {
@@ -72,22 +74,29 @@ export function retryableRequest<TResponse>(
       responseTimeout: getTimeout(timeoutsCount, requestOptions.timeout as number),
     };
 
+    /**
+     * The stackFrame is pushed to the stackTrace so we
+     * can have information about onRetry and onFailure
+     * decisions.
+     */
+    const pushToStackTrace = (response: Response): StackFrame => {
+      const stackFrame: StackFrame = {
+        request: payload,
+        response,
+        host,
+        triesLeft: hosts.length,
+      };
+
+      // eslint-disable-next-line functional/immutable-data
+      stackTrace.push(stackFrame);
+
+      return stackFrame;
+    };
+
     const decisions: Outcomes<TResponse> = {
       onSucess: response => deserializeSuccess(response),
       onRetry(response) {
-        const stackFrame: StackFrame = {
-          request: payload,
-          response,
-          host,
-          triesLeft: hosts.length,
-        };
-
-        /**
-         * The stackFrace is pushed to the stackTrace so we
-         * can have information about the failures once a
-         * retry error is thrown.
-         */
-        stackTrace.push(stackFrame); // eslint-disable-line functional/immutable-data
+        const stackFrame = pushToStackTrace(response);
 
         /**
          * If response is a timeout, we increaset the number of
@@ -103,7 +112,7 @@ export function retryableRequest<TResponse>(
            * the end user to debug / store stack frames even
            * when a retry error does not happen.
            */
-          transporter.logger.debug('Retryable failure', stackFrame),
+          transporter.logger.info('Retryable failure', stackFrameWithoutCredentials(stackFrame)),
 
           /**
            * We also store the state of the host in failure cases. If the host, is
@@ -120,7 +129,9 @@ export function retryableRequest<TResponse>(
         ]).then(() => retry(hosts, getTimeout));
       },
       onFail(response) {
-        throw deserializeFailure(response);
+        pushToStackTrace(response);
+
+        throw deserializeFailure(response, stackTraceWithoutCredentials(stackTrace));
       },
     };
 
