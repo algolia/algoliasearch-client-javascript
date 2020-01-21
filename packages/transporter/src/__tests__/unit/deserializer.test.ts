@@ -91,7 +91,7 @@ describe('deserializer', () => {
       name: 'ApiError',
       message: 'Server error',
       status: 404,
-      stackTrace: [
+      transporterStackTrace: [
         {
           host: {
             accept: 1,

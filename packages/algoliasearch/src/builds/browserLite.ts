@@ -103,4 +103,4 @@ export type SearchClient = BaseSearchClient & {
   ) => Readonly<Promise<readonly SearchForFacetValuesResponse[]>>;
 };
 
-export * from '../types';
+export { WithoutCredentials, AlgoliaSearchOptions } from '../types';

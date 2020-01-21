@@ -29,9 +29,9 @@ beforeEach(() => {
 
 const transporterRequest = createFixtures().transporterRequest();
 
-describe('stacktrace serialization', () => {
+describe('transporter stack trace serialization', () => {
   it('removes credentials', async () => {
-    const stackTrace = [
+    const transporterStackTrace = [
       {
         host: {
           accept: 1,
@@ -92,7 +92,7 @@ describe('stacktrace serialization', () => {
       name: 'RetryError',
       message:
         'Unreachable hosts - your application id may be incorrect. If the error persists, contact support@algolia.com.',
-      stackTrace,
+      transporterStackTrace,
     });
 
     // assert headers did not got mutated
@@ -104,7 +104,11 @@ describe('stacktrace serialization', () => {
     });
 
     // assert logger received retriable failures
-    await verify(loggerMock.info('Retryable failure', deepEqual(stackTrace[0]))).times(1);
-    await verify(loggerMock.info('Retryable failure', deepEqual(stackTrace[1]))).times(1);
+    await verify(loggerMock.info('Retryable failure', deepEqual(transporterStackTrace[0]))).times(
+      1
+    );
+    await verify(loggerMock.info('Retryable failure', deepEqual(transporterStackTrace[1]))).times(
+      1
+    );
   });
 });

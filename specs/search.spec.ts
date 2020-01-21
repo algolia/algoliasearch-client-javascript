@@ -29,10 +29,15 @@ const objects = [
   }
 ];
 
+// @ts-ignore
 const credentials = {
   appId: `${process.env.ALGOLIA_APPLICATION_ID_1}`,
   apiKey: `${process.env.ALGOLIA_SEARCH_KEY_1}`
 };
+
+// @ts-ignore
+const version = require("../lerna.json").version;
+
 
 ["algoliasearch-lite.com", "algoliasearch.com"].forEach(preset => {
   describe(`search features - ${preset}`, () => {
@@ -118,7 +123,7 @@ const credentials = {
         ];
         return client
           .search(params)
-          .then(function (response) {
+          .then(function(response) {
             return Promise.all([response, client.search(params)]);
           })
           .then(done);
@@ -130,20 +135,14 @@ const credentials = {
       expect(queryID).toBe(queryID2);
     });
 
-    it("throws errors", async () => {
-      const err = await browser.executeAsync(function(credentials, done) {
-        const client = algoliasearch(credentials.appId, credentials.apiKey);
 
-        const index = client.initIndex("SDFGHJKL");
-
-        index.search("").then(undefined, done);
-      }, credentials);
-
-      expect(err).toEqual({
-        name: "ApiError",
-        status: 404,
-        message: "Index SDFGHJKL does not exist"
+    it("contains version", async () => {
+      const browserVersion: string = await browser.executeAsync(function(done) {
+        done(algoliasearch.version);
       });
+      
+      expect(browserVersion).toBe(version);
+      expect(browserVersion.startsWith('4.')).toBe(true);
     });
   });
 });

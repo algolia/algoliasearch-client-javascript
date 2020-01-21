@@ -5,5 +5,5 @@ export type RetryError = Error & {
    * Contains report of stack frames of the
    * execution of a certain request.
    */
-  readonly stackTrace: readonly StackFrame[];
+  readonly transporterStackTrace: readonly StackFrame[];
 };
