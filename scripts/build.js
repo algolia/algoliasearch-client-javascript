@@ -2,7 +2,6 @@
 
 const fs = require('fs-extra');
 const path = require('path');
-const chalk = require('chalk');
 const execa = require('execa');
 
 const targets = fs.readdirSync('packages').filter(f => fs.statSync(`packages/${f}`).isDirectory());
@@ -41,7 +40,7 @@ async function buildDefinition(target, config = '') {
   const pkg = require(`${pkgDir}/package.json`);
 
   console.log();
-  console.log(chalk.bold(chalk.yellow(`Rolling up type definitions for ${target}...`)));
+  console.log(`Rolling up type definitions for ${target}...`);
 
   // build types
   const { Extractor, ExtractorConfig } = require('@microsoft/api-extractor');
@@ -67,7 +66,7 @@ async function buildDefinition(target, config = '') {
       );
       await fs.writeFile(dtsPath, `${existing}\n${toAdd.join('\n')}`);
     }
-    console.log(chalk.bold(chalk.green(`API Extractor completed successfully.`)));
+    console.log(`API Extractor completed successfully.`);
   } else {
     console.error(
       `API Extractor completed with ${result.errorCount} errors` +

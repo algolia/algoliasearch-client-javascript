@@ -1,3 +1,4 @@
+import { version } from '@algolia/client-common';
 import { Requester } from '@algolia/requester-common';
 import { anything, spy, when } from 'ts-mockito';
 
@@ -109,8 +110,7 @@ describe('deserializer', () => {
             },
             method: 'POST',
             responseTimeout: 2,
-            url:
-              'https://read.com/save?x-algolia-agent=Algolia%20for%20JavaScript%20(4.0.0-beta.14)%3B%20Browser',
+            url: `https://read.com/save?x-algolia-agent=Algolia%20for%20JavaScript%20(${version})%3B%20Browser`,
           },
           response: {
             content: 'Server error',
