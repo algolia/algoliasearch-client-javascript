@@ -1,15 +1,31 @@
-import { createRetryablePromise } from '..';
+import {
+  deleteIndex,
+  findObject,
+  getObjectPosition,
+  multipleBatch,
+  multipleGetObjects,
+  saveObjects,
+  setSettings,
+} from '@algolia/client-search';
+
+import { addMethods, createRetryablePromise } from '..';
 import algoliasearchForBrowser from '../../../algoliasearch/src/builds/browser';
+import algoliasearchForBrowserLite from '../../../algoliasearch/src/builds/browserLite';
 import algoliasearchForNode, { SearchIndex } from '../../../algoliasearch/src/builds/node';
 
 /* eslint functional/no-class: 0 */
 export class TestSuite {
   public readonly testName: string;
 
+  public readonly isBrowserLite: boolean = testing.isBrowserLite();
+
   public readonly isBrowser: boolean = testing.isBrowser();
 
   // @ts-ignore
-  public readonly algoliasearch: typeof algoliasearchForNode = this.isBrowser
+  // eslint-disable-next-line no-nested-ternary
+  public readonly algoliasearch: typeof algoliasearchForNode = this.isBrowserLite
+    ? algoliasearchForBrowserLite
+    : this.isBrowser
     ? algoliasearchForBrowser
     : algoliasearchForNode;
 
@@ -44,7 +60,17 @@ export class TestSuite {
     appIdEnv: string = 'ALGOLIA_APPLICATION_ID_1',
     apiKeyEnv: string = 'ALGOLIA_ADMIN_KEY_1'
   ) {
-    return this.algoliasearch(`${process.env[appIdEnv]}`, `${process.env[apiKeyEnv]}`);
+    let client = this.algoliasearch(`${process.env[appIdEnv]}`, `${process.env[apiKeyEnv]}`);
+
+    if (testing.isBrowserLite()) {
+      // @ts-ignore
+      client = addMethods(client, {
+        multipleBatch,
+        multipleGetObjects,
+      });
+    }
+
+    return client;
   }
 
   public makeRecommendationClient(
@@ -55,7 +81,18 @@ export class TestSuite {
   }
 
   public makeIndex(indexName?: string) {
-    const index = this.makeSearchClient().initIndex(indexName || this.makeIndexName());
+    let index = this.makeSearchClient().initIndex(indexName || this.makeIndexName());
+
+    if (testing.isBrowserLite()) {
+      // @ts-ignore
+      index = addMethods(index, {
+        saveObjects,
+        setSettings,
+        delete: deleteIndex,
+        findObject,
+        getObjectPosition,
+      });
+    }
 
     this.indices.push(index);
 

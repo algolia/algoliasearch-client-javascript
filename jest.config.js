@@ -1,4 +1,4 @@
-/* eslint-disable import/no-commonjs, functional/immutable-data */
+/* eslint-disable import/no-commonjs, functional/immutable-data, sonarjs/no-duplicate-string */
 const { pathsToModuleNameMapper } = require('ts-jest/utils');
 
 const { compilerOptions } = require('./tsconfig');
@@ -28,6 +28,35 @@ const config = {
 
 module.exports = {
   projects: [
+    Object.assign(
+      {
+        displayName: 'browser-lite',
+        testEnvironment: 'jsdom',
+        roots: ['packages/client-search/src/__tests__/integration'],
+        testPathIgnorePatterns: [
+          'packages/client-search/src/__tests__/integration/api-keys.test.ts',
+          'packages/client-search/src/__tests__/integration/batching.test.ts',
+          'packages/client-search/src/__tests__/integration/chunked-batch.test.ts',
+          'packages/client-search/src/__tests__/integration/copy-and-move-index.test.ts',
+          'packages/client-search/src/__tests__/integration/exists.test.ts',
+          'packages/client-search/src/__tests__/integration/get-logs.test.ts',
+          'packages/client-search/src/__tests__/integration/indexing.test.ts',
+          'packages/client-search/src/__tests__/integration/mcm.test.ts',
+          'packages/client-search/src/__tests__/integration/replacing.test.ts',
+          'packages/client-search/src/__tests__/integration/rules.test.ts',
+          'packages/client-search/src/__tests__/integration/secured-api-keys.test.ts',
+          'packages/client-search/src/__tests__/integration/settings.test.ts',
+          'packages/client-search/src/__tests__/integration/synonyms.test.ts',
+        ],
+        globals: {
+          environment: 'browser-lite',
+          isBrowser: true,
+          'ts-jest': { isolatedModules: true },
+          window: {},
+        },
+      },
+      config
+    ),
     Object.assign(
       {
         displayName: 'browser',

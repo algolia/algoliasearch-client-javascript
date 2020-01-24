@@ -5,6 +5,7 @@ declare global {
   const testing: {
     readonly environment: () => string;
     readonly isBrowser: () => boolean;
+    readonly isBrowserLite: () => boolean;
   };
 }
 
