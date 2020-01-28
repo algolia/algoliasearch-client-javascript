@@ -82,6 +82,7 @@ module.exports = {
         testPathIgnorePatterns: [
           'packages/requester-browser-xhr/*',
           'packages/cache-browser-local-storage/*',
+          'packages/algoliasearch/src/__tests__/lite.test.ts',
           'packages/client-search/src/__tests__/integration/mcm.test.ts',
         ],
         globals: {
