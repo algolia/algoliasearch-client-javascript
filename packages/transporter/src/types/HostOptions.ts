@@ -7,9 +7,9 @@ export type HostOptions = {
   readonly url: string;
 
   /**
-   * The type of host.
+   * The type of host. Defaults to `Any`.
    */
-  readonly accept: CallType;
+  readonly accept?: CallType;
 
   /**
    * The protocol. Defaults to `https`.

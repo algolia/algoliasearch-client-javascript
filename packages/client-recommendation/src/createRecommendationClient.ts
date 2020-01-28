@@ -5,7 +5,7 @@ import {
   createAuth,
   CreateClient,
 } from '@algolia/client-common';
-import { CallEnum, createTransporter } from '@algolia/transporter';
+import { createTransporter } from '@algolia/transporter';
 
 import { RecommendationClient, RecommendationClientOptions } from '.';
 
@@ -17,7 +17,7 @@ export const createRecommendationClient: CreateClient<
   const auth = createAuth(AuthMode.WithinHeaders, options.appId, options.apiKey);
 
   const transporter = createTransporter({
-    hosts: [{ url: `recommendation.${region}.algolia.com`, accept: CallEnum.Any }],
+    hosts: [{ url: `recommendation.${region}.algolia.com` }],
     ...options,
     headers: {
       ...auth.headers(),

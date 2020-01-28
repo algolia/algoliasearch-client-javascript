@@ -1,7 +1,9 @@
 import { createInMemoryCache } from '@algolia/cache-in-memory';
 import { version } from '@algolia/client-common';
-import { CallEnum, createStatelessHost, createUserAgent } from '@algolia/transporter';
+import { SearchOptions } from '@algolia/client-search';
+import { createStatelessHost, createUserAgent, RequestOptions } from '@algolia/transporter';
 
+import { AlgoliaSearchOptions } from '..';
 import { TestSuite } from '../../../client-common/src/__tests__/TestSuite';
 
 const algoliasearch = new TestSuite('search').algoliasearch;
@@ -58,7 +60,7 @@ describe('default preset', () => {
       headers: {
         header: 'foo',
       },
-      hosts: [{ accept: CallEnum.Any, url: 'foo.com' }],
+      hosts: [{ url: 'foo.com' }],
     });
 
     // First, all should be the same, except hosts cache.
@@ -100,9 +102,7 @@ describe('default preset', () => {
       'x-algolia-api-key': 'apiKey',
       header: 'foo',
     });
-    expect(customClient.transporter.hosts).toEqual([
-      createStatelessHost({ accept: CallEnum.Any, url: 'foo.com' }),
-    ]);
+    expect(customClient.transporter.hosts).toEqual([createStatelessHost({ url: 'foo.com' })]);
 
     expect(customClient.initAnalytics().transporter.queryParameters).toEqual({});
     expect(customClient.initRecommendation().transporter.headers).toEqual({
@@ -111,7 +111,7 @@ describe('default preset', () => {
       'x-algolia-api-key': 'apiKey',
     });
     expect(customClient.initAnalytics().transporter.hosts).not.toEqual([
-      createStatelessHost({ accept: CallEnum.Any, url: 'foo.com' }),
+      createStatelessHost({ url: 'foo.com' }),
     ]);
 
     expect(customClient.initRecommendation().transporter.queryParameters).not.toEqual({
@@ -124,7 +124,7 @@ describe('default preset', () => {
       'x-algolia-api-key': 'apiKey',
     });
     expect(customClient.initRecommendation().transporter.hosts).not.toEqual([
-      createStatelessHost({ accept: CallEnum.Any, url: 'foo.com' }),
+      createStatelessHost({ url: 'foo.com' }),
     ]);
   });
 
@@ -145,5 +145,45 @@ describe('default preset', () => {
     if (!testing.isBrowser()) {
       expect(client).toHaveProperty('destroy');
     }
+  });
+
+  it('allows to use places', async () => {
+    const places = (appId: string = '', apiKey: string = '', options?: AlgoliaSearchOptions) => {
+      const placesClient = algoliasearch(appId, apiKey, {
+        hosts: [
+          'places-dsn.algolia.net',
+          'places-1.algolianet.com',
+          'places-2.algolianet.com',
+          'places-3.algolianet.com',
+        ].map(url => {
+          return { url };
+        }),
+        ...options,
+      });
+
+      return (query: string, requestOptions?: RequestOptions & SearchOptions) => {
+        return placesClient.transporter.read(
+          {
+            method: 'POST',
+            path: '1/places/query',
+            data: {
+              query,
+            },
+            cacheable: true,
+          },
+          requestOptions
+        );
+      };
+    };
+
+    const search = places('', '');
+
+    const results = await search('Portugal');
+
+    // @ts-ignore
+    expect(results.query).toBe('Portugal');
+
+    // @ts-ignore
+    expect(results.hits[0].country_code).toBe('pt');
   });
 });

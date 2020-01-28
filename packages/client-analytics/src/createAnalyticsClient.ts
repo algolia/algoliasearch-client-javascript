@@ -5,7 +5,7 @@ import {
   createAuth,
   CreateClient,
 } from '@algolia/client-common';
-import { CallEnum, createTransporter } from '@algolia/transporter';
+import { createTransporter } from '@algolia/transporter';
 
 import { AnalyticsClient, AnalyticsClientOptions } from '.';
 
@@ -17,7 +17,7 @@ export const createAnalyticsClient: CreateClient<
   const auth = createAuth(AuthMode.WithinHeaders, options.appId, options.apiKey);
 
   const transporter = createTransporter({
-    hosts: [{ url: `analytics.${region}.algolia.com`, accept: CallEnum.Any }],
+    hosts: [{ url: `analytics.${region}.algolia.com` }],
     ...options,
     headers: {
       ...auth.headers(),

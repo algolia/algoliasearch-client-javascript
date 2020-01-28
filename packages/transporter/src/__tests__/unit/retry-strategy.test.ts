@@ -4,7 +4,7 @@ import { anything, deepEqual, spy, verify, when } from 'ts-mockito';
 import { createStatefulHost, Transporter } from '../..';
 import { createRetryableOptions } from '../../concerns/createRetryableOptions';
 import { createStatelessHost } from '../../createStatelessHost';
-import { CallEnum, HostStatusEnum } from '../../types';
+import { HostStatusEnum } from '../../types';
 import { createFakeRequester, createFixtures } from '../fixtures';
 
 let requesterMock: Requester;
@@ -222,9 +222,7 @@ describe('retry strategy', () => {
     await transporter.hostsCache.set(transporter.hosts[0], {
       ...createStatefulHost(
         createStatelessHost({
-          protocol: 'https',
           url: 'read.com',
-          accept: CallEnum.Any,
         })
       ),
       lastUpdate: Date.now() - 60 * 2 * 1000 - 20,

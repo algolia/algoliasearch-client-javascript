@@ -6,7 +6,7 @@ import {
   CreateClient,
   shuffle,
 } from '@algolia/client-common';
-import { CallEnum, createTransporter } from '@algolia/transporter';
+import { CallEnum, createTransporter, HostOptions } from '@algolia/transporter';
 
 import { SearchClient, SearchClientOptions } from './types';
 
@@ -23,14 +23,14 @@ export const createSearchClient: CreateClient<
   );
 
   const transporter = createTransporter({
-    hosts: [
+    hosts: ([
       { url: `${appId}-dsn.algolia.net`, accept: CallEnum.Read },
       { url: `${appId}.algolia.net`, accept: CallEnum.Write },
-    ].concat(
+    ] as readonly HostOptions[]).concat(
       shuffle([
-        { url: `${appId}-1.algolianet.com`, accept: CallEnum.Any },
-        { url: `${appId}-2.algolianet.com`, accept: CallEnum.Any },
-        { url: `${appId}-3.algolianet.com`, accept: CallEnum.Any },
+        { url: `${appId}-1.algolianet.com` },
+        { url: `${appId}-2.algolianet.com` },
+        { url: `${appId}-3.algolianet.com` },
       ])
     ),
     ...options,

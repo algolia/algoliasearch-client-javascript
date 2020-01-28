@@ -39,7 +39,7 @@ export function createFixtures() {
         hosts: [
           { url: 'read.com', accept: CallEnum.Read },
           { url: 'write.com', accept: CallEnum.Write },
-          { url: 'read-and-write.com', accept: CallEnum.Any },
+          { url: 'read-and-write.com' },
         ],
         requester,
         hostsCache: createInMemoryCache(),

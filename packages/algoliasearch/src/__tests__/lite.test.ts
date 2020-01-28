@@ -1,8 +1,9 @@
 import { createInMemoryCache } from '@algolia/cache-in-memory';
 import { version } from '@algolia/client-common';
-import { CallEnum, createStatelessHost, createUserAgent } from '@algolia/transporter';
+import { SearchOptions } from '@algolia/client-search';
+import { createStatelessHost, createUserAgent, RequestOptions } from '@algolia/transporter';
 
-import algoliasearch from '../builds/browserLite';
+import algoliasearch, { AlgoliaSearchOptions } from '../builds/browserLite';
 
 const client = algoliasearch('appId', 'apiKey');
 
@@ -50,7 +51,7 @@ describe('lite preset', () => {
       headers: {
         header: 'foo',
       },
-      hosts: [{ accept: CallEnum.Any, url: 'foo.com' }],
+      hosts: [{ url: 'foo.com' }],
     });
 
     expect(customClient.transporter.hostsCache).toBe(cache);
@@ -68,8 +69,46 @@ describe('lite preset', () => {
       'content-type': 'application/x-www-form-urlencoded',
       header: 'foo',
     });
-    expect(customClient.transporter.hosts).toEqual([
-      createStatelessHost({ accept: CallEnum.Any, url: 'foo.com' }),
-    ]);
+    expect(customClient.transporter.hosts).toEqual([createStatelessHost({ url: 'foo.com' })]);
+  });
+
+  it('allows to use places', async () => {
+    const places = (appId: string = '', apiKey: string = '', options?: AlgoliaSearchOptions) => {
+      const placesClient = algoliasearch(appId, apiKey, {
+        hosts: [
+          'places-dsn.algolia.net',
+          'places-1.algolianet.com',
+          'places-2.algolianet.com',
+          'places-3.algolianet.com',
+        ].map(url => {
+          return { url };
+        }),
+        ...options,
+      });
+
+      return (query: string, requestOptions?: RequestOptions & SearchOptions) => {
+        return placesClient.transporter.read(
+          {
+            method: 'POST',
+            path: '1/places/query',
+            data: {
+              query,
+            },
+            cacheable: true,
+          },
+          requestOptions
+        );
+      };
+    };
+
+    const search = places('', '');
+
+    const results = await search('Portugal');
+
+    // @ts-ignore
+    expect(results.query).toBe('Portugal');
+
+    // @ts-ignore
+    expect(results.hits[0].country_code).toBe('pt');
   });
 });

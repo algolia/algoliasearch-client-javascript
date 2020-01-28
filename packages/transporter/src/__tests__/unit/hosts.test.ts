@@ -1,7 +1,7 @@
 import { Requester } from '@algolia/requester-common';
 import { anything, deepEqual, spy, verify, when } from 'ts-mockito';
 
-import { Transporter } from '../..';
+import { CallEnum, createStatelessHost, Transporter } from '../..';
 import { createFakeRequester, createFixtures } from '../fixtures';
 
 let requesterMock: Requester;
@@ -58,5 +58,15 @@ describe('selection of hosts', (): void => {
         )
       )
     ).once();
+  });
+
+  it('defaults to `https` and `any`', () => {
+    const host = createStatelessHost({ url: 'foo.com' });
+
+    expect(host).toEqual({
+      url: 'foo.com',
+      accept: CallEnum.Any,
+      protocol: 'https',
+    });
   });
 });
