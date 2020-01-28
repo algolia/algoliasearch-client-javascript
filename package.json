@@ -37,7 +37,7 @@
     "@rollup/plugin-node-resolve": "7.0.0",
     "@types/jest": "24.9.1",
     "@types/node": "13.5.0",
-    "@typescript-eslint/eslint-plugin": "2.17.0",
+    "@typescript-eslint/eslint-plugin": "2.18.0",
     "@typescript-eslint/parser": "2.17.0",
     "@wdio/cli": "5.18.6",
     "@wdio/jasmine-framework": "5.18.6",
