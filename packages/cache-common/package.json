@@ -4,12 +4,12 @@
   "private": false,
   "description": "Common interfaces for promise-based caching libraries",
   "license": "MIT",
-  "files": [
-    "index.js",
-    "dist"
-  ],
   "sideEffects": false,
   "main": "index.js",
   "module": "dist/cache-common.esm.js",
-  "types": "dist/cache-common.d.ts"
+  "types": "dist/cache-common.d.ts",
+  "files": [
+    "index.js",
+    "dist"
+  ]
 }

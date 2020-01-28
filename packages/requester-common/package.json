@@ -4,12 +4,12 @@
   "private": false,
   "description": "Common interfaces for promise-based request libraries",
   "license": "MIT",
-  "files": [
-    "index.js",
-    "dist"
-  ],
   "sideEffects": false,
   "main": "index.js",
   "module": "dist/requester-common.esm.js",
-  "types": "dist/requester-common.d.ts"
+  "types": "dist/requester-common.d.ts",
+  "files": [
+    "index.js",
+    "dist"
+  ]
 }

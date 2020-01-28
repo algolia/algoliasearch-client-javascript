@@ -3,14 +3,14 @@
   "version": "4.0.0-beta.15",
   "private": false,
   "license": "MIT",
-  "files": [
-    "index.js",
-    "dist"
-  ],
   "sideEffects": false,
   "main": "index.js",
   "module": "dist/client-analytics.esm.js",
   "types": "dist/client-analytics.d.ts",
+  "files": [
+    "index.js",
+    "dist"
+  ],
   "dependencies": {
     "@algolia/cache-common": "4.0.0-beta.15",
     "@algolia/client-common": "4.0.0-beta.15",

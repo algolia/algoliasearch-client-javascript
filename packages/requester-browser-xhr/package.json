@@ -4,14 +4,14 @@
   "private": false,
   "description": "Promise-based request library for browser using xhr.",
   "license": "MIT",
-  "files": [
-    "index.js",
-    "dist"
-  ],
   "sideEffects": false,
   "main": "index.js",
   "module": "dist/requester-browser-xhr.esm.js",
   "types": "dist/requester-browser-xhr.d.ts",
+  "files": [
+    "index.js",
+    "dist"
+  ],
   "dependencies": {
     "@algolia/requester-common": "4.0.0-beta.15"
   }

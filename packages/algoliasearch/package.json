@@ -4,13 +4,6 @@
   "private": false,
   "description": "A fully-featured and blazing-fast JavaScript API client to interact with Algolia API.",
   "license": "MIT",
-  "files": [
-    "dist",
-    "index.js",
-    "index.d.ts",
-    "lite.js",
-    "lite.d.ts"
-  ],
   "sideEffects": false,
   "main": "index.js",
   "jsdelivr": "./dist/algoliasearch.umd.js",
@@ -20,6 +13,13 @@
     "./lite.js": "./dist/algoliasearch-lite.umd.js"
   },
   "types": "index.d.ts",
+  "files": [
+    "dist",
+    "index.js",
+    "index.d.ts",
+    "lite.js",
+    "lite.d.ts"
+  ],
   "dependencies": {
     "@algolia/cache-browser-local-storage": "4.0.0-beta.15",
     "@algolia/cache-common": "4.0.0-beta.15",
