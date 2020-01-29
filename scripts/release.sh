@@ -100,7 +100,7 @@ read -p "=> when ready, press [Y/y] to push to github and publish the package. (
 if [[ ! $REPLY =~ ^[Yy]$ ]]; then exit 1; fi
 
 printf "\n${GREEN}[INFO]${NC} Committing changes" 
-git commit -m "release: $newVersion"
+git commit -m "release: $newVersion" --no-verify
 
 printf "\n${GREEN}[INFO]${NC} Creating tag and pushing it" 
 git tag "$newVersion"
