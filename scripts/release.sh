@@ -97,7 +97,6 @@ if [[ -n $(git diff --exit-code) ]]; then
   exit 1
 fi
 
-
 printf "\n\n${GREEN}[INFO]${NC} almost done, check everything in another terminal tab if you want.\n"
 printf "\n\nAfter this, we are going to push changes, tag them, and publish the package to npm.\n"
 read -p "=> when ready, press [Y/y] to push to github and publish the package. (y/n): "
