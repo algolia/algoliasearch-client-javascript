@@ -50,7 +50,7 @@ read -e newVersion
 printf "\n"
 
 if [[ "$newVersion" == "" ]]; then
-  printf "\n${GREEN}[INFO]${NC} The version must be provided.\n"
+  printf "\n${RED}[INFO]${NC} The version must be provided.\n"
   exit 1
 fi
 
@@ -89,10 +89,14 @@ fi
 
 yarn build
 
+printf "${GREEN}[INFO]${NC} Validating declarations files.\n"
+yarn test:build-declarations
+
 if [[ -n $(git diff --exit-code) ]]; then
   printf "\n${RED}[ERROR]${NC} there is unstaged files.\n"
   exit 1
 fi
+
 
 printf "\n\n${GREEN}[INFO]${NC} almost done, check everything in another terminal tab if you want.\n"
 printf "\n\nAfter this, we are going to push changes, tag them, and publish the package to npm.\n"

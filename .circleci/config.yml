@@ -36,7 +36,7 @@ defaults: &defaults
 version: 2.1
 jobs:
   test_build:
-    description: Testing build size
+    description: Testing build & Test Size & Declarations File
     parameters:
       version:
         type: string
@@ -51,8 +51,14 @@ jobs:
       - run: *run_yarn_install
       - save_cache: *save_yarn_cache
       - run:
-          name: Build & Test packages size
-          command: yarn build && yarn test:size
+          name: Build
+          command: yarn build
+      - run:
+          name: Test size
+          command: yarn test:build-size
+      - run:
+          name: Validate declarations
+          command: yarn test:build-declarations
 
   test_lint:
     description: Testing coding style
