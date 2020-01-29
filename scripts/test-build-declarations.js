@@ -20,14 +20,21 @@ const NUMBER_OF_DECLARATIONS = 18;
     process.exit(1);
   }
 
-  return Promise.all(
-    declarations.map(file => {
-      return execa('yarn', ['tsc', file, '--noEmit'], {
-        stdio: 'inherit',
-      });
-    })
-  ).catch(err => {
-    console.log(err);
-    process.exit(1);
-  });
+  const check = file => {
+    return execa('yarn', ['tsc', file, '--noEmit'], {
+      stdio: 'inherit',
+    }).catch(err => {
+      console.log(err);
+      process.exit(1);
+    });
+  };
+
+  if (process.env.CIRCLE_BUILD_NUM) {
+    // eslint-disable-next-line functional/no-loop-statement
+    for (const declaration of declarations) {
+      await check(declaration);
+    }
+  } else {
+    await Promise.all(declarations.map(check));
+  }
 })();
