@@ -1,7 +1,12 @@
 import { createInMemoryCache } from '@algolia/cache-in-memory';
-import { version } from '@algolia/client-common';
+import { shuffle, version } from '@algolia/client-common';
 import { SearchOptions } from '@algolia/client-search';
-import { createStatelessHost, createUserAgent, RequestOptions } from '@algolia/transporter';
+import {
+  createStatelessHost,
+  createUserAgent,
+  HostOptions,
+  RequestOptions,
+} from '@algolia/transporter';
 
 import algoliasearch, { AlgoliaSearchOptions } from '../builds/browserLite';
 
@@ -75,14 +80,13 @@ describe('lite preset', () => {
   it('allows to use places', async () => {
     const places = (appId: string = '', apiKey: string = '', options?: AlgoliaSearchOptions) => {
       const placesClient = algoliasearch(appId, apiKey, {
-        hosts: [
-          'places-dsn.algolia.net',
-          'places-1.algolianet.com',
-          'places-2.algolianet.com',
-          'places-3.algolianet.com',
-        ].map(url => {
-          return { url };
-        }),
+        hosts: ([{ url: 'places-dsn.algolia.net' }] as readonly HostOptions[]).concat(
+          shuffle([
+            { url: 'places-1.algolia.net' },
+            { url: 'places-2.algolia.net' },
+            { url: 'places-3.algolia.net' },
+          ])
+        ),
         ...options,
       });
 
