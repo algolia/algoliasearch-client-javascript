@@ -12,7 +12,6 @@
     "dist"
   ],
   "dependencies": {
-    "@algolia/cache-common": "4.0.0-beta.15",
     "@algolia/client-common": "4.0.0-beta.15",
     "@algolia/requester-common": "4.0.0-beta.15",
     "@algolia/transporter": "4.0.0-beta.15"

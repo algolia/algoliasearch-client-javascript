@@ -24,6 +24,7 @@
     "@algolia/cache-browser-local-storage": "4.0.0-beta.15",
     "@algolia/cache-common": "4.0.0-beta.15",
     "@algolia/cache-in-memory": "4.0.0-beta.15",
+    "@algolia/client-account": "4.0.0-beta.15",
     "@algolia/client-analytics": "4.0.0-beta.15",
     "@algolia/client-common": "4.0.0-beta.15",
     "@algolia/client-recommendation": "4.0.0-beta.15",

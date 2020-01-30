@@ -1,3 +1,26 @@
+const { resolve } = require("path");
+
+const PACKAGE_DIR = "./packages";
+
+const noExtraneousOverrides = require("./scripts/packages").map(package => {
+  console.log(resolve(__dirname, PACKAGE_DIR, package));
+
+  return {
+    files: [`${PACKAGE_DIR}/${package}/**/*`],
+    rules: {
+      "import/no-extraneous-dependencies": [
+        "error",
+        {
+          devDependencies: true,
+          optionalDependencies: true,
+          peerDependencies: true,
+          packageDir: [resolve(__dirname, PACKAGE_DIR, package)]
+        }
+      ]
+    }
+  };
+});
+
 module.exports = {
   plugins: ["functional", "sonarjs", "wdio", "simple-import-sort", "promise"],
   extends: [
@@ -83,6 +106,7 @@ module.exports = {
     }
   },
   overrides: [
+    ...noExtraneousOverrides,
     {
       files: ["**/__tests__/**"],
       rules: {
