@@ -19,11 +19,11 @@ printf "\n${RED}[ACTION]${NC} Changes on changelog are not part of this release 
 read -p "is the changelog modified and commited separately? If yes, are you sure? (y/n): "
 if [[ ! $REPLY =~ ^[Yy]$ ]]; then exit 1; fi
 
-releaseBranch='release/v4.0.0'
+releaseBranch='master'
 currentBranch=`git rev-parse --abbrev-ref HEAD` 
 
 if [ "$currentBranch" != "$releaseBranch" ]; then
-  printf "\n${RED}[ERROR]${NC} You must be on release/v4.0.0.\n"
+  printf "\n${RED}[ERROR]${NC} You must be on master branch.\n"
   exit 1
 fi
 
