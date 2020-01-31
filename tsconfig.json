@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "outDir": "dist",
+    "strict": true,
+    "sourceMap": false,
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "allowJs": false,
+    "noUnusedLocals": true,
+    "strictNullChecks": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "experimentalDecorators": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "removeComments": false,
+    "lib": ["esnext", "dom"],
+    "types": ["jest", "node", "webdriverio"],
+    "rootDir": ".",
+    "paths": {
+      "algoliasearch": ["packages/algoliasearch/src/builds/node"],
+      "@algolia/*": ["packages/*/src"]
+    }
+  },
+  "include": ["packages/**/src/**/*.ts", "global.d.ts"]
+}

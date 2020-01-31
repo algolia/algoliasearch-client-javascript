@@ -1,0 +1,20 @@
+{
+  "name": "@algolia/client-analytics",
+  "version": "4.0.0-beta.16",
+  "private": false,
+  "license": "MIT",
+  "sideEffects": false,
+  "main": "index.js",
+  "module": "dist/client-analytics.esm.js",
+  "types": "dist/client-analytics.d.ts",
+  "files": [
+    "index.js",
+    "dist"
+  ],
+  "dependencies": {
+    "@algolia/client-common": "4.0.0-beta.16",
+    "@algolia/client-search": "4.0.0-beta.16",
+    "@algolia/requester-common": "4.0.0-beta.16",
+    "@algolia/transporter": "4.0.0-beta.16"
+  }
+}

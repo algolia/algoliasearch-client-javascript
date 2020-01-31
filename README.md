@@ -6,7 +6,6 @@
   <h4 align="center">The perfect starting point to integrate <a href="https://algolia.com" target="_blank">Algolia</a> within your JavaScript project</h4>
 
   <p align="center">
-    <a href="https://travis-ci.org/algolia/algoliasearch-client-javascript"><img src="https://img.shields.io/travis/algolia/algoliasearch-client-javascript/master.svg" alt="Build Status"></img></a>
     <a href="https://npmjs.org/package/algoliasearch"><img src="https://img.shields.io/npm/v/algoliasearch.svg?style=flat-square" alt="NPM version"></img></a>
     <a href="http://npm-stat.com/charts.html?package=algoliasearch"><img src="https://img.shields.io/npm/dm/algoliasearch.svg?style=flat-square" alt="NPM downloads"></a>
     <a href="https://www.jsdelivr.com/package/npm/algoliasearch"><img src="https://data.jsdelivr.com/v1/package/npm/algoliasearch/badge" alt="jsDelivr Downloads"></img></a>
@@ -28,6 +27,7 @@
 - Thin & **minimal low-level HTTP client** to interact with Algolia's API
 - Works both on the **browser** and **node.js**
 - **UMD compatible**, you can use it with any module loader
+- It uses modern JavaScript, is built with TypeScript
 - Contains type definitions: **[@types/algoliasearch](https://www.npmjs.com/package/@types/algoliasearch)**
 
 ## 💡 Getting Started
@@ -35,21 +35,23 @@
 First, install Algolia JavaScript API Client via the [npm](https://www.npmjs.com/get-npm) package manager:
 
 ```bash
-npm install --save algoliasearch
+npm install algoliasearch
 ```
 
 Then, create objects on your index:
 
 ```js
-const algoliasearch = require('algoliasearch');
+const algoliasearch = require("algoliasearch");
 
-const client = algoliasearch('YourApplicationID', 'YourAdminAPIKey');
-const index = client.initIndex('your_index_name');
+const client = algoliasearch("YourApplicationID", "YourAdminAPIKey");
+const index = client.initIndex("your_index_name");
 
-const objects = [{
-  objectID: 1,
-  name: 'Foo'
-}];
+const objects = [
+  {
+    objectID: 1,
+    name: "Foo"
+  }
+];
 
 index
   .saveObjects(objects)
@@ -65,7 +67,7 @@ Finally, let's actually search using the `search` method:
 
 ```js
 index
-  .search('Fo')
+  .search("Fo")
   .then(({ hits }) => {
     console.log(hits);
   })

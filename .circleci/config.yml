@@ -1,0 +1,143 @@
+aliases:
+  - &removes_npmrc
+    name: Removes npmrc
+    command: |
+      rm .npmrc
+
+  - &install_yarn_version
+    name: Install specific Yarn version
+    command: |
+      curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.16.0
+      echo 'export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"' >> $BASH_ENV
+
+  - &restore_yarn_cache
+    name: Restore Yarn cache
+    keys:
+      - yarn-{{ .Branch }}-packages-{{ checksum "yarn.lock" }}
+
+  - &save_yarn_cache
+    name: Save Yarn cache
+    key: yarn-{{ .Branch }}-packages-{{ checksum "yarn.lock" }}
+    paths:
+      - ~/.cache/yarn
+
+  - &run_yarn_install
+    name: Install dependencies
+    command: yarn install --pure-lockfile --ignore-engines
+
+defaults: &defaults
+  working_directory: ~/algoliasearch-client-javascript
+  parameters:
+    version:
+      type: string
+  docker:
+    - image: circleci/node:<< parameters.version >>
+
+version: 2.1
+jobs:
+  test_build:
+    description: Testing build & Test Size & Declarations File
+    parameters:
+      version:
+        type: string
+    docker:
+      - image: circleci/node:<< parameters.version >>
+    <<: *defaults
+    steps:
+      - checkout
+      - run: *removes_npmrc
+      - run: *install_yarn_version
+      - restore_cache: *restore_yarn_cache
+      - run: *run_yarn_install
+      - save_cache: *save_yarn_cache
+      - run:
+          name: Build
+          command: yarn build
+      - run:
+          name: Test size
+          command: yarn test:build-size
+      - run:
+          name: Validate declarations
+          command: yarn test:build-declarations
+
+  test_lint:
+    description: Testing coding style
+    <<: *defaults
+    steps:
+      - checkout
+      - run: *removes_npmrc
+      - run: *install_yarn_version
+      - restore_cache: *restore_yarn_cache
+      - run: *run_yarn_install
+      - save_cache: *save_yarn_cache
+      - run:
+          name: Lint tests
+          command: yarn test:lint
+
+  test_types:
+    description: Testing type checking
+    <<: *defaults
+    steps:
+      - checkout
+      - run: *removes_npmrc
+      - run: *install_yarn_version
+      - restore_cache: *restore_yarn_cache
+      - run: *run_yarn_install
+      - save_cache: *save_yarn_cache
+      - run:
+          name: Lint tests
+          command: yarn test:types
+
+  test_unit:
+    description: Testing code against node << parameters.version >>
+    <<: *defaults
+    steps:
+      - checkout
+      - run: *removes_npmrc
+      - run: *install_yarn_version
+      - restore_cache: *restore_yarn_cache
+      - run: *run_yarn_install
+      - save_cache: *save_yarn_cache
+      - run:
+          name: Unit Tests
+          command: yarn test:unit --maxWorkers=4
+
+  test_browser:
+    description: Testing code within browsers
+    <<: *defaults
+    steps:
+      - checkout
+      - run: *removes_npmrc
+      - run: *install_yarn_version
+      - restore_cache: *restore_yarn_cache
+      - run: *run_yarn_install
+      - save_cache: *save_yarn_cache
+      - run:
+          name: Build
+          command: yarn build
+      - run:
+          name: Browser tests
+          command: yarn test:browser-ci
+
+workflows:
+  version: 2
+  ci:
+    jobs:
+      - test_unit:
+          version: '8'
+      - test_unit:
+          version: '10'
+      - test_unit:
+          version: '11'
+      - test_unit:
+          version: '12'
+      - test_unit:
+          version: '13'
+      - test_lint:
+          version: '13'
+      - test_types:
+          version: '13'
+      - test_build:
+          version: '13'
+      - test_browser:
+          version: '13'

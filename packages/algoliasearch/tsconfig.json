@@ -1,0 +1,10 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "declaration": true,
+    "noEmit": false,
+    "allowJs": false,
+    "emitDeclarationOnly": true,
+    "outFile": "dist/types.d.ts"
+  }
+}

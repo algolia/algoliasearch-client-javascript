@@ -1,0 +1,6 @@
+{
+  "rewrites": [
+    { "source": "", "destination": "/playground/browser/index.html" },
+    { "source": "/lite", "destination": "/playground/browser-lite/index.html" }
+  ]
+}

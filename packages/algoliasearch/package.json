@@ -1,0 +1,39 @@
+{
+  "name": "algoliasearch",
+  "version": "4.0.0-beta.16",
+  "private": false,
+  "description": "A fully-featured and blazing-fast JavaScript API client to interact with Algolia API.",
+  "license": "MIT",
+  "sideEffects": false,
+  "main": "index.js",
+  "jsdelivr": "./dist/algoliasearch.umd.js",
+  "unpkg": "./dist/algoliasearch.umd.js",
+  "browser": {
+    "./index.js": "./dist/algoliasearch.umd.js",
+    "./lite.js": "./dist/algoliasearch-lite.umd.js"
+  },
+  "types": "index.d.ts",
+  "files": [
+    "dist",
+    "index.js",
+    "index.d.ts",
+    "lite.js",
+    "lite.d.ts"
+  ],
+  "dependencies": {
+    "@algolia/cache-browser-local-storage": "4.0.0-beta.16",
+    "@algolia/cache-common": "4.0.0-beta.16",
+    "@algolia/cache-in-memory": "4.0.0-beta.16",
+    "@algolia/client-account": "4.0.0-beta.16",
+    "@algolia/client-analytics": "4.0.0-beta.16",
+    "@algolia/client-common": "4.0.0-beta.16",
+    "@algolia/client-recommendation": "4.0.0-beta.16",
+    "@algolia/client-search": "4.0.0-beta.16",
+    "@algolia/logger-common": "4.0.0-beta.16",
+    "@algolia/logger-console": "4.0.0-beta.16",
+    "@algolia/requester-browser-xhr": "4.0.0-beta.16",
+    "@algolia/requester-common": "4.0.0-beta.16",
+    "@algolia/requester-node-http": "4.0.0-beta.16",
+    "@algolia/transporter": "4.0.0-beta.16"
+  }
+}

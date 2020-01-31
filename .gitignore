@@ -1,1 +1,7 @@
-node_modules/
+.DS_Store
+coverage
+node_modules
+dist
+.vscode
+*.test.ts.snap
+*.umd.js
