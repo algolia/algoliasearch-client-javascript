@@ -3,7 +3,6 @@ const { resolve } = require("path");
 const PACKAGE_DIR = "./packages";
 
 const noExtraneousOverrides = require("./scripts/packages").map(package => {
-  console.log(resolve(__dirname, PACKAGE_DIR, package));
 
   return {
     files: [`${PACKAGE_DIR}/${package}/**/*`],
