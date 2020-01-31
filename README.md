@@ -27,8 +27,7 @@
 - Thin & **minimal low-level HTTP client** to interact with Algolia's API
 - Works both on the **browser** and **node.js**
 - **UMD compatible**, you can use it with any module loader
-- It uses modern JavaScript, is built with TypeScript
-- Contains type definitions: **[@types/algoliasearch](https://www.npmjs.com/package/@types/algoliasearch)**
+- Built with TypeScript
 
 ## 💡 Getting Started
 
