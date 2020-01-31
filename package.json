@@ -37,7 +37,7 @@
     "@rollup/plugin-json": "4.0.1",
     "@rollup/plugin-node-resolve": "7.0.0",
     "@types/jest": "25.1.0",
-    "@types/node": "13.5.0",
+    "@types/node": "13.5.3",
     "@typescript-eslint/eslint-plugin": "2.18.0",
     "@typescript-eslint/parser": "2.18.0",
     "@wdio/cli": "5.18.6",
