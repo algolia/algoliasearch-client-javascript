@@ -20,6 +20,10 @@
     "lite.js",
     "lite.d.ts"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/algolia/algoliasearch-client-javascript.git"
+  },
   "dependencies": {
     "@algolia/cache-browser-local-storage": "4.0.0",
     "@algolia/cache-common": "4.0.0",
