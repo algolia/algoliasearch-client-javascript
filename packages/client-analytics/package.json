@@ -1,6 +1,6 @@
 {
   "name": "@algolia/client-analytics",
-  "version": "4.0.0-beta.16",
+  "version": "4.0.0",
   "private": false,
   "license": "MIT",
   "sideEffects": false,
@@ -12,9 +12,9 @@
     "dist"
   ],
   "dependencies": {
-    "@algolia/client-common": "4.0.0-beta.16",
-    "@algolia/client-search": "4.0.0-beta.16",
-    "@algolia/requester-common": "4.0.0-beta.16",
-    "@algolia/transporter": "4.0.0-beta.16"
+    "@algolia/client-common": "4.0.0",
+    "@algolia/client-search": "4.0.0",
+    "@algolia/requester-common": "4.0.0",
+    "@algolia/transporter": "4.0.0"
   }
 }

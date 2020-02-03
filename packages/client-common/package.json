@@ -1,6 +1,6 @@
 {
   "name": "@algolia/client-common",
-  "version": "4.0.0-beta.16",
+  "version": "4.0.0",
   "private": false,
   "license": "MIT",
   "sideEffects": false,
@@ -12,7 +12,7 @@
     "dist"
   ],
   "dependencies": {
-    "@algolia/requester-common": "4.0.0-beta.16",
-    "@algolia/transporter": "4.0.0-beta.16"
+    "@algolia/requester-common": "4.0.0",
+    "@algolia/transporter": "4.0.0"
   }
 }
