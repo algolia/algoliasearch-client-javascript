@@ -11,5 +11,9 @@
   "files": [
     "index.js",
     "dist"
-  ]
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/algolia/algoliasearch-client-js.git"
+  }
 }

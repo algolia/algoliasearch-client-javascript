@@ -11,6 +11,10 @@
     "index.js",
     "dist"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/algolia/algoliasearch-client-javascript.git"
+  },
   "dependencies": {
     "@algolia/client-common": "4.0.0",
     "@algolia/client-search": "4.0.0",
