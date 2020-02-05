@@ -2,9 +2,19 @@ import { addMethods, encode } from '../..';
 
 describe('helpers', () => {
   it('encodes url', () => {
-    const encodedString = encode('foo/%s/bar/%s', ' 1 ', ' e ');
+    expect(encode('')).toBe('');
 
-    expect(encodedString).toBe('foo/%201%20/bar/%20e%20');
+    expect(encode('/1/indexes/test/settings')).toBe('/1/indexes/test/settings');
+
+    expect(encode('/1/indexes/test/task/%s', 123)).toBe('/1/indexes/test/task/123');
+
+    expect(encode('/1/indexes/%s/task/%s', 'index#name', 1234)).toBe(
+      '/1/indexes/index%23name/task/1234'
+    );
+
+    expect(encode('/1/indexes/%s/batch', '#index name_42#%23')).toBe(
+      '/1/indexes/%23index%20name_42%23%2523/batch'
+    );
   });
 
   it('adds objects', () => {
