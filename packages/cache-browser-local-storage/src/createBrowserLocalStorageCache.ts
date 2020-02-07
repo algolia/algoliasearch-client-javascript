@@ -5,7 +5,16 @@ import { BrowserLocalStorageOptions } from '.';
 export function createBrowserLocalStorageCache(options: BrowserLocalStorageOptions): Cache {
   const namespaceKey = `algoliasearch-client-js-${options.key}`;
 
-  const getStorage = () => options.localStorage || window.localStorage;
+  // eslint-disable-next-line functional/no-let
+  let storage: Storage;
+  const getStorage = () => {
+    if (storage === undefined) {
+      storage = options.localStorage || window.localStorage;
+    }
+
+    return storage;
+  };
+
   const getNamespace = <TValue>(): Record<string, TValue> => {
     return JSON.parse(getStorage().getItem(namespaceKey) || '{}');
   };
