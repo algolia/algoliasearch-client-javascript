@@ -70,7 +70,7 @@
     "jest": "25.1.0",
     "jest-mock-console": "1.0.0",
     "lerna": "3.20.2",
-    "nock": "11.7.2",
+    "nock": "11.8.2",
     "prettier": "1.19.1",
     "rollup": "1.31.0",
     "rollup-plugin-babel": "4.3.3",
