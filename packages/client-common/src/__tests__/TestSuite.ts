@@ -47,6 +47,8 @@ export class TestSuite {
           });
       });
     }
+
+    this.indices = [];
   }
 
   public constructor(testName?: string) {
