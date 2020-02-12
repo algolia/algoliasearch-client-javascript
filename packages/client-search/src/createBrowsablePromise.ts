@@ -23,6 +23,7 @@ export function createBrowsablePromise<TObject>(
 
         // eslint-disable-next-line functional/immutable-data
         data.page++;
+        data.cursor = response.cursor;
 
         return browse();
       });
