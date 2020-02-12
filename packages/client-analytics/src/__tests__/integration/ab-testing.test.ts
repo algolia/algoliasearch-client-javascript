@@ -41,15 +41,19 @@ test(testSuite.testName, async () => {
 
   // Delete old AB tests
   {
-    const oldABTests = (await analytics.getABTests()).abtests;
+    const getABTestsResponse = await analytics.getABTests();
 
-    await Promise.all(
-      oldABTests
-        .filter(
-          abtest => abtest.name.startsWith('js-') && !abtest.name.startsWith(`js-${todayDate}`)
-        )
-        .map(abtest => analytics.deleteABTest(abtest.abTestID))
-    );
+    if (getABTestsResponse.count) {
+      const oldABTests = getABTestsResponse.abtests;
+
+      await Promise.all(
+        oldABTests
+          .filter(
+            abtest => abtest.name.startsWith('js-') && !abtest.name.startsWith(`js-${todayDate}`)
+          )
+          .map(abtest => analytics.deleteABTest(abtest.abTestID))
+      );
+    }
   }
   // Create the two indices by adding a dummy object in each of them
   const object = createFaker().object('one');
