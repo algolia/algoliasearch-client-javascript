@@ -39,7 +39,12 @@ const objects = [
   ).initIndex('javascript-browser-testing-lite');
 
   if (await index.exists()) {
-    await index.delete();
+    // eslint-disable-next-line no-console
+    console.log(
+      `Index "javascript-browser-testing-lite" already exists on app id: ${process.env.ALGOLIA_APPLICATION_ID_1}`
+    );
+
+    return;
   }
 
   await index
