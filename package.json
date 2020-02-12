@@ -78,7 +78,7 @@
     "rollup-plugin-ignore": "1.0.5",
     "rollup-plugin-node-globals": "1.4.0",
     "rollup-plugin-terser": "5.2.0",
-    "rollup-plugin-typescript2": "0.25.3",
+    "rollup-plugin-typescript2": "0.26.0",
     "serve": "11.3.0",
     "sort-package-json": "1.39.1",
     "ts-jest": "25.2.0",
