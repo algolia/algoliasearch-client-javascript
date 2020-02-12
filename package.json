@@ -12,6 +12,7 @@
     "pre-commit": "yarn test:lint && yarn test:types",
     "release": "./scripts/release.sh",
     "release-publish": "lerna exec --concurrency 1 -- npm publish --verbose",
+    "setup:browser": "yarn node scripts/setup-test-browser.js",
     "test:browser-ci": "./scripts/prepare-test-browser.sh && wdio ./wdio.saucelabs.conf.js",
     "test:browser-locally": "./scripts/prepare-test-browser.sh && wdio ./wdio.local.conf.js",
     "test:build-declarations": "node --max-old-space-size=4096 scripts/test-build-declarations.js",
