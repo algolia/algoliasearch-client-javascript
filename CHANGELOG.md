@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased](https://github.com/algolia/algoliasearch-client-javascript/compare/4.0.2...master)
 
 ### Fixed
+- `browseObjects` missing cursor error ([#1011](https://github.com/algolia/algoliasearch-client-javascript/pull/1011))
+- `browseSynonyms|browseRules` giving just a maximum of 20 hits ([#1011](https://github.com/algolia/algoliasearch-client-javascript/pull/1011))
 - Node entry point not es6 compliant ([#1005](https://github.com/algolia/algoliasearch-client-javascript/pull/1005))
 
 ## [v4.0.2](https://github.com/algolia/algoliasearch-client-javascript/compare/4.0.1...4.0.2)
