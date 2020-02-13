@@ -23,7 +23,7 @@ export const browseSynonyms = (base: SearchIndex) => {
       ...options,
       shouldStop: response => response.hits.length < options.hitsPerPage,
       request(data) {
-        return searchSynonyms(base)('', { ...requestOptions, ...data }).then(
+        return searchSynonyms(base)('', { ...options, ...data }).then(
           (response): BrowseResponse<Synonym> => {
             return {
               ...response,

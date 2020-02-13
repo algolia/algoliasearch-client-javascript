@@ -23,7 +23,7 @@ export const browseRules = (base: SearchIndex) => {
       ...options,
       shouldStop: response => response.hits.length < options.hitsPerPage,
       request(data) {
-        return searchRules(base)('', { ...requestOptions, ...data }).then(
+        return searchRules(base)('', { ...options, ...data }).then(
           (response): BrowseResponse<Rule> => {
             return {
               ...response,

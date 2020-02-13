@@ -36,6 +36,7 @@ module.exports = {
         testPathIgnorePatterns: [
           'packages/client-search/src/__tests__/integration/api-keys.test.ts',
           'packages/client-search/src/__tests__/integration/batching.test.ts',
+          'packages/client-search/src/__tests__/integration/browsing.test.ts',
           'packages/client-search/src/__tests__/integration/chunked-batch.test.ts',
           'packages/client-search/src/__tests__/integration/copy-and-move-index.test.ts',
           'packages/client-search/src/__tests__/integration/exists.test.ts',
