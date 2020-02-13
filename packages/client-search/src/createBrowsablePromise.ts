@@ -28,7 +28,7 @@ export function createBrowsablePromise<TObject>(
 
         /**
          * Finally, if the response contains a cursor, we browse to the next
-         * batch using that same cursor. Otherwise, we just use the tradicional
+         * batch using that same cursor. Otherwise, we just use the traditional
          * browsing using the page element.
          */
         if (response.cursor) {
