@@ -112,7 +112,7 @@ test(testSuite.testName, async () => {
 
         expect(browse(testCase.method, { hitsPerPage: 11 })).resolves.toEqual({
           hitsCount: 10,
-          batchCount: 2,
+          batchCount: 1,
         }),
       ]);
 
