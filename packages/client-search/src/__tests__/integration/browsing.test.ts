@@ -16,6 +16,12 @@ afterAll(() => testSuite.cleanUp());
 test(testSuite.testName, async () => {
   const index = testSuite.makeIndex();
 
+  // First lets create the index.
+  await index.setSettings({}).wait();
+
+  // Then, let's create a generic browse function that
+  // will take a browseMethod, and get metrics such as
+  // the number of retrieved hits and number of batches.
   const browse = async (
     method: (index: SearchIndex) => any,
     options: { hitsPerPage?: number } = {}
@@ -38,7 +44,9 @@ test(testSuite.testName, async () => {
     return result;
   };
 
-  await index.setSettings({}).wait();
+  // Next, let's create a test case for each browse type, note that
+  // each test case as a specific method, a specific way of browsing,
+  // and also a specific way of reseting the dataset.
 
   const objectsCase = {
     method: browseObjects,
@@ -85,6 +93,8 @@ test(testSuite.testName, async () => {
     cursorBased: false,
   };
 
+  // Finaly let's start the testing part. For each browse type lets test
+  // it against, and multiple numbers of datasets and conditions.
   await Promise.all(
     [objectsCase, synonymsCase, rulesCase].map(async testCase => {
       await expect(browse(testCase.method)).resolves.toEqual({
