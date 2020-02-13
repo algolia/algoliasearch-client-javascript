@@ -67,7 +67,7 @@
     "eslint-plugin-wdio": "5.13.2",
     "fs-extra": "8.1.0",
     "glob": "7.1.6",
-    "husky": "4.2.2",
+    "husky": "4.2.3",
     "jest": "25.1.0",
     "jest-mock-console": "1.0.0",
     "lerna": "3.20.2",
