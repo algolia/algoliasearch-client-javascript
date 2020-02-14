@@ -14,5 +14,5 @@ export type GetABTestsResponse = {
   /**
    * The list of ab tests.
    */
-  readonly abtests: readonly GetABTestResponse[];
+  readonly abtests: readonly GetABTestResponse[] | null;
 };

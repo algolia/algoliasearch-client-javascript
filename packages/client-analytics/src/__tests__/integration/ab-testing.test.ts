@@ -100,8 +100,8 @@ test(testSuite.testName, async () => {
   // corresponds to the original one
   {
     const all = await analytics.getABTests();
-    const found = all.abtests.find(t => t.abTestID === abTestID);
-    if (found === undefined) {
+    const found = all.abtests && all.abtests.find(t => t.abTestID === abTestID);
+    if (!found) {
       throw new Error('Ab test not found.');
     }
 
