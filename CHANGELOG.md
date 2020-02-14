@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased](https://github.com/algolia/algoliasearch-client-javascript/compare/4.0.3...master)
 
+### Fixed
+- Field `abtests` in GetAbTestsResponse ([#1012](https://github.com/algolia/algoliasearch-client-javascript/pull/1012))
+
 ## [v4.0.3](https://github.com/algolia/algoliasearch-client-javascript/compare/4.0.2...4.0.3)
 
 ### Fixed
