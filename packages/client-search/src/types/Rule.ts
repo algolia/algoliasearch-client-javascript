@@ -142,6 +142,11 @@ export type Consequence = {
   readonly hide?: ReadonlyArray<{ readonly objectID: string }>;
 
   /**
+   * Whether the Query Rule should promote or not promoted items.
+   */
+  readonly filterPromotes?: boolean;
+
+  /**
    * Custom JSON object that will be appended to the userData array in the response.
    * This object is not interpreted by the API. It is limited to 1kB of minified JSON.
    */
