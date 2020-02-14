@@ -1,10 +1,8 @@
 import { Rule, Settings } from '../..';
-import { createMultiWaitable } from '../../../../client-common/src/__tests__/helpers';
+import { waitResponses } from '../../../../client-common/src/__tests__/helpers';
 import { TestSuite } from '../../../../client-common/src/__tests__/TestSuite';
 
 const testSuite = new TestSuite('rules');
-
-afterAll(() => testSuite.cleanUp());
 
 test(testSuite.testName, async () => {
   const index = testSuite.makeIndex();
@@ -71,7 +69,7 @@ test(testSuite.testName, async () => {
 
   const rulesToSaves: Rule[] = [ruleToSave2, ruleToSave3, ruleToSave4];
   responses.push(index.saveRules(rulesToSaves));
-  await createMultiWaitable(responses).wait();
+  await waitResponses(responses);
 
   expect(await index.getRule(ruleToSave.objectID)).toMatchObject(ruleToSave);
   expect(await index.getRule(ruleToSave2.objectID)).toMatchObject(ruleToSave2);

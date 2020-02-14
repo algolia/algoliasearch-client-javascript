@@ -2,8 +2,6 @@ import { TestSuite } from '../../../../client-common/src/__tests__/TestSuite';
 
 const testSuite = new TestSuite('get_logs');
 
-afterAll(() => testSuite.cleanUp());
-
 test(testSuite.testName, async () => {
   const client = testSuite.makeSearchClient();
 

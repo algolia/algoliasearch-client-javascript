@@ -1,10 +1,8 @@
 import { createObjectNotFoundError } from '../..';
-import { createMultiWaitable } from '../../../../client-common/src/__tests__/helpers';
+import { waitResponses } from '../../../../client-common/src/__tests__/helpers';
 import { TestSuite } from '../../../../client-common/src/__tests__/TestSuite';
 
 const testSuite = new TestSuite('search');
-
-afterAll(() => testSuite.cleanUp());
 
 test(testSuite.testName, async () => {
   const index = testSuite.makeIndex();
@@ -44,7 +42,7 @@ test(testSuite.testName, async () => {
 
   responses.push(index.setSettings({ attributesForFaceting: ['searchable(company)'] }));
 
-  await createMultiWaitable(responses).wait();
+  await waitResponses(responses);
 
   type TObject = {
     company: string;

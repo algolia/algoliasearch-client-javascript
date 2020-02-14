@@ -1,11 +1,9 @@
 import { createFaker } from '../../../../client-common/src/__tests__/createFaker';
-import { createMultiWaitable } from '../../../../client-common/src/__tests__/helpers';
+import { waitResponses } from '../../../../client-common/src/__tests__/helpers';
 import { TestSuite } from '../../../../client-common/src/__tests__/TestSuite';
 import { ObjectWithObjectID } from '../../types';
 
 const testSuite = new TestSuite('indexing');
-
-afterAll(() => testSuite.cleanUp());
 
 test(testSuite.testName, async () => {
   const index = testSuite.makeIndex();
@@ -65,7 +63,7 @@ test(testSuite.testName, async () => {
     })
   );
 
-  await createMultiWaitable(responses).wait();
+  await waitResponses(responses);
   responses = [];
 
   await expect(index.getObject('object1')).resolves.toStrictEqual(object1);
@@ -123,7 +121,7 @@ test(testSuite.testName, async () => {
 
   responses.push(index.partialUpdateObjects([updatedObject3, updatedObject4]));
 
-  await createMultiWaitable(responses).wait();
+  await waitResponses(responses);
   responses = [];
 
   expect(await index.getObject('object1')).toEqual(updatedObject1);

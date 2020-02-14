@@ -11,8 +11,6 @@ import { TestSuite } from '../../../../client-common/src/__tests__/TestSuite';
 
 const testSuite = new TestSuite('browsing');
 
-afterAll(() => testSuite.cleanUp());
-
 test(testSuite.testName, async () => {
   const index = testSuite.makeIndex();
 

@@ -7,8 +7,6 @@ import { TestSuite } from '../../../../client-common/src/__tests__/TestSuite';
 
 const testSuite = new TestSuite('mcm');
 
-afterAll(() => testSuite.cleanUp());
-
 const createRetryableTransporter = (client: Transporter): Transporter => {
   return new Proxy(client, {
     get(obj: any, method: string) {
