@@ -2256,15 +2256,15 @@
     fs-extra "^8.0.1"
     selenium-standalone "^6.15.1"
 
-"@wdio/spec-reporter@5.18.6":
-  version "5.18.6"
-  resolved "https://registry.yarnpkg.com/@wdio/spec-reporter/-/spec-reporter-5.18.6.tgz#9951d7a14688a67cd2d7dba8a79f30852307683d"
-  integrity sha512-W0+igtkBAkcXmoVEAiMoZUx2RSMCSO1R4yzxwr4ZOBlqeT7gp58uUJyzfiRdxjFK6Moll78Xujq6C+jXDzVH2w==
+"@wdio/spec-reporter@5.18.7":
+  version "5.18.7"
+  resolved "https://registry.yarnpkg.com/@wdio/spec-reporter/-/spec-reporter-5.18.7.tgz#9f9106c9398b608891e84adcc7e3c4540805caa4"
+  integrity sha512-CF1CgAyQdGq51HcNBoSnIRxqyB6V0V6GWxx2fVMlf6V0447SrPXPN1FdBRdLgQGA70ZqNs3o4ZLwSJJaZOIoTw==
   dependencies:
     "@wdio/reporter" "5.18.6"
     chalk "^3.0.0"
     easy-table "^1.1.1"
-    pretty-ms "^5.0.0"
+    pretty-ms "^6.0.0"
 
 "@wdio/static-server-service@5.16.10":
   version "5.16.10"
@@ -8211,10 +8211,10 @@ pretty-format@^25.1.0:
     ansi-styles "^4.0.0"
     react-is "^16.12.0"
 
-pretty-ms@^5.0.0:
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/pretty-ms/-/pretty-ms-5.1.0.tgz#b906bdd1ec9e9799995c372e2b1c34f073f95384"
-  integrity sha512-4gaK1skD2gwscCfkswYQRmddUb2GJZtzDGRjHWadVHtK/DIKFufa12MvES6/xu1tVbUYeia5bmLcwJtZJQUqnw==
+pretty-ms@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/pretty-ms/-/pretty-ms-6.0.0.tgz#39a0eb5f31d359bcee43c9579e6ddf4a02a82ff0"
+  integrity sha512-X5i1y9/8VuBMb9WU8zubTiLKnJG4lcKvL7eaCEVc/jpTe3aS74gCcBM6Yd1vvUDoTCXm4Y15obNS/16yB0FTaQ==
   dependencies:
     parse-ms "^2.1.0"
 
