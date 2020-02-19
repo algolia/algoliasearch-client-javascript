@@ -1,19 +1,16 @@
 import { accountCopyIndex } from '@algolia/client-account';
 import { Rule, Synonym } from '@algolia/client-search';
 
-import { createMultiWaitable } from '../../../../client-common/src/__tests__/helpers';
+import { waitResponses } from '../../../../client-common/src/__tests__/helpers';
 import { TestSuite } from '../../../../client-common/src/__tests__/TestSuite';
 
 const testSuite = new TestSuite('account_copy_index');
-
-afterAll(() => testSuite.cleanUp());
 
 test(testSuite.testName, async () => {
   const source = testSuite.makeIndex();
   const destination = testSuite
     .makeSearchClient('ALGOLIA_APPLICATION_ID_2', 'ALGOLIA_ADMIN_KEY_2')
     .initIndex(testSuite.makeIndexName());
-  testSuite.indices.push(destination);
 
   await expect(accountCopyIndex(source, source)).rejects.toEqual({
     name: 'IndicesInTheSameAppError',
@@ -35,12 +32,12 @@ test(testSuite.testName, async () => {
 
   const synomy: Synonym = { objectID: 'one', type: 'synonym', synonyms: ['one', 'two'] };
 
-  await createMultiWaitable([
+  await waitResponses([
     source.saveObject({ objectID: 'one' }),
     source.setSettings({ searchableAttributes: ['objectID'] }),
     source.saveRule(rule),
     source.saveSynonym(synomy),
-  ]).wait();
+  ]);
 
   await expect(accountCopyIndex(source, destination).wait()).resolves.toBeUndefined();
 

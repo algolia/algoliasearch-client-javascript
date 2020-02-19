@@ -10,6 +10,7 @@ export * from './BatchActionType';
 export * from './BatchRequest';
 export * from './BatchResponse';
 export * from './BrowseOptions';
+export * from './BrowseRequestData';
 export * from './BrowseResponse';
 export * from './ChunkOptions';
 export * from './ChunkedBatchResponse';

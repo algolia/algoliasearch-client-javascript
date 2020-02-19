@@ -1,10 +1,8 @@
 import { Rule, Synonym } from '../..';
-import { createMultiWaitable } from '../../../../client-common/src/__tests__/helpers';
+import { waitResponses } from '../../../../client-common/src/__tests__/helpers';
 import { TestSuite } from '../../../../client-common/src/__tests__/TestSuite';
 
 const testSuite = new TestSuite('replacing');
-
-afterAll(() => testSuite.cleanUp());
 
 test(testSuite.testName, async () => {
   const index = testSuite.makeIndex();
@@ -32,7 +30,7 @@ test(testSuite.testName, async () => {
     })
   );
 
-  await createMultiWaitable(responses).wait();
+  await waitResponses(responses);
   responses = [];
 
   let replaceAllObjectsResponse = await index.replaceAllObjects([{ objectID: 'two' }]).wait();
@@ -59,7 +57,7 @@ test(testSuite.testName, async () => {
 
   responses.push(index.replaceAllRules([rule2]));
 
-  await createMultiWaitable(responses).wait();
+  await waitResponses(responses);
 
   await expect(index.getObject('one')).rejects.toMatchObject({
     name: 'ApiError',

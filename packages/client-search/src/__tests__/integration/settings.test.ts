@@ -5,8 +5,6 @@ import { TestSuite } from '../../../../client-common/src/__tests__/TestSuite';
 
 const testSuite = new TestSuite('settings');
 
-afterAll(() => testSuite.cleanUp());
-
 test(testSuite.testName, async () => {
   const index = testSuite.makeIndex();
   await index.saveObject(createFaker().object('foo')).wait();

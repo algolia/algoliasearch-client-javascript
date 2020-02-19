@@ -2,8 +2,6 @@ import { TestSuite } from '../../../../client-common/src/__tests__/TestSuite';
 
 const testSuite = new TestSuite('query_parameters');
 
-afterAll(() => testSuite.cleanUp());
-
 test(testSuite.testName, async () => {
   const index = testSuite.makeIndex();
   await index.saveObject({ objectID: 1 }).wait();

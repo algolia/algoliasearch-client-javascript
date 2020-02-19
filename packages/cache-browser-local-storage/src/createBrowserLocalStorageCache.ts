@@ -3,11 +3,20 @@ import { Cache, CacheEvents } from '@algolia/cache-common';
 import { BrowserLocalStorageOptions } from '.';
 
 export function createBrowserLocalStorageCache(options: BrowserLocalStorageOptions): Cache {
-  const storage = options.localStorage || window.localStorage;
   const namespaceKey = `algoliasearch-client-js-${options.key}`;
 
+  // eslint-disable-next-line functional/no-let
+  let storage: Storage;
+  const getStorage = () => {
+    if (storage === undefined) {
+      storage = options.localStorage || window.localStorage;
+    }
+
+    return storage;
+  };
+
   const getNamespace = <TValue>(): Record<string, TValue> => {
-    return JSON.parse(storage.getItem(namespaceKey) || '{}');
+    return JSON.parse(getStorage().getItem(namespaceKey) || '{}');
   };
 
   return {
@@ -38,7 +47,7 @@ export function createBrowserLocalStorageCache(options: BrowserLocalStorageOptio
         // eslint-disable-next-line functional/immutable-data
         namespace[JSON.stringify(key)] = value;
 
-        storage.setItem(namespaceKey, JSON.stringify(namespace));
+        getStorage().setItem(namespaceKey, JSON.stringify(namespace));
 
         return value;
       });
@@ -51,13 +60,13 @@ export function createBrowserLocalStorageCache(options: BrowserLocalStorageOptio
         // eslint-disable-next-line functional/immutable-data
         delete namespace[JSON.stringify(key)];
 
-        storage.setItem(namespaceKey, JSON.stringify(namespace));
+        getStorage().setItem(namespaceKey, JSON.stringify(namespace));
       });
     },
 
     clear(): Readonly<Promise<void>> {
       return Promise.resolve().then(() => {
-        storage.removeItem(namespaceKey);
+        getStorage().removeItem(namespaceKey);
       });
     },
   };

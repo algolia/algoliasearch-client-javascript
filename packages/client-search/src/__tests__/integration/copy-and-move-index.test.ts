@@ -1,9 +1,7 @@
-import { createMultiWaitable } from '../../../../client-common/src/__tests__/helpers';
+import { waitResponses } from '../../../../client-common/src/__tests__/helpers';
 import { TestSuite } from '../../../../client-common/src/__tests__/TestSuite';
 
 const testSuite = new TestSuite('copy_and_move_index');
-
-afterAll(() => testSuite.cleanUp());
 
 test(testSuite.testName, async () => {
   const index = testSuite.makeIndex();
@@ -41,7 +39,7 @@ test(testSuite.testName, async () => {
     })
   );
 
-  await createMultiWaitable(responses).wait();
+  await waitResponses(responses);
   responses = [];
 
   const indexSettings = testSuite.makeIndex(`${index.indexName}copy_index_settings`);
@@ -56,7 +54,7 @@ test(testSuite.testName, async () => {
   const indexFull = testSuite.makeIndex(`${index.indexName}copy_index_full`);
   responses.push(client.copyIndex(index.indexName, indexFull.indexName));
 
-  await createMultiWaitable(responses).wait();
+  await waitResponses(responses);
   responses = [];
 
   const synonyms = await index.searchSynonyms('');

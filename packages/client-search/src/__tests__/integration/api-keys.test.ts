@@ -2,10 +2,16 @@ import { TestSuite } from '../../../../client-common/src/__tests__/TestSuite';
 
 const testSuite = new TestSuite('api_keys');
 
-afterAll(() => testSuite.cleanUp());
-
 test(testSuite.testName, async () => {
   const client = testSuite.makeSearchClient();
+
+  // @ts-ignore
+  client.transporter.timeouts = {
+    connect: 2,
+    read: 5,
+    write: 30,
+  };
+
   const apiKeyOptions = {
     description: 'A description',
     indexes: ['index'],
@@ -61,8 +67,8 @@ test(testSuite.testName, async () => {
   const restoreApiKeyResponse = await client.restoreApiKey(addApiKeyResponse.key).wait();
   expect(Object.keys(restoreApiKeyResponse)).toEqual(['createdAt']);
 
-  const restoredGetApiKeyResponse = await client.getApiKey(addApiKeyResponse.key);
-  expect(restoredGetApiKeyResponse).toMatchObject({
+  const getRestoredApiKeyResponse = await client.getApiKey(addApiKeyResponse.key);
+  expect(getRestoredApiKeyResponse).toMatchObject({
     maxHitsPerQuery: 42,
     queryParameters: 'typoTolerance=min',
   });

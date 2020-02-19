@@ -79,7 +79,37 @@ describe('browser local storage cache', () => {
     expect(localStorage.length).toBe(0);
   });
 
-  it('do throws localstorage related exceptions', async () => {
+  it('do throws localstorage exceptions on access', async () => {
+    const message =
+      "Failed to read the 'localStorage' property from 'Window': Access is denied for this document.";
+
+    const cache = createBrowserLocalStorageCache(
+      new Proxy(
+        { key: 'foo' },
+        {
+          get(_, key) {
+            if (key === 'key') {
+              return 'foo';
+            }
+
+            // Simulates a window.localStorage access.
+            throw new DOMException(message);
+          },
+        }
+      )
+    );
+    const key = { foo: 'bar' };
+    const value = 'foo';
+    const fallback = 'bar';
+
+    await expect(cache.delete(key)).rejects.toEqual(new DOMException(message));
+    await expect(cache.set(key, value)).rejects.toEqual(new DOMException(message));
+    await expect(cache.get(key, () => Promise.resolve(fallback))).rejects.toEqual(
+      new DOMException(message)
+    );
+  });
+
+  it('do throws localstorage exceptions after access', async () => {
     const cache = createBrowserLocalStorageCache({
       key: version,
       localStorage: notAvailableStorage,

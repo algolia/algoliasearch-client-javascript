@@ -1,11 +1,8 @@
 import { BatchActionEnum, StrategyEnum } from '../..';
-import { createMultiWaitable } from '../../../../client-common/src/__tests__/helpers';
 import { TestSuite } from '../../../../client-common/src/__tests__/TestSuite';
 import { MultipleBatchRequest } from '../../types';
 
 const testSuite = new TestSuite('multiple_operations');
-
-afterAll(() => testSuite.cleanUp());
 
 test(testSuite.testName, async () => {
   const client = testSuite.makeSearchClient();
@@ -36,10 +33,7 @@ test(testSuite.testName, async () => {
     },
   ];
 
-  createMultiWaitable([
-    client.multipleBatch(queries),
-    index.setSettings({ attributesForFaceting: ['searchable(firstname)'] }),
-  ] as any).wait();
+  await index.setSettings({ attributesForFaceting: ['searchable(firstname)'] }).wait();
 
   const responses = await client.multipleBatch(queries).wait();
   const objectIDs = responses.objectIDs.map(objectID => objectID);
@@ -94,7 +88,7 @@ test(testSuite.testName, async () => {
 
   expect(searchForFacetValuesResponse[0].facetHits).toEqual([
     {
-      count: 4,
+      count: 2,
       highlighted: '<em>Jimmie</em>',
       value: 'Jimmie',
     },

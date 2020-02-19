@@ -8,10 +8,10 @@ import {
   setSettings,
 } from '@algolia/client-search';
 
-import { addMethods, createRetryablePromise } from '..';
+import { addMethods } from '..';
 import algoliasearchForBrowser from '../../../algoliasearch/src/builds/browser';
 import algoliasearchForBrowserLite from '../../../algoliasearch/src/builds/browserLite';
-import algoliasearchForNode, { SearchIndex } from '../../../algoliasearch/src/builds/node';
+import algoliasearchForNode from '../../../algoliasearch/src/builds/node';
 
 /* eslint functional/no-class: 0 */
 export class TestSuite {
@@ -29,31 +29,12 @@ export class TestSuite {
     ? algoliasearchForBrowser
     : algoliasearchForNode;
 
-  public indices: SearchIndex[];
-
-  public async cleanUp(): Promise<void> {
-    for (const index of this.indices) {
-      await createRetryablePromise(retry => {
-        return index
-          .delete()
-          .wait()
-          .catch((err: Error) => {
-            const errAbTest = 'cannot delete with an index under AB testing index as destination';
-            if (err.message === errAbTest) {
-              return retry();
-            }
-
-            throw err;
-          });
-      });
-    }
-  }
+  public indicesCount = 0;
 
   public constructor(testName?: string) {
     this.ensureEnvironmentVariables();
 
     this.testName = testName || '';
-    this.indices = [];
   }
 
   public makeSearchClient(
@@ -94,7 +75,7 @@ export class TestSuite {
       });
     }
 
-    this.indices.push(index);
+    this.indicesCount++;
 
     return index;
   }
@@ -103,7 +84,7 @@ export class TestSuite {
     const instanceName = this.makeInstanceName();
     const dateTime = this.makeDateTime();
 
-    return `javascript_${dateTime}_${instanceName}_${this.testName}_${this.indices.length}`;
+    return `javascript_${dateTime}_${instanceName}_${this.testName}_${this.indicesCount}`;
   }
 
   public makeDateTime(): string {
@@ -127,18 +108,21 @@ export class TestSuite {
   }
 
   public makeInstanceName(): string {
+    const randomString = Math.random()
+      .toString(36)
+      .substring(7);
     const environment = testing.environment();
     const nodeVersion = process.versions.node;
     const jobNumber = process.env.CIRCLE_BUILD_NUM;
     const user = process.env.USER;
 
     if (jobNumber) {
-      return `${environment}_${nodeVersion}_${jobNumber}`;
+      return `${environment}_${nodeVersion}_${jobNumber}_${randomString}`;
     } else if (user) {
-      return `${environment}_${nodeVersion}_${user}`;
+      return `${environment}_${nodeVersion}_${user}_${randomString}`;
     }
 
-    return `${environment}_${nodeVersion}_unknown`;
+    return `${environment}_${nodeVersion}_unknown_${randomString}`;
   }
 
   private ensureEnvironmentVariables(): void {

@@ -1,10 +1,8 @@
 import { Synonym, SynonymEnum } from '../..';
-import { createMultiWaitable } from '../../../../client-common/src/__tests__/helpers';
+import { waitResponses } from '../../../../client-common/src/__tests__/helpers';
 import { TestSuite } from '../../../../client-common/src/__tests__/TestSuite';
 
 const testSuite = new TestSuite('synonyms');
-
-afterAll(() => testSuite.cleanUp());
 
 test(testSuite.testName, async () => {
   const index = testSuite.makeIndex();
@@ -64,7 +62,7 @@ test(testSuite.testName, async () => {
 
   responses.push(index.saveSynonyms([synonym2, synonym3, synonym4, synonym5]));
 
-  await createMultiWaitable(responses).wait();
+  await waitResponses(responses);
 
   synonyms.push(synonym1);
 

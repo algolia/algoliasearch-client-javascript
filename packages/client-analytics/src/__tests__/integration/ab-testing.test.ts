@@ -3,12 +3,10 @@ import { Transporter } from '@algolia/transporter';
 
 import { ABTest, Variant } from '../..';
 import { createFaker } from '../../../../client-common/src/__tests__/createFaker';
-import { createMultiWaitable } from '../../../../client-common/src/__tests__/helpers';
+import { waitResponses } from '../../../../client-common/src/__tests__/helpers';
 import { TestSuite } from '../../../../client-common/src/__tests__/TestSuite';
 
 const testSuite = new TestSuite('ab_testing');
-
-afterAll(() => testSuite.cleanUp());
 
 const createRetryableTransporter = (client: Transporter): Transporter => {
   return new Proxy(client, {
@@ -37,23 +35,17 @@ test(testSuite.testName, async () => {
   // @ts-ignore
   analytics.transporter = createRetryableTransporter(analytics.transporter);
   const today = new Date();
-  const todayDate = `${today.getFullYear}-${today.getMonth}-${today.getDay}`;
 
-  // Delete old AB tests
-  {
-    const oldABTests = (await analytics.getABTests()).abtests;
+  // @ts-ignore
+  analytics.transporter.timeouts = {
+    connect: 2,
+    read: 5,
+    write: 30,
+  };
 
-    await Promise.all(
-      oldABTests
-        .filter(
-          abtest => abtest.name.startsWith('js-') && !abtest.name.startsWith(`js-${todayDate}`)
-        )
-        .map(abtest => analytics.deleteABTest(abtest.abTestID))
-    );
-  }
   // Create the two indices by adding a dummy object in each of them
   const object = createFaker().object('one');
-  await createMultiWaitable([index1.saveObject(object), index2.saveObject(object)] as any).wait();
+  await waitResponses([index1.saveObject(object), index2.saveObject(object)]);
 
   const abTestName = testSuite.makeIndexName();
   const abTest: ABTest = {
@@ -108,8 +100,8 @@ test(testSuite.testName, async () => {
   // corresponds to the original one
   {
     const all = await analytics.getABTests();
-    const found = all.abtests.find(t => t.abTestID === abTestID);
-    if (found === undefined) {
+    const found = all.abtests && all.abtests.find(t => t.abTestID === abTestID);
+    if (!found) {
       throw new Error('Ab test not found.');
     }
 

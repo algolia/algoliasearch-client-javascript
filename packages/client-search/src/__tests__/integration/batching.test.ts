@@ -3,8 +3,6 @@ import { ObjectWithObjectID } from '../../types';
 
 const testSuite = new TestSuite('batching');
 
-afterAll(() => testSuite.cleanUp());
-
 test(testSuite.testName, async () => {
   const index = testSuite.makeIndex();
 
