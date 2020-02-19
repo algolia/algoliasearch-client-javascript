@@ -13,7 +13,7 @@ const createRetryableTransporter = (client: Transporter): Transporter => {
       return (...args: any) => {
         return createRetryablePromise(retry => {
           return obj[method](...args).catch((err: ApiError) => {
-            if (err.status === 500 && err.message === 'Remote side is unreachable') {
+            if (err.message === 'Remote side is unreachable') {
               return retry();
             }
 
