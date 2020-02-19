@@ -57,17 +57,18 @@ test(testSuite.testName, async () => {
     client.assignUserIDs([userID(1), userID(2)], firstClusterName)
   ).resolves.toHaveProperty('createdAt');
 
-  const waitAssign = async (number: number) => {
-    // eslint-disable-next-line no-constant-condition
-    while (true) {
+  const waitAssign = (number: number) => {
+    return createRetryablePromise(async retry => {
       try {
         return await client.getUserID(userID(number));
       } catch (e) {
         if (e.status !== 404 || e.message !== 'Mapping does not exist for this userID') {
           throw e;
         }
+
+        return retry();
       }
-    }
+    });
   };
 
   await Promise.all([0, 1, 2].map(waitAssign));
@@ -146,19 +147,20 @@ test(testSuite.testName, async () => {
     await expect(removeUserID(number)).resolves.toHaveProperty('deletedAt');
   }
 
-  const waitRemove = async (number: number) => {
-    // eslint-disable-next-line no-constant-condition
-    while (true) {
+  const waitRemove = (number: number) => {
+    return createRetryablePromise(async retry => {
       try {
         await client.getUserID(userID(number));
+
+        return retry();
       } catch (e) {
         if (e.status !== 404) {
           throw e;
         }
-
-        return;
       }
-    }
+
+      return Promise.resolve();
+    });
   };
 
   await Promise.all([0, 1, 2].map(waitRemove));
