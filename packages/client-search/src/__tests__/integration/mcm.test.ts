@@ -57,7 +57,7 @@ test(testSuite.testName, async () => {
     client.assignUserIDs([userID(1), userID(2)], firstClusterName)
   ).resolves.toHaveProperty('createdAt');
 
-  const waitUserID = async (number: number) => {
+  const waitAssign = async (number: number) => {
     // eslint-disable-next-line no-constant-condition
     while (true) {
       try {
@@ -70,8 +70,10 @@ test(testSuite.testName, async () => {
     }
   };
 
+  await Promise.all([0, 1, 2].map(waitAssign));
+
   for (let number = 0; number < 3; number++) {
-    await expect(waitUserID(number)).resolves.toMatchObject({
+    await expect(client.getUserID(userID(number))).resolves.toMatchObject({
       userID: userID(number),
       clusterName: firstClusterName,
       nbRecords: 0,
@@ -143,6 +145,23 @@ test(testSuite.testName, async () => {
   for (let number = 0; number < 3; number++) {
     await expect(removeUserID(number)).resolves.toHaveProperty('deletedAt');
   }
+
+  const waitRemove = async (number: number) => {
+    // eslint-disable-next-line no-constant-condition
+    while (true) {
+      try {
+        await client.getUserID(userID(number));
+      } catch (e) {
+        if (e.status !== 404) {
+          throw e;
+        }
+
+        return;
+      }
+    }
+  };
+
+  await Promise.all([0, 1, 2].map(waitRemove));
 
   for (let number = 0; number < 3; number++) {
     await expect(client.getUserID(userID(number))).rejects.toMatchObject({
