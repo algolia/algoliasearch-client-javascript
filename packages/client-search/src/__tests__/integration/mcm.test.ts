@@ -172,4 +172,23 @@ test(testSuite.testName, async () => {
       status: 404,
     });
   }
+
+  await expect(client.hasPendingMappings({ retrieveMappings: true })).resolves.toMatchObject({
+    clusters: expect.any(Object),
+    pending: expect.any(Boolean),
+  });
+
+  await expect(client.hasPendingMappings({ getClusters: true })).resolves.toMatchObject({
+    clusters: expect.any(Object),
+    pending: expect.any(Boolean),
+  });
+
+  /* eslint-disable-next-line jest/valid-expect */
+  const assertion = await expect(client.hasPendingMappings()).resolves;
+
+  assertion.toMatchObject({
+    pending: expect.any(Boolean),
+  });
+
+  assertion.not.toHaveProperty('clusters');
 });

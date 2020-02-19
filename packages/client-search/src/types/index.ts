@@ -33,6 +33,8 @@ export * from './GetObjectOptions';
 export * from './GetObjectsOptions';
 export * from './GetObjectsResponse';
 export * from './GetTopUserIDsResponse';
+export * from './HasPendingMappingsOptions';
+export * from './HasPendingMappingsResponse';
 export * from './IndexOperationResponse';
 export * from './Indice';
 export * from './ListApiKeysResponse';
