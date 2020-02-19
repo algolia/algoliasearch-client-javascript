@@ -1,4 +1,4 @@
-/* eslint-disable import/no-commonjs, functional/immutable-data, sonarjs/no-duplicate-string */
+/* eslint-disable import/no-commonjs, functional/immutable-data */
 const { pathsToModuleNameMapper } = require('ts-jest/utils');
 
 const { compilerOptions } = require('./tsconfig');
@@ -65,7 +65,6 @@ module.exports = {
         testPathIgnorePatterns: [
           'packages/requester-node-http/*',
           'packages/client-search/src/__tests__/integration/secured-api-keys.test.ts',
-          'packages/client-search/src/__tests__/integration/mcm.test.ts',
         ],
         globals: {
           environment: 'browser',
@@ -84,7 +83,6 @@ module.exports = {
           'packages/requester-browser-xhr/*',
           'packages/cache-browser-local-storage/*',
           'packages/algoliasearch/src/__tests__/lite.test.ts',
-          'packages/client-search/src/__tests__/integration/mcm.test.ts',
         ],
         globals: {
           environment: 'node',

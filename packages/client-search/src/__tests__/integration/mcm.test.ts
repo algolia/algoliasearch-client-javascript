@@ -31,6 +31,13 @@ test(testSuite.testName, async () => {
   // @ts-ignore
   client.transporter = createRetryableTransporter(client.transporter);
 
+  // @ts-ignore
+  client.transporter.timeouts = {
+    connect: 2,
+    read: 5,
+    write: 30,
+  };
+
   const response = await client.listClusters();
 
   expect(response.clusters).toHaveLength(2);
@@ -42,15 +49,13 @@ test(testSuite.testName, async () => {
       .replace(/:/g, '-')
       .replace(/\./g, '-');
 
-  const assignUserIDResponse = await client.assignUserID(userID(0), firstClusterName);
-  expect(assignUserIDResponse).toHaveProperty('createdAt');
-
-  const assignUserIDsResponse = await client.assignUserIDs(
-    [userID(1), userID(2)],
-    firstClusterName
+  await expect(client.assignUserID(userID(0), firstClusterName)).resolves.toHaveProperty(
+    'createdAt'
   );
 
-  expect(assignUserIDsResponse).toHaveProperty('createdAt');
+  await expect(
+    client.assignUserIDs([userID(1), userID(2)], firstClusterName)
+  ).resolves.toHaveProperty('createdAt');
 
   const waitUserID = async (number: number) => {
     // eslint-disable-next-line no-constant-condition
@@ -58,13 +63,15 @@ test(testSuite.testName, async () => {
       try {
         return await client.getUserID(userID(number));
       } catch (e) {
-        // @todo Be more specific here.
+        if (e.status !== 404 || e.message !== 'Mapping does not exist for this userID') {
+          throw e;
+        }
       }
     }
   };
 
   for (let number = 0; number < 3; number++) {
-    expect(await waitUserID(number)).toMatchObject({
+    await expect(waitUserID(number)).resolves.toMatchObject({
       userID: userID(number),
       clusterName: firstClusterName,
       nbRecords: 0,
@@ -94,11 +101,14 @@ test(testSuite.testName, async () => {
     'dataSize',
   ]);
 
-  expect(
-    await client.listUserIDs({
+  await expect(
+    client.listUserIDs({
       hitsPerPage: 1,
     })
-  ).toHaveLength(1);
+  ).resolves.toMatchObject({
+    hitsPerPage: 1,
+    page: 0,
+  });
 
   expect(listUserIDsResponse.userIDs.length > 0).toBe(true);
   expect(Object.keys(listUserIDsResponse.userIDs[0])).toEqual([
@@ -123,21 +133,22 @@ test(testSuite.testName, async () => {
       try {
         return await client.removeUserID(userID(number));
       } catch (e) {
-        // @todo Be more specific here...
+        if (e.status !== 400 || e.message !== `User '${userID(number)}' is already migrating`) {
+          throw e;
+        }
       }
     }
   };
 
   for (let number = 0; number < 3; number++) {
-    expect(await removeUserID(number)).toHaveProperty('deletedAt');
+    await expect(removeUserID(number)).resolves.toHaveProperty('deletedAt');
   }
 
   for (let number = 0; number < 3; number++) {
-    await expect(client.getUserID(userID(number))).rejects.toEqual({
+    await expect(client.getUserID(userID(number))).rejects.toMatchObject({
       message: 'Mapping does not exist for this userID',
       name: 'ApiError',
       status: 404,
     });
   }
-  // @todo remove past users ids.
 });
