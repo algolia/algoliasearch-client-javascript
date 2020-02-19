@@ -12,15 +12,13 @@ export const assignUserID = (base: SearchClient) => {
     const mappedRequestOptions = createMappedRequestOptions(requestOptions);
 
     // eslint-disable-next-line functional/immutable-data
-    mappedRequestOptions.headers['X-Algolia-User-ID'] = userID;
+    mappedRequestOptions.queryParameters['X-Algolia-User-ID'] = userID;
 
     return base.transporter.write(
       {
         method: MethodEnum.Post,
         path: '1/clusters/mapping',
-        data: {
-          cluster: clusterName,
-        },
+        data: { cluster: clusterName },
       },
       mappedRequestOptions
     );
