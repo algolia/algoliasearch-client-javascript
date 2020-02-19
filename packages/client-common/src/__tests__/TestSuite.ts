@@ -108,21 +108,18 @@ export class TestSuite {
   }
 
   public makeInstanceName(): string {
-    const randomString = Math.random()
-      .toString(36)
-      .substring(7);
     const environment = testing.environment();
     const nodeVersion = process.versions.node;
     const jobNumber = process.env.CIRCLE_BUILD_NUM;
     const user = process.env.USER;
 
     if (jobNumber) {
-      return `${environment}_${nodeVersion}_${jobNumber}_${randomString}`;
+      return `${environment}_${nodeVersion}_${jobNumber}`;
     } else if (user) {
-      return `${environment}_${nodeVersion}_${user}_${randomString}`;
+      return `${environment}_${nodeVersion}_${user}`;
     }
 
-    return `${environment}_${nodeVersion}_unknown_${randomString}`;
+    return `${environment}_${nodeVersion}_unknown`;
   }
 
   private ensureEnvironmentVariables(): void {
