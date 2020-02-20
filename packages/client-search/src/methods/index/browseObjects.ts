@@ -12,11 +12,11 @@ import {
 
 export const browseObjects = (base: SearchIndex) => {
   return <TObject>(
-    requestOptions?: SearchOptions & BrowseOptions<TObject> & RequestOptions
+    requestOptions?: SearchOptions & BrowseOptions<TObject> & RequestOptions 
   ): Readonly<Promise<void>> => {
     return createBrowsablePromise<TObject>({
-      ...requestOptions,
       shouldStop: response => response.cursor === undefined,
+      ...requestOptions,
       request: (data: Record<string, any>): Readonly<Promise<BrowseResponse<TObject>>> =>
         base.transporter.read(
           {
