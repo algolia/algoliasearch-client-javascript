@@ -81,7 +81,7 @@
     "rollup-plugin-terser": "5.2.0",
     "rollup-plugin-typescript2": "0.26.0",
     "serve": "11.3.0",
-    "sort-package-json": "1.39.1",
+    "sort-package-json": "1.40.0",
     "ts-jest": "25.2.1",
     "ts-mockito": "2.5.0",
     "ts-node": "8.6.2",
