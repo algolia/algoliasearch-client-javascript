@@ -22,6 +22,10 @@
   <a href="https://www.algolia.com/support" target="_blank">Support</a>
 </p>
 
+**Migration note from v3.x to v4.x**
+
+> In February 2020, we released v4 of our JavaScript client. If you are using version 3.x of the client, read the [migration guide to version 4.x](https://www.algolia.com/doc/api-client/getting-started/upgrade-guides/javascript/). Version 3.x will **no longer** be under active development.
+
 ## ✨ Features
 
 - Thin & **minimal low-level HTTP client** to interact with Algolia's API

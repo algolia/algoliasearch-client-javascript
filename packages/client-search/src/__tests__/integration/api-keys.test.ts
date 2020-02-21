@@ -1,3 +1,5 @@
+import { createRetryablePromise } from '@algolia/client-common';
+
 import { TestSuite } from '../../../../client-common/src/__tests__/TestSuite';
 
 const testSuite = new TestSuite('api_keys');
@@ -40,23 +42,26 @@ test(testSuite.testName, async () => {
     addApiKeyResponse.key
   );
 
-  const updateApiKeyResponse = await client
-    .updateApiKey(addApiKeyResponse.key, {
-      maxHitsPerQuery: 42,
-      queryParameters: 'typoTolerance=min',
-    })
-    .wait();
+  await expect(
+    client
+      .updateApiKey(addApiKeyResponse.key, {
+        maxHitsPerQuery: 42,
+        queryParameters: 'typoTolerance=min',
+      })
+      .wait()
+  ).resolves.toMatchObject({
+    updatedAt: expect.any(String),
+    key: addApiKeyResponse.key,
+  });
 
-  expect(Object.keys(updateApiKeyResponse)).toEqual(['key', 'updatedAt']);
-
-  const updatedGetApiKeyResponse = await client.getApiKey(addApiKeyResponse.key);
-  expect(updatedGetApiKeyResponse).toMatchObject({
+  await expect(client.getApiKey(addApiKeyResponse.key)).resolves.toMatchObject({
     maxHitsPerQuery: 42,
     queryParameters: 'typoTolerance=min',
   });
 
-  const deleteApiKeyResponse = await client.deleteApiKey(addApiKeyResponse.key).wait();
-  expect(Object.keys(deleteApiKeyResponse)).toEqual(['deletedAt']);
+  await expect(client.deleteApiKey(addApiKeyResponse.key).wait()).resolves.toMatchObject({
+    deletedAt: expect.any(String),
+  });
 
   await expect(client.getApiKey(addApiKeyResponse.key)).rejects.toMatchObject({
     name: 'ApiError',
@@ -64,15 +69,28 @@ test(testSuite.testName, async () => {
     status: 404,
   });
 
-  const restoreApiKeyResponse = await client.restoreApiKey(addApiKeyResponse.key).wait();
-  expect(Object.keys(restoreApiKeyResponse)).toEqual(['createdAt']);
+  const restoreApiKey = createRetryablePromise(async retry => {
+    try {
+      return await client.restoreApiKey(addApiKeyResponse.key).wait();
+    } catch (e) {
+      if (e.message !== 'Key already exists') {
+        throw e;
+      }
 
-  const getRestoredApiKeyResponse = await client.getApiKey(addApiKeyResponse.key);
-  expect(getRestoredApiKeyResponse).toMatchObject({
+      return retry();
+    }
+  });
+
+  await expect(restoreApiKey).resolves.toMatchObject({
+    createdAt: expect.any(String),
+  });
+
+  await expect(client.getApiKey(addApiKeyResponse.key)).resolves.toMatchObject({
     maxHitsPerQuery: 42,
     queryParameters: 'typoTolerance=min',
   });
 
-  const deleteAgainApiKeyResponse = await client.deleteApiKey(addApiKeyResponse.key).wait();
-  expect(Object.keys(deleteAgainApiKeyResponse)).toEqual(['deletedAt']);
+  await expect(client.deleteApiKey(addApiKeyResponse.key).wait()).resolves.toMatchObject({
+    deletedAt: expect.any(String),
+  });
 });
