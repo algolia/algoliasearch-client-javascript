@@ -16,6 +16,7 @@ export * from './getLogs';
 export * from './getSecuredApiKeyRemainingValidity';
 export * from './getTopUserIDs';
 export * from './getUserID';
+export * from './hasPendingMappings';
 export * from './initIndex';
 export * from './listApiKeys';
 export * from './listClusters';

@@ -87,6 +87,9 @@ import {
   getTopUserIDs,
   GetTopUserIDsResponse,
   getUserID,
+  hasPendingMappings,
+  HasPendingMappingsOptions,
+  HasPendingMappingsResponse,
   IndexOperationResponse,
   initIndex,
   listApiKeys,
@@ -227,6 +230,7 @@ export default function algoliasearch(
       listUserIDs,
       getTopUserIDs,
       removeUserID,
+      hasPendingMappings,
       generateSecuredApiKey,
       getSecuredApiKeyRemainingValidity,
       destroy,
@@ -584,6 +588,9 @@ export type SearchClient = BaseSearchClient & {
     userID: string,
     requestOptions?: RequestOptions
   ) => Readonly<Promise<RemoveUserIDResponse>>;
+  readonly hasPendingMappings: (
+    requestOptions?: HasPendingMappingsOptions & RequestOptions
+  ) => Readonly<Promise<HasPendingMappingsResponse>>;
   readonly generateSecuredApiKey: (
     parentApiKey: string,
     restrictions: SecuredApiKeyRestrictions
