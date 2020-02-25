@@ -80,6 +80,13 @@ test(testSuite.testName, async () => {
       fi: ['attribute3'],
     },
     keepDiacriticsOnCharacters: 'øé',
+    queryLanguages: ['en', 'fr'],
+    alternativesAsExact: ['ignorePlurals'],
+    advancedSyntaxFeatures: ['exactPhrase'],
+    userData: {
+      customUserData: 42.0,
+    },
+    indexLanguages: ['ja'],
   };
 
   await index.setSettings(settings1).wait();
