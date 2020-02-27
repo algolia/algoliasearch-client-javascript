@@ -53,8 +53,8 @@ export class TestSuite {
     // To avoid timeouts we increase the timeouts duration
     // @ts-ignore
     client.transporter.timeouts = {
-      connect: 5,
-      read: 10,
+      connect: 30,
+      read: 30,
       write: 30,
     };
 
