@@ -4,8 +4,8 @@ import { TestSuite } from '../../../../client-common/src/__tests__/TestSuite';
 const testSuite = new TestSuite('copy_and_move_index');
 
 test(testSuite.testName, async () => {
-  const index = testSuite.makeIndex();
   const client = testSuite.makeSearchClient();
+  const index = client.initIndex(testSuite.makeIndexName());
 
   let responses = [];
 
