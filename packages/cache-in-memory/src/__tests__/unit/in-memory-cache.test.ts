@@ -12,7 +12,11 @@ describe('in memory cache', () => {
       await cache.get({ key: 'foo' }, defaultValue, {
         miss: () => Promise.resolve(missMock()),
       })
-    ).toMatchSnapshot({ bar: 1 });
+    ).toMatchInlineSnapshot(`
+      Object {
+        "bar": 1,
+      }
+    `);
 
     await cache.set({ key: 'foo' }, { foo: 2 });
 

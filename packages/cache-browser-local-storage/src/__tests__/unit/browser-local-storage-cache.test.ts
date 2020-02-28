@@ -24,7 +24,11 @@ describe('browser local storage cache', () => {
       await cache.get({ key: 'foo' }, defaultValue, {
         miss: () => Promise.resolve(missMock()),
       })
-    ).toMatchSnapshot({ bar: 1 });
+    ).toMatchInlineSnapshot(`
+      Object {
+        "bar": 1,
+      }
+    `);
 
     expect(missMock.mock.calls.length).toBe(1);
 
