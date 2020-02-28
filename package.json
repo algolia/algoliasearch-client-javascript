@@ -20,7 +20,7 @@
     "test:lint": "eslint . --ext .js,.ts",
     "test:locally": "lerna clean --yes && yarn lint && yarn test:types && yarn test:unit",
     "test:types": "yarn tsc",
-    "test:unit": "./scripts/prepare-test-unit.sh && lerna clean --yes && jest --verbose --updateSnapshot",
+    "test:unit": "./scripts/prepare-test-unit.sh && lerna clean --yes && jest --verbose",
     "update": "rm -rf node_modules && rm -f yarn.lock && lerna clean --yes && yarn install"
   },
   "husky": {
