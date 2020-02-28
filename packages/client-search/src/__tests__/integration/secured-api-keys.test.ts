@@ -17,7 +17,9 @@ test(testSuite.testName, async () => {
 
   await expect(
     testSuite
-      .algoliasearch(index1.appId, securedApiKey)
+      .algoliasearch(index1.appId, securedApiKey, {
+        hosts: client.transporter.hosts,
+      })
       .initIndex(index1.indexName)
       .search('')
   ).resolves.toMatchObject({
