@@ -5,6 +5,7 @@ import { ABTest, Variant } from '../..';
 import { createFaker } from '../../../../client-common/src/__tests__/createFaker';
 import { waitResponses } from '../../../../client-common/src/__tests__/helpers';
 import { TestSuite } from '../../../../client-common/src/__tests__/TestSuite';
+import { AddABTestResponse } from '../../types';
 
 const testSuite = new TestSuite('ab_testing');
 
@@ -61,7 +62,18 @@ test(testSuite.testName, async () => {
     endAt: new Date(today.getTime() + 24 * 3600 * 1000).toISOString(),
   };
 
-  const addABTestResponse = await analytics.addABTest(abTest);
+  const addABTestResponse = await createRetryablePromise<AddABTestResponse>(async retry => {
+    try {
+      return await analytics.addABTest(abTest);
+    } catch (e) {
+      if (e.message !== 'Index does not exist') {
+        throw e;
+      }
+
+      return retry();
+    }
+  });
+
   const abTestID = addABTestResponse.abTestID;
   await client.initIndex(addABTestResponse.index).waitTask(addABTestResponse.taskID);
 
