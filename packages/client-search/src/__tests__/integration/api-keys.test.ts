@@ -7,13 +7,6 @@ const testSuite = new TestSuite('api_keys');
 test(testSuite.testName, async () => {
   const client = testSuite.makeSearchClient();
 
-  // @ts-ignore
-  client.transporter.timeouts = {
-    connect: 2,
-    read: 5,
-    write: 30,
-  };
-
   const apiKeyOptions = {
     description: 'A description',
     indexes: ['index'],

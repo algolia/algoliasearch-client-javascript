@@ -43,6 +43,21 @@ export class TestSuite {
   ) {
     let client = this.algoliasearch(`${process.env[appIdEnv]}`, `${process.env[apiKeyEnv]}`);
 
+    // To ensure `Consistency` during the Common Test Suite, we
+    // force the transporter to work with a single host in the
+    // list: { dsn:read, dsn:write, host-1, host-2, host-3 }
+    client.transporter.hosts = [client.transporter.hosts[2]];
+
+    // Also, since we are targeting always the same host, the
+    // server may take a litle more than expected to answer.
+    // To avoid timeouts we increase the timeouts duration
+    // @ts-ignore
+    client.transporter.timeouts = {
+      connect: 30,
+      read: 30,
+      write: 30,
+    };
+
     if (testing.isBrowserLite()) {
       // @ts-ignore
       client = addMethods(client, {

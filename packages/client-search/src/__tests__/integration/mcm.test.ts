@@ -31,13 +31,6 @@ test(testSuite.testName, async () => {
   // @ts-ignore
   client.transporter = createRetryableTransporter(client.transporter);
 
-  // @ts-ignore
-  client.transporter.timeouts = {
-    connect: 2,
-    read: 5,
-    write: 30,
-  };
-
   const response = await client.listClusters();
 
   expect(response.clusters).toHaveLength(2);

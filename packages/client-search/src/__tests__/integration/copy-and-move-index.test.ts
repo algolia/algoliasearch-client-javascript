@@ -4,8 +4,8 @@ import { TestSuite } from '../../../../client-common/src/__tests__/TestSuite';
 const testSuite = new TestSuite('copy_and_move_index');
 
 test(testSuite.testName, async () => {
-  const index = testSuite.makeIndex();
   const client = testSuite.makeSearchClient();
+  const index = client.initIndex(testSuite.makeIndexName());
 
   let responses = [];
 
@@ -42,16 +42,16 @@ test(testSuite.testName, async () => {
   await waitResponses(responses);
   responses = [];
 
-  const indexSettings = testSuite.makeIndex(`${index.indexName}copy_index_settings`);
+  const indexSettings = client.initIndex(`${index.indexName}copy_index_settings`);
   responses.push(client.copySettings(index.indexName, indexSettings.indexName));
 
-  const indexSynonyms = testSuite.makeIndex(`${index.indexName}copy_index_synonyms`);
+  const indexSynonyms = client.initIndex(`${index.indexName}copy_index_synonyms`);
   responses.push(client.copySynonyms(index.indexName, indexSynonyms.indexName));
 
-  const indexRules = testSuite.makeIndex(`${index.indexName}copy_index_rules`);
+  const indexRules = client.initIndex(`${index.indexName}copy_index_rules`);
   responses.push(client.copyRules(index.indexName, indexRules.indexName));
 
-  const indexFull = testSuite.makeIndex(`${index.indexName}copy_index_full`);
+  const indexFull = client.initIndex(`${index.indexName}copy_index_full`);
   responses.push(client.copyIndex(index.indexName, indexFull.indexName));
 
   await waitResponses(responses);
@@ -80,7 +80,7 @@ test(testSuite.testName, async () => {
   expect((await indexRules.getSettings()).attributesForFaceting).toEqual(null);
   expect((await indexSynonyms.getSettings()).attributesForFaceting).toEqual(null);
 
-  const indexMoved = testSuite.makeIndex(`${index.indexName}move_index`);
+  const indexMoved = client.initIndex(`${index.indexName}move_index`);
   await client.moveIndex(index.indexName, indexMoved.indexName).wait();
 
   expect(await index.exists()).toBe(false);
