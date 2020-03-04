@@ -90,12 +90,12 @@ export class TestSuite {
       });
     }
 
-    this.indicesCount++;
-
     return index;
   }
 
   public makeIndexName(): string {
+    this.indicesCount++;
+
     const instanceName = this.makeInstanceName();
     const dateTime = this.makeDateTime();
 

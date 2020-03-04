@@ -6,10 +6,12 @@ const testSuite = new TestSuite('secured_api_keys');
 
 test(testSuite.testName, async () => {
   const client = testSuite.makeSearchClient();
-  const index1 = testSuite.makeIndex();
-  const index2 = testSuite.makeIndex();
+  const index1 = client.initIndex(testSuite.makeIndexName());
+  const index2 = client.initIndex(testSuite.makeIndexName());
 
   await index1.saveObject({ objectID: 'one' }).wait();
+  await index2.saveObject({ objectID: 'one' }).wait();
+
   const securedApiKey = await client.generateSecuredApiKey(process.env.ALGOLIA_SEARCH_KEY_1 || '', {
     validUntil: Math.round(new Date().getTime() / 1000) + 60,
     restrictIndices: index1.indexName,
