@@ -126,7 +126,7 @@ export type SearchResponse<TObject = {}> = {
   /**
    * The computed geo location.
    *
-   * Format: ${lat},${lng}, where the latitude and longitude are expressed as decimal floating point number.
+   * Format: "lat,lng", where the latitude and longitude are expressed as decimal floating point number.
    */
   readonly aroundLatLng?: string;
 
