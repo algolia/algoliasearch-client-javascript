@@ -1,6 +1,6 @@
 {
   "name": "@algolia/logger-common",
-  "version": "4.0.3",
+  "version": "4.1.0",
   "private": false,
   "description": "Common interfaces for promise-based log libraries",
   "repository": {
