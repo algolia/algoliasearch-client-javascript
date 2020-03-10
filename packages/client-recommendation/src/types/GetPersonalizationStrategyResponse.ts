@@ -2,22 +2,22 @@ export type GetPersonalizationStrategyResponse = {
   /**
    * Events scoring
    */
-  readonly eventsScoring: ReadonlyArray<{
-    readonly eventName: string;
-    readonly eventType: string;
-    readonly score: number;
+  eventsScoring: Array<{
+    eventName: string;
+    eventType: string;
+    score: number;
   }>;
 
   /**
    * Facets scoring
    */
-  readonly facetsScoring: ReadonlyArray<{
-    readonly facetName: string;
-    readonly score: number;
+  facetsScoring: Array<{
+    facetName: string;
+    score: number;
   }>;
 
   /**
    * Personalization impact
    */
-  readonly personalizationImpact: number;
+  personalizationImpact: number;
 };

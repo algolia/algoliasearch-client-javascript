@@ -4,5 +4,5 @@ export type ListUserIDsResponse = {
   /**
    * List of users id.
    */
-  readonly userIDs: readonly UserIDResponse[];
+  userIDs: UserIDResponse[];
 };

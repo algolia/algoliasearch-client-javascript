@@ -2,10 +2,10 @@ export type MultipleBatchResponse = {
   /**
    * The list of object ids.
    */
-  readonly objectIDs: readonly string[];
+  objectIDs: string[];
 
   /**
    * The operation task id. May be used to perform a wait task.
    */
-  readonly taskID: Readonly<Record<string, number>>;
+  taskID: Record<string, number>;
 };

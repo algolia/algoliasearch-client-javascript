@@ -4,5 +4,5 @@ export type MultipleQueriesResponse<TObject> = {
   /**
    * The list of results.
    */
-  readonly results: ReadonlyArray<SearchResponse<TObject & ObjectWithObjectID>>;
+  results: Array<SearchResponse<TObject & ObjectWithObjectID>>;
 };

@@ -2,10 +2,10 @@ export type PartialUpdateObjectResponse = {
   /**
    * The operation task id. May be used to perform a wait task.
    */
-  readonly taskID: number;
+  taskID: number;
 
   /**
    * The object id updated.
    */
-  readonly objectID: string;
+  objectID: string;
 };

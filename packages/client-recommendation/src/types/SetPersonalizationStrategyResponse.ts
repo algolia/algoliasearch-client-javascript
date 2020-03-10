@@ -2,10 +2,10 @@ export type SetPersonalizationStrategyResponse = {
   /**
    * The status code.
    */
-  readonly status?: number;
+  status?: number;
 
   /**
    * The message.
    */
-  readonly message: string;
+  message: string;
 };
