@@ -5,7 +5,16 @@ import { SetPersonalizationStrategyResponse } from '../../types';
 const testSuite = new TestSuite('personalization_strategy');
 
 test(testSuite.testName, async () => {
-  const client = testSuite.makeSearchClient().initRecommendation();
+  // On the CI, we parallelize too many calls to this endpoint. Making
+  // the API slow to respond, and reaching a timeout. These specific
+  // timeouts should ensure the test suite works as expected.
+  const client = testSuite.makeSearchClient().initRecommendation({
+    timeouts: {
+      connect: 30,
+      read: 30,
+      write: 30,
+    },
+  });
 
   const personalizationStrategy: PersonalizationStrategy = {
     eventsScoring: [
