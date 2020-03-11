@@ -4,25 +4,25 @@ export type SearchUserIDsResponse<> = {
   /**
    * List of userID matching the query.
    */
-  readonly hits: readonly UserIDResponse[];
+  hits: UserIDResponse[];
 
   /**
    * Current page.
    */
-  readonly page: number;
+  page: number;
 
   /**
    * Number of userIDs matching the query.
    */
-  readonly nbHits: number;
+  nbHits: number;
 
   /**
    * Number of hits retrieved per page.
    */
-  readonly hitsPerPage: number;
+  hitsPerPage: number;
 
   /**
    * Timestamp of the last update of the index.
    */
-  readonly updatedAt: number;
+  updatedAt: number;
 };

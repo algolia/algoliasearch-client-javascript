@@ -2,10 +2,10 @@ export type SaveSynonymResponse = {
   /**
    * When the given synonyms got saved.
    */
-  readonly updatedAt: number;
+  updatedAt: number;
 
   /**
    * The operation task id. May be used to perform a wait task.
    */
-  readonly taskID: number;
+  taskID: number;
 };

@@ -4,5 +4,5 @@ export type ListClustersResponse = {
   /**
    * List of clusters.
    */
-  readonly clusters: readonly Cluster[];
+  clusters: Cluster[];
 };

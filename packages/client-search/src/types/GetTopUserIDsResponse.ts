@@ -4,5 +4,5 @@ export type GetTopUserIDsResponse = {
   /**
    * Mapping of cluster names to top users.
    */
-  readonly topUsers: Readonly<Record<string, readonly UserIDResponse[]>>;
+  topUsers: Record<string, UserIDResponse[]>;
 };

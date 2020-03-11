@@ -4,15 +4,15 @@ export type SearchForFacetValuesResponse = {
   /**
    * The list of facet hits.
    */
-  readonly facetHits: readonly FacetHit[];
+  facetHits: FacetHit[];
 
   /**
    * The exhaustive facets count.
    */
-  readonly exhaustiveFacetsCount: boolean;
+  exhaustiveFacetsCount: boolean;
 
   /**
    * The time that the API toke the process the request.
    */
-  readonly processingTimeMS?: number;
+  processingTimeMS?: number;
 };

@@ -2,20 +2,20 @@ export type UserIDResponse = {
   /**
    * userID of the user.
    */
-  readonly userID: string;
+  userID: string;
 
   /**
    * Cluster on which the user is assigned
    */
-  readonly clusterName: string;
+  clusterName: string;
 
   /**
    * Number of records belonging to the user.
    */
-  readonly nbRecords: number;
+  nbRecords: number;
 
   /**
    * Data size used by the user.
    */
-  readonly dataSize: number;
+  dataSize: number;
 };

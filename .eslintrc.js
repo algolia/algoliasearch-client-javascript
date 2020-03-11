@@ -3,7 +3,6 @@ const { resolve } = require("path");
 const PACKAGE_DIR = "./packages";
 
 const noExtraneousOverrides = require("./scripts/packages").map(package => {
-
   return {
     files: [`${PACKAGE_DIR}/${package}/**/*`],
     rules: {
@@ -119,6 +118,12 @@ module.exports = {
         "functional/prefer-readonly-type": 0,
         "sonarjs/no-duplicate-string": 0,
         "jest/expect-expect": 0
+      }
+    },
+    {
+      files: ["**/src/types/*Response.ts"],
+      rules: {
+        "functional/prefer-readonly-type": 0
       }
     }
   ],

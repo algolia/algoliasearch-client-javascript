@@ -4,10 +4,10 @@ export type SearchSynonymsResponse = {
   /**
    * The list of synonyms.
    */
-  readonly hits: readonly Synonym[];
+  hits: Synonym[];
 
   /**
    * The number of synonyms on the list.
    */
-  readonly nbHits: number;
+  nbHits: number;
 };

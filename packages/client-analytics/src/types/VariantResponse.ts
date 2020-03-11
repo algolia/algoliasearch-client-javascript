@@ -6,47 +6,47 @@ export type VariantResponse = Variant & {
   /**
    * Average click position for the variant.
    */
-  readonly averageClickPostion?: number;
+  averageClickPostion?: number;
 
   /**
    * Distinct click count for the variant.
    */
-  readonly clickCount?: number;
+  clickCount?: number;
 
   /**
    * Click through rate for the variant.
    */
-  readonly clickThroughRate?: number;
+  clickThroughRate?: number;
 
   /**
    * Click through rate for the variant.
    */
-  readonly conversionCount?: number;
+  conversionCount?: number;
 
   /**
    * Distinct conversion count for the variant.
    */
-  readonly conversionRate?: number;
+  conversionRate?: number;
 
   /**
    * No result count.
    */
-  readonly noResultCount?: number;
+  noResultCount?: number;
 
   /**
    * Search count.
    */
-  readonly searchCount?: number;
+  searchCount?: number;
 
   /**
    * User count.
    */
-  readonly userCount?: number;
+  userCount?: number;
 
   /**
    * The search parameters.
    *
    * @todo Handle this search options type.
    */
-  readonly customSearchParameters?: SearchOptions;
+  customSearchParameters?: SearchOptions;
 };
