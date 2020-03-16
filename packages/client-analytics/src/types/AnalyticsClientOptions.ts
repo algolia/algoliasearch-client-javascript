@@ -12,5 +12,5 @@ export type AnalyticsClientOptions = {
   /**
    * The prefered region.
    */
-  readonly region?: string;
+  readonly region?: 'de' | 'us';
 };
