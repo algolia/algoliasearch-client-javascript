@@ -70,7 +70,7 @@ export type Log = {
   readonly index?: string;
 
   /**
-   * internal queries performed for this query.
+   * Internal queries performed for this query.
    */
   readonly inner_queries: ReadonlyArray<{
     readonly indexName: string;
