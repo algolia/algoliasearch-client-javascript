@@ -73,6 +73,9 @@ export type Log = {
    * Internal queries performed for this query.
    */
   readonly inner_queries: ReadonlyArray<{
+    /**
+     * Index of this query.
+     */
     readonly indexName: string;
     readonly queryID: number;
     readonly offset: number;
