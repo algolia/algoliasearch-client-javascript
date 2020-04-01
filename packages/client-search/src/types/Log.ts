@@ -77,7 +77,7 @@ export type Log = {
      * Index of this query.
      */
     readonly indexName: string;
-    readonly queryID: number;
+    readonly queryID: string;
     readonly offset: number;
     readonly userToken: string;
   }>;
