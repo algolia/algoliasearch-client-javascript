@@ -4,6 +4,7 @@
 
 export * from './AddApiKeyOptions';
 export * from './AddApiKeyResponse';
+export * from './ApiKeyType';
 export * from './AssignUserIDResponse';
 export * from './AssignUserIDsResponse';
 export * from './BatchActionType';
