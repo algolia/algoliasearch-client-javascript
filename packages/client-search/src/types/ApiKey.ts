@@ -9,4 +9,6 @@ export type ApiKeyACL =
   | 'analytics'
   | 'listIndexes'
   | 'logs'
-  | 'seeUnretrievableAttributes';
+  | 'seeUnretrievableAttributes'
+  | 'recommendation'
+  | 'usage';
