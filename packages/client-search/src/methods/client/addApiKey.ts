@@ -10,7 +10,7 @@ import { ApiError, RequestOptions } from '@algolia/transporter';
 import {
   AddApiKeyOptions,
   AddApiKeyResponse,
-  ApiKeyACL,
+  ApiKeyACLType,
   getApiKey,
   GetApiKeyResponse,
   SearchClient,
@@ -18,7 +18,7 @@ import {
 
 export const addApiKey = (base: SearchClient) => {
   return (
-    acl: readonly ApiKeyACL[],
+    acl: readonly ApiKeyACLType[],
     requestOptions?: AddApiKeyOptions &
       Pick<RequestOptions, Exclude<keyof RequestOptions, 'queryParameters'>>
   ): Readonly<WaitablePromise<AddApiKeyResponse>> => {

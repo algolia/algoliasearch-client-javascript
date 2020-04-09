@@ -30,7 +30,7 @@ import {
   addApiKey,
   AddApiKeyOptions,
   AddApiKeyResponse,
-  ApiKeyACL,
+  ApiKeyACLType,
   assignUserID,
   AssignUserIDResponse,
   assignUserIDs,
@@ -543,7 +543,7 @@ export type SearchClient = BaseSearchClient & {
     requestOptions?: RequestOptions
   ) => Readonly<Promise<GetApiKeyResponse>>;
   readonly addApiKey: (
-    acl: readonly ApiKeyACL[],
+    acl: readonly ApiKeyACLType[],
     requestOptions?: AddApiKeyOptions &
       Pick<RequestOptions, Exclude<keyof RequestOptions, 'queryParameters'>>
   ) => Readonly<WaitablePromise<AddApiKeyResponse>>;

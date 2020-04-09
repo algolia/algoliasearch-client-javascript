@@ -1,4 +1,4 @@
-import { ApiKeyACL } from '.';
+import { ApiKeyACLType } from '.';
 
 export type GetApiKeyResponse = {
   /**
@@ -14,7 +14,7 @@ export type GetApiKeyResponse = {
   /**
    * List of permissions the key contains.
    */
-  acl: ApiKeyACL[];
+  acl: ApiKeyACLType[];
 
   /**
    * A Unix timestamp used to define the expiration date of the API key.
