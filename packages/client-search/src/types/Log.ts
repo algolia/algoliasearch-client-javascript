@@ -47,7 +47,7 @@ export type Log = {
   /**
    * Number Of Api Calls
    */
-  readonly nb_api_calls: string;
+  readonly nb_api_calls?: string;
 
   /**
    * Processing time for the query. This does not include network time.

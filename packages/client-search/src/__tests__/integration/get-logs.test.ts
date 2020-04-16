@@ -28,7 +28,6 @@ test(testSuite.testName, async () => {
     'ip',
     'sha1',
     'query_headers',
-    'nb_api_calls',
     'processing_time_ms',
   ];
   expect(Object.keys(getLogsResponse.logs[0])).toEqual(expect.arrayContaining(keys));
