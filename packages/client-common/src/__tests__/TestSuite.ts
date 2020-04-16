@@ -131,7 +131,7 @@ export class TestSuite {
     if (jobNumber) {
       return `${environment}_${nodeVersion}_${jobNumber}`;
     } else if (user) {
-      return `${environment}_${nodeVersion}_${user}`;
+      return `${environment}_${nodeVersion}_${user.substring(0, 5)}`;
     }
 
     return `${environment}_${nodeVersion}_unknown`;
