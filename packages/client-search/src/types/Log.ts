@@ -2,7 +2,7 @@ export type Log = {
   /**
    * Timestamp in ISO-8601 format.
    */
-  readonly timeStamp: string;
+  readonly timestamp: string;
 
   /**
    * Rest type of the method.
@@ -12,12 +12,12 @@ export type Log = {
   /**
    * Http response code.
    */
-  readonly answerCode: string;
+  readonly answer_code: string;
 
   /**
    * Request body. It’s truncated after 1000 characters.
    */
-  readonly queryBody: string;
+  readonly query_body: string;
 
   /**
    * Answer body. It’s truncated after 1000 characters.
@@ -42,22 +42,22 @@ export type Log = {
   /**
    * Request Headers (API Key is obfuscated).
    */
-  readonly queryHeaders: string;
+  readonly query_headers: string;
 
   /**
    * Number Of Api Calls
    */
-  readonly numberOfApiCalls: string;
+  readonly nb_api_calls?: string;
 
   /**
    * Processing time for the query. This does not include network time.
    */
-  readonly processingTimeMS: string;
+  readonly processing_time_ms: string;
 
   /**
    * Number of hits returned for the query.
    */
-  readonly numberOfQueryHits: string;
+  readonly query_nb_hits?: string;
 
   /**
    * Exhaustive flags used during the query.
@@ -67,5 +67,5 @@ export type Log = {
   /**
    * Index name of the log
    */
-  readonly index: string;
+  readonly index?: string;
 };

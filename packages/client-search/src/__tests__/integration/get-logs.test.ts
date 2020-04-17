@@ -1,3 +1,5 @@
+import { Log } from '../..';
+import { RequiredKeys } from '../../../../client-common/src/__tests__/helpers';
 import { TestSuite } from '../../../../client-common/src/__tests__/TestSuite';
 
 const testSuite = new TestSuite('get_logs');
@@ -15,5 +17,18 @@ test(testSuite.testName, async () => {
     type: 'all',
   });
 
-  await expect(getLogsResponse.logs).toHaveLength(2);
+  expect(getLogsResponse.logs).toHaveLength(2);
+  const keys: Array<RequiredKeys<Log>> = [
+    'timestamp',
+    'method',
+    'answer_code',
+    'query_body',
+    'answer',
+    'url',
+    'ip',
+    'sha1',
+    'query_headers',
+    'processing_time_ms',
+  ];
+  expect(Object.keys(getLogsResponse.logs[0])).toEqual(expect.arrayContaining(keys));
 });
