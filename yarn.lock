@@ -4417,10 +4417,10 @@ eslint-plugin-sonarjs@0.5.0:
   resolved "https://registry.yarnpkg.com/eslint-plugin-sonarjs/-/eslint-plugin-sonarjs-0.5.0.tgz#ce17b2daba65a874c2862213a9e38e8986ad7d7d"
   integrity sha512-XW5MnzlRjhXpIdbULC/qAdJYHWw3rRLws/DyawdlPU/IdVr9AmRK1r2LaCvabwKOAW2XYYSo3kDX58E4MrB7PQ==
 
-eslint-plugin-wdio@5.13.2:
-  version "5.13.2"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-wdio/-/eslint-plugin-wdio-5.13.2.tgz#cfe75ffaea954c49d1e089f5b3b388746012951b"
-  integrity sha512-C3q1aPOPAlfcc64qE9GFfGdT/H6aZwur5ugMzXtiGejiLP/omdY0XrU8wHaLJ1QpNr+/ohf/MIYVthFK0tr1Sw==
+eslint-plugin-wdio@6.0.12:
+  version "6.0.12"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-wdio/-/eslint-plugin-wdio-6.0.12.tgz#e4c9d87c910eedd3fbf657c98a1b2ee374bc38b4"
+  integrity sha512-qZqcU1Z0bqrqhYM1MbwIvKQxcQEGIOEclOjcveavvLZAN4ezpXb1Ogw3xu+UK13iArregJOMI6uUt+JkFmER1A==
 
 eslint-scope@^5.0.0:
   version "5.0.0"
