@@ -10,6 +10,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 - Improved `acl` property type in `GetApiKeyResponse` and `addApiKey` function param ([#1126](https://github.com/algolia/algoliasearch-client-javascript/pull/1126))
+- Improved `AnalyticsClientOptions` property type region ([#1085](https://github.com/algolia/algoliasearch-client-javascript/pull/1085))
+- Responses types can now be muted ([#1068](https://github.com/algolia/algoliasearch-client-javascript/pull/1068))
+
+### Fixed
+- Type `Log` ([#1139](https://github.com/algolia/algoliasearch-client-javascript/pull/1139))
 
 ## [v4.1.0](https://github.com/algolia/algoliasearch-client-javascript/compare/4.0.3...4.1.0)
 
