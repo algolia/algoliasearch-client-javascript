@@ -40,7 +40,7 @@ git fetch origin --tags
 
 currentVersion=`cat lerna.json | jq -r '.version'`
 
-printf "\n${RED}[ACTION]${NC} Checking CI status is an manual step! Check here: https://circleci.com/gh/algolia\n"
+printf "\n${RED}[ACTION]${NC} Checking CI status is an manual step! Check here: https://circleci.com/gh/algolia/algoliasearch-client-javascript\n"
 read -p "Is the latest commit a success? If yes, are you sure? (y/n): "
 if [[ ! $REPLY =~ ^[Yy]$ ]]; then exit 1; fi
 
