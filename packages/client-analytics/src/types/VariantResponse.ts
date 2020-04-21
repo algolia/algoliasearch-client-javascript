@@ -43,10 +43,9 @@ export type VariantResponse = Variant & {
    */
   userCount?: number;
 
+  // @todo Handle this search options type.
   /**
    * The search parameters.
-   *
-   * @todo Handle this search options type.
    */
   customSearchParameters?: SearchOptions;
 };

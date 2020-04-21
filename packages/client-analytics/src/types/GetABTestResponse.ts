@@ -32,13 +32,13 @@ export type GetABTestResponse = {
   abTestID: number;
 
   /**
-   * The ab test significance based on click data. Should be > 0.95 to be considered significant - no matter which variant is winning.
+   * The ab test significance based on click data. Should be higher than 0.95 to be considered significant - no matter which variant is winning.
    */
   clickSignificance: number;
 
   /**
    *
-   * The ab test significance based on conversion data. Should be > 0.95 to be considered significant - no matter which variant is winning.
+   * The ab test significance based on conversion data. Should be higher than 0.95 to be considered significant - no matter which variant is winning.
    */
   conversionSignificance: number;
 };

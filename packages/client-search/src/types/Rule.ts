@@ -53,7 +53,6 @@ export type AutomaticFacetFilter = {
 export type ConsequenceQuery = {
   /**
    * List of removes.
-   *
    */
   readonly remove?: readonly string[];
 
@@ -66,10 +65,14 @@ export type ConsequenceQuery = {
      */
     readonly type?: 'remove' | 'replace';
 
-    /** Text or patterns to remove from the query string. */
+    /**
+     * Text or patterns to remove from the query string.
+     */
     readonly delete?: string;
 
-    /** Text that should be inserted in place of the removed text inside the query string. */
+    /**
+     * Text that should be inserted in place of the removed text inside the query string.
+     */
     readonly insert?: string;
   }>;
 };
@@ -106,10 +109,14 @@ export type ConsequenceParams = {
 };
 
 export type Condition = {
-  /** Query patterns are expressed as a string with a specific syntax. A pattern is a sequence of tokens. */
+  /**
+   * Query patterns are expressed as a string with a specific syntax. A pattern is a sequence of tokens.
+   */
   readonly pattern?: string;
 
-  /** { is | startsWith | endsWith | contains }: Whether the pattern must match the beginning or the end of the query string, or both, or none. */
+  /**
+   * is | startsWith | endsWith | contains: Whether the pattern must match the beginning or the end of the query string, or both, or none.
+   */
   readonly anchoring?: 'is' | 'startsWith' | 'endsWith' | 'contains';
 
   /**
