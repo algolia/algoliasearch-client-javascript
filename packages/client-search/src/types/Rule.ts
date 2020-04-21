@@ -110,7 +110,7 @@ export type ConsequenceParams = {
 
 export type Condition = {
   /**
-   * Query patterns are expressed as a string with a specific syntax. A pattern is a sequence of tokens. 
+   * Query patterns are expressed as a string with a specific syntax. A pattern is a sequence of tokens.
    */
   readonly pattern?: string;
 
