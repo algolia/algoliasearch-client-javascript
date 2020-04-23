@@ -310,6 +310,14 @@ export type SearchOptions = {
   readonly removeStopWords?: boolean | readonly string[];
 
   /**
+   * List of supported languages with their associated language ISO code.
+   *
+   * Apply a set of natural language best practices such asignorePlurals,
+   * removeStopWords, removeWordsIfNoResults, analyticsTags and ruleContexts.
+   */
+  readonly naturalLanguages?: readonly string[];
+
+  /**
    * When true, each hit in the response contains an additional _rankingInfo object.
    */
   readonly getRankingInfo?: boolean;
