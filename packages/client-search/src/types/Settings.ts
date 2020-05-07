@@ -273,6 +273,11 @@ export type Settings = {
    * Overrides Algolia's default normalization.
    */
   readonly customNormalization?: Readonly<Record<string, Readonly<Record<string, string>>>>;
+  
+  /**
+   * Enable personalization for queries by default
+   */
+  readonly enablePersonalization?: boolean;
 
   /**
    * Custom userData that could be added to the Settings.
