@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 # Release Notes
 
-## [v4.3.0](https://github.com/algolia/algoliasearch-client-javascript/compare/4.2.0...4.3.0)
+## [UNRELEASED](https://github.com/algolia/algoliasearch-client-javascript/compare/4.2.0...master)
 
 ## Added
 
