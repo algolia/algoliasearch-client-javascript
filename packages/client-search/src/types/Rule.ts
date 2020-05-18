@@ -31,6 +31,15 @@ export type Rule = {
    * The list must not be empty.
    */
   readonly validity?: readonly TimeRange[];
+
+  readonly _metadata?: {
+    /**
+     * The last update time.
+     *
+     * @internal
+     */
+    readonly lastUpdate: number;
+  };
 };
 
 export type AutomaticFacetFilter = {

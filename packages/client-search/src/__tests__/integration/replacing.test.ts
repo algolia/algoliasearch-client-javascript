@@ -74,7 +74,7 @@ test(testSuite.testName, async () => {
     status: 404,
   });
 
-  await expect(index.getRule('two')).resolves.toEqual(rule2);
+  await expect(index.getRule('two')).resolves.toMatchObject(rule2);
   await expect(index.getRule('one')).rejects.toMatchObject({
     name: 'ApiError',
     message: 'ObjectID does not exist',
