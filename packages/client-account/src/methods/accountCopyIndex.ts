@@ -55,8 +55,7 @@ export const accountCopyIndex = (
         // eslint-disable-next-line functional/immutable-data
         batch: objects => responses.push(saveObjects(destination)(objects, requestOptions)),
       })
-    )
-    .then(() => Promise.resolve());
+    );
 
   return createWaitablePromise(
     /**
