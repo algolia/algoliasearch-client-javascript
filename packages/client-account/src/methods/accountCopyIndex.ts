@@ -55,10 +55,22 @@ export const accountCopyIndex = (
         // eslint-disable-next-line functional/immutable-data
         batch: objects => responses.push(saveObjects(destination)(objects, requestOptions)),
       })
-    )
-    .then(() => Promise.resolve());
+    );
 
-  return createWaitablePromise(promise, () =>
-    Promise.all(responses.map(response => response.wait()))
+  return createWaitablePromise(
+    /**
+     * The original promise will return an array of async responses, now
+     * we need to resolve that array of async responses using a
+     * `Promise.all`, and then resolve `void` for the end-user.
+     */
+    promise.then(() => Promise.all(responses)).then(() => undefined),
+
+    /**
+     * Next, if the end-user calls the `wait` method, we need to also call
+     * the `wait` method on each element of of async responses.
+     */
+    (_response, waitRequestOptions) => {
+      return Promise.all(responses.map(response => response.wait(waitRequestOptions)));
+    }
   );
 };
