@@ -31,6 +31,13 @@ describe(testSuite.testName, () => {
     ]);
   };
 
+  const waitForIndexCreated = (destination: ReturnType<typeof testSuite.makeIndex>) =>
+    createRetryablePromise(async retry => {
+      const exists = await destination.exists();
+
+      return exists ? Promise.resolve() : retry();
+    });
+
   it('copies indices between accounts', async () => {
     const source = testSuite.makeIndex();
     const destination = testSuite
@@ -75,11 +82,8 @@ describe(testSuite.testName, () => {
 
     await expect(accountCopyIndex(source, destination)).resolves.toBeUndefined();
 
-    await createRetryablePromise(async retry => {
-      const exists = await destination.exists();
-
-      return exists ? Promise.resolve() : retry();
-    });
+    await waitForIndexCreated(destination);
+    await expect(destination.exists()).resolves.toEqual(true);
   });
 
   it('it bubbles up errors', async () => {
@@ -91,7 +95,7 @@ describe(testSuite.testName, () => {
 
     const addApiKeyResponse = await testSuite
       .makeSearchClient('ALGOLIA_APPLICATION_ID_2', 'ALGOLIA_ADMIN_KEY_2')
-      .addApiKey(['settings', 'editSettings'], {
+      .addApiKey(['settings', 'editSettings', 'search'], {
         indexes: [indexName],
       })
       .wait();
@@ -106,6 +110,13 @@ describe(testSuite.testName, () => {
       status: 400,
     });
 
-    await expect(destination.exists()).resolves.toBe(false);
+    // At this point, we should have created the index. But it should
+    // be empty because we only have set settings on it.
+    await waitForIndexCreated(destination);
+
+    await expect(destination.search('')).resolves.toMatchObject({
+      nbHits: 0,
+      hits: [],
+    });
   });
 });
