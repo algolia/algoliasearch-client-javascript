@@ -100,7 +100,7 @@ describe(testSuite.testName, () => {
       .algoliasearch(`${process.env.ALGOLIA_APPLICATION_ID_2}`, addApiKeyResponse.key)
       .initIndex(indexName);
 
-    await expect(accountCopyIndex(source, destination)).rejects.toMatchObject({
+    await expect(accountCopyIndex(source, destination).wait()).rejects.toMatchObject({
       name: 'ApiError',
       message: 'Not enough rights to update an object near line:1 column:64',
       status: 400,

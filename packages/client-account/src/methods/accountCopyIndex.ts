@@ -64,7 +64,7 @@ export const accountCopyIndex = (
      * we need to resolve that array of async responses using a
      * `Promise.all`, and then resolve `void` for the end-user.
      */
-    promise.then(() => Promise.all(responses)).then(() => Promise.resolve()),
+    promise.then(() => Promise.all(responses)).then(() => undefined),
 
     /**
      * Next, if the end-user calls the `wait` method, we need to also call
