@@ -87,6 +87,16 @@ export type ConsequencePromote = {
    * Promoted rank for the object (zero-based).
    */
   readonly position: number;
+} | {
+  /**
+   * List of unique identifiers for the objects to promote.
+   */
+  readonly objectIDs: string[];
+  
+  /**
+   * Promoted start rank for the objects (zero-based).
+   */
+  readonly position: number;
 };
 
 export type ConsequenceParams = {
