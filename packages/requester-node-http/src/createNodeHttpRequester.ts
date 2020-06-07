@@ -27,10 +27,12 @@ export function createNodeHttpRequester(): Requester & Destroyable {
         };
 
         const req = (url.protocol === 'https:' ? https : http).request(options, response => {
-          // eslint-disable-next-line functional/no-let
-          let content = '';
+          // eslint-disable-next-line functional/no-let, functional/prefer-readonly-type
+          let contentBuffers: Buffer[] = [];
 
-          response.on('data', chunk => (content += chunk));
+          response.on('data', chunk => {
+            contentBuffers = contentBuffers.concat(chunk);
+          });
 
           response.on('end', () => {
             // eslint-disable-next-line @typescript-eslint/no-use-before-define
@@ -40,7 +42,7 @@ export function createNodeHttpRequester(): Requester & Destroyable {
 
             resolve({
               status: response.statusCode || 0,
-              content,
+              content: Buffer.concat(contentBuffers).toString(),
               isTimedOut: false,
             });
           });
