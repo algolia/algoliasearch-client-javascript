@@ -134,10 +134,10 @@ workflows:
       - test_unit:
           version: '13'
       - test_lint:
-          version: '12.18.0'
+          version: '12'
       - test_types:
-          version: '12.18.0'
+          version: '12'
       - test_build:
-          version: '12.18.0'
+          version: '12.16.2'
       - test_browser:
-          version: '12.18.0'
+          version: '12.16.2'
