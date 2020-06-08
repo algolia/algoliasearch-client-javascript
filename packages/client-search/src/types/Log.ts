@@ -74,11 +74,23 @@ export type Log = {
    */
   readonly inner_queries: ReadonlyArray<{
     /**
-     * Index of this query.
+     * Index name of the query.
      */
     readonly indexName: string;
+
+    /**
+     * Query ID of the query.
+     */
     readonly queryID: string;
+
+    /**
+     * The offset of the query.
+     */
     readonly offset: number;
+
+    /**
+     * The user token of the query.
+     */
     readonly userToken: string;
   }>;
 };
