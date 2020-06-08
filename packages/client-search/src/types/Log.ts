@@ -81,12 +81,12 @@ export type Log = {
     /**
      * Query ID of the query.
      */
-    readonly queryID: string;
+    readonly queryID?: string;
 
     /**
      * The offset of the query.
      */
-    readonly offset: number;
+    readonly offset?: number;
 
     /**
      * The user token of the query.
