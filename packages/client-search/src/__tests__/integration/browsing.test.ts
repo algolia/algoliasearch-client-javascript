@@ -8,13 +8,14 @@ import {
 } from '../..';
 import { createFaker } from '../../../../client-common/src/__tests__/createFaker';
 import { TestSuite } from '../../../../client-common/src/__tests__/TestSuite';
+import { SearchOptions } from '../../types';
 
 const testSuite = new TestSuite('browsing');
 
 let index: ReturnType<typeof testSuite.makeIndex>;
 let browse: (
   method: (index: SearchIndex) => any,
-  options?: { hitsPerPage?: number }
+  options?: BrowseOptions<{}> & SearchOptions
 ) => Promise<{
   hitsCount: number;
   batchCount: number;
@@ -146,6 +147,36 @@ describe.each([
 
       expect(browse(testCase.method, { hitsPerPage: 999 })).resolves.toEqual({
         hitsCount: 1000,
+        batchCount: 2,
+      }),
+    ]);
+  });
+
+  test('should stop', async () => {
+    await testCase.withDataset(10);
+
+    await Promise.all([
+      expect(
+        browse(testCase.method, {
+          // Should stop on the very first batch. Therefore, the number
+          // of hits should be 1, and the batch count should be 1
+          shouldStop: () => true,
+          hitsPerPage: 1,
+        })
+      ).resolves.toEqual({
+        hitsCount: 1,
+        batchCount: 1,
+      }),
+
+      expect(
+        browse(testCase.method, {
+          // Should stop on the second batch. The one that was the objectID "7". Therefore,
+          // the number of hits should be 4, and the batch count should be 2
+          shouldStop: res => res.hits[0].objectID === '7',
+          hitsPerPage: 2,
+        })
+      ).resolves.toEqual({
+        hitsCount: 4,
         batchCount: 2,
       }),
     ]);
