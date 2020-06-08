@@ -87,6 +87,8 @@ test(testSuite.testName, async () => {
       customUserData: 42.0,
     },
     indexLanguages: ['ja'],
+    customNormalization: { default: { ä: 'ae', ö: 'oe' } },
+    enablePersonalization: true,
   };
 
   await index.setSettings(settings1).wait();
