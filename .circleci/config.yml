@@ -138,6 +138,6 @@ workflows:
       - test_types:
           version: '12'
       - test_build:
-          version: '12'
+          version: '12.16.2'
       - test_browser:
-          version: '12'
+          version: '12.16.2'
