@@ -1,5 +1,7 @@
 import { MethodEnum, Request } from '@algolia/requester-common';
 import nock from 'nock';
+// @ts-ignore
+import { Readable } from 'readable-stream';
 
 import { createNodeHttpRequester } from '../..';
 
@@ -86,6 +88,27 @@ describe('status code handling', () => {
     expect(response.status).toBe(400);
     expect(response.content).toBe(JSON.stringify(body));
     expect(response.isTimedOut).toBe(false);
+  });
+
+  it('handles chunked responses inside unicode character boundaries', async () => {
+    const testdata = Buffer.from('äöü');
+
+    // create a test response stream that is chunked inside a unicode character
+    function* generate() {
+      yield testdata.slice(0, 3);
+      yield testdata.slice(3);
+    }
+
+    const testStream = Readable.from(generate());
+
+    nock('https://algolia-dns.net', { reqheaders: headers })
+      .post('/foo')
+      .query({ 'x-algolia-header': 'foo' })
+      .reply(200, testStream);
+
+    const response = await requester.send(requestStub);
+
+    expect(response.content).toEqual(testdata.toString());
   });
 });
 
