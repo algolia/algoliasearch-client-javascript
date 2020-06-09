@@ -91,6 +91,6 @@ export type Log = {
     /**
      * The user token of the query.
      */
-    readonly user_token: string;
+    readonly user_token?: string;
   }>;
 };
