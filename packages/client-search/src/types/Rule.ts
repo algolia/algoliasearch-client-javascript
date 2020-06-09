@@ -93,7 +93,7 @@ export type ConsequencePromote =
       /**
        * List of unique identifiers for the objects to promote.
        */
-      readonly objectIDs: string[];
+      readonly objectIDs: readonly string[];
 
       /**
        * Promoted start rank for the objects (zero-based).
