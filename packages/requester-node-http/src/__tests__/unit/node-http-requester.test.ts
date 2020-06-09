@@ -1,6 +1,7 @@
 import { MethodEnum, Request } from '@algolia/requester-common';
 import nock from 'nock';
-import { Readable } from 'stream';
+// @ts-ignore
+import { Readable } from 'readable-stream';
 
 import { createNodeHttpRequester } from '../..';
 
@@ -97,6 +98,7 @@ describe('status code handling', () => {
       yield testdata.slice(0, 3);
       yield testdata.slice(3);
     }
+
     const testStream = Readable.from(generate());
 
     nock('https://algolia-dns.net', { reqheaders: headers })
