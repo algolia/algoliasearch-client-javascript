@@ -76,12 +76,12 @@ export type Log = {
     /**
      * Index name of the query.
      */
-    readonly indexName: string;
+    readonly index_name: string;
 
     /**
      * Query ID of the query.
      */
-    readonly queryID?: string;
+    readonly query_id?: string;
 
     /**
      * The offset of the query.
@@ -91,6 +91,6 @@ export type Log = {
     /**
      * The user token of the query.
      */
-    readonly userToken: string;
+    readonly user_token?: string;
   }>;
 };
