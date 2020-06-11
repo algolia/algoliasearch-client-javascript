@@ -1,6 +1,6 @@
 {
   "name": "algoliasearch",
-  "version": "4.2.0",
+  "version": "4.3.0",
   "private": false,
   "description": "A fully-featured and blazing-fast JavaScript API client to interact with Algolia API.",
   "repository": {
@@ -25,19 +25,19 @@
     "lite.d.ts"
   ],
   "dependencies": {
-    "@algolia/cache-browser-local-storage": "4.2.0",
-    "@algolia/cache-common": "4.2.0",
-    "@algolia/cache-in-memory": "4.2.0",
-    "@algolia/client-account": "4.2.0",
-    "@algolia/client-analytics": "4.2.0",
-    "@algolia/client-common": "4.2.0",
-    "@algolia/client-recommendation": "4.2.0",
-    "@algolia/client-search": "4.2.0",
-    "@algolia/logger-common": "4.2.0",
-    "@algolia/logger-console": "4.2.0",
-    "@algolia/requester-browser-xhr": "4.2.0",
-    "@algolia/requester-common": "4.2.0",
-    "@algolia/requester-node-http": "4.2.0",
-    "@algolia/transporter": "4.2.0"
+    "@algolia/cache-browser-local-storage": "4.3.0",
+    "@algolia/cache-common": "4.3.0",
+    "@algolia/cache-in-memory": "4.3.0",
+    "@algolia/client-account": "4.3.0",
+    "@algolia/client-analytics": "4.3.0",
+    "@algolia/client-common": "4.3.0",
+    "@algolia/client-recommendation": "4.3.0",
+    "@algolia/client-search": "4.3.0",
+    "@algolia/logger-common": "4.3.0",
+    "@algolia/logger-console": "4.3.0",
+    "@algolia/requester-browser-xhr": "4.3.0",
+    "@algolia/requester-common": "4.3.0",
+    "@algolia/requester-node-http": "4.3.0",
+    "@algolia/transporter": "4.3.0"
   }
 }
