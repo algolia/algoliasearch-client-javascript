@@ -8,6 +8,8 @@ export type Rule = {
 
   /**
    * Condition of the rule, expressed using the following variables: pattern, anchoring, context.
+   *
+   * @deprecated This parameter is deprecated in favor of `conditions`.
    */
   readonly condition?: Condition;
 
