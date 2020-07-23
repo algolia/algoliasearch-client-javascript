@@ -40,16 +40,17 @@ test(testSuite.testName, async () => {
     status: 200,
     message: 'Strategy was successfully updated',
   };
-  
+
   const errorResponse: SetPersonalizationStrategyResponse = {
     status: 429,
     message: 'Number of strategy saves exceeded for the day',
   };
-  
+
   try {
     const response = await client.setPersonalizationStrategy(personalizationStrategy);
     expect(response).toEqual(successResponse);
   } catch (error) {
+    // eslint-disable-next-line jest/no-try-expect
     expect(error).toEqual({ name: 'ApiError', ...errorResponse });
   }
 
