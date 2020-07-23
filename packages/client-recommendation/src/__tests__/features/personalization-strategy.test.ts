@@ -51,7 +51,7 @@ test(testSuite.testName, async () => {
     expect(response).toEqual(successResponse);
   } catch (error) {
     // eslint-disable-next-line jest/no-try-expect
-    expect(error).toEqual({ name: 'ApiError', ...errorResponse });
+    expect(error).toEqual(expect.objectContaining({ name: 'ApiError', ...errorResponse }));
   }
 
   await expect(client.getPersonalizationStrategy()).resolves.toEqual(personalizationStrategy);
