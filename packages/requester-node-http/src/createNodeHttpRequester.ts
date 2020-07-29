@@ -1,14 +1,15 @@
 /* eslint sonarjs/cognitive-complexity: 0 */ // -->
 
 import { Destroyable, Request, Requester, Response } from '@algolia/requester-common';
+import * as HttpsProxyAgent from 'https-proxy-agent';
 import * as http from 'http';
 import * as https from 'https';
 import * as URL from 'url';
 
-export function createNodeHttpRequester(): Requester & Destroyable {
+export function createNodeHttpRequester(proxy: String): Requester & Destroyable {
   const agentOptions = { keepAlive: true };
-  const httpAgent = new http.Agent(agentOptions);
-  const httpsAgent = new https.Agent(agentOptions);
+  const httpAgent = proxy ? new HttpsProxyAgent(proxy) : new http.Agent(agentOptions);
+  const httpsAgent = proxy ? new HttpsProxyAgent(proxy) : new https.Agent(agentOptions);
 
   return {
     send(request: Request): Readonly<Promise<Response>> {
