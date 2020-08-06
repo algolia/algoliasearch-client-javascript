@@ -84,17 +84,29 @@ export type ConsequenceQuery = {
   }>;
 };
 
-export type ConsequencePromote = {
-  /**
-   * Unique identifier of the object to promote.
-   */
-  readonly objectID: string;
+export type ConsequencePromote =
+  | {
+      /**
+       * Unique identifier of the object to promote.
+       */
+      readonly objectID: string;
 
-  /**
-   * Promoted rank for the object (zero-based).
-   */
-  readonly position: number;
-};
+      /**
+       * Promoted rank for the object (zero-based).
+       */
+      readonly position: number;
+    }
+  | {
+      /**
+       * List of unique identifiers for the objects to promote.
+       */
+      readonly objectIDs: readonly string[];
+
+      /**
+       * Promoted start rank for the objects (zero-based).
+       */
+      readonly position: number;
+    };
 
 export type ConsequenceParams = {
   /**
