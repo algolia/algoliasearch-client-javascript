@@ -6,22 +6,29 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 # Release Notes
 
+## [v4.4.0](https://github.com/algolia/algoliasearch-client-javascript/compare/4.3.1...4.4.0)
+
+### Added
+
+- Accept multiple objectIDs in a Rule promotion ([#1156](https://github.com/algolia/algoliasearch-client-javascript/pull/1156), [#1155](https://github.com/algolia/algoliasearch-client-javascript/pull/1155))
+- Accept a custom http(s) agent in `createNodeHttpRequester` ([#1180](https://github.com/algolia/algoliasearch-client-javascript/pull/1180))
+
 ## [v4.3.1](https://github.com/algolia/algoliasearch-client-javascript/compare/4.3.0...4.3.1)
 
-## Added
+### Added
 
 - Support to multiple `conditions` on query rules ([#1171](https://github.com/algolia/algoliasearch-client-javascript/pull/1171), [#1174](https://github.com/algolia/algoliasearch-client-javascript/pull/1174))
 
 ## [v4.3.0](https://github.com/algolia/algoliasearch-client-javascript/compare/4.2.0...4.3.0)
 
-## Added
+### Added
 
 - `naturalLanguages` option type ([#1147](https://github.com/algolia/algoliasearch-client-javascript/pull/1147))
 - `shouldStop` option to stop browse ([#1029](https://github.com/algolia/algoliasearch-client-javascript/pull/1029))
 - `inner_queries` property to `getLogs` response ([#1109](https://github.com/algolia/algoliasearch-client-javascript/pull/1109), [#1166](https://github.com/algolia/algoliasearch-client-javascript/pull/1166))
 - `enablePersonalization` option to type `Settings` ([#1151](https://github.com/algolia/algoliasearch-client-javascript/pull/1151))
 
-## Fixed
+### Fixed
 
 - additional `clear`, `delete` & `deleteObject` types for the `.batch` method ([#1149](https://github.com/algolia/algoliasearch-client-javascript/pull/1149))
 - unhandled promise issue while using while using `accountCopyIndex` ([#1154](https://github.com/algolia/algoliasearch-client-javascript/pull/1154))
