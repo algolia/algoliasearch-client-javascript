@@ -43,7 +43,7 @@ test(testSuite.testName, async () => {
 
   const ruleToSave2: Rule = {
     objectID: 'query_edits',
-    condition: { anchoring: 'is', pattern: 'mobile phone', alternatives: true },
+    conditions: [{ anchoring: 'is', pattern: 'mobile phone', alternatives: true }],
     consequence: {
       params: {
         query: {

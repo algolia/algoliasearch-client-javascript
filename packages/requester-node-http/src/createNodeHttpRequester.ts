@@ -1,3 +1,4 @@
+/* eslint functional/prefer-readonly-type: 0 */
 /* eslint sonarjs/cognitive-complexity: 0 */ // -->
 
 import { Destroyable, Request, Requester, Response } from '@algolia/requester-common';
@@ -5,10 +6,20 @@ import * as http from 'http';
 import * as https from 'https';
 import * as URL from 'url';
 
-export function createNodeHttpRequester(): Requester & Destroyable {
+export type NodeHttpRequesterOptions = {
+  agent?: https.Agent | http.Agent;
+  httpAgent?: http.Agent;
+  httpsAgent?: https.Agent;
+};
+
+export function createNodeHttpRequester({
+  agent: userGlobalAgent,
+  httpAgent: userHttpAgent,
+  httpsAgent: userHttpsAgent,
+}: NodeHttpRequesterOptions = {}): Requester & Destroyable {
   const agentOptions = { keepAlive: true };
-  const httpAgent = new http.Agent(agentOptions);
-  const httpsAgent = new https.Agent(agentOptions);
+  const httpAgent = userHttpAgent || userGlobalAgent || new http.Agent(agentOptions);
+  const httpsAgent = userHttpsAgent || userGlobalAgent || new https.Agent(agentOptions);
 
   return {
     send(request: Request): Readonly<Promise<Response>> {
@@ -28,9 +39,11 @@ export function createNodeHttpRequester(): Requester & Destroyable {
 
         const req = (url.protocol === 'https:' ? https : http).request(options, response => {
           // eslint-disable-next-line functional/no-let
-          let content = '';
+          let contentBuffers: Buffer[] = [];
 
-          response.on('data', chunk => (content += chunk));
+          response.on('data', chunk => {
+            contentBuffers = contentBuffers.concat(chunk);
+          });
 
           response.on('end', () => {
             // eslint-disable-next-line @typescript-eslint/no-use-before-define
@@ -40,7 +53,7 @@ export function createNodeHttpRequester(): Requester & Destroyable {
 
             resolve({
               status: response.statusCode || 0,
-              content,
+              content: Buffer.concat(contentBuffers).toString(),
               isTimedOut: false,
             });
           });

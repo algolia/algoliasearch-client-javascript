@@ -6,7 +6,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 # Release Notes
 
-## [UNRELEASED](https://github.com/algolia/algoliasearch-client-javascript/compare/4.2.0...master)
+## [v4.3.1](https://github.com/algolia/algoliasearch-client-javascript/compare/4.3.0...4.3.1)
+
+## Added
+
+- Support to multiple `conditions` on query rules ([#1171](https://github.com/algolia/algoliasearch-client-javascript/pull/1171), [#1174](https://github.com/algolia/algoliasearch-client-javascript/pull/1174))
+
+## [v4.3.0](https://github.com/algolia/algoliasearch-client-javascript/compare/4.2.0...4.3.0)
 
 ## Added
 
@@ -19,6 +25,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - additional `clear`, `delete` & `deleteObject` types for the `.batch` method ([#1149](https://github.com/algolia/algoliasearch-client-javascript/pull/1149))
 - unhandled promise issue while using while using `accountCopyIndex` ([#1154](https://github.com/algolia/algoliasearch-client-javascript/pull/1154))
+- node requester unicode characters being corrupted on large responses ([#1164](https://github.com/algolia/algoliasearch-client-javascript/pull/1164))
 
 ## [v4.2.0](https://github.com/algolia/algoliasearch-client-javascript/compare/4.1.0...4.2.0)
 
