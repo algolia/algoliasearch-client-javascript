@@ -23,4 +23,9 @@ export type MappedRequestOptions = {
    * The data to be transfered to the server.
    */
   readonly data?: Record<string, string>;
+
+  /**
+   * options passed to the network request function
+   */
+  readonly requesterOptions?: any;
 };

@@ -1,5 +1,14 @@
 import { MappedRequestOptions, RequestOptions } from '.';
 
+const SPECIAL_KEYS = [
+  'timeout',
+  'headers',
+  'queryParameters',
+  'data',
+  'cacheable',
+  'requesterOptions',
+];
+
 export function createMappedRequestOptions(
   requestOptions?: RequestOptions,
   timeout?: number
@@ -9,7 +18,7 @@ export function createMappedRequestOptions(
   const data: Record<string, string> = options.data || {};
 
   Object.keys(options).forEach(key => {
-    if (['timeout', 'headers', 'queryParameters', 'data', 'cacheable'].indexOf(key) === -1) {
+    if (SPECIAL_KEYS.indexOf(key) === -1) {
       data[key] = options[key]; // eslint-disable-line functional/immutable-data
     }
   });
@@ -20,5 +29,6 @@ export function createMappedRequestOptions(
     headers: options.headers || {},
     queryParameters: options.queryParameters || {},
     cacheable: options.cacheable,
+    requesterOptions: options.requesterOptions,
   };
 }

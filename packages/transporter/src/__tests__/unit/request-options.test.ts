@@ -53,4 +53,11 @@ describe('request options', () => {
 
     expect(result.data).toBeUndefined();
   });
+
+  it('passes requesterOptions through', () => {
+    const requesterOptions = { time: new Date() };
+    const result = createMappedRequestOptions({ requesterOptions });
+
+    expect(result.requesterOptions).toEqual(requesterOptions);
+  });
 });

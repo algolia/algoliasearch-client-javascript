@@ -6,7 +6,7 @@ export type RequestOptions = {
   readonly cacheable?: boolean;
 
   /**
-   * Custom timeout for the request. Note that, in normal situacions
+   * Custom timeout for the request. Note that, in normal situations
    * the given timeout will be applied. But the transporter layer may
    * increase this timeout if there is need for it.
    */
@@ -14,21 +14,26 @@ export type RequestOptions = {
 
   /**
    * Custom headers for the request. This headers are
-   * going to be merged the transporter headers.
+   * going to be merged with the transporter headers.
    */
   readonly headers?: Readonly<Record<string, string>>;
 
   /**
    * Custom query parameters for the request. This query parameters are
-   * going to be merged the transporter query parameters.
+   * going to be merged with the transporter query parameters.
    */
   readonly queryParameters?: Record<string, any>;
 
   /**
    * Custom data for the request. This data are
-   * going to be merged the transporter data.
+   * going to be merged with the transporter data.
    */
   readonly data?: Record<string, any>;
+
+  /**
+   * options passed to the network request function
+   */
+  readonly requesterOptions?: any;
 
   /**
    * Additional request body values. It's only taken in

@@ -30,4 +30,9 @@ export type Request = {
    * The data to be transfered to the server.
    */
   readonly data: string | undefined;
+
+  /**
+   * options passed to the network request function
+   */
+  readonly requesterOptions?: any;
 };

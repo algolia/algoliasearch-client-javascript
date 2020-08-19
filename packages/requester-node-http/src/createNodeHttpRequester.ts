@@ -35,6 +35,7 @@ export function createNodeHttpRequester({
           method: request.method,
           headers: request.headers,
           ...(url.port !== undefined ? { port: url.port || '' } : {}),
+          ...(request.requesterOptions ? request.requesterOptions : {}),
         };
 
         const req = (url.protocol === 'https:' ? https : http).request(options, response => {

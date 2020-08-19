@@ -72,6 +72,7 @@ export function retryableRequest<TResponse>(
       url: serializeUrl(host, request.path, queryParameters),
       connectTimeout: getTimeout(timeoutsCount, transporter.timeouts.connect),
       responseTimeout: getTimeout(timeoutsCount, requestOptions.timeout as number),
+      requesterOptions: requestOptions.requesterOptions,
     };
 
     /**

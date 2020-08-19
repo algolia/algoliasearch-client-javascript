@@ -216,7 +216,7 @@ describe('timeout handling', () => {
   });
 });
 
-describe('error handling', (): void => {
+describe('error handling', () => {
   it('resolves dns not found', async () => {
     const request = {
       url: 'https://this-dont-exist.algolia.com',
@@ -249,5 +249,29 @@ describe('error handling', (): void => {
     expect(response.status).toBe(0);
     expect(response.content).toBe('This is a general error');
     expect(response.isTimedOut).toBe(false);
+  });
+});
+
+describe('options', () => {
+  it('passes `requesterOptions` to http.request()', async () => {
+    const request = {
+      ...requestStub,
+      requesterOptions: {
+        // override any parameter sent to http[s].request
+        // we can only test those which nock can handle, like method
+        method: 'GET',
+      },
+    };
+
+    const body = { response: 'foo' };
+
+    nock('https://algolia-dns.net')
+      .get('/foo')
+      .query({ 'x-algolia-header': 'foo' })
+      .reply(200, body);
+
+    const response = await requester.send(request);
+
+    expect(response.content).toEqual(body);
   });
 });
