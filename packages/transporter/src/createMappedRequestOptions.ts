@@ -29,6 +29,6 @@ export function createMappedRequestOptions(
     headers: options.headers || {},
     queryParameters: options.queryParameters || {},
     cacheable: options.cacheable,
-    requesterOptions: options.requesterOptions,
+    ...(options.requesterOptions ? { requesterOptions: options.requesterOptions } : {}),
   };
 }
