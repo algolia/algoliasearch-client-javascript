@@ -4,5 +4,5 @@ export type GetObjectsResponse<TObject> = {
   /**
    * The list of results.
    */
-  results: Array<TObject & ObjectWithObjectID>;
+  results: Array<(TObject & ObjectWithObjectID) | null>;
 };
