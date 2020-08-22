@@ -6,7 +6,7 @@ export type VariantResponse = Variant & {
   /**
    * Average click position for the variant.
    */
-  averageClickPostion?: number;
+  averageClickPosition?: number;
 
   /**
    * Distinct click count for the variant.
@@ -32,6 +32,11 @@ export type VariantResponse = Variant & {
    * No result count.
    */
   noResultCount?: number;
+
+  /**
+   * Tracked search count.
+   */
+  trackedSearchCount?: number;
 
   /**
    * Search count.
