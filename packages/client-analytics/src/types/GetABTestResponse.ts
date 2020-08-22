@@ -27,6 +27,11 @@ export type GetABTestResponse = {
   createdAt: string;
 
   /**
+   * The ab test updated date.
+   */
+  updatedAt: string;
+
+  /**
    * The ab test unique identifier.
    */
   abTestID: number;
