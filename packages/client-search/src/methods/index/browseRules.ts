@@ -28,9 +28,8 @@ export const browseRules = (base: SearchIndex) => {
             return {
               ...response,
               hits: response.hits.map(rule => {
-                // @ts-ignore
                 // eslint-disable-next-line functional/immutable-data,no-param-reassign
-                delete rule._highlightResult;
+                delete (rule as any)._highlightResult;
 
                 return rule;
               }),
