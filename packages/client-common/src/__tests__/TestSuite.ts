@@ -59,8 +59,7 @@ export class TestSuite {
     };
 
     if (testing.isBrowserLite()) {
-      // @ts-ignore
-      client = addMethods(client, {
+      return addMethods(client, {
         multipleBatch,
         multipleGetObjects,
       });
@@ -77,11 +76,10 @@ export class TestSuite {
   }
 
   public makeIndex(indexName?: string) {
-    let index = this.makeSearchClient().initIndex(indexName || this.makeIndexName());
+    const index = this.makeSearchClient().initIndex(indexName || this.makeIndexName());
 
     if (testing.isBrowserLite()) {
-      // @ts-ignore
-      index = addMethods(index, {
+      return addMethods(index, {
         saveObjects,
         setSettings,
         delete: deleteIndex,

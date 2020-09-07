@@ -15,7 +15,7 @@ export function shuffle<TData>(array: TData[]): TData[] {
 
 type Methods<TBase> = {
   // eslint-disable-next-line functional/prefer-readonly-type
-  readonly [key: string]: (base: TBase) => (...args: unknown[]) => unknown;
+  readonly [key: string]: (base: TBase) => (...args: any[]) => any;
 };
 
 type AddedMethods<TBase, TMethods extends Methods<TBase>> = TBase &
