@@ -41,7 +41,7 @@ export class TestSuite {
     appIdEnv: string = 'ALGOLIA_APPLICATION_ID_1',
     apiKeyEnv: string = 'ALGOLIA_ADMIN_KEY_1'
   ) {
-    let client = this.algoliasearch(`${process.env[appIdEnv]}`, `${process.env[apiKeyEnv]}`);
+    const client = this.algoliasearch(`${process.env[appIdEnv]}`, `${process.env[apiKeyEnv]}`);
 
     // To ensure `Consistency` during the Common Test Suite, we
     // force the transporter to work with a single host in the
