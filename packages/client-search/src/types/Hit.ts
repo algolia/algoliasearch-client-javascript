@@ -5,10 +5,10 @@ type HighlightMatch = {
   readonly fullyHighlighted?: boolean;
 };
 
-type Highlight<THit> = THit extends string | number
+type HighlightResult<THit> = THit extends string | number
   ? HighlightMatch
   : {
-      [KAttribute in keyof THit]: Highlight<THit[KAttribute]>;
+      [KAttribute in keyof THit]: HighlightResult<THit[KAttribute]>;
     };
 
 type SnippetMatch = {
@@ -16,16 +16,16 @@ type SnippetMatch = {
   readonly matchLevel: 'none' | 'partial' | 'full';
 };
 
-type Snippet<THit> = THit extends string | number
+type SnippetResult<THit> = THit extends string | number
   ? SnippetMatch
   : {
-      [KAttribute in keyof THit]: Snippet<THit[KAttribute]>;
+      [KAttribute in keyof THit]: SnippetResult<THit[KAttribute]>;
     };
 
 export type Hit<THit> = THit & {
   readonly objectID: string;
-  readonly _highlightResult?: Highlight<THit>;
-  readonly _snippetResult?: Snippet<THit>;
+  readonly _highlightResult?: HighlightResult<THit>;
+  readonly _snippetResult?: SnippetResult<THit>;
   readonly _rankingInfo?: {
     readonly promoted: boolean;
     readonly nbTypos: number;
