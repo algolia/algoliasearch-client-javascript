@@ -36,6 +36,7 @@ export * from './GetObjectsResponse';
 export * from './GetTopUserIDsResponse';
 export * from './HasPendingMappingsOptions';
 export * from './HasPendingMappingsResponse';
+export * from './Hit';
 export * from './IndexOperationResponse';
 export * from './Indice';
 export * from './ListApiKeysResponse';

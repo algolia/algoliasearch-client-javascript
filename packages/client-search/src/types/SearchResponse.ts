@@ -1,4 +1,4 @@
-import { ObjectWithObjectID } from '.';
+import { Hit } from '.';
 
 export type SearchResponse<TObject = {}> = {
   /**
@@ -6,7 +6,7 @@ export type SearchResponse<TObject = {}> = {
    *
    * Hits are ordered according to the ranking or sorting of the index being queried.
    */
-  hits: Array<TObject & ObjectWithObjectID>;
+  hits: Array<Hit<TObject>>;
 
   /**
    * Index of the current page (zero-based).
