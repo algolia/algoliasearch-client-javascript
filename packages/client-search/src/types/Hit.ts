@@ -5,7 +5,7 @@ type HighlightMatch = {
   readonly fullyHighlighted?: boolean;
 };
 
-type HighlightResult<THit> = THit extends string | number
+export type HighlightResult<THit> = THit extends string | number
   ? HighlightMatch
   : {
       [KAttribute in keyof THit]: HighlightResult<THit[KAttribute]>;
@@ -16,7 +16,7 @@ type SnippetMatch = {
   readonly matchLevel: 'none' | 'partial' | 'full';
 };
 
-type SnippetResult<THit> = THit extends string | number
+export type SnippetResult<THit> = THit extends string | number
   ? SnippetMatch
   : {
       [KAttribute in keyof THit]: SnippetResult<THit[KAttribute]>;
