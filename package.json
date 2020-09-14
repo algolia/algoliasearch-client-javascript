@@ -29,10 +29,10 @@
     }
   },
   "devDependencies": {
-    "@babel/cli": "7.10.4",
-    "@babel/core": "7.10.4",
-    "@babel/preset-env": "7.10.4",
-    "@babel/preset-typescript": "7.10.4",
+    "@babel/cli": "7.8.4",
+    "@babel/core": "7.8.7",
+    "@babel/preset-env": "7.8.7",
+    "@babel/preset-typescript": "7.8.3",
     "@microsoft/api-extractor": "7.7.8",
     "@rollup/plugin-alias": "3.0.1",
     "@rollup/plugin-json": "4.0.2",
