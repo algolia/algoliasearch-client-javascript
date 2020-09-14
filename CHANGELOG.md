@@ -6,6 +6,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 # Release Notes
 
+## [v4.5.0](https://github.com/algolia/algoliasearch-client-javascript/compare/4.4.0...4.5.0)
+
+### Added
+
+- introduce a new `Hit` type, returned from search operations ([#1191](https://github.com/algolia/algoliasearch-client-javascript/pull/1191))
+- Allow `hosts` array to also accept strings ([#1189](https://github.com/algolia/algoliasearch-client-javascript/pull/1189))
+
+### Fixed
+
+- add missing updatedAt attribute to client-analytics ([#1186](https://github.com/algolia/algoliasearch-client-javascript/pull/1186))
+- a/b test VariantResponse typing ([#1185](https://github.com/algolia/algoliasearch-client-javascript/pull/1185))
+- getObjects can also return `null` if an object is not existing ([#1183](https://github.com/algolia/algoliasearch-client-javascript/pull/1183))
+
 ## [v4.4.0](https://github.com/algolia/algoliasearch-client-javascript/compare/4.3.1...4.4.0)
 
 ### Added
