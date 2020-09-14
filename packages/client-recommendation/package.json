@@ -1,6 +1,6 @@
 {
   "name": "@algolia/client-recommendation",
-  "version": "4.5.0",
+  "version": "4.5.1",
   "private": false,
   "repository": {
     "type": "git",
@@ -16,8 +16,8 @@
     "dist"
   ],
   "dependencies": {
-    "@algolia/client-common": "4.5.0",
-    "@algolia/requester-common": "4.5.0",
-    "@algolia/transporter": "4.5.0"
+    "@algolia/client-common": "4.5.1",
+    "@algolia/requester-common": "4.5.1",
+    "@algolia/transporter": "4.5.1"
   }
 }
