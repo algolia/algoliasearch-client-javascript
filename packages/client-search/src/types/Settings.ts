@@ -155,6 +155,11 @@ export type Settings = {
    * Whether rules should be globally enabled.
    */
   readonly enableRules?: boolean;
+  
+   /**
+   * Whether personalization should be globally enabled.
+   */
+  readonly enablePersonalization?: boolean;
 
   /**
    * Controls if and how query words are interpreted as prefixes.
