@@ -16,7 +16,12 @@ const NUMBER_OF_DECLARATIONS = 18;
   });
 
   if (declarations.length !== NUMBER_OF_DECLARATIONS) {
-    console.log('Unexpected number of declarations');
+    console.log(
+      'Unexpected number of declarations. expected:',
+      NUMBER_OF_DECLARATIONS,
+      'but got:',
+      declarations.length
+    );
     process.exit(1);
   }
 
