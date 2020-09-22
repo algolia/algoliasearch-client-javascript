@@ -119,27 +119,95 @@ jobs:
           name: Browser tests
           command: yarn test:browser-ci
 
+  release:
+    working_directory: ~/algoliasearch-client-javascript
+    description: Perform a new release of the JavaScript client
+    docker:
+      - image: circleci/node:14
+    steps:
+      - checkout
+      - run:
+          command: yarn install
+      - run:
+          command: |
+            if [[ -z "$GITHUB_TOKEN" ]]; then echo '$GITHUB_TOKEN is not set'; exit 1; fi
+            yarn shipjs trigger
+
 workflows:
   version: 2
   ci:
     jobs:
       - test_unit:
           version: '8'
+          name: 'test_unit_8'
+          filters:
+            tags:
+              only: /.*/
       - test_unit:
           version: '10'
+          name: 'test_unit_10'
+          filters:
+            tags:
+              only: /.*/
       - test_unit:
           version: '11'
+          name: 'test_unit_11'
+          filters:
+            tags:
+              only: /.*/
       - test_unit:
           version: '12'
+          name: 'test_unit_12'
+          filters:
+            tags:
+              only: /.*/
       - test_unit:
           version: '13'
+          name: 'test_unit_13'
+          filters:
+            tags:
+              only: /.*/
       - test_unit:
           version: '14'
+          name: 'test_unit_14'
+          filters:
+            tags:
+              only: /.*/
       - test_lint:
           version: '12'
+          filters:
+            tags:
+              only: /.*/
       - test_types:
           version: '12'
+          filters:
+            tags:
+              only: /.*/
       - test_build:
           version: '12.16.2'
+          filters:
+            tags:
+              only: /.*/
       - test_browser:
           version: '12.16.2'
+          filters:
+            tags:
+              only: /.*/
+      - release:
+          requires:
+            - test_unit_8
+            - test_unit_9
+            - test_unit_10
+            - test_unit_11
+            - test_unit_12
+            - test_unit_13
+            - test_unit_14
+            - test_lint
+            - test_types
+            - test_build
+            - test_browser
+          filters:
+            tags:
+              only: /^[1-9]+.[0-9]+.[0-9]+.*/
+            branches:
+              ignore: /.*/
