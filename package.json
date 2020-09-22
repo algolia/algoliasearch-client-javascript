@@ -1,6 +1,7 @@
 {
   "private": true,
   "license": "MIT",
+  "version": "4.5.1",
   "workspaces": [
     "packages/*"
   ],
@@ -10,8 +11,7 @@
     "lint": "eslint . --ext .js,.ts --fix && node ./scripts/sort-package-json.js",
     "playground": "./scripts/prepare-playground.sh && yarn serve",
     "pre-commit": "yarn test:lint && yarn test:types",
-    "release": "./scripts/release.sh",
-    "release-publish": "lerna exec --concurrency 1 -- npm publish --verbose",
+    "release": "shipjs prepare",
     "setup:browser": "yarn node scripts/setup-test-browser.js",
     "test:browser-ci": "yarn setup:browser && ./scripts/prepare-test-browser.sh && wdio ./wdio.saucelabs.conf.js",
     "test:browser-locally": "yarn setup:browser && ./scripts/prepare-test-browser.sh && wdio ./wdio.local.conf.js",
@@ -82,6 +82,7 @@
     "rollup-plugin-terser": "5.2.0",
     "rollup-plugin-typescript2": "0.26.0",
     "serve": "11.3.0",
+    "shipjs": "0.22.0",
     "sort-package-json": "1.40.0",
     "ts-jest": "25.2.1",
     "ts-mockito": "2.5.0",

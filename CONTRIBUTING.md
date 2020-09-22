@@ -90,10 +90,13 @@ TypeScript files are validated using a combination of [Prettier](https://github.
 
 ### Main version
 
-To release a stable version, go on `master` (`git checkout master`) and use:
+To release a stable version, [generate a personal Github token](https://github.com/settings/tokens/new) with the `repo` scope from your logged-in Github account, go on the `master` branch (`git checkout master`) and use:
 
 ```sh
-npm run release
+export GITHUB_TOKEN=XXX # You can add this to your .env or .bashrc/.zshrc configuration file.
+yarn release
 ```
 
-If you're part of the Algolia team, you can read more details [here](https://github.com/algolia/doc-api-clients-squad/blob/master/release/javascript-v4.md)
+This will create a new Github PR proposing a PR to be made. Once merged, the CI will take care of publishing the new version on NPM registry.
+
+If you're part of the Algolia team, you can read more details [here](https://algolia.atlassian.net/wiki/spaces/DX/pages/2034925622/JavaScript+v4+release+process).
