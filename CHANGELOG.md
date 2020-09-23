@@ -1,3 +1,9 @@
+##  (2020-09-23)
+
+* chore: migrate release process to Ship.js ([5794e78](https://github.com/algolia/algoliasearch-client-javascript/commit/5794e78))
+
+
+
 ## [v4.5.1](https://github.com/algolia/algoliasearch-client-javascript/compare/4.5.0...4.5.1)
 
 ### Fixed

@@ -1,6 +1,6 @@
 {
   "name": "@algolia/transporter",
-  "version": "4.5.1",
+  "version": "4.5.2",
   "private": false,
   "description": "Promise-based transporter layer with embedded retry strategy.",
   "repository": {
