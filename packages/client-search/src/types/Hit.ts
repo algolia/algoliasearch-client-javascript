@@ -38,6 +38,11 @@ export type RankingInfo = {
     readonly lng: number;
     readonly distance: number;
   };
+  readonly personalization?: {
+    readonly filtersScore: number;
+    readonly rankingScore: number;
+    readonly score: number;
+  };
 };
 
 export type Hit<THit> = THit & {
