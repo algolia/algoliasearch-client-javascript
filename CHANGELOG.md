@@ -1,3 +1,8 @@
+## [v4.5.2](https://github.com/algolia/algoliasearch-client-javascript/compare/4.5.1...4.5.2)
+* chore: migrate release process to Ship.js ([fe062ff](https://github.com/algolia/algoliasearch-client-javascript/commit/fe062ff))
+
+
+
 ## [v4.5.1](https://github.com/algolia/algoliasearch-client-javascript/compare/4.5.0...4.5.1)
 
 ### Fixed
