@@ -1,9 +1,4 @@
 aliases:
-  - &removes_npmrc
-    name: Removes npmrc
-    command: |
-      rm .npmrc
-
   - &install_yarn_version
     name: Install specific Yarn version
     command: |
@@ -45,7 +40,6 @@ jobs:
     <<: *defaults
     steps:
       - checkout
-      - run: *removes_npmrc
       - run: *install_yarn_version
       - restore_cache: *restore_yarn_cache
       - run: *run_yarn_install
@@ -65,7 +59,6 @@ jobs:
     <<: *defaults
     steps:
       - checkout
-      - run: *removes_npmrc
       - run: *install_yarn_version
       - restore_cache: *restore_yarn_cache
       - run: *run_yarn_install
@@ -79,7 +72,6 @@ jobs:
     <<: *defaults
     steps:
       - checkout
-      - run: *removes_npmrc
       - run: *install_yarn_version
       - restore_cache: *restore_yarn_cache
       - run: *run_yarn_install
@@ -93,7 +85,6 @@ jobs:
     <<: *defaults
     steps:
       - checkout
-      - run: *removes_npmrc
       - run: *install_yarn_version
       - restore_cache: *restore_yarn_cache
       - run: *run_yarn_install
@@ -107,7 +98,6 @@ jobs:
     <<: *defaults
     steps:
       - checkout
-      - run: *removes_npmrc
       - run: *install_yarn_version
       - restore_cache: *restore_yarn_cache
       - run: *run_yarn_install
