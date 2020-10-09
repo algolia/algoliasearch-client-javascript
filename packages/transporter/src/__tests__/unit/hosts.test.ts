@@ -69,4 +69,14 @@ describe('selection of hosts', (): void => {
       protocol: 'https',
     });
   });
+
+  it('allows a string to be passed', () => {
+    const host = createStatelessHost('foo.com');
+
+    expect(host).toEqual({
+      url: 'foo.com',
+      accept: CallEnum.Any,
+      protocol: 'https',
+    });
+  });
 });
