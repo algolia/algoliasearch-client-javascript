@@ -28,9 +28,8 @@ export const browseSynonyms = (base: SearchIndex) => {
             return {
               ...response,
               hits: response.hits.map(synonym => {
-                // @ts-ignore
                 // eslint-disable-next-line functional/immutable-data,no-param-reassign
-                delete synonym._highlightResult;
+                delete (synonym as any)._highlightResult;
 
                 return synonym;
               }),

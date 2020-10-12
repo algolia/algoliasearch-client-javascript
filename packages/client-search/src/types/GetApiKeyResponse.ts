@@ -43,6 +43,13 @@ export type GetApiKeyResponse = {
   referers?: string[];
 
   /**
+   * IPv4 network allowed to use the generated key.
+   * This is used for more protection against API key leaking and reuse.
+   * Note that you can only provide a single source, but you can specify a range of IPs (e.g., 192.168.1.0/24).
+   */
+  restrictSources?: string;
+
+  /**
    * Specify the list of query parameters. You can force the query parameters for a query using the url string format.
    */
   queryParameters?: string;

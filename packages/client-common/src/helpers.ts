@@ -13,27 +13,30 @@ export function shuffle<TData>(array: TData[]): TData[] {
   return array;
 }
 
-export function addMethods<
-  TBase,
-  TMethods extends {
-    readonly [key: string]: (base: TBase) => (...args: any) => any;
-  }
->(
+type Methods<TBase> = {
+  // eslint-disable-next-line functional/prefer-readonly-type
+  readonly [key: string]: (base: TBase) => (...args: any[]) => any;
+};
+
+type AddedMethods<TBase, TMethods extends Methods<TBase>> = TBase &
+  {
+    [TKey in keyof TMethods extends string ? keyof TMethods : never]: ReturnType<TMethods[TKey]>;
+  };
+
+export function addMethods<TBase extends {}, TMethods extends Methods<TBase>>(
   base: TBase,
   methods?: TMethods
-): TBase &
-  {
-    // eslint-disable-next-line @typescript-eslint/generic-type-naming
-    [key in keyof TMethods extends string ? keyof TMethods : never]: ReturnType<TMethods[key]>;
-  } {
-  Object.keys(methods !== undefined ? methods : {}).forEach(key => {
-    // @ts-ignore
+): AddedMethods<TBase, TMethods> {
+  if (!methods) {
+    return base as AddedMethods<TBase, TMethods>;
+  }
+
+  Object.keys(methods).forEach(key => {
     // eslint-disable-next-line functional/immutable-data, no-param-reassign
-    base[key] = methods[key](base);
+    (base as any)[key] = methods[key](base);
   });
 
-  // @ts-ignore
-  return base;
+  return base as AddedMethods<TBase, TMethods>;
 }
 
 export function encode(format: string, ...args: readonly any[]): string {

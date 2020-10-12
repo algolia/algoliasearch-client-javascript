@@ -41,7 +41,7 @@ export class TestSuite {
     appIdEnv: string = 'ALGOLIA_APPLICATION_ID_1',
     apiKeyEnv: string = 'ALGOLIA_ADMIN_KEY_1'
   ) {
-    let client = this.algoliasearch(`${process.env[appIdEnv]}`, `${process.env[apiKeyEnv]}`);
+    const client = this.algoliasearch(`${process.env[appIdEnv]}`, `${process.env[apiKeyEnv]}`);
 
     // To ensure `Consistency` during the Common Test Suite, we
     // force the transporter to work with a single host in the
@@ -59,8 +59,7 @@ export class TestSuite {
     };
 
     if (testing.isBrowserLite()) {
-      // @ts-ignore
-      client = addMethods(client, {
+      return addMethods(client, {
         multipleBatch,
         multipleGetObjects,
       });
@@ -77,11 +76,10 @@ export class TestSuite {
   }
 
   public makeIndex(indexName?: string) {
-    let index = this.makeSearchClient().initIndex(indexName || this.makeIndexName());
+    const index = this.makeSearchClient().initIndex(indexName || this.makeIndexName());
 
     if (testing.isBrowserLite()) {
-      // @ts-ignore
-      index = addMethods(index, {
+      return addMethods(index, {
         saveObjects,
         setSettings,
         delete: deleteIndex,
