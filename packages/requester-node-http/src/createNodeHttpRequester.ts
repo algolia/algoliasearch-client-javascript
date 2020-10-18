@@ -12,14 +12,17 @@ export type NodeHttpRequesterOptions = {
   httpsAgent?: https.Agent;
 };
 
+const agentOptions = { keepAlive: true };
+const defaultHttpAgent = new http.Agent(agentOptions);
+const defaultHttpsAgent = new https.Agent(agentOptions);
+
 export function createNodeHttpRequester({
   agent: userGlobalAgent,
   httpAgent: userHttpAgent,
   httpsAgent: userHttpsAgent,
 }: NodeHttpRequesterOptions = {}): Requester & Destroyable {
-  const agentOptions = { keepAlive: true };
-  const httpAgent = userHttpAgent || userGlobalAgent || new http.Agent(agentOptions);
-  const httpsAgent = userHttpsAgent || userGlobalAgent || new https.Agent(agentOptions);
+  const httpAgent = userHttpAgent || userGlobalAgent || defaultHttpAgent;
+  const httpsAgent = userHttpsAgent || userGlobalAgent || defaultHttpsAgent;
 
   return {
     send(request: Request): Readonly<Promise<Response>> {
