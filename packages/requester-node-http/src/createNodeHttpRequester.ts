@@ -10,14 +10,14 @@ export type NodeHttpRequesterOptions = {
   agent?: https.Agent | http.Agent;
   httpAgent?: http.Agent;
   httpsAgent?: https.Agent;
-  requestOptions?: https.RequestOptions;
+  requesterOptions?: https.RequestOptions;
 };
 
 export function createNodeHttpRequester({
   agent: userGlobalAgent,
   httpAgent: userHttpAgent,
   httpsAgent: userHttpsAgent,
-  requestOptions = {},
+  requesterOptions = {},
 }: NodeHttpRequesterOptions = {}): Requester & Destroyable {
   const agentOptions = { keepAlive: true };
   const httpAgent = userHttpAgent || userGlobalAgent || new http.Agent(agentOptions);
@@ -37,7 +37,7 @@ export function createNodeHttpRequester({
           method: request.method,
           headers: request.headers,
           ...(url.port !== undefined ? { port: url.port || '' } : {}),
-          ...requestOptions,
+          ...requesterOptions,
         };
 
         const req = (url.protocol === 'https:' ? https : http).request(options, response => {
