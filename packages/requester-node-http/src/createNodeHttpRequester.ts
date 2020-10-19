@@ -34,13 +34,16 @@ export function createNodeHttpRequester({
         const path = url.query === null ? url.pathname : `${url.pathname}?${url.query}`;
 
         const options: https.RequestOptions = {
+          ...requesterOptions,
           agent: url.protocol === 'https:' ? httpsAgent : httpAgent,
           hostname: url.hostname,
           path,
           method: request.method,
-          headers: request.headers,
+          headers: {
+            ...(requesterOptions?.headers ? requesterOptions.headers : {}),
+            ...request.headers,
+          },
           ...(url.port !== undefined ? { port: url.port || '' } : {}),
-          ...requesterOptions,
         };
 
         const req = (url.protocol === 'https:' ? https : http).request(options, response => {

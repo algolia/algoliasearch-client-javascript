@@ -251,3 +251,31 @@ describe('error handling', (): void => {
     expect(response.isTimedOut).toBe(false);
   });
 });
+
+describe('requesterOptions', () => {
+  it('allows to pass requesterOptions', async () => {
+    const body = JSON.stringify({ foo: 'bar' });
+    const requesterTmp = createNodeHttpRequester({
+      requesterOptions: {
+        headers: {
+          'x-algolia-foo': 'bar',
+        },
+      },
+    });
+
+    nock('https://algolia-dns.net', {
+      reqheaders: {
+        ...headers,
+        'x-algolia-foo': 'bar',
+      },
+    })
+      .post('/foo')
+      .query({ 'x-algolia-header': 'foo' })
+      .reply(200, body);
+
+    const response = await requesterTmp.send(requestStub);
+
+    expect(response.status).toBe(200);
+    expect(response.content).toBe(body);
+  });
+});
