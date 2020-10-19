@@ -40,7 +40,7 @@ export function createNodeHttpRequester({
           path,
           method: request.method,
           headers: {
-            ...(requesterOptions?.headers ? requesterOptions.headers : {}),
+            ...(requesterOptions && requesterOptions.headers ? requesterOptions.headers : {}),
             ...request.headers,
           },
           ...(url.port !== undefined ? { port: url.port || '' } : {}),
