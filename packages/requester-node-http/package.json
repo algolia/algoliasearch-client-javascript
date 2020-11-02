@@ -1,6 +1,6 @@
 {
   "name": "@algolia/requester-node-http",
-  "version": "4.5.1",
+  "version": "4.6.0",
   "private": false,
   "description": "Promise-based request library for node using the native http module.",
   "repository": {

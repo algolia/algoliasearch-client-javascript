@@ -1,3 +1,14 @@
+## [v4.6.0](https://github.com/algolia/algoliasearch-client-javascript/compare/4.5.1...4.6.0)
+
+* chore: migrate release process to Ship.js (#1210) ([f82bd48](https://github.com/algolia/algoliasearch-client-javascript/commit/f82bd48)), closes [#1210](https://github.com/algolia/algoliasearch-client-javascript/issues/1210)
+* chore: update bundlesize ([c3f5d72](https://github.com/algolia/algoliasearch-client-javascript/commit/c3f5d72))
+* chore(TypeScript): avoid ts-ignore (#1190) ([5207d68](https://github.com/algolia/algoliasearch-client-javascript/commit/5207d68)), closes [#1190](https://github.com/algolia/algoliasearch-client-javascript/issues/1190)
+* fix(node): allow passing requesterOptions (#1215) ([4348b38](https://github.com/algolia/algoliasearch-client-javascript/commit/4348b38)), closes [#1215](https://github.com/algolia/algoliasearch-client-javascript/issues/1215)
+* fix(node): reuse http agent across client (#1216) ([f6e9e56](https://github.com/algolia/algoliasearch-client-javascript/commit/f6e9e56)), closes [#1216](https://github.com/algolia/algoliasearch-client-javascript/issues/1216)
+* feat(client-search): add personalization field to RankingInfo (#1213) ([50b78a3](https://github.com/algolia/algoliasearch-client-javascript/commit/50b78a3)), closes [#1213](https://github.com/algolia/algoliasearch-client-javascript/issues/1213)
+
+
+
 ## [v4.5.1](https://github.com/algolia/algoliasearch-client-javascript/compare/4.5.0...4.5.1)
 
 ### Fixed
