@@ -1,3 +1,11 @@
+## [v4.6.0](https://github.com/algolia/algoliasearch-client-javascript/compare/4.5.1...4.6.0)
+
+* fix(node): allow passing requesterOptions (#1215) ([4348b38](https://github.com/algolia/algoliasearch-client-javascript/commit/4348b38)), closes [#1215](https://github.com/algolia/algoliasearch-client-javascript/issues/1215)
+* fix(node): reuse http agent across client (#1216) ([f6e9e56](https://github.com/algolia/algoliasearch-client-javascript/commit/f6e9e56)), closes [#1216](https://github.com/algolia/algoliasearch-client-javascript/issues/1216)
+* feat(client-search): add personalization field to RankingInfo (#1213) ([50b78a3](https://github.com/algolia/algoliasearch-client-javascript/commit/50b78a3)), closes [#1213](https://github.com/algolia/algoliasearch-client-javascript/issues/1213)
+
+
+
 ## [v4.5.1](https://github.com/algolia/algoliasearch-client-javascript/compare/4.5.0...4.5.1)
 
 ### Fixed
