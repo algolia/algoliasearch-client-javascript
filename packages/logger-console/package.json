@@ -17,6 +17,6 @@
     "dist"
   ],
   "dependencies": {
-    "@algolia/logger-common": "4.5.1"
+    "@algolia/logger-common": "4.6.0"
   }
 }

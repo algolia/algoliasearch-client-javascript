@@ -16,9 +16,9 @@
     "dist"
   ],
   "dependencies": {
-    "@algolia/client-common": "4.5.1",
-    "@algolia/client-search": "4.5.1",
-    "@algolia/requester-common": "4.5.1",
-    "@algolia/transporter": "4.5.1"
+    "@algolia/client-common": "4.6.0",
+    "@algolia/client-search": "4.6.0",
+    "@algolia/requester-common": "4.6.0",
+    "@algolia/transporter": "4.6.0"
   }
 }

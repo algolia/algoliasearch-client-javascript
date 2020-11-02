@@ -17,6 +17,6 @@
     "dist"
   ],
   "dependencies": {
-    "@algolia/cache-common": "4.5.1"
+    "@algolia/cache-common": "4.6.0"
   }
 }
