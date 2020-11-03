@@ -38,7 +38,6 @@ const credentials = {
 // @ts-ignore
 const version = require("../lerna.json").version;
 
-
 ["algoliasearch-lite.com", "algoliasearch.com"].forEach(preset => {
   describe(`search features - ${preset}`, () => {
     beforeEach(async () => browser.url(preset));
@@ -63,42 +62,6 @@ const version = require("../lerna.json").version;
 
       expect(results[2].hits.pop().value).toEqual("#000");
       expect(results[2].nbHits).toBe(1);
-    });
-
-    it("searchClient::searchForAnswers and searchIndex::searchForAnswers", async () => {
-      const results = await browser.executeAsync(function(credentials, done) {
-        // TODO: change these credentials to the main ones once enabled
-        const client = algoliasearch('CKOEQ4XGMU', '6560d3886292a5aec86d63b9a2cba447');
-
-        // TODO: remove this customization once the engine accepts url encoded query params
-        client.transporter.userAgent.value = "answers-test";
-
-        const index = client.initIndex('ted');
-
-        Promise.all([
-          index.searchForAnswers("sir ken robinson", ["en"]),
-          index.searchForAnswers("what", ["en"]),
-          index.searchForAnswers("arthur", ["en"], { nbHits: 2, params: {
-            highlightPreTag: '_pre_',
-            highlightPostTag: '_post_'
-          }}),
-        ]).then(function(responses) {
-          done({
-            kenRobinson: responses[0],
-            what: responses[1],
-            arthur: responses[2]
-          });
-        });
-      }, credentials);
-
-      expect(results.kenRobinson.nbHits).toBe(1);
-
-      expect(results.what.nbHits).toBe(0);
-
-      expect(results.arthur.nbHits).toBe(2);
-      expect(results.arthur.hits[0]._highlightResult.main_speaker.value).toBe(
-        '_pre_Arthur_post_ Benjamin'
-      );
     });
 
     it("searchClient::searchForFacetValues and searchIndex::searchForFacetValues", async () => {
@@ -171,14 +134,63 @@ const version = require("../lerna.json").version;
       expect(queryID).toBe(queryID2);
     });
 
-
     it("contains version", async () => {
       const browserVersion: string = await browser.executeAsync(function(done) {
         done(algoliasearch.version);
       });
-      
+
       expect(browserVersion).toBe(version);
-      expect(browserVersion.startsWith('4.')).toBe(true);
+      expect(browserVersion.startsWith("4.")).toBe(true);
     });
+  });
+});
+
+describe("search features - algoliasearch.com", () => {
+  beforeEach(async () => browser.url("algoliasearch.com"));
+
+  it("searchClient::searchForAnswers and searchIndex::searchForAnswers", async () => {
+    const results = await browser.executeAsync(function(credentials, done) {
+      // TODO: change these credentials to the main ones once enabled
+      const client = algoliasearch(
+        "CKOEQ4XGMU",
+        "6560d3886292a5aec86d63b9a2cba447"
+      );
+
+      // TODO: remove this customization once the engine accepts url encoded query params
+      client.transporter.userAgent.value = "answers-test";
+
+      const index = client.initIndex("ted");
+
+      Promise.all([
+        index.searchForAnswers("sir ken robinson", ["en"]),
+        index.searchForAnswers("what", ["en"]),
+        index.searchForAnswers("sarah", ["en"], {
+          nbHits: 2,
+          params: {
+            highlightPreTag: "_pre_",
+            highlightPostTag: "_post_"
+          }
+        })
+      ]).then(function(responses) {
+        done({
+          kenRobinson: responses[0],
+          what: responses[1],
+          sarah: responses[2]
+        });
+      });
+    }, credentials);
+
+    expect(results.kenRobinson.nbHits).toBe(10);
+
+    expect(results.what.nbHits).toBe(0);
+
+    expect(results.sarah.nbHits).toBe(2);
+    expect(results.sarah.hits[0]._highlightResult.main_speaker.value).toBe(
+      "_pre_Sarah_post_ Kay"
+    );
+
+    expect(results.sarah.hits[0]._answer.extract).toBe(
+      "https://www.ted.com/talks/_pre_sarah_post__kay_how_many_lives_can_you_live↵"
+    );
   });
 });
