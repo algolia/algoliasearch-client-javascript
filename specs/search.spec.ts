@@ -65,6 +65,42 @@ const version = require("../lerna.json").version;
       expect(results[2].nbHits).toBe(1);
     });
 
+    it("searchClient::searchForAnswers and searchIndex::searchForAnswers", async () => {
+      const results = await browser.executeAsync(function(credentials, done) {
+        // TODO: change these credentials to the main ones once enabled
+        const client = algoliasearch('CKOEQ4XGMU', '6560d3886292a5aec86d63b9a2cba447');
+
+        // TODO: remove this customization once the engine accepts url encoded query params
+        client.transporter.userAgent.value = "answers-test";
+
+        const index = client.initIndex('ted');
+
+        Promise.all([
+          index.searchForAnswers("sir ken robinson", ["en"]),
+          index.searchForAnswers("what", ["en"]),
+          index.searchForAnswers("arthur", ["en"], { nbHits: 2, params: {
+            highlightPreTag: '_pre_',
+            highlightPostTag: '_post_'
+          }}),
+        ]).then(function(responses) {
+          done({
+            kenRobinson: responses[0],
+            what: responses[1],
+            arthur: responses[2]
+          });
+        });
+      }, credentials);
+
+      expect(results.kenRobinson.nbHits).toBe(1);
+
+      expect(results.what.nbHits).toBe(0);
+
+      expect(results.arthur.nbHits).toBe(2);
+      expect(results.arthur.hits[0]._highlightResult.main_speaker.value).toBe(
+        '_pre_Arthur_post_ Benjamin'
+      );
+    });
+
     it("searchClient::searchForFacetValues and searchIndex::searchForFacetValues", async () => {
       const results = await browser.executeAsync(function(credentials, done) {
         const client = algoliasearch(credentials.appId, credentials.apiKey);

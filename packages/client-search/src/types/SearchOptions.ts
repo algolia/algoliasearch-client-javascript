@@ -312,7 +312,7 @@ export type SearchOptions = {
   /**
    * List of supported languages with their associated language ISO code.
    *
-   * Apply a set of natural language best practices such asignorePlurals,
+   * Apply a set of natural language best practices such as ignorePlurals,
    * removeStopWords, removeWordsIfNoResults, analyticsTags and ruleContexts.
    */
   readonly naturalLanguages?: readonly string[];

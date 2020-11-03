@@ -37,6 +37,7 @@ export * from './saveRules';
 export * from './saveSynonym';
 export * from './saveSynonyms';
 export * from './search';
+export * from './searchForAnswers';
 export * from './searchForFacetValues';
 export * from './searchRules';
 export * from './searchSynonyms';

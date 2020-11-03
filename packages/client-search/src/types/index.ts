@@ -69,6 +69,8 @@ export * from './SaveSynonymsOptions';
 export * from './SaveSynonymsResponse';
 export * from './SearchClient';
 export * from './SearchClientOptions';
+export * from './SearchForAnswersOptions';
+export * from './SearchForAnswersResponse';
 export * from './SearchForFacetValuesQueryParams';
 export * from './SearchForFacetValuesResponse';
 export * from './SearchIndex';

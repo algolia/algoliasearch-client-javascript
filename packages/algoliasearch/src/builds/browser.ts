@@ -143,6 +143,9 @@ import {
   SaveSynonymsResponse,
   search,
   SearchClient as BaseSearchClient,
+  searchForAnswers,
+  SearchForAnswersOptions,
+  SearchForAnswersResponse,
   searchForFacetValues,
   SearchForFacetValuesQueryParams,
   SearchForFacetValuesResponse,
@@ -242,6 +245,7 @@ export default function algoliasearch(
             saveObject,
             saveObjects,
             search,
+            searchForAnswers,
             searchForFacetValues,
             waitTask,
             setSettings,
@@ -345,6 +349,11 @@ export type SearchIndex = BaseSearchIndex & {
     query: string,
     requestOptions?: RequestOptions & SearchOptions
   ) => Readonly<Promise<SearchResponse<TObject>>>;
+  readonly searchForAnswers: (
+    query: string,
+    queryLanguages: readonly string[],
+    requestOptions?: RequestOptions & SearchForAnswersOptions
+  ) => Readonly<Promise<SearchForAnswersResponse>>;
   readonly searchForFacetValues: (
     facetName: string,
     facetQuery: string,
