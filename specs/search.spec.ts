@@ -190,7 +190,7 @@ describe("search features - algoliasearch.com", () => {
     );
 
     expect(results.sarah.hits[0]._answer.extract).toBe(
-      "https://www.ted.com/talks/_pre_sarah_post__kay_how_many_lives_can_you_live↵"
+      "https://www.ted.com/talks/_pre_sarah_post__kay_how_many_lives_can_you_live"
     );
   });
 });
