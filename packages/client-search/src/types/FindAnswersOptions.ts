@@ -1,6 +1,6 @@
 import { SearchOptions } from './SearchOptions';
 
-export type SearchForAnswersOptions = {
+export type FindAnswersOptions = {
   readonly attributesForPrediction?: readonly string[];
   readonly nbHits?: number;
   readonly threshold?: number;

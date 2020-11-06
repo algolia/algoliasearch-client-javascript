@@ -148,7 +148,7 @@ const version = require("../lerna.json").version;
 describe("search features - algoliasearch.com", () => {
   beforeEach(async () => browser.url("algoliasearch.com"));
 
-  it("searchClient::searchForAnswers and searchIndex::searchForAnswers", async () => {
+  it("searchClient::findAnswers and searchIndex::findAnswers", async () => {
     const results = await browser.executeAsync(function(credentials, done) {
       // TODO: change these credentials to the main ones once enabled
       const client = algoliasearch(
@@ -162,9 +162,9 @@ describe("search features - algoliasearch.com", () => {
       const index = client.initIndex("ted");
 
       Promise.all([
-        index.searchForAnswers("sir ken robinson", ["en"]),
-        index.searchForAnswers("what", ["en"]),
-        index.searchForAnswers("sarah", ["en"], {
+        index.findAnswers("sir ken robinson", ["en"]),
+        index.findAnswers("what", ["en"]),
+        index.findAnswers("sarah", ["en"], {
           nbHits: 2,
           params: {
             highlightPreTag: "_pre_",

@@ -1,7 +1,7 @@
 import { Hit } from './Hit';
 import { SearchResponse } from './SearchResponse';
 
-export type SearchForAnswersResponse<TObject = {}> = SearchResponse<TObject> & {
+export type FindAnswersResponse<TObject = {}> = SearchResponse<TObject> & {
   /**
    * The hits returned by the search.
    *
