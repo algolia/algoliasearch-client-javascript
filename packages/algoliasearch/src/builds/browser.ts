@@ -240,12 +240,12 @@ export default function algoliasearch(
           methods: {
             batch,
             delete: deleteIndex,
+            findAnswers,
             getObject,
             getObjects,
             saveObject,
             saveObjects,
             search,
-            findAnswers,
             searchForFacetValues,
             waitTask,
             setSettings,
