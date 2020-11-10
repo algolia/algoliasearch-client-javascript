@@ -1,4 +1,5 @@
 {
+  "packages": ["./", "packages/algoliasearch"],
   "publishDirectory": {
     "algoliasearch": "packages/algoliasearch/dist"
   }
