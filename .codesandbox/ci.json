@@ -1,4 +1,4 @@
 {
   "packages": ["packages/*"],
-  "sandboxes": ["/playground/sandbox"]
+  "sandboxes": ["github/algolia/create-instantsearch-app/tree/templates/javascript-client"]
 }
