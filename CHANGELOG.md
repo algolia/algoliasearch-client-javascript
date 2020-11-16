@@ -1,3 +1,10 @@
+## [v4.7.0](https://github.com/algolia/algoliasearch-client-javascript/compare/4.6.0...4.7.0)
+
+* feat(findAnswers): implement the new method (experimental) (#1219) ([8d962ea](https://github.com/algolia/algoliasearch-client-javascript/commit/8d962ea)), closes [#1219](https://github.com/algolia/algoliasearch-client-javascript/issues/1219)
+* feat(analytics & recommendation): allow creation of clients (initAnalytics, initRecommendation) with their own credentials (#1223) ([a7938b0](https://github.com/algolia/algoliasearch-client-javascript/commit/a7938b0))
+
+
+
 ## [v4.6.0](https://github.com/algolia/algoliasearch-client-javascript/compare/4.5.1...4.6.0)
 
 * fix(node): allow passing requesterOptions (#1215) ([4348b38](https://github.com/algolia/algoliasearch-client-javascript/commit/4348b38)), closes [#1215](https://github.com/algolia/algoliasearch-client-javascript/issues/1215)

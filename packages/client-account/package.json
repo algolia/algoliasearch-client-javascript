@@ -1,6 +1,6 @@
 {
   "name": "@algolia/client-account",
-  "version": "4.6.0",
+  "version": "4.7.0",
   "private": false,
   "repository": {
     "type": "git",
@@ -16,8 +16,8 @@
     "dist"
   ],
   "dependencies": {
-    "@algolia/client-common": "4.6.0",
-    "@algolia/client-search": "4.6.0",
-    "@algolia/transporter": "4.6.0"
+    "@algolia/client-common": "4.7.0",
+    "@algolia/client-search": "4.7.0",
+    "@algolia/transporter": "4.7.0"
   }
 }
