@@ -454,7 +454,10 @@ export type SearchIndex = BaseSearchIndex & {
   readonly replaceAllSynonyms: (
     synonyms: readonly Synonym[],
     requestOptions?: RequestOptions &
-      Pick<SaveSynonymsOptions, Exclude<keyof SaveSynonymsOptions, 'replaceExistingSynonyms'>>
+      Pick<
+        SaveSynonymsOptions,
+        Exclude<keyof SaveSynonymsOptions, 'clearExistingSynonyms' | 'replaceExistingSynonyms'>
+      >
   ) => Readonly<WaitablePromise<SaveSynonymsResponse>>;
   readonly searchRules: (
     query: string,
