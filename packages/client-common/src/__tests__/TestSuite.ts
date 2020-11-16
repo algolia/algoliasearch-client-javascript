@@ -49,7 +49,7 @@ export class TestSuite {
     client.transporter.hosts = [client.transporter.hosts[2]];
 
     // Also, since we are targeting always the same host, the
-    // server may take a litle more than expected to answer.
+    // server may take a little more than expected to answer.
     // To avoid timeouts we increase the timeouts duration
     // @ts-ignore
     client.transporter.timeouts = {

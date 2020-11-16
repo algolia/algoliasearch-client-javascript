@@ -146,6 +146,34 @@ describe('default preset', () => {
     expect(recommendation.transporter.userAgent).toBe(client.transporter.userAgent);
   });
 
+  test('allows clients to override credentials', () => {
+    const clientWithOptions = algoliasearch('appId', 'apiKey');
+
+    expect(clientWithOptions.transporter.headers['x-algolia-api-key']).toBe('apiKey');
+
+    const analytics = clientWithOptions.initAnalytics({
+      apiKey: 'analytics',
+    });
+    const recommendation = clientWithOptions.initRecommendation({
+      apiKey: 'recommendation',
+    });
+
+    expect(analytics.transporter.headers['x-algolia-api-key']).toBe('analytics');
+    expect(recommendation.transporter.headers['x-algolia-api-key']).toBe('recommendation');
+  });
+
+  test('allows clients to keep default credentials', () => {
+    const clientWithOptions = algoliasearch('appId', 'apiKey');
+
+    expect(clientWithOptions.transporter.headers['x-algolia-api-key']).toBe('apiKey');
+
+    const analytics = clientWithOptions.initAnalytics();
+    const recommendation = clientWithOptions.initRecommendation();
+
+    expect(analytics.transporter.headers['x-algolia-api-key']).toBe('apiKey');
+    expect(recommendation.transporter.headers['x-algolia-api-key']).toBe('apiKey');
+  });
+
   it('can be destroyed', () => {
     if (!testing.isBrowser()) {
       expect(client).toHaveProperty('destroy');
