@@ -1,8 +1,6 @@
 ## [v4.7.0](https://github.com/algolia/algoliasearch-client-javascript/compare/4.6.0...4.7.0)
 
 * feat(findAnswers): implement the new method (experimental) (#1219) ([8d962ea](https://github.com/algolia/algoliasearch-client-javascript/commit/8d962ea)), closes [#1219](https://github.com/algolia/algoliasearch-client-javascript/issues/1219)
-* chore: add code sandbox ci (#1222) ([d5cb2ad](https://github.com/algolia/algoliasearch-client-javascript/commit/d5cb2ad)), closes [#1222](https://github.com/algolia/algoliasearch-client-javascript/issues/1222)
-* chore(release): configure shipjs to use lerna (#1218) ([c15e7cc](https://github.com/algolia/algoliasearch-client-javascript/commit/c15e7cc)), closes [#1218](https://github.com/algolia/algoliasearch-client-javascript/issues/1218)
 
 
 
