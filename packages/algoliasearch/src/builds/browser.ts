@@ -68,6 +68,9 @@ import {
   deleteSynonym,
   DeleteSynonymOptions,
   exists,
+  findAnswers,
+  FindAnswersOptions,
+  FindAnswersResponse,
   findObject,
   FindObjectOptions,
   FindObjectResponse,
@@ -237,6 +240,7 @@ export default function algoliasearch(
           methods: {
             batch,
             delete: deleteIndex,
+            findAnswers,
             getObject,
             getObjects,
             saveObject,
@@ -345,6 +349,11 @@ export type SearchIndex = BaseSearchIndex & {
     query: string,
     requestOptions?: RequestOptions & SearchOptions
   ) => Readonly<Promise<SearchResponse<TObject>>>;
+  readonly findAnswers: (
+    query: string,
+    queryLanguages: readonly string[],
+    requestOptions?: RequestOptions & FindAnswersOptions
+  ) => Readonly<Promise<FindAnswersResponse>>;
   readonly searchForFacetValues: (
     facetName: string,
     facetQuery: string,

@@ -25,6 +25,8 @@ export * from './DeleteByFiltersOptions';
 export * from './DeleteResponse';
 export * from './DeleteSynonymOptions';
 export * from './FacetHit';
+export * from './FindAnswersOptions';
+export * from './FindAnswersResponse';
 export * from './FindObjectOptions';
 export * from './FindObjectResponse';
 export * from './GetApiKeyResponse';
