@@ -6,6 +6,12 @@ export type SaveSynonymsOptions = {
 
   /**
    * If the existing synonyms should be removed.
+   * @deprecated use clearExistingSynonyms
    */
   readonly replaceExistingSynonyms?: boolean;
+
+  /**
+   * If the existing synonyms should be removed.
+   */
+  readonly clearExistingSynonyms?: boolean;
 };
