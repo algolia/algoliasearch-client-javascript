@@ -4,6 +4,9 @@ import { createInMemoryCache } from '@algolia/cache-in-memory';
 import { AuthMode, version } from '@algolia/client-common';
 import {
   createSearchClient,
+  findAnswers,
+  FindAnswersOptions,
+  FindAnswersResponse,
   initIndex,
   multipleQueries,
   MultipleQueriesOptions,
@@ -66,7 +69,7 @@ export default function algoliasearch(
       multipleSearchForFacetValues,
       initIndex: base => (indexName: string): SearchIndex => {
         return initIndex(base)(indexName, {
-          methods: { search, searchForFacetValues },
+          methods: { search, searchForFacetValues, findAnswers },
         });
       },
     },
@@ -86,6 +89,11 @@ export type SearchIndex = BaseSearchIndex & {
     facetQuery: string,
     requestOptions?: RequestOptions & SearchOptions
   ) => Readonly<Promise<SearchForFacetValuesResponse>>;
+  readonly findAnswers: (
+    query: string,
+    queryLanguages: readonly string[],
+    requestOptions?: RequestOptions & FindAnswersOptions
+  ) => Readonly<Promise<FindAnswersResponse>>;
 };
 
 export type SearchClient = BaseSearchClient & {
