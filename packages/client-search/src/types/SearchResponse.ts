@@ -67,7 +67,7 @@ export type SearchResponse<TObject = {}> = {
   /**
    * Statistics for numerical facets.
    */
-  facetsStats?: Record<
+  facets_stats?: Record<
     string,
     {
       /**
