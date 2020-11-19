@@ -1,3 +1,10 @@
+## [v4.8.0](https://github.com/algolia/algoliasearch-client-javascript/compare/4.7.0...4.8.0)
+
+* feat(saveSynonyms): replaceExistingSynonyms -> clearExistingSynonyms (#1226) ([2fcf485](https://github.com/algolia/algoliasearch-client-javascript/commit/2fcf485)), closes [#1226](https://github.com/algolia/algoliasearch-client-javascript/issues/1226) [#1224](https://github.com/algolia/algoliasearch-client-javascript/issues/1224)
+* fix(findAnswers): expose in lite version (#1227) ([6cb1d0a](https://github.com/algolia/algoliasearch-client-javascript/commit/6cb1d0a)), closes [#1227](https://github.com/algolia/algoliasearch-client-javascript/issues/1227)
+
+
+
 ## [v4.7.0](https://github.com/algolia/algoliasearch-client-javascript/compare/4.6.0...4.7.0)
 
 * feat(findAnswers): implement the new method (experimental) (#1219) ([8d962ea](https://github.com/algolia/algoliasearch-client-javascript/commit/8d962ea)), closes [#1219](https://github.com/algolia/algoliasearch-client-javascript/issues/1219)
