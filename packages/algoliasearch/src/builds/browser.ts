@@ -349,11 +349,11 @@ export type SearchIndex = BaseSearchIndex & {
     query: string,
     requestOptions?: RequestOptions & SearchOptions
   ) => Readonly<Promise<SearchResponse<TObject>>>;
-  readonly findAnswers: (
+  readonly findAnswers: <TObject>(
     query: string,
     queryLanguages: readonly string[],
     requestOptions?: RequestOptions & FindAnswersOptions
-  ) => Readonly<Promise<FindAnswersResponse>>;
+  ) => Readonly<Promise<FindAnswersResponse<TObject>>>;
   readonly searchForFacetValues: (
     facetName: string,
     facetQuery: string,
