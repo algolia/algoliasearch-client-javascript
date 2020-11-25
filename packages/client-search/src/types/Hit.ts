@@ -8,7 +8,7 @@ type HighlightMatch = {
 export type HighlightResult<THit> = THit extends string | number
   ? HighlightMatch
   : {
-      [KAttribute in keyof THit]: HighlightResult<THit[KAttribute]>;
+      [KAttribute in keyof THit]?: HighlightResult<THit[KAttribute]>;
     };
 
 type SnippetMatch = {
