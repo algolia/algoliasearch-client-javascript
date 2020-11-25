@@ -357,11 +357,11 @@ export type SearchIndex = BaseSearchIndex & {
     facetQuery: string,
     requestOptions?: RequestOptions & SearchOptions
   ) => Readonly<Promise<SearchForFacetValuesResponse>>;
-  readonly findAnswers: (
+  readonly findAnswers: <TObject>(
     query: string,
     queryLanguages: readonly string[],
     requestOptions?: RequestOptions & FindAnswersOptions
-  ) => Readonly<Promise<FindAnswersResponse>>;
+  ) => Readonly<Promise<FindAnswersResponse<TObject>>>;
   readonly batch: (
     requests: readonly BatchRequest[],
     requestOptions?: RequestOptions
