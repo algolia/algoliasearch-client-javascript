@@ -1,3 +1,9 @@
+## [v4.8.1](https://github.com/algolia/algoliasearch-client-javascript/compare/4.8.0...4.8.1)
+
+* fix(ts): correct search response for facets_stats (#1229) ([ac732d1](https://github.com/algolia/algoliasearch-client-javascript/commit/ac732d1)), closes [#1229](https://github.com/algolia/algoliasearch-client-javascript/issues/1229)
+
+
+
 ## [v4.8.0](https://github.com/algolia/algoliasearch-client-javascript/compare/4.7.0...4.8.0)
 
 * feat(saveSynonyms): replaceExistingSynonyms -> clearExistingSynonyms (#1226) ([2fcf485](https://github.com/algolia/algoliasearch-client-javascript/commit/2fcf485)), closes [#1226](https://github.com/algolia/algoliasearch-client-javascript/issues/1226) [#1224](https://github.com/algolia/algoliasearch-client-javascript/issues/1224)
