@@ -1,3 +1,10 @@
+## [v4.8.2](https://github.com/algolia/algoliasearch-client-javascript/compare/4.8.1...4.8.2)
+
+* fix(findAnswers): fix typing (#1233) ([a935d88](https://github.com/algolia/algoliasearch-client-javascript/commit/a935d88)), closes [#1233](https://github.com/algolia/algoliasearch-client-javascript/issues/1233)
+* fix(ts): don't require every attribute to be highlighted (#1234) ([4591d0e](https://github.com/algolia/algoliasearch-client-javascript/commit/4591d0e)), closes [#1234](https://github.com/algolia/algoliasearch-client-javascript/issues/1234)
+
+
+
 ## [v4.8.1](https://github.com/algolia/algoliasearch-client-javascript/compare/4.8.0...4.8.1)
 
 * fix(ts): correct search response for facets_stats (#1229) ([ac732d1](https://github.com/algolia/algoliasearch-client-javascript/commit/ac732d1)), closes [#1229](https://github.com/algolia/algoliasearch-client-javascript/issues/1229)
