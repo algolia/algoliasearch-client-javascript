@@ -1,18 +1,18 @@
-export type Indice = {
+export type Index = {
   /**
    * Index name.
    */
   readonly name: string;
 
   /**
-   * Index creation date.
+   * Index creation date. (ISO-8601 format)
    */
-  readonly createdAt: number;
+  readonly createdAt: string;
 
   /**
-   * Date of last update.
+   * Date of last update. (ISO-8601 format)
    */
-  readonly updatedAt: number;
+  readonly updatedAt: string;
 
   /**
    * Number of records contained in the index
@@ -32,7 +32,7 @@ export type Indice = {
   /**
    * Last build time in seconds.
    */
-  readonly lastBuildTimes: number;
+  readonly lastBuildTimeS: number;
 
   /**
    * Number of pending indexing operations.
@@ -43,4 +43,21 @@ export type Indice = {
    * A boolean which says whether the index has pending tasks.
    */
   readonly pendingTask: boolean;
+
+  /**
+   * Only present if the index is a replica.
+   * Contains the name of the related primary index.
+   */
+  readonly primary?: string;
+
+  /**
+   * Only present if the index is a primary index with replicas.
+   * Contains the names of all linked replicas.
+   */
+  readonly replicas?: readonly string[];
 };
+
+/**
+ * @deprecated please use `Index` instead of `Indice`
+ */
+export type Indice = Index;
