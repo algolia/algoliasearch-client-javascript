@@ -1,3 +1,9 @@
+## [v4.8.3](https://github.com/algolia/algoliasearch-client-javascript/compare/4.8.2...4.8.3)
+
+* fix(ts): correct type for listIndices response (#1236) ([0bb6bba](https://github.com/algolia/algoliasearch-client-javascript/commit/0bb6bba)), closes [#1236](https://github.com/algolia/algoliasearch-client-javascript/issues/1236)
+
+
+
 ## [v4.8.2](https://github.com/algolia/algoliasearch-client-javascript/compare/4.8.1...4.8.2)
 
 * fix(findAnswers): fix typing (#1233) ([a935d88](https://github.com/algolia/algoliasearch-client-javascript/commit/a935d88)), closes [#1233](https://github.com/algolia/algoliasearch-client-javascript/issues/1233)
