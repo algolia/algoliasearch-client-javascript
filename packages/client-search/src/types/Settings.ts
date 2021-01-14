@@ -283,4 +283,12 @@ export type Settings = {
    * Custom userData that could be added to the Settings.
    */
   readonly userData?: any;
+
+  /**
+   * Enable word segmentation (also called decompounding) at query time for
+   * languages that have it enabled using "decompoundedAttributes". For example,
+   * this turns the query "spaanplaatbehang" (Dutch) into "spaan plaat behang"
+   * to retrieve more relevant results.
+   */
+  readonly decompoundQuery?: boolean;
 };
