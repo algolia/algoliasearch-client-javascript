@@ -334,4 +334,12 @@ export type SearchOptions = {
    * Engine's default: true
    */
   readonly enableABTest?: boolean;
+
+  /**
+   * Enable word segmentation (also called decompounding) at query time for
+   * compatible languages. For example, this turns the Dutch query
+   * "spaanplaatbehang" into "spaan plaat behang" to retrieve more relevant
+   * results.
+   */
+  readonly decompoundQuery?: boolean;
 };
