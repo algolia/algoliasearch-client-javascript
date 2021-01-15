@@ -337,9 +337,9 @@ export type SearchOptions = {
 
   /**
    * Enable word segmentation (also called decompounding) at query time for
-   * languages that have it enabled using "decompoundedAttributes". For example,
-   * this turns the query "spaanplaatbehang" (Dutch) into "spaan plaat behang"
-   * to retrieve more relevant results.
+   * compatible languages. For example, this turns the Dutch query
+   * "spaanplaatbehang" into "spaan plaat behang" to retrieve more relevant
+   * results.
    */
   readonly decompoundQuery?: boolean;
 };
