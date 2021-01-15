@@ -291,4 +291,10 @@ export type Settings = {
    * results.
    */
   readonly decompoundQuery?: boolean;
+
+  /**
+   * Specify on which attributes in your index Algolia should apply
+   * transliteration to a normalized form for compatible scripts.
+   */
+  readonly attributesToTransliterate?: readonly string[];
 };
