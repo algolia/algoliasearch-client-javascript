@@ -291,4 +291,10 @@ export type Settings = {
    * results.
    */
   readonly decompoundQuery?: boolean;
+
+  /**
+   * Specify on which attributes in your index Algolia should apply Japanese
+   * transliteration to make words indexed in Katakana or Kanji searchable in Hiragana.
+   */
+  readonly attributesToTransliterate?: readonly string[];
 };
