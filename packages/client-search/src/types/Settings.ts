@@ -294,7 +294,7 @@ export type Settings = {
 
   /**
    * Specify on which attributes in your index Algolia should apply
-   * transliteration to a normalized form for compatible scripts.
+   * Japanese transliteration to make words indexed in Katakana or Kanji searchable in Hiragana.
    */
   readonly attributesToTransliterate?: readonly string[];
 };
