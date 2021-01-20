@@ -1,3 +1,10 @@
+## [v4.8.4](https://github.com/algolia/algoliasearch-client-javascript/compare/4.8.3...4.8.4)
+
+* feat(ts): add decompoundQuery (#1240) ([446c9a0](https://github.com/algolia/algoliasearch-client-javascript/commit/446c9a0)), closes [#1240](https://github.com/algolia/algoliasearch-client-javascript/issues/1240)
+* feat(ts): add the attributesToTransliterate setting (#1244) ([b91c035](https://github.com/algolia/algoliasearch-client-javascript/commit/b91c035)), closes [#1244](https://github.com/algolia/algoliasearch-client-javascript/issues/1244)
+
+
+
 ## [v4.8.3](https://github.com/algolia/algoliasearch-client-javascript/compare/4.8.2...4.8.3)
 
 * fix(ts): correct type for listIndices response (#1236) ([0bb6bba](https://github.com/algolia/algoliasearch-client-javascript/commit/0bb6bba)), closes [#1236](https://github.com/algolia/algoliasearch-client-javascript/issues/1236)
