@@ -131,18 +131,6 @@ workflows:
           version: '8'
           name: 'test_unit_8'
       - test_unit:
-          version: '10'
-          name: 'test_unit_10'
-      - test_unit:
-          version: '11'
-          name: 'test_unit_11'
-      - test_unit:
-          version: '12'
-          name: 'test_unit_12'
-      - test_unit:
-          version: '13'
-          name: 'test_unit_13'
-      - test_unit:
           version: '14'
           name: 'test_unit_14'
       - test_lint:
@@ -156,10 +144,6 @@ workflows:
       - release:
           requires:
             - test_unit_8
-            - test_unit_10
-            - test_unit_11
-            - test_unit_12
-            - test_unit_13
             - test_unit_14
             - test_lint
             - test_types
