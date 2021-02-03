@@ -297,4 +297,11 @@ export type Settings = {
    * transliteration to make words indexed in Katakana or Kanji searchable in Hiragana.
    */
   readonly attributesToTransliterate?: readonly string[];
+
+  /**
+   * relevancy score to apply to search in virtual index. A Bigger value means
+   * fewer, but more relevant results, smaller value means more, but less
+   * relevant results.
+   */
+  readonly relevancyStrictness?: number;
 };
