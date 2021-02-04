@@ -134,6 +134,11 @@ export type Condition = {
   readonly pattern?: string;
 
   /**
+   * Apply this rule only when the filter matches.
+   */
+  readonly filters?: string;
+
+  /**
    * is | startsWith | endsWith | contains: Whether the pattern must match the beginning or the end of the query string, or both, or none.
    */
   readonly anchoring?: 'is' | 'startsWith' | 'endsWith' | 'contains';
