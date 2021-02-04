@@ -299,9 +299,9 @@ export type Settings = {
   readonly attributesToTransliterate?: readonly string[];
 
   /**
-   * relevancy score to apply to search in virtual index. A Bigger value means
-   * fewer, but more relevant results, smaller value means more, but less
-   * relevant results.
+   * The relevancy score to apply to search in a virtual index [0-100]. A Bigger
+   * value means fewer, but more relevant results, smaller value means more, but
+   * less relevant results.
    */
   readonly relevancyStrictness?: number;
 };
