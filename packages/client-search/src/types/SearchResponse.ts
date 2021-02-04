@@ -31,7 +31,7 @@ export type SearchResponse<TObject = {}> = {
   /**
    * Subset of hits selected when relevancyStrictness is applied.
    */
-  nbSortedHits: number;
+  nbSortedHits?: number;
 
   /**
    * Number of pages returned.
