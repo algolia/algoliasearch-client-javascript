@@ -299,7 +299,7 @@ export type Settings = {
   readonly attributesToTransliterate?: readonly string[];
 
   /**
-   * The relevancy score to apply to search in a virtual index [0-100]. A Bigger
+   * The relevancy threshold to apply to search in a virtual index [0-100]. A Bigger
    * value means fewer, but more relevant results, smaller value means more, but
    * less relevant results.
    */

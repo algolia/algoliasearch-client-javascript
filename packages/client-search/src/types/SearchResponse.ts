@@ -29,7 +29,7 @@ export type SearchResponse<TObject = {}> = {
   nbHits: number;
 
   /**
-   * Subset of hits matched when relevancyStrictness is applied.
+   * Subset of hits selected when relevancyStrictness is applied.
    */
   nbSortedHits: number;
 
@@ -222,7 +222,7 @@ export type SearchResponse<TObject = {}> = {
   };
 
   /**
-   * The relevancy score applied to search in a virtual index
+   * The relevancy threshold applied to search in a virtual index.
    */
   appliedRelevancyStrictness?: number;
 };
