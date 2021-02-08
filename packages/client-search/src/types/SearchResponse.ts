@@ -29,6 +29,11 @@ export type SearchResponse<TObject = {}> = {
   nbHits: number;
 
   /**
+   * Subset of hits selected when relevancyStrictness is applied.
+   */
+  nbSortedHits?: number;
+
+  /**
    * Number of pages returned.
    *
    * Calculation is based on the total number of hits (nbHits) divided by the
@@ -215,4 +220,9 @@ export type SearchResponse<TObject = {}> = {
      */
     params?: Record<string, any>;
   };
+
+  /**
+   * The relevancy threshold applied to search in a virtual index.
+   */
+  appliedRelevancyStrictness?: number;
 };
