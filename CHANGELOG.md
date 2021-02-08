@@ -1,3 +1,10 @@
+## [v4.8.5](https://github.com/algolia/algoliasearch-client-javascript/compare/4.8.4...4.8.5)
+
+* feat(ts): add virtual index parameters (#1251) ([cffd8f0](https://github.com/algolia/algoliasearch-client-javascript/commit/cffd8f0)), closes [#1251](https://github.com/algolia/algoliasearch-client-javascript/issues/1251) [#1249](https://github.com/algolia/algoliasearch-client-javascript/issues/1249)
+* feat(ts): allow filters in rule condition (#1247) ([5032d6f](https://github.com/algolia/algoliasearch-client-javascript/commit/5032d6f)), closes [#1247](https://github.com/algolia/algoliasearch-client-javascript/issues/1247) [#1246](https://github.com/algolia/algoliasearch-client-javascript/issues/1246)
+
+
+
 ## [v4.8.4](https://github.com/algolia/algoliasearch-client-javascript/compare/4.8.3...4.8.4)
 
 * feat(ts): add decompoundQuery (#1240) ([446c9a0](https://github.com/algolia/algoliasearch-client-javascript/commit/446c9a0)), closes [#1240](https://github.com/algolia/algoliasearch-client-javascript/issues/1240)
