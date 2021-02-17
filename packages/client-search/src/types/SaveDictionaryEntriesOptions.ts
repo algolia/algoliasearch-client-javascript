@@ -1,0 +1,5 @@
+export type SaveDictionaryEntriesOptions = {
+  /**
+   * TODO
+   */
+};

@@ -44,6 +44,7 @@ import {
   browseSynonyms,
   ChunkedBatchResponse,
   ChunkOptions,
+  clearDictionaryEntries,
   clearObjects,
   clearRules,
   ClearRulesOptions,
@@ -59,6 +60,7 @@ import {
   DeleteApiKeyResponse,
   deleteBy,
   DeleteByFiltersOptions,
+  deleteDictionaryEntries,
   deleteIndex,
   deleteObject,
   deleteObjects,
@@ -66,6 +68,8 @@ import {
   deleteRule,
   deleteSynonym,
   DeleteSynonymOptions,
+  DictionaryEntry,
+  DictionarySettings,
   exists,
   findAnswers,
   FindAnswersOptions,
@@ -76,6 +80,9 @@ import {
   generateSecuredApiKey,
   getApiKey,
   GetApiKeyResponse,
+  getDictionarySettings,
+  GetDictionarySettingsResponse,
+  getDictionaryTask,
   getLogs,
   GetLogsResponse,
   getObject,
@@ -128,9 +135,13 @@ import {
   ReplaceAllObjectsOptions,
   replaceAllRules,
   replaceAllSynonyms,
+  replaceDictionaryEntries,
   restoreApiKey,
   RestoreApiKeyResponse,
   Rule,
+  saveDictionaryEntries,
+  SaveDictionaryEntriesOptions,
+  SaveDictionaryEntriesResponse,
   saveObject,
   SaveObjectResponse,
   saveObjects,
@@ -147,6 +158,8 @@ import {
   SaveSynonymsResponse,
   search,
   SearchClient as BaseSearchClient,
+  searchDictionaryEntries,
+  SearchDictionaryEntriesResponse,
   searchForFacetValues,
   SearchForFacetValuesQueryParams,
   SearchForFacetValuesResponse,
@@ -162,14 +175,18 @@ import {
   SearchUserIDsOptions,
   SearchUserIDsResponse,
   SecuredApiKeyRestrictions,
+  setDictionarySettings,
+  SetDictionarySettingsResponse,
   setSettings,
   SetSettingsResponse,
   Settings,
   Synonym,
+  TaskStatusResponse,
   updateApiKey,
   UpdateApiKeyOptions,
   UpdateApiKeyResponse,
   UserIDResponse,
+  waitDictionaryTask,
   waitTask,
 } from '@algolia/client-search';
 import { createNullLogger } from '@algolia/logger-common';
@@ -238,6 +255,15 @@ export default function algoliasearch(
       generateSecuredApiKey,
       getSecuredApiKeyRemainingValidity,
       destroy,
+      clearDictionaryEntries,
+      deleteDictionaryEntries,
+      getDictionarySettings,
+      getDictionaryTask,
+      replaceDictionaryEntries,
+      saveDictionaryEntries,
+      searchDictionaryEntries,
+      setDictionarySettings,
+      waitDictionaryTask,
       initIndex: base => (indexName: string): SearchIndex => {
         return initIndex(base)(indexName, {
           methods: {
@@ -609,6 +635,41 @@ export type SearchClient = BaseSearchClient & {
     restrictions: SecuredApiKeyRestrictions
   ) => string;
   readonly getSecuredApiKeyRemainingValidity: (securedApiKey: string) => number;
+  readonly clearDictionaryEntries: (
+    dictionary: string,
+    requestOptions?: RequestOptions & SaveDictionaryEntriesOptions
+  ) => Readonly<WaitablePromise<SaveDictionaryEntriesResponse>>;
+  readonly deleteDictionaryEntries: (
+    dictionary: string,
+    objectIDs: readonly string[],
+    requestOptions?: RequestOptions & SaveDictionaryEntriesOptions
+  ) => Readonly<WaitablePromise<SaveDictionaryEntriesResponse>>;
+  readonly replaceDictionaryEntries: (
+    dictionary: string,
+    entries: readonly DictionaryEntry[],
+    requestOptions?: RequestOptions & SaveDictionaryEntriesOptions
+  ) => Readonly<WaitablePromise<SaveDictionaryEntriesResponse>>;
+  readonly saveDictionaryEntries: (
+    dictionary: string,
+    entries: readonly DictionaryEntry[],
+    requestOptions?: RequestOptions & SaveDictionaryEntriesOptions
+  ) => Readonly<WaitablePromise<SaveDictionaryEntriesResponse>>;
+  readonly searchDictionaryEntries: (
+    dictionary: string,
+    query: string,
+    requestOptions?: RequestOptions
+  ) => Readonly<Promise<SearchDictionaryEntriesResponse>>;
+  readonly getDictionarySettings: (
+    requestOptions?: RequestOptions
+  ) => Readonly<Promise<GetDictionarySettingsResponse>>;
+  readonly setDictionarySettings: (
+    settings: readonly DictionarySettings[],
+    requestOptions?: RequestOptions
+  ) => Readonly<WaitablePromise<SetDictionarySettingsResponse>>;
+  readonly getDictionaryTask: (
+    taskID: number,
+    requestOptions?: RequestOptions
+  ) => Readonly<Promise<TaskStatusResponse>>;
   readonly initAnalytics: (options?: InitAnalyticsOptions) => AnalyticsClient;
   readonly initRecommendation: (options?: InitRecommendationOptions) => RecommendationClient;
 } & Destroyable;

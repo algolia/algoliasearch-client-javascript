@@ -1,0 +1,5 @@
+export type GetDictionarySettingsResponse = {
+  /**
+   *  TODO
+   */
+};
