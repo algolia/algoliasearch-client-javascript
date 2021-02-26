@@ -94,7 +94,11 @@ export function retryableRequest<TResponse>(
     };
 
     const decisions: Outcomes<TResponse> = {
-      onSucess: response => deserializeSuccess(response),
+      /**
+       * @deprecated this property is deprecated in favor of `onSuccess`
+       */
+      onSucess: response => onSuccess(response),
+      onSuccess: response => deserializeSuccess(response),
       onRetry(response) {
         const stackFrame = pushToStackTrace(response);
 
