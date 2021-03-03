@@ -5,3 +5,4 @@ dist
 .vscode
 *.umd.js
 yarn-error.log
+.env
