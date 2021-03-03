@@ -4,5 +4,5 @@ export type FindAnswersOptions = {
   readonly attributesForPrediction?: readonly string[];
   readonly nbHits?: number;
   readonly threshold?: number;
-  readonly params?: SearchOptions;
+  readonly searchParameters?: SearchOptions;
 };
