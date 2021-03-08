@@ -1,3 +1,12 @@
+## [v4.8.6](https://github.com/algolia/algoliasearch-client-javascript/compare/4.8.5...4.8.6)
+
+* fix(answers): rename params to searchParameters (#1256) ([0229a12](https://github.com/algolia/algoliasearch-client-javascript/commit/0229a12)), closes [#1256](https://github.com/algolia/algoliasearch-client-javascript/issues/1256)
+* fix(onSucess): correctly deprecate ([c7d04ca](https://github.com/algolia/algoliasearch-client-javascript/commit/c7d04ca))
+* fix(types): update FindAnswersOptions (#1258) ([bdf67a5](https://github.com/algolia/algoliasearch-client-javascript/commit/bdf67a5)), closes [#1258](https://github.com/algolia/algoliasearch-client-javascript/issues/1258)
+* refactor(retry): Spell success properly (#1254) ([173f5f1](https://github.com/algolia/algoliasearch-client-javascript/commit/173f5f1)), closes [#1254](https://github.com/algolia/algoliasearch-client-javascript/issues/1254)
+
+
+
 ## [v4.8.5](https://github.com/algolia/algoliasearch-client-javascript/compare/4.8.4...4.8.5)
 
 * feat(ts): add virtual index parameters (#1251) ([cffd8f0](https://github.com/algolia/algoliasearch-client-javascript/commit/cffd8f0)), closes [#1251](https://github.com/algolia/algoliasearch-client-javascript/issues/1251) [#1249](https://github.com/algolia/algoliasearch-client-javascript/issues/1249)
