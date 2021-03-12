@@ -4,7 +4,7 @@ import { RequestOptions } from '@algolia/transporter';
 
 import { SearchClient, TaskStatusResponse } from '../..';
 
-export const getDictionaryTask = (base: SearchClient) => {
+export const getAppTask = (base: SearchClient) => {
   return (
     taskID: number,
     requestOptions?: RequestOptions

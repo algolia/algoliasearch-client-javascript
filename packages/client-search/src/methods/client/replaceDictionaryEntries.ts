@@ -8,7 +8,7 @@ import {
   SaveDictionaryEntriesResponse,
   SearchClient,
 } from '../..';
-import { waitDictionaryTask } from '.';
+import { waitAppTask } from '.';
 
 // TODO: fill in DictionaryEntry & SaveDictionaryEntriesOptions types
 // TODO entries have to be a composite objects with actionType=addEntry and body=DictEntry like MultipleBatch
@@ -27,8 +27,7 @@ export const replaceDictionaryEntries = (base: SearchClient) => {
         },
         requestOptions
       ),
-      (response, waitRequestOptions) =>
-        waitDictionaryTask(base)(response.taskID, waitRequestOptions)
+      (response, waitRequestOptions) => waitAppTask(base)(response.taskID, waitRequestOptions)
     );
   };
 };

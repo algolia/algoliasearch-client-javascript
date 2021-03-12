@@ -80,9 +80,9 @@ import {
   generateSecuredApiKey,
   getApiKey,
   GetApiKeyResponse,
+  getAppTask,
   getDictionarySettings,
   GetDictionarySettingsResponse,
-  getDictionaryTask,
   getLogs,
   GetLogsResponse,
   getObject,
@@ -186,7 +186,7 @@ import {
   UpdateApiKeyOptions,
   UpdateApiKeyResponse,
   UserIDResponse,
-  waitDictionaryTask,
+  waitAppTask,
   waitTask,
 } from '@algolia/client-search';
 import { createNullLogger } from '@algolia/logger-common';
@@ -258,12 +258,12 @@ export default function algoliasearch(
       clearDictionaryEntries,
       deleteDictionaryEntries,
       getDictionarySettings,
-      getDictionaryTask,
+      getAppTask,
       replaceDictionaryEntries,
       saveDictionaryEntries,
       searchDictionaryEntries,
       setDictionarySettings,
-      waitDictionaryTask,
+      waitAppTask,
       initIndex: base => (indexName: string): SearchIndex => {
         return initIndex(base)(indexName, {
           methods: {
@@ -666,7 +666,7 @@ export type SearchClient = BaseSearchClient & {
     settings: readonly DictionarySettings[],
     requestOptions?: RequestOptions
   ) => Readonly<WaitablePromise<SetDictionarySettingsResponse>>;
-  readonly getDictionaryTask: (
+  readonly getAppTask: (
     taskID: number,
     requestOptions?: RequestOptions
   ) => Readonly<Promise<TaskStatusResponse>>;

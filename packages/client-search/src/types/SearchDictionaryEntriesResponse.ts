@@ -2,10 +2,6 @@ import { Hit } from '.';
 
 export type SearchDictionaryEntriesResponse<TObject = {}> = {
   /**
-   *  TODO
-   */
-
-  /**
    * The hits returned by the search.
    *
    * Hits are ordered according to the ranking or sorting of the index being queried.

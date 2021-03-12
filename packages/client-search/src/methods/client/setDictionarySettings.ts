@@ -3,7 +3,7 @@ import { MethodEnum } from '@algolia/requester-common';
 import { RequestOptions } from '@algolia/transporter';
 
 import { DictionarySettings, SearchClient, SetDictionarySettingsResponse } from '../..';
-import { waitDictionaryTask } from '.';
+import { waitAppTask } from '.';
 
 // TODO: fill in DictionarySettings & SetDictionarySettingsResponse types
 export const setDictionarySettings = (base: SearchClient) => {
@@ -20,8 +20,7 @@ export const setDictionarySettings = (base: SearchClient) => {
         },
         requestOptions
       ),
-      (response, waitRequestOptions) =>
-        waitDictionaryTask(base)(response.taskID, waitRequestOptions)
+      (response, waitRequestOptions) => waitAppTask(base)(response.taskID, waitRequestOptions)
     );
   };
 };

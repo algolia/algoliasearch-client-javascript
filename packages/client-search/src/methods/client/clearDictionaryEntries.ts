@@ -3,7 +3,7 @@ import { MethodEnum } from '@algolia/requester-common';
 import { RequestOptions } from '@algolia/transporter';
 
 import { SaveDictionaryEntriesOptions, SaveDictionaryEntriesResponse, SearchClient } from '../..';
-import { waitDictionaryTask } from '.';
+import { waitAppTask } from '.';
 
 // TODO: fill in SaveDictionaryEntriesOptions type
 export const clearDictionaryEntries = (base: SearchClient) => {
@@ -23,8 +23,7 @@ export const clearDictionaryEntries = (base: SearchClient) => {
         },
         requestOptions
       ),
-      (response, waitRequestOptions) =>
-        waitDictionaryTask(base)(response.taskID, waitRequestOptions)
+      (response, waitRequestOptions) => waitAppTask(base)(response.taskID, waitRequestOptions)
     );
   };
 };

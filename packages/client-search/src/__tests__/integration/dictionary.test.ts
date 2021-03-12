@@ -7,7 +7,7 @@ test(testSuite.testName, async () => {
 
   // Stopwords
   const stopwordEntryId = Math.floor(Math.random() * 10000).toString();
-  expect(await client.searchDictionaryEntries('stopwords', stopwordEntryId).nbHits).toEqual(0);
+  expect((await client.searchDictionaryEntries('stopwords', stopwordEntryId)).nbHits).toEqual(0);
 
   const stopwordEntry = {
     objectID: stopwordEntryId,
@@ -23,7 +23,7 @@ test(testSuite.testName, async () => {
   expect(stopwords.hits[0].word).toEqual(stopwordEntry.word);
 
   await client.deleteDictionaryEntries('stopwords', [stopwordEntryId]);
-  expect(await client.searchDictionaryEntries('stopwords', stopwordEntryId).nbHits).toEqual(0);
+  expect((await client.searchDictionaryEntries('stopwords', stopwordEntryId)).nbHits).toEqual(0);
 
   const oldDictionaryState = await client.searchDictionaryEntries('stopwords', '');
   const oldDictionaryEntries = oldDictionaryState.hits.map(hit => {
@@ -33,10 +33,10 @@ test(testSuite.testName, async () => {
   });
 
   await client.saveDictionaryEntries('stopwords', [stopwordEntry]);
-  expect(await client.searchDictionaryEntries('stopwords', stopwordEntryId).nbHits).toEqual(1);
+  expect((await client.searchDictionaryEntries('stopwords', stopwordEntryId)).nbHits).toEqual(1);
 
   await client.replaceDictionaryEntries('stopwords', oldDictionaryEntries);
-  expect(await client.searchDictionaryEntries('stopwords', stopwordEntryId).nbHits).toEqual(0);
+  expect((await client.searchDictionaryEntries('stopwords', stopwordEntryId)).nbHits).toEqual(0);
 
   const stopwordsSettings = {
     disableStandardEntries: {
