@@ -42,6 +42,6 @@ export type FindAnswersOptions = {
     | 'naturalLanguages'
     | 'removeStopWords'
     | 'ignorePlurals'
-    | 'andremoveWordsIfNoResults'
+    | 'removeWordsIfNoResults'
   >;
 };
