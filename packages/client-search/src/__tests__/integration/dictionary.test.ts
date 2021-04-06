@@ -3,7 +3,7 @@ import { TestSuite } from '../../../../client-common/src/__tests__/TestSuite';
 const testSuite = new TestSuite('dictionary');
 
 test(testSuite.testName, async () => {
-  const client = testSuite.makeSearchClient('ALGOLIA_APPLICATION_ID_2', 'ALGOLIA_ADMIN_KEY_2')
+  const client = testSuite.makeSearchClient('ALGOLIA_APPLICATION_ID_2', 'ALGOLIA_ADMIN_KEY_2');
 
   // Stopwords
   const stopwordEntryId = Math.floor(Math.random() * 10000).toString();
