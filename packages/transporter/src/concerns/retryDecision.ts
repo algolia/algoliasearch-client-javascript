@@ -26,7 +26,7 @@ export const retryDecision = <TResponse>(
   }
 
   if (isSuccess(response)) {
-    return outcomes.onSucess(response);
+    return outcomes.onSuccess(response);
   }
 
   return outcomes.onFail(response);
@@ -34,6 +34,6 @@ export const retryDecision = <TResponse>(
 
 export type Outcomes<TResponse> = {
   readonly onFail: (response: Response) => Readonly<Promise<never>>;
-  readonly onSucess: (response: Response) => Readonly<Promise<TResponse>>;
+  readonly onSuccess: (response: Response) => Readonly<Promise<TResponse>>;
   readonly onRetry: (response: Response) => Readonly<Promise<TResponse>>;
 };
