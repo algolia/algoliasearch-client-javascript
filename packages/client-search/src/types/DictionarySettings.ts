@@ -1,10 +1,11 @@
+import { DictionaryName } from './DictionaryName';
+import { RequireAtLeastOne } from './RequireAtLeastOne';
+
 export type DictionarySettings = {
   /**
-   * Unique identifier for the rule (format: [A-Za-z0-9_-]+).
+   * TODO: Description
    */
-  readonly objectID: string;
-
-  /**
-   *  TODO
-   */
+  readonly disableStandardEntries: RequireAtLeastOne<
+    Record<DictionaryName, Record<string, boolean>>
+  >;
 };

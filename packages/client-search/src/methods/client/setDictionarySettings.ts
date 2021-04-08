@@ -5,10 +5,9 @@ import { RequestOptions } from '@algolia/transporter';
 import { DictionarySettings, SearchClient, SetDictionarySettingsResponse } from '../..';
 import { waitAppTask } from '.';
 
-// TODO: fill in DictionarySettings & SetDictionarySettingsResponse types
 export const setDictionarySettings = (base: SearchClient) => {
   return (
-    settings: readonly DictionarySettings[],
+    settings: DictionarySettings,
     requestOptions?: RequestOptions
   ): Readonly<WaitablePromise<SetDictionarySettingsResponse>> => {
     return createWaitablePromise<SetDictionarySettingsResponse>(

@@ -2,15 +2,14 @@ import { encode } from '@algolia/client-common';
 import { MethodEnum } from '@algolia/requester-common';
 import { RequestOptions } from '@algolia/transporter';
 
-import { SearchClient, SearchDictionaryEntriesResponse } from '../..';
+import { DictionaryName, SearchClient, SearchDictionaryEntriesResponse } from '../..';
 
-// TODO: fill in SearchDictionaryEntriesResponse type
 export const searchDictionaryEntries = (base: SearchClient) => {
-  return <TObject>(
-    dictionary: string,
+  return (
+    dictionary: DictionaryName,
     query: string,
     requestOptions?: RequestOptions
-  ): Readonly<Promise<SearchDictionaryEntriesResponse<TObject>>> => {
+  ): Readonly<Promise<SearchDictionaryEntriesResponse>> => {
     return base.transporter.read(
       {
         method: MethodEnum.Post,

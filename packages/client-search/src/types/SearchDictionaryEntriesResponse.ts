@@ -1,12 +1,10 @@
-import { Hit } from '.';
+import { DictionaryEntry } from './DictionaryEntry';
 
-export type SearchDictionaryEntriesResponse<TObject = {}> = {
+export type SearchDictionaryEntriesResponse = {
   /**
-   * The hits returned by the search.
-   *
-   * Hits are ordered according to the ranking or sorting of the index being queried.
+   * The dictionary entries returned by the search.
    */
-  hits: Array<Hit<TObject>>;
+  hits: DictionaryEntry[];
 
   /**
    * Index of the current page (zero-based).
@@ -14,24 +12,9 @@ export type SearchDictionaryEntriesResponse<TObject = {}> = {
   page: number;
 
   /**
-   * Number of hits returned (used only with offset)
-   */
-  length?: number;
-
-  /**
-   * The offset of the first hit to returned.
-   */
-  offset?: number;
-
-  /**
-   * Number of hits matched by the query.
+   * Number of dictionary entries matched by the query.
    */
   nbHits: number;
-
-  /**
-   * Subset of hits selected when relevancyStrictness is applied.
-   */
-  nbSortedHits?: number;
 
   /**
    * Number of pages returned.
@@ -40,27 +23,4 @@ export type SearchDictionaryEntriesResponse<TObject = {}> = {
    * number of hits per page (hitsPerPage), rounded up to the nearest integer.
    */
   nbPages: number;
-
-  /**
-   * Maximum number of hits returned per page.
-   */
-  hitsPerPage: number;
-
-  /**
-   * Time the server took to process the request, in milliseconds. This does not include network time.
-   */
-  processingTimeMS: number;
-
-  /**
-   * Whether the nbHits is exhaustive (true) or approximate (false).
-   *
-   * An approximation is done when the query takes more than 50ms to be
-   * processed (this can happen when using complex filters on millions on records).
-   */
-  exhaustiveNbHits: boolean;
-
-  /**
-   * Whether the facet count is exhaustive (true) or approximate (false).
-   */
-  exhaustiveFacetsCount?: boolean;
 };

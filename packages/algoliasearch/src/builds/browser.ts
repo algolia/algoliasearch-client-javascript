@@ -70,6 +70,7 @@ import {
   deleteSynonym,
   DeleteSynonymOptions,
   DictionaryEntry,
+  DictionaryName,
   DictionarySettings,
   exists,
   findAnswers,
@@ -628,26 +629,26 @@ export type SearchClient = BaseSearchClient & {
     requestOptions?: HasPendingMappingsOptions & RequestOptions
   ) => Readonly<Promise<HasPendingMappingsResponse>>;
   readonly clearDictionaryEntries: (
-    dictionary: string,
+    dictionary: DictionaryName,
     requestOptions?: RequestOptions & SaveDictionaryEntriesOptions
   ) => Readonly<WaitablePromise<SaveDictionaryEntriesResponse>>;
   readonly deleteDictionaryEntries: (
-    dictionary: string,
+    dictionary: DictionaryName,
     objectIDs: readonly string[],
     requestOptions?: RequestOptions & SaveDictionaryEntriesOptions
   ) => Readonly<WaitablePromise<SaveDictionaryEntriesResponse>>;
   readonly replaceDictionaryEntries: (
-    dictionary: string,
+    dictionary: DictionaryName,
     entries: readonly DictionaryEntry[],
     requestOptions?: RequestOptions & SaveDictionaryEntriesOptions
   ) => Readonly<WaitablePromise<SaveDictionaryEntriesResponse>>;
   readonly saveDictionaryEntries: (
-    dictionary: string,
+    dictionary: DictionaryName,
     entries: readonly DictionaryEntry[],
     requestOptions?: RequestOptions & SaveDictionaryEntriesOptions
   ) => Readonly<WaitablePromise<SaveDictionaryEntriesResponse>>;
   readonly searchDictionaryEntries: (
-    dictionary: string,
+    dictionary: DictionaryName,
     query: string,
     requestOptions?: RequestOptions
   ) => Readonly<Promise<SearchDictionaryEntriesResponse>>;
@@ -655,7 +656,7 @@ export type SearchClient = BaseSearchClient & {
     requestOptions?: RequestOptions
   ) => Readonly<Promise<GetDictionarySettingsResponse>>;
   readonly setDictionarySettings: (
-    settings: readonly DictionarySettings[],
+    settings: DictionarySettings,
     requestOptions?: RequestOptions
   ) => Readonly<WaitablePromise<SetDictionarySettingsResponse>>;
   readonly getAppTask: (

@@ -1,5 +1,8 @@
+import { DictionaryEntry } from './DictionaryEntry';
+
 export type SaveDictionaryEntriesOptions = {
   /**
-   * TODO
+   * Array of dictionary entries
    */
+  readonly dictionaryEntries: readonly DictionaryEntry[];
 };

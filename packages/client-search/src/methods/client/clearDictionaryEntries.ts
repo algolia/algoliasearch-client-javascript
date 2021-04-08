@@ -2,13 +2,17 @@ import { createWaitablePromise, encode, WaitablePromise } from '@algolia/client-
 import { MethodEnum } from '@algolia/requester-common';
 import { RequestOptions } from '@algolia/transporter';
 
-import { SaveDictionaryEntriesOptions, SaveDictionaryEntriesResponse, SearchClient } from '../..';
+import {
+  DictionaryName,
+  SaveDictionaryEntriesOptions,
+  SaveDictionaryEntriesResponse,
+  SearchClient,
+} from '../..';
 import { waitAppTask } from '.';
 
-// TODO: fill in SaveDictionaryEntriesOptions type
 export const clearDictionaryEntries = (base: SearchClient) => {
   return (
-    dictionary: string,
+    dictionary: DictionaryName,
     requestOptions?: RequestOptions & SaveDictionaryEntriesOptions
   ): Readonly<WaitablePromise<SaveDictionaryEntriesResponse>> => {
     return createWaitablePromise<SaveDictionaryEntriesResponse>(

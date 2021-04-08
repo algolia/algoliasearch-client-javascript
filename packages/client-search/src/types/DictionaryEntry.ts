@@ -4,7 +4,13 @@ export type DictionaryEntry = {
    */
   readonly objectID: string;
 
-  /**
-   *  TODO
-   */
+  readonly language: string;
+
+  readonly word?: string;
+
+  readonly words?: readonly string[];
+
+  readonly decomposition?: readonly string[];
+
+  readonly state?: 'enabled' | 'disabled';
 };

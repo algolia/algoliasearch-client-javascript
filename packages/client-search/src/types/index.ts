@@ -25,6 +25,7 @@ export * from './DeleteByFiltersOptions';
 export * from './DeleteResponse';
 export * from './DeleteSynonymOptions';
 export * from './DictionaryEntry';
+export * from './DictionaryName';
 export * from './DictionarySettings';
 export * from './FacetHit';
 export * from './FindAnswersOptions';
