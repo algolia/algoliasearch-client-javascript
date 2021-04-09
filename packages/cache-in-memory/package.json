@@ -1,6 +1,6 @@
 {
   "name": "@algolia/cache-in-memory",
-  "version": "4.8.5",
+  "version": "4.8.6",
   "private": false,
   "description": "Promise-based cache library using memory.",
   "repository": {
@@ -17,6 +17,6 @@
     "dist"
   ],
   "dependencies": {
-    "@algolia/cache-common": "4.8.5"
+    "@algolia/cache-common": "4.8.6"
   }
 }
