@@ -18,7 +18,7 @@ export const replaceDictionaryEntries = (base: SearchClient) => {
     requestOptions?: RequestOptions & SaveDictionaryEntriesOptions
   ): Readonly<WaitablePromise<SaveDictionaryEntriesResponse>> => {
     const requests = entries.map(entry => ({
-      actionType: 'addEntry',
+      action: 'addEntry',
       body: entry,
     }));
 

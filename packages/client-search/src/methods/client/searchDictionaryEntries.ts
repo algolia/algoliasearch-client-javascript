@@ -13,7 +13,7 @@ export const searchDictionaryEntries = (base: SearchClient) => {
     return base.transporter.read(
       {
         method: MethodEnum.Post,
-        path: encode('1/indexes/%s/query', dictionary),
+        path: encode('/1/dictionaries/%s/search', dictionary),
         data: {
           query,
         },
