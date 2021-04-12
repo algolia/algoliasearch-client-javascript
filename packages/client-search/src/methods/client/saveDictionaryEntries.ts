@@ -3,9 +3,9 @@ import { MethodEnum } from '@algolia/requester-common';
 import { RequestOptions } from '@algolia/transporter';
 
 import {
+  DictionaryEntriesOptions,
   DictionaryEntry,
   DictionaryName,
-  SaveDictionaryEntriesOptions,
   SaveDictionaryEntriesResponse,
   SearchClient,
 } from '../..';
@@ -15,7 +15,7 @@ export const saveDictionaryEntries = (base: SearchClient) => {
   return (
     dictionary: DictionaryName,
     entries: readonly DictionaryEntry[],
-    requestOptions?: RequestOptions & SaveDictionaryEntriesOptions
+    requestOptions?: RequestOptions & DictionaryEntriesOptions
   ): Readonly<WaitablePromise<SaveDictionaryEntriesResponse>> => {
     const requests = entries.map(entry => ({
       action: 'addEntry',

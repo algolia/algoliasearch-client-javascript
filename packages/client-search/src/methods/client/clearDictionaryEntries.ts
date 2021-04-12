@@ -3,8 +3,8 @@ import { MethodEnum } from '@algolia/requester-common';
 import { RequestOptions } from '@algolia/transporter';
 
 import {
+  DictionaryEntriesOptions,
   DictionaryName,
-  SaveDictionaryEntriesOptions,
   SaveDictionaryEntriesResponse,
   SearchClient,
 } from '../..';
@@ -13,7 +13,7 @@ import { waitAppTask } from '.';
 export const clearDictionaryEntries = (base: SearchClient) => {
   return (
     dictionary: DictionaryName,
-    requestOptions?: RequestOptions & SaveDictionaryEntriesOptions
+    requestOptions?: RequestOptions & DictionaryEntriesOptions
   ): Readonly<WaitablePromise<SaveDictionaryEntriesResponse>> => {
     return createWaitablePromise<SaveDictionaryEntriesResponse>(
       base.transporter.write(

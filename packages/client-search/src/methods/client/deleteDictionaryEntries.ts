@@ -3,8 +3,8 @@ import { MethodEnum } from '@algolia/requester-common';
 import { RequestOptions } from '@algolia/transporter';
 
 import {
+  DictionaryEntriesOptions,
   DictionaryName,
-  SaveDictionaryEntriesOptions,
   SaveDictionaryEntriesResponse,
   SearchClient,
 } from '../..';
@@ -14,7 +14,7 @@ export const deleteDictionaryEntries = (base: SearchClient) => {
   return (
     dictionary: DictionaryName,
     objectIDs: readonly string[],
-    requestOptions?: RequestOptions & SaveDictionaryEntriesOptions
+    requestOptions?: RequestOptions & DictionaryEntriesOptions
   ): Readonly<WaitablePromise<SaveDictionaryEntriesResponse>> => {
     const requests = objectIDs.map(objectID => ({
       action: 'deleteEntry',

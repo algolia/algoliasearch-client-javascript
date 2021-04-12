@@ -1,6 +1,6 @@
 import { DictionaryEntry } from './DictionaryEntry';
 
-export type SaveDictionaryEntriesOptions = {
+export type DictionaryEntriesOptions = {
   /**
    * Array of dictionary entries
    */
