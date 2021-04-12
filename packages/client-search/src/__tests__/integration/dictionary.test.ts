@@ -33,11 +33,7 @@ describe(testSuite.testName, () => {
 
     expect(stopwords.nbHits).toEqual(nbSearchEntries + 1);
     expect(stopwords.hits).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining({
-          ...stopwordEntry,
-        }),
-      ])
+      expect.arrayContaining([expect.objectContaining(stopwordEntry)])
     );
 
     await client.deleteDictionaryEntries('stopwords', [stopwordEntry.objectID]).wait();
@@ -101,13 +97,7 @@ describe(testSuite.testName, () => {
     const plurals = await client.searchDictionaryEntries('plurals', pluralEntry.objectID);
 
     expect(plurals.nbHits).toEqual(nbSearchEntries + 1);
-    expect(plurals.hits).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining({
-          ...pluralEntry,
-        }),
-      ])
-    );
+    expect(plurals.hits).toEqual(expect.arrayContaining([expect.objectContaining(pluralEntry)]));
 
     await client.deleteDictionaryEntries('plurals', [pluralEntry.objectID]).wait();
     expect((await client.searchDictionaryEntries('plurals', pluralEntry.objectID)).nbHits).toEqual(
@@ -143,11 +133,7 @@ describe(testSuite.testName, () => {
 
     expect(compounds.nbHits).toEqual(nbSearchEntries + 1);
     expect(compounds.hits).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining({
-          ...compoundEntry,
-        }),
-      ])
+      expect.arrayContaining([expect.objectContaining(compoundEntry)])
     );
 
     await client.deleteDictionaryEntries('compounds', [compoundEntry.objectID]).wait();
