@@ -32,8 +32,13 @@ describe(testSuite.testName, () => {
     const stopwords = await client.searchDictionaryEntries('stopwords', stopwordEntry.objectID);
 
     expect(stopwords.nbHits).toEqual(nbSearchEntries + 1);
-    expect(stopwords.hits[nbSearchEntries].objectID).toEqual(stopwordEntry.objectID);
-    expect(stopwords.hits[nbSearchEntries].word).toEqual(stopwordEntry.word);
+    expect(stopwords.hits).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          ...stopwordEntry,
+        }),
+      ])
+    );
 
     await client.deleteDictionaryEntries('stopwords', [stopwordEntry.objectID]).wait();
     expect(
@@ -96,8 +101,13 @@ describe(testSuite.testName, () => {
     const plurals = await client.searchDictionaryEntries('plurals', pluralEntry.objectID);
 
     expect(plurals.nbHits).toEqual(nbSearchEntries + 1);
-    expect(plurals.hits[nbSearchEntries].objectID).toEqual(pluralEntry.objectID);
-    expect(plurals.hits[nbSearchEntries].words).toEqual(pluralEntry.words);
+    expect(plurals.hits).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          ...pluralEntry,
+        }),
+      ])
+    );
 
     await client.deleteDictionaryEntries('plurals', [pluralEntry.objectID]).wait();
     expect((await client.searchDictionaryEntries('plurals', pluralEntry.objectID)).nbHits).toEqual(
@@ -132,8 +142,13 @@ describe(testSuite.testName, () => {
     const compounds = await client.searchDictionaryEntries('compounds', compoundEntry.objectID);
 
     expect(compounds.nbHits).toEqual(nbSearchEntries + 1);
-    expect(compounds.hits[nbSearchEntries].objectID).toEqual(compoundEntry.objectID);
-    expect(compounds.hits[nbSearchEntries].word).toEqual(compoundEntry.word);
+    expect(compounds.hits).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          ...compoundEntry,
+        }),
+      ])
+    );
 
     await client.deleteDictionaryEntries('compounds', [compoundEntry.objectID]).wait();
     expect(
