@@ -70,6 +70,7 @@ import {
   deleteSynonym,
   DeleteSynonymOptions,
   DictionaryEntriesOptions,
+  DictionaryEntriesResponse,
   DictionaryEntry,
   DictionaryName,
   DictionarySettings,
@@ -141,7 +142,6 @@ import {
   RestoreApiKeyResponse,
   Rule,
   saveDictionaryEntries,
-  SaveDictionaryEntriesResponse,
   saveObject,
   SaveObjectResponse,
   saveObjects,
@@ -631,22 +631,22 @@ export type SearchClient = BaseSearchClient & {
   readonly clearDictionaryEntries: (
     dictionary: DictionaryName,
     requestOptions?: RequestOptions & DictionaryEntriesOptions
-  ) => Readonly<WaitablePromise<SaveDictionaryEntriesResponse>>;
+  ) => Readonly<WaitablePromise<DictionaryEntriesResponse>>;
   readonly deleteDictionaryEntries: (
     dictionary: DictionaryName,
     objectIDs: readonly string[],
     requestOptions?: RequestOptions & DictionaryEntriesOptions
-  ) => Readonly<WaitablePromise<SaveDictionaryEntriesResponse>>;
+  ) => Readonly<WaitablePromise<DictionaryEntriesResponse>>;
   readonly replaceDictionaryEntries: (
     dictionary: DictionaryName,
     entries: readonly DictionaryEntry[],
     requestOptions?: RequestOptions & DictionaryEntriesOptions
-  ) => Readonly<WaitablePromise<SaveDictionaryEntriesResponse>>;
+  ) => Readonly<WaitablePromise<DictionaryEntriesResponse>>;
   readonly saveDictionaryEntries: (
     dictionary: DictionaryName,
     entries: readonly DictionaryEntry[],
     requestOptions?: RequestOptions & DictionaryEntriesOptions
-  ) => Readonly<WaitablePromise<SaveDictionaryEntriesResponse>>;
+  ) => Readonly<WaitablePromise<DictionaryEntriesResponse>>;
   readonly searchDictionaryEntries: (
     dictionary: DictionaryName,
     query: string,

@@ -4,8 +4,8 @@ import { RequestOptions } from '@algolia/transporter';
 
 import {
   DictionaryEntriesOptions,
+  DictionaryEntriesResponse,
   DictionaryName,
-  SaveDictionaryEntriesResponse,
   SearchClient,
 } from '../..';
 import { waitAppTask } from '.';
@@ -15,13 +15,13 @@ export const deleteDictionaryEntries = (base: SearchClient) => {
     dictionary: DictionaryName,
     objectIDs: readonly string[],
     requestOptions?: RequestOptions & DictionaryEntriesOptions
-  ): Readonly<WaitablePromise<SaveDictionaryEntriesResponse>> => {
+  ): Readonly<WaitablePromise<DictionaryEntriesResponse>> => {
     const requests = objectIDs.map(objectID => ({
       action: 'deleteEntry',
       body: { objectID },
     }));
 
-    return createWaitablePromise<SaveDictionaryEntriesResponse>(
+    return createWaitablePromise<DictionaryEntriesResponse>(
       base.transporter.write(
         {
           method: MethodEnum.Post,

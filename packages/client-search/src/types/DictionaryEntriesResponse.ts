@@ -1,4 +1,4 @@
-export type SaveDictionaryEntriesResponse = {
+export type DictionaryEntriesResponse = {
   /**
    * When the given rules got saved.
    */

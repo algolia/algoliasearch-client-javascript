@@ -4,9 +4,9 @@ import { RequestOptions } from '@algolia/transporter';
 
 import {
   DictionaryEntriesOptions,
+  DictionaryEntriesResponse,
   DictionaryEntry,
   DictionaryName,
-  SaveDictionaryEntriesResponse,
   SearchClient,
 } from '../..';
 import { waitAppTask } from '.';
@@ -16,13 +16,13 @@ export const saveDictionaryEntries = (base: SearchClient) => {
     dictionary: DictionaryName,
     entries: readonly DictionaryEntry[],
     requestOptions?: RequestOptions & DictionaryEntriesOptions
-  ): Readonly<WaitablePromise<SaveDictionaryEntriesResponse>> => {
+  ): Readonly<WaitablePromise<DictionaryEntriesResponse>> => {
     const requests = entries.map(entry => ({
       action: 'addEntry',
       body: entry,
     }));
 
-    return createWaitablePromise<SaveDictionaryEntriesResponse>(
+    return createWaitablePromise<DictionaryEntriesResponse>(
       base.transporter.write(
         {
           method: MethodEnum.Post,
