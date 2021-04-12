@@ -1,6 +1,13 @@
 import { SearchOptions } from '.';
 
-export type MultipleQueriesQuery = {
+type SharedMultipleQueriesQuery = {
+  /**
+   * The type of query to perform.
+   *
+   * @defaultValue "default"
+   */
+  readonly type?: 'default' | 'facet';
+
   /**
    * The index name.
    */
@@ -16,3 +23,17 @@ export type MultipleQueriesQuery = {
    */
   readonly query?: string;
 };
+
+export type MultipleQueriesQuery = SharedMultipleQueriesQuery &
+  (
+    | {
+        readonly type?: 'default';
+      }
+    | {
+        readonly type: 'facet';
+        /**
+         * The facet name.
+         */
+        readonly facet: string;
+      }
+  );
