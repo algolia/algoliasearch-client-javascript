@@ -89,7 +89,6 @@ export * from './SearchSynonymsResponse';
 export * from './SearchUserIDsOptions';
 export * from './SearchUserIDsResponse';
 export * from './SecuredApiKeyRestrictions';
-export * from './SetDictionarySettingsResponse';
 export * from './SetSettingsOptions';
 export * from './SetSettingsResponse';
 export * from './Settings';

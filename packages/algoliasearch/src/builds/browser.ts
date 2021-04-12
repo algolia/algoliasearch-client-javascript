@@ -175,7 +175,6 @@ import {
   SearchUserIDsOptions,
   SearchUserIDsResponse,
   setDictionarySettings,
-  SetDictionarySettingsResponse,
   setSettings,
   SetSettingsResponse,
   Settings,
@@ -658,7 +657,7 @@ export type SearchClient = BaseSearchClient & {
   readonly setDictionarySettings: (
     settings: DictionarySettings,
     requestOptions?: RequestOptions
-  ) => Readonly<WaitablePromise<SetDictionarySettingsResponse>>;
+  ) => Readonly<WaitablePromise<DictionaryEntriesResponse>>;
   readonly getAppTask: (
     taskID: number,
     requestOptions?: RequestOptions

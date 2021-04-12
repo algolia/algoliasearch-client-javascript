@@ -2,15 +2,15 @@ import { createWaitablePromise, WaitablePromise } from '@algolia/client-common';
 import { MethodEnum } from '@algolia/requester-common';
 import { RequestOptions } from '@algolia/transporter';
 
-import { DictionarySettings, SearchClient, SetDictionarySettingsResponse } from '../..';
+import { DictionaryEntriesResponse, DictionarySettings, SearchClient } from '../..';
 import { waitAppTask } from '.';
 
 export const setDictionarySettings = (base: SearchClient) => {
   return (
     settings: DictionarySettings,
     requestOptions?: RequestOptions
-  ): Readonly<WaitablePromise<SetDictionarySettingsResponse>> => {
-    return createWaitablePromise<SetDictionarySettingsResponse>(
+  ): Readonly<WaitablePromise<DictionaryEntriesResponse>> => {
+    return createWaitablePromise<DictionaryEntriesResponse>(
       base.transporter.write(
         {
           method: MethodEnum.Put,
