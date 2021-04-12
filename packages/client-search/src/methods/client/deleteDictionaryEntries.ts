@@ -18,7 +18,7 @@ export const deleteDictionaryEntries = (base: SearchClient) => {
   ): Readonly<WaitablePromise<SaveDictionaryEntriesResponse>> => {
     const requests = objectIDs.map(objectID => ({
       action: 'deleteEntry',
-      body: objectID,
+      body: { objectID },
     }));
 
     return createWaitablePromise<SaveDictionaryEntriesResponse>(

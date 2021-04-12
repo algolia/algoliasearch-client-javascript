@@ -3,90 +3,141 @@ import { TestSuite } from '../../../../client-common/src/__tests__/TestSuite';
 
 const testSuite = new TestSuite('dictionary');
 
-test(testSuite.testName, async () => {
+describe(testSuite.testName, () => {
   const client = testSuite.makeSearchClient('ALGOLIA_APPLICATION_ID_2', 'ALGOLIA_ADMIN_KEY_2');
 
-  const stopwordEntryId = Math.floor(Math.random() * 10000).toString();
-  expect((await client.searchDictionaryEntries('stopwords', stopwordEntryId)).nbHits).toEqual(0);
+  test('stopwords', async () => {
+    const stopwordEntry = {
+      objectID: Math.floor(Math.random() * 10000).toString(),
+      language: 'en',
+      word: 'down',
+    };
 
-  const stopwordEntry = {
-    objectID: stopwordEntryId,
-    language: 'en',
-    word: 'down',
-  };
+    // clean past entries
+    await client
+      .deleteDictionaryEntries(
+        'stopwords',
+        (await client.searchDictionaryEntries('stopwords', stopwordEntry.objectID)).hits.map(
+          hit => hit.objectID
+        )
+      )
+      .wait();
 
-  await client.saveDictionaryEntries('stopwords', [stopwordEntry]);
+    const nbSearchEntries = (
+      await client.searchDictionaryEntries('stopwords', stopwordEntry.objectID)
+    ).nbHits;
 
-  const stopwords = await client.searchDictionaryEntries('stopwords', stopwordEntryId);
-  expect(stopwords.nbHits).toEqual(1);
-  expect(stopwords.hits[0].objectID).toEqual(stopwordEntry.objectID);
-  expect(stopwords.hits[0].word).toEqual(stopwordEntry.word);
+    await client.saveDictionaryEntries('stopwords', [stopwordEntry]).wait();
 
-  await client.deleteDictionaryEntries('stopwords', [stopwordEntryId]);
-  expect((await client.searchDictionaryEntries('stopwords', stopwordEntryId)).nbHits).toEqual(0);
+    const stopwords = await client.searchDictionaryEntries('stopwords', stopwordEntry.objectID);
 
-  const oldDictionaryState = await client.searchDictionaryEntries('stopwords', '');
-  const oldDictionaryEntries = oldDictionaryState.hits.map(hit => {
-    // @ts-ignore
-    delete hit.type;
+    expect(stopwords.nbHits).toEqual(nbSearchEntries + 1);
+    expect(stopwords.hits[nbSearchEntries].objectID).toEqual(stopwordEntry.objectID);
+    expect(stopwords.hits[nbSearchEntries].word).toEqual(stopwordEntry.word);
 
-    return hit;
+    await client.deleteDictionaryEntries('stopwords', [stopwordEntry.objectID]).wait();
+    expect(
+      (await client.searchDictionaryEntries('stopwords', stopwordEntry.objectID)).nbHits
+    ).toEqual(0);
+
+    const oldDictionaryState = await client.searchDictionaryEntries('stopwords', '');
+    const oldDictionaryEntries = oldDictionaryState.hits.map(hit => {
+      // @ts-ignore
+      delete hit.type;
+
+      return hit;
+    });
+
+    await client.saveDictionaryEntries('stopwords', [stopwordEntry]).wait();
+    expect(
+      (await client.searchDictionaryEntries('stopwords', stopwordEntry.objectID)).nbHits
+    ).toEqual(1);
+
+    await client.replaceDictionaryEntries('stopwords', oldDictionaryEntries).wait();
+    expect(
+      (await client.searchDictionaryEntries('stopwords', stopwordEntry.objectID)).nbHits
+    ).toEqual(0);
+
+    const stopwordsSettings = {
+      disableStandardEntries: {
+        stopwords: {
+          en: true,
+          fr: true,
+        },
+      },
+    };
+
+    await client.setDictionarySettings(stopwordsSettings);
+    expect(await client.getDictionarySettings()).toEqual(stopwordsSettings);
   });
 
-  await client.saveDictionaryEntries('stopwords', [stopwordEntry]);
-  expect((await client.searchDictionaryEntries('stopwords', stopwordEntryId)).nbHits).toEqual(1);
+  test('plurals', async () => {
+    const pluralEntry = {
+      objectID: Math.floor(Math.random() * 10000).toString(),
+      language: 'fr',
+      words: ['cheval', 'chevaux'],
+    };
 
-  await client.replaceDictionaryEntries('stopwords', oldDictionaryEntries);
-  expect((await client.searchDictionaryEntries('stopwords', stopwordEntryId)).nbHits).toEqual(0);
+    // clean past entries
+    await client
+      .deleteDictionaryEntries(
+        'plurals',
+        (await client.searchDictionaryEntries('plurals', pluralEntry.objectID)).hits.map(
+          hit => hit.objectID
+        )
+      )
+      .wait();
 
-  const stopwordsSettings = {
-    disableStandardEntries: {
-      stopwords: {
-        en: true,
-      },
-    },
-  };
+    const nbSearchEntries = (await client.searchDictionaryEntries('plurals', pluralEntry.objectID))
+      .nbHits;
 
-  await client.setDictionarySettings(stopwordsSettings);
-  expect(await client.getDictionarySettings()).toEqual(stopwordsSettings);
+    await client.saveDictionaryEntries('plurals', [pluralEntry]).wait();
 
-  const pluralEntryId = Math.floor(Math.random() * 10000).toString();
-  expect((await client.searchDictionaryEntries('plurals', pluralEntryId)).nbHits).toEqual(0);
+    const plurals = await client.searchDictionaryEntries('plurals', pluralEntry.objectID);
 
-  const pluralEntry = {
-    objectID: pluralEntryId,
-    language: 'fr',
-    words: ['cheval', 'chevaux'],
-  };
+    expect(plurals.nbHits).toEqual(nbSearchEntries + 1);
+    expect(plurals.hits[nbSearchEntries].objectID).toEqual(pluralEntry.objectID);
+    expect(plurals.hits[nbSearchEntries].words).toEqual(pluralEntry.words);
 
-  await client.saveDictionaryEntries('plurals', [pluralEntry]);
+    await client.deleteDictionaryEntries('plurals', [pluralEntry.objectID]).wait();
+    expect((await client.searchDictionaryEntries('plurals', pluralEntry.objectID)).nbHits).toEqual(
+      0
+    );
+  });
 
-  const plurals = await client.searchDictionaryEntries('plurals', pluralEntryId);
-  expect(plurals.nbHits).toEqual(1);
-  expect(plurals.hits[0].objectID).toEqual(pluralEntry.objectID);
-  expect(plurals.hits[0].words).toEqual(pluralEntry.words);
+  test('compounds', async () => {
+    const compoundEntry = {
+      objectID: Math.floor(Math.random() * 10000).toString(),
+      language: 'de',
+      word: 'kopfschmerztablette',
+      decomposition: ['kopf', 'schmerz', 'tablette'],
+    };
 
-  await client.deleteDictionaryEntries('plurals', [pluralEntryId]);
-  expect((await client.searchDictionaryEntries('plurals', pluralEntryId)).nbHits).toEqual(0);
+    // clean past entries
+    await client
+      .deleteDictionaryEntries(
+        'compounds',
+        (await client.searchDictionaryEntries('compounds', compoundEntry.objectID)).hits.map(
+          hit => hit.objectID
+        )
+      )
+      .wait();
 
-  const compoundEntryId = Math.floor(Math.random() * 10000).toString();
-  expect((await client.searchDictionaryEntries('plurals', compoundEntryId)).nbHits).toEqual(0);
+    const nbSearchEntries = (
+      await client.searchDictionaryEntries('compounds', compoundEntry.objectID)
+    ).nbHits;
 
-  const compoundEntry = {
-    objectID: compoundEntryId,
-    language: 'fr',
-    word: 'kopfschmerztablette',
-    decomposition: ['kopf', 'schmerz', 'tablette'],
-  };
+    await client.saveDictionaryEntries('compounds', [compoundEntry]).wait();
 
-  await client.saveDictionaryEntries('plurals', [compoundEntry]);
+    const compounds = await client.searchDictionaryEntries('compounds', compoundEntry.objectID);
 
-  const compounds = await client.searchDictionaryEntries('plurals', compoundEntryId);
-  expect(compounds.nbHits).toEqual(1);
-  expect(compounds.hits[0].objectID).toEqual(compoundEntry.objectID);
-  expect(compounds.hits[0].word).toEqual(compoundEntry.word);
-  expect(compounds.hits[0].decomposition).toEqual(compoundEntry.decomposition);
+    expect(compounds.nbHits).toEqual(nbSearchEntries + 1);
+    expect(compounds.hits[nbSearchEntries].objectID).toEqual(compoundEntry.objectID);
+    expect(compounds.hits[nbSearchEntries].word).toEqual(compoundEntry.word);
 
-  await client.deleteDictionaryEntries('plurals', [compoundEntryId]);
-  expect((await client.searchDictionaryEntries('plurals', compoundEntryId)).nbHits).toEqual(0);
+    await client.deleteDictionaryEntries('compounds', [compoundEntry.objectID]).wait();
+    expect(
+      (await client.searchDictionaryEntries('compounds', compoundEntry.objectID)).nbHits
+    ).toEqual(0);
+  });
 });
