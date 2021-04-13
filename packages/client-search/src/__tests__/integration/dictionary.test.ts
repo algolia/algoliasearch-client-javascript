@@ -2,13 +2,14 @@
 import { TestSuite } from '../../../../client-common/src/__tests__/TestSuite';
 
 const testSuite = new TestSuite('dictionary');
+import crypto from 'crypto';
 
 describe(testSuite.testName, () => {
   const client = testSuite.makeSearchClient('ALGOLIA_APPLICATION_ID_2', 'ALGOLIA_ADMIN_KEY_2');
 
   test('stopwords', async () => {
     const stopwordEntry = {
-      objectID: Math.floor(Math.random() * 10000).toString(),
+      objectID: crypto.randomBytes(16).toString('hex'),
       language: 'en',
       word: 'down',
     };
@@ -74,7 +75,7 @@ describe(testSuite.testName, () => {
 
   test('plurals', async () => {
     const pluralEntry = {
-      objectID: Math.floor(Math.random() * 10000).toString(),
+      objectID: crypto.randomBytes(16).toString('hex'),
       language: 'fr',
       words: ['cheval', 'chevaux'],
     };
@@ -107,7 +108,7 @@ describe(testSuite.testName, () => {
 
   test('compounds', async () => {
     const compoundEntry = {
-      objectID: Math.floor(Math.random() * 10000).toString(),
+      objectID: crypto.randomBytes(16).toString('hex'),
       language: 'de',
       word: 'kopfschmerztablette',
       decomposition: ['kopf', 'schmerz', 'tablette'],
