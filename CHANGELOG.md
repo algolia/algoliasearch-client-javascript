@@ -1,3 +1,11 @@
+## [v4.9.0](https://github.com/algolia/algoliasearch-client-javascript/compare/4.8.6...4.9.0)
+
+* feat(dictionaries): adds methods and tests (#1253) ([aed6554](https://github.com/algolia/algoliasearch-client-javascript/commit/aed6554)), closes [#1253](https://github.com/algolia/algoliasearch-client-javascript/issues/1253)
+* feat(types): support `type` and `facet` in search methods (#1263) ([54c1cb7](https://github.com/algolia/algoliasearch-client-javascript/commit/54c1cb7)), closes [#1263](https://github.com/algolia/algoliasearch-client-javascript/issues/1263)
+* fix(findAnswers): omit removeWordsIfNoResults correctly ([3aec216](https://github.com/algolia/algoliasearch-client-javascript/commit/3aec216))
+
+
+
 ## [v4.8.6](https://github.com/algolia/algoliasearch-client-javascript/compare/4.8.5...4.8.6)
 
 * fix(answers): rename params to searchParameters (#1256) ([0229a12](https://github.com/algolia/algoliasearch-client-javascript/commit/0229a12)), closes [#1256](https://github.com/algolia/algoliasearch-client-javascript/issues/1256)
