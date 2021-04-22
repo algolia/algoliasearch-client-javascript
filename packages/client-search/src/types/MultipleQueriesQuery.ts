@@ -35,5 +35,9 @@ export type MultipleQueriesQuery = SharedMultipleQueriesQuery &
          * The facet name.
          */
         readonly facet: string;
+        /**
+         * The search options.
+         */
+        readonly params?: SharedMultipleQueriesQuery['params'] & { readonly facetQuery?: string };
       }
   );
