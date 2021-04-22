@@ -38,6 +38,11 @@ export type MultipleQueriesQuery = SharedMultipleQueriesQuery &
         /**
          * The search options.
          */
-        readonly params?: SharedMultipleQueriesQuery['params'] & { readonly facetQuery?: string };
+        readonly params?: SharedMultipleQueriesQuery['params'] & {
+          /**
+           * The search query used to search the facet attribute. Follows the same rules for an index query: a single character, a partial word, a word, or a phrase.
+           */
+          readonly facetQuery?: string;
+        };
       }
   );
