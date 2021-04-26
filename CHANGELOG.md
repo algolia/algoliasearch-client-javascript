@@ -1,3 +1,9 @@
+## [v4.9.1](https://github.com/algolia/algoliasearch-client-javascript/compare/4.9.0...4.9.1)
+
+* fix(types): support `facetQuery` in `MultipleQueriesQuery` (#1267) ([84355a9](https://github.com/algolia/algoliasearch-client-javascript/commit/84355a9)), closes [#1267](https://github.com/algolia/algoliasearch-client-javascript/issues/1267)
+
+
+
 ## [v4.9.0](https://github.com/algolia/algoliasearch-client-javascript/compare/4.8.6...4.9.0)
 
 * feat(dictionaries): adds methods and tests (#1253) ([aed6554](https://github.com/algolia/algoliasearch-client-javascript/commit/aed6554)), closes [#1253](https://github.com/algolia/algoliasearch-client-javascript/issues/1253)
