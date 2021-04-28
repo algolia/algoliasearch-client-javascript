@@ -2,14 +2,14 @@ import { ApiKeyACLType } from '.';
 
 export type GetApiKeyResponse = {
   /**
-   * A Unix timestamp used to define the expiration date of the API key.
+   * The api key value
    */
   value: string;
 
   /**
-   * Date of creation.
+   * Date of creation (Unix timestamp).
    */
-  createdAt: string;
+  createdAt: number;
 
   /**
    * List of permissions the key contains.
