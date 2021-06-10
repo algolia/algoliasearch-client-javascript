@@ -304,4 +304,43 @@ export type Settings = {
    * less relevant results.
    */
   readonly relevancyStrictness?: number;
+
+  /**
+   * Content defining how the search interface should be rendered.
+   * This is set via the settings for a default value and can be overridden via rules
+   */
+  readonly renderingContent?: {
+    /**
+     * defining how facets should be ordered
+     */
+    readonly facetOrdering?: {
+      /**
+       * the ordering of facets (widgets)
+       */
+      readonly facet?: {
+        /**
+         * pinned order of facet lists
+         */
+        readonly order: readonly string[];
+      };
+      /**
+       * the ordering of facet values, within an individual list
+       */
+      readonly values?: {
+        readonly [facet: string]: {
+          /**
+           * pinned order of facet values
+           */
+          readonly order: readonly string[];
+          /**
+           * How to display the remaining items.
+           * - facet count (descending)
+           * - alphabetical (ascending)
+           * - hidden (show only pinned values)
+           */
+          readonly sortRemainingBy: 'count' | 'alpha' | 'hidden';
+        };
+      };
+    };
+  };
 };
