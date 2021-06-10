@@ -1,3 +1,10 @@
+## [v4.9.2](https://github.com/algolia/algoliasearch-client-javascript/compare/4.9.1...4.9.2)
+
+* feat(ts): document renderingContent (#1273) ([04f2a20](https://github.com/algolia/algoliasearch-client-javascript/commit/04f2a20)), closes [#1273](https://github.com/algolia/algoliasearch-client-javascript/issues/1273)
+* fix(api-keys): fix typing issues (#1270) ([fec87a9](https://github.com/algolia/algoliasearch-client-javascript/commit/fec87a9)), closes [#1270](https://github.com/algolia/algoliasearch-client-javascript/issues/1270)
+
+
+
 ## [v4.9.1](https://github.com/algolia/algoliasearch-client-javascript/compare/4.9.0...4.9.1)
 
 * fix(types): support `facetQuery` in `MultipleQueriesQuery` (#1267) ([84355a9](https://github.com/algolia/algoliasearch-client-javascript/commit/84355a9)), closes [#1267](https://github.com/algolia/algoliasearch-client-javascript/issues/1267)
