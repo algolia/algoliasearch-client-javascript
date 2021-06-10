@@ -226,5 +226,5 @@ export type SearchResponse<TObject = {}> = {
    */
   appliedRelevancyStrictness?: number;
 
-  readonly renderingContent?: Settings['renderingContent'];
+  renderingContent?: Settings['renderingContent'];
 };
