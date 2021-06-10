@@ -1,4 +1,4 @@
-import { Hit } from '.';
+import { Hit, Settings } from '.';
 
 export type SearchResponse<TObject = {}> = {
   /**
@@ -225,4 +225,6 @@ export type SearchResponse<TObject = {}> = {
    * The relevancy threshold applied to search in a virtual index.
    */
   appliedRelevancyStrictness?: number;
+
+  renderingContent?: Settings['renderingContent'];
 };
