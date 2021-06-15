@@ -1,6 +1,6 @@
 {
   "name": "@algolia/logger-console",
-  "version": "4.9.2",
+  "version": "4.9.3",
   "private": false,
   "description": "Promise-based log library using console log.",
   "repository": {
@@ -17,6 +17,6 @@
     "dist"
   ],
   "dependencies": {
-    "@algolia/logger-common": "4.9.2"
+    "@algolia/logger-common": "4.9.3"
   }
 }
