@@ -1,3 +1,9 @@
+## [v4.9.3](https://github.com/algolia/algoliasearch-client-javascript/compare/4.9.2...4.9.3)
+
+* fix(ts): make all keys in facetOrdering optional ([d772f98](https://github.com/algolia/algoliasearch-client-javascript/commit/d772f98))
+
+
+
 ## [v4.9.2](https://github.com/algolia/algoliasearch-client-javascript/compare/4.9.1...4.9.2)
 
 * feat(ts): document renderingContent (#1273) ([04f2a20](https://github.com/algolia/algoliasearch-client-javascript/commit/04f2a20)), closes [#1273](https://github.com/algolia/algoliasearch-client-javascript/issues/1273)
