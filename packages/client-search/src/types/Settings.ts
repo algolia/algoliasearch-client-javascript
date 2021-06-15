@@ -321,7 +321,7 @@ export type Settings = {
         /**
          * pinned order of facet lists
          */
-        readonly order: readonly string[];
+        readonly order?: readonly string[];
       };
       /**
        * the ordering of facet values, within an individual list
@@ -331,14 +331,14 @@ export type Settings = {
           /**
            * pinned order of facet values
            */
-          readonly order: readonly string[];
+          readonly order?: readonly string[];
           /**
            * How to display the remaining items.
            * - facet count (descending)
            * - alphabetical (ascending)
            * - hidden (show only pinned values)
            */
-          readonly sortRemainingBy: 'count' | 'alpha' | 'hidden';
+          readonly sortRemainingBy?: 'count' | 'alpha' | 'hidden';
         };
       };
     };
