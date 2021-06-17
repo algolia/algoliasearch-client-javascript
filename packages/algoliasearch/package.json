@@ -31,7 +31,7 @@
     "@algolia/client-account": "4.9.3",
     "@algolia/client-analytics": "4.9.3",
     "@algolia/client-common": "4.9.3",
-    "@algolia/client-recommendation": "4.9.3",
+    "@algolia/client-personalization": "4.9.3",
     "@algolia/client-search": "4.9.3",
     "@algolia/logger-common": "4.9.3",
     "@algolia/logger-console": "4.9.3",
