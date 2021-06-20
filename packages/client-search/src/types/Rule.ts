@@ -124,7 +124,7 @@ export type ConsequenceParams = {
    * Same syntax as automaticFacetFilters, but the engine treats the filters as optional.
    * Behaves like optionalFilters.
    */
-  readonly automaticOptionalFacetFilters?: readonly AutomaticFacetFilter[];
+  readonly automaticOptionalFacetFilters?: readonly AutomaticFacetFilter[] | readonly string[];
 
   /**
    * Content defining how the search interface should be rendered.
