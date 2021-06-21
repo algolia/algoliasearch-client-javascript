@@ -12,6 +12,8 @@ import { addMethods } from '..';
 import algoliasearchForBrowser from '../../../algoliasearch/src/builds/browser';
 import algoliasearchForBrowserLite from '../../../algoliasearch/src/builds/browserLite';
 import algoliasearchForNode from '../../../algoliasearch/src/builds/node';
+import recommendForBrowser from '../../../recommend/src/builds/browser';
+import recommendForNode from '../../../recommend/src/builds/node';
 
 /* eslint functional/no-class: 0 */
 export class TestSuite {
@@ -28,6 +30,11 @@ export class TestSuite {
     : this.isBrowser
     ? algoliasearchForBrowser
     : algoliasearchForNode;
+
+  // @ts-ignore `destroy` only exists on the Node build
+  public readonly recommend: typeof recommendForNode = this.isBrowser
+    ? recommendForBrowser
+    : recommendForNode;
 
   public indicesCount = 0;
 

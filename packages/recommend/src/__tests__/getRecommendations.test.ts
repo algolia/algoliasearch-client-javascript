@@ -1,0 +1,84 @@
+import { TestSuite } from '../../../client-common/src/__tests__/TestSuite';
+
+const recommend = new TestSuite('recommend').recommend;
+
+function createMockedClient() {
+  const client = recommend('appId', 'apiKey');
+  // @ts-ignore read-only property
+  client.transporter = {
+    ...client.transporter,
+    read: jest.fn(),
+  };
+
+  return client;
+}
+
+describe('getRecommendations', () => {
+  test('builds the request for "bought-together" model', async () => {
+    const client = createMockedClient();
+
+    await client.getRecommendations(
+      {
+        model: 'bought-together',
+        indexName: 'products',
+        objectID: 'B018APC4LE',
+      },
+      {}
+    );
+
+    expect(client.transporter.read).toHaveBeenCalledTimes(1);
+    expect(client.transporter.read).toHaveBeenCalledWith(
+      {
+        cacheable: true,
+        data: {
+          requests: [
+            {
+              indexName: 'products',
+              model: 'bought-together',
+              objectID: 'B018APC4LE',
+              queryParameters: {},
+              threshold: 0,
+            },
+          ],
+        },
+        method: 'POST',
+        path: '1/indexes/*/recommendations',
+      },
+      {}
+    );
+  });
+
+  test('builds the request for "related-products" model', async () => {
+    const client = createMockedClient();
+
+    await client.getRecommendations(
+      {
+        model: 'related-products',
+        indexName: 'products',
+        objectID: 'B018APC4LE',
+      },
+      {}
+    );
+
+    expect(client.transporter.read).toHaveBeenCalledTimes(1);
+    expect(client.transporter.read).toHaveBeenCalledWith(
+      {
+        cacheable: true,
+        data: {
+          requests: [
+            {
+              indexName: 'products',
+              model: 'related-products',
+              objectID: 'B018APC4LE',
+              queryParameters: {},
+              threshold: 0,
+            },
+          ],
+        },
+        method: 'POST',
+        path: '1/indexes/*/recommendations',
+      },
+      {}
+    );
+  });
+});
