@@ -4,9 +4,9 @@ import { destroy, version } from '@algolia/client-common';
 import { createNullLogger } from '@algolia/logger-common';
 import { Destroyable } from '@algolia/requester-common';
 import { createNodeHttpRequester } from '@algolia/requester-node-http';
+import { createUserAgent } from '@algolia/transporter';
 
 import { createRecommendClient } from '../createRecommendClient';
-import { createUserAgent } from '../createUserAgent';
 import { getFrequentlyBoughtTogether, getRecommendations, getRelatedProducts } from '../methods';
 import {
   RecommendClient as BaseRecommendClient,
@@ -32,10 +32,9 @@ export default function recommend(
     responsesCache: createNullCache(),
     requestsCache: createNullCache(),
     hostsCache: createInMemoryCache(),
-    userAgent: createUserAgent(version).add({
-      segment: 'Node.js',
-      version: process.versions.node,
-    }),
+    userAgent: createUserAgent(version)
+      .add({ segment: 'Recommend', version })
+      .add({ segment: 'Node.js', version: process.versions.node }),
   };
 
   return createRecommendClient({

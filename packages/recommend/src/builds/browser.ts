@@ -5,9 +5,9 @@ import { AuthMode, version } from '@algolia/client-common';
 import { LogLevelEnum } from '@algolia/logger-common';
 import { createConsoleLogger } from '@algolia/logger-console';
 import { createBrowserXhrRequester } from '@algolia/requester-browser-xhr';
+import { createUserAgent } from '@algolia/transporter';
 
 import { createRecommendClient } from '../createRecommendClient';
-import { createUserAgent } from '../createUserAgent';
 import { getFrequentlyBoughtTogether, getRecommendations, getRelatedProducts } from '../methods';
 import { RecommendClient, RecommendOptions, WithRecommendMethods } from '../types';
 
@@ -34,9 +34,9 @@ export default function recommend(
         createInMemoryCache(),
       ],
     }),
-    userAgent: createUserAgent(version).add({
-      segment: 'Browser',
-    }),
+    userAgent: createUserAgent(version)
+      .add({ segment: 'Recommend', version })
+      .add({ segment: 'Browser' }),
     authMode: AuthMode.WithinQueryParameters,
   };
 

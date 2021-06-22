@@ -109,13 +109,13 @@ describe('recommend', () => {
 
     if (testing.isBrowser()) {
       expect(client.transporter.userAgent.value).toEqual(
-        `Algolia Recommend for JavaScript (${version}); Browser`
+        `Algolia for JavaScript (${version}); Recommend (${version}); Browser`
       );
     } else {
       const nodeVersion = process.versions.node;
 
       expect(client.transporter.userAgent.value).toEqual(
-        `Algolia Recommend for JavaScript (${version}); Node.js (${nodeVersion})`
+        `Algolia for JavaScript (${version}); Recommend (${version}); Node.js (${nodeVersion})`
       );
     }
   });
