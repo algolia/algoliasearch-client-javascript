@@ -4,11 +4,7 @@ const recommend = new TestSuite('recommend').recommend;
 
 function createMockedClient() {
   const client = recommend('appId', 'apiKey');
-  // @ts-ignore read-only property
-  client.transporter = {
-    ...client.transporter,
-    read: jest.fn(),
-  };
+  jest.spyOn(client.transporter, 'read').mockImplementation(() => Promise.resolve());
 
   return client;
 }
