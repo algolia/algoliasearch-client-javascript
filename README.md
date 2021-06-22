@@ -9,7 +9,7 @@
     <a href="https://npmjs.org/package/algoliasearch"><img src="https://img.shields.io/npm/v/algoliasearch.svg?style=flat-square" alt="NPM version"></img></a>
     <a href="http://npm-stat.com/charts.html?package=algoliasearch"><img src="https://img.shields.io/npm/dm/algoliasearch.svg?style=flat-square" alt="NPM downloads"></a>
     <a href="https://www.jsdelivr.com/package/npm/algoliasearch"><img src="https://data.jsdelivr.com/v1/package/npm/algoliasearch/badge" alt="jsDelivr Downloads"></img></a>
-    <a href="LICENSE.txt"><img src="https://img.shields.io/badge/license-MIT-green.svg?style=flat-square" alt="License"></a>
+    <a href="LICENSE.md"><img src="https://img.shields.io/badge/license-MIT-green.svg?style=flat-square" alt="License"></a>
   </p>
 </p>
 
@@ -88,4 +88,4 @@ Encountering an issue? Before reaching out to support, we recommend heading to o
 
 ## 📄 License
 
-Algolia JavaScript API Client is an open-sourced software licensed under the [MIT license](LICENSE.txt).
+Algolia JavaScript API Client is an open-sourced software licensed under the [MIT license](LICENSE.md).
