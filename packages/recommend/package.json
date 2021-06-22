@@ -1,0 +1,37 @@
+{
+  "name": "@algolia/recommend",
+  "version": "4.9.3",
+  "private": false,
+  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/algolia/algoliasearch-client-javascript.git"
+  },
+  "license": "MIT",
+  "sideEffects": false,
+  "main": "index.js",
+  "jsdelivr": "./dist/recommend.umd.js",
+  "unpkg": "./dist/recommend.umd.js",
+  "browser": {
+    "./index.js": "./dist/recommend.umd.js"
+  },
+  "types": "index.d.ts",
+  "files": [
+    "dist",
+    "index.js",
+    "index.d.ts"
+  ],
+  "dependencies": {
+    "@algolia/cache-browser-local-storage": "4.9.3",
+    "@algolia/cache-common": "4.9.3",
+    "@algolia/cache-in-memory": "4.9.3",
+    "@algolia/client-common": "4.9.3",
+    "@algolia/client-search": "4.9.3",
+    "@algolia/logger-common": "4.9.3",
+    "@algolia/logger-console": "4.9.3",
+    "@algolia/requester-browser-xhr": "4.9.3",
+    "@algolia/requester-common": "4.9.3",
+    "@algolia/requester-node-http": "4.9.3",
+    "@algolia/transporter": "4.9.3"
+  }
+}

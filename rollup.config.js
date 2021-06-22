@@ -99,6 +99,21 @@ packagesConfig.push({
   });
 });
 
+packagesConfig.push(
+  {
+    output: 'recommend',
+    package: 'recommend',
+    input: `src/builds/browser.ts`,
+    formats: ['esm-browser', 'umd'],
+  },
+  {
+    output: 'recommend',
+    package: 'recommend',
+    input: `src/builds/node.ts`,
+    formats: ['cjs'],
+  }
+);
+
 const packagesDir = path.resolve(__dirname, 'packages');
 const aliasOptions = { resolve: ['.ts'] };
 
