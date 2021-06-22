@@ -31,7 +31,6 @@ describe('getRelatedProducts', () => {
               indexName: 'products',
               model: 'related-products',
               objectID: 'B018APC4LE',
-              queryParameters: {},
               threshold: 0,
             },
           ],

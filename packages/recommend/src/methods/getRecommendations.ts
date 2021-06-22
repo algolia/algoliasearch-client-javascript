@@ -21,9 +21,6 @@ export const getRecommendations: GetRecommendations = base => {
   return (options, requestOptions) => {
     const requests: readonly GetRecommendationsOptions[] = [
       {
-        // @TODO: we temporarly need to provide `queryParameters` because the
-        // endpoint doesn't default it yet.
-        queryParameters: {},
         // The `threshold` param is required by the endpoint to make it easier
         // to provide a default value later, so we default it in the client
         // so that users don't have to provide a value.
