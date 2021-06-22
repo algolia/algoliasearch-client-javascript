@@ -4,6 +4,7 @@
 
 export * from './RecommendClient';
 export * from './RecommendClientOptions';
-export * from './RecommendOptions';
 export * from './RecommendModel';
+export * from './RecommendOptions';
+export * from './RecommendSearchOptions';
 export * from './WithRecommendMethods';

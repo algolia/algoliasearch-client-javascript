@@ -2,7 +2,7 @@
   "name": "@algolia/recommend",
   "version": "4.9.3",
   "private": false,
-  "description": "",
+  "description": "The perfect starting point to integrate Algolia Recommend within your JavaScript project.",
   "repository": {
     "type": "git",
     "url": "git://github.com/algolia/algoliasearch-client-javascript.git"

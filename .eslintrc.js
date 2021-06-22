@@ -66,6 +66,7 @@ module.exports = {
           ['@algolia/client-search', './packages/client-search/src'],
           ['@algolia/logger-common', './packages/logger-common/src'],
           ['@algolia/logger-console', './packages/logger-console/src'],
+          ['@algolia/recommend', './packages/recommend/src'],
           ['@algolia/requester-browser-xhr', './packages/requester-browser-xhr/src'],
           ['@algolia/requester-common', './packages/requester-common/src'],
           ['@algolia/requester-node-http', './packages/requester-node-http/src'],
