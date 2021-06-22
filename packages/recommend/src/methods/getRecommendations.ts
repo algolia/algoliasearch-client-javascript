@@ -1,7 +1,11 @@
-import { SearchOptions } from '@algolia/client-search';
 import { MethodEnum } from '@algolia/requester-common';
 
-import { RecommendClient, RecommendModel, WithRecommendMethods } from '../types';
+import {
+  RecommendClient,
+  RecommendModel,
+  RecommendSearchOptions,
+  WithRecommendMethods,
+} from '../types';
 
 export type GetRecommendationsOptions = {
   readonly indexName: string;
@@ -9,8 +13,8 @@ export type GetRecommendationsOptions = {
   readonly objectID: string;
   readonly threshold?: number;
   readonly maxRecommendations?: number;
-  readonly queryParameters?: SearchOptions;
-  readonly fallbackParameters?: Pick<SearchOptions, 'facetFilters'>;
+  readonly queryParameters?: RecommendSearchOptions;
+  readonly fallbackParameters?: RecommendSearchOptions;
 };
 
 type GetRecommendations = (
