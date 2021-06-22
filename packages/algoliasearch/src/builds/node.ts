@@ -220,6 +220,18 @@ export default function algoliasearch(
     }),
   };
   const searchClientOptions = { ...commonOptions, ...options };
+  const initPersonalization = () => (
+    clientOptions?: InitPersonalizationOptions
+  ): PersonalizationClient => {
+    return createPersonalizationClient({
+      ...commonOptions,
+      ...clientOptions,
+      methods: {
+        getPersonalizationStrategy,
+        setPersonalizationStrategy,
+      },
+    });
+  };
 
   return createSearchClient({
     ...searchClientOptions,
@@ -322,18 +334,7 @@ export default function algoliasearch(
           },
         });
       },
-      initPersonalization: () => (
-        clientOptions?: InitPersonalizationOptions
-      ): PersonalizationClient => {
-        return createPersonalizationClient({
-          ...commonOptions,
-          ...clientOptions,
-          methods: {
-            getPersonalizationStrategy,
-            setPersonalizationStrategy,
-          },
-        });
-      },
+      initPersonalization,
       initRecommendation: () => (
         clientOptions?: InitPersonalizationOptions
       ): PersonalizationClient => {
@@ -341,14 +342,7 @@ export default function algoliasearch(
           'The `initRecommendation` method is deprecated. Use `initPersonalization` instead.'
         );
 
-        return createPersonalizationClient({
-          ...commonOptions,
-          ...clientOptions,
-          methods: {
-            getPersonalizationStrategy,
-            setPersonalizationStrategy,
-          },
-        });
+        return initPersonalization()(clientOptions);
       },
     },
   });
