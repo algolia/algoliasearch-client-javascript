@@ -14,10 +14,12 @@ describe('getFrequentlyBoughtTogether', () => {
     const client = createMockedClient();
 
     await client.getFrequentlyBoughtTogether(
-      {
-        indexName: 'products',
-        objectID: 'B018APC4LE',
-      },
+      [
+        {
+          indexName: 'products',
+          objectID: 'B018APC4LE',
+        },
+      ],
       {}
     );
 
@@ -46,15 +48,17 @@ describe('getFrequentlyBoughtTogether', () => {
   test('ignores `fallbackParameters`', async () => {
     const client = createMockedClient();
 
-    await client.getFrequentlyBoughtTogether({
-      // @ts-ignore `fallbackParameters` are not supposed to be passed
-      // according to the types
-      fallbackParameters: {
-        facetFilters: [],
+    await client.getFrequentlyBoughtTogether([
+      {
+        // @ts-ignore `fallbackParameters` are not supposed to be passed
+        // according to the types
+        fallbackParameters: {
+          facetFilters: [],
+        },
+        indexName: 'products',
+        objectID: 'B018APC4LE',
       },
-      indexName: 'products',
-      objectID: 'B018APC4LE',
-    });
+    ]);
 
     expect(client.transporter.read).toHaveBeenCalledTimes(1);
     expect(client.transporter.read).toHaveBeenCalledWith(
