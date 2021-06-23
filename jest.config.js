@@ -48,6 +48,7 @@ module.exports = {
           'packages/client-search/src/__tests__/integration/secured-api-keys.test.ts',
           'packages/client-search/src/__tests__/integration/settings.test.ts',
           'packages/client-search/src/__tests__/integration/synonyms.test.ts',
+          'packages/client-search/src/__tests__/integration/dictionary.test.ts',
         ],
         globals: {
           environment: 'browser-lite',
@@ -65,6 +66,7 @@ module.exports = {
         testPathIgnorePatterns: [
           'packages/requester-node-http/*',
           'packages/client-search/src/__tests__/integration/secured-api-keys.test.ts',
+          'packages/client-search/src/__tests__/integration/dictionary.test.ts',
         ],
         globals: {
           environment: 'browser',

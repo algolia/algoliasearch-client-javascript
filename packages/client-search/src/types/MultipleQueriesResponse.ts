@@ -1,8 +1,8 @@
-import { ObjectWithObjectID, SearchResponse } from '.';
+import { SearchResponse } from '.';
 
 export type MultipleQueriesResponse<TObject> = {
   /**
    * The list of results.
    */
-  results: Array<SearchResponse<TObject & ObjectWithObjectID>>;
+  results: Array<SearchResponse<TObject>>;
 };

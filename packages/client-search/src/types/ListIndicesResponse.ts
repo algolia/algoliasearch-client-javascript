@@ -1,4 +1,4 @@
-import { Indice } from '.';
+import { Index } from '.';
 
 export type ListIndicesResponse = {
   /**
@@ -9,5 +9,5 @@ export type ListIndicesResponse = {
   /**
    * List of index response
    */
-  items: Indice[];
+  items: Index[];
 };

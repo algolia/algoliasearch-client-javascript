@@ -1,18 +1,20 @@
+import { ApiKeyACLType } from '.';
+
 export type GetApiKeyResponse = {
   /**
-   * A Unix timestamp used to define the expiration date of the API key.
+   * The api key value
    */
   value: string;
 
   /**
-   * Date of creation.
+   * Date of creation (Unix timestamp).
    */
-  createdAt: string;
+  createdAt: number;
 
   /**
    * List of permissions the key contains.
    */
-  acl: string[];
+  acl: ApiKeyACLType[];
 
   /**
    * A Unix timestamp used to define the expiration date of the API key.
@@ -39,6 +41,13 @@ export type GetApiKeyResponse = {
    * Specify the list of referers. You can target all referers starting with a prefix, ending with a suffix using the ‘*’ character.
    */
   referers?: string[];
+
+  /**
+   * IPv4 network allowed to use the generated key.
+   * This is used for more protection against API key leaking and reuse.
+   * Note that you can only provide a single source, but you can specify a range of IPs (e.g., 192.168.1.0/24).
+   */
+  restrictSources?: string;
 
   /**
    * Specify the list of query parameters. You can force the query parameters for a query using the url string format.

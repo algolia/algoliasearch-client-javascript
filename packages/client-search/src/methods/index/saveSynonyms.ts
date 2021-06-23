@@ -10,14 +10,15 @@ export const saveSynonyms = (base: SearchIndex) => {
     synonyms: readonly Synonym[],
     requestOptions?: SaveSynonymsOptions & RequestOptions
   ): Readonly<WaitablePromise<SaveSynonymsResponse>> => {
-    const { forwardToReplicas, replaceExistingSynonyms, ...options } = requestOptions || {};
+    const { forwardToReplicas, clearExistingSynonyms, replaceExistingSynonyms, ...options } =
+      requestOptions || {};
     const mappedRequestOptions = createMappedRequestOptions(options);
 
     if (forwardToReplicas) {
       mappedRequestOptions.queryParameters.forwardToReplicas = 1; // eslint-disable-line functional/immutable-data
     }
 
-    if (replaceExistingSynonyms) {
+    if (replaceExistingSynonyms || clearExistingSynonyms) {
       mappedRequestOptions.queryParameters.replaceExistingSynonyms = 1; // eslint-disable-line functional/immutable-data
     }
 

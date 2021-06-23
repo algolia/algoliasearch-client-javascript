@@ -94,7 +94,7 @@ export function retryableRequest<TResponse>(
     };
 
     const decisions: Outcomes<TResponse> = {
-      onSucess: response => deserializeSuccess(response),
+      onSuccess: response => deserializeSuccess(response),
       onRetry(response) {
         const stackFrame = pushToStackTrace(response);
 

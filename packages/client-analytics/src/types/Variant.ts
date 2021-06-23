@@ -16,10 +16,9 @@ export type Variant = {
    */
   readonly trafficPercentage: number;
 
+  // @todo Handle this search options type.
   /**
    * The search parameters.
-   *
-   * @todo Handle this search options type.
    */
   readonly customSearchParameters?: SearchOptions;
 };

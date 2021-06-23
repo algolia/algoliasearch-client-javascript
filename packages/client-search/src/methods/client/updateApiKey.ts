@@ -35,17 +35,16 @@ export const updateApiKey = (base: SearchClient) => {
       'description',
       'maxQueriesPerIPPerHour',
       'maxHitsPerQuery',
-    ];
+    ] as const;
 
     const hasChanged = (getApiKeyResponse: GetApiKeyResponse): boolean => {
       return Object.keys(updatedFields)
-        .filter(updatedField => apiKeyFields.indexOf(updatedField) !== -1)
+        .filter(
+          (updatedField: any): updatedField is typeof apiKeyFields[number] =>
+            apiKeyFields.indexOf(updatedField) !== -1
+        )
         .every(updatedField => {
-          return (
-            // @ts-ignore
-
-            getApiKeyResponse[updatedField] === updatedFields[updatedField]
-          );
+          return getApiKeyResponse[updatedField] === updatedFields[updatedField];
         });
     };
 

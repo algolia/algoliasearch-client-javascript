@@ -4,11 +4,25 @@ import { anything, deepEqual, spy, verify, when } from 'ts-mockito';
 import { TestSuite } from '../../../../client-common/src/__tests__/TestSuite';
 import { PersonalizationStrategy, SetPersonalizationStrategyResponse } from '../../types';
 
-const recommendationClient = new TestSuite().algoliasearch('appId', 'apiKey').initRecommendation();
+const searchClient = new TestSuite().algoliasearch('appId', 'apiKey', {
+  logger: {
+    debug: jest.fn(),
+    info: jest.fn(),
+    error: jest.fn(),
+  },
+});
+const recommendationClient = searchClient.initRecommendation();
 
 describe('recommendation client', () => {
+  it('logs a deprecation message', () => {
+    expect(searchClient.transporter.logger.info).toHaveBeenCalledTimes(1);
+    expect(searchClient.transporter.logger.info).toHaveBeenCalledWith(
+      'The `initRecommendation` method is deprecated. Use `initPersonalization` instead.'
+    );
+  });
+
   it('uses region to define the host', () => {
-    expect(recommendationClient.transporter.hosts[0].url).toBe('recommendation.us.algolia.com');
+    expect(recommendationClient.transporter.hosts[0].url).toBe('personalization.us.algolia.com');
   });
 
   it('sets default headers', () => {

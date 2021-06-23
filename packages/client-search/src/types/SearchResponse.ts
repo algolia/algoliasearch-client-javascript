@@ -1,4 +1,4 @@
-import { ObjectWithObjectID } from '.';
+import { Hit, Settings } from '.';
 
 export type SearchResponse<TObject = {}> = {
   /**
@@ -6,7 +6,7 @@ export type SearchResponse<TObject = {}> = {
    *
    * Hits are ordered according to the ranking or sorting of the index being queried.
    */
-  hits: Array<TObject & ObjectWithObjectID>;
+  hits: Array<Hit<TObject>>;
 
   /**
    * Index of the current page (zero-based).
@@ -27,6 +27,11 @@ export type SearchResponse<TObject = {}> = {
    * Number of hits matched by the query.
    */
   nbHits: number;
+
+  /**
+   * Subset of hits selected when relevancyStrictness is applied.
+   */
+  nbSortedHits?: number;
 
   /**
    * Number of pages returned.
@@ -67,7 +72,7 @@ export type SearchResponse<TObject = {}> = {
   /**
    * Statistics for numerical facets.
    */
-  facetsStats?: Record<
+  facets_stats?: Record<
     string,
     {
       /**
@@ -215,4 +220,11 @@ export type SearchResponse<TObject = {}> = {
      */
     params?: Record<string, any>;
   };
+
+  /**
+   * The relevancy threshold applied to search in a virtual index.
+   */
+  appliedRelevancyStrictness?: number;
+
+  renderingContent?: Settings['renderingContent'];
 };

@@ -20,17 +20,16 @@ export const browseSynonyms = (base: SearchIndex) => {
     };
 
     return createBrowsablePromise<Synonym>({
-      ...options,
       shouldStop: response => response.hits.length < options.hitsPerPage,
+      ...options,
       request(data) {
         return searchSynonyms(base)('', { ...options, ...data }).then(
           (response): BrowseResponse<Synonym> => {
             return {
               ...response,
               hits: response.hits.map(synonym => {
-                // @ts-ignore
                 // eslint-disable-next-line functional/immutable-data,no-param-reassign
-                delete synonym._highlightResult;
+                delete (synonym as any)._highlightResult;
 
                 return synonym;
               }),

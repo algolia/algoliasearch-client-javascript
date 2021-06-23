@@ -12,6 +12,8 @@ import { addMethods } from '..';
 import algoliasearchForBrowser from '../../../algoliasearch/src/builds/browser';
 import algoliasearchForBrowserLite from '../../../algoliasearch/src/builds/browserLite';
 import algoliasearchForNode from '../../../algoliasearch/src/builds/node';
+import recommendForBrowser from '../../../recommend/src/builds/browser';
+import recommendForNode from '../../../recommend/src/builds/node';
 
 /* eslint functional/no-class: 0 */
 export class TestSuite {
@@ -29,6 +31,11 @@ export class TestSuite {
     ? algoliasearchForBrowser
     : algoliasearchForNode;
 
+  // @ts-ignore `destroy` only exists on the Node build
+  public readonly recommend: typeof recommendForNode = this.isBrowser
+    ? recommendForBrowser
+    : recommendForNode;
+
   public indicesCount = 0;
 
   public constructor(testName?: string) {
@@ -41,7 +48,7 @@ export class TestSuite {
     appIdEnv: string = 'ALGOLIA_APPLICATION_ID_1',
     apiKeyEnv: string = 'ALGOLIA_ADMIN_KEY_1'
   ) {
-    let client = this.algoliasearch(`${process.env[appIdEnv]}`, `${process.env[apiKeyEnv]}`);
+    const client = this.algoliasearch(`${process.env[appIdEnv]}`, `${process.env[apiKeyEnv]}`);
 
     // To ensure `Consistency` during the Common Test Suite, we
     // force the transporter to work with a single host in the
@@ -49,7 +56,7 @@ export class TestSuite {
     client.transporter.hosts = [client.transporter.hosts[2]];
 
     // Also, since we are targeting always the same host, the
-    // server may take a litle more than expected to answer.
+    // server may take a little more than expected to answer.
     // To avoid timeouts we increase the timeouts duration
     // @ts-ignore
     client.transporter.timeouts = {
@@ -59,8 +66,7 @@ export class TestSuite {
     };
 
     if (testing.isBrowserLite()) {
-      // @ts-ignore
-      client = addMethods(client, {
+      return addMethods(client, {
         multipleBatch,
         multipleGetObjects,
       });
@@ -69,19 +75,11 @@ export class TestSuite {
     return client;
   }
 
-  public makeRecommendationClient(
-    appIdEnv: string = 'ALGOLIA_APPLICATION_ID_1',
-    apiKeyEnv: string = 'ALGOLIA_ADMIN_KEY_1'
-  ) {
-    return this.makeSearchClient(appIdEnv, apiKeyEnv).initRecommendation();
-  }
-
   public makeIndex(indexName?: string) {
-    let index = this.makeSearchClient().initIndex(indexName || this.makeIndexName());
+    const index = this.makeSearchClient().initIndex(indexName || this.makeIndexName());
 
     if (testing.isBrowserLite()) {
-      // @ts-ignore
-      index = addMethods(index, {
+      return addMethods(index, {
         saveObjects,
         setSettings,
         delete: deleteIndex,
@@ -131,7 +129,7 @@ export class TestSuite {
     if (jobNumber) {
       return `${environment}_${nodeVersion}_${jobNumber}`;
     } else if (user) {
-      return `${environment}_${nodeVersion}_${user}`;
+      return `${environment}_${nodeVersion}_${user.substring(0, 5)}`;
     }
 
     return `${environment}_${nodeVersion}_unknown`;

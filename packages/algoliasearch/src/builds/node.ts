@@ -18,18 +18,19 @@ import {
 } from '@algolia/client-analytics';
 import { destroy, version, WaitablePromise } from '@algolia/client-common';
 import {
-  createRecommendationClient,
+  createPersonalizationClient,
   getPersonalizationStrategy,
   GetPersonalizationStrategyResponse,
+  PersonalizationClient as BasePersonalizationClient,
   PersonalizationStrategy,
-  RecommendationClient as BaseRecommendationClient,
   setPersonalizationStrategy,
   SetPersonalizationStrategyResponse,
-} from '@algolia/client-recommendation';
+} from '@algolia/client-personalization';
 import {
   addApiKey,
   AddApiKeyOptions,
   AddApiKeyResponse,
+  ApiKeyACLType,
   assignUserID,
   AssignUserIDResponse,
   assignUserIDs,
@@ -43,6 +44,7 @@ import {
   browseSynonyms,
   ChunkedBatchResponse,
   ChunkOptions,
+  clearDictionaryEntries,
   clearObjects,
   clearRules,
   ClearRulesOptions,
@@ -58,6 +60,7 @@ import {
   DeleteApiKeyResponse,
   deleteBy,
   DeleteByFiltersOptions,
+  deleteDictionaryEntries,
   deleteIndex,
   deleteObject,
   deleteObjects,
@@ -65,13 +68,24 @@ import {
   deleteRule,
   deleteSynonym,
   DeleteSynonymOptions,
+  DictionaryEntriesOptions,
+  DictionaryEntriesResponse,
+  DictionaryEntry,
+  DictionaryName,
+  DictionarySettings,
   exists,
+  findAnswers,
+  FindAnswersOptions,
+  FindAnswersResponse,
   findObject,
   FindObjectOptions,
   FindObjectResponse,
   generateSecuredApiKey,
   getApiKey,
   GetApiKeyResponse,
+  getAppTask,
+  getDictionarySettings,
+  GetDictionarySettingsResponse,
   getLogs,
   GetLogsResponse,
   getObject,
@@ -124,9 +138,11 @@ import {
   ReplaceAllObjectsOptions,
   replaceAllRules,
   replaceAllSynonyms,
+  replaceDictionaryEntries,
   restoreApiKey,
   RestoreApiKeyResponse,
   Rule,
+  saveDictionaryEntries,
   saveObject,
   SaveObjectResponse,
   saveObjects,
@@ -143,6 +159,8 @@ import {
   SaveSynonymsResponse,
   search,
   SearchClient as BaseSearchClient,
+  searchDictionaryEntries,
+  SearchDictionaryEntriesResponse,
   searchForFacetValues,
   SearchForFacetValuesQueryParams,
   SearchForFacetValuesResponse,
@@ -158,14 +176,17 @@ import {
   SearchUserIDsOptions,
   SearchUserIDsResponse,
   SecuredApiKeyRestrictions,
+  setDictionarySettings,
   setSettings,
   SetSettingsResponse,
   Settings,
   Synonym,
+  TaskStatusResponse,
   updateApiKey,
   UpdateApiKeyOptions,
   UpdateApiKeyResponse,
   UserIDResponse,
+  waitAppTask,
   waitTask,
 } from '@algolia/client-search';
 import { createNullLogger } from '@algolia/logger-common';
@@ -173,7 +194,7 @@ import { Destroyable } from '@algolia/requester-common';
 import { createNodeHttpRequester } from '@algolia/requester-node-http';
 import { createUserAgent, RequestOptions } from '@algolia/transporter';
 
-import { AlgoliaSearchOptions, InitAnalyticsOptions, InitRecommendationOptions } from '../types';
+import { AlgoliaSearchOptions, InitAnalyticsOptions, InitPersonalizationOptions } from '../types';
 
 export {
   GetPersonalizationStrategyResponse,
@@ -340,10 +361,22 @@ export default function algoliasearch(
       version: process.versions.node,
     }),
   };
+  const searchClientOptions = { ...commonOptions, ...options };
+  const initPersonalization = () => (
+    clientOptions?: InitPersonalizationOptions
+  ): PersonalizationClient => {
+    return createPersonalizationClient({
+      ...commonOptions,
+      ...clientOptions,
+      methods: {
+        getPersonalizationStrategy,
+        setPersonalizationStrategy,
+      },
+    });
+  };
 
   return createSearchClient({
-    ...commonOptions,
-    ...options,
+    ...searchClientOptions,
     methods: {
       search: multipleQueries,
       searchForFacetValues: multipleSearchForFacetValues,
@@ -376,11 +409,21 @@ export default function algoliasearch(
       generateSecuredApiKey,
       getSecuredApiKeyRemainingValidity,
       destroy,
+      clearDictionaryEntries,
+      deleteDictionaryEntries,
+      getDictionarySettings,
+      getAppTask,
+      replaceDictionaryEntries,
+      saveDictionaryEntries,
+      searchDictionaryEntries,
+      setDictionarySettings,
+      waitAppTask,
       initIndex: base => (indexName: string): SearchIndex => {
         return initIndex(base)(indexName, {
           methods: {
             batch,
             delete: deleteIndex,
+            findAnswers,
             getObject,
             getObjects,
             saveObject,
@@ -433,17 +476,15 @@ export default function algoliasearch(
           },
         });
       },
+      initPersonalization,
       initRecommendation: () => (
-        clientOptions?: InitRecommendationOptions
-      ): RecommendationClient => {
-        return createRecommendationClient({
-          ...commonOptions,
-          ...clientOptions,
-          methods: {
-            getPersonalizationStrategy,
-            setPersonalizationStrategy,
-          },
-        });
+        clientOptions?: InitPersonalizationOptions
+      ): PersonalizationClient => {
+        searchClientOptions.logger.info(
+          'The `initRecommendation` method is deprecated. Use `initPersonalization` instead.'
+        );
+
+        return initPersonalization()(clientOptions);
       },
     },
   });
@@ -452,7 +493,7 @@ export default function algoliasearch(
 // eslint-disable-next-line functional/immutable-data
 algoliasearch.version = version;
 
-export type RecommendationClient = BaseRecommendationClient & {
+export type PersonalizationClient = BasePersonalizationClient & {
   readonly getPersonalizationStrategy: (
     requestOptions?: RequestOptions
   ) => Readonly<Promise<GetPersonalizationStrategyResponse>>;
@@ -461,6 +502,11 @@ export type RecommendationClient = BaseRecommendationClient & {
     requestOptions?: RequestOptions
   ) => Readonly<Promise<SetPersonalizationStrategyResponse>>;
 };
+
+/**
+ * @deprecated Use `PersonalizationClient` instead.
+ */
+export type RecommendationClient = PersonalizationClient;
 
 export type AnalyticsClient = BaseAnalyticsClient & {
   readonly addABTest: (
@@ -494,6 +540,11 @@ export type SearchIndex = BaseSearchIndex & {
     facetQuery: string,
     requestOptions?: RequestOptions & SearchOptions
   ) => Readonly<Promise<SearchForFacetValuesResponse>>;
+  readonly findAnswers: <TObject>(
+    query: string,
+    queryLanguages: readonly string[],
+    requestOptions?: RequestOptions & FindAnswersOptions
+  ) => Readonly<Promise<FindAnswersResponse<TObject>>>;
   readonly batch: (
     requests: readonly BatchRequest[],
     requestOptions?: RequestOptions
@@ -586,7 +637,10 @@ export type SearchIndex = BaseSearchIndex & {
   readonly replaceAllSynonyms: (
     synonyms: readonly Synonym[],
     requestOptions?: RequestOptions &
-      Pick<SaveSynonymsOptions, Exclude<keyof SaveSynonymsOptions, 'replaceExistingSynonyms'>>
+      Pick<
+        SaveSynonymsOptions,
+        Exclude<keyof SaveSynonymsOptions, 'clearExistingSynonyms' | 'replaceExistingSynonyms'>
+      >
   ) => Readonly<WaitablePromise<SaveSynonymsResponse>>;
   readonly searchRules: (
     query: string,
@@ -684,7 +738,7 @@ export type SearchClient = BaseSearchClient & {
     requestOptions?: RequestOptions
   ) => Readonly<Promise<GetApiKeyResponse>>;
   readonly addApiKey: (
-    acl: readonly string[],
+    acl: readonly ApiKeyACLType[],
     requestOptions?: AddApiKeyOptions &
       Pick<RequestOptions, Exclude<keyof RequestOptions, 'queryParameters'>>
   ) => Readonly<WaitablePromise<AddApiKeyResponse>>;
@@ -738,8 +792,47 @@ export type SearchClient = BaseSearchClient & {
     restrictions: SecuredApiKeyRestrictions
   ) => string;
   readonly getSecuredApiKeyRemainingValidity: (securedApiKey: string) => number;
+  readonly clearDictionaryEntries: (
+    dictionary: DictionaryName,
+    requestOptions?: RequestOptions & DictionaryEntriesOptions
+  ) => Readonly<WaitablePromise<DictionaryEntriesResponse>>;
+  readonly deleteDictionaryEntries: (
+    dictionary: DictionaryName,
+    objectIDs: readonly string[],
+    requestOptions?: RequestOptions & DictionaryEntriesOptions
+  ) => Readonly<WaitablePromise<DictionaryEntriesResponse>>;
+  readonly replaceDictionaryEntries: (
+    dictionary: DictionaryName,
+    entries: readonly DictionaryEntry[],
+    requestOptions?: RequestOptions & DictionaryEntriesOptions
+  ) => Readonly<WaitablePromise<DictionaryEntriesResponse>>;
+  readonly saveDictionaryEntries: (
+    dictionary: DictionaryName,
+    entries: readonly DictionaryEntry[],
+    requestOptions?: RequestOptions & DictionaryEntriesOptions
+  ) => Readonly<WaitablePromise<DictionaryEntriesResponse>>;
+  readonly searchDictionaryEntries: (
+    dictionary: DictionaryName,
+    query: string,
+    requestOptions?: RequestOptions
+  ) => Readonly<Promise<SearchDictionaryEntriesResponse>>;
+  readonly getDictionarySettings: (
+    requestOptions?: RequestOptions
+  ) => Readonly<Promise<GetDictionarySettingsResponse>>;
+  readonly setDictionarySettings: (
+    settings: DictionarySettings,
+    requestOptions?: RequestOptions
+  ) => Readonly<WaitablePromise<DictionaryEntriesResponse>>;
+  readonly getAppTask: (
+    taskID: number,
+    requestOptions?: RequestOptions
+  ) => Readonly<Promise<TaskStatusResponse>>;
   readonly initAnalytics: (options?: InitAnalyticsOptions) => AnalyticsClient;
-  readonly initRecommendation: (options?: InitRecommendationOptions) => RecommendationClient;
+  readonly initPersonalization: (options?: InitPersonalizationOptions) => PersonalizationClient;
+  /**
+   * @deprecated Use `initPersonalization` instead.
+   */
+  readonly initRecommendation: (options?: InitPersonalizationOptions) => PersonalizationClient;
 } & Destroyable;
 
 export * from '../types';

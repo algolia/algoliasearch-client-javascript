@@ -4,6 +4,8 @@ export const BatchActionEnum: Readonly<Record<string, BatchActionType>> = {
   PartialUpdateObject: 'partialUpdateObject',
   PartialUpdateObjectNoCreate: 'partialUpdateObjectNoCreate',
   DeleteObject: 'deleteObject',
+  DeleteIndex: 'delete',
+  ClearIndex: 'clear',
 };
 
 export type BatchActionType =
@@ -11,4 +13,6 @@ export type BatchActionType =
   | 'updateObject'
   | 'partialUpdateObject'
   | 'partialUpdateObjectNoCreate'
-  | 'deleteObject';
+  | 'deleteObject'
+  | 'delete'
+  | 'clear';

@@ -310,6 +310,14 @@ export type SearchOptions = {
   readonly removeStopWords?: boolean | readonly string[];
 
   /**
+   * List of supported languages with their associated language ISO code.
+   *
+   * Apply a set of natural language best practices such as ignorePlurals,
+   * removeStopWords, removeWordsIfNoResults, analyticsTags and ruleContexts.
+   */
+  readonly naturalLanguages?: readonly string[];
+
+  /**
    * When true, each hit in the response contains an additional _rankingInfo object.
    */
   readonly getRankingInfo?: boolean;
@@ -326,4 +334,19 @@ export type SearchOptions = {
    * Engine's default: true
    */
   readonly enableABTest?: boolean;
+
+  /**
+   * Enable word segmentation (also called decompounding) at query time for
+   * compatible languages. For example, this turns the Dutch query
+   * "spaanplaatbehang" into "spaan plaat behang" to retrieve more relevant
+   * results.
+   */
+  readonly decompoundQuery?: boolean;
+
+  /**
+   * The relevancy threshold to apply to search in a virtual index [0-100]. A Bigger
+   * value means fewer, but more relevant results, smaller value means more, but
+   * less relevant results.
+   */
+  readonly relevancyStrictness?: number;
 };

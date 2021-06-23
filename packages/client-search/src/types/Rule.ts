@@ -1,4 +1,4 @@
-import { SearchOptions } from '.';
+import { SearchOptions, Settings } from '.';
 
 export type Rule = {
   /**
@@ -8,8 +8,15 @@ export type Rule = {
 
   /**
    * Condition of the rule, expressed using the following variables: pattern, anchoring, context.
+   *
+   * @deprecated This parameter is deprecated in favor of `conditions`.
    */
   readonly condition?: Condition;
+
+  /**
+   * Conditions of the rule, expressed using the following variables: pattern, anchoring, context.
+   */
+  readonly conditions?: readonly Condition[];
 
   /**
    * Consequence of the rule. At least one of the following object must be used: params, promote, hide, userData.
@@ -53,7 +60,6 @@ export type AutomaticFacetFilter = {
 export type ConsequenceQuery = {
   /**
    * List of removes.
-   *
    */
   readonly remove?: readonly string[];
 
@@ -66,25 +72,41 @@ export type ConsequenceQuery = {
      */
     readonly type?: 'remove' | 'replace';
 
-    /** Text or patterns to remove from the query string. */
+    /**
+     * Text or patterns to remove from the query string.
+     */
     readonly delete?: string;
 
-    /** Text that should be inserted in place of the removed text inside the query string. */
+    /**
+     * Text that should be inserted in place of the removed text inside the query string.
+     */
     readonly insert?: string;
   }>;
 };
 
-export type ConsequencePromote = {
-  /**
-   * Unique identifier of the object to promote.
-   */
-  readonly objectID: string;
+export type ConsequencePromote =
+  | {
+      /**
+       * Unique identifier of the object to promote.
+       */
+      readonly objectID: string;
 
-  /**
-   * Promoted rank for the object (zero-based).
-   */
-  readonly position: number;
-};
+      /**
+       * Promoted rank for the object (zero-based).
+       */
+      readonly position: number;
+    }
+  | {
+      /**
+       * List of unique identifiers for the objects to promote.
+       */
+      readonly objectIDs: readonly string[];
+
+      /**
+       * Promoted start rank for the objects (zero-based).
+       */
+      readonly position: number;
+    };
 
 export type ConsequenceParams = {
   /**
@@ -102,14 +124,29 @@ export type ConsequenceParams = {
    * Same syntax as automaticFacetFilters, but the engine treats the filters as optional.
    * Behaves like optionalFilters.
    */
-  readonly automaticOptionalFacetFilters?: readonly AutomaticFacetFilter[];
+  readonly automaticOptionalFacetFilters?: readonly AutomaticFacetFilter[] | readonly string[];
+
+  /**
+   * Content defining how the search interface should be rendered.
+   * A default value for this can be set via settings
+   */
+  readonly renderingContent?: Settings['renderingContent'];
 };
 
 export type Condition = {
-  /** Query patterns are expressed as a string with a specific syntax. A pattern is a sequence of tokens. */
+  /**
+   * Query patterns are expressed as a string with a specific syntax. A pattern is a sequence of tokens.
+   */
   readonly pattern?: string;
 
-  /** { is | startsWith | endsWith | contains }: Whether the pattern must match the beginning or the end of the query string, or both, or none. */
+  /**
+   * Apply this rule only when the filter matches.
+   */
+  readonly filters?: string;
+
+  /**
+   * is | startsWith | endsWith | contains: Whether the pattern must match the beginning or the end of the query string, or both, or none.
+   */
   readonly anchoring?: 'is' | 'startsWith' | 'endsWith' | 'contains';
 
   /**
@@ -155,12 +192,12 @@ export type Consequence = {
 
 export type TimeRange = {
   /**
-   * DateTime with UTC offset for Serialization/Deserialization in unix timespam.
+   * DateTime with UTC offset for Serialization/Deserialization in unix timespan.
    */
   readonly from: number;
 
   /**
-   * DateTime with UTC offset for Serialization/Deserialization in unix timespam.
+   * DateTime with UTC offset for Serialization/Deserialization in unix timespan.
    */
   readonly until: number;
 };

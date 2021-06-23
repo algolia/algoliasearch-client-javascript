@@ -9,11 +9,14 @@ export const replaceAllSynonyms = (base: SearchIndex) => {
   return (
     synonyms: readonly Synonym[],
     requestOptions?: RequestOptions &
-      Pick<SaveSynonymsOptions, Exclude<keyof SaveSynonymsOptions, 'replaceExistingSynonyms'>>
+      Pick<
+        SaveSynonymsOptions,
+        Exclude<keyof SaveSynonymsOptions, 'clearExistingSynonyms' | 'replaceExistingSynonyms'>
+      >
   ): Readonly<WaitablePromise<SaveSynonymsResponse>> => {
     return saveSynonyms(base)(synonyms, {
       ...requestOptions,
-      replaceExistingSynonyms: true,
+      clearExistingSynonyms: true,
     });
   };
 };

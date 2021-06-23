@@ -275,7 +275,72 @@ export type Settings = {
   readonly customNormalization?: Readonly<Record<string, Readonly<Record<string, string>>>>;
 
   /**
+   * Enable personalization for queries by default
+   */
+  readonly enablePersonalization?: boolean;
+
+  /**
    * Custom userData that could be added to the Settings.
    */
   readonly userData?: any;
+
+  /**
+   * Enable word segmentation (also called decompounding) at query time for
+   * compatible languages. For example, this turns the Dutch query
+   * "spaanplaatbehang" into "spaan plaat behang" to retrieve more relevant
+   * results.
+   */
+  readonly decompoundQuery?: boolean;
+
+  /**
+   * Specify on which attributes in your index Algolia should apply Japanese
+   * transliteration to make words indexed in Katakana or Kanji searchable in Hiragana.
+   */
+  readonly attributesToTransliterate?: readonly string[];
+
+  /**
+   * The relevancy threshold to apply to search in a virtual index [0-100]. A Bigger
+   * value means fewer, but more relevant results, smaller value means more, but
+   * less relevant results.
+   */
+  readonly relevancyStrictness?: number;
+
+  /**
+   * Content defining how the search interface should be rendered.
+   * This is set via the settings for a default value and can be overridden via rules
+   */
+  readonly renderingContent?: {
+    /**
+     * defining how facets should be ordered
+     */
+    readonly facetOrdering?: {
+      /**
+       * the ordering of facets (widgets)
+       */
+      readonly facet?: {
+        /**
+         * pinned order of facet lists
+         */
+        readonly order?: readonly string[];
+      };
+      /**
+       * the ordering of facet values, within an individual list
+       */
+      readonly values?: {
+        readonly [facet: string]: {
+          /**
+           * pinned order of facet values
+           */
+          readonly order?: readonly string[];
+          /**
+           * How to display the remaining items.
+           * - facet count (descending)
+           * - alphabetical (ascending)
+           * - hidden (show only pinned values)
+           */
+          readonly sortRemainingBy?: 'count' | 'alpha' | 'hidden';
+        };
+      };
+    };
+  };
 };

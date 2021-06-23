@@ -9,7 +9,7 @@
     <a href="https://npmjs.org/package/algoliasearch"><img src="https://img.shields.io/npm/v/algoliasearch.svg?style=flat-square" alt="NPM version"></img></a>
     <a href="http://npm-stat.com/charts.html?package=algoliasearch"><img src="https://img.shields.io/npm/dm/algoliasearch.svg?style=flat-square" alt="NPM downloads"></a>
     <a href="https://www.jsdelivr.com/package/npm/algoliasearch"><img src="https://data.jsdelivr.com/v1/package/npm/algoliasearch/badge" alt="jsDelivr Downloads"></img></a>
-    <a href="LICENSE.txt"><img src="https://img.shields.io/badge/license-MIT-green.svg?style=flat-square" alt="License"></a>
+    <a href="LICENSE.md"><img src="https://img.shields.io/badge/license-MIT-green.svg?style=flat-square" alt="License"></a>
   </p>
 </p>
 
@@ -19,6 +19,7 @@
   <a href="https://discourse.algolia.com" target="_blank">Community Forum</a>  •
   <a href="http://stackoverflow.com/questions/tagged/algolia" target="_blank">Stack Overflow</a>  •
   <a href="https://github.com/algolia/algoliasearch-client-javascript/issues" target="_blank">Report a bug</a>  •
+  <a href="https://www.algolia.com/doc/api-client/troubleshooting/faq/javascript/" target="_blank">FAQ</a>  •
   <a href="https://www.algolia.com/support" target="_blank">Support</a>
 </p>
 
@@ -81,6 +82,10 @@ index
 
 For full documentation, visit the **[online documentation](https://www.algolia.com/doc/api-client/getting-started/install/javascript/)**.
 
+## ❓ Troubleshooting
+
+Encountering an issue? Before reaching out to support, we recommend heading to our [FAQ](https://www.algolia.com/doc/api-client/troubleshooting/faq/javascript/) where you will find answers for the most common issues and gotchas with the client.
+
 ## 📄 License
 
-Algolia JavaScript API Client is an open-sourced software licensed under the [MIT license](LICENSE.txt).
+Algolia JavaScript API Client is an open-sourced software licensed under the [MIT license](LICENSE.md).

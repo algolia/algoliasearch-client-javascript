@@ -17,6 +17,7 @@ export * from './deleteObjects';
 export * from './deleteRule';
 export * from './deleteSynonym';
 export * from './exists';
+export * from './findAnswers';
 export * from './findObject';
 export * from './getObject';
 export * from './getObjectPosition';
