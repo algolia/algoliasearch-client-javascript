@@ -14,10 +14,12 @@ describe('getRelatedProducts', () => {
     const client = createMockedClient();
 
     await client.getRelatedProducts(
-      {
-        indexName: 'products',
-        objectID: 'B018APC4LE',
-      },
+      [
+        {
+          indexName: 'products',
+          objectID: 'B018APC4LE',
+        },
+      ],
       {}
     );
 

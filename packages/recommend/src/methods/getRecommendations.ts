@@ -7,7 +7,7 @@ import {
   WithRecommendMethods,
 } from '../types';
 
-export type GetRecommendationsOptions = {
+export type GetRecommendationsQuery = {
   readonly indexName: string;
   readonly model: RecommendModel;
   readonly objectID: string;
@@ -22,16 +22,14 @@ type GetRecommendations = (
 ) => WithRecommendMethods<RecommendClient>['getRecommendations'];
 
 export const getRecommendations: GetRecommendations = base => {
-  return (options, requestOptions) => {
-    const requests: readonly GetRecommendationsOptions[] = [
-      {
-        // The `threshold` param is required by the endpoint to make it easier
-        // to provide a default value later, so we default it in the client
-        // so that users don't have to provide a value.
-        threshold: 0,
-        ...options,
-      },
-    ];
+  return (queries, requestOptions) => {
+    const requests: readonly GetRecommendationsQuery[] = queries.map(query => ({
+      // The `threshold` param is required by the endpoint to make it easier
+      // to provide a default value later, so we default it in the client
+      // so that users don't have to provide a value.
+      threshold: 0,
+      ...query,
+    }));
 
     return base.transporter.read(
       {
