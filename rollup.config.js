@@ -29,6 +29,7 @@ const packagesConfig = [
   'client-account',
   'client-analytics',
   'client-common',
+  'client-personalization',
   'client-recommendation',
   'logger-common',
   'logger-console',

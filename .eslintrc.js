@@ -61,6 +61,7 @@ module.exports = {
           ['@algolia/client-account', './packages/client-account/src'],
           ['@algolia/client-analytics', './packages/client-analytics/src'],
           ['@algolia/client-common', './packages/client-common/src'],
+          ['@algolia/client-personalization', './packages/client-personalization/src'],
           ['@algolia/client-recommendation', './packages/client-recommendation/src'],
           ['@algolia/client-search', './packages/client-search/src'],
           ['@algolia/logger-common', './packages/logger-common/src'],

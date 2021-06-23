@@ -1,6 +1,6 @@
 import { AnalyticsClientOptions } from '@algolia/client-analytics';
 import { ClientTransporterOptions } from '@algolia/client-common';
-import { RecommendationClientOptions } from '@algolia/client-recommendation';
+import { PersonalizationClientOptions } from '@algolia/client-personalization';
 import { SearchClientOptions } from '@algolia/client-search';
 
 type Credentials = { readonly appId: string; readonly apiKey: string };
@@ -20,5 +20,10 @@ export type AlgoliaSearchOptions = Partial<ClientTransporterOptions> &
 export type InitAnalyticsOptions = Partial<ClientTransporterOptions> &
   OptionalCredentials<AnalyticsClientOptions>;
 
-export type InitRecommendationOptions = Partial<ClientTransporterOptions> &
-  OptionalCredentials<RecommendationClientOptions>;
+export type InitPersonalizationOptions = Partial<ClientTransporterOptions> &
+  OptionalCredentials<PersonalizationClientOptions>;
+
+/**
+ * @deprecated Use `InitPersonalizationOptions` instead.
+ */
+export type InitRecommendationOptions = InitPersonalizationOptions;
