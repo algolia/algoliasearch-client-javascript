@@ -41,10 +41,12 @@ const algoliarecommend = require('@algolia/recommend');
 const client = algoliarecommend('YourApplicationID', 'YourAdminAPIKey');
 
 client
-  .getFrequentlyBoughtTogether({
-    indexName: 'your_index_name',
-    objectID: 'your_object_id',
-  })
+  .getFrequentlyBoughtTogether([
+    {
+      indexName: 'your_index_name',
+      objectID: 'your_object_id',
+    },
+  ])
   .then(({ results }) => {
     console.log(results);
   })
@@ -53,10 +55,12 @@ client
   });
 
 client
-  .getRelatedProducts({
-    indexName: 'your_index_name',
-    objectID: 'your_object_id',
-  })
+  .getRelatedProducts([
+    {
+      indexName: 'your_index_name',
+      objectID: 'your_object_id',
+    },
+  ])
   .then(({ results }) => {
     console.log(results);
   })
