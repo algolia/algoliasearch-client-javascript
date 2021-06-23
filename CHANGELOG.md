@@ -1,3 +1,10 @@
+## [v4.10.0](https://github.com/algolia/algoliasearch-client-javascript/compare/4.9.3...4.10.0)
+
+* feat(recommend): introduce Recommend API client (#1280) ([97ebde6](https://github.com/algolia/algoliasearch-client-javascript/commit/97ebde6)), closes [#1280](https://github.com/algolia/algoliasearch-client-javascript/issues/1280) [#1278](https://github.com/algolia/algoliasearch-client-javascript/issues/1278)
+* fix(rules): automaticOptionalFacetFilters type takes the same input as automaticFacetFilters (#1279) ([831a3de](https://github.com/algolia/algoliasearch-client-javascript/commit/831a3de)), closes [#1279](https://github.com/algolia/algoliasearch-client-javascript/issues/1279)
+
+
+
 ## [v4.9.3](https://github.com/algolia/algoliasearch-client-javascript/compare/4.9.2...4.9.3)
 
 * fix(ts): make all keys in facetOrdering optional ([d772f98](https://github.com/algolia/algoliasearch-client-javascript/commit/d772f98))
