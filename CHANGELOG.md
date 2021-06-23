@@ -1,3 +1,10 @@
+## [v4.10.2](https://github.com/algolia/algoliasearch-client-javascript/compare/4.10.0...4.10.2)
+
+* fix(recommend): export method types (#1287) ([95281fe](https://github.com/algolia/algoliasearch-client-javascript/commit/95281fe)), closes [#1287](https://github.com/algolia/algoliasearch-client-javascript/issues/1287)
+* chore(release): force public access on npm release (#1288) ([2fefd78](https://github.com/algolia/algoliasearch-client-javascript/commit/2fefd78)), closes [#1288](https://github.com/algolia/algoliasearch-client-javascript/issues/1288)
+
+
+
 ## [v4.10.0](https://github.com/algolia/algoliasearch-client-javascript/compare/4.9.3...4.10.0)
 
 The `@algolia/client-recommendation` is now deprecated, please use `@algolia/client-personalization` instead. If you were using `initRecommendation` from the `algoliasearch` package, please use `initPersonalization` instead.
