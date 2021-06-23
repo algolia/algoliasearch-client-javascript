@@ -8,17 +8,13 @@ import { createUserAgent } from '@algolia/transporter';
 
 import { createRecommendClient } from '../createRecommendClient';
 import { getFrequentlyBoughtTogether, getRecommendations, getRelatedProducts } from '../methods';
-import {
-  RecommendClient as BaseRecommendClient,
-  RecommendOptions,
-  WithRecommendMethods,
-} from '../types';
+import { BaseRecommendClient, RecommendOptions, WithRecommendMethods } from '../types';
 
 export default function recommend(
   appId: string,
   apiKey: string,
   options?: RecommendOptions
-): WithRecommendMethods<RecommendClient> {
+): RecommendClient {
   const commonOptions = {
     appId,
     apiKey,
@@ -52,6 +48,6 @@ export default function recommend(
 // eslint-disable-next-line functional/immutable-data
 recommend.version = version;
 
-export type RecommendClient = BaseRecommendClient & Destroyable;
+export type RecommendClient = WithRecommendMethods<BaseRecommendClient> & Destroyable;
 
 export * from '../types';
