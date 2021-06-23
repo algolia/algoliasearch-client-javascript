@@ -16,6 +16,9 @@ module.exports = {
   getTagName: ({ version }) => `${version}`,
   conventionalChangelogArgs:
     '--config conventional-changelog.config.js --infile CHANGELOG.md --same-file',
+  publishCommand({ tag }) {
+    return `npm publish --access public --tag ${tag}`;
+  },
   async versionUpdated({ version, dir }) {
     // Update version with lerna
     await exec(`lerna version ${version} --no-git-tag-version --no-push --exact --yes`);
