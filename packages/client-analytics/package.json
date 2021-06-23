@@ -1,6 +1,6 @@
 {
   "name": "@algolia/client-analytics",
-  "version": "4.9.3",
+  "version": "4.10.0",
   "private": false,
   "repository": {
     "type": "git",
@@ -16,9 +16,9 @@
     "dist"
   ],
   "dependencies": {
-    "@algolia/client-common": "4.9.3",
-    "@algolia/client-search": "4.9.3",
-    "@algolia/requester-common": "4.9.3",
-    "@algolia/transporter": "4.9.3"
+    "@algolia/client-common": "4.10.0",
+    "@algolia/client-search": "4.10.0",
+    "@algolia/requester-common": "4.10.0",
+    "@algolia/transporter": "4.10.0"
   }
 }
