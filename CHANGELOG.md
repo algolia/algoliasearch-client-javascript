@@ -4,7 +4,7 @@ The `@algolia/client-recommendation` is now deprecated, please use `@algolia/cli
 
 
 
-
+* feat(recommend): support multiple queries (#1283) ([5cf64dd](https://github.com/algolia/algoliasearch-client-javascript/commit/5cf64dd))
 * feat(recommend): introduce Recommend API client (#1280) ([97ebde6](https://github.com/algolia/algoliasearch-client-javascript/commit/97ebde6)), closes [#1280](https://github.com/algolia/algoliasearch-client-javascript/issues/1280) [#1278](https://github.com/algolia/algoliasearch-client-javascript/issues/1278)
 * feat(personalization): deprecate client-recommendation (#1278)
 * fix(rules): automaticOptionalFacetFilters type takes the same input as automaticFacetFilters (#1279) ([831a3de](https://github.com/algolia/algoliasearch-client-javascript/commit/831a3de)), closes [#1279](https://github.com/algolia/algoliasearch-client-javascript/issues/1279)
