@@ -1,5 +1,5 @@
 {
-  "name": "@algolia/client-recommendation",
+  "name": "@algolia/client-personalization",
   "version": "4.9.3",
   "private": false,
   "repository": {
@@ -9,15 +9,15 @@
   "license": "MIT",
   "sideEffects": false,
   "main": "index.js",
-  "module": "dist/client-recommendation.esm.js",
-  "types": "dist/client-recommendation.d.ts",
+  "module": "dist/client-personalization.esm.js",
+  "types": "dist/client-personalization.d.ts",
   "files": [
     "index.js",
     "dist"
   ],
   "dependencies": {
     "@algolia/client-common": "4.9.3",
-    "@algolia/client-personalization": "4.9.3",
-    "@algolia/requester-common": "4.9.3"
+    "@algolia/requester-common": "4.9.3",
+    "@algolia/transporter": "4.9.3"
   }
 }

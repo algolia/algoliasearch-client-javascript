@@ -1,8 +1,8 @@
 {
-  "name": "algoliasearch",
+  "name": "@algolia/recommend",
   "version": "4.9.3",
   "private": false,
-  "description": "A fully-featured and blazing-fast JavaScript API client to interact with Algolia API.",
+  "description": "The perfect starting point to integrate Algolia Recommend within your JavaScript project.",
   "repository": {
     "type": "git",
     "url": "git://github.com/algolia/algoliasearch-client-javascript.git"
@@ -10,28 +10,22 @@
   "license": "MIT",
   "sideEffects": false,
   "main": "index.js",
-  "jsdelivr": "./dist/algoliasearch.umd.js",
-  "unpkg": "./dist/algoliasearch.umd.js",
+  "jsdelivr": "./dist/recommend.umd.js",
+  "unpkg": "./dist/recommend.umd.js",
   "browser": {
-    "./index.js": "./dist/algoliasearch.umd.js",
-    "./lite.js": "./dist/algoliasearch-lite.umd.js"
+    "./index.js": "./dist/recommend.umd.js"
   },
   "types": "index.d.ts",
   "files": [
     "dist",
     "index.js",
-    "index.d.ts",
-    "lite.js",
-    "lite.d.ts"
+    "index.d.ts"
   ],
   "dependencies": {
     "@algolia/cache-browser-local-storage": "4.9.3",
     "@algolia/cache-common": "4.9.3",
     "@algolia/cache-in-memory": "4.9.3",
-    "@algolia/client-account": "4.9.3",
-    "@algolia/client-analytics": "4.9.3",
     "@algolia/client-common": "4.9.3",
-    "@algolia/client-personalization": "4.9.3",
     "@algolia/client-search": "4.9.3",
     "@algolia/logger-common": "4.9.3",
     "@algolia/logger-console": "4.9.3",

@@ -7,6 +7,7 @@ export const ApiKeyACLEnum: Readonly<Record<string, ApiKeyACLType>> = {
   EditSettings: 'editSettings',
   ListIndexes: 'listIndexes',
   Logs: 'logs',
+  Personalization: 'personalization',
   Recommendation: 'recommendation',
   Search: 'search',
   SeeUnretrievableAttributes: 'seeUnretrievableAttributes',
@@ -23,6 +24,7 @@ export type ApiKeyACLType =
   | 'editSettings'
   | 'listIndexes'
   | 'logs'
+  | 'personalization'
   | 'recommendation'
   | 'search'
   | 'seeUnretrievableAttributes'

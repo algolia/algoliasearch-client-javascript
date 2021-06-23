@@ -4,35 +4,23 @@ import { anything, deepEqual, spy, verify, when } from 'ts-mockito';
 import { TestSuite } from '../../../../client-common/src/__tests__/TestSuite';
 import { PersonalizationStrategy, SetPersonalizationStrategyResponse } from '../../types';
 
-const searchClient = new TestSuite().algoliasearch('appId', 'apiKey', {
-  logger: {
-    debug: jest.fn(),
-    info: jest.fn(),
-    error: jest.fn(),
-  },
-});
-const recommendationClient = searchClient.initRecommendation();
+const personalizationClient = new TestSuite()
+  .algoliasearch('appId', 'apiKey')
+  .initPersonalization();
 
-describe('recommendation client', () => {
-  it('logs a deprecation message', () => {
-    expect(searchClient.transporter.logger.info).toHaveBeenCalledTimes(1);
-    expect(searchClient.transporter.logger.info).toHaveBeenCalledWith(
-      'The `initRecommendation` method is deprecated. Use `initPersonalization` instead.'
-    );
-  });
-
+describe('personalization client', () => {
   it('uses region to define the host', () => {
-    expect(recommendationClient.transporter.hosts[0].url).toBe('personalization.us.algolia.com');
+    expect(personalizationClient.transporter.hosts[0].url).toBe('personalization.us.algolia.com');
   });
 
   it('sets default headers', () => {
-    expect(recommendationClient.transporter.headers).toEqual({
+    expect(personalizationClient.transporter.headers).toEqual({
       'content-type': 'application/json',
       'x-algolia-application-id': 'appId',
       'x-algolia-api-key': 'apiKey',
     });
 
-    expect(recommendationClient.transporter.queryParameters).toEqual({});
+    expect(personalizationClient.transporter.queryParameters).toEqual({});
   });
 });
 
@@ -50,14 +38,14 @@ describe('personalization', () => {
   };
 
   it('set personalization strategy', async () => {
-    const transporterMock = spy(recommendationClient.transporter);
+    const transporterMock = spy(personalizationClient.transporter);
     const response: SetPersonalizationStrategyResponse = {
       status: 200,
       message: 'Strategy was successfully updated',
     };
     when(transporterMock.write(anything(), anything())).thenResolve(response);
 
-    const setPersonalizationStrategyResponse = await recommendationClient.setPersonalizationStrategy(
+    const setPersonalizationStrategyResponse = await personalizationClient.setPersonalizationStrategy(
       personalizationStrategy,
       { foo: 'bar' }
     );
@@ -76,10 +64,10 @@ describe('personalization', () => {
   });
 
   it('get personalization strategy', async () => {
-    const transporterMock = spy(recommendationClient.transporter);
+    const transporterMock = spy(personalizationClient.transporter);
     when(transporterMock.read(anything(), anything())).thenResolve(personalizationStrategy);
 
-    const getPersonalizationStrategyResponse = await recommendationClient.getPersonalizationStrategy();
+    const getPersonalizationStrategyResponse = await personalizationClient.getPersonalizationStrategy();
 
     verify(
       transporterMock.read(
