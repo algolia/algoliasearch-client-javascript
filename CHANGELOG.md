@@ -1,3 +1,10 @@
+## [v4.10.3](https://github.com/algolia/algoliasearch-client-javascript/compare/4.10.2...4.10.3)
+
+* fix(answers): omit original hits in response (#1293) ([fb62b15](https://github.com/algolia/algoliasearch-client-javascript/commit/fb62b15)), closes [#1293](https://github.com/algolia/algoliasearch-client-javascript/issues/1293)
+* fix(facetOrdering): facetOrdering.facets, not .facet ([d931976](https://github.com/algolia/algoliasearch-client-javascript/commit/d931976))
+
+
+
 ## [v4.10.2](https://github.com/algolia/algoliasearch-client-javascript/compare/4.10.0...4.10.2)
 
 * fix(recommend): export method types (#1287) ([95281fe](https://github.com/algolia/algoliasearch-client-javascript/commit/95281fe)), closes [#1287](https://github.com/algolia/algoliasearch-client-javascript/issues/1287)
