@@ -69,6 +69,11 @@ export type Transporter = {
   readonly queryParameters: QueryParameters;
 
   /**
+   * data sent on each request
+   */
+  readonly data: Record<string, string> | undefined;
+
+  /**
    * The hosts used by the retry strategy.
    *
    * @readonly

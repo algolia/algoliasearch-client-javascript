@@ -36,19 +36,22 @@ export function serializeQueryParameters(parameters: Readonly<Record<string, any
 }
 
 export function serializeData(
+  transporter: Transporter,
   request: Request,
   requestOptions: RequestOptions
 ): string | undefined {
   if (
     request.method === MethodEnum.Get ||
-    (request.data === undefined && requestOptions.data === undefined)
+    (transporter.data === undefined &&
+      request.data === undefined &&
+      requestOptions.data === undefined)
   ) {
     return undefined;
   }
 
   const data = Array.isArray(request.data)
     ? request.data
-    : { ...request.data, ...requestOptions.data };
+    : { ...transporter.data, ...request.data, ...requestOptions.data };
 
   return JSON.stringify(data);
 }

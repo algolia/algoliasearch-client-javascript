@@ -29,6 +29,8 @@ export const createPersonalizationClient: CreateClient<
       ...auth.queryParameters(),
       ...options.queryParameters,
     },
+
+    data: auth.data(),
   });
 
   return addMethods({ appId: options.appId, transporter }, options.methods);

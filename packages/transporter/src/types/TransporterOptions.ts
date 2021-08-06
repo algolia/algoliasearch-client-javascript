@@ -65,6 +65,11 @@ export type TransporterOptions = {
   readonly queryParameters: QueryParameters;
 
   /**
+   * The data set by the requester (credentials)
+   */
+  readonly data: Record<string, string>;
+
+  /**
    * The user agent used. Sent on query parameters.
    */
   readonly userAgent: UserAgent;

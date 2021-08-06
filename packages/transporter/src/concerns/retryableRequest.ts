@@ -31,7 +31,7 @@ export function retryableRequest<TResponse>(
   /**
    * First we prepare the payload that do not depend from hosts.
    */
-  const data = serializeData(request, requestOptions);
+  const data = serializeData(transporter, request, requestOptions);
   const headers = serializeHeaders(transporter, requestOptions);
   const method = request.method;
 
@@ -40,6 +40,8 @@ export function retryableRequest<TResponse>(
     request.method !== MethodEnum.Get
       ? {}
       : {
+          // if AuthMode.WithinData, we forcibly map apiKey back to a query param
+          'x-algolia-api-key': transporter.data?.apiKey,
           ...request.data,
           ...requestOptions.data,
         };

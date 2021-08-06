@@ -2,9 +2,7 @@ import { Headers, HostOptions, QueryParameters, TransporterOptions } from '@algo
 
 export type ClientTransporterOptions = Pick<
   TransporterOptions,
-  Exclude<keyof TransporterOptions, 'headers'> &
-    Exclude<keyof TransporterOptions, 'queryParameters'> &
-    Exclude<keyof TransporterOptions, 'hosts'>
+  Exclude<keyof TransporterOptions, 'hosts' | 'headers' | 'queryParameters' | 'data'>
 > & {
   /**
    * The hosts used by the requester.
