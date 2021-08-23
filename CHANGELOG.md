@@ -1,3 +1,9 @@
+## [v4.10.4](https://github.com/algolia/algoliasearch-client-javascript/compare/4.10.3...4.10.4)
+
+* fix(recommend): expose correct key on window in umd (#1298) ([169b12a](https://github.com/algolia/algoliasearch-client-javascript/commit/169b12a)), closes [#1298](https://github.com/algolia/algoliasearch-client-javascript/issues/1298)
+
+
+
 ## [v4.10.3](https://github.com/algolia/algoliasearch-client-javascript/compare/4.10.2...4.10.3)
 
 * fix(answers): omit original hits in response (#1293) ([fb62b15](https://github.com/algolia/algoliasearch-client-javascript/commit/fb62b15)), closes [#1293](https://github.com/algolia/algoliasearch-client-javascript/issues/1293)
