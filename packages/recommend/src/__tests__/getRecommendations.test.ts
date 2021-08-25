@@ -125,4 +125,76 @@ describe('getRecommendations', () => {
       {}
     );
   });
+
+  test('overrides `undefined` threshold with default value', async () => {
+    const client = createMockedClient();
+
+    await client.getRecommendations(
+      [
+        {
+          model: 'bought-together',
+          indexName: 'products',
+          objectID: 'B018APC4LE',
+          threshold: undefined,
+        },
+      ],
+      {}
+    );
+
+    expect(client.transporter.read).toHaveBeenCalledTimes(1);
+    expect(client.transporter.read).toHaveBeenCalledWith(
+      {
+        cacheable: true,
+        data: {
+          requests: [
+            {
+              indexName: 'products',
+              model: 'bought-together',
+              objectID: 'B018APC4LE',
+              threshold: 0,
+            },
+          ],
+        },
+        method: 'POST',
+        path: '1/indexes/*/recommendations',
+      },
+      {}
+    );
+  });
+
+  test('overrides default threshold value', async () => {
+    const client = createMockedClient();
+
+    await client.getRecommendations(
+      [
+        {
+          model: 'bought-together',
+          indexName: 'products',
+          objectID: 'B018APC4LE',
+          threshold: 42,
+        },
+      ],
+      {}
+    );
+
+    expect(client.transporter.read).toHaveBeenCalledTimes(1);
+    expect(client.transporter.read).toHaveBeenCalledWith(
+      {
+        cacheable: true,
+        data: {
+          requests: [
+            {
+              indexName: 'products',
+              model: 'bought-together',
+              objectID: 'B018APC4LE',
+              threshold: 42,
+            },
+          ],
+        },
+        method: 'POST',
+        path: '1/indexes/*/recommendations',
+      },
+      {}
+    );
+  });
 });
