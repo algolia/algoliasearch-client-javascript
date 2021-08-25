@@ -9,11 +9,11 @@ type GetRecommendations = (
 export const getRecommendations: GetRecommendations = base => {
   return (queries: readonly RecommendationsQuery[], requestOptions) => {
     const requests: readonly RecommendationsQuery[] = queries.map(query => ({
+      ...query,
       // The `threshold` param is required by the endpoint to make it easier
       // to provide a default value later, so we default it in the client
       // so that users don't have to provide a value.
-      threshold: 0,
-      ...query,
+      threshold: query.threshold || 0,
     }));
 
     return base.transporter.read(
