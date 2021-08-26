@@ -1,3 +1,9 @@
+## [v4.10.5](https://github.com/algolia/algoliasearch-client-javascript/compare/4.10.4...4.10.5)
+
+* fix(recommend): prevent `undefined` threshold (#1300) ([7d21d3c](https://github.com/algolia/algoliasearch-client-javascript/commit/7d21d3c)), closes [#1300](https://github.com/algolia/algoliasearch-client-javascript/issues/1300)
+
+
+
 ## [v4.10.4](https://github.com/algolia/algoliasearch-client-javascript/compare/4.10.3...4.10.4)
 
 * fix(recommend): expose correct key on window in umd (#1298) ([169b12a](https://github.com/algolia/algoliasearch-client-javascript/commit/169b12a)), closes [#1298](https://github.com/algolia/algoliasearch-client-javascript/issues/1298)
