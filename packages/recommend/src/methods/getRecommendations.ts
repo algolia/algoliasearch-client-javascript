@@ -17,7 +17,7 @@ export type GetRecommendationsOptions = {
   readonly fallbackParameters?: RecommendSearchOptions;
 };
 
-type GetRecommendations = (
+export type GetRecommendations = (
   base: RecommendClient
 ) => WithRecommendMethods<RecommendClient>['getRecommendations'];
 

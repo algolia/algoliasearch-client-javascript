@@ -6,7 +6,7 @@ export type GetFrequentlyBoughtTogetherOptions = Omit<
   'model' | 'fallbackParameters'
 >;
 
-type GetFrequentlyBoughtTogether = (
+export type GetFrequentlyBoughtTogether = (
   base: RecommendClient
 ) => WithRecommendMethods<RecommendClient>['getFrequentlyBoughtTogether'];
 

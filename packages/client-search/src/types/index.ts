@@ -65,6 +65,7 @@ export * from './PartialUpdateObjectResponse';
 export * from './PartialUpdateObjectsOptions';
 export * from './RemoveUserIDResponse';
 export * from './ReplaceAllObjectsOptions';
+export * from './RequireAtLeastOne';
 export * from './RestoreApiKeyResponse';
 export * from './Rule';
 export * from './SaveObjectResponse';

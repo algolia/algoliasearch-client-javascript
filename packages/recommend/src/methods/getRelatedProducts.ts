@@ -3,7 +3,7 @@ import { getRecommendations, GetRecommendationsOptions } from './getRecommendati
 
 export type GetRelatedProductsOptions = Omit<GetRecommendationsOptions, 'model'>;
 
-type GetRelatedProducts = (
+export type GetRelatedProducts = (
   base: RecommendClient
 ) => WithRecommendMethods<RecommendClient>['getRelatedProducts'];
 
