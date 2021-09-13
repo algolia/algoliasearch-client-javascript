@@ -18,14 +18,14 @@ import {
 } from '@algolia/client-analytics';
 import { destroy, version, WaitablePromise } from '@algolia/client-common';
 import {
-  createRecommendationClient,
+  createPersonalizationClient,
   getPersonalizationStrategy,
   GetPersonalizationStrategyResponse,
+  PersonalizationClient as BasePersonalizationClient,
   PersonalizationStrategy,
-  RecommendationClient as BaseRecommendationClient,
   setPersonalizationStrategy,
   SetPersonalizationStrategyResponse,
-} from '@algolia/client-recommendation';
+} from '@algolia/client-personalization';
 import {
   addApiKey,
   AddApiKeyOptions,
@@ -194,7 +194,7 @@ import { Destroyable } from '@algolia/requester-common';
 import { createNodeHttpRequester } from '@algolia/requester-node-http';
 import { createUserAgent, RequestOptions } from '@algolia/transporter';
 
-import { AlgoliaSearchOptions, InitAnalyticsOptions, InitRecommendationOptions } from '../types';
+import { AlgoliaSearchOptions, InitAnalyticsOptions, InitPersonalizationOptions } from '../types';
 
 export default function algoliasearch(
   appId: string,
@@ -219,10 +219,22 @@ export default function algoliasearch(
       version: process.versions.node,
     }),
   };
+  const searchClientOptions = { ...commonOptions, ...options };
+  const initPersonalization = () => (
+    clientOptions?: InitPersonalizationOptions
+  ): PersonalizationClient => {
+    return createPersonalizationClient({
+      ...commonOptions,
+      ...clientOptions,
+      methods: {
+        getPersonalizationStrategy,
+        setPersonalizationStrategy,
+      },
+    });
+  };
 
   return createSearchClient({
-    ...commonOptions,
-    ...options,
+    ...searchClientOptions,
     methods: {
       search: multipleQueries,
       searchForFacetValues: multipleSearchForFacetValues,
@@ -322,17 +334,15 @@ export default function algoliasearch(
           },
         });
       },
+      initPersonalization,
       initRecommendation: () => (
-        clientOptions?: InitRecommendationOptions
-      ): RecommendationClient => {
-        return createRecommendationClient({
-          ...commonOptions,
-          ...clientOptions,
-          methods: {
-            getPersonalizationStrategy,
-            setPersonalizationStrategy,
-          },
-        });
+        clientOptions?: InitPersonalizationOptions
+      ): PersonalizationClient => {
+        searchClientOptions.logger.info(
+          'The `initRecommendation` method is deprecated. Use `initPersonalization` instead.'
+        );
+
+        return initPersonalization()(clientOptions);
       },
     },
   });
@@ -341,7 +351,7 @@ export default function algoliasearch(
 // eslint-disable-next-line functional/immutable-data
 algoliasearch.version = version;
 
-export type RecommendationClient = BaseRecommendationClient & {
+export type PersonalizationClient = BasePersonalizationClient & {
   readonly getPersonalizationStrategy: (
     requestOptions?: RequestOptions
   ) => Readonly<Promise<GetPersonalizationStrategyResponse>>;
@@ -350,6 +360,11 @@ export type RecommendationClient = BaseRecommendationClient & {
     requestOptions?: RequestOptions
   ) => Readonly<Promise<SetPersonalizationStrategyResponse>>;
 };
+
+/**
+ * @deprecated Use `PersonalizationClient` instead.
+ */
+export type RecommendationClient = PersonalizationClient;
 
 export type AnalyticsClient = BaseAnalyticsClient & {
   readonly addABTest: (
@@ -671,7 +686,11 @@ export type SearchClient = BaseSearchClient & {
     requestOptions?: RequestOptions
   ) => Readonly<Promise<TaskStatusResponse>>;
   readonly initAnalytics: (options?: InitAnalyticsOptions) => AnalyticsClient;
-  readonly initRecommendation: (options?: InitRecommendationOptions) => RecommendationClient;
+  readonly initPersonalization: (options?: InitPersonalizationOptions) => PersonalizationClient;
+  /**
+   * @deprecated Use `initPersonalization` instead.
+   */
+  readonly initRecommendation: (options?: InitPersonalizationOptions) => PersonalizationClient;
 } & Destroyable;
 
 export * from '../types';

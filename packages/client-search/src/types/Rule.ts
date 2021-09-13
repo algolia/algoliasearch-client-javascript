@@ -1,4 +1,4 @@
-import { SearchOptions } from '.';
+import { SearchOptions, Settings } from '.';
 
 export type Rule = {
   /**
@@ -124,7 +124,13 @@ export type ConsequenceParams = {
    * Same syntax as automaticFacetFilters, but the engine treats the filters as optional.
    * Behaves like optionalFilters.
    */
-  readonly automaticOptionalFacetFilters?: readonly AutomaticFacetFilter[];
+  readonly automaticOptionalFacetFilters?: readonly AutomaticFacetFilter[] | readonly string[];
+
+  /**
+   * Content defining how the search interface should be rendered.
+   * A default value for this can be set via settings
+   */
+  readonly renderingContent?: Settings['renderingContent'];
 };
 
 export type Condition = {
@@ -186,12 +192,12 @@ export type Consequence = {
 
 export type TimeRange = {
   /**
-   * DateTime with UTC offset for Serialization/Deserialization in unix timespam.
+   * DateTime with UTC offset for Serialization/Deserialization in unix timespan.
    */
   readonly from: number;
 
   /**
-   * DateTime with UTC offset for Serialization/Deserialization in unix timespam.
+   * DateTime with UTC offset for Serialization/Deserialization in unix timespan.
    */
   readonly until: number;
 };

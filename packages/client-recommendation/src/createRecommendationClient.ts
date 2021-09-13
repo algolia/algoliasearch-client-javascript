@@ -1,35 +1,21 @@
-import {
-  addMethods,
-  AuthMode,
-  ClientTransporterOptions,
-  createAuth,
-  CreateClient,
-} from '@algolia/client-common';
-import { createTransporter } from '@algolia/transporter';
+import { ClientTransporterOptions, CreateClient } from '@algolia/client-common';
+import { createPersonalizationClient } from '@algolia/client-personalization';
 
 import { RecommendationClient, RecommendationClientOptions } from '.';
 
+/**
+ * @deprecated The `@algolia/client-recommendation` package is deprecated and you should use `@algolia/client-personalization` instead. To migrate, install the new package and replace `createRecommendationClient` with `createPersonalizationClient`.
+ */
 export const createRecommendationClient: CreateClient<
   RecommendationClient,
   RecommendationClientOptions & ClientTransporterOptions
 > = options => {
-  const region = options.region || 'us';
-  const auth = createAuth(AuthMode.WithinHeaders, options.appId, options.apiKey);
+  /* eslint-disable max-len */
+  options.logger.info(
+    'The `@algolia/client-recommendation` package is deprecated and you should use `@algolia/client-personalization` instead.\n' +
+      'To migrate, install the new package and replace `createRecommendationClient` with `createPersonalizationClient`.'
+  );
+  /* eslint-enable max-len */
 
-  const transporter = createTransporter({
-    hosts: [{ url: `recommendation.${region}.algolia.com` }],
-    ...options,
-    headers: {
-      ...auth.headers(),
-      ...{ 'content-type': 'application/json' },
-      ...options.headers,
-    },
-
-    queryParameters: {
-      ...auth.queryParameters(),
-      ...options.queryParameters,
-    },
-  });
-
-  return addMethods({ appId: options.appId, transporter }, options.methods);
+  return createPersonalizationClient(options);
 };

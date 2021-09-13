@@ -1,3 +1,60 @@
+## [v4.10.5](https://github.com/algolia/algoliasearch-client-javascript/compare/4.10.4...4.10.5)
+
+* fix(recommend): prevent `undefined` threshold (#1300) ([7d21d3c](https://github.com/algolia/algoliasearch-client-javascript/commit/7d21d3c)), closes [#1300](https://github.com/algolia/algoliasearch-client-javascript/issues/1300)
+
+
+
+## [v4.10.4](https://github.com/algolia/algoliasearch-client-javascript/compare/4.10.3...4.10.4)
+
+* fix(recommend): expose correct key on window in umd (#1298) ([169b12a](https://github.com/algolia/algoliasearch-client-javascript/commit/169b12a)), closes [#1298](https://github.com/algolia/algoliasearch-client-javascript/issues/1298)
+
+
+
+## [v4.10.3](https://github.com/algolia/algoliasearch-client-javascript/compare/4.10.2...4.10.3)
+
+* fix(answers): omit original hits in response (#1293) ([fb62b15](https://github.com/algolia/algoliasearch-client-javascript/commit/fb62b15)), closes [#1293](https://github.com/algolia/algoliasearch-client-javascript/issues/1293)
+* fix(facetOrdering): facetOrdering.facets, not .facet ([d931976](https://github.com/algolia/algoliasearch-client-javascript/commit/d931976))
+
+
+
+## [v4.10.2](https://github.com/algolia/algoliasearch-client-javascript/compare/4.10.0...4.10.2)
+
+* fix(recommend): export method types (#1287) ([95281fe](https://github.com/algolia/algoliasearch-client-javascript/commit/95281fe)), closes [#1287](https://github.com/algolia/algoliasearch-client-javascript/issues/1287)
+* chore(release): force public access on npm release (#1288) ([2fefd78](https://github.com/algolia/algoliasearch-client-javascript/commit/2fefd78)), closes [#1288](https://github.com/algolia/algoliasearch-client-javascript/issues/1288)
+
+
+
+## [v4.10.0](https://github.com/algolia/algoliasearch-client-javascript/compare/4.9.3...4.10.0)
+
+The `@algolia/client-recommendation` is now deprecated, please use `@algolia/client-personalization` instead. If you were using `initRecommendation` from the `algoliasearch` package, please use `initPersonalization` instead.
+
+
+
+* feat(recommend): introduce Recommend API client (#1280) ([97ebde6](https://github.com/algolia/algoliasearch-client-javascript/commit/97ebde6)), closes [#1280](https://github.com/algolia/algoliasearch-client-javascript/issues/1280) [#1278](https://github.com/algolia/algoliasearch-client-javascript/issues/1278)
+* feat(personalization): deprecate client-recommendation (#1278)
+* fix(rules): automaticOptionalFacetFilters type takes the same input as automaticFacetFilters (#1279) ([831a3de](https://github.com/algolia/algoliasearch-client-javascript/commit/831a3de)), closes [#1279](https://github.com/algolia/algoliasearch-client-javascript/issues/1279)
+
+
+
+## [v4.9.3](https://github.com/algolia/algoliasearch-client-javascript/compare/4.9.2...4.9.3)
+
+* fix(ts): make all keys in facetOrdering optional ([d772f98](https://github.com/algolia/algoliasearch-client-javascript/commit/d772f98))
+
+
+
+## [v4.9.2](https://github.com/algolia/algoliasearch-client-javascript/compare/4.9.1...4.9.2)
+
+* feat(ts): document renderingContent (#1273) ([04f2a20](https://github.com/algolia/algoliasearch-client-javascript/commit/04f2a20)), closes [#1273](https://github.com/algolia/algoliasearch-client-javascript/issues/1273)
+* fix(api-keys): fix typing issues (#1270) ([fec87a9](https://github.com/algolia/algoliasearch-client-javascript/commit/fec87a9)), closes [#1270](https://github.com/algolia/algoliasearch-client-javascript/issues/1270)
+
+
+
+## [v4.9.1](https://github.com/algolia/algoliasearch-client-javascript/compare/4.9.0...4.9.1)
+
+* fix(types): support `facetQuery` in `MultipleQueriesQuery` (#1267) ([84355a9](https://github.com/algolia/algoliasearch-client-javascript/commit/84355a9)), closes [#1267](https://github.com/algolia/algoliasearch-client-javascript/issues/1267)
+
+
+
 ## [v4.9.0](https://github.com/algolia/algoliasearch-client-javascript/compare/4.8.6...4.9.0)
 
 * feat(dictionaries): adds methods and tests (#1253) ([aed6554](https://github.com/algolia/algoliasearch-client-javascript/commit/aed6554)), closes [#1253](https://github.com/algolia/algoliasearch-client-javascript/issues/1253)

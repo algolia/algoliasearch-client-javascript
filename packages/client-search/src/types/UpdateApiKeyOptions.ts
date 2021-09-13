@@ -1,4 +1,11 @@
+import { ApiKeyACLType } from '.';
+
 export type UpdateApiKeyOptions = {
+  /**
+   * List of permissions the key contains.
+   */
+  readonly acl?: readonly ApiKeyACLType[];
+
   /**
    * A Unix timestamp used to define the expiration date of the API key.
    */
