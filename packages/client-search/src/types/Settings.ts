@@ -317,7 +317,7 @@ export type Settings = {
       /**
        * the ordering of facets (widgets)
        */
-      readonly facet?: {
+      readonly facets?: {
         /**
          * pinned order of facet lists
          */

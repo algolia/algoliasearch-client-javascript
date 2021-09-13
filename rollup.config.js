@@ -81,6 +81,7 @@ packagesConfig.push({
   packagesConfig.push({
     output: build === 'browser' ? 'algoliasearch' : 'algoliasearch-lite',
     package: 'algoliasearch',
+    name: 'algoliasearch',
     input: `src/builds/${build}.ts`,
     formats: ['esm-browser'],
     ignore: ['crypto'],
@@ -89,6 +90,7 @@ packagesConfig.push({
   packagesConfig.push({
     output: build === 'browser' ? 'algoliasearch' : 'algoliasearch-lite',
     package: 'algoliasearch',
+    name: 'algoliasearch',
     input: `src/builds/${build}.ts`,
     formats: ['umd'],
     external: ['dom'],
@@ -103,12 +105,14 @@ packagesConfig.push(
   {
     output: 'recommend',
     package: 'recommend',
+    name: '@algolia/recommend',
     input: `src/builds/browser.ts`,
     formats: ['esm-browser', 'umd'],
   },
   {
     output: 'recommend',
     package: 'recommend',
+    name: '@algolia/recommend',
     input: `src/builds/node.ts`,
     formats: ['cjs'],
   }
@@ -159,7 +163,7 @@ packagesConfig
       const isEsmBrowserBuild = /\.esm.browser.js$/.test(output.file);
 
       if (isUmdBuild) {
-        output.name = 'algoliasearch';
+        output.name = packageConfig.name;
         output.banner = createLicence(output.file);
       }
 

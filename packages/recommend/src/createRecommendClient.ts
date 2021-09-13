@@ -8,10 +8,10 @@ import {
 } from '@algolia/client-common';
 import { CallEnum, createTransporter, HostOptions } from '@algolia/transporter';
 
-import { RecommendClient, RecommendClientOptions } from './types';
+import { BaseRecommendClient, RecommendClientOptions } from './types';
 
 export const createRecommendClient: CreateClient<
-  RecommendClient,
+  BaseRecommendClient,
   RecommendClientOptions & ClientTransporterOptions
 > = options => {
   const appId = options.appId;

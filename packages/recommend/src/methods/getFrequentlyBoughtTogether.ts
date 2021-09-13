@@ -1,23 +1,18 @@
-import { RecommendClient, WithRecommendMethods } from '../types';
-import { getRecommendations, GetRecommendationsOptions } from './getRecommendations';
-
-export type GetFrequentlyBoughtTogetherOptions = Omit<
-  GetRecommendationsOptions,
-  'model' | 'fallbackParameters'
->;
+import { BaseRecommendClient, FrequentlyBoughtTogetherQuery, WithRecommendMethods } from '../types';
+import { getRecommendations } from './getRecommendations';
 
 export type GetFrequentlyBoughtTogether = (
-  base: RecommendClient
-) => WithRecommendMethods<RecommendClient>['getFrequentlyBoughtTogether'];
+  base: BaseRecommendClient
+) => WithRecommendMethods<BaseRecommendClient>['getFrequentlyBoughtTogether'];
 
 export const getFrequentlyBoughtTogether: GetFrequentlyBoughtTogether = base => {
-  return (options, requestOptions) => {
+  return (queries: readonly FrequentlyBoughtTogetherQuery[], requestOptions) => {
     return getRecommendations(base)(
-      {
-        ...options,
+      queries.map(query => ({
+        ...query,
         fallbackParameters: {},
         model: 'bought-together',
-      },
+      })),
       requestOptions
     );
   };

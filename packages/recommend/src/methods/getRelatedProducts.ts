@@ -1,19 +1,17 @@
-import { RecommendClient, WithRecommendMethods } from '../types';
-import { getRecommendations, GetRecommendationsOptions } from './getRecommendations';
-
-export type GetRelatedProductsOptions = Omit<GetRecommendationsOptions, 'model'>;
+import { BaseRecommendClient, RelatedProductsQuery, WithRecommendMethods } from '../types';
+import { getRecommendations } from './getRecommendations';
 
 export type GetRelatedProducts = (
-  base: RecommendClient
-) => WithRecommendMethods<RecommendClient>['getRelatedProducts'];
+  base: BaseRecommendClient
+) => WithRecommendMethods<BaseRecommendClient>['getRelatedProducts'];
 
 export const getRelatedProducts: GetRelatedProducts = base => {
-  return (options, requestOptions) => {
+  return (queries: readonly RelatedProductsQuery[], requestOptions) => {
     return getRecommendations(base)(
-      {
-        ...options,
+      queries.map(query => ({
+        ...query,
         model: 'related-products',
-      },
+      })),
       requestOptions
     );
   };

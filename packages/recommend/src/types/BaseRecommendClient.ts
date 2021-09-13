@@ -1,6 +1,6 @@
 import { Transporter } from '@algolia/transporter';
 
-export type RecommendClient = {
+export type BaseRecommendClient = {
   /**
    * The application id.
    */

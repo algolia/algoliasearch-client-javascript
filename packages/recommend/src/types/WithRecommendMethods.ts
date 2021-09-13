@@ -1,18 +1,16 @@
 import { MultipleQueriesResponse, SearchOptions } from '@algolia/client-search';
 import { RequestOptions } from '@algolia/transporter';
 
-import {
-  GetFrequentlyBoughtTogetherOptions,
-  GetRecommendationsOptions,
-  GetRelatedProductsOptions,
-} from '../methods';
+import { FrequentlyBoughtTogetherQuery } from './FrequentlyBoughtTogetherQuery';
+import { RecommendationsQuery } from './RecommendationsQuery';
+import { RelatedProductsQuery } from './RelatedProductsQuery';
 
 export type WithRecommendMethods<TType> = TType & {
   /**
    * Returns recommendations.
    */
   readonly getRecommendations: <TObject>(
-    options: GetRecommendationsOptions,
+    queries: readonly RecommendationsQuery[],
     requestOptions?: RequestOptions & SearchOptions
   ) => Readonly<Promise<MultipleQueriesResponse<TObject>>>;
 
@@ -20,7 +18,7 @@ export type WithRecommendMethods<TType> = TType & {
    * Returns [Related Products](https://algolia.com/doc/guides/algolia-ai/recommend/#related-products).
    */
   readonly getRelatedProducts: <TObject>(
-    options: GetRelatedProductsOptions,
+    queries: readonly RelatedProductsQuery[],
     requestOptions?: RequestOptions & SearchOptions
   ) => Readonly<Promise<MultipleQueriesResponse<TObject>>>;
 
@@ -28,7 +26,7 @@ export type WithRecommendMethods<TType> = TType & {
    * Returns [Frequently Bought Together](https://algolia.com/doc/guides/algolia-ai/recommend/#frequently-bought-together) products.
    */
   readonly getFrequentlyBoughtTogether: <TObject>(
-    options: GetFrequentlyBoughtTogetherOptions,
+    queries: readonly FrequentlyBoughtTogetherQuery[],
     requestOptions?: RequestOptions & SearchOptions
   ) => Readonly<Promise<MultipleQueriesResponse<TObject>>>;
 };

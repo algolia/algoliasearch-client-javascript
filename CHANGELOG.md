@@ -1,3 +1,41 @@
+## [v4.10.5](https://github.com/algolia/algoliasearch-client-javascript/compare/4.10.4...4.10.5)
+
+* fix(recommend): prevent `undefined` threshold (#1300) ([7d21d3c](https://github.com/algolia/algoliasearch-client-javascript/commit/7d21d3c)), closes [#1300](https://github.com/algolia/algoliasearch-client-javascript/issues/1300)
+
+
+
+## [v4.10.4](https://github.com/algolia/algoliasearch-client-javascript/compare/4.10.3...4.10.4)
+
+* fix(recommend): expose correct key on window in umd (#1298) ([169b12a](https://github.com/algolia/algoliasearch-client-javascript/commit/169b12a)), closes [#1298](https://github.com/algolia/algoliasearch-client-javascript/issues/1298)
+
+
+
+## [v4.10.3](https://github.com/algolia/algoliasearch-client-javascript/compare/4.10.2...4.10.3)
+
+* fix(answers): omit original hits in response (#1293) ([fb62b15](https://github.com/algolia/algoliasearch-client-javascript/commit/fb62b15)), closes [#1293](https://github.com/algolia/algoliasearch-client-javascript/issues/1293)
+* fix(facetOrdering): facetOrdering.facets, not .facet ([d931976](https://github.com/algolia/algoliasearch-client-javascript/commit/d931976))
+
+
+
+## [v4.10.2](https://github.com/algolia/algoliasearch-client-javascript/compare/4.10.0...4.10.2)
+
+* fix(recommend): export method types (#1287) ([95281fe](https://github.com/algolia/algoliasearch-client-javascript/commit/95281fe)), closes [#1287](https://github.com/algolia/algoliasearch-client-javascript/issues/1287)
+* chore(release): force public access on npm release (#1288) ([2fefd78](https://github.com/algolia/algoliasearch-client-javascript/commit/2fefd78)), closes [#1288](https://github.com/algolia/algoliasearch-client-javascript/issues/1288)
+
+
+
+## [v4.10.0](https://github.com/algolia/algoliasearch-client-javascript/compare/4.9.3...4.10.0)
+
+The `@algolia/client-recommendation` is now deprecated, please use `@algolia/client-personalization` instead. If you were using `initRecommendation` from the `algoliasearch` package, please use `initPersonalization` instead.
+
+
+
+* feat(recommend): introduce Recommend API client (#1280) ([97ebde6](https://github.com/algolia/algoliasearch-client-javascript/commit/97ebde6)), closes [#1280](https://github.com/algolia/algoliasearch-client-javascript/issues/1280) [#1278](https://github.com/algolia/algoliasearch-client-javascript/issues/1278)
+* feat(personalization): deprecate client-recommendation (#1278)
+* fix(rules): automaticOptionalFacetFilters type takes the same input as automaticFacetFilters (#1279) ([831a3de](https://github.com/algolia/algoliasearch-client-javascript/commit/831a3de)), closes [#1279](https://github.com/algolia/algoliasearch-client-javascript/issues/1279)
+
+
+
 ## [v4.9.3](https://github.com/algolia/algoliasearch-client-javascript/compare/4.9.2...4.9.3)
 
 * fix(ts): make all keys in facetOrdering optional ([d772f98](https://github.com/algolia/algoliasearch-client-javascript/commit/d772f98))
