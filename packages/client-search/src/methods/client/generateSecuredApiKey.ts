@@ -1,5 +1,5 @@
 import { serializeQueryParameters } from '@algolia/transporter';
-import * as crypto from 'crypto';
+import crypto from 'crypto';
 
 import { SecuredApiKeyRestrictions } from '../..';
 
