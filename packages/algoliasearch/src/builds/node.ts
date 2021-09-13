@@ -196,6 +196,21 @@ import { createUserAgent, RequestOptions } from '@algolia/transporter';
 
 import { AlgoliaSearchOptions, InitAnalyticsOptions, InitPersonalizationOptions } from '../types';
 
+// All exports
+export * from '@algolia/cache-common';
+export * from '@algolia/cache-in-memory';
+export * from '@algolia/client-analytics';
+export * from '@algolia/client-analytics';
+export * from '@algolia/client-common';
+export * from '@algolia/client-personalization';
+export * from '@algolia/client-search';
+export * from '@algolia/client-search';
+export * from '@algolia/logger-common';
+export * from '@algolia/requester-common';
+export * from '@algolia/requester-common';
+export * from '@algolia/requester-node-http';
+export * from '@algolia/cache-common';
+export * from '@algolia/client-common';
 export {
   GetPersonalizationStrategyResponse,
   PersonalizationStrategy,
@@ -203,21 +218,6 @@ export {
   RecommendationClientOptions,
   SetPersonalizationStrategyResponse,
 } from '@algolia/client-recommendation';
-
-export {
-  ABTest,
-  AnalyticsClient as BaseAnalyticsClient,
-  AnalyticsClientOptions,
-  AddABTestResponse,
-  GetABTestResponse,
-  GetABTestsOptions,
-  GetABTestsResponse,
-  StopABTestResponse,
-  DeleteABTestResponse,
-  Variant,
-  VariantResponse,
-} from '@algolia/client-analytics';
-
 export {
   RequestOptions,
   Transporter,
@@ -233,110 +233,11 @@ export {
   Request as TransporterRequest,
 } from '@algolia/transporter';
 
-export {
-  SearchIndex as BaseSearchIndex,
-  SearchResponse,
-  BatchRequest,
-  BatchResponse,
-  DeleteResponse,
-  GetObjectOptions,
-  ObjectWithObjectID,
-  GetObjectsOptions,
-  GetObjectsResponse,
-  ChunkOptions,
-  SaveObjectsOptions,
-  SaveObjectResponse,
-  ChunkedBatchResponse,
-  Settings,
-  SetSettingsResponse,
-  PartialUpdateObjectsOptions,
-  PartialUpdateObjectResponse,
-  DeleteByFiltersOptions,
-  BrowseOptions,
-  FindObjectOptions,
-  FindObjectResponse,
-  Synonym,
-  SaveSynonymsOptions,
-  SaveSynonymResponse,
-  SaveSynonymsResponse,
-  SearchSynonymsOptions,
-  SearchSynonymsResponse,
-  DeleteSynonymOptions,
-  ClearSynonymsOptions,
-  ReplaceAllObjectsOptions,
-  SearchRulesOptions,
-  Rule,
-  SaveRulesOptions,
-  SaveRuleResponse,
-  SaveRulesResponse,
-  ClearRulesOptions,
-  SearchClient as BaseSearchClient,
-  MultipleQueriesQuery,
-  MultipleQueriesOptions,
-  MultipleQueriesResponse,
-  SearchForFacetValuesResponse,
-  SearchForFacetValuesQueryParams,
-  SearchOptions,
-  MultipleBatchRequest,
-  MultipleBatchResponse,
-  MultipleGetObject,
-  MultipleGetObjectsResponse,
-  CopyIndexOptions,
-  IndexOperationResponse,
-  ListIndicesResponse,
-  GetLogsResponse,
-  ListClustersResponse,
-  GetApiKeyResponse,
-  AddApiKeyOptions,
-  AddApiKeyResponse,
-  ListApiKeysResponse,
-  UpdateApiKeyOptions,
-  UpdateApiKeyResponse,
-  DeleteApiKeyResponse,
-  RestoreApiKeyResponse,
-  AssignUserIDResponse,
-  AssignUserIDsResponse,
-  UserIDResponse,
-  SearchUserIDsOptions,
-  SearchUserIDsResponse,
-  ListUserIDsOptions,
-  ListUserIDsResponse,
-  GetTopUserIDsResponse,
-  RemoveUserIDResponse,
-  HasPendingMappingsOptions,
-  ScopeType,
-  Log,
-  Cluster,
-  Indice,
-  HasPendingMappingsResponse,
-  SecuredApiKeyRestrictions,
-  BatchActionType,
-  StrategyType,
-  Condition,
-  Consequence,
-  TimeRange,
-  FacetHit,
-  SynonymType,
-  ConsequenceParams,
-  ConsequencePromote,
-  ConsequenceQuery,
-  AutomaticFacetFilter,
-  SearchClientOptions,
-} from '@algolia/client-search';
+// To do: reup after eslint upgrade
+// export * as recommendation from '@algolia/client-recommendation';
+// export * as transporter from '@algolia/transporter';
 
-export { ClientTransporterOptions, AuthModeType, WaitablePromise } from '@algolia/client-common';
-
-export {
-  Destroyable,
-  Requester,
-  Request as RequesterRequest,
-  Response as RequesterResponse,
-  MethodType,
-} from '@algolia/requester-common';
-
-export { Cache, CacheEvents } from '@algolia/cache-common';
-
-export { Logger } from '@algolia/logger-common';
+export * from '../types';
 
 export default function algoliasearch(
   appId: string,
@@ -834,5 +735,3 @@ export type SearchClient = BaseSearchClient & {
    */
   readonly initRecommendation: (options?: InitPersonalizationOptions) => PersonalizationClient;
 } & Destroyable;
-
-export * from '../types';
