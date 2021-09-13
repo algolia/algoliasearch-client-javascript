@@ -200,13 +200,10 @@ import { AlgoliaSearchOptions, InitAnalyticsOptions, InitPersonalizationOptions 
 export * from '@algolia/cache-common';
 export * from '@algolia/cache-in-memory';
 export * from '@algolia/client-analytics';
-export * from '@algolia/client-analytics';
 export * from '@algolia/client-common';
 export * from '@algolia/client-personalization';
 export * from '@algolia/client-search';
-export * from '@algolia/client-search';
 export * from '@algolia/logger-common';
-export * from '@algolia/requester-common';
 export * from '@algolia/requester-common';
 export * from '@algolia/requester-node-http';
 export * from '@algolia/cache-common';
