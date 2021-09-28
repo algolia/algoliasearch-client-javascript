@@ -349,4 +349,14 @@ export type SearchOptions = {
    * less relevant results.
    */
   readonly relevancyStrictness?: number;
+
+  /**
+   * Whether this search should use Dynamic Re-Ranking.
+   * @link https://www.algolia.com/doc/guides/algolia-ai/re-ranking/
+   *
+   * Note: You need to turn on Dynamic Re-Ranking on your index for it to have an effect on
+   * your search results. You can do this through the Re-Ranking page on the dashboard.
+   * This parameter is only used to turn off Dynamic Re-Ranking (with false) at search time.
+   */
+  readonly enableReRanking?: boolean;
 };
