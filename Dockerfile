@@ -1,5 +1,5 @@
 # Dockerfile
-FROM node:10-alpine
+FROM node:12.16.2-alpine
 
 # Install the dependencies in the parent folder so they don't get overriden by the bind mount
 WORKDIR /

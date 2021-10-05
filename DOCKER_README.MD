@@ -1,5 +1,5 @@
 In this page you will find our recommended way of installing Docker on your machine. 
-This guide is made for OSX users.
+This guide is made for macOS users.
 
 ## Install docker
 
