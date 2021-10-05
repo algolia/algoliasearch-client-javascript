@@ -6,7 +6,7 @@ FROM $NODE_IMAGE
 # Install the dependencies in the parent folder so they don't get overriden by the bind mount
 WORKDIR /
 
-# Needed to compile some npm packages
+# We need to install some dependencies for bundlesize (https://github.com/siddharthkp/bundlesize/pull/370)
 RUN apk add --no-cache bash python3 make g++
 
 COPY package.json yarn.lock ./

@@ -28,7 +28,7 @@ docker run -it --rm --env ALGOLIA_APPLICATION_ID_1 \
                     --env ALGOLIA_ADMIN_KEY_1 \
                     --env ALGOLIA_SEARCH_KEY_1 \
                     --env ALGOLIA_APPLICATION_ID_2 \
-                    --env ALGOLIA_ADMIN_KEY_2
+                    --env ALGOLIA_ADMIN_KEY_2 \
                     --env ALGOLIA_APPLICATION_ID_MCM \
                     --env ALGOLIA_ADMIN_KEY_MCM \
 -v $PWD:/app -v /app/node_modules -w /app algolia-js bash
