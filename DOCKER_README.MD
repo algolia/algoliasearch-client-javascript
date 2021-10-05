@@ -8,7 +8,7 @@ Install [Docker Desktop](https://docs.docker.com/get-docker/).
 ## Build the image
 
 ```bash
-docker build -t algolia-js .
+docker build -t algolia-js --build-arg NODE_IMAGE=node:$(cat .nvmrc)-alpine .
 ```
 
 ## Run the image
