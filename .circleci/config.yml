@@ -32,9 +32,6 @@ version: 2.1
 jobs:
   test_build:
     description: Testing build & Test Size & Declarations File
-    parameters:
-      version:
-        type: string
     <<: *defaults
     steps:
       - checkout
