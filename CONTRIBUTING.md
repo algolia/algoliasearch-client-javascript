@@ -71,7 +71,7 @@ _Note that no new features will be developed or backported for the `vX` branches
 
 ### Docker
 
-If you don't want to install dependencies on your host machine, you can follow this [guide](http:s//github.com/algolia/algoliasearch-client-javascript/blob/master/DOCKER_README.MD) to run code inside a docker container but keep the source files on your favorite IDE.
+If you don't want to install dependencies on your host machine, you can follow this [guide](https://github.com/algolia/algoliasearch-client-javascript/blob/master/DOCKER_README.MD) to run code inside a docker container but keep the source files on your favorite IDE.
 
 ### Host machine
 
