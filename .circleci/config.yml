@@ -26,17 +26,12 @@ defaults: &defaults
     version:
       type: string
   docker:
-    - image: circleci/node:<< parameters.version >>
+    - image: cimg/node:<< parameters.version >>
 
 version: 2.1
 jobs:
   test_build:
     description: Testing build & Test Size & Declarations File
-    parameters:
-      version:
-        type: string
-    docker:
-      - image: circleci/node:<< parameters.version >>
     <<: *defaults
     steps:
       - checkout
@@ -113,7 +108,7 @@ jobs:
     working_directory: ~/algoliasearch-client-javascript
     description: Perform a new release of the JavaScript client
     docker:
-      - image: circleci/node:14
+      - image: cimg/node:14.17
     steps:
       - checkout
       - run:
@@ -128,15 +123,15 @@ workflows:
   ci:
     jobs:
       - test_unit:
-          version: '8'
+          version: '8.17'
           name: 'test_unit_8'
       - test_unit:
-          version: '14'
+          version: '14.17'
           name: 'test_unit_14'
       - test_lint:
-          version: '12'
+          version: '12.22'
       - test_types:
-          version: '12'
+          version: '12.22'
       - test_build:
           version: '12.16.2'
       - test_browser:
