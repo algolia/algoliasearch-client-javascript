@@ -4,6 +4,7 @@ import { createInMemoryCache } from '@algolia/cache-in-memory';
 import { AuthMode, version } from '@algolia/client-common';
 import {
   createSearchClient,
+  customRequest,
   findAnswers,
   FindAnswersOptions,
   FindAnswersResponse,
@@ -25,7 +26,7 @@ import {
 import { LogLevelEnum } from '@algolia/logger-common';
 import { createConsoleLogger } from '@algolia/logger-console';
 import { createBrowserXhrRequester } from '@algolia/requester-browser-xhr';
-import { createUserAgent, RequestOptions } from '@algolia/transporter';
+import { createUserAgent, Request, RequestOptions } from '@algolia/transporter';
 
 import { AlgoliaSearchOptions } from '../types';
 
@@ -67,6 +68,7 @@ export default function algoliasearch(
       searchForFacetValues: multipleSearchForFacetValues,
       multipleQueries,
       multipleSearchForFacetValues,
+      customRequest,
       initIndex: base => (indexName: string): SearchIndex => {
         return initIndex(base)(indexName, {
           methods: { search, searchForFacetValues, findAnswers },
@@ -109,6 +111,10 @@ export type SearchClient = BaseSearchClient & {
     }>,
     requestOptions?: RequestOptions
   ) => Readonly<Promise<readonly SearchForFacetValuesResponse[]>>;
+  readonly customRequest: <TResponse>(
+    request: Request,
+    requestOptions?: RequestOptions
+  ) => Readonly<Promise<TResponse>>;
 };
 
 export { WithoutCredentials, AlgoliaSearchOptions } from '../types';

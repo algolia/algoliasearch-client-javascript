@@ -10,6 +10,7 @@ export * from './copyIndex';
 export * from './copyRules';
 export * from './copySettings';
 export * from './copySynonyms';
+export * from './customRequest';
 export * from './deleteApiKey';
 export * from './deleteDictionaryEntries';
 export * from './generateSecuredApiKey';
