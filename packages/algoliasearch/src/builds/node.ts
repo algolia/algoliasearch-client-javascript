@@ -56,6 +56,7 @@ import {
   copySettings,
   copySynonyms,
   createSearchClient,
+  customRequest,
   deleteApiKey,
   DeleteApiKeyResponse,
   deleteBy,
@@ -192,7 +193,7 @@ import {
 import { createNullLogger } from '@algolia/logger-common';
 import { Destroyable } from '@algolia/requester-common';
 import { createNodeHttpRequester } from '@algolia/requester-node-http';
-import { createUserAgent, RequestOptions } from '@algolia/transporter';
+import { createUserAgent, Request, RequestOptions } from '@algolia/transporter';
 
 import { AlgoliaSearchOptions, InitAnalyticsOptions, InitPersonalizationOptions } from '../types';
 
@@ -276,6 +277,7 @@ export default function algoliasearch(
       searchDictionaryEntries,
       setDictionarySettings,
       waitAppTask,
+      customRequest,
       initIndex: base => (indexName: string): SearchIndex => {
         return initIndex(base)(indexName, {
           methods: {
@@ -685,6 +687,10 @@ export type SearchClient = BaseSearchClient & {
     taskID: number,
     requestOptions?: RequestOptions
   ) => Readonly<Promise<TaskStatusResponse>>;
+  readonly customRequest: <TResponse>(
+    request: Request,
+    requestOptions?: RequestOptions
+  ) => Readonly<Promise<TResponse>>;
   readonly initAnalytics: (options?: InitAnalyticsOptions) => AnalyticsClient;
   readonly initPersonalization: (options?: InitPersonalizationOptions) => PersonalizationClient;
   /**

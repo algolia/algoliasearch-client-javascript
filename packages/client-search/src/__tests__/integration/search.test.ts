@@ -1,4 +1,4 @@
-import { createObjectNotFoundError, SearchResponse } from '../..';
+import { createObjectNotFoundError, ListApiKeysResponse, SearchResponse } from '../..';
 import { waitResponses } from '../../../../client-common/src/__tests__/helpers';
 import { TestSuite } from '../../../../client-common/src/__tests__/TestSuite';
 
@@ -262,4 +262,10 @@ test('decompounding at query time', async () => {
   };
 
   expect(results.explain).toMatchObject(explain);
+});
+
+it('allows custom request', async () => {
+  const client = testSuite.makeSearchClient();
+  const res = await client.customRequest<ListApiKeysResponse>({ method: 'GET', path: '/1/keys' });
+  expect(res.keys.length).toBeGreaterThan(0);
 });
