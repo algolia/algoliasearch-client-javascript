@@ -5,7 +5,8 @@ const execa = require('execa');
 const targets = fs.readdirSync('packages').filter(f => fs.statSync(`packages/${f}`).isDirectory());
 const exclude = {
   all: '__tests__',
-  algoliasearch: 'builds|presets',
+  algoliasearch: 'builds',
+  recommend: 'builds',
   transporter: 'concerns',
 };
 
