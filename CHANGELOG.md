@@ -1,8 +1,5 @@
 ## [v4.11.0](https://github.com/algolia/algoliasearch-client-javascript/compare/4.10.5...4.11.0)
 
-* chore: dockerize development environment (#1308) ([7c38e64](https://github.com/algolia/algoliasearch-client-javascript/commit/7c38e64)), closes [#1308](https://github.com/algolia/algoliasearch-client-javascript/issues/1308)
-* chore(ci): remove unused travis config ([8011c0e](https://github.com/algolia/algoliasearch-client-javascript/commit/8011c0e))
-* fix(ci): update docker image (#1309) ([6223bf6](https://github.com/algolia/algoliasearch-client-javascript/commit/6223bf6)), closes [#1309](https://github.com/algolia/algoliasearch-client-javascript/issues/1309)
 * fix(insideBoundingBox): allow strings (#1310) ([87d5b0d](https://github.com/algolia/algoliasearch-client-javascript/commit/87d5b0d)), closes [#1310](https://github.com/algolia/algoliasearch-client-javascript/issues/1310)
 * feat: add custom request function (#1312) ([3cea192](https://github.com/algolia/algoliasearch-client-javascript/commit/3cea192)), closes [#1312](https://github.com/algolia/algoliasearch-client-javascript/issues/1312)
 * feat(ts): document enableReRanking (#1306) ([00ad924](https://github.com/algolia/algoliasearch-client-javascript/commit/00ad924)), closes [#1306](https://github.com/algolia/algoliasearch-client-javascript/issues/1306)
