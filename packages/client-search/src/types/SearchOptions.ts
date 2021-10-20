@@ -292,7 +292,7 @@ export type SearchOptions = {
   /**
    * Search inside a rectangular area (in geo coordinates).
    */
-  readonly insideBoundingBox?: ReadonlyArray<readonly number[]>;
+  readonly insideBoundingBox?: ReadonlyArray<readonly number[]> | string;
 
   /**
    * Search inside a polygon (in geo coordinates).
