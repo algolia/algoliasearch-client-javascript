@@ -35,11 +35,6 @@ jobs:
     <<: *defaults
     steps:
       - checkout
-      - run:
-        name: Install node version
-        command: nvm install << parameters.node_version_nvm >>
-        when:
-          condition: << parameters.node_version_nvm >>
       - run: *install_yarn_version
       - restore_cache: *restore_yarn_cache
       - run: *run_yarn_install
@@ -85,6 +80,11 @@ jobs:
     <<: *defaults
     steps:
       - checkout
+      - run:
+          name: Install node version
+          command: nvm install << parameters.node_version_nvm >>
+          # when:
+          #   condition: << parameters.node_version_nvm >>
       - run: *install_yarn_version
       - restore_cache: *restore_yarn_cache
       - run: *run_yarn_install
