@@ -23,10 +23,13 @@ aliases:
 defaults: &defaults
   working_directory: ~/algoliasearch-client-javascript
   parameters:
-    version:
+    cimg_version:
       type: string
+    node_version:
+      type: string
+      default: ''
   docker:
-    - image: cimg/node:<< parameters.version >>
+    - image: cimg/node:<< parameters.cimg_version >>
 
 version: 2.1
 jobs:
@@ -76,10 +79,19 @@ jobs:
           command: yarn test:types
 
   test_unit:
-    description: Testing code against node << parameters.version >>
+    description: Testing code against node << parameters.node_version >>
     <<: *defaults
     steps:
       - checkout
+      - run:
+          name: Install node version
+          command: |
+            if [ '<< parameters.node_version >>' ]; then
+              curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash;
+              export NVM_DIR="$HOME/.nvm";
+              [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh";
+              nvm install '<< parameters.node_version >>';
+            fi;
       - run: *install_yarn_version
       - restore_cache: *restore_yarn_cache
       - run: *run_yarn_install
@@ -123,19 +135,21 @@ workflows:
   ci:
     jobs:
       - test_unit:
-          version: '8.17'
+          # workaround: cimg/node:8 certificate is unsigned, we use nvm instead
+          cimg_version: '14.17'
+          node_version: '8.17'
           name: 'test_unit_8'
       - test_unit:
-          version: '14.17'
+          cimg_version: '14.17'
           name: 'test_unit_14'
       - test_lint:
-          version: '12.22'
+          cimg_version: '12.22'
       - test_types:
-          version: '12.22'
+          cimg_version: '12.22'
       - test_build:
-          version: '12.16.2'
+          cimg_version: '12.16.2'
       - test_browser:
-          version: '12.16.2'
+          cimg_version: '12.16.2'
       - release:
           requires:
             - test_unit_8
