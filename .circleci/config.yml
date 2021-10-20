@@ -86,9 +86,9 @@ jobs:
       - run:
           name: Install node version
           command: |
-            if [ '<< parameters.node_version_nvm >>' ]
-              nvm install '<< parameters.node_version_nvm >>'
-            fi
+            if [ '<< parameters.node_version_nvm >>' ]; then
+              nvm install '<< parameters.node_version_nvm >>';
+            fi;
       - run: *install_yarn_version
       - restore_cache: *restore_yarn_cache
       - run: *run_yarn_install
