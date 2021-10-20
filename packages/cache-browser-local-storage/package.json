@@ -1,6 +1,6 @@
 {
   "name": "@algolia/cache-browser-local-storage",
-  "version": "4.10.5",
+  "version": "4.11.0",
   "private": false,
   "description": "Promise-based cache library for browser using local storage.",
   "repository": {
@@ -17,6 +17,6 @@
     "dist"
   ],
   "dependencies": {
-    "@algolia/cache-common": "4.10.5"
+    "@algolia/cache-common": "4.11.0"
   }
 }

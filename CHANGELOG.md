@@ -1,3 +1,12 @@
+## [v4.11.0](https://github.com/algolia/algoliasearch-client-javascript/compare/4.10.5...4.11.0)
+
+* fix(insideBoundingBox): allow strings (#1310) ([87d5b0d](https://github.com/algolia/algoliasearch-client-javascript/commit/87d5b0d)), closes [#1310](https://github.com/algolia/algoliasearch-client-javascript/issues/1310)
+* feat: add custom request function (#1312) ([3cea192](https://github.com/algolia/algoliasearch-client-javascript/commit/3cea192)), closes [#1312](https://github.com/algolia/algoliasearch-client-javascript/issues/1312)
+* feat(ts): document enableReRanking (#1306) ([00ad924](https://github.com/algolia/algoliasearch-client-javascript/commit/00ad924)), closes [#1306](https://github.com/algolia/algoliasearch-client-javascript/issues/1306)
+* docs(recommend): add TSDoc (#1305) ([a5df2fb](https://github.com/algolia/algoliasearch-client-javascript/commit/a5df2fb)), closes [#1305](https://github.com/algolia/algoliasearch-client-javascript/issues/1305)
+
+
+
 ## [v4.10.5](https://github.com/algolia/algoliasearch-client-javascript/compare/4.10.4...4.10.5)
 
 * fix(recommend): prevent `undefined` threshold (#1300) ([7d21d3c](https://github.com/algolia/algoliasearch-client-javascript/commit/7d21d3c)), closes [#1300](https://github.com/algolia/algoliasearch-client-javascript/issues/1300)
