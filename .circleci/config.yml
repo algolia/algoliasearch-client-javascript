@@ -87,6 +87,7 @@ jobs:
           name: Install node version
           command: |
             if [ '<< parameters.node_version_nvm >>' ]; then
+              curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
               nvm install '<< parameters.node_version_nvm >>';
             fi;
       - run: *install_yarn_version
