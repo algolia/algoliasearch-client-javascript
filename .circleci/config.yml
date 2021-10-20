@@ -35,6 +35,11 @@ jobs:
     <<: *defaults
     steps:
       - checkout
+      - run:
+        name: Install node version
+        command: nvm install << parameters.node_version_nvm >>
+        when:
+          condition: << parameters.node_version_nvm >>
       - run: *install_yarn_version
       - restore_cache: *restore_yarn_cache
       - run: *run_yarn_install
@@ -123,7 +128,9 @@ workflows:
   ci:
     jobs:
       - test_unit:
-          version: '8.17'
+          # workaround: newer docker image, older node version
+          version: '14.17'
+          node_version_nvm: '8.17'
           name: 'test_unit_8'
       - test_unit:
           version: '14.17'
