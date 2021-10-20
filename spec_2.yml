@@ -1,0 +1,109 @@
+openapi: 3.0.0
+info:
+  title: Recommend API
+  description: API powering the Recommend feature of Algolia.
+  version: 0.1.0
+servers:
+  - url: https://{appid}-1.algolianet.com
+  - url: https://{appid}-2.algolianet.com
+  - url: https://{appid}-3.algolianet.com
+  - url: https://{appid}-dsn.algolianet.com
+paths:
+  /1/indexes/*/recommendations:
+    post:
+      operationId: getRecommendations
+      summary: Get recommendations for the given requests.
+      parameters:
+        - in: header
+          name: X-Algolia-Application-Id
+          description: Algolia appID
+          schema:
+            type: string
+        - in: header
+          name: X-Algolia-API-Key
+          description: Algolia API key
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  indexName:
+                    type: string
+                    example: products
+                  model:
+                    type: string
+                    enum: [related-products, bought-together]
+                  objectID:
+                    type: string
+                  threshold:
+                    type: number
+                    default: 0
+                    minimum: 0
+                    maximum: 1
+                  maxRecommendations:
+                    type: number
+                    default: 0
+                    example: 5
+                    minimum: 0
+                    maximum: 1000
+                  minRecommendations:
+                    type: number
+                    default: 0
+                    example: 3
+                    minimum: 0
+                    maximum: 1000
+                  queryParameters:
+                    type: object
+                    additionalProperties: true
+                    description: A key-value mapping of additional search parameters
+                    example:
+                      filters: "in_stock:true"
+                  fallbackParameters:
+                    type: object
+                    additionalProperties: true
+                    description: A key-value mapping of additional search parameters
+                    example:
+                      filters: "brand:apple"
+                required:
+                - indexName
+                - model
+                - objectID
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        hits:
+                          type: array
+                          items:
+                            type: object
+                            additionalProperties: {}
+                            properties:
+                              objectID:
+                                type: string
+                                example: objectID1
+                              _score:
+                                type: number
+                                minimum: 0
+                                maximum: 1
+                                example: 0.41
+                        nbHits:
+                          type: integer
+                        queryID:
+                          type: string
+                          pattern: '[a-f0-9]{32}'
+                          example: 43b15df305339e827f0ac0bdc5ebcaa7
