@@ -135,7 +135,7 @@ workflows:
   ci:
     jobs:
       - test_unit:
-          # workaround: newer docker image, older node version
+          # workaround: cimg/node:8 certificate is unsigned, we use nvm instead
           cimg_version: '14.17'
           node_version: '8.17'
           name: 'test_unit_8'
