@@ -3,7 +3,7 @@
  */
 
 export * from './GetPersonalizationStrategyResponse';
-export * from './PersonalizationStrategy';
 export * from './PersonalizationClient';
 export * from './PersonalizationClientOptions';
+export * from './PersonalizationStrategy';
 export * from './SetPersonalizationStrategyResponse';

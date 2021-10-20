@@ -51,7 +51,6 @@
     "barrelsby": "2.2.0",
     "bundlesize": "0.18.0",
     "dotenv": "8.2.0",
-    "dotenv-extended": "2.7.1",
     "eslint": "6.8.0",
     "eslint-config-algolia": "15.0.0",
     "eslint-config-prettier": "6.10.0",
