@@ -1,0 +1,13 @@
+node_modules
+.bash_profile
+.env
+dist
+yarn.lock
+
+*/*/.openapi-generator
+*/*/.swagger-codegen
+*/*/node_modules
+*/*/dist
+*/*/yarn.lock
+*/*/.openapi-generator-ignore
+*/*/.swagger-codegen-ignore
