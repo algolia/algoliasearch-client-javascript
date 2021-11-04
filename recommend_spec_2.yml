@@ -31,7 +31,6 @@ paths:
             schema:
               type: array
               items:
-                title: getRecommendationsRequest
                 type: object
                 properties:
                   indexName:
@@ -81,7 +80,6 @@ paths:
           content:
             application/json:
               schema:
-                title: getRecommendationsResponse
                 type: object
                 properties:
                   results:

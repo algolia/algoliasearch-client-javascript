@@ -1,32 +1,18 @@
 openapi: 3.0.0
 info:
-  title: Search API
-  description: API powering the Search feature of Algolia.
+  title: Recommend API
+  description: API powering the Recommend feature of Algolia.
   version: 0.1.0
 servers:
-  - url: https://{appId}-1.algolianet.com
-    variables:
-      appId:
-        default: test
-  - url: https://{appId}-2.algolianet.com
-    variables:
-      appId:
-        default: test
-  - url: https://{appId}-3.algolianet.com
-    variables:
-      appId:
-        default: test
-  - url: https://{appId}-dsn.algolianet.com
-    variables:
-      appId:
-        default: test
+  - url: https://{appid}-1.algolianet.com
+  - url: https://{appid}-2.algolianet.com
+  - url: https://{appid}-3.algolianet.com
+  - url: https://{appid}-dsn.algolianet.com
 paths:
-  /1/indexes/*/queries:
+  /1/indexes/*/recommendations:
     post:
-      tags:
-        - search
-      operationId: search
-      summary: Get search results for the given requests.
+      operationId: getRecommendations
+      summary: Get recommendations for the given requests.
       parameters:
         - in: header
           name: X-Algolia-Application-Id
@@ -45,39 +31,49 @@ paths:
             schema:
               type: array
               items:
-                title: multipleQueries
                 type: object
                 properties:
                   indexName:
                     type: string
                     example: products
-                    description: The Algolia index name
-                  query:
+                  model:
                     type: string
-                    description: The query to search for
-                  type:
+                    enum: [related-products, bought-together]
+                  objectID:
                     type: string
-                    enum: [default, facet]
-                    default: default
-                    description: Perform a search query with `default`, will search for facet values if `facet` is given
-                  facet:
-                    type: string
-                    description: The `facet` name
-                  params:
+                  threshold:
+                    type: number
+                    default: 0
+                    minimum: 0
+                    maximum: 1
+                  maxRecommendations:
+                    type: number
+                    default: 0
+                    example: 5
+                    minimum: 0
+                    maximum: 1000
+                  queryParameters:
                     type: object
                     additionalProperties: true
                     description: A key-value mapping of additional search parameters
                     example:
                       filters: 'in_stock:true'
+                  fallbackParameters:
+                    type: object
+                    additionalProperties: true
+                    description: A key-value mapping of additional search parameters
+                    example:
+                      filters: 'brand:apple'
                 required:
                   - indexName
+                  - model
+                  - objectID
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                title: multipleQueriesResponse
                 type: object
                 properties:
                   results:
@@ -94,6 +90,11 @@ paths:
                               objectID:
                                 type: string
                                 example: objectID1
+                              _score:
+                                type: number
+                                minimum: 0
+                                maximum: 1
+                                example: 0.41
                         nbHits:
                           type: integer
                         queryID:
