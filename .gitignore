@@ -2,12 +2,15 @@ node_modules
 .bash_profile
 .env
 dist
-yarn.lock
+.pnp.cjs
 
-*/*/.openapi-generator
-*/*/.swagger-codegen
-*/*/node_modules
-*/*/dist
-*/*/yarn.lock
-*/*/.openapi-generator-ignore
-*/*/.swagger-codegen-ignore
+yarn-error.log
+
+.yarn/*
+!.yarn/releases
+!.yarn/plugins
+
+*/.openapi-generator
+*/node_modules
+*/dist
+*/.openapi-generator-ignore

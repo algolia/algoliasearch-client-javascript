@@ -1,19 +1,25 @@
 {
   "name": "@algolia/automation-javascript-client",
   "version": "0.0.0",
+  "workspaces": [
+    "output"
+  ],
   "scripts": {
-    "generate": "yarn openapi-generator-cli generate --generator-key client",
+    "generate": "PACKAGE_VERSION='4.11.0' TS_POST_PROCESS_FILE='yarn prettier --write .' yarn openapi-generator-cli generate --generator-key client && yarn install",
     "client:build": "cd output/ && yarn install && yarn build && cd ..",
     "client:test": "yarn install && tsc && node dist/app.js",
     "clean:output": "rm -rf output/*",
-    "clean": "rm -rf dist node_modules build && yarn clean:output"
+    "clean": "rm -rf dist build node_modules"
   },
   "devDependencies": {
-    "@openapitools/openapi-generator-cli": "2.4.13",
+    "@openapitools/openapi-generator-cli": "^2.4.13",
+    "algoliasearch-client-javascript": "file:output/",
     "prettier": "2.4.1",
     "typescript": "4.4.4"
   },
-  "dependencies": {
-    "algoliasearch-client-javascript": "file:output/"
-  }
+  "engines": {
+    "node": ">= 12.0.0",
+    "yarn": ">= 2.0.0"
+  },
+  "packageManager": "yarn@3.0.2"
 }
