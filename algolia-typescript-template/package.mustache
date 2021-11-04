@@ -1,0 +1,32 @@
+{
+  "name": "{{npmName}}",
+  "version": "{{npmVersion}}",
+  "description": "JavaScript client for {{npmName}}",
+  "repository": "{{gitUserId}}/{{gitRepoId}}",
+  "author": "Algolia",
+  "private": true,
+  "license": "MIT",
+  "main": "dist/api.js",
+  "types": "dist/api.d.ts",
+  "scripts": {
+    "clean": "rm -Rf node_modules/ *.js",
+    "build": "tsc",
+    "test": "yarn build && node dist/client.js"
+  },
+  "engines": {
+    "node": ">= 12.0.0",
+    "yarn": ">= 2.0.0"
+  },
+  "dependencies": {
+    "@types/request": "^2.48.7",
+    "request": "^2.81.0"
+  },
+  "devDependencies": {
+    "@types/node": "^16.11.6",
+    "typescript": "^4.4.4"
+  }
+  {{#npmRepository}},
+  "publishConfig": {
+    "registry": "{{npmRepository}}"
+  }{{/npmRepository}}
+}

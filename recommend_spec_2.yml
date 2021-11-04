@@ -63,17 +63,17 @@ paths:
                     additionalProperties: true
                     description: A key-value mapping of additional search parameters
                     example:
-                      filters: "in_stock:true"
+                      filters: 'in_stock:true'
                   fallbackParameters:
                     type: object
                     additionalProperties: true
                     description: A key-value mapping of additional search parameters
                     example:
-                      filters: "brand:apple"
+                      filters: 'brand:apple'
                 required:
-                - indexName
-                - model
-                - objectID
+                  - indexName
+                  - model
+                  - objectID
       responses:
         '200':
           description: OK
