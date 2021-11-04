@@ -20,7 +20,6 @@ import { MultipleQueries } from './multipleQueries';
 import { MultipleQueriesResponse } from './multipleQueriesResponse';
 import { MultipleQueriesResponseResults } from './multipleQueriesResponseResults';
 
-/* tslint:disable:no-unused-variable */
 let primitives = ['string', 'boolean', 'double', 'integer', 'long', 'float', 'number', 'any'];
 
 let enumsMap: { [index: string]: any } = {

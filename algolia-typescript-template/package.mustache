@@ -3,6 +3,7 @@
   "version": "{{npmVersion}}",
   "description": "JavaScript client for {{npmName}}",
   "repository": "{{gitUserId}}/{{gitRepoId}}",
+  "author": "Algolia",
   "private": true,
   "license": "MIT",
   "main": "dist/api.js",
@@ -13,21 +14,18 @@
     "test": "yarn build && node dist/client.js"
   },
   "engines": {
-    "node": ">= 8.0.0",
-    "yarn": ">= 1.6.0"
+    "node": ">= 12.0.0",
+    "yarn": ">= 2.0.0"
   },
-  "author": "OpenAPI-Generator Contributors",
   "dependencies": {
-    "bluebird": "^3.5.0",
-    "request": "^2.81.0",
-    "@types/bluebird": "3.5.33",
-    "@types/request": "*",
-    "rewire": "^3.0.2"
+    "@types/request": "^2.48.7",
+    "request": "^2.81.0"
   },
   "devDependencies": {
-    "typescript": "^2.4.2",
-    "@types/node": "8.10.34"
-  }{{#npmRepository}},
+    "@types/node": "^16.11.6",
+    "typescript": "^4.4.4"
+  }
+  {{#npmRepository}},
   "publishConfig": {
     "registry": "{{npmRepository}}"
   }{{/npmRepository}}
