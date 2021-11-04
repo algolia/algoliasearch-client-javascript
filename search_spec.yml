@@ -1,0 +1,102 @@
+openapi: 3.0.0
+info:
+  title: Search API
+  description: API powering the Search feature of Algolia.
+  version: 0.1.0
+servers:
+  - url: https://{appId}-1.algolianet.com
+    variables:
+      appId:
+        default: test
+  - url: https://{appId}-2.algolianet.com
+    variables:
+      appId:
+        default: test
+  - url: https://{appId}-3.algolianet.com
+    variables:
+      appId:
+        default: test
+  - url: https://{appId}-dsn.algolianet.com
+    variables:
+      appId:
+        default: test
+paths:
+  /1/indexes/*/queries:
+    post:
+      tags:
+        - search
+      operationId: search
+      summary: Get search results for the given requests.
+      parameters:
+        - in: header
+          name: X-Algolia-Application-Id
+          description: Algolia appID
+          schema:
+            type: string
+        - in: header
+          name: X-Algolia-API-Key
+          description: Algolia API key
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                title: multipleQueries
+                type: object
+                properties:
+                  indexName:
+                    type: string
+                    example: products
+                    description: The Algolia index name
+                  query:
+                    type: string
+                    description: The query to search for
+                  type:
+                    type: string
+                    enum: [default, facet]
+                    default: default
+                    description: Perform a search query with `default`, will search for facet values if `facet` is given
+                  facet:
+                    type: string
+                    description: The `facet` name
+                  params:
+                    type: object
+                    additionalProperties: true
+                    description: A key-value mapping of additional search parameters
+                    example:
+                      filters: 'in_stock:true'
+                required:
+                  - indexName
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: multipleQueriesResponse
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        hits:
+                          type: array
+                          items:
+                            type: object
+                            additionalProperties: {}
+                            properties:
+                              objectID:
+                                type: string
+                                example: objectID1
+                        nbHits:
+                          type: integer
+                        queryID:
+                          type: string
+                          pattern: '[a-f0-9]{32}'
+                          example: 43b15df305339e827f0ac0bdc5ebcaa7

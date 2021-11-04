@@ -1,5 +1,0 @@
-{
-  "apiPackage": "algoliasearch-client-javascript",
-  "modelPropertyNaming": "camelCase",
-  "supportsES6": true
-}

@@ -3,17 +3,23 @@
 ## Install and setup env
 
 ```bash
-yarn && export PACKAGE_VERSION='4.11.0' TS_POST_PROCESS_FILE='yarn prettier --write .'
+nvm use && yarn && export PACKAGE_VERSION='4.11.0' TS_POST_PROCESS_FILE='yarn prettier --write .'
 ```
 
-## Generate
+## Generate client based on `spec.yml`
 
 ```bash
 yarn generate
 ```
 
-## Install clients
+## Build generated client
 
 ```bash
-yarn install-clients
+yarn client:build
+```
+
+## Test built client response
+
+```bash
+yarn client:test
 ```
