@@ -1,0 +1,16 @@
+node_modules
+.bash_profile
+.env
+dist
+.pnp.cjs
+
+yarn-error.log
+
+.yarn/*
+!.yarn/releases
+!.yarn/plugins
+
+*/.openapi-generator
+*/node_modules
+*/dist
+*/.openapi-generator-ignore
