@@ -1,15 +1,12 @@
 {
-  "name": "algoliasearch-client-javascript",
+  "name": "@algolia/automation-javascript-client",
   "version": "0.0.0",
   "scripts": {
-    "generate:openapi": "openapi-generator-cli generate --generator-key client",
-    "generate:swagger": "swagger-codegen generate -c swagger.json -i spec.yml -l typescript-axios -o output/client-swagger/",
-    "generate": "yarn generate:openapi && yarn generate:swagger",
-    "install:client-openapi": "cd output/client-openapi && yarn install && yarn build && cd ../..",
-    "install:client-swagger": "cd output/client-swagger && yarn install && yarn build && cd ../..",
-    "install-clients": "yarn install:client-openapi && yarn install:client-swagger",
-    "test:build": "tsc",
-    "test": "yarn test:build && node dist/app.js"
+    "generate": "yarn openapi-generator-cli generate --generator-key client",
+    "client:build": "cd output/ && yarn install && yarn build && cd ..",
+    "client:test": "yarn install && tsc && node dist/app.js",
+    "clean:output": "rm -rf output/*",
+    "clean": "rm -rf dist node_modules build && yarn clean:output"
   },
   "devDependencies": {
     "@openapitools/openapi-generator-cli": "2.4.13",
@@ -17,8 +14,6 @@
     "typescript": "4.4.4"
   },
   "dependencies": {
-    "algoliasearch-client-javascript": "file:output/client-swagger/",
-    "algoliasearch-client-javascript-openapi": "file:output/client-openapi/",
-    "algoliasearch-client-javascript-swagger": "file:output/client-swagger/"
+    "algoliasearch-client-javascript": "file:output/"
   }
 }

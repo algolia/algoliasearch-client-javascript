@@ -1,23 +1,25 @@
 {
   "$schema": "node_modules/@openapitools/openapi-generator-cli/config.schema.json",
-  "spaces": 2,
   "generator-cli": {
     "version": "5.2.1",
-    "enablePostProcessFile": true,
     "generators": {
       "client": {
         "generatorName": "typescript-node",
-        "output": "#{cwd}/output/client-openapi/",
-        "glob": "spec.yml",
+        "templateDir": "#{cwd}/algolia-typescript-template/",
+        "config": "#{cwd}/openapitools.json",
         "enablePostProcessFile": true,
+        "httpUserAgent": "Algolia for JavaScript ({packageVersion});",
+
+        "apiPackage": "client-search",
+        "output": "#{cwd}/output/",
+        "glob": "spec.yml",
         "gitHost": "algolia",
         "gitUserId": "algolia",
         "gitRepoId": "algoliasearch-client-javascript",
-        "httpUserAgent": "Algolia for JavaScript (${PACKAGE_VERSION});",
         "additionalProperties": {
-          "npmName": "algoliasearch-client-javascript-openapi",
           "supportsES6": "true",
-          "npmVersion": "${PACKAGE_VERSION}"
+          "npmName": "algoliasearch-client-javascript",
+          "npmVersion": "5.0.0"
         }
       }
     }

@@ -1,52 +1,25 @@
-import {
-  DefaultApi as DefaultOpenAPI,
-  GetRecommendationsRequest,
-} from 'algoliasearch-client-javascript-openapi';
-import { DefaultApi as DefaultSwaggerAPI } from 'algoliasearch-client-javascript-swagger';
-// not exported by default?
-import { GetRecommendationsRequestModelEnum } from 'algoliasearch-client-javascript-swagger/dist/models';
+import { SearchApi } from 'algoliasearch-client-javascript';
 
-const openApiClient = new DefaultOpenAPI();
-const swaggerClient = new DefaultSwaggerAPI();
+const client = new SearchApi();
 
-async function testClients() {
+async function testClient() {
   // test openapi gen
   try {
-    const openApiResult = await openApiClient.getRecommendations(
+    const res = await client.search(
       [
         {
-          indexName: 'gstar_demo_test',
-          model: GetRecommendationsRequest.ModelEnum['RelatedProducts'],
-          objectID: 'abcd',
+          indexName: 'docsearch',
+          query: 'crawler',
         },
       ],
-      'HYDY1KWTWB',
-      '28cf6d38411215e2eef188e635216508'
+      'R2IYF7ETH7',
+      'e1e920e59f457ec70473486171c1d3b6'
     );
 
-    console.log('[1-RESPONSE]', openApiResult);
+    console.log('[1-RESPONSE]', res);
   } catch (e) {
     console.error('[1-ERROR]', e);
   }
-
-  // test swagger gen
-  try {
-    const swaggerResult = await swaggerClient.getRecommendations(
-      [
-        {
-          indexName: 'gstar_demo_test',
-          model: GetRecommendationsRequestModelEnum['RelatedProducts'],
-          objectID: 'abcd',
-        },
-      ],
-      'HYDY1KWTWB',
-      '28cf6d38411215e2eef188e635216508'
-    );
-
-    console.log('[2-RESPONSE]', swaggerResult);
-  } catch (e) {
-    console.error('[2-ERROR]', e);
-  }
 }
 
-testClients();
+testClient();

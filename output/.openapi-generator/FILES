@@ -1,0 +1,11 @@
+.gitignore
+api.ts
+client-search/apis.ts
+client-search/searchApi.ts
+git_push.sh
+model/models.ts
+model/multipleQueries.ts
+model/multipleQueriesResponse.ts
+model/multipleQueriesResponseResults.ts
+package.json
+tsconfig.json
