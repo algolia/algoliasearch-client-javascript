@@ -1,0 +1,55 @@
+post:
+  tags:
+    - object
+  operationId: batch
+  summary: Performs multiple write operations in a single API call
+  parameters:
+    - $ref: "../../parameters.yml#/AppId"
+    - $ref: "../../parameters.yml#/ApiKey"
+    - $ref: "../../parameters.yml#/IndexName"
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: array
+          items:
+            title: operation
+            type: object
+            additionalProperties: false
+            properties:
+              action:
+                type: string
+                enum:
+                  - "addObject"
+                  - "updateObject"
+                  - "partialUpdateObject"
+                  - "partialUpdateObjectNoCreate"
+                  - "deleteObject"
+                  - "delete"
+                  - "clear"
+                description: type of operation
+              body:
+                type: object
+                # this could be a long oneOf with every possibilities
+                additionalProperties: true
+                description: arguments to the operation (depends on the type of the operation)
+  responses:
+    "200":
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: false
+            properties:
+              taskID:
+                type: integer
+              objectIDs:
+                type: array
+                items:
+                  type: string
+    "400":
+      $ref: "../../responses/BadRequest.yml"
+    "404":
+      $ref: "../../responses/IndexNotFound.yml"

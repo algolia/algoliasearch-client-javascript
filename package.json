@@ -6,6 +6,7 @@
   ],
   "scripts": {
     "generate": "PACKAGE_VERSION='4.11.0' TS_POST_PROCESS_FILE='yarn prettier --write .' yarn openapi-generator-cli generate --generator-key client && yarn install",
+    "build:spec": "yarn swagger-cli bundle openapi_spec/spec.yml --outfile dist/openapi.yml --type yaml",
     "client:build": "cd output/ && yarn install && yarn build && cd ..",
     "client:test": "yarn install && tsc && node dist/app.js",
     "clean:output": "rm -rf output/*",
@@ -21,5 +22,8 @@
     "node": ">= 12.0.0",
     "yarn": ">= 2.0.0"
   },
-  "packageManager": "yarn@3.0.2"
+  "packageManager": "yarn@3.0.2",
+  "dependencies": {
+    "swagger-cli": "^4.0.4"
+  }
 }
