@@ -1,0 +1,489 @@
+openapi: 3.0.0
+info:
+  title: Search API
+  description: API powering the Search feature of Algolia.
+  version: 0.1.0
+servers:
+  - url: https://{appId}-1.algolianet.com
+    variables:
+      appId:
+        default: test
+  - url: https://{appId}-2.algolianet.com
+    variables:
+      appId:
+        default: test
+  - url: https://{appId}-3.algolianet.com
+    variables:
+      appId:
+        default: test
+  - url: https://{appId}-dsn.algolianet.com
+    variables:
+      appId:
+        default: test
+paths:
+  /1/indexes/{indexName}/query:
+    post:
+      tags:
+        - search
+      operationId: searchSingle
+      summary: Get search results
+      parameters:
+        - $ref: '#/components/parameters/AppId'
+        - $ref: '#/components/parameters/ApiKey'
+        - $ref: '#/components/parameters/IndexName'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: singleQueryResponse
+                type: object
+                properties:
+                  hits:
+                    type: array
+                    items:
+                      type: object
+                      additionalProperties: {}
+                      properties:
+                        objectID:
+                          type: string
+                          example: objectID1
+                  nbHits:
+                    type: integer
+                  queryID:
+                    type: string
+                    pattern: '[a-f0-9]{32}'
+                    example: 43b15df305339e827f0ac0bdc5ebcaa7
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+  /1/indexes/*/queries:
+    post:
+      tags:
+        - search
+      operationId: searchMulti
+      summary: Get search results for the given requests.
+      parameters:
+        - $ref: '#/components/parameters/AppId'
+        - $ref: '#/components/parameters/ApiKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                title: multipleQueries
+                type: object
+                properties:
+                  indexName:
+                    type: string
+                    example: products
+                    description: The Algolia index name
+                  query:
+                    type: string
+                    description: The query to search for
+                  type:
+                    type: string
+                    enum: [default, facet]
+                    default: default
+                    description: Perform a search query with `default`, will search for facet values if `facet` is given
+                  facet:
+                    type: string
+                    description: The `facet` name
+                  params:
+                    type: object
+                    additionalProperties: true
+                    description: A key-value mapping of additional search parameters
+                    example:
+                      filters: 'in_stock:true'
+                required:
+                  - indexName
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: multipleQueriesResponse
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        hits:
+                          type: array
+                          items:
+                            type: object
+                            additionalProperties: {}
+                            properties:
+                              objectID:
+                                type: string
+                                example: objectID1
+                        nbHits:
+                          type: integer
+                        queryID:
+                          type: string
+                          pattern: '[a-f0-9]{32}'
+                          example: 43b15df305339e827f0ac0bdc5ebcaa7
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+  /1/indexes/{indexName}:
+    post:
+      tags:
+        - object
+      operationId: saveSingle
+      summary: Save object
+      description: Add an object to the index, automatically assigning it an object ID
+      parameters:
+        - $ref: '#/components/parameters/AppId'
+        - $ref: '#/components/parameters/ApiKey'
+        - $ref: '#/components/parameters/IndexName'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+  /1/indexes/{indexName}/batch:
+    post:
+      tags:
+        - object
+      operationId: batchSingle
+      summary: Performs multiple write operations in a single API call
+      parameters:
+        - $ref: '#/components/parameters/AppId'
+        - $ref: '#/components/parameters/ApiKey'
+        - $ref: '#/components/parameters/IndexName'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                title: operation
+                type: object
+                properties:
+                  action:
+                    type: string
+                    description: type of operation
+                  body:
+                    type: object
+                    description: arguments to the operation (depends on the type of the operation)
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  taskID:
+                    type: integer
+                  objectIDs:
+                    type: array
+                    items:
+                      type: string
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+components:
+  parameters:
+    AppId:
+      name: X-Algolia-Application-Id
+      in: header
+      description: Algolia appID
+      required: true
+      schema:
+        type: string
+        example: 'DJNVGS47DK'
+    ApiKey:
+      name: X-Algolia-API-Key
+      in: header
+      description: Algolia API key
+      required: true
+      schema:
+        type: string
+        example: 'sjzcj8gfe345adkb6gw3yul8hgredv34'
+    IndexName:
+      name: indexName
+      in: path
+      description: The index in which to perform the request
+      required: true
+      schema:
+        type: string
+        example: 'myIndexName'
+  responses:
+    BadRequest:
+      description: Bad request or request arguments
+      content:
+        application/json:
+          schema:
+             $ref: '#/components/schemas/Error'
+    IndexNotFound:
+      description: Index not found
+      content:
+        application/json:
+          schema:
+             $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+    SearchParams:
+      type: object
+      additionalProperties: false
+      properties:
+        query:
+          type: string
+          description: The text to search in the index.
+        similarQuery:
+          type: string
+          description: Overrides the query parameter and performs a more generic search that can be used to find “similar” results.
+        attributesToRetrieve:
+          type: array
+          items:
+            type: string
+          description: This parameter controls which attributes to retrieve and which not to retrieve.
+        restrictSearchableAttributes:
+          type: array
+          items:
+            type: string
+          description: Restricts a given query to look in only a subset of your searchable attributes.
+        relevancyStrictness:
+          type: string
+          description: Controls the relevancy threshold below which less relevant results aren’t included in the results.
+        filters:
+          type: array
+          items:
+            type: string
+          description: Filter the query with numeric, facet and/or tag filters.
+        facetFilters:
+          type: array
+          items:
+            type: string
+          description: Filter hits by facet value.
+        optionalFilters:
+          type: array
+          items:
+            type: string
+          description: Create filters for ranking purposes, where records that match the filter are ranked higher, or lower in the case of a negative optional filter.
+        numericFilters:
+          type: array
+          items:
+            type: string
+          description: Filter on numeric attributes.
+        tagFilters:
+          type: array
+          items:
+            type: string
+          description: Filter hits by tags.
+        sumOrFiltersScores:
+          type: string
+          description: Determines how to calculate the total score for filtering.
+        facets:
+          type: array
+          items:
+            type: string
+          description: Retrieve facets and their facet values.
+        maxValuesPerFacet:
+          type: integer
+          description: Maximum number of facet values to return for each facet during a regular search.
+        facetingAfterDistinct:
+          type: boolean
+          description: Force faceting to be applied after de-duplication (via the Distinct setting).
+        sortFacetValuesBy:
+          type: string
+          description: Controls how facet values are fetched.
+          default: 'count'
+        attributesToHighlight:
+          type: array
+          items:
+            type: string
+          description: List of attributes to highlight.
+        attributesToSnippet:
+          type: array
+          items:
+            type: string
+          description: List of attributes to snippet, with an optional maximum number of words to snippet.
+        highlightPreTag:
+          type: string
+          description: The HTML string to insert before the highlighted parts in all highlight and snippet results.
+        highlightPostTag:
+          type: string
+          description: The HTML string to insert after the highlighted parts in all highlight and snippet results.
+        snippetEllipsisText:
+          type: string
+          description: String used as an ellipsis indicator when a snippet is truncated.
+        restrictHighlightAndSnippetArrays:
+          type: string
+          description: Restrict highlighting and snippeting to items that matched the query.
+        page:
+          type: integer
+          description: Specify the page to retrieve.
+          default: 0
+        hitsPerPage:
+          type: integer
+          description: Set the number of hits per page.
+          default: 20
+        offset:
+          type: integer
+          description: Specify the offset of the first hit to return.
+          default: null
+        length:
+          type: integer
+          description: Set the number of hits to retrieve (used only with offset).
+        minWordSizefor1Typo:
+          type: integer
+          description: Minimum number of characters a word in the query string must contain to accept matches with 1 typo.
+        minWordSizefor2Typos:
+          type: integer
+          description: Minimum number of characters a word in the query string must contain to accept matches with 2 typos.
+        typoTolerance:
+          type: string
+          description: Controls whether typo tolerance is enabled and how it is applied.
+          default: true
+        allowTyposOnNumericTokens:
+          type: boolean
+          description: Whether to allow typos on numbers (“numeric tokens”) in the query string.
+        disableTypoToleranceOnAttributes:
+          type: string
+          description: List of attributes on which you want to disable typo tolerance.
+        aroundLatLng:
+          type: string
+          description: Search for entries around a central geolocation, enabling a geo search within a circular area.
+        aroundLatLngViaIP:
+          type: string
+          description: Search for entries around a given location automatically computed from the requester’s IP address.
+        aroundRadius:
+          type: string
+          description: Define the maximum radius for a geo search (in meters).
+        aroundPrecision:
+          type: string
+          description: Precision of geo search (in meters), to add grouping by geo location to the ranking formula.
+        minimumAroundRadius:
+          type: string
+          description: Minimum radius (in meters) used for a geo search when aroundRadius is not set.
+        insideBoundingBox:
+          type: string
+          description: Search inside a rectangular area (in geo coordinates).
+        insidePolygon:
+          type: string
+          description: Search inside a polygon (in geo coordinates).
+        ignorePlurals:
+          type: string
+          description: Treats singular, plurals, and other forms of declensions as matching terms.
+        removeStopWords:
+          type: string
+          description: Removes stop (common) words from the query before executing it.
+        queryLanguages:
+          type: string
+          description: Sets the languages to be used by language-specific settings and functionalities such as ignorePlurals, removeStopWords, and CJK word-detection.
+        naturalLanguages:
+          type: string
+          description: This parameter changes the default values of certain parameters and settings that work best for a natural language query, such as ignorePlurals, removeStopWords, removeWordsIfNoResults, analyticsTags and ruleContexts. These parameters and settings work well together when the query is formatted in natural language instead of keywords, for example when your user performs a voice search.
+        decompoundQuery:
+          type: string
+          description: Splits compound words into their composing atoms in the query.
+        enableRules:
+          type: string
+          description: Whether Rules should be globally enabled.
+        ruleContexts:
+          type: string
+          description: Enables contextual rules.
+        enablePersonalization:
+          type: string
+          description: Enable the Personalization feature.
+        personalizationImpact:
+          type: string
+          description: Define the impact of the Personalization feature.
+        userToken:
+          type: string
+          description: Associates a certain user token with the current search.
+        queryType:
+          type: string
+          description: Controls if and how query words are interpreted as prefixes.
+        removeWordsIfNoResults:
+          type: string
+          description: Selects a strategy to remove words from the query when it doesn’t match any hits.
+        advancedSyntax:
+          type: string
+          description: Enables the advanced query syntax.
+        optionalWords:
+          type: string
+          description: A list of words that should be considered as optional when found in the query.
+        disableExactOnAttributes:
+          type: string
+          description: List of attributes on which you want to disable the exact ranking criterion.
+        exactOnSingleWordQuery:
+          type: string
+          description: Controls how the exact ranking criterion is computed when the query contains only one word.
+        alternativesAsExact:
+          type: string
+          description: List of alternatives that should be considered an exact match by the exact ranking criterion.
+        advancedSyntaxFeatures:
+          type: string
+          description: Allows you to specify which advanced syntax features are active when ‘advancedSyntax’ is enabled.
+        distinct:
+          type: string
+          description: Enables de-duplication or grouping of results.
+        getRankingInfo:
+          type: string
+          description: Retrieve detailed ranking information.
+        clickAnalytics:
+          type: string
+          description: Enable the Click Analytics feature.
+        analytics:
+          type: string
+          description: Whether the current query will be taken into account in the Analytics.
+        analyticsTags:
+          type: string
+          description: List of tags to apply to the query for analytics purposes.
+        synonyms:
+          type: string
+          description: Whether to take into account an index’s synonyms for a particular search.
+        replaceSynonymsInHighlight:
+          type: string
+          description: Whether to highlight and snippet the original word that matches the synonym or the synonym itself.
+        minProximity:
+          type: string
+          description: Precision of the proximity ranking criterion.
+        responseFields:
+          type: string
+          description: Choose which fields to return in the API response. This parameters applies to search and browse queries.
+        maxFacetHits:
+          type: string
+          description: Maximum number of facet hits to return during a search for facet values.
+        percentileComputation:
+          type: string
+          description: Whether to include or exclude a query from the processing-time percentile computation.
+        attributeCriteriaComputedByMinProximity:
+          type: string
+          description: When attribute is ranked above proximity in your ranking formula, proximity is used to select which searchable attribute is matched in the attribute ranking stage.
+        enableABTest:
+          type: string
+          description: Whether this search should participate in running AB tests.
+        enableReRanking:
+          type: string
+          description: Whether this search should use AI Re-Ranking.
