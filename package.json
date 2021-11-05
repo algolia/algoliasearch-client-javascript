@@ -48,7 +48,7 @@
     "@wdio/selenium-standalone-service": "5.16.10",
     "@wdio/spec-reporter": "5.18.7",
     "@wdio/static-server-service": "5.16.10",
-    "barrelsby": "2.2.0",
+    "barrelsby": "2.3.0",
     "bundlesize": "0.18.0",
     "dotenv": "8.2.0",
     "eslint": "6.8.0",
