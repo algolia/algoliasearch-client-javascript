@@ -223,7 +223,7 @@ components:
       required: true
       schema:
         type: string
-        example: 'sjzcj8gfe345adkb6gw3yul8hgredv34'
+        example: '43b15df305339e827f0ac0bdc5ebcaa7'
     IndexName:
       name: indexName
       in: path
