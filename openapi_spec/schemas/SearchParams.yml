@@ -1,0 +1,449 @@
+type: object
+additionalProperties: false
+properties:
+query:
+  type: string
+  summary: The text to search in the index.
+  default: ""
+similarQuery:
+  type: string
+  summary: Overrides the query parameter and performs a more generic search that can be used to find “similar” results.
+  default: ""
+searchableAttributes:
+  type: array
+  items:
+    type: string
+  summary: The complete list of attributes used for searching.
+  default: []
+attributesForFaceting:
+  type: array
+  items:
+    type: string
+  summary: The complete list of attributes that will be used for faceting.
+  default: []
+unretrievableAttributes:
+  type: array
+  items:
+    type: string
+  summary: List of attributes that can’t be retrieved at query time.
+  default: []
+attributesToRetrieve:
+  type: array
+  items:
+    type: string
+  summary: This parameter controls which attributes to retrieve and which not to retrieve.
+  default: ["*"]
+restrictSearchableAttributes:
+  type: array
+  items:
+    type: string
+  summary: Restricts a given query to look in only a subset of your searchable attributes.
+  default: []
+ranking:
+  type: array
+  items:
+    type: string
+  summary: Controls how Algolia should sort your results.
+  default:
+    - "typo"
+    - "geo"
+    - "words"
+    - "filters"
+    - "proximity"
+    - "attribute"
+    - "exact"
+    - "custom"
+customRanking:
+  type: array
+  items:
+    type: string
+  summary: Specifies the custom ranking criterion.
+  default: []
+relevancyStrictness:
+  type: integer
+  summary: Controls the relevancy threshold below which less relevant results aren’t included in the results.
+  default: 100
+replicas:
+  type: array
+  items:
+    type: string
+  summary: Creates replicas, exact copies of an index.
+  default: []
+filters:
+  type: string
+  summary: Filter the query with numeric, facet and/or tag filters.
+  default: ""
+  # There could be a pattern for this one (complicated one)
+facetFilters:
+  type: array
+  items:
+    type: string
+  summary: Filter hits by facet value.
+  default: []
+optionalFilters:
+  type: array
+  items:
+    type: string
+  summary: Create filters for ranking purposes, where records that match the filter are ranked higher, or lower in the case of a negative optional filter.
+  default: []
+numericFilters:
+  type: array
+  items:
+    type: string
+  summary: Filter on numeric attributes.
+  default: []
+tagFilters:
+  type: array
+  items:
+    type: string
+  summary: Filter hits by tags.
+  default: []
+sumOrFiltersScores:
+  type: boolean
+  summary: Determines how to calculate the total score for filtering.
+  default: false
+facets:
+  type: array
+  items:
+    type: string
+  summary: Retrieve facets and their facet values.
+  default: []
+maxValuesPerFacet:
+  type: integer
+  summary: Maximum number of facet values to return for each facet during a regular search.
+  default: 100
+facetingAfterDistinct:
+  type: boolean
+  summary: Force faceting to be applied after de-duplication (via the Distinct setting).
+  default: false
+sortFacetValuesBy:
+  type: string
+  summary: Controls how facet values are fetched.
+  default: "count"
+attributesToHighlight:
+  type: array
+  items:
+    type: string
+  summary: List of attributes to highlight.
+attributesToSnippet:
+  type: array
+  items:
+    type: string
+  summary: List of attributes to snippet, with an optional maximum number of words to snippet.
+  default: []
+highlightPreTag:
+  type: string
+  summary: The HTML string to insert before the highlighted parts in all highlight and snippet results.
+  default: "<em>"
+highlightPostTag:
+  type: string
+  summary: The HTML string to insert after the highlighted parts in all highlight and snippet results.
+  default: "</em>"
+snippetEllipsisText:
+  type: string
+  summary: String used as an ellipsis indicator when a snippet is truncated.
+  default: "…"
+restrictHighlightAndSnippetArrays:
+  type: boolean
+  summary: Restrict highlighting and snippeting to items that matched the query.
+  default: false
+page:
+  type: integer
+  summary: Specify the page to retrieve.
+  default: 0
+hitsPerPage:
+  type: integer
+  summary: Set the number of hits per page.
+  default: 20
+offset:
+  type: integer
+  summary: Specify the offset of the first hit to return.
+  default: null
+length:
+  type: integer
+  summary: Set the number of hits to retrieve (used only with offset).
+  default: null
+paginationLimitedTo:
+  type: integer
+  summary: Set the maximum number of hits accessible via pagination.
+  default: 1000
+minWordSizefor1Typo:
+  type: integer
+  summary: Minimum number of characters a word in the query string must contain to accept matches with 1 typo.
+  default: 4
+minWordSizefor2Typos:
+  type: integer
+  summary: Minimum number of characters a word in the query string must contain to accept matches with 2 typos.
+  default: 8
+typoTolerance:
+  type: string
+  enum: [true, false, "min", "strict"]
+  summary: Controls whether typo tolerance is enabled and how it is applied.
+  default: true
+allowTyposOnNumericTokens:
+  type: boolean
+  summary: Whether to allow typos on numbers (“numeric tokens”) in the query string.
+  default: true
+disableTypoToleranceOnAttributes:
+  type: array
+  items:
+    type: string
+  summary: List of attributes on which you want to disable typo tolerance.
+  default: []
+disableTypoToleranceOnWords:
+  type: array
+  items:
+    type: string
+  summary: A list of words for which you want to turn off typo tolerance.
+  default: []
+separatorsToIndex:
+  type: string
+  summary: Control which separators are indexed.
+  default: ""
+aroundLatLng:
+  type: string
+  summary: Search for entries around a central geolocation, enabling a geo search within a circular area.
+  default: null
+aroundLatLngViaIP:
+  type: boolean
+  summary: Search for entries around a given location automatically computed from the requester’s IP address.
+  default: false
+aroundRadius:
+  type: string
+  summary: Define the maximum radius for a geo search (in meters).
+  default: null
+aroundPrecision:
+  type: integer
+  summary: Precision of geo search (in meters), to add grouping by geo location to the ranking formula.
+  default: 10
+minimumAroundRadius:
+  type: integer
+  summary: Minimum radius (in meters) used for a geo search when aroundRadius is not set.
+  default: null
+insideBoundingBox:
+  type: array
+  items:
+    type: float
+  summary: Search inside a rectangular area (in geo coordinates).
+  default: null
+insidePolygon:
+  type: array
+  items:
+    type: float
+  summary: Search inside a polygon (in geo coordinates).
+  default: null
+ignorePlurals:
+  type: string
+  summary: Treats singular, plurals, and other forms of declensions as matching terms.
+  default: false
+attributesToTransliterate:
+  type: array
+  summary: Specify on which attributes to apply transliteration.
+removeStopWords:
+  type: string
+  summary: Removes stop (common) words from the query before executing it.
+  default: false
+camelCaseAttributes:
+  type: array
+  items:
+    type: string
+  summary: List of attributes on which to do a decomposition of camel case words.
+  default: []
+decompoundedAttributes:
+  type: object
+  additionalProperties: true
+  summary: Specify on which attributes in your index Algolia should apply word segmentation, also known as decompounding.
+  default: {}
+keepDiacriticsOnCharacters:
+  type: string
+  summary: List of characters that the engine shouldn’t automatically normalize.
+  default: ""
+customNormalization:
+  type: object
+  additionalProperties: true
+  summary: Override the default normalization handled by the engine.
+  default: {}
+queryLanguages:
+  type: array
+  items:
+    type: string
+  summary: Sets the languages to be used by language-specific settings and functionalities such as ignorePlurals, removeStopWords, and CJK word-detection.
+  default: []
+indexLanguages:
+  type: array
+  items:
+    type: string
+  summary: Sets the languages at the index level for language-specific processing such as tokenization and normalization.
+  default: []
+naturalLanguages:
+  type: array
+  items:
+    type: string
+  summary: This parameter changes the default values of certain parameters and settings that work best for a natural language query, such as ignorePlurals, removeStopWords, removeWordsIfNoResults, analyticsTags and ruleContexts. These parameters and settings work well together when the query is formatted in natural language instead of keywords, for example when your user performs a voice search.
+  default: []
+decompoundQuery:
+  type: boolean
+  summary: Splits compound words into their composing atoms in the query.
+  default: true
+enableRules:
+  type: boolean
+  summary: Whether Rules should be globally enabled.
+  default: true
+filterPromotes:
+  type: boolean
+  summary: Whether promoted results should match the filters of the current search, except for geographic filters.
+  default: false
+ruleContexts:
+  type: array
+  items:
+    type: string
+  summary: Enables contextual rules.
+  default: []
+enablePersonalization:
+  type: boolean
+  summary: Enable the Personalization feature.
+  default: false
+personalizationImpact:
+  type: integer
+  summary: Define the impact of the Personalization feature.
+  default: 100
+userToken:
+  type: string
+  summary: Associates a certain user token with the current search.
+queryType:
+  type: string
+  enum: ["prefixLast", "prefixAll", "prefixNone"]
+  summary: Controls if and how query words are interpreted as prefixes.
+  default: "prefixLast"
+removeWordsIfNoResults:
+  type: string
+  enum: ["none", "lastWords", "firstWords", "allOptional"]
+  summary: Selects a strategy to remove words from the query when it doesn’t match any hits.
+  default: "none"
+advancedSyntax:
+  type: boolean
+  summary: Enables the advanced query syntax.
+  default: false
+optionalWords:
+  type: array
+  items:
+    type: string
+  summary: A list of words that should be considered as optional when found in the query.
+  default: []
+disablePrefixOnAttributes:
+  type: array
+  items:
+    type: string
+  summary: List of attributes on which you want to disable prefix matching.
+  default: []
+disableExactOnAttributes:
+  type: array
+  items:
+    type: string
+  summary: List of attributes on which you want to disable the exact ranking criterion.
+  default: []
+exactOnSingleWordQuery:
+  type: string
+  enum: ["attribute", "none", "word"]
+  summary: Controls how the exact ranking criterion is computed when the query contains only one word.
+  default: "attribute"
+alternativesAsExact:
+  type: array
+  items:
+    type: string
+    enum: ["ignorePlurals", "singleWordSynonym", "multiWordsSynonym"]
+  summary: List of alternatives that should be considered an exact match by the exact ranking criterion.
+  default: ["ignorePlurals", "singleWordSynonym"]
+advancedSyntaxFeatures:
+  type: array
+  items:
+    type: string
+    enums: ["exactPhrase", "excludeWords"]
+  summary: Allows you to specify which advanced syntax features are active when ‘advancedSyntax’ is enabled.
+  default: ["exactPhrase", "excludeWords"]
+numericAttributesForFiltering:
+  type: array
+  items:
+    type: string
+  summary: List of numeric attributes that can be used as numerical filters.
+  default: null
+allowCompressionOfIntegerArray:
+  type: boolean
+  summary: Enables compression of large integer arrays.
+  default: false
+attributeForDistinct:
+  type: string
+  summary: Name of the de-duplication attribute to be used with the distinct feature.
+  default: null
+distinct:
+  type: integer
+  min: 0
+  max: 4
+  summary: Enables de-duplication or grouping of results.
+  default: 0
+getRankingInfo:
+  type: boolean
+  summary: Retrieve detailed ranking information.
+  default: false
+clickAnalytics:
+  type: boolean
+  summary: Enable the Click Analytics feature.
+  default: false
+analytics:
+  type: boolean
+  summary: Whether the current query will be taken into account in the Analytics.
+  default: true
+analyticsTags:
+  type: array
+  items:
+    type: string
+  summary: List of tags to apply to the query for analytics purposes.
+  default: []
+synonyms:
+  type: boolean
+  summary: Whether to take into account an index’s synonyms for a particular search.
+  default: true
+replaceSynonymsInHighlight:
+  type: boolean
+  summary: Whether to highlight and snippet the original word that matches the synonym or the synonym itself.
+  default: false
+minProximity:
+  type: integer
+  min: 1
+  max: 7
+  summary: Precision of the proximity ranking criterion.
+  default: 1
+responseFields:
+  type: array
+  items:
+    type: string
+  summary: Choose which fields to return in the API response. This parameters applies to search and browse queries.
+maxFacetHits:
+  type: integer
+  summary: Maximum number of facet hits to return during a search for facet values.
+  default: 10
+percentileComputation:
+  type: boolean
+  summary: Whether to include or exclude a query from the processing-time percentile computation.
+  default: true
+attributeCriteriaComputedByMinProximity:
+  type: boolean
+  summary: When attribute is ranked above proximity in your ranking formula, proximity is used to select which searchable attribute is matched in the attribute ranking stage.
+  default: false
+userData:
+  type: object
+  additionalProperties: true
+  summary: Lets you store custom data in your indices.
+  default: {}
+enableABTest:
+  type: boolean
+  summary: Whether this search should participate in running AB tests.
+  default: true
+enableReRanking:
+  type: boolean
+  summary: Whether this search should use AI Re-Ranking.
+  default: true
+renderingContent:
+  type: object
+  summary: Content defining how the search interface should be rendered. Can be set via the settings for a default value and can be overridden via rules.
+  default: {}
