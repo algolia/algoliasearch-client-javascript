@@ -84,7 +84,7 @@
     "shipjs": "0.23.3",
     "sort-package-json": "1.40.0",
     "ts-jest": "25.2.1",
-    "ts-mockito": "2.5.0",
+    "ts-mockito": "2.6.1",
     "ts-node": "8.6.2",
     "typescript": "3.8.3",
     "webdriverio": "5.18.7",
