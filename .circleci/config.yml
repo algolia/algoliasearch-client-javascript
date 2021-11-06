@@ -120,7 +120,7 @@ jobs:
     working_directory: ~/algoliasearch-client-javascript
     description: Perform a new release of the JavaScript client
     docker:
-      - image: cimg/node:14.17
+      - image: cimg/node:14.18
     steps:
       - checkout
       - run:
