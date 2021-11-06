@@ -65,7 +65,7 @@
     "eslint-plugin-sonarjs": "0.5.0",
     "eslint-plugin-wdio": "5.13.2",
     "fs-extra": "8.1.0",
-    "glob": "7.1.6",
+    "glob": "7.2.0",
     "husky": "4.2.3",
     "jest": "25.1.0",
     "jest-mock-console": "1.0.0",
