@@ -12,33 +12,31 @@ post:
     content:
       application/json:
         schema:
-          allOf:
-            - $ref: "../../schemas/SearchParams.yml"
-            - type: object
-              properties:
-                requests:
-                  type: array
-                  items:
-                    title: operation
+          type: object
+          properties:
+            requests:
+              type: array
+              items:
+                title: operation
+                type: object
+                additionalProperties: false
+                properties:
+                  action:
+                    type: string
+                    enum:
+                      - "addObject"
+                      - "updateObject"
+                      - "partialUpdateObject"
+                      - "partialUpdateObjectNoCreate"
+                      - "deleteObject"
+                      - "delete"
+                      - "clear"
+                    description: type of operation
+                  body:
                     type: object
-                    additionalProperties: false
-                    properties:
-                      action:
-                        type: string
-                        enum:
-                          - "addObject"
-                          - "updateObject"
-                          - "partialUpdateObject"
-                          - "partialUpdateObjectNoCreate"
-                          - "deleteObject"
-                          - "delete"
-                          - "clear"
-                        description: type of operation
-                      body:
-                        type: object
-                        # this could be a long oneOf with every possibilities
-                        additionalProperties: true
-                        description: arguments to the operation (depends on the type of the operation)
+                    # this could be a long oneOf with every possibilities
+                    additionalProperties: true
+                    description: arguments to the operation (depends on the type of the operation)
   responses:
     "200":
       description: OK

@@ -11,35 +11,41 @@ post:
     content:
       application/json:
         schema:
-          type: array
-          items:
-            title: multipleQueries
-            type: object
-            additionalProperties: false
-            properties:
-              indexName:
-                type: string
-                example: products
-                description: The Algolia index name
-              query:
-                type: string
-                description: The query to search for
-              type:
-                type: string
-                enum: [default, facet]
-                default: default
-                description: Perform a search query with `default`, will search for facet values if `facet` is given
-              facet:
-                type: string
-                description: The `facet` name
-              params:
+          type: object
+          additionalProperties: false
+          properties:
+            requests:
+              type: array
+              items:
+                title: multipleQueries
                 type: object
-                additionalProperties: true
-                description: A key-value mapping of additional search parameters
-                example:
-                  filters: "in_stock:true"
-            required:
-              - indexName
+                additionalProperties: false
+                properties:
+                  indexName:
+                    type: string
+                    example: products
+                    description: The Algolia index name
+                  query:
+                    type: string
+                    description: The query to search for
+                  type:
+                    type: string
+                    enum: [default, facet]
+                    default: default
+                    description: Perform a search query with `default`, will search for facet values if `facet` is given
+                  facet:
+                    type: string
+                    description: The `facet` name
+                  params:
+                    type: string
+                    description: A query string of search parameters
+                required:
+                  - indexName
+            strategy:
+              type: string
+              enum: ["none", "stopIfEnoughMatches"]
+          required:
+            - requests
   responses:
     "200":
       description: OK

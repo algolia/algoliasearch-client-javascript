@@ -24,8 +24,10 @@ post:
             type: object
             additionalProperties: false
             properties:
+              createdAt:
+                type: string
               taskID:
-                type: number
+                type: integer
               objectID:
                 type: string
     "400":
