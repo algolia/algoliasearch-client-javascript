@@ -1,12 +1,12 @@
 post:
   tags:
-    - object
+    - search
   operationId: batch
   summary: Performs multiple write operations in a single API call
   parameters:
-    - $ref: "../../parameters.yml#/AppId"
-    - $ref: "../../parameters.yml#/ApiKey"
-    - $ref: "../../parameters.yml#/IndexName"
+    - $ref: '../../parameters.yml#/AppId'
+    - $ref: '../../parameters.yml#/ApiKey'
+    - $ref: '../../parameters.yml#/IndexName'
   requestBody:
     required: true
     content:
@@ -24,13 +24,13 @@ post:
                   action:
                     type: string
                     enum:
-                      - "addObject"
-                      - "updateObject"
-                      - "partialUpdateObject"
-                      - "partialUpdateObjectNoCreate"
-                      - "deleteObject"
-                      - "delete"
-                      - "clear"
+                      - 'addObject'
+                      - 'updateObject'
+                      - 'partialUpdateObject'
+                      - 'partialUpdateObjectNoCreate'
+                      - 'deleteObject'
+                      - 'delete'
+                      - 'clear'
                     description: type of operation
                   body:
                     type: object
@@ -38,7 +38,7 @@ post:
                     additionalProperties: true
                     description: arguments to the operation (depends on the type of the operation)
   responses:
-    "200":
+    '200':
       description: OK
       content:
         application/json:
@@ -52,7 +52,7 @@ post:
                 type: array
                 items:
                   type: string
-    "400":
-      $ref: "../../responses/BadRequest.yml"
-    "404":
-      $ref: "../../responses/IndexNotFound.yml"
+    '400':
+      $ref: '../../responses/BadRequest.yml'
+    '404':
+      $ref: '../../responses/IndexNotFound.yml'

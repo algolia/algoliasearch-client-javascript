@@ -4,13 +4,13 @@ post:
   operationId: search
   summary: Get search results
   parameters:
-    - $ref: "../../parameters.yml#/AppId"
-    - $ref: "../../parameters.yml#/ApiKey"
-    - $ref: "../../parameters.yml#/IndexName"
+    - $ref: '../../parameters.yml#/AppId'
+    - $ref: '../../parameters.yml#/ApiKey'
+    - $ref: '../../parameters.yml#/IndexName'
   requestBody:
-    $ref: "../../schemas/SearchParams.yml"
+    $ref: '../../schemas/SearchParams.yml'
   responses:
-    "200":
+    '200':
       description: OK
       content:
         application/json:
@@ -32,9 +32,9 @@ post:
                 type: integer
               queryID:
                 type: string
-                pattern: "[a-f0-9]{32}"
+                pattern: '[a-f0-9]{32}'
                 example: 43b15df305339e827f0ac0bdc5ebcaa7
-    "400":
-      $ref: "../../responses/BadRequest.yml"
-    "404":
-      $ref: "../../responses/IndexNotFound.yml"
+    '400':
+      $ref: '../../responses/BadRequest.yml'
+    '404':
+      $ref: '../../responses/IndexNotFound.yml'

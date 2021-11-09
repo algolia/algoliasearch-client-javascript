@@ -4,11 +4,11 @@ properties:
   query:
     type: string
     description: The text to search in the index.
-    default: ""
+    default: ''
   similarQuery:
     type: string
-    description: Overrides the query parameter and performs a more generic search that can be used to find “similar” results.
-    default: ""
+    description: Overrides the query parameter and performs a more generic search that can be used to find "similar" results.
+    default: ''
   searchableAttributes:
     type: array
     items:
@@ -32,7 +32,7 @@ properties:
     items:
       type: string
     description: This parameter controls which attributes to retrieve and which not to retrieve.
-    default: ["*"]
+    default: ['*']
   restrictSearchableAttributes:
     type: array
     items:
@@ -45,14 +45,14 @@ properties:
       type: string
     description: Controls how Algolia should sort your results.
     default:
-      - "typo"
-      - "geo"
-      - "words"
-      - "filters"
-      - "proximity"
-      - "attribute"
-      - "exact"
-      - "custom"
+      - 'typo'
+      - 'geo'
+      - 'words'
+      - 'filters'
+      - 'proximity'
+      - 'attribute'
+      - 'exact'
+      - 'custom'
   customRanking:
     type: array
     items:
@@ -72,7 +72,7 @@ properties:
   filters:
     type: string
     description: Filter the query with numeric, facet and/or tag filters.
-    default: ""
+    default: ''
     # There could be a pattern for this one (complicated one)
   facetFilters:
     type: array
@@ -119,7 +119,7 @@ properties:
   sortFacetValuesBy:
     type: string
     description: Controls how facet values are fetched.
-    default: "count"
+    default: 'count'
   attributesToHighlight:
     type: array
     items:
@@ -134,15 +134,15 @@ properties:
   highlightPreTag:
     type: string
     description: The HTML string to insert before the highlighted parts in all highlight and snippet results.
-    default: "<em>"
+    default: '<em>'
   highlightPostTag:
     type: string
     description: The HTML string to insert after the highlighted parts in all highlight and snippet results.
-    default: "</em>"
+    default: '</em>'
   snippetEllipsisText:
     type: string
     description: String used as an ellipsis indicator when a snippet is truncated.
-    default: "…"
+    default: '…'
   restrictHighlightAndSnippetArrays:
     type: boolean
     description: Restrict highlighting and snippeting to items that matched the query.
@@ -177,7 +177,7 @@ properties:
     default: 8
   typoTolerance:
     type: string
-    enum: [true, false, "min", "strict"]
+    enum: [true, false, 'min', 'strict']
     description: Controls whether typo tolerance is enabled and how it is applied.
     default: true
   allowTyposOnNumericTokens:
@@ -199,7 +199,7 @@ properties:
   separatorsToIndex:
     type: string
     description: Control which separators are indexed.
-    default: ""
+    default: ''
   aroundLatLng:
     type: string
     description: Search for entries around a central geolocation, enabling a geo search within a circular area.
@@ -259,7 +259,7 @@ properties:
   keepDiacriticsOnCharacters:
     type: string
     description: List of characters that the engine shouldn’t automatically normalize.
-    default: ""
+    default: ''
   customNormalization:
     type: object
     additionalProperties: true
@@ -314,14 +314,14 @@ properties:
     description: Associates a certain user token with the current search.
   queryType:
     type: string
-    enum: ["prefixLast", "prefixAll", "prefixNone"]
+    enum: ['prefixLast', 'prefixAll', 'prefixNone']
     description: Controls if and how query words are interpreted as prefixes.
-    default: "prefixLast"
+    default: 'prefixLast'
   removeWordsIfNoResults:
     type: string
-    enum: ["none", "lastWords", "firstWords", "allOptional"]
+    enum: ['none', 'lastWords', 'firstWords', 'allOptional']
     description: Selects a strategy to remove words from the query when it doesn’t match any hits.
-    default: "none"
+    default: 'none'
   advancedSyntax:
     type: boolean
     description: Enables the advanced query syntax.
@@ -346,23 +346,23 @@ properties:
     default: []
   exactOnSingleWordQuery:
     type: string
-    enum: ["attribute", "none", "word"]
+    enum: ['attribute', 'none', 'word']
     description: Controls how the exact ranking criterion is computed when the query contains only one word.
-    default: "attribute"
+    default: 'attribute'
   alternativesAsExact:
     type: array
     items:
       type: string
-      enum: ["ignorePlurals", "singleWordSynonym", "multiWordsSynonym"]
+      enum: ['ignorePlurals', 'singleWordSynonym', 'multiWordsSynonym']
     description: List of alternatives that should be considered an exact match by the exact ranking criterion.
-    default: ["ignorePlurals", "singleWordSynonym"]
+    default: ['ignorePlurals', 'singleWordSynonym']
   advancedSyntaxFeatures:
     type: array
     items:
       type: string
-      enum: ["exactPhrase", "excludeWords"]
+      enum: ['exactPhrase', 'excludeWords']
     description: Allows you to specify which advanced syntax features are active when ‘advancedSyntax’ is enabled.
-    default: ["exactPhrase", "excludeWords"]
+    default: ['exactPhrase', 'excludeWords']
   numericAttributesForFiltering:
     type: array
     items:

@@ -5,8 +5,8 @@ AppId:
   required: true
   schema:
     type: string
-    pattern: "^(?:beta|testing)?[A-Z0-9]{10}$"
-    example: "DJNVGS47DK"
+    pattern: '^(?:beta|testing)?[A-Z0-9]{10}$'
+    example: 'DJNVGS47DK'
 ApiKey:
   name: X-Algolia-API-Key
   in: header
@@ -14,8 +14,8 @@ ApiKey:
   required: true
   schema:
     type: string
-    pattern: "^[a-f0-9]{32}$"
-    example: "43b15df305339e827f0ac0bdc5ebcaa7"
+    pattern: '^[a-f0-9]{32}$'
+    example: '43b15df305339e827f0ac0bdc5ebcaa7'
 IndexName:
   name: indexName
   in: path
@@ -23,4 +23,4 @@ IndexName:
   required: true
   schema:
     type: string
-    example: "myIndexName"
+    example: 'myIndexName'

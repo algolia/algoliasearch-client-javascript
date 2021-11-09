@@ -25,8 +25,8 @@ paths:
   # /1/indexes/{indexName}/query:
   #   $ref: "./paths/indexes/search.yml"
   /1/indexes/*/queries:
-    $ref: "./paths/indexes/searchMulti.yml"
+    $ref: './paths/indexes/multipleQueries.yml'
   /1/indexes/{indexName}:
-    $ref: "./paths/indexes/saveObject.yml"
+    $ref: './paths/indexes/saveObject.yml'
   /1/indexes/{indexName}/batch:
-    $ref: "./paths/indexes/batch.yml"
+    $ref: './paths/indexes/batch.yml'

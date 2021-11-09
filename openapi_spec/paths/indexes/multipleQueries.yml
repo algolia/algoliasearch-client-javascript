@@ -1,11 +1,11 @@
 post:
   tags:
     - search
-  operationId: searchMulti
+  operationId: multipleQueries
   summary: Get search results for the given requests.
   parameters:
-    - $ref: "../../parameters.yml#/AppId"
-    - $ref: "../../parameters.yml#/ApiKey"
+    - $ref: '../../parameters.yml#/AppId'
+    - $ref: '../../parameters.yml#/ApiKey'
   requestBody:
     required: true
     content:
@@ -43,11 +43,11 @@ post:
                   - indexName
             strategy:
               type: string
-              enum: ["none", "stopIfEnoughMatches"]
+              enum: ['none', 'stopIfEnoughMatches']
           required:
             - requests
   responses:
-    "200":
+    '200':
       description: OK
       content:
         application/json:
@@ -75,9 +75,9 @@ post:
                       type: integer
                     queryID:
                       type: string
-                      pattern: "[a-f0-9]{32}"
+                      pattern: '[a-f0-9]{32}'
                       example: 43b15df305339e827f0ac0bdc5ebcaa7
-    "400":
-      $ref: "../../responses/BadRequest.yml"
-    "404":
-      $ref: "../../responses/IndexNotFound.yml"
+    '400':
+      $ref: '../../responses/BadRequest.yml'
+    '404':
+      $ref: '../../responses/IndexNotFound.yml'
