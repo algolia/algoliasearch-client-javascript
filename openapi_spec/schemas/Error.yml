@@ -4,4 +4,4 @@ additionalProperties: true
 properties:
   message:
     type: string
-    example: 'Invalid application id'
+    example: 'Invalid Application-Id or API-Key'
