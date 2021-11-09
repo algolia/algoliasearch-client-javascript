@@ -5,9 +5,9 @@ post:
   summary: Save object
   description: Add an object to the index, automatically assigning it an object ID
   parameters:
-    - $ref: "../../parameters.yml#/AppId"
-    - $ref: "../../parameters.yml#/ApiKey"
-    - $ref: "../../parameters.yml#/IndexName"
+    - $ref: '../../parameters.yml#/AppId'
+    - $ref: '../../parameters.yml#/ApiKey'
+    - $ref: '../../parameters.yml#/IndexName'
   requestBody:
     required: true
     content:
@@ -16,7 +16,7 @@ post:
           type: object
           additionalProperties: true
   responses:
-    "200":
+    '200':
       description: OK
       content:
         application/json:
@@ -30,7 +30,7 @@ post:
                 type: integer
               objectID:
                 type: string
-    "400":
-      $ref: "../../responses/BadRequest.yml"
-    "404":
-      $ref: "../../responses/IndexNotFound.yml"
+    '400':
+      $ref: '../../responses/BadRequest.yml'
+    '404':
+      $ref: '../../responses/IndexNotFound.yml'
