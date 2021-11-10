@@ -213,7 +213,7 @@ export default function algoliasearch(
     requester: createNodeHttpRequester(),
     logger: createNullLogger(),
     responsesCache: createNullCache(),
-    requestsCache: createNullCache(),
+    requestsCache: createInMemoryCache({ serializable: false }),
     hostsCache: createInMemoryCache(),
     userAgent: createUserAgent(version).add({
       segment: 'Node.js',
