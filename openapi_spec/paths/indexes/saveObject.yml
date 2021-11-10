@@ -1,6 +1,6 @@
 post:
   tags:
-    - object
+    - search
   operationId: saveObject
   summary: Save object
   description: Add an object to the index, automatically assigning it an object ID
