@@ -2,10 +2,10 @@ import localVarRequest from 'request';
 import http from 'http';
 
 import { BatchObject } from '../model/batchObject';
-import { InlineResponse200 } from '../model/inlineResponse200';
-import { InlineResponse2001 } from '../model/inlineResponse2001';
+import { BatchResponse } from '../model/batchResponse';
 import { MultipleQueriesObject } from '../model/multipleQueriesObject';
 import { MultipleQueriesResponse } from '../model/multipleQueriesResponse';
+import { SaveObjectResponse } from '../model/saveObjectResponse';
 
 import { ObjectSerializer, Authentication, VoidAuth, Interceptor } from '../model/models';
 
@@ -89,7 +89,7 @@ export class SearchApi {
     indexName: string,
     batchObject: BatchObject,
     options: { headers: { [name: string]: string } } = { headers: {} }
-  ): Promise<{ response: http.IncomingMessage; body: InlineResponse2001 }> {
+  ): Promise<{ response: http.IncomingMessage; body: BatchResponse }> {
     const localVarPath =
       this.basePath +
       '/1/indexes/{indexName}/batch'.replace(
@@ -171,13 +171,13 @@ export class SearchApi {
           localVarRequestOptions.form = localVarFormParams;
         }
       }
-      return new Promise<{ response: http.IncomingMessage; body: InlineResponse2001 }>(
+      return new Promise<{ response: http.IncomingMessage; body: BatchResponse }>(
         (resolve, reject) => {
           localVarRequest(localVarRequestOptions, (error, response, body) => {
             if (error) {
               reject(error);
             } else {
-              body = ObjectSerializer.deserialize(body, 'InlineResponse2001');
+              body = ObjectSerializer.deserialize(body, 'BatchResponse');
               if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
                 resolve({ response: response, body: body });
               } else {
@@ -307,7 +307,7 @@ export class SearchApi {
     indexName: string,
     requestBody: { [key: string]: object },
     options: { headers: { [name: string]: string } } = { headers: {} }
-  ): Promise<{ response: http.IncomingMessage; body: InlineResponse200 }> {
+  ): Promise<{ response: http.IncomingMessage; body: SaveObjectResponse }> {
     const localVarPath =
       this.basePath +
       '/1/indexes/{indexName}'.replace(
@@ -393,13 +393,13 @@ export class SearchApi {
           localVarRequestOptions.form = localVarFormParams;
         }
       }
-      return new Promise<{ response: http.IncomingMessage; body: InlineResponse200 }>(
+      return new Promise<{ response: http.IncomingMessage; body: SaveObjectResponse }>(
         (resolve, reject) => {
           localVarRequest(localVarRequestOptions, (error, response, body) => {
             if (error) {
               reject(error);
             } else {
-              body = ObjectSerializer.deserialize(body, 'InlineResponse200');
+              body = ObjectSerializer.deserialize(body, 'SaveObjectResponse');
               if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
                 resolve({ response: response, body: body });
               } else {

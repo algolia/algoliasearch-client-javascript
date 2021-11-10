@@ -21,6 +21,7 @@ post:
       content:
         application/json:
           schema:
+            title: saveObjectResponse
             type: object
             additionalProperties: false
             properties:
