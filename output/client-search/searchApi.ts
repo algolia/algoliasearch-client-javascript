@@ -1,10 +1,10 @@
 import localVarRequest from 'request';
 import http from 'http';
 
-import { InlineObject } from '../model/inlineObject';
-import { InlineObject1 } from '../model/inlineObject1';
+import { BatchObject } from '../model/batchObject';
 import { InlineResponse200 } from '../model/inlineResponse200';
 import { InlineResponse2001 } from '../model/inlineResponse2001';
+import { MultipleQueriesObject } from '../model/multipleQueriesObject';
 import { MultipleQueriesResponse } from '../model/multipleQueriesResponse';
 
 import { ObjectSerializer, Authentication, VoidAuth, Interceptor } from '../model/models';
@@ -81,13 +81,13 @@ export class SearchApi {
    * @param xAlgoliaApplicationId Algolia appID
    * @param xAlgoliaAPIKey Algolia API key
    * @param indexName The index in which to perform the request
-   * @param inlineObject1
+   * @param batchObject
    */
   public async batch(
     xAlgoliaApplicationId: string,
     xAlgoliaAPIKey: string,
     indexName: string,
-    inlineObject1: InlineObject1,
+    batchObject: BatchObject,
     options: { headers: { [name: string]: string } } = { headers: {} }
   ): Promise<{ response: http.IncomingMessage; body: InlineResponse2001 }> {
     const localVarPath =
@@ -126,9 +126,9 @@ export class SearchApi {
       throw new Error('Required parameter indexName was null or undefined when calling batch.');
     }
 
-    // verify required parameter 'inlineObject1' is not null or undefined
-    if (inlineObject1 === null || inlineObject1 === undefined) {
-      throw new Error('Required parameter inlineObject1 was null or undefined when calling batch.');
+    // verify required parameter 'batchObject' is not null or undefined
+    if (batchObject === null || batchObject === undefined) {
+      throw new Error('Required parameter batchObject was null or undefined when calling batch.');
     }
 
     localVarHeaderParams['X-Algolia-Application-Id'] = ObjectSerializer.serialize(
@@ -150,7 +150,7 @@ export class SearchApi {
       uri: localVarPath,
       useQuerystring: this._useQuerystring,
       json: true,
-      body: ObjectSerializer.serialize(inlineObject1, 'InlineObject1'),
+      body: ObjectSerializer.serialize(batchObject, 'BatchObject'),
     };
 
     let authenticationPromise = Promise.resolve();
@@ -194,12 +194,12 @@ export class SearchApi {
    * @summary Get search results for the given requests.
    * @param xAlgoliaApplicationId Algolia appID
    * @param xAlgoliaAPIKey Algolia API key
-   * @param inlineObject
+   * @param multipleQueriesObject
    */
   public async multipleQueries(
     xAlgoliaApplicationId: string,
     xAlgoliaAPIKey: string,
-    inlineObject: InlineObject,
+    multipleQueriesObject: MultipleQueriesObject,
     options: { headers: { [name: string]: string } } = { headers: {} }
   ): Promise<{ response: http.IncomingMessage; body: MultipleQueriesResponse }> {
     const localVarPath = this.basePath + '/1/indexes/*/queries';
@@ -228,10 +228,10 @@ export class SearchApi {
       );
     }
 
-    // verify required parameter 'inlineObject' is not null or undefined
-    if (inlineObject === null || inlineObject === undefined) {
+    // verify required parameter 'multipleQueriesObject' is not null or undefined
+    if (multipleQueriesObject === null || multipleQueriesObject === undefined) {
       throw new Error(
-        'Required parameter inlineObject was null or undefined when calling multipleQueries.'
+        'Required parameter multipleQueriesObject was null or undefined when calling multipleQueries.'
       );
     }
 
@@ -254,7 +254,7 @@ export class SearchApi {
       uri: localVarPath,
       useQuerystring: this._useQuerystring,
       json: true,
-      body: ObjectSerializer.serialize(inlineObject, 'InlineObject'),
+      body: ObjectSerializer.serialize(multipleQueriesObject, 'MultipleQueriesObject'),
     };
 
     let authenticationPromise = Promise.resolve();

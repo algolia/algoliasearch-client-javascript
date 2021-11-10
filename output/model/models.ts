@@ -1,11 +1,11 @@
 import localVarRequest from 'request';
 
-export * from './inlineObject';
-export * from './inlineObject1';
+export * from './batchObject';
 export * from './inlineResponse200';
 export * from './inlineResponse2001';
 export * from './modelError';
 export * from './multipleQueries';
+export * from './multipleQueriesObject';
 export * from './multipleQueriesResponse';
 export * from './multipleQueriesResponseHits';
 export * from './multipleQueriesResponseResults';
@@ -23,12 +23,12 @@ export interface RequestDetailedFile {
 
 export type RequestFile = string | Buffer | fs.ReadStream | RequestDetailedFile;
 
-import { InlineObject } from './inlineObject';
-import { InlineObject1 } from './inlineObject1';
+import { BatchObject } from './batchObject';
 import { InlineResponse200 } from './inlineResponse200';
 import { InlineResponse2001 } from './inlineResponse2001';
 import { ModelError } from './modelError';
 import { MultipleQueries } from './multipleQueries';
+import { MultipleQueriesObject } from './multipleQueriesObject';
 import { MultipleQueriesResponse } from './multipleQueriesResponse';
 import { MultipleQueriesResponseHits } from './multipleQueriesResponseHits';
 import { MultipleQueriesResponseResults } from './multipleQueriesResponseResults';
@@ -37,18 +37,18 @@ import { Operation } from './operation';
 let primitives = ['string', 'boolean', 'double', 'integer', 'long', 'float', 'number', 'any'];
 
 let enumsMap: { [index: string]: any } = {
-  'InlineObject.StrategyEnum': InlineObject.StrategyEnum,
   'MultipleQueries.TypeEnum': MultipleQueries.TypeEnum,
+  'MultipleQueriesObject.StrategyEnum': MultipleQueriesObject.StrategyEnum,
   'Operation.ActionEnum': Operation.ActionEnum,
 };
 
 let typeMap: { [index: string]: any } = {
-  InlineObject: InlineObject,
-  InlineObject1: InlineObject1,
+  BatchObject: BatchObject,
   InlineResponse200: InlineResponse200,
   InlineResponse2001: InlineResponse2001,
   ModelError: ModelError,
   MultipleQueries: MultipleQueries,
+  MultipleQueriesObject: MultipleQueriesObject,
   MultipleQueriesResponse: MultipleQueriesResponse,
   MultipleQueriesResponseHits: MultipleQueriesResponseHits,
   MultipleQueriesResponseResults: MultipleQueriesResponseResults,

@@ -1,9 +1,9 @@
 import { RequestFile } from './models';
 import { MultipleQueries } from './multipleQueries';
 
-export class InlineObject {
+export class MultipleQueriesObject {
   'requests': Array<MultipleQueries>;
-  'strategy'?: InlineObject.StrategyEnum;
+  'strategy'?: MultipleQueriesObject.StrategyEnum;
 
   static discriminator: string | undefined = undefined;
 
@@ -16,16 +16,16 @@ export class InlineObject {
     {
       name: 'strategy',
       baseName: 'strategy',
-      type: 'InlineObject.StrategyEnum',
+      type: 'MultipleQueriesObject.StrategyEnum',
     },
   ];
 
   static getAttributeTypeMap() {
-    return InlineObject.attributeTypeMap;
+    return MultipleQueriesObject.attributeTypeMap;
   }
 }
 
-export namespace InlineObject {
+export namespace MultipleQueriesObject {
   export enum StrategyEnum {
     None = <any>'none',
     StopIfEnoughMatches = <any>'stopIfEnoughMatches',

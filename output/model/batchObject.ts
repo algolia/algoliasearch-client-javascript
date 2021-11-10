@@ -1,7 +1,7 @@
 import { RequestFile } from './models';
 import { Operation } from './operation';
 
-export class InlineObject1 {
+export class BatchObject {
   'requests'?: Array<Operation>;
 
   static discriminator: string | undefined = undefined;
@@ -15,6 +15,6 @@ export class InlineObject1 {
   ];
 
   static getAttributeTypeMap() {
-    return InlineObject1.attributeTypeMap;
+    return BatchObject.attributeTypeMap;
   }
 }
