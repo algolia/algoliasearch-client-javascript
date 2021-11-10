@@ -2,25 +2,23 @@ const { resolve } = require('path');
 
 const PACKAGE_DIR = './packages';
 
-const noExtraneousOverrides = require('./scripts/packages').map(package => {
-  return {
-    files: [`${PACKAGE_DIR}/${package}/**/*`],
-    rules: {
-      'import/no-extraneous-dependencies': [
-        'error',
-        {
-          devDependencies: true,
-          optionalDependencies: true,
-          peerDependencies: true,
-          packageDir: [resolve(__dirname, PACKAGE_DIR, package)],
-        },
-      ],
-    },
-  };
-});
+const noExtraneousOverrides = require('./scripts/packages').map(package => ({
+  files: [`${PACKAGE_DIR}/${package}/**/*`],
+  rules: {
+    'import/no-extraneous-dependencies': [
+      'error',
+      {
+        devDependencies: true,
+        optionalDependencies: true,
+        peerDependencies: true,
+        packageDir: [resolve(__dirname, PACKAGE_DIR, package)],
+      },
+    ],
+  },
+}));
 
 module.exports = {
-  plugins: ['functional', 'sonarjs', 'wdio', 'simple-import-sort', 'promise'],
+  plugins: ['functional', 'sonarjs', 'wdio', 'promise'],
   extends: [
     'algolia',
     'algolia/jest',
@@ -32,7 +30,7 @@ module.exports = {
   ],
   rules: {
     'eslint-comments/disable-enable-pair': ['error', { allowWholeFile: true }],
-    'simple-import-sort/sort': 'error',
+    "sort-imports": ['error'],
     'max-len': [1, 120, 2, { ignoreComments: true }],
     'prettier/prettier': ['error', {}, { usePrettierrc: true }],
     'object-shorthand': ['error', 'always', { avoidExplicitReturnArrows: true }],
@@ -41,7 +39,6 @@ module.exports = {
     'import/no-extraneous-dependencies': ['error', { packageDir: './', devDependencies: true }],
     'import/extensions': ['off'],
     'no-bitwise': ['off'],
-    'valid-jsdoc': ['off'],
     'functional/no-expression-statement': ['off'],
     'functional/no-conditional-statement': ['off'],
     'functional/no-throw-statement': ['off'],
