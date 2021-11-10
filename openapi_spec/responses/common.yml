@@ -1,0 +1,15 @@
+taskID:
+  type: integer
+  description: taskID of the indexing task to wait for.
+objectID:
+  type: string
+  description: Unique identifier of the object
+objectIDs:
+  type: array
+  items:
+    type: string
+  description: List of objectID
+queryID:
+  type: string
+  pattern: '^[a-f0-9]{32}$'
+  example: 43b15df305339e827f0ac0bdc5ebcaa7
