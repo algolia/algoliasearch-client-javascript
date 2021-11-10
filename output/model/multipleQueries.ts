@@ -18,9 +18,9 @@ export class MultipleQueries {
    */
   'facet'?: string;
   /**
-   * A key-value mapping of additional search parameters
+   * A query string of search parameters
    */
-  'params'?: { [key: string]: object };
+  'params'?: string;
 
   static discriminator: string | undefined = undefined;
 
@@ -48,7 +48,7 @@ export class MultipleQueries {
     {
       name: 'params',
       baseName: 'params',
-      type: '{ [key: string]: object; }',
+      type: 'string',
     },
   ];
 

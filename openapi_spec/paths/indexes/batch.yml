@@ -12,6 +12,7 @@ post:
     content:
       application/json:
         schema:
+          title: batchObject
           type: object
           properties:
             requests:
@@ -43,6 +44,7 @@ post:
       content:
         application/json:
           schema:
+            title: batchResponse
             type: object
             additionalProperties: false
             properties:
