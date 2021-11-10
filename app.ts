@@ -5,18 +5,14 @@ const client = new SearchApi();
 async function testClient() {
   // test openapi gen
   try {
-    const res = await client.multipleQueries(
-      'R2IYF7ETH7',
-      'e1e920e59f457ec70473486171c1d3b6',
-      {
-        'requests' : [
-          {
-            indexName: 'docsearch',
-            query: 'crawler',
-          }
-        ]
-      }
-    );
+    const res = await client.multipleQueries('R2IYF7ETH7', 'e1e920e59f457ec70473486171c1d3b6', {
+      requests: [
+        {
+          indexName: 'docsearch',
+          query: 'crawler',
+        },
+      ],
+    });
 
     console.log('[1-RESPONSE]', res);
   } catch (e) {
