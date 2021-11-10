@@ -27,9 +27,9 @@ post:
               createdAt:
                 type: string
               taskID:
-                type: integer
+                $ref: '../../responses/common.yml#/taskID'
               objectID:
-                type: string
+                $ref: '../../responses/common.yml#/objectID'
     '400':
       $ref: '../../responses/BadRequest.yml'
     '404':

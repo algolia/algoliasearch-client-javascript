@@ -47,11 +47,9 @@ post:
             additionalProperties: false
             properties:
               taskID:
-                type: integer
+                $ref: '../../responses/common.yml#/taskID'
               objectIDs:
-                type: array
-                items:
-                  type: string
+                $ref: '../../responses/common.yml#/objectIDs'
     '400':
       $ref: '../../responses/BadRequest.yml'
     '404':
