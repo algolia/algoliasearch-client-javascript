@@ -1,8 +1,15 @@
 import localVarRequest from 'request';
 
+export * from './batchObject';
+export * from './batchResponse';
+export * from './modelError';
 export * from './multipleQueries';
+export * from './multipleQueriesObject';
 export * from './multipleQueriesResponse';
+export * from './multipleQueriesResponseHits';
 export * from './multipleQueriesResponseResults';
+export * from './operation';
+export * from './saveObjectResponse';
 
 import * as fs from 'fs';
 
@@ -16,20 +23,36 @@ export interface RequestDetailedFile {
 
 export type RequestFile = string | Buffer | fs.ReadStream | RequestDetailedFile;
 
+import { BatchObject } from './batchObject';
+import { BatchResponse } from './batchResponse';
+import { ModelError } from './modelError';
 import { MultipleQueries } from './multipleQueries';
+import { MultipleQueriesObject } from './multipleQueriesObject';
 import { MultipleQueriesResponse } from './multipleQueriesResponse';
+import { MultipleQueriesResponseHits } from './multipleQueriesResponseHits';
 import { MultipleQueriesResponseResults } from './multipleQueriesResponseResults';
+import { Operation } from './operation';
+import { SaveObjectResponse } from './saveObjectResponse';
 
 let primitives = ['string', 'boolean', 'double', 'integer', 'long', 'float', 'number', 'any'];
 
 let enumsMap: { [index: string]: any } = {
   'MultipleQueries.TypeEnum': MultipleQueries.TypeEnum,
+  'MultipleQueriesObject.StrategyEnum': MultipleQueriesObject.StrategyEnum,
+  'Operation.ActionEnum': Operation.ActionEnum,
 };
 
 let typeMap: { [index: string]: any } = {
+  BatchObject: BatchObject,
+  BatchResponse: BatchResponse,
+  ModelError: ModelError,
   MultipleQueries: MultipleQueries,
+  MultipleQueriesObject: MultipleQueriesObject,
   MultipleQueriesResponse: MultipleQueriesResponse,
+  MultipleQueriesResponseHits: MultipleQueriesResponseHits,
   MultipleQueriesResponseResults: MultipleQueriesResponseResults,
+  Operation: Operation,
+  SaveObjectResponse: SaveObjectResponse,
 };
 
 export class ObjectSerializer {
