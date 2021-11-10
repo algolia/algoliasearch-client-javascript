@@ -1,31 +1,37 @@
 import { RequestFile } from './models';
 
-export class InlineResponse2001 {
+export class SaveObjectResponse {
+  'createdAt'?: string;
   /**
    * taskID of the indexing task to wait for.
    */
   'taskID'?: number;
   /**
-   * List of objectID
+   * Unique identifier of the object
    */
-  'objectIDs'?: Array<string>;
+  'objectID'?: string;
 
   static discriminator: string | undefined = undefined;
 
   static attributeTypeMap: Array<{ name: string; baseName: string; type: string }> = [
+    {
+      name: 'createdAt',
+      baseName: 'createdAt',
+      type: 'string',
+    },
     {
       name: 'taskID',
       baseName: 'taskID',
       type: 'number',
     },
     {
-      name: 'objectIDs',
-      baseName: 'objectIDs',
-      type: 'Array<string>',
+      name: 'objectID',
+      baseName: 'objectID',
+      type: 'string',
     },
   ];
 
   static getAttributeTypeMap() {
-    return InlineResponse2001.attributeTypeMap;
+    return SaveObjectResponse.attributeTypeMap;
   }
 }
