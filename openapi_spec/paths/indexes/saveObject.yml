@@ -5,8 +5,6 @@ post:
   summary: Save object
   description: Add an object to the index, automatically assigning it an object ID
   parameters:
-    - $ref: '../../parameters.yml#/AppId'
-    - $ref: '../../parameters.yml#/ApiKey'
     - $ref: '../../parameters.yml#/IndexName'
   requestBody:
     required: true

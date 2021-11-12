@@ -78,14 +78,10 @@ export class SearchApi {
   /**
    *
    * @summary Performs multiple write operations in a single API call
-   * @param xAlgoliaApplicationId Algolia appID
-   * @param xAlgoliaAPIKey Algolia API key
    * @param indexName The index in which to perform the request
    * @param batchObject
    */
   public async batch(
-    xAlgoliaApplicationId: string,
-    xAlgoliaAPIKey: string,
     indexName: string,
     batchObject: BatchObject,
     options: { headers: { [name: string]: string } } = { headers: {} }
@@ -107,20 +103,6 @@ export class SearchApi {
     }
     let localVarFormParams: any = {};
 
-    // verify required parameter 'xAlgoliaApplicationId' is not null or undefined
-    if (xAlgoliaApplicationId === null || xAlgoliaApplicationId === undefined) {
-      throw new Error(
-        'Required parameter xAlgoliaApplicationId was null or undefined when calling batch.'
-      );
-    }
-
-    // verify required parameter 'xAlgoliaAPIKey' is not null or undefined
-    if (xAlgoliaAPIKey === null || xAlgoliaAPIKey === undefined) {
-      throw new Error(
-        'Required parameter xAlgoliaAPIKey was null or undefined when calling batch.'
-      );
-    }
-
     // verify required parameter 'indexName' is not null or undefined
     if (indexName === null || indexName === undefined) {
       throw new Error('Required parameter indexName was null or undefined when calling batch.');
@@ -131,14 +113,6 @@ export class SearchApi {
       throw new Error('Required parameter batchObject was null or undefined when calling batch.');
     }
 
-    localVarHeaderParams['X-Algolia-Application-Id'] = ObjectSerializer.serialize(
-      xAlgoliaApplicationId,
-      'string'
-    );
-    localVarHeaderParams['X-Algolia-API-Key'] = ObjectSerializer.serialize(
-      xAlgoliaAPIKey,
-      'string'
-    );
     (<any>Object).assign(localVarHeaderParams, options.headers);
 
     let localVarUseFormData = false;
@@ -192,13 +166,9 @@ export class SearchApi {
   /**
    *
    * @summary Get search results for the given requests.
-   * @param xAlgoliaApplicationId Algolia appID
-   * @param xAlgoliaAPIKey Algolia API key
    * @param multipleQueriesObject
    */
   public async multipleQueries(
-    xAlgoliaApplicationId: string,
-    xAlgoliaAPIKey: string,
     multipleQueriesObject: MultipleQueriesObject,
     options: { headers: { [name: string]: string } } = { headers: {} }
   ): Promise<{ response: http.IncomingMessage; body: MultipleQueriesResponse }> {
@@ -214,20 +184,6 @@ export class SearchApi {
     }
     let localVarFormParams: any = {};
 
-    // verify required parameter 'xAlgoliaApplicationId' is not null or undefined
-    if (xAlgoliaApplicationId === null || xAlgoliaApplicationId === undefined) {
-      throw new Error(
-        'Required parameter xAlgoliaApplicationId was null or undefined when calling multipleQueries.'
-      );
-    }
-
-    // verify required parameter 'xAlgoliaAPIKey' is not null or undefined
-    if (xAlgoliaAPIKey === null || xAlgoliaAPIKey === undefined) {
-      throw new Error(
-        'Required parameter xAlgoliaAPIKey was null or undefined when calling multipleQueries.'
-      );
-    }
-
     // verify required parameter 'multipleQueriesObject' is not null or undefined
     if (multipleQueriesObject === null || multipleQueriesObject === undefined) {
       throw new Error(
@@ -235,14 +191,6 @@ export class SearchApi {
       );
     }
 
-    localVarHeaderParams['X-Algolia-Application-Id'] = ObjectSerializer.serialize(
-      xAlgoliaApplicationId,
-      'string'
-    );
-    localVarHeaderParams['X-Algolia-API-Key'] = ObjectSerializer.serialize(
-      xAlgoliaAPIKey,
-      'string'
-    );
     (<any>Object).assign(localVarHeaderParams, options.headers);
 
     let localVarUseFormData = false;
@@ -296,14 +244,10 @@ export class SearchApi {
   /**
    * Add an object to the index, automatically assigning it an object ID
    * @summary Save object
-   * @param xAlgoliaApplicationId Algolia appID
-   * @param xAlgoliaAPIKey Algolia API key
    * @param indexName The index in which to perform the request
    * @param requestBody
    */
   public async saveObject(
-    xAlgoliaApplicationId: string,
-    xAlgoliaAPIKey: string,
     indexName: string,
     requestBody: { [key: string]: object },
     options: { headers: { [name: string]: string } } = { headers: {} }
@@ -325,20 +269,6 @@ export class SearchApi {
     }
     let localVarFormParams: any = {};
 
-    // verify required parameter 'xAlgoliaApplicationId' is not null or undefined
-    if (xAlgoliaApplicationId === null || xAlgoliaApplicationId === undefined) {
-      throw new Error(
-        'Required parameter xAlgoliaApplicationId was null or undefined when calling saveObject.'
-      );
-    }
-
-    // verify required parameter 'xAlgoliaAPIKey' is not null or undefined
-    if (xAlgoliaAPIKey === null || xAlgoliaAPIKey === undefined) {
-      throw new Error(
-        'Required parameter xAlgoliaAPIKey was null or undefined when calling saveObject.'
-      );
-    }
-
     // verify required parameter 'indexName' is not null or undefined
     if (indexName === null || indexName === undefined) {
       throw new Error(
@@ -353,14 +283,6 @@ export class SearchApi {
       );
     }
 
-    localVarHeaderParams['X-Algolia-Application-Id'] = ObjectSerializer.serialize(
-      xAlgoliaApplicationId,
-      'string'
-    );
-    localVarHeaderParams['X-Algolia-API-Key'] = ObjectSerializer.serialize(
-      xAlgoliaAPIKey,
-      'string'
-    );
     (<any>Object).assign(localVarHeaderParams, options.headers);
 
     let localVarUseFormData = false;
