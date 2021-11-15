@@ -20,6 +20,19 @@ servers:
     variables:
       appId:
         default: test
+components:
+  securitySchemes:
+    appId:
+      type: apiKey
+      in: header
+      name: X-Algolia-Application-Id
+    apiKey:
+      type: apiKey
+      in: header
+      name: X-Algolia-API-Key
+security:
+  - appId: []
+    apiKey: []
 paths:
   # We can add this one later, as it requires the init method
   # /1/indexes/{indexName}/query:
