@@ -1,7 +1,7 @@
 import { searchClient } from './searchClient';
 
-const appId = process.env.ALGOLIA_APPLICATION_ID_1 || '**** APP_ID *****';
-const apiKey = process.env.ALGOLIA_ADMIN_KEY_1 || '**** API_KEY *****';
+const appId = process.env.ALGOLIA_APPLICATION_ID_1 || '**** APP_ID *****';
+const apiKey = process.env.ALGOLIA_ADMIN_KEY_1 || '**** API_KEY *****';
 // Init client with appId and apiKey
 const client = new searchClient(appId, apiKey);
 
