@@ -36,16 +36,13 @@ export class SearchApi {
 
   protected interceptors: Interceptor[] = [];
 
-  constructor(basePath?: string);
-  constructor(basePathOrUsername: string, password?: string, basePath?: string) {
-    if (password) {
-      if (basePath) {
-        this.basePath = basePath;
-      }
-    } else {
-      if (basePathOrUsername) {
-        this.basePath = basePathOrUsername;
-      }
+  constructor(appId: string, apiKey: string, basePath?: string) {
+    this.setApiKey(SearchApiApiKeys.appId, appId);
+    this.setApiKey(SearchApiApiKeys.apiKey, apiKey);
+    this.basePath = 'https://' + appId + '-1.algolianet.com';
+
+    if (basePath) {
+      this.basePath = basePath;
     }
   }
 

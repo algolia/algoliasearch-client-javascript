@@ -11,4 +11,6 @@ export class HttpError extends Error {
 
 export { RequestFile } from '../model/models';
 
+export class searchClient extends SearchApi {}
+
 export const APIS = [SearchApi];
