@@ -59,27 +59,14 @@ export class {{classname}} {
 
     protected interceptors: Interceptor[] = [];
 
-    constructor(basePath?: string);
-{{#authMethods}}
-{{#isBasicBasic}}
-    constructor(username: string, password: string, basePath?: string);
-{{/isBasicBasic}}
-{{/authMethods}}
-    constructor(basePathOrUsername: string, password?: string, basePath?: string) {
-        if (password) {
-{{#authMethods}}
-{{#isBasicBasic}}
-            this.username = basePathOrUsername;
-            this.password = password
-{{/isBasicBasic}}
-{{/authMethods}}
-            if (basePath) {
-                this.basePath = basePath;
-            }
-        } else {
-            if (basePathOrUsername) {
-                this.basePath = basePathOrUsername
-            }
+    constructor(appId: string, apiKey: string, basePath?: string) {
+
+        this.setApiKey(SearchApiApiKeys.appId, appId);
+        this.setApiKey(SearchApiApiKeys.apiKey, apiKey);
+        this.basePath = 'https://' + appId + '-1.algolianet.com';
+
+        if (basePath) {
+            this.basePath = basePath;
         }
     }
 

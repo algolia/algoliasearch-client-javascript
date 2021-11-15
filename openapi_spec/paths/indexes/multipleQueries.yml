@@ -3,9 +3,6 @@ post:
     - search
   operationId: multipleQueries
   summary: Get search results for the given requests.
-  parameters:
-    - $ref: '../../parameters.yml#/AppId'
-    - $ref: '../../parameters.yml#/ApiKey'
   requestBody:
     required: true
     content:

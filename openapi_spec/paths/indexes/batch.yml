@@ -4,8 +4,6 @@ post:
   operationId: batch
   summary: Performs multiple write operations in a single API call
   parameters:
-    - $ref: '../../parameters.yml#/AppId'
-    - $ref: '../../parameters.yml#/ApiKey'
     - $ref: '../../parameters.yml#/IndexName'
   requestBody:
     required: true

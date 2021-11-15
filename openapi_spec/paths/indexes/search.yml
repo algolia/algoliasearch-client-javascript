@@ -4,8 +4,6 @@ post:
   operationId: search
   summary: Get search results
   parameters:
-    - $ref: '../../parameters.yml#/AppId'
-    - $ref: '../../parameters.yml#/ApiKey'
     - $ref: '../../parameters.yml#/IndexName'
   requestBody:
     $ref: '../../schemas/SearchParams.yml'

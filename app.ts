@@ -1,11 +1,14 @@
-import { SearchApi } from 'algoliasearch-client-javascript';
+import { searchClient } from 'algoliasearch-client-javascript';
 
-const client = new SearchApi();
+const appId = process.env.ALGOLIA_APPLICATION_ID_1 || '**** APP_ID *****';
+const apiKey = process.env.ALGOLIA_ADMIN_KEY_1 || '**** API_KEY *****';
+// Init client with appId and apiKey
+const client = new searchClient(appId, apiKey);
 
 async function testClient() {
   // test openapi gen
   try {
-    const res = await client.multipleQueries('R2IYF7ETH7', 'e1e920e59f457ec70473486171c1d3b6', {
+    const res = await client.multipleQueries({
       requests: [
         {
           indexName: 'docsearch',
