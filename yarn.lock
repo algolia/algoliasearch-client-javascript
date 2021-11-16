@@ -226,11 +226,11 @@ __metadata:
 
 "algoliasearch-client-javascript@file:output/::locator=%40algolia%2Fautomation-javascript-client%40workspace%3A.":
   version: 5.0.0
-  resolution: "algoliasearch-client-javascript@file:output/#output/::hash=342434&locator=%40algolia%2Fautomation-javascript-client%40workspace%3A."
+  resolution: "algoliasearch-client-javascript@file:output/#output/::hash=860dfb&locator=%40algolia%2Fautomation-javascript-client%40workspace%3A."
   dependencies:
     "@types/request": ^2.48.7
     request: ^2.81.0
-  checksum: 79ae2881a4d93698d4600f7710ea07512df105e9faf61982acc2cc8327d1666fe39f7e83c4a4d471b1876c321b932850a49923a49d22d474bacdf16dfaa81e71
+  checksum: b037f9adb50d7f67768e3252e36df48381811346d4dc5c18b8c919ee275ace0d5713f887fe836e52c4a3e95a6b744e4a84a83bc751781fed00cf5b954a3152ef
   languageName: node
   linkType: hard
 

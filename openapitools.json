@@ -7,7 +7,6 @@
         "generatorName": "typescript-node",
         "templateDir": "#{cwd}/algolia-typescript-template/",
         "config": "#{cwd}/openapitools.json",
-        "enablePostProcessFile": true,
         "httpUserAgent": "Algolia for JavaScript ({packageVersion});",
         "apiPackage": "client-search",
         "output": "#{cwd}/output/",
