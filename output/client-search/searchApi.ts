@@ -10,7 +10,7 @@ import { MultipleQueriesResponse } from '../model/multipleQueriesResponse';
 import { SaveObjectResponse } from '../model/saveObjectResponse';
 
 import { ObjectSerializer, Authentication, VoidAuth, Interceptor } from '../model/models';
-import { HttpBasicAuth, HttpBearerAuth, ApiKeyAuth, OAuth } from '../model/models';
+import { HttpBearerAuth, ApiKeyAuth, OAuth } from '../model/models';
 
 import { HttpError, RequestFile } from './apis';
 
@@ -86,7 +86,7 @@ export class SearchApi {
       encodeURIComponent(String(indexName))
     );
     let headers: Headers = {};
-    let queryParams: Record<string, string> = {};
+    let queryParameters: Record<string, string> = {};
     const produces = ['application/json'];
     // give precedence to 'application/json'
     if (produces.indexOf('application/json') >= 0) {
@@ -110,12 +110,14 @@ export class SearchApi {
 
     const request: Request = {
       method: 'POST',
-      url: path,
-      headers,
+      path,
       data: ObjectSerializer.serialize(batchObject, 'BatchObject'),
     };
 
-    const requestOptions: RequestOptions = {};
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
 
     let authenticationPromise = Promise.resolve();
     if (this.authentications.apiKey.apiKey) {
@@ -139,7 +141,7 @@ export class SearchApi {
 
     await interceptorPromise;
 
-    return transporter.retryableRequest(request, requestOptions);
+    return this.transporter.retryableRequest(request, requestOptions);
   }
   /**
    *
@@ -152,7 +154,7 @@ export class SearchApi {
   ): Promise<{ response: http.IncomingMessage; body: MultipleQueriesResponse }> {
     const path = '/1/indexes/*/queries';
     let headers: Headers = {};
-    let queryParams: Record<string, string> = {};
+    let queryParameters: Record<string, string> = {};
     const produces = ['application/json'];
     // give precedence to 'application/json'
     if (produces.indexOf('application/json') >= 0) {
@@ -173,12 +175,14 @@ export class SearchApi {
 
     const request: Request = {
       method: 'POST',
-      url: path,
-      headers,
+      path,
       data: ObjectSerializer.serialize(multipleQueriesObject, 'MultipleQueriesObject'),
     };
 
-    const requestOptions: RequestOptions = {};
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
 
     let authenticationPromise = Promise.resolve();
     if (this.authentications.apiKey.apiKey) {
@@ -202,7 +206,7 @@ export class SearchApi {
 
     await interceptorPromise;
 
-    return transporter.retryableRequest(request, requestOptions);
+    return this.transporter.retryableRequest(request, requestOptions);
   }
   /**
    * Add an object to the index, automatically assigning it an object ID
@@ -220,7 +224,7 @@ export class SearchApi {
       encodeURIComponent(String(indexName))
     );
     let headers: Headers = {};
-    let queryParams: Record<string, string> = {};
+    let queryParameters: Record<string, string> = {};
     const produces = ['application/json'];
     // give precedence to 'application/json'
     if (produces.indexOf('application/json') >= 0) {
@@ -248,12 +252,14 @@ export class SearchApi {
 
     const request: Request = {
       method: 'POST',
-      url: path,
-      headers,
+      path,
       data: ObjectSerializer.serialize(requestBody, '{ [key: string]: object; }'),
     };
 
-    const requestOptions: RequestOptions = {};
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
 
     let authenticationPromise = Promise.resolve();
     if (this.authentications.apiKey.apiKey) {
@@ -277,6 +283,6 @@ export class SearchApi {
 
     await interceptorPromise;
 
-    return transporter.retryableRequest(request, requestOptions);
+    return this.transporter.retryableRequest(request, requestOptions);
   }
 }

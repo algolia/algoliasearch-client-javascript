@@ -9,7 +9,7 @@ import { {{classname}} } from '{{filename}}';
 
 import { ObjectSerializer, Authentication, VoidAuth, Interceptor } from '../model/models';
 {{#hasAuthMethods}}
-import { HttpBasicAuth, HttpBearerAuth, ApiKeyAuth, OAuth } from '../model/models';
+import { HttpBearerAuth, ApiKeyAuth, OAuth } from '../model/models';
 {{/hasAuthMethods}}
 
 import { HttpError, RequestFile } from './apis';
@@ -131,7 +131,7 @@ export class {{classname}} {
         const path = '{{{path}}}'{{#pathParams}}
             .replace('{' + '{{baseName}}' + '}', encodeURIComponent(String({{paramName}}))){{/pathParams}};
         let headers: Headers = {};
-        let queryParams: Record<string, string> = {};
+        let queryParameters: Record<string, string> = {};
 {{#hasProduces}}
         const produces = [{{#produces}}'{{{mediaType}}}'{{^-last}}, {{/-last}}{{/produces}}];
         // give precedence to 'application/json'
@@ -154,7 +154,7 @@ export class {{classname}} {
 {{/allParams}}
 {{#queryParams}}
         if ({{paramName}} !== undefined) {
-            queryParams['{{baseName}}'] = ObjectSerializer.serialize({{paramName}}, "{{{dataType}}}");
+            queryParameters['{{baseName}}'] = ObjectSerializer.serialize({{paramName}}, "{{{dataType}}}");
         }
 
 {{/queryParams}}
@@ -165,14 +165,16 @@ export class {{classname}} {
 
         const request: Request = {
             method: '{{httpMethod}}',
-            url: path,
-            headers,
+            path,
 {{#bodyParam}}
             data: ObjectSerializer.serialize({{paramName}}, "{{{dataType}}}")
 {{/bodyParam}}
         };
 
-        const requestOptions: RequestOptions = {};
+        const requestOptions: RequestOptions = {
+          headers,
+          queryParameters
+        };
 
         let authenticationPromise = Promise.resolve();
 {{#authMethods}}
@@ -206,7 +208,7 @@ export class {{classname}} {
 
         await interceptorPromise;
 
-        return transporter.retryableRequest(request, requestOptions);
+        return this.transporter.retryableRequest(request, requestOptions);
     }
 {{/operation}}
 }

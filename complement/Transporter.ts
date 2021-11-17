@@ -6,6 +6,7 @@ import type {
   Timeouts,
   Response,
   Outcomes,
+  EndRequest,
 } from './types';
 import { MemoryCache } from './MemoryCache';
 import type { Cache } from './Cache';
@@ -137,7 +138,7 @@ export class Transporter {
         throw new RetryError(stackTrace);
       }
 
-      const payload = {
+      const payload: EndRequest = {
         data,
         headers,
         method,
