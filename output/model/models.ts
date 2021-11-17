@@ -184,17 +184,17 @@ export interface Authentication {
   applyToRequest(requestOptions: RequestOptions): Promise<void> | void;
 }
 
+/*
 export class HttpBasicAuth implements Authentication {
-  public username: string = '';
-  public password: string = '';
+    public username: string = '';
+    public password: string = '';
 
-  applyToRequest(requestOptions: RequestOptions): void {
-    requestOptions.auth = {
-      username: this.username,
-      password: this.password,
-    };
-  }
-}
+    applyToRequest(requestOptions: RequestOptions): void {
+        requestOptions.auth = {
+            username: this.username, password: this.password
+        }
+    }
+}*/
 
 export class HttpBearerAuth implements Authentication {
   public accessToken: string | (() => string) = '';
@@ -215,7 +215,7 @@ export class ApiKeyAuth implements Authentication {
 
   applyToRequest(requestOptions: RequestOptions): void {
     if (this.location == 'query') {
-      (<any>requestOptions.qs)[this.paramName] = this.apiKey;
+      requestOptions.queryParameters[this.paramName] = this.apiKey;
     } else if (this.location == 'header' && requestOptions && requestOptions.headers) {
       requestOptions.headers[this.paramName] = this.apiKey;
     } else if (this.location == 'cookie' && requestOptions && requestOptions.headers) {

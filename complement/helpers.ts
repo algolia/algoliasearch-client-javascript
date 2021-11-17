@@ -78,9 +78,7 @@ export function deserializeSuccess<TObject>(response: Response): TObject {
   try {
     return JSON.parse(response.content);
   } catch (e) {
-    if (e instanceof Error) {
-      throw new DeserializationError(e.message, response);
-    }
+    throw new DeserializationError((e as Error).message, response);
   }
 }
 

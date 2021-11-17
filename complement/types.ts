@@ -24,7 +24,7 @@ export type RequestOptions = {
    * Custom query parameters for the request. This query parameters are
    * going to be merged the transporter query parameters.
    */
-  queryParameters?: Record<string, any>;
+  queryParameters: Record<string, any>;
   data?: Record<string, any>;
 };
 
@@ -34,7 +34,7 @@ export type EndRequest = {
   connectTimeout: number;
   responseTimeout: number;
   headers: Headers;
-  data: string;
+  data?: string;
 };
 
 export type Response = {

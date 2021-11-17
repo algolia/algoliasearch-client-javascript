@@ -10,6 +10,7 @@ export class Requester {
     this.httpAgent = new http.Agent({ keepAlive: true });
     this.httpsAgent = new https.Agent({ keepAlive: true });
   }
+
   async send(request: EndRequest): Promise<Response> {
     return new Promise((resolve) => {
       const url = new URL(request.url);
