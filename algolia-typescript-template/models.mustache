@@ -185,18 +185,6 @@ export interface Authentication {
     applyToRequest(requestOptions: RequestOptions): Promise<void> | void;
 }
 
-/*
-export class HttpBasicAuth implements Authentication {
-    public username: string = '';
-    public password: string = '';
-
-    applyToRequest(requestOptions: RequestOptions): void {
-        requestOptions.auth = {
-            username: this.username, password: this.password
-        }
-    }
-}*/
-
 export class HttpBearerAuth implements Authentication {
     public accessToken: string | (() => string) = '';
 
