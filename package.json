@@ -5,7 +5,7 @@
     "output"
   ],
   "scripts": {
-    "lint": "yarn prettier --write .",
+    "lint": "yarn prettier --write openapi_spec output",
     "generate": "PACKAGE_VERSION='4.11.0' yarn openapi-generator-cli generate --generator-key client && ln -fs \"$(pwd)/complement\" \"$(pwd)/output/\" && yarn lint && yarn install",
     "build:spec": "yarn swagger-cli bundle openapi_spec/spec.yml --outfile dist/openapi.yml --type yaml",
     "client:build": "cd output/ && yarn install && yarn build && cd ..",
