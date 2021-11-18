@@ -80,7 +80,7 @@ export class SearchApi {
     indexName: string,
     batchObject: BatchObject,
     options: { headers: { [name: string]: string } } = { headers: {} }
-  ): Promise<{ response: http.IncomingMessage; body: BatchResponse }> {
+  ): Promise<BatchResponse> {
     const path = '/1/indexes/{indexName}/batch'.replace(
       '{' + 'indexName' + '}',
       encodeURIComponent(String(indexName))
@@ -151,7 +151,7 @@ export class SearchApi {
   public async multipleQueries(
     multipleQueriesObject: MultipleQueriesObject,
     options: { headers: { [name: string]: string } } = { headers: {} }
-  ): Promise<{ response: http.IncomingMessage; body: MultipleQueriesResponse }> {
+  ): Promise<MultipleQueriesResponse> {
     const path = '/1/indexes/*/queries';
     let headers: Headers = {};
     let queryParameters: Record<string, string> = {};
@@ -218,7 +218,7 @@ export class SearchApi {
     indexName: string,
     requestBody: { [key: string]: object },
     options: { headers: { [name: string]: string } } = { headers: {} }
-  ): Promise<{ response: http.IncomingMessage; body: SaveObjectResponse }> {
+  ): Promise<SaveObjectResponse> {
     const path = '/1/indexes/{indexName}'.replace(
       '{' + 'indexName' + '}',
       encodeURIComponent(String(indexName))
