@@ -1,8 +1,8 @@
 import { RequestFile } from './models';
-import { MultipleQueriesResponseResults } from './multipleQueriesResponseResults';
+import { SearchResponse } from './searchResponse';
 
 export class MultipleQueriesResponse {
-  'results'?: Array<MultipleQueriesResponseResults>;
+  'results'?: Array<SearchResponse>;
 
   static discriminator: string | undefined = undefined;
 
@@ -10,7 +10,7 @@ export class MultipleQueriesResponse {
     {
       name: 'results',
       baseName: 'results',
-      type: 'Array<MultipleQueriesResponseResults>',
+      type: 'Array<SearchResponse>',
     },
   ];
 

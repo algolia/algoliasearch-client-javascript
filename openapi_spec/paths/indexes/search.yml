@@ -6,7 +6,13 @@ post:
   parameters:
     - $ref: '../../parameters.yml#/IndexName'
   requestBody:
-    $ref: '../../schemas/SearchParams.yml'
+    required: true
+    content:
+      application/json:
+        schema:
+          oneOf:
+            - $ref: ../../schemas/SearchParams.yml#/searchParams
+            - $ref: ../../schemas/SearchParams.yml#/searchParamsString
   responses:
     '200':
       description: OK
@@ -14,24 +20,8 @@ post:
         application/json:
           schema:
             title: singleQueryResponse
-            type: object
-            additionalProperties: false
-            properties:
-              hits:
-                type: array
-                items:
-                  type: object
-                  additionalProperties: false
-                  properties:
-                    objectID:
-                      $ref: '../../responses/common.yml#/objectID'
-              nbHits:
-                type: integer
-              queryID:
-                type: string
-                pattern: '^[a-f0-9]{32}$'
-                example: 43b15df305339e827f0ac0bdc5ebcaa7
+            $ref: ../../schemas/SearchResponse.yml#/searchResponse
     '400':
-      $ref: '../../responses/BadRequest.yml'
+      $ref: ../../responses/BadRequest.yml
     '404':
-      $ref: '../../responses/IndexNotFound.yml'
+      $ref: ../../responses/IndexNotFound.yml

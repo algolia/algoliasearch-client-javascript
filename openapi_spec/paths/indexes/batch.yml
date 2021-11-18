@@ -12,6 +12,7 @@ post:
         schema:
           title: batchObject
           type: object
+          additionalProperties: false
           properties:
             requests:
               type: array
