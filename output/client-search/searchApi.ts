@@ -8,6 +8,9 @@ import { BatchResponse } from '../model/batchResponse';
 import { MultipleQueriesObject } from '../model/multipleQueriesObject';
 import { MultipleQueriesResponse } from '../model/multipleQueriesResponse';
 import { SaveObjectResponse } from '../model/saveObjectResponse';
+import { SearchParams } from '../model/searchParams';
+import { SearchParamsString } from '../model/searchParamsString';
+import { SearchResponse } from '../model/searchResponse';
 
 import { ObjectSerializer, Authentication, VoidAuth, Interceptor } from '../model/models';
 import { HttpBearerAuth, ApiKeyAuth, OAuth } from '../model/models';
@@ -254,6 +257,84 @@ export class SearchApi {
       method: 'POST',
       path,
       data: ObjectSerializer.serialize(requestBody, '{ [key: string]: object; }'),
+    };
+
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
+
+    let authenticationPromise = Promise.resolve();
+    if (this.authentications.apiKey.apiKey) {
+      authenticationPromise = authenticationPromise.then(() =>
+        this.authentications.apiKey.applyToRequest(requestOptions)
+      );
+    }
+    if (this.authentications.appId.apiKey) {
+      authenticationPromise = authenticationPromise.then(() =>
+        this.authentications.appId.applyToRequest(requestOptions)
+      );
+    }
+    authenticationPromise = authenticationPromise.then(() =>
+      this.authentications.default.applyToRequest(requestOptions)
+    );
+
+    let interceptorPromise = authenticationPromise;
+    for (const interceptor of this.interceptors) {
+      interceptorPromise = interceptorPromise.then(() => interceptor(requestOptions));
+    }
+
+    await interceptorPromise;
+
+    return this.transporter.retryableRequest(request, requestOptions);
+  }
+  /**
+   *
+   * @summary Get search results
+   * @param indexName The index in which to perform the request
+   * @param searchParamsSearchParamsString
+   */
+  public async search(
+    indexName: string,
+    searchParamsSearchParamsString: SearchParams | SearchParamsString,
+    options: { headers: { [name: string]: string } } = { headers: {} }
+  ): Promise<SearchResponse> {
+    const path = '/1/indexes/{indexName}/query'.replace(
+      '{' + 'indexName' + '}',
+      encodeURIComponent(String(indexName))
+    );
+    let headers: Headers = {};
+    let queryParameters: Record<string, string> = {};
+    const produces = ['application/json'];
+    // give precedence to 'application/json'
+    if (produces.indexOf('application/json') >= 0) {
+      headers.Accept = 'application/json';
+    } else {
+      headers.Accept = produces.join(',');
+    }
+    let formParams: Record<string, string> = {};
+
+    // verify required parameter 'indexName' is not null or undefined
+    if (indexName === null || indexName === undefined) {
+      throw new Error('Required parameter indexName was null or undefined when calling search.');
+    }
+
+    // verify required parameter 'searchParamsSearchParamsString' is not null or undefined
+    if (searchParamsSearchParamsString === null || searchParamsSearchParamsString === undefined) {
+      throw new Error(
+        'Required parameter searchParamsSearchParamsString was null or undefined when calling search.'
+      );
+    }
+
+    headers = { ...headers, ...options.headers };
+
+    const request: Request = {
+      method: 'POST',
+      path,
+      data: ObjectSerializer.serialize(
+        searchParamsSearchParamsString,
+        'SearchParams | SearchParamsString'
+      ),
     };
 
     const requestOptions: RequestOptions = {

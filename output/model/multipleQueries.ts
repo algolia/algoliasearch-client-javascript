@@ -6,7 +6,7 @@ export class MultipleQueries {
    */
   'indexName': string;
   /**
-   * The query to search for
+   * The text to search in the index.
    */
   'query'?: string;
   /**

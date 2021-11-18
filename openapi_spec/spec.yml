@@ -34,9 +34,8 @@ security:
   - appId: []
     apiKey: []
 paths:
-  # We can add this one later, as it requires the init method
-  # /1/indexes/{indexName}/query:
-  #   $ref: "./paths/indexes/search.yml"
+  /1/indexes/{indexName}/query:
+    $ref: './paths/indexes/search.yml'
   /1/indexes/*/queries:
     $ref: './paths/indexes/multipleQueries.yml'
   /1/indexes/{indexName}:

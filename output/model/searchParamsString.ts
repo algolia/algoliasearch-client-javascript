@@ -1,22 +1,19 @@
 import { RequestFile } from './models';
 
-export class MultipleQueriesResponseHits {
-  /**
-   * Unique identifier of the object
-   */
-  'objectID'?: string;
+export class SearchParamsString {
+  'params'?: string;
 
   static discriminator: string | undefined = undefined;
 
   static attributeTypeMap: Array<{ name: string; baseName: string; type: string }> = [
     {
-      name: 'objectID',
-      baseName: 'objectID',
+      name: 'params',
+      baseName: 'params',
       type: 'string',
     },
   ];
 
   static getAttributeTypeMap() {
-    return MultipleQueriesResponseHits.attributeTypeMap;
+    return SearchParamsString.attributeTypeMap;
   }
 }

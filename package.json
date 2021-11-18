@@ -10,21 +10,21 @@
     "build:spec": "yarn swagger-cli bundle openapi_spec/spec.yml --outfile dist/openapi.yml --type yaml",
     "client:build": "cd output/ && yarn install && yarn build && cd ..",
     "client:test": "yarn install && tsc && node dist/app.js",
+    "client": "yarn client:build && yarn client:test",
     "clean:output": "rm -rf output/*",
     "clean": "rm -rf dist build node_modules"
   },
   "devDependencies": {
     "@openapitools/openapi-generator-cli": "^2.4.13",
     "algoliasearch-client-javascript": "file:output/",
+    "dotenv": "10.0.0",
     "prettier": "2.4.1",
+    "swagger-cli": "^4.0.4",
     "typescript": "4.4.4"
   },
   "engines": {
     "node": ">= 12.0.0",
     "yarn": ">= 2.0.0"
   },
-  "packageManager": "yarn@3.0.2",
-  "dependencies": {
-    "swagger-cli": "^4.0.4"
-  }
+  "packageManager": "yarn@3.0.2"
 }
