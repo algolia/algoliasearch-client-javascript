@@ -1,7 +1,7 @@
 import http from 'http';
-import { shuffle } from '../complement/helpers';
-import { Transporter } from '../complement/Transporter';
-import { Headers, Host, Request, RequestOptions } from '../complement/types';
+import { shuffle } from '../utils/helpers';
+import { Transporter } from '../utils/Transporter';
+import { Headers, Host, Request, RequestOptions } from '../utils/types';
 
 import { BatchObject } from '../model/batchObject';
 import { BatchResponse } from '../model/batchResponse';

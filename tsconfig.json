@@ -14,7 +14,9 @@
     "declaration": true,
     "lib": ["dom", "es6", "es5", "dom.iterable", "scripthost"],
     "outDir": "dist",
-    "typeRoots": ["node_modules/@types"]
+    "typeRoots": ["node_modules/@types"],
+    "types": ["node"]
   },
-  "include": ["app.ts"]
+  "include": ["client-search", "model", "api.ts"],
+  "exclude": ["dist", "node_modules"]
 }

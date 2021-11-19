@@ -1,30 +1,24 @@
 {
-  "name": "@algolia/automation-javascript-client",
-  "version": "0.0.0",
-  "workspaces": [
-    "output"
-  ],
+  "name": "algoliasearch-client-javascript",
+  "version": "5.0.0",
+  "description": "JavaScript client for algoliasearch-client-javascript",
+  "repository": "algolia/algoliasearch-client-javascript",
+  "author": "Algolia",
+  "private": true,
+  "license": "MIT",
+  "main": "dist/api.js",
+  "types": "dist/api.d.ts",
   "scripts": {
-    "lint": "yarn prettier --write openapi_spec output",
-    "generate": "PACKAGE_VERSION='4.11.0' yarn openapi-generator-cli generate --generator-key client && ln -fs \"$(pwd)/complement\" \"$(pwd)/output/\" && yarn lint && yarn install",
-    "build:spec": "yarn swagger-cli bundle openapi_spec/spec.yml --outfile dist/openapi.yml --type yaml",
-    "client:build": "cd output/ && yarn install && yarn build && cd ..",
-    "client:test": "yarn install && tsc && node dist/app.js",
-    "client": "yarn client:build && yarn client:test",
-    "clean:output": "rm -rf output/*",
-    "clean": "rm -rf dist build node_modules"
-  },
-  "devDependencies": {
-    "@openapitools/openapi-generator-cli": "^2.4.13",
-    "algoliasearch-client-javascript": "file:output/",
-    "dotenv": "10.0.0",
-    "prettier": "2.4.1",
-    "swagger-cli": "^4.0.4",
-    "typescript": "4.4.4"
+    "clean": "rm -Rf node_modules/ *.js",
+    "build": "tsc",
+    "test": "yarn build && node dist/client.js"
   },
   "engines": {
-    "node": ">= 12.0.0",
-    "yarn": ">= 2.0.0"
+    "node": "^16.0.0",
+    "yarn": "^3.0.0"
   },
-  "packageManager": "yarn@3.0.2"
+  "devDependencies": {
+    "@types/node": "^16.11.6",
+    "typescript": "4.5.2"
+  }
 }

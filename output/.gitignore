@@ -1,6 +1,0 @@
-node_modules
-typings
-dist
-build
-.env
-.vscode
