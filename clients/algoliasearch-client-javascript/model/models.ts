@@ -1,4 +1,4 @@
-import type { RequestOptions } from '../complement/types';
+import type { RequestOptions } from '../utils/types';
 
 export * from './batchObject';
 export * from './batchResponse';

@@ -10,9 +10,7 @@ yarn-error.log
 !.yarn/releases
 !.yarn/plugins
 
-*/.openapi-generator
-*/node_modules
-*/dist
-*/.openapi-generator-ignore
-
-output/complement
+**/.openapi-generator
+**/node_modules
+**/dist
+**/.openapi-generator-ignore

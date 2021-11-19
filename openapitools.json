@@ -3,14 +3,13 @@
   "generator-cli": {
     "version": "5.2.1",
     "generators": {
-      "client": {
+      "javascript-client": {
         "generatorName": "typescript-node",
-        "templateDir": "#{cwd}/algolia-typescript-template/",
+        "templateDir": "#{cwd}/templates/javascript/",
         "config": "#{cwd}/openapitools.json",
-        "httpUserAgent": "Algolia for JavaScript ({packageVersion});",
         "apiPackage": "client-search",
-        "output": "#{cwd}/output/",
-        "glob": "openapi_spec/spec.yml",
+        "output": "#{cwd}/clients/algoliasearch-client-javascript",
+        "glob": "specs/spec.yml",
         "gitHost": "algolia",
         "gitUserId": "algolia",
         "gitRepoId": "algoliasearch-client-javascript",
