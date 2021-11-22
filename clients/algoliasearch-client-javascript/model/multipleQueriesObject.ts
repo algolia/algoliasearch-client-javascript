@@ -1,4 +1,3 @@
-import { RequestFile } from './models';
 import { MultipleQueries } from './multipleQueries';
 
 export class MultipleQueriesObject {

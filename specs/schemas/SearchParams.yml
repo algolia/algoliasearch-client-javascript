@@ -215,13 +215,11 @@ searchParams:
       items:
         type: number
       description: Search inside a rectangular area (in geo coordinates).
-      default: null
     insidePolygon:
       type: array
       items:
         type: number
       description: Search inside a polygon (in geo coordinates).
-      default: null
     ignorePlurals:
       type: string
       description: Treats singular, plurals, and other forms of declensions as matching terms.

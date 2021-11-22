@@ -1,5 +1,3 @@
-import { RequestFile } from './models';
-
 export class MultipleQueries {
   /**
    * The Algolia index name

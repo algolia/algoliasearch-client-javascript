@@ -1,4 +1,3 @@
-import { RequestFile } from './models';
 import { RankingInfoMatchedGeoLocation } from './rankingInfoMatchedGeoLocation';
 
 export class RankingInfo {

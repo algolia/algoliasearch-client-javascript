@@ -1,5 +1,3 @@
-import { RequestFile } from './models';
-
 export class SearchParams {
   /**
    * The text to search in the index.

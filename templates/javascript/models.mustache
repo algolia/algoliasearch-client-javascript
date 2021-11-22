@@ -8,18 +8,6 @@ export * from '{{{ classFilename }}}';
 {{/model}}
 {{/models}}
 
-import * as fs from 'fs';
-
-export interface RequestDetailedFile {
-    value: Buffer;
-    options?: {
-        filename?: string;
-        contentType?: string;
-    }
-}
-
-export type RequestFile = string | Buffer | fs.ReadStream | RequestDetailedFile;
-
 {{! Object serialization only relevant if generating APIs, too }}
 {{#generateApis}}
 

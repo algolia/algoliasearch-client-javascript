@@ -2,4 +2,4 @@ description: Index not found
 content:
   application/json:
     schema:
-      $ref: '../schemas/Error.yml'
+      $ref: '../schemas/ErrorBase.yml'

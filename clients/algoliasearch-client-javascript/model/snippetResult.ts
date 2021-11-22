@@ -1,5 +1,3 @@
-import { RequestFile } from './models';
-
 export class SnippetResult {
   /**
    * Markup text with occurrences highlighted.

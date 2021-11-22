@@ -1,4 +1,3 @@
-import { RequestFile } from './models';
 import { HighlightResult } from './highlightResult';
 import { RankingInfo } from './rankingInfo';
 import { SnippetResult } from './snippetResult';
@@ -6,7 +5,8 @@ import { SnippetResult } from './snippetResult';
 /**
  * A single record
  */
-export class Record extends null<String, object> {
+// export class Record extends null<String, object>
+export class Record {
   /**
    * Unique identifier of the object
    */
@@ -47,6 +47,6 @@ export class Record extends null<String, object> {
   ];
 
   static getAttributeTypeMap() {
-    return super.getAttributeTypeMap().concat(Record.attributeTypeMap);
+    return Record.attributeTypeMap;
   }
 }

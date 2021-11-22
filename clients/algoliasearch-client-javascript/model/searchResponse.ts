@@ -1,4 +1,3 @@
-import { RequestFile } from './models';
 import { Record } from './record';
 import { SearchResponseFacetsStats } from './searchResponseFacetsStats';
 

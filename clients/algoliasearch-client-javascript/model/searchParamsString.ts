@@ -1,5 +1,3 @@
-import { RequestFile } from './models';
-
 export class SearchParamsString {
   'params'?: string;
 

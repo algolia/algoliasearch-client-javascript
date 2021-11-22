@@ -12,8 +12,6 @@ import { ObjectSerializer, Authentication, VoidAuth, Interceptor } from '../mode
 import { HttpBearerAuth, ApiKeyAuth, OAuth } from '../model/models';
 {{/hasAuthMethods}}
 
-import { HttpError, RequestFile } from './apis';
-
 {{#operations}}
 {{#description}}
 /**

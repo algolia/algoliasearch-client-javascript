@@ -101,7 +101,7 @@ searchResponse:
       type: string
       description: The query string that will be searched, after normalization.
     processingTimeMS:
-      type: number
+      type: integer
       description: Time the server took to process the request, in milliseconds.
       example: 20
     query:

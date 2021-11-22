@@ -1,4 +1,3 @@
-import { RequestFile } from './models';
 import { Operation } from './operation';
 
 export class BatchObject {

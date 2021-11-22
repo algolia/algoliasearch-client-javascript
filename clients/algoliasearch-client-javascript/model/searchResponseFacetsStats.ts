@@ -1,5 +1,3 @@
-import { RequestFile } from './models';
-
 export class SearchResponseFacetsStats {
   /**
    * The minimum value in the result set.

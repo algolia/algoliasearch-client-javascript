@@ -6,7 +6,8 @@
     "playground/javascript/"
   ],
   "scripts": {
-    "build:spec": "yarn swagger-cli bundle openapi_spec/spec.yml --outfile dist/openapi.yml --type yaml",
+    "build:spec": "yarn swagger-cli bundle specs/spec.yml --outfile dist/openapi.yml --type yaml",
+    "build:spec:json": "yarn swagger-cli bundle specs/spec.yml --outfile dist/openapi.json --type json",
     "clean": "rm -rf **/dist **/build **/node_modules",
     "client:build-js": "cd clients/algoliasearch-client-javascript/ && yarn install && yarn build && cd ../../",
     "client:build": "yarn client:build-js",
