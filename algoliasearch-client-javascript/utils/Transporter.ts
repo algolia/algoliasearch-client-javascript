@@ -144,7 +144,7 @@ export class Transporter {
         method,
         url: serializeUrl(host, request.path, queryParameters),
         connectTimeout: getTimeout(timeoutsCount, this.timeouts.connect),
-        responseTimeout: getTimeout(timeoutsCount, requestOptions.timeout as number),
+        responseTimeout: getTimeout(timeoutsCount, requestOptions.timeout ?? this.timeouts.read),
       };
 
       /**

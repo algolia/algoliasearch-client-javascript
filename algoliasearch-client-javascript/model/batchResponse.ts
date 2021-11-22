@@ -1,5 +1,3 @@
-import { RequestFile } from './models';
-
 export class BatchResponse {
   /**
    * taskID of the indexing task to wait for.

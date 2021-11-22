@@ -1,4 +1,3 @@
-import { RequestFile } from './models';
 import { SearchResponse } from './searchResponse';
 
 export class MultipleQueriesResponse {

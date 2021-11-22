@@ -2,8 +2,8 @@ import type { RequestOptions } from '../utils/types';
 
 export * from './batchObject';
 export * from './batchResponse';
+export * from './errorBase';
 export * from './highlightResult';
-export * from './modelError';
 export * from './multipleQueries';
 export * from './multipleQueriesObject';
 export * from './multipleQueriesResponse';
@@ -18,22 +18,10 @@ export * from './searchResponse';
 export * from './searchResponseFacetsStats';
 export * from './snippetResult';
 
-import * as fs from 'fs';
-
-export interface RequestDetailedFile {
-  value: Buffer;
-  options?: {
-    filename?: string;
-    contentType?: string;
-  };
-}
-
-export type RequestFile = string | Buffer | fs.ReadStream | RequestDetailedFile;
-
 import { BatchObject } from './batchObject';
 import { BatchResponse } from './batchResponse';
+import { ErrorBase } from './errorBase';
 import { HighlightResult } from './highlightResult';
-import { ModelError } from './modelError';
 import { MultipleQueries } from './multipleQueries';
 import { MultipleQueriesObject } from './multipleQueriesObject';
 import { MultipleQueriesResponse } from './multipleQueriesResponse';
@@ -67,8 +55,8 @@ let enumsMap: { [index: string]: any } = {
 let typeMap: { [index: string]: any } = {
   BatchObject: BatchObject,
   BatchResponse: BatchResponse,
+  ErrorBase: ErrorBase,
   HighlightResult: HighlightResult,
-  ModelError: ModelError,
   MultipleQueries: MultipleQueries,
   MultipleQueriesObject: MultipleQueriesObject,
   MultipleQueriesResponse: MultipleQueriesResponse,

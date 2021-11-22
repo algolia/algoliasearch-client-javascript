@@ -20,12 +20,12 @@ yarn client:build
 
 # Testing clients
 
-Go to the [`playground`](./playground) folder to test your client
+The clients can be tested inside the [`playground`](./playground) folder
 
 ## JavaScript
 
 ```bash
-cd playground/javascript && yarn start
+yarn playground:js
 ```
 
 # Troubleshooting

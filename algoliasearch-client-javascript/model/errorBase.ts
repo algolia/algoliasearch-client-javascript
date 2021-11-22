@@ -1,9 +1,8 @@
-import { RequestFile } from './models';
-
 /**
  * Error
  */
-export class ModelError extends null<String, object> {
+// export class ErrorBase extends null<String, object>
+export class ErrorBase {
   'message'?: string;
 
   static discriminator: string | undefined = undefined;
@@ -17,6 +16,6 @@ export class ModelError extends null<String, object> {
   ];
 
   static getAttributeTypeMap() {
-    return super.getAttributeTypeMap().concat(ModelError.attributeTypeMap);
+    return ErrorBase.attributeTypeMap;
   }
 }

@@ -1,5 +1,3 @@
-import { RequestFile } from './models';
-
 export class Operation {
   /**
    * type of operation

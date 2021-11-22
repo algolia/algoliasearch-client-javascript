@@ -1,5 +1,3 @@
-import { RequestFile } from './models';
-
 export class RankingInfoMatchedGeoLocation {
   /**
    * Latitude of the matched location.

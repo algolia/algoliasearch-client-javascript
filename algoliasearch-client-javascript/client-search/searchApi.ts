@@ -5,6 +5,7 @@ import { Headers, Host, Request, RequestOptions } from '../utils/types';
 
 import { BatchObject } from '../model/batchObject';
 import { BatchResponse } from '../model/batchResponse';
+import { ErrorBase } from '../model/errorBase';
 import { MultipleQueriesObject } from '../model/multipleQueriesObject';
 import { MultipleQueriesResponse } from '../model/multipleQueriesResponse';
 import { SaveObjectResponse } from '../model/saveObjectResponse';
@@ -14,8 +15,6 @@ import { SearchResponse } from '../model/searchResponse';
 
 import { ObjectSerializer, Authentication, VoidAuth, Interceptor } from '../model/models';
 import { HttpBearerAuth, ApiKeyAuth, OAuth } from '../model/models';
-
-import { HttpError, RequestFile } from './apis';
 
 export enum SearchApiApiKeys {
   apiKey,

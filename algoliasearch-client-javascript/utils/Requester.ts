@@ -63,7 +63,7 @@ export class Requester {
 
       req.on('error', (error) => {
         clearTimeout(connectTimeout);
-        clearTimeout(responseTimeout as NodeJS.Timeout);
+        clearTimeout(responseTimeout!);
         resolve({ status: 0, content: error.message, isTimedOut: false });
       });
 
