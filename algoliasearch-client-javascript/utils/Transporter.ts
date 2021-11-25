@@ -5,7 +5,6 @@ import type {
   StackFrame,
   Timeouts,
   Response,
-  Outcomes,
   EndRequest,
 } from './types';
 import { MemoryCache } from './MemoryCache';
@@ -20,8 +19,9 @@ import {
 } from './helpers';
 import { Headers } from './types';
 import { RetryError } from './errors';
-import { retryDecision } from './retryDecision';
+import * as responseUtils from './Response';
 import { Requester } from './Requester';
+import { HttpRequester } from './HttpRequester';
 
 export class Transporter {
   private hosts: Host[];
@@ -36,27 +36,28 @@ export class Transporter {
     baseHeaders,
     userAgent,
     timeouts,
+    requester = new HttpRequester(),
   }: {
     hosts: Host[];
     baseHeaders: Headers;
     userAgent: string;
     timeouts: Timeouts;
+    requester?: Requester;
   }) {
     this.hosts = hosts;
     this.hostsCache = new MemoryCache();
     this.baseHeaders = baseHeaders;
     this.userAgent = userAgent;
     this.timeouts = timeouts;
-
-    this.requester = new Requester();
+    this.requester = requester;
   }
 
-  async createRetryableOptions(): Promise<{
+  async createRetryableOptions(compatibleHosts: Host[]): Promise<{
     hosts: Host[];
     getTimeout: (retryCount: number, timeout: number) => number;
   }> {
     const statefulHosts = await Promise.all(
-      this.hosts.map((statelessHost) => {
+      compatibleHosts.map((statelessHost) => {
         return this.hostsCache.get(statelessHost, async () => {
           return new StatefulHost(statelessHost);
         });
@@ -70,10 +71,10 @@ export class Transporter {
      */
     const hostsAvailable = [...hostsUp, ...hostsTimeouted];
 
-    const statelessHostsAvailable = hostsAvailable.length > 0 ? hostsAvailable : this.hosts;
+    const hosts = hostsAvailable.length > 0 ? hostsAvailable : compatibleHosts;
 
     return {
-      hosts: statelessHostsAvailable,
+      hosts,
       getTimeout(timeoutsCount: number, baseTimeout: number): number {
         /**
          * Imagine that you have 4 hosts, if timeouts will increase
@@ -96,11 +97,10 @@ export class Transporter {
     };
   }
 
-  async retryableRequest<TResponse>(
-    request: Request,
-    requestOptions: RequestOptions
-  ): Promise<TResponse> {
+  async request<TResponse>(request: Request, requestOptions: RequestOptions): Promise<TResponse> {
     const stackTrace: StackFrame[] = [];
+
+    const isRead = request.method === 'GET';
 
     /**
      * First we prepare the payload that do not depend from hosts.
@@ -110,13 +110,12 @@ export class Transporter {
     const method = request.method;
 
     // On `GET`, the data is proxied to query parameters.
-    const dataQueryParameters: Record<string, any> =
-      request.method !== 'GET'
-        ? {}
-        : {
-            ...request.data,
-            ...requestOptions.data,
-          };
+    const dataQueryParameters: Record<string, any> = isRead
+      ? {
+          ...request.data,
+          ...requestOptions.data,
+        }
+      : {};
 
     const queryParameters = {
       'x-algolia-agent': this.userAgent,
@@ -138,13 +137,18 @@ export class Transporter {
         throw new RetryError(stackTrace);
       }
 
+      let responseTimeout = requestOptions.timeout;
+      if (responseTimeout === undefined) {
+        responseTimeout = isRead ? this.timeouts.read : this.timeouts.write;
+      }
+
       const payload: EndRequest = {
         data,
         headers,
         method,
         url: serializeUrl(host, request.path, queryParameters),
         connectTimeout: getTimeout(timeoutsCount, this.timeouts.connect),
-        responseTimeout: getTimeout(timeoutsCount, requestOptions.timeout ?? this.timeouts.read),
+        responseTimeout: getTimeout(timeoutsCount, responseTimeout),
       };
 
       /**
@@ -165,48 +169,33 @@ export class Transporter {
         return stackFrame;
       };
 
-      const decisions: Outcomes<TResponse> = {
-        onSuccess: (response) => deserializeSuccess(response),
-        onRetry: async (response) => {
-          const stackFrame = pushToStackTrace(response);
-
-          /**
-           * If response is a timeout, we increaset the number of
-           * timeouts so we can increase the timeout later.
-           */
-          if (response.isTimedOut) {
-            timeoutsCount++;
-          }
-
-          await Promise.all([
-            /**
-             * Failures are individually send the logger, allowing
-             * the end user to debug / store stack frames even
-             * when a retry error does not happen.
-             */
-            //transporter.logger.info('Retryable failure', stackFrameWithoutCredentials(stackFrame)),
-
-            /**
-             * We also store the state of the host in failure cases. If the host, is
-             * down it will remain down for the next 2 minutes. In a timeout situation,
-             * this host will be added end of the list of hosts on the next request.
-             */
-            this.hostsCache.set(
-              host,
-              new StatefulHost(host, response.isTimedOut ? 'timedout' : 'down')
-            ),
-          ]);
-          return retry(hosts, getTimeout);
-        },
-        onFail: (response) => {
-          pushToStackTrace(response);
-
-          throw deserializeFailure(response, stackTrace);
-        },
-      };
-
       const response = await this.requester.send(payload);
-      return retryDecision(response, decisions);
+
+      if (responseUtils.isRetryable(response)) {
+        pushToStackTrace(response);
+
+        // If response is a timeout, we increase the number of timeouts so we can increase the timeout later.
+        if (response.isTimedOut) {
+          timeoutsCount++;
+        }
+
+        /**
+         * We also store the state of the host in failure cases. If the host, is
+         * down it will remain down for the next 2 minutes. In a timeout situation,
+         * this host will be added end of the list of hosts on the next request.
+         */
+        await this.hostsCache.set(
+          host,
+          new StatefulHost(host, response.isTimedOut ? 'timedout' : 'down')
+        );
+        return retry(hosts, getTimeout);
+      }
+      if (responseUtils.isSuccess(response)) {
+        return deserializeSuccess(response);
+      }
+
+      pushToStackTrace(response);
+      throw deserializeFailure(response, stackTrace);
     };
 
     /**
@@ -217,7 +206,11 @@ export class Transporter {
      * 2. We also get from the retryable options a timeout multiplier that is tailored
      * for the current context.
      */
-    const options = await this.createRetryableOptions();
+    const compatibleHosts = this.hosts.filter(
+      (host) =>
+        host.accept == 'readWrite' || (isRead ? host.accept == 'read' : host.accept == 'write')
+    );
+    const options = await this.createRetryableOptions(compatibleHosts);
     return retry([...options.hosts].reverse(), options.getTimeout);
   }
 }

@@ -1,7 +1,7 @@
-import http from 'http';
 import { shuffle } from '../utils/helpers';
 import { Transporter } from '../utils/Transporter';
 import { Headers, Host, Request, RequestOptions } from '../utils/types';
+import { Requester } from '../utils/Requester';
 
 import { BatchObject } from '../model/batchObject';
 import { BatchResponse } from '../model/batchResponse';
@@ -12,9 +12,7 @@ import { SaveObjectResponse } from '../model/saveObjectResponse';
 import { SearchParams } from '../model/searchParams';
 import { SearchParamsString } from '../model/searchParamsString';
 import { SearchResponse } from '../model/searchResponse';
-
-import { ObjectSerializer, Authentication, VoidAuth, Interceptor } from '../model/models';
-import { HttpBearerAuth, ApiKeyAuth, OAuth } from '../model/models';
+import { ApiKeyAuth } from '../model/models';
 
 export enum SearchApiApiKeys {
   apiKey,
@@ -25,14 +23,11 @@ export class SearchApi {
   private transporter: Transporter;
 
   protected authentications = {
-    default: <Authentication>new VoidAuth(),
     apiKey: new ApiKeyAuth('header', 'X-Algolia-API-Key'),
     appId: new ApiKeyAuth('header', 'X-Algolia-Application-Id'),
   };
 
-  protected interceptors: Interceptor[] = [];
-
-  constructor(appId: string, apiKey: string) {
+  constructor(appId: string, apiKey: string, requester?: Requester) {
     this.setApiKey(SearchApiApiKeys.appId, appId);
     this.setApiKey(SearchApiApiKeys.apiKey, apiKey);
     this.transporter = new Transporter({
@@ -57,19 +52,25 @@ export class SearchApi {
         read: 5,
         write: 30,
       },
+      requester,
     });
   }
 
-  public setDefaultAuthentication(auth: Authentication) {
-    this.authentications.default = auth;
-  }
-
   public setApiKey(key: SearchApiApiKeys, value: string) {
-    (this.authentications as any)[SearchApiApiKeys[key]].apiKey = value;
+    this.authentications[SearchApiApiKeys[key]].apiKey = value;
   }
 
-  public addInterceptor(interceptor: Interceptor) {
-    this.interceptors.push(interceptor);
+  private async sendRequest<TResponse>(
+    request: Request,
+    requestOptions: RequestOptions
+  ): Promise<TResponse> {
+    if (this.authentications.apiKey.apiKey) {
+      this.authentications.apiKey.applyToRequest(requestOptions);
+    }
+    if (this.authentications.appId.apiKey) {
+      this.authentications.appId.applyToRequest(requestOptions);
+    }
+    return this.transporter.request(request, requestOptions);
   }
 
   /**
@@ -78,42 +79,26 @@ export class SearchApi {
    * @param indexName The index in which to perform the request
    * @param batchObject
    */
-  public async batch(
-    indexName: string,
-    batchObject: BatchObject,
-    options: { headers: { [name: string]: string } } = { headers: {} }
-  ): Promise<BatchResponse> {
+  public async batch(indexName: string, batchObject: BatchObject): Promise<BatchResponse> {
     const path = '/1/indexes/{indexName}/batch'.replace(
       '{' + 'indexName' + '}',
       encodeURIComponent(String(indexName))
     );
-    let headers: Headers = {};
+    let headers: Headers = { Accept: 'application/json' };
     let queryParameters: Record<string, string> = {};
-    const produces = ['application/json'];
-    // give precedence to 'application/json'
-    if (produces.indexOf('application/json') >= 0) {
-      headers.Accept = 'application/json';
-    } else {
-      headers.Accept = produces.join(',');
-    }
-    let formParams: Record<string, string> = {};
 
-    // verify required parameter 'indexName' is not null or undefined
     if (indexName === null || indexName === undefined) {
       throw new Error('Required parameter indexName was null or undefined when calling batch.');
     }
 
-    // verify required parameter 'batchObject' is not null or undefined
     if (batchObject === null || batchObject === undefined) {
       throw new Error('Required parameter batchObject was null or undefined when calling batch.');
     }
 
-    headers = { ...headers, ...options.headers };
-
     const request: Request = {
       method: 'POST',
       path,
-      data: ObjectSerializer.serialize(batchObject, 'BatchObject'),
+      data: batchObject,
     };
 
     const requestOptions: RequestOptions = {
@@ -121,29 +106,7 @@ export class SearchApi {
       queryParameters,
     };
 
-    let authenticationPromise = Promise.resolve();
-    if (this.authentications.apiKey.apiKey) {
-      authenticationPromise = authenticationPromise.then(() =>
-        this.authentications.apiKey.applyToRequest(requestOptions)
-      );
-    }
-    if (this.authentications.appId.apiKey) {
-      authenticationPromise = authenticationPromise.then(() =>
-        this.authentications.appId.applyToRequest(requestOptions)
-      );
-    }
-    authenticationPromise = authenticationPromise.then(() =>
-      this.authentications.default.applyToRequest(requestOptions)
-    );
-
-    let interceptorPromise = authenticationPromise;
-    for (const interceptor of this.interceptors) {
-      interceptorPromise = interceptorPromise.then(() => interceptor(requestOptions));
-    }
-
-    await interceptorPromise;
-
-    return this.transporter.retryableRequest(request, requestOptions);
+    return this.sendRequest(request, requestOptions);
   }
   /**
    *
@@ -151,34 +114,22 @@ export class SearchApi {
    * @param multipleQueriesObject
    */
   public async multipleQueries(
-    multipleQueriesObject: MultipleQueriesObject,
-    options: { headers: { [name: string]: string } } = { headers: {} }
+    multipleQueriesObject: MultipleQueriesObject
   ): Promise<MultipleQueriesResponse> {
     const path = '/1/indexes/*/queries';
-    let headers: Headers = {};
+    let headers: Headers = { Accept: 'application/json' };
     let queryParameters: Record<string, string> = {};
-    const produces = ['application/json'];
-    // give precedence to 'application/json'
-    if (produces.indexOf('application/json') >= 0) {
-      headers.Accept = 'application/json';
-    } else {
-      headers.Accept = produces.join(',');
-    }
-    let formParams: Record<string, string> = {};
 
-    // verify required parameter 'multipleQueriesObject' is not null or undefined
     if (multipleQueriesObject === null || multipleQueriesObject === undefined) {
       throw new Error(
         'Required parameter multipleQueriesObject was null or undefined when calling multipleQueries.'
       );
     }
 
-    headers = { ...headers, ...options.headers };
-
     const request: Request = {
       method: 'POST',
       path,
-      data: ObjectSerializer.serialize(multipleQueriesObject, 'MultipleQueriesObject'),
+      data: multipleQueriesObject,
     };
 
     const requestOptions: RequestOptions = {
@@ -186,29 +137,7 @@ export class SearchApi {
       queryParameters,
     };
 
-    let authenticationPromise = Promise.resolve();
-    if (this.authentications.apiKey.apiKey) {
-      authenticationPromise = authenticationPromise.then(() =>
-        this.authentications.apiKey.applyToRequest(requestOptions)
-      );
-    }
-    if (this.authentications.appId.apiKey) {
-      authenticationPromise = authenticationPromise.then(() =>
-        this.authentications.appId.applyToRequest(requestOptions)
-      );
-    }
-    authenticationPromise = authenticationPromise.then(() =>
-      this.authentications.default.applyToRequest(requestOptions)
-    );
-
-    let interceptorPromise = authenticationPromise;
-    for (const interceptor of this.interceptors) {
-      interceptorPromise = interceptorPromise.then(() => interceptor(requestOptions));
-    }
-
-    await interceptorPromise;
-
-    return this.transporter.retryableRequest(request, requestOptions);
+    return this.sendRequest(request, requestOptions);
   }
   /**
    * Add an object to the index, automatically assigning it an object ID
@@ -218,44 +147,31 @@ export class SearchApi {
    */
   public async saveObject(
     indexName: string,
-    requestBody: { [key: string]: object },
-    options: { headers: { [name: string]: string } } = { headers: {} }
+    requestBody: { [key: string]: object }
   ): Promise<SaveObjectResponse> {
     const path = '/1/indexes/{indexName}'.replace(
       '{' + 'indexName' + '}',
       encodeURIComponent(String(indexName))
     );
-    let headers: Headers = {};
+    let headers: Headers = { Accept: 'application/json' };
     let queryParameters: Record<string, string> = {};
-    const produces = ['application/json'];
-    // give precedence to 'application/json'
-    if (produces.indexOf('application/json') >= 0) {
-      headers.Accept = 'application/json';
-    } else {
-      headers.Accept = produces.join(',');
-    }
-    let formParams: Record<string, string> = {};
 
-    // verify required parameter 'indexName' is not null or undefined
     if (indexName === null || indexName === undefined) {
       throw new Error(
         'Required parameter indexName was null or undefined when calling saveObject.'
       );
     }
 
-    // verify required parameter 'requestBody' is not null or undefined
     if (requestBody === null || requestBody === undefined) {
       throw new Error(
         'Required parameter requestBody was null or undefined when calling saveObject.'
       );
     }
 
-    headers = { ...headers, ...options.headers };
-
     const request: Request = {
       method: 'POST',
       path,
-      data: ObjectSerializer.serialize(requestBody, '{ [key: string]: object; }'),
+      data: requestBody,
     };
 
     const requestOptions: RequestOptions = {
@@ -263,29 +179,7 @@ export class SearchApi {
       queryParameters,
     };
 
-    let authenticationPromise = Promise.resolve();
-    if (this.authentications.apiKey.apiKey) {
-      authenticationPromise = authenticationPromise.then(() =>
-        this.authentications.apiKey.applyToRequest(requestOptions)
-      );
-    }
-    if (this.authentications.appId.apiKey) {
-      authenticationPromise = authenticationPromise.then(() =>
-        this.authentications.appId.applyToRequest(requestOptions)
-      );
-    }
-    authenticationPromise = authenticationPromise.then(() =>
-      this.authentications.default.applyToRequest(requestOptions)
-    );
-
-    let interceptorPromise = authenticationPromise;
-    for (const interceptor of this.interceptors) {
-      interceptorPromise = interceptorPromise.then(() => interceptor(requestOptions));
-    }
-
-    await interceptorPromise;
-
-    return this.transporter.retryableRequest(request, requestOptions);
+    return this.sendRequest(request, requestOptions);
   }
   /**
    *
@@ -295,45 +189,29 @@ export class SearchApi {
    */
   public async search(
     indexName: string,
-    searchParamsSearchParamsString: SearchParams | SearchParamsString,
-    options: { headers: { [name: string]: string } } = { headers: {} }
+    searchParamsSearchParamsString: SearchParams | SearchParamsString
   ): Promise<SearchResponse> {
     const path = '/1/indexes/{indexName}/query'.replace(
       '{' + 'indexName' + '}',
       encodeURIComponent(String(indexName))
     );
-    let headers: Headers = {};
+    let headers: Headers = { Accept: 'application/json' };
     let queryParameters: Record<string, string> = {};
-    const produces = ['application/json'];
-    // give precedence to 'application/json'
-    if (produces.indexOf('application/json') >= 0) {
-      headers.Accept = 'application/json';
-    } else {
-      headers.Accept = produces.join(',');
-    }
-    let formParams: Record<string, string> = {};
 
-    // verify required parameter 'indexName' is not null or undefined
     if (indexName === null || indexName === undefined) {
       throw new Error('Required parameter indexName was null or undefined when calling search.');
     }
 
-    // verify required parameter 'searchParamsSearchParamsString' is not null or undefined
     if (searchParamsSearchParamsString === null || searchParamsSearchParamsString === undefined) {
       throw new Error(
         'Required parameter searchParamsSearchParamsString was null or undefined when calling search.'
       );
     }
 
-    headers = { ...headers, ...options.headers };
-
     const request: Request = {
       method: 'POST',
       path,
-      data: ObjectSerializer.serialize(
-        searchParamsSearchParamsString,
-        'SearchParams | SearchParamsString'
-      ),
+      data: searchParamsSearchParamsString,
     };
 
     const requestOptions: RequestOptions = {
@@ -341,28 +219,6 @@ export class SearchApi {
       queryParameters,
     };
 
-    let authenticationPromise = Promise.resolve();
-    if (this.authentications.apiKey.apiKey) {
-      authenticationPromise = authenticationPromise.then(() =>
-        this.authentications.apiKey.applyToRequest(requestOptions)
-      );
-    }
-    if (this.authentications.appId.apiKey) {
-      authenticationPromise = authenticationPromise.then(() =>
-        this.authentications.appId.applyToRequest(requestOptions)
-      );
-    }
-    authenticationPromise = authenticationPromise.then(() =>
-      this.authentications.default.applyToRequest(requestOptions)
-    );
-
-    let interceptorPromise = authenticationPromise;
-    for (const interceptor of this.interceptors) {
-      interceptorPromise = interceptorPromise.then(() => interceptor(requestOptions));
-    }
-
-    await interceptorPromise;
-
-    return this.transporter.retryableRequest(request, requestOptions);
+    return this.sendRequest(request, requestOptions);
   }
 }
