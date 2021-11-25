@@ -45,7 +45,7 @@ async function testSearch() {
       return console.log(`[${e.status}] ${e.message}`, e.stackTrace);
     }
 
-    console.log('[ERROR]', e);
+    console.log('[ERROR]', JSON.stringify(e, null, 4));
   }
 }
 

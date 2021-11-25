@@ -63,9 +63,3 @@ export type Timeouts = {
   readonly read: number;
   readonly write: number;
 };
-
-export type Outcomes<TResponse> = {
-  readonly onFail: (response: Response) => Promise<never>;
-  readonly onSuccess: (response: Response) => Promise<TResponse>;
-  readonly onRetry: (response: Response) => Promise<TResponse>;
-};
