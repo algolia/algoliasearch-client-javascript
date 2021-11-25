@@ -1,0 +1,104 @@
+record:
+  type: object
+  description: A single record
+  additionalProperties: true
+  required:
+    - objectID
+  properties:
+    objectID:
+      $ref: '../../../common/responses/common.yml#/objectID'
+    _highlightResult:
+      $ref: '#/highlightResult'
+    _snippetResult:
+      $ref: '#/snippetResult'
+    _rankingInfo:
+      $ref: '#/rankingInfo'
+    _distinctSeqID:
+      type: integer
+
+# Props
+highlightResult:
+  type: object
+  additionalProperties: false
+  properties:
+    value:
+      type: string
+      description: 'Markup text with occurrences highlighted.'
+      example: '<em>George</em> <em>Clo</em>oney'
+    matchLevel:
+      type: string
+      description: 'Indicates how well the attribute matched the search query.'
+      enum: [none, partial, full]
+    matchedWords:
+      type: array
+      description: List of words from the query that matched the object.
+      items:
+        type: string
+    fullyHighlighted:
+      type: boolean
+      description: 'Whether the entire attribute value is highlighted.'
+
+snippetResult:
+  type: object
+  additionalProperties: false
+  properties:
+    value:
+      type: string
+      description: 'Markup text with occurrences highlighted.'
+      example: '<em>George</em> <em>Clo</em>oney...'
+    matchLevel:
+      type: string
+      description: 'Indicates how well the attribute matched the search query.'
+      enum: [none, partial, full]
+
+rankingInfo:
+  type: object
+  additionalProperties: false
+  properties:
+    filters:
+      type: integer
+      description: 'This field is reserved for advanced usage.'
+    firstMatchedWord:
+      type: integer
+      description: 'Position of the most important matched attribute in the attributes to index list.'
+    geoDistance:
+      type: integer
+      description: 'Distance between the geo location in the search query and the best matching geo location in the record, divided by the geo precision (in meters).'
+    geoPrecision:
+      type: integer
+      description: 'Precision used when computing the geo distance, in meters.'
+    matchedGeoLocation:
+      type: object
+      additionalProperties:
+        type: object
+        additionalProperties: false
+        properties:
+          lat:
+            type: number
+            format: double
+            description: 'Latitude of the matched location.'
+          lng:
+            type: number
+            format: double
+            description: 'Longitude of the matched location.'
+          distance:
+            type: integer
+            description: 'Distance between the matched location and the search location (in meters).'
+    nbExactWords:
+      type: integer
+      description: 'Number of exactly matched words.'
+    nbTypos:
+      type: integer
+      description: 'Number of typos encountered when matching the record.'
+    promoted:
+      type: boolean
+      description: 'Present and set to true if a Rule promoted the hit.'
+    proximityDistance:
+      type: integer
+      description: 'When the query contains more than one word, the sum of the distances between matched words (in meters).'
+    userScore:
+      type: integer
+      description: 'Custom ranking for the object, expressed as a single integer value.'
+    word:
+      type: integer
+      description: 'Number of matched words, including prefixes and typos.'

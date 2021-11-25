@@ -1,0 +1,37 @@
+post:
+  tags:
+    - search
+  operationId: saveObject
+  summary: Save object
+  description: Add an object to the index, automatically assigning it an object ID
+  parameters:
+    - $ref: '../../../common/parameters.yml#/IndexName'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          additionalProperties: true
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            title: saveObjectResponse
+            type: object
+            additionalProperties: false
+            properties:
+              createdAt:
+                type: string
+              taskID:
+                $ref: '../../../common/responses/common.yml#/taskID'
+              objectID:
+                $ref: '../../../common/responses/common.yml#/objectID'
+    '400':
+      $ref: '../../common/responses/BadRequest.yml'
+    '404':
+      $ref: '../../common/responses/IndexNotFound.yml'
+#delete index
+# delete:
