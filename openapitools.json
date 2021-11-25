@@ -9,7 +9,7 @@
         "config": "#{cwd}/openapitools.json",
         "apiPackage": "client-search",
         "output": "#{cwd}/clients/algoliasearch-client-javascript",
-        "glob": "specs/spec.yml",
+        "glob": "specs/search/spec.yml",
         "gitHost": "algolia",
         "gitUserId": "algolia",
         "gitRepoId": "algoliasearch-client-javascript",

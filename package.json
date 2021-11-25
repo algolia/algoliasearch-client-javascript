@@ -6,8 +6,8 @@
     "playground/javascript/"
   ],
   "scripts": {
-    "build:spec": "yarn swagger-cli bundle specs/spec.yml --outfile dist/openapi.yml --type yaml",
-    "build:spec:json": "yarn swagger-cli bundle specs/spec.yml --outfile dist/openapi.json --type json",
+    "build:spec": "yarn swagger-cli bundle specs/search/spec.yml --outfile dist/openapi.yml --type yaml",
+    "build:spec:json": "yarn swagger-cli bundle specs/search/spec.yml --outfile dist/openapi.json --type json",
     "clean": "rm -rf **/dist **/build **/node_modules",
     "client:build-js": "cd clients/algoliasearch-client-javascript/ && yarn install && yarn build && cd ../../",
     "client:build": "yarn client:build-js",
@@ -15,7 +15,9 @@
     "lint:specs": "yarn prettier --write specs",
     "lint": "yarn lint:specs && yarn lint:js",
     "generate:js": "PACKAGE_VERSION='4.11.0' yarn openapi-generator-cli generate --generator-key javascript-client && yarn install && yarn utils:import-js",
+    "generate:js:search": "PACKAGE_VERSION='4.11.0' yarn openapi-generator-cli generate -i specs/search/spec.yml --generator-key javascript-client && yarn install && yarn utils:import-js",
     "generate": "yarn generate:js && yarn lint",
+    "generate:search": "yarn generate:js:search && yarn lint",
     "playground:js": "yarn workspace algoliasearch-client-javascript-playground start",
     "utils:import-js": "mkdir -p -- clients/algoliasearch-client-javascript/utils && cp -R clients/utils/javascript/ clients/algoliasearch-client-javascript/utils"
   },

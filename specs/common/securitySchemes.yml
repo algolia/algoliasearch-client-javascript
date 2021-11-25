@@ -1,0 +1,8 @@
+appId:
+  type: apiKey
+  in: header
+  name: X-Algolia-Application-Id
+apiKey:
+  type: apiKey
+  in: header
+  name: X-Algolia-API-Key
