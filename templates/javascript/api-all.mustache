@@ -12,7 +12,7 @@ export * from './{{ classFilename }}Interface'
 export class searchClient extends SearchApi{}
 
 export * from '../utils/errors';
-export { EchoRequester } from '../utils/EchoRequester';
+export { EchoRequester } from '../utils/requester/EchoRequester';
 
 export const APIS = [{{#apis}}{{#operations}}{{ classname }}{{/operations}}{{^-last}}, {{/-last}}{{/apis}}];
 {{/apiInfo}}

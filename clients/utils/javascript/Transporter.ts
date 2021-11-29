@@ -7,8 +7,8 @@ import type {
   Response,
   EndRequest,
 } from './types';
-import { MemoryCache } from './MemoryCache';
-import type { Cache } from './Cache';
+import { MemoryCache } from './cache/MemoryCache';
+import type { Cache } from './cache/Cache';
 import { StatefulHost } from './StatefulHost';
 import {
   deserializeFailure,
@@ -20,8 +20,8 @@ import {
 import { Headers } from './types';
 import { RetryError } from './errors';
 import * as responseUtils from './Response';
-import { Requester } from './Requester';
-import { HttpRequester } from './HttpRequester';
+import { Requester } from './requester/Requester';
+import { HttpRequester } from './requester/HttpRequester';
 
 export class Transporter {
   private hosts: Host[];
@@ -49,6 +49,15 @@ export class Transporter {
     this.baseHeaders = baseHeaders;
     this.userAgent = userAgent;
     this.timeouts = timeouts;
+    this.requester = requester;
+  }
+
+  public setHosts(hosts: Host[]): void {
+    this.hosts = hosts;
+    this.hostsCache.clear();
+  }
+
+  public setRequester(requester: Requester): void {
     this.requester = requester;
   }
 
@@ -169,7 +178,7 @@ export class Transporter {
         return stackFrame;
       };
 
-      const response = await this.requester.send(payload);
+      const response = await this.requester.send(payload, request);
 
       if (responseUtils.isRetryable(response)) {
         pushToStackTrace(response);

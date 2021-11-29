@@ -1,7 +1,7 @@
 import { shuffle } from '../utils/helpers';
 import { Transporter } from '../utils/Transporter';
 import { Headers, Host, Request, RequestOptions } from '../utils/types';
-import { Requester } from '../utils/Requester';
+import { Requester } from '../utils/requester/Requester';
 
 import { BatchObject } from '../model/batchObject';
 import { BatchResponse } from '../model/batchResponse';
@@ -27,22 +27,11 @@ export class SearchApi {
     appId: new ApiKeyAuth('header', 'X-Algolia-Application-Id'),
   };
 
-  constructor(appId: string, apiKey: string, requester?: Requester) {
+  constructor(appId: string, apiKey: string, options?: { requester?: Requester; hosts?: Host[] }) {
     this.setApiKey(SearchApiApiKeys.appId, appId);
     this.setApiKey(SearchApiApiKeys.apiKey, apiKey);
     this.transporter = new Transporter({
-      hosts: (
-        [
-          { url: `${appId}-dsn.algolia.net`, accept: 'read', protocol: 'https' },
-          { url: `${appId}.algolia.net`, accept: 'write', protocol: 'https' },
-        ] as Host[]
-      ).concat(
-        shuffle([
-          { url: `${appId}-1.algolianet.com`, accept: 'readWrite', protocol: 'https' },
-          { url: `${appId}-2.algolianet.com`, accept: 'readWrite', protocol: 'https' },
-          { url: `${appId}-3.algolianet.com`, accept: 'readWrite', protocol: 'https' },
-        ])
-      ),
+      hosts: options?.hosts ?? this.getDefaultHosts(appId, apiKey),
       baseHeaders: {
         'content-type': 'application/x-www-form-urlencoded',
       },
@@ -52,8 +41,31 @@ export class SearchApi {
         read: 5,
         write: 30,
       },
-      requester,
+      requester: options?.requester,
     });
+  }
+
+  public getDefaultHosts(appId: string, apiKey: string): Host[] {
+    return (
+      [
+        { url: `${appId}-dsn.algolia.net`, accept: 'read', protocol: 'https' },
+        { url: `${appId}.algolia.net`, accept: 'write', protocol: 'https' },
+      ] as Host[]
+    ).concat(
+      shuffle([
+        { url: `${appId}-1.algolianet.com`, accept: 'readWrite', protocol: 'https' },
+        { url: `${appId}-2.algolianet.com`, accept: 'readWrite', protocol: 'https' },
+        { url: `${appId}-3.algolianet.com`, accept: 'readWrite', protocol: 'https' },
+      ])
+    );
+  }
+
+  public setRequest(requester: Requester): void {
+    this.transporter.setRequester(requester);
+  }
+
+  public setHosts(hosts: Host[]): void {
+    this.transporter.setHosts(hosts);
   }
 
   public setApiKey(key: SearchApiApiKeys, value: string) {
