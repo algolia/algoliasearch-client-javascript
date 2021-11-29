@@ -22,6 +22,7 @@ import { RetryError } from './errors';
 import * as responseUtils from './Response';
 import { Requester } from './requester/Requester';
 import { HttpRequester } from './requester/HttpRequester';
+import { stackTraceWithoutCredentials, stackFrameWithoutCredentials } from './stackTrace';
 
 export class Transporter {
   private hosts: Host[];
@@ -143,7 +144,7 @@ export class Transporter {
        */
       const host = hosts.pop();
       if (host === undefined) {
-        throw new RetryError(stackTrace);
+        throw new RetryError(stackTraceWithoutCredentials(stackTrace));
       }
 
       let responseTimeout = requestOptions.timeout;
@@ -181,12 +182,18 @@ export class Transporter {
       const response = await this.requester.send(payload, request);
 
       if (responseUtils.isRetryable(response)) {
-        pushToStackTrace(response);
+        const stackFrame = pushToStackTrace(response);
 
         // If response is a timeout, we increase the number of timeouts so we can increase the timeout later.
         if (response.isTimedOut) {
           timeoutsCount++;
         }
+        /**
+         * Failures are individually sent to the logger, allowing
+         * the end user to debug / store stack frames even
+         * when a retry error does not happen.
+         */
+        console.log('Retryable failure', stackFrameWithoutCredentials(stackFrame));
 
         /**
          * We also store the state of the host in failure cases. If the host, is
