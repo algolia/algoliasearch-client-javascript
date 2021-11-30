@@ -1,0 +1,50 @@
+name: client_javascript
+
+on:
+  workflow_run:
+    workflows: ['specs']
+    types:
+      - completed
+
+jobs:
+  build:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-java@v2
+        with:
+          distribution: 'zulu'
+          java-version: '11'
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'yarn'
+          cache-dependency-path: 'yarn.lock'
+
+      - name: Install Dependencies
+        run: yarn install
+
+      - name: Generate search client
+        run: yarn generate:js:search
+
+      - name: Build search client
+        run: yarn client:build-js:search
+
+      - name: Generate recommend client
+        run: yarn generate:js:recommend
+
+      - name: Build recommend client
+        run: yarn client:build-js:recommend
+
+      - name: Lint
+        run: yarn prettier --check clients/algoliasearch-client-javascript
+
+  build-failure:
+    if: ${{ github.event.workflow_run.conclusion == 'failure' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Error on `specs` workflow
+        run: exit 1
