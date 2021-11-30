@@ -6,7 +6,7 @@ record:
     - objectID
   properties:
     objectID:
-      $ref: '../../../common/responses/common.yml#/objectID'
+      $ref: '../../../common/parameters.yml#/objectID'
     _highlightResult:
       $ref: '#/highlightResult'
     _snippetResult:

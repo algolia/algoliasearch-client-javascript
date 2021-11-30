@@ -1,9 +1,13 @@
 import type { RequestOptions } from '../utils/types';
 
+export * from './baseIndexSettings';
+export * from './baseSearchParams';
 export * from './batchObject';
 export * from './batchResponse';
 export * from './errorBase';
 export * from './highlightResult';
+export * from './indexSettings';
+export * from './indexSettingsAsSearchParams';
 export * from './multipleQueries';
 export * from './multipleQueriesObject';
 export * from './multipleQueriesResponse';
@@ -13,9 +17,10 @@ export * from './rankingInfoMatchedGeoLocation';
 export * from './record';
 export * from './saveObjectResponse';
 export * from './searchParams';
-export * from './searchParamsString';
+export * from './searchParamsAsString';
 export * from './searchResponse';
 export * from './searchResponseFacetsStats';
+export * from './setSettingsResponse';
 export * from './snippetResult';
 
 export interface Authentication {

@@ -6,12 +6,14 @@ import { Requester } from '../utils/requester/Requester';
 import { BatchObject } from '../model/batchObject';
 import { BatchResponse } from '../model/batchResponse';
 import { ErrorBase } from '../model/errorBase';
+import { IndexSettings } from '../model/indexSettings';
 import { MultipleQueriesObject } from '../model/multipleQueriesObject';
 import { MultipleQueriesResponse } from '../model/multipleQueriesResponse';
 import { SaveObjectResponse } from '../model/saveObjectResponse';
 import { SearchParams } from '../model/searchParams';
-import { SearchParamsString } from '../model/searchParamsString';
+import { SearchParamsAsString } from '../model/searchParamsAsString';
 import { SearchResponse } from '../model/searchResponse';
+import { SetSettingsResponse } from '../model/setSettingsResponse';
 import { ApiKeyAuth } from '../model/models';
 
 export enum SearchApiApiKeys {
@@ -122,6 +124,37 @@ export class SearchApi {
   }
   /**
    *
+   * @summary Retrieve settings of a given indexName.
+   * @param indexName The index in which to perform the request
+   */
+  public async getSettings(indexName: string): Promise<IndexSettings> {
+    const path = '/1/indexes/{indexName}/settings'.replace(
+      '{' + 'indexName' + '}',
+      encodeURIComponent(String(indexName))
+    );
+    let headers: Headers = { Accept: 'application/json' };
+    let queryParameters: Record<string, string> = {};
+
+    if (indexName === null || indexName === undefined) {
+      throw new Error(
+        'Required parameter indexName was null or undefined when calling getSettings.'
+      );
+    }
+
+    const request: Request = {
+      method: 'GET',
+      path,
+    };
+
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
+
+    return this.sendRequest(request, requestOptions);
+  }
+  /**
+   *
    * @summary Get search results for the given requests.
    * @param multipleQueriesObject
    */
@@ -197,11 +230,11 @@ export class SearchApi {
    *
    * @summary Get search results
    * @param indexName The index in which to perform the request
-   * @param searchParamsSearchParamsString
+   * @param searchParamsAsStringSearchParams
    */
   public async search(
     indexName: string,
-    searchParamsSearchParamsString: SearchParams | SearchParamsString
+    searchParamsAsStringSearchParams: SearchParamsAsString | SearchParams
   ): Promise<SearchResponse> {
     const path = '/1/indexes/{indexName}/query'.replace(
       '{' + 'indexName' + '}',
@@ -214,16 +247,67 @@ export class SearchApi {
       throw new Error('Required parameter indexName was null or undefined when calling search.');
     }
 
-    if (searchParamsSearchParamsString === null || searchParamsSearchParamsString === undefined) {
+    if (
+      searchParamsAsStringSearchParams === null ||
+      searchParamsAsStringSearchParams === undefined
+    ) {
       throw new Error(
-        'Required parameter searchParamsSearchParamsString was null or undefined when calling search.'
+        'Required parameter searchParamsAsStringSearchParams was null or undefined when calling search.'
       );
     }
 
     const request: Request = {
       method: 'POST',
       path,
-      data: searchParamsSearchParamsString,
+      data: searchParamsAsStringSearchParams,
+    };
+
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
+
+    return this.sendRequest(request, requestOptions);
+  }
+  /**
+   *
+   * @summary Update settings of a given indexName. Only specified settings are overridden; unspecified settings are left unchanged. Specifying null for a setting resets it to its default value.
+   * @param indexName The index in which to perform the request
+   * @param indexSettings
+   * @param forwardToReplicas When true, changes are also propagated to replicas of the given indexName.
+   */
+  public async setSettings(
+    indexName: string,
+    indexSettings: IndexSettings,
+    forwardToReplicas?: boolean
+  ): Promise<SetSettingsResponse> {
+    const path = '/1/indexes/{indexName}/settings'.replace(
+      '{' + 'indexName' + '}',
+      encodeURIComponent(String(indexName))
+    );
+    let headers: Headers = { Accept: 'application/json' };
+    let queryParameters: Record<string, string> = {};
+
+    if (indexName === null || indexName === undefined) {
+      throw new Error(
+        'Required parameter indexName was null or undefined when calling setSettings.'
+      );
+    }
+
+    if (indexSettings === null || indexSettings === undefined) {
+      throw new Error(
+        'Required parameter indexSettings was null or undefined when calling setSettings.'
+      );
+    }
+
+    if (forwardToReplicas !== undefined) {
+      queryParameters['forwardToReplicas'] = forwardToReplicas.toString();
+    }
+
+    const request: Request = {
+      method: 'PUT',
+      path,
+      data: indexSettings,
     };
 
     const requestOptions: RequestOptions = {

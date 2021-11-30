@@ -14,9 +14,9 @@ searchResponse:
     - params
   properties:
     abTestID:
-      $ref: ../../../common/responses/common.yml#/abTestID
+      $ref: '../../../common/parameters.yml#/abTestID'
     abTestVariantID:
-      $ref: ../../../common/responses/common.yml#/abTestVariantID
+      $ref: '../../../common/parameters.yml#/abTestVariantID'
     aroundLatLng:
       type: string
       description: The computed geo location.
@@ -65,9 +65,9 @@ searchResponse:
     hits:
       type: array
       items:
-        $ref: Record.yml#/record
+        $ref: 'Record.yml#/record'
     hitsPerPage:
-      $ref: SearchParams.yml#/searchParams/properties/hitsPerPage
+      $ref: 'IndexSettings.yml#/indexSettingsAsSearchParams/properties/hitsPerPage'
     index:
       type: string
       example: indexName
@@ -92,7 +92,7 @@ searchResponse:
       description: The number of hits selected and sorted by the relevant sort algorithm
       example: 20
     page:
-      $ref: SearchParams.yml#/searchParams/properties/page
+      $ref: 'SearchParams.yml#/baseSearchParams/properties/page'
     params:
       type: string
       description: A url-encoded string of all search parameters.
@@ -105,7 +105,7 @@ searchResponse:
       description: Time the server took to process the request, in milliseconds.
       example: 20
     query:
-      $ref: SearchParams.yml#/searchParams/properties/query
+      $ref: 'SearchParams.yml#/baseSearchParams/properties/query'
     queryAfterRemoval:
       type: string
       description: A markup text indicating which parts of the original query have been removed in order to retrieve a non-empty result set.
@@ -113,4 +113,4 @@ searchResponse:
       type: string
       description: Actual host name of the server that processed the request.
     userData:
-      $ref: IndexSettingsParams.yml#/userData
+      $ref: 'IndexSettings.yml#/baseIndexSettings/properties/userData'
