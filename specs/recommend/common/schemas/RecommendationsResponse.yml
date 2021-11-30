@@ -1,0 +1,38 @@
+recommendationsResponse:
+  allOf:
+    - $ref: '../../../search/common/schemas/SearchResponse.yml#/baseSearchResponse'
+    - $ref: '#/recommendHits'
+
+recommendHits:
+  type: object
+  additionalProperties: false
+  properties:
+    hits:
+      type: array
+      items:
+        $ref: '#/recommendRecord'
+
+recommendRecord:
+  type: object
+  description: A Recommend record
+  additionalProperties: true
+  required:
+    - objectID
+    - _score
+  properties:
+    objectID:
+      $ref: '../../../common/parameters.yml#/objectID'
+    _highlightResult:
+      $ref: '../../../search/common/schemas/Record.yml#/highlightResult'
+    _snippetResult:
+      $ref: '../../../search/common/schemas/Record.yml#/snippetResult'
+    _rankingInfo:
+      $ref: '../../../search/common/schemas/Record.yml#/rankingInfo'
+    _distinctSeqID:
+      $ref: '../../../search/common/schemas/Record.yml#/record/properties/_distinctSeqID'
+    _score:
+      type: number
+      format: double
+      minimum: 0
+      maximum: 100
+      description: The recommendation score

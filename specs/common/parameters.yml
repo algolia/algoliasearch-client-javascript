@@ -48,3 +48,8 @@ updatedAt:
   type: string
   format: date-time
   description: Date of last update. (ISO-8601 format)
+
+indexName:
+  type: string
+  example: products
+  description: The Algolia index name

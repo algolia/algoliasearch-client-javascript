@@ -20,9 +20,7 @@ post:
                 additionalProperties: false
                 properties:
                   indexName:
-                    type: string
-                    example: products
-                    description: The Algolia index name
+                    $ref: '../../../common/parameters.yml#/indexName'
                   query:
                     $ref: '../../common/schemas/SearchParams.yml#/baseSearchParams/properties/query'
                   type:
@@ -56,9 +54,11 @@ post:
               results:
                 type: array
                 items:
-                  $ref: ../../common/schemas/SearchResponse.yml#/searchResponse
+                  $ref: '../../common/schemas/SearchResponse.yml#/searchResponse'
     '400':
       $ref: '../../../common/responses/BadRequest.yml'
+    '402':
+      $ref: '../../../common/responses/FeatureNotEnabled.yml'
     '403':
       $ref: '../../../common/responses/MethodNotAllowed.yml'
     '404':

@@ -1,26 +1,19 @@
 import type { RequestOptions } from '../utils/types';
 
-export * from './baseIndexSettings';
 export * from './baseSearchParams';
-export * from './batchObject';
-export * from './batchResponse';
+export * from './baseSearchResponse';
+export * from './baseSearchResponseFacetsStats';
 export * from './errorBase';
+export * from './getRecommendations';
+export * from './getRecommendationsResponse';
 export * from './highlightResult';
-export * from './indexSettings';
 export * from './indexSettingsAsSearchParams';
-export * from './multipleQueries';
-export * from './multipleQueriesObject';
-export * from './multipleQueriesResponse';
-export * from './operation';
 export * from './rankingInfo';
 export * from './rankingInfoMatchedGeoLocation';
-export * from './record';
-export * from './saveObjectResponse';
-export * from './searchParams';
-export * from './searchParamsAsString';
-export * from './searchResponse';
-export * from './searchResponseFacetsStats';
-export * from './setSettingsResponse';
+export * from './recommendHits';
+export * from './recommendRecord';
+export * from './recommendationRequest';
+export * from './recommendationsResponse';
 export * from './snippetResult';
 
 export interface Authentication {

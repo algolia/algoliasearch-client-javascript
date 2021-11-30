@@ -2,7 +2,7 @@ openapi: 3.0.2
 info:
   title: Recommend API
   description: API powering the Recommend feature of Algolia.
-  version: 0.0.1
+  version: 0.1.0
 components:
   securitySchemes:
     appId:

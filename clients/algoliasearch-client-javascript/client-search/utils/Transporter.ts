@@ -189,7 +189,7 @@ export class Transporter {
           timeoutsCount++;
         }
         /**
-         * Failures are individually send the logger, allowing
+         * Failures are individually sent to the logger, allowing
          * the end user to debug / store stack frames even
          * when a retry error does not happen.
          */

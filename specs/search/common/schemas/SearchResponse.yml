@@ -1,4 +1,18 @@
 searchResponse:
+  allOf:
+    - $ref: '#/baseSearchResponse'
+    - $ref: '#/searchHits'
+
+searchHits:
+  type: object
+  additionalProperties: false
+  properties:
+    hits:
+      type: array
+      items:
+        $ref: 'Record.yml#/record'
+
+baseSearchResponse:
   type: object
   additionalProperties: false
   required:
@@ -62,10 +76,6 @@ searchResponse:
           sum:
             type: integer
             description: The sum of all values in the result set.
-    hits:
-      type: array
-      items:
-        $ref: 'Record.yml#/record'
     hitsPerPage:
       $ref: 'IndexSettings.yml#/indexSettingsAsSearchParams/properties/hitsPerPage'
     index:

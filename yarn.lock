@@ -15,6 +15,24 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@algolia/client-search@5.0.0, @algolia/client-search@workspace:clients/algoliasearch-client-javascript/client-search":
+  version: 0.0.0-use.local
+  resolution: "@algolia/client-search@workspace:clients/algoliasearch-client-javascript/client-search"
+  dependencies:
+    "@types/node": ^16.11.6
+    typescript: 4.5.2
+  languageName: unknown
+  linkType: soft
+
+"@algolia/recommend@5.0.0, @algolia/recommend@workspace:clients/algoliasearch-client-javascript/recommend":
+  version: 0.0.0-use.local
+  resolution: "@algolia/recommend@workspace:clients/algoliasearch-client-javascript/recommend"
+  dependencies:
+    "@types/node": ^16.11.6
+    typescript: 4.5.2
+  languageName: unknown
+  linkType: soft
+
 "@apidevtools/json-schema-ref-parser@npm:^9.0.6":
   version: 9.0.9
   resolution: "@apidevtools/json-schema-ref-parser@npm:9.0.9"
@@ -178,31 +196,11 @@ __metadata:
   linkType: hard
 
 "@types/node@npm:^16.11.6":
-  version: 16.11.9
-  resolution: "@types/node@npm:16.11.9"
-  checksum: baec2e6471ee58fd1e9874e6f47ab95a918a0f46b42424392e4c13e3e07f078f8b72b6b48073b0b14f710ed66c5f1b2e497df43f28151000f11f5f299382cfe2
+  version: 16.11.10
+  resolution: "@types/node@npm:16.11.10"
+  checksum: 9c79419c5c3d92d5825bffa30f3668533f598d8b63a73ea7fc24e47f162bdbed92b0f8e4f4261cc3314b39cee050e303366d2aa154abc95c63a572a110b8c160
   languageName: node
   linkType: hard
-
-"algoliasearch-client-javascript-playground@workspace:playground/javascript":
-  version: 0.0.0-use.local
-  resolution: "algoliasearch-client-javascript-playground@workspace:playground/javascript"
-  dependencies:
-    algoliasearch-client-javascript: 5.0.0
-    dotenv: 10.0.0
-    prettier: 2.4.1
-    typescript: 4.5.2
-  languageName: unknown
-  linkType: soft
-
-"algoliasearch-client-javascript@5.0.0, algoliasearch-client-javascript@workspace:clients/algoliasearch-client-javascript":
-  version: 0.0.0-use.local
-  resolution: "algoliasearch-client-javascript@workspace:clients/algoliasearch-client-javascript"
-  dependencies:
-    "@types/node": ^16.11.6
-    typescript: 4.5.2
-  languageName: unknown
-  linkType: soft
 
 "ansi-escapes@npm:^4.2.1":
   version: 4.3.2
@@ -715,6 +713,18 @@ __metadata:
   checksum: 70bc80038e3718aa9072bc63b3a0135166d7120bde46bfcaf80a88d11005dcef1b2d69cd353849f87a3f58ba8f546a8c6e6983408236ff01fa50b52339ee5223
   languageName: node
   linkType: hard
+
+"javascript-playground@workspace:playground/javascript":
+  version: 0.0.0-use.local
+  resolution: "javascript-playground@workspace:playground/javascript"
+  dependencies:
+    "@algolia/client-search": 5.0.0
+    "@algolia/recommend": 5.0.0
+    dotenv: 10.0.0
+    prettier: 2.4.1
+    typescript: 4.5.2
+  languageName: unknown
+  linkType: soft
 
 "js-yaml@npm:^3.14.0":
   version: 3.14.1

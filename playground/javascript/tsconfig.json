@@ -16,5 +16,5 @@
     "outDir": "dist",
     "typeRoots": ["node_modules/@types"]
   },
-  "include": ["app.ts"]
+  "include": ["search.ts", "recommend.ts"]
 }

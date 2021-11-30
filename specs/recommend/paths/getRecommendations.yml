@@ -1,1 +1,77 @@
 post:
+  tags:
+    - recommend
+  operationId: getRecommendations
+  summary: Returns recommendations for a specific model and objectID
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          title: getRecommendations
+          type: object
+          additionalProperties: false
+          properties:
+            requests:
+              type: array
+              items:
+                title: recommendationRequest
+                type: object
+                additionalProperties: false
+                properties:
+                  indexName:
+                    $ref: '../../common/parameters.yml#/indexName'
+                  objectID:
+                    $ref: '../../common/parameters.yml#/objectID'
+                  model:
+                    description: The recommendation model to use.
+                    type: string
+                    enum: ['related-products', 'bought-together']
+                  threshold:
+                    type: integer
+                    minimum: 0
+                    maximum: 100
+                    description: The threshold to use when filtering recommendations by their score.
+                  maxRecommendations:
+                    type: integer
+                    default: 0
+                    description: The max number of recommendations to retrieve. If it’s set to 0, all the recommendations of the objectID may be returned.
+                  queryParameters:
+                    description: The Algolia search parameters.
+                    allOf:
+                      - $ref: '../../search/common/schemas/SearchParams.yml#/baseSearchParams'
+                      - $ref: '../../search/common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams'
+                  fallbackParameters:
+                    description: The Algolia search parameters when there are no recommendations.
+                    allOf:
+                      - $ref: '../../search/common/schemas/SearchParams.yml#/baseSearchParams'
+                      - $ref: '../../search/common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams'
+                required:
+                  - model
+                  - indexName
+                  - objectID
+                  - threshold
+          required:
+            - requests
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            title: getRecommendationsResponse
+            type: object
+            additionalProperties: false
+            properties:
+              results:
+                type: array
+                items:
+                  $ref: '../common/schemas/RecommendationsResponse.yml#/recommendationsResponse'
+    '400':
+      $ref: '../../common/responses/BadRequest.yml'
+    '402':
+      $ref: '../../common/responses/FeatureNotEnabled.yml'
+    '403':
+      $ref: '../../common/responses/MethodNotAllowed.yml'
+    '404':
+      $ref: '../../common/responses/IndexNotFound.yml'

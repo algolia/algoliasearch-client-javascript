@@ -1,3 +1,3 @@
 // This is the entrypoint for the package
-export * from './{{apiPackage}}/apis';
+export * from './src/apis';
 export * from './model/models';

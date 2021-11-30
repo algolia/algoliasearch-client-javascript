@@ -6,10 +6,24 @@
 nvm use && yarn
 ```
 
-## Generate clients based on the [`spec.yml` file](./search/specs.yml)
+## Generate clients based on the [`specs`](./specs/)
+
+### All clients
+
+```bash
+yarn generate
+```
+
+### Search client
 
 ```bash
 yarn generate:search
+```
+
+### Recommend client
+
+```bash
+yarn generate:recommend
 ```
 
 ## Build generated clients

@@ -3,12 +3,12 @@
   "generator-cli": {
     "version": "5.3.0",
     "generators": {
-      "javascript-client": {
+      "javascript-client-search": {
         "generatorName": "typescript-node",
         "templateDir": "#{cwd}/templates/javascript/",
         "config": "#{cwd}/openapitools.json",
-        "apiPackage": "client-search",
-        "output": "#{cwd}/clients/algoliasearch-client-javascript",
+        "apiPackage": "src",
+        "output": "#{cwd}/clients/algoliasearch-client-javascript/client-search",
         "glob": "specs/search/spec.yml",
         "gitHost": "algolia",
         "gitUserId": "algolia",
@@ -16,7 +16,25 @@
         "additionalProperties": {
           "modelPropertyNaming": "original",
           "supportsES6": true,
-          "npmName": "algoliasearch-client-javascript",
+          "npmName": "@algolia/client-search",
+          "npmVersion": "5.0.0"
+        }
+      },
+      "javascript-recommend": {
+        "generatorName": "typescript-node",
+        "templateDir": "#{cwd}/templates/javascript/",
+        "config": "#{cwd}/openapitools.json",
+        "apiPackage": "src",
+        "output": "#{cwd}/clients/algoliasearch-client-javascript/recommend",
+        "glob": "specs/recommend/spec.yml",
+        "gitHost": "algolia",
+        "gitUserId": "algolia",
+        "gitRepoId": "algoliasearch-client-javascript",
+        "reservedWordsMappings": "queryParameters=queryParameters",
+        "additionalProperties": {
+          "modelPropertyNaming": "original",
+          "supportsES6": true,
+          "npmName": "@algolia/recommend",
           "npmVersion": "5.0.0"
         }
       }

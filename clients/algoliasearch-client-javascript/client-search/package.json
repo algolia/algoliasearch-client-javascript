@@ -1,7 +1,7 @@
 {
-  "name": "algoliasearch-client-javascript",
+  "name": "@algolia/client-search",
   "version": "5.0.0",
-  "description": "JavaScript client for algoliasearch-client-javascript",
+  "description": "JavaScript client for @algolia/client-search",
   "repository": "algolia/algoliasearch-client-javascript",
   "author": "Algolia",
   "private": true,
