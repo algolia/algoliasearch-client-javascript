@@ -1,7 +1,7 @@
 {
   "$schema": "./node_modules/@openapitools/openapi-generator-cli/config.schema.json",
   "generator-cli": {
-    "version": "5.2.1",
+    "version": "5.3.0",
     "generators": {
       "javascript-client": {
         "generatorName": "typescript-node",

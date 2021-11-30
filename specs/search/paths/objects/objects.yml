@@ -26,12 +26,14 @@ post:
               createdAt:
                 type: string
               taskID:
-                $ref: '../../../common/responses/common.yml#/taskID'
+                $ref: '../../../common/parameters.yml#/taskID'
               objectID:
-                $ref: '../../../common/responses/common.yml#/objectID'
+                $ref: '../../../common/parameters.yml#/objectID'
     '400':
-      $ref: '../../common/responses/BadRequest.yml'
+      $ref: '../../../common/responses/BadRequest.yml'
+    '403':
+      $ref: '../../../common/responses/MethodNotAllowed.yml'
     '404':
-      $ref: '../../common/responses/IndexNotFound.yml'
-#delete index
+      $ref: '../../../common/responses/IndexNotFound.yml'
+# delete index
 # delete:

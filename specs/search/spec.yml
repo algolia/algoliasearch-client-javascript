@@ -50,8 +50,8 @@ paths:
   # ##########################
   # ### Settings Endpoints ###
   # ##########################
-  # /1/indexes/{indexName}/settings:
-  #   $ref: './paths/settings/settings.yml'
+  /1/indexes/{indexName}/settings:
+    $ref: './paths/settings/settings.yml'
   #
   # ################################
   # ### Manage Indices Endpoints ###

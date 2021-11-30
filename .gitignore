@@ -14,3 +14,4 @@ yarn-error.log
 **/node_modules
 **/dist
 **/.openapi-generator-ignore
+**/git_push.sh

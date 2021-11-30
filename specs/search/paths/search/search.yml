@@ -11,17 +11,19 @@ post:
       application/json:
         schema:
           oneOf:
-            - $ref: ../../common/schemas/SearchParams.yml#/searchParams
-            - $ref: ../../common/schemas/SearchParams.yml#/searchParamsString
+            - $ref: '../../common/schemas/SearchParams.yml#/searchParamsAsString'
+            - $ref: '../../common/schemas/SearchParams.yml#/searchParams'
   responses:
     '200':
       description: OK
       content:
         application/json:
           schema:
-            title: singleQueryResponse
-            $ref: ../../common/schemas/SearchResponse.yml#/searchResponse
+            title: searchResponse
+            $ref: '../../common/schemas/SearchResponse.yml#/searchResponse'
     '400':
-      $ref: ../../common/responses/BadRequest.yml
+      $ref: '../../../common/responses/BadRequest.yml'
+    '403':
+      $ref: '../../../common/responses/MethodNotAllowed.yml'
     '404':
-      $ref: ../../common/responses/IndexNotFound.yml
+      $ref: '../../../common/responses/IndexNotFound.yml'

@@ -121,7 +121,7 @@ export class {{classname}} {
     {{/allParams}}
     {{#queryParams}}
     if ({{paramName}} !== undefined) {
-      queryParameters['{{baseName}}'] = {{paramName}};
+      queryParameters['{{baseName}}'] = {{paramName}}.toString();
     }
 
     {{/queryParams}}

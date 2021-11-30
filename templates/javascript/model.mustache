@@ -4,6 +4,10 @@
 import { {{classname}} } from '{{filename}}';
 {{/tsImports}}
 
+{{! We handle types that depend on other interfaces }}
+{{#interfaces.size}}export type {{classname}} = {{#interfaces}}{{.}} {{^-last}}&{{/-last}} {{/interfaces}};{{/interfaces.size}}
+
+{{^interfaces}}
 {{#description}}
 /**
 * {{{description}}}
@@ -20,7 +24,7 @@ export type {{classname}} = {
     * {{{description}}}
     */
 {{/description}}
-    '{{name}}'{{^required}}?{{/required}}: {{#isEnum}}{{{datatypeWithEnum}}}{{/isEnum}}{{^isEnum}}{{{dataType}}}{{#isNullable}} | null{{/isNullable}}{{/isEnum}};
+    {{name}}{{^required}}?{{/required}}: {{#isEnum}}{{{datatypeWithEnum}}}{{/isEnum}}{{^isEnum}}{{{dataType}}}{{#isNullable}} | null{{/isNullable}}{{/isEnum}};
 {{/vars}}
 }
 
@@ -49,5 +53,6 @@ export enum {{classname}} {
     {{/allowableValues}}
 }
 {{/isEnum}}
+{{/interfaces}}
 {{/model}}
 {{/models}}

@@ -48,10 +48,12 @@ post:
             additionalProperties: false
             properties:
               taskID:
-                $ref: '../../../common/responses/common.yml#/taskID'
+                $ref: '../../../common/parameters.yml#/taskID'
               objectIDs:
-                $ref: '../../../common/responses/common.yml#/objectIDs'
+                $ref: '../../../common/parameters.yml#/objectIDs'
     '400':
-      $ref: '../../common/responses/BadRequest.yml'
+      $ref: '../../../common/responses/BadRequest.yml'
+    '403':
+      $ref: '../../../common/responses/MethodNotAllowed.yml'
     '404':
-      $ref: '../../common/responses/IndexNotFound.yml'
+      $ref: '../../../common/responses/IndexNotFound.yml'

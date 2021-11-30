@@ -1,21 +1,4 @@
-AppId:
-  name: X-Algolia-Application-Id
-  in: header
-  description: Algolia appID
-  required: true
-  schema:
-    type: string
-    pattern: '^(?:beta|testing)?[A-Z0-9]{10}$'
-    example: 'DJNVGS47DK'
-ApiKey:
-  name: X-Algolia-API-Key
-  in: header
-  description: Algolia API key
-  required: true
-  schema:
-    type: string
-    pattern: '^[a-f0-9]{32}$'
-    example: '43b15df305339e827f0ac0bdc5ebcaa7'
+# path
 IndexName:
   name: indexName
   in: path
@@ -24,3 +7,44 @@ IndexName:
   schema:
     type: string
     example: 'myIndexName'
+
+# query
+ForwardToReplicas:
+  in: query
+  name: forwardToReplicas
+  description: When true, changes are also propagated to replicas of the given indexName.
+  schema:
+    type: boolean
+
+# misc
+taskID:
+  type: integer
+  description: taskID of the indexing task to wait for.
+
+objectID:
+  type: string
+  description: Unique identifier of the object
+
+objectIDs:
+  type: array
+  items:
+    type: string
+  description: List of objectID
+
+queryID:
+  type: string
+  pattern: '^[a-f0-9]{32}$'
+  example: 43b15df305339e827f0ac0bdc5ebcaa7
+
+abTestID:
+  type: integer
+  description: If a search encounters an index that is being A/B tested, abTestID reports the ongoing A/B test ID.
+
+abTestVariantID:
+  type: integer
+  description: If a search encounters an index that is being A/B tested, abTestVariantID reports the variant ID of the index used.
+
+updatedAt:
+  type: string
+  format: date-time
+  description: Date of last update. (ISO-8601 format)
