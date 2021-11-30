@@ -1,4 +1,4 @@
-import { searchClient, ApiError } from 'algoliasearch-client-javascript';
+import { RecommendApi, ApiError, RecommendationRequest } from '@algolia/recommend';
 import dotenv from 'dotenv';
 
 dotenv.config({ path: '../.env' });
@@ -10,15 +10,17 @@ const searchIndex = process.env.SEARCH_INDEX || 'test_index';
 const searchQuery = process.env.SEARCH_QUERY || 'test_query';
 
 // Init client with appId and apiKey
-const client = new searchClient(appId, apiKey);
+const client = new RecommendApi(appId, apiKey);
 
-async function testMultiQueries() {
+async function testRecommend() {
   try {
-    const res = await client.multipleQueries({
+    const res = await client.getRecommendations({
       requests: [
         {
           indexName: searchIndex,
-          query: searchQuery,
+          model: RecommendationRequest.ModelEnum['BoughtTogether'],
+          objectID: searchQuery,
+          threshold: 0,
         },
       ],
     });
@@ -33,21 +35,4 @@ async function testMultiQueries() {
   }
 }
 
-async function testSearch() {
-  try {
-    const res = await client.search(searchIndex, {
-      query: searchQuery,
-    });
-
-    console.log(`[OK]`, res);
-  } catch (e) {
-    if (e instanceof ApiError) {
-      return console.log(`[${e.status}] ${e.message}`, e.stackTrace);
-    }
-
-    console.log('[ERROR]', JSON.stringify(e, null, 4));
-  }
-}
-
-// testMultiQueries();
-testSearch();
+testRecommend();

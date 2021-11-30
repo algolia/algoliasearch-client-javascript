@@ -1,4 +1,4 @@
-export type SearchResponseFacetsStats = {
+export type BaseSearchResponseFacetsStats = {
   /**
    * The minimum value in the result set.
    */

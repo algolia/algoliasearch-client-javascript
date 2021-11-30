@@ -1,7 +1,6 @@
-import { Record } from './record';
-import { SearchResponseFacetsStats } from './searchResponseFacetsStats';
+import { BaseSearchResponseFacetsStats } from './baseSearchResponseFacetsStats';
 
-export type SearchResponse = {
+export type BaseSearchResponse = {
   /**
    * If a search encounters an index that is being A/B tested, abTestID reports the ongoing A/B test ID.
    */
@@ -37,8 +36,7 @@ export type SearchResponse = {
   /**
    * Statistics for numerical facets.
    */
-  facets_stats?: { [key: string]: SearchResponseFacetsStats };
-  hits: Array<Record>;
+  facets_stats?: { [key: string]: BaseSearchResponseFacetsStats };
   /**
    * Set the number of hits per page.
    */

@@ -17,6 +17,6 @@
     "typeRoots": ["node_modules/@types"],
     "types": ["node"]
   },
-  "include": ["client-search", "model", "api.ts"],
+  "include": ["src", "model", "api.ts"],
   "exclude": ["dist", "node_modules"]
 }
