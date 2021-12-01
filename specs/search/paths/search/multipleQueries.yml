@@ -2,9 +2,10 @@ post:
   tags:
     - search
   operationId: multipleQueries
-  summary: Get search results for the given requests.
+  description: Get search results for the given requests.
   requestBody:
     required: true
+    description: The `multipleQueries` requests and strategy.
     content:
       application/json:
         schema:
@@ -27,13 +28,13 @@ post:
                     type: string
                     enum: [default, facet]
                     default: default
-                    description: Perform a search query with `default`, will search for facet values if `facet` is given
+                    description: Perform a search query with `default`, will search for facet values if `facet` is given.
                   facet:
                     type: string
-                    description: The `facet` name
+                    description: The `facet` name.
                   params:
                     type: string
-                    description: A query string of search parameters
+                    description: A query string of search parameters.
                 required:
                   - indexName
             strategy:

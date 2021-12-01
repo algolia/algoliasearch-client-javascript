@@ -1,4 +1,23 @@
+import { isRetryable, isSuccess } from './Response';
+import { StatefulHost } from './StatefulHost';
+import type { Cache } from './cache/Cache';
+import { MemoryCache } from './cache/MemoryCache';
+import { RetryError } from './errors';
+import {
+  deserializeFailure,
+  deserializeSuccess,
+  serializeData,
+  serializeHeaders,
+  serializeUrl,
+} from './helpers';
+import { HttpRequester } from './requester/HttpRequester';
+import type { Requester } from './requester/Requester';
+import {
+  stackTraceWithoutCredentials,
+  stackFrameWithoutCredentials,
+} from './stackTrace';
 import type {
+  Headers,
   Host,
   Request,
   RequestOptions,
@@ -7,22 +26,6 @@ import type {
   Response,
   EndRequest,
 } from './types';
-import { MemoryCache } from './cache/MemoryCache';
-import type { Cache } from './cache/Cache';
-import { StatefulHost } from './StatefulHost';
-import {
-  deserializeFailure,
-  deserializeSuccess,
-  serializeData,
-  serializeHeaders,
-  serializeUrl,
-} from './helpers';
-import { Headers } from './types';
-import { RetryError } from './errors';
-import * as responseUtils from './Response';
-import { Requester } from './requester/Requester';
-import { HttpRequester } from './requester/HttpRequester';
-import { stackTraceWithoutCredentials, stackFrameWithoutCredentials } from './stackTrace';
 
 export class Transporter {
   private hosts: Host[];
@@ -53,12 +56,12 @@ export class Transporter {
     this.requester = requester;
   }
 
-  public setHosts(hosts: Host[]): void {
+  setHosts(hosts: Host[]): void {
     this.hosts = hosts;
     this.hostsCache.clear();
   }
 
-  public setRequester(requester: Requester): void {
+  setRequester(requester: Requester): void {
     this.requester = requester;
   }
 
@@ -68,8 +71,8 @@ export class Transporter {
   }> {
     const statefulHosts = await Promise.all(
       compatibleHosts.map((statelessHost) => {
-        return this.hostsCache.get(statelessHost, async () => {
-          return new StatefulHost(statelessHost);
+        return this.hostsCache.get(statelessHost, () => {
+          return Promise.resolve(new StatefulHost(statelessHost));
         });
       })
     );
@@ -88,9 +91,9 @@ export class Transporter {
       getTimeout(timeoutsCount: number, baseTimeout: number): number {
         /**
          * Imagine that you have 4 hosts, if timeouts will increase
-         * on the following way: 1 (timeouted) > 4 (timeouted) > 5 (200)
+         * on the following way: 1 (timeouted) > 4 (timeouted) > 5 (200).
          *
-         * Note that, the very next request, we start from the previous timeout
+         * Note that, the very next request, we start from the previous timeout.
          *
          *  5 (timeouted) > 6 (timeouted) > 7 ...
          *
@@ -107,7 +110,10 @@ export class Transporter {
     };
   }
 
-  async request<TResponse>(request: Request, requestOptions: RequestOptions): Promise<TResponse> {
+  async request<TResponse>(
+    request: Request,
+    requestOptions: RequestOptions
+  ): Promise<TResponse> {
     const stackTrace: StackFrame[] = [];
 
     const isRead = request.method === 'GET';
@@ -181,7 +187,7 @@ export class Transporter {
 
       const response = await this.requester.send(payload, request);
 
-      if (responseUtils.isRetryable(response)) {
+      if (isRetryable(response)) {
         const stackFrame = pushToStackTrace(response);
 
         // If response is a timeout, we increase the number of timeouts so we can increase the timeout later.
@@ -193,7 +199,11 @@ export class Transporter {
          * the end user to debug / store stack frames even
          * when a retry error does not happen.
          */
-        console.log('Retryable failure', stackFrameWithoutCredentials(stackFrame));
+        // eslint-disable-next-line no-console -- this will be fixed with the new `Logger`
+        console.log(
+          'Retryable failure',
+          stackFrameWithoutCredentials(stackFrame)
+        );
 
         /**
          * We also store the state of the host in failure cases. If the host, is
@@ -206,7 +216,7 @@ export class Transporter {
         );
         return retry(hosts, getTimeout);
       }
-      if (responseUtils.isSuccess(response)) {
+      if (isSuccess(response)) {
         return deserializeSuccess(response);
       }
 
@@ -224,7 +234,8 @@ export class Transporter {
      */
     const compatibleHosts = this.hosts.filter(
       (host) =>
-        host.accept == 'readWrite' || (isRead ? host.accept == 'read' : host.accept == 'write')
+        host.accept === 'readWrite' ||
+        (isRead ? host.accept === 'read' : host.accept === 'write')
     );
     const options = await this.createRetryableOptions(compatibleHosts);
     return retry([...options.hosts].reverse(), options.getTimeout);

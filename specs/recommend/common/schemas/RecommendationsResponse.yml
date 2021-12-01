@@ -14,7 +14,7 @@ recommendHits:
 
 recommendRecord:
   type: object
-  description: A Recommend record
+  description: A Recommend record.
   additionalProperties: true
   required:
     - objectID
@@ -35,4 +35,4 @@ recommendRecord:
       format: double
       minimum: 0
       maximum: 100
-      description: The recommendation score
+      description: The recommendation score.

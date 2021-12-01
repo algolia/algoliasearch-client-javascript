@@ -2,31 +2,31 @@ export type IndexSettingsAsSearchParams = {
   /**
    * The complete list of attributes used for searching.
    */
-  searchableAttributes?: Array<string>;
+  searchableAttributes?: string[];
   /**
    * The complete list of attributes that will be used for faceting.
    */
-  attributesForFaceting?: Array<string>;
+  attributesForFaceting?: string[];
   /**
    * List of attributes that can’t be retrieved at query time.
    */
-  unretrievableAttributes?: Array<string>;
+  unretrievableAttributes?: string[];
   /**
    * This parameter controls which attributes to retrieve and which not to retrieve.
    */
-  attributesToRetrieve?: Array<string>;
+  attributesToRetrieve?: string[];
   /**
    * Restricts a given query to look in only a subset of your searchable attributes.
    */
-  restrictSearchableAttributes?: Array<string>;
+  restrictSearchableAttributes?: string[];
   /**
    * Controls how Algolia should sort your results.
    */
-  ranking?: Array<string>;
+  ranking?: string[];
   /**
    * Specifies the custom ranking criterion.
    */
-  customRanking?: Array<string>;
+  customRanking?: string[];
   /**
    * Controls the relevancy threshold below which less relevant results aren’t included in the results.
    */
@@ -34,11 +34,11 @@ export type IndexSettingsAsSearchParams = {
   /**
    * List of attributes to highlight.
    */
-  attributesToHighlight?: Array<string>;
+  attributesToHighlight?: string[];
   /**
    * List of attributes to snippet, with an optional maximum number of words to snippet.
    */
-  attributesToSnippet?: Array<string>;
+  attributesToSnippet?: string[];
   /**
    * The HTML string to insert before the highlighted parts in all highlight and snippet results.
    */
@@ -78,7 +78,7 @@ export type IndexSettingsAsSearchParams = {
   /**
    * List of attributes on which you want to disable typo tolerance.
    */
-  disableTypoToleranceOnAttributes?: Array<string>;
+  disableTypoToleranceOnAttributes?: string[];
   /**
    * Control which separators are indexed.
    */
@@ -98,7 +98,7 @@ export type IndexSettingsAsSearchParams = {
   /**
    * Sets the languages to be used by language-specific settings and functionalities such as ignorePlurals, removeStopWords, and CJK word-detection.
    */
-  queryLanguages?: Array<string>;
+  queryLanguages?: string[];
   /**
    * Splits compound words into their composing atoms in the query.
    */
@@ -126,11 +126,11 @@ export type IndexSettingsAsSearchParams = {
   /**
    * A list of words that should be considered as optional when found in the query.
    */
-  optionalWords?: Array<string>;
+  optionalWords?: string[];
   /**
    * List of attributes on which you want to disable the exact ranking criterion.
    */
-  disableExactOnAttributes?: Array<string>;
+  disableExactOnAttributes?: string[];
   /**
    * Controls how the exact ranking criterion is computed when the query contains only one word.
    */
@@ -138,11 +138,11 @@ export type IndexSettingsAsSearchParams = {
   /**
    * List of alternatives that should be considered an exact match by the exact ranking criterion.
    */
-  alternativesAsExact?: Array<IndexSettingsAsSearchParams.AlternativesAsExactEnum>;
+  alternativesAsExact?: IndexSettingsAsSearchParams.AlternativesAsExactEnum[];
   /**
    * Allows you to specify which advanced syntax features are active when ‘advancedSyntax’ is enabled.
    */
-  advancedSyntaxFeatures?: Array<IndexSettingsAsSearchParams.AdvancedSyntaxFeaturesEnum>;
+  advancedSyntaxFeatures?: IndexSettingsAsSearchParams.AdvancedSyntaxFeaturesEnum[];
   /**
    * Enables de-duplication or grouping of results.
    */
@@ -162,7 +162,7 @@ export type IndexSettingsAsSearchParams = {
   /**
    * Choose which fields to return in the API response. This parameters applies to search and browse queries.
    */
-  responseFields?: Array<string>;
+  responseFields?: string[];
   /**
    * Maximum number of facet hits to return during a search for facet values.
    */
@@ -174,7 +174,7 @@ export type IndexSettingsAsSearchParams = {
   /**
    * Content defining how the search interface should be rendered. Can be set via the settings for a default value and can be overridden via rules.
    */
-  renderingContent?: object;
+  renderingContent?: Record<string, any>;
 };
 
 export namespace IndexSettingsAsSearchParams {

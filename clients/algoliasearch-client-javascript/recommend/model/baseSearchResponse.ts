@@ -1,4 +1,4 @@
-import { BaseSearchResponseFacetsStats } from './baseSearchResponseFacetsStats';
+import type { BaseSearchResponseFacetsStats } from './baseSearchResponseFacetsStats';
 
 export type BaseSearchResponse = {
   /**
@@ -22,11 +22,11 @@ export type BaseSearchResponse = {
    */
   exhaustiveFacetsCount?: boolean;
   /**
-   * Indicate if the nbHits count was exhaustive or approximate
+   * Indicate if the nbHits count was exhaustive or approximate.
    */
   exhaustiveNbHits: boolean;
   /**
-   * Indicate if the typo-tolerence search was exhaustive or approximate (only included when typo-tolerance is enabled)
+   * Indicate if the typo-tolerence search was exhaustive or approximate (only included when typo-tolerance is enabled).
    */
   exhaustiveTypo: boolean;
   /**
@@ -54,15 +54,15 @@ export type BaseSearchResponse = {
    */
   message?: string;
   /**
-   * Number of hits that the search query matched
+   * Number of hits that the search query matched.
    */
   nbHits: number;
   /**
-   * Number of pages available for the current query
+   * Number of pages available for the current query.
    */
   nbPages: number;
   /**
-   * The number of hits selected and sorted by the relevant sort algorithm
+   * The number of hits selected and sorted by the relevant sort algorithm.
    */
   nbSortedHits?: number;
   /**
@@ -96,5 +96,5 @@ export type BaseSearchResponse = {
   /**
    * Lets you store custom data in your indices.
    */
-  userData?: { [key: string]: object };
+  userData?: { [key: string]: Record<string, any> };
 };

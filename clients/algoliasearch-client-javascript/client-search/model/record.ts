@@ -1,13 +1,13 @@
-import { HighlightResult } from './highlightResult';
-import { RankingInfo } from './rankingInfo';
-import { SnippetResult } from './snippetResult';
+import type { HighlightResult } from './highlightResult';
+import type { RankingInfo } from './rankingInfo';
+import type { SnippetResult } from './snippetResult';
 
 /**
- * A single record
+ * A single record.
  */
 export type Record = {
   /**
-   * Unique identifier of the object
+   * Unique identifier of the object.
    */
   objectID: string;
   _highlightResult?: HighlightResult;

@@ -1,11 +1,11 @@
-import { Response, StackFrame } from './types';
+import type { Response, StackFrame } from './types';
 
 class ErrorWithStackTrace extends Error {
   stackTrace: StackFrame[];
 
   constructor(message: string, stackTrace: StackFrame[]) {
     super(message);
-    //the array and object should be frozen to reflect the stackTrace at the time of the error
+    // the array and object should be frozen to reflect the stackTrace at the time of the error
     this.stackTrace = stackTrace;
   }
 }

@@ -1,4 +1,5 @@
 indexSettings:
+  description: The Algolia index settings.
   allOf:
     - $ref: '#/baseIndexSettings'
     - $ref: '#/indexSettingsAsSearchParams'

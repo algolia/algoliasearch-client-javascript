@@ -2,7 +2,7 @@ export type BaseIndexSettings = {
   /**
    * Creates replicas, exact copies of an index.
    */
-  replicas?: Array<string>;
+  replicas?: string[];
   /**
    * Set the maximum number of hits accessible via pagination.
    */
@@ -10,23 +10,23 @@ export type BaseIndexSettings = {
   /**
    * A list of words for which you want to turn off typo tolerance.
    */
-  disableTypoToleranceOnWords?: Array<string>;
+  disableTypoToleranceOnWords?: string[];
   /**
    * Specify on which attributes to apply transliteration.
    */
-  attributesToTransliterate?: Array<string>;
+  attributesToTransliterate?: string[];
   /**
    * List of attributes on which to do a decomposition of camel case words.
    */
-  camelCaseAttributes?: Array<string>;
+  camelCaseAttributes?: string[];
   /**
    * Specify on which attributes in your index Algolia should apply word segmentation, also known as decompounding.
    */
-  decompoundedAttributes?: { [key: string]: object };
+  decompoundedAttributes?: { [key: string]: Record<string, any> };
   /**
    * Sets the languages at the index level for language-specific processing such as tokenization and normalization.
    */
-  indexLanguages?: Array<string>;
+  indexLanguages?: string[];
   /**
    * Whether promoted results should match the filters of the current search, except for geographic filters.
    */
@@ -34,7 +34,7 @@ export type BaseIndexSettings = {
   /**
    * List of attributes on which you want to disable prefix matching.
    */
-  disablePrefixOnAttributes?: Array<string>;
+  disablePrefixOnAttributes?: string[];
   /**
    * Enables compression of large integer arrays.
    */
@@ -42,9 +42,9 @@ export type BaseIndexSettings = {
   /**
    * List of numeric attributes that can be used as numerical filters.
    */
-  numericAttributesForFiltering?: Array<string>;
+  numericAttributesForFiltering?: string[];
   /**
    * Lets you store custom data in your indices.
    */
-  userData?: { [key: string]: object };
+  userData?: { [key: string]: Record<string, any> };
 };

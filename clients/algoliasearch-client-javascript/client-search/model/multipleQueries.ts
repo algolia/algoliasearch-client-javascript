@@ -1,6 +1,6 @@
 export type MultipleQueries = {
   /**
-   * The Algolia index name
+   * The Algolia index name.
    */
   indexName: string;
   /**
@@ -8,15 +8,15 @@ export type MultipleQueries = {
    */
   query?: string;
   /**
-   * Perform a search query with `default`, will search for facet values if `facet` is given
+   * Perform a search query with `default`, will search for facet values if `facet` is given.
    */
   type?: MultipleQueries.TypeEnum;
   /**
-   * The `facet` name
+   * The `facet` name.
    */
   facet?: string;
   /**
-   * A query string of search parameters
+   * A query string of search parameters.
    */
   params?: string;
 };

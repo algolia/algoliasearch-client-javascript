@@ -1,6 +1,4 @@
-import { BaseSearchResponse } from './baseSearchResponse';
-import { BaseSearchResponseFacetsStats } from './baseSearchResponseFacetsStats';
-import { RecommendHits } from './recommendHits';
-import { RecommendRecord } from './recommendRecord';
+import type { BaseSearchResponse } from './baseSearchResponse';
+import type { RecommendHits } from './recommendHits';
 
 export type RecommendationsResponse = BaseSearchResponse & RecommendHits;

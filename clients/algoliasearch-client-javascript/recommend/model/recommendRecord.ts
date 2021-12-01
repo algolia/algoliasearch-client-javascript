@@ -1,13 +1,13 @@
-import { HighlightResult } from './highlightResult';
-import { RankingInfo } from './rankingInfo';
-import { SnippetResult } from './snippetResult';
+import type { HighlightResult } from './highlightResult';
+import type { RankingInfo } from './rankingInfo';
+import type { SnippetResult } from './snippetResult';
 
 /**
- * A Recommend record
+ * A Recommend record.
  */
 export type RecommendRecord = {
   /**
-   * Unique identifier of the object
+   * Unique identifier of the object.
    */
   objectID: string;
   _highlightResult?: HighlightResult;
@@ -15,7 +15,7 @@ export type RecommendRecord = {
   _rankingInfo?: RankingInfo;
   _distinctSeqID?: number;
   /**
-   * The recommendation score
+   * The recommendation score.
    */
   _score: number;
 };

@@ -1,12 +1,12 @@
 export type Operation = {
   /**
-   * type of operation
+   * Type of operation.
    */
   action?: Operation.ActionEnum;
   /**
-   * arguments to the operation (depends on the type of the operation)
+   * Arguments to the operation (depends on the type of the operation).
    */
-  body?: { [key: string]: object };
+  body?: { [key: string]: Record<string, any> };
 };
 
 export namespace Operation {

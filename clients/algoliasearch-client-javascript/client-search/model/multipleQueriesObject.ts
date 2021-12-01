@@ -1,7 +1,7 @@
-import { MultipleQueries } from './multipleQueries';
+import type { MultipleQueries } from './multipleQueries';
 
 export type MultipleQueriesObject = {
-  requests: Array<MultipleQueries>;
+  requests: MultipleQueries[];
   strategy?: MultipleQueriesObject.StrategyEnum;
 };
 

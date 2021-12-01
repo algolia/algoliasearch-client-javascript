@@ -1,14 +1,25 @@
 import { ApiError, DeserializationError } from './errors';
-import { Headers, Host, Request, RequestOptions, Response, StackFrame } from './types';
+import type {
+  Headers,
+  Host,
+  Request,
+  RequestOptions,
+  Response,
+  StackFrame,
+} from './types';
 
 export function shuffle<TData>(array: TData[]): TData[] {
+  const shuffledArray = array;
+
   for (let c = array.length - 1; c > 0; c--) {
     const b = Math.floor(Math.random() * (c + 1));
     const a = array[c];
-    array[c] = array[b];
-    array[b] = a;
+
+    shuffledArray[c] = array[b];
+    shuffledArray[b] = a;
   }
-  return array;
+
+  return shuffledArray;
 }
 
 export function serializeUrl(
@@ -17,7 +28,9 @@ export function serializeUrl(
   queryParameters: Readonly<Record<string, string>>
 ): string {
   const queryParametersAsString = serializeQueryParameters(queryParameters);
-  let url = `${host.protocol}://${host.url}/${path.charAt(0) === '/' ? path.substr(1) : path}`;
+  let url = `${host.protocol}://${host.url}/${
+    path.charAt(0) === '/' ? path.substr(1) : path
+  }`;
 
   if (queryParametersAsString.length) {
     url += `?${queryParametersAsString}`;
@@ -26,7 +39,9 @@ export function serializeUrl(
   return url;
 }
 
-export function serializeQueryParameters(parameters: Readonly<Record<string, any>>): string {
+export function serializeQueryParameters(
+  parameters: Readonly<Record<string, any>>
+): string {
   const isObjectOrArray = (value: any): boolean =>
     Object.prototype.toString.call(value) === '[object Object]' ||
     Object.prototype.toString.call(value) === '[object Array]';
@@ -35,7 +50,9 @@ export function serializeQueryParameters(parameters: Readonly<Record<string, any
     .map(
       (key) =>
         `${key}=${
-          isObjectOrArray(parameters[key]) ? JSON.stringify(parameters[key]) : parameters[key]
+          isObjectOrArray(parameters[key])
+            ? JSON.stringify(parameters[key])
+            : parameters[key]
         }`
     )
     .join('&');
@@ -59,7 +76,10 @@ export function serializeData(
   return JSON.stringify(data);
 }
 
-export function serializeHeaders(baseHeaders: Headers, requestOptions: RequestOptions): Headers {
+export function serializeHeaders(
+  baseHeaders: Headers,
+  requestOptions: RequestOptions
+): Headers {
   const headers: Headers = {
     ...baseHeaders,
     ...requestOptions.headers,
@@ -82,7 +102,10 @@ export function deserializeSuccess<TObject>(response: Response): TObject {
   }
 }
 
-export function deserializeFailure({ content, status }: Response, stackFrame: StackFrame[]): Error {
+export function deserializeFailure(
+  { content, status }: Response,
+  stackFrame: StackFrame[]
+): Error {
   let message = content;
   try {
     message = JSON.parse(content).message;

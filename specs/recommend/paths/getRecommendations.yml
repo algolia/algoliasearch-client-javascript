@@ -2,13 +2,14 @@ post:
   tags:
     - recommend
   operationId: getRecommendations
-  summary: Returns recommendations for a specific model and objectID
+  description: Returns recommendations for a specific model and objectID.
   requestBody:
     required: true
     content:
       application/json:
         schema:
           title: getRecommendations
+          description: The `getRecommendations` requests.
           type: object
           additionalProperties: false
           properties:

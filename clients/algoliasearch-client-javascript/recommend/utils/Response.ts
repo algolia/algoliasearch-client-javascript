@@ -1,10 +1,16 @@
-import { Response } from './types';
+import type { Response } from './types';
 
-export function isNetworkError({ isTimedOut, status }: Omit<Response, 'content'>): boolean {
+export function isNetworkError({
+  isTimedOut,
+  status,
+}: Omit<Response, 'content'>): boolean {
   return !isTimedOut && ~~status === 0;
 }
 
-export function isRetryable({ isTimedOut, status }: Omit<Response, 'content'>): boolean {
+export function isRetryable({
+  isTimedOut,
+  status,
+}: Omit<Response, 'content'>): boolean {
   return (
     isTimedOut ||
     isNetworkError({ isTimedOut, status }) ||
