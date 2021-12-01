@@ -25,8 +25,6 @@ export enum {{classname}}Keys {
 }
 
 export class {{classname}} {
-  private transporter: Transporter;
-
   protected authentications = {
     {{#hasAuthMethods}}
     {{#authMethods}}
@@ -37,11 +35,25 @@ export class {{classname}} {
     {{/hasAuthMethods}}
   }
 
+  private transporter: Transporter;
+  
+  private sendRequest<TResponse>(request: Request, requestOptions: RequestOptions): Promise<TResponse> {
+    {{#authMethods}}
+    {{#isApiKey}}
+    if (this.authentications.{{name}}.apiKey) {
+    this.authentications.{{name}}.applyToRequest(requestOptions);
+    }
+    
+    {{/isApiKey}}
+    {{/authMethods}}
+    return this.transporter.request(request, requestOptions);
+  }
+
   constructor(appId: string, apiKey: string, options?: {requester?: Requester, hosts?: Host[]}) {
     this.setApiKey({{classname}}Keys.appId, appId);
     this.setApiKey({{classname}}Keys.apiKey, apiKey);
     this.transporter = new Transporter({
-      hosts: options?.hosts ?? this.getDefaultHosts(appId, apiKey),
+      hosts: options?.hosts ?? this.getDefaultHosts(appId),
       baseHeaders: {
         'content-type': 'application/x-www-form-urlencoded'
       },
@@ -55,7 +67,7 @@ export class {{classname}} {
     });
   }
 
-  public getDefaultHosts(appId: string, apiKey: string): Host[] {
+  public getDefaultHosts(appId: string): Host[] {
     return (
         [
           { url: `${appId}-dsn.algolia.net`, accept: 'read', protocol: 'https' },
@@ -78,34 +90,27 @@ export class {{classname}} {
     this.transporter.setHosts(hosts);
   }
 
-  public setApiKey(key: {{classname}}Keys, value: string) {
+  public setApiKey(key: {{classname}}Keys, value: string): void {
     this.authentications[{{classname}}Keys[key]].apiKey = value;
-  }
-
-  private async sendRequest<TResponse>(request: Request, requestOptions: RequestOptions): Promise<TResponse> {
-    {{#authMethods}}
-    {{#isApiKey}}
-    if (this.authentications.{{name}}.apiKey) {
-    this.authentications.{{name}}.applyToRequest(requestOptions);
-    }
-    {{/isApiKey}}
-    {{/authMethods}}
-    return this.transporter.request(request, requestOptions);
   }
 
   {{#operation}}
   /**
+  {{#notes}}
   * {{&notes}}
+  {{/notes}}
   {{#summary}}
   * @summary {{&summary}}
   {{/summary}}
   {{#allParams}}
-  * @param {{paramName}} {{description}}
+  * @param {{paramName}} {{^description}}The {{paramName}} {{/description}} {{#description}}{{description}}{{/description}}
   {{/allParams}}
   */
-  public async {{nickname}} ({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}) : Promise<{{{returnType}}}> {
+  public {{nickname}} ({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}) : Promise<{{{returnType}}}> {
     const path = '{{{path}}}'{{#pathParams}}.replace(
-      '{' + '{{baseName}}' + '}', 
+    {{=<% %>=}}
+      '{<%baseName%>}',
+    <%={{ }}=%>
       encodeURIComponent(String({{paramName}}))
     ){{/pathParams}};
     let headers: Headers = { Accept: 'application/json' };

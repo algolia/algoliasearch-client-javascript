@@ -1,6 +1,8 @@
-import { EndRequest, Response } from '../types';
-import * as http from 'http';
-import * as https from 'https';
+import http from 'http';
+import https from 'https';
+
+import type { EndRequest, Response } from '../types';
+
 import { Requester } from './Requester';
 
 export class HttpRequester extends Requester {
@@ -13,12 +15,14 @@ export class HttpRequester extends Requester {
     this.httpsAgent = new https.Agent({ keepAlive: true });
   }
 
-  async send(request: EndRequest): Promise<Response> {
+  send(request: EndRequest): Promise<Response> {
     return new Promise((resolve) => {
+      let responseTimeout: NodeJS.Timeout | undefined;
+      // eslint-disable-next-line prefer-const -- linter thinks this is not reassigned
+      let connectTimeout: NodeJS.Timeout | undefined;
       const url = new URL(request.url);
-
-      const path = url.search === null ? url.pathname : `${url.pathname}?${url.search}`;
-
+      const path =
+        url.search === null ? url.pathname : `${url.pathname}?${url.search}`;
       const options: https.RequestOptions = {
         agent: url.protocol === 'https:' ? this.httpsAgent : this.httpAgent,
         hostname: url.hostname,
@@ -28,26 +32,32 @@ export class HttpRequester extends Requester {
         ...(url.port !== undefined ? { port: url.port || '' } : {}),
       };
 
-      const req = (url.protocol === 'https:' ? https : http).request(options, (response) => {
-        let contentBuffers: Buffer[] = [];
+      const req = (url.protocol === 'https:' ? https : http).request(
+        options,
+        (response) => {
+          let contentBuffers: Buffer[] = [];
 
-        response.on('data', (chunk) => {
-          contentBuffers = contentBuffers.concat(chunk);
-        });
-
-        response.on('end', () => {
-          clearTimeout(connectTimeout);
-          clearTimeout(responseTimeout as NodeJS.Timeout);
-
-          resolve({
-            status: response.statusCode || 0,
-            content: Buffer.concat(contentBuffers).toString(),
-            isTimedOut: false,
+          response.on('data', (chunk) => {
+            contentBuffers = contentBuffers.concat(chunk);
           });
-        });
-      });
 
-      const createTimeout = (timeout: number, content: string): NodeJS.Timeout => {
+          response.on('end', () => {
+            clearTimeout(connectTimeout as NodeJS.Timeout);
+            clearTimeout(responseTimeout as NodeJS.Timeout);
+
+            resolve({
+              status: response.statusCode || 0,
+              content: Buffer.concat(contentBuffers).toString(),
+              isTimedOut: false,
+            });
+          });
+        }
+      );
+
+      const createTimeout = (
+        timeout: number,
+        content: string
+      ): NodeJS.Timeout => {
         return setTimeout(() => {
           req.destroy();
 
@@ -59,19 +69,23 @@ export class HttpRequester extends Requester {
         }, timeout * 1000);
       };
 
-      const connectTimeout = createTimeout(request.connectTimeout, 'Connection timeout');
-
-      let responseTimeout: NodeJS.Timeout | undefined;
+      connectTimeout = createTimeout(
+        request.connectTimeout,
+        'Connection timeout'
+      );
 
       req.on('error', (error) => {
-        clearTimeout(connectTimeout);
+        clearTimeout(connectTimeout as NodeJS.Timeout);
         clearTimeout(responseTimeout!);
         resolve({ status: 0, content: error.message, isTimedOut: false });
       });
 
       req.once('response', () => {
-        clearTimeout(connectTimeout);
-        responseTimeout = createTimeout(request.responseTimeout, 'Socket timeout');
+        clearTimeout(connectTimeout as NodeJS.Timeout);
+        responseTimeout = createTimeout(
+          request.responseTimeout,
+          'Socket timeout'
+        );
       });
 
       if (request.data !== undefined) {

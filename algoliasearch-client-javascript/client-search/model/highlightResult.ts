@@ -10,7 +10,7 @@ export type HighlightResult = {
   /**
    * List of words from the query that matched the object.
    */
-  matchedWords?: Array<string>;
+  matchedWords?: string[];
   /**
    * Whether the entire attribute value is highlighted.
    */

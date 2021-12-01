@@ -1,4 +1,4 @@
-description: Method not allowed with this API key
+description: Method not allowed with this API key.
 content:
   application/json:
     schema:

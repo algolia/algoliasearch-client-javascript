@@ -1,4 +1,4 @@
-import { RankingInfoMatchedGeoLocation } from './rankingInfoMatchedGeoLocation';
+import type { RankingInfoMatchedGeoLocation } from './rankingInfoMatchedGeoLocation';
 
 export type RankingInfo = {
   /**

@@ -1,10 +1,10 @@
 export type BatchResponse = {
   /**
-   * taskID of the indexing task to wait for.
+   * TaskID of the indexing task to wait for.
    */
   taskID?: number;
   /**
-   * List of objectID
+   * List of objectID.
    */
-  objectIDs?: Array<string>;
+  objectIDs?: string[];
 };

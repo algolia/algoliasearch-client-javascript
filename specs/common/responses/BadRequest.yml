@@ -1,4 +1,4 @@
-description: Bad request or request arguments
+description: Bad request or request arguments.
 content:
   application/json:
     schema:

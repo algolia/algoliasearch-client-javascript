@@ -1,4 +1,4 @@
-description: Error
+description: Error.
 type: object
 additionalProperties: true
 properties:

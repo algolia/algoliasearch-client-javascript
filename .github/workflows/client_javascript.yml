@@ -40,7 +40,7 @@ jobs:
         run: yarn client:build-js:recommend
 
       - name: Lint
-        run: yarn prettier --check clients/algoliasearch-client-javascript
+        run: yarn lint
 
   build-failure:
     if: ${{ github.event.workflow_run.conclusion == 'failure' }}

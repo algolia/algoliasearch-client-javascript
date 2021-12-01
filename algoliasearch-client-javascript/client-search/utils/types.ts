@@ -1,4 +1,4 @@
-export type Method = 'GET' | 'PATCH' | 'POST' | 'PUT' | 'DELETE';
+export type Method = 'DELETE' | 'GET' | 'PATCH' | 'POST' | 'PUT';
 
 export type Request = {
   method: Method;
@@ -47,7 +47,7 @@ export type Headers = Record<string, string>;
 
 export type Host = {
   url: string;
-  accept: 'read' | 'write' | 'readWrite';
+  accept: 'read' | 'readWrite' | 'write';
   protocol: 'http' | 'https';
 };
 

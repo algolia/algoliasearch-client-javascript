@@ -1,5 +1,5 @@
-import { RecommendationsResponse } from './recommendationsResponse';
+import type { RecommendationsResponse } from './recommendationsResponse';
 
 export type GetRecommendationsResponse = {
-  results?: Array<RecommendationsResponse>;
+  results?: RecommendationsResponse[];
 };

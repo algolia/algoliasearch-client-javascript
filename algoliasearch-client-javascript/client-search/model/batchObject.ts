@@ -1,5 +1,8 @@
-import { Operation } from './operation';
+import type { Operation } from './operation';
 
+/**
+ * The `batch` requests.
+ */
 export type BatchObject = {
-  requests?: Array<Operation>;
+  requests?: Operation[];
 };

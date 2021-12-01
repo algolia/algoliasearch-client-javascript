@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 {{#generateApis}}
 import type { RequestOptions } from '../utils/types';
 {{/generateApis}}
@@ -25,11 +26,11 @@ export class ApiKeyAuth implements Authentication {
     }
 
     applyToRequest(requestOptions: RequestOptions): void {
-        if (this.location == "query") {
+        if (this.location === "query") {
             requestOptions.queryParameters[this.paramName] = this.apiKey;
-        } else if (this.location == "header" && requestOptions && requestOptions.headers) {
+        } else if (this.location === "header" && requestOptions && requestOptions.headers) {
             requestOptions.headers[this.paramName] = this.apiKey;
-        } else if (this.location == 'cookie' && requestOptions && requestOptions.headers) {
+        } else if (this.location === 'cookie' && requestOptions && requestOptions.headers) {
             if (requestOptions.headers['Cookie']) {
                 requestOptions.headers['Cookie'] += '; ' + this.paramName + '=' + encodeURIComponent(this.apiKey);
             }

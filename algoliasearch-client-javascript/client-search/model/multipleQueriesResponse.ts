@@ -1,5 +1,5 @@
-import { SearchResponse } from './searchResponse';
+import type { SearchResponse } from './searchResponse';
 
 export type MultipleQueriesResponse = {
-  results?: Array<SearchResponse>;
+  results?: SearchResponse[];
 };

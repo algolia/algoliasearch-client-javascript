@@ -1,13 +1,13 @@
-import { BaseSearchParams } from './baseSearchParams';
-import { IndexSettingsAsSearchParams } from './indexSettingsAsSearchParams';
+import type { BaseSearchParams } from './baseSearchParams';
+import type { IndexSettingsAsSearchParams } from './indexSettingsAsSearchParams';
 
 export type RecommendationRequest = {
   /**
-   * The Algolia index name
+   * The Algolia index name.
    */
   indexName: string;
   /**
-   * Unique identifier of the object
+   * Unique identifier of the object.
    */
   objectID: string;
   /**

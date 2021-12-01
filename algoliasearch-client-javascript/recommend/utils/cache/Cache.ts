@@ -2,17 +2,23 @@ export interface Cache {
   /**
    * Gets the value of the given `key`.
    */
-  get: <TValue>(key: object | string, defaultValue: () => Promise<TValue>) => Promise<TValue>;
+  get: <TValue>(
+    key: Record<string, unknown> | string,
+    defaultValue: () => Promise<TValue>
+  ) => Promise<TValue>;
 
   /**
    * Sets the given value with the given `key`.
    */
-  set: <TValue>(key: object | string, value: TValue) => Promise<TValue>;
+  set: <TValue>(
+    key: Record<string, unknown> | string,
+    value: TValue
+  ) => Promise<TValue>;
 
   /**
    * Deletes the given `key`.
    */
-  delete: (key: object | string) => Promise<void>;
+  delete: (key: Record<string, unknown> | string) => Promise<void>;
 
   /**
    * Clears the cache.

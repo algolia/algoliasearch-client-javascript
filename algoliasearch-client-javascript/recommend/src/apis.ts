@@ -1,5 +1,6 @@
-export * from './recommendApi';
 import { RecommendApi } from './recommendApi';
+
+export * from './recommendApi';
 export * from '../utils/errors';
 export { EchoRequester } from '../utils/requester/EchoRequester';
 

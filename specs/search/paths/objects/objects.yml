@@ -2,12 +2,12 @@ post:
   tags:
     - search
   operationId: saveObject
-  summary: Save object
-  description: Add an object to the index, automatically assigning it an object ID
+  description: Add an object to the index, automatically assigning it an object ID.
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
   requestBody:
     required: true
+    description: The Algolia object.
     content:
       application/json:
         schema:

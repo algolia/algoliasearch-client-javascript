@@ -1,20 +1,18 @@
-import { shuffle } from '../utils/helpers';
-import { Transporter } from '../utils/Transporter';
-import { Headers, Host, Request, RequestOptions } from '../utils/types';
-import { Requester } from '../utils/requester/Requester';
-
-import { BatchObject } from '../model/batchObject';
-import { BatchResponse } from '../model/batchResponse';
-import { ErrorBase } from '../model/errorBase';
-import { IndexSettings } from '../model/indexSettings';
-import { MultipleQueriesObject } from '../model/multipleQueriesObject';
-import { MultipleQueriesResponse } from '../model/multipleQueriesResponse';
-import { SaveObjectResponse } from '../model/saveObjectResponse';
-import { SearchParams } from '../model/searchParams';
-import { SearchParamsAsString } from '../model/searchParamsAsString';
-import { SearchResponse } from '../model/searchResponse';
-import { SetSettingsResponse } from '../model/setSettingsResponse';
+import type { BatchObject } from '../model/batchObject';
+import type { BatchResponse } from '../model/batchResponse';
+import type { IndexSettings } from '../model/indexSettings';
 import { ApiKeyAuth } from '../model/models';
+import type { MultipleQueriesObject } from '../model/multipleQueriesObject';
+import type { MultipleQueriesResponse } from '../model/multipleQueriesResponse';
+import type { SaveObjectResponse } from '../model/saveObjectResponse';
+import type { SearchParams } from '../model/searchParams';
+import type { SearchParamsAsString } from '../model/searchParamsAsString';
+import type { SearchResponse } from '../model/searchResponse';
+import type { SetSettingsResponse } from '../model/setSettingsResponse';
+import { Transporter } from '../utils/Transporter';
+import { shuffle } from '../utils/helpers';
+import type { Requester } from '../utils/requester/Requester';
+import type { Headers, Host, Request, RequestOptions } from '../utils/types';
 
 export enum SearchApiKeys {
   apiKey,
@@ -22,18 +20,37 @@ export enum SearchApiKeys {
 }
 
 export class SearchApi {
-  private transporter: Transporter;
-
   protected authentications = {
     apiKey: new ApiKeyAuth('header', 'X-Algolia-API-Key'),
     appId: new ApiKeyAuth('header', 'X-Algolia-Application-Id'),
   };
 
-  constructor(appId: string, apiKey: string, options?: { requester?: Requester; hosts?: Host[] }) {
+  private transporter: Transporter;
+
+  private sendRequest<TResponse>(
+    request: Request,
+    requestOptions: RequestOptions
+  ): Promise<TResponse> {
+    if (this.authentications.apiKey.apiKey) {
+      this.authentications.apiKey.applyToRequest(requestOptions);
+    }
+
+    if (this.authentications.appId.apiKey) {
+      this.authentications.appId.applyToRequest(requestOptions);
+    }
+
+    return this.transporter.request(request, requestOptions);
+  }
+
+  constructor(
+    appId: string,
+    apiKey: string,
+    options?: { requester?: Requester; hosts?: Host[] }
+  ) {
     this.setApiKey(SearchApiKeys.appId, appId);
     this.setApiKey(SearchApiKeys.apiKey, apiKey);
     this.transporter = new Transporter({
-      hosts: options?.hosts ?? this.getDefaultHosts(appId, apiKey),
+      hosts: options?.hosts ?? this.getDefaultHosts(appId),
       baseHeaders: {
         'content-type': 'application/x-www-form-urlencoded',
       },
@@ -47,7 +64,7 @@ export class SearchApi {
     });
   }
 
-  public getDefaultHosts(appId: string, apiKey: string): Host[] {
+  getDefaultHosts(appId: string): Host[] {
     return (
       [
         { url: `${appId}-dsn.algolia.net`, accept: 'read', protocol: 'https' },
@@ -55,58 +72,61 @@ export class SearchApi {
       ] as Host[]
     ).concat(
       shuffle([
-        { url: `${appId}-1.algolianet.com`, accept: 'readWrite', protocol: 'https' },
-        { url: `${appId}-2.algolianet.com`, accept: 'readWrite', protocol: 'https' },
-        { url: `${appId}-3.algolianet.com`, accept: 'readWrite', protocol: 'https' },
+        {
+          url: `${appId}-1.algolianet.com`,
+          accept: 'readWrite',
+          protocol: 'https',
+        },
+        {
+          url: `${appId}-2.algolianet.com`,
+          accept: 'readWrite',
+          protocol: 'https',
+        },
+        {
+          url: `${appId}-3.algolianet.com`,
+          accept: 'readWrite',
+          protocol: 'https',
+        },
       ])
     );
   }
 
-  public setRequest(requester: Requester): void {
+  setRequest(requester: Requester): void {
     this.transporter.setRequester(requester);
   }
 
-  public setHosts(hosts: Host[]): void {
+  setHosts(hosts: Host[]): void {
     this.transporter.setHosts(hosts);
   }
 
-  public setApiKey(key: SearchApiKeys, value: string) {
+  setApiKey(key: SearchApiKeys, value: string): void {
     this.authentications[SearchApiKeys[key]].apiKey = value;
   }
 
-  private async sendRequest<TResponse>(
-    request: Request,
-    requestOptions: RequestOptions
-  ): Promise<TResponse> {
-    if (this.authentications.apiKey.apiKey) {
-      this.authentications.apiKey.applyToRequest(requestOptions);
-    }
-    if (this.authentications.appId.apiKey) {
-      this.authentications.appId.applyToRequest(requestOptions);
-    }
-    return this.transporter.request(request, requestOptions);
-  }
-
   /**
+   * Performs multiple write operations in a single API call.
    *
-   * @summary Performs multiple write operations in a single API call
-   * @param indexName The index in which to perform the request
-   * @param batchObject
+   * @param indexName  - The index in which to perform the request.
+   * @param batchObject - The batchObject.
    */
-  public async batch(indexName: string, batchObject: BatchObject): Promise<BatchResponse> {
+  batch(indexName: string, batchObject: BatchObject): Promise<BatchResponse> {
     const path = '/1/indexes/{indexName}/batch'.replace(
-      '{' + 'indexName' + '}',
+      '{indexName}',
       encodeURIComponent(String(indexName))
     );
-    let headers: Headers = { Accept: 'application/json' };
-    let queryParameters: Record<string, string> = {};
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
 
     if (indexName === null || indexName === undefined) {
-      throw new Error('Required parameter indexName was null or undefined when calling batch.');
+      throw new Error(
+        'Required parameter indexName was null or undefined when calling batch.'
+      );
     }
 
     if (batchObject === null || batchObject === undefined) {
-      throw new Error('Required parameter batchObject was null or undefined when calling batch.');
+      throw new Error(
+        'Required parameter batchObject was null or undefined when calling batch.'
+      );
     }
 
     const request: Request = {
@@ -123,17 +143,17 @@ export class SearchApi {
     return this.sendRequest(request, requestOptions);
   }
   /**
+   * Retrieve settings of a given indexName.
    *
-   * @summary Retrieve settings of a given indexName.
-   * @param indexName The index in which to perform the request
+   * @param indexName  - The index in which to perform the request.
    */
-  public async getSettings(indexName: string): Promise<IndexSettings> {
+  getSettings(indexName: string): Promise<IndexSettings> {
     const path = '/1/indexes/{indexName}/settings'.replace(
-      '{' + 'indexName' + '}',
+      '{indexName}',
       encodeURIComponent(String(indexName))
     );
-    let headers: Headers = { Accept: 'application/json' };
-    let queryParameters: Record<string, string> = {};
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
 
     if (indexName === null || indexName === undefined) {
       throw new Error(
@@ -154,16 +174,16 @@ export class SearchApi {
     return this.sendRequest(request, requestOptions);
   }
   /**
+   * Get search results for the given requests.
    *
-   * @summary Get search results for the given requests.
-   * @param multipleQueriesObject
+   * @param multipleQueriesObject - The multipleQueriesObject.
    */
-  public async multipleQueries(
+  multipleQueries(
     multipleQueriesObject: MultipleQueriesObject
   ): Promise<MultipleQueriesResponse> {
     const path = '/1/indexes/*/queries';
-    let headers: Headers = { Accept: 'application/json' };
-    let queryParameters: Record<string, string> = {};
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
 
     if (multipleQueriesObject === null || multipleQueriesObject === undefined) {
       throw new Error(
@@ -185,21 +205,21 @@ export class SearchApi {
     return this.sendRequest(request, requestOptions);
   }
   /**
-   * Add an object to the index, automatically assigning it an object ID
-   * @summary Save object
-   * @param indexName The index in which to perform the request
-   * @param requestBody
+   * Add an object to the index, automatically assigning it an object ID.
+   *
+   * @param indexName  - The index in which to perform the request.
+   * @param requestBody  - The Algolia object.
    */
-  public async saveObject(
+  saveObject(
     indexName: string,
-    requestBody: { [key: string]: object }
+    requestBody: { [key: string]: Record<string, any> }
   ): Promise<SaveObjectResponse> {
     const path = '/1/indexes/{indexName}'.replace(
-      '{' + 'indexName' + '}',
+      '{indexName}',
       encodeURIComponent(String(indexName))
     );
-    let headers: Headers = { Accept: 'application/json' };
-    let queryParameters: Record<string, string> = {};
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
 
     if (indexName === null || indexName === undefined) {
       throw new Error(
@@ -227,24 +247,26 @@ export class SearchApi {
     return this.sendRequest(request, requestOptions);
   }
   /**
+   * Get search results.
    *
-   * @summary Get search results
-   * @param indexName The index in which to perform the request
-   * @param searchParamsAsStringSearchParams
+   * @param indexName  - The index in which to perform the request.
+   * @param searchParamsAsStringSearchParams - The searchParamsAsStringSearchParams.
    */
-  public async search(
+  search(
     indexName: string,
-    searchParamsAsStringSearchParams: SearchParamsAsString | SearchParams
+    searchParamsAsStringSearchParams: SearchParams | SearchParamsAsString
   ): Promise<SearchResponse> {
     const path = '/1/indexes/{indexName}/query'.replace(
-      '{' + 'indexName' + '}',
+      '{indexName}',
       encodeURIComponent(String(indexName))
     );
-    let headers: Headers = { Accept: 'application/json' };
-    let queryParameters: Record<string, string> = {};
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
 
     if (indexName === null || indexName === undefined) {
-      throw new Error('Required parameter indexName was null or undefined when calling search.');
+      throw new Error(
+        'Required parameter indexName was null or undefined when calling search.'
+      );
     }
 
     if (
@@ -270,23 +292,23 @@ export class SearchApi {
     return this.sendRequest(request, requestOptions);
   }
   /**
+   * Update settings of a given indexName. Only specified settings are overridden; unspecified settings are left unchanged. Specifying null for a setting resets it to its default value.
    *
-   * @summary Update settings of a given indexName. Only specified settings are overridden; unspecified settings are left unchanged. Specifying null for a setting resets it to its default value.
-   * @param indexName The index in which to perform the request
-   * @param indexSettings
-   * @param forwardToReplicas When true, changes are also propagated to replicas of the given indexName.
+   * @param indexName  - The index in which to perform the request.
+   * @param indexSettings - The indexSettings.
+   * @param forwardToReplicas  - When true, changes are also propagated to replicas of the given indexName.
    */
-  public async setSettings(
+  setSettings(
     indexName: string,
     indexSettings: IndexSettings,
     forwardToReplicas?: boolean
   ): Promise<SetSettingsResponse> {
     const path = '/1/indexes/{indexName}/settings'.replace(
-      '{' + 'indexName' + '}',
+      '{indexName}',
       encodeURIComponent(String(indexName))
     );
-    let headers: Headers = { Accept: 'application/json' };
-    let queryParameters: Record<string, string> = {};
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
 
     if (indexName === null || indexName === undefined) {
       throw new Error(
@@ -301,7 +323,7 @@ export class SearchApi {
     }
 
     if (forwardToReplicas !== undefined) {
-      queryParameters['forwardToReplicas'] = forwardToReplicas.toString();
+      queryParameters.forwardToReplicas = forwardToReplicas.toString();
     }
 
     const request: Request = {

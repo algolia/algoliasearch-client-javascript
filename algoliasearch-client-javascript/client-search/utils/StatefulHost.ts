@@ -4,11 +4,11 @@ const EXPIRATION_DELAY = 2 * 60 * 1000;
 
 export class StatefulHost implements Host {
   url: string;
-  accept: 'read' | 'write' | 'readWrite';
+  accept: 'read' | 'readWrite' | 'write';
   protocol: 'http' | 'https';
 
   private lastUpdate: number;
-  private status: 'up' | 'down' | 'timedout';
+  private status: 'down' | 'timedout' | 'up';
 
   constructor(host: Host, status: StatefulHost['status'] = 'up') {
     this.url = host.url;
@@ -20,10 +20,15 @@ export class StatefulHost implements Host {
   }
 
   isUp(): boolean {
-    return this.status === 'up' || Date.now() - this.lastUpdate > EXPIRATION_DELAY;
+    return (
+      this.status === 'up' || Date.now() - this.lastUpdate > EXPIRATION_DELAY
+    );
   }
 
   isTimedout(): boolean {
-    return this.status === 'timedout' && Date.now() - this.lastUpdate <= EXPIRATION_DELAY;
+    return (
+      this.status === 'timedout' &&
+      Date.now() - this.lastUpdate <= EXPIRATION_DELAY
+    );
   }
 }

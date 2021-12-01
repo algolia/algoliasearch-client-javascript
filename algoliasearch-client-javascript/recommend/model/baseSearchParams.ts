@@ -14,19 +14,19 @@ export type BaseSearchParams = {
   /**
    * Filter hits by facet value.
    */
-  facetFilters?: Array<string>;
+  facetFilters?: string[];
   /**
    * Create filters for ranking purposes, where records that match the filter are ranked higher, or lower in the case of a negative optional filter.
    */
-  optionalFilters?: Array<string>;
+  optionalFilters?: string[];
   /**
    * Filter on numeric attributes.
    */
-  numericFilters?: Array<string>;
+  numericFilters?: string[];
   /**
    * Filter hits by tags.
    */
-  tagFilters?: Array<string>;
+  tagFilters?: string[];
   /**
    * Determines how to calculate the total score for filtering.
    */
@@ -34,7 +34,7 @@ export type BaseSearchParams = {
   /**
    * Retrieve facets and their facet values.
    */
-  facets?: Array<string>;
+  facets?: string[];
   /**
    * Maximum number of facet values to return for each facet during a regular search.
    */
@@ -82,19 +82,19 @@ export type BaseSearchParams = {
   /**
    * Search inside a rectangular area (in geo coordinates).
    */
-  insideBoundingBox?: Array<number>;
+  insideBoundingBox?: number[];
   /**
    * Search inside a polygon (in geo coordinates).
    */
-  insidePolygon?: Array<number>;
+  insidePolygon?: number[];
   /**
    * This parameter changes the default values of certain parameters and settings that work best for a natural language query, such as ignorePlurals, removeStopWords, removeWordsIfNoResults, analyticsTags and ruleContexts. These parameters and settings work well together when the query is formatted in natural language instead of keywords, for example when your user performs a voice search.
    */
-  naturalLanguages?: Array<string>;
+  naturalLanguages?: string[];
   /**
    * Enables contextual rules.
    */
-  ruleContexts?: Array<string>;
+  ruleContexts?: string[];
   /**
    * Define the impact of the Personalization feature.
    */
@@ -118,7 +118,7 @@ export type BaseSearchParams = {
   /**
    * List of tags to apply to the query for analytics purposes.
    */
-  analyticsTags?: Array<string>;
+  analyticsTags?: string[];
   /**
    * Whether to include or exclude a query from the processing-time percentile computation.
    */

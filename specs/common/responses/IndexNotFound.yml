@@ -1,4 +1,4 @@
-description: Index not found
+description: Index not found.
 content:
   application/json:
     schema:
