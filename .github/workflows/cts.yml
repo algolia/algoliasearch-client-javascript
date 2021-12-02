@@ -1,0 +1,30 @@
+name: cts
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'yarn'
+          cache-dependency-path: 'yarn.lock'
+
+      - name: Install Dependencies
+        run: yarn install
+
+      - name: Generate client
+        run: yarn generate:js
+
+      - name: Build client
+        run: yarn client:build
+
+      - name: Generate CTS
+        run: yarn cts:generate
+
+      - name: Run CTS
+        run: yarn cts:test
