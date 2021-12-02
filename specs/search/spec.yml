@@ -56,10 +56,10 @@ paths:
   # ################################
   # ### Manage Indices Endpoints ###
   # ################################
-  # /1/indexes/{indexName}/operation:
-  #   $ref: './paths/manage_indices/copyIndex.yml'
-  # /1/indexes:
-  #   $ref: './paths/manage_indices/listIndices.yml'
+  /1/indexes/{indexName}/operation:
+    $ref: './paths/manage_indices/operationIndex.yml'
+  /1/indexes:
+    $ref: './paths/manage_indices/listIndices.yml'
   #
   # ##########################
   # ### Synonyms Endpoints ###

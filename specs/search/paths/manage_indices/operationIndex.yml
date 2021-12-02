@@ -1,0 +1,54 @@
+post:
+  tags:
+    - search
+  operationId: operationIndex
+  summary: Copy/move index.
+  description: Peforms a copy or a move operation on a index.
+  parameters:
+    - $ref: '../../../common/parameters.yml#/IndexName'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          title: operationIndexObject
+          type: object
+          additionalProperties: false
+          properties:
+            operation:
+              type: string
+              enum: ['move', 'copy']
+              description: Type of operation to perform (move or copy).
+            destination:
+              $ref: '../../../common/parameters.yml#/indexName'
+            scope:
+              type: array
+              items:
+                type: string
+                enum: ['settings', 'synonyms', 'rules']
+              description: Scope of the data to copy. When absent, a full copy is performed. When present, only the selected scopes are copied.
+          required:
+            - operation
+            - destination
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            title: operationIndexResponse
+            type: object
+            additionalProperties: false
+            properties:
+              taskID:
+                $ref: '../../../common/parameters.yml#/taskID'
+              updatedAt:
+                $ref: '../../../common/parameters.yml#/updatedAt'
+    '400':
+      $ref: '../../../common/responses/BadRequest.yml'
+    '402':
+      $ref: '../../../common/responses/FeatureNotEnabled.yml'
+    '403':
+      $ref: '../../../common/responses/MethodNotAllowed.yml'
+    '404':
+      $ref: '../../../common/responses/IndexNotFound.yml'

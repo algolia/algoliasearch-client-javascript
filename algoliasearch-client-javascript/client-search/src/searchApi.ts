@@ -1,9 +1,13 @@
 import type { BatchObject } from '../model/batchObject';
 import type { BatchResponse } from '../model/batchResponse';
+import type { DeleteIndexResponse } from '../model/deleteIndexResponse';
 import type { IndexSettings } from '../model/indexSettings';
+import type { ListIndicesResponse } from '../model/listIndicesResponse';
 import { ApiKeyAuth } from '../model/models';
 import type { MultipleQueriesObject } from '../model/multipleQueriesObject';
 import type { MultipleQueriesResponse } from '../model/multipleQueriesResponse';
+import type { OperationIndexObject } from '../model/operationIndexObject';
+import type { OperationIndexResponse } from '../model/operationIndexResponse';
 import type { SaveObjectResponse } from '../model/saveObjectResponse';
 import type { SearchParams } from '../model/searchParams';
 import type { SearchParamsAsString } from '../model/searchParamsAsString';
@@ -143,6 +147,38 @@ export class SearchApi {
     return this.sendRequest(request, requestOptions);
   }
   /**
+   * Delete an existing index.
+   *
+   * @summary Delete index.
+   * @param indexName  - The index in which to perform the request.
+   */
+  deleteIndex(indexName: string): Promise<DeleteIndexResponse> {
+    const path = '/1/indexes/{indexName}'.replace(
+      '{indexName}',
+      encodeURIComponent(String(indexName))
+    );
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (indexName === null || indexName === undefined) {
+      throw new Error(
+        'Required parameter indexName was null or undefined when calling deleteIndex.'
+      );
+    }
+
+    const request: Request = {
+      method: 'DELETE',
+      path,
+    };
+
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
+
+    return this.sendRequest(request, requestOptions);
+  }
+  /**
    * Retrieve settings of a given indexName.
    *
    * @param indexName - The index in which to perform the request.
@@ -159,6 +195,33 @@ export class SearchApi {
       throw new Error(
         'Required parameter indexName was null or undefined when calling getSettings.'
       );
+    }
+
+    const request: Request = {
+      method: 'GET',
+      path,
+    };
+
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
+
+    return this.sendRequest(request, requestOptions);
+  }
+  /**
+   * List existing indexes from an application.
+   *
+   * @summary List existing indexes.
+   * @param page  - Requested page (zero-based). When specified, will retrieve a specific page; the page size is implicitly set to 100. When null, will retrieve all indices (no pagination).
+   */
+  listIndices(page?: number): Promise<ListIndicesResponse> {
+    const path = '/1/indexes';
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (page !== undefined) {
+      queryParameters.Page = page.toString();
     }
 
     const request: Request = {
@@ -195,6 +258,49 @@ export class SearchApi {
       method: 'POST',
       path,
       data: multipleQueriesObject,
+    };
+
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
+
+    return this.sendRequest(request, requestOptions);
+  }
+  /**
+   * Peforms a copy or a move operation on a index.
+   *
+   * @summary Copy/move index.
+   * @param indexName  - The index in which to perform the request.
+   * @param operationIndexObject - The operationIndexObject.
+   */
+  operationIndex(
+    indexName: string,
+    operationIndexObject: OperationIndexObject
+  ): Promise<OperationIndexResponse> {
+    const path = '/1/indexes/{indexName}/operation'.replace(
+      '{indexName}',
+      encodeURIComponent(String(indexName))
+    );
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (indexName === null || indexName === undefined) {
+      throw new Error(
+        'Required parameter indexName was null or undefined when calling operationIndex.'
+      );
+    }
+
+    if (operationIndexObject === null || operationIndexObject === undefined) {
+      throw new Error(
+        'Required parameter operationIndexObject was null or undefined when calling operationIndex.'
+      );
+    }
+
+    const request: Request = {
+      method: 'POST',
+      path,
+      data: operationIndexObject,
     };
 
     const requestOptions: RequestOptions = {

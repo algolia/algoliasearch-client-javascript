@@ -38,4 +38,33 @@ post:
     '404':
       $ref: '../../../common/responses/IndexNotFound.yml'
 # delete index
-# delete:
+delete:
+  tags:
+    - search
+  operationId: deleteIndex
+  summary: Delete index.
+  description: Delete an existing index.
+  parameters:
+    - $ref: '../../../common/parameters.yml#/IndexName'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            title: deleteIndexResponse
+            type: object
+            additionalProperties: false
+            properties:
+              taskID:
+                $ref: '../../../common/parameters.yml#/taskID'
+              deleteAt:
+                $ref: '../../../common/parameters.yml#/deleteAt'
+    '400':
+      $ref: '../../../common/responses/BadRequest.yml'
+    '402':
+      $ref: '../../../common/responses/FeatureNotEnabled.yml'
+    '403':
+      $ref: '../../../common/responses/MethodNotAllowed.yml'
+    '404':
+      $ref: '../../../common/responses/IndexNotFound.yml'
