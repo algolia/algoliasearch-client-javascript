@@ -106,7 +106,7 @@ export class SearchApi {
   /**
    * Performs multiple write operations in a single API call.
    *
-   * @param indexName  - The index in which to perform the request.
+   * @param indexName - The index in which to perform the request.
    * @param batchObject - The batchObject.
    */
   batch(indexName: string, batchObject: BatchObject): Promise<BatchResponse> {
@@ -145,7 +145,7 @@ export class SearchApi {
   /**
    * Retrieve settings of a given indexName.
    *
-   * @param indexName  - The index in which to perform the request.
+   * @param indexName - The index in which to perform the request.
    */
   getSettings(indexName: string): Promise<IndexSettings> {
     const path = '/1/indexes/{indexName}/settings'.replace(
@@ -207,8 +207,8 @@ export class SearchApi {
   /**
    * Add an object to the index, automatically assigning it an object ID.
    *
-   * @param indexName  - The index in which to perform the request.
-   * @param requestBody  - The Algolia object.
+   * @param indexName - The index in which to perform the request.
+   * @param requestBody - The Algolia object.
    */
   saveObject(
     indexName: string,
@@ -249,7 +249,7 @@ export class SearchApi {
   /**
    * Get search results.
    *
-   * @param indexName  - The index in which to perform the request.
+   * @param indexName - The index in which to perform the request.
    * @param searchParamsAsStringSearchParams - The searchParamsAsStringSearchParams.
    */
   search(
@@ -294,9 +294,9 @@ export class SearchApi {
   /**
    * Update settings of a given indexName. Only specified settings are overridden; unspecified settings are left unchanged. Specifying null for a setting resets it to its default value.
    *
-   * @param indexName  - The index in which to perform the request.
+   * @param indexName - The index in which to perform the request.
    * @param indexSettings - The indexSettings.
-   * @param forwardToReplicas  - When true, changes are also propagated to replicas of the given indexName.
+   * @param forwardToReplicas - When true, changes are also propagated to replicas of the given indexName.
    */
   setSettings(
     indexName: string,
