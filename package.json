@@ -17,7 +17,7 @@
     "client:build-js:recommend": "yarn workspace @algolia/recommend build",
     "client:build-js": "yarn client:build-js:search && yarn client:build-js:recommend",
     "client:build": "yarn client:build-js",
-    "lint:client:fix": "yarn prettier --write ${CLIENT} && eslint --ext=ts ${CLIENT} --fix",
+    "lint:client:fix": "eslint --ext=ts ${CLIENT} --fix",
     "lint": "eslint --ext=ts .",
     "format:specs": "yarn prettier --write specs",
     "generate:js:recommend": "yarn openapi-generator-cli generate --generator-key javascript-recommend && CLIENT=recommend yarn utils:import-js && CLIENT=clients/algoliasearch-client-javascript/recommend/ yarn lint:client:fix",

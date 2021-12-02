@@ -103,7 +103,7 @@ export class {{classname}} {
   * @summary {{&summary}}
   {{/summary}}
   {{#allParams}}
-  * @param {{paramName}} {{^description}}The {{paramName}} {{/description}} {{#description}}{{description}}{{/description}}
+  * @param {{paramName}} {{^description}}The {{paramName}}{{/description}}{{#description}}{{description}}{{/description}}
   {{/allParams}}
   */
   public {{nickname}} ({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}) : Promise<{{{returnType}}}> {
