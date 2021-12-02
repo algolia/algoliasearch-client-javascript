@@ -16,6 +16,16 @@ ForwardToReplicas:
   schema:
     type: boolean
 
+# query
+Page:
+  in: query
+  name: Page
+  description: Requested page (zero-based). When specified, will retrieve a specific page; the page size is implicitly set to 100. When null, will retrieve all indices (no pagination).
+  schema:
+    type: integer
+    nullable: true
+    default: null
+
 # misc
 taskID:
   type: integer
@@ -48,6 +58,11 @@ updatedAt:
   type: string
   format: date-time
   description: Date of last update (ISO-8601 format).
+
+deleteAt:
+  type: string
+  format: date-time
+  description: Date of deletion (ISO-8601 format).
 
 indexName:
   type: string
