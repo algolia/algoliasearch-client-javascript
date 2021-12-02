@@ -1,0 +1,20 @@
+[
+  {
+    "testName": "search",
+    "method": "search",
+    "parameters": [
+      "indexName",
+      {
+        "$objectName": "Query",
+        "query": "queryString"
+      }
+    ],
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "data": {
+        "query": "queryString"
+      }
+    }
+  }
+]

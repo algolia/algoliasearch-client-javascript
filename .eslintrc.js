@@ -30,7 +30,7 @@ module.exports = {
     'no-bitwise': 0,
     '@typescript-eslint/no-namespace': 0,
     'max-classes-per-file': 0,
-    'no-unused-vars': 0,
+    'no-continue': 0,
     '@typescript-eslint/prefer-enum-initializers': 0,
     // there's a conflict when declaring `type` and `namespaces`, even with `ignoreDeclarationMerge`
     'no-redeclare': 0,

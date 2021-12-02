@@ -15,3 +15,5 @@ yarn-error.log
 **/dist
 **/.openapi-generator-ignore
 **/git_push.sh
+
+.vscode
