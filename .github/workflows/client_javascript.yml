@@ -1,14 +1,9 @@
 name: client_javascript
 
-on:
-  workflow_run:
-    workflows: ['specs']
-    types:
-      - completed
+on: [push]
 
 jobs:
   build:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -41,10 +36,3 @@ jobs:
 
       - name: Lint
         run: yarn lint
-
-  build-failure:
-    if: ${{ github.event.workflow_run.conclusion == 'failure' }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Error on `specs` workflow
-        run: exit 1
