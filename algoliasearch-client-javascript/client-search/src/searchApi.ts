@@ -53,6 +53,7 @@ export class SearchApi {
   ) {
     this.setApiKey(SearchApiKeys.appId, appId);
     this.setApiKey(SearchApiKeys.apiKey, apiKey);
+
     this.transporter = new Transporter({
       hosts: options?.hosts ?? this.getDefaultHosts(appId),
       baseHeaders: {
@@ -150,7 +151,7 @@ export class SearchApi {
    * Delete an existing index.
    *
    * @summary Delete index.
-   * @param indexName  - The index in which to perform the request.
+   * @param indexName - The index in which to perform the request.
    */
   deleteIndex(indexName: string): Promise<DeleteIndexResponse> {
     const path = '/1/indexes/{indexName}'.replace(
@@ -213,7 +214,7 @@ export class SearchApi {
    * List existing indexes from an application.
    *
    * @summary List existing indexes.
-   * @param page  - Requested page (zero-based). When specified, will retrieve a specific page; the page size is implicitly set to 100. When null, will retrieve all indices (no pagination).
+   * @param page - Requested page (zero-based). When specified, will retrieve a specific page; the page size is implicitly set to 100. When null, will retrieve all indices (no pagination).
    */
   listIndices(page?: number): Promise<ListIndicesResponse> {
     const path = '/1/indexes';
@@ -271,7 +272,7 @@ export class SearchApi {
    * Peforms a copy or a move operation on a index.
    *
    * @summary Copy/move index.
-   * @param indexName  - The index in which to perform the request.
+   * @param indexName - The index in which to perform the request.
    * @param operationIndexObject - The operationIndexObject.
    */
   operationIndex(

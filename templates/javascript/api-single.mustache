@@ -49,11 +49,20 @@ export class {{classname}} {
     return this.transporter.request(request, requestOptions);
   }
 
-  constructor(appId: string, apiKey: string, options?: {requester?: Requester, hosts?: Host[]}) {
+  constructor(
+      appId: string,
+      apiKey: string,{{#isPersonalizationHost}}
+      region?: string, {{/isPersonalizationHost}}
+      options?: {requester?: Requester, hosts?: Host[]}
+    ) {
     this.setApiKey({{classname}}Keys.appId, appId);
     this.setApiKey({{classname}}Keys.apiKey, apiKey);
+
     this.transporter = new Transporter({
-      hosts: options?.hosts ?? this.getDefaultHosts(appId),
+      hosts: options?.hosts ?? this.getDefaultHosts(
+        {{^isPersonalizationHost}}appId{{/isPersonalizationHost}}
+        {{#isPersonalizationHost}}region{{/isPersonalizationHost}}
+    ),
       baseHeaders: {
         'content-type': 'application/x-www-form-urlencoded'
       },
@@ -67,6 +76,7 @@ export class {{classname}} {
     });
   }
 
+  {{^isPersonalizationHost}}
   public getDefaultHosts(appId: string): Host[] {
     return (
         [
@@ -81,6 +91,13 @@ export class {{classname}} {
         ])
       );
   }
+  {{/isPersonalizationHost}}
+
+  {{#isPersonalizationHost}}
+  public getDefaultHosts(region: string = 'us'): Host[] {
+    return [{ url: `personalization.${region}.algolia.com`, accept: 'readWrite', protocol: 'https' }];
+  }
+  {{/isPersonalizationHost}}
 
   public setRequest(requester: Requester): void {
     this.transporter.setRequester(requester);

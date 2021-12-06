@@ -1,6 +1,4 @@
 node_modules
-typings
 dist
-build
+.openapi-generator
 .env
-.vscode

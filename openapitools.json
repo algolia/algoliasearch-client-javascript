@@ -39,6 +39,26 @@
           "packageName": "@algolia/recommend",
           "npmVersion": "5.0.0"
         }
+      },
+      "javascript-personalization": {
+        "generatorName": "typescript-node",
+        "templateDir": "#{cwd}/templates/javascript/",
+        "config": "#{cwd}/openapitools.json",
+        "apiPackage": "src",
+        "output": "#{cwd}/clients/algoliasearch-client-javascript/client-personalization",
+        "glob": "specs/personalization/spec.yml",
+        "gitHost": "algolia",
+        "gitUserId": "algolia",
+        "gitRepoId": "algoliasearch-client-javascript",
+        "additionalProperties": {
+          "modelPropertyNaming": "original",
+          "supportsES6": true,
+          "npmName": "@algolia/client-personalization",
+          "packageName": "@algolia/client-personalization",
+          "npmVersion": "5.0.0",
+
+          "isPersonalizationHost": false
+        }
       }
     }
   }

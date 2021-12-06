@@ -2,7 +2,7 @@ openapi: 3.0.2
 info:
   title: Personalization API
   description: API powering the Personalization feature of Algolia.
-  version: 0.0.1
+  version: 0.1.0
 components:
   securitySchemes:
     appId:
@@ -15,7 +15,7 @@ security:
 paths:
   /1/profiles/personalization/{userToken}:
     $ref: './paths/getUserTokenProfile.yml'
-#  /1/profiles/{userToken}:
-#    $ref: './paths/deleteUserProfile.yml'
-#  /1/strategies/personalization:
-#    $ref: './paths/personalizationStrategy.yml'
+  /1/profiles/{userToken}:
+    $ref: './paths/deleteUserProfile.yml'
+  /1/strategies/personalization:
+    $ref: './paths/personalizationStrategy.yml'
