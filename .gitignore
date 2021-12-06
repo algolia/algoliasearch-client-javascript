@@ -10,10 +10,7 @@ yarn-error.log
 !.yarn/releases
 !.yarn/plugins
 
-**/.openapi-generator
 **/node_modules
 **/dist
-**/.openapi-generator-ignore
-**/git_push.sh
 
 .vscode

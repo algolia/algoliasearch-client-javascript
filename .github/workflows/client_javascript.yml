@@ -34,5 +34,10 @@ jobs:
       - name: Build recommend client
         run: yarn client:build-js:recommend
 
+      - name: Generate personalization client
+        run: yarn generate:js:personalization
+
+      - name: Build personalization client
+        run: yarn client:build-js:personalization
       - name: Lint
         run: yarn lint

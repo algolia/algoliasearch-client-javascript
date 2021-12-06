@@ -41,6 +41,7 @@ export class RecommendApi {
   ) {
     this.setApiKey(RecommendApiKeys.appId, appId);
     this.setApiKey(RecommendApiKeys.apiKey, apiKey);
+
     this.transporter = new Transporter({
       hosts: options?.hosts ?? this.getDefaultHosts(appId),
       baseHeaders: {
