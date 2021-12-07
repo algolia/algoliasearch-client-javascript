@@ -13,12 +13,6 @@ security:
   - appId: []
     apiKey: []
 paths:
-  # ########################
-  # ### Status Endpoints ###
-  # ########################
-  /2/status:
-    $ref: './paths/status/getStatus.yml'
-  #
   # ##################################
   # ### Search Analytics Endpoints ###
   # ##################################
@@ -48,7 +42,7 @@ paths:
   #   $ref: './paths/search/getAttributeTopFilters.yml'
   # /2/countries:
   #   $ref: './paths/search/getTopCountries.yml'
-  #
+
   # #################################
   # ### Click Analytics Endpoints ###
   # #################################
@@ -60,3 +54,9 @@ paths:
   #   $ref: './paths/click/getClickThroughRate.yml'
   # /2/conversions/conversionRate:
   #   $ref: './paths/click/getConversionRate.yml'
+
+  # ########################
+  # ### Status Endpoints ###
+  # ########################
+  /2/status:
+    $ref: './paths/status/getStatus.yml'
