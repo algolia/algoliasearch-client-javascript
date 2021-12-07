@@ -1,0 +1,81 @@
+name: Checks
+
+on: [push]
+
+jobs:
+  setup:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup
+        uses: ./.github/actions/setup
+
+  specs:
+    runs-on: ubuntu-20.04
+    needs: setup
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Restore cache
+        uses: ./.github/actions/cache
+
+      - name: Build
+        run: yarn build:spec
+
+      - name: Validate
+        run: yarn validate
+
+      - name: Lint
+        run: yamllint specs
+
+  client_javascript:
+    runs-on: ubuntu-20.04
+    needs: [setup, specs]
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Restore cache
+        uses: ./.github/actions/cache
+
+      - name: Generate search client
+        run: yarn generate:js:search
+
+      - name: Build search client
+        run: yarn client:build-js:search
+
+      - name: Generate recommend client
+        run: yarn generate:js:recommend
+
+      - name: Build recommend client
+        run: yarn client:build-js:recommend
+
+      - name: Generate personalization client
+        run: yarn generate:js:personalization
+
+      - name: Build personalization client
+        run: yarn client:build-js:personalization
+
+      - name: Lint
+        run: yarn lint
+
+  cts:
+    runs-on: ubuntu-20.04
+    needs: [setup, specs, client_javascript]
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Restore cache
+        uses: ./.github/actions/cache
+
+      - name: Generate clients
+        run: yarn generate
+
+      - name: Build client
+        run: yarn client:build
+
+      - name: Generate CTS
+        run: yarn cts:generate
+
+      - name: Run CTS
+        run: yarn cts:test

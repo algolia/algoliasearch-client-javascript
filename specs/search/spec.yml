@@ -20,11 +20,11 @@ paths:
     $ref: './paths/search/search.yml'
   /1/indexes/*/queries:
     $ref: './paths/search/multipleQueries.yml'
-  #/1/indexes/{indexName}/facets/{facetName}/query:
+  # /1/indexes/{indexName}/facets/{facetName}/query:
   #  $ref: './paths/search/searchForFacetValues.yml'
-  #/1/indexes/{indexName}/browse:
+  # /1/indexes/{indexName}/browse:
   #  $ref: './paths/search/browse.yml'
-  #
+
   # #########################
   # ### Objects Endpoints ###
   # #########################
@@ -46,21 +46,13 @@ paths:
   #   $ref: './paths/objects/multipleGetObjects.yml'
   # /1/indexes/{indexName}/{objectID}:
   #   $ref: './paths/objects/getObject.yml'
-  #
+
   # ##########################
   # ### Settings Endpoints ###
   # ##########################
   /1/indexes/{indexName}/settings:
     $ref: './paths/settings/settings.yml'
-  #
-  # ################################
-  # ### Manage Indices Endpoints ###
-  # ################################
-  /1/indexes/{indexName}/operation:
-    $ref: './paths/manage_indices/operationIndex.yml'
-  /1/indexes:
-    $ref: './paths/manage_indices/listIndices.yml'
-  #
+
   # ##########################
   # ### Synonyms Endpoints ###
   # ##########################
@@ -72,7 +64,7 @@ paths:
   #   $ref: './paths/synonyms/clearAllSynonyms.yml'
   # /1/indexes/{indexName}/synonyms/search:
   #   $ref: './paths/synonyms/searchSynonyms.yml'
-  #
+
   # ######################
   # ### Keys Endpoints ###
   # ######################
@@ -82,7 +74,7 @@ paths:
   #   $ref: './paths/keys/key.yml'
   # /1/keys/{key}/restore:
   #   $ref: './paths/keys/restoreApiKey.yml'
-  #
+
   # #######################
   # ### Rules Endpoints ###
   # #######################
@@ -94,7 +86,7 @@ paths:
   #   $ref: './paths/rules/clearRules.yml'
   # /1/indexes/{indexName}/rules/search:
   #   $ref: './paths/rules/searchRules.yml'
-  #
+
   # ##############################
   # ### Dictionaries Endpoints ###
   # ##############################
@@ -106,7 +98,7 @@ paths:
   #   $ref: './paths/dictionaries/dictionarySettings.yml'
   # /1/dictionaries/*/languages:
   #   $ref: './paths/dictionaries/getDictionaryLanguages.yml'
-  #
+
   # ###############################
   # ### MultiClusters Endpoints ###
   # ###############################
@@ -124,7 +116,7 @@ paths:
   #   $ref: './paths/multiclusters/searchUserIds.yml'
   # /1/clusters/mapping/pending:
   #   $ref: './paths/multiclusters/hasPendingMappings.yml'
-  #
+
   # #######################
   # ### Vault Endpoints ###
   # #######################
@@ -134,7 +126,7 @@ paths:
   #   $ref: './paths/vault/appendSource.yml'
   # /1/security/sources/{source}:
   #   $ref: './paths/vault/deleteSource.yml'
-  #
+
   # ##########################
   # ### Advanced Endpoints ###
   # ##########################
@@ -144,3 +136,11 @@ paths:
   #   $ref: './paths/advanced/getTask.yml'
   # /1/isalive:
   #   $ref: './paths/advanced/isAlive.yml'
+
+  # ################################
+  # ### Manage Indices Endpoints ###
+  # ################################
+  /1/indexes/{indexName}/operation:
+    $ref: './paths/manage_indices/operationIndex.yml'
+  /1/indexes:
+    $ref: './paths/manage_indices/listIndices.yml'
