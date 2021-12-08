@@ -1,3 +1,3 @@
 # Default owners
 
-- @algolia/data-ingestion
+- @algolia/api-clients-automation
