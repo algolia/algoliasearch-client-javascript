@@ -39,19 +39,19 @@ jobs:
         uses: ./.github/actions/cache
 
       - name: Generate search client
-        run: yarn generate:js:search
+        run: yarn generate javascript search
 
       - name: Build search client
         run: yarn client:build-js:search
 
       - name: Generate recommend client
-        run: yarn generate:js:recommend
+        run: yarn generate javascript recommend
 
       - name: Build recommend client
         run: yarn client:build-js:recommend
 
       - name: Generate personalization client
-        run: yarn generate:js:personalization
+        run: yarn generate javascript personalization
 
       - name: Build personalization client
         run: yarn client:build-js:personalization

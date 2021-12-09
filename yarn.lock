@@ -22,6 +22,7 @@ __metadata:
     eslint-plugin-jsdoc: 37.1.0
     eslint-plugin-prettier: 4.0.0
     eslint-plugin-unused-imports: 2.0.0
+    json: 11.0.0
     prettier: 2.5.0
     swagger-cli: 4.0.4
     typescript: 4.5.2
@@ -4261,6 +4262,15 @@ fsevents@^2.3.2:
   bin:
     json5: lib/cli.js
   checksum: e76ea23dbb8fc1348c143da628134a98adf4c5a4e8ea2adaa74a80c455fc2cdf0e2e13e6398ef819bfe92306b610ebb2002668ed9fc1af386d593691ef346fc3
+  languageName: node
+  linkType: hard
+
+"json@npm:11.0.0":
+  version: 11.0.0
+  resolution: "json@npm:11.0.0"
+  bin:
+    json: lib/json.js
+  checksum: 0beb8689722fc30251638543caf791bedc1a25199c18eb0281de115a0dadb00a07d4d36cbd7ff7680e04157fcb2bba76f29ed940b1e4e92f60c6fbaa74523fce
   languageName: node
   linkType: hard
 
