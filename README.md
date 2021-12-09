@@ -14,16 +14,21 @@ nvm use && yarn
 yarn generate
 ```
 
+Generic command:
+```bash
+yarn generate <language | all> <client | all>
+```
+
 ### Search client
 
 ```bash
-yarn generate:search
+yarn generate all search
 ```
 
 ### Recommend client
 
 ```bash
-yarn generate:recommend
+yarn generate all recommend
 ```
 
 ## Build generated clients

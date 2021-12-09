@@ -20,9 +20,17 @@ Example for the JavaScript client
 openapi-generator author template -g typescript-node -o templates/algoliasearch-client-javascript/
 ```
 
+## Add the language/client to the tool chain
+
+Add each client in the file `openapitools.json`, following the others client structure.
+Then add it to the `scripts/multiplexer.sh` file to register it for the other commands.
+
+Don't forget to write tests for it using the [CTS](./CTS.md)
 ## Customize the template
 
 API clients require a custom Algolia logic in order to seamlessly work with our engine.
+
+The first thing to do is strip as much code as possible, because the generation include lots of useless feature.
 
 You will need to implement:
 
