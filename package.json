@@ -7,14 +7,6 @@
     "tests/"
   ],
   "scripts": {
-    "build:spec:personalization:json": "yarn swagger-cli bundle specs/personalization/spec.yml --outfile specs/dist/personalization.json --type json",
-    "build:spec:recommend:json": "yarn swagger-cli bundle specs/recommend/spec.yml --outfile specs/dist/recommend.json --type json",
-    "build:spec:search:json": "yarn swagger-cli bundle specs/search/spec.yml --outfile specs/dist/search.json --type json",
-    "build:spec:personalization": "yarn swagger-cli bundle specs/personalization/spec.yml --outfile specs/dist/personalization.yml --type yaml",
-    "build:spec:recommend": "yarn swagger-cli bundle specs/recommend/spec.yml --outfile specs/dist/recommend.yml --type yaml",
-    "build:spec:search": "yarn swagger-cli bundle specs/search/spec.yml --outfile specs/dist/search.yml --type yaml",
-    "build:spec:json": "yarn build:spec:search:json && yarn build:spec:recommend:json",
-    "build:spec": "yarn build:spec:search && yarn build:spec:recommend && yarn build:spec:personalization",
     "clean": "rm -rf **/dist **/build **/node_modules",
     "client:build-js:personalization": "yarn workspace @algolia/client-personalization build",
     "client:build-js:recommend": "yarn workspace @algolia/recommend build",
@@ -24,12 +16,13 @@
     "cts:generate": "yarn workspace tests cts:generate",
     "cts:test": "yarn workspace tests test",
     "lint": "eslint --ext=ts .",
-    "format:specs": "yarn prettier --write specs",
-    "generate": "./scripts/multiplexer.sh ./scripts/generate.sh ${0:-all} ${1:-all} && ./scripts/post-gen/global.sh",
+    "post:generate": "./scripts/post-gen/global.sh",
+    "generate": "./scripts/multiplexer.sh ./scripts/generate.sh ${0:-all} ${1:-all} && yarn post:generate",
     "playground:js:personalization": "yarn workspace javascript-playground start:personalization",
     "playground:js:recommend": "yarn workspace javascript-playground start:recommend",
     "playground:js:search": "yarn workspace javascript-playground start:search",
-    "validate": "yarn swagger-cli validate specs/dist/search.yml && yarn swagger-cli validate specs/dist/recommend.yml && yarn swagger-cli validate specs/dist/personalization.yml"
+    "specs:format": "yarn prettier --write specs",
+    "specs": "./scripts/specs.sh ${0:-all} ${1:-yaml}"
   },
   "devDependencies": {
     "@openapitools/openapi-generator-cli": "2.4.18",

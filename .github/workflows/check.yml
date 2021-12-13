@@ -20,11 +20,14 @@ jobs:
       - name: Restore cache
         uses: ./.github/actions/cache
 
-      - name: Build
-        run: yarn build:spec
+      - name: Checking search specs
+        run: yarn specs search
 
-      - name: Validate
-        run: yarn validate
+      - name: Checking recommend specs
+        run: yarn specs recommend
+
+      - name: Checking personalization specs
+        run: yarn specs personalization
 
       - name: Lint
         run: yamllint specs
