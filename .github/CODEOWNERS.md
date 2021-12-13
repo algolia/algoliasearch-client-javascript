@@ -1,3 +1,3 @@
 # Default owners
 
-- @algolia/api-clients-automation
+* @algolia/api-clients-automation
