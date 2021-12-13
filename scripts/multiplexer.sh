@@ -1,5 +1,5 @@
 #!/bin/bash
-# Call this script with multiplexer.sh <lang | all> <client | all> <cmd>
+# Call this script with multiplexer.sh <cmd> <lang | all> <client | all>
 # to run the cmd for all the required lang-client combination
 
 # Break on non-zero code
@@ -13,8 +13,29 @@ CMD=$1
 LANGUAGE=$2
 CLIENT=$3
 
-LANGUAGES=(javascript)
-CLIENTS=(search recommend personalization)
+LANGUAGES=()
+CLIENTS=()
+
+find_clients_and_languages() {
+    echo "> Searching for available languages and clients..."
+
+    local generators=( $(cat openapitools.json | jq '."generator-cli".generators' | jq -r 'keys[]') )
+
+    for generator in "${generators[@]}"; do
+        local lang=${generator%-*}
+        local client=${generator#*-}
+
+        if [[ ! ${LANGUAGES[*]} =~ $lang ]]; then
+            LANGUAGES+=($lang)
+        fi
+
+        if [[ ! ${CLIENTS[*]} =~ $client ]]; then
+            CLIENTS+=($client)
+        fi
+    done
+}
+
+find_clients_and_languages
 
 if [[ $LANGUAGE == "all" ]]; then
     LANGUAGE=("${LANGUAGES[@]}")

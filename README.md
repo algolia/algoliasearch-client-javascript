@@ -15,6 +15,7 @@ yarn generate
 ```
 
 Generic command:
+
 ```bash
 yarn generate <language | all> <client | all>
 ```
