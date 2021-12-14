@@ -12,13 +12,13 @@ const availableLanguages = ['javascript'] as const;
 type Language = typeof availableLanguages[number];
 
 type CTSBlock = {
-  name: string;
+  testName?: string;
   method: string;
   parameters: any[];
   request: {
     path: string;
     method: string;
-    data: string;
+    data?: string;
   };
 };
 
@@ -90,8 +90,12 @@ async function loadCTSForClient(client: string): Promise<CTSBlock[]> {
       );
     }
 
-    // for now we stringify all params for mustache to render them properly
     for (const test of tests) {
+      if (test.testName === undefined) {
+        test.testName = test.method;
+      }
+
+      // for now we stringify all params for mustache to render them properly
       for (let i = 0; i < test.parameters.length; i++) {
         // delete the object name for now, but it could be use for `new $objectName(params)`
         delete test.parameters[i].$objectName;

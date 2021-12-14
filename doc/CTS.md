@@ -23,7 +23,7 @@ The test generation script requires a JSON file name from the `operationId` (e.g
 ```json
 [
   {
-    "testName": "the name of the test (e.g. test('search endpoint'))",
+    "testName": "the name of the test (e.g. test('search endpoint')) (default: 'method')",
     "method": "the method to call (e.g. search)",
     "parameters": [
       "indexName",
