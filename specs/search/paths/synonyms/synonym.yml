@@ -1,3 +1,105 @@
 put:
+  tags:
+    - search
+  operationId: saveSynonym
+  summary: Save synonym.
+  description: Create a new synonym object or update the existing synonym object with the given object ID.
+  parameters:
+    - $ref: '../../../common/parameters.yml#/IndexName'
+    - $ref: '../../../common/parameters.yml#/ObjectID'
+    - $ref: '../../../common/parameters.yml#/ForwardToReplicas'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: 'common/schemas.yml#/synonymHit'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            title: saveSynonymResponse
+            type: object
+            additionalProperties: false
+            properties:
+              taskID:
+                $ref: '../../../common/parameters.yml#/taskID'
+              updatedAt:
+                $ref: '../../../common/parameters.yml#/updatedAt'
+              id:
+                $ref: '../../../common/parameters.yml#/id'
+            required:
+              - taskID
+              - updatedAt
+              - id
+    '400':
+      $ref: '../../../common/responses/BadRequest.yml'
+    '402':
+      $ref: '../../../common/responses/FeatureNotEnabled.yml'
+    '403':
+      $ref: '../../../common/responses/MethodNotAllowed.yml'
+    '404':
+      $ref: '../../../common/responses/IndexNotFound.yml'
+
 get:
+  tags:
+    - search
+  operationId: getSynonym
+  summary: Get synonym.
+  description: Fetch a synonym object identified by its objectID.
+  parameters:
+    - $ref: '../../../common/parameters.yml#/IndexName'
+    - $ref: '../../../common/parameters.yml#/ObjectID'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: './common/schemas.yml#/synonymHit'
+    '400':
+      $ref: '../../../common/responses/BadRequest.yml'
+    '402':
+      $ref: '../../../common/responses/FeatureNotEnabled.yml'
+    '403':
+      $ref: '../../../common/responses/MethodNotAllowed.yml'
+    '404':
+      $ref: '../../../common/responses/IndexNotFound.yml'
+
 delete:
+  tags:
+    - search
+  operationId: deleteSynonym
+  summary: Delete synonym.
+  description: Delete a single synonyms set, identified by the given objectID.
+  parameters:
+    - $ref: '../../../common/parameters.yml#/IndexName'
+    - $ref: '../../../common/parameters.yml#/ObjectID'
+    - $ref: '../../../common/parameters.yml#/ForwardToReplicas'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            title: deleteSynonymResponse
+            type: object
+            additionalProperties: false
+            properties:
+              taskID:
+                $ref: '../../../common/parameters.yml#/taskID'
+              deletedAt:
+                $ref: '../../../common/parameters.yml#/deleteAt'
+            required:
+              - taskID
+              - deletedAt
+    '400':
+      $ref: '../../../common/responses/BadRequest.yml'
+    '402':
+      $ref: '../../../common/responses/FeatureNotEnabled.yml'
+    '403':
+      $ref: '../../../common/responses/MethodNotAllowed.yml'
+    '404':
+      $ref: '../../../common/responses/IndexNotFound.yml'

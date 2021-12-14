@@ -1,1 +1,41 @@
 post:
+  tags:
+    - search
+  operationId: saveSynonyms
+  summary: Save a batch of synonyms.
+  description: Create/update multiple synonym objects at once, potentially replacing the entire list of synonyms if replaceExistingSynonyms is true.
+  parameters:
+    - $ref: '../../../common/parameters.yml#/IndexName'
+    - $ref: '../../../common/parameters.yml#/ForwardToReplicas'
+    - $ref: 'common/parameters.yml#/ReplaceExistingSynonyms'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: 'common/schemas.yml#/synonymHits'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            title: saveSynonymsResponse
+            type: object
+            additionalProperties: false
+            properties:
+              taskID:
+                $ref: '../../../common/parameters.yml#/taskID'
+              updatedAt:
+                $ref: '../../../common/parameters.yml#/updatedAt'
+            required:
+              - taskID
+              - updatedAt
+    '400':
+      $ref: '../../../common/responses/BadRequest.yml'
+    '402':
+      $ref: '../../../common/responses/FeatureNotEnabled.yml'
+    '403':
+      $ref: '../../../common/responses/MethodNotAllowed.yml'
+    '404':
+      $ref: '../../../common/responses/IndexNotFound.yml'

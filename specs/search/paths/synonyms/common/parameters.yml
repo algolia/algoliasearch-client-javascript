@@ -1,0 +1,29 @@
+ReplaceExistingSynonyms:
+  in: query
+  name: replaceExistingSynonyms
+  schema:
+    type: boolean
+  description: Replace all synonyms of the index with the ones sent with this request.
+
+Query:
+  in: query
+  name: query
+  description: Search for specific synonyms matching this string.
+  schema:
+    type: string
+    default: ''
+
+Type:
+  in: query
+  name: type
+  description: Only search for specific types of synonyms.
+  schema:
+    type: string
+    enum:
+      [
+        'synonym',
+        'onewaysynonym',
+        'altcorrection1',
+        'altcorrection2',
+        'placeholder',
+      ]

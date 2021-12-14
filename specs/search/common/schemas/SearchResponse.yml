@@ -12,6 +12,11 @@ searchHits:
       items:
         $ref: 'Record.yml#/record'
 
+nbHits:
+  type: integer
+  description: Number of hits that the search query matched
+  example: 20
+
 baseSearchResponse:
   type: object
   additionalProperties: false
@@ -90,9 +95,7 @@ baseSearchResponse:
       type: string
       description: Used to return warnings about the query.
     nbHits:
-      type: integer
-      description: Number of hits that the search query matched
-      example: 20
+      $ref: '#/nbHits'
     nbPages:
       type: integer
       description: Number of pages available for the current query
