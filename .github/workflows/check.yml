@@ -62,9 +62,24 @@ jobs:
       - name: Lint
         run: yarn lint
 
+  client_java:
+    runs-on: ubuntu-20.04
+    needs: [setup, specs]
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Restore cache
+        uses: ./.github/actions/cache
+
+      - name: Generate search client
+        run: yarn generate java search
+
+      - name: Build search client
+        run: yarn client:build-java
+
   cts:
     runs-on: ubuntu-20.04
-    needs: [setup, specs, client_javascript]
+    needs: [setup, specs, client_javascript, client_java]
     steps:
       - uses: actions/checkout@v2
 
