@@ -56,8 +56,28 @@
           "npmName": "@algolia/client-personalization",
           "packageName": "@algolia/client-personalization",
           "npmVersion": "5.0.0",
-
           "isPersonalizationHost": false
+        }
+      },
+      "java-search": {
+        "generatorName": "java",
+        "templateDir": "#{cwd}/templates/java/",
+        "config": "#{cwd}/openapitools.json",
+        "output": "#{cwd}/clients/algoliasearch-client-java-2",
+        "artifactId": "algoliasearch-client-java-2",
+        "groupId": "com.algolia",
+        "apiPackage": "com.algolia.search",
+        "invokerPackage": "com.algolia",
+        "modelPackage": "com.algolia.model",
+        "library": "okhttp-gson",
+        "glob": "specs/search/spec.yml",
+        "gitHost": "algolia",
+        "gitUserId": "algolia",
+        "gitRepoId": "algoliasearch-client-java-2",
+        "additionalProperties": {
+          "sourceFolder": "algoliasearch-core",
+          "java8": true,
+          "dateLibrary": "java8"
         }
       }
     }

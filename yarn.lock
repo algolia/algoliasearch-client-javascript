@@ -24,6 +24,7 @@ __metadata:
     eslint-plugin-unused-imports: 2.0.0
     json: 11.0.0
     prettier: 2.5.0
+    prettier-plugin-java: 1.6.0
     swagger-cli: 4.0.4
     typescript: 4.5.2
   languageName: unknown
@@ -1799,6 +1800,15 @@ __metadata:
   version: 0.7.0
   resolution: "chardet@npm:0.7.0"
   checksum: 6fd5da1f5d18ff5712c1e0aed41da200d7c51c28f11b36ee3c7b483f3696dabc08927fc6b227735eb8f0e1215c9a8abd8154637f3eff8cada5959df7f58b024d
+  languageName: node
+  linkType: hard
+
+"chevrotain@npm:6.5.0":
+  version: 6.5.0
+  resolution: "chevrotain@npm:6.5.0"
+  dependencies:
+    regexp-to-ast: 0.4.0
+  checksum: ce03cf3874ae1fd91bb57de753ea313442c7d1be04f59ab126c237062b51f5cb3204e9bdbb1b469973c96c1ce0850e83f909bee14a23bb88a0dbbd964e1c2a9e
   languageName: node
   linkType: hard
 
@@ -3636,6 +3646,16 @@ fsevents@^2.3.2:
   languageName: node
   linkType: hard
 
+"java-parser@npm:2.0.0":
+  version: 2.0.0
+  resolution: "java-parser@npm:2.0.0"
+  dependencies:
+    chevrotain: 6.5.0
+    lodash: 4.17.21
+  checksum: ac2ccd448d0b5d9232927f514279edd1557cd898455d6528190ae2568303d73f53214c2977f6988d1c5c351719c69dd82c65850ba53d77d0cf0449e5b42cbe81
+  languageName: node
+  linkType: hard
+
 "javascript-playground@workspace:playground/javascript":
   version: 0.0.0-use.local
   resolution: "javascript-playground@workspace:playground/javascript"
@@ -5041,6 +5061,26 @@ fsevents@^2.3.2:
   languageName: node
   linkType: hard
 
+"prettier-plugin-java@npm:1.6.0":
+  version: 1.6.0
+  resolution: "prettier-plugin-java@npm:1.6.0"
+  dependencies:
+    java-parser: 2.0.0
+    lodash: 4.17.21
+    prettier: 2.3.1
+  checksum: 30fe055ba370cd9f05204ea5b5cabdb490521b84d7673ded0151aba16c0767b1f596600a4924b3541ac1a82819b67a5cd783094b53192612e9f48ae23edbaa3d
+  languageName: node
+  linkType: hard
+
+"prettier@npm:2.3.1":
+  version: 2.3.1
+  resolution: "prettier@npm:2.3.1"
+  bin:
+    prettier: bin-prettier.js
+  checksum: 3b37731ff7150feecf19736c77c790e7e276b404ac9af81cbaf87cfecefc48ef9a864f34c2a5caf5955378b8f2525984b8611703a0d9c1f052b4cfa6eb35899f
+  languageName: node
+  linkType: hard
+
 "prettier@npm:2.5.0":
   version: 2.5.0
   resolution: "prettier@npm:2.5.0"
@@ -5139,6 +5179,13 @@ fsevents@^2.3.2:
   version: 0.1.13
   resolution: "reflect-metadata@npm:0.1.13"
   checksum: 798d379a7b6f6455501145419505c97dd11cbc23857a386add2b9ef15963ccf15a48d9d15507afe01d4cd74116df8a213247200bac00320bd7c11ddeaa5e8fb4
+  languageName: node
+  linkType: hard
+
+"regexp-to-ast@npm:0.4.0":
+  version: 0.4.0
+  resolution: "regexp-to-ast@npm:0.4.0"
+  checksum: 0f42d802b6259dcd442f79460d8764aa39165323098a6346aded67957816eb2d007ab09e6c674448425df8f721692258c87b51b1ce75c5df23b390dbb36056c0
   languageName: node
   linkType: hard
 

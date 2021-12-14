@@ -8,6 +8,7 @@
   ],
   "scripts": {
     "clean": "rm -rf **/dist **/build **/node_modules",
+    "client:build-java": "mvn clean install -f clients/algoliasearch-client-java-2/pom.xml",
     "client:build-js:personalization": "yarn workspace @algolia/client-personalization build",
     "client:build-js:recommend": "yarn workspace @algolia/recommend build",
     "client:build-js:search": "yarn workspace @algolia/client-search build",
@@ -18,6 +19,7 @@
     "lint": "eslint --ext=ts .",
     "post:generate": "./scripts/post-gen/global.sh",
     "generate": "./scripts/multiplexer.sh ./scripts/generate.sh ${0:-all} ${1:-all} && yarn post:generate",
+    "playground:java": "mvn clean compile exec:java -f playground/java/pom.xml",
     "playground:js:personalization": "yarn workspace javascript-playground start:personalization",
     "playground:js:recommend": "yarn workspace javascript-playground start:recommend",
     "playground:js:search": "yarn workspace javascript-playground start:search",
@@ -40,6 +42,7 @@
     "eslint-plugin-unused-imports": "2.0.0",
     "json": "11.0.0",
     "prettier": "2.5.0",
+    "prettier-plugin-java": "1.6.0",
     "swagger-cli": "4.0.4",
     "typescript": "4.5.2"
   },
