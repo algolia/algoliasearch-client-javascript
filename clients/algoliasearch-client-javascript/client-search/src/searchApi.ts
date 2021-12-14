@@ -1,6 +1,8 @@
 import type { BatchObject } from '../model/batchObject';
 import type { BatchResponse } from '../model/batchResponse';
+import type { ClearAllSynonymsResponse } from '../model/clearAllSynonymsResponse';
 import type { DeleteIndexResponse } from '../model/deleteIndexResponse';
+import type { DeleteSynonymResponse } from '../model/deleteSynonymResponse';
 import type { IndexSettings } from '../model/indexSettings';
 import type { ListIndicesResponse } from '../model/listIndicesResponse';
 import { ApiKeyAuth } from '../model/models';
@@ -9,10 +11,14 @@ import type { MultipleQueriesResponse } from '../model/multipleQueriesResponse';
 import type { OperationIndexObject } from '../model/operationIndexObject';
 import type { OperationIndexResponse } from '../model/operationIndexResponse';
 import type { SaveObjectResponse } from '../model/saveObjectResponse';
+import type { SaveSynonymResponse } from '../model/saveSynonymResponse';
+import type { SaveSynonymsResponse } from '../model/saveSynonymsResponse';
 import type { SearchParams } from '../model/searchParams';
 import type { SearchParamsAsString } from '../model/searchParamsAsString';
 import type { SearchResponse } from '../model/searchResponse';
+import type { SearchSynonymsResponse } from '../model/searchSynonymsResponse';
 import type { SetSettingsResponse } from '../model/setSettingsResponse';
+import type { SynonymHit } from '../model/synonymHit';
 import { Transporter } from '../utils/Transporter';
 import { shuffle } from '../utils/helpers';
 import type { Requester } from '../utils/requester/Requester';
@@ -148,6 +154,46 @@ export class SearchApi {
     return this.sendRequest(request, requestOptions);
   }
   /**
+   * Remove all synonyms from an index.
+   *
+   * @summary Clear all synonyms.
+   * @param indexName - The index in which to perform the request.
+   * @param forwardToReplicas - When true, changes are also propagated to replicas of the given indexName.
+   */
+  clearAllSynonyms(
+    indexName: string,
+    forwardToReplicas?: boolean
+  ): Promise<ClearAllSynonymsResponse> {
+    const path = '/1/indexes/{indexName}/synonyms/clear'.replace(
+      '{indexName}',
+      encodeURIComponent(String(indexName))
+    );
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (indexName === null || indexName === undefined) {
+      throw new Error(
+        'Required parameter indexName was null or undefined when calling clearAllSynonyms.'
+      );
+    }
+
+    if (forwardToReplicas !== undefined) {
+      queryParameters.forwardToReplicas = forwardToReplicas.toString();
+    }
+
+    const request: Request = {
+      method: 'POST',
+      path,
+    };
+
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
+
+    return this.sendRequest(request, requestOptions);
+  }
+  /**
    * Delete an existing index.
    *
    * @summary Delete index.
@@ -180,6 +226,53 @@ export class SearchApi {
     return this.sendRequest(request, requestOptions);
   }
   /**
+   * Delete a single synonyms set, identified by the given objectID.
+   *
+   * @summary Delete synonym.
+   * @param indexName - The index in which to perform the request.
+   * @param objectID - Unique identifier of an object.
+   * @param forwardToReplicas - When true, changes are also propagated to replicas of the given indexName.
+   */
+  deleteSynonym(
+    indexName: string,
+    objectID: string,
+    forwardToReplicas?: boolean
+  ): Promise<DeleteSynonymResponse> {
+    const path = '/1/indexes/{indexName}/synonyms/{objectID}'
+      .replace('{indexName}', encodeURIComponent(String(indexName)))
+      .replace('{objectID}', encodeURIComponent(String(objectID)));
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (indexName === null || indexName === undefined) {
+      throw new Error(
+        'Required parameter indexName was null or undefined when calling deleteSynonym.'
+      );
+    }
+
+    if (objectID === null || objectID === undefined) {
+      throw new Error(
+        'Required parameter objectID was null or undefined when calling deleteSynonym.'
+      );
+    }
+
+    if (forwardToReplicas !== undefined) {
+      queryParameters.forwardToReplicas = forwardToReplicas.toString();
+    }
+
+    const request: Request = {
+      method: 'DELETE',
+      path,
+    };
+
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
+
+    return this.sendRequest(request, requestOptions);
+  }
+  /**
    * Retrieve settings of a given indexName.
    *
    * @param indexName - The index in which to perform the request.
@@ -195,6 +288,44 @@ export class SearchApi {
     if (indexName === null || indexName === undefined) {
       throw new Error(
         'Required parameter indexName was null or undefined when calling getSettings.'
+      );
+    }
+
+    const request: Request = {
+      method: 'GET',
+      path,
+    };
+
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
+
+    return this.sendRequest(request, requestOptions);
+  }
+  /**
+   * Fetch a synonym object identified by its objectID.
+   *
+   * @summary Get synonym.
+   * @param indexName - The index in which to perform the request.
+   * @param objectID - Unique identifier of an object.
+   */
+  getSynonym(indexName: string, objectID: string): Promise<SynonymHit> {
+    const path = '/1/indexes/{indexName}/synonyms/{objectID}'
+      .replace('{indexName}', encodeURIComponent(String(indexName)))
+      .replace('{objectID}', encodeURIComponent(String(objectID)));
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (indexName === null || indexName === undefined) {
+      throw new Error(
+        'Required parameter indexName was null or undefined when calling getSynonym.'
+      );
+    }
+
+    if (objectID === null || objectID === undefined) {
+      throw new Error(
+        'Required parameter objectID was null or undefined when calling getSynonym.'
       );
     }
 
@@ -354,6 +485,118 @@ export class SearchApi {
     return this.sendRequest(request, requestOptions);
   }
   /**
+   * Create a new synonym object or update the existing synonym object with the given object ID.
+   *
+   * @summary Save synonym.
+   * @param indexName - The index in which to perform the request.
+   * @param objectID - Unique identifier of an object.
+   * @param synonymHit - The synonymHit.
+   * @param forwardToReplicas - When true, changes are also propagated to replicas of the given indexName.
+   */
+  saveSynonym(
+    indexName: string,
+    objectID: string,
+    synonymHit: SynonymHit,
+    forwardToReplicas?: boolean
+  ): Promise<SaveSynonymResponse> {
+    const path = '/1/indexes/{indexName}/synonyms/{objectID}'
+      .replace('{indexName}', encodeURIComponent(String(indexName)))
+      .replace('{objectID}', encodeURIComponent(String(objectID)));
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (indexName === null || indexName === undefined) {
+      throw new Error(
+        'Required parameter indexName was null or undefined when calling saveSynonym.'
+      );
+    }
+
+    if (objectID === null || objectID === undefined) {
+      throw new Error(
+        'Required parameter objectID was null or undefined when calling saveSynonym.'
+      );
+    }
+
+    if (synonymHit === null || synonymHit === undefined) {
+      throw new Error(
+        'Required parameter synonymHit was null or undefined when calling saveSynonym.'
+      );
+    }
+
+    if (forwardToReplicas !== undefined) {
+      queryParameters.forwardToReplicas = forwardToReplicas.toString();
+    }
+
+    const request: Request = {
+      method: 'PUT',
+      path,
+      data: synonymHit,
+    };
+
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
+
+    return this.sendRequest(request, requestOptions);
+  }
+  /**
+   * Create/update multiple synonym objects at once, potentially replacing the entire list of synonyms if replaceExistingSynonyms is true.
+   *
+   * @summary Save a batch of synonyms.
+   * @param indexName - The index in which to perform the request.
+   * @param synonymHit - The synonymHit.
+   * @param forwardToReplicas - When true, changes are also propagated to replicas of the given indexName.
+   * @param replaceExistingSynonyms - Replace all synonyms of the index with the ones sent with this request.
+   */
+  saveSynonyms(
+    indexName: string,
+    synonymHit: SynonymHit[],
+    forwardToReplicas?: boolean,
+    replaceExistingSynonyms?: boolean
+  ): Promise<SaveSynonymsResponse> {
+    const path = '/1/indexes/{indexName}/synonyms/batch'.replace(
+      '{indexName}',
+      encodeURIComponent(String(indexName))
+    );
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (indexName === null || indexName === undefined) {
+      throw new Error(
+        'Required parameter indexName was null or undefined when calling saveSynonyms.'
+      );
+    }
+
+    if (synonymHit === null || synonymHit === undefined) {
+      throw new Error(
+        'Required parameter synonymHit was null or undefined when calling saveSynonyms.'
+      );
+    }
+
+    if (forwardToReplicas !== undefined) {
+      queryParameters.forwardToReplicas = forwardToReplicas.toString();
+    }
+
+    if (replaceExistingSynonyms !== undefined) {
+      queryParameters.replaceExistingSynonyms =
+        replaceExistingSynonyms.toString();
+    }
+
+    const request: Request = {
+      method: 'POST',
+      path,
+      data: synonymHit,
+    };
+
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
+
+    return this.sendRequest(request, requestOptions);
+  }
+  /**
    * Get search results.
    *
    * @param indexName - The index in which to perform the request.
@@ -389,6 +632,69 @@ export class SearchApi {
       method: 'POST',
       path,
       data: searchParamsAsStringSearchParams,
+    };
+
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
+
+    return this.sendRequest(request, requestOptions);
+  }
+  /**
+   * Search or browse all synonyms, optionally filtering them by type.
+   *
+   * @summary Get all synonyms that match a query.
+   * @param indexName - The index in which to perform the request.
+   * @param query - Search for specific synonyms matching this string.
+   * @param type - Only search for specific types of synonyms.
+   * @param page - Requested page (zero-based). When specified, will retrieve a specific page; the page size is implicitly set to 100. When null, will retrieve all indices (no pagination).
+   * @param hitsPerPage - Maximum number of objects to retrieve.
+   */
+  searchSynonyms(
+    indexName: string,
+    query?: string,
+    type?:
+      | 'altcorrection1'
+      | 'altcorrection2'
+      | 'onewaysynonym'
+      | 'placeholder'
+      | 'synonym',
+    page?: number,
+    hitsPerPage?: number
+  ): Promise<SearchSynonymsResponse> {
+    const path = '/1/indexes/{indexName}/synonyms/search'.replace(
+      '{indexName}',
+      encodeURIComponent(String(indexName))
+    );
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (indexName === null || indexName === undefined) {
+      throw new Error(
+        'Required parameter indexName was null or undefined when calling searchSynonyms.'
+      );
+    }
+
+    if (query !== undefined) {
+      queryParameters.query = query.toString();
+    }
+
+    if (type !== undefined) {
+      queryParameters.type = type.toString();
+    }
+
+    if (page !== undefined) {
+      queryParameters.Page = page.toString();
+    }
+
+    if (hitsPerPage !== undefined) {
+      queryParameters.hitsPerPage = hitsPerPage.toString();
+    }
+
+    const request: Request = {
+      method: 'POST',
+      path,
     };
 
     const requestOptions: RequestOptions = {

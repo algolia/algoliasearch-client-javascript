@@ -1,0 +1,15 @@
+[
+  {
+    "testName": "searchSynonyms",
+    "method": "searchSynonyms",
+    "parameters": [
+      "indexName",
+      "queryString",
+      "onewaysynonym"
+    ],
+    "request": {
+      "path": "/1/indexes/indexName/synonyms/search",
+      "method": "POST"
+    }
+  }
+]

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { {{client}}, EchoRequester } from '{{{import}}}';
 
 describe('Common Test Suite', () => {
@@ -9,7 +10,7 @@ describe('Common Test Suite', () => {
     expect(req).toMatchObject({
       path: '{{{request.path}}}',
       method: '{{{request.method}}}',
-      data: {{{request.data}}},
+      {{#request.data}}data: {{{request.data}}},{{/request.data}}
     })
   });
 

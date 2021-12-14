@@ -1,0 +1,25 @@
+[
+  {
+    "testName": "saveSynonym",
+    "method": "saveSynonym",
+    "parameters": [
+      "indexName",
+      "id1",
+      {
+        "objectID" : "id1",
+        "type": "synonym",
+        "synonyms": ["car", "vehicule", "auto"]
+      },
+      true
+    ],
+    "request": {
+      "path": "/1/indexes/indexName/synonyms/id1",
+      "method": "PUT",
+      "data": {
+        "objectID" : "id1",
+        "type": "synonym",
+        "synonyms": ["car", "vehicule", "auto"]
+      }
+    }
+  }
+]

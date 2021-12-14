@@ -56,14 +56,14 @@ paths:
   # ##########################
   # ### Synonyms Endpoints ###
   # ##########################
-  # /1/indexes/{indexName}/synonyms/{objectID}:
-  #   $ref: './paths/synonyms/synonym.yml'
-  # /1/indexes/{indexName}/synonyms/batch:
-  #   $ref: './paths/synonyms/batchSynonyms.yml'
-  # /1/indexes/{indexName}/synonyms/clear:
-  #   $ref: './paths/synonyms/clearAllSynonyms.yml'
-  # /1/indexes/{indexName}/synonyms/search:
-  #   $ref: './paths/synonyms/searchSynonyms.yml'
+  /1/indexes/{indexName}/synonyms/{objectID}:
+    $ref: './paths/synonyms/synonym.yml'
+  /1/indexes/{indexName}/synonyms/batch:
+    $ref: './paths/synonyms/batchSynonyms.yml'
+  /1/indexes/{indexName}/synonyms/clear:
+    $ref: './paths/synonyms/clearAllSynonyms.yml'
+  /1/indexes/{indexName}/synonyms/search:
+    $ref: './paths/synonyms/searchSynonyms.yml'
 
   # ######################
   # ### Keys Endpoints ###
