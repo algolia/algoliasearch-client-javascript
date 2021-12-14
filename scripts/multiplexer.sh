@@ -16,12 +16,14 @@ CLIENT=$3
 LANGUAGES=()
 CLIENTS=()
 
+GENERATORS=()
+
 find_clients_and_languages() {
     echo "> Searching for available languages and clients..."
 
-    local generators=( $(cat openapitools.json | jq '."generator-cli".generators' | jq -r 'keys[]') )
+    GENERATORS=( $(cat openapitools.json | jq '."generator-cli".generators' | jq -r 'keys[]') )
 
-    for generator in "${generators[@]}"; do
+    for generator in "${GENERATORS[@]}"; do
         local lang=${generator%-*}
         local client=${generator#*-}
 
@@ -57,6 +59,8 @@ fi
 
 for lang in "${LANGUAGE[@]}"; do
     for client in "${CLIENT[@]}"; do
-        $CMD $lang $client
+        if [[ " ${GENERATORS[*]} " =~ " ${lang}-${client} " ]]; then
+            $CMD $lang $client
+        fi
     done
 done
