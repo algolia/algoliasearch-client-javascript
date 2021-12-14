@@ -10,7 +10,7 @@ describe('Common Test Suite', () => {
     expect(req).toMatchObject({
       path: '{{{request.path}}}',
       method: '{{{request.method}}}',
-      {{#request.data}}data: {{{request.data}}},{{/request.data}}
+      {{#request.data}}data: {{{.}}},{{/request.data}}
     })
   });
 

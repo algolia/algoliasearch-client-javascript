@@ -42,23 +42,19 @@ describe('Common Test Suite', () => {
     expect(req).toMatchObject({
       path: '/1/indexes/indexName/synonyms/batch',
       method: 'POST',
-      data: {
-        synonymHit: [
-          {
-            objectID: 'id1',
-            type: 'synonym',
-            synonyms: ['car', 'vehicule', 'auto'],
-          },
-          {
-            objectID: 'id2',
-            type: 'onewaysynonym',
-            input: 'iphone',
-            synonyms: ['ephone', 'aphone', 'yphone'],
-          },
-        ],
-        ForwardToReplicas: true,
-        ReplaceExistingSynonyms: false,
-      },
+      data: [
+        {
+          objectID: 'id1',
+          type: 'synonym',
+          synonyms: ['car', 'vehicule', 'auto'],
+        },
+        {
+          objectID: 'id2',
+          type: 'onewaysynonym',
+          input: 'iphone',
+          synonyms: ['ephone', 'aphone', 'yphone'],
+        },
+      ],
     });
   });
 
@@ -110,12 +106,9 @@ describe('Common Test Suite', () => {
       path: '/1/indexes/indexName/synonyms/id1',
       method: 'PUT',
       data: {
-        synonymHit: {
-          objectID: 'id1',
-          type: 'synonym',
-          synonyms: ['car', 'vehicule', 'auto'],
-        },
-        ForwardToReplicas: true,
+        objectID: 'id1',
+        type: 'synonym',
+        synonyms: ['car', 'vehicule', 'auto'],
       },
     });
   });

@@ -1,6 +1,5 @@
 [
   {
-    "testName": "clearAllSynonyms",
     "method": "clearAllSynonyms",
     "parameters": [
       "indexName"
