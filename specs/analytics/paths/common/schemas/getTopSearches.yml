@@ -1,0 +1,65 @@
+getTopSearchesResponse:
+  type: object
+  additionalProperties: false
+  required:
+    - searches
+  properties:
+    searches:
+      type: array
+      description: A list of top searches with their count.
+      items:
+        type: object
+        additionalProperties: false
+        required:
+          - search
+          - count
+          - nbHits
+        properties:
+          search:
+            $ref: '../parameters.yml#/search'
+          count:
+            $ref: '../parameters.yml#/count'
+          nbHits:
+            $ref: '../parameters.yml#/nbHits'
+
+getTopSearchesResponseWithAnalytics:
+  type: object
+  additionalProperties: false
+  required:
+    - searches
+  properties:
+    searches:
+      type: array
+      description: A list of top searches with their count and analytics.
+      items:
+        type: object
+        additionalProperties: false
+        required:
+          - search
+          - count
+          - nbHits
+          - clickThroughRate
+          - averageClickPosition
+          - conversionRate
+          - trackedSearchCount
+          - clickCount
+          - conversionCount
+        properties:
+          search:
+            $ref: '../parameters.yml#/search'
+          count:
+            $ref: '../parameters.yml#/count'
+          clickThroughRate:
+            $ref: '../parameters.yml#/rate'
+          averageClickPosition:
+            $ref: '../parameters.yml#/averageClickPosition'
+          conversionRate:
+            $ref: '../parameters.yml#/conversionRate'
+          trackedSearchCount:
+            $ref: '../parameters.yml#/trackedSearchCount'
+          clickCount:
+            $ref: '../parameters.yml#/clickCount'
+          conversionCount:
+            $ref: '../parameters.yml#/conversionCount'
+          nbHits:
+            $ref: '../parameters.yml#/nbHits'

@@ -18,7 +18,9 @@
           "supportsES6": true,
           "npmName": "@algolia/client-search",
           "packageName": "@algolia/client-search",
-          "npmVersion": "5.0.0"
+          "npmVersion": "5.0.0",
+
+          "isSearchHost": true
         }
       },
       "javascript-recommend": {
@@ -37,7 +39,9 @@
           "supportsES6": true,
           "npmName": "@algolia/recommend",
           "packageName": "@algolia/recommend",
-          "npmVersion": "5.0.0"
+          "npmVersion": "5.0.0",
+
+          "isSearchHost": true
         }
       },
       "javascript-personalization": {
@@ -56,7 +60,30 @@
           "npmName": "@algolia/client-personalization",
           "packageName": "@algolia/client-personalization",
           "npmVersion": "5.0.0",
-          "isPersonalizationHost": false
+
+          "hasRegionalHost": true,
+          "isPersonalizationHost": true
+        }
+      },
+      "javascript-analytics": {
+        "generatorName": "typescript-node",
+        "templateDir": "#{cwd}/templates/javascript/",
+        "config": "#{cwd}/openapitools.json",
+        "apiPackage": "src",
+        "output": "#{cwd}/clients/algoliasearch-client-javascript/client-analytics",
+        "glob": "specs/analytics/spec.yml",
+        "gitHost": "algolia",
+        "gitUserId": "algolia",
+        "gitRepoId": "algoliasearch-client-javascript",
+        "additionalProperties": {
+          "modelPropertyNaming": "original",
+          "supportsES6": true,
+          "npmName": "@algolia/client-analytics",
+          "packageName": "@algolia/client-analytics",
+          "npmVersion": "5.0.0",
+
+          "hasRegionalHost": true,
+          "isAnalyticsHost": true
         }
       },
       "java-search": {

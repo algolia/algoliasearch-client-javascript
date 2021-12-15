@@ -29,6 +29,9 @@ jobs:
       - name: Checking personalization specs
         run: yarn specs personalization
 
+      - name: Checking analytics specs
+        run: yarn specs analytics
+
       - name: Lint
         run: yamllint specs
 
@@ -58,6 +61,12 @@ jobs:
 
       - name: Build personalization client
         run: yarn client:build-js:personalization
+
+      - name: Generate analytics client
+        run: yarn generate javascript analytics
+
+      - name: Build analytics client
+        run: yarn client:build-js:analytics
 
       - name: Lint
         run: yarn lint

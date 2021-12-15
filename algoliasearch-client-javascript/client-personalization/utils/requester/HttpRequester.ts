@@ -22,7 +22,7 @@ export class HttpRequester extends Requester {
       let connectTimeout: NodeJS.Timeout | undefined;
       const url = new URL(request.url);
       const path =
-        url.search === null ? url.pathname : `${url.pathname}?${url.search}`;
+        url.search === null ? url.pathname : `${url.pathname}${url.search}`;
       const options: https.RequestOptions = {
         agent: url.protocol === 'https:' ? this.httpsAgent : this.httpAgent,
         hostname: url.hostname,

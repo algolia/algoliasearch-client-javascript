@@ -51,8 +51,15 @@ export class {{classname}} {
 
   constructor(
       appId: string,
-      apiKey: string,{{#isPersonalizationHost}}
-      region?: string, {{/isPersonalizationHost}}
+      apiKey: string,
+      {{#hasRegionalHost}}
+        {{#isPersonalizationHost}}
+            region?: string,
+        {{/isPersonalizationHost}}
+        {{#isAnalyticsHost}}
+            region: 'de' | 'us',
+        {{/isAnalyticsHost}}
+      {{/hasRegionalHost}}
       options?: {requester?: Requester, hosts?: Host[]}
     ) {
     this.setApiKey({{classname}}Keys.appId, appId);
@@ -60,8 +67,8 @@ export class {{classname}} {
 
     this.transporter = new Transporter({
       hosts: options?.hosts ?? this.getDefaultHosts(
-        {{^isPersonalizationHost}}appId{{/isPersonalizationHost}}
-        {{#isPersonalizationHost}}region{{/isPersonalizationHost}}
+        {{^hasRegionalHost}}appId{{/hasRegionalHost}}
+        {{#hasRegionalHost}}region{{/hasRegionalHost}}
     ),
       baseHeaders: {
         'content-type': 'application/x-www-form-urlencoded'
@@ -76,7 +83,7 @@ export class {{classname}} {
     });
   }
 
-  {{^isPersonalizationHost}}
+  {{#isSearchHost}}
   public getDefaultHosts(appId: string): Host[] {
     return (
         [
@@ -91,13 +98,19 @@ export class {{classname}} {
         ])
       );
   }
-  {{/isPersonalizationHost}}
+  {{/isSearchHost}}
 
   {{#isPersonalizationHost}}
   public getDefaultHosts(region: string = 'us'): Host[] {
     return [{ url: `personalization.${region}.algolia.com`, accept: 'readWrite', protocol: 'https' }];
   }
   {{/isPersonalizationHost}}
+
+  {{#isAnalyticsHost}}
+  public getDefaultHosts(region: 'de' | 'us'): Host[] {
+    return [{ url: `analytics.${region}.algolia.com`, accept: 'readWrite', protocol: 'https' }];
+  }
+  {{/isAnalyticsHost}}
 
   public setRequest(requester: Requester): void {
     this.transporter.setRequester(requester);

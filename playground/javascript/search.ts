@@ -14,7 +14,7 @@ const client = new SearchApi(appId, apiKey);
 
 async function testSearch() {
   try {
-    const res = await client.search(searchIndex, {});
+    const res = await client.search(searchIndex, { query: searchQuery });
 
     console.log(`[OK]`, res);
   } catch (e) {
