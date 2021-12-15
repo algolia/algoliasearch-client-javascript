@@ -1,1 +1,127 @@
 get:
+  tags:
+    - search
+  operationId: getLogs
+  description: Return the lastest log entries.
+  parameters:
+    - name: offset
+      in: query
+      description: First entry to retrieve (zero-based). Log entries are sorted by decreasing date, therefore 0 designates the most recent log entry.
+      schema:
+        type: integer
+        default: 0
+    - name: length
+      in: query
+      description: Maximum number of entries to retrieve. The maximum allowed value is 1000.
+      schema:
+        type: integer
+        default: 10
+        maximum: 1000
+    - name: indexName
+      in: query
+      description: Index for which log entries should be retrieved. When omitted, log entries are retrieved across all indices.
+      schema:
+        type: string
+        nullable: true
+        default: null
+    - name: type
+      in: query
+      description: Type of log entries to retrieve. When omitted, all log entries are retrieved.
+      schema:
+        type: string
+        enum: [all, query, build, error]
+        default: all
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            title: getLogsResponse
+            type: object
+            additionalProperties: false
+            required:
+              - logs
+            properties:
+              logs:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    timestamp:
+                      type: string
+                      description: Timestamp in ISO-8601 format.
+                    method:
+                      type: string
+                      description: HTTP method of the perfomed request.
+                    answer_code:
+                      type: string
+                      description: HTTP response code.
+                    query_body:
+                      type: string
+                      description: Request body. Truncated after 1000 characters.
+                    answer:
+                      type: string
+                      description: Answer body. Truncated after 1000 characters.
+                    url:
+                      type: string
+                      description: Request URL.
+                    ip:
+                      type: string
+                      description: IP of the client which perfomed the request.
+                    query_headers:
+                      type: string
+                      description: Request Headers (API Key is obfuscated).
+                    sha1:
+                      type: string
+                      description: SHA1 signature of the log entry.
+                    nb_api_calls:
+                      type: string
+                      description: Number of API calls.
+                    processing_time_ms:
+                      type: string
+                      description: Processing time for the query. It doesn't include network time.
+                    index:
+                      type: string
+                      description: Index targeted by the query.
+                    query_params:
+                      type: string
+                      description: Query parameters sent with the request.
+                    query_nb_hits:
+                      type: string
+                      description: Number of hits returned for the query.
+                    inner_queries:
+                      type: array
+                      description: Array of all performed queries for the given request.
+                      items:
+                        type: object
+                        properties:
+                          index_name:
+                            type: string
+                            description: Index targeted by the query.
+                          user_token:
+                            type: string
+                            description: User identifier.
+                          query_id:
+                            type: string
+                            description: QueryID for the given query.
+                  required:
+                    - timestamp
+                    - method
+                    - answer_code
+                    - query_body
+                    - answer
+                    - url
+                    - ip
+                    - query_headers
+                    - sha1
+                    - nb_api_calls
+                    - processing_time_ms
+    '400':
+      $ref: '../../../common/responses/BadRequest.yml'
+    '402':
+      $ref: '../../../common/responses/FeatureNotEnabled.yml'
+    '403':
+      $ref: '../../../common/responses/MethodNotAllowed.yml'
+    '404':
+      $ref: '../../../common/responses/IndexNotFound.yml'
