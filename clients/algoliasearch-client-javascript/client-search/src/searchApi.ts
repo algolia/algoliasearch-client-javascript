@@ -3,6 +3,8 @@ import type { BatchResponse } from '../model/batchResponse';
 import type { ClearAllSynonymsResponse } from '../model/clearAllSynonymsResponse';
 import type { DeleteIndexResponse } from '../model/deleteIndexResponse';
 import type { DeleteSynonymResponse } from '../model/deleteSynonymResponse';
+import type { GetLogsResponse } from '../model/getLogsResponse';
+import type { GetTaskResponse } from '../model/getTaskResponse';
 import type { IndexSettings } from '../model/indexSettings';
 import type { ListIndicesResponse } from '../model/listIndicesResponse';
 import { ApiKeyAuth } from '../model/models';
@@ -273,6 +275,52 @@ export class SearchApi {
     return this.sendRequest(request, requestOptions);
   }
   /**
+   * Return the lastest log entries.
+   *
+   * @param offset - First entry to retrieve (zero-based). Log entries are sorted by decreasing date, therefore 0 designates the most recent log entry.
+   * @param length - Maximum number of entries to retrieve. The maximum allowed value is 1000.
+   * @param indexName - Index for which log entries should be retrieved. When omitted, log entries are retrieved across all indices.
+   * @param type - Type of log entries to retrieve. When omitted, all log entries are retrieved.
+   */
+  getLogs(
+    offset?: number,
+    length?: number,
+    indexName?: string,
+    type?: 'all' | 'build' | 'error' | 'query'
+  ): Promise<GetLogsResponse> {
+    const path = '/1/logs';
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (offset !== undefined) {
+      queryParameters.offset = offset.toString();
+    }
+
+    if (length !== undefined) {
+      queryParameters.length = length.toString();
+    }
+
+    if (indexName !== undefined) {
+      queryParameters.indexName = indexName.toString();
+    }
+
+    if (type !== undefined) {
+      queryParameters.type = type.toString();
+    }
+
+    const request: Request = {
+      method: 'GET',
+      path,
+    };
+
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
+
+    return this.sendRequest(request, requestOptions);
+  }
+  /**
    * Retrieve settings of a given indexName.
    *
    * @param indexName - The index in which to perform the request.
@@ -326,6 +374,43 @@ export class SearchApi {
     if (objectID === null || objectID === undefined) {
       throw new Error(
         'Required parameter objectID was null or undefined when calling getSynonym.'
+      );
+    }
+
+    const request: Request = {
+      method: 'GET',
+      path,
+    };
+
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
+
+    return this.sendRequest(request, requestOptions);
+  }
+  /**
+   * Check the current status of a given task.
+   *
+   * @param indexName - The index in which to perform the request.
+   * @param taskID - Unique identifier of an task. Numeric value (up to 64bits).
+   */
+  getTask(indexName: string, taskID: number): Promise<GetTaskResponse> {
+    const path = '/1/indexes/{indexName}/task/{taskID}'
+      .replace('{indexName}', encodeURIComponent(String(indexName)))
+      .replace('{taskID}', encodeURIComponent(String(taskID)));
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (indexName === null || indexName === undefined) {
+      throw new Error(
+        'Required parameter indexName was null or undefined when calling getTask.'
+      );
+    }
+
+    if (taskID === null || taskID === undefined) {
+      throw new Error(
+        'Required parameter taskID was null or undefined when calling getTask.'
       );
     }
 

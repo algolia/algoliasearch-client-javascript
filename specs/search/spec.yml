@@ -130,12 +130,10 @@ paths:
   # ##########################
   # ### Advanced Endpoints ###
   # ##########################
-  # /1/logs:
-  #   $ref: './paths/advanced/getLogs.yml'
-  # /1/indexes/{indexName}/task/{taskID}:
-  #   $ref: './paths/advanced/getTask.yml'
-  # /1/isalive:
-  #   $ref: './paths/advanced/isAlive.yml'
+  /1/logs:
+    $ref: './paths/advanced/getLogs.yml'
+  /1/indexes/{indexName}/task/{taskID}:
+    $ref: './paths/advanced/getTask.yml'
 
   # ################################
   # ### Manage Indices Endpoints ###

@@ -10,6 +10,8 @@ import com.algolia.model.BatchResponse;
 import com.algolia.model.ClearAllSynonymsResponse;
 import com.algolia.model.DeleteIndexResponse;
 import com.algolia.model.DeleteSynonymResponse;
+import com.algolia.model.GetLogsResponse;
+import com.algolia.model.GetTaskResponse;
 import com.algolia.model.IndexSettings;
 import com.algolia.model.ListIndicesResponse;
 import com.algolia.model.MultipleQueriesObject;
@@ -782,6 +784,232 @@ public class SearchApi extends ApiClient {
   }
 
   /**
+   * Build call for getLogs
+   *
+   * @param offset First entry to retrieve (zero-based). Log entries are sorted by decreasing date,
+   *     therefore 0 designates the most recent log entry. (optional, default to 0)
+   * @param length Maximum number of entries to retrieve. The maximum allowed value is 1000.
+   *     (optional, default to 10)
+   * @param indexName Index for which log entries should be retrieved. When omitted, log entries are
+   *     retrieved across all indices. (optional)
+   * @param type Type of log entries to retrieve. When omitted, all log entries are retrieved.
+   *     (optional, default to all)
+   * @param _callback Callback for upload/download progress
+   * @return Call to execute
+   * @throws ApiException If fail to serialize the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
+  public okhttp3.Call getLogsCall(
+    Integer offset,
+    Integer length,
+    String indexName,
+    String type,
+    final ApiCallback _callback
+  ) throws ApiException {
+    Object localVarPostBody = null;
+
+    // create path and map variables
+    String localVarPath = "/1/logs";
+
+    List<Pair> localVarQueryParams = new ArrayList<Pair>();
+    List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+    Map<String, String> localVarCookieParams = new HashMap<String, String>();
+    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+    if (offset != null) {
+      localVarQueryParams.addAll(this.parameterToPair("offset", offset));
+    }
+
+    if (length != null) {
+      localVarQueryParams.addAll(this.parameterToPair("length", length));
+    }
+
+    if (indexName != null) {
+      localVarQueryParams.addAll(this.parameterToPair("indexName", indexName));
+    }
+
+    if (type != null) {
+      localVarQueryParams.addAll(this.parameterToPair("type", type));
+    }
+
+    final String[] localVarAccepts = { "application/json" };
+    final String localVarAccept = this.selectHeaderAccept(localVarAccepts);
+    if (localVarAccept != null) {
+      localVarHeaderParams.put("Accept", localVarAccept);
+    }
+
+    final String[] localVarContentTypes = {};
+
+    final String localVarContentType =
+      this.selectHeaderContentType(localVarContentTypes);
+    localVarHeaderParams.put("Content-Type", localVarContentType);
+
+    String[] localVarAuthNames = new String[] { "apiKey", "appId" };
+    return this.buildCall(
+        localVarPath,
+        "GET",
+        localVarQueryParams,
+        localVarCollectionQueryParams,
+        localVarPostBody,
+        localVarHeaderParams,
+        localVarCookieParams,
+        localVarFormParams,
+        localVarAuthNames,
+        _callback
+      );
+  }
+
+  @SuppressWarnings("rawtypes")
+  private okhttp3.Call getLogsValidateBeforeCall(
+    Integer offset,
+    Integer length,
+    String indexName,
+    String type,
+    final ApiCallback _callback
+  ) throws ApiException {
+    okhttp3.Call localVarCall = getLogsCall(
+      offset,
+      length,
+      indexName,
+      type,
+      _callback
+    );
+    return localVarCall;
+  }
+
+  /**
+   * Return the lastest log entries.
+   *
+   * @param offset First entry to retrieve (zero-based). Log entries are sorted by decreasing date,
+   *     therefore 0 designates the most recent log entry. (optional, default to 0)
+   * @param length Maximum number of entries to retrieve. The maximum allowed value is 1000.
+   *     (optional, default to 10)
+   * @param indexName Index for which log entries should be retrieved. When omitted, log entries are
+   *     retrieved across all indices. (optional)
+   * @param type Type of log entries to retrieve. When omitted, all log entries are retrieved.
+   *     (optional, default to all)
+   * @return GetLogsResponse
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
+  public GetLogsResponse getLogs(
+    Integer offset,
+    Integer length,
+    String indexName,
+    String type
+  ) throws ApiException {
+    ApiResponse<GetLogsResponse> localVarResp = getLogsWithHttpInfo(
+      offset,
+      length,
+      indexName,
+      type
+    );
+    return localVarResp.getData();
+  }
+
+  /**
+   * Return the lastest log entries.
+   *
+   * @param offset First entry to retrieve (zero-based). Log entries are sorted by decreasing date,
+   *     therefore 0 designates the most recent log entry. (optional, default to 0)
+   * @param length Maximum number of entries to retrieve. The maximum allowed value is 1000.
+   *     (optional, default to 10)
+   * @param indexName Index for which log entries should be retrieved. When omitted, log entries are
+   *     retrieved across all indices. (optional)
+   * @param type Type of log entries to retrieve. When omitted, all log entries are retrieved.
+   *     (optional, default to all)
+   * @return ApiResponse&lt;GetLogsResponse&gt;
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
+  public ApiResponse<GetLogsResponse> getLogsWithHttpInfo(
+    Integer offset,
+    Integer length,
+    String indexName,
+    String type
+  ) throws ApiException {
+    okhttp3.Call localVarCall = getLogsValidateBeforeCall(
+      offset,
+      length,
+      indexName,
+      type,
+      null
+    );
+    Type localVarReturnType = new TypeToken<GetLogsResponse>() {}.getType();
+    return this.execute(localVarCall, localVarReturnType);
+  }
+
+  /**
+   * (asynchronously) Return the lastest log entries.
+   *
+   * @param offset First entry to retrieve (zero-based). Log entries are sorted by decreasing date,
+   *     therefore 0 designates the most recent log entry. (optional, default to 0)
+   * @param length Maximum number of entries to retrieve. The maximum allowed value is 1000.
+   *     (optional, default to 10)
+   * @param indexName Index for which log entries should be retrieved. When omitted, log entries are
+   *     retrieved across all indices. (optional)
+   * @param type Type of log entries to retrieve. When omitted, all log entries are retrieved.
+   *     (optional, default to all)
+   * @param _callback The callback to be executed when the API call finishes
+   * @return The request call
+   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
+  public okhttp3.Call getLogsAsync(
+    Integer offset,
+    Integer length,
+    String indexName,
+    String type,
+    final ApiCallback<GetLogsResponse> _callback
+  ) throws ApiException {
+    okhttp3.Call localVarCall = getLogsValidateBeforeCall(
+      offset,
+      length,
+      indexName,
+      type,
+      _callback
+    );
+    Type localVarReturnType = new TypeToken<GetLogsResponse>() {}.getType();
+    this.executeAsync(localVarCall, localVarReturnType, _callback);
+    return localVarCall;
+  }
+
+  /**
    * Build call for getSettings
    *
    * @param indexName The index in which to perform the request. (required)
@@ -1118,6 +1346,190 @@ public class SearchApi extends ApiClient {
       _callback
     );
     Type localVarReturnType = new TypeToken<SynonymHit>() {}.getType();
+    this.executeAsync(localVarCall, localVarReturnType, _callback);
+    return localVarCall;
+  }
+
+  /**
+   * Build call for getTask
+   *
+   * @param indexName The index in which to perform the request. (required)
+   * @param taskID Unique identifier of an task. Numeric value (up to 64bits) (required)
+   * @param _callback Callback for upload/download progress
+   * @return Call to execute
+   * @throws ApiException If fail to serialize the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
+  public okhttp3.Call getTaskCall(
+    String indexName,
+    Integer taskID,
+    final ApiCallback _callback
+  ) throws ApiException {
+    Object localVarPostBody = null;
+
+    // create path and map variables
+    String localVarPath =
+      "/1/indexes/{indexName}/task/{taskID}".replaceAll(
+          "\\{" + "indexName" + "\\}",
+          this.escapeString(indexName.toString())
+        )
+        .replaceAll(
+          "\\{" + "taskID" + "\\}",
+          this.escapeString(taskID.toString())
+        );
+
+    List<Pair> localVarQueryParams = new ArrayList<Pair>();
+    List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+    Map<String, String> localVarCookieParams = new HashMap<String, String>();
+    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+    final String[] localVarAccepts = { "application/json" };
+    final String localVarAccept = this.selectHeaderAccept(localVarAccepts);
+    if (localVarAccept != null) {
+      localVarHeaderParams.put("Accept", localVarAccept);
+    }
+
+    final String[] localVarContentTypes = {};
+
+    final String localVarContentType =
+      this.selectHeaderContentType(localVarContentTypes);
+    localVarHeaderParams.put("Content-Type", localVarContentType);
+
+    String[] localVarAuthNames = new String[] { "apiKey", "appId" };
+    return this.buildCall(
+        localVarPath,
+        "GET",
+        localVarQueryParams,
+        localVarCollectionQueryParams,
+        localVarPostBody,
+        localVarHeaderParams,
+        localVarCookieParams,
+        localVarFormParams,
+        localVarAuthNames,
+        _callback
+      );
+  }
+
+  @SuppressWarnings("rawtypes")
+  private okhttp3.Call getTaskValidateBeforeCall(
+    String indexName,
+    Integer taskID,
+    final ApiCallback _callback
+  ) throws ApiException {
+    // verify the required parameter 'indexName' is set
+    if (indexName == null) {
+      throw new ApiException(
+        "Missing the required parameter 'indexName' when calling getTask(Async)"
+      );
+    }
+
+    // verify the required parameter 'taskID' is set
+    if (taskID == null) {
+      throw new ApiException(
+        "Missing the required parameter 'taskID' when calling getTask(Async)"
+      );
+    }
+
+    okhttp3.Call localVarCall = getTaskCall(indexName, taskID, _callback);
+    return localVarCall;
+  }
+
+  /**
+   * Check the current status of a given task.
+   *
+   * @param indexName The index in which to perform the request. (required)
+   * @param taskID Unique identifier of an task. Numeric value (up to 64bits) (required)
+   * @return GetTaskResponse
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
+  public GetTaskResponse getTask(String indexName, Integer taskID)
+    throws ApiException {
+    ApiResponse<GetTaskResponse> localVarResp = getTaskWithHttpInfo(
+      indexName,
+      taskID
+    );
+    return localVarResp.getData();
+  }
+
+  /**
+   * Check the current status of a given task.
+   *
+   * @param indexName The index in which to perform the request. (required)
+   * @param taskID Unique identifier of an task. Numeric value (up to 64bits) (required)
+   * @return ApiResponse&lt;GetTaskResponse&gt;
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
+  public ApiResponse<GetTaskResponse> getTaskWithHttpInfo(
+    String indexName,
+    Integer taskID
+  ) throws ApiException {
+    okhttp3.Call localVarCall = getTaskValidateBeforeCall(
+      indexName,
+      taskID,
+      null
+    );
+    Type localVarReturnType = new TypeToken<GetTaskResponse>() {}.getType();
+    return this.execute(localVarCall, localVarReturnType);
+  }
+
+  /**
+   * (asynchronously) Check the current status of a given task.
+   *
+   * @param indexName The index in which to perform the request. (required)
+   * @param taskID Unique identifier of an task. Numeric value (up to 64bits) (required)
+   * @param _callback The callback to be executed when the API call finishes
+   * @return The request call
+   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
+  public okhttp3.Call getTaskAsync(
+    String indexName,
+    Integer taskID,
+    final ApiCallback<GetTaskResponse> _callback
+  ) throws ApiException {
+    okhttp3.Call localVarCall = getTaskValidateBeforeCall(
+      indexName,
+      taskID,
+      _callback
+    );
+    Type localVarReturnType = new TypeToken<GetTaskResponse>() {}.getType();
     this.executeAsync(localVarCall, localVarReturnType, _callback);
     return localVarCall;
   }
