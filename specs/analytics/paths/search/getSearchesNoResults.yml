@@ -1,1 +1,50 @@
 get:
+  tags:
+    - analytics
+  operationId: getSearchesNoResults
+  description: Returns top searches that didn't return any results. Limited to the 1000 most frequent ones.
+  summary: Returns top searches that didn't return any results.
+  parameters:
+    - $ref: '../../../common/parameters.yml#/Index'
+    - $ref: '../../../common/parameters.yml#/StartDate'
+    - $ref: '../../../common/parameters.yml#/EndDate'
+    - $ref: '../common/parameters.yml#/Limit'
+    - $ref: '../common/parameters.yml#/Offset'
+    - $ref: '../common/parameters.yml#/Tags'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            title: getSearchesNoResultsResponse
+            type: object
+            additionalProperties: false
+            required:
+              - searches
+            properties:
+              searches:
+                type: array
+                description: A list of searches with no results and their count.
+                items:
+                  type: object
+                  additionalProperties: false
+                  required:
+                    - search
+                    - count
+                    - nbHits
+                  properties:
+                    search:
+                      $ref: '../common/parameters.yml#/search'
+                    count:
+                      $ref: '../common/parameters.yml#/count'
+                    nbHits:
+                      $ref: '../common/parameters.yml#/nbHits'
+    '400':
+      $ref: '../../../common/responses/BadRequest.yml'
+    '402':
+      $ref: '../../../common/responses/FeatureNotEnabled.yml'
+    '403':
+      $ref: '../../../common/responses/MethodNotAllowed.yml'
+    '404':
+      $ref: '../../../common/responses/IndexNotFound.yml'

@@ -1,2 +1,31 @@
 get:
-# handle /2/hits?search= as well
+  tags:
+    - analytics
+  operationId: getTopHits
+  description: Returns top hits. Limited to the 1000 most frequent ones.
+  summary: Returns top hits.
+  parameters:
+    - $ref: '../../../common/parameters.yml#/Index'
+    - $ref: '../common/parameters.yml#/ClickAnalytics'
+    - $ref: '../../../common/parameters.yml#/StartDate'
+    - $ref: '../../../common/parameters.yml#/EndDate'
+    - $ref: '../common/parameters.yml#/Limit'
+    - $ref: '../common/parameters.yml#/Offset'
+    - $ref: '../common/parameters.yml#/Tags'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: '../common/schemas/getTopHits.yml#/getTopHitsResponse'
+              - $ref: '../common/schemas/getTopHits.yml#/getTopHitsResponseWithAnalytics'
+    '400':
+      $ref: '../../../common/responses/BadRequest.yml'
+    '402':
+      $ref: '../../../common/responses/FeatureNotEnabled.yml'
+    '403':
+      $ref: '../../../common/responses/MethodNotAllowed.yml'
+    '404':
+      $ref: '../../../common/responses/IndexNotFound.yml'

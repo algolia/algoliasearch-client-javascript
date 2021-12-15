@@ -16,44 +16,50 @@ paths:
   # ##################################
   # ### Search Analytics Endpoints ###
   # ##################################
-  # /2/searches:
-  #  $ref: './paths/search/getTopSearches.yml'
-  # /2/searches/count:
-  #   $ref: './paths/search/getSearchesCount.yml'
-  # /2/searches/noResults:
-  #   $ref: './paths/search/getSearchesNoResults.yml'
-  # /2/searches/noClicks:
-  #   $ref: './paths/search/getSearchesNoClicks.yml'
-  # /2/searches/noResultRate:
-  #   $ref: './paths/search/getNoResultsRate.yml'
-  # /2/searches/noClickRate:
-  #   $ref: './paths/search/getNoClickRate.yml'
-  # /2/hits:
-  #  $ref: './paths/search/getTopHits.yml'
-  # /2/users/count:
-  #   $ref: './paths/search/getUsersCount.yml'
-  # /2/filters:
-  #   $ref: './paths/search/getTopFilterAttributes.yml'
-  # /2/filters/noResults?search=:
-  #   $ref: './paths/search/getNoResultTopFilters.yml'
-  # /2/filters/{attribute list}?search=:
-  #   $ref: './paths/search/getSearchAttributesTopFilters.yml'
-  # /2/filters/{attribute}:
-  #   $ref: './paths/search/getAttributeTopFilters.yml'
-  # /2/countries:
-  #   $ref: './paths/search/getTopCountries.yml'
+  /2/searches:
+    $ref: './paths/search/getTopSearches.yml'
+  /2/searches/count:
+    $ref: './paths/search/getSearchesCount.yml'
+  /2/searches/noResults:
+    $ref: './paths/search/getSearchesNoResults.yml'
+  /2/searches/noClicks:
+    $ref: './paths/search/getSearchesNoClicks.yml'
+  /2/searches/noResultRate:
+    $ref: './paths/search/getNoResultsRate.yml'
+  /2/searches/noClickRate:
+    $ref: './paths/search/getNoClickRate.yml'
+  /2/hits:
+    $ref: './paths/search/getTopHits.yml'
+  /2/hits?search={search}:
+    $ref: './paths/search/getTopHitsForSearch.yml'
+  /2/users/count:
+    $ref: './paths/search/getUsersCount.yml'
+  /2/filters:
+    $ref: './paths/search/getTopFilterAttributes.yml'
+  /2/filters/{attribute}:
+    $ref: './paths/search/getTopFilterForAttribute.yml'
+  /2/filters?search={search}:
+    $ref: './paths/search/getTopFilterAttributesForSearch.yml'
+  /2/filters/noResults:
+    $ref: './paths/search/getTopFiltersNoResults.yml'
+  /2/filters/noResults?search={search}:
+    $ref: './paths/search/getTopFiltersNoResultsForSearch.yml'
+  /2/filters/{attributes}?search={search}:
+    $ref: './paths/search/getTopFiltersForAttributesSearch.yml'
+  /2/countries:
+    $ref: './paths/search/getTopCountries.yml'
 
   # #################################
   # ### Click Analytics Endpoints ###
   # #################################
-  # /2/clicks/averageClickPosition:
-  #   $ref: './paths/click/getAverageTopClickPosition.yml'
-  # /2/clicks/positions:
-  #   $ref: './paths/click/getClickPositions.yml'
-  # /2/clicks/clickThroughRate:
-  #   $ref: './paths/click/getClickThroughRate.yml'
-  # /2/conversions/conversionRate:
-  #   $ref: './paths/click/getConversionRate.yml'
+  /2/clicks/averageClickPosition:
+    $ref: './paths/click/getAverageClickPosition.yml'
+  /2/clicks/positions:
+    $ref: './paths/click/getClickPositions.yml'
+  /2/clicks/clickThroughRate:
+    $ref: './paths/click/getClickThroughRate.yml'
+  /2/conversions/conversionRate:
+    $ref: './paths/click/getConversionRate.yml'
 
   # ########################
   # ### Status Endpoints ###

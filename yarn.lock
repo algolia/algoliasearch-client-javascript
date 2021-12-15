@@ -30,6 +30,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@algolia/client-analytics@5.0.0, @algolia/client-analytics@workspace:clients/algoliasearch-client-javascript/client-analytics":
+  version: 0.0.0-use.local
+  resolution: "@algolia/client-analytics@workspace:clients/algoliasearch-client-javascript/client-analytics"
+  dependencies:
+    "@types/node": 16.11.11
+    typescript: 4.5.2
+  languageName: unknown
+  linkType: soft
+
 "@algolia/client-personalization@5.0.0, @algolia/client-personalization@workspace:clients/algoliasearch-client-javascript/client-personalization":
   version: 0.0.0-use.local
   resolution: "@algolia/client-personalization@workspace:clients/algoliasearch-client-javascript/client-personalization"
@@ -3660,6 +3669,7 @@ fsevents@^2.3.2:
   version: 0.0.0-use.local
   resolution: "javascript-playground@workspace:playground/javascript"
   dependencies:
+    "@algolia/client-analytics": 5.0.0
     "@algolia/client-personalization": 5.0.0
     "@algolia/client-search": 5.0.0
     "@algolia/recommend": 5.0.0

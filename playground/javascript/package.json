@@ -3,14 +3,17 @@
   "version": "0.0.0",
   "scripts": {
     "build": "tsc",
+    "start:analytics": "yarn install && yarn build && yarn test:analytics",
     "start:personalization": "yarn install && yarn build && yarn test:personalization",
     "start:recommend": "yarn install && yarn build && yarn test:recommend",
     "start:search": "yarn install && yarn build && yarn test:search",
+    "test:analytics": "node dist/analytics.js",
     "test:personalization": "node dist/personalization.js",
     "test:recommend": "node dist/recommend.js",
     "test:search": "node dist/search.js"
   },
   "devDependencies": {
+    "@algolia/client-analytics": "5.0.0",
     "@algolia/client-personalization": "5.0.0",
     "@algolia/client-search": "5.0.0",
     "@algolia/recommend": "5.0.0",

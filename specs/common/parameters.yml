@@ -18,6 +18,30 @@ ObjectID:
     example: '123'
 
 # query
+Index:
+  in: query
+  name: index
+  description: The index name to target.
+  required: true
+  schema:
+    type: string
+
+StartDate:
+  in: query
+  name: startDate
+  description: The lower bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
+  schema:
+    type: string
+    format: date-time
+
+EndDate:
+  in: query
+  name: endDate
+  description: The upper bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
+  schema:
+    type: string
+    format: date-time
+
 ForwardToReplicas:
   in: query
   name: forwardToReplicas

@@ -1,1 +1,30 @@
 get:
+  tags:
+    - analytics
+  operationId: getStatus
+  description: Returns the latest update time of the analytics API for a given index. If the index has been recently created and/or no search has been performed yet the updated time will be null.
+  summary: Get latest update time of the analytics API.
+  parameters:
+    - $ref: '../../../common/parameters.yml#/Index'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            title: getStatusResponse
+            type: object
+            additionalProperties: false
+            required:
+              - updatedAt
+            properties:
+              updatedAt:
+                $ref: '../common/parameters.yml#/updatedAt'
+    '400':
+      $ref: '../../../common/responses/BadRequest.yml'
+    '402':
+      $ref: '../../../common/responses/FeatureNotEnabled.yml'
+    '403':
+      $ref: '../../../common/responses/MethodNotAllowed.yml'
+    '404':
+      $ref: '../../../common/responses/IndexNotFound.yml'

@@ -1,0 +1,139 @@
+# path
+Attribute:
+  in: path
+  name: attribute
+  description: The exact name of the attribute.
+  required: true
+  schema:
+    type: string
+
+# query
+OrderBy:
+  in: query
+  name: orderBy
+  description: Reorder the results.
+  schema:
+    enum: [searchCount, clickThroughRate, conversionRate, averageClickPosition]
+    default: 'searchCount'
+
+Direction:
+  in: query
+  name: direction
+  description: The sorting of the result.
+  schema:
+    enum: [asc, desc]
+    default: 'asc'
+
+ClickAnalytics:
+  in: query
+  name: clickAnalytics
+  description: Whether to include the click-through and conversion rates for a search.
+  schema:
+    type: boolean
+    default: false
+
+Limit:
+  in: query
+  name: limit
+  description: How many items to fetch.
+  schema:
+    type: integer
+    default: 10
+
+Search:
+  in: path
+  name: search
+  description: The query term. Must match the exact user input.
+  required: true
+  schema:
+    type: string
+
+SearchInPath:
+  in: path
+  name: search
+  description: The query term. Must match the exact user input.
+  required: true
+  schema:
+    type: string
+
+Offset:
+  in: query
+  name: offset
+  description: From which position to start retrieving results.
+  schema:
+    type: integer
+    default: 0
+
+Tags:
+  name: tags
+  in: query
+  description: Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+  schema:
+    type: string
+
+# misc
+average:
+  type: number
+  format: double
+  description: The average of all the click count event.
+
+averageClickPosition:
+  type: integer
+  description: The average position of all the click count event.
+
+clickCount:
+  type: integer
+  description: The number of click event.
+
+date:
+  type: string
+  format: date-time
+  description: Date of the event.
+
+rate:
+  type: number
+  format: double
+  description: The click-through rate.
+
+conversionRate:
+  type: number
+  format: double
+  description: The conversion rate.
+
+trackedSearchCount:
+  type: integer
+  description: The number of tracked search click.
+
+conversionCount:
+  type: integer
+  description: The number of converted clicks.
+
+updatedAt:
+  $ref: '../../../common/parameters.yml#/updatedAt'
+
+attribute:
+  description: The attribute.
+  type: string
+
+operator:
+  description: The operator.
+  type: string
+
+value:
+  description: The value of the attribute.
+  type: string
+
+search:
+  description: The search query.
+  type: string
+
+hit:
+  description: The hit.
+  type: string
+
+count:
+  description: The number of occurrences.
+  type: integer
+
+nbHits:
+  $ref: '../../../search/common/schemas/SearchResponse.yml#/baseSearchResponse/properties/nbHits'
