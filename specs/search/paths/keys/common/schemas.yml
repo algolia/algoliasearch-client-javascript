@@ -1,0 +1,91 @@
+apiKey:
+  type: object
+  description: Api Key object.
+  additionalProperties: false
+  properties:
+    acl:
+      type: array
+      description: Set of permissions associated with the key.
+      default: []
+      items:
+        type: string
+        enum:
+          [
+            'addObject',
+            'analytics',
+            'browse',
+            'deleteObject',
+            'deleteIndex',
+            'editSettings',
+            'listIndexes',
+            'logs',
+            'personalization',
+            'recommendation',
+            'search',
+            'seeUnretrievableAttributes',
+            'settings',
+            'usage',
+          ]
+    description:
+      type: string
+      description: A comment used to identify a key more easily in the dashboard. It is not interpreted by the API.
+      default: ''
+    indexes:
+      type: array
+      description: Restrict this new API key to a list of indices or index patterns. If the list is empty, all indices are allowed.
+      default: []
+      items:
+        type: string
+    maxHitsPerQuery:
+      type: integer
+      description: Maximum number of hits this API key can retrieve in one query. If zero, no limit is enforced.
+      default: 0
+    maxQueriesPerIPPerHour:
+      type: integer
+      description: Maximum number of API calls per hour allowed from a given IP address or a user token.
+      default: 0
+    queryParameters:
+      type: string
+      description: URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
+      default: ''
+    referers:
+      type: array
+      description: Restrict this new API key to specific referers. If empty or blank, defaults to all referers.
+      default: []
+      items:
+        type: string
+    validity:
+      type: integer
+      description: Validity limit for this key in seconds. The key will automatically be removed after this period of time.
+      default: 0
+  required:
+    - acl
+
+keyString:
+  type: string
+  description: Key string.
+
+createdAtObject:
+  type: object
+  required:
+    - createdAt
+  properties:
+    createdAt:
+      $ref: '../../../../common/parameters.yml#/createdAt'
+
+keyObject:
+  allOf:
+    - $ref: '#/apiKey'
+    - $ref: '#/createdAtObject'
+
+addApiKeyResponse:
+  type: object
+  additionalProperties: false
+  properties:
+    key:
+      $ref: '#/keyString'
+    createdAt:
+      $ref: '../../../../common/parameters.yml#/createdAt'
+  required:
+    - key
+    - createdAt
