@@ -5,40 +5,15 @@ import io.swagger.annotations.ApiModelProperty;
 import java.time.OffsetDateTime;
 import java.util.Objects;
 
-/** DeleteIndexResponse */
-public class DeleteIndexResponse {
-
-  public static final String SERIALIZED_NAME_TASK_I_D = "taskID";
-
-  @SerializedName(SERIALIZED_NAME_TASK_I_D)
-  private Integer taskID;
+/** RemoveUserIdResponse */
+public class RemoveUserIdResponse {
 
   public static final String SERIALIZED_NAME_DELETED_AT = "deletedAt";
 
   @SerializedName(SERIALIZED_NAME_DELETED_AT)
   private OffsetDateTime deletedAt;
 
-  public DeleteIndexResponse taskID(Integer taskID) {
-    this.taskID = taskID;
-    return this;
-  }
-
-  /**
-   * taskID of the indexing task to wait for.
-   *
-   * @return taskID
-   */
-  @javax.annotation.Nullable
-  @ApiModelProperty(value = "taskID of the indexing task to wait for.")
-  public Integer getTaskID() {
-    return taskID;
-  }
-
-  public void setTaskID(Integer taskID) {
-    this.taskID = taskID;
-  }
-
-  public DeleteIndexResponse deletedAt(OffsetDateTime deletedAt) {
+  public RemoveUserIdResponse deletedAt(OffsetDateTime deletedAt) {
     this.deletedAt = deletedAt;
     return this;
   }
@@ -48,8 +23,11 @@ public class DeleteIndexResponse {
    *
    * @return deletedAt
    */
-  @javax.annotation.Nullable
-  @ApiModelProperty(value = "Date of deletion (ISO-8601 format).")
+  @javax.annotation.Nonnull
+  @ApiModelProperty(
+    required = true,
+    value = "Date of deletion (ISO-8601 format)."
+  )
   public OffsetDateTime getDeletedAt() {
     return deletedAt;
   }
@@ -66,23 +44,19 @@ public class DeleteIndexResponse {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    DeleteIndexResponse deleteIndexResponse = (DeleteIndexResponse) o;
-    return (
-      Objects.equals(this.taskID, deleteIndexResponse.taskID) &&
-      Objects.equals(this.deletedAt, deleteIndexResponse.deletedAt)
-    );
+    RemoveUserIdResponse removeUserIdResponse = (RemoveUserIdResponse) o;
+    return Objects.equals(this.deletedAt, removeUserIdResponse.deletedAt);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(taskID, deletedAt);
+    return Objects.hash(deletedAt);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class DeleteIndexResponse {\n");
-    sb.append("    taskID: ").append(toIndentedString(taskID)).append("\n");
+    sb.append("class RemoveUserIdResponse {\n");
     sb
       .append("    deletedAt: ")
       .append(toIndentedString(deletedAt))

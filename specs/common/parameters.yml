@@ -117,7 +117,7 @@ updatedAt:
   format: date-time
   description: Date of last update (ISO-8601 format).
 
-deleteAt:
+deletedAt:
   type: string
   format: date-time
   description: Date of deletion (ISO-8601 format).

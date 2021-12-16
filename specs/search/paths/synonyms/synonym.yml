@@ -91,7 +91,7 @@ delete:
               taskID:
                 $ref: '../../../common/parameters.yml#/taskID'
               deletedAt:
-                $ref: '../../../common/parameters.yml#/deleteAt'
+                $ref: '../../../common/parameters.yml#/deletedAt'
             required:
               - taskID
               - deletedAt

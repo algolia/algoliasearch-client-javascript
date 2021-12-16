@@ -19,6 +19,7 @@ record:
 # Props
 highlightResult:
   type: object
+  description: Highlighted attributes.
   additionalProperties: false
   properties:
     value:

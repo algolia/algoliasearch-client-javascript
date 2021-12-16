@@ -1,3 +1,6 @@
+/**
+ * Highlighted attributes.
+ */
 export type HighlightResult = {
   /**
    * Markup text with occurrences highlighted.

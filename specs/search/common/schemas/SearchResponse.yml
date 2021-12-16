@@ -14,7 +14,7 @@ searchHits:
 
 nbHits:
   type: integer
-  description: Number of hits that the search query matched
+  description: Number of hits that the search query matched.
   example: 20
 
 baseSearchResponse:
