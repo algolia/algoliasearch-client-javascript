@@ -5,16 +5,12 @@ import type { EndRequest, Response } from '../types';
 
 import { Requester } from './Requester';
 
+// Global agents allow us to reuse the TCP protocol with multiple clients
+const agentOptions = { keepAlive: true };
+const httpAgent = new http.Agent(agentOptions);
+const httpsAgent = new https.Agent(agentOptions);
+
 export class HttpRequester extends Requester {
-  private httpAgent: http.Agent;
-  private httpsAgent: https.Agent;
-
-  constructor() {
-    super();
-    this.httpAgent = new http.Agent({ keepAlive: true });
-    this.httpsAgent = new https.Agent({ keepAlive: true });
-  }
-
   send(request: EndRequest): Promise<Response> {
     return new Promise((resolve) => {
       let responseTimeout: NodeJS.Timeout | undefined;
@@ -24,7 +20,7 @@ export class HttpRequester extends Requester {
       const path =
         url.search === null ? url.pathname : `${url.pathname}${url.search}`;
       const options: https.RequestOptions = {
-        agent: url.protocol === 'https:' ? this.httpsAgent : this.httpAgent,
+        agent: url.protocol === 'https:' ? httpsAgent : httpAgent,
         hostname: url.hostname,
         path,
         method: request.method,
