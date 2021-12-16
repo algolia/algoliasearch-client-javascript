@@ -75,6 +75,33 @@ describe('Common Test Suite', () => {
     });
   });
 
+  test('updateApiKey', async () => {
+    const req = await client.updateApiKey('myApiKey', {
+      acl: ['search', 'addObject'],
+      validity: 300,
+      maxQueriesPerIPPerHour: 100,
+      maxHitsPerQuery: 20,
+    });
+    expect(req).toMatchObject({
+      path: '/1/keys/myApiKey',
+      method: 'PUT',
+      data: {
+        acl: ['search', 'addObject'],
+        validity: 300,
+        maxQueriesPerIPPerHour: 100,
+        maxHitsPerQuery: 20,
+      },
+    });
+  });
+
+  test('deleteApiKey', async () => {
+    const req = await client.deleteApiKey('myTestApiKey');
+    expect(req).toMatchObject({
+      path: '/1/keys/myTestApiKey',
+      method: 'DELETE',
+    });
+  });
+
   test('clearAllSynonyms', async () => {
     const req = await client.clearAllSynonyms('indexName');
     expect(req).toMatchObject({
@@ -83,11 +110,56 @@ describe('Common Test Suite', () => {
     });
   });
 
+  test('addApiKey', async () => {
+    const req = await client.addApiKey({
+      acl: ['search', 'addObject'],
+      description: 'my new api key',
+      validity: 300,
+      maxQueriesPerIPPerHour: 100,
+      maxHitsPerQuery: 20,
+    });
+    expect(req).toMatchObject({
+      path: '/1/keys',
+      method: 'POST',
+      data: {
+        acl: ['search', 'addObject'],
+        description: 'my new api key',
+        validity: 300,
+        maxQueriesPerIPPerHour: 100,
+        maxHitsPerQuery: 20,
+      },
+    });
+  });
+
+  test('restoreApiKey', async () => {
+    const req = await client.restoreApiKey('myApiKey');
+    expect(req).toMatchObject({
+      path: '/1/keys/myApiKey/restore',
+      method: 'POST',
+    });
+  });
+
+  test('getApiKey', async () => {
+    const req = await client.getApiKey('myTestApiKey');
+    expect(req).toMatchObject({
+      path: '/1/keys/myTestApiKey',
+      method: 'GET',
+    });
+  });
+
   test('deleteSynonym', async () => {
     const req = await client.deleteSynonym('indexName', 'id1');
     expect(req).toMatchObject({
       path: '/1/indexes/indexName/synonyms/id1',
       method: 'DELETE',
+    });
+  });
+
+  test('listApiKeys', async () => {
+    const req = await client.listApiKeys();
+    expect(req).toMatchObject({
+      path: '/1/keys',
+      method: 'GET',
     });
   });
 

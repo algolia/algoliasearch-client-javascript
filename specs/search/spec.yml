@@ -68,12 +68,12 @@ paths:
   # ######################
   # ### Keys Endpoints ###
   # ######################
-  # /1/keys:
-  #   $ref: './paths/keys/keys.yml'
-  # /1/keys/{key}:
-  #   $ref: './paths/keys/key.yml'
-  # /1/keys/{key}/restore:
-  #   $ref: './paths/keys/restoreApiKey.yml'
+  /1/keys:
+    $ref: './paths/keys/keys.yml'
+  /1/keys/{key}:
+    $ref: './paths/keys/key.yml'
+  /1/keys/{key}/restore:
+    $ref: './paths/keys/restoreApiKey.yml'
 
   # #######################
   # ### Rules Endpoints ###

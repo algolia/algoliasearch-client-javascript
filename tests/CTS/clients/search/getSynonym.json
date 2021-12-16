@@ -1,10 +1,7 @@
 [
   {
     "method": "getSynonym",
-    "parameters": [
-      "indexName",
-      "id1"
-    ],
+    "parameters": ["indexName", "id1"],
     "request": {
       "path": "/1/indexes/indexName/synonyms/id1",
       "method": "GET"

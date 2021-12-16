@@ -1,6 +1,8 @@
 /* eslint-disable no-param-reassign */
 import type { RequestOptions } from '../utils/types';
 
+export * from './addApiKeyResponse';
+export * from './apiKey';
 export * from './baseIndexSettings';
 export * from './baseSearchParams';
 export * from './baseSearchResponse';
@@ -8,6 +10,8 @@ export * from './baseSearchResponseFacetsStats';
 export * from './batchObject';
 export * from './batchResponse';
 export * from './clearAllSynonymsResponse';
+export * from './createdAtObject';
+export * from './deleteApiKeyResponse';
 export * from './deleteIndexResponse';
 export * from './deleteSynonymResponse';
 export * from './errorBase';
@@ -19,6 +23,8 @@ export * from './highlightResult';
 export * from './index';
 export * from './indexSettings';
 export * from './indexSettingsAsSearchParams';
+export * from './keyObject';
+export * from './listApiKeysResponse';
 export * from './listIndicesResponse';
 export * from './multipleQueries';
 export * from './multipleQueriesObject';
@@ -41,6 +47,7 @@ export * from './setSettingsResponse';
 export * from './snippetResult';
 export * from './synonymHit';
 export * from './synonymHitHighlightResult';
+export * from './updateApiKeyResponse';
 
 export interface Authentication {
   /**
