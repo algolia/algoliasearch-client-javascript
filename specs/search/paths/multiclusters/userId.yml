@@ -1,2 +1,62 @@
 get:
+  tags:
+    - search
+  operationId: getUserId
+  summary: Get userID
+  description: >
+    Returns the userID data stored in the mapping.
+
+    The data returned will usually be a few seconds behind real time, because userID usage may take up to a few seconds to propagate to the different clusters.
+
+    Upon success, the response is 200 OK and contains the following userID data.
+  parameters:
+    - $ref: '../../common/parameters.yml#/UserIDInPath'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '../../common/schemas/UserId.yml#/userId'
+    '400':
+      $ref: '../../../common/responses/BadRequest.yml'
+    '402':
+      $ref: '../../../common/responses/FeatureNotEnabled.yml'
+    '403':
+      $ref: '../../../common/responses/MethodNotAllowed.yml'
+    '404':
+      $ref: '../../../common/responses/IndexNotFound.yml'
+
 delete:
+  tags:
+    - search
+  operationId: removeUserId
+  summary: Remove userID
+  description: >
+    Remove a userID and its associated data from the multi-clusters.
+
+    Upon success, the response is 200 OK and a task is created to remove the userID data and mapping.
+  parameters:
+    - $ref: '../../common/parameters.yml#/UserIDInPath'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            title: removeUserIdResponse
+            type: object
+            additionalProperties: false
+            properties:
+              deletedAt:
+                $ref: '../../../common/parameters.yml#/deletedAt'
+            required:
+              - deletedAt
+    '400':
+      $ref: '../../../common/responses/BadRequest.yml'
+    '402':
+      $ref: '../../../common/responses/FeatureNotEnabled.yml'
+    '403':
+      $ref: '../../../common/responses/MethodNotAllowed.yml'
+    '404':
+      $ref: '../../../common/responses/IndexNotFound.yml'

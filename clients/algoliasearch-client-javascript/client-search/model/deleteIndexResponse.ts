@@ -6,5 +6,5 @@ export type DeleteIndexResponse = {
   /**
    * Date of deletion (ISO-8601 format).
    */
-  deleteAt?: Date;
+  deletedAt?: Date;
 };

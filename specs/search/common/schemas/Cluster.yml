@@ -1,0 +1,25 @@
+cluster:
+  type: object
+  description: A cluster.
+  properties:
+    clusterName:
+      type: string
+      description: Name of the cluster.
+      example: 'c11-test'
+    nbRecords:
+      type: integer
+      description: Number of records in the cluster.
+      example: 3
+    nbUserIDs:
+      type: integer
+      description: Number of users assigned to the cluster.
+      example: 19
+    dataSize:
+      type: integer
+      description: Data size taken by all the users assigned to the cluster.
+      example: 481
+  required:
+    - clusterName
+    - nbRecords
+    - nbUserIDs
+    - dataSize

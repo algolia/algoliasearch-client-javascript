@@ -51,7 +51,7 @@ public class SearchSynonymsResponse extends HashMap<String, Object> {
   }
 
   /**
-   * Number of hits that the search query matched
+   * Number of hits that the search query matched.
    *
    * @return nbHits
    */
@@ -59,7 +59,7 @@ public class SearchSynonymsResponse extends HashMap<String, Object> {
   @ApiModelProperty(
     example = "20",
     required = true,
-    value = "Number of hits that the search query matched"
+    value = "Number of hits that the search query matched."
   )
   public Integer getNbHits() {
     return nbHits;

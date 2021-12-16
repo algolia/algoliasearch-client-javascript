@@ -1,1 +1,40 @@
 get:
+  tags:
+    - search
+  operationId: hasPendingMappings
+  summary: Has pending mappings
+  description: >
+    Get the status of your clusters’ migrations or user creations.
+
+    Creating a large batch of users or migrating your multi-cluster may take quite some time. This method lets you retrieve the status of the migration, so you can know when it’s done.
+
+    Upon success, the response is 200 OK.
+
+    A successful response indicates that the operation has been taken into account, and the userIDs are directly usable.
+  parameters:
+    - in: query
+      name: getClusters
+      schema:
+        type: boolean
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            title: hasPendingMappingsResponse
+            type: object
+            additionalProperties: false
+            properties:
+              createdAt:
+                $ref: '../../../common/parameters.yml#/createdAt'
+            required:
+              - createdAt
+    '400':
+      $ref: '../../../common/responses/BadRequest.yml'
+    '402':
+      $ref: '../../../common/responses/FeatureNotEnabled.yml'
+    '403':
+      $ref: '../../../common/responses/MethodNotAllowed.yml'
+    '404':
+      $ref: '../../../common/responses/IndexNotFound.yml'

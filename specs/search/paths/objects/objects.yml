@@ -58,8 +58,8 @@ delete:
             properties:
               taskID:
                 $ref: '../../../common/parameters.yml#/taskID'
-              deleteAt:
-                $ref: '../../../common/parameters.yml#/deleteAt'
+              deletedAt:
+                $ref: '../../../common/parameters.yml#/deletedAt'
     '400':
       $ref: '../../../common/responses/BadRequest.yml'
     '402':
