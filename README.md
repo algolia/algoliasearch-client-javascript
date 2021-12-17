@@ -1,51 +1,93 @@
-# How to run
+# api-clients-automation
 
-## Install and setup env
+**Make sure to have Docker installed so you don't have to install the tooling for every API clients.**
+
+## Setup repository tooling
 
 ```bash
 nvm use && yarn
 ```
 
-## Generate clients based on the [`specs`](./specs/)
+## Setup dev environment
 
-### All clients
-
-```bash
-yarn generate
-```
-
-Generic command:
+You can also execute docker commands one by one, see [Docker commands](#docker)
 
 ```bash
-yarn generate <language | all> <client | all>
+yarn docker:setup
 ```
 
-### Search client
+### Docker
+
+#### Build
+
+Build docker image from [Dockerfile](./Dockerfile)
 
 ```bash
-yarn generate all search
+yarn docker:build
 ```
 
-### Recommend client
+#### Mount
+
+Mount docker image on `dev` container
 
 ```bash
-yarn generate all recommend
+yarn docker:mount
 ```
 
-## Build generated clients
+#### Clean
+
+Stops `dev` container and clean the built image
 
 ```bash
-yarn client:build
+yarn docker:clean
 ```
 
-# Testing clients
+## Contributing
+
+You can now make changes locally and run commands through the docker container.
+
+### Generate clients based on the [`specs`](./specs/)
+
+#### Usage
+
+```bash
+yarn docker generate <language | all> <client | all>
+```
+
+#### Generate all clients
+
+```bash
+yarn docker generate
+```
+
+### Generate specific client for specific language
+
+#### Usage
+
+```bash
+yarn docker build:clients <language | all> <client | all>
+```
+
+### Build specific client for specific language
+
+```bash
+yarn docker build:clients java recommend
+```
+
+## Testing clients
 
 The clients can be tested inside the [`playground`](./playground) folder
+
+## Usage
+
+```bash
+yarn docker playground:<language>:<client>
+```
 
 ## JavaScript
 
 ```bash
-yarn playground:js
+yarn docker playground:js:search
 ```
 
 # Troubleshooting

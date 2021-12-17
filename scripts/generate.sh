@@ -9,13 +9,14 @@ cd ${DIR}/..
 
 lang=$1
 client=$2
+generator="$1-$2"
 
 # Run the pre generation script if it exists.
 run_pre_gen() {
     pregen="./scripts/pre-gen/${lang}.sh"
 
     if [[ -f "$pregen" ]]; then
-        echo "> Running pre-gen script for ${lang}-${client}..."
+        echo "> Running pre-gen script for $generator..."
         $pregen $client
     fi
 }
@@ -23,9 +24,9 @@ run_pre_gen() {
 generate_client() {
     set +e
 
-    echo "> Generating code for ${lang}-${client}..."
+    echo "> Generating code for $generator..."
 
-    log=$(yarn openapi-generator-cli generate --generator-key "${lang}-${client}")
+    log=$(yarn openapi-generator-cli generate --generator-key "$generator")
 
     if [[ $? != 0 ]]; then
         echo "$log"
@@ -40,8 +41,8 @@ run_post_gen() {
     postgen="./scripts/post-gen/${lang}.sh"
 
     if [[ -f "$postgen" ]]; then
-        echo "> Running post-gen script for ${lang}-${client}..."
-        $postgen "${lang}-${client}"
+        echo "> Running post-gen script for $generator..."
+        $postgen "$generator"
     fi
 }
 

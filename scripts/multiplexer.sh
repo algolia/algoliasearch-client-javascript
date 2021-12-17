@@ -2,6 +2,12 @@
 # Call this script with multiplexer.sh <cmd> <lang | all> <client | all>
 # to run the cmd for all the required lang-client combination
 
+if [[ ! $CI ]] && [[ ! $DOCKER ]]; then
+    echo "You should run scripts via the docker container, see README.md"
+
+    exit 1
+fi
+
 # Break on non-zero code
 set -e
 
