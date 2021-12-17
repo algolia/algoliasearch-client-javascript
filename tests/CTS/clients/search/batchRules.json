@@ -1,0 +1,67 @@
+[
+  {
+    "method": "batchRules",
+    "parameters": [
+      "indexName",
+      [
+          {
+            "objectID": "a-rule-id",
+            "conditions": [{
+              "pattern": "smartphone",
+              "anchoring": "contains"
+            }],
+            "consequence": {
+              "params": {
+                "filters": "category:smartphone"
+              }
+            }
+          },
+          {
+            "objectID": "a-second-rule-id",
+            "conditions": [{
+              "pattern": "apple",
+              "anchoring": "contains"
+            }],
+            "consequence": {
+              "params": {
+                "filters": "brand:apple"
+              }
+            }
+          }
+      ],
+      true,
+      true
+    ],
+    "request": {
+      "path": "/1/indexes/indexName/rules/batch",
+      "method": "POST",
+      "data": [
+          {
+            "objectID": "a-rule-id",
+            "conditions": [{
+              "pattern": "smartphone",
+              "anchoring": "contains"
+            }],
+            "consequence": {
+              "params": {
+                "filters": "category:smartphone"
+              }
+            }
+          },
+          {
+            "objectID": "a-second-rule-id",
+            "conditions": [{
+              "pattern": "apple",
+              "anchoring": "contains"
+            }],
+            "consequence": {
+              "params": {
+                "filters": "brand:apple"
+              }
+            }
+          }
+      ]
+    }
+  }
+]
+  

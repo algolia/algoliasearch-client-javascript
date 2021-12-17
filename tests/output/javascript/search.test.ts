@@ -58,6 +58,14 @@ describe('Common Test Suite', () => {
     });
   });
 
+  test('deleteRule', async () => {
+    const req = await client.deleteRule('indexName', 'id1');
+    expect(req).toMatchObject({
+      path: '/1/indexes/indexName/rules/id1',
+      method: 'DELETE',
+    });
+  });
+
   test('getSynonym', async () => {
     const req = await client.getSynonym('indexName', 'id1');
     expect(req).toMatchObject({
@@ -72,6 +80,50 @@ describe('Common Test Suite', () => {
       path: '/1/indexes/indexName/query',
       method: 'POST',
       data: { query: 'queryString' },
+    });
+  });
+
+  test('getRule', async () => {
+    const req = await client.getRule('indexName', 'id1');
+    expect(req).toMatchObject({
+      path: '/1/indexes/indexName/rules/id1',
+      method: 'GET',
+    });
+  });
+
+  test('batchRules', async () => {
+    const req = await client.batchRules(
+      'indexName',
+      [
+        {
+          objectID: 'a-rule-id',
+          conditions: [{ pattern: 'smartphone', anchoring: 'contains' }],
+          consequence: { params: { filters: 'category:smartphone' } },
+        },
+        {
+          objectID: 'a-second-rule-id',
+          conditions: [{ pattern: 'apple', anchoring: 'contains' }],
+          consequence: { params: { filters: 'brand:apple' } },
+        },
+      ],
+      true,
+      true
+    );
+    expect(req).toMatchObject({
+      path: '/1/indexes/indexName/rules/batch',
+      method: 'POST',
+      data: [
+        {
+          objectID: 'a-rule-id',
+          conditions: [{ pattern: 'smartphone', anchoring: 'contains' }],
+          consequence: { params: { filters: 'category:smartphone' } },
+        },
+        {
+          objectID: 'a-second-rule-id',
+          conditions: [{ pattern: 'apple', anchoring: 'contains' }],
+          consequence: { params: { filters: 'brand:apple' } },
+        },
+      ],
     });
   });
 
@@ -102,11 +154,42 @@ describe('Common Test Suite', () => {
     });
   });
 
+  test('searchRules', async () => {
+    const req = await client.searchRules('indexName', { query: 'something' });
+    expect(req).toMatchObject({
+      path: '/1/indexes/indexName/rules/search',
+      method: 'POST',
+      data: { query: 'something' },
+    });
+  });
+
   test('clearAllSynonyms', async () => {
     const req = await client.clearAllSynonyms('indexName');
     expect(req).toMatchObject({
       path: '/1/indexes/indexName/synonyms/clear',
       method: 'POST',
+    });
+  });
+
+  test('saveRule', async () => {
+    const req = await client.saveRule(
+      'indexName',
+      'id1',
+      {
+        objectID: 'id1',
+        conditions: [{ pattern: 'apple', anchoring: 'contains' }],
+        consequence: { params: { filters: 'brand:apple' } },
+      },
+      true
+    );
+    expect(req).toMatchObject({
+      path: '/1/indexes/indexName/rules/id1',
+      method: 'PUT',
+      data: {
+        objectID: 'id1',
+        conditions: [{ pattern: 'apple', anchoring: 'contains' }],
+        consequence: { params: { filters: 'brand:apple' } },
+      },
     });
   });
 
@@ -152,6 +235,14 @@ describe('Common Test Suite', () => {
     expect(req).toMatchObject({
       path: '/1/indexes/indexName/synonyms/id1',
       method: 'DELETE',
+    });
+  });
+
+  test('clearRules', async () => {
+    const req = await client.clearRules('indexName');
+    expect(req).toMatchObject({
+      path: '/1/indexes/indexName/rules/clear',
+      method: 'POST',
     });
   });
 

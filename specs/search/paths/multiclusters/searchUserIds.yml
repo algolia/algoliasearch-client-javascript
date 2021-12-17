@@ -81,7 +81,7 @@ post:
               page:
                 $ref: '../../common/schemas/SearchResponse.yml#/baseSearchResponse/properties/page'
               hitsPerPage:
-                $ref: '../../common/schemas/SearchResponse.yml#/baseSearchResponse/properties/hitsPerPage'
+                $ref: '../../../common/parameters.yml#/hitsPerPage'
               updatedAt:
                 $ref: '../../../common/parameters.yml#/updatedAt'
             required:

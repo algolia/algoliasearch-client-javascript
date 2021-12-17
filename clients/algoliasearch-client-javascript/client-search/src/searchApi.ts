@@ -29,12 +29,15 @@ import type { OperationIndexObject } from '../model/operationIndexObject';
 import type { OperationIndexResponse } from '../model/operationIndexResponse';
 import type { RemoveUserIdResponse } from '../model/removeUserIdResponse';
 import type { ReplaceSourceResponse } from '../model/replaceSourceResponse';
+import type { Rule } from '../model/rule';
 import type { SaveObjectResponse } from '../model/saveObjectResponse';
 import type { SaveSynonymResponse } from '../model/saveSynonymResponse';
 import type { SaveSynonymsResponse } from '../model/saveSynonymsResponse';
 import type { SearchParams } from '../model/searchParams';
 import type { SearchParamsAsString } from '../model/searchParamsAsString';
 import type { SearchResponse } from '../model/searchResponse';
+import type { SearchRulesParams } from '../model/searchRulesParams';
+import type { SearchRulesResponse } from '../model/searchRulesResponse';
 import type { SearchSynonymsResponse } from '../model/searchSynonymsResponse';
 import type { SearchUserIdsObject } from '../model/searchUserIdsObject';
 import type { SearchUserIdsResponse } from '../model/searchUserIdsResponse';
@@ -42,6 +45,8 @@ import type { SetSettingsResponse } from '../model/setSettingsResponse';
 import type { Source } from '../model/source';
 import type { SynonymHit } from '../model/synonymHit';
 import type { UpdateApiKeyResponse } from '../model/updateApiKeyResponse';
+import type { UpdatedRuleResponse } from '../model/updatedRuleResponse';
+import type { UpdatedRuleResponseWithoutObjectID } from '../model/updatedRuleResponseWithoutObjectID';
 import type { UserId } from '../model/userId';
 import { Transporter } from '../utils/Transporter';
 import { shuffle } from '../utils/helpers';
@@ -328,6 +333,61 @@ export class SearchApi {
     return this.sendRequest(request, requestOptions);
   }
   /**
+   * Create or update a batch of Rules.
+   *
+   * @summary Batch Rules.
+   * @param indexName - The index in which to perform the request.
+   * @param rule - The rule.
+   * @param forwardToReplicas - When true, changes are also propagated to replicas of the given indexName.
+   * @param clearExistingRules - When true, existing Rules are cleared before adding this batch. When false, existing Rules are kept.
+   */
+  batchRules(
+    indexName: string,
+    rule: Rule[],
+    forwardToReplicas?: boolean,
+    clearExistingRules?: boolean
+  ): Promise<UpdatedRuleResponseWithoutObjectID> {
+    const path = '/1/indexes/{indexName}/rules/batch'.replace(
+      '{indexName}',
+      encodeURIComponent(String(indexName))
+    );
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (indexName === null || indexName === undefined) {
+      throw new Error(
+        'Required parameter indexName was null or undefined when calling batchRules.'
+      );
+    }
+
+    if (rule === null || rule === undefined) {
+      throw new Error(
+        'Required parameter rule was null or undefined when calling batchRules.'
+      );
+    }
+
+    if (forwardToReplicas !== undefined) {
+      queryParameters.forwardToReplicas = forwardToReplicas.toString();
+    }
+
+    if (clearExistingRules !== undefined) {
+      queryParameters.clearExistingRules = clearExistingRules.toString();
+    }
+
+    const request: Request = {
+      method: 'POST',
+      path,
+      data: rule,
+    };
+
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
+
+    return this.sendRequest(request, requestOptions);
+  }
+  /**
    * Remove all synonyms from an index.
    *
    * @summary Clear all synonyms.
@@ -348,6 +408,46 @@ export class SearchApi {
     if (indexName === null || indexName === undefined) {
       throw new Error(
         'Required parameter indexName was null or undefined when calling clearAllSynonyms.'
+      );
+    }
+
+    if (forwardToReplicas !== undefined) {
+      queryParameters.forwardToReplicas = forwardToReplicas.toString();
+    }
+
+    const request: Request = {
+      method: 'POST',
+      path,
+    };
+
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
+
+    return this.sendRequest(request, requestOptions);
+  }
+  /**
+   * Delete all Rules in the index.
+   *
+   * @summary Clear Rules.
+   * @param indexName - The index in which to perform the request.
+   * @param forwardToReplicas - When true, changes are also propagated to replicas of the given indexName.
+   */
+  clearRules(
+    indexName: string,
+    forwardToReplicas?: boolean
+  ): Promise<UpdatedRuleResponseWithoutObjectID> {
+    const path = '/1/indexes/{indexName}/rules/clear'.replace(
+      '{indexName}',
+      encodeURIComponent(String(indexName))
+    );
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (indexName === null || indexName === undefined) {
+      throw new Error(
+        'Required parameter indexName was null or undefined when calling clearRules.'
       );
     }
 
@@ -417,6 +517,53 @@ export class SearchApi {
       throw new Error(
         'Required parameter indexName was null or undefined when calling deleteIndex.'
       );
+    }
+
+    const request: Request = {
+      method: 'DELETE',
+      path,
+    };
+
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
+
+    return this.sendRequest(request, requestOptions);
+  }
+  /**
+   * Delete the Rule with the specified objectID.
+   *
+   * @summary Delete a rule.
+   * @param indexName - The index in which to perform the request.
+   * @param objectID - Unique identifier of an object.
+   * @param forwardToReplicas - When true, changes are also propagated to replicas of the given indexName.
+   */
+  deleteRule(
+    indexName: string,
+    objectID: string,
+    forwardToReplicas?: boolean
+  ): Promise<UpdatedRuleResponseWithoutObjectID> {
+    const path = '/1/indexes/{indexName}/rules/{objectID}'
+      .replace('{indexName}', encodeURIComponent(String(indexName)))
+      .replace('{objectID}', encodeURIComponent(String(objectID)));
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (indexName === null || indexName === undefined) {
+      throw new Error(
+        'Required parameter indexName was null or undefined when calling deleteRule.'
+      );
+    }
+
+    if (objectID === null || objectID === undefined) {
+      throw new Error(
+        'Required parameter objectID was null or undefined when calling deleteRule.'
+      );
+    }
+
+    if (forwardToReplicas !== undefined) {
+      queryParameters.forwardToReplicas = forwardToReplicas.toString();
     }
 
     const request: Request = {
@@ -573,6 +720,44 @@ export class SearchApi {
 
     if (type !== undefined) {
       queryParameters.type = type.toString();
+    }
+
+    const request: Request = {
+      method: 'GET',
+      path,
+    };
+
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
+
+    return this.sendRequest(request, requestOptions);
+  }
+  /**
+   * Retrieve the Rule with the specified objectID.
+   *
+   * @summary Get a rule.
+   * @param indexName - The index in which to perform the request.
+   * @param objectID - Unique identifier of an object.
+   */
+  getRule(indexName: string, objectID: string): Promise<Rule> {
+    const path = '/1/indexes/{indexName}/rules/{objectID}'
+      .replace('{indexName}', encodeURIComponent(String(indexName)))
+      .replace('{objectID}', encodeURIComponent(String(objectID)));
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (indexName === null || indexName === undefined) {
+      throw new Error(
+        'Required parameter indexName was null or undefined when calling getRule.'
+      );
+    }
+
+    if (objectID === null || objectID === undefined) {
+      throw new Error(
+        'Required parameter objectID was null or undefined when calling getRule.'
+      );
     }
 
     const request: Request = {
@@ -1112,6 +1297,62 @@ export class SearchApi {
     return this.sendRequest(request, requestOptions);
   }
   /**
+   * Create or update the Rule with the specified objectID.
+   *
+   * @summary Save/Update a rule.
+   * @param indexName - The index in which to perform the request.
+   * @param objectID - Unique identifier of an object.
+   * @param rule - The rule.
+   * @param forwardToReplicas - When true, changes are also propagated to replicas of the given indexName.
+   */
+  saveRule(
+    indexName: string,
+    objectID: string,
+    rule: Rule,
+    forwardToReplicas?: boolean
+  ): Promise<UpdatedRuleResponse> {
+    const path = '/1/indexes/{indexName}/rules/{objectID}'
+      .replace('{indexName}', encodeURIComponent(String(indexName)))
+      .replace('{objectID}', encodeURIComponent(String(objectID)));
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (indexName === null || indexName === undefined) {
+      throw new Error(
+        'Required parameter indexName was null or undefined when calling saveRule.'
+      );
+    }
+
+    if (objectID === null || objectID === undefined) {
+      throw new Error(
+        'Required parameter objectID was null or undefined when calling saveRule.'
+      );
+    }
+
+    if (rule === null || rule === undefined) {
+      throw new Error(
+        'Required parameter rule was null or undefined when calling saveRule.'
+      );
+    }
+
+    if (forwardToReplicas !== undefined) {
+      queryParameters.forwardToReplicas = forwardToReplicas.toString();
+    }
+
+    const request: Request = {
+      method: 'PUT',
+      path,
+      data: rule,
+    };
+
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
+
+    return this.sendRequest(request, requestOptions);
+  }
+  /**
    * Create a new synonym object or update the existing synonym object with the given object ID.
    *
    * @summary Save synonym.
@@ -1259,6 +1500,49 @@ export class SearchApi {
       method: 'POST',
       path,
       data: searchParamsAsStringSearchParams,
+    };
+
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
+
+    return this.sendRequest(request, requestOptions);
+  }
+  /**
+   * Search for rules matching various criteria.
+   *
+   * @summary Search for rules.
+   * @param indexName - The index in which to perform the request.
+   * @param searchRulesParams - The searchRulesParams.
+   */
+  searchRules(
+    indexName: string,
+    searchRulesParams: SearchRulesParams
+  ): Promise<SearchRulesResponse> {
+    const path = '/1/indexes/{indexName}/rules/search'.replace(
+      '{indexName}',
+      encodeURIComponent(String(indexName))
+    );
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (indexName === null || indexName === undefined) {
+      throw new Error(
+        'Required parameter indexName was null or undefined when calling searchRules.'
+      );
+    }
+
+    if (searchRulesParams === null || searchRulesParams === undefined) {
+      throw new Error(
+        'Required parameter searchRulesParams was null or undefined when calling searchRules.'
+      );
+    }
+
+    const request: Request = {
+      method: 'POST',
+      path,
+      data: searchRulesParams,
     };
 
     const requestOptions: RequestOptions = {

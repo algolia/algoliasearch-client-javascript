@@ -14,7 +14,7 @@ export type SearchUserIdsResponse = {
    */
   page: number;
   /**
-   * Set the number of hits per page.
+   * Maximum number of hits in a page. Minimum is 1, maximum is 1000.
    */
   hitsPerPage: number;
   /**

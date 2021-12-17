@@ -1,0 +1,11 @@
+[
+  {
+    "method": "deleteRule",
+    "parameters": ["indexName", "id1"],
+    "request": {
+      "path": "/1/indexes/indexName/rules/id1",
+      "method": "DELETE"
+    }
+  }
+]
+  

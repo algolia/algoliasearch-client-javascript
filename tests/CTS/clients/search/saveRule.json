@@ -1,0 +1,39 @@
+[
+  {
+    "method": "saveRule",
+    "parameters": [
+      "indexName",
+      "id1",
+      {
+          "objectID": "id1",
+          "conditions": [{
+            "pattern": "apple",
+            "anchoring": "contains"
+          }],
+          "consequence": {
+            "params": {
+              "filters": "brand:apple"
+            }
+          }
+        },
+      true
+    ],
+    "request": {
+      "path": "/1/indexes/indexName/rules/id1",
+      "method": "PUT",
+      "data": {
+          "objectID": "id1",
+          "conditions": [{
+            "pattern": "apple",
+            "anchoring": "contains"
+          }],
+          "consequence": {
+            "params": {
+              "filters": "brand:apple"
+            }
+          }
+        }
+    }
+  }
+]
+  
