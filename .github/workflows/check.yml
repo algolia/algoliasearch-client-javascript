@@ -25,16 +25,16 @@ jobs:
         uses: ./.github/actions/cache
 
       - name: Checking search specs
-        run: yarn specs search
+        run: yarn build:specs search
 
       - name: Checking recommend specs
-        run: yarn specs recommend
+        run: yarn build:specs recommend
 
       - name: Checking personalization specs
-        run: yarn specs personalization
+        run: yarn build:specs personalization
 
       - name: Checking analytics specs
-        run: yarn specs analytics
+        run: yarn build:specs analytics
 
       - name: Lint
         run: yamllint specs
@@ -52,25 +52,25 @@ jobs:
         run: yarn generate javascript search
 
       - name: Build search client
-        run: yarn client:build-js:search
+        run: yarn build:clients javascript search
 
       - name: Generate recommend client
         run: yarn generate javascript recommend
 
       - name: Build recommend client
-        run: yarn client:build-js:recommend
+        run: yarn build:clients javascript recommend
 
       - name: Generate personalization client
         run: yarn generate javascript personalization
 
       - name: Build personalization client
-        run: yarn client:build-js:personalization
+        run: yarn build:clients javascript personalization
 
       - name: Generate analytics client
         run: yarn generate javascript analytics
 
       - name: Build analytics client
-        run: yarn client:build-js:analytics
+        run: yarn build:clients javascript analytics
 
       - name: Lint
         run: yarn lint
@@ -88,7 +88,7 @@ jobs:
         run: yarn generate java search
 
       - name: Build search client
-        run: yarn client:build-java
+        run: yarn build:clients java search
 
   cts:
     runs-on: ubuntu-20.04
@@ -103,7 +103,7 @@ jobs:
         run: yarn generate
 
       - name: Build client
-        run: yarn client:build
+        run: yarn build:clients
 
       - name: Generate CTS
         run: yarn cts:generate

@@ -6,7 +6,7 @@ export CLIENT=$(cat openapitools.json | jq -r --arg generator "$GENERATOR" '."ge
 echo "> Exporting utils for ${GENERATOR}..."
 mkdir -p $CLIENT/utils
 
-cp -R clients/algoliasearch-client-javascript/utils/ $CLIENT/utils
+cp -R clients/algoliasearch-client-javascript/utils/ $CLIENT/
 
 lint_client() {
     set +e
