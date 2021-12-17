@@ -1,2 +1,39 @@
 get:
+  tags:
+    - search
+  operationId: getSources
+  description: List all allowed sources.
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: './common/schemas.yml#/sources'
+
 put:
+  tags:
+    - search
+  operationId: replaceSources
+  description: Replace all allowed sources.
+  requestBody:
+    required: true
+    description: The sources to allow.
+    content:
+      application/json:
+        schema:
+          $ref: './common/schemas.yml#/sources'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            title: replaceSourceResponse
+            type: object
+            additionalProperties: false
+            required:
+              - updatedAt
+            properties:
+              updatedAt:
+                $ref: '../../../common/parameters.yml#/updatedAt'
