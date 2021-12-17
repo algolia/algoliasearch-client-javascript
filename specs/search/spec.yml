@@ -78,14 +78,14 @@ paths:
   # #######################
   # ### Rules Endpoints ###
   # #######################
-  # /1/indexes/{indexName}/rules/{objectID}:
-  #   $ref: './paths/rules/rule.yml'
-  # /1/indexes/{indexName}/rules/batch:
-  #   $ref: './paths/rules/batchRules.yml'
-  # /1/indexes/{indexName}/rules/clear:
-  #   $ref: './paths/rules/clearRules.yml'
-  # /1/indexes/{indexName}/rules/search:
-  #   $ref: './paths/rules/searchRules.yml'
+  /1/indexes/{indexName}/rules/{objectID}:
+    $ref: './paths/rules/rule.yml'
+  /1/indexes/{indexName}/rules/batch:
+    $ref: './paths/rules/batchRules.yml'
+  /1/indexes/{indexName}/rules/clear:
+    $ref: './paths/rules/clearRules.yml'
+  /1/indexes/{indexName}/rules/search:
+    $ref: './paths/rules/searchRules.yml'
 
   # ##############################
   # ### Dictionaries Endpoints ###

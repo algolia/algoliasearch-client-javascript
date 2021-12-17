@@ -1,0 +1,14 @@
+[
+  {
+    "method": "searchRules",
+    "parameters": [
+        "indexName",
+        {"query": "something"}
+      ],
+    "request": {
+      "path": "/1/indexes/indexName/rules/search",
+      "method": "POST",
+      "data": {"query": "something"}
+    }
+  }
+]

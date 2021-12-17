@@ -1,1 +1,77 @@
 post:
+  tags:
+    - search
+  operationId: searchRules
+  summary: Search for rules.
+  description: Search for rules matching various criteria.
+  parameters:
+    - $ref: '../../../common/parameters.yml#/IndexName'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          title: searchRulesParams
+          description: Parameters for the search.
+          additionalProperties: false
+          properties:
+            query:
+              $ref: '../../../common/parameters.yml#/query'
+            anchoring:
+              $ref: './common/schemas.yml#/anchoring'
+            context:
+              type: string
+              description: Restricts matches to contextual rules with a specific context (exact match).
+            page:
+              $ref: '../../../common/parameters.yml#/page'
+            hitsPerPage:
+              $ref: '../../../common/parameters.yml#/hitsPerPage'
+            enabled:
+              type: boolean
+              default: null
+              description: When specified, restricts matches to rules with a specific enabled status. When absent (default), all rules are retrieved, regardless of their enabled status.
+            requestOptions:
+              type: array
+              description: A mapping of requestOptions to send along with the request.
+              items:
+                type: object
+                description: Request Option.
+                additionalProperties: true
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            title: searchRulesResponse
+            type: object
+            additionalProperties: false
+            required:
+              - hits
+              - nbHits
+              - page
+              - nbPages
+            properties:
+              hits:
+                type: array
+                description: Fetched rules.
+                items:
+                  $ref: 'common/schemas.yml#/rule'
+              nbHits:
+                type: integer
+                description: Number of fetched rules.
+              page:
+                type: integer
+                description: Current page.
+              nbPages:
+                type: integer
+                description: Number of pages.
+    '400':
+      $ref: '../../../common/responses/BadRequest.yml'
+    '402':
+      $ref: '../../../common/responses/FeatureNotEnabled.yml'
+    '403':
+      $ref: '../../../common/responses/MethodNotAllowed.yml'
+    '404':
+      $ref: '../../../common/responses/IndexNotFound.yml'

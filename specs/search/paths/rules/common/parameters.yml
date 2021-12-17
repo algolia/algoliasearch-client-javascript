@@ -1,0 +1,7 @@
+ClearExistingRules:
+  in: query
+  name: clearExistingRules
+  required: false
+  schema:
+    type: boolean
+  description: When true, existing Rules are cleared before adding this batch. When false, existing Rules are kept.

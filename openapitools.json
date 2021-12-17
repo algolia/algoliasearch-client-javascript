@@ -13,7 +13,7 @@
         "gitHost": "algolia",
         "gitUserId": "algolia",
         "gitRepoId": "algoliasearch-client-javascript",
-        "reservedWordsMappings": "queryParameters=queryParameters",
+        "reservedWordsMappings": "queryParameters=queryParameters,requestOptions=requestOptions",
         "additionalProperties": {
           "modelPropertyNaming": "original",
           "supportsES6": true,

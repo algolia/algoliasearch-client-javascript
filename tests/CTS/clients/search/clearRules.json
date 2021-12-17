@@ -1,0 +1,11 @@
+[
+  {
+    "method": "clearRules",
+    "parameters": ["indexName"],
+    "request": {
+      "path": "/1/indexes/indexName/rules/clear",
+      "method": "POST"
+    }
+  }
+]
+  

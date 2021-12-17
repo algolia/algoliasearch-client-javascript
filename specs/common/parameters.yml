@@ -126,3 +126,18 @@ indexName:
   type: string
   example: products
   description: The Algolia index name.
+
+hitsPerPage:
+  type: integer
+  default: 20
+  description: Maximum number of hits in a page. Minimum is 1, maximum is 1000.
+
+query:
+  type: string
+  description: Full text query.
+  default: ''
+
+page:
+  type: integer
+  default: 0
+  description: Requested page (zero-based).
