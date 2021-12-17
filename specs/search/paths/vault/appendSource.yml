@@ -1,1 +1,26 @@
 post:
+  tags:
+    - search
+  operationId: appendSource
+  description: Add a single source to the list of allowed sources.
+  requestBody:
+    required: true
+    description: The source to add.
+    content:
+      application/json:
+        schema:
+          $ref: 'common/schemas.yml#/source'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            title: appendSourceResponse
+            type: object
+            additionalProperties: false
+            required:
+              - createdAt
+            properties:
+              createdAt:
+                $ref: '../../../common/parameters.yml#/createdAt'

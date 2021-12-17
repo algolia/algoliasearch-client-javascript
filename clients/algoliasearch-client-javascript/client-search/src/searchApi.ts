@@ -1,5 +1,6 @@
 import type { AddApiKeyResponse } from '../model/addApiKeyResponse';
 import type { ApiKey } from '../model/apiKey';
+import type { AppendSourceResponse } from '../model/appendSourceResponse';
 import type { AssignUserIdObject } from '../model/assignUserIdObject';
 import type { AssignUserIdResponse } from '../model/assignUserIdResponse';
 import type { BatchAssignUserIdsObject } from '../model/batchAssignUserIdsObject';
@@ -9,6 +10,7 @@ import type { BatchResponse } from '../model/batchResponse';
 import type { ClearAllSynonymsResponse } from '../model/clearAllSynonymsResponse';
 import type { DeleteApiKeyResponse } from '../model/deleteApiKeyResponse';
 import type { DeleteIndexResponse } from '../model/deleteIndexResponse';
+import type { DeleteSourceResponse } from '../model/deleteSourceResponse';
 import type { DeleteSynonymResponse } from '../model/deleteSynonymResponse';
 import type { GetLogsResponse } from '../model/getLogsResponse';
 import type { GetTaskResponse } from '../model/getTaskResponse';
@@ -26,6 +28,7 @@ import type { MultipleQueriesResponse } from '../model/multipleQueriesResponse';
 import type { OperationIndexObject } from '../model/operationIndexObject';
 import type { OperationIndexResponse } from '../model/operationIndexResponse';
 import type { RemoveUserIdResponse } from '../model/removeUserIdResponse';
+import type { ReplaceSourceResponse } from '../model/replaceSourceResponse';
 import type { SaveObjectResponse } from '../model/saveObjectResponse';
 import type { SaveSynonymResponse } from '../model/saveSynonymResponse';
 import type { SaveSynonymsResponse } from '../model/saveSynonymsResponse';
@@ -36,6 +39,7 @@ import type { SearchSynonymsResponse } from '../model/searchSynonymsResponse';
 import type { SearchUserIdsObject } from '../model/searchUserIdsObject';
 import type { SearchUserIdsResponse } from '../model/searchUserIdsResponse';
 import type { SetSettingsResponse } from '../model/setSettingsResponse';
+import type { Source } from '../model/source';
 import type { SynonymHit } from '../model/synonymHit';
 import type { UpdateApiKeyResponse } from '../model/updateApiKeyResponse';
 import type { UserId } from '../model/userId';
@@ -155,6 +159,35 @@ export class SearchApi {
       method: 'POST',
       path,
       data: apiKey,
+    };
+
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
+
+    return this.sendRequest(request, requestOptions);
+  }
+  /**
+   * Add a single source to the list of allowed sources.
+   *
+   * @param source - The source to add.
+   */
+  appendSource(source: Source): Promise<AppendSourceResponse> {
+    const path = '/1/security/sources/append';
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (source === null || source === undefined) {
+      throw new Error(
+        'Required parameter source was null or undefined when calling appendSource.'
+      );
+    }
+
+    const request: Request = {
+      method: 'POST',
+      path,
+      data: source,
     };
 
     const requestOptions: RequestOptions = {
@@ -399,6 +432,37 @@ export class SearchApi {
     return this.sendRequest(request, requestOptions);
   }
   /**
+   * Remove a single source from the list of allowed sources.
+   *
+   * @param source - The IP range of the source.
+   */
+  deleteSource(source: string): Promise<DeleteSourceResponse> {
+    const path = '/1/security/sources/{source}'.replace(
+      '{source}',
+      encodeURIComponent(String(source))
+    );
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (source === null || source === undefined) {
+      throw new Error(
+        'Required parameter source was null or undefined when calling deleteSource.'
+      );
+    }
+
+    const request: Request = {
+      method: 'DELETE',
+      path,
+    };
+
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
+
+    return this.sendRequest(request, requestOptions);
+  }
+  /**
    * Delete a single synonyms set, identified by the given objectID.
    *
    * @summary Delete synonym.
@@ -541,6 +605,26 @@ export class SearchApi {
         'Required parameter indexName was null or undefined when calling getSettings.'
       );
     }
+
+    const request: Request = {
+      method: 'GET',
+      path,
+    };
+
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
+
+    return this.sendRequest(request, requestOptions);
+  }
+  /**
+   * List all allowed sources.
+   */
+  getSources(): Promise<Source[]> {
+    const path = '/1/security/sources';
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
 
     const request: Request = {
       method: 'GET',
@@ -915,6 +999,35 @@ export class SearchApi {
     const request: Request = {
       method: 'DELETE',
       path,
+    };
+
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
+
+    return this.sendRequest(request, requestOptions);
+  }
+  /**
+   * Replace all allowed sources.
+   *
+   * @param source - The sources to allow.
+   */
+  replaceSources(source: Source[]): Promise<ReplaceSourceResponse> {
+    const path = '/1/security/sources';
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (source === null || source === undefined) {
+      throw new Error(
+        'Required parameter source was null or undefined when calling replaceSources.'
+      );
+    }
+
+    const request: Request = {
+      method: 'PUT',
+      path,
+      data: source,
     };
 
     const requestOptions: RequestOptions = {

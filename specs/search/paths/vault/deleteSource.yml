@@ -1,1 +1,27 @@
 delete:
+  tags:
+    - search
+  operationId: deleteSource
+  description: Remove a single source from the list of allowed sources.
+  parameters:
+    - name: source
+      in: path
+      required: true
+      description: The IP range of the source.
+      schema:
+        type: string
+        example: '10.0.0.1/32'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            title: deleteSourceResponse
+            type: object
+            additionalProperties: false
+            required:
+              - deletedAt
+            properties:
+              deletedAt:
+                $ref: '../../../common/parameters.yml#/deletedAt'

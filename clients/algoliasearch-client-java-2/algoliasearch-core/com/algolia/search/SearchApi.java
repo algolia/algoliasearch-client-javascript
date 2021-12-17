@@ -7,6 +7,7 @@ import com.algolia.ApiResponse;
 import com.algolia.Pair;
 import com.algolia.model.AddApiKeyResponse;
 import com.algolia.model.ApiKey;
+import com.algolia.model.AppendSourceResponse;
 import com.algolia.model.AssignUserIdObject;
 import com.algolia.model.AssignUserIdResponse;
 import com.algolia.model.BatchAssignUserIdsObject;
@@ -16,6 +17,7 @@ import com.algolia.model.BatchResponse;
 import com.algolia.model.ClearAllSynonymsResponse;
 import com.algolia.model.DeleteApiKeyResponse;
 import com.algolia.model.DeleteIndexResponse;
+import com.algolia.model.DeleteSourceResponse;
 import com.algolia.model.DeleteSynonymResponse;
 import com.algolia.model.GetLogsResponse;
 import com.algolia.model.GetTaskResponse;
@@ -32,6 +34,7 @@ import com.algolia.model.MultipleQueriesResponse;
 import com.algolia.model.OperationIndexObject;
 import com.algolia.model.OperationIndexResponse;
 import com.algolia.model.RemoveUserIdResponse;
+import com.algolia.model.ReplaceSourceResponse;
 import com.algolia.model.SaveObjectResponse;
 import com.algolia.model.SaveSynonymResponse;
 import com.algolia.model.SaveSynonymsResponse;
@@ -41,6 +44,7 @@ import com.algolia.model.SearchSynonymsResponse;
 import com.algolia.model.SearchUserIdsObject;
 import com.algolia.model.SearchUserIdsResponse;
 import com.algolia.model.SetSettingsResponse;
+import com.algolia.model.Source;
 import com.algolia.model.SynonymHit;
 import com.algolia.model.UpdateApiKeyResponse;
 import com.algolia.model.UserId;
@@ -199,6 +203,145 @@ public class SearchApi extends ApiClient {
   ) throws ApiException {
     okhttp3.Call localVarCall = addApiKeyValidateBeforeCall(apiKey, _callback);
     Type localVarReturnType = new TypeToken<AddApiKeyResponse>() {}.getType();
+    this.executeAsync(localVarCall, localVarReturnType, _callback);
+    return localVarCall;
+  }
+
+  /**
+   * Build call for appendSource
+   *
+   * @param source The source to add. (required)
+   * @param _callback Callback for upload/download progress
+   * @return Call to execute
+   * @throws ApiException If fail to serialize the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * </table>
+   */
+  public okhttp3.Call appendSourceCall(
+    Source source,
+    final ApiCallback _callback
+  ) throws ApiException {
+    Object localVarPostBody = source;
+
+    // create path and map variables
+    String localVarPath = "/1/security/sources/append";
+
+    List<Pair> localVarQueryParams = new ArrayList<Pair>();
+    List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+    Map<String, String> localVarCookieParams = new HashMap<String, String>();
+    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+    final String[] localVarAccepts = { "application/json" };
+    final String localVarAccept = this.selectHeaderAccept(localVarAccepts);
+    if (localVarAccept != null) {
+      localVarHeaderParams.put("Accept", localVarAccept);
+    }
+
+    final String[] localVarContentTypes = { "application/json" };
+    final String localVarContentType =
+      this.selectHeaderContentType(localVarContentTypes);
+    localVarHeaderParams.put("Content-Type", localVarContentType);
+
+    String[] localVarAuthNames = new String[] { "apiKey", "appId" };
+    return this.buildCall(
+        localVarPath,
+        "POST",
+        localVarQueryParams,
+        localVarCollectionQueryParams,
+        localVarPostBody,
+        localVarHeaderParams,
+        localVarCookieParams,
+        localVarFormParams,
+        localVarAuthNames,
+        _callback
+      );
+  }
+
+  @SuppressWarnings("rawtypes")
+  private okhttp3.Call appendSourceValidateBeforeCall(
+    Source source,
+    final ApiCallback _callback
+  ) throws ApiException {
+    // verify the required parameter 'source' is set
+    if (source == null) {
+      throw new ApiException(
+        "Missing the required parameter 'source' when calling appendSource(Async)"
+      );
+    }
+
+    okhttp3.Call localVarCall = appendSourceCall(source, _callback);
+    return localVarCall;
+  }
+
+  /**
+   * Add a single source to the list of allowed sources.
+   *
+   * @param source The source to add. (required)
+   * @return AppendSourceResponse
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * </table>
+   */
+  public AppendSourceResponse appendSource(Source source) throws ApiException {
+    ApiResponse<AppendSourceResponse> localVarResp = appendSourceWithHttpInfo(
+      source
+    );
+    return localVarResp.getData();
+  }
+
+  /**
+   * Add a single source to the list of allowed sources.
+   *
+   * @param source The source to add. (required)
+   * @return ApiResponse&lt;AppendSourceResponse&gt;
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * </table>
+   */
+  public ApiResponse<AppendSourceResponse> appendSourceWithHttpInfo(
+    Source source
+  ) throws ApiException {
+    okhttp3.Call localVarCall = appendSourceValidateBeforeCall(source, null);
+    Type localVarReturnType = new TypeToken<AppendSourceResponse>() {}
+      .getType();
+    return this.execute(localVarCall, localVarReturnType);
+  }
+
+  /**
+   * (asynchronously) Add a single source to the list of allowed sources.
+   *
+   * @param source The source to add. (required)
+   * @param _callback The callback to be executed when the API call finishes
+   * @return The request call
+   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * </table>
+   */
+  public okhttp3.Call appendSourceAsync(
+    Source source,
+    final ApiCallback<AppendSourceResponse> _callback
+  ) throws ApiException {
+    okhttp3.Call localVarCall = appendSourceValidateBeforeCall(
+      source,
+      _callback
+    );
+    Type localVarReturnType = new TypeToken<AppendSourceResponse>() {}
+      .getType();
     this.executeAsync(localVarCall, localVarReturnType, _callback);
     return localVarCall;
   }
@@ -1280,6 +1423,150 @@ public class SearchApi extends ApiClient {
   }
 
   /**
+   * Build call for deleteSource
+   *
+   * @param source The IP range of the source. (required)
+   * @param _callback Callback for upload/download progress
+   * @return Call to execute
+   * @throws ApiException If fail to serialize the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * </table>
+   */
+  public okhttp3.Call deleteSourceCall(
+    String source,
+    final ApiCallback _callback
+  ) throws ApiException {
+    Object localVarPostBody = null;
+
+    // create path and map variables
+    String localVarPath =
+      "/1/security/sources/{source}".replaceAll(
+          "\\{" + "source" + "\\}",
+          this.escapeString(source.toString())
+        );
+
+    List<Pair> localVarQueryParams = new ArrayList<Pair>();
+    List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+    Map<String, String> localVarCookieParams = new HashMap<String, String>();
+    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+    final String[] localVarAccepts = { "application/json" };
+    final String localVarAccept = this.selectHeaderAccept(localVarAccepts);
+    if (localVarAccept != null) {
+      localVarHeaderParams.put("Accept", localVarAccept);
+    }
+
+    final String[] localVarContentTypes = {};
+
+    final String localVarContentType =
+      this.selectHeaderContentType(localVarContentTypes);
+    localVarHeaderParams.put("Content-Type", localVarContentType);
+
+    String[] localVarAuthNames = new String[] { "apiKey", "appId" };
+    return this.buildCall(
+        localVarPath,
+        "DELETE",
+        localVarQueryParams,
+        localVarCollectionQueryParams,
+        localVarPostBody,
+        localVarHeaderParams,
+        localVarCookieParams,
+        localVarFormParams,
+        localVarAuthNames,
+        _callback
+      );
+  }
+
+  @SuppressWarnings("rawtypes")
+  private okhttp3.Call deleteSourceValidateBeforeCall(
+    String source,
+    final ApiCallback _callback
+  ) throws ApiException {
+    // verify the required parameter 'source' is set
+    if (source == null) {
+      throw new ApiException(
+        "Missing the required parameter 'source' when calling deleteSource(Async)"
+      );
+    }
+
+    okhttp3.Call localVarCall = deleteSourceCall(source, _callback);
+    return localVarCall;
+  }
+
+  /**
+   * Remove a single source from the list of allowed sources.
+   *
+   * @param source The IP range of the source. (required)
+   * @return DeleteSourceResponse
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * </table>
+   */
+  public DeleteSourceResponse deleteSource(String source) throws ApiException {
+    ApiResponse<DeleteSourceResponse> localVarResp = deleteSourceWithHttpInfo(
+      source
+    );
+    return localVarResp.getData();
+  }
+
+  /**
+   * Remove a single source from the list of allowed sources.
+   *
+   * @param source The IP range of the source. (required)
+   * @return ApiResponse&lt;DeleteSourceResponse&gt;
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * </table>
+   */
+  public ApiResponse<DeleteSourceResponse> deleteSourceWithHttpInfo(
+    String source
+  ) throws ApiException {
+    okhttp3.Call localVarCall = deleteSourceValidateBeforeCall(source, null);
+    Type localVarReturnType = new TypeToken<DeleteSourceResponse>() {}
+      .getType();
+    return this.execute(localVarCall, localVarReturnType);
+  }
+
+  /**
+   * (asynchronously) Remove a single source from the list of allowed sources.
+   *
+   * @param source The IP range of the source. (required)
+   * @param _callback The callback to be executed when the API call finishes
+   * @return The request call
+   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * </table>
+   */
+  public okhttp3.Call deleteSourceAsync(
+    String source,
+    final ApiCallback<DeleteSourceResponse> _callback
+  ) throws ApiException {
+    okhttp3.Call localVarCall = deleteSourceValidateBeforeCall(
+      source,
+      _callback
+    );
+    Type localVarReturnType = new TypeToken<DeleteSourceResponse>() {}
+      .getType();
+    this.executeAsync(localVarCall, localVarReturnType, _callback);
+    return localVarCall;
+  }
+
+  /**
    * Build call for deleteSynonym
    *
    * @param indexName The index in which to perform the request. (required)
@@ -2024,6 +2311,123 @@ public class SearchApi extends ApiClient {
       _callback
     );
     Type localVarReturnType = new TypeToken<IndexSettings>() {}.getType();
+    this.executeAsync(localVarCall, localVarReturnType, _callback);
+    return localVarCall;
+  }
+
+  /**
+   * Build call for getSources
+   *
+   * @param _callback Callback for upload/download progress
+   * @return Call to execute
+   * @throws ApiException If fail to serialize the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * </table>
+   */
+  public okhttp3.Call getSourcesCall(final ApiCallback _callback)
+    throws ApiException {
+    Object localVarPostBody = null;
+
+    // create path and map variables
+    String localVarPath = "/1/security/sources";
+
+    List<Pair> localVarQueryParams = new ArrayList<Pair>();
+    List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+    Map<String, String> localVarCookieParams = new HashMap<String, String>();
+    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+    final String[] localVarAccepts = { "application/json" };
+    final String localVarAccept = this.selectHeaderAccept(localVarAccepts);
+    if (localVarAccept != null) {
+      localVarHeaderParams.put("Accept", localVarAccept);
+    }
+
+    final String[] localVarContentTypes = {};
+
+    final String localVarContentType =
+      this.selectHeaderContentType(localVarContentTypes);
+    localVarHeaderParams.put("Content-Type", localVarContentType);
+
+    String[] localVarAuthNames = new String[] { "apiKey", "appId" };
+    return this.buildCall(
+        localVarPath,
+        "GET",
+        localVarQueryParams,
+        localVarCollectionQueryParams,
+        localVarPostBody,
+        localVarHeaderParams,
+        localVarCookieParams,
+        localVarFormParams,
+        localVarAuthNames,
+        _callback
+      );
+  }
+
+  @SuppressWarnings("rawtypes")
+  private okhttp3.Call getSourcesValidateBeforeCall(
+    final ApiCallback _callback
+  ) throws ApiException {
+    okhttp3.Call localVarCall = getSourcesCall(_callback);
+    return localVarCall;
+  }
+
+  /**
+   * List all allowed sources.
+   *
+   * @return List&lt;Source&gt;
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * </table>
+   */
+  public List<Source> getSources() throws ApiException {
+    ApiResponse<List<Source>> localVarResp = getSourcesWithHttpInfo();
+    return localVarResp.getData();
+  }
+
+  /**
+   * List all allowed sources.
+   *
+   * @return ApiResponse&lt;List&lt;Source&gt;&gt;
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * </table>
+   */
+  public ApiResponse<List<Source>> getSourcesWithHttpInfo()
+    throws ApiException {
+    okhttp3.Call localVarCall = getSourcesValidateBeforeCall(null);
+    Type localVarReturnType = new TypeToken<List<Source>>() {}.getType();
+    return this.execute(localVarCall, localVarReturnType);
+  }
+
+  /**
+   * (asynchronously) List all allowed sources.
+   *
+   * @param _callback The callback to be executed when the API call finishes
+   * @return The request call
+   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * </table>
+   */
+  public okhttp3.Call getSourcesAsync(
+    final ApiCallback<List<Source>> _callback
+  ) throws ApiException {
+    okhttp3.Call localVarCall = getSourcesValidateBeforeCall(_callback);
+    Type localVarReturnType = new TypeToken<List<Source>>() {}.getType();
     this.executeAsync(localVarCall, localVarReturnType, _callback);
     return localVarCall;
   }
@@ -3997,6 +4401,146 @@ public class SearchApi extends ApiClient {
       _callback
     );
     Type localVarReturnType = new TypeToken<RemoveUserIdResponse>() {}
+      .getType();
+    this.executeAsync(localVarCall, localVarReturnType, _callback);
+    return localVarCall;
+  }
+
+  /**
+   * Build call for replaceSources
+   *
+   * @param source The sources to allow. (required)
+   * @param _callback Callback for upload/download progress
+   * @return Call to execute
+   * @throws ApiException If fail to serialize the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * </table>
+   */
+  public okhttp3.Call replaceSourcesCall(
+    List<Source> source,
+    final ApiCallback _callback
+  ) throws ApiException {
+    Object localVarPostBody = source;
+
+    // create path and map variables
+    String localVarPath = "/1/security/sources";
+
+    List<Pair> localVarQueryParams = new ArrayList<Pair>();
+    List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+    Map<String, String> localVarCookieParams = new HashMap<String, String>();
+    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+    final String[] localVarAccepts = { "application/json" };
+    final String localVarAccept = this.selectHeaderAccept(localVarAccepts);
+    if (localVarAccept != null) {
+      localVarHeaderParams.put("Accept", localVarAccept);
+    }
+
+    final String[] localVarContentTypes = { "application/json" };
+    final String localVarContentType =
+      this.selectHeaderContentType(localVarContentTypes);
+    localVarHeaderParams.put("Content-Type", localVarContentType);
+
+    String[] localVarAuthNames = new String[] { "apiKey", "appId" };
+    return this.buildCall(
+        localVarPath,
+        "PUT",
+        localVarQueryParams,
+        localVarCollectionQueryParams,
+        localVarPostBody,
+        localVarHeaderParams,
+        localVarCookieParams,
+        localVarFormParams,
+        localVarAuthNames,
+        _callback
+      );
+  }
+
+  @SuppressWarnings("rawtypes")
+  private okhttp3.Call replaceSourcesValidateBeforeCall(
+    List<Source> source,
+    final ApiCallback _callback
+  ) throws ApiException {
+    // verify the required parameter 'source' is set
+    if (source == null) {
+      throw new ApiException(
+        "Missing the required parameter 'source' when calling replaceSources(Async)"
+      );
+    }
+
+    okhttp3.Call localVarCall = replaceSourcesCall(source, _callback);
+    return localVarCall;
+  }
+
+  /**
+   * Replace all allowed sources.
+   *
+   * @param source The sources to allow. (required)
+   * @return ReplaceSourceResponse
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * </table>
+   */
+  public ReplaceSourceResponse replaceSources(List<Source> source)
+    throws ApiException {
+    ApiResponse<ReplaceSourceResponse> localVarResp = replaceSourcesWithHttpInfo(
+      source
+    );
+    return localVarResp.getData();
+  }
+
+  /**
+   * Replace all allowed sources.
+   *
+   * @param source The sources to allow. (required)
+   * @return ApiResponse&lt;ReplaceSourceResponse&gt;
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * </table>
+   */
+  public ApiResponse<ReplaceSourceResponse> replaceSourcesWithHttpInfo(
+    List<Source> source
+  ) throws ApiException {
+    okhttp3.Call localVarCall = replaceSourcesValidateBeforeCall(source, null);
+    Type localVarReturnType = new TypeToken<ReplaceSourceResponse>() {}
+      .getType();
+    return this.execute(localVarCall, localVarReturnType);
+  }
+
+  /**
+   * (asynchronously) Replace all allowed sources.
+   *
+   * @param source The sources to allow. (required)
+   * @param _callback The callback to be executed when the API call finishes
+   * @return The request call
+   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * </table>
+   */
+  public okhttp3.Call replaceSourcesAsync(
+    List<Source> source,
+    final ApiCallback<ReplaceSourceResponse> _callback
+  ) throws ApiException {
+    okhttp3.Call localVarCall = replaceSourcesValidateBeforeCall(
+      source,
+      _callback
+    );
+    Type localVarReturnType = new TypeToken<ReplaceSourceResponse>() {}
       .getType();
     this.executeAsync(localVarCall, localVarReturnType, _callback);
     return localVarCall;
