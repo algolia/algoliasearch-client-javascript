@@ -1,0 +1,47 @@
+searchDictionaryEntriesResponse:
+  type: object
+  additionalProperties: false
+  properties:
+    hits:
+      type: array
+      description: The dictionary entries returned by the search.
+      items:
+        $ref: '#/dictionaryEntry'
+    page:
+      $ref: '../../../../../common/parameters.yml#/page'
+    nbHits:
+      $ref: '../../../../common/schemas/SearchResponse.yml#/nbHits'
+    nbPages:
+      $ref: '../../../../common/schemas/SearchResponse.yml#/nbPages'
+
+dictionaryEntry:
+  type: object
+  description: A dictionary entry.
+  additionalProperties: true
+  required:
+    - objectID
+    - language
+  properties:
+    objectID:
+      $ref: '../../../../../common/parameters.yml#/objectID'
+    language:
+      type: string
+      description: Language ISO code supported by the dictionary (e.g., "en" for English).
+    word:
+      type: string
+      description: The word of the dictionary entry.
+    words:
+      type: array
+      description: The words of the dictionary entry.
+      items:
+        type: string
+    decomposition:
+      type: array
+      description: A decomposition of the word of the dictionary entry.
+      items:
+        type: string
+    state:
+      description: The state of the dictionary entry.
+      type: string
+      enum: ['enabled', 'disabled']
+      default: enabled

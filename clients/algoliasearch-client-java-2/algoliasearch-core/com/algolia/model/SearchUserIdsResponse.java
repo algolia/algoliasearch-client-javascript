@@ -20,7 +20,7 @@ public class SearchUserIdsResponse {
   public static final String SERIALIZED_NAME_NB_HITS = "nbHits";
 
   @SerializedName(SERIALIZED_NAME_NB_HITS)
-  private Object nbHits = null;
+  private Integer nbHits;
 
   public static final String SERIALIZED_NAME_PAGE = "page";
 
@@ -65,23 +65,27 @@ public class SearchUserIdsResponse {
     this.hits = hits;
   }
 
-  public SearchUserIdsResponse nbHits(Object nbHits) {
+  public SearchUserIdsResponse nbHits(Integer nbHits) {
     this.nbHits = nbHits;
     return this;
   }
 
   /**
-   * Get nbHits
+   * Number of hits that the search query matched.
    *
    * @return nbHits
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "")
-  public Object getNbHits() {
+  @ApiModelProperty(
+    example = "20",
+    required = true,
+    value = "Number of hits that the search query matched."
+  )
+  public Integer getNbHits() {
     return nbHits;
   }
 
-  public void setNbHits(Object nbHits) {
+  public void setNbHits(Integer nbHits) {
     this.nbHits = nbHits;
   }
 
@@ -111,12 +115,15 @@ public class SearchUserIdsResponse {
   }
 
   /**
-   * Set the number of hits per page.
+   * Maximum number of hits in a page. Minimum is 1, maximum is 1000.
    *
    * @return hitsPerPage
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "Set the number of hits per page.")
+  @ApiModelProperty(
+    required = true,
+    value = "Maximum number of hits in a page. Minimum is 1, maximum is 1000."
+  )
   public Integer getHitsPerPage() {
     return hitsPerPage;
   }

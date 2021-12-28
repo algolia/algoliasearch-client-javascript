@@ -25,11 +25,11 @@ post:
               type: string
               description: Query to search. The search is a prefix search with typoTolerance. Use empty query to retrieve all users.
             clusterName:
-              $ref: '../../common/schemas/Cluster.yml#/cluster/properties/clusterName'
+              $ref: '../../common/schemas/Cluster.yml#/clusterName'
             page:
-              $ref: '../../common/schemas/SearchParams.yml#/baseSearchParams/properties/page'
+              $ref: '../../common/schemas/SearchParams.yml#/page'
             hitsPerPage:
-              $ref: '../../common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams/properties/hitsPerPage'
+              $ref: '../../common/schemas/IndexSettings.yml#/hitsPerPage'
           required:
             - query
   responses:
@@ -51,11 +51,11 @@ post:
                     userID:
                       $ref: '../../common/schemas/UserId.yml#/userId/properties/userID'
                     clusterName:
-                      $ref: '../../common/schemas/Cluster.yml#/cluster/properties/clusterName'
+                      $ref: '../../common/schemas/Cluster.yml#/clusterName'
                     nbRecords:
-                      $ref: '../../common/schemas/Cluster.yml#/cluster/properties/nbRecords'
+                      $ref: '../../common/schemas/Cluster.yml#/nbRecords'
                     dataSize:
-                      $ref: '../../common/schemas/Cluster.yml#/cluster/properties/dataSize'
+                      $ref: '../../common/schemas/Cluster.yml#/dataSize'
                     objectID:
                       type: string
                       description: userID of the requested user. Same as userID.
@@ -77,9 +77,9 @@ post:
                     - objectID
                     - _highlightResult
               nbHits:
-                $ref: '../../common/schemas/SearchResponse.yml#/baseSearchResponse/properties/nbHits'
+                $ref: '../../common/schemas/SearchResponse.yml#/nbHits'
               page:
-                $ref: '../../common/schemas/SearchResponse.yml#/baseSearchResponse/properties/page'
+                $ref: '../../common/schemas/SearchParams.yml#/page'
               hitsPerPage:
                 $ref: '../../../common/parameters.yml#/hitsPerPage'
               updatedAt:

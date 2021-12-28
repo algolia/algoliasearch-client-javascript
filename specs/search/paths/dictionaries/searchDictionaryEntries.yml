@@ -1,1 +1,44 @@
 post:
+  tags:
+    - search
+  operationId: searchDictionaryEntries
+  description: Search the dictionary entries.
+  summary: Search the dictionary entries.
+  parameters:
+    - $ref: 'common/parameters.yml#/DictionaryName'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          title: searchDictionaryEntries
+          description: The `searchDictionaryEntries` request.
+          type: object
+          required:
+            - query
+          additionalProperties: false
+          properties:
+            query:
+              $ref: '../../common/schemas/SearchParams.yml#/query'
+            page:
+              $ref: '../../common/schemas/SearchParams.yml#/page'
+            hitsPerPage:
+              $ref: '../../common/schemas/IndexSettings.yml#/hitsPerPage'
+            language:
+              $ref: 'common/parameters.yml#/language'
+
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: './common/schemas/DictionaryEntriesResponse.yml#/dictionaryEntriesResponse'
+    '400':
+      $ref: '../../../common/responses/BadRequest.yml'
+    '402':
+      $ref: '../../../common/responses/FeatureNotEnabled.yml'
+    '403':
+      $ref: '../../../common/responses/MethodNotAllowed.yml'
+    '404':
+      $ref: '../../../common/responses/IndexNotFound.yml'

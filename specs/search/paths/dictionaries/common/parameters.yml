@@ -1,0 +1,33 @@
+# path
+DictionaryName:
+  in: path
+  name: dictionaryName
+  description: The dictionary to search in.
+  required: true
+  schema:
+    enum: ['plurals', 'stopwords', 'compounds']
+    type: string
+
+# misc
+language:
+  description: Language ISO code supported by the dictionary (e.g., "en" for English).
+  type: string
+
+standardEntries:
+  description: Map of language ISO code supported by the dictionary (e.g., "en" for English) to a boolean value.
+  type: object
+  additionalProperties: false
+  properties:
+    plurals:
+      $ref: '#/standardEntry'
+    stopwords:
+      $ref: '#/standardEntry'
+    compounds:
+      $ref: '#/standardEntry'
+
+standardEntry:
+  description: Language ISO code.
+  type: object
+  nullable: true
+  additionalProperties:
+    type: boolean

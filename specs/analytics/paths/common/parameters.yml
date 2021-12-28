@@ -136,4 +136,4 @@ count:
   type: integer
 
 nbHits:
-  $ref: '../../../search/common/schemas/SearchResponse.yml#/baseSearchResponse/properties/nbHits'
+  $ref: '../../../search/common/schemas/SearchResponse.yml#/nbHits'

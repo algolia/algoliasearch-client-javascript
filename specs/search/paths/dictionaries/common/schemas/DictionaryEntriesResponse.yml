@@ -1,0 +1,12 @@
+dictionaryEntriesResponse:
+  description: The dictionary entry reponse.
+  additionalProperties: false
+  type: object
+  required:
+    - updatedAt
+    - taskId
+  properties:
+    taskId:
+      $ref: '../../../../../common/parameters.yml#/taskID'
+    updatedAt:
+      $ref: '../../../../../common/parameters.yml#/updatedAt'

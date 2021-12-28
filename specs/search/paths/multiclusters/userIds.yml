@@ -24,7 +24,7 @@ post:
           additionalProperties: false
           properties:
             cluster:
-              $ref: '../../common/schemas/Cluster.yml#/cluster/properties/clusterName'
+              $ref: '../../common/schemas/Cluster.yml#/clusterName'
           required:
             - cluster
   responses:

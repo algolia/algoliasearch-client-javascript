@@ -14,14 +14,14 @@ rule:
       $ref: '#/consequence'
     description:
       type: string
-      description: This field is intended for Rule management purposes, in particular to ease searching for Rules and presenting them to human readers. It’s not interpreted by the API.
+      description: This field is intended for Rule management purposes, in particular to ease searching for Rules and presenting them to human readers. It's not interpreted by the API.
     enabled:
       type: boolean
       default: true
-      description: Whether the Rule is enabled. Disabled Rules remain in the index, but aren’t applied at query time.
+      description: Whether the Rule is enabled. Disabled Rules remain in the index, but aren't applied at query time.
     validity:
       type: array
-      description: By default, Rules are permanently valid. When validity periods are specified, the Rule applies only during those periods; it’s ignored the rest of the time. The list must not be empty.
+      description: By default, Rules are permanently valid. When validity periods are specified, the Rule applies only during those periods; it's ignored the rest of the time. The list must not be empty.
       items:
         $ref: '#/timeRange'
   required:
@@ -80,7 +80,7 @@ consequence:
           - objectID
     userData:
       type: object
-      description: Custom JSON object that will be appended to the userData array in the response. This object isn’t interpreted by the API. It’s limited to 1kB of minified JSON.
+      description: Custom JSON object that will be appended to the userData array in the response. This object isn't interpreted by the API. It's limited to 1kB of minified JSON.
       additionalProperties: true
 
 promote:
@@ -128,7 +128,7 @@ automaticFacetFilter:
   properties:
     facet:
       type: string
-      description: Attribute to filter on. This must match a facet placeholder in the Rule’s pattern.
+      description: Attribute to filter on. This must match a facet placeholder in the Rule's pattern.
     score:
       type: integer
       default: 1

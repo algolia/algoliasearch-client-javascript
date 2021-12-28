@@ -10,9 +10,7 @@ baseSearchParams:
     - query
   properties:
     query:
-      type: string
-      description: The text to search in the index.
-      default: ''
+      $ref: '#/query'
     similarQuery:
       type: string
       description: Overrides the query parameter and performs a more generic search that can be used to find "similar" results.
@@ -69,9 +67,7 @@ baseSearchParams:
       description: Controls how facet values are fetched.
       default: 'count'
     page:
-      type: integer
-      description: Specify the page to retrieve.
-      default: 0
+      $ref: '#/page'
     offset:
       type: integer
       description: Specify the offset of the first hit to return.
@@ -86,7 +82,7 @@ baseSearchParams:
       default: ''
     aroundLatLngViaIP:
       type: boolean
-      description: Search for entries around a given location automatically computed from the requester’s IP address.
+      description: Search for entries around a given location automatically computed from the requester's IP address.
       default: false
     aroundRadius:
       description: Define the maximum radius for a geo search (in meters).
@@ -169,3 +165,13 @@ searchParamsAsString:
   properties:
     params:
       type: string
+
+query:
+  type: string
+  description: The text to search in the index.
+  default: ''
+
+page:
+  type: integer
+  description: Specify the page to retrieve.
+  default: 0

@@ -4,9 +4,9 @@ get:
   operationId: hasPendingMappings
   summary: Has pending mappings
   description: >
-    Get the status of your clusters’ migrations or user creations.
+    Get the status of your clusters' migrations or user creations.
 
-    Creating a large batch of users or migrating your multi-cluster may take quite some time. This method lets you retrieve the status of the migration, so you can know when it’s done.
+    Creating a large batch of users or migrating your multi-cluster may take quite some time. This method lets you retrieve the status of the migration, so you can know when it's done.
 
     Upon success, the response is 200 OK.
 
