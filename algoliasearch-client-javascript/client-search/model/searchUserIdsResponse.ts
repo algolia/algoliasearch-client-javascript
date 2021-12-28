@@ -8,7 +8,10 @@ export type SearchUserIdsResponse = {
    * List of user object matching the query.
    */
   hits: SearchUserIdsResponseHits[];
-  nbHits: Record<string, any>;
+  /**
+   * Number of hits that the search query matched.
+   */
+  nbHits: number;
   /**
    * Specify the page to retrieve.
    */

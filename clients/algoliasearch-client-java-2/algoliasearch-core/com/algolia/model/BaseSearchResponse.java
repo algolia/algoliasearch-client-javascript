@@ -417,7 +417,7 @@ public class BaseSearchResponse {
   }
 
   /**
-   * Index name used for the query. In the case of an A/B test, the targeted index isn’t always the
+   * Index name used for the query. In the case of an A/B test, the targeted index isn't always the
    * index used by the query.
    *
    * @return indexUsed
@@ -425,7 +425,7 @@ public class BaseSearchResponse {
   @javax.annotation.Nullable
   @ApiModelProperty(
     example = "indexNameAlt",
-    value = "Index name used for the query. In the case of an A/B test, the targeted index isn’t" +
+    value = "Index name used for the query. In the case of an A/B test, the targeted index isn't" +
     " always the index used by the query."
   )
   public String getIndexUsed() {

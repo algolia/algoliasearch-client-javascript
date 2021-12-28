@@ -578,14 +578,14 @@ public class BaseSearchParams {
   }
 
   /**
-   * Search for entries around a given location automatically computed from the requester’s IP
+   * Search for entries around a given location automatically computed from the requester's IP
    * address.
    *
    * @return aroundLatLngViaIP
    */
   @javax.annotation.Nullable
   @ApiModelProperty(
-    value = "Search for entries around a given location automatically computed from the requester’s" +
+    value = "Search for entries around a given location automatically computed from the requester's" +
     " IP address."
   )
   public Boolean getAroundLatLngViaIP() {

@@ -286,7 +286,7 @@ public class IndexSettingsAsSearchParams {
   @SerializedName(SERIALIZED_NAME_QUERY_TYPE)
   private QueryTypeEnum queryType = QueryTypeEnum.PREFIXLAST;
 
-  /** Selects a strategy to remove words from the query when it doesn’t match any hits. */
+  /** Selects a strategy to remove words from the query when it doesn't match any hits. */
   @JsonAdapter(RemoveWordsIfNoResultsEnum.Adapter.class)
   public enum RemoveWordsIfNoResultsEnum {
     NONE("none"),
@@ -668,13 +668,13 @@ public class IndexSettingsAsSearchParams {
   }
 
   /**
-   * List of attributes that can’t be retrieved at query time.
+   * List of attributes that can't be retrieved at query time.
    *
    * @return unretrievableAttributes
    */
   @javax.annotation.Nullable
   @ApiModelProperty(
-    value = "List of attributes that can’t be retrieved at query time."
+    value = "List of attributes that can't be retrieved at query time."
   )
   public List<String> getUnretrievableAttributes() {
     return unretrievableAttributes;
@@ -820,14 +820,14 @@ public class IndexSettingsAsSearchParams {
   }
 
   /**
-   * Controls the relevancy threshold below which less relevant results aren’t included in the
+   * Controls the relevancy threshold below which less relevant results aren't included in the
    * results.
    *
    * @return relevancyStrictness
    */
   @javax.annotation.Nullable
   @ApiModelProperty(
-    value = "Controls the relevancy threshold below which less relevant results aren’t included in" +
+    value = "Controls the relevancy threshold below which less relevant results aren't included in" +
     " the results."
   )
   public Integer getRelevancyStrictness() {
@@ -1104,13 +1104,13 @@ public class IndexSettingsAsSearchParams {
   }
 
   /**
-   * Whether to allow typos on numbers (“numeric tokens”) in the query string.
+   * Whether to allow typos on numbers (\"numeric tokens\") in the query string.
    *
    * @return allowTyposOnNumericTokens
    */
   @javax.annotation.Nullable
   @ApiModelProperty(
-    value = "Whether to allow typos on numbers (“numeric tokens”) in the query string."
+    value = "Whether to allow typos on numbers (\"numeric tokens\") in the query string."
   )
   public Boolean getAllowTyposOnNumericTokens() {
     return allowTyposOnNumericTokens;
@@ -1232,13 +1232,13 @@ public class IndexSettingsAsSearchParams {
   }
 
   /**
-   * List of characters that the engine shouldn’t automatically normalize.
+   * List of characters that the engine shouldn't automatically normalize.
    *
    * @return keepDiacriticsOnCharacters
    */
   @javax.annotation.Nullable
   @ApiModelProperty(
-    value = "List of characters that the engine shouldn’t automatically normalize."
+    value = "List of characters that the engine shouldn't automatically normalize."
   )
   public String getKeepDiacriticsOnCharacters() {
     return keepDiacriticsOnCharacters;
@@ -1378,13 +1378,13 @@ public class IndexSettingsAsSearchParams {
   }
 
   /**
-   * Selects a strategy to remove words from the query when it doesn’t match any hits.
+   * Selects a strategy to remove words from the query when it doesn't match any hits.
    *
    * @return removeWordsIfNoResults
    */
   @javax.annotation.Nullable
   @ApiModelProperty(
-    value = "Selects a strategy to remove words from the query when it doesn’t match any hits."
+    value = "Selects a strategy to remove words from the query when it doesn't match any hits."
   )
   public RemoveWordsIfNoResultsEnum getRemoveWordsIfNoResults() {
     return removeWordsIfNoResults;
@@ -1566,14 +1566,14 @@ public class IndexSettingsAsSearchParams {
   }
 
   /**
-   * Allows you to specify which advanced syntax features are active when ‘advancedSyntax’ is
+   * Allows you to specify which advanced syntax features are active when ‘advancedSyntax' is
    * enabled.
    *
    * @return advancedSyntaxFeatures
    */
   @javax.annotation.Nullable
   @ApiModelProperty(
-    value = "Allows you to specify which advanced syntax features are active when ‘advancedSyntax’ is" +
+    value = "Allows you to specify which advanced syntax features are active when ‘advancedSyntax' is" +
     " enabled."
   )
   public List<AdvancedSyntaxFeaturesEnum> getAdvancedSyntaxFeatures() {
@@ -1612,13 +1612,13 @@ public class IndexSettingsAsSearchParams {
   }
 
   /**
-   * Whether to take into account an index’s synonyms for a particular search.
+   * Whether to take into account an index's synonyms for a particular search.
    *
    * @return synonyms
    */
   @javax.annotation.Nullable
   @ApiModelProperty(
-    value = "Whether to take into account an index’s synonyms for a particular search."
+    value = "Whether to take into account an index's synonyms for a particular search."
   )
   public Boolean getSynonyms() {
     return synonyms;

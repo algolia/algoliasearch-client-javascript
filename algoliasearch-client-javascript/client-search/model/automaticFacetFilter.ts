@@ -3,7 +3,7 @@
  */
 export type AutomaticFacetFilter = {
   /**
-   * Attribute to filter on. This must match a facet placeholder in the Rule’s pattern.
+   * Attribute to filter on. This must match a facet placeholder in the Rule\'s pattern.
    */
   facet: string;
   /**

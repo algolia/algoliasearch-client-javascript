@@ -12,11 +12,6 @@ searchHits:
       items:
         $ref: 'Record.yml#/record'
 
-nbHits:
-  type: integer
-  description: Number of hits that the search query matched.
-  example: 20
-
 baseSearchResponse:
   type: object
   additionalProperties: false
@@ -82,14 +77,14 @@ baseSearchResponse:
             type: integer
             description: The sum of all values in the result set.
     hitsPerPage:
-      $ref: 'IndexSettings.yml#/indexSettingsAsSearchParams/properties/hitsPerPage'
+      $ref: 'IndexSettings.yml#/hitsPerPage'
     index:
       type: string
       example: indexName
       description: Index name used for the query.
     indexUsed:
       type: string
-      description: Index name used for the query. In the case of an A/B test, the targeted index isn’t always the index used by the query.
+      description: Index name used for the query. In the case of an A/B test, the targeted index isn't always the index used by the query.
       example: indexNameAlt
     message:
       type: string
@@ -97,15 +92,13 @@ baseSearchResponse:
     nbHits:
       $ref: '#/nbHits'
     nbPages:
-      type: integer
-      description: Number of pages available for the current query
-      example: 1
+      $ref: '#/nbPages'
     nbSortedHits:
       type: integer
       description: The number of hits selected and sorted by the relevant sort algorithm
       example: 20
     page:
-      $ref: 'SearchParams.yml#/baseSearchParams/properties/page'
+      $ref: 'SearchParams.yml#/page'
     params:
       type: string
       description: A url-encoded string of all search parameters.
@@ -118,7 +111,7 @@ baseSearchResponse:
       description: Time the server took to process the request, in milliseconds.
       example: 20
     query:
-      $ref: 'SearchParams.yml#/baseSearchParams/properties/query'
+      $ref: 'SearchParams.yml#/query'
     queryAfterRemoval:
       type: string
       description: A markup text indicating which parts of the original query have been removed in order to retrieve a non-empty result set.
@@ -127,3 +120,13 @@ baseSearchResponse:
       description: Actual host name of the server that processed the request.
     userData:
       $ref: 'IndexSettings.yml#/baseIndexSettings/properties/userData'
+
+nbHits:
+  type: integer
+  description: Number of hits that the search query matched.
+  example: 20
+
+nbPages:
+  type: integer
+  description: Number of pages available for the current query
+  example: 1

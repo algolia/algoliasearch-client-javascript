@@ -36,7 +36,7 @@ post:
                   maxRecommendations:
                     type: integer
                     default: 0
-                    description: The max number of recommendations to retrieve. If it’s set to 0, all the recommendations of the objectID may be returned.
+                    description: The max number of recommendations to retrieve. If it's set to 0, all the recommendations of the objectID may be returned.
                   queryParameters:
                     description: The Algolia search parameters.
                     allOf:

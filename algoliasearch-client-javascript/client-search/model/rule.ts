@@ -16,15 +16,15 @@ export type Rule = {
   conditions?: Condition[];
   consequence: Consequence;
   /**
-   * This field is intended for Rule management purposes, in particular to ease searching for Rules and presenting them to human readers. It’s not interpreted by the API.
+   * This field is intended for Rule management purposes, in particular to ease searching for Rules and presenting them to human readers. It\'s not interpreted by the API.
    */
   description?: string;
   /**
-   * Whether the Rule is enabled. Disabled Rules remain in the index, but aren’t applied at query time.
+   * Whether the Rule is enabled. Disabled Rules remain in the index, but aren\'t applied at query time.
    */
   enabled?: boolean;
   /**
-   * By default, Rules are permanently valid. When validity periods are specified, the Rule applies only during those periods; it’s ignored the rest of the time. The list must not be empty.
+   * By default, Rules are permanently valid. When validity periods are specified, the Rule applies only during those periods; it\'s ignored the rest of the time. The list must not be empty.
    */
   validity?: TimeRange[];
 };

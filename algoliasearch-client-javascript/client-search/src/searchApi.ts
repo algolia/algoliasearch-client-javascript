@@ -5,6 +5,7 @@ import type { AssignUserIdObject } from '../model/assignUserIdObject';
 import type { AssignUserIdResponse } from '../model/assignUserIdResponse';
 import type { BatchAssignUserIdsObject } from '../model/batchAssignUserIdsObject';
 import type { BatchAssignUserIdsResponse } from '../model/batchAssignUserIdsResponse';
+import type { BatchDictionaryEntries } from '../model/batchDictionaryEntries';
 import type { BatchObject } from '../model/batchObject';
 import type { BatchResponse } from '../model/batchResponse';
 import type { ClearAllSynonymsResponse } from '../model/clearAllSynonymsResponse';
@@ -12,12 +13,16 @@ import type { DeleteApiKeyResponse } from '../model/deleteApiKeyResponse';
 import type { DeleteIndexResponse } from '../model/deleteIndexResponse';
 import type { DeleteSourceResponse } from '../model/deleteSourceResponse';
 import type { DeleteSynonymResponse } from '../model/deleteSynonymResponse';
+import type { DictionaryEntriesResponse } from '../model/dictionaryEntriesResponse';
+import type { DictionarySettingsRequest } from '../model/dictionarySettingsRequest';
+import type { GetDictionarySettingsResponse } from '../model/getDictionarySettingsResponse';
 import type { GetLogsResponse } from '../model/getLogsResponse';
 import type { GetTaskResponse } from '../model/getTaskResponse';
 import type { GetTopUserIdsResponse } from '../model/getTopUserIdsResponse';
 import type { HasPendingMappingsResponse } from '../model/hasPendingMappingsResponse';
 import type { IndexSettings } from '../model/indexSettings';
 import type { KeyObject } from '../model/keyObject';
+import type { Languages } from '../model/languages';
 import type { ListApiKeysResponse } from '../model/listApiKeysResponse';
 import type { ListClustersResponse } from '../model/listClustersResponse';
 import type { ListIndicesResponse } from '../model/listIndicesResponse';
@@ -33,6 +38,7 @@ import type { Rule } from '../model/rule';
 import type { SaveObjectResponse } from '../model/saveObjectResponse';
 import type { SaveSynonymResponse } from '../model/saveSynonymResponse';
 import type { SaveSynonymsResponse } from '../model/saveSynonymsResponse';
+import type { SearchDictionaryEntries } from '../model/searchDictionaryEntries';
 import type { SearchParams } from '../model/searchParams';
 import type { SearchParamsAsString } from '../model/searchParamsAsString';
 import type { SearchResponse } from '../model/searchResponse';
@@ -323,6 +329,52 @@ export class SearchApi {
       method: 'POST',
       path,
       data: batchAssignUserIdsObject,
+    };
+
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
+
+    return this.sendRequest(request, requestOptions);
+  }
+  /**
+   * Send a batch of dictionary entries.
+   *
+   * @summary Send a batch of dictionary entries.
+   * @param dictionaryName - The dictionary to search in.
+   * @param batchDictionaryEntries - The batchDictionaryEntries.
+   */
+  batchDictionaryEntries(
+    dictionaryName: 'compounds' | 'plurals' | 'stopwords',
+    batchDictionaryEntries: BatchDictionaryEntries
+  ): Promise<DictionaryEntriesResponse> {
+    const path = '/1/dictionaries/{dictionaryName}/batch'.replace(
+      '{dictionaryName}',
+      encodeURIComponent(String(dictionaryName))
+    );
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (dictionaryName === null || dictionaryName === undefined) {
+      throw new Error(
+        'Required parameter dictionaryName was null or undefined when calling batchDictionaryEntries.'
+      );
+    }
+
+    if (
+      batchDictionaryEntries === null ||
+      batchDictionaryEntries === undefined
+    ) {
+      throw new Error(
+        'Required parameter batchDictionaryEntries was null or undefined when calling batchDictionaryEntries.'
+      );
+    }
+
+    const request: Request = {
+      method: 'POST',
+      path,
+      data: batchDictionaryEntries,
     };
 
     const requestOptions: RequestOptions = {
@@ -689,6 +741,50 @@ export class SearchApi {
     return this.sendRequest(request, requestOptions);
   }
   /**
+   * List dictionaries supported per language.
+   *
+   * @summary List dictionaries supported per language.
+   */
+  getDictionaryLanguages(): Promise<{ [key: string]: Languages }> {
+    const path = '/1/dictionaries/*/languages';
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    const request: Request = {
+      method: 'GET',
+      path,
+    };
+
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
+
+    return this.sendRequest(request, requestOptions);
+  }
+  /**
+   * Retrieve dictionaries settings.
+   *
+   * @summary Retrieve dictionaries settings. The API stores languages whose standard entries are disabled. Fetch settings does not return false values.
+   */
+  getDictionarySettings(): Promise<GetDictionarySettingsResponse> {
+    const path = '/1/dictionaries/*/settings';
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    const request: Request = {
+      method: 'GET',
+      path,
+    };
+
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
+
+    return this.sendRequest(request, requestOptions);
+  }
+  /**
    * Return the lastest log entries.
    *
    * @param offset - First entry to retrieve (zero-based). Log entries are sorted by decreasing date, therefore 0 designates the most recent log entry.
@@ -953,7 +1049,7 @@ export class SearchApi {
     return this.sendRequest(request, requestOptions);
   }
   /**
-   * Get the status of your clusters’ migrations or user creations. Creating a large batch of users or migrating your multi-cluster may take quite some time. This method lets you retrieve the status of the migration, so you can know when it’s done. Upon success, the response is 200 OK. A successful response indicates that the operation has been taken into account, and the userIDs are directly usable.
+   * Get the status of your clusters\' migrations or user creations. Creating a large batch of users or migrating your multi-cluster may take quite some time. This method lets you retrieve the status of the migration, so you can know when it\'s done. Upon success, the response is 200 OK. A successful response indicates that the operation has been taken into account, and the userIDs are directly usable.
    *
    * @summary Has pending mappings.
    * @param getClusters - The getClusters.
@@ -1510,6 +1606,52 @@ export class SearchApi {
     return this.sendRequest(request, requestOptions);
   }
   /**
+   * Search the dictionary entries.
+   *
+   * @summary Search the dictionary entries.
+   * @param dictionaryName - The dictionary to search in.
+   * @param searchDictionaryEntries - The searchDictionaryEntries.
+   */
+  searchDictionaryEntries(
+    dictionaryName: 'compounds' | 'plurals' | 'stopwords',
+    searchDictionaryEntries: SearchDictionaryEntries
+  ): Promise<DictionaryEntriesResponse> {
+    const path = '/1/dictionaries/{dictionaryName}/search'.replace(
+      '{dictionaryName}',
+      encodeURIComponent(String(dictionaryName))
+    );
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (dictionaryName === null || dictionaryName === undefined) {
+      throw new Error(
+        'Required parameter dictionaryName was null or undefined when calling searchDictionaryEntries.'
+      );
+    }
+
+    if (
+      searchDictionaryEntries === null ||
+      searchDictionaryEntries === undefined
+    ) {
+      throw new Error(
+        'Required parameter searchDictionaryEntries was null or undefined when calling searchDictionaryEntries.'
+      );
+    }
+
+    const request: Request = {
+      method: 'POST',
+      path,
+      data: searchDictionaryEntries,
+    };
+
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
+
+    return this.sendRequest(request, requestOptions);
+  }
+  /**
    * Search for rules matching various criteria.
    *
    * @summary Search for rules.
@@ -1638,6 +1780,41 @@ export class SearchApi {
       method: 'POST',
       path,
       data: searchUserIdsObject,
+    };
+
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
+
+    return this.sendRequest(request, requestOptions);
+  }
+  /**
+   * Set dictionary settings.
+   *
+   * @summary Set dictionary settings.
+   * @param dictionarySettingsRequest - The dictionarySettingsRequest.
+   */
+  setDictionarySettings(
+    dictionarySettingsRequest: DictionarySettingsRequest
+  ): Promise<DictionaryEntriesResponse> {
+    const path = '/1/dictionaries/*/settings';
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (
+      dictionarySettingsRequest === null ||
+      dictionarySettingsRequest === undefined
+    ) {
+      throw new Error(
+        'Required parameter dictionarySettingsRequest was null or undefined when calling setDictionarySettings.'
+      );
+    }
+
+    const request: Request = {
+      method: 'PUT',
+      path,
+      data: dictionarySettingsRequest,
     };
 
     const requestOptions: RequestOptions = {

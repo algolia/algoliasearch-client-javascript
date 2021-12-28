@@ -1,0 +1,160 @@
+package com.algolia.model;
+
+import com.google.gson.annotations.SerializedName;
+import io.swagger.annotations.ApiModelProperty;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
+/** SearchRulesResponse */
+public class SearchRulesResponse {
+
+  public static final String SERIALIZED_NAME_HITS = "hits";
+
+  @SerializedName(SERIALIZED_NAME_HITS)
+  private List<Rule> hits = new ArrayList<>();
+
+  public static final String SERIALIZED_NAME_NB_HITS = "nbHits";
+
+  @SerializedName(SERIALIZED_NAME_NB_HITS)
+  private Integer nbHits;
+
+  public static final String SERIALIZED_NAME_PAGE = "page";
+
+  @SerializedName(SERIALIZED_NAME_PAGE)
+  private Integer page;
+
+  public static final String SERIALIZED_NAME_NB_PAGES = "nbPages";
+
+  @SerializedName(SERIALIZED_NAME_NB_PAGES)
+  private Integer nbPages;
+
+  public SearchRulesResponse hits(List<Rule> hits) {
+    this.hits = hits;
+    return this;
+  }
+
+  public SearchRulesResponse addHitsItem(Rule hitsItem) {
+    this.hits.add(hitsItem);
+    return this;
+  }
+
+  /**
+   * Fetched rules.
+   *
+   * @return hits
+   */
+  @javax.annotation.Nonnull
+  @ApiModelProperty(required = true, value = "Fetched rules.")
+  public List<Rule> getHits() {
+    return hits;
+  }
+
+  public void setHits(List<Rule> hits) {
+    this.hits = hits;
+  }
+
+  public SearchRulesResponse nbHits(Integer nbHits) {
+    this.nbHits = nbHits;
+    return this;
+  }
+
+  /**
+   * Number of fetched rules.
+   *
+   * @return nbHits
+   */
+  @javax.annotation.Nonnull
+  @ApiModelProperty(required = true, value = "Number of fetched rules.")
+  public Integer getNbHits() {
+    return nbHits;
+  }
+
+  public void setNbHits(Integer nbHits) {
+    this.nbHits = nbHits;
+  }
+
+  public SearchRulesResponse page(Integer page) {
+    this.page = page;
+    return this;
+  }
+
+  /**
+   * Current page.
+   *
+   * @return page
+   */
+  @javax.annotation.Nonnull
+  @ApiModelProperty(required = true, value = "Current page.")
+  public Integer getPage() {
+    return page;
+  }
+
+  public void setPage(Integer page) {
+    this.page = page;
+  }
+
+  public SearchRulesResponse nbPages(Integer nbPages) {
+    this.nbPages = nbPages;
+    return this;
+  }
+
+  /**
+   * Number of pages.
+   *
+   * @return nbPages
+   */
+  @javax.annotation.Nonnull
+  @ApiModelProperty(required = true, value = "Number of pages.")
+  public Integer getNbPages() {
+    return nbPages;
+  }
+
+  public void setNbPages(Integer nbPages) {
+    this.nbPages = nbPages;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    SearchRulesResponse searchRulesResponse = (SearchRulesResponse) o;
+    return (
+      Objects.equals(this.hits, searchRulesResponse.hits) &&
+      Objects.equals(this.nbHits, searchRulesResponse.nbHits) &&
+      Objects.equals(this.page, searchRulesResponse.page) &&
+      Objects.equals(this.nbPages, searchRulesResponse.nbPages)
+    );
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(hits, nbHits, page, nbPages);
+  }
+
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("class SearchRulesResponse {\n");
+    sb.append("    hits: ").append(toIndentedString(hits)).append("\n");
+    sb.append("    nbHits: ").append(toIndentedString(nbHits)).append("\n");
+    sb.append("    page: ").append(toIndentedString(page)).append("\n");
+    sb.append("    nbPages: ").append(toIndentedString(nbPages)).append("\n");
+    sb.append("}");
+    return sb.toString();
+  }
+
+  /**
+   * Convert the given object to string with each line indented by 4 spaces (except the first line).
+   */
+  private String toIndentedString(Object o) {
+    if (o == null) {
+      return "null";
+    }
+    return o.toString().replace("\n", "\n    ");
+  }
+}

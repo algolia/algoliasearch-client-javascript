@@ -22,7 +22,7 @@ post:
           additionalProperties: false
           properties:
             cluster:
-              $ref: '../../common/schemas/Cluster.yml#/cluster/properties/clusterName'
+              $ref: '../../common/schemas/Cluster.yml#/clusterName'
             users:
               type: array
               description: userIDs to assign. Note you cannot move users with this method.

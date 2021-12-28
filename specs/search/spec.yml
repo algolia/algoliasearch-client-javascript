@@ -90,14 +90,14 @@ paths:
   # ##############################
   # ### Dictionaries Endpoints ###
   # ##############################
-  # /1/dictionaries/{dictionaryName}/batch:
-  #   $ref: './paths/dictionaries/batchDictionaryEntries.yml'
-  # /1/dictionaries/{dictionaryName}/search:
-  #   $ref: './paths/dictionaries/searchDictionaryEntries.yml'
-  # /1/dictionaries/*/settings:
-  #   $ref: './paths/dictionaries/dictionarySettings.yml'
-  # /1/dictionaries/*/languages:
-  #   $ref: './paths/dictionaries/getDictionaryLanguages.yml'
+  /1/dictionaries/{dictionaryName}/batch:
+    $ref: './paths/dictionaries/batchDictionaryEntries.yml'
+  /1/dictionaries/{dictionaryName}/search:
+    $ref: './paths/dictionaries/searchDictionaryEntries.yml'
+  /1/dictionaries/*/settings:
+    $ref: './paths/dictionaries/dictionarySettings.yml'
+  /1/dictionaries/*/languages:
+    $ref: './paths/dictionaries/getDictionaryLanguages.yml'
 
   # ###############################
   # ### MultiClusters Endpoints ###

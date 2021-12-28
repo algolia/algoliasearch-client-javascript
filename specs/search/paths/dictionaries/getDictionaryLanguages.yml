@@ -1,1 +1,24 @@
 get:
+  tags:
+    - search
+  operationId: getDictionaryLanguages
+  description: List dictionaries supported per language.
+  summary: List dictionaries supported per language.
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            title: getDictionaryLanguagesResponse
+            type: object
+            additionalProperties:
+              $ref: './common/schemas/Languages.yml#/languages'
+    '400':
+      $ref: '../../../common/responses/BadRequest.yml'
+    '402':
+      $ref: '../../../common/responses/FeatureNotEnabled.yml'
+    '403':
+      $ref: '../../../common/responses/MethodNotAllowed.yml'
+    '404':
+      $ref: '../../../common/responses/IndexNotFound.yml'

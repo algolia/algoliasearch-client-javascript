@@ -8,7 +8,7 @@ export type IndexSettingsAsSearchParams = {
    */
   attributesForFaceting?: string[];
   /**
-   * List of attributes that can’t be retrieved at query time.
+   * List of attributes that can\'t be retrieved at query time.
    */
   unretrievableAttributes?: string[];
   /**
@@ -28,7 +28,7 @@ export type IndexSettingsAsSearchParams = {
    */
   customRanking?: string[];
   /**
-   * Controls the relevancy threshold below which less relevant results aren’t included in the results.
+   * Controls the relevancy threshold below which less relevant results aren\'t included in the results.
    */
   relevancyStrictness?: number;
   /**
@@ -72,7 +72,7 @@ export type IndexSettingsAsSearchParams = {
    */
   typoTolerance?: IndexSettingsAsSearchParams.TypoToleranceEnum;
   /**
-   * Whether to allow typos on numbers (“numeric tokens”) in the query string.
+   * Whether to allow typos on numbers (\"numeric tokens\") in the query string.
    */
   allowTyposOnNumericTokens?: boolean;
   /**
@@ -92,7 +92,7 @@ export type IndexSettingsAsSearchParams = {
    */
   removeStopWords?: string;
   /**
-   * List of characters that the engine shouldn’t automatically normalize.
+   * List of characters that the engine shouldn\'t automatically normalize.
    */
   keepDiacriticsOnCharacters?: string;
   /**
@@ -116,7 +116,7 @@ export type IndexSettingsAsSearchParams = {
    */
   queryType?: IndexSettingsAsSearchParams.QueryTypeEnum;
   /**
-   * Selects a strategy to remove words from the query when it doesn’t match any hits.
+   * Selects a strategy to remove words from the query when it doesn\'t match any hits.
    */
   removeWordsIfNoResults?: IndexSettingsAsSearchParams.RemoveWordsIfNoResultsEnum;
   /**
@@ -140,7 +140,7 @@ export type IndexSettingsAsSearchParams = {
    */
   alternativesAsExact?: IndexSettingsAsSearchParams.AlternativesAsExactEnum[];
   /**
-   * Allows you to specify which advanced syntax features are active when ‘advancedSyntax’ is enabled.
+   * Allows you to specify which advanced syntax features are active when ‘advancedSyntax\' is enabled.
    */
   advancedSyntaxFeatures?: IndexSettingsAsSearchParams.AdvancedSyntaxFeaturesEnum[];
   /**
@@ -148,7 +148,7 @@ export type IndexSettingsAsSearchParams = {
    */
   distinct?: number;
   /**
-   * Whether to take into account an index’s synonyms for a particular search.
+   * Whether to take into account an index\'s synonyms for a particular search.
    */
   synonyms?: boolean;
   /**

@@ -23,7 +23,7 @@ post:
                   indexName:
                     $ref: '../../../common/parameters.yml#/indexName'
                   query:
-                    $ref: '../../common/schemas/SearchParams.yml#/baseSearchParams/properties/query'
+                    $ref: '../../common/schemas/SearchParams.yml#/query'
                   type:
                     type: string
                     enum: [default, facet]
