@@ -164,7 +164,12 @@ searchParamsAsString:
   additionalProperties: false
   properties:
     params:
-      type: string
+      $ref: '#/paramsAsString'
+
+paramsAsString:
+  description: Search parameters as URL-encoded query string.
+  type: string
+  default: ''
 
 query:
   type: string
@@ -175,3 +180,8 @@ page:
   type: integer
   description: Specify the page to retrieve.
   default: 0
+
+cursor:
+  type: string
+  description: Cursor indicating the location to resume browsing from. Must match the value returned by the previous call.
+  example: 'jMDY3M2MwM2QwMWUxMmQwYWI0ZTN'

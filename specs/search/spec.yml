@@ -20,10 +20,10 @@ paths:
     $ref: './paths/search/search.yml'
   /1/indexes/*/queries:
     $ref: './paths/search/multipleQueries.yml'
-  # /1/indexes/{indexName}/facets/{facetName}/query:
-  #  $ref: './paths/search/searchForFacetValues.yml'
-  # /1/indexes/{indexName}/browse:
-  #  $ref: './paths/search/browse.yml'
+  /1/indexes/{indexName}/facets/{facetName}/query:
+    $ref: './paths/search/searchForFacetValues.yml'
+  /1/indexes/{indexName}/browse:
+    $ref: './paths/search/browse.yml'
 
   # #########################
   # ### Objects Endpoints ###

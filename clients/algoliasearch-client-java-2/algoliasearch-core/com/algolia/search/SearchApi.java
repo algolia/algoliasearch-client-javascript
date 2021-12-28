@@ -15,6 +15,8 @@ import com.algolia.model.BatchAssignUserIdsResponse;
 import com.algolia.model.BatchDictionaryEntries;
 import com.algolia.model.BatchObject;
 import com.algolia.model.BatchResponse;
+import com.algolia.model.BrowseRequest;
+import com.algolia.model.BrowseResponse;
 import com.algolia.model.ClearAllSynonymsResponse;
 import com.algolia.model.DeleteApiKeyResponse;
 import com.algolia.model.DeleteIndexResponse;
@@ -45,6 +47,8 @@ import com.algolia.model.SaveObjectResponse;
 import com.algolia.model.SaveSynonymResponse;
 import com.algolia.model.SaveSynonymsResponse;
 import com.algolia.model.SearchDictionaryEntries;
+import com.algolia.model.SearchForFacetValuesRequest;
+import com.algolia.model.SearchForFacetValuesResponse;
 import com.algolia.model.SearchParams;
 import com.algolia.model.SearchResponse;
 import com.algolia.model.SearchRulesParams;
@@ -1348,6 +1352,204 @@ public class SearchApi extends ApiClient {
     );
     Type localVarReturnType = new TypeToken<UpdatedRuleResponseWithoutObjectID>() {}
       .getType();
+    this.executeAsync(localVarCall, localVarReturnType, _callback);
+    return localVarCall;
+  }
+
+  /**
+   * Build call for browse
+   *
+   * @param indexName The index in which to perform the request. (required)
+   * @param browseRequest (required)
+   * @param _callback Callback for upload/download progress
+   * @return Call to execute
+   * @throws ApiException If fail to serialize the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
+  public okhttp3.Call browseCall(
+    String indexName,
+    BrowseRequest browseRequest,
+    final ApiCallback _callback
+  ) throws ApiException {
+    Object localVarPostBody = browseRequest;
+
+    // create path and map variables
+    String localVarPath =
+      "/1/indexes/{indexName}/browse".replaceAll(
+          "\\{" + "indexName" + "\\}",
+          this.escapeString(indexName.toString())
+        );
+
+    List<Pair> localVarQueryParams = new ArrayList<Pair>();
+    List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+    Map<String, String> localVarCookieParams = new HashMap<String, String>();
+    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+    final String[] localVarAccepts = { "application/json" };
+    final String localVarAccept = this.selectHeaderAccept(localVarAccepts);
+    if (localVarAccept != null) {
+      localVarHeaderParams.put("Accept", localVarAccept);
+    }
+
+    final String[] localVarContentTypes = { "application/json" };
+    final String localVarContentType =
+      this.selectHeaderContentType(localVarContentTypes);
+    localVarHeaderParams.put("Content-Type", localVarContentType);
+
+    String[] localVarAuthNames = new String[] { "apiKey", "appId" };
+    return this.buildCall(
+        localVarPath,
+        "POST",
+        localVarQueryParams,
+        localVarCollectionQueryParams,
+        localVarPostBody,
+        localVarHeaderParams,
+        localVarCookieParams,
+        localVarFormParams,
+        localVarAuthNames,
+        _callback
+      );
+  }
+
+  @SuppressWarnings("rawtypes")
+  private okhttp3.Call browseValidateBeforeCall(
+    String indexName,
+    BrowseRequest browseRequest,
+    final ApiCallback _callback
+  ) throws ApiException {
+    // verify the required parameter 'indexName' is set
+    if (indexName == null) {
+      throw new ApiException(
+        "Missing the required parameter 'indexName' when calling browse(Async)"
+      );
+    }
+
+    // verify the required parameter 'browseRequest' is set
+    if (browseRequest == null) {
+      throw new ApiException(
+        "Missing the required parameter 'browseRequest' when calling browse(Async)"
+      );
+    }
+
+    okhttp3.Call localVarCall = browseCall(indexName, browseRequest, _callback);
+    return localVarCall;
+  }
+
+  /**
+   * Retrieve all index content. This method allows you to retrieve all index content. It can
+   * retrieve up to 1,000 records per call and supports full text search and filters. For
+   * performance reasons, some features are not supported, including &#x60;distinct&#x60;, sorting
+   * by &#x60;typos&#x60;, &#x60;words&#x60; or &#x60;geo distance&#x60;. When there is more content
+   * to be browsed, the response contains a cursor field. This cursor has to be passed to the
+   * subsequent call to browse in order to get the next page of results. When the end of the index
+   * has been reached, the cursor field is absent from the response.
+   *
+   * @param indexName The index in which to perform the request. (required)
+   * @param browseRequest (required)
+   * @return BrowseResponse
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
+  public BrowseResponse browse(String indexName, BrowseRequest browseRequest)
+    throws ApiException {
+    ApiResponse<BrowseResponse> localVarResp = browseWithHttpInfo(
+      indexName,
+      browseRequest
+    );
+    return localVarResp.getData();
+  }
+
+  /**
+   * Retrieve all index content. This method allows you to retrieve all index content. It can
+   * retrieve up to 1,000 records per call and supports full text search and filters. For
+   * performance reasons, some features are not supported, including &#x60;distinct&#x60;, sorting
+   * by &#x60;typos&#x60;, &#x60;words&#x60; or &#x60;geo distance&#x60;. When there is more content
+   * to be browsed, the response contains a cursor field. This cursor has to be passed to the
+   * subsequent call to browse in order to get the next page of results. When the end of the index
+   * has been reached, the cursor field is absent from the response.
+   *
+   * @param indexName The index in which to perform the request. (required)
+   * @param browseRequest (required)
+   * @return ApiResponse&lt;BrowseResponse&gt;
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
+  public ApiResponse<BrowseResponse> browseWithHttpInfo(
+    String indexName,
+    BrowseRequest browseRequest
+  ) throws ApiException {
+    okhttp3.Call localVarCall = browseValidateBeforeCall(
+      indexName,
+      browseRequest,
+      null
+    );
+    Type localVarReturnType = new TypeToken<BrowseResponse>() {}.getType();
+    return this.execute(localVarCall, localVarReturnType);
+  }
+
+  /**
+   * Retrieve all index content. (asynchronously) This method allows you to retrieve all index
+   * content. It can retrieve up to 1,000 records per call and supports full text search and
+   * filters. For performance reasons, some features are not supported, including
+   * &#x60;distinct&#x60;, sorting by &#x60;typos&#x60;, &#x60;words&#x60; or &#x60;geo
+   * distance&#x60;. When there is more content to be browsed, the response contains a cursor field.
+   * This cursor has to be passed to the subsequent call to browse in order to get the next page of
+   * results. When the end of the index has been reached, the cursor field is absent from the
+   * response.
+   *
+   * @param indexName The index in which to perform the request. (required)
+   * @param browseRequest (required)
+   * @param _callback The callback to be executed when the API call finishes
+   * @return The request call
+   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
+  public okhttp3.Call browseAsync(
+    String indexName,
+    BrowseRequest browseRequest,
+    final ApiCallback<BrowseResponse> _callback
+  ) throws ApiException {
+    okhttp3.Call localVarCall = browseValidateBeforeCall(
+      indexName,
+      browseRequest,
+      _callback
+    );
+    Type localVarReturnType = new TypeToken<BrowseResponse>() {}.getType();
     this.executeAsync(localVarCall, localVarReturnType, _callback);
     return localVarCall;
   }
@@ -7250,6 +7452,222 @@ public class SearchApi extends ApiClient {
       _callback
     );
     Type localVarReturnType = new TypeToken<DictionaryEntriesResponse>() {}
+      .getType();
+    this.executeAsync(localVarCall, localVarReturnType, _callback);
+    return localVarCall;
+  }
+
+  /**
+   * Build call for searchForFacetValues
+   *
+   * @param indexName The index in which to perform the request. (required)
+   * @param facetName The facet name. (required)
+   * @param searchForFacetValuesRequest (required)
+   * @param _callback Callback for upload/download progress
+   * @return Call to execute
+   * @throws ApiException If fail to serialize the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
+  public okhttp3.Call searchForFacetValuesCall(
+    String indexName,
+    String facetName,
+    SearchForFacetValuesRequest searchForFacetValuesRequest,
+    final ApiCallback _callback
+  ) throws ApiException {
+    Object localVarPostBody = searchForFacetValuesRequest;
+
+    // create path and map variables
+    String localVarPath =
+      "/1/indexes/{indexName}/facets/{facetName}/query".replaceAll(
+          "\\{" + "indexName" + "\\}",
+          this.escapeString(indexName.toString())
+        )
+        .replaceAll(
+          "\\{" + "facetName" + "\\}",
+          this.escapeString(facetName.toString())
+        );
+
+    List<Pair> localVarQueryParams = new ArrayList<Pair>();
+    List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+    Map<String, String> localVarCookieParams = new HashMap<String, String>();
+    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+    final String[] localVarAccepts = { "application/json" };
+    final String localVarAccept = this.selectHeaderAccept(localVarAccepts);
+    if (localVarAccept != null) {
+      localVarHeaderParams.put("Accept", localVarAccept);
+    }
+
+    final String[] localVarContentTypes = { "application/json" };
+    final String localVarContentType =
+      this.selectHeaderContentType(localVarContentTypes);
+    localVarHeaderParams.put("Content-Type", localVarContentType);
+
+    String[] localVarAuthNames = new String[] { "apiKey", "appId" };
+    return this.buildCall(
+        localVarPath,
+        "POST",
+        localVarQueryParams,
+        localVarCollectionQueryParams,
+        localVarPostBody,
+        localVarHeaderParams,
+        localVarCookieParams,
+        localVarFormParams,
+        localVarAuthNames,
+        _callback
+      );
+  }
+
+  @SuppressWarnings("rawtypes")
+  private okhttp3.Call searchForFacetValuesValidateBeforeCall(
+    String indexName,
+    String facetName,
+    SearchForFacetValuesRequest searchForFacetValuesRequest,
+    final ApiCallback _callback
+  ) throws ApiException {
+    // verify the required parameter 'indexName' is set
+    if (indexName == null) {
+      throw new ApiException(
+        "Missing the required parameter 'indexName' when calling searchForFacetValues(Async)"
+      );
+    }
+
+    // verify the required parameter 'facetName' is set
+    if (facetName == null) {
+      throw new ApiException(
+        "Missing the required parameter 'facetName' when calling searchForFacetValues(Async)"
+      );
+    }
+
+    // verify the required parameter 'searchForFacetValuesRequest' is set
+    if (searchForFacetValuesRequest == null) {
+      throw new ApiException(
+        "Missing the required parameter 'searchForFacetValuesRequest' when calling" +
+        " searchForFacetValues(Async)"
+      );
+    }
+
+    okhttp3.Call localVarCall = searchForFacetValuesCall(
+      indexName,
+      facetName,
+      searchForFacetValuesRequest,
+      _callback
+    );
+    return localVarCall;
+  }
+
+  /**
+   * Search for values of a given facet Search for values of a given facet, optionally restricting
+   * the returned values to those contained in objects matching other search criteria.
+   *
+   * @param indexName The index in which to perform the request. (required)
+   * @param facetName The facet name. (required)
+   * @param searchForFacetValuesRequest (required)
+   * @return SearchForFacetValuesResponse
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
+  public SearchForFacetValuesResponse searchForFacetValues(
+    String indexName,
+    String facetName,
+    SearchForFacetValuesRequest searchForFacetValuesRequest
+  ) throws ApiException {
+    ApiResponse<SearchForFacetValuesResponse> localVarResp = searchForFacetValuesWithHttpInfo(
+      indexName,
+      facetName,
+      searchForFacetValuesRequest
+    );
+    return localVarResp.getData();
+  }
+
+  /**
+   * Search for values of a given facet Search for values of a given facet, optionally restricting
+   * the returned values to those contained in objects matching other search criteria.
+   *
+   * @param indexName The index in which to perform the request. (required)
+   * @param facetName The facet name. (required)
+   * @param searchForFacetValuesRequest (required)
+   * @return ApiResponse&lt;SearchForFacetValuesResponse&gt;
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
+  public ApiResponse<SearchForFacetValuesResponse> searchForFacetValuesWithHttpInfo(
+    String indexName,
+    String facetName,
+    SearchForFacetValuesRequest searchForFacetValuesRequest
+  ) throws ApiException {
+    okhttp3.Call localVarCall = searchForFacetValuesValidateBeforeCall(
+      indexName,
+      facetName,
+      searchForFacetValuesRequest,
+      null
+    );
+    Type localVarReturnType = new TypeToken<SearchForFacetValuesResponse>() {}
+      .getType();
+    return this.execute(localVarCall, localVarReturnType);
+  }
+
+  /**
+   * Search for values of a given facet (asynchronously) Search for values of a given facet,
+   * optionally restricting the returned values to those contained in objects matching other search
+   * criteria.
+   *
+   * @param indexName The index in which to perform the request. (required)
+   * @param facetName The facet name. (required)
+   * @param searchForFacetValuesRequest (required)
+   * @param _callback The callback to be executed when the API call finishes
+   * @return The request call
+   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * <tr><td> 400 </td><td> Bad request or request arguments. </td><td>  -  </td></tr>
+   * <tr><td> 402 </td><td> This feature is not enabled on your Algolia account. </td><td>  -  </td></tr>
+   * <tr><td> 403 </td><td> Method not allowed with this API key. </td><td>  -  </td></tr>
+   * <tr><td> 404 </td><td> Index not found. </td><td>  -  </td></tr>
+   * </table>
+   */
+  public okhttp3.Call searchForFacetValuesAsync(
+    String indexName,
+    String facetName,
+    SearchForFacetValuesRequest searchForFacetValuesRequest,
+    final ApiCallback<SearchForFacetValuesResponse> _callback
+  ) throws ApiException {
+    okhttp3.Call localVarCall = searchForFacetValuesValidateBeforeCall(
+      indexName,
+      facetName,
+      searchForFacetValuesRequest,
+      _callback
+    );
+    Type localVarReturnType = new TypeToken<SearchForFacetValuesResponse>() {}
       .getType();
     this.executeAsync(localVarCall, localVarReturnType, _callback);
     return localVarCall;

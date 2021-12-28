@@ -288,9 +288,7 @@ indexSettingsAsSearchParams:
       description: Choose which fields to return in the API response. This parameters applies to search and browse queries.
       default: []
     maxFacetHits:
-      type: integer
-      description: Maximum number of facet hits to return during a search for facet values.
-      default: 10
+      $ref: '#/maxFacetHits'
     attributeCriteriaComputedByMinProximity:
       type: boolean
       description: When attribute is ranked above proximity in your ranking formula, proximity is used to select which searchable attribute is matched in the attribute ranking stage.
@@ -299,6 +297,12 @@ indexSettingsAsSearchParams:
       type: object
       description: Content defining how the search interface should be rendered. Can be set via the settings for a default value and can be overridden via rules.
       default: {}
+
+maxFacetHits:
+  type: integer
+  description: Maximum number of facet hits to return during a search for facet values. For performance reasons, the maximum allowed number of returned values is 100.
+  maximum: 100
+  default: 10
 
 hitsPerPage:
   type: integer

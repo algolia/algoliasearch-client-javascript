@@ -86,7 +86,7 @@ public class SnippetResult {
    */
   @javax.annotation.Nullable
   @ApiModelProperty(
-    example = "<em>George</em> <em>Clo</em>oney...",
+    example = "<em>George</em> <em>Clo</em>oney",
     value = "Markup text with occurrences highlighted."
   )
   public String getValue() {

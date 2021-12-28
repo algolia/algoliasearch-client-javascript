@@ -3,6 +3,21 @@ searchResponse:
     - $ref: '#/baseSearchResponse'
     - $ref: '#/searchHits'
 
+browseResponse:
+  allOf:
+    - $ref: '#/baseSearchResponse'
+    - $ref: '#/searchHits'
+    - $ref: '#/baseBrowseResponse'
+
+baseBrowseResponse:
+  type: object
+  additionalProperties: false
+  required:
+    - cursor
+  properties:
+    cursor:
+      $ref: 'SearchParams.yml#/cursor'
+
 searchHits:
   type: object
   additionalProperties: false

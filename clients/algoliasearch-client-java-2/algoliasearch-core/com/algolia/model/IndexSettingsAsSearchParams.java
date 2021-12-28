@@ -1718,13 +1718,15 @@ public class IndexSettingsAsSearchParams {
   }
 
   /**
-   * Maximum number of facet hits to return during a search for facet values.
+   * Maximum number of facet hits to return during a search for facet values. For performance
+   * reasons, the maximum allowed number of returned values is 100. maximum: 100
    *
    * @return maxFacetHits
    */
   @javax.annotation.Nullable
   @ApiModelProperty(
-    value = "Maximum number of facet hits to return during a search for facet values."
+    value = "Maximum number of facet hits to return during a search for facet values. For performance" +
+    " reasons, the maximum allowed number of returned values is 100."
   )
   public Integer getMaxFacetHits() {
     return maxFacetHits;
