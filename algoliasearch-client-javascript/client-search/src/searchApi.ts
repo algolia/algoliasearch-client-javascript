@@ -8,6 +8,8 @@ import type { BatchAssignUserIdsResponse } from '../model/batchAssignUserIdsResp
 import type { BatchDictionaryEntries } from '../model/batchDictionaryEntries';
 import type { BatchObject } from '../model/batchObject';
 import type { BatchResponse } from '../model/batchResponse';
+import type { BrowseRequest } from '../model/browseRequest';
+import type { BrowseResponse } from '../model/browseResponse';
 import type { ClearAllSynonymsResponse } from '../model/clearAllSynonymsResponse';
 import type { DeleteApiKeyResponse } from '../model/deleteApiKeyResponse';
 import type { DeleteIndexResponse } from '../model/deleteIndexResponse';
@@ -39,6 +41,8 @@ import type { SaveObjectResponse } from '../model/saveObjectResponse';
 import type { SaveSynonymResponse } from '../model/saveSynonymResponse';
 import type { SaveSynonymsResponse } from '../model/saveSynonymsResponse';
 import type { SearchDictionaryEntries } from '../model/searchDictionaryEntries';
+import type { SearchForFacetValuesRequest } from '../model/searchForFacetValuesRequest';
+import type { SearchForFacetValuesResponse } from '../model/searchForFacetValuesResponse';
 import type { SearchParams } from '../model/searchParams';
 import type { SearchParamsAsString } from '../model/searchParamsAsString';
 import type { SearchResponse } from '../model/searchResponse';
@@ -430,6 +434,49 @@ export class SearchApi {
       method: 'POST',
       path,
       data: rule,
+    };
+
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
+
+    return this.sendRequest(request, requestOptions);
+  }
+  /**
+   * This method allows you to retrieve all index content. It can retrieve up to 1,000 records per call and supports full text search and filters. For performance reasons, some features are not supported, including `distinct`, sorting by `typos`, `words` or `geo distance`. When there is more content to be browsed, the response contains a cursor field. This cursor has to be passed to the subsequent call to browse in order to get the next page of results. When the end of the index has been reached, the cursor field is absent from the response.
+   *
+   * @summary Retrieve all index content.
+   * @param indexName - The index in which to perform the request.
+   * @param browseRequest - The browseRequest.
+   */
+  browse(
+    indexName: string,
+    browseRequest: BrowseRequest
+  ): Promise<BrowseResponse> {
+    const path = '/1/indexes/{indexName}/browse'.replace(
+      '{indexName}',
+      encodeURIComponent(String(indexName))
+    );
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (indexName === null || indexName === undefined) {
+      throw new Error(
+        'Required parameter indexName was null or undefined when calling browse.'
+      );
+    }
+
+    if (browseRequest === null || browseRequest === undefined) {
+      throw new Error(
+        'Required parameter browseRequest was null or undefined when calling browse.'
+      );
+    }
+
+    const request: Request = {
+      method: 'POST',
+      path,
+      data: browseRequest,
     };
 
     const requestOptions: RequestOptions = {
@@ -1642,6 +1689,59 @@ export class SearchApi {
       method: 'POST',
       path,
       data: searchDictionaryEntries,
+    };
+
+    const requestOptions: RequestOptions = {
+      headers,
+      queryParameters,
+    };
+
+    return this.sendRequest(request, requestOptions);
+  }
+  /**
+   * Search for values of a given facet, optionally restricting the returned values to those contained in objects matching other search criteria.
+   *
+   * @summary Search for values of a given facet.
+   * @param indexName - The index in which to perform the request.
+   * @param facetName - The facet name.
+   * @param searchForFacetValuesRequest - The searchForFacetValuesRequest.
+   */
+  searchForFacetValues(
+    indexName: string,
+    facetName: string,
+    searchForFacetValuesRequest: SearchForFacetValuesRequest
+  ): Promise<SearchForFacetValuesResponse> {
+    const path = '/1/indexes/{indexName}/facets/{facetName}/query'
+      .replace('{indexName}', encodeURIComponent(String(indexName)))
+      .replace('{facetName}', encodeURIComponent(String(facetName)));
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (indexName === null || indexName === undefined) {
+      throw new Error(
+        'Required parameter indexName was null or undefined when calling searchForFacetValues.'
+      );
+    }
+
+    if (facetName === null || facetName === undefined) {
+      throw new Error(
+        'Required parameter facetName was null or undefined when calling searchForFacetValues.'
+      );
+    }
+
+    if (
+      searchForFacetValuesRequest === null ||
+      searchForFacetValuesRequest === undefined
+    ) {
+      throw new Error(
+        'Required parameter searchForFacetValuesRequest was null or undefined when calling searchForFacetValues.'
+      );
+    }
+
+    const request: Request = {
+      method: 'POST',
+      path,
+      data: searchForFacetValuesRequest,
     };
 
     const requestOptions: RequestOptions = {

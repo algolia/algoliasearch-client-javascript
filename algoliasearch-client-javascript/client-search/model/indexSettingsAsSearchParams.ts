@@ -164,7 +164,7 @@ export type IndexSettingsAsSearchParams = {
    */
   responseFields?: string[];
   /**
-   * Maximum number of facet hits to return during a search for facet values.
+   * Maximum number of facet hits to return during a search for facet values. For performance reasons, the maximum allowed number of returned values is 100.
    */
   maxFacetHits?: number;
   /**

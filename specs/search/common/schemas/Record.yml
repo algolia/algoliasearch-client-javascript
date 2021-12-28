@@ -23,9 +23,7 @@ highlightResult:
   additionalProperties: false
   properties:
     value:
-      type: string
-      description: Markup text with occurrences highlighted.
-      example: '<em>George</em> <em>Clo</em>oney'
+      $ref: '#/highlightedValue'
     matchLevel:
       type: string
       description: Indicates how well the attribute matched the search query.
@@ -44,9 +42,7 @@ snippetResult:
   additionalProperties: false
   properties:
     value:
-      type: string
-      description: Markup text with occurrences highlighted.
-      example: '<em>George</em> <em>Clo</em>oney...'
+      $ref: '#/highlightedValue'
     matchLevel:
       type: string
       description: Indicates how well the attribute matched the search query.
@@ -103,3 +99,8 @@ rankingInfo:
     word:
       type: integer
       description: Number of matched words, including prefixes and typos.
+
+highlightedValue:
+  type: string
+  description: Markup text with occurrences highlighted.
+  example: '<em>George</em> <em>Clo</em>oney'
