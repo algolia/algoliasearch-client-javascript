@@ -8,6 +8,14 @@ describe('Common Test Suite', () => {
     { requester: new EchoRequester() }
   );
 
+  test('get getDictionarySettings results', async () => {
+    const req = await client.getDictionarySettings();
+    expect(req).toMatchObject({
+      path: '/1/dictionaries/*/settings',
+      method: 'GET',
+    });
+  });
+
   test('searchSynonyms', async () => {
     const req = await client.searchSynonyms(
       'indexName',
@@ -66,6 +74,31 @@ describe('Common Test Suite', () => {
     });
   });
 
+  test('get searchForFacetValues results with minimal parameters', async () => {
+    const req = await client.searchForFacetValues('indexName', 'facetName');
+    expect(req).toMatchObject({
+      path: '/1/indexes/indexName/facets/facetName/query',
+      method: 'POST',
+    });
+  });
+
+  test('get searchForFacetValues results with all parameters', async () => {
+    const req = await client.searchForFacetValues('indexName', 'facetName', {
+      params: "query=foo&facetFilters=['bar']",
+      facetQuery: 'foo',
+      maxFacetHits: 42,
+    });
+    expect(req).toMatchObject({
+      path: '/1/indexes/indexName/facets/facetName/query',
+      method: 'POST',
+      data: {
+        params: "query=foo&facetFilters=['bar']",
+        facetQuery: 'foo',
+        maxFacetHits: 42,
+      },
+    });
+  });
+
   test('getSynonym', async () => {
     const req = await client.getSynonym('indexName', 'id1');
     expect(req).toMatchObject({
@@ -83,11 +116,70 @@ describe('Common Test Suite', () => {
     });
   });
 
+  test('get setDictionarySettings results with minimal parameters', async () => {
+    const req = await client.setDictionarySettings({
+      disableStandardEntries: { plurals: { fr: false, en: false, ru: true } },
+    });
+    expect(req).toMatchObject({
+      path: '/1/dictionaries/*/settings',
+      method: 'PUT',
+      data: {
+        disableStandardEntries: { plurals: { fr: false, en: false, ru: true } },
+      },
+    });
+  });
+
+  test('get setDictionarySettings results with all parameters', async () => {
+    const req = await client.setDictionarySettings({
+      disableStandardEntries: {
+        plurals: { fr: false, en: false, ru: true },
+        stopwords: { fr: false },
+        compounds: { ru: true },
+      },
+    });
+    expect(req).toMatchObject({
+      path: '/1/dictionaries/*/settings',
+      method: 'PUT',
+      data: {
+        disableStandardEntries: {
+          plurals: { fr: false, en: false, ru: true },
+          stopwords: { fr: false },
+          compounds: { ru: true },
+        },
+      },
+    });
+  });
+
   test('getRule', async () => {
     const req = await client.getRule('indexName', 'id1');
     expect(req).toMatchObject({
       path: '/1/indexes/indexName/rules/id1',
       method: 'GET',
+    });
+  });
+
+  test('get searchDictionaryEntries results with minimal parameters', async () => {
+    const req = await client.searchDictionaryEntries('dictionaryName', {
+      query: 'foo',
+    });
+    expect(req).toMatchObject({
+      path: '/1/dictionaries/dictionaryName/search',
+      method: 'POST',
+      data: { query: 'foo' },
+    });
+  });
+
+  test('get searchDictionaryEntries results with all parameters', async () => {
+    const req = await client.searchDictionaryEntries('dictionaryName', {
+      query: 'foo',
+      page: 4,
+      hitsPerPage: 2,
+      language: 'fr',
+    });
+    expect(req).toMatchObject({
+      path: '/1/dictionaries/dictionaryName/search',
+      method: 'POST',
+      data: { query: 'foo', page: 4, hitsPerPage: 2, language: 'fr' },
     });
   });
 
@@ -143,6 +235,14 @@ describe('Common Test Suite', () => {
         maxQueriesPerIPPerHour: 100,
         maxHitsPerQuery: 20,
       },
+    });
+  });
+
+  test('get getDictionaryLanguages', async () => {
+    const req = await client.getDictionaryLanguages();
+    expect(req).toMatchObject({
+      path: '/1/dictionaries/*/languages',
+      method: 'GET',
     });
   });
 
@@ -230,6 +330,26 @@ describe('Common Test Suite', () => {
     });
   });
 
+  test('get browse results with minimal parameters', async () => {
+    const req = await client.browse('indexName');
+    expect(req).toMatchObject({
+      path: '/1/indexes/indexName/browse',
+      method: 'POST',
+    });
+  });
+
+  test('get browse results with all parameters', async () => {
+    const req = await client.browse('indexName', {
+      params: "query=foo&facetFilters=['bar']",
+      cursor: 'cts',
+    });
+    expect(req).toMatchObject({
+      path: '/1/indexes/indexName/browse',
+      method: 'POST',
+      data: { params: "query=foo&facetFilters=['bar']", cursor: 'cts' },
+    });
+  });
+
   test('deleteSynonym', async () => {
     const req = await client.deleteSynonym('indexName', 'id1');
     expect(req).toMatchObject({
@@ -243,6 +363,86 @@ describe('Common Test Suite', () => {
     expect(req).toMatchObject({
       path: '/1/indexes/indexName/rules/clear',
       method: 'POST',
+    });
+  });
+
+  test('get batchDictionaryEntries results with minimal parameters', async () => {
+    const req = await client.batchDictionaryEntries('dictionaryName', {
+      requests: [
+        { action: 'addEntry', body: { objectID: '1', language: 'en' } },
+        { action: 'deleteEntry', body: { objectID: '2', language: 'fr' } },
+      ],
+    });
+    expect(req).toMatchObject({
+      path: '/1/dictionaries/dictionaryName/batch',
+      method: 'POST',
+      data: {
+        requests: [
+          { action: 'addEntry', body: { objectID: '1', language: 'en' } },
+          { action: 'deleteEntry', body: { objectID: '2', language: 'fr' } },
+        ],
+      },
+    });
+  });
+
+  test('get batchDictionaryEntries results with all parameters', async () => {
+    const req = await client.batchDictionaryEntries('dictionaryName', {
+      clearExistingDictionaryEntries: false,
+      requests: [
+        {
+          action: 'addEntry',
+          body: {
+            objectID: '1',
+            language: 'en',
+            word: 'yo',
+            words: ['yo', 'algolia'],
+            decomposition: ['yo', 'algolia'],
+            state: 'enabled',
+          },
+        },
+        {
+          action: 'deleteEntry',
+          body: {
+            objectID: '2',
+            language: 'fr',
+            word: 'salut',
+            words: ['salut', 'algolia'],
+            decomposition: ['salut', 'algolia'],
+            state: 'enabled',
+          },
+        },
+      ],
+    });
+    expect(req).toMatchObject({
+      path: '/1/dictionaries/dictionaryName/batch',
+      method: 'POST',
+      data: {
+        clearExistingDictionaryEntries: false,
+        requests: [
+          {
+            action: 'addEntry',
+            body: {
+              objectID: '1',
+              language: 'en',
+              word: 'yo',
+              words: ['yo', 'algolia'],
+              decomposition: ['yo', 'algolia'],
+              state: 'enabled',
+            },
+          },
+          {
+            action: 'deleteEntry',
+            body: {
+              objectID: '2',
+              language: 'fr',
+              word: 'salut',
+              words: ['salut', 'algolia'],
+              decomposition: ['salut', 'algolia'],
+              state: 'enabled',
+            },
+          },
+        ],
+      },
     });
   });
 

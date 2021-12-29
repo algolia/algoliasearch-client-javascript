@@ -1,0 +1,114 @@
+[
+  {
+    "method": "batchDictionaryEntries",
+    "testName": "get batchDictionaryEntries results with minimal parameters",
+    "parameters": [
+      "dictionaryName",
+      {
+        "requests": [
+          {
+            "action": "addEntry",
+            "body": {
+              "objectID": "1",
+              "language": "en"
+            }
+          },
+          {
+            "action": "deleteEntry",
+            "body": {
+              "objectID": "2",
+              "language": "fr"
+            }
+          }
+        ]
+      }
+    ],
+    "request": {
+      "path": "/1/dictionaries/dictionaryName/batch",
+      "method": "POST",
+      "data": {
+        "requests": [
+          {
+            "action": "addEntry",
+            "body": {
+              "objectID": "1",
+              "language": "en"
+            }
+          },
+          {
+            "action": "deleteEntry",
+            "body": {
+              "objectID": "2",
+              "language": "fr"
+            }
+          }
+        ]
+      }
+    }
+  },
+  {
+    "method": "batchDictionaryEntries",
+    "testName": "get batchDictionaryEntries results with all parameters",
+    "parameters": [
+      "dictionaryName",
+      {
+        "clearExistingDictionaryEntries": false,
+        "requests": [
+          {
+            "action": "addEntry",
+            "body": {
+              "objectID": "1",
+              "language": "en",
+              "word": "yo",
+              "words": ["yo", "algolia"],
+              "decomposition": ["yo", "algolia"],
+              "state": "enabled"
+            }
+          },
+          {
+            "action": "deleteEntry",
+            "body": {
+              "objectID": "2",
+              "language": "fr",
+              "word": "salut",
+              "words": ["salut", "algolia"],
+              "decomposition": ["salut", "algolia"],
+              "state": "enabled"
+            }
+          }
+        ]
+      }
+    ],
+    "request": {
+      "path": "/1/dictionaries/dictionaryName/batch",
+      "method": "POST",
+      "data": {
+        "clearExistingDictionaryEntries": false,
+        "requests": [
+          {
+            "action": "addEntry",
+            "body": {
+              "objectID": "1",
+              "language": "en",
+              "word": "yo",
+              "words": ["yo", "algolia"],
+              "decomposition": ["yo", "algolia"],
+              "state": "enabled"
+            }
+          },
+          {
+            "action": "deleteEntry",
+            "body": {
+              "objectID": "2",
+              "language": "fr",
+              "word": "salut",
+              "words": ["salut", "algolia"],
+              "decomposition": ["salut", "algolia"],
+              "state": "enabled"
+            }
+          }
+        ]
+      }
+    }
+  }
+]

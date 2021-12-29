@@ -1340,7 +1340,7 @@ public class SearchApi extends ApiClient {
    * Build call for browse
    *
    * @param indexName The index in which to perform the request. (required)
-   * @param browseRequest (required)
+   * @param browseRequest (optional)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
@@ -1413,13 +1413,6 @@ public class SearchApi extends ApiClient {
       );
     }
 
-    // verify the required parameter 'browseRequest' is set
-    if (browseRequest == null) {
-      throw new ApiException(
-        "Missing the required parameter 'browseRequest' when calling browse(Async)"
-      );
-    }
-
     okhttp3.Call localVarCall = browseCall(indexName, browseRequest, _callback);
     return localVarCall;
   }
@@ -1434,7 +1427,7 @@ public class SearchApi extends ApiClient {
    * has been reached, the cursor field is absent from the response.
    *
    * @param indexName The index in which to perform the request. (required)
-   * @param browseRequest (required)
+   * @param browseRequest (optional)
    * @return BrowseResponse
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
@@ -1467,7 +1460,7 @@ public class SearchApi extends ApiClient {
    * has been reached, the cursor field is absent from the response.
    *
    * @param indexName The index in which to perform the request. (required)
-   * @param browseRequest (required)
+   * @param browseRequest (optional)
    * @return ApiResponse&lt;BrowseResponse&gt;
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
@@ -1505,7 +1498,7 @@ public class SearchApi extends ApiClient {
    * response.
    *
    * @param indexName The index in which to perform the request. (required)
-   * @param browseRequest (required)
+   * @param browseRequest (optional)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
    * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -7426,7 +7419,7 @@ public class SearchApi extends ApiClient {
    *
    * @param indexName The index in which to perform the request. (required)
    * @param facetName The facet name. (required)
-   * @param searchForFacetValuesRequest (required)
+   * @param searchForFacetValuesRequest (optional)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
@@ -7512,14 +7505,6 @@ public class SearchApi extends ApiClient {
       );
     }
 
-    // verify the required parameter 'searchForFacetValuesRequest' is set
-    if (searchForFacetValuesRequest == null) {
-      throw new ApiException(
-        "Missing the required parameter 'searchForFacetValuesRequest' when calling" +
-        " searchForFacetValues(Async)"
-      );
-    }
-
     okhttp3.Call localVarCall = searchForFacetValuesCall(
       indexName,
       facetName,
@@ -7535,7 +7520,7 @@ public class SearchApi extends ApiClient {
    *
    * @param indexName The index in which to perform the request. (required)
    * @param facetName The facet name. (required)
-   * @param searchForFacetValuesRequest (required)
+   * @param searchForFacetValuesRequest (optional)
    * @return SearchForFacetValuesResponse
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
@@ -7568,7 +7553,7 @@ public class SearchApi extends ApiClient {
    *
    * @param indexName The index in which to perform the request. (required)
    * @param facetName The facet name. (required)
-   * @param searchForFacetValuesRequest (required)
+   * @param searchForFacetValuesRequest (optional)
    * @return ApiResponse&lt;SearchForFacetValuesResponse&gt;
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
@@ -7605,7 +7590,7 @@ public class SearchApi extends ApiClient {
    *
    * @param indexName The index in which to perform the request. (required)
    * @param facetName The facet name. (required)
-   * @param searchForFacetValuesRequest (required)
+   * @param searchForFacetValuesRequest (optional)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
    * @throws ApiException If fail to process the API call, e.g. serializing the request body object

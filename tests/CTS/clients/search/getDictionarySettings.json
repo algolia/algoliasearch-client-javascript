@@ -1,0 +1,11 @@
+[
+  {
+    "method": "getDictionarySettings",
+    "testName": "get getDictionarySettings results",
+    "parameters": [],
+    "request": {
+      "path": "/1/dictionaries/*/settings",
+      "method": "GET"
+    }
+  }
+]
