@@ -1,21 +1,21 @@
-openapi: 3.0.2
-info:
-  title: A/B Testing API
-  description: API powering the A/B Testing feature of Algolia.
-  version: 0.0.1
-components:
-  securitySchemes:
-    appId:
-      $ref: '../common/securitySchemes.yml#/appId'
-    apiKey:
-      $ref: '../common/securitySchemes.yml#/apiKey'
-security:
-  - appId: []
-    apiKey: []
-paths:
-  /2/abtests:
-    $ref: './paths/abtests.yml'
-#  /2/abtests/{id}:
-#    $ref: './paths/abtest.yml'
-#  /2/abtests/{id}/stop:
-#    $ref: './paths/stopAbTest.yml'
+# openapi: 3.0.2
+# info:
+#   title: A/B Testing API
+#   description: API powering the A/B Testing feature of Algolia.
+#   version: 0.0.1
+# components:
+#   securitySchemes:
+#     appId:
+#       $ref: '../common/securitySchemes.yml#/appId'
+#     apiKey:
+#       $ref: '../common/securitySchemes.yml#/apiKey'
+# security:
+#   - appId: []
+#     apiKey: []
+# paths:
+# /2/abtests:
+# $ref: paths/abtests.yml
+# /2/abtests/{id}:
+#   $ref: 'paths/abtest.yml'
+# /2/abtests/{id}/stop:
+#   $ref: 'paths/stopAbTest.yml'

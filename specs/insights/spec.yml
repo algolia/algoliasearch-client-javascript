@@ -1,17 +1,17 @@
-openapi: 3.0.2
-info:
-  title: Insights API
-  description: API powering the Insights feature of Algolia.
-  version: 0.0.1
-components:
-  securitySchemes:
-    appId:
-      $ref: '../common/securitySchemes.yml#/appId'
-    apiKey:
-      $ref: '../common/securitySchemes.yml#/apiKey'
-security:
-  - appId: []
-    apiKey: []
-paths:
-  /1/events:
-    $ref: './paths/pushEvents.yml'
+# openapi: 3.0.2
+# info:
+#   title: Insights API
+#   description: API powering the Insights feature of Algolia.
+#   version: 0.0.1
+# components:
+#   securitySchemes:
+#     appId:
+#       $ref: '../common/securitySchemes.yml#/appId'
+#     apiKey:
+#       $ref: '../common/securitySchemes.yml#/apiKey'
+# security:
+#   - appId: []
+#     apiKey: []
+# paths:
+#   /1/events:
+#     $ref: paths/pushEvents.yml

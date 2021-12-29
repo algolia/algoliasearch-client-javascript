@@ -29,26 +29,15 @@ post:
             - cluster
   responses:
     '200':
-      description: OK
-      content:
-        application/json:
-          schema:
-            title: assignUserIdResponse
-            type: object
-            additionalProperties: false
-            properties:
-              createdAt:
-                $ref: '../../../common/parameters.yml#/createdAt'
-            required:
-              - createdAt
+      $ref: ../../../common/responses/CreatedAt.yml
     '400':
-      $ref: '../../../common/responses/BadRequest.yml'
+      $ref: ../../../common/responses/BadRequest.yml
     '402':
-      $ref: '../../../common/responses/FeatureNotEnabled.yml'
+      $ref: ../../../common/responses/FeatureNotEnabled.yml
     '403':
-      $ref: '../../../common/responses/MethodNotAllowed.yml'
+      $ref: ../../../common/responses/MethodNotAllowed.yml
     '404':
-      $ref: '../../../common/responses/IndexNotFound.yml'
+      $ref: ../../../common/responses/IndexNotFound.yml
 
 get:
   tags:
@@ -82,10 +71,10 @@ get:
             required:
               - userIDs
     '400':
-      $ref: '../../../common/responses/BadRequest.yml'
+      $ref: ../../../common/responses/BadRequest.yml
     '402':
-      $ref: '../../../common/responses/FeatureNotEnabled.yml'
+      $ref: ../../../common/responses/FeatureNotEnabled.yml
     '403':
-      $ref: '../../../common/responses/MethodNotAllowed.yml'
+      $ref: ../../../common/responses/MethodNotAllowed.yml
     '404':
-      $ref: '../../../common/responses/IndexNotFound.yml'
+      $ref: ../../../common/responses/IndexNotFound.yml

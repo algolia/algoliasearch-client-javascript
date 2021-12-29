@@ -14,7 +14,7 @@ OrderBy:
   description: Reorder the results.
   schema:
     enum: [searchCount, clickThroughRate, conversionRate, averageClickPosition]
-    default: 'searchCount'
+    default: searchCount
 
 Direction:
   in: query
@@ -22,7 +22,7 @@ Direction:
   description: The sorting of the result.
   schema:
     enum: [asc, desc]
-    default: 'asc'
+    default: asc
 
 ClickAnalytics:
   in: query

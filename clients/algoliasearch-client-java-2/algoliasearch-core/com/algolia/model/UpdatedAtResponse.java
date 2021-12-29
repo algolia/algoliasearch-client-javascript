@@ -6,44 +6,46 @@ import io.swagger.annotations.ApiModelProperty;
 import java.time.OffsetDateTime;
 import java.util.Objects;
 
-/** The dictionary entry reponse. */
-@ApiModel(description = "The dictionary entry reponse.")
-public class DictionaryEntriesResponse {
+/** The response with a taskID and an updatedAt timestamp. */
+@ApiModel(
+  description = "The response with a taskID and an updatedAt timestamp."
+)
+public class UpdatedAtResponse {
 
-  public static final String SERIALIZED_NAME_TASK_ID = "taskId";
+  public static final String SERIALIZED_NAME_TASK_I_D = "taskID";
 
-  @SerializedName(SERIALIZED_NAME_TASK_ID)
-  private Integer taskId;
+  @SerializedName(SERIALIZED_NAME_TASK_I_D)
+  private Integer taskID;
 
   public static final String SERIALIZED_NAME_UPDATED_AT = "updatedAt";
 
   @SerializedName(SERIALIZED_NAME_UPDATED_AT)
   private OffsetDateTime updatedAt;
 
-  public DictionaryEntriesResponse taskId(Integer taskId) {
-    this.taskId = taskId;
+  public UpdatedAtResponse taskID(Integer taskID) {
+    this.taskID = taskID;
     return this;
   }
 
   /**
    * taskID of the indexing task to wait for.
    *
-   * @return taskId
+   * @return taskID
    */
   @javax.annotation.Nonnull
   @ApiModelProperty(
     required = true,
     value = "taskID of the indexing task to wait for."
   )
-  public Integer getTaskId() {
-    return taskId;
+  public Integer getTaskID() {
+    return taskID;
   }
 
-  public void setTaskId(Integer taskId) {
-    this.taskId = taskId;
+  public void setTaskID(Integer taskID) {
+    this.taskID = taskID;
   }
 
-  public DictionaryEntriesResponse updatedAt(OffsetDateTime updatedAt) {
+  public UpdatedAtResponse updatedAt(OffsetDateTime updatedAt) {
     this.updatedAt = updatedAt;
     return this;
   }
@@ -74,23 +76,23 @@ public class DictionaryEntriesResponse {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    DictionaryEntriesResponse dictionaryEntriesResponse = (DictionaryEntriesResponse) o;
+    UpdatedAtResponse updatedAtResponse = (UpdatedAtResponse) o;
     return (
-      Objects.equals(this.taskId, dictionaryEntriesResponse.taskId) &&
-      Objects.equals(this.updatedAt, dictionaryEntriesResponse.updatedAt)
+      Objects.equals(this.taskID, updatedAtResponse.taskID) &&
+      Objects.equals(this.updatedAt, updatedAtResponse.updatedAt)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(taskId, updatedAt);
+    return Objects.hash(taskID, updatedAt);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class DictionaryEntriesResponse {\n");
-    sb.append("    taskId: ").append(toIndentedString(taskId)).append("\n");
+    sb.append("class UpdatedAtResponse {\n");
+    sb.append("    taskID: ").append(toIndentedString(taskID)).append("\n");
     sb
       .append("    updatedAt: ")
       .append(toIndentedString(updatedAt))

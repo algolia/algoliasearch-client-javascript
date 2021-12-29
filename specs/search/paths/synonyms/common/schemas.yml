@@ -16,13 +16,12 @@ synonymHit:
       type: string
       description: Type of the synonym object.
       enum:
-        [
-          'synonym',
-          'onewaysynonym',
-          'altcorrection1',
-          'altcorrection2',
-          'placeholder',
-        ]
+        - synonym
+        - onewaysynonym
+        - altcorrection1
+        - altcorrection2
+        - placeholder
+
     synonyms:
       type: array
       items:

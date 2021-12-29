@@ -6,11 +6,11 @@ userId:
     userID:
       type: string
       description: userID of the user.
-      example: 'user1'
+      example: user1
     clusterName:
       type: string
       description: Cluster on which the user is assigned.
-      example: 'c1-test'
+      example: c1-test
     nbRecords:
       type: integer
       description: Number of records belonging to the user.

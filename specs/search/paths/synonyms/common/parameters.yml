@@ -20,10 +20,8 @@ Type:
   schema:
     type: string
     enum:
-      [
-        'synonym',
-        'onewaysynonym',
-        'altcorrection1',
-        'altcorrection2',
-        'placeholder',
-      ]
+      - synonym
+      - onewaysynonym
+      - altcorrection1
+      - altcorrection2
+      - placeholder

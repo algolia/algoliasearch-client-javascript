@@ -17,7 +17,7 @@ post:
           properties:
             operation:
               type: string
-              enum: ['move', 'copy']
+              enum: [move, copy]
               description: Type of operation to perform (move or copy).
             destination:
               $ref: '../../../common/parameters.yml#/indexName'
@@ -25,30 +25,19 @@ post:
               type: array
               items:
                 type: string
-                enum: ['settings', 'synonyms', 'rules']
+                enum: [settings, synonyms, rules]
               description: Scope of the data to copy. When absent, a full copy is performed. When present, only the selected scopes are copied.
           required:
             - operation
             - destination
   responses:
     '200':
-      description: OK
-      content:
-        application/json:
-          schema:
-            title: operationIndexResponse
-            type: object
-            additionalProperties: false
-            properties:
-              taskID:
-                $ref: '../../../common/parameters.yml#/taskID'
-              updatedAt:
-                $ref: '../../../common/parameters.yml#/updatedAt'
+      $ref: ../../../common/responses/UpdatedAt.yml
     '400':
-      $ref: '../../../common/responses/BadRequest.yml'
+      $ref: ../../../common/responses/BadRequest.yml
     '402':
-      $ref: '../../../common/responses/FeatureNotEnabled.yml'
+      $ref: ../../../common/responses/FeatureNotEnabled.yml
     '403':
-      $ref: '../../../common/responses/MethodNotAllowed.yml'
+      $ref: ../../../common/responses/MethodNotAllowed.yml
     '404':
-      $ref: '../../../common/responses/IndexNotFound.yml'
+      $ref: ../../../common/responses/IndexNotFound.yml

@@ -26,19 +26,14 @@ post:
               $ref: '../../common/schemas/IndexSettings.yml#/hitsPerPage'
             language:
               $ref: 'common/parameters.yml#/language'
-
   responses:
     '200':
-      description: OK
-      content:
-        application/json:
-          schema:
-            $ref: './common/schemas/DictionaryEntriesResponse.yml#/dictionaryEntriesResponse'
+      $ref: ../../../common/responses/UpdatedAt.yml
     '400':
-      $ref: '../../../common/responses/BadRequest.yml'
+      $ref: ../../../common/responses/BadRequest.yml
     '402':
-      $ref: '../../../common/responses/FeatureNotEnabled.yml'
+      $ref: ../../../common/responses/FeatureNotEnabled.yml
     '403':
-      $ref: '../../../common/responses/MethodNotAllowed.yml'
+      $ref: ../../../common/responses/MethodNotAllowed.yml
     '404':
-      $ref: '../../../common/responses/IndexNotFound.yml'
+      $ref: ../../../common/responses/IndexNotFound.yml

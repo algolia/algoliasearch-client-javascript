@@ -10,22 +10,21 @@ apiKey:
       items:
         type: string
         enum:
-          [
-            'addObject',
-            'analytics',
-            'browse',
-            'deleteObject',
-            'deleteIndex',
-            'editSettings',
-            'listIndexes',
-            'logs',
-            'personalization',
-            'recommendation',
-            'search',
-            'seeUnretrievableAttributes',
-            'settings',
-            'usage',
-          ]
+          - addObject
+          - analytics
+          - browse
+          - deleteObject
+          - deleteIndex
+          - editSettings
+          - listIndexes
+          - logs
+          - personalization
+          - recommendation
+          - search
+          - seeUnretrievableAttributes
+          - settings
+          - usage
+
     description:
       type: string
       description: A comment used to identify a key more easily in the dashboard. It is not interpreted by the API.

@@ -11,7 +11,7 @@ source:
     source:
       description: The IP range of the source.
       type: string
-      example: '10.0.0.1/32'
+      example: 10.0.0.1/32
     description:
       description: The description of the source.
       type: string

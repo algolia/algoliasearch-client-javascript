@@ -43,5 +43,5 @@ dictionaryEntry:
     state:
       description: The state of the dictionary entry.
       type: string
-      enum: ['enabled', 'disabled']
+      enum: [enabled, disabled]
       default: enabled

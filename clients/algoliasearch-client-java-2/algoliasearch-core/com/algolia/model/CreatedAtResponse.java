@@ -1,19 +1,21 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.time.OffsetDateTime;
 import java.util.Objects;
 
-/** BatchAssignUserIdsResponse */
-public class BatchAssignUserIdsResponse {
+/** The response with a createdAt timestamp. */
+@ApiModel(description = "The response with a createdAt timestamp.")
+public class CreatedAtResponse {
 
   public static final String SERIALIZED_NAME_CREATED_AT = "createdAt";
 
   @SerializedName(SERIALIZED_NAME_CREATED_AT)
   private OffsetDateTime createdAt;
 
-  public BatchAssignUserIdsResponse createdAt(OffsetDateTime createdAt) {
+  public CreatedAtResponse createdAt(OffsetDateTime createdAt) {
     this.createdAt = createdAt;
     return this;
   }
@@ -44,8 +46,8 @@ public class BatchAssignUserIdsResponse {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    BatchAssignUserIdsResponse batchAssignUserIdsResponse = (BatchAssignUserIdsResponse) o;
-    return Objects.equals(this.createdAt, batchAssignUserIdsResponse.createdAt);
+    CreatedAtResponse createdAtResponse = (CreatedAtResponse) o;
+    return Objects.equals(this.createdAt, createdAtResponse.createdAt);
   }
 
   @Override
@@ -56,7 +58,7 @@ public class BatchAssignUserIdsResponse {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class BatchAssignUserIdsResponse {\n");
+    sb.append("class CreatedAtResponse {\n");
     sb
       .append("    createdAt: ")
       .append(toIndentedString(createdAt))

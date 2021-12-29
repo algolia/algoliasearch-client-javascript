@@ -1,20 +1,18 @@
-# Not used yet
-
 # timeouts:
 #   type: object
 #   additionalProperties: false
 #   properties:
 #     connect:
 #       type: integer
-#       description: 'Connection timeout in seconds.'
+#       description: Connection timeout in seconds.
 #       example: 2
 #     read:
 #       type: integer
-#       description: 'Read timeout in seconds.'
+#       description: Read timeout in seconds.
 #       example: 5
 #     write:
 #       type: integer
-#       description: 'Write timeout in seconds.'
+#       description: Write timeout in seconds.
 #       example: 30
 
 # X-Algolia-UserToken:

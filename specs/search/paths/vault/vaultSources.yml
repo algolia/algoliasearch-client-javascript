@@ -9,7 +9,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: './common/schemas.yml#/sources'
+            $ref: 'common/schemas.yml#/sources'
 
 put:
   tags:
@@ -22,7 +22,7 @@ put:
     content:
       application/json:
         schema:
-          $ref: './common/schemas.yml#/sources'
+          $ref: 'common/schemas.yml#/sources'
   responses:
     '200':
       description: OK

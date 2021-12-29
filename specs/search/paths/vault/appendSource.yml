@@ -12,15 +12,4 @@ post:
           $ref: 'common/schemas.yml#/source'
   responses:
     '200':
-      description: OK
-      content:
-        application/json:
-          schema:
-            title: appendSourceResponse
-            type: object
-            additionalProperties: false
-            required:
-              - createdAt
-            properties:
-              createdAt:
-                $ref: '../../../common/parameters.yml#/createdAt'
+      $ref: ../../../common/responses/CreatedAt.yml

@@ -103,4 +103,4 @@ rankingInfo:
 highlightedValue:
   type: string
   description: Markup text with occurrences highlighted.
-  example: '<em>George</em> <em>Clo</em>oney'
+  example: <em>George</em> <em>Clo</em>oney

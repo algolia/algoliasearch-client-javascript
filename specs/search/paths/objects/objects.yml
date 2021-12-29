@@ -30,13 +30,13 @@ post:
               objectID:
                 $ref: '../../../common/parameters.yml#/objectID'
     '400':
-      $ref: '../../../common/responses/BadRequest.yml'
+      $ref: ../../../common/responses/BadRequest.yml
     '402':
-      $ref: '../../../common/responses/FeatureNotEnabled.yml'
+      $ref: ../../../common/responses/FeatureNotEnabled.yml
     '403':
-      $ref: '../../../common/responses/MethodNotAllowed.yml'
+      $ref: ../../../common/responses/MethodNotAllowed.yml
     '404':
-      $ref: '../../../common/responses/IndexNotFound.yml'
+      $ref: ../../../common/responses/IndexNotFound.yml
 # delete index
 delete:
   tags:
@@ -48,23 +48,12 @@ delete:
     - $ref: '../../../common/parameters.yml#/IndexName'
   responses:
     '200':
-      description: OK
-      content:
-        application/json:
-          schema:
-            title: deleteIndexResponse
-            type: object
-            additionalProperties: false
-            properties:
-              taskID:
-                $ref: '../../../common/parameters.yml#/taskID'
-              deletedAt:
-                $ref: '../../../common/parameters.yml#/deletedAt'
+      $ref: ../../../common/responses/DeletedAt.yml
     '400':
-      $ref: '../../../common/responses/BadRequest.yml'
+      $ref: ../../../common/responses/BadRequest.yml
     '402':
-      $ref: '../../../common/responses/FeatureNotEnabled.yml'
+      $ref: ../../../common/responses/FeatureNotEnabled.yml
     '403':
-      $ref: '../../../common/responses/MethodNotAllowed.yml'
+      $ref: ../../../common/responses/MethodNotAllowed.yml
     '404':
-      $ref: '../../../common/responses/IndexNotFound.yml'
+      $ref: ../../../common/responses/IndexNotFound.yml

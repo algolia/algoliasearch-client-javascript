@@ -22,6 +22,7 @@ __metadata:
     eslint-plugin-jsdoc: 37.1.0
     eslint-plugin-prettier: 4.0.0
     eslint-plugin-unused-imports: 2.0.0
+    eslint-plugin-yml: 0.12.0
     json: 11.0.0
     prettier: 2.5.0
     prettier-plugin-java: 1.6.0
@@ -2565,6 +2566,20 @@ __metadata:
     "@typescript-eslint/eslint-plugin":
       optional: true
   checksum: 8aa1e03e75da2a62a354065e0cb8fe370118c6f8d9720a32fe8c1da937de6adb81a4fed7d0d391d115ac9453b49029fb19f970d180a2cf3dba451fd4c20f0dc4
+  languageName: node
+  linkType: hard
+
+"eslint-plugin-yml@npm:0.12.0":
+  version: 0.12.0
+  resolution: "eslint-plugin-yml@npm:0.12.0"
+  dependencies:
+    debug: ^4.3.2
+    lodash: ^4.17.21
+    natural-compare: ^1.4.0
+    yaml-eslint-parser: ^0.5.0
+  peerDependencies:
+    eslint: ">=6.0.0"
+  checksum: 67432347b49dd0c1dff6243a8ae13fb5db4048fda2404becd8c5205ad0286eea3b5bc59ea59532794e226c54591838fe20775298e1ce7aba072da8e43e7a3a4d
   languageName: node
   linkType: hard
 
@@ -6372,6 +6387,24 @@ typescript@4.5.2:
   version: 4.0.0
   resolution: "yallist@npm:4.0.0"
   checksum: 343617202af32df2a15a3be36a5a8c0c8545208f3d3dfbc6bb7c3e3b7e8c6f8e7485432e4f3b88da3031a6e20afa7c711eded32ddfb122896ac5d914e75848d5
+  languageName: node
+  linkType: hard
+
+"yaml-eslint-parser@npm:^0.5.0":
+  version: 0.5.0
+  resolution: "yaml-eslint-parser@npm:0.5.0"
+  dependencies:
+    eslint-visitor-keys: ^3.0.0
+    lodash: ^4.17.21
+    yaml: ^1.10.2
+  checksum: f4b316407fa3a98e35808c3321617be8d01333df23e5ac5c00b1bd2c497845aeebab4bd506209f38b1e48c3d0483ade8b2c2f0251d131924435ed718d88b2c26
+  languageName: node
+  linkType: hard
+
+"yaml@npm:^1.10.2":
+  version: 1.10.2
+  resolution: "yaml@npm:1.10.2"
+  checksum: ce4ada136e8a78a0b08dc10b4b900936912d15de59905b2bf415b4d33c63df1d555d23acb2a41b23cf9fb5da41c256441afca3d6509de7247daa062fd2c5ea5f
   languageName: node
   linkType: hard
 

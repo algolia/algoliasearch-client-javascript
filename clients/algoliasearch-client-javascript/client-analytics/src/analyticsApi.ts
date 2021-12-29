@@ -101,8 +101,8 @@ export class AnalyticsApi {
    *
    * @summary Returns the average click position.
    * @param index - The index name to target.
-   * @param startDate - The lower bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
-   * @param endDate - The upper bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
+   * @param startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   * @param endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
    * @param tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
    */
   getAverageClickPosition(
@@ -154,8 +154,8 @@ export class AnalyticsApi {
    *
    * @summary Returns the distribution of clicks per range of positions.
    * @param index - The index name to target.
-   * @param startDate - The lower bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
-   * @param endDate - The upper bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
+   * @param startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   * @param endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
    * @param tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
    */
   getClickPositions(
@@ -207,8 +207,8 @@ export class AnalyticsApi {
    *
    * @summary Returns a click-through rate (CTR).
    * @param index - The index name to target.
-   * @param startDate - The lower bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
-   * @param endDate - The upper bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
+   * @param startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   * @param endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
    * @param tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
    */
   getClickThroughRate(
@@ -260,8 +260,8 @@ export class AnalyticsApi {
    *
    * @summary Returns a conversion rate (CR).
    * @param index - The index name to target.
-   * @param startDate - The lower bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
-   * @param endDate - The upper bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
+   * @param startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   * @param endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
    * @param tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
    */
   getConversationRate(
@@ -313,8 +313,8 @@ export class AnalyticsApi {
    *
    * @summary Returns the rate at which searches didn\'t lead to any clicks.
    * @param index - The index name to target.
-   * @param startDate - The lower bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
-   * @param endDate - The upper bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
+   * @param startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   * @param endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
    * @param tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
    */
   getNoClickRate(
@@ -366,8 +366,8 @@ export class AnalyticsApi {
    *
    * @summary Returns the rate at which searches didn\'t return any results.
    * @param index - The index name to target.
-   * @param startDate - The lower bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
-   * @param endDate - The upper bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
+   * @param startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   * @param endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
    * @param tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
    */
   getNoResultsRate(
@@ -419,8 +419,8 @@ export class AnalyticsApi {
    *
    * @summary Returns the number of searches across the given time range.
    * @param index - The index name to target.
-   * @param startDate - The lower bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
-   * @param endDate - The upper bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
+   * @param startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   * @param endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
    * @param tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
    */
   getSearchesCount(
@@ -472,8 +472,8 @@ export class AnalyticsApi {
    *
    * @summary Returns top searches that didn\'t lead to any clicks.
    * @param index - The index name to target.
-   * @param startDate - The lower bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
-   * @param endDate - The upper bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
+   * @param startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   * @param endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
    * @param limit - How many items to fetch.
    * @param offset - From which position to start retrieving results.
    * @param tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
@@ -537,8 +537,8 @@ export class AnalyticsApi {
    *
    * @summary Returns top searches that didn\'t return any results.
    * @param index - The index name to target.
-   * @param startDate - The lower bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
-   * @param endDate - The upper bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
+   * @param startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   * @param endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
    * @param limit - How many items to fetch.
    * @param offset - From which position to start retrieving results.
    * @param tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
@@ -635,8 +635,8 @@ export class AnalyticsApi {
    *
    * @summary Returns top countries.
    * @param index - The index name to target.
-   * @param startDate - The lower bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
-   * @param endDate - The upper bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
+   * @param startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   * @param endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
    * @param limit - How many items to fetch.
    * @param offset - From which position to start retrieving results.
    * @param tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
@@ -700,8 +700,8 @@ export class AnalyticsApi {
    *
    * @summary Returns top filter attributes.
    * @param index - The index name to target.
-   * @param startDate - The lower bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
-   * @param endDate - The upper bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
+   * @param startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   * @param endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
    * @param limit - How many items to fetch.
    * @param offset - From which position to start retrieving results.
    * @param tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
@@ -766,8 +766,8 @@ export class AnalyticsApi {
    * @summary Returns top filter attributes for a given search.
    * @param index - The index name to target.
    * @param search - The query term. Must match the exact user input.
-   * @param startDate - The lower bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
-   * @param endDate - The upper bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
+   * @param startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   * @param endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
    * @param limit - How many items to fetch.
    * @param offset - From which position to start retrieving results.
    * @param tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
@@ -842,8 +842,8 @@ export class AnalyticsApi {
    * @summary Returns top filters for the given attribute.
    * @param attribute - The exact name of the attribute.
    * @param index - The index name to target.
-   * @param startDate - The lower bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
-   * @param endDate - The upper bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
+   * @param startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   * @param endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
    * @param limit - How many items to fetch.
    * @param offset - From which position to start retrieving results.
    * @param tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
@@ -919,8 +919,8 @@ export class AnalyticsApi {
    * @param attributes - The exact names of the attributes, separated by commas.
    * @param index - The index name to target.
    * @param search - The query term. Must match the exact user input.
-   * @param startDate - The lower bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
-   * @param endDate - The upper bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
+   * @param startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   * @param endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
    * @param limit - How many items to fetch.
    * @param offset - From which position to start retrieving results.
    * @param tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
@@ -1000,8 +1000,8 @@ export class AnalyticsApi {
    *
    * @summary Returns top filters with no results.
    * @param index - The index name to target.
-   * @param startDate - The lower bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
-   * @param endDate - The upper bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
+   * @param startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   * @param endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
    * @param limit - How many items to fetch.
    * @param offset - From which position to start retrieving results.
    * @param tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
@@ -1066,8 +1066,8 @@ export class AnalyticsApi {
    * @summary Returns top filters for the given no result search.
    * @param index - The index name to target.
    * @param search - The query term. Must match the exact user input.
-   * @param startDate - The lower bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
-   * @param endDate - The upper bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
+   * @param startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   * @param endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
    * @param limit - How many items to fetch.
    * @param offset - From which position to start retrieving results.
    * @param tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
@@ -1142,8 +1142,8 @@ export class AnalyticsApi {
    * @summary Returns top hits.
    * @param index - The index name to target.
    * @param clickAnalytics - Whether to include the click-through and conversion rates for a search.
-   * @param startDate - The lower bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
-   * @param endDate - The upper bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
+   * @param startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   * @param endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
    * @param limit - How many items to fetch.
    * @param offset - From which position to start retrieving results.
    * @param tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
@@ -1214,8 +1214,8 @@ export class AnalyticsApi {
    * @param index - The index name to target.
    * @param search - The query term. Must match the exact user input.
    * @param clickAnalytics - Whether to include the click-through and conversion rates for a search.
-   * @param startDate - The lower bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
-   * @param endDate - The upper bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
+   * @param startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   * @param endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
    * @param limit - How many items to fetch.
    * @param offset - From which position to start retrieving results.
    * @param tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
@@ -1295,8 +1295,8 @@ export class AnalyticsApi {
    * @summary Returns top searches.
    * @param index - The index name to target.
    * @param clickAnalytics - Whether to include the click-through and conversion rates for a search.
-   * @param startDate - The lower bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
-   * @param endDate - The upper bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
+   * @param startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   * @param endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
    * @param orderBy - Reorder the results.
    * @param direction - The sorting of the result.
    * @param limit - How many items to fetch.
@@ -1377,8 +1377,8 @@ export class AnalyticsApi {
    *
    * @summary Returns the distinct count of users across the given time range.
    * @param index - The index name to target.
-   * @param startDate - The lower bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
-   * @param endDate - The upper bound timestamp (a date, a string like “2006-01-02”) of the period to analyze.
+   * @param startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   * @param endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
    * @param tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
    */
   getUsersCount(

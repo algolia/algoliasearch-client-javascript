@@ -14,4 +14,4 @@ security:
     apiKey: []
 paths:
   /1/indexes/*/recommendations:
-    $ref: './paths/getRecommendations.yml'
+    $ref: paths/getRecommendations.yml

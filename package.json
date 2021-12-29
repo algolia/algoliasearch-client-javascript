@@ -26,7 +26,8 @@
     "playground:js:personalization": "yarn workspace javascript-playground start:personalization",
     "playground:js:recommend": "yarn workspace javascript-playground start:recommend",
     "playground:js:search": "yarn workspace javascript-playground start:search",
-    "specs:format": "yarn prettier --write specs"
+    "specs:format": "yarn prettier --write specs",
+    "specs:lint": "eslint --ext=yml specs/ .github/"
   },
   "devDependencies": {
     "@openapitools/openapi-generator-cli": "2.4.18",
@@ -42,6 +43,7 @@
     "eslint-plugin-jsdoc": "37.1.0",
     "eslint-plugin-prettier": "4.0.0",
     "eslint-plugin-unused-imports": "2.0.0",
+    "eslint-plugin-yml": "0.12.0",
     "json": "11.0.0",
     "prettier": "2.5.0",
     "prettier-plugin-java": "1.6.0",

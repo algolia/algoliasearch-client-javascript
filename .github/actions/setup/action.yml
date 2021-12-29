@@ -3,7 +3,7 @@ name: Setup
 description: Setup CI environment.
 
 runs:
-  using: 'composite'
+  using: composite
   steps:
     - name: Restore cache
       uses: ./.github/actions/cache
@@ -15,18 +15,14 @@ runs:
     - name: Install Java
       uses: actions/setup-java@v2
       with:
-        distribution: 'zulu'
-        java-version: '11.0.4'
+        distribution: zulu
+        java-version: 11.0.4
 
     - name: Install Node
       uses: actions/setup-node@v2
       with:
-        node-version-file: '.nvmrc'
+        node-version-file: .nvmrc
 
     - name: Install JavaScript Dependencies
       shell: bash
       run: yarn install
-
-    - name: Install spec linter
-      shell: bash
-      run: sudo apt-get -y install yamllint
