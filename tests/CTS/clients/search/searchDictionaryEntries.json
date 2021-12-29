@@ -1,0 +1,42 @@
+[
+  {
+    "method": "searchDictionaryEntries",
+    "testName": "get searchDictionaryEntries results with minimal parameters",
+    "parameters": [
+      "dictionaryName",
+      {
+        "query": "foo"
+      }
+    ],
+    "request": {
+      "path": "/1/dictionaries/dictionaryName/search",
+      "method": "POST",
+      "data": {
+        "query": "foo"
+      }
+    }
+  },
+  {
+    "method": "searchDictionaryEntries",
+    "testName": "get searchDictionaryEntries results with all parameters",
+    "parameters": [
+      "dictionaryName",
+      {
+        "query": "foo",
+        "page": 4,
+        "hitsPerPage": 2,
+        "language": "fr"
+      }
+    ],
+    "request": {
+      "path": "/1/dictionaries/dictionaryName/search",
+      "method": "POST",
+      "data": {
+        "query": "foo",
+        "page": 4,
+        "hitsPerPage": 2,
+        "language": "fr"
+      }
+    }
+  }
+]

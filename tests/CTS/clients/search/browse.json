@@ -1,0 +1,30 @@
+[
+  {
+    "method": "browse",
+    "testName": "get browse results with minimal parameters",
+    "parameters": ["indexName"],
+    "request": {
+      "path": "/1/indexes/indexName/browse",
+      "method": "POST"
+    }
+  },
+  {
+    "method": "browse",
+    "testName": "get browse results with all parameters",
+    "parameters": [
+      "indexName",
+      {
+        "params": "query=foo&facetFilters=['bar']",
+        "cursor": "cts"
+      }
+    ],
+    "request": {
+      "path": "/1/indexes/indexName/browse",
+      "method": "POST",
+      "data": {
+        "params": "query=foo&facetFilters=['bar']",
+        "cursor": "cts"
+      }
+    }
+  }
+]

@@ -12,7 +12,6 @@ post:
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
   requestBody:
-    required: true
     content:
       application/json:
         schema:

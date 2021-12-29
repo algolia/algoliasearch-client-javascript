@@ -443,7 +443,7 @@ export class SearchApi {
    */
   browse(
     indexName: string,
-    browseRequest: BrowseRequest
+    browseRequest?: BrowseRequest
   ): Promise<BrowseResponse> {
     const path = '/1/indexes/{indexName}/browse'.replace(
       '{indexName}',
@@ -455,12 +455,6 @@ export class SearchApi {
     if (indexName === null || indexName === undefined) {
       throw new Error(
         'Required parameter indexName was null or undefined when calling browse.'
-      );
-    }
-
-    if (browseRequest === null || browseRequest === undefined) {
-      throw new Error(
-        'Required parameter browseRequest was null or undefined when calling browse.'
       );
     }
 
@@ -1698,7 +1692,7 @@ export class SearchApi {
   searchForFacetValues(
     indexName: string,
     facetName: string,
-    searchForFacetValuesRequest: SearchForFacetValuesRequest
+    searchForFacetValuesRequest?: SearchForFacetValuesRequest
   ): Promise<SearchForFacetValuesResponse> {
     const path = '/1/indexes/{indexName}/facets/{facetName}/query'
       .replace('{indexName}', encodeURIComponent(String(indexName)))
@@ -1715,15 +1709,6 @@ export class SearchApi {
     if (facetName === null || facetName === undefined) {
       throw new Error(
         'Required parameter facetName was null or undefined when calling searchForFacetValues.'
-      );
-    }
-
-    if (
-      searchForFacetValuesRequest === null ||
-      searchForFacetValuesRequest === undefined
-    ) {
-      throw new Error(
-        'Required parameter searchForFacetValuesRequest was null or undefined when calling searchForFacetValues.'
       );
     }
 

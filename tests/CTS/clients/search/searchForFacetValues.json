@@ -1,0 +1,33 @@
+[
+  {
+    "method": "searchForFacetValues",
+    "testName": "get searchForFacetValues results with minimal parameters",
+    "parameters": ["indexName", "facetName"],
+    "request": {
+      "path": "/1/indexes/indexName/facets/facetName/query",
+      "method": "POST"
+    }
+  },
+  {
+    "method": "searchForFacetValues",
+    "testName": "get searchForFacetValues results with all parameters",
+    "parameters": [
+      "indexName",
+      "facetName",
+      {
+        "params": "query=foo&facetFilters=['bar']",
+        "facetQuery": "foo",
+        "maxFacetHits": 42
+      }
+    ],
+    "request": {
+      "path": "/1/indexes/indexName/facets/facetName/query",
+      "method": "POST",
+      "data": {
+        "params": "query=foo&facetFilters=['bar']",
+        "facetQuery": "foo",
+        "maxFacetHits": 42
+      }
+    }
+  }
+]

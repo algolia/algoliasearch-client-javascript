@@ -79,9 +79,15 @@ async function loadCTSForClient(client: string): Promise<CTSBlock[]> {
       continue;
     }
     const operationId = file.name.replace('.json', '');
-    const tests: CTSBlock[] = JSON.parse(
-      (await fsp.readFile(file.path)).toString()
-    );
+    const fileContent = (await fsp.readFile(file.path)).toString();
+
+    if (!fileContent) {
+      throw new Error(
+        `cannot read empty file for operationId ${operationId} - ${client} client`
+      );
+    }
+
+    const tests: CTSBlock[] = JSON.parse(fileContent);
 
     // check test validity against spec
     if (!operations.includes(operationId)) {

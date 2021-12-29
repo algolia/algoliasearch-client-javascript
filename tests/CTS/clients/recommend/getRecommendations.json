@@ -1,0 +1,188 @@
+[
+  {
+    "method": "getRecommendations",
+    "testName": "get recommendations with minimal parameters",
+    "parameters": [
+      {
+        "requests": [
+          {
+            "indexName": "indexName",
+            "objectID": "objectID",
+            "model": "related-products",
+            "threshold": 42
+          }
+        ]
+      }
+    ],
+    "request": {
+      "path": "/1/indexes/*/recommendations",
+      "method": "POST",
+      "data": {
+        "requests": [
+          {
+            "indexName": "indexName",
+            "objectID": "objectID",
+            "model": "related-products",
+            "threshold": 42
+          }
+        ]
+      }
+    }
+  },
+  {
+    "method": "getRecommendations",
+    "testName": "get recommendations with all parameters",
+    "parameters": [
+      {
+        "requests": [
+          {
+            "indexName": "indexName",
+            "objectID": "objectID",
+            "model": "related-products",
+            "threshold": 42,
+            "queryParameters": { "facetFilters": ["query"] },
+            "fallbackParameters": { "facetFilters": ["fallback"] }
+          }
+        ]
+      }
+    ],
+    "request": {
+      "path": "/1/indexes/*/recommendations",
+      "method": "POST",
+      "data": {
+        "requests": [
+          {
+            "indexName": "indexName",
+            "objectID": "objectID",
+            "model": "related-products",
+            "threshold": 42,
+            "queryParameters": { "facetFilters": ["query"] },
+            "fallbackParameters": { "facetFilters": ["fallback"] }
+          }
+        ]
+      }
+    }
+  },
+  {
+    "method": "getRecommendations",
+    "testName": "get multiple recommendations with minimal parameters",
+    "parameters": [
+      {
+        "requests": [
+          {
+            "indexName": "indexName1",
+            "objectID": "objectID1",
+            "model": "related-products",
+            "threshold": 21
+          },
+          {
+            "indexName": "indexName2",
+            "objectID": "objectID2",
+            "model": "related-products",
+            "threshold": 21
+          }
+        ]
+      }
+    ],
+    "request": {
+      "path": "/1/indexes/*/recommendations",
+      "method": "POST",
+      "data": {
+        "requests": [
+          {
+            "indexName": "indexName1",
+            "objectID": "objectID1",
+            "model": "related-products",
+            "threshold": 21
+          },
+          {
+            "indexName": "indexName2",
+            "objectID": "objectID2",
+            "model": "related-products",
+            "threshold": 21
+          }
+        ]
+      }
+    }
+  },
+  {
+    "method": "getRecommendations",
+    "testName": "get multiple recommendations with all parameters",
+    "parameters": [
+      {
+        "requests": [
+          {
+            "indexName": "indexName1",
+            "objectID": "objectID1",
+            "model": "related-products",
+            "threshold": 21,
+            "queryParameters": { "facetFilters": ["query1"] },
+            "fallbackParameters": { "facetFilters": ["fallback1"] }
+          },
+          {
+            "indexName": "indexName2",
+            "objectID": "objectID2",
+            "model": "related-products",
+            "threshold": 21,
+            "queryParameters": { "facetFilters": ["query2"] },
+            "fallbackParameters": { "facetFilters": ["fallback2"] }
+          }
+        ]
+      }
+    ],
+    "request": {
+      "path": "/1/indexes/*/recommendations",
+      "method": "POST",
+      "data": {
+        "requests": [
+          {
+            "indexName": "indexName1",
+            "objectID": "objectID1",
+            "model": "related-products",
+            "threshold": 21,
+            "queryParameters": { "facetFilters": ["query1"] },
+            "fallbackParameters": { "facetFilters": ["fallback1"] }
+          },
+          {
+            "indexName": "indexName2",
+            "objectID": "objectID2",
+            "model": "related-products",
+            "threshold": 21,
+            "queryParameters": { "facetFilters": ["query2"] },
+            "fallbackParameters": { "facetFilters": ["fallback2"] }
+          }
+        ]
+      }
+    }
+  },
+  {
+    "method": "getRecommendations",
+    "testName": "get frequently bought together recommendations",
+    "parameters": [
+      {
+        "requests": [
+          {
+            "indexName": "indexName1",
+            "objectID": "objectID1",
+            "model": "bought-together",
+            "threshold": 42
+          }
+        ]
+      }
+    ],
+    "request": {
+      "path": "/1/indexes/*/recommendations",
+      "method": "POST",
+      "data": {
+        "requests": [
+          {
+            "indexName": "indexName1",
+            "objectID": "objectID1",
+            "model": "bought-together",
+            "threshold": 42
+          }
+        ]
+      }
+    }
+  }
+]

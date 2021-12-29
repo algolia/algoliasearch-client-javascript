@@ -1,0 +1,11 @@
+[
+  {
+    "method": "getDictionaryLanguages",
+    "testName": "get getDictionaryLanguages",
+    "parameters": [],
+    "request": {
+      "path": "/1/dictionaries/*/languages",
+      "method": "GET"
+    }
+  }
+]
