@@ -19,7 +19,7 @@ post:
             query:
               $ref: '../../../common/parameters.yml#/query'
             anchoring:
-              $ref: './common/schemas.yml#/anchoring'
+              $ref: 'common/schemas.yml#/anchoring'
             context:
               type: string
               description: Restricts matches to contextual rules with a specific context (exact match).
@@ -68,10 +68,10 @@ post:
                 type: integer
                 description: Number of pages.
     '400':
-      $ref: '../../../common/responses/BadRequest.yml'
+      $ref: ../../../common/responses/BadRequest.yml
     '402':
-      $ref: '../../../common/responses/FeatureNotEnabled.yml'
+      $ref: ../../../common/responses/FeatureNotEnabled.yml
     '403':
-      $ref: '../../../common/responses/MethodNotAllowed.yml'
+      $ref: ../../../common/responses/MethodNotAllowed.yml
     '404':
-      $ref: '../../../common/responses/IndexNotFound.yml'
+      $ref: ../../../common/responses/IndexNotFound.yml

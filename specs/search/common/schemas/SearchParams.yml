@@ -65,7 +65,7 @@ baseSearchParams:
     sortFacetValuesBy:
       type: string
       description: Controls how facet values are fetched.
-      default: 'count'
+      default: count
     page:
       $ref: '#/page'
     offset:
@@ -184,4 +184,4 @@ page:
 cursor:
   type: string
   description: Cursor indicating the location to resume browsing from. Must match the value returned by the previous call.
-  example: 'jMDY3M2MwM2QwMWUxMmQwYWI0ZTN'
+  example: jMDY3M2MwM2QwMWUxMmQwYWI0ZTN

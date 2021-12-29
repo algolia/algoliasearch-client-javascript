@@ -4,7 +4,7 @@ FROM node:$NODE_VERSION-alpine
 
 ENV DOCKER=true
 
-RUN apk add openjdk11 maven jq bash yamllint perl curl
+RUN apk add openjdk11 maven jq bash perl curl
 
 WORKDIR /app
 

@@ -5,7 +5,7 @@ DictionaryName:
   description: The dictionary to search in.
   required: true
   schema:
-    enum: ['plurals', 'stopwords', 'compounds']
+    enum: [plurals, stopwords, compounds]
     type: string
 
 # misc

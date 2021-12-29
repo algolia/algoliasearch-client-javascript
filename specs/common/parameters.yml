@@ -6,7 +6,7 @@ IndexName:
   required: true
   schema:
     type: string
-    example: 'myIndexName'
+    example: myIndexName
 
 ObjectID:
   name: objectID

@@ -112,14 +112,14 @@ indexSettingsAsSearchParams:
         type: string
       description: Controls how Algolia should sort your results.
       default:
-        - 'typo'
-        - 'geo'
-        - 'words'
-        - 'filters'
-        - 'proximity'
-        - 'attribute'
-        - 'exact'
-        - 'custom'
+        - typo
+        - geo
+        - words
+        - filters
+        - proximity
+        - attribute
+        - exact
+        - custom
     customRanking:
       type: array
       items:
@@ -144,15 +144,15 @@ indexSettingsAsSearchParams:
     highlightPreTag:
       type: string
       description: The HTML string to insert before the highlighted parts in all highlight and snippet results.
-      default: '<em>'
+      default: <em>
     highlightPostTag:
       type: string
       description: The HTML string to insert after the highlighted parts in all highlight and snippet results.
-      default: '</em>'
+      default: </em>
     snippetEllipsisText:
       type: string
       description: String used as an ellipsis indicator when a snippet is truncated.
-      default: '…'
+      default: …
     restrictHighlightAndSnippetArrays:
       type: boolean
       description: Restrict highlighting and snippeting to items that matched the query.
@@ -169,7 +169,7 @@ indexSettingsAsSearchParams:
       default: 8
     typoTolerance:
       type: string
-      enum: [true, false, 'min', 'strict']
+      enum: [true, false, min, strict]
       description: Controls whether typo tolerance is enabled and how it is applied.
       default: true
     allowTyposOnNumericTokens:
@@ -218,14 +218,14 @@ indexSettingsAsSearchParams:
       default: false
     queryType:
       type: string
-      enum: ['prefixLast', 'prefixAll', 'prefixNone']
+      enum: [prefixLast, prefixAll, prefixNone]
       description: Controls if and how query words are interpreted as prefixes.
-      default: 'prefixLast'
+      default: prefixLast
     removeWordsIfNoResults:
       type: string
-      enum: ['none', 'lastWords', 'firstWords', 'allOptional']
+      enum: [none, lastWords, firstWords, allOptional]
       description: Selects a strategy to remove words from the query when it doesn't match any hits.
-      default: 'none'
+      default: none
     advancedSyntax:
       type: boolean
       description: Enables the advanced query syntax.
@@ -244,23 +244,23 @@ indexSettingsAsSearchParams:
       default: []
     exactOnSingleWordQuery:
       type: string
-      enum: ['attribute', 'none', 'word']
+      enum: [attribute, none, word]
       description: Controls how the exact ranking criterion is computed when the query contains only one word.
-      default: 'attribute'
+      default: attribute
     alternativesAsExact:
       type: array
       items:
         type: string
-        enum: ['ignorePlurals', 'singleWordSynonym', 'multiWordsSynonym']
+        enum: [ignorePlurals, singleWordSynonym, multiWordsSynonym]
       description: List of alternatives that should be considered an exact match by the exact ranking criterion.
-      default: ['ignorePlurals', 'singleWordSynonym']
+      default: [ignorePlurals, singleWordSynonym]
     advancedSyntaxFeatures:
       type: array
       items:
         type: string
-        enum: ['exactPhrase', 'excludeWords']
+        enum: [exactPhrase, excludeWords]
       description: Allows you to specify which advanced syntax features are active when ‘advancedSyntax' is enabled.
-      default: ['exactPhrase', 'excludeWords']
+      default: [exactPhrase, excludeWords]
     distinct:
       type: integer
       minimum: 0

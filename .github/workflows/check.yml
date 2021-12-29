@@ -37,7 +37,7 @@ jobs:
         run: yarn build:specs analytics
 
       - name: Lint
-        run: yamllint specs
+        run: yarn specs:lint
 
   client_javascript:
     runs-on: ubuntu-20.04

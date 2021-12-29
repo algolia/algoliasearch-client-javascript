@@ -30,13 +30,13 @@ put:
               updatedAt:
                 $ref: '../../../common/parameters.yml#/updatedAt'
     '400':
-      $ref: '../../../common/responses/BadRequest.yml'
+      $ref: ../../../common/responses/BadRequest.yml
     '402':
-      $ref: '../../../common/responses/FeatureNotEnabled.yml'
+      $ref: ../../../common/responses/FeatureNotEnabled.yml
     '403':
-      $ref: '../../../common/responses/MethodNotAllowed.yml'
+      $ref: ../../../common/responses/MethodNotAllowed.yml
     '404':
-      $ref: '../../../common/responses/IndexNotFound.yml'
+      $ref: ../../../common/responses/IndexNotFound.yml
 
 get:
   tags:
@@ -52,15 +52,15 @@ get:
       content:
         application/json:
           schema:
-            $ref: './common/schemas.yml#/keyObject'
+            $ref: 'common/schemas.yml#/keyObject'
     '400':
-      $ref: '../../../common/responses/BadRequest.yml'
+      $ref: ../../../common/responses/BadRequest.yml
     '402':
-      $ref: '../../../common/responses/FeatureNotEnabled.yml'
+      $ref: ../../../common/responses/FeatureNotEnabled.yml
     '403':
-      $ref: '../../../common/responses/MethodNotAllowed.yml'
+      $ref: ../../../common/responses/MethodNotAllowed.yml
     '404':
-      $ref: '../../../common/responses/IndexNotFound.yml'
+      $ref: ../../../common/responses/IndexNotFound.yml
 
 delete:
   tags:
@@ -85,10 +85,10 @@ delete:
               deletedAt:
                 $ref: '../../../common/parameters.yml#/deletedAt'
     '400':
-      $ref: '../../../common/responses/BadRequest.yml'
+      $ref: ../../../common/responses/BadRequest.yml
     '402':
-      $ref: '../../../common/responses/FeatureNotEnabled.yml'
+      $ref: ../../../common/responses/FeatureNotEnabled.yml
     '403':
-      $ref: '../../../common/responses/MethodNotAllowed.yml'
+      $ref: ../../../common/responses/MethodNotAllowed.yml
     '404':
-      $ref: '../../../common/responses/IndexNotFound.yml'
+      $ref: ../../../common/responses/IndexNotFound.yml

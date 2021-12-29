@@ -10,7 +10,7 @@ delete:
       description: The IP range of the source.
       schema:
         type: string
-        example: '10.0.0.1/32'
+        example: 10.0.0.1/32
   responses:
     '200':
       description: OK

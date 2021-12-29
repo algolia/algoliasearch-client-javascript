@@ -5,6 +5,37 @@ module.exports = {
     'plugin:import/errors',
     'plugin:import/warnings',
     'plugin:import/typescript',
+    'plugin:yml/standard',
+  ],
+
+  // yml linter
+  overrides: [
+    {
+      files: ['*.yml'],
+      parser: 'yaml-eslint-parser',
+      rules: {
+        '@typescript-eslint/naming-convention': 0,
+        'yml/quotes': [
+          2,
+          {
+            prefer: 'single',
+            avoidEscape: true,
+          },
+        ],
+        'yml/no-multiple-empty-lines': [
+          2,
+          {
+            max: 1,
+            maxEOF: 0,
+            maxBOF: 0,
+          },
+        ],
+        'yml/require-string-key': 2,
+
+        // Should be removed once the specs are finished
+        'yml/no-empty-document': 0,
+      },
+    },
   ],
 
   env: {

@@ -4,5 +4,5 @@ KeyString:
   required: true
   schema:
     type: string
-    example: 'myAPIKey'
+    example: myAPIKey
   description: API Key string.

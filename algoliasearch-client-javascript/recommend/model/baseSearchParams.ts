@@ -64,7 +64,7 @@ export type BaseSearchParams = {
    */
   aroundLatLng?: string;
   /**
-   * Search for entries around a given location automatically computed from the requester’s IP address.
+   * Search for entries around a given location automatically computed from the requester\'s IP address.
    */
   aroundLatLngViaIP?: boolean;
   /**

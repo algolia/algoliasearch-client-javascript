@@ -48,7 +48,7 @@ condition:
 anchoring:
   type: string
   description: Whether the pattern parameter must match the beginning or the end of the query string, or both, or none.
-  enum: ['is', 'startsWith', 'endsWith', 'contains']
+  enum: [is, startsWith, endsWith, contains]
 
 consequence:
   type: object
@@ -166,17 +166,5 @@ updatedRuleResponse:
       $ref: '../../../../common/parameters.yml#/taskID'
   required:
     - objectID
-    - updatedAt
-    - taskID
-
-updatedRuleResponseWithoutObjectID:
-  type: object
-  additionalProperties: false
-  properties:
-    updatedAt:
-      $ref: '../../../../common/parameters.yml#/updatedAt'
-    taskID:
-      $ref: '../../../../common/parameters.yml#/taskID'
-  required:
     - updatedAt
     - taskID

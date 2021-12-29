@@ -34,7 +34,7 @@ get:
                     - clickCount
                   properties:
                     position:
-                      description: |
+                      description: >
                         Range of positions with the following pattern:
 
                         Positions from 1 to 10 included are displayed in separated groups.
@@ -46,10 +46,10 @@ get:
                     clickCount:
                       $ref: '../common/parameters.yml#/clickCount'
     '400':
-      $ref: '../../../common/responses/BadRequest.yml'
+      $ref: ../../../common/responses/BadRequest.yml
     '402':
-      $ref: '../../../common/responses/FeatureNotEnabled.yml'
+      $ref: ../../../common/responses/FeatureNotEnabled.yml
     '403':
-      $ref: '../../../common/responses/MethodNotAllowed.yml'
+      $ref: ../../../common/responses/MethodNotAllowed.yml
     '404':
-      $ref: '../../../common/responses/IndexNotFound.yml'
+      $ref: ../../../common/responses/IndexNotFound.yml

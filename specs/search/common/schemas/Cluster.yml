@@ -31,4 +31,4 @@ dataSize:
 clusterName:
   type: string
   description: Name of the cluster.
-  example: 'c11-test'
+  example: c11-test
