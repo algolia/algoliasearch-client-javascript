@@ -1,0 +1,122 @@
+package com.algolia.model;
+
+import com.google.gson.annotations.SerializedName;
+import io.swagger.annotations.ApiModelProperty;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+
+/** MultipleBatchResponse */
+public class MultipleBatchResponse {
+
+  public static final String SERIALIZED_NAME_TASK_I_D = "taskID";
+
+  @SerializedName(SERIALIZED_NAME_TASK_I_D)
+  private Map<String, Object> taskID = null;
+
+  public static final String SERIALIZED_NAME_OBJECT_I_DS = "objectIDs";
+
+  @SerializedName(SERIALIZED_NAME_OBJECT_I_DS)
+  private List<String> objectIDs = null;
+
+  public MultipleBatchResponse taskID(Map<String, Object> taskID) {
+    this.taskID = taskID;
+    return this;
+  }
+
+  public MultipleBatchResponse putTaskIDItem(String key, Object taskIDItem) {
+    if (this.taskID == null) {
+      this.taskID = new HashMap<>();
+    }
+    this.taskID.put(key, taskIDItem);
+    return this;
+  }
+
+  /**
+   * List of tasksIDs per index.
+   *
+   * @return taskID
+   */
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "List of tasksIDs per index.")
+  public Map<String, Object> getTaskID() {
+    return taskID;
+  }
+
+  public void setTaskID(Map<String, Object> taskID) {
+    this.taskID = taskID;
+  }
+
+  public MultipleBatchResponse objectIDs(List<String> objectIDs) {
+    this.objectIDs = objectIDs;
+    return this;
+  }
+
+  public MultipleBatchResponse addObjectIDsItem(String objectIDsItem) {
+    if (this.objectIDs == null) {
+      this.objectIDs = new ArrayList<>();
+    }
+    this.objectIDs.add(objectIDsItem);
+    return this;
+  }
+
+  /**
+   * List of objectID.
+   *
+   * @return objectIDs
+   */
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "List of objectID.")
+  public List<String> getObjectIDs() {
+    return objectIDs;
+  }
+
+  public void setObjectIDs(List<String> objectIDs) {
+    this.objectIDs = objectIDs;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    MultipleBatchResponse multipleBatchResponse = (MultipleBatchResponse) o;
+    return (
+      Objects.equals(this.taskID, multipleBatchResponse.taskID) &&
+      Objects.equals(this.objectIDs, multipleBatchResponse.objectIDs)
+    );
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(taskID, objectIDs);
+  }
+
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("class MultipleBatchResponse {\n");
+    sb.append("    taskID: ").append(toIndentedString(taskID)).append("\n");
+    sb
+      .append("    objectIDs: ")
+      .append(toIndentedString(objectIDs))
+      .append("\n");
+    sb.append("}");
+    return sb.toString();
+  }
+
+  /**
+   * Convert the given object to string with each line indented by 4 spaces (except the first line).
+   */
+  private String toIndentedString(Object o) {
+    if (o == null) {
+      return "null";
+    }
+    return o.toString().replace("\n", "\n    ");
+  }
+}

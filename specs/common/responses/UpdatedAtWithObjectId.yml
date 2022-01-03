@@ -1,0 +1,15 @@
+description: OK
+content:
+  application/json:
+    schema:
+      title: updatedAtWithObjectIdResponse
+      description: The response with a taskID, an objectID and an updatedAt timestamp.
+      additionalProperties: false
+      type: object
+      properties:
+        taskID:
+          $ref: '../parameters.yml#/taskID'
+        updatedAt:
+          $ref: '../parameters.yml#/updatedAt'
+        objectID:
+          $ref: '../parameters.yml#/objectID'

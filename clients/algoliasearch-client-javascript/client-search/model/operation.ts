@@ -1,22 +1,13 @@
+import type { Action } from './action';
+
 export type Operation = {
-  /**
-   * Type of operation.
-   */
-  action?: Operation.ActionEnum;
+  action?: Action;
   /**
    * Arguments to the operation (depends on the type of the operation).
    */
   body?: { [key: string]: Record<string, any> };
+  /**
+   * Index to target for this operation.
+   */
+  indexName?: string;
 };
-
-export namespace Operation {
-  export enum ActionEnum {
-    AddObject = 'addObject',
-    UpdateObject = 'updateObject',
-    PartialUpdateObject = 'partialUpdateObject',
-    PartialUpdateObjectNoCreate = 'partialUpdateObjectNoCreate',
-    DeleteObject = 'deleteObject',
-    Delete = 'delete',
-    Clear = 'clear',
-  }
-}

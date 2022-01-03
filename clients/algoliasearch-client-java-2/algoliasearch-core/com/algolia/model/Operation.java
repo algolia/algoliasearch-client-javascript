@@ -1,12 +1,7 @@
 package com.algolia.model;
 
-import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModelProperty;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -14,92 +9,38 @@ import java.util.Objects;
 /** Operation */
 public class Operation {
 
-  /** type of operation. */
-  @JsonAdapter(ActionEnum.Adapter.class)
-  public enum ActionEnum {
-    ADDOBJECT("addObject"),
-
-    UPDATEOBJECT("updateObject"),
-
-    PARTIALUPDATEOBJECT("partialUpdateObject"),
-
-    PARTIALUPDATEOBJECTNOCREATE("partialUpdateObjectNoCreate"),
-
-    DELETEOBJECT("deleteObject"),
-
-    DELETE("delete"),
-
-    CLEAR("clear");
-
-    private String value;
-
-    ActionEnum(String value) {
-      this.value = value;
-    }
-
-    public String getValue() {
-      return value;
-    }
-
-    @Override
-    public String toString() {
-      return String.valueOf(value);
-    }
-
-    public static ActionEnum fromValue(String value) {
-      for (ActionEnum b : ActionEnum.values()) {
-        if (b.value.equals(value)) {
-          return b;
-        }
-      }
-      throw new IllegalArgumentException("Unexpected value '" + value + "'");
-    }
-
-    public static class Adapter extends TypeAdapter<ActionEnum> {
-
-      @Override
-      public void write(
-        final JsonWriter jsonWriter,
-        final ActionEnum enumeration
-      ) throws IOException {
-        jsonWriter.value(enumeration.getValue());
-      }
-
-      @Override
-      public ActionEnum read(final JsonReader jsonReader) throws IOException {
-        String value = jsonReader.nextString();
-        return ActionEnum.fromValue(value);
-      }
-    }
-  }
-
   public static final String SERIALIZED_NAME_ACTION = "action";
 
   @SerializedName(SERIALIZED_NAME_ACTION)
-  private ActionEnum action;
+  private Action action;
 
   public static final String SERIALIZED_NAME_BODY = "body";
 
   @SerializedName(SERIALIZED_NAME_BODY)
   private Map<String, Object> body = null;
 
-  public Operation action(ActionEnum action) {
+  public static final String SERIALIZED_NAME_INDEX_NAME = "indexName";
+
+  @SerializedName(SERIALIZED_NAME_INDEX_NAME)
+  private String indexName;
+
+  public Operation action(Action action) {
     this.action = action;
     return this;
   }
 
   /**
-   * type of operation.
+   * Get action
    *
    * @return action
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "type of operation.")
-  public ActionEnum getAction() {
+  @ApiModelProperty(value = "")
+  public Action getAction() {
     return action;
   }
 
-  public void setAction(ActionEnum action) {
+  public void setAction(Action action) {
     this.action = action;
   }
 
@@ -133,6 +74,26 @@ public class Operation {
     this.body = body;
   }
 
+  public Operation indexName(String indexName) {
+    this.indexName = indexName;
+    return this;
+  }
+
+  /**
+   * Index to target for this operation.
+   *
+   * @return indexName
+   */
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "Index to target for this operation.")
+  public String getIndexName() {
+    return indexName;
+  }
+
+  public void setIndexName(String indexName) {
+    this.indexName = indexName;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -144,13 +105,14 @@ public class Operation {
     Operation operation = (Operation) o;
     return (
       Objects.equals(this.action, operation.action) &&
-      Objects.equals(this.body, operation.body)
+      Objects.equals(this.body, operation.body) &&
+      Objects.equals(this.indexName, operation.indexName)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(action, body);
+    return Objects.hash(action, body, indexName);
   }
 
   @Override
@@ -159,6 +121,10 @@ public class Operation {
     sb.append("class Operation {\n");
     sb.append("    action: ").append(toIndentedString(action)).append("\n");
     sb.append("    body: ").append(toIndentedString(body)).append("\n");
+    sb
+      .append("    indexName: ")
+      .append(toIndentedString(indexName))
+      .append("\n");
     sb.append("}");
     return sb.toString();
   }

@@ -10,7 +10,7 @@ post:
     content:
       application/json:
         schema:
-          title: batchObject
+          title: batchWriteObject
           description: The `batch` requests.
           type: object
           additionalProperties: false
@@ -23,21 +23,9 @@ post:
                 additionalProperties: false
                 properties:
                   action:
-                    type: string
-                    enum:
-                      - addObject
-                      - updateObject
-                      - partialUpdateObject
-                      - partialUpdateObjectNoCreate
-                      - deleteObject
-                      - delete
-                      - clear
-                    description: type of operation.
+                    $ref: 'common/schemas.yml#/action'
                   body:
-                    type: object
-                    # this could be a long oneOf with every possibilities
-                    additionalProperties: true
-                    description: arguments to the operation (depends on the type of the operation).
+                    $ref: 'common/schemas.yml#/body'
   responses:
     '200':
       description: OK
