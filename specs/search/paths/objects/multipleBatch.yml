@@ -1,1 +1,53 @@
-# post:
+post:
+  tags:
+    - search
+  operationId: multipleBatch
+  description: Perform multiple write operations, potentially targeting multiple indices, in a single API call.
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          title: batchObject
+          description: The `batch` requests.
+          type: object
+          additionalProperties: false
+          properties:
+            requests:
+              type: array
+              items:
+                title: Operation.
+                type: object
+                additionalProperties: false
+                properties:
+                  action:
+                    $ref: 'common/schemas.yml#/action'
+                  body:
+                    $ref: 'common/schemas.yml#/body'
+                  indexName:
+                    type: string
+                    description: Index to target for this operation.
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            title: multipleBatchResponse
+            type: object
+            additionalProperties: false
+            properties:
+              taskID:
+                type: object
+                description: List of tasksIDs per index.
+                additionalProperties: true
+              objectIDs:
+                $ref: ../../../common/parameters.yml#/objectIDs
+    '400':
+      $ref: ../../../common/responses/BadRequest.yml
+    '402':
+      $ref: ../../../common/responses/FeatureNotEnabled.yml
+    '403':
+      $ref: ../../../common/responses/MethodNotAllowed.yml
+    '404':
+      $ref: ../../../common/responses/IndexNotFound.yml

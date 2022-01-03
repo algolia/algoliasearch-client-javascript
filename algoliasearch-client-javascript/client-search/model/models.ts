@@ -1,6 +1,7 @@
 /* eslint-disable no-param-reassign */
 import type { RequestOptions } from '../utils/types';
 
+export * from './action';
 export * from './addApiKeyResponse';
 export * from './anchoring';
 export * from './apiKey';
@@ -16,8 +17,10 @@ export * from './batchDictionaryEntries';
 export * from './batchDictionaryEntriesRequest';
 export * from './batchObject';
 export * from './batchResponse';
+export * from './batchWriteObject';
 export * from './browseRequest';
 export * from './browseResponse';
+export * from './buildInOperation';
 export * from './condition';
 export * from './consequence';
 export * from './consequenceHide';
@@ -34,6 +37,8 @@ export * from './getDictionarySettingsResponse';
 export * from './getLogsResponse';
 export * from './getLogsResponseInnerQueries';
 export * from './getLogsResponseLogs';
+export * from './getObjectsObject';
+export * from './getObjectsResponse';
 export * from './getTaskResponse';
 export * from './getTopUserIdsResponse';
 export * from './highlightResult';
@@ -46,6 +51,8 @@ export * from './listApiKeysResponse';
 export * from './listClustersResponse';
 export * from './listIndicesResponse';
 export * from './listUserIdsResponse';
+export * from './multipleBatchResponse';
+export * from './multipleGetObjectsObject';
 export * from './multipleQueries';
 export * from './multipleQueriesObject';
 export * from './multipleQueriesResponse';
@@ -84,6 +91,7 @@ export * from './synonymHitHighlightResult';
 export * from './timeRange';
 export * from './updateApiKeyResponse';
 export * from './updatedAtResponse';
+export * from './updatedAtWithObjectIdResponse';
 export * from './updatedRuleResponse';
 export * from './userId';
 

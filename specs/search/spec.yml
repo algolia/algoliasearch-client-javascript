@@ -6,9 +6,9 @@ info:
 components:
   securitySchemes:
     appId:
-      $ref: '../common/securitySchemes.yml#/appId'
+      $ref: ../common/securitySchemes.yml#/appId
     apiKey:
-      $ref: '../common/securitySchemes.yml#/apiKey'
+      $ref: ../common/securitySchemes.yml#/apiKey
 security:
   - appId: []
     apiKey: []
@@ -30,22 +30,20 @@ paths:
   # #########################
   /1/indexes/{indexName}:
     $ref: paths/objects/objects.yml
-  # /1/indexes/{indexName}/{objectID}:
-  #   $ref: 'paths/objects/object.yml'
-  # /1/indexes/{indexName}/deleteByQuery:
-  #   $ref: 'paths/objects/deleteBy.yml'
-  # /1/indexes/{indexName}/clear:
-  #   $ref: 'paths/objects/clearObjects.yml'
-  # /1/indexes/{indexName}/{objectID}/partial:
-  #   $ref: 'paths/objects/partialUpdate.yml'
+  /1/indexes/{indexName}/{objectID}:
+    $ref: paths/objects/object.yml
+  /1/indexes/{indexName}/deleteByQuery:
+    $ref: paths/objects/deleteBy.yml
+  /1/indexes/{indexName}/clear:
+    $ref: paths/objects/clearObjects.yml
+  /1/indexes/{indexName}/{objectID}/partial:
+    $ref: paths/objects/partialUpdate.yml
   /1/indexes/{indexName}/batch:
     $ref: paths/objects/batch.yml
-  # /1/indexes/*/batch:
-  #   $ref: 'paths/objects/multipleBatch.yml'
-  # /1/indexes/*/objects:
-  #   $ref: 'paths/objects/multipleGetObjects.yml'
-  # /1/indexes/{indexName}/{objectID}:
-  #   $ref: 'paths/objects/getObject.yml'
+  /1/indexes/*/batch:
+    $ref: paths/objects/multipleBatch.yml
+  /1/indexes/*/objects:
+    $ref: paths/objects/multipleGetObjects.yml
 
   # ##########################
   # ### Settings Endpoints ###

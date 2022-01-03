@@ -5,6 +5,8 @@ export CLIENT=$(cat openapitools.json | jq -r --arg generator "$GENERATOR" '."ge
 
 # Restore the oneOf spec
 mv ./specs/search/paths/search/search.yml.bak ./specs/search/paths/search/search.yml
+mv ./specs/search/paths/objects/deleteBy.yml.bak ./specs/search/paths/objects/deleteBy.yml
+mv ./specs/search/paths/objects/partialUpdate.yml.bak ./specs/search/paths/objects/partialUpdate.yml
 
 # Replace {} (OpenAPI default) with new Object
 find "$CLIENT" -type f -name "*.java" | xargs sed -i -e 's~= {}~= new Object()~g'
