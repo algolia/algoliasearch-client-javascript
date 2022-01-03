@@ -1,13 +1,13 @@
 // @ts-nocheck
 import { RecommendApi, EchoRequester } from '@algolia/recommend';
 
-describe('Common Test Suite', () => {
-  const client = new RecommendApi(
-    process.env.ALGOLIA_APPLICATION_ID,
-    process.env.ALGOLIA_SEARCH_KEY,
-    { requester: new EchoRequester() }
-  );
+const client = new RecommendApi(
+  process.env.ALGOLIA_APPLICATION_ID,
+  process.env.ALGOLIA_SEARCH_KEY,
+  { requester: new EchoRequester() }
+);
 
+describe('getRecommendations', () => {
   test('get recommendations with minimal parameters', async () => {
     const req = await client.getRecommendations({
       requests: [

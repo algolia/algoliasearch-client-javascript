@@ -11,7 +11,7 @@
     "build:specs": "./scripts/build/specs.sh ${0:-all} ${1:-yaml}",
     "build": "yarn build:specs && yarn build:clients",
     "clean": "rm -rf **/dist **/build **/node_modules",
-    "cts:generate": "yarn workspace tests cts:generate",
+    "cts:generate": "yarn workspace tests start",
     "cts:test": "yarn workspace tests test",
     "docker:build": "./scripts/docker/build.sh",
     "docker:clean": "docker stop dev; docker rm -f dev; docker image rm -f api-clients-automation",
