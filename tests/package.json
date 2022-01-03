@@ -2,13 +2,15 @@
   "name": "tests",
   "version": "1.0.0",
   "scripts": {
-    "test": "jest",
+    "build": "tsc",
     "lint:fix": "yarn eslint --ext=ts output --fix",
-    "cts:generate": "ts-node -T generateCTS.ts ${0:-all} && yarn lint:fix"
+    "test": "jest",
+    "start": "yarn build && node dist/tests/generateCTS.js ${0:-all} && yarn lint:fix"
   },
   "devDependencies": {
     "@algolia/client-search": "5.0.0",
     "@algolia/recommend": "5.0.0",
+    "@apidevtools/swagger-parser": "10.0.3",
     "@types/jest": "27.0.3",
     "@types/mustache": "4.1.2",
     "@types/node": "16.11.11",
@@ -18,9 +20,7 @@
     "mustache": "4.2.0",
     "openapi-types": "9.3.1",
     "prettier": "2.5.0",
-    "swagger-parser": "10.0.3",
     "ts-jest": "27.0.7",
-    "ts-node": "10.4.0",
     "typescript": "4.5.2"
   }
 }

@@ -1,13 +1,13 @@
 // @ts-nocheck
 import { SearchApi, EchoRequester } from '@algolia/client-search';
 
-describe('Common Test Suite', () => {
-  const client = new SearchApi(
-    process.env.ALGOLIA_APPLICATION_ID,
-    process.env.ALGOLIA_SEARCH_KEY,
-    { requester: new EchoRequester() }
-  );
+const client = new SearchApi(
+  process.env.ALGOLIA_APPLICATION_ID,
+  process.env.ALGOLIA_SEARCH_KEY,
+  { requester: new EchoRequester() }
+);
 
+describe('getDictionarySettings', () => {
   test('get getDictionarySettings results', async () => {
     const req = await client.getDictionarySettings();
     expect(req).toMatchObject({
@@ -15,7 +15,9 @@ describe('Common Test Suite', () => {
       method: 'GET',
     });
   });
+});
 
+describe('searchSynonyms', () => {
   test('searchSynonyms', async () => {
     const req = await client.searchSynonyms(
       'indexName',
@@ -27,7 +29,9 @@ describe('Common Test Suite', () => {
       method: 'POST',
     });
   });
+});
 
+describe('saveSynonyms', () => {
   test('saveSynonyms', async () => {
     const req = await client.saveSynonyms(
       'indexName',
@@ -65,7 +69,9 @@ describe('Common Test Suite', () => {
       ],
     });
   });
+});
 
+describe('deleteRule', () => {
   test('deleteRule', async () => {
     const req = await client.deleteRule('indexName', 'id1');
     expect(req).toMatchObject({
@@ -73,7 +79,9 @@ describe('Common Test Suite', () => {
       method: 'DELETE',
     });
   });
+});
 
+describe('searchForFacetValues', () => {
   test('get searchForFacetValues results with minimal parameters', async () => {
     const req = await client.searchForFacetValues('indexName', 'facetName');
     expect(req).toMatchObject({
@@ -98,7 +106,9 @@ describe('Common Test Suite', () => {
       },
     });
   });
+});
 
+describe('getSynonym', () => {
   test('getSynonym', async () => {
     const req = await client.getSynonym('indexName', 'id1');
     expect(req).toMatchObject({
@@ -106,7 +116,9 @@ describe('Common Test Suite', () => {
       method: 'GET',
     });
   });
+});
 
+describe('search', () => {
   test('search', async () => {
     const req = await client.search('indexName', { query: 'queryString' });
     expect(req).toMatchObject({
@@ -115,7 +127,9 @@ describe('Common Test Suite', () => {
       data: { query: 'queryString' },
     });
   });
+});
 
+describe('setDictionarySettings', () => {
   test('get setDictionarySettings results with minimal parameters', async () => {
     const req = await client.setDictionarySettings({
       disableStandardEntries: { plurals: { fr: false, en: false, ru: true } },
@@ -149,7 +163,9 @@ describe('Common Test Suite', () => {
       },
     });
   });
+});
 
+describe('getRule', () => {
   test('getRule', async () => {
     const req = await client.getRule('indexName', 'id1');
     expect(req).toMatchObject({
@@ -157,7 +173,9 @@ describe('Common Test Suite', () => {
       method: 'GET',
     });
   });
+});
 
+describe('searchDictionaryEntries', () => {
   test('get searchDictionaryEntries results with minimal parameters', async () => {
     const req = await client.searchDictionaryEntries('dictionaryName', {
       query: 'foo',
@@ -182,7 +200,9 @@ describe('Common Test Suite', () => {
       data: { query: 'foo', page: 4, hitsPerPage: 2, language: 'fr' },
     });
   });
+});
 
+describe('batchRules', () => {
   test('batchRules', async () => {
     const req = await client.batchRules(
       'indexName',
@@ -218,7 +238,9 @@ describe('Common Test Suite', () => {
       ],
     });
   });
+});
 
+describe('updateApiKey', () => {
   test('updateApiKey', async () => {
     const req = await client.updateApiKey('myApiKey', {
       acl: ['search', 'addObject'],
@@ -237,7 +259,9 @@ describe('Common Test Suite', () => {
       },
     });
   });
+});
 
+describe('getDictionaryLanguages', () => {
   test('get getDictionaryLanguages', async () => {
     const req = await client.getDictionaryLanguages();
     expect(req).toMatchObject({
@@ -245,7 +269,9 @@ describe('Common Test Suite', () => {
       method: 'GET',
     });
   });
+});
 
+describe('deleteApiKey', () => {
   test('deleteApiKey', async () => {
     const req = await client.deleteApiKey('myTestApiKey');
     expect(req).toMatchObject({
@@ -253,7 +279,9 @@ describe('Common Test Suite', () => {
       method: 'DELETE',
     });
   });
+});
 
+describe('searchRules', () => {
   test('searchRules', async () => {
     const req = await client.searchRules('indexName', { query: 'something' });
     expect(req).toMatchObject({
@@ -262,7 +290,9 @@ describe('Common Test Suite', () => {
       data: { query: 'something' },
     });
   });
+});
 
+describe('clearAllSynonyms', () => {
   test('clearAllSynonyms', async () => {
     const req = await client.clearAllSynonyms('indexName');
     expect(req).toMatchObject({
@@ -270,7 +300,9 @@ describe('Common Test Suite', () => {
       method: 'POST',
     });
   });
+});
 
+describe('saveRule', () => {
   test('saveRule', async () => {
     const req = await client.saveRule(
       'indexName',
@@ -292,7 +324,9 @@ describe('Common Test Suite', () => {
       },
     });
   });
+});
 
+describe('addApiKey', () => {
   test('addApiKey', async () => {
     const req = await client.addApiKey({
       acl: ['search', 'addObject'],
@@ -313,7 +347,9 @@ describe('Common Test Suite', () => {
       },
     });
   });
+});
 
+describe('restoreApiKey', () => {
   test('restoreApiKey', async () => {
     const req = await client.restoreApiKey('myApiKey');
     expect(req).toMatchObject({
@@ -321,7 +357,9 @@ describe('Common Test Suite', () => {
       method: 'POST',
     });
   });
+});
 
+describe('getApiKey', () => {
   test('getApiKey', async () => {
     const req = await client.getApiKey('myTestApiKey');
     expect(req).toMatchObject({
@@ -329,7 +367,9 @@ describe('Common Test Suite', () => {
       method: 'GET',
     });
   });
+});
 
+describe('browse', () => {
   test('get browse results with minimal parameters', async () => {
     const req = await client.browse('indexName');
     expect(req).toMatchObject({
@@ -349,7 +389,9 @@ describe('Common Test Suite', () => {
       data: { params: "query=foo&facetFilters=['bar']", cursor: 'cts' },
     });
   });
+});
 
+describe('deleteSynonym', () => {
   test('deleteSynonym', async () => {
     const req = await client.deleteSynonym('indexName', 'id1');
     expect(req).toMatchObject({
@@ -357,7 +399,9 @@ describe('Common Test Suite', () => {
       method: 'DELETE',
     });
   });
+});
 
+describe('clearRules', () => {
   test('clearRules', async () => {
     const req = await client.clearRules('indexName');
     expect(req).toMatchObject({
@@ -365,7 +409,9 @@ describe('Common Test Suite', () => {
       method: 'POST',
     });
   });
+});
 
+describe('batchDictionaryEntries', () => {
   test('get batchDictionaryEntries results with minimal parameters', async () => {
     const req = await client.batchDictionaryEntries('dictionaryName', {
       requests: [
@@ -445,7 +491,9 @@ describe('Common Test Suite', () => {
       },
     });
   });
+});
 
+describe('listApiKeys', () => {
   test('listApiKeys', async () => {
     const req = await client.listApiKeys();
     expect(req).toMatchObject({
@@ -453,7 +501,9 @@ describe('Common Test Suite', () => {
       method: 'GET',
     });
   });
+});
 
+describe('saveSynonym', () => {
   test('saveSynonym', async () => {
     const req = await client.saveSynonym(
       'indexName',
