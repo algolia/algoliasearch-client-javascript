@@ -1,4 +1,8 @@
-import { RecommendApi, ApiError, RecommendationRequest } from '@algolia/recommend';
+import {
+  RecommendApi,
+  ApiError,
+  RecommendationRequest,
+} from '@algolia/recommend';
 import dotenv from 'dotenv';
 
 dotenv.config({ path: '../.env' });
@@ -14,16 +18,20 @@ const client = new RecommendApi(appId, apiKey);
 
 async function testRecommend() {
   try {
-    const res = await client.getRecommendations({
-      requests: [
-        {
-          indexName: searchIndex,
-          model: RecommendationRequest.ModelEnum['BoughtTogether'],
-          objectID: searchQuery,
-          threshold: 0,
-        },
-      ],
-    });
+    const request = {
+      getRecommendations: {
+        requests: [
+          {
+            indexName: searchIndex,
+            model: RecommendationRequest.ModelEnum['BoughtTogether'],
+            objectID: searchQuery,
+            threshold: 0,
+          },
+        ],
+      },
+    };
+
+    const res = await client.getRecommendations(request);
 
     console.log(`[OK]`, res);
   } catch (e) {

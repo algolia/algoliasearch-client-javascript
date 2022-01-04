@@ -4,14 +4,16 @@
     "testName": "get recommendations with minimal parameters",
     "parameters": [
       {
-        "requests": [
-          {
-            "indexName": "indexName",
-            "objectID": "objectID",
-            "model": "related-products",
-            "threshold": 42
-          }
-        ]
+        "getRecommendations": {
+          "requests": [
+            {
+              "indexName": "indexName",
+              "objectID": "objectID",
+              "model": "related-products",
+              "threshold": 42
+            }
+          ]
+        }
       }
     ],
     "request": {
@@ -34,16 +36,18 @@
     "testName": "get recommendations with all parameters",
     "parameters": [
       {
-        "requests": [
-          {
-            "indexName": "indexName",
-            "objectID": "objectID",
-            "model": "related-products",
-            "threshold": 42,
-            "queryParameters": { "facetFilters": ["query"] },
-            "fallbackParameters": { "facetFilters": ["fallback"] }
-          }
-        ]
+        "getRecommendations": {
+          "requests": [
+            {
+              "indexName": "indexName",
+              "objectID": "objectID",
+              "model": "related-products",
+              "threshold": 42,
+              "queryParameters": { "facetFilters": ["query"] },
+              "fallbackParameters": { "facetFilters": ["fallback"] }
+            }
+          ]
+        }
       }
     ],
     "request": {
@@ -68,20 +72,22 @@
     "testName": "get multiple recommendations with minimal parameters",
     "parameters": [
       {
-        "requests": [
-          {
-            "indexName": "indexName1",
-            "objectID": "objectID1",
-            "model": "related-products",
-            "threshold": 21
-          },
-          {
-            "indexName": "indexName2",
-            "objectID": "objectID2",
-            "model": "related-products",
-            "threshold": 21
-          }
-        ]
+        "getRecommendations": {
+          "requests": [
+            {
+              "indexName": "indexName1",
+              "objectID": "objectID1",
+              "model": "related-products",
+              "threshold": 21
+            },
+            {
+              "indexName": "indexName2",
+              "objectID": "objectID2",
+              "model": "related-products",
+              "threshold": 21
+            }
+          ]
+        }
       }
     ],
     "request": {
@@ -110,24 +116,26 @@
     "testName": "get multiple recommendations with all parameters",
     "parameters": [
       {
-        "requests": [
-          {
-            "indexName": "indexName1",
-            "objectID": "objectID1",
-            "model": "related-products",
-            "threshold": 21,
-            "queryParameters": { "facetFilters": ["query1"] },
-            "fallbackParameters": { "facetFilters": ["fallback1"] }
-          },
-          {
-            "indexName": "indexName2",
-            "objectID": "objectID2",
-            "model": "related-products",
-            "threshold": 21,
-            "queryParameters": { "facetFilters": ["query2"] },
-            "fallbackParameters": { "facetFilters": ["fallback2"] }
-          }
-        ]
+        "getRecommendations": {
+          "requests": [
+            {
+              "indexName": "indexName1",
+              "objectID": "objectID1",
+              "model": "related-products",
+              "threshold": 21,
+              "queryParameters": { "facetFilters": ["query1"] },
+              "fallbackParameters": { "facetFilters": ["fallback1"] }
+            },
+            {
+              "indexName": "indexName2",
+              "objectID": "objectID2",
+              "model": "related-products",
+              "threshold": 21,
+              "queryParameters": { "facetFilters": ["query2"] },
+              "fallbackParameters": { "facetFilters": ["fallback2"] }
+            }
+          ]
+        }
       }
     ],
     "request": {
@@ -160,14 +168,16 @@
     "testName": "get frequently bought together recommendations",
     "parameters": [
       {
-        "requests": [
-          {
-            "indexName": "indexName1",
-            "objectID": "objectID1",
-            "model": "bought-together",
-            "threshold": 42
-          }
-        ]
+        "getRecommendations": {
+          "requests": [
+            {
+              "indexName": "indexName1",
+              "objectID": "objectID1",
+              "model": "bought-together",
+              "threshold": 42
+            }
+          ]
+        }
       }
     ],
     "request": {

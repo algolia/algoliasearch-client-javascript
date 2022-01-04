@@ -3,11 +3,13 @@
     "method": "addApiKey",
     "parameters": [
       {
-        "acl": ["search", "addObject"],
-        "description": "my new api key",
-        "validity": 300,
-        "maxQueriesPerIPPerHour": 100,
-        "maxHitsPerQuery": 20
+        "apiKey": {
+          "acl": ["search", "addObject"],
+          "description": "my new api key",
+          "validity": 300,
+          "maxQueriesPerIPPerHour": 100,
+          "maxHitsPerQuery": 20
+        }
       }
     ],
     "request": {

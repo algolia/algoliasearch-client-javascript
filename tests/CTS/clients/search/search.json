@@ -2,10 +2,12 @@
   {
     "method": "search",
     "parameters": [
-      "indexName",
       {
-        "$objectName": "Query",
-        "query": "queryString"
+        "indexName": "indexName",
+        "searchParams": {
+          "$objectName": "Query",
+          "query": "queryString"
+        }
       }
     ],
     "request": {

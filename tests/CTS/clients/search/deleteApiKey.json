@@ -1,7 +1,7 @@
 [
   {
     "method": "deleteApiKey",
-    "parameters": ["myTestApiKey"],
+    "parameters": [{ "key": "myTestApiKey" }],
     "request": {
       "path": "/1/keys/myTestApiKey",
       "method": "DELETE"

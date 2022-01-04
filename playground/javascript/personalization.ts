@@ -12,7 +12,7 @@ const client = new PersonalizationApi(appId, apiKey, 'eu');
 
 async function testPersonalization() {
   try {
-    const res = await client.getPersonalizationStrategy();
+    const res = await client.deleteUserProfile({ userToken: 'userToken' });
 
     console.log(`[OK]`, res);
   } catch (e) {

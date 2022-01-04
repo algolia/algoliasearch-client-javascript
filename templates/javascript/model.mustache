@@ -5,7 +5,9 @@ import { {{classname}} } from '{{filename}}';
 {{/tsImports}}
 
 {{! We handle types that depend on other interfaces }}
-{{#interfaces.size}}export type {{classname}} = {{#interfaces}}{{.}} {{^-last}}&{{/-last}} {{/interfaces}};{{/interfaces.size}}
+{{#interfaces.size}}
+export type {{classname}} = {{#oneOf}}{{.}} {{^-last}}|{{/-last}} {{/oneOf}}{{#allOf}}{{.}} {{^-last}}&{{/-last}} {{/allOf}};
+{{/interfaces.size}}
 
 {{^interfaces}}
 {{#description}}

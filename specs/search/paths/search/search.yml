@@ -10,9 +10,7 @@ post:
     content:
       application/json:
         schema:
-          oneOf:
-            - $ref: '../../common/schemas/SearchParams.yml#/searchParamsAsString'
-            - $ref: '../../common/schemas/SearchParams.yml#/searchParams'
+          $ref: '../../common/schemas/SearchParams.yml#/searchParams'
   responses:
     '200':
       description: OK

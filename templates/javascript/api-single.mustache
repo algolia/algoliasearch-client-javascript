@@ -16,6 +16,7 @@ import { ApiKeyAuth } from '../model/models';
 * {{&description}}
 */
 {{/description}}
+
 export enum {{classname}}Keys {
   {{#authMethods}}
   {{#isApiKey}}
@@ -132,11 +133,20 @@ export class {{classname}} {
   {{#summary}}
   * @summary {{&summary}}
   {{/summary}}
+  * @param {{nickname}} - The {{nickname}} parameters.
   {{#allParams}}
-  * @param {{paramName}} {{^description}}The {{paramName}}{{/description}}{{#description}}{{{description}}}{{/description}}
+  * @param {{nickname}}.{{paramName}} {{^description}}The {{paramName}}{{/description}}{{#description}}{{{description}}}{{/description}}
   {{/allParams}}
   */
-  public {{nickname}} ({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}) : Promise<{{{returnType}}}> {
+  public {{nickname}} (
+      {{#allParams.0}}
+        {
+          {{#allParams}}
+            {{paramName}},
+          {{/allParams}}
+        }: {{#lambda.titlecase}}{{nickname}}{{/lambda.titlecase}}Props
+      {{/allParams.0}}
+      ) : Promise<{{{returnType}}}> {
     const path = '{{{path}}}'{{#pathParams}}.replace(
     {{=<% %>=}}
       '{<%baseName%>}',
@@ -151,6 +161,14 @@ export class {{classname}} {
     if ({{paramName}} === null || {{paramName}} === undefined) {
       throw new Error('Required parameter {{paramName}} was null or undefined when calling {{nickname}}.');
     }
+
+    {{#vars}}
+    {{#required}}
+    if ({{paramName}}.{{baseName}} === null || {{paramName}}.{{baseName}} === undefined) {
+      throw new Error('Required parameter {{paramName}}.{{baseName}} was null or undefined when calling {{nickname}}.');
+    }
+    {{/required}}
+    {{/vars}}
 
     {{/required}}
     {{/allParams}}
@@ -181,4 +199,16 @@ export class {{classname}} {
   }
   {{/operation}}
 }
+
+{{#operation}}
+{{#allParams.0}}
+export type {{#lambda.titlecase}}{{nickname}}{{/lambda.titlecase}}Props = {
+  {{#allParams}}
+    {{paramName}}{{^required}}?{{/required}}: {{{dataType}}};
+  {{/allParams}}
+}
+{{/allParams.0}}
+
+{{/operation}}
+
 {{/operations}}

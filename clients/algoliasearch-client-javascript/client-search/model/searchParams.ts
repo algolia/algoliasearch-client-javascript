@@ -1,4 +1,4 @@
-import type { BaseSearchParams } from './baseSearchParams';
-import type { IndexSettingsAsSearchParams } from './indexSettingsAsSearchParams';
+import type { SearchParamsObject } from './searchParamsObject';
+import type { SearchParamsString } from './searchParamsString';
 
-export type SearchParams = BaseSearchParams & IndexSettingsAsSearchParams;
+export type SearchParams = SearchParamsObject | SearchParamsString;

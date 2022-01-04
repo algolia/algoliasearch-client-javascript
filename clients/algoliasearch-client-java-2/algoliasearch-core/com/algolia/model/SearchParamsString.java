@@ -4,15 +4,15 @@ import com.google.gson.annotations.SerializedName;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.Objects;
 
-/** SearchParamsAsString */
-public class SearchParamsAsString {
+/** SearchParamsString */
+public class SearchParamsString {
 
   public static final String SERIALIZED_NAME_PARAMS = "params";
 
   @SerializedName(SERIALIZED_NAME_PARAMS)
   private String params = "";
 
-  public SearchParamsAsString params(String params) {
+  public SearchParamsString params(String params) {
     this.params = params;
     return this;
   }
@@ -40,8 +40,8 @@ public class SearchParamsAsString {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    SearchParamsAsString searchParamsAsString = (SearchParamsAsString) o;
-    return Objects.equals(this.params, searchParamsAsString.params);
+    SearchParamsString searchParamsString = (SearchParamsString) o;
+    return Objects.equals(this.params, searchParamsString.params);
   }
 
   @Override
@@ -52,7 +52,7 @@ public class SearchParamsAsString {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class SearchParamsAsString {\n");
+    sb.append("class SearchParamsString {\n");
     sb.append("    params: ").append(toIndentedString(params)).append("\n");
     sb.append("}");
     return sb.toString();

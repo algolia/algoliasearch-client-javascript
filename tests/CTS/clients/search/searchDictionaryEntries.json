@@ -3,9 +3,11 @@
     "method": "searchDictionaryEntries",
     "testName": "get searchDictionaryEntries results with minimal parameters",
     "parameters": [
-      "dictionaryName",
       {
-        "query": "foo"
+        "dictionaryName": "dictionaryName",
+        "searchDictionaryEntries": {
+          "query": "foo"
+        }
       }
     ],
     "request": {
@@ -20,12 +22,14 @@
     "method": "searchDictionaryEntries",
     "testName": "get searchDictionaryEntries results with all parameters",
     "parameters": [
-      "dictionaryName",
       {
-        "query": "foo",
-        "page": 4,
-        "hitsPerPage": 2,
-        "language": "fr"
+        "dictionaryName": "dictionaryName",
+        "searchDictionaryEntries": {
+          "query": "foo",
+          "page": 4,
+          "hitsPerPage": 2,
+          "language": "fr"
+        }
       }
     ],
     "request": {
