@@ -118,7 +118,7 @@ yarn docker playground:java:search
 
 # Troubleshooting
 
-> `Error: The operation couldn’t be completed. Unable to locate a Java Runtime.`
+> `Error: The operation couldn't be completed. Unable to locate a Java Runtime.`
 
 Java is not located in your PATH, either source the right `.bash_profile`, `.zshrc`, etc. file or do the following command in this repository:
 

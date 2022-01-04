@@ -8,7 +8,7 @@ post:
 
     This method enables you to delete one or more objects based on filters (numeric, facet, tag or geo queries).
 
-    It doesn’t accept empty filters or a query.
+    It doesn't accept empty filters or a query.
   parameters:
     - $ref: ../../../common/parameters.yml#/IndexName
   requestBody:
@@ -16,9 +16,7 @@ post:
     content:
       application/json:
         schema:
-          oneOf:
-            - $ref: '../../common/schemas/SearchParams.yml#/searchParamsAsString'
-            - $ref: '../../common/schemas/SearchParams.yml#/searchParams'
+          $ref: '../../common/schemas/SearchParams.yml#/searchParams'
   responses:
     '200':
       $ref: ../../../common/responses/DeletedAt.yml

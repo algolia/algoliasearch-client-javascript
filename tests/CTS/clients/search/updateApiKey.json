@@ -2,12 +2,14 @@
   {
     "method": "updateApiKey",
     "parameters": [
-      "myApiKey",
       {
-        "acl": ["search", "addObject"],
-        "validity": 300,
-        "maxQueriesPerIPPerHour": 100,
-        "maxHitsPerQuery": 20
+        "key": "myApiKey",
+        "apiKey": {
+          "acl": ["search", "addObject"],
+          "validity": 300,
+          "maxQueriesPerIPPerHour": 100,
+          "maxHitsPerQuery": 20
+        }
       }
     ],
     "request": {

@@ -2,14 +2,17 @@
   {
     "method": "batchRules",
     "parameters": [
-      "indexName",
-      [
+      {
+        "indexName": "indexName",
+        "rule": [
           {
             "objectID": "a-rule-id",
-            "conditions": [{
-              "pattern": "smartphone",
-              "anchoring": "contains"
-            }],
+            "conditions": [
+              {
+                "pattern": "smartphone",
+                "anchoring": "contains"
+              }
+            ],
             "consequence": {
               "params": {
                 "filters": "category:smartphone"
@@ -18,50 +21,56 @@
           },
           {
             "objectID": "a-second-rule-id",
-            "conditions": [{
-              "pattern": "apple",
-              "anchoring": "contains"
-            }],
+            "conditions": [
+              {
+                "pattern": "apple",
+                "anchoring": "contains"
+              }
+            ],
             "consequence": {
               "params": {
                 "filters": "brand:apple"
               }
             }
           }
-      ],
-      true,
-      true
+        ],
+        "forwardToReplicas": true,
+        "clearExistingRules": true
+      }
     ],
     "request": {
       "path": "/1/indexes/indexName/rules/batch",
       "method": "POST",
       "data": [
-          {
-            "objectID": "a-rule-id",
-            "conditions": [{
+        {
+          "objectID": "a-rule-id",
+          "conditions": [
+            {
               "pattern": "smartphone",
               "anchoring": "contains"
-            }],
-            "consequence": {
-              "params": {
-                "filters": "category:smartphone"
-              }
             }
-          },
-          {
-            "objectID": "a-second-rule-id",
-            "conditions": [{
-              "pattern": "apple",
-              "anchoring": "contains"
-            }],
-            "consequence": {
-              "params": {
-                "filters": "brand:apple"
-              }
+          ],
+          "consequence": {
+            "params": {
+              "filters": "category:smartphone"
             }
           }
+        },
+        {
+          "objectID": "a-second-rule-id",
+          "conditions": [
+            {
+              "pattern": "apple",
+              "anchoring": "contains"
+            }
+          ],
+          "consequence": {
+            "params": {
+              "filters": "brand:apple"
+            }
+          }
+        }
       ]
     }
   }
 ]
-  

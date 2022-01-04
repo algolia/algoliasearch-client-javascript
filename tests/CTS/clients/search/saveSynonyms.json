@@ -2,22 +2,24 @@
   {
     "method": "saveSynonyms",
     "parameters": [
-      "indexName",
-      [
-        {
-          "objectID": "id1",
-          "type": "synonym",
-          "synonyms": ["car", "vehicule", "auto"]
-        },
-        {
-          "objectID": "id2",
-          "type": "onewaysynonym",
-          "input": "iphone",
-          "synonyms": ["ephone", "aphone", "yphone"]
-        }
-      ],
-      true,
-      false
+      {
+        "indexName": "indexName",
+        "synonymHit": [
+          {
+            "objectID": "id1",
+            "type": "synonym",
+            "synonyms": ["car", "vehicule", "auto"]
+          },
+          {
+            "objectID": "id2",
+            "type": "onewaysynonym",
+            "input": "iphone",
+            "synonyms": ["ephone", "aphone", "yphone"]
+          }
+        ],
+        "forwardToReplicas": true,
+        "replaceExistingSynonyms": false
+      }
     ],
     "request": {
       "path": "/1/indexes/indexName/synonyms/batch",

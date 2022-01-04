@@ -1,7 +1,7 @@
 [
   {
     "method": "deleteSynonym",
-    "parameters": ["indexName", "id1"],
+    "parameters": [{ "indexName": "indexName", "objectID": "id1" }],
     "request": {
       "path": "/1/indexes/indexName/synonyms/id1",
       "method": "DELETE"

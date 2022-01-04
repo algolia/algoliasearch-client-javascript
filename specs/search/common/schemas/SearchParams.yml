@@ -1,4 +1,9 @@
 searchParams:
+  oneOf:
+    - $ref: '#/searchParamsString'
+    - $ref: '#/searchParamsObject'
+
+searchParamsObject:
   allOf:
     - $ref: '../../common/schemas/SearchParams.yml#/baseSearchParams'
     - $ref: '../../common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams'
@@ -159,7 +164,7 @@ baseSearchParams:
       description: Whether this search should use AI Re-Ranking.
       default: true
 
-searchParamsAsString:
+searchParamsString:
   type: object
   additionalProperties: false
   properties:

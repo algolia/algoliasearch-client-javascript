@@ -1,4 +1,4 @@
-export type SearchParamsAsString = {
+export type SearchParamsString = {
   /**
    * Search parameters as URL-encoded query string.
    */

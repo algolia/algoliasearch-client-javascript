@@ -85,9 +85,12 @@ export class PersonalizationApi {
    * Returns, as part of the response, a date until which the data can safely be considered as deleted for the given user. This means that if you send events for the given user before this date, they will be ignored. Any data received after the deletedUntil date will start building a new user profile. It might take a couple hours before for the deletion request to be fully processed.
    *
    * @summary Delete the user profile and all its associated data.
-   * @param userToken - UserToken representing the user for which to fetch the Personalization profile.
+   * @param deleteUserProfile - The deleteUserProfile parameters.
+   * @param deleteUserProfile.userToken - UserToken representing the user for which to fetch the Personalization profile.
    */
-  deleteUserProfile(userToken: string): Promise<DeleteUserProfileResponse> {
+  deleteUserProfile({
+    userToken,
+  }: DeleteUserProfileProps): Promise<DeleteUserProfileResponse> {
     const path = '/1/profiles/{userToken}'.replace(
       '{userToken}',
       encodeURIComponent(String(userToken))
@@ -117,6 +120,7 @@ export class PersonalizationApi {
    * The strategy contains information on the events and facets that impact user profiles and personalized search results.
    *
    * @summary Get the current personalization strategy.
+   * @param getPersonalizationStrategy - The getPersonalizationStrategy parameters.
    */
   getPersonalizationStrategy(): Promise<PersonalizationStrategyObject> {
     const path = '/1/strategies/personalization';
@@ -139,9 +143,12 @@ export class PersonalizationApi {
    * The profile is structured by facet name used in the strategy. Each facet value is mapped to its score. Each score represents the user affinity for a specific facet value given the userToken past events and the Personalization strategy defined. Scores are bounded to 20. The last processed event timestamp is provided using the ISO 8601 format for debugging purposes.
    *
    * @summary Get the user profile built from Personalization strategy.
-   * @param userToken - UserToken representing the user for which to fetch the Personalization profile.
+   * @param getUserTokenProfile - The getUserTokenProfile parameters.
+   * @param getUserTokenProfile.userToken - UserToken representing the user for which to fetch the Personalization profile.
    */
-  getUserTokenProfile(userToken: string): Promise<GetUserTokenResponse> {
+  getUserTokenProfile({
+    userToken,
+  }: GetUserTokenProfileProps): Promise<GetUserTokenResponse> {
     const path = '/1/profiles/personalization/{userToken}'.replace(
       '{userToken}',
       encodeURIComponent(String(userToken))
@@ -171,11 +178,12 @@ export class PersonalizationApi {
    * A strategy defines the events and facets that impact user profiles and personalized search results.
    *
    * @summary Set a new personalization strategy.
-   * @param personalizationStrategyObject - The personalizationStrategyObject.
+   * @param setPersonalizationStrategy - The setPersonalizationStrategy parameters.
+   * @param setPersonalizationStrategy.personalizationStrategyObject - The personalizationStrategyObject.
    */
-  setPersonalizationStrategy(
-    personalizationStrategyObject: PersonalizationStrategyObject
-  ): Promise<SetPersonalizationStrategyResponse> {
+  setPersonalizationStrategy({
+    personalizationStrategyObject,
+  }: SetPersonalizationStrategyProps): Promise<SetPersonalizationStrategyResponse> {
     const path = '/1/strategies/personalization';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
@@ -186,6 +194,31 @@ export class PersonalizationApi {
     ) {
       throw new Error(
         'Required parameter personalizationStrategyObject was null or undefined when calling setPersonalizationStrategy.'
+      );
+    }
+
+    if (
+      personalizationStrategyObject.eventScoring === null ||
+      personalizationStrategyObject.eventScoring === undefined
+    ) {
+      throw new Error(
+        'Required parameter personalizationStrategyObject.eventScoring was null or undefined when calling setPersonalizationStrategy.'
+      );
+    }
+    if (
+      personalizationStrategyObject.facetScoring === null ||
+      personalizationStrategyObject.facetScoring === undefined
+    ) {
+      throw new Error(
+        'Required parameter personalizationStrategyObject.facetScoring was null or undefined when calling setPersonalizationStrategy.'
+      );
+    }
+    if (
+      personalizationStrategyObject.personalizationImpact === null ||
+      personalizationStrategyObject.personalizationImpact === undefined
+    ) {
+      throw new Error(
+        'Required parameter personalizationStrategyObject.personalizationImpact was null or undefined when calling setPersonalizationStrategy.'
       );
     }
 
@@ -203,3 +236,15 @@ export class PersonalizationApi {
     return this.sendRequest(request, requestOptions);
   }
 }
+
+export type DeleteUserProfileProps = {
+  userToken: string;
+};
+
+export type GetUserTokenProfileProps = {
+  userToken: string;
+};
+
+export type SetPersonalizationStrategyProps = {
+  personalizationStrategyObject: PersonalizationStrategyObject;
+};

@@ -1649,11 +1649,11 @@ public class SearchApi extends ApiClient {
   /**
    * Retrieve all index content. This method allows you to retrieve all index content. It can
    * retrieve up to 1,000 records per call and supports full text search and filters. For
-   * performance reasons, some features are not supported, including &#x60;distinct&#x60;, sorting
-   * by &#x60;typos&#x60;, &#x60;words&#x60; or &#x60;geo distance&#x60;. When there is more content
-   * to be browsed, the response contains a cursor field. This cursor has to be passed to the
-   * subsequent call to browse in order to get the next page of results. When the end of the index
-   * has been reached, the cursor field is absent from the response.
+   * performance reasons, some features are not supported, including `distinct`, sorting by `typos`,
+   * `words` or `geo distance`. When there is more content to be browsed, the response contains a
+   * cursor field. This cursor has to be passed to the subsequent call to browse in order to get the
+   * next page of results. When the end of the index has been reached, the cursor field is absent
+   * from the response.
    *
    * @param indexName The index in which to perform the request. (required)
    * @param browseRequest (optional)
@@ -1682,11 +1682,11 @@ public class SearchApi extends ApiClient {
   /**
    * Retrieve all index content. This method allows you to retrieve all index content. It can
    * retrieve up to 1,000 records per call and supports full text search and filters. For
-   * performance reasons, some features are not supported, including &#x60;distinct&#x60;, sorting
-   * by &#x60;typos&#x60;, &#x60;words&#x60; or &#x60;geo distance&#x60;. When there is more content
-   * to be browsed, the response contains a cursor field. This cursor has to be passed to the
-   * subsequent call to browse in order to get the next page of results. When the end of the index
-   * has been reached, the cursor field is absent from the response.
+   * performance reasons, some features are not supported, including `distinct`, sorting by `typos`,
+   * `words` or `geo distance`. When there is more content to be browsed, the response contains a
+   * cursor field. This cursor has to be passed to the subsequent call to browse in order to get the
+   * next page of results. When the end of the index has been reached, the cursor field is absent
+   * from the response.
    *
    * @param indexName The index in which to perform the request. (required)
    * @param browseRequest (optional)
@@ -1719,12 +1719,11 @@ public class SearchApi extends ApiClient {
   /**
    * Retrieve all index content. (asynchronously) This method allows you to retrieve all index
    * content. It can retrieve up to 1,000 records per call and supports full text search and
-   * filters. For performance reasons, some features are not supported, including
-   * &#x60;distinct&#x60;, sorting by &#x60;typos&#x60;, &#x60;words&#x60; or &#x60;geo
-   * distance&#x60;. When there is more content to be browsed, the response contains a cursor field.
-   * This cursor has to be passed to the subsequent call to browse in order to get the next page of
-   * results. When the end of the index has been reached, the cursor field is absent from the
-   * response.
+   * filters. For performance reasons, some features are not supported, including `distinct`,
+   * sorting by `typos`, `words` or `geo distance`. When there is more content to be browsed, the
+   * response contains a cursor field. This cursor has to be passed to the subsequent call to browse
+   * in order to get the next page of results. When the end of the index has been reached, the
+   * cursor field is absent from the response.
    *
    * @param indexName The index in which to perform the request. (required)
    * @param browseRequest (optional)
@@ -2025,7 +2024,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * clear all objects from an index. Delete an index’s content, but leave settings and
+   * clear all objects from an index. Delete an index's content, but leave settings and
    * index-specific API keys untouched.
    *
    * @param indexName The index in which to perform the request. (required)
@@ -2050,7 +2049,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * clear all objects from an index. Delete an index’s content, but leave settings and
+   * clear all objects from an index. Delete an index's content, but leave settings and
    * index-specific API keys untouched.
    *
    * @param indexName The index in which to perform the request. (required)
@@ -2076,7 +2075,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * clear all objects from an index. (asynchronously) Delete an index’s content, but leave settings
+   * clear all objects from an index. (asynchronously) Delete an index's content, but leave settings
    * and index-specific API keys untouched.
    *
    * @param indexName The index in which to perform the request. (required)
@@ -2544,7 +2543,7 @@ public class SearchApi extends ApiClient {
   /**
    * Delete all records matching the query. Remove all objects matching a filter (including geo
    * filters). This method enables you to delete one or more objects based on filters (numeric,
-   * facet, tag or geo queries). It doesn’t accept empty filters or a query.
+   * facet, tag or geo queries). It doesn't accept empty filters or a query.
    *
    * @param indexName The index in which to perform the request. (required)
    * @param searchParams (required)
@@ -2575,7 +2574,7 @@ public class SearchApi extends ApiClient {
   /**
    * Delete all records matching the query. Remove all objects matching a filter (including geo
    * filters). This method enables you to delete one or more objects based on filters (numeric,
-   * facet, tag or geo queries). It doesn’t accept empty filters or a query.
+   * facet, tag or geo queries). It doesn't accept empty filters or a query.
    *
    * @param indexName The index in which to perform the request. (required)
    * @param searchParams (required)
@@ -2608,7 +2607,7 @@ public class SearchApi extends ApiClient {
   /**
    * Delete all records matching the query. (asynchronously) Remove all objects matching a filter
    * (including geo filters). This method enables you to delete one or more objects based on filters
-   * (numeric, facet, tag or geo queries). It doesn’t accept empty filters or a query.
+   * (numeric, facet, tag or geo queries). It doesn't accept empty filters or a query.
    *
    * @param indexName The index in which to perform the request. (required)
    * @param searchParams (required)
@@ -5785,11 +5784,11 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Has pending mappings Get the status of your clusters&#39; migrations or user creations.
-   * Creating a large batch of users or migrating your multi-cluster may take quite some time. This
-   * method lets you retrieve the status of the migration, so you can know when it&#39;s done. Upon
-   * success, the response is 200 OK. A successful response indicates that the operation has been
-   * taken into account, and the userIDs are directly usable.
+   * Has pending mappings Get the status of your clusters' migrations or user creations. Creating a
+   * large batch of users or migrating your multi-cluster may take quite some time. This method lets
+   * you retrieve the status of the migration, so you can know when it's done. Upon success, the
+   * response is 200 OK. A successful response indicates that the operation has been taken into
+   * account, and the userIDs are directly usable.
    *
    * @param getClusters (optional)
    * @return CreatedAtResponse
@@ -5814,11 +5813,11 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Has pending mappings Get the status of your clusters&#39; migrations or user creations.
-   * Creating a large batch of users or migrating your multi-cluster may take quite some time. This
-   * method lets you retrieve the status of the migration, so you can know when it&#39;s done. Upon
-   * success, the response is 200 OK. A successful response indicates that the operation has been
-   * taken into account, and the userIDs are directly usable.
+   * Has pending mappings Get the status of your clusters' migrations or user creations. Creating a
+   * large batch of users or migrating your multi-cluster may take quite some time. This method lets
+   * you retrieve the status of the migration, so you can know when it's done. Upon success, the
+   * response is 200 OK. A successful response indicates that the operation has been taken into
+   * account, and the userIDs are directly usable.
    *
    * @param getClusters (optional)
    * @return ApiResponse&lt;CreatedAtResponse&gt;
@@ -5846,9 +5845,9 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Has pending mappings (asynchronously) Get the status of your clusters&#39; migrations or user
+   * Has pending mappings (asynchronously) Get the status of your clusters' migrations or user
    * creations. Creating a large batch of users or migrating your multi-cluster may take quite some
-   * time. This method lets you retrieve the status of the migration, so you can know when it&#39;s
+   * time. This method lets you retrieve the status of the migration, so you can know when it's
    * done. Upon success, the response is 200 OK. A successful response indicates that the operation
    * has been taken into account, and the userIDs are directly usable.
    *
@@ -7130,7 +7129,7 @@ public class SearchApi extends ApiClient {
    * Partially update an object. Update one or more attributes of an existing object. This method
    * lets you update only a part of an existing object, either by adding new attributes or updating
    * existing ones. You can partially update several objects in a single method call. If the index
-   * targeted by this operation doesn’t exist yet, it’s automatically created.
+   * targeted by this operation doesn't exist yet, it's automatically created.
    *
    * @param indexName The index in which to perform the request. (required)
    * @param objectID Unique identifier of an object. (required)
@@ -7169,7 +7168,7 @@ public class SearchApi extends ApiClient {
    * Partially update an object. Update one or more attributes of an existing object. This method
    * lets you update only a part of an existing object, either by adding new attributes or updating
    * existing ones. You can partially update several objects in a single method call. If the index
-   * targeted by this operation doesn’t exist yet, it’s automatically created.
+   * targeted by this operation doesn't exist yet, it's automatically created.
    *
    * @param indexName The index in which to perform the request. (required)
    * @param objectID Unique identifier of an object. (required)
@@ -7211,7 +7210,7 @@ public class SearchApi extends ApiClient {
    * Partially update an object. (asynchronously) Update one or more attributes of an existing
    * object. This method lets you update only a part of an existing object, either by adding new
    * attributes or updating existing ones. You can partially update several objects in a single
-   * method call. If the index targeted by this operation doesn’t exist yet, it’s automatically
+   * method call. If the index targeted by this operation doesn't exist yet, it's automatically
    * created.
    *
    * @param indexName The index in which to perform the request. (required)
@@ -9685,11 +9684,11 @@ public class SearchApi extends ApiClient {
   /**
    * Search userID Search for userIDs. The data returned will usually be a few seconds behind real
    * time, because userID usage may take up to a few seconds propagate to the different clusters. To
-   * keep updates moving quickly, the index of userIDs isn&#39;t built synchronously with the
-   * mapping. Instead, the index is built once every 12h, at the same time as the update of userID
-   * usage. For example, when you perform a modification like adding or moving a userID, the search
-   * will report an outdated value until the next rebuild of the mapping, which takes place every
-   * 12h. Upon success, the response is 200 OK and contains the following userIDs data.
+   * keep updates moving quickly, the index of userIDs isn't built synchronously with the mapping.
+   * Instead, the index is built once every 12h, at the same time as the update of userID usage. For
+   * example, when you perform a modification like adding or moving a userID, the search will report
+   * an outdated value until the next rebuild of the mapping, which takes place every 12h. Upon
+   * success, the response is 200 OK and contains the following userIDs data.
    *
    * @param searchUserIdsObject (required)
    * @return SearchUserIdsResponse
@@ -9717,11 +9716,11 @@ public class SearchApi extends ApiClient {
   /**
    * Search userID Search for userIDs. The data returned will usually be a few seconds behind real
    * time, because userID usage may take up to a few seconds propagate to the different clusters. To
-   * keep updates moving quickly, the index of userIDs isn&#39;t built synchronously with the
-   * mapping. Instead, the index is built once every 12h, at the same time as the update of userID
-   * usage. For example, when you perform a modification like adding or moving a userID, the search
-   * will report an outdated value until the next rebuild of the mapping, which takes place every
-   * 12h. Upon success, the response is 200 OK and contains the following userIDs data.
+   * keep updates moving quickly, the index of userIDs isn't built synchronously with the mapping.
+   * Instead, the index is built once every 12h, at the same time as the update of userID usage. For
+   * example, when you perform a modification like adding or moving a userID, the search will report
+   * an outdated value until the next rebuild of the mapping, which takes place every 12h. Upon
+   * success, the response is 200 OK and contains the following userIDs data.
    *
    * @param searchUserIdsObject (required)
    * @return ApiResponse&lt;SearchUserIdsResponse&gt;
@@ -9752,7 +9751,7 @@ public class SearchApi extends ApiClient {
   /**
    * Search userID (asynchronously) Search for userIDs. The data returned will usually be a few
    * seconds behind real time, because userID usage may take up to a few seconds propagate to the
-   * different clusters. To keep updates moving quickly, the index of userIDs isn&#39;t built
+   * different clusters. To keep updates moving quickly, the index of userIDs isn't built
    * synchronously with the mapping. Instead, the index is built once every 12h, at the same time as
    * the update of userID usage. For example, when you perform a modification like adding or moving
    * a userID, the search will report an outdated value until the next rebuild of the mapping, which

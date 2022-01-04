@@ -15,6 +15,7 @@ post:
           properties:
             requests:
               type: array
+              description: The `getRecommendations` requests.
               items:
                 title: recommendationRequest
                 type: object

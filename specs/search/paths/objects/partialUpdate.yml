@@ -10,7 +10,7 @@ post:
 
     You can partially update several objects in a single method call.
 
-    If the index targeted by this operation doesn’t exist yet, it’s automatically created.
+    If the index targeted by this operation doesn't exist yet, it's automatically created.
   parameters:
     - $ref: ../../../common/parameters.yml#/IndexName
     - $ref: ../../../common/parameters.yml#/ObjectID

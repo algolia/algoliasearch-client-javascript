@@ -2,38 +2,43 @@
   {
     "method": "saveRule",
     "parameters": [
-      "indexName",
-      "id1",
       {
+        "indexName": "indexName",
+        "objectID": "id1",
+        "rule": {
           "objectID": "id1",
-          "conditions": [{
-            "pattern": "apple",
-            "anchoring": "contains"
-          }],
+          "conditions": [
+            {
+              "pattern": "apple",
+              "anchoring": "contains"
+            }
+          ],
           "consequence": {
             "params": {
               "filters": "brand:apple"
             }
           }
         },
-      true
+        "forwardToReplicas": true
+      }
     ],
     "request": {
       "path": "/1/indexes/indexName/rules/id1",
       "method": "PUT",
       "data": {
-          "objectID": "id1",
-          "conditions": [{
+        "objectID": "id1",
+        "conditions": [
+          {
             "pattern": "apple",
             "anchoring": "contains"
-          }],
-          "consequence": {
-            "params": {
-              "filters": "brand:apple"
-            }
+          }
+        ],
+        "consequence": {
+          "params": {
+            "filters": "brand:apple"
           }
         }
+      }
     }
   }
 ]
-  

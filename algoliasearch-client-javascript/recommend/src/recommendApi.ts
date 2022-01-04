@@ -99,11 +99,12 @@ export class RecommendApi {
   /**
    * Returns recommendations for a specific model and objectID.
    *
-   * @param getRecommendations - The getRecommendations.
+   * @param getRecommendations - The getRecommendations parameters.
+   * @param getRecommendations.getRecommendations - The getRecommendations.
    */
-  getRecommendations(
-    getRecommendations: GetRecommendations
-  ): Promise<GetRecommendationsResponse> {
+  getRecommendations({
+    getRecommendations,
+  }: GetRecommendationsProps): Promise<GetRecommendationsResponse> {
     const path = '/1/indexes/*/recommendations';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
@@ -111,6 +112,15 @@ export class RecommendApi {
     if (getRecommendations === null || getRecommendations === undefined) {
       throw new Error(
         'Required parameter getRecommendations was null or undefined when calling getRecommendations.'
+      );
+    }
+
+    if (
+      getRecommendations.requests === null ||
+      getRecommendations.requests === undefined
+    ) {
+      throw new Error(
+        'Required parameter getRecommendations.requests was null or undefined when calling getRecommendations.'
       );
     }
 
@@ -128,3 +138,7 @@ export class RecommendApi {
     return this.sendRequest(request, requestOptions);
   }
 }
+
+export type GetRecommendationsProps = {
+  getRecommendations: GetRecommendations;
+};

@@ -3,24 +3,26 @@
     "method": "batchDictionaryEntries",
     "testName": "get batchDictionaryEntries results with minimal parameters",
     "parameters": [
-      "dictionaryName",
       {
-        "requests": [
-          {
-            "action": "addEntry",
-            "body": {
-              "objectID": "1",
-              "language": "en"
+        "dictionaryName": "dictionaryName",
+        "batchDictionaryEntries": {
+          "requests": [
+            {
+              "action": "addEntry",
+              "body": {
+                "objectID": "1",
+                "language": "en"
+              }
+            },
+            {
+              "action": "deleteEntry",
+              "body": {
+                "objectID": "2",
+                "language": "fr"
+              }
             }
-          },
-          {
-            "action": "deleteEntry",
-            "body": {
-              "objectID": "2",
-              "language": "fr"
-            }
-          }
-        ]
+          ]
+        }
       }
     ],
     "request": {
@@ -50,33 +52,35 @@
     "method": "batchDictionaryEntries",
     "testName": "get batchDictionaryEntries results with all parameters",
     "parameters": [
-      "dictionaryName",
       {
-        "clearExistingDictionaryEntries": false,
-        "requests": [
-          {
-            "action": "addEntry",
-            "body": {
-              "objectID": "1",
-              "language": "en",
-              "word": "yo",
-              "words": ["yo", "algolia"],
-              "decomposition": ["yo", "algolia"],
-              "state": "enabled"
+        "dictionaryName": "dictionaryName",
+        "batchDictionaryEntries": {
+          "clearExistingDictionaryEntries": false,
+          "requests": [
+            {
+              "action": "addEntry",
+              "body": {
+                "objectID": "1",
+                "language": "en",
+                "word": "yo",
+                "words": ["yo", "algolia"],
+                "decomposition": ["yo", "algolia"],
+                "state": "enabled"
+              }
+            },
+            {
+              "action": "deleteEntry",
+              "body": {
+                "objectID": "2",
+                "language": "fr",
+                "word": "salut",
+                "words": ["salut", "algolia"],
+                "decomposition": ["salut", "algolia"],
+                "state": "enabled"
+              }
             }
-          },
-          {
-            "action": "deleteEntry",
-            "body": {
-              "objectID": "2",
-              "language": "fr",
-              "word": "salut",
-              "words": ["salut", "algolia"],
-              "decomposition": ["salut", "algolia"],
-              "state": "enabled"
-            }
-          }
-        ]
+          ]
+        }
       }
     ],
     "request": {
