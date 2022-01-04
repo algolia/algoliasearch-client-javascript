@@ -15,12 +15,12 @@
     "@types/mustache": "4.1.2",
     "@types/node": "16.11.11",
     "dotenv": "10.0.0",
-    "eslint": "8.3.0",
-    "jest": "27.4.3",
+    "eslint": "8.6.0",
+    "jest": "27.4.5",
     "mustache": "4.2.0",
-    "openapi-types": "9.3.1",
-    "prettier": "2.5.0",
-    "ts-jest": "27.0.7",
-    "typescript": "4.5.2"
+    "openapi-types": "10.0.0",
+    "prettier": "2.5.1",
+    "ts-jest": "27.1.2",
+    "typescript": "4.5.4"
   }
 }
