@@ -7,25 +7,9 @@ import com.google.gson.TypeAdapter;
 import com.google.gson.internal.bind.util.ISO8601Utils;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import com.google.gson.JsonElement;
 import io.gsonfire.GsonFireBuilder;
 import io.gsonfire.TypeSelector;
-{{#joda}}
-import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
-import org.joda.time.format.DateTimeFormatter;
-import org.joda.time.format.DateTimeFormatterBuilder;
-import org.joda.time.format.ISODateTimeFormat;
-{{/joda}}
-{{#threetenbp}}
-import org.threeten.bp.LocalDate;
-import org.threeten.bp.OffsetDateTime;
-import org.threeten.bp.format.DateTimeFormatter;
-{{/threetenbp}}
 
-{{#models.0}}
-import {{modelPackage}}.*;
-{{/models.0}}
 import okio.ByteString;
 
 import java.io.IOException;
@@ -41,7 +25,6 @@ import java.time.format.DateTimeFormatter;
 {{/java8}}
 import java.util.Date;
 import java.util.Locale;
-import java.util.Map;
 import java.util.HashMap;
 
 public class JSON {
@@ -59,7 +42,6 @@ public class JSON {
     {{/jsr310}}
     private ByteArrayAdapter byteArrayAdapter = new ByteArrayAdapter();
 
-    @SuppressWarnings("unchecked")
     public static GsonBuilder createGson() {
         GsonFireBuilder fireBuilder = new GsonFireBuilder()
         {{#models}}
@@ -86,29 +68,6 @@ public class JSON {
         builder.disableHtmlEscaping();
         {{/disableHtmlEscaping}}
         return builder;
-    }
-
-    private static String getDiscriminatorValue(JsonElement readElement, String discriminatorField) {
-        JsonElement element = readElement.getAsJsonObject().get(discriminatorField);
-        if (null == element) {
-            throw new IllegalArgumentException("missing discriminator field: <" + discriminatorField + ">");
-        }
-        return element.getAsString();
-    }
-
-    /**
-     * Returns the Java class that implements the OpenAPI schema for the specified discriminator value.
-     *
-     * @param classByDiscriminatorValue The map of discriminator values to Java classes.
-     * @param discriminatorValue The value of the OpenAPI discriminator in the input data.
-     * @return The Java class that implements the OpenAPI schema
-     */
-    private static Class getClassByDiscriminator(Map classByDiscriminatorValue, String discriminatorValue) {
-        Class clazz = (Class) classByDiscriminatorValue.get(discriminatorValue{{^discriminatorCaseSensitive}}.toUpperCase(Locale.ROOT){{/discriminatorCaseSensitive}});
-        if (null == clazz) {
-            throw new IllegalArgumentException("cannot determine model class of name: <" + discriminatorValue + ">");
-        }
-        return clazz;
     }
 
     public JSON() {
@@ -170,7 +129,6 @@ public class JSON {
      * @param returnType The type to deserialize into
      * @return The deserialized Java object
      */
-    @SuppressWarnings("unchecked")
     public <T> T deserialize(String body, Type returnType) {
         try {
             if (isLenientOnJson) {

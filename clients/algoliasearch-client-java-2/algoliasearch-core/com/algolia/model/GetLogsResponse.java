@@ -1,7 +1,6 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -9,9 +8,7 @@ import java.util.Objects;
 /** GetLogsResponse */
 public class GetLogsResponse {
 
-  public static final String SERIALIZED_NAME_LOGS = "logs";
-
-  @SerializedName(SERIALIZED_NAME_LOGS)
+  @SerializedName("logs")
   private List<GetLogsResponseLogs> logs = new ArrayList<>();
 
   public GetLogsResponse logs(List<GetLogsResponseLogs> logs) {
@@ -30,7 +27,6 @@ public class GetLogsResponse {
    * @return logs
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "")
   public List<GetLogsResponseLogs> getLogs() {
     return logs;
   }

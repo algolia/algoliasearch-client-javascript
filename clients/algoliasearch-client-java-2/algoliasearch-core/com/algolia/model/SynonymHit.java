@@ -5,20 +5,15 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 /** Synonym object. */
-@ApiModel(description = "Synonym object.")
 public class SynonymHit {
 
-  public static final String SERIALIZED_NAME_OBJECT_I_D = "objectID";
-
-  @SerializedName(SERIALIZED_NAME_OBJECT_I_D)
+  @SerializedName("objectID")
   private String objectID;
 
   /** Type of the synonym object. */
@@ -76,45 +71,28 @@ public class SynonymHit {
     }
   }
 
-  public static final String SERIALIZED_NAME_TYPE = "type";
-
-  @SerializedName(SERIALIZED_NAME_TYPE)
+  @SerializedName("type")
   private TypeEnum type;
 
-  public static final String SERIALIZED_NAME_SYNONYMS = "synonyms";
-
-  @SerializedName(SERIALIZED_NAME_SYNONYMS)
+  @SerializedName("synonyms")
   private List<String> synonyms = null;
 
-  public static final String SERIALIZED_NAME_INPUT = "input";
-
-  @SerializedName(SERIALIZED_NAME_INPUT)
+  @SerializedName("input")
   private String input;
 
-  public static final String SERIALIZED_NAME_WORD = "word";
-
-  @SerializedName(SERIALIZED_NAME_WORD)
+  @SerializedName("word")
   private String word;
 
-  public static final String SERIALIZED_NAME_CORRECTIONS = "corrections";
-
-  @SerializedName(SERIALIZED_NAME_CORRECTIONS)
+  @SerializedName("corrections")
   private List<String> corrections = null;
 
-  public static final String SERIALIZED_NAME_PLACEHOLDER = "placeholder";
-
-  @SerializedName(SERIALIZED_NAME_PLACEHOLDER)
+  @SerializedName("placeholder")
   private String placeholder;
 
-  public static final String SERIALIZED_NAME_REPLACEMENTS = "replacements";
-
-  @SerializedName(SERIALIZED_NAME_REPLACEMENTS)
+  @SerializedName("replacements")
   private List<String> replacements = null;
 
-  public static final String SERIALIZED_NAME_HIGHLIGHT_RESULT =
-    "_highlightResult";
-
-  @SerializedName(SERIALIZED_NAME_HIGHLIGHT_RESULT)
+  @SerializedName("_highlightResult")
   private SynonymHitHighlightResult highlightResult;
 
   public SynonymHit objectID(String objectID) {
@@ -128,10 +106,6 @@ public class SynonymHit {
    * @return objectID
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(
-    required = true,
-    value = "Unique identifier of the synonym object to be created or updated."
-  )
   public String getObjectID() {
     return objectID;
   }
@@ -151,7 +125,6 @@ public class SynonymHit {
    * @return type
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "Type of the synonym object.")
   public TypeEnum getType() {
     return type;
   }
@@ -179,7 +152,6 @@ public class SynonymHit {
    * @return synonyms
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Words or phrases to be considered equivalent.")
   public List<String> getSynonyms() {
     return synonyms;
   }
@@ -199,9 +171,6 @@ public class SynonymHit {
    * @return input
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Word or phrase to appear in query strings (for onewaysynonym)."
-  )
   public String getInput() {
     return input;
   }
@@ -221,9 +190,6 @@ public class SynonymHit {
    * @return word
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Word or phrase to appear in query strings (for altcorrection1 and altcorrection2)."
-  )
   public String getWord() {
     return word;
   }
@@ -251,7 +217,6 @@ public class SynonymHit {
    * @return corrections
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Words to be matched in records.")
   public List<String> getCorrections() {
     return corrections;
   }
@@ -271,7 +236,6 @@ public class SynonymHit {
    * @return placeholder
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Token to be put inside records.")
   public String getPlaceholder() {
     return placeholder;
   }
@@ -299,7 +263,6 @@ public class SynonymHit {
    * @return replacements
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "List of query words that will match the token.")
   public List<String> getReplacements() {
     return replacements;
   }
@@ -319,7 +282,6 @@ public class SynonymHit {
    * @return highlightResult
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
   public SynonymHitHighlightResult getHighlightResult() {
     return highlightResult;
   }

@@ -1,20 +1,15 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.Objects;
 
 /** TimeRange */
 public class TimeRange {
 
-  public static final String SERIALIZED_NAME_FROM = "from";
-
-  @SerializedName(SERIALIZED_NAME_FROM)
+  @SerializedName("from")
   private Integer from;
 
-  public static final String SERIALIZED_NAME_UNTIL = "until";
-
-  @SerializedName(SERIALIZED_NAME_UNTIL)
+  @SerializedName("until")
   private Integer until;
 
   public TimeRange from(Integer from) {
@@ -28,10 +23,6 @@ public class TimeRange {
    * @return from
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(
-    required = true,
-    value = "Lower bound of the time range (Unix timestamp)."
-  )
   public Integer getFrom() {
     return from;
   }
@@ -51,10 +42,6 @@ public class TimeRange {
    * @return until
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(
-    required = true,
-    value = "Upper bound of the time range (Unix timestamp)."
-  )
   public Integer getUntil() {
     return until;
   }

@@ -5,20 +5,15 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 /** Highlighted attributes. */
-@ApiModel(description = "Highlighted attributes.")
 public class HighlightResult {
 
-  public static final String SERIALIZED_NAME_VALUE = "value";
-
-  @SerializedName(SERIALIZED_NAME_VALUE)
+  @SerializedName("value")
   private String value;
 
   /** Indicates how well the attribute matched the search query. */
@@ -73,20 +68,13 @@ public class HighlightResult {
     }
   }
 
-  public static final String SERIALIZED_NAME_MATCH_LEVEL = "matchLevel";
-
-  @SerializedName(SERIALIZED_NAME_MATCH_LEVEL)
+  @SerializedName("matchLevel")
   private MatchLevelEnum matchLevel;
 
-  public static final String SERIALIZED_NAME_MATCHED_WORDS = "matchedWords";
-
-  @SerializedName(SERIALIZED_NAME_MATCHED_WORDS)
+  @SerializedName("matchedWords")
   private List<String> matchedWords = null;
 
-  public static final String SERIALIZED_NAME_FULLY_HIGHLIGHTED =
-    "fullyHighlighted";
-
-  @SerializedName(SERIALIZED_NAME_FULLY_HIGHLIGHTED)
+  @SerializedName("fullyHighlighted")
   private Boolean fullyHighlighted;
 
   public HighlightResult value(String value) {
@@ -100,10 +88,6 @@ public class HighlightResult {
    * @return value
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    example = "<em>George</em> <em>Clo</em>oney",
-    value = "Markup text with occurrences highlighted."
-  )
   public String getValue() {
     return value;
   }
@@ -123,9 +107,6 @@ public class HighlightResult {
    * @return matchLevel
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Indicates how well the attribute matched the search query."
-  )
   public MatchLevelEnum getMatchLevel() {
     return matchLevel;
   }
@@ -153,9 +134,6 @@ public class HighlightResult {
    * @return matchedWords
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "List of words from the query that matched the object."
-  )
   public List<String> getMatchedWords() {
     return matchedWords;
   }
@@ -175,9 +153,6 @@ public class HighlightResult {
    * @return fullyHighlighted
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Whether the entire attribute value is highlighted."
-  )
   public Boolean getFullyHighlighted() {
     return fullyHighlighted;
   }

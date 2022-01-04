@@ -1,27 +1,18 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.Objects;
 
 /** Automatic facet Filter. */
-@ApiModel(description = "Automatic facet Filter.")
 public class AutomaticFacetFilter {
 
-  public static final String SERIALIZED_NAME_FACET = "facet";
-
-  @SerializedName(SERIALIZED_NAME_FACET)
+  @SerializedName("facet")
   private String facet;
 
-  public static final String SERIALIZED_NAME_SCORE = "score";
-
-  @SerializedName(SERIALIZED_NAME_SCORE)
+  @SerializedName("score")
   private Integer score = 1;
 
-  public static final String SERIALIZED_NAME_DISJUNCTIVE = "disjunctive";
-
-  @SerializedName(SERIALIZED_NAME_DISJUNCTIVE)
+  @SerializedName("disjunctive")
   private Boolean disjunctive = false;
 
   public AutomaticFacetFilter facet(String facet) {
@@ -35,10 +26,6 @@ public class AutomaticFacetFilter {
    * @return facet
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(
-    required = true,
-    value = "Attribute to filter on. This must match a facet placeholder in the Rule's pattern."
-  )
   public String getFacet() {
     return facet;
   }
@@ -58,9 +45,6 @@ public class AutomaticFacetFilter {
    * @return score
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Score for the filter. Typically used for optional or disjunctive filters."
-  )
   public Integer getScore() {
     return score;
   }
@@ -80,9 +64,6 @@ public class AutomaticFacetFilter {
    * @return disjunctive
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Whether the filter is disjunctive (true) or conjunctive (false)."
-  )
   public Boolean getDisjunctive() {
     return disjunctive;
   }

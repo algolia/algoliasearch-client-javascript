@@ -1,40 +1,25 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.HashMap;
 import java.util.Objects;
 
 /** A single record. */
-@ApiModel(description = "A single record.")
 public class Record extends HashMap<String, Object> {
 
-  public static final String SERIALIZED_NAME_OBJECT_I_D = "objectID";
-
-  @SerializedName(SERIALIZED_NAME_OBJECT_I_D)
+  @SerializedName("objectID")
   private String objectID;
 
-  public static final String SERIALIZED_NAME_HIGHLIGHT_RESULT =
-    "_highlightResult";
-
-  @SerializedName(SERIALIZED_NAME_HIGHLIGHT_RESULT)
+  @SerializedName("_highlightResult")
   private HighlightResult highlightResult;
 
-  public static final String SERIALIZED_NAME_SNIPPET_RESULT = "_snippetResult";
-
-  @SerializedName(SERIALIZED_NAME_SNIPPET_RESULT)
+  @SerializedName("_snippetResult")
   private SnippetResult snippetResult;
 
-  public static final String SERIALIZED_NAME_RANKING_INFO = "_rankingInfo";
-
-  @SerializedName(SERIALIZED_NAME_RANKING_INFO)
+  @SerializedName("_rankingInfo")
   private RankingInfo rankingInfo;
 
-  public static final String SERIALIZED_NAME_DISTINCT_SEQ_I_D =
-    "_distinctSeqID";
-
-  @SerializedName(SERIALIZED_NAME_DISTINCT_SEQ_I_D)
+  @SerializedName("_distinctSeqID")
   private Integer distinctSeqID;
 
   public Record objectID(String objectID) {
@@ -48,7 +33,6 @@ public class Record extends HashMap<String, Object> {
    * @return objectID
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "Unique identifier of the object.")
   public String getObjectID() {
     return objectID;
   }
@@ -68,7 +52,6 @@ public class Record extends HashMap<String, Object> {
    * @return highlightResult
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
   public HighlightResult getHighlightResult() {
     return highlightResult;
   }
@@ -88,7 +71,6 @@ public class Record extends HashMap<String, Object> {
    * @return snippetResult
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
   public SnippetResult getSnippetResult() {
     return snippetResult;
   }
@@ -108,7 +90,6 @@ public class Record extends HashMap<String, Object> {
    * @return rankingInfo
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
   public RankingInfo getRankingInfo() {
     return rankingInfo;
   }
@@ -128,7 +109,6 @@ public class Record extends HashMap<String, Object> {
    * @return distinctSeqID
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
   public Integer getDistinctSeqID() {
     return distinctSeqID;
   }

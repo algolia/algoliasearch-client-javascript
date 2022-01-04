@@ -1,25 +1,17 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 /** The `batchDictionaryEntries` requests. */
-@ApiModel(description = "The `batchDictionaryEntries` requests.")
 public class BatchDictionaryEntries {
 
-  public static final String SERIALIZED_NAME_CLEAR_EXISTING_DICTIONARY_ENTRIES =
-    "clearExistingDictionaryEntries";
-
-  @SerializedName(SERIALIZED_NAME_CLEAR_EXISTING_DICTIONARY_ENTRIES)
+  @SerializedName("clearExistingDictionaryEntries")
   private Boolean clearExistingDictionaryEntries = false;
 
-  public static final String SERIALIZED_NAME_REQUESTS = "requests";
-
-  @SerializedName(SERIALIZED_NAME_REQUESTS)
+  @SerializedName("requests")
   private List<BatchDictionaryEntriesRequest> requests = new ArrayList<>();
 
   public BatchDictionaryEntries clearExistingDictionaryEntries(
@@ -35,9 +27,6 @@ public class BatchDictionaryEntries {
    * @return clearExistingDictionaryEntries
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "When `true`, start the batch by removing all the custom entries from the dictionary."
-  )
   public Boolean getClearExistingDictionaryEntries() {
     return clearExistingDictionaryEntries;
   }
@@ -68,10 +57,6 @@ public class BatchDictionaryEntries {
    * @return requests
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(
-    required = true,
-    value = "List of operations to batch. Each operation is described by an `action` and a `body`."
-  )
   public List<BatchDictionaryEntriesRequest> getRequests() {
     return requests;
   }

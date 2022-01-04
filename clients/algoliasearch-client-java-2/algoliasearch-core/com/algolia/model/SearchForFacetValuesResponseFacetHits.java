@@ -1,25 +1,18 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.Objects;
 
 /** SearchForFacetValuesResponseFacetHits */
 public class SearchForFacetValuesResponseFacetHits {
 
-  public static final String SERIALIZED_NAME_VALUE = "value";
-
-  @SerializedName(SERIALIZED_NAME_VALUE)
+  @SerializedName("value")
   private String value;
 
-  public static final String SERIALIZED_NAME_HIGHLIGHTED = "highlighted";
-
-  @SerializedName(SERIALIZED_NAME_HIGHLIGHTED)
+  @SerializedName("highlighted")
   private String highlighted;
 
-  public static final String SERIALIZED_NAME_COUNT = "count";
-
-  @SerializedName(SERIALIZED_NAME_COUNT)
+  @SerializedName("count")
   private Integer count;
 
   public SearchForFacetValuesResponseFacetHits value(String value) {
@@ -33,7 +26,6 @@ public class SearchForFacetValuesResponseFacetHits {
    * @return value
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "Raw value of the facet.")
   public String getValue() {
     return value;
   }
@@ -53,11 +45,6 @@ public class SearchForFacetValuesResponseFacetHits {
    * @return highlighted
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(
-    example = "<em>George</em> <em>Clo</em>oney",
-    required = true,
-    value = "Markup text with occurrences highlighted."
-  )
   public String getHighlighted() {
     return highlighted;
   }
@@ -78,12 +65,6 @@ public class SearchForFacetValuesResponseFacetHits {
    * @return count
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(
-    required = true,
-    value = "How many objects contain this facet value. This takes into account the extra search" +
-    " parameters specified in the query. Like for a regular search query, the counts" +
-    " may not be exhaustive."
-  )
   public Integer getCount() {
     return count;
   }

@@ -1,50 +1,33 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
 /** Parameters for the search. */
-@ApiModel(description = "Parameters for the search.")
 public class SearchRulesParams {
 
-  public static final String SERIALIZED_NAME_QUERY = "query";
-
-  @SerializedName(SERIALIZED_NAME_QUERY)
+  @SerializedName("query")
   private String query = "";
 
-  public static final String SERIALIZED_NAME_ANCHORING = "anchoring";
-
-  @SerializedName(SERIALIZED_NAME_ANCHORING)
+  @SerializedName("anchoring")
   private Anchoring anchoring;
 
-  public static final String SERIALIZED_NAME_CONTEXT = "context";
-
-  @SerializedName(SERIALIZED_NAME_CONTEXT)
+  @SerializedName("context")
   private String context;
 
-  public static final String SERIALIZED_NAME_PAGE = "page";
-
-  @SerializedName(SERIALIZED_NAME_PAGE)
+  @SerializedName("page")
   private Integer page = 0;
 
-  public static final String SERIALIZED_NAME_HITS_PER_PAGE = "hitsPerPage";
-
-  @SerializedName(SERIALIZED_NAME_HITS_PER_PAGE)
+  @SerializedName("hitsPerPage")
   private Integer hitsPerPage = 20;
 
-  public static final String SERIALIZED_NAME_ENABLED = "enabled";
-
-  @SerializedName(SERIALIZED_NAME_ENABLED)
+  @SerializedName("enabled")
   private Boolean enabled;
 
-  public static final String SERIALIZED_NAME_REQUEST_OPTIONS = "requestOptions";
-
-  @SerializedName(SERIALIZED_NAME_REQUEST_OPTIONS)
+  @SerializedName("requestOptions")
   private List<Map<String, Object>> requestOptions = null;
 
   public SearchRulesParams query(String query) {
@@ -58,7 +41,6 @@ public class SearchRulesParams {
    * @return query
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Full text query.")
   public String getQuery() {
     return query;
   }
@@ -78,7 +60,6 @@ public class SearchRulesParams {
    * @return anchoring
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
   public Anchoring getAnchoring() {
     return anchoring;
   }
@@ -98,9 +79,6 @@ public class SearchRulesParams {
    * @return context
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Restricts matches to contextual rules with a specific context (exact match)."
-  )
   public String getContext() {
     return context;
   }
@@ -120,7 +98,6 @@ public class SearchRulesParams {
    * @return page
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Requested page (zero-based).")
   public Integer getPage() {
     return page;
   }
@@ -140,9 +117,6 @@ public class SearchRulesParams {
    * @return hitsPerPage
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Maximum number of hits in a page. Minimum is 1, maximum is 1000."
-  )
   public Integer getHitsPerPage() {
     return hitsPerPage;
   }
@@ -163,10 +137,6 @@ public class SearchRulesParams {
    * @return enabled
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "When specified, restricts matches to rules with a specific enabled status. When absent" +
-    " (default), all rules are retrieved, regardless of their enabled status."
-  )
   public Boolean getEnabled() {
     return enabled;
   }
@@ -198,9 +168,6 @@ public class SearchRulesParams {
    * @return requestOptions
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "A mapping of requestOptions to send along with the request."
-  )
   public List<Map<String, Object>> getRequestOptions() {
     return requestOptions;
   }

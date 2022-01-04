@@ -8,12 +8,12 @@ import io.github.cdimascio.dotenv.Dotenv;
 
 public class App {
     public static void main(String[] args) {
-        Dotenv dotenv = Dotenv.configure().directory("../").load();
-        System.out.println(dotenv.get("ALGOLIA_APPLICATION_ID"));
+        Dotenv dotenv = Dotenv.configure().directory("playground/").load();
 
         SearchApi client = new SearchApi(dotenv.get("ALGOLIA_APPLICATION_ID"), dotenv.get("ALGOLIA_SEARCH_KEY"));
-        String indexName = "myIndexName"; // String | The index in which to perform the request.
+        String indexName = dotenv.get("SEARCH_INDEX");
         SearchParams params = new SearchParams();
+        params.setQuery(dotenv.get("SEARCH_QUERY"));
         try {
             SearchResponse result = client.search(indexName, params);
             System.out.println(result);

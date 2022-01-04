@@ -1,24 +1,17 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 /** Highlighted results */
-@ApiModel(description = "Highlighted results")
 public class SynonymHitHighlightResult {
 
-  public static final String SERIALIZED_NAME_TYPE = "type";
-
-  @SerializedName(SERIALIZED_NAME_TYPE)
+  @SerializedName("type")
   private HighlightResult type;
 
-  public static final String SERIALIZED_NAME_SYNONYMS = "synonyms";
-
-  @SerializedName(SERIALIZED_NAME_SYNONYMS)
+  @SerializedName("synonyms")
   private List<HighlightResult> synonyms = null;
 
   public SynonymHitHighlightResult type(HighlightResult type) {
@@ -32,7 +25,6 @@ public class SynonymHitHighlightResult {
    * @return type
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
   public HighlightResult getType() {
     return type;
   }
@@ -62,7 +54,6 @@ public class SynonymHitHighlightResult {
    * @return synonyms
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
   public List<HighlightResult> getSynonyms() {
     return synonyms;
   }

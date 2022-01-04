@@ -1,40 +1,27 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 /** userIDs data. */
-@ApiModel(description = "userIDs data.")
 public class SearchUserIdsResponse {
 
-  public static final String SERIALIZED_NAME_HITS = "hits";
-
-  @SerializedName(SERIALIZED_NAME_HITS)
+  @SerializedName("hits")
   private List<SearchUserIdsResponseHits> hits = new ArrayList<>();
 
-  public static final String SERIALIZED_NAME_NB_HITS = "nbHits";
-
-  @SerializedName(SERIALIZED_NAME_NB_HITS)
+  @SerializedName("nbHits")
   private Integer nbHits;
 
-  public static final String SERIALIZED_NAME_PAGE = "page";
-
-  @SerializedName(SERIALIZED_NAME_PAGE)
+  @SerializedName("page")
   private Integer page = 0;
 
-  public static final String SERIALIZED_NAME_HITS_PER_PAGE = "hitsPerPage";
-
-  @SerializedName(SERIALIZED_NAME_HITS_PER_PAGE)
+  @SerializedName("hitsPerPage")
   private Integer hitsPerPage = 20;
 
-  public static final String SERIALIZED_NAME_UPDATED_AT = "updatedAt";
-
-  @SerializedName(SERIALIZED_NAME_UPDATED_AT)
+  @SerializedName("updatedAt")
   private OffsetDateTime updatedAt;
 
   public SearchUserIdsResponse hits(List<SearchUserIdsResponseHits> hits) {
@@ -53,10 +40,6 @@ public class SearchUserIdsResponse {
    * @return hits
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(
-    required = true,
-    value = "List of user object matching the query."
-  )
   public List<SearchUserIdsResponseHits> getHits() {
     return hits;
   }
@@ -76,11 +59,6 @@ public class SearchUserIdsResponse {
    * @return nbHits
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(
-    example = "20",
-    required = true,
-    value = "Number of hits that the search query matched."
-  )
   public Integer getNbHits() {
     return nbHits;
   }
@@ -100,7 +78,6 @@ public class SearchUserIdsResponse {
    * @return page
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "Specify the page to retrieve.")
   public Integer getPage() {
     return page;
   }
@@ -120,10 +97,6 @@ public class SearchUserIdsResponse {
    * @return hitsPerPage
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(
-    required = true,
-    value = "Maximum number of hits in a page. Minimum is 1, maximum is 1000."
-  )
   public Integer getHitsPerPage() {
     return hitsPerPage;
   }
@@ -143,10 +116,6 @@ public class SearchUserIdsResponse {
    * @return updatedAt
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(
-    required = true,
-    value = "Date of last update (ISO-8601 format)."
-  )
   public OffsetDateTime getUpdatedAt() {
     return updatedAt;
   }

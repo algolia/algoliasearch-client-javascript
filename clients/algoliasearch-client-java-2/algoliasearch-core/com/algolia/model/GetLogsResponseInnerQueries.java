@@ -1,25 +1,18 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.Objects;
 
 /** GetLogsResponseInnerQueries */
 public class GetLogsResponseInnerQueries {
 
-  public static final String SERIALIZED_NAME_INDEX_NAME = "index_name";
-
-  @SerializedName(SERIALIZED_NAME_INDEX_NAME)
+  @SerializedName("index_name")
   private String indexName;
 
-  public static final String SERIALIZED_NAME_USER_TOKEN = "user_token";
-
-  @SerializedName(SERIALIZED_NAME_USER_TOKEN)
+  @SerializedName("user_token")
   private String userToken;
 
-  public static final String SERIALIZED_NAME_QUERY_ID = "query_id";
-
-  @SerializedName(SERIALIZED_NAME_QUERY_ID)
+  @SerializedName("query_id")
   private String queryId;
 
   public GetLogsResponseInnerQueries indexName(String indexName) {
@@ -33,7 +26,6 @@ public class GetLogsResponseInnerQueries {
    * @return indexName
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Index targeted by the query.")
   public String getIndexName() {
     return indexName;
   }
@@ -53,7 +45,6 @@ public class GetLogsResponseInnerQueries {
    * @return userToken
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "User identifier.")
   public String getUserToken() {
     return userToken;
   }
@@ -73,7 +64,6 @@ public class GetLogsResponseInnerQueries {
    * @return queryId
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "QueryID for the given query.")
   public String getQueryId() {
     return queryId;
   }

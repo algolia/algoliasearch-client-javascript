@@ -1,7 +1,6 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,14 +9,10 @@ import java.util.Objects;
 /** SearchSynonymsResponse */
 public class SearchSynonymsResponse extends HashMap<String, Object> {
 
-  public static final String SERIALIZED_NAME_HITS = "hits";
-
-  @SerializedName(SERIALIZED_NAME_HITS)
+  @SerializedName("hits")
   private List<SynonymHit> hits = new ArrayList<>();
 
-  public static final String SERIALIZED_NAME_NB_HITS = "nbHits";
-
-  @SerializedName(SERIALIZED_NAME_NB_HITS)
+  @SerializedName("nbHits")
   private Integer nbHits;
 
   public SearchSynonymsResponse hits(List<SynonymHit> hits) {
@@ -36,7 +31,6 @@ public class SearchSynonymsResponse extends HashMap<String, Object> {
    * @return hits
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "Array of synonym objects.")
   public List<SynonymHit> getHits() {
     return hits;
   }
@@ -56,11 +50,6 @@ public class SearchSynonymsResponse extends HashMap<String, Object> {
    * @return nbHits
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(
-    example = "20",
-    required = true,
-    value = "Number of hits that the search query matched."
-  )
   public Integer getNbHits() {
     return nbHits;
   }

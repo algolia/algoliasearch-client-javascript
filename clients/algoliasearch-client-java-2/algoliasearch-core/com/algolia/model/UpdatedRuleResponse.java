@@ -1,26 +1,19 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
-import io.swagger.annotations.ApiModelProperty;
 import java.time.OffsetDateTime;
 import java.util.Objects;
 
 /** UpdatedRuleResponse */
 public class UpdatedRuleResponse {
 
-  public static final String SERIALIZED_NAME_OBJECT_I_D = "objectID";
-
-  @SerializedName(SERIALIZED_NAME_OBJECT_I_D)
+  @SerializedName("objectID")
   private String objectID;
 
-  public static final String SERIALIZED_NAME_UPDATED_AT = "updatedAt";
-
-  @SerializedName(SERIALIZED_NAME_UPDATED_AT)
+  @SerializedName("updatedAt")
   private OffsetDateTime updatedAt;
 
-  public static final String SERIALIZED_NAME_TASK_I_D = "taskID";
-
-  @SerializedName(SERIALIZED_NAME_TASK_I_D)
+  @SerializedName("taskID")
   private Integer taskID;
 
   public UpdatedRuleResponse objectID(String objectID) {
@@ -34,7 +27,6 @@ public class UpdatedRuleResponse {
    * @return objectID
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "Unique identifier of the object.")
   public String getObjectID() {
     return objectID;
   }
@@ -54,10 +46,6 @@ public class UpdatedRuleResponse {
    * @return updatedAt
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(
-    required = true,
-    value = "Date of last update (ISO-8601 format)."
-  )
   public OffsetDateTime getUpdatedAt() {
     return updatedAt;
   }
@@ -77,10 +65,6 @@ public class UpdatedRuleResponse {
    * @return taskID
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(
-    required = true,
-    value = "taskID of the indexing task to wait for."
-  )
   public Integer getTaskID() {
     return taskID;
   }

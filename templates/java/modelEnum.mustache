@@ -1,7 +1,3 @@
-{{#jackson}}
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
-{{/jackson}}
 {{#gson}}
 import java.io.IOException;
 import com.google.gson.TypeAdapter;
@@ -22,16 +18,10 @@ import com.google.gson.stream.JsonWriter;
 {{/jsonb}}
 {{>additionalEnumTypeAnnotations}}public enum {{{datatypeWithEnum}}}{{^datatypeWithEnum}}{{{classname}}}{{/datatypeWithEnum}} {
   {{#allowableValues}}{{#enumVars}}
-    {{#enumDescription}}
-  /**
+  {{#enumDescription}}/**
    * {{{.}}}
-   */
-     {{/enumDescription}}
-  {{#withXml}}
-  @XmlEnumValue({{#isInteger}}"{{/isInteger}}{{#isDouble}}"{{/isDouble}}{{#isLong}}"{{/isLong}}{{#isFloat}}"{{/isFloat}}{{{value}}}{{#isInteger}}"{{/isInteger}}{{#isDouble}}"{{/isDouble}}{{#isLong}}"{{/isLong}}{{#isFloat}}"{{/isFloat}})
-  {{/withXml}}
-  {{{name}}}({{{value}}}){{^-last}},
-  {{/-last}}{{#-last}};{{/-last}}{{/enumVars}}{{/allowableValues}}
+   */{{/enumDescription}}
+  {{{name}}}({{{value}}}){{^-last}},{{/-last}}{{#-last}};{{/-last}}{{/enumVars}}{{/allowableValues}}
 
   private {{{dataType}}} value;
 
@@ -39,9 +29,6 @@ import com.google.gson.stream.JsonWriter;
     this.value = value;
   }
 
-{{#jackson}}
-  @JsonValue
-{{/jackson}}
   public {{{dataType}}} getValue() {
     return value;
   }
@@ -51,9 +38,6 @@ import com.google.gson.stream.JsonWriter;
     return String.valueOf(value);
   }
 
-{{#jackson}}
-  @JsonCreator
-{{/jackson}}
   public static {{{datatypeWithEnum}}}{{^datatypeWithEnum}}{{{classname}}}{{/datatypeWithEnum}} fromValue({{{dataType}}} value) {
     for ({{{datatypeWithEnum}}}{{^datatypeWithEnum}}{{{classname}}}{{/datatypeWithEnum}} b : {{{datatypeWithEnum}}}{{^datatypeWithEnum}}{{{classname}}}{{/datatypeWithEnum}}.values()) {
       if (b.value.equals(value)) {

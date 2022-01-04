@@ -1,7 +1,6 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -9,24 +8,16 @@ import java.util.Objects;
 /** SearchRulesResponse */
 public class SearchRulesResponse {
 
-  public static final String SERIALIZED_NAME_HITS = "hits";
-
-  @SerializedName(SERIALIZED_NAME_HITS)
+  @SerializedName("hits")
   private List<Rule> hits = new ArrayList<>();
 
-  public static final String SERIALIZED_NAME_NB_HITS = "nbHits";
-
-  @SerializedName(SERIALIZED_NAME_NB_HITS)
+  @SerializedName("nbHits")
   private Integer nbHits;
 
-  public static final String SERIALIZED_NAME_PAGE = "page";
-
-  @SerializedName(SERIALIZED_NAME_PAGE)
+  @SerializedName("page")
   private Integer page;
 
-  public static final String SERIALIZED_NAME_NB_PAGES = "nbPages";
-
-  @SerializedName(SERIALIZED_NAME_NB_PAGES)
+  @SerializedName("nbPages")
   private Integer nbPages;
 
   public SearchRulesResponse hits(List<Rule> hits) {
@@ -45,7 +36,6 @@ public class SearchRulesResponse {
    * @return hits
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "Fetched rules.")
   public List<Rule> getHits() {
     return hits;
   }
@@ -65,7 +55,6 @@ public class SearchRulesResponse {
    * @return nbHits
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "Number of fetched rules.")
   public Integer getNbHits() {
     return nbHits;
   }
@@ -85,7 +74,6 @@ public class SearchRulesResponse {
    * @return page
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "Current page.")
   public Integer getPage() {
     return page;
   }
@@ -105,7 +93,6 @@ public class SearchRulesResponse {
    * @return nbPages
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "Number of pages.")
   public Integer getNbPages() {
     return nbPages;
   }

@@ -5,7 +5,6 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,9 +13,7 @@ import java.util.Objects;
 /** MultipleQueriesObject */
 public class MultipleQueriesObject {
 
-  public static final String SERIALIZED_NAME_REQUESTS = "requests";
-
-  @SerializedName(SERIALIZED_NAME_REQUESTS)
+  @SerializedName("requests")
   private List<MultipleQueries> requests = new ArrayList<>();
 
   /** Gets or Sets strategy */
@@ -68,9 +65,7 @@ public class MultipleQueriesObject {
     }
   }
 
-  public static final String SERIALIZED_NAME_STRATEGY = "strategy";
-
-  @SerializedName(SERIALIZED_NAME_STRATEGY)
+  @SerializedName("strategy")
   private StrategyEnum strategy;
 
   public MultipleQueriesObject requests(List<MultipleQueries> requests) {
@@ -89,7 +84,6 @@ public class MultipleQueriesObject {
    * @return requests
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "")
   public List<MultipleQueries> getRequests() {
     return requests;
   }
@@ -109,7 +103,6 @@ public class MultipleQueriesObject {
    * @return strategy
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
   public StrategyEnum getStrategy() {
     return strategy;
   }

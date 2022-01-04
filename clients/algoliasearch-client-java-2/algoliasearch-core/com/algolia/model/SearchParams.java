@@ -5,299 +5,166 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-import org.openapitools.jackson.nullable.JsonNullable;
 
 /** SearchParams */
 public class SearchParams {
 
-  public static final String SERIALIZED_NAME_PARAMS = "params";
-
-  @SerializedName(SERIALIZED_NAME_PARAMS)
+  @SerializedName("params")
   private String params = "";
 
-  public static final String SERIALIZED_NAME_QUERY = "query";
-
-  @SerializedName(SERIALIZED_NAME_QUERY)
+  @SerializedName("query")
   private String query = "";
 
-  public static final String SERIALIZED_NAME_SIMILAR_QUERY = "similarQuery";
-
-  @SerializedName(SERIALIZED_NAME_SIMILAR_QUERY)
+  @SerializedName("similarQuery")
   private String similarQuery = "";
 
-  public static final String SERIALIZED_NAME_FILTERS = "filters";
-
-  @SerializedName(SERIALIZED_NAME_FILTERS)
+  @SerializedName("filters")
   private String filters = "";
 
-  public static final String SERIALIZED_NAME_FACET_FILTERS = "facetFilters";
-
-  @SerializedName(SERIALIZED_NAME_FACET_FILTERS)
+  @SerializedName("facetFilters")
   private List<String> facetFilters = null;
 
-  public static final String SERIALIZED_NAME_OPTIONAL_FILTERS =
-    "optionalFilters";
-
-  @SerializedName(SERIALIZED_NAME_OPTIONAL_FILTERS)
+  @SerializedName("optionalFilters")
   private List<String> optionalFilters = null;
 
-  public static final String SERIALIZED_NAME_NUMERIC_FILTERS = "numericFilters";
-
-  @SerializedName(SERIALIZED_NAME_NUMERIC_FILTERS)
+  @SerializedName("numericFilters")
   private List<String> numericFilters = null;
 
-  public static final String SERIALIZED_NAME_TAG_FILTERS = "tagFilters";
-
-  @SerializedName(SERIALIZED_NAME_TAG_FILTERS)
+  @SerializedName("tagFilters")
   private List<String> tagFilters = null;
 
-  public static final String SERIALIZED_NAME_SUM_OR_FILTERS_SCORES =
-    "sumOrFiltersScores";
-
-  @SerializedName(SERIALIZED_NAME_SUM_OR_FILTERS_SCORES)
+  @SerializedName("sumOrFiltersScores")
   private Boolean sumOrFiltersScores = false;
 
-  public static final String SERIALIZED_NAME_FACETS = "facets";
-
-  @SerializedName(SERIALIZED_NAME_FACETS)
+  @SerializedName("facets")
   private List<String> facets = null;
 
-  public static final String SERIALIZED_NAME_MAX_VALUES_PER_FACET =
-    "maxValuesPerFacet";
-
-  @SerializedName(SERIALIZED_NAME_MAX_VALUES_PER_FACET)
+  @SerializedName("maxValuesPerFacet")
   private Integer maxValuesPerFacet = 100;
 
-  public static final String SERIALIZED_NAME_FACETING_AFTER_DISTINCT =
-    "facetingAfterDistinct";
-
-  @SerializedName(SERIALIZED_NAME_FACETING_AFTER_DISTINCT)
+  @SerializedName("facetingAfterDistinct")
   private Boolean facetingAfterDistinct = false;
 
-  public static final String SERIALIZED_NAME_SORT_FACET_VALUES_BY =
-    "sortFacetValuesBy";
-
-  @SerializedName(SERIALIZED_NAME_SORT_FACET_VALUES_BY)
+  @SerializedName("sortFacetValuesBy")
   private String sortFacetValuesBy = "count";
 
-  public static final String SERIALIZED_NAME_PAGE = "page";
-
-  @SerializedName(SERIALIZED_NAME_PAGE)
+  @SerializedName("page")
   private Integer page = 0;
 
-  public static final String SERIALIZED_NAME_OFFSET = "offset";
-
-  @SerializedName(SERIALIZED_NAME_OFFSET)
+  @SerializedName("offset")
   private Integer offset;
 
-  public static final String SERIALIZED_NAME_LENGTH = "length";
-
-  @SerializedName(SERIALIZED_NAME_LENGTH)
+  @SerializedName("length")
   private Integer length;
 
-  public static final String SERIALIZED_NAME_AROUND_LAT_LNG = "aroundLatLng";
-
-  @SerializedName(SERIALIZED_NAME_AROUND_LAT_LNG)
+  @SerializedName("aroundLatLng")
   private String aroundLatLng = "";
 
-  public static final String SERIALIZED_NAME_AROUND_LAT_LNG_VIA_I_P =
-    "aroundLatLngViaIP";
-
-  @SerializedName(SERIALIZED_NAME_AROUND_LAT_LNG_VIA_I_P)
+  @SerializedName("aroundLatLngViaIP")
   private Boolean aroundLatLngViaIP = false;
 
-  public static final String SERIALIZED_NAME_AROUND_RADIUS = "aroundRadius";
-
-  @SerializedName(SERIALIZED_NAME_AROUND_RADIUS)
+  @SerializedName("aroundRadius")
   private OneOfintegerstring aroundRadius;
 
-  public static final String SERIALIZED_NAME_AROUND_PRECISION =
-    "aroundPrecision";
-
-  @SerializedName(SERIALIZED_NAME_AROUND_PRECISION)
+  @SerializedName("aroundPrecision")
   private Integer aroundPrecision = 10;
 
-  public static final String SERIALIZED_NAME_MINIMUM_AROUND_RADIUS =
-    "minimumAroundRadius";
-
-  @SerializedName(SERIALIZED_NAME_MINIMUM_AROUND_RADIUS)
+  @SerializedName("minimumAroundRadius")
   private Integer minimumAroundRadius;
 
-  public static final String SERIALIZED_NAME_INSIDE_BOUNDING_BOX =
-    "insideBoundingBox";
-
-  @SerializedName(SERIALIZED_NAME_INSIDE_BOUNDING_BOX)
+  @SerializedName("insideBoundingBox")
   private List<BigDecimal> insideBoundingBox = null;
 
-  public static final String SERIALIZED_NAME_INSIDE_POLYGON = "insidePolygon";
-
-  @SerializedName(SERIALIZED_NAME_INSIDE_POLYGON)
+  @SerializedName("insidePolygon")
   private List<BigDecimal> insidePolygon = null;
 
-  public static final String SERIALIZED_NAME_NATURAL_LANGUAGES =
-    "naturalLanguages";
-
-  @SerializedName(SERIALIZED_NAME_NATURAL_LANGUAGES)
+  @SerializedName("naturalLanguages")
   private List<String> naturalLanguages = null;
 
-  public static final String SERIALIZED_NAME_RULE_CONTEXTS = "ruleContexts";
-
-  @SerializedName(SERIALIZED_NAME_RULE_CONTEXTS)
+  @SerializedName("ruleContexts")
   private List<String> ruleContexts = null;
 
-  public static final String SERIALIZED_NAME_PERSONALIZATION_IMPACT =
-    "personalizationImpact";
-
-  @SerializedName(SERIALIZED_NAME_PERSONALIZATION_IMPACT)
+  @SerializedName("personalizationImpact")
   private Integer personalizationImpact = 100;
 
-  public static final String SERIALIZED_NAME_USER_TOKEN = "userToken";
-
-  @SerializedName(SERIALIZED_NAME_USER_TOKEN)
+  @SerializedName("userToken")
   private String userToken;
 
-  public static final String SERIALIZED_NAME_GET_RANKING_INFO =
-    "getRankingInfo";
-
-  @SerializedName(SERIALIZED_NAME_GET_RANKING_INFO)
+  @SerializedName("getRankingInfo")
   private Boolean getRankingInfo = false;
 
-  public static final String SERIALIZED_NAME_CLICK_ANALYTICS = "clickAnalytics";
-
-  @SerializedName(SERIALIZED_NAME_CLICK_ANALYTICS)
+  @SerializedName("clickAnalytics")
   private Boolean clickAnalytics = false;
 
-  public static final String SERIALIZED_NAME_ANALYTICS = "analytics";
-
-  @SerializedName(SERIALIZED_NAME_ANALYTICS)
+  @SerializedName("analytics")
   private Boolean analytics = true;
 
-  public static final String SERIALIZED_NAME_ANALYTICS_TAGS = "analyticsTags";
-
-  @SerializedName(SERIALIZED_NAME_ANALYTICS_TAGS)
+  @SerializedName("analyticsTags")
   private List<String> analyticsTags = null;
 
-  public static final String SERIALIZED_NAME_PERCENTILE_COMPUTATION =
-    "percentileComputation";
-
-  @SerializedName(SERIALIZED_NAME_PERCENTILE_COMPUTATION)
+  @SerializedName("percentileComputation")
   private Boolean percentileComputation = true;
 
-  public static final String SERIALIZED_NAME_ENABLE_A_B_TEST = "enableABTest";
-
-  @SerializedName(SERIALIZED_NAME_ENABLE_A_B_TEST)
+  @SerializedName("enableABTest")
   private Boolean enableABTest = true;
 
-  public static final String SERIALIZED_NAME_ENABLE_RE_RANKING =
-    "enableReRanking";
-
-  @SerializedName(SERIALIZED_NAME_ENABLE_RE_RANKING)
+  @SerializedName("enableReRanking")
   private Boolean enableReRanking = true;
 
-  public static final String SERIALIZED_NAME_SEARCHABLE_ATTRIBUTES =
-    "searchableAttributes";
-
-  @SerializedName(SERIALIZED_NAME_SEARCHABLE_ATTRIBUTES)
+  @SerializedName("searchableAttributes")
   private List<String> searchableAttributes = null;
 
-  public static final String SERIALIZED_NAME_ATTRIBUTES_FOR_FACETING =
-    "attributesForFaceting";
-
-  @SerializedName(SERIALIZED_NAME_ATTRIBUTES_FOR_FACETING)
+  @SerializedName("attributesForFaceting")
   private List<String> attributesForFaceting = null;
 
-  public static final String SERIALIZED_NAME_UNRETRIEVABLE_ATTRIBUTES =
-    "unretrievableAttributes";
-
-  @SerializedName(SERIALIZED_NAME_UNRETRIEVABLE_ATTRIBUTES)
+  @SerializedName("unretrievableAttributes")
   private List<String> unretrievableAttributes = null;
 
-  public static final String SERIALIZED_NAME_ATTRIBUTES_TO_RETRIEVE =
-    "attributesToRetrieve";
-
-  @SerializedName(SERIALIZED_NAME_ATTRIBUTES_TO_RETRIEVE)
+  @SerializedName("attributesToRetrieve")
   private List<String> attributesToRetrieve = null;
 
-  public static final String SERIALIZED_NAME_RESTRICT_SEARCHABLE_ATTRIBUTES =
-    "restrictSearchableAttributes";
-
-  @SerializedName(SERIALIZED_NAME_RESTRICT_SEARCHABLE_ATTRIBUTES)
+  @SerializedName("restrictSearchableAttributes")
   private List<String> restrictSearchableAttributes = null;
 
-  public static final String SERIALIZED_NAME_RANKING = "ranking";
-
-  @SerializedName(SERIALIZED_NAME_RANKING)
+  @SerializedName("ranking")
   private List<String> ranking = null;
 
-  public static final String SERIALIZED_NAME_CUSTOM_RANKING = "customRanking";
-
-  @SerializedName(SERIALIZED_NAME_CUSTOM_RANKING)
+  @SerializedName("customRanking")
   private List<String> customRanking = null;
 
-  public static final String SERIALIZED_NAME_RELEVANCY_STRICTNESS =
-    "relevancyStrictness";
-
-  @SerializedName(SERIALIZED_NAME_RELEVANCY_STRICTNESS)
+  @SerializedName("relevancyStrictness")
   private Integer relevancyStrictness = 100;
 
-  public static final String SERIALIZED_NAME_ATTRIBUTES_TO_HIGHLIGHT =
-    "attributesToHighlight";
-
-  @SerializedName(SERIALIZED_NAME_ATTRIBUTES_TO_HIGHLIGHT)
+  @SerializedName("attributesToHighlight")
   private List<String> attributesToHighlight = null;
 
-  public static final String SERIALIZED_NAME_ATTRIBUTES_TO_SNIPPET =
-    "attributesToSnippet";
-
-  @SerializedName(SERIALIZED_NAME_ATTRIBUTES_TO_SNIPPET)
+  @SerializedName("attributesToSnippet")
   private List<String> attributesToSnippet = null;
 
-  public static final String SERIALIZED_NAME_HIGHLIGHT_PRE_TAG =
-    "highlightPreTag";
-
-  @SerializedName(SERIALIZED_NAME_HIGHLIGHT_PRE_TAG)
+  @SerializedName("highlightPreTag")
   private String highlightPreTag = "<em>";
 
-  public static final String SERIALIZED_NAME_HIGHLIGHT_POST_TAG =
-    "highlightPostTag";
-
-  @SerializedName(SERIALIZED_NAME_HIGHLIGHT_POST_TAG)
+  @SerializedName("highlightPostTag")
   private String highlightPostTag = "</em>";
 
-  public static final String SERIALIZED_NAME_SNIPPET_ELLIPSIS_TEXT =
-    "snippetEllipsisText";
-
-  @SerializedName(SERIALIZED_NAME_SNIPPET_ELLIPSIS_TEXT)
+  @SerializedName("snippetEllipsisText")
   private String snippetEllipsisText = "…";
 
-  public static final String SERIALIZED_NAME_RESTRICT_HIGHLIGHT_AND_SNIPPET_ARRAYS =
-    "restrictHighlightAndSnippetArrays";
-
-  @SerializedName(SERIALIZED_NAME_RESTRICT_HIGHLIGHT_AND_SNIPPET_ARRAYS)
+  @SerializedName("restrictHighlightAndSnippetArrays")
   private Boolean restrictHighlightAndSnippetArrays = false;
 
-  public static final String SERIALIZED_NAME_HITS_PER_PAGE = "hitsPerPage";
-
-  @SerializedName(SERIALIZED_NAME_HITS_PER_PAGE)
+  @SerializedName("hitsPerPage")
   private Integer hitsPerPage = 20;
 
-  public static final String SERIALIZED_NAME_MIN_WORD_SIZEFOR1_TYPO =
-    "minWordSizefor1Typo";
-
-  @SerializedName(SERIALIZED_NAME_MIN_WORD_SIZEFOR1_TYPO)
+  @SerializedName("minWordSizefor1Typo")
   private Integer minWordSizefor1Typo = 4;
 
-  public static final String SERIALIZED_NAME_MIN_WORD_SIZEFOR2_TYPOS =
-    "minWordSizefor2Typos";
-
-  @SerializedName(SERIALIZED_NAME_MIN_WORD_SIZEFOR2_TYPOS)
+  @SerializedName("minWordSizefor2Typos")
   private Integer minWordSizefor2Typos = 8;
 
   /** Controls whether typo tolerance is enabled and how it is applied. */
@@ -354,66 +221,37 @@ public class SearchParams {
     }
   }
 
-  public static final String SERIALIZED_NAME_TYPO_TOLERANCE = "typoTolerance";
-
-  @SerializedName(SERIALIZED_NAME_TYPO_TOLERANCE)
+  @SerializedName("typoTolerance")
   private TypoToleranceEnum typoTolerance = TypoToleranceEnum.TRUE;
 
-  public static final String SERIALIZED_NAME_ALLOW_TYPOS_ON_NUMERIC_TOKENS =
-    "allowTyposOnNumericTokens";
-
-  @SerializedName(SERIALIZED_NAME_ALLOW_TYPOS_ON_NUMERIC_TOKENS)
+  @SerializedName("allowTyposOnNumericTokens")
   private Boolean allowTyposOnNumericTokens = true;
 
-  public static final String SERIALIZED_NAME_DISABLE_TYPO_TOLERANCE_ON_ATTRIBUTES =
-    "disableTypoToleranceOnAttributes";
-
-  @SerializedName(SERIALIZED_NAME_DISABLE_TYPO_TOLERANCE_ON_ATTRIBUTES)
+  @SerializedName("disableTypoToleranceOnAttributes")
   private List<String> disableTypoToleranceOnAttributes = null;
 
-  public static final String SERIALIZED_NAME_SEPARATORS_TO_INDEX =
-    "separatorsToIndex";
-
-  @SerializedName(SERIALIZED_NAME_SEPARATORS_TO_INDEX)
+  @SerializedName("separatorsToIndex")
   private String separatorsToIndex = "";
 
-  public static final String SERIALIZED_NAME_IGNORE_PLURALS = "ignorePlurals";
-
-  @SerializedName(SERIALIZED_NAME_IGNORE_PLURALS)
+  @SerializedName("ignorePlurals")
   private String ignorePlurals = "false";
 
-  public static final String SERIALIZED_NAME_REMOVE_STOP_WORDS =
-    "removeStopWords";
-
-  @SerializedName(SERIALIZED_NAME_REMOVE_STOP_WORDS)
+  @SerializedName("removeStopWords")
   private String removeStopWords = "false";
 
-  public static final String SERIALIZED_NAME_KEEP_DIACRITICS_ON_CHARACTERS =
-    "keepDiacriticsOnCharacters";
-
-  @SerializedName(SERIALIZED_NAME_KEEP_DIACRITICS_ON_CHARACTERS)
+  @SerializedName("keepDiacriticsOnCharacters")
   private String keepDiacriticsOnCharacters = "";
 
-  public static final String SERIALIZED_NAME_QUERY_LANGUAGES = "queryLanguages";
-
-  @SerializedName(SERIALIZED_NAME_QUERY_LANGUAGES)
+  @SerializedName("queryLanguages")
   private List<String> queryLanguages = null;
 
-  public static final String SERIALIZED_NAME_DECOMPOUND_QUERY =
-    "decompoundQuery";
-
-  @SerializedName(SERIALIZED_NAME_DECOMPOUND_QUERY)
+  @SerializedName("decompoundQuery")
   private Boolean decompoundQuery = true;
 
-  public static final String SERIALIZED_NAME_ENABLE_RULES = "enableRules";
-
-  @SerializedName(SERIALIZED_NAME_ENABLE_RULES)
+  @SerializedName("enableRules")
   private Boolean enableRules = true;
 
-  public static final String SERIALIZED_NAME_ENABLE_PERSONALIZATION =
-    "enablePersonalization";
-
-  @SerializedName(SERIALIZED_NAME_ENABLE_PERSONALIZATION)
+  @SerializedName("enablePersonalization")
   private Boolean enablePersonalization = false;
 
   /** Controls if and how query words are interpreted as prefixes. */
@@ -468,9 +306,7 @@ public class SearchParams {
     }
   }
 
-  public static final String SERIALIZED_NAME_QUERY_TYPE = "queryType";
-
-  @SerializedName(SERIALIZED_NAME_QUERY_TYPE)
+  @SerializedName("queryType")
   private QueryTypeEnum queryType = QueryTypeEnum.PREFIXLAST;
 
   /** Selects a strategy to remove words from the query when it doesn't match any hits. */
@@ -528,27 +364,17 @@ public class SearchParams {
     }
   }
 
-  public static final String SERIALIZED_NAME_REMOVE_WORDS_IF_NO_RESULTS =
-    "removeWordsIfNoResults";
-
-  @SerializedName(SERIALIZED_NAME_REMOVE_WORDS_IF_NO_RESULTS)
+  @SerializedName("removeWordsIfNoResults")
   private RemoveWordsIfNoResultsEnum removeWordsIfNoResults =
     RemoveWordsIfNoResultsEnum.NONE;
 
-  public static final String SERIALIZED_NAME_ADVANCED_SYNTAX = "advancedSyntax";
-
-  @SerializedName(SERIALIZED_NAME_ADVANCED_SYNTAX)
+  @SerializedName("advancedSyntax")
   private Boolean advancedSyntax = false;
 
-  public static final String SERIALIZED_NAME_OPTIONAL_WORDS = "optionalWords";
-
-  @SerializedName(SERIALIZED_NAME_OPTIONAL_WORDS)
+  @SerializedName("optionalWords")
   private List<String> optionalWords = null;
 
-  public static final String SERIALIZED_NAME_DISABLE_EXACT_ON_ATTRIBUTES =
-    "disableExactOnAttributes";
-
-  @SerializedName(SERIALIZED_NAME_DISABLE_EXACT_ON_ATTRIBUTES)
+  @SerializedName("disableExactOnAttributes")
   private List<String> disableExactOnAttributes = null;
 
   /** Controls how the exact ranking criterion is computed when the query contains only one word. */
@@ -604,10 +430,7 @@ public class SearchParams {
     }
   }
 
-  public static final String SERIALIZED_NAME_EXACT_ON_SINGLE_WORD_QUERY =
-    "exactOnSingleWordQuery";
-
-  @SerializedName(SERIALIZED_NAME_EXACT_ON_SINGLE_WORD_QUERY)
+  @SerializedName("exactOnSingleWordQuery")
   private ExactOnSingleWordQueryEnum exactOnSingleWordQuery =
     ExactOnSingleWordQueryEnum.ATTRIBUTE;
 
@@ -663,10 +486,7 @@ public class SearchParams {
     }
   }
 
-  public static final String SERIALIZED_NAME_ALTERNATIVES_AS_EXACT =
-    "alternativesAsExact";
-
-  @SerializedName(SERIALIZED_NAME_ALTERNATIVES_AS_EXACT)
+  @SerializedName("alternativesAsExact")
   private List<AlternativesAsExactEnum> alternativesAsExact = null;
 
   /** Gets or Sets advancedSyntaxFeatures */
@@ -720,53 +540,31 @@ public class SearchParams {
     }
   }
 
-  public static final String SERIALIZED_NAME_ADVANCED_SYNTAX_FEATURES =
-    "advancedSyntaxFeatures";
-
-  @SerializedName(SERIALIZED_NAME_ADVANCED_SYNTAX_FEATURES)
+  @SerializedName("advancedSyntaxFeatures")
   private List<AdvancedSyntaxFeaturesEnum> advancedSyntaxFeatures = null;
 
-  public static final String SERIALIZED_NAME_DISTINCT = "distinct";
-
-  @SerializedName(SERIALIZED_NAME_DISTINCT)
+  @SerializedName("distinct")
   private Integer distinct = 0;
 
-  public static final String SERIALIZED_NAME_SYNONYMS = "synonyms";
-
-  @SerializedName(SERIALIZED_NAME_SYNONYMS)
+  @SerializedName("synonyms")
   private Boolean synonyms = true;
 
-  public static final String SERIALIZED_NAME_REPLACE_SYNONYMS_IN_HIGHLIGHT =
-    "replaceSynonymsInHighlight";
-
-  @SerializedName(SERIALIZED_NAME_REPLACE_SYNONYMS_IN_HIGHLIGHT)
+  @SerializedName("replaceSynonymsInHighlight")
   private Boolean replaceSynonymsInHighlight = false;
 
-  public static final String SERIALIZED_NAME_MIN_PROXIMITY = "minProximity";
-
-  @SerializedName(SERIALIZED_NAME_MIN_PROXIMITY)
+  @SerializedName("minProximity")
   private Integer minProximity = 1;
 
-  public static final String SERIALIZED_NAME_RESPONSE_FIELDS = "responseFields";
-
-  @SerializedName(SERIALIZED_NAME_RESPONSE_FIELDS)
+  @SerializedName("responseFields")
   private List<String> responseFields = null;
 
-  public static final String SERIALIZED_NAME_MAX_FACET_HITS = "maxFacetHits";
-
-  @SerializedName(SERIALIZED_NAME_MAX_FACET_HITS)
+  @SerializedName("maxFacetHits")
   private Integer maxFacetHits = 10;
 
-  public static final String SERIALIZED_NAME_ATTRIBUTE_CRITERIA_COMPUTED_BY_MIN_PROXIMITY =
-    "attributeCriteriaComputedByMinProximity";
-
-  @SerializedName(SERIALIZED_NAME_ATTRIBUTE_CRITERIA_COMPUTED_BY_MIN_PROXIMITY)
+  @SerializedName("attributeCriteriaComputedByMinProximity")
   private Boolean attributeCriteriaComputedByMinProximity = false;
 
-  public static final String SERIALIZED_NAME_RENDERING_CONTENT =
-    "renderingContent";
-
-  @SerializedName(SERIALIZED_NAME_RENDERING_CONTENT)
+  @SerializedName("renderingContent")
   private Object renderingContent = new Object();
 
   public SearchParams params(String params) {
@@ -780,7 +578,6 @@ public class SearchParams {
    * @return params
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Search parameters as URL-encoded query string.")
   public String getParams() {
     return params;
   }
@@ -800,7 +597,6 @@ public class SearchParams {
    * @return query
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "The text to search in the index.")
   public String getQuery() {
     return query;
   }
@@ -821,10 +617,6 @@ public class SearchParams {
    * @return similarQuery
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Overrides the query parameter and performs a more generic search that can be used to" +
-    " find \"similar\" results."
-  )
   public String getSimilarQuery() {
     return similarQuery;
   }
@@ -844,9 +636,6 @@ public class SearchParams {
    * @return filters
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Filter the query with numeric, facet and/or tag filters."
-  )
   public String getFilters() {
     return filters;
   }
@@ -874,7 +663,6 @@ public class SearchParams {
    * @return facetFilters
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Filter hits by facet value.")
   public List<String> getFacetFilters() {
     return facetFilters;
   }
@@ -903,10 +691,6 @@ public class SearchParams {
    * @return optionalFilters
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Create filters for ranking purposes, where records that match the filter are ranked" +
-    " higher, or lower in the case of a negative optional filter."
-  )
   public List<String> getOptionalFilters() {
     return optionalFilters;
   }
@@ -934,7 +718,6 @@ public class SearchParams {
    * @return numericFilters
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Filter on numeric attributes.")
   public List<String> getNumericFilters() {
     return numericFilters;
   }
@@ -962,7 +745,6 @@ public class SearchParams {
    * @return tagFilters
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Filter hits by tags.")
   public List<String> getTagFilters() {
     return tagFilters;
   }
@@ -982,9 +764,6 @@ public class SearchParams {
    * @return sumOrFiltersScores
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Determines how to calculate the total score for filtering."
-  )
   public Boolean getSumOrFiltersScores() {
     return sumOrFiltersScores;
   }
@@ -1012,7 +791,6 @@ public class SearchParams {
    * @return facets
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Retrieve facets and their facet values.")
   public List<String> getFacets() {
     return facets;
   }
@@ -1032,9 +810,6 @@ public class SearchParams {
    * @return maxValuesPerFacet
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Maximum number of facet values to return for each facet during a regular search."
-  )
   public Integer getMaxValuesPerFacet() {
     return maxValuesPerFacet;
   }
@@ -1054,9 +829,6 @@ public class SearchParams {
    * @return facetingAfterDistinct
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Force faceting to be applied after de-duplication (via the Distinct setting)."
-  )
   public Boolean getFacetingAfterDistinct() {
     return facetingAfterDistinct;
   }
@@ -1076,7 +848,6 @@ public class SearchParams {
    * @return sortFacetValuesBy
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Controls how facet values are fetched.")
   public String getSortFacetValuesBy() {
     return sortFacetValuesBy;
   }
@@ -1096,7 +867,6 @@ public class SearchParams {
    * @return page
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Specify the page to retrieve.")
   public Integer getPage() {
     return page;
   }
@@ -1116,7 +886,6 @@ public class SearchParams {
    * @return offset
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Specify the offset of the first hit to return.")
   public Integer getOffset() {
     return offset;
   }
@@ -1136,9 +905,6 @@ public class SearchParams {
    * @return length
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Set the number of hits to retrieve (used only with offset)."
-  )
   public Integer getLength() {
     return length;
   }
@@ -1158,10 +924,6 @@ public class SearchParams {
    * @return aroundLatLng
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Search for entries around a central geolocation, enabling a geo search within a circular" +
-    " area."
-  )
   public String getAroundLatLng() {
     return aroundLatLng;
   }
@@ -1182,10 +944,6 @@ public class SearchParams {
    * @return aroundLatLngViaIP
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Search for entries around a given location automatically computed from the requester's" +
-    " IP address."
-  )
   public Boolean getAroundLatLngViaIP() {
     return aroundLatLngViaIP;
   }
@@ -1205,9 +963,6 @@ public class SearchParams {
    * @return aroundRadius
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Define the maximum radius for a geo search (in meters)."
-  )
   public OneOfintegerstring getAroundRadius() {
     return aroundRadius;
   }
@@ -1227,10 +982,6 @@ public class SearchParams {
    * @return aroundPrecision
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Precision of geo search (in meters), to add grouping by geo location to the ranking" +
-    " formula."
-  )
   public Integer getAroundPrecision() {
     return aroundPrecision;
   }
@@ -1250,9 +1001,6 @@ public class SearchParams {
    * @return minimumAroundRadius
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Minimum radius (in meters) used for a geo search when aroundRadius is not set."
-  )
   public Integer getMinimumAroundRadius() {
     return minimumAroundRadius;
   }
@@ -1282,9 +1030,6 @@ public class SearchParams {
    * @return insideBoundingBox
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Search inside a rectangular area (in geo coordinates)."
-  )
   public List<BigDecimal> getInsideBoundingBox() {
     return insideBoundingBox;
   }
@@ -1312,7 +1057,6 @@ public class SearchParams {
    * @return insidePolygon
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Search inside a polygon (in geo coordinates).")
   public List<BigDecimal> getInsidePolygon() {
     return insidePolygon;
   }
@@ -1344,13 +1088,6 @@ public class SearchParams {
    * @return naturalLanguages
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "This parameter changes the default values of certain parameters and settings that work" +
-    " best for a natural language query, such as ignorePlurals, removeStopWords," +
-    " removeWordsIfNoResults, analyticsTags and ruleContexts. These parameters and" +
-    " settings work well together when the query is formatted in natural language" +
-    " instead of keywords, for example when your user performs a voice search."
-  )
   public List<String> getNaturalLanguages() {
     return naturalLanguages;
   }
@@ -1378,7 +1115,6 @@ public class SearchParams {
    * @return ruleContexts
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Enables contextual rules.")
   public List<String> getRuleContexts() {
     return ruleContexts;
   }
@@ -1398,7 +1134,6 @@ public class SearchParams {
    * @return personalizationImpact
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Define the impact of the Personalization feature.")
   public Integer getPersonalizationImpact() {
     return personalizationImpact;
   }
@@ -1418,9 +1153,6 @@ public class SearchParams {
    * @return userToken
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Associates a certain user token with the current search."
-  )
   public String getUserToken() {
     return userToken;
   }
@@ -1440,7 +1172,6 @@ public class SearchParams {
    * @return getRankingInfo
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Retrieve detailed ranking information.")
   public Boolean getGetRankingInfo() {
     return getRankingInfo;
   }
@@ -1460,7 +1191,6 @@ public class SearchParams {
    * @return clickAnalytics
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Enable the Click Analytics feature.")
   public Boolean getClickAnalytics() {
     return clickAnalytics;
   }
@@ -1480,9 +1210,6 @@ public class SearchParams {
    * @return analytics
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Whether the current query will be taken into account in the Analytics."
-  )
   public Boolean getAnalytics() {
     return analytics;
   }
@@ -1510,9 +1237,6 @@ public class SearchParams {
    * @return analyticsTags
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "List of tags to apply to the query for analytics purposes."
-  )
   public List<String> getAnalyticsTags() {
     return analyticsTags;
   }
@@ -1532,9 +1256,6 @@ public class SearchParams {
    * @return percentileComputation
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Whether to include or exclude a query from the processing-time percentile computation."
-  )
   public Boolean getPercentileComputation() {
     return percentileComputation;
   }
@@ -1554,9 +1275,6 @@ public class SearchParams {
    * @return enableABTest
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Whether this search should participate in running AB tests."
-  )
   public Boolean getEnableABTest() {
     return enableABTest;
   }
@@ -1576,7 +1294,6 @@ public class SearchParams {
    * @return enableReRanking
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Whether this search should use AI Re-Ranking.")
   public Boolean getEnableReRanking() {
     return enableReRanking;
   }
@@ -1606,9 +1323,6 @@ public class SearchParams {
    * @return searchableAttributes
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "The complete list of attributes used for searching."
-  )
   public List<String> getSearchableAttributes() {
     return searchableAttributes;
   }
@@ -1640,9 +1354,6 @@ public class SearchParams {
    * @return attributesForFaceting
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "The complete list of attributes that will be used for faceting."
-  )
   public List<String> getAttributesForFaceting() {
     return attributesForFaceting;
   }
@@ -1674,9 +1385,6 @@ public class SearchParams {
    * @return unretrievableAttributes
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "List of attributes that can't be retrieved at query time."
-  )
   public List<String> getUnretrievableAttributes() {
     return unretrievableAttributes;
   }
@@ -1706,9 +1414,6 @@ public class SearchParams {
    * @return attributesToRetrieve
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "This parameter controls which attributes to retrieve and which not to retrieve."
-  )
   public List<String> getAttributesToRetrieve() {
     return attributesToRetrieve;
   }
@@ -1740,9 +1445,6 @@ public class SearchParams {
    * @return restrictSearchableAttributes
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Restricts a given query to look in only a subset of your searchable attributes."
-  )
   public List<String> getRestrictSearchableAttributes() {
     return restrictSearchableAttributes;
   }
@@ -1772,7 +1474,6 @@ public class SearchParams {
    * @return ranking
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Controls how Algolia should sort your results.")
   public List<String> getRanking() {
     return ranking;
   }
@@ -1800,7 +1501,6 @@ public class SearchParams {
    * @return customRanking
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Specifies the custom ranking criterion.")
   public List<String> getCustomRanking() {
     return customRanking;
   }
@@ -1821,10 +1521,6 @@ public class SearchParams {
    * @return relevancyStrictness
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Controls the relevancy threshold below which less relevant results aren't included in" +
-    " the results."
-  )
   public Integer getRelevancyStrictness() {
     return relevancyStrictness;
   }
@@ -1856,7 +1552,6 @@ public class SearchParams {
    * @return attributesToHighlight
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "List of attributes to highlight.")
   public List<String> getAttributesToHighlight() {
     return attributesToHighlight;
   }
@@ -1886,9 +1581,6 @@ public class SearchParams {
    * @return attributesToSnippet
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "List of attributes to snippet, with an optional maximum number of words to snippet."
-  )
   public List<String> getAttributesToSnippet() {
     return attributesToSnippet;
   }
@@ -1908,10 +1600,6 @@ public class SearchParams {
    * @return highlightPreTag
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "The HTML string to insert before the highlighted parts in all highlight and snippet" +
-    " results."
-  )
   public String getHighlightPreTag() {
     return highlightPreTag;
   }
@@ -1931,10 +1619,6 @@ public class SearchParams {
    * @return highlightPostTag
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "The HTML string to insert after the highlighted parts in all highlight and snippet" +
-    " results."
-  )
   public String getHighlightPostTag() {
     return highlightPostTag;
   }
@@ -1954,9 +1638,6 @@ public class SearchParams {
    * @return snippetEllipsisText
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "String used as an ellipsis indicator when a snippet is truncated."
-  )
   public String getSnippetEllipsisText() {
     return snippetEllipsisText;
   }
@@ -1978,9 +1659,6 @@ public class SearchParams {
    * @return restrictHighlightAndSnippetArrays
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Restrict highlighting and snippeting to items that matched the query."
-  )
   public Boolean getRestrictHighlightAndSnippetArrays() {
     return restrictHighlightAndSnippetArrays;
   }
@@ -2002,7 +1680,6 @@ public class SearchParams {
    * @return hitsPerPage
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Set the number of hits per page.")
   public Integer getHitsPerPage() {
     return hitsPerPage;
   }
@@ -2023,10 +1700,6 @@ public class SearchParams {
    * @return minWordSizefor1Typo
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Minimum number of characters a word in the query string must contain to accept matches" +
-    " with 1 typo."
-  )
   public Integer getMinWordSizefor1Typo() {
     return minWordSizefor1Typo;
   }
@@ -2047,10 +1720,6 @@ public class SearchParams {
    * @return minWordSizefor2Typos
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Minimum number of characters a word in the query string must contain to accept matches" +
-    " with 2 typos."
-  )
   public Integer getMinWordSizefor2Typos() {
     return minWordSizefor2Typos;
   }
@@ -2070,9 +1739,6 @@ public class SearchParams {
    * @return typoTolerance
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Controls whether typo tolerance is enabled and how it is applied."
-  )
   public TypoToleranceEnum getTypoTolerance() {
     return typoTolerance;
   }
@@ -2094,9 +1760,6 @@ public class SearchParams {
    * @return allowTyposOnNumericTokens
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Whether to allow typos on numbers (\"numeric tokens\") in the query string."
-  )
   public Boolean getAllowTyposOnNumericTokens() {
     return allowTyposOnNumericTokens;
   }
@@ -2130,9 +1793,6 @@ public class SearchParams {
    * @return disableTypoToleranceOnAttributes
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "List of attributes on which you want to disable typo tolerance."
-  )
   public List<String> getDisableTypoToleranceOnAttributes() {
     return disableTypoToleranceOnAttributes;
   }
@@ -2154,7 +1814,6 @@ public class SearchParams {
    * @return separatorsToIndex
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Control which separators are indexed.")
   public String getSeparatorsToIndex() {
     return separatorsToIndex;
   }
@@ -2174,9 +1833,6 @@ public class SearchParams {
    * @return ignorePlurals
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Treats singular, plurals, and other forms of declensions as matching terms."
-  )
   public String getIgnorePlurals() {
     return ignorePlurals;
   }
@@ -2196,9 +1852,6 @@ public class SearchParams {
    * @return removeStopWords
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Removes stop (common) words from the query before executing it."
-  )
   public String getRemoveStopWords() {
     return removeStopWords;
   }
@@ -2220,9 +1873,6 @@ public class SearchParams {
    * @return keepDiacriticsOnCharacters
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "List of characters that the engine shouldn't automatically normalize."
-  )
   public String getKeepDiacriticsOnCharacters() {
     return keepDiacriticsOnCharacters;
   }
@@ -2251,10 +1901,6 @@ public class SearchParams {
    * @return queryLanguages
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Sets the languages to be used by language-specific settings and functionalities such as" +
-    " ignorePlurals, removeStopWords, and CJK word-detection."
-  )
   public List<String> getQueryLanguages() {
     return queryLanguages;
   }
@@ -2274,9 +1920,6 @@ public class SearchParams {
    * @return decompoundQuery
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Splits compound words into their composing atoms in the query."
-  )
   public Boolean getDecompoundQuery() {
     return decompoundQuery;
   }
@@ -2296,7 +1939,6 @@ public class SearchParams {
    * @return enableRules
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Whether Rules should be globally enabled.")
   public Boolean getEnableRules() {
     return enableRules;
   }
@@ -2316,7 +1958,6 @@ public class SearchParams {
    * @return enablePersonalization
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Enable the Personalization feature.")
   public Boolean getEnablePersonalization() {
     return enablePersonalization;
   }
@@ -2336,9 +1977,6 @@ public class SearchParams {
    * @return queryType
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Controls if and how query words are interpreted as prefixes."
-  )
   public QueryTypeEnum getQueryType() {
     return queryType;
   }
@@ -2360,9 +1998,6 @@ public class SearchParams {
    * @return removeWordsIfNoResults
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Selects a strategy to remove words from the query when it doesn't match any hits."
-  )
   public RemoveWordsIfNoResultsEnum getRemoveWordsIfNoResults() {
     return removeWordsIfNoResults;
   }
@@ -2384,7 +2019,6 @@ public class SearchParams {
    * @return advancedSyntax
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Enables the advanced query syntax.")
   public Boolean getAdvancedSyntax() {
     return advancedSyntax;
   }
@@ -2412,9 +2046,6 @@ public class SearchParams {
    * @return optionalWords
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "A list of words that should be considered as optional when found in the query."
-  )
   public List<String> getOptionalWords() {
     return optionalWords;
   }
@@ -2446,9 +2077,6 @@ public class SearchParams {
    * @return disableExactOnAttributes
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "List of attributes on which you want to disable the exact ranking criterion."
-  )
   public List<String> getDisableExactOnAttributes() {
     return disableExactOnAttributes;
   }
@@ -2472,10 +2100,6 @@ public class SearchParams {
    * @return exactOnSingleWordQuery
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Controls how the exact ranking criterion is computed when the query contains only one" +
-    " word."
-  )
   public ExactOnSingleWordQueryEnum getExactOnSingleWordQuery() {
     return exactOnSingleWordQuery;
   }
@@ -2509,10 +2133,6 @@ public class SearchParams {
    * @return alternativesAsExact
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "List of alternatives that should be considered an exact match by the exact ranking" +
-    " criterion."
-  )
   public List<AlternativesAsExactEnum> getAlternativesAsExact() {
     return alternativesAsExact;
   }
@@ -2547,10 +2167,6 @@ public class SearchParams {
    * @return advancedSyntaxFeatures
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Allows you to specify which advanced syntax features are active when ‘advancedSyntax' is" +
-    " enabled."
-  )
   public List<AdvancedSyntaxFeaturesEnum> getAdvancedSyntaxFeatures() {
     return advancedSyntaxFeatures;
   }
@@ -2572,7 +2188,6 @@ public class SearchParams {
    * @return distinct
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Enables de-duplication or grouping of results.")
   public Integer getDistinct() {
     return distinct;
   }
@@ -2592,9 +2207,6 @@ public class SearchParams {
    * @return synonyms
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Whether to take into account an index's synonyms for a particular search."
-  )
   public Boolean getSynonyms() {
     return synonyms;
   }
@@ -2617,10 +2229,6 @@ public class SearchParams {
    * @return replaceSynonymsInHighlight
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Whether to highlight and snippet the original word that matches the synonym or the" +
-    " synonym itself."
-  )
   public Boolean getReplaceSynonymsInHighlight() {
     return replaceSynonymsInHighlight;
   }
@@ -2642,7 +2250,6 @@ public class SearchParams {
    * @return minProximity
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Precision of the proximity ranking criterion.")
   public Integer getMinProximity() {
     return minProximity;
   }
@@ -2671,10 +2278,6 @@ public class SearchParams {
    * @return responseFields
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Choose which fields to return in the API response. This parameters applies to search and" +
-    " browse queries."
-  )
   public List<String> getResponseFields() {
     return responseFields;
   }
@@ -2695,10 +2298,6 @@ public class SearchParams {
    * @return maxFacetHits
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Maximum number of facet hits to return during a search for facet values. For performance" +
-    " reasons, the maximum allowed number of returned values is 100."
-  )
   public Integer getMaxFacetHits() {
     return maxFacetHits;
   }
@@ -2722,10 +2321,6 @@ public class SearchParams {
    * @return attributeCriteriaComputedByMinProximity
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "When attribute is ranked above proximity in your ranking formula, proximity is used to" +
-    " select which searchable attribute is matched in the attribute ranking stage."
-  )
   public Boolean getAttributeCriteriaComputedByMinProximity() {
     return attributeCriteriaComputedByMinProximity;
   }
@@ -2749,10 +2344,6 @@ public class SearchParams {
    * @return renderingContent
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Content defining how the search interface should be rendered. Can be set via the" +
-    " settings for a default value and can be overridden via rules."
-  )
   public Object getRenderingContent() {
     return renderingContent;
   }
@@ -2936,22 +2527,6 @@ public class SearchParams {
     );
   }
 
-  private static <T> boolean equalsNullable(
-    JsonNullable<T> a,
-    JsonNullable<T> b
-  ) {
-    return (
-      a == b ||
-      (
-        a != null &&
-        b != null &&
-        a.isPresent() &&
-        b.isPresent() &&
-        Objects.deepEquals(a.get(), b.get())
-      )
-    );
-  }
-
   @Override
   public int hashCode() {
     return Objects.hash(
@@ -3034,13 +2609,6 @@ public class SearchParams {
       attributeCriteriaComputedByMinProximity,
       renderingContent
     );
-  }
-
-  private static <T> int hashCodeNullable(JsonNullable<T> a) {
-    if (a == null) {
-      return 1;
-    }
-    return a.isPresent() ? Arrays.deepHashCode(new Object[] { a.get() }) : 31;
   }
 
   @Override

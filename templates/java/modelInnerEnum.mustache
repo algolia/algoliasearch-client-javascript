@@ -34,9 +34,6 @@
       this.value = value;
     }
 
-{{#jackson}}
-    @JsonValue
-{{/jackson}}
     public {{{dataType}}} getValue() {
       return value;
     }
@@ -46,9 +43,6 @@
       return String.valueOf(value);
     }
 
-{{#jackson}}
-    @JsonCreator
-{{/jackson}}
     public static {{{datatypeWithEnum}}}{{^datatypeWithEnum}}{{{classname}}}{{/datatypeWithEnum}} fromValue({{{dataType}}} value) {
       for ({{{datatypeWithEnum}}}{{^datatypeWithEnum}}{{{classname}}}{{/datatypeWithEnum}} b : {{{datatypeWithEnum}}}{{^datatypeWithEnum}}{{{classname}}}{{/datatypeWithEnum}}.values()) {
         if (b.value.equals(value)) {

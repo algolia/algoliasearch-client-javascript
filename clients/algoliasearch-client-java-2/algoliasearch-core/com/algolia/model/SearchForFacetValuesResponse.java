@@ -1,7 +1,6 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -9,9 +8,7 @@ import java.util.Objects;
 /** SearchForFacetValuesResponse */
 public class SearchForFacetValuesResponse {
 
-  public static final String SERIALIZED_NAME_FACET_HITS = "facetHits";
-
-  @SerializedName(SERIALIZED_NAME_FACET_HITS)
+  @SerializedName("facetHits")
   private List<SearchForFacetValuesResponseFacetHits> facetHits = new ArrayList<>();
 
   public SearchForFacetValuesResponse facetHits(
@@ -34,7 +31,6 @@ public class SearchForFacetValuesResponse {
    * @return facetHits
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "")
   public List<SearchForFacetValuesResponseFacetHits> getFacetHits() {
     return facetHits;
   }

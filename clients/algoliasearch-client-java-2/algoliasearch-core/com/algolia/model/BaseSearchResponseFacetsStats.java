@@ -1,30 +1,21 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.Objects;
 
 /** BaseSearchResponseFacetsStats */
 public class BaseSearchResponseFacetsStats {
 
-  public static final String SERIALIZED_NAME_MIN = "min";
-
-  @SerializedName(SERIALIZED_NAME_MIN)
+  @SerializedName("min")
   private Integer min;
 
-  public static final String SERIALIZED_NAME_MAX = "max";
-
-  @SerializedName(SERIALIZED_NAME_MAX)
+  @SerializedName("max")
   private Integer max;
 
-  public static final String SERIALIZED_NAME_AVG = "avg";
-
-  @SerializedName(SERIALIZED_NAME_AVG)
+  @SerializedName("avg")
   private Integer avg;
 
-  public static final String SERIALIZED_NAME_SUM = "sum";
-
-  @SerializedName(SERIALIZED_NAME_SUM)
+  @SerializedName("sum")
   private Integer sum;
 
   public BaseSearchResponseFacetsStats min(Integer min) {
@@ -38,7 +29,6 @@ public class BaseSearchResponseFacetsStats {
    * @return min
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "The minimum value in the result set.")
   public Integer getMin() {
     return min;
   }
@@ -58,7 +48,6 @@ public class BaseSearchResponseFacetsStats {
    * @return max
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "The maximum value in the result set.")
   public Integer getMax() {
     return max;
   }
@@ -78,7 +67,6 @@ public class BaseSearchResponseFacetsStats {
    * @return avg
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "The average facet value in the result set.")
   public Integer getAvg() {
     return avg;
   }
@@ -98,7 +86,6 @@ public class BaseSearchResponseFacetsStats {
    * @return sum
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "The sum of all values in the result set.")
   public Integer getSum() {
     return sum;
   }

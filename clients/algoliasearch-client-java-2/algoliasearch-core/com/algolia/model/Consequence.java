@@ -1,8 +1,6 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,32 +8,21 @@ import java.util.Map;
 import java.util.Objects;
 
 /** Consequence of the Rule. */
-@ApiModel(description = "Consequence of the Rule.")
 public class Consequence {
 
-  public static final String SERIALIZED_NAME_PARAMS = "params";
-
-  @SerializedName(SERIALIZED_NAME_PARAMS)
+  @SerializedName("params")
   private Params params;
 
-  public static final String SERIALIZED_NAME_PROMOTE = "promote";
-
-  @SerializedName(SERIALIZED_NAME_PROMOTE)
+  @SerializedName("promote")
   private List<Promote> promote = null;
 
-  public static final String SERIALIZED_NAME_FILTER_PROMOTES = "filterPromotes";
-
-  @SerializedName(SERIALIZED_NAME_FILTER_PROMOTES)
+  @SerializedName("filterPromotes")
   private Boolean filterPromotes = false;
 
-  public static final String SERIALIZED_NAME_HIDE = "hide";
-
-  @SerializedName(SERIALIZED_NAME_HIDE)
+  @SerializedName("hide")
   private List<ConsequenceHide> hide = null;
 
-  public static final String SERIALIZED_NAME_USER_DATA = "userData";
-
-  @SerializedName(SERIALIZED_NAME_USER_DATA)
+  @SerializedName("userData")
   private Map<String, Object> userData = null;
 
   public Consequence params(Params params) {
@@ -49,7 +36,6 @@ public class Consequence {
    * @return params
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
   public Params getParams() {
     return params;
   }
@@ -77,7 +63,6 @@ public class Consequence {
    * @return promote
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Objects to promote as hits.")
   public List<Promote> getPromote() {
     return promote;
   }
@@ -99,11 +84,6 @@ public class Consequence {
    * @return filterPromotes
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Only use in combination with the promote consequence. When true, promoted results will" +
-    " be restricted to match the filters of the current search. When false, the" +
-    " promoted results will show up regardless of the filters."
-  )
   public Boolean getFilterPromotes() {
     return filterPromotes;
   }
@@ -132,10 +112,6 @@ public class Consequence {
    * @return hide
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Objects to hide from hits. Each object must contain an objectID field. By default, you" +
-    " can hide up to 50 items per rule."
-  )
   public List<ConsequenceHide> getHide() {
     return hide;
   }
@@ -164,10 +140,6 @@ public class Consequence {
    * @return userData
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Custom JSON object that will be appended to the userData array in the response. This" +
-    " object isn't interpreted by the API. It's limited to 1kB of minified JSON."
-  )
   public Map<String, Object> getUserData() {
     return userData;
   }

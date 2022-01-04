@@ -1,7 +1,6 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -9,19 +8,13 @@ import java.util.Objects;
 /** Operation */
 public class Operation {
 
-  public static final String SERIALIZED_NAME_ACTION = "action";
-
-  @SerializedName(SERIALIZED_NAME_ACTION)
+  @SerializedName("action")
   private Action action;
 
-  public static final String SERIALIZED_NAME_BODY = "body";
-
-  @SerializedName(SERIALIZED_NAME_BODY)
+  @SerializedName("body")
   private Map<String, Object> body = null;
 
-  public static final String SERIALIZED_NAME_INDEX_NAME = "indexName";
-
-  @SerializedName(SERIALIZED_NAME_INDEX_NAME)
+  @SerializedName("indexName")
   private String indexName;
 
   public Operation action(Action action) {
@@ -35,7 +28,6 @@ public class Operation {
    * @return action
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
   public Action getAction() {
     return action;
   }
@@ -63,9 +55,6 @@ public class Operation {
    * @return body
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "arguments to the operation (depends on the type of the operation)."
-  )
   public Map<String, Object> getBody() {
     return body;
   }
@@ -85,7 +74,6 @@ public class Operation {
    * @return indexName
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Index to target for this operation.")
   public String getIndexName() {
     return indexName;
   }

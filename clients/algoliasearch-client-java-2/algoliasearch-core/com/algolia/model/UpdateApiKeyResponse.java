@@ -1,21 +1,16 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
-import io.swagger.annotations.ApiModelProperty;
 import java.time.OffsetDateTime;
 import java.util.Objects;
 
 /** UpdateApiKeyResponse */
 public class UpdateApiKeyResponse {
 
-  public static final String SERIALIZED_NAME_KEY = "key";
-
-  @SerializedName(SERIALIZED_NAME_KEY)
+  @SerializedName("key")
   private String key;
 
-  public static final String SERIALIZED_NAME_UPDATED_AT = "updatedAt";
-
-  @SerializedName(SERIALIZED_NAME_UPDATED_AT)
+  @SerializedName("updatedAt")
   private OffsetDateTime updatedAt;
 
   public UpdateApiKeyResponse key(String key) {
@@ -29,7 +24,6 @@ public class UpdateApiKeyResponse {
    * @return key
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "Key string.")
   public String getKey() {
     return key;
   }
@@ -49,10 +43,6 @@ public class UpdateApiKeyResponse {
    * @return updatedAt
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(
-    required = true,
-    value = "Date of last update (ISO-8601 format)."
-  )
   public OffsetDateTime getUpdatedAt() {
     return updatedAt;
   }

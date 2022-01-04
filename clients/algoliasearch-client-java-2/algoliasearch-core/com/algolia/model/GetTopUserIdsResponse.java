@@ -1,20 +1,15 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
 /** Array of userIDs and clusters. */
-@ApiModel(description = "Array of userIDs and clusters.")
 public class GetTopUserIdsResponse {
 
-  public static final String SERIALIZED_NAME_TOP_USERS = "topUsers";
-
-  @SerializedName(SERIALIZED_NAME_TOP_USERS)
+  @SerializedName("topUsers")
   private List<Map<String, List<UserId>>> topUsers = new ArrayList<>();
 
   public GetTopUserIdsResponse topUsers(
@@ -37,10 +32,6 @@ public class GetTopUserIdsResponse {
    * @return topUsers
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(
-    required = true,
-    value = "Mapping of cluster names to top users."
-  )
   public List<Map<String, List<UserId>>> getTopUsers() {
     return topUsers;
   }

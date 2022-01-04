@@ -1,19 +1,14 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 /** The `batch` requests. */
-@ApiModel(description = "The `batch` requests.")
 public class BatchWriteObject {
 
-  public static final String SERIALIZED_NAME_REQUESTS = "requests";
-
-  @SerializedName(SERIALIZED_NAME_REQUESTS)
+  @SerializedName("requests")
   private List<Operation> requests = null;
 
   public BatchWriteObject requests(List<Operation> requests) {
@@ -35,7 +30,6 @@ public class BatchWriteObject {
    * @return requests
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
   public List<Operation> getRequests() {
     return requests;
   }

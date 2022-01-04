@@ -1,15 +1,12 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.Objects;
 
 /** SearchParamsString */
 public class SearchParamsString {
 
-  public static final String SERIALIZED_NAME_PARAMS = "params";
-
-  @SerializedName(SERIALIZED_NAME_PARAMS)
+  @SerializedName("params")
   private String params = "";
 
   public SearchParamsString params(String params) {
@@ -23,7 +20,6 @@ public class SearchParamsString {
    * @return params
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Search parameters as URL-encoded query string.")
   public String getParams() {
     return params;
   }

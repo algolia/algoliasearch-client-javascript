@@ -5,8 +5,6 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,32 +12,21 @@ import java.util.List;
 import java.util.Objects;
 
 /** A dictionary entry. */
-@ApiModel(description = "A dictionary entry.")
 public class DictionaryEntry extends HashMap<String, Object> {
 
-  public static final String SERIALIZED_NAME_OBJECT_I_D = "objectID";
-
-  @SerializedName(SERIALIZED_NAME_OBJECT_I_D)
+  @SerializedName("objectID")
   private String objectID;
 
-  public static final String SERIALIZED_NAME_LANGUAGE = "language";
-
-  @SerializedName(SERIALIZED_NAME_LANGUAGE)
+  @SerializedName("language")
   private String language;
 
-  public static final String SERIALIZED_NAME_WORD = "word";
-
-  @SerializedName(SERIALIZED_NAME_WORD)
+  @SerializedName("word")
   private String word;
 
-  public static final String SERIALIZED_NAME_WORDS = "words";
-
-  @SerializedName(SERIALIZED_NAME_WORDS)
+  @SerializedName("words")
   private List<String> words = null;
 
-  public static final String SERIALIZED_NAME_DECOMPOSITION = "decomposition";
-
-  @SerializedName(SERIALIZED_NAME_DECOMPOSITION)
+  @SerializedName("decomposition")
   private List<String> decomposition = null;
 
   /** The state of the dictionary entry. */
@@ -91,9 +78,7 @@ public class DictionaryEntry extends HashMap<String, Object> {
     }
   }
 
-  public static final String SERIALIZED_NAME_STATE = "state";
-
-  @SerializedName(SERIALIZED_NAME_STATE)
+  @SerializedName("state")
   private StateEnum state = StateEnum.ENABLED;
 
   public DictionaryEntry objectID(String objectID) {
@@ -107,7 +92,6 @@ public class DictionaryEntry extends HashMap<String, Object> {
    * @return objectID
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "Unique identifier of the object.")
   public String getObjectID() {
     return objectID;
   }
@@ -127,10 +111,6 @@ public class DictionaryEntry extends HashMap<String, Object> {
    * @return language
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(
-    required = true,
-    value = "Language ISO code supported by the dictionary (e.g., \"en\" for English)."
-  )
   public String getLanguage() {
     return language;
   }
@@ -150,7 +130,6 @@ public class DictionaryEntry extends HashMap<String, Object> {
    * @return word
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "The word of the dictionary entry.")
   public String getWord() {
     return word;
   }
@@ -178,7 +157,6 @@ public class DictionaryEntry extends HashMap<String, Object> {
    * @return words
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "The words of the dictionary entry.")
   public List<String> getWords() {
     return words;
   }
@@ -206,9 +184,6 @@ public class DictionaryEntry extends HashMap<String, Object> {
    * @return decomposition
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "A decomposition of the word of the dictionary entry."
-  )
   public List<String> getDecomposition() {
     return decomposition;
   }
@@ -228,7 +203,6 @@ public class DictionaryEntry extends HashMap<String, Object> {
    * @return state
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "The state of the dictionary entry.")
   public StateEnum getState() {
     return state;
   }

@@ -1,18 +1,13 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.HashMap;
 import java.util.Objects;
 
 /** Error. */
-@ApiModel(description = "Error.")
 public class ErrorBase extends HashMap<String, Object> {
 
-  public static final String SERIALIZED_NAME_MESSAGE = "message";
-
-  @SerializedName(SERIALIZED_NAME_MESSAGE)
+  @SerializedName("message")
   private String message;
 
   public ErrorBase message(String message) {
@@ -26,7 +21,6 @@ public class ErrorBase extends HashMap<String, Object> {
    * @return message
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(example = "Invalid Application-Id or API-Key", value = "")
   public String getMessage() {
     return message;
   }

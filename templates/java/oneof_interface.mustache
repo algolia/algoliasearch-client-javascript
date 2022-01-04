@@ -1,4 +1,4 @@
-{{>additionalModelTypeAnnotations}}{{>typeInfoAnnotation}}{{>xmlAnnotation}}
+{{>additionalModelTypeAnnotations}}
 public interface {{classname}} {{#vendorExtensions.x-implements}}{{#-first}}extends {{{.}}}{{/-first}}{{^-first}}, {{{.}}}{{/-first}}{{/vendorExtensions.x-implements}} {
     {{#discriminator}}
     public {{propertyType}} {{propertyGetter}}();

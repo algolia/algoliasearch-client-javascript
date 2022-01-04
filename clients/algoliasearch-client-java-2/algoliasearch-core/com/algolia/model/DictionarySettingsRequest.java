@@ -1,20 +1,12 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.Objects;
 
 /** Disable the builtin Algolia entries for a type of dictionary per language. */
-@ApiModel(
-  description = "Disable the builtin Algolia entries for a type of dictionary per language."
-)
 public class DictionarySettingsRequest {
 
-  public static final String SERIALIZED_NAME_DISABLE_STANDARD_ENTRIES =
-    "disableStandardEntries";
-
-  @SerializedName(SERIALIZED_NAME_DISABLE_STANDARD_ENTRIES)
+  @SerializedName("disableStandardEntries")
   private StandardEntries disableStandardEntries;
 
   public DictionarySettingsRequest disableStandardEntries(
@@ -30,7 +22,6 @@ public class DictionarySettingsRequest {
    * @return disableStandardEntries
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "")
   public StandardEntries getDisableStandardEntries() {
     return disableStandardEntries;
   }

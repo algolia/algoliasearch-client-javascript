@@ -1,19 +1,14 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 /** UserIDs data. */
-@ApiModel(description = "UserIDs data.")
 public class ListUserIdsResponse {
 
-  public static final String SERIALIZED_NAME_USER_I_DS = "userIDs";
-
-  @SerializedName(SERIALIZED_NAME_USER_I_DS)
+  @SerializedName("userIDs")
   private List<UserId> userIDs = new ArrayList<>();
 
   public ListUserIdsResponse userIDs(List<UserId> userIDs) {
@@ -32,7 +27,6 @@ public class ListUserIdsResponse {
    * @return userIDs
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "List of userIDs.")
   public List<UserId> getUserIDs() {
     return userIDs;
   }

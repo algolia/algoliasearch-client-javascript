@@ -1,44 +1,29 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 /** Rule object. */
-@ApiModel(description = "Rule object.")
 public class Rule {
 
-  public static final String SERIALIZED_NAME_OBJECT_I_D = "objectID";
-
-  @SerializedName(SERIALIZED_NAME_OBJECT_I_D)
+  @SerializedName("objectID")
   private String objectID;
 
-  public static final String SERIALIZED_NAME_CONDITIONS = "conditions";
-
-  @SerializedName(SERIALIZED_NAME_CONDITIONS)
+  @SerializedName("conditions")
   private List<Condition> conditions = null;
 
-  public static final String SERIALIZED_NAME_CONSEQUENCE = "consequence";
-
-  @SerializedName(SERIALIZED_NAME_CONSEQUENCE)
+  @SerializedName("consequence")
   private Consequence consequence;
 
-  public static final String SERIALIZED_NAME_DESCRIPTION = "description";
-
-  @SerializedName(SERIALIZED_NAME_DESCRIPTION)
+  @SerializedName("description")
   private String description;
 
-  public static final String SERIALIZED_NAME_ENABLED = "enabled";
-
-  @SerializedName(SERIALIZED_NAME_ENABLED)
+  @SerializedName("enabled")
   private Boolean enabled = true;
 
-  public static final String SERIALIZED_NAME_VALIDITY = "validity";
-
-  @SerializedName(SERIALIZED_NAME_VALIDITY)
+  @SerializedName("validity")
   private List<TimeRange> validity = null;
 
   public Rule objectID(String objectID) {
@@ -52,7 +37,6 @@ public class Rule {
    * @return objectID
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "Unique identifier of the object.")
   public String getObjectID() {
     return objectID;
   }
@@ -81,10 +65,6 @@ public class Rule {
    * @return conditions
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "A list of conditions that should apply to activate a Rule. You can use up to 25" +
-    " conditions per Rule."
-  )
   public List<Condition> getConditions() {
     return conditions;
   }
@@ -104,7 +84,6 @@ public class Rule {
    * @return consequence
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "")
   public Consequence getConsequence() {
     return consequence;
   }
@@ -125,10 +104,6 @@ public class Rule {
    * @return description
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "This field is intended for Rule management purposes, in particular to ease searching for" +
-    " Rules and presenting them to human readers. It's not interpreted by the API."
-  )
   public String getDescription() {
     return description;
   }
@@ -149,10 +124,6 @@ public class Rule {
    * @return enabled
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Whether the Rule is enabled. Disabled Rules remain in the index, but aren't applied at" +
-    " query time."
-  )
   public Boolean getEnabled() {
     return enabled;
   }
@@ -181,11 +152,6 @@ public class Rule {
    * @return validity
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "By default, Rules are permanently valid. When validity periods are specified, the Rule" +
-    " applies only during those periods; it's ignored the rest of the time. The list" +
-    " must not be empty."
-  )
   public List<TimeRange> getValidity() {
     return validity;
   }

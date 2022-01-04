@@ -1,32 +1,21 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.Objects;
 
 /** The `searchDictionaryEntries` request. */
-@ApiModel(description = "The `searchDictionaryEntries` request.")
 public class SearchDictionaryEntries {
 
-  public static final String SERIALIZED_NAME_QUERY = "query";
-
-  @SerializedName(SERIALIZED_NAME_QUERY)
+  @SerializedName("query")
   private String query = "";
 
-  public static final String SERIALIZED_NAME_PAGE = "page";
-
-  @SerializedName(SERIALIZED_NAME_PAGE)
+  @SerializedName("page")
   private Integer page = 0;
 
-  public static final String SERIALIZED_NAME_HITS_PER_PAGE = "hitsPerPage";
-
-  @SerializedName(SERIALIZED_NAME_HITS_PER_PAGE)
+  @SerializedName("hitsPerPage")
   private Integer hitsPerPage = 20;
 
-  public static final String SERIALIZED_NAME_LANGUAGE = "language";
-
-  @SerializedName(SERIALIZED_NAME_LANGUAGE)
+  @SerializedName("language")
   private String language;
 
   public SearchDictionaryEntries query(String query) {
@@ -40,7 +29,6 @@ public class SearchDictionaryEntries {
    * @return query
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "The text to search in the index.")
   public String getQuery() {
     return query;
   }
@@ -60,7 +48,6 @@ public class SearchDictionaryEntries {
    * @return page
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Specify the page to retrieve.")
   public Integer getPage() {
     return page;
   }
@@ -80,7 +67,6 @@ public class SearchDictionaryEntries {
    * @return hitsPerPage
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Set the number of hits per page.")
   public Integer getHitsPerPage() {
     return hitsPerPage;
   }
@@ -100,9 +86,6 @@ public class SearchDictionaryEntries {
    * @return language
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Language ISO code supported by the dictionary (e.g., \"en\" for English)."
-  )
   public String getLanguage() {
     return language;
   }

@@ -1,20 +1,15 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.Objects;
 
 /** BrowseRequest */
 public class BrowseRequest {
 
-  public static final String SERIALIZED_NAME_PARAMS = "params";
-
-  @SerializedName(SERIALIZED_NAME_PARAMS)
+  @SerializedName("params")
   private String params = "";
 
-  public static final String SERIALIZED_NAME_CURSOR = "cursor";
-
-  @SerializedName(SERIALIZED_NAME_CURSOR)
+  @SerializedName("cursor")
   private String cursor;
 
   public BrowseRequest params(String params) {
@@ -28,7 +23,6 @@ public class BrowseRequest {
    * @return params
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Search parameters as URL-encoded query string.")
   public String getParams() {
     return params;
   }
@@ -49,11 +43,6 @@ public class BrowseRequest {
    * @return cursor
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    example = "jMDY3M2MwM2QwMWUxMmQwYWI0ZTN",
-    value = "Cursor indicating the location to resume browsing from. Must match the value returned by" +
-    " the previous call."
-  )
   public String getCursor() {
     return cursor;
   }

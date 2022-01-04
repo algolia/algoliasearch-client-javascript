@@ -1,18 +1,13 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.time.OffsetDateTime;
 import java.util.Objects;
 
 /** The response with a createdAt timestamp. */
-@ApiModel(description = "The response with a createdAt timestamp.")
 public class CreatedAtResponse {
 
-  public static final String SERIALIZED_NAME_CREATED_AT = "createdAt";
-
-  @SerializedName(SERIALIZED_NAME_CREATED_AT)
+  @SerializedName("createdAt")
   private OffsetDateTime createdAt;
 
   public CreatedAtResponse createdAt(OffsetDateTime createdAt) {
@@ -26,10 +21,6 @@ public class CreatedAtResponse {
    * @return createdAt
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(
-    required = true,
-    value = "Date of creation (ISO-8601 format)."
-  )
   public OffsetDateTime getCreatedAt() {
     return createdAt;
   }

@@ -1,194 +1,111 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
-import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-import org.openapitools.jackson.nullable.JsonNullable;
 
 /** BaseSearchParams */
 public class BaseSearchParams {
 
-  public static final String SERIALIZED_NAME_QUERY = "query";
-
-  @SerializedName(SERIALIZED_NAME_QUERY)
+  @SerializedName("query")
   private String query = "";
 
-  public static final String SERIALIZED_NAME_SIMILAR_QUERY = "similarQuery";
-
-  @SerializedName(SERIALIZED_NAME_SIMILAR_QUERY)
+  @SerializedName("similarQuery")
   private String similarQuery = "";
 
-  public static final String SERIALIZED_NAME_FILTERS = "filters";
-
-  @SerializedName(SERIALIZED_NAME_FILTERS)
+  @SerializedName("filters")
   private String filters = "";
 
-  public static final String SERIALIZED_NAME_FACET_FILTERS = "facetFilters";
-
-  @SerializedName(SERIALIZED_NAME_FACET_FILTERS)
+  @SerializedName("facetFilters")
   private List<String> facetFilters = null;
 
-  public static final String SERIALIZED_NAME_OPTIONAL_FILTERS =
-    "optionalFilters";
-
-  @SerializedName(SERIALIZED_NAME_OPTIONAL_FILTERS)
+  @SerializedName("optionalFilters")
   private List<String> optionalFilters = null;
 
-  public static final String SERIALIZED_NAME_NUMERIC_FILTERS = "numericFilters";
-
-  @SerializedName(SERIALIZED_NAME_NUMERIC_FILTERS)
+  @SerializedName("numericFilters")
   private List<String> numericFilters = null;
 
-  public static final String SERIALIZED_NAME_TAG_FILTERS = "tagFilters";
-
-  @SerializedName(SERIALIZED_NAME_TAG_FILTERS)
+  @SerializedName("tagFilters")
   private List<String> tagFilters = null;
 
-  public static final String SERIALIZED_NAME_SUM_OR_FILTERS_SCORES =
-    "sumOrFiltersScores";
-
-  @SerializedName(SERIALIZED_NAME_SUM_OR_FILTERS_SCORES)
+  @SerializedName("sumOrFiltersScores")
   private Boolean sumOrFiltersScores = false;
 
-  public static final String SERIALIZED_NAME_FACETS = "facets";
-
-  @SerializedName(SERIALIZED_NAME_FACETS)
+  @SerializedName("facets")
   private List<String> facets = null;
 
-  public static final String SERIALIZED_NAME_MAX_VALUES_PER_FACET =
-    "maxValuesPerFacet";
-
-  @SerializedName(SERIALIZED_NAME_MAX_VALUES_PER_FACET)
+  @SerializedName("maxValuesPerFacet")
   private Integer maxValuesPerFacet = 100;
 
-  public static final String SERIALIZED_NAME_FACETING_AFTER_DISTINCT =
-    "facetingAfterDistinct";
-
-  @SerializedName(SERIALIZED_NAME_FACETING_AFTER_DISTINCT)
+  @SerializedName("facetingAfterDistinct")
   private Boolean facetingAfterDistinct = false;
 
-  public static final String SERIALIZED_NAME_SORT_FACET_VALUES_BY =
-    "sortFacetValuesBy";
-
-  @SerializedName(SERIALIZED_NAME_SORT_FACET_VALUES_BY)
+  @SerializedName("sortFacetValuesBy")
   private String sortFacetValuesBy = "count";
 
-  public static final String SERIALIZED_NAME_PAGE = "page";
-
-  @SerializedName(SERIALIZED_NAME_PAGE)
+  @SerializedName("page")
   private Integer page = 0;
 
-  public static final String SERIALIZED_NAME_OFFSET = "offset";
-
-  @SerializedName(SERIALIZED_NAME_OFFSET)
+  @SerializedName("offset")
   private Integer offset;
 
-  public static final String SERIALIZED_NAME_LENGTH = "length";
-
-  @SerializedName(SERIALIZED_NAME_LENGTH)
+  @SerializedName("length")
   private Integer length;
 
-  public static final String SERIALIZED_NAME_AROUND_LAT_LNG = "aroundLatLng";
-
-  @SerializedName(SERIALIZED_NAME_AROUND_LAT_LNG)
+  @SerializedName("aroundLatLng")
   private String aroundLatLng = "";
 
-  public static final String SERIALIZED_NAME_AROUND_LAT_LNG_VIA_I_P =
-    "aroundLatLngViaIP";
-
-  @SerializedName(SERIALIZED_NAME_AROUND_LAT_LNG_VIA_I_P)
+  @SerializedName("aroundLatLngViaIP")
   private Boolean aroundLatLngViaIP = false;
 
-  public static final String SERIALIZED_NAME_AROUND_RADIUS = "aroundRadius";
-
-  @SerializedName(SERIALIZED_NAME_AROUND_RADIUS)
+  @SerializedName("aroundRadius")
   private OneOfintegerstring aroundRadius;
 
-  public static final String SERIALIZED_NAME_AROUND_PRECISION =
-    "aroundPrecision";
-
-  @SerializedName(SERIALIZED_NAME_AROUND_PRECISION)
+  @SerializedName("aroundPrecision")
   private Integer aroundPrecision = 10;
 
-  public static final String SERIALIZED_NAME_MINIMUM_AROUND_RADIUS =
-    "minimumAroundRadius";
-
-  @SerializedName(SERIALIZED_NAME_MINIMUM_AROUND_RADIUS)
+  @SerializedName("minimumAroundRadius")
   private Integer minimumAroundRadius;
 
-  public static final String SERIALIZED_NAME_INSIDE_BOUNDING_BOX =
-    "insideBoundingBox";
-
-  @SerializedName(SERIALIZED_NAME_INSIDE_BOUNDING_BOX)
+  @SerializedName("insideBoundingBox")
   private List<BigDecimal> insideBoundingBox = null;
 
-  public static final String SERIALIZED_NAME_INSIDE_POLYGON = "insidePolygon";
-
-  @SerializedName(SERIALIZED_NAME_INSIDE_POLYGON)
+  @SerializedName("insidePolygon")
   private List<BigDecimal> insidePolygon = null;
 
-  public static final String SERIALIZED_NAME_NATURAL_LANGUAGES =
-    "naturalLanguages";
-
-  @SerializedName(SERIALIZED_NAME_NATURAL_LANGUAGES)
+  @SerializedName("naturalLanguages")
   private List<String> naturalLanguages = null;
 
-  public static final String SERIALIZED_NAME_RULE_CONTEXTS = "ruleContexts";
-
-  @SerializedName(SERIALIZED_NAME_RULE_CONTEXTS)
+  @SerializedName("ruleContexts")
   private List<String> ruleContexts = null;
 
-  public static final String SERIALIZED_NAME_PERSONALIZATION_IMPACT =
-    "personalizationImpact";
-
-  @SerializedName(SERIALIZED_NAME_PERSONALIZATION_IMPACT)
+  @SerializedName("personalizationImpact")
   private Integer personalizationImpact = 100;
 
-  public static final String SERIALIZED_NAME_USER_TOKEN = "userToken";
-
-  @SerializedName(SERIALIZED_NAME_USER_TOKEN)
+  @SerializedName("userToken")
   private String userToken;
 
-  public static final String SERIALIZED_NAME_GET_RANKING_INFO =
-    "getRankingInfo";
-
-  @SerializedName(SERIALIZED_NAME_GET_RANKING_INFO)
+  @SerializedName("getRankingInfo")
   private Boolean getRankingInfo = false;
 
-  public static final String SERIALIZED_NAME_CLICK_ANALYTICS = "clickAnalytics";
-
-  @SerializedName(SERIALIZED_NAME_CLICK_ANALYTICS)
+  @SerializedName("clickAnalytics")
   private Boolean clickAnalytics = false;
 
-  public static final String SERIALIZED_NAME_ANALYTICS = "analytics";
-
-  @SerializedName(SERIALIZED_NAME_ANALYTICS)
+  @SerializedName("analytics")
   private Boolean analytics = true;
 
-  public static final String SERIALIZED_NAME_ANALYTICS_TAGS = "analyticsTags";
-
-  @SerializedName(SERIALIZED_NAME_ANALYTICS_TAGS)
+  @SerializedName("analyticsTags")
   private List<String> analyticsTags = null;
 
-  public static final String SERIALIZED_NAME_PERCENTILE_COMPUTATION =
-    "percentileComputation";
-
-  @SerializedName(SERIALIZED_NAME_PERCENTILE_COMPUTATION)
+  @SerializedName("percentileComputation")
   private Boolean percentileComputation = true;
 
-  public static final String SERIALIZED_NAME_ENABLE_A_B_TEST = "enableABTest";
-
-  @SerializedName(SERIALIZED_NAME_ENABLE_A_B_TEST)
+  @SerializedName("enableABTest")
   private Boolean enableABTest = true;
 
-  public static final String SERIALIZED_NAME_ENABLE_RE_RANKING =
-    "enableReRanking";
-
-  @SerializedName(SERIALIZED_NAME_ENABLE_RE_RANKING)
+  @SerializedName("enableReRanking")
   private Boolean enableReRanking = true;
 
   public BaseSearchParams query(String query) {
@@ -202,7 +119,6 @@ public class BaseSearchParams {
    * @return query
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "The text to search in the index.")
   public String getQuery() {
     return query;
   }
@@ -223,10 +139,6 @@ public class BaseSearchParams {
    * @return similarQuery
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Overrides the query parameter and performs a more generic search that can be used to" +
-    " find \"similar\" results."
-  )
   public String getSimilarQuery() {
     return similarQuery;
   }
@@ -246,9 +158,6 @@ public class BaseSearchParams {
    * @return filters
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Filter the query with numeric, facet and/or tag filters."
-  )
   public String getFilters() {
     return filters;
   }
@@ -276,7 +185,6 @@ public class BaseSearchParams {
    * @return facetFilters
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Filter hits by facet value.")
   public List<String> getFacetFilters() {
     return facetFilters;
   }
@@ -305,10 +213,6 @@ public class BaseSearchParams {
    * @return optionalFilters
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Create filters for ranking purposes, where records that match the filter are ranked" +
-    " higher, or lower in the case of a negative optional filter."
-  )
   public List<String> getOptionalFilters() {
     return optionalFilters;
   }
@@ -336,7 +240,6 @@ public class BaseSearchParams {
    * @return numericFilters
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Filter on numeric attributes.")
   public List<String> getNumericFilters() {
     return numericFilters;
   }
@@ -364,7 +267,6 @@ public class BaseSearchParams {
    * @return tagFilters
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Filter hits by tags.")
   public List<String> getTagFilters() {
     return tagFilters;
   }
@@ -384,9 +286,6 @@ public class BaseSearchParams {
    * @return sumOrFiltersScores
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Determines how to calculate the total score for filtering."
-  )
   public Boolean getSumOrFiltersScores() {
     return sumOrFiltersScores;
   }
@@ -414,7 +313,6 @@ public class BaseSearchParams {
    * @return facets
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Retrieve facets and their facet values.")
   public List<String> getFacets() {
     return facets;
   }
@@ -434,9 +332,6 @@ public class BaseSearchParams {
    * @return maxValuesPerFacet
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Maximum number of facet values to return for each facet during a regular search."
-  )
   public Integer getMaxValuesPerFacet() {
     return maxValuesPerFacet;
   }
@@ -456,9 +351,6 @@ public class BaseSearchParams {
    * @return facetingAfterDistinct
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Force faceting to be applied after de-duplication (via the Distinct setting)."
-  )
   public Boolean getFacetingAfterDistinct() {
     return facetingAfterDistinct;
   }
@@ -478,7 +370,6 @@ public class BaseSearchParams {
    * @return sortFacetValuesBy
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Controls how facet values are fetched.")
   public String getSortFacetValuesBy() {
     return sortFacetValuesBy;
   }
@@ -498,7 +389,6 @@ public class BaseSearchParams {
    * @return page
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Specify the page to retrieve.")
   public Integer getPage() {
     return page;
   }
@@ -518,7 +408,6 @@ public class BaseSearchParams {
    * @return offset
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Specify the offset of the first hit to return.")
   public Integer getOffset() {
     return offset;
   }
@@ -538,9 +427,6 @@ public class BaseSearchParams {
    * @return length
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Set the number of hits to retrieve (used only with offset)."
-  )
   public Integer getLength() {
     return length;
   }
@@ -560,10 +446,6 @@ public class BaseSearchParams {
    * @return aroundLatLng
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Search for entries around a central geolocation, enabling a geo search within a circular" +
-    " area."
-  )
   public String getAroundLatLng() {
     return aroundLatLng;
   }
@@ -584,10 +466,6 @@ public class BaseSearchParams {
    * @return aroundLatLngViaIP
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Search for entries around a given location automatically computed from the requester's" +
-    " IP address."
-  )
   public Boolean getAroundLatLngViaIP() {
     return aroundLatLngViaIP;
   }
@@ -607,9 +485,6 @@ public class BaseSearchParams {
    * @return aroundRadius
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Define the maximum radius for a geo search (in meters)."
-  )
   public OneOfintegerstring getAroundRadius() {
     return aroundRadius;
   }
@@ -629,10 +504,6 @@ public class BaseSearchParams {
    * @return aroundPrecision
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Precision of geo search (in meters), to add grouping by geo location to the ranking" +
-    " formula."
-  )
   public Integer getAroundPrecision() {
     return aroundPrecision;
   }
@@ -652,9 +523,6 @@ public class BaseSearchParams {
    * @return minimumAroundRadius
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Minimum radius (in meters) used for a geo search when aroundRadius is not set."
-  )
   public Integer getMinimumAroundRadius() {
     return minimumAroundRadius;
   }
@@ -686,9 +554,6 @@ public class BaseSearchParams {
    * @return insideBoundingBox
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Search inside a rectangular area (in geo coordinates)."
-  )
   public List<BigDecimal> getInsideBoundingBox() {
     return insideBoundingBox;
   }
@@ -716,7 +581,6 @@ public class BaseSearchParams {
    * @return insidePolygon
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Search inside a polygon (in geo coordinates).")
   public List<BigDecimal> getInsidePolygon() {
     return insidePolygon;
   }
@@ -748,13 +612,6 @@ public class BaseSearchParams {
    * @return naturalLanguages
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "This parameter changes the default values of certain parameters and settings that work" +
-    " best for a natural language query, such as ignorePlurals, removeStopWords," +
-    " removeWordsIfNoResults, analyticsTags and ruleContexts. These parameters and" +
-    " settings work well together when the query is formatted in natural language" +
-    " instead of keywords, for example when your user performs a voice search."
-  )
   public List<String> getNaturalLanguages() {
     return naturalLanguages;
   }
@@ -782,7 +639,6 @@ public class BaseSearchParams {
    * @return ruleContexts
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Enables contextual rules.")
   public List<String> getRuleContexts() {
     return ruleContexts;
   }
@@ -802,7 +658,6 @@ public class BaseSearchParams {
    * @return personalizationImpact
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Define the impact of the Personalization feature.")
   public Integer getPersonalizationImpact() {
     return personalizationImpact;
   }
@@ -822,9 +677,6 @@ public class BaseSearchParams {
    * @return userToken
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Associates a certain user token with the current search."
-  )
   public String getUserToken() {
     return userToken;
   }
@@ -844,7 +696,6 @@ public class BaseSearchParams {
    * @return getRankingInfo
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Retrieve detailed ranking information.")
   public Boolean getGetRankingInfo() {
     return getRankingInfo;
   }
@@ -864,7 +715,6 @@ public class BaseSearchParams {
    * @return clickAnalytics
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Enable the Click Analytics feature.")
   public Boolean getClickAnalytics() {
     return clickAnalytics;
   }
@@ -884,9 +734,6 @@ public class BaseSearchParams {
    * @return analytics
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Whether the current query will be taken into account in the Analytics."
-  )
   public Boolean getAnalytics() {
     return analytics;
   }
@@ -914,9 +761,6 @@ public class BaseSearchParams {
    * @return analyticsTags
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "List of tags to apply to the query for analytics purposes."
-  )
   public List<String> getAnalyticsTags() {
     return analyticsTags;
   }
@@ -936,9 +780,6 @@ public class BaseSearchParams {
    * @return percentileComputation
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Whether to include or exclude a query from the processing-time percentile computation."
-  )
   public Boolean getPercentileComputation() {
     return percentileComputation;
   }
@@ -958,9 +799,6 @@ public class BaseSearchParams {
    * @return enableABTest
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Whether this search should participate in running AB tests."
-  )
   public Boolean getEnableABTest() {
     return enableABTest;
   }
@@ -980,7 +818,6 @@ public class BaseSearchParams {
    * @return enableReRanking
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Whether this search should use AI Re-Ranking.")
   public Boolean getEnableReRanking() {
     return enableReRanking;
   }
@@ -1065,22 +902,6 @@ public class BaseSearchParams {
     );
   }
 
-  private static <T> boolean equalsNullable(
-    JsonNullable<T> a,
-    JsonNullable<T> b
-  ) {
-    return (
-      a == b ||
-      (
-        a != null &&
-        b != null &&
-        a.isPresent() &&
-        b.isPresent() &&
-        Objects.deepEquals(a.get(), b.get())
-      )
-    );
-  }
-
   @Override
   public int hashCode() {
     return Objects.hash(
@@ -1118,13 +939,6 @@ public class BaseSearchParams {
       enableABTest,
       enableReRanking
     );
-  }
-
-  private static <T> int hashCodeNullable(JsonNullable<T> a) {
-    if (a == null) {
-      return 1;
-    }
-    return a.isPresent() ? Arrays.deepHashCode(new Object[] { a.get() }) : 31;
   }
 
   @Override
