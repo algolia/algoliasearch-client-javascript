@@ -7,8 +7,8 @@
     "tests/"
   ],
   "scripts": {
-    "build:clients": "./scripts/multiplexer.sh ./scripts/build/clients.sh ${0:-all} ${1:-all}",
-    "build:specs": "./scripts/build/specs.sh ${0:-all} ${1:-yaml}",
+    "build:clients": "./scripts/multiplexer.sh ./scripts/builds/clients.sh ${0:-all} ${1:-all}",
+    "build:specs": "./scripts/builds/specs.sh ${0:-all} ${1:-yaml}",
     "build": "yarn build:specs && yarn build:clients",
     "clean": "rm -rf **/dist **/build **/node_modules",
     "cts:generate": "yarn workspace tests start",
