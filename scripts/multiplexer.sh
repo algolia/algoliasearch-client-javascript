@@ -19,6 +19,12 @@ CMD=$1
 LANGUAGE=$2
 CLIENT=$3
 
+if [[ $CMD == "./scripts/playground.sh" ]] && ([[ $LANGUAGE == "all" ]] || [[ $CLIENT == "all" ]]); then
+    echo "You cannot use 'all' when running the playground, please specify the language and client"
+
+    exit 1
+fi
+
 LANGUAGES=()
 CLIENTS=()
 
