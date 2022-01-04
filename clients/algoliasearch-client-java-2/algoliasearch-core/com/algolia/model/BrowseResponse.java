@@ -1,7 +1,6 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,140 +10,82 @@ import java.util.Objects;
 /** BrowseResponse */
 public class BrowseResponse {
 
-  public static final String SERIALIZED_NAME_AB_TEST_I_D = "abTestID";
-
-  @SerializedName(SERIALIZED_NAME_AB_TEST_I_D)
+  @SerializedName("abTestID")
   private Integer abTestID;
 
-  public static final String SERIALIZED_NAME_AB_TEST_VARIANT_I_D =
-    "abTestVariantID";
-
-  @SerializedName(SERIALIZED_NAME_AB_TEST_VARIANT_I_D)
+  @SerializedName("abTestVariantID")
   private Integer abTestVariantID;
 
-  public static final String SERIALIZED_NAME_AROUND_LAT_LNG = "aroundLatLng";
-
-  @SerializedName(SERIALIZED_NAME_AROUND_LAT_LNG)
+  @SerializedName("aroundLatLng")
   private String aroundLatLng;
 
-  public static final String SERIALIZED_NAME_AUTOMATIC_RADIUS =
-    "automaticRadius";
-
-  @SerializedName(SERIALIZED_NAME_AUTOMATIC_RADIUS)
+  @SerializedName("automaticRadius")
   private String automaticRadius;
 
-  public static final String SERIALIZED_NAME_EXHAUSTIVE_FACETS_COUNT =
-    "exhaustiveFacetsCount";
-
-  @SerializedName(SERIALIZED_NAME_EXHAUSTIVE_FACETS_COUNT)
+  @SerializedName("exhaustiveFacetsCount")
   private Boolean exhaustiveFacetsCount;
 
-  public static final String SERIALIZED_NAME_EXHAUSTIVE_NB_HITS =
-    "exhaustiveNbHits";
-
-  @SerializedName(SERIALIZED_NAME_EXHAUSTIVE_NB_HITS)
+  @SerializedName("exhaustiveNbHits")
   private Boolean exhaustiveNbHits;
 
-  public static final String SERIALIZED_NAME_EXHAUSTIVE_TYPO = "exhaustiveTypo";
-
-  @SerializedName(SERIALIZED_NAME_EXHAUSTIVE_TYPO)
+  @SerializedName("exhaustiveTypo")
   private Boolean exhaustiveTypo;
 
-  public static final String SERIALIZED_NAME_FACETS = "facets";
-
-  @SerializedName(SERIALIZED_NAME_FACETS)
+  @SerializedName("facets")
   private Map<String, Map<String, String>> facets = null;
 
-  public static final String SERIALIZED_NAME_FACETS_STATS = "facets_stats";
-
-  @SerializedName(SERIALIZED_NAME_FACETS_STATS)
+  @SerializedName("facets_stats")
   private Map<String, BaseSearchResponseFacetsStats> facetsStats = null;
 
-  public static final String SERIALIZED_NAME_HITS_PER_PAGE = "hitsPerPage";
-
-  @SerializedName(SERIALIZED_NAME_HITS_PER_PAGE)
+  @SerializedName("hitsPerPage")
   private Integer hitsPerPage = 20;
 
-  public static final String SERIALIZED_NAME_INDEX = "index";
-
-  @SerializedName(SERIALIZED_NAME_INDEX)
+  @SerializedName("index")
   private String index;
 
-  public static final String SERIALIZED_NAME_INDEX_USED = "indexUsed";
-
-  @SerializedName(SERIALIZED_NAME_INDEX_USED)
+  @SerializedName("indexUsed")
   private String indexUsed;
 
-  public static final String SERIALIZED_NAME_MESSAGE = "message";
-
-  @SerializedName(SERIALIZED_NAME_MESSAGE)
+  @SerializedName("message")
   private String message;
 
-  public static final String SERIALIZED_NAME_NB_HITS = "nbHits";
-
-  @SerializedName(SERIALIZED_NAME_NB_HITS)
+  @SerializedName("nbHits")
   private Integer nbHits;
 
-  public static final String SERIALIZED_NAME_NB_PAGES = "nbPages";
-
-  @SerializedName(SERIALIZED_NAME_NB_PAGES)
+  @SerializedName("nbPages")
   private Integer nbPages;
 
-  public static final String SERIALIZED_NAME_NB_SORTED_HITS = "nbSortedHits";
-
-  @SerializedName(SERIALIZED_NAME_NB_SORTED_HITS)
+  @SerializedName("nbSortedHits")
   private Integer nbSortedHits;
 
-  public static final String SERIALIZED_NAME_PAGE = "page";
-
-  @SerializedName(SERIALIZED_NAME_PAGE)
+  @SerializedName("page")
   private Integer page = 0;
 
-  public static final String SERIALIZED_NAME_PARAMS = "params";
-
-  @SerializedName(SERIALIZED_NAME_PARAMS)
+  @SerializedName("params")
   private String params;
 
-  public static final String SERIALIZED_NAME_PARSED_QUERY = "parsedQuery";
-
-  @SerializedName(SERIALIZED_NAME_PARSED_QUERY)
+  @SerializedName("parsedQuery")
   private String parsedQuery;
 
-  public static final String SERIALIZED_NAME_PROCESSING_TIME_M_S =
-    "processingTimeMS";
-
-  @SerializedName(SERIALIZED_NAME_PROCESSING_TIME_M_S)
+  @SerializedName("processingTimeMS")
   private Integer processingTimeMS;
 
-  public static final String SERIALIZED_NAME_QUERY = "query";
-
-  @SerializedName(SERIALIZED_NAME_QUERY)
+  @SerializedName("query")
   private String query = "";
 
-  public static final String SERIALIZED_NAME_QUERY_AFTER_REMOVAL =
-    "queryAfterRemoval";
-
-  @SerializedName(SERIALIZED_NAME_QUERY_AFTER_REMOVAL)
+  @SerializedName("queryAfterRemoval")
   private String queryAfterRemoval;
 
-  public static final String SERIALIZED_NAME_SERVER_USED = "serverUsed";
-
-  @SerializedName(SERIALIZED_NAME_SERVER_USED)
+  @SerializedName("serverUsed")
   private String serverUsed;
 
-  public static final String SERIALIZED_NAME_USER_DATA = "userData";
-
-  @SerializedName(SERIALIZED_NAME_USER_DATA)
+  @SerializedName("userData")
   private Map<String, Object> userData = null;
 
-  public static final String SERIALIZED_NAME_HITS = "hits";
-
-  @SerializedName(SERIALIZED_NAME_HITS)
+  @SerializedName("hits")
   private List<Record> hits = new ArrayList<>();
 
-  public static final String SERIALIZED_NAME_CURSOR = "cursor";
-
-  @SerializedName(SERIALIZED_NAME_CURSOR)
+  @SerializedName("cursor")
   private String cursor;
 
   public BrowseResponse abTestID(Integer abTestID) {
@@ -159,10 +100,6 @@ public class BrowseResponse {
    * @return abTestID
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "If a search encounters an index that is being A/B tested, abTestID reports the ongoing" +
-    " A/B test ID."
-  )
   public Integer getAbTestID() {
     return abTestID;
   }
@@ -183,10 +120,6 @@ public class BrowseResponse {
    * @return abTestVariantID
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "If a search encounters an index that is being A/B tested, abTestVariantID reports the" +
-    " variant ID of the index used."
-  )
   public Integer getAbTestVariantID() {
     return abTestVariantID;
   }
@@ -206,7 +139,6 @@ public class BrowseResponse {
    * @return aroundLatLng
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "The computed geo location.")
   public String getAroundLatLng() {
     return aroundLatLng;
   }
@@ -227,10 +159,6 @@ public class BrowseResponse {
    * @return automaticRadius
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "The automatically computed radius. For legacy reasons, this parameter is a string and" +
-    " not an integer."
-  )
   public String getAutomaticRadius() {
     return automaticRadius;
   }
@@ -250,9 +178,6 @@ public class BrowseResponse {
    * @return exhaustiveFacetsCount
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Whether the facet count is exhaustive or approximate."
-  )
   public Boolean getExhaustiveFacetsCount() {
     return exhaustiveFacetsCount;
   }
@@ -272,10 +197,6 @@ public class BrowseResponse {
    * @return exhaustiveNbHits
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(
-    required = true,
-    value = "Indicate if the nbHits count was exhaustive or approximate"
-  )
   public Boolean getExhaustiveNbHits() {
     return exhaustiveNbHits;
   }
@@ -296,11 +217,6 @@ public class BrowseResponse {
    * @return exhaustiveTypo
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(
-    required = true,
-    value = "Indicate if the typo-tolerence search was exhaustive or approximate (only included when" +
-    " typo-tolerance is enabled)"
-  )
   public Boolean getExhaustiveTypo() {
     return exhaustiveTypo;
   }
@@ -331,10 +247,6 @@ public class BrowseResponse {
    * @return facets
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    example = "{\"category\":{\"food\":1,\"tech\":42}}",
-    value = "A mapping of each facet name to the corresponding facet counts."
-  )
   public Map<String, Map<String, String>> getFacets() {
     return facets;
   }
@@ -367,7 +279,6 @@ public class BrowseResponse {
    * @return facetsStats
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Statistics for numerical facets.")
   public Map<String, BaseSearchResponseFacetsStats> getFacetsStats() {
     return facetsStats;
   }
@@ -389,7 +300,6 @@ public class BrowseResponse {
    * @return hitsPerPage
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "Set the number of hits per page.")
   public Integer getHitsPerPage() {
     return hitsPerPage;
   }
@@ -409,10 +319,6 @@ public class BrowseResponse {
    * @return index
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    example = "indexName",
-    value = "Index name used for the query."
-  )
   public String getIndex() {
     return index;
   }
@@ -433,11 +339,6 @@ public class BrowseResponse {
    * @return indexUsed
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    example = "indexNameAlt",
-    value = "Index name used for the query. In the case of an A/B test, the targeted index isn't" +
-    " always the index used by the query."
-  )
   public String getIndexUsed() {
     return indexUsed;
   }
@@ -457,7 +358,6 @@ public class BrowseResponse {
    * @return message
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Used to return warnings about the query.")
   public String getMessage() {
     return message;
   }
@@ -477,11 +377,6 @@ public class BrowseResponse {
    * @return nbHits
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(
-    example = "20",
-    required = true,
-    value = "Number of hits that the search query matched."
-  )
   public Integer getNbHits() {
     return nbHits;
   }
@@ -501,11 +396,6 @@ public class BrowseResponse {
    * @return nbPages
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(
-    example = "1",
-    required = true,
-    value = "Number of pages available for the current query"
-  )
   public Integer getNbPages() {
     return nbPages;
   }
@@ -525,10 +415,6 @@ public class BrowseResponse {
    * @return nbSortedHits
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    example = "20",
-    value = "The number of hits selected and sorted by the relevant sort algorithm"
-  )
   public Integer getNbSortedHits() {
     return nbSortedHits;
   }
@@ -548,7 +434,6 @@ public class BrowseResponse {
    * @return page
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "Specify the page to retrieve.")
   public Integer getPage() {
     return page;
   }
@@ -568,11 +453,6 @@ public class BrowseResponse {
    * @return params
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(
-    example = "query=a&hitsPerPage=20",
-    required = true,
-    value = "A url-encoded string of all search parameters."
-  )
   public String getParams() {
     return params;
   }
@@ -592,9 +472,6 @@ public class BrowseResponse {
    * @return parsedQuery
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "The query string that will be searched, after normalization."
-  )
   public String getParsedQuery() {
     return parsedQuery;
   }
@@ -614,11 +491,6 @@ public class BrowseResponse {
    * @return processingTimeMS
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(
-    example = "20",
-    required = true,
-    value = "Time the server took to process the request, in milliseconds."
-  )
   public Integer getProcessingTimeMS() {
     return processingTimeMS;
   }
@@ -638,7 +510,6 @@ public class BrowseResponse {
    * @return query
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "The text to search in the index.")
   public String getQuery() {
     return query;
   }
@@ -659,10 +530,6 @@ public class BrowseResponse {
    * @return queryAfterRemoval
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "A markup text indicating which parts of the original query have been removed in order to" +
-    " retrieve a non-empty result set."
-  )
   public String getQueryAfterRemoval() {
     return queryAfterRemoval;
   }
@@ -682,9 +549,6 @@ public class BrowseResponse {
    * @return serverUsed
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Actual host name of the server that processed the request."
-  )
   public String getServerUsed() {
     return serverUsed;
   }
@@ -712,7 +576,6 @@ public class BrowseResponse {
    * @return userData
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Lets you store custom data in your indices.")
   public Map<String, Object> getUserData() {
     return userData;
   }
@@ -737,7 +600,6 @@ public class BrowseResponse {
    * @return hits
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "")
   public List<Record> getHits() {
     return hits;
   }
@@ -758,12 +620,6 @@ public class BrowseResponse {
    * @return cursor
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(
-    example = "jMDY3M2MwM2QwMWUxMmQwYWI0ZTN",
-    required = true,
-    value = "Cursor indicating the location to resume browsing from. Must match the value returned by" +
-    " the previous call."
-  )
   public String getCursor() {
     return cursor;
   }

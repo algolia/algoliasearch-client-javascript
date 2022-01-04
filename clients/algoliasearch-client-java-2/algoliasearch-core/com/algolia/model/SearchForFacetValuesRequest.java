@@ -1,25 +1,18 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.Objects;
 
 /** SearchForFacetValuesRequest */
 public class SearchForFacetValuesRequest {
 
-  public static final String SERIALIZED_NAME_PARAMS = "params";
-
-  @SerializedName(SERIALIZED_NAME_PARAMS)
+  @SerializedName("params")
   private String params = "";
 
-  public static final String SERIALIZED_NAME_FACET_QUERY = "facetQuery";
-
-  @SerializedName(SERIALIZED_NAME_FACET_QUERY)
+  @SerializedName("facetQuery")
   private String facetQuery = "";
 
-  public static final String SERIALIZED_NAME_MAX_FACET_HITS = "maxFacetHits";
-
-  @SerializedName(SERIALIZED_NAME_MAX_FACET_HITS)
+  @SerializedName("maxFacetHits")
   private Integer maxFacetHits = 10;
 
   public SearchForFacetValuesRequest params(String params) {
@@ -33,7 +26,6 @@ public class SearchForFacetValuesRequest {
    * @return params
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Search parameters as URL-encoded query string.")
   public String getParams() {
     return params;
   }
@@ -53,7 +45,6 @@ public class SearchForFacetValuesRequest {
    * @return facetQuery
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Text to search inside the facet's values.")
   public String getFacetQuery() {
     return facetQuery;
   }
@@ -74,10 +65,6 @@ public class SearchForFacetValuesRequest {
    * @return maxFacetHits
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Maximum number of facet hits to return during a search for facet values. For performance" +
-    " reasons, the maximum allowed number of returned values is 100."
-  )
   public Integer getMaxFacetHits() {
     return maxFacetHits;
   }

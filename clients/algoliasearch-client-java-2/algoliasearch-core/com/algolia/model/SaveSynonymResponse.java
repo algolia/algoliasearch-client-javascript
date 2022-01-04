@@ -1,26 +1,19 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
-import io.swagger.annotations.ApiModelProperty;
 import java.time.OffsetDateTime;
 import java.util.Objects;
 
 /** SaveSynonymResponse */
 public class SaveSynonymResponse {
 
-  public static final String SERIALIZED_NAME_TASK_I_D = "taskID";
-
-  @SerializedName(SERIALIZED_NAME_TASK_I_D)
+  @SerializedName("taskID")
   private Integer taskID;
 
-  public static final String SERIALIZED_NAME_UPDATED_AT = "updatedAt";
-
-  @SerializedName(SERIALIZED_NAME_UPDATED_AT)
+  @SerializedName("updatedAt")
   private OffsetDateTime updatedAt;
 
-  public static final String SERIALIZED_NAME_ID = "id";
-
-  @SerializedName(SERIALIZED_NAME_ID)
+  @SerializedName("id")
   private String id;
 
   public SaveSynonymResponse taskID(Integer taskID) {
@@ -34,10 +27,6 @@ public class SaveSynonymResponse {
    * @return taskID
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(
-    required = true,
-    value = "taskID of the indexing task to wait for."
-  )
   public Integer getTaskID() {
     return taskID;
   }
@@ -57,10 +46,6 @@ public class SaveSynonymResponse {
    * @return updatedAt
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(
-    required = true,
-    value = "Date of last update (ISO-8601 format)."
-  )
   public OffsetDateTime getUpdatedAt() {
     return updatedAt;
   }
@@ -80,7 +65,6 @@ public class SaveSynonymResponse {
    * @return id
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "objectID of the inserted object.")
   public String getId() {
     return id;
   }

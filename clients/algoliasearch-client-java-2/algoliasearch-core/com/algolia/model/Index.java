@@ -1,7 +1,6 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
-import io.swagger.annotations.ApiModelProperty;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,61 +9,37 @@ import java.util.Objects;
 /** Index */
 public class Index {
 
-  public static final String SERIALIZED_NAME_NAME = "name";
-
-  @SerializedName(SERIALIZED_NAME_NAME)
+  @SerializedName("name")
   private String name;
 
-  public static final String SERIALIZED_NAME_CREATED_AT = "createdAt";
-
-  @SerializedName(SERIALIZED_NAME_CREATED_AT)
+  @SerializedName("createdAt")
   private OffsetDateTime createdAt;
 
-  public static final String SERIALIZED_NAME_UPDATED_AT = "updatedAt";
-
-  @SerializedName(SERIALIZED_NAME_UPDATED_AT)
+  @SerializedName("updatedAt")
   private OffsetDateTime updatedAt;
 
-  public static final String SERIALIZED_NAME_ENTRIES = "entries";
-
-  @SerializedName(SERIALIZED_NAME_ENTRIES)
+  @SerializedName("entries")
   private Integer entries;
 
-  public static final String SERIALIZED_NAME_DATA_SIZE = "dataSize";
-
-  @SerializedName(SERIALIZED_NAME_DATA_SIZE)
+  @SerializedName("dataSize")
   private Integer dataSize;
 
-  public static final String SERIALIZED_NAME_FILE_SIZE = "fileSize";
-
-  @SerializedName(SERIALIZED_NAME_FILE_SIZE)
+  @SerializedName("fileSize")
   private Integer fileSize;
 
-  public static final String SERIALIZED_NAME_LAST_BUILD_TIME_S =
-    "lastBuildTimeS";
-
-  @SerializedName(SERIALIZED_NAME_LAST_BUILD_TIME_S)
+  @SerializedName("lastBuildTimeS")
   private Integer lastBuildTimeS;
 
-  public static final String SERIALIZED_NAME_NUMBER_OF_PENDING_TASK =
-    "numberOfPendingTask";
-
-  @SerializedName(SERIALIZED_NAME_NUMBER_OF_PENDING_TASK)
+  @SerializedName("numberOfPendingTask")
   private Integer numberOfPendingTask;
 
-  public static final String SERIALIZED_NAME_PENDING_TASK = "pendingTask";
-
-  @SerializedName(SERIALIZED_NAME_PENDING_TASK)
+  @SerializedName("pendingTask")
   private Boolean pendingTask;
 
-  public static final String SERIALIZED_NAME_PRIMARY = "primary";
-
-  @SerializedName(SERIALIZED_NAME_PRIMARY)
+  @SerializedName("primary")
   private String primary;
 
-  public static final String SERIALIZED_NAME_REPLICAS = "replicas";
-
-  @SerializedName(SERIALIZED_NAME_REPLICAS)
+  @SerializedName("replicas")
   private List<String> replicas = null;
 
   public Index name(String name) {
@@ -78,7 +53,6 @@ public class Index {
    * @return name
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "Index name.")
   public String getName() {
     return name;
   }
@@ -98,10 +72,6 @@ public class Index {
    * @return createdAt
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(
-    required = true,
-    value = "Index creation date. An empty string means that the index has no records."
-  )
   public OffsetDateTime getCreatedAt() {
     return createdAt;
   }
@@ -121,10 +91,6 @@ public class Index {
    * @return updatedAt
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(
-    required = true,
-    value = "Date of last update (ISO-8601 format)."
-  )
   public OffsetDateTime getUpdatedAt() {
     return updatedAt;
   }
@@ -144,10 +110,6 @@ public class Index {
    * @return entries
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(
-    required = true,
-    value = "Number of records contained in the index."
-  )
   public Integer getEntries() {
     return entries;
   }
@@ -167,10 +129,6 @@ public class Index {
    * @return dataSize
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(
-    required = true,
-    value = "Number of bytes of the index in minified format."
-  )
   public Integer getDataSize() {
     return dataSize;
   }
@@ -190,10 +148,6 @@ public class Index {
    * @return fileSize
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(
-    required = true,
-    value = "Number of bytes of the index binary file."
-  )
   public Integer getFileSize() {
     return fileSize;
   }
@@ -213,7 +167,6 @@ public class Index {
    * @return lastBuildTimeS
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "Last build time")
   public Integer getLastBuildTimeS() {
     return lastBuildTimeS;
   }
@@ -233,9 +186,6 @@ public class Index {
    * @return numberOfPendingTask
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Number of pending indexing operations. This value is deprecated and should not be used."
-  )
   public Integer getNumberOfPendingTask() {
     return numberOfPendingTask;
   }
@@ -256,11 +206,6 @@ public class Index {
    * @return pendingTask
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(
-    required = true,
-    value = "A boolean which says whether the index has pending tasks. This value is deprecated and" +
-    " should not be used."
-  )
   public Boolean getPendingTask() {
     return pendingTask;
   }
@@ -280,9 +225,6 @@ public class Index {
    * @return primary
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Only present if the index is a replica. Contains the name of the related primary index."
-  )
   public String getPrimary() {
     return primary;
   }
@@ -311,10 +253,6 @@ public class Index {
    * @return replicas
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Only present if the index is a primary index with replicas. Contains the names of all" +
-    " linked replicas."
-  )
   public List<String> getReplicas() {
     return replicas;
   }

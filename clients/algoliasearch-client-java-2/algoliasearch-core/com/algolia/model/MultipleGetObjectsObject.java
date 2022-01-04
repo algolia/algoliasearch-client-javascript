@@ -1,30 +1,20 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 /** GetObject operation on an index. */
-@ApiModel(description = "GetObject operation on an index.")
 public class MultipleGetObjectsObject {
 
-  public static final String SERIALIZED_NAME_ATTRIBUTES_TO_RETRIEVE =
-    "attributesToRetrieve";
-
-  @SerializedName(SERIALIZED_NAME_ATTRIBUTES_TO_RETRIEVE)
+  @SerializedName("attributesToRetrieve")
   private List<String> attributesToRetrieve = null;
 
-  public static final String SERIALIZED_NAME_OBJECT_I_D = "objectID";
-
-  @SerializedName(SERIALIZED_NAME_OBJECT_I_D)
+  @SerializedName("objectID")
   private String objectID;
 
-  public static final String SERIALIZED_NAME_INDEX_NAME = "indexName";
-
-  @SerializedName(SERIALIZED_NAME_INDEX_NAME)
+  @SerializedName("indexName")
   private String indexName;
 
   public MultipleGetObjectsObject attributesToRetrieve(
@@ -50,9 +40,6 @@ public class MultipleGetObjectsObject {
    * @return attributesToRetrieve
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "List of attributes to retrieve. By default, all retrievable attributes are returned."
-  )
   public List<String> getAttributesToRetrieve() {
     return attributesToRetrieve;
   }
@@ -72,10 +59,6 @@ public class MultipleGetObjectsObject {
    * @return objectID
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(
-    required = true,
-    value = "ID of the object within that index."
-  )
   public String getObjectID() {
     return objectID;
   }
@@ -95,10 +78,6 @@ public class MultipleGetObjectsObject {
    * @return indexName
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(
-    required = true,
-    value = "name of the index containing the object."
-  )
   public String getIndexName() {
     return indexName;
   }

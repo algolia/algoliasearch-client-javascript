@@ -1,20 +1,15 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.Objects;
 
 /** SearchUserIdsResponseHighlightResult */
 public class SearchUserIdsResponseHighlightResult {
 
-  public static final String SERIALIZED_NAME_USER_I_D = "userID";
-
-  @SerializedName(SERIALIZED_NAME_USER_I_D)
+  @SerializedName("userID")
   private HighlightResult userID;
 
-  public static final String SERIALIZED_NAME_CLUSTER_NAME = "clusterName";
-
-  @SerializedName(SERIALIZED_NAME_CLUSTER_NAME)
+  @SerializedName("clusterName")
   private HighlightResult clusterName;
 
   public SearchUserIdsResponseHighlightResult userID(HighlightResult userID) {
@@ -28,7 +23,6 @@ public class SearchUserIdsResponseHighlightResult {
    * @return userID
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "")
   public HighlightResult getUserID() {
     return userID;
   }
@@ -50,7 +44,6 @@ public class SearchUserIdsResponseHighlightResult {
    * @return clusterName
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "")
   public HighlightResult getClusterName() {
     return clusterName;
   }

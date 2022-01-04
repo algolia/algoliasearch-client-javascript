@@ -1,16 +1,13 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
-import io.swagger.annotations.ApiModelProperty;
 import java.time.OffsetDateTime;
 import java.util.Objects;
 
 /** RemoveUserIdResponse */
 public class RemoveUserIdResponse {
 
-  public static final String SERIALIZED_NAME_DELETED_AT = "deletedAt";
-
-  @SerializedName(SERIALIZED_NAME_DELETED_AT)
+  @SerializedName("deletedAt")
   private OffsetDateTime deletedAt;
 
   public RemoveUserIdResponse deletedAt(OffsetDateTime deletedAt) {
@@ -24,10 +21,6 @@ public class RemoveUserIdResponse {
    * @return deletedAt
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(
-    required = true,
-    value = "Date of deletion (ISO-8601 format)."
-  )
   public OffsetDateTime getDeletedAt() {
     return deletedAt;
   }

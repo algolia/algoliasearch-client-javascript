@@ -1,30 +1,21 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.Objects;
 
 /** Condition */
 public class Condition {
 
-  public static final String SERIALIZED_NAME_PATTERN = "pattern";
-
-  @SerializedName(SERIALIZED_NAME_PATTERN)
+  @SerializedName("pattern")
   private String pattern;
 
-  public static final String SERIALIZED_NAME_ANCHORING = "anchoring";
-
-  @SerializedName(SERIALIZED_NAME_ANCHORING)
+  @SerializedName("anchoring")
   private Anchoring anchoring;
 
-  public static final String SERIALIZED_NAME_ALTERNATIVES = "alternatives";
-
-  @SerializedName(SERIALIZED_NAME_ALTERNATIVES)
+  @SerializedName("alternatives")
   private Boolean alternatives = false;
 
-  public static final String SERIALIZED_NAME_CONTEXT = "context";
-
-  @SerializedName(SERIALIZED_NAME_CONTEXT)
+  @SerializedName("context")
   private String context;
 
   public Condition pattern(String pattern) {
@@ -38,7 +29,6 @@ public class Condition {
    * @return pattern
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Query pattern syntax")
   public String getPattern() {
     return pattern;
   }
@@ -58,7 +48,6 @@ public class Condition {
    * @return anchoring
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
   public Anchoring getAnchoring() {
     return anchoring;
   }
@@ -78,9 +67,6 @@ public class Condition {
    * @return alternatives
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Whether the pattern matches on plurals, synonyms, and typos."
-  )
   public Boolean getAlternatives() {
     return alternatives;
   }
@@ -100,7 +86,6 @@ public class Condition {
    * @return context
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Rule context format: [A-Za-z0-9_-]+).")
   public String getContext() {
     return context;
   }

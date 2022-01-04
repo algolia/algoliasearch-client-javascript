@@ -1,7 +1,6 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -9,80 +8,49 @@ import java.util.Objects;
 /** GetLogsResponseLogs */
 public class GetLogsResponseLogs {
 
-  public static final String SERIALIZED_NAME_TIMESTAMP = "timestamp";
-
-  @SerializedName(SERIALIZED_NAME_TIMESTAMP)
+  @SerializedName("timestamp")
   private String timestamp;
 
-  public static final String SERIALIZED_NAME_METHOD = "method";
-
-  @SerializedName(SERIALIZED_NAME_METHOD)
+  @SerializedName("method")
   private String method;
 
-  public static final String SERIALIZED_NAME_ANSWER_CODE = "answer_code";
-
-  @SerializedName(SERIALIZED_NAME_ANSWER_CODE)
+  @SerializedName("answer_code")
   private String answerCode;
 
-  public static final String SERIALIZED_NAME_QUERY_BODY = "query_body";
-
-  @SerializedName(SERIALIZED_NAME_QUERY_BODY)
+  @SerializedName("query_body")
   private String queryBody;
 
-  public static final String SERIALIZED_NAME_ANSWER = "answer";
-
-  @SerializedName(SERIALIZED_NAME_ANSWER)
+  @SerializedName("answer")
   private String answer;
 
-  public static final String SERIALIZED_NAME_URL = "url";
-
-  @SerializedName(SERIALIZED_NAME_URL)
+  @SerializedName("url")
   private String url;
 
-  public static final String SERIALIZED_NAME_IP = "ip";
-
-  @SerializedName(SERIALIZED_NAME_IP)
+  @SerializedName("ip")
   private String ip;
 
-  public static final String SERIALIZED_NAME_QUERY_HEADERS = "query_headers";
-
-  @SerializedName(SERIALIZED_NAME_QUERY_HEADERS)
+  @SerializedName("query_headers")
   private String queryHeaders;
 
-  public static final String SERIALIZED_NAME_SHA1 = "sha1";
-
-  @SerializedName(SERIALIZED_NAME_SHA1)
+  @SerializedName("sha1")
   private String sha1;
 
-  public static final String SERIALIZED_NAME_NB_API_CALLS = "nb_api_calls";
-
-  @SerializedName(SERIALIZED_NAME_NB_API_CALLS)
+  @SerializedName("nb_api_calls")
   private String nbApiCalls;
 
-  public static final String SERIALIZED_NAME_PROCESSING_TIME_MS =
-    "processing_time_ms";
-
-  @SerializedName(SERIALIZED_NAME_PROCESSING_TIME_MS)
+  @SerializedName("processing_time_ms")
   private String processingTimeMs;
 
-  public static final String SERIALIZED_NAME_INDEX = "index";
-
-  @SerializedName(SERIALIZED_NAME_INDEX)
+  @SerializedName("index")
   private String index;
 
-  public static final String SERIALIZED_NAME_QUERY_PARAMS = "query_params";
-
-  @SerializedName(SERIALIZED_NAME_QUERY_PARAMS)
+  @SerializedName("query_params")
   private String queryParams;
 
-  public static final String SERIALIZED_NAME_QUERY_NB_HITS = "query_nb_hits";
-
-  @SerializedName(SERIALIZED_NAME_QUERY_NB_HITS)
+  @SerializedName("query_nb_hits")
   private String queryNbHits;
 
-  public static final String SERIALIZED_NAME_INNER_QUERIES = "inner_queries";
-
-  @SerializedName(SERIALIZED_NAME_INNER_QUERIES)
+  @SerializedName("inner_queries")
   private List<GetLogsResponseInnerQueries> innerQueries = null;
 
   public GetLogsResponseLogs timestamp(String timestamp) {
@@ -96,7 +64,6 @@ public class GetLogsResponseLogs {
    * @return timestamp
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "Timestamp in ISO-8601 format.")
   public String getTimestamp() {
     return timestamp;
   }
@@ -116,10 +83,6 @@ public class GetLogsResponseLogs {
    * @return method
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(
-    required = true,
-    value = "HTTP method of the perfomed request."
-  )
   public String getMethod() {
     return method;
   }
@@ -139,7 +102,6 @@ public class GetLogsResponseLogs {
    * @return answerCode
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "HTTP response code.")
   public String getAnswerCode() {
     return answerCode;
   }
@@ -159,10 +121,6 @@ public class GetLogsResponseLogs {
    * @return queryBody
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(
-    required = true,
-    value = "Request body. Truncated after 1000 characters."
-  )
   public String getQueryBody() {
     return queryBody;
   }
@@ -182,10 +140,6 @@ public class GetLogsResponseLogs {
    * @return answer
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(
-    required = true,
-    value = "Answer body. Truncated after 1000 characters."
-  )
   public String getAnswer() {
     return answer;
   }
@@ -205,7 +159,6 @@ public class GetLogsResponseLogs {
    * @return url
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "Request URL.")
   public String getUrl() {
     return url;
   }
@@ -225,10 +178,6 @@ public class GetLogsResponseLogs {
    * @return ip
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(
-    required = true,
-    value = "IP of the client which perfomed the request."
-  )
   public String getIp() {
     return ip;
   }
@@ -248,10 +197,6 @@ public class GetLogsResponseLogs {
    * @return queryHeaders
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(
-    required = true,
-    value = "Request Headers (API Key is obfuscated)."
-  )
   public String getQueryHeaders() {
     return queryHeaders;
   }
@@ -271,7 +216,6 @@ public class GetLogsResponseLogs {
    * @return sha1
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "SHA1 signature of the log entry.")
   public String getSha1() {
     return sha1;
   }
@@ -291,7 +235,6 @@ public class GetLogsResponseLogs {
    * @return nbApiCalls
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "Number of API calls.")
   public String getNbApiCalls() {
     return nbApiCalls;
   }
@@ -311,10 +254,6 @@ public class GetLogsResponseLogs {
    * @return processingTimeMs
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(
-    required = true,
-    value = "Processing time for the query. It doesn't include network time."
-  )
   public String getProcessingTimeMs() {
     return processingTimeMs;
   }
@@ -334,7 +273,6 @@ public class GetLogsResponseLogs {
    * @return index
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Index targeted by the query.")
   public String getIndex() {
     return index;
   }
@@ -354,7 +292,6 @@ public class GetLogsResponseLogs {
    * @return queryParams
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Query parameters sent with the request.")
   public String getQueryParams() {
     return queryParams;
   }
@@ -374,7 +311,6 @@ public class GetLogsResponseLogs {
    * @return queryNbHits
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Number of hits returned for the query.")
   public String getQueryNbHits() {
     return queryNbHits;
   }
@@ -406,9 +342,6 @@ public class GetLogsResponseLogs {
    * @return innerQueries
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Array of all performed queries for the given request."
-  )
   public List<GetLogsResponseInnerQueries> getInnerQueries() {
     return innerQueries;
   }

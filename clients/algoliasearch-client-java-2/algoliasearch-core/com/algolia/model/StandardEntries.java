@@ -1,37 +1,23 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import org.openapitools.jackson.nullable.JsonNullable;
 
 /**
  * Map of language ISO code supported by the dictionary (e.g., \"en\" for English) to a boolean
  * value.
  */
-@ApiModel(
-  description = "Map of language ISO code supported by the dictionary (e.g., \"en\" for English) to a" +
-  " boolean value."
-)
 public class StandardEntries {
 
-  public static final String SERIALIZED_NAME_PLURALS = "plurals";
-
-  @SerializedName(SERIALIZED_NAME_PLURALS)
+  @SerializedName("plurals")
   private Map<String, Boolean> plurals = null;
 
-  public static final String SERIALIZED_NAME_STOPWORDS = "stopwords";
-
-  @SerializedName(SERIALIZED_NAME_STOPWORDS)
+  @SerializedName("stopwords")
   private Map<String, Boolean> stopwords = null;
 
-  public static final String SERIALIZED_NAME_COMPOUNDS = "compounds";
-
-  @SerializedName(SERIALIZED_NAME_COMPOUNDS)
+  @SerializedName("compounds")
   private Map<String, Boolean> compounds = null;
 
   public StandardEntries plurals(Map<String, Boolean> plurals) {
@@ -53,7 +39,6 @@ public class StandardEntries {
    * @return plurals
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Language ISO code.")
   public Map<String, Boolean> getPlurals() {
     return plurals;
   }
@@ -81,7 +66,6 @@ public class StandardEntries {
    * @return stopwords
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Language ISO code.")
   public Map<String, Boolean> getStopwords() {
     return stopwords;
   }
@@ -109,7 +93,6 @@ public class StandardEntries {
    * @return compounds
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Language ISO code.")
   public Map<String, Boolean> getCompounds() {
     return compounds;
   }
@@ -134,32 +117,9 @@ public class StandardEntries {
     );
   }
 
-  private static <T> boolean equalsNullable(
-    JsonNullable<T> a,
-    JsonNullable<T> b
-  ) {
-    return (
-      a == b ||
-      (
-        a != null &&
-        b != null &&
-        a.isPresent() &&
-        b.isPresent() &&
-        Objects.deepEquals(a.get(), b.get())
-      )
-    );
-  }
-
   @Override
   public int hashCode() {
     return Objects.hash(plurals, stopwords, compounds);
-  }
-
-  private static <T> int hashCodeNullable(JsonNullable<T> a) {
-    if (a == null) {
-      return 1;
-    }
-    return a.isPresent() ? Arrays.deepHashCode(new Object[] { a.get() }) : 31;
   }
 
   @Override

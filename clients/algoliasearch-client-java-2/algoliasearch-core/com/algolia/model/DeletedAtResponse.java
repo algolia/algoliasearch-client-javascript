@@ -1,23 +1,16 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.time.OffsetDateTime;
 import java.util.Objects;
 
 /** The response with a taskID and a deletedAt timestamp. */
-@ApiModel(description = "The response with a taskID and a deletedAt timestamp.")
 public class DeletedAtResponse {
 
-  public static final String SERIALIZED_NAME_TASK_I_D = "taskID";
-
-  @SerializedName(SERIALIZED_NAME_TASK_I_D)
+  @SerializedName("taskID")
   private Integer taskID;
 
-  public static final String SERIALIZED_NAME_DELETED_AT = "deletedAt";
-
-  @SerializedName(SERIALIZED_NAME_DELETED_AT)
+  @SerializedName("deletedAt")
   private OffsetDateTime deletedAt;
 
   public DeletedAtResponse taskID(Integer taskID) {
@@ -31,10 +24,6 @@ public class DeletedAtResponse {
    * @return taskID
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(
-    required = true,
-    value = "taskID of the indexing task to wait for."
-  )
   public Integer getTaskID() {
     return taskID;
   }
@@ -54,10 +43,6 @@ public class DeletedAtResponse {
    * @return deletedAt
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(
-    required = true,
-    value = "Date of deletion (ISO-8601 format)."
-  )
   public OffsetDateTime getDeletedAt() {
     return deletedAt;
   }

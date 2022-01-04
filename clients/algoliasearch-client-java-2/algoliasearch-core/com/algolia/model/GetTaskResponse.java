@@ -5,7 +5,6 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 import java.util.Objects;
 
@@ -61,9 +60,7 @@ public class GetTaskResponse {
     }
   }
 
-  public static final String SERIALIZED_NAME_STATUS = "status";
-
-  @SerializedName(SERIALIZED_NAME_STATUS)
+  @SerializedName("status")
   private StatusEnum status;
 
   public GetTaskResponse status(StatusEnum status) {
@@ -77,7 +74,6 @@ public class GetTaskResponse {
    * @return status
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "")
   public StatusEnum getStatus() {
     return status;
   }

@@ -1,18 +1,12 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.Objects;
 
 /** Custom entries for a dictionary */
-@ApiModel(description = "Custom entries for a dictionary")
 public class DictionaryLanguage {
 
-  public static final String SERIALIZED_NAME_NB_CUSTOM_ENTIRES =
-    "nbCustomEntires";
-
-  @SerializedName(SERIALIZED_NAME_NB_CUSTOM_ENTIRES)
+  @SerializedName("nbCustomEntires")
   private Integer nbCustomEntires;
 
   public DictionaryLanguage nbCustomEntires(Integer nbCustomEntires) {
@@ -27,10 +21,6 @@ public class DictionaryLanguage {
    * @return nbCustomEntires
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "When nbCustomEntries is set to 0, the user didn't customize the dictionary. The" +
-    " dictionary is still supported with standard, Algolia-provided entries."
-  )
   public Integer getNbCustomEntires() {
     return nbCustomEntires;
   }

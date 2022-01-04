@@ -1,7 +1,6 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -9,9 +8,7 @@ import java.util.Objects;
 /** MultipleQueriesResponse */
 public class MultipleQueriesResponse {
 
-  public static final String SERIALIZED_NAME_RESULTS = "results";
-
-  @SerializedName(SERIALIZED_NAME_RESULTS)
+  @SerializedName("results")
   private List<SearchResponse> results = null;
 
   public MultipleQueriesResponse results(List<SearchResponse> results) {
@@ -33,7 +30,6 @@ public class MultipleQueriesResponse {
    * @return results
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
   public List<SearchResponse> getResults() {
     return results;
   }

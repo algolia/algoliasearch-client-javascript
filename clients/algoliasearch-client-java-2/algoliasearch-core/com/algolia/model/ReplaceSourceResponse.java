@@ -1,16 +1,13 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
-import io.swagger.annotations.ApiModelProperty;
 import java.time.OffsetDateTime;
 import java.util.Objects;
 
 /** ReplaceSourceResponse */
 public class ReplaceSourceResponse {
 
-  public static final String SERIALIZED_NAME_UPDATED_AT = "updatedAt";
-
-  @SerializedName(SERIALIZED_NAME_UPDATED_AT)
+  @SerializedName("updatedAt")
   private OffsetDateTime updatedAt;
 
   public ReplaceSourceResponse updatedAt(OffsetDateTime updatedAt) {
@@ -24,10 +21,6 @@ public class ReplaceSourceResponse {
    * @return updatedAt
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(
-    required = true,
-    value = "Date of last update (ISO-8601 format)."
-  )
   public OffsetDateTime getUpdatedAt() {
     return updatedAt;
   }

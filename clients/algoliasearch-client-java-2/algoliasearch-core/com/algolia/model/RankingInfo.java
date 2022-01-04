@@ -1,7 +1,6 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -9,62 +8,37 @@ import java.util.Objects;
 /** RankingInfo */
 public class RankingInfo {
 
-  public static final String SERIALIZED_NAME_FILTERS = "filters";
-
-  @SerializedName(SERIALIZED_NAME_FILTERS)
+  @SerializedName("filters")
   private Integer filters;
 
-  public static final String SERIALIZED_NAME_FIRST_MATCHED_WORD =
-    "firstMatchedWord";
-
-  @SerializedName(SERIALIZED_NAME_FIRST_MATCHED_WORD)
+  @SerializedName("firstMatchedWord")
   private Integer firstMatchedWord;
 
-  public static final String SERIALIZED_NAME_GEO_DISTANCE = "geoDistance";
-
-  @SerializedName(SERIALIZED_NAME_GEO_DISTANCE)
+  @SerializedName("geoDistance")
   private Integer geoDistance;
 
-  public static final String SERIALIZED_NAME_GEO_PRECISION = "geoPrecision";
-
-  @SerializedName(SERIALIZED_NAME_GEO_PRECISION)
+  @SerializedName("geoPrecision")
   private Integer geoPrecision;
 
-  public static final String SERIALIZED_NAME_MATCHED_GEO_LOCATION =
-    "matchedGeoLocation";
-
-  @SerializedName(SERIALIZED_NAME_MATCHED_GEO_LOCATION)
+  @SerializedName("matchedGeoLocation")
   private Map<String, RankingInfoMatchedGeoLocation> matchedGeoLocation = null;
 
-  public static final String SERIALIZED_NAME_NB_EXACT_WORDS = "nbExactWords";
-
-  @SerializedName(SERIALIZED_NAME_NB_EXACT_WORDS)
+  @SerializedName("nbExactWords")
   private Integer nbExactWords;
 
-  public static final String SERIALIZED_NAME_NB_TYPOS = "nbTypos";
-
-  @SerializedName(SERIALIZED_NAME_NB_TYPOS)
+  @SerializedName("nbTypos")
   private Integer nbTypos;
 
-  public static final String SERIALIZED_NAME_PROMOTED = "promoted";
-
-  @SerializedName(SERIALIZED_NAME_PROMOTED)
+  @SerializedName("promoted")
   private Boolean promoted;
 
-  public static final String SERIALIZED_NAME_PROXIMITY_DISTANCE =
-    "proximityDistance";
-
-  @SerializedName(SERIALIZED_NAME_PROXIMITY_DISTANCE)
+  @SerializedName("proximityDistance")
   private Integer proximityDistance;
 
-  public static final String SERIALIZED_NAME_USER_SCORE = "userScore";
-
-  @SerializedName(SERIALIZED_NAME_USER_SCORE)
+  @SerializedName("userScore")
   private Integer userScore;
 
-  public static final String SERIALIZED_NAME_WORD = "word";
-
-  @SerializedName(SERIALIZED_NAME_WORD)
+  @SerializedName("word")
   private Integer word;
 
   public RankingInfo filters(Integer filters) {
@@ -78,7 +52,6 @@ public class RankingInfo {
    * @return filters
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "This field is reserved for advanced usage.")
   public Integer getFilters() {
     return filters;
   }
@@ -98,9 +71,6 @@ public class RankingInfo {
    * @return firstMatchedWord
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Position of the most important matched attribute in the attributes to index list."
-  )
   public Integer getFirstMatchedWord() {
     return firstMatchedWord;
   }
@@ -121,10 +91,6 @@ public class RankingInfo {
    * @return geoDistance
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Distance between the geo location in the search query and the best matching geo location" +
-    " in the record, divided by the geo precision (in meters)."
-  )
   public Integer getGeoDistance() {
     return geoDistance;
   }
@@ -144,9 +110,6 @@ public class RankingInfo {
    * @return geoPrecision
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Precision used when computing the geo distance, in meters."
-  )
   public Integer getGeoPrecision() {
     return geoPrecision;
   }
@@ -179,7 +142,6 @@ public class RankingInfo {
    * @return matchedGeoLocation
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
   public Map<String, RankingInfoMatchedGeoLocation> getMatchedGeoLocation() {
     return matchedGeoLocation;
   }
@@ -201,7 +163,6 @@ public class RankingInfo {
    * @return nbExactWords
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Number of exactly matched words.")
   public Integer getNbExactWords() {
     return nbExactWords;
   }
@@ -221,9 +182,6 @@ public class RankingInfo {
    * @return nbTypos
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Number of typos encountered when matching the record."
-  )
   public Integer getNbTypos() {
     return nbTypos;
   }
@@ -243,9 +201,6 @@ public class RankingInfo {
    * @return promoted
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Present and set to true if a Rule promoted the hit."
-  )
   public Boolean getPromoted() {
     return promoted;
   }
@@ -266,10 +221,6 @@ public class RankingInfo {
    * @return proximityDistance
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "When the query contains more than one word, the sum of the distances between matched" +
-    " words (in meters)."
-  )
   public Integer getProximityDistance() {
     return proximityDistance;
   }
@@ -289,9 +240,6 @@ public class RankingInfo {
    * @return userScore
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Custom ranking for the object, expressed as a single integer value."
-  )
   public Integer getUserScore() {
     return userScore;
   }
@@ -311,9 +259,6 @@ public class RankingInfo {
    * @return word
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Number of matched words, including prefixes and typos."
-  )
   public Integer getWord() {
     return word;
   }

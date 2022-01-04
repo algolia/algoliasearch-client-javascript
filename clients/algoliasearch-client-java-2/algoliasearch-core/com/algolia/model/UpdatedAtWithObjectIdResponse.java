@@ -1,30 +1,19 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.time.OffsetDateTime;
 import java.util.Objects;
 
 /** The response with a taskID, an objectID and an updatedAt timestamp. */
-@ApiModel(
-  description = "The response with a taskID, an objectID and an updatedAt timestamp."
-)
 public class UpdatedAtWithObjectIdResponse {
 
-  public static final String SERIALIZED_NAME_TASK_I_D = "taskID";
-
-  @SerializedName(SERIALIZED_NAME_TASK_I_D)
+  @SerializedName("taskID")
   private Integer taskID;
 
-  public static final String SERIALIZED_NAME_UPDATED_AT = "updatedAt";
-
-  @SerializedName(SERIALIZED_NAME_UPDATED_AT)
+  @SerializedName("updatedAt")
   private OffsetDateTime updatedAt;
 
-  public static final String SERIALIZED_NAME_OBJECT_I_D = "objectID";
-
-  @SerializedName(SERIALIZED_NAME_OBJECT_I_D)
+  @SerializedName("objectID")
   private String objectID;
 
   public UpdatedAtWithObjectIdResponse taskID(Integer taskID) {
@@ -38,7 +27,6 @@ public class UpdatedAtWithObjectIdResponse {
    * @return taskID
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "taskID of the indexing task to wait for.")
   public Integer getTaskID() {
     return taskID;
   }
@@ -58,7 +46,6 @@ public class UpdatedAtWithObjectIdResponse {
    * @return updatedAt
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Date of last update (ISO-8601 format).")
   public OffsetDateTime getUpdatedAt() {
     return updatedAt;
   }
@@ -78,7 +65,6 @@ public class UpdatedAtWithObjectIdResponse {
    * @return objectID
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Unique identifier of the object.")
   public String getObjectID() {
     return objectID;
   }

@@ -1,22 +1,15 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.Objects;
 
 /** The source. */
-@ApiModel(description = "The source.")
 public class Source {
 
-  public static final String SERIALIZED_NAME_SOURCE = "source";
-
-  @SerializedName(SERIALIZED_NAME_SOURCE)
+  @SerializedName("source")
   private String source;
 
-  public static final String SERIALIZED_NAME_DESCRIPTION = "description";
-
-  @SerializedName(SERIALIZED_NAME_DESCRIPTION)
+  @SerializedName("description")
   private String description;
 
   public Source source(String source) {
@@ -30,11 +23,6 @@ public class Source {
    * @return source
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(
-    example = "10.0.0.1/32",
-    required = true,
-    value = "The IP range of the source."
-  )
   public String getSource() {
     return source;
   }
@@ -54,7 +42,6 @@ public class Source {
    * @return description
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "The description of the source.")
   public String getDescription() {
     return description;
   }

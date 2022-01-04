@@ -1,41 +1,27 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.Objects;
 
 /** SearchUserIdsResponseHits */
 public class SearchUserIdsResponseHits {
 
-  public static final String SERIALIZED_NAME_USER_I_D = "userID";
-
-  @SerializedName(SERIALIZED_NAME_USER_I_D)
+  @SerializedName("userID")
   private UserId userID;
 
-  public static final String SERIALIZED_NAME_CLUSTER_NAME = "clusterName";
-
-  @SerializedName(SERIALIZED_NAME_CLUSTER_NAME)
+  @SerializedName("clusterName")
   private String clusterName;
 
-  public static final String SERIALIZED_NAME_NB_RECORDS = "nbRecords";
-
-  @SerializedName(SERIALIZED_NAME_NB_RECORDS)
+  @SerializedName("nbRecords")
   private Integer nbRecords;
 
-  public static final String SERIALIZED_NAME_DATA_SIZE = "dataSize";
-
-  @SerializedName(SERIALIZED_NAME_DATA_SIZE)
+  @SerializedName("dataSize")
   private Integer dataSize;
 
-  public static final String SERIALIZED_NAME_OBJECT_I_D = "objectID";
-
-  @SerializedName(SERIALIZED_NAME_OBJECT_I_D)
+  @SerializedName("objectID")
   private String objectID;
 
-  public static final String SERIALIZED_NAME_HIGHLIGHT_RESULT =
-    "_highlightResult";
-
-  @SerializedName(SERIALIZED_NAME_HIGHLIGHT_RESULT)
+  @SerializedName("_highlightResult")
   private SearchUserIdsResponseHighlightResult highlightResult;
 
   public SearchUserIdsResponseHits userID(UserId userID) {
@@ -49,7 +35,6 @@ public class SearchUserIdsResponseHits {
    * @return userID
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "")
   public UserId getUserID() {
     return userID;
   }
@@ -69,11 +54,6 @@ public class SearchUserIdsResponseHits {
    * @return clusterName
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(
-    example = "c11-test",
-    required = true,
-    value = "Name of the cluster."
-  )
   public String getClusterName() {
     return clusterName;
   }
@@ -93,11 +73,6 @@ public class SearchUserIdsResponseHits {
    * @return nbRecords
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(
-    example = "3",
-    required = true,
-    value = "Number of records in the cluster."
-  )
   public Integer getNbRecords() {
     return nbRecords;
   }
@@ -117,11 +92,6 @@ public class SearchUserIdsResponseHits {
    * @return dataSize
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(
-    example = "481",
-    required = true,
-    value = "Data size taken by all the users assigned to the cluster."
-  )
   public Integer getDataSize() {
     return dataSize;
   }
@@ -141,10 +111,6 @@ public class SearchUserIdsResponseHits {
    * @return objectID
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(
-    required = true,
-    value = "userID of the requested user. Same as userID."
-  )
   public String getObjectID() {
     return objectID;
   }
@@ -166,7 +132,6 @@ public class SearchUserIdsResponseHits {
    * @return highlightResult
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "")
   public SearchUserIdsResponseHighlightResult getHighlightResult() {
     return highlightResult;
   }

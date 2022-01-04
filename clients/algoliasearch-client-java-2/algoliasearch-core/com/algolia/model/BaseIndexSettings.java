@@ -1,7 +1,6 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,72 +10,40 @@ import java.util.Objects;
 /** BaseIndexSettings */
 public class BaseIndexSettings {
 
-  public static final String SERIALIZED_NAME_REPLICAS = "replicas";
-
-  @SerializedName(SERIALIZED_NAME_REPLICAS)
+  @SerializedName("replicas")
   private List<String> replicas = null;
 
-  public static final String SERIALIZED_NAME_PAGINATION_LIMITED_TO =
-    "paginationLimitedTo";
-
-  @SerializedName(SERIALIZED_NAME_PAGINATION_LIMITED_TO)
+  @SerializedName("paginationLimitedTo")
   private Integer paginationLimitedTo = 1000;
 
-  public static final String SERIALIZED_NAME_DISABLE_TYPO_TOLERANCE_ON_WORDS =
-    "disableTypoToleranceOnWords";
-
-  @SerializedName(SERIALIZED_NAME_DISABLE_TYPO_TOLERANCE_ON_WORDS)
+  @SerializedName("disableTypoToleranceOnWords")
   private List<String> disableTypoToleranceOnWords = null;
 
-  public static final String SERIALIZED_NAME_ATTRIBUTES_TO_TRANSLITERATE =
-    "attributesToTransliterate";
-
-  @SerializedName(SERIALIZED_NAME_ATTRIBUTES_TO_TRANSLITERATE)
+  @SerializedName("attributesToTransliterate")
   private List<String> attributesToTransliterate = null;
 
-  public static final String SERIALIZED_NAME_CAMEL_CASE_ATTRIBUTES =
-    "camelCaseAttributes";
-
-  @SerializedName(SERIALIZED_NAME_CAMEL_CASE_ATTRIBUTES)
+  @SerializedName("camelCaseAttributes")
   private List<String> camelCaseAttributes = null;
 
-  public static final String SERIALIZED_NAME_DECOMPOUNDED_ATTRIBUTES =
-    "decompoundedAttributes";
-
-  @SerializedName(SERIALIZED_NAME_DECOMPOUNDED_ATTRIBUTES)
+  @SerializedName("decompoundedAttributes")
   private Map<String, Object> decompoundedAttributes = null;
 
-  public static final String SERIALIZED_NAME_INDEX_LANGUAGES = "indexLanguages";
-
-  @SerializedName(SERIALIZED_NAME_INDEX_LANGUAGES)
+  @SerializedName("indexLanguages")
   private List<String> indexLanguages = null;
 
-  public static final String SERIALIZED_NAME_FILTER_PROMOTES = "filterPromotes";
-
-  @SerializedName(SERIALIZED_NAME_FILTER_PROMOTES)
+  @SerializedName("filterPromotes")
   private Boolean filterPromotes = false;
 
-  public static final String SERIALIZED_NAME_DISABLE_PREFIX_ON_ATTRIBUTES =
-    "disablePrefixOnAttributes";
-
-  @SerializedName(SERIALIZED_NAME_DISABLE_PREFIX_ON_ATTRIBUTES)
+  @SerializedName("disablePrefixOnAttributes")
   private List<String> disablePrefixOnAttributes = null;
 
-  public static final String SERIALIZED_NAME_ALLOW_COMPRESSION_OF_INTEGER_ARRAY =
-    "allowCompressionOfIntegerArray";
-
-  @SerializedName(SERIALIZED_NAME_ALLOW_COMPRESSION_OF_INTEGER_ARRAY)
+  @SerializedName("allowCompressionOfIntegerArray")
   private Boolean allowCompressionOfIntegerArray = false;
 
-  public static final String SERIALIZED_NAME_NUMERIC_ATTRIBUTES_FOR_FILTERING =
-    "numericAttributesForFiltering";
-
-  @SerializedName(SERIALIZED_NAME_NUMERIC_ATTRIBUTES_FOR_FILTERING)
+  @SerializedName("numericAttributesForFiltering")
   private List<String> numericAttributesForFiltering = null;
 
-  public static final String SERIALIZED_NAME_USER_DATA = "userData";
-
-  @SerializedName(SERIALIZED_NAME_USER_DATA)
+  @SerializedName("userData")
   private Map<String, Object> userData = null;
 
   public BaseIndexSettings replicas(List<String> replicas) {
@@ -98,7 +65,6 @@ public class BaseIndexSettings {
    * @return replicas
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Creates replicas, exact copies of an index.")
   public List<String> getReplicas() {
     return replicas;
   }
@@ -118,9 +84,6 @@ public class BaseIndexSettings {
    * @return paginationLimitedTo
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Set the maximum number of hits accessible via pagination."
-  )
   public Integer getPaginationLimitedTo() {
     return paginationLimitedTo;
   }
@@ -152,9 +115,6 @@ public class BaseIndexSettings {
    * @return disableTypoToleranceOnWords
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "A list of words for which you want to turn off typo tolerance."
-  )
   public List<String> getDisableTypoToleranceOnWords() {
     return disableTypoToleranceOnWords;
   }
@@ -188,9 +148,6 @@ public class BaseIndexSettings {
    * @return attributesToTransliterate
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Specify on which attributes to apply transliteration."
-  )
   public List<String> getAttributesToTransliterate() {
     return attributesToTransliterate;
   }
@@ -224,9 +181,6 @@ public class BaseIndexSettings {
    * @return camelCaseAttributes
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "List of attributes on which to do a decomposition of camel case words."
-  )
   public List<String> getCamelCaseAttributes() {
     return camelCaseAttributes;
   }
@@ -260,10 +214,6 @@ public class BaseIndexSettings {
    * @return decompoundedAttributes
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Specify on which attributes in your index Algolia should apply word segmentation, also" +
-    " known as decompounding."
-  )
   public Map<String, Object> getDecompoundedAttributes() {
     return decompoundedAttributes;
   }
@@ -294,10 +244,6 @@ public class BaseIndexSettings {
    * @return indexLanguages
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Sets the languages at the index level for language-specific processing such as" +
-    " tokenization and normalization."
-  )
   public List<String> getIndexLanguages() {
     return indexLanguages;
   }
@@ -318,10 +264,6 @@ public class BaseIndexSettings {
    * @return filterPromotes
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Whether promoted results should match the filters of the current search, except for" +
-    " geographic filters."
-  )
   public Boolean getFilterPromotes() {
     return filterPromotes;
   }
@@ -353,9 +295,6 @@ public class BaseIndexSettings {
    * @return disablePrefixOnAttributes
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "List of attributes on which you want to disable prefix matching."
-  )
   public List<String> getDisablePrefixOnAttributes() {
     return disablePrefixOnAttributes;
   }
@@ -379,7 +318,6 @@ public class BaseIndexSettings {
    * @return allowCompressionOfIntegerArray
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Enables compression of large integer arrays.")
   public Boolean getAllowCompressionOfIntegerArray() {
     return allowCompressionOfIntegerArray;
   }
@@ -413,9 +351,6 @@ public class BaseIndexSettings {
    * @return numericAttributesForFiltering
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "List of numeric attributes that can be used as numerical filters."
-  )
   public List<String> getNumericAttributesForFiltering() {
     return numericAttributesForFiltering;
   }
@@ -445,7 +380,6 @@ public class BaseIndexSettings {
    * @return userData
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Lets you store custom data in your indices.")
   public Map<String, Object> getUserData() {
     return userData;
   }

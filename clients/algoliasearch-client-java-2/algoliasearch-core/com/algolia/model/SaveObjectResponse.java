@@ -1,25 +1,18 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.Objects;
 
 /** SaveObjectResponse */
 public class SaveObjectResponse {
 
-  public static final String SERIALIZED_NAME_CREATED_AT = "createdAt";
-
-  @SerializedName(SERIALIZED_NAME_CREATED_AT)
+  @SerializedName("createdAt")
   private String createdAt;
 
-  public static final String SERIALIZED_NAME_TASK_I_D = "taskID";
-
-  @SerializedName(SERIALIZED_NAME_TASK_I_D)
+  @SerializedName("taskID")
   private Integer taskID;
 
-  public static final String SERIALIZED_NAME_OBJECT_I_D = "objectID";
-
-  @SerializedName(SERIALIZED_NAME_OBJECT_I_D)
+  @SerializedName("objectID")
   private String objectID;
 
   public SaveObjectResponse createdAt(String createdAt) {
@@ -33,7 +26,6 @@ public class SaveObjectResponse {
    * @return createdAt
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
   public String getCreatedAt() {
     return createdAt;
   }
@@ -53,7 +45,6 @@ public class SaveObjectResponse {
    * @return taskID
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "taskID of the indexing task to wait for.")
   public Integer getTaskID() {
     return taskID;
   }
@@ -73,7 +64,6 @@ public class SaveObjectResponse {
    * @return objectID
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Unique identifier of the object.")
   public String getObjectID() {
     return objectID;
   }

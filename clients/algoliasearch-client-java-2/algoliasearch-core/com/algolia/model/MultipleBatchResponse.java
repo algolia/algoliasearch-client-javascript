@@ -1,7 +1,6 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,14 +10,10 @@ import java.util.Objects;
 /** MultipleBatchResponse */
 public class MultipleBatchResponse {
 
-  public static final String SERIALIZED_NAME_TASK_I_D = "taskID";
-
-  @SerializedName(SERIALIZED_NAME_TASK_I_D)
+  @SerializedName("taskID")
   private Map<String, Object> taskID = null;
 
-  public static final String SERIALIZED_NAME_OBJECT_I_DS = "objectIDs";
-
-  @SerializedName(SERIALIZED_NAME_OBJECT_I_DS)
+  @SerializedName("objectIDs")
   private List<String> objectIDs = null;
 
   public MultipleBatchResponse taskID(Map<String, Object> taskID) {
@@ -40,7 +35,6 @@ public class MultipleBatchResponse {
    * @return taskID
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "List of tasksIDs per index.")
   public Map<String, Object> getTaskID() {
     return taskID;
   }
@@ -68,7 +62,6 @@ public class MultipleBatchResponse {
    * @return objectIDs
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "List of objectID.")
   public List<String> getObjectIDs() {
     return objectIDs;
   }

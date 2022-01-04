@@ -1,19 +1,14 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 /** The `getObjects` requests. */
-@ApiModel(description = "The `getObjects` requests.")
 public class GetObjectsObject {
 
-  public static final String SERIALIZED_NAME_REQUESTS = "requests";
-
-  @SerializedName(SERIALIZED_NAME_REQUESTS)
+  @SerializedName("requests")
   private List<MultipleGetObjectsObject> requests = null;
 
   public GetObjectsObject requests(List<MultipleGetObjectsObject> requests) {
@@ -37,7 +32,6 @@ public class GetObjectsObject {
    * @return requests
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
   public List<MultipleGetObjectsObject> getRequests() {
     return requests;
   }

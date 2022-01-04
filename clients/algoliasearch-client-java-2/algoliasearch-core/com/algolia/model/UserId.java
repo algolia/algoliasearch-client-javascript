@@ -1,32 +1,21 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.Objects;
 
 /** A userID. */
-@ApiModel(description = "A userID.")
 public class UserId {
 
-  public static final String SERIALIZED_NAME_USER_I_D = "userID";
-
-  @SerializedName(SERIALIZED_NAME_USER_I_D)
+  @SerializedName("userID")
   private String userID;
 
-  public static final String SERIALIZED_NAME_CLUSTER_NAME = "clusterName";
-
-  @SerializedName(SERIALIZED_NAME_CLUSTER_NAME)
+  @SerializedName("clusterName")
   private String clusterName;
 
-  public static final String SERIALIZED_NAME_NB_RECORDS = "nbRecords";
-
-  @SerializedName(SERIALIZED_NAME_NB_RECORDS)
+  @SerializedName("nbRecords")
   private Integer nbRecords;
 
-  public static final String SERIALIZED_NAME_DATA_SIZE = "dataSize";
-
-  @SerializedName(SERIALIZED_NAME_DATA_SIZE)
+  @SerializedName("dataSize")
   private Integer dataSize;
 
   public UserId userID(String userID) {
@@ -40,11 +29,6 @@ public class UserId {
    * @return userID
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(
-    example = "user1",
-    required = true,
-    value = "userID of the user."
-  )
   public String getUserID() {
     return userID;
   }
@@ -64,11 +48,6 @@ public class UserId {
    * @return clusterName
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(
-    example = "c1-test",
-    required = true,
-    value = "Cluster on which the user is assigned."
-  )
   public String getClusterName() {
     return clusterName;
   }
@@ -88,11 +67,6 @@ public class UserId {
    * @return nbRecords
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(
-    example = "42",
-    required = true,
-    value = "Number of records belonging to the user."
-  )
   public Integer getNbRecords() {
     return nbRecords;
   }
@@ -112,11 +86,6 @@ public class UserId {
    * @return dataSize
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(
-    example = "0",
-    required = true,
-    value = "Data size used by the user."
-  )
   public Integer getDataSize() {
     return dataSize;
   }

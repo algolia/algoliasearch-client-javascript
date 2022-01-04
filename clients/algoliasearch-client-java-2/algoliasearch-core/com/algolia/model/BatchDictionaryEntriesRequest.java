@@ -5,7 +5,6 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 import java.util.Objects;
 
@@ -61,14 +60,10 @@ public class BatchDictionaryEntriesRequest {
     }
   }
 
-  public static final String SERIALIZED_NAME_ACTION = "action";
-
-  @SerializedName(SERIALIZED_NAME_ACTION)
+  @SerializedName("action")
   private ActionEnum action;
 
-  public static final String SERIALIZED_NAME_BODY = "body";
-
-  @SerializedName(SERIALIZED_NAME_BODY)
+  @SerializedName("body")
   private DictionaryEntry body;
 
   public BatchDictionaryEntriesRequest action(ActionEnum action) {
@@ -82,7 +77,6 @@ public class BatchDictionaryEntriesRequest {
    * @return action
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "Actions to perform.")
   public ActionEnum getAction() {
     return action;
   }
@@ -102,7 +96,6 @@ public class BatchDictionaryEntriesRequest {
    * @return body
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "")
   public DictionaryEntry getBody() {
     return body;
   }

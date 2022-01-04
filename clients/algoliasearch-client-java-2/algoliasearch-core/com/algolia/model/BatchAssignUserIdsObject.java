@@ -1,24 +1,17 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 /** Assign userID object. */
-@ApiModel(description = "Assign userID object.")
 public class BatchAssignUserIdsObject {
 
-  public static final String SERIALIZED_NAME_CLUSTER = "cluster";
-
-  @SerializedName(SERIALIZED_NAME_CLUSTER)
+  @SerializedName("cluster")
   private String cluster;
 
-  public static final String SERIALIZED_NAME_USERS = "users";
-
-  @SerializedName(SERIALIZED_NAME_USERS)
+  @SerializedName("users")
   private List<String> users = new ArrayList<>();
 
   public BatchAssignUserIdsObject cluster(String cluster) {
@@ -32,11 +25,6 @@ public class BatchAssignUserIdsObject {
    * @return cluster
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(
-    example = "c11-test",
-    required = true,
-    value = "Name of the cluster."
-  )
   public String getCluster() {
     return cluster;
   }
@@ -61,10 +49,6 @@ public class BatchAssignUserIdsObject {
    * @return users
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(
-    required = true,
-    value = "userIDs to assign. Note you cannot move users with this method."
-  )
   public List<String> getUsers() {
     return users;
   }

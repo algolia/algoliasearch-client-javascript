@@ -1,15 +1,12 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.Objects;
 
 /** BaseBrowseResponse */
 public class BaseBrowseResponse {
 
-  public static final String SERIALIZED_NAME_CURSOR = "cursor";
-
-  @SerializedName(SERIALIZED_NAME_CURSOR)
+  @SerializedName("cursor")
   private String cursor;
 
   public BaseBrowseResponse cursor(String cursor) {
@@ -24,12 +21,6 @@ public class BaseBrowseResponse {
    * @return cursor
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(
-    example = "jMDY3M2MwM2QwMWUxMmQwYWI0ZTN",
-    required = true,
-    value = "Cursor indicating the location to resume browsing from. Must match the value returned by" +
-    " the previous call."
-  )
   public String getCursor() {
     return cursor;
   }

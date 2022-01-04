@@ -1,32 +1,21 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.Objects;
 
 /** OK */
-@ApiModel(description = "OK")
 public class SearchUserIdsObject {
 
-  public static final String SERIALIZED_NAME_QUERY = "query";
-
-  @SerializedName(SERIALIZED_NAME_QUERY)
+  @SerializedName("query")
   private String query;
 
-  public static final String SERIALIZED_NAME_CLUSTER_NAME = "clusterName";
-
-  @SerializedName(SERIALIZED_NAME_CLUSTER_NAME)
+  @SerializedName("clusterName")
   private String clusterName;
 
-  public static final String SERIALIZED_NAME_PAGE = "page";
-
-  @SerializedName(SERIALIZED_NAME_PAGE)
+  @SerializedName("page")
   private Integer page = 0;
 
-  public static final String SERIALIZED_NAME_HITS_PER_PAGE = "hitsPerPage";
-
-  @SerializedName(SERIALIZED_NAME_HITS_PER_PAGE)
+  @SerializedName("hitsPerPage")
   private Integer hitsPerPage = 20;
 
   public SearchUserIdsObject query(String query) {
@@ -41,11 +30,6 @@ public class SearchUserIdsObject {
    * @return query
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(
-    required = true,
-    value = "Query to search. The search is a prefix search with typoTolerance. Use empty query to" +
-    " retrieve all users."
-  )
   public String getQuery() {
     return query;
   }
@@ -65,7 +49,6 @@ public class SearchUserIdsObject {
    * @return clusterName
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(example = "c11-test", value = "Name of the cluster.")
   public String getClusterName() {
     return clusterName;
   }
@@ -85,7 +68,6 @@ public class SearchUserIdsObject {
    * @return page
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Specify the page to retrieve.")
   public Integer getPage() {
     return page;
   }
@@ -105,7 +87,6 @@ public class SearchUserIdsObject {
    * @return hitsPerPage
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Set the number of hits per page.")
   public Integer getHitsPerPage() {
     return hitsPerPage;
   }

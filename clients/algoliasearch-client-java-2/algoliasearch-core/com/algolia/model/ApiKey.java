@@ -5,15 +5,12 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 /** Api Key object. */
-@ApiModel(description = "Api Key object.")
 public class ApiKey {
 
   /** Gets or Sets acl */
@@ -87,47 +84,28 @@ public class ApiKey {
     }
   }
 
-  public static final String SERIALIZED_NAME_ACL = "acl";
-
-  @SerializedName(SERIALIZED_NAME_ACL)
+  @SerializedName("acl")
   private List<AclEnum> acl = new ArrayList<>();
 
-  public static final String SERIALIZED_NAME_DESCRIPTION = "description";
-
-  @SerializedName(SERIALIZED_NAME_DESCRIPTION)
+  @SerializedName("description")
   private String description = "";
 
-  public static final String SERIALIZED_NAME_INDEXES = "indexes";
-
-  @SerializedName(SERIALIZED_NAME_INDEXES)
+  @SerializedName("indexes")
   private List<String> indexes = null;
 
-  public static final String SERIALIZED_NAME_MAX_HITS_PER_QUERY =
-    "maxHitsPerQuery";
-
-  @SerializedName(SERIALIZED_NAME_MAX_HITS_PER_QUERY)
+  @SerializedName("maxHitsPerQuery")
   private Integer maxHitsPerQuery = 0;
 
-  public static final String SERIALIZED_NAME_MAX_QUERIES_PER_I_P_PER_HOUR =
-    "maxQueriesPerIPPerHour";
-
-  @SerializedName(SERIALIZED_NAME_MAX_QUERIES_PER_I_P_PER_HOUR)
+  @SerializedName("maxQueriesPerIPPerHour")
   private Integer maxQueriesPerIPPerHour = 0;
 
-  public static final String SERIALIZED_NAME_QUERY_PARAMETERS =
-    "queryParameters";
-
-  @SerializedName(SERIALIZED_NAME_QUERY_PARAMETERS)
+  @SerializedName("queryParameters")
   private String queryParameters = "";
 
-  public static final String SERIALIZED_NAME_REFERERS = "referers";
-
-  @SerializedName(SERIALIZED_NAME_REFERERS)
+  @SerializedName("referers")
   private List<String> referers = null;
 
-  public static final String SERIALIZED_NAME_VALIDITY = "validity";
-
-  @SerializedName(SERIALIZED_NAME_VALIDITY)
+  @SerializedName("validity")
   private Integer validity = 0;
 
   public ApiKey acl(List<AclEnum> acl) {
@@ -146,10 +124,6 @@ public class ApiKey {
    * @return acl
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(
-    required = true,
-    value = "Set of permissions associated with the key."
-  )
   public List<AclEnum> getAcl() {
     return acl;
   }
@@ -170,10 +144,6 @@ public class ApiKey {
    * @return description
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "A comment used to identify a key more easily in the dashboard. It is not interpreted by" +
-    " the API."
-  )
   public String getDescription() {
     return description;
   }
@@ -202,10 +172,6 @@ public class ApiKey {
    * @return indexes
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Restrict this new API key to a list of indices or index patterns. If the list is empty," +
-    " all indices are allowed."
-  )
   public List<String> getIndexes() {
     return indexes;
   }
@@ -225,10 +191,6 @@ public class ApiKey {
    * @return maxHitsPerQuery
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Maximum number of hits this API key can retrieve in one query. If zero, no limit is" +
-    " enforced."
-  )
   public Integer getMaxHitsPerQuery() {
     return maxHitsPerQuery;
   }
@@ -248,9 +210,6 @@ public class ApiKey {
    * @return maxQueriesPerIPPerHour
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Maximum number of API calls per hour allowed from a given IP address or a user token."
-  )
   public Integer getMaxQueriesPerIPPerHour() {
     return maxQueriesPerIPPerHour;
   }
@@ -271,10 +230,6 @@ public class ApiKey {
    * @return queryParameters
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "URL-encoded query string. Force some query parameters to be applied for each query made" +
-    " with this API key."
-  )
   public String getQueryParameters() {
     return queryParameters;
   }
@@ -302,10 +257,6 @@ public class ApiKey {
    * @return referers
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Restrict this new API key to specific referers. If empty or blank, defaults to all" +
-    " referers."
-  )
   public List<String> getReferers() {
     return referers;
   }
@@ -326,10 +277,6 @@ public class ApiKey {
    * @return validity
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Validity limit for this key in seconds. The key will automatically be removed after this" +
-    " period of time."
-  )
   public Integer getValidity() {
     return validity;
   }

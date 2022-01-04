@@ -1,7 +1,6 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -9,14 +8,10 @@ import java.util.Objects;
 /** BatchResponse */
 public class BatchResponse {
 
-  public static final String SERIALIZED_NAME_TASK_I_D = "taskID";
-
-  @SerializedName(SERIALIZED_NAME_TASK_I_D)
+  @SerializedName("taskID")
   private Integer taskID;
 
-  public static final String SERIALIZED_NAME_OBJECT_I_DS = "objectIDs";
-
-  @SerializedName(SERIALIZED_NAME_OBJECT_I_DS)
+  @SerializedName("objectIDs")
   private List<String> objectIDs = null;
 
   public BatchResponse taskID(Integer taskID) {
@@ -30,7 +25,6 @@ public class BatchResponse {
    * @return taskID
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "taskID of the indexing task to wait for.")
   public Integer getTaskID() {
     return taskID;
   }
@@ -58,7 +52,6 @@ public class BatchResponse {
    * @return objectIDs
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "List of objectID.")
   public List<String> getObjectIDs() {
     return objectIDs;
   }

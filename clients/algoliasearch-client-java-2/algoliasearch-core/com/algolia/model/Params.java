@@ -1,33 +1,20 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 /** Additional search parameters. Any valid search parameter is allowed. */
-@ApiModel(
-  description = "Additional search parameters. Any valid search parameter is allowed."
-)
 public class Params {
 
-  public static final String SERIALIZED_NAME_QUERY = "query";
-
-  @SerializedName(SERIALIZED_NAME_QUERY)
+  @SerializedName("query")
   private String query;
 
-  public static final String SERIALIZED_NAME_AUTOMATIC_FACET_FILTERS =
-    "automaticFacetFilters";
-
-  @SerializedName(SERIALIZED_NAME_AUTOMATIC_FACET_FILTERS)
+  @SerializedName("automaticFacetFilters")
   private List<AutomaticFacetFilter> automaticFacetFilters = null;
 
-  public static final String SERIALIZED_NAME_AUTOMATIC_OPTIONAL_FACET_FILTERS =
-    "automaticOptionalFacetFilters";
-
-  @SerializedName(SERIALIZED_NAME_AUTOMATIC_OPTIONAL_FACET_FILTERS)
+  @SerializedName("automaticOptionalFacetFilters")
   private List<AutomaticFacetFilter> automaticOptionalFacetFilters = null;
 
   public Params query(String query) {
@@ -41,7 +28,6 @@ public class Params {
    * @return query
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Query string.")
   public String getQuery() {
     return query;
   }
@@ -74,10 +60,6 @@ public class Params {
    * @return automaticFacetFilters
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Names of facets to which automatic filtering must be applied; they must match the facet" +
-    " name of a facet value placeholder in the query pattern."
-  )
   public List<AutomaticFacetFilter> getAutomaticFacetFilters() {
     return automaticFacetFilters;
   }
@@ -111,9 +93,6 @@ public class Params {
    * @return automaticOptionalFacetFilters
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Same syntax as automaticFacetFilters, but the engine treats the filters as optional."
-  )
   public List<AutomaticFacetFilter> getAutomaticOptionalFacetFilters() {
     return automaticOptionalFacetFilters;
   }

@@ -1,7 +1,6 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -9,14 +8,10 @@ import java.util.Objects;
 /** ListIndicesResponse */
 public class ListIndicesResponse {
 
-  public static final String SERIALIZED_NAME_ITEMS = "items";
-
-  @SerializedName(SERIALIZED_NAME_ITEMS)
+  @SerializedName("items")
   private List<Index> items = null;
 
-  public static final String SERIALIZED_NAME_NB_PAGES = "nbPages";
-
-  @SerializedName(SERIALIZED_NAME_NB_PAGES)
+  @SerializedName("nbPages")
   private Integer nbPages;
 
   public ListIndicesResponse items(List<Index> items) {
@@ -38,7 +33,6 @@ public class ListIndicesResponse {
    * @return items
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "List of the fetched indices.")
   public List<Index> getItems() {
     return items;
   }
@@ -58,7 +52,6 @@ public class ListIndicesResponse {
    * @return nbPages
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(example = "100", value = "Number of pages.")
   public Integer getNbPages() {
     return nbPages;
   }

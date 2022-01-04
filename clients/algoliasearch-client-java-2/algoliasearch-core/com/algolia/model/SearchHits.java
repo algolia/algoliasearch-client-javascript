@@ -1,7 +1,6 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -9,9 +8,7 @@ import java.util.Objects;
 /** SearchHits */
 public class SearchHits {
 
-  public static final String SERIALIZED_NAME_HITS = "hits";
-
-  @SerializedName(SERIALIZED_NAME_HITS)
+  @SerializedName("hits")
   private List<Record> hits = null;
 
   public SearchHits hits(List<Record> hits) {
@@ -33,7 +30,6 @@ public class SearchHits {
    * @return hits
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
   public List<Record> getHits() {
     return hits;
   }

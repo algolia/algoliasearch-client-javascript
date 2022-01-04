@@ -5,7 +5,6 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -64,14 +63,10 @@ public class OperationIndexObject {
     }
   }
 
-  public static final String SERIALIZED_NAME_OPERATION = "operation";
-
-  @SerializedName(SERIALIZED_NAME_OPERATION)
+  @SerializedName("operation")
   private OperationEnum operation;
 
-  public static final String SERIALIZED_NAME_DESTINATION = "destination";
-
-  @SerializedName(SERIALIZED_NAME_DESTINATION)
+  @SerializedName("destination")
   private String destination;
 
   /** Gets or Sets scope */
@@ -125,9 +120,7 @@ public class OperationIndexObject {
     }
   }
 
-  public static final String SERIALIZED_NAME_SCOPE = "scope";
-
-  @SerializedName(SERIALIZED_NAME_SCOPE)
+  @SerializedName("scope")
   private List<ScopeEnum> scope = null;
 
   public OperationIndexObject operation(OperationEnum operation) {
@@ -141,10 +134,6 @@ public class OperationIndexObject {
    * @return operation
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(
-    required = true,
-    value = "Type of operation to perform (move or copy)."
-  )
   public OperationEnum getOperation() {
     return operation;
   }
@@ -164,11 +153,6 @@ public class OperationIndexObject {
    * @return destination
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(
-    example = "products",
-    required = true,
-    value = "The Algolia index name."
-  )
   public String getDestination() {
     return destination;
   }
@@ -197,10 +181,6 @@ public class OperationIndexObject {
    * @return scope
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Scope of the data to copy. When absent, a full copy is performed. When present, only the" +
-    " selected scopes are copied."
-  )
   public List<ScopeEnum> getScope() {
     return scope;
   }

@@ -5,16 +5,13 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 import java.util.Objects;
 
 /** SnippetResult */
 public class SnippetResult {
 
-  public static final String SERIALIZED_NAME_VALUE = "value";
-
-  @SerializedName(SERIALIZED_NAME_VALUE)
+  @SerializedName("value")
   private String value;
 
   /** Indicates how well the attribute matched the search query. */
@@ -69,9 +66,7 @@ public class SnippetResult {
     }
   }
 
-  public static final String SERIALIZED_NAME_MATCH_LEVEL = "matchLevel";
-
-  @SerializedName(SERIALIZED_NAME_MATCH_LEVEL)
+  @SerializedName("matchLevel")
   private MatchLevelEnum matchLevel;
 
   public SnippetResult value(String value) {
@@ -85,10 +80,6 @@ public class SnippetResult {
    * @return value
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    example = "<em>George</em> <em>Clo</em>oney",
-    value = "Markup text with occurrences highlighted."
-  )
   public String getValue() {
     return value;
   }
@@ -108,9 +99,6 @@ public class SnippetResult {
    * @return matchLevel
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Indicates how well the attribute matched the search query."
-  )
   public MatchLevelEnum getMatchLevel() {
     return matchLevel;
   }

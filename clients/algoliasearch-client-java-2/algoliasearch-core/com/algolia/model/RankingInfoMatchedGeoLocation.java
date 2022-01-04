@@ -1,25 +1,18 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.Objects;
 
 /** RankingInfoMatchedGeoLocation */
 public class RankingInfoMatchedGeoLocation {
 
-  public static final String SERIALIZED_NAME_LAT = "lat";
-
-  @SerializedName(SERIALIZED_NAME_LAT)
+  @SerializedName("lat")
   private Double lat;
 
-  public static final String SERIALIZED_NAME_LNG = "lng";
-
-  @SerializedName(SERIALIZED_NAME_LNG)
+  @SerializedName("lng")
   private Double lng;
 
-  public static final String SERIALIZED_NAME_DISTANCE = "distance";
-
-  @SerializedName(SERIALIZED_NAME_DISTANCE)
+  @SerializedName("distance")
   private Integer distance;
 
   public RankingInfoMatchedGeoLocation lat(Double lat) {
@@ -33,7 +26,6 @@ public class RankingInfoMatchedGeoLocation {
    * @return lat
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Latitude of the matched location.")
   public Double getLat() {
     return lat;
   }
@@ -53,7 +45,6 @@ public class RankingInfoMatchedGeoLocation {
    * @return lng
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Longitude of the matched location.")
   public Double getLng() {
     return lng;
   }
@@ -73,9 +64,6 @@ public class RankingInfoMatchedGeoLocation {
    * @return distance
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Distance between the matched location and the search location (in meters)."
-  )
   public Integer getDistance() {
     return distance;
   }

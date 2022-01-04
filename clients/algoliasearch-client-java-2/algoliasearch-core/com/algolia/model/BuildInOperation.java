@@ -5,18 +5,12 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 import java.util.Objects;
 
 /**
  * To update an attribute without pushing the entire record, you can use these built-in operations.
  */
-@ApiModel(
-  description = "To update an attribute without pushing the entire record, you can use these built-in" +
-  " operations."
-)
 public class BuildInOperation {
 
   /** The operation to apply on the attribute. */
@@ -79,14 +73,10 @@ public class BuildInOperation {
     }
   }
 
-  public static final String SERIALIZED_NAME_OPERATION = "_operation";
-
-  @SerializedName(SERIALIZED_NAME_OPERATION)
+  @SerializedName("_operation")
   private OperationEnum operation;
 
-  public static final String SERIALIZED_NAME_VALUE = "value";
-
-  @SerializedName(SERIALIZED_NAME_VALUE)
+  @SerializedName("value")
   private String value;
 
   public BuildInOperation operation(OperationEnum operation) {
@@ -100,10 +90,6 @@ public class BuildInOperation {
    * @return operation
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(
-    required = true,
-    value = "The operation to apply on the attribute."
-  )
   public OperationEnum getOperation() {
     return operation;
   }
@@ -124,11 +110,6 @@ public class BuildInOperation {
    * @return value
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(
-    required = true,
-    value = "the right-hand side argument to the operation, for example, increment or decrement step," +
-    " value to add or remove."
-  )
   public String getValue() {
     return value;
   }

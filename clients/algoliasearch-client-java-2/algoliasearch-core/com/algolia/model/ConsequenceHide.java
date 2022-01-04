@@ -1,17 +1,12 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.Objects;
 
 /** Unique identifier of the object to hide. */
-@ApiModel(description = "Unique identifier of the object to hide.")
 public class ConsequenceHide {
 
-  public static final String SERIALIZED_NAME_OBJECT_I_D = "objectID";
-
-  @SerializedName(SERIALIZED_NAME_OBJECT_I_D)
+  @SerializedName("objectID")
   private String objectID;
 
   public ConsequenceHide objectID(String objectID) {
@@ -25,7 +20,6 @@ public class ConsequenceHide {
    * @return objectID
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "Unique identifier of the object.")
   public String getObjectID() {
     return objectID;
   }

@@ -1,29 +1,20 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 /** Object to promote as hits. */
-@ApiModel(description = "Object to promote as hits.")
 public class Promote {
 
-  public static final String SERIALIZED_NAME_OBJECT_I_D = "objectID";
-
-  @SerializedName(SERIALIZED_NAME_OBJECT_I_D)
+  @SerializedName("objectID")
   private String objectID;
 
-  public static final String SERIALIZED_NAME_OBJECT_I_DS = "objectIDs";
-
-  @SerializedName(SERIALIZED_NAME_OBJECT_I_DS)
+  @SerializedName("objectIDs")
   private List<String> objectIDs = null;
 
-  public static final String SERIALIZED_NAME_POSITION = "position";
-
-  @SerializedName(SERIALIZED_NAME_POSITION)
+  @SerializedName("position")
   private Integer position;
 
   public Promote objectID(String objectID) {
@@ -37,7 +28,6 @@ public class Promote {
    * @return objectID
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Unique identifier of the object to promote.")
   public String getObjectID() {
     return objectID;
   }
@@ -65,9 +55,6 @@ public class Promote {
    * @return objectIDs
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(
-    value = "Array of unique identifiers of the objects to promote."
-  )
   public List<String> getObjectIDs() {
     return objectIDs;
   }
@@ -89,12 +76,6 @@ public class Promote {
    * @return position
    */
   @javax.annotation.Nonnull
-  @ApiModelProperty(
-    required = true,
-    value = "The position to promote the objects to (zero-based). If you pass objectIDs, the objects" +
-    " are placed at this position as a group. For example, if you pass four objectIDs" +
-    " to position 0, the objects take the first four positions."
-  )
   public Integer getPosition() {
     return position;
   }

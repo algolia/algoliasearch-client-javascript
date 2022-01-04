@@ -1,9 +1,7 @@
 package com.algolia;
 
-import com.algolia.model.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 import com.google.gson.TypeAdapter;
 import com.google.gson.internal.bind.util.ISO8601Utils;
@@ -20,7 +18,6 @@ import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
-import java.util.Map;
 import okio.ByteString;
 
 public class JSON {
@@ -33,45 +30,10 @@ public class JSON {
   private LocalDateTypeAdapter localDateTypeAdapter = new LocalDateTypeAdapter();
   private ByteArrayAdapter byteArrayAdapter = new ByteArrayAdapter();
 
-  @SuppressWarnings("unchecked")
   public static GsonBuilder createGson() {
     GsonFireBuilder fireBuilder = new GsonFireBuilder();
     GsonBuilder builder = fireBuilder.createGsonBuilder();
     return builder;
-  }
-
-  private static String getDiscriminatorValue(
-    JsonElement readElement,
-    String discriminatorField
-  ) {
-    JsonElement element = readElement.getAsJsonObject().get(discriminatorField);
-    if (null == element) {
-      throw new IllegalArgumentException(
-        "missing discriminator field: <" + discriminatorField + ">"
-      );
-    }
-    return element.getAsString();
-  }
-
-  /**
-   * Returns the Java class that implements the OpenAPI schema for the specified discriminator
-   * value.
-   *
-   * @param classByDiscriminatorValue The map of discriminator values to Java classes.
-   * @param discriminatorValue The value of the OpenAPI discriminator in the input data.
-   * @return The Java class that implements the OpenAPI schema
-   */
-  private static Class getClassByDiscriminator(
-    Map classByDiscriminatorValue,
-    String discriminatorValue
-  ) {
-    Class clazz = (Class) classByDiscriminatorValue.get(discriminatorValue);
-    if (null == clazz) {
-      throw new IllegalArgumentException(
-        "cannot determine model class of name: <" + discriminatorValue + ">"
-      );
-    }
-    return clazz;
   }
 
   public JSON() {
@@ -128,7 +90,6 @@ public class JSON {
    * @param returnType The type to deserialize into
    * @return The deserialized Java object
    */
-  @SuppressWarnings("unchecked")
   public <T> T deserialize(String body, Type returnType) {
     try {
       if (isLenientOnJson) {

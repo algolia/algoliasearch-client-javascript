@@ -1,27 +1,18 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.Objects;
 
 /** A dictionary language. */
-@ApiModel(description = "A dictionary language.")
 public class Languages {
 
-  public static final String SERIALIZED_NAME_PLURALS = "plurals";
-
-  @SerializedName(SERIALIZED_NAME_PLURALS)
+  @SerializedName("plurals")
   private DictionaryLanguage plurals;
 
-  public static final String SERIALIZED_NAME_STOPWORDS = "stopwords";
-
-  @SerializedName(SERIALIZED_NAME_STOPWORDS)
+  @SerializedName("stopwords")
   private DictionaryLanguage stopwords;
 
-  public static final String SERIALIZED_NAME_COMPOUNDS = "compounds";
-
-  @SerializedName(SERIALIZED_NAME_COMPOUNDS)
+  @SerializedName("compounds")
   private DictionaryLanguage compounds;
 
   public Languages plurals(DictionaryLanguage plurals) {
@@ -35,7 +26,6 @@ public class Languages {
    * @return plurals
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(required = true, value = "")
   public DictionaryLanguage getPlurals() {
     return plurals;
   }
@@ -55,7 +45,6 @@ public class Languages {
    * @return stopwords
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(required = true, value = "")
   public DictionaryLanguage getStopwords() {
     return stopwords;
   }
@@ -75,7 +64,6 @@ public class Languages {
    * @return compounds
    */
   @javax.annotation.Nullable
-  @ApiModelProperty(required = true, value = "")
   public DictionaryLanguage getCompounds() {
     return compounds;
   }
