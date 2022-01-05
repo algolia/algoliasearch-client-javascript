@@ -5,24 +5,96 @@ description: Setup CI environment.
 runs:
   using: composite
   steps:
-    - name: Restore cache
-      uses: ./.github/actions/cache
-
-    - name: Update apt packages
-      shell: bash
-      run: sudo apt update
-
     - name: Install Java
       uses: actions/setup-java@v2
       with:
         distribution: zulu
         java-version: 11.0.4
+        cache: maven
 
     - name: Install Node
       uses: actions/setup-node@v2
       with:
         node-version-file: .nvmrc
+        cache: yarn
 
-    - name: Install JavaScript Dependencies
+    - name: Restore cache
+      uses: ./.github/actions/cache
+
+    - name: Setting diff outputs variables
+      id: diff
       shell: bash
-      run: yarn install
+      run: |
+        echo "::set-output name=GITHUB_ACTIONS_CHANGED::$(git diff --shortstat origin/${{ github.base_ref }}..HEAD -- .github/actions .github/workflows | wc -l)"
+
+        echo "::set-output name=SPECS_CHANGED::$(git diff --shortstat origin/${{ github.base_ref }}..HEAD -- specs | wc -l)"
+        echo "::set-output name=COMMON_SPECS_CHANGED::$(git diff --shortstat origin/${{ github.base_ref }}..HEAD -- specs/common | wc -l)"
+        echo "::set-output name=SEARCH_SPECS_CHANGED::$(git diff --shortstat origin/${{ github.base_ref }}..HEAD -- specs/search | wc -l)"
+        echo "::set-output name=RECOMMEND_SPECS_CHANGED::$(git diff --shortstat origin/${{ github.base_ref }}..HEAD -- specs/recommend | wc -l)"
+        echo "::set-output name=QS_SPECS_CHANGED::$(git diff --shortstat origin/${{ github.base_ref }}..HEAD -- specs/query_suggestions | wc -l)"
+        echo "::set-output name=PERSO_SPECS_CHANGED::$(git diff --shortstat origin/${{ github.base_ref }}..HEAD -- specs/personalization | wc -l)"
+        echo "::set-output name=INSIGHTS_SPECS_CHANGED::$(git diff --shortstat origin/${{ github.base_ref }}..HEAD -- specs/insights | wc -l)"
+        echo "::set-output name=ANALYTICS_SPECS_CHANGED::$(git diff --shortstat origin/${{ github.base_ref }}..HEAD -- specs/analytics | wc -l)"
+        echo "::set-output name=AB_SPECS_CHANGED::$(git diff --shortstat origin/${{ github.base_ref }}..HEAD -- specs/abtesting | wc -l)"
+
+        echo "::set-output name=TESTS_CHANGED::$(git diff --shortstat origin/${{ github.base_ref }}..HEAD -- tests | wc -l)"
+
+        echo "::set-output name=SCRIPTS_CHANGED::$(git diff --shortstat origin/${{ github.base_ref }}..HEAD -- scripts | wc -l)"
+
+        echo "::set-output name=JS_CLIENT_CHANGED::$(git diff --shortstat origin/${{ github.base_ref }}..HEAD -- clients/algoliasearch-client-javascript | wc -l)"
+        echo "::set-output name=JS_SEARCH_CLIENT_CHANGED::$(git diff --shortstat origin/${{ github.base_ref }}..HEAD -- clients/algoliasearch-client-javascript/client-search | wc -l)"
+        echo "::set-output name=JS_RECOMMEND_CLIENT_CHANGED::$(git diff --shortstat origin/${{ github.base_ref }}..HEAD -- clients/algoliasearch-client-javascript/recommend | wc -l)"
+        echo "::set-output name=JS_PERSO_CLIENT_CHANGED::$(git diff --shortstat origin/${{ github.base_ref }}..HEAD -- clients/algoliasearch-client-javascript/client-personalization | wc -l)"
+        echo "::set-output name=JS_ANALYTICS_CLIENT_CHANGED::$(git diff --shortstat origin/${{ github.base_ref }}..HEAD -- clients/algoliasearch-client-javascript/client-analytics | wc -l)"
+        echo "::set-output name=JS_TEMPLATE_CHANGED::$(git diff --shortstat origin/${{ github.base_ref }}..HEAD -- templates/javascript | wc -l)"
+
+        echo "::set-output name=JAVA_CLIENT_CHANGED::$(git diff --shortstat origin/${{ github.base_ref }}..HEAD -- clients/algoliasearch-client-java-2 | wc -l)"
+        echo "::set-output name=JAVA_TEMPLATE_CHANGED::$(git diff --shortstat origin/${{ github.base_ref }}..HEAD -- templates/java | wc -l)"
+
+outputs:
+  # specs variables
+  RUN_SPECS_SEARCH:
+    description: 'Determine if the `specs_search` job should run'
+    value: ${{ steps.diff.outputs.GITHUB_ACTIONS_CHANGED > 0 || steps.diff.outputs.SCRIPTS_CHANGED > 0 || steps.diff.outputs.COMMON_SPECS_CHANGED > 0 || steps.diff.outputs.SEARCH_SPECS_CHANGED > 0 }}
+  RUN_SPECS_RECOMMEND:
+    description: 'Determine if the `specs_recommend` job should run'
+    value: ${{ steps.diff.outputs.GITHUB_ACTIONS_CHANGED > 0 || steps.diff.outputs.SCRIPTS_CHANGED > 0 || steps.diff.outputs.COMMON_SPECS_CHANGED > 0 || steps.diff.outputs.RECOMMEND_SPECS_CHANGED > 0 }}
+  RUN_SPECS_QS:
+    description: 'Determine if the `specs_qs` job should run'
+    value: ${{ steps.diff.outputs.GITHUB_ACTIONS_CHANGED > 0 || steps.diff.outputs.SCRIPTS_CHANGED > 0 || steps.diff.outputs.COMMON_SPECS_CHANGED > 0 || steps.diff.outputs.QS_SPECS_CHANGED > 0 }}
+  RUN_SPECS_PERSO:
+    description: 'Determine if the `specs_perso` job should run'
+    value: ${{ steps.diff.outputs.GITHUB_ACTIONS_CHANGED > 0 || steps.diff.outputs.SCRIPTS_CHANGED > 0 || steps.diff.outputs.COMMON_SPECS_CHANGED > 0 || steps.diff.outputs.PERSO_SPECS_CHANGED > 0 }}
+  RUN_SPECS_INSIGHTS:
+    description: 'Determine if the `specs_insights` job should run'
+    value: ${{ steps.diff.outputs.GITHUB_ACTIONS_CHANGED > 0 || steps.diff.outputs.SCRIPTS_CHANGED > 0 || steps.diff.outputs.COMMON_SPECS_CHANGED > 0 || steps.diff.outputs.INSIGHTS_SPECS_CHANGED > 0 }}
+  RUN_SPECS_ANALYTICS:
+    description: 'Determine if the `specs_analytics` job should run'
+    value: ${{ steps.diff.outputs.GITHUB_ACTIONS_CHANGED > 0 || steps.diff.outputs.SCRIPTS_CHANGED > 0 || steps.diff.outputs.COMMON_SPECS_CHANGED > 0 || steps.diff.outputs.ANALYTICS_SPECS_CHANGED > 0 }}
+  RUN_SPECS_AB:
+    description: 'Determine if the `specs_ab` job should run'
+    value: ${{ steps.diff.outputs.GITHUB_ACTIONS_CHANGED > 0 || steps.diff.outputs.SCRIPTS_CHANGED > 0 || steps.diff.outputs.COMMON_SPECS_CHANGED > 0 || steps.diff.outputs.AB_SPECS_CHANGED > 0 }}
+
+  # js client variables
+  RUN_JS_CLIENT_SEARCH:
+    description: 'Determine if the `client_javascript_search` job should run'
+    value: ${{ steps.diff.outputs.GITHUB_ACTIONS_CHANGED > 0 || steps.diff.outputs.COMMON_SPECS_CHANGED > 0 || steps.diff.outputs.SEARCH_SPECS_CHANGED > 0 || steps.diff.outputs.SCRIPTS_CHANGED > 0 || steps.diff.outputs.JS_SEARCH_CLIENT_CHANGED > 0 || steps.diff.outputs.JS_TEMPLATE_CHANGED > 0 }}
+  RUN_JS_CLIENT_RECOMMEND:
+    description: 'Determine if the `client_javascript_recommend` job should run'
+    value: ${{ steps.diff.outputs.GITHUB_ACTIONS_CHANGED > 0 || steps.diff.outputs.COMMON_SPECS_CHANGED > 0 || steps.diff.outputs.RECOMMEND_SPECS_CHANGED > 0 || steps.diff.outputs.SCRIPTS_CHANGED > 0 || steps.diff.outputs.JS_RECOMMEND_CLIENT_CHANGED > 0 || steps.diff.outputs.JS_TEMPLATE_CHANGED > 0 }}
+  RUN_JS_CLIENT_PERSO:
+    description: 'Determine if the `client_javascript_perso` job should run'
+    value: ${{ steps.diff.outputs.GITHUB_ACTIONS_CHANGED > 0 || steps.diff.outputs.COMMON_SPECS_CHANGED > 0 || steps.diff.outputs.PERSO_SPECS_CHANGED > 0 || steps.diff.outputs.SCRIPTS_CHANGED > 0 || steps.diff.outputs.JS_PERSO_CLIENT_CHANGED > 0 || steps.diff.outputs.JS_TEMPLATE_CHANGED > 0 }}
+  RUN_JS_CLIENT_ANALYTICS:
+    description: 'Determine if the `client_javascript_analytics` job should run'
+    value: ${{ steps.diff.outputs.GITHUB_ACTIONS_CHANGED > 0 || steps.diff.outputs.COMMON_SPECS_CHANGED > 0 || steps.diff.outputs.ANALYTICS_SPECS_CHANGED > 0 || steps.diff.outputs.SCRIPTS_CHANGED > 0 || steps.diff.outputs.JS_ANALYTICS_CLIENT_CHANGED > 0 || steps.diff.outputs.JS_TEMPLATE_CHANGED > 0 }}
+
+  # java client variables
+  RUN_JAVA_CLIENT:
+    description: 'Determine if the `client_java_*` job should run'
+    value: ${{ steps.diff.outputs.GITHUB_ACTIONS_CHANGED > 0 || steps.diff.outputs.COMMON_SPECS_CHANGED > 0 || steps.diff.outputs.SEARCH_SPECS_CHANGED > 0 || steps.diff.outputs.SCRIPTS_CHANGED > 0 || steps.diff.outputs.JAVA_CLIENT_CHANGED > 0 || steps.diff.outputs.JAVA_TEMPLATE_CHANGED > 0 }}
+
+  # cts variables
+  RUN_CTS:
+    description: 'Determine if the `cts` job should run'
+    value: ${{ steps.diff.outputs.GITHUB_ACTIONS_CHANGED > 0 || steps.diff.outputs.SPECS_CHANGED > 0 || steps.diff.outputs.CTS_CHANGED > 0 || steps.diff.outputs.JS_CLIENT_CHANGED > 0 || steps.diff.outputs.JS_TEMPLATE_CHANGED > 0 || steps.diff.outputs.JAVA_CLIENT_CHANGED > 0 || steps.diff.outputs.JAVA_TEMPLATE_CHANGED > 0 }}
