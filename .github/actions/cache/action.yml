@@ -2,29 +2,76 @@ name: Cache
 
 description: Restore cached dependencies.
 
+inputs:
+  job:
+    description: 'The job that requires this composite'
+    required: true
+    default: 'cts'
+
 runs:
   using: composite
   steps:
+    # restore clients
+    - name: Restore built JavaScript search client
+      if: ${{ inputs.job == 'cts' }}
+      uses: actions/cache@v2
+      with:
+        path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/client-search/**
+        key: ${{ runner.os }}-js-client-search-${{ hashFiles('yarn.lock') }}
+
+    - name: Restore built JavaScript recommend client
+      if: ${{ inputs.job == 'cts' }}
+      uses: actions/cache@v2
+      with:
+        path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/recommend/**
+        key: ${{ runner.os }}-js-client-recommend-${{ hashFiles('yarn.lock') }}
+
+    - name: Restore built JavaScript personalization client
+      if: ${{ inputs.job == 'cts' }}
+      uses: actions/cache@v2
+      with:
+        path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/client-personalization/**
+        key: ${{ runner.os }}-js-client-personalization-${{ hashFiles('yarn.lock') }}
+
+    - name: Restore built JavaScript analytics client
+      if: ${{ inputs.job == 'cts' }}
+      uses: actions/cache@v2
+      with:
+        path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/client-analytics/**
+        key: ${{ runner.os }}-js-client-analytics-${{ hashFiles('yarn.lock') }}
+
+    - name: Restore built Java client
+      if: ${{ inputs.job == 'cts' }}
+      uses: actions/cache@v2
+      with:
+        path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-java-2/**
+        key: ${{ runner.os }}-java-client-${{ hashFiles('**/pom.xml') }}
+
+    # setup yarn
     - name: Get yarn cache directory path
       shell: bash
-      id: yarn-cache-dir-path
-      run: echo "::set-output name=dir::$(yarn cache dir)"
+      id: yarn-cache-dir
+      run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
 
-    - name: Restore yarn cache
-      uses: actions/cache@v2
-      id: yarn-cache
-      with:
-        path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-        key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
-
-    - name: Restore node_modules
+    - name: Restore Yarn
       uses: actions/cache@v2
       with:
-        path: '**/node_modules'
-        key: ${{ runner.os }}-modules-${{ hashFiles('yarn.lock') }}
+        path: ${{ steps.yarn-cache-dir.outputs.dir || '/home/runner/work/api-clients-automation/api-clients-automation/.yarn/cache' }}
+        key: node-cache-${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
 
-    - name: Restore maven dependencies
+    - name: Install JavaScript dependencies
+      shell: bash
+      run: yarn install
+
+    # setup maven
+    - name: Restore Maven
+      if: ${{ inputs.job == 'java' }}
       uses: actions/cache@v2
       with:
         path: ~/.m2/repository
-        key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+        key: setup-java-${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+
+    - name: Install Maven dependencies
+      if: ${{ inputs.job == 'java' }}
+      shell: bash
+      run: mvn clean install -f clients/algoliasearch-client-java-2/pom.xml
