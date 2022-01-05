@@ -7,9 +7,11 @@
     "test": "jest",
     "start": "yarn build && node dist/tests/generateCTS.js ${0:-all} && yarn lint:fix"
   },
-  "devDependencies": {
+  "dependencies": {
     "@algolia/client-search": "5.0.0",
-    "@algolia/recommend": "5.0.0",
+    "@algolia/recommend": "5.0.0"
+  },
+  "devDependencies": {
     "@apidevtools/swagger-parser": "10.0.3",
     "@types/jest": "27.0.3",
     "@types/mustache": "4.1.2",

@@ -6,7 +6,6 @@ inputs:
   job:
     description: 'The job that requires this composite'
     required: true
-    default: 'cts'
 
 runs:
   using: composite
@@ -16,35 +15,35 @@ runs:
       if: ${{ inputs.job == 'cts' }}
       uses: actions/cache@v2
       with:
-        path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/client-search/**
+        path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/client-search/dist
         key: ${{ runner.os }}-js-client-search-${{ hashFiles('yarn.lock') }}
 
     - name: Restore built JavaScript recommend client
       if: ${{ inputs.job == 'cts' }}
       uses: actions/cache@v2
       with:
-        path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/recommend/**
+        path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/recommend/dist
         key: ${{ runner.os }}-js-client-recommend-${{ hashFiles('yarn.lock') }}
 
     - name: Restore built JavaScript personalization client
       if: ${{ inputs.job == 'cts' }}
       uses: actions/cache@v2
       with:
-        path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/client-personalization/**
+        path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/client-personalization/dist
         key: ${{ runner.os }}-js-client-personalization-${{ hashFiles('yarn.lock') }}
 
     - name: Restore built JavaScript analytics client
       if: ${{ inputs.job == 'cts' }}
       uses: actions/cache@v2
       with:
-        path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/client-analytics/**
+        path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/client-analytics/dist
         key: ${{ runner.os }}-js-client-analytics-${{ hashFiles('yarn.lock') }}
 
     - name: Restore built Java client
       if: ${{ inputs.job == 'cts' }}
       uses: actions/cache@v2
       with:
-        path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-java-2/**
+        path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-java-2/target
         key: ${{ runner.os }}-java-client-${{ hashFiles('**/pom.xml') }}
 
     # setup yarn
