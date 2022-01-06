@@ -7,7 +7,7 @@ const client = new {{client}}(process.env.ALGOLIA_APPLICATION_ID, process.env.AL
 describe('{{operationId}}', () => {
     {{#tests}}
     test('{{testName}}', async () => {
-        const req = await client.{{method}}({{#parameters}}{{{value}}}{{^-last}}, {{/-last}}{{/parameters}});
+        const req = await client.{{method}}({{{parameters}}});
         expect(req).toMatchObject({
         path: '{{{request.path}}}',
         method: '{{{request.method}}}',
