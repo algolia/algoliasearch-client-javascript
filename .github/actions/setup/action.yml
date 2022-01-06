@@ -97,4 +97,4 @@ outputs:
   # cts variables
   RUN_CTS:
     description: 'Determine if the `cts` job should run'
-    value: ${{ github.ref_name == 'main' || steps.diff.outputs.GITHUB_ACTIONS_CHANGED > 0 || steps.diff.outputs.SPECS_CHANGED > 0 || steps.diff.outputs.CTS_CHANGED > 0 || steps.diff.outputs.JS_CLIENT_CHANGED > 0 || steps.diff.outputs.JS_TEMPLATE_CHANGED > 0 || steps.diff.outputs.JAVA_CLIENT_CHANGED > 0 || steps.diff.outputs.JAVA_TEMPLATE_CHANGED > 0 }}
+    value: ${{ github.ref_name == 'main' || steps.diff.outputs.GITHUB_ACTIONS_CHANGED > 0 || steps.diff.outputs.SPECS_CHANGED > 0 || steps.diff.outputs.TESTS_CHANGED > 0 || steps.diff.outputs.JS_CLIENT_CHANGED > 0 || steps.diff.outputs.JS_TEMPLATE_CHANGED > 0 || steps.diff.outputs.JAVA_CLIENT_CHANGED > 0 || steps.diff.outputs.JAVA_TEMPLATE_CHANGED > 0 }}
