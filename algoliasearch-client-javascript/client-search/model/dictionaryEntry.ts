@@ -25,12 +25,7 @@ export type DictionaryEntry = {
   /**
    * The state of the dictionary entry.
    */
-  state?: DictionaryEntry.StateEnum;
+  state?: DictionaryEntryState;
 };
 
-export namespace DictionaryEntry {
-  export enum StateEnum {
-    Enabled = 'enabled',
-    Disabled = 'disabled',
-  }
-}
+export type DictionaryEntryState = 'disabled' | 'enabled';

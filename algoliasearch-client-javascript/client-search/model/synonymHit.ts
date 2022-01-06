@@ -11,7 +11,7 @@ export type SynonymHit = {
   /**
    * Type of the synonym object.
    */
-  type: SynonymHit.TypeEnum;
+  type: SynonymHitType;
   /**
    * Words or phrases to be considered equivalent.
    */
@@ -39,12 +39,9 @@ export type SynonymHit = {
   _highlightResult?: SynonymHitHighlightResult;
 };
 
-export namespace SynonymHit {
-  export enum TypeEnum {
-    Synonym = 'synonym',
-    Onewaysynonym = 'onewaysynonym',
-    Altcorrection1 = 'altcorrection1',
-    Altcorrection2 = 'altcorrection2',
-    Placeholder = 'placeholder',
-  }
-}
+export type SynonymHitType =
+  | 'altcorrection1'
+  | 'altcorrection2'
+  | 'onewaysynonym'
+  | 'placeholder'
+  | 'synonym';

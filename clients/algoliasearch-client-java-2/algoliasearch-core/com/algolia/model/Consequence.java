@@ -11,7 +11,7 @@ import java.util.Objects;
 public class Consequence {
 
   @SerializedName("params")
-  private Params params;
+  private ConsequenceParams params;
 
   @SerializedName("promote")
   private List<Promote> promote = null;
@@ -25,7 +25,7 @@ public class Consequence {
   @SerializedName("userData")
   private Map<String, Object> userData = null;
 
-  public Consequence params(Params params) {
+  public Consequence params(ConsequenceParams params) {
     this.params = params;
     return this;
   }
@@ -36,11 +36,11 @@ public class Consequence {
    * @return params
    */
   @javax.annotation.Nullable
-  public Params getParams() {
+  public ConsequenceParams getParams() {
     return params;
   }
 
-  public void setParams(Params params) {
+  public void setParams(ConsequenceParams params) {
     this.params = params;
   }
 

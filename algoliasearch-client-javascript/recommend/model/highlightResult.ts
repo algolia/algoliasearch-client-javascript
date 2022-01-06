@@ -9,7 +9,7 @@ export type HighlightResult = {
   /**
    * Indicates how well the attribute matched the search query.
    */
-  matchLevel?: HighlightResult.MatchLevelEnum;
+  matchLevel?: HighlightResultMatchLevel;
   /**
    * List of words from the query that matched the object.
    */
@@ -20,10 +20,4 @@ export type HighlightResult = {
   fullyHighlighted?: boolean;
 };
 
-export namespace HighlightResult {
-  export enum MatchLevelEnum {
-    None = 'none',
-    Partial = 'partial',
-    Full = 'full',
-  }
-}
+export type HighlightResultMatchLevel = 'full' | 'none' | 'partial';

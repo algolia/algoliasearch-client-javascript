@@ -39,15 +39,9 @@ post:
                     default: 0
                     description: The max number of recommendations to retrieve. If it's set to 0, all the recommendations of the objectID may be returned.
                   queryParameters:
-                    description: The Algolia search parameters.
-                    allOf:
-                      - $ref: '../../search/common/schemas/SearchParams.yml#/baseSearchParams'
-                      - $ref: '../../search/common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams'
+                    $ref: '../common/schemas/SearchParams.yml#/searchParams'
                   fallbackParameters:
-                    description: The Algolia search parameters when there are no recommendations.
-                    allOf:
-                      - $ref: '../../search/common/schemas/SearchParams.yml#/baseSearchParams'
-                      - $ref: '../../search/common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams'
+                    $ref: '../common/schemas/SearchParams.yml#/searchParams'
                 required:
                   - model
                   - indexName

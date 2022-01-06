@@ -4,15 +4,14 @@
     "parameters": {
       "indexName": "indexName",
       "searchParams": {
-        "$objectName": "Query",
-        "query": "queryString"
+        "query": "myQuery"
       }
     },
     "request": {
       "path": "/1/indexes/indexName/query",
       "method": "POST",
       "data": {
-        "query": "queryString"
+        "query": "myQuery"
       }
     }
   }

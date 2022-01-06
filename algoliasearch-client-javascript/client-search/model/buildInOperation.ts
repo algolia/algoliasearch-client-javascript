@@ -5,21 +5,18 @@ export type BuildInOperation = {
   /**
    * The operation to apply on the attribute.
    */
-  _operation: BuildInOperation.OperationEnum;
+  _operation: BuildInOperationOperation;
   /**
    * The right-hand side argument to the operation, for example, increment or decrement step, value to add or remove.
    */
   value: string;
 };
 
-export namespace BuildInOperation {
-  export enum OperationEnum {
-    Increment = 'Increment',
-    Decrement = 'Decrement',
-    Add = 'Add',
-    Remove = 'Remove',
-    AddUnique = 'AddUnique',
-    IncrementFrom = 'IncrementFrom',
-    IncrementSet = 'IncrementSet',
-  }
-}
+export type BuildInOperationOperation =
+  | 'Add'
+  | 'AddUnique'
+  | 'Decrement'
+  | 'Increment'
+  | 'IncrementFrom'
+  | 'IncrementSet'
+  | 'Remove';

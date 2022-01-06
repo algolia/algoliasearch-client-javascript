@@ -118,6 +118,16 @@ async function loadCTSForClient(client: string): Promise<CTSBlock[]> {
       if (test.testName === undefined) {
         test.testName = test.method;
       }
+
+      // stringify request.data too
+      test.request.data = JSON.stringify(test.request.data);
+
+      if (Object.keys(test.parameters).length === 0) {
+        test.parameters = undefined;
+
+        continue;
+      }
+
       if (
         typeof test.parameters !== 'object' ||
         Array.isArray(test.parameters)
@@ -138,9 +148,6 @@ async function loadCTSForClient(client: string): Promise<CTSBlock[]> {
           '-last': i === arr.length - 1,
         })
       );
-
-      // stringify request.data too
-      test.request.data = JSON.stringify(test.request.data);
     }
 
     ctsClient.push({

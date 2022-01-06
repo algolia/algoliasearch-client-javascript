@@ -26,35 +26,25 @@ export type {{classname}} = {
     * {{{description}}}
     */
 {{/description}}
-    {{name}}{{^required}}?{{/required}}: {{#isEnum}}{{{datatypeWithEnum}}}{{/isEnum}}{{^isEnum}}{{{dataType}}}{{#isNullable}} | null{{/isNullable}}{{/isEnum}};
+    {{name}}{{^required}}?{{/required}}: {{#isEnum}}{{classname}}{{{nameInCamelCase}}}{{#isArray}}[]{{/isArray}}{{/isEnum}}{{^isEnum}}{{{dataType}}}{{#isNullable}} | null{{/isNullable}}{{/isEnum}};
 {{/vars}}
 }
 
 {{#hasEnums}}
-export namespace {{classname}} {
 {{#vars}}
 {{#isEnum}}
-    export enum {{enumName}} {
-        {{#allowableValues}}
-        {{#enumVars}}
-        {{name}} = {{{value}}}{{^-last}},{{/-last}}
-        {{/enumVars}}
-        {{/allowableValues}}
-    }
+export type {{classname}}{{nameInCamelCase}} = {{#allowableValues}}{{#enumVars}}{{{value}}}{{^-last}}|{{/-last}}{{/enumVars}}{{/allowableValues}}
+
 {{/isEnum}}
 {{/vars}}
-}
 {{/hasEnums}}
 {{/isEnum}}
+
 {{#isEnum}}
-export enum {{classname}} {
-    {{#allowableValues}}
-    {{#enumVars}}
-    {{name}} = {{{value}}}{{^-last}},{{/-last}}
-    {{/enumVars}}
-    {{/allowableValues}}
-}
+export type {{classname}} = {{#allowableValues}}{{#enumVars}}{{{value}}}{{^-last}}|{{/-last}}{{/enumVars}}{{/allowableValues}}
+
 {{/isEnum}}
+
 {{/interfaces}}
 {{/model}}
 {{/models}}

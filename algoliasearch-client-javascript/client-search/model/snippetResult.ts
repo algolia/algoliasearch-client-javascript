@@ -6,13 +6,7 @@ export type SnippetResult = {
   /**
    * Indicates how well the attribute matched the search query.
    */
-  matchLevel?: SnippetResult.MatchLevelEnum;
+  matchLevel?: SnippetResultMatchLevel;
 };
 
-export namespace SnippetResult {
-  export enum MatchLevelEnum {
-    None = 'none',
-    Partial = 'partial',
-    Full = 'full',
-  }
-}
+export type SnippetResultMatchLevel = 'full' | 'none' | 'partial';

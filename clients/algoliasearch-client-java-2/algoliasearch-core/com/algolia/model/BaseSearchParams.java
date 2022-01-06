@@ -9,9 +9,6 @@ import java.util.Objects;
 /** BaseSearchParams */
 public class BaseSearchParams {
 
-  @SerializedName("query")
-  private String query = "";
-
   @SerializedName("similarQuery")
   private String similarQuery = "";
 
@@ -107,25 +104,6 @@ public class BaseSearchParams {
 
   @SerializedName("enableReRanking")
   private Boolean enableReRanking = true;
-
-  public BaseSearchParams query(String query) {
-    this.query = query;
-    return this;
-  }
-
-  /**
-   * The text to search in the index.
-   *
-   * @return query
-   */
-  @javax.annotation.Nonnull
-  public String getQuery() {
-    return query;
-  }
-
-  public void setQuery(String query) {
-    this.query = query;
-  }
 
   public BaseSearchParams similarQuery(String similarQuery) {
     this.similarQuery = similarQuery;
@@ -836,7 +814,6 @@ public class BaseSearchParams {
     }
     BaseSearchParams baseSearchParams = (BaseSearchParams) o;
     return (
-      Objects.equals(this.query, baseSearchParams.query) &&
       Objects.equals(this.similarQuery, baseSearchParams.similarQuery) &&
       Objects.equals(this.filters, baseSearchParams.filters) &&
       Objects.equals(this.facetFilters, baseSearchParams.facetFilters) &&
@@ -905,7 +882,6 @@ public class BaseSearchParams {
   @Override
   public int hashCode() {
     return Objects.hash(
-      query,
       similarQuery,
       filters,
       facetFilters,
@@ -945,7 +921,6 @@ public class BaseSearchParams {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class BaseSearchParams {\n");
-    sb.append("    query: ").append(toIndentedString(query)).append("\n");
     sb
       .append("    similarQuery: ")
       .append(toIndentedString(similarQuery))

@@ -1,7 +1,9 @@
-// @ts-nocheck
 import { {{client}}, EchoRequester } from '{{{import}}}';
 
-const client = new {{client}}(process.env.ALGOLIA_APPLICATION_ID, process.env.ALGOLIA_SEARCH_KEY, { requester: new EchoRequester() });
+const appId = process.env.ALGOLIA_APPLICATION_ID || 'test_app_id';
+const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'test_api_key';
+
+const client = new {{client}}(appId, apiKey, { requester: new EchoRequester() });
 
 {{#blocks}}
 describe('{{operationId}}', () => {

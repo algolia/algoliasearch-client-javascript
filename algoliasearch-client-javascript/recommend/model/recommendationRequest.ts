@@ -1,5 +1,4 @@
-import type { BaseSearchParams } from './baseSearchParams';
-import type { IndexSettingsAsSearchParams } from './indexSettingsAsSearchParams';
+import type { SearchParams } from './searchParams';
 
 export type RecommendationRequest = {
   /**
@@ -13,7 +12,7 @@ export type RecommendationRequest = {
   /**
    * The recommendation model to use.
    */
-  model: RecommendationRequest.ModelEnum;
+  model: RecommendationRequestModel;
   /**
    * The threshold to use when filtering recommendations by their score.
    */
@@ -22,19 +21,8 @@ export type RecommendationRequest = {
    * The max number of recommendations to retrieve. If it\'s set to 0, all the recommendations of the objectID may be returned.
    */
   maxRecommendations?: number;
-  /**
-   * The Algolia search parameters.
-   */
-  queryParameters?: (BaseSearchParams & IndexSettingsAsSearchParams) | null;
-  /**
-   * The Algolia search parameters when there are no recommendations.
-   */
-  fallbackParameters?: (BaseSearchParams & IndexSettingsAsSearchParams) | null;
+  queryParameters?: SearchParams;
+  fallbackParameters?: SearchParams;
 };
 
-export namespace RecommendationRequest {
-  export enum ModelEnum {
-    RelatedProducts = 'related-products',
-    BoughtTogether = 'bought-together',
-  }
-}
+export type RecommendationRequestModel = 'bought-together' | 'related-products';
