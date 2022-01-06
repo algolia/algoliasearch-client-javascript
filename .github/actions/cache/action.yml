@@ -4,7 +4,7 @@ description: Restore cached dependencies.
 
 inputs:
   job:
-    description: 'The job that requires this composite'
+    description: The job that requires this composite
     required: true
 
 runs:
