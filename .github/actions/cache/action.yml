@@ -16,35 +16,35 @@ runs:
       uses: actions/cache@v2
       with:
         path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/client-search/dist
-        key: ${{ runner.os }}-js-client-search-${{ hashFiles('yarn.lock') }}
+        key: ${{ runner.os }}-js-client-search-${{ hashFiles('clients/algoliasearch-client-javascript/client-search/**') }}
 
     - name: Restore built JavaScript recommend client
       if: ${{ inputs.job == 'cts' }}
       uses: actions/cache@v2
       with:
         path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/recommend/dist
-        key: ${{ runner.os }}-js-client-recommend-${{ hashFiles('yarn.lock') }}
+        key: ${{ runner.os }}-js-client-recommend-${{ hashFiles('clients/algoliasearch-client-javascript/recommend/**') }}
 
     - name: Restore built JavaScript personalization client
       if: ${{ inputs.job == 'cts' }}
       uses: actions/cache@v2
       with:
         path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/client-personalization/dist
-        key: ${{ runner.os }}-js-client-personalization-${{ hashFiles('yarn.lock') }}
+        key: ${{ runner.os }}-js-client-personalization-${{ hashFiles('clients/algoliasearch-client-javascript/client-personalization/**') }}
 
     - name: Restore built JavaScript analytics client
       if: ${{ inputs.job == 'cts' }}
       uses: actions/cache@v2
       with:
         path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/client-analytics/dist
-        key: ${{ runner.os }}-js-client-analytics-${{ hashFiles('yarn.lock') }}
+        key: ${{ runner.os }}-js-client-analytics-${{ hashFiles('clients/algoliasearch-client-javascript/client-analytics/**') }}
 
     - name: Restore built Java client
       if: ${{ inputs.job == 'cts' }}
       uses: actions/cache@v2
       with:
         path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-java-2/target
-        key: ${{ runner.os }}-java-client-${{ hashFiles('**/pom.xml') }}
+        key: ${{ runner.os }}-java-client-${{ hashFiles('clients/algoliasearch-client-java-2/**') }}
 
     # setup yarn
     - name: Get yarn cache directory path
