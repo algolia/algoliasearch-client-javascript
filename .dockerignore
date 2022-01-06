@@ -1,7 +1,0 @@
-.github
-.git
-.vscode
-**/dist
-**/build
-**/node_modules
-playground
