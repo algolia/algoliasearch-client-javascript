@@ -2,7 +2,7 @@ export type OperationIndexObject = {
   /**
    * Type of operation to perform (move or copy).
    */
-  operation: OperationIndexObject.OperationEnum;
+  operation: OperationIndexObjectOperation;
   /**
    * The Algolia index name.
    */
@@ -10,17 +10,9 @@ export type OperationIndexObject = {
   /**
    * Scope of the data to copy. When absent, a full copy is performed. When present, only the selected scopes are copied.
    */
-  scope?: OperationIndexObject.ScopeEnum[];
+  scope?: OperationIndexObjectScope[];
 };
 
-export namespace OperationIndexObject {
-  export enum OperationEnum {
-    Move = 'move',
-    Copy = 'copy',
-  }
-  export enum ScopeEnum {
-    Settings = 'settings',
-    Synonyms = 'synonyms',
-    Rules = 'rules',
-  }
-}
+export type OperationIndexObjectOperation = 'copy' | 'move';
+
+export type OperationIndexObjectScope = 'rules' | 'settings' | 'synonyms';

@@ -56,7 +56,7 @@ consequence:
   additionalProperties: false
   properties:
     params:
-      $ref: '#/params'
+      $ref: '#/consequenceParams'
     promote:
       type: array
       description: Objects to promote as hits.
@@ -82,6 +82,12 @@ consequence:
       type: object
       description: Custom JSON object that will be appended to the userData array in the response. This object isn't interpreted by the API. It's limited to 1kB of minified JSON.
       additionalProperties: true
+
+consequenceParams:
+  allOf:
+    - $ref: '#/params'
+    - $ref: '../../../common/schemas/SearchParams.yml#/baseSearchParams'
+    - $ref: '../../../common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams'
 
 promote:
   type: object

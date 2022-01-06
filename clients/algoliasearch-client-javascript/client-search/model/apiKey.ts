@@ -5,7 +5,7 @@ export type ApiKey = {
   /**
    * Set of permissions associated with the key.
    */
-  acl: ApiKey.AclEnum[];
+  acl: ApiKeyAcl[];
   /**
    * A comment used to identify a key more easily in the dashboard. It is not interpreted by the API.
    */
@@ -36,21 +36,18 @@ export type ApiKey = {
   validity?: number;
 };
 
-export namespace ApiKey {
-  export enum AclEnum {
-    AddObject = 'addObject',
-    Analytics = 'analytics',
-    Browse = 'browse',
-    DeleteObject = 'deleteObject',
-    DeleteIndex = 'deleteIndex',
-    EditSettings = 'editSettings',
-    ListIndexes = 'listIndexes',
-    Logs = 'logs',
-    Personalization = 'personalization',
-    Recommendation = 'recommendation',
-    Search = 'search',
-    SeeUnretrievableAttributes = 'seeUnretrievableAttributes',
-    Settings = 'settings',
-    Usage = 'usage',
-  }
-}
+export type ApiKeyAcl =
+  | 'addObject'
+  | 'analytics'
+  | 'browse'
+  | 'deleteIndex'
+  | 'deleteObject'
+  | 'editSettings'
+  | 'listIndexes'
+  | 'logs'
+  | 'personalization'
+  | 'recommendation'
+  | 'search'
+  | 'seeUnretrievableAttributes'
+  | 'settings'
+  | 'usage';

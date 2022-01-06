@@ -2,12 +2,7 @@ import type { MultipleQueries } from './multipleQueries';
 
 export type MultipleQueriesObject = {
   requests: MultipleQueries[];
-  strategy?: MultipleQueriesObject.StrategyEnum;
+  strategy?: MultipleQueriesObjectStrategy;
 };
 
-export namespace MultipleQueriesObject {
-  export enum StrategyEnum {
-    None = 'none',
-    StopIfEnoughMatches = 'stopIfEnoughMatches',
-  }
-}
+export type MultipleQueriesObjectStrategy = 'none' | 'stopIfEnoughMatches';

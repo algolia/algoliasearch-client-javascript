@@ -11,11 +11,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-/** SearchParams */
-public class SearchParams {
+/** ConsequenceParams */
+public class ConsequenceParams {
 
-  @SerializedName("params")
-  private String params = "";
+  @SerializedName("query")
+  private String query;
+
+  @SerializedName("automaticFacetFilters")
+  private List<AutomaticFacetFilter> automaticFacetFilters = null;
+
+  @SerializedName("automaticOptionalFacetFilters")
+  private List<AutomaticFacetFilter> automaticOptionalFacetFilters = null;
 
   @SerializedName("similarQuery")
   private String similarQuery = "";
@@ -112,9 +118,6 @@ public class SearchParams {
 
   @SerializedName("enableReRanking")
   private Boolean enableReRanking = true;
-
-  @SerializedName("query")
-  private String query = "";
 
   @SerializedName("searchableAttributes")
   private List<String> searchableAttributes = null;
@@ -567,26 +570,93 @@ public class SearchParams {
   @SerializedName("renderingContent")
   private Object renderingContent = new Object();
 
-  public SearchParams params(String params) {
-    this.params = params;
+  public ConsequenceParams query(String query) {
+    this.query = query;
     return this;
   }
 
   /**
-   * Search parameters as URL-encoded query string.
+   * Query string.
    *
-   * @return params
+   * @return query
    */
   @javax.annotation.Nullable
-  public String getParams() {
-    return params;
+  public String getQuery() {
+    return query;
   }
 
-  public void setParams(String params) {
-    this.params = params;
+  public void setQuery(String query) {
+    this.query = query;
   }
 
-  public SearchParams similarQuery(String similarQuery) {
+  public ConsequenceParams automaticFacetFilters(
+    List<AutomaticFacetFilter> automaticFacetFilters
+  ) {
+    this.automaticFacetFilters = automaticFacetFilters;
+    return this;
+  }
+
+  public ConsequenceParams addAutomaticFacetFiltersItem(
+    AutomaticFacetFilter automaticFacetFiltersItem
+  ) {
+    if (this.automaticFacetFilters == null) {
+      this.automaticFacetFilters = new ArrayList<>();
+    }
+    this.automaticFacetFilters.add(automaticFacetFiltersItem);
+    return this;
+  }
+
+  /**
+   * Names of facets to which automatic filtering must be applied; they must match the facet name of
+   * a facet value placeholder in the query pattern.
+   *
+   * @return automaticFacetFilters
+   */
+  @javax.annotation.Nullable
+  public List<AutomaticFacetFilter> getAutomaticFacetFilters() {
+    return automaticFacetFilters;
+  }
+
+  public void setAutomaticFacetFilters(
+    List<AutomaticFacetFilter> automaticFacetFilters
+  ) {
+    this.automaticFacetFilters = automaticFacetFilters;
+  }
+
+  public ConsequenceParams automaticOptionalFacetFilters(
+    List<AutomaticFacetFilter> automaticOptionalFacetFilters
+  ) {
+    this.automaticOptionalFacetFilters = automaticOptionalFacetFilters;
+    return this;
+  }
+
+  public ConsequenceParams addAutomaticOptionalFacetFiltersItem(
+    AutomaticFacetFilter automaticOptionalFacetFiltersItem
+  ) {
+    if (this.automaticOptionalFacetFilters == null) {
+      this.automaticOptionalFacetFilters = new ArrayList<>();
+    }
+    this.automaticOptionalFacetFilters.add(automaticOptionalFacetFiltersItem);
+    return this;
+  }
+
+  /**
+   * Same syntax as automaticFacetFilters, but the engine treats the filters as optional.
+   *
+   * @return automaticOptionalFacetFilters
+   */
+  @javax.annotation.Nullable
+  public List<AutomaticFacetFilter> getAutomaticOptionalFacetFilters() {
+    return automaticOptionalFacetFilters;
+  }
+
+  public void setAutomaticOptionalFacetFilters(
+    List<AutomaticFacetFilter> automaticOptionalFacetFilters
+  ) {
+    this.automaticOptionalFacetFilters = automaticOptionalFacetFilters;
+  }
+
+  public ConsequenceParams similarQuery(String similarQuery) {
     this.similarQuery = similarQuery;
     return this;
   }
@@ -606,7 +676,7 @@ public class SearchParams {
     this.similarQuery = similarQuery;
   }
 
-  public SearchParams filters(String filters) {
+  public ConsequenceParams filters(String filters) {
     this.filters = filters;
     return this;
   }
@@ -625,12 +695,12 @@ public class SearchParams {
     this.filters = filters;
   }
 
-  public SearchParams facetFilters(List<String> facetFilters) {
+  public ConsequenceParams facetFilters(List<String> facetFilters) {
     this.facetFilters = facetFilters;
     return this;
   }
 
-  public SearchParams addFacetFiltersItem(String facetFiltersItem) {
+  public ConsequenceParams addFacetFiltersItem(String facetFiltersItem) {
     if (this.facetFilters == null) {
       this.facetFilters = new ArrayList<>();
     }
@@ -652,12 +722,12 @@ public class SearchParams {
     this.facetFilters = facetFilters;
   }
 
-  public SearchParams optionalFilters(List<String> optionalFilters) {
+  public ConsequenceParams optionalFilters(List<String> optionalFilters) {
     this.optionalFilters = optionalFilters;
     return this;
   }
 
-  public SearchParams addOptionalFiltersItem(String optionalFiltersItem) {
+  public ConsequenceParams addOptionalFiltersItem(String optionalFiltersItem) {
     if (this.optionalFilters == null) {
       this.optionalFilters = new ArrayList<>();
     }
@@ -680,12 +750,12 @@ public class SearchParams {
     this.optionalFilters = optionalFilters;
   }
 
-  public SearchParams numericFilters(List<String> numericFilters) {
+  public ConsequenceParams numericFilters(List<String> numericFilters) {
     this.numericFilters = numericFilters;
     return this;
   }
 
-  public SearchParams addNumericFiltersItem(String numericFiltersItem) {
+  public ConsequenceParams addNumericFiltersItem(String numericFiltersItem) {
     if (this.numericFilters == null) {
       this.numericFilters = new ArrayList<>();
     }
@@ -707,12 +777,12 @@ public class SearchParams {
     this.numericFilters = numericFilters;
   }
 
-  public SearchParams tagFilters(List<String> tagFilters) {
+  public ConsequenceParams tagFilters(List<String> tagFilters) {
     this.tagFilters = tagFilters;
     return this;
   }
 
-  public SearchParams addTagFiltersItem(String tagFiltersItem) {
+  public ConsequenceParams addTagFiltersItem(String tagFiltersItem) {
     if (this.tagFilters == null) {
       this.tagFilters = new ArrayList<>();
     }
@@ -734,7 +804,7 @@ public class SearchParams {
     this.tagFilters = tagFilters;
   }
 
-  public SearchParams sumOrFiltersScores(Boolean sumOrFiltersScores) {
+  public ConsequenceParams sumOrFiltersScores(Boolean sumOrFiltersScores) {
     this.sumOrFiltersScores = sumOrFiltersScores;
     return this;
   }
@@ -753,12 +823,12 @@ public class SearchParams {
     this.sumOrFiltersScores = sumOrFiltersScores;
   }
 
-  public SearchParams facets(List<String> facets) {
+  public ConsequenceParams facets(List<String> facets) {
     this.facets = facets;
     return this;
   }
 
-  public SearchParams addFacetsItem(String facetsItem) {
+  public ConsequenceParams addFacetsItem(String facetsItem) {
     if (this.facets == null) {
       this.facets = new ArrayList<>();
     }
@@ -780,7 +850,7 @@ public class SearchParams {
     this.facets = facets;
   }
 
-  public SearchParams maxValuesPerFacet(Integer maxValuesPerFacet) {
+  public ConsequenceParams maxValuesPerFacet(Integer maxValuesPerFacet) {
     this.maxValuesPerFacet = maxValuesPerFacet;
     return this;
   }
@@ -799,7 +869,9 @@ public class SearchParams {
     this.maxValuesPerFacet = maxValuesPerFacet;
   }
 
-  public SearchParams facetingAfterDistinct(Boolean facetingAfterDistinct) {
+  public ConsequenceParams facetingAfterDistinct(
+    Boolean facetingAfterDistinct
+  ) {
     this.facetingAfterDistinct = facetingAfterDistinct;
     return this;
   }
@@ -818,7 +890,7 @@ public class SearchParams {
     this.facetingAfterDistinct = facetingAfterDistinct;
   }
 
-  public SearchParams sortFacetValuesBy(String sortFacetValuesBy) {
+  public ConsequenceParams sortFacetValuesBy(String sortFacetValuesBy) {
     this.sortFacetValuesBy = sortFacetValuesBy;
     return this;
   }
@@ -837,7 +909,7 @@ public class SearchParams {
     this.sortFacetValuesBy = sortFacetValuesBy;
   }
 
-  public SearchParams page(Integer page) {
+  public ConsequenceParams page(Integer page) {
     this.page = page;
     return this;
   }
@@ -856,7 +928,7 @@ public class SearchParams {
     this.page = page;
   }
 
-  public SearchParams offset(Integer offset) {
+  public ConsequenceParams offset(Integer offset) {
     this.offset = offset;
     return this;
   }
@@ -875,7 +947,7 @@ public class SearchParams {
     this.offset = offset;
   }
 
-  public SearchParams length(Integer length) {
+  public ConsequenceParams length(Integer length) {
     this.length = length;
     return this;
   }
@@ -894,7 +966,7 @@ public class SearchParams {
     this.length = length;
   }
 
-  public SearchParams aroundLatLng(String aroundLatLng) {
+  public ConsequenceParams aroundLatLng(String aroundLatLng) {
     this.aroundLatLng = aroundLatLng;
     return this;
   }
@@ -913,7 +985,7 @@ public class SearchParams {
     this.aroundLatLng = aroundLatLng;
   }
 
-  public SearchParams aroundLatLngViaIP(Boolean aroundLatLngViaIP) {
+  public ConsequenceParams aroundLatLngViaIP(Boolean aroundLatLngViaIP) {
     this.aroundLatLngViaIP = aroundLatLngViaIP;
     return this;
   }
@@ -933,7 +1005,7 @@ public class SearchParams {
     this.aroundLatLngViaIP = aroundLatLngViaIP;
   }
 
-  public SearchParams aroundRadius(OneOfintegerstring aroundRadius) {
+  public ConsequenceParams aroundRadius(OneOfintegerstring aroundRadius) {
     this.aroundRadius = aroundRadius;
     return this;
   }
@@ -952,7 +1024,7 @@ public class SearchParams {
     this.aroundRadius = aroundRadius;
   }
 
-  public SearchParams aroundPrecision(Integer aroundPrecision) {
+  public ConsequenceParams aroundPrecision(Integer aroundPrecision) {
     this.aroundPrecision = aroundPrecision;
     return this;
   }
@@ -971,7 +1043,7 @@ public class SearchParams {
     this.aroundPrecision = aroundPrecision;
   }
 
-  public SearchParams minimumAroundRadius(Integer minimumAroundRadius) {
+  public ConsequenceParams minimumAroundRadius(Integer minimumAroundRadius) {
     this.minimumAroundRadius = minimumAroundRadius;
     return this;
   }
@@ -990,12 +1062,14 @@ public class SearchParams {
     this.minimumAroundRadius = minimumAroundRadius;
   }
 
-  public SearchParams insideBoundingBox(List<BigDecimal> insideBoundingBox) {
+  public ConsequenceParams insideBoundingBox(
+    List<BigDecimal> insideBoundingBox
+  ) {
     this.insideBoundingBox = insideBoundingBox;
     return this;
   }
 
-  public SearchParams addInsideBoundingBoxItem(
+  public ConsequenceParams addInsideBoundingBoxItem(
     BigDecimal insideBoundingBoxItem
   ) {
     if (this.insideBoundingBox == null) {
@@ -1019,12 +1093,12 @@ public class SearchParams {
     this.insideBoundingBox = insideBoundingBox;
   }
 
-  public SearchParams insidePolygon(List<BigDecimal> insidePolygon) {
+  public ConsequenceParams insidePolygon(List<BigDecimal> insidePolygon) {
     this.insidePolygon = insidePolygon;
     return this;
   }
 
-  public SearchParams addInsidePolygonItem(BigDecimal insidePolygonItem) {
+  public ConsequenceParams addInsidePolygonItem(BigDecimal insidePolygonItem) {
     if (this.insidePolygon == null) {
       this.insidePolygon = new ArrayList<>();
     }
@@ -1046,12 +1120,14 @@ public class SearchParams {
     this.insidePolygon = insidePolygon;
   }
 
-  public SearchParams naturalLanguages(List<String> naturalLanguages) {
+  public ConsequenceParams naturalLanguages(List<String> naturalLanguages) {
     this.naturalLanguages = naturalLanguages;
     return this;
   }
 
-  public SearchParams addNaturalLanguagesItem(String naturalLanguagesItem) {
+  public ConsequenceParams addNaturalLanguagesItem(
+    String naturalLanguagesItem
+  ) {
     if (this.naturalLanguages == null) {
       this.naturalLanguages = new ArrayList<>();
     }
@@ -1077,12 +1153,12 @@ public class SearchParams {
     this.naturalLanguages = naturalLanguages;
   }
 
-  public SearchParams ruleContexts(List<String> ruleContexts) {
+  public ConsequenceParams ruleContexts(List<String> ruleContexts) {
     this.ruleContexts = ruleContexts;
     return this;
   }
 
-  public SearchParams addRuleContextsItem(String ruleContextsItem) {
+  public ConsequenceParams addRuleContextsItem(String ruleContextsItem) {
     if (this.ruleContexts == null) {
       this.ruleContexts = new ArrayList<>();
     }
@@ -1104,7 +1180,9 @@ public class SearchParams {
     this.ruleContexts = ruleContexts;
   }
 
-  public SearchParams personalizationImpact(Integer personalizationImpact) {
+  public ConsequenceParams personalizationImpact(
+    Integer personalizationImpact
+  ) {
     this.personalizationImpact = personalizationImpact;
     return this;
   }
@@ -1123,7 +1201,7 @@ public class SearchParams {
     this.personalizationImpact = personalizationImpact;
   }
 
-  public SearchParams userToken(String userToken) {
+  public ConsequenceParams userToken(String userToken) {
     this.userToken = userToken;
     return this;
   }
@@ -1142,7 +1220,7 @@ public class SearchParams {
     this.userToken = userToken;
   }
 
-  public SearchParams getRankingInfo(Boolean getRankingInfo) {
+  public ConsequenceParams getRankingInfo(Boolean getRankingInfo) {
     this.getRankingInfo = getRankingInfo;
     return this;
   }
@@ -1161,7 +1239,7 @@ public class SearchParams {
     this.getRankingInfo = getRankingInfo;
   }
 
-  public SearchParams clickAnalytics(Boolean clickAnalytics) {
+  public ConsequenceParams clickAnalytics(Boolean clickAnalytics) {
     this.clickAnalytics = clickAnalytics;
     return this;
   }
@@ -1180,7 +1258,7 @@ public class SearchParams {
     this.clickAnalytics = clickAnalytics;
   }
 
-  public SearchParams analytics(Boolean analytics) {
+  public ConsequenceParams analytics(Boolean analytics) {
     this.analytics = analytics;
     return this;
   }
@@ -1199,12 +1277,12 @@ public class SearchParams {
     this.analytics = analytics;
   }
 
-  public SearchParams analyticsTags(List<String> analyticsTags) {
+  public ConsequenceParams analyticsTags(List<String> analyticsTags) {
     this.analyticsTags = analyticsTags;
     return this;
   }
 
-  public SearchParams addAnalyticsTagsItem(String analyticsTagsItem) {
+  public ConsequenceParams addAnalyticsTagsItem(String analyticsTagsItem) {
     if (this.analyticsTags == null) {
       this.analyticsTags = new ArrayList<>();
     }
@@ -1226,7 +1304,9 @@ public class SearchParams {
     this.analyticsTags = analyticsTags;
   }
 
-  public SearchParams percentileComputation(Boolean percentileComputation) {
+  public ConsequenceParams percentileComputation(
+    Boolean percentileComputation
+  ) {
     this.percentileComputation = percentileComputation;
     return this;
   }
@@ -1245,7 +1325,7 @@ public class SearchParams {
     this.percentileComputation = percentileComputation;
   }
 
-  public SearchParams enableABTest(Boolean enableABTest) {
+  public ConsequenceParams enableABTest(Boolean enableABTest) {
     this.enableABTest = enableABTest;
     return this;
   }
@@ -1264,7 +1344,7 @@ public class SearchParams {
     this.enableABTest = enableABTest;
   }
 
-  public SearchParams enableReRanking(Boolean enableReRanking) {
+  public ConsequenceParams enableReRanking(Boolean enableReRanking) {
     this.enableReRanking = enableReRanking;
     return this;
   }
@@ -1283,31 +1363,14 @@ public class SearchParams {
     this.enableReRanking = enableReRanking;
   }
 
-  public SearchParams query(String query) {
-    this.query = query;
-    return this;
-  }
-
-  /**
-   * The text to search in the index.
-   *
-   * @return query
-   */
-  @javax.annotation.Nonnull
-  public String getQuery() {
-    return query;
-  }
-
-  public void setQuery(String query) {
-    this.query = query;
-  }
-
-  public SearchParams searchableAttributes(List<String> searchableAttributes) {
+  public ConsequenceParams searchableAttributes(
+    List<String> searchableAttributes
+  ) {
     this.searchableAttributes = searchableAttributes;
     return this;
   }
 
-  public SearchParams addSearchableAttributesItem(
+  public ConsequenceParams addSearchableAttributesItem(
     String searchableAttributesItem
   ) {
     if (this.searchableAttributes == null) {
@@ -1331,14 +1394,14 @@ public class SearchParams {
     this.searchableAttributes = searchableAttributes;
   }
 
-  public SearchParams attributesForFaceting(
+  public ConsequenceParams attributesForFaceting(
     List<String> attributesForFaceting
   ) {
     this.attributesForFaceting = attributesForFaceting;
     return this;
   }
 
-  public SearchParams addAttributesForFacetingItem(
+  public ConsequenceParams addAttributesForFacetingItem(
     String attributesForFacetingItem
   ) {
     if (this.attributesForFaceting == null) {
@@ -1362,14 +1425,14 @@ public class SearchParams {
     this.attributesForFaceting = attributesForFaceting;
   }
 
-  public SearchParams unretrievableAttributes(
+  public ConsequenceParams unretrievableAttributes(
     List<String> unretrievableAttributes
   ) {
     this.unretrievableAttributes = unretrievableAttributes;
     return this;
   }
 
-  public SearchParams addUnretrievableAttributesItem(
+  public ConsequenceParams addUnretrievableAttributesItem(
     String unretrievableAttributesItem
   ) {
     if (this.unretrievableAttributes == null) {
@@ -1393,12 +1456,14 @@ public class SearchParams {
     this.unretrievableAttributes = unretrievableAttributes;
   }
 
-  public SearchParams attributesToRetrieve(List<String> attributesToRetrieve) {
+  public ConsequenceParams attributesToRetrieve(
+    List<String> attributesToRetrieve
+  ) {
     this.attributesToRetrieve = attributesToRetrieve;
     return this;
   }
 
-  public SearchParams addAttributesToRetrieveItem(
+  public ConsequenceParams addAttributesToRetrieveItem(
     String attributesToRetrieveItem
   ) {
     if (this.attributesToRetrieve == null) {
@@ -1422,14 +1487,14 @@ public class SearchParams {
     this.attributesToRetrieve = attributesToRetrieve;
   }
 
-  public SearchParams restrictSearchableAttributes(
+  public ConsequenceParams restrictSearchableAttributes(
     List<String> restrictSearchableAttributes
   ) {
     this.restrictSearchableAttributes = restrictSearchableAttributes;
     return this;
   }
 
-  public SearchParams addRestrictSearchableAttributesItem(
+  public ConsequenceParams addRestrictSearchableAttributesItem(
     String restrictSearchableAttributesItem
   ) {
     if (this.restrictSearchableAttributes == null) {
@@ -1455,12 +1520,12 @@ public class SearchParams {
     this.restrictSearchableAttributes = restrictSearchableAttributes;
   }
 
-  public SearchParams ranking(List<String> ranking) {
+  public ConsequenceParams ranking(List<String> ranking) {
     this.ranking = ranking;
     return this;
   }
 
-  public SearchParams addRankingItem(String rankingItem) {
+  public ConsequenceParams addRankingItem(String rankingItem) {
     if (this.ranking == null) {
       this.ranking = new ArrayList<>();
     }
@@ -1482,12 +1547,12 @@ public class SearchParams {
     this.ranking = ranking;
   }
 
-  public SearchParams customRanking(List<String> customRanking) {
+  public ConsequenceParams customRanking(List<String> customRanking) {
     this.customRanking = customRanking;
     return this;
   }
 
-  public SearchParams addCustomRankingItem(String customRankingItem) {
+  public ConsequenceParams addCustomRankingItem(String customRankingItem) {
     if (this.customRanking == null) {
       this.customRanking = new ArrayList<>();
     }
@@ -1509,7 +1574,7 @@ public class SearchParams {
     this.customRanking = customRanking;
   }
 
-  public SearchParams relevancyStrictness(Integer relevancyStrictness) {
+  public ConsequenceParams relevancyStrictness(Integer relevancyStrictness) {
     this.relevancyStrictness = relevancyStrictness;
     return this;
   }
@@ -1529,14 +1594,14 @@ public class SearchParams {
     this.relevancyStrictness = relevancyStrictness;
   }
 
-  public SearchParams attributesToHighlight(
+  public ConsequenceParams attributesToHighlight(
     List<String> attributesToHighlight
   ) {
     this.attributesToHighlight = attributesToHighlight;
     return this;
   }
 
-  public SearchParams addAttributesToHighlightItem(
+  public ConsequenceParams addAttributesToHighlightItem(
     String attributesToHighlightItem
   ) {
     if (this.attributesToHighlight == null) {
@@ -1560,12 +1625,14 @@ public class SearchParams {
     this.attributesToHighlight = attributesToHighlight;
   }
 
-  public SearchParams attributesToSnippet(List<String> attributesToSnippet) {
+  public ConsequenceParams attributesToSnippet(
+    List<String> attributesToSnippet
+  ) {
     this.attributesToSnippet = attributesToSnippet;
     return this;
   }
 
-  public SearchParams addAttributesToSnippetItem(
+  public ConsequenceParams addAttributesToSnippetItem(
     String attributesToSnippetItem
   ) {
     if (this.attributesToSnippet == null) {
@@ -1589,7 +1656,7 @@ public class SearchParams {
     this.attributesToSnippet = attributesToSnippet;
   }
 
-  public SearchParams highlightPreTag(String highlightPreTag) {
+  public ConsequenceParams highlightPreTag(String highlightPreTag) {
     this.highlightPreTag = highlightPreTag;
     return this;
   }
@@ -1608,7 +1675,7 @@ public class SearchParams {
     this.highlightPreTag = highlightPreTag;
   }
 
-  public SearchParams highlightPostTag(String highlightPostTag) {
+  public ConsequenceParams highlightPostTag(String highlightPostTag) {
     this.highlightPostTag = highlightPostTag;
     return this;
   }
@@ -1627,7 +1694,7 @@ public class SearchParams {
     this.highlightPostTag = highlightPostTag;
   }
 
-  public SearchParams snippetEllipsisText(String snippetEllipsisText) {
+  public ConsequenceParams snippetEllipsisText(String snippetEllipsisText) {
     this.snippetEllipsisText = snippetEllipsisText;
     return this;
   }
@@ -1646,7 +1713,7 @@ public class SearchParams {
     this.snippetEllipsisText = snippetEllipsisText;
   }
 
-  public SearchParams restrictHighlightAndSnippetArrays(
+  public ConsequenceParams restrictHighlightAndSnippetArrays(
     Boolean restrictHighlightAndSnippetArrays
   ) {
     this.restrictHighlightAndSnippetArrays = restrictHighlightAndSnippetArrays;
@@ -1669,7 +1736,7 @@ public class SearchParams {
     this.restrictHighlightAndSnippetArrays = restrictHighlightAndSnippetArrays;
   }
 
-  public SearchParams hitsPerPage(Integer hitsPerPage) {
+  public ConsequenceParams hitsPerPage(Integer hitsPerPage) {
     this.hitsPerPage = hitsPerPage;
     return this;
   }
@@ -1688,7 +1755,7 @@ public class SearchParams {
     this.hitsPerPage = hitsPerPage;
   }
 
-  public SearchParams minWordSizefor1Typo(Integer minWordSizefor1Typo) {
+  public ConsequenceParams minWordSizefor1Typo(Integer minWordSizefor1Typo) {
     this.minWordSizefor1Typo = minWordSizefor1Typo;
     return this;
   }
@@ -1708,7 +1775,7 @@ public class SearchParams {
     this.minWordSizefor1Typo = minWordSizefor1Typo;
   }
 
-  public SearchParams minWordSizefor2Typos(Integer minWordSizefor2Typos) {
+  public ConsequenceParams minWordSizefor2Typos(Integer minWordSizefor2Typos) {
     this.minWordSizefor2Typos = minWordSizefor2Typos;
     return this;
   }
@@ -1728,7 +1795,7 @@ public class SearchParams {
     this.minWordSizefor2Typos = minWordSizefor2Typos;
   }
 
-  public SearchParams typoTolerance(TypoToleranceEnum typoTolerance) {
+  public ConsequenceParams typoTolerance(TypoToleranceEnum typoTolerance) {
     this.typoTolerance = typoTolerance;
     return this;
   }
@@ -1747,7 +1814,7 @@ public class SearchParams {
     this.typoTolerance = typoTolerance;
   }
 
-  public SearchParams allowTyposOnNumericTokens(
+  public ConsequenceParams allowTyposOnNumericTokens(
     Boolean allowTyposOnNumericTokens
   ) {
     this.allowTyposOnNumericTokens = allowTyposOnNumericTokens;
@@ -1768,14 +1835,14 @@ public class SearchParams {
     this.allowTyposOnNumericTokens = allowTyposOnNumericTokens;
   }
 
-  public SearchParams disableTypoToleranceOnAttributes(
+  public ConsequenceParams disableTypoToleranceOnAttributes(
     List<String> disableTypoToleranceOnAttributes
   ) {
     this.disableTypoToleranceOnAttributes = disableTypoToleranceOnAttributes;
     return this;
   }
 
-  public SearchParams addDisableTypoToleranceOnAttributesItem(
+  public ConsequenceParams addDisableTypoToleranceOnAttributesItem(
     String disableTypoToleranceOnAttributesItem
   ) {
     if (this.disableTypoToleranceOnAttributes == null) {
@@ -1803,7 +1870,7 @@ public class SearchParams {
     this.disableTypoToleranceOnAttributes = disableTypoToleranceOnAttributes;
   }
 
-  public SearchParams separatorsToIndex(String separatorsToIndex) {
+  public ConsequenceParams separatorsToIndex(String separatorsToIndex) {
     this.separatorsToIndex = separatorsToIndex;
     return this;
   }
@@ -1822,7 +1889,7 @@ public class SearchParams {
     this.separatorsToIndex = separatorsToIndex;
   }
 
-  public SearchParams ignorePlurals(String ignorePlurals) {
+  public ConsequenceParams ignorePlurals(String ignorePlurals) {
     this.ignorePlurals = ignorePlurals;
     return this;
   }
@@ -1841,7 +1908,7 @@ public class SearchParams {
     this.ignorePlurals = ignorePlurals;
   }
 
-  public SearchParams removeStopWords(String removeStopWords) {
+  public ConsequenceParams removeStopWords(String removeStopWords) {
     this.removeStopWords = removeStopWords;
     return this;
   }
@@ -1860,7 +1927,7 @@ public class SearchParams {
     this.removeStopWords = removeStopWords;
   }
 
-  public SearchParams keepDiacriticsOnCharacters(
+  public ConsequenceParams keepDiacriticsOnCharacters(
     String keepDiacriticsOnCharacters
   ) {
     this.keepDiacriticsOnCharacters = keepDiacriticsOnCharacters;
@@ -1881,12 +1948,12 @@ public class SearchParams {
     this.keepDiacriticsOnCharacters = keepDiacriticsOnCharacters;
   }
 
-  public SearchParams queryLanguages(List<String> queryLanguages) {
+  public ConsequenceParams queryLanguages(List<String> queryLanguages) {
     this.queryLanguages = queryLanguages;
     return this;
   }
 
-  public SearchParams addQueryLanguagesItem(String queryLanguagesItem) {
+  public ConsequenceParams addQueryLanguagesItem(String queryLanguagesItem) {
     if (this.queryLanguages == null) {
       this.queryLanguages = new ArrayList<>();
     }
@@ -1909,7 +1976,7 @@ public class SearchParams {
     this.queryLanguages = queryLanguages;
   }
 
-  public SearchParams decompoundQuery(Boolean decompoundQuery) {
+  public ConsequenceParams decompoundQuery(Boolean decompoundQuery) {
     this.decompoundQuery = decompoundQuery;
     return this;
   }
@@ -1928,7 +1995,7 @@ public class SearchParams {
     this.decompoundQuery = decompoundQuery;
   }
 
-  public SearchParams enableRules(Boolean enableRules) {
+  public ConsequenceParams enableRules(Boolean enableRules) {
     this.enableRules = enableRules;
     return this;
   }
@@ -1947,7 +2014,9 @@ public class SearchParams {
     this.enableRules = enableRules;
   }
 
-  public SearchParams enablePersonalization(Boolean enablePersonalization) {
+  public ConsequenceParams enablePersonalization(
+    Boolean enablePersonalization
+  ) {
     this.enablePersonalization = enablePersonalization;
     return this;
   }
@@ -1966,7 +2035,7 @@ public class SearchParams {
     this.enablePersonalization = enablePersonalization;
   }
 
-  public SearchParams queryType(QueryTypeEnum queryType) {
+  public ConsequenceParams queryType(QueryTypeEnum queryType) {
     this.queryType = queryType;
     return this;
   }
@@ -1985,7 +2054,7 @@ public class SearchParams {
     this.queryType = queryType;
   }
 
-  public SearchParams removeWordsIfNoResults(
+  public ConsequenceParams removeWordsIfNoResults(
     RemoveWordsIfNoResultsEnum removeWordsIfNoResults
   ) {
     this.removeWordsIfNoResults = removeWordsIfNoResults;
@@ -2008,7 +2077,7 @@ public class SearchParams {
     this.removeWordsIfNoResults = removeWordsIfNoResults;
   }
 
-  public SearchParams advancedSyntax(Boolean advancedSyntax) {
+  public ConsequenceParams advancedSyntax(Boolean advancedSyntax) {
     this.advancedSyntax = advancedSyntax;
     return this;
   }
@@ -2027,12 +2096,12 @@ public class SearchParams {
     this.advancedSyntax = advancedSyntax;
   }
 
-  public SearchParams optionalWords(List<String> optionalWords) {
+  public ConsequenceParams optionalWords(List<String> optionalWords) {
     this.optionalWords = optionalWords;
     return this;
   }
 
-  public SearchParams addOptionalWordsItem(String optionalWordsItem) {
+  public ConsequenceParams addOptionalWordsItem(String optionalWordsItem) {
     if (this.optionalWords == null) {
       this.optionalWords = new ArrayList<>();
     }
@@ -2054,14 +2123,14 @@ public class SearchParams {
     this.optionalWords = optionalWords;
   }
 
-  public SearchParams disableExactOnAttributes(
+  public ConsequenceParams disableExactOnAttributes(
     List<String> disableExactOnAttributes
   ) {
     this.disableExactOnAttributes = disableExactOnAttributes;
     return this;
   }
 
-  public SearchParams addDisableExactOnAttributesItem(
+  public ConsequenceParams addDisableExactOnAttributesItem(
     String disableExactOnAttributesItem
   ) {
     if (this.disableExactOnAttributes == null) {
@@ -2087,7 +2156,7 @@ public class SearchParams {
     this.disableExactOnAttributes = disableExactOnAttributes;
   }
 
-  public SearchParams exactOnSingleWordQuery(
+  public ConsequenceParams exactOnSingleWordQuery(
     ExactOnSingleWordQueryEnum exactOnSingleWordQuery
   ) {
     this.exactOnSingleWordQuery = exactOnSingleWordQuery;
@@ -2110,14 +2179,14 @@ public class SearchParams {
     this.exactOnSingleWordQuery = exactOnSingleWordQuery;
   }
 
-  public SearchParams alternativesAsExact(
+  public ConsequenceParams alternativesAsExact(
     List<AlternativesAsExactEnum> alternativesAsExact
   ) {
     this.alternativesAsExact = alternativesAsExact;
     return this;
   }
 
-  public SearchParams addAlternativesAsExactItem(
+  public ConsequenceParams addAlternativesAsExactItem(
     AlternativesAsExactEnum alternativesAsExactItem
   ) {
     if (this.alternativesAsExact == null) {
@@ -2143,14 +2212,14 @@ public class SearchParams {
     this.alternativesAsExact = alternativesAsExact;
   }
 
-  public SearchParams advancedSyntaxFeatures(
+  public ConsequenceParams advancedSyntaxFeatures(
     List<AdvancedSyntaxFeaturesEnum> advancedSyntaxFeatures
   ) {
     this.advancedSyntaxFeatures = advancedSyntaxFeatures;
     return this;
   }
 
-  public SearchParams addAdvancedSyntaxFeaturesItem(
+  public ConsequenceParams addAdvancedSyntaxFeaturesItem(
     AdvancedSyntaxFeaturesEnum advancedSyntaxFeaturesItem
   ) {
     if (this.advancedSyntaxFeatures == null) {
@@ -2177,7 +2246,7 @@ public class SearchParams {
     this.advancedSyntaxFeatures = advancedSyntaxFeatures;
   }
 
-  public SearchParams distinct(Integer distinct) {
+  public ConsequenceParams distinct(Integer distinct) {
     this.distinct = distinct;
     return this;
   }
@@ -2196,7 +2265,7 @@ public class SearchParams {
     this.distinct = distinct;
   }
 
-  public SearchParams synonyms(Boolean synonyms) {
+  public ConsequenceParams synonyms(Boolean synonyms) {
     this.synonyms = synonyms;
     return this;
   }
@@ -2215,7 +2284,7 @@ public class SearchParams {
     this.synonyms = synonyms;
   }
 
-  public SearchParams replaceSynonymsInHighlight(
+  public ConsequenceParams replaceSynonymsInHighlight(
     Boolean replaceSynonymsInHighlight
   ) {
     this.replaceSynonymsInHighlight = replaceSynonymsInHighlight;
@@ -2239,7 +2308,7 @@ public class SearchParams {
     this.replaceSynonymsInHighlight = replaceSynonymsInHighlight;
   }
 
-  public SearchParams minProximity(Integer minProximity) {
+  public ConsequenceParams minProximity(Integer minProximity) {
     this.minProximity = minProximity;
     return this;
   }
@@ -2258,12 +2327,12 @@ public class SearchParams {
     this.minProximity = minProximity;
   }
 
-  public SearchParams responseFields(List<String> responseFields) {
+  public ConsequenceParams responseFields(List<String> responseFields) {
     this.responseFields = responseFields;
     return this;
   }
 
-  public SearchParams addResponseFieldsItem(String responseFieldsItem) {
+  public ConsequenceParams addResponseFieldsItem(String responseFieldsItem) {
     if (this.responseFields == null) {
       this.responseFields = new ArrayList<>();
     }
@@ -2286,7 +2355,7 @@ public class SearchParams {
     this.responseFields = responseFields;
   }
 
-  public SearchParams maxFacetHits(Integer maxFacetHits) {
+  public ConsequenceParams maxFacetHits(Integer maxFacetHits) {
     this.maxFacetHits = maxFacetHits;
     return this;
   }
@@ -2306,7 +2375,7 @@ public class SearchParams {
     this.maxFacetHits = maxFacetHits;
   }
 
-  public SearchParams attributeCriteriaComputedByMinProximity(
+  public ConsequenceParams attributeCriteriaComputedByMinProximity(
     Boolean attributeCriteriaComputedByMinProximity
   ) {
     this.attributeCriteriaComputedByMinProximity =
@@ -2332,7 +2401,7 @@ public class SearchParams {
       attributeCriteriaComputedByMinProximity;
   }
 
-  public SearchParams renderingContent(Object renderingContent) {
+  public ConsequenceParams renderingContent(Object renderingContent) {
     this.renderingContent = renderingContent;
     return this;
   }
@@ -2360,177 +2429,207 @@ public class SearchParams {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    SearchParams searchParams = (SearchParams) o;
+    ConsequenceParams consequenceParams = (ConsequenceParams) o;
     return (
-      Objects.equals(this.params, searchParams.params) &&
-      Objects.equals(this.similarQuery, searchParams.similarQuery) &&
-      Objects.equals(this.filters, searchParams.filters) &&
-      Objects.equals(this.facetFilters, searchParams.facetFilters) &&
-      Objects.equals(this.optionalFilters, searchParams.optionalFilters) &&
-      Objects.equals(this.numericFilters, searchParams.numericFilters) &&
-      Objects.equals(this.tagFilters, searchParams.tagFilters) &&
+      Objects.equals(this.query, consequenceParams.query) &&
+      Objects.equals(
+        this.automaticFacetFilters,
+        consequenceParams.automaticFacetFilters
+      ) &&
+      Objects.equals(
+        this.automaticOptionalFacetFilters,
+        consequenceParams.automaticOptionalFacetFilters
+      ) &&
+      Objects.equals(this.similarQuery, consequenceParams.similarQuery) &&
+      Objects.equals(this.filters, consequenceParams.filters) &&
+      Objects.equals(this.facetFilters, consequenceParams.facetFilters) &&
+      Objects.equals(this.optionalFilters, consequenceParams.optionalFilters) &&
+      Objects.equals(this.numericFilters, consequenceParams.numericFilters) &&
+      Objects.equals(this.tagFilters, consequenceParams.tagFilters) &&
       Objects.equals(
         this.sumOrFiltersScores,
-        searchParams.sumOrFiltersScores
+        consequenceParams.sumOrFiltersScores
       ) &&
-      Objects.equals(this.facets, searchParams.facets) &&
-      Objects.equals(this.maxValuesPerFacet, searchParams.maxValuesPerFacet) &&
+      Objects.equals(this.facets, consequenceParams.facets) &&
+      Objects.equals(
+        this.maxValuesPerFacet,
+        consequenceParams.maxValuesPerFacet
+      ) &&
       Objects.equals(
         this.facetingAfterDistinct,
-        searchParams.facetingAfterDistinct
+        consequenceParams.facetingAfterDistinct
       ) &&
-      Objects.equals(this.sortFacetValuesBy, searchParams.sortFacetValuesBy) &&
-      Objects.equals(this.page, searchParams.page) &&
-      Objects.equals(this.offset, searchParams.offset) &&
-      Objects.equals(this.length, searchParams.length) &&
-      Objects.equals(this.aroundLatLng, searchParams.aroundLatLng) &&
-      Objects.equals(this.aroundLatLngViaIP, searchParams.aroundLatLngViaIP) &&
-      Objects.equals(this.aroundRadius, searchParams.aroundRadius) &&
-      Objects.equals(this.aroundPrecision, searchParams.aroundPrecision) &&
+      Objects.equals(
+        this.sortFacetValuesBy,
+        consequenceParams.sortFacetValuesBy
+      ) &&
+      Objects.equals(this.page, consequenceParams.page) &&
+      Objects.equals(this.offset, consequenceParams.offset) &&
+      Objects.equals(this.length, consequenceParams.length) &&
+      Objects.equals(this.aroundLatLng, consequenceParams.aroundLatLng) &&
+      Objects.equals(
+        this.aroundLatLngViaIP,
+        consequenceParams.aroundLatLngViaIP
+      ) &&
+      Objects.equals(this.aroundRadius, consequenceParams.aroundRadius) &&
+      Objects.equals(this.aroundPrecision, consequenceParams.aroundPrecision) &&
       Objects.equals(
         this.minimumAroundRadius,
-        searchParams.minimumAroundRadius
+        consequenceParams.minimumAroundRadius
       ) &&
-      Objects.equals(this.insideBoundingBox, searchParams.insideBoundingBox) &&
-      Objects.equals(this.insidePolygon, searchParams.insidePolygon) &&
-      Objects.equals(this.naturalLanguages, searchParams.naturalLanguages) &&
-      Objects.equals(this.ruleContexts, searchParams.ruleContexts) &&
+      Objects.equals(
+        this.insideBoundingBox,
+        consequenceParams.insideBoundingBox
+      ) &&
+      Objects.equals(this.insidePolygon, consequenceParams.insidePolygon) &&
+      Objects.equals(
+        this.naturalLanguages,
+        consequenceParams.naturalLanguages
+      ) &&
+      Objects.equals(this.ruleContexts, consequenceParams.ruleContexts) &&
       Objects.equals(
         this.personalizationImpact,
-        searchParams.personalizationImpact
+        consequenceParams.personalizationImpact
       ) &&
-      Objects.equals(this.userToken, searchParams.userToken) &&
-      Objects.equals(this.getRankingInfo, searchParams.getRankingInfo) &&
-      Objects.equals(this.clickAnalytics, searchParams.clickAnalytics) &&
-      Objects.equals(this.analytics, searchParams.analytics) &&
-      Objects.equals(this.analyticsTags, searchParams.analyticsTags) &&
+      Objects.equals(this.userToken, consequenceParams.userToken) &&
+      Objects.equals(this.getRankingInfo, consequenceParams.getRankingInfo) &&
+      Objects.equals(this.clickAnalytics, consequenceParams.clickAnalytics) &&
+      Objects.equals(this.analytics, consequenceParams.analytics) &&
+      Objects.equals(this.analyticsTags, consequenceParams.analyticsTags) &&
       Objects.equals(
         this.percentileComputation,
-        searchParams.percentileComputation
+        consequenceParams.percentileComputation
       ) &&
-      Objects.equals(this.enableABTest, searchParams.enableABTest) &&
-      Objects.equals(this.enableReRanking, searchParams.enableReRanking) &&
-      Objects.equals(this.query, searchParams.query) &&
+      Objects.equals(this.enableABTest, consequenceParams.enableABTest) &&
+      Objects.equals(this.enableReRanking, consequenceParams.enableReRanking) &&
       Objects.equals(
         this.searchableAttributes,
-        searchParams.searchableAttributes
+        consequenceParams.searchableAttributes
       ) &&
       Objects.equals(
         this.attributesForFaceting,
-        searchParams.attributesForFaceting
+        consequenceParams.attributesForFaceting
       ) &&
       Objects.equals(
         this.unretrievableAttributes,
-        searchParams.unretrievableAttributes
+        consequenceParams.unretrievableAttributes
       ) &&
       Objects.equals(
         this.attributesToRetrieve,
-        searchParams.attributesToRetrieve
+        consequenceParams.attributesToRetrieve
       ) &&
       Objects.equals(
         this.restrictSearchableAttributes,
-        searchParams.restrictSearchableAttributes
+        consequenceParams.restrictSearchableAttributes
       ) &&
-      Objects.equals(this.ranking, searchParams.ranking) &&
-      Objects.equals(this.customRanking, searchParams.customRanking) &&
+      Objects.equals(this.ranking, consequenceParams.ranking) &&
+      Objects.equals(this.customRanking, consequenceParams.customRanking) &&
       Objects.equals(
         this.relevancyStrictness,
-        searchParams.relevancyStrictness
+        consequenceParams.relevancyStrictness
       ) &&
       Objects.equals(
         this.attributesToHighlight,
-        searchParams.attributesToHighlight
+        consequenceParams.attributesToHighlight
       ) &&
       Objects.equals(
         this.attributesToSnippet,
-        searchParams.attributesToSnippet
+        consequenceParams.attributesToSnippet
       ) &&
-      Objects.equals(this.highlightPreTag, searchParams.highlightPreTag) &&
-      Objects.equals(this.highlightPostTag, searchParams.highlightPostTag) &&
+      Objects.equals(this.highlightPreTag, consequenceParams.highlightPreTag) &&
+      Objects.equals(
+        this.highlightPostTag,
+        consequenceParams.highlightPostTag
+      ) &&
       Objects.equals(
         this.snippetEllipsisText,
-        searchParams.snippetEllipsisText
+        consequenceParams.snippetEllipsisText
       ) &&
       Objects.equals(
         this.restrictHighlightAndSnippetArrays,
-        searchParams.restrictHighlightAndSnippetArrays
+        consequenceParams.restrictHighlightAndSnippetArrays
       ) &&
-      Objects.equals(this.hitsPerPage, searchParams.hitsPerPage) &&
+      Objects.equals(this.hitsPerPage, consequenceParams.hitsPerPage) &&
       Objects.equals(
         this.minWordSizefor1Typo,
-        searchParams.minWordSizefor1Typo
+        consequenceParams.minWordSizefor1Typo
       ) &&
       Objects.equals(
         this.minWordSizefor2Typos,
-        searchParams.minWordSizefor2Typos
+        consequenceParams.minWordSizefor2Typos
       ) &&
-      Objects.equals(this.typoTolerance, searchParams.typoTolerance) &&
+      Objects.equals(this.typoTolerance, consequenceParams.typoTolerance) &&
       Objects.equals(
         this.allowTyposOnNumericTokens,
-        searchParams.allowTyposOnNumericTokens
+        consequenceParams.allowTyposOnNumericTokens
       ) &&
       Objects.equals(
         this.disableTypoToleranceOnAttributes,
-        searchParams.disableTypoToleranceOnAttributes
+        consequenceParams.disableTypoToleranceOnAttributes
       ) &&
-      Objects.equals(this.separatorsToIndex, searchParams.separatorsToIndex) &&
-      Objects.equals(this.ignorePlurals, searchParams.ignorePlurals) &&
-      Objects.equals(this.removeStopWords, searchParams.removeStopWords) &&
+      Objects.equals(
+        this.separatorsToIndex,
+        consequenceParams.separatorsToIndex
+      ) &&
+      Objects.equals(this.ignorePlurals, consequenceParams.ignorePlurals) &&
+      Objects.equals(this.removeStopWords, consequenceParams.removeStopWords) &&
       Objects.equals(
         this.keepDiacriticsOnCharacters,
-        searchParams.keepDiacriticsOnCharacters
+        consequenceParams.keepDiacriticsOnCharacters
       ) &&
-      Objects.equals(this.queryLanguages, searchParams.queryLanguages) &&
-      Objects.equals(this.decompoundQuery, searchParams.decompoundQuery) &&
-      Objects.equals(this.enableRules, searchParams.enableRules) &&
+      Objects.equals(this.queryLanguages, consequenceParams.queryLanguages) &&
+      Objects.equals(this.decompoundQuery, consequenceParams.decompoundQuery) &&
+      Objects.equals(this.enableRules, consequenceParams.enableRules) &&
       Objects.equals(
         this.enablePersonalization,
-        searchParams.enablePersonalization
+        consequenceParams.enablePersonalization
       ) &&
-      Objects.equals(this.queryType, searchParams.queryType) &&
+      Objects.equals(this.queryType, consequenceParams.queryType) &&
       Objects.equals(
         this.removeWordsIfNoResults,
-        searchParams.removeWordsIfNoResults
+        consequenceParams.removeWordsIfNoResults
       ) &&
-      Objects.equals(this.advancedSyntax, searchParams.advancedSyntax) &&
-      Objects.equals(this.optionalWords, searchParams.optionalWords) &&
+      Objects.equals(this.advancedSyntax, consequenceParams.advancedSyntax) &&
+      Objects.equals(this.optionalWords, consequenceParams.optionalWords) &&
       Objects.equals(
         this.disableExactOnAttributes,
-        searchParams.disableExactOnAttributes
+        consequenceParams.disableExactOnAttributes
       ) &&
       Objects.equals(
         this.exactOnSingleWordQuery,
-        searchParams.exactOnSingleWordQuery
+        consequenceParams.exactOnSingleWordQuery
       ) &&
       Objects.equals(
         this.alternativesAsExact,
-        searchParams.alternativesAsExact
+        consequenceParams.alternativesAsExact
       ) &&
       Objects.equals(
         this.advancedSyntaxFeatures,
-        searchParams.advancedSyntaxFeatures
+        consequenceParams.advancedSyntaxFeatures
       ) &&
-      Objects.equals(this.distinct, searchParams.distinct) &&
-      Objects.equals(this.synonyms, searchParams.synonyms) &&
+      Objects.equals(this.distinct, consequenceParams.distinct) &&
+      Objects.equals(this.synonyms, consequenceParams.synonyms) &&
       Objects.equals(
         this.replaceSynonymsInHighlight,
-        searchParams.replaceSynonymsInHighlight
+        consequenceParams.replaceSynonymsInHighlight
       ) &&
-      Objects.equals(this.minProximity, searchParams.minProximity) &&
-      Objects.equals(this.responseFields, searchParams.responseFields) &&
-      Objects.equals(this.maxFacetHits, searchParams.maxFacetHits) &&
+      Objects.equals(this.minProximity, consequenceParams.minProximity) &&
+      Objects.equals(this.responseFields, consequenceParams.responseFields) &&
+      Objects.equals(this.maxFacetHits, consequenceParams.maxFacetHits) &&
       Objects.equals(
         this.attributeCriteriaComputedByMinProximity,
-        searchParams.attributeCriteriaComputedByMinProximity
+        consequenceParams.attributeCriteriaComputedByMinProximity
       ) &&
-      Objects.equals(this.renderingContent, searchParams.renderingContent)
+      Objects.equals(this.renderingContent, consequenceParams.renderingContent)
     );
   }
 
   @Override
   public int hashCode() {
     return Objects.hash(
-      params,
+      query,
+      automaticFacetFilters,
+      automaticOptionalFacetFilters,
       similarQuery,
       filters,
       facetFilters,
@@ -2563,7 +2662,6 @@ public class SearchParams {
       percentileComputation,
       enableABTest,
       enableReRanking,
-      query,
       searchableAttributes,
       attributesForFaceting,
       unretrievableAttributes,
@@ -2614,8 +2712,16 @@ public class SearchParams {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class SearchParams {\n");
-    sb.append("    params: ").append(toIndentedString(params)).append("\n");
+    sb.append("class ConsequenceParams {\n");
+    sb.append("    query: ").append(toIndentedString(query)).append("\n");
+    sb
+      .append("    automaticFacetFilters: ")
+      .append(toIndentedString(automaticFacetFilters))
+      .append("\n");
+    sb
+      .append("    automaticOptionalFacetFilters: ")
+      .append(toIndentedString(automaticOptionalFacetFilters))
+      .append("\n");
     sb
       .append("    similarQuery: ")
       .append(toIndentedString(similarQuery))
@@ -2729,7 +2835,6 @@ public class SearchParams {
       .append("    enableReRanking: ")
       .append(toIndentedString(enableReRanking))
       .append("\n");
-    sb.append("    query: ").append(toIndentedString(query)).append("\n");
     sb
       .append("    searchableAttributes: ")
       .append(toIndentedString(searchableAttributes))

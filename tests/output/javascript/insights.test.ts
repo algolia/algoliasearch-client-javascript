@@ -1,11 +1,11 @@
-// @ts-nocheck
 import { InsightsApi, EchoRequester } from '@algolia/client-insights';
 
-const client = new InsightsApi(
-  process.env.ALGOLIA_APPLICATION_ID,
-  process.env.ALGOLIA_SEARCH_KEY,
-  { requester: new EchoRequester() }
-);
+const appId = process.env.ALGOLIA_APPLICATION_ID || 'test_app_id';
+const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'test_api_key';
+
+const client = new InsightsApi(appId, apiKey, {
+  requester: new EchoRequester(),
+});
 
 describe('pushEvents', () => {
   test('pushEvents', async () => {

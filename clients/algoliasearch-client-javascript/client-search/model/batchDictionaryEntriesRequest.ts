@@ -4,13 +4,8 @@ export type BatchDictionaryEntriesRequest = {
   /**
    * Actions to perform.
    */
-  action: BatchDictionaryEntriesRequest.ActionEnum;
+  action: BatchDictionaryEntriesRequestAction;
   body: DictionaryEntry;
 };
 
-export namespace BatchDictionaryEntriesRequest {
-  export enum ActionEnum {
-    AddEntry = 'addEntry',
-    DeleteEntry = 'deleteEntry',
-  }
-}
+export type BatchDictionaryEntriesRequestAction = 'addEntry' | 'deleteEntry';

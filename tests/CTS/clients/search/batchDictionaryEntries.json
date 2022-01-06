@@ -3,7 +3,7 @@
     "method": "batchDictionaryEntries",
     "testName": "get batchDictionaryEntries results with minimal parameters",
     "parameters": {
-      "dictionaryName": "dictionaryName",
+      "dictionaryName": "compounds",
       "batchDictionaryEntries": {
         "requests": [
           {
@@ -24,7 +24,7 @@
       }
     },
     "request": {
-      "path": "/1/dictionaries/dictionaryName/batch",
+      "path": "/1/dictionaries/compounds/batch",
       "method": "POST",
       "data": {
         "requests": [
@@ -50,7 +50,7 @@
     "method": "batchDictionaryEntries",
     "testName": "get batchDictionaryEntries results with all parameters",
     "parameters": {
-      "dictionaryName": "dictionaryName",
+      "dictionaryName": "compounds",
       "batchDictionaryEntries": {
         "clearExistingDictionaryEntries": false,
         "requests": [
@@ -60,14 +60,8 @@
               "objectID": "1",
               "language": "en",
               "word": "yo",
-              "words": [
-                "yo",
-                "algolia"
-              ],
-              "decomposition": [
-                "yo",
-                "algolia"
-              ],
+              "words": ["yo", "algolia"],
+              "decomposition": ["yo", "algolia"],
               "state": "enabled"
             }
           },
@@ -77,14 +71,8 @@
               "objectID": "2",
               "language": "fr",
               "word": "salut",
-              "words": [
-                "salut",
-                "algolia"
-              ],
-              "decomposition": [
-                "salut",
-                "algolia"
-              ],
+              "words": ["salut", "algolia"],
+              "decomposition": ["salut", "algolia"],
               "state": "enabled"
             }
           }
@@ -92,7 +80,7 @@
       }
     },
     "request": {
-      "path": "/1/dictionaries/dictionaryName/batch",
+      "path": "/1/dictionaries/compounds/batch",
       "method": "POST",
       "data": {
         "clearExistingDictionaryEntries": false,
@@ -103,14 +91,8 @@
               "objectID": "1",
               "language": "en",
               "word": "yo",
-              "words": [
-                "yo",
-                "algolia"
-              ],
-              "decomposition": [
-                "yo",
-                "algolia"
-              ],
+              "words": ["yo", "algolia"],
+              "decomposition": ["yo", "algolia"],
               "state": "enabled"
             }
           },
@@ -120,14 +102,8 @@
               "objectID": "2",
               "language": "fr",
               "word": "salut",
-              "words": [
-                "salut",
-                "algolia"
-              ],
-              "decomposition": [
-                "salut",
-                "algolia"
-              ],
+              "words": ["salut", "algolia"],
+              "decomposition": ["salut", "algolia"],
               "state": "enabled"
             }
           }

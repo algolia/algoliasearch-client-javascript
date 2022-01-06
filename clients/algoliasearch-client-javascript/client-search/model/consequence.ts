@@ -1,12 +1,12 @@
 import type { ConsequenceHide } from './consequenceHide';
-import type { Params } from './params';
+import type { ConsequenceParams } from './consequenceParams';
 import type { Promote } from './promote';
 
 /**
  * Consequence of the Rule.
  */
 export type Consequence = {
-  params?: Params;
+  params?: ConsequenceParams;
   /**
    * Objects to promote as hits.
    */

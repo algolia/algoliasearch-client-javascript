@@ -1,7 +1,7 @@
 import type { BaseSearchParams } from './baseSearchParams';
 import type { IndexSettingsAsSearchParams } from './indexSettingsAsSearchParams';
-import type { RequiredSearchParams } from './requiredSearchParams';
+import type { Params } from './params';
 
-export type SearchParamsObject = BaseSearchParams &
+export type ConsequenceParams = BaseSearchParams &
   IndexSettingsAsSearchParams &
-  RequiredSearchParams;
+  Params;

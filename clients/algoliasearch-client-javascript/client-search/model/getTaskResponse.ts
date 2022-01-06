@@ -1,10 +1,5 @@
 export type GetTaskResponse = {
-  status: GetTaskResponse.StatusEnum;
+  status: GetTaskResponseStatus;
 };
 
-export namespace GetTaskResponse {
-  export enum StatusEnum {
-    Published = 'published',
-    NotPublished = 'notPublished',
-  }
-}
+export type GetTaskResponseStatus = 'notPublished' | 'published';

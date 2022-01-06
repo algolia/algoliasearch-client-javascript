@@ -70,7 +70,7 @@ export type IndexSettingsAsSearchParams = {
   /**
    * Controls whether typo tolerance is enabled and how it is applied.
    */
-  typoTolerance?: IndexSettingsAsSearchParams.TypoToleranceEnum;
+  typoTolerance?: IndexSettingsAsSearchParamsTypoTolerance;
   /**
    * Whether to allow typos on numbers (\"numeric tokens\") in the query string.
    */
@@ -114,11 +114,11 @@ export type IndexSettingsAsSearchParams = {
   /**
    * Controls if and how query words are interpreted as prefixes.
    */
-  queryType?: IndexSettingsAsSearchParams.QueryTypeEnum;
+  queryType?: IndexSettingsAsSearchParamsQueryType;
   /**
    * Selects a strategy to remove words from the query when it doesn\'t match any hits.
    */
-  removeWordsIfNoResults?: IndexSettingsAsSearchParams.RemoveWordsIfNoResultsEnum;
+  removeWordsIfNoResults?: IndexSettingsAsSearchParamsRemoveWordsIfNoResults;
   /**
    * Enables the advanced query syntax.
    */
@@ -134,15 +134,15 @@ export type IndexSettingsAsSearchParams = {
   /**
    * Controls how the exact ranking criterion is computed when the query contains only one word.
    */
-  exactOnSingleWordQuery?: IndexSettingsAsSearchParams.ExactOnSingleWordQueryEnum;
+  exactOnSingleWordQuery?: IndexSettingsAsSearchParamsExactOnSingleWordQuery;
   /**
    * List of alternatives that should be considered an exact match by the exact ranking criterion.
    */
-  alternativesAsExact?: IndexSettingsAsSearchParams.AlternativesAsExactEnum[];
+  alternativesAsExact?: IndexSettingsAsSearchParamsAlternativesAsExact[];
   /**
    * Allows you to specify which advanced syntax features are active when ‘advancedSyntax\' is enabled.
    */
-  advancedSyntaxFeatures?: IndexSettingsAsSearchParams.AdvancedSyntaxFeaturesEnum[];
+  advancedSyntaxFeatures?: IndexSettingsAsSearchParamsAdvancedSyntaxFeatures[];
   /**
    * Enables de-duplication or grouping of results.
    */
@@ -177,36 +177,33 @@ export type IndexSettingsAsSearchParams = {
   renderingContent?: Record<string, any>;
 };
 
-export namespace IndexSettingsAsSearchParams {
-  export enum TypoToleranceEnum {
-    True = 'true',
-    False = 'false',
-    Min = 'min',
-    Strict = 'strict',
-  }
-  export enum QueryTypeEnum {
-    PrefixLast = 'prefixLast',
-    PrefixAll = 'prefixAll',
-    PrefixNone = 'prefixNone',
-  }
-  export enum RemoveWordsIfNoResultsEnum {
-    None = 'none',
-    LastWords = 'lastWords',
-    FirstWords = 'firstWords',
-    AllOptional = 'allOptional',
-  }
-  export enum ExactOnSingleWordQueryEnum {
-    Attribute = 'attribute',
-    None = 'none',
-    Word = 'word',
-  }
-  export enum AlternativesAsExactEnum {
-    IgnorePlurals = 'ignorePlurals',
-    SingleWordSynonym = 'singleWordSynonym',
-    MultiWordsSynonym = 'multiWordsSynonym',
-  }
-  export enum AdvancedSyntaxFeaturesEnum {
-    ExactPhrase = 'exactPhrase',
-    ExcludeWords = 'excludeWords',
-  }
-}
+export type IndexSettingsAsSearchParamsTypoTolerance =
+  | 'false'
+  | 'min'
+  | 'strict'
+  | 'true';
+
+export type IndexSettingsAsSearchParamsQueryType =
+  | 'prefixAll'
+  | 'prefixLast'
+  | 'prefixNone';
+
+export type IndexSettingsAsSearchParamsRemoveWordsIfNoResults =
+  | 'allOptional'
+  | 'firstWords'
+  | 'lastWords'
+  | 'none';
+
+export type IndexSettingsAsSearchParamsExactOnSingleWordQuery =
+  | 'attribute'
+  | 'none'
+  | 'word';
+
+export type IndexSettingsAsSearchParamsAlternativesAsExact =
+  | 'ignorePlurals'
+  | 'multiWordsSynonym'
+  | 'singleWordSynonym';
+
+export type IndexSettingsAsSearchParamsAdvancedSyntaxFeatures =
+  | 'exactPhrase'
+  | 'excludeWords';

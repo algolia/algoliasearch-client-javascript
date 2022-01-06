@@ -1,11 +1,11 @@
-// @ts-nocheck
 import { RecommendApi, EchoRequester } from '@algolia/recommend';
 
-const client = new RecommendApi(
-  process.env.ALGOLIA_APPLICATION_ID,
-  process.env.ALGOLIA_SEARCH_KEY,
-  { requester: new EchoRequester() }
-);
+const appId = process.env.ALGOLIA_APPLICATION_ID || 'test_app_id';
+const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'test_api_key';
+
+const client = new RecommendApi(appId, apiKey, {
+  requester: new EchoRequester(),
+});
 
 describe('getRecommendations', () => {
   test('get recommendations with minimal parameters', async () => {
@@ -46,8 +46,11 @@ describe('getRecommendations', () => {
             objectID: 'objectID',
             model: 'related-products',
             threshold: 42,
-            queryParameters: { facetFilters: ['query'] },
-            fallbackParameters: { facetFilters: ['fallback'] },
+            queryParameters: { query: 'myQuery', facetFilters: ['query'] },
+            fallbackParameters: {
+              query: 'myQuery',
+              facetFilters: ['fallback'],
+            },
           },
         ],
       },
@@ -62,8 +65,11 @@ describe('getRecommendations', () => {
             objectID: 'objectID',
             model: 'related-products',
             threshold: 42,
-            queryParameters: { facetFilters: ['query'] },
-            fallbackParameters: { facetFilters: ['fallback'] },
+            queryParameters: { query: 'myQuery', facetFilters: ['query'] },
+            fallbackParameters: {
+              query: 'myQuery',
+              facetFilters: ['fallback'],
+            },
           },
         ],
       },
@@ -120,16 +126,22 @@ describe('getRecommendations', () => {
             objectID: 'objectID1',
             model: 'related-products',
             threshold: 21,
-            queryParameters: { facetFilters: ['query1'] },
-            fallbackParameters: { facetFilters: ['fallback1'] },
+            queryParameters: { query: 'myQuery', facetFilters: ['query1'] },
+            fallbackParameters: {
+              query: 'myQuery',
+              facetFilters: ['fallback1'],
+            },
           },
           {
             indexName: 'indexName2',
             objectID: 'objectID2',
             model: 'related-products',
             threshold: 21,
-            queryParameters: { facetFilters: ['query2'] },
-            fallbackParameters: { facetFilters: ['fallback2'] },
+            queryParameters: { query: 'myQuery', facetFilters: ['query2'] },
+            fallbackParameters: {
+              query: 'myQuery',
+              facetFilters: ['fallback2'],
+            },
           },
         ],
       },
@@ -144,16 +156,22 @@ describe('getRecommendations', () => {
             objectID: 'objectID1',
             model: 'related-products',
             threshold: 21,
-            queryParameters: { facetFilters: ['query1'] },
-            fallbackParameters: { facetFilters: ['fallback1'] },
+            queryParameters: { query: 'myQuery', facetFilters: ['query1'] },
+            fallbackParameters: {
+              query: 'myQuery',
+              facetFilters: ['fallback1'],
+            },
           },
           {
             indexName: 'indexName2',
             objectID: 'objectID2',
             model: 'related-products',
             threshold: 21,
-            queryParameters: { facetFilters: ['query2'] },
-            fallbackParameters: { facetFilters: ['fallback2'] },
+            queryParameters: { query: 'myQuery', facetFilters: ['query2'] },
+            fallbackParameters: {
+              query: 'myQuery',
+              facetFilters: ['fallback2'],
+            },
           },
         ],
       },

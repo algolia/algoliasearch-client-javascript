@@ -15,6 +15,8 @@ export * from './recommendHits';
 export * from './recommendRecord';
 export * from './recommendationRequest';
 export * from './recommendationsResponse';
+export * from './requiredSearchParams';
+export * from './searchParams';
 export * from './snippetResult';
 
 export interface Authentication {

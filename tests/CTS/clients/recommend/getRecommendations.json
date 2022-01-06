@@ -41,14 +41,12 @@
             "model": "related-products",
             "threshold": 42,
             "queryParameters": {
-              "facetFilters": [
-                "query"
-              ]
+              "query": "myQuery",
+              "facetFilters": ["query"]
             },
             "fallbackParameters": {
-              "facetFilters": [
-                "fallback"
-              ]
+              "query": "myQuery",
+              "facetFilters": ["fallback"]
             }
           }
         ]
@@ -65,14 +63,12 @@
             "model": "related-products",
             "threshold": 42,
             "queryParameters": {
-              "facetFilters": [
-                "query"
-              ]
+              "query": "myQuery",
+              "facetFilters": ["query"]
             },
             "fallbackParameters": {
-              "facetFilters": [
-                "fallback"
-              ]
+              "query": "myQuery",
+              "facetFilters": ["fallback"]
             }
           }
         ]
@@ -133,14 +129,12 @@
             "model": "related-products",
             "threshold": 21,
             "queryParameters": {
-              "facetFilters": [
-                "query1"
-              ]
+              "query": "myQuery",
+              "facetFilters": ["query1"]
             },
             "fallbackParameters": {
-              "facetFilters": [
-                "fallback1"
-              ]
+              "query": "myQuery",
+              "facetFilters": ["fallback1"]
             }
           },
           {
@@ -149,14 +143,12 @@
             "model": "related-products",
             "threshold": 21,
             "queryParameters": {
-              "facetFilters": [
-                "query2"
-              ]
+              "query": "myQuery",
+              "facetFilters": ["query2"]
             },
             "fallbackParameters": {
-              "facetFilters": [
-                "fallback2"
-              ]
+              "query": "myQuery",
+              "facetFilters": ["fallback2"]
             }
           }
         ]
@@ -173,14 +165,12 @@
             "model": "related-products",
             "threshold": 21,
             "queryParameters": {
-              "facetFilters": [
-                "query1"
-              ]
+              "query": "myQuery",
+              "facetFilters": ["query1"]
             },
             "fallbackParameters": {
-              "facetFilters": [
-                "fallback1"
-              ]
+              "query": "myQuery",
+              "facetFilters": ["fallback1"]
             }
           },
           {
@@ -189,14 +179,12 @@
             "model": "related-products",
             "threshold": 21,
             "queryParameters": {
-              "facetFilters": [
-                "query2"
-              ]
+              "query": "myQuery",
+              "facetFilters": ["query2"]
             },
             "fallbackParameters": {
-              "facetFilters": [
-                "fallback2"
-              ]
+              "query": "myQuery",
+              "facetFilters": ["fallback2"]
             }
           }
         ]

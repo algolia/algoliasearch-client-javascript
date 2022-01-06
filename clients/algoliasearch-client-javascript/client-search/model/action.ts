@@ -1,12 +1,12 @@
 /**
  * Type of operation.
  */
-export enum Action {
-  AddObject = 'addObject',
-  UpdateObject = 'updateObject',
-  PartialUpdateObject = 'partialUpdateObject',
-  PartialUpdateObjectNoCreate = 'partialUpdateObjectNoCreate',
-  DeleteObject = 'deleteObject',
-  Delete = 'delete',
-  Clear = 'clear',
-}
+
+export type Action =
+  | 'addObject'
+  | 'clear'
+  | 'delete'
+  | 'deleteObject'
+  | 'partialUpdateObject'
+  | 'partialUpdateObjectNoCreate'
+  | 'updateObject';

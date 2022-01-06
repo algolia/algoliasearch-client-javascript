@@ -10,7 +10,7 @@ export type MultipleQueries = {
   /**
    * Perform a search query with `default`, will search for facet values if `facet` is given.
    */
-  type?: MultipleQueries.TypeEnum;
+  type?: MultipleQueriesType;
   /**
    * The `facet` name.
    */
@@ -21,9 +21,4 @@ export type MultipleQueries = {
   params?: string;
 };
 
-export namespace MultipleQueries {
-  export enum TypeEnum {
-    Default = 'default',
-    Facet = 'facet',
-  }
-}
+export type MultipleQueriesType = 'default' | 'facet';

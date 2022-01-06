@@ -5,7 +5,7 @@ export type InsightEvent = {
   /**
    * An eventType can be a click, a conversion, or a view.
    */
-  eventType: InsightEvent.EventTypeEnum;
+  eventType: InsightEventEventType;
   /**
    * A user-defined string used to categorize events.
    */
@@ -40,10 +40,4 @@ export type InsightEvent = {
   positions?: number[];
 };
 
-export namespace InsightEvent {
-  export enum EventTypeEnum {
-    Click = 'click',
-    Conversion = 'conversion',
-    View = 'view',
-  }
-}
+export type InsightEventEventType = 'click' | 'conversion' | 'view';
