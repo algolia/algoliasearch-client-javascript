@@ -343,4 +343,21 @@ export type Settings = {
       };
     };
   };
+
+  /**
+   * Whether this index should use Dynamic Re-Ranking.
+   * @link https://www.algolia.com/doc/guides/algolia-ai/re-ranking/
+   *
+   * Note: In order for this parameter to work, the index needs to be opted in to the Dynamic Re-Ranking feature, if your plan allows it.
+   * This can be done in the dashboard.
+   */
+  readonly enableReRanking?: boolean;
+
+  /**
+   * When Dynamic Re-Ranking is enabled, only records that match these filters will be impacted by Dynamic Re-Ranking.
+   */
+  readonly reRankingApplyFilter?:
+    | string
+    | readonly string[]
+    | ReadonlyArray<readonly string[] | string>;
 };

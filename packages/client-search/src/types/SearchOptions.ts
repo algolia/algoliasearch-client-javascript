@@ -359,4 +359,12 @@ export type SearchOptions = {
    * This parameter is only used to turn off Dynamic Re-Ranking (with false) at search time.
    */
   readonly enableReRanking?: boolean;
+
+  /**
+   * When Dynamic Re-Ranking is enabled, only records that match these filters will be impacted by Dynamic Re-Ranking.
+   */
+  readonly reRankingApplyFilter?:
+    | string
+    | readonly string[]
+    | ReadonlyArray<readonly string[] | string>;
 };
