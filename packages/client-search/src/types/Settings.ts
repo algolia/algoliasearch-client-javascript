@@ -348,8 +348,8 @@ export type Settings = {
    * Whether this index should use Dynamic Re-Ranking.
    * @link https://www.algolia.com/doc/guides/algolia-ai/re-ranking/
    *
-   * Note: In order for this parameter to work, the index needs to be opted in to the Dynamic Re-Ranking feature, if your plan allows it.
-   * This can be done in the dashboard.
+   * Note: You need to turn on Dynamic Re-Ranking on your index for it to have an effect on
+   * your search results. You can do this through the Re-Ranking page on the dashboard.
    */
   readonly enableReRanking?: boolean;
 
