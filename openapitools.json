@@ -87,6 +87,26 @@
           "isAnalyticsHost": true
         }
       },
+      "javascript-insights": {
+        "generatorName": "typescript-node",
+        "templateDir": "#{cwd}/templates/javascript/",
+        "config": "#{cwd}/openapitools.json",
+        "apiPackage": "src",
+        "output": "#{cwd}/clients/algoliasearch-client-javascript/client-insights",
+        "glob": "specs/insights/spec.yml",
+        "gitHost": "algolia",
+        "gitUserId": "algolia",
+        "gitRepoId": "algoliasearch-client-javascript",
+        "additionalProperties": {
+          "modelPropertyNaming": "original",
+          "supportsES6": true,
+          "npmName": "@algolia/client-insights",
+          "npmVersion": "5.0.0",
+
+          "packageName": "@algolia/client-insights",
+          "isInsightsHost": true
+        }
+      },
       "java-search": {
         "generatorName": "java",
         "templateDir": "#{cwd}/templates/java/",

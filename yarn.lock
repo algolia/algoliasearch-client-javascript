@@ -40,6 +40,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@algolia/client-insights@5.0.0, @algolia/client-insights@workspace:clients/algoliasearch-client-javascript/client-insights":
+  version: 0.0.0-use.local
+  resolution: "@algolia/client-insights@workspace:clients/algoliasearch-client-javascript/client-insights"
+  dependencies:
+    "@types/node": 16.11.11
+    typescript: 4.5.4
+  languageName: unknown
+  linkType: soft
+
 "@algolia/client-personalization@5.0.0, @algolia/client-personalization@workspace:clients/algoliasearch-client-javascript/client-personalization":
   version: 0.0.0-use.local
   resolution: "@algolia/client-personalization@workspace:clients/algoliasearch-client-javascript/client-personalization"
@@ -5683,6 +5692,7 @@ fsevents@^2.3.2:
   version: 0.0.0-use.local
   resolution: "tests@workspace:tests"
   dependencies:
+    "@algolia/client-insights": 5.0.0
     "@algolia/client-search": 5.0.0
     "@algolia/recommend": 5.0.0
     "@apidevtools/swagger-parser": 10.0.3

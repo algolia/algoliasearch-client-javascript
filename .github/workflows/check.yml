@@ -38,6 +38,7 @@ jobs:
       RUN_JS_CLIENT_RECOMMEND: ${{ steps.setup.outputs.RUN_JS_CLIENT_RECOMMEND }}
       RUN_JS_CLIENT_PERSO: ${{ steps.setup.outputs.RUN_JS_CLIENT_PERSO }}
       RUN_JS_CLIENT_ANALYTICS: ${{ steps.setup.outputs.RUN_JS_CLIENT_ANALYTICS }}
+      RUN_JS_CLIENT_INSIGHTS: ${{ steps.setup.outputs.RUN_JS_CLIENT_INSIGHTS }}
 
       RUN_JAVA_CLIENT: ${{ steps.setup.outputs.RUN_JAVA_CLIENT }}
 
@@ -106,6 +107,22 @@ jobs:
 
       - name: Lint analytics specs
         run: yarn eslint --ext=yml specs/analytics
+
+  specs_insights:
+    runs-on: ubuntu-20.04
+    needs: setup
+    if: ${{ always() && needs.setup.outputs.RUN_SPECS_INSIGHTS == 'true' }}
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Restore cache
+        uses: ./.github/actions/cache
+
+      - name: Checking insights specs
+        run: yarn build:specs insights
+
+      - name: Lint insights specs
+        run: yarn eslint --ext=yml specs/insights
 
   client_javascript_search:
     runs-on: ubuntu-20.04
@@ -207,6 +224,31 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         run: yarn build:clients javascript analytics
 
+  client_javascript_insights:
+    runs-on: ubuntu-20.04
+    needs: [specs_insights]
+    if: ${{ always() && needs.setup.outputs.RUN_JS_CLIENT_INSIGHTS == 'true' }}
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Restore cache
+        uses: ./.github/actions/cache
+
+      - name: Cache insights client
+        id: cache
+        uses: actions/cache@v2
+        with:
+          path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/client-insights/dist
+          key: ${{ runner.os }}-js-client-insights-${{ hashFiles('clients/algoliasearch-client-javascript/client-insights/**') }}
+
+      - name: Generate insights client
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: yarn generate javascript insights
+
+      - name: Build insights client
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: yarn build:clients javascript insights
+
   client_java_search:
     runs-on: ubuntu-20.04
     needs: [specs_search]
@@ -241,6 +283,7 @@ jobs:
       - client_javascript_recommend
       - client_javascript_perso
       - client_javascript_analytics
+      - client_javascript_insights
       - client_java_search
 
     if: ${{ always() && needs.setup.outputs.RUN_CTS == 'true' }}
