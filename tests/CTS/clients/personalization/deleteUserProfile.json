@@ -1,0 +1,13 @@
+[
+  {
+    "method": "deleteUserProfile",
+    "testName": "delete deleteUserProfile",
+    "parameters": {
+      "userToken": "UserToken"
+    },
+    "request": {
+      "path": "/1/profiles/UserToken",
+      "method": "DELETE"
+    }
+  }
+]

@@ -3,7 +3,7 @@ import { {{client}}, EchoRequester } from '{{{import}}}';
 const appId = process.env.ALGOLIA_APPLICATION_ID || 'test_app_id';
 const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'test_api_key';
 
-const client = new {{client}}(appId, apiKey, { requester: new EchoRequester() });
+const client = new {{client}}(appId, apiKey, {{#hasRegionalHost}}'eu', {{/hasRegionalHost}}{ requester: new EchoRequester() });
 
 {{#blocks}}
 describe('{{operationId}}', () => {

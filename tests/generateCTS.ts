@@ -183,6 +183,7 @@ async function generateCode(language: Language): Promise<void> {
       import: packageNames[language][client],
       client: `${capitalize(client)}Api`,
       blocks: cts[client],
+      hasRegionalHost: ['personalization', 'analytics'].includes(client),
     });
     await fsp.writeFile(
       `output/${language}/${client}${extensionForLanguage[language]}`,

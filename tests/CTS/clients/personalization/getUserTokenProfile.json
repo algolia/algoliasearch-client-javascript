@@ -1,0 +1,13 @@
+[
+  {
+    "method": "getUserTokenProfile",
+    "testName": "get getUserTokenProfile",
+    "parameters": {
+      "userToken": "UserToken"
+    },
+    "request": {
+      "path": "/1/profiles/personalization/UserToken",
+      "method": "GET"
+    }
+  }
+]
