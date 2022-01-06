@@ -68,7 +68,7 @@ export class {{classname}} {
 
     this.transporter = new Transporter({
       hosts: options?.hosts ?? this.getDefaultHosts(
-        {{^hasRegionalHost}}appId{{/hasRegionalHost}}
+        {{#isSearchHost}}appId{{/isSearchHost}}
         {{#hasRegionalHost}}region{{/hasRegionalHost}}
     ),
       baseHeaders: {
@@ -112,6 +112,12 @@ export class {{classname}} {
     return [{ url: `analytics.${region}.algolia.com`, accept: 'readWrite', protocol: 'https' }];
   }
   {{/isAnalyticsHost}}
+
+  {{#isInsightsHost}}
+  public getDefaultHosts(): Host[] {
+    return [{ url: `insights.algolia.io`, accept: 'readWrite', protocol: 'https' }];
+  }
+  {{/isInsightsHost}}
 
   public setRequest(requester: Requester): void {
     this.transporter.setRequester(requester);
