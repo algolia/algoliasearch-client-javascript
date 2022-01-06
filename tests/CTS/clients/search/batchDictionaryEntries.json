@@ -2,29 +2,27 @@
   {
     "method": "batchDictionaryEntries",
     "testName": "get batchDictionaryEntries results with minimal parameters",
-    "parameters": [
-      {
-        "dictionaryName": "dictionaryName",
-        "batchDictionaryEntries": {
-          "requests": [
-            {
-              "action": "addEntry",
-              "body": {
-                "objectID": "1",
-                "language": "en"
-              }
-            },
-            {
-              "action": "deleteEntry",
-              "body": {
-                "objectID": "2",
-                "language": "fr"
-              }
+    "parameters": {
+      "dictionaryName": "dictionaryName",
+      "batchDictionaryEntries": {
+        "requests": [
+          {
+            "action": "addEntry",
+            "body": {
+              "objectID": "1",
+              "language": "en"
             }
-          ]
-        }
+          },
+          {
+            "action": "deleteEntry",
+            "body": {
+              "objectID": "2",
+              "language": "fr"
+            }
+          }
+        ]
       }
-    ],
+    },
     "request": {
       "path": "/1/dictionaries/dictionaryName/batch",
       "method": "POST",
@@ -51,38 +49,48 @@
   {
     "method": "batchDictionaryEntries",
     "testName": "get batchDictionaryEntries results with all parameters",
-    "parameters": [
-      {
-        "dictionaryName": "dictionaryName",
-        "batchDictionaryEntries": {
-          "clearExistingDictionaryEntries": false,
-          "requests": [
-            {
-              "action": "addEntry",
-              "body": {
-                "objectID": "1",
-                "language": "en",
-                "word": "yo",
-                "words": ["yo", "algolia"],
-                "decomposition": ["yo", "algolia"],
-                "state": "enabled"
-              }
-            },
-            {
-              "action": "deleteEntry",
-              "body": {
-                "objectID": "2",
-                "language": "fr",
-                "word": "salut",
-                "words": ["salut", "algolia"],
-                "decomposition": ["salut", "algolia"],
-                "state": "enabled"
-              }
+    "parameters": {
+      "dictionaryName": "dictionaryName",
+      "batchDictionaryEntries": {
+        "clearExistingDictionaryEntries": false,
+        "requests": [
+          {
+            "action": "addEntry",
+            "body": {
+              "objectID": "1",
+              "language": "en",
+              "word": "yo",
+              "words": [
+                "yo",
+                "algolia"
+              ],
+              "decomposition": [
+                "yo",
+                "algolia"
+              ],
+              "state": "enabled"
             }
-          ]
-        }
+          },
+          {
+            "action": "deleteEntry",
+            "body": {
+              "objectID": "2",
+              "language": "fr",
+              "word": "salut",
+              "words": [
+                "salut",
+                "algolia"
+              ],
+              "decomposition": [
+                "salut",
+                "algolia"
+              ],
+              "state": "enabled"
+            }
+          }
+        ]
       }
-    ],
+    },
     "request": {
       "path": "/1/dictionaries/dictionaryName/batch",
       "method": "POST",
@@ -95,8 +103,14 @@
               "objectID": "1",
               "language": "en",
               "word": "yo",
-              "words": ["yo", "algolia"],
-              "decomposition": ["yo", "algolia"],
+              "words": [
+                "yo",
+                "algolia"
+              ],
+              "decomposition": [
+                "yo",
+                "algolia"
+              ],
               "state": "enabled"
             }
           },
@@ -106,8 +120,14 @@
               "objectID": "2",
               "language": "fr",
               "word": "salut",
-              "words": ["salut", "algolia"],
-              "decomposition": ["salut", "algolia"],
+              "words": [
+                "salut",
+                "algolia"
+              ],
+              "decomposition": [
+                "salut",
+                "algolia"
+              ],
               "state": "enabled"
             }
           }

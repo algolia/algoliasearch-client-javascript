@@ -1,7 +1,9 @@
 [
   {
     "method": "clearAllSynonyms",
-    "parameters": [{ "indexName": "indexName" }],
+    "parameters": {
+      "indexName": "indexName"
+    },
     "request": {
       "path": "/1/indexes/indexName/synonyms/clear",
       "method": "POST"

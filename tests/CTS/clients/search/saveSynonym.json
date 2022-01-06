@@ -1,25 +1,31 @@
 [
   {
     "method": "saveSynonym",
-    "parameters": [
-      {
-        "indexName": "indexName",
+    "parameters": {
+      "indexName": "indexName",
+      "objectID": "id1",
+      "synonymHit": {
         "objectID": "id1",
-        "synonymHit": {
-          "objectID": "id1",
-          "type": "synonym",
-          "synonyms": ["car", "vehicule", "auto"]
-        },
-        "forwardToReplicas": true
-      }
-    ],
+        "type": "synonym",
+        "synonyms": [
+          "car",
+          "vehicule",
+          "auto"
+        ]
+      },
+      "forwardToReplicas": true
+    },
     "request": {
       "path": "/1/indexes/indexName/synonyms/id1",
       "method": "PUT",
       "data": {
         "objectID": "id1",
         "type": "synonym",
-        "synonyms": ["car", "vehicule", "auto"]
+        "synonyms": [
+          "car",
+          "vehicule",
+          "auto"
+        ]
       }
     }
   }

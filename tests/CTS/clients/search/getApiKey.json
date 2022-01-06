@@ -1,7 +1,9 @@
 [
   {
     "method": "getApiKey",
-    "parameters": [{ "key": "myTestApiKey" }],
+    "parameters": {
+      "key": "myTestApiKey"
+    },
     "request": {
       "path": "/1/keys/myTestApiKey",
       "method": "GET"

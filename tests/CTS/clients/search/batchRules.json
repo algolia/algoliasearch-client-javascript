@@ -1,43 +1,41 @@
 [
   {
     "method": "batchRules",
-    "parameters": [
-      {
-        "indexName": "indexName",
-        "rule": [
-          {
-            "objectID": "a-rule-id",
-            "conditions": [
-              {
-                "pattern": "smartphone",
-                "anchoring": "contains"
-              }
-            ],
-            "consequence": {
-              "params": {
-                "filters": "category:smartphone"
-              }
+    "parameters": {
+      "indexName": "indexName",
+      "rule": [
+        {
+          "objectID": "a-rule-id",
+          "conditions": [
+            {
+              "pattern": "smartphone",
+              "anchoring": "contains"
             }
-          },
-          {
-            "objectID": "a-second-rule-id",
-            "conditions": [
-              {
-                "pattern": "apple",
-                "anchoring": "contains"
-              }
-            ],
-            "consequence": {
-              "params": {
-                "filters": "brand:apple"
-              }
+          ],
+          "consequence": {
+            "params": {
+              "filters": "category:smartphone"
             }
           }
-        ],
-        "forwardToReplicas": true,
-        "clearExistingRules": true
-      }
-    ],
+        },
+        {
+          "objectID": "a-second-rule-id",
+          "conditions": [
+            {
+              "pattern": "apple",
+              "anchoring": "contains"
+            }
+          ],
+          "consequence": {
+            "params": {
+              "filters": "brand:apple"
+            }
+          }
+        }
+      ],
+      "forwardToReplicas": true,
+      "clearExistingRules": true
+    },
     "request": {
       "path": "/1/indexes/indexName/rules/batch",
       "method": "POST",

@@ -2,7 +2,9 @@
   {
     "method": "browse",
     "testName": "get browse results with minimal parameters",
-    "parameters": [{ "indexName": "indexName" }],
+    "parameters": {
+      "indexName": "indexName"
+    },
     "request": {
       "path": "/1/indexes/indexName/browse",
       "method": "POST"
@@ -11,15 +13,13 @@
   {
     "method": "browse",
     "testName": "get browse results with all parameters",
-    "parameters": [
-      {
-        "indexName": "indexName",
-        "browseRequest": {
-          "params": "query=foo&facetFilters=['bar']",
-          "cursor": "cts"
-        }
+    "parameters": {
+      "indexName": "indexName",
+      "browseRequest": {
+        "params": "query=foo&facetFilters=['bar']",
+        "cursor": "cts"
       }
-    ],
+    },
     "request": {
       "path": "/1/indexes/indexName/browse",
       "method": "POST",

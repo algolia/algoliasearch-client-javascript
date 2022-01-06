@@ -1,16 +1,18 @@
 [
   {
     "method": "searchRules",
-    "parameters": [
-      {
-        "indexName": "indexName",
-        "searchRulesParams": { "query": "something" }
+    "parameters": {
+      "indexName": "indexName",
+      "searchRulesParams": {
+        "query": "something"
       }
-    ],
+    },
     "request": {
       "path": "/1/indexes/indexName/rules/search",
       "method": "POST",
-      "data": { "query": "something" }
+      "data": {
+        "query": "something"
+      }
     }
   }
 ]

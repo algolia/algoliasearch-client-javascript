@@ -1,7 +1,9 @@
 [
   {
     "method": "restoreApiKey",
-    "parameters": [{ "key": "myApiKey" }],
+    "parameters": {
+      "key": "myApiKey"
+    },
     "request": {
       "path": "/1/keys/myApiKey/restore",
       "method": "POST"

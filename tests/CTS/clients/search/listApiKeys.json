@@ -1,7 +1,7 @@
 [
   {
     "method": "listApiKeys",
-    "parameters": [],
+    "parameters": {},
     "request": {
       "path": "/1/keys",
       "method": "GET"

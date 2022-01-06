@@ -11,10 +11,12 @@ import openapitools from '../openapitools.json';
 const availableLanguages = ['javascript'] as const;
 type Language = typeof availableLanguages[number];
 
+// This does not reflect the expected type of the CTS, it's rather the type passed to mustache
 type Tests = {
   testName?: string;
   method: string;
-  parameters: any[];
+  parameters: any;
+  parametersArray: any;
   request: {
     path: string;
     method: string;
@@ -70,6 +72,17 @@ function capitalize(str: string): string {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
+function removeObjectName(obj: Record<string, any>): void {
+  for (const prop in obj) {
+    if (prop === '$objectName') {
+      // eslint-disable-next-line no-param-reassign
+      delete obj[prop];
+    } else if (typeof obj[prop] === 'object') {
+      removeObjectName(obj[prop]);
+    }
+  }
+}
+
 async function loadCTSForClient(client: string): Promise<CTSBlock[]> {
   // load the list of operations from the spec
   const spec = await SwaggerParser.validate(`../specs/${client}/spec.yml`);
@@ -105,18 +118,26 @@ async function loadCTSForClient(client: string): Promise<CTSBlock[]> {
       if (test.testName === undefined) {
         test.testName = test.method;
       }
-
-      // for now we stringify all params for mustache to render them properly
-      for (let i = 0; i < test.parameters.length; i++) {
-        // delete the object name for now, but it could be use for `new $objectName(params)`
-        delete test.parameters[i].$objectName;
-
-        // include the `-last` param to join with comma in mustache
-        test.parameters[i] = {
-          value: JSON.stringify(test.parameters[i]),
-          '-last': i === test.parameters.length - 1,
-        };
+      if (
+        typeof test.parameters !== 'object' ||
+        Array.isArray(test.parameters)
+      ) {
+        throw new Error(`parameters of ${test.testName} must be an object`);
       }
+
+      // we stringify the param for mustache to render them properly
+      // delete the object name recursively for now, but it could be use for `new $objectName(params)`
+      removeObjectName(test.parameters);
+
+      test.parameters = JSON.stringify(test.parameters);
+
+      // include the `-last` param to join with comma in mustache
+      test.parametersArray = Object.values(test.parameters).map(
+        (val, i, arr) => ({
+          value: JSON.stringify(val),
+          '-last': i === arr.length - 1,
+        })
+      );
 
       // stringify request.data too
       test.request.data = JSON.stringify(test.request.data);
@@ -128,7 +149,9 @@ async function loadCTSForClient(client: string): Promise<CTSBlock[]> {
     });
   }
 
-  return ctsClient;
+  return ctsClient.sort((t1, t2) =>
+    t1.operationId.localeCompare(t2.operationId)
+  );
 }
 
 async function loadCTS(): Promise<void> {

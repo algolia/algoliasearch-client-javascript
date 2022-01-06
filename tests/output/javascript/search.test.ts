@@ -251,7 +251,7 @@ describe('getApiKey', () => {
 
 describe('getDictionaryLanguages', () => {
   test('get getDictionaryLanguages', async () => {
-    const req = await client.getDictionaryLanguages();
+    const req = await client.getDictionaryLanguages({});
     expect(req).toMatchObject({
       path: '/1/dictionaries/*/languages',
       method: 'GET',
@@ -261,7 +261,7 @@ describe('getDictionaryLanguages', () => {
 
 describe('getDictionarySettings', () => {
   test('get getDictionarySettings results', async () => {
-    const req = await client.getDictionarySettings();
+    const req = await client.getDictionarySettings({});
     expect(req).toMatchObject({
       path: '/1/dictionaries/*/settings',
       method: 'GET',
@@ -297,7 +297,7 @@ describe('getSynonym', () => {
 
 describe('listApiKeys', () => {
   test('listApiKeys', async () => {
-    const req = await client.listApiKeys();
+    const req = await client.listApiKeys({});
     expect(req).toMatchObject({
       path: '/1/keys',
       method: 'GET',
@@ -407,7 +407,7 @@ describe('search', () => {
   test('search', async () => {
     const req = await client.search({
       indexName: 'indexName',
-      searchParams: { $objectName: 'Query', query: 'queryString' },
+      searchParams: { query: 'queryString' },
     });
     expect(req).toMatchObject({
       path: '/1/indexes/indexName/query',
