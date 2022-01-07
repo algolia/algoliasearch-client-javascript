@@ -13,6 +13,7 @@ OrderBy:
   name: orderBy
   description: Reorder the results.
   schema:
+    type: string
     enum: [searchCount, clickThroughRate, conversionRate, averageClickPosition]
     default: searchCount
 
@@ -21,6 +22,7 @@ Direction:
   name: direction
   description: The sorting of the result.
   schema:
+    type: string
     enum: [asc, desc]
     default: asc
 

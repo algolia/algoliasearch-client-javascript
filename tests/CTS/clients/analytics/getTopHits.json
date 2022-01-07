@@ -1,0 +1,30 @@
+[
+  {
+    "method": "getTopHits",
+    "testName": "get getTopHits with minimal parameters",
+    "parameters": {
+      "index": "index"
+    },
+    "request": {
+      "path": "/2/hits",
+      "method": "GET"
+    }
+  },
+  {
+    "method": "getTopHits",
+    "testName": "get getTopHits with all parameters",
+    "parameters": {
+      "index": "index",
+      "clickAnalytics": true,
+      "startDate": "1999-09-19",
+      "endDate": "2001-01-01",
+      "limit": 21,
+      "offset": 42,
+      "tags": "tag"
+    },
+    "request": {
+      "path": "/2/hits",
+      "method": "GET"
+    }
+  }
+]

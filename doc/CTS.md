@@ -49,6 +49,7 @@ And that's it! If the name of the file matches a real `operationId` in the spec,
 - Create a template in `test/CTS/templates/<your language>.mustache` that parse a array of test into your test framework of choice
 
 When writing your template, here is a list of variables accessible from `mustache`:
+
 ```js
 {
   "import": "the name of the package or library to import",
@@ -60,14 +61,25 @@ When writing your template, here is a list of variables accessible from `mustach
       "testName": "the descriptive name test (default to `method`)"
       "method": "the method to call on the API Client",
       "parameters": {
-        // Object of all parameters with their name, tobe used for languages that require the parameter name
+        // Object of all parameters with their name, to be used for languages that require the parameter name
         "parameterName": "value",
         ...
       },
-      "parametersArray": [
-        // The same paremeters but passed as an array for other languages
-        // It includes the `-last` properties used to join the parameters
+      "parametersWithDataType": [
+          {
+            "key": "key",
+            "value": "value",
+            // booleans indicating the data type
+            "isDate": "false",
+            "isArray": "false",
+            "isObject": "true",
+            "isString": "false",
+            // boolean indicating if it is the last parameter
+            "-last": "false",
+          }
       ],
+      // boolean indicating if the method has parameters, useful for `GET` requests
+      "hasParameters": "true",
       "request": {
         "path": "the expected path of the request",
         "method": "the expected method: GET, POST, PUT, DELETE or PATCH",
@@ -83,6 +95,7 @@ When writing your template, here is a list of variables accessible from `mustach
 ## Get the list of remaining CTS to implement
 
 To get the list of `operationId` not yet in the CTS but in the spec, run this command:
+
 ```bash
 rm -rf ./specs/dist
 comm -3 <(grep -r operationId ./specs | awk -F: '{gsub(/ /,""); print $NF}' | sort) <(find ./tests/CTS/clients -type f -name '*.json' | awk -F/ '{gsub(/.json/,"");print $NF}' | sort)

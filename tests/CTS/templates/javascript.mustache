@@ -3,13 +3,20 @@ import { {{client}}, EchoRequester } from '{{{import}}}';
 const appId = process.env.ALGOLIA_APPLICATION_ID || 'test_app_id';
 const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'test_api_key';
 
-const client = new {{client}}(appId, apiKey, {{#hasRegionalHost}}'eu', {{/hasRegionalHost}}{ requester: new EchoRequester() });
+const client = new {{client}}(appId, apiKey, {{#hasRegionalHost}}'de', {{/hasRegionalHost}}{ requester: new EchoRequester() });
 
 {{#blocks}}
 describe('{{operationId}}', () => {
     {{#tests}}
     test('{{testName}}', async () => {
-        const req = await client.{{method}}({{{parameters}}});
+        const req = await client.{{method}}(
+            {{#hasParameters}}{
+                {{#parametersWithDataType}}
+                    {{#isDate}}{{{key}}}:new Date({{{value}}}),{{/isDate}}{{^isDate}}{{{key}}}:{{{value}}},{{/isDate}}
+                {{/parametersWithDataType}}
+            }{{/hasParameters}}
+        );
+
         expect(req).toMatchObject({
         path: '{{{request.path}}}',
         method: '{{{request.method}}}',

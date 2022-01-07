@@ -16,6 +16,7 @@ describe('addApiKey', () => {
         maxHitsPerQuery: 20,
       },
     });
+
     expect(req).toMatchObject({
       path: '/1/keys',
       method: 'POST',
@@ -41,6 +42,7 @@ describe('batchDictionaryEntries', () => {
         ],
       },
     });
+
     expect(req).toMatchObject({
       path: '/1/dictionaries/compounds/batch',
       method: 'POST',
@@ -84,6 +86,7 @@ describe('batchDictionaryEntries', () => {
         ],
       },
     });
+
     expect(req).toMatchObject({
       path: '/1/dictionaries/compounds/batch',
       method: 'POST',
@@ -137,6 +140,7 @@ describe('batchRules', () => {
       forwardToReplicas: true,
       clearExistingRules: true,
     });
+
     expect(req).toMatchObject({
       path: '/1/indexes/indexName/rules/batch',
       method: 'POST',
@@ -158,7 +162,10 @@ describe('batchRules', () => {
 
 describe('browse', () => {
   test('get browse results with minimal parameters', async () => {
-    const req = await client.browse({ indexName: 'indexName' });
+    const req = await client.browse({
+      indexName: 'indexName',
+    });
+
     expect(req).toMatchObject({
       path: '/1/indexes/indexName/browse',
       method: 'POST',
@@ -173,6 +180,7 @@ describe('browse', () => {
         cursor: 'cts',
       },
     });
+
     expect(req).toMatchObject({
       path: '/1/indexes/indexName/browse',
       method: 'POST',
@@ -183,7 +191,10 @@ describe('browse', () => {
 
 describe('clearAllSynonyms', () => {
   test('clearAllSynonyms', async () => {
-    const req = await client.clearAllSynonyms({ indexName: 'indexName' });
+    const req = await client.clearAllSynonyms({
+      indexName: 'indexName',
+    });
+
     expect(req).toMatchObject({
       path: '/1/indexes/indexName/synonyms/clear',
       method: 'POST',
@@ -193,7 +204,10 @@ describe('clearAllSynonyms', () => {
 
 describe('clearRules', () => {
   test('clearRules', async () => {
-    const req = await client.clearRules({ indexName: 'indexName' });
+    const req = await client.clearRules({
+      indexName: 'indexName',
+    });
+
     expect(req).toMatchObject({
       path: '/1/indexes/indexName/rules/clear',
       method: 'POST',
@@ -203,7 +217,10 @@ describe('clearRules', () => {
 
 describe('deleteApiKey', () => {
   test('deleteApiKey', async () => {
-    const req = await client.deleteApiKey({ key: 'myTestApiKey' });
+    const req = await client.deleteApiKey({
+      key: 'myTestApiKey',
+    });
+
     expect(req).toMatchObject({
       path: '/1/keys/myTestApiKey',
       method: 'DELETE',
@@ -217,6 +234,7 @@ describe('deleteRule', () => {
       indexName: 'indexName',
       objectID: 'id1',
     });
+
     expect(req).toMatchObject({
       path: '/1/indexes/indexName/rules/id1',
       method: 'DELETE',
@@ -230,6 +248,7 @@ describe('deleteSynonym', () => {
       indexName: 'indexName',
       objectID: 'id1',
     });
+
     expect(req).toMatchObject({
       path: '/1/indexes/indexName/synonyms/id1',
       method: 'DELETE',
@@ -239,7 +258,10 @@ describe('deleteSynonym', () => {
 
 describe('getApiKey', () => {
   test('getApiKey', async () => {
-    const req = await client.getApiKey({ key: 'myTestApiKey' });
+    const req = await client.getApiKey({
+      key: 'myTestApiKey',
+    });
+
     expect(req).toMatchObject({
       path: '/1/keys/myTestApiKey',
       method: 'GET',
@@ -250,6 +272,7 @@ describe('getApiKey', () => {
 describe('getDictionaryLanguages', () => {
   test('get getDictionaryLanguages', async () => {
     const req = await client.getDictionaryLanguages();
+
     expect(req).toMatchObject({
       path: '/1/dictionaries/*/languages',
       method: 'GET',
@@ -260,6 +283,7 @@ describe('getDictionaryLanguages', () => {
 describe('getDictionarySettings', () => {
   test('get getDictionarySettings results', async () => {
     const req = await client.getDictionarySettings();
+
     expect(req).toMatchObject({
       path: '/1/dictionaries/*/settings',
       method: 'GET',
@@ -273,6 +297,7 @@ describe('getRule', () => {
       indexName: 'indexName',
       objectID: 'id1',
     });
+
     expect(req).toMatchObject({
       path: '/1/indexes/indexName/rules/id1',
       method: 'GET',
@@ -286,6 +311,7 @@ describe('getSynonym', () => {
       indexName: 'indexName',
       objectID: 'id1',
     });
+
     expect(req).toMatchObject({
       path: '/1/indexes/indexName/synonyms/id1',
       method: 'GET',
@@ -296,6 +322,7 @@ describe('getSynonym', () => {
 describe('listApiKeys', () => {
   test('listApiKeys', async () => {
     const req = await client.listApiKeys();
+
     expect(req).toMatchObject({
       path: '/1/keys',
       method: 'GET',
@@ -305,7 +332,10 @@ describe('listApiKeys', () => {
 
 describe('restoreApiKey', () => {
   test('restoreApiKey', async () => {
-    const req = await client.restoreApiKey({ key: 'myApiKey' });
+    const req = await client.restoreApiKey({
+      key: 'myApiKey',
+    });
+
     expect(req).toMatchObject({
       path: '/1/keys/myApiKey/restore',
       method: 'POST',
@@ -325,6 +355,7 @@ describe('saveRule', () => {
       },
       forwardToReplicas: true,
     });
+
     expect(req).toMatchObject({
       path: '/1/indexes/indexName/rules/id1',
       method: 'PUT',
@@ -349,6 +380,7 @@ describe('saveSynonym', () => {
       },
       forwardToReplicas: true,
     });
+
     expect(req).toMatchObject({
       path: '/1/indexes/indexName/synonyms/id1',
       method: 'PUT',
@@ -381,6 +413,7 @@ describe('saveSynonyms', () => {
       forwardToReplicas: true,
       replaceExistingSynonyms: false,
     });
+
     expect(req).toMatchObject({
       path: '/1/indexes/indexName/synonyms/batch',
       method: 'POST',
@@ -407,6 +440,7 @@ describe('search', () => {
       indexName: 'indexName',
       searchParams: { query: 'myQuery' },
     });
+
     expect(req).toMatchObject({
       path: '/1/indexes/indexName/query',
       method: 'POST',
@@ -421,6 +455,7 @@ describe('searchDictionaryEntries', () => {
       dictionaryName: 'compounds',
       searchDictionaryEntries: { query: 'foo' },
     });
+
     expect(req).toMatchObject({
       path: '/1/dictionaries/compounds/search',
       method: 'POST',
@@ -438,6 +473,7 @@ describe('searchDictionaryEntries', () => {
         language: 'fr',
       },
     });
+
     expect(req).toMatchObject({
       path: '/1/dictionaries/compounds/search',
       method: 'POST',
@@ -452,6 +488,7 @@ describe('searchForFacetValues', () => {
       indexName: 'indexName',
       facetName: 'facetName',
     });
+
     expect(req).toMatchObject({
       path: '/1/indexes/indexName/facets/facetName/query',
       method: 'POST',
@@ -468,6 +505,7 @@ describe('searchForFacetValues', () => {
         maxFacetHits: 42,
       },
     });
+
     expect(req).toMatchObject({
       path: '/1/indexes/indexName/facets/facetName/query',
       method: 'POST',
@@ -486,6 +524,7 @@ describe('searchRules', () => {
       indexName: 'indexName',
       searchRulesParams: { query: 'something' },
     });
+
     expect(req).toMatchObject({
       path: '/1/indexes/indexName/rules/search',
       method: 'POST',
@@ -501,6 +540,7 @@ describe('searchSynonyms', () => {
       query: 'queryString',
       type: 'onewaysynonym',
     });
+
     expect(req).toMatchObject({
       path: '/1/indexes/indexName/synonyms/search',
       method: 'POST',
@@ -515,6 +555,7 @@ describe('setDictionarySettings', () => {
         disableStandardEntries: { plurals: { fr: false, en: false, ru: true } },
       },
     });
+
     expect(req).toMatchObject({
       path: '/1/dictionaries/*/settings',
       method: 'PUT',
@@ -534,6 +575,7 @@ describe('setDictionarySettings', () => {
         },
       },
     });
+
     expect(req).toMatchObject({
       path: '/1/dictionaries/*/settings',
       method: 'PUT',
@@ -559,6 +601,7 @@ describe('updateApiKey', () => {
         maxHitsPerQuery: 20,
       },
     });
+
     expect(req).toMatchObject({
       path: '/1/keys/myApiKey',
       method: 'PUT',
