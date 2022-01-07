@@ -1455,184 +1455,532 @@ export class AnalyticsApi {
 }
 
 export type GetAverageClickPositionProps = {
+  /**
+   * The index name to target.
+   */
   index: string;
+  /**
+   * The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   */
   startDate?: Date;
+  /**
+   * The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   */
   endDate?: Date;
+  /**
+   * Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   */
   tags?: string;
 };
 
 export type GetClickPositionsProps = {
+  /**
+   * The index name to target.
+   */
   index: string;
+  /**
+   * The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   */
   startDate?: Date;
+  /**
+   * The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   */
   endDate?: Date;
+  /**
+   * Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   */
   tags?: string;
 };
 
 export type GetClickThroughRateProps = {
+  /**
+   * The index name to target.
+   */
   index: string;
+  /**
+   * The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   */
   startDate?: Date;
+  /**
+   * The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   */
   endDate?: Date;
+  /**
+   * Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   */
   tags?: string;
 };
 
 export type GetConversationRateProps = {
+  /**
+   * The index name to target.
+   */
   index: string;
+  /**
+   * The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   */
   startDate?: Date;
+  /**
+   * The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   */
   endDate?: Date;
+  /**
+   * Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   */
   tags?: string;
 };
 
 export type GetNoClickRateProps = {
+  /**
+   * The index name to target.
+   */
   index: string;
+  /**
+   * The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   */
   startDate?: Date;
+  /**
+   * The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   */
   endDate?: Date;
+  /**
+   * Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   */
   tags?: string;
 };
 
 export type GetNoResultsRateProps = {
+  /**
+   * The index name to target.
+   */
   index: string;
+  /**
+   * The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   */
   startDate?: Date;
+  /**
+   * The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   */
   endDate?: Date;
+  /**
+   * Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   */
   tags?: string;
 };
 
 export type GetSearchesCountProps = {
+  /**
+   * The index name to target.
+   */
   index: string;
+  /**
+   * The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   */
   startDate?: Date;
+  /**
+   * The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   */
   endDate?: Date;
+  /**
+   * Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   */
   tags?: string;
 };
 
 export type GetSearchesNoClicksProps = {
+  /**
+   * The index name to target.
+   */
   index: string;
+  /**
+   * The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   */
   startDate?: Date;
+  /**
+   * The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   */
   endDate?: Date;
+  /**
+   * How many items to fetch.
+   */
   limit?: number;
+  /**
+   * From which position to start retrieving results.
+   */
   offset?: number;
+  /**
+   * Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   */
   tags?: string;
 };
 
 export type GetSearchesNoResultsProps = {
+  /**
+   * The index name to target.
+   */
   index: string;
+  /**
+   * The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   */
   startDate?: Date;
+  /**
+   * The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   */
   endDate?: Date;
+  /**
+   * How many items to fetch.
+   */
   limit?: number;
+  /**
+   * From which position to start retrieving results.
+   */
   offset?: number;
+  /**
+   * Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   */
   tags?: string;
 };
 
 export type GetStatusProps = {
+  /**
+   * The index name to target.
+   */
   index: string;
 };
 
 export type GetTopCountriesProps = {
+  /**
+   * The index name to target.
+   */
   index: string;
+  /**
+   * The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   */
   startDate?: Date;
+  /**
+   * The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   */
   endDate?: Date;
+  /**
+   * How many items to fetch.
+   */
   limit?: number;
+  /**
+   * From which position to start retrieving results.
+   */
   offset?: number;
+  /**
+   * Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   */
   tags?: string;
 };
 
 export type GetTopFilterAttributesProps = {
+  /**
+   * The index name to target.
+   */
   index: string;
+  /**
+   * The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   */
   startDate?: Date;
+  /**
+   * The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   */
   endDate?: Date;
+  /**
+   * How many items to fetch.
+   */
   limit?: number;
+  /**
+   * From which position to start retrieving results.
+   */
   offset?: number;
+  /**
+   * Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   */
   tags?: string;
 };
 
 export type GetTopFilterAttributesForSearchProps = {
+  /**
+   * The index name to target.
+   */
   index: string;
+  /**
+   * The query term. Must match the exact user input.
+   */
   search: string;
+  /**
+   * The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   */
   startDate?: Date;
+  /**
+   * The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   */
   endDate?: Date;
+  /**
+   * How many items to fetch.
+   */
   limit?: number;
+  /**
+   * From which position to start retrieving results.
+   */
   offset?: number;
+  /**
+   * Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   */
   tags?: string;
 };
 
 export type GetTopFilterForAttributeProps = {
+  /**
+   * The exact name of the attribute.
+   */
   attribute: string;
+  /**
+   * The index name to target.
+   */
   index: string;
+  /**
+   * The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   */
   startDate?: Date;
+  /**
+   * The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   */
   endDate?: Date;
+  /**
+   * How many items to fetch.
+   */
   limit?: number;
+  /**
+   * From which position to start retrieving results.
+   */
   offset?: number;
+  /**
+   * Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   */
   tags?: string;
 };
 
 export type GetTopFiltersForAttributesSearchProps = {
+  /**
+   * The exact names of the attributes, separated by commas.
+   */
   attributes: string;
+  /**
+   * The index name to target.
+   */
   index: string;
+  /**
+   * The query term. Must match the exact user input.
+   */
   search: string;
+  /**
+   * The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   */
   startDate?: Date;
+  /**
+   * The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   */
   endDate?: Date;
+  /**
+   * How many items to fetch.
+   */
   limit?: number;
+  /**
+   * From which position to start retrieving results.
+   */
   offset?: number;
+  /**
+   * Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   */
   tags?: string;
 };
 
 export type GetTopFiltersNoResultsProps = {
+  /**
+   * The index name to target.
+   */
   index: string;
+  /**
+   * The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   */
   startDate?: Date;
+  /**
+   * The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   */
   endDate?: Date;
+  /**
+   * How many items to fetch.
+   */
   limit?: number;
+  /**
+   * From which position to start retrieving results.
+   */
   offset?: number;
+  /**
+   * Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   */
   tags?: string;
 };
 
 export type GetTopFiltersNoResultsForSearchProps = {
+  /**
+   * The index name to target.
+   */
   index: string;
+  /**
+   * The query term. Must match the exact user input.
+   */
   search: string;
+  /**
+   * The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   */
   startDate?: Date;
+  /**
+   * The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   */
   endDate?: Date;
+  /**
+   * How many items to fetch.
+   */
   limit?: number;
+  /**
+   * From which position to start retrieving results.
+   */
   offset?: number;
+  /**
+   * Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   */
   tags?: string;
 };
 
 export type GetTopHitsProps = {
+  /**
+   * The index name to target.
+   */
   index: string;
+  /**
+   * Whether to include the click-through and conversion rates for a search.
+   */
   clickAnalytics?: boolean;
+  /**
+   * The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   */
   startDate?: Date;
+  /**
+   * The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   */
   endDate?: Date;
+  /**
+   * How many items to fetch.
+   */
   limit?: number;
+  /**
+   * From which position to start retrieving results.
+   */
   offset?: number;
+  /**
+   * Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   */
   tags?: string;
 };
 
 export type GetTopHitsForSearchProps = {
+  /**
+   * The index name to target.
+   */
   index: string;
+  /**
+   * The query term. Must match the exact user input.
+   */
   search: string;
+  /**
+   * Whether to include the click-through and conversion rates for a search.
+   */
   clickAnalytics?: boolean;
+  /**
+   * The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   */
   startDate?: Date;
+  /**
+   * The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   */
   endDate?: Date;
+  /**
+   * How many items to fetch.
+   */
   limit?: number;
+  /**
+   * From which position to start retrieving results.
+   */
   offset?: number;
+  /**
+   * Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   */
   tags?: string;
 };
 
 export type GetTopSearchesProps = {
+  /**
+   * The index name to target.
+   */
   index: string;
+  /**
+   * Whether to include the click-through and conversion rates for a search.
+   */
   clickAnalytics?: boolean;
+  /**
+   * The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   */
   startDate?: Date;
+  /**
+   * The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   */
   endDate?: Date;
+  /**
+   * Reorder the results.
+   */
   orderBy?:
     | 'averageClickPosition'
     | 'clickThroughRate'
     | 'conversionRate'
     | 'searchCount';
+  /**
+   * The sorting of the result.
+   */
   direction?: 'asc' | 'desc';
+  /**
+   * How many items to fetch.
+   */
   limit?: number;
+  /**
+   * From which position to start retrieving results.
+   */
   offset?: number;
+  /**
+   * Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   */
   tags?: string;
 };
 
 export type GetUsersCountProps = {
+  /**
+   * The index name to target.
+   */
   index: string;
+  /**
+   * The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   */
   startDate?: Date;
+  /**
+   * The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   */
   endDate?: Date;
+  /**
+   * Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   */
   tags?: string;
 };
