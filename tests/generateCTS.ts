@@ -10,13 +10,23 @@ import openapitools from '../openapitools.json';
 
 const availableLanguages = ['javascript'] as const;
 type Language = typeof availableLanguages[number];
+type ParametersWithDataType = {
+  key: string;
+  value: string;
+  isDate: boolean;
+  isArray: boolean;
+  isObject: boolean;
+  isString: boolean;
+  '-last': boolean;
+};
 
 // This does not reflect the expected type of the CTS, it's rather the type passed to mustache
 type Tests = {
   testName?: string;
   method: string;
   parameters: any;
-  parametersArray: any;
+  parametersWithDataType: ParametersWithDataType[] | undefined;
+  hasParameters: boolean;
   request: {
     path: string;
     method: string;
@@ -124,6 +134,8 @@ async function loadCTSForClient(client: string): Promise<CTSBlock[]> {
 
       if (Object.keys(test.parameters).length === 0) {
         test.parameters = undefined;
+        test.parametersWithDataType = undefined;
+        test.hasParameters = false;
 
         continue;
       }
@@ -139,15 +151,31 @@ async function loadCTSForClient(client: string): Promise<CTSBlock[]> {
       // delete the object name recursively for now, but it could be use for `new $objectName(params)`
       removeObjectName(test.parameters);
 
-      test.parameters = JSON.stringify(test.parameters);
-
+      // Provide the `key` and `is*` params to apply custom logic in templates
       // include the `-last` param to join with comma in mustache
-      test.parametersArray = Object.values(test.parameters).map(
-        (val, i, arr) => ({
-          value: JSON.stringify(val),
-          '-last': i === arr.length - 1,
-        })
+      test.parametersWithDataType = Object.entries(test.parameters).map(
+        ([key, value], i, arr) => {
+          const isDate = key === 'startDate' || key === 'endDate';
+          const isArray = Array.isArray(value);
+
+          return {
+            key,
+            value: JSON.stringify(value),
+            isString: typeof value === 'string' && isDate === false,
+            isObject: typeof value === 'object' && isArray === false,
+            isArray,
+            isDate,
+            '-last': i === arr.length - 1,
+          };
+        }
       );
+
+      if (fileName === 'getDictionarySettings') {
+        console.log(test.parameters, test.parametersWithDataType);
+      }
+
+      test.parameters = JSON.stringify(test.parameters);
+      test.hasParameters = true;
     }
 
     ctsClient.push({

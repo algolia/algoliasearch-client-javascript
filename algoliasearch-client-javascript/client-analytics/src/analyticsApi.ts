@@ -1619,8 +1619,12 @@ export type GetTopSearchesProps = {
   clickAnalytics?: boolean;
   startDate?: Date;
   endDate?: Date;
-  orderBy?: Record<string, any>;
-  direction?: Record<string, any>;
+  orderBy?:
+    | 'averageClickPosition'
+    | 'clickThroughRate'
+    | 'conversionRate'
+    | 'searchCount';
+  direction?: 'asc' | 'desc';
   limit?: number;
   offset?: number;
   tags?: string;

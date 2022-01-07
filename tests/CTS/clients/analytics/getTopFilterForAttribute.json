@@ -1,0 +1,60 @@
+[
+  {
+    "method": "getTopFilterForAttribute",
+    "testName": "get getTopFilterForAttribute with minimal parameters",
+    "parameters": {
+      "attribute": "myAttribute",
+      "index": "index"
+    },
+    "request": {
+      "path": "/2/filters/myAttribute",
+      "method": "GET"
+    }
+  },
+  {
+    "method": "getTopFilterForAttribute",
+    "testName": "get getTopFilterForAttribute with minimal parameters and multiple attributes",
+    "parameters": {
+      "attribute": "myAttribute1,myAttribute2",
+      "index": "index"
+    },
+    "request": {
+      "path": "/2/filters/myAttribute1%2CmyAttribute2",
+      "method": "GET"
+    }
+  },
+  {
+    "method": "getTopFilterForAttribute",
+    "testName": "get getTopFilterForAttribute with all parameters",
+    "parameters": {
+      "attribute": "myAttribute",
+      "index": "index",
+      "startDate": "1999-09-19",
+      "endDate": "2001-01-01",
+      "limit": 21,
+      "offset": 42,
+      "tags": "tag"
+    },
+    "request": {
+      "path": "/2/filters/myAttribute",
+      "method": "GET"
+    }
+  },
+  {
+    "method": "getTopFilterForAttribute",
+    "testName": "get getTopFilterForAttribute with all parameters and multiple attributes",
+    "parameters": {
+      "attribute": "myAttribute1,myAttribute2",
+      "index": "index",
+      "startDate": "1999-09-19",
+      "endDate": "2001-01-01",
+      "limit": 21,
+      "offset": 42,
+      "tags": "tag"
+    },
+    "request": {
+      "path": "/2/filters/myAttribute1%2CmyAttribute2",
+      "method": "GET"
+    }
+  }
+]

@@ -6,13 +6,16 @@ import {
 const appId = process.env.ALGOLIA_APPLICATION_ID || 'test_app_id';
 const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'test_api_key';
 
-const client = new PersonalizationApi(appId, apiKey, 'eu', {
+const client = new PersonalizationApi(appId, apiKey, 'de', {
   requester: new EchoRequester(),
 });
 
 describe('deleteUserProfile', () => {
   test('delete deleteUserProfile', async () => {
-    const req = await client.deleteUserProfile({ userToken: 'UserToken' });
+    const req = await client.deleteUserProfile({
+      userToken: 'UserToken',
+    });
+
     expect(req).toMatchObject({
       path: '/1/profiles/UserToken',
       method: 'DELETE',
@@ -23,6 +26,7 @@ describe('deleteUserProfile', () => {
 describe('getPersonalizationStrategy', () => {
   test('get getPersonalizationStrategy', async () => {
     const req = await client.getPersonalizationStrategy();
+
     expect(req).toMatchObject({
       path: '/1/strategies/personalization',
       method: 'GET',
@@ -32,7 +36,10 @@ describe('getPersonalizationStrategy', () => {
 
 describe('getUserTokenProfile', () => {
   test('get getUserTokenProfile', async () => {
-    const req = await client.getUserTokenProfile({ userToken: 'UserToken' });
+    const req = await client.getUserTokenProfile({
+      userToken: 'UserToken',
+    });
+
     expect(req).toMatchObject({
       path: '/1/profiles/personalization/UserToken',
       method: 'GET',
@@ -49,6 +56,7 @@ describe('setPersonalizationStrategy', () => {
         personalizationImpact: 42,
       },
     });
+
     expect(req).toMatchObject({
       path: '/1/strategies/personalization',
       method: 'POST',

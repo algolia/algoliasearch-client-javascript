@@ -21,6 +21,7 @@ describe('getRecommendations', () => {
         ],
       },
     });
+
     expect(req).toMatchObject({
       path: '/1/indexes/*/recommendations',
       method: 'POST',
@@ -55,6 +56,7 @@ describe('getRecommendations', () => {
         ],
       },
     });
+
     expect(req).toMatchObject({
       path: '/1/indexes/*/recommendations',
       method: 'POST',
@@ -95,6 +97,7 @@ describe('getRecommendations', () => {
         ],
       },
     });
+
     expect(req).toMatchObject({
       path: '/1/indexes/*/recommendations',
       method: 'POST',
@@ -146,6 +149,7 @@ describe('getRecommendations', () => {
         ],
       },
     });
+
     expect(req).toMatchObject({
       path: '/1/indexes/*/recommendations',
       method: 'POST',
@@ -191,6 +195,7 @@ describe('getRecommendations', () => {
         ],
       },
     });
+
     expect(req).toMatchObject({
       path: '/1/indexes/*/recommendations',
       method: 'POST',

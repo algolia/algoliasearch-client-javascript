@@ -5692,6 +5692,7 @@ fsevents@^2.3.2:
   version: 0.0.0-use.local
   resolution: "tests@workspace:tests"
   dependencies:
+    "@algolia/client-analytics": 5.0.0
     "@algolia/client-insights": 5.0.0
     "@algolia/client-personalization": 5.0.0
     "@algolia/client-search": 5.0.0

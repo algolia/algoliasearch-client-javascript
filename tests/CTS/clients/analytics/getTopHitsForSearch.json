@@ -1,0 +1,32 @@
+[
+  {
+    "method": "getTopHitsForSearch",
+    "testName": "get getTopHitsForSearch with minimal parameters",
+    "parameters": {
+      "index": "index",
+      "search": "mySearch"
+    },
+    "request": {
+      "path": "/2/hits?search=mySearch",
+      "method": "GET"
+    }
+  },
+  {
+    "method": "getTopHitsForSearch",
+    "testName": "get getTopHitsForSearch with all parameters",
+    "parameters": {
+      "index": "index",
+      "search": "mySearch",
+      "clickAnalytics": true,
+      "startDate": "1999-09-19",
+      "endDate": "2001-01-01",
+      "limit": 21,
+      "offset": 42,
+      "tags": "tag"
+    },
+    "request": {
+      "path": "/2/hits?search=mySearch",
+      "method": "GET"
+    }
+  }
+]

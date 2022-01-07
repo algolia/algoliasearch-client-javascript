@@ -42,6 +42,7 @@ describe('pushEvents', () => {
         ],
       },
     });
+
     expect(req).toMatchObject({
       path: '/1/events',
       method: 'POST',

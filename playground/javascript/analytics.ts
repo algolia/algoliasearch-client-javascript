@@ -14,7 +14,8 @@ const client = new AnalyticsApi(appId, apiKey, 'de');
 
 async function testAnalytics() {
   try {
-    const res = await client.getSearchesNoResults({
+    const res = await client.getTopFilterForAttribute({
+      attribute: 'myAttribute1,myAttribute2',
       index: analyticsIndex,
     });
 
