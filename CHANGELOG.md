@@ -1,3 +1,12 @@
+## [v4.12.0](https://github.com/algolia/algoliasearch-client-javascript/compare/4.11.0...4.12.0)
+
+* feat(types): add reranking engine settings to types (#1378) ([e9c0f30](https://github.com/algolia/algoliasearch-client-javascript/commit/e9c0f30)), closes [#1378](https://github.com/algolia/algoliasearch-client-javascript/issues/1378)
+* chore: clean up unused package and auto exports (#1315) ([dfa7254](https://github.com/algolia/algoliasearch-client-javascript/commit/dfa7254)), closes [#1315](https://github.com/algolia/algoliasearch-client-javascript/issues/1315)
+* chore: Configure Renovate (#1304) ([f75924d](https://github.com/algolia/algoliasearch-client-javascript/commit/f75924d)), closes [#1304](https://github.com/algolia/algoliasearch-client-javascript/issues/1304)
+* chore: disable renovate until the test suite is less flaky (#1370) ([8c8db3d](https://github.com/algolia/algoliasearch-client-javascript/commit/8c8db3d)), closes [#1370](https://github.com/algolia/algoliasearch-client-javascript/issues/1370)
+
+
+
 ## [v4.11.0](https://github.com/algolia/algoliasearch-client-javascript/compare/4.10.5...4.11.0)
 
 * fix(insideBoundingBox): allow strings (#1310) ([87d5b0d](https://github.com/algolia/algoliasearch-client-javascript/commit/87d5b0d)), closes [#1310](https://github.com/algolia/algoliasearch-client-javascript/issues/1310)
