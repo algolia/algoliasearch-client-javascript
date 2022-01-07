@@ -238,13 +238,22 @@ export class PersonalizationApi {
 }
 
 export type DeleteUserProfileProps = {
+  /**
+   * UserToken representing the user for which to fetch the Personalization profile.
+   */
   userToken: string;
 };
 
 export type GetUserTokenProfileProps = {
+  /**
+   * UserToken representing the user for which to fetch the Personalization profile.
+   */
   userToken: string;
 };
 
 export type SetPersonalizationStrategyProps = {
+  /**
+   * The personalizationStrategyObject.
+   */
   personalizationStrategyObject: PersonalizationStrategyObject;
 };

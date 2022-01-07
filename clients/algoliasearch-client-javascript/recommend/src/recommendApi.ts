@@ -140,5 +140,8 @@ export class RecommendApi {
 }
 
 export type GetRecommendationsProps = {
+  /**
+   * The getRecommendations.
+   */
   getRecommendations: GetRecommendations;
 };

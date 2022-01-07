@@ -2502,263 +2502,575 @@ export class SearchApi {
 }
 
 export type AddApiKeyProps = {
+  /**
+   * The apiKey.
+   */
   apiKey: ApiKey;
 };
 
 export type AddOrUpdateObjectProps = {
+  /**
+   * The index in which to perform the request.
+   */
   indexName: string;
+  /**
+   * Unique identifier of an object.
+   */
   objectID: string;
+  /**
+   * The Algolia object.
+   */
   requestBody: { [key: string]: Record<string, any> };
 };
 
 export type AppendSourceProps = {
+  /**
+   * The source to add.
+   */
   source: Source;
 };
 
 export type AssignUserIdProps = {
+  /**
+   * UserID to assign.
+   */
   xAlgoliaUserID: Record<string, any>;
+  /**
+   * The assignUserIdObject.
+   */
   assignUserIdObject: AssignUserIdObject;
 };
 
 export type BatchProps = {
+  /**
+   * The index in which to perform the request.
+   */
   indexName: string;
+  /**
+   * The batchWriteObject.
+   */
   batchWriteObject: BatchWriteObject;
 };
 
 export type BatchAssignUserIdsProps = {
+  /**
+   * UserID to assign.
+   */
   xAlgoliaUserID: Record<string, any>;
+  /**
+   * The batchAssignUserIdsObject.
+   */
   batchAssignUserIdsObject: BatchAssignUserIdsObject;
 };
 
 export type BatchDictionaryEntriesProps = {
+  /**
+   * The dictionary to search in.
+   */
   dictionaryName: 'compounds' | 'plurals' | 'stopwords';
+  /**
+   * The batchDictionaryEntries.
+   */
   batchDictionaryEntries: BatchDictionaryEntries;
 };
 
 export type BatchRulesProps = {
+  /**
+   * The index in which to perform the request.
+   */
   indexName: string;
+  /**
+   * The rule.
+   */
   rule: Rule[];
+  /**
+   * When true, changes are also propagated to replicas of the given indexName.
+   */
   forwardToReplicas?: boolean;
+  /**
+   * When true, existing Rules are cleared before adding this batch. When false, existing Rules are kept.
+   */
   clearExistingRules?: boolean;
 };
 
 export type BrowseProps = {
+  /**
+   * The index in which to perform the request.
+   */
   indexName: string;
+  /**
+   * The browseRequest.
+   */
   browseRequest?: BrowseRequest;
 };
 
 export type ClearAllSynonymsProps = {
+  /**
+   * The index in which to perform the request.
+   */
   indexName: string;
+  /**
+   * When true, changes are also propagated to replicas of the given indexName.
+   */
   forwardToReplicas?: boolean;
 };
 
 export type ClearObjectsProps = {
+  /**
+   * The index in which to perform the request.
+   */
   indexName: string;
 };
 
 export type ClearRulesProps = {
+  /**
+   * The index in which to perform the request.
+   */
   indexName: string;
+  /**
+   * When true, changes are also propagated to replicas of the given indexName.
+   */
   forwardToReplicas?: boolean;
 };
 
 export type DeleteApiKeyProps = {
+  /**
+   * API Key string.
+   */
   key: string;
 };
 
 export type DeleteByProps = {
+  /**
+   * The index in which to perform the request.
+   */
   indexName: string;
+  /**
+   * The searchParams.
+   */
   searchParams: SearchParams;
 };
 
 export type DeleteIndexProps = {
+  /**
+   * The index in which to perform the request.
+   */
   indexName: string;
 };
 
 export type DeleteObjectProps = {
+  /**
+   * The index in which to perform the request.
+   */
   indexName: string;
+  /**
+   * Unique identifier of an object.
+   */
   objectID: string;
 };
 
 export type DeleteRuleProps = {
+  /**
+   * The index in which to perform the request.
+   */
   indexName: string;
+  /**
+   * Unique identifier of an object.
+   */
   objectID: string;
+  /**
+   * When true, changes are also propagated to replicas of the given indexName.
+   */
   forwardToReplicas?: boolean;
 };
 
 export type DeleteSourceProps = {
+  /**
+   * The IP range of the source.
+   */
   source: string;
 };
 
 export type DeleteSynonymProps = {
+  /**
+   * The index in which to perform the request.
+   */
   indexName: string;
+  /**
+   * Unique identifier of an object.
+   */
   objectID: string;
+  /**
+   * When true, changes are also propagated to replicas of the given indexName.
+   */
   forwardToReplicas?: boolean;
 };
 
 export type GetApiKeyProps = {
+  /**
+   * API Key string.
+   */
   key: string;
 };
 
 export type GetLogsProps = {
+  /**
+   * First entry to retrieve (zero-based). Log entries are sorted by decreasing date, therefore 0 designates the most recent log entry.
+   */
   offset?: number;
+  /**
+   * Maximum number of entries to retrieve. The maximum allowed value is 1000.
+   */
   length?: number;
+  /**
+   * Index for which log entries should be retrieved. When omitted, log entries are retrieved across all indices.
+   */
   indexName?: string;
+  /**
+   * Type of log entries to retrieve. When omitted, all log entries are retrieved.
+   */
   type?: 'all' | 'build' | 'error' | 'query';
 };
 
 export type GetObjectProps = {
+  /**
+   * The index in which to perform the request.
+   */
   indexName: string;
+  /**
+   * Unique identifier of an object.
+   */
   objectID: string;
+  /**
+   * The attributesToRetrieve.
+   */
   attributesToRetrieve?: string[];
 };
 
 export type GetObjectsProps = {
+  /**
+   * The getObjectsObject.
+   */
   getObjectsObject: GetObjectsObject;
 };
 
 export type GetRuleProps = {
+  /**
+   * The index in which to perform the request.
+   */
   indexName: string;
+  /**
+   * Unique identifier of an object.
+   */
   objectID: string;
 };
 
 export type GetSettingsProps = {
+  /**
+   * The index in which to perform the request.
+   */
   indexName: string;
 };
 
 export type GetSynonymProps = {
+  /**
+   * The index in which to perform the request.
+   */
   indexName: string;
+  /**
+   * Unique identifier of an object.
+   */
   objectID: string;
 };
 
 export type GetTaskProps = {
+  /**
+   * The index in which to perform the request.
+   */
   indexName: string;
+  /**
+   * Unique identifier of an task. Numeric value (up to 64bits).
+   */
   taskID: number;
 };
 
 export type GetUserIdProps = {
+  /**
+   * UserID to assign.
+   */
   userID: Record<string, any>;
 };
 
 export type HasPendingMappingsProps = {
+  /**
+   * The getClusters.
+   */
   getClusters?: boolean;
 };
 
 export type ListIndicesProps = {
+  /**
+   * Requested page (zero-based). When specified, will retrieve a specific page; the page size is implicitly set to 100. When null, will retrieve all indices (no pagination).
+   */
   page?: number;
 };
 
 export type ListUserIdsProps = {
+  /**
+   * Requested page (zero-based). When specified, will retrieve a specific page; the page size is implicitly set to 100. When null, will retrieve all indices (no pagination).
+   */
   page?: number;
+  /**
+   * Maximum number of objects to retrieve.
+   */
   hitsPerPage?: number;
 };
 
 export type MultipleBatchProps = {
+  /**
+   * The batchObject.
+   */
   batchObject: BatchObject;
 };
 
 export type MultipleQueriesProps = {
+  /**
+   * The multipleQueriesObject.
+   */
   multipleQueriesObject: MultipleQueriesObject;
 };
 
 export type OperationIndexProps = {
+  /**
+   * The index in which to perform the request.
+   */
   indexName: string;
+  /**
+   * The operationIndexObject.
+   */
   operationIndexObject: OperationIndexObject;
 };
 
 export type PartialUpdateObjectProps = {
+  /**
+   * The index in which to perform the request.
+   */
   indexName: string;
+  /**
+   * Unique identifier of an object.
+   */
   objectID: string;
+  /**
+   * The Algolia object.
+   */
   stringBuildInOperation: Array<{ [key: string]: BuildInOperation | string }>;
+  /**
+   * Creates the record if it does not exist yet.
+   */
   createIfNotExists?: boolean;
 };
 
 export type RemoveUserIdProps = {
+  /**
+   * UserID to assign.
+   */
   userID: Record<string, any>;
 };
 
 export type ReplaceSourcesProps = {
+  /**
+   * The sources to allow.
+   */
   source: Source[];
 };
 
 export type RestoreApiKeyProps = {
+  /**
+   * API Key string.
+   */
   key: string;
 };
 
 export type SaveObjectProps = {
+  /**
+   * The index in which to perform the request.
+   */
   indexName: string;
+  /**
+   * The Algolia object.
+   */
   requestBody: { [key: string]: Record<string, any> };
 };
 
 export type SaveRuleProps = {
+  /**
+   * The index in which to perform the request.
+   */
   indexName: string;
+  /**
+   * Unique identifier of an object.
+   */
   objectID: string;
+  /**
+   * The rule.
+   */
   rule: Rule;
+  /**
+   * When true, changes are also propagated to replicas of the given indexName.
+   */
   forwardToReplicas?: boolean;
 };
 
 export type SaveSynonymProps = {
+  /**
+   * The index in which to perform the request.
+   */
   indexName: string;
+  /**
+   * Unique identifier of an object.
+   */
   objectID: string;
+  /**
+   * The synonymHit.
+   */
   synonymHit: SynonymHit;
+  /**
+   * When true, changes are also propagated to replicas of the given indexName.
+   */
   forwardToReplicas?: boolean;
 };
 
 export type SaveSynonymsProps = {
+  /**
+   * The index in which to perform the request.
+   */
   indexName: string;
+  /**
+   * The synonymHit.
+   */
   synonymHit: SynonymHit[];
+  /**
+   * When true, changes are also propagated to replicas of the given indexName.
+   */
   forwardToReplicas?: boolean;
+  /**
+   * Replace all synonyms of the index with the ones sent with this request.
+   */
   replaceExistingSynonyms?: boolean;
 };
 
 export type SearchProps = {
+  /**
+   * The index in which to perform the request.
+   */
   indexName: string;
+  /**
+   * The searchParams.
+   */
   searchParams: SearchParams;
 };
 
 export type SearchDictionaryEntriesProps = {
+  /**
+   * The dictionary to search in.
+   */
   dictionaryName: 'compounds' | 'plurals' | 'stopwords';
+  /**
+   * The searchDictionaryEntries.
+   */
   searchDictionaryEntries: SearchDictionaryEntries;
 };
 
 export type SearchForFacetValuesProps = {
+  /**
+   * The index in which to perform the request.
+   */
   indexName: string;
+  /**
+   * The facet name.
+   */
   facetName: string;
+  /**
+   * The searchForFacetValuesRequest.
+   */
   searchForFacetValuesRequest?: SearchForFacetValuesRequest;
 };
 
 export type SearchRulesProps = {
+  /**
+   * The index in which to perform the request.
+   */
   indexName: string;
+  /**
+   * The searchRulesParams.
+   */
   searchRulesParams: SearchRulesParams;
 };
 
 export type SearchSynonymsProps = {
+  /**
+   * The index in which to perform the request.
+   */
   indexName: string;
+  /**
+   * Search for specific synonyms matching this string.
+   */
   query?: string;
+  /**
+   * Only search for specific types of synonyms.
+   */
   type?:
     | 'altcorrection1'
     | 'altcorrection2'
     | 'onewaysynonym'
     | 'placeholder'
     | 'synonym';
+  /**
+   * Requested page (zero-based). When specified, will retrieve a specific page; the page size is implicitly set to 100. When null, will retrieve all indices (no pagination).
+   */
   page?: number;
+  /**
+   * Maximum number of objects to retrieve.
+   */
   hitsPerPage?: number;
 };
 
 export type SearchUserIdsProps = {
+  /**
+   * The searchUserIdsObject.
+   */
   searchUserIdsObject: SearchUserIdsObject;
 };
 
 export type SetDictionarySettingsProps = {
+  /**
+   * The dictionarySettingsRequest.
+   */
   dictionarySettingsRequest: DictionarySettingsRequest;
 };
 
 export type SetSettingsProps = {
+  /**
+   * The index in which to perform the request.
+   */
   indexName: string;
+  /**
+   * The indexSettings.
+   */
   indexSettings: IndexSettings;
+  /**
+   * When true, changes are also propagated to replicas of the given indexName.
+   */
   forwardToReplicas?: boolean;
 };
 
 export type UpdateApiKeyProps = {
+  /**
+   * API Key string.
+   */
   key: string;
+  /**
+   * The apiKey.
+   */
   apiKey: ApiKey;
 };

@@ -114,5 +114,8 @@ export class InsightsApi {
 }
 
 export type PushEventsProps = {
+  /**
+   * The insightEvents.
+   */
   insightEvents: InsightEvents;
 };

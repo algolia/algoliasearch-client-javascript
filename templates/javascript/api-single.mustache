@@ -210,6 +210,9 @@ export class {{classname}} {
 {{#allParams.0}}
 export type {{#lambda.titlecase}}{{nickname}}{{/lambda.titlecase}}Props = {
   {{#allParams}}
+    /**
+    * {{^description}}The {{paramName}}{{/description}}{{#description}}{{{description}}}{{/description}}
+    */
     {{paramName}}{{^required}}?{{/required}}: {{{dataType}}};
   {{/allParams}}
 }
