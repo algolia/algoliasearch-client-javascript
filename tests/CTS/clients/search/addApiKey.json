@@ -3,10 +3,7 @@
     "method": "addApiKey",
     "parameters": {
       "apiKey": {
-        "acl": [
-          "search",
-          "addObject"
-        ],
+        "acl": ["search", "addObject"],
         "description": "my new api key",
         "validity": 300,
         "maxQueriesPerIPPerHour": 100,
@@ -17,10 +14,7 @@
       "path": "/1/keys",
       "method": "POST",
       "data": {
-        "acl": [
-          "search",
-          "addObject"
-        ],
+        "acl": ["search", "addObject"],
         "description": "my new api key",
         "validity": 300,
         "maxQueriesPerIPPerHour": 100,

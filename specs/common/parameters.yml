@@ -32,7 +32,8 @@ StartDate:
   description: The lower bound timestamp (a date, a string like "2006-01-02") of the period to analyze.
   schema:
     type: string
-    format: date-time
+    example: 1999-09-19
+    pattern: ^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$
 
 EndDate:
   in: query
@@ -40,7 +41,8 @@ EndDate:
   description: The upper bound timestamp (a date, a string like "2006-01-02") of the period to analyze.
   schema:
     type: string
-    format: date-time
+    example: 2000-01-21
+    pattern: ^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$
 
 ForwardToReplicas:
   in: query

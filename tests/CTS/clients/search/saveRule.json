@@ -36,6 +36,9 @@
             "filters": "brand:apple"
           }
         }
+      },
+      "searchParams": {
+        "forwardToReplicas": "true"
       }
     }
   }

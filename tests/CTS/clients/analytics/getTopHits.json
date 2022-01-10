@@ -7,7 +7,10 @@
     },
     "request": {
       "path": "/2/hits",
-      "method": "GET"
+      "method": "GET",
+      "searchParams": {
+        "index": "index"
+      }
     }
   },
   {
@@ -15,6 +18,7 @@
     "testName": "get getTopHits with all parameters",
     "parameters": {
       "index": "index",
+      "search": "mySearch",
       "clickAnalytics": true,
       "startDate": "1999-09-19",
       "endDate": "2001-01-01",
@@ -24,7 +28,17 @@
     },
     "request": {
       "path": "/2/hits",
-      "method": "GET"
+      "method": "GET",
+      "searchParams": {
+        "index": "index",
+        "search": "mySearch",
+        "clickAnalytics": "true",
+        "startDate": "1999-09-19",
+        "endDate": "2001-01-01",
+        "limit": "21",
+        "offset": "42",
+        "tags": "tag"
+      }
     }
   }
 ]

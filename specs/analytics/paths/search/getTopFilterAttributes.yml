@@ -6,6 +6,7 @@ get:
   summary: Returns top filter attributes.
   parameters:
     - $ref: '../../../common/parameters.yml#/Index'
+    - $ref: '../common/parameters.yml#/Search'
     - $ref: '../../../common/parameters.yml#/StartDate'
     - $ref: '../../../common/parameters.yml#/EndDate'
     - $ref: '../common/parameters.yml#/Limit'

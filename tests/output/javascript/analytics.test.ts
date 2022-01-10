@@ -9,349 +9,359 @@ const client = new AnalyticsApi(appId, apiKey, 'de', {
 
 describe('getAverageClickPosition', () => {
   test('get getAverageClickPosition with minimal parameters', async () => {
-    const req = await client.getAverageClickPosition({
-      index: 'index',
-    });
+    const req = await client.getAverageClickPosition({ index: 'index' });
 
-    expect(req).toMatchObject({
-      path: '/2/clicks/averageClickPosition',
-      method: 'GET',
-    });
+    expect((req as any).path).toEqual('/2/clicks/averageClickPosition');
+    expect((req as any).method).toEqual('GET');
+    expect((req as any).data).toEqual(undefined);
+    expect((req as any).searchParams).toEqual({ index: 'index' });
   });
 
   test('get getAverageClickPosition with all parameters', async () => {
     const req = await client.getAverageClickPosition({
       index: 'index',
-      startDate: new Date('1999-09-19'),
-      endDate: new Date('2001-01-01'),
+      startDate: '1999-09-19',
+      endDate: '2001-01-01',
       tags: 'tag',
     });
 
-    expect(req).toMatchObject({
-      path: '/2/clicks/averageClickPosition',
-      method: 'GET',
+    expect((req as any).path).toEqual('/2/clicks/averageClickPosition');
+    expect((req as any).method).toEqual('GET');
+    expect((req as any).data).toEqual(undefined);
+    expect((req as any).searchParams).toEqual({
+      index: 'index',
+      startDate: '1999-09-19',
+      endDate: '2001-01-01',
+      tags: 'tag',
     });
   });
 });
 
 describe('getClickPositions', () => {
   test('get getClickPositions with minimal parameters', async () => {
-    const req = await client.getClickPositions({
-      index: 'index',
-    });
+    const req = await client.getClickPositions({ index: 'index' });
 
-    expect(req).toMatchObject({
-      path: '/2/clicks/positions',
-      method: 'GET',
-    });
+    expect((req as any).path).toEqual('/2/clicks/positions');
+    expect((req as any).method).toEqual('GET');
+    expect((req as any).data).toEqual(undefined);
+    expect((req as any).searchParams).toEqual({ index: 'index' });
   });
 
   test('get getClickPositions with all parameters', async () => {
     const req = await client.getClickPositions({
       index: 'index',
-      startDate: new Date('1999-09-19'),
-      endDate: new Date('2001-01-01'),
+      startDate: '1999-09-19',
+      endDate: '2001-01-01',
       tags: 'tag',
     });
 
-    expect(req).toMatchObject({
-      path: '/2/clicks/positions',
-      method: 'GET',
+    expect((req as any).path).toEqual('/2/clicks/positions');
+    expect((req as any).method).toEqual('GET');
+    expect((req as any).data).toEqual(undefined);
+    expect((req as any).searchParams).toEqual({
+      index: 'index',
+      startDate: '1999-09-19',
+      endDate: '2001-01-01',
+      tags: 'tag',
     });
   });
 });
 
 describe('getClickThroughRate', () => {
   test('get getClickThroughRate with minimal parameters', async () => {
-    const req = await client.getClickThroughRate({
-      index: 'index',
-    });
+    const req = await client.getClickThroughRate({ index: 'index' });
 
-    expect(req).toMatchObject({
-      path: '/2/clicks/clickThroughRate',
-      method: 'GET',
-    });
+    expect((req as any).path).toEqual('/2/clicks/clickThroughRate');
+    expect((req as any).method).toEqual('GET');
+    expect((req as any).data).toEqual(undefined);
+    expect((req as any).searchParams).toEqual({ index: 'index' });
   });
 
   test('get getClickThroughRate with all parameters', async () => {
     const req = await client.getClickThroughRate({
       index: 'index',
-      startDate: new Date('1999-09-19'),
-      endDate: new Date('2001-01-01'),
+      startDate: '1999-09-19',
+      endDate: '2001-01-01',
       tags: 'tag',
     });
 
-    expect(req).toMatchObject({
-      path: '/2/clicks/clickThroughRate',
-      method: 'GET',
+    expect((req as any).path).toEqual('/2/clicks/clickThroughRate');
+    expect((req as any).method).toEqual('GET');
+    expect((req as any).data).toEqual(undefined);
+    expect((req as any).searchParams).toEqual({
+      index: 'index',
+      startDate: '1999-09-19',
+      endDate: '2001-01-01',
+      tags: 'tag',
     });
   });
 });
 
 describe('getConversationRate', () => {
   test('get getConversationRate with minimal parameters', async () => {
-    const req = await client.getConversationRate({
-      index: 'index',
-    });
+    const req = await client.getConversationRate({ index: 'index' });
 
-    expect(req).toMatchObject({
-      path: '/2/conversions/conversionRate',
-      method: 'GET',
-    });
+    expect((req as any).path).toEqual('/2/conversions/conversionRate');
+    expect((req as any).method).toEqual('GET');
+    expect((req as any).data).toEqual(undefined);
+    expect((req as any).searchParams).toEqual({ index: 'index' });
   });
 
   test('get getConversationRate with all parameters', async () => {
     const req = await client.getConversationRate({
       index: 'index',
-      startDate: new Date('1999-09-19'),
-      endDate: new Date('2001-01-01'),
+      startDate: '1999-09-19',
+      endDate: '2001-01-01',
       tags: 'tag',
     });
 
-    expect(req).toMatchObject({
-      path: '/2/conversions/conversionRate',
-      method: 'GET',
+    expect((req as any).path).toEqual('/2/conversions/conversionRate');
+    expect((req as any).method).toEqual('GET');
+    expect((req as any).data).toEqual(undefined);
+    expect((req as any).searchParams).toEqual({
+      index: 'index',
+      startDate: '1999-09-19',
+      endDate: '2001-01-01',
+      tags: 'tag',
     });
   });
 });
 
 describe('getNoClickRate', () => {
   test('get getNoClickRate with minimal parameters', async () => {
-    const req = await client.getNoClickRate({
-      index: 'index',
-    });
+    const req = await client.getNoClickRate({ index: 'index' });
 
-    expect(req).toMatchObject({
-      path: '/2/searches/noClickRate',
-      method: 'GET',
-    });
+    expect((req as any).path).toEqual('/2/searches/noClickRate');
+    expect((req as any).method).toEqual('GET');
+    expect((req as any).data).toEqual(undefined);
+    expect((req as any).searchParams).toEqual({ index: 'index' });
   });
 
   test('get getNoClickRate with all parameters', async () => {
     const req = await client.getNoClickRate({
       index: 'index',
-      startDate: new Date('1999-09-19'),
-      endDate: new Date('2001-01-01'),
+      startDate: '1999-09-19',
+      endDate: '2001-01-01',
       tags: 'tag',
     });
 
-    expect(req).toMatchObject({
-      path: '/2/searches/noClickRate',
-      method: 'GET',
+    expect((req as any).path).toEqual('/2/searches/noClickRate');
+    expect((req as any).method).toEqual('GET');
+    expect((req as any).data).toEqual(undefined);
+    expect((req as any).searchParams).toEqual({
+      index: 'index',
+      startDate: '1999-09-19',
+      endDate: '2001-01-01',
+      tags: 'tag',
     });
   });
 });
 
 describe('getNoResultsRate', () => {
   test('get getNoResultsRate with minimal parameters', async () => {
-    const req = await client.getNoResultsRate({
-      index: 'index',
-    });
+    const req = await client.getNoResultsRate({ index: 'index' });
 
-    expect(req).toMatchObject({
-      path: '/2/searches/noResultRate',
-      method: 'GET',
-    });
+    expect((req as any).path).toEqual('/2/searches/noResultRate');
+    expect((req as any).method).toEqual('GET');
+    expect((req as any).data).toEqual(undefined);
+    expect((req as any).searchParams).toEqual({ index: 'index' });
   });
 
   test('get getNoResultsRate with all parameters', async () => {
     const req = await client.getNoResultsRate({
       index: 'index',
-      startDate: new Date('1999-09-19'),
-      endDate: new Date('2001-01-01'),
+      startDate: '1999-09-19',
+      endDate: '2001-01-01',
       tags: 'tag',
     });
 
-    expect(req).toMatchObject({
-      path: '/2/searches/noResultRate',
-      method: 'GET',
+    expect((req as any).path).toEqual('/2/searches/noResultRate');
+    expect((req as any).method).toEqual('GET');
+    expect((req as any).data).toEqual(undefined);
+    expect((req as any).searchParams).toEqual({
+      index: 'index',
+      startDate: '1999-09-19',
+      endDate: '2001-01-01',
+      tags: 'tag',
     });
   });
 });
 
 describe('getSearchesCount', () => {
   test('get getSearchesCount with minimal parameters', async () => {
-    const req = await client.getSearchesCount({
-      index: 'index',
-    });
+    const req = await client.getSearchesCount({ index: 'index' });
 
-    expect(req).toMatchObject({
-      path: '/2/searches/count',
-      method: 'GET',
-    });
+    expect((req as any).path).toEqual('/2/searches/count');
+    expect((req as any).method).toEqual('GET');
+    expect((req as any).data).toEqual(undefined);
+    expect((req as any).searchParams).toEqual({ index: 'index' });
   });
 
   test('get getSearchesCount with all parameters', async () => {
     const req = await client.getSearchesCount({
       index: 'index',
-      startDate: new Date('1999-09-19'),
-      endDate: new Date('2001-01-01'),
+      startDate: '1999-09-19',
+      endDate: '2001-01-01',
       tags: 'tag',
     });
 
-    expect(req).toMatchObject({
-      path: '/2/searches/count',
-      method: 'GET',
+    expect((req as any).path).toEqual('/2/searches/count');
+    expect((req as any).method).toEqual('GET');
+    expect((req as any).data).toEqual(undefined);
+    expect((req as any).searchParams).toEqual({
+      index: 'index',
+      startDate: '1999-09-19',
+      endDate: '2001-01-01',
+      tags: 'tag',
     });
   });
 });
 
 describe('getSearchesNoClicks', () => {
   test('get getSearchesNoClicks with minimal parameters', async () => {
-    const req = await client.getSearchesNoClicks({
-      index: 'index',
-    });
+    const req = await client.getSearchesNoClicks({ index: 'index' });
 
-    expect(req).toMatchObject({
-      path: '/2/searches/noClicks',
-      method: 'GET',
-    });
+    expect((req as any).path).toEqual('/2/searches/noClicks');
+    expect((req as any).method).toEqual('GET');
+    expect((req as any).data).toEqual(undefined);
+    expect((req as any).searchParams).toEqual({ index: 'index' });
   });
 
   test('get getSearchesNoClicks with all parameters', async () => {
     const req = await client.getSearchesNoClicks({
       index: 'index',
-      startDate: new Date('1999-09-19'),
-      endDate: new Date('2001-01-01'),
+      startDate: '1999-09-19',
+      endDate: '2001-01-01',
       limit: 21,
       offset: 42,
       tags: 'tag',
     });
 
-    expect(req).toMatchObject({
-      path: '/2/searches/noClicks',
-      method: 'GET',
+    expect((req as any).path).toEqual('/2/searches/noClicks');
+    expect((req as any).method).toEqual('GET');
+    expect((req as any).data).toEqual(undefined);
+    expect((req as any).searchParams).toEqual({
+      index: 'index',
+      startDate: '1999-09-19',
+      endDate: '2001-01-01',
+      limit: '21',
+      offset: '42',
+      tags: 'tag',
     });
   });
 });
 
 describe('getSearchesNoResults', () => {
   test('get getSearchesNoResults with minimal parameters', async () => {
-    const req = await client.getSearchesNoResults({
-      index: 'index',
-    });
+    const req = await client.getSearchesNoResults({ index: 'index' });
 
-    expect(req).toMatchObject({
-      path: '/2/searches/noResults',
-      method: 'GET',
-    });
+    expect((req as any).path).toEqual('/2/searches/noResults');
+    expect((req as any).method).toEqual('GET');
+    expect((req as any).data).toEqual(undefined);
+    expect((req as any).searchParams).toEqual({ index: 'index' });
   });
 
   test('get getSearchesNoResults with all parameters', async () => {
     const req = await client.getSearchesNoResults({
       index: 'index',
-      startDate: new Date('1999-09-19'),
-      endDate: new Date('2001-01-01'),
+      startDate: '1999-09-19',
+      endDate: '2001-01-01',
       limit: 21,
       offset: 42,
       tags: 'tag',
     });
 
-    expect(req).toMatchObject({
-      path: '/2/searches/noResults',
-      method: 'GET',
+    expect((req as any).path).toEqual('/2/searches/noResults');
+    expect((req as any).method).toEqual('GET');
+    expect((req as any).data).toEqual(undefined);
+    expect((req as any).searchParams).toEqual({
+      index: 'index',
+      startDate: '1999-09-19',
+      endDate: '2001-01-01',
+      limit: '21',
+      offset: '42',
+      tags: 'tag',
     });
   });
 });
 
 describe('getStatus', () => {
   test('get getStatus with minimal parameters', async () => {
-    const req = await client.getStatus({
-      index: 'index',
-    });
+    const req = await client.getStatus({ index: 'index' });
 
-    expect(req).toMatchObject({
-      path: '/2/status',
-      method: 'GET',
-    });
+    expect((req as any).path).toEqual('/2/status');
+    expect((req as any).method).toEqual('GET');
+    expect((req as any).data).toEqual(undefined);
+    expect((req as any).searchParams).toEqual({ index: 'index' });
   });
 });
 
 describe('getTopCountries', () => {
   test('get getTopCountries with minimal parameters', async () => {
-    const req = await client.getTopCountries({
-      index: 'index',
-    });
+    const req = await client.getTopCountries({ index: 'index' });
 
-    expect(req).toMatchObject({
-      path: '/2/countries',
-      method: 'GET',
-    });
+    expect((req as any).path).toEqual('/2/countries');
+    expect((req as any).method).toEqual('GET');
+    expect((req as any).data).toEqual(undefined);
+    expect((req as any).searchParams).toEqual({ index: 'index' });
   });
 
   test('get getTopCountries with all parameters', async () => {
     const req = await client.getTopCountries({
       index: 'index',
-      startDate: new Date('1999-09-19'),
-      endDate: new Date('2001-01-01'),
+      startDate: '1999-09-19',
+      endDate: '2001-01-01',
       limit: 21,
       offset: 42,
       tags: 'tag',
     });
 
-    expect(req).toMatchObject({
-      path: '/2/countries',
-      method: 'GET',
+    expect((req as any).path).toEqual('/2/countries');
+    expect((req as any).method).toEqual('GET');
+    expect((req as any).data).toEqual(undefined);
+    expect((req as any).searchParams).toEqual({
+      index: 'index',
+      startDate: '1999-09-19',
+      endDate: '2001-01-01',
+      limit: '21',
+      offset: '42',
+      tags: 'tag',
     });
   });
 });
 
 describe('getTopFilterAttributes', () => {
   test('get getTopFilterAttributes with minimal parameters', async () => {
-    const req = await client.getTopFilterAttributes({
-      index: 'index',
-    });
+    const req = await client.getTopFilterAttributes({ index: 'index' });
 
-    expect(req).toMatchObject({
-      path: '/2/filters',
-      method: 'GET',
-    });
+    expect((req as any).path).toEqual('/2/filters');
+    expect((req as any).method).toEqual('GET');
+    expect((req as any).data).toEqual(undefined);
+    expect((req as any).searchParams).toEqual({ index: 'index' });
   });
 
   test('get getTopFilterAttributes with all parameters', async () => {
     const req = await client.getTopFilterAttributes({
       index: 'index',
-      startDate: new Date('1999-09-19'),
-      endDate: new Date('2001-01-01'),
+      search: 'mySearch',
+      startDate: '1999-09-19',
+      endDate: '2001-01-01',
       limit: 21,
       offset: 42,
       tags: 'tag',
     });
 
-    expect(req).toMatchObject({
-      path: '/2/filters',
-      method: 'GET',
-    });
-  });
-});
-
-describe('getTopFilterAttributesForSearch', () => {
-  test('get getTopFilterAttributesForSearch with minimal parameters', async () => {
-    const req = await client.getTopFilterAttributesForSearch({
+    expect((req as any).path).toEqual('/2/filters');
+    expect((req as any).method).toEqual('GET');
+    expect((req as any).data).toEqual(undefined);
+    expect((req as any).searchParams).toEqual({
       index: 'index',
       search: 'mySearch',
-    });
-
-    expect(req).toMatchObject({
-      path: '/2/filters?search=mySearch',
-      method: 'GET',
-    });
-  });
-
-  test('get getTopFilterAttributesForSearch with all parameters', async () => {
-    const req = await client.getTopFilterAttributesForSearch({
-      index: 'index',
-      search: 'mySearch',
-      startDate: new Date('1999-09-19'),
-      endDate: new Date('2001-01-01'),
-      limit: 21,
-      offset: 42,
+      startDate: '1999-09-19',
+      endDate: '2001-01-01',
+      limit: '21',
+      offset: '42',
       tags: 'tag',
-    });
-
-    expect(req).toMatchObject({
-      path: '/2/filters?search=mySearch',
-      method: 'GET',
     });
   });
 });
@@ -363,10 +373,10 @@ describe('getTopFilterForAttribute', () => {
       index: 'index',
     });
 
-    expect(req).toMatchObject({
-      path: '/2/filters/myAttribute',
-      method: 'GET',
-    });
+    expect((req as any).path).toEqual('/2/filters/myAttribute');
+    expect((req as any).method).toEqual('GET');
+    expect((req as any).data).toEqual(undefined);
+    expect((req as any).searchParams).toEqual({ index: 'index' });
   });
 
   test('get getTopFilterForAttribute with minimal parameters and multiple attributes', async () => {
@@ -375,26 +385,35 @@ describe('getTopFilterForAttribute', () => {
       index: 'index',
     });
 
-    expect(req).toMatchObject({
-      path: '/2/filters/myAttribute1%2CmyAttribute2',
-      method: 'GET',
-    });
+    expect((req as any).path).toEqual('/2/filters/myAttribute1%2CmyAttribute2');
+    expect((req as any).method).toEqual('GET');
+    expect((req as any).data).toEqual(undefined);
+    expect((req as any).searchParams).toEqual({ index: 'index' });
   });
 
   test('get getTopFilterForAttribute with all parameters', async () => {
     const req = await client.getTopFilterForAttribute({
       attribute: 'myAttribute',
       index: 'index',
-      startDate: new Date('1999-09-19'),
-      endDate: new Date('2001-01-01'),
+      search: 'mySearch',
+      startDate: '1999-09-19',
+      endDate: '2001-01-01',
       limit: 21,
       offset: 42,
       tags: 'tag',
     });
 
-    expect(req).toMatchObject({
-      path: '/2/filters/myAttribute',
-      method: 'GET',
+    expect((req as any).path).toEqual('/2/filters/myAttribute');
+    expect((req as any).method).toEqual('GET');
+    expect((req as any).data).toEqual(undefined);
+    expect((req as any).searchParams).toEqual({
+      index: 'index',
+      search: 'mySearch',
+      startDate: '1999-09-19',
+      endDate: '2001-01-01',
+      limit: '21',
+      offset: '42',
+      tags: 'tag',
     });
   });
 
@@ -402,224 +421,119 @@ describe('getTopFilterForAttribute', () => {
     const req = await client.getTopFilterForAttribute({
       attribute: 'myAttribute1,myAttribute2',
       index: 'index',
-      startDate: new Date('1999-09-19'),
-      endDate: new Date('2001-01-01'),
+      search: 'mySearch',
+      startDate: '1999-09-19',
+      endDate: '2001-01-01',
       limit: 21,
       offset: 42,
       tags: 'tag',
     });
 
-    expect(req).toMatchObject({
-      path: '/2/filters/myAttribute1%2CmyAttribute2',
-      method: 'GET',
-    });
-  });
-});
-
-describe('getTopFiltersForAttributesSearch', () => {
-  test('get getTopFiltersForAttributesSearch with minimal parameters', async () => {
-    const req = await client.getTopFiltersForAttributesSearch({
-      attributes: 'myAttribute',
+    expect((req as any).path).toEqual('/2/filters/myAttribute1%2CmyAttribute2');
+    expect((req as any).method).toEqual('GET');
+    expect((req as any).data).toEqual(undefined);
+    expect((req as any).searchParams).toEqual({
       index: 'index',
       search: 'mySearch',
-    });
-
-    expect(req).toMatchObject({
-      path: '/2/filters/myAttribute?search=mySearch',
-      method: 'GET',
-    });
-  });
-
-  test('get getTopFiltersForAttributesSearch with minimal parameters and multiple attributes', async () => {
-    const req = await client.getTopFiltersForAttributesSearch({
-      attributes: 'myAttribute1,myAttribute2',
-      index: 'index',
-      search: 'mySearch',
-    });
-
-    expect(req).toMatchObject({
-      path: '/2/filters/myAttribute1%2CmyAttribute2?search=mySearch',
-      method: 'GET',
-    });
-  });
-
-  test('get getTopFiltersForAttributesSearch with all parameters', async () => {
-    const req = await client.getTopFiltersForAttributesSearch({
-      attributes: 'myAttribute',
-      index: 'index',
-      search: 'mySearch',
-      startDate: new Date('1999-09-19'),
-      endDate: new Date('2001-01-01'),
-      limit: 21,
-      offset: 42,
+      startDate: '1999-09-19',
+      endDate: '2001-01-01',
+      limit: '21',
+      offset: '42',
       tags: 'tag',
-    });
-
-    expect(req).toMatchObject({
-      path: '/2/filters/myAttribute?search=mySearch',
-      method: 'GET',
-    });
-  });
-
-  test('get getTopFiltersForAttributesSearch with all parameters and multiple attributes', async () => {
-    const req = await client.getTopFiltersForAttributesSearch({
-      attributes: 'myAttribute1,myAttribute2',
-      index: 'index',
-      search: 'mySearch',
-      startDate: new Date('1999-09-19'),
-      endDate: new Date('2001-01-01'),
-      limit: 21,
-      offset: 42,
-      tags: 'tag',
-    });
-
-    expect(req).toMatchObject({
-      path: '/2/filters/myAttribute1%2CmyAttribute2?search=mySearch',
-      method: 'GET',
     });
   });
 });
 
 describe('getTopFiltersNoResults', () => {
   test('get getTopFiltersNoResults with minimal parameters', async () => {
-    const req = await client.getTopFiltersNoResults({
-      index: 'index',
-    });
+    const req = await client.getTopFiltersNoResults({ index: 'index' });
 
-    expect(req).toMatchObject({
-      path: '/2/filters/noResults',
-      method: 'GET',
-    });
+    expect((req as any).path).toEqual('/2/filters/noResults');
+    expect((req as any).method).toEqual('GET');
+    expect((req as any).data).toEqual(undefined);
+    expect((req as any).searchParams).toEqual({ index: 'index' });
   });
 
   test('get getTopFiltersNoResults with all parameters', async () => {
     const req = await client.getTopFiltersNoResults({
       index: 'index',
-      startDate: new Date('1999-09-19'),
-      endDate: new Date('2001-01-01'),
+      search: 'mySearch',
+      startDate: '1999-09-19',
+      endDate: '2001-01-01',
       limit: 21,
       offset: 42,
       tags: 'tag',
     });
 
-    expect(req).toMatchObject({
-      path: '/2/filters/noResults',
-      method: 'GET',
-    });
-  });
-});
-
-describe('getTopFiltersNoResultsForSearch', () => {
-  test('get getTopFiltersNoResultsForSearch with minimal parameters', async () => {
-    const req = await client.getTopFiltersNoResultsForSearch({
+    expect((req as any).path).toEqual('/2/filters/noResults');
+    expect((req as any).method).toEqual('GET');
+    expect((req as any).data).toEqual(undefined);
+    expect((req as any).searchParams).toEqual({
       index: 'index',
       search: 'mySearch',
-    });
-
-    expect(req).toMatchObject({
-      path: '/2/filters/noResults?search=mySearch',
-      method: 'GET',
-    });
-  });
-
-  test('get getTopFiltersNoResultsForSearch with all parameters', async () => {
-    const req = await client.getTopFiltersNoResultsForSearch({
-      index: 'index',
-      search: 'mySearch',
-      startDate: new Date('1999-09-19'),
-      endDate: new Date('2001-01-01'),
-      limit: 21,
-      offset: 42,
+      startDate: '1999-09-19',
+      endDate: '2001-01-01',
+      limit: '21',
+      offset: '42',
       tags: 'tag',
-    });
-
-    expect(req).toMatchObject({
-      path: '/2/filters/noResults?search=mySearch',
-      method: 'GET',
     });
   });
 });
 
 describe('getTopHits', () => {
   test('get getTopHits with minimal parameters', async () => {
-    const req = await client.getTopHits({
-      index: 'index',
-    });
+    const req = await client.getTopHits({ index: 'index' });
 
-    expect(req).toMatchObject({
-      path: '/2/hits',
-      method: 'GET',
-    });
+    expect((req as any).path).toEqual('/2/hits');
+    expect((req as any).method).toEqual('GET');
+    expect((req as any).data).toEqual(undefined);
+    expect((req as any).searchParams).toEqual({ index: 'index' });
   });
 
   test('get getTopHits with all parameters', async () => {
     const req = await client.getTopHits({
       index: 'index',
+      search: 'mySearch',
       clickAnalytics: true,
-      startDate: new Date('1999-09-19'),
-      endDate: new Date('2001-01-01'),
+      startDate: '1999-09-19',
+      endDate: '2001-01-01',
       limit: 21,
       offset: 42,
       tags: 'tag',
     });
 
-    expect(req).toMatchObject({
-      path: '/2/hits',
-      method: 'GET',
-    });
-  });
-});
-
-describe('getTopHitsForSearch', () => {
-  test('get getTopHitsForSearch with minimal parameters', async () => {
-    const req = await client.getTopHitsForSearch({
+    expect((req as any).path).toEqual('/2/hits');
+    expect((req as any).method).toEqual('GET');
+    expect((req as any).data).toEqual(undefined);
+    expect((req as any).searchParams).toEqual({
       index: 'index',
       search: 'mySearch',
-    });
-
-    expect(req).toMatchObject({
-      path: '/2/hits?search=mySearch',
-      method: 'GET',
-    });
-  });
-
-  test('get getTopHitsForSearch with all parameters', async () => {
-    const req = await client.getTopHitsForSearch({
-      index: 'index',
-      search: 'mySearch',
-      clickAnalytics: true,
-      startDate: new Date('1999-09-19'),
-      endDate: new Date('2001-01-01'),
-      limit: 21,
-      offset: 42,
+      clickAnalytics: 'true',
+      startDate: '1999-09-19',
+      endDate: '2001-01-01',
+      limit: '21',
+      offset: '42',
       tags: 'tag',
-    });
-
-    expect(req).toMatchObject({
-      path: '/2/hits?search=mySearch',
-      method: 'GET',
     });
   });
 });
 
 describe('getTopSearches', () => {
   test('get getTopSearches with minimal parameters', async () => {
-    const req = await client.getTopSearches({
-      index: 'index',
-    });
+    const req = await client.getTopSearches({ index: 'index' });
 
-    expect(req).toMatchObject({
-      path: '/2/searches',
-      method: 'GET',
-    });
+    expect((req as any).path).toEqual('/2/searches');
+    expect((req as any).method).toEqual('GET');
+    expect((req as any).data).toEqual(undefined);
+    expect((req as any).searchParams).toEqual({ index: 'index' });
   });
 
   test('get getTopSearches with all parameters', async () => {
     const req = await client.getTopSearches({
       index: 'index',
       clickAnalytics: true,
-      startDate: new Date('1999-09-19'),
-      endDate: new Date('2001-01-01'),
+      startDate: '1999-09-19',
+      endDate: '2001-01-01',
       orderBy: 'searchCount',
       direction: 'asc',
       limit: 21,
@@ -627,36 +541,49 @@ describe('getTopSearches', () => {
       tags: 'tag',
     });
 
-    expect(req).toMatchObject({
-      path: '/2/searches',
-      method: 'GET',
+    expect((req as any).path).toEqual('/2/searches');
+    expect((req as any).method).toEqual('GET');
+    expect((req as any).data).toEqual(undefined);
+    expect((req as any).searchParams).toEqual({
+      index: 'index',
+      clickAnalytics: 'true',
+      startDate: '1999-09-19',
+      endDate: '2001-01-01',
+      orderBy: 'searchCount',
+      direction: 'asc',
+      limit: '21',
+      offset: '42',
+      tags: 'tag',
     });
   });
 });
 
 describe('getUsersCount', () => {
   test('get getUsersCount with minimal parameters', async () => {
-    const req = await client.getUsersCount({
-      index: 'index',
-    });
+    const req = await client.getUsersCount({ index: 'index' });
 
-    expect(req).toMatchObject({
-      path: '/2/users/count',
-      method: 'GET',
-    });
+    expect((req as any).path).toEqual('/2/users/count');
+    expect((req as any).method).toEqual('GET');
+    expect((req as any).data).toEqual(undefined);
+    expect((req as any).searchParams).toEqual({ index: 'index' });
   });
 
   test('get getUsersCount with all parameters', async () => {
     const req = await client.getUsersCount({
       index: 'index',
-      startDate: new Date('1999-09-19'),
-      endDate: new Date('2001-01-01'),
+      startDate: '1999-09-19',
+      endDate: '2001-01-01',
       tags: 'tag',
     });
 
-    expect(req).toMatchObject({
-      path: '/2/users/count',
-      method: 'GET',
+    expect((req as any).path).toEqual('/2/users/count');
+    expect((req as any).method).toEqual('GET');
+    expect((req as any).data).toEqual(undefined);
+    expect((req as any).searchParams).toEqual({
+      index: 'index',
+      startDate: '1999-09-19',
+      endDate: '2001-01-01',
+      tags: 'tag',
     });
   });
 });
