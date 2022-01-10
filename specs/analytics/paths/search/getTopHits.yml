@@ -6,6 +6,7 @@ get:
   summary: Returns top hits.
   parameters:
     - $ref: '../../../common/parameters.yml#/Index'
+    - $ref: '../common/parameters.yml#/Search'
     - $ref: '../common/parameters.yml#/ClickAnalytics'
     - $ref: '../../../common/parameters.yml#/StartDate'
     - $ref: '../../../common/parameters.yml#/EndDate'

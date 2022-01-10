@@ -22,20 +22,19 @@ describe('getRecommendations', () => {
       },
     });
 
-    expect(req).toMatchObject({
-      path: '/1/indexes/*/recommendations',
-      method: 'POST',
-      data: {
-        requests: [
-          {
-            indexName: 'indexName',
-            objectID: 'objectID',
-            model: 'related-products',
-            threshold: 42,
-          },
-        ],
-      },
+    expect((req as any).path).toEqual('/1/indexes/*/recommendations');
+    expect((req as any).method).toEqual('POST');
+    expect((req as any).data).toEqual({
+      requests: [
+        {
+          indexName: 'indexName',
+          objectID: 'objectID',
+          model: 'related-products',
+          threshold: 42,
+        },
+      ],
     });
+    expect((req as any).searchParams).toEqual(undefined);
   });
 
   test('get recommendations with all parameters', async () => {
@@ -57,25 +56,21 @@ describe('getRecommendations', () => {
       },
     });
 
-    expect(req).toMatchObject({
-      path: '/1/indexes/*/recommendations',
-      method: 'POST',
-      data: {
-        requests: [
-          {
-            indexName: 'indexName',
-            objectID: 'objectID',
-            model: 'related-products',
-            threshold: 42,
-            queryParameters: { query: 'myQuery', facetFilters: ['query'] },
-            fallbackParameters: {
-              query: 'myQuery',
-              facetFilters: ['fallback'],
-            },
-          },
-        ],
-      },
+    expect((req as any).path).toEqual('/1/indexes/*/recommendations');
+    expect((req as any).method).toEqual('POST');
+    expect((req as any).data).toEqual({
+      requests: [
+        {
+          indexName: 'indexName',
+          objectID: 'objectID',
+          model: 'related-products',
+          threshold: 42,
+          queryParameters: { query: 'myQuery', facetFilters: ['query'] },
+          fallbackParameters: { query: 'myQuery', facetFilters: ['fallback'] },
+        },
+      ],
     });
+    expect((req as any).searchParams).toEqual(undefined);
   });
 
   test('get multiple recommendations with minimal parameters', async () => {
@@ -98,26 +93,25 @@ describe('getRecommendations', () => {
       },
     });
 
-    expect(req).toMatchObject({
-      path: '/1/indexes/*/recommendations',
-      method: 'POST',
-      data: {
-        requests: [
-          {
-            indexName: 'indexName1',
-            objectID: 'objectID1',
-            model: 'related-products',
-            threshold: 21,
-          },
-          {
-            indexName: 'indexName2',
-            objectID: 'objectID2',
-            model: 'related-products',
-            threshold: 21,
-          },
-        ],
-      },
+    expect((req as any).path).toEqual('/1/indexes/*/recommendations');
+    expect((req as any).method).toEqual('POST');
+    expect((req as any).data).toEqual({
+      requests: [
+        {
+          indexName: 'indexName1',
+          objectID: 'objectID1',
+          model: 'related-products',
+          threshold: 21,
+        },
+        {
+          indexName: 'indexName2',
+          objectID: 'objectID2',
+          model: 'related-products',
+          threshold: 21,
+        },
+      ],
     });
+    expect((req as any).searchParams).toEqual(undefined);
   });
 
   test('get multiple recommendations with all parameters', async () => {
@@ -150,36 +144,29 @@ describe('getRecommendations', () => {
       },
     });
 
-    expect(req).toMatchObject({
-      path: '/1/indexes/*/recommendations',
-      method: 'POST',
-      data: {
-        requests: [
-          {
-            indexName: 'indexName1',
-            objectID: 'objectID1',
-            model: 'related-products',
-            threshold: 21,
-            queryParameters: { query: 'myQuery', facetFilters: ['query1'] },
-            fallbackParameters: {
-              query: 'myQuery',
-              facetFilters: ['fallback1'],
-            },
-          },
-          {
-            indexName: 'indexName2',
-            objectID: 'objectID2',
-            model: 'related-products',
-            threshold: 21,
-            queryParameters: { query: 'myQuery', facetFilters: ['query2'] },
-            fallbackParameters: {
-              query: 'myQuery',
-              facetFilters: ['fallback2'],
-            },
-          },
-        ],
-      },
+    expect((req as any).path).toEqual('/1/indexes/*/recommendations');
+    expect((req as any).method).toEqual('POST');
+    expect((req as any).data).toEqual({
+      requests: [
+        {
+          indexName: 'indexName1',
+          objectID: 'objectID1',
+          model: 'related-products',
+          threshold: 21,
+          queryParameters: { query: 'myQuery', facetFilters: ['query1'] },
+          fallbackParameters: { query: 'myQuery', facetFilters: ['fallback1'] },
+        },
+        {
+          indexName: 'indexName2',
+          objectID: 'objectID2',
+          model: 'related-products',
+          threshold: 21,
+          queryParameters: { query: 'myQuery', facetFilters: ['query2'] },
+          fallbackParameters: { query: 'myQuery', facetFilters: ['fallback2'] },
+        },
+      ],
     });
+    expect((req as any).searchParams).toEqual(undefined);
   });
 
   test('get frequently bought together recommendations', async () => {
@@ -196,19 +183,18 @@ describe('getRecommendations', () => {
       },
     });
 
-    expect(req).toMatchObject({
-      path: '/1/indexes/*/recommendations',
-      method: 'POST',
-      data: {
-        requests: [
-          {
-            indexName: 'indexName1',
-            objectID: 'objectID1',
-            model: 'bought-together',
-            threshold: 42,
-          },
-        ],
-      },
+    expect((req as any).path).toEqual('/1/indexes/*/recommendations');
+    expect((req as any).method).toEqual('POST');
+    expect((req as any).data).toEqual({
+      requests: [
+        {
+          indexName: 'indexName1',
+          objectID: 'objectID1',
+          model: 'bought-together',
+          threshold: 42,
+        },
+      ],
     });
+    expect((req as any).searchParams).toEqual(undefined);
   });
 });

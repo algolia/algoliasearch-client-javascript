@@ -7,7 +7,10 @@
     },
     "request": {
       "path": "/2/searches/noResults",
-      "method": "GET"
+      "method": "GET",
+      "searchParams": {
+        "index": "index"
+      }
     }
   },
   {
@@ -23,7 +26,15 @@
     },
     "request": {
       "path": "/2/searches/noResults",
-      "method": "GET"
+      "method": "GET",
+      "searchParams": {
+        "index": "index",
+        "startDate": "1999-09-19",
+        "endDate": "2001-01-01",
+        "limit": "21",
+        "offset": "42",
+        "tags": "tag"
+      }
     }
   }
 ]

@@ -43,18 +43,9 @@ Limit:
     default: 10
 
 Search:
-  in: path
+  in: query
   name: search
-  description: The query term. Must match the exact user input.
-  required: true
-  schema:
-    type: string
-
-SearchInPath:
-  in: path
-  name: search
-  description: The query term. Must match the exact user input.
-  required: true
+  description: The query term to search for. Must match the exact user input.
   schema:
     type: string
 

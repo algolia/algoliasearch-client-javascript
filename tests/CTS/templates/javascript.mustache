@@ -10,18 +10,13 @@ describe('{{operationId}}', () => {
     {{#tests}}
     test('{{testName}}', async () => {
         const req = await client.{{method}}(
-            {{#hasParameters}}{
-                {{#parametersWithDataType}}
-                    {{#isDate}}{{{key}}}:new Date({{{value}}}),{{/isDate}}{{^isDate}}{{{key}}}:{{{value}}},{{/isDate}}
-                {{/parametersWithDataType}}
-            }{{/hasParameters}}
+          {{#hasParameters}}{{{parameters}}}{{/hasParameters}}
         );
 
-        expect(req).toMatchObject({
-        path: '{{{request.path}}}',
-        method: '{{{request.method}}}',
-        {{#request.data}}data: {{{.}}},{{/request.data}}
-        })
+        expect((req as any).path).toEqual('{{{request.path}}}');
+        expect((req as any).method).toEqual('{{{request.method}}}');
+        expect((req as any).data).toEqual({{#request.data}}{{{request.data}}}{{/request.data}}{{^request.data}}undefined{{/request.data}});
+        expect((req as any).searchParams).toEqual({{#request.searchParams}}{{{request.searchParams}}}{{/request.searchParams}}{{^request.searchParams}}undefined{{/request.searchParams}});
     });
 
     {{/tests}}

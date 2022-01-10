@@ -8,7 +8,10 @@
     },
     "request": {
       "path": "/2/filters/myAttribute",
-      "method": "GET"
+      "method": "GET",
+      "searchParams": {
+        "index": "index"
+      }
     }
   },
   {
@@ -20,7 +23,10 @@
     },
     "request": {
       "path": "/2/filters/myAttribute1%2CmyAttribute2",
-      "method": "GET"
+      "method": "GET",
+      "searchParams": {
+        "index": "index"
+      }
     }
   },
   {
@@ -29,6 +35,7 @@
     "parameters": {
       "attribute": "myAttribute",
       "index": "index",
+      "search": "mySearch",
       "startDate": "1999-09-19",
       "endDate": "2001-01-01",
       "limit": 21,
@@ -37,7 +44,16 @@
     },
     "request": {
       "path": "/2/filters/myAttribute",
-      "method": "GET"
+      "method": "GET",
+      "searchParams": {
+        "index": "index",
+        "search": "mySearch",
+        "startDate": "1999-09-19",
+        "endDate": "2001-01-01",
+        "limit": "21",
+        "offset": "42",
+        "tags": "tag"
+      }
     }
   },
   {
@@ -46,6 +62,7 @@
     "parameters": {
       "attribute": "myAttribute1,myAttribute2",
       "index": "index",
+      "search": "mySearch",
       "startDate": "1999-09-19",
       "endDate": "2001-01-01",
       "limit": 21,
@@ -54,7 +71,16 @@
     },
     "request": {
       "path": "/2/filters/myAttribute1%2CmyAttribute2",
-      "method": "GET"
+      "method": "GET",
+      "searchParams": {
+        "index": "index",
+        "search": "mySearch",
+        "startDate": "1999-09-19",
+        "endDate": "2001-01-01",
+        "limit": "21",
+        "offset": "42",
+        "tags": "tag"
+      }
     }
   }
 ]

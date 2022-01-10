@@ -68,7 +68,11 @@
             }
           }
         }
-      ]
+      ],
+      "searchParams": {
+        "forwardToReplicas": "true",
+        "clearExistingRules": "true"
+      }
     }
   }
 ]
