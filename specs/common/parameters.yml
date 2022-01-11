@@ -53,7 +53,7 @@ ForwardToReplicas:
 
 Page:
   in: query
-  name: Page
+  name: page
   description: Requested page (zero-based). When specified, will retrieve a specific page; the page size is implicitly set to 100. When null, will retrieve all indices (no pagination).
   schema:
     type: integer
@@ -62,7 +62,7 @@ Page:
 
 PageDefault0:
   in: query
-  name: Page
+  name: page
   description: Requested page (zero-based). When specified, will retrieve a specific page; the page size is implicitly set to 100. When null, will retrieve all indices (no pagination).
   schema:
     type: integer

@@ -1,8 +1,6 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
 /** Operation */
@@ -12,7 +10,7 @@ public class Operation {
   private Action action;
 
   @SerializedName("body")
-  private Map<String, Object> body = null;
+  private Object body;
 
   @SerializedName("indexName")
   private String indexName;
@@ -36,16 +34,8 @@ public class Operation {
     this.action = action;
   }
 
-  public Operation body(Map<String, Object> body) {
+  public Operation body(Object body) {
     this.body = body;
-    return this;
-  }
-
-  public Operation putBodyItem(String key, Object bodyItem) {
-    if (this.body == null) {
-      this.body = new HashMap<>();
-    }
-    this.body.put(key, bodyItem);
     return this;
   }
 
@@ -55,11 +45,11 @@ public class Operation {
    * @return body
    */
   @javax.annotation.Nullable
-  public Map<String, Object> getBody() {
+  public Object getBody() {
     return body;
   }
 
-  public void setBody(Map<String, Object> body) {
+  public void setBody(Object body) {
     this.body = body;
   }
 

@@ -1,0 +1,22 @@
+[
+  {
+    "method": "setSettings",
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "paginationLimitedTo": 10
+      },
+      "forwardToReplicas": true
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "data": {
+        "paginationLimitedTo": 10
+      },
+      "searchParams": {
+        "forwardToReplicas": "true"
+      }
+    }
+  }
+]

@@ -22,7 +22,7 @@ export type BaseIndexSettings = {
   /**
    * Specify on which attributes in your index Algolia should apply word segmentation, also known as decompounding.
    */
-  decompoundedAttributes?: { [key: string]: Record<string, any> };
+  decompoundedAttributes?: Record<string, any>;
   /**
    * Sets the languages at the index level for language-specific processing such as tokenization and normalization.
    */
@@ -46,5 +46,5 @@ export type BaseIndexSettings = {
   /**
    * Lets you store custom data in your indices.
    */
-  userData?: { [key: string]: Record<string, any> };
+  userData?: Record<string, any>;
 };

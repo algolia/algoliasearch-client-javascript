@@ -1,0 +1,35 @@
+[
+  {
+    "method": "multipleQueries",
+    "parameters": {
+      "multipleQueriesObject": {
+        "requests": [
+          {
+            "indexName": "theIndexName",
+            "query": "test",
+            "type": "facet",
+            "facet": "theFacet",
+            "params": "testParam"
+          }
+        ],
+        "strategy": "stopIfEnoughMatches"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/*/queries",
+      "method": "POST",
+      "data": {
+        "requests": [
+          {
+            "indexName": "theIndexName",
+            "query": "test",
+            "type": "facet",
+            "facet": "theFacet",
+            "params": "testParam"
+          }
+        ],
+        "strategy": "stopIfEnoughMatches"
+      }
+    }
+  }
+]

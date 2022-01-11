@@ -1,0 +1,34 @@
+[
+  {
+    "method": "batch",
+    "parameters": {
+      "indexName": "theIndexName",
+      "batchWriteObject": {
+        "requests": [
+          {
+            "action": "delete",
+            "body": {
+              "key": "value"
+            },
+            "indexName": "otherIndexName"
+          }
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/batch",
+      "method": "POST",
+      "data": {
+        "requests": [
+          {
+            "action": "delete",
+            "body": {
+              "key": "value"
+            },
+            "indexName": "otherIndexName"
+          }
+        ]
+      }
+    }
+  }
+]

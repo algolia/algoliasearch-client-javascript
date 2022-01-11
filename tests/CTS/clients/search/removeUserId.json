@@ -1,0 +1,12 @@
+[
+  {
+    "method": "removeUserId",
+    "parameters": {
+      "userID": "uniqueID"
+    },
+    "request": {
+      "path": "/1/clusters/mapping/uniqueID",
+      "method": "DELETE"
+    }
+  }
+]

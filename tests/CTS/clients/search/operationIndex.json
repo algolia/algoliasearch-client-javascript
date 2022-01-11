@@ -1,0 +1,28 @@
+[
+  {
+    "method": "operationIndex",
+    "parameters": {
+      "indexName": "theIndexName",
+      "operationIndexObject": {
+        "operation": "copy",
+        "destination": "dest",
+        "scope": [
+          "rules",
+          "settings"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/operation",
+      "method": "POST",
+      "data": {
+        "operation": "copy",
+        "destination": "dest",
+        "scope": [
+          "rules",
+          "settings"
+        ]
+      }
+    }
+  }
+]

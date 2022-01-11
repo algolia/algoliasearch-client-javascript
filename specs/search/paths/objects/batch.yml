@@ -25,7 +25,8 @@ post:
                   action:
                     $ref: 'common/schemas.yml#/action'
                   body:
-                    $ref: 'common/schemas.yml#/body'
+                    type: object
+                    description: arguments to the operation (depends on the type of the operation).
   responses:
     '200':
       description: OK

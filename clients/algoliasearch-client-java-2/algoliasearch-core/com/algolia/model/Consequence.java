@@ -2,9 +2,7 @@ package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 /** Consequence of the Rule. */
@@ -23,7 +21,7 @@ public class Consequence {
   private List<ConsequenceHide> hide = null;
 
   @SerializedName("userData")
-  private Map<String, Object> userData = null;
+  private Object userData;
 
   public Consequence params(ConsequenceParams params) {
     this.params = params;
@@ -120,16 +118,8 @@ public class Consequence {
     this.hide = hide;
   }
 
-  public Consequence userData(Map<String, Object> userData) {
+  public Consequence userData(Object userData) {
     this.userData = userData;
-    return this;
-  }
-
-  public Consequence putUserDataItem(String key, Object userDataItem) {
-    if (this.userData == null) {
-      this.userData = new HashMap<>();
-    }
-    this.userData.put(key, userDataItem);
     return this;
   }
 
@@ -140,11 +130,11 @@ public class Consequence {
    * @return userData
    */
   @javax.annotation.Nullable
-  public Map<String, Object> getUserData() {
+  public Object getUserData() {
     return userData;
   }
 
-  public void setUserData(Map<String, Object> userData) {
+  public void setUserData(Object userData) {
     this.userData = userData;
   }
 

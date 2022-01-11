@@ -10,5 +10,5 @@ export type GetUserTokenResponse = {
   /**
    * The userToken scores.
    */
-  scores: { [key: string]: Record<string, any> };
+  scores: Record<string, any>;
 };

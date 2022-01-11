@@ -193,12 +193,12 @@ export class SearchApi {
    * @param addOrUpdateObject - The addOrUpdateObject parameters.
    * @param addOrUpdateObject.indexName - The index in which to perform the request.
    * @param addOrUpdateObject.objectID - Unique identifier of an object.
-   * @param addOrUpdateObject.requestBody - The Algolia object.
+   * @param addOrUpdateObject.body - The Algolia object.
    */
   addOrUpdateObject({
     indexName,
     objectID,
-    requestBody,
+    body,
   }: AddOrUpdateObjectProps): Promise<UpdatedAtWithObjectIdResponse> {
     const path = '/1/indexes/{indexName}/{objectID}'
       .replace('{indexName}', encodeURIComponent(String(indexName)))
@@ -218,16 +218,16 @@ export class SearchApi {
       );
     }
 
-    if (requestBody === null || requestBody === undefined) {
+    if (body === null || body === undefined) {
       throw new Error(
-        'Required parameter requestBody was null or undefined when calling addOrUpdateObject.'
+        'Required parameter body was null or undefined when calling addOrUpdateObject.'
       );
     }
 
     const request: Request = {
       method: 'PUT',
       path,
-      data: requestBody,
+      data: body,
     };
 
     const requestOptions: RequestOptions = {
@@ -1490,7 +1490,7 @@ export class SearchApi {
     const queryParameters: Record<string, string> = {};
 
     if (page !== undefined) {
-      queryParameters.Page = page.toString();
+      queryParameters.page = page.toString();
     }
 
     const request: Request = {
@@ -1522,7 +1522,7 @@ export class SearchApi {
     const queryParameters: Record<string, string> = {};
 
     if (page !== undefined) {
-      queryParameters.Page = page.toString();
+      queryParameters.page = page.toString();
     }
 
     if (hitsPerPage !== undefined) {
@@ -1838,11 +1838,11 @@ export class SearchApi {
    *
    * @param saveObject - The saveObject parameters.
    * @param saveObject.indexName - The index in which to perform the request.
-   * @param saveObject.requestBody - The Algolia object.
+   * @param saveObject.body - The Algolia object.
    */
   saveObject({
     indexName,
-    requestBody,
+    body,
   }: SaveObjectProps): Promise<SaveObjectResponse> {
     const path = '/1/indexes/{indexName}'.replace(
       '{indexName}',
@@ -1857,16 +1857,16 @@ export class SearchApi {
       );
     }
 
-    if (requestBody === null || requestBody === undefined) {
+    if (body === null || body === undefined) {
       throw new Error(
-        'Required parameter requestBody was null or undefined when calling saveObject.'
+        'Required parameter body was null or undefined when calling saveObject.'
       );
     }
 
     const request: Request = {
       method: 'POST',
       path,
-      data: requestBody,
+      data: body,
     };
 
     const requestOptions: RequestOptions = {
@@ -2294,7 +2294,7 @@ export class SearchApi {
     }
 
     if (page !== undefined) {
-      queryParameters.Page = page.toString();
+      queryParameters.page = page.toString();
     }
 
     if (hitsPerPage !== undefined) {
@@ -2520,7 +2520,7 @@ export type AddOrUpdateObjectProps = {
   /**
    * The Algolia object.
    */
-  requestBody: { [key: string]: Record<string, any> };
+  body: Record<string, any>;
 };
 
 export type AppendSourceProps = {
@@ -2534,7 +2534,7 @@ export type AssignUserIdProps = {
   /**
    * UserID to assign.
    */
-  xAlgoliaUserID: Record<string, any>;
+  xAlgoliaUserID: string;
   /**
    * The assignUserIdObject.
    */
@@ -2556,7 +2556,7 @@ export type BatchAssignUserIdsProps = {
   /**
    * UserID to assign.
    */
-  xAlgoliaUserID: Record<string, any>;
+  xAlgoliaUserID: string;
   /**
    * The batchAssignUserIdsObject.
    */
@@ -2798,7 +2798,7 @@ export type GetUserIdProps = {
   /**
    * UserID to assign.
    */
-  userID: Record<string, any>;
+  userID: string;
 };
 
 export type HasPendingMappingsProps = {
@@ -2874,7 +2874,7 @@ export type RemoveUserIdProps = {
   /**
    * UserID to assign.
    */
-  userID: Record<string, any>;
+  userID: string;
 };
 
 export type ReplaceSourcesProps = {
@@ -2899,7 +2899,7 @@ export type SaveObjectProps = {
   /**
    * The Algolia object.
    */
-  requestBody: { [key: string]: Record<string, any> };
+  body: Record<string, any>;
 };
 
 export type SaveRuleProps = {

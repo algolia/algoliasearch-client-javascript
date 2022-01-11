@@ -1,0 +1,35 @@
+[
+  {
+    "method": "getObjects",
+    "parameters": {
+      "getObjectsObject": {
+        "requests": [
+          {
+            "attributesToRetrieve": [
+              "attr1",
+              "attr2"
+            ],
+            "objectID": "uniqueID",
+            "indexName": "theIndexName"
+          }
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/*/objects",
+      "method": "POST",
+      "data": {
+        "requests": [
+          {
+            "attributesToRetrieve": [
+              "attr1",
+              "attr2"
+            ],
+            "objectID": "uniqueID",
+            "indexName": "theIndexName"
+          }
+        ]
+      }
+    }
+  }
+]

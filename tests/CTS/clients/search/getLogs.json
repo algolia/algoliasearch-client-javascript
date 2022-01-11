@@ -1,0 +1,21 @@
+[
+  {
+    "method": "getLogs",
+    "parameters": {
+      "offset": 5,
+      "length": 10,
+      "indexName": "theIndexName",
+      "type": "all"
+    },
+    "request": {
+      "path": "/1/logs",
+      "method": "GET",
+      "searchParams": {
+        "offset": "5",
+        "length": "10",
+        "indexName": "theIndexName",
+        "type": "all"
+      }
+    }
+  }
+]

@@ -80,7 +80,7 @@ public class BrowseResponse {
   private String serverUsed;
 
   @SerializedName("userData")
-  private Map<String, Object> userData = null;
+  private Object userData = new Object();
 
   @SerializedName("hits")
   private List<Record> hits = new ArrayList<>();
@@ -557,16 +557,8 @@ public class BrowseResponse {
     this.serverUsed = serverUsed;
   }
 
-  public BrowseResponse userData(Map<String, Object> userData) {
+  public BrowseResponse userData(Object userData) {
     this.userData = userData;
-    return this;
-  }
-
-  public BrowseResponse putUserDataItem(String key, Object userDataItem) {
-    if (this.userData == null) {
-      this.userData = new HashMap<>();
-    }
-    this.userData.put(key, userDataItem);
     return this;
   }
 
@@ -576,11 +568,11 @@ public class BrowseResponse {
    * @return userData
    */
   @javax.annotation.Nullable
-  public Map<String, Object> getUserData() {
+  public Object getUserData() {
     return userData;
   }
 
-  public void setUserData(Map<String, Object> userData) {
+  public void setUserData(Object userData) {
     this.userData = userData;
   }
 
