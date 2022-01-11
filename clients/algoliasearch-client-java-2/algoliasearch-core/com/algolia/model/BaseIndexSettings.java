@@ -2,9 +2,7 @@ package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 /** BaseIndexSettings */
@@ -26,7 +24,7 @@ public class BaseIndexSettings {
   private List<String> camelCaseAttributes = null;
 
   @SerializedName("decompoundedAttributes")
-  private Map<String, Object> decompoundedAttributes = null;
+  private Object decompoundedAttributes = new Object();
 
   @SerializedName("indexLanguages")
   private List<String> indexLanguages = null;
@@ -44,7 +42,7 @@ public class BaseIndexSettings {
   private List<String> numericAttributesForFiltering = null;
 
   @SerializedName("userData")
-  private Map<String, Object> userData = null;
+  private Object userData = new Object();
 
   public BaseIndexSettings replicas(List<String> replicas) {
     this.replicas = replicas;
@@ -190,20 +188,9 @@ public class BaseIndexSettings {
   }
 
   public BaseIndexSettings decompoundedAttributes(
-    Map<String, Object> decompoundedAttributes
+    Object decompoundedAttributes
   ) {
     this.decompoundedAttributes = decompoundedAttributes;
-    return this;
-  }
-
-  public BaseIndexSettings putDecompoundedAttributesItem(
-    String key,
-    Object decompoundedAttributesItem
-  ) {
-    if (this.decompoundedAttributes == null) {
-      this.decompoundedAttributes = new HashMap<>();
-    }
-    this.decompoundedAttributes.put(key, decompoundedAttributesItem);
     return this;
   }
 
@@ -214,13 +201,11 @@ public class BaseIndexSettings {
    * @return decompoundedAttributes
    */
   @javax.annotation.Nullable
-  public Map<String, Object> getDecompoundedAttributes() {
+  public Object getDecompoundedAttributes() {
     return decompoundedAttributes;
   }
 
-  public void setDecompoundedAttributes(
-    Map<String, Object> decompoundedAttributes
-  ) {
+  public void setDecompoundedAttributes(Object decompoundedAttributes) {
     this.decompoundedAttributes = decompoundedAttributes;
   }
 
@@ -361,16 +346,8 @@ public class BaseIndexSettings {
     this.numericAttributesForFiltering = numericAttributesForFiltering;
   }
 
-  public BaseIndexSettings userData(Map<String, Object> userData) {
+  public BaseIndexSettings userData(Object userData) {
     this.userData = userData;
-    return this;
-  }
-
-  public BaseIndexSettings putUserDataItem(String key, Object userDataItem) {
-    if (this.userData == null) {
-      this.userData = new HashMap<>();
-    }
-    this.userData.put(key, userDataItem);
     return this;
   }
 
@@ -380,11 +357,11 @@ public class BaseIndexSettings {
    * @return userData
    */
   @javax.annotation.Nullable
-  public Map<String, Object> getUserData() {
+  public Object getUserData() {
     return userData;
   }
 
-  public void setUserData(Map<String, Object> userData) {
+  public void setUserData(Object userData) {
     this.userData = userData;
   }
 

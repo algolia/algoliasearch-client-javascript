@@ -2,30 +2,20 @@ package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 /** MultipleBatchResponse */
 public class MultipleBatchResponse {
 
   @SerializedName("taskID")
-  private Map<String, Object> taskID = null;
+  private Object taskID;
 
   @SerializedName("objectIDs")
   private List<String> objectIDs = null;
 
-  public MultipleBatchResponse taskID(Map<String, Object> taskID) {
+  public MultipleBatchResponse taskID(Object taskID) {
     this.taskID = taskID;
-    return this;
-  }
-
-  public MultipleBatchResponse putTaskIDItem(String key, Object taskIDItem) {
-    if (this.taskID == null) {
-      this.taskID = new HashMap<>();
-    }
-    this.taskID.put(key, taskIDItem);
     return this;
   }
 
@@ -35,11 +25,11 @@ public class MultipleBatchResponse {
    * @return taskID
    */
   @javax.annotation.Nullable
-  public Map<String, Object> getTaskID() {
+  public Object getTaskID() {
     return taskID;
   }
 
-  public void setTaskID(Map<String, Object> taskID) {
+  public void setTaskID(Object taskID) {
     this.taskID = taskID;
   }
 

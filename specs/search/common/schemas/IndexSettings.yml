@@ -37,7 +37,6 @@ baseIndexSettings:
       default: []
     decompoundedAttributes:
       type: object
-      additionalProperties: true
       description: Specify on which attributes in your index Algolia should apply word segmentation, also known as decompounding.
       default: {}
     indexLanguages:
@@ -68,7 +67,6 @@ baseIndexSettings:
       default: []
     userData:
       type: object
-      additionalProperties: true
       description: Lets you store custom data in your indices.
       default: {}
 

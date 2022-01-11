@@ -1,0 +1,12 @@
+[
+  {
+    "method": "clearObjects",
+    "parameters": {
+      "indexName": "theIndexName"
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/clear",
+      "method": "POST"
+    }
+  }
+]

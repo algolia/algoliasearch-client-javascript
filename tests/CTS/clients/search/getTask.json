@@ -1,0 +1,13 @@
+[
+  {
+    "method": "getTask",
+    "parameters": {
+      "indexName": "theIndexName",
+      "taskID": 123
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/task/123",
+      "method": "GET"
+    }
+  }
+]

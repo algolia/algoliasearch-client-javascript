@@ -12,7 +12,6 @@ post:
       application/json:
         schema:
           type: object
-          additionalProperties: true
   responses:
     '200':
       description: OK

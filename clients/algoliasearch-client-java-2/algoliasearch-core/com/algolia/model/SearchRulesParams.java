@@ -3,7 +3,6 @@ package com.algolia.model;
 import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 /** Parameters for the search. */
@@ -28,7 +27,7 @@ public class SearchRulesParams {
   private Boolean enabled;
 
   @SerializedName("requestOptions")
-  private List<Map<String, Object>> requestOptions = null;
+  private List<Object> requestOptions = null;
 
   public SearchRulesParams query(String query) {
     this.query = query;
@@ -145,16 +144,12 @@ public class SearchRulesParams {
     this.enabled = enabled;
   }
 
-  public SearchRulesParams requestOptions(
-    List<Map<String, Object>> requestOptions
-  ) {
+  public SearchRulesParams requestOptions(List<Object> requestOptions) {
     this.requestOptions = requestOptions;
     return this;
   }
 
-  public SearchRulesParams addRequestOptionsItem(
-    Map<String, Object> requestOptionsItem
-  ) {
+  public SearchRulesParams addRequestOptionsItem(Object requestOptionsItem) {
     if (this.requestOptions == null) {
       this.requestOptions = new ArrayList<>();
     }
@@ -168,11 +163,11 @@ public class SearchRulesParams {
    * @return requestOptions
    */
   @javax.annotation.Nullable
-  public List<Map<String, Object>> getRequestOptions() {
+  public List<Object> getRequestOptions() {
     return requestOptions;
   }
 
-  public void setRequestOptions(List<Map<String, Object>> requestOptions) {
+  public void setRequestOptions(List<Object> requestOptions) {
     this.requestOptions = requestOptions;
   }
 

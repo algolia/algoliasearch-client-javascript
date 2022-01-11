@@ -78,7 +78,7 @@ public class BaseSearchResponse {
   private String serverUsed;
 
   @SerializedName("userData")
-  private Map<String, Object> userData = null;
+  private Object userData = new Object();
 
   public BaseSearchResponse abTestID(Integer abTestID) {
     this.abTestID = abTestID;
@@ -551,16 +551,8 @@ public class BaseSearchResponse {
     this.serverUsed = serverUsed;
   }
 
-  public BaseSearchResponse userData(Map<String, Object> userData) {
+  public BaseSearchResponse userData(Object userData) {
     this.userData = userData;
-    return this;
-  }
-
-  public BaseSearchResponse putUserDataItem(String key, Object userDataItem) {
-    if (this.userData == null) {
-      this.userData = new HashMap<>();
-    }
-    this.userData.put(key, userDataItem);
     return this;
   }
 
@@ -570,11 +562,11 @@ public class BaseSearchResponse {
    * @return userData
    */
   @javax.annotation.Nullable
-  public Map<String, Object> getUserData() {
+  public Object getUserData() {
     return userData;
   }
 
-  public void setUserData(Map<String, Object> userData) {
+  public void setUserData(Object userData) {
     this.userData = userData;
   }
 

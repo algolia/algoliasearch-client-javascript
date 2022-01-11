@@ -46,7 +46,7 @@ public class {{classname}} extends ApiClient {
     @Deprecated
     {{/isDeprecated}}
     private Call {{operationId}}Call({{#allParams}}{{{dataType}}} {{paramName}}, {{/allParams}}final ApiCallback _callback) throws ApiException {
-        Object body = {{#bodyParam}}{{paramName}}{{/bodyParam}}{{^bodyParam}}null{{/bodyParam}};
+        Object bodyObj = {{#bodyParam}}{{paramName}}{{/bodyParam}}{{^bodyParam}}null{{/bodyParam}};
 
         // create path and map variables
         String path = "{{{path}}}"{{#pathParams}}
@@ -70,7 +70,7 @@ public class {{classname}} extends ApiClient {
         headers.put("Accept", "application/json");
         headers.put("Content-Type", "application/json");
 
-        return this.buildCall(path, "{{httpMethod}}", queryParams, body, headers, _callback);
+        return this.buildCall(path, "{{httpMethod}}", queryParams, bodyObj, headers, _callback);
     }
 
     {{#isDeprecated}}

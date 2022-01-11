@@ -1,0 +1,35 @@
+[
+  {
+    "method": "partialUpdateObject",
+    "parameters": {
+      "indexName": "theIndexName",
+      "objectID": "uniqueID",
+      "stringBuildInOperation": [
+        {
+          "id1": "test",
+          "id2": {
+            "_operation": "AddUnique",
+            "value": "test2"
+          }
+        }
+      ],
+      "createIfNotExists": true
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/uniqueID/partial",
+      "method": "POST",
+      "data": [
+        {
+          "id1": "test",
+          "id2": {
+            "_operation": "AddUnique",
+            "value": "test2"
+          }
+        }
+      ],
+      "searchParams": {
+        "createIfNotExists": "true"
+      }
+    }
+  }
+]

@@ -30,6 +30,105 @@ describe('addApiKey', () => {
   });
 });
 
+describe('addOrUpdateObject', () => {
+  test('addOrUpdateObject', async () => {
+    const req = await client.addOrUpdateObject({
+      indexName: 'indexName',
+      objectID: 'uniqueID',
+      body: { key: 'value' },
+    });
+
+    expect((req as any).path).toEqual('/1/indexes/indexName/uniqueID');
+    expect((req as any).method).toEqual('PUT');
+    expect((req as any).data).toEqual({ key: 'value' });
+    expect((req as any).searchParams).toEqual(undefined);
+  });
+});
+
+describe('appendSource', () => {
+  test('appendSource', async () => {
+    const req = await client.appendSource({
+      source: { source: 'theSource', description: 'theDescription' },
+    });
+
+    expect((req as any).path).toEqual('/1/security/sources/append');
+    expect((req as any).method).toEqual('POST');
+    expect((req as any).data).toEqual({
+      source: 'theSource',
+      description: 'theDescription',
+    });
+    expect((req as any).searchParams).toEqual(undefined);
+  });
+});
+
+describe('assignUserId', () => {
+  test('assignUserId', async () => {
+    const req = await client.assignUserId({
+      xAlgoliaUserID: 'userID',
+      assignUserIdObject: { cluster: 'theCluster' },
+    });
+
+    expect((req as any).path).toEqual('/1/clusters/mapping');
+    expect((req as any).method).toEqual('POST');
+    expect((req as any).data).toEqual({ cluster: 'theCluster' });
+    expect((req as any).searchParams).toEqual({
+      'X-Algolia-User-ID': 'userID',
+    });
+  });
+});
+
+describe('batch', () => {
+  test('batch', async () => {
+    const req = await client.batch({
+      indexName: 'theIndexName',
+      batchWriteObject: {
+        requests: [
+          {
+            action: 'delete',
+            body: { key: 'value' },
+            indexName: 'otherIndexName',
+          },
+        ],
+      },
+    });
+
+    expect((req as any).path).toEqual('/1/indexes/theIndexName/batch');
+    expect((req as any).method).toEqual('POST');
+    expect((req as any).data).toEqual({
+      requests: [
+        {
+          action: 'delete',
+          body: { key: 'value' },
+          indexName: 'otherIndexName',
+        },
+      ],
+    });
+    expect((req as any).searchParams).toEqual(undefined);
+  });
+});
+
+describe('batchAssignUserIds', () => {
+  test('batchAssignUserIds', async () => {
+    const req = await client.batchAssignUserIds({
+      xAlgoliaUserID: 'userID',
+      batchAssignUserIdsObject: {
+        cluster: 'theCluster',
+        users: ['user1', 'user2'],
+      },
+    });
+
+    expect((req as any).path).toEqual('/1/clusters/mapping/batch');
+    expect((req as any).method).toEqual('POST');
+    expect((req as any).data).toEqual({
+      cluster: 'theCluster',
+      users: ['user1', 'user2'],
+    });
+    expect((req as any).searchParams).toEqual({
+      'X-Algolia-User-ID': 'userID',
+    });
+  });
+});
+
 describe('batchDictionaryEntries', () => {
   test('get batchDictionaryEntries results with minimal parameters', async () => {
     const req = await client.batchDictionaryEntries({
@@ -199,6 +298,17 @@ describe('clearAllSynonyms', () => {
   });
 });
 
+describe('clearObjects', () => {
+  test('clearObjects', async () => {
+    const req = await client.clearObjects({ indexName: 'theIndexName' });
+
+    expect((req as any).path).toEqual('/1/indexes/theIndexName/clear');
+    expect((req as any).method).toEqual('POST');
+    expect((req as any).data).toEqual(undefined);
+    expect((req as any).searchParams).toEqual(undefined);
+  });
+});
+
 describe('clearRules', () => {
   test('clearRules', async () => {
     const req = await client.clearRules({ indexName: 'indexName' });
@@ -221,6 +331,45 @@ describe('deleteApiKey', () => {
   });
 });
 
+describe('deleteBy', () => {
+  test('deleteBy', async () => {
+    const req = await client.deleteBy({
+      indexName: 'theIndexName',
+      searchParams: { query: 'testQuery' },
+    });
+
+    expect((req as any).path).toEqual('/1/indexes/theIndexName/deleteByQuery');
+    expect((req as any).method).toEqual('POST');
+    expect((req as any).data).toEqual({ query: 'testQuery' });
+    expect((req as any).searchParams).toEqual(undefined);
+  });
+});
+
+describe('deleteIndex', () => {
+  test('deleteIndex', async () => {
+    const req = await client.deleteIndex({ indexName: 'theIndexName' });
+
+    expect((req as any).path).toEqual('/1/indexes/theIndexName');
+    expect((req as any).method).toEqual('DELETE');
+    expect((req as any).data).toEqual(undefined);
+    expect((req as any).searchParams).toEqual(undefined);
+  });
+});
+
+describe('deleteObject', () => {
+  test('deleteObject', async () => {
+    const req = await client.deleteObject({
+      indexName: 'theIndexName',
+      objectID: 'uniqueID',
+    });
+
+    expect((req as any).path).toEqual('/1/indexes/theIndexName/uniqueID');
+    expect((req as any).method).toEqual('DELETE');
+    expect((req as any).data).toEqual(undefined);
+    expect((req as any).searchParams).toEqual(undefined);
+  });
+});
+
 describe('deleteRule', () => {
   test('deleteRule', async () => {
     const req = await client.deleteRule({
@@ -229,6 +378,17 @@ describe('deleteRule', () => {
     });
 
     expect((req as any).path).toEqual('/1/indexes/indexName/rules/id1');
+    expect((req as any).method).toEqual('DELETE');
+    expect((req as any).data).toEqual(undefined);
+    expect((req as any).searchParams).toEqual(undefined);
+  });
+});
+
+describe('deleteSource', () => {
+  test('deleteSource', async () => {
+    const req = await client.deleteSource({ source: 'theSource' });
+
+    expect((req as any).path).toEqual('/1/security/sources/theSource');
     expect((req as any).method).toEqual('DELETE');
     expect((req as any).data).toEqual(undefined);
     expect((req as any).searchParams).toEqual(undefined);
@@ -282,6 +442,73 @@ describe('getDictionarySettings', () => {
   });
 });
 
+describe('getLogs', () => {
+  test('getLogs', async () => {
+    const req = await client.getLogs({
+      offset: 5,
+      length: 10,
+      indexName: 'theIndexName',
+      type: 'all',
+    });
+
+    expect((req as any).path).toEqual('/1/logs');
+    expect((req as any).method).toEqual('GET');
+    expect((req as any).data).toEqual(undefined);
+    expect((req as any).searchParams).toEqual({
+      offset: '5',
+      length: '10',
+      indexName: 'theIndexName',
+      type: 'all',
+    });
+  });
+});
+
+describe('getObject', () => {
+  test('getObject', async () => {
+    const req = await client.getObject({
+      indexName: 'theIndexName',
+      objectID: 'uniqueID',
+      attributesToRetrieve: ['attr1', 'attr2'],
+    });
+
+    expect((req as any).path).toEqual('/1/indexes/theIndexName/uniqueID');
+    expect((req as any).method).toEqual('GET');
+    expect((req as any).data).toEqual(undefined);
+    expect((req as any).searchParams).toEqual({
+      attributesToRetrieve: 'attr1,attr2',
+    });
+  });
+});
+
+describe('getObjects', () => {
+  test('getObjects', async () => {
+    const req = await client.getObjects({
+      getObjectsObject: {
+        requests: [
+          {
+            attributesToRetrieve: ['attr1', 'attr2'],
+            objectID: 'uniqueID',
+            indexName: 'theIndexName',
+          },
+        ],
+      },
+    });
+
+    expect((req as any).path).toEqual('/1/indexes/*/objects');
+    expect((req as any).method).toEqual('POST');
+    expect((req as any).data).toEqual({
+      requests: [
+        {
+          attributesToRetrieve: ['attr1', 'attr2'],
+          objectID: 'uniqueID',
+          indexName: 'theIndexName',
+        },
+      ],
+    });
+    expect((req as any).searchParams).toEqual(undefined);
+  });
+});
+
 describe('getRule', () => {
   test('getRule', async () => {
     const req = await client.getRule({
@@ -290,6 +517,28 @@ describe('getRule', () => {
     });
 
     expect((req as any).path).toEqual('/1/indexes/indexName/rules/id1');
+    expect((req as any).method).toEqual('GET');
+    expect((req as any).data).toEqual(undefined);
+    expect((req as any).searchParams).toEqual(undefined);
+  });
+});
+
+describe('getSettings', () => {
+  test('getSettings', async () => {
+    const req = await client.getSettings({ indexName: 'theIndexName' });
+
+    expect((req as any).path).toEqual('/1/indexes/theIndexName/settings');
+    expect((req as any).method).toEqual('GET');
+    expect((req as any).data).toEqual(undefined);
+    expect((req as any).searchParams).toEqual(undefined);
+  });
+});
+
+describe('getSources', () => {
+  test('getSources', async () => {
+    const req = await client.getSources();
+
+    expect((req as any).path).toEqual('/1/security/sources');
     expect((req as any).method).toEqual('GET');
     expect((req as any).data).toEqual(undefined);
     expect((req as any).searchParams).toEqual(undefined);
@@ -310,6 +559,53 @@ describe('getSynonym', () => {
   });
 });
 
+describe('getTask', () => {
+  test('getTask', async () => {
+    const req = await client.getTask({
+      indexName: 'theIndexName',
+      taskID: 123,
+    });
+
+    expect((req as any).path).toEqual('/1/indexes/theIndexName/task/123');
+    expect((req as any).method).toEqual('GET');
+    expect((req as any).data).toEqual(undefined);
+    expect((req as any).searchParams).toEqual(undefined);
+  });
+});
+
+describe('getTopUserIds', () => {
+  test('getTopUserIds', async () => {
+    const req = await client.getTopUserIds();
+
+    expect((req as any).path).toEqual('/1/clusters/mapping/top');
+    expect((req as any).method).toEqual('GET');
+    expect((req as any).data).toEqual(undefined);
+    expect((req as any).searchParams).toEqual(undefined);
+  });
+});
+
+describe('getUserId', () => {
+  test('getUserId', async () => {
+    const req = await client.getUserId({ userID: 'uniqueID' });
+
+    expect((req as any).path).toEqual('/1/clusters/mapping/uniqueID');
+    expect((req as any).method).toEqual('GET');
+    expect((req as any).data).toEqual(undefined);
+    expect((req as any).searchParams).toEqual(undefined);
+  });
+});
+
+describe('hasPendingMappings', () => {
+  test('hasPendingMappings', async () => {
+    const req = await client.hasPendingMappings({ getClusters: true });
+
+    expect((req as any).path).toEqual('/1/clusters/mapping/pending');
+    expect((req as any).method).toEqual('GET');
+    expect((req as any).data).toEqual(undefined);
+    expect((req as any).searchParams).toEqual({ getClusters: 'true' });
+  });
+});
+
 describe('listApiKeys', () => {
   test('listApiKeys', async () => {
     const req = await client.listApiKeys();
@@ -321,6 +617,176 @@ describe('listApiKeys', () => {
   });
 });
 
+describe('listClusters', () => {
+  test('listClusters', async () => {
+    const req = await client.listClusters();
+
+    expect((req as any).path).toEqual('/1/clusters');
+    expect((req as any).method).toEqual('GET');
+    expect((req as any).data).toEqual(undefined);
+    expect((req as any).searchParams).toEqual(undefined);
+  });
+});
+
+describe('listIndices', () => {
+  test('listIndices', async () => {
+    const req = await client.listIndices({ page: 8 });
+
+    expect((req as any).path).toEqual('/1/indexes');
+    expect((req as any).method).toEqual('GET');
+    expect((req as any).data).toEqual(undefined);
+    expect((req as any).searchParams).toEqual({ page: '8' });
+  });
+});
+
+describe('listUserIds', () => {
+  test('listUserIds', async () => {
+    const req = await client.listUserIds({ page: 8, hitsPerPage: 100 });
+
+    expect((req as any).path).toEqual('/1/clusters/mapping');
+    expect((req as any).method).toEqual('GET');
+    expect((req as any).data).toEqual(undefined);
+    expect((req as any).searchParams).toEqual({
+      page: '8',
+      hitsPerPage: '100',
+    });
+  });
+});
+
+describe('multipleBatch', () => {
+  test('multipleBatch', async () => {
+    const req = await client.multipleBatch({
+      batchObject: {
+        requests: [
+          {
+            action: 'addObject',
+            body: { key: 'value' },
+            indexName: 'theIndexName',
+          },
+        ],
+      },
+    });
+
+    expect((req as any).path).toEqual('/1/indexes/*/batch');
+    expect((req as any).method).toEqual('POST');
+    expect((req as any).data).toEqual({
+      requests: [
+        {
+          action: 'addObject',
+          body: { key: 'value' },
+          indexName: 'theIndexName',
+        },
+      ],
+    });
+    expect((req as any).searchParams).toEqual(undefined);
+  });
+});
+
+describe('multipleQueries', () => {
+  test('multipleQueries', async () => {
+    const req = await client.multipleQueries({
+      multipleQueriesObject: {
+        requests: [
+          {
+            indexName: 'theIndexName',
+            query: 'test',
+            type: 'facet',
+            facet: 'theFacet',
+            params: 'testParam',
+          },
+        ],
+        strategy: 'stopIfEnoughMatches',
+      },
+    });
+
+    expect((req as any).path).toEqual('/1/indexes/*/queries');
+    expect((req as any).method).toEqual('POST');
+    expect((req as any).data).toEqual({
+      requests: [
+        {
+          indexName: 'theIndexName',
+          query: 'test',
+          type: 'facet',
+          facet: 'theFacet',
+          params: 'testParam',
+        },
+      ],
+      strategy: 'stopIfEnoughMatches',
+    });
+    expect((req as any).searchParams).toEqual(undefined);
+  });
+});
+
+describe('operationIndex', () => {
+  test('operationIndex', async () => {
+    const req = await client.operationIndex({
+      indexName: 'theIndexName',
+      operationIndexObject: {
+        operation: 'copy',
+        destination: 'dest',
+        scope: ['rules', 'settings'],
+      },
+    });
+
+    expect((req as any).path).toEqual('/1/indexes/theIndexName/operation');
+    expect((req as any).method).toEqual('POST');
+    expect((req as any).data).toEqual({
+      operation: 'copy',
+      destination: 'dest',
+      scope: ['rules', 'settings'],
+    });
+    expect((req as any).searchParams).toEqual(undefined);
+  });
+});
+
+describe('partialUpdateObject', () => {
+  test('partialUpdateObject', async () => {
+    const req = await client.partialUpdateObject({
+      indexName: 'theIndexName',
+      objectID: 'uniqueID',
+      stringBuildInOperation: [
+        { id1: 'test', id2: { _operation: 'AddUnique', value: 'test2' } },
+      ],
+      createIfNotExists: true,
+    });
+
+    expect((req as any).path).toEqual(
+      '/1/indexes/theIndexName/uniqueID/partial'
+    );
+    expect((req as any).method).toEqual('POST');
+    expect((req as any).data).toEqual([
+      { id1: 'test', id2: { _operation: 'AddUnique', value: 'test2' } },
+    ]);
+    expect((req as any).searchParams).toEqual({ createIfNotExists: 'true' });
+  });
+});
+
+describe('removeUserId', () => {
+  test('removeUserId', async () => {
+    const req = await client.removeUserId({ userID: 'uniqueID' });
+
+    expect((req as any).path).toEqual('/1/clusters/mapping/uniqueID');
+    expect((req as any).method).toEqual('DELETE');
+    expect((req as any).data).toEqual(undefined);
+    expect((req as any).searchParams).toEqual(undefined);
+  });
+});
+
+describe('replaceSources', () => {
+  test('replaceSources', async () => {
+    const req = await client.replaceSources({
+      source: [{ source: 'theSource', description: 'theDescription' }],
+    });
+
+    expect((req as any).path).toEqual('/1/security/sources');
+    expect((req as any).method).toEqual('PUT');
+    expect((req as any).data).toEqual([
+      { source: 'theSource', description: 'theDescription' },
+    ]);
+    expect((req as any).searchParams).toEqual(undefined);
+  });
+});
+
 describe('restoreApiKey', () => {
   test('restoreApiKey', async () => {
     const req = await client.restoreApiKey({ key: 'myApiKey' });
@@ -328,6 +794,20 @@ describe('restoreApiKey', () => {
     expect((req as any).path).toEqual('/1/keys/myApiKey/restore');
     expect((req as any).method).toEqual('POST');
     expect((req as any).data).toEqual(undefined);
+    expect((req as any).searchParams).toEqual(undefined);
+  });
+});
+
+describe('saveObject', () => {
+  test('saveObject', async () => {
+    const req = await client.saveObject({
+      indexName: 'theIndexName',
+      body: { objectID: 'id', test: 'val' },
+    });
+
+    expect((req as any).path).toEqual('/1/indexes/theIndexName');
+    expect((req as any).method).toEqual('POST');
+    expect((req as any).data).toEqual({ objectID: 'id', test: 'val' });
     expect((req as any).searchParams).toEqual(undefined);
   });
 });
@@ -544,6 +1024,29 @@ describe('searchSynonyms', () => {
   });
 });
 
+describe('searchUserIds', () => {
+  test('searchUserIds', async () => {
+    const req = await client.searchUserIds({
+      searchUserIdsObject: {
+        query: 'test',
+        clusterName: 'theClusterName',
+        page: 5,
+        hitsPerPage: 10,
+      },
+    });
+
+    expect((req as any).path).toEqual('/1/clusters/mapping/search');
+    expect((req as any).method).toEqual('POST');
+    expect((req as any).data).toEqual({
+      query: 'test',
+      clusterName: 'theClusterName',
+      page: 5,
+      hitsPerPage: 10,
+    });
+    expect((req as any).searchParams).toEqual(undefined);
+  });
+});
+
 describe('setDictionarySettings', () => {
   test('get setDictionarySettings results with minimal parameters', async () => {
     const req = await client.setDictionarySettings({
@@ -581,6 +1084,21 @@ describe('setDictionarySettings', () => {
       },
     });
     expect((req as any).searchParams).toEqual(undefined);
+  });
+});
+
+describe('setSettings', () => {
+  test('setSettings', async () => {
+    const req = await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { paginationLimitedTo: 10 },
+      forwardToReplicas: true,
+    });
+
+    expect((req as any).path).toEqual('/1/indexes/theIndexName/settings');
+    expect((req as any).method).toEqual('PUT');
+    expect((req as any).data).toEqual({ paginationLimitedTo: 10 });
+    expect((req as any).searchParams).toEqual({ forwardToReplicas: 'true' });
   });
 });
 

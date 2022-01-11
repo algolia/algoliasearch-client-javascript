@@ -3,21 +3,20 @@ package com.algolia.model;
 import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 /** GetObjectsResponse */
 public class GetObjectsResponse {
 
   @SerializedName("results")
-  private List<Map<String, Object>> results = null;
+  private List<Object> results = null;
 
-  public GetObjectsResponse results(List<Map<String, Object>> results) {
+  public GetObjectsResponse results(List<Object> results) {
     this.results = results;
     return this;
   }
 
-  public GetObjectsResponse addResultsItem(Map<String, Object> resultsItem) {
+  public GetObjectsResponse addResultsItem(Object resultsItem) {
     if (this.results == null) {
       this.results = new ArrayList<>();
     }
@@ -31,11 +30,11 @@ public class GetObjectsResponse {
    * @return results
    */
   @javax.annotation.Nullable
-  public List<Map<String, Object>> getResults() {
+  public List<Object> getResults() {
     return results;
   }
 
-  public void setResults(List<Map<String, Object>> results) {
+  public void setResults(List<Object> results) {
     this.results = results;
   }
 

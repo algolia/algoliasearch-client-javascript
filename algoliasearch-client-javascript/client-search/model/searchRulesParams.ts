@@ -28,5 +28,5 @@ export type SearchRulesParams = {
   /**
    * A mapping of requestOptions to send along with the request.
    */
-  requestOptions?: Array<{ [key: string]: Record<string, any> }>;
+  requestOptions?: Array<Record<string, any>>;
 };

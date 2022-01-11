@@ -14,7 +14,8 @@ UserIDInQuery:
   in: query
   required: true
   schema:
-    $ref: '#/userID'
+    type: string
+    pattern: '^[a-zA-Z0-9 \-*.]+$'
 
 # path
 UserIDInPath:
@@ -23,7 +24,8 @@ UserIDInPath:
   in: path
   required: true
   schema:
-    $ref: '#/userID'
+    type: string
+    pattern: '^[a-zA-Z0-9 \-*.]+$'
 
 # misc
 userID:

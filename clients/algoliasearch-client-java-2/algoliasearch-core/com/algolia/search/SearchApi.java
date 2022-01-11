@@ -84,7 +84,7 @@ public class SearchApi extends ApiClient {
    */
   private Call addApiKeyCall(ApiKey apiKey, final ApiCallback _callback)
     throws ApiException {
-    Object body = apiKey;
+    Object bodyObj = apiKey;
 
     // create path and map variables
     String path = "/1/keys";
@@ -95,7 +95,14 @@ public class SearchApi extends ApiClient {
     headers.put("Accept", "application/json");
     headers.put("Content-Type", "application/json");
 
-    return this.buildCall(path, "POST", queryParams, body, headers, _callback);
+    return this.buildCall(
+        path,
+        "POST",
+        queryParams,
+        bodyObj,
+        headers,
+        _callback
+      );
   }
 
   @SuppressWarnings("rawtypes")
@@ -152,7 +159,7 @@ public class SearchApi extends ApiClient {
    *
    * @param indexName The index in which to perform the request. (required)
    * @param objectID Unique identifier of an object. (required)
-   * @param requestBody The Algolia object. (required)
+   * @param body The Algolia object. (required)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
@@ -160,10 +167,10 @@ public class SearchApi extends ApiClient {
   private Call addOrUpdateObjectCall(
     String indexName,
     String objectID,
-    Map<String, Object> requestBody,
+    Object body,
     final ApiCallback _callback
   ) throws ApiException {
-    Object body = requestBody;
+    Object bodyObj = body;
 
     // create path and map variables
     String path =
@@ -182,14 +189,21 @@ public class SearchApi extends ApiClient {
     headers.put("Accept", "application/json");
     headers.put("Content-Type", "application/json");
 
-    return this.buildCall(path, "PUT", queryParams, body, headers, _callback);
+    return this.buildCall(
+        path,
+        "PUT",
+        queryParams,
+        bodyObj,
+        headers,
+        _callback
+      );
   }
 
   @SuppressWarnings("rawtypes")
   private Call addOrUpdateObjectValidateBeforeCall(
     String indexName,
     String objectID,
-    Map<String, Object> requestBody,
+    Object body,
     final ApiCallback _callback
   ) throws ApiException {
     // verify the required parameter 'indexName' is set
@@ -206,14 +220,14 @@ public class SearchApi extends ApiClient {
       );
     }
 
-    // verify the required parameter 'requestBody' is set
-    if (requestBody == null) {
+    // verify the required parameter 'body' is set
+    if (body == null) {
       throw new ApiException(
-        "Missing the required parameter 'requestBody' when calling addOrUpdateObject(Async)"
+        "Missing the required parameter 'body' when calling addOrUpdateObject(Async)"
       );
     }
 
-    return addOrUpdateObjectCall(indexName, objectID, requestBody, _callback);
+    return addOrUpdateObjectCall(indexName, objectID, body, _callback);
   }
 
   /**
@@ -223,7 +237,7 @@ public class SearchApi extends ApiClient {
    *
    * @param indexName The index in which to perform the request. (required)
    * @param objectID Unique identifier of an object. (required)
-   * @param requestBody The Algolia object. (required)
+   * @param body The Algolia object. (required)
    * @return UpdatedAtWithObjectIdResponse
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
@@ -231,12 +245,12 @@ public class SearchApi extends ApiClient {
   public UpdatedAtWithObjectIdResponse addOrUpdateObject(
     String indexName,
     String objectID,
-    Map<String, Object> requestBody
+    Object body
   ) throws ApiException {
     Call call = addOrUpdateObjectValidateBeforeCall(
       indexName,
       objectID,
-      requestBody,
+      body,
       null
     );
     Type returnType = new TypeToken<UpdatedAtWithObjectIdResponse>() {}
@@ -253,7 +267,7 @@ public class SearchApi extends ApiClient {
    *
    * @param indexName The index in which to perform the request. (required)
    * @param objectID Unique identifier of an object. (required)
-   * @param requestBody The Algolia object. (required)
+   * @param body The Algolia object. (required)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
    * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -261,13 +275,13 @@ public class SearchApi extends ApiClient {
   public Call addOrUpdateObjectAsync(
     String indexName,
     String objectID,
-    Map<String, Object> requestBody,
+    Object body,
     final ApiCallback<UpdatedAtWithObjectIdResponse> _callback
   ) throws ApiException {
     Call call = addOrUpdateObjectValidateBeforeCall(
       indexName,
       objectID,
-      requestBody,
+      body,
       _callback
     );
     Type returnType = new TypeToken<UpdatedAtWithObjectIdResponse>() {}
@@ -286,7 +300,7 @@ public class SearchApi extends ApiClient {
    */
   private Call appendSourceCall(Source source, final ApiCallback _callback)
     throws ApiException {
-    Object body = source;
+    Object bodyObj = source;
 
     // create path and map variables
     String path = "/1/security/sources/append";
@@ -297,7 +311,14 @@ public class SearchApi extends ApiClient {
     headers.put("Accept", "application/json");
     headers.put("Content-Type", "application/json");
 
-    return this.buildCall(path, "POST", queryParams, body, headers, _callback);
+    return this.buildCall(
+        path,
+        "POST",
+        queryParams,
+        bodyObj,
+        headers,
+        _callback
+      );
   }
 
   @SuppressWarnings("rawtypes")
@@ -358,11 +379,11 @@ public class SearchApi extends ApiClient {
    * @throws ApiException If fail to serialize the request body object
    */
   private Call assignUserIdCall(
-    Object xAlgoliaUserID,
+    String xAlgoliaUserID,
     AssignUserIdObject assignUserIdObject,
     final ApiCallback _callback
   ) throws ApiException {
-    Object body = assignUserIdObject;
+    Object bodyObj = assignUserIdObject;
 
     // create path and map variables
     String path = "/1/clusters/mapping";
@@ -379,12 +400,19 @@ public class SearchApi extends ApiClient {
     headers.put("Accept", "application/json");
     headers.put("Content-Type", "application/json");
 
-    return this.buildCall(path, "POST", queryParams, body, headers, _callback);
+    return this.buildCall(
+        path,
+        "POST",
+        queryParams,
+        bodyObj,
+        headers,
+        _callback
+      );
   }
 
   @SuppressWarnings("rawtypes")
   private Call assignUserIdValidateBeforeCall(
-    Object xAlgoliaUserID,
+    String xAlgoliaUserID,
     AssignUserIdObject assignUserIdObject,
     final ApiCallback _callback
   ) throws ApiException {
@@ -418,7 +446,7 @@ public class SearchApi extends ApiClient {
    *     response body
    */
   public CreatedAtResponse assignUserId(
-    Object xAlgoliaUserID,
+    String xAlgoliaUserID,
     AssignUserIdObject assignUserIdObject
   ) throws ApiException {
     Call call = assignUserIdValidateBeforeCall(
@@ -444,7 +472,7 @@ public class SearchApi extends ApiClient {
    * @throws ApiException If fail to process the API call, e.g. serializing the request body object
    */
   public Call assignUserIdAsync(
-    Object xAlgoliaUserID,
+    String xAlgoliaUserID,
     AssignUserIdObject assignUserIdObject,
     final ApiCallback<CreatedAtResponse> _callback
   ) throws ApiException {
@@ -472,7 +500,7 @@ public class SearchApi extends ApiClient {
     BatchWriteObject batchWriteObject,
     final ApiCallback _callback
   ) throws ApiException {
-    Object body = batchWriteObject;
+    Object bodyObj = batchWriteObject;
 
     // create path and map variables
     String path =
@@ -487,7 +515,14 @@ public class SearchApi extends ApiClient {
     headers.put("Accept", "application/json");
     headers.put("Content-Type", "application/json");
 
-    return this.buildCall(path, "POST", queryParams, body, headers, _callback);
+    return this.buildCall(
+        path,
+        "POST",
+        queryParams,
+        bodyObj,
+        headers,
+        _callback
+      );
   }
 
   @SuppressWarnings("rawtypes")
@@ -562,11 +597,11 @@ public class SearchApi extends ApiClient {
    * @throws ApiException If fail to serialize the request body object
    */
   private Call batchAssignUserIdsCall(
-    Object xAlgoliaUserID,
+    String xAlgoliaUserID,
     BatchAssignUserIdsObject batchAssignUserIdsObject,
     final ApiCallback _callback
   ) throws ApiException {
-    Object body = batchAssignUserIdsObject;
+    Object bodyObj = batchAssignUserIdsObject;
 
     // create path and map variables
     String path = "/1/clusters/mapping/batch";
@@ -583,12 +618,19 @@ public class SearchApi extends ApiClient {
     headers.put("Accept", "application/json");
     headers.put("Content-Type", "application/json");
 
-    return this.buildCall(path, "POST", queryParams, body, headers, _callback);
+    return this.buildCall(
+        path,
+        "POST",
+        queryParams,
+        bodyObj,
+        headers,
+        _callback
+      );
   }
 
   @SuppressWarnings("rawtypes")
   private Call batchAssignUserIdsValidateBeforeCall(
-    Object xAlgoliaUserID,
+    String xAlgoliaUserID,
     BatchAssignUserIdsObject batchAssignUserIdsObject,
     final ApiCallback _callback
   ) throws ApiException {
@@ -626,7 +668,7 @@ public class SearchApi extends ApiClient {
    *     response body
    */
   public CreatedAtResponse batchAssignUserIds(
-    Object xAlgoliaUserID,
+    String xAlgoliaUserID,
     BatchAssignUserIdsObject batchAssignUserIdsObject
   ) throws ApiException {
     Call call = batchAssignUserIdsValidateBeforeCall(
@@ -651,7 +693,7 @@ public class SearchApi extends ApiClient {
    * @throws ApiException If fail to process the API call, e.g. serializing the request body object
    */
   public Call batchAssignUserIdsAsync(
-    Object xAlgoliaUserID,
+    String xAlgoliaUserID,
     BatchAssignUserIdsObject batchAssignUserIdsObject,
     final ApiCallback<CreatedAtResponse> _callback
   ) throws ApiException {
@@ -679,7 +721,7 @@ public class SearchApi extends ApiClient {
     BatchDictionaryEntries batchDictionaryEntries,
     final ApiCallback _callback
   ) throws ApiException {
-    Object body = batchDictionaryEntries;
+    Object bodyObj = batchDictionaryEntries;
 
     // create path and map variables
     String path =
@@ -694,7 +736,14 @@ public class SearchApi extends ApiClient {
     headers.put("Accept", "application/json");
     headers.put("Content-Type", "application/json");
 
-    return this.buildCall(path, "POST", queryParams, body, headers, _callback);
+    return this.buildCall(
+        path,
+        "POST",
+        queryParams,
+        bodyObj,
+        headers,
+        _callback
+      );
   }
 
   @SuppressWarnings("rawtypes")
@@ -793,7 +842,7 @@ public class SearchApi extends ApiClient {
     Boolean clearExistingRules,
     final ApiCallback _callback
   ) throws ApiException {
-    Object body = rule;
+    Object bodyObj = rule;
 
     // create path and map variables
     String path =
@@ -820,7 +869,14 @@ public class SearchApi extends ApiClient {
     headers.put("Accept", "application/json");
     headers.put("Content-Type", "application/json");
 
-    return this.buildCall(path, "POST", queryParams, body, headers, _callback);
+    return this.buildCall(
+        path,
+        "POST",
+        queryParams,
+        bodyObj,
+        headers,
+        _callback
+      );
   }
 
   @SuppressWarnings("rawtypes")
@@ -931,7 +987,7 @@ public class SearchApi extends ApiClient {
     BrowseRequest browseRequest,
     final ApiCallback _callback
   ) throws ApiException {
-    Object body = browseRequest;
+    Object bodyObj = browseRequest;
 
     // create path and map variables
     String path =
@@ -946,7 +1002,14 @@ public class SearchApi extends ApiClient {
     headers.put("Accept", "application/json");
     headers.put("Content-Type", "application/json");
 
-    return this.buildCall(path, "POST", queryParams, body, headers, _callback);
+    return this.buildCall(
+        path,
+        "POST",
+        queryParams,
+        bodyObj,
+        headers,
+        _callback
+      );
   }
 
   @SuppressWarnings("rawtypes")
@@ -1030,7 +1093,7 @@ public class SearchApi extends ApiClient {
     Boolean forwardToReplicas,
     final ApiCallback _callback
   ) throws ApiException {
-    Object body = null;
+    Object bodyObj = null;
 
     // create path and map variables
     String path =
@@ -1051,7 +1114,14 @@ public class SearchApi extends ApiClient {
     headers.put("Accept", "application/json");
     headers.put("Content-Type", "application/json");
 
-    return this.buildCall(path, "POST", queryParams, body, headers, _callback);
+    return this.buildCall(
+        path,
+        "POST",
+        queryParams,
+        bodyObj,
+        headers,
+        _callback
+      );
   }
 
   @SuppressWarnings("rawtypes")
@@ -1129,7 +1199,7 @@ public class SearchApi extends ApiClient {
    */
   private Call clearObjectsCall(String indexName, final ApiCallback _callback)
     throws ApiException {
-    Object body = null;
+    Object bodyObj = null;
 
     // create path and map variables
     String path =
@@ -1144,7 +1214,14 @@ public class SearchApi extends ApiClient {
     headers.put("Accept", "application/json");
     headers.put("Content-Type", "application/json");
 
-    return this.buildCall(path, "POST", queryParams, body, headers, _callback);
+    return this.buildCall(
+        path,
+        "POST",
+        queryParams,
+        bodyObj,
+        headers,
+        _callback
+      );
   }
 
   @SuppressWarnings("rawtypes")
@@ -1212,7 +1289,7 @@ public class SearchApi extends ApiClient {
     Boolean forwardToReplicas,
     final ApiCallback _callback
   ) throws ApiException {
-    Object body = null;
+    Object bodyObj = null;
 
     // create path and map variables
     String path =
@@ -1233,7 +1310,14 @@ public class SearchApi extends ApiClient {
     headers.put("Accept", "application/json");
     headers.put("Content-Type", "application/json");
 
-    return this.buildCall(path, "POST", queryParams, body, headers, _callback);
+    return this.buildCall(
+        path,
+        "POST",
+        queryParams,
+        bodyObj,
+        headers,
+        _callback
+      );
   }
 
   @SuppressWarnings("rawtypes")
@@ -1311,7 +1395,7 @@ public class SearchApi extends ApiClient {
    */
   private Call deleteApiKeyCall(String key, final ApiCallback _callback)
     throws ApiException {
-    Object body = null;
+    Object bodyObj = null;
 
     // create path and map variables
     String path =
@@ -1330,7 +1414,7 @@ public class SearchApi extends ApiClient {
         path,
         "DELETE",
         queryParams,
-        body,
+        bodyObj,
         headers,
         _callback
       );
@@ -1398,7 +1482,7 @@ public class SearchApi extends ApiClient {
     SearchParams searchParams,
     final ApiCallback _callback
   ) throws ApiException {
-    Object body = searchParams;
+    Object bodyObj = searchParams;
 
     // create path and map variables
     String path =
@@ -1413,7 +1497,14 @@ public class SearchApi extends ApiClient {
     headers.put("Accept", "application/json");
     headers.put("Content-Type", "application/json");
 
-    return this.buildCall(path, "POST", queryParams, body, headers, _callback);
+    return this.buildCall(
+        path,
+        "POST",
+        queryParams,
+        bodyObj,
+        headers,
+        _callback
+      );
   }
 
   @SuppressWarnings("rawtypes")
@@ -1492,7 +1583,7 @@ public class SearchApi extends ApiClient {
    */
   private Call deleteIndexCall(String indexName, final ApiCallback _callback)
     throws ApiException {
-    Object body = null;
+    Object bodyObj = null;
 
     // create path and map variables
     String path =
@@ -1511,7 +1602,7 @@ public class SearchApi extends ApiClient {
         path,
         "DELETE",
         queryParams,
-        body,
+        bodyObj,
         headers,
         _callback
       );
@@ -1579,7 +1670,7 @@ public class SearchApi extends ApiClient {
     String objectID,
     final ApiCallback _callback
   ) throws ApiException {
-    Object body = null;
+    Object bodyObj = null;
 
     // create path and map variables
     String path =
@@ -1602,7 +1693,7 @@ public class SearchApi extends ApiClient {
         path,
         "DELETE",
         queryParams,
-        body,
+        bodyObj,
         headers,
         _callback
       );
@@ -1685,7 +1776,7 @@ public class SearchApi extends ApiClient {
     Boolean forwardToReplicas,
     final ApiCallback _callback
   ) throws ApiException {
-    Object body = null;
+    Object bodyObj = null;
 
     // create path and map variables
     String path =
@@ -1714,7 +1805,7 @@ public class SearchApi extends ApiClient {
         path,
         "DELETE",
         queryParams,
-        body,
+        bodyObj,
         headers,
         _callback
       );
@@ -1809,7 +1900,7 @@ public class SearchApi extends ApiClient {
    */
   private Call deleteSourceCall(String source, final ApiCallback _callback)
     throws ApiException {
-    Object body = null;
+    Object bodyObj = null;
 
     // create path and map variables
     String path =
@@ -1828,7 +1919,7 @@ public class SearchApi extends ApiClient {
         path,
         "DELETE",
         queryParams,
-        body,
+        bodyObj,
         headers,
         _callback
       );
@@ -1899,7 +1990,7 @@ public class SearchApi extends ApiClient {
     Boolean forwardToReplicas,
     final ApiCallback _callback
   ) throws ApiException {
-    Object body = null;
+    Object bodyObj = null;
 
     // create path and map variables
     String path =
@@ -1928,7 +2019,7 @@ public class SearchApi extends ApiClient {
         path,
         "DELETE",
         queryParams,
-        body,
+        bodyObj,
         headers,
         _callback
       );
@@ -2024,7 +2115,7 @@ public class SearchApi extends ApiClient {
    */
   private Call getApiKeyCall(String key, final ApiCallback _callback)
     throws ApiException {
-    Object body = null;
+    Object bodyObj = null;
 
     // create path and map variables
     String path =
@@ -2039,7 +2130,14 @@ public class SearchApi extends ApiClient {
     headers.put("Accept", "application/json");
     headers.put("Content-Type", "application/json");
 
-    return this.buildCall(path, "GET", queryParams, body, headers, _callback);
+    return this.buildCall(
+        path,
+        "GET",
+        queryParams,
+        bodyObj,
+        headers,
+        _callback
+      );
   }
 
   @SuppressWarnings("rawtypes")
@@ -2099,7 +2197,7 @@ public class SearchApi extends ApiClient {
    */
   private Call getDictionaryLanguagesCall(final ApiCallback _callback)
     throws ApiException {
-    Object body = null;
+    Object bodyObj = null;
 
     // create path and map variables
     String path = "/1/dictionaries/*/languages";
@@ -2110,7 +2208,14 @@ public class SearchApi extends ApiClient {
     headers.put("Accept", "application/json");
     headers.put("Content-Type", "application/json");
 
-    return this.buildCall(path, "GET", queryParams, body, headers, _callback);
+    return this.buildCall(
+        path,
+        "GET",
+        queryParams,
+        bodyObj,
+        headers,
+        _callback
+      );
   }
 
   @SuppressWarnings("rawtypes")
@@ -2160,7 +2265,7 @@ public class SearchApi extends ApiClient {
    */
   private Call getDictionarySettingsCall(final ApiCallback _callback)
     throws ApiException {
-    Object body = null;
+    Object bodyObj = null;
 
     // create path and map variables
     String path = "/1/dictionaries/*/settings";
@@ -2171,7 +2276,14 @@ public class SearchApi extends ApiClient {
     headers.put("Accept", "application/json");
     headers.put("Content-Type", "application/json");
 
-    return this.buildCall(path, "GET", queryParams, body, headers, _callback);
+    return this.buildCall(
+        path,
+        "GET",
+        queryParams,
+        bodyObj,
+        headers,
+        _callback
+      );
   }
 
   @SuppressWarnings("rawtypes")
@@ -2239,7 +2351,7 @@ public class SearchApi extends ApiClient {
     String type,
     final ApiCallback _callback
   ) throws ApiException {
-    Object body = null;
+    Object bodyObj = null;
 
     // create path and map variables
     String path = "/1/logs";
@@ -2266,7 +2378,14 @@ public class SearchApi extends ApiClient {
     headers.put("Accept", "application/json");
     headers.put("Content-Type", "application/json");
 
-    return this.buildCall(path, "GET", queryParams, body, headers, _callback);
+    return this.buildCall(
+        path,
+        "GET",
+        queryParams,
+        bodyObj,
+        headers,
+        _callback
+      );
   }
 
   @SuppressWarnings("rawtypes")
@@ -2363,7 +2482,7 @@ public class SearchApi extends ApiClient {
     List<String> attributesToRetrieve,
     final ApiCallback _callback
   ) throws ApiException {
-    Object body = null;
+    Object bodyObj = null;
 
     // create path and map variables
     String path =
@@ -2388,7 +2507,14 @@ public class SearchApi extends ApiClient {
     headers.put("Accept", "application/json");
     headers.put("Content-Type", "application/json");
 
-    return this.buildCall(path, "GET", queryParams, body, headers, _callback);
+    return this.buildCall(
+        path,
+        "GET",
+        queryParams,
+        bodyObj,
+        headers,
+        _callback
+      );
   }
 
   @SuppressWarnings("rawtypes")
@@ -2480,7 +2606,7 @@ public class SearchApi extends ApiClient {
     GetObjectsObject getObjectsObject,
     final ApiCallback _callback
   ) throws ApiException {
-    Object body = getObjectsObject;
+    Object bodyObj = getObjectsObject;
 
     // create path and map variables
     String path = "/1/indexes/*/objects";
@@ -2491,7 +2617,14 @@ public class SearchApi extends ApiClient {
     headers.put("Accept", "application/json");
     headers.put("Content-Type", "application/json");
 
-    return this.buildCall(path, "POST", queryParams, body, headers, _callback);
+    return this.buildCall(
+        path,
+        "POST",
+        queryParams,
+        bodyObj,
+        headers,
+        _callback
+      );
   }
 
   @SuppressWarnings("rawtypes")
@@ -2559,7 +2692,7 @@ public class SearchApi extends ApiClient {
     String objectID,
     final ApiCallback _callback
   ) throws ApiException {
-    Object body = null;
+    Object bodyObj = null;
 
     // create path and map variables
     String path =
@@ -2578,7 +2711,14 @@ public class SearchApi extends ApiClient {
     headers.put("Accept", "application/json");
     headers.put("Content-Type", "application/json");
 
-    return this.buildCall(path, "GET", queryParams, body, headers, _callback);
+    return this.buildCall(
+        path,
+        "GET",
+        queryParams,
+        bodyObj,
+        headers,
+        _callback
+      );
   }
 
   @SuppressWarnings("rawtypes")
@@ -2650,7 +2790,7 @@ public class SearchApi extends ApiClient {
    */
   private Call getSettingsCall(String indexName, final ApiCallback _callback)
     throws ApiException {
-    Object body = null;
+    Object bodyObj = null;
 
     // create path and map variables
     String path =
@@ -2665,7 +2805,14 @@ public class SearchApi extends ApiClient {
     headers.put("Accept", "application/json");
     headers.put("Content-Type", "application/json");
 
-    return this.buildCall(path, "GET", queryParams, body, headers, _callback);
+    return this.buildCall(
+        path,
+        "GET",
+        queryParams,
+        bodyObj,
+        headers,
+        _callback
+      );
   }
 
   @SuppressWarnings("rawtypes")
@@ -2724,7 +2871,7 @@ public class SearchApi extends ApiClient {
    * @throws ApiException If fail to serialize the request body object
    */
   private Call getSourcesCall(final ApiCallback _callback) throws ApiException {
-    Object body = null;
+    Object bodyObj = null;
 
     // create path and map variables
     String path = "/1/security/sources";
@@ -2735,7 +2882,14 @@ public class SearchApi extends ApiClient {
     headers.put("Accept", "application/json");
     headers.put("Content-Type", "application/json");
 
-    return this.buildCall(path, "GET", queryParams, body, headers, _callback);
+    return this.buildCall(
+        path,
+        "GET",
+        queryParams,
+        bodyObj,
+        headers,
+        _callback
+      );
   }
 
   @SuppressWarnings("rawtypes")
@@ -2787,7 +2941,7 @@ public class SearchApi extends ApiClient {
     String objectID,
     final ApiCallback _callback
   ) throws ApiException {
-    Object body = null;
+    Object bodyObj = null;
 
     // create path and map variables
     String path =
@@ -2806,7 +2960,14 @@ public class SearchApi extends ApiClient {
     headers.put("Accept", "application/json");
     headers.put("Content-Type", "application/json");
 
-    return this.buildCall(path, "GET", queryParams, body, headers, _callback);
+    return this.buildCall(
+        path,
+        "GET",
+        queryParams,
+        bodyObj,
+        headers,
+        _callback
+      );
   }
 
   @SuppressWarnings("rawtypes")
@@ -2883,7 +3044,7 @@ public class SearchApi extends ApiClient {
     Integer taskID,
     final ApiCallback _callback
   ) throws ApiException {
-    Object body = null;
+    Object bodyObj = null;
 
     // create path and map variables
     String path =
@@ -2902,7 +3063,14 @@ public class SearchApi extends ApiClient {
     headers.put("Accept", "application/json");
     headers.put("Content-Type", "application/json");
 
-    return this.buildCall(path, "GET", queryParams, body, headers, _callback);
+    return this.buildCall(
+        path,
+        "GET",
+        queryParams,
+        bodyObj,
+        headers,
+        _callback
+      );
   }
 
   @SuppressWarnings("rawtypes")
@@ -2974,7 +3142,7 @@ public class SearchApi extends ApiClient {
    */
   private Call getTopUserIdsCall(final ApiCallback _callback)
     throws ApiException {
-    Object body = null;
+    Object bodyObj = null;
 
     // create path and map variables
     String path = "/1/clusters/mapping/top";
@@ -2985,7 +3153,14 @@ public class SearchApi extends ApiClient {
     headers.put("Accept", "application/json");
     headers.put("Content-Type", "application/json");
 
-    return this.buildCall(path, "GET", queryParams, body, headers, _callback);
+    return this.buildCall(
+        path,
+        "GET",
+        queryParams,
+        bodyObj,
+        headers,
+        _callback
+      );
   }
 
   @SuppressWarnings("rawtypes")
@@ -3038,9 +3213,9 @@ public class SearchApi extends ApiClient {
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call getUserIdCall(Object userID, final ApiCallback _callback)
+  private Call getUserIdCall(String userID, final ApiCallback _callback)
     throws ApiException {
-    Object body = null;
+    Object bodyObj = null;
 
     // create path and map variables
     String path =
@@ -3055,12 +3230,19 @@ public class SearchApi extends ApiClient {
     headers.put("Accept", "application/json");
     headers.put("Content-Type", "application/json");
 
-    return this.buildCall(path, "GET", queryParams, body, headers, _callback);
+    return this.buildCall(
+        path,
+        "GET",
+        queryParams,
+        bodyObj,
+        headers,
+        _callback
+      );
   }
 
   @SuppressWarnings("rawtypes")
   private Call getUserIdValidateBeforeCall(
-    Object userID,
+    String userID,
     final ApiCallback _callback
   ) throws ApiException {
     // verify the required parameter 'userID' is set
@@ -3084,7 +3266,7 @@ public class SearchApi extends ApiClient {
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
-  public UserId getUserId(Object userID) throws ApiException {
+  public UserId getUserId(String userID) throws ApiException {
     Call call = getUserIdValidateBeforeCall(userID, null);
     Type returnType = new TypeToken<UserId>() {}.getType();
     ApiResponse<UserId> res = this.execute(call, returnType);
@@ -3103,7 +3285,7 @@ public class SearchApi extends ApiClient {
    * @throws ApiException If fail to process the API call, e.g. serializing the request body object
    */
   public Call getUserIdAsync(
-    Object userID,
+    String userID,
     final ApiCallback<UserId> _callback
   ) throws ApiException {
     Call call = getUserIdValidateBeforeCall(userID, _callback);
@@ -3124,7 +3306,7 @@ public class SearchApi extends ApiClient {
     Boolean getClusters,
     final ApiCallback _callback
   ) throws ApiException {
-    Object body = null;
+    Object bodyObj = null;
 
     // create path and map variables
     String path = "/1/clusters/mapping/pending";
@@ -3139,7 +3321,14 @@ public class SearchApi extends ApiClient {
     headers.put("Accept", "application/json");
     headers.put("Content-Type", "application/json");
 
-    return this.buildCall(path, "GET", queryParams, body, headers, _callback);
+    return this.buildCall(
+        path,
+        "GET",
+        queryParams,
+        bodyObj,
+        headers,
+        _callback
+      );
   }
 
   @SuppressWarnings("rawtypes")
@@ -3201,7 +3390,7 @@ public class SearchApi extends ApiClient {
    */
   private Call listApiKeysCall(final ApiCallback _callback)
     throws ApiException {
-    Object body = null;
+    Object bodyObj = null;
 
     // create path and map variables
     String path = "/1/keys";
@@ -3212,7 +3401,14 @@ public class SearchApi extends ApiClient {
     headers.put("Accept", "application/json");
     headers.put("Content-Type", "application/json");
 
-    return this.buildCall(path, "GET", queryParams, body, headers, _callback);
+    return this.buildCall(
+        path,
+        "GET",
+        queryParams,
+        bodyObj,
+        headers,
+        _callback
+      );
   }
 
   @SuppressWarnings("rawtypes")
@@ -3261,7 +3457,7 @@ public class SearchApi extends ApiClient {
    */
   private Call listClustersCall(final ApiCallback _callback)
     throws ApiException {
-    Object body = null;
+    Object bodyObj = null;
 
     // create path and map variables
     String path = "/1/clusters";
@@ -3272,7 +3468,14 @@ public class SearchApi extends ApiClient {
     headers.put("Accept", "application/json");
     headers.put("Content-Type", "application/json");
 
-    return this.buildCall(path, "GET", queryParams, body, headers, _callback);
+    return this.buildCall(
+        path,
+        "GET",
+        queryParams,
+        bodyObj,
+        headers,
+        _callback
+      );
   }
 
   @SuppressWarnings("rawtypes")
@@ -3325,7 +3528,7 @@ public class SearchApi extends ApiClient {
    */
   private Call listIndicesCall(Integer page, final ApiCallback _callback)
     throws ApiException {
-    Object body = null;
+    Object bodyObj = null;
 
     // create path and map variables
     String path = "/1/indexes";
@@ -3334,13 +3537,20 @@ public class SearchApi extends ApiClient {
     Map<String, String> headers = new HashMap<String, String>();
 
     if (page != null) {
-      queryParams.addAll(this.parameterToPair("Page", page));
+      queryParams.addAll(this.parameterToPair("page", page));
     }
 
     headers.put("Accept", "application/json");
     headers.put("Content-Type", "application/json");
 
-    return this.buildCall(path, "GET", queryParams, body, headers, _callback);
+    return this.buildCall(
+        path,
+        "GET",
+        queryParams,
+        bodyObj,
+        headers,
+        _callback
+      );
   }
 
   @SuppressWarnings("rawtypes")
@@ -3404,7 +3614,7 @@ public class SearchApi extends ApiClient {
     Integer hitsPerPage,
     final ApiCallback _callback
   ) throws ApiException {
-    Object body = null;
+    Object bodyObj = null;
 
     // create path and map variables
     String path = "/1/clusters/mapping";
@@ -3413,7 +3623,7 @@ public class SearchApi extends ApiClient {
     Map<String, String> headers = new HashMap<String, String>();
 
     if (page != null) {
-      queryParams.addAll(this.parameterToPair("Page", page));
+      queryParams.addAll(this.parameterToPair("page", page));
     }
 
     if (hitsPerPage != null) {
@@ -3423,7 +3633,14 @@ public class SearchApi extends ApiClient {
     headers.put("Accept", "application/json");
     headers.put("Content-Type", "application/json");
 
-    return this.buildCall(path, "GET", queryParams, body, headers, _callback);
+    return this.buildCall(
+        path,
+        "GET",
+        queryParams,
+        bodyObj,
+        headers,
+        _callback
+      );
   }
 
   @SuppressWarnings("rawtypes")
@@ -3494,7 +3711,7 @@ public class SearchApi extends ApiClient {
     BatchObject batchObject,
     final ApiCallback _callback
   ) throws ApiException {
-    Object body = batchObject;
+    Object bodyObj = batchObject;
 
     // create path and map variables
     String path = "/1/indexes/*/batch";
@@ -3505,7 +3722,14 @@ public class SearchApi extends ApiClient {
     headers.put("Accept", "application/json");
     headers.put("Content-Type", "application/json");
 
-    return this.buildCall(path, "POST", queryParams, body, headers, _callback);
+    return this.buildCall(
+        path,
+        "POST",
+        queryParams,
+        bodyObj,
+        headers,
+        _callback
+      );
   }
 
   @SuppressWarnings("rawtypes")
@@ -3571,7 +3795,7 @@ public class SearchApi extends ApiClient {
     MultipleQueriesObject multipleQueriesObject,
     final ApiCallback _callback
   ) throws ApiException {
-    Object body = multipleQueriesObject;
+    Object bodyObj = multipleQueriesObject;
 
     // create path and map variables
     String path = "/1/indexes/*/queries";
@@ -3582,7 +3806,14 @@ public class SearchApi extends ApiClient {
     headers.put("Accept", "application/json");
     headers.put("Content-Type", "application/json");
 
-    return this.buildCall(path, "POST", queryParams, body, headers, _callback);
+    return this.buildCall(
+        path,
+        "POST",
+        queryParams,
+        bodyObj,
+        headers,
+        _callback
+      );
   }
 
   @SuppressWarnings("rawtypes")
@@ -3653,7 +3884,7 @@ public class SearchApi extends ApiClient {
     OperationIndexObject operationIndexObject,
     final ApiCallback _callback
   ) throws ApiException {
-    Object body = operationIndexObject;
+    Object bodyObj = operationIndexObject;
 
     // create path and map variables
     String path =
@@ -3668,7 +3899,14 @@ public class SearchApi extends ApiClient {
     headers.put("Accept", "application/json");
     headers.put("Content-Type", "application/json");
 
-    return this.buildCall(path, "POST", queryParams, body, headers, _callback);
+    return this.buildCall(
+        path,
+        "POST",
+        queryParams,
+        bodyObj,
+        headers,
+        _callback
+      );
   }
 
   @SuppressWarnings("rawtypes")
@@ -3761,7 +3999,7 @@ public class SearchApi extends ApiClient {
     Boolean createIfNotExists,
     final ApiCallback _callback
   ) throws ApiException {
-    Object body = buildInOperation;
+    Object bodyObj = buildInOperation;
 
     // create path and map variables
     String path =
@@ -3786,7 +4024,14 @@ public class SearchApi extends ApiClient {
     headers.put("Accept", "application/json");
     headers.put("Content-Type", "application/json");
 
-    return this.buildCall(path, "POST", queryParams, body, headers, _callback);
+    return this.buildCall(
+        path,
+        "POST",
+        queryParams,
+        bodyObj,
+        headers,
+        _callback
+      );
   }
 
   @SuppressWarnings("rawtypes")
@@ -3907,9 +4152,9 @@ public class SearchApi extends ApiClient {
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
    */
-  private Call removeUserIdCall(Object userID, final ApiCallback _callback)
+  private Call removeUserIdCall(String userID, final ApiCallback _callback)
     throws ApiException {
-    Object body = null;
+    Object bodyObj = null;
 
     // create path and map variables
     String path =
@@ -3928,7 +4173,7 @@ public class SearchApi extends ApiClient {
         path,
         "DELETE",
         queryParams,
-        body,
+        bodyObj,
         headers,
         _callback
       );
@@ -3936,7 +4181,7 @@ public class SearchApi extends ApiClient {
 
   @SuppressWarnings("rawtypes")
   private Call removeUserIdValidateBeforeCall(
-    Object userID,
+    String userID,
     final ApiCallback _callback
   ) throws ApiException {
     // verify the required parameter 'userID' is set
@@ -3958,7 +4203,7 @@ public class SearchApi extends ApiClient {
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
-  public RemoveUserIdResponse removeUserId(Object userID) throws ApiException {
+  public RemoveUserIdResponse removeUserId(String userID) throws ApiException {
     Call call = removeUserIdValidateBeforeCall(userID, null);
     Type returnType = new TypeToken<RemoveUserIdResponse>() {}.getType();
     ApiResponse<RemoveUserIdResponse> res = this.execute(call, returnType);
@@ -3976,7 +4221,7 @@ public class SearchApi extends ApiClient {
    * @throws ApiException If fail to process the API call, e.g. serializing the request body object
    */
   public Call removeUserIdAsync(
-    Object userID,
+    String userID,
     final ApiCallback<RemoveUserIdResponse> _callback
   ) throws ApiException {
     Call call = removeUserIdValidateBeforeCall(userID, _callback);
@@ -3997,7 +4242,7 @@ public class SearchApi extends ApiClient {
     List<Source> source,
     final ApiCallback _callback
   ) throws ApiException {
-    Object body = source;
+    Object bodyObj = source;
 
     // create path and map variables
     String path = "/1/security/sources";
@@ -4008,7 +4253,14 @@ public class SearchApi extends ApiClient {
     headers.put("Accept", "application/json");
     headers.put("Content-Type", "application/json");
 
-    return this.buildCall(path, "PUT", queryParams, body, headers, _callback);
+    return this.buildCall(
+        path,
+        "PUT",
+        queryParams,
+        bodyObj,
+        headers,
+        _callback
+      );
   }
 
   @SuppressWarnings("rawtypes")
@@ -4070,7 +4322,7 @@ public class SearchApi extends ApiClient {
    */
   private Call restoreApiKeyCall(String key, final ApiCallback _callback)
     throws ApiException {
-    Object body = null;
+    Object bodyObj = null;
 
     // create path and map variables
     String path =
@@ -4085,7 +4337,14 @@ public class SearchApi extends ApiClient {
     headers.put("Accept", "application/json");
     headers.put("Content-Type", "application/json");
 
-    return this.buildCall(path, "POST", queryParams, body, headers, _callback);
+    return this.buildCall(
+        path,
+        "POST",
+        queryParams,
+        bodyObj,
+        headers,
+        _callback
+      );
   }
 
   @SuppressWarnings("rawtypes")
@@ -4141,17 +4400,17 @@ public class SearchApi extends ApiClient {
    * Build call for saveObject
    *
    * @param indexName The index in which to perform the request. (required)
-   * @param requestBody The Algolia object. (required)
+   * @param body The Algolia object. (required)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
    */
   private Call saveObjectCall(
     String indexName,
-    Map<String, Object> requestBody,
+    Object body,
     final ApiCallback _callback
   ) throws ApiException {
-    Object body = requestBody;
+    Object bodyObj = body;
 
     // create path and map variables
     String path =
@@ -4166,13 +4425,20 @@ public class SearchApi extends ApiClient {
     headers.put("Accept", "application/json");
     headers.put("Content-Type", "application/json");
 
-    return this.buildCall(path, "POST", queryParams, body, headers, _callback);
+    return this.buildCall(
+        path,
+        "POST",
+        queryParams,
+        bodyObj,
+        headers,
+        _callback
+      );
   }
 
   @SuppressWarnings("rawtypes")
   private Call saveObjectValidateBeforeCall(
     String indexName,
-    Map<String, Object> requestBody,
+    Object body,
     final ApiCallback _callback
   ) throws ApiException {
     // verify the required parameter 'indexName' is set
@@ -4182,30 +4448,28 @@ public class SearchApi extends ApiClient {
       );
     }
 
-    // verify the required parameter 'requestBody' is set
-    if (requestBody == null) {
+    // verify the required parameter 'body' is set
+    if (body == null) {
       throw new ApiException(
-        "Missing the required parameter 'requestBody' when calling saveObject(Async)"
+        "Missing the required parameter 'body' when calling saveObject(Async)"
       );
     }
 
-    return saveObjectCall(indexName, requestBody, _callback);
+    return saveObjectCall(indexName, body, _callback);
   }
 
   /**
    * Add an object to the index, automatically assigning it an object ID.
    *
    * @param indexName The index in which to perform the request. (required)
-   * @param requestBody The Algolia object. (required)
+   * @param body The Algolia object. (required)
    * @return SaveObjectResponse
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
-  public SaveObjectResponse saveObject(
-    String indexName,
-    Map<String, Object> requestBody
-  ) throws ApiException {
-    Call call = saveObjectValidateBeforeCall(indexName, requestBody, null);
+  public SaveObjectResponse saveObject(String indexName, Object body)
+    throws ApiException {
+    Call call = saveObjectValidateBeforeCall(indexName, body, null);
     Type returnType = new TypeToken<SaveObjectResponse>() {}.getType();
     ApiResponse<SaveObjectResponse> res = this.execute(call, returnType);
     return res.getData();
@@ -4215,17 +4479,17 @@ public class SearchApi extends ApiClient {
    * (asynchronously) Add an object to the index, automatically assigning it an object ID.
    *
    * @param indexName The index in which to perform the request. (required)
-   * @param requestBody The Algolia object. (required)
+   * @param body The Algolia object. (required)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
    * @throws ApiException If fail to process the API call, e.g. serializing the request body object
    */
   public Call saveObjectAsync(
     String indexName,
-    Map<String, Object> requestBody,
+    Object body,
     final ApiCallback<SaveObjectResponse> _callback
   ) throws ApiException {
-    Call call = saveObjectValidateBeforeCall(indexName, requestBody, _callback);
+    Call call = saveObjectValidateBeforeCall(indexName, body, _callback);
     Type returnType = new TypeToken<SaveObjectResponse>() {}.getType();
     this.executeAsync(call, returnType, _callback);
     return call;
@@ -4250,7 +4514,7 @@ public class SearchApi extends ApiClient {
     Boolean forwardToReplicas,
     final ApiCallback _callback
   ) throws ApiException {
-    Object body = rule;
+    Object bodyObj = rule;
 
     // create path and map variables
     String path =
@@ -4275,7 +4539,14 @@ public class SearchApi extends ApiClient {
     headers.put("Accept", "application/json");
     headers.put("Content-Type", "application/json");
 
-    return this.buildCall(path, "PUT", queryParams, body, headers, _callback);
+    return this.buildCall(
+        path,
+        "PUT",
+        queryParams,
+        bodyObj,
+        headers,
+        _callback
+      );
   }
 
   @SuppressWarnings("rawtypes")
@@ -4396,7 +4667,7 @@ public class SearchApi extends ApiClient {
     Boolean forwardToReplicas,
     final ApiCallback _callback
   ) throws ApiException {
-    Object body = synonymHit;
+    Object bodyObj = synonymHit;
 
     // create path and map variables
     String path =
@@ -4421,7 +4692,14 @@ public class SearchApi extends ApiClient {
     headers.put("Accept", "application/json");
     headers.put("Content-Type", "application/json");
 
-    return this.buildCall(path, "PUT", queryParams, body, headers, _callback);
+    return this.buildCall(
+        path,
+        "PUT",
+        queryParams,
+        bodyObj,
+        headers,
+        _callback
+      );
   }
 
   @SuppressWarnings("rawtypes")
@@ -4545,7 +4823,7 @@ public class SearchApi extends ApiClient {
     Boolean replaceExistingSynonyms,
     final ApiCallback _callback
   ) throws ApiException {
-    Object body = synonymHit;
+    Object bodyObj = synonymHit;
 
     // create path and map variables
     String path =
@@ -4572,7 +4850,14 @@ public class SearchApi extends ApiClient {
     headers.put("Accept", "application/json");
     headers.put("Content-Type", "application/json");
 
-    return this.buildCall(path, "POST", queryParams, body, headers, _callback);
+    return this.buildCall(
+        path,
+        "POST",
+        queryParams,
+        bodyObj,
+        headers,
+        _callback
+      );
   }
 
   @SuppressWarnings("rawtypes")
@@ -4685,7 +4970,7 @@ public class SearchApi extends ApiClient {
     SearchParams searchParams,
     final ApiCallback _callback
   ) throws ApiException {
-    Object body = searchParams;
+    Object bodyObj = searchParams;
 
     // create path and map variables
     String path =
@@ -4700,7 +4985,14 @@ public class SearchApi extends ApiClient {
     headers.put("Accept", "application/json");
     headers.put("Content-Type", "application/json");
 
-    return this.buildCall(path, "POST", queryParams, body, headers, _callback);
+    return this.buildCall(
+        path,
+        "POST",
+        queryParams,
+        bodyObj,
+        headers,
+        _callback
+      );
   }
 
   @SuppressWarnings("rawtypes")
@@ -4777,7 +5069,7 @@ public class SearchApi extends ApiClient {
     SearchDictionaryEntries searchDictionaryEntries,
     final ApiCallback _callback
   ) throws ApiException {
-    Object body = searchDictionaryEntries;
+    Object bodyObj = searchDictionaryEntries;
 
     // create path and map variables
     String path =
@@ -4792,7 +5084,14 @@ public class SearchApi extends ApiClient {
     headers.put("Accept", "application/json");
     headers.put("Content-Type", "application/json");
 
-    return this.buildCall(path, "POST", queryParams, body, headers, _callback);
+    return this.buildCall(
+        path,
+        "POST",
+        queryParams,
+        bodyObj,
+        headers,
+        _callback
+      );
   }
 
   @SuppressWarnings("rawtypes")
@@ -4887,7 +5186,7 @@ public class SearchApi extends ApiClient {
     SearchForFacetValuesRequest searchForFacetValuesRequest,
     final ApiCallback _callback
   ) throws ApiException {
-    Object body = searchForFacetValuesRequest;
+    Object bodyObj = searchForFacetValuesRequest;
 
     // create path and map variables
     String path =
@@ -4906,7 +5205,14 @@ public class SearchApi extends ApiClient {
     headers.put("Accept", "application/json");
     headers.put("Content-Type", "application/json");
 
-    return this.buildCall(path, "POST", queryParams, body, headers, _callback);
+    return this.buildCall(
+        path,
+        "POST",
+        queryParams,
+        bodyObj,
+        headers,
+        _callback
+      );
   }
 
   @SuppressWarnings("rawtypes")
@@ -5011,7 +5317,7 @@ public class SearchApi extends ApiClient {
     SearchRulesParams searchRulesParams,
     final ApiCallback _callback
   ) throws ApiException {
-    Object body = searchRulesParams;
+    Object bodyObj = searchRulesParams;
 
     // create path and map variables
     String path =
@@ -5026,7 +5332,14 @@ public class SearchApi extends ApiClient {
     headers.put("Accept", "application/json");
     headers.put("Content-Type", "application/json");
 
-    return this.buildCall(path, "POST", queryParams, body, headers, _callback);
+    return this.buildCall(
+        path,
+        "POST",
+        queryParams,
+        bodyObj,
+        headers,
+        _callback
+      );
   }
 
   @SuppressWarnings("rawtypes")
@@ -5121,7 +5434,7 @@ public class SearchApi extends ApiClient {
     Integer hitsPerPage,
     final ApiCallback _callback
   ) throws ApiException {
-    Object body = null;
+    Object bodyObj = null;
 
     // create path and map variables
     String path =
@@ -5142,7 +5455,7 @@ public class SearchApi extends ApiClient {
     }
 
     if (page != null) {
-      queryParams.addAll(this.parameterToPair("Page", page));
+      queryParams.addAll(this.parameterToPair("page", page));
     }
 
     if (hitsPerPage != null) {
@@ -5152,7 +5465,14 @@ public class SearchApi extends ApiClient {
     headers.put("Accept", "application/json");
     headers.put("Content-Type", "application/json");
 
-    return this.buildCall(path, "POST", queryParams, body, headers, _callback);
+    return this.buildCall(
+        path,
+        "POST",
+        queryParams,
+        bodyObj,
+        headers,
+        _callback
+      );
   }
 
   @SuppressWarnings("rawtypes")
@@ -5264,7 +5584,7 @@ public class SearchApi extends ApiClient {
     SearchUserIdsObject searchUserIdsObject,
     final ApiCallback _callback
   ) throws ApiException {
-    Object body = searchUserIdsObject;
+    Object bodyObj = searchUserIdsObject;
 
     // create path and map variables
     String path = "/1/clusters/mapping/search";
@@ -5275,7 +5595,14 @@ public class SearchApi extends ApiClient {
     headers.put("Accept", "application/json");
     headers.put("Content-Type", "application/json");
 
-    return this.buildCall(path, "POST", queryParams, body, headers, _callback);
+    return this.buildCall(
+        path,
+        "POST",
+        queryParams,
+        bodyObj,
+        headers,
+        _callback
+      );
   }
 
   @SuppressWarnings("rawtypes")
@@ -5353,7 +5680,7 @@ public class SearchApi extends ApiClient {
     DictionarySettingsRequest dictionarySettingsRequest,
     final ApiCallback _callback
   ) throws ApiException {
-    Object body = dictionarySettingsRequest;
+    Object bodyObj = dictionarySettingsRequest;
 
     // create path and map variables
     String path = "/1/dictionaries/*/settings";
@@ -5364,7 +5691,14 @@ public class SearchApi extends ApiClient {
     headers.put("Accept", "application/json");
     headers.put("Content-Type", "application/json");
 
-    return this.buildCall(path, "PUT", queryParams, body, headers, _callback);
+    return this.buildCall(
+        path,
+        "PUT",
+        queryParams,
+        bodyObj,
+        headers,
+        _callback
+      );
   }
 
   @SuppressWarnings("rawtypes")
@@ -5441,7 +5775,7 @@ public class SearchApi extends ApiClient {
     Boolean forwardToReplicas,
     final ApiCallback _callback
   ) throws ApiException {
-    Object body = indexSettings;
+    Object bodyObj = indexSettings;
 
     // create path and map variables
     String path =
@@ -5462,7 +5796,14 @@ public class SearchApi extends ApiClient {
     headers.put("Accept", "application/json");
     headers.put("Content-Type", "application/json");
 
-    return this.buildCall(path, "PUT", queryParams, body, headers, _callback);
+    return this.buildCall(
+        path,
+        "PUT",
+        queryParams,
+        bodyObj,
+        headers,
+        _callback
+      );
   }
 
   @SuppressWarnings("rawtypes")
@@ -5566,7 +5907,7 @@ public class SearchApi extends ApiClient {
     ApiKey apiKey,
     final ApiCallback _callback
   ) throws ApiException {
-    Object body = apiKey;
+    Object bodyObj = apiKey;
 
     // create path and map variables
     String path =
@@ -5581,7 +5922,14 @@ public class SearchApi extends ApiClient {
     headers.put("Accept", "application/json");
     headers.put("Content-Type", "application/json");
 
-    return this.buildCall(path, "PUT", queryParams, body, headers, _callback);
+    return this.buildCall(
+        path,
+        "PUT",
+        queryParams,
+        bodyObj,
+        headers,
+        _callback
+      );
   }
 
   @SuppressWarnings("rawtypes")

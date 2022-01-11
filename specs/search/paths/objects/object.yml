@@ -14,7 +14,6 @@ put:
       application/json:
         schema:
           type: object
-          additionalProperties: true
   responses:
     '200':
       $ref: ../../../common/responses/UpdatedAtWithObjectId.yml

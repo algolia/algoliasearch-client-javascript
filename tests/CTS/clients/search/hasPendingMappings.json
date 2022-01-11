@@ -1,0 +1,15 @@
+[
+  {
+    "method": "hasPendingMappings",
+    "parameters": {
+      "getClusters": true
+    },
+    "request": {
+      "path": "/1/clusters/mapping/pending",
+      "method": "GET",
+      "searchParams": {
+        "getClusters": "true"
+      }
+    }
+  }
+]
