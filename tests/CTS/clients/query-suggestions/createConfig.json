@@ -1,0 +1,67 @@
+[
+  {
+    "method": "createConfig",
+    "parameters": {
+      "querySuggestionsIndexWithIndexParam": {
+        "indexName": "theIndexName",
+        "sourceIndices": [
+          {
+            "indexName": "testIndex",
+            "facets": [
+              {
+                "attributes": "test"
+              }
+            ],
+            "generate": [
+              [
+                "facetA",
+                "facetB"
+              ],
+              [
+                "facetC"
+              ]
+            ]
+          }
+        ],
+        "languages": [
+          "french"
+        ],
+        "exclude": [
+          "test"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/configs",
+      "method": "POST",
+      "data": {
+        "indexName": "theIndexName",
+        "sourceIndices": [
+          {
+            "indexName": "testIndex",
+            "facets": [
+              {
+                "attributes": "test"
+              }
+            ],
+            "generate": [
+              [
+                "facetA",
+                "facetB"
+              ],
+              [
+                "facetC"
+              ]
+            ]
+          }
+        ],
+        "languages": [
+          "french"
+        ],
+        "exclude": [
+          "test"
+        ]
+      }
+    }
+  }
+]

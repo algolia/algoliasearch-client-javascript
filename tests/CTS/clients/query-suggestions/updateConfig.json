@@ -1,0 +1,66 @@
+[
+  {
+    "method": "updateConfig",
+    "parameters": {
+      "indexName": "theIndexName",
+      "querySuggestionsIndexParam": {
+        "sourceIndices": [
+          {
+            "indexName": "testIndex",
+            "facets": [
+              {
+                "attributes": "test"
+              }
+            ],
+            "generate": [
+              [
+                "facetA",
+                "facetB"
+              ],
+              [
+                "facetC"
+              ]
+            ]
+          }
+        ],
+        "languages": [
+          "french"
+        ],
+        "exclude": [
+          "test"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/configs/theIndexName",
+      "method": "PUT",
+      "data": {
+        "sourceIndices": [
+          {
+            "indexName": "testIndex",
+            "facets": [
+              {
+                "attributes": "test"
+              }
+            ],
+            "generate": [
+              [
+                "facetA",
+                "facetB"
+              ],
+              [
+                "facetC"
+              ]
+            ]
+          }
+        ],
+        "languages": [
+          "french"
+        ],
+        "exclude": [
+          "test"
+        ]
+      }
+    }
+  }
+]

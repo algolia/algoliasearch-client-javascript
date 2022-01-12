@@ -60,6 +60,9 @@ export class {{classname}} {
         {{#isAnalyticsHost}}
             region: 'de' | 'us',
         {{/isAnalyticsHost}}
+        {{#isQuerySuggestionsHost}}
+            region: 'eu' | 'us',
+        {{/isQuerySuggestionsHost}}
       {{/hasRegionalHost}}
       options?: {requester?: Requester, hosts?: Host[]}
     ) {
@@ -118,6 +121,12 @@ export class {{classname}} {
     return [{ url: `insights.algolia.io`, accept: 'readWrite', protocol: 'https' }];
   }
   {{/isInsightsHost}}
+
+  {{#isQuerySuggestionsHost}}
+  public getDefaultHosts(region: string = 'us'): Host[] {
+    return [{ url: `query-suggestions.${region}.algolia.com`, accept: 'readWrite', protocol: 'https' }];
+  }
+  {{/isQuerySuggestionsHost}}
 
   public setRequest(requester: Requester): void {
     this.transporter.setRequester(requester);

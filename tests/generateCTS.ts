@@ -54,7 +54,9 @@ const packageNames: Record<string, Record<Language, string>> = Object.entries(
   openapitools['generator-cli'].generators
 ).reduce((prev, [clientName, clientConfig]) => {
   const obj = prev;
-  const [lang, client] = clientName.split('-') as [Language, string];
+  const parts = clientName.split('-');
+  const lang = parts[0] as Language;
+  const client = parts.slice(1).join('-');
 
   if (!(lang in prev)) {
     obj[lang] = {};
@@ -81,6 +83,13 @@ async function* walk(
 
 function capitalize(str: string): string {
   return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+function createClientName(client: string): string {
+  return `${client
+    .split('-')
+    .map((part) => capitalize(part))
+    .join('')}Api`;
 }
 
 function removeObjectName(obj: Record<string, any>): void {
@@ -211,9 +220,13 @@ async function generateCode(language: Language): Promise<void> {
 
     const code = Mustache.render(template, {
       import: packageNames[language][client],
-      client: `${capitalize(client)}Api`,
+      client: createClientName(client),
       blocks: cts[client],
-      hasRegionalHost: ['personalization', 'analytics'].includes(client),
+      hasRegionalHost: [
+        'personalization',
+        'analytics',
+        'query-suggestions',
+      ].includes(client),
     });
     await fsp.writeFile(
       `output/${language}/${client}${extensionForLanguage[language]}`,

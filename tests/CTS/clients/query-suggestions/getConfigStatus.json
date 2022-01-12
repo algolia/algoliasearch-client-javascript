@@ -1,0 +1,12 @@
+[
+  {
+    "method": "getConfigStatus",
+    "parameters": {
+      "indexName": "theIndexName"
+    },
+    "request": {
+      "path": "/1/configs/theIndexName/status",
+      "method": "GET"
+    }
+  }
+]

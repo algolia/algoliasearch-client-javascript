@@ -1,0 +1,5 @@
+description: Internal error
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/ErrorBase.yml

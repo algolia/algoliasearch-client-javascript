@@ -1,0 +1,12 @@
+[
+  {
+    "method": "getLogFile",
+    "parameters": {
+      "indexName": "theIndexName"
+    },
+    "request": {
+      "path": "/1/logs/theIndexName",
+      "method": "GET"
+    }
+  }
+]
