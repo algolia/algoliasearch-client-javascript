@@ -1,0 +1,10 @@
+[
+  {
+    "method": "getAllConfigs",
+    "parameters": {},
+    "request": {
+      "path": "/1/configs",
+      "method": "GET"
+    }
+  }
+]

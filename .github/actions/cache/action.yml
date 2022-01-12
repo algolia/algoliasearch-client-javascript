@@ -25,6 +25,13 @@ runs:
         path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/recommend/dist
         key: ${{ runner.os }}-js-client-recommend-${{ hashFiles('clients/algoliasearch-client-javascript/recommend/**') }}
 
+    - name: Restore built JavaScript query-suggestions client
+      if: ${{ inputs.job == 'cts' }}
+      uses: actions/cache@v2
+      with:
+        path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/client-query-suggestions/dist
+        key: ${{ runner.os }}-js-client-query-suggestions-${{ hashFiles('clients/algoliasearch-client-javascript/client-query-suggestions/**') }}
+
     - name: Restore built JavaScript personalization client
       if: ${{ inputs.job == 'cts' }}
       uses: actions/cache@v2

@@ -1,0 +1,61 @@
+QuerySuggestionsIndex:
+  type: object
+  additionalProperties: false
+  required:
+    - indexName
+    - sourceIndices
+    - languages
+    - exclude
+  properties:
+    indexName:
+      type: string
+      description: Index name to target.
+    sourceIndices:
+      $ref: '#/SourceIndicesWithReplicas'
+    languages:
+      type: array
+      items:
+        type: string
+      description: De-duplicate singular and plural suggestions. For example, let's say your index contains English content, and that two suggestions “shoe” and “shoes” end up in your Query Suggestions index. If the English language is configured, only the most popular of those two suggestions would remain.
+    exclude:
+      type: array
+      items:
+        type: string
+      description: List of words and patterns to exclude from the Query Suggestions index.
+
+SourceIndexWithReplicas:
+  type: object
+  additionalProperties: false
+  required:
+    - indexName
+    - replicas
+    - analyticsTags
+    - facets
+    - minHits
+    - minLetters
+    - generate
+    - external
+  properties:
+    indexName:
+      $ref: ../parameters.yml#/SourceIndex/properties/indexName
+    replicas:
+      type: boolean
+      description: true if the Query Suggestions index is a replicas.
+    analyticsTags:
+      $ref: ../parameters.yml#/SourceIndex/properties/analyticsTags
+    facets:
+      $ref: ../parameters.yml#/SourceIndex/properties/facets
+    minHits:
+      $ref: ../parameters.yml#/SourceIndex/properties/minHits
+    minLetters:
+      $ref: ../parameters.yml#/SourceIndex/properties/minLetters
+    generate:
+      $ref: ../parameters.yml#/SourceIndex/properties/generate
+    external:
+      $ref: ../parameters.yml#/SourceIndex/properties/external
+
+SourceIndicesWithReplicas:
+  type: array
+  items:
+    $ref: '#/SourceIndexWithReplicas'
+  description: List of source indices used to generate a Query Suggestions index.

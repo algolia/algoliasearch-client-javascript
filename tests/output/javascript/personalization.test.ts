@@ -6,7 +6,7 @@ import {
 const appId = process.env.ALGOLIA_APPLICATION_ID || 'test_app_id';
 const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'test_api_key';
 
-const client = new PersonalizationApi(appId, apiKey, 'de', {
+const client = new PersonalizationApi(appId, apiKey, 'us', {
   requester: new EchoRequester(),
 });
 

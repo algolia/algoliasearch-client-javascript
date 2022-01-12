@@ -1,0 +1,23 @@
+openapi: 3.0.2
+info:
+  title: Query Suggestions API
+  description: API powering the Query Suggestions feature of Algolia.
+  version: 0.0.1
+components:
+  securitySchemes:
+    appId:
+      $ref: '../common/securitySchemes.yml#/appId'
+    apiKey:
+      $ref: '../common/securitySchemes.yml#/apiKey'
+security:
+  - appId: []
+    apiKey: []
+paths:
+  /1/configs:
+    $ref: paths/qsConfigs.yml
+  /1/configs/{indexName}:
+    $ref: paths/qsConfig.yml
+  /1/configs/{indexName}/status:
+    $ref: paths/getConfigurationStatus.yml
+  /1/logs/{indexName}:
+    $ref: paths/getLogFile.yml

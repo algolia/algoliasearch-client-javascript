@@ -1,0 +1,12 @@
+[
+  {
+    "method": "deleteConfig",
+    "parameters": {
+      "indexName": "theIndexName"
+    },
+    "request": {
+      "path": "/1/configs/theIndexName",
+      "method": "DELETE"
+    }
+  }
+]

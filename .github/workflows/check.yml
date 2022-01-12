@@ -28,7 +28,7 @@ jobs:
     outputs:
       RUN_SPECS_SEARCH: ${{ steps.setup.outputs.RUN_SPECS_SEARCH }}
       RUN_SPECS_RECOMMEND: ${{ steps.setup.outputs.RUN_SPECS_RECOMMEND }}
-      RUN_SPECS_QS: ${{ steps.setup.outputs.RUN_SPECS_QS }}
+      RUN_SPECS_QUERY_SUGGESTIONS: ${{ steps.setup.outputs.RUN_SPECS_QUERY_SUGGESTIONS }}
       RUN_SPECS_PERSO: ${{ steps.setup.outputs.RUN_SPECS_PERSO }}
       RUN_SPECS_INSIGHTS: ${{ steps.setup.outputs.RUN_SPECS_INSIGHTS }}
       RUN_SPECS_ANALYTICS: ${{ steps.setup.outputs.RUN_SPECS_ANALYTICS }}
@@ -36,6 +36,7 @@ jobs:
 
       RUN_JS_CLIENT_SEARCH: ${{ steps.setup.outputs.RUN_JS_CLIENT_SEARCH }}
       RUN_JS_CLIENT_RECOMMEND: ${{ steps.setup.outputs.RUN_JS_CLIENT_RECOMMEND }}
+      RUN_JS_CLIENT_QUERY_SUGGESTIONS: ${{ steps.setup.outputs.RUN_JS_CLIENT_QUERY_SUGGESTIONS }}
       RUN_JS_CLIENT_PERSO: ${{ steps.setup.outputs.RUN_JS_CLIENT_PERSO }}
       RUN_JS_CLIENT_ANALYTICS: ${{ steps.setup.outputs.RUN_JS_CLIENT_ANALYTICS }}
       RUN_JS_CLIENT_INSIGHTS: ${{ steps.setup.outputs.RUN_JS_CLIENT_INSIGHTS }}
@@ -75,6 +76,22 @@ jobs:
 
       - name: Lint recommend specs
         run: yarn eslint --ext=yml specs/recommend
+
+  specs_query_suggestions:
+    runs-on: ubuntu-20.04
+    needs: setup
+    if: ${{ always() && needs.setup.outputs.RUN_SPECS_QUERY_SUGGESTIONS == 'true' }}
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Restore cache
+        uses: ./.github/actions/cache
+
+      - name: Checking query-suggestions specs
+        run: yarn build:specs query-suggestions
+
+      - name: Lint query-suggestions specs
+        run: yarn eslint --ext=yml specs/query-suggestions
 
   specs_perso:
     runs-on: ubuntu-20.04
@@ -173,6 +190,31 @@ jobs:
       - name: Build recommend client
         if: steps.cache.outputs.cache-hit != 'true'
         run: yarn build:clients javascript recommend
+
+  client_javascript_query_suggestions:
+    runs-on: ubuntu-20.04
+    needs: [specs_query_suggestions]
+    if: ${{ always() && needs.setup.outputs.RUN_JS_CLIENT_QUERY_SUGGESTIONS == 'true' }}
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Restore cache
+        uses: ./.github/actions/cache
+
+      - name: Cache query-suggestions client
+        id: cache
+        uses: actions/cache@v2
+        with:
+          path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/client-query-suggestions/dist
+          key: ${{ runner.os }}-js-client-query-suggestions-${{ hashFiles('clients/algoliasearch-client-javascript/client-query-suggestions/**') }}
+
+      - name: Generate query-suggestions client
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: yarn generate javascript query-suggestions
+
+      - name: Build query-suggestions client
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: yarn build:clients javascript query-suggestions
 
   client_javascript_perso:
     runs-on: ubuntu-20.04
@@ -281,6 +323,7 @@ jobs:
     needs:
       - client_javascript_search
       - client_javascript_recommend
+      - client_javascript_query_suggestions
       - client_javascript_perso
       - client_javascript_analytics
       - client_javascript_insights
