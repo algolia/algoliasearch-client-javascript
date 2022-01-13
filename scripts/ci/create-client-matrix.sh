@@ -25,7 +25,7 @@ for pair in $clients; do
     folder=$(echo $pair | jq '.folder')
     spec_changed=$(git diff --shortstat origin/$BASE_BRANCH..HEAD -- specs/$name | wc -l)
     client_changed=$(git diff --shortstat origin/$BASE_BRANCH..HEAD -- $folder | wc -l)
-    if [[ $BASE_CHANGED || $spec_changed > 0 || $client_changed > 0 ]]; then
+    if [[ $BASE_CHANGED == "true" || $spec_changed > 0 || $client_changed > 0 ]]; then
         to_test=$(echo $to_test | jq --argjson pair $pair '.client |= .+ [$pair]')
     fi
 done
