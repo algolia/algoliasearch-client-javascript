@@ -61,7 +61,7 @@ export class QuerySuggestionsApi {
     });
   }
 
-  getDefaultHosts(region: string = 'us'): Host[] {
+  getDefaultHosts(region: 'eu' | 'us' = 'us'): Host[] {
     return [
       {
         url: `query-suggestions.${region}.algolia.com`,
@@ -86,12 +86,11 @@ export class QuerySuggestionsApi {
   /**
    * Create a configuration of a Query Suggestions index. There\'s a limit of 100 configurations per application.
    *
-   * @param createConfig - The createConfig parameters.
-   * @param createConfig.querySuggestionsIndexWithIndexParam - The querySuggestionsIndexWithIndexParam.
+   * @param querySuggestionsIndexWithIndexParam - The querySuggestionsIndexWithIndexParam object.
    */
-  createConfig({
-    querySuggestionsIndexWithIndexParam,
-  }: CreateConfigProps): Promise<SucessResponse> {
+  createConfig(
+    querySuggestionsIndexWithIndexParam: QuerySuggestionsIndexWithIndexParam
+  ): Promise<SucessResponse> {
     const path = '/1/configs';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
@@ -121,7 +120,7 @@ export class QuerySuggestionsApi {
   /**
    * Delete a configuration of a Query Suggestion\'s index. By deleting a configuraton, you stop all updates to the underlying query suggestion index. Note that when doing this, the underlying index does not change - existing suggestions remain untouched.
    *
-   * @param deleteConfig - The deleteConfig parameters.
+   * @param deleteConfig - The deleteConfig object.
    * @param deleteConfig.indexName - The index in which to perform the request.
    */
   deleteConfig({ indexName }: DeleteConfigProps): Promise<SucessResponse> {
@@ -152,8 +151,6 @@ export class QuerySuggestionsApi {
   }
   /**
    * Get all the configurations of Query Suggestions. For each index, you get a block of JSON with a list of its configuration settings.
-   *
-   * @param getAllConfigs - The getAllConfigs parameters.
    */
   getAllConfigs(): Promise<QuerySuggestionsIndex[]> {
     const path = '/1/configs';
@@ -175,7 +172,7 @@ export class QuerySuggestionsApi {
   /**
    * Get the configuration of a single Query Suggestions index.
    *
-   * @param getConfig - The getConfig parameters.
+   * @param getConfig - The getConfig object.
    * @param getConfig.indexName - The index in which to perform the request.
    */
   getConfig({ indexName }: GetConfigProps): Promise<QuerySuggestionsIndex> {
@@ -207,7 +204,7 @@ export class QuerySuggestionsApi {
   /**
    * Get the status of a Query Suggestion\'s index. The status includes whether the Query Suggestions index is currently in the process of being built, and the last build time.
    *
-   * @param getConfigStatus - The getConfigStatus parameters.
+   * @param getConfigStatus - The getConfigStatus object.
    * @param getConfigStatus.indexName - The index in which to perform the request.
    */
   getConfigStatus({ indexName }: GetConfigStatusProps): Promise<Status> {
@@ -239,7 +236,7 @@ export class QuerySuggestionsApi {
   /**
    * Get the log file of the last build of a single Query Suggestion index.
    *
-   * @param getLogFile - The getLogFile parameters.
+   * @param getLogFile - The getLogFile object.
    * @param getLogFile.indexName - The index in which to perform the request.
    */
   getLogFile({ indexName }: GetLogFileProps): Promise<LogFile[]> {
@@ -271,9 +268,9 @@ export class QuerySuggestionsApi {
   /**
    * Update the configuration of a Query Suggestions index.
    *
-   * @param updateConfig - The updateConfig parameters.
+   * @param updateConfig - The updateConfig object.
    * @param updateConfig.indexName - The index in which to perform the request.
-   * @param updateConfig.querySuggestionsIndexParam - The querySuggestionsIndexParam.
+   * @param updateConfig.querySuggestionsIndexParam - The querySuggestionsIndexParam object.
    */
   updateConfig({
     indexName,
@@ -325,13 +322,6 @@ export class QuerySuggestionsApi {
   }
 }
 
-export type CreateConfigProps = {
-  /**
-   * The querySuggestionsIndexWithIndexParam.
-   */
-  querySuggestionsIndexWithIndexParam: QuerySuggestionsIndexWithIndexParam;
-};
-
 export type DeleteConfigProps = {
   /**
    * The index in which to perform the request.
@@ -365,8 +355,5 @@ export type UpdateConfigProps = {
    * The index in which to perform the request.
    */
   indexName: string;
-  /**
-   * The querySuggestionsIndexParam.
-   */
   querySuggestionsIndexParam: QuerySuggestionsIndexParam;
 };

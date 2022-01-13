@@ -23,7 +23,7 @@ get:
               - count
             properties:
               count:
-                $ref: '../common/parameters.yml#/count'
+                $ref: ../common/parameters.yml#/count
               dates:
                 type: array
                 description: A list of users count with their date.
@@ -37,7 +37,7 @@ get:
                     date:
                       $ref: '../common/parameters.yml#/date'
                     count:
-                      $ref: '../common/parameters.yml#/count'
+                      $ref: ../common/parameters.yml#/count
     '400':
       $ref: ../../../common/responses/BadRequest.yml
     '402':

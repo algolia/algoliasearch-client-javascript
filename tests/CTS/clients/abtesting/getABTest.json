@@ -1,0 +1,13 @@
+[
+  {
+    "method": "getABTest",
+    "testName": "getABTest",
+    "parameters": {
+      "id": 42
+    },
+    "request": {
+      "path": "/2/abtests/42",
+      "method": "GET"
+    }
+  }
+]

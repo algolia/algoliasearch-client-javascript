@@ -31,6 +31,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@algolia/client-abtesting@5.0.0, @algolia/client-abtesting@workspace:clients/algoliasearch-client-javascript/client-abtesting":
+  version: 0.0.0-use.local
+  resolution: "@algolia/client-abtesting@workspace:clients/algoliasearch-client-javascript/client-abtesting"
+  dependencies:
+    "@types/node": 16.11.11
+    typescript: 4.5.4
+  languageName: unknown
+  linkType: soft
+
 "@algolia/client-analytics@5.0.0, @algolia/client-analytics@workspace:clients/algoliasearch-client-javascript/client-analytics":
   version: 0.0.0-use.local
   resolution: "@algolia/client-analytics@workspace:clients/algoliasearch-client-javascript/client-analytics"
@@ -3632,8 +3641,10 @@ fsevents@^2.3.2:
   version: 0.0.0-use.local
   resolution: "javascript-playground@workspace:playground/javascript"
   dependencies:
+    "@algolia/client-abtesting": 5.0.0
     "@algolia/client-analytics": 5.0.0
     "@algolia/client-personalization": 5.0.0
+    "@algolia/client-query-suggestions": 5.0.0
     "@algolia/client-search": 5.0.0
     "@algolia/recommend": 5.0.0
     dotenv: 10.0.0
@@ -5701,6 +5712,7 @@ fsevents@^2.3.2:
   version: 0.0.0-use.local
   resolution: "tests@workspace:tests"
   dependencies:
+    "@algolia/client-abtesting": 5.0.0
     "@algolia/client-analytics": 5.0.0
     "@algolia/client-insights": 5.0.0
     "@algolia/client-personalization": 5.0.0

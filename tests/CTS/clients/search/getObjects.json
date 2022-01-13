@@ -2,18 +2,13 @@
   {
     "method": "getObjects",
     "parameters": {
-      "getObjectsObject": {
-        "requests": [
-          {
-            "attributesToRetrieve": [
-              "attr1",
-              "attr2"
-            ],
-            "objectID": "uniqueID",
-            "indexName": "theIndexName"
-          }
-        ]
-      }
+      "requests": [
+        {
+          "attributesToRetrieve": ["attr1", "attr2"],
+          "objectID": "uniqueID",
+          "indexName": "theIndexName"
+        }
+      ]
     },
     "request": {
       "path": "/1/indexes/*/objects",
@@ -21,10 +16,7 @@
       "data": {
         "requests": [
           {
-            "attributesToRetrieve": [
-              "attr1",
-              "attr2"
-            ],
+            "attributesToRetrieve": ["attr1", "attr2"],
             "objectID": "uniqueID",
             "indexName": "theIndexName"
           }

@@ -12,7 +12,9 @@ const client = new PersonalizationApi(appId, apiKey, 'us', {
 
 describe('deleteUserProfile', () => {
   test('delete deleteUserProfile', async () => {
-    const req = await client.deleteUserProfile({ userToken: 'UserToken' });
+    const req = await client.deleteUserProfile({
+      userToken: 'UserToken',
+    });
 
     expect((req as any).path).toEqual('/1/profiles/UserToken');
     expect((req as any).method).toEqual('DELETE');
@@ -34,7 +36,9 @@ describe('getPersonalizationStrategy', () => {
 
 describe('getUserTokenProfile', () => {
   test('get getUserTokenProfile', async () => {
-    const req = await client.getUserTokenProfile({ userToken: 'UserToken' });
+    const req = await client.getUserTokenProfile({
+      userToken: 'UserToken',
+    });
 
     expect((req as any).path).toEqual('/1/profiles/personalization/UserToken');
     expect((req as any).method).toEqual('GET');
@@ -46,11 +50,9 @@ describe('getUserTokenProfile', () => {
 describe('setPersonalizationStrategy', () => {
   test('set setPersonalizationStrategy', async () => {
     const req = await client.setPersonalizationStrategy({
-      personalizationStrategyObject: {
-        eventScoring: [{ score: 42, eventName: 'Algolia', eventType: 'Event' }],
-        facetScoring: [{ score: 42, facetName: 'Event' }],
-        personalizationImpact: 42,
-      },
+      eventScoring: [{ score: 42, eventName: 'Algolia', eventType: 'Event' }],
+      facetScoring: [{ score: 42, facetName: 'Event' }],
+      personalizationImpact: 42,
     });
 
     expect((req as any).path).toEqual('/1/strategies/personalization');

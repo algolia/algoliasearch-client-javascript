@@ -19,16 +19,14 @@ const client = new RecommendApi(appId, apiKey);
 async function testRecommend() {
   try {
     const res = await client.getRecommendations({
-      getRecommendations: {
-        requests: [
-          {
-            indexName: searchIndex,
-            model: 'bought-together',
-            objectID: searchQuery,
-            threshold: 0,
-          },
-        ],
-      },
+      requests: [
+        {
+          indexName: searchIndex,
+          model: 'bought-together',
+          objectID: searchQuery,
+          threshold: 0,
+        },
+      ],
     });
 
     console.log(`[OK]`, res);

@@ -46,6 +46,13 @@ runs:
         path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/client-analytics/dist
         key: ${{ runner.os }}-js-client-analytics-${{ hashFiles('clients/algoliasearch-client-javascript/client-analytics/**') }}
 
+    - name: Restore built JavaScript abtesting client
+      if: ${{ inputs.job == 'cts' }}
+      uses: actions/cache@v2
+      with:
+        path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/client-abtesting/dist
+        key: ${{ runner.os }}-js-client-abtesting-${{ hashFiles('clients/algoliasearch-client-javascript/client-abtesting/**') }}
+
     - name: Restore built JavaScript insights client
       if: ${{ inputs.job == 'cts' }}
       uses: actions/cache@v2

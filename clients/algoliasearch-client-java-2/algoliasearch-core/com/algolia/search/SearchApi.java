@@ -2471,7 +2471,8 @@ public class SearchApi extends ApiClient {
    *
    * @param indexName The index in which to perform the request. (required)
    * @param objectID Unique identifier of an object. (required)
-   * @param attributesToRetrieve (optional)
+   * @param attributesToRetrieve List of attributes to retrieve. If not specified, all retrievable
+   *     attributes are returned. (optional)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
@@ -2546,7 +2547,8 @@ public class SearchApi extends ApiClient {
    *
    * @param indexName The index in which to perform the request. (required)
    * @param objectID Unique identifier of an object. (required)
-   * @param attributesToRetrieve (optional)
+   * @param attributesToRetrieve List of attributes to retrieve. If not specified, all retrievable
+   *     attributes are returned. (optional)
    * @return Map&lt;String, String&gt;
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
@@ -2572,7 +2574,8 @@ public class SearchApi extends ApiClient {
    *
    * @param indexName The index in which to perform the request. (required)
    * @param objectID Unique identifier of an object. (required)
-   * @param attributesToRetrieve (optional)
+   * @param attributesToRetrieve List of attributes to retrieve. If not specified, all retrievable
+   *     attributes are returned. (optional)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
    * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -3297,7 +3300,7 @@ public class SearchApi extends ApiClient {
   /**
    * Build call for hasPendingMappings
    *
-   * @param getClusters (optional)
+   * @param getClusters Whether to get clusters or not. (optional)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
@@ -3346,7 +3349,7 @@ public class SearchApi extends ApiClient {
    * response is 200 OK. A successful response indicates that the operation has been taken into
    * account, and the userIDs are directly usable.
    *
-   * @param getClusters (optional)
+   * @param getClusters Whether to get clusters or not. (optional)
    * @return CreatedAtResponse
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
@@ -3366,7 +3369,7 @@ public class SearchApi extends ApiClient {
    * done. Upon success, the response is 200 OK. A successful response indicates that the operation
    * has been taken into account, and the userIDs are directly usable.
    *
-   * @param getClusters (optional)
+   * @param getClusters Whether to get clusters or not. (optional)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
    * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -3985,7 +3988,7 @@ public class SearchApi extends ApiClient {
    *
    * @param indexName The index in which to perform the request. (required)
    * @param objectID Unique identifier of an object. (required)
-   * @param buildInOperation The Algolia object. (required)
+   * @param buildInOperation List of attributes to update. (required)
    * @param createIfNotExists Creates the record if it does not exist yet. (optional, default to
    *     true)
    * @param _callback Callback for upload/download progress
@@ -4081,7 +4084,7 @@ public class SearchApi extends ApiClient {
    *
    * @param indexName The index in which to perform the request. (required)
    * @param objectID Unique identifier of an object. (required)
-   * @param buildInOperation The Algolia object. (required)
+   * @param buildInOperation List of attributes to update. (required)
    * @param createIfNotExists Creates the record if it does not exist yet. (optional, default to
    *     true)
    * @return UpdatedAtWithObjectIdResponse
@@ -4117,7 +4120,7 @@ public class SearchApi extends ApiClient {
    *
    * @param indexName The index in which to perform the request. (required)
    * @param objectID Unique identifier of an object. (required)
-   * @param buildInOperation The Algolia object. (required)
+   * @param buildInOperation List of attributes to update. (required)
    * @param createIfNotExists Creates the record if it does not exist yet. (optional, default to
    *     true)
    * @param _callback The callback to be executed when the API call finishes

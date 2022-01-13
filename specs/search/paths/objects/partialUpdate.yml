@@ -22,12 +22,11 @@ post:
         default: true
   requestBody:
     required: true
-    description: The Algolia object.
+    description: List of attributes to update.
     content:
       application/json:
         schema:
           type: array
-          description: List of attributes to update.
           additionalProperties: false
           items:
             type: object

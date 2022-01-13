@@ -2,17 +2,15 @@
   {
     "method": "multipleBatch",
     "parameters": {
-      "batchObject": {
-        "requests": [
-          {
-            "action": "addObject",
-            "body": {
-              "key": "value"
-            },
-            "indexName": "theIndexName"
-          }
-        ]
-      }
+      "requests": [
+        {
+          "action": "addObject",
+          "body": {
+            "key": "value"
+          },
+          "indexName": "theIndexName"
+        }
+      ]
     },
     "request": {
       "path": "/1/indexes/*/batch",

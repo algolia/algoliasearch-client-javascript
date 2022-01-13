@@ -1,5 +1,6 @@
 sources:
   description: A list of sources.
+  type: array
   items:
     $ref: '#/source'
 

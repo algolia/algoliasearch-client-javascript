@@ -34,28 +34,12 @@ ClickAnalytics:
     type: boolean
     default: false
 
-Limit:
-  in: query
-  name: limit
-  description: How many items to fetch.
-  schema:
-    type: integer
-    default: 10
-
 Search:
   in: query
   name: search
   description: The query term to search for. Must match the exact user input.
   schema:
     type: string
-
-Offset:
-  in: query
-  name: offset
-  description: From which position to start retrieving results.
-  schema:
-    type: integer
-    default: 0
 
 Tags:
   name: tags
@@ -93,10 +77,6 @@ conversionRate:
   format: double
   description: The conversion rate.
 
-trackedSearchCount:
-  type: integer
-  description: The number of tracked search click.
-
 conversionCount:
   type: integer
   description: The number of converted clicks.
@@ -124,9 +104,11 @@ hit:
   description: The hit.
   type: string
 
-count:
-  description: The number of occurrences.
-  type: integer
-
 nbHits:
-  $ref: '../../../search/common/schemas/SearchResponse.yml#/nbHits'
+  $ref: ../../../search/common/schemas/SearchResponse.yml#/nbHits
+
+trackedSearchCount:
+  $ref: ../../../common/parameters.yml#/trackedSearchCount
+
+count:
+  $ref: ../../../common/parameters.yml#/count

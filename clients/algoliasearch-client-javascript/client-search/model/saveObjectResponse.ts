@@ -1,7 +1,7 @@
 export type SaveObjectResponse = {
   createdAt?: string;
   /**
-   * TaskID of the indexing task to wait for.
+   * TaskID of the task to wait for.
    */
   taskID?: number;
   /**

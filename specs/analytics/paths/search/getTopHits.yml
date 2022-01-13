@@ -10,8 +10,8 @@ get:
     - $ref: '../common/parameters.yml#/ClickAnalytics'
     - $ref: '../../../common/parameters.yml#/StartDate'
     - $ref: '../../../common/parameters.yml#/EndDate'
-    - $ref: '../common/parameters.yml#/Limit'
-    - $ref: '../common/parameters.yml#/Offset'
+    - $ref: '../../../common/parameters.yml#/Limit'
+    - $ref: '../../../common/parameters.yml#/Offset'
     - $ref: '../common/parameters.yml#/Tags'
   responses:
     '200':

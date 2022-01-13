@@ -54,15 +54,7 @@ export class {{classname}} {
       appId: string,
       apiKey: string,
       {{#hasRegionalHost}}
-        {{#isPersonalizationHost}}
-            region?: string,
-        {{/isPersonalizationHost}}
-        {{#isAnalyticsHost}}
-            region: 'de' | 'us',
-        {{/isAnalyticsHost}}
-        {{#isQuerySuggestionsHost}}
-            region: 'eu' | 'us',
-        {{/isQuerySuggestionsHost}}
+        region: {{#isDeHost}}'de'{{/isDeHost}}{{#isEuHost}}'eu'{{/isEuHost}} | 'us',
       {{/hasRegionalHost}}
       options?: {requester?: Requester, hosts?: Host[]}
     ) {
@@ -104,29 +96,19 @@ export class {{classname}} {
   }
   {{/isSearchHost}}
 
-  {{#isPersonalizationHost}}
-  public getDefaultHosts(region: string = 'us'): Host[] {
-    return [{ url: `personalization.${region}.algolia.com`, accept: 'readWrite', protocol: 'https' }];
-  }
-  {{/isPersonalizationHost}}
+  {{^isSearchHost}}
+    {{#hasRegionalHost}}
+    public getDefaultHosts(region: {{#isDeHost}}'de'{{/isDeHost}}{{#isEuHost}}'eu'{{/isEuHost}} | 'us' = 'us'): Host[] {
+      return [{ url: `{{{host}}}.${region}.algolia.com`, accept: 'readWrite', protocol: 'https' }];
+    }
+    {{/hasRegionalHost}}
 
-  {{#isAnalyticsHost}}
-  public getDefaultHosts(region: 'de' | 'us'): Host[] {
-    return [{ url: `analytics.${region}.algolia.com`, accept: 'readWrite', protocol: 'https' }];
-  }
-  {{/isAnalyticsHost}}
-
-  {{#isInsightsHost}}
-  public getDefaultHosts(): Host[] {
-    return [{ url: `insights.algolia.io`, accept: 'readWrite', protocol: 'https' }];
-  }
-  {{/isInsightsHost}}
-
-  {{#isQuerySuggestionsHost}}
-  public getDefaultHosts(region: string = 'us'): Host[] {
-    return [{ url: `query-suggestions.${region}.algolia.com`, accept: 'readWrite', protocol: 'https' }];
-  }
-  {{/isQuerySuggestionsHost}}
+    {{^hasRegionalHost}}
+    public getDefaultHosts(): Host[] {
+      return [{ url: '{{{host}}}.algolia.io', accept: 'readWrite', protocol: 'https' }];
+    }
+    {{/hasRegionalHost}}
+  {{/isSearchHost}}
 
   public setRequest(requester: Requester): void {
     this.transporter.setRequester(requester);
@@ -148,19 +130,88 @@ export class {{classname}} {
   {{#summary}}
   * @summary {{&summary}}
   {{/summary}}
-  * @param {{nickname}} - The {{nickname}} parameters.
-  {{#allParams}}
-  * @param {{nickname}}.{{paramName}} {{^description}}The {{paramName}}{{/description}}{{#description}}{{{description}}}{{/description}}
-  {{/allParams}}
+  {{#allParams.0}}
+    {{^bodyParams.0}}
+      * @param {{nickname}} - The {{nickname}} object.
+        {{#allParams}}
+          * @param {{nickname}}.{{paramName}} {{^description}}The {{paramName}} object.{{/description}}{{#description}}{{{description}}}{{/description}}
+        {{/allParams}}
+    {{/bodyParams.0}}
+    {{#bodyParams.0}}
+      {{^queryParams.0}}
+        {{^pathParams.0}}
+          {{#bodyParams.0.isArray}}
+            {{^bodyParams.1}}
+              * @param {{nickname}} - The {{nickname}} object.
+                {{#allParams}}
+                  * @param {{nickname}}.{{paramName}} {{^description}}The {{paramName}} object.{{/description}}{{#description}}{{{description}}}{{/description}}
+                {{/allParams}}
+            {{/bodyParams.1}}
+          {{/bodyParams.0.isArray}}
+          {{^bodyParams.0.isArray}}
+            * @param {{paramName}} {{^description}}The {{paramName}} object.{{/description}}{{#description}}{{{description}}}{{/description}}
+          {{/bodyParams.0.isArray}}
+        {{/pathParams.0}}
+        {{#pathParams.0}}
+          * @param {{nickname}} - The {{nickname}} object.
+            {{#allParams}}
+              * @param {{nickname}}.{{paramName}} {{^description}}The {{paramName}} object.{{/description}}{{#description}}{{{description}}}{{/description}}
+            {{/allParams}}
+        {{/pathParams.0}}
+      {{/queryParams.0}}
+      {{#queryParams.0}}
+        * @param {{nickname}} - The {{nickname}} object.
+          {{#allParams}}
+            * @param {{nickname}}.{{paramName}} {{^description}}The {{paramName}} object.{{/description}}{{#description}}{{{description}}}{{/description}}
+          {{/allParams}}
+      {{/queryParams.0}}
+    {{/bodyParams.0}}
+  {{/allParams.0}}
   */
   public {{nickname}} (
-      {{#allParams.0}}
+    {{#allParams.0}}
+      {{^bodyParams.0}}
         {
           {{#allParams}}
             {{paramName}},
           {{/allParams}}
         }: {{#lambda.titlecase}}{{nickname}}{{/lambda.titlecase}}Props
-      {{/allParams.0}}
+      {{/bodyParams.0}}
+      {{#bodyParams.0}}
+        {{^queryParams.0}}
+          {{^pathParams.0}}
+            {{#bodyParams.0.isArray}}
+              {{^bodyParams.1}}
+              {
+                {{#allParams}}
+                  {{paramName}},
+                {{/allParams}}
+              }: {{#lambda.titlecase}}{{nickname}}{{/lambda.titlecase}}Props
+              {{/bodyParams.1}}
+            {{/bodyParams.0.isArray}}
+            {{^bodyParams.0.isArray}}
+              {{#bodyParams}}
+                {{paramName}}: {{{dataType}}},
+              {{/bodyParams}}
+            {{/bodyParams.0.isArray}}
+          {{/pathParams.0}}
+          {{#pathParams.0}}
+            {
+              {{#allParams}}
+                {{paramName}},
+              {{/allParams}}
+            }: {{#lambda.titlecase}}{{nickname}}{{/lambda.titlecase}}Props
+          {{/pathParams.0}}
+        {{/queryParams.0}}
+        {{#queryParams.0}}
+          {
+            {{#allParams}}
+              {{paramName}},
+            {{/allParams}}
+          }: {{#lambda.titlecase}}{{nickname}}{{/lambda.titlecase}}Props
+        {{/queryParams.0}}
+      {{/bodyParams.0}}
+    {{/allParams.0}}
       ) : Promise<{{{returnType}}}> {
     const path = '{{{path}}}'{{#pathParams}}.replace(
     {{=<% %>=}}
@@ -217,14 +268,62 @@ export class {{classname}} {
 
 {{#operation}}
 {{#allParams.0}}
+  {{^bodyParams.0}}
 export type {{#lambda.titlecase}}{{nickname}}{{/lambda.titlecase}}Props = {
   {{#allParams}}
+    {{#description}}
     /**
-    * {{^description}}The {{paramName}}{{/description}}{{#description}}{{{description}}}{{/description}}
+    * {{{description}}}
     */
+    {{/description}}
     {{paramName}}{{^required}}?{{/required}}: {{{dataType}}};
   {{/allParams}}
 }
+  {{/bodyParams.0}}
+  {{#bodyParams.0}}
+    {{^queryParams.0}}
+      {{^pathParams.0}}
+        {{#bodyParams.0.isArray}}
+          {{^bodyParams.1}}
+export type {{#lambda.titlecase}}{{nickname}}{{/lambda.titlecase}}Props = {
+  {{#allParams}}
+    {{#description}}
+    /**
+    * {{{description}}}
+    */
+    {{/description}}
+    {{paramName}}{{^required}}?{{/required}}: {{{dataType}}};
+  {{/allParams}}
+}
+          {{/bodyParams.1}}
+        {{/bodyParams.0.isArray}}
+      {{/pathParams.0}}
+      {{#pathParams.0}}
+export type {{#lambda.titlecase}}{{nickname}}{{/lambda.titlecase}}Props = {
+  {{#allParams}}
+    {{#description}}
+    /**
+    * {{{description}}}
+    */
+    {{/description}}
+    {{paramName}}{{^required}}?{{/required}}: {{{dataType}}};
+  {{/allParams}}
+}
+      {{/pathParams.0}}
+    {{/queryParams.0}}
+    {{#queryParams.0}}
+export type {{#lambda.titlecase}}{{nickname}}{{/lambda.titlecase}}Props = {
+  {{#allParams}}
+    {{#description}}
+    /**
+    * {{{description}}}
+    */
+    {{/description}}
+    {{paramName}}{{^required}}?{{/required}}: {{{dataType}}};
+  {{/allParams}}
+}
+    {{/queryParams.0}}
+  {{/bodyParams.0}}
 {{/allParams.0}}
 
 {{/operation}}

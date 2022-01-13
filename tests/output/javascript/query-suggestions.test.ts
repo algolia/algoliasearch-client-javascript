@@ -13,18 +13,16 @@ const client = new QuerySuggestionsApi(appId, apiKey, 'us', {
 describe('createConfig', () => {
   test('createConfig', async () => {
     const req = await client.createConfig({
-      querySuggestionsIndexWithIndexParam: {
-        indexName: 'theIndexName',
-        sourceIndices: [
-          {
-            indexName: 'testIndex',
-            facets: [{ attributes: 'test' }],
-            generate: [['facetA', 'facetB'], ['facetC']],
-          },
-        ],
-        languages: ['french'],
-        exclude: ['test'],
-      },
+      indexName: 'theIndexName',
+      sourceIndices: [
+        {
+          indexName: 'testIndex',
+          facets: [{ attributes: 'test' }],
+          generate: [['facetA', 'facetB'], ['facetC']],
+        },
+      ],
+      languages: ['french'],
+      exclude: ['test'],
     });
 
     expect((req as any).path).toEqual('/1/configs');
@@ -47,7 +45,9 @@ describe('createConfig', () => {
 
 describe('deleteConfig', () => {
   test('deleteConfig', async () => {
-    const req = await client.deleteConfig({ indexName: 'theIndexName' });
+    const req = await client.deleteConfig({
+      indexName: 'theIndexName',
+    });
 
     expect((req as any).path).toEqual('/1/configs/theIndexName');
     expect((req as any).method).toEqual('DELETE');
@@ -69,7 +69,9 @@ describe('getAllConfigs', () => {
 
 describe('getConfig', () => {
   test('getConfig', async () => {
-    const req = await client.getConfig({ indexName: 'theIndexName' });
+    const req = await client.getConfig({
+      indexName: 'theIndexName',
+    });
 
     expect((req as any).path).toEqual('/1/configs/theIndexName');
     expect((req as any).method).toEqual('GET');
@@ -80,7 +82,9 @@ describe('getConfig', () => {
 
 describe('getConfigStatus', () => {
   test('getConfigStatus', async () => {
-    const req = await client.getConfigStatus({ indexName: 'theIndexName' });
+    const req = await client.getConfigStatus({
+      indexName: 'theIndexName',
+    });
 
     expect((req as any).path).toEqual('/1/configs/theIndexName/status');
     expect((req as any).method).toEqual('GET');
@@ -91,7 +95,9 @@ describe('getConfigStatus', () => {
 
 describe('getLogFile', () => {
   test('getLogFile', async () => {
-    const req = await client.getLogFile({ indexName: 'theIndexName' });
+    const req = await client.getLogFile({
+      indexName: 'theIndexName',
+    });
 
     expect((req as any).path).toEqual('/1/logs/theIndexName');
     expect((req as any).method).toEqual('GET');

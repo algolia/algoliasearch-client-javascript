@@ -99,12 +99,11 @@ export class RecommendApi {
   /**
    * Returns recommendations for a specific model and objectID.
    *
-   * @param getRecommendations - The getRecommendations parameters.
-   * @param getRecommendations.getRecommendations - The getRecommendations.
+   * @param getRecommendations - The getRecommendations object.
    */
-  getRecommendations({
-    getRecommendations,
-  }: GetRecommendationsProps): Promise<GetRecommendationsResponse> {
+  getRecommendations(
+    getRecommendations: GetRecommendations
+  ): Promise<GetRecommendationsResponse> {
     const path = '/1/indexes/*/recommendations';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
@@ -138,10 +137,3 @@ export class RecommendApi {
     return this.sendRequest(request, requestOptions);
   }
 }
-
-export type GetRecommendationsProps = {
-  /**
-   * The getRecommendations.
-   */
-  getRecommendations: GetRecommendations;
-};

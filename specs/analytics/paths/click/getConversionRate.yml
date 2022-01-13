@@ -27,7 +27,7 @@ get:
               rate:
                 $ref: '../common/parameters.yml#/rate'
               trackedSearchCount:
-                $ref: '../common/parameters.yml#/trackedSearchCount'
+                $ref: ../common/parameters.yml#/trackedSearchCount
               conversionCount:
                 $ref: '../common/parameters.yml#/conversionCount'
               dates:
@@ -45,7 +45,7 @@ get:
                     rate:
                       $ref: '../common/parameters.yml#/rate'
                     trackedSearchCount:
-                      $ref: '../common/parameters.yml#/trackedSearchCount'
+                      $ref: ../common/parameters.yml#/trackedSearchCount
                     conversionCount:
                       $ref: '../common/parameters.yml#/conversionCount'
                     date:

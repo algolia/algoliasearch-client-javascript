@@ -9,7 +9,9 @@ const client = new AnalyticsApi(appId, apiKey, 'us', {
 
 describe('getAverageClickPosition', () => {
   test('get getAverageClickPosition with minimal parameters', async () => {
-    const req = await client.getAverageClickPosition({ index: 'index' });
+    const req = await client.getAverageClickPosition({
+      index: 'index',
+    });
 
     expect((req as any).path).toEqual('/2/clicks/averageClickPosition');
     expect((req as any).method).toEqual('GET');
@@ -39,7 +41,9 @@ describe('getAverageClickPosition', () => {
 
 describe('getClickPositions', () => {
   test('get getClickPositions with minimal parameters', async () => {
-    const req = await client.getClickPositions({ index: 'index' });
+    const req = await client.getClickPositions({
+      index: 'index',
+    });
 
     expect((req as any).path).toEqual('/2/clicks/positions');
     expect((req as any).method).toEqual('GET');
@@ -69,7 +73,9 @@ describe('getClickPositions', () => {
 
 describe('getClickThroughRate', () => {
   test('get getClickThroughRate with minimal parameters', async () => {
-    const req = await client.getClickThroughRate({ index: 'index' });
+    const req = await client.getClickThroughRate({
+      index: 'index',
+    });
 
     expect((req as any).path).toEqual('/2/clicks/clickThroughRate');
     expect((req as any).method).toEqual('GET');
@@ -99,7 +105,9 @@ describe('getClickThroughRate', () => {
 
 describe('getConversationRate', () => {
   test('get getConversationRate with minimal parameters', async () => {
-    const req = await client.getConversationRate({ index: 'index' });
+    const req = await client.getConversationRate({
+      index: 'index',
+    });
 
     expect((req as any).path).toEqual('/2/conversions/conversionRate');
     expect((req as any).method).toEqual('GET');
@@ -129,7 +137,9 @@ describe('getConversationRate', () => {
 
 describe('getNoClickRate', () => {
   test('get getNoClickRate with minimal parameters', async () => {
-    const req = await client.getNoClickRate({ index: 'index' });
+    const req = await client.getNoClickRate({
+      index: 'index',
+    });
 
     expect((req as any).path).toEqual('/2/searches/noClickRate');
     expect((req as any).method).toEqual('GET');
@@ -159,7 +169,9 @@ describe('getNoClickRate', () => {
 
 describe('getNoResultsRate', () => {
   test('get getNoResultsRate with minimal parameters', async () => {
-    const req = await client.getNoResultsRate({ index: 'index' });
+    const req = await client.getNoResultsRate({
+      index: 'index',
+    });
 
     expect((req as any).path).toEqual('/2/searches/noResultRate');
     expect((req as any).method).toEqual('GET');
@@ -189,7 +201,9 @@ describe('getNoResultsRate', () => {
 
 describe('getSearchesCount', () => {
   test('get getSearchesCount with minimal parameters', async () => {
-    const req = await client.getSearchesCount({ index: 'index' });
+    const req = await client.getSearchesCount({
+      index: 'index',
+    });
 
     expect((req as any).path).toEqual('/2/searches/count');
     expect((req as any).method).toEqual('GET');
@@ -219,7 +233,9 @@ describe('getSearchesCount', () => {
 
 describe('getSearchesNoClicks', () => {
   test('get getSearchesNoClicks with minimal parameters', async () => {
-    const req = await client.getSearchesNoClicks({ index: 'index' });
+    const req = await client.getSearchesNoClicks({
+      index: 'index',
+    });
 
     expect((req as any).path).toEqual('/2/searches/noClicks');
     expect((req as any).method).toEqual('GET');
@@ -253,7 +269,9 @@ describe('getSearchesNoClicks', () => {
 
 describe('getSearchesNoResults', () => {
   test('get getSearchesNoResults with minimal parameters', async () => {
-    const req = await client.getSearchesNoResults({ index: 'index' });
+    const req = await client.getSearchesNoResults({
+      index: 'index',
+    });
 
     expect((req as any).path).toEqual('/2/searches/noResults');
     expect((req as any).method).toEqual('GET');
@@ -287,7 +305,9 @@ describe('getSearchesNoResults', () => {
 
 describe('getStatus', () => {
   test('get getStatus with minimal parameters', async () => {
-    const req = await client.getStatus({ index: 'index' });
+    const req = await client.getStatus({
+      index: 'index',
+    });
 
     expect((req as any).path).toEqual('/2/status');
     expect((req as any).method).toEqual('GET');
@@ -298,7 +318,9 @@ describe('getStatus', () => {
 
 describe('getTopCountries', () => {
   test('get getTopCountries with minimal parameters', async () => {
-    const req = await client.getTopCountries({ index: 'index' });
+    const req = await client.getTopCountries({
+      index: 'index',
+    });
 
     expect((req as any).path).toEqual('/2/countries');
     expect((req as any).method).toEqual('GET');
@@ -332,7 +354,9 @@ describe('getTopCountries', () => {
 
 describe('getTopFilterAttributes', () => {
   test('get getTopFilterAttributes with minimal parameters', async () => {
-    const req = await client.getTopFilterAttributes({ index: 'index' });
+    const req = await client.getTopFilterAttributes({
+      index: 'index',
+    });
 
     expect((req as any).path).toEqual('/2/filters');
     expect((req as any).method).toEqual('GET');
@@ -446,7 +470,9 @@ describe('getTopFilterForAttribute', () => {
 
 describe('getTopFiltersNoResults', () => {
   test('get getTopFiltersNoResults with minimal parameters', async () => {
-    const req = await client.getTopFiltersNoResults({ index: 'index' });
+    const req = await client.getTopFiltersNoResults({
+      index: 'index',
+    });
 
     expect((req as any).path).toEqual('/2/filters/noResults');
     expect((req as any).method).toEqual('GET');
@@ -482,7 +508,9 @@ describe('getTopFiltersNoResults', () => {
 
 describe('getTopHits', () => {
   test('get getTopHits with minimal parameters', async () => {
-    const req = await client.getTopHits({ index: 'index' });
+    const req = await client.getTopHits({
+      index: 'index',
+    });
 
     expect((req as any).path).toEqual('/2/hits');
     expect((req as any).method).toEqual('GET');
@@ -520,7 +548,9 @@ describe('getTopHits', () => {
 
 describe('getTopSearches', () => {
   test('get getTopSearches with minimal parameters', async () => {
-    const req = await client.getTopSearches({ index: 'index' });
+    const req = await client.getTopSearches({
+      index: 'index',
+    });
 
     expect((req as any).path).toEqual('/2/searches');
     expect((req as any).method).toEqual('GET');
@@ -560,7 +590,9 @@ describe('getTopSearches', () => {
 
 describe('getUsersCount', () => {
   test('get getUsersCount with minimal parameters', async () => {
-    const req = await client.getUsersCount({ index: 'index' });
+    const req = await client.getUsersCount({
+      index: 'index',
+    });
 
     expect((req as any).path).toEqual('/2/users/count');
     expect((req as any).method).toEqual('GET');

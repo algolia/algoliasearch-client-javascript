@@ -2,10 +2,8 @@
   {
     "method": "appendSource",
     "parameters": {
-      "source": {
-        "source": "theSource",
-        "description": "theDescription"
-      }
+      "source": "theSource",
+      "description": "theDescription"
     },
     "request": {
       "path": "/1/security/sources/append",

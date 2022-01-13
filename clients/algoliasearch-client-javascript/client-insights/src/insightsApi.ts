@@ -58,7 +58,7 @@ export class InsightsApi {
 
   getDefaultHosts(): Host[] {
     return [
-      { url: `insights.algolia.io`, accept: 'readWrite', protocol: 'https' },
+      { url: 'insights.algolia.io', accept: 'readWrite', protocol: 'https' },
     ];
   }
 
@@ -78,10 +78,9 @@ export class InsightsApi {
    * This command pushes an array of events.
    *
    * @summary Pushes an array of events.
-   * @param pushEvents - The pushEvents parameters.
-   * @param pushEvents.insightEvents - The insightEvents.
+   * @param insightEvents - The insightEvents object.
    */
-  pushEvents({ insightEvents }: PushEventsProps): Promise<PushEventsResponse> {
+  pushEvents(insightEvents: InsightEvents): Promise<PushEventsResponse> {
     const path = '/1/events';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
@@ -112,10 +111,3 @@ export class InsightsApi {
     return this.sendRequest(request, requestOptions);
   }
 }
-
-export type PushEventsProps = {
-  /**
-   * The insightEvents.
-   */
-  insightEvents: InsightEvents;
-};

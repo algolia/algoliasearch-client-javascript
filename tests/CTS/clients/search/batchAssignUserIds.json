@@ -5,10 +5,7 @@
       "xAlgoliaUserID": "userID",
       "batchAssignUserIdsObject": {
         "cluster": "theCluster",
-        "users": [
-          "user1",
-          "user2"
-        ]
+        "users": ["user1", "user2"]
       }
     },
     "request": {
@@ -16,10 +13,7 @@
       "method": "POST",
       "data": {
         "cluster": "theCluster",
-        "users": [
-          "user1",
-          "user2"
-        ]
+        "users": ["user1", "user2"]
       },
       "searchParams": {
         "X-Algolia-User-ID": "userID"
