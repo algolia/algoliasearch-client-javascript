@@ -63,7 +63,8 @@
 
           "packageName": "@algolia/client-personalization",
           "hasRegionalHost": true,
-          "isPersonalizationHost": true
+          "isEuHost": true,
+          "host": "personalization"
         }
       },
       "javascript-analytics": {
@@ -84,7 +85,8 @@
 
           "packageName": "@algolia/client-analytics",
           "hasRegionalHost": true,
-          "isAnalyticsHost": true
+          "isDeHost": true,
+          "host": "analytics"
         }
       },
       "javascript-insights": {
@@ -104,7 +106,29 @@
           "npmVersion": "5.0.0",
 
           "packageName": "@algolia/client-insights",
-          "isInsightsHost": true
+          "host": "insights"
+        }
+      },
+      "javascript-abtesting": {
+        "generatorName": "typescript-node",
+        "templateDir": "#{cwd}/templates/javascript/",
+        "config": "#{cwd}/openapitools.json",
+        "apiPackage": "src",
+        "output": "#{cwd}/clients/algoliasearch-client-javascript/client-abtesting",
+        "glob": "specs/abtesting/spec.yml",
+        "gitHost": "algolia",
+        "gitUserId": "algolia",
+        "gitRepoId": "algoliasearch-client-javascript",
+        "additionalProperties": {
+          "modelPropertyNaming": "original",
+          "supportsES6": true,
+          "npmName": "@algolia/client-abtesting",
+          "npmVersion": "5.0.0",
+
+          "packageName": "@algolia/client-abtesting",
+          "hasRegionalHost": true,
+          "isDeHost": true,
+          "host": "analytics"
         }
       },
       "javascript-query-suggestions": {
@@ -125,7 +149,8 @@
 
           "packageName": "@algolia/client-query-suggestions",
           "hasRegionalHost": true,
-          "isQuerySuggestionsHost": true
+          "isEuHost": true,
+          "host": "query-suggestions"
         }
       },
       "java-search": {

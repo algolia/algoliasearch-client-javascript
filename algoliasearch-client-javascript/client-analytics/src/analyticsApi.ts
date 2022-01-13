@@ -74,7 +74,7 @@ export class AnalyticsApi {
     });
   }
 
-  getDefaultHosts(region: 'de' | 'us'): Host[] {
+  getDefaultHosts(region: 'de' | 'us' = 'us'): Host[] {
     return [
       {
         url: `analytics.${region}.algolia.com`,
@@ -100,7 +100,7 @@ export class AnalyticsApi {
    * Returns the average click position. The endpoint returns a value for the complete given time range, as well as a value per day.
    *
    * @summary Returns the average click position.
-   * @param getAverageClickPosition - The getAverageClickPosition parameters.
+   * @param getAverageClickPosition - The getAverageClickPosition object.
    * @param getAverageClickPosition.index - The index name to target.
    * @param getAverageClickPosition.startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
    * @param getAverageClickPosition.endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
@@ -154,7 +154,7 @@ export class AnalyticsApi {
    * Returns the distribution of clicks per range of positions.
    *
    * @summary Returns the distribution of clicks per range of positions.
-   * @param getClickPositions - The getClickPositions parameters.
+   * @param getClickPositions - The getClickPositions object.
    * @param getClickPositions.index - The index name to target.
    * @param getClickPositions.startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
    * @param getClickPositions.endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
@@ -208,7 +208,7 @@ export class AnalyticsApi {
    * Returns a click-through rate (CTR). The endpoint returns a value for the complete given time range, as well as a value per day. It also returns the count of clicks and searches used to compute the rates.
    *
    * @summary Returns a click-through rate (CTR).
-   * @param getClickThroughRate - The getClickThroughRate parameters.
+   * @param getClickThroughRate - The getClickThroughRate object.
    * @param getClickThroughRate.index - The index name to target.
    * @param getClickThroughRate.startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
    * @param getClickThroughRate.endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
@@ -262,7 +262,7 @@ export class AnalyticsApi {
    * Returns a conversion rate (CR). The endpoint returns a value for the complete given time range, as well as a value per day. It also returns the count of conversion and searches used to compute the rates.
    *
    * @summary Returns a conversion rate (CR).
-   * @param getConversationRate - The getConversationRate parameters.
+   * @param getConversationRate - The getConversationRate object.
    * @param getConversationRate.index - The index name to target.
    * @param getConversationRate.startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
    * @param getConversationRate.endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
@@ -316,7 +316,7 @@ export class AnalyticsApi {
    * Returns the rate at which searches didn\'t lead to any clicks. The endpoint returns a value for the complete given time range, as well as a value per day. It also returns the count of searches and searches without clicks.
    *
    * @summary Returns the rate at which searches didn\'t lead to any clicks.
-   * @param getNoClickRate - The getNoClickRate parameters.
+   * @param getNoClickRate - The getNoClickRate object.
    * @param getNoClickRate.index - The index name to target.
    * @param getNoClickRate.startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
    * @param getNoClickRate.endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
@@ -370,7 +370,7 @@ export class AnalyticsApi {
    * Returns the rate at which searches didn\'t return any results. The endpoint returns a value for the complete given time range, as well as a value per day. It also returns the count of searches and searches without results used to compute the rates.
    *
    * @summary Returns the rate at which searches didn\'t return any results.
-   * @param getNoResultsRate - The getNoResultsRate parameters.
+   * @param getNoResultsRate - The getNoResultsRate object.
    * @param getNoResultsRate.index - The index name to target.
    * @param getNoResultsRate.startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
    * @param getNoResultsRate.endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
@@ -424,7 +424,7 @@ export class AnalyticsApi {
    * Returns the number of searches across the given time range. The endpoint returns a value for the complete given time range, as well as a value per day.
    *
    * @summary Returns the number of searches across the given time range.
-   * @param getSearchesCount - The getSearchesCount parameters.
+   * @param getSearchesCount - The getSearchesCount object.
    * @param getSearchesCount.index - The index name to target.
    * @param getSearchesCount.startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
    * @param getSearchesCount.endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
@@ -478,12 +478,12 @@ export class AnalyticsApi {
    * Returns top searches that didn\'t lead to any clicks. Limited to the 1000 most frequent ones. For each search, also returns the average number of found hits.
    *
    * @summary Returns top searches that didn\'t lead to any clicks.
-   * @param getSearchesNoClicks - The getSearchesNoClicks parameters.
+   * @param getSearchesNoClicks - The getSearchesNoClicks object.
    * @param getSearchesNoClicks.index - The index name to target.
    * @param getSearchesNoClicks.startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
    * @param getSearchesNoClicks.endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
-   * @param getSearchesNoClicks.limit - How many items to fetch.
-   * @param getSearchesNoClicks.offset - From which position to start retrieving results.
+   * @param getSearchesNoClicks.limit - Number of records to return. Limit is the size of the page.
+   * @param getSearchesNoClicks.offset - Position of the starting record. Used for paging. 0 is the first record.
    * @param getSearchesNoClicks.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
    */
   getSearchesNoClicks({
@@ -544,12 +544,12 @@ export class AnalyticsApi {
    * Returns top searches that didn\'t return any results. Limited to the 1000 most frequent ones.
    *
    * @summary Returns top searches that didn\'t return any results.
-   * @param getSearchesNoResults - The getSearchesNoResults parameters.
+   * @param getSearchesNoResults - The getSearchesNoResults object.
    * @param getSearchesNoResults.index - The index name to target.
    * @param getSearchesNoResults.startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
    * @param getSearchesNoResults.endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
-   * @param getSearchesNoResults.limit - How many items to fetch.
-   * @param getSearchesNoResults.offset - From which position to start retrieving results.
+   * @param getSearchesNoResults.limit - Number of records to return. Limit is the size of the page.
+   * @param getSearchesNoResults.offset - Position of the starting record. Used for paging. 0 is the first record.
    * @param getSearchesNoResults.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
    */
   getSearchesNoResults({
@@ -610,7 +610,7 @@ export class AnalyticsApi {
    * Returns the latest update time of the analytics API for a given index. If the index has been recently created and/or no search has been performed yet the updated time will be null.
    *
    * @summary Get latest update time of the analytics API.
-   * @param getStatus - The getStatus parameters.
+   * @param getStatus - The getStatus object.
    * @param getStatus.index - The index name to target.
    */
   getStatus({ index }: GetStatusProps): Promise<GetStatusResponse> {
@@ -644,12 +644,12 @@ export class AnalyticsApi {
    * Returns top countries. Limited to the 1000 most frequent ones.
    *
    * @summary Returns top countries.
-   * @param getTopCountries - The getTopCountries parameters.
+   * @param getTopCountries - The getTopCountries object.
    * @param getTopCountries.index - The index name to target.
    * @param getTopCountries.startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
    * @param getTopCountries.endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
-   * @param getTopCountries.limit - How many items to fetch.
-   * @param getTopCountries.offset - From which position to start retrieving results.
+   * @param getTopCountries.limit - Number of records to return. Limit is the size of the page.
+   * @param getTopCountries.offset - Position of the starting record. Used for paging. 0 is the first record.
    * @param getTopCountries.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
    */
   getTopCountries({
@@ -710,13 +710,13 @@ export class AnalyticsApi {
    * Returns top filter attributes. Limited to the 1000 most used filters.
    *
    * @summary Returns top filter attributes.
-   * @param getTopFilterAttributes - The getTopFilterAttributes parameters.
+   * @param getTopFilterAttributes - The getTopFilterAttributes object.
    * @param getTopFilterAttributes.index - The index name to target.
    * @param getTopFilterAttributes.search - The query term to search for. Must match the exact user input.
    * @param getTopFilterAttributes.startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
    * @param getTopFilterAttributes.endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
-   * @param getTopFilterAttributes.limit - How many items to fetch.
-   * @param getTopFilterAttributes.offset - From which position to start retrieving results.
+   * @param getTopFilterAttributes.limit - Number of records to return. Limit is the size of the page.
+   * @param getTopFilterAttributes.offset - Position of the starting record. Used for paging. 0 is the first record.
    * @param getTopFilterAttributes.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
    */
   getTopFilterAttributes({
@@ -782,14 +782,14 @@ export class AnalyticsApi {
    * Returns top filters for the given attribute. Limited to the 1000 most used filters.
    *
    * @summary Returns top filters for the given attribute.
-   * @param getTopFilterForAttribute - The getTopFilterForAttribute parameters.
+   * @param getTopFilterForAttribute - The getTopFilterForAttribute object.
    * @param getTopFilterForAttribute.attribute - The exact name of the attribute.
    * @param getTopFilterForAttribute.index - The index name to target.
    * @param getTopFilterForAttribute.search - The query term to search for. Must match the exact user input.
    * @param getTopFilterForAttribute.startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
    * @param getTopFilterForAttribute.endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
-   * @param getTopFilterForAttribute.limit - How many items to fetch.
-   * @param getTopFilterForAttribute.offset - From which position to start retrieving results.
+   * @param getTopFilterForAttribute.limit - Number of records to return. Limit is the size of the page.
+   * @param getTopFilterForAttribute.offset - Position of the starting record. Used for paging. 0 is the first record.
    * @param getTopFilterForAttribute.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
    */
   getTopFilterForAttribute({
@@ -865,13 +865,13 @@ export class AnalyticsApi {
    * Returns top filters with no results. Limited to the 1000 most used filters.
    *
    * @summary Returns top filters with no results.
-   * @param getTopFiltersNoResults - The getTopFiltersNoResults parameters.
+   * @param getTopFiltersNoResults - The getTopFiltersNoResults object.
    * @param getTopFiltersNoResults.index - The index name to target.
    * @param getTopFiltersNoResults.search - The query term to search for. Must match the exact user input.
    * @param getTopFiltersNoResults.startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
    * @param getTopFiltersNoResults.endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
-   * @param getTopFiltersNoResults.limit - How many items to fetch.
-   * @param getTopFiltersNoResults.offset - From which position to start retrieving results.
+   * @param getTopFiltersNoResults.limit - Number of records to return. Limit is the size of the page.
+   * @param getTopFiltersNoResults.offset - Position of the starting record. Used for paging. 0 is the first record.
    * @param getTopFiltersNoResults.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
    */
   getTopFiltersNoResults({
@@ -937,14 +937,14 @@ export class AnalyticsApi {
    * Returns top hits. Limited to the 1000 most frequent ones.
    *
    * @summary Returns top hits.
-   * @param getTopHits - The getTopHits parameters.
+   * @param getTopHits - The getTopHits object.
    * @param getTopHits.index - The index name to target.
    * @param getTopHits.search - The query term to search for. Must match the exact user input.
    * @param getTopHits.clickAnalytics - Whether to include the click-through and conversion rates for a search.
    * @param getTopHits.startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
    * @param getTopHits.endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
-   * @param getTopHits.limit - How many items to fetch.
-   * @param getTopHits.offset - From which position to start retrieving results.
+   * @param getTopHits.limit - Number of records to return. Limit is the size of the page.
+   * @param getTopHits.offset - Position of the starting record. Used for paging. 0 is the first record.
    * @param getTopHits.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
    */
   getTopHits({
@@ -1017,15 +1017,15 @@ export class AnalyticsApi {
    * Returns top searches. Limited to the 1000 most frequent ones. For each search, also returns the average number of hits returned.
    *
    * @summary Returns top searches.
-   * @param getTopSearches - The getTopSearches parameters.
+   * @param getTopSearches - The getTopSearches object.
    * @param getTopSearches.index - The index name to target.
    * @param getTopSearches.clickAnalytics - Whether to include the click-through and conversion rates for a search.
    * @param getTopSearches.startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
    * @param getTopSearches.endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
    * @param getTopSearches.orderBy - Reorder the results.
    * @param getTopSearches.direction - The sorting of the result.
-   * @param getTopSearches.limit - How many items to fetch.
-   * @param getTopSearches.offset - From which position to start retrieving results.
+   * @param getTopSearches.limit - Number of records to return. Limit is the size of the page.
+   * @param getTopSearches.offset - Position of the starting record. Used for paging. 0 is the first record.
    * @param getTopSearches.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
    */
   getTopSearches({
@@ -1103,7 +1103,7 @@ export class AnalyticsApi {
    * Returns the distinct count of users across the given time range. The endpoint returns a value for the complete given time range, as well as a value per day.
    *
    * @summary Returns the distinct count of users across the given time range.
-   * @param getUsersCount - The getUsersCount parameters.
+   * @param getUsersCount - The getUsersCount object.
    * @param getUsersCount.index - The index name to target.
    * @param getUsersCount.startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
    * @param getUsersCount.endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
@@ -1302,11 +1302,11 @@ export type GetSearchesNoClicksProps = {
    */
   endDate?: string;
   /**
-   * How many items to fetch.
+   * Number of records to return. Limit is the size of the page.
    */
   limit?: number;
   /**
-   * From which position to start retrieving results.
+   * Position of the starting record. Used for paging. 0 is the first record.
    */
   offset?: number;
   /**
@@ -1329,11 +1329,11 @@ export type GetSearchesNoResultsProps = {
    */
   endDate?: string;
   /**
-   * How many items to fetch.
+   * Number of records to return. Limit is the size of the page.
    */
   limit?: number;
   /**
-   * From which position to start retrieving results.
+   * Position of the starting record. Used for paging. 0 is the first record.
    */
   offset?: number;
   /**
@@ -1363,11 +1363,11 @@ export type GetTopCountriesProps = {
    */
   endDate?: string;
   /**
-   * How many items to fetch.
+   * Number of records to return. Limit is the size of the page.
    */
   limit?: number;
   /**
-   * From which position to start retrieving results.
+   * Position of the starting record. Used for paging. 0 is the first record.
    */
   offset?: number;
   /**
@@ -1394,11 +1394,11 @@ export type GetTopFilterAttributesProps = {
    */
   endDate?: string;
   /**
-   * How many items to fetch.
+   * Number of records to return. Limit is the size of the page.
    */
   limit?: number;
   /**
-   * From which position to start retrieving results.
+   * Position of the starting record. Used for paging. 0 is the first record.
    */
   offset?: number;
   /**
@@ -1429,11 +1429,11 @@ export type GetTopFilterForAttributeProps = {
    */
   endDate?: string;
   /**
-   * How many items to fetch.
+   * Number of records to return. Limit is the size of the page.
    */
   limit?: number;
   /**
-   * From which position to start retrieving results.
+   * Position of the starting record. Used for paging. 0 is the first record.
    */
   offset?: number;
   /**
@@ -1460,11 +1460,11 @@ export type GetTopFiltersNoResultsProps = {
    */
   endDate?: string;
   /**
-   * How many items to fetch.
+   * Number of records to return. Limit is the size of the page.
    */
   limit?: number;
   /**
-   * From which position to start retrieving results.
+   * Position of the starting record. Used for paging. 0 is the first record.
    */
   offset?: number;
   /**
@@ -1495,11 +1495,11 @@ export type GetTopHitsProps = {
    */
   endDate?: string;
   /**
-   * How many items to fetch.
+   * Number of records to return. Limit is the size of the page.
    */
   limit?: number;
   /**
-   * From which position to start retrieving results.
+   * Position of the starting record. Used for paging. 0 is the first record.
    */
   offset?: number;
   /**
@@ -1538,11 +1538,11 @@ export type GetTopSearchesProps = {
    */
   direction?: 'asc' | 'desc';
   /**
-   * How many items to fetch.
+   * Number of records to return. Limit is the size of the page.
    */
   limit?: number;
   /**
-   * From which position to start retrieving results.
+   * Position of the starting record. Used for paging. 0 is the first record.
    */
   offset?: number;
   /**

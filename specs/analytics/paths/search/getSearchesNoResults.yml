@@ -8,8 +8,8 @@ get:
     - $ref: '../../../common/parameters.yml#/Index'
     - $ref: '../../../common/parameters.yml#/StartDate'
     - $ref: '../../../common/parameters.yml#/EndDate'
-    - $ref: '../common/parameters.yml#/Limit'
-    - $ref: '../common/parameters.yml#/Offset'
+    - $ref: '../../../common/parameters.yml#/Limit'
+    - $ref: '../../../common/parameters.yml#/Offset'
     - $ref: '../common/parameters.yml#/Tags'
   responses:
     '200':
@@ -35,11 +35,11 @@ get:
                     - nbHits
                   properties:
                     search:
-                      $ref: '../common/parameters.yml#/search'
+                      $ref: ../common/parameters.yml#/search
                     count:
-                      $ref: '../common/parameters.yml#/count'
+                      $ref: ../common/parameters.yml#/count
                     nbHits:
-                      $ref: '../common/parameters.yml#/nbHits'
+                      $ref: ../common/parameters.yml#/nbHits
     '400':
       $ref: ../../../common/responses/BadRequest.yml
     '402':

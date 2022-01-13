@@ -8,8 +8,8 @@ get:
     - $ref: '../../../common/parameters.yml#/Index'
     - $ref: '../../../common/parameters.yml#/StartDate'
     - $ref: '../../../common/parameters.yml#/EndDate'
-    - $ref: '../common/parameters.yml#/Limit'
-    - $ref: '../common/parameters.yml#/Offset'
+    - $ref: '../../../common/parameters.yml#/Limit'
+    - $ref: '../../../common/parameters.yml#/Offset'
     - $ref: '../common/parameters.yml#/Tags'
   responses:
     '200':
@@ -37,7 +37,7 @@ get:
                       description: The country.
                       type: string
                     count:
-                      $ref: '../common/parameters.yml#/count'
+                      $ref: ../common/parameters.yml#/count
     '400':
       $ref: ../../../common/responses/BadRequest.yml
     '402':

@@ -3,13 +3,11 @@
     "method": "setDictionarySettings",
     "testName": "get setDictionarySettings results with minimal parameters",
     "parameters": {
-      "dictionarySettingsRequest": {
-        "disableStandardEntries": {
-          "plurals": {
-            "fr": false,
-            "en": false,
-            "ru": true
-          }
+      "disableStandardEntries": {
+        "plurals": {
+          "fr": false,
+          "en": false,
+          "ru": true
         }
       }
     },
@@ -31,19 +29,17 @@
     "method": "setDictionarySettings",
     "testName": "get setDictionarySettings results with all parameters",
     "parameters": {
-      "dictionarySettingsRequest": {
-        "disableStandardEntries": {
-          "plurals": {
-            "fr": false,
-            "en": false,
-            "ru": true
-          },
-          "stopwords": {
-            "fr": false
-          },
-          "compounds": {
-            "ru": true
-          }
+      "disableStandardEntries": {
+        "plurals": {
+          "fr": false,
+          "en": false,
+          "ru": true
+        },
+        "stopwords": {
+          "fr": false
+        },
+        "compounds": {
+          "ru": true
         }
       }
     },

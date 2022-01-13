@@ -8,13 +8,11 @@ const client = new SearchApi(appId, apiKey, { requester: new EchoRequester() });
 describe('addApiKey', () => {
   test('addApiKey', async () => {
     const req = await client.addApiKey({
-      apiKey: {
-        acl: ['search', 'addObject'],
-        description: 'my new api key',
-        validity: 300,
-        maxQueriesPerIPPerHour: 100,
-        maxHitsPerQuery: 20,
-      },
+      acl: ['search', 'addObject'],
+      description: 'my new api key',
+      validity: 300,
+      maxQueriesPerIPPerHour: 100,
+      maxHitsPerQuery: 20,
     });
 
     expect((req as any).path).toEqual('/1/keys');
@@ -48,7 +46,8 @@ describe('addOrUpdateObject', () => {
 describe('appendSource', () => {
   test('appendSource', async () => {
     const req = await client.appendSource({
-      source: { source: 'theSource', description: 'theDescription' },
+      source: 'theSource',
+      description: 'theDescription',
     });
 
     expect((req as any).path).toEqual('/1/security/sources/append');
@@ -260,7 +259,9 @@ describe('batchRules', () => {
 
 describe('browse', () => {
   test('get browse results with minimal parameters', async () => {
-    const req = await client.browse({ indexName: 'indexName' });
+    const req = await client.browse({
+      indexName: 'indexName',
+    });
 
     expect((req as any).path).toEqual('/1/indexes/indexName/browse');
     expect((req as any).method).toEqual('POST');
@@ -289,7 +290,9 @@ describe('browse', () => {
 
 describe('clearAllSynonyms', () => {
   test('clearAllSynonyms', async () => {
-    const req = await client.clearAllSynonyms({ indexName: 'indexName' });
+    const req = await client.clearAllSynonyms({
+      indexName: 'indexName',
+    });
 
     expect((req as any).path).toEqual('/1/indexes/indexName/synonyms/clear');
     expect((req as any).method).toEqual('POST');
@@ -300,7 +303,9 @@ describe('clearAllSynonyms', () => {
 
 describe('clearObjects', () => {
   test('clearObjects', async () => {
-    const req = await client.clearObjects({ indexName: 'theIndexName' });
+    const req = await client.clearObjects({
+      indexName: 'theIndexName',
+    });
 
     expect((req as any).path).toEqual('/1/indexes/theIndexName/clear');
     expect((req as any).method).toEqual('POST');
@@ -311,7 +316,9 @@ describe('clearObjects', () => {
 
 describe('clearRules', () => {
   test('clearRules', async () => {
-    const req = await client.clearRules({ indexName: 'indexName' });
+    const req = await client.clearRules({
+      indexName: 'indexName',
+    });
 
     expect((req as any).path).toEqual('/1/indexes/indexName/rules/clear');
     expect((req as any).method).toEqual('POST');
@@ -322,7 +329,9 @@ describe('clearRules', () => {
 
 describe('deleteApiKey', () => {
   test('deleteApiKey', async () => {
-    const req = await client.deleteApiKey({ key: 'myTestApiKey' });
+    const req = await client.deleteApiKey({
+      key: 'myTestApiKey',
+    });
 
     expect((req as any).path).toEqual('/1/keys/myTestApiKey');
     expect((req as any).method).toEqual('DELETE');
@@ -347,7 +356,9 @@ describe('deleteBy', () => {
 
 describe('deleteIndex', () => {
   test('deleteIndex', async () => {
-    const req = await client.deleteIndex({ indexName: 'theIndexName' });
+    const req = await client.deleteIndex({
+      indexName: 'theIndexName',
+    });
 
     expect((req as any).path).toEqual('/1/indexes/theIndexName');
     expect((req as any).method).toEqual('DELETE');
@@ -386,7 +397,9 @@ describe('deleteRule', () => {
 
 describe('deleteSource', () => {
   test('deleteSource', async () => {
-    const req = await client.deleteSource({ source: 'theSource' });
+    const req = await client.deleteSource({
+      source: 'theSource',
+    });
 
     expect((req as any).path).toEqual('/1/security/sources/theSource');
     expect((req as any).method).toEqual('DELETE');
@@ -411,7 +424,9 @@ describe('deleteSynonym', () => {
 
 describe('getApiKey', () => {
   test('getApiKey', async () => {
-    const req = await client.getApiKey({ key: 'myTestApiKey' });
+    const req = await client.getApiKey({
+      key: 'myTestApiKey',
+    });
 
     expect((req as any).path).toEqual('/1/keys/myTestApiKey');
     expect((req as any).method).toEqual('GET');
@@ -483,15 +498,13 @@ describe('getObject', () => {
 describe('getObjects', () => {
   test('getObjects', async () => {
     const req = await client.getObjects({
-      getObjectsObject: {
-        requests: [
-          {
-            attributesToRetrieve: ['attr1', 'attr2'],
-            objectID: 'uniqueID',
-            indexName: 'theIndexName',
-          },
-        ],
-      },
+      requests: [
+        {
+          attributesToRetrieve: ['attr1', 'attr2'],
+          objectID: 'uniqueID',
+          indexName: 'theIndexName',
+        },
+      ],
     });
 
     expect((req as any).path).toEqual('/1/indexes/*/objects');
@@ -525,7 +538,9 @@ describe('getRule', () => {
 
 describe('getSettings', () => {
   test('getSettings', async () => {
-    const req = await client.getSettings({ indexName: 'theIndexName' });
+    const req = await client.getSettings({
+      indexName: 'theIndexName',
+    });
 
     expect((req as any).path).toEqual('/1/indexes/theIndexName/settings');
     expect((req as any).method).toEqual('GET');
@@ -586,7 +601,9 @@ describe('getTopUserIds', () => {
 
 describe('getUserId', () => {
   test('getUserId', async () => {
-    const req = await client.getUserId({ userID: 'uniqueID' });
+    const req = await client.getUserId({
+      userID: 'uniqueID',
+    });
 
     expect((req as any).path).toEqual('/1/clusters/mapping/uniqueID');
     expect((req as any).method).toEqual('GET');
@@ -597,7 +614,9 @@ describe('getUserId', () => {
 
 describe('hasPendingMappings', () => {
   test('hasPendingMappings', async () => {
-    const req = await client.hasPendingMappings({ getClusters: true });
+    const req = await client.hasPendingMappings({
+      getClusters: true,
+    });
 
     expect((req as any).path).toEqual('/1/clusters/mapping/pending');
     expect((req as any).method).toEqual('GET');
@@ -630,7 +649,9 @@ describe('listClusters', () => {
 
 describe('listIndices', () => {
   test('listIndices', async () => {
-    const req = await client.listIndices({ page: 8 });
+    const req = await client.listIndices({
+      page: 8,
+    });
 
     expect((req as any).path).toEqual('/1/indexes');
     expect((req as any).method).toEqual('GET');
@@ -641,7 +662,10 @@ describe('listIndices', () => {
 
 describe('listUserIds', () => {
   test('listUserIds', async () => {
-    const req = await client.listUserIds({ page: 8, hitsPerPage: 100 });
+    const req = await client.listUserIds({
+      page: 8,
+      hitsPerPage: 100,
+    });
 
     expect((req as any).path).toEqual('/1/clusters/mapping');
     expect((req as any).method).toEqual('GET');
@@ -656,15 +680,13 @@ describe('listUserIds', () => {
 describe('multipleBatch', () => {
   test('multipleBatch', async () => {
     const req = await client.multipleBatch({
-      batchObject: {
-        requests: [
-          {
-            action: 'addObject',
-            body: { key: 'value' },
-            indexName: 'theIndexName',
-          },
-        ],
-      },
+      requests: [
+        {
+          action: 'addObject',
+          body: { key: 'value' },
+          indexName: 'theIndexName',
+        },
+      ],
     });
 
     expect((req as any).path).toEqual('/1/indexes/*/batch');
@@ -685,18 +707,16 @@ describe('multipleBatch', () => {
 describe('multipleQueries', () => {
   test('multipleQueries', async () => {
     const req = await client.multipleQueries({
-      multipleQueriesObject: {
-        requests: [
-          {
-            indexName: 'theIndexName',
-            query: 'test',
-            type: 'facet',
-            facet: 'theFacet',
-            params: 'testParam',
-          },
-        ],
-        strategy: 'stopIfEnoughMatches',
-      },
+      requests: [
+        {
+          indexName: 'theIndexName',
+          query: 'test',
+          type: 'facet',
+          facet: 'theFacet',
+          params: 'testParam',
+        },
+      ],
+      strategy: 'stopIfEnoughMatches',
     });
 
     expect((req as any).path).toEqual('/1/indexes/*/queries');
@@ -763,7 +783,9 @@ describe('partialUpdateObject', () => {
 
 describe('removeUserId', () => {
   test('removeUserId', async () => {
-    const req = await client.removeUserId({ userID: 'uniqueID' });
+    const req = await client.removeUserId({
+      userID: 'uniqueID',
+    });
 
     expect((req as any).path).toEqual('/1/clusters/mapping/uniqueID');
     expect((req as any).method).toEqual('DELETE');
@@ -789,7 +811,9 @@ describe('replaceSources', () => {
 
 describe('restoreApiKey', () => {
   test('restoreApiKey', async () => {
-    const req = await client.restoreApiKey({ key: 'myApiKey' });
+    const req = await client.restoreApiKey({
+      key: 'myApiKey',
+    });
 
     expect((req as any).path).toEqual('/1/keys/myApiKey/restore');
     expect((req as any).method).toEqual('POST');
@@ -1027,12 +1051,10 @@ describe('searchSynonyms', () => {
 describe('searchUserIds', () => {
   test('searchUserIds', async () => {
     const req = await client.searchUserIds({
-      searchUserIdsObject: {
-        query: 'test',
-        clusterName: 'theClusterName',
-        page: 5,
-        hitsPerPage: 10,
-      },
+      query: 'test',
+      clusterName: 'theClusterName',
+      page: 5,
+      hitsPerPage: 10,
     });
 
     expect((req as any).path).toEqual('/1/clusters/mapping/search');
@@ -1050,9 +1072,7 @@ describe('searchUserIds', () => {
 describe('setDictionarySettings', () => {
   test('get setDictionarySettings results with minimal parameters', async () => {
     const req = await client.setDictionarySettings({
-      dictionarySettingsRequest: {
-        disableStandardEntries: { plurals: { fr: false, en: false, ru: true } },
-      },
+      disableStandardEntries: { plurals: { fr: false, en: false, ru: true } },
     });
 
     expect((req as any).path).toEqual('/1/dictionaries/*/settings');
@@ -1065,12 +1085,10 @@ describe('setDictionarySettings', () => {
 
   test('get setDictionarySettings results with all parameters', async () => {
     const req = await client.setDictionarySettings({
-      dictionarySettingsRequest: {
-        disableStandardEntries: {
-          plurals: { fr: false, en: false, ru: true },
-          stopwords: { fr: false },
-          compounds: { ru: true },
-        },
+      disableStandardEntries: {
+        plurals: { fr: false, en: false, ru: true },
+        stopwords: { fr: false },
+        compounds: { ru: true },
       },
     });
 

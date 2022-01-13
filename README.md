@@ -101,19 +101,19 @@ The clients can be tested inside the [`playground`](./playground) folder
 ### Usage
 
 ```bash
-yarn docker playground:<language>:<client>
+yarn docker playground <language> <client>
 ```
 
 ### JavaScript
 
 ```bash
-yarn docker playground:js:search
+yarn docker playground javascript search
 ```
 
 ### Java
 
 ```bash
-yarn docker playground:java:search
+yarn docker playground java search
 ```
 
 # Troubleshooting

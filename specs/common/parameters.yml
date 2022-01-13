@@ -77,10 +77,26 @@ HitsPerPage:
     type: integer
     default: 100
 
+Offset:
+  in: query
+  name: offset
+  description: Position of the starting record. Used for paging. 0 is the first record.
+  schema:
+    type: integer
+    default: 0
+
+Limit:
+  in: query
+  name: limit
+  description: Number of records to return. Limit is the size of the page.
+  schema:
+    type: integer
+    default: 10
+
 # misc
 taskID:
   type: integer
-  description: taskID of the indexing task to wait for.
+  description: taskID of the task to wait for.
 
 objectID:
   type: string
@@ -143,3 +159,11 @@ page:
   type: integer
   default: 0
   description: Requested page (zero-based).
+
+trackedSearchCount:
+  type: integer
+  description: The number of tracked search click.
+
+count:
+  description: The number of occurrences.
+  type: integer

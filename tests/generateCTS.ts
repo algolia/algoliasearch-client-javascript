@@ -166,7 +166,7 @@ async function loadCTSForClient(client: string): Promise<CTSBlock[]> {
       // include the `-last` param to join with comma in mustache
       test.parametersWithDataType = Object.entries(test.parameters).map(
         ([key, value], i, arr) => {
-          const isDate = key === 'startDate' || key === 'endDate';
+          const isDate = key === 'endAt';
           const isArray = Array.isArray(value);
 
           return {
@@ -225,6 +225,7 @@ async function generateCode(language: Language): Promise<void> {
       hasRegionalHost: [
         'personalization',
         'analytics',
+        'abtesting',
         'query-suggestions',
       ].includes(client),
     });

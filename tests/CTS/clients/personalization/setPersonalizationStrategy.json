@@ -3,22 +3,20 @@
     "method": "setPersonalizationStrategy",
     "testName": "set setPersonalizationStrategy",
     "parameters": {
-      "personalizationStrategyObject": {
-        "eventScoring": [
-          {
-            "score": 42,
-            "eventName": "Algolia",
-            "eventType": "Event"
-          }
-        ],
-        "facetScoring": [
-          {
-            "score": 42,
-            "facetName": "Event"
-          }
-        ],
-        "personalizationImpact": 42
-      }
+      "eventScoring": [
+        {
+          "score": 42,
+          "eventName": "Algolia",
+          "eventType": "Event"
+        }
+      ],
+      "facetScoring": [
+        {
+          "score": 42,
+          "facetName": "Event"
+        }
+      ],
+      "personalizationImpact": 42
     },
     "request": {
       "path": "/1/strategies/personalization",

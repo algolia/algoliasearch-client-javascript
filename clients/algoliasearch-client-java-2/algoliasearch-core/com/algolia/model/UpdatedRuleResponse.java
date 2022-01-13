@@ -60,7 +60,7 @@ public class UpdatedRuleResponse {
   }
 
   /**
-   * taskID of the indexing task to wait for.
+   * taskID of the task to wait for.
    *
    * @return taskID
    */

@@ -1,0 +1,13 @@
+[
+  {
+    "method": "deleteABTest",
+    "testName": "deleteABTest",
+    "parameters": {
+      "id": 42
+    },
+    "request": {
+      "path": "/2/abtests/42",
+      "method": "DELETE"
+    }
+  }
+]

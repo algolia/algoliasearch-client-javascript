@@ -11,8 +11,8 @@ get:
     - $ref: '../../../common/parameters.yml#/EndDate'
     - $ref: '../common/parameters.yml#/OrderBy'
     - $ref: '../common/parameters.yml#/Direction'
-    - $ref: '../common/parameters.yml#/Limit'
-    - $ref: '../common/parameters.yml#/Offset'
+    - $ref: '../../../common/parameters.yml#/Limit'
+    - $ref: '../../../common/parameters.yml#/Offset'
     - $ref: '../common/parameters.yml#/Tags'
   responses:
     '200':

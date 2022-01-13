@@ -2,18 +2,16 @@
   {
     "method": "multipleQueries",
     "parameters": {
-      "multipleQueriesObject": {
-        "requests": [
-          {
-            "indexName": "theIndexName",
-            "query": "test",
-            "type": "facet",
-            "facet": "theFacet",
-            "params": "testParam"
-          }
-        ],
-        "strategy": "stopIfEnoughMatches"
-      }
+      "requests": [
+        {
+          "indexName": "theIndexName",
+          "query": "test",
+          "type": "facet",
+          "facet": "theFacet",
+          "params": "testParam"
+        }
+      ],
+      "strategy": "stopIfEnoughMatches"
     },
     "request": {
       "path": "/1/indexes/*/queries",

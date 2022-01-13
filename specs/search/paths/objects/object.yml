@@ -37,6 +37,7 @@ get:
     - $ref: ../../../common/parameters.yml#/ObjectID
     - name: attributesToRetrieve
       in: query
+      description: List of attributes to retrieve. If not specified, all retrievable attributes are returned.
       schema:
         type: array
         items:

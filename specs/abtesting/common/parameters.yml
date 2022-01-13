@@ -1,0 +1,42 @@
+# path
+ID:
+  in: path
+  name: id
+  description: The A/B test ID.
+  required: true
+  schema:
+    type: integer
+
+# misc
+index:
+  type: string
+  description: The index performing the A/B test.
+
+taskID:
+  $ref: ../../common/parameters.yml#/taskID
+
+abTestID:
+  type: integer
+  description: The A/B test ID.
+
+endAt:
+  type: string
+  format: date-time
+  description: End date for the A/B test expressed as YYYY-MM-DDThh:mm:ssZ.
+
+createdAt:
+  type: string
+  format: date-time
+  description: End date for the A/B test expressed as YYYY-MM-DDThh:mm:ssZ.
+
+name:
+  type: string
+  description: A/B test name.
+
+description:
+  type: string
+  description: The A/B test description.
+
+trafficPercentage:
+  type: integer
+  description: The traffic perfecentage for the A/B test.

@@ -2,12 +2,10 @@
   {
     "method": "searchUserIds",
     "parameters": {
-      "searchUserIdsObject": {
-        "query": "test",
-        "clusterName": "theClusterName",
-        "page": 5,
-        "hitsPerPage": 10
-      }
+      "query": "test",
+      "clusterName": "theClusterName",
+      "page": 5,
+      "hitsPerPage": 10
     },
     "request": {
       "path": "/1/clusters/mapping/search",

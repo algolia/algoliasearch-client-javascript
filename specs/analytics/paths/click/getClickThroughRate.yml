@@ -29,7 +29,7 @@ get:
               clickCount:
                 $ref: '../common/parameters.yml#/clickCount'
               trackedSearchCount:
-                $ref: '../common/parameters.yml#/trackedSearchCount'
+                $ref: ../common/parameters.yml#/trackedSearchCount
               dates:
                 type: array
                 description: A list of click-through rate events with their date.
@@ -47,7 +47,7 @@ get:
                     clickCount:
                       $ref: '../common/parameters.yml#/clickCount'
                     trackedSearchCount:
-                      $ref: '../common/parameters.yml#/trackedSearchCount'
+                      $ref: ../common/parameters.yml#/trackedSearchCount
                     date:
                       $ref: '../common/parameters.yml#/date'
     '400':

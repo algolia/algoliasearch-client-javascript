@@ -10,7 +10,11 @@ describe('{{operationId}}', () => {
     {{#tests}}
     test('{{testName}}', async () => {
         const req = await client.{{method}}(
-          {{#hasParameters}}{{{parameters}}}{{/hasParameters}}
+            {{#hasParameters}}{
+                {{#parametersWithDataType}}
+                    {{#isDate}}{{{key}}}:new Date({{{value}}}),{{/isDate}}{{^isDate}}{{{key}}}:{{{value}}},{{/isDate}}
+                {{/parametersWithDataType}}
+            }{{/hasParameters}}
         );
 
         expect((req as any).path).toEqual('{{{request.path}}}');
