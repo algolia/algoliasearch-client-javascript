@@ -16,11 +16,11 @@ export type ABTest = {
   /**
    * End date for the A/B test expressed as YYYY-MM-DDThh:mm:ssZ.
    */
-  endAt: Date;
+  endAt: string;
   /**
    * End date for the A/B test expressed as YYYY-MM-DDThh:mm:ssZ.
    */
-  createdAt: Date;
+  createdAt: string;
   /**
    * A/B test name.
    */

@@ -37,20 +37,7 @@ post:
       content:
         application/json:
           schema:
-            title: addABTestsResponse
-            type: object
-            additionalProperties: false
-            properties:
-              index:
-                $ref: ../common/parameters.yml#/index
-              abTestID:
-                $ref: ../common/parameters.yml#/abTestID
-              taskID:
-                $ref: ../common/parameters.yml#/taskID
-            required:
-              - abTestID
-              - index
-              - taskID
+            $ref: ../common/schemas/ABTestResponse.yml#/ABTestResponse
     '400':
       $ref: ../../common/responses/BadRequest.yml
     '402':

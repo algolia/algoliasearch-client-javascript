@@ -1,7 +1,6 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
-import java.time.OffsetDateTime;
 import java.util.Objects;
 
 /** UpdateApiKeyResponse */
@@ -11,7 +10,7 @@ public class UpdateApiKeyResponse {
   private String key;
 
   @SerializedName("updatedAt")
-  private OffsetDateTime updatedAt;
+  private String updatedAt;
 
   public UpdateApiKeyResponse key(String key) {
     this.key = key;
@@ -32,7 +31,7 @@ public class UpdateApiKeyResponse {
     this.key = key;
   }
 
-  public UpdateApiKeyResponse updatedAt(OffsetDateTime updatedAt) {
+  public UpdateApiKeyResponse updatedAt(String updatedAt) {
     this.updatedAt = updatedAt;
     return this;
   }
@@ -43,11 +42,11 @@ public class UpdateApiKeyResponse {
    * @return updatedAt
    */
   @javax.annotation.Nonnull
-  public OffsetDateTime getUpdatedAt() {
+  public String getUpdatedAt() {
     return updatedAt;
   }
 
-  public void setUpdatedAt(OffsetDateTime updatedAt) {
+  public void setUpdatedAt(String updatedAt) {
     this.updatedAt = updatedAt;
   }
 

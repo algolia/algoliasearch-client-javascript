@@ -6,5 +6,5 @@ export type AddApiKeyResponse = {
   /**
    * Date of creation (ISO-8601 format).
    */
-  createdAt: Date;
+  createdAt: string;
 };

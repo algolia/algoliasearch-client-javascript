@@ -6,11 +6,11 @@ export type Index = {
   /**
    * Index creation date. An empty string means that the index has no records.
    */
-  createdAt: Date;
+  createdAt: string;
   /**
    * Date of last update (ISO-8601 format).
    */
-  updatedAt: Date;
+  updatedAt: string;
   /**
    * Number of records contained in the index.
    */

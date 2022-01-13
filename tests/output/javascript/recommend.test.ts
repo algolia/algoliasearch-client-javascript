@@ -1,4 +1,5 @@
 import { RecommendApi, EchoRequester } from '@algolia/recommend';
+import type { EchoResponse } from '@algolia/recommend';
 
 const appId = process.env.ALGOLIA_APPLICATION_ID || 'test_app_id';
 const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'test_api_key';
@@ -9,7 +10,7 @@ const client = new RecommendApi(appId, apiKey, {
 
 describe('getRecommendations', () => {
   test('get recommendations with minimal parameters', async () => {
-    const req = await client.getRecommendations({
+    const req = (await client.getRecommendations({
       requests: [
         {
           indexName: 'indexName',
@@ -18,11 +19,11 @@ describe('getRecommendations', () => {
           threshold: 42,
         },
       ],
-    });
+    })) as unknown as EchoResponse;
 
-    expect((req as any).path).toEqual('/1/indexes/*/recommendations');
-    expect((req as any).method).toEqual('POST');
-    expect((req as any).data).toEqual({
+    expect(req.path).toEqual('/1/indexes/*/recommendations');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
       requests: [
         {
           indexName: 'indexName',
@@ -32,11 +33,11 @@ describe('getRecommendations', () => {
         },
       ],
     });
-    expect((req as any).searchParams).toEqual(undefined);
+    expect(req.searchParams).toEqual(undefined);
   });
 
   test('get recommendations with all parameters', async () => {
-    const req = await client.getRecommendations({
+    const req = (await client.getRecommendations({
       requests: [
         {
           indexName: 'indexName',
@@ -47,11 +48,11 @@ describe('getRecommendations', () => {
           fallbackParameters: { query: 'myQuery', facetFilters: ['fallback'] },
         },
       ],
-    });
+    })) as unknown as EchoResponse;
 
-    expect((req as any).path).toEqual('/1/indexes/*/recommendations');
-    expect((req as any).method).toEqual('POST');
-    expect((req as any).data).toEqual({
+    expect(req.path).toEqual('/1/indexes/*/recommendations');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
       requests: [
         {
           indexName: 'indexName',
@@ -63,11 +64,11 @@ describe('getRecommendations', () => {
         },
       ],
     });
-    expect((req as any).searchParams).toEqual(undefined);
+    expect(req.searchParams).toEqual(undefined);
   });
 
   test('get multiple recommendations with minimal parameters', async () => {
-    const req = await client.getRecommendations({
+    const req = (await client.getRecommendations({
       requests: [
         {
           indexName: 'indexName1',
@@ -82,11 +83,11 @@ describe('getRecommendations', () => {
           threshold: 21,
         },
       ],
-    });
+    })) as unknown as EchoResponse;
 
-    expect((req as any).path).toEqual('/1/indexes/*/recommendations');
-    expect((req as any).method).toEqual('POST');
-    expect((req as any).data).toEqual({
+    expect(req.path).toEqual('/1/indexes/*/recommendations');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
       requests: [
         {
           indexName: 'indexName1',
@@ -102,11 +103,11 @@ describe('getRecommendations', () => {
         },
       ],
     });
-    expect((req as any).searchParams).toEqual(undefined);
+    expect(req.searchParams).toEqual(undefined);
   });
 
   test('get multiple recommendations with all parameters', async () => {
-    const req = await client.getRecommendations({
+    const req = (await client.getRecommendations({
       requests: [
         {
           indexName: 'indexName1',
@@ -125,11 +126,11 @@ describe('getRecommendations', () => {
           fallbackParameters: { query: 'myQuery', facetFilters: ['fallback2'] },
         },
       ],
-    });
+    })) as unknown as EchoResponse;
 
-    expect((req as any).path).toEqual('/1/indexes/*/recommendations');
-    expect((req as any).method).toEqual('POST');
-    expect((req as any).data).toEqual({
+    expect(req.path).toEqual('/1/indexes/*/recommendations');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
       requests: [
         {
           indexName: 'indexName1',
@@ -149,11 +150,11 @@ describe('getRecommendations', () => {
         },
       ],
     });
-    expect((req as any).searchParams).toEqual(undefined);
+    expect(req.searchParams).toEqual(undefined);
   });
 
   test('get frequently bought together recommendations', async () => {
-    const req = await client.getRecommendations({
+    const req = (await client.getRecommendations({
       requests: [
         {
           indexName: 'indexName1',
@@ -162,11 +163,11 @@ describe('getRecommendations', () => {
           threshold: 42,
         },
       ],
-    });
+    })) as unknown as EchoResponse;
 
-    expect((req as any).path).toEqual('/1/indexes/*/recommendations');
-    expect((req as any).method).toEqual('POST');
-    expect((req as any).data).toEqual({
+    expect(req.path).toEqual('/1/indexes/*/recommendations');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
       requests: [
         {
           indexName: 'indexName1',
@@ -176,6 +177,6 @@ describe('getRecommendations', () => {
         },
       ],
     });
-    expect((req as any).searchParams).toEqual(undefined);
+    expect(req.searchParams).toEqual(undefined);
   });
 });

@@ -1,7 +1,6 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
-import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -22,7 +21,7 @@ public class SearchUserIdsResponse {
   private Integer hitsPerPage = 20;
 
   @SerializedName("updatedAt")
-  private OffsetDateTime updatedAt;
+  private String updatedAt;
 
   public SearchUserIdsResponse hits(List<SearchUserIdsResponseHits> hits) {
     this.hits = hits;
@@ -105,7 +104,7 @@ public class SearchUserIdsResponse {
     this.hitsPerPage = hitsPerPage;
   }
 
-  public SearchUserIdsResponse updatedAt(OffsetDateTime updatedAt) {
+  public SearchUserIdsResponse updatedAt(String updatedAt) {
     this.updatedAt = updatedAt;
     return this;
   }
@@ -116,11 +115,11 @@ public class SearchUserIdsResponse {
    * @return updatedAt
    */
   @javax.annotation.Nonnull
-  public OffsetDateTime getUpdatedAt() {
+  public String getUpdatedAt() {
     return updatedAt;
   }
 
-  public void setUpdatedAt(OffsetDateTime updatedAt) {
+  public void setUpdatedAt(String updatedAt) {
     this.updatedAt = updatedAt;
   }
 

@@ -1,7 +1,6 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
-import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -13,10 +12,10 @@ public class Index {
   private String name;
 
   @SerializedName("createdAt")
-  private OffsetDateTime createdAt;
+  private String createdAt;
 
   @SerializedName("updatedAt")
-  private OffsetDateTime updatedAt;
+  private String updatedAt;
 
   @SerializedName("entries")
   private Integer entries;
@@ -61,7 +60,7 @@ public class Index {
     this.name = name;
   }
 
-  public Index createdAt(OffsetDateTime createdAt) {
+  public Index createdAt(String createdAt) {
     this.createdAt = createdAt;
     return this;
   }
@@ -72,15 +71,15 @@ public class Index {
    * @return createdAt
    */
   @javax.annotation.Nonnull
-  public OffsetDateTime getCreatedAt() {
+  public String getCreatedAt() {
     return createdAt;
   }
 
-  public void setCreatedAt(OffsetDateTime createdAt) {
+  public void setCreatedAt(String createdAt) {
     this.createdAt = createdAt;
   }
 
-  public Index updatedAt(OffsetDateTime updatedAt) {
+  public Index updatedAt(String updatedAt) {
     this.updatedAt = updatedAt;
     return this;
   }
@@ -91,11 +90,11 @@ public class Index {
    * @return updatedAt
    */
   @javax.annotation.Nonnull
-  public OffsetDateTime getUpdatedAt() {
+  public String getUpdatedAt() {
     return updatedAt;
   }
 
-  public void setUpdatedAt(OffsetDateTime updatedAt) {
+  public void setUpdatedAt(String updatedAt) {
     this.updatedAt = updatedAt;
   }
 

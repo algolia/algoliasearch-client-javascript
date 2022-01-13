@@ -14,5 +14,5 @@ export type GetClickThroughRateResponseDates = {
   /**
    * Date of the event.
    */
-  date: Date;
+  date: string;
 };

@@ -1,16 +1,15 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
-import java.time.OffsetDateTime;
 import java.util.Objects;
 
 /** ReplaceSourceResponse */
 public class ReplaceSourceResponse {
 
   @SerializedName("updatedAt")
-  private OffsetDateTime updatedAt;
+  private String updatedAt;
 
-  public ReplaceSourceResponse updatedAt(OffsetDateTime updatedAt) {
+  public ReplaceSourceResponse updatedAt(String updatedAt) {
     this.updatedAt = updatedAt;
     return this;
   }
@@ -21,11 +20,11 @@ public class ReplaceSourceResponse {
    * @return updatedAt
    */
   @javax.annotation.Nonnull
-  public OffsetDateTime getUpdatedAt() {
+  public String getUpdatedAt() {
     return updatedAt;
   }
 
-  public void setUpdatedAt(OffsetDateTime updatedAt) {
+  public void setUpdatedAt(String updatedAt) {
     this.updatedAt = updatedAt;
   }
 

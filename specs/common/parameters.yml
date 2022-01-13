@@ -127,17 +127,14 @@ abTestVariantID:
 
 createdAt:
   type: string
-  format: date-time
   description: Date of creation (ISO-8601 format).
 
 updatedAt:
   type: string
-  format: date-time
   description: Date of last update (ISO-8601 format).
 
 deletedAt:
   type: string
-  format: date-time
   description: Date of deletion (ISO-8601 format).
 
 indexName:

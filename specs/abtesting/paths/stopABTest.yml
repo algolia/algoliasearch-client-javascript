@@ -17,8 +17,7 @@ post:
       content:
         application/json:
           schema:
-            title: stopABTestResponse
-            type: object
+            $ref: ../common/schemas/ABTestResponse.yml#/ABTestResponse
     '400':
       $ref: ../../common/responses/BadRequest.yml
     '402':

@@ -1,37 +1,43 @@
 import type { GetRecommendations } from '../model/getRecommendations';
 import type { GetRecommendationsResponse } from '../model/getRecommendationsResponse';
-import { ApiKeyAuth } from '../model/models';
 import { Transporter } from '../utils/Transporter';
 import { shuffle } from '../utils/helpers';
 import type { Requester } from '../utils/requester/Requester';
 import type { Headers, Host, Request, RequestOptions } from '../utils/types';
 
-export enum RecommendApiKeys {
-  apiKey,
-  appId,
-}
-
 export class RecommendApi {
   protected authentications = {
-    apiKey: new ApiKeyAuth('header', 'X-Algolia-API-Key'),
-    appId: new ApiKeyAuth('header', 'X-Algolia-Application-Id'),
+    apiKey: 'Algolia-API-Key',
+    appId: 'Algolia-Application-Id',
   };
 
   private transporter: Transporter;
+
+  private applyAuthenticationHeaders(
+    requestOptions: RequestOptions
+  ): RequestOptions {
+    if (requestOptions?.headers) {
+      return {
+        ...requestOptions,
+        headers: {
+          ...requestOptions.headers,
+          'X-Algolia-API-Key': this.authentications.apiKey,
+          'X-Algolia-Application-Id': this.authentications.appId,
+        },
+      };
+    }
+
+    return requestOptions;
+  }
 
   private sendRequest<TResponse>(
     request: Request,
     requestOptions: RequestOptions
   ): Promise<TResponse> {
-    if (this.authentications.apiKey.apiKey) {
-      this.authentications.apiKey.applyToRequest(requestOptions);
-    }
-
-    if (this.authentications.appId.apiKey) {
-      this.authentications.appId.applyToRequest(requestOptions);
-    }
-
-    return this.transporter.request(request, requestOptions);
+    return this.transporter.request(
+      request,
+      this.applyAuthenticationHeaders(requestOptions)
+    );
   }
 
   constructor(
@@ -39,8 +45,7 @@ export class RecommendApi {
     apiKey: string,
     options?: { requester?: Requester; hosts?: Host[] }
   ) {
-    this.setApiKey(RecommendApiKeys.appId, appId);
-    this.setApiKey(RecommendApiKeys.apiKey, apiKey);
+    this.setAuthentication({ appId, apiKey });
 
     this.transporter = new Transporter({
       hosts: options?.hosts ?? this.getDefaultHosts(appId),
@@ -92,8 +97,11 @@ export class RecommendApi {
     this.transporter.setHosts(hosts);
   }
 
-  setApiKey(key: RecommendApiKeys, value: string): void {
-    this.authentications[RecommendApiKeys[key]].apiKey = value;
+  setAuthentication({ appId, apiKey }): void {
+    this.authentications = {
+      apiKey,
+      appId,
+    };
   }
 
   /**

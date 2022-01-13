@@ -43,6 +43,14 @@ export type Response = {
   status: number;
 };
 
+export type EchoResponse = Request & {
+  connectTimeout: number;
+  headers: Record<string, string>;
+  responseTimeout: number;
+  searchParams?: Record<string, string>;
+  userAgent?: string;
+};
+
 export type Headers = Record<string, string>;
 
 export type Host = {

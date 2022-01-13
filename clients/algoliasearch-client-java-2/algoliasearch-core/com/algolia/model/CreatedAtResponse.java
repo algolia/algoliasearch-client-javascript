@@ -1,16 +1,15 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
-import java.time.OffsetDateTime;
 import java.util.Objects;
 
 /** The response with a createdAt timestamp. */
 public class CreatedAtResponse {
 
   @SerializedName("createdAt")
-  private OffsetDateTime createdAt;
+  private String createdAt;
 
-  public CreatedAtResponse createdAt(OffsetDateTime createdAt) {
+  public CreatedAtResponse createdAt(String createdAt) {
     this.createdAt = createdAt;
     return this;
   }
@@ -21,11 +20,11 @@ public class CreatedAtResponse {
    * @return createdAt
    */
   @javax.annotation.Nonnull
-  public OffsetDateTime getCreatedAt() {
+  public String getCreatedAt() {
     return createdAt;
   }
 
-  public void setCreatedAt(OffsetDateTime createdAt) {
+  public void setCreatedAt(String createdAt) {
     this.createdAt = createdAt;
   }
 

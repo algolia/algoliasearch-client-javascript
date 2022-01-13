@@ -6,9 +6,6 @@ import { Requester } from '../utils/requester/Requester';
 {{#imports}}
 import { {{classname}} } from '{{filename}}';
 {{/imports}}
-{{#hasAuthMethods}}
-import { ApiKeyAuth } from '../model/models';
-{{/hasAuthMethods}}
 
 {{#operations}}
 {{#description}}
@@ -17,37 +14,39 @@ import { ApiKeyAuth } from '../model/models';
 */
 {{/description}}
 
-export enum {{classname}}Keys {
-  {{#authMethods}}
-  {{#isApiKey}}
-  {{name}},
-  {{/isApiKey}}
-  {{/authMethods}}
-}
-
 export class {{classname}} {
   protected authentications = {
-    {{#hasAuthMethods}}
-    {{#authMethods}}
-    {{#isApiKey}}
-    '{{name}}': new ApiKeyAuth({{#isKeyInHeader}}'header'{{/isKeyInHeader}}{{#isKeyInQuery}}'query'{{/isKeyInQuery}}{{#isKeyInCookie}}'cookie'{{/isKeyInCookie}}, '{{keyParamName}}'),
-    {{/isApiKey}}
-    {{/authMethods}}
-    {{/hasAuthMethods}}
-  }
+    apiKey: 'Algolia-API-Key',
+    appId: 'Algolia-Application-Id',
+  };
 
   private transporter: Transporter;
-  
-  private sendRequest<TResponse>(request: Request, requestOptions: RequestOptions): Promise<TResponse> {
-    {{#authMethods}}
-    {{#isApiKey}}
-    if (this.authentications.{{name}}.apiKey) {
-    this.authentications.{{name}}.applyToRequest(requestOptions);
+
+  private applyAuthenticationHeaders(
+    requestOptions: RequestOptions
+  ): RequestOptions {
+    if (requestOptions?.headers) {
+      return {
+        ...requestOptions,
+        headers: {
+          ...requestOptions.headers,
+          'X-Algolia-API-Key': this.authentications.apiKey,
+          'X-Algolia-Application-Id': this.authentications.appId,
+        },
+      };
     }
-    
-    {{/isApiKey}}
-    {{/authMethods}}
-    return this.transporter.request(request, requestOptions);
+
+    return requestOptions;
+  }
+  
+  private sendRequest<TResponse>(
+    request: Request,
+    requestOptions: RequestOptions
+  ): Promise<TResponse> {
+    return this.transporter.request(
+      request,
+      this.applyAuthenticationHeaders(requestOptions)
+    );
   }
 
   constructor(
@@ -58,8 +57,7 @@ export class {{classname}} {
       {{/hasRegionalHost}}
       options?: {requester?: Requester, hosts?: Host[]}
     ) {
-    this.setApiKey({{classname}}Keys.appId, appId);
-    this.setApiKey({{classname}}Keys.apiKey, apiKey);
+    this.setAuthentication({ appId, apiKey });
 
     this.transporter = new Transporter({
       hosts: options?.hosts ?? this.getDefaultHosts(
@@ -118,8 +116,11 @@ export class {{classname}} {
     this.transporter.setHosts(hosts);
   }
 
-  public setApiKey(key: {{classname}}Keys, value: string): void {
-    this.authentications[{{classname}}Keys[key]].apiKey = value;
+  public setAuthentication({ appId, apiKey }): void {
+    this.authentications = {
+      apiKey,
+      appId,
+    };
   }
 
   {{#operation}}
@@ -168,7 +169,7 @@ export class {{classname}} {
     {{/bodyParams.0}}
   {{/allParams.0}}
   */
-  public {{nickname}} (
+  public {{nickname}}(
     {{#allParams.0}}
       {{^bodyParams.0}}
         {

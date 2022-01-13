@@ -1,4 +1,5 @@
 import { InsightsApi, EchoRequester } from '@algolia/client-insights';
+import type { EchoResponse } from '@algolia/client-insights';
 
 const appId = process.env.ALGOLIA_APPLICATION_ID || 'test_app_id';
 const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'test_api_key';
@@ -9,7 +10,7 @@ const client = new InsightsApi(appId, apiKey, {
 
 describe('pushEvents', () => {
   test('pushEvents', async () => {
-    const req = await client.pushEvents({
+    const req = (await client.pushEvents({
       events: [
         {
           eventType: 'click',
@@ -39,11 +40,11 @@ describe('pushEvents', () => {
           queryID: '43b15df305339e827f0ac0bdc5ebcaa7',
         },
       ],
-    });
+    })) as unknown as EchoResponse;
 
-    expect((req as any).path).toEqual('/1/events');
-    expect((req as any).method).toEqual('POST');
-    expect((req as any).data).toEqual({
+    expect(req.path).toEqual('/1/events');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
       events: [
         {
           eventType: 'click',
@@ -74,6 +75,6 @@ describe('pushEvents', () => {
         },
       ],
     });
-    expect((req as any).searchParams).toEqual(undefined);
+    expect(req.searchParams).toEqual(undefined);
   });
 });

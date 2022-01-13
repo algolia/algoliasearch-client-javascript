@@ -6,7 +6,6 @@ import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import java.io.IOException;
-import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -110,7 +109,7 @@ public class KeyObject {
   private Integer validity = 0;
 
   @SerializedName("createdAt")
-  private OffsetDateTime createdAt;
+  private String createdAt;
 
   public KeyObject acl(List<AclEnum> acl) {
     this.acl = acl;
@@ -289,7 +288,7 @@ public class KeyObject {
     this.validity = validity;
   }
 
-  public KeyObject createdAt(OffsetDateTime createdAt) {
+  public KeyObject createdAt(String createdAt) {
     this.createdAt = createdAt;
     return this;
   }
@@ -300,11 +299,11 @@ public class KeyObject {
    * @return createdAt
    */
   @javax.annotation.Nonnull
-  public OffsetDateTime getCreatedAt() {
+  public String getCreatedAt() {
     return createdAt;
   }
 
-  public void setCreatedAt(OffsetDateTime createdAt) {
+  public void setCreatedAt(String createdAt) {
     this.createdAt = createdAt;
   }
 

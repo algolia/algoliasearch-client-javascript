@@ -39,8 +39,7 @@ delete:
       content:
         application/json:
           schema:
-            title: deleteABTestResponse
-            type: object
+            $ref: ../common/schemas/ABTestResponse.yml#/ABTestResponse
     '400':
       $ref: ../../common/responses/BadRequest.yml
     '402':

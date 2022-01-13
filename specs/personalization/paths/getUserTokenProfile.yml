@@ -24,7 +24,6 @@ get:
                 $ref: '../common/parameters.yml#/userToken'
               lastEventAt:
                 type: string
-                format: date-time
                 description: Date of last event update. (ISO-8601 format)
               scores:
                 type: object

@@ -24,7 +24,6 @@ get:
               properties:
                 timestamp:
                   type: string
-                  format: date-time
                   description: date and time of creation of the record.
                 level:
                   type: string

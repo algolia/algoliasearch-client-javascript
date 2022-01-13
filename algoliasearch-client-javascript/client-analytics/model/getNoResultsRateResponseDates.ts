@@ -2,7 +2,7 @@ export type GetNoResultsRateResponseDates = {
   /**
    * Date of the event.
    */
-  date: Date;
+  date: string;
   /**
    * The number of occurrences.
    */

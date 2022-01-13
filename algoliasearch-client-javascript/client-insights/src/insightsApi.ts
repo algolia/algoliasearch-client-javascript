@@ -1,36 +1,42 @@
 import type { InsightEvents } from '../model/insightEvents';
-import { ApiKeyAuth } from '../model/models';
 import type { PushEventsResponse } from '../model/pushEventsResponse';
 import { Transporter } from '../utils/Transporter';
 import type { Requester } from '../utils/requester/Requester';
 import type { Headers, Host, Request, RequestOptions } from '../utils/types';
 
-export enum InsightsApiKeys {
-  apiKey,
-  appId,
-}
-
 export class InsightsApi {
   protected authentications = {
-    apiKey: new ApiKeyAuth('header', 'X-Algolia-API-Key'),
-    appId: new ApiKeyAuth('header', 'X-Algolia-Application-Id'),
+    apiKey: 'Algolia-API-Key',
+    appId: 'Algolia-Application-Id',
   };
 
   private transporter: Transporter;
+
+  private applyAuthenticationHeaders(
+    requestOptions: RequestOptions
+  ): RequestOptions {
+    if (requestOptions?.headers) {
+      return {
+        ...requestOptions,
+        headers: {
+          ...requestOptions.headers,
+          'X-Algolia-API-Key': this.authentications.apiKey,
+          'X-Algolia-Application-Id': this.authentications.appId,
+        },
+      };
+    }
+
+    return requestOptions;
+  }
 
   private sendRequest<TResponse>(
     request: Request,
     requestOptions: RequestOptions
   ): Promise<TResponse> {
-    if (this.authentications.apiKey.apiKey) {
-      this.authentications.apiKey.applyToRequest(requestOptions);
-    }
-
-    if (this.authentications.appId.apiKey) {
-      this.authentications.appId.applyToRequest(requestOptions);
-    }
-
-    return this.transporter.request(request, requestOptions);
+    return this.transporter.request(
+      request,
+      this.applyAuthenticationHeaders(requestOptions)
+    );
   }
 
   constructor(
@@ -38,8 +44,7 @@ export class InsightsApi {
     apiKey: string,
     options?: { requester?: Requester; hosts?: Host[] }
   ) {
-    this.setApiKey(InsightsApiKeys.appId, appId);
-    this.setApiKey(InsightsApiKeys.apiKey, apiKey);
+    this.setAuthentication({ appId, apiKey });
 
     this.transporter = new Transporter({
       hosts: options?.hosts ?? this.getDefaultHosts(),
@@ -70,8 +75,11 @@ export class InsightsApi {
     this.transporter.setHosts(hosts);
   }
 
-  setApiKey(key: InsightsApiKeys, value: string): void {
-    this.authentications[InsightsApiKeys[key]].apiKey = value;
+  setAuthentication({ appId, apiKey }): void {
+    this.authentications = {
+      apiKey,
+      appId,
+    };
   }
 
   /**

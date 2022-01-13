@@ -12,5 +12,5 @@ export type AddABTestsRequest = {
   /**
    * End date for the A/B test expressed as YYYY-MM-DDThh:mm:ssZ.
    */
-  endAt: Date;
+  endAt: string;
 };

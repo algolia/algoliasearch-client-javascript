@@ -1,8 +1,4 @@
-import {
-  RecommendApi,
-  ApiError,
-  RecommendationRequest,
-} from '@algolia/recommend';
+import { RecommendApi, ApiError } from '@algolia/recommend';
 import dotenv from 'dotenv';
 
 dotenv.config({ path: '../.env' });

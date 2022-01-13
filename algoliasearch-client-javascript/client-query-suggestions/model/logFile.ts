@@ -2,7 +2,7 @@ export type LogFile = {
   /**
    * Date and time of creation of the record.
    */
-  timestamp: Date;
+  timestamp: string;
   /**
    * Type of the record, can be one of three values (INFO, SKIP or ERROR).
    */

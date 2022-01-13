@@ -6,7 +6,7 @@ export type GetUserTokenResponse = {
   /**
    * Date of last event update. (ISO-8601 format).
    */
-  lastEventAt: Date;
+  lastEventAt: string;
   /**
    * The userToken scores.
    */

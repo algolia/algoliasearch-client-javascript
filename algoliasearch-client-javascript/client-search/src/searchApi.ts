@@ -27,7 +27,6 @@ import type { ListApiKeysResponse } from '../model/listApiKeysResponse';
 import type { ListClustersResponse } from '../model/listClustersResponse';
 import type { ListIndicesResponse } from '../model/listIndicesResponse';
 import type { ListUserIdsResponse } from '../model/listUserIdsResponse';
-import { ApiKeyAuth } from '../model/models';
 import type { MultipleBatchResponse } from '../model/multipleBatchResponse';
 import type { MultipleQueriesObject } from '../model/multipleQueriesObject';
 import type { MultipleQueriesResponse } from '../model/multipleQueriesResponse';
@@ -59,32 +58,39 @@ import { shuffle } from '../utils/helpers';
 import type { Requester } from '../utils/requester/Requester';
 import type { Headers, Host, Request, RequestOptions } from '../utils/types';
 
-export enum SearchApiKeys {
-  apiKey,
-  appId,
-}
-
 export class SearchApi {
   protected authentications = {
-    apiKey: new ApiKeyAuth('header', 'X-Algolia-API-Key'),
-    appId: new ApiKeyAuth('header', 'X-Algolia-Application-Id'),
+    apiKey: 'Algolia-API-Key',
+    appId: 'Algolia-Application-Id',
   };
 
   private transporter: Transporter;
+
+  private applyAuthenticationHeaders(
+    requestOptions: RequestOptions
+  ): RequestOptions {
+    if (requestOptions?.headers) {
+      return {
+        ...requestOptions,
+        headers: {
+          ...requestOptions.headers,
+          'X-Algolia-API-Key': this.authentications.apiKey,
+          'X-Algolia-Application-Id': this.authentications.appId,
+        },
+      };
+    }
+
+    return requestOptions;
+  }
 
   private sendRequest<TResponse>(
     request: Request,
     requestOptions: RequestOptions
   ): Promise<TResponse> {
-    if (this.authentications.apiKey.apiKey) {
-      this.authentications.apiKey.applyToRequest(requestOptions);
-    }
-
-    if (this.authentications.appId.apiKey) {
-      this.authentications.appId.applyToRequest(requestOptions);
-    }
-
-    return this.transporter.request(request, requestOptions);
+    return this.transporter.request(
+      request,
+      this.applyAuthenticationHeaders(requestOptions)
+    );
   }
 
   constructor(
@@ -92,8 +98,7 @@ export class SearchApi {
     apiKey: string,
     options?: { requester?: Requester; hosts?: Host[] }
   ) {
-    this.setApiKey(SearchApiKeys.appId, appId);
-    this.setApiKey(SearchApiKeys.apiKey, apiKey);
+    this.setAuthentication({ appId, apiKey });
 
     this.transporter = new Transporter({
       hosts: options?.hosts ?? this.getDefaultHosts(appId),
@@ -145,8 +150,11 @@ export class SearchApi {
     this.transporter.setHosts(hosts);
   }
 
-  setApiKey(key: SearchApiKeys, value: string): void {
-    this.authentications[SearchApiKeys[key]].apiKey = value;
+  setAuthentication({ appId, apiKey }): void {
+    this.authentications = {
+      apiKey,
+      appId,
+    };
   }
 
   /**
