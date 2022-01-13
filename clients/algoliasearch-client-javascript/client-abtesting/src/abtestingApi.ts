@@ -1,38 +1,44 @@
 import type { ABTest } from '../model/aBTest';
+import type { ABTestResponse } from '../model/aBTestResponse';
 import type { AddABTestsRequest } from '../model/addABTestsRequest';
-import type { AddABTestsResponse } from '../model/addABTestsResponse';
 import type { ListABTestsResponse } from '../model/listABTestsResponse';
-import { ApiKeyAuth } from '../model/models';
 import { Transporter } from '../utils/Transporter';
 import type { Requester } from '../utils/requester/Requester';
 import type { Headers, Host, Request, RequestOptions } from '../utils/types';
 
-export enum AbtestingApiKeys {
-  apiKey,
-  appId,
-}
-
 export class AbtestingApi {
   protected authentications = {
-    apiKey: new ApiKeyAuth('header', 'X-Algolia-API-Key'),
-    appId: new ApiKeyAuth('header', 'X-Algolia-Application-Id'),
+    apiKey: 'Algolia-API-Key',
+    appId: 'Algolia-Application-Id',
   };
 
   private transporter: Transporter;
+
+  private applyAuthenticationHeaders(
+    requestOptions: RequestOptions
+  ): RequestOptions {
+    if (requestOptions?.headers) {
+      return {
+        ...requestOptions,
+        headers: {
+          ...requestOptions.headers,
+          'X-Algolia-API-Key': this.authentications.apiKey,
+          'X-Algolia-Application-Id': this.authentications.appId,
+        },
+      };
+    }
+
+    return requestOptions;
+  }
 
   private sendRequest<TResponse>(
     request: Request,
     requestOptions: RequestOptions
   ): Promise<TResponse> {
-    if (this.authentications.apiKey.apiKey) {
-      this.authentications.apiKey.applyToRequest(requestOptions);
-    }
-
-    if (this.authentications.appId.apiKey) {
-      this.authentications.appId.applyToRequest(requestOptions);
-    }
-
-    return this.transporter.request(request, requestOptions);
+    return this.transporter.request(
+      request,
+      this.applyAuthenticationHeaders(requestOptions)
+    );
   }
 
   constructor(
@@ -41,8 +47,7 @@ export class AbtestingApi {
     region: 'de' | 'us',
     options?: { requester?: Requester; hosts?: Host[] }
   ) {
-    this.setApiKey(AbtestingApiKeys.appId, appId);
-    this.setApiKey(AbtestingApiKeys.apiKey, apiKey);
+    this.setAuthentication({ appId, apiKey });
 
     this.transporter = new Transporter({
       hosts: options?.hosts ?? this.getDefaultHosts(region),
@@ -77,8 +82,11 @@ export class AbtestingApi {
     this.transporter.setHosts(hosts);
   }
 
-  setApiKey(key: AbtestingApiKeys, value: string): void {
-    this.authentications[AbtestingApiKeys[key]].apiKey = value;
+  setAuthentication({ appId, apiKey }): void {
+    this.authentications = {
+      apiKey,
+      appId,
+    };
   }
 
   /**
@@ -87,9 +95,7 @@ export class AbtestingApi {
    * @summary Creates a new A/B test with provided configuration.
    * @param addABTestsRequest - The addABTestsRequest object.
    */
-  addABTests(
-    addABTestsRequest: AddABTestsRequest
-  ): Promise<AddABTestsResponse> {
+  addABTests(addABTestsRequest: AddABTestsRequest): Promise<ABTestResponse> {
     const path = '/2/abtests';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
@@ -145,7 +151,7 @@ export class AbtestingApi {
    * @param deleteABTest - The deleteABTest object.
    * @param deleteABTest.id - The A/B test ID.
    */
-  deleteABTest({ id }: DeleteABTestProps): Promise<Record<string, any>> {
+  deleteABTest({ id }: DeleteABTestProps): Promise<ABTestResponse> {
     const path = '/2/abtests/{id}'.replace(
       '{id}',
       encodeURIComponent(String(id))
@@ -247,7 +253,7 @@ export class AbtestingApi {
    * @param stopABTest - The stopABTest object.
    * @param stopABTest.id - The A/B test ID.
    */
-  stopABTest({ id }: StopABTestProps): Promise<Record<string, any>> {
+  stopABTest({ id }: StopABTestProps): Promise<ABTestResponse> {
     const path = '/2/abtests/{id}/stop'.replace(
       '{id}',
       encodeURIComponent(String(id))

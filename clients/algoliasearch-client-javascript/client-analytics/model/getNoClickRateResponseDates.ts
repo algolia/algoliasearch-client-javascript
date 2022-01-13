@@ -14,5 +14,5 @@ export type GetNoClickRateResponseDates = {
   /**
    * Date of the event.
    */
-  date: Date;
+  date: string;
 };

@@ -23,5 +23,5 @@ export type SearchUserIdsResponse = {
   /**
    * Date of last update (ISO-8601 format).
    */
-  updatedAt: Date;
+  updatedAt: string;
 };

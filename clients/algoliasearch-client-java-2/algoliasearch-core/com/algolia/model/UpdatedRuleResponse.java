@@ -1,7 +1,6 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
-import java.time.OffsetDateTime;
 import java.util.Objects;
 
 /** UpdatedRuleResponse */
@@ -11,7 +10,7 @@ public class UpdatedRuleResponse {
   private String objectID;
 
   @SerializedName("updatedAt")
-  private OffsetDateTime updatedAt;
+  private String updatedAt;
 
   @SerializedName("taskID")
   private Integer taskID;
@@ -35,7 +34,7 @@ public class UpdatedRuleResponse {
     this.objectID = objectID;
   }
 
-  public UpdatedRuleResponse updatedAt(OffsetDateTime updatedAt) {
+  public UpdatedRuleResponse updatedAt(String updatedAt) {
     this.updatedAt = updatedAt;
     return this;
   }
@@ -46,11 +45,11 @@ public class UpdatedRuleResponse {
    * @return updatedAt
    */
   @javax.annotation.Nonnull
-  public OffsetDateTime getUpdatedAt() {
+  public String getUpdatedAt() {
     return updatedAt;
   }
 
-  public void setUpdatedAt(OffsetDateTime updatedAt) {
+  public void setUpdatedAt(String updatedAt) {
     this.updatedAt = updatedAt;
   }
 

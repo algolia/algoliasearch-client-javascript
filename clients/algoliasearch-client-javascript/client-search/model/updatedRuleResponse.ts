@@ -6,7 +6,7 @@ export type UpdatedRuleResponse = {
   /**
    * Date of last update (ISO-8601 format).
    */
-  updatedAt: Date;
+  updatedAt: string;
   /**
    * TaskID of the task to wait for.
    */

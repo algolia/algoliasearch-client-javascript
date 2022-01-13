@@ -10,6 +10,7 @@ export * from './{{ classFilename }}Interface'
 {{/apis}}
 export * from '../utils/errors';
 export { EchoRequester } from '../utils/requester/EchoRequester';
+export { EchoResponse } from '../utils/types';
 
 export const APIS = [{{#apis}}{{#operations}}{{ classname }}{{/operations}}{{^-last}}, {{/-last}}{{/apis}}];
 {{/apiInfo}}

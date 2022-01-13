@@ -1,7 +1,6 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
-import java.time.OffsetDateTime;
 import java.util.Objects;
 
 /** The response with a taskID and a deletedAt timestamp. */
@@ -11,7 +10,7 @@ public class DeletedAtResponse {
   private Integer taskID;
 
   @SerializedName("deletedAt")
-  private OffsetDateTime deletedAt;
+  private String deletedAt;
 
   public DeletedAtResponse taskID(Integer taskID) {
     this.taskID = taskID;
@@ -32,7 +31,7 @@ public class DeletedAtResponse {
     this.taskID = taskID;
   }
 
-  public DeletedAtResponse deletedAt(OffsetDateTime deletedAt) {
+  public DeletedAtResponse deletedAt(String deletedAt) {
     this.deletedAt = deletedAt;
     return this;
   }
@@ -43,11 +42,11 @@ public class DeletedAtResponse {
    * @return deletedAt
    */
   @javax.annotation.Nonnull
-  public OffsetDateTime getDeletedAt() {
+  public String getDeletedAt() {
     return deletedAt;
   }
 
-  public void setDeletedAt(OffsetDateTime deletedAt) {
+  public void setDeletedAt(String deletedAt) {
     this.deletedAt = deletedAt;
   }
 

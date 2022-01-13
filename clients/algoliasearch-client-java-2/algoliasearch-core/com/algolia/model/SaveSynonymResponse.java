@@ -1,7 +1,6 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
-import java.time.OffsetDateTime;
 import java.util.Objects;
 
 /** SaveSynonymResponse */
@@ -11,7 +10,7 @@ public class SaveSynonymResponse {
   private Integer taskID;
 
   @SerializedName("updatedAt")
-  private OffsetDateTime updatedAt;
+  private String updatedAt;
 
   @SerializedName("id")
   private String id;
@@ -35,7 +34,7 @@ public class SaveSynonymResponse {
     this.taskID = taskID;
   }
 
-  public SaveSynonymResponse updatedAt(OffsetDateTime updatedAt) {
+  public SaveSynonymResponse updatedAt(String updatedAt) {
     this.updatedAt = updatedAt;
     return this;
   }
@@ -46,11 +45,11 @@ public class SaveSynonymResponse {
    * @return updatedAt
    */
   @javax.annotation.Nonnull
-  public OffsetDateTime getUpdatedAt() {
+  public String getUpdatedAt() {
     return updatedAt;
   }
 
-  public void setUpdatedAt(OffsetDateTime updatedAt) {
+  public void setUpdatedAt(String updatedAt) {
     this.updatedAt = updatedAt;
   }
 

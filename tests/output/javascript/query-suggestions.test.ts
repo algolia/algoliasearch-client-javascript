@@ -2,6 +2,7 @@ import {
   QuerySuggestionsApi,
   EchoRequester,
 } from '@algolia/client-query-suggestions';
+import type { EchoResponse } from '@algolia/client-query-suggestions';
 
 const appId = process.env.ALGOLIA_APPLICATION_ID || 'test_app_id';
 const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'test_api_key';
@@ -12,7 +13,7 @@ const client = new QuerySuggestionsApi(appId, apiKey, 'us', {
 
 describe('createConfig', () => {
   test('createConfig', async () => {
-    const req = await client.createConfig({
+    const req = (await client.createConfig({
       indexName: 'theIndexName',
       sourceIndices: [
         {
@@ -23,11 +24,11 @@ describe('createConfig', () => {
       ],
       languages: ['french'],
       exclude: ['test'],
-    });
+    })) as unknown as EchoResponse;
 
-    expect((req as any).path).toEqual('/1/configs');
-    expect((req as any).method).toEqual('POST');
-    expect((req as any).data).toEqual({
+    expect(req.path).toEqual('/1/configs');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
       indexName: 'theIndexName',
       sourceIndices: [
         {
@@ -39,76 +40,76 @@ describe('createConfig', () => {
       languages: ['french'],
       exclude: ['test'],
     });
-    expect((req as any).searchParams).toEqual(undefined);
+    expect(req.searchParams).toEqual(undefined);
   });
 });
 
 describe('deleteConfig', () => {
   test('deleteConfig', async () => {
-    const req = await client.deleteConfig({
+    const req = (await client.deleteConfig({
       indexName: 'theIndexName',
-    });
+    })) as unknown as EchoResponse;
 
-    expect((req as any).path).toEqual('/1/configs/theIndexName');
-    expect((req as any).method).toEqual('DELETE');
-    expect((req as any).data).toEqual(undefined);
-    expect((req as any).searchParams).toEqual(undefined);
+    expect(req.path).toEqual('/1/configs/theIndexName');
+    expect(req.method).toEqual('DELETE');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toEqual(undefined);
   });
 });
 
 describe('getAllConfigs', () => {
   test('getAllConfigs', async () => {
-    const req = await client.getAllConfigs();
+    const req = (await client.getAllConfigs()) as unknown as EchoResponse;
 
-    expect((req as any).path).toEqual('/1/configs');
-    expect((req as any).method).toEqual('GET');
-    expect((req as any).data).toEqual(undefined);
-    expect((req as any).searchParams).toEqual(undefined);
+    expect(req.path).toEqual('/1/configs');
+    expect(req.method).toEqual('GET');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toEqual(undefined);
   });
 });
 
 describe('getConfig', () => {
   test('getConfig', async () => {
-    const req = await client.getConfig({
+    const req = (await client.getConfig({
       indexName: 'theIndexName',
-    });
+    })) as unknown as EchoResponse;
 
-    expect((req as any).path).toEqual('/1/configs/theIndexName');
-    expect((req as any).method).toEqual('GET');
-    expect((req as any).data).toEqual(undefined);
-    expect((req as any).searchParams).toEqual(undefined);
+    expect(req.path).toEqual('/1/configs/theIndexName');
+    expect(req.method).toEqual('GET');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toEqual(undefined);
   });
 });
 
 describe('getConfigStatus', () => {
   test('getConfigStatus', async () => {
-    const req = await client.getConfigStatus({
+    const req = (await client.getConfigStatus({
       indexName: 'theIndexName',
-    });
+    })) as unknown as EchoResponse;
 
-    expect((req as any).path).toEqual('/1/configs/theIndexName/status');
-    expect((req as any).method).toEqual('GET');
-    expect((req as any).data).toEqual(undefined);
-    expect((req as any).searchParams).toEqual(undefined);
+    expect(req.path).toEqual('/1/configs/theIndexName/status');
+    expect(req.method).toEqual('GET');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toEqual(undefined);
   });
 });
 
 describe('getLogFile', () => {
   test('getLogFile', async () => {
-    const req = await client.getLogFile({
+    const req = (await client.getLogFile({
       indexName: 'theIndexName',
-    });
+    })) as unknown as EchoResponse;
 
-    expect((req as any).path).toEqual('/1/logs/theIndexName');
-    expect((req as any).method).toEqual('GET');
-    expect((req as any).data).toEqual(undefined);
-    expect((req as any).searchParams).toEqual(undefined);
+    expect(req.path).toEqual('/1/logs/theIndexName');
+    expect(req.method).toEqual('GET');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toEqual(undefined);
   });
 });
 
 describe('updateConfig', () => {
   test('updateConfig', async () => {
-    const req = await client.updateConfig({
+    const req = (await client.updateConfig({
       indexName: 'theIndexName',
       querySuggestionsIndexParam: {
         sourceIndices: [
@@ -121,11 +122,11 @@ describe('updateConfig', () => {
         languages: ['french'],
         exclude: ['test'],
       },
-    });
+    })) as unknown as EchoResponse;
 
-    expect((req as any).path).toEqual('/1/configs/theIndexName');
-    expect((req as any).method).toEqual('PUT');
-    expect((req as any).data).toEqual({
+    expect(req.path).toEqual('/1/configs/theIndexName');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({
       sourceIndices: [
         {
           indexName: 'testIndex',
@@ -136,6 +137,6 @@ describe('updateConfig', () => {
       languages: ['french'],
       exclude: ['test'],
     });
-    expect((req as any).searchParams).toEqual(undefined);
+    expect(req.searchParams).toEqual(undefined);
   });
 });

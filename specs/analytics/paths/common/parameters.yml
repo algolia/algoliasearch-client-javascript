@@ -64,7 +64,6 @@ clickCount:
 
 date:
   type: string
-  format: date-time
   description: Date of the event.
 
 rate:

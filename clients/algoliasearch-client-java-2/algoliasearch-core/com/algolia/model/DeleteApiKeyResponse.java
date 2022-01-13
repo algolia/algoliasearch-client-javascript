@@ -1,16 +1,15 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
-import java.time.OffsetDateTime;
 import java.util.Objects;
 
 /** DeleteApiKeyResponse */
 public class DeleteApiKeyResponse {
 
   @SerializedName("deletedAt")
-  private OffsetDateTime deletedAt;
+  private String deletedAt;
 
-  public DeleteApiKeyResponse deletedAt(OffsetDateTime deletedAt) {
+  public DeleteApiKeyResponse deletedAt(String deletedAt) {
     this.deletedAt = deletedAt;
     return this;
   }
@@ -21,11 +20,11 @@ public class DeleteApiKeyResponse {
    * @return deletedAt
    */
   @javax.annotation.Nonnull
-  public OffsetDateTime getDeletedAt() {
+  public String getDeletedAt() {
     return deletedAt;
   }
 
-  public void setDeletedAt(OffsetDateTime deletedAt) {
+  public void setDeletedAt(String deletedAt) {
     this.deletedAt = deletedAt;
   }
 

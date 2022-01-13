@@ -13,7 +13,6 @@ type Language = typeof availableLanguages[number];
 type ParametersWithDataType = {
   key: string;
   value: string;
-  isDate: boolean;
   isArray: boolean;
   isObject: boolean;
   isString: boolean;
@@ -166,16 +165,14 @@ async function loadCTSForClient(client: string): Promise<CTSBlock[]> {
       // include the `-last` param to join with comma in mustache
       test.parametersWithDataType = Object.entries(test.parameters).map(
         ([key, value], i, arr) => {
-          const isDate = key === 'endAt';
           const isArray = Array.isArray(value);
 
           return {
             key,
             value: JSON.stringify(value),
-            isString: typeof value === 'string' && isDate === false,
+            isString: typeof value === 'string',
             isObject: typeof value === 'object' && isArray === false,
             isArray,
-            isDate,
             '-last': i === arr.length - 1,
           };
         }

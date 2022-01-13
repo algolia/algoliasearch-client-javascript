@@ -17,37 +17,43 @@ import type { GetTopHitsResponseWithAnalytics } from '../model/getTopHitsRespons
 import type { GetTopSearchesResponse } from '../model/getTopSearchesResponse';
 import type { GetTopSearchesResponseWithAnalytics } from '../model/getTopSearchesResponseWithAnalytics';
 import type { GetUsersCountResponse } from '../model/getUsersCountResponse';
-import { ApiKeyAuth } from '../model/models';
 import { Transporter } from '../utils/Transporter';
 import type { Requester } from '../utils/requester/Requester';
 import type { Headers, Host, Request, RequestOptions } from '../utils/types';
 
-export enum AnalyticsApiKeys {
-  apiKey,
-  appId,
-}
-
 export class AnalyticsApi {
   protected authentications = {
-    apiKey: new ApiKeyAuth('header', 'X-Algolia-API-Key'),
-    appId: new ApiKeyAuth('header', 'X-Algolia-Application-Id'),
+    apiKey: 'Algolia-API-Key',
+    appId: 'Algolia-Application-Id',
   };
 
   private transporter: Transporter;
+
+  private applyAuthenticationHeaders(
+    requestOptions: RequestOptions
+  ): RequestOptions {
+    if (requestOptions?.headers) {
+      return {
+        ...requestOptions,
+        headers: {
+          ...requestOptions.headers,
+          'X-Algolia-API-Key': this.authentications.apiKey,
+          'X-Algolia-Application-Id': this.authentications.appId,
+        },
+      };
+    }
+
+    return requestOptions;
+  }
 
   private sendRequest<TResponse>(
     request: Request,
     requestOptions: RequestOptions
   ): Promise<TResponse> {
-    if (this.authentications.apiKey.apiKey) {
-      this.authentications.apiKey.applyToRequest(requestOptions);
-    }
-
-    if (this.authentications.appId.apiKey) {
-      this.authentications.appId.applyToRequest(requestOptions);
-    }
-
-    return this.transporter.request(request, requestOptions);
+    return this.transporter.request(
+      request,
+      this.applyAuthenticationHeaders(requestOptions)
+    );
   }
 
   constructor(
@@ -56,8 +62,7 @@ export class AnalyticsApi {
     region: 'de' | 'us',
     options?: { requester?: Requester; hosts?: Host[] }
   ) {
-    this.setApiKey(AnalyticsApiKeys.appId, appId);
-    this.setApiKey(AnalyticsApiKeys.apiKey, apiKey);
+    this.setAuthentication({ appId, apiKey });
 
     this.transporter = new Transporter({
       hosts: options?.hosts ?? this.getDefaultHosts(region),
@@ -92,8 +97,11 @@ export class AnalyticsApi {
     this.transporter.setHosts(hosts);
   }
 
-  setApiKey(key: AnalyticsApiKeys, value: string): void {
-    this.authentications[AnalyticsApiKeys[key]].apiKey = value;
+  setAuthentication({ appId, apiKey }): void {
+    this.authentications = {
+      apiKey,
+      appId,
+    };
   }
 
   /**

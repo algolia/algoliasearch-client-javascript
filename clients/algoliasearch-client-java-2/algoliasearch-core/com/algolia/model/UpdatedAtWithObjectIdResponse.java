@@ -1,7 +1,6 @@
 package com.algolia.model;
 
 import com.google.gson.annotations.SerializedName;
-import java.time.OffsetDateTime;
 import java.util.Objects;
 
 /** The response with a taskID, an objectID and an updatedAt timestamp. */
@@ -11,7 +10,7 @@ public class UpdatedAtWithObjectIdResponse {
   private Integer taskID;
 
   @SerializedName("updatedAt")
-  private OffsetDateTime updatedAt;
+  private String updatedAt;
 
   @SerializedName("objectID")
   private String objectID;
@@ -35,7 +34,7 @@ public class UpdatedAtWithObjectIdResponse {
     this.taskID = taskID;
   }
 
-  public UpdatedAtWithObjectIdResponse updatedAt(OffsetDateTime updatedAt) {
+  public UpdatedAtWithObjectIdResponse updatedAt(String updatedAt) {
     this.updatedAt = updatedAt;
     return this;
   }
@@ -46,11 +45,11 @@ public class UpdatedAtWithObjectIdResponse {
    * @return updatedAt
    */
   @javax.annotation.Nullable
-  public OffsetDateTime getUpdatedAt() {
+  public String getUpdatedAt() {
     return updatedAt;
   }
 
-  public void setUpdatedAt(OffsetDateTime updatedAt) {
+  public void setUpdatedAt(String updatedAt) {
     this.updatedAt = updatedAt;
   }
 

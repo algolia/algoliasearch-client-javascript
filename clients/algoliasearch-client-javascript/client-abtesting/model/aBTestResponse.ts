@@ -1,4 +1,4 @@
-export type AddABTestsResponse = {
+export type ABTestResponse = {
   /**
    * The index performing the A/B test.
    */

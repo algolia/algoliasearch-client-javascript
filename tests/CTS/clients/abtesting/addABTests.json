@@ -3,7 +3,7 @@
     "method": "addABTests",
     "testName": "addABTests with minimal parameters",
     "parameters": {
-      "endAt": "2022-12-31",
+      "endAt": "2022-12-31T00:00:00.000Z",
       "name": "myABTest",
       "variant": [
         {

@@ -21,7 +21,6 @@ index:
       description: Index name.
     createdAt:
       type: string
-      format: date-time
       description: Index creation date. An empty string means that the index has no records.
     updatedAt:
       $ref: '../../../common/parameters.yml#/updatedAt'

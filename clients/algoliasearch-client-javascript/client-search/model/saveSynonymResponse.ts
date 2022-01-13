@@ -6,7 +6,7 @@ export type SaveSynonymResponse = {
   /**
    * Date of last update (ISO-8601 format).
    */
-  updatedAt: Date;
+  updatedAt: string;
   /**
    * ObjectID of the inserted object.
    */

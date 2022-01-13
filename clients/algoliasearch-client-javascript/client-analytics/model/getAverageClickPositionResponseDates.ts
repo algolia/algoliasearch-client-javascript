@@ -10,5 +10,5 @@ export type GetAverageClickPositionResponseDates = {
   /**
    * Date of the event.
    */
-  date: Date;
+  date: string;
 };
