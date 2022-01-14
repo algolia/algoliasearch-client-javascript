@@ -12,11 +12,27 @@
     "sourceMap": true,
     "noLib": false,
     "declaration": true,
-    "lib": ["dom", "es6", "es5", "dom.iterable", "scripthost"],
+    "lib": [
+      "dom",
+      "es6",
+      "es5",
+      "dom.iterable",
+      "scripthost"
+    ],
     "outDir": "dist",
-    "typeRoots": ["../node_modules/@types"],
-    "types": ["node", "jest"],
+    "typeRoots": [
+      "../node_modules/@types"
+    ],
+    "types": [
+      "node"
+    ],
     "resolveJsonModule": true
   },
-  "exclude": ["dist", "output"]
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "dist",
+    "output"
+  ]
 }

@@ -6,19 +6,31 @@ It is automaticaly generated for all languages, from a JSON entry point.
 ## How to run it
 
 ```bash
-yarn cts:generate
-yarn cts:test
+yarn docker cts:generate
+yarn docker cts:test
 ```
 
-If you only want to generate the tests for a set of languages, you can run:
+If you only want to generate the tests for a language, you can run:
 
 ```bash
-yarn cts:generate "javascript ruby"
+yarn docker cts:generate javascript
+```
+
+Or for a specific client:
+
+```bash
+yarn docker cts:generate all search
+```
+
+Or a specific language and client:
+
+```bash
+yarn docker cts:generate javascript search
 ```
 
 ## How to add test
 
-The test generation script requires a JSON file name from the `operationId` (e.g. `search.json`), located in the `CTS/<client>/` folder (e.g. `CTS/search/`).
+The test generation script requires a JSON file name from the `operationId` (e.g. `search.json`), located in the `CTS/<client>/requests/` folder (e.g. `CTS/search/requests/`).
 
 ```json
 [
@@ -45,8 +57,7 @@ And that's it! If the name of the file matches a real `operationId` in the spec,
 
 ## How to add a new language
 
-- Add the language in the array `languages` in `tests/generateCTS.ts`.
-- Create a template in `test/CTS/templates/<your language>.mustache` that parse a array of test into your test framework of choice
+- Create a template in `test/CTS/templates/<your language>/requests.mustache` that parses an array of tests into the test framework of choice
 
 When writing your template, here is a list of variables accessible from `mustache`:
 
