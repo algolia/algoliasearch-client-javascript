@@ -30,8 +30,3 @@ export type CTSBlock = {
 export type CTS = {
   requests: CTSBlock[];
 };
-
-export const extensionForLanguage: Record<string, string> = {
-  javascript: 'test.ts',
-  java: 'java',
-};

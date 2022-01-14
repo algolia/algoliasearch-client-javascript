@@ -4,7 +4,7 @@ import SwaggerParser from '@apidevtools/swagger-parser';
 import type { OpenAPIV3 } from 'openapi-types';
 
 import type { CTS, CTSBlock, Tests } from './types';
-import { removeObjectName, walk } from './utils';
+import { removeObjectName, walk } from '../../utils';
 
 async function loadRequestsCTS(client: string): Promise<CTSBlock[]> {
   // load the list of operations from the spec
@@ -19,7 +19,7 @@ async function loadRequestsCTS(client: string): Promise<CTSBlock[]> {
 
   const ctsClient: CTSBlock[] = [];
 
-  for await (const file of walk(`./CTS/clients/${client}/requests`)) {
+  for await (const file of walk(`./CTS/methods/requests/${client}`)) {
     if (!file.name.endsWith('json')) {
       continue;
     }
