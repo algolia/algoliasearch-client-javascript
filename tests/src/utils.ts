@@ -56,3 +56,8 @@ export function removeObjectName(obj: Record<string, any>): void {
     }
   }
 }
+
+export const extensionForLanguage: Record<string, string> = {
+  javascript: 'test.ts',
+  java: 'java',
+};

@@ -5,12 +5,16 @@ import Mustache from 'mustache';
 import { loadCTS } from './cts';
 import { loadRequestsTemplate } from './templates';
 import type { CTSBlock } from './types';
-import { extensionForLanguage } from './types';
-import { createClientName, packageNames } from './utils';
+import {
+  createClientName,
+  packageNames,
+  extensionForLanguage,
+} from '../../utils';
 
 async function createOutputDir(language: string): Promise<void> {
-  await fsp.mkdir(`output/${language}`, { recursive: true });
-  await fsp.mkdir(`output/${language}/tests`, { recursive: true });
+  await fsp.mkdir(`output/${language}/tests/methods/requests`, {
+    recursive: true,
+  });
 }
 
 async function generateRequestsTests(
@@ -35,7 +39,7 @@ async function generateRequestsTests(
     ].includes(client),
   });
   await fsp.writeFile(
-    `output/${language}/tests/${client}Requests.${extensionForLanguage[language]}`,
+    `output/${language}/tests/methods/requests/${client}.${extensionForLanguage[language]}`,
     code
   );
 }

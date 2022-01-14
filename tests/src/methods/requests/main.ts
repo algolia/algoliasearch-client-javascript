@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 
 import { generateTests } from './generate';
-import { packageNames } from './utils';
+import { packageNames } from '../../utils';
 
 function printUsage(): void {
   console.log(`usage: generateCTS language client`);
