@@ -15,8 +15,6 @@ find "$CLIENT" -type f -name "*.java" | xargs sed -i -e 's~= {}~= new Object()~g
 echo "package com.algolia.model;public class OneOfintegerstring {}" > $CLIENT/algoliasearch-core/com/algolia/model/OneOfintegerstring.java
 
 format_client() {
-    set +e
-
     echo "> Formatting $GENERATOR..."
 
     # Download the formatter if not present and run it
@@ -35,14 +33,19 @@ format_client() {
                                                      --add-exports jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED \
                                                      -jar dist/$javaFormatter -r
 
-    log=$(yarn prettier --write $CLIENT/**/*.java)
+    CMD="yarn prettier --write $CLIENT/**/*.java"
+    if [[ $VERBOSE == "true" ]]; then
+        $CMD
+    else
+        set +e
+        log=$($CMD)
 
-    if [[ $? != 0 ]]; then
-        echo "$log"
-        exit 1
+        if [[ $? != 0 ]]; then
+            echo "$log"
+            exit 1
+        fi
+        set -e
     fi
-
-    set -e
 }
 
 format_client
