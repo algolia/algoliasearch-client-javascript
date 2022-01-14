@@ -7,12 +7,12 @@
     "tests/"
   ],
   "scripts": {
-    "build:clients": "./scripts/multiplexer.sh ./scripts/builds/clients.sh ${0:-all} ${1:-all}",
+    "build:clients": "./scripts/multiplexer.sh ${2:-nonverbose} ./scripts/builds/clients.sh ${0:-all} ${1:-all}",
     "build:specs": "./scripts/builds/specs.sh ${0:-all} ${1:-yaml}",
     "build": "yarn build:specs && yarn build:clients",
     "clean": "rm -rf **/dist **/build **/node_modules",
-    "cts:generate": "yarn workspace tests build && ./scripts/multiplexer.sh yarn workspace tests generate ${0:-all} ${1:-all} && yarn workspace tests lint:fix",
-    "cts:test": "./scripts/multiplexer.sh ./scripts/runCTS.sh ${0:-javascript} all",
+    "cts:generate": "yarn workspace tests build && ./scripts/multiplexer.sh ${2:-nonverbose} yarn workspace tests generate ${0:-all} ${1:-all} && yarn workspace tests lint:fix",
+    "cts:test": "./scripts/multiplexer.sh ${1:-nonverbose} ./scripts/runCTS.sh ${0:-javascript} all",
     "docker:build": "./scripts/docker/build.sh",
     "docker:clean": "docker stop dev; docker rm -f dev; docker image rm -f api-clients-automation",
     "docker:mount": "./scripts/docker/mount.sh",
@@ -20,8 +20,8 @@
     "docker": "docker exec dev yarn $*",
     "lint": "eslint --ext=ts .",
     "post:generate": "./scripts/post-gen/global.sh",
-    "generate": "./scripts/multiplexer.sh ./scripts/generate.sh ${0:-all} ${1:-all} && yarn post:generate",
-    "playground": "./scripts/multiplexer.sh ./scripts/playground.sh ${0:-javascript} ${1:-search}",
+    "generate": "./scripts/multiplexer.sh ${2:-nonverbose} ./scripts/generate.sh ${0:-all} ${1:-all} && yarn post:generate",
+    "playground": "./scripts/multiplexer.sh ${2:-nonverbose} ./scripts/playground.sh ${0:-javascript} ${1:-search}",
     "specs:format": "yarn prettier --write specs",
     "specs:lint": "eslint --ext=yml specs/ .github/"
   },

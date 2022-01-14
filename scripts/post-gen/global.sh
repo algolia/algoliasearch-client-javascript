@@ -11,18 +11,20 @@ if [[ ! $DOCKER ]]; then
 fi
 
 format_specs() {
-    set +e
-
     echo "> Formatting specs..."
+    CMD="yarn specs:format"
+    if [[ $VERBOSE == "true" ]]; then
+        $CMD
+    else
+        set +e
+        log=$($CMD)
 
-    log=$(yarn specs:format)
-
-    if [[ $? != 0 ]]; then
-        echo "$log"
-        exit 1
+        if [[ $? != 0 ]]; then
+            echo "$log"
+            exit 1
+        fi
+        set -e
     fi
-
-    set -e
 }
 
 format_specs

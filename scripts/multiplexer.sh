@@ -1,5 +1,5 @@
 #!/bin/bash
-# Call this script with multiplexer.sh <cmd> <lang | all> <client | all>
+# Call this script with multiplexer.sh <verbose | nonverbose> <cmd (can be as long as you want)> <lang | all> <client | all>
 # to run the cmd for all the required lang-client combination
 
 if [[ ! $CI ]] && [[ ! $DOCKER ]]; then
@@ -15,9 +15,14 @@ DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null && pwd)"
 # Move to the root (easier to locate other scripts)
 cd ${DIR}/..
 
-CMD=${@:1:$#-2} # all arguments but the last 2
+CMD=${@:2:$#-3} # all arguments but the last 2 and first one
 LANGUAGE=${@: -2:1} # before last argument
 CLIENT=${@: -1} # last argument
+
+if [[ $1 == "verbose" ]]; then
+    export VERBOSE=true
+    echo "Verbose mode"
+fi
 
 if [[ $CMD == "./scripts/playground.sh" ]] && ([[ $LANGUAGE == "all" ]] || [[ $CLIENT == "all" ]]); then
     echo "You cannot use 'all' when running the playground, please specify the language and client"

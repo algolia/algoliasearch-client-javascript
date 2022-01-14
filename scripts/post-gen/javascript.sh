@@ -9,24 +9,25 @@ mkdir -p $CLIENT/utils
 cp -R clients/algoliasearch-client-javascript/utils/ $CLIENT/
 
 lint_client() {
-    set +e
-
     echo "> Linting ${GENERATOR}..."
-
-    log=$(eslint --ext=ts ${CLIENT} --fix)
-
-    if [[ $? != 0 ]]; then
-        # jsdoc/require-hyphen-before-param-description fails to lint more than
-        # 6 parameters, we re-run the script if failed to lint the rest
-        eslint --ext=ts ${CLIENT} --fix
+    CMD="yarn eslint --ext=ts ${CLIENT} --fix"
+    if [[ $VERBOSE == "true" ]]; then
+        $CMD
+    else
+        set +e
+        log=$($CMD)
 
         if [[ $? != 0 ]]; then
-            exit 1
+            # jsdoc/require-hyphen-before-param-description fails to lint more than
+            # 6 parameters, we re-run the script if failed to lint the rest
+            $CMD
+
+            if [[ $? != 0 ]]; then
+                exit 1
+            fi
         fi
+        set -e
     fi
-
-    set -e
-
 }
 
 lint_client

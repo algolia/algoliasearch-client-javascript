@@ -22,18 +22,20 @@ run_pre_gen() {
 }
 
 generate_client() {
-    set +e
-
     echo "> Generating code for $generator..."
+    CMD="yarn openapi-generator-cli generate --generator-key $generator"
+    if [[ $VERBOSE == "true" ]]; then
+        $CMD
+    else
+        set +e
+        log=$($CMD)
 
-    log=$(yarn openapi-generator-cli generate --generator-key "$generator")
-
-    if [[ $? != 0 ]]; then
-        echo "$log"
-        exit 1
+        if [[ $? != 0 ]]; then
+            echo "$log"
+            exit 1
+        fi
+        set -e
     fi
-
-    set -e
 }
 
 # Run the post generation script if it exists.
