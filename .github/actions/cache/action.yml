@@ -31,56 +31,56 @@ runs:
       uses: actions/cache@v2
       with:
         path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/client-search/dist
-        key: ${{ runner.os }}-1-js-client-search-${{ hashFiles('clients/algoliasearch-client-javascript/client-search/**') }}
+        key: ${{ runner.os }}-1-js-client-search-${{ hashFiles('clients/algoliasearch-client-javascript/client-search/**') }}-${{ hashFiles('specs/dist/search.yml') }}
 
     - name: Restore built JavaScript recommend client
       if: ${{ inputs.job == 'cts' }}
       uses: actions/cache@v2
       with:
         path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/recommend/dist
-        key: ${{ runner.os }}-1-js-client-recommend-${{ hashFiles('clients/algoliasearch-client-javascript/recommend/**') }}
+        key: ${{ runner.os }}-1-js-client-recommend-${{ hashFiles('clients/algoliasearch-client-javascript/recommend/**') }}-${{ hashFiles('specs/dist/recommend.yml') }}
 
     - name: Restore built JavaScript query-suggestions client
       if: ${{ inputs.job == 'cts' }}
       uses: actions/cache@v2
       with:
         path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/client-query-suggestions/dist
-        key: ${{ runner.os }}-1-js-client-query-suggestions-${{ hashFiles('clients/algoliasearch-client-javascript/client-query-suggestions/**') }}
+        key: ${{ runner.os }}-1-js-client-query-suggestions-${{ hashFiles('clients/algoliasearch-client-javascript/client-query-suggestions/**') }}-${{ hashFiles('specs/dist/query-suggestions.yml') }}
 
     - name: Restore built JavaScript personalization client
       if: ${{ inputs.job == 'cts' }}
       uses: actions/cache@v2
       with:
         path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/client-personalization/dist
-        key: ${{ runner.os }}-1-js-client-personalization-${{ hashFiles('clients/algoliasearch-client-javascript/client-personalization/**') }}
+        key: ${{ runner.os }}-1-js-client-personalization-${{ hashFiles('clients/algoliasearch-client-javascript/client-personalization/**') }}-${{ hashFiles('specs/dist/personalization.yml') }}
 
     - name: Restore built JavaScript analytics client
       if: ${{ inputs.job == 'cts' }}
       uses: actions/cache@v2
       with:
         path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/client-analytics/dist
-        key: ${{ runner.os }}-1-js-client-analytics-${{ hashFiles('clients/algoliasearch-client-javascript/client-analytics/**') }}
+        key: ${{ runner.os }}-1-js-client-analytics-${{ hashFiles('clients/algoliasearch-client-javascript/client-analytics/**') }}-${{ hashFiles('specs/dist/analytics.yml') }}
 
     - name: Restore built JavaScript abtesting client
       if: ${{ inputs.job == 'cts' }}
       uses: actions/cache@v2
       with:
         path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/client-abtesting/dist
-        key: ${{ runner.os }}-1-js-client-abtesting-${{ hashFiles('clients/algoliasearch-client-javascript/client-abtesting/**') }}
+        key: ${{ runner.os }}-1-js-client-abtesting-${{ hashFiles('clients/algoliasearch-client-javascript/client-abtesting/**') }}-${{ hashFiles('specs/dist/abtesting.yml') }}
 
     - name: Restore built JavaScript insights client
       if: ${{ inputs.job == 'cts' }}
       uses: actions/cache@v2
       with:
         path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/client-insights/dist
-        key: ${{ runner.os }}-1-js-client-insights-${{ hashFiles('clients/algoliasearch-client-javascript/client-insights/**') }}
+        key: ${{ runner.os }}-1-js-client-insights-${{ hashFiles('clients/algoliasearch-client-javascript/client-insights/**') }}-${{ hashFiles('specs/dist/insights.yml') }}
 
     - name: Restore built Java client
       if: ${{ inputs.job == 'cts' }}
       uses: actions/cache@v2
       with:
         path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-java-2/target
-        key: ${{ runner.os }}-1-java-client-${{ hashFiles('clients/algoliasearch-client-java-2/**') }}
+        key: ${{ runner.os }}-1-java-client-${{ hashFiles('clients/algoliasearch-client-java-2/**') }}-${{ hashFiles('specs/dist/search.yml') }}
 
     # setup yarn
     - name: Get yarn cache directory path
