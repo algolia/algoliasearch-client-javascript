@@ -89,7 +89,6 @@ public class {{classname}} extends ApiClient {
     }
 
     /**
-     * {{&summary}}
      * {{&notes}}{{#allParams}}
      * @param {{paramName}} {{&description}}{{#required}} (required){{/required}}{{^required}} (optional{{^isContainer}}{{#defaultValue}}, default to {{.}}{{/defaultValue}}{{/isContainer}}){{/required}}{{/allParams}}{{#returnType}}
      * @return {{.}}{{/returnType}}
@@ -112,7 +111,7 @@ public class {{classname}} extends ApiClient {
         return res.getData();{{/returnType}}{{^returnType}}return this.execute(call).getData();{{/returnType}}
     }
     /**
-     * {{summary}} (asynchronously)
+     * (asynchronously)
      * {{notes}}{{#allParams}}
      * @param {{paramName}} {{{description}}}{{#required}} (required){{/required}}{{^required}} (optional{{^isContainer}}{{#defaultValue}}, default to {{.}}{{/defaultValue}}{{/isContainer}}){{/required}}{{/allParams}}
      * @param _callback The callback to be executed when the API call finishes
