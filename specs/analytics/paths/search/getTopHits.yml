@@ -6,13 +6,13 @@ get:
   summary: Returns top hits.
   parameters:
     - $ref: '../../../common/parameters.yml#/Index'
-    - $ref: '../common/parameters.yml#/Search'
-    - $ref: '../common/parameters.yml#/ClickAnalytics'
+    - $ref: '../../common/parameters.yml#/Search'
+    - $ref: '../../common/parameters.yml#/ClickAnalytics'
     - $ref: '../../../common/parameters.yml#/StartDate'
     - $ref: '../../../common/parameters.yml#/EndDate'
     - $ref: '../../../common/parameters.yml#/Limit'
     - $ref: '../../../common/parameters.yml#/Offset'
-    - $ref: '../common/parameters.yml#/Tags'
+    - $ref: '../../common/parameters.yml#/Tags'
   responses:
     '200':
       description: OK
@@ -20,8 +20,8 @@ get:
         application/json:
           schema:
             oneOf:
-              - $ref: '../common/schemas/getTopHits.yml#/getTopHitsResponse'
-              - $ref: '../common/schemas/getTopHits.yml#/getTopHitsResponseWithAnalytics'
+              - $ref: '../../common/schemas/getTopHits.yml#/getTopHitsResponse'
+              - $ref: '../../common/schemas/getTopHits.yml#/getTopHitsResponseWithAnalytics'
     '400':
       $ref: ../../../common/responses/BadRequest.yml
     '402':

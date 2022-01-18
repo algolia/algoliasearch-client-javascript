@@ -3,6 +3,7 @@ post:
     - search
   operationId: appendSource
   description: Add a single source to the list of allowed sources.
+  summary: Add a single source.
   requestBody:
     required: true
     description: The source to add.
@@ -13,3 +14,11 @@ post:
   responses:
     '200':
       $ref: ../../../common/responses/CreatedAt.yml
+    '400':
+      $ref: ../../../common/responses/BadRequest.yml
+    '402':
+      $ref: ../../../common/responses/FeatureNotEnabled.yml
+    '403':
+      $ref: ../../../common/responses/MethodNotAllowed.yml
+    '404':
+      $ref: ../../../common/responses/IndexNotFound.yml

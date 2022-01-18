@@ -3,6 +3,7 @@ put:
     - query-suggestions
   operationId: updateConfig
   description: Update the configuration of a Query Suggestions index.
+  summary: Update the configuration of a Query Suggestions index.
   parameters:
     - $ref: ../../common/parameters.yml#/IndexName
   requestBody:
@@ -29,6 +30,7 @@ delete:
     By deleting a configuraton, you stop all updates to the underlying query suggestion index.
 
     Note that when doing this, the underlying index does not change - existing suggestions remain untouched.
+  summary: Delete a configuration of a Query Suggestion's index.
   parameters:
     - $ref: ../../common/parameters.yml#/IndexName
   responses:
@@ -46,6 +48,7 @@ get:
     - query-suggestions
   operationId: getConfig
   description: Get the configuration of a single Query Suggestions index.
+  summary: Get the configuration of a single Query Suggestions index.
   parameters:
     - $ref: ../../common/parameters.yml#/IndexName
   responses:

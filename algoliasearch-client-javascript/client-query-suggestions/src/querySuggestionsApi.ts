@@ -94,6 +94,7 @@ export class QuerySuggestionsApi {
   /**
    * Create a configuration of a Query Suggestions index. There\'s a limit of 100 configurations per application.
    *
+   * @summary Create a configuration of a Query Suggestions index.
    * @param querySuggestionsIndexWithIndexParam - The querySuggestionsIndexWithIndexParam object.
    */
   createConfig(
@@ -128,6 +129,7 @@ export class QuerySuggestionsApi {
   /**
    * Delete a configuration of a Query Suggestion\'s index. By deleting a configuraton, you stop all updates to the underlying query suggestion index. Note that when doing this, the underlying index does not change - existing suggestions remain untouched.
    *
+   * @summary Delete a configuration of a Query Suggestion\'s index.
    * @param deleteConfig - The deleteConfig object.
    * @param deleteConfig.indexName - The index in which to perform the request.
    */
@@ -159,6 +161,8 @@ export class QuerySuggestionsApi {
   }
   /**
    * Get all the configurations of Query Suggestions. For each index, you get a block of JSON with a list of its configuration settings.
+   *
+   * @summary Get all the configurations of Query Suggestions.
    */
   getAllConfigs(): Promise<QuerySuggestionsIndex[]> {
     const path = '/1/configs';
@@ -180,6 +184,7 @@ export class QuerySuggestionsApi {
   /**
    * Get the configuration of a single Query Suggestions index.
    *
+   * @summary Get the configuration of a single Query Suggestions index.
    * @param getConfig - The getConfig object.
    * @param getConfig.indexName - The index in which to perform the request.
    */
@@ -212,6 +217,7 @@ export class QuerySuggestionsApi {
   /**
    * Get the status of a Query Suggestion\'s index. The status includes whether the Query Suggestions index is currently in the process of being built, and the last build time.
    *
+   * @summary Get the status of a Query Suggestion\'s index.
    * @param getConfigStatus - The getConfigStatus object.
    * @param getConfigStatus.indexName - The index in which to perform the request.
    */
@@ -244,6 +250,7 @@ export class QuerySuggestionsApi {
   /**
    * Get the log file of the last build of a single Query Suggestion index.
    *
+   * @summary Get the log file of the last build of a single Query Suggestion index.
    * @param getLogFile - The getLogFile object.
    * @param getLogFile.indexName - The index in which to perform the request.
    */
@@ -276,6 +283,7 @@ export class QuerySuggestionsApi {
   /**
    * Update the configuration of a Query Suggestions index.
    *
+   * @summary Update the configuration of a Query Suggestions index.
    * @param updateConfig - The updateConfig object.
    * @param updateConfig.indexName - The index in which to perform the request.
    * @param updateConfig.querySuggestionsIndexParam - The querySuggestionsIndexParam object.

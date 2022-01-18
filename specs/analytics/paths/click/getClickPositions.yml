@@ -8,7 +8,7 @@ get:
     - $ref: '../../../common/parameters.yml#/Index'
     - $ref: '../../../common/parameters.yml#/StartDate'
     - $ref: '../../../common/parameters.yml#/EndDate'
-    - $ref: '../common/parameters.yml#/Tags'
+    - $ref: '../../common/parameters.yml#/Tags'
   responses:
     '200':
       description: OK
@@ -44,7 +44,7 @@ get:
                       items:
                         type: integer
                     clickCount:
-                      $ref: '../common/parameters.yml#/clickCount'
+                      $ref: '../../common/parameters.yml#/clickCount'
     '400':
       $ref: ../../../common/responses/BadRequest.yml
     '402':

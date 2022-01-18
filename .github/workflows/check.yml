@@ -50,11 +50,16 @@ jobs:
       - name: Restore cache
         uses: ./.github/actions/cache
 
-      - name: Checking ${{ matrix.client }} specs
-        run: yarn build:specs ${{ matrix.client }}
+      - name: Cache ${{ matrix.client }} spec
+        id: cache
+        uses: actions/cache@v2
+        with:
+          path: '/home/runner/work/api-clients-automation/api-clients-automation/specs/dist/${{ matrix.client }}.yml'
+          key: ${{ runner.os }}-${{ matrix.client }}-specs-${{ hashFiles(format('specs/{0}/**', matrix.client)) }}
 
-      - name: Lint ${{ matrix.client }} specs
-        run: yarn eslint --ext=yml specs/${{ matrix.client }}
+      - name: Building ${{ matrix.client }} specs
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: yarn build:specs ${{ matrix.client }}
 
   client_javascript:
     runs-on: ubuntu-20.04
@@ -69,13 +74,16 @@ jobs:
 
       - name: Restore cache
         uses: ./.github/actions/cache
+        with:
+          job: client
+          spec: ${{ matrix.client.name }}
 
       - name: Cache ${{ matrix.client.name }} client
         id: cache
         uses: actions/cache@v2
         with:
           path: '/home/runner/work/api-clients-automation/api-clients-automation/${{ matrix.client.folder }}/dist'
-          key: ${{ runner.os }}-js-client-${{ matrix.client.name }}-${{ hashFiles(format('{0}/**', matrix.client.folder)) }}
+          key: ${{ runner.os }}-1-js-client-${{ matrix.client.name }}-${{ hashFiles(format('{0}/**', matrix.client.folder)) }}
 
       - name: Generate ${{ matrix.client.name }} client
         if: steps.cache.outputs.cache-hit != 'true'
@@ -99,14 +107,16 @@ jobs:
       - name: Restore cache
         uses: ./.github/actions/cache
         with:
-          job: java
+          job: client
+          language: java
+          spec: ${{ matrix.client.name }}
 
       - name: Cache ${{ matrix.client.name }} client
         id: cache
         uses: actions/cache@v2
         with:
-          path: '/home/runner/work/api-clients-automation/api-clients-automation/${{ matrix.client.folder }}/dist'
-          key: ${{ runner.os }}-java-client-${{ matrix.client.name }}-${{ hashFiles(format('{0}/**', matrix.client.folder)) }}
+          path: '/home/runner/work/api-clients-automation/api-clients-automation/${{ matrix.client.folder }}/target'
+          key: ${{ runner.os }}-1-java-client-${{ matrix.client.name }}-${{ hashFiles(format('{0}/**', matrix.client.folder)) }}
 
       - name: Generate ${{ matrix.client.name }} client
         if: steps.cache.outputs.cache-hit != 'true'

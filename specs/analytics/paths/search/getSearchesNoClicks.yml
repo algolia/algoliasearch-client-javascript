@@ -10,7 +10,7 @@ get:
     - $ref: '../../../common/parameters.yml#/EndDate'
     - $ref: '../../../common/parameters.yml#/Limit'
     - $ref: '../../../common/parameters.yml#/Offset'
-    - $ref: '../common/parameters.yml#/Tags'
+    - $ref: '../../common/parameters.yml#/Tags'
   responses:
     '200':
       description: OK
@@ -35,11 +35,11 @@ get:
                     - withFilterCount
                   properties:
                     search:
-                      $ref: ../common/parameters.yml#/search
+                      $ref: ../../common/parameters.yml#/search
                     count:
-                      $ref: ../common/parameters.yml#/count
+                      $ref: ../../../common/parameters.yml#/count
                     withFilterCount:
-                      $ref: ../common/parameters.yml#/count
+                      $ref: ../../../common/parameters.yml#/count
     '400':
       $ref: ../../../common/responses/BadRequest.yml
     '402':

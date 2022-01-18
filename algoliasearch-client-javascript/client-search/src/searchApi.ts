@@ -8,7 +8,7 @@ import type { BatchResponse } from '../model/batchResponse';
 import type { BatchWriteObject } from '../model/batchWriteObject';
 import type { BrowseRequest } from '../model/browseRequest';
 import type { BrowseResponse } from '../model/browseResponse';
-import type { BuildInOperation } from '../model/buildInOperation';
+import type { BuiltInOperation } from '../model/builtInOperation';
 import type { CreatedAtResponse } from '../model/createdAtResponse';
 import type { DeleteApiKeyResponse } from '../model/deleteApiKeyResponse';
 import type { DeleteSourceResponse } from '../model/deleteSourceResponse';
@@ -247,6 +247,7 @@ export class SearchApi {
   /**
    * Add a single source to the list of allowed sources.
    *
+   * @summary Add a single source.
    * @param source - The source to add.
    */
   appendSource(source: Source): Promise<CreatedAtResponse> {
@@ -330,6 +331,7 @@ export class SearchApi {
   /**
    * Performs multiple write operations in a single API call.
    *
+   * @summary Performs multiple write operations in a single API call.
    * @param batch - The batch object.
    * @param batch.indexName - The index in which to perform the request.
    * @param batch.batchWriteObject - The batchWriteObject object.
@@ -897,6 +899,7 @@ export class SearchApi {
   /**
    * Remove a single source from the list of allowed sources.
    *
+   * @summary Remove a single source.
    * @param deleteSource - The deleteSource object.
    * @param deleteSource.source - The IP range of the source.
    */
@@ -1054,6 +1057,7 @@ export class SearchApi {
   /**
    * Return the lastest log entries.
    *
+   * @summary Return the lastest log entries.
    * @param getLogs - The getLogs object.
    * @param getLogs.offset - First entry to retrieve (zero-based). Log entries are sorted by decreasing date, therefore 0 designates the most recent log entry.
    * @param getLogs.length - Maximum number of entries to retrieve. The maximum allowed value is 1000.
@@ -1218,6 +1222,7 @@ export class SearchApi {
   /**
    * Retrieve settings of a given indexName.
    *
+   * @summary Retrieve settings of a given indexName.
    * @param getSettings - The getSettings object.
    * @param getSettings.indexName - The index in which to perform the request.
    */
@@ -1249,6 +1254,8 @@ export class SearchApi {
   }
   /**
    * List all allowed sources.
+   *
+   * @summary List all allowed sources.
    */
   getSources(): Promise<Source[]> {
     const path = '/1/security/sources';
@@ -1309,6 +1316,7 @@ export class SearchApi {
   /**
    * Check the current status of a given task.
    *
+   * @summary Check the current status of a given task.
    * @param getTask - The getTask object.
    * @param getTask.indexName - The index in which to perform the request.
    * @param getTask.taskID - Unique identifier of an task. Numeric value (up to 64bits).
@@ -1540,6 +1548,7 @@ export class SearchApi {
   /**
    * Perform multiple write operations, potentially targeting multiple indices, in a single API call.
    *
+   * @summary Perform multiple write operations.
    * @param batchObject - The batchObject object.
    */
   multipleBatch(batchObject: BatchObject): Promise<MultipleBatchResponse> {
@@ -1569,6 +1578,7 @@ export class SearchApi {
   /**
    * Get search results for the given requests.
    *
+   * @summary Get search results for the given requests.
    * @param multipleQueriesObject - The multipleQueriesObject object.
    */
   multipleQueries(
@@ -1674,13 +1684,13 @@ export class SearchApi {
    * @param partialUpdateObject - The partialUpdateObject object.
    * @param partialUpdateObject.indexName - The index in which to perform the request.
    * @param partialUpdateObject.objectID - Unique identifier of an object.
-   * @param partialUpdateObject.stringBuildInOperation - List of attributes to update.
+   * @param partialUpdateObject.stringBuiltInOperation - List of attributes to update.
    * @param partialUpdateObject.createIfNotExists - Creates the record if it does not exist yet.
    */
   partialUpdateObject({
     indexName,
     objectID,
-    stringBuildInOperation,
+    stringBuiltInOperation,
     createIfNotExists,
   }: PartialUpdateObjectProps): Promise<UpdatedAtWithObjectIdResponse> {
     const path = '/1/indexes/{indexName}/{objectID}/partial'
@@ -1702,11 +1712,11 @@ export class SearchApi {
     }
 
     if (
-      stringBuildInOperation === null ||
-      stringBuildInOperation === undefined
+      stringBuiltInOperation === null ||
+      stringBuiltInOperation === undefined
     ) {
       throw new Error(
-        'Required parameter stringBuildInOperation was null or undefined when calling partialUpdateObject.'
+        'Required parameter stringBuiltInOperation was null or undefined when calling partialUpdateObject.'
       );
     }
 
@@ -1717,7 +1727,7 @@ export class SearchApi {
     const request: Request = {
       method: 'POST',
       path,
-      data: stringBuildInOperation,
+      data: stringBuiltInOperation,
     };
 
     const requestOptions: RequestOptions = {
@@ -1763,6 +1773,7 @@ export class SearchApi {
   /**
    * Replace all allowed sources.
    *
+   * @summary Replace all allowed sources.
    * @param replaceSources - The replaceSources object.
    * @param replaceSources.source - The sources to allow.
    */
@@ -1828,6 +1839,7 @@ export class SearchApi {
   /**
    * Add an object to the index, automatically assigning it an object ID.
    *
+   * @summary Add an object to the index.
    * @param saveObject - The saveObject object.
    * @param saveObject.indexName - The index in which to perform the request.
    * @param saveObject.body - The Algolia object.
@@ -2064,6 +2076,7 @@ export class SearchApi {
   /**
    * Get search results.
    *
+   * @summary Get search results.
    * @param search - The search object.
    * @param search.indexName - The index in which to perform the request.
    * @param search.searchParams - The searchParams object.
@@ -2393,6 +2406,7 @@ export class SearchApi {
   /**
    * Update settings of a given indexName. Only specified settings are overridden; unspecified settings are left unchanged. Specifying null for a setting resets it to its default value.
    *
+   * @summary Update settings of a given indexName.
    * @param setSettings - The setSettings object.
    * @param setSettings.indexName - The index in which to perform the request.
    * @param setSettings.indexSettings - The indexSettings object.
@@ -2794,7 +2808,7 @@ export type PartialUpdateObjectProps = {
   /**
    * List of attributes to update.
    */
-  stringBuildInOperation: Array<{ [key: string]: BuildInOperation | string }>;
+  stringBuiltInOperation: Array<{ [key: string]: BuiltInOperation | string }>;
   /**
    * Creates the record if it does not exist yet.
    */

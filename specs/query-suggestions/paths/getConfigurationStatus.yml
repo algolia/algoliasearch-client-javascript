@@ -6,6 +6,7 @@ get:
     Get the status of a Query Suggestion's index.
 
     The status includes whether the Query Suggestions index is currently in the process of being built, and the last build time.
+  summary: Get the status of a Query Suggestion's index.
   parameters:
     - $ref: ../../common/parameters.yml#/IndexName
   responses:

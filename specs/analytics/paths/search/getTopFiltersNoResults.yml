@@ -6,19 +6,19 @@ get:
   summary: Returns top filters with no results.
   parameters:
     - $ref: '../../../common/parameters.yml#/Index'
-    - $ref: '../common/parameters.yml#/Search'
+    - $ref: '../../common/parameters.yml#/Search'
     - $ref: '../../../common/parameters.yml#/StartDate'
     - $ref: '../../../common/parameters.yml#/EndDate'
     - $ref: '../../../common/parameters.yml#/Limit'
     - $ref: '../../../common/parameters.yml#/Offset'
-    - $ref: '../common/parameters.yml#/Tags'
+    - $ref: '../../common/parameters.yml#/Tags'
   responses:
     '200':
       description: OK
       content:
         application/json:
           schema:
-            $ref: '../common/schemas/getTopFiltersNoResults.yml#/getTopFiltersNoResultsResponse'
+            $ref: '../../common/schemas/getTopFiltersNoResults.yml#/getTopFiltersNoResultsResponse'
     '400':
       $ref: ../../../common/responses/BadRequest.yml
     '402':

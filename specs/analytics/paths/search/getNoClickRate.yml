@@ -8,7 +8,7 @@ get:
     - $ref: '../../../common/parameters.yml#/Index'
     - $ref: '../../../common/parameters.yml#/StartDate'
     - $ref: '../../../common/parameters.yml#/EndDate'
-    - $ref: '../common/parameters.yml#/Tags'
+    - $ref: '../../common/parameters.yml#/Tags'
   responses:
     '200':
       description: OK
@@ -25,11 +25,11 @@ get:
               - rate
             properties:
               rate:
-                $ref: '../common/parameters.yml#/rate'
+                $ref: '../../common/parameters.yml#/rate'
               count:
-                $ref: '../common/parameters.yml#/clickCount'
+                $ref: '../../common/parameters.yml#/clickCount'
               noClickCount:
-                $ref: '../common/parameters.yml#/clickCount'
+                $ref: '../../common/parameters.yml#/clickCount'
               dates:
                 type: array
                 description: A list of searches without clicks with their date, rate and counts.
@@ -43,13 +43,13 @@ get:
                     - date
                   properties:
                     rate:
-                      $ref: '../common/parameters.yml#/rate'
+                      $ref: '../../common/parameters.yml#/rate'
                     count:
-                      $ref: '../common/parameters.yml#/clickCount'
+                      $ref: '../../common/parameters.yml#/clickCount'
                     noClickCount:
-                      $ref: '../common/parameters.yml#/clickCount'
+                      $ref: '../../common/parameters.yml#/clickCount'
                     date:
-                      $ref: '../common/parameters.yml#/date'
+                      $ref: '../../common/parameters.yml#/date'
     '400':
       $ref: ../../../common/responses/BadRequest.yml
     '402':

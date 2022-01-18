@@ -3,6 +3,7 @@ get:
     - search
   operationId: getSources
   description: List all allowed sources.
+  summary: List all allowed sources.
   responses:
     '200':
       description: OK
@@ -10,12 +11,21 @@ get:
         application/json:
           schema:
             $ref: 'common/schemas.yml#/sources'
+    '400':
+      $ref: ../../../common/responses/BadRequest.yml
+    '402':
+      $ref: ../../../common/responses/FeatureNotEnabled.yml
+    '403':
+      $ref: ../../../common/responses/MethodNotAllowed.yml
+    '404':
+      $ref: ../../../common/responses/IndexNotFound.yml
 
 put:
   tags:
     - search
   operationId: replaceSources
   description: Replace all allowed sources.
+  summary: Replace all allowed sources.
   requestBody:
     required: true
     description: The sources to allow.
@@ -37,3 +47,11 @@ put:
             properties:
               updatedAt:
                 $ref: '../../../common/parameters.yml#/updatedAt'
+    '400':
+      $ref: ../../../common/responses/BadRequest.yml
+    '402':
+      $ref: ../../../common/responses/FeatureNotEnabled.yml
+    '403':
+      $ref: ../../../common/responses/MethodNotAllowed.yml
+    '404':
+      $ref: ../../../common/responses/IndexNotFound.yml

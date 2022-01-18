@@ -6,14 +6,14 @@ get:
   summary: Returns top searches.
   parameters:
     - $ref: '../../../common/parameters.yml#/Index'
-    - $ref: '../common/parameters.yml#/ClickAnalytics'
+    - $ref: '../../common/parameters.yml#/ClickAnalytics'
     - $ref: '../../../common/parameters.yml#/StartDate'
     - $ref: '../../../common/parameters.yml#/EndDate'
-    - $ref: '../common/parameters.yml#/OrderBy'
-    - $ref: '../common/parameters.yml#/Direction'
+    - $ref: '../../common/parameters.yml#/OrderBy'
+    - $ref: '../../common/parameters.yml#/Direction'
     - $ref: '../../../common/parameters.yml#/Limit'
     - $ref: '../../../common/parameters.yml#/Offset'
-    - $ref: '../common/parameters.yml#/Tags'
+    - $ref: '../../common/parameters.yml#/Tags'
   responses:
     '200':
       description: OK
@@ -21,8 +21,8 @@ get:
         application/json:
           schema:
             oneOf:
-              - $ref: '../common/schemas/getTopSearches.yml#/getTopSearchesResponse'
-              - $ref: '../common/schemas/getTopSearches.yml#/getTopSearchesResponseWithAnalytics'
+              - $ref: '../../common/schemas/getTopSearches.yml#/getTopSearchesResponse'
+              - $ref: '../../common/schemas/getTopSearches.yml#/getTopSearchesResponseWithAnalytics'
     '400':
       $ref: ../../../common/responses/BadRequest.yml
     '402':

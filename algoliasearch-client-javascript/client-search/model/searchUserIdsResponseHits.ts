@@ -1,8 +1,10 @@
 import type { SearchUserIdsResponseHighlightResult } from './searchUserIdsResponseHighlightResult';
-import type { UserId } from './userId';
 
 export type SearchUserIdsResponseHits = {
-  userID: UserId;
+  /**
+   * UserID of the user.
+   */
+  userID: string;
   /**
    * Name of the cluster.
    */

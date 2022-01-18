@@ -3,6 +3,7 @@ post:
     - search
   operationId: search
   description: Get search results.
+  summary: Get search results.
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
   requestBody:
@@ -10,7 +11,7 @@ post:
     content:
       application/json:
         schema:
-          $ref: '../../common/schemas/SearchParams.yml#/searchParams'
+          $ref: '../../../common/schemas/SearchParams.yml#/searchParams'
   responses:
     '200':
       description: OK

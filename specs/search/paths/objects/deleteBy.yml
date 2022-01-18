@@ -16,7 +16,7 @@ post:
     content:
       application/json:
         schema:
-          $ref: '../../common/schemas/SearchParams.yml#/searchParams'
+          $ref: '../../../common/schemas/SearchParams.yml#/searchParams'
   responses:
     '200':
       $ref: ../../../common/responses/DeletedAt.yml

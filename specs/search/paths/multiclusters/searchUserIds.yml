@@ -27,9 +27,9 @@ post:
             clusterName:
               $ref: '../../common/schemas/Cluster.yml#/clusterName'
             page:
-              $ref: '../../common/schemas/SearchParams.yml#/page'
+              $ref: '../../../common/schemas/SearchParams.yml#/page'
             hitsPerPage:
-              $ref: '../../common/schemas/IndexSettings.yml#/hitsPerPage'
+              $ref: '../../../common/schemas/IndexSettings.yml#/hitsPerPage'
           required:
             - query
   responses:
@@ -79,7 +79,7 @@ post:
               nbHits:
                 $ref: '../../common/schemas/SearchResponse.yml#/nbHits'
               page:
-                $ref: '../../common/schemas/SearchParams.yml#/page'
+                $ref: '../../../common/schemas/SearchParams.yml#/page'
               hitsPerPage:
                 $ref: '../../../common/parameters.yml#/hitsPerPage'
               updatedAt:

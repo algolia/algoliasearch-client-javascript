@@ -8,7 +8,7 @@
   ],
   "scripts": {
     "build:clients": "./scripts/multiplexer.sh ${2:-nonverbose} ./scripts/builds/clients.sh ${0:-all} ${1:-all}",
-    "build:specs": "./scripts/builds/specs.sh ${0:-all} ${1:-yaml}",
+    "build:specs": "./scripts/builds/specs.sh ${0:-all} ${1:-yml}",
     "build": "yarn build:specs && yarn build:clients",
     "clean": "rm -rf **/dist **/build **/node_modules",
     "cts:generate": "yarn workspace tests build && ./scripts/multiplexer.sh ${2:-nonverbose} yarn workspace tests generate ${0:-all} ${1:-all} && yarn workspace tests lint:fix",
@@ -17,16 +17,17 @@
     "docker:clean": "docker stop dev; docker rm -f dev; docker image rm -f api-clients-automation",
     "docker:mount": "./scripts/docker/mount.sh",
     "docker:setup": "yarn docker:clean && yarn docker:build && yarn docker:mount",
-    "docker": "docker exec dev yarn $*",
+    "docker": "docker exec -it dev yarn $*",
     "lint": "eslint --ext=ts .",
     "post:generate": "./scripts/post-gen/global.sh",
     "generate": "./scripts/multiplexer.sh ${2:-nonverbose} ./scripts/generate.sh ${0:-all} ${1:-all} && yarn post:generate",
     "playground": "./scripts/multiplexer.sh ${2:-nonverbose} ./scripts/playground.sh ${0:-javascript} ${1:-search}",
     "specs:format": "yarn prettier --write specs",
-    "specs:lint": "eslint --ext=yml specs/ .github/"
+    "specs:lint": "eslint --ext=yml specs/ .github/ && yarn openapi lint"
   },
   "devDependencies": {
     "@openapitools/openapi-generator-cli": "2.4.18",
+    "@redocly/openapi-cli": "1.0.0-beta.79",
     "@typescript-eslint/eslint-plugin": "5.5.0",
     "@typescript-eslint/parser": "5.5.0",
     "babel-eslint": "10.1.0",
@@ -43,7 +44,6 @@
     "json": "11.0.0",
     "prettier": "2.5.1",
     "prettier-plugin-java": "1.6.0",
-    "swagger-cli": "4.0.4",
     "typescript": "4.5.4"
   },
   "engines": {
