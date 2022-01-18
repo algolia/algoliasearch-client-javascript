@@ -121,7 +121,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Create a new API key. Add a new API Key with specific permissions/restrictions.
+   * Add a new API Key with specific permissions/restrictions.
    *
    * @param apiKey (required)
    * @return AddApiKeyResponse
@@ -136,8 +136,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Create a new API key. (asynchronously) Add a new API Key with specific
-   * permissions/restrictions.
+   * (asynchronously) Add a new API Key with specific permissions/restrictions.
    *
    * @param apiKey (required)
    * @param _callback The callback to be executed when the API call finishes
@@ -231,9 +230,8 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Add or replace an object with a given object ID. Add or replace an object with a given object
-   * ID. If the object does not exist, it will be created. If it already exists, it will be
-   * replaced.
+   * Add or replace an object with a given object ID. If the object does not exist, it will be
+   * created. If it already exists, it will be replaced.
    *
    * @param indexName The index in which to perform the request. (required)
    * @param objectID Unique identifier of an object. (required)
@@ -261,9 +259,8 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Add or replace an object with a given object ID. (asynchronously) Add or replace an object with
-   * a given object ID. If the object does not exist, it will be created. If it already exists, it
-   * will be replaced.
+   * (asynchronously) Add or replace an object with a given object ID. If the object does not exist,
+   * it will be created. If it already exists, it will be replaced.
    *
    * @param indexName The index in which to perform the request. (required)
    * @param objectID Unique identifier of an object. (required)
@@ -434,10 +431,10 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Assign or Move userID Assign or Move a userID to a cluster. The time it takes to migrate (move)
-   * a user is proportional to the amount of data linked to the userID. Upon success, the response
-   * is 200 OK. A successful response indicates that the operation has been taken into account, and
-   * the userID is directly usable.
+   * Assign or Move a userID to a cluster. The time it takes to migrate (move) a user is
+   * proportional to the amount of data linked to the userID. Upon success, the response is 200 OK.
+   * A successful response indicates that the operation has been taken into account, and the userID
+   * is directly usable.
    *
    * @param xAlgoliaUserID userID to assign. (required)
    * @param assignUserIdObject (required)
@@ -460,10 +457,10 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Assign or Move userID (asynchronously) Assign or Move a userID to a cluster. The time it takes
-   * to migrate (move) a user is proportional to the amount of data linked to the userID. Upon
-   * success, the response is 200 OK. A successful response indicates that the operation has been
-   * taken into account, and the userID is directly usable.
+   * (asynchronously) Assign or Move a userID to a cluster. The time it takes to migrate (move) a
+   * user is proportional to the amount of data linked to the userID. Upon success, the response is
+   * 200 OK. A successful response indicates that the operation has been taken into account, and the
+   * userID is directly usable.
    *
    * @param xAlgoliaUserID userID to assign. (required)
    * @param assignUserIdObject (required)
@@ -657,9 +654,9 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Batch assign userIDs Assign multiple userIDs to a cluster. Upon success, the response is 200
-   * OK. A successful response indicates that the operation has been taken into account, and the
-   * userIDs are directly usable.
+   * Assign multiple userIDs to a cluster. Upon success, the response is 200 OK. A successful
+   * response indicates that the operation has been taken into account, and the userIDs are directly
+   * usable.
    *
    * @param xAlgoliaUserID userID to assign. (required)
    * @param batchAssignUserIdsObject (required)
@@ -682,9 +679,9 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Batch assign userIDs (asynchronously) Assign multiple userIDs to a cluster. Upon success, the
-   * response is 200 OK. A successful response indicates that the operation has been taken into
-   * account, and the userIDs are directly usable.
+   * (asynchronously) Assign multiple userIDs to a cluster. Upon success, the response is 200 OK. A
+   * successful response indicates that the operation has been taken into account, and the userIDs
+   * are directly usable.
    *
    * @param xAlgoliaUserID userID to assign. (required)
    * @param batchAssignUserIdsObject (required)
@@ -776,7 +773,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Send a batch of dictionary entries. Send a batch of dictionary entries.
+   * Send a batch of dictionary entries.
    *
    * @param dictionaryName The dictionary to search in. (required)
    * @param batchDictionaryEntries (required)
@@ -799,7 +796,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Send a batch of dictionary entries. (asynchronously) Send a batch of dictionary entries.
+   * (asynchronously) Send a batch of dictionary entries.
    *
    * @param dictionaryName The dictionary to search in. (required)
    * @param batchDictionaryEntries (required)
@@ -911,7 +908,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Batch Rules. Create or update a batch of Rules.
+   * Create or update a batch of Rules.
    *
    * @param indexName The index in which to perform the request. (required)
    * @param rule (required)
@@ -942,7 +939,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Batch Rules. (asynchronously) Create or update a batch of Rules.
+   * (asynchronously) Create or update a batch of Rules.
    *
    * @param indexName The index in which to perform the request. (required)
    * @param rule (required)
@@ -1029,13 +1026,12 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Retrieve all index content. This method allows you to retrieve all index content. It can
-   * retrieve up to 1,000 records per call and supports full text search and filters. For
-   * performance reasons, some features are not supported, including `distinct`, sorting by `typos`,
-   * `words` or `geo distance`. When there is more content to be browsed, the response contains a
-   * cursor field. This cursor has to be passed to the subsequent call to browse in order to get the
-   * next page of results. When the end of the index has been reached, the cursor field is absent
-   * from the response.
+   * This method allows you to retrieve all index content. It can retrieve up to 1,000 records per
+   * call and supports full text search and filters. For performance reasons, some features are not
+   * supported, including `distinct`, sorting by `typos`, `words` or `geo distance`. When there is
+   * more content to be browsed, the response contains a cursor field. This cursor has to be passed
+   * to the subsequent call to browse in order to get the next page of results. When the end of the
+   * index has been reached, the cursor field is absent from the response.
    *
    * @param indexName The index in which to perform the request. (required)
    * @param browseRequest (optional)
@@ -1052,14 +1048,13 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Retrieve all index content. (asynchronously) This method allows you to retrieve all index
-   * content. It can retrieve up to 1,000 records per call and supports full text search and
-   * filters. For performance reasons, some features are not supported, including
-   * &#x60;distinct&#x60;, sorting by &#x60;typos&#x60;, &#x60;words&#x60; or &#x60;geo
-   * distance&#x60;. When there is more content to be browsed, the response contains a cursor field.
-   * This cursor has to be passed to the subsequent call to browse in order to get the next page of
-   * results. When the end of the index has been reached, the cursor field is absent from the
-   * response.
+   * (asynchronously) This method allows you to retrieve all index content. It can retrieve up to
+   * 1,000 records per call and supports full text search and filters. For performance reasons, some
+   * features are not supported, including &#x60;distinct&#x60;, sorting by &#x60;typos&#x60;,
+   * &#x60;words&#x60; or &#x60;geo distance&#x60;. When there is more content to be browsed, the
+   * response contains a cursor field. This cursor has to be passed to the subsequent call to browse
+   * in order to get the next page of results. When the end of the index has been reached, the
+   * cursor field is absent from the response.
    *
    * @param indexName The index in which to perform the request. (required)
    * @param browseRequest (optional)
@@ -1141,7 +1136,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Clear all synonyms. Remove all synonyms from an index.
+   * Remove all synonyms from an index.
    *
    * @param indexName The index in which to perform the request. (required)
    * @param forwardToReplicas When true, changes are also propagated to replicas of the given
@@ -1165,7 +1160,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Clear all synonyms. (asynchronously) Remove all synonyms from an index.
+   * (asynchronously) Remove all synonyms from an index.
    *
    * @param indexName The index in which to perform the request. (required)
    * @param forwardToReplicas When true, changes are also propagated to replicas of the given
@@ -1240,8 +1235,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * clear all objects from an index. Delete an index's content, but leave settings and
-   * index-specific API keys untouched.
+   * Delete an index's content, but leave settings and index-specific API keys untouched.
    *
    * @param indexName The index in which to perform the request. (required)
    * @return UpdatedAtResponse
@@ -1256,8 +1250,8 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * clear all objects from an index. (asynchronously) Delete an index&#39;s content, but leave
-   * settings and index-specific API keys untouched.
+   * (asynchronously) Delete an index&#39;s content, but leave settings and index-specific API keys
+   * untouched.
    *
    * @param indexName The index in which to perform the request. (required)
    * @param _callback The callback to be executed when the API call finishes
@@ -1337,7 +1331,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Clear Rules. Delete all Rules in the index.
+   * Delete all Rules in the index.
    *
    * @param indexName The index in which to perform the request. (required)
    * @param forwardToReplicas When true, changes are also propagated to replicas of the given
@@ -1361,7 +1355,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Clear Rules. (asynchronously) Delete all Rules in the index.
+   * (asynchronously) Delete all Rules in the index.
    *
    * @param indexName The index in which to perform the request. (required)
    * @param forwardToReplicas When true, changes are also propagated to replicas of the given
@@ -1436,7 +1430,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Delete an API key. Delete an existing API Key.
+   * Delete an existing API Key.
    *
    * @param key API Key string. (required)
    * @return DeleteApiKeyResponse
@@ -1451,7 +1445,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Delete an API key. (asynchronously) Delete an existing API Key.
+   * (asynchronously) Delete an existing API Key.
    *
    * @param key API Key string. (required)
    * @param _callback The callback to be executed when the API call finishes
@@ -1531,9 +1525,9 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Delete all records matching the query. Remove all objects matching a filter (including geo
-   * filters). This method enables you to delete one or more objects based on filters (numeric,
-   * facet, tag or geo queries). It doesn't accept empty filters or a query.
+   * Remove all objects matching a filter (including geo filters). This method enables you to delete
+   * one or more objects based on filters (numeric, facet, tag or geo queries). It doesn't accept
+   * empty filters or a query.
    *
    * @param indexName The index in which to perform the request. (required)
    * @param searchParams (required)
@@ -1552,9 +1546,9 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Delete all records matching the query. (asynchronously) Remove all objects matching a filter
-   * (including geo filters). This method enables you to delete one or more objects based on filters
-   * (numeric, facet, tag or geo queries). It doesn&#39;t accept empty filters or a query.
+   * (asynchronously) Remove all objects matching a filter (including geo filters). This method
+   * enables you to delete one or more objects based on filters (numeric, facet, tag or geo
+   * queries). It doesn&#39;t accept empty filters or a query.
    *
    * @param indexName The index in which to perform the request. (required)
    * @param searchParams (required)
@@ -1624,7 +1618,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Delete index. Delete an existing index.
+   * Delete an existing index.
    *
    * @param indexName The index in which to perform the request. (required)
    * @return DeletedAtResponse
@@ -1639,7 +1633,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Delete index. (asynchronously) Delete an existing index.
+   * (asynchronously) Delete an existing index.
    *
    * @param indexName The index in which to perform the request. (required)
    * @param _callback The callback to be executed when the API call finishes
@@ -1723,7 +1717,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Delete object. Delete an existing object.
+   * Delete an existing object.
    *
    * @param indexName The index in which to perform the request. (required)
    * @param objectID Unique identifier of an object. (required)
@@ -1740,7 +1734,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Delete object. (asynchronously) Delete an existing object.
+   * (asynchronously) Delete an existing object.
    *
    * @param indexName The index in which to perform the request. (required)
    * @param objectID Unique identifier of an object. (required)
@@ -1836,7 +1830,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Delete a rule. Delete the Rule with the specified objectID.
+   * Delete the Rule with the specified objectID.
    *
    * @param indexName The index in which to perform the request. (required)
    * @param objectID Unique identifier of an object. (required)
@@ -1863,7 +1857,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Delete a rule. (asynchronously) Delete the Rule with the specified objectID.
+   * (asynchronously) Delete the Rule with the specified objectID.
    *
    * @param indexName The index in which to perform the request. (required)
    * @param objectID Unique identifier of an object. (required)
@@ -2050,7 +2044,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Delete synonym. Delete a single synonyms set, identified by the given objectID.
+   * Delete a single synonyms set, identified by the given objectID.
    *
    * @param indexName The index in which to perform the request. (required)
    * @param objectID Unique identifier of an object. (required)
@@ -2077,8 +2071,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Delete synonym. (asynchronously) Delete a single synonyms set, identified by the given
-   * objectID.
+   * (asynchronously) Delete a single synonyms set, identified by the given objectID.
    *
    * @param indexName The index in which to perform the request. (required)
    * @param objectID Unique identifier of an object. (required)
@@ -2156,7 +2149,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Get an API key. Get the permissions of an API key.
+   * Get the permissions of an API key.
    *
    * @param key API Key string. (required)
    * @return KeyObject
@@ -2171,7 +2164,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Get an API key. (asynchronously) Get the permissions of an API key.
+   * (asynchronously) Get the permissions of an API key.
    *
    * @param key API Key string. (required)
    * @param _callback The callback to be executed when the API call finishes
@@ -2226,7 +2219,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * List dictionaries supported per language. List dictionaries supported per language.
+   * List dictionaries supported per language.
    *
    * @return Map&lt;String, Languages&gt;
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
@@ -2240,8 +2233,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * List dictionaries supported per language. (asynchronously) List dictionaries supported per
-   * language.
+   * (asynchronously) List dictionaries supported per language.
    *
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
@@ -2294,8 +2286,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Retrieve dictionaries settings. The API stores languages whose standard entries are disabled.
-   * Fetch settings does not return false values. Retrieve dictionaries settings.
+   * Retrieve dictionaries settings.
    *
    * @return GetDictionarySettingsResponse
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
@@ -2312,8 +2303,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Retrieve dictionaries settings. The API stores languages whose standard entries are disabled.
-   * Fetch settings does not return false values. (asynchronously) Retrieve dictionaries settings.
+   * (asynchronously) Retrieve dictionaries settings.
    *
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
@@ -2543,7 +2533,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Retrieve one object from the index. Retrieve one object from the index.
+   * Retrieve one object from the index.
    *
    * @param indexName The index in which to perform the request. (required)
    * @param objectID Unique identifier of an object. (required)
@@ -2570,7 +2560,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Retrieve one object from the index. (asynchronously) Retrieve one object from the index.
+   * (asynchronously) Retrieve one object from the index.
    *
    * @param indexName The index in which to perform the request. (required)
    * @param objectID Unique identifier of an object. (required)
@@ -2646,8 +2636,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Retrieve one or more objects. Retrieve one or more objects, potentially from different indices,
-   * in a single API call.
+   * Retrieve one or more objects, potentially from different indices, in a single API call.
    *
    * @param getObjectsObject (required)
    * @return GetObjectsResponse
@@ -2663,8 +2652,8 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Retrieve one or more objects. (asynchronously) Retrieve one or more objects, potentially from
-   * different indices, in a single API call.
+   * (asynchronously) Retrieve one or more objects, potentially from different indices, in a single
+   * API call.
    *
    * @param getObjectsObject (required)
    * @param _callback The callback to be executed when the API call finishes
@@ -2748,7 +2737,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Get a rule. Retrieve the Rule with the specified objectID.
+   * Retrieve the Rule with the specified objectID.
    *
    * @param indexName The index in which to perform the request. (required)
    * @param objectID Unique identifier of an object. (required)
@@ -2764,7 +2753,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Get a rule. (asynchronously) Retrieve the Rule with the specified objectID.
+   * (asynchronously) Retrieve the Rule with the specified objectID.
    *
    * @param indexName The index in which to perform the request. (required)
    * @param objectID Unique identifier of an object. (required)
@@ -2997,7 +2986,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Get synonym. Fetch a synonym object identified by its objectID.
+   * Fetch a synonym object identified by its objectID.
    *
    * @param indexName The index in which to perform the request. (required)
    * @param objectID Unique identifier of an object. (required)
@@ -3014,7 +3003,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Get synonym. (asynchronously) Fetch a synonym object identified by its objectID.
+   * (asynchronously) Fetch a synonym object identified by its objectID.
    *
    * @param indexName The index in which to perform the request. (required)
    * @param objectID Unique identifier of an object. (required)
@@ -3173,10 +3162,10 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Get top userID Get the top 10 userIDs with the highest number of records per cluster. The data
-   * returned will usually be a few seconds behind real time, because userID usage may take up to a
-   * few seconds to propagate to the different clusters. Upon success, the response is 200 OK and
-   * contains the following array of userIDs and clusters.
+   * Get the top 10 userIDs with the highest number of records per cluster. The data returned will
+   * usually be a few seconds behind real time, because userID usage may take up to a few seconds to
+   * propagate to the different clusters. Upon success, the response is 200 OK and contains the
+   * following array of userIDs and clusters.
    *
    * @return GetTopUserIdsResponse
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
@@ -3190,10 +3179,10 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Get top userID (asynchronously) Get the top 10 userIDs with the highest number of records per
-   * cluster. The data returned will usually be a few seconds behind real time, because userID usage
-   * may take up to a few seconds to propagate to the different clusters. Upon success, the response
-   * is 200 OK and contains the following array of userIDs and clusters.
+   * (asynchronously) Get the top 10 userIDs with the highest number of records per cluster. The
+   * data returned will usually be a few seconds behind real time, because userID usage may take up
+   * to a few seconds to propagate to the different clusters. Upon success, the response is 200 OK
+   * and contains the following array of userIDs and clusters.
    *
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
@@ -3259,9 +3248,9 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Get userID Returns the userID data stored in the mapping. The data returned will usually be a
-   * few seconds behind real time, because userID usage may take up to a few seconds to propagate to
-   * the different clusters. Upon success, the response is 200 OK and contains the following userID
+   * Returns the userID data stored in the mapping. The data returned will usually be a few seconds
+   * behind real time, because userID usage may take up to a few seconds to propagate to the
+   * different clusters. Upon success, the response is 200 OK and contains the following userID
    * data.
    *
    * @param userID userID to assign. (required)
@@ -3277,10 +3266,10 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Get userID (asynchronously) Returns the userID data stored in the mapping. The data returned
-   * will usually be a few seconds behind real time, because userID usage may take up to a few
-   * seconds to propagate to the different clusters. Upon success, the response is 200 OK and
-   * contains the following userID data.
+   * (asynchronously) Returns the userID data stored in the mapping. The data returned will usually
+   * be a few seconds behind real time, because userID usage may take up to a few seconds to
+   * propagate to the different clusters. Upon success, the response is 200 OK and contains the
+   * following userID data.
    *
    * @param userID userID to assign. (required)
    * @param _callback The callback to be executed when the API call finishes
@@ -3343,11 +3332,11 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Has pending mappings Get the status of your clusters' migrations or user creations. Creating a
-   * large batch of users or migrating your multi-cluster may take quite some time. This method lets
-   * you retrieve the status of the migration, so you can know when it's done. Upon success, the
-   * response is 200 OK. A successful response indicates that the operation has been taken into
-   * account, and the userIDs are directly usable.
+   * Get the status of your clusters' migrations or user creations. Creating a large batch of users
+   * or migrating your multi-cluster may take quite some time. This method lets you retrieve the
+   * status of the migration, so you can know when it's done. Upon success, the response is 200 OK.
+   * A successful response indicates that the operation has been taken into account, and the userIDs
+   * are directly usable.
    *
    * @param getClusters Whether to get clusters or not. (optional)
    * @return CreatedAtResponse
@@ -3363,11 +3352,11 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Has pending mappings (asynchronously) Get the status of your clusters&#39; migrations or user
-   * creations. Creating a large batch of users or migrating your multi-cluster may take quite some
-   * time. This method lets you retrieve the status of the migration, so you can know when it&#39;s
-   * done. Upon success, the response is 200 OK. A successful response indicates that the operation
-   * has been taken into account, and the userIDs are directly usable.
+   * (asynchronously) Get the status of your clusters&#39; migrations or user creations. Creating a
+   * large batch of users or migrating your multi-cluster may take quite some time. This method lets
+   * you retrieve the status of the migration, so you can know when it&#39;s done. Upon success, the
+   * response is 200 OK. A successful response indicates that the operation has been taken into
+   * account, and the userIDs are directly usable.
    *
    * @param getClusters Whether to get clusters or not. (optional)
    * @param _callback The callback to be executed when the API call finishes
@@ -3421,7 +3410,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Get the full list of API Keys. List API keys, along with their associated rights.
+   * List API keys, along with their associated rights.
    *
    * @return ListApiKeysResponse
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
@@ -3435,8 +3424,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Get the full list of API Keys. (asynchronously) List API keys, along with their associated
-   * rights.
+   * (asynchronously) List API keys, along with their associated rights.
    *
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
@@ -3488,8 +3476,8 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * List clusters List the clusters available in a multi-clusters setup for a single appID. Upon
-   * success, the response is 200 OK and contains the following clusters.
+   * List the clusters available in a multi-clusters setup for a single appID. Upon success, the
+   * response is 200 OK and contains the following clusters.
    *
    * @return ListClustersResponse
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
@@ -3503,8 +3491,8 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * List clusters (asynchronously) List the clusters available in a multi-clusters setup for a
-   * single appID. Upon success, the response is 200 OK and contains the following clusters.
+   * (asynchronously) List the clusters available in a multi-clusters setup for a single appID. Upon
+   * success, the response is 200 OK and contains the following clusters.
    *
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
@@ -3565,7 +3553,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * List existing indexes. List existing indexes from an application.
+   * List existing indexes from an application.
    *
    * @param page Requested page (zero-based). When specified, will retrieve a specific page; the
    *     page size is implicitly set to 100. When null, will retrieve all indices (no pagination).
@@ -3582,7 +3570,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * List existing indexes. (asynchronously) List existing indexes from an application.
+   * (asynchronously) List existing indexes from an application.
    *
    * @param page Requested page (zero-based). When specified, will retrieve a specific page; the
    *     page size is implicitly set to 100. When null, will retrieve all indices (no pagination).
@@ -3656,10 +3644,10 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * List userIDs List the userIDs assigned to a multi-clusters appID. The data returned will
-   * usually be a few seconds behind real time, because userID usage may take up to a few seconds to
-   * propagate to the different clusters. Upon success, the response is 200 OK and contains the
-   * following userIDs data.
+   * List the userIDs assigned to a multi-clusters appID. The data returned will usually be a few
+   * seconds behind real time, because userID usage may take up to a few seconds to propagate to the
+   * different clusters. Upon success, the response is 200 OK and contains the following userIDs
+   * data.
    *
    * @param page Requested page (zero-based). When specified, will retrieve a specific page; the
    *     page size is implicitly set to 100. When null, will retrieve all indices (no pagination).
@@ -3678,10 +3666,10 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * List userIDs (asynchronously) List the userIDs assigned to a multi-clusters appID. The data
-   * returned will usually be a few seconds behind real time, because userID usage may take up to a
-   * few seconds to propagate to the different clusters. Upon success, the response is 200 OK and
-   * contains the following userIDs data.
+   * (asynchronously) List the userIDs assigned to a multi-clusters appID. The data returned will
+   * usually be a few seconds behind real time, because userID usage may take up to a few seconds to
+   * propagate to the different clusters. Upon success, the response is 200 OK and contains the
+   * following userIDs data.
    *
    * @param page Requested page (zero-based). When specified, will retrieve a specific page; the
    *     page size is implicitly set to 100. When null, will retrieve all indices (no pagination).
@@ -3937,7 +3925,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Copy/move index. Peforms a copy or a move operation on a index.
+   * Peforms a copy or a move operation on a index.
    *
    * @param indexName The index in which to perform the request. (required)
    * @param operationIndexObject (required)
@@ -3960,7 +3948,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Copy/move index. (asynchronously) Peforms a copy or a move operation on a index.
+   * (asynchronously) Peforms a copy or a move operation on a index.
    *
    * @param indexName The index in which to perform the request. (required)
    * @param operationIndexObject (required)
@@ -4077,10 +4065,10 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Partially update an object. Update one or more attributes of an existing object. This method
-   * lets you update only a part of an existing object, either by adding new attributes or updating
-   * existing ones. You can partially update several objects in a single method call. If the index
-   * targeted by this operation doesn't exist yet, it's automatically created.
+   * Update one or more attributes of an existing object. This method lets you update only a part of
+   * an existing object, either by adding new attributes or updating existing ones. You can
+   * partially update several objects in a single method call. If the index targeted by this
+   * operation doesn't exist yet, it's automatically created.
    *
    * @param indexName The index in which to perform the request. (required)
    * @param objectID Unique identifier of an object. (required)
@@ -4112,11 +4100,10 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Partially update an object. (asynchronously) Update one or more attributes of an existing
-   * object. This method lets you update only a part of an existing object, either by adding new
-   * attributes or updating existing ones. You can partially update several objects in a single
-   * method call. If the index targeted by this operation doesn&#39;t exist yet, it&#39;s
-   * automatically created.
+   * (asynchronously) Update one or more attributes of an existing object. This method lets you
+   * update only a part of an existing object, either by adding new attributes or updating existing
+   * ones. You can partially update several objects in a single method call. If the index targeted
+   * by this operation doesn&#39;t exist yet, it&#39;s automatically created.
    *
    * @param indexName The index in which to perform the request. (required)
    * @param objectID Unique identifier of an object. (required)
@@ -4198,8 +4185,8 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Remove userID Remove a userID and its associated data from the multi-clusters. Upon success,
-   * the response is 200 OK and a task is created to remove the userID data and mapping.
+   * Remove a userID and its associated data from the multi-clusters. Upon success, the response is
+   * 200 OK and a task is created to remove the userID data and mapping.
    *
    * @param userID userID to assign. (required)
    * @return RemoveUserIdResponse
@@ -4214,9 +4201,8 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Remove userID (asynchronously) Remove a userID and its associated data from the multi-clusters.
-   * Upon success, the response is 200 OK and a task is created to remove the userID data and
-   * mapping.
+   * (asynchronously) Remove a userID and its associated data from the multi-clusters. Upon success,
+   * the response is 200 OK and a task is created to remove the userID data and mapping.
    *
    * @param userID userID to assign. (required)
    * @param _callback The callback to be executed when the API call finishes
@@ -4366,7 +4352,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Restore an API key. Restore a deleted API key, along with its associated rights.
+   * Restore a deleted API key, along with its associated rights.
    *
    * @param key API Key string. (required)
    * @return AddApiKeyResponse
@@ -4381,8 +4367,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Restore an API key. (asynchronously) Restore a deleted API key, along with its associated
-   * rights.
+   * (asynchronously) Restore a deleted API key, along with its associated rights.
    *
    * @param key API Key string. (required)
    * @param _callback The callback to be executed when the API call finishes
@@ -4591,7 +4576,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Save/Update a rule. Create or update the Rule with the specified objectID.
+   * Create or update the Rule with the specified objectID.
    *
    * @param indexName The index in which to perform the request. (required)
    * @param objectID Unique identifier of an object. (required)
@@ -4621,7 +4606,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Save/Update a rule. (asynchronously) Create or update the Rule with the specified objectID.
+   * (asynchronously) Create or update the Rule with the specified objectID.
    *
    * @param indexName The index in which to perform the request. (required)
    * @param objectID Unique identifier of an object. (required)
@@ -4744,8 +4729,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Save synonym. Create a new synonym object or update the existing synonym object with the given
-   * object ID.
+   * Create a new synonym object or update the existing synonym object with the given object ID.
    *
    * @param indexName The index in which to perform the request. (required)
    * @param objectID Unique identifier of an object. (required)
@@ -4775,8 +4759,8 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Save synonym. (asynchronously) Create a new synonym object or update the existing synonym
-   * object with the given object ID.
+   * (asynchronously) Create a new synonym object or update the existing synonym object with the
+   * given object ID.
    *
    * @param indexName The index in which to perform the request. (required)
    * @param objectID Unique identifier of an object. (required)
@@ -4895,8 +4879,8 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Save a batch of synonyms. Create/update multiple synonym objects at once, potentially replacing
-   * the entire list of synonyms if replaceExistingSynonyms is true.
+   * Create/update multiple synonym objects at once, potentially replacing the entire list of
+   * synonyms if replaceExistingSynonyms is true.
    *
    * @param indexName The index in which to perform the request. (required)
    * @param synonymHit (required)
@@ -4927,8 +4911,8 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Save a batch of synonyms. (asynchronously) Create/update multiple synonym objects at once,
-   * potentially replacing the entire list of synonyms if replaceExistingSynonyms is true.
+   * (asynchronously) Create/update multiple synonym objects at once, potentially replacing the
+   * entire list of synonyms if replaceExistingSynonyms is true.
    *
    * @param indexName The index in which to perform the request. (required)
    * @param synonymHit (required)
@@ -5127,7 +5111,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Search the dictionary entries. Search the dictionary entries.
+   * Search the dictionary entries.
    *
    * @param dictionaryName The dictionary to search in. (required)
    * @param searchDictionaryEntries (required)
@@ -5150,7 +5134,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Search the dictionary entries. (asynchronously) Search the dictionary entries.
+   * (asynchronously) Search the dictionary entries.
    *
    * @param dictionaryName The dictionary to search in. (required)
    * @param searchDictionaryEntries (required)
@@ -5248,8 +5232,8 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Search for values of a given facet Search for values of a given facet, optionally restricting
-   * the returned values to those contained in objects matching other search criteria.
+   * Search for values of a given facet, optionally restricting the returned values to those
+   * contained in objects matching other search criteria.
    *
    * @param indexName The index in which to perform the request. (required)
    * @param facetName The facet name. (required)
@@ -5277,9 +5261,8 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Search for values of a given facet (asynchronously) Search for values of a given facet,
-   * optionally restricting the returned values to those contained in objects matching other search
-   * criteria.
+   * (asynchronously) Search for values of a given facet, optionally restricting the returned values
+   * to those contained in objects matching other search criteria.
    *
    * @param indexName The index in which to perform the request. (required)
    * @param facetName The facet name. (required)
@@ -5369,7 +5352,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Search for rules. Search for rules matching various criteria.
+   * Search for rules matching various criteria.
    *
    * @param indexName The index in which to perform the request. (required)
    * @param searchRulesParams (required)
@@ -5392,7 +5375,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Search for rules. (asynchronously) Search for rules matching various criteria.
+   * (asynchronously) Search for rules matching various criteria.
    *
    * @param indexName The index in which to perform the request. (required)
    * @param searchRulesParams (required)
@@ -5505,8 +5488,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Get all synonyms that match a query. Search or browse all synonyms, optionally filtering them
-   * by type.
+   * Search or browse all synonyms, optionally filtering them by type.
    *
    * @param indexName The index in which to perform the request. (required)
    * @param query Search for specific synonyms matching this string. (optional, default to )
@@ -5540,8 +5522,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Get all synonyms that match a query. (asynchronously) Search or browse all synonyms, optionally
-   * filtering them by type.
+   * (asynchronously) Search or browse all synonyms, optionally filtering them by type.
    *
    * @param indexName The index in which to perform the request. (required)
    * @param query Search for specific synonyms matching this string. (optional, default to )
@@ -5624,12 +5605,12 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Search userID Search for userIDs. The data returned will usually be a few seconds behind real
-   * time, because userID usage may take up to a few seconds propagate to the different clusters. To
-   * keep updates moving quickly, the index of userIDs isn't built synchronously with the mapping.
-   * Instead, the index is built once every 12h, at the same time as the update of userID usage. For
-   * example, when you perform a modification like adding or moving a userID, the search will report
-   * an outdated value until the next rebuild of the mapping, which takes place every 12h. Upon
+   * Search for userIDs. The data returned will usually be a few seconds behind real time, because
+   * userID usage may take up to a few seconds propagate to the different clusters. To keep updates
+   * moving quickly, the index of userIDs isn't built synchronously with the mapping. Instead, the
+   * index is built once every 12h, at the same time as the update of userID usage. For example,
+   * when you perform a modification like adding or moving a userID, the search will report an
+   * outdated value until the next rebuild of the mapping, which takes place every 12h. Upon
    * success, the response is 200 OK and contains the following userIDs data.
    *
    * @param searchUserIdsObject (required)
@@ -5647,14 +5628,13 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Search userID (asynchronously) Search for userIDs. The data returned will usually be a few
-   * seconds behind real time, because userID usage may take up to a few seconds propagate to the
-   * different clusters. To keep updates moving quickly, the index of userIDs isn&#39;t built
-   * synchronously with the mapping. Instead, the index is built once every 12h, at the same time as
-   * the update of userID usage. For example, when you perform a modification like adding or moving
-   * a userID, the search will report an outdated value until the next rebuild of the mapping, which
-   * takes place every 12h. Upon success, the response is 200 OK and contains the following userIDs
-   * data.
+   * (asynchronously) Search for userIDs. The data returned will usually be a few seconds behind
+   * real time, because userID usage may take up to a few seconds propagate to the different
+   * clusters. To keep updates moving quickly, the index of userIDs isn&#39;t built synchronously
+   * with the mapping. Instead, the index is built once every 12h, at the same time as the update of
+   * userID usage. For example, when you perform a modification like adding or moving a userID, the
+   * search will report an outdated value until the next rebuild of the mapping, which takes place
+   * every 12h. Upon success, the response is 200 OK and contains the following userIDs data.
    *
    * @param searchUserIdsObject (required)
    * @param _callback The callback to be executed when the API call finishes
@@ -5721,7 +5701,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Set dictionary settings. Set dictionary settings.
+   * Set dictionary settings.
    *
    * @param dictionarySettingsRequest (required)
    * @return UpdatedAtResponse
@@ -5741,7 +5721,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Set dictionary settings. (asynchronously) Set dictionary settings.
+   * (asynchronously) Set dictionary settings.
    *
    * @param dictionarySettingsRequest (required)
    * @param _callback The callback to be executed when the API call finishes
@@ -5959,7 +5939,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Update an API key. Replace every permission of an existing API key.
+   * Replace every permission of an existing API key.
    *
    * @param key API Key string. (required)
    * @param apiKey (required)
@@ -5976,7 +5956,7 @@ public class SearchApi extends ApiClient {
   }
 
   /**
-   * Update an API key. (asynchronously) Replace every permission of an existing API key.
+   * (asynchronously) Replace every permission of an existing API key.
    *
    * @param key API Key string. (required)
    * @param apiKey (required)
