@@ -16,7 +16,7 @@ baseBrowseResponse:
     - cursor
   properties:
     cursor:
-      $ref: 'SearchParams.yml#/cursor'
+      $ref: '../../../common/schemas/SearchParams.yml#/cursor'
 
 searchHits:
   type: object
@@ -92,7 +92,7 @@ baseSearchResponse:
             type: integer
             description: The sum of all values in the result set.
     hitsPerPage:
-      $ref: 'IndexSettings.yml#/hitsPerPage'
+      $ref: '../../../common/schemas/IndexSettings.yml#/hitsPerPage'
     index:
       type: string
       example: indexName
@@ -113,7 +113,7 @@ baseSearchResponse:
       description: The number of hits selected and sorted by the relevant sort algorithm
       example: 20
     page:
-      $ref: 'SearchParams.yml#/page'
+      $ref: '../../../common/schemas/SearchParams.yml#/page'
     params:
       type: string
       description: A url-encoded string of all search parameters.
@@ -126,7 +126,7 @@ baseSearchResponse:
       description: Time the server took to process the request, in milliseconds.
       example: 20
     query:
-      $ref: 'SearchParams.yml#/query'
+      $ref: '../../../common/schemas/SearchParams.yml#/query'
     queryAfterRemoval:
       type: string
       description: A markup text indicating which parts of the original query have been removed in order to retrieve a non-empty result set.
@@ -134,7 +134,7 @@ baseSearchResponse:
       type: string
       description: Actual host name of the server that processed the request.
     userData:
-      $ref: 'IndexSettings.yml#/baseIndexSettings/properties/userData'
+      $ref: '../../../common/schemas/IndexSettings.yml#/baseIndexSettings/properties/userData'
 
 nbHits:
   type: integer

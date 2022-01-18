@@ -20,9 +20,9 @@ post:
           additionalProperties: false
           properties:
             params:
-              $ref: '../../common/schemas/SearchParams.yml#/paramsAsString'
+              $ref: '../../../common/schemas/SearchParams.yml#/paramsAsString'
             cursor:
-              $ref: '../../common/schemas/SearchParams.yml#/cursor'
+              $ref: '../../../common/schemas/SearchParams.yml#/cursor'
   responses:
     '200':
       description: OK

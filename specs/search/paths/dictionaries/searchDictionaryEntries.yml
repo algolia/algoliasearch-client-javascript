@@ -19,11 +19,11 @@ post:
           additionalProperties: false
           properties:
             query:
-              $ref: '../../common/schemas/SearchParams.yml#/query'
+              $ref: '../../../common/schemas/SearchParams.yml#/query'
             page:
-              $ref: '../../common/schemas/SearchParams.yml#/page'
+              $ref: '../../../common/schemas/SearchParams.yml#/page'
             hitsPerPage:
-              $ref: '../../common/schemas/IndexSettings.yml#/hitsPerPage'
+              $ref: '../../../common/schemas/IndexSettings.yml#/hitsPerPage'
             language:
               $ref: 'common/parameters.yml#/language'
   responses:

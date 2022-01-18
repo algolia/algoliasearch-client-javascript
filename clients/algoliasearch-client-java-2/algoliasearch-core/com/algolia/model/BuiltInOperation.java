@@ -11,7 +11,7 @@ import java.util.Objects;
 /**
  * To update an attribute without pushing the entire record, you can use these built-in operations.
  */
-public class BuildInOperation {
+public class BuiltInOperation {
 
   /** The operation to apply on the attribute. */
   @JsonAdapter(OperationEnum.Adapter.class)
@@ -79,7 +79,7 @@ public class BuildInOperation {
   @SerializedName("value")
   private String value;
 
-  public BuildInOperation operation(OperationEnum operation) {
+  public BuiltInOperation operation(OperationEnum operation) {
     this.operation = operation;
     return this;
   }
@@ -98,7 +98,7 @@ public class BuildInOperation {
     this.operation = operation;
   }
 
-  public BuildInOperation value(String value) {
+  public BuiltInOperation value(String value) {
     this.value = value;
     return this;
   }
@@ -126,10 +126,10 @@ public class BuildInOperation {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    BuildInOperation buildInOperation = (BuildInOperation) o;
+    BuiltInOperation builtInOperation = (BuiltInOperation) o;
     return (
-      Objects.equals(this.operation, buildInOperation.operation) &&
-      Objects.equals(this.value, buildInOperation.value)
+      Objects.equals(this.operation, builtInOperation.operation) &&
+      Objects.equals(this.value, builtInOperation.value)
     );
   }
 
@@ -141,7 +141,7 @@ public class BuildInOperation {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class BuildInOperation {\n");
+    sb.append("class BuiltInOperation {\n");
     sb
       .append("    operation: ")
       .append(toIndentedString(operation))

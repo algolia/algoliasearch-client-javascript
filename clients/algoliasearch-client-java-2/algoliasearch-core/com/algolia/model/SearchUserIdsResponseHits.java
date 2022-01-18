@@ -7,7 +7,7 @@ import java.util.Objects;
 public class SearchUserIdsResponseHits {
 
   @SerializedName("userID")
-  private UserId userID;
+  private String userID;
 
   @SerializedName("clusterName")
   private String clusterName;
@@ -24,22 +24,22 @@ public class SearchUserIdsResponseHits {
   @SerializedName("_highlightResult")
   private SearchUserIdsResponseHighlightResult highlightResult;
 
-  public SearchUserIdsResponseHits userID(UserId userID) {
+  public SearchUserIdsResponseHits userID(String userID) {
     this.userID = userID;
     return this;
   }
 
   /**
-   * Get userID
+   * userID of the user.
    *
    * @return userID
    */
   @javax.annotation.Nonnull
-  public UserId getUserID() {
+  public String getUserID() {
     return userID;
   }
 
-  public void setUserID(UserId userID) {
+  public void setUserID(String userID) {
     this.userID = userID;
   }
 

@@ -80,9 +80,6 @@ conversionCount:
   type: integer
   description: The number of converted clicks.
 
-updatedAt:
-  $ref: '../../../common/parameters.yml#/updatedAt'
-
 attribute:
   description: The attribute.
   type: string
@@ -102,12 +99,3 @@ search:
 hit:
   description: The hit.
   type: string
-
-nbHits:
-  $ref: ../../../search/common/schemas/SearchResponse.yml#/nbHits
-
-trackedSearchCount:
-  $ref: ../../../common/parameters.yml#/trackedSearchCount
-
-count:
-  $ref: ../../../common/parameters.yml#/count

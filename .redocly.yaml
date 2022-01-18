@@ -1,0 +1,24 @@
+apiDefinitions:
+  abtesting: specs/abtesting/spec.yml
+  analytics: specs/analytics/spec.yml
+  insights: specs/insights/spec.yml
+  personalization: specs/personalization/spec.yml
+  query-suggestions: specs/query-suggestions/spec.yml
+  recommend: specs/recommend/spec.yml
+  search: specs/search/spec.yml
+
+lint:
+  extends:
+    - recommended
+
+  rules:
+    no-empty-servers: off
+    info-license: off # for now we can keep it off.
+    no-ambiguous-paths: off # this is out of our scope.
+    no-enum-type-mismatch: warn # keeping the warning since it only occur on one edge case
+
+    tag-description: error
+    parameter-description: error
+    operation-description: error
+    operation-parameters-unique: error
+    tags-alphabetical: error

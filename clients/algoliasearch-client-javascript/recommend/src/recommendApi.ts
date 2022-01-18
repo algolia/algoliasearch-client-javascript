@@ -107,6 +107,7 @@ export class RecommendApi {
   /**
    * Returns recommendations for a specific model and objectID.
    *
+   * @summary Returns recommendations for a specific model and objectID.
    * @param getRecommendations - The getRecommendations object.
    */
   getRecommendations(

@@ -21,13 +21,13 @@ post:
           additionalProperties: false
           properties:
             params:
-              $ref: '../../common/schemas/SearchParams.yml#/paramsAsString'
+              $ref: '../../../common/schemas/SearchParams.yml#/paramsAsString'
             facetQuery:
               type: string
               description: Text to search inside the facet's values.
               default: ''
             maxFacetHits:
-              $ref: '../../common/schemas/IndexSettings.yml#/maxFacetHits'
+              $ref: '../../../common/schemas/IndexSettings.yml#/maxFacetHits'
   responses:
     '200':
       description: OK

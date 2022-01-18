@@ -19,7 +19,7 @@ get:
               - updatedAt
             properties:
               updatedAt:
-                $ref: '../common/parameters.yml#/updatedAt'
+                $ref: ../../../common/parameters.yml#/updatedAt
     '400':
       $ref: ../../../common/responses/BadRequest.yml
     '402':

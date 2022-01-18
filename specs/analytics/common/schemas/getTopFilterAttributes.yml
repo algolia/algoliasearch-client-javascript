@@ -20,4 +20,4 @@ getTopFilterAttribute:
     attribute:
       $ref: ../parameters.yml#/attribute
     count:
-      $ref: ../parameters.yml#/count
+      $ref: ../../../common/parameters.yml#/count

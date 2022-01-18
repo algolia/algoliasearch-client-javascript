@@ -3,6 +3,7 @@ post:
     - search
   operationId: saveObject
   description: Add an object to the index, automatically assigning it an object ID.
+  summary: Add an object to the index.
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
   requestBody:

@@ -3,6 +3,7 @@ get:
     - search
   operationId: getTask
   description: Check the current status of a given task.
+  summary: Check the current status of a given task.
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
     - name: taskID

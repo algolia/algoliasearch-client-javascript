@@ -15,7 +15,6 @@ import com.algolia.model.BatchResponse;
 import com.algolia.model.BatchWriteObject;
 import com.algolia.model.BrowseRequest;
 import com.algolia.model.BrowseResponse;
-import com.algolia.model.BuildInOperation;
 import com.algolia.model.CreatedAtResponse;
 import com.algolia.model.DeleteApiKeyResponse;
 import com.algolia.model.DeleteSourceResponse;
@@ -37,6 +36,7 @@ import com.algolia.model.ListUserIdsResponse;
 import com.algolia.model.MultipleBatchResponse;
 import com.algolia.model.MultipleQueriesObject;
 import com.algolia.model.MultipleQueriesResponse;
+import com.algolia.model.OneOfstringbuiltInOperation;
 import com.algolia.model.OperationIndexObject;
 import com.algolia.model.RemoveUserIdResponse;
 import com.algolia.model.ReplaceSourceResponse;
@@ -2327,7 +2327,7 @@ public class SearchApi extends ApiClient {
    * @param length Maximum number of entries to retrieve. The maximum allowed value is 1000.
    *     (optional, default to 10)
    * @param indexName Index for which log entries should be retrieved. When omitted, log entries are
-   *     retrieved across all indices. (optional)
+   *     retrieved across all indices. (optional, default to null)
    * @param type Type of log entries to retrieve. When omitted, all log entries are retrieved.
    *     (optional, default to all)
    * @param _callback Callback for upload/download progress
@@ -2397,7 +2397,7 @@ public class SearchApi extends ApiClient {
    * @param length Maximum number of entries to retrieve. The maximum allowed value is 1000.
    *     (optional, default to 10)
    * @param indexName Index for which log entries should be retrieved. When omitted, log entries are
-   *     retrieved across all indices. (optional)
+   *     retrieved across all indices. (optional, default to null)
    * @param type Type of log entries to retrieve. When omitted, all log entries are retrieved.
    *     (optional, default to all)
    * @return GetLogsResponse
@@ -2430,7 +2430,7 @@ public class SearchApi extends ApiClient {
    * @param length Maximum number of entries to retrieve. The maximum allowed value is 1000.
    *     (optional, default to 10)
    * @param indexName Index for which log entries should be retrieved. When omitted, log entries are
-   *     retrieved across all indices. (optional)
+   *     retrieved across all indices. (optional, default to null)
    * @param type Type of log entries to retrieve. When omitted, all log entries are retrieved.
    *     (optional, default to all)
    * @param _callback The callback to be executed when the API call finishes
@@ -3976,7 +3976,7 @@ public class SearchApi extends ApiClient {
    *
    * @param indexName The index in which to perform the request. (required)
    * @param objectID Unique identifier of an object. (required)
-   * @param buildInOperation List of attributes to update. (required)
+   * @param oneOfstringbuiltInOperation List of attributes to update. (required)
    * @param createIfNotExists Creates the record if it does not exist yet. (optional, default to
    *     true)
    * @param _callback Callback for upload/download progress
@@ -3986,11 +3986,11 @@ public class SearchApi extends ApiClient {
   private Call partialUpdateObjectCall(
     String indexName,
     String objectID,
-    List<Map<String, BuildInOperation>> buildInOperation,
+    List<Map<String, OneOfstringbuiltInOperation>> oneOfstringbuiltInOperation,
     Boolean createIfNotExists,
     final ApiCallback _callback
   ) throws ApiException {
-    Object bodyObj = buildInOperation;
+    Object bodyObj = oneOfstringbuiltInOperation;
 
     // create path and map variables
     String path =
@@ -4029,7 +4029,7 @@ public class SearchApi extends ApiClient {
   private Call partialUpdateObjectValidateBeforeCall(
     String indexName,
     String objectID,
-    List<Map<String, BuildInOperation>> buildInOperation,
+    List<Map<String, OneOfstringbuiltInOperation>> oneOfstringbuiltInOperation,
     Boolean createIfNotExists,
     final ApiCallback _callback
   ) throws ApiException {
@@ -4047,10 +4047,10 @@ public class SearchApi extends ApiClient {
       );
     }
 
-    // verify the required parameter 'buildInOperation' is set
-    if (buildInOperation == null) {
+    // verify the required parameter 'oneOfstringbuiltInOperation' is set
+    if (oneOfstringbuiltInOperation == null) {
       throw new ApiException(
-        "Missing the required parameter 'buildInOperation' when calling" +
+        "Missing the required parameter 'oneOfstringbuiltInOperation' when calling" +
         " partialUpdateObject(Async)"
       );
     }
@@ -4058,7 +4058,7 @@ public class SearchApi extends ApiClient {
     return partialUpdateObjectCall(
       indexName,
       objectID,
-      buildInOperation,
+      oneOfstringbuiltInOperation,
       createIfNotExists,
       _callback
     );
@@ -4072,7 +4072,7 @@ public class SearchApi extends ApiClient {
    *
    * @param indexName The index in which to perform the request. (required)
    * @param objectID Unique identifier of an object. (required)
-   * @param buildInOperation List of attributes to update. (required)
+   * @param oneOfstringbuiltInOperation List of attributes to update. (required)
    * @param createIfNotExists Creates the record if it does not exist yet. (optional, default to
    *     true)
    * @return UpdatedAtWithObjectIdResponse
@@ -4082,13 +4082,13 @@ public class SearchApi extends ApiClient {
   public UpdatedAtWithObjectIdResponse partialUpdateObject(
     String indexName,
     String objectID,
-    List<Map<String, BuildInOperation>> buildInOperation,
+    List<Map<String, OneOfstringbuiltInOperation>> oneOfstringbuiltInOperation,
     Boolean createIfNotExists
   ) throws ApiException {
     Call call = partialUpdateObjectValidateBeforeCall(
       indexName,
       objectID,
-      buildInOperation,
+      oneOfstringbuiltInOperation,
       createIfNotExists,
       null
     );
@@ -4107,7 +4107,7 @@ public class SearchApi extends ApiClient {
    *
    * @param indexName The index in which to perform the request. (required)
    * @param objectID Unique identifier of an object. (required)
-   * @param buildInOperation List of attributes to update. (required)
+   * @param oneOfstringbuiltInOperation List of attributes to update. (required)
    * @param createIfNotExists Creates the record if it does not exist yet. (optional, default to
    *     true)
    * @param _callback The callback to be executed when the API call finishes
@@ -4117,14 +4117,14 @@ public class SearchApi extends ApiClient {
   public Call partialUpdateObjectAsync(
     String indexName,
     String objectID,
-    List<Map<String, BuildInOperation>> buildInOperation,
+    List<Map<String, OneOfstringbuiltInOperation>> oneOfstringbuiltInOperation,
     Boolean createIfNotExists,
     final ApiCallback<UpdatedAtWithObjectIdResponse> _callback
   ) throws ApiException {
     Call call = partialUpdateObjectValidateBeforeCall(
       indexName,
       objectID,
-      buildInOperation,
+      oneOfstringbuiltInOperation,
       createIfNotExists,
       _callback
     );

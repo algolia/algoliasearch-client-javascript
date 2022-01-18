@@ -758,7 +758,7 @@ describe('partialUpdateObject', () => {
     const req = (await client.partialUpdateObject({
       indexName: 'theIndexName',
       objectID: 'uniqueID',
-      stringBuildInOperation: [
+      stringBuiltInOperation: [
         { id1: 'test', id2: { _operation: 'AddUnique', value: 'test2' } },
       ],
       createIfNotExists: true,

@@ -85,8 +85,8 @@ consequence:
 consequenceParams:
   allOf:
     - $ref: '#/params'
-    - $ref: '../../../common/schemas/SearchParams.yml#/baseSearchParams'
-    - $ref: '../../../common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams'
+    - $ref: '../../../../common/schemas/SearchParams.yml#/baseSearchParams'
+    - $ref: '../../../../common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams'
 
 promote:
   type: object

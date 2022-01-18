@@ -34,7 +34,7 @@ post:
             additionalProperties:
               oneOf:
                 - $ref: 'common/schemas.yml#/attribute'
-                - $ref: 'common/schemas.yml#/buildInOperation'
+                - $ref: 'common/schemas.yml#/builtInOperation'
   responses:
     '200':
       $ref: ../../../common/responses/UpdatedAtWithObjectId.yml

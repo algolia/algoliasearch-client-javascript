@@ -3,6 +3,7 @@ get:
     - search
   operationId: getLogs
   description: Return the lastest log entries.
+  summary: Return the lastest log entries.
   parameters:
     - name: offset
       in: query

@@ -14,7 +14,7 @@ attribute:
   type: string
   description: Value of the attribute to be updated.
 
-buildInOperation:
+builtInOperation:
   type: object
   description: To update an attribute without pushing the entire record, you can use these built-in operations.
   additionalProperties: false

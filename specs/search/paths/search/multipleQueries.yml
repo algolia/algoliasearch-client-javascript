@@ -3,6 +3,7 @@ post:
     - search
   operationId: multipleQueries
   description: Get search results for the given requests.
+  summary: Get search results for the given requests.
   requestBody:
     required: true
     description: The `multipleQueries` requests and strategy.
@@ -23,7 +24,7 @@ post:
                   indexName:
                     $ref: '../../../common/parameters.yml#/indexName'
                   query:
-                    $ref: '../../common/schemas/SearchParams.yml#/query'
+                    $ref: '../../../common/schemas/SearchParams.yml#/query'
                   type:
                     type: string
                     enum: [default, facet]

@@ -11,6 +11,11 @@ lang=$1
 client=$2
 generator="$1-$2"
 
+# build spec before generating client
+build_spec() {
+    yarn build:specs $client
+}
+
 # Run the pre generation script if it exists.
 run_pre_gen() {
     pregen="./scripts/pre-gen/${lang}.sh"
@@ -47,6 +52,10 @@ run_post_gen() {
         $postgen "$generator"
     fi
 }
+
+if [[ ! $CI ]]; then
+    build_spec
+fi
 
 run_pre_gen
 generate_client

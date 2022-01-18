@@ -3,6 +3,7 @@ post:
     - query-suggestions
   operationId: createConfig
   description: Create a configuration of a Query Suggestions index. There's a limit of 100 configurations per application.
+  summary: Create a configuration of a Query Suggestions index.
   requestBody:
     required: true
     content:
@@ -31,6 +32,7 @@ get:
     Get all the configurations of Query Suggestions.
 
     For each index, you get a block of JSON with a list of its configuration settings.
+  summary: Get all the configurations of Query Suggestions.
   responses:
     '200':
       description: OK

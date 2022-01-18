@@ -13,6 +13,7 @@ find "$CLIENT" -type f -name "*.java" | xargs sed -i -e 's~= {}~= new Object()~g
 
 # Create a special class for the OneOf integer string (not complete yet, juste here for compilation)
 echo "package com.algolia.model;public class OneOfintegerstring {}" > $CLIENT/algoliasearch-core/com/algolia/model/OneOfintegerstring.java
+echo "package com.algolia.model;public class OneOfstringbuiltInOperation {}" > $CLIENT/algoliasearch-core/com/algolia/model/OneOfstringbuiltInOperation.java
 
 format_client() {
     echo "> Formatting $GENERATOR..."
