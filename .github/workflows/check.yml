@@ -83,11 +83,15 @@ jobs:
         uses: actions/cache@v2
         with:
           path: '/home/runner/work/api-clients-automation/api-clients-automation/${{ matrix.client.folder }}/dist'
-          key: ${{ runner.os }}-1-js-client-${{ matrix.client.name }}-${{ hashFiles(format('{0}/**', matrix.client.folder)) }}
+          key: ${{ runner.os }}-1-js-client-${{ matrix.client.name }}-${{ hashFiles(format('{0}/**', matrix.client.folder)) }}-${{ hashFiles(format('specs/dist/{0}.yml', matrix.client.name)) }}
 
       - name: Generate ${{ matrix.client.name }} client
         if: steps.cache.outputs.cache-hit != 'true'
         run: yarn generate javascript ${{ matrix.client.name }}
+
+      - name: Check diff with pushed client
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: exit $(git status --porcelain ${{ matrix.client.folder }} | wc -l)
 
       - name: Build ${{ matrix.client.name }} client
         if: steps.cache.outputs.cache-hit != 'true'
@@ -116,11 +120,15 @@ jobs:
         uses: actions/cache@v2
         with:
           path: '/home/runner/work/api-clients-automation/api-clients-automation/${{ matrix.client.folder }}/target'
-          key: ${{ runner.os }}-1-java-client-${{ matrix.client.name }}-${{ hashFiles(format('{0}/**', matrix.client.folder)) }}
+          key: ${{ runner.os }}-1-java-client-${{ matrix.client.name }}-${{ hashFiles(format('{0}/**', matrix.client.folder)) }}-${{ hashFiles(format('specs/dist/{0}.yml', matrix.client.name)) }} }}
 
       - name: Generate ${{ matrix.client.name }} client
         if: steps.cache.outputs.cache-hit != 'true'
         run: yarn generate java ${{ matrix.client.name }}
+
+      - name: Check diff with pushed client
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: exit $(git status --porcelain ${{ matrix.client.folder }} | wc -l)
 
       - name: Build ${{ matrix.client.name }} client
         if: steps.cache.outputs.cache-hit != 'true'
