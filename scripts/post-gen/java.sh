@@ -15,6 +15,21 @@ find "$CLIENT" -type f -name "*.java" | xargs sed -i -e 's~= {}~= new Object()~g
 echo "package com.algolia.model;public class OneOfintegerstring {}" > $CLIENT/algoliasearch-core/com/algolia/model/OneOfintegerstring.java
 echo "package com.algolia.model;public class OneOfstringbuiltInOperation {}" > $CLIENT/algoliasearch-core/com/algolia/model/OneOfstringbuiltInOperation.java
 
+# Generate types for the EchoRequester, to be able to keep the correct response type on the API method.
+
+# Extract the normal response to extend it
+responses=($(grep -o 'public .*ApiCallback<.*>' $CLIENT/algoliasearch-core/com/algolia/**/*Api.java | sed 's/public.*ApiCallback<//; s/>$//; s/ //; s/^Map</HashMap</; s/^List</ArrayList</'))
+operationId=($(grep -o 'public Call .*(' $CLIENT/algoliasearch-core/com/algolia/**/*Api.java | sed 's/public Call //; s/Async(//'))
+mustacheData='{"responses": [] }'
+for i in "${!responses[@]}"; do
+    class="${operationId[$i]^}"
+    super=${responses[$i]}
+
+    mustacheData=$(echo $mustacheData | jq --arg class $class --arg super $super '.responses |= .+ [{className:$class,superClass:$super}]')
+done
+
+echo $mustacheData | yarn mustache - scripts/post-gen/javaEchoResponse.mustache > $CLIENT/algoliasearch-core/com/algolia/utils/echo/EchoResponse.java
+
 format_client() {
     echo "> Formatting $GENERATOR..."
 
@@ -34,7 +49,7 @@ format_client() {
                                                      --add-exports jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED \
                                                      -jar dist/$javaFormatter -r
 
-    CMD="yarn prettier --write $CLIENT/**/*.java"
+    CMD="yarn prettier --write $CLIENT"
     if [[ $VERBOSE == "true" ]]; then
         $CMD
     else

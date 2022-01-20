@@ -8,6 +8,7 @@ api/**
 docs/**
 gradle/**
 src/**
+README.md
 
 .travis.yml
 build.gradle

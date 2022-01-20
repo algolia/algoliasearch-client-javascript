@@ -19,7 +19,7 @@ build_client(){
     if [[ $lang == 'javascript' ]]; then
         yarn workspace $package build
     elif [[ $lang == 'java' ]]; then
-        CMD="mvn clean install -f clients/$package/pom.xml"
+        CMD="mvn install -f clients/$package/pom.xml"
         if [[ $VERBOSE == "true" ]]; then
             $CMD
         else
