@@ -12,7 +12,6 @@ lint:
     - recommended
 
   rules:
-    no-empty-servers: off
     info-license: off # for now we can keep it off.
     no-ambiguous-paths: off # this is out of our scope.
     no-enum-type-mismatch: warn # keeping the warning since it only occur on one edge case

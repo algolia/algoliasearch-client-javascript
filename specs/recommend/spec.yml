@@ -9,6 +9,27 @@ components:
       $ref: '../common/securitySchemes.yml#/appId'
     apiKey:
       $ref: '../common/securitySchemes.yml#/apiKey'
+servers:
+  - url: https://{appId}.algolianet.com
+    variables:
+      appId:
+        default: myAppId
+  - url: https://{appId}-1.algolianet.com
+    variables:
+      appId:
+        default: myAppId
+  - url: https://{appId}-2.algolianet.com
+    variables:
+      appId:
+        default: myAppId
+  - url: https://{appId}-3.algolianet.com
+    variables:
+      appId:
+        default: myAppId
+  - url: https://{appId}-dsn.algolianet.com
+    variables:
+      appId:
+        default: myAppId
 security:
   - appId: []
     apiKey: []

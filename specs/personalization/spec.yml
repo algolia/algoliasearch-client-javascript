@@ -9,6 +9,14 @@ components:
       $ref: '../common/securitySchemes.yml#/appId'
     apiKey:
       $ref: '../common/securitySchemes.yml#/apiKey'
+servers:
+  - url: https://personalization.{region}.algolia.com
+    variables:
+      region:
+        enum:
+          - us
+          - eu
+        default: us
 security:
   - appId: []
     apiKey: []
