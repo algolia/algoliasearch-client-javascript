@@ -1,6 +1,6 @@
-record:
+hit:
   type: object
-  description: A single record.
+  description: A single hit.
   additionalProperties: true
   required:
     - objectID
@@ -14,9 +14,12 @@ record:
     _rankingInfo:
       $ref: '#/rankingInfo'
     _distinctSeqID:
-      type: integer
+      $ref: '#/_distinctSeqID'
 
 # Props
+_distinctSeqID:
+  type: integer
+
 highlightResult:
   type: object
   description: Highlighted attributes.

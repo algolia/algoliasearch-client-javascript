@@ -10,16 +10,16 @@ post:
     content:
       application/json:
         schema:
-          title: getObjectsObject
-          description: The `getObjects` requests.
+          title: getObjectsParams
+          description: The `getObjects` parameters.
           type: object
           additionalProperties: false
           properties:
             requests:
               type: array
               items:
-                description: GetObject operation on an index.
-                title: multipleGetObjectsObject
+                description: getObjects operation on an index.
+                title: multipleGetObjectsParams
                 type: object
                 additionalProperties: false
                 required:

@@ -5,20 +5,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-/** The `getObjects` requests. */
-public class GetObjectsObject {
+/** The `multipleBatch` parameters. */
+public class BatchParams {
 
   @SerializedName("requests")
-  private List<MultipleGetObjectsObject> requests = null;
+  private List<Operation> requests = null;
 
-  public GetObjectsObject requests(List<MultipleGetObjectsObject> requests) {
+  public BatchParams requests(List<Operation> requests) {
     this.requests = requests;
     return this;
   }
 
-  public GetObjectsObject addRequestsItem(
-    MultipleGetObjectsObject requestsItem
-  ) {
+  public BatchParams addRequestsItem(Operation requestsItem) {
     if (this.requests == null) {
       this.requests = new ArrayList<>();
     }
@@ -32,11 +30,11 @@ public class GetObjectsObject {
    * @return requests
    */
   @javax.annotation.Nullable
-  public List<MultipleGetObjectsObject> getRequests() {
+  public List<Operation> getRequests() {
     return requests;
   }
 
-  public void setRequests(List<MultipleGetObjectsObject> requests) {
+  public void setRequests(List<Operation> requests) {
     this.requests = requests;
   }
 
@@ -48,8 +46,8 @@ public class GetObjectsObject {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    GetObjectsObject getObjectsObject = (GetObjectsObject) o;
-    return Objects.equals(this.requests, getObjectsObject.requests);
+    BatchParams batchParams = (BatchParams) o;
+    return Objects.equals(this.requests, batchParams.requests);
   }
 
   @Override
@@ -60,7 +58,7 @@ public class GetObjectsObject {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class GetObjectsObject {\n");
+    sb.append("class BatchParams {\n");
     sb.append("    requests: ").append(toIndentedString(requests)).append("\n");
     sb.append("}");
     return sb.toString();

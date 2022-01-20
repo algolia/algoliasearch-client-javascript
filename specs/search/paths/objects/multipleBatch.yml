@@ -9,8 +9,8 @@ post:
     content:
       application/json:
         schema:
-          title: batchObject
-          description: The `batch` requests.
+          title: batchParams
+          description: The `multipleBatch` parameters.
           type: object
           additionalProperties: false
           properties:

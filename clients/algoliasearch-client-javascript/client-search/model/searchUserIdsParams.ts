@@ -1,7 +1,7 @@
 /**
  * OK.
  */
-export type SearchUserIdsObject = {
+export type SearchUserIdsParams = {
   /**
    * Query to search. The search is a prefix search with typoTolerance. Use empty query to retrieve all users.
    */

@@ -6,13 +6,13 @@ listIndicesResponse:
       type: array
       description: List of the fetched indices.
       items:
-        $ref: '#/index'
+        $ref: '#/indice'
     nbPages:
       type: integer
       description: Number of pages.
       example: 100
 
-index:
+indice:
   type: object
   additionalProperties: false
   properties:

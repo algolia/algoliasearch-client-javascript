@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-/** Assign userID object. */
-public class BatchAssignUserIdsObject {
+/** Assign userID parameters. */
+public class BatchAssignUserIdsParams {
 
   @SerializedName("cluster")
   private String cluster;
@@ -14,7 +14,7 @@ public class BatchAssignUserIdsObject {
   @SerializedName("users")
   private List<String> users = new ArrayList<>();
 
-  public BatchAssignUserIdsObject cluster(String cluster) {
+  public BatchAssignUserIdsParams cluster(String cluster) {
     this.cluster = cluster;
     return this;
   }
@@ -33,12 +33,12 @@ public class BatchAssignUserIdsObject {
     this.cluster = cluster;
   }
 
-  public BatchAssignUserIdsObject users(List<String> users) {
+  public BatchAssignUserIdsParams users(List<String> users) {
     this.users = users;
     return this;
   }
 
-  public BatchAssignUserIdsObject addUsersItem(String usersItem) {
+  public BatchAssignUserIdsParams addUsersItem(String usersItem) {
     this.users.add(usersItem);
     return this;
   }
@@ -65,10 +65,10 @@ public class BatchAssignUserIdsObject {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    BatchAssignUserIdsObject batchAssignUserIdsObject = (BatchAssignUserIdsObject) o;
+    BatchAssignUserIdsParams batchAssignUserIdsParams = (BatchAssignUserIdsParams) o;
     return (
-      Objects.equals(this.cluster, batchAssignUserIdsObject.cluster) &&
-      Objects.equals(this.users, batchAssignUserIdsObject.users)
+      Objects.equals(this.cluster, batchAssignUserIdsParams.cluster) &&
+      Objects.equals(this.users, batchAssignUserIdsParams.users)
     );
   }
 
@@ -80,7 +80,7 @@ public class BatchAssignUserIdsObject {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class BatchAssignUserIdsObject {\n");
+    sb.append("class BatchAssignUserIdsParams {\n");
     sb.append("    cluster: ").append(toIndentedString(cluster)).append("\n");
     sb.append("    users: ").append(toIndentedString(users)).append("\n");
     sb.append("}");

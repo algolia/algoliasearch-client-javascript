@@ -3,7 +3,7 @@
     "method": "operationIndex",
     "parameters": {
       "indexName": "theIndexName",
-      "operationIndexObject": {
+      "operationIndexParams": {
         "operation": "copy",
         "destination": "dest",
         "scope": ["rules", "settings"]

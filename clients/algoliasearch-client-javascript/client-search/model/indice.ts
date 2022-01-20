@@ -1,4 +1,4 @@
-export type Index = {
+export type Indice = {
   /**
    * Index name.
    */

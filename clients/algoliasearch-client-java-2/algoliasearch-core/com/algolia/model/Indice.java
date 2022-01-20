@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-/** Index */
-public class Index {
+/** Indice */
+public class Indice {
 
   @SerializedName("name")
   private String name;
@@ -41,7 +41,7 @@ public class Index {
   @SerializedName("replicas")
   private List<String> replicas = null;
 
-  public Index name(String name) {
+  public Indice name(String name) {
     this.name = name;
     return this;
   }
@@ -60,7 +60,7 @@ public class Index {
     this.name = name;
   }
 
-  public Index createdAt(String createdAt) {
+  public Indice createdAt(String createdAt) {
     this.createdAt = createdAt;
     return this;
   }
@@ -79,7 +79,7 @@ public class Index {
     this.createdAt = createdAt;
   }
 
-  public Index updatedAt(String updatedAt) {
+  public Indice updatedAt(String updatedAt) {
     this.updatedAt = updatedAt;
     return this;
   }
@@ -98,7 +98,7 @@ public class Index {
     this.updatedAt = updatedAt;
   }
 
-  public Index entries(Integer entries) {
+  public Indice entries(Integer entries) {
     this.entries = entries;
     return this;
   }
@@ -117,7 +117,7 @@ public class Index {
     this.entries = entries;
   }
 
-  public Index dataSize(Integer dataSize) {
+  public Indice dataSize(Integer dataSize) {
     this.dataSize = dataSize;
     return this;
   }
@@ -136,7 +136,7 @@ public class Index {
     this.dataSize = dataSize;
   }
 
-  public Index fileSize(Integer fileSize) {
+  public Indice fileSize(Integer fileSize) {
     this.fileSize = fileSize;
     return this;
   }
@@ -155,7 +155,7 @@ public class Index {
     this.fileSize = fileSize;
   }
 
-  public Index lastBuildTimeS(Integer lastBuildTimeS) {
+  public Indice lastBuildTimeS(Integer lastBuildTimeS) {
     this.lastBuildTimeS = lastBuildTimeS;
     return this;
   }
@@ -174,7 +174,7 @@ public class Index {
     this.lastBuildTimeS = lastBuildTimeS;
   }
 
-  public Index numberOfPendingTask(Integer numberOfPendingTask) {
+  public Indice numberOfPendingTask(Integer numberOfPendingTask) {
     this.numberOfPendingTask = numberOfPendingTask;
     return this;
   }
@@ -193,7 +193,7 @@ public class Index {
     this.numberOfPendingTask = numberOfPendingTask;
   }
 
-  public Index pendingTask(Boolean pendingTask) {
+  public Indice pendingTask(Boolean pendingTask) {
     this.pendingTask = pendingTask;
     return this;
   }
@@ -213,7 +213,7 @@ public class Index {
     this.pendingTask = pendingTask;
   }
 
-  public Index primary(String primary) {
+  public Indice primary(String primary) {
     this.primary = primary;
     return this;
   }
@@ -232,12 +232,12 @@ public class Index {
     this.primary = primary;
   }
 
-  public Index replicas(List<String> replicas) {
+  public Indice replicas(List<String> replicas) {
     this.replicas = replicas;
     return this;
   }
 
-  public Index addReplicasItem(String replicasItem) {
+  public Indice addReplicasItem(String replicasItem) {
     if (this.replicas == null) {
       this.replicas = new ArrayList<>();
     }
@@ -268,19 +268,19 @@ public class Index {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Index index = (Index) o;
+    Indice indice = (Indice) o;
     return (
-      Objects.equals(this.name, index.name) &&
-      Objects.equals(this.createdAt, index.createdAt) &&
-      Objects.equals(this.updatedAt, index.updatedAt) &&
-      Objects.equals(this.entries, index.entries) &&
-      Objects.equals(this.dataSize, index.dataSize) &&
-      Objects.equals(this.fileSize, index.fileSize) &&
-      Objects.equals(this.lastBuildTimeS, index.lastBuildTimeS) &&
-      Objects.equals(this.numberOfPendingTask, index.numberOfPendingTask) &&
-      Objects.equals(this.pendingTask, index.pendingTask) &&
-      Objects.equals(this.primary, index.primary) &&
-      Objects.equals(this.replicas, index.replicas)
+      Objects.equals(this.name, indice.name) &&
+      Objects.equals(this.createdAt, indice.createdAt) &&
+      Objects.equals(this.updatedAt, indice.updatedAt) &&
+      Objects.equals(this.entries, indice.entries) &&
+      Objects.equals(this.dataSize, indice.dataSize) &&
+      Objects.equals(this.fileSize, indice.fileSize) &&
+      Objects.equals(this.lastBuildTimeS, indice.lastBuildTimeS) &&
+      Objects.equals(this.numberOfPendingTask, indice.numberOfPendingTask) &&
+      Objects.equals(this.pendingTask, indice.pendingTask) &&
+      Objects.equals(this.primary, indice.primary) &&
+      Objects.equals(this.replicas, indice.replicas)
     );
   }
 
@@ -304,7 +304,7 @@ public class Index {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Index {\n");
+    sb.append("class Indice {\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb
       .append("    createdAt: ")

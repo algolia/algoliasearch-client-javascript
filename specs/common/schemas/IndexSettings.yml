@@ -66,9 +66,7 @@ baseIndexSettings:
       description: List of numeric attributes that can be used as numerical filters.
       default: []
     userData:
-      type: object
-      description: Lets you store custom data in your indices.
-      default: {}
+      $ref: '#/userData'
 
 indexSettingsAsSearchParams:
   type: object
@@ -306,3 +304,8 @@ hitsPerPage:
   type: integer
   description: Set the number of hits per page.
   default: 20
+
+userData:
+  type: object
+  description: Lets you store custom data in your indices.
+  default: {}

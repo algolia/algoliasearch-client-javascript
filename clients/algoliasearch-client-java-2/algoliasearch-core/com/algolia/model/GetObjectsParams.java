@@ -5,18 +5,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-/** The `batch` requests. */
-public class BatchWriteObject {
+/** The `getObjects` parameters. */
+public class GetObjectsParams {
 
   @SerializedName("requests")
-  private List<Operation> requests = null;
+  private List<MultipleGetObjectsParams> requests = null;
 
-  public BatchWriteObject requests(List<Operation> requests) {
+  public GetObjectsParams requests(List<MultipleGetObjectsParams> requests) {
     this.requests = requests;
     return this;
   }
 
-  public BatchWriteObject addRequestsItem(Operation requestsItem) {
+  public GetObjectsParams addRequestsItem(
+    MultipleGetObjectsParams requestsItem
+  ) {
     if (this.requests == null) {
       this.requests = new ArrayList<>();
     }
@@ -30,11 +32,11 @@ public class BatchWriteObject {
    * @return requests
    */
   @javax.annotation.Nullable
-  public List<Operation> getRequests() {
+  public List<MultipleGetObjectsParams> getRequests() {
     return requests;
   }
 
-  public void setRequests(List<Operation> requests) {
+  public void setRequests(List<MultipleGetObjectsParams> requests) {
     this.requests = requests;
   }
 
@@ -46,8 +48,8 @@ public class BatchWriteObject {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    BatchWriteObject batchWriteObject = (BatchWriteObject) o;
-    return Objects.equals(this.requests, batchWriteObject.requests);
+    GetObjectsParams getObjectsParams = (GetObjectsParams) o;
+    return Objects.equals(this.requests, getObjectsParams.requests);
   }
 
   @Override
@@ -58,7 +60,7 @@ public class BatchWriteObject {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class BatchWriteObject {\n");
+    sb.append("class GetObjectsParams {\n");
     sb.append("    requests: ").append(toIndentedString(requests)).append("\n");
     sb.append("}");
     return sb.toString();

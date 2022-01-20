@@ -9,14 +9,14 @@ import java.util.Objects;
 public class SearchHits {
 
   @SerializedName("hits")
-  private List<Record> hits = null;
+  private List<Hit> hits = null;
 
-  public SearchHits hits(List<Record> hits) {
+  public SearchHits hits(List<Hit> hits) {
     this.hits = hits;
     return this;
   }
 
-  public SearchHits addHitsItem(Record hitsItem) {
+  public SearchHits addHitsItem(Hit hitsItem) {
     if (this.hits == null) {
       this.hits = new ArrayList<>();
     }
@@ -30,11 +30,11 @@ public class SearchHits {
    * @return hits
    */
   @javax.annotation.Nullable
-  public List<Record> getHits() {
+  public List<Hit> getHits() {
     return hits;
   }
 
-  public void setHits(List<Record> hits) {
+  public void setHits(List<Hit> hits) {
     this.hits = hits;
   }
 

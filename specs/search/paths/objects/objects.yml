@@ -8,7 +8,7 @@ post:
     - $ref: '../../../common/parameters.yml#/IndexName'
   requestBody:
     required: true
-    description: The Algolia object.
+    description: The Algolia record.
     content:
       application/json:
         schema:

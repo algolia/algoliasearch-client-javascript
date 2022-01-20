@@ -1,4 +1,4 @@
-personalizationStrategyObject:
+personalizationStrategyParams:
   type: object
   additionalProperties: false
   required:
@@ -20,7 +20,7 @@ personalizationStrategyObject:
       type: integer
       description: 'The impact that personalization has on search results: a number between 0 (personalization disabled) and 100 (personalization fully enabled).'
 
-# props
+# misc
 score:
   type: integer
   description: The score for the event.

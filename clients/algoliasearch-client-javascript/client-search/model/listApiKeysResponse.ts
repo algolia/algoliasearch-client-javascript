@@ -1,8 +1,8 @@
-import type { KeyObject } from './keyObject';
+import type { Key } from './key';
 
 export type ListApiKeysResponse = {
   /**
    * List of api keys.
    */
-  keys: KeyObject[];
+  keys: Key[];
 };

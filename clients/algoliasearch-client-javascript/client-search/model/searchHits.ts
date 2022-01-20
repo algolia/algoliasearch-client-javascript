@@ -1,5 +1,5 @@
-import type { Record } from './record';
+import type { Hit } from './hit';
 
 export type SearchHits = {
-  hits?: Record[];
+  hits?: Hit[];
 };

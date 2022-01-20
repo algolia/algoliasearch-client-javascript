@@ -7,12 +7,12 @@ import com.algolia.ApiResponse;
 import com.algolia.Pair;
 import com.algolia.model.AddApiKeyResponse;
 import com.algolia.model.ApiKey;
-import com.algolia.model.AssignUserIdObject;
-import com.algolia.model.BatchAssignUserIdsObject;
+import com.algolia.model.AssignUserIdParams;
+import com.algolia.model.BatchAssignUserIdsParams;
 import com.algolia.model.BatchDictionaryEntries;
-import com.algolia.model.BatchObject;
+import com.algolia.model.BatchParams;
 import com.algolia.model.BatchResponse;
-import com.algolia.model.BatchWriteObject;
+import com.algolia.model.BatchWriteParams;
 import com.algolia.model.BrowseRequest;
 import com.algolia.model.BrowseResponse;
 import com.algolia.model.CreatedAtResponse;
@@ -22,22 +22,22 @@ import com.algolia.model.DeletedAtResponse;
 import com.algolia.model.DictionarySettingsRequest;
 import com.algolia.model.GetDictionarySettingsResponse;
 import com.algolia.model.GetLogsResponse;
-import com.algolia.model.GetObjectsObject;
+import com.algolia.model.GetObjectsParams;
 import com.algolia.model.GetObjectsResponse;
 import com.algolia.model.GetTaskResponse;
 import com.algolia.model.GetTopUserIdsResponse;
 import com.algolia.model.IndexSettings;
-import com.algolia.model.KeyObject;
+import com.algolia.model.Key;
 import com.algolia.model.Languages;
 import com.algolia.model.ListApiKeysResponse;
 import com.algolia.model.ListClustersResponse;
 import com.algolia.model.ListIndicesResponse;
 import com.algolia.model.ListUserIdsResponse;
 import com.algolia.model.MultipleBatchResponse;
-import com.algolia.model.MultipleQueriesObject;
+import com.algolia.model.MultipleQueriesParams;
 import com.algolia.model.MultipleQueriesResponse;
 import com.algolia.model.OneOfstringbuiltInOperation;
-import com.algolia.model.OperationIndexObject;
+import com.algolia.model.OperationIndexParams;
 import com.algolia.model.RemoveUserIdResponse;
 import com.algolia.model.ReplaceSourceResponse;
 import com.algolia.model.Rule;
@@ -51,7 +51,7 @@ import com.algolia.model.SearchResponse;
 import com.algolia.model.SearchRulesParams;
 import com.algolia.model.SearchRulesResponse;
 import com.algolia.model.SearchSynonymsResponse;
-import com.algolia.model.SearchUserIdsObject;
+import com.algolia.model.SearchUserIdsParams;
 import com.algolia.model.SearchUserIdsResponse;
 import com.algolia.model.Source;
 import com.algolia.model.SynonymHit;
@@ -370,17 +370,17 @@ public class SearchApi extends ApiClient {
    * Build call for assignUserId
    *
    * @param xAlgoliaUserID userID to assign. (required)
-   * @param assignUserIdObject (required)
+   * @param assignUserIdParams (required)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
    */
   private Call assignUserIdCall(
     String xAlgoliaUserID,
-    AssignUserIdObject assignUserIdObject,
+    AssignUserIdParams assignUserIdParams,
     final ApiCallback _callback
   ) throws ApiException {
-    Object bodyObj = assignUserIdObject;
+    Object bodyObj = assignUserIdParams;
 
     // create path and map variables
     String path = "/1/clusters/mapping";
@@ -410,7 +410,7 @@ public class SearchApi extends ApiClient {
   @SuppressWarnings("rawtypes")
   private Call assignUserIdValidateBeforeCall(
     String xAlgoliaUserID,
-    AssignUserIdObject assignUserIdObject,
+    AssignUserIdParams assignUserIdParams,
     final ApiCallback _callback
   ) throws ApiException {
     // verify the required parameter 'xAlgoliaUserID' is set
@@ -420,14 +420,14 @@ public class SearchApi extends ApiClient {
       );
     }
 
-    // verify the required parameter 'assignUserIdObject' is set
-    if (assignUserIdObject == null) {
+    // verify the required parameter 'assignUserIdParams' is set
+    if (assignUserIdParams == null) {
       throw new ApiException(
-        "Missing the required parameter 'assignUserIdObject' when calling assignUserId(Async)"
+        "Missing the required parameter 'assignUserIdParams' when calling assignUserId(Async)"
       );
     }
 
-    return assignUserIdCall(xAlgoliaUserID, assignUserIdObject, _callback);
+    return assignUserIdCall(xAlgoliaUserID, assignUserIdParams, _callback);
   }
 
   /**
@@ -437,18 +437,18 @@ public class SearchApi extends ApiClient {
    * is directly usable.
    *
    * @param xAlgoliaUserID userID to assign. (required)
-   * @param assignUserIdObject (required)
+   * @param assignUserIdParams (required)
    * @return CreatedAtResponse
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
   public CreatedAtResponse assignUserId(
     String xAlgoliaUserID,
-    AssignUserIdObject assignUserIdObject
+    AssignUserIdParams assignUserIdParams
   ) throws ApiException {
     Call call = assignUserIdValidateBeforeCall(
       xAlgoliaUserID,
-      assignUserIdObject,
+      assignUserIdParams,
       null
     );
     Type returnType = new TypeToken<CreatedAtResponse>() {}.getType();
@@ -463,19 +463,19 @@ public class SearchApi extends ApiClient {
    * userID is directly usable.
    *
    * @param xAlgoliaUserID userID to assign. (required)
-   * @param assignUserIdObject (required)
+   * @param assignUserIdParams (required)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
    * @throws ApiException If fail to process the API call, e.g. serializing the request body object
    */
   public Call assignUserIdAsync(
     String xAlgoliaUserID,
-    AssignUserIdObject assignUserIdObject,
+    AssignUserIdParams assignUserIdParams,
     final ApiCallback<CreatedAtResponse> _callback
   ) throws ApiException {
     Call call = assignUserIdValidateBeforeCall(
       xAlgoliaUserID,
-      assignUserIdObject,
+      assignUserIdParams,
       _callback
     );
     Type returnType = new TypeToken<CreatedAtResponse>() {}.getType();
@@ -487,17 +487,17 @@ public class SearchApi extends ApiClient {
    * Build call for batch
    *
    * @param indexName The index in which to perform the request. (required)
-   * @param batchWriteObject (required)
+   * @param batchWriteParams (required)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
    */
   private Call batchCall(
     String indexName,
-    BatchWriteObject batchWriteObject,
+    BatchWriteParams batchWriteParams,
     final ApiCallback _callback
   ) throws ApiException {
-    Object bodyObj = batchWriteObject;
+    Object bodyObj = batchWriteParams;
 
     // create path and map variables
     String path =
@@ -525,7 +525,7 @@ public class SearchApi extends ApiClient {
   @SuppressWarnings("rawtypes")
   private Call batchValidateBeforeCall(
     String indexName,
-    BatchWriteObject batchWriteObject,
+    BatchWriteParams batchWriteParams,
     final ApiCallback _callback
   ) throws ApiException {
     // verify the required parameter 'indexName' is set
@@ -535,30 +535,30 @@ public class SearchApi extends ApiClient {
       );
     }
 
-    // verify the required parameter 'batchWriteObject' is set
-    if (batchWriteObject == null) {
+    // verify the required parameter 'batchWriteParams' is set
+    if (batchWriteParams == null) {
       throw new ApiException(
-        "Missing the required parameter 'batchWriteObject' when calling batch(Async)"
+        "Missing the required parameter 'batchWriteParams' when calling batch(Async)"
       );
     }
 
-    return batchCall(indexName, batchWriteObject, _callback);
+    return batchCall(indexName, batchWriteParams, _callback);
   }
 
   /**
    * Performs multiple write operations in a single API call.
    *
    * @param indexName The index in which to perform the request. (required)
-   * @param batchWriteObject (required)
+   * @param batchWriteParams (required)
    * @return BatchResponse
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
   public BatchResponse batch(
     String indexName,
-    BatchWriteObject batchWriteObject
+    BatchWriteParams batchWriteParams
   ) throws ApiException {
-    Call call = batchValidateBeforeCall(indexName, batchWriteObject, null);
+    Call call = batchValidateBeforeCall(indexName, batchWriteParams, null);
     Type returnType = new TypeToken<BatchResponse>() {}.getType();
     ApiResponse<BatchResponse> res = this.execute(call, returnType);
     return res.getData();
@@ -568,17 +568,17 @@ public class SearchApi extends ApiClient {
    * (asynchronously) Performs multiple write operations in a single API call.
    *
    * @param indexName The index in which to perform the request. (required)
-   * @param batchWriteObject (required)
+   * @param batchWriteParams (required)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
    * @throws ApiException If fail to process the API call, e.g. serializing the request body object
    */
   public Call batchAsync(
     String indexName,
-    BatchWriteObject batchWriteObject,
+    BatchWriteParams batchWriteParams,
     final ApiCallback<BatchResponse> _callback
   ) throws ApiException {
-    Call call = batchValidateBeforeCall(indexName, batchWriteObject, _callback);
+    Call call = batchValidateBeforeCall(indexName, batchWriteParams, _callback);
     Type returnType = new TypeToken<BatchResponse>() {}.getType();
     this.executeAsync(call, returnType, _callback);
     return call;
@@ -588,17 +588,17 @@ public class SearchApi extends ApiClient {
    * Build call for batchAssignUserIds
    *
    * @param xAlgoliaUserID userID to assign. (required)
-   * @param batchAssignUserIdsObject (required)
+   * @param batchAssignUserIdsParams (required)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
    */
   private Call batchAssignUserIdsCall(
     String xAlgoliaUserID,
-    BatchAssignUserIdsObject batchAssignUserIdsObject,
+    BatchAssignUserIdsParams batchAssignUserIdsParams,
     final ApiCallback _callback
   ) throws ApiException {
-    Object bodyObj = batchAssignUserIdsObject;
+    Object bodyObj = batchAssignUserIdsParams;
 
     // create path and map variables
     String path = "/1/clusters/mapping/batch";
@@ -628,7 +628,7 @@ public class SearchApi extends ApiClient {
   @SuppressWarnings("rawtypes")
   private Call batchAssignUserIdsValidateBeforeCall(
     String xAlgoliaUserID,
-    BatchAssignUserIdsObject batchAssignUserIdsObject,
+    BatchAssignUserIdsParams batchAssignUserIdsParams,
     final ApiCallback _callback
   ) throws ApiException {
     // verify the required parameter 'xAlgoliaUserID' is set
@@ -638,17 +638,17 @@ public class SearchApi extends ApiClient {
       );
     }
 
-    // verify the required parameter 'batchAssignUserIdsObject' is set
-    if (batchAssignUserIdsObject == null) {
+    // verify the required parameter 'batchAssignUserIdsParams' is set
+    if (batchAssignUserIdsParams == null) {
       throw new ApiException(
-        "Missing the required parameter 'batchAssignUserIdsObject' when calling" +
+        "Missing the required parameter 'batchAssignUserIdsParams' when calling" +
         " batchAssignUserIds(Async)"
       );
     }
 
     return batchAssignUserIdsCall(
       xAlgoliaUserID,
-      batchAssignUserIdsObject,
+      batchAssignUserIdsParams,
       _callback
     );
   }
@@ -659,18 +659,18 @@ public class SearchApi extends ApiClient {
    * usable.
    *
    * @param xAlgoliaUserID userID to assign. (required)
-   * @param batchAssignUserIdsObject (required)
+   * @param batchAssignUserIdsParams (required)
    * @return CreatedAtResponse
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
   public CreatedAtResponse batchAssignUserIds(
     String xAlgoliaUserID,
-    BatchAssignUserIdsObject batchAssignUserIdsObject
+    BatchAssignUserIdsParams batchAssignUserIdsParams
   ) throws ApiException {
     Call call = batchAssignUserIdsValidateBeforeCall(
       xAlgoliaUserID,
-      batchAssignUserIdsObject,
+      batchAssignUserIdsParams,
       null
     );
     Type returnType = new TypeToken<CreatedAtResponse>() {}.getType();
@@ -684,19 +684,19 @@ public class SearchApi extends ApiClient {
    * are directly usable.
    *
    * @param xAlgoliaUserID userID to assign. (required)
-   * @param batchAssignUserIdsObject (required)
+   * @param batchAssignUserIdsParams (required)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
    * @throws ApiException If fail to process the API call, e.g. serializing the request body object
    */
   public Call batchAssignUserIdsAsync(
     String xAlgoliaUserID,
-    BatchAssignUserIdsObject batchAssignUserIdsObject,
+    BatchAssignUserIdsParams batchAssignUserIdsParams,
     final ApiCallback<CreatedAtResponse> _callback
   ) throws ApiException {
     Call call = batchAssignUserIdsValidateBeforeCall(
       xAlgoliaUserID,
-      batchAssignUserIdsObject,
+      batchAssignUserIdsParams,
       _callback
     );
     Type returnType = new TypeToken<CreatedAtResponse>() {}.getType();
@@ -2152,14 +2152,14 @@ public class SearchApi extends ApiClient {
    * Get the permissions of an API key.
    *
    * @param key API Key string. (required)
-   * @return KeyObject
+   * @return Key
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
-  public KeyObject getApiKey(String key) throws ApiException {
+  public Key getApiKey(String key) throws ApiException {
     Call call = getApiKeyValidateBeforeCall(key, null);
-    Type returnType = new TypeToken<KeyObject>() {}.getType();
-    ApiResponse<KeyObject> res = this.execute(call, returnType);
+    Type returnType = new TypeToken<Key>() {}.getType();
+    ApiResponse<Key> res = this.execute(call, returnType);
     return res.getData();
   }
 
@@ -2171,12 +2171,10 @@ public class SearchApi extends ApiClient {
    * @return The request call
    * @throws ApiException If fail to process the API call, e.g. serializing the request body object
    */
-  public Call getApiKeyAsync(
-    String key,
-    final ApiCallback<KeyObject> _callback
-  ) throws ApiException {
+  public Call getApiKeyAsync(String key, final ApiCallback<Key> _callback)
+    throws ApiException {
     Call call = getApiKeyValidateBeforeCall(key, _callback);
-    Type returnType = new TypeToken<KeyObject>() {}.getType();
+    Type returnType = new TypeToken<Key>() {}.getType();
     this.executeAsync(call, returnType, _callback);
     return call;
   }
@@ -2590,16 +2588,16 @@ public class SearchApi extends ApiClient {
   /**
    * Build call for getObjects
    *
-   * @param getObjectsObject (required)
+   * @param getObjectsParams (required)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
    */
   private Call getObjectsCall(
-    GetObjectsObject getObjectsObject,
+    GetObjectsParams getObjectsParams,
     final ApiCallback _callback
   ) throws ApiException {
-    Object bodyObj = getObjectsObject;
+    Object bodyObj = getObjectsParams;
 
     // create path and map variables
     String path = "/1/indexes/*/objects";
@@ -2622,30 +2620,30 @@ public class SearchApi extends ApiClient {
 
   @SuppressWarnings("rawtypes")
   private Call getObjectsValidateBeforeCall(
-    GetObjectsObject getObjectsObject,
+    GetObjectsParams getObjectsParams,
     final ApiCallback _callback
   ) throws ApiException {
-    // verify the required parameter 'getObjectsObject' is set
-    if (getObjectsObject == null) {
+    // verify the required parameter 'getObjectsParams' is set
+    if (getObjectsParams == null) {
       throw new ApiException(
-        "Missing the required parameter 'getObjectsObject' when calling getObjects(Async)"
+        "Missing the required parameter 'getObjectsParams' when calling getObjects(Async)"
       );
     }
 
-    return getObjectsCall(getObjectsObject, _callback);
+    return getObjectsCall(getObjectsParams, _callback);
   }
 
   /**
    * Retrieve one or more objects, potentially from different indices, in a single API call.
    *
-   * @param getObjectsObject (required)
+   * @param getObjectsParams (required)
    * @return GetObjectsResponse
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
-  public GetObjectsResponse getObjects(GetObjectsObject getObjectsObject)
+  public GetObjectsResponse getObjects(GetObjectsParams getObjectsParams)
     throws ApiException {
-    Call call = getObjectsValidateBeforeCall(getObjectsObject, null);
+    Call call = getObjectsValidateBeforeCall(getObjectsParams, null);
     Type returnType = new TypeToken<GetObjectsResponse>() {}.getType();
     ApiResponse<GetObjectsResponse> res = this.execute(call, returnType);
     return res.getData();
@@ -2655,16 +2653,16 @@ public class SearchApi extends ApiClient {
    * (asynchronously) Retrieve one or more objects, potentially from different indices, in a single
    * API call.
    *
-   * @param getObjectsObject (required)
+   * @param getObjectsParams (required)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
    * @throws ApiException If fail to process the API call, e.g. serializing the request body object
    */
   public Call getObjectsAsync(
-    GetObjectsObject getObjectsObject,
+    GetObjectsParams getObjectsParams,
     final ApiCallback<GetObjectsResponse> _callback
   ) throws ApiException {
-    Call call = getObjectsValidateBeforeCall(getObjectsObject, _callback);
+    Call call = getObjectsValidateBeforeCall(getObjectsParams, _callback);
     Type returnType = new TypeToken<GetObjectsResponse>() {}.getType();
     this.executeAsync(call, returnType, _callback);
     return call;
@@ -3693,16 +3691,16 @@ public class SearchApi extends ApiClient {
   /**
    * Build call for multipleBatch
    *
-   * @param batchObject (required)
+   * @param batchParams (required)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
    */
   private Call multipleBatchCall(
-    BatchObject batchObject,
+    BatchParams batchParams,
     final ApiCallback _callback
   ) throws ApiException {
-    Object bodyObj = batchObject;
+    Object bodyObj = batchParams;
 
     // create path and map variables
     String path = "/1/indexes/*/batch";
@@ -3725,31 +3723,31 @@ public class SearchApi extends ApiClient {
 
   @SuppressWarnings("rawtypes")
   private Call multipleBatchValidateBeforeCall(
-    BatchObject batchObject,
+    BatchParams batchParams,
     final ApiCallback _callback
   ) throws ApiException {
-    // verify the required parameter 'batchObject' is set
-    if (batchObject == null) {
+    // verify the required parameter 'batchParams' is set
+    if (batchParams == null) {
       throw new ApiException(
-        "Missing the required parameter 'batchObject' when calling multipleBatch(Async)"
+        "Missing the required parameter 'batchParams' when calling multipleBatch(Async)"
       );
     }
 
-    return multipleBatchCall(batchObject, _callback);
+    return multipleBatchCall(batchParams, _callback);
   }
 
   /**
    * Perform multiple write operations, potentially targeting multiple indices, in a single API
    * call.
    *
-   * @param batchObject (required)
+   * @param batchParams (required)
    * @return MultipleBatchResponse
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
-  public MultipleBatchResponse multipleBatch(BatchObject batchObject)
+  public MultipleBatchResponse multipleBatch(BatchParams batchParams)
     throws ApiException {
-    Call call = multipleBatchValidateBeforeCall(batchObject, null);
+    Call call = multipleBatchValidateBeforeCall(batchParams, null);
     Type returnType = new TypeToken<MultipleBatchResponse>() {}.getType();
     ApiResponse<MultipleBatchResponse> res = this.execute(call, returnType);
     return res.getData();
@@ -3759,16 +3757,16 @@ public class SearchApi extends ApiClient {
    * (asynchronously) Perform multiple write operations, potentially targeting multiple indices, in
    * a single API call.
    *
-   * @param batchObject (required)
+   * @param batchParams (required)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
    * @throws ApiException If fail to process the API call, e.g. serializing the request body object
    */
   public Call multipleBatchAsync(
-    BatchObject batchObject,
+    BatchParams batchParams,
     final ApiCallback<MultipleBatchResponse> _callback
   ) throws ApiException {
-    Call call = multipleBatchValidateBeforeCall(batchObject, _callback);
+    Call call = multipleBatchValidateBeforeCall(batchParams, _callback);
     Type returnType = new TypeToken<MultipleBatchResponse>() {}.getType();
     this.executeAsync(call, returnType, _callback);
     return call;
@@ -3777,16 +3775,16 @@ public class SearchApi extends ApiClient {
   /**
    * Build call for multipleQueries
    *
-   * @param multipleQueriesObject (required)
+   * @param multipleQueriesParams (required)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
    */
   private Call multipleQueriesCall(
-    MultipleQueriesObject multipleQueriesObject,
+    MultipleQueriesParams multipleQueriesParams,
     final ApiCallback _callback
   ) throws ApiException {
-    Object bodyObj = multipleQueriesObject;
+    Object bodyObj = multipleQueriesParams;
 
     // create path and map variables
     String path = "/1/indexes/*/queries";
@@ -3809,32 +3807,32 @@ public class SearchApi extends ApiClient {
 
   @SuppressWarnings("rawtypes")
   private Call multipleQueriesValidateBeforeCall(
-    MultipleQueriesObject multipleQueriesObject,
+    MultipleQueriesParams multipleQueriesParams,
     final ApiCallback _callback
   ) throws ApiException {
-    // verify the required parameter 'multipleQueriesObject' is set
-    if (multipleQueriesObject == null) {
+    // verify the required parameter 'multipleQueriesParams' is set
+    if (multipleQueriesParams == null) {
       throw new ApiException(
-        "Missing the required parameter 'multipleQueriesObject' when calling" +
+        "Missing the required parameter 'multipleQueriesParams' when calling" +
         " multipleQueries(Async)"
       );
     }
 
-    return multipleQueriesCall(multipleQueriesObject, _callback);
+    return multipleQueriesCall(multipleQueriesParams, _callback);
   }
 
   /**
    * Get search results for the given requests.
    *
-   * @param multipleQueriesObject (required)
+   * @param multipleQueriesParams (required)
    * @return MultipleQueriesResponse
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
   public MultipleQueriesResponse multipleQueries(
-    MultipleQueriesObject multipleQueriesObject
+    MultipleQueriesParams multipleQueriesParams
   ) throws ApiException {
-    Call call = multipleQueriesValidateBeforeCall(multipleQueriesObject, null);
+    Call call = multipleQueriesValidateBeforeCall(multipleQueriesParams, null);
     Type returnType = new TypeToken<MultipleQueriesResponse>() {}.getType();
     ApiResponse<MultipleQueriesResponse> res = this.execute(call, returnType);
     return res.getData();
@@ -3843,17 +3841,17 @@ public class SearchApi extends ApiClient {
   /**
    * (asynchronously) Get search results for the given requests.
    *
-   * @param multipleQueriesObject (required)
+   * @param multipleQueriesParams (required)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
    * @throws ApiException If fail to process the API call, e.g. serializing the request body object
    */
   public Call multipleQueriesAsync(
-    MultipleQueriesObject multipleQueriesObject,
+    MultipleQueriesParams multipleQueriesParams,
     final ApiCallback<MultipleQueriesResponse> _callback
   ) throws ApiException {
     Call call = multipleQueriesValidateBeforeCall(
-      multipleQueriesObject,
+      multipleQueriesParams,
       _callback
     );
     Type returnType = new TypeToken<MultipleQueriesResponse>() {}.getType();
@@ -3865,17 +3863,17 @@ public class SearchApi extends ApiClient {
    * Build call for operationIndex
    *
    * @param indexName The index in which to perform the request. (required)
-   * @param operationIndexObject (required)
+   * @param operationIndexParams (required)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
    */
   private Call operationIndexCall(
     String indexName,
-    OperationIndexObject operationIndexObject,
+    OperationIndexParams operationIndexParams,
     final ApiCallback _callback
   ) throws ApiException {
-    Object bodyObj = operationIndexObject;
+    Object bodyObj = operationIndexParams;
 
     // create path and map variables
     String path =
@@ -3903,7 +3901,7 @@ public class SearchApi extends ApiClient {
   @SuppressWarnings("rawtypes")
   private Call operationIndexValidateBeforeCall(
     String indexName,
-    OperationIndexObject operationIndexObject,
+    OperationIndexParams operationIndexParams,
     final ApiCallback _callback
   ) throws ApiException {
     // verify the required parameter 'indexName' is set
@@ -3913,33 +3911,33 @@ public class SearchApi extends ApiClient {
       );
     }
 
-    // verify the required parameter 'operationIndexObject' is set
-    if (operationIndexObject == null) {
+    // verify the required parameter 'operationIndexParams' is set
+    if (operationIndexParams == null) {
       throw new ApiException(
-        "Missing the required parameter 'operationIndexObject' when calling" +
+        "Missing the required parameter 'operationIndexParams' when calling" +
         " operationIndex(Async)"
       );
     }
 
-    return operationIndexCall(indexName, operationIndexObject, _callback);
+    return operationIndexCall(indexName, operationIndexParams, _callback);
   }
 
   /**
    * Peforms a copy or a move operation on a index.
    *
    * @param indexName The index in which to perform the request. (required)
-   * @param operationIndexObject (required)
+   * @param operationIndexParams (required)
    * @return UpdatedAtResponse
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
   public UpdatedAtResponse operationIndex(
     String indexName,
-    OperationIndexObject operationIndexObject
+    OperationIndexParams operationIndexParams
   ) throws ApiException {
     Call call = operationIndexValidateBeforeCall(
       indexName,
-      operationIndexObject,
+      operationIndexParams,
       null
     );
     Type returnType = new TypeToken<UpdatedAtResponse>() {}.getType();
@@ -3951,19 +3949,19 @@ public class SearchApi extends ApiClient {
    * (asynchronously) Peforms a copy or a move operation on a index.
    *
    * @param indexName The index in which to perform the request. (required)
-   * @param operationIndexObject (required)
+   * @param operationIndexParams (required)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
    * @throws ApiException If fail to process the API call, e.g. serializing the request body object
    */
   public Call operationIndexAsync(
     String indexName,
-    OperationIndexObject operationIndexObject,
+    OperationIndexParams operationIndexParams,
     final ApiCallback<UpdatedAtResponse> _callback
   ) throws ApiException {
     Call call = operationIndexValidateBeforeCall(
       indexName,
-      operationIndexObject,
+      operationIndexParams,
       _callback
     );
     Type returnType = new TypeToken<UpdatedAtResponse>() {}.getType();
@@ -4388,7 +4386,7 @@ public class SearchApi extends ApiClient {
    * Build call for saveObject
    *
    * @param indexName The index in which to perform the request. (required)
-   * @param body The Algolia object. (required)
+   * @param body The Algolia record. (required)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
@@ -4450,7 +4448,7 @@ public class SearchApi extends ApiClient {
    * Add an object to the index, automatically assigning it an object ID.
    *
    * @param indexName The index in which to perform the request. (required)
-   * @param body The Algolia object. (required)
+   * @param body The Algolia record. (required)
    * @return SaveObjectResponse
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
@@ -4467,7 +4465,7 @@ public class SearchApi extends ApiClient {
    * (asynchronously) Add an object to the index, automatically assigning it an object ID.
    *
    * @param indexName The index in which to perform the request. (required)
-   * @param body The Algolia object. (required)
+   * @param body The Algolia record. (required)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
    * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -5559,16 +5557,16 @@ public class SearchApi extends ApiClient {
   /**
    * Build call for searchUserIds
    *
-   * @param searchUserIdsObject (required)
+   * @param searchUserIdsParams (required)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
    */
   private Call searchUserIdsCall(
-    SearchUserIdsObject searchUserIdsObject,
+    SearchUserIdsParams searchUserIdsParams,
     final ApiCallback _callback
   ) throws ApiException {
-    Object bodyObj = searchUserIdsObject;
+    Object bodyObj = searchUserIdsParams;
 
     // create path and map variables
     String path = "/1/clusters/mapping/search";
@@ -5591,17 +5589,17 @@ public class SearchApi extends ApiClient {
 
   @SuppressWarnings("rawtypes")
   private Call searchUserIdsValidateBeforeCall(
-    SearchUserIdsObject searchUserIdsObject,
+    SearchUserIdsParams searchUserIdsParams,
     final ApiCallback _callback
   ) throws ApiException {
-    // verify the required parameter 'searchUserIdsObject' is set
-    if (searchUserIdsObject == null) {
+    // verify the required parameter 'searchUserIdsParams' is set
+    if (searchUserIdsParams == null) {
       throw new ApiException(
-        "Missing the required parameter 'searchUserIdsObject' when calling searchUserIds(Async)"
+        "Missing the required parameter 'searchUserIdsParams' when calling searchUserIds(Async)"
       );
     }
 
-    return searchUserIdsCall(searchUserIdsObject, _callback);
+    return searchUserIdsCall(searchUserIdsParams, _callback);
   }
 
   /**
@@ -5613,15 +5611,15 @@ public class SearchApi extends ApiClient {
    * outdated value until the next rebuild of the mapping, which takes place every 12h. Upon
    * success, the response is 200 OK and contains the following userIDs data.
    *
-   * @param searchUserIdsObject (required)
+   * @param searchUserIdsParams (required)
    * @return SearchUserIdsResponse
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
   public SearchUserIdsResponse searchUserIds(
-    SearchUserIdsObject searchUserIdsObject
+    SearchUserIdsParams searchUserIdsParams
   ) throws ApiException {
-    Call call = searchUserIdsValidateBeforeCall(searchUserIdsObject, null);
+    Call call = searchUserIdsValidateBeforeCall(searchUserIdsParams, null);
     Type returnType = new TypeToken<SearchUserIdsResponse>() {}.getType();
     ApiResponse<SearchUserIdsResponse> res = this.execute(call, returnType);
     return res.getData();
@@ -5636,16 +5634,16 @@ public class SearchApi extends ApiClient {
    * search will report an outdated value until the next rebuild of the mapping, which takes place
    * every 12h. Upon success, the response is 200 OK and contains the following userIDs data.
    *
-   * @param searchUserIdsObject (required)
+   * @param searchUserIdsParams (required)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
    * @throws ApiException If fail to process the API call, e.g. serializing the request body object
    */
   public Call searchUserIdsAsync(
-    SearchUserIdsObject searchUserIdsObject,
+    SearchUserIdsParams searchUserIdsParams,
     final ApiCallback<SearchUserIdsResponse> _callback
   ) throws ApiException {
-    Call call = searchUserIdsValidateBeforeCall(searchUserIdsObject, _callback);
+    Call call = searchUserIdsValidateBeforeCall(searchUserIdsParams, _callback);
     Type returnType = new TypeToken<SearchUserIdsResponse>() {}.getType();
     this.executeAsync(call, returnType, _callback);
     return call;

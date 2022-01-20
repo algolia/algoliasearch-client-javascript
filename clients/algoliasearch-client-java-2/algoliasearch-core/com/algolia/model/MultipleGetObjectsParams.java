@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-/** GetObject operation on an index. */
-public class MultipleGetObjectsObject {
+/** getObjects operation on an index. */
+public class MultipleGetObjectsParams {
 
   @SerializedName("attributesToRetrieve")
   private List<String> attributesToRetrieve = null;
@@ -17,14 +17,14 @@ public class MultipleGetObjectsObject {
   @SerializedName("indexName")
   private String indexName;
 
-  public MultipleGetObjectsObject attributesToRetrieve(
+  public MultipleGetObjectsParams attributesToRetrieve(
     List<String> attributesToRetrieve
   ) {
     this.attributesToRetrieve = attributesToRetrieve;
     return this;
   }
 
-  public MultipleGetObjectsObject addAttributesToRetrieveItem(
+  public MultipleGetObjectsParams addAttributesToRetrieveItem(
     String attributesToRetrieveItem
   ) {
     if (this.attributesToRetrieve == null) {
@@ -48,7 +48,7 @@ public class MultipleGetObjectsObject {
     this.attributesToRetrieve = attributesToRetrieve;
   }
 
-  public MultipleGetObjectsObject objectID(String objectID) {
+  public MultipleGetObjectsParams objectID(String objectID) {
     this.objectID = objectID;
     return this;
   }
@@ -67,7 +67,7 @@ public class MultipleGetObjectsObject {
     this.objectID = objectID;
   }
 
-  public MultipleGetObjectsObject indexName(String indexName) {
+  public MultipleGetObjectsParams indexName(String indexName) {
     this.indexName = indexName;
     return this;
   }
@@ -94,14 +94,14 @@ public class MultipleGetObjectsObject {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    MultipleGetObjectsObject multipleGetObjectsObject = (MultipleGetObjectsObject) o;
+    MultipleGetObjectsParams multipleGetObjectsParams = (MultipleGetObjectsParams) o;
     return (
       Objects.equals(
         this.attributesToRetrieve,
-        multipleGetObjectsObject.attributesToRetrieve
+        multipleGetObjectsParams.attributesToRetrieve
       ) &&
-      Objects.equals(this.objectID, multipleGetObjectsObject.objectID) &&
-      Objects.equals(this.indexName, multipleGetObjectsObject.indexName)
+      Objects.equals(this.objectID, multipleGetObjectsParams.objectID) &&
+      Objects.equals(this.indexName, multipleGetObjectsParams.indexName)
     );
   }
 
@@ -113,7 +113,7 @@ public class MultipleGetObjectsObject {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class MultipleGetObjectsObject {\n");
+    sb.append("class MultipleGetObjectsParams {\n");
     sb
       .append("    attributesToRetrieve: ")
       .append(toIndentedString(attributesToRetrieve))

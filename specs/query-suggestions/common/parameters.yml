@@ -5,40 +5,19 @@ SourceIndex:
     - indexName
   properties:
     indexName:
-      type: string
-      description: Source index name.
+      $ref: '#/indexName'
     analyticsTags:
-      type: array
-      items:
-        type: string
-      default: []
-      description: List of analytics tags to filter the popular searches per tag.
+      $ref: '#/analyticsTags'
     facets:
-      type: array
-      items:
-        type: object
-      default: []
-      description: List of facets to define as categories for the query suggestions.
+      $ref: '#/facets'
     minHits:
-      type: integer
-      description: Minimum number of hits (e.g., matching records in the source index) to generate a suggestions.
+      $ref: '#/minHits'
     minLetters:
-      type: integer
-      description: Minimum number of required letters for a suggestion to remain.
+      $ref: '#/minLetters'
     generate:
-      type: array
-      items:
-        type: array
-        items:
-          type: string
-      default: []
-      description: List of facet attributes used to generate Query Suggestions. The resulting suggestions are every combination of the facets in the nested list (e.g., (facetA and facetB) and facetC).
-      example: [[facetA, facetB], [facetC]]
+      $ref: '#/generate'
     external:
-      type: array
-      items:
-        $ref: '#/SourceIndexExternal'
-      description: List of external indices to use to generate custom Query Suggestions.
+      $ref: '#/external'
 
 SourceIndexExternal:
   type: object
@@ -91,3 +70,45 @@ QuerySuggestionsIndexWithIndexParam:
         indexName:
           type: string
           description: Index name to target.
+
+indexName:
+  type: string
+  description: Source index name.
+
+analyticsTags:
+  type: array
+  items:
+    type: string
+  default: []
+  description: List of analytics tags to filter the popular searches per tag.
+
+facets:
+  type: array
+  items:
+    type: object
+  default: []
+  description: List of facets to define as categories for the query suggestions.
+
+minHits:
+  type: integer
+  description: Minimum number of hits (e.g., matching records in the source index) to generate a suggestions.
+
+minLetters:
+  type: integer
+  description: Minimum number of required letters for a suggestion to remain.
+
+generate:
+  type: array
+  items:
+    type: array
+    items:
+      type: string
+  default: []
+  description: List of facet attributes used to generate Query Suggestions. The resulting suggestions are every combination of the facets in the nested list (e.g., (facetA and facetB) and facetC).
+  example: [[facetA, facetB], [facetC]]
+
+external:
+  type: array
+  items:
+    $ref: '#/SourceIndexExternal'
+  description: List of external indices to use to generate custom Query Suggestions.

@@ -1,7 +1,7 @@
 /**
- * Assign userID object.
+ * Assign userID parameters.
  */
-export type AssignUserIdObject = {
+export type AssignUserIdParams = {
   /**
    * Name of the cluster.
    */

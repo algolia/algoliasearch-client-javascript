@@ -31,3 +31,5 @@ UserIDInPath:
 userID:
   type: string
   pattern: '^[a-zA-Z0-9 \-*.]+$'
+  description: userID of the user.
+  example: user1

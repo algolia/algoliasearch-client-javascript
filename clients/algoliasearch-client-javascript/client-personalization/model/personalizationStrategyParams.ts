@@ -1,7 +1,7 @@
 import type { EventScoring } from './eventScoring';
 import type { FacetScoring } from './facetScoring';
 
-export type PersonalizationStrategyObject = {
+export type PersonalizationStrategyParams = {
   /**
    * Scores associated with the events.
    */

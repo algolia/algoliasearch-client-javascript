@@ -11,7 +11,7 @@ post:
     content:
       application/json:
         schema:
-          title: operationIndexObject
+          title: operationIndexParams
           type: object
           additionalProperties: false
           properties:

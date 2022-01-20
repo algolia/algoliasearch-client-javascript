@@ -1,10 +1,10 @@
-import type { Index } from './index';
+import type { Indice } from './indice';
 
 export type ListIndicesResponse = {
   /**
    * List of the fetched indices.
    */
-  items?: Index[];
+  items?: Indice[];
   /**
    * Number of pages.
    */

@@ -100,34 +100,25 @@ export class AbtestingApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (addABTestsRequest === null || addABTestsRequest === undefined) {
+    if (!addABTestsRequest) {
       throw new Error(
-        'Required parameter addABTestsRequest was null or undefined when calling addABTests.'
+        'Parameter `addABTestsRequest` is required when calling `addABTests`.'
       );
     }
 
-    if (
-      addABTestsRequest.name === null ||
-      addABTestsRequest.name === undefined
-    ) {
+    if (!addABTestsRequest.name) {
       throw new Error(
-        'Required parameter addABTestsRequest.name was null or undefined when calling addABTests.'
+        'Parameter `addABTestsRequest.name` is required when calling `addABTests`.'
       );
     }
-    if (
-      addABTestsRequest.variant === null ||
-      addABTestsRequest.variant === undefined
-    ) {
+    if (!addABTestsRequest.variant) {
       throw new Error(
-        'Required parameter addABTestsRequest.variant was null or undefined when calling addABTests.'
+        'Parameter `addABTestsRequest.variant` is required when calling `addABTests`.'
       );
     }
-    if (
-      addABTestsRequest.endAt === null ||
-      addABTestsRequest.endAt === undefined
-    ) {
+    if (!addABTestsRequest.endAt) {
       throw new Error(
-        'Required parameter addABTestsRequest.endAt was null or undefined when calling addABTests.'
+        'Parameter `addABTestsRequest.endAt` is required when calling `addABTests`.'
       );
     }
 
@@ -159,9 +150,9 @@ export class AbtestingApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (id === null || id === undefined) {
+    if (!id) {
       throw new Error(
-        'Required parameter id was null or undefined when calling deleteABTest.'
+        'Parameter `id` is required when calling `deleteABTest`.'
       );
     }
 
@@ -192,10 +183,8 @@ export class AbtestingApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (id === null || id === undefined) {
-      throw new Error(
-        'Required parameter id was null or undefined when calling getABTest.'
-      );
+    if (!id) {
+      throw new Error('Parameter `id` is required when calling `getABTest`.');
     }
 
     const request: Request = {
@@ -261,10 +250,8 @@ export class AbtestingApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (id === null || id === undefined) {
-      throw new Error(
-        'Required parameter id was null or undefined when calling stopABTest.'
-      );
+    if (!id) {
+      throw new Error('Parameter `id` is required when calling `stopABTest`.');
     }
 
     const request: Request = {

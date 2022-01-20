@@ -4,8 +4,8 @@ import com.google.gson.annotations.SerializedName;
 import java.util.HashMap;
 import java.util.Objects;
 
-/** A single record. */
-public class Record extends HashMap<String, Object> {
+/** A single hit. */
+public class Hit extends HashMap<String, Object> {
 
   @SerializedName("objectID")
   private String objectID;
@@ -22,7 +22,7 @@ public class Record extends HashMap<String, Object> {
   @SerializedName("_distinctSeqID")
   private Integer distinctSeqID;
 
-  public Record objectID(String objectID) {
+  public Hit objectID(String objectID) {
     this.objectID = objectID;
     return this;
   }
@@ -41,7 +41,7 @@ public class Record extends HashMap<String, Object> {
     this.objectID = objectID;
   }
 
-  public Record highlightResult(HighlightResult highlightResult) {
+  public Hit highlightResult(HighlightResult highlightResult) {
     this.highlightResult = highlightResult;
     return this;
   }
@@ -60,7 +60,7 @@ public class Record extends HashMap<String, Object> {
     this.highlightResult = highlightResult;
   }
 
-  public Record snippetResult(SnippetResult snippetResult) {
+  public Hit snippetResult(SnippetResult snippetResult) {
     this.snippetResult = snippetResult;
     return this;
   }
@@ -79,7 +79,7 @@ public class Record extends HashMap<String, Object> {
     this.snippetResult = snippetResult;
   }
 
-  public Record rankingInfo(RankingInfo rankingInfo) {
+  public Hit rankingInfo(RankingInfo rankingInfo) {
     this.rankingInfo = rankingInfo;
     return this;
   }
@@ -98,7 +98,7 @@ public class Record extends HashMap<String, Object> {
     this.rankingInfo = rankingInfo;
   }
 
-  public Record distinctSeqID(Integer distinctSeqID) {
+  public Hit distinctSeqID(Integer distinctSeqID) {
     this.distinctSeqID = distinctSeqID;
     return this;
   }
@@ -125,13 +125,13 @@ public class Record extends HashMap<String, Object> {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Record record = (Record) o;
+    Hit hit = (Hit) o;
     return (
-      Objects.equals(this.objectID, record.objectID) &&
-      Objects.equals(this.highlightResult, record.highlightResult) &&
-      Objects.equals(this.snippetResult, record.snippetResult) &&
-      Objects.equals(this.rankingInfo, record.rankingInfo) &&
-      Objects.equals(this.distinctSeqID, record.distinctSeqID) &&
+      Objects.equals(this.objectID, hit.objectID) &&
+      Objects.equals(this.highlightResult, hit.highlightResult) &&
+      Objects.equals(this.snippetResult, hit.snippetResult) &&
+      Objects.equals(this.rankingInfo, hit.rankingInfo) &&
+      Objects.equals(this.distinctSeqID, hit.distinctSeqID) &&
       super.equals(o)
     );
   }
@@ -151,7 +151,7 @@ public class Record extends HashMap<String, Object> {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Record {\n");
+    sb.append("class Hit {\n");
     sb.append("    ").append(toIndentedString(super.toString())).append("\n");
     sb.append("    objectID: ").append(toIndentedString(objectID)).append("\n");
     sb
