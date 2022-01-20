@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.Objects;
 
 /** OK */
-public class SearchUserIdsObject {
+public class SearchUserIdsParams {
 
   @SerializedName("query")
   private String query;
@@ -18,7 +18,7 @@ public class SearchUserIdsObject {
   @SerializedName("hitsPerPage")
   private Integer hitsPerPage = 20;
 
-  public SearchUserIdsObject query(String query) {
+  public SearchUserIdsParams query(String query) {
     this.query = query;
     return this;
   }
@@ -38,7 +38,7 @@ public class SearchUserIdsObject {
     this.query = query;
   }
 
-  public SearchUserIdsObject clusterName(String clusterName) {
+  public SearchUserIdsParams clusterName(String clusterName) {
     this.clusterName = clusterName;
     return this;
   }
@@ -57,7 +57,7 @@ public class SearchUserIdsObject {
     this.clusterName = clusterName;
   }
 
-  public SearchUserIdsObject page(Integer page) {
+  public SearchUserIdsParams page(Integer page) {
     this.page = page;
     return this;
   }
@@ -76,7 +76,7 @@ public class SearchUserIdsObject {
     this.page = page;
   }
 
-  public SearchUserIdsObject hitsPerPage(Integer hitsPerPage) {
+  public SearchUserIdsParams hitsPerPage(Integer hitsPerPage) {
     this.hitsPerPage = hitsPerPage;
     return this;
   }
@@ -103,12 +103,12 @@ public class SearchUserIdsObject {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    SearchUserIdsObject searchUserIdsObject = (SearchUserIdsObject) o;
+    SearchUserIdsParams searchUserIdsParams = (SearchUserIdsParams) o;
     return (
-      Objects.equals(this.query, searchUserIdsObject.query) &&
-      Objects.equals(this.clusterName, searchUserIdsObject.clusterName) &&
-      Objects.equals(this.page, searchUserIdsObject.page) &&
-      Objects.equals(this.hitsPerPage, searchUserIdsObject.hitsPerPage)
+      Objects.equals(this.query, searchUserIdsParams.query) &&
+      Objects.equals(this.clusterName, searchUserIdsParams.clusterName) &&
+      Objects.equals(this.page, searchUserIdsParams.page) &&
+      Objects.equals(this.hitsPerPage, searchUserIdsParams.hitsPerPage)
     );
   }
 
@@ -120,7 +120,7 @@ public class SearchUserIdsObject {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class SearchUserIdsObject {\n");
+    sb.append("class SearchUserIdsParams {\n");
     sb.append("    query: ").append(toIndentedString(query)).append("\n");
     sb
       .append("    clusterName: ")

@@ -1,7 +1,7 @@
 /**
- * GetObject operation on an index.
+ * GetObjects operation on an index.
  */
-export type MultipleGetObjectsObject = {
+export type MultipleGetObjectsParams = {
   /**
    * List of attributes to retrieve. By default, all retrievable attributes are returned.
    */

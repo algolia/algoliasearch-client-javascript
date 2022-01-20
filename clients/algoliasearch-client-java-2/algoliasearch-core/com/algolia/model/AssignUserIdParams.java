@@ -3,13 +3,13 @@ package com.algolia.model;
 import com.google.gson.annotations.SerializedName;
 import java.util.Objects;
 
-/** Assign userID object. */
-public class AssignUserIdObject {
+/** Assign userID parameters. */
+public class AssignUserIdParams {
 
   @SerializedName("cluster")
   private String cluster;
 
-  public AssignUserIdObject cluster(String cluster) {
+  public AssignUserIdParams cluster(String cluster) {
     this.cluster = cluster;
     return this;
   }
@@ -36,8 +36,8 @@ public class AssignUserIdObject {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    AssignUserIdObject assignUserIdObject = (AssignUserIdObject) o;
-    return Objects.equals(this.cluster, assignUserIdObject.cluster);
+    AssignUserIdParams assignUserIdParams = (AssignUserIdParams) o;
+    return Objects.equals(this.cluster, assignUserIdParams.cluster);
   }
 
   @Override
@@ -48,7 +48,7 @@ public class AssignUserIdObject {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class AssignUserIdObject {\n");
+    sb.append("class AssignUserIdParams {\n");
     sb.append("    cluster: ").append(toIndentedString(cluster)).append("\n");
     sb.append("}");
     return sb.toString();

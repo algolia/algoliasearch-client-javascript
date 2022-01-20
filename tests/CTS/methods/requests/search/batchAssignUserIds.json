@@ -3,7 +3,7 @@
     "method": "batchAssignUserIds",
     "parameters": {
       "xAlgoliaUserID": "userID",
-      "batchAssignUserIdsObject": {
+      "batchAssignUserIdsParams": {
         "cluster": "theCluster",
         "users": ["user1", "user2"]
       }

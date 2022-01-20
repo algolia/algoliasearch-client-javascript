@@ -4,9 +4,7 @@ userId:
   description: A userID.
   properties:
     userID:
-      type: string
-      description: userID of the user.
-      example: user1
+      $ref: '../../common/parameters.yml#/userID'
     clusterName:
       type: string
       description: Cluster on which the user is assigned.

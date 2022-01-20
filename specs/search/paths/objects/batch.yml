@@ -11,8 +11,8 @@ post:
     content:
       application/json:
         schema:
-          title: batchWriteObject
-          description: The `batch` requests.
+          title: batchWriteParams
+          description: The `batch` parameters.
           type: object
           additionalProperties: false
           properties:

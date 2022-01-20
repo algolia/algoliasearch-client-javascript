@@ -10,7 +10,7 @@ post:
     content:
       application/json:
         schema:
-          title: multipleQueriesObject
+          title: multipleQueriesParams
           type: object
           additionalProperties: false
           properties:

@@ -25,7 +25,7 @@ searchHits:
     hits:
       type: array
       items:
-        $ref: 'Record.yml#/record'
+        $ref: 'Hit.yml#/hit'
 
 baseSearchResponse:
   type: object
@@ -134,7 +134,7 @@ baseSearchResponse:
       type: string
       description: Actual host name of the server that processed the request.
     userData:
-      $ref: '../../../common/schemas/IndexSettings.yml#/baseIndexSettings/properties/userData'
+      $ref: '../../../common/schemas/IndexSettings.yml#/userData'
 
 nbHits:
   type: integer

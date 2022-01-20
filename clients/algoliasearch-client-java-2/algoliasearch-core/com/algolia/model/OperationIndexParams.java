@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-/** OperationIndexObject */
-public class OperationIndexObject {
+/** OperationIndexParams */
+public class OperationIndexParams {
 
   /** Type of operation to perform (move or copy). */
   @JsonAdapter(OperationEnum.Adapter.class)
@@ -123,7 +123,7 @@ public class OperationIndexObject {
   @SerializedName("scope")
   private List<ScopeEnum> scope = null;
 
-  public OperationIndexObject operation(OperationEnum operation) {
+  public OperationIndexParams operation(OperationEnum operation) {
     this.operation = operation;
     return this;
   }
@@ -142,7 +142,7 @@ public class OperationIndexObject {
     this.operation = operation;
   }
 
-  public OperationIndexObject destination(String destination) {
+  public OperationIndexParams destination(String destination) {
     this.destination = destination;
     return this;
   }
@@ -161,12 +161,12 @@ public class OperationIndexObject {
     this.destination = destination;
   }
 
-  public OperationIndexObject scope(List<ScopeEnum> scope) {
+  public OperationIndexParams scope(List<ScopeEnum> scope) {
     this.scope = scope;
     return this;
   }
 
-  public OperationIndexObject addScopeItem(ScopeEnum scopeItem) {
+  public OperationIndexParams addScopeItem(ScopeEnum scopeItem) {
     if (this.scope == null) {
       this.scope = new ArrayList<>();
     }
@@ -197,11 +197,11 @@ public class OperationIndexObject {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    OperationIndexObject operationIndexObject = (OperationIndexObject) o;
+    OperationIndexParams operationIndexParams = (OperationIndexParams) o;
     return (
-      Objects.equals(this.operation, operationIndexObject.operation) &&
-      Objects.equals(this.destination, operationIndexObject.destination) &&
-      Objects.equals(this.scope, operationIndexObject.scope)
+      Objects.equals(this.operation, operationIndexParams.operation) &&
+      Objects.equals(this.destination, operationIndexParams.destination) &&
+      Objects.equals(this.scope, operationIndexParams.scope)
     );
   }
 
@@ -213,7 +213,7 @@ public class OperationIndexObject {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class OperationIndexObject {\n");
+    sb.append("class OperationIndexParams {\n");
     sb
       .append("    operation: ")
       .append(toIndentedString(operation))

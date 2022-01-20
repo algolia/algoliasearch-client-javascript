@@ -83,7 +83,7 @@ public class SearchResponse {
   private Object userData = new Object();
 
   @SerializedName("hits")
-  private List<Record> hits = new ArrayList<>();
+  private List<Hit> hits = new ArrayList<>();
 
   public SearchResponse abTestID(Integer abTestID) {
     this.abTestID = abTestID;
@@ -573,12 +573,12 @@ public class SearchResponse {
     this.userData = userData;
   }
 
-  public SearchResponse hits(List<Record> hits) {
+  public SearchResponse hits(List<Hit> hits) {
     this.hits = hits;
     return this;
   }
 
-  public SearchResponse addHitsItem(Record hitsItem) {
+  public SearchResponse addHitsItem(Hit hitsItem) {
     this.hits.add(hitsItem);
     return this;
   }
@@ -589,11 +589,11 @@ public class SearchResponse {
    * @return hits
    */
   @javax.annotation.Nonnull
-  public List<Record> getHits() {
+  public List<Hit> getHits() {
     return hits;
   }
 
-  public void setHits(List<Record> hits) {
+  public void setHits(List<Hit> hits) {
     this.hits = hits;
   }
 

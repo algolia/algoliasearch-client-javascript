@@ -65,7 +65,7 @@ describe('assignUserId', () => {
   test('assignUserId', async () => {
     const req = (await client.assignUserId({
       xAlgoliaUserID: 'userID',
-      assignUserIdObject: { cluster: 'theCluster' },
+      assignUserIdParams: { cluster: 'theCluster' },
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/clusters/mapping');
@@ -79,7 +79,7 @@ describe('batch', () => {
   test('batch', async () => {
     const req = (await client.batch({
       indexName: 'theIndexName',
-      batchWriteObject: {
+      batchWriteParams: {
         requests: [
           {
             action: 'delete',
@@ -109,7 +109,7 @@ describe('batchAssignUserIds', () => {
   test('batchAssignUserIds', async () => {
     const req = (await client.batchAssignUserIds({
       xAlgoliaUserID: 'userID',
-      batchAssignUserIdsObject: {
+      batchAssignUserIdsParams: {
         cluster: 'theCluster',
         users: ['user1', 'user2'],
       },
@@ -735,7 +735,7 @@ describe('operationIndex', () => {
   test('operationIndex', async () => {
     const req = (await client.operationIndex({
       indexName: 'theIndexName',
-      operationIndexObject: {
+      operationIndexParams: {
         operation: 'copy',
         destination: 'dest',
         scope: ['rules', 'settings'],

@@ -1,14 +1,17 @@
 import type { SourceIndexExternal } from './sourceIndexExternal';
 
-export type SourceIndexWithReplicas = {
-  /**
-   * Source index name.
-   */
-  indexName: string;
+/**
+ * Source indice with replicas used to generate a Query Suggestions index.
+ */
+export type SourceIndiceWithReplicas = {
   /**
    * True if the Query Suggestions index is a replicas.
    */
   replicas: boolean;
+  /**
+   * Source index name.
+   */
+  indexName: string;
   /**
    * List of analytics tags to filter the popular searches per tag.
    */

@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-/** KeyObject */
-public class KeyObject {
+/** Key */
+public class Key {
 
   /** Gets or Sets acl */
   @JsonAdapter(AclEnum.Adapter.class)
@@ -111,12 +111,12 @@ public class KeyObject {
   @SerializedName("createdAt")
   private String createdAt;
 
-  public KeyObject acl(List<AclEnum> acl) {
+  public Key acl(List<AclEnum> acl) {
     this.acl = acl;
     return this;
   }
 
-  public KeyObject addAclItem(AclEnum aclItem) {
+  public Key addAclItem(AclEnum aclItem) {
     this.acl.add(aclItem);
     return this;
   }
@@ -135,7 +135,7 @@ public class KeyObject {
     this.acl = acl;
   }
 
-  public KeyObject description(String description) {
+  public Key description(String description) {
     this.description = description;
     return this;
   }
@@ -155,12 +155,12 @@ public class KeyObject {
     this.description = description;
   }
 
-  public KeyObject indexes(List<String> indexes) {
+  public Key indexes(List<String> indexes) {
     this.indexes = indexes;
     return this;
   }
 
-  public KeyObject addIndexesItem(String indexesItem) {
+  public Key addIndexesItem(String indexesItem) {
     if (this.indexes == null) {
       this.indexes = new ArrayList<>();
     }
@@ -183,7 +183,7 @@ public class KeyObject {
     this.indexes = indexes;
   }
 
-  public KeyObject maxHitsPerQuery(Integer maxHitsPerQuery) {
+  public Key maxHitsPerQuery(Integer maxHitsPerQuery) {
     this.maxHitsPerQuery = maxHitsPerQuery;
     return this;
   }
@@ -202,7 +202,7 @@ public class KeyObject {
     this.maxHitsPerQuery = maxHitsPerQuery;
   }
 
-  public KeyObject maxQueriesPerIPPerHour(Integer maxQueriesPerIPPerHour) {
+  public Key maxQueriesPerIPPerHour(Integer maxQueriesPerIPPerHour) {
     this.maxQueriesPerIPPerHour = maxQueriesPerIPPerHour;
     return this;
   }
@@ -221,7 +221,7 @@ public class KeyObject {
     this.maxQueriesPerIPPerHour = maxQueriesPerIPPerHour;
   }
 
-  public KeyObject queryParameters(String queryParameters) {
+  public Key queryParameters(String queryParameters) {
     this.queryParameters = queryParameters;
     return this;
   }
@@ -241,12 +241,12 @@ public class KeyObject {
     this.queryParameters = queryParameters;
   }
 
-  public KeyObject referers(List<String> referers) {
+  public Key referers(List<String> referers) {
     this.referers = referers;
     return this;
   }
 
-  public KeyObject addReferersItem(String referersItem) {
+  public Key addReferersItem(String referersItem) {
     if (this.referers == null) {
       this.referers = new ArrayList<>();
     }
@@ -268,7 +268,7 @@ public class KeyObject {
     this.referers = referers;
   }
 
-  public KeyObject validity(Integer validity) {
+  public Key validity(Integer validity) {
     this.validity = validity;
     return this;
   }
@@ -288,7 +288,7 @@ public class KeyObject {
     this.validity = validity;
   }
 
-  public KeyObject createdAt(String createdAt) {
+  public Key createdAt(String createdAt) {
     this.createdAt = createdAt;
     return this;
   }
@@ -315,20 +315,17 @@ public class KeyObject {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    KeyObject keyObject = (KeyObject) o;
+    Key key = (Key) o;
     return (
-      Objects.equals(this.acl, keyObject.acl) &&
-      Objects.equals(this.description, keyObject.description) &&
-      Objects.equals(this.indexes, keyObject.indexes) &&
-      Objects.equals(this.maxHitsPerQuery, keyObject.maxHitsPerQuery) &&
-      Objects.equals(
-        this.maxQueriesPerIPPerHour,
-        keyObject.maxQueriesPerIPPerHour
-      ) &&
-      Objects.equals(this.queryParameters, keyObject.queryParameters) &&
-      Objects.equals(this.referers, keyObject.referers) &&
-      Objects.equals(this.validity, keyObject.validity) &&
-      Objects.equals(this.createdAt, keyObject.createdAt)
+      Objects.equals(this.acl, key.acl) &&
+      Objects.equals(this.description, key.description) &&
+      Objects.equals(this.indexes, key.indexes) &&
+      Objects.equals(this.maxHitsPerQuery, key.maxHitsPerQuery) &&
+      Objects.equals(this.maxQueriesPerIPPerHour, key.maxQueriesPerIPPerHour) &&
+      Objects.equals(this.queryParameters, key.queryParameters) &&
+      Objects.equals(this.referers, key.referers) &&
+      Objects.equals(this.validity, key.validity) &&
+      Objects.equals(this.createdAt, key.createdAt)
     );
   }
 
@@ -350,7 +347,7 @@ public class KeyObject {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class KeyObject {\n");
+    sb.append("class Key {\n");
     sb.append("    acl: ").append(toIndentedString(acl)).append("\n");
     sb
       .append("    description: ")

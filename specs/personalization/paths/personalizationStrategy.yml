@@ -9,7 +9,7 @@ post:
     content:
       application/json:
         schema:
-          $ref: '../common/schemas/personalizationStrategy.yml#/personalizationStrategyObject'
+          $ref: '../common/schemas/personalizationStrategy.yml#/personalizationStrategyParams'
   responses:
     '200':
       description: OK
@@ -45,7 +45,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../common/schemas/personalizationStrategy.yml#/personalizationStrategyObject'
+            $ref: '../common/schemas/personalizationStrategy.yml#/personalizationStrategyParams'
     '400':
       $ref: ../../common/responses/BadRequest.yml
     '402':

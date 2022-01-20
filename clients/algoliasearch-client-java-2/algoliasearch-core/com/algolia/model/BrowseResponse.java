@@ -83,7 +83,7 @@ public class BrowseResponse {
   private Object userData = new Object();
 
   @SerializedName("hits")
-  private List<Record> hits = new ArrayList<>();
+  private List<Hit> hits = new ArrayList<>();
 
   @SerializedName("cursor")
   private String cursor;
@@ -576,12 +576,12 @@ public class BrowseResponse {
     this.userData = userData;
   }
 
-  public BrowseResponse hits(List<Record> hits) {
+  public BrowseResponse hits(List<Hit> hits) {
     this.hits = hits;
     return this;
   }
 
-  public BrowseResponse addHitsItem(Record hitsItem) {
+  public BrowseResponse addHitsItem(Hit hitsItem) {
     this.hits.add(hitsItem);
     return this;
   }
@@ -592,11 +592,11 @@ public class BrowseResponse {
    * @return hits
    */
   @javax.annotation.Nonnull
-  public List<Record> getHits() {
+  public List<Hit> getHits() {
     return hits;
   }
 
-  public void setHits(List<Record> hits) {
+  public void setHits(List<Hit> hits) {
     this.hits = hits;
   }
 

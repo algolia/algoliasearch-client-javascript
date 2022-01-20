@@ -1,7 +1,7 @@
 /**
- * Assign userID object.
+ * Assign userID parameters.
  */
-export type BatchAssignUserIdsObject = {
+export type BatchAssignUserIdsParams = {
   /**
    * Name of the cluster.
    */

@@ -1,11 +1,11 @@
 import type { AddApiKeyResponse } from '../model/addApiKeyResponse';
 import type { ApiKey } from '../model/apiKey';
-import type { AssignUserIdObject } from '../model/assignUserIdObject';
-import type { BatchAssignUserIdsObject } from '../model/batchAssignUserIdsObject';
+import type { AssignUserIdParams } from '../model/assignUserIdParams';
+import type { BatchAssignUserIdsParams } from '../model/batchAssignUserIdsParams';
 import type { BatchDictionaryEntries } from '../model/batchDictionaryEntries';
-import type { BatchObject } from '../model/batchObject';
+import type { BatchParams } from '../model/batchParams';
 import type { BatchResponse } from '../model/batchResponse';
-import type { BatchWriteObject } from '../model/batchWriteObject';
+import type { BatchWriteParams } from '../model/batchWriteParams';
 import type { BrowseRequest } from '../model/browseRequest';
 import type { BrowseResponse } from '../model/browseResponse';
 import type { BuiltInOperation } from '../model/builtInOperation';
@@ -16,21 +16,21 @@ import type { DeletedAtResponse } from '../model/deletedAtResponse';
 import type { DictionarySettingsRequest } from '../model/dictionarySettingsRequest';
 import type { GetDictionarySettingsResponse } from '../model/getDictionarySettingsResponse';
 import type { GetLogsResponse } from '../model/getLogsResponse';
-import type { GetObjectsObject } from '../model/getObjectsObject';
+import type { GetObjectsParams } from '../model/getObjectsParams';
 import type { GetObjectsResponse } from '../model/getObjectsResponse';
 import type { GetTaskResponse } from '../model/getTaskResponse';
 import type { GetTopUserIdsResponse } from '../model/getTopUserIdsResponse';
 import type { IndexSettings } from '../model/indexSettings';
-import type { KeyObject } from '../model/keyObject';
+import type { Key } from '../model/key';
 import type { Languages } from '../model/languages';
 import type { ListApiKeysResponse } from '../model/listApiKeysResponse';
 import type { ListClustersResponse } from '../model/listClustersResponse';
 import type { ListIndicesResponse } from '../model/listIndicesResponse';
 import type { ListUserIdsResponse } from '../model/listUserIdsResponse';
 import type { MultipleBatchResponse } from '../model/multipleBatchResponse';
-import type { MultipleQueriesObject } from '../model/multipleQueriesObject';
+import type { MultipleQueriesParams } from '../model/multipleQueriesParams';
 import type { MultipleQueriesResponse } from '../model/multipleQueriesResponse';
-import type { OperationIndexObject } from '../model/operationIndexObject';
+import type { OperationIndexParams } from '../model/operationIndexParams';
 import type { RemoveUserIdResponse } from '../model/removeUserIdResponse';
 import type { ReplaceSourceResponse } from '../model/replaceSourceResponse';
 import type { Rule } from '../model/rule';
@@ -44,7 +44,7 @@ import type { SearchResponse } from '../model/searchResponse';
 import type { SearchRulesParams } from '../model/searchRulesParams';
 import type { SearchRulesResponse } from '../model/searchRulesResponse';
 import type { SearchSynonymsResponse } from '../model/searchSynonymsResponse';
-import type { SearchUserIdsObject } from '../model/searchUserIdsObject';
+import type { SearchUserIdsParams } from '../model/searchUserIdsParams';
 import type { SearchUserIdsResponse } from '../model/searchUserIdsResponse';
 import type { Source } from '../model/source';
 import type { SynonymHit } from '../model/synonymHit';
@@ -168,15 +168,15 @@ export class SearchApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (apiKey === null || apiKey === undefined) {
+    if (!apiKey) {
       throw new Error(
-        'Required parameter apiKey was null or undefined when calling addApiKey.'
+        'Parameter `apiKey` is required when calling `addApiKey`.'
       );
     }
 
-    if (apiKey.acl === null || apiKey.acl === undefined) {
+    if (!apiKey.acl) {
       throw new Error(
-        'Required parameter apiKey.acl was null or undefined when calling addApiKey.'
+        'Parameter `apiKey.acl` is required when calling `addApiKey`.'
       );
     }
 
@@ -213,21 +213,21 @@ export class SearchApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (indexName === null || indexName === undefined) {
+    if (!indexName) {
       throw new Error(
-        'Required parameter indexName was null or undefined when calling addOrUpdateObject.'
+        'Parameter `indexName` is required when calling `addOrUpdateObject`.'
       );
     }
 
-    if (objectID === null || objectID === undefined) {
+    if (!objectID) {
       throw new Error(
-        'Required parameter objectID was null or undefined when calling addOrUpdateObject.'
+        'Parameter `objectID` is required when calling `addOrUpdateObject`.'
       );
     }
 
-    if (body === null || body === undefined) {
+    if (!body) {
       throw new Error(
-        'Required parameter body was null or undefined when calling addOrUpdateObject.'
+        'Parameter `body` is required when calling `addOrUpdateObject`.'
       );
     }
 
@@ -255,9 +255,9 @@ export class SearchApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (source === null || source === undefined) {
+    if (!source) {
       throw new Error(
-        'Required parameter source was null or undefined when calling appendSource.'
+        'Parameter `source` is required when calling `appendSource`.'
       );
     }
 
@@ -280,34 +280,31 @@ export class SearchApi {
    * @summary Assign or Move userID.
    * @param assignUserId - The assignUserId object.
    * @param assignUserId.xAlgoliaUserID - UserID to assign.
-   * @param assignUserId.assignUserIdObject - The assignUserIdObject object.
+   * @param assignUserId.assignUserIdParams - The assignUserIdParams object.
    */
   assignUserId({
     xAlgoliaUserID,
-    assignUserIdObject,
+    assignUserIdParams,
   }: AssignUserIdProps): Promise<CreatedAtResponse> {
     const path = '/1/clusters/mapping';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (xAlgoliaUserID === null || xAlgoliaUserID === undefined) {
+    if (!xAlgoliaUserID) {
       throw new Error(
-        'Required parameter xAlgoliaUserID was null or undefined when calling assignUserId.'
+        'Parameter `xAlgoliaUserID` is required when calling `assignUserId`.'
       );
     }
 
-    if (assignUserIdObject === null || assignUserIdObject === undefined) {
+    if (!assignUserIdParams) {
       throw new Error(
-        'Required parameter assignUserIdObject was null or undefined when calling assignUserId.'
+        'Parameter `assignUserIdParams` is required when calling `assignUserId`.'
       );
     }
 
-    if (
-      assignUserIdObject.cluster === null ||
-      assignUserIdObject.cluster === undefined
-    ) {
+    if (!assignUserIdParams.cluster) {
       throw new Error(
-        'Required parameter assignUserIdObject.cluster was null or undefined when calling assignUserId.'
+        'Parameter `assignUserIdParams.cluster` is required when calling `assignUserId`.'
       );
     }
 
@@ -318,7 +315,7 @@ export class SearchApi {
     const request: Request = {
       method: 'POST',
       path,
-      data: assignUserIdObject,
+      data: assignUserIdParams,
     };
 
     const requestOptions: RequestOptions = {
@@ -334,9 +331,9 @@ export class SearchApi {
    * @summary Performs multiple write operations in a single API call.
    * @param batch - The batch object.
    * @param batch.indexName - The index in which to perform the request.
-   * @param batch.batchWriteObject - The batchWriteObject object.
+   * @param batch.batchWriteParams - The batchWriteParams object.
    */
-  batch({ indexName, batchWriteObject }: BatchProps): Promise<BatchResponse> {
+  batch({ indexName, batchWriteParams }: BatchProps): Promise<BatchResponse> {
     const path = '/1/indexes/{indexName}/batch'.replace(
       '{indexName}',
       encodeURIComponent(String(indexName))
@@ -344,22 +341,22 @@ export class SearchApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (indexName === null || indexName === undefined) {
+    if (!indexName) {
       throw new Error(
-        'Required parameter indexName was null or undefined when calling batch.'
+        'Parameter `indexName` is required when calling `batch`.'
       );
     }
 
-    if (batchWriteObject === null || batchWriteObject === undefined) {
+    if (!batchWriteParams) {
       throw new Error(
-        'Required parameter batchWriteObject was null or undefined when calling batch.'
+        'Parameter `batchWriteParams` is required when calling `batch`.'
       );
     }
 
     const request: Request = {
       method: 'POST',
       path,
-      data: batchWriteObject,
+      data: batchWriteParams,
     };
 
     const requestOptions: RequestOptions = {
@@ -375,45 +372,36 @@ export class SearchApi {
    * @summary Batch assign userIDs.
    * @param batchAssignUserIds - The batchAssignUserIds object.
    * @param batchAssignUserIds.xAlgoliaUserID - UserID to assign.
-   * @param batchAssignUserIds.batchAssignUserIdsObject - The batchAssignUserIdsObject object.
+   * @param batchAssignUserIds.batchAssignUserIdsParams - The batchAssignUserIdsParams object.
    */
   batchAssignUserIds({
     xAlgoliaUserID,
-    batchAssignUserIdsObject,
+    batchAssignUserIdsParams,
   }: BatchAssignUserIdsProps): Promise<CreatedAtResponse> {
     const path = '/1/clusters/mapping/batch';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (xAlgoliaUserID === null || xAlgoliaUserID === undefined) {
+    if (!xAlgoliaUserID) {
       throw new Error(
-        'Required parameter xAlgoliaUserID was null or undefined when calling batchAssignUserIds.'
+        'Parameter `xAlgoliaUserID` is required when calling `batchAssignUserIds`.'
       );
     }
 
-    if (
-      batchAssignUserIdsObject === null ||
-      batchAssignUserIdsObject === undefined
-    ) {
+    if (!batchAssignUserIdsParams) {
       throw new Error(
-        'Required parameter batchAssignUserIdsObject was null or undefined when calling batchAssignUserIds.'
+        'Parameter `batchAssignUserIdsParams` is required when calling `batchAssignUserIds`.'
       );
     }
 
-    if (
-      batchAssignUserIdsObject.cluster === null ||
-      batchAssignUserIdsObject.cluster === undefined
-    ) {
+    if (!batchAssignUserIdsParams.cluster) {
       throw new Error(
-        'Required parameter batchAssignUserIdsObject.cluster was null or undefined when calling batchAssignUserIds.'
+        'Parameter `batchAssignUserIdsParams.cluster` is required when calling `batchAssignUserIds`.'
       );
     }
-    if (
-      batchAssignUserIdsObject.users === null ||
-      batchAssignUserIdsObject.users === undefined
-    ) {
+    if (!batchAssignUserIdsParams.users) {
       throw new Error(
-        'Required parameter batchAssignUserIdsObject.users was null or undefined when calling batchAssignUserIds.'
+        'Parameter `batchAssignUserIdsParams.users` is required when calling `batchAssignUserIds`.'
       );
     }
 
@@ -424,7 +412,7 @@ export class SearchApi {
     const request: Request = {
       method: 'POST',
       path,
-      data: batchAssignUserIdsObject,
+      data: batchAssignUserIdsParams,
     };
 
     const requestOptions: RequestOptions = {
@@ -453,27 +441,21 @@ export class SearchApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (dictionaryName === null || dictionaryName === undefined) {
+    if (!dictionaryName) {
       throw new Error(
-        'Required parameter dictionaryName was null or undefined when calling batchDictionaryEntries.'
+        'Parameter `dictionaryName` is required when calling `batchDictionaryEntries`.'
       );
     }
 
-    if (
-      batchDictionaryEntries === null ||
-      batchDictionaryEntries === undefined
-    ) {
+    if (!batchDictionaryEntries) {
       throw new Error(
-        'Required parameter batchDictionaryEntries was null or undefined when calling batchDictionaryEntries.'
+        'Parameter `batchDictionaryEntries` is required when calling `batchDictionaryEntries`.'
       );
     }
 
-    if (
-      batchDictionaryEntries.requests === null ||
-      batchDictionaryEntries.requests === undefined
-    ) {
+    if (!batchDictionaryEntries.requests) {
       throw new Error(
-        'Required parameter batchDictionaryEntries.requests was null or undefined when calling batchDictionaryEntries.'
+        'Parameter `batchDictionaryEntries.requests` is required when calling `batchDictionaryEntries`.'
       );
     }
 
@@ -513,15 +495,15 @@ export class SearchApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (indexName === null || indexName === undefined) {
+    if (!indexName) {
       throw new Error(
-        'Required parameter indexName was null or undefined when calling batchRules.'
+        'Parameter `indexName` is required when calling `batchRules`.'
       );
     }
 
-    if (rule === null || rule === undefined) {
+    if (!rule) {
       throw new Error(
-        'Required parameter rule was null or undefined when calling batchRules.'
+        'Parameter `rule` is required when calling `batchRules`.'
       );
     }
 
@@ -562,9 +544,9 @@ export class SearchApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (indexName === null || indexName === undefined) {
+    if (!indexName) {
       throw new Error(
-        'Required parameter indexName was null or undefined when calling browse.'
+        'Parameter `indexName` is required when calling `browse`.'
       );
     }
 
@@ -600,9 +582,9 @@ export class SearchApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (indexName === null || indexName === undefined) {
+    if (!indexName) {
       throw new Error(
-        'Required parameter indexName was null or undefined when calling clearAllSynonyms.'
+        'Parameter `indexName` is required when calling `clearAllSynonyms`.'
       );
     }
 
@@ -637,9 +619,9 @@ export class SearchApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (indexName === null || indexName === undefined) {
+    if (!indexName) {
       throw new Error(
-        'Required parameter indexName was null or undefined when calling clearObjects.'
+        'Parameter `indexName` is required when calling `clearObjects`.'
       );
     }
 
@@ -674,9 +656,9 @@ export class SearchApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (indexName === null || indexName === undefined) {
+    if (!indexName) {
       throw new Error(
-        'Required parameter indexName was null or undefined when calling clearRules.'
+        'Parameter `indexName` is required when calling `clearRules`.'
       );
     }
 
@@ -711,9 +693,9 @@ export class SearchApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (key === null || key === undefined) {
+    if (!key) {
       throw new Error(
-        'Required parameter key was null or undefined when calling deleteApiKey.'
+        'Parameter `key` is required when calling `deleteApiKey`.'
       );
     }
 
@@ -748,15 +730,15 @@ export class SearchApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (indexName === null || indexName === undefined) {
+    if (!indexName) {
       throw new Error(
-        'Required parameter indexName was null or undefined when calling deleteBy.'
+        'Parameter `indexName` is required when calling `deleteBy`.'
       );
     }
 
-    if (searchParams === null || searchParams === undefined) {
+    if (!searchParams) {
       throw new Error(
-        'Required parameter searchParams was null or undefined when calling deleteBy.'
+        'Parameter `searchParams` is required when calling `deleteBy`.'
       );
     }
 
@@ -788,9 +770,9 @@ export class SearchApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (indexName === null || indexName === undefined) {
+    if (!indexName) {
       throw new Error(
-        'Required parameter indexName was null or undefined when calling deleteIndex.'
+        'Parameter `indexName` is required when calling `deleteIndex`.'
       );
     }
 
@@ -824,15 +806,15 @@ export class SearchApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (indexName === null || indexName === undefined) {
+    if (!indexName) {
       throw new Error(
-        'Required parameter indexName was null or undefined when calling deleteObject.'
+        'Parameter `indexName` is required when calling `deleteObject`.'
       );
     }
 
-    if (objectID === null || objectID === undefined) {
+    if (!objectID) {
       throw new Error(
-        'Required parameter objectID was null or undefined when calling deleteObject.'
+        'Parameter `objectID` is required when calling `deleteObject`.'
       );
     }
 
@@ -868,15 +850,15 @@ export class SearchApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (indexName === null || indexName === undefined) {
+    if (!indexName) {
       throw new Error(
-        'Required parameter indexName was null or undefined when calling deleteRule.'
+        'Parameter `indexName` is required when calling `deleteRule`.'
       );
     }
 
-    if (objectID === null || objectID === undefined) {
+    if (!objectID) {
       throw new Error(
-        'Required parameter objectID was null or undefined when calling deleteRule.'
+        'Parameter `objectID` is required when calling `deleteRule`.'
       );
     }
 
@@ -911,9 +893,9 @@ export class SearchApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (source === null || source === undefined) {
+    if (!source) {
       throw new Error(
-        'Required parameter source was null or undefined when calling deleteSource.'
+        'Parameter `source` is required when calling `deleteSource`.'
       );
     }
 
@@ -949,15 +931,15 @@ export class SearchApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (indexName === null || indexName === undefined) {
+    if (!indexName) {
       throw new Error(
-        'Required parameter indexName was null or undefined when calling deleteSynonym.'
+        'Parameter `indexName` is required when calling `deleteSynonym`.'
       );
     }
 
-    if (objectID === null || objectID === undefined) {
+    if (!objectID) {
       throw new Error(
-        'Required parameter objectID was null or undefined when calling deleteSynonym.'
+        'Parameter `objectID` is required when calling `deleteSynonym`.'
       );
     }
 
@@ -984,7 +966,7 @@ export class SearchApi {
    * @param getApiKey - The getApiKey object.
    * @param getApiKey.key - API Key string.
    */
-  getApiKey({ key }: GetApiKeyProps): Promise<KeyObject> {
+  getApiKey({ key }: GetApiKeyProps): Promise<Key> {
     const path = '/1/keys/{key}'.replace(
       '{key}',
       encodeURIComponent(String(key))
@@ -992,10 +974,8 @@ export class SearchApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (key === null || key === undefined) {
-      throw new Error(
-        'Required parameter key was null or undefined when calling getApiKey.'
-      );
+    if (!key) {
+      throw new Error('Parameter `key` is required when calling `getApiKey`.');
     }
 
     const request: Request = {
@@ -1122,15 +1102,15 @@ export class SearchApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (indexName === null || indexName === undefined) {
+    if (!indexName) {
       throw new Error(
-        'Required parameter indexName was null or undefined when calling getObject.'
+        'Parameter `indexName` is required when calling `getObject`.'
       );
     }
 
-    if (objectID === null || objectID === undefined) {
+    if (!objectID) {
       throw new Error(
-        'Required parameter objectID was null or undefined when calling getObject.'
+        'Parameter `objectID` is required when calling `getObject`.'
       );
     }
 
@@ -1154,23 +1134,23 @@ export class SearchApi {
    * Retrieve one or more objects, potentially from different indices, in a single API call.
    *
    * @summary Retrieve one or more objects.
-   * @param getObjectsObject - The getObjectsObject object.
+   * @param getObjectsParams - The getObjectsParams object.
    */
-  getObjects(getObjectsObject: GetObjectsObject): Promise<GetObjectsResponse> {
+  getObjects(getObjectsParams: GetObjectsParams): Promise<GetObjectsResponse> {
     const path = '/1/indexes/*/objects';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (getObjectsObject === null || getObjectsObject === undefined) {
+    if (!getObjectsParams) {
       throw new Error(
-        'Required parameter getObjectsObject was null or undefined when calling getObjects.'
+        'Parameter `getObjectsParams` is required when calling `getObjects`.'
       );
     }
 
     const request: Request = {
       method: 'POST',
       path,
-      data: getObjectsObject,
+      data: getObjectsParams,
     };
 
     const requestOptions: RequestOptions = {
@@ -1195,15 +1175,15 @@ export class SearchApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (indexName === null || indexName === undefined) {
+    if (!indexName) {
       throw new Error(
-        'Required parameter indexName was null or undefined when calling getRule.'
+        'Parameter `indexName` is required when calling `getRule`.'
       );
     }
 
-    if (objectID === null || objectID === undefined) {
+    if (!objectID) {
       throw new Error(
-        'Required parameter objectID was null or undefined when calling getRule.'
+        'Parameter `objectID` is required when calling `getRule`.'
       );
     }
 
@@ -1234,9 +1214,9 @@ export class SearchApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (indexName === null || indexName === undefined) {
+    if (!indexName) {
       throw new Error(
-        'Required parameter indexName was null or undefined when calling getSettings.'
+        'Parameter `indexName` is required when calling `getSettings`.'
       );
     }
 
@@ -1289,15 +1269,15 @@ export class SearchApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (indexName === null || indexName === undefined) {
+    if (!indexName) {
       throw new Error(
-        'Required parameter indexName was null or undefined when calling getSynonym.'
+        'Parameter `indexName` is required when calling `getSynonym`.'
       );
     }
 
-    if (objectID === null || objectID === undefined) {
+    if (!objectID) {
       throw new Error(
-        'Required parameter objectID was null or undefined when calling getSynonym.'
+        'Parameter `objectID` is required when calling `getSynonym`.'
       );
     }
 
@@ -1328,16 +1308,14 @@ export class SearchApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (indexName === null || indexName === undefined) {
+    if (!indexName) {
       throw new Error(
-        'Required parameter indexName was null or undefined when calling getTask.'
+        'Parameter `indexName` is required when calling `getTask`.'
       );
     }
 
-    if (taskID === null || taskID === undefined) {
-      throw new Error(
-        'Required parameter taskID was null or undefined when calling getTask.'
-      );
+    if (!taskID) {
+      throw new Error('Parameter `taskID` is required when calling `getTask`.');
     }
 
     const request: Request = {
@@ -1389,9 +1367,9 @@ export class SearchApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (userID === null || userID === undefined) {
+    if (!userID) {
       throw new Error(
-        'Required parameter userID was null or undefined when calling getUserId.'
+        'Parameter `userID` is required when calling `getUserId`.'
       );
     }
 
@@ -1549,23 +1527,23 @@ export class SearchApi {
    * Perform multiple write operations, potentially targeting multiple indices, in a single API call.
    *
    * @summary Perform multiple write operations.
-   * @param batchObject - The batchObject object.
+   * @param batchParams - The batchParams object.
    */
-  multipleBatch(batchObject: BatchObject): Promise<MultipleBatchResponse> {
+  multipleBatch(batchParams: BatchParams): Promise<MultipleBatchResponse> {
     const path = '/1/indexes/*/batch';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (batchObject === null || batchObject === undefined) {
+    if (!batchParams) {
       throw new Error(
-        'Required parameter batchObject was null or undefined when calling multipleBatch.'
+        'Parameter `batchParams` is required when calling `multipleBatch`.'
       );
     }
 
     const request: Request = {
       method: 'POST',
       path,
-      data: batchObject,
+      data: batchParams,
     };
 
     const requestOptions: RequestOptions = {
@@ -1579,34 +1557,31 @@ export class SearchApi {
    * Get search results for the given requests.
    *
    * @summary Get search results for the given requests.
-   * @param multipleQueriesObject - The multipleQueriesObject object.
+   * @param multipleQueriesParams - The multipleQueriesParams object.
    */
   multipleQueries(
-    multipleQueriesObject: MultipleQueriesObject
+    multipleQueriesParams: MultipleQueriesParams
   ): Promise<MultipleQueriesResponse> {
     const path = '/1/indexes/*/queries';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (multipleQueriesObject === null || multipleQueriesObject === undefined) {
+    if (!multipleQueriesParams) {
       throw new Error(
-        'Required parameter multipleQueriesObject was null or undefined when calling multipleQueries.'
+        'Parameter `multipleQueriesParams` is required when calling `multipleQueries`.'
       );
     }
 
-    if (
-      multipleQueriesObject.requests === null ||
-      multipleQueriesObject.requests === undefined
-    ) {
+    if (!multipleQueriesParams.requests) {
       throw new Error(
-        'Required parameter multipleQueriesObject.requests was null or undefined when calling multipleQueries.'
+        'Parameter `multipleQueriesParams.requests` is required when calling `multipleQueries`.'
       );
     }
 
     const request: Request = {
       method: 'POST',
       path,
-      data: multipleQueriesObject,
+      data: multipleQueriesParams,
     };
 
     const requestOptions: RequestOptions = {
@@ -1622,11 +1597,11 @@ export class SearchApi {
    * @summary Copy/move index.
    * @param operationIndex - The operationIndex object.
    * @param operationIndex.indexName - The index in which to perform the request.
-   * @param operationIndex.operationIndexObject - The operationIndexObject object.
+   * @param operationIndex.operationIndexParams - The operationIndexParams object.
    */
   operationIndex({
     indexName,
-    operationIndexObject,
+    operationIndexParams,
   }: OperationIndexProps): Promise<UpdatedAtResponse> {
     const path = '/1/indexes/{indexName}/operation'.replace(
       '{indexName}',
@@ -1635,39 +1610,33 @@ export class SearchApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (indexName === null || indexName === undefined) {
+    if (!indexName) {
       throw new Error(
-        'Required parameter indexName was null or undefined when calling operationIndex.'
+        'Parameter `indexName` is required when calling `operationIndex`.'
       );
     }
 
-    if (operationIndexObject === null || operationIndexObject === undefined) {
+    if (!operationIndexParams) {
       throw new Error(
-        'Required parameter operationIndexObject was null or undefined when calling operationIndex.'
+        'Parameter `operationIndexParams` is required when calling `operationIndex`.'
       );
     }
 
-    if (
-      operationIndexObject.operation === null ||
-      operationIndexObject.operation === undefined
-    ) {
+    if (!operationIndexParams.operation) {
       throw new Error(
-        'Required parameter operationIndexObject.operation was null or undefined when calling operationIndex.'
+        'Parameter `operationIndexParams.operation` is required when calling `operationIndex`.'
       );
     }
-    if (
-      operationIndexObject.destination === null ||
-      operationIndexObject.destination === undefined
-    ) {
+    if (!operationIndexParams.destination) {
       throw new Error(
-        'Required parameter operationIndexObject.destination was null or undefined when calling operationIndex.'
+        'Parameter `operationIndexParams.destination` is required when calling `operationIndex`.'
       );
     }
 
     const request: Request = {
       method: 'POST',
       path,
-      data: operationIndexObject,
+      data: operationIndexParams,
     };
 
     const requestOptions: RequestOptions = {
@@ -1699,24 +1668,21 @@ export class SearchApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (indexName === null || indexName === undefined) {
+    if (!indexName) {
       throw new Error(
-        'Required parameter indexName was null or undefined when calling partialUpdateObject.'
+        'Parameter `indexName` is required when calling `partialUpdateObject`.'
       );
     }
 
-    if (objectID === null || objectID === undefined) {
+    if (!objectID) {
       throw new Error(
-        'Required parameter objectID was null or undefined when calling partialUpdateObject.'
+        'Parameter `objectID` is required when calling `partialUpdateObject`.'
       );
     }
 
-    if (
-      stringBuiltInOperation === null ||
-      stringBuiltInOperation === undefined
-    ) {
+    if (!stringBuiltInOperation) {
       throw new Error(
-        'Required parameter stringBuiltInOperation was null or undefined when calling partialUpdateObject.'
+        'Parameter `stringBuiltInOperation` is required when calling `partialUpdateObject`.'
       );
     }
 
@@ -1752,9 +1718,9 @@ export class SearchApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (userID === null || userID === undefined) {
+    if (!userID) {
       throw new Error(
-        'Required parameter userID was null or undefined when calling removeUserId.'
+        'Parameter `userID` is required when calling `removeUserId`.'
       );
     }
 
@@ -1784,9 +1750,9 @@ export class SearchApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (source === null || source === undefined) {
+    if (!source) {
       throw new Error(
-        'Required parameter source was null or undefined when calling replaceSources.'
+        'Parameter `source` is required when calling `replaceSources`.'
       );
     }
 
@@ -1818,9 +1784,9 @@ export class SearchApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (key === null || key === undefined) {
+    if (!key) {
       throw new Error(
-        'Required parameter key was null or undefined when calling restoreApiKey.'
+        'Parameter `key` is required when calling `restoreApiKey`.'
       );
     }
 
@@ -1842,7 +1808,7 @@ export class SearchApi {
    * @summary Add an object to the index.
    * @param saveObject - The saveObject object.
    * @param saveObject.indexName - The index in which to perform the request.
-   * @param saveObject.body - The Algolia object.
+   * @param saveObject.body - The Algolia record.
    */
   saveObject({
     indexName,
@@ -1855,15 +1821,15 @@ export class SearchApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (indexName === null || indexName === undefined) {
+    if (!indexName) {
       throw new Error(
-        'Required parameter indexName was null or undefined when calling saveObject.'
+        'Parameter `indexName` is required when calling `saveObject`.'
       );
     }
 
-    if (body === null || body === undefined) {
+    if (!body) {
       throw new Error(
-        'Required parameter body was null or undefined when calling saveObject.'
+        'Parameter `body` is required when calling `saveObject`.'
       );
     }
 
@@ -1902,32 +1868,30 @@ export class SearchApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (indexName === null || indexName === undefined) {
+    if (!indexName) {
       throw new Error(
-        'Required parameter indexName was null or undefined when calling saveRule.'
+        'Parameter `indexName` is required when calling `saveRule`.'
       );
     }
 
-    if (objectID === null || objectID === undefined) {
+    if (!objectID) {
       throw new Error(
-        'Required parameter objectID was null or undefined when calling saveRule.'
+        'Parameter `objectID` is required when calling `saveRule`.'
       );
     }
 
-    if (rule === null || rule === undefined) {
-      throw new Error(
-        'Required parameter rule was null or undefined when calling saveRule.'
-      );
+    if (!rule) {
+      throw new Error('Parameter `rule` is required when calling `saveRule`.');
     }
 
-    if (rule.objectID === null || rule.objectID === undefined) {
+    if (!rule.objectID) {
       throw new Error(
-        'Required parameter rule.objectID was null or undefined when calling saveRule.'
+        'Parameter `rule.objectID` is required when calling `saveRule`.'
       );
     }
-    if (rule.consequence === null || rule.consequence === undefined) {
+    if (!rule.consequence) {
       throw new Error(
-        'Required parameter rule.consequence was null or undefined when calling saveRule.'
+        'Parameter `rule.consequence` is required when calling `saveRule`.'
       );
     }
 
@@ -1970,32 +1934,32 @@ export class SearchApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (indexName === null || indexName === undefined) {
+    if (!indexName) {
       throw new Error(
-        'Required parameter indexName was null or undefined when calling saveSynonym.'
+        'Parameter `indexName` is required when calling `saveSynonym`.'
       );
     }
 
-    if (objectID === null || objectID === undefined) {
+    if (!objectID) {
       throw new Error(
-        'Required parameter objectID was null or undefined when calling saveSynonym.'
+        'Parameter `objectID` is required when calling `saveSynonym`.'
       );
     }
 
-    if (synonymHit === null || synonymHit === undefined) {
+    if (!synonymHit) {
       throw new Error(
-        'Required parameter synonymHit was null or undefined when calling saveSynonym.'
+        'Parameter `synonymHit` is required when calling `saveSynonym`.'
       );
     }
 
-    if (synonymHit.objectID === null || synonymHit.objectID === undefined) {
+    if (!synonymHit.objectID) {
       throw new Error(
-        'Required parameter synonymHit.objectID was null or undefined when calling saveSynonym.'
+        'Parameter `synonymHit.objectID` is required when calling `saveSynonym`.'
       );
     }
-    if (synonymHit.type === null || synonymHit.type === undefined) {
+    if (!synonymHit.type) {
       throw new Error(
-        'Required parameter synonymHit.type was null or undefined when calling saveSynonym.'
+        'Parameter `synonymHit.type` is required when calling `saveSynonym`.'
       );
     }
 
@@ -2039,15 +2003,15 @@ export class SearchApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (indexName === null || indexName === undefined) {
+    if (!indexName) {
       throw new Error(
-        'Required parameter indexName was null or undefined when calling saveSynonyms.'
+        'Parameter `indexName` is required when calling `saveSynonyms`.'
       );
     }
 
-    if (synonymHit === null || synonymHit === undefined) {
+    if (!synonymHit) {
       throw new Error(
-        'Required parameter synonymHit was null or undefined when calling saveSynonyms.'
+        'Parameter `synonymHit` is required when calling `saveSynonyms`.'
       );
     }
 
@@ -2089,15 +2053,15 @@ export class SearchApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (indexName === null || indexName === undefined) {
+    if (!indexName) {
       throw new Error(
-        'Required parameter indexName was null or undefined when calling search.'
+        'Parameter `indexName` is required when calling `search`.'
       );
     }
 
-    if (searchParams === null || searchParams === undefined) {
+    if (!searchParams) {
       throw new Error(
-        'Required parameter searchParams was null or undefined when calling search.'
+        'Parameter `searchParams` is required when calling `search`.'
       );
     }
 
@@ -2133,27 +2097,21 @@ export class SearchApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (dictionaryName === null || dictionaryName === undefined) {
+    if (!dictionaryName) {
       throw new Error(
-        'Required parameter dictionaryName was null or undefined when calling searchDictionaryEntries.'
+        'Parameter `dictionaryName` is required when calling `searchDictionaryEntries`.'
       );
     }
 
-    if (
-      searchDictionaryEntries === null ||
-      searchDictionaryEntries === undefined
-    ) {
+    if (!searchDictionaryEntries) {
       throw new Error(
-        'Required parameter searchDictionaryEntries was null or undefined when calling searchDictionaryEntries.'
+        'Parameter `searchDictionaryEntries` is required when calling `searchDictionaryEntries`.'
       );
     }
 
-    if (
-      searchDictionaryEntries.query === null ||
-      searchDictionaryEntries.query === undefined
-    ) {
+    if (!searchDictionaryEntries.query) {
       throw new Error(
-        'Required parameter searchDictionaryEntries.query was null or undefined when calling searchDictionaryEntries.'
+        'Parameter `searchDictionaryEntries.query` is required when calling `searchDictionaryEntries`.'
       );
     }
 
@@ -2190,15 +2148,15 @@ export class SearchApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (indexName === null || indexName === undefined) {
+    if (!indexName) {
       throw new Error(
-        'Required parameter indexName was null or undefined when calling searchForFacetValues.'
+        'Parameter `indexName` is required when calling `searchForFacetValues`.'
       );
     }
 
-    if (facetName === null || facetName === undefined) {
+    if (!facetName) {
       throw new Error(
-        'Required parameter facetName was null or undefined when calling searchForFacetValues.'
+        'Parameter `facetName` is required when calling `searchForFacetValues`.'
       );
     }
 
@@ -2234,15 +2192,15 @@ export class SearchApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (indexName === null || indexName === undefined) {
+    if (!indexName) {
       throw new Error(
-        'Required parameter indexName was null or undefined when calling searchRules.'
+        'Parameter `indexName` is required when calling `searchRules`.'
       );
     }
 
-    if (searchRulesParams === null || searchRulesParams === undefined) {
+    if (!searchRulesParams) {
       throw new Error(
-        'Required parameter searchRulesParams was null or undefined when calling searchRules.'
+        'Parameter `searchRulesParams` is required when calling `searchRules`.'
       );
     }
 
@@ -2284,9 +2242,9 @@ export class SearchApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (indexName === null || indexName === undefined) {
+    if (!indexName) {
       throw new Error(
-        'Required parameter indexName was null or undefined when calling searchSynonyms.'
+        'Parameter `indexName` is required when calling `searchSynonyms`.'
       );
     }
 
@@ -2322,34 +2280,31 @@ export class SearchApi {
    * Search for userIDs. The data returned will usually be a few seconds behind real time, because userID usage may take up to a few seconds propagate to the different clusters. To keep updates moving quickly, the index of userIDs isn\'t built synchronously with the mapping. Instead, the index is built once every 12h, at the same time as the update of userID usage. For example, when you perform a modification like adding or moving a userID, the search will report an outdated value until the next rebuild of the mapping, which takes place every 12h. Upon success, the response is 200 OK and contains the following userIDs data.
    *
    * @summary Search userID.
-   * @param searchUserIdsObject - The searchUserIdsObject object.
+   * @param searchUserIdsParams - The searchUserIdsParams object.
    */
   searchUserIds(
-    searchUserIdsObject: SearchUserIdsObject
+    searchUserIdsParams: SearchUserIdsParams
   ): Promise<SearchUserIdsResponse> {
     const path = '/1/clusters/mapping/search';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (searchUserIdsObject === null || searchUserIdsObject === undefined) {
+    if (!searchUserIdsParams) {
       throw new Error(
-        'Required parameter searchUserIdsObject was null or undefined when calling searchUserIds.'
+        'Parameter `searchUserIdsParams` is required when calling `searchUserIds`.'
       );
     }
 
-    if (
-      searchUserIdsObject.query === null ||
-      searchUserIdsObject.query === undefined
-    ) {
+    if (!searchUserIdsParams.query) {
       throw new Error(
-        'Required parameter searchUserIdsObject.query was null or undefined when calling searchUserIds.'
+        'Parameter `searchUserIdsParams.query` is required when calling `searchUserIds`.'
       );
     }
 
     const request: Request = {
       method: 'POST',
       path,
-      data: searchUserIdsObject,
+      data: searchUserIdsParams,
     };
 
     const requestOptions: RequestOptions = {
@@ -2372,21 +2327,15 @@ export class SearchApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (
-      dictionarySettingsRequest === null ||
-      dictionarySettingsRequest === undefined
-    ) {
+    if (!dictionarySettingsRequest) {
       throw new Error(
-        'Required parameter dictionarySettingsRequest was null or undefined when calling setDictionarySettings.'
+        'Parameter `dictionarySettingsRequest` is required when calling `setDictionarySettings`.'
       );
     }
 
-    if (
-      dictionarySettingsRequest.disableStandardEntries === null ||
-      dictionarySettingsRequest.disableStandardEntries === undefined
-    ) {
+    if (!dictionarySettingsRequest.disableStandardEntries) {
       throw new Error(
-        'Required parameter dictionarySettingsRequest.disableStandardEntries was null or undefined when calling setDictionarySettings.'
+        'Parameter `dictionarySettingsRequest.disableStandardEntries` is required when calling `setDictionarySettings`.'
       );
     }
 
@@ -2424,15 +2373,15 @@ export class SearchApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (indexName === null || indexName === undefined) {
+    if (!indexName) {
       throw new Error(
-        'Required parameter indexName was null or undefined when calling setSettings.'
+        'Parameter `indexName` is required when calling `setSettings`.'
       );
     }
 
-    if (indexSettings === null || indexSettings === undefined) {
+    if (!indexSettings) {
       throw new Error(
-        'Required parameter indexSettings was null or undefined when calling setSettings.'
+        'Parameter `indexSettings` is required when calling `setSettings`.'
       );
     }
 
@@ -2472,21 +2421,21 @@ export class SearchApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (key === null || key === undefined) {
+    if (!key) {
       throw new Error(
-        'Required parameter key was null or undefined when calling updateApiKey.'
+        'Parameter `key` is required when calling `updateApiKey`.'
       );
     }
 
-    if (apiKey === null || apiKey === undefined) {
+    if (!apiKey) {
       throw new Error(
-        'Required parameter apiKey was null or undefined when calling updateApiKey.'
+        'Parameter `apiKey` is required when calling `updateApiKey`.'
       );
     }
 
-    if (apiKey.acl === null || apiKey.acl === undefined) {
+    if (!apiKey.acl) {
       throw new Error(
-        'Required parameter apiKey.acl was null or undefined when calling updateApiKey.'
+        'Parameter `apiKey.acl` is required when calling `updateApiKey`.'
       );
     }
 
@@ -2525,7 +2474,7 @@ export type AssignUserIdProps = {
    * UserID to assign.
    */
   xAlgoliaUserID: string;
-  assignUserIdObject: AssignUserIdObject;
+  assignUserIdParams: AssignUserIdParams;
 };
 
 export type BatchProps = {
@@ -2533,7 +2482,7 @@ export type BatchProps = {
    * The index in which to perform the request.
    */
   indexName: string;
-  batchWriteObject: BatchWriteObject;
+  batchWriteParams: BatchWriteParams;
 };
 
 export type BatchAssignUserIdsProps = {
@@ -2541,7 +2490,7 @@ export type BatchAssignUserIdsProps = {
    * UserID to assign.
    */
   xAlgoliaUserID: string;
-  batchAssignUserIdsObject: BatchAssignUserIdsObject;
+  batchAssignUserIdsParams: BatchAssignUserIdsParams;
 };
 
 export type BatchDictionaryEntriesProps = {
@@ -2793,7 +2742,7 @@ export type OperationIndexProps = {
    * The index in which to perform the request.
    */
   indexName: string;
-  operationIndexObject: OperationIndexObject;
+  operationIndexParams: OperationIndexParams;
 };
 
 export type PartialUpdateObjectProps = {
@@ -2842,7 +2791,7 @@ export type SaveObjectProps = {
    */
   indexName: string;
   /**
-   * The Algolia object.
+   * The Algolia record.
    */
   body: Record<string, any>;
 };

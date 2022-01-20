@@ -18,9 +18,9 @@ post:
     content:
       application/json:
         schema:
-          title: assignUserIdObject
+          title: assignUserIdParams
           type: object
-          description: Assign userID object.
+          description: Assign userID parameters.
           additionalProperties: false
           properties:
             cluster:

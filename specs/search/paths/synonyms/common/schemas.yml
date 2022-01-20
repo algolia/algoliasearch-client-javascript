@@ -52,11 +52,11 @@ synonymHit:
       additionalProperties: false
       properties:
         type:
-          $ref: '../../../common/schemas/Record.yml#/highlightResult'
+          $ref: '../../../common/schemas/Hit.yml#/highlightResult'
         synonyms:
           type: array
           items:
-            $ref: '../../../common/schemas/Record.yml#/highlightResult'
+            $ref: '../../../common/schemas/Hit.yml#/highlightResult'
   required:
     - objectID
     - type

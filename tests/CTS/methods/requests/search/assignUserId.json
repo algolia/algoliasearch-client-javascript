@@ -3,7 +3,7 @@
     "method": "assignUserId",
     "parameters": {
       "xAlgoliaUserID": "userID",
-      "assignUserIdObject": {
+      "assignUserIdParams": {
         "cluster": "theCluster"
       }
     },

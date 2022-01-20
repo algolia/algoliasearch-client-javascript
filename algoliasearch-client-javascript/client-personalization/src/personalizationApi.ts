@@ -1,6 +1,6 @@
 import type { DeleteUserProfileResponse } from '../model/deleteUserProfileResponse';
 import type { GetUserTokenResponse } from '../model/getUserTokenResponse';
-import type { PersonalizationStrategyObject } from '../model/personalizationStrategyObject';
+import type { PersonalizationStrategyParams } from '../model/personalizationStrategyParams';
 import type { SetPersonalizationStrategyResponse } from '../model/setPersonalizationStrategyResponse';
 import { Transporter } from '../utils/Transporter';
 import type { Requester } from '../utils/requester/Requester';
@@ -106,9 +106,9 @@ export class PersonalizationApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (userToken === null || userToken === undefined) {
+    if (!userToken) {
       throw new Error(
-        'Required parameter userToken was null or undefined when calling deleteUserProfile.'
+        'Parameter `userToken` is required when calling `deleteUserProfile`.'
       );
     }
 
@@ -129,7 +129,7 @@ export class PersonalizationApi {
    *
    * @summary Get the current personalization strategy.
    */
-  getPersonalizationStrategy(): Promise<PersonalizationStrategyObject> {
+  getPersonalizationStrategy(): Promise<PersonalizationStrategyParams> {
     const path = '/1/strategies/personalization';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
@@ -163,9 +163,9 @@ export class PersonalizationApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (userToken === null || userToken === undefined) {
+    if (!userToken) {
       throw new Error(
-        'Required parameter userToken was null or undefined when calling getUserTokenProfile.'
+        'Parameter `userToken` is required when calling `getUserTokenProfile`.'
       );
     }
 
@@ -185,53 +185,41 @@ export class PersonalizationApi {
    * A strategy defines the events and facets that impact user profiles and personalized search results.
    *
    * @summary Set a new personalization strategy.
-   * @param personalizationStrategyObject - The personalizationStrategyObject object.
+   * @param personalizationStrategyParams - The personalizationStrategyParams object.
    */
   setPersonalizationStrategy(
-    personalizationStrategyObject: PersonalizationStrategyObject
+    personalizationStrategyParams: PersonalizationStrategyParams
   ): Promise<SetPersonalizationStrategyResponse> {
     const path = '/1/strategies/personalization';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (
-      personalizationStrategyObject === null ||
-      personalizationStrategyObject === undefined
-    ) {
+    if (!personalizationStrategyParams) {
       throw new Error(
-        'Required parameter personalizationStrategyObject was null or undefined when calling setPersonalizationStrategy.'
+        'Parameter `personalizationStrategyParams` is required when calling `setPersonalizationStrategy`.'
       );
     }
 
-    if (
-      personalizationStrategyObject.eventScoring === null ||
-      personalizationStrategyObject.eventScoring === undefined
-    ) {
+    if (!personalizationStrategyParams.eventScoring) {
       throw new Error(
-        'Required parameter personalizationStrategyObject.eventScoring was null or undefined when calling setPersonalizationStrategy.'
+        'Parameter `personalizationStrategyParams.eventScoring` is required when calling `setPersonalizationStrategy`.'
       );
     }
-    if (
-      personalizationStrategyObject.facetScoring === null ||
-      personalizationStrategyObject.facetScoring === undefined
-    ) {
+    if (!personalizationStrategyParams.facetScoring) {
       throw new Error(
-        'Required parameter personalizationStrategyObject.facetScoring was null or undefined when calling setPersonalizationStrategy.'
+        'Parameter `personalizationStrategyParams.facetScoring` is required when calling `setPersonalizationStrategy`.'
       );
     }
-    if (
-      personalizationStrategyObject.personalizationImpact === null ||
-      personalizationStrategyObject.personalizationImpact === undefined
-    ) {
+    if (!personalizationStrategyParams.personalizationImpact) {
       throw new Error(
-        'Required parameter personalizationStrategyObject.personalizationImpact was null or undefined when calling setPersonalizationStrategy.'
+        'Parameter `personalizationStrategyParams.personalizationImpact` is required when calling `setPersonalizationStrategy`.'
       );
     }
 
     const request: Request = {
       method: 'POST',
       path,
-      data: personalizationStrategyObject,
+      data: personalizationStrategyParams,
     };
 
     const requestOptions: RequestOptions = {

@@ -93,15 +93,15 @@ export class InsightsApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (insightEvents === null || insightEvents === undefined) {
+    if (!insightEvents) {
       throw new Error(
-        'Required parameter insightEvents was null or undefined when calling pushEvents.'
+        'Parameter `insightEvents` is required when calling `pushEvents`.'
       );
     }
 
-    if (insightEvents.events === null || insightEvents.events === undefined) {
+    if (!insightEvents.events) {
       throw new Error(
-        'Required parameter insightEvents.events was null or undefined when calling pushEvents.'
+        'Parameter `insightEvents.events` is required when calling `pushEvents`.'
       );
     }
 

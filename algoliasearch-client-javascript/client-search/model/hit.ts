@@ -3,9 +3,9 @@ import type { RankingInfo } from './rankingInfo';
 import type { SnippetResult } from './snippetResult';
 
 /**
- * A Recommend record.
+ * A single hit.
  */
-export type RecommendRecord = {
+export type Hit = {
   /**
    * Unique identifier of the object.
    */
@@ -14,8 +14,4 @@ export type RecommendRecord = {
   _snippetResult?: SnippetResult;
   _rankingInfo?: RankingInfo;
   _distinctSeqID?: number;
-  /**
-   * The recommendation score.
-   */
-  _score: number;
 };

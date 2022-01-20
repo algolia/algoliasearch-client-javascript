@@ -52,7 +52,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: 'common/schemas.yml#/keyObject'
+            $ref: 'common/schemas.yml#/key'
     '400':
       $ref: ../../../common/responses/BadRequest.yml
     '402':

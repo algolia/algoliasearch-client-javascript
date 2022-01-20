@@ -117,18 +117,15 @@ export class RecommendApi {
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (getRecommendations === null || getRecommendations === undefined) {
+    if (!getRecommendations) {
       throw new Error(
-        'Required parameter getRecommendations was null or undefined when calling getRecommendations.'
+        'Parameter `getRecommendations` is required when calling `getRecommendations`.'
       );
     }
 
-    if (
-      getRecommendations.requests === null ||
-      getRecommendations.requests === undefined
-    ) {
+    if (!getRecommendations.requests) {
       throw new Error(
-        'Required parameter getRecommendations.requests was null or undefined when calling getRecommendations.'
+        'Parameter `getRecommendations.requests` is required when calling `getRecommendations`.'
       );
     }
 

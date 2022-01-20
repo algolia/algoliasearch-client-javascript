@@ -9,14 +9,14 @@ import java.util.Objects;
 public class ListApiKeysResponse {
 
   @SerializedName("keys")
-  private List<KeyObject> keys = new ArrayList<>();
+  private List<Key> keys = new ArrayList<>();
 
-  public ListApiKeysResponse keys(List<KeyObject> keys) {
+  public ListApiKeysResponse keys(List<Key> keys) {
     this.keys = keys;
     return this;
   }
 
-  public ListApiKeysResponse addKeysItem(KeyObject keysItem) {
+  public ListApiKeysResponse addKeysItem(Key keysItem) {
     this.keys.add(keysItem);
     return this;
   }
@@ -27,11 +27,11 @@ public class ListApiKeysResponse {
    * @return keys
    */
   @javax.annotation.Nonnull
-  public List<KeyObject> getKeys() {
+  public List<Key> getKeys() {
     return keys;
   }
 
-  public void setKeys(List<KeyObject> keys) {
+  public void setKeys(List<Key> keys) {
     this.keys = keys;
   }
 

@@ -1,5 +1,5 @@
-import type { RecommendRecord } from './recommendRecord';
+import type { RecommendHit } from './recommendHit';
 
 export type RecommendHits = {
-  hits?: RecommendRecord[];
+  hits?: RecommendHit[];
 };

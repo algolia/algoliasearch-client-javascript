@@ -72,7 +72,7 @@ createdAtObject:
     createdAt:
       $ref: '../../../../common/parameters.yml#/createdAt'
 
-keyObject:
+key:
   allOf:
     - $ref: '#/apiKey'
     - $ref: '#/createdAtObject'

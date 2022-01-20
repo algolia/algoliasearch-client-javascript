@@ -16,9 +16,9 @@ post:
     content:
       application/json:
         schema:
-          title: batchAssignUserIdsObject
+          title: batchAssignUserIdsParams
           type: object
-          description: Assign userID object.
+          description: Assign userID parameters.
           additionalProperties: false
           properties:
             cluster:
