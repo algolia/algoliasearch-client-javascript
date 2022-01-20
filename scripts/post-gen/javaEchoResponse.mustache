@@ -1,0 +1,44 @@
+package com.algolia.utils.echo;
+
+import java.io.IOException;
+import com.algolia.model.*;
+import okhttp3.Request;
+import java.util.ArrayList;
+import java.util.HashMap;
+import okio.Buffer;
+
+public class EchoResponse {
+
+    private static String parseRequestBody(Request req) {
+        try {
+            final Request copy = req.newBuilder().build();
+            final Buffer buffer = new Buffer();
+            copy.body().writeTo(buffer);
+            return buffer.readUtf8();
+        } catch (final IOException e) {
+            return "error";
+        }
+    }
+
+    {{#responses}}
+    public static class {{{className}}} extends {{{superClass}}} implements EchoResponseInterface {
+        private Request request;
+
+        public {{{className}}}(Request request) { 
+            this.request = request; 
+        }
+
+        public String getPath() { 
+            return request.url().encodedPath(); 
+        }
+
+        public String getMethod() { 
+            return request.method(); 
+        }
+
+        public String getBody() {
+            return parseRequestBody(request);
+        }
+    }
+    {{/responses}}
+} 

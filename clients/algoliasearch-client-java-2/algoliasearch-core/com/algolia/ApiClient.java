@@ -1,5 +1,6 @@
 package com.algolia;
 
+import com.algolia.utils.Requester;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
@@ -9,11 +10,8 @@ import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.*;
 import java.util.Map.Entry;
-import java.util.concurrent.TimeUnit;
 import okhttp3.*;
 import okhttp3.internal.http.HttpMethod;
-import okhttp3.logging.HttpLoggingInterceptor;
-import okhttp3.logging.HttpLoggingInterceptor.Level;
 
 public class ApiClient {
 
@@ -25,36 +23,21 @@ public class ApiClient {
 
   private DateFormat dateFormat;
 
-  private OkHttpClient httpClient;
   private JSON json;
 
-  private HttpLoggingInterceptor loggingInterceptor;
+  private Requester requester;
 
   /*
-   * Basic constructor for ApiClient
+   * Constructor for ApiClient with custom Requester
    */
-  public ApiClient(String appId, String apiKey) {
+  public ApiClient(String appId, String apiKey, Requester requester) {
     json = new JSON();
     setUserAgent("OpenAPI-Generator/0.1.0/java");
-    initHttpClient();
 
     this.basePath = "https://" + appId + "-1.algolianet.com";
     this.appId = appId;
     this.apiKey = apiKey;
-  }
-
-  private void initHttpClient() {
-    initHttpClient(Collections.<Interceptor>emptyList());
-  }
-
-  private void initHttpClient(List<Interceptor> interceptors) {
-    OkHttpClient.Builder builder = new OkHttpClient.Builder();
-    builder.addNetworkInterceptor(getProgressInterceptor());
-    for (Interceptor interceptor : interceptors) {
-      builder.addInterceptor(interceptor);
-    }
-
-    httpClient = builder.build();
+    this.requester = requester;
   }
 
   /**
@@ -130,20 +113,7 @@ public class ApiClient {
    * @return ApiClient
    */
   public ApiClient setDebugging(boolean debugging) {
-    if (debugging != this.debugging) {
-      if (debugging) {
-        loggingInterceptor = new HttpLoggingInterceptor();
-        loggingInterceptor.setLevel(Level.BODY);
-        httpClient =
-          httpClient.newBuilder().addInterceptor(loggingInterceptor).build();
-      } else {
-        final OkHttpClient.Builder builder = httpClient.newBuilder();
-        builder.interceptors().remove(loggingInterceptor);
-        httpClient = builder.build();
-        loggingInterceptor = null;
-      }
-    }
-    this.debugging = debugging;
+    requester.setDebugging(debugging);
     return this;
   }
 
@@ -153,7 +123,7 @@ public class ApiClient {
    * @return Timeout in milliseconds
    */
   public int getConnectTimeout() {
-    return httpClient.connectTimeoutMillis();
+    return requester.getConnectTimeout();
   }
 
   /**
@@ -164,11 +134,7 @@ public class ApiClient {
    * @return Api client
    */
   public ApiClient setConnectTimeout(int connectionTimeout) {
-    httpClient =
-      httpClient
-        .newBuilder()
-        .connectTimeout(connectionTimeout, TimeUnit.MILLISECONDS)
-        .build();
+    requester.setConnectTimeout(connectionTimeout);
     return this;
   }
 
@@ -178,7 +144,7 @@ public class ApiClient {
    * @return Timeout in milliseconds
    */
   public int getReadTimeout() {
-    return httpClient.readTimeoutMillis();
+    return requester.getReadTimeout();
   }
 
   /**
@@ -189,11 +155,7 @@ public class ApiClient {
    * @return Api client
    */
   public ApiClient setReadTimeout(int readTimeout) {
-    httpClient =
-      httpClient
-        .newBuilder()
-        .readTimeout(readTimeout, TimeUnit.MILLISECONDS)
-        .build();
+    requester.setReadTimeout(readTimeout);
     return this;
   }
 
@@ -203,7 +165,7 @@ public class ApiClient {
    * @return Timeout in milliseconds
    */
   public int getWriteTimeout() {
-    return httpClient.writeTimeoutMillis();
+    return requester.getWriteTimeout();
   }
 
   /**
@@ -214,11 +176,7 @@ public class ApiClient {
    * @return Api client
    */
   public ApiClient setWriteTimeout(int writeTimeout) {
-    httpClient =
-      httpClient
-        .newBuilder()
-        .writeTimeout(writeTimeout, TimeUnit.MILLISECONDS)
-        .build();
+    requester.setWriteTimeout(writeTimeout);
     return this;
   }
 
@@ -672,7 +630,7 @@ public class ApiClient {
       callback
     );
 
-    return httpClient.newCall(request);
+    return requester.newCall(request);
   }
 
   /**
@@ -814,27 +772,5 @@ public class ApiClient {
       formBuilder.add(param.getKey(), parameterToString(param.getValue()));
     }
     return formBuilder.build();
-  }
-
-  /**
-   * Get network interceptor to add it to the httpClient to track download progress for async
-   * requests.
-   */
-  private Interceptor getProgressInterceptor() {
-    return new Interceptor() {
-      @Override
-      public Response intercept(Interceptor.Chain chain) throws IOException {
-        final Request request = chain.request();
-        final Response originalResponse = chain.proceed(request);
-        if (request.tag() instanceof ApiCallback) {
-          final ApiCallback callback = (ApiCallback) request.tag();
-          return originalResponse
-            .newBuilder()
-            .body(new ProgressResponseBody(originalResponse.body(), callback))
-            .build();
-        }
-        return originalResponse;
-      }
-    };
   }
 }

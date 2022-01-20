@@ -6,7 +6,6 @@
   ],
   "scripts": {
     "build": "tsc",
-    "lint:fix": "yarn workspace javascript-tests lint:fix",
     "generate": "yarn generate:methods:requets ${0:-javascript} ${1:-search}",
     "generate:methods:requets": "node dist/tests/src/methods/requests/main.js ${0:-javascript} ${1:-search}",
     "start": "yarn build && yarn generate ${0:-javascript} ${1:-search} && yarn lint:fix"

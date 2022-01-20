@@ -9,9 +9,11 @@ import {{invokerPackage}}.Pair;
 import com.google.gson.reflect.TypeToken;
 
 import okhttp3.Call;
+import okhttp3.Request;
 
-{{#imports}}import {{import}};
-{{/imports}}
+import com.algolia.utils.*;
+import com.algolia.utils.echo.*;
+import com.algolia.model.*;
 
 import java.lang.reflect.Type;
 {{^fullJavaUtil}}
@@ -24,7 +26,11 @@ import java.util.Map;
 {{#operations}}
 public class {{classname}} extends ApiClient {
     public {{classname}}(String appId, String apiKey) {
-        super(appId, apiKey);
+        super(appId, apiKey, new HttpRequester());
+    }
+
+    public {{classname}}(String appId, String apiKey, Requester requester) {
+        super(appId, apiKey, requester);
     }
 
     {{#operation}}
@@ -45,7 +51,7 @@ public class {{classname}} extends ApiClient {
     {{#isDeprecated}}
     @Deprecated
     {{/isDeprecated}}
-    private Call {{operationId}}Call({{#allParams}}{{{dataType}}} {{paramName}}, {{/allParams}}final ApiCallback _callback) throws ApiException {
+    private Call {{operationId}}Call({{#allParams}}{{{dataType}}} {{paramName}}, {{/allParams}}final ApiCallback<{{{returnType}}}> _callback) throws ApiException {
         Object bodyObj = {{#bodyParam}}{{paramName}}{{/bodyParam}}{{^bodyParam}}null{{/bodyParam}};
 
         // create path and map variables
@@ -76,8 +82,7 @@ public class {{classname}} extends ApiClient {
     {{#isDeprecated}}
     @Deprecated
     {{/isDeprecated}}
-    @SuppressWarnings("rawtypes")
-    private Call {{operationId}}ValidateBeforeCall({{#allParams}}{{{dataType}}} {{paramName}}, {{/allParams}}final ApiCallback _callback) throws ApiException {
+    private Call {{operationId}}ValidateBeforeCall({{#allParams}}{{{dataType}}} {{paramName}}, {{/allParams}}final ApiCallback<{{{returnType}}}> _callback) throws ApiException {
         {{#allParams}}{{#required}}
         // verify the required parameter '{{paramName}}' is set
         if ({{paramName}} == null) {
@@ -105,10 +110,14 @@ public class {{classname}} extends ApiClient {
     @Deprecated
     {{/isDeprecated}}
     public {{#returnType}}{{{.}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{operationId}}({{#allParams}}{{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/allParams}}) throws ApiException {
-        Call call = {{operationId}}ValidateBeforeCall({{#allParams}}{{paramName}}, {{/allParams}}null);
+        Call req = {{operationId}}ValidateBeforeCall({{#allParams}}{{paramName}}, {{/allParams}}null);
+        if (req instanceof CallEcho) {
+            {{#returnType}}return new EchoResponse.{{#lambda.titlecase}}{{{operationId}}}{{/lambda.titlecase}}(((CallEcho)req).request());{{/returnType}}
+        }
+        Call call = (Call)req;
         {{#returnType}}Type returnType = new TypeToken<{{{.}}}>(){}.getType();
         ApiResponse<{{{.}}}> res = this.execute(call, returnType);
-        return res.getData();{{/returnType}}{{^returnType}}return this.execute(call).getData();{{/returnType}}
+        return res.getData();{{/returnType}}{{^returnType}}this.execute(call).getData();{{/returnType}}
     }
     /**
      * (asynchronously)
