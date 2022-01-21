@@ -36,6 +36,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@algolia/client-abtesting@workspace:clients/algoliasearch-client-javascript/client-abtesting"
   dependencies:
+    "@algolia/client-common": 5.0.0
     "@types/node": 16.11.11
     typescript: 4.5.4
   languageName: unknown
@@ -44,6 +45,16 @@ __metadata:
 "@algolia/client-analytics@5.0.0, @algolia/client-analytics@workspace:clients/algoliasearch-client-javascript/client-analytics":
   version: 0.0.0-use.local
   resolution: "@algolia/client-analytics@workspace:clients/algoliasearch-client-javascript/client-analytics"
+  dependencies:
+    "@algolia/client-common": 5.0.0
+    "@types/node": 16.11.11
+    typescript: 4.5.4
+  languageName: unknown
+  linkType: soft
+
+"@algolia/client-common@5.0.0, @algolia/client-common@workspace:clients/algoliasearch-client-javascript/client-common":
+  version: 0.0.0-use.local
+  resolution: "@algolia/client-common@workspace:clients/algoliasearch-client-javascript/client-common"
   dependencies:
     "@types/node": 16.11.11
     typescript: 4.5.4
@@ -54,6 +65,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@algolia/client-insights@workspace:clients/algoliasearch-client-javascript/client-insights"
   dependencies:
+    "@algolia/client-common": 5.0.0
     "@types/node": 16.11.11
     typescript: 4.5.4
   languageName: unknown
@@ -63,6 +75,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@algolia/client-personalization@workspace:clients/algoliasearch-client-javascript/client-personalization"
   dependencies:
+    "@algolia/client-common": 5.0.0
     "@types/node": 16.11.11
     typescript: 4.5.4
   languageName: unknown
@@ -72,6 +85,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@algolia/client-query-suggestions@workspace:clients/algoliasearch-client-javascript/client-query-suggestions"
   dependencies:
+    "@algolia/client-common": 5.0.0
     "@types/node": 16.11.11
     typescript: 4.5.4
   languageName: unknown
@@ -81,6 +95,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@algolia/client-search@workspace:clients/algoliasearch-client-javascript/client-search"
   dependencies:
+    "@algolia/client-common": 5.0.0
     "@types/node": 16.11.11
     typescript: 4.5.4
   languageName: unknown
@@ -90,6 +105,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@algolia/recommend@workspace:clients/algoliasearch-client-javascript/recommend"
   dependencies:
+    "@algolia/client-common": 5.0.0
     "@types/node": 16.11.11
     typescript: 4.5.4
   languageName: unknown

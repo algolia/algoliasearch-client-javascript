@@ -53,7 +53,7 @@ See this PR of the first JavaScript implementation for reference: https://github
 
 ### Retry strategy
 
-The retry strategy cannot be generated and needs to be implemented outside of the generated client folder. You need to add your transporter to the `utils/<your language>` folder, and update the `.mustache` template files accordingly.
+The retry strategy cannot be generated and needs to be implemented outside of the generated client folder. You need to add your transporter to the utils folder of your language, and update the `.mustache` template files accordingly.
 
 See this PR of the first JavaScript implementation for reference: https://github.com/algolia/api-client-automation-experiment/pull/9
 

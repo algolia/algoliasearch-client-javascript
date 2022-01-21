@@ -1,12 +1,18 @@
+import { Transporter } from '@algolia/client-common';
+import type {
+  Headers,
+  Requester,
+  Host,
+  Request,
+  RequestOptions,
+} from '@algolia/client-common';
+
 import type { LogFile } from '../model/logFile';
 import type { QuerySuggestionsIndex } from '../model/querySuggestionsIndex';
 import type { QuerySuggestionsIndexParam } from '../model/querySuggestionsIndexParam';
 import type { QuerySuggestionsIndexWithIndexParam } from '../model/querySuggestionsIndexWithIndexParam';
 import type { Status } from '../model/status';
 import type { SucessResponse } from '../model/sucessResponse';
-import { Transporter } from '../utils/Transporter';
-import type { Requester } from '../utils/requester/Requester';
-import type { Headers, Host, Request, RequestOptions } from '../utils/types';
 
 export class QuerySuggestionsApi {
   protected authentications = {

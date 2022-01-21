@@ -1,9 +1,14 @@
+import { shuffle, Transporter } from '@algolia/client-common';
+import type {
+  Headers,
+  Requester,
+  Host,
+  Request,
+  RequestOptions,
+} from '@algolia/client-common';
+
 import type { GetRecommendations } from '../model/getRecommendations';
 import type { GetRecommendationsResponse } from '../model/getRecommendationsResponse';
-import { Transporter } from '../utils/Transporter';
-import { shuffle } from '../utils/helpers';
-import type { Requester } from '../utils/requester/Requester';
-import type { Headers, Host, Request, RequestOptions } from '../utils/types';
 
 export class RecommendApi {
   protected authentications = {

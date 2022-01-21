@@ -1,5 +1,7 @@
 #!/bin/bash
 
+LANGUAGE=$1
+
 if [[ $CI ]]; then
     exit 0
 fi
@@ -10,8 +12,17 @@ if [[ ! $DOCKER ]]; then
     exit 1
 fi
 
+build_js_common() {
+    echo "> Building @algolia/client-common..."
+
+    yarn workspace @algolia/client-common build
+
+    echo ""
+}
+
 format_specs() {
     echo "> Formatting specs..."
+
     CMD="yarn specs:format"
     if [[ $VERBOSE == "true" ]]; then
         $CMD
@@ -25,6 +36,12 @@ format_specs() {
         fi
         set -e
     fi
+
+    echo ""
 }
 
 format_specs
+
+if [[ $LANGUAGE == 'javascript' || $LANGUAGE == 'all' ]]; then
+    build_js_common
+fi

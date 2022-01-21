@@ -26,6 +26,12 @@ runs:
         key: ${{ runner.os }}-${{ inputs.spec }}-specs-${{ hashFiles(format('specs/{0}/**', inputs.spec)) }}
 
     # restore clients
+    - name: Restore built JavaScript common client
+      uses: actions/cache@v2
+      with:
+        path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/client-common/dist
+        key: ${{ runner.os }}-1-js-client-common-${{ hashFiles('clients/common-client-javascript/client-common/**') }}
+
     - name: Restore built JavaScript search client
       if: ${{ inputs.job == 'cts' }}
       uses: actions/cache@v2

@@ -3,8 +3,9 @@ import fsp from 'fs/promises';
 import SwaggerParser from '@apidevtools/swagger-parser';
 import type { OpenAPIV3 } from 'openapi-types';
 
-import type { CTS, CTSBlock, Tests } from './types';
 import { removeObjectName, walk } from '../../utils';
+
+import type { CTS, CTSBlock, Tests } from './types';
 
 async function loadRequestsCTS(client: string): Promise<CTSBlock[]> {
   // load the list of operations from the spec

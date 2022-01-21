@@ -1,3 +1,12 @@
+import { Transporter } from '@algolia/client-common';
+import type {
+  Headers,
+  Requester,
+  Host,
+  Request,
+  RequestOptions,
+} from '@algolia/client-common';
+
 import type { GetAverageClickPositionResponse } from '../model/getAverageClickPositionResponse';
 import type { GetClickPositionsResponse } from '../model/getClickPositionsResponse';
 import type { GetClickThroughRateResponse } from '../model/getClickThroughRateResponse';
@@ -17,9 +26,6 @@ import type { GetTopHitsResponseWithAnalytics } from '../model/getTopHitsRespons
 import type { GetTopSearchesResponse } from '../model/getTopSearchesResponse';
 import type { GetTopSearchesResponseWithAnalytics } from '../model/getTopSearchesResponseWithAnalytics';
 import type { GetUsersCountResponse } from '../model/getUsersCountResponse';
-import { Transporter } from '../utils/Transporter';
-import type { Requester } from '../utils/requester/Requester';
-import type { Headers, Host, Request, RequestOptions } from '../utils/types';
 
 export class AnalyticsApi {
   protected authentications = {
