@@ -81,6 +81,13 @@ runs:
         path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/client-insights/dist
         key: ${{ runner.os }}-1-js-client-insights-${{ hashFiles('clients/algoliasearch-client-javascript/client-insights/**') }}-${{ hashFiles('specs/dist/insights.yml') }}
 
+    - name: Restore built JavaScript sources client
+      if: ${{ inputs.job == 'cts' }}
+      uses: actions/cache@v2
+      with:
+        path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/client-sources/dist
+        key: ${{ runner.os }}-1-js-client-sources-${{ hashFiles('clients/algoliasearch-client-javascript/client-sources/**') }}-${{ hashFiles('specs/dist/sources.yml') }}
+
     - name: Restore built Java client
       if: ${{ inputs.job == 'cts' }}
       uses: actions/cache@v2

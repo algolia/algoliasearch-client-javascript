@@ -17,6 +17,7 @@ This folder hosts the generated clients.
 - [@algolia/client-query-suggestions](./algoliasearch-client-javascript/client-query-suggestions/): The Algolia query suggestions client.
 - [@algolia/client-search](./algoliasearch-client-javascript/client-search/): The Algolia search client.
 - [@algolia/recommend](./algoliasearch-client-javascript/recommend/): The Algolia recommend client.
+- [@algolia/sources](./algoliasearch-client-javascript/client-sources/): The Algolia sources client.
 
 #### Utils
 

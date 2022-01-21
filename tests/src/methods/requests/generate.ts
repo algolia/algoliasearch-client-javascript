@@ -37,6 +37,7 @@ async function generateRequestsTests(
       'analytics',
       'abtesting',
       'query-suggestions',
+      'sources',
     ].includes(client),
   });
   await fsp.writeFile(

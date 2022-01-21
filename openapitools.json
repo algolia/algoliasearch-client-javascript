@@ -153,6 +153,28 @@
           "host": "query-suggestions"
         }
       },
+      "javascript-sources": {
+        "generatorName": "typescript-node",
+        "templateDir": "#{cwd}/templates/javascript/",
+        "config": "#{cwd}/openapitools.json",
+        "apiPackage": "src",
+        "output": "#{cwd}/clients/algoliasearch-client-javascript/client-sources",
+        "glob": "specs/dist/sources.yml",
+        "gitHost": "algolia",
+        "gitUserId": "algolia",
+        "gitRepoId": "algoliasearch-client-javascript",
+        "additionalProperties": {
+          "modelPropertyNaming": "original",
+          "supportsES6": true,
+          "npmName": "@algolia/client-sources",
+          "npmVersion": "0.0.1",
+
+          "packageName": "@algolia/client-sources",
+          "hasRegionalHost": true,
+          "isDeHost": true,
+          "host": "data"
+        }
+      },
       "java-search": {
         "generatorName": "java",
         "templateDir": "#{cwd}/templates/java/",

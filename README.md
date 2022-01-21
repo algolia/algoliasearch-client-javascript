@@ -96,7 +96,7 @@ yarn docker build:clients java recommend
 
 ## Testing clients
 
-The clients can be tested inside the [`playground`](./playground) folder
+The clients can be tested inside the [`playground`](./playground) folder and with the [common test suite (CTS)](./doc/CTS.md)
 
 ### Usage
 

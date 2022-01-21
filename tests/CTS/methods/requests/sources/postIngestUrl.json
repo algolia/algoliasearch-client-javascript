@@ -1,0 +1,22 @@
+[
+  {
+    "method": "postIngestUrl",
+    "testName": "post postIngestUrl with minimal parameters",
+    "parameters": {
+      "type": "csv",
+      "input": {
+        "url": "https://example.com/file.csv"
+      }
+    },
+    "request": {
+      "path": "/1/ingest/url",
+      "method": "POST",
+      "data": {
+        "type": "csv",
+        "input": {
+          "url": "https://example.com/file.csv"
+        }
+      }
+    }
+  }
+]

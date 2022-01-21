@@ -9,12 +9,14 @@
     "start:query-suggestions": "yarn install && yarn build && yarn test:query-suggestions",
     "start:recommend": "yarn install && yarn build && yarn test:recommend",
     "start:search": "yarn install && yarn build && yarn test:search",
+    "start:sources": "yarn install && yarn build && yarn test:sources",
     "test:abtesting": "node dist/analytics.js",
     "test:analytics": "node dist/analytics.js",
     "test:personalization": "node dist/personalization.js",
     "test:query-suggestions": "node dist/query-suggestions.js",
     "test:recommend": "node dist/recommend.js",
-    "test:search": "node dist/search.js"
+    "test:search": "node dist/search.js",
+    "test:sources": "node dist/sources.js"
   },
   "devDependencies": {
     "@algolia/client-abtesting": "5.0.0",
@@ -22,6 +24,7 @@
     "@algolia/client-personalization": "5.0.0",
     "@algolia/client-query-suggestions": "5.0.0",
     "@algolia/client-search": "5.0.0",
+    "@algolia/client-sources": "0.0.1",
     "@algolia/recommend": "5.0.0",
     "dotenv": "10.0.0",
     "typescript": "4.5.4"

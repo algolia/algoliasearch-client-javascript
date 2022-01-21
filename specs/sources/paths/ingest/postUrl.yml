@@ -1,0 +1,50 @@
+post:
+  tags:
+    - sources
+  operationId: postIngestUrl
+  summary: Create a new ingestion job via URL.
+  description: Add an ingestion job that will fetch data from an URL.
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          title: postURLJob
+          type: object
+          description: Object containing a URL job.
+          additionalProperties: false
+          required:
+            - type
+            - input
+          properties:
+            type:
+              type: string
+              description: The type of the file to ingest.
+              enum:
+                - csv
+            input:
+              type: object
+              title: postURLJobInput
+              description: The input of the job.
+              properties:
+                url:
+                  type: string
+                  description: The URL of the file to ingest.
+              required:
+                - url
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            title: postIngestUrlResponse
+            type: object
+            additionalProperties: false
+            required:
+              - task
+            properties:
+              task:
+                $ref: ../../common/schemas/Task.yml#/task
+    '400':
+      $ref: ../../../common/responses/BadRequest.yml
