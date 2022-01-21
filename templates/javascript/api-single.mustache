@@ -1,7 +1,5 @@
-import { shuffle } from '../utils/helpers';
-import { Transporter } from '../utils/Transporter'; 
-import { Headers, Host, Request, RequestOptions } from '../utils/types';
-import { Requester } from '../utils/requester/Requester';
+import { shuffle, Transporter } from '@algolia/client-common';
+import type { Headers, Requester, Host, Request, RequestOptions } from '@algolia/client-common';
 
 {{#imports}}
 import { {{classname}} } from '{{filename}}';

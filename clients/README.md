@@ -1,6 +1,6 @@
 # Clients
 
-This folder hosts the generated clients and their utils.
+This folder hosts the generated clients.
 
 ## Generated clients
 
@@ -20,4 +20,4 @@ This folder hosts the generated clients and their utils.
 
 #### Utils
 
-- [JavaScript](./algoliasearch-client-javascript/utils/): The JavaScript clients utils.
+- [JavaScript](./algoliasearch-client-javascript/client-common/): The JavaScript clients common files.

@@ -1,10 +1,16 @@
+import { Transporter } from '@algolia/client-common';
+import type {
+  Headers,
+  Requester,
+  Host,
+  Request,
+  RequestOptions,
+} from '@algolia/client-common';
+
 import type { ABTest } from '../model/aBTest';
 import type { ABTestResponse } from '../model/aBTestResponse';
 import type { AddABTestsRequest } from '../model/addABTestsRequest';
 import type { ListABTestsResponse } from '../model/listABTestsResponse';
-import { Transporter } from '../utils/Transporter';
-import type { Requester } from '../utils/requester/Requester';
-import type { Headers, Host, Request, RequestOptions } from '../utils/types';
 
 export class AbtestingApi {
   protected authentications = {

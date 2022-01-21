@@ -1,13 +1,13 @@
 {
-  "name": "@algolia/client-abtesting",
+  "name": "@algolia/client-common",
   "version": "5.0.0",
-  "description": "JavaScript client for @algolia/client-abtesting",
+  "description": "Common package for the Algolia JavaScript API client.",
   "repository": "algolia/algoliasearch-client-javascript",
   "author": "Algolia",
   "private": true,
   "license": "MIT",
-  "main": "dist/api.js",
-  "types": "dist/api.d.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
     "clean": "rm -rf dist/"
@@ -15,9 +15,6 @@
   "engines": {
     "node": "^16.0.0",
     "yarn": "^3.0.0"
-  },
-  "dependencies": {
-    "@algolia/client-common": "5.0.0"
   },
   "devDependencies": {
     "@types/node": "16.11.11",

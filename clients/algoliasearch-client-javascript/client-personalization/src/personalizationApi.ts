@@ -1,10 +1,16 @@
+import { Transporter } from '@algolia/client-common';
+import type {
+  Headers,
+  Requester,
+  Host,
+  Request,
+  RequestOptions,
+} from '@algolia/client-common';
+
 import type { DeleteUserProfileResponse } from '../model/deleteUserProfileResponse';
 import type { GetUserTokenResponse } from '../model/getUserTokenResponse';
 import type { PersonalizationStrategyParams } from '../model/personalizationStrategyParams';
 import type { SetPersonalizationStrategyResponse } from '../model/setPersonalizationStrategyResponse';
-import { Transporter } from '../utils/Transporter';
-import type { Requester } from '../utils/requester/Requester';
-import type { Headers, Host, Request, RequestOptions } from '../utils/types';
 
 export class PersonalizationApi {
   protected authentications = {

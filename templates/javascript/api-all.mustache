@@ -8,9 +8,7 @@ import { {{ classname }} } from './{{ classFilename }}';
 export * from './{{ classFilename }}Interface'
 {{/withInterfaces}}
 {{/apis}}
-export * from '../utils/errors';
-export { EchoRequester } from '../utils/requester/EchoRequester';
-export { EchoResponse } from '../utils/types';
+export * from '@algolia/client-common';
 
 export const APIS = [{{#apis}}{{#operations}}{{ classname }}{{/operations}}{{^-last}}, {{/-last}}{{/apis}}];
 {{/apiInfo}}

@@ -20,7 +20,7 @@
     "docker": "docker exec -it dev yarn $*",
     "lint": "eslint --ext=ts .",
     "post:generate": "./scripts/post-gen/global.sh",
-    "generate": "./scripts/multiplexer.sh ${2:-nonverbose} ./scripts/generate.sh ${0:-all} ${1:-all} && yarn post:generate",
+    "generate": "./scripts/multiplexer.sh ${2:-nonverbose} ./scripts/generate.sh ${0:-all} ${1:-all} && yarn post:generate ${0:-all}",
     "playground": "./scripts/multiplexer.sh ${2:-nonverbose} ./scripts/playground.sh ${0:-javascript} ${1:-search}",
     "specs:format": "yarn prettier --write specs",
     "specs:lint": "eslint --ext=yml specs/ .github/ && yarn openapi lint"

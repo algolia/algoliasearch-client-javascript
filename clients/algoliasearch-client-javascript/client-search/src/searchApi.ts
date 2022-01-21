@@ -1,3 +1,12 @@
+import { shuffle, Transporter } from '@algolia/client-common';
+import type {
+  Headers,
+  Requester,
+  Host,
+  Request,
+  RequestOptions,
+} from '@algolia/client-common';
+
 import type { AddApiKeyResponse } from '../model/addApiKeyResponse';
 import type { ApiKey } from '../model/apiKey';
 import type { AssignUserIdParams } from '../model/assignUserIdParams';
@@ -53,10 +62,6 @@ import type { UpdatedAtResponse } from '../model/updatedAtResponse';
 import type { UpdatedAtWithObjectIdResponse } from '../model/updatedAtWithObjectIdResponse';
 import type { UpdatedRuleResponse } from '../model/updatedRuleResponse';
 import type { UserId } from '../model/userId';
-import { Transporter } from '../utils/Transporter';
-import { shuffle } from '../utils/helpers';
-import type { Requester } from '../utils/requester/Requester';
-import type { Headers, Host, Request, RequestOptions } from '../utils/types';
 
 export class SearchApi {
   protected authentications = {
