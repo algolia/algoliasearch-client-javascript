@@ -5,7 +5,11 @@ It is automaticaly generated for all languages, from a JSON entry point.
 
 ## How to run it
 
+> CTS requires all clients to be built
+
 ```bash
+yarn docker build:specs
+yarn docker build:clients
 yarn docker cts:generate
 yarn docker cts:test
 ```

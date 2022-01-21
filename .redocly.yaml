@@ -6,6 +6,7 @@ apiDefinitions:
   query-suggestions: specs/query-suggestions/spec.yml
   recommend: specs/recommend/spec.yml
   search: specs/search/spec.yml
+  sources: specs/sources/spec.yml
 
 lint:
   extends:
