@@ -35,8 +35,7 @@ public class {{classname}} extends ApiClient {
 
     {{#operation}}
     /**
-     * Build call for {{operationId}}{{#allParams}}
-     * @param {{paramName}} {{&description}}{{#required}} (required){{/required}}{{^required}} (optional{{^isContainer}}{{#defaultValue}}, default to {{.}}{{/defaultValue}}{{/isContainer}}){{/required}}{{/allParams}}
+     * Build call for {{operationId}}
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -119,6 +118,13 @@ public class {{classname}} extends ApiClient {
         ApiResponse<{{{.}}}> res = this.execute(call, returnType);
         return res.getData();{{/returnType}}{{^returnType}}this.execute(call).getData();{{/returnType}}
     }
+
+    {{#optionalParams.0}}
+    public {{#returnType}}{{{.}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{operationId}}({{#requiredParams}}{{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/requiredParams}}) throws ApiException {
+        {{#returnType}}return {{/returnType}}this.{{operationId}}({{#requiredParams}}{{paramName}}{{^-last}},{{/-last}}{{/requiredParams}}{{#requiredParams.0}},{{/requiredParams.0}}{{#optionalParams}}{{#defaultValue}}{{#isString}}"{{.}}"{{/isString}}{{^isString}}{{.}}{{/isString}}{{/defaultValue}}{{^defaultValue}}null{{/defaultValue}}{{^-last}},{{/-last}}{{/optionalParams}});
+    }
+    {{/optionalParams.0}}
+
     /**
      * (asynchronously)
      * {{notes}}{{#allParams}}
