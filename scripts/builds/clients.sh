@@ -7,39 +7,34 @@ DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null && pwd)"
 # Move to the root (easier to locate other scripts)
 cd ${DIR}/../..
 
-lang=$1
-client=$2
-generator="$lang-$client"
-package=$(cat openapitools.json | jq -r --arg generator "$generator" '."generator-cli".generators[$generator].additionalProperties.packageName')
+LANGUAGE=$1
+CLIENT=$2
+GENERATOR="$LANGUAGE-$CLIENT"
+PACKAGE=$(cat openapitools.json | jq -r --arg generator "$GENERATOR" '."generator-cli".generators[$generator].additionalProperties.packageName')
 
-# Commands are based on the lang
-build_client(){
-    echo "> Building $generator..."
-
-    if [[ $lang == 'javascript' ]]; then
-        yarn workspace $package build
-    elif [[ $lang == 'java' ]]; then
-        CMD="mvn install -f clients/$package/pom.xml"
-        if [[ $VERBOSE == "true" ]]; then
-            $CMD
-        else
-            set +e
-            log=$($CMD)
-
-            if [[ $? != 0 ]]; then
-                echo "$log"
-                exit 1
-            fi
-            set -e
-        fi
-    fi
-}
-
-
-
-if [[ -z $package ]]; then
-    echo "Unknown package ${package}"
+if [[ -z $PACKAGE ]]; then
+    echo "Unknown package ${PACKAGE}"
     exit 1
 fi
 
-build_client
+# Commands are based on the LANGUAGE
+echo "> Building $GENERATOR..."
+
+if [[ $LANGUAGE == 'javascript' ]]; then
+    CMD="yarn workspace $PACKAGE build"
+elif [[ $LANGUAGE == 'java' ]]; then
+    CMD="mvn install -f clients/$PACKAGE/pom.xml"
+fi
+
+if [[ $VERBOSE == "true" ]]; then
+    $CMD
+else
+    set +e
+    log=$($CMD)
+
+    if [[ $? != 0 ]]; then
+        echo "$log"
+        exit 1
+    fi
+    set -e
+fi

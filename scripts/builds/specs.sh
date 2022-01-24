@@ -9,58 +9,40 @@ fi
 # Break on non-zero code
 set -e
 
-SPEC=$1
-OUTPUT=$2
-
-SPECS=()
-CLIENT=""
-
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null && pwd)"
 # Move to the root (easier to locate other scripts)
 cd ${DIR}/../..
 
-find_specs() {
-    echo "> Searching for available specs..."
-
-    SPECS=($(find specs/*/spec.yml))
-
-    echo ""
-}
+CLIENT=$1
+OUTPUT=$2
 
 check_format_spec() {
-    local spec=$1
-
-    echo "> Checking format of input spec file ${spec}"
-
-    yarn eslint --ext=yml ${spec}
-
+    local client=$1
+    echo "> Checking format of $client spec"
+    yarn specs:lint $client
     echo ""
 }
 
 build_spec() {
-    local spec=$1
-
-    yarn openapi bundle ${spec} -o specs/dist/${CLIENT}.${OUTPUT} --ext ${OUTPUT}
-
+    local client=$1
+    yarn openapi bundle specs/${client}/spec.yml -o specs/dist/${client}.${OUTPUT} --ext ${OUTPUT}
     echo ""
 }
 
-validate_spec() {
-    local spec=$1
-
-    yarn openapi lint specs/dist/${CLIENT}.${OUTPUT}
-
+validate_output_spec() {
+    local client=$1
+    yarn openapi lint specs/dist/${client}.${OUTPUT}
     echo ""
 }
 
-find_specs
+CLIENTS=$(find specs/*/spec.yml | awk -F / '{ print $(NF-1) }')
 
-if [[ $SPEC == "all" ]]; then
-    SPECS=("${SPECS[@]}")
-elif [[ ${SPECS[*]} =~ ${SPEC} ]]; then
-    SPECS=("specs/${SPEC}/spec.yml")
+if [[ $CLIENT == "all" ]]; then
+    CLIENTS=("${CLIENTS[@]}")
+elif [[ ${CLIENTS[*]} =~ ${CLIENT} ]]; then
+    CLIENTS=($CLIENT)
 else
-    echo "Unknown spec ${SPEC}"
+    echo "Unknown spec ${CLIENT}"
     exit 1
 fi
 
@@ -69,10 +51,8 @@ if [[ $OUTPUT != "yml" ]] && [[ $OUTPUT != "json" ]]; then
     exit 1
 fi
 
-for spec in "${SPECS[@]}"; do
-    CLIENT=$(echo $spec | awk -F / '{ print $(NF-1) }')
-
-    check_format_spec $spec
-    build_spec $spec
-    validate_spec $spec
+for client in "${CLIENTS[@]}"; do
+    check_format_spec $client
+    build_spec $client
+    validate_output_spec $client
 done

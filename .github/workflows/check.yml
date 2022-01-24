@@ -24,7 +24,7 @@ jobs:
         uses: ./.github/actions/setup
 
       - name: Lint GitHub actions
-        run: yarn eslint --ext=yml .github/actions .github/workflows
+        run: yarn github-actions:lint
 
     outputs:
       RUN_SPECS: ${{ steps.setup.outputs.RUN_SPECS }}

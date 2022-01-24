@@ -6,7 +6,7 @@ task:
       type: string
       description: The id of the task.
       format: uuid
-      example: 'e0f6db8a-24f5-4092-83a4-1b2c6cb6d809'
+      example: e0f6db8a-24f5-4092-83a4-1b2c6cb6d809
     type:
       type: string
       description: The type of the task executed.

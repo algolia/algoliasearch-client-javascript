@@ -22,8 +22,9 @@
     "post:generate": "./scripts/post-gen/global.sh",
     "generate": "./scripts/multiplexer.sh ${2:-nonverbose} ./scripts/generate.sh ${0:-all} ${1:-all} && yarn post:generate ${0:-all}",
     "playground": "./scripts/multiplexer.sh ${2:-nonverbose} ./scripts/playground.sh ${0:-javascript} ${1:-search}",
-    "specs:format": "yarn prettier --write specs",
-    "specs:lint": "eslint --ext=yml specs/ .github/ && yarn openapi lint"
+    "specs:fix": "eslint --ext=yml specs/ --fix",
+    "specs:lint": "eslint --ext=yml specs/$0",
+    "github-actions:lint": "eslint --ext=yml .github/"
   },
   "devDependencies": {
     "@openapitools/openapi-generator-cli": "2.4.18",

@@ -4,7 +4,7 @@ LANGUAGE=$1
 BASE_CHANGED=$2
 BASE_BRANCH=$3
 
-clients=$(cat openapitools.json | jq --arg lang $LANGUAGE -c '."generator-cli".generators 
+CLIENTS=$(cat openapitools.json | jq --arg lang $LANGUAGE -c '."generator-cli".generators 
                                 | with_entries(
                                     if (.key | test($lang + "-.*")) then 
                                         ({key:.key,value:.value}) 
@@ -20,7 +20,7 @@ clients=$(cat openapitools.json | jq --arg lang $LANGUAGE -c '."generator-cli".g
                                 | .[]')
 
 to_test='{"client": []}'
-for pair in $clients; do
+for pair in $CLIENTS; do
     name=$(echo $pair | jq '.name')
     folder=$(echo $pair | jq '.folder')
     spec_changed=$(git diff --shortstat origin/$BASE_BRANCH..HEAD -- specs/$name | wc -l)
