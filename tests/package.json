@@ -7,8 +7,8 @@
   "scripts": {
     "build": "tsc",
     "generate:methods:requets": "node dist/tests/src/methods/requests/main.js ${0:-javascript} ${1:-search}",
-    "generate": "yarn generate:methods:requets ${0:-javascript} ${1:-search} && yarn lint:fix",
-    "lint:fix": "yarn workspace javascript-tests lint:fix",
+    "format": "../scripts/formatter.sh ${0:-javascript} tests/output/${0:-javascript}",
+    "generate": "yarn generate:methods:requets ${0:-javascript} ${1:-search} && yarn format ${0:-javascript}",
     "start": "yarn build && yarn generate ${0:-javascript} ${1:-search}"
   },
   "devDependencies": {

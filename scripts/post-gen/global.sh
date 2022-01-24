@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Break on non-zero code
+set -e
+
 LANGUAGE=$1
 
 if [[ $CI ]]; then
@@ -23,7 +26,7 @@ build_js_common() {
 format_specs() {
     echo "> Formatting specs..."
 
-    CMD="yarn specs:format"
+    CMD="yarn specs:fix"
     if [[ $VERBOSE == "true" ]]; then
         $CMD
     else
