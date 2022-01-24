@@ -29,7 +29,6 @@ public class SearchApi extends ApiClient {
   /**
    * Build call for addApiKey
    *
-   * @param apiKey (required)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
@@ -113,9 +112,6 @@ public class SearchApi extends ApiClient {
   /**
    * Build call for addOrUpdateObject
    *
-   * @param indexName The index in which to perform the request. (required)
-   * @param objectID Unique identifier of an object. (required)
-   * @param body The Algolia object. (required)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
@@ -250,7 +246,6 @@ public class SearchApi extends ApiClient {
   /**
    * Build call for appendSource
    *
-   * @param source The source to add. (required)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
@@ -334,8 +329,6 @@ public class SearchApi extends ApiClient {
   /**
    * Build call for assignUserId
    *
-   * @param xAlgoliaUserID userID to assign. (required)
-   * @param assignUserIdParams (required)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
@@ -454,8 +447,6 @@ public class SearchApi extends ApiClient {
   /**
    * Build call for batch
    *
-   * @param indexName The index in which to perform the request. (required)
-   * @param batchWriteParams (required)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
@@ -558,8 +549,6 @@ public class SearchApi extends ApiClient {
   /**
    * Build call for batchAssignUserIds
    *
-   * @param xAlgoliaUserID userID to assign. (required)
-   * @param batchAssignUserIdsParams (required)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
@@ -681,8 +670,6 @@ public class SearchApi extends ApiClient {
   /**
    * Build call for batchDictionaryEntries
    *
-   * @param dictionaryName The dictionary to search in. (required)
-   * @param batchDictionaryEntries (required)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
@@ -801,12 +788,6 @@ public class SearchApi extends ApiClient {
   /**
    * Build call for batchRules
    *
-   * @param indexName The index in which to perform the request. (required)
-   * @param rule (required)
-   * @param forwardToReplicas When true, changes are also propagated to replicas of the given
-   *     indexName. (optional)
-   * @param clearExistingRules When true, existing Rules are cleared before adding this batch. When
-   *     false, existing Rules are kept. (optional)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
@@ -920,6 +901,11 @@ public class SearchApi extends ApiClient {
     return res.getData();
   }
 
+  public UpdatedAtResponse batchRules(String indexName, List<Rule> rule)
+    throws ApiException {
+    return this.batchRules(indexName, rule, null, null);
+  }
+
   /**
    * (asynchronously) Create or update a batch of Rules.
    *
@@ -955,8 +941,6 @@ public class SearchApi extends ApiClient {
   /**
    * Build call for browse
    *
-   * @param indexName The index in which to perform the request. (required)
-   * @param browseRequest (optional)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
@@ -1032,6 +1016,10 @@ public class SearchApi extends ApiClient {
     return res.getData();
   }
 
+  public BrowseResponse browse(String indexName) throws ApiException {
+    return this.browse(indexName, null);
+  }
+
   /**
    * (asynchronously) This method allows you to retrieve all index content. It can retrieve up to
    * 1,000 records per call and supports full text search and filters. For performance reasons, some
@@ -1061,9 +1049,6 @@ public class SearchApi extends ApiClient {
   /**
    * Build call for clearAllSynonyms
    *
-   * @param indexName The index in which to perform the request. (required)
-   * @param forwardToReplicas When true, changes are also propagated to replicas of the given
-   *     indexName. (optional)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
@@ -1147,6 +1132,11 @@ public class SearchApi extends ApiClient {
     return res.getData();
   }
 
+  public UpdatedAtResponse clearAllSynonyms(String indexName)
+    throws ApiException {
+    return this.clearAllSynonyms(indexName, null);
+  }
+
   /**
    * (asynchronously) Remove all synonyms from an index.
    *
@@ -1175,7 +1165,6 @@ public class SearchApi extends ApiClient {
   /**
    * Build call for clearObjects
    *
-   * @param indexName The index in which to perform the request. (required)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
@@ -1264,9 +1253,6 @@ public class SearchApi extends ApiClient {
   /**
    * Build call for clearRules
    *
-   * @param indexName The index in which to perform the request. (required)
-   * @param forwardToReplicas When true, changes are also propagated to replicas of the given
-   *     indexName. (optional)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
@@ -1346,6 +1332,10 @@ public class SearchApi extends ApiClient {
     return res.getData();
   }
 
+  public UpdatedAtResponse clearRules(String indexName) throws ApiException {
+    return this.clearRules(indexName, null);
+  }
+
   /**
    * (asynchronously) Delete all Rules in the index.
    *
@@ -1374,7 +1364,6 @@ public class SearchApi extends ApiClient {
   /**
    * Build call for deleteApiKey
    *
-   * @param key API Key string. (required)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
@@ -1462,8 +1451,6 @@ public class SearchApi extends ApiClient {
   /**
    * Build call for deleteBy
    *
-   * @param indexName The index in which to perform the request. (required)
-   * @param searchParams (required)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
@@ -1570,7 +1557,6 @@ public class SearchApi extends ApiClient {
   /**
    * Build call for deleteIndex
    *
-   * @param indexName The index in which to perform the request. (required)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
@@ -1658,8 +1644,6 @@ public class SearchApi extends ApiClient {
   /**
    * Build call for deleteObject
    *
-   * @param indexName The index in which to perform the request. (required)
-   * @param objectID Unique identifier of an object. (required)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
@@ -1764,10 +1748,6 @@ public class SearchApi extends ApiClient {
   /**
    * Build call for deleteRule
    *
-   * @param indexName The index in which to perform the request. (required)
-   * @param objectID Unique identifier of an object. (required)
-   * @param forwardToReplicas When true, changes are also propagated to replicas of the given
-   *     indexName. (optional)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
@@ -1867,6 +1847,11 @@ public class SearchApi extends ApiClient {
     return res.getData();
   }
 
+  public UpdatedAtResponse deleteRule(String indexName, String objectID)
+    throws ApiException {
+    return this.deleteRule(indexName, objectID, null);
+  }
+
   /**
    * (asynchronously) Delete the Rule with the specified objectID.
    *
@@ -1898,7 +1883,6 @@ public class SearchApi extends ApiClient {
   /**
    * Build call for deleteSource
    *
-   * @param source The IP range of the source. (required)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
@@ -1986,10 +1970,6 @@ public class SearchApi extends ApiClient {
   /**
    * Build call for deleteSynonym
    *
-   * @param indexName The index in which to perform the request. (required)
-   * @param objectID Unique identifier of an object. (required)
-   * @param forwardToReplicas When true, changes are also propagated to replicas of the given
-   *     indexName. (optional)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
@@ -2089,6 +2069,11 @@ public class SearchApi extends ApiClient {
     return res.getData();
   }
 
+  public DeletedAtResponse deleteSynonym(String indexName, String objectID)
+    throws ApiException {
+    return this.deleteSynonym(indexName, objectID, null);
+  }
+
   /**
    * (asynchronously) Delete a single synonyms set, identified by the given objectID.
    *
@@ -2120,7 +2105,6 @@ public class SearchApi extends ApiClient {
   /**
    * Build call for getApiKey
    *
-   * @param key API Key string. (required)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
@@ -2352,14 +2336,6 @@ public class SearchApi extends ApiClient {
   /**
    * Build call for getLogs
    *
-   * @param offset First entry to retrieve (zero-based). Log entries are sorted by decreasing date,
-   *     therefore 0 designates the most recent log entry. (optional, default to 0)
-   * @param length Maximum number of entries to retrieve. The maximum allowed value is 1000.
-   *     (optional, default to 10)
-   * @param indexName Index for which log entries should be retrieved. When omitted, log entries are
-   *     retrieved across all indices. (optional, default to null)
-   * @param type Type of log entries to retrieve. When omitted, all log entries are retrieved.
-   *     (optional, default to all)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
@@ -2449,6 +2425,10 @@ public class SearchApi extends ApiClient {
     return res.getData();
   }
 
+  public GetLogsResponse getLogs() throws ApiException {
+    return this.getLogs(0, 10, "null", "all");
+  }
+
   /**
    * (asynchronously) Return the lastest log entries.
    *
@@ -2486,10 +2466,6 @@ public class SearchApi extends ApiClient {
   /**
    * Build call for getObject
    *
-   * @param indexName The index in which to perform the request. (required)
-   * @param objectID Unique identifier of an object. (required)
-   * @param attributesToRetrieve List of attributes to retrieve. If not specified, all retrievable
-   *     attributes are returned. (optional)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
@@ -2589,6 +2565,11 @@ public class SearchApi extends ApiClient {
     return res.getData();
   }
 
+  public Map<String, String> getObject(String indexName, String objectID)
+    throws ApiException {
+    return this.getObject(indexName, objectID, null);
+  }
+
   /**
    * (asynchronously) Retrieve one object from the index.
    *
@@ -2620,7 +2601,6 @@ public class SearchApi extends ApiClient {
   /**
    * Build call for getObjects
    *
-   * @param getObjectsParams (required)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
@@ -2706,8 +2686,6 @@ public class SearchApi extends ApiClient {
   /**
    * Build call for getRule
    *
-   * @param indexName The index in which to perform the request. (required)
-   * @param objectID Unique identifier of an object. (required)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
@@ -2811,7 +2789,6 @@ public class SearchApi extends ApiClient {
   /**
    * Build call for getSettings
    *
-   * @param indexName The index in which to perform the request. (required)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
@@ -2968,8 +2945,6 @@ public class SearchApi extends ApiClient {
   /**
    * Build call for getSynonym
    *
-   * @param indexName The index in which to perform the request. (required)
-   * @param objectID Unique identifier of an object. (required)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
@@ -3074,8 +3049,6 @@ public class SearchApi extends ApiClient {
   /**
    * Build call for getTask
    *
-   * @param indexName The index in which to perform the request. (required)
-   * @param taskID Unique identifier of an task. Numeric value (up to 64bits) (required)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
@@ -3257,7 +3230,6 @@ public class SearchApi extends ApiClient {
   /**
    * Build call for getUserId
    *
-   * @param userID userID to assign. (required)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
@@ -3351,7 +3323,6 @@ public class SearchApi extends ApiClient {
   /**
    * Build call for hasPendingMappings
    *
-   * @param getClusters Whether to get clusters or not. (optional)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
@@ -3414,6 +3385,10 @@ public class SearchApi extends ApiClient {
     Type returnType = new TypeToken<CreatedAtResponse>() {}.getType();
     ApiResponse<CreatedAtResponse> res = this.execute(call, returnType);
     return res.getData();
+  }
+
+  public CreatedAtResponse hasPendingMappings() throws ApiException {
+    return this.hasPendingMappings(null);
   }
 
   /**
@@ -3585,9 +3560,6 @@ public class SearchApi extends ApiClient {
   /**
    * Build call for listIndices
    *
-   * @param page Requested page (zero-based). When specified, will retrieve a specific page; the
-   *     page size is implicitly set to 100. When null, will retrieve all indices (no pagination).
-   *     (optional)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
@@ -3649,6 +3621,10 @@ public class SearchApi extends ApiClient {
     return res.getData();
   }
 
+  public ListIndicesResponse listIndices() throws ApiException {
+    return this.listIndices(null);
+  }
+
   /**
    * (asynchronously) List existing indexes from an application.
    *
@@ -3672,10 +3648,6 @@ public class SearchApi extends ApiClient {
   /**
    * Build call for listUserIds
    *
-   * @param page Requested page (zero-based). When specified, will retrieve a specific page; the
-   *     page size is implicitly set to 100. When null, will retrieve all indices (no pagination).
-   *     (optional)
-   * @param hitsPerPage Maximum number of objects to retrieve. (optional, default to 100)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
@@ -3748,6 +3720,10 @@ public class SearchApi extends ApiClient {
     return res.getData();
   }
 
+  public ListUserIdsResponse listUserIds() throws ApiException {
+    return this.listUserIds(null, 100);
+  }
+
   /**
    * (asynchronously) List the userIDs assigned to a multi-clusters appID. The data returned will
    * usually be a few seconds behind real time, because userID usage may take up to a few seconds to
@@ -3776,7 +3752,6 @@ public class SearchApi extends ApiClient {
   /**
    * Build call for multipleBatch
    *
-   * @param batchParams (required)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
@@ -3863,7 +3838,6 @@ public class SearchApi extends ApiClient {
   /**
    * Build call for multipleQueries
    *
-   * @param multipleQueriesParams (required)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
@@ -3953,8 +3927,6 @@ public class SearchApi extends ApiClient {
   /**
    * Build call for operationIndex
    *
-   * @param indexName The index in which to perform the request. (required)
-   * @param operationIndexParams (required)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
@@ -4066,11 +4038,6 @@ public class SearchApi extends ApiClient {
   /**
    * Build call for partialUpdateObject
    *
-   * @param indexName The index in which to perform the request. (required)
-   * @param objectID Unique identifier of an object. (required)
-   * @param oneOfstringbuiltInOperation List of attributes to update. (required)
-   * @param createIfNotExists Creates the record if it does not exist yet. (optional, default to
-   *     true)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
@@ -4194,6 +4161,19 @@ public class SearchApi extends ApiClient {
     return res.getData();
   }
 
+  public UpdatedAtWithObjectIdResponse partialUpdateObject(
+    String indexName,
+    String objectID,
+    List<Map<String, OneOfstringbuiltInOperation>> oneOfstringbuiltInOperation
+  ) throws ApiException {
+    return this.partialUpdateObject(
+        indexName,
+        objectID,
+        oneOfstringbuiltInOperation,
+        true
+      );
+  }
+
   /**
    * (asynchronously) Update one or more attributes of an existing object. This method lets you
    * update only a part of an existing object, either by adding new attributes or updating existing
@@ -4232,7 +4212,6 @@ public class SearchApi extends ApiClient {
   /**
    * Build call for removeUserId
    *
-   * @param userID userID to assign. (required)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
@@ -4322,7 +4301,6 @@ public class SearchApi extends ApiClient {
   /**
    * Build call for replaceSources
    *
-   * @param source The sources to allow. (required)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
@@ -4407,7 +4385,6 @@ public class SearchApi extends ApiClient {
   /**
    * Build call for restoreApiKey
    *
-   * @param key API Key string. (required)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
@@ -4495,8 +4472,6 @@ public class SearchApi extends ApiClient {
   /**
    * Build call for saveObject
    *
-   * @param indexName The index in which to perform the request. (required)
-   * @param body The Algolia record. (required)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
@@ -4597,11 +4572,6 @@ public class SearchApi extends ApiClient {
   /**
    * Build call for saveRule
    *
-   * @param indexName The index in which to perform the request. (required)
-   * @param objectID Unique identifier of an object. (required)
-   * @param rule (required)
-   * @param forwardToReplicas When true, changes are also propagated to replicas of the given
-   *     indexName. (optional)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
@@ -4719,6 +4689,14 @@ public class SearchApi extends ApiClient {
     return res.getData();
   }
 
+  public UpdatedRuleResponse saveRule(
+    String indexName,
+    String objectID,
+    Rule rule
+  ) throws ApiException {
+    return this.saveRule(indexName, objectID, rule, null);
+  }
+
   /**
    * (asynchronously) Create or update the Rule with the specified objectID.
    *
@@ -4753,11 +4731,6 @@ public class SearchApi extends ApiClient {
   /**
    * Build call for saveSynonym
    *
-   * @param indexName The index in which to perform the request. (required)
-   * @param objectID Unique identifier of an object. (required)
-   * @param synonymHit (required)
-   * @param forwardToReplicas When true, changes are also propagated to replicas of the given
-   *     indexName. (optional)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
@@ -4875,6 +4848,14 @@ public class SearchApi extends ApiClient {
     return res.getData();
   }
 
+  public SaveSynonymResponse saveSynonym(
+    String indexName,
+    String objectID,
+    SynonymHit synonymHit
+  ) throws ApiException {
+    return this.saveSynonym(indexName, objectID, synonymHit, null);
+  }
+
   /**
    * (asynchronously) Create a new synonym object or update the existing synonym object with the
    * given object ID.
@@ -4910,12 +4891,6 @@ public class SearchApi extends ApiClient {
   /**
    * Build call for saveSynonyms
    *
-   * @param indexName The index in which to perform the request. (required)
-   * @param synonymHit (required)
-   * @param forwardToReplicas When true, changes are also propagated to replicas of the given
-   *     indexName. (optional)
-   * @param replaceExistingSynonyms Replace all synonyms of the index with the ones sent with this
-   *     request. (optional)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
@@ -5030,6 +5005,13 @@ public class SearchApi extends ApiClient {
     return res.getData();
   }
 
+  public UpdatedAtResponse saveSynonyms(
+    String indexName,
+    List<SynonymHit> synonymHit
+  ) throws ApiException {
+    return this.saveSynonyms(indexName, synonymHit, null, null);
+  }
+
   /**
    * (asynchronously) Create/update multiple synonym objects at once, potentially replacing the
    * entire list of synonyms if replaceExistingSynonyms is true.
@@ -5066,8 +5048,6 @@ public class SearchApi extends ApiClient {
   /**
    * Build call for search
    *
-   * @param indexName The index in which to perform the request. (required)
-   * @param searchParams (required)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
@@ -5168,8 +5148,6 @@ public class SearchApi extends ApiClient {
   /**
    * Build call for searchDictionaryEntries
    *
-   * @param dictionaryName The dictionary to search in. (required)
-   * @param searchDictionaryEntries (required)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
@@ -5288,9 +5266,6 @@ public class SearchApi extends ApiClient {
   /**
    * Build call for searchForFacetValues
    *
-   * @param indexName The index in which to perform the request. (required)
-   * @param facetName The facet name. (required)
-   * @param searchForFacetValuesRequest (optional)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
@@ -5391,6 +5366,13 @@ public class SearchApi extends ApiClient {
     return res.getData();
   }
 
+  public SearchForFacetValuesResponse searchForFacetValues(
+    String indexName,
+    String facetName
+  ) throws ApiException {
+    return this.searchForFacetValues(indexName, facetName, null);
+  }
+
   /**
    * (asynchronously) Search for values of a given facet, optionally restricting the returned values
    * to those contained in objects matching other search criteria.
@@ -5423,8 +5405,6 @@ public class SearchApi extends ApiClient {
   /**
    * Build call for searchRules
    *
-   * @param indexName The index in which to perform the request. (required)
-   * @param searchRulesParams (required)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
@@ -5535,13 +5515,6 @@ public class SearchApi extends ApiClient {
   /**
    * Build call for searchSynonyms
    *
-   * @param indexName The index in which to perform the request. (required)
-   * @param query Search for specific synonyms matching this string. (optional, default to )
-   * @param type Only search for specific types of synonyms. (optional)
-   * @param page Requested page (zero-based). When specified, will retrieve a specific page; the
-   *     page size is implicitly set to 100. When null, will retrieve all indices (no pagination).
-   *     (optional, default to 0)
-   * @param hitsPerPage Maximum number of objects to retrieve. (optional, default to 100)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
@@ -5658,6 +5631,11 @@ public class SearchApi extends ApiClient {
     return res.getData();
   }
 
+  public SearchSynonymsResponse searchSynonyms(String indexName)
+    throws ApiException {
+    return this.searchSynonyms(indexName, "", null, 0, 100);
+  }
+
   /**
    * (asynchronously) Search or browse all synonyms, optionally filtering them by type.
    *
@@ -5696,7 +5674,6 @@ public class SearchApi extends ApiClient {
   /**
    * Build call for searchUserIds
    *
-   * @param searchUserIdsParams (required)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
@@ -5794,7 +5771,6 @@ public class SearchApi extends ApiClient {
   /**
    * Build call for setDictionarySettings
    *
-   * @param dictionarySettingsRequest (required)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
@@ -5887,10 +5863,6 @@ public class SearchApi extends ApiClient {
   /**
    * Build call for setSettings
    *
-   * @param indexName The index in which to perform the request. (required)
-   * @param indexSettings (required)
-   * @param forwardToReplicas When true, changes are also propagated to replicas of the given
-   *     indexName. (optional)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
@@ -5992,6 +5964,13 @@ public class SearchApi extends ApiClient {
     return res.getData();
   }
 
+  public UpdatedAtResponse setSettings(
+    String indexName,
+    IndexSettings indexSettings
+  ) throws ApiException {
+    return this.setSettings(indexName, indexSettings, null);
+  }
+
   /**
    * (asynchronously) Update settings of a given indexName. Only specified settings are overridden;
    * unspecified settings are left unchanged. Specifying null for a setting resets it to its default
@@ -6025,8 +6004,6 @@ public class SearchApi extends ApiClient {
   /**
    * Build call for updateApiKey
    *
-   * @param key API Key string. (required)
-   * @param apiKey (required)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
    * @throws ApiException If fail to serialize the request body object
