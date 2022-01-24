@@ -7,7 +7,7 @@ export type DeleteByFiltersOptions = {
   /**
    *  Filter hits by facet value.
    */
-  readonly facetFilters?: string | readonly string[] | ReadonlyArray<readonly string[]>;
+  readonly facetFilters?: string | readonly string[] | ReadonlyArray<readonly string[] | string>;
 
   /**
    * Filter on numeric attributes.
