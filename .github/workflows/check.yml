@@ -149,6 +149,12 @@ jobs:
         with:
           job: cts
 
+      - name: Check script linting
+        run: yarn cts:lint:scripts
+
+      - name: Test CTS script
+        run: yarn cts:test:scripts
+
       - name: Generate CTS
         run: yarn cts:generate
 

@@ -1,18 +1,38 @@
-type ParametersWithDataType = {
+export type ParametersWithDataType = {
   key: string;
-  value: string;
+  value: Record<string, any> | string;
+  parent?: string;
+  suffix: number;
+  parentSuffix: number;
   isArray: boolean;
   isObject: boolean;
+  isFreeFormObject: boolean;
   isString: boolean;
+  isBoolean: boolean;
+  isInteger: boolean;
+  isDouble: boolean;
   '-last': boolean;
+  objectName?: string;
 };
 
-// This does not reflect the expected type of the CTS, it's rather the type passed to mustache
-export type Tests = {
+export type RequestCTS = {
   testName?: string;
   method: string;
+  parameters: Record<string, any>;
+  request: {
+    path: string;
+    method: string;
+    data?: Record<string, any>;
+    searchParams?: Record<string, string>;
+  };
+};
+
+export type RequestCTSOutput = {
+  testName: string;
+  testIndex: number;
+  method: string;
   parameters: any;
-  parametersWithDataType: ParametersWithDataType[] | undefined;
+  parametersWithDataType?: ParametersWithDataType[];
   hasParameters: boolean;
   request: {
     path: string;
@@ -24,7 +44,7 @@ export type Tests = {
 
 export type CTSBlock = {
   operationId: string;
-  tests: Tests[];
+  tests: RequestCTSOutput[];
 };
 
 export type CTS = {
