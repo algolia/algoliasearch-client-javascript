@@ -14,7 +14,7 @@ export type SearchOptions = {
   /**
    *  Filter hits by facet value.
    */
-  readonly facetFilters?: string | readonly string[] | ReadonlyArray<readonly string[]>;
+  readonly facetFilters?: string | readonly string[] | ReadonlyArray<readonly string[] | string>;
 
   /**
    * Create filters for ranking purposes, where records that match the filter are ranked highest.
