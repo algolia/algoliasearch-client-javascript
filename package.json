@@ -13,6 +13,8 @@
     "clean": "rm -rf **/dist **/build **/node_modules **/target",
     "cts:generate": "yarn workspace tests build && ./scripts/multiplexer.sh ${2:-nonverbose} yarn workspace tests generate ${0:-all} ${1:-all}",
     "cts:test": "./scripts/multiplexer.sh ${1:-nonverbose} ./scripts/runCTS.sh ${0:-javascript} all",
+    "cts:test:scripts": "yarn workspace tests test:scripts",
+    "cts:lint:scripts": "eslint --ext=ts tests/src/",
     "docker:build": "./scripts/docker/build.sh",
     "docker:clean": "docker stop dev; docker rm -f dev; docker image rm -f api-clients-automation",
     "docker:mount": "./scripts/docker/mount.sh",

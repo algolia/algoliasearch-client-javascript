@@ -92,3 +92,11 @@ for lang in "${LANGUAGE[@]}"; do
         fi
     done
 done
+
+# Format after every client for the CTS
+if [[ $CMD == 'yarn workspace tests generate' ]]; then
+    for lang in "${LANGUAGE[@]}"; do
+        yarn workspace tests format $lang
+    done
+    yarn cts:lint:scripts --fix
+fi

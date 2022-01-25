@@ -46,18 +46,48 @@ export function createClientName(client: string): string {
     .join('')}Api`;
 }
 
-export function removeObjectName(obj: Record<string, any>): void {
-  for (const prop in obj) {
-    if (prop === '$objectName') {
-      // eslint-disable-next-line no-param-reassign
-      delete obj[prop];
-    } else if (typeof obj[prop] === 'object') {
-      removeObjectName(obj[prop]);
+export function removeObjectName(obj: any): any {
+  if (typeof obj === 'object') {
+    if (Array.isArray(obj)) {
+      return obj.map((k) => removeObjectName(k));
     }
+    const copy = {};
+    for (const prop in obj) {
+      if (!Object.prototype.hasOwnProperty.call(obj, prop)) {
+        continue;
+      }
+      if (prop === '$objectName') {
+        continue;
+      }
+      copy[prop] = removeObjectName(obj[prop]);
+    }
+    return copy;
   }
+  return obj;
 }
 
+export function removeEnumType(obj: any): any {
+  if (typeof obj === 'object') {
+    if (Array.isArray(obj)) {
+      return obj.map((k) => removeEnumType(k));
+    }
+    if ('$enumType' in obj) {
+      return obj.value;
+    }
+    return Object.fromEntries(
+      Object.entries(obj).map(([k, v]) => [k, removeEnumType(v)])
+    );
+  }
+  return obj;
+}
+
+// All those language dependents object should be defined in the CTS itself
 export const extensionForLanguage: Record<string, string> = {
   javascript: 'test.ts',
-  java: 'java',
+  java: 'test.java',
+};
+
+export const sourcePathForLanguage: Record<string, string> = {
+  javascript: 'tests/methods/requests',
+  java: 'src/test/java/com/algolia',
 };
