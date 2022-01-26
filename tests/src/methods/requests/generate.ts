@@ -2,6 +2,7 @@ import fsp from 'fs/promises';
 
 import Mustache from 'mustache';
 
+import openapitools from '../../../../openapitools.json';
 import {
   createClientName,
   packageNames,
@@ -37,13 +38,11 @@ async function generateRequestsTests(
       import: packageNames[language][client],
       client: createClientName(client),
       blocks: cts,
-      hasRegionalHost: [
-        'personalization',
-        'analytics',
-        'abtesting',
-        'query-suggestions',
-        'sources',
-      ].includes(client),
+      hasRegionalHost: openapitools['generator-cli'].generators[
+        `${language}-${client}`
+      ].additionalProperties.hasRegionalHost
+        ? true
+        : undefined,
       capitalize() {
         return function (text: string, render: (string) => string): string {
           return capitalize(render(text));
@@ -57,6 +56,7 @@ async function generateRequestsTests(
     },
     partials
   );
+
   await fsp.writeFile(
     `output/${language}/${sourcePathForLanguage[language]}/${client}.${extensionForLanguage[language]}`,
     code

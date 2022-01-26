@@ -1,0 +1,65 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable require-await */
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+// @ts-nocheck
+import { {{client}}, EchoRequester } from '{{{import}}}';
+
+const appId = process.env.ALGOLIA_APPLICATION_ID || 'Algolia-API-Key';
+const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'Algolia-Application-Id';
+
+function createClient(): {{client}} {
+    return new {{client}}(appId, apiKey, {{#hasRegionalHost}}'us', {{/hasRegionalHost}}{ requester: new EchoRequester() });
+}
+
+{{#blocks}}
+describe('{{operationId}}', () => {
+    {{#tests}}
+    test('{{testName}}', async () => {
+        {{#autoCreateClient}}
+            const $client = createClient();
+        {{/autoCreateClient}}
+
+        let actual;
+        {{#steps}}
+            {{#expectedError}}
+                await expect(new Promise((resolve, reject) => {
+                    {{> step}}
+                    if (actual instanceof Promise) {
+                        actual.then(resolve).catch(reject);
+                    } else {
+                        resolve();
+                    }
+                })).rejects.toThrow("{{{expectedError}}}")
+            {{/expectedError}}
+
+            {{^expectedError}}
+                {{#expectedNoError}}
+                    await expect(new Promise((resolve, reject) => {
+                        {{> step}}
+                        if (actual instanceof Promise) {
+                            actual.then(resolve).catch(reject);
+                        } else {
+                            resolve();
+                        }
+                    })).resolves.not.toThrow();
+                {{/expectedNoError}}
+                
+                {{^expectedNoError}}
+                    {{> step}}
+
+                    if (actual instanceof Promise) {
+                        actual = await actual;
+                    }
+
+                    {{#expected}}
+                        {{> expected}}
+                    {{/expected}}
+                {{/expectedNoError}}
+            {{/expectedError}}
+        {{/steps}}
+    });
+
+    {{/tests}}
+})
+
+{{/blocks}}

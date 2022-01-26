@@ -1,0 +1,33 @@
+[
+  {
+    "testName": "does not throw when region is not given",
+    "autoCreateClient": false,
+    "steps": [
+      {
+        "type": "createClient",
+        "parameters": {
+          "appId": "my-app-id",
+          "apiKey": "my-api-key",
+          "region": ""
+        },
+        "expected": {
+          "error": false
+        }
+      }
+    ]
+  },
+  {
+    "testName": "getAverageClickPosition throws without index",
+    "steps": [
+      {
+        "type": "method",
+        "object": "$client",
+        "path": "getClickPositions",
+        "parameters": [{}],
+        "expected": {
+          "error": "Parameter `index` is required when calling `getClickPositions`."
+        }
+      }
+    ]
+  }
+]

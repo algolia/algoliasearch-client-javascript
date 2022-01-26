@@ -86,6 +86,7 @@
           "packageName": "@algolia/client-analytics",
           "hasRegionalHost": true,
           "isDeHost": true,
+          "fallbackToUS": true,
           "host": "analytics"
         }
       },

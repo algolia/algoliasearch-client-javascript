@@ -6,10 +6,11 @@
   ],
   "scripts": {
     "build": "tsc",
+    "generate": "yarn generate:methods:requets ${0:-javascript} ${1:-search} && yarn generate:client ${0:-javascript} ${1:-search} && yarn format ${0:-javascript}",
     "generate:methods:requets": "node dist/tests/src/methods/requests/main.js ${0:-javascript} ${1:-search}",
-    "format": "../scripts/formatter.sh ${0:-javascript} tests/output/${0:-javascript}",
-    "generate": "yarn generate:methods:requets ${0:-javascript} ${1:-search}",
-    "start": "yarn build && yarn generate ${0:-javascript} ${1:-search}",
+    "generate:client": "node dist/tests/src/client/main.js ${0:-javascript} ${1:-search}",
+    "format": "../scripts/formatter.sh ${0:-javascript} tests/output/${0:-javascript} && yarn lint",
+    "lint": "eslint --ext=ts ./src",
     "test:scripts": "jest"
   },
   "devDependencies": {
