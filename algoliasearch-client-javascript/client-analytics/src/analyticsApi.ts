@@ -27,6 +27,8 @@ import type { GetTopSearchesResponse } from '../model/getTopSearchesResponse';
 import type { GetTopSearchesResponseWithAnalytics } from '../model/getTopSearchesResponseWithAnalytics';
 import type { GetUsersCountResponse } from '../model/getUsersCountResponse';
 
+export const version = '5.0.0';
+
 export class AnalyticsApi {
   protected authentications = {
     apiKey: 'Algolia-API-Key',
@@ -75,7 +77,7 @@ export class AnalyticsApi {
       baseHeaders: {
         'content-type': 'application/x-www-form-urlencoded',
       },
-      userAgent: 'Algolia for Javascript',
+      userAgent: 'Algolia for Javascript (5.0.0)',
       timeouts: {
         connect: 2,
         read: 5,

@@ -10,6 +10,8 @@ import type {
 import type { PostIngestUrlResponse } from '../model/postIngestUrlResponse';
 import type { PostURLJob } from '../model/postURLJob';
 
+export const version = '0.0.1';
+
 export class SourcesApi {
   protected authentications = {
     apiKey: 'Algolia-API-Key',
@@ -58,7 +60,7 @@ export class SourcesApi {
       baseHeaders: {
         'content-type': 'application/x-www-form-urlencoded',
       },
-      userAgent: 'Algolia for Javascript',
+      userAgent: 'Algolia for Javascript (0.0.1)',
       timeouts: {
         connect: 2,
         read: 5,

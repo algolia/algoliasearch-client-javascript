@@ -5,6 +5,8 @@ import type { Headers, Requester, Host, Request, RequestOptions } from '@algolia
 import { {{classname}} } from '{{filename}}';
 {{/imports}}
 
+export const version = '{{packageVersion}}';
+
 {{#operations}}
 {{#description}}
 /**
@@ -65,7 +67,7 @@ export class {{classname}} {
       baseHeaders: {
         'content-type': 'application/x-www-form-urlencoded'
       },
-      userAgent: 'Algolia for Javascript',
+      userAgent: 'Algolia for Javascript ({{packageVersion}})',
       timeouts: {
         connect: 2,
         read: 5,
