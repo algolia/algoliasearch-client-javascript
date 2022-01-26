@@ -1,8 +1,7 @@
 import type { MultipleQueries } from './multipleQueries';
+import type { MultipleQueriesStrategy } from './multipleQueriesStrategy';
 
 export type MultipleQueriesParams = {
   requests: MultipleQueries[];
-  strategy?: MultipleQueriesParamsStrategy;
+  strategy?: MultipleQueriesStrategy;
 };
-
-export type MultipleQueriesParamsStrategy = 'none' | 'stopIfEnoughMatches';

@@ -1,3 +1,5 @@
+import type { MultipleQueriesType } from './multipleQueriesType';
+
 export type MultipleQueries = {
   /**
    * The Algolia index name.
@@ -7,9 +9,6 @@ export type MultipleQueries = {
    * The text to search in the index.
    */
   query?: string;
-  /**
-   * Perform a search query with `default`, will search for facet values if `facet` is given.
-   */
   type?: MultipleQueriesType;
   /**
    * The `facet` name.
@@ -20,5 +19,3 @@ export type MultipleQueries = {
    */
   params?: string;
 };
-
-export type MultipleQueriesType = 'default' | 'facet';

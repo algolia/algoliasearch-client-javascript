@@ -1,4 +1,5 @@
 import type { SynonymHitHighlightResult } from './synonymHitHighlightResult';
+import type { SynonymType } from './synonymType';
 
 /**
  * Synonym object.
@@ -8,10 +9,7 @@ export type SynonymHit = {
    * Unique identifier of the synonym object to be created or updated.
    */
   objectID: string;
-  /**
-   * Type of the synonym object.
-   */
-  type: SynonymHitType;
+  type: SynonymType;
   /**
    * Words or phrases to be considered equivalent.
    */
@@ -38,10 +36,3 @@ export type SynonymHit = {
   replacements?: string[];
   _highlightResult?: SynonymHitHighlightResult;
 };
-
-export type SynonymHitType =
-  | 'altcorrection1'
-  | 'altcorrection2'
-  | 'onewaysynonym'
-  | 'placeholder'
-  | 'synonym';

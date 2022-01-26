@@ -1,11 +1,6 @@
 package com.algolia.model;
 
-import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -29,57 +24,8 @@ public class DictionaryEntry extends HashMap<String, Object> {
   @SerializedName("decomposition")
   private List<String> decomposition = null;
 
-  /** The state of the dictionary entry. */
-  @JsonAdapter(StateEnum.Adapter.class)
-  public enum StateEnum {
-    ENABLED("enabled"),
-
-    DISABLED("disabled");
-
-    private String value;
-
-    StateEnum(String value) {
-      this.value = value;
-    }
-
-    public String getValue() {
-      return value;
-    }
-
-    @Override
-    public String toString() {
-      return String.valueOf(value);
-    }
-
-    public static StateEnum fromValue(String value) {
-      for (StateEnum b : StateEnum.values()) {
-        if (b.value.equals(value)) {
-          return b;
-        }
-      }
-      throw new IllegalArgumentException("Unexpected value '" + value + "'");
-    }
-
-    public static class Adapter extends TypeAdapter<StateEnum> {
-
-      @Override
-      public void write(
-        final JsonWriter jsonWriter,
-        final StateEnum enumeration
-      ) throws IOException {
-        jsonWriter.value(enumeration.getValue());
-      }
-
-      @Override
-      public StateEnum read(final JsonReader jsonReader) throws IOException {
-        String value = jsonReader.nextString();
-        return StateEnum.fromValue(value);
-      }
-    }
-  }
-
   @SerializedName("state")
-  private StateEnum state = StateEnum.ENABLED;
+  private DictionaryEntryState state = DictionaryEntryState.ENABLED;
 
   public DictionaryEntry objectID(String objectID) {
     this.objectID = objectID;
@@ -192,22 +138,22 @@ public class DictionaryEntry extends HashMap<String, Object> {
     this.decomposition = decomposition;
   }
 
-  public DictionaryEntry state(StateEnum state) {
+  public DictionaryEntry state(DictionaryEntryState state) {
     this.state = state;
     return this;
   }
 
   /**
-   * The state of the dictionary entry.
+   * Get state
    *
    * @return state
    */
   @javax.annotation.Nullable
-  public StateEnum getState() {
+  public DictionaryEntryState getState() {
     return state;
   }
 
-  public void setState(StateEnum state) {
+  public void setState(DictionaryEntryState state) {
     this.state = state;
   }
 

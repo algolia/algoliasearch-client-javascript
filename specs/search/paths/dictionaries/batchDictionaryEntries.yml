@@ -34,9 +34,7 @@ post:
                   - body
                 properties:
                   action:
-                    description: Actions to perform.
-                    type: string
-                    enum: [addEntry, deleteEntry]
+                    $ref: '../../common/enums.yml#/dictionaryAction'
                   body:
                     $ref: 'common/schemas/SearchDictionaryEntriesResponse.yml#/dictionaryEntry'
   responses:

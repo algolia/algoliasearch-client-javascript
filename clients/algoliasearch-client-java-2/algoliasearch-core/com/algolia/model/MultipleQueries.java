@@ -1,11 +1,6 @@
 package com.algolia.model;
 
-import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
-import java.io.IOException;
 import java.util.Objects;
 
 /** MultipleQueries */
@@ -17,57 +12,8 @@ public class MultipleQueries {
   @SerializedName("query")
   private String query = "";
 
-  /** Perform a search query with `default`, will search for facet values if `facet` is given. */
-  @JsonAdapter(TypeEnum.Adapter.class)
-  public enum TypeEnum {
-    DEFAULT("default"),
-
-    FACET("facet");
-
-    private String value;
-
-    TypeEnum(String value) {
-      this.value = value;
-    }
-
-    public String getValue() {
-      return value;
-    }
-
-    @Override
-    public String toString() {
-      return String.valueOf(value);
-    }
-
-    public static TypeEnum fromValue(String value) {
-      for (TypeEnum b : TypeEnum.values()) {
-        if (b.value.equals(value)) {
-          return b;
-        }
-      }
-      throw new IllegalArgumentException("Unexpected value '" + value + "'");
-    }
-
-    public static class Adapter extends TypeAdapter<TypeEnum> {
-
-      @Override
-      public void write(
-        final JsonWriter jsonWriter,
-        final TypeEnum enumeration
-      ) throws IOException {
-        jsonWriter.value(enumeration.getValue());
-      }
-
-      @Override
-      public TypeEnum read(final JsonReader jsonReader) throws IOException {
-        String value = jsonReader.nextString();
-        return TypeEnum.fromValue(value);
-      }
-    }
-  }
-
   @SerializedName("type")
-  private TypeEnum type = TypeEnum.DEFAULT;
+  private MultipleQueriesType type = MultipleQueriesType.DEFAULT;
 
   @SerializedName("facet")
   private String facet;
@@ -113,22 +59,22 @@ public class MultipleQueries {
     this.query = query;
   }
 
-  public MultipleQueries type(TypeEnum type) {
+  public MultipleQueries type(MultipleQueriesType type) {
     this.type = type;
     return this;
   }
 
   /**
-   * Perform a search query with `default`, will search for facet values if `facet` is given.
+   * Get type
    *
    * @return type
    */
   @javax.annotation.Nullable
-  public TypeEnum getType() {
+  public MultipleQueriesType getType() {
     return type;
   }
 
-  public void setType(TypeEnum type) {
+  public void setType(MultipleQueriesType type) {
     this.type = type;
   }
 

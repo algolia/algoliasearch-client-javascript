@@ -1,11 +1,6 @@
 package com.algolia.model;
 
-import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -13,132 +8,31 @@ import java.util.Objects;
 /** OperationIndexParams */
 public class OperationIndexParams {
 
-  /** Type of operation to perform (move or copy). */
-  @JsonAdapter(OperationEnum.Adapter.class)
-  public enum OperationEnum {
-    MOVE("move"),
-
-    COPY("copy");
-
-    private String value;
-
-    OperationEnum(String value) {
-      this.value = value;
-    }
-
-    public String getValue() {
-      return value;
-    }
-
-    @Override
-    public String toString() {
-      return String.valueOf(value);
-    }
-
-    public static OperationEnum fromValue(String value) {
-      for (OperationEnum b : OperationEnum.values()) {
-        if (b.value.equals(value)) {
-          return b;
-        }
-      }
-      throw new IllegalArgumentException("Unexpected value '" + value + "'");
-    }
-
-    public static class Adapter extends TypeAdapter<OperationEnum> {
-
-      @Override
-      public void write(
-        final JsonWriter jsonWriter,
-        final OperationEnum enumeration
-      ) throws IOException {
-        jsonWriter.value(enumeration.getValue());
-      }
-
-      @Override
-      public OperationEnum read(final JsonReader jsonReader)
-        throws IOException {
-        String value = jsonReader.nextString();
-        return OperationEnum.fromValue(value);
-      }
-    }
-  }
-
   @SerializedName("operation")
-  private OperationEnum operation;
+  private OperationType operation;
 
   @SerializedName("destination")
   private String destination;
 
-  /** Gets or Sets scope */
-  @JsonAdapter(ScopeEnum.Adapter.class)
-  public enum ScopeEnum {
-    SETTINGS("settings"),
-
-    SYNONYMS("synonyms"),
-
-    RULES("rules");
-
-    private String value;
-
-    ScopeEnum(String value) {
-      this.value = value;
-    }
-
-    public String getValue() {
-      return value;
-    }
-
-    @Override
-    public String toString() {
-      return String.valueOf(value);
-    }
-
-    public static ScopeEnum fromValue(String value) {
-      for (ScopeEnum b : ScopeEnum.values()) {
-        if (b.value.equals(value)) {
-          return b;
-        }
-      }
-      throw new IllegalArgumentException("Unexpected value '" + value + "'");
-    }
-
-    public static class Adapter extends TypeAdapter<ScopeEnum> {
-
-      @Override
-      public void write(
-        final JsonWriter jsonWriter,
-        final ScopeEnum enumeration
-      ) throws IOException {
-        jsonWriter.value(enumeration.getValue());
-      }
-
-      @Override
-      public ScopeEnum read(final JsonReader jsonReader) throws IOException {
-        String value = jsonReader.nextString();
-        return ScopeEnum.fromValue(value);
-      }
-    }
-  }
-
   @SerializedName("scope")
-  private List<ScopeEnum> scope = null;
+  private List<ScopeType> scope = null;
 
-  public OperationIndexParams operation(OperationEnum operation) {
+  public OperationIndexParams operation(OperationType operation) {
     this.operation = operation;
     return this;
   }
 
   /**
-   * Type of operation to perform (move or copy).
+   * Get operation
    *
    * @return operation
    */
   @javax.annotation.Nonnull
-  public OperationEnum getOperation() {
+  public OperationType getOperation() {
     return operation;
   }
 
-  public void setOperation(OperationEnum operation) {
+  public void setOperation(OperationType operation) {
     this.operation = operation;
   }
 
@@ -161,12 +55,12 @@ public class OperationIndexParams {
     this.destination = destination;
   }
 
-  public OperationIndexParams scope(List<ScopeEnum> scope) {
+  public OperationIndexParams scope(List<ScopeType> scope) {
     this.scope = scope;
     return this;
   }
 
-  public OperationIndexParams addScopeItem(ScopeEnum scopeItem) {
+  public OperationIndexParams addScopeItem(ScopeType scopeItem) {
     if (this.scope == null) {
       this.scope = new ArrayList<>();
     }
@@ -181,11 +75,11 @@ public class OperationIndexParams {
    * @return scope
    */
   @javax.annotation.Nullable
-  public List<ScopeEnum> getScope() {
+  public List<ScopeType> getScope() {
     return scope;
   }
 
-  public void setScope(List<ScopeEnum> scope) {
+  public void setScope(List<ScopeType> scope) {
     this.scope = scope;
   }
 

@@ -43,7 +43,7 @@
            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
+                <version>3.9.0</version>
                 <configuration>
                     <fork>true</fork>
                     <meminitial>128m</meminitial>
@@ -177,12 +177,6 @@
             <artifactId>gson-fire</artifactId>
             <version>${gson-fire-version}</version>
         </dependency>
-        <dependency>
-            <groupId>jakarta.annotation</groupId>
-            <artifactId>jakarta.annotation-api</artifactId>
-            <version>${jakarta-annotation-version}</version>
-            <scope>provided</scope>
-        </dependency>
     </dependencies>
     <properties>
         <java.version>{{#java8}}1.8{{/java8}}{{^java8}}1.7{{/java8}}</java.version>
@@ -190,8 +184,7 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <gson-fire-version>1.8.5</gson-fire-version>
         <okhttp-version>4.9.1</okhttp-version>
-        <gson-version>2.8.6</gson-version>
-        <jakarta-annotation-version>1.3.5</jakarta-annotation-version>
+        <gson-version>2.8.9</gson-version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 </project>

@@ -26,10 +26,7 @@ post:
                   query:
                     $ref: '../../../common/schemas/SearchParams.yml#/query'
                   type:
-                    type: string
-                    enum: [default, facet]
-                    default: default
-                    description: Perform a search query with `default`, will search for facet values if `facet` is given.
+                    $ref: '../../common/enums.yml#/multipleQueriesType'
                   facet:
                     type: string
                     description: The `facet` name.
@@ -39,8 +36,7 @@ post:
                 required:
                   - indexName
             strategy:
-              type: string
-              enum: [none, stopIfEnoughMatches]
+              $ref: '../../common/enums.yml#/multipleQueriesStrategy'
           required:
             - requests
   responses:
