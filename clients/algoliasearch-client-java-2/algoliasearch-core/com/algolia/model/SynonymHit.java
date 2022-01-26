@@ -1,11 +1,6 @@
 package com.algolia.model;
 
-import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -16,63 +11,8 @@ public class SynonymHit {
   @SerializedName("objectID")
   private String objectID;
 
-  /** Type of the synonym object. */
-  @JsonAdapter(TypeEnum.Adapter.class)
-  public enum TypeEnum {
-    SYNONYM("synonym"),
-
-    ONEWAYSYNONYM("onewaysynonym"),
-
-    ALTCORRECTION1("altcorrection1"),
-
-    ALTCORRECTION2("altcorrection2"),
-
-    PLACEHOLDER("placeholder");
-
-    private String value;
-
-    TypeEnum(String value) {
-      this.value = value;
-    }
-
-    public String getValue() {
-      return value;
-    }
-
-    @Override
-    public String toString() {
-      return String.valueOf(value);
-    }
-
-    public static TypeEnum fromValue(String value) {
-      for (TypeEnum b : TypeEnum.values()) {
-        if (b.value.equals(value)) {
-          return b;
-        }
-      }
-      throw new IllegalArgumentException("Unexpected value '" + value + "'");
-    }
-
-    public static class Adapter extends TypeAdapter<TypeEnum> {
-
-      @Override
-      public void write(
-        final JsonWriter jsonWriter,
-        final TypeEnum enumeration
-      ) throws IOException {
-        jsonWriter.value(enumeration.getValue());
-      }
-
-      @Override
-      public TypeEnum read(final JsonReader jsonReader) throws IOException {
-        String value = jsonReader.nextString();
-        return TypeEnum.fromValue(value);
-      }
-    }
-  }
-
   @SerializedName("type")
-  private TypeEnum type;
+  private SynonymType type;
 
   @SerializedName("synonyms")
   private List<String> synonyms = null;
@@ -114,22 +54,22 @@ public class SynonymHit {
     this.objectID = objectID;
   }
 
-  public SynonymHit type(TypeEnum type) {
+  public SynonymHit type(SynonymType type) {
     this.type = type;
     return this;
   }
 
   /**
-   * Type of the synonym object.
+   * Get type
    *
    * @return type
    */
   @javax.annotation.Nonnull
-  public TypeEnum getType() {
+  public SynonymType getType() {
     return type;
   }
 
-  public void setType(TypeEnum type) {
+  public void setType(SynonymType type) {
     this.type = type;
   }
 

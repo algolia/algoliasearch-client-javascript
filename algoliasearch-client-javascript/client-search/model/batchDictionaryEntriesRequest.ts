@@ -1,11 +1,7 @@
+import type { DictionaryAction } from './dictionaryAction';
 import type { DictionaryEntry } from './dictionaryEntry';
 
 export type BatchDictionaryEntriesRequest = {
-  /**
-   * Actions to perform.
-   */
-  action: BatchDictionaryEntriesRequestAction;
+  action: DictionaryAction;
   body: DictionaryEntry;
 };
-
-export type BatchDictionaryEntriesRequestAction = 'addEntry' | 'deleteEntry';

@@ -41,7 +41,4 @@ dictionaryEntry:
       items:
         type: string
     state:
-      description: The state of the dictionary entry.
-      type: string
-      enum: [enabled, disabled]
-      default: enabled
+      $ref: '../../../../common/enums.yml#/dictionaryEntryState'

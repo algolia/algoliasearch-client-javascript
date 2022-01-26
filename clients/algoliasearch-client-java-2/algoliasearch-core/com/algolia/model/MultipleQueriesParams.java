@@ -1,11 +1,6 @@
 package com.algolia.model;
 
-import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -16,57 +11,8 @@ public class MultipleQueriesParams {
   @SerializedName("requests")
   private List<MultipleQueries> requests = new ArrayList<>();
 
-  /** Gets or Sets strategy */
-  @JsonAdapter(StrategyEnum.Adapter.class)
-  public enum StrategyEnum {
-    NONE("none"),
-
-    STOPIFENOUGHMATCHES("stopIfEnoughMatches");
-
-    private String value;
-
-    StrategyEnum(String value) {
-      this.value = value;
-    }
-
-    public String getValue() {
-      return value;
-    }
-
-    @Override
-    public String toString() {
-      return String.valueOf(value);
-    }
-
-    public static StrategyEnum fromValue(String value) {
-      for (StrategyEnum b : StrategyEnum.values()) {
-        if (b.value.equals(value)) {
-          return b;
-        }
-      }
-      throw new IllegalArgumentException("Unexpected value '" + value + "'");
-    }
-
-    public static class Adapter extends TypeAdapter<StrategyEnum> {
-
-      @Override
-      public void write(
-        final JsonWriter jsonWriter,
-        final StrategyEnum enumeration
-      ) throws IOException {
-        jsonWriter.value(enumeration.getValue());
-      }
-
-      @Override
-      public StrategyEnum read(final JsonReader jsonReader) throws IOException {
-        String value = jsonReader.nextString();
-        return StrategyEnum.fromValue(value);
-      }
-    }
-  }
-
   @SerializedName("strategy")
-  private StrategyEnum strategy;
+  private MultipleQueriesStrategy strategy;
 
   public MultipleQueriesParams requests(List<MultipleQueries> requests) {
     this.requests = requests;
@@ -92,7 +38,7 @@ public class MultipleQueriesParams {
     this.requests = requests;
   }
 
-  public MultipleQueriesParams strategy(StrategyEnum strategy) {
+  public MultipleQueriesParams strategy(MultipleQueriesStrategy strategy) {
     this.strategy = strategy;
     return this;
   }
@@ -103,11 +49,11 @@ public class MultipleQueriesParams {
    * @return strategy
    */
   @javax.annotation.Nullable
-  public StrategyEnum getStrategy() {
+  public MultipleQueriesStrategy getStrategy() {
     return strategy;
   }
 
-  public void setStrategy(StrategyEnum strategy) {
+  public void setStrategy(MultipleQueriesStrategy strategy) {
     this.strategy = strategy;
   }
 

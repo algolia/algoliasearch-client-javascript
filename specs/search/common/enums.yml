@@ -1,0 +1,29 @@
+multipleQueriesType:
+  type: string
+  enum: [default, facet]
+  default: default
+  description: Perform a search query with `default`, will search for facet values if `facet` is given.
+
+multipleQueriesStrategy:
+  type: string
+  enum: [none, stopIfEnoughMatches]
+
+operationType:
+  type: string
+  enum: [move, copy]
+  description: Type of operation to perform (move or copy).
+
+scopeType:
+  type: string
+  enum: [settings, synonyms, rules]
+
+dictionaryAction:
+  type: string
+  enum: [addEntry, deleteEntry]
+  description: Actions to perform.
+
+dictionaryEntryState:
+  type: string
+  enum: [enabled, disabled]
+  default: enabled
+  description: The state of the dictionary entry.

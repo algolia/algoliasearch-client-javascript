@@ -1,87 +1,33 @@
 package com.algolia.model;
 
-import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
-import java.io.IOException;
 import java.util.Objects;
 
 /** BatchDictionaryEntriesRequest */
 public class BatchDictionaryEntriesRequest {
 
-  /** Actions to perform. */
-  @JsonAdapter(ActionEnum.Adapter.class)
-  public enum ActionEnum {
-    ADDENTRY("addEntry"),
-
-    DELETEENTRY("deleteEntry");
-
-    private String value;
-
-    ActionEnum(String value) {
-      this.value = value;
-    }
-
-    public String getValue() {
-      return value;
-    }
-
-    @Override
-    public String toString() {
-      return String.valueOf(value);
-    }
-
-    public static ActionEnum fromValue(String value) {
-      for (ActionEnum b : ActionEnum.values()) {
-        if (b.value.equals(value)) {
-          return b;
-        }
-      }
-      throw new IllegalArgumentException("Unexpected value '" + value + "'");
-    }
-
-    public static class Adapter extends TypeAdapter<ActionEnum> {
-
-      @Override
-      public void write(
-        final JsonWriter jsonWriter,
-        final ActionEnum enumeration
-      ) throws IOException {
-        jsonWriter.value(enumeration.getValue());
-      }
-
-      @Override
-      public ActionEnum read(final JsonReader jsonReader) throws IOException {
-        String value = jsonReader.nextString();
-        return ActionEnum.fromValue(value);
-      }
-    }
-  }
-
   @SerializedName("action")
-  private ActionEnum action;
+  private DictionaryAction action;
 
   @SerializedName("body")
   private DictionaryEntry body;
 
-  public BatchDictionaryEntriesRequest action(ActionEnum action) {
+  public BatchDictionaryEntriesRequest action(DictionaryAction action) {
     this.action = action;
     return this;
   }
 
   /**
-   * Actions to perform.
+   * Get action
    *
    * @return action
    */
   @javax.annotation.Nonnull
-  public ActionEnum getAction() {
+  public DictionaryAction getAction() {
     return action;
   }
 
-  public void setAction(ActionEnum action) {
+  public void setAction(DictionaryAction action) {
     this.action = action;
   }
 

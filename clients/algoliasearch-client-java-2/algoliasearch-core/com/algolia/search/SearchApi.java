@@ -5522,7 +5522,7 @@ public class SearchApi extends ApiClient {
   private Call searchSynonymsCall(
     String indexName,
     String query,
-    String type,
+    SynonymType type,
     Integer page,
     Integer hitsPerPage,
     final ApiCallback<SearchSynonymsResponse> _callback
@@ -5571,7 +5571,7 @@ public class SearchApi extends ApiClient {
   private Call searchSynonymsValidateBeforeCall(
     String indexName,
     String query,
-    String type,
+    SynonymType type,
     Integer page,
     Integer hitsPerPage,
     final ApiCallback<SearchSynonymsResponse> _callback
@@ -5610,7 +5610,7 @@ public class SearchApi extends ApiClient {
   public SearchSynonymsResponse searchSynonyms(
     String indexName,
     String query,
-    String type,
+    SynonymType type,
     Integer page,
     Integer hitsPerPage
   ) throws ApiException {
@@ -5653,7 +5653,7 @@ public class SearchApi extends ApiClient {
   public Call searchSynonymsAsync(
     String indexName,
     String query,
-    String type,
+    SynonymType type,
     Integer page,
     Integer hitsPerPage,
     final ApiCallback<SearchSynonymsResponse> _callback

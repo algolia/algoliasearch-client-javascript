@@ -16,16 +16,13 @@ post:
           additionalProperties: false
           properties:
             operation:
-              type: string
-              enum: [move, copy]
-              description: Type of operation to perform (move or copy).
+              $ref: '../../common/enums.yml#/operationType'
             destination:
               $ref: '../../../common/parameters.yml#/indexName'
             scope:
               type: array
               items:
-                type: string
-                enum: [settings, synonyms, rules]
+                $ref: '../../common/enums.yml#/scopeType'
               description: Scope of the data to copy. When absent, a full copy is performed. When present, only the selected scopes are copied.
           required:
             - operation

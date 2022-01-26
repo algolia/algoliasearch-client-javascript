@@ -57,6 +57,7 @@ import type { SearchUserIdsParams } from '../model/searchUserIdsParams';
 import type { SearchUserIdsResponse } from '../model/searchUserIdsResponse';
 import type { Source } from '../model/source';
 import type { SynonymHit } from '../model/synonymHit';
+import type { SynonymType } from '../model/synonymType';
 import type { UpdateApiKeyResponse } from '../model/updateApiKeyResponse';
 import type { UpdatedAtResponse } from '../model/updatedAtResponse';
 import type { UpdatedAtWithObjectIdResponse } from '../model/updatedAtWithObjectIdResponse';
@@ -1962,11 +1963,6 @@ export class SearchApi {
         'Parameter `synonymHit.objectID` is required when calling `saveSynonym`.'
       );
     }
-    if (!synonymHit.type) {
-      throw new Error(
-        'Parameter `synonymHit.type` is required when calling `saveSynonym`.'
-      );
-    }
 
     if (forwardToReplicas !== undefined) {
       queryParameters.forwardToReplicas = forwardToReplicas.toString();
@@ -2897,12 +2893,7 @@ export type SearchSynonymsProps = {
   /**
    * Only search for specific types of synonyms.
    */
-  type?:
-    | 'altcorrection1'
-    | 'altcorrection2'
-    | 'onewaysynonym'
-    | 'placeholder'
-    | 'synonym';
+  type?: SynonymType;
   /**
    * Requested page (zero-based). When specified, will retrieve a specific page; the page size is implicitly set to 100. When null, will retrieve all indices (no pagination).
    */

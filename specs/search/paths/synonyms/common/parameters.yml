@@ -18,10 +18,14 @@ Type:
   name: type
   description: Only search for specific types of synonyms.
   schema:
-    type: string
-    enum:
-      - synonym
-      - onewaysynonym
-      - altcorrection1
-      - altcorrection2
-      - placeholder
+    $ref: '#/SynonymType'
+
+SynonymType:
+  type: string
+  description: Type of the synonym object.
+  enum:
+    - synonym
+    - onewaysynonym
+    - altcorrection1
+    - altcorrection2
+    - placeholder

@@ -1,3 +1,5 @@
+import type { DictionaryEntryState } from './dictionaryEntryState';
+
 /**
  * A dictionary entry.
  */
@@ -22,10 +24,5 @@ export type DictionaryEntry = {
    * A decomposition of the word of the dictionary entry.
    */
   decomposition?: string[];
-  /**
-   * The state of the dictionary entry.
-   */
   state?: DictionaryEntryState;
 };
-
-export type DictionaryEntryState = 'disabled' | 'enabled';
