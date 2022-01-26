@@ -10,6 +10,8 @@ import type {
 import type { GetRecommendations } from '../model/getRecommendations';
 import type { GetRecommendationsResponse } from '../model/getRecommendationsResponse';
 
+export const version = '5.0.0';
+
 export class RecommendApi {
   protected authentications = {
     apiKey: 'Algolia-API-Key',
@@ -57,7 +59,7 @@ export class RecommendApi {
       baseHeaders: {
         'content-type': 'application/x-www-form-urlencoded',
       },
-      userAgent: 'Algolia for Javascript',
+      userAgent: 'Algolia for Javascript (5.0.0)',
       timeouts: {
         connect: 2,
         read: 5,

@@ -18,7 +18,7 @@
           "modelPropertyNaming": "original",
           "supportsES6": true,
           "npmName": "@algolia/client-search",
-          "npmVersion": "5.0.0",
+          "packageVersion": "5.0.0",
 
           "packageName": "@algolia/client-search",
           "isSearchHost": true
@@ -39,7 +39,7 @@
           "modelPropertyNaming": "original",
           "supportsES6": true,
           "npmName": "@algolia/recommend",
-          "npmVersion": "5.0.0",
+          "packageVersion": "5.0.0",
 
           "packageName": "@algolia/recommend",
           "isSearchHost": true
@@ -59,7 +59,7 @@
           "modelPropertyNaming": "original",
           "supportsES6": true,
           "npmName": "@algolia/client-personalization",
-          "npmVersion": "5.0.0",
+          "packageVersion": "5.0.0",
 
           "packageName": "@algolia/client-personalization",
           "hasRegionalHost": true,
@@ -81,7 +81,7 @@
           "modelPropertyNaming": "original",
           "supportsES6": true,
           "npmName": "@algolia/client-analytics",
-          "npmVersion": "5.0.0",
+          "packageVersion": "5.0.0",
 
           "packageName": "@algolia/client-analytics",
           "hasRegionalHost": true,
@@ -103,7 +103,7 @@
           "modelPropertyNaming": "original",
           "supportsES6": true,
           "npmName": "@algolia/client-insights",
-          "npmVersion": "5.0.0",
+          "packageVersion": "5.0.0",
 
           "packageName": "@algolia/client-insights",
           "host": "insights"
@@ -123,7 +123,7 @@
           "modelPropertyNaming": "original",
           "supportsES6": true,
           "npmName": "@algolia/client-abtesting",
-          "npmVersion": "5.0.0",
+          "packageVersion": "5.0.0",
 
           "packageName": "@algolia/client-abtesting",
           "hasRegionalHost": true,
@@ -145,7 +145,7 @@
           "modelPropertyNaming": "original",
           "supportsES6": true,
           "npmName": "@algolia/client-query-suggestions",
-          "npmVersion": "5.0.0",
+          "packageVersion": "5.0.0",
 
           "packageName": "@algolia/client-query-suggestions",
           "hasRegionalHost": true,
@@ -167,7 +167,7 @@
           "modelPropertyNaming": "original",
           "supportsES6": true,
           "npmName": "@algolia/client-sources",
-          "npmVersion": "0.0.1",
+          "packageVersion": "0.0.1",
 
           "packageName": "@algolia/client-sources",
           "hasRegionalHost": true,

@@ -64,6 +64,8 @@ import type { UpdatedAtWithObjectIdResponse } from '../model/updatedAtWithObject
 import type { UpdatedRuleResponse } from '../model/updatedRuleResponse';
 import type { UserId } from '../model/userId';
 
+export const version = '5.0.0';
+
 export class SearchApi {
   protected authentications = {
     apiKey: 'Algolia-API-Key',
@@ -111,7 +113,7 @@ export class SearchApi {
       baseHeaders: {
         'content-type': 'application/x-www-form-urlencoded',
       },
-      userAgent: 'Algolia for Javascript',
+      userAgent: 'Algolia for Javascript (5.0.0)',
       timeouts: {
         connect: 2,
         read: 5,
