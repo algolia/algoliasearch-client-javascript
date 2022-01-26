@@ -57,6 +57,16 @@ export class QuerySuggestionsApi {
     region: 'eu' | 'us',
     options?: { requester?: Requester; hosts?: Host[] }
   ) {
+    if (!appId) {
+      throw new Error('`appId` is missing.');
+    }
+    if (!apiKey) {
+      throw new Error('`apiKey` is missing.');
+    }
+    if (!region) {
+      throw new Error('`region` is missing.');
+    }
+
     this.setAuthentication({ appId, apiKey });
 
     this.transporter = new Transporter({
@@ -74,7 +84,7 @@ export class QuerySuggestionsApi {
     });
   }
 
-  getDefaultHosts(region: 'eu' | 'us' = 'us'): Host[] {
+  getDefaultHosts(region: 'eu' | 'us'): Host[] {
     return [
       {
         url: `query-suggestions.${region}.algolia.com`,

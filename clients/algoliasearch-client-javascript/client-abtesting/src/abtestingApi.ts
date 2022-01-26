@@ -55,6 +55,16 @@ export class AbtestingApi {
     region: 'de' | 'us',
     options?: { requester?: Requester; hosts?: Host[] }
   ) {
+    if (!appId) {
+      throw new Error('`appId` is missing.');
+    }
+    if (!apiKey) {
+      throw new Error('`apiKey` is missing.');
+    }
+    if (!region) {
+      throw new Error('`region` is missing.');
+    }
+
     this.setAuthentication({ appId, apiKey });
 
     this.transporter = new Transporter({
@@ -72,7 +82,7 @@ export class AbtestingApi {
     });
   }
 
-  getDefaultHosts(region: 'de' | 'us' = 'us'): Host[] {
+  getDefaultHosts(region: 'de' | 'us'): Host[] {
     return [
       {
         url: `analytics.${region}.algolia.com`,

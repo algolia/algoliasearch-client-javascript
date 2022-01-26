@@ -1,0 +1,8 @@
+new {{client}}(
+  '{{parameters.appId}}',
+  '{{parameters.apiKey}}',
+  {{#hasRegionalHost}}'{{parameters.region}}',{{/hasRegionalHost}}
+  {
+      requester: new EchoRequester()
+  }
+)

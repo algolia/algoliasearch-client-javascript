@@ -1,0 +1,12 @@
+{{#isCreateClient}}
+    const $client = {{> createClient}}
+    actual = $client;
+{{/isCreateClient}}
+
+{{#isVariable}}
+    actual = {{> variable}}
+{{/isVariable}}
+
+{{#isMethod}}
+    actual = {{> method}}
+{{/isMethod}}
