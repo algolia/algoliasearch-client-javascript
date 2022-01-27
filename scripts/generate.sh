@@ -11,9 +11,29 @@ LANGUAGE=$1
 CLIENT=$2
 GENERATOR="$1-$2"
 
+compute_hash() {
+    cacheSpec=$(find specs/$CLIENT -type f -print0 | xargs -0 sha1sum | sha1sum | tr -d ' ')
+    cacheCommon=$(find specs/common -type f -print0 | xargs -0 sha1sum | sha1sum | tr -d ' ')
+    echo "$cacheSpec$cacheCommon"
+}
+
 # build spec before generating client
 build_spec() {
+    # check if file and cache exist
+    cacheFile="specs/dist/$CLIENT.cache"
+    if [[ -f specs/dist/$CLIENT.yml ]]; then
+        cache=$(compute_hash)
+        # compare with stored cache
+        if [[ -f $cacheFile && $(cat $cacheFile) == $cache ]]; then
+            echo "> Skipped building spec because the files did not change..."
+            return
+        fi
+    fi
     yarn build:specs $CLIENT
+
+    # store hash
+    cache=$(compute_hash)
+    echo $cache > $cacheFile
 }
 
 # Run the pre generation script if it exists.
