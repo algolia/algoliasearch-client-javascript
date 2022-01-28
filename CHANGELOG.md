@@ -1,3 +1,9 @@
+## [v4.12.1](https://github.com/algolia/algoliasearch-client-javascript/compare/4.12.0...4.12.1)
+
+* fix(types): allow mix of strings and arrays in facetFilters (#1384) ([dfc2a09](https://github.com/algolia/algoliasearch-client-javascript/commit/dfc2a09)), closes [#1384](https://github.com/algolia/algoliasearch-client-javascript/issues/1384)
+
+
+
 ## [v4.12.0](https://github.com/algolia/algoliasearch-client-javascript/compare/4.11.0...4.12.0)
 
 - feat(types): add reranking engine settings to types (#1378) ([e9c0f30](https://github.com/algolia/algoliasearch-client-javascript/commit/e9c0f30)), closes [#1378](https://github.com/algolia/algoliasearch-client-javascript/issues/1378)
