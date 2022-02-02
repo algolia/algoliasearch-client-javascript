@@ -1,7 +1,7 @@
 {
   "$schema": "./node_modules/@openapitools/openapi-generator-cli/config.schema.json",
   "generator-cli": {
-    "version": "5.3.0",
+    "version": "5.4.0",
     "generators": {
       "javascript-search": {
         "generatorName": "typescript-node",
@@ -19,9 +19,7 @@
           "supportsES6": true,
           "npmName": "@algolia/client-search",
           "packageVersion": "5.0.0",
-
-          "packageName": "@algolia/client-search",
-          "isSearchHost": true
+          "packageName": "@algolia/client-search"
         }
       },
       "javascript-recommend": {
@@ -40,9 +38,7 @@
           "supportsES6": true,
           "npmName": "@algolia/recommend",
           "packageVersion": "5.0.0",
-
-          "packageName": "@algolia/recommend",
-          "isSearchHost": true
+          "packageName": "@algolia/recommend"
         }
       },
       "javascript-personalization": {
@@ -60,11 +56,11 @@
           "supportsES6": true,
           "npmName": "@algolia/client-personalization",
           "packageVersion": "5.0.0",
-
           "packageName": "@algolia/client-personalization",
           "hasRegionalHost": true,
           "isEuHost": true,
-          "host": "personalization"
+          "host": "personalization",
+          "topLevelDomain": "com"
         }
       },
       "javascript-analytics": {
@@ -82,12 +78,12 @@
           "supportsES6": true,
           "npmName": "@algolia/client-analytics",
           "packageVersion": "5.0.0",
-
           "packageName": "@algolia/client-analytics",
+          "fallbackToAliasHost": true,
           "hasRegionalHost": true,
           "isDeHost": true,
-          "fallbackToUS": true,
-          "host": "analytics"
+          "host": "analytics",
+          "topLevelDomain": "com"
         }
       },
       "javascript-insights": {
@@ -105,9 +101,12 @@
           "supportsES6": true,
           "npmName": "@algolia/client-insights",
           "packageVersion": "5.0.0",
-
           "packageName": "@algolia/client-insights",
-          "host": "insights"
+          "fallbackToAliasHost": true,
+          "hasRegionalHost": true,
+          "isDeHost": true,
+          "host": "insights",
+          "topLevelDomain": "io"
         }
       },
       "javascript-abtesting": {
@@ -125,11 +124,12 @@
           "supportsES6": true,
           "npmName": "@algolia/client-abtesting",
           "packageVersion": "5.0.0",
-
           "packageName": "@algolia/client-abtesting",
           "hasRegionalHost": true,
+          "fallbackToAliasHost": true,
           "isDeHost": true,
-          "host": "analytics"
+          "host": "analytics",
+          "topLevelDomain": "com"
         }
       },
       "javascript-query-suggestions": {
@@ -147,11 +147,11 @@
           "supportsES6": true,
           "npmName": "@algolia/client-query-suggestions",
           "packageVersion": "5.0.0",
-
           "packageName": "@algolia/client-query-suggestions",
           "hasRegionalHost": true,
           "isEuHost": true,
-          "host": "query-suggestions"
+          "host": "query-suggestions",
+          "topLevelDomain": "com"
         }
       },
       "javascript-sources": {
@@ -169,11 +169,11 @@
           "supportsES6": true,
           "npmName": "@algolia/client-sources",
           "packageVersion": "0.0.1",
-
           "packageName": "@algolia/client-sources",
           "hasRegionalHost": true,
           "isDeHost": true,
-          "host": "data"
+          "host": "data",
+          "topLevelDomain": "com"
         }
       },
       "java-search": {
@@ -195,7 +195,6 @@
           "sourceFolder": "algoliasearch-core",
           "java8": true,
           "dateLibrary": "java8",
-
           "packageName": "algoliasearch-client-java-2"
         }
       }

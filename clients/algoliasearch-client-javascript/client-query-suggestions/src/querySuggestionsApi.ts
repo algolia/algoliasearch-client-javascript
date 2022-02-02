@@ -60,9 +60,11 @@ export class QuerySuggestionsApi {
     if (!appId) {
       throw new Error('`appId` is missing.');
     }
+
     if (!apiKey) {
       throw new Error('`apiKey` is missing.');
     }
+
     if (!region) {
       throw new Error('`region` is missing.');
     }

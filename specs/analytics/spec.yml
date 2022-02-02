@@ -17,6 +17,7 @@ servers:
           - us
           - de
         default: us
+  - url: https://analytics.algolia.com
 security:
   - appId: []
     apiKey: []

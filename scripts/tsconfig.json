@@ -2,10 +2,8 @@
   "extends": "../base.tsconfig.json",
   "compilerOptions": {
     "typeRoots": ["../node_modules/@types"],
-    "types": ["node", "jest"],
-    "lib": ["ESNext", "dom", "dom.iterable"],
     "outDir": "dist"
   },
-  "include": ["src"],
-  "exclude": ["dist", "output"]
+  "include": ["pre-gen/setHostsOptions.ts"],
+  "exclude": ["dist", "*.json"]
 }

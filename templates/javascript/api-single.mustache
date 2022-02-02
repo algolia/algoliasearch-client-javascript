@@ -53,29 +53,31 @@ export class {{classname}} {
       appId: string,
       apiKey: string,
       {{#hasRegionalHost}}
-        region: {{#isDeHost}}'de'{{/isDeHost}}{{#isEuHost}}'eu'{{/isEuHost}} | 'us',
+        region{{#fallbackToAliasHost}}?{{/fallbackToAliasHost}}: {{#isDeHost}}'de'{{/isDeHost}}{{#isEuHost}}'eu'{{/isEuHost}} | 'us',
       {{/hasRegionalHost}}
       options?: {requester?: Requester, hosts?: Host[]}
     ) {
     if (!appId) {
       throw new Error("`appId` is missing.");
     }
+
     if (!apiKey) {
       throw new Error("`apiKey` is missing.");
     }
+
     {{#hasRegionalHost}}
-    {{^fallbackToUS}}
+    {{^fallbackToAliasHost}}
     if (!region) {
       throw new Error("`region` is missing.");
     }
-    {{/fallbackToUS}}
+    {{/fallbackToAliasHost}}
     {{/hasRegionalHost}}
 
     this.setAuthentication({ appId, apiKey });
 
     this.transporter = new Transporter({
       hosts: options?.hosts ?? this.getDefaultHosts(
-        {{#isSearchHost}}appId{{/isSearchHost}}
+        {{^hasRegionalHost}}appId{{/hasRegionalHost}}
         {{#hasRegionalHost}}region{{/hasRegionalHost}}
     ),
       baseHeaders: {
@@ -91,7 +93,7 @@ export class {{classname}} {
     });
   }
 
-  {{#isSearchHost}}
+  {{^hasRegionalHost}}
   public getDefaultHosts(appId: string): Host[] {
     return (
         [
@@ -106,21 +108,15 @@ export class {{classname}} {
         ])
       );
   }
-  {{/isSearchHost}}
+  {{/hasRegionalHost}}
 
-  {{^isSearchHost}}
-    {{#hasRegionalHost}}
-    public getDefaultHosts(region: {{#isDeHost}}'de'{{/isDeHost}}{{#isEuHost}}'eu'{{/isEuHost}} | 'us'{{#fallbackToUS}} = 'us'{{/fallbackToUS}}): Host[] {
-      return [{ url: `{{{host}}}.${region}.algolia.com`, accept: 'readWrite', protocol: 'https' }];
-    }
-    {{/hasRegionalHost}}
+  {{#hasRegionalHost}}
+    public getDefaultHosts(region{{#fallbackToAliasHost}}?{{/fallbackToAliasHost}}: {{#isDeHost}}'de'{{/isDeHost}}{{#isEuHost}}'eu'{{/isEuHost}} | 'us'): Host[] {
+      {{#fallbackToAliasHost}}const regionHost = region ? `.${region}.` : '.';{{/fallbackToAliasHost}}
 
-    {{^hasRegionalHost}}
-    public getDefaultHosts(): Host[] {
-      return [{ url: '{{{host}}}.algolia.io', accept: 'readWrite', protocol: 'https' }];
+      return [{ url: `{{{host}}}{{#fallbackToAliasHost}}${regionHost}{{/fallbackToAliasHost}}{{^fallbackToAliasHost}}.${region}.{{/fallbackToAliasHost}}algolia.{{#topLevelDomain}}{{.}}{{/topLevelDomain}}{{^topLevelDomain}}com{{/topLevelDomain}}`, accept: 'readWrite', protocol: 'https' }];
     }
-    {{/hasRegionalHost}}
-  {{/isSearchHost}}
+  {{/hasRegionalHost}}
 
   public setRequest(requester: Requester): void {
     this.transporter.setRequester(requester);

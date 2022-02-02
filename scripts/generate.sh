@@ -44,11 +44,16 @@ run_pre_gen() {
         echo "> Running pre-gen script for $GENERATOR..."
         $pregen $CLIENT
     fi
+
+    # Sets the hosts option to the `openapitools.json` config file
+    yarn workspace scripts setHostsOptions $LANGUAGE $CLIENT
 }
 
 generate_client() {
     echo "> Generating code for $GENERATOR..."
+
     CMD="yarn openapi-generator-cli generate --generator-key $GENERATOR"
+
     if [[ $VERBOSE == "true" ]]; then
         $CMD
     else
