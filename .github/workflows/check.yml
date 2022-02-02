@@ -158,5 +158,8 @@ jobs:
       - name: Generate CTS
         run: yarn cts:generate
 
+      - name: Check diff with pushed CTS
+        run: exit $(git status --porcelain ./tests/output | wc -l)
+
       - name: Run CTS
         run: yarn cts:test

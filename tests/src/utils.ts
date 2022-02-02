@@ -2,6 +2,7 @@ import fsp from 'fs/promises';
 import path from 'path';
 
 import openapitools from '../../openapitools.json';
+import ctsConfig from '../CTS/config.json';
 
 // For each generator, we map the packageName with the language and client
 export const packageNames: Record<
@@ -90,19 +91,8 @@ export function removeEnumType(obj: any): any {
   return obj;
 }
 
-// All those language dependents object should be defined in the CTS itself
-export const extensionForLanguage: Record<string, string> = {
-  javascript: 'test.ts',
-  java: 'test.java',
-};
-
-export const sourcePathForLanguage: Record<string, string> = {
-  javascript: 'tests/methods/requests',
-  java: 'src/test/java/com/algolia',
-};
-
-/* eslint-disable no-console */
 function printUsage(commandName: string): void {
+  /* eslint-disable no-console */
   console.log(`usage: ${commandName} language client`);
   // eslint-disable-next-line no-process-exit
   process.exit(1);
@@ -130,10 +120,62 @@ export function parseCLI(
     // eslint-disable-next-line no-process-exit
     process.exit(1);
   }
+  /* eslint-enable no-console */
 
   return {
     lang,
     client,
   };
 }
-/* eslint-enable no-console */
+
+export async function createOutputDir({
+  language,
+  testPath,
+}: {
+  language: string;
+  testPath: string;
+}): Promise<void> {
+  await fsp.mkdir(
+    `output/${language}/${ctsConfig[language].outputFolder}/${testPath}`,
+    {
+      recursive: true,
+    }
+  );
+}
+
+export function getOutputPath({
+  language,
+  client,
+  testPath,
+}: {
+  language: string;
+  client: string;
+  testPath: string;
+}): string {
+  return `output/${language}/${ctsConfig[language].outputFolder}/${testPath}/${client}.${ctsConfig[language].extension}`;
+}
+
+export async function loadTemplates({
+  language,
+  testPath,
+}: {
+  language: string;
+  testPath: string;
+}): Promise<Record<string, string>> {
+  const templates: Record<string, string> = {};
+  const templatePath = `./CTS/${testPath}/templates/${language}`;
+
+  if (!(await exists(templatePath))) {
+    return {};
+  }
+
+  for await (const file of walk(templatePath)) {
+    if (!file.name.endsWith('.mustache')) {
+      continue;
+    }
+    const name = file.name.replace('.mustache', '');
+    const fileContent = (await fsp.readFile(file.path)).toString();
+    templates[name] = fileContent;
+  }
+  return templates;
+}
