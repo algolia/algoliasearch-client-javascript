@@ -10,6 +10,13 @@ components:
     apiKey:
       $ref: '../common/securitySchemes.yml#/apiKey'
 servers:
+  - url: https://insights.{region}.algolia.io
+    variables:
+      region:
+        enum:
+          - us
+          - de
+        default: us
   - url: https://insights.algolia.io
 security:
   - appId: []

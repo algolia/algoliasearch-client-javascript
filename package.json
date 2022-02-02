@@ -4,7 +4,8 @@
   "workspaces": [
     "clients/algoliasearch-client-javascript/*",
     "playground/javascript/",
-    "tests/"
+    "tests/",
+    "scripts/"
   ],
   "scripts": {
     "build:clients": "./scripts/multiplexer.sh ${2:-nonverbose} ./scripts/builds/clients.sh ${0:-all} ${1:-all}",
@@ -29,7 +30,7 @@
     "github-actions:lint": "eslint --ext=yml .github/"
   },
   "devDependencies": {
-    "@openapitools/openapi-generator-cli": "2.4.18",
+    "@openapitools/openapi-generator-cli": "2.4.26",
     "@redocly/openapi-cli": "1.0.0-beta.79",
     "@typescript-eslint/eslint-plugin": "5.5.0",
     "@typescript-eslint/parser": "5.5.0",

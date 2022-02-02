@@ -9,7 +9,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@algolia/api-client-automation@workspace:."
   dependencies:
-    "@openapitools/openapi-generator-cli": 2.4.18
+    "@openapitools/openapi-generator-cli": 2.4.26
     "@redocly/openapi-cli": 1.0.0-beta.79
     "@typescript-eslint/eslint-plugin": 5.5.0
     "@typescript-eslint/parser": 5.5.0
@@ -830,9 +830,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nestjs/common@npm:8.2.3":
-  version: 8.2.3
-  resolution: "@nestjs/common@npm:8.2.3"
+"@nestjs/common@npm:8.2.6":
+  version: 8.2.6
+  resolution: "@nestjs/common@npm:8.2.6"
   dependencies:
     axios: 0.24.0
     iterare: 1.2.1
@@ -851,13 +851,13 @@ __metadata:
       optional: true
     class-validator:
       optional: true
-  checksum: 2a06ffaf58da0622727621db0b6574cad94f4a0d9b895bb8352f736207c7087fce477185b2cacd3b013b0386860e573b0d27b900783df6885e32fc943d5e87b8
+  checksum: 3999376069a9adade0d5a60bdaabd05756195ee5a8621c0d3b9f77353446188e183dfe5ec6ccb5d696c96f24da48b7edaeb3e554d9d5c3e20946ba1b030c8f54
   languageName: node
   linkType: hard
 
-"@nestjs/core@npm:8.2.3":
-  version: 8.2.3
-  resolution: "@nestjs/core@npm:8.2.3"
+"@nestjs/core@npm:8.2.6":
+  version: 8.2.6
+  resolution: "@nestjs/core@npm:8.2.6"
   dependencies:
     "@nuxtjs/opencollective": 0.3.2
     fast-safe-stringify: 2.1.1
@@ -880,7 +880,7 @@ __metadata:
       optional: true
     "@nestjs/websockets":
       optional: true
-  checksum: 35da95f8c17ab5d44b7aecef91cc77bdf0ddc23df93854d4a2ac8f1db633bbe17f96434128d343aee17464e332f2c6431abad4e3ed18f6a8b5b63d5fedb57655
+  checksum: abf275dbe309302a16fa77132e362d30ed275ffbca46e51a93bdafdd99daa12a970af3f903a09f9e034af9f4372fe436b7a68bd09c81e9ea7aab00d939482ff2
   languageName: node
   linkType: hard
 
@@ -944,28 +944,28 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@openapitools/openapi-generator-cli@npm:2.4.18":
-  version: 2.4.18
-  resolution: "@openapitools/openapi-generator-cli@npm:2.4.18"
+"@openapitools/openapi-generator-cli@npm:2.4.26":
+  version: 2.4.26
+  resolution: "@openapitools/openapi-generator-cli@npm:2.4.26"
   dependencies:
-    "@nestjs/common": 8.2.3
-    "@nestjs/core": 8.2.3
+    "@nestjs/common": 8.2.6
+    "@nestjs/core": 8.2.6
     "@nuxtjs/opencollective": 0.3.2
     chalk: 4.1.2
     commander: 8.3.0
     compare-versions: 3.6.0
-    concurrently: 6.4.0
+    concurrently: 6.5.1
     console.table: 0.10.0
     fs-extra: 10.0.0
     glob: 7.1.6
     inquirer: 8.2.0
     lodash: 4.17.21
     reflect-metadata: 0.1.13
-    rxjs: 7.4.0
+    rxjs: 7.5.2
     tslib: 2.0.3
   bin:
     openapi-generator-cli: main.js
-  checksum: b35fe3d5c5d514e70d7c1dea464606fbe93024b71996cb499d0e285ca0db751e2a26e01aac7f3aac3ec2751d483af9c45bac2685bce76fc111d0d0bde3d18cc0
+  checksum: ff6f75e194c0df492c4f6951a922a1da5472e7c3ca09b7b8e02f9b910e1fcc49832ca19e18ee7fdd87fcf43ef1ed6443ef5d1954932137c759d87f8a51e276eb
   languageName: node
   linkType: hard
 
@@ -1147,6 +1147,13 @@ __metadata:
     jest-diff: ^27.0.0
     pretty-format: ^27.0.0
   checksum: d2350267f954f9a2e4a15e5f02fbf19a77abfb9fd9e57a954de1fb0e9a0d3d5f8d3646ac7d9c42aeb4b4d828d2e70624ec149c85bb50a48634a54eed8429e1f8
+  languageName: node
+  linkType: hard
+
+"@types/js-yaml@npm:4.0.5":
+  version: 4.0.5
+  resolution: "@types/js-yaml@npm:4.0.5"
+  checksum: 7dcac8c50fec31643cc9d6444b5503239a861414cdfaa7ae9a38bc22597c4d850c4b8cec3d82d73b3fbca408348ce223b0408d598b32e094470dfffc6d486b4d
   languageName: node
   linkType: hard
 
@@ -2096,9 +2103,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"concurrently@npm:6.4.0":
-  version: 6.4.0
-  resolution: "concurrently@npm:6.4.0"
+"concurrently@npm:6.5.1":
+  version: 6.5.1
+  resolution: "concurrently@npm:6.5.1"
   dependencies:
     chalk: ^4.1.0
     date-fns: ^2.16.1
@@ -2110,7 +2117,7 @@ __metadata:
     yargs: ^16.2.0
   bin:
     concurrently: bin/concurrently.js
-  checksum: 902864cc853176cac406246fa367a1b24ebfcbea9ba43c164f9cb4e2c9c1a5f9d8be05ce98fe7ef13329ffd5cc340a052007a9c870863e2068425d95b3bf89d7
+  checksum: 3f4d89b464fa5c9fb6f9489b46594c30ba54eff6ff10ab3cb5f30f64b74c83be664623a0f0cc731a3cb3f057a1f4a3292f7d3470c012a292c44aca31f214a3fa
   languageName: node
   linkType: hard
 
@@ -4330,6 +4337,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"js-yaml@npm:4.1.0, js-yaml@npm:^4.1.0":
+  version: 4.1.0
+  resolution: "js-yaml@npm:4.1.0"
+  dependencies:
+    argparse: ^2.0.1
+  bin:
+    js-yaml: bin/js-yaml.js
+  checksum: c7830dfd456c3ef2c6e355cc5a92e6700ceafa1d14bba54497b34a99f0376cecbb3e9ac14d3e5849b426d5a5140709a66237a8c991c675431271c4ce5504151a
+  languageName: node
+  linkType: hard
+
 "js-yaml@npm:^3.13.1":
   version: 3.14.1
   resolution: "js-yaml@npm:3.14.1"
@@ -4339,17 +4357,6 @@ __metadata:
   bin:
     js-yaml: bin/js-yaml.js
   checksum: bef146085f472d44dee30ec34e5cf36bf89164f5d585435a3d3da89e52622dff0b188a580e4ad091c3341889e14cb88cac6e4deb16dc5b1e9623bb0601fc255c
-  languageName: node
-  linkType: hard
-
-"js-yaml@npm:^4.1.0":
-  version: 4.1.0
-  resolution: "js-yaml@npm:4.1.0"
-  dependencies:
-    argparse: ^2.0.1
-  bin:
-    js-yaml: bin/js-yaml.js
-  checksum: c7830dfd456c3ef2c6e355cc5a92e6700ceafa1d14bba54497b34a99f0376cecbb3e9ac14d3e5849b426d5a5140709a66237a8c991c675431271c4ce5504151a
   languageName: node
   linkType: hard
 
@@ -5533,12 +5540,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rxjs@npm:7.4.0":
-  version: 7.4.0
-  resolution: "rxjs@npm:7.4.0"
+"rxjs@npm:7.5.2, rxjs@npm:^7.2.0":
+  version: 7.5.2
+  resolution: "rxjs@npm:7.5.2"
   dependencies:
-    tslib: ~2.1.0
-  checksum: 6b33172a760dcad6882fdc836ee8cf1ebe160dd7eaad95c45a12338ffdaa96eb41e48e6c25bbd3d1fdf45075949ff447954bc17a9d01c688558a67967d09c114
+    tslib: ^2.1.0
+  checksum: daf1fe7289de500b25d822fd96cde3c138c7902e8bf0e6aa12a3e70847a5cabeeb4d677f10e19387e1db44b12c5b1be0ff5c79b8cd63ed6ce891d765e566cf4d
   languageName: node
   linkType: hard
 
@@ -5548,15 +5555,6 @@ __metadata:
   dependencies:
     tslib: ^1.9.0
   checksum: bc334edef1bb8bbf56590b0b25734ba0deaf8825b703256a93714308ea36dff8a11d25533671adf8e104e5e8f256aa6fdfe39b2e248cdbd7a5f90c260acbbd1b
-  languageName: node
-  linkType: hard
-
-"rxjs@npm:^7.2.0":
-  version: 7.5.2
-  resolution: "rxjs@npm:7.5.2"
-  dependencies:
-    tslib: ^2.1.0
-  checksum: daf1fe7289de500b25d822fd96cde3c138c7902e8bf0e6aa12a3e70847a5cabeeb4d677f10e19387e1db44b12c5b1be0ff5c79b8cd63ed6ce891d765e566cf4d
   languageName: node
   linkType: hard
 
@@ -5589,6 +5587,17 @@ __metadata:
   checksum: 5636b55cf15f7cf0baa73f2797bf992bdcf75d1b39d82c0aa4608555c774368f6ac321cb641fd5f3d3ceb87805122cd47540da6a7b5960fe0dbdb8f8c263f000
   languageName: node
   linkType: hard
+
+"scripts@workspace:scripts":
+  version: 0.0.0-use.local
+  resolution: "scripts@workspace:scripts"
+  dependencies:
+    "@types/js-yaml": 4.0.5
+    "@types/node": 16.11.11
+    js-yaml: 4.1.0
+    typescript: 4.5.4
+  languageName: unknown
+  linkType: soft
 
 "semver@npm:7.x, semver@npm:^7.2.1, semver@npm:^7.3.2, semver@npm:^7.3.5":
   version: 7.3.5
@@ -6179,13 +6188,6 @@ __metadata:
   version: 1.14.1
   resolution: "tslib@npm:1.14.1"
   checksum: dbe628ef87f66691d5d2959b3e41b9ca0045c3ee3c7c7b906cc1e328b39f199bb1ad9e671c39025bd56122ac57dfbf7385a94843b1cc07c60a4db74795829acd
-  languageName: node
-  linkType: hard
-
-"tslib@npm:~2.1.0":
-  version: 2.1.0
-  resolution: "tslib@npm:2.1.0"
-  checksum: aa189c8179de0427b0906da30926fd53c59d96ec239dff87d6e6bc831f608df0cbd6f77c61dabc074408bd0aa0b9ae4ec35cb2c15f729e32f37274db5730cb78
   languageName: node
   linkType: hard
 

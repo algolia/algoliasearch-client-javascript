@@ -52,17 +52,15 @@ export class AbtestingApi {
   constructor(
     appId: string,
     apiKey: string,
-    region: 'de' | 'us',
+    region?: 'de' | 'us',
     options?: { requester?: Requester; hosts?: Host[] }
   ) {
     if (!appId) {
       throw new Error('`appId` is missing.');
     }
+
     if (!apiKey) {
       throw new Error('`apiKey` is missing.');
-    }
-    if (!region) {
-      throw new Error('`region` is missing.');
     }
 
     this.setAuthentication({ appId, apiKey });
@@ -82,10 +80,12 @@ export class AbtestingApi {
     });
   }
 
-  getDefaultHosts(region: 'de' | 'us'): Host[] {
+  getDefaultHosts(region?: 'de' | 'us'): Host[] {
+    const regionHost = region ? `.${region}.` : '.';
+
     return [
       {
-        url: `analytics.${region}.algolia.com`,
+        url: `analytics${regionHost}algolia.com`,
         accept: 'readWrite',
         protocol: 'https',
       },

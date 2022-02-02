@@ -4,7 +4,7 @@ import type { EchoResponse } from '@algolia/client-insights';
 const appId = process.env.ALGOLIA_APPLICATION_ID || 'test_app_id';
 const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'test_api_key';
 
-const client = new InsightsApi(appId, apiKey, {
+const client = new InsightsApi(appId, apiKey, 'us', {
   requester: new EchoRequester(),
 });
 
