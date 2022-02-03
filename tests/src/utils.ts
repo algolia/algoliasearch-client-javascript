@@ -76,6 +76,10 @@ export function removeObjectName(obj: any): any {
   return obj;
 }
 
+export function checkIfLanguageExists(language: string): boolean {
+  return Boolean(ctsConfig[language]);
+}
+
 export function removeEnumType(obj: any): any {
   if (typeof obj === 'object') {
     if (Array.isArray(obj)) {
