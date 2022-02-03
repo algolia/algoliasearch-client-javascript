@@ -11,6 +11,7 @@ for generator in "${GENERATORS[@]}"; do
     client=${generator#*-}
     if [[ ! ${SPECS[*]} =~ $client ]]; then
         changed=$(git diff --shortstat origin/$BASE_BRANCH..HEAD -- specs/$client | wc -l)
+        SPECS+=($client)
         if [[ $BASE_CHANGED == "true" || $changed > 0 ]]; then
             to_check=$(echo $to_check | jq --arg client $client '.client |= .+ [$client]')
         fi
