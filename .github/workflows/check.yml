@@ -120,7 +120,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: '/home/runner/work/api-clients-automation/api-clients-automation/${{ matrix.client.folder }}/target'
-          key: ${{ runner.os }}-1-java-client-${{ matrix.client.name }}-${{ hashFiles(format('{0}/**', matrix.client.folder)) }}-${{ hashFiles(format('specs/dist/{0}.yml', matrix.client.name)) }} }}
+          key: ${{ runner.os }}-1-java-client-${{ matrix.client.name }}-${{ hashFiles(format('{0}/**', matrix.client.folder)) }}-${{ hashFiles(format('specs/dist/{0}.yml', matrix.client.name)) }}
 
       - name: Generate ${{ matrix.client.name }} client
         if: steps.cache.outputs.cache-hit != 'true'
