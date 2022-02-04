@@ -197,6 +197,163 @@
           "dateLibrary": "java8",
           "packageName": "algoliasearch-client-java-2"
         }
+      },
+      "php-search": {
+        "generatorName": "php",
+        "templateDir": "#{cwd}/templates/php/",
+        "config": "#{cwd}/openapitools.json",
+        "output": "#{cwd}/clients/algoliasearch-client-php",
+        "glob": "specs/dist/search.yml",
+        "gitHost": "algolia",
+        "gitUserId": "algolia",
+        "gitRepoId": "algoliasearch-client-php",
+        "invokerPackage": "Algolia\\AlgoliaSearch",
+        "modelPackage": "Model\\Search",
+        "additionalProperties": {
+          "configClassname": "SearchConfig",
+          "clusterHostsMethod": "createFromAppId",
+          "useCache": true,
+          "variableNamingConvention": "camelCase",
+          "packageName": "algoliasearch-client-php"
+        }
+      },
+      "php-recommend": {
+        "generatorName": "php",
+        "templateDir": "#{cwd}/templates/php/",
+        "config": "#{cwd}/openapitools.json",
+        "output": "#{cwd}/clients/algoliasearch-client-php",
+        "glob": "specs/dist/recommend.yml",
+        "gitHost": "algolia",
+        "gitUserId": "algolia",
+        "gitRepoId": "algoliasearch-client-php",
+        "invokerPackage": "Algolia\\AlgoliaSearch",
+        "modelPackage": "Model\\Recommend",
+        "additionalProperties": {
+          "configClassname": "RecommendConfig",
+          "clusterHostsMethod": "createFromAppId",
+          "hasRegionalHost": true,
+          "allowedRegions": "us-de",
+          "variableNamingConvention": "camelCase",
+          "packageName": "algoliasearch-client-php"
+        }
+      },
+      "php-personalization": {
+        "generatorName": "php",
+        "templateDir": "#{cwd}/templates/php/",
+        "config": "#{cwd}/openapitools.json",
+        "output": "#{cwd}/clients/algoliasearch-client-php",
+        "glob": "specs/dist/personalization.yml",
+        "gitHost": "algolia",
+        "gitUserId": "algolia",
+        "gitRepoId": "algoliasearch-client-php",
+        "invokerPackage": "Algolia\\AlgoliaSearch",
+        "modelPackage": "Model\\Personalization",
+        "additionalProperties": {
+          "configClassname": "PersonalizationConfig",
+          "clusterHostsMethod": "createForRecommendation",
+          "hasRegionalHost": true,
+          "allowedRegions": "us-eu",
+          "variableNamingConvention": "camelCase",
+          "packageName": "algoliasearch-client-php",
+          "isEuHost": true,
+          "host": "personalization",
+          "topLevelDomain": "com"
+        }
+      },
+      "php-analytics": {
+        "generatorName": "php",
+        "templateDir": "#{cwd}/templates/php/",
+        "config": "#{cwd}/openapitools.json",
+        "output": "#{cwd}/clients/algoliasearch-client-php",
+        "glob": "specs/dist/analytics.yml",
+        "gitHost": "algolia",
+        "gitUserId": "algolia",
+        "gitRepoId": "algoliasearch-client-php",
+        "invokerPackage": "Algolia\\AlgoliaSearch",
+        "modelPackage": "Model\\Analytics",
+        "additionalProperties": {
+          "configClassname": "AnalyticsConfig",
+          "clusterHostsMethod": "createForAnalytics",
+          "hasRegionalHost": true,
+          "allowedRegions": "us-de",
+          "variableNamingConvention": "camelCase",
+          "packageName": "algoliasearch-client-php",
+          "fallbackToAliasHost": true,
+          "isDeHost": true,
+          "host": "analytics",
+          "topLevelDomain": "com"
+        }
+      },
+      "php-insights": {
+        "generatorName": "php",
+        "templateDir": "#{cwd}/templates/php/",
+        "config": "#{cwd}/openapitools.json",
+        "output": "#{cwd}/clients/algoliasearch-client-php",
+        "glob": "specs/dist/insights.yml",
+        "gitHost": "algolia",
+        "gitUserId": "algolia",
+        "gitRepoId": "algoliasearch-client-php",
+        "invokerPackage": "Algolia\\AlgoliaSearch",
+        "modelPackage": "Model\\Insights",
+        "additionalProperties": {
+          "configClassname": "InsightsConfig",
+          "clusterHostsMethod": "createForInsights",
+          "hasRegionalHost": true,
+          "allowedRegions": "us-de",
+          "variableNamingConvention": "camelCase",
+          "packageName": "algoliasearch-client-php",
+          "fallbackToAliasHost": true,
+          "isDeHost": true,
+          "host": "insights",
+          "topLevelDomain": "io"
+        }
+      },
+      "php-abtesting": {
+        "generatorName": "php",
+        "templateDir": "#{cwd}/templates/php/",
+        "config": "#{cwd}/openapitools.json",
+        "output": "#{cwd}/clients/algoliasearch-client-php",
+        "glob": "specs/dist/abtesting.yml",
+        "gitHost": "algolia",
+        "gitUserId": "algolia",
+        "gitRepoId": "algoliasearch-client-php",
+        "invokerPackage": "Algolia\\AlgoliaSearch",
+        "modelPackage": "Model\\ABTesting",
+        "additionalProperties": {
+          "configClassname": "AbTestingConfig",
+          "clusterHostsMethod": "createForAnalytics",
+          "hasRegionalHost": true,
+          "allowedRegions": "us-de",
+          "variableNamingConvention": "camelCase",
+          "packageName": "algoliasearch-client-php",
+          "fallbackToAliasHost": true,
+          "isDeHost": true,
+          "host": "analytics",
+          "topLevelDomain": "com"
+        }
+      },
+      "php-query-suggestions": {
+        "generatorName": "php",
+        "templateDir": "#{cwd}/templates/php/",
+        "config": "#{cwd}/openapitools.json",
+        "output": "#{cwd}/clients/algoliasearch-client-php",
+        "glob": "specs/dist/query-suggestions.yml",
+        "gitHost": "algolia",
+        "gitUserId": "algolia",
+        "gitRepoId": "algoliasearch-client-php",
+        "invokerPackage": "Algolia\\AlgoliaSearch",
+        "modelPackage": "Model\\QuerySuggestions",
+        "additionalProperties": {
+          "configClassname": "QuerySuggestionsConfig",
+          "clusterHostsMethod": "createForQuerySuggestions",
+          "hasRegionalHost": true,
+          "allowedRegions": "us-eu",
+          "variableNamingConvention": "camelCase",
+          "packageName": "algoliasearch-client-php",
+          "isEuHost": true,
+          "host": "query-suggestions",
+          "topLevelDomain": "com"
+        }
       }
     }
   }

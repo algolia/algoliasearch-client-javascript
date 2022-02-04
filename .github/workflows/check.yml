@@ -36,6 +36,9 @@ jobs:
       RUN_JAVA: ${{ steps.setup.outputs.RUN_JAVA }}
       JAVA_MATRIX: ${{ steps.setup.outputs.JAVA_MATRIX }}
 
+      RUN_PHP: ${{ steps.setup.outputs.RUN_PHP }}
+      PHP_MATRIX: ${{ steps.setup.outputs.PHP_MATRIX }}
+
       RUN_CTS: ${{ steps.setup.outputs.RUN_CTS }}
 
   specs:
@@ -134,11 +137,43 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         run: yarn build:clients java ${{ matrix.client.name }}
 
+  client_php:
+    runs-on: ubuntu-20.04
+    needs:
+      - setup
+      - specs
+    if: ${{ always() && needs.setup.outputs.RUN_PHP == 'true' }}
+    strategy:
+      matrix: ${{ fromJSON(needs.setup.outputs.PHP_MATRIX) }}
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Restore cache
+        uses: ./.github/actions/cache
+        with:
+          job: client
+          language: php
+          spec: ${{ matrix.client.name }}
+
+      - name: Generate ${{ matrix.client.name }} client
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: yarn generate php ${{ matrix.client.name }}
+
+      - name: Check diff with pushed client
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: exit $(git status --porcelain ${{ matrix.client.folder }} | wc -l)
+
+      - name: Build ${{ matrix.client.name }} client
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: yarn build:clients php ${{ matrix.client.name }}
+
   cts:
     runs-on: ubuntu-20.04
     needs:
       - client_javascript
       - client_java
+      - client_php
+
     if: ${{ always() && needs.setup.outputs.RUN_CTS == 'true' }}
     steps:
       - uses: actions/checkout@v2

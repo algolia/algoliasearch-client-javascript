@@ -40,6 +40,9 @@ runs:
         echo "::set-output name=JAVA_CLIENT_CHANGED::$(git diff --shortstat origin/${{ github.base_ref }}..HEAD -- clients/algoliasearch-client-java-2 | wc -l)"
         echo "::set-output name=JAVA_TEMPLATE_CHANGED::$(git diff --shortstat origin/${{ github.base_ref }}..HEAD -- templates/java | wc -l)"
 
+        echo "::set-output name=PHP_CLIENT_CHANGED::$(git diff --shortstat origin/${{ github.base_ref }}..HEAD -- clients/algoliasearch-client-php | wc -l)"
+        echo "::set-output name=PHP_TEMPLATE_CHANGED::$(git diff --shortstat origin/${{ github.base_ref }}..HEAD -- templates/php | wc -l)"
+
     - name: Compute specs matrix
       id: spec-matrix
       shell: bash
@@ -91,6 +94,23 @@ runs:
         echo "::set-output name=MATRIX::$matrix"
         echo "::set-output name=RUN_CLIENT::$run"
 
+    - name: Compute the PHP client build matrix
+      id: php-matrix
+      shell: bash
+      run: |
+        base_changed=${{ github.ref == 'refs/heads/main' || steps.diff.outputs.GITHUB_ACTIONS_CHANGED > 0 || steps.diff.outputs.COMMON_SPECS_CHANGED > 0 || steps.diff.outputs.SCRIPTS_CHANGED > 0 || steps.diff.outputs.PHP_TEMPLATE_CHANGED > 0 }}
+
+        matrix=$(./scripts/ci/create-client-matrix.sh php $base_changed ${{ github.base_ref }})
+
+        if [[ $matrix == '{"client":["no-run"]}' ]]; then
+          run="false"
+        else
+          run="true"
+        fi
+
+        echo "::set-output name=MATRIX::$matrix"
+        echo "::set-output name=RUN_CLIENT::$run"
+
 outputs:
   RUN_SPECS:
     description: Whether to run specs or not
@@ -115,6 +135,14 @@ outputs:
   JAVA_MATRIX:
     description: Generate the matrix for the Java client
     value: ${{ steps.java-matrix.outputs.MATRIX }}
+
+  RUN_PHP:
+    description: Whether to run php client or not
+    value: ${{ steps.php-matrix.outputs.RUN_CLIENT }}
+
+  PHP_MATRIX:
+    description: Generate the matrix for the PHP client
+    value: ${{ steps.php-matrix.outputs.MATRIX }}
 
   RUN_CTS:
     description: Determine if the `cts` job should run
