@@ -16,6 +16,12 @@ run_playground() {
         yarn workspace javascript-playground start:$CLIENT
     elif [[ $LANGUAGE == 'java' ]]; then
         mvn clean compile exec:java -f playground/java/pom.xml
+    elif [[ $lang == 'php' ]]; then
+        cd playground/php
+        composer update
+        composer dump-autoload
+        cd src
+        php8 $client.php
     fi
 }
 
