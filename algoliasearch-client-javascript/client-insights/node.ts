@@ -26,8 +26,8 @@ export function insightsApi(
     apiKey,
     region,
     timeouts: {
-      connect: 1,
-      read: 2,
+      connect: 2,
+      read: 5,
       write: 30,
     },
     requester: options?.requester ?? new HttpRequester(),
