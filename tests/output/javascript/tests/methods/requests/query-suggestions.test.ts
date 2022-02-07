@@ -1,13 +1,11 @@
-import {
-  QuerySuggestionsApi,
-  EchoRequester,
-} from '@algolia/client-query-suggestions';
-import type { EchoResponse } from '@algolia/client-query-suggestions';
+import { EchoRequester } from '@algolia/client-common';
+import type { EchoResponse } from '@algolia/client-common';
+import { querySuggestionsApi } from '@algolia/client-query-suggestions';
 
 const appId = process.env.ALGOLIA_APPLICATION_ID || 'test_app_id';
 const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'test_api_key';
 
-const client = new QuerySuggestionsApi(appId, apiKey, 'us', {
+const client = querySuggestionsApi(appId, apiKey, 'us', {
   requester: new EchoRequester(),
 });
 

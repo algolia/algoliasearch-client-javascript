@@ -15,10 +15,18 @@ if [[ ! $DOCKER ]]; then
     exit 1
 fi
 
-build_js_common() {
+build_js_common_requesters() {
     echo "> Building @algolia/client-common..."
 
     yarn workspace @algolia/client-common build
+
+    echo "> Building @algolia/requester-node-http..."
+
+    yarn workspace @algolia/requester-node-http build
+
+    echo "> Building @algolia/requester-browser-xhr..."
+
+    yarn workspace @algolia/requester-browser-xhr build
 
     echo ""
 }
@@ -46,5 +54,5 @@ format_specs() {
 format_specs
 
 if [[ $LANGUAGE == 'javascript' || $LANGUAGE == 'all' ]]; then
-    build_js_common
+    build_js_common_requesters
 fi

@@ -1,13 +1,11 @@
-import {
-  PersonalizationApi,
-  EchoRequester,
-} from '@algolia/client-personalization';
-import type { EchoResponse } from '@algolia/client-personalization';
+import { EchoRequester } from '@algolia/client-common';
+import type { EchoResponse } from '@algolia/client-common';
+import { personalizationApi } from '@algolia/client-personalization';
 
 const appId = process.env.ALGOLIA_APPLICATION_ID || 'test_app_id';
 const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'test_api_key';
 
-const client = new PersonalizationApi(appId, apiKey, 'us', {
+const client = personalizationApi(appId, apiKey, 'us', {
   requester: new EchoRequester(),
 });
 

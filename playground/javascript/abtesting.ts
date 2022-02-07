@@ -1,4 +1,4 @@
-import { AbtestingApi, ApiError } from '@algolia/client-abtesting';
+import { abtestingApi, ApiError } from '@algolia/client-abtesting';
 import dotenv from 'dotenv';
 
 dotenv.config({ path: '../.env' });
@@ -8,7 +8,7 @@ const apiKey =
   process.env.ALGOLIA_ANALYTICS_KEY || '**** ANALYTICS_API_KEY *****';
 
 // Init client with appId and apiKey
-const client = new AbtestingApi(appId, apiKey, 'de');
+const client = abtestingApi(appId, apiKey, 'de');
 
 async function testABTesting() {
   try {

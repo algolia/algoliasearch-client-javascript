@@ -35,7 +35,7 @@ export async function generateTests(
     template,
     {
       import: packageNames[language][client],
-      client: createClientName(client),
+      client: createClientName(client, language),
       blocks: cts,
       hasRegionalHost: openapitools['generator-cli'].generators[
         `${language}-${client}`

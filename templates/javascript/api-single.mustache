@@ -1,5 +1,5 @@
-import { shuffle, Transporter } from '@algolia/client-common';
-import type { Headers, Requester, Host, Request, RequestOptions } from '@algolia/client-common';
+import { shuffle, Transporter, createAuth, getUserAgent } from '@algolia/client-common';
+import type { CreateClientOptions, Headers, Host, Request } from '@algolia/client-common';
 
 {{#imports}}
 import { {{classname}} } from '{{filename}}';
@@ -14,124 +14,71 @@ export const version = '{{packageVersion}}';
 */
 {{/description}}
 
-export class {{classname}} {
-  protected authentications = {
-    apiKey: 'Algolia-API-Key',
-    appId: 'Algolia-Application-Id',
-  };
+{{#hasRegionalHost}}
+export type Region = {{#isDeHost}}'de'{{/isDeHost}}{{#isEuHost}}'eu'{{/isEuHost}} | 'us';
+{{/hasRegionalHost}}
 
-  private transporter: Transporter;
-
-  private applyAuthenticationHeaders(
-    requestOptions: RequestOptions
-  ): RequestOptions {
-    if (requestOptions?.headers) {
-      return {
-        ...requestOptions,
-        headers: {
-          ...requestOptions.headers,
-          'X-Algolia-API-Key': this.authentications.apiKey,
-          'X-Algolia-Application-Id': this.authentications.appId,
-        },
-      };
-    }
-
-    return requestOptions;
-  }
-  
-  private sendRequest<TResponse>(
-    request: Request,
-    requestOptions: RequestOptions
-  ): Promise<TResponse> {
-    return this.transporter.request(
-      request,
-      this.applyAuthenticationHeaders(requestOptions)
-    );
-  }
-
-  constructor(
-      appId: string,
-      apiKey: string,
-      {{#hasRegionalHost}}
-        region{{#fallbackToAliasHost}}?{{/fallbackToAliasHost}}: {{#isDeHost}}'de'{{/isDeHost}}{{#isEuHost}}'eu'{{/isEuHost}} | 'us',
-      {{/hasRegionalHost}}
-      options?: {requester?: Requester, hosts?: Host[]}
-    ) {
-    if (!appId) {
-      throw new Error("`appId` is missing.");
-    }
-
-    if (!apiKey) {
-      throw new Error("`apiKey` is missing.");
-    }
-
-    {{#hasRegionalHost}}
-    {{^fallbackToAliasHost}}
-    if (!region) {
-      throw new Error("`region` is missing.");
-    }
-    {{/fallbackToAliasHost}}
-    {{/hasRegionalHost}}
-
-    this.setAuthentication({ appId, apiKey });
-
-    this.transporter = new Transporter({
-      hosts: options?.hosts ?? this.getDefaultHosts(
-        {{^hasRegionalHost}}appId{{/hasRegionalHost}}
-        {{#hasRegionalHost}}region{{/hasRegionalHost}}
-    ),
-      baseHeaders: {
-        'content-type': 'application/x-www-form-urlencoded'
+{{^hasRegionalHost}}
+function getDefaultHosts(appId: string): Host[] {
+  return (
+    [
+      {
+        url: `${appId}-dsn.algolia.net`,
+        accept: 'read',
+        protocol: 'https',
       },
-      userAgent: 'Algolia for Javascript ({{packageVersion}})',
-      timeouts: {
-        connect: 2,
-        read: 5,
-        write: 30,
+      {
+        url: `${appId}.algolia.net`,
+        accept: 'write',
+        protocol: 'https',
       },
-      requester: options?.requester,
-    });
-  }
+    ] as Host[]
+  ).concat(
+    shuffle([
+      {
+        url: `${appId}-1.algolianet.com`,
+        accept: 'readWrite',
+        protocol: 'https',
+      },
+      {
+        url: `${appId}-2.algolianet.com`,
+        accept: 'readWrite',
+        protocol: 'https',
+      },
+      {
+        url: `${appId}-3.algolianet.com`,
+        accept: 'readWrite',
+        protocol: 'https',
+      },
+    ])
+  );
+}
+{{/hasRegionalHost}}
 
-  {{^hasRegionalHost}}
-  public getDefaultHosts(appId: string): Host[] {
-    return (
-        [
-          { url: `${appId}-dsn.algolia.net`, accept: 'read', protocol: 'https' },
-          { url: `${appId}.algolia.net`, accept: 'write', protocol: 'https' },
-        ] as Host[]
-      ).concat(
-        shuffle([
-          { url: `${appId}-1.algolianet.com`, accept: 'readWrite', protocol: 'https' },
-          { url: `${appId}-2.algolianet.com`, accept: 'readWrite', protocol: 'https' },
-          { url: `${appId}-3.algolianet.com`, accept: 'readWrite', protocol: 'https' },
-        ])
-      );
-  }
-  {{/hasRegionalHost}}
+{{#hasRegionalHost}}
+function getDefaultHosts(region{{#fallbackToAliasHost}}?{{/fallbackToAliasHost}}: Region): Host[] {
+  {{#fallbackToAliasHost}}const regionHost = region ? `.${region}.` : '.';{{/fallbackToAliasHost}}
 
-  {{#hasRegionalHost}}
-    public getDefaultHosts(region{{#fallbackToAliasHost}}?{{/fallbackToAliasHost}}: {{#isDeHost}}'de'{{/isDeHost}}{{#isEuHost}}'eu'{{/isEuHost}} | 'us'): Host[] {
-      {{#fallbackToAliasHost}}const regionHost = region ? `.${region}.` : '.';{{/fallbackToAliasHost}}
+  return [{ url: `{{{host}}}{{#fallbackToAliasHost}}${regionHost}{{/fallbackToAliasHost}}{{^fallbackToAliasHost}}.${region}.{{/fallbackToAliasHost}}algolia.{{#topLevelDomain}}{{.}}{{/topLevelDomain}}{{^topLevelDomain}}com{{/topLevelDomain}}`, accept: 'readWrite', protocol: 'https' }];
+}
+{{/hasRegionalHost}}
 
-      return [{ url: `{{{host}}}{{#fallbackToAliasHost}}${regionHost}{{/fallbackToAliasHost}}{{^fallbackToAliasHost}}.${region}.{{/fallbackToAliasHost}}algolia.{{#topLevelDomain}}{{.}}{{/topLevelDomain}}{{^topLevelDomain}}com{{/topLevelDomain}}`, accept: 'readWrite', protocol: 'https' }];
-    }
-  {{/hasRegionalHost}}
-
-  public setRequest(requester: Requester): void {
-    this.transporter.setRequester(requester);
-  }
-
-  public setHosts(hosts: Host[]): void {
-    this.transporter.setHosts(hosts);
-  }
-
-  public setAuthentication({ appId, apiKey }): void {
-    this.authentications = {
-      apiKey,
-      appId,
-    };
-  }
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+export const create{{capitalizedApiName}}Api = (options: CreateClientOptions{{#hasRegionalHost}} & {region{{#fallbackToAliasHost}}?{{/fallbackToAliasHost}}: Region }{{/hasRegionalHost}}) => {
+  const auth = createAuth(options.appId, options.apiKey, options.authMode);
+  const transporter = new Transporter({
+    hosts: options?.hosts ?? getDefaultHosts({{^hasRegionalHost}}options.appId{{/hasRegionalHost}}{{#hasRegionalHost}}options.region{{/hasRegionalHost}}),
+    baseHeaders: {
+      'content-type': 'application/x-www-form-urlencoded',
+    },
+    userAgent: getUserAgent({
+      userAgents: options.userAgents,
+      client: '{{{capitalizedApiName}}}',
+      version,
+    }),
+    timeouts: options.timeouts,
+    requester: options.requester,
+  });
 
   {{#operation}}
   /**
@@ -179,7 +126,7 @@ export class {{classname}} {
     {{/bodyParams.0}}
   {{/allParams.0}}
   */
-  public {{nickname}}(
+  function {{nickname}}(
     {{#allParams.0}}
       {{^bodyParams.0}}
         {
@@ -267,15 +214,21 @@ export class {{classname}} {
       {{/bodyParam}}
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
-      queryParameters
-    };
-
-    return this.sendRequest(request, requestOptions);
+    return transporter.request(request, {
+      queryParameters,
+      headers: {
+        ...headers,
+        ...auth.headers(),
+      },
+    });
   }
+
   {{/operation}}
+
+  return { {{#operation}}{{nickname}},{{/operation}} };
 }
+
+export type {{capitalizedApiName}}Api = ReturnType<typeof create{{capitalizedApiName}}Api>;
 
 {{#operation}}
 {{#allParams.0}}

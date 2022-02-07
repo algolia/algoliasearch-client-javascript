@@ -1,10 +1,9 @@
-import { Transporter } from '@algolia/client-common';
+import { Transporter, createAuth, getUserAgent } from '@algolia/client-common';
 import type {
+  CreateClientOptions,
   Headers,
-  Requester,
   Host,
   Request,
-  RequestOptions,
 } from '@algolia/client-common';
 
 import type { DeleteUserProfileResponse } from '../model/deleteUserProfileResponse';
@@ -14,100 +13,36 @@ import type { SetPersonalizationStrategyResponse } from '../model/setPersonaliza
 
 export const version = '5.0.0';
 
-export class PersonalizationApi {
-  protected authentications = {
-    apiKey: 'Algolia-API-Key',
-    appId: 'Algolia-Application-Id',
-  };
+export type Region = 'eu' | 'us';
 
-  private transporter: Transporter;
+function getDefaultHosts(region: Region): Host[] {
+  return [
+    {
+      url: `personalization.${region}.algolia.com`,
+      accept: 'readWrite',
+      protocol: 'https',
+    },
+  ];
+}
 
-  private applyAuthenticationHeaders(
-    requestOptions: RequestOptions
-  ): RequestOptions {
-    if (requestOptions?.headers) {
-      return {
-        ...requestOptions,
-        headers: {
-          ...requestOptions.headers,
-          'X-Algolia-API-Key': this.authentications.apiKey,
-          'X-Algolia-Application-Id': this.authentications.appId,
-        },
-      };
-    }
-
-    return requestOptions;
-  }
-
-  private sendRequest<TResponse>(
-    request: Request,
-    requestOptions: RequestOptions
-  ): Promise<TResponse> {
-    return this.transporter.request(
-      request,
-      this.applyAuthenticationHeaders(requestOptions)
-    );
-  }
-
-  constructor(
-    appId: string,
-    apiKey: string,
-    region: 'eu' | 'us',
-    options?: { requester?: Requester; hosts?: Host[] }
-  ) {
-    if (!appId) {
-      throw new Error('`appId` is missing.');
-    }
-
-    if (!apiKey) {
-      throw new Error('`apiKey` is missing.');
-    }
-
-    if (!region) {
-      throw new Error('`region` is missing.');
-    }
-
-    this.setAuthentication({ appId, apiKey });
-
-    this.transporter = new Transporter({
-      hosts: options?.hosts ?? this.getDefaultHosts(region),
-      baseHeaders: {
-        'content-type': 'application/x-www-form-urlencoded',
-      },
-      userAgent: 'Algolia for Javascript (5.0.0)',
-      timeouts: {
-        connect: 2,
-        read: 5,
-        write: 30,
-      },
-      requester: options?.requester,
-    });
-  }
-
-  getDefaultHosts(region: 'eu' | 'us'): Host[] {
-    return [
-      {
-        url: `personalization.${region}.algolia.com`,
-        accept: 'readWrite',
-        protocol: 'https',
-      },
-    ];
-  }
-
-  setRequest(requester: Requester): void {
-    this.transporter.setRequester(requester);
-  }
-
-  setHosts(hosts: Host[]): void {
-    this.transporter.setHosts(hosts);
-  }
-
-  setAuthentication({ appId, apiKey }): void {
-    this.authentications = {
-      apiKey,
-      appId,
-    };
-  }
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+export const createPersonalizationApi = (
+  options: CreateClientOptions & { region: Region }
+) => {
+  const auth = createAuth(options.appId, options.apiKey, options.authMode);
+  const transporter = new Transporter({
+    hosts: options?.hosts ?? getDefaultHosts(options.region),
+    baseHeaders: {
+      'content-type': 'application/x-www-form-urlencoded',
+    },
+    userAgent: getUserAgent({
+      userAgents: options.userAgents,
+      client: 'Personalization',
+      version,
+    }),
+    timeouts: options.timeouts,
+    requester: options.requester,
+  });
 
   /**
    * Returns, as part of the response, a date until which the data can safely be considered as deleted for the given user. This means that if you send events for the given user before this date, they will be ignored. Any data received after the deletedUntil date will start building a new user profile. It might take a couple hours before for the deletion request to be fully processed.
@@ -116,7 +51,7 @@ export class PersonalizationApi {
    * @param deleteUserProfile - The deleteUserProfile object.
    * @param deleteUserProfile.userToken - UserToken representing the user for which to fetch the Personalization profile.
    */
-  deleteUserProfile({
+  function deleteUserProfile({
     userToken,
   }: DeleteUserProfileProps): Promise<DeleteUserProfileResponse> {
     const path = '/1/profiles/{userToken}'.replace(
@@ -137,19 +72,21 @@ export class PersonalizationApi {
       path,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers: {
+        ...headers,
+        ...auth.headers(),
+      },
+    });
   }
+
   /**
    * The strategy contains information on the events and facets that impact user profiles and personalized search results.
    *
    * @summary Get the current personalization strategy.
    */
-  getPersonalizationStrategy(): Promise<PersonalizationStrategyParams> {
+  function getPersonalizationStrategy(): Promise<PersonalizationStrategyParams> {
     const path = '/1/strategies/personalization';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
@@ -159,13 +96,15 @@ export class PersonalizationApi {
       path,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers: {
+        ...headers,
+        ...auth.headers(),
+      },
+    });
   }
+
   /**
    * The profile is structured by facet name used in the strategy. Each facet value is mapped to its score. Each score represents the user affinity for a specific facet value given the userToken past events and the Personalization strategy defined. Scores are bounded to 20. The last processed event timestamp is provided using the ISO 8601 format for debugging purposes.
    *
@@ -173,7 +112,7 @@ export class PersonalizationApi {
    * @param getUserTokenProfile - The getUserTokenProfile object.
    * @param getUserTokenProfile.userToken - UserToken representing the user for which to fetch the Personalization profile.
    */
-  getUserTokenProfile({
+  function getUserTokenProfile({
     userToken,
   }: GetUserTokenProfileProps): Promise<GetUserTokenResponse> {
     const path = '/1/profiles/personalization/{userToken}'.replace(
@@ -194,20 +133,22 @@ export class PersonalizationApi {
       path,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers: {
+        ...headers,
+        ...auth.headers(),
+      },
+    });
   }
+
   /**
    * A strategy defines the events and facets that impact user profiles and personalized search results.
    *
    * @summary Set a new personalization strategy.
    * @param personalizationStrategyParams - The personalizationStrategyParams object.
    */
-  setPersonalizationStrategy(
+  function setPersonalizationStrategy(
     personalizationStrategyParams: PersonalizationStrategyParams
   ): Promise<SetPersonalizationStrategyResponse> {
     const path = '/1/strategies/personalization';
@@ -242,14 +183,24 @@ export class PersonalizationApi {
       data: personalizationStrategyParams,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers: {
+        ...headers,
+        ...auth.headers(),
+      },
+    });
   }
-}
+
+  return {
+    deleteUserProfile,
+    getPersonalizationStrategy,
+    getUserTokenProfile,
+    setPersonalizationStrategy,
+  };
+};
+
+export type PersonalizationApi = ReturnType<typeof createPersonalizationApi>;
 
 export type DeleteUserProfileProps = {
   /**

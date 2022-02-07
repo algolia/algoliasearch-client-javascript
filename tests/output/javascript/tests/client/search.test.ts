@@ -1,11 +1,13 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 // @ts-nocheck
-import { SearchApi, EchoRequester } from '@algolia/client-search';
+import { EchoRequester } from '@algolia/client-common';
+import { searchApi } from '@algolia/client-search';
 
 const appId = process.env.ALGOLIA_APPLICATION_ID || 'Algolia-API-Key';
 const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'Algolia-Application-Id';
 
-function createClient(): SearchApi {
-  return new SearchApi(appId, apiKey, { requester: new EchoRequester() });
+function createClient() {
+  return searchApi(appId, apiKey, { requester: new EchoRequester() });
 }
 
 describe('parameters', () => {
@@ -13,14 +15,8 @@ describe('parameters', () => {
     let actual;
     await expect(
       new Promise((resolve, reject) => {
-        const $client = new SearchApi(
-          '',
-          '',
+        const $client = searchApi('', '', { requester: new EchoRequester() });
 
-          {
-            requester: new EchoRequester(),
-          }
-        );
         actual = $client;
 
         if (actual instanceof Promise) {
@@ -33,14 +29,10 @@ describe('parameters', () => {
 
     await expect(
       new Promise((resolve, reject) => {
-        const $client = new SearchApi(
-          '',
-          'my-api-key',
+        const $client = searchApi('', 'my-api-key', {
+          requester: new EchoRequester(),
+        });
 
-          {
-            requester: new EchoRequester(),
-          }
-        );
         actual = $client;
 
         if (actual instanceof Promise) {
@@ -53,14 +45,10 @@ describe('parameters', () => {
 
     await expect(
       new Promise((resolve, reject) => {
-        const $client = new SearchApi(
-          'my-app-id',
-          '',
+        const $client = searchApi('my-app-id', '', {
+          requester: new EchoRequester(),
+        });
 
-          {
-            requester: new EchoRequester(),
-          }
-        );
         actual = $client;
 
         if (actual instanceof Promise) {

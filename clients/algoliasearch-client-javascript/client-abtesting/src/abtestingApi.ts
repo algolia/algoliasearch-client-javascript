@@ -1,10 +1,9 @@
-import { Transporter } from '@algolia/client-common';
+import { Transporter, createAuth, getUserAgent } from '@algolia/client-common';
 import type {
+  CreateClientOptions,
   Headers,
-  Requester,
   Host,
   Request,
-  RequestOptions,
 } from '@algolia/client-common';
 
 import type { ABTest } from '../model/aBTest';
@@ -14,98 +13,38 @@ import type { ListABTestsResponse } from '../model/listABTestsResponse';
 
 export const version = '5.0.0';
 
-export class AbtestingApi {
-  protected authentications = {
-    apiKey: 'Algolia-API-Key',
-    appId: 'Algolia-Application-Id',
-  };
+export type Region = 'de' | 'us';
 
-  private transporter: Transporter;
+function getDefaultHosts(region?: Region): Host[] {
+  const regionHost = region ? `.${region}.` : '.';
 
-  private applyAuthenticationHeaders(
-    requestOptions: RequestOptions
-  ): RequestOptions {
-    if (requestOptions?.headers) {
-      return {
-        ...requestOptions,
-        headers: {
-          ...requestOptions.headers,
-          'X-Algolia-API-Key': this.authentications.apiKey,
-          'X-Algolia-Application-Id': this.authentications.appId,
-        },
-      };
-    }
+  return [
+    {
+      url: `analytics${regionHost}algolia.com`,
+      accept: 'readWrite',
+      protocol: 'https',
+    },
+  ];
+}
 
-    return requestOptions;
-  }
-
-  private sendRequest<TResponse>(
-    request: Request,
-    requestOptions: RequestOptions
-  ): Promise<TResponse> {
-    return this.transporter.request(
-      request,
-      this.applyAuthenticationHeaders(requestOptions)
-    );
-  }
-
-  constructor(
-    appId: string,
-    apiKey: string,
-    region?: 'de' | 'us',
-    options?: { requester?: Requester; hosts?: Host[] }
-  ) {
-    if (!appId) {
-      throw new Error('`appId` is missing.');
-    }
-
-    if (!apiKey) {
-      throw new Error('`apiKey` is missing.');
-    }
-
-    this.setAuthentication({ appId, apiKey });
-
-    this.transporter = new Transporter({
-      hosts: options?.hosts ?? this.getDefaultHosts(region),
-      baseHeaders: {
-        'content-type': 'application/x-www-form-urlencoded',
-      },
-      userAgent: 'Algolia for Javascript (5.0.0)',
-      timeouts: {
-        connect: 2,
-        read: 5,
-        write: 30,
-      },
-      requester: options?.requester,
-    });
-  }
-
-  getDefaultHosts(region?: 'de' | 'us'): Host[] {
-    const regionHost = region ? `.${region}.` : '.';
-
-    return [
-      {
-        url: `analytics${regionHost}algolia.com`,
-        accept: 'readWrite',
-        protocol: 'https',
-      },
-    ];
-  }
-
-  setRequest(requester: Requester): void {
-    this.transporter.setRequester(requester);
-  }
-
-  setHosts(hosts: Host[]): void {
-    this.transporter.setHosts(hosts);
-  }
-
-  setAuthentication({ appId, apiKey }): void {
-    this.authentications = {
-      apiKey,
-      appId,
-    };
-  }
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+export const createAbtestingApi = (
+  options: CreateClientOptions & { region?: Region }
+) => {
+  const auth = createAuth(options.appId, options.apiKey, options.authMode);
+  const transporter = new Transporter({
+    hosts: options?.hosts ?? getDefaultHosts(options.region),
+    baseHeaders: {
+      'content-type': 'application/x-www-form-urlencoded',
+    },
+    userAgent: getUserAgent({
+      userAgents: options.userAgents,
+      client: 'Abtesting',
+      version,
+    }),
+    timeouts: options.timeouts,
+    requester: options.requester,
+  });
 
   /**
    * Creates a new A/B test with provided configuration. You can set an A/B test on two different indices with different settings, or on the same index with different search parameters by providing a customSearchParameters setting on one of the variants.
@@ -113,7 +52,9 @@ export class AbtestingApi {
    * @summary Creates a new A/B test with provided configuration.
    * @param addABTestsRequest - The addABTestsRequest object.
    */
-  addABTests(addABTestsRequest: AddABTestsRequest): Promise<ABTestResponse> {
+  function addABTests(
+    addABTestsRequest: AddABTestsRequest
+  ): Promise<ABTestResponse> {
     const path = '/2/abtests';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
@@ -146,13 +87,15 @@ export class AbtestingApi {
       data: addABTestsRequest,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers: {
+        ...headers,
+        ...auth.headers(),
+      },
+    });
   }
+
   /**
    * Deletes the A/B Test and removes all associated metadata & metrics.
    *
@@ -160,7 +103,7 @@ export class AbtestingApi {
    * @param deleteABTest - The deleteABTest object.
    * @param deleteABTest.id - The A/B test ID.
    */
-  deleteABTest({ id }: DeleteABTestProps): Promise<ABTestResponse> {
+  function deleteABTest({ id }: DeleteABTestProps): Promise<ABTestResponse> {
     const path = '/2/abtests/{id}'.replace(
       '{id}',
       encodeURIComponent(String(id))
@@ -179,13 +122,15 @@ export class AbtestingApi {
       path,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers: {
+        ...headers,
+        ...auth.headers(),
+      },
+    });
   }
+
   /**
    * Returns metadata and metrics for A/B test id. Behaves in the same way as GET /2/abtests however the endpoint will return 403.
    *
@@ -193,7 +138,7 @@ export class AbtestingApi {
    * @param getABTest - The getABTest object.
    * @param getABTest.id - The A/B test ID.
    */
-  getABTest({ id }: GetABTestProps): Promise<ABTest> {
+  function getABTest({ id }: GetABTestProps): Promise<ABTest> {
     const path = '/2/abtests/{id}'.replace(
       '{id}',
       encodeURIComponent(String(id))
@@ -210,13 +155,15 @@ export class AbtestingApi {
       path,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers: {
+        ...headers,
+        ...auth.headers(),
+      },
+    });
   }
+
   /**
    * Fetch all existing A/B tests for App that are available for the current API Key. Returns an array of metadata and metrics. When no data has been processed, the metrics will be returned as null.
    *
@@ -225,7 +172,7 @@ export class AbtestingApi {
    * @param listABTests.offset - Position of the starting record. Used for paging. 0 is the first record.
    * @param listABTests.limit - Number of records to return. Limit is the size of the page.
    */
-  listABTests({
+  function listABTests({
     offset,
     limit,
   }: ListABTestsProps): Promise<ListABTestsResponse> {
@@ -246,13 +193,15 @@ export class AbtestingApi {
       path,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers: {
+        ...headers,
+        ...auth.headers(),
+      },
+    });
   }
+
   /**
    * Marks the A/B test as stopped. At this point, the test is over and cannot be restarted. As a result, your application is back to normal: index A will perform as usual, receiving 100% of all search requests. Associated metadata and metrics are still stored.
    *
@@ -260,7 +209,7 @@ export class AbtestingApi {
    * @param stopABTest - The stopABTest object.
    * @param stopABTest.id - The A/B test ID.
    */
-  stopABTest({ id }: StopABTestProps): Promise<ABTestResponse> {
+  function stopABTest({ id }: StopABTestProps): Promise<ABTestResponse> {
     const path = '/2/abtests/{id}/stop'.replace(
       '{id}',
       encodeURIComponent(String(id))
@@ -277,14 +226,19 @@ export class AbtestingApi {
       path,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers: {
+        ...headers,
+        ...auth.headers(),
+      },
+    });
   }
-}
+
+  return { addABTests, deleteABTest, getABTest, listABTests, stopABTest };
+};
+
+export type AbtestingApi = ReturnType<typeof createAbtestingApi>;
 
 export type DeleteABTestProps = {
   /**

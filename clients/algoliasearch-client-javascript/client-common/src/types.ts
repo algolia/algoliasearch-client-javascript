@@ -71,3 +71,39 @@ export type Timeouts = {
   readonly read: number;
   readonly write: number;
 };
+
+export type UserAgentOptions = {
+  /**
+   * The segment. Usually the integration name.
+   */
+  readonly segment: string;
+
+  /**
+   * The version. Usually the integration version.
+   */
+  readonly version?: string;
+};
+
+export type UserAgent = {
+  /**
+   * The raw value of the user agent.
+   */
+  value: string;
+
+  /**
+   * Mutates the current user agent ading the given user agent options.
+   */
+  readonly add: (options: UserAgentOptions) => UserAgent;
+};
+
+export type AuthMode = 'WithinHeaders' | 'WithinQueryParameters';
+
+export type CreateClientOptions = {
+  appId: string;
+  apiKey: string;
+  requester: any;
+  timeouts: Timeouts;
+  userAgents: UserAgentOptions[];
+  hosts?: Host[];
+  authMode?: AuthMode;
+};

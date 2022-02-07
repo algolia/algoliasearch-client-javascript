@@ -90,7 +90,7 @@ export async function generateTests(
     template,
     {
       import: packageNames[language][client],
-      client: createClientName(client),
+      client: createClientName(client, language),
       blocks: modifyForMustache(testsBlocks),
       hasRegionalHost: openapitools['generator-cli'].generators[
         `${language}-${client}`

@@ -1,10 +1,11 @@
-import { AbtestingApi, EchoRequester } from '@algolia/client-abtesting';
-import type { EchoResponse } from '@algolia/client-abtesting';
+import { abtestingApi } from '@algolia/client-abtesting';
+import { EchoRequester } from '@algolia/client-common';
+import type { EchoResponse } from '@algolia/client-common';
 
 const appId = process.env.ALGOLIA_APPLICATION_ID || 'test_app_id';
 const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'test_api_key';
 
-const client = new AbtestingApi(appId, apiKey, 'us', {
+const client = abtestingApi(appId, apiKey, 'us', {
   requester: new EchoRequester(),
 });
 

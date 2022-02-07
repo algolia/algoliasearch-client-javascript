@@ -1,10 +1,9 @@
-import { Transporter } from '@algolia/client-common';
+import { Transporter, createAuth, getUserAgent } from '@algolia/client-common';
 import type {
+  CreateClientOptions,
   Headers,
-  Requester,
   Host,
   Request,
-  RequestOptions,
 } from '@algolia/client-common';
 
 import type { InsightEvents } from '../model/insightEvents';
@@ -12,98 +11,38 @@ import type { PushEventsResponse } from '../model/pushEventsResponse';
 
 export const version = '5.0.0';
 
-export class InsightsApi {
-  protected authentications = {
-    apiKey: 'Algolia-API-Key',
-    appId: 'Algolia-Application-Id',
-  };
+export type Region = 'de' | 'us';
 
-  private transporter: Transporter;
+function getDefaultHosts(region?: Region): Host[] {
+  const regionHost = region ? `.${region}.` : '.';
 
-  private applyAuthenticationHeaders(
-    requestOptions: RequestOptions
-  ): RequestOptions {
-    if (requestOptions?.headers) {
-      return {
-        ...requestOptions,
-        headers: {
-          ...requestOptions.headers,
-          'X-Algolia-API-Key': this.authentications.apiKey,
-          'X-Algolia-Application-Id': this.authentications.appId,
-        },
-      };
-    }
+  return [
+    {
+      url: `insights${regionHost}algolia.io`,
+      accept: 'readWrite',
+      protocol: 'https',
+    },
+  ];
+}
 
-    return requestOptions;
-  }
-
-  private sendRequest<TResponse>(
-    request: Request,
-    requestOptions: RequestOptions
-  ): Promise<TResponse> {
-    return this.transporter.request(
-      request,
-      this.applyAuthenticationHeaders(requestOptions)
-    );
-  }
-
-  constructor(
-    appId: string,
-    apiKey: string,
-    region?: 'de' | 'us',
-    options?: { requester?: Requester; hosts?: Host[] }
-  ) {
-    if (!appId) {
-      throw new Error('`appId` is missing.');
-    }
-
-    if (!apiKey) {
-      throw new Error('`apiKey` is missing.');
-    }
-
-    this.setAuthentication({ appId, apiKey });
-
-    this.transporter = new Transporter({
-      hosts: options?.hosts ?? this.getDefaultHosts(region),
-      baseHeaders: {
-        'content-type': 'application/x-www-form-urlencoded',
-      },
-      userAgent: 'Algolia for Javascript (5.0.0)',
-      timeouts: {
-        connect: 2,
-        read: 5,
-        write: 30,
-      },
-      requester: options?.requester,
-    });
-  }
-
-  getDefaultHosts(region?: 'de' | 'us'): Host[] {
-    const regionHost = region ? `.${region}.` : '.';
-
-    return [
-      {
-        url: `insights${regionHost}algolia.io`,
-        accept: 'readWrite',
-        protocol: 'https',
-      },
-    ];
-  }
-
-  setRequest(requester: Requester): void {
-    this.transporter.setRequester(requester);
-  }
-
-  setHosts(hosts: Host[]): void {
-    this.transporter.setHosts(hosts);
-  }
-
-  setAuthentication({ appId, apiKey }): void {
-    this.authentications = {
-      apiKey,
-      appId,
-    };
-  }
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+export const createInsightsApi = (
+  options: CreateClientOptions & { region?: Region }
+) => {
+  const auth = createAuth(options.appId, options.apiKey, options.authMode);
+  const transporter = new Transporter({
+    hosts: options?.hosts ?? getDefaultHosts(options.region),
+    baseHeaders: {
+      'content-type': 'application/x-www-form-urlencoded',
+    },
+    userAgent: getUserAgent({
+      userAgents: options.userAgents,
+      client: 'Insights',
+      version,
+    }),
+    timeouts: options.timeouts,
+    requester: options.requester,
+  });
 
   /**
    * This command pushes an array of events.
@@ -111,7 +50,9 @@ export class InsightsApi {
    * @summary Pushes an array of events.
    * @param insightEvents - The insightEvents object.
    */
-  pushEvents(insightEvents: InsightEvents): Promise<PushEventsResponse> {
+  function pushEvents(
+    insightEvents: InsightEvents
+  ): Promise<PushEventsResponse> {
     const path = '/1/events';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
@@ -134,11 +75,16 @@ export class InsightsApi {
       data: insightEvents,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers: {
+        ...headers,
+        ...auth.headers(),
+      },
+    });
   }
-}
+
+  return { pushEvents };
+};
+
+export type InsightsApi = ReturnType<typeof createInsightsApi>;

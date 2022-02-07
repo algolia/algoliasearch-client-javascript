@@ -1,10 +1,11 @@
-import { SourcesApi, EchoRequester } from '@algolia/client-sources';
-import type { EchoResponse } from '@algolia/client-sources';
+import { EchoRequester } from '@algolia/client-common';
+import type { EchoResponse } from '@algolia/client-common';
+import { sourcesApi } from '@algolia/client-sources';
 
 const appId = process.env.ALGOLIA_APPLICATION_ID || 'test_app_id';
 const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'test_api_key';
 
-const client = new SourcesApi(appId, apiKey, 'us', {
+const client = sourcesApi(appId, apiKey, 'us', {
   requester: new EchoRequester(),
 });
 

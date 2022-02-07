@@ -1,10 +1,11 @@
-import { AnalyticsApi, EchoRequester } from '@algolia/client-analytics';
-import type { EchoResponse } from '@algolia/client-analytics';
+import { analyticsApi } from '@algolia/client-analytics';
+import { EchoRequester } from '@algolia/client-common';
+import type { EchoResponse } from '@algolia/client-common';
 
 const appId = process.env.ALGOLIA_APPLICATION_ID || 'test_app_id';
 const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'test_api_key';
 
-const client = new AnalyticsApi(appId, apiKey, 'us', {
+const client = analyticsApi(appId, apiKey, 'us', {
   requester: new EchoRequester(),
 });
 

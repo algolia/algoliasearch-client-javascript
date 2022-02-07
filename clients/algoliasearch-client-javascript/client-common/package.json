@@ -13,7 +13,7 @@
     "clean": "rm -rf dist/"
   },
   "engines": {
-    "node": "^16.0.0",
+    "node": "^14.0.0",
     "yarn": "^3.0.0"
   },
   "devDependencies": {

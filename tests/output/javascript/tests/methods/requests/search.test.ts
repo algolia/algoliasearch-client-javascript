@@ -1,10 +1,11 @@
-import { SearchApi, EchoRequester } from '@algolia/client-search';
-import type { EchoResponse } from '@algolia/client-search';
+import { EchoRequester } from '@algolia/client-common';
+import type { EchoResponse } from '@algolia/client-common';
+import { searchApi } from '@algolia/client-search';
 
 const appId = process.env.ALGOLIA_APPLICATION_ID || 'test_app_id';
 const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'test_api_key';
 
-const client = new SearchApi(appId, apiKey, { requester: new EchoRequester() });
+const client = searchApi(appId, apiKey, { requester: new EchoRequester() });
 
 describe('addApiKey', () => {
   test('addApiKey', async () => {

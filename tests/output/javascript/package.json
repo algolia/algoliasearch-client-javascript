@@ -8,6 +8,7 @@
   "dependencies": {
     "@algolia/client-abtesting": "5.0.0",
     "@algolia/client-analytics": "5.0.0",
+    "@algolia/client-common": "5.0.0",
     "@algolia/client-insights": "5.0.0",
     "@algolia/client-personalization": "5.0.0",
     "@algolia/client-query-suggestions": "5.0.0",

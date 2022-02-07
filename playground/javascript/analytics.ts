@@ -1,4 +1,4 @@
-import { AnalyticsApi, ApiError } from '@algolia/client-analytics';
+import { analyticsApi, ApiError } from '@algolia/client-analytics';
 import dotenv from 'dotenv';
 
 dotenv.config({ path: '../.env' });
@@ -10,7 +10,7 @@ const apiKey =
 const analyticsIndex = process.env.ANALYTICS_INDEX || 'test_index';
 
 // Init client with appId and apiKey
-const client = new AnalyticsApi(appId, apiKey, 'de');
+const client = analyticsApi(appId, apiKey, 'de');
 
 async function testAnalytics() {
   try {

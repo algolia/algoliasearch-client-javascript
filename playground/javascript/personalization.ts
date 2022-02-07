@@ -1,4 +1,4 @@
-import { PersonalizationApi, ApiError } from '@algolia/client-personalization';
+import { personalizationApi, ApiError } from '@algolia/client-personalization';
 import dotenv from 'dotenv';
 
 dotenv.config({ path: '../.env' });
@@ -8,7 +8,7 @@ const apiKey =
   process.env.ALGOLIA_RECOMMENDATION_KEY || '**** RECOMMENDATION_API_KEY *****';
 
 // Init client with appId and apiKey
-const client = new PersonalizationApi(appId, apiKey, 'eu');
+const client = personalizationApi(appId, apiKey, 'eu');
 
 async function testPersonalization() {
   try {

@@ -1,10 +1,9 @@
-import { Transporter } from '@algolia/client-common';
+import { Transporter, createAuth, getUserAgent } from '@algolia/client-common';
 import type {
+  CreateClientOptions,
   Headers,
-  Requester,
   Host,
   Request,
-  RequestOptions,
 } from '@algolia/client-common';
 
 import type { PostIngestUrlResponse } from '../model/postIngestUrlResponse';
@@ -12,100 +11,36 @@ import type { PostURLJob } from '../model/postURLJob';
 
 export const version = '0.0.1';
 
-export class SourcesApi {
-  protected authentications = {
-    apiKey: 'Algolia-API-Key',
-    appId: 'Algolia-Application-Id',
-  };
+export type Region = 'de' | 'us';
 
-  private transporter: Transporter;
+function getDefaultHosts(region: Region): Host[] {
+  return [
+    {
+      url: `data.${region}.algolia.com`,
+      accept: 'readWrite',
+      protocol: 'https',
+    },
+  ];
+}
 
-  private applyAuthenticationHeaders(
-    requestOptions: RequestOptions
-  ): RequestOptions {
-    if (requestOptions?.headers) {
-      return {
-        ...requestOptions,
-        headers: {
-          ...requestOptions.headers,
-          'X-Algolia-API-Key': this.authentications.apiKey,
-          'X-Algolia-Application-Id': this.authentications.appId,
-        },
-      };
-    }
-
-    return requestOptions;
-  }
-
-  private sendRequest<TResponse>(
-    request: Request,
-    requestOptions: RequestOptions
-  ): Promise<TResponse> {
-    return this.transporter.request(
-      request,
-      this.applyAuthenticationHeaders(requestOptions)
-    );
-  }
-
-  constructor(
-    appId: string,
-    apiKey: string,
-    region: 'de' | 'us',
-    options?: { requester?: Requester; hosts?: Host[] }
-  ) {
-    if (!appId) {
-      throw new Error('`appId` is missing.');
-    }
-
-    if (!apiKey) {
-      throw new Error('`apiKey` is missing.');
-    }
-
-    if (!region) {
-      throw new Error('`region` is missing.');
-    }
-
-    this.setAuthentication({ appId, apiKey });
-
-    this.transporter = new Transporter({
-      hosts: options?.hosts ?? this.getDefaultHosts(region),
-      baseHeaders: {
-        'content-type': 'application/x-www-form-urlencoded',
-      },
-      userAgent: 'Algolia for Javascript (0.0.1)',
-      timeouts: {
-        connect: 2,
-        read: 5,
-        write: 30,
-      },
-      requester: options?.requester,
-    });
-  }
-
-  getDefaultHosts(region: 'de' | 'us'): Host[] {
-    return [
-      {
-        url: `data.${region}.algolia.com`,
-        accept: 'readWrite',
-        protocol: 'https',
-      },
-    ];
-  }
-
-  setRequest(requester: Requester): void {
-    this.transporter.setRequester(requester);
-  }
-
-  setHosts(hosts: Host[]): void {
-    this.transporter.setHosts(hosts);
-  }
-
-  setAuthentication({ appId, apiKey }): void {
-    this.authentications = {
-      apiKey,
-      appId,
-    };
-  }
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+export const createSourcesApi = (
+  options: CreateClientOptions & { region: Region }
+) => {
+  const auth = createAuth(options.appId, options.apiKey, options.authMode);
+  const transporter = new Transporter({
+    hosts: options?.hosts ?? getDefaultHosts(options.region),
+    baseHeaders: {
+      'content-type': 'application/x-www-form-urlencoded',
+    },
+    userAgent: getUserAgent({
+      userAgents: options.userAgents,
+      client: 'Sources',
+      version,
+    }),
+    timeouts: options.timeouts,
+    requester: options.requester,
+  });
 
   /**
    * Add an ingestion job that will fetch data from an URL.
@@ -113,7 +48,9 @@ export class SourcesApi {
    * @summary Create a new ingestion job via URL.
    * @param postURLJob - The postURLJob object.
    */
-  postIngestUrl(postURLJob: PostURLJob): Promise<PostIngestUrlResponse> {
+  function postIngestUrl(
+    postURLJob: PostURLJob
+  ): Promise<PostIngestUrlResponse> {
     const path = '/1/ingest/url';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
@@ -141,11 +78,16 @@ export class SourcesApi {
       data: postURLJob,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers: {
+        ...headers,
+        ...auth.headers(),
+      },
+    });
   }
-}
+
+  return { postIngestUrl };
+};
+
+export type SourcesApi = ReturnType<typeof createSourcesApi>;

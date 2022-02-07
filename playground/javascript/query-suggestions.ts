@@ -1,5 +1,5 @@
 import {
-  QuerySuggestionsApi,
+  querySuggestionsApi,
   ApiError,
 } from '@algolia/client-query-suggestions';
 import dotenv from 'dotenv';
@@ -12,7 +12,7 @@ const apiKey =
   '**** QUERY_SUGGESTIONS_KEY *****';
 
 // Init client with appId and apiKey
-const client = new QuerySuggestionsApi(appId, apiKey, 'us');
+const client = querySuggestionsApi(appId, apiKey, 'us');
 
 async function testABTesting() {
   try {
