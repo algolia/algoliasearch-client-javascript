@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-/** The `batchDictionaryEntries` requests. */
-public class BatchDictionaryEntries {
+/** The `batchDictionaryEntries` parameters. */
+public class BatchDictionaryEntriesParams {
 
   @SerializedName("clearExistingDictionaryEntries")
   private Boolean clearExistingDictionaryEntries = false;
@@ -14,7 +14,7 @@ public class BatchDictionaryEntries {
   @SerializedName("requests")
   private List<BatchDictionaryEntriesRequest> requests = new ArrayList<>();
 
-  public BatchDictionaryEntries clearExistingDictionaryEntries(
+  public BatchDictionaryEntriesParams clearExistingDictionaryEntries(
     Boolean clearExistingDictionaryEntries
   ) {
     this.clearExistingDictionaryEntries = clearExistingDictionaryEntries;
@@ -37,14 +37,14 @@ public class BatchDictionaryEntries {
     this.clearExistingDictionaryEntries = clearExistingDictionaryEntries;
   }
 
-  public BatchDictionaryEntries requests(
+  public BatchDictionaryEntriesParams requests(
     List<BatchDictionaryEntriesRequest> requests
   ) {
     this.requests = requests;
     return this;
   }
 
-  public BatchDictionaryEntries addRequestsItem(
+  public BatchDictionaryEntriesParams addRequestsItem(
     BatchDictionaryEntriesRequest requestsItem
   ) {
     this.requests.add(requestsItem);
@@ -73,13 +73,13 @@ public class BatchDictionaryEntries {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    BatchDictionaryEntries batchDictionaryEntries = (BatchDictionaryEntries) o;
+    BatchDictionaryEntriesParams batchDictionaryEntriesParams = (BatchDictionaryEntriesParams) o;
     return (
       Objects.equals(
         this.clearExistingDictionaryEntries,
-        batchDictionaryEntries.clearExistingDictionaryEntries
+        batchDictionaryEntriesParams.clearExistingDictionaryEntries
       ) &&
-      Objects.equals(this.requests, batchDictionaryEntries.requests)
+      Objects.equals(this.requests, batchDictionaryEntriesParams.requests)
     );
   }
 
@@ -91,7 +91,7 @@ public class BatchDictionaryEntries {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class BatchDictionaryEntries {\n");
+    sb.append("class BatchDictionaryEntriesParams {\n");
     sb
       .append("    clearExistingDictionaryEntries: ")
       .append(toIndentedString(clearExistingDictionaryEntries))

@@ -9,8 +9,8 @@ post:
     content:
       application/json:
         schema:
-          title: getRecommendations
-          description: The `getRecommendations` requests.
+          title: getRecommendationsParams
+          description: The `getRecommendations` parameters.
           type: object
           additionalProperties: false
           properties:

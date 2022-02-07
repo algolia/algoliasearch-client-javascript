@@ -1,9 +1,9 @@
 import type { RecommendationRequest } from './recommendationRequest';
 
 /**
- * The `getRecommendations` requests.
+ * The `getRecommendations` parameters.
  */
-export type GetRecommendations = {
+export type GetRecommendationsParams = {
   /**
    * The `getRecommendations` requests.
    */

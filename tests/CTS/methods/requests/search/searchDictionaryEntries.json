@@ -4,7 +4,7 @@
     "testName": "get searchDictionaryEntries results with minimal parameters",
     "parameters": {
       "dictionaryName": "compounds",
-      "searchDictionaryEntries": {
+      "searchDictionaryEntriesParams": {
         "query": "foo"
       }
     },
@@ -21,7 +21,7 @@
     "testName": "get searchDictionaryEntries results with all parameters",
     "parameters": {
       "dictionaryName": "compounds",
-      "searchDictionaryEntries": {
+      "searchDictionaryEntriesParams": {
         "query": "foo",
         "page": 4,
         "hitsPerPage": 2,

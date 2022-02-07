@@ -130,7 +130,7 @@ describe('batchDictionaryEntries', () => {
   test('get batchDictionaryEntries results with minimal parameters', async () => {
     const req = (await client.batchDictionaryEntries({
       dictionaryName: 'compounds',
-      batchDictionaryEntries: {
+      batchDictionaryEntriesParams: {
         requests: [
           { action: 'addEntry', body: { objectID: '1', language: 'en' } },
           { action: 'deleteEntry', body: { objectID: '2', language: 'fr' } },
@@ -152,7 +152,7 @@ describe('batchDictionaryEntries', () => {
   test('get batchDictionaryEntries results with all parameters', async () => {
     const req = (await client.batchDictionaryEntries({
       dictionaryName: 'compounds',
-      batchDictionaryEntries: {
+      batchDictionaryEntriesParams: {
         clearExistingDictionaryEntries: false,
         requests: [
           {
@@ -938,7 +938,7 @@ describe('searchDictionaryEntries', () => {
   test('get searchDictionaryEntries results with minimal parameters', async () => {
     const req = (await client.searchDictionaryEntries({
       dictionaryName: 'compounds',
-      searchDictionaryEntries: { query: 'foo' },
+      searchDictionaryEntriesParams: { query: 'foo' },
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/dictionaries/compounds/search');
@@ -950,7 +950,7 @@ describe('searchDictionaryEntries', () => {
   test('get searchDictionaryEntries results with all parameters', async () => {
     const req = (await client.searchDictionaryEntries({
       dictionaryName: 'compounds',
-      searchDictionaryEntries: {
+      searchDictionaryEntriesParams: {
         query: 'foo',
         page: 4,
         hitsPerPage: 2,

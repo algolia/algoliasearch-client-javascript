@@ -11,8 +11,8 @@ post:
     content:
       application/json:
         schema:
-          title: batchDictionaryEntries
-          description: The `batchDictionaryEntries` requests.
+          title: batchDictionaryEntriesParams
+          description: The `batchDictionaryEntries` parameters.
           type: object
           required:
             - requests

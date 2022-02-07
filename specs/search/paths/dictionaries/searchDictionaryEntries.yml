@@ -11,8 +11,8 @@ post:
     content:
       application/json:
         schema:
-          title: searchDictionaryEntries
-          description: The `searchDictionaryEntries` request.
+          title: searchDictionaryEntriesParams
+          description: The `searchDictionaryEntries` parameters.
           type: object
           required:
             - query

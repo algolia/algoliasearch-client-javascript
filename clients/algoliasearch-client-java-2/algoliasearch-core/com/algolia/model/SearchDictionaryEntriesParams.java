@@ -3,8 +3,8 @@ package com.algolia.model;
 import com.google.gson.annotations.SerializedName;
 import java.util.Objects;
 
-/** The `searchDictionaryEntries` request. */
-public class SearchDictionaryEntries {
+/** The `searchDictionaryEntries` parameters. */
+public class SearchDictionaryEntriesParams {
 
   @SerializedName("query")
   private String query = "";
@@ -18,7 +18,7 @@ public class SearchDictionaryEntries {
   @SerializedName("language")
   private String language;
 
-  public SearchDictionaryEntries query(String query) {
+  public SearchDictionaryEntriesParams query(String query) {
     this.query = query;
     return this;
   }
@@ -37,7 +37,7 @@ public class SearchDictionaryEntries {
     this.query = query;
   }
 
-  public SearchDictionaryEntries page(Integer page) {
+  public SearchDictionaryEntriesParams page(Integer page) {
     this.page = page;
     return this;
   }
@@ -56,7 +56,7 @@ public class SearchDictionaryEntries {
     this.page = page;
   }
 
-  public SearchDictionaryEntries hitsPerPage(Integer hitsPerPage) {
+  public SearchDictionaryEntriesParams hitsPerPage(Integer hitsPerPage) {
     this.hitsPerPage = hitsPerPage;
     return this;
   }
@@ -75,7 +75,7 @@ public class SearchDictionaryEntries {
     this.hitsPerPage = hitsPerPage;
   }
 
-  public SearchDictionaryEntries language(String language) {
+  public SearchDictionaryEntriesParams language(String language) {
     this.language = language;
     return this;
   }
@@ -102,12 +102,15 @@ public class SearchDictionaryEntries {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    SearchDictionaryEntries searchDictionaryEntries = (SearchDictionaryEntries) o;
+    SearchDictionaryEntriesParams searchDictionaryEntriesParams = (SearchDictionaryEntriesParams) o;
     return (
-      Objects.equals(this.query, searchDictionaryEntries.query) &&
-      Objects.equals(this.page, searchDictionaryEntries.page) &&
-      Objects.equals(this.hitsPerPage, searchDictionaryEntries.hitsPerPage) &&
-      Objects.equals(this.language, searchDictionaryEntries.language)
+      Objects.equals(this.query, searchDictionaryEntriesParams.query) &&
+      Objects.equals(this.page, searchDictionaryEntriesParams.page) &&
+      Objects.equals(
+        this.hitsPerPage,
+        searchDictionaryEntriesParams.hitsPerPage
+      ) &&
+      Objects.equals(this.language, searchDictionaryEntriesParams.language)
     );
   }
 
@@ -119,7 +122,7 @@ public class SearchDictionaryEntries {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class SearchDictionaryEntries {\n");
+    sb.append("class SearchDictionaryEntriesParams {\n");
     sb.append("    query: ").append(toIndentedString(query)).append("\n");
     sb.append("    page: ").append(toIndentedString(page)).append("\n");
     sb

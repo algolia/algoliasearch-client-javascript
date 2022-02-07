@@ -11,7 +11,7 @@ import type {
   Request,
 } from '@algolia/client-common';
 
-import type { GetRecommendations } from '../model/getRecommendations';
+import type { GetRecommendationsParams } from '../model/getRecommendationsParams';
 import type { GetRecommendationsResponse } from '../model/getRecommendationsResponse';
 
 export const version = '5.0.0';
@@ -72,31 +72,31 @@ export const createRecommendApi = (options: CreateClientOptions) => {
    * Returns recommendations for a specific model and objectID.
    *
    * @summary Returns recommendations for a specific model and objectID.
-   * @param getRecommendations - The getRecommendations object.
+   * @param getRecommendationsParams - The getRecommendationsParams object.
    */
   function getRecommendations(
-    getRecommendations: GetRecommendations
+    getRecommendationsParams: GetRecommendationsParams
   ): Promise<GetRecommendationsResponse> {
     const path = '/1/indexes/*/recommendations';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (!getRecommendations) {
+    if (!getRecommendationsParams) {
       throw new Error(
-        'Parameter `getRecommendations` is required when calling `getRecommendations`.'
+        'Parameter `getRecommendationsParams` is required when calling `getRecommendations`.'
       );
     }
 
-    if (!getRecommendations.requests) {
+    if (!getRecommendationsParams.requests) {
       throw new Error(
-        'Parameter `getRecommendations.requests` is required when calling `getRecommendations`.'
+        'Parameter `getRecommendationsParams.requests` is required when calling `getRecommendations`.'
       );
     }
 
     const request: Request = {
       method: 'POST',
       path,
-      data: getRecommendations,
+      data: getRecommendationsParams,
     };
 
     return transporter.request(request, {
