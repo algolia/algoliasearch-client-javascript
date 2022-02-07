@@ -18,7 +18,6 @@ This folder hosts the generated clients.
 - [@algolia/client-search](./algoliasearch-client-javascript/client-search/): The Algolia search client.
 - [@algolia/recommend](./algoliasearch-client-javascript/recommend/): The Algolia recommend client.
 - [@algolia/sources](./algoliasearch-client-javascript/client-sources/): The Algolia sources client.
-
-#### Utils
-
-- [JavaScript](./algoliasearch-client-javascript/client-common/): The JavaScript clients common files.
+- [@algolia/client-common](./algoliasearch-client-javascript/client-common/): The JavaScript clients common files.
+- [@algolia/requester-browser-xhr](./algoliasearch-client-javascript/requester-browser-xhr/): Browser XHR requester for the Algolia JavaScript clients.
+- [@algolia/requester-node-http](./algoliasearch-client-javascript/requester-node-http/): Node.js HTTP requester for the Algolia JavaScript clients.

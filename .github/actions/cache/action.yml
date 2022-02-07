@@ -30,7 +30,19 @@ runs:
       uses: actions/cache@v2
       with:
         path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/client-common/dist
-        key: ${{ runner.os }}-1-js-client-common-${{ hashFiles('clients/common-client-javascript/client-common/**') }}
+        key: ${{ runner.os }}-1-js-client-common-${{ hashFiles('clients/algoliasearch-client-javascript/client-common/**') }}
+
+    - name: Restore built JavaScript node requester
+      uses: actions/cache@v2
+      with:
+        path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/requester-node-http/dist
+        key: ${{ runner.os }}-1-js-node-requester-${{ hashFiles('clients/algoliasearch-client-javascript/requester-node-http/**') }}
+
+    - name: Restore built JavaScript browser requester
+      uses: actions/cache@v2
+      with:
+        path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/requester-browser-xhr/dist
+        key: ${{ runner.os }}-1-js-browser-requester-${{ hashFiles('clients/algoliasearch-client-javascript/requester-browser-xhr/**') }}
 
     - name: Restore built JavaScript search client
       if: ${{ inputs.job == 'cts' }}

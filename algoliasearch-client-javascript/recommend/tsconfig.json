@@ -17,6 +17,6 @@
     "typeRoots": ["node_modules/@types"],
     "types": ["node"]
   },
-  "include": ["src", "model", "api.ts"],
+  "include": ["src", "model", "node.ts", "browser.ts"],
   "exclude": ["dist", "node_modules"]
 }

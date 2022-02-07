@@ -10,7 +10,6 @@ import {
   serializeHeaders,
   serializeUrl,
 } from './helpers';
-import { HttpRequester } from './requester/HttpRequester';
 import type { Requester } from './requester/Requester';
 import {
   stackTraceWithoutCredentials,
@@ -25,13 +24,14 @@ import type {
   Timeouts,
   Response,
   EndRequest,
+  UserAgent,
 } from './types';
 
 export class Transporter {
   private hosts: Host[];
   private baseHeaders: Headers;
   private hostsCache: Cache;
-  private userAgent: string;
+  private userAgent: UserAgent;
   private timeouts: Timeouts;
   private requester: Requester;
 
@@ -40,13 +40,13 @@ export class Transporter {
     baseHeaders,
     userAgent,
     timeouts,
-    requester = new HttpRequester(),
+    requester,
   }: {
     hosts: Host[];
     baseHeaders: Headers;
-    userAgent: string;
+    userAgent: UserAgent;
     timeouts: Timeouts;
-    requester?: Requester;
+    requester: Requester;
   }) {
     this.hosts = hosts;
     this.hostsCache = new MemoryCache();
@@ -134,7 +134,7 @@ export class Transporter {
       : {};
 
     const queryParameters = {
-      'x-algolia-agent': this.userAgent,
+      'x-algolia-agent': this.userAgent.value,
       ...dataQueryParameters,
       ...requestOptions.queryParameters,
     };

@@ -64,6 +64,10 @@ module.exports = {
     'no-continue': 0,
     '@typescript-eslint/prefer-enum-initializers': 0,
 
+    // in the meantime of finding an alternative, we warn
+    'no-shadow': 'off',
+    '@typescript-eslint/no-shadow': ['warn'],
+
     '@typescript-eslint/no-unused-vars': 2,
     'unused-imports/no-unused-imports-ts': 2,
     '@typescript-eslint/member-ordering': [

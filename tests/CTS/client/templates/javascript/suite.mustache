@@ -2,13 +2,15 @@
 /* eslint-disable require-await */
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 // @ts-nocheck
-import { {{client}}, EchoRequester } from '{{{import}}}';
+import { {{client}} } from '{{{import}}}';
+import { EchoRequester } from '@algolia/client-common';
 
 const appId = process.env.ALGOLIA_APPLICATION_ID || 'Algolia-API-Key';
 const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'Algolia-Application-Id';
 
-function createClient(): {{client}} {
-    return new {{client}}(appId, apiKey, {{#hasRegionalHost}}'us', {{/hasRegionalHost}}{ requester: new EchoRequester() });
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+function createClient() {
+  return {{client}}(appId, apiKey, {{#hasRegionalHost}}'us', {{/hasRegionalHost}}{ requester: new EchoRequester() });
 }
 
 {{#blocks}}

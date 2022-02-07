@@ -1,9 +1,9 @@
 import http from 'http';
 import https from 'https';
+import { URL } from 'url';
 
-import type { EndRequest, Response } from '../types';
-
-import { Requester } from './Requester';
+import { Requester } from '@algolia/client-common';
+import type { EndRequest, Response } from '@algolia/client-common';
 
 // Global agents allow us to reuse the TCP protocol with multiple clients
 const agentOptions = { keepAlive: true };

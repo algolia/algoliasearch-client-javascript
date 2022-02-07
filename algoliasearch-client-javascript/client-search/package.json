@@ -6,18 +6,25 @@
   "author": "Algolia",
   "private": true,
   "license": "MIT",
-  "main": "dist/api.js",
-  "types": "dist/api.d.ts",
+  "main": "./dist/node.js",
+  "types": "./dist/node.d.ts",
+  "jsdelivr": "./dist/browser.js",
+  "unpkg": "./dist/browser.js",
+  "browser": {
+    "./index.js": "./dist/browser.js"
+  },
   "scripts": {
     "build": "tsc",
     "clean": "rm -rf dist/"
   },
   "engines": {
-    "node": "^16.0.0",
+    "node": "^14.0.0",
     "yarn": "^3.0.0"
   },
   "dependencies": {
-    "@algolia/client-common": "5.0.0"
+    "@algolia/client-common": "5.0.0",
+    "@algolia/requester-browser-xhr": "5.0.0",
+    "@algolia/requester-node-http": "5.0.0"
   },
   "devDependencies": {
     "@types/node": "16.11.11",

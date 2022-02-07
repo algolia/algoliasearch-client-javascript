@@ -1,12 +1,11 @@
-import { RecommendApi, EchoRequester } from '@algolia/recommend';
-import type { EchoResponse } from '@algolia/recommend';
+import { EchoRequester } from '@algolia/client-common';
+import type { EchoResponse } from '@algolia/client-common';
+import { recommendApi } from '@algolia/recommend';
 
 const appId = process.env.ALGOLIA_APPLICATION_ID || 'test_app_id';
 const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'test_api_key';
 
-const client = new RecommendApi(appId, apiKey, {
-  requester: new EchoRequester(),
-});
+const client = recommendApi(appId, apiKey, { requester: new EchoRequester() });
 
 describe('getRecommendations', () => {
   test('get recommendations with minimal parameters', async () => {

@@ -37,6 +37,8 @@ __metadata:
   resolution: "@algolia/client-abtesting@workspace:clients/algoliasearch-client-javascript/client-abtesting"
   dependencies:
     "@algolia/client-common": 5.0.0
+    "@algolia/requester-browser-xhr": 5.0.0
+    "@algolia/requester-node-http": 5.0.0
     "@types/node": 16.11.11
     typescript: 4.5.4
   languageName: unknown
@@ -47,6 +49,8 @@ __metadata:
   resolution: "@algolia/client-analytics@workspace:clients/algoliasearch-client-javascript/client-analytics"
   dependencies:
     "@algolia/client-common": 5.0.0
+    "@algolia/requester-browser-xhr": 5.0.0
+    "@algolia/requester-node-http": 5.0.0
     "@types/node": 16.11.11
     typescript: 4.5.4
   languageName: unknown
@@ -66,6 +70,8 @@ __metadata:
   resolution: "@algolia/client-insights@workspace:clients/algoliasearch-client-javascript/client-insights"
   dependencies:
     "@algolia/client-common": 5.0.0
+    "@algolia/requester-browser-xhr": 5.0.0
+    "@algolia/requester-node-http": 5.0.0
     "@types/node": 16.11.11
     typescript: 4.5.4
   languageName: unknown
@@ -76,6 +82,8 @@ __metadata:
   resolution: "@algolia/client-personalization@workspace:clients/algoliasearch-client-javascript/client-personalization"
   dependencies:
     "@algolia/client-common": 5.0.0
+    "@algolia/requester-browser-xhr": 5.0.0
+    "@algolia/requester-node-http": 5.0.0
     "@types/node": 16.11.11
     typescript: 4.5.4
   languageName: unknown
@@ -86,6 +94,8 @@ __metadata:
   resolution: "@algolia/client-query-suggestions@workspace:clients/algoliasearch-client-javascript/client-query-suggestions"
   dependencies:
     "@algolia/client-common": 5.0.0
+    "@algolia/requester-browser-xhr": 5.0.0
+    "@algolia/requester-node-http": 5.0.0
     "@types/node": 16.11.11
     typescript: 4.5.4
   languageName: unknown
@@ -96,6 +106,8 @@ __metadata:
   resolution: "@algolia/client-search@workspace:clients/algoliasearch-client-javascript/client-search"
   dependencies:
     "@algolia/client-common": 5.0.0
+    "@algolia/requester-browser-xhr": 5.0.0
+    "@algolia/requester-node-http": 5.0.0
     "@types/node": 16.11.11
     typescript: 4.5.4
   languageName: unknown
@@ -106,6 +118,8 @@ __metadata:
   resolution: "@algolia/client-sources@workspace:clients/algoliasearch-client-javascript/client-sources"
   dependencies:
     "@algolia/client-common": 5.0.0
+    "@algolia/requester-browser-xhr": 5.0.0
+    "@algolia/requester-node-http": 5.0.0
     "@types/node": 16.11.11
     typescript: 4.5.4
   languageName: unknown
@@ -114,6 +128,28 @@ __metadata:
 "@algolia/recommend@5.0.0, @algolia/recommend@workspace:clients/algoliasearch-client-javascript/recommend":
   version: 0.0.0-use.local
   resolution: "@algolia/recommend@workspace:clients/algoliasearch-client-javascript/recommend"
+  dependencies:
+    "@algolia/client-common": 5.0.0
+    "@algolia/requester-browser-xhr": 5.0.0
+    "@algolia/requester-node-http": 5.0.0
+    "@types/node": 16.11.11
+    typescript: 4.5.4
+  languageName: unknown
+  linkType: soft
+
+"@algolia/requester-browser-xhr@5.0.0, @algolia/requester-browser-xhr@workspace:clients/algoliasearch-client-javascript/requester-browser-xhr":
+  version: 0.0.0-use.local
+  resolution: "@algolia/requester-browser-xhr@workspace:clients/algoliasearch-client-javascript/requester-browser-xhr"
+  dependencies:
+    "@algolia/client-common": 5.0.0
+    "@types/node": 16.11.11
+    typescript: 4.5.4
+  languageName: unknown
+  linkType: soft
+
+"@algolia/requester-node-http@5.0.0, @algolia/requester-node-http@workspace:clients/algoliasearch-client-javascript/requester-node-http":
+  version: 0.0.0-use.local
+  resolution: "@algolia/requester-node-http@workspace:clients/algoliasearch-client-javascript/requester-node-http"
   dependencies:
     "@algolia/client-common": 5.0.0
     "@types/node": 16.11.11
@@ -3814,6 +3850,7 @@ __metadata:
   dependencies:
     "@algolia/client-abtesting": 5.0.0
     "@algolia/client-analytics": 5.0.0
+    "@algolia/client-common": 5.0.0
     "@algolia/client-insights": 5.0.0
     "@algolia/client-personalization": 5.0.0
     "@algolia/client-query-suggestions": 5.0.0

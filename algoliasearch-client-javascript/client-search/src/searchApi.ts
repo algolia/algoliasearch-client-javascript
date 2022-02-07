@@ -1,10 +1,14 @@
-import { shuffle, Transporter } from '@algolia/client-common';
+import {
+  shuffle,
+  Transporter,
+  createAuth,
+  getUserAgent,
+} from '@algolia/client-common';
 import type {
+  CreateClientOptions,
   Headers,
-  Requester,
   Host,
   Request,
-  RequestOptions,
 } from '@algolia/client-common';
 
 import type { AddApiKeyResponse } from '../model/addApiKeyResponse';
@@ -66,112 +70,57 @@ import type { UserId } from '../model/userId';
 
 export const version = '5.0.0';
 
-export class SearchApi {
-  protected authentications = {
-    apiKey: 'Algolia-API-Key',
-    appId: 'Algolia-Application-Id',
-  };
-
-  private transporter: Transporter;
-
-  private applyAuthenticationHeaders(
-    requestOptions: RequestOptions
-  ): RequestOptions {
-    if (requestOptions?.headers) {
-      return {
-        ...requestOptions,
-        headers: {
-          ...requestOptions.headers,
-          'X-Algolia-API-Key': this.authentications.apiKey,
-          'X-Algolia-Application-Id': this.authentications.appId,
-        },
-      };
-    }
-
-    return requestOptions;
-  }
-
-  private sendRequest<TResponse>(
-    request: Request,
-    requestOptions: RequestOptions
-  ): Promise<TResponse> {
-    return this.transporter.request(
-      request,
-      this.applyAuthenticationHeaders(requestOptions)
-    );
-  }
-
-  constructor(
-    appId: string,
-    apiKey: string,
-    options?: { requester?: Requester; hosts?: Host[] }
-  ) {
-    if (!appId) {
-      throw new Error('`appId` is missing.');
-    }
-
-    if (!apiKey) {
-      throw new Error('`apiKey` is missing.');
-    }
-
-    this.setAuthentication({ appId, apiKey });
-
-    this.transporter = new Transporter({
-      hosts: options?.hosts ?? this.getDefaultHosts(appId),
-      baseHeaders: {
-        'content-type': 'application/x-www-form-urlencoded',
+function getDefaultHosts(appId: string): Host[] {
+  return (
+    [
+      {
+        url: `${appId}-dsn.algolia.net`,
+        accept: 'read',
+        protocol: 'https',
       },
-      userAgent: 'Algolia for Javascript (5.0.0)',
-      timeouts: {
-        connect: 2,
-        read: 5,
-        write: 30,
+      {
+        url: `${appId}.algolia.net`,
+        accept: 'write',
+        protocol: 'https',
       },
-      requester: options?.requester,
-    });
-  }
+    ] as Host[]
+  ).concat(
+    shuffle([
+      {
+        url: `${appId}-1.algolianet.com`,
+        accept: 'readWrite',
+        protocol: 'https',
+      },
+      {
+        url: `${appId}-2.algolianet.com`,
+        accept: 'readWrite',
+        protocol: 'https',
+      },
+      {
+        url: `${appId}-3.algolianet.com`,
+        accept: 'readWrite',
+        protocol: 'https',
+      },
+    ])
+  );
+}
 
-  getDefaultHosts(appId: string): Host[] {
-    return (
-      [
-        { url: `${appId}-dsn.algolia.net`, accept: 'read', protocol: 'https' },
-        { url: `${appId}.algolia.net`, accept: 'write', protocol: 'https' },
-      ] as Host[]
-    ).concat(
-      shuffle([
-        {
-          url: `${appId}-1.algolianet.com`,
-          accept: 'readWrite',
-          protocol: 'https',
-        },
-        {
-          url: `${appId}-2.algolianet.com`,
-          accept: 'readWrite',
-          protocol: 'https',
-        },
-        {
-          url: `${appId}-3.algolianet.com`,
-          accept: 'readWrite',
-          protocol: 'https',
-        },
-      ])
-    );
-  }
-
-  setRequest(requester: Requester): void {
-    this.transporter.setRequester(requester);
-  }
-
-  setHosts(hosts: Host[]): void {
-    this.transporter.setHosts(hosts);
-  }
-
-  setAuthentication({ appId, apiKey }): void {
-    this.authentications = {
-      apiKey,
-      appId,
-    };
-  }
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+export const createSearchApi = (options: CreateClientOptions) => {
+  const auth = createAuth(options.appId, options.apiKey, options.authMode);
+  const transporter = new Transporter({
+    hosts: options?.hosts ?? getDefaultHosts(options.appId),
+    baseHeaders: {
+      'content-type': 'application/x-www-form-urlencoded',
+    },
+    userAgent: getUserAgent({
+      userAgents: options.userAgents,
+      client: 'Search',
+      version,
+    }),
+    timeouts: options.timeouts,
+    requester: options.requester,
+  });
 
   /**
    * Add a new API Key with specific permissions/restrictions.
@@ -179,7 +128,7 @@ export class SearchApi {
    * @summary Create a new API key.
    * @param apiKey - The apiKey object.
    */
-  addApiKey(apiKey: ApiKey): Promise<AddApiKeyResponse> {
+  function addApiKey(apiKey: ApiKey): Promise<AddApiKeyResponse> {
     const path = '/1/keys';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
@@ -202,13 +151,15 @@ export class SearchApi {
       data: apiKey,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers: {
+        ...headers,
+        ...auth.headers(),
+      },
+    });
   }
+
   /**
    * Add or replace an object with a given object ID. If the object does not exist, it will be created. If it already exists, it will be replaced.
    *
@@ -218,7 +169,7 @@ export class SearchApi {
    * @param addOrUpdateObject.objectID - Unique identifier of an object.
    * @param addOrUpdateObject.body - The Algolia object.
    */
-  addOrUpdateObject({
+  function addOrUpdateObject({
     indexName,
     objectID,
     body,
@@ -253,20 +204,22 @@ export class SearchApi {
       data: body,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers: {
+        ...headers,
+        ...auth.headers(),
+      },
+    });
   }
+
   /**
    * Add a single source to the list of allowed sources.
    *
    * @summary Add a single source.
    * @param source - The source to add.
    */
-  appendSource(source: Source): Promise<CreatedAtResponse> {
+  function appendSource(source: Source): Promise<CreatedAtResponse> {
     const path = '/1/security/sources/append';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
@@ -283,13 +236,15 @@ export class SearchApi {
       data: source,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers: {
+        ...headers,
+        ...auth.headers(),
+      },
+    });
   }
+
   /**
    * Assign or Move a userID to a cluster. The time it takes to migrate (move) a user is proportional to the amount of data linked to the userID. Upon success, the response is 200 OK. A successful response indicates that the operation has been taken into account, and the userID is directly usable.
    *
@@ -298,7 +253,7 @@ export class SearchApi {
    * @param assignUserId.xAlgoliaUserID - UserID to assign.
    * @param assignUserId.assignUserIdParams - The assignUserIdParams object.
    */
-  assignUserId({
+  function assignUserId({
     xAlgoliaUserID,
     assignUserIdParams,
   }: AssignUserIdProps): Promise<CreatedAtResponse> {
@@ -334,13 +289,15 @@ export class SearchApi {
       data: assignUserIdParams,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers: {
+        ...headers,
+        ...auth.headers(),
+      },
+    });
   }
+
   /**
    * Performs multiple write operations in a single API call.
    *
@@ -349,7 +306,10 @@ export class SearchApi {
    * @param batch.indexName - The index in which to perform the request.
    * @param batch.batchWriteParams - The batchWriteParams object.
    */
-  batch({ indexName, batchWriteParams }: BatchProps): Promise<BatchResponse> {
+  function batch({
+    indexName,
+    batchWriteParams,
+  }: BatchProps): Promise<BatchResponse> {
     const path = '/1/indexes/{indexName}/batch'.replace(
       '{indexName}',
       encodeURIComponent(String(indexName))
@@ -375,13 +335,15 @@ export class SearchApi {
       data: batchWriteParams,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers: {
+        ...headers,
+        ...auth.headers(),
+      },
+    });
   }
+
   /**
    * Assign multiple userIDs to a cluster. Upon success, the response is 200 OK. A successful response indicates that the operation has been taken into account, and the userIDs are directly usable.
    *
@@ -390,7 +352,7 @@ export class SearchApi {
    * @param batchAssignUserIds.xAlgoliaUserID - UserID to assign.
    * @param batchAssignUserIds.batchAssignUserIdsParams - The batchAssignUserIdsParams object.
    */
-  batchAssignUserIds({
+  function batchAssignUserIds({
     xAlgoliaUserID,
     batchAssignUserIdsParams,
   }: BatchAssignUserIdsProps): Promise<CreatedAtResponse> {
@@ -431,13 +393,15 @@ export class SearchApi {
       data: batchAssignUserIdsParams,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers: {
+        ...headers,
+        ...auth.headers(),
+      },
+    });
   }
+
   /**
    * Send a batch of dictionary entries.
    *
@@ -446,7 +410,7 @@ export class SearchApi {
    * @param batchDictionaryEntries.dictionaryName - The dictionary to search in.
    * @param batchDictionaryEntries.batchDictionaryEntries - The batchDictionaryEntries object.
    */
-  batchDictionaryEntries({
+  function batchDictionaryEntries({
     dictionaryName,
     batchDictionaryEntries,
   }: BatchDictionaryEntriesProps): Promise<UpdatedAtResponse> {
@@ -481,13 +445,15 @@ export class SearchApi {
       data: batchDictionaryEntries,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers: {
+        ...headers,
+        ...auth.headers(),
+      },
+    });
   }
+
   /**
    * Create or update a batch of Rules.
    *
@@ -498,7 +464,7 @@ export class SearchApi {
    * @param batchRules.forwardToReplicas - When true, changes are also propagated to replicas of the given indexName.
    * @param batchRules.clearExistingRules - When true, existing Rules are cleared before adding this batch. When false, existing Rules are kept.
    */
-  batchRules({
+  function batchRules({
     indexName,
     rule,
     forwardToReplicas,
@@ -537,13 +503,15 @@ export class SearchApi {
       data: rule,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers: {
+        ...headers,
+        ...auth.headers(),
+      },
+    });
   }
+
   /**
    * This method allows you to retrieve all index content. It can retrieve up to 1,000 records per call and supports full text search and filters. For performance reasons, some features are not supported, including `distinct`, sorting by `typos`, `words` or `geo distance`. When there is more content to be browsed, the response contains a cursor field. This cursor has to be passed to the subsequent call to browse in order to get the next page of results. When the end of the index has been reached, the cursor field is absent from the response.
    *
@@ -552,7 +520,10 @@ export class SearchApi {
    * @param browse.indexName - The index in which to perform the request.
    * @param browse.browseRequest - The browseRequest object.
    */
-  browse({ indexName, browseRequest }: BrowseProps): Promise<BrowseResponse> {
+  function browse({
+    indexName,
+    browseRequest,
+  }: BrowseProps): Promise<BrowseResponse> {
     const path = '/1/indexes/{indexName}/browse'.replace(
       '{indexName}',
       encodeURIComponent(String(indexName))
@@ -572,13 +543,15 @@ export class SearchApi {
       data: browseRequest,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers: {
+        ...headers,
+        ...auth.headers(),
+      },
+    });
   }
+
   /**
    * Remove all synonyms from an index.
    *
@@ -587,7 +560,7 @@ export class SearchApi {
    * @param clearAllSynonyms.indexName - The index in which to perform the request.
    * @param clearAllSynonyms.forwardToReplicas - When true, changes are also propagated to replicas of the given indexName.
    */
-  clearAllSynonyms({
+  function clearAllSynonyms({
     indexName,
     forwardToReplicas,
   }: ClearAllSynonymsProps): Promise<UpdatedAtResponse> {
@@ -613,13 +586,15 @@ export class SearchApi {
       path,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers: {
+        ...headers,
+        ...auth.headers(),
+      },
+    });
   }
+
   /**
    * Delete an index\'s content, but leave settings and index-specific API keys untouched.
    *
@@ -627,7 +602,9 @@ export class SearchApi {
    * @param clearObjects - The clearObjects object.
    * @param clearObjects.indexName - The index in which to perform the request.
    */
-  clearObjects({ indexName }: ClearObjectsProps): Promise<UpdatedAtResponse> {
+  function clearObjects({
+    indexName,
+  }: ClearObjectsProps): Promise<UpdatedAtResponse> {
     const path = '/1/indexes/{indexName}/clear'.replace(
       '{indexName}',
       encodeURIComponent(String(indexName))
@@ -646,13 +623,15 @@ export class SearchApi {
       path,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers: {
+        ...headers,
+        ...auth.headers(),
+      },
+    });
   }
+
   /**
    * Delete all Rules in the index.
    *
@@ -661,7 +640,7 @@ export class SearchApi {
    * @param clearRules.indexName - The index in which to perform the request.
    * @param clearRules.forwardToReplicas - When true, changes are also propagated to replicas of the given indexName.
    */
-  clearRules({
+  function clearRules({
     indexName,
     forwardToReplicas,
   }: ClearRulesProps): Promise<UpdatedAtResponse> {
@@ -687,13 +666,15 @@ export class SearchApi {
       path,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers: {
+        ...headers,
+        ...auth.headers(),
+      },
+    });
   }
+
   /**
    * Delete an existing API Key.
    *
@@ -701,7 +682,9 @@ export class SearchApi {
    * @param deleteApiKey - The deleteApiKey object.
    * @param deleteApiKey.key - API Key string.
    */
-  deleteApiKey({ key }: DeleteApiKeyProps): Promise<DeleteApiKeyResponse> {
+  function deleteApiKey({
+    key,
+  }: DeleteApiKeyProps): Promise<DeleteApiKeyResponse> {
     const path = '/1/keys/{key}'.replace(
       '{key}',
       encodeURIComponent(String(key))
@@ -720,13 +703,15 @@ export class SearchApi {
       path,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers: {
+        ...headers,
+        ...auth.headers(),
+      },
+    });
   }
+
   /**
    * Remove all objects matching a filter (including geo filters). This method enables you to delete one or more objects based on filters (numeric, facet, tag or geo queries). It doesn\'t accept empty filters or a query.
    *
@@ -735,7 +720,7 @@ export class SearchApi {
    * @param deleteBy.indexName - The index in which to perform the request.
    * @param deleteBy.searchParams - The searchParams object.
    */
-  deleteBy({
+  function deleteBy({
     indexName,
     searchParams,
   }: DeleteByProps): Promise<DeletedAtResponse> {
@@ -764,13 +749,15 @@ export class SearchApi {
       data: searchParams,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers: {
+        ...headers,
+        ...auth.headers(),
+      },
+    });
   }
+
   /**
    * Delete an existing index.
    *
@@ -778,7 +765,9 @@ export class SearchApi {
    * @param deleteIndex - The deleteIndex object.
    * @param deleteIndex.indexName - The index in which to perform the request.
    */
-  deleteIndex({ indexName }: DeleteIndexProps): Promise<DeletedAtResponse> {
+  function deleteIndex({
+    indexName,
+  }: DeleteIndexProps): Promise<DeletedAtResponse> {
     const path = '/1/indexes/{indexName}'.replace(
       '{indexName}',
       encodeURIComponent(String(indexName))
@@ -797,13 +786,15 @@ export class SearchApi {
       path,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers: {
+        ...headers,
+        ...auth.headers(),
+      },
+    });
   }
+
   /**
    * Delete an existing object.
    *
@@ -812,7 +803,7 @@ export class SearchApi {
    * @param deleteObject.indexName - The index in which to perform the request.
    * @param deleteObject.objectID - Unique identifier of an object.
    */
-  deleteObject({
+  function deleteObject({
     indexName,
     objectID,
   }: DeleteObjectProps): Promise<DeletedAtResponse> {
@@ -839,13 +830,15 @@ export class SearchApi {
       path,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers: {
+        ...headers,
+        ...auth.headers(),
+      },
+    });
   }
+
   /**
    * Delete the Rule with the specified objectID.
    *
@@ -855,7 +848,7 @@ export class SearchApi {
    * @param deleteRule.objectID - Unique identifier of an object.
    * @param deleteRule.forwardToReplicas - When true, changes are also propagated to replicas of the given indexName.
    */
-  deleteRule({
+  function deleteRule({
     indexName,
     objectID,
     forwardToReplicas,
@@ -887,13 +880,15 @@ export class SearchApi {
       path,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers: {
+        ...headers,
+        ...auth.headers(),
+      },
+    });
   }
+
   /**
    * Remove a single source from the list of allowed sources.
    *
@@ -901,7 +896,9 @@ export class SearchApi {
    * @param deleteSource - The deleteSource object.
    * @param deleteSource.source - The IP range of the source.
    */
-  deleteSource({ source }: DeleteSourceProps): Promise<DeleteSourceResponse> {
+  function deleteSource({
+    source,
+  }: DeleteSourceProps): Promise<DeleteSourceResponse> {
     const path = '/1/security/sources/{source}'.replace(
       '{source}',
       encodeURIComponent(String(source))
@@ -920,13 +917,15 @@ export class SearchApi {
       path,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers: {
+        ...headers,
+        ...auth.headers(),
+      },
+    });
   }
+
   /**
    * Delete a single synonyms set, identified by the given objectID.
    *
@@ -936,7 +935,7 @@ export class SearchApi {
    * @param deleteSynonym.objectID - Unique identifier of an object.
    * @param deleteSynonym.forwardToReplicas - When true, changes are also propagated to replicas of the given indexName.
    */
-  deleteSynonym({
+  function deleteSynonym({
     indexName,
     objectID,
     forwardToReplicas,
@@ -968,13 +967,15 @@ export class SearchApi {
       path,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers: {
+        ...headers,
+        ...auth.headers(),
+      },
+    });
   }
+
   /**
    * Get the permissions of an API key.
    *
@@ -982,7 +983,7 @@ export class SearchApi {
    * @param getApiKey - The getApiKey object.
    * @param getApiKey.key - API Key string.
    */
-  getApiKey({ key }: GetApiKeyProps): Promise<Key> {
+  function getApiKey({ key }: GetApiKeyProps): Promise<Key> {
     const path = '/1/keys/{key}'.replace(
       '{key}',
       encodeURIComponent(String(key))
@@ -999,19 +1000,21 @@ export class SearchApi {
       path,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers: {
+        ...headers,
+        ...auth.headers(),
+      },
+    });
   }
+
   /**
    * List dictionaries supported per language.
    *
    * @summary List dictionaries supported per language.
    */
-  getDictionaryLanguages(): Promise<{ [key: string]: Languages }> {
+  function getDictionaryLanguages(): Promise<{ [key: string]: Languages }> {
     const path = '/1/dictionaries/*/languages';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
@@ -1021,19 +1024,21 @@ export class SearchApi {
       path,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers: {
+        ...headers,
+        ...auth.headers(),
+      },
+    });
   }
+
   /**
    * Retrieve dictionaries settings.
    *
    * @summary Retrieve dictionaries settings. The API stores languages whose standard entries are disabled. Fetch settings does not return false values.
    */
-  getDictionarySettings(): Promise<GetDictionarySettingsResponse> {
+  function getDictionarySettings(): Promise<GetDictionarySettingsResponse> {
     const path = '/1/dictionaries/*/settings';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
@@ -1043,13 +1048,15 @@ export class SearchApi {
       path,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers: {
+        ...headers,
+        ...auth.headers(),
+      },
+    });
   }
+
   /**
    * Return the lastest log entries.
    *
@@ -1060,7 +1067,7 @@ export class SearchApi {
    * @param getLogs.indexName - Index for which log entries should be retrieved. When omitted, log entries are retrieved across all indices.
    * @param getLogs.type - Type of log entries to retrieve. When omitted, all log entries are retrieved.
    */
-  getLogs({
+  function getLogs({
     offset,
     length,
     indexName,
@@ -1091,13 +1098,15 @@ export class SearchApi {
       path,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers: {
+        ...headers,
+        ...auth.headers(),
+      },
+    });
   }
+
   /**
    * Retrieve one object from the index.
    *
@@ -1107,7 +1116,7 @@ export class SearchApi {
    * @param getObject.objectID - Unique identifier of an object.
    * @param getObject.attributesToRetrieve - List of attributes to retrieve. If not specified, all retrievable attributes are returned.
    */
-  getObject({
+  function getObject({
     indexName,
     objectID,
     attributesToRetrieve,
@@ -1139,20 +1148,24 @@ export class SearchApi {
       path,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers: {
+        ...headers,
+        ...auth.headers(),
+      },
+    });
   }
+
   /**
    * Retrieve one or more objects, potentially from different indices, in a single API call.
    *
    * @summary Retrieve one or more objects.
    * @param getObjectsParams - The getObjectsParams object.
    */
-  getObjects(getObjectsParams: GetObjectsParams): Promise<GetObjectsResponse> {
+  function getObjects(
+    getObjectsParams: GetObjectsParams
+  ): Promise<GetObjectsResponse> {
     const path = '/1/indexes/*/objects';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
@@ -1169,13 +1182,15 @@ export class SearchApi {
       data: getObjectsParams,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers: {
+        ...headers,
+        ...auth.headers(),
+      },
+    });
   }
+
   /**
    * Retrieve the Rule with the specified objectID.
    *
@@ -1184,7 +1199,7 @@ export class SearchApi {
    * @param getRule.indexName - The index in which to perform the request.
    * @param getRule.objectID - Unique identifier of an object.
    */
-  getRule({ indexName, objectID }: GetRuleProps): Promise<Rule> {
+  function getRule({ indexName, objectID }: GetRuleProps): Promise<Rule> {
     const path = '/1/indexes/{indexName}/rules/{objectID}'
       .replace('{indexName}', encodeURIComponent(String(indexName)))
       .replace('{objectID}', encodeURIComponent(String(objectID)));
@@ -1208,13 +1223,15 @@ export class SearchApi {
       path,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers: {
+        ...headers,
+        ...auth.headers(),
+      },
+    });
   }
+
   /**
    * Retrieve settings of a given indexName.
    *
@@ -1222,7 +1239,9 @@ export class SearchApi {
    * @param getSettings - The getSettings object.
    * @param getSettings.indexName - The index in which to perform the request.
    */
-  getSettings({ indexName }: GetSettingsProps): Promise<IndexSettings> {
+  function getSettings({
+    indexName,
+  }: GetSettingsProps): Promise<IndexSettings> {
     const path = '/1/indexes/{indexName}/settings'.replace(
       '{indexName}',
       encodeURIComponent(String(indexName))
@@ -1241,19 +1260,21 @@ export class SearchApi {
       path,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers: {
+        ...headers,
+        ...auth.headers(),
+      },
+    });
   }
+
   /**
    * List all allowed sources.
    *
    * @summary List all allowed sources.
    */
-  getSources(): Promise<Source[]> {
+  function getSources(): Promise<Source[]> {
     const path = '/1/security/sources';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
@@ -1263,13 +1284,15 @@ export class SearchApi {
       path,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers: {
+        ...headers,
+        ...auth.headers(),
+      },
+    });
   }
+
   /**
    * Fetch a synonym object identified by its objectID.
    *
@@ -1278,7 +1301,10 @@ export class SearchApi {
    * @param getSynonym.indexName - The index in which to perform the request.
    * @param getSynonym.objectID - Unique identifier of an object.
    */
-  getSynonym({ indexName, objectID }: GetSynonymProps): Promise<SynonymHit> {
+  function getSynonym({
+    indexName,
+    objectID,
+  }: GetSynonymProps): Promise<SynonymHit> {
     const path = '/1/indexes/{indexName}/synonyms/{objectID}'
       .replace('{indexName}', encodeURIComponent(String(indexName)))
       .replace('{objectID}', encodeURIComponent(String(objectID)));
@@ -1302,13 +1328,15 @@ export class SearchApi {
       path,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers: {
+        ...headers,
+        ...auth.headers(),
+      },
+    });
   }
+
   /**
    * Check the current status of a given task.
    *
@@ -1317,7 +1345,10 @@ export class SearchApi {
    * @param getTask.indexName - The index in which to perform the request.
    * @param getTask.taskID - Unique identifier of an task. Numeric value (up to 64bits).
    */
-  getTask({ indexName, taskID }: GetTaskProps): Promise<GetTaskResponse> {
+  function getTask({
+    indexName,
+    taskID,
+  }: GetTaskProps): Promise<GetTaskResponse> {
     const path = '/1/indexes/{indexName}/task/{taskID}'
       .replace('{indexName}', encodeURIComponent(String(indexName)))
       .replace('{taskID}', encodeURIComponent(String(taskID)));
@@ -1339,19 +1370,21 @@ export class SearchApi {
       path,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers: {
+        ...headers,
+        ...auth.headers(),
+      },
+    });
   }
+
   /**
    * Get the top 10 userIDs with the highest number of records per cluster. The data returned will usually be a few seconds behind real time, because userID usage may take up to a few seconds to propagate to the different clusters. Upon success, the response is 200 OK and contains the following array of userIDs and clusters.
    *
    * @summary Get top userID.
    */
-  getTopUserIds(): Promise<GetTopUserIdsResponse> {
+  function getTopUserIds(): Promise<GetTopUserIdsResponse> {
     const path = '/1/clusters/mapping/top';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
@@ -1361,13 +1394,15 @@ export class SearchApi {
       path,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers: {
+        ...headers,
+        ...auth.headers(),
+      },
+    });
   }
+
   /**
    * Returns the userID data stored in the mapping. The data returned will usually be a few seconds behind real time, because userID usage may take up to a few seconds to propagate to the different clusters. Upon success, the response is 200 OK and contains the following userID data.
    *
@@ -1375,7 +1410,7 @@ export class SearchApi {
    * @param getUserId - The getUserId object.
    * @param getUserId.userID - UserID to assign.
    */
-  getUserId({ userID }: GetUserIdProps): Promise<UserId> {
+  function getUserId({ userID }: GetUserIdProps): Promise<UserId> {
     const path = '/1/clusters/mapping/{userID}'.replace(
       '{userID}',
       encodeURIComponent(String(userID))
@@ -1394,13 +1429,15 @@ export class SearchApi {
       path,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers: {
+        ...headers,
+        ...auth.headers(),
+      },
+    });
   }
+
   /**
    * Get the status of your clusters\' migrations or user creations. Creating a large batch of users or migrating your multi-cluster may take quite some time. This method lets you retrieve the status of the migration, so you can know when it\'s done. Upon success, the response is 200 OK. A successful response indicates that the operation has been taken into account, and the userIDs are directly usable.
    *
@@ -1408,7 +1445,7 @@ export class SearchApi {
    * @param hasPendingMappings - The hasPendingMappings object.
    * @param hasPendingMappings.getClusters - Whether to get clusters or not.
    */
-  hasPendingMappings({
+  function hasPendingMappings({
     getClusters,
   }: HasPendingMappingsProps): Promise<CreatedAtResponse> {
     const path = '/1/clusters/mapping/pending';
@@ -1424,19 +1461,21 @@ export class SearchApi {
       path,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers: {
+        ...headers,
+        ...auth.headers(),
+      },
+    });
   }
+
   /**
    * List API keys, along with their associated rights.
    *
    * @summary Get the full list of API Keys.
    */
-  listApiKeys(): Promise<ListApiKeysResponse> {
+  function listApiKeys(): Promise<ListApiKeysResponse> {
     const path = '/1/keys';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
@@ -1446,19 +1485,21 @@ export class SearchApi {
       path,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers: {
+        ...headers,
+        ...auth.headers(),
+      },
+    });
   }
+
   /**
    * List the clusters available in a multi-clusters setup for a single appID. Upon success, the response is 200 OK and contains the following clusters.
    *
    * @summary List clusters.
    */
-  listClusters(): Promise<ListClustersResponse> {
+  function listClusters(): Promise<ListClustersResponse> {
     const path = '/1/clusters';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
@@ -1468,13 +1509,15 @@ export class SearchApi {
       path,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers: {
+        ...headers,
+        ...auth.headers(),
+      },
+    });
   }
+
   /**
    * List existing indexes from an application.
    *
@@ -1482,7 +1525,9 @@ export class SearchApi {
    * @param listIndices - The listIndices object.
    * @param listIndices.page - Requested page (zero-based). When specified, will retrieve a specific page; the page size is implicitly set to 100. When null, will retrieve all indices (no pagination).
    */
-  listIndices({ page }: ListIndicesProps): Promise<ListIndicesResponse> {
+  function listIndices({
+    page,
+  }: ListIndicesProps): Promise<ListIndicesResponse> {
     const path = '/1/indexes';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
@@ -1496,13 +1541,15 @@ export class SearchApi {
       path,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers: {
+        ...headers,
+        ...auth.headers(),
+      },
+    });
   }
+
   /**
    * List the userIDs assigned to a multi-clusters appID. The data returned will usually be a few seconds behind real time, because userID usage may take up to a few seconds to propagate to the different clusters. Upon success, the response is 200 OK and contains the following userIDs data.
    *
@@ -1511,7 +1558,7 @@ export class SearchApi {
    * @param listUserIds.page - Requested page (zero-based). When specified, will retrieve a specific page; the page size is implicitly set to 100. When null, will retrieve all indices (no pagination).
    * @param listUserIds.hitsPerPage - Maximum number of objects to retrieve.
    */
-  listUserIds({
+  function listUserIds({
     page,
     hitsPerPage,
   }: ListUserIdsProps): Promise<ListUserIdsResponse> {
@@ -1532,20 +1579,24 @@ export class SearchApi {
       path,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers: {
+        ...headers,
+        ...auth.headers(),
+      },
+    });
   }
+
   /**
    * Perform multiple write operations, potentially targeting multiple indices, in a single API call.
    *
    * @summary Perform multiple write operations.
    * @param batchParams - The batchParams object.
    */
-  multipleBatch(batchParams: BatchParams): Promise<MultipleBatchResponse> {
+  function multipleBatch(
+    batchParams: BatchParams
+  ): Promise<MultipleBatchResponse> {
     const path = '/1/indexes/*/batch';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
@@ -1562,20 +1613,22 @@ export class SearchApi {
       data: batchParams,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers: {
+        ...headers,
+        ...auth.headers(),
+      },
+    });
   }
+
   /**
    * Get search results for the given requests.
    *
    * @summary Get search results for the given requests.
    * @param multipleQueriesParams - The multipleQueriesParams object.
    */
-  multipleQueries(
+  function multipleQueries(
     multipleQueriesParams: MultipleQueriesParams
   ): Promise<MultipleQueriesResponse> {
     const path = '/1/indexes/*/queries';
@@ -1600,13 +1653,15 @@ export class SearchApi {
       data: multipleQueriesParams,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers: {
+        ...headers,
+        ...auth.headers(),
+      },
+    });
   }
+
   /**
    * Peforms a copy or a move operation on a index.
    *
@@ -1615,7 +1670,7 @@ export class SearchApi {
    * @param operationIndex.indexName - The index in which to perform the request.
    * @param operationIndex.operationIndexParams - The operationIndexParams object.
    */
-  operationIndex({
+  function operationIndex({
     indexName,
     operationIndexParams,
   }: OperationIndexProps): Promise<UpdatedAtResponse> {
@@ -1655,13 +1710,15 @@ export class SearchApi {
       data: operationIndexParams,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers: {
+        ...headers,
+        ...auth.headers(),
+      },
+    });
   }
+
   /**
    * Update one or more attributes of an existing object. This method lets you update only a part of an existing object, either by adding new attributes or updating existing ones. You can partially update several objects in a single method call. If the index targeted by this operation doesn\'t exist yet, it\'s automatically created.
    *
@@ -1672,7 +1729,7 @@ export class SearchApi {
    * @param partialUpdateObject.stringBuiltInOperation - List of attributes to update.
    * @param partialUpdateObject.createIfNotExists - Creates the record if it does not exist yet.
    */
-  partialUpdateObject({
+  function partialUpdateObject({
     indexName,
     objectID,
     stringBuiltInOperation,
@@ -1712,13 +1769,15 @@ export class SearchApi {
       data: stringBuiltInOperation,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers: {
+        ...headers,
+        ...auth.headers(),
+      },
+    });
   }
+
   /**
    * Remove a userID and its associated data from the multi-clusters. Upon success, the response is 200 OK and a task is created to remove the userID data and mapping.
    *
@@ -1726,7 +1785,9 @@ export class SearchApi {
    * @param removeUserId - The removeUserId object.
    * @param removeUserId.userID - UserID to assign.
    */
-  removeUserId({ userID }: RemoveUserIdProps): Promise<RemoveUserIdResponse> {
+  function removeUserId({
+    userID,
+  }: RemoveUserIdProps): Promise<RemoveUserIdResponse> {
     const path = '/1/clusters/mapping/{userID}'.replace(
       '{userID}',
       encodeURIComponent(String(userID))
@@ -1745,13 +1806,15 @@ export class SearchApi {
       path,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers: {
+        ...headers,
+        ...auth.headers(),
+      },
+    });
   }
+
   /**
    * Replace all allowed sources.
    *
@@ -1759,7 +1822,7 @@ export class SearchApi {
    * @param replaceSources - The replaceSources object.
    * @param replaceSources.source - The sources to allow.
    */
-  replaceSources({
+  function replaceSources({
     source,
   }: ReplaceSourcesProps): Promise<ReplaceSourceResponse> {
     const path = '/1/security/sources';
@@ -1778,13 +1841,15 @@ export class SearchApi {
       data: source,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers: {
+        ...headers,
+        ...auth.headers(),
+      },
+    });
   }
+
   /**
    * Restore a deleted API key, along with its associated rights.
    *
@@ -1792,7 +1857,9 @@ export class SearchApi {
    * @param restoreApiKey - The restoreApiKey object.
    * @param restoreApiKey.key - API Key string.
    */
-  restoreApiKey({ key }: RestoreApiKeyProps): Promise<AddApiKeyResponse> {
+  function restoreApiKey({
+    key,
+  }: RestoreApiKeyProps): Promise<AddApiKeyResponse> {
     const path = '/1/keys/{key}/restore'.replace(
       '{key}',
       encodeURIComponent(String(key))
@@ -1811,13 +1878,15 @@ export class SearchApi {
       path,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers: {
+        ...headers,
+        ...auth.headers(),
+      },
+    });
   }
+
   /**
    * Add an object to the index, automatically assigning it an object ID.
    *
@@ -1826,7 +1895,7 @@ export class SearchApi {
    * @param saveObject.indexName - The index in which to perform the request.
    * @param saveObject.body - The Algolia record.
    */
-  saveObject({
+  function saveObject({
     indexName,
     body,
   }: SaveObjectProps): Promise<SaveObjectResponse> {
@@ -1855,13 +1924,15 @@ export class SearchApi {
       data: body,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers: {
+        ...headers,
+        ...auth.headers(),
+      },
+    });
   }
+
   /**
    * Create or update the Rule with the specified objectID.
    *
@@ -1872,7 +1943,7 @@ export class SearchApi {
    * @param saveRule.rule - The rule object.
    * @param saveRule.forwardToReplicas - When true, changes are also propagated to replicas of the given indexName.
    */
-  saveRule({
+  function saveRule({
     indexName,
     objectID,
     rule,
@@ -1921,13 +1992,15 @@ export class SearchApi {
       data: rule,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers: {
+        ...headers,
+        ...auth.headers(),
+      },
+    });
   }
+
   /**
    * Create a new synonym object or update the existing synonym object with the given object ID.
    *
@@ -1938,7 +2011,7 @@ export class SearchApi {
    * @param saveSynonym.synonymHit - The synonymHit object.
    * @param saveSynonym.forwardToReplicas - When true, changes are also propagated to replicas of the given indexName.
    */
-  saveSynonym({
+  function saveSynonym({
     indexName,
     objectID,
     synonymHit,
@@ -1984,13 +2057,15 @@ export class SearchApi {
       data: synonymHit,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers: {
+        ...headers,
+        ...auth.headers(),
+      },
+    });
   }
+
   /**
    * Create/update multiple synonym objects at once, potentially replacing the entire list of synonyms if replaceExistingSynonyms is true.
    *
@@ -2001,7 +2076,7 @@ export class SearchApi {
    * @param saveSynonyms.forwardToReplicas - When true, changes are also propagated to replicas of the given indexName.
    * @param saveSynonyms.replaceExistingSynonyms - Replace all synonyms of the index with the ones sent with this request.
    */
-  saveSynonyms({
+  function saveSynonyms({
     indexName,
     synonymHit,
     forwardToReplicas,
@@ -2041,13 +2116,15 @@ export class SearchApi {
       data: synonymHit,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers: {
+        ...headers,
+        ...auth.headers(),
+      },
+    });
   }
+
   /**
    * Get search results.
    *
@@ -2056,7 +2133,10 @@ export class SearchApi {
    * @param search.indexName - The index in which to perform the request.
    * @param search.searchParams - The searchParams object.
    */
-  search({ indexName, searchParams }: SearchProps): Promise<SearchResponse> {
+  function search({
+    indexName,
+    searchParams,
+  }: SearchProps): Promise<SearchResponse> {
     const path = '/1/indexes/{indexName}/query'.replace(
       '{indexName}',
       encodeURIComponent(String(indexName))
@@ -2082,13 +2162,15 @@ export class SearchApi {
       data: searchParams,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers: {
+        ...headers,
+        ...auth.headers(),
+      },
+    });
   }
+
   /**
    * Search the dictionary entries.
    *
@@ -2097,7 +2179,7 @@ export class SearchApi {
    * @param searchDictionaryEntries.dictionaryName - The dictionary to search in.
    * @param searchDictionaryEntries.searchDictionaryEntries - The searchDictionaryEntries object.
    */
-  searchDictionaryEntries({
+  function searchDictionaryEntries({
     dictionaryName,
     searchDictionaryEntries,
   }: SearchDictionaryEntriesProps): Promise<UpdatedAtResponse> {
@@ -2132,13 +2214,15 @@ export class SearchApi {
       data: searchDictionaryEntries,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers: {
+        ...headers,
+        ...auth.headers(),
+      },
+    });
   }
+
   /**
    * Search for values of a given facet, optionally restricting the returned values to those contained in objects matching other search criteria.
    *
@@ -2148,7 +2232,7 @@ export class SearchApi {
    * @param searchForFacetValues.facetName - The facet name.
    * @param searchForFacetValues.searchForFacetValuesRequest - The searchForFacetValuesRequest object.
    */
-  searchForFacetValues({
+  function searchForFacetValues({
     indexName,
     facetName,
     searchForFacetValuesRequest,
@@ -2177,13 +2261,15 @@ export class SearchApi {
       data: searchForFacetValuesRequest,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers: {
+        ...headers,
+        ...auth.headers(),
+      },
+    });
   }
+
   /**
    * Search for rules matching various criteria.
    *
@@ -2192,7 +2278,7 @@ export class SearchApi {
    * @param searchRules.indexName - The index in which to perform the request.
    * @param searchRules.searchRulesParams - The searchRulesParams object.
    */
-  searchRules({
+  function searchRules({
     indexName,
     searchRulesParams,
   }: SearchRulesProps): Promise<SearchRulesResponse> {
@@ -2221,13 +2307,15 @@ export class SearchApi {
       data: searchRulesParams,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers: {
+        ...headers,
+        ...auth.headers(),
+      },
+    });
   }
+
   /**
    * Search or browse all synonyms, optionally filtering them by type.
    *
@@ -2239,7 +2327,7 @@ export class SearchApi {
    * @param searchSynonyms.page - Requested page (zero-based). When specified, will retrieve a specific page; the page size is implicitly set to 100. When null, will retrieve all indices (no pagination).
    * @param searchSynonyms.hitsPerPage - Maximum number of objects to retrieve.
    */
-  searchSynonyms({
+  function searchSynonyms({
     indexName,
     query,
     type,
@@ -2280,20 +2368,22 @@ export class SearchApi {
       path,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers: {
+        ...headers,
+        ...auth.headers(),
+      },
+    });
   }
+
   /**
    * Search for userIDs. The data returned will usually be a few seconds behind real time, because userID usage may take up to a few seconds propagate to the different clusters. To keep updates moving quickly, the index of userIDs isn\'t built synchronously with the mapping. Instead, the index is built once every 12h, at the same time as the update of userID usage. For example, when you perform a modification like adding or moving a userID, the search will report an outdated value until the next rebuild of the mapping, which takes place every 12h. Upon success, the response is 200 OK and contains the following userIDs data.
    *
    * @summary Search userID.
    * @param searchUserIdsParams - The searchUserIdsParams object.
    */
-  searchUserIds(
+  function searchUserIds(
     searchUserIdsParams: SearchUserIdsParams
   ): Promise<SearchUserIdsResponse> {
     const path = '/1/clusters/mapping/search';
@@ -2318,20 +2408,22 @@ export class SearchApi {
       data: searchUserIdsParams,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers: {
+        ...headers,
+        ...auth.headers(),
+      },
+    });
   }
+
   /**
    * Set dictionary settings.
    *
    * @summary Set dictionary settings.
    * @param dictionarySettingsRequest - The dictionarySettingsRequest object.
    */
-  setDictionarySettings(
+  function setDictionarySettings(
     dictionarySettingsRequest: DictionarySettingsRequest
   ): Promise<UpdatedAtResponse> {
     const path = '/1/dictionaries/*/settings';
@@ -2356,13 +2448,15 @@ export class SearchApi {
       data: dictionarySettingsRequest,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers: {
+        ...headers,
+        ...auth.headers(),
+      },
+    });
   }
+
   /**
    * Update settings of a given indexName. Only specified settings are overridden; unspecified settings are left unchanged. Specifying null for a setting resets it to its default value.
    *
@@ -2372,7 +2466,7 @@ export class SearchApi {
    * @param setSettings.indexSettings - The indexSettings object.
    * @param setSettings.forwardToReplicas - When true, changes are also propagated to replicas of the given indexName.
    */
-  setSettings({
+  function setSettings({
     indexName,
     indexSettings,
     forwardToReplicas,
@@ -2406,13 +2500,15 @@ export class SearchApi {
       data: indexSettings,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers: {
+        ...headers,
+        ...auth.headers(),
+      },
+    });
   }
+
   /**
    * Replace every permission of an existing API key.
    *
@@ -2421,7 +2517,7 @@ export class SearchApi {
    * @param updateApiKey.key - API Key string.
    * @param updateApiKey.apiKey - The apiKey object.
    */
-  updateApiKey({
+  function updateApiKey({
     key,
     apiKey,
   }: UpdateApiKeyProps): Promise<UpdateApiKeyResponse> {
@@ -2456,14 +2552,77 @@ export class SearchApi {
       data: apiKey,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers: {
+        ...headers,
+        ...auth.headers(),
+      },
+    });
   }
-}
+
+  return {
+    addApiKey,
+    addOrUpdateObject,
+    appendSource,
+    assignUserId,
+    batch,
+    batchAssignUserIds,
+    batchDictionaryEntries,
+    batchRules,
+    browse,
+    clearAllSynonyms,
+    clearObjects,
+    clearRules,
+    deleteApiKey,
+    deleteBy,
+    deleteIndex,
+    deleteObject,
+    deleteRule,
+    deleteSource,
+    deleteSynonym,
+    getApiKey,
+    getDictionaryLanguages,
+    getDictionarySettings,
+    getLogs,
+    getObject,
+    getObjects,
+    getRule,
+    getSettings,
+    getSources,
+    getSynonym,
+    getTask,
+    getTopUserIds,
+    getUserId,
+    hasPendingMappings,
+    listApiKeys,
+    listClusters,
+    listIndices,
+    listUserIds,
+    multipleBatch,
+    multipleQueries,
+    operationIndex,
+    partialUpdateObject,
+    removeUserId,
+    replaceSources,
+    restoreApiKey,
+    saveObject,
+    saveRule,
+    saveSynonym,
+    saveSynonyms,
+    search,
+    searchDictionaryEntries,
+    searchForFacetValues,
+    searchRules,
+    searchSynonyms,
+    searchUserIds,
+    setDictionarySettings,
+    setSettings,
+    updateApiKey,
+  };
+};
+
+export type SearchApi = ReturnType<typeof createSearchApi>;
 
 export type AddOrUpdateObjectProps = {
   /**

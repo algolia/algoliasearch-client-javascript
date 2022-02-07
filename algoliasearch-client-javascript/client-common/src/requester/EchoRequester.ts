@@ -1,3 +1,5 @@
+import { URL } from 'url';
+
 import type { EndRequest, Request, Response, EchoResponse } from '../types';
 
 import { Requester } from './Requester';

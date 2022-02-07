@@ -1,10 +1,11 @@
-import { InsightsApi, EchoRequester } from '@algolia/client-insights';
-import type { EchoResponse } from '@algolia/client-insights';
+import { EchoRequester } from '@algolia/client-common';
+import type { EchoResponse } from '@algolia/client-common';
+import { insightsApi } from '@algolia/client-insights';
 
 const appId = process.env.ALGOLIA_APPLICATION_ID || 'test_app_id';
 const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'test_api_key';
 
-const client = new InsightsApi(appId, apiKey, 'us', {
+const client = insightsApi(appId, apiKey, 'us', {
   requester: new EchoRequester(),
 });
 

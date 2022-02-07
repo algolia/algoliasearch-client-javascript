@@ -1,10 +1,14 @@
-import { shuffle, Transporter } from '@algolia/client-common';
+import {
+  shuffle,
+  Transporter,
+  createAuth,
+  getUserAgent,
+} from '@algolia/client-common';
 import type {
+  CreateClientOptions,
   Headers,
-  Requester,
   Host,
   Request,
-  RequestOptions,
 } from '@algolia/client-common';
 
 import type { GetRecommendations } from '../model/getRecommendations';
@@ -12,112 +16,57 @@ import type { GetRecommendationsResponse } from '../model/getRecommendationsResp
 
 export const version = '5.0.0';
 
-export class RecommendApi {
-  protected authentications = {
-    apiKey: 'Algolia-API-Key',
-    appId: 'Algolia-Application-Id',
-  };
-
-  private transporter: Transporter;
-
-  private applyAuthenticationHeaders(
-    requestOptions: RequestOptions
-  ): RequestOptions {
-    if (requestOptions?.headers) {
-      return {
-        ...requestOptions,
-        headers: {
-          ...requestOptions.headers,
-          'X-Algolia-API-Key': this.authentications.apiKey,
-          'X-Algolia-Application-Id': this.authentications.appId,
-        },
-      };
-    }
-
-    return requestOptions;
-  }
-
-  private sendRequest<TResponse>(
-    request: Request,
-    requestOptions: RequestOptions
-  ): Promise<TResponse> {
-    return this.transporter.request(
-      request,
-      this.applyAuthenticationHeaders(requestOptions)
-    );
-  }
-
-  constructor(
-    appId: string,
-    apiKey: string,
-    options?: { requester?: Requester; hosts?: Host[] }
-  ) {
-    if (!appId) {
-      throw new Error('`appId` is missing.');
-    }
-
-    if (!apiKey) {
-      throw new Error('`apiKey` is missing.');
-    }
-
-    this.setAuthentication({ appId, apiKey });
-
-    this.transporter = new Transporter({
-      hosts: options?.hosts ?? this.getDefaultHosts(appId),
-      baseHeaders: {
-        'content-type': 'application/x-www-form-urlencoded',
+function getDefaultHosts(appId: string): Host[] {
+  return (
+    [
+      {
+        url: `${appId}-dsn.algolia.net`,
+        accept: 'read',
+        protocol: 'https',
       },
-      userAgent: 'Algolia for Javascript (5.0.0)',
-      timeouts: {
-        connect: 2,
-        read: 5,
-        write: 30,
+      {
+        url: `${appId}.algolia.net`,
+        accept: 'write',
+        protocol: 'https',
       },
-      requester: options?.requester,
-    });
-  }
+    ] as Host[]
+  ).concat(
+    shuffle([
+      {
+        url: `${appId}-1.algolianet.com`,
+        accept: 'readWrite',
+        protocol: 'https',
+      },
+      {
+        url: `${appId}-2.algolianet.com`,
+        accept: 'readWrite',
+        protocol: 'https',
+      },
+      {
+        url: `${appId}-3.algolianet.com`,
+        accept: 'readWrite',
+        protocol: 'https',
+      },
+    ])
+  );
+}
 
-  getDefaultHosts(appId: string): Host[] {
-    return (
-      [
-        { url: `${appId}-dsn.algolia.net`, accept: 'read', protocol: 'https' },
-        { url: `${appId}.algolia.net`, accept: 'write', protocol: 'https' },
-      ] as Host[]
-    ).concat(
-      shuffle([
-        {
-          url: `${appId}-1.algolianet.com`,
-          accept: 'readWrite',
-          protocol: 'https',
-        },
-        {
-          url: `${appId}-2.algolianet.com`,
-          accept: 'readWrite',
-          protocol: 'https',
-        },
-        {
-          url: `${appId}-3.algolianet.com`,
-          accept: 'readWrite',
-          protocol: 'https',
-        },
-      ])
-    );
-  }
-
-  setRequest(requester: Requester): void {
-    this.transporter.setRequester(requester);
-  }
-
-  setHosts(hosts: Host[]): void {
-    this.transporter.setHosts(hosts);
-  }
-
-  setAuthentication({ appId, apiKey }): void {
-    this.authentications = {
-      apiKey,
-      appId,
-    };
-  }
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+export const createRecommendApi = (options: CreateClientOptions) => {
+  const auth = createAuth(options.appId, options.apiKey, options.authMode);
+  const transporter = new Transporter({
+    hosts: options?.hosts ?? getDefaultHosts(options.appId),
+    baseHeaders: {
+      'content-type': 'application/x-www-form-urlencoded',
+    },
+    userAgent: getUserAgent({
+      userAgents: options.userAgents,
+      client: 'Recommend',
+      version,
+    }),
+    timeouts: options.timeouts,
+    requester: options.requester,
+  });
 
   /**
    * Returns recommendations for a specific model and objectID.
@@ -125,7 +74,7 @@ export class RecommendApi {
    * @summary Returns recommendations for a specific model and objectID.
    * @param getRecommendations - The getRecommendations object.
    */
-  getRecommendations(
+  function getRecommendations(
     getRecommendations: GetRecommendations
   ): Promise<GetRecommendationsResponse> {
     const path = '/1/indexes/*/recommendations';
@@ -150,11 +99,16 @@ export class RecommendApi {
       data: getRecommendations,
     };
 
-    const requestOptions: RequestOptions = {
-      headers,
+    return transporter.request(request, {
       queryParameters,
-    };
-
-    return this.sendRequest(request, requestOptions);
+      headers: {
+        ...headers,
+        ...auth.headers(),
+      },
+    });
   }
-}
+
+  return { getRecommendations };
+};
+
+export type RecommendApi = ReturnType<typeof createRecommendApi>;
