@@ -4,7 +4,7 @@
     "testName": "get batchDictionaryEntries results with minimal parameters",
     "parameters": {
       "dictionaryName": "compounds",
-      "batchDictionaryEntries": {
+      "batchDictionaryEntriesParams": {
         "requests": [
           {
             "action": "addEntry",
@@ -51,7 +51,7 @@
     "testName": "get batchDictionaryEntries results with all parameters",
     "parameters": {
       "dictionaryName": "compounds",
-      "batchDictionaryEntries": {
+      "batchDictionaryEntriesParams": {
         "clearExistingDictionaryEntries": false,
         "requests": [
           {

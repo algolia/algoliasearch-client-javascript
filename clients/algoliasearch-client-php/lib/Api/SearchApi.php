@@ -468,14 +468,14 @@ class SearchApi
      * Send a batch of dictionary entries.
      *
      * @param  string $dictionaryName The dictionary to search in. (required)
-     * @param  \Algolia\AlgoliaSearch\Model\Search\BatchDictionaryEntries $batchDictionaryEntries batchDictionaryEntries (required)
+     * @param  \Algolia\AlgoliaSearch\Model\Search\BatchDictionaryEntriesParams $batchDictionaryEntriesParams batchDictionaryEntriesParams (required)
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      *
      * @return \Algolia\AlgoliaSearch\Model\Search\UpdatedAtResponse|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase
      */
-    public function batchDictionaryEntries($dictionaryName, $batchDictionaryEntries)
+    public function batchDictionaryEntries($dictionaryName, $batchDictionaryEntriesParams)
     {
         // verify the required parameter 'dictionaryName' is set
         if ($dictionaryName === null || (is_array($dictionaryName) && count($dictionaryName) === 0)) {
@@ -483,10 +483,10 @@ class SearchApi
                 'Missing the required parameter $dictionaryName when calling batchDictionaryEntries'
             );
         }
-        // verify the required parameter 'batchDictionaryEntries' is set
-        if ($batchDictionaryEntries === null || (is_array($batchDictionaryEntries) && count($batchDictionaryEntries) === 0)) {
+        // verify the required parameter 'batchDictionaryEntriesParams' is set
+        if ($batchDictionaryEntriesParams === null || (is_array($batchDictionaryEntriesParams) && count($batchDictionaryEntriesParams) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $batchDictionaryEntries when calling batchDictionaryEntries'
+                'Missing the required parameter $batchDictionaryEntriesParams when calling batchDictionaryEntries'
             );
         }
 
@@ -506,8 +506,8 @@ class SearchApi
         $headers = [];
         $headers['Accept'] = 'application/json';
         $headers['Content-Type'] = 'application/json';
-        if (isset($batchDictionaryEntries)) {
-            $httpBody = $batchDictionaryEntries;
+        if (isset($batchDictionaryEntriesParams)) {
+            $httpBody = $batchDictionaryEntriesParams;
         }
 
         $defaultHeaders = [];
@@ -3051,14 +3051,14 @@ class SearchApi
      * Search the dictionary entries.
      *
      * @param  string $dictionaryName The dictionary to search in. (required)
-     * @param  \Algolia\AlgoliaSearch\Model\Search\SearchDictionaryEntries $searchDictionaryEntries searchDictionaryEntries (required)
+     * @param  \Algolia\AlgoliaSearch\Model\Search\SearchDictionaryEntriesParams $searchDictionaryEntriesParams searchDictionaryEntriesParams (required)
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      *
      * @return \Algolia\AlgoliaSearch\Model\Search\UpdatedAtResponse|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase
      */
-    public function searchDictionaryEntries($dictionaryName, $searchDictionaryEntries)
+    public function searchDictionaryEntries($dictionaryName, $searchDictionaryEntriesParams)
     {
         // verify the required parameter 'dictionaryName' is set
         if ($dictionaryName === null || (is_array($dictionaryName) && count($dictionaryName) === 0)) {
@@ -3066,10 +3066,10 @@ class SearchApi
                 'Missing the required parameter $dictionaryName when calling searchDictionaryEntries'
             );
         }
-        // verify the required parameter 'searchDictionaryEntries' is set
-        if ($searchDictionaryEntries === null || (is_array($searchDictionaryEntries) && count($searchDictionaryEntries) === 0)) {
+        // verify the required parameter 'searchDictionaryEntriesParams' is set
+        if ($searchDictionaryEntriesParams === null || (is_array($searchDictionaryEntriesParams) && count($searchDictionaryEntriesParams) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $searchDictionaryEntries when calling searchDictionaryEntries'
+                'Missing the required parameter $searchDictionaryEntriesParams when calling searchDictionaryEntries'
             );
         }
 
@@ -3089,8 +3089,8 @@ class SearchApi
         $headers = [];
         $headers['Accept'] = 'application/json';
         $headers['Content-Type'] = 'application/json';
-        if (isset($searchDictionaryEntries)) {
-            $httpBody = $searchDictionaryEntries;
+        if (isset($searchDictionaryEntriesParams)) {
+            $httpBody = $searchDictionaryEntriesParams;
         }
 
         $defaultHeaders = [];
@@ -3393,19 +3393,19 @@ class SearchApi
      *
      * Set dictionary settings.
      *
-     * @param  \Algolia\AlgoliaSearch\Model\Search\DictionarySettingsRequest $dictionarySettingsRequest dictionarySettingsRequest (required)
+     * @param  \Algolia\AlgoliaSearch\Model\Search\DictionarySettingsParams $dictionarySettingsParams dictionarySettingsParams (required)
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      *
      * @return \Algolia\AlgoliaSearch\Model\Search\UpdatedAtResponse|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase
      */
-    public function setDictionarySettings($dictionarySettingsRequest)
+    public function setDictionarySettings($dictionarySettingsParams)
     {
-        // verify the required parameter 'dictionarySettingsRequest' is set
-        if ($dictionarySettingsRequest === null || (is_array($dictionarySettingsRequest) && count($dictionarySettingsRequest) === 0)) {
+        // verify the required parameter 'dictionarySettingsParams' is set
+        if ($dictionarySettingsParams === null || (is_array($dictionarySettingsParams) && count($dictionarySettingsParams) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $dictionarySettingsRequest when calling setDictionarySettings'
+                'Missing the required parameter $dictionarySettingsParams when calling setDictionarySettings'
             );
         }
 
@@ -3417,8 +3417,8 @@ class SearchApi
         $headers = [];
         $headers['Accept'] = 'application/json';
         $headers['Content-Type'] = 'application/json';
-        if (isset($dictionarySettingsRequest)) {
-            $httpBody = $dictionarySettingsRequest;
+        if (isset($dictionarySettingsParams)) {
+            $httpBody = $dictionarySettingsParams;
         }
 
         $defaultHeaders = [];

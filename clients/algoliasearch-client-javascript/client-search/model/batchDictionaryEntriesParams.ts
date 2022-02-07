@@ -1,9 +1,9 @@
 import type { BatchDictionaryEntriesRequest } from './batchDictionaryEntriesRequest';
 
 /**
- * The `batchDictionaryEntries` requests.
+ * The `batchDictionaryEntries` parameters.
  */
-export type BatchDictionaryEntries = {
+export type BatchDictionaryEntriesParams = {
   /**
    * When `true`, start the batch by removing all the custom entries from the dictionary.
    */

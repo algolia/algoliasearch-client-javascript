@@ -90,19 +90,19 @@ class RecommendApi
      *
      * Returns recommendations for a specific model and objectID.
      *
-     * @param  \Algolia\AlgoliaSearch\Model\Recommend\GetRecommendations $getRecommendations getRecommendations (required)
+     * @param  \Algolia\AlgoliaSearch\Model\Recommend\GetRecommendationsParams $getRecommendationsParams getRecommendationsParams (required)
      *
      * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      *
      * @return \Algolia\AlgoliaSearch\Model\Recommend\GetRecommendationsResponse|\Algolia\AlgoliaSearch\Model\Recommend\ErrorBase|\Algolia\AlgoliaSearch\Model\Recommend\ErrorBase|\Algolia\AlgoliaSearch\Model\Recommend\ErrorBase|\Algolia\AlgoliaSearch\Model\Recommend\ErrorBase
      */
-    public function getRecommendations($getRecommendations)
+    public function getRecommendations($getRecommendationsParams)
     {
-        // verify the required parameter 'getRecommendations' is set
-        if ($getRecommendations === null || (is_array($getRecommendations) && count($getRecommendations) === 0)) {
+        // verify the required parameter 'getRecommendationsParams' is set
+        if ($getRecommendationsParams === null || (is_array($getRecommendationsParams) && count($getRecommendationsParams) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $getRecommendations when calling getRecommendations'
+                'Missing the required parameter $getRecommendationsParams when calling getRecommendations'
             );
         }
 
@@ -114,8 +114,8 @@ class RecommendApi
         $headers = [];
         $headers['Accept'] = 'application/json';
         $headers['Content-Type'] = 'application/json';
-        if (isset($getRecommendations)) {
-            $httpBody = $getRecommendations;
+        if (isset($getRecommendationsParams)) {
+            $httpBody = $getRecommendationsParams;
         }
 
         $defaultHeaders = [];

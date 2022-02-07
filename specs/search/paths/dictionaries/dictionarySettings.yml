@@ -9,7 +9,7 @@ put:
     content:
       application/json:
         schema:
-          title: dictionarySettingsRequest
+          title: dictionarySettingsParams
           type: object
           additionalProperties: false
           description: Disable the builtin Algolia entries for a type of dictionary per language.

@@ -1,7 +1,7 @@
 /**
- * The `searchDictionaryEntries` request.
+ * The `searchDictionaryEntries` parameters.
  */
-export type SearchDictionaryEntries = {
+export type SearchDictionaryEntriesParams = {
   /**
    * The text to search in the index.
    */

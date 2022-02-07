@@ -4,12 +4,12 @@ import com.google.gson.annotations.SerializedName;
 import java.util.Objects;
 
 /** Disable the builtin Algolia entries for a type of dictionary per language. */
-public class DictionarySettingsRequest {
+public class DictionarySettingsParams {
 
   @SerializedName("disableStandardEntries")
   private StandardEntries disableStandardEntries;
 
-  public DictionarySettingsRequest disableStandardEntries(
+  public DictionarySettingsParams disableStandardEntries(
     StandardEntries disableStandardEntries
   ) {
     this.disableStandardEntries = disableStandardEntries;
@@ -40,10 +40,10 @@ public class DictionarySettingsRequest {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    DictionarySettingsRequest dictionarySettingsRequest = (DictionarySettingsRequest) o;
+    DictionarySettingsParams dictionarySettingsParams = (DictionarySettingsParams) o;
     return Objects.equals(
       this.disableStandardEntries,
-      dictionarySettingsRequest.disableStandardEntries
+      dictionarySettingsParams.disableStandardEntries
     );
   }
 
@@ -55,7 +55,7 @@ public class DictionarySettingsRequest {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class DictionarySettingsRequest {\n");
+    sb.append("class DictionarySettingsParams {\n");
     sb
       .append("    disableStandardEntries: ")
       .append(toIndentedString(disableStandardEntries))

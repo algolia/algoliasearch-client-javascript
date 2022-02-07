@@ -1,22 +1,22 @@
 <?php
 
-namespace Algolia\AlgoliaSearch\Model\Search;
+namespace Algolia\AlgoliaSearch\Model\Recommend;
 
 use \Algolia\AlgoliaSearch\ObjectSerializer;
 use \ArrayAccess;
 
 /**
- * BatchDictionaryEntries Class Doc Comment
+ * GetRecommendationsParams Class Doc Comment
  *
  * @category Class
- * @description The &#x60;batchDictionaryEntries&#x60; requests.
+ * @description The &#x60;getRecommendations&#x60; parameters.
  *
  * @package  Algolia\AlgoliaSearch
  * @implements \ArrayAccess<TKey, TValue>
  * @template TKey int|null
  * @template TValue mixed|null
  */
-class BatchDictionaryEntries implements ModelInterface, ArrayAccess, \JsonSerializable
+class GetRecommendationsParams implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -25,7 +25,7 @@ class BatchDictionaryEntries implements ModelInterface, ArrayAccess, \JsonSerial
       *
       * @var string
       */
-    protected static $openAPIModelName = 'batchDictionaryEntries';
+    protected static $openAPIModelName = 'getRecommendationsParams';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -33,8 +33,7 @@ class BatchDictionaryEntries implements ModelInterface, ArrayAccess, \JsonSerial
       * @var string[]
       */
     protected static $openAPITypes = [
-        'clearExistingDictionaryEntries' => 'bool',
-        'requests' => '\Algolia\AlgoliaSearch\Model\Search\BatchDictionaryEntriesRequest[]',
+        'requests' => '\Algolia\AlgoliaSearch\Model\Recommend\RecommendationRequest[]',
     ];
 
     /**
@@ -45,7 +44,6 @@ class BatchDictionaryEntries implements ModelInterface, ArrayAccess, \JsonSerial
       * @psalm-var array<string, string|null>
       */
     protected static $openAPIFormats = [
-        'clearExistingDictionaryEntries' => null,
         'requests' => null,
     ];
 
@@ -76,7 +74,6 @@ class BatchDictionaryEntries implements ModelInterface, ArrayAccess, \JsonSerial
      * @var string[]
      */
     protected static $attributeMap = [
-        'clearExistingDictionaryEntries' => 'clearExistingDictionaryEntries',
         'requests' => 'requests',
     ];
 
@@ -86,7 +83,6 @@ class BatchDictionaryEntries implements ModelInterface, ArrayAccess, \JsonSerial
      * @var string[]
      */
     protected static $setters = [
-        'clearExistingDictionaryEntries' => 'setClearExistingDictionaryEntries',
         'requests' => 'setRequests',
     ];
 
@@ -96,7 +92,6 @@ class BatchDictionaryEntries implements ModelInterface, ArrayAccess, \JsonSerial
      * @var string[]
      */
     protected static $getters = [
-        'clearExistingDictionaryEntries' => 'getClearExistingDictionaryEntries',
         'requests' => 'getRequests',
     ];
 
@@ -156,7 +151,6 @@ class BatchDictionaryEntries implements ModelInterface, ArrayAccess, \JsonSerial
      */
     public function __construct(array $data = null)
     {
-        $this->container['clearExistingDictionaryEntries'] = $data['clearExistingDictionaryEntries'] ?? false;
         $this->container['requests'] = $data['requests'] ?? null;
     }
 
@@ -188,33 +182,9 @@ class BatchDictionaryEntries implements ModelInterface, ArrayAccess, \JsonSerial
     }
 
     /**
-     * Gets clearExistingDictionaryEntries
-     *
-     * @return bool|null
-     */
-    public function getClearExistingDictionaryEntries()
-    {
-        return $this->container['clearExistingDictionaryEntries'];
-    }
-
-    /**
-     * Sets clearExistingDictionaryEntries
-     *
-     * @param bool|null $clearExistingDictionaryEntries when `true`, start the batch by removing all the custom entries from the dictionary
-     *
-     * @return self
-     */
-    public function setClearExistingDictionaryEntries($clearExistingDictionaryEntries)
-    {
-        $this->container['clearExistingDictionaryEntries'] = $clearExistingDictionaryEntries;
-
-        return $this;
-    }
-
-    /**
      * Gets requests
      *
-     * @return \Algolia\AlgoliaSearch\Model\Search\BatchDictionaryEntriesRequest[]
+     * @return \Algolia\AlgoliaSearch\Model\Recommend\RecommendationRequest[]
      */
     public function getRequests()
     {
@@ -224,7 +194,7 @@ class BatchDictionaryEntries implements ModelInterface, ArrayAccess, \JsonSerial
     /**
      * Sets requests
      *
-     * @param \Algolia\AlgoliaSearch\Model\Search\BatchDictionaryEntriesRequest[] $requests List of operations to batch. Each operation is described by an `action` and a `body`.
+     * @param \Algolia\AlgoliaSearch\Model\Recommend\RecommendationRequest[] $requests the `getRecommendations` requests
      *
      * @return self
      */

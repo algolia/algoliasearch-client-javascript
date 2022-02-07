@@ -15,7 +15,7 @@ import type { AddApiKeyResponse } from '../model/addApiKeyResponse';
 import type { ApiKey } from '../model/apiKey';
 import type { AssignUserIdParams } from '../model/assignUserIdParams';
 import type { BatchAssignUserIdsParams } from '../model/batchAssignUserIdsParams';
-import type { BatchDictionaryEntries } from '../model/batchDictionaryEntries';
+import type { BatchDictionaryEntriesParams } from '../model/batchDictionaryEntriesParams';
 import type { BatchParams } from '../model/batchParams';
 import type { BatchResponse } from '../model/batchResponse';
 import type { BatchWriteParams } from '../model/batchWriteParams';
@@ -26,7 +26,7 @@ import type { CreatedAtResponse } from '../model/createdAtResponse';
 import type { DeleteApiKeyResponse } from '../model/deleteApiKeyResponse';
 import type { DeleteSourceResponse } from '../model/deleteSourceResponse';
 import type { DeletedAtResponse } from '../model/deletedAtResponse';
-import type { DictionarySettingsRequest } from '../model/dictionarySettingsRequest';
+import type { DictionarySettingsParams } from '../model/dictionarySettingsParams';
 import type { GetDictionarySettingsResponse } from '../model/getDictionarySettingsResponse';
 import type { GetLogsResponse } from '../model/getLogsResponse';
 import type { GetObjectsParams } from '../model/getObjectsParams';
@@ -49,7 +49,7 @@ import type { ReplaceSourceResponse } from '../model/replaceSourceResponse';
 import type { Rule } from '../model/rule';
 import type { SaveObjectResponse } from '../model/saveObjectResponse';
 import type { SaveSynonymResponse } from '../model/saveSynonymResponse';
-import type { SearchDictionaryEntries } from '../model/searchDictionaryEntries';
+import type { SearchDictionaryEntriesParams } from '../model/searchDictionaryEntriesParams';
 import type { SearchForFacetValuesRequest } from '../model/searchForFacetValuesRequest';
 import type { SearchForFacetValuesResponse } from '../model/searchForFacetValuesResponse';
 import type { SearchParams } from '../model/searchParams';
@@ -408,11 +408,11 @@ export const createSearchApi = (options: CreateClientOptions) => {
    * @summary Send a batch of dictionary entries.
    * @param batchDictionaryEntries - The batchDictionaryEntries object.
    * @param batchDictionaryEntries.dictionaryName - The dictionary to search in.
-   * @param batchDictionaryEntries.batchDictionaryEntries - The batchDictionaryEntries object.
+   * @param batchDictionaryEntries.batchDictionaryEntriesParams - The batchDictionaryEntriesParams object.
    */
   function batchDictionaryEntries({
     dictionaryName,
-    batchDictionaryEntries,
+    batchDictionaryEntriesParams,
   }: BatchDictionaryEntriesProps): Promise<UpdatedAtResponse> {
     const path = '/1/dictionaries/{dictionaryName}/batch'.replace(
       '{dictionaryName}',
@@ -427,22 +427,22 @@ export const createSearchApi = (options: CreateClientOptions) => {
       );
     }
 
-    if (!batchDictionaryEntries) {
+    if (!batchDictionaryEntriesParams) {
       throw new Error(
-        'Parameter `batchDictionaryEntries` is required when calling `batchDictionaryEntries`.'
+        'Parameter `batchDictionaryEntriesParams` is required when calling `batchDictionaryEntries`.'
       );
     }
 
-    if (!batchDictionaryEntries.requests) {
+    if (!batchDictionaryEntriesParams.requests) {
       throw new Error(
-        'Parameter `batchDictionaryEntries.requests` is required when calling `batchDictionaryEntries`.'
+        'Parameter `batchDictionaryEntriesParams.requests` is required when calling `batchDictionaryEntries`.'
       );
     }
 
     const request: Request = {
       method: 'POST',
       path,
-      data: batchDictionaryEntries,
+      data: batchDictionaryEntriesParams,
     };
 
     return transporter.request(request, {
@@ -2177,11 +2177,11 @@ export const createSearchApi = (options: CreateClientOptions) => {
    * @summary Search the dictionary entries.
    * @param searchDictionaryEntries - The searchDictionaryEntries object.
    * @param searchDictionaryEntries.dictionaryName - The dictionary to search in.
-   * @param searchDictionaryEntries.searchDictionaryEntries - The searchDictionaryEntries object.
+   * @param searchDictionaryEntries.searchDictionaryEntriesParams - The searchDictionaryEntriesParams object.
    */
   function searchDictionaryEntries({
     dictionaryName,
-    searchDictionaryEntries,
+    searchDictionaryEntriesParams,
   }: SearchDictionaryEntriesProps): Promise<UpdatedAtResponse> {
     const path = '/1/dictionaries/{dictionaryName}/search'.replace(
       '{dictionaryName}',
@@ -2196,22 +2196,22 @@ export const createSearchApi = (options: CreateClientOptions) => {
       );
     }
 
-    if (!searchDictionaryEntries) {
+    if (!searchDictionaryEntriesParams) {
       throw new Error(
-        'Parameter `searchDictionaryEntries` is required when calling `searchDictionaryEntries`.'
+        'Parameter `searchDictionaryEntriesParams` is required when calling `searchDictionaryEntries`.'
       );
     }
 
-    if (!searchDictionaryEntries.query) {
+    if (!searchDictionaryEntriesParams.query) {
       throw new Error(
-        'Parameter `searchDictionaryEntries.query` is required when calling `searchDictionaryEntries`.'
+        'Parameter `searchDictionaryEntriesParams.query` is required when calling `searchDictionaryEntries`.'
       );
     }
 
     const request: Request = {
       method: 'POST',
       path,
-      data: searchDictionaryEntries,
+      data: searchDictionaryEntriesParams,
     };
 
     return transporter.request(request, {
@@ -2421,31 +2421,31 @@ export const createSearchApi = (options: CreateClientOptions) => {
    * Set dictionary settings.
    *
    * @summary Set dictionary settings.
-   * @param dictionarySettingsRequest - The dictionarySettingsRequest object.
+   * @param dictionarySettingsParams - The dictionarySettingsParams object.
    */
   function setDictionarySettings(
-    dictionarySettingsRequest: DictionarySettingsRequest
+    dictionarySettingsParams: DictionarySettingsParams
   ): Promise<UpdatedAtResponse> {
     const path = '/1/dictionaries/*/settings';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
-    if (!dictionarySettingsRequest) {
+    if (!dictionarySettingsParams) {
       throw new Error(
-        'Parameter `dictionarySettingsRequest` is required when calling `setDictionarySettings`.'
+        'Parameter `dictionarySettingsParams` is required when calling `setDictionarySettings`.'
       );
     }
 
-    if (!dictionarySettingsRequest.disableStandardEntries) {
+    if (!dictionarySettingsParams.disableStandardEntries) {
       throw new Error(
-        'Parameter `dictionarySettingsRequest.disableStandardEntries` is required when calling `setDictionarySettings`.'
+        'Parameter `dictionarySettingsParams.disableStandardEntries` is required when calling `setDictionarySettings`.'
       );
     }
 
     const request: Request = {
       method: 'PUT',
       path,
-      data: dictionarySettingsRequest,
+      data: dictionarySettingsParams,
     };
 
     return transporter.request(request, {
@@ -2668,7 +2668,7 @@ export type BatchDictionaryEntriesProps = {
    * The dictionary to search in.
    */
   dictionaryName: 'compounds' | 'plurals' | 'stopwords';
-  batchDictionaryEntries: BatchDictionaryEntries;
+  batchDictionaryEntriesParams: BatchDictionaryEntriesParams;
 };
 
 export type BatchRulesProps = {
@@ -3027,7 +3027,7 @@ export type SearchDictionaryEntriesProps = {
    * The dictionary to search in.
    */
   dictionaryName: 'compounds' | 'plurals' | 'stopwords';
-  searchDictionaryEntries: SearchDictionaryEntries;
+  searchDictionaryEntriesParams: SearchDictionaryEntriesParams;
 };
 
 export type SearchForFacetValuesProps = {

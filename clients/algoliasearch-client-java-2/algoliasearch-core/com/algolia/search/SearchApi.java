@@ -676,10 +676,10 @@ public class SearchApi extends ApiClient {
    */
   private Call batchDictionaryEntriesCall(
     String dictionaryName,
-    BatchDictionaryEntries batchDictionaryEntries,
+    BatchDictionaryEntriesParams batchDictionaryEntriesParams,
     final ApiCallback<UpdatedAtResponse> _callback
   ) throws ApiException {
-    Object bodyObj = batchDictionaryEntries;
+    Object bodyObj = batchDictionaryEntriesParams;
 
     // create path and map variables
     String path =
@@ -706,7 +706,7 @@ public class SearchApi extends ApiClient {
 
   private Call batchDictionaryEntriesValidateBeforeCall(
     String dictionaryName,
-    BatchDictionaryEntries batchDictionaryEntries,
+    BatchDictionaryEntriesParams batchDictionaryEntriesParams,
     final ApiCallback<UpdatedAtResponse> _callback
   ) throws ApiException {
     // verify the required parameter 'dictionaryName' is set
@@ -717,17 +717,17 @@ public class SearchApi extends ApiClient {
       );
     }
 
-    // verify the required parameter 'batchDictionaryEntries' is set
-    if (batchDictionaryEntries == null) {
+    // verify the required parameter 'batchDictionaryEntriesParams' is set
+    if (batchDictionaryEntriesParams == null) {
       throw new ApiException(
-        "Missing the required parameter 'batchDictionaryEntries' when calling" +
+        "Missing the required parameter 'batchDictionaryEntriesParams' when calling" +
         " batchDictionaryEntries(Async)"
       );
     }
 
     return batchDictionaryEntriesCall(
       dictionaryName,
-      batchDictionaryEntries,
+      batchDictionaryEntriesParams,
       _callback
     );
   }
@@ -736,18 +736,18 @@ public class SearchApi extends ApiClient {
    * Send a batch of dictionary entries.
    *
    * @param dictionaryName The dictionary to search in. (required)
-   * @param batchDictionaryEntries (required)
+   * @param batchDictionaryEntriesParams (required)
    * @return UpdatedAtResponse
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
   public UpdatedAtResponse batchDictionaryEntries(
     String dictionaryName,
-    BatchDictionaryEntries batchDictionaryEntries
+    BatchDictionaryEntriesParams batchDictionaryEntriesParams
   ) throws ApiException {
     Call req = batchDictionaryEntriesValidateBeforeCall(
       dictionaryName,
-      batchDictionaryEntries,
+      batchDictionaryEntriesParams,
       null
     );
     if (req instanceof CallEcho) {
@@ -765,19 +765,19 @@ public class SearchApi extends ApiClient {
    * (asynchronously) Send a batch of dictionary entries.
    *
    * @param dictionaryName The dictionary to search in. (required)
-   * @param batchDictionaryEntries (required)
+   * @param batchDictionaryEntriesParams (required)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
    * @throws ApiException If fail to process the API call, e.g. serializing the request body object
    */
   public Call batchDictionaryEntriesAsync(
     String dictionaryName,
-    BatchDictionaryEntries batchDictionaryEntries,
+    BatchDictionaryEntriesParams batchDictionaryEntriesParams,
     final ApiCallback<UpdatedAtResponse> _callback
   ) throws ApiException {
     Call call = batchDictionaryEntriesValidateBeforeCall(
       dictionaryName,
-      batchDictionaryEntries,
+      batchDictionaryEntriesParams,
       _callback
     );
     Type returnType = new TypeToken<UpdatedAtResponse>() {}.getType();
@@ -5154,10 +5154,10 @@ public class SearchApi extends ApiClient {
    */
   private Call searchDictionaryEntriesCall(
     String dictionaryName,
-    SearchDictionaryEntries searchDictionaryEntries,
+    SearchDictionaryEntriesParams searchDictionaryEntriesParams,
     final ApiCallback<UpdatedAtResponse> _callback
   ) throws ApiException {
-    Object bodyObj = searchDictionaryEntries;
+    Object bodyObj = searchDictionaryEntriesParams;
 
     // create path and map variables
     String path =
@@ -5184,7 +5184,7 @@ public class SearchApi extends ApiClient {
 
   private Call searchDictionaryEntriesValidateBeforeCall(
     String dictionaryName,
-    SearchDictionaryEntries searchDictionaryEntries,
+    SearchDictionaryEntriesParams searchDictionaryEntriesParams,
     final ApiCallback<UpdatedAtResponse> _callback
   ) throws ApiException {
     // verify the required parameter 'dictionaryName' is set
@@ -5195,17 +5195,17 @@ public class SearchApi extends ApiClient {
       );
     }
 
-    // verify the required parameter 'searchDictionaryEntries' is set
-    if (searchDictionaryEntries == null) {
+    // verify the required parameter 'searchDictionaryEntriesParams' is set
+    if (searchDictionaryEntriesParams == null) {
       throw new ApiException(
-        "Missing the required parameter 'searchDictionaryEntries' when calling" +
+        "Missing the required parameter 'searchDictionaryEntriesParams' when calling" +
         " searchDictionaryEntries(Async)"
       );
     }
 
     return searchDictionaryEntriesCall(
       dictionaryName,
-      searchDictionaryEntries,
+      searchDictionaryEntriesParams,
       _callback
     );
   }
@@ -5214,18 +5214,18 @@ public class SearchApi extends ApiClient {
    * Search the dictionary entries.
    *
    * @param dictionaryName The dictionary to search in. (required)
-   * @param searchDictionaryEntries (required)
+   * @param searchDictionaryEntriesParams (required)
    * @return UpdatedAtResponse
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
   public UpdatedAtResponse searchDictionaryEntries(
     String dictionaryName,
-    SearchDictionaryEntries searchDictionaryEntries
+    SearchDictionaryEntriesParams searchDictionaryEntriesParams
   ) throws ApiException {
     Call req = searchDictionaryEntriesValidateBeforeCall(
       dictionaryName,
-      searchDictionaryEntries,
+      searchDictionaryEntriesParams,
       null
     );
     if (req instanceof CallEcho) {
@@ -5243,19 +5243,19 @@ public class SearchApi extends ApiClient {
    * (asynchronously) Search the dictionary entries.
    *
    * @param dictionaryName The dictionary to search in. (required)
-   * @param searchDictionaryEntries (required)
+   * @param searchDictionaryEntriesParams (required)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
    * @throws ApiException If fail to process the API call, e.g. serializing the request body object
    */
   public Call searchDictionaryEntriesAsync(
     String dictionaryName,
-    SearchDictionaryEntries searchDictionaryEntries,
+    SearchDictionaryEntriesParams searchDictionaryEntriesParams,
     final ApiCallback<UpdatedAtResponse> _callback
   ) throws ApiException {
     Call call = searchDictionaryEntriesValidateBeforeCall(
       dictionaryName,
-      searchDictionaryEntries,
+      searchDictionaryEntriesParams,
       _callback
     );
     Type returnType = new TypeToken<UpdatedAtResponse>() {}.getType();
@@ -5776,10 +5776,10 @@ public class SearchApi extends ApiClient {
    * @throws ApiException If fail to serialize the request body object
    */
   private Call setDictionarySettingsCall(
-    DictionarySettingsRequest dictionarySettingsRequest,
+    DictionarySettingsParams dictionarySettingsParams,
     final ApiCallback<UpdatedAtResponse> _callback
   ) throws ApiException {
-    Object bodyObj = dictionarySettingsRequest;
+    Object bodyObj = dictionarySettingsParams;
 
     // create path and map variables
     String path = "/1/dictionaries/*/settings";
@@ -5801,33 +5801,33 @@ public class SearchApi extends ApiClient {
   }
 
   private Call setDictionarySettingsValidateBeforeCall(
-    DictionarySettingsRequest dictionarySettingsRequest,
+    DictionarySettingsParams dictionarySettingsParams,
     final ApiCallback<UpdatedAtResponse> _callback
   ) throws ApiException {
-    // verify the required parameter 'dictionarySettingsRequest' is set
-    if (dictionarySettingsRequest == null) {
+    // verify the required parameter 'dictionarySettingsParams' is set
+    if (dictionarySettingsParams == null) {
       throw new ApiException(
-        "Missing the required parameter 'dictionarySettingsRequest' when calling" +
+        "Missing the required parameter 'dictionarySettingsParams' when calling" +
         " setDictionarySettings(Async)"
       );
     }
 
-    return setDictionarySettingsCall(dictionarySettingsRequest, _callback);
+    return setDictionarySettingsCall(dictionarySettingsParams, _callback);
   }
 
   /**
    * Set dictionary settings.
    *
-   * @param dictionarySettingsRequest (required)
+   * @param dictionarySettingsParams (required)
    * @return UpdatedAtResponse
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    */
   public UpdatedAtResponse setDictionarySettings(
-    DictionarySettingsRequest dictionarySettingsRequest
+    DictionarySettingsParams dictionarySettingsParams
   ) throws ApiException {
     Call req = setDictionarySettingsValidateBeforeCall(
-      dictionarySettingsRequest,
+      dictionarySettingsParams,
       null
     );
     if (req instanceof CallEcho) {
@@ -5842,17 +5842,17 @@ public class SearchApi extends ApiClient {
   /**
    * (asynchronously) Set dictionary settings.
    *
-   * @param dictionarySettingsRequest (required)
+   * @param dictionarySettingsParams (required)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
    * @throws ApiException If fail to process the API call, e.g. serializing the request body object
    */
   public Call setDictionarySettingsAsync(
-    DictionarySettingsRequest dictionarySettingsRequest,
+    DictionarySettingsParams dictionarySettingsParams,
     final ApiCallback<UpdatedAtResponse> _callback
   ) throws ApiException {
     Call call = setDictionarySettingsValidateBeforeCall(
-      dictionarySettingsRequest,
+      dictionarySettingsParams,
       _callback
     );
     Type returnType = new TypeToken<UpdatedAtResponse>() {}.getType();

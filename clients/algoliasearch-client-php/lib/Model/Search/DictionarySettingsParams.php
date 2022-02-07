@@ -6,7 +6,7 @@ use \Algolia\AlgoliaSearch\ObjectSerializer;
 use \ArrayAccess;
 
 /**
- * DictionarySettingsRequest Class Doc Comment
+ * DictionarySettingsParams Class Doc Comment
  *
  * @category Class
  * @description Disable the builtin Algolia entries for a type of dictionary per language.
@@ -16,7 +16,7 @@ use \ArrayAccess;
  * @template TKey int|null
  * @template TValue mixed|null
  */
-class DictionarySettingsRequest implements ModelInterface, ArrayAccess, \JsonSerializable
+class DictionarySettingsParams implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -25,7 +25,7 @@ class DictionarySettingsRequest implements ModelInterface, ArrayAccess, \JsonSer
       *
       * @var string
       */
-    protected static $openAPIModelName = 'dictionarySettingsRequest';
+    protected static $openAPIModelName = 'dictionarySettingsParams';
 
     /**
       * Array of property to type mappings. Used for (de)serialization

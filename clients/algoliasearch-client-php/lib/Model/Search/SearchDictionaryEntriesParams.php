@@ -6,17 +6,17 @@ use \Algolia\AlgoliaSearch\ObjectSerializer;
 use \ArrayAccess;
 
 /**
- * SearchDictionaryEntries Class Doc Comment
+ * SearchDictionaryEntriesParams Class Doc Comment
  *
  * @category Class
- * @description The &#x60;searchDictionaryEntries&#x60; request.
+ * @description The &#x60;searchDictionaryEntries&#x60; parameters.
  *
  * @package  Algolia\AlgoliaSearch
  * @implements \ArrayAccess<TKey, TValue>
  * @template TKey int|null
  * @template TValue mixed|null
  */
-class SearchDictionaryEntries implements ModelInterface, ArrayAccess, \JsonSerializable
+class SearchDictionaryEntriesParams implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -25,7 +25,7 @@ class SearchDictionaryEntries implements ModelInterface, ArrayAccess, \JsonSeria
       *
       * @var string
       */
-    protected static $openAPIModelName = 'searchDictionaryEntries';
+    protected static $openAPIModelName = 'searchDictionaryEntriesParams';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
