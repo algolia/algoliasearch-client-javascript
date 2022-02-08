@@ -70,7 +70,9 @@ export const create{{capitalizedApiName}}Api = (options: CreateClientOptions{{#h
     hosts: options?.hosts ?? getDefaultHosts({{^hasRegionalHost}}options.appId{{/hasRegionalHost}}{{#hasRegionalHost}}options.region{{/hasRegionalHost}}),
     baseHeaders: {
       'content-type': 'application/x-www-form-urlencoded',
+      ...auth.headers(),
     },
+    baseQueryParameters: auth.queryParameters(),
     userAgent: getUserAgent({
       userAgents: options.userAgents,
       client: '{{{capitalizedApiName}}}',
@@ -216,10 +218,7 @@ export const create{{capitalizedApiName}}Api = (options: CreateClientOptions{{#h
 
     return transporter.request(request, {
       queryParameters,
-      headers: {
-        ...headers,
-        ...auth.headers(),
-      },
+      headers,
     });
   }
 
