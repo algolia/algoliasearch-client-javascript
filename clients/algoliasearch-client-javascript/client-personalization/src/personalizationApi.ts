@@ -34,7 +34,9 @@ export const createPersonalizationApi = (
     hosts: options?.hosts ?? getDefaultHosts(options.region),
     baseHeaders: {
       'content-type': 'application/x-www-form-urlencoded',
+      ...auth.headers(),
     },
+    baseQueryParameters: auth.queryParameters(),
     userAgent: getUserAgent({
       userAgents: options.userAgents,
       client: 'Personalization',
@@ -74,10 +76,7 @@ export const createPersonalizationApi = (
 
     return transporter.request(request, {
       queryParameters,
-      headers: {
-        ...headers,
-        ...auth.headers(),
-      },
+      headers,
     });
   }
 
@@ -98,10 +97,7 @@ export const createPersonalizationApi = (
 
     return transporter.request(request, {
       queryParameters,
-      headers: {
-        ...headers,
-        ...auth.headers(),
-      },
+      headers,
     });
   }
 
@@ -135,10 +131,7 @@ export const createPersonalizationApi = (
 
     return transporter.request(request, {
       queryParameters,
-      headers: {
-        ...headers,
-        ...auth.headers(),
-      },
+      headers,
     });
   }
 
@@ -185,10 +178,7 @@ export const createPersonalizationApi = (
 
     return transporter.request(request, {
       queryParameters,
-      headers: {
-        ...headers,
-        ...auth.headers(),
-      },
+      headers,
     });
   }
 

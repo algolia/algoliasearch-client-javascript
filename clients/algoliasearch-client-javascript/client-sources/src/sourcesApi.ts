@@ -32,7 +32,9 @@ export const createSourcesApi = (
     hosts: options?.hosts ?? getDefaultHosts(options.region),
     baseHeaders: {
       'content-type': 'application/x-www-form-urlencoded',
+      ...auth.headers(),
     },
+    baseQueryParameters: auth.queryParameters(),
     userAgent: getUserAgent({
       userAgents: options.userAgents,
       client: 'Sources',
@@ -80,10 +82,7 @@ export const createSourcesApi = (
 
     return transporter.request(request, {
       queryParameters,
-      headers: {
-        ...headers,
-        ...auth.headers(),
-      },
+      headers,
     });
   }
 

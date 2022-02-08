@@ -112,7 +112,9 @@ export const createSearchApi = (options: CreateClientOptions) => {
     hosts: options?.hosts ?? getDefaultHosts(options.appId),
     baseHeaders: {
       'content-type': 'application/x-www-form-urlencoded',
+      ...auth.headers(),
     },
+    baseQueryParameters: auth.queryParameters(),
     userAgent: getUserAgent({
       userAgents: options.userAgents,
       client: 'Search',
@@ -153,10 +155,7 @@ export const createSearchApi = (options: CreateClientOptions) => {
 
     return transporter.request(request, {
       queryParameters,
-      headers: {
-        ...headers,
-        ...auth.headers(),
-      },
+      headers,
     });
   }
 
@@ -206,10 +205,7 @@ export const createSearchApi = (options: CreateClientOptions) => {
 
     return transporter.request(request, {
       queryParameters,
-      headers: {
-        ...headers,
-        ...auth.headers(),
-      },
+      headers,
     });
   }
 
@@ -238,10 +234,7 @@ export const createSearchApi = (options: CreateClientOptions) => {
 
     return transporter.request(request, {
       queryParameters,
-      headers: {
-        ...headers,
-        ...auth.headers(),
-      },
+      headers,
     });
   }
 
@@ -291,10 +284,7 @@ export const createSearchApi = (options: CreateClientOptions) => {
 
     return transporter.request(request, {
       queryParameters,
-      headers: {
-        ...headers,
-        ...auth.headers(),
-      },
+      headers,
     });
   }
 
@@ -337,10 +327,7 @@ export const createSearchApi = (options: CreateClientOptions) => {
 
     return transporter.request(request, {
       queryParameters,
-      headers: {
-        ...headers,
-        ...auth.headers(),
-      },
+      headers,
     });
   }
 
@@ -395,10 +382,7 @@ export const createSearchApi = (options: CreateClientOptions) => {
 
     return transporter.request(request, {
       queryParameters,
-      headers: {
-        ...headers,
-        ...auth.headers(),
-      },
+      headers,
     });
   }
 
@@ -447,10 +431,7 @@ export const createSearchApi = (options: CreateClientOptions) => {
 
     return transporter.request(request, {
       queryParameters,
-      headers: {
-        ...headers,
-        ...auth.headers(),
-      },
+      headers,
     });
   }
 
@@ -505,10 +486,7 @@ export const createSearchApi = (options: CreateClientOptions) => {
 
     return transporter.request(request, {
       queryParameters,
-      headers: {
-        ...headers,
-        ...auth.headers(),
-      },
+      headers,
     });
   }
 
@@ -545,10 +523,7 @@ export const createSearchApi = (options: CreateClientOptions) => {
 
     return transporter.request(request, {
       queryParameters,
-      headers: {
-        ...headers,
-        ...auth.headers(),
-      },
+      headers,
     });
   }
 
@@ -588,10 +563,7 @@ export const createSearchApi = (options: CreateClientOptions) => {
 
     return transporter.request(request, {
       queryParameters,
-      headers: {
-        ...headers,
-        ...auth.headers(),
-      },
+      headers,
     });
   }
 
@@ -625,10 +597,7 @@ export const createSearchApi = (options: CreateClientOptions) => {
 
     return transporter.request(request, {
       queryParameters,
-      headers: {
-        ...headers,
-        ...auth.headers(),
-      },
+      headers,
     });
   }
 
@@ -668,10 +637,7 @@ export const createSearchApi = (options: CreateClientOptions) => {
 
     return transporter.request(request, {
       queryParameters,
-      headers: {
-        ...headers,
-        ...auth.headers(),
-      },
+      headers,
     });
   }
 
@@ -705,10 +671,7 @@ export const createSearchApi = (options: CreateClientOptions) => {
 
     return transporter.request(request, {
       queryParameters,
-      headers: {
-        ...headers,
-        ...auth.headers(),
-      },
+      headers,
     });
   }
 
@@ -751,10 +714,7 @@ export const createSearchApi = (options: CreateClientOptions) => {
 
     return transporter.request(request, {
       queryParameters,
-      headers: {
-        ...headers,
-        ...auth.headers(),
-      },
+      headers,
     });
   }
 
@@ -788,10 +748,7 @@ export const createSearchApi = (options: CreateClientOptions) => {
 
     return transporter.request(request, {
       queryParameters,
-      headers: {
-        ...headers,
-        ...auth.headers(),
-      },
+      headers,
     });
   }
 
@@ -832,10 +789,7 @@ export const createSearchApi = (options: CreateClientOptions) => {
 
     return transporter.request(request, {
       queryParameters,
-      headers: {
-        ...headers,
-        ...auth.headers(),
-      },
+      headers,
     });
   }
 
@@ -882,10 +836,7 @@ export const createSearchApi = (options: CreateClientOptions) => {
 
     return transporter.request(request, {
       queryParameters,
-      headers: {
-        ...headers,
-        ...auth.headers(),
-      },
+      headers,
     });
   }
 
@@ -919,10 +870,7 @@ export const createSearchApi = (options: CreateClientOptions) => {
 
     return transporter.request(request, {
       queryParameters,
-      headers: {
-        ...headers,
-        ...auth.headers(),
-      },
+      headers,
     });
   }
 
@@ -969,10 +917,7 @@ export const createSearchApi = (options: CreateClientOptions) => {
 
     return transporter.request(request, {
       queryParameters,
-      headers: {
-        ...headers,
-        ...auth.headers(),
-      },
+      headers,
     });
   }
 
@@ -1002,10 +947,7 @@ export const createSearchApi = (options: CreateClientOptions) => {
 
     return transporter.request(request, {
       queryParameters,
-      headers: {
-        ...headers,
-        ...auth.headers(),
-      },
+      headers,
     });
   }
 
@@ -1026,10 +968,7 @@ export const createSearchApi = (options: CreateClientOptions) => {
 
     return transporter.request(request, {
       queryParameters,
-      headers: {
-        ...headers,
-        ...auth.headers(),
-      },
+      headers,
     });
   }
 
@@ -1050,10 +989,7 @@ export const createSearchApi = (options: CreateClientOptions) => {
 
     return transporter.request(request, {
       queryParameters,
-      headers: {
-        ...headers,
-        ...auth.headers(),
-      },
+      headers,
     });
   }
 
@@ -1100,10 +1036,7 @@ export const createSearchApi = (options: CreateClientOptions) => {
 
     return transporter.request(request, {
       queryParameters,
-      headers: {
-        ...headers,
-        ...auth.headers(),
-      },
+      headers,
     });
   }
 
@@ -1150,10 +1083,7 @@ export const createSearchApi = (options: CreateClientOptions) => {
 
     return transporter.request(request, {
       queryParameters,
-      headers: {
-        ...headers,
-        ...auth.headers(),
-      },
+      headers,
     });
   }
 
@@ -1184,10 +1114,7 @@ export const createSearchApi = (options: CreateClientOptions) => {
 
     return transporter.request(request, {
       queryParameters,
-      headers: {
-        ...headers,
-        ...auth.headers(),
-      },
+      headers,
     });
   }
 
@@ -1225,10 +1152,7 @@ export const createSearchApi = (options: CreateClientOptions) => {
 
     return transporter.request(request, {
       queryParameters,
-      headers: {
-        ...headers,
-        ...auth.headers(),
-      },
+      headers,
     });
   }
 
@@ -1262,10 +1186,7 @@ export const createSearchApi = (options: CreateClientOptions) => {
 
     return transporter.request(request, {
       queryParameters,
-      headers: {
-        ...headers,
-        ...auth.headers(),
-      },
+      headers,
     });
   }
 
@@ -1286,10 +1207,7 @@ export const createSearchApi = (options: CreateClientOptions) => {
 
     return transporter.request(request, {
       queryParameters,
-      headers: {
-        ...headers,
-        ...auth.headers(),
-      },
+      headers,
     });
   }
 
@@ -1330,10 +1248,7 @@ export const createSearchApi = (options: CreateClientOptions) => {
 
     return transporter.request(request, {
       queryParameters,
-      headers: {
-        ...headers,
-        ...auth.headers(),
-      },
+      headers,
     });
   }
 
@@ -1372,10 +1287,7 @@ export const createSearchApi = (options: CreateClientOptions) => {
 
     return transporter.request(request, {
       queryParameters,
-      headers: {
-        ...headers,
-        ...auth.headers(),
-      },
+      headers,
     });
   }
 
@@ -1396,10 +1308,7 @@ export const createSearchApi = (options: CreateClientOptions) => {
 
     return transporter.request(request, {
       queryParameters,
-      headers: {
-        ...headers,
-        ...auth.headers(),
-      },
+      headers,
     });
   }
 
@@ -1431,10 +1340,7 @@ export const createSearchApi = (options: CreateClientOptions) => {
 
     return transporter.request(request, {
       queryParameters,
-      headers: {
-        ...headers,
-        ...auth.headers(),
-      },
+      headers,
     });
   }
 
@@ -1463,10 +1369,7 @@ export const createSearchApi = (options: CreateClientOptions) => {
 
     return transporter.request(request, {
       queryParameters,
-      headers: {
-        ...headers,
-        ...auth.headers(),
-      },
+      headers,
     });
   }
 
@@ -1487,10 +1390,7 @@ export const createSearchApi = (options: CreateClientOptions) => {
 
     return transporter.request(request, {
       queryParameters,
-      headers: {
-        ...headers,
-        ...auth.headers(),
-      },
+      headers,
     });
   }
 
@@ -1511,10 +1411,7 @@ export const createSearchApi = (options: CreateClientOptions) => {
 
     return transporter.request(request, {
       queryParameters,
-      headers: {
-        ...headers,
-        ...auth.headers(),
-      },
+      headers,
     });
   }
 
@@ -1543,10 +1440,7 @@ export const createSearchApi = (options: CreateClientOptions) => {
 
     return transporter.request(request, {
       queryParameters,
-      headers: {
-        ...headers,
-        ...auth.headers(),
-      },
+      headers,
     });
   }
 
@@ -1581,10 +1475,7 @@ export const createSearchApi = (options: CreateClientOptions) => {
 
     return transporter.request(request, {
       queryParameters,
-      headers: {
-        ...headers,
-        ...auth.headers(),
-      },
+      headers,
     });
   }
 
@@ -1615,10 +1506,7 @@ export const createSearchApi = (options: CreateClientOptions) => {
 
     return transporter.request(request, {
       queryParameters,
-      headers: {
-        ...headers,
-        ...auth.headers(),
-      },
+      headers,
     });
   }
 
@@ -1655,10 +1543,7 @@ export const createSearchApi = (options: CreateClientOptions) => {
 
     return transporter.request(request, {
       queryParameters,
-      headers: {
-        ...headers,
-        ...auth.headers(),
-      },
+      headers,
     });
   }
 
@@ -1712,10 +1597,7 @@ export const createSearchApi = (options: CreateClientOptions) => {
 
     return transporter.request(request, {
       queryParameters,
-      headers: {
-        ...headers,
-        ...auth.headers(),
-      },
+      headers,
     });
   }
 
@@ -1771,10 +1653,7 @@ export const createSearchApi = (options: CreateClientOptions) => {
 
     return transporter.request(request, {
       queryParameters,
-      headers: {
-        ...headers,
-        ...auth.headers(),
-      },
+      headers,
     });
   }
 
@@ -1808,10 +1687,7 @@ export const createSearchApi = (options: CreateClientOptions) => {
 
     return transporter.request(request, {
       queryParameters,
-      headers: {
-        ...headers,
-        ...auth.headers(),
-      },
+      headers,
     });
   }
 
@@ -1843,10 +1719,7 @@ export const createSearchApi = (options: CreateClientOptions) => {
 
     return transporter.request(request, {
       queryParameters,
-      headers: {
-        ...headers,
-        ...auth.headers(),
-      },
+      headers,
     });
   }
 
@@ -1880,10 +1753,7 @@ export const createSearchApi = (options: CreateClientOptions) => {
 
     return transporter.request(request, {
       queryParameters,
-      headers: {
-        ...headers,
-        ...auth.headers(),
-      },
+      headers,
     });
   }
 
@@ -1926,10 +1796,7 @@ export const createSearchApi = (options: CreateClientOptions) => {
 
     return transporter.request(request, {
       queryParameters,
-      headers: {
-        ...headers,
-        ...auth.headers(),
-      },
+      headers,
     });
   }
 
@@ -1994,10 +1861,7 @@ export const createSearchApi = (options: CreateClientOptions) => {
 
     return transporter.request(request, {
       queryParameters,
-      headers: {
-        ...headers,
-        ...auth.headers(),
-      },
+      headers,
     });
   }
 
@@ -2059,10 +1923,7 @@ export const createSearchApi = (options: CreateClientOptions) => {
 
     return transporter.request(request, {
       queryParameters,
-      headers: {
-        ...headers,
-        ...auth.headers(),
-      },
+      headers,
     });
   }
 
@@ -2118,10 +1979,7 @@ export const createSearchApi = (options: CreateClientOptions) => {
 
     return transporter.request(request, {
       queryParameters,
-      headers: {
-        ...headers,
-        ...auth.headers(),
-      },
+      headers,
     });
   }
 
@@ -2164,10 +2022,7 @@ export const createSearchApi = (options: CreateClientOptions) => {
 
     return transporter.request(request, {
       queryParameters,
-      headers: {
-        ...headers,
-        ...auth.headers(),
-      },
+      headers,
     });
   }
 
@@ -2216,10 +2071,7 @@ export const createSearchApi = (options: CreateClientOptions) => {
 
     return transporter.request(request, {
       queryParameters,
-      headers: {
-        ...headers,
-        ...auth.headers(),
-      },
+      headers,
     });
   }
 
@@ -2263,10 +2115,7 @@ export const createSearchApi = (options: CreateClientOptions) => {
 
     return transporter.request(request, {
       queryParameters,
-      headers: {
-        ...headers,
-        ...auth.headers(),
-      },
+      headers,
     });
   }
 
@@ -2309,10 +2158,7 @@ export const createSearchApi = (options: CreateClientOptions) => {
 
     return transporter.request(request, {
       queryParameters,
-      headers: {
-        ...headers,
-        ...auth.headers(),
-      },
+      headers,
     });
   }
 
@@ -2370,10 +2216,7 @@ export const createSearchApi = (options: CreateClientOptions) => {
 
     return transporter.request(request, {
       queryParameters,
-      headers: {
-        ...headers,
-        ...auth.headers(),
-      },
+      headers,
     });
   }
 
@@ -2410,10 +2253,7 @@ export const createSearchApi = (options: CreateClientOptions) => {
 
     return transporter.request(request, {
       queryParameters,
-      headers: {
-        ...headers,
-        ...auth.headers(),
-      },
+      headers,
     });
   }
 
@@ -2450,10 +2290,7 @@ export const createSearchApi = (options: CreateClientOptions) => {
 
     return transporter.request(request, {
       queryParameters,
-      headers: {
-        ...headers,
-        ...auth.headers(),
-      },
+      headers,
     });
   }
 
@@ -2502,10 +2339,7 @@ export const createSearchApi = (options: CreateClientOptions) => {
 
     return transporter.request(request, {
       queryParameters,
-      headers: {
-        ...headers,
-        ...auth.headers(),
-      },
+      headers,
     });
   }
 
@@ -2554,10 +2388,7 @@ export const createSearchApi = (options: CreateClientOptions) => {
 
     return transporter.request(request, {
       queryParameters,
-      headers: {
-        ...headers,
-        ...auth.headers(),
-      },
+      headers,
     });
   }
 

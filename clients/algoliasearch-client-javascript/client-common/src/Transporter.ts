@@ -16,20 +16,22 @@ import {
   stackFrameWithoutCredentials,
 } from './stackTrace';
 import type {
+  EndRequest,
   Headers,
   Host,
+  QueryParameters,
   Request,
   RequestOptions,
+  Response,
   StackFrame,
   Timeouts,
-  Response,
-  EndRequest,
   UserAgent,
 } from './types';
 
 export class Transporter {
   private hosts: Host[];
   private baseHeaders: Headers;
+  private baseQueryParameters: QueryParameters;
   private hostsCache: Cache;
   private userAgent: UserAgent;
   private timeouts: Timeouts;
@@ -38,12 +40,14 @@ export class Transporter {
   constructor({
     hosts,
     baseHeaders,
+    baseQueryParameters,
     userAgent,
     timeouts,
     requester,
   }: {
     hosts: Host[];
     baseHeaders: Headers;
+    baseQueryParameters: QueryParameters;
     userAgent: UserAgent;
     timeouts: Timeouts;
     requester: Requester;
@@ -51,6 +55,7 @@ export class Transporter {
     this.hosts = hosts;
     this.hostsCache = new MemoryCache();
     this.baseHeaders = baseHeaders;
+    this.baseQueryParameters = baseQueryParameters;
     this.userAgent = userAgent;
     this.timeouts = timeouts;
     this.requester = requester;
@@ -135,6 +140,7 @@ export class Transporter {
 
     const queryParameters = {
       'x-algolia-agent': this.userAgent.value,
+      ...this.baseQueryParameters,
       ...dataQueryParameters,
       ...requestOptions.queryParameters,
     };
