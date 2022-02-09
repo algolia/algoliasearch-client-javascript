@@ -69,11 +69,13 @@ yarn docker build:specs recommend
 #### Fix the specs format
 
 This is used by the build script and should not need to be called manually but if you want to format all specs file do:
+
 ```bash
 yarn docker specs:fix
 ```
 
 If you just want to check the format (not override the files), run:
+
 ```bash
 yarn docker specs:lint <client>
 yarn docker specs:lint search
