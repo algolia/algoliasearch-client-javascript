@@ -2,10 +2,16 @@
   {
     "method": "multipleBatch",
     "parameters": {
+      "$objectName": "BatchParams",
       "requests": [
         {
-          "action": "addObject",
+          "$objectName": "Operation",
+          "action": {
+            "$enumType": "Action",
+            "value": "addObject"
+          },
           "body": {
+            "$objectName": "Object",
             "key": "value"
           },
           "indexName": "theIndexName"

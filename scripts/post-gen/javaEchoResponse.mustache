@@ -1,10 +1,14 @@
 package com.algolia.utils.echo;
 
-import java.io.IOException;
+import com.algolia.Pair;
 import com.algolia.model.*;
-import okhttp3.Request;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+
+import okhttp3.HttpUrl;
+import okhttp3.Request;
 import okio.Buffer;
 
 public class EchoResponse {
@@ -18,6 +22,17 @@ public class EchoResponse {
         } catch (final IOException e) {
             return "error";
         }
+    }
+
+    private static List<Pair> buildQueryParams(Request req) {
+        List<Pair> params = new ArrayList<Pair>();
+        HttpUrl url = req.url();
+        for (String name : url.queryParameterNames()) {
+            for (String value : url.queryParameterValues(name)) {
+                params.add(new Pair(name, value));
+            }
+        }
+        return params;
     }
 
     {{#responses}}
@@ -38,6 +53,10 @@ public class EchoResponse {
 
         public String getBody() {
             return parseRequestBody(request);
+        }
+
+        public List<Pair> getQueryParams() {
+            return buildQueryParams(request);
         }
     }
     {{/responses}}

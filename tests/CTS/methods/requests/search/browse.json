@@ -16,6 +16,7 @@
     "parameters": {
       "indexName": "indexName",
       "browseRequest": {
+        "$objectName": "BrowseRequest",
         "params": "query=foo&facetFilters=['bar']",
         "cursor": "cts"
       }

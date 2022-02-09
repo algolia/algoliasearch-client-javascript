@@ -11,11 +11,11 @@ src/**
 README.md
 
 .travis.yml
-build.gradle
 build.sbt
+gradle.properties
 git_push.sh
+pom.xml
 gradle*
-settings.gradle
 
 # Selective source file
 algoliasearch-core/com/algolia/auth/**

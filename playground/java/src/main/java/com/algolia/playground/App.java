@@ -1,4 +1,4 @@
-package com.test;
+package com.algolia.playground;
 
 import com.algolia.model.*;
 import com.algolia.search.SearchApi;
@@ -8,7 +8,7 @@ import io.github.cdimascio.dotenv.Dotenv;
 
 public class App {
     public static void main(String[] args) {
-        Dotenv dotenv = Dotenv.configure().directory("playground/").load();
+        Dotenv dotenv = Dotenv.configure().directory("../").load();
 
         SearchApi client = new SearchApi(dotenv.get("ALGOLIA_APPLICATION_ID"), dotenv.get("ALGOLIA_SEARCH_KEY"));
         String indexName = dotenv.get("SEARCH_INDEX");

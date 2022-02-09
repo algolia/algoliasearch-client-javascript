@@ -5,29 +5,43 @@
       "indexName": "indexName",
       "rule": [
         {
+          "$objectName": "Rule",
           "objectID": "a-rule-id",
           "conditions": [
             {
+              "$objectName": "Condition",
               "pattern": "smartphone",
-              "anchoring": "contains"
+              "anchoring": {
+                "$enumType": "Anchoring",
+                "value": "contains"
+              }
             }
           ],
           "consequence": {
+            "$objectName": "Consequence",
             "params": {
+              "$objectName": "ConsequenceParams",
               "filters": "category:smartphone"
             }
           }
         },
         {
+          "$objectName": "Rule",
           "objectID": "a-second-rule-id",
           "conditions": [
             {
+              "$objectName": "Condition",
               "pattern": "apple",
-              "anchoring": "contains"
+              "anchoring": {
+                "$enumType": "Anchoring",
+                "value": "contains"
+              }
             }
           ],
           "consequence": {
+            "$objectName": "Consequence",
             "params": {
+              "$objectName": "ConsequenceParams",
               "filters": "brand:apple"
             }
           }

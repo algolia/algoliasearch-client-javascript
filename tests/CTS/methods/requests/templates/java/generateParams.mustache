@@ -1,0 +1,11 @@
+{{#isString}}String {{{key}}}{{suffix}} = "{{{value}}}";{{/isString}}
+{{#isInteger}}int {{{key}}}{{suffix}} = {{{value}}};{{/isInteger}}
+{{#isDouble}}double {{{key}}}{{suffix}} = {{{value}}};{{/isDouble}}
+{{#isBoolean}}boolean {{{key}}}{{suffix}} = {{{value}}};{{/isBoolean}}
+{{#isEnum}}{{#value}}{{{enumType}}} {{{key}}}{{suffix}} = {{{enumType}}}.fromValue("{{{value}}}");{{/value}}{{/isEnum}}
+{{#isArray}}List {{{key}}}{{suffix}} = new ArrayList(); { {{#value}}{{> generateParams}}{{parent}}{{parentSuffix}}.add({{{key}}}{{suffix}});{{/value}} }{{/isArray}}
+{{#isObject}}{{{objectName}}} {{{key}}}{{suffix}} = new {{{objectName}}}();
+{ {{#value}}{{> generateParams}}{{parent}}{{parentSuffix}}.set{{#capitalize}}{{{key}}}{{/capitalize}}({{{key}}}{{suffix}});
+{{/value}} }{{/isObject}}{{#isFreeFormObject}}HashMap {{{key}}}{{suffix}} = new HashMap<String, Object>();
+{ {{#value}}{{> generateParams}}{{parent}}{{parentSuffix}}.put("{{{key}}}", {{{key}}}{{suffix}});
+{{/value}} }{{/isFreeFormObject}}

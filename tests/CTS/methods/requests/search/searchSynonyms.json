@@ -2,17 +2,11 @@
   {
     "method": "searchSynonyms",
     "parameters": {
-      "indexName": "indexName",
-      "query": "queryString",
-      "type": "onewaysynonym"
+      "indexName": "indexName"
     },
     "request": {
       "path": "/1/indexes/indexName/synonyms/search",
-      "method": "POST",
-      "searchParams": {
-        "query": "queryString",
-        "type": "onewaysynonym"
-      }
+      "method": "POST"
     }
   }
 ]

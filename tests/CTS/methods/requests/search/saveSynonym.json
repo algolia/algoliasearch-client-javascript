@@ -5,9 +5,17 @@
       "indexName": "indexName",
       "objectID": "id1",
       "synonymHit": {
+        "$objectName": "SynonymHit",
         "objectID": "id1",
-        "type": "synonym",
-        "synonyms": ["car", "vehicule", "auto"]
+        "type": {
+          "$enumType": "SynonymType",
+          "value": "synonym"
+        },
+        "synonyms": [
+          "car",
+          "vehicule",
+          "auto"
+        ]
       },
       "forwardToReplicas": true
     },
@@ -17,7 +25,11 @@
       "data": {
         "objectID": "id1",
         "type": "synonym",
-        "synonyms": ["car", "vehicule", "auto"]
+        "synonyms": [
+          "car",
+          "vehicule",
+          "auto"
+        ]
       },
       "searchParams": {
         "forwardToReplicas": "true"

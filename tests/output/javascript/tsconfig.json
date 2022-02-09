@@ -5,6 +5,6 @@
     "typeRoots": ["../../../node_modules/@types"],
     "resolveJsonModule": true
   },
-  "include": ["tests"],
+  "include": ["src"],
   "exclude": []
 }

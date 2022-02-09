@@ -4,6 +4,7 @@
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {
+        "$objectName": "IndexSettings",
         "paginationLimitedTo": 10
       },
       "forwardToReplicas": true

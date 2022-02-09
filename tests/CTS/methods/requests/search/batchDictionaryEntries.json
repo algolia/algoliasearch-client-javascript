@@ -5,17 +5,28 @@
     "parameters": {
       "dictionaryName": "compounds",
       "batchDictionaryEntriesParams": {
+        "$objectName": "BatchDictionaryEntriesParams",
         "requests": [
           {
-            "action": "addEntry",
+            "$objectName": "BatchDictionaryEntriesRequest",
+            "action": {
+              "$enumType": "DictionaryAction",
+              "value": "addEntry"
+            },
             "body": {
+              "$objectName": "DictionaryEntry",
               "objectID": "1",
               "language": "en"
             }
           },
           {
-            "action": "deleteEntry",
+            "$objectName": "BatchDictionaryEntriesRequest",
+            "action": {
+              "$enumType": "DictionaryAction",
+              "value": "deleteEntry"
+            },
             "body": {
+              "$objectName": "DictionaryEntry",
               "objectID": "2",
               "language": "fr"
             }
@@ -52,28 +63,57 @@
     "parameters": {
       "dictionaryName": "compounds",
       "batchDictionaryEntriesParams": {
+        "$objectName": "BatchDictionaryEntriesParams",
         "clearExistingDictionaryEntries": false,
         "requests": [
           {
-            "action": "addEntry",
+            "$objectName": "BatchDictionaryEntriesRequest",
+            "action": {
+              "$enumType": "DictionaryAction",
+              "value": "addEntry"
+            },
             "body": {
+              "$objectName": "DictionaryEntry",
               "objectID": "1",
               "language": "en",
               "word": "yo",
-              "words": ["yo", "algolia"],
-              "decomposition": ["yo", "algolia"],
-              "state": "enabled"
+              "words": [
+                "yo",
+                "algolia"
+              ],
+              "decomposition": [
+                "yo",
+                "algolia"
+              ],
+              "state": {
+                "$enumType": "DictionaryEntryState",
+                "value": "enabled"
+              }
             }
           },
           {
-            "action": "deleteEntry",
+            "$objectName": "BatchDictionaryEntriesRequest",
+            "action": {
+              "$enumType": "DictionaryAction",
+              "value": "deleteEntry"
+            },
             "body": {
+              "$objectName": "DictionaryEntry",
               "objectID": "2",
               "language": "fr",
               "word": "salut",
-              "words": ["salut", "algolia"],
-              "decomposition": ["salut", "algolia"],
-              "state": "enabled"
+              "words": [
+                "salut",
+                "algolia"
+              ],
+              "decomposition": [
+                "salut",
+                "algolia"
+              ],
+              "state": {
+                "$enumType": "DictionaryEntryState",
+                "value": "enabled"
+              }
             }
           }
         ]
@@ -91,8 +131,14 @@
               "objectID": "1",
               "language": "en",
               "word": "yo",
-              "words": ["yo", "algolia"],
-              "decomposition": ["yo", "algolia"],
+              "words": [
+                "yo",
+                "algolia"
+              ],
+              "decomposition": [
+                "yo",
+                "algolia"
+              ],
               "state": "enabled"
             }
           },
@@ -102,8 +148,14 @@
               "objectID": "2",
               "language": "fr",
               "word": "salut",
-              "words": ["salut", "algolia"],
-              "decomposition": ["salut", "algolia"],
+              "words": [
+                "salut",
+                "algolia"
+              ],
+              "decomposition": [
+                "salut",
+                "algolia"
+              ],
               "state": "enabled"
             }
           }

@@ -15,7 +15,7 @@ run_playground() {
     if [[ $LANGUAGE == 'javascript' ]]; then
         yarn workspace javascript-playground start:$CLIENT
     elif [[ $LANGUAGE == 'java' ]]; then
-        mvn clean compile exec:java -f playground/java/pom.xml
+        ./gradle/gradlew --no-daemon -p playground/java run
     elif [[ $lang == 'php' ]]; then
         cd playground/php
         composer update

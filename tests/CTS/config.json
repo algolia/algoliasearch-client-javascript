@@ -1,7 +1,7 @@
 {
   "javascript": {
     "extension": "test.ts",
-    "outputFolder": "tests"
+    "outputFolder": "src"
   },
   "java": {
     "extension": "test.java",
