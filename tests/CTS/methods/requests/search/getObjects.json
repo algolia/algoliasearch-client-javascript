@@ -2,9 +2,14 @@
   {
     "method": "getObjects",
     "parameters": {
+      "$objectName": "GetObjectsParams",
       "requests": [
         {
-          "attributesToRetrieve": ["attr1", "attr2"],
+          "$objectName": "MultipleGetObjectsParams",
+          "attributesToRetrieve": [
+            "attr1",
+            "attr2"
+          ],
           "objectID": "uniqueID",
           "indexName": "theIndexName"
         }
@@ -16,7 +21,10 @@
       "data": {
         "requests": [
           {
-            "attributesToRetrieve": ["attr1", "attr2"],
+            "attributesToRetrieve": [
+              "attr1",
+              "attr2"
+            ],
             "objectID": "uniqueID",
             "indexName": "theIndexName"
           }

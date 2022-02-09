@@ -4,6 +4,7 @@
     "parameters": {
       "indexName": "indexName",
       "searchRulesParams": {
+        "$objectName": "SearchRulesParams",
         "query": "something"
       }
     },

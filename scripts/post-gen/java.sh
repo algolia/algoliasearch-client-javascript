@@ -15,7 +15,7 @@ find "$FOLDER" -type f -name "*.java" | xargs sed -i -e 's~= {}~= new Object()~g
 
 # Create a special class for the OneOf integer string (not complete yet, juste here for compilation)
 echo "package com.algolia.model;public class OneOfintegerstring {}" > $FOLDER/algoliasearch-core/com/algolia/model/OneOfintegerstring.java
-echo "package com.algolia.model;public class OneOfstringbuiltInOperation {}" > $FOLDER/algoliasearch-core/com/algolia/model/OneOfstringbuiltInOperation.java
+echo 'package com.algolia.model;import com.google.gson.annotations.SerializedName;public class OneOfstringbuiltInOperation { @SerializedName("_operation") private String _operation; @SerializedName("value") private String value;public void set_operation(String op){_operation = op;} public void setValue(String value) {this.value=value;} }' > $FOLDER/algoliasearch-core/com/algolia/model/OneOfstringbuiltInOperation.java
 
 # Generate types for the EchoRequester, to be able to keep the correct response type on the API method.
 

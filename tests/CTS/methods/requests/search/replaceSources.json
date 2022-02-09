@@ -4,6 +4,7 @@
     "parameters": {
       "source": [
         {
+          "$objectName": "Source",
           "source": "theSource",
           "description": "theDescription"
         }

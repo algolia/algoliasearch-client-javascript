@@ -10,7 +10,10 @@ runs:
       with:
         distribution: zulu
         java-version: 11.0.4
-        cache: maven
+        cache: gradle
+
+    - name: Validate gradle wrapper
+      uses: gradle/wrapper-validation-action@v1
 
     - name: Install Node
       uses: actions/setup-node@v2

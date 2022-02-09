@@ -3,8 +3,11 @@
     "method": "setDictionarySettings",
     "testName": "get setDictionarySettings results with minimal parameters",
     "parameters": {
+      "$objectName": "DictionarySettingsParams",
       "disableStandardEntries": {
+        "$objectName": "StandardEntries",
         "plurals": {
+          "$objectName": "Object",
           "fr": false,
           "en": false,
           "ru": true
@@ -29,16 +32,21 @@
     "method": "setDictionarySettings",
     "testName": "get setDictionarySettings results with all parameters",
     "parameters": {
+      "$objectName": "DictionarySettingsParams",
       "disableStandardEntries": {
+        "$objectName": "StandardEntries",
         "plurals": {
+          "$objectName": "Object",
           "fr": false,
           "en": false,
           "ru": true
         },
         "stopwords": {
+          "$objectName": "Object",
           "fr": false
         },
         "compounds": {
+          "$objectName": "Object",
           "ru": true
         }
       }

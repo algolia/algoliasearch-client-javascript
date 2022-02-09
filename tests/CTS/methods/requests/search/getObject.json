@@ -4,7 +4,10 @@
     "parameters": {
       "indexName": "theIndexName",
       "objectID": "uniqueID",
-      "attributesToRetrieve": ["attr1", "attr2"]
+      "attributesToRetrieve": [
+        "attr1",
+        "attr2"
+      ]
     },
     "request": {
       "path": "/1/indexes/theIndexName/uniqueID",

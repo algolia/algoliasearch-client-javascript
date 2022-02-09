@@ -4,6 +4,7 @@
     "parameters": {
       "indexName": "theIndexName",
       "body": {
+        "$objectName": "Object",
         "objectID": "id",
         "test": "val"
       }

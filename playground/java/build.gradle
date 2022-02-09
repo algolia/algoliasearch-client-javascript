@@ -1,0 +1,26 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'io.github.cdimascio:dotenv-java:2.2.2'
+    implementation 'com.algolia:algoliasearch-client-java-2:0.1.0'
+}
+
+group = 'com.algolia'
+version = '1.0'
+description = 'java-playground'
+java.sourceCompatibility = JavaVersion.VERSION_1_8
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+application {
+    mainClass = "com.algolia.playground.App"
+}

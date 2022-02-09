@@ -4,9 +4,16 @@
     "parameters": {
       "indexName": "theIndexName",
       "operationIndexParams": {
-        "operation": "copy",
+        "$objectName": "OperationIndexParams",
+        "operation": {
+          "$enumType": "OperationType",
+          "value": "copy"
+        },
         "destination": "dest",
-        "scope": ["rules", "settings"]
+        "scope": [
+          "rules",
+          "settings"
+        ]
       }
     },
     "request": {
@@ -15,7 +22,10 @@
       "data": {
         "operation": "copy",
         "destination": "dest",
-        "scope": ["rules", "settings"]
+        "scope": [
+          "rules",
+          "settings"
+        ]
       }
     }
   }

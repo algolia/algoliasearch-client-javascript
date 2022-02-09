@@ -2,16 +2,24 @@
   {
     "method": "multipleQueries",
     "parameters": {
+      "$objectName": "MultipleQueriesParams",
       "requests": [
         {
+          "$objectName": "MultipleQueries",
           "indexName": "theIndexName",
           "query": "test",
-          "type": "facet",
+          "type": {
+            "$enumType": "MultipleQueriesType",
+            "value": "facet"
+          },
           "facet": "theFacet",
           "params": "testParam"
         }
       ],
-      "strategy": "stopIfEnoughMatches"
+      "strategy": {
+        "$enumType": "MultipleQueriesStrategy",
+        "value": "stopIfEnoughMatches"
+      }
     },
     "request": {
       "path": "/1/indexes/*/queries",

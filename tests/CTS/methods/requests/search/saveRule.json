@@ -5,15 +5,22 @@
       "indexName": "indexName",
       "objectID": "id1",
       "rule": {
+        "$objectName": "Rule",
         "objectID": "id1",
         "conditions": [
           {
+            "$objectName": "Condition",
             "pattern": "apple",
-            "anchoring": "contains"
+            "anchoring": {
+              "$enumType": "Anchoring",
+              "value": "contains"
+            }
           }
         ],
         "consequence": {
+          "$objectName": "Consequence",
           "params": {
+            "$objectName": "ConsequenceParams",
             "filters": "brand:apple"
           }
         }

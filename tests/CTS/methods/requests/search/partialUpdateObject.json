@@ -6,8 +6,10 @@
       "objectID": "uniqueID",
       "stringBuiltInOperation": [
         {
+          "$objectName": "Object",
           "id1": "test",
           "id2": {
+            "$objectName": "OneOfstringbuiltInOperation",
             "_operation": "AddUnique",
             "value": "test2"
           }

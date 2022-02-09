@@ -1023,17 +1023,12 @@ describe('searchSynonyms', () => {
   test('searchSynonyms', async () => {
     const req = (await client.searchSynonyms({
       indexName: 'indexName',
-      query: 'queryString',
-      type: 'onewaysynonym',
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/indexes/indexName/synonyms/search');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toEqual({
-      query: 'queryString',
-      type: 'onewaysynonym',
-    });
+    expect(req.searchParams).toEqual(undefined);
   });
 });
 

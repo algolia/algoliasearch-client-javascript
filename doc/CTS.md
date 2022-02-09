@@ -44,8 +44,12 @@ The test generation script requires a JSON file name from the `operationId` (e.g
     "parameters": {
       "indexName": "testIndex",
       "searchParam": {
-        "$objectName": "the name of the object for strongly type language, should be on every 'object' type",
-        "query": "the string to search"
+        "$objectName": "the name of the object for strongly type language, should be on every 'object' type (can be 'Object' if free-form)",
+        "query": "the string to search",
+        "acl": { 
+          "$enumType": "the name of the enum object if marked as enum in the spec",
+          "value": "the string value of the enum",
+        }
       }
     },
     "request": {
@@ -58,6 +62,7 @@ The test generation script requires a JSON file name from the `operationId` (e.g
 ```
 
 And that's it! If the name of the file matches a real `operationId` in the spec, then a test will be generated.
+Don't forget to add `$objectName` and `$enumType` when necessary, otherwise typed language will fail to generate tests.
 
 ## How to add a new language
 
