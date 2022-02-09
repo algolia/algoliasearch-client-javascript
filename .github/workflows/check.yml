@@ -14,6 +14,7 @@ concurrency:
 jobs:
   setup:
     runs-on: ubuntu-20.04
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v2
         with:
@@ -43,6 +44,7 @@ jobs:
 
   specs:
     runs-on: ubuntu-20.04
+    timeout-minutes: 10
     needs: setup
     if: ${{ always() && needs.setup.outputs.RUN_SPECS == 'true' }}
     strategy:
@@ -65,6 +67,7 @@ jobs:
         run: yarn build:specs ${{ matrix.client }}
 
   client_javascript:
+    timeout-minutes: 10
     runs-on: ubuntu-20.04
     needs:
       - setup
@@ -102,6 +105,7 @@ jobs:
 
   client_java:
     runs-on: ubuntu-20.04
+    timeout-minutes: 10
     needs:
       - setup
       - specs
@@ -139,6 +143,7 @@ jobs:
 
   client_php:
     runs-on: ubuntu-20.04
+    timeout-minutes: 10
     needs:
       - setup
       - specs
@@ -169,6 +174,7 @@ jobs:
 
   cts:
     runs-on: ubuntu-20.04
+    timeout-minutes: 20
     needs:
       - client_javascript
       - client_java
