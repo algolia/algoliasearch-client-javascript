@@ -92,7 +92,7 @@ use {{invokerPackage}}\RetryStrategy\ClusterHosts;
         } elseif (false === ($clusterHosts = ClusterHosts::createFromCache($cacheKey))) {
             // We'll try to restore the ClusterHost from cache, if we cannot
             // we create a new instance and set the cache key
-            $clusterHosts = ClusterHosts::{{clusterHostsMethod}}($config->getAppId())
+            $clusterHosts = ClusterHosts::createFromAppId($config->getAppId())
                 ->setCacheKey($cacheKey);
         }
         {{/useCache}}
@@ -102,7 +102,7 @@ use {{invokerPackage}}\RetryStrategy\ClusterHosts;
             // If a list of hosts was passed, we ignore the cache
             $clusterHosts = ClusterHosts::create($hosts);
         } else {
-            $clusterHosts = ClusterHosts::{{clusterHostsMethod}}($config->getAppId());
+            $clusterHosts = ClusterHosts::create('{{host}}.'.$config->getRegion().'.algolia.{{topLevelDomain}}');
         }
         {{/useCache}}
 

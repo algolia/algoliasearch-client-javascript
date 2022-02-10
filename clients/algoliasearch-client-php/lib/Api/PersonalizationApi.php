@@ -66,7 +66,7 @@ class PersonalizationApi
             // If a list of hosts was passed, we ignore the cache
             $clusterHosts = ClusterHosts::create($hosts);
         } else {
-            $clusterHosts = ClusterHosts::createForRecommendation($config->getAppId());
+            $clusterHosts = ClusterHosts::create('personalization.'.$config->getRegion().'.algolia.com');
         }
 
         $apiWrapper = new ApiWrapper(

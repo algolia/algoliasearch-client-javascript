@@ -38,18 +38,14 @@ class RecommendApi
     }
 
     /**
-     * Instantiate the client with basic credentials and region
+     * Instantiate the client with basic credentials
      *
      * @param string $appId  Application ID
      * @param string $apiKey Algolia API Key
-     * @param string $region Region
      */
-    public static function create($appId = null, $apiKey = null, $region = null)
+    public static function create($appId = null, $apiKey = null)
     {
-        $allowedRegions = explode('-', 'us-de');
-        $config = RecommendConfig::create($appId, $apiKey, $region, $allowedRegions);
-
-        return static::createWithConfig($config);
+        return static::createWithConfig(RecommendConfig::create($appId, $apiKey));
     }
 
     /**
@@ -61,11 +57,16 @@ class RecommendApi
     {
         $config = clone $config;
 
+        $cacheKey = sprintf('%s-clusterHosts-%s', __CLASS__, $config->getAppId());
+
         if ($hosts = $config->getHosts()) {
             // If a list of hosts was passed, we ignore the cache
             $clusterHosts = ClusterHosts::create($hosts);
-        } else {
-            $clusterHosts = ClusterHosts::createFromAppId($config->getAppId());
+        } elseif (false === ($clusterHosts = ClusterHosts::createFromCache($cacheKey))) {
+            // We'll try to restore the ClusterHost from cache, if we cannot
+            // we create a new instance and set the cache key
+            $clusterHosts = ClusterHosts::createFromAppId($config->getAppId())
+                ->setCacheKey($cacheKey);
         }
 
         $apiWrapper = new ApiWrapper(

@@ -227,7 +227,6 @@
         "modelPackage": "Model\\Search",
         "additionalProperties": {
           "configClassname": "SearchConfig",
-          "clusterHostsMethod": "createFromAppId",
           "useCache": true,
           "variableNamingConvention": "camelCase",
           "packageName": "algoliasearch-client-php"
@@ -246,9 +245,7 @@
         "modelPackage": "Model\\Recommend",
         "additionalProperties": {
           "configClassname": "RecommendConfig",
-          "clusterHostsMethod": "createFromAppId",
-          "hasRegionalHost": true,
-          "allowedRegions": "us-de",
+          "useCache": true,
           "variableNamingConvention": "camelCase",
           "packageName": "algoliasearch-client-php"
         }
@@ -266,7 +263,6 @@
         "modelPackage": "Model\\Personalization",
         "additionalProperties": {
           "configClassname": "PersonalizationConfig",
-          "clusterHostsMethod": "createForRecommendation",
           "hasRegionalHost": true,
           "allowedRegions": "us-eu",
           "variableNamingConvention": "camelCase",
@@ -289,7 +285,6 @@
         "modelPackage": "Model\\Analytics",
         "additionalProperties": {
           "configClassname": "AnalyticsConfig",
-          "clusterHostsMethod": "createForAnalytics",
           "hasRegionalHost": true,
           "allowedRegions": "us-de",
           "variableNamingConvention": "camelCase",
@@ -313,7 +308,6 @@
         "modelPackage": "Model\\Insights",
         "additionalProperties": {
           "configClassname": "InsightsConfig",
-          "clusterHostsMethod": "createForInsights",
           "hasRegionalHost": true,
           "allowedRegions": "us-de",
           "variableNamingConvention": "camelCase",
@@ -337,7 +331,6 @@
         "modelPackage": "Model\\ABTesting",
         "additionalProperties": {
           "configClassname": "AbTestingConfig",
-          "clusterHostsMethod": "createForAnalytics",
           "hasRegionalHost": true,
           "allowedRegions": "us-de",
           "variableNamingConvention": "camelCase",
@@ -361,7 +354,6 @@
         "modelPackage": "Model\\QuerySuggestions",
         "additionalProperties": {
           "configClassname": "QuerySuggestionsConfig",
-          "clusterHostsMethod": "createForQuerySuggestions",
           "hasRegionalHost": true,
           "allowedRegions": "us-eu",
           "variableNamingConvention": "camelCase",

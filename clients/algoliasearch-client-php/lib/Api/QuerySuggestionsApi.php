@@ -66,7 +66,7 @@ class QuerySuggestionsApi
             // If a list of hosts was passed, we ignore the cache
             $clusterHosts = ClusterHosts::create($hosts);
         } else {
-            $clusterHosts = ClusterHosts::createForQuerySuggestions($config->getAppId());
+            $clusterHosts = ClusterHosts::create('query-suggestions.'.$config->getRegion().'.algolia.com');
         }
 
         $apiWrapper = new ApiWrapper(
