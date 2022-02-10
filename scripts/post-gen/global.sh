@@ -16,16 +16,22 @@ if [[ ! $DOCKER ]]; then
 fi
 
 build_js_common_requesters() {
-    echo "> Building @algolia/client-common..."
+    echo "> Cleaning previous build @algolia/client-common..."
+    yarn workspace @algolia/client-common clean
 
+    echo "> Building @algolia/client-common..."
     yarn workspace @algolia/client-common build
 
-    echo "> Building @algolia/requester-node-http..."
+    echo "> Cleaning previous build @algolia/requester-node-http..."
+    yarn workspace @algolia/requester-node-http clean
 
+    echo "> Building @algolia/requester-node-http..."
     yarn workspace @algolia/requester-node-http build
 
-    echo "> Building @algolia/requester-browser-xhr..."
+    echo "> Cleaning previous build @algolia/requester-browser-xhr..."
+    yarn workspace @algolia/requester-browser-xhr clean
 
+    echo "> Building @algolia/requester-browser-xhr..."
     yarn workspace @algolia/requester-browser-xhr build
 
     echo ""

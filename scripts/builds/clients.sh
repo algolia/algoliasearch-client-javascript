@@ -18,9 +18,13 @@ if [[ -z $PACKAGE ]]; then
 fi
 
 # Commands are based on the LANGUAGE
-echo "> Building $GENERATOR..."
-
 if [[ $LANGUAGE == 'javascript' ]]; then
+    echo "> Cleaning previous build $GENERATOR..."
+
+    yarn workspace $PACKAGE clean
+
+    echo "> Bundling $GENERATOR..."
+
     CMD="yarn workspace $PACKAGE build"
 elif [[ $LANGUAGE == 'php' ]]; then
     # no build needed (for now)

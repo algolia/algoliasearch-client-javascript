@@ -3,16 +3,14 @@
 import type { Host, Requester } from '@algolia/client-common';
 import { HttpRequester } from '@algolia/requester-node-http';
 
-import { create{{capitalizedApiName}}Api, version } from './src/{{apiName}}Api';
+import { create{{capitalizedApiName}}Api } from './src/{{apiName}}Api';
 import type { {{capitalizedApiName}}Api } from './src/{{apiName}}Api';
 
 {{#hasRegionalHost}}
 import type { Region } from './src/{{apiName}}Api';
 {{/hasRegionalHost}}
 
-
 export * from './src/{{apiName}}Api';
-export * from '@algolia/client-common';
 
 export function {{apiName}}Api(
   appId: string,

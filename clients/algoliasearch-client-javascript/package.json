@@ -1,0 +1,21 @@
+{
+  "name": "algoliasearch-client-javascript",
+  "version": "5.0.0",
+  "workspaces": [
+    "packages/*"
+  ],
+  "private": true,
+  "scripts": {
+    "build:utils": "yarn workspace @algolia/client-common build && yarn workspace @algolia/requester-node-http build && yarn workspace @algolia/requester-browser-xhr build",
+    "clean:utils": "yarn workspace @algolia/client-common clean && yarn workspace @algolia/requester-node-http clean && yarn workspace @algolia/requester-browser-xhr clean",
+    "clean": "rm -rf packages/*/dist",
+    "test:types": "yarn tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "4.5.4"
+  },
+  "engines": {
+    "node": "^14.0.0",
+    "yarn": "^3.0.0"
+  }
+}

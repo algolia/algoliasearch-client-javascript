@@ -2,7 +2,7 @@
   "name": "@algolia/api-client-automation",
   "version": "0.0.0",
   "workspaces": [
-    "clients/algoliasearch-client-javascript/*",
+    "clients/algoliasearch-client-javascript/",
     "playground/javascript/",
     "tests/",
     "scripts/"

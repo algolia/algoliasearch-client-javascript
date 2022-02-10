@@ -17,7 +17,7 @@ openapi-generator author template -g <YOUR_TEMPLATE_NAME> -o templates/<YOUR_API
 Example for the JavaScript client
 
 ```bash
-openapi-generator author template -g typescript-node -o templates/algoliasearch-client-javascript/
+openapi-generator author template -g typescript-node -o templates/javascript/
 ```
 
 ## Add the language/client to the tool chain

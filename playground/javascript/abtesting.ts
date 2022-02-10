@@ -1,4 +1,5 @@
-import { abtestingApi, ApiError } from '@algolia/client-abtesting';
+import { abtestingApi } from '@algolia/client-abtesting';
+import { ApiError } from '@algolia/client-common';
 import dotenv from 'dotenv';
 
 dotenv.config({ path: '../.env' });
