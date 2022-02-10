@@ -73,6 +73,11 @@ export const createSourcesApi = (
         'Parameter `postURLJob.input` is required when calling `postIngestUrl`.'
       );
     }
+    if (!postURLJob.target) {
+      throw new Error(
+        'Parameter `postURLJob.target` is required when calling `postIngestUrl`.'
+      );
+    }
 
     const request: Request = {
       method: 'POST',
