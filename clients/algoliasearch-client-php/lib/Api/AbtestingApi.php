@@ -66,7 +66,7 @@ class AbtestingApi
             // If a list of hosts was passed, we ignore the cache
             $clusterHosts = ClusterHosts::create($hosts);
         } else {
-            $clusterHosts = ClusterHosts::createForAnalytics($config->getAppId());
+            $clusterHosts = ClusterHosts::create('analytics.'.$config->getRegion().'.algolia.com');
         }
 
         $apiWrapper = new ApiWrapper(
