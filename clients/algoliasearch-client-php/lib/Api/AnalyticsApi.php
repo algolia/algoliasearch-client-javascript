@@ -119,7 +119,6 @@ class AnalyticsApi
 
         $resourcePath = '/2/clicks/averageClickPosition';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
 
         if ($index !== null) {
@@ -162,24 +161,7 @@ class AnalyticsApi
             }
         }
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('GET', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation getClickPositions
@@ -214,7 +196,6 @@ class AnalyticsApi
 
         $resourcePath = '/2/clicks/positions';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
 
         if ($index !== null) {
@@ -257,24 +238,7 @@ class AnalyticsApi
             }
         }
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('GET', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation getClickThroughRate
@@ -309,7 +273,6 @@ class AnalyticsApi
 
         $resourcePath = '/2/clicks/clickThroughRate';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
 
         if ($index !== null) {
@@ -352,24 +315,7 @@ class AnalyticsApi
             }
         }
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('GET', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation getConversationRate
@@ -404,7 +350,6 @@ class AnalyticsApi
 
         $resourcePath = '/2/conversions/conversionRate';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
 
         if ($index !== null) {
@@ -447,24 +392,7 @@ class AnalyticsApi
             }
         }
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('GET', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation getNoClickRate
@@ -499,7 +427,6 @@ class AnalyticsApi
 
         $resourcePath = '/2/searches/noClickRate';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
 
         if ($index !== null) {
@@ -542,24 +469,7 @@ class AnalyticsApi
             }
         }
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('GET', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation getNoResultsRate
@@ -594,7 +504,6 @@ class AnalyticsApi
 
         $resourcePath = '/2/searches/noResultRate';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
 
         if ($index !== null) {
@@ -637,24 +546,7 @@ class AnalyticsApi
             }
         }
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('GET', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation getSearchesCount
@@ -689,7 +581,6 @@ class AnalyticsApi
 
         $resourcePath = '/2/searches/count';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
 
         if ($index !== null) {
@@ -732,24 +623,7 @@ class AnalyticsApi
             }
         }
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('GET', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation getSearchesNoClicks
@@ -786,7 +660,6 @@ class AnalyticsApi
 
         $resourcePath = '/2/searches/noClicks';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
 
         if ($index !== null) {
@@ -849,24 +722,7 @@ class AnalyticsApi
             }
         }
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('GET', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation getSearchesNoResults
@@ -903,7 +759,6 @@ class AnalyticsApi
 
         $resourcePath = '/2/searches/noResults';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
 
         if ($index !== null) {
@@ -966,24 +821,7 @@ class AnalyticsApi
             }
         }
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('GET', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation getStatus
@@ -1008,7 +846,6 @@ class AnalyticsApi
 
         $resourcePath = '/2/status';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
 
         if ($index !== null) {
@@ -1021,24 +858,7 @@ class AnalyticsApi
             }
         }
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('GET', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation getTopCountries
@@ -1075,7 +895,6 @@ class AnalyticsApi
 
         $resourcePath = '/2/countries';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
 
         if ($index !== null) {
@@ -1138,24 +957,7 @@ class AnalyticsApi
             }
         }
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('GET', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation getTopFilterAttributes
@@ -1193,7 +995,6 @@ class AnalyticsApi
 
         $resourcePath = '/2/filters';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
 
         if ($index !== null) {
@@ -1266,24 +1067,7 @@ class AnalyticsApi
             }
         }
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('GET', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation getTopFilterForAttribute
@@ -1328,7 +1112,6 @@ class AnalyticsApi
 
         $resourcePath = '/2/filters/{attribute}';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
 
         if ($index !== null) {
@@ -1409,24 +1192,7 @@ class AnalyticsApi
             );
         }
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('GET', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation getTopFiltersNoResults
@@ -1464,7 +1230,6 @@ class AnalyticsApi
 
         $resourcePath = '/2/filters/noResults';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
 
         if ($index !== null) {
@@ -1537,24 +1302,7 @@ class AnalyticsApi
             }
         }
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('GET', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation getTopHits
@@ -1593,7 +1341,6 @@ class AnalyticsApi
 
         $resourcePath = '/2/hits';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
 
         if ($index !== null) {
@@ -1676,24 +1423,7 @@ class AnalyticsApi
             }
         }
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('GET', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation getTopSearches
@@ -1733,7 +1463,6 @@ class AnalyticsApi
 
         $resourcePath = '/2/searches';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
 
         if ($index !== null) {
@@ -1826,24 +1555,7 @@ class AnalyticsApi
             }
         }
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('GET', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation getUsersCount
@@ -1878,7 +1590,6 @@ class AnalyticsApi
 
         $resourcePath = '/2/users/count';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
 
         if ($index !== null) {
@@ -1921,28 +1632,13 @@ class AnalyticsApi
             }
         }
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('GET', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
 
-    private function sendRequest($method, $resourcePath, $query, $httpBody)
+    private function sendRequest($method, $resourcePath, $queryParams, $httpBody)
     {
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
+
         if ($method === 'GET') {
             $request = $this->api->read(
                 $method,

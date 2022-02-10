@@ -109,7 +109,6 @@ class PersonalizationApi
 
         $resourcePath = '/1/profiles/{userToken}';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
         // path params
         if ($userToken !== null) {
@@ -120,24 +119,7 @@ class PersonalizationApi
             );
         }
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('DELETE', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('DELETE', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation getPersonalizationStrategy
@@ -154,27 +136,9 @@ class PersonalizationApi
     {
         $resourcePath = '/1/strategies/personalization';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('GET', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation getUserTokenProfile
@@ -199,7 +163,6 @@ class PersonalizationApi
 
         $resourcePath = '/1/profiles/personalization/{userToken}';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
         // path params
         if ($userToken !== null) {
@@ -210,24 +173,7 @@ class PersonalizationApi
             );
         }
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('GET', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation setPersonalizationStrategy
@@ -252,34 +198,19 @@ class PersonalizationApi
 
         $resourcePath = '/1/strategies/personalization';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
         if (isset($personalizationStrategyParams)) {
             $httpBody = $personalizationStrategyParams;
         }
 
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('POST', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('POST', $resourcePath, $queryParams, $httpBody);
     }
 
-    private function sendRequest($method, $resourcePath, $query, $httpBody)
+    private function sendRequest($method, $resourcePath, $queryParams, $httpBody)
     {
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
+
         if ($method === 'GET') {
             $request = $this->api->read(
                 $method,

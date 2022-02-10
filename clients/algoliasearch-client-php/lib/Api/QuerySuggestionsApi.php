@@ -109,30 +109,13 @@ class QuerySuggestionsApi
 
         $resourcePath = '/1/configs';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
         if (isset($querySuggestionsIndexWithIndexParam)) {
             $httpBody = $querySuggestionsIndexWithIndexParam;
         }
 
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('POST', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('POST', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation deleteConfig
@@ -157,7 +140,6 @@ class QuerySuggestionsApi
 
         $resourcePath = '/1/configs/{indexName}';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
         // path params
         if ($indexName !== null) {
@@ -168,24 +150,7 @@ class QuerySuggestionsApi
             );
         }
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('DELETE', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('DELETE', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation getAllConfigs
@@ -202,27 +167,9 @@ class QuerySuggestionsApi
     {
         $resourcePath = '/1/configs';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('GET', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation getConfig
@@ -247,7 +194,6 @@ class QuerySuggestionsApi
 
         $resourcePath = '/1/configs/{indexName}';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
         // path params
         if ($indexName !== null) {
@@ -258,24 +204,7 @@ class QuerySuggestionsApi
             );
         }
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('GET', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation getConfigStatus
@@ -300,7 +229,6 @@ class QuerySuggestionsApi
 
         $resourcePath = '/1/configs/{indexName}/status';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
         // path params
         if ($indexName !== null) {
@@ -311,24 +239,7 @@ class QuerySuggestionsApi
             );
         }
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('GET', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation getLogFile
@@ -353,7 +264,6 @@ class QuerySuggestionsApi
 
         $resourcePath = '/1/logs/{indexName}';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
         // path params
         if ($indexName !== null) {
@@ -364,24 +274,7 @@ class QuerySuggestionsApi
             );
         }
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('GET', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation updateConfig
@@ -413,7 +306,6 @@ class QuerySuggestionsApi
 
         $resourcePath = '/1/configs/{indexName}';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
         // path params
         if ($indexName !== null) {
@@ -424,31 +316,17 @@ class QuerySuggestionsApi
             );
         }
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
         if (isset($querySuggestionsIndexParam)) {
             $httpBody = $querySuggestionsIndexParam;
         }
 
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('PUT', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('PUT', $resourcePath, $queryParams, $httpBody);
     }
 
-    private function sendRequest($method, $resourcePath, $query, $httpBody)
+    private function sendRequest($method, $resourcePath, $queryParams, $httpBody)
     {
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
+
         if ($method === 'GET') {
             $request = $this->api->read(
                 $method,

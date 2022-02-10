@@ -29,11 +29,6 @@ final class ApiWrapper implements ApiWrapperInterface
     private $http;
 
     /**
-     * @var Configuration
-     */
-    private $config;
-
-    /**
      * @var \Algolia\AlgoliaSearch\RetryStrategy\ClusterHosts
      */
     private $clusterHosts;
@@ -61,7 +56,6 @@ final class ApiWrapper implements ApiWrapperInterface
         LoggerInterface $logger = null
     ) {
         $this->http = $http;
-        $this->config = $config;
         $this->clusterHosts = $clusterHosts;
         $this->requestOptionsFactory = $RqstOptsFactory ?: new RequestOptionsFactory($config);
         $this->logger = $logger ?: Algolia::getLogger();

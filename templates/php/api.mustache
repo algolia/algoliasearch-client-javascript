@@ -219,7 +219,6 @@ use {{invokerPackage}}\RetryStrategy\ClusterHosts;
 
         $resourcePath = '{{{path}}}';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
         {{#queryParams}}
 
@@ -249,17 +248,6 @@ use {{invokerPackage}}\RetryStrategy\ClusterHosts;
         }
         {{/isExplode}}
         {{/queryParams}}
-        {{#headerParams}}
-        // header params
-        {{#collectionFormat}}
-        if (is_array(${{paramName}})) {
-            ${{paramName}} = ObjectSerializer::serializeCollection(${{paramName}}, '{{collectionFormat}}');
-        }
-        {{/collectionFormat}}
-        if (${{paramName}} !== null) {
-            $headerParams['{{baseName}}'] = ObjectSerializer::toHeaderValue(${{paramName}});
-        }
-        {{/headerParams}}
         {{#pathParams}}
         // path params
         {{#collectionFormat}}
@@ -276,47 +264,11 @@ use {{invokerPackage}}\RetryStrategy\ClusterHosts;
         }
         {{/pathParams}}
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
         {{#bodyParams}}
         if (isset(${{paramName}})) { 
             $httpBody = ${{paramName}};
         } 
         {{/bodyParams}}
-        {{#authMethods}}
-        {{#isBasic}}
-        {{#isBasicBasic}}
-        // this endpoint requires HTTP basic authentication
-        if (!empty($this->config->getUsername()) || !(empty($this->config->getPassword()))) {
-            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
-        }
-        {{/isBasicBasic}}
-        {{#isBasicBearer}}
-        // this endpoint requires Bearer{{#bearerFormat}} ({{{.}}}){{/bearerFormat}} authentication (access token)
-        if ($this->config->getAccessToken() !== null) {
-            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
-        }
-        {{/isBasicBearer}}
-        {{/isBasic}}
-        {{#isOAuth}}
-        // this endpoint requires OAuth (access token)
-        if ($this->config->getAccessToken() !== null) {
-            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
-        }
-        {{/isOAuth}}
-        {{/authMethods}}
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
 
         {{#servers.0}}
         $operationHosts = [{{#servers}}"{{{url}}}"{{^-last}}, {{/-last}}{{/servers}}];
@@ -326,14 +278,15 @@ use {{invokerPackage}}\RetryStrategy\ClusterHosts;
         $operationHost = $operationHosts[$this->hostIndex];
 
         {{/servers.0}}
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
 
-        return $this->sendRequest('{{httpMethod}}', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('{{httpMethod}}', $resourcePath, $queryParams, $httpBody);
     }
     {{/operation}}
 
-    private function sendRequest($method, $resourcePath, $query, $httpBody)
+    private function sendRequest($method, $resourcePath, $queryParams, $httpBody)
     {
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
+
         if($method == 'GET') {
             $request = $this->api->read(
                 $method,
