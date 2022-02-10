@@ -3,16 +3,14 @@
 import type { Host, Requester } from '@algolia/client-common';
 import { XhrRequester } from '@algolia/requester-browser-xhr';
 
-import { create{{capitalizedApiName}}Api, version } from './src/{{apiName}}Api';
+import { create{{capitalizedApiName}}Api } from './src/{{apiName}}Api';
 import type { {{capitalizedApiName}}Api } from './src/{{apiName}}Api';
 
 {{#hasRegionalHost}}
 import type { Region } from './src/{{apiName}}Api';
 {{/hasRegionalHost}}
 
-
 export * from './src/{{apiName}}Api';
-export * from '@algolia/client-common';
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function {{apiName}}Api(

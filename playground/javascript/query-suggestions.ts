@@ -1,7 +1,5 @@
-import {
-  querySuggestionsApi,
-  ApiError,
-} from '@algolia/client-query-suggestions';
+import { querySuggestionsApi } from '@algolia/client-query-suggestions';
+import { ApiError } from '@algolia/client-common';
 import dotenv from 'dotenv';
 
 dotenv.config({ path: '../.env' });

@@ -2,7 +2,6 @@
   "name": "javascript-tests",
   "version": "1.0.0",
   "scripts": {
-    "lint:fix": "yarn eslint --ext=ts tests --fix",
     "test": "jest"
   },
   "dependencies": {
@@ -17,17 +16,11 @@
     "@algolia/recommend": "5.0.0"
   },
   "devDependencies": {
-    "@apidevtools/swagger-parser": "10.0.3",
     "@types/jest": "27.0.3",
-    "@types/mustache": "4.1.2",
     "@types/node": "16.11.11",
-    "dotenv": "11.0.0",
-    "eslint": "8.6.0",
     "jest": "27.4.7",
-    "mustache": "4.2.0",
-    "openapi-types": "10.0.0",
-    "prettier": "2.5.1",
     "ts-jest": "27.1.2",
+    "ts-node": "10.5.0",
     "typescript": "4.5.4"
   }
 }

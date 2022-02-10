@@ -1,4 +1,5 @@
-import { personalizationApi, ApiError } from '@algolia/client-personalization';
+import { personalizationApi } from '@algolia/client-personalization';
+import { ApiError } from '@algolia/client-common';
 import dotenv from 'dotenv';
 
 dotenv.config({ path: '../.env' });

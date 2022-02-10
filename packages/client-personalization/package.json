@@ -1,0 +1,32 @@
+{
+  "name": "@algolia/client-personalization",
+  "version": "5.0.0",
+  "description": "JavaScript client for @algolia/client-personalization",
+  "repository": "algolia/algoliasearch-client-javascript",
+  "author": "Algolia",
+  "private": true,
+  "license": "MIT",
+  "main": "./dist/node.js",
+  "types": "./dist/node.d.ts",
+  "jsdelivr": "./dist/browser.js",
+  "unpkg": "./dist/browser.js",
+  "browser": {
+    "./index.js": "./dist/browser.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf dist/"
+  },
+  "engines": {
+    "node": "^14.0.0"
+  },
+  "dependencies": {
+    "@algolia/client-common": "5.0.0",
+    "@algolia/requester-browser-xhr": "5.0.0",
+    "@algolia/requester-node-http": "5.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "16.11.11",
+    "typescript": "4.5.4"
+  }
+}

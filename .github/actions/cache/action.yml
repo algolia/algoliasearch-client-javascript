@@ -29,76 +29,76 @@ runs:
     - name: Restore built JavaScript common client
       uses: actions/cache@v2
       with:
-        path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/client-common/dist
-        key: ${{ runner.os }}-1-js-client-common-${{ hashFiles('clients/algoliasearch-client-javascript/client-common/**') }}
+        path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/packages/client-common/dist
+        key: ${{ runner.os }}-1-js-client-common-${{ hashFiles('clients/algoliasearch-client-javascript/packages/client-common/**') }}
 
     - name: Restore built JavaScript node requester
       uses: actions/cache@v2
       with:
-        path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/requester-node-http/dist
-        key: ${{ runner.os }}-1-js-node-requester-${{ hashFiles('clients/algoliasearch-client-javascript/requester-node-http/**') }}
+        path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/packages/requester-node-http/dist
+        key: ${{ runner.os }}-1-js-node-requester-${{ hashFiles('clients/algoliasearch-client-javascript/packages/requester-node-http/**') }}
 
     - name: Restore built JavaScript browser requester
       uses: actions/cache@v2
       with:
-        path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/requester-browser-xhr/dist
-        key: ${{ runner.os }}-1-js-browser-requester-${{ hashFiles('clients/algoliasearch-client-javascript/requester-browser-xhr/**') }}
+        path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/packages/requester-browser-xhr/dist
+        key: ${{ runner.os }}-1-js-browser-requester-${{ hashFiles('clients/algoliasearch-client-javascript/packages/requester-browser-xhr/**') }}
 
     - name: Restore built JavaScript search client
       if: ${{ inputs.job == 'cts' }}
       uses: actions/cache@v2
       with:
-        path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/client-search/dist
-        key: ${{ runner.os }}-1-js-client-search-${{ hashFiles('clients/algoliasearch-client-javascript/client-search/**') }}-${{ hashFiles('specs/dist/search.yml') }}
+        path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/packages/client-search/dist
+        key: ${{ runner.os }}-1-js-client-search-${{ hashFiles('clients/algoliasearch-client-javascript/packages/client-search/**') }}-${{ hashFiles('specs/dist/search.yml') }}
 
     - name: Restore built JavaScript recommend client
       if: ${{ inputs.job == 'cts' }}
       uses: actions/cache@v2
       with:
-        path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/recommend/dist
-        key: ${{ runner.os }}-1-js-client-recommend-${{ hashFiles('clients/algoliasearch-client-javascript/recommend/**') }}-${{ hashFiles('specs/dist/recommend.yml') }}
+        path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/packages/recommend/dist
+        key: ${{ runner.os }}-1-js-client-recommend-${{ hashFiles('clients/algoliasearch-client-javascript/packages/recommend/**') }}-${{ hashFiles('specs/dist/recommend.yml') }}
 
     - name: Restore built JavaScript query-suggestions client
       if: ${{ inputs.job == 'cts' }}
       uses: actions/cache@v2
       with:
-        path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/client-query-suggestions/dist
-        key: ${{ runner.os }}-1-js-client-query-suggestions-${{ hashFiles('clients/algoliasearch-client-javascript/client-query-suggestions/**') }}-${{ hashFiles('specs/dist/query-suggestions.yml') }}
+        path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/packages/client-query-suggestions/dist
+        key: ${{ runner.os }}-1-js-client-query-suggestions-${{ hashFiles('clients/algoliasearch-client-javascript/packages/client-query-suggestions/**') }}-${{ hashFiles('specs/dist/query-suggestions.yml') }}
 
     - name: Restore built JavaScript personalization client
       if: ${{ inputs.job == 'cts' }}
       uses: actions/cache@v2
       with:
-        path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/client-personalization/dist
-        key: ${{ runner.os }}-1-js-client-personalization-${{ hashFiles('clients/algoliasearch-client-javascript/client-personalization/**') }}-${{ hashFiles('specs/dist/personalization.yml') }}
+        path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/packages/client-personalization/dist
+        key: ${{ runner.os }}-1-js-client-personalization-${{ hashFiles('clients/algoliasearch-client-javascript/packages/client-personalization/**') }}-${{ hashFiles('specs/dist/personalization.yml') }}
 
     - name: Restore built JavaScript analytics client
       if: ${{ inputs.job == 'cts' }}
       uses: actions/cache@v2
       with:
-        path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/client-analytics/dist
-        key: ${{ runner.os }}-1-js-client-analytics-${{ hashFiles('clients/algoliasearch-client-javascript/client-analytics/**') }}-${{ hashFiles('specs/dist/analytics.yml') }}
+        path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/packages/client-analytics/dist
+        key: ${{ runner.os }}-1-js-client-analytics-${{ hashFiles('clients/algoliasearch-client-javascript/packages/client-analytics/**') }}-${{ hashFiles('specs/dist/analytics.yml') }}
 
     - name: Restore built JavaScript abtesting client
       if: ${{ inputs.job == 'cts' }}
       uses: actions/cache@v2
       with:
-        path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/client-abtesting/dist
-        key: ${{ runner.os }}-1-js-client-abtesting-${{ hashFiles('clients/algoliasearch-client-javascript/client-abtesting/**') }}-${{ hashFiles('specs/dist/abtesting.yml') }}
+        path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/packages/client-abtesting/dist
+        key: ${{ runner.os }}-1-js-client-abtesting-${{ hashFiles('clients/algoliasearch-client-javascript/packages/client-abtesting/**') }}-${{ hashFiles('specs/dist/abtesting.yml') }}
 
     - name: Restore built JavaScript insights client
       if: ${{ inputs.job == 'cts' }}
       uses: actions/cache@v2
       with:
-        path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/client-insights/dist
-        key: ${{ runner.os }}-1-js-client-insights-${{ hashFiles('clients/algoliasearch-client-javascript/client-insights/**') }}-${{ hashFiles('specs/dist/insights.yml') }}
+        path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/packages/client-insights/dist
+        key: ${{ runner.os }}-1-js-client-insights-${{ hashFiles('clients/algoliasearch-client-javascript/packages/client-insights/**') }}-${{ hashFiles('specs/dist/insights.yml') }}
 
     - name: Restore built JavaScript sources client
       if: ${{ inputs.job == 'cts' }}
       uses: actions/cache@v2
       with:
-        path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/client-sources/dist
-        key: ${{ runner.os }}-1-js-client-sources-${{ hashFiles('clients/algoliasearch-client-javascript/client-sources/**') }}-${{ hashFiles('specs/dist/sources.yml') }}
+        path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/packages/client-sources/dist
+        key: ${{ runner.os }}-1-js-client-sources-${{ hashFiles('clients/algoliasearch-client-javascript/packages/client-sources/**') }}-${{ hashFiles('specs/dist/sources.yml') }}
 
     - name: Restore built Java client
       if: ${{ inputs.job == 'cts' }}

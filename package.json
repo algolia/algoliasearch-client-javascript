@@ -1,58 +1,21 @@
 {
-  "name": "@algolia/api-client-automation",
-  "version": "0.0.0",
+  "name": "algoliasearch-client-javascript",
+  "version": "5.0.0",
   "workspaces": [
-    "clients/algoliasearch-client-javascript/*",
-    "playground/javascript/",
-    "tests/",
-    "scripts/"
+    "packages/*"
   ],
+  "private": true,
   "scripts": {
-    "build:clients": "./scripts/multiplexer.sh ${2:-nonverbose} ./scripts/builds/clients.sh ${0:-all} ${1:-all}",
-    "build:specs": "./scripts/builds/specs.sh ${0:-all} ${1:-yml}",
-    "build": "yarn build:specs && yarn build:clients",
-    "clean": "rm -rf **/dist **/build **/node_modules **/.gradle",
-    "cts:generate": "yarn workspace tests build && ./scripts/multiplexer.sh ${2:-nonverbose} yarn workspace tests generate ${0:-all} ${1:-all}",
-    "cts:test": "./scripts/multiplexer.sh ${1:-nonverbose} ./scripts/runCTS.sh ${0:-all} all",
-    "cts:test:scripts": "yarn workspace tests test:scripts",
-    "cts:lint:scripts": "eslint --ext=ts tests/src/",
-    "docker:build": "./scripts/docker/build.sh",
-    "docker:clean": "docker stop dev; docker rm -f dev; docker image rm -f api-clients-automation",
-    "docker:mount": "./scripts/docker/mount.sh",
-    "docker:setup": "yarn docker:clean && yarn docker:build && yarn docker:mount",
-    "docker": "docker exec -it dev yarn $*",
-    "lint": "eslint --ext=ts .",
-    "post:generate": "./scripts/post-gen/global.sh",
-    "generate": "./scripts/multiplexer.sh ${2:-nonverbose} ./scripts/generate.sh ${0:-all} ${1:-all} && yarn post:generate ${0:-all}",
-    "playground": "./scripts/multiplexer.sh ${2:-nonverbose} ./scripts/playground.sh ${0:-javascript} ${1:-search}",
-    "specs:fix": "eslint --ext=yml specs/ --fix",
-    "specs:lint": "eslint --ext=yml specs/$0",
-    "github-actions:lint": "eslint --ext=yml .github/"
+    "build:utils": "yarn workspace @algolia/client-common build && yarn workspace @algolia/requester-node-http build && yarn workspace @algolia/requester-browser-xhr build",
+    "clean:utils": "yarn workspace @algolia/client-common clean && yarn workspace @algolia/requester-node-http clean && yarn workspace @algolia/requester-browser-xhr clean",
+    "clean": "rm -rf packages/*/dist",
+    "test:types": "yarn tsc --noEmit"
   },
   "devDependencies": {
-    "@openapitools/openapi-generator-cli": "2.4.26",
-    "@redocly/openapi-cli": "1.0.0-beta.79",
-    "@typescript-eslint/eslint-plugin": "5.5.0",
-    "@typescript-eslint/parser": "5.5.0",
-    "babel-eslint": "10.1.0",
-    "eslint": "8.6.0",
-    "eslint-config-algolia": "20.0.0",
-    "eslint-config-prettier": "8.3.0",
-    "eslint-plugin-algolia": "2.0.0",
-    "eslint-plugin-eslint-comments": "3.2.0",
-    "eslint-plugin-import": "2.25.4",
-    "eslint-plugin-jsdoc": "37.5.1",
-    "eslint-plugin-prettier": "4.0.0",
-    "eslint-plugin-unused-imports": "2.0.0",
-    "eslint-plugin-yml": "0.12.0",
-    "json": "11.0.0",
-    "mustache": "4.2.0",
-    "prettier": "2.5.1",
-    "prettier-plugin-java": "1.6.0",
     "typescript": "4.5.4"
   },
   "engines": {
-    "node": "^16.0.0",
+    "node": "^14.0.0",
     "yarn": "^3.0.0"
   }
 }
