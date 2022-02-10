@@ -109,30 +109,13 @@ class AbtestingApi
 
         $resourcePath = '/2/abtests';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
         if (isset($addABTestsRequest)) {
             $httpBody = $addABTestsRequest;
         }
 
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('POST', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('POST', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation deleteABTest
@@ -157,7 +140,6 @@ class AbtestingApi
 
         $resourcePath = '/2/abtests/{id}';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
         // path params
         if ($id !== null) {
@@ -168,24 +150,7 @@ class AbtestingApi
             );
         }
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('DELETE', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('DELETE', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation getABTest
@@ -210,7 +175,6 @@ class AbtestingApi
 
         $resourcePath = '/2/abtests/{id}';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
         // path params
         if ($id !== null) {
@@ -221,24 +185,7 @@ class AbtestingApi
             );
         }
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('GET', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation listABTests
@@ -257,7 +204,6 @@ class AbtestingApi
     {
         $resourcePath = '/2/abtests';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
 
         if ($offset !== null) {
@@ -280,24 +226,7 @@ class AbtestingApi
             }
         }
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('GET', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation stopABTest
@@ -322,7 +251,6 @@ class AbtestingApi
 
         $resourcePath = '/2/abtests/{id}/stop';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
         // path params
         if ($id !== null) {
@@ -333,28 +261,13 @@ class AbtestingApi
             );
         }
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('POST', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('POST', $resourcePath, $queryParams, $httpBody);
     }
 
-    private function sendRequest($method, $resourcePath, $query, $httpBody)
+    private function sendRequest($method, $resourcePath, $queryParams, $httpBody)
     {
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
+
         if ($method === 'GET') {
             $request = $this->api->read(
                 $method,

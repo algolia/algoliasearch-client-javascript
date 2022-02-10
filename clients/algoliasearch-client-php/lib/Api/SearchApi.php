@@ -110,30 +110,13 @@ class SearchApi
 
         $resourcePath = '/1/keys';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
         if (isset($apiKey)) {
             $httpBody = $apiKey;
         }
 
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('POST', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('POST', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation addOrUpdateObject
@@ -172,7 +155,6 @@ class SearchApi
 
         $resourcePath = '/1/indexes/{indexName}/{objectID}';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
         // path params
         if ($indexName !== null) {
@@ -191,27 +173,11 @@ class SearchApi
             );
         }
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
         if (isset($body)) {
             $httpBody = $body;
         }
 
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('PUT', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('PUT', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation appendSource
@@ -236,30 +202,13 @@ class SearchApi
 
         $resourcePath = '/1/security/sources/append';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
         if (isset($source)) {
             $httpBody = $source;
         }
 
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('POST', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('POST', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation assignUserId
@@ -295,7 +244,6 @@ class SearchApi
 
         $resourcePath = '/1/clusters/mapping';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
 
         if ($xAlgoliaUserID !== null) {
@@ -308,27 +256,11 @@ class SearchApi
             }
         }
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
         if (isset($assignUserIdParams)) {
             $httpBody = $assignUserIdParams;
         }
 
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('POST', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('POST', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation batch
@@ -360,7 +292,6 @@ class SearchApi
 
         $resourcePath = '/1/indexes/{indexName}/batch';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
         // path params
         if ($indexName !== null) {
@@ -371,27 +302,11 @@ class SearchApi
             );
         }
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
         if (isset($batchWriteParams)) {
             $httpBody = $batchWriteParams;
         }
 
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('POST', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('POST', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation batchAssignUserIds
@@ -427,7 +342,6 @@ class SearchApi
 
         $resourcePath = '/1/clusters/mapping/batch';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
 
         if ($xAlgoliaUserID !== null) {
@@ -440,27 +354,11 @@ class SearchApi
             }
         }
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
         if (isset($batchAssignUserIdsParams)) {
             $httpBody = $batchAssignUserIdsParams;
         }
 
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('POST', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('POST', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation batchDictionaryEntries
@@ -492,7 +390,6 @@ class SearchApi
 
         $resourcePath = '/1/dictionaries/{dictionaryName}/batch';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
         // path params
         if ($dictionaryName !== null) {
@@ -503,27 +400,11 @@ class SearchApi
             );
         }
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
         if (isset($batchDictionaryEntriesParams)) {
             $httpBody = $batchDictionaryEntriesParams;
         }
 
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('POST', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('POST', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation batchRules
@@ -557,7 +438,6 @@ class SearchApi
 
         $resourcePath = '/1/indexes/{indexName}/rules/batch';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
 
         if ($forwardToReplicas !== null) {
@@ -588,27 +468,11 @@ class SearchApi
             );
         }
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
         if (isset($rule)) {
             $httpBody = $rule;
         }
 
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('POST', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('POST', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation browse
@@ -634,7 +498,6 @@ class SearchApi
 
         $resourcePath = '/1/indexes/{indexName}/browse';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
         // path params
         if ($indexName !== null) {
@@ -645,27 +508,11 @@ class SearchApi
             );
         }
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
         if (isset($browseRequest)) {
             $httpBody = $browseRequest;
         }
 
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('POST', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('POST', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation clearAllSynonyms
@@ -691,7 +538,6 @@ class SearchApi
 
         $resourcePath = '/1/indexes/{indexName}/synonyms/clear';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
 
         if ($forwardToReplicas !== null) {
@@ -712,24 +558,7 @@ class SearchApi
             );
         }
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('POST', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('POST', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation clearObjects
@@ -754,7 +583,6 @@ class SearchApi
 
         $resourcePath = '/1/indexes/{indexName}/clear';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
         // path params
         if ($indexName !== null) {
@@ -765,24 +593,7 @@ class SearchApi
             );
         }
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('POST', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('POST', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation clearRules
@@ -808,7 +619,6 @@ class SearchApi
 
         $resourcePath = '/1/indexes/{indexName}/rules/clear';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
 
         if ($forwardToReplicas !== null) {
@@ -829,24 +639,7 @@ class SearchApi
             );
         }
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('POST', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('POST', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation deleteApiKey
@@ -871,7 +664,6 @@ class SearchApi
 
         $resourcePath = '/1/keys/{key}';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
         // path params
         if ($key !== null) {
@@ -882,24 +674,7 @@ class SearchApi
             );
         }
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('DELETE', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('DELETE', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation deleteBy
@@ -931,7 +706,6 @@ class SearchApi
 
         $resourcePath = '/1/indexes/{indexName}/deleteByQuery';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
         // path params
         if ($indexName !== null) {
@@ -942,27 +716,11 @@ class SearchApi
             );
         }
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
         if (isset($searchParams)) {
             $httpBody = $searchParams;
         }
 
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('POST', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('POST', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation deleteIndex
@@ -987,7 +745,6 @@ class SearchApi
 
         $resourcePath = '/1/indexes/{indexName}';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
         // path params
         if ($indexName !== null) {
@@ -998,24 +755,7 @@ class SearchApi
             );
         }
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('DELETE', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('DELETE', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation deleteObject
@@ -1047,7 +787,6 @@ class SearchApi
 
         $resourcePath = '/1/indexes/{indexName}/{objectID}';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
         // path params
         if ($indexName !== null) {
@@ -1066,24 +805,7 @@ class SearchApi
             );
         }
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('DELETE', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('DELETE', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation deleteRule
@@ -1116,7 +838,6 @@ class SearchApi
 
         $resourcePath = '/1/indexes/{indexName}/rules/{objectID}';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
 
         if ($forwardToReplicas !== null) {
@@ -1145,24 +866,7 @@ class SearchApi
             );
         }
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('DELETE', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('DELETE', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation deleteSource
@@ -1187,7 +891,6 @@ class SearchApi
 
         $resourcePath = '/1/security/sources/{source}';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
         // path params
         if ($source !== null) {
@@ -1198,24 +901,7 @@ class SearchApi
             );
         }
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('DELETE', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('DELETE', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation deleteSynonym
@@ -1248,7 +934,6 @@ class SearchApi
 
         $resourcePath = '/1/indexes/{indexName}/synonyms/{objectID}';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
 
         if ($forwardToReplicas !== null) {
@@ -1277,24 +962,7 @@ class SearchApi
             );
         }
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('DELETE', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('DELETE', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation getApiKey
@@ -1319,7 +987,6 @@ class SearchApi
 
         $resourcePath = '/1/keys/{key}';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
         // path params
         if ($key !== null) {
@@ -1330,24 +997,7 @@ class SearchApi
             );
         }
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('GET', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation getDictionaryLanguages
@@ -1364,27 +1014,9 @@ class SearchApi
     {
         $resourcePath = '/1/dictionaries/*/languages';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('GET', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation getDictionarySettings
@@ -1401,27 +1033,9 @@ class SearchApi
     {
         $resourcePath = '/1/dictionaries/*/settings';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('GET', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation getLogs
@@ -1446,7 +1060,6 @@ class SearchApi
 
         $resourcePath = '/1/logs';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
 
         if ($offset !== null) {
@@ -1489,24 +1102,7 @@ class SearchApi
             }
         }
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('GET', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation getObject
@@ -1539,7 +1135,6 @@ class SearchApi
 
         $resourcePath = '/1/indexes/{indexName}/{objectID}';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
 
         if ($attributesToRetrieve !== null) {
@@ -1568,24 +1163,7 @@ class SearchApi
             );
         }
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('GET', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation getObjects
@@ -1610,30 +1188,13 @@ class SearchApi
 
         $resourcePath = '/1/indexes/*/objects';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
         if (isset($getObjectsParams)) {
             $httpBody = $getObjectsParams;
         }
 
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('POST', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('POST', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation getRule
@@ -1665,7 +1226,6 @@ class SearchApi
 
         $resourcePath = '/1/indexes/{indexName}/rules/{objectID}';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
         // path params
         if ($indexName !== null) {
@@ -1684,24 +1244,7 @@ class SearchApi
             );
         }
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('GET', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation getSettings
@@ -1726,7 +1269,6 @@ class SearchApi
 
         $resourcePath = '/1/indexes/{indexName}/settings';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
         // path params
         if ($indexName !== null) {
@@ -1737,24 +1279,7 @@ class SearchApi
             );
         }
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('GET', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation getSources
@@ -1771,27 +1296,9 @@ class SearchApi
     {
         $resourcePath = '/1/security/sources';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('GET', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation getSynonym
@@ -1823,7 +1330,6 @@ class SearchApi
 
         $resourcePath = '/1/indexes/{indexName}/synonyms/{objectID}';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
         // path params
         if ($indexName !== null) {
@@ -1842,24 +1348,7 @@ class SearchApi
             );
         }
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('GET', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation getTask
@@ -1891,7 +1380,6 @@ class SearchApi
 
         $resourcePath = '/1/indexes/{indexName}/task/{taskID}';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
         // path params
         if ($indexName !== null) {
@@ -1910,24 +1398,7 @@ class SearchApi
             );
         }
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('GET', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation getTopUserIds
@@ -1944,27 +1415,9 @@ class SearchApi
     {
         $resourcePath = '/1/clusters/mapping/top';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('GET', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation getUserId
@@ -1992,7 +1445,6 @@ class SearchApi
 
         $resourcePath = '/1/clusters/mapping/{userID}';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
         // path params
         if ($userID !== null) {
@@ -2003,24 +1455,7 @@ class SearchApi
             );
         }
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('GET', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation hasPendingMappings
@@ -2038,7 +1473,6 @@ class SearchApi
     {
         $resourcePath = '/1/clusters/mapping/pending';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
 
         if ($getClusters !== null) {
@@ -2051,24 +1485,7 @@ class SearchApi
             }
         }
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('GET', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation listApiKeys
@@ -2085,27 +1502,9 @@ class SearchApi
     {
         $resourcePath = '/1/keys';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('GET', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation listClusters
@@ -2122,27 +1521,9 @@ class SearchApi
     {
         $resourcePath = '/1/clusters';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('GET', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation listIndices
@@ -2160,7 +1541,6 @@ class SearchApi
     {
         $resourcePath = '/1/indexes';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
 
         if ($page !== null) {
@@ -2173,24 +1553,7 @@ class SearchApi
             }
         }
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('GET', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation listUserIds
@@ -2209,7 +1572,6 @@ class SearchApi
     {
         $resourcePath = '/1/clusters/mapping';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
 
         if ($page !== null) {
@@ -2232,24 +1594,7 @@ class SearchApi
             }
         }
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('GET', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation multipleBatch
@@ -2274,30 +1619,13 @@ class SearchApi
 
         $resourcePath = '/1/indexes/*/batch';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
         if (isset($batchParams)) {
             $httpBody = $batchParams;
         }
 
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('POST', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('POST', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation multipleQueries
@@ -2322,30 +1650,13 @@ class SearchApi
 
         $resourcePath = '/1/indexes/*/queries';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
         if (isset($multipleQueriesParams)) {
             $httpBody = $multipleQueriesParams;
         }
 
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('POST', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('POST', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation operationIndex
@@ -2377,7 +1688,6 @@ class SearchApi
 
         $resourcePath = '/1/indexes/{indexName}/operation';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
         // path params
         if ($indexName !== null) {
@@ -2388,27 +1698,11 @@ class SearchApi
             );
         }
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
         if (isset($operationIndexParams)) {
             $httpBody = $operationIndexParams;
         }
 
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('POST', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('POST', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation partialUpdateObject
@@ -2448,7 +1742,6 @@ class SearchApi
 
         $resourcePath = '/1/indexes/{indexName}/{objectID}/partial';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
 
         if ($createIfNotExists !== null) {
@@ -2477,27 +1770,11 @@ class SearchApi
             );
         }
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
         if (isset($oneOfStringBuiltInOperation)) {
             $httpBody = $oneOfStringBuiltInOperation;
         }
 
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('POST', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('POST', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation removeUserId
@@ -2525,7 +1802,6 @@ class SearchApi
 
         $resourcePath = '/1/clusters/mapping/{userID}';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
         // path params
         if ($userID !== null) {
@@ -2536,24 +1812,7 @@ class SearchApi
             );
         }
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('DELETE', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('DELETE', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation replaceSources
@@ -2578,30 +1837,13 @@ class SearchApi
 
         $resourcePath = '/1/security/sources';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
         if (isset($source)) {
             $httpBody = $source;
         }
 
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('PUT', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('PUT', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation restoreApiKey
@@ -2626,7 +1868,6 @@ class SearchApi
 
         $resourcePath = '/1/keys/{key}/restore';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
         // path params
         if ($key !== null) {
@@ -2637,24 +1878,7 @@ class SearchApi
             );
         }
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('POST', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('POST', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation saveObject
@@ -2686,7 +1910,6 @@ class SearchApi
 
         $resourcePath = '/1/indexes/{indexName}';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
         // path params
         if ($indexName !== null) {
@@ -2697,27 +1920,11 @@ class SearchApi
             );
         }
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
         if (isset($body)) {
             $httpBody = $body;
         }
 
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('POST', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('POST', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation saveRule
@@ -2757,7 +1964,6 @@ class SearchApi
 
         $resourcePath = '/1/indexes/{indexName}/rules/{objectID}';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
 
         if ($forwardToReplicas !== null) {
@@ -2786,27 +1992,11 @@ class SearchApi
             );
         }
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
         if (isset($rule)) {
             $httpBody = $rule;
         }
 
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('PUT', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('PUT', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation saveSynonym
@@ -2846,7 +2036,6 @@ class SearchApi
 
         $resourcePath = '/1/indexes/{indexName}/synonyms/{objectID}';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
 
         if ($forwardToReplicas !== null) {
@@ -2875,27 +2064,11 @@ class SearchApi
             );
         }
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
         if (isset($synonymHit)) {
             $httpBody = $synonymHit;
         }
 
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('PUT', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('PUT', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation saveSynonyms
@@ -2929,7 +2102,6 @@ class SearchApi
 
         $resourcePath = '/1/indexes/{indexName}/synonyms/batch';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
 
         if ($forwardToReplicas !== null) {
@@ -2960,27 +2132,11 @@ class SearchApi
             );
         }
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
         if (isset($synonymHit)) {
             $httpBody = $synonymHit;
         }
 
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('POST', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('POST', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation search
@@ -3012,7 +2168,6 @@ class SearchApi
 
         $resourcePath = '/1/indexes/{indexName}/query';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
         // path params
         if ($indexName !== null) {
@@ -3023,27 +2178,11 @@ class SearchApi
             );
         }
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
         if (isset($searchParams)) {
             $httpBody = $searchParams;
         }
 
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('POST', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('POST', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation searchDictionaryEntries
@@ -3075,7 +2214,6 @@ class SearchApi
 
         $resourcePath = '/1/dictionaries/{dictionaryName}/search';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
         // path params
         if ($dictionaryName !== null) {
@@ -3086,27 +2224,11 @@ class SearchApi
             );
         }
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
         if (isset($searchDictionaryEntriesParams)) {
             $httpBody = $searchDictionaryEntriesParams;
         }
 
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('POST', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('POST', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation searchForFacetValues
@@ -3139,7 +2261,6 @@ class SearchApi
 
         $resourcePath = '/1/indexes/{indexName}/facets/{facetName}/query';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
         // path params
         if ($indexName !== null) {
@@ -3158,27 +2279,11 @@ class SearchApi
             );
         }
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
         if (isset($searchForFacetValuesRequest)) {
             $httpBody = $searchForFacetValuesRequest;
         }
 
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('POST', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('POST', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation searchRules
@@ -3210,7 +2315,6 @@ class SearchApi
 
         $resourcePath = '/1/indexes/{indexName}/rules/search';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
         // path params
         if ($indexName !== null) {
@@ -3221,27 +2325,11 @@ class SearchApi
             );
         }
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
         if (isset($searchRulesParams)) {
             $httpBody = $searchRulesParams;
         }
 
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('POST', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('POST', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation searchSynonyms
@@ -3270,7 +2358,6 @@ class SearchApi
 
         $resourcePath = '/1/indexes/{indexName}/synonyms/search';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
 
         if ($query !== null) {
@@ -3321,24 +2408,7 @@ class SearchApi
             );
         }
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('POST', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('POST', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation searchUserIds
@@ -3363,30 +2433,13 @@ class SearchApi
 
         $resourcePath = '/1/clusters/mapping/search';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
         if (isset($searchUserIdsParams)) {
             $httpBody = $searchUserIdsParams;
         }
 
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('POST', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('POST', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation setDictionarySettings
@@ -3411,30 +2464,13 @@ class SearchApi
 
         $resourcePath = '/1/dictionaries/*/settings';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
         if (isset($dictionarySettingsParams)) {
             $httpBody = $dictionarySettingsParams;
         }
 
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('PUT', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('PUT', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation setSettings
@@ -3467,7 +2503,6 @@ class SearchApi
 
         $resourcePath = '/1/indexes/{indexName}/settings';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
 
         if ($forwardToReplicas !== null) {
@@ -3488,27 +2523,11 @@ class SearchApi
             );
         }
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
         if (isset($indexSettings)) {
             $httpBody = $indexSettings;
         }
 
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('PUT', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('PUT', $resourcePath, $queryParams, $httpBody);
     }
     /**
      * Operation updateApiKey
@@ -3540,7 +2559,6 @@ class SearchApi
 
         $resourcePath = '/1/keys/{key}';
         $queryParams = [];
-        $headerParams = [];
         $httpBody = [];
         // path params
         if ($key !== null) {
@@ -3551,31 +2569,17 @@ class SearchApi
             );
         }
 
-        $headers = [];
-        $headers['Accept'] = 'application/json';
-        $headers['Content-Type'] = 'application/json';
         if (isset($apiKey)) {
             $httpBody = $apiKey;
         }
 
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-
-        return $this->sendRequest('PUT', $resourcePath, $query, $httpBody);
+        return $this->sendRequest('PUT', $resourcePath, $queryParams, $httpBody);
     }
 
-    private function sendRequest($method, $resourcePath, $query, $httpBody)
+    private function sendRequest($method, $resourcePath, $queryParams, $httpBody)
     {
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
+
         if ($method === 'GET') {
             $request = $this->api->read(
                 $method,
