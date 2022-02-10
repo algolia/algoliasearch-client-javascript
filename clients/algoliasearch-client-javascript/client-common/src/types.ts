@@ -45,6 +45,7 @@ export type Response = {
 
 export type EchoResponse = Request & {
   connectTimeout: number;
+  host: string;
   headers: Record<string, string>;
   responseTimeout: number;
   searchParams?: Record<string, string>;

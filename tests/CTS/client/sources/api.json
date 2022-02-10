@@ -1,0 +1,56 @@
+[
+  {
+    "testName": "calls api with correct host",
+    "steps": [
+      {
+        "type": "method",
+        "object": "$client",
+        "path": "postIngestUrl",
+        "parameters": [{ "type": "csv", "input": { "url": "..." } }],
+        "expected": {
+          "match": {
+            "objectContaining": {
+              "host": "data.us.algolia.com"
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "testName": "calls api with correct user agent",
+    "steps": [
+      {
+        "type": "method",
+        "object": "$client",
+        "path": "postIngestUrl",
+        "parameters": [{ "type": "csv", "input": { "url": "..." } }],
+        "expected": {
+          "testSubject": "actual.userAgent",
+          "match": {
+            "regexp": "/Algolia%20for%20(.+)%20\\(\\d+\\.\\d+\\.\\d+\\)/"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "testName": "calls api with correct timeouts",
+    "steps": [
+      {
+        "type": "method",
+        "object": "$client",
+        "path": "postIngestUrl",
+        "parameters": [{ "type": "csv", "input": { "url": "..." } }],
+        "expected": {
+          "match": {
+            "objectContaining": {
+              "connectTimeout": 2,
+              "responseTimeout": 30
+            }
+          }
+        }
+      }
+    ]
+  }
+]

@@ -1,3 +1,13 @@
 {{#length}}
-  expect(actual).toHaveLength({{length}});
+  expect({{> testSubject}}).toHaveLength({{length}});
 {{/length}}
+
+{{#match}}
+  {{#objectContaining}}
+    expect({{> testSubject}}).toEqual(expect.objectContaining({{{objectContaining}}}));
+  {{/objectContaining}}
+
+  {{#regexp}}
+    expect({{> testSubject}}).toMatch({{{regexp}}});
+  {{/regexp}}
+{{/match}}

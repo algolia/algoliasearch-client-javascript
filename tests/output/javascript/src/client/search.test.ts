@@ -1,21 +1,77 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
-// @ts-nocheck
+/* eslint-disable prefer-const */
+// @ts-nocheck Failing tests will have type errors, but we cannot suppress them even with @ts-expect-error because it doesn't work for a block of lines.
 import { EchoRequester } from '@algolia/client-common';
 import { searchApi } from '@algolia/client-search';
 
-const appId = process.env.ALGOLIA_APPLICATION_ID || 'Algolia-API-Key';
-const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'Algolia-Application-Id';
+const appId = 'test-app-id';
+const apiKey = 'test-api-key';
 
 function createClient() {
   return searchApi(appId, apiKey, { requester: new EchoRequester() });
 }
 
+describe('api', () => {
+  test('calls api with correct host', async () => {
+    let $client;
+    $client = createClient();
+
+    let actual;
+
+    actual = $client.search({ indexName: 'my-index', searchParams: {} });
+
+    if (actual instanceof Promise) {
+      actual = await actual;
+    }
+
+    expect(actual).toEqual(
+      expect.objectContaining({ host: 'test-app-id.algolia.net' })
+    );
+  });
+
+  test('calls api with correct user agent', async () => {
+    let $client;
+    $client = createClient();
+
+    let actual;
+
+    actual = $client.search({ indexName: 'my-index', searchParams: {} });
+
+    if (actual instanceof Promise) {
+      actual = await actual;
+    }
+
+    expect(actual.userAgent).toMatch(
+      /Algolia%20for%20(.+)%20\(\d+\.\d+\.\d+\)/
+    );
+  });
+
+  test('calls api with correct timeouts', async () => {
+    let $client;
+    $client = createClient();
+
+    let actual;
+
+    actual = $client.search({ indexName: 'my-index', searchParams: {} });
+
+    if (actual instanceof Promise) {
+      actual = await actual;
+    }
+
+    expect(actual).toEqual(
+      expect.objectContaining({ connectTimeout: 2, responseTimeout: 30 })
+    );
+  });
+});
+
 describe('parameters', () => {
-  test('constructor throws with invalid parameters', async () => {
+  test('client throws with invalid parameters', async () => {
+    let $client;
+
     let actual;
     await expect(
       new Promise((resolve, reject) => {
-        const $client = searchApi('', '', { requester: new EchoRequester() });
+        $client = searchApi('', '', { requester: new EchoRequester() });
 
         actual = $client;
 
@@ -29,7 +85,7 @@ describe('parameters', () => {
 
     await expect(
       new Promise((resolve, reject) => {
-        const $client = searchApi('', 'my-api-key', {
+        $client = searchApi('', 'my-api-key', {
           requester: new EchoRequester(),
         });
 
@@ -45,7 +101,7 @@ describe('parameters', () => {
 
     await expect(
       new Promise((resolve, reject) => {
-        const $client = searchApi('my-app-id', '', {
+        $client = searchApi('my-app-id', '', {
           requester: new EchoRequester(),
         });
 
@@ -61,7 +117,8 @@ describe('parameters', () => {
   });
 
   test('`addApiKey` throws with invalid parameters', async () => {
-    const $client = createClient();
+    let $client;
+    $client = createClient();
 
     let actual;
     await expect(
@@ -92,7 +149,8 @@ describe('parameters', () => {
   });
 
   test('`addOrUpdateObject` throws with invalid parameters', async () => {
-    const $client = createClient();
+    let $client;
+    $client = createClient();
 
     let actual;
     await expect(

@@ -128,6 +128,7 @@ function modifyForMustache(
             type: step.type,
             object: step.object,
             path: step.path,
+            expected: step.expected,
             parameters: step.parameters && serializeParameters(step.parameters),
             ...base,
           };
@@ -141,6 +142,18 @@ function modifyForMustache(
 
         if (step.expected?.error === false) {
           modified.expectedNoError = true;
+        }
+
+        if (step.expected?.match?.objectContaining) {
+          if (!modified.expected) {
+            modified.expected = {};
+          }
+
+          modified.expected.match = {
+            objectContaining: JSON.stringify(
+              step.expected?.match?.objectContaining
+            ),
+          };
         }
 
         return modified;
