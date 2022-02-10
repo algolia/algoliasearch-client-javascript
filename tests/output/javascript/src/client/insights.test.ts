@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 /* eslint-disable prefer-const */
 // @ts-nocheck Failing tests will have type errors, but we cannot suppress them even with @ts-expect-error because it doesn't work for a block of lines.
-import { analyticsApi } from '@algolia/client-analytics';
 import { EchoRequester } from '@algolia/client-common';
+import { insightsApi } from '@algolia/client-insights';
 
 const appId = 'test-app-id';
 const apiKey = 'test-api-key';
 
 function createClient() {
-  return analyticsApi(appId, apiKey, 'us', { requester: new EchoRequester() });
+  return insightsApi(appId, apiKey, 'us', { requester: new EchoRequester() });
 }
 
 describe('api', () => {
@@ -18,7 +18,7 @@ describe('api', () => {
 
     let actual;
 
-    actual = $client.getAverageClickPosition({ index: 'my-index' });
+    actual = $client.pushEvents({ events: [] });
 
     if (actual instanceof Promise) {
       actual = await actual;
@@ -35,14 +35,14 @@ describe('api', () => {
 
     let actual;
 
-    actual = $client.getAverageClickPosition({ index: 'my-index' });
+    actual = $client.pushEvents({ events: [] });
 
     if (actual instanceof Promise) {
       actual = await actual;
     }
 
     expect(actual).toEqual(
-      expect.objectContaining({ connectTimeout: 2, responseTimeout: 5 })
+      expect.objectContaining({ connectTimeout: 2, responseTimeout: 30 })
     );
   });
 });
@@ -55,7 +55,7 @@ describe('parameters', () => {
 
     await expect(
       new Promise((resolve, reject) => {
-        $client = analyticsApi('my-app-id', 'my-api-key', '', {
+        $client = insightsApi('my-app-id', 'my-api-key', '', {
           requester: new EchoRequester(),
         });
 
@@ -69,33 +69,14 @@ describe('parameters', () => {
       })
     ).resolves.not.toThrow();
 
-    actual = $client.getAverageClickPosition({ index: 'my-index' });
+    actual = $client.pushEvents({ events: [] });
 
     if (actual instanceof Promise) {
       actual = await actual;
     }
 
     expect(actual).toEqual(
-      expect.objectContaining({ host: 'analytics.algolia.com' })
-    );
-  });
-
-  test('getAverageClickPosition throws without index', async () => {
-    let $client;
-    $client = createClient();
-
-    let actual;
-    await expect(
-      new Promise((resolve, reject) => {
-        actual = $client.getClickPositions({});
-        if (actual instanceof Promise) {
-          actual.then(resolve).catch(reject);
-        } else {
-          resolve();
-        }
-      })
-    ).rejects.toThrow(
-      'Parameter `index` is required when calling `getClickPositions`.'
+      expect.objectContaining({ host: 'insights.algolia.io' })
     );
   });
 });

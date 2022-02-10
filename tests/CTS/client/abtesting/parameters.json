@@ -1,6 +1,6 @@
 [
   {
-    "testName": "does not throw when region is not given",
+    "testName": "fallbacks to the alias when region is not given",
     "autoCreateClient": false,
     "steps": [
       {
@@ -13,19 +13,22 @@
         "expected": {
           "error": false
         }
-      }
-    ]
-  },
-  {
-    "testName": "getAverageClickPosition throws without index",
-    "steps": [
+      },
       {
         "type": "method",
         "object": "$client",
-        "path": "getClickPositions",
-        "parameters": [{}],
+        "path": "getABTest",
+        "parameters": [
+          {
+            "id": "test"
+          }
+        ],
         "expected": {
-          "error": "Parameter `index` is required when calling `getClickPositions`."
+          "match": {
+            "objectContaining": {
+              "host": "analytics.algolia.com"
+            }
+          }
         }
       }
     ]

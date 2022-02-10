@@ -1,6 +1,6 @@
 [
   {
-    "testName": "constructor throws with invalid parameters",
+    "testName": "client throws with invalid parameters",
     "autoCreateClient": false,
     "steps": [
       {

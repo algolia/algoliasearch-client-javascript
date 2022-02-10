@@ -1,0 +1,36 @@
+[
+  {
+    "testName": "throws when region is not given",
+    "autoCreateClient": false,
+    "steps": [
+      {
+        "type": "createClient",
+        "parameters": {
+          "appId": "my-app-id",
+          "apiKey": "my-api-key",
+          "region": ""
+        },
+        "expected": {
+          "error": "`region` is missing."
+        }
+      }
+    ]
+  },
+  {
+    "testName": "does not throw when region is given",
+    "autoCreateClient": false,
+    "steps": [
+      {
+        "type": "createClient",
+        "parameters": {
+          "appId": "my-app-id",
+          "apiKey": "my-api-key",
+          "region": "us"
+        },
+        "expected": {
+          "error": false
+        }
+      }
+    ]
+  }
+]
