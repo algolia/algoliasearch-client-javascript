@@ -16,22 +16,82 @@ post:
           required:
             - type
             - input
+            - target
           properties:
             type:
               type: string
               description: The type of the file to ingest.
               enum:
                 - csv
+            uniqueIDColumn:
+              type: string
+              description: The name of the column that hold the unique identifier
+              example: objectID
             input:
               type: object
               title: postURLJobInput
               description: The input of the job.
+              additionalProperties: false
+              required:
+                - url
               properties:
                 url:
                   type: string
                   description: The URL of the file to ingest.
+                method:
+                  type: string
+                  description: The HTTP method that will be used to fetch the URL.
+                  default: GET
+                  enum:
+                    - GET
+                    - POST
+                auth:
+                  type: object
+                  title: postURLJobAuth
+                  description: The authentication scheme for the URL that will be fetched.
+                  additionalProperties: false
+                  required:
+                    - type
+                    - login
+                    - password
+                  properties:
+                    type:
+                      type: string
+                      description: The type of authentication to use.
+                      enum:
+                        - basic
+                    login:
+                      type: string
+                      description: The login to use for Basic Auth.
+                      example: johndoe
+                    password:
+                      type: string
+                      description: The password to use for Basic Auth.
+                      example: mypassword
+            target:
+              type: object
+              title: postURLJobTarget
+              description: The target of the job.
+              additionalProperties: false
               required:
-                - url
+                - type
+                - indexName
+                - operation
+              properties:
+                type:
+                  type: string
+                  description: The product to target
+                  enum:
+                    - search
+                indexName:
+                  type: string
+                  description: The index name of the product
+                  example: my_index_name
+                operation:
+                  type: string
+                  description: The type of operation to execute
+                  enum:
+                    - replace
   responses:
     '200':
       description: OK

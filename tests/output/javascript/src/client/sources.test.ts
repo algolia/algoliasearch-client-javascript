@@ -18,7 +18,11 @@ describe('api', () => {
 
     let actual;
 
-    actual = $client.postIngestUrl({ type: 'csv', input: { url: '...' } });
+    actual = $client.postIngestUrl({
+      type: 'csv',
+      input: { url: 'https://example.com/file.csv' },
+      target: { type: 'search', indexName: 'pageviews', operation: 'replace' },
+    });
 
     if (actual instanceof Promise) {
       actual = await actual;
@@ -35,7 +39,11 @@ describe('api', () => {
 
     let actual;
 
-    actual = $client.postIngestUrl({ type: 'csv', input: { url: '...' } });
+    actual = $client.postIngestUrl({
+      type: 'csv',
+      input: { url: 'https://example.com/file.csv' },
+      target: { type: 'search', indexName: 'pageviews', operation: 'replace' },
+    });
 
     if (actual instanceof Promise) {
       actual = await actual;
@@ -52,7 +60,11 @@ describe('api', () => {
 
     let actual;
 
-    actual = $client.postIngestUrl({ type: 'csv', input: { url: '...' } });
+    actual = $client.postIngestUrl({
+      type: 'csv',
+      input: { url: 'https://example.com/file.csv' },
+      target: { type: 'search', indexName: 'pageviews', operation: 'replace' },
+    });
 
     if (actual instanceof Promise) {
       actual = await actual;

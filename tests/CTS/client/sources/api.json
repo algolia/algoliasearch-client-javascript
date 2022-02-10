@@ -6,7 +6,19 @@
         "type": "method",
         "object": "$client",
         "path": "postIngestUrl",
-        "parameters": [{ "type": "csv", "input": { "url": "..." } }],
+        "parameters": [
+          {
+            "type": "csv",
+            "input": {
+              "url": "https://example.com/file.csv"
+            },
+            "target": {
+              "type": "search",
+              "indexName": "pageviews",
+              "operation": "replace"
+            }
+          }
+        ],
         "expected": {
           "match": {
             "objectContaining": {
@@ -24,7 +36,19 @@
         "type": "method",
         "object": "$client",
         "path": "postIngestUrl",
-        "parameters": [{ "type": "csv", "input": { "url": "..." } }],
+        "parameters": [
+          {
+            "type": "csv",
+            "input": {
+              "url": "https://example.com/file.csv"
+            },
+            "target": {
+              "type": "search",
+              "indexName": "pageviews",
+              "operation": "replace"
+            }
+          }
+        ],
         "expected": {
           "testSubject": "actual.userAgent",
           "match": {
@@ -41,7 +65,19 @@
         "type": "method",
         "object": "$client",
         "path": "postIngestUrl",
-        "parameters": [{ "type": "csv", "input": { "url": "..." } }],
+        "parameters": [
+          {
+            "type": "csv",
+            "input": {
+              "url": "https://example.com/file.csv"
+            },
+            "target": {
+              "type": "search",
+              "indexName": "pageviews",
+              "operation": "replace"
+            }
+          }
+        ],
         "expected": {
           "match": {
             "objectContaining": {
