@@ -25,6 +25,10 @@ type AdditionalProperties = Partial<{
   isDeHost: boolean;
   host: string;
   topLevelDomain: string;
+  /**
+   * Client name needs to be explicitly set, no variables required in the host.
+   */
+  experimentalHost: string;
 }>;
 
 async function setHostsOptions(): Promise<void> {
@@ -55,6 +59,12 @@ async function setHostsOptions(): Promise<void> {
       }
 
       const { host } = new URL(url);
+
+      // Edge case for `predict`, we should maybe have a proper way to detect
+      // experimental/staging hosts
+      if (client === 'predict') {
+        additionalProperties.experimentalHost = host;
+      }
 
       if (!variables?.region || !variables?.region?.enum) {
         continue;

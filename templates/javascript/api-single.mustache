@@ -18,7 +18,7 @@ export const version = '{{packageVersion}}';
 export type Region = {{#isDeHost}}'de'{{/isDeHost}}{{#isEuHost}}'eu'{{/isEuHost}} | 'us';
 {{/hasRegionalHost}}
 
-{{^hasRegionalHost}}
+{{^hasRegionalHost}}{{^experimentalHost}}
 function getDefaultHosts(appId: string): Host[] {
   return (
     [
@@ -53,7 +53,13 @@ function getDefaultHosts(appId: string): Host[] {
     ])
   );
 }
-{{/hasRegionalHost}}
+{{/experimentalHost}}{{/hasRegionalHost}}
+
+{{#experimentalHost}}
+function getDefaultHosts(): Host[] {
+  return [{ url: '{{experimentalHost}}', accept: 'readWrite', protocol: 'https' }];
+}
+{{/experimentalHost}}
 
 {{#hasRegionalHost}}
 function getDefaultHosts(region{{#fallbackToAliasHost}}?{{/fallbackToAliasHost}}: Region): Host[] {
@@ -67,7 +73,7 @@ function getDefaultHosts(region{{#fallbackToAliasHost}}?{{/fallbackToAliasHost}}
 export const create{{capitalizedApiName}}Api = (options: CreateClientOptions{{#hasRegionalHost}} & {region{{#fallbackToAliasHost}}?{{/fallbackToAliasHost}}: Region }{{/hasRegionalHost}}) => {
   const auth = createAuth(options.appId, options.apiKey, options.authMode);
   const transporter = new Transporter({
-    hosts: options?.hosts ?? getDefaultHosts({{^hasRegionalHost}}options.appId{{/hasRegionalHost}}{{#hasRegionalHost}}options.region{{/hasRegionalHost}}),
+    hosts: options?.hosts ?? getDefaultHosts({{^hasRegionalHost}}{{^experimentalHost}}options.appId{{/experimentalHost}}{{/hasRegionalHost}}{{#hasRegionalHost}}options.region{{/hasRegionalHost}}),
     baseHeaders: {
       'content-type': 'application/x-www-form-urlencoded',
       ...auth.headers(),

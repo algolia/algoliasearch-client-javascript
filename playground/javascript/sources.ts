@@ -16,7 +16,11 @@ async function testSource() {
       type: 'csv',
       input: {
         url: '',
-        // url: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR7HII972uvH_5IOVCH8HS6348FJP575hs-v1f8EtrUYEFzuapc5QYrZIktNQJMUiF-9ACN_ddodkCk/pub?output=csv'
+      },
+      target: {
+        indexName: 'test',
+        operation: 'replace',
+        type: 'search',
       },
     });
 

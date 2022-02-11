@@ -192,6 +192,27 @@
           "topLevelDomain": "com"
         }
       },
+      "javascript-predict": {
+        "generatorName": "typescript-node",
+        "templateDir": "#{cwd}/templates/javascript/",
+        "config": "#{cwd}/openapitools.json",
+        "apiPackage": "src",
+        "output": "#{cwd}/clients/algoliasearch-client-javascript/packages/client-predict",
+        "glob": "specs/dist/predict.yml",
+        "gitHost": "algolia",
+        "gitUserId": "algolia",
+        "gitRepoId": "algoliasearch-client-javascript",
+        "additionalProperties": {
+          "modelPropertyNaming": "original",
+          "supportsES6": true,
+          "npmName": "@algolia/client-predict",
+          "apiName": "predict",
+          "capitalizedApiName": "Predict",
+          "packageVersion": "0.0.1",
+          "packageName": "@algolia/client-predict",
+          "experimentalHost": "predict-api-oslcbws3zq-ew.a.run.app"
+        }
+      },
       "java-search": {
         "generatorName": "java",
         "templateDir": "#{cwd}/templates/java/",
