@@ -1,0 +1,7 @@
+userID:
+  name: userID
+  in: path
+  required: true
+  schema:
+    type: string
+  description: User ID for authenticated users or cookie ID for non-authenticated repeated users (visitors).

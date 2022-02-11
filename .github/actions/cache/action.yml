@@ -100,6 +100,13 @@ runs:
         path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/packages/client-sources/dist
         key: ${{ runner.os }}-1-js-client-sources-${{ hashFiles('clients/algoliasearch-client-javascript/packages/client-sources/**') }}-${{ hashFiles('specs/dist/sources.yml') }}
 
+    - name: Restore built JavaScript predict client
+      if: ${{ inputs.job == 'cts' }}
+      uses: actions/cache@v2
+      with:
+        path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/packages/client-predict/dist
+        key: ${{ runner.os }}-1-js-client-predict-${{ hashFiles('clients/algoliasearch-client-javascript/packages/client-predict/**') }}-${{ hashFiles('specs/dist/predict.yml') }}
+
     - name: Restore built Java client
       if: ${{ inputs.job == 'cts' }}
       uses: actions/cache@v2
