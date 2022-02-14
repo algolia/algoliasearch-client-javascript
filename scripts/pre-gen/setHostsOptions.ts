@@ -43,7 +43,7 @@ async function setHostsOptions(): Promise<void> {
     throw new Error(`Generator not found: ${generator}`);
   }
 
-  const specPath = path.join(__dirname, `../../specs/dist/${client}.yml`);
+  const specPath = path.join(__dirname, `../../specs/bundled/${client}.yml`);
 
   if (!(await stat(specPath))) {
     throw new Error(`File not found ${specPath}`);

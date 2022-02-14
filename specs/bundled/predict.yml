@@ -1,0 +1,195 @@
+openapi: 3.0.2
+info:
+  title: Predict API
+  description: API powering the Predict feature of Algolia.
+  version: 0.1.0
+components:
+  securitySchemes:
+    appId:
+      type: apiKey
+      in: header
+      name: X-Algolia-Application-Id
+    apiKey:
+      type: apiKey
+      in: header
+      name: X-Algolia-API-Key
+  parameters:
+    userID:
+      name: userID
+      in: path
+      required: true
+      schema:
+        type: string
+      description: >-
+        User ID for authenticated users or cookie ID for non-authenticated
+        repeated users (visitors).
+  schemas:
+    ErrorBase:
+      description: Error.
+      type: object
+      additionalProperties: true
+      properties:
+        message:
+          type: string
+          example: Invalid Application-Id or API-Key
+  responses:
+    UserNotFound:
+      description: User not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
+    MethodNotAllowed:
+      description: Method not allowed with this API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
+servers:
+  - url: https://predict-api-oslcbws3zq-ew.a.run.app
+security:
+  - appId: []
+    apiKey: []
+paths:
+  /1/users/{userID}/fetch:
+    post:
+      tags:
+        - predict
+      operationId: fetchUserProfile
+      description: >-
+        Get predictions, properties (raw, computed or custom) and segments
+        (computed or custom) for a user profile.
+      summary: Get user profile.
+      parameters:
+        - $ref: '#/components/parameters/userID'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              title: params
+              type: object
+              description: Object with models and types to retrieve.
+              additionalProperties: false
+              properties:
+                modelsToRetrieve:
+                  type: array
+                  description: List with model types for which to retrieve predictions
+                  items:
+                    type: string
+                    enum:
+                      - funnel_stage
+                      - order_value
+                      - affinities
+                typesToRetrieve:
+                  type: array
+                  description: List with types to be retrieved.
+                  items:
+                    type: string
+                    enum:
+                      - properties
+                      - segments
+                  minItems: 1
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: fetchUserProfileResponse
+                type: object
+                required:
+                  - user
+                properties:
+                  user:
+                    type: string
+                  predictions:
+                    type: object
+                    title: predictions
+                    properties:
+                      funnel_stage:
+                        type: object
+                        description: Prediction for the **funnel_stage** model
+                        properties:
+                          value:
+                            type: array
+                            items:
+                              title: funnel_stage
+                              type: object
+                              properties:
+                                name:
+                                  type: string
+                                probability:
+                                  type: number
+                                  minimum: 0
+                                  maximum: 1
+                          lastUpdatedAt:
+                            type: string
+                      order_value:
+                        type: object
+                        description: Prediction for the **order_value** model
+                        properties:
+                          value:
+                            type: number
+                            minimum: 0
+                          lastUpdatedAt:
+                            type: string
+                      affinities:
+                        type: object
+                        description: Prediction for the **affinities** model
+                        properties:
+                          value:
+                            type: array
+                            items:
+                              title: affinities
+                              type: object
+                              properties:
+                                name:
+                                  type: string
+                                value:
+                                  type: string
+                                probability:
+                                  type: number
+                                  minimum: 0
+                                  maximum: 1
+                          lastUpdatedAt:
+                            type: string
+                  properties:
+                    type: object
+                    title: properties
+                    description: Properties for the user profile
+                    properties:
+                      raw:
+                        type: object
+                        description: Raw user properties (key-value pairs)
+                      computed:
+                        type: object
+                        description: Computed user properties (key-value pairs)
+                      custom:
+                        type: object
+                        description: Custom user properties (key-value pairs)
+                  segments:
+                    type: object
+                    title: segments
+                    description: Segments that the user belongs to
+                    properties:
+                      computed:
+                        type: array
+                        description: List of computed segments IDs
+                        items:
+                          type: string
+                      custom:
+                        type: array
+                        description: List of custom segments IDs
+                        items:
+                          type: string
+        '400':
+          description: ModelsToRetrieve or typesToRetrieve must be set.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBase'
+        '404':
+          $ref: '#/components/responses/UserNotFound'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'

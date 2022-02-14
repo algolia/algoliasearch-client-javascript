@@ -1,0 +1,952 @@
+openapi: 3.0.2
+info:
+  title: Recommend API
+  description: API powering the Recommend feature of Algolia.
+  version: 0.1.0
+components:
+  securitySchemes:
+    appId:
+      type: apiKey
+      in: header
+      name: X-Algolia-Application-Id
+    apiKey:
+      type: apiKey
+      in: header
+      name: X-Algolia-API-Key
+  schemas:
+    indexName:
+      type: string
+      example: products
+      description: The Algolia index name.
+    objectID:
+      type: string
+      description: Unique identifier of the object.
+    page:
+      type: integer
+      description: Specify the page to retrieve.
+      default: 0
+    baseSearchParams:
+      type: object
+      additionalProperties: false
+      properties:
+        similarQuery:
+          type: string
+          description: >-
+            Overrides the query parameter and performs a more generic search
+            that can be used to find "similar" results.
+          default: ''
+        filters:
+          type: string
+          description: Filter the query with numeric, facet and/or tag filters.
+          default: ''
+        facetFilters:
+          type: array
+          items:
+            type: string
+          description: Filter hits by facet value.
+          default: []
+        optionalFilters:
+          type: array
+          items:
+            type: string
+          description: >-
+            Create filters for ranking purposes, where records that match the
+            filter are ranked higher, or lower in the case of a negative
+            optional filter.
+          default: []
+        numericFilters:
+          type: array
+          items:
+            type: string
+          description: Filter on numeric attributes.
+          default: []
+        tagFilters:
+          type: array
+          items:
+            type: string
+          description: Filter hits by tags.
+          default: []
+        sumOrFiltersScores:
+          type: boolean
+          description: Determines how to calculate the total score for filtering.
+          default: false
+        facets:
+          type: array
+          items:
+            type: string
+          description: Retrieve facets and their facet values.
+          default: []
+        maxValuesPerFacet:
+          type: integer
+          description: >-
+            Maximum number of facet values to return for each facet during a
+            regular search.
+          default: 100
+        facetingAfterDistinct:
+          type: boolean
+          description: >-
+            Force faceting to be applied after de-duplication (via the Distinct
+            setting).
+          default: false
+        sortFacetValuesBy:
+          type: string
+          description: Controls how facet values are fetched.
+          default: count
+        page:
+          $ref: '#/components/schemas/page'
+        offset:
+          type: integer
+          description: Specify the offset of the first hit to return.
+        length:
+          type: integer
+          description: Set the number of hits to retrieve (used only with offset).
+          minimum: 1
+          maximum: 1000
+        aroundLatLng:
+          type: string
+          description: >-
+            Search for entries around a central geolocation, enabling a geo
+            search within a circular area.
+          default: ''
+        aroundLatLngViaIP:
+          type: boolean
+          description: >-
+            Search for entries around a given location automatically computed
+            from the requester's IP address.
+          default: false
+        aroundRadius:
+          description: Define the maximum radius for a geo search (in meters).
+          oneOf:
+            - type: integer
+              minimum: 1
+            - type: string
+              enum:
+                - all
+        aroundPrecision:
+          type: integer
+          description: >-
+            Precision of geo search (in meters), to add grouping by geo location
+            to the ranking formula.
+          default: 10
+        minimumAroundRadius:
+          type: integer
+          description: >-
+            Minimum radius (in meters) used for a geo search when aroundRadius
+            is not set.
+          minimum: 1
+        insideBoundingBox:
+          type: array
+          items:
+            type: number
+          description: Search inside a rectangular area (in geo coordinates).
+        insidePolygon:
+          type: array
+          items:
+            type: number
+          description: Search inside a polygon (in geo coordinates).
+        naturalLanguages:
+          type: array
+          items:
+            type: string
+          description: >-
+            This parameter changes the default values of certain parameters and
+            settings that work best for a natural language query, such as
+            ignorePlurals, removeStopWords, removeWordsIfNoResults,
+            analyticsTags and ruleContexts. These parameters and settings work
+            well together when the query is formatted in natural language
+            instead of keywords, for example when your user performs a voice
+            search.
+          default: []
+        ruleContexts:
+          type: array
+          items:
+            type: string
+          description: Enables contextual rules.
+          default: []
+        personalizationImpact:
+          type: integer
+          description: Define the impact of the Personalization feature.
+          default: 100
+        userToken:
+          type: string
+          description: Associates a certain user token with the current search.
+        getRankingInfo:
+          type: boolean
+          description: Retrieve detailed ranking information.
+          default: false
+        clickAnalytics:
+          type: boolean
+          description: Enable the Click Analytics feature.
+          default: false
+        analytics:
+          type: boolean
+          description: >-
+            Whether the current query will be taken into account in the
+            Analytics.
+          default: true
+        analyticsTags:
+          type: array
+          items:
+            type: string
+          description: List of tags to apply to the query for analytics purposes.
+          default: []
+        percentileComputation:
+          type: boolean
+          description: >-
+            Whether to include or exclude a query from the processing-time
+            percentile computation.
+          default: true
+        enableABTest:
+          type: boolean
+          description: Whether this search should participate in running AB tests.
+          default: true
+        enableReRanking:
+          type: boolean
+          description: Whether this search should use AI Re-Ranking.
+          default: true
+    query:
+      type: string
+      description: The text to search in the index.
+      default: ''
+    requiredSearchParams:
+      type: object
+      additionalProperties: false
+      required:
+        - query
+      properties:
+        query:
+          $ref: '#/components/schemas/query'
+    hitsPerPage:
+      type: integer
+      description: Set the number of hits per page.
+      default: 20
+    maxFacetHits:
+      type: integer
+      description: >-
+        Maximum number of facet hits to return during a search for facet values.
+        For performance reasons, the maximum allowed number of returned values
+        is 100.
+      maximum: 100
+      default: 10
+    indexSettingsAsSearchParams:
+      type: object
+      additionalProperties: false
+      properties:
+        searchableAttributes:
+          type: array
+          items:
+            type: string
+          description: The complete list of attributes used for searching.
+          default: []
+        attributesForFaceting:
+          type: array
+          items:
+            type: string
+          description: The complete list of attributes that will be used for faceting.
+          default: []
+        unretrievableAttributes:
+          type: array
+          items:
+            type: string
+          description: List of attributes that can't be retrieved at query time.
+          default: []
+        attributesToRetrieve:
+          type: array
+          items:
+            type: string
+          description: >-
+            This parameter controls which attributes to retrieve and which not
+            to retrieve.
+          default:
+            - '*'
+        restrictSearchableAttributes:
+          type: array
+          items:
+            type: string
+          description: >-
+            Restricts a given query to look in only a subset of your searchable
+            attributes.
+          default: []
+        ranking:
+          type: array
+          items:
+            type: string
+          description: Controls how Algolia should sort your results.
+          default:
+            - typo
+            - geo
+            - words
+            - filters
+            - proximity
+            - attribute
+            - exact
+            - custom
+        customRanking:
+          type: array
+          items:
+            type: string
+          description: Specifies the custom ranking criterion.
+          default: []
+        relevancyStrictness:
+          type: integer
+          description: >-
+            Controls the relevancy threshold below which less relevant results
+            aren't included in the results.
+          default: 100
+        attributesToHighlight:
+          type: array
+          items:
+            type: string
+          description: List of attributes to highlight.
+        attributesToSnippet:
+          type: array
+          items:
+            type: string
+          description: >-
+            List of attributes to snippet, with an optional maximum number of
+            words to snippet.
+          default: []
+        highlightPreTag:
+          type: string
+          description: >-
+            The HTML string to insert before the highlighted parts in all
+            highlight and snippet results.
+          default: <em>
+        highlightPostTag:
+          type: string
+          description: >-
+            The HTML string to insert after the highlighted parts in all
+            highlight and snippet results.
+          default: </em>
+        snippetEllipsisText:
+          type: string
+          description: String used as an ellipsis indicator when a snippet is truncated.
+          default: …
+        restrictHighlightAndSnippetArrays:
+          type: boolean
+          description: >-
+            Restrict highlighting and snippeting to items that matched the
+            query.
+          default: false
+        hitsPerPage:
+          $ref: '#/components/schemas/hitsPerPage'
+        minWordSizefor1Typo:
+          type: integer
+          description: >-
+            Minimum number of characters a word in the query string must contain
+            to accept matches with 1 typo.
+          default: 4
+        minWordSizefor2Typos:
+          type: integer
+          description: >-
+            Minimum number of characters a word in the query string must contain
+            to accept matches with 2 typos.
+          default: 8
+        typoTolerance:
+          type: string
+          enum:
+            - true
+            - false
+            - min
+            - strict
+          description: Controls whether typo tolerance is enabled and how it is applied.
+          default: true
+        allowTyposOnNumericTokens:
+          type: boolean
+          description: >-
+            Whether to allow typos on numbers ("numeric tokens") in the query
+            string.
+          default: true
+        disableTypoToleranceOnAttributes:
+          type: array
+          items:
+            type: string
+          description: List of attributes on which you want to disable typo tolerance.
+          default: []
+        separatorsToIndex:
+          type: string
+          description: Control which separators are indexed.
+          default: ''
+        ignorePlurals:
+          type: string
+          description: >-
+            Treats singular, plurals, and other forms of declensions as matching
+            terms.
+          default: false
+        removeStopWords:
+          type: string
+          description: Removes stop (common) words from the query before executing it.
+          default: false
+        keepDiacriticsOnCharacters:
+          type: string
+          description: >-
+            List of characters that the engine shouldn't automatically
+            normalize.
+          default: ''
+        queryLanguages:
+          type: array
+          items:
+            type: string
+          description: >-
+            Sets the languages to be used by language-specific settings and
+            functionalities such as ignorePlurals, removeStopWords, and CJK
+            word-detection.
+          default: []
+        decompoundQuery:
+          type: boolean
+          description: Splits compound words into their composing atoms in the query.
+          default: true
+        enableRules:
+          type: boolean
+          description: Whether Rules should be globally enabled.
+          default: true
+        enablePersonalization:
+          type: boolean
+          description: Enable the Personalization feature.
+          default: false
+        queryType:
+          type: string
+          enum:
+            - prefixLast
+            - prefixAll
+            - prefixNone
+          description: Controls if and how query words are interpreted as prefixes.
+          default: prefixLast
+        removeWordsIfNoResults:
+          type: string
+          enum:
+            - none
+            - lastWords
+            - firstWords
+            - allOptional
+          description: >-
+            Selects a strategy to remove words from the query when it doesn't
+            match any hits.
+          default: none
+        advancedSyntax:
+          type: boolean
+          description: Enables the advanced query syntax.
+          default: false
+        optionalWords:
+          type: array
+          items:
+            type: string
+          description: >-
+            A list of words that should be considered as optional when found in
+            the query.
+          default: []
+        disableExactOnAttributes:
+          type: array
+          items:
+            type: string
+          description: >-
+            List of attributes on which you want to disable the exact ranking
+            criterion.
+          default: []
+        exactOnSingleWordQuery:
+          type: string
+          enum:
+            - attribute
+            - none
+            - word
+          description: >-
+            Controls how the exact ranking criterion is computed when the query
+            contains only one word.
+          default: attribute
+        alternativesAsExact:
+          type: array
+          items:
+            type: string
+            enum:
+              - ignorePlurals
+              - singleWordSynonym
+              - multiWordsSynonym
+          description: >-
+            List of alternatives that should be considered an exact match by the
+            exact ranking criterion.
+          default:
+            - ignorePlurals
+            - singleWordSynonym
+        advancedSyntaxFeatures:
+          type: array
+          items:
+            type: string
+            enum:
+              - exactPhrase
+              - excludeWords
+          description: >-
+            Allows you to specify which advanced syntax features are active when
+            ‘advancedSyntax' is enabled.
+          default:
+            - exactPhrase
+            - excludeWords
+        distinct:
+          type: integer
+          minimum: 0
+          maximum: 4
+          description: Enables de-duplication or grouping of results.
+          default: 0
+        synonyms:
+          type: boolean
+          description: >-
+            Whether to take into account an index's synonyms for a particular
+            search.
+          default: true
+        replaceSynonymsInHighlight:
+          type: boolean
+          description: >-
+            Whether to highlight and snippet the original word that matches the
+            synonym or the synonym itself.
+          default: false
+        minProximity:
+          type: integer
+          minimum: 1
+          maximum: 7
+          description: Precision of the proximity ranking criterion.
+          default: 1
+        responseFields:
+          type: array
+          items:
+            type: string
+          description: >-
+            Choose which fields to return in the API response. This parameters
+            applies to search and browse queries.
+          default: []
+        maxFacetHits:
+          $ref: '#/components/schemas/maxFacetHits'
+        attributeCriteriaComputedByMinProximity:
+          type: boolean
+          description: >-
+            When attribute is ranked above proximity in your ranking formula,
+            proximity is used to select which searchable attribute is matched in
+            the attribute ranking stage.
+          default: false
+        renderingContent:
+          type: object
+          description: >-
+            Content defining how the search interface should be rendered. Can be
+            set via the settings for a default value and can be overridden via
+            rules.
+          default: {}
+    searchParams:
+      allOf:
+        - $ref: '#/components/schemas/baseSearchParams'
+        - $ref: '#/components/schemas/requiredSearchParams'
+        - $ref: '#/components/schemas/indexSettingsAsSearchParams'
+    abTestID:
+      type: integer
+      description: >-
+        If a search encounters an index that is being A/B tested, abTestID
+        reports the ongoing A/B test ID.
+    abTestVariantID:
+      type: integer
+      description: >-
+        If a search encounters an index that is being A/B tested,
+        abTestVariantID reports the variant ID of the index used.
+    nbHits:
+      type: integer
+      description: Number of hits that the search query matched.
+      example: 20
+    nbPages:
+      type: integer
+      description: Number of pages available for the current query
+      example: 1
+    userData:
+      type: object
+      description: Lets you store custom data in your indices.
+      default: {}
+    baseSearchResponse:
+      type: object
+      additionalProperties: false
+      required:
+        - hits
+        - nbHits
+        - page
+        - nbPages
+        - hitsPerPage
+        - processingTimeMS
+        - exhaustiveNbHits
+        - exhaustiveTypo
+        - query
+        - params
+      properties:
+        abTestID:
+          $ref: '#/components/schemas/abTestID'
+        abTestVariantID:
+          $ref: '#/components/schemas/abTestVariantID'
+        aroundLatLng:
+          type: string
+          description: The computed geo location.
+          pattern: ^(-?\d+(\.\d+)?),\s*(-?\d+(\.\d+)?)$
+        automaticRadius:
+          type: string
+          description: >-
+            The automatically computed radius. For legacy reasons, this
+            parameter is a string and not an integer.
+        exhaustiveFacetsCount:
+          type: boolean
+          description: Whether the facet count is exhaustive or approximate.
+        exhaustiveNbHits:
+          type: boolean
+          description: Indicate if the nbHits count was exhaustive or approximate
+        exhaustiveTypo:
+          type: boolean
+          description: >-
+            Indicate if the typo-tolerence search was exhaustive or approximate
+            (only included when typo-tolerance is enabled)
+        facets:
+          type: object
+          additionalProperties:
+            type: object
+            additionalProperties:
+              type: string
+          description: A mapping of each facet name to the corresponding facet counts.
+          example:
+            category:
+              food: 1
+              tech: 42
+        facets_stats:
+          type: object
+          description: Statistics for numerical facets.
+          additionalProperties:
+            type: object
+            properties:
+              min:
+                type: integer
+                description: The minimum value in the result set.
+              max:
+                type: integer
+                description: The maximum value in the result set.
+              avg:
+                type: integer
+                description: The average facet value in the result set.
+              sum:
+                type: integer
+                description: The sum of all values in the result set.
+        hitsPerPage:
+          $ref: '#/components/schemas/hitsPerPage'
+        index:
+          type: string
+          example: indexName
+          description: Index name used for the query.
+        indexUsed:
+          type: string
+          description: >-
+            Index name used for the query. In the case of an A/B test, the
+            targeted index isn't always the index used by the query.
+          example: indexNameAlt
+        message:
+          type: string
+          description: Used to return warnings about the query.
+        nbHits:
+          $ref: '#/components/schemas/nbHits'
+        nbPages:
+          $ref: '#/components/schemas/nbPages'
+        nbSortedHits:
+          type: integer
+          description: >-
+            The number of hits selected and sorted by the relevant sort
+            algorithm
+          example: 20
+        page:
+          $ref: '#/components/schemas/page'
+        params:
+          type: string
+          description: A url-encoded string of all search parameters.
+          example: query=a&hitsPerPage=20
+        parsedQuery:
+          type: string
+          description: The query string that will be searched, after normalization.
+        processingTimeMS:
+          type: integer
+          description: Time the server took to process the request, in milliseconds.
+          example: 20
+        query:
+          $ref: '#/components/schemas/query'
+        queryAfterRemoval:
+          type: string
+          description: >-
+            A markup text indicating which parts of the original query have been
+            removed in order to retrieve a non-empty result set.
+        serverUsed:
+          type: string
+          description: Actual host name of the server that processed the request.
+        userData:
+          $ref: '#/components/schemas/userData'
+    highlightedValue:
+      type: string
+      description: Markup text with occurrences highlighted.
+      example: <em>George</em> <em>Clo</em>oney
+    highlightResult:
+      type: object
+      description: Highlighted attributes.
+      additionalProperties: false
+      properties:
+        value:
+          $ref: '#/components/schemas/highlightedValue'
+        matchLevel:
+          type: string
+          description: Indicates how well the attribute matched the search query.
+          enum:
+            - none
+            - partial
+            - full
+        matchedWords:
+          type: array
+          description: List of words from the query that matched the object.
+          items:
+            type: string
+        fullyHighlighted:
+          type: boolean
+          description: Whether the entire attribute value is highlighted.
+    snippetResult:
+      type: object
+      additionalProperties: false
+      properties:
+        value:
+          $ref: '#/components/schemas/highlightedValue'
+        matchLevel:
+          type: string
+          description: Indicates how well the attribute matched the search query.
+          enum:
+            - none
+            - partial
+            - full
+    rankingInfo:
+      type: object
+      additionalProperties: false
+      properties:
+        filters:
+          type: integer
+          description: This field is reserved for advanced usage.
+        firstMatchedWord:
+          type: integer
+          description: >-
+            Position of the most important matched attribute in the attributes
+            to index list.
+        geoDistance:
+          type: integer
+          description: >-
+            Distance between the geo location in the search query and the best
+            matching geo location in the record, divided by the geo precision
+            (in meters).
+        geoPrecision:
+          type: integer
+          description: Precision used when computing the geo distance, in meters.
+        matchedGeoLocation:
+          type: object
+          additionalProperties:
+            type: object
+            additionalProperties: false
+            properties:
+              lat:
+                type: number
+                format: double
+                description: Latitude of the matched location.
+              lng:
+                type: number
+                format: double
+                description: Longitude of the matched location.
+              distance:
+                type: integer
+                description: >-
+                  Distance between the matched location and the search location
+                  (in meters).
+        nbExactWords:
+          type: integer
+          description: Number of exactly matched words.
+        nbTypos:
+          type: integer
+          description: Number of typos encountered when matching the record.
+        promoted:
+          type: boolean
+          description: Present and set to true if a Rule promoted the hit.
+        proximityDistance:
+          type: integer
+          description: >-
+            When the query contains more than one word, the sum of the distances
+            between matched words (in meters).
+        userScore:
+          type: integer
+          description: Custom ranking for the object, expressed as a single integer value.
+        word:
+          type: integer
+          description: Number of matched words, including prefixes and typos.
+    _distinctSeqID:
+      type: integer
+    recommendHit:
+      type: object
+      description: A Recommend hit.
+      additionalProperties: true
+      required:
+        - objectID
+        - _score
+      properties:
+        objectID:
+          $ref: '#/components/schemas/objectID'
+        _highlightResult:
+          $ref: '#/components/schemas/highlightResult'
+        _snippetResult:
+          $ref: '#/components/schemas/snippetResult'
+        _rankingInfo:
+          $ref: '#/components/schemas/rankingInfo'
+        _distinctSeqID:
+          $ref: '#/components/schemas/_distinctSeqID'
+        _score:
+          type: number
+          format: double
+          minimum: 0
+          maximum: 100
+          description: The recommendation score.
+    recommendHits:
+      type: object
+      additionalProperties: false
+      properties:
+        hits:
+          type: array
+          items:
+            $ref: '#/components/schemas/recommendHit'
+    recommendationsResponse:
+      allOf:
+        - $ref: '#/components/schemas/baseSearchResponse'
+        - $ref: '#/components/schemas/recommendHits'
+    ErrorBase:
+      description: Error.
+      type: object
+      additionalProperties: true
+      properties:
+        message:
+          type: string
+          example: Invalid Application-Id or API-Key
+  responses:
+    BadRequest:
+      description: Bad request or request arguments.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
+    FeatureNotEnabled:
+      description: This feature is not enabled on your Algolia account.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
+    MethodNotAllowed:
+      description: Method not allowed with this API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
+    IndexNotFound:
+      description: Index not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
+servers:
+  - url: https://{appId}.algolianet.com
+    variables:
+      appId:
+        default: myAppId
+  - url: https://{appId}-1.algolianet.com
+    variables:
+      appId:
+        default: myAppId
+  - url: https://{appId}-2.algolianet.com
+    variables:
+      appId:
+        default: myAppId
+  - url: https://{appId}-3.algolianet.com
+    variables:
+      appId:
+        default: myAppId
+  - url: https://{appId}-dsn.algolianet.com
+    variables:
+      appId:
+        default: myAppId
+security:
+  - appId: []
+    apiKey: []
+paths:
+  /1/indexes/*/recommendations:
+    post:
+      tags:
+        - recommend
+      operationId: getRecommendations
+      description: Returns recommendations for a specific model and objectID.
+      summary: Returns recommendations for a specific model and objectID.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              title: getRecommendationsParams
+              description: The `getRecommendations` parameters.
+              type: object
+              additionalProperties: false
+              properties:
+                requests:
+                  type: array
+                  description: The `getRecommendations` requests.
+                  items:
+                    title: recommendationRequest
+                    type: object
+                    additionalProperties: false
+                    properties:
+                      indexName:
+                        $ref: '#/components/schemas/indexName'
+                      objectID:
+                        $ref: '#/components/schemas/objectID'
+                      model:
+                        description: The recommendation model to use.
+                        type: string
+                        enum:
+                          - related-products
+                          - bought-together
+                      threshold:
+                        type: integer
+                        minimum: 0
+                        maximum: 100
+                        description: >-
+                          The threshold to use when filtering recommendations by
+                          their score.
+                      maxRecommendations:
+                        type: integer
+                        default: 0
+                        description: >-
+                          The max number of recommendations to retrieve. If it's
+                          set to 0, all the recommendations of the objectID may
+                          be returned.
+                      queryParameters:
+                        $ref: '#/components/schemas/searchParams'
+                      fallbackParameters:
+                        $ref: '#/components/schemas/searchParams'
+                    required:
+                      - model
+                      - indexName
+                      - objectID
+                      - threshold
+              required:
+                - requests
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: getRecommendationsResponse
+                type: object
+                additionalProperties: false
+                properties:
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/recommendationsResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
