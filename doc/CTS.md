@@ -46,9 +46,9 @@ The test generation script requires a JSON file name from the `operationId` (e.g
       "searchParam": {
         "$objectName": "the name of the object for strongly type language, should be on every 'object' type (can be 'Object' if free-form)",
         "query": "the string to search",
-        "acl": { 
+        "acl": {
           "$enumType": "the name of the enum object if marked as enum in the spec",
-          "value": "the string value of the enum",
+          "value": "the string value of the enum"
         }
       }
     },
@@ -117,6 +117,6 @@ When writing your template, here is a list of variables accessible from `mustach
 To get the list of `operationId` not yet in the CTS but in the spec, run this command:
 
 ```bash
-rm -rf ./specs/dist
+rm -rf ./specs/bundled
 comm -3 <(grep -r operationId ./specs | awk -F: '{gsub(/ /,""); print $NF}' | sort) <(find ./tests/CTS/clients -type f -name '*.json' | awk -F/ '{gsub(/.json/,"");print $NF}' | sort)
 ```

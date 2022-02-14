@@ -55,16 +55,11 @@ jobs:
       - name: Restore cache
         uses: ./.github/actions/cache
 
-      - name: Cache ${{ matrix.client }} spec
-        id: cache
-        uses: actions/cache@v2
-        with:
-          path: '/home/runner/work/api-clients-automation/api-clients-automation/specs/dist/${{ matrix.client }}.yml'
-          key: ${{ runner.os }}-${{ matrix.client }}-specs-${{ hashFiles(format('specs/{0}/**', matrix.client)) }}
-
       - name: Building ${{ matrix.client }} specs
-        if: steps.cache.outputs.cache-hit != 'true'
         run: yarn build:specs ${{ matrix.client }}
+
+      - name: Check diff with pushed spec
+        run: exit $(git status --porcelain specs/bundled/${{ matrix.client }}.yml | wc -l)
 
   client_javascript:
     timeout-minutes: 10
@@ -89,7 +84,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: '/home/runner/work/api-clients-automation/api-clients-automation/${{ matrix.client.folder }}/dist'
-          key: ${{ runner.os }}-1-js-client-${{ matrix.client.name }}-${{ hashFiles(format('{0}/**', matrix.client.folder)) }}-${{ hashFiles(format('specs/dist/{0}.yml', matrix.client.name)) }}
+          key: ${{ runner.os }}-1-js-client-${{ matrix.client.name }}-${{ hashFiles(format('{0}/**', matrix.client.folder)) }}-${{ hashFiles(format('specs/bundled/{0}.yml', matrix.client.name)) }}
 
       - name: Generate ${{ matrix.client.name }} client
         if: steps.cache.outputs.cache-hit != 'true'
@@ -127,7 +122,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: '/home/runner/work/api-clients-automation/api-clients-automation/${{ matrix.client.folder }}/target'
-          key: ${{ runner.os }}-1-java-client-${{ matrix.client.name }}-${{ hashFiles(format('{0}/**', matrix.client.folder)) }}-${{ hashFiles(format('specs/dist/{0}.yml', matrix.client.name)) }}
+          key: ${{ runner.os }}-1-java-client-${{ matrix.client.name }}-${{ hashFiles(format('{0}/**', matrix.client.folder)) }}-${{ hashFiles(format('specs/bundled/{0}.yml', matrix.client.name)) }}
 
       - name: Generate ${{ matrix.client.name }} client
         if: steps.cache.outputs.cache-hit != 'true'

@@ -1,0 +1,281 @@
+openapi: 3.0.2
+info:
+  title: Personalization API
+  description: API powering the Personalization feature of Algolia.
+  version: 0.1.0
+components:
+  securitySchemes:
+    appId:
+      type: apiKey
+      in: header
+      name: X-Algolia-Application-Id
+    apiKey:
+      type: apiKey
+      in: header
+      name: X-Algolia-API-Key
+  parameters:
+    UserToken:
+      name: userToken
+      in: path
+      required: true
+      description: >-
+        userToken representing the user for which to fetch the Personalization
+        profile.
+      schema:
+        type: string
+  schemas:
+    userToken:
+      type: string
+      description: >-
+        userToken representing the user for which to fetch the Personalization
+        profile.
+    ErrorBase:
+      description: Error.
+      type: object
+      additionalProperties: true
+      properties:
+        message:
+          type: string
+          example: Invalid Application-Id or API-Key
+    score:
+      type: integer
+      description: The score for the event.
+    eventScoring:
+      type: object
+      additionalProperties: false
+      required:
+        - score
+        - eventName
+        - eventType
+      properties:
+        score:
+          $ref: '#/components/schemas/score'
+        eventName:
+          type: string
+          description: The name of the event.
+        eventType:
+          type: string
+          description: The type of the event.
+    facetScoring:
+      type: object
+      additionalProperties: false
+      required:
+        - score
+        - facetName
+      properties:
+        score:
+          $ref: '#/components/schemas/score'
+        facetName:
+          type: string
+          description: The name of the facet.
+    personalizationStrategyParams:
+      type: object
+      additionalProperties: false
+      required:
+        - eventScoring
+        - facetScoring
+        - personalizationImpact
+      properties:
+        eventScoring:
+          type: array
+          description: Scores associated with the events.
+          items:
+            $ref: '#/components/schemas/eventScoring'
+        facetScoring:
+          type: array
+          description: Scores associated with the facets.
+          items:
+            $ref: '#/components/schemas/facetScoring'
+        personalizationImpact:
+          type: integer
+          description: >-
+            The impact that personalization has on search results: a number
+            between 0 (personalization disabled) and 100 (personalization fully
+            enabled).
+  responses:
+    BadRequest:
+      description: Bad request or request arguments.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
+    FeatureNotEnabled:
+      description: This feature is not enabled on your Algolia account.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
+    MethodNotAllowed:
+      description: Method not allowed with this API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
+    IndexNotFound:
+      description: Index not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
+servers:
+  - url: https://personalization.{region}.algolia.com
+    variables:
+      region:
+        enum:
+          - us
+          - eu
+        default: us
+security:
+  - appId: []
+    apiKey: []
+paths:
+  /1/profiles/personalization/{userToken}:
+    get:
+      tags:
+        - personalization
+      operationId: getUserTokenProfile
+      description: >-
+        The profile is structured by facet name used in the strategy. Each facet
+        value is mapped to its score. Each score represents the user affinity
+        for a specific facet value given the userToken past events and the
+        Personalization strategy defined. Scores are bounded to 20. The last
+        processed event timestamp is provided using the ISO 8601 format for
+        debugging purposes.
+      summary: Get the user profile built from Personalization strategy.
+      parameters:
+        - $ref: '#/components/parameters/UserToken'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: getUserTokenResponse
+                type: object
+                additionalProperties: false
+                required:
+                  - userToken
+                  - scores
+                  - lastEventAt
+                properties:
+                  userToken:
+                    $ref: '#/components/schemas/userToken'
+                  lastEventAt:
+                    type: string
+                    description: Date of last event update. (ISO-8601 format)
+                  scores:
+                    type: object
+                    description: The userToken scores.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+  /1/profiles/{userToken}:
+    delete:
+      tags:
+        - personalization
+      operationId: deleteUserProfile
+      description: >-
+        Returns, as part of the response, a date until which the data can safely
+        be considered as deleted for the given user. This means that if you send
+        events for the given user before this date, they will be ignored. Any
+        data received after the deletedUntil date will start building a new user
+        profile. It might take a couple hours before for the deletion request to
+        be fully processed.
+      summary: Delete the user profile and all its associated data.
+      parameters:
+        - $ref: '#/components/parameters/UserToken'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: deleteUserProfileResponse
+                type: object
+                additionalProperties: false
+                required:
+                  - userToken
+                  - deletedUntil
+                properties:
+                  userToken:
+                    $ref: '#/components/schemas/userToken'
+                  deletedUntil:
+                    type: string
+                    description: >-
+                      A date until which the data can safely be considered as
+                      deleted for the given user. Any data received after the
+                      deletedUntil date will start building a new user profile.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+  /1/strategies/personalization:
+    post:
+      tags:
+        - personalization
+      operationId: setPersonalizationStrategy
+      description: >-
+        A strategy defines the events and facets that impact user profiles and
+        personalized search results.
+      summary: Set a new personalization strategy.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/personalizationStrategyParams'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: setPersonalizationStrategyResponse
+                type: object
+                additionalProperties: false
+                required:
+                  - message
+                properties:
+                  message:
+                    type: string
+                    description: A message confirming the strategy update.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+    get:
+      tags:
+        - personalization
+      operationId: getPersonalizationStrategy
+      description: >-
+        The strategy contains information on the events and facets that impact
+        user profiles and personalized search results.
+      summary: Get the current personalization strategy.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/personalizationStrategyParams'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'

@@ -25,17 +25,17 @@ check_format_spec() {
 
 build_spec() {
     local client=$1
-    yarn openapi bundle specs/${client}/spec.yml -o specs/dist/${client}.${OUTPUT} --ext ${OUTPUT}
+    yarn openapi bundle specs/${client}/spec.yml -o specs/bundled/${client}.${OUTPUT} --ext ${OUTPUT}
     echo ""
 }
 
 validate_output_spec() {
     local client=$1
-    yarn openapi lint specs/dist/${client}.${OUTPUT}
+    yarn openapi lint specs/bundled/${client}.${OUTPUT}
     echo ""
 }
 
-CLIENTS=$(find specs/*/spec.yml | awk -F / '{ print $(NF-1) }')
+CLIENTS=($(find specs/*/spec.yml | awk -F / '{ print $(NF-1) }'))
 
 if [[ $CLIENT == "all" ]]; then
     CLIENTS=("${CLIENTS[@]}")

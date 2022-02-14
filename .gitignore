@@ -1,7 +1,6 @@
 node_modules
 .bash_profile
 .env
-dist
 .pnp.cjs
 
 yarn-error.log
@@ -17,5 +16,7 @@ target
 **/.DS_Store
 .gradle
 build
+
+dist
 
 .openapi-generator

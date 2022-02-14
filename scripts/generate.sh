@@ -20,8 +20,9 @@ compute_hash() {
 # build spec before generating client
 build_spec() {
     # check if file and cache exist
+    mkdir -p specs/dist
     cacheFile="specs/dist/$CLIENT.cache"
-    if [[ -f specs/dist/$CLIENT.yml ]]; then
+    if [[ -f specs/bundled/$CLIENT.yml ]]; then
         cache=$(compute_hash)
         # compare with stored cache
         if [[ -f $cacheFile && $(cat $cacheFile) == $cache ]]; then
