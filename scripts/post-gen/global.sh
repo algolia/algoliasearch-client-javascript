@@ -6,6 +6,8 @@ set -e
 LANGUAGE=$1
 
 if [[ $CI ]]; then
+    echo "Not running post-gen/global on CI for $LANGUAGE"
+
     exit 0
 fi
 
