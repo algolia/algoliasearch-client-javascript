@@ -1,10 +1,10 @@
 import type { Host, Requester } from '@algolia/client-common';
-import { XhrRequester } from '@algolia/requester-browser-xhr';
+import { HttpRequester } from '@algolia/requester-node-http';
 
-import { createRecommendApi } from './src/recommendApi';
-import type { RecommendApi } from './src/recommendApi';
+import { createRecommendApi } from '../src/recommendApi';
+import type { RecommendApi } from '../src/recommendApi';
 
-export * from './src/recommendApi';
+export * from '../src/recommendApi';
 
 export function recommendApi(
   appId: string,
@@ -22,15 +22,13 @@ export function recommendApi(
   return createRecommendApi({
     appId,
     apiKey,
-
     timeouts: {
-      connect: 1,
-      read: 2,
+      connect: 2,
+      read: 5,
       write: 30,
     },
-    requester: options?.requester ?? new XhrRequester(),
-    userAgents: [{ segment: 'Browser' }],
-    authMode: 'WithinQueryParameters',
+    requester: options?.requester ?? new HttpRequester(),
+    userAgents: [{ segment: 'Node.js', version: process.versions.node }],
     ...options,
   });
 }

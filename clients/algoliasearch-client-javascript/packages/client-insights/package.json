@@ -6,12 +6,12 @@
   "author": "Algolia",
   "private": true,
   "license": "MIT",
-  "main": "./dist/node.js",
-  "types": "./dist/node.d.ts",
-  "jsdelivr": "./dist/browser.js",
-  "unpkg": "./dist/browser.js",
+  "main": "./dist/builds/node.js",
+  "types": "./dist/builds/node.d.ts",
+  "jsdelivr": "./dist/builds/browser.js",
+  "unpkg": "./dist/builds/browser.js",
   "browser": {
-    "./index.js": "./dist/browser.js"
+    "./index.js": "./dist/builds/browser.js"
   },
   "scripts": {
     "build": "tsc",

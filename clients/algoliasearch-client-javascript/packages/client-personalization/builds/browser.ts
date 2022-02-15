@@ -1,16 +1,17 @@
 import type { Host, Requester } from '@algolia/client-common';
 import { XhrRequester } from '@algolia/requester-browser-xhr';
 
-import { createSearchApi } from './src/searchApi';
-import type { SearchApi } from './src/searchApi';
+import { createPersonalizationApi } from '../src/personalizationApi';
+import type { PersonalizationApi, Region } from '../src/personalizationApi';
 
-export * from './src/searchApi';
+export * from '../src/personalizationApi';
 
-export function searchApi(
+export function personalizationApi(
   appId: string,
   apiKey: string,
+  region: Region,
   options?: { requester?: Requester; hosts?: Host[] }
-): SearchApi {
+): PersonalizationApi {
   if (!appId) {
     throw new Error('`appId` is missing.');
   }
@@ -19,10 +20,14 @@ export function searchApi(
     throw new Error('`apiKey` is missing.');
   }
 
-  return createSearchApi({
+  if (!region) {
+    throw new Error('`region` is missing.');
+  }
+
+  return createPersonalizationApi({
     appId,
     apiKey,
-
+    region,
     timeouts: {
       connect: 1,
       read: 2,

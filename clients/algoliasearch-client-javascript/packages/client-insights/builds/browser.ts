@@ -1,10 +1,10 @@
 import type { Host, Requester } from '@algolia/client-common';
 import { XhrRequester } from '@algolia/requester-browser-xhr';
 
-import { createInsightsApi } from './src/insightsApi';
-import type { InsightsApi, Region } from './src/insightsApi';
+import { createInsightsApi } from '../src/insightsApi';
+import type { InsightsApi, Region } from '../src/insightsApi';
 
-export * from './src/insightsApi';
+export * from '../src/insightsApi';
 
 export function insightsApi(
   appId: string,

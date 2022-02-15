@@ -1,17 +1,17 @@
 import type { Host, Requester } from '@algolia/client-common';
 import { XhrRequester } from '@algolia/requester-browser-xhr';
 
-import { createAnalyticsApi } from './src/analyticsApi';
-import type { AnalyticsApi, Region } from './src/analyticsApi';
+import { createSourcesApi } from '../src/sourcesApi';
+import type { SourcesApi, Region } from '../src/sourcesApi';
 
-export * from './src/analyticsApi';
+export * from '../src/sourcesApi';
 
-export function analyticsApi(
+export function sourcesApi(
   appId: string,
   apiKey: string,
-  region?: Region,
+  region: Region,
   options?: { requester?: Requester; hosts?: Host[] }
-): AnalyticsApi {
+): SourcesApi {
   if (!appId) {
     throw new Error('`appId` is missing.');
   }
@@ -20,7 +20,11 @@ export function analyticsApi(
     throw new Error('`apiKey` is missing.');
   }
 
-  return createAnalyticsApi({
+  if (!region) {
+    throw new Error('`region` is missing.');
+  }
+
+  return createSourcesApi({
     appId,
     apiKey,
     region,

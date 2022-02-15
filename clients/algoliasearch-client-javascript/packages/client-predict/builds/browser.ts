@@ -1,10 +1,10 @@
 import type { Host, Requester } from '@algolia/client-common';
 import { XhrRequester } from '@algolia/requester-browser-xhr';
 
-import { createPredictApi } from './src/predictApi';
-import type { PredictApi } from './src/predictApi';
+import { createPredictApi } from '../src/predictApi';
+import type { PredictApi } from '../src/predictApi';
 
-export * from './src/predictApi';
+export * from '../src/predictApi';
 
 export function predictApi(
   appId: string,
@@ -22,7 +22,6 @@ export function predictApi(
   return createPredictApi({
     appId,
     apiKey,
-
     timeouts: {
       connect: 1,
       read: 2,
