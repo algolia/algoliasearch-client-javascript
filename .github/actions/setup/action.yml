@@ -38,6 +38,7 @@ runs:
         echo "::set-output name=SCRIPTS_CHANGED::$(git diff --shortstat origin/${{ github.base_ref }}..HEAD -- scripts | wc -l)"
 
         echo "::set-output name=JS_CLIENT_CHANGED::$(git diff --shortstat origin/${{ github.base_ref }}..HEAD -- clients/algoliasearch-client-javascript | wc -l)"
+        echo "::set-output name=JS_COMMON_CHANGED::$(git diff --shortstat origin/${{ github.base_ref }}..HEAD -- clients/algoliasearch-client-javascript/packages/client-common clients/algoliasearch-client-javascript/packages/requester-browser-xhr clients/algoliasearch-client-javascript/packages/requester-node-http | wc -l)"
         echo "::set-output name=JS_TEMPLATE_CHANGED::$(git diff --shortstat origin/${{ github.base_ref }}..HEAD -- templates/javascript | wc -l)"
 
         echo "::set-output name=JAVA_CLIENT_CHANGED::$(git diff --shortstat origin/${{ github.base_ref }}..HEAD -- clients/algoliasearch-client-java-2 | wc -l)"
@@ -79,6 +80,10 @@ runs:
 
         echo "::set-output name=MATRIX::$matrix"
         echo "::set-output name=RUN_CLIENT::$run"
+
+        if [[ $base_changed == 'true' || steps.diff.outputs.JS_COMMON_CHANGED > 0 ]]; then
+          echo "::set-output name=RUN_COMMON::true"
+        fi
 
     - name: Compute the Java client build matrix
       id: java-matrix
@@ -126,6 +131,10 @@ outputs:
   RUN_JS:
     description: Whether to run js client or not
     value: ${{ steps.js-matrix.outputs.RUN_CLIENT }}
+
+  RUN_JS_COMMON:
+    description: Whether to build JS client common folders when RUN_JS is false
+    value: ${{ steps.js-matrix.outputs.RUN_COMMON }}
 
   JS_MATRIX:
     description: Generate the matrix for the Javascript client

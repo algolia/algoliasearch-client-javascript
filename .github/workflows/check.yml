@@ -32,6 +32,7 @@ jobs:
       SPECS_MATRIX: ${{ steps.setup.outputs.SPECS_MATRIX }}
 
       RUN_JS: ${{ steps.setup.outputs.RUN_JS }}
+      RUN_JS_COMMON: ${{ steps.setup.outputs.RUN_JS_COMMON }}
       JS_MATRIX: ${{ steps.setup.outputs.JS_MATRIX }}
 
       RUN_JAVA: ${{ steps.setup.outputs.RUN_JAVA }}
@@ -97,6 +98,39 @@ jobs:
       - name: Build ${{ matrix.client.name }} client
         if: steps.cache.outputs.cache-hit != 'true'
         run: yarn build:clients javascript ${{ matrix.client.name }}
+
+  client_javascript_common:
+    timeout-minutes: 10
+    runs-on: ubuntu-20.04
+    needs:
+      - setup
+      - specs
+    if: ${{ always() && needs.setup.outputs.RUN_JS_COMMON == 'true' }}
+    strategy:
+      matrix:
+        client:
+          - client-common
+          - requester-browser-xhr
+          - requester-node-http
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Restore cache
+        uses: ./.github/actions/cache
+        with:
+          job: client
+          spec: ${{ matrix.client }}
+
+      - name: Cache ${{ matrix.client }} client
+        id: cache
+        uses: actions/cache@v2
+        with:
+          path: '/home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-javascript/packages/${{ matrix.client }}/dist'
+          key: ${{ runner.os }}-1-js-${{ matrix.client }}-${{ hashFiles(format('clients/algoliasearch-client-javascript/packages/{0}/**', matrix.client)) }}
+
+      - name: Build ${{ matrix.client }} client
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: yarn workspace @algolia/${{ matrix.client }} build
 
   client_java:
     runs-on: ubuntu-20.04
@@ -172,6 +206,7 @@ jobs:
     timeout-minutes: 20
     needs:
       - client_javascript
+      - client_javascript_common
       - client_java
       - client_php
 
