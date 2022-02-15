@@ -87,16 +87,11 @@ class QuerySuggestionsApi
     }
 
     /**
-     * Operation createConfig
-     *
      * Create a configuration of a Query Suggestions index.
      *
-     * @param  \Algolia\AlgoliaSearch\Model\QuerySuggestions\QuerySuggestionsIndexWithIndexParam $querySuggestionsIndexWithIndexParam querySuggestionsIndexWithIndexParam (required)
+     * @param array $querySuggestionsIndexWithIndexParam querySuggestionsIndexWithIndexParam (required)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\QuerySuggestions\SucessResponse|\Algolia\AlgoliaSearch\Model\QuerySuggestions\ErrorBase|\Algolia\AlgoliaSearch\Model\QuerySuggestions\ErrorBase|\Algolia\AlgoliaSearch\Model\QuerySuggestions\ErrorBase|\Algolia\AlgoliaSearch\Model\QuerySuggestions\ErrorBase|\Algolia\AlgoliaSearch\Model\QuerySuggestions\ErrorBase
+     * @return array<string, mixed>
      */
     public function createConfig($querySuggestionsIndexWithIndexParam)
     {
@@ -117,17 +112,13 @@ class QuerySuggestionsApi
 
         return $this->sendRequest('POST', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation deleteConfig
-     *
      * Delete a configuration of a Query Suggestion&#39;s index.
      *
-     * @param  string $indexName The index in which to perform the request. (required)
+     * @param string $indexName The index in which to perform the request. (required)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\QuerySuggestions\SucessResponse|\Algolia\AlgoliaSearch\Model\QuerySuggestions\ErrorBase|\Algolia\AlgoliaSearch\Model\QuerySuggestions\ErrorBase|\Algolia\AlgoliaSearch\Model\QuerySuggestions\ErrorBase
+     * @return array<string, mixed>
      */
     public function deleteConfig($indexName)
     {
@@ -152,16 +143,12 @@ class QuerySuggestionsApi
 
         return $this->sendRequest('DELETE', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation getAllConfigs
-     *
      * Get all the configurations of Query Suggestions.
      *
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\QuerySuggestions\QuerySuggestionsIndex[]|\Algolia\AlgoliaSearch\Model\QuerySuggestions\ErrorBase|\Algolia\AlgoliaSearch\Model\QuerySuggestions\ErrorBase|\Algolia\AlgoliaSearch\Model\QuerySuggestions\ErrorBase|\Algolia\AlgoliaSearch\Model\QuerySuggestions\ErrorBase
+     * @return array<string, mixed>
      */
     public function getAllConfigs()
     {
@@ -171,17 +158,13 @@ class QuerySuggestionsApi
 
         return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation getConfig
-     *
      * Get the configuration of a single Query Suggestions index.
      *
-     * @param  string $indexName The index in which to perform the request. (required)
+     * @param string $indexName The index in which to perform the request. (required)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\QuerySuggestions\QuerySuggestionsIndex|\Algolia\AlgoliaSearch\Model\QuerySuggestions\ErrorBase|\Algolia\AlgoliaSearch\Model\QuerySuggestions\ErrorBase|\Algolia\AlgoliaSearch\Model\QuerySuggestions\ErrorBase|\Algolia\AlgoliaSearch\Model\QuerySuggestions\ErrorBase|\Algolia\AlgoliaSearch\Model\QuerySuggestions\ErrorBase
+     * @return array<string, mixed>
      */
     public function getConfig($indexName)
     {
@@ -206,17 +189,13 @@ class QuerySuggestionsApi
 
         return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation getConfigStatus
-     *
      * Get the status of a Query Suggestion&#39;s index.
      *
-     * @param  string $indexName The index in which to perform the request. (required)
+     * @param string $indexName The index in which to perform the request. (required)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\QuerySuggestions\Status|\Algolia\AlgoliaSearch\Model\QuerySuggestions\ErrorBase|\Algolia\AlgoliaSearch\Model\QuerySuggestions\ErrorBase|\Algolia\AlgoliaSearch\Model\QuerySuggestions\ErrorBase
+     * @return array<string, mixed>
      */
     public function getConfigStatus($indexName)
     {
@@ -241,17 +220,13 @@ class QuerySuggestionsApi
 
         return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation getLogFile
-     *
      * Get the log file of the last build of a single Query Suggestion index.
      *
-     * @param  string $indexName The index in which to perform the request. (required)
+     * @param string $indexName The index in which to perform the request. (required)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\QuerySuggestions\LogFile[]|\Algolia\AlgoliaSearch\Model\QuerySuggestions\ErrorBase|\Algolia\AlgoliaSearch\Model\QuerySuggestions\ErrorBase|\Algolia\AlgoliaSearch\Model\QuerySuggestions\ErrorBase|\Algolia\AlgoliaSearch\Model\QuerySuggestions\ErrorBase
+     * @return array<string, mixed>
      */
     public function getLogFile($indexName)
     {
@@ -276,18 +251,14 @@ class QuerySuggestionsApi
 
         return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation updateConfig
-     *
      * Update the configuration of a Query Suggestions index.
      *
-     * @param  string $indexName The index in which to perform the request. (required)
-     * @param  \Algolia\AlgoliaSearch\Model\QuerySuggestions\QuerySuggestionsIndexParam $querySuggestionsIndexParam querySuggestionsIndexParam (required)
+     * @param string $indexName The index in which to perform the request. (required)
+     * @param array $querySuggestionsIndexParam querySuggestionsIndexParam (required)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\QuerySuggestions\SucessResponse|\Algolia\AlgoliaSearch\Model\QuerySuggestions\ErrorBase|\Algolia\AlgoliaSearch\Model\QuerySuggestions\ErrorBase
+     * @return array<string, mixed>
      */
     public function updateConfig($indexName, $querySuggestionsIndexParam)
     {

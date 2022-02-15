@@ -88,16 +88,11 @@ class SearchApi
     }
 
     /**
-     * Operation addApiKey
-     *
      * Create a new API key.
      *
-     * @param  \Algolia\AlgoliaSearch\Model\Search\ApiKey $apiKey apiKey (required)
+     * @param array $apiKey apiKey (required)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Search\AddApiKeyResponse|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase
+     * @return array<string, mixed>
      */
     public function addApiKey($apiKey)
     {
@@ -118,19 +113,15 @@ class SearchApi
 
         return $this->sendRequest('POST', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation addOrUpdateObject
-     *
      * Add or replace an object with a given object ID.
      *
-     * @param  string $indexName The index in which to perform the request. (required)
-     * @param  string $objectID Unique identifier of an object. (required)
-     * @param  object $body The Algolia object. (required)
+     * @param string $indexName The index in which to perform the request. (required)
+     * @param string $objectID Unique identifier of an object. (required)
+     * @param array $body The Algolia object. (required)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Search\UpdatedAtWithObjectIdResponse|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase
+     * @return array<string, mixed>
      */
     public function addOrUpdateObject($indexName, $objectID, $body)
     {
@@ -179,17 +170,13 @@ class SearchApi
 
         return $this->sendRequest('PUT', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation appendSource
-     *
      * Add a single source.
      *
-     * @param  \Algolia\AlgoliaSearch\Model\Search\Source $source The source to add. (required)
+     * @param array $source The source to add. (required)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Search\CreatedAtResponse|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase
+     * @return array<string, mixed>
      */
     public function appendSource($source)
     {
@@ -210,18 +197,14 @@ class SearchApi
 
         return $this->sendRequest('POST', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation assignUserId
-     *
      * Assign or Move userID
      *
-     * @param  string $xAlgoliaUserID userID to assign. (required)
-     * @param  \Algolia\AlgoliaSearch\Model\Search\AssignUserIdParams $assignUserIdParams assignUserIdParams (required)
+     * @param string $xAlgoliaUserID userID to assign. (required)
+     * @param array $assignUserIdParams assignUserIdParams (required)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Search\CreatedAtResponse|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase
+     * @return array<string, mixed>
      */
     public function assignUserId($xAlgoliaUserID, $assignUserIdParams)
     {
@@ -262,18 +245,14 @@ class SearchApi
 
         return $this->sendRequest('POST', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation batch
-     *
      * Performs multiple write operations in a single API call.
      *
-     * @param  string $indexName The index in which to perform the request. (required)
-     * @param  \Algolia\AlgoliaSearch\Model\Search\BatchWriteParams $batchWriteParams batchWriteParams (required)
+     * @param string $indexName The index in which to perform the request. (required)
+     * @param array $batchWriteParams batchWriteParams (required)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Search\BatchResponse|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase
+     * @return array<string, mixed>
      */
     public function batch($indexName, $batchWriteParams)
     {
@@ -308,18 +287,14 @@ class SearchApi
 
         return $this->sendRequest('POST', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation batchAssignUserIds
-     *
      * Batch assign userIDs
      *
-     * @param  string $xAlgoliaUserID userID to assign. (required)
-     * @param  \Algolia\AlgoliaSearch\Model\Search\BatchAssignUserIdsParams $batchAssignUserIdsParams batchAssignUserIdsParams (required)
+     * @param string $xAlgoliaUserID userID to assign. (required)
+     * @param array $batchAssignUserIdsParams batchAssignUserIdsParams (required)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Search\CreatedAtResponse|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase
+     * @return array<string, mixed>
      */
     public function batchAssignUserIds($xAlgoliaUserID, $batchAssignUserIdsParams)
     {
@@ -360,18 +335,14 @@ class SearchApi
 
         return $this->sendRequest('POST', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation batchDictionaryEntries
-     *
      * Send a batch of dictionary entries.
      *
-     * @param  string $dictionaryName The dictionary to search in. (required)
-     * @param  \Algolia\AlgoliaSearch\Model\Search\BatchDictionaryEntriesParams $batchDictionaryEntriesParams batchDictionaryEntriesParams (required)
+     * @param string $dictionaryName The dictionary to search in. (required)
+     * @param array $batchDictionaryEntriesParams batchDictionaryEntriesParams (required)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Search\UpdatedAtResponse|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase
+     * @return array<string, mixed>
      */
     public function batchDictionaryEntries($dictionaryName, $batchDictionaryEntriesParams)
     {
@@ -406,20 +377,16 @@ class SearchApi
 
         return $this->sendRequest('POST', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation batchRules
-     *
      * Batch Rules.
      *
-     * @param  string $indexName The index in which to perform the request. (required)
-     * @param  \Algolia\AlgoliaSearch\Model\Search\Rule[] $rule rule (required)
-     * @param  bool $forwardToReplicas When true, changes are also propagated to replicas of the given indexName. (optional)
-     * @param  bool $clearExistingRules When true, existing Rules are cleared before adding this batch. When false, existing Rules are kept. (optional)
+     * @param string $indexName The index in which to perform the request. (required)
+     * @param array $rule rule (required)
+     * @param array $forwardToReplicas When true, changes are also propagated to replicas of the given indexName. (optional)
+     * @param array $clearExistingRules When true, existing Rules are cleared before adding this batch. When false, existing Rules are kept. (optional)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Search\UpdatedAtResponse|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase
+     * @return array<string, mixed>
      */
     public function batchRules($indexName, $rule, $forwardToReplicas = null, $clearExistingRules = null)
     {
@@ -474,18 +441,14 @@ class SearchApi
 
         return $this->sendRequest('POST', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation browse
-     *
      * Retrieve all index content.
      *
-     * @param  string $indexName The index in which to perform the request. (required)
-     * @param  \Algolia\AlgoliaSearch\Model\Search\BrowseRequest $browseRequest browseRequest (optional)
+     * @param string $indexName The index in which to perform the request. (required)
+     * @param array $browseRequest browseRequest (optional)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Search\BrowseResponse|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase
+     * @return array<string, mixed>
      */
     public function browse($indexName, $browseRequest = null)
     {
@@ -514,18 +477,14 @@ class SearchApi
 
         return $this->sendRequest('POST', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation clearAllSynonyms
-     *
      * Clear all synonyms.
      *
-     * @param  string $indexName The index in which to perform the request. (required)
-     * @param  bool $forwardToReplicas When true, changes are also propagated to replicas of the given indexName. (optional)
+     * @param string $indexName The index in which to perform the request. (required)
+     * @param array $forwardToReplicas When true, changes are also propagated to replicas of the given indexName. (optional)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Search\UpdatedAtResponse|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase
+     * @return array<string, mixed>
      */
     public function clearAllSynonyms($indexName, $forwardToReplicas = null)
     {
@@ -560,17 +519,13 @@ class SearchApi
 
         return $this->sendRequest('POST', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation clearObjects
-     *
      * clear all objects from an index.
      *
-     * @param  string $indexName The index in which to perform the request. (required)
+     * @param string $indexName The index in which to perform the request. (required)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Search\UpdatedAtResponse|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase
+     * @return array<string, mixed>
      */
     public function clearObjects($indexName)
     {
@@ -595,18 +550,14 @@ class SearchApi
 
         return $this->sendRequest('POST', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation clearRules
-     *
      * Clear Rules.
      *
-     * @param  string $indexName The index in which to perform the request. (required)
-     * @param  bool $forwardToReplicas When true, changes are also propagated to replicas of the given indexName. (optional)
+     * @param string $indexName The index in which to perform the request. (required)
+     * @param array $forwardToReplicas When true, changes are also propagated to replicas of the given indexName. (optional)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Search\UpdatedAtResponse|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase
+     * @return array<string, mixed>
      */
     public function clearRules($indexName, $forwardToReplicas = null)
     {
@@ -641,17 +592,13 @@ class SearchApi
 
         return $this->sendRequest('POST', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation deleteApiKey
-     *
      * Delete an API key.
      *
-     * @param  string $key API Key string. (required)
+     * @param string $key API Key string. (required)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Search\DeleteApiKeyResponse|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase
+     * @return array<string, mixed>
      */
     public function deleteApiKey($key)
     {
@@ -676,18 +623,14 @@ class SearchApi
 
         return $this->sendRequest('DELETE', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation deleteBy
-     *
      * Delete all records matching the query.
      *
-     * @param  string $indexName The index in which to perform the request. (required)
-     * @param  \Algolia\AlgoliaSearch\Model\Search\SearchParams $searchParams searchParams (required)
+     * @param string $indexName The index in which to perform the request. (required)
+     * @param array $searchParams searchParams (required)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Search\DeletedAtResponse|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase
+     * @return array<string, mixed>
      */
     public function deleteBy($indexName, $searchParams)
     {
@@ -722,17 +665,13 @@ class SearchApi
 
         return $this->sendRequest('POST', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation deleteIndex
-     *
      * Delete index.
      *
-     * @param  string $indexName The index in which to perform the request. (required)
+     * @param string $indexName The index in which to perform the request. (required)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Search\DeletedAtResponse|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase
+     * @return array<string, mixed>
      */
     public function deleteIndex($indexName)
     {
@@ -757,18 +696,14 @@ class SearchApi
 
         return $this->sendRequest('DELETE', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation deleteObject
-     *
      * Delete object.
      *
-     * @param  string $indexName The index in which to perform the request. (required)
-     * @param  string $objectID Unique identifier of an object. (required)
+     * @param string $indexName The index in which to perform the request. (required)
+     * @param string $objectID Unique identifier of an object. (required)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Search\DeletedAtResponse|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase
+     * @return array<string, mixed>
      */
     public function deleteObject($indexName, $objectID)
     {
@@ -807,19 +742,15 @@ class SearchApi
 
         return $this->sendRequest('DELETE', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation deleteRule
-     *
      * Delete a rule.
      *
-     * @param  string $indexName The index in which to perform the request. (required)
-     * @param  string $objectID Unique identifier of an object. (required)
-     * @param  bool $forwardToReplicas When true, changes are also propagated to replicas of the given indexName. (optional)
+     * @param string $indexName The index in which to perform the request. (required)
+     * @param string $objectID Unique identifier of an object. (required)
+     * @param array $forwardToReplicas When true, changes are also propagated to replicas of the given indexName. (optional)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Search\UpdatedAtResponse|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase
+     * @return array<string, mixed>
      */
     public function deleteRule($indexName, $objectID, $forwardToReplicas = null)
     {
@@ -868,17 +799,13 @@ class SearchApi
 
         return $this->sendRequest('DELETE', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation deleteSource
-     *
      * Remove a single source.
      *
-     * @param  string $source The IP range of the source. (required)
+     * @param string $source The IP range of the source. (required)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Search\DeleteSourceResponse|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase
+     * @return array<string, mixed>
      */
     public function deleteSource($source)
     {
@@ -903,19 +830,15 @@ class SearchApi
 
         return $this->sendRequest('DELETE', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation deleteSynonym
-     *
      * Delete synonym.
      *
-     * @param  string $indexName The index in which to perform the request. (required)
-     * @param  string $objectID Unique identifier of an object. (required)
-     * @param  bool $forwardToReplicas When true, changes are also propagated to replicas of the given indexName. (optional)
+     * @param string $indexName The index in which to perform the request. (required)
+     * @param string $objectID Unique identifier of an object. (required)
+     * @param array $forwardToReplicas When true, changes are also propagated to replicas of the given indexName. (optional)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Search\DeletedAtResponse|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase
+     * @return array<string, mixed>
      */
     public function deleteSynonym($indexName, $objectID, $forwardToReplicas = null)
     {
@@ -964,17 +887,13 @@ class SearchApi
 
         return $this->sendRequest('DELETE', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation getApiKey
-     *
      * Get an API key.
      *
-     * @param  string $key API Key string. (required)
+     * @param string $key API Key string. (required)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Search\Key|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase
+     * @return array<string, mixed>
      */
     public function getApiKey($key)
     {
@@ -999,16 +918,12 @@ class SearchApi
 
         return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation getDictionaryLanguages
-     *
      * List dictionaries supported per language.
      *
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return array<string,\Algolia\AlgoliaSearch\Model\Search\Languages>|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase
+     * @return array<string, mixed>
      */
     public function getDictionaryLanguages()
     {
@@ -1018,16 +933,12 @@ class SearchApi
 
         return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation getDictionarySettings
-     *
      * Retrieve dictionaries settings. The API stores languages whose standard entries are disabled. Fetch settings does not return false values.
      *
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Search\GetDictionarySettingsResponse|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase
+     * @return array<string, mixed>
      */
     public function getDictionarySettings()
     {
@@ -1037,20 +948,16 @@ class SearchApi
 
         return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation getLogs
-     *
      * Return the lastest log entries.
      *
-     * @param  int $offset First entry to retrieve (zero-based). Log entries are sorted by decreasing date, therefore 0 designates the most recent log entry. (optional, default to 0)
-     * @param  int $length Maximum number of entries to retrieve. The maximum allowed value is 1000. (optional, default to 10)
-     * @param  string $indexName Index for which log entries should be retrieved. When omitted, log entries are retrieved across all indices. (optional, default to 'null')
-     * @param  string $type Type of log entries to retrieve. When omitted, all log entries are retrieved. (optional, default to 'all')
+     * @param int $offset First entry to retrieve (zero-based). Log entries are sorted by decreasing date, therefore 0 designates the most recent log entry. (optional, default to 0)
+     * @param int $length Maximum number of entries to retrieve. The maximum allowed value is 1000. (optional, default to 10)
+     * @param string $indexName Index for which log entries should be retrieved. When omitted, log entries are retrieved across all indices. (optional, default to 'null')
+     * @param string $type Type of log entries to retrieve. When omitted, all log entries are retrieved. (optional, default to 'all')
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Search\GetLogsResponse|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase
+     * @return array<string, mixed>
      */
     public function getLogs($offset = 0, $length = 10, $indexName = 'null', $type = 'all')
     {
@@ -1104,19 +1011,15 @@ class SearchApi
 
         return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation getObject
-     *
      * Retrieve one object from the index.
      *
-     * @param  string $indexName The index in which to perform the request. (required)
-     * @param  string $objectID Unique identifier of an object. (required)
-     * @param  string[] $attributesToRetrieve List of attributes to retrieve. If not specified, all retrievable attributes are returned. (optional)
+     * @param string $indexName The index in which to perform the request. (required)
+     * @param string $objectID Unique identifier of an object. (required)
+     * @param array $attributesToRetrieve List of attributes to retrieve. If not specified, all retrievable attributes are returned. (optional)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return array<string,string>|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase
+     * @return array<string, mixed>
      */
     public function getObject($indexName, $objectID, $attributesToRetrieve = null)
     {
@@ -1165,17 +1068,13 @@ class SearchApi
 
         return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation getObjects
-     *
      * Retrieve one or more objects.
      *
-     * @param  \Algolia\AlgoliaSearch\Model\Search\GetObjectsParams $getObjectsParams getObjectsParams (required)
+     * @param array $getObjectsParams getObjectsParams (required)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Search\GetObjectsResponse|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase
+     * @return array<string, mixed>
      */
     public function getObjects($getObjectsParams)
     {
@@ -1196,18 +1095,14 @@ class SearchApi
 
         return $this->sendRequest('POST', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation getRule
-     *
      * Get a rule.
      *
-     * @param  string $indexName The index in which to perform the request. (required)
-     * @param  string $objectID Unique identifier of an object. (required)
+     * @param string $indexName The index in which to perform the request. (required)
+     * @param string $objectID Unique identifier of an object. (required)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Search\Rule|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase
+     * @return array<string, mixed>
      */
     public function getRule($indexName, $objectID)
     {
@@ -1246,17 +1141,13 @@ class SearchApi
 
         return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation getSettings
-     *
      * Retrieve settings of a given indexName.
      *
-     * @param  string $indexName The index in which to perform the request. (required)
+     * @param string $indexName The index in which to perform the request. (required)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Search\IndexSettings|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase
+     * @return array<string, mixed>
      */
     public function getSettings($indexName)
     {
@@ -1281,16 +1172,12 @@ class SearchApi
 
         return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation getSources
-     *
      * List all allowed sources.
      *
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Search\Source[]|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase
+     * @return array<string, mixed>
      */
     public function getSources()
     {
@@ -1300,18 +1187,14 @@ class SearchApi
 
         return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation getSynonym
-     *
      * Get synonym.
      *
-     * @param  string $indexName The index in which to perform the request. (required)
-     * @param  string $objectID Unique identifier of an object. (required)
+     * @param string $indexName The index in which to perform the request. (required)
+     * @param string $objectID Unique identifier of an object. (required)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Search\SynonymHit|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase
+     * @return array<string, mixed>
      */
     public function getSynonym($indexName, $objectID)
     {
@@ -1350,18 +1233,14 @@ class SearchApi
 
         return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation getTask
-     *
      * Check the current status of a given task.
      *
-     * @param  string $indexName The index in which to perform the request. (required)
-     * @param  int $taskID Unique identifier of an task. Numeric value (up to 64bits) (required)
+     * @param string $indexName The index in which to perform the request. (required)
+     * @param int $taskID Unique identifier of an task. Numeric value (up to 64bits) (required)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Search\GetTaskResponse|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase
+     * @return array<string, mixed>
      */
     public function getTask($indexName, $taskID)
     {
@@ -1400,16 +1279,12 @@ class SearchApi
 
         return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation getTopUserIds
-     *
      * Get top userID
      *
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Search\GetTopUserIdsResponse|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase
+     * @return array<string, mixed>
      */
     public function getTopUserIds()
     {
@@ -1419,17 +1294,13 @@ class SearchApi
 
         return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation getUserId
-     *
      * Get userID
      *
-     * @param  string $userID userID to assign. (required)
+     * @param string $userID userID to assign. (required)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Search\UserId|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase
+     * @return array<string, mixed>
      */
     public function getUserId($userID)
     {
@@ -1457,17 +1328,13 @@ class SearchApi
 
         return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation hasPendingMappings
-     *
      * Has pending mappings
      *
-     * @param  bool $getClusters Whether to get clusters or not. (optional)
+     * @param array $getClusters Whether to get clusters or not. (optional)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Search\CreatedAtResponse|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase
+     * @return array<string, mixed>
      */
     public function hasPendingMappings($getClusters = null)
     {
@@ -1487,16 +1354,12 @@ class SearchApi
 
         return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation listApiKeys
-     *
      * Get the full list of API Keys.
      *
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Search\ListApiKeysResponse|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase
+     * @return array<string, mixed>
      */
     public function listApiKeys()
     {
@@ -1506,16 +1369,12 @@ class SearchApi
 
         return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation listClusters
-     *
      * List clusters
      *
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Search\ListClustersResponse|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase
+     * @return array<string, mixed>
      */
     public function listClusters()
     {
@@ -1525,17 +1384,13 @@ class SearchApi
 
         return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation listIndices
-     *
      * List existing indexes.
      *
-     * @param  int $page Requested page (zero-based). When specified, will retrieve a specific page; the page size is implicitly set to 100. When null, will retrieve all indices (no pagination). (optional)
+     * @param int $page Requested page (zero-based). When specified, will retrieve a specific page; the page size is implicitly set to 100. When null, will retrieve all indices (no pagination). (optional)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Search\ListIndicesResponse|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase
+     * @return array<string, mixed>
      */
     public function listIndices($page = null)
     {
@@ -1555,18 +1410,14 @@ class SearchApi
 
         return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation listUserIds
-     *
      * List userIDs
      *
-     * @param  int $page Requested page (zero-based). When specified, will retrieve a specific page; the page size is implicitly set to 100. When null, will retrieve all indices (no pagination). (optional)
-     * @param  int $hitsPerPage Maximum number of objects to retrieve. (optional, default to 100)
+     * @param int $page Requested page (zero-based). When specified, will retrieve a specific page; the page size is implicitly set to 100. When null, will retrieve all indices (no pagination). (optional)
+     * @param int $hitsPerPage Maximum number of objects to retrieve. (optional, default to 100)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Search\ListUserIdsResponse|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase
+     * @return array<string, mixed>
      */
     public function listUserIds($page = null, $hitsPerPage = 100)
     {
@@ -1596,17 +1447,13 @@ class SearchApi
 
         return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation multipleBatch
-     *
      * Perform multiple write operations.
      *
-     * @param  \Algolia\AlgoliaSearch\Model\Search\BatchParams $batchParams batchParams (required)
+     * @param array $batchParams batchParams (required)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Search\MultipleBatchResponse|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase
+     * @return array<string, mixed>
      */
     public function multipleBatch($batchParams)
     {
@@ -1627,17 +1474,13 @@ class SearchApi
 
         return $this->sendRequest('POST', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation multipleQueries
-     *
      * Get search results for the given requests.
      *
-     * @param  \Algolia\AlgoliaSearch\Model\Search\MultipleQueriesParams $multipleQueriesParams multipleQueriesParams (required)
+     * @param array $multipleQueriesParams multipleQueriesParams (required)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Search\MultipleQueriesResponse|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase
+     * @return array<string, mixed>
      */
     public function multipleQueries($multipleQueriesParams)
     {
@@ -1658,18 +1501,14 @@ class SearchApi
 
         return $this->sendRequest('POST', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation operationIndex
-     *
      * Copy/move index.
      *
-     * @param  string $indexName The index in which to perform the request. (required)
-     * @param  \Algolia\AlgoliaSearch\Model\Search\OperationIndexParams $operationIndexParams operationIndexParams (required)
+     * @param string $indexName The index in which to perform the request. (required)
+     * @param array $operationIndexParams operationIndexParams (required)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Search\UpdatedAtResponse|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase
+     * @return array<string, mixed>
      */
     public function operationIndex($indexName, $operationIndexParams)
     {
@@ -1704,20 +1543,16 @@ class SearchApi
 
         return $this->sendRequest('POST', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation partialUpdateObject
-     *
      * Partially update an object.
      *
-     * @param  string $indexName The index in which to perform the request. (required)
-     * @param  string $objectID Unique identifier of an object. (required)
-     * @param  array<string,OneOfStringBuiltInOperation>[] $oneOfStringBuiltInOperation List of attributes to update. (required)
-     * @param  bool $createIfNotExists Creates the record if it does not exist yet. (optional, default to true)
+     * @param string $indexName The index in which to perform the request. (required)
+     * @param string $objectID Unique identifier of an object. (required)
+     * @param array $oneOfStringBuiltInOperation List of attributes to update. (required)
+     * @param array $createIfNotExists Creates the record if it does not exist yet. (optional, default to true)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Search\UpdatedAtWithObjectIdResponse|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase
+     * @return array<string, mixed>
      */
     public function partialUpdateObject($indexName, $objectID, $oneOfStringBuiltInOperation, $createIfNotExists = true)
     {
@@ -1776,17 +1611,13 @@ class SearchApi
 
         return $this->sendRequest('POST', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation removeUserId
-     *
      * Remove userID
      *
-     * @param  string $userID userID to assign. (required)
+     * @param string $userID userID to assign. (required)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Search\RemoveUserIdResponse|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase
+     * @return array<string, mixed>
      */
     public function removeUserId($userID)
     {
@@ -1814,17 +1645,13 @@ class SearchApi
 
         return $this->sendRequest('DELETE', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation replaceSources
-     *
      * Replace all allowed sources.
      *
-     * @param  \Algolia\AlgoliaSearch\Model\Search\Source[] $source The sources to allow. (required)
+     * @param array $source The sources to allow. (required)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Search\ReplaceSourceResponse|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase
+     * @return array<string, mixed>
      */
     public function replaceSources($source)
     {
@@ -1845,17 +1672,13 @@ class SearchApi
 
         return $this->sendRequest('PUT', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation restoreApiKey
-     *
      * Restore an API key.
      *
-     * @param  string $key API Key string. (required)
+     * @param string $key API Key string. (required)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Search\AddApiKeyResponse|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase
+     * @return array<string, mixed>
      */
     public function restoreApiKey($key)
     {
@@ -1880,18 +1703,14 @@ class SearchApi
 
         return $this->sendRequest('POST', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation saveObject
-     *
      * Add an object to the index.
      *
-     * @param  string $indexName The index in which to perform the request. (required)
-     * @param  object $body The Algolia record. (required)
+     * @param string $indexName The index in which to perform the request. (required)
+     * @param array $body The Algolia record. (required)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Search\SaveObjectResponse|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase
+     * @return array<string, mixed>
      */
     public function saveObject($indexName, $body)
     {
@@ -1926,20 +1745,16 @@ class SearchApi
 
         return $this->sendRequest('POST', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation saveRule
-     *
      * Save/Update a rule.
      *
-     * @param  string $indexName The index in which to perform the request. (required)
-     * @param  string $objectID Unique identifier of an object. (required)
-     * @param  \Algolia\AlgoliaSearch\Model\Search\Rule $rule rule (required)
-     * @param  bool $forwardToReplicas When true, changes are also propagated to replicas of the given indexName. (optional)
+     * @param string $indexName The index in which to perform the request. (required)
+     * @param string $objectID Unique identifier of an object. (required)
+     * @param array $rule rule (required)
+     * @param array $forwardToReplicas When true, changes are also propagated to replicas of the given indexName. (optional)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Search\UpdatedRuleResponse|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase
+     * @return array<string, mixed>
      */
     public function saveRule($indexName, $objectID, $rule, $forwardToReplicas = null)
     {
@@ -1998,20 +1813,16 @@ class SearchApi
 
         return $this->sendRequest('PUT', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation saveSynonym
-     *
      * Save synonym.
      *
-     * @param  string $indexName The index in which to perform the request. (required)
-     * @param  string $objectID Unique identifier of an object. (required)
-     * @param  \Algolia\AlgoliaSearch\Model\Search\SynonymHit $synonymHit synonymHit (required)
-     * @param  bool $forwardToReplicas When true, changes are also propagated to replicas of the given indexName. (optional)
+     * @param string $indexName The index in which to perform the request. (required)
+     * @param string $objectID Unique identifier of an object. (required)
+     * @param array $synonymHit synonymHit (required)
+     * @param array $forwardToReplicas When true, changes are also propagated to replicas of the given indexName. (optional)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Search\SaveSynonymResponse|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase
+     * @return array<string, mixed>
      */
     public function saveSynonym($indexName, $objectID, $synonymHit, $forwardToReplicas = null)
     {
@@ -2070,20 +1881,16 @@ class SearchApi
 
         return $this->sendRequest('PUT', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation saveSynonyms
-     *
      * Save a batch of synonyms.
      *
-     * @param  string $indexName The index in which to perform the request. (required)
-     * @param  \Algolia\AlgoliaSearch\Model\Search\SynonymHit[] $synonymHit synonymHit (required)
-     * @param  bool $forwardToReplicas When true, changes are also propagated to replicas of the given indexName. (optional)
-     * @param  bool $replaceExistingSynonyms Replace all synonyms of the index with the ones sent with this request. (optional)
+     * @param string $indexName The index in which to perform the request. (required)
+     * @param array $synonymHit synonymHit (required)
+     * @param array $forwardToReplicas When true, changes are also propagated to replicas of the given indexName. (optional)
+     * @param array $replaceExistingSynonyms Replace all synonyms of the index with the ones sent with this request. (optional)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Search\UpdatedAtResponse|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase
+     * @return array<string, mixed>
      */
     public function saveSynonyms($indexName, $synonymHit, $forwardToReplicas = null, $replaceExistingSynonyms = null)
     {
@@ -2138,18 +1945,14 @@ class SearchApi
 
         return $this->sendRequest('POST', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation search
-     *
      * Get search results.
      *
-     * @param  string $indexName The index in which to perform the request. (required)
-     * @param  \Algolia\AlgoliaSearch\Model\Search\SearchParams $searchParams searchParams (required)
+     * @param string $indexName The index in which to perform the request. (required)
+     * @param array $searchParams searchParams (required)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Search\SearchResponse|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase
+     * @return array<string, mixed>
      */
     public function search($indexName, $searchParams)
     {
@@ -2184,18 +1987,14 @@ class SearchApi
 
         return $this->sendRequest('POST', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation searchDictionaryEntries
-     *
      * Search the dictionary entries.
      *
-     * @param  string $dictionaryName The dictionary to search in. (required)
-     * @param  \Algolia\AlgoliaSearch\Model\Search\SearchDictionaryEntriesParams $searchDictionaryEntriesParams searchDictionaryEntriesParams (required)
+     * @param string $dictionaryName The dictionary to search in. (required)
+     * @param array $searchDictionaryEntriesParams searchDictionaryEntriesParams (required)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Search\UpdatedAtResponse|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase
+     * @return array<string, mixed>
      */
     public function searchDictionaryEntries($dictionaryName, $searchDictionaryEntriesParams)
     {
@@ -2230,19 +2029,15 @@ class SearchApi
 
         return $this->sendRequest('POST', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation searchForFacetValues
-     *
      * Search for values of a given facet
      *
-     * @param  string $indexName The index in which to perform the request. (required)
-     * @param  string $facetName The facet name. (required)
-     * @param  \Algolia\AlgoliaSearch\Model\Search\SearchForFacetValuesRequest $searchForFacetValuesRequest searchForFacetValuesRequest (optional)
+     * @param string $indexName The index in which to perform the request. (required)
+     * @param string $facetName The facet name. (required)
+     * @param array $searchForFacetValuesRequest searchForFacetValuesRequest (optional)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Search\SearchForFacetValuesResponse|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase
+     * @return array<string, mixed>
      */
     public function searchForFacetValues($indexName, $facetName, $searchForFacetValuesRequest = null)
     {
@@ -2285,18 +2080,14 @@ class SearchApi
 
         return $this->sendRequest('POST', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation searchRules
-     *
      * Search for rules.
      *
-     * @param  string $indexName The index in which to perform the request. (required)
-     * @param  \Algolia\AlgoliaSearch\Model\Search\SearchRulesParams $searchRulesParams searchRulesParams (required)
+     * @param string $indexName The index in which to perform the request. (required)
+     * @param array $searchRulesParams searchRulesParams (required)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Search\SearchRulesResponse|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase
+     * @return array<string, mixed>
      */
     public function searchRules($indexName, $searchRulesParams)
     {
@@ -2331,21 +2122,17 @@ class SearchApi
 
         return $this->sendRequest('POST', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation searchSynonyms
-     *
      * Get all synonyms that match a query.
      *
-     * @param  string $indexName The index in which to perform the request. (required)
-     * @param  string $query Search for specific synonyms matching this string. (optional, default to '')
-     * @param  \Algolia\AlgoliaSearch\Model\Search\SynonymType $type Only search for specific types of synonyms. (optional)
-     * @param  int $page Requested page (zero-based). When specified, will retrieve a specific page; the page size is implicitly set to 100. When null, will retrieve all indices (no pagination). (optional, default to 0)
-     * @param  int $hitsPerPage Maximum number of objects to retrieve. (optional, default to 100)
+     * @param string $indexName The index in which to perform the request. (required)
+     * @param string $query Search for specific synonyms matching this string. (optional, default to '')
+     * @param array $type Only search for specific types of synonyms. (optional)
+     * @param int $page Requested page (zero-based). When specified, will retrieve a specific page; the page size is implicitly set to 100. When null, will retrieve all indices (no pagination). (optional, default to 0)
+     * @param int $hitsPerPage Maximum number of objects to retrieve. (optional, default to 100)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Search\SearchSynonymsResponse|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase
+     * @return array<string, mixed>
      */
     public function searchSynonyms($indexName, $query = '', $type = null, $page = 0, $hitsPerPage = 100)
     {
@@ -2410,17 +2197,13 @@ class SearchApi
 
         return $this->sendRequest('POST', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation searchUserIds
-     *
      * Search userID
      *
-     * @param  \Algolia\AlgoliaSearch\Model\Search\SearchUserIdsParams $searchUserIdsParams searchUserIdsParams (required)
+     * @param array $searchUserIdsParams searchUserIdsParams (required)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Search\SearchUserIdsResponse|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase
+     * @return array<string, mixed>
      */
     public function searchUserIds($searchUserIdsParams)
     {
@@ -2441,17 +2224,13 @@ class SearchApi
 
         return $this->sendRequest('POST', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation setDictionarySettings
-     *
      * Set dictionary settings.
      *
-     * @param  \Algolia\AlgoliaSearch\Model\Search\DictionarySettingsParams $dictionarySettingsParams dictionarySettingsParams (required)
+     * @param array $dictionarySettingsParams dictionarySettingsParams (required)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Search\UpdatedAtResponse|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase
+     * @return array<string, mixed>
      */
     public function setDictionarySettings($dictionarySettingsParams)
     {
@@ -2472,19 +2251,15 @@ class SearchApi
 
         return $this->sendRequest('PUT', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation setSettings
-     *
      * Update settings of a given indexName.
      *
-     * @param  string $indexName The index in which to perform the request. (required)
-     * @param  \Algolia\AlgoliaSearch\Model\Search\IndexSettings $indexSettings indexSettings (required)
-     * @param  bool $forwardToReplicas When true, changes are also propagated to replicas of the given indexName. (optional)
+     * @param string $indexName The index in which to perform the request. (required)
+     * @param array $indexSettings indexSettings (required)
+     * @param array $forwardToReplicas When true, changes are also propagated to replicas of the given indexName. (optional)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Search\UpdatedAtResponse|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase
+     * @return array<string, mixed>
      */
     public function setSettings($indexName, $indexSettings, $forwardToReplicas = null)
     {
@@ -2529,18 +2304,14 @@ class SearchApi
 
         return $this->sendRequest('PUT', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation updateApiKey
-     *
      * Update an API key.
      *
-     * @param  string $key API Key string. (required)
-     * @param  \Algolia\AlgoliaSearch\Model\Search\ApiKey $apiKey apiKey (required)
+     * @param string $key API Key string. (required)
+     * @param array $apiKey apiKey (required)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Search\UpdateApiKeyResponse|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase|\Algolia\AlgoliaSearch\Model\Search\ErrorBase
+     * @return array<string, mixed>
      */
     public function updateApiKey($key, $apiKey)
     {

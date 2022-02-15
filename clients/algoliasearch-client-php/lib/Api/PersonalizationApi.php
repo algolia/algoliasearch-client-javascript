@@ -87,16 +87,11 @@ class PersonalizationApi
     }
 
     /**
-     * Operation deleteUserProfile
-     *
      * Delete the user profile and all its associated data.
      *
-     * @param  string $userToken userToken representing the user for which to fetch the Personalization profile. (required)
+     * @param string $userToken userToken representing the user for which to fetch the Personalization profile. (required)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Personalization\DeleteUserProfileResponse|\Algolia\AlgoliaSearch\Model\Personalization\ErrorBase|\Algolia\AlgoliaSearch\Model\Personalization\ErrorBase|\Algolia\AlgoliaSearch\Model\Personalization\ErrorBase|\Algolia\AlgoliaSearch\Model\Personalization\ErrorBase
+     * @return array<string, mixed>
      */
     public function deleteUserProfile($userToken)
     {
@@ -121,16 +116,12 @@ class PersonalizationApi
 
         return $this->sendRequest('DELETE', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation getPersonalizationStrategy
-     *
      * Get the current personalization strategy.
      *
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Personalization\PersonalizationStrategyParams|\Algolia\AlgoliaSearch\Model\Personalization\ErrorBase|\Algolia\AlgoliaSearch\Model\Personalization\ErrorBase|\Algolia\AlgoliaSearch\Model\Personalization\ErrorBase|\Algolia\AlgoliaSearch\Model\Personalization\ErrorBase
+     * @return array<string, mixed>
      */
     public function getPersonalizationStrategy()
     {
@@ -140,17 +131,13 @@ class PersonalizationApi
 
         return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation getUserTokenProfile
-     *
      * Get the user profile built from Personalization strategy.
      *
-     * @param  string $userToken userToken representing the user for which to fetch the Personalization profile. (required)
+     * @param string $userToken userToken representing the user for which to fetch the Personalization profile. (required)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Personalization\GetUserTokenResponse|\Algolia\AlgoliaSearch\Model\Personalization\ErrorBase|\Algolia\AlgoliaSearch\Model\Personalization\ErrorBase|\Algolia\AlgoliaSearch\Model\Personalization\ErrorBase|\Algolia\AlgoliaSearch\Model\Personalization\ErrorBase
+     * @return array<string, mixed>
      */
     public function getUserTokenProfile($userToken)
     {
@@ -175,17 +162,13 @@ class PersonalizationApi
 
         return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation setPersonalizationStrategy
-     *
      * Set a new personalization strategy.
      *
-     * @param  \Algolia\AlgoliaSearch\Model\Personalization\PersonalizationStrategyParams $personalizationStrategyParams personalizationStrategyParams (required)
+     * @param array $personalizationStrategyParams personalizationStrategyParams (required)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Personalization\SetPersonalizationStrategyResponse|\Algolia\AlgoliaSearch\Model\Personalization\ErrorBase|\Algolia\AlgoliaSearch\Model\Personalization\ErrorBase|\Algolia\AlgoliaSearch\Model\Personalization\ErrorBase|\Algolia\AlgoliaSearch\Model\Personalization\ErrorBase
+     * @return array<string, mixed>
      */
     public function setPersonalizationStrategy($personalizationStrategyParams)
     {
