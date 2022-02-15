@@ -125,9 +125,7 @@ use {{invokerPackage}}\RetryStrategy\ClusterHosts;
 
 {{#operation}}
     /**
-     * Operation {{{operationId}}}
 {{#summary}}
-     *
      * {{.}}
 {{/summary}}
      *
@@ -135,29 +133,14 @@ use {{invokerPackage}}\RetryStrategy\ClusterHosts;
      * {{.}}
      *
 {{/description}}
-{{#vendorExtensions.x-group-parameters}}
-     * Note: the input parameter is an associative array with the keys listed as the parameter name below
-     *
-{{/vendorExtensions.x-group-parameters}}
-{{#servers}}
-{{#-first}}
-     * This operation contains host(s) defined in the OpenAP spec. Use 'hostIndex' to select the host.
-{{/-first}}
-     * URL: {{{url}}}
-{{#-last}}
-     *
-{{/-last}}
-{{/servers}}
 {{#allParams}}
-     * @param  {{{dataType}}} ${{paramName}}{{#description}} {{.}}{{/description}}{{^description}} {{paramName}}{{/description}} {{#required}}(required){{/required}}{{^required}}(optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}{{#isDeprecated}} (deprecated){{/isDeprecated}}
+     * @param {{#isString}}string{{/isString}}{{#isInteger}}int{{/isInteger}}{{^isString}}{{^isInteger}}array{{/isInteger}}{{/isString}} ${{paramName}}{{#description}} {{.}}{{/description}}{{^description}} {{paramName}}{{/description}} {{#required}}(required){{/required}}{{^required}}(optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}{{#isDeprecated}} (deprecated){{/isDeprecated}}
 {{/allParams}}
      *
-     * @throws \{{invokerPackage}}\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return {{#returnType}}{{#responses}}{{#dataType}}{{^-first}}|{{/-first}}{{/dataType}}{{{dataType}}}{{/responses}}{{/returnType}}{{^returnType}}void{{/returnType}}
-    {{#isDeprecated}}
+     * @return array<string, mixed>
+  {{#isDeprecated}}
      * @deprecated
-    {{/isDeprecated}}
+  {{/isDeprecated}}
      */
     public function {{operationId}}({{^vendorExtensions.x-group-parameters}}{{#allParams}}${{paramName}}{{^required}} = {{{defaultValue}}}{{^defaultValue}}null{{/defaultValue}}{{/required}}{{^-last}}, {{/-last}}{{/allParams}}{{/vendorExtensions.x-group-parameters}}{{#vendorExtensions.x-group-parameters}}$associative_array{{/vendorExtensions.x-group-parameters}})
     {
@@ -281,6 +264,7 @@ use {{invokerPackage}}\RetryStrategy\ClusterHosts;
 
         return $this->sendRequest('{{httpMethod}}', $resourcePath, $queryParams, $httpBody);
     }
+
     {{/operation}}
 
     private function sendRequest($method, $resourcePath, $queryParams, $httpBody)

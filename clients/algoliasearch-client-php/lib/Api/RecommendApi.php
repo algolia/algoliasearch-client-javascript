@@ -87,16 +87,11 @@ class RecommendApi
     }
 
     /**
-     * Operation getRecommendations
-     *
      * Returns recommendations for a specific model and objectID.
      *
-     * @param  \Algolia\AlgoliaSearch\Model\Recommend\GetRecommendationsParams $getRecommendationsParams getRecommendationsParams (required)
+     * @param array $getRecommendationsParams getRecommendationsParams (required)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Recommend\GetRecommendationsResponse|\Algolia\AlgoliaSearch\Model\Recommend\ErrorBase|\Algolia\AlgoliaSearch\Model\Recommend\ErrorBase|\Algolia\AlgoliaSearch\Model\Recommend\ErrorBase|\Algolia\AlgoliaSearch\Model\Recommend\ErrorBase
+     * @return array<string, mixed>
      */
     public function getRecommendations($getRecommendationsParams)
     {

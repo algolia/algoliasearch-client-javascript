@@ -87,19 +87,14 @@ class AnalyticsApi
     }
 
     /**
-     * Operation getAverageClickPosition
-     *
      * Returns the average click position.
      *
-     * @param  string $index The index name to target. (required)
-     * @param  string $startDate The lower bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
-     * @param  string $endDate The upper bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
-     * @param  string $tags Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded. (optional)
+     * @param string $index The index name to target. (required)
+     * @param string $startDate The lower bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
+     * @param string $endDate The upper bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
+     * @param string $tags Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded. (optional)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Analytics\GetAverageClickPositionResponse|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase
+     * @return array<string, mixed>
      */
     public function getAverageClickPosition($index, $startDate = null, $endDate = null, $tags = null)
     {
@@ -163,20 +158,16 @@ class AnalyticsApi
 
         return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation getClickPositions
-     *
      * Returns the distribution of clicks per range of positions.
      *
-     * @param  string $index The index name to target. (required)
-     * @param  string $startDate The lower bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
-     * @param  string $endDate The upper bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
-     * @param  string $tags Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded. (optional)
+     * @param string $index The index name to target. (required)
+     * @param string $startDate The lower bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
+     * @param string $endDate The upper bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
+     * @param string $tags Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded. (optional)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Analytics\GetClickPositionsResponse|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase
+     * @return array<string, mixed>
      */
     public function getClickPositions($index, $startDate = null, $endDate = null, $tags = null)
     {
@@ -240,20 +231,16 @@ class AnalyticsApi
 
         return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation getClickThroughRate
-     *
      * Returns a click-through rate (CTR).
      *
-     * @param  string $index The index name to target. (required)
-     * @param  string $startDate The lower bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
-     * @param  string $endDate The upper bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
-     * @param  string $tags Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded. (optional)
+     * @param string $index The index name to target. (required)
+     * @param string $startDate The lower bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
+     * @param string $endDate The upper bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
+     * @param string $tags Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded. (optional)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Analytics\GetClickThroughRateResponse|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase
+     * @return array<string, mixed>
      */
     public function getClickThroughRate($index, $startDate = null, $endDate = null, $tags = null)
     {
@@ -317,20 +304,16 @@ class AnalyticsApi
 
         return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation getConversationRate
-     *
      * Returns a conversion rate (CR).
      *
-     * @param  string $index The index name to target. (required)
-     * @param  string $startDate The lower bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
-     * @param  string $endDate The upper bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
-     * @param  string $tags Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded. (optional)
+     * @param string $index The index name to target. (required)
+     * @param string $startDate The lower bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
+     * @param string $endDate The upper bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
+     * @param string $tags Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded. (optional)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Analytics\GetConversationRateResponse|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase
+     * @return array<string, mixed>
      */
     public function getConversationRate($index, $startDate = null, $endDate = null, $tags = null)
     {
@@ -394,20 +377,16 @@ class AnalyticsApi
 
         return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation getNoClickRate
-     *
      * Returns the rate at which searches didn&#39;t lead to any clicks.
      *
-     * @param  string $index The index name to target. (required)
-     * @param  string $startDate The lower bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
-     * @param  string $endDate The upper bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
-     * @param  string $tags Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded. (optional)
+     * @param string $index The index name to target. (required)
+     * @param string $startDate The lower bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
+     * @param string $endDate The upper bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
+     * @param string $tags Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded. (optional)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Analytics\GetNoClickRateResponse|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase
+     * @return array<string, mixed>
      */
     public function getNoClickRate($index, $startDate = null, $endDate = null, $tags = null)
     {
@@ -471,20 +450,16 @@ class AnalyticsApi
 
         return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation getNoResultsRate
-     *
      * Returns the rate at which searches didn&#39;t return any results.
      *
-     * @param  string $index The index name to target. (required)
-     * @param  string $startDate The lower bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
-     * @param  string $endDate The upper bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
-     * @param  string $tags Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded. (optional)
+     * @param string $index The index name to target. (required)
+     * @param string $startDate The lower bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
+     * @param string $endDate The upper bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
+     * @param string $tags Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded. (optional)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Analytics\GetNoResultsRateResponse|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase
+     * @return array<string, mixed>
      */
     public function getNoResultsRate($index, $startDate = null, $endDate = null, $tags = null)
     {
@@ -548,20 +523,16 @@ class AnalyticsApi
 
         return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation getSearchesCount
-     *
      * Returns the number of searches across the given time range.
      *
-     * @param  string $index The index name to target. (required)
-     * @param  string $startDate The lower bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
-     * @param  string $endDate The upper bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
-     * @param  string $tags Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded. (optional)
+     * @param string $index The index name to target. (required)
+     * @param string $startDate The lower bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
+     * @param string $endDate The upper bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
+     * @param string $tags Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded. (optional)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Analytics\GetSearchesCountResponse|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase
+     * @return array<string, mixed>
      */
     public function getSearchesCount($index, $startDate = null, $endDate = null, $tags = null)
     {
@@ -625,22 +596,18 @@ class AnalyticsApi
 
         return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation getSearchesNoClicks
-     *
      * Returns top searches that didn&#39;t lead to any clicks.
      *
-     * @param  string $index The index name to target. (required)
-     * @param  string $startDate The lower bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
-     * @param  string $endDate The upper bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
-     * @param  int $limit Number of records to return. Limit is the size of the page. (optional, default to 10)
-     * @param  int $offset Position of the starting record. Used for paging. 0 is the first record. (optional, default to 0)
-     * @param  string $tags Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded. (optional)
+     * @param string $index The index name to target. (required)
+     * @param string $startDate The lower bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
+     * @param string $endDate The upper bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
+     * @param int $limit Number of records to return. Limit is the size of the page. (optional, default to 10)
+     * @param int $offset Position of the starting record. Used for paging. 0 is the first record. (optional, default to 0)
+     * @param string $tags Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded. (optional)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Analytics\GetSearchesNoClicksResponse|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase
+     * @return array<string, mixed>
      */
     public function getSearchesNoClicks($index, $startDate = null, $endDate = null, $limit = 10, $offset = 0, $tags = null)
     {
@@ -724,22 +691,18 @@ class AnalyticsApi
 
         return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation getSearchesNoResults
-     *
      * Returns top searches that didn&#39;t return any results.
      *
-     * @param  string $index The index name to target. (required)
-     * @param  string $startDate The lower bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
-     * @param  string $endDate The upper bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
-     * @param  int $limit Number of records to return. Limit is the size of the page. (optional, default to 10)
-     * @param  int $offset Position of the starting record. Used for paging. 0 is the first record. (optional, default to 0)
-     * @param  string $tags Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded. (optional)
+     * @param string $index The index name to target. (required)
+     * @param string $startDate The lower bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
+     * @param string $endDate The upper bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
+     * @param int $limit Number of records to return. Limit is the size of the page. (optional, default to 10)
+     * @param int $offset Position of the starting record. Used for paging. 0 is the first record. (optional, default to 0)
+     * @param string $tags Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded. (optional)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Analytics\GetSearchesNoResultsResponse|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase
+     * @return array<string, mixed>
      */
     public function getSearchesNoResults($index, $startDate = null, $endDate = null, $limit = 10, $offset = 0, $tags = null)
     {
@@ -823,17 +786,13 @@ class AnalyticsApi
 
         return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation getStatus
-     *
      * Get latest update time of the analytics API.
      *
-     * @param  string $index The index name to target. (required)
+     * @param string $index The index name to target. (required)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Analytics\GetStatusResponse|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase
+     * @return array<string, mixed>
      */
     public function getStatus($index)
     {
@@ -860,22 +819,18 @@ class AnalyticsApi
 
         return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation getTopCountries
-     *
      * Returns top countries.
      *
-     * @param  string $index The index name to target. (required)
-     * @param  string $startDate The lower bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
-     * @param  string $endDate The upper bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
-     * @param  int $limit Number of records to return. Limit is the size of the page. (optional, default to 10)
-     * @param  int $offset Position of the starting record. Used for paging. 0 is the first record. (optional, default to 0)
-     * @param  string $tags Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded. (optional)
+     * @param string $index The index name to target. (required)
+     * @param string $startDate The lower bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
+     * @param string $endDate The upper bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
+     * @param int $limit Number of records to return. Limit is the size of the page. (optional, default to 10)
+     * @param int $offset Position of the starting record. Used for paging. 0 is the first record. (optional, default to 0)
+     * @param string $tags Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded. (optional)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Analytics\GetTopCountriesResponse|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase
+     * @return array<string, mixed>
      */
     public function getTopCountries($index, $startDate = null, $endDate = null, $limit = 10, $offset = 0, $tags = null)
     {
@@ -959,23 +914,19 @@ class AnalyticsApi
 
         return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation getTopFilterAttributes
-     *
      * Returns top filter attributes.
      *
-     * @param  string $index The index name to target. (required)
-     * @param  string $search The query term to search for. Must match the exact user input. (optional)
-     * @param  string $startDate The lower bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
-     * @param  string $endDate The upper bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
-     * @param  int $limit Number of records to return. Limit is the size of the page. (optional, default to 10)
-     * @param  int $offset Position of the starting record. Used for paging. 0 is the first record. (optional, default to 0)
-     * @param  string $tags Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded. (optional)
+     * @param string $index The index name to target. (required)
+     * @param string $search The query term to search for. Must match the exact user input. (optional)
+     * @param string $startDate The lower bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
+     * @param string $endDate The upper bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
+     * @param int $limit Number of records to return. Limit is the size of the page. (optional, default to 10)
+     * @param int $offset Position of the starting record. Used for paging. 0 is the first record. (optional, default to 0)
+     * @param string $tags Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded. (optional)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Analytics\GetTopFilterAttributesResponse|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase
+     * @return array<string, mixed>
      */
     public function getTopFilterAttributes($index, $search = null, $startDate = null, $endDate = null, $limit = 10, $offset = 0, $tags = null)
     {
@@ -1069,24 +1020,20 @@ class AnalyticsApi
 
         return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation getTopFilterForAttribute
-     *
      * Returns top filters for the given attribute.
      *
-     * @param  string $attribute The exact name of the attribute. (required)
-     * @param  string $index The index name to target. (required)
-     * @param  string $search The query term to search for. Must match the exact user input. (optional)
-     * @param  string $startDate The lower bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
-     * @param  string $endDate The upper bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
-     * @param  int $limit Number of records to return. Limit is the size of the page. (optional, default to 10)
-     * @param  int $offset Position of the starting record. Used for paging. 0 is the first record. (optional, default to 0)
-     * @param  string $tags Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded. (optional)
+     * @param string $attribute The exact name of the attribute. (required)
+     * @param string $index The index name to target. (required)
+     * @param string $search The query term to search for. Must match the exact user input. (optional)
+     * @param string $startDate The lower bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
+     * @param string $endDate The upper bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
+     * @param int $limit Number of records to return. Limit is the size of the page. (optional, default to 10)
+     * @param int $offset Position of the starting record. Used for paging. 0 is the first record. (optional, default to 0)
+     * @param string $tags Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded. (optional)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Analytics\GetTopFilterForAttributeResponse|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase
+     * @return array<string, mixed>
      */
     public function getTopFilterForAttribute($attribute, $index, $search = null, $startDate = null, $endDate = null, $limit = 10, $offset = 0, $tags = null)
     {
@@ -1194,23 +1141,19 @@ class AnalyticsApi
 
         return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation getTopFiltersNoResults
-     *
      * Returns top filters with no results.
      *
-     * @param  string $index The index name to target. (required)
-     * @param  string $search The query term to search for. Must match the exact user input. (optional)
-     * @param  string $startDate The lower bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
-     * @param  string $endDate The upper bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
-     * @param  int $limit Number of records to return. Limit is the size of the page. (optional, default to 10)
-     * @param  int $offset Position of the starting record. Used for paging. 0 is the first record. (optional, default to 0)
-     * @param  string $tags Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded. (optional)
+     * @param string $index The index name to target. (required)
+     * @param string $search The query term to search for. Must match the exact user input. (optional)
+     * @param string $startDate The lower bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
+     * @param string $endDate The upper bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
+     * @param int $limit Number of records to return. Limit is the size of the page. (optional, default to 10)
+     * @param int $offset Position of the starting record. Used for paging. 0 is the first record. (optional, default to 0)
+     * @param string $tags Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded. (optional)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Analytics\GetTopFiltersNoResultsResponse|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase
+     * @return array<string, mixed>
      */
     public function getTopFiltersNoResults($index, $search = null, $startDate = null, $endDate = null, $limit = 10, $offset = 0, $tags = null)
     {
@@ -1304,24 +1247,20 @@ class AnalyticsApi
 
         return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation getTopHits
-     *
      * Returns top hits.
      *
-     * @param  string $index The index name to target. (required)
-     * @param  string $search The query term to search for. Must match the exact user input. (optional)
-     * @param  bool $clickAnalytics Whether to include the click-through and conversion rates for a search. (optional, default to false)
-     * @param  string $startDate The lower bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
-     * @param  string $endDate The upper bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
-     * @param  int $limit Number of records to return. Limit is the size of the page. (optional, default to 10)
-     * @param  int $offset Position of the starting record. Used for paging. 0 is the first record. (optional, default to 0)
-     * @param  string $tags Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded. (optional)
+     * @param string $index The index name to target. (required)
+     * @param string $search The query term to search for. Must match the exact user input. (optional)
+     * @param array $clickAnalytics Whether to include the click-through and conversion rates for a search. (optional, default to false)
+     * @param string $startDate The lower bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
+     * @param string $endDate The upper bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
+     * @param int $limit Number of records to return. Limit is the size of the page. (optional, default to 10)
+     * @param int $offset Position of the starting record. Used for paging. 0 is the first record. (optional, default to 0)
+     * @param string $tags Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded. (optional)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return OneOfGetTopHitsResponseGetTopHitsResponseWithAnalytics|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase
+     * @return array<string, mixed>
      */
     public function getTopHits($index, $search = null, $clickAnalytics = false, $startDate = null, $endDate = null, $limit = 10, $offset = 0, $tags = null)
     {
@@ -1425,25 +1364,21 @@ class AnalyticsApi
 
         return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation getTopSearches
-     *
      * Returns top searches.
      *
-     * @param  string $index The index name to target. (required)
-     * @param  bool $clickAnalytics Whether to include the click-through and conversion rates for a search. (optional, default to false)
-     * @param  string $startDate The lower bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
-     * @param  string $endDate The upper bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
-     * @param  string $orderBy Reorder the results. (optional, default to 'searchCount')
-     * @param  string $direction The sorting of the result. (optional, default to 'asc')
-     * @param  int $limit Number of records to return. Limit is the size of the page. (optional, default to 10)
-     * @param  int $offset Position of the starting record. Used for paging. 0 is the first record. (optional, default to 0)
-     * @param  string $tags Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded. (optional)
+     * @param string $index The index name to target. (required)
+     * @param array $clickAnalytics Whether to include the click-through and conversion rates for a search. (optional, default to false)
+     * @param string $startDate The lower bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
+     * @param string $endDate The upper bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
+     * @param string $orderBy Reorder the results. (optional, default to 'searchCount')
+     * @param string $direction The sorting of the result. (optional, default to 'asc')
+     * @param int $limit Number of records to return. Limit is the size of the page. (optional, default to 10)
+     * @param int $offset Position of the starting record. Used for paging. 0 is the first record. (optional, default to 0)
+     * @param string $tags Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded. (optional)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return OneOfGetTopSearchesResponseGetTopSearchesResponseWithAnalytics|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase
+     * @return array<string, mixed>
      */
     public function getTopSearches($index, $clickAnalytics = false, $startDate = null, $endDate = null, $orderBy = 'searchCount', $direction = 'asc', $limit = 10, $offset = 0, $tags = null)
     {
@@ -1557,20 +1492,16 @@ class AnalyticsApi
 
         return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation getUsersCount
-     *
      * Returns the distinct count of users across the given time range.
      *
-     * @param  string $index The index name to target. (required)
-     * @param  string $startDate The lower bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
-     * @param  string $endDate The upper bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
-     * @param  string $tags Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded. (optional)
+     * @param string $index The index name to target. (required)
+     * @param string $startDate The lower bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
+     * @param string $endDate The upper bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
+     * @param string $tags Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded. (optional)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Analytics\GetUsersCountResponse|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase|\Algolia\AlgoliaSearch\Model\Analytics\ErrorBase
+     * @return array<string, mixed>
      */
     public function getUsersCount($index, $startDate = null, $endDate = null, $tags = null)
     {

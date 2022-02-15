@@ -87,16 +87,11 @@ class AbtestingApi
     }
 
     /**
-     * Operation addABTests
-     *
      * Creates a new A/B test with provided configuration.
      *
-     * @param  \Algolia\AlgoliaSearch\Model\ABTesting\AddABTestsRequest $addABTestsRequest addABTestsRequest (required)
+     * @param array $addABTestsRequest addABTestsRequest (required)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\ABTesting\ABTestResponse|\Algolia\AlgoliaSearch\Model\ABTesting\ErrorBase|\Algolia\AlgoliaSearch\Model\ABTesting\ErrorBase|\Algolia\AlgoliaSearch\Model\ABTesting\ErrorBase|\Algolia\AlgoliaSearch\Model\ABTesting\ErrorBase
+     * @return array<string, mixed>
      */
     public function addABTests($addABTestsRequest)
     {
@@ -117,17 +112,13 @@ class AbtestingApi
 
         return $this->sendRequest('POST', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation deleteABTest
-     *
      * Deletes the A/B Test.
      *
-     * @param  int $id The A/B test ID. (required)
+     * @param int $id The A/B test ID. (required)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\ABTesting\ABTestResponse|\Algolia\AlgoliaSearch\Model\ABTesting\ErrorBase|\Algolia\AlgoliaSearch\Model\ABTesting\ErrorBase|\Algolia\AlgoliaSearch\Model\ABTesting\ErrorBase|\Algolia\AlgoliaSearch\Model\ABTesting\ErrorBase
+     * @return array<string, mixed>
      */
     public function deleteABTest($id)
     {
@@ -152,17 +143,13 @@ class AbtestingApi
 
         return $this->sendRequest('DELETE', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation getABTest
-     *
      * Returns metadata and metrics for A/B test id.
      *
-     * @param  int $id The A/B test ID. (required)
+     * @param int $id The A/B test ID. (required)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\ABTesting\ABTest|\Algolia\AlgoliaSearch\Model\ABTesting\ErrorBase|\Algolia\AlgoliaSearch\Model\ABTesting\ErrorBase|\Algolia\AlgoliaSearch\Model\ABTesting\ErrorBase|\Algolia\AlgoliaSearch\Model\ABTesting\ErrorBase
+     * @return array<string, mixed>
      */
     public function getABTest($id)
     {
@@ -187,18 +174,14 @@ class AbtestingApi
 
         return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation listABTests
-     *
      * Fetch all existing A/B tests for App that are available for the current API Key.
      *
-     * @param  int $offset Position of the starting record. Used for paging. 0 is the first record. (optional, default to 0)
-     * @param  int $limit Number of records to return. Limit is the size of the page. (optional, default to 10)
+     * @param int $offset Position of the starting record. Used for paging. 0 is the first record. (optional, default to 0)
+     * @param int $limit Number of records to return. Limit is the size of the page. (optional, default to 10)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\ABTesting\ListABTestsResponse|\Algolia\AlgoliaSearch\Model\ABTesting\ErrorBase|\Algolia\AlgoliaSearch\Model\ABTesting\ErrorBase|\Algolia\AlgoliaSearch\Model\ABTesting\ErrorBase|\Algolia\AlgoliaSearch\Model\ABTesting\ErrorBase
+     * @return array<string, mixed>
      */
     public function listABTests($offset = 0, $limit = 10)
     {
@@ -228,17 +211,13 @@ class AbtestingApi
 
         return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
     }
+
     /**
-     * Operation stopABTest
-     *
      * Marks the A/B test as stopped.
      *
-     * @param  int $id The A/B test ID. (required)
+     * @param int $id The A/B test ID. (required)
      *
-     * @throws \Algolia\AlgoliaSearch\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     *
-     * @return \Algolia\AlgoliaSearch\Model\ABTesting\ABTestResponse|\Algolia\AlgoliaSearch\Model\ABTesting\ErrorBase|\Algolia\AlgoliaSearch\Model\ABTesting\ErrorBase|\Algolia\AlgoliaSearch\Model\ABTesting\ErrorBase|\Algolia\AlgoliaSearch\Model\ABTesting\ErrorBase
+     * @return array<string, mixed>
      */
     public function stopABTest($id)
     {
