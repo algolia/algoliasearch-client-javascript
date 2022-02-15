@@ -13,8 +13,7 @@
     "clean": "rm -rf dist/"
   },
   "engines": {
-    "node": "^14.0.0",
-    "yarn": "^3.0.0"
+    "node": "^14.0.0"
   },
   "dependencies": {
     "@algolia/client-common": "5.0.0"

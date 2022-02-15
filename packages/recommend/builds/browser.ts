@@ -1,17 +1,16 @@
 import type { Host, Requester } from '@algolia/client-common';
 import { XhrRequester } from '@algolia/requester-browser-xhr';
 
-import { createPersonalizationApi } from './src/personalizationApi';
-import type { PersonalizationApi, Region } from './src/personalizationApi';
+import { createRecommendApi } from '../src/recommendApi';
+import type { RecommendApi } from '../src/recommendApi';
 
-export * from './src/personalizationApi';
+export * from '../src/recommendApi';
 
-export function personalizationApi(
+export function recommendApi(
   appId: string,
   apiKey: string,
-  region: Region,
   options?: { requester?: Requester; hosts?: Host[] }
-): PersonalizationApi {
+): RecommendApi {
   if (!appId) {
     throw new Error('`appId` is missing.');
   }
@@ -20,14 +19,9 @@ export function personalizationApi(
     throw new Error('`apiKey` is missing.');
   }
 
-  if (!region) {
-    throw new Error('`region` is missing.');
-  }
-
-  return createPersonalizationApi({
+  return createRecommendApi({
     appId,
     apiKey,
-    region,
     timeouts: {
       connect: 1,
       read: 2,

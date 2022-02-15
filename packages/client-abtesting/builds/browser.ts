@@ -1,10 +1,10 @@
 import type { Host, Requester } from '@algolia/client-common';
-import { HttpRequester } from '@algolia/requester-node-http';
+import { XhrRequester } from '@algolia/requester-browser-xhr';
 
-import { createAbtestingApi } from './src/abtestingApi';
-import type { AbtestingApi, Region } from './src/abtestingApi';
+import { createAbtestingApi } from '../src/abtestingApi';
+import type { AbtestingApi, Region } from '../src/abtestingApi';
 
-export * from './src/abtestingApi';
+export * from '../src/abtestingApi';
 
 export function abtestingApi(
   appId: string,
@@ -25,12 +25,13 @@ export function abtestingApi(
     apiKey,
     region,
     timeouts: {
-      connect: 2,
-      read: 5,
+      connect: 1,
+      read: 2,
       write: 30,
     },
-    requester: options?.requester ?? new HttpRequester(),
-    userAgents: [{ segment: 'Node.js', version: process.versions.node }],
+    requester: options?.requester ?? new XhrRequester(),
+    userAgents: [{ segment: 'Browser' }],
+    authMode: 'WithinQueryParameters',
     ...options,
   });
 }

@@ -1,17 +1,16 @@
 import type { Host, Requester } from '@algolia/client-common';
 import { XhrRequester } from '@algolia/requester-browser-xhr';
 
-import { createQuerySuggestionsApi } from './src/querySuggestionsApi';
-import type { QuerySuggestionsApi, Region } from './src/querySuggestionsApi';
+import { createSearchApi } from '../src/searchApi';
+import type { SearchApi } from '../src/searchApi';
 
-export * from './src/querySuggestionsApi';
+export * from '../src/searchApi';
 
-export function querySuggestionsApi(
+export function searchApi(
   appId: string,
   apiKey: string,
-  region: Region,
   options?: { requester?: Requester; hosts?: Host[] }
-): QuerySuggestionsApi {
+): SearchApi {
   if (!appId) {
     throw new Error('`appId` is missing.');
   }
@@ -20,14 +19,9 @@ export function querySuggestionsApi(
     throw new Error('`apiKey` is missing.');
   }
 
-  if (!region) {
-    throw new Error('`region` is missing.');
-  }
-
-  return createQuerySuggestionsApi({
+  return createSearchApi({
     appId,
     apiKey,
-    region,
     timeouts: {
       connect: 1,
       read: 2,

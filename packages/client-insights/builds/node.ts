@@ -1,16 +1,17 @@
 import type { Host, Requester } from '@algolia/client-common';
 import { HttpRequester } from '@algolia/requester-node-http';
 
-import { createPredictApi } from './src/predictApi';
-import type { PredictApi } from './src/predictApi';
+import { createInsightsApi } from '../src/insightsApi';
+import type { InsightsApi, Region } from '../src/insightsApi';
 
-export * from './src/predictApi';
+export * from '../src/insightsApi';
 
-export function predictApi(
+export function insightsApi(
   appId: string,
   apiKey: string,
+  region?: Region,
   options?: { requester?: Requester; hosts?: Host[] }
-): PredictApi {
+): InsightsApi {
   if (!appId) {
     throw new Error('`appId` is missing.');
   }
@@ -19,10 +20,10 @@ export function predictApi(
     throw new Error('`apiKey` is missing.');
   }
 
-  return createPredictApi({
+  return createInsightsApi({
     appId,
     apiKey,
-
+    region,
     timeouts: {
       connect: 2,
       read: 5,

@@ -3,6 +3,6 @@
   "compilerOptions": {
     "outDir": "dist",
   },
-  "include": ["src", "model", "node.ts", "browser.ts"],
+  "include": ["src", "model", "builds/node.ts", "builds/browser.ts"],
   "exclude": ["dist", "node_modules"]
 }

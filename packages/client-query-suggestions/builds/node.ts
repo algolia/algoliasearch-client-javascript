@@ -1,17 +1,17 @@
 import type { Host, Requester } from '@algolia/client-common';
 import { HttpRequester } from '@algolia/requester-node-http';
 
-import { createInsightsApi } from './src/insightsApi';
-import type { InsightsApi, Region } from './src/insightsApi';
+import { createQuerySuggestionsApi } from '../src/querySuggestionsApi';
+import type { QuerySuggestionsApi, Region } from '../src/querySuggestionsApi';
 
-export * from './src/insightsApi';
+export * from '../src/querySuggestionsApi';
 
-export function insightsApi(
+export function querySuggestionsApi(
   appId: string,
   apiKey: string,
-  region?: Region,
+  region: Region,
   options?: { requester?: Requester; hosts?: Host[] }
-): InsightsApi {
+): QuerySuggestionsApi {
   if (!appId) {
     throw new Error('`appId` is missing.');
   }
@@ -20,7 +20,11 @@ export function insightsApi(
     throw new Error('`apiKey` is missing.');
   }
 
-  return createInsightsApi({
+  if (!region) {
+    throw new Error('`region` is missing.');
+  }
+
+  return createQuerySuggestionsApi({
     appId,
     apiKey,
     region,
