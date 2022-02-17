@@ -1,0 +1,23 @@
+name: Process release
+on:
+  issues:
+    types:
+      - closed
+jobs:
+  build:
+    name: Release
+    runs-on: ubuntu-20.04
+    if: "startsWith(github.event.issue.title, 'chore: release')"
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Setup
+        id: setup
+        uses: ./.github/actions/setup
+
+      - run: ./scripts/release/process-release.js
+        env:
+          EVENT_NUMBER: ${{ github.event.issue.number }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
