@@ -5,7 +5,7 @@ import type { CreateClientOptions, Headers, Host, Request } from '@algolia/clien
 import { {{classname}} } from '{{filename}}';
 {{/imports}}
 
-export const version = '{{packageVersion}}';
+export const apiClientVersion = '{{packageVersion}}';
 
 {{#operations}}
 {{#description}}
@@ -82,7 +82,7 @@ export const create{{capitalizedApiName}}Api = (options: CreateClientOptions{{#h
     userAgent: getUserAgent({
       userAgents: options.userAgents,
       client: '{{{capitalizedApiName}}}',
-      version,
+      version: apiClientVersion,
     }),
     timeouts: options.timeouts,
     requester: options.requester,

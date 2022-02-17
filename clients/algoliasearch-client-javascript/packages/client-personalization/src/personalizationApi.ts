@@ -11,7 +11,7 @@ import type { GetUserTokenResponse } from '../model/getUserTokenResponse';
 import type { PersonalizationStrategyParams } from '../model/personalizationStrategyParams';
 import type { SetPersonalizationStrategyResponse } from '../model/setPersonalizationStrategyResponse';
 
-export const version = '5.0.0';
+export const apiClientVersion = '5.0.0';
 
 export type Region = 'eu' | 'us';
 
@@ -40,7 +40,7 @@ export const createPersonalizationApi = (
     userAgent: getUserAgent({
       userAgents: options.userAgents,
       client: 'Personalization',
-      version,
+      version: apiClientVersion,
     }),
     timeouts: options.timeouts,
     requester: options.requester,

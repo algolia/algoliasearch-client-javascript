@@ -13,7 +13,7 @@ import type { QuerySuggestionsIndexWithIndexParam } from '../model/querySuggesti
 import type { Status } from '../model/status';
 import type { SucessResponse } from '../model/sucessResponse';
 
-export const version = '5.0.0';
+export const apiClientVersion = '5.0.0';
 
 export type Region = 'eu' | 'us';
 
@@ -42,7 +42,7 @@ export const createQuerySuggestionsApi = (
     userAgent: getUserAgent({
       userAgents: options.userAgents,
       client: 'QuerySuggestions',
-      version,
+      version: apiClientVersion,
     }),
     timeouts: options.timeouts,
     requester: options.requester,
