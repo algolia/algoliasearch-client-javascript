@@ -4,6 +4,6 @@
     "typeRoots": ["../node_modules/@types"],
     "outDir": "dist"
   },
-  "include": ["pre-gen/setHostsOptions.ts"],
+  "include": ["pre-gen/setHostsOptions.ts", "release/*"],
   "exclude": ["dist", "*.json"]
 }
