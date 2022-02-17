@@ -68,7 +68,7 @@ import type { UpdatedAtWithObjectIdResponse } from '../model/updatedAtWithObject
 import type { UpdatedRuleResponse } from '../model/updatedRuleResponse';
 import type { UserId } from '../model/userId';
 
-export const version = '5.0.0';
+export const apiClientVersion = '5.0.0';
 
 function getDefaultHosts(appId: string): Host[] {
   return (
@@ -118,7 +118,7 @@ export const createSearchApi = (options: CreateClientOptions) => {
     userAgent: getUserAgent({
       userAgents: options.userAgents,
       client: 'Search',
-      version,
+      version: apiClientVersion,
     }),
     timeouts: options.timeouts,
     requester: options.requester,

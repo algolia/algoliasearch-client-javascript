@@ -9,7 +9,7 @@ import type {
 import type { FetchUserProfileResponse } from '../model/fetchUserProfileResponse';
 import type { Params } from '../model/params';
 
-export const version = '0.0.1';
+export const apiClientVersion = '0.0.1';
 
 function getDefaultHosts(): Host[] {
   return [
@@ -34,7 +34,7 @@ export const createPredictApi = (options: CreateClientOptions) => {
     userAgent: getUserAgent({
       userAgents: options.userAgents,
       client: 'Predict',
-      version,
+      version: apiClientVersion,
     }),
     timeouts: options.timeouts,
     requester: options.requester,

@@ -9,7 +9,7 @@ import type {
 import type { PostIngestUrlResponse } from '../model/postIngestUrlResponse';
 import type { PostURLJob } from '../model/postURLJob';
 
-export const version = '0.0.1';
+export const apiClientVersion = '0.0.1';
 
 export type Region = 'de' | 'us';
 
@@ -38,7 +38,7 @@ export const createSourcesApi = (
     userAgent: getUserAgent({
       userAgents: options.userAgents,
       client: 'Sources',
-      version,
+      version: apiClientVersion,
     }),
     timeouts: options.timeouts,
     requester: options.requester,

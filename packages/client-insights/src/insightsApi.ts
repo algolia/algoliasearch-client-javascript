@@ -9,7 +9,7 @@ import type {
 import type { InsightEvents } from '../model/insightEvents';
 import type { PushEventsResponse } from '../model/pushEventsResponse';
 
-export const version = '5.0.0';
+export const apiClientVersion = '5.0.0';
 
 export type Region = 'de' | 'us';
 
@@ -40,7 +40,7 @@ export const createInsightsApi = (
     userAgent: getUserAgent({
       userAgents: options.userAgents,
       client: 'Insights',
-      version,
+      version: apiClientVersion,
     }),
     timeouts: options.timeouts,
     requester: options.requester,

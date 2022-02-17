@@ -26,7 +26,7 @@ import type { GetTopSearchesResponse } from '../model/getTopSearchesResponse';
 import type { GetTopSearchesResponseWithAnalytics } from '../model/getTopSearchesResponseWithAnalytics';
 import type { GetUsersCountResponse } from '../model/getUsersCountResponse';
 
-export const version = '5.0.0';
+export const apiClientVersion = '5.0.0';
 
 export type Region = 'de' | 'us';
 
@@ -57,7 +57,7 @@ export const createAnalyticsApi = (
     userAgent: getUserAgent({
       userAgents: options.userAgents,
       client: 'Analytics',
-      version,
+      version: apiClientVersion,
     }),
     timeouts: options.timeouts,
     requester: options.requester,

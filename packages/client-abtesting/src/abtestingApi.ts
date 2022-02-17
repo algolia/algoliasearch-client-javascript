@@ -11,7 +11,7 @@ import type { ABTestResponse } from '../model/aBTestResponse';
 import type { AddABTestsRequest } from '../model/addABTestsRequest';
 import type { ListABTestsResponse } from '../model/listABTestsResponse';
 
-export const version = '5.0.0';
+export const apiClientVersion = '5.0.0';
 
 export type Region = 'de' | 'us';
 
@@ -42,7 +42,7 @@ export const createAbtestingApi = (
     userAgent: getUserAgent({
       userAgents: options.userAgents,
       client: 'Abtesting',
-      version,
+      version: apiClientVersion,
     }),
     timeouts: options.timeouts,
     requester: options.requester,

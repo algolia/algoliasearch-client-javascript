@@ -14,7 +14,7 @@ import type {
 import type { GetRecommendationsParams } from '../model/getRecommendationsParams';
 import type { GetRecommendationsResponse } from '../model/getRecommendationsResponse';
 
-export const version = '5.0.0';
+export const apiClientVersion = '5.0.0';
 
 function getDefaultHosts(appId: string): Host[] {
   return (
@@ -64,7 +64,7 @@ export const createRecommendApi = (options: CreateClientOptions) => {
     userAgent: getUserAgent({
       userAgents: options.userAgents,
       client: 'Recommend',
-      version,
+      version: apiClientVersion,
     }),
     timeouts: options.timeouts,
     requester: options.requester,
