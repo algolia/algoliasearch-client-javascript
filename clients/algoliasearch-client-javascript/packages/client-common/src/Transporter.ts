@@ -1,3 +1,4 @@
+import type { Requester } from './Requester';
 import { isRetryable, isSuccess } from './Response';
 import { StatefulHost } from './StatefulHost';
 import { createMemoryCache } from './createMemoryCache';
@@ -10,7 +11,6 @@ import {
   serializeHeaders,
   serializeUrl,
 } from './helpers';
-import type { Requester } from './requester/Requester';
 import {
   stackTraceWithoutCredentials,
   stackFrameWithoutCredentials,

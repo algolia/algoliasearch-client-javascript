@@ -1,23 +1,31 @@
-import { analyticsApi } from '@algolia/client-analytics';
+import { abtestingApi } from '@algolia/client-abtesting';
 import { ApiError } from '@algolia/client-common';
 import dotenv from 'dotenv';
 
-dotenv.config({ path: '../.env' });
+dotenv.config({ path: '../../.env' });
 
 const appId = process.env.ALGOLIA_APPLICATION_ID || '**** APP_ID *****';
 const apiKey =
   process.env.ALGOLIA_ANALYTICS_KEY || '**** ANALYTICS_API_KEY *****';
 
-const analyticsIndex = process.env.ANALYTICS_INDEX || 'test_index';
-
 // Init client with appId and apiKey
-const client = analyticsApi(appId, apiKey, 'de');
+const client = abtestingApi(appId, apiKey, 'de');
 
-async function testAnalytics() {
+async function testABTesting() {
   try {
-    const res = await client.getTopFilterForAttribute({
-      attribute: 'myAttribute1,myAttribute2',
-      index: analyticsIndex,
+    const res = await client.addABTests({
+      endAt: '2022-02-01',
+      name: 'testing',
+      variant: [
+        {
+          index: 'test1',
+          trafficPercentage: 30,
+        },
+        {
+          index: 'test2',
+          trafficPercentage: 50,
+        },
+      ],
     });
 
     console.log(`[OK]`, res);
@@ -30,4 +38,4 @@ async function testAnalytics() {
   }
 }
 
-testAnalytics();
+testABTesting();

@@ -2,6 +2,7 @@ node_modules
 .bash_profile
 .env
 .pnp.cjs
+.parcel-cache
 
 yarn-error.log
 

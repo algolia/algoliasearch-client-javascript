@@ -1,12 +1,12 @@
 import { abtestingApi } from '@algolia/client-abtesting';
-import { EchoRequester } from '@algolia/client-common';
 import type { EchoResponse } from '@algolia/client-common';
+import { echoRequester } from '@algolia/requester-node-http';
 
 const appId = process.env.ALGOLIA_APPLICATION_ID || 'test_app_id';
 const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'test_api_key';
 
 const client = abtestingApi(appId, apiKey, 'us', {
-  requester: new EchoRequester(),
+  requester: echoRequester(),
 });
 
 describe('addABTests', () => {

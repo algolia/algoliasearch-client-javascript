@@ -1,8 +1,8 @@
-import { searchApi } from '@algolia/client-search';
+import { recommendApi } from '@algolia/recommend';
 import { ApiError } from '@algolia/client-common';
 import dotenv from 'dotenv';
 
-dotenv.config({ path: '../.env' });
+dotenv.config({ path: '../../.env' });
 
 const appId = process.env.ALGOLIA_APPLICATION_ID || '**** APP_ID *****';
 const apiKey = process.env.ALGOLIA_SEARCH_KEY || '**** SEARCH_API_KEY *****';
@@ -11,13 +11,19 @@ const searchIndex = process.env.SEARCH_INDEX || 'test_index';
 const searchQuery = process.env.SEARCH_QUERY || 'test_query';
 
 // Init client with appId and apiKey
-const client = searchApi(appId, apiKey);
+const client = recommendApi(appId, apiKey);
 
-async function testSearch() {
+async function testRecommend() {
   try {
-    const res = await client.search({
-      indexName: searchIndex,
-      searchParams: { query: searchQuery },
+    const res = await client.getRecommendations({
+      requests: [
+        {
+          indexName: searchIndex,
+          model: 'bought-together',
+          objectID: searchQuery,
+          threshold: 0,
+        },
+      ],
     });
 
     console.log(`[OK]`, res);
@@ -30,4 +36,4 @@ async function testSearch() {
   }
 }
 
-testSearch();
+testRecommend();

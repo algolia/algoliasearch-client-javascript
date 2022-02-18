@@ -1,13 +1,11 @@
-import { EchoRequester } from '@algolia/client-common';
 import type { EchoResponse } from '@algolia/client-common';
 import { insightsApi } from '@algolia/client-insights';
+import { echoRequester } from '@algolia/requester-node-http';
 
 const appId = process.env.ALGOLIA_APPLICATION_ID || 'test_app_id';
 const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'test_api_key';
 
-const client = insightsApi(appId, apiKey, 'us', {
-  requester: new EchoRequester(),
-});
+const client = insightsApi(appId, apiKey, 'us', { requester: echoRequester() });
 
 describe('pushEvents', () => {
   test('pushEvents', async () => {

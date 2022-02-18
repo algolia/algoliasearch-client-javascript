@@ -125,6 +125,12 @@ yarn docker playground <language> <client>
 yarn docker playground javascript search
 ```
 
+#### Browser
+
+```bash
+yarn playground:browser
+```
+
 ### Java
 
 ```bash

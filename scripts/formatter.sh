@@ -18,7 +18,7 @@ fi
 if [[ $LANGUAGE == 'javascript' ]]; then
     # jsdoc/require-hyphen-before-param-description fails to lint more than
     # 6 parameters, we re-run the script if failed to lint the rest
-    CMD="yarn eslint --ext=ts ${FOLDER} --fix || yarn eslint --ext=ts ${FOLDER} --fix"
+    CMD="yarn eslint --ext=ts,js ${FOLDER} --fix || yarn eslint --ext=ts,js ${FOLDER} --fix"
 elif [[ $LANGUAGE == 'php' ]]; then  
     if [[ $CI ]]; then
         PHP="php"
