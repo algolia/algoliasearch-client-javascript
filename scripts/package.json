@@ -3,13 +3,15 @@
   "version": "1.0.0",
   "scripts": {
     "build": "tsc",
-    "release": "yarn build && node dist/scripts/release/create-release-issue.js",
+    "createReleaseIssue": "yarn build && node dist/scripts/release/create-release-issue.js",
+    "processRelease": "yarn build && node dist/scripts/release/process-release.js",
     "setHostsOptions": "yarn build && node dist/scripts/pre-gen/setHostsOptions.js"
   },
   "devDependencies": {
     "@octokit/rest": "18.12.0",
     "@types/js-yaml": "4.0.5",
     "@types/node": "16.11.11",
+    "@types/semver": "7.3.9",
     "dotenv": "16.0.0",
     "execa": "5.1.1",
     "js-yaml": "4.1.0",

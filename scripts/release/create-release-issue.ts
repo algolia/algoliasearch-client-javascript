@@ -13,7 +13,7 @@ dotenv.config();
 type Version = {
   current: string;
   langName: string;
-  next?: string;
+  next?: string | null;
   noCommit?: boolean;
   skipRelease?: boolean;
 };

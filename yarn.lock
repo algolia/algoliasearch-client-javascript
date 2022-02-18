@@ -1436,6 +1436,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/semver@npm:7.3.9":
+  version: 7.3.9
+  resolution: "@types/semver@npm:7.3.9"
+  checksum: 60bfcfdfa7f937be2c6f4b37ddb6714fb0f27b05fe4cbdfdd596a97d35ed95d13ee410efdd88e72a66449d0384220bf20055ab7d6b5df10de4990fbd20e5cbe0
+  languageName: node
+  linkType: hard
+
 "@types/stack-utils@npm:^2.0.0":
   version: 2.0.1
   resolution: "@types/stack-utils@npm:2.0.1"
@@ -5885,6 +5892,7 @@ __metadata:
     "@octokit/rest": 18.12.0
     "@types/js-yaml": 4.0.5
     "@types/node": 16.11.11
+    "@types/semver": 7.3.9
     dotenv: 16.0.0
     execa: 5.1.1
     js-yaml: 4.1.0
