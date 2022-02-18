@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 /* eslint-disable prefer-const */
 // @ts-nocheck Failing tests will have type errors, but we cannot suppress them even with @ts-expect-error because it doesn't work for a block of lines.
-import { EchoRequester } from '@algolia/client-common';
 import { insightsApi } from '@algolia/client-insights';
+import { echoRequester } from '@algolia/requester-node-http';
 
 const appId = 'test-app-id';
 const apiKey = 'test-api-key';
 
 function createClient() {
-  return insightsApi(appId, apiKey, 'us', { requester: new EchoRequester() });
+  return insightsApi(appId, apiKey, 'us', { requester: echoRequester() });
 }
 
 describe('api', () => {
@@ -56,7 +56,7 @@ describe('parameters', () => {
     await expect(
       new Promise((resolve, reject) => {
         $client = insightsApi('my-app-id', 'my-api-key', '', {
-          requester: new EchoRequester(),
+          requester: echoRequester(),
         });
 
         actual = $client;

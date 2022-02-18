@@ -30,6 +30,7 @@ post:
           additionalProperties: false
           items:
             type: object
+            title: attributeToUpdate
             description: Attribute to update.
             additionalProperties:
               oneOf:

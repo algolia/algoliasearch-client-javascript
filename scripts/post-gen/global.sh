@@ -17,24 +17,12 @@ if [[ ! $DOCKER ]]; then
     exit 1
 fi
 
-build_js_common_requesters() {
-    echo "> Cleaning previous build @algolia/client-common..."
-    yarn workspace @algolia/client-common clean
+build_js_utils() {
+    echo "> Cleaning JavaScript client utils..."
+    yarn workspace algoliasearch-client-javascript clean:utils
 
-    echo "> Building @algolia/client-common..."
-    yarn workspace @algolia/client-common build
-
-    echo "> Cleaning previous build @algolia/requester-node-http..."
-    yarn workspace @algolia/requester-node-http clean
-
-    echo "> Building @algolia/requester-node-http..."
-    yarn workspace @algolia/requester-node-http build
-
-    echo "> Cleaning previous build @algolia/requester-browser-xhr..."
-    yarn workspace @algolia/requester-browser-xhr clean
-
-    echo "> Building @algolia/requester-browser-xhr..."
-    yarn workspace @algolia/requester-browser-xhr build
+    echo "> Building JavaScript client utils..."
+    yarn workspace algoliasearch-client-javascript build:utils
 
     echo ""
 }
@@ -62,5 +50,5 @@ format_specs() {
 format_specs
 
 if [[ $LANGUAGE == 'javascript' || $LANGUAGE == 'all' ]]; then
-    build_js_common_requesters
+    build_js_utils
 fi

@@ -6,7 +6,8 @@
   "author": "Algolia",
   "private": true,
   "license": "MIT",
-  "main": "dist/index.js",
+  "main": "dist/requester-browser-xhr.cjs.node.js",
+  "module": "dist/requester-browser-xhr.esm.node.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",

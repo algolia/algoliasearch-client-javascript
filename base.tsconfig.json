@@ -3,7 +3,7 @@
     "module": "commonjs",
     "noImplicitAny": false,
     "suppressImplicitAnyIndexErrors": true,
-    "target": "ES6",
+    "target": "esnext",
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "strict": true,

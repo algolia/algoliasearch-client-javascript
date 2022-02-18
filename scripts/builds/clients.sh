@@ -23,7 +23,7 @@ if [[ $LANGUAGE == 'javascript' ]]; then
     yarn workspace $PACKAGE clean
 
     echo "> Bundling $GENERATOR..."
-    CMD="yarn workspace $PACKAGE build"
+    CMD="yarn workspace algoliasearch-client-javascript build $PACKAGE"
 elif [[ $LANGUAGE == 'php' ]]; then
     # no build needed (for now)
     :

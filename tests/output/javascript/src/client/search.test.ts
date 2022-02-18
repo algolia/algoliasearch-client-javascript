@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 /* eslint-disable prefer-const */
 // @ts-nocheck Failing tests will have type errors, but we cannot suppress them even with @ts-expect-error because it doesn't work for a block of lines.
-import { EchoRequester } from '@algolia/client-common';
 import { searchApi } from '@algolia/client-search';
+import { echoRequester } from '@algolia/requester-node-http';
 
 const appId = 'test-app-id';
 const apiKey = 'test-api-key';
 
 function createClient() {
-  return searchApi(appId, apiKey, { requester: new EchoRequester() });
+  return searchApi(appId, apiKey, { requester: echoRequester() });
 }
 
 describe('api', () => {
@@ -71,7 +71,7 @@ describe('parameters', () => {
     let actual;
     await expect(
       new Promise((resolve, reject) => {
-        $client = searchApi('', '', { requester: new EchoRequester() });
+        $client = searchApi('', '', { requester: echoRequester() });
 
         actual = $client;
 
@@ -85,9 +85,7 @@ describe('parameters', () => {
 
     await expect(
       new Promise((resolve, reject) => {
-        $client = searchApi('', 'my-api-key', {
-          requester: new EchoRequester(),
-        });
+        $client = searchApi('', 'my-api-key', { requester: echoRequester() });
 
         actual = $client;
 
@@ -101,9 +99,7 @@ describe('parameters', () => {
 
     await expect(
       new Promise((resolve, reject) => {
-        $client = searchApi('my-app-id', '', {
-          requester: new EchoRequester(),
-        });
+        $client = searchApi('my-app-id', '', { requester: echoRequester() });
 
         actual = $client;
 

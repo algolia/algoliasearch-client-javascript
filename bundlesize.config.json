@@ -1,0 +1,48 @@
+{
+  "files": [
+    {
+      "path": "packages/client-abtesting/dist/client-abtesting.umd.browser.js",
+      "maxSize": "3.25KB"
+    },
+    {
+      "path": "packages/client-analytics/dist/client-analytics.umd.browser.js",
+      "maxSize": "3.75KB"
+    },
+    {
+      "path": "packages/client-insights/dist/client-insights.umd.browser.js",
+      "maxSize": "3.00KB"
+    },
+    {
+      "path": "packages/client-personalization/dist/client-personalization.umd.browser.js",
+      "maxSize": "3.25KB"
+    },
+    {
+      "path": "packages/client-query-suggestions/dist/client-query-suggestions.umd.browser.js",
+      "maxSize": "3.25KB"
+    },
+    {
+      "path": "packages/client-search/dist/client-search.umd.browser.js",
+      "maxSize": "5.25KB"
+    },
+    {
+      "path": "packages/client-sources/dist/client-sources.umd.browser.js",
+      "maxSize": "3.00KB"
+    },
+    {
+      "path": "packages/recommend/dist/recommend.umd.browser.js",
+      "maxSize": "3.25KB"
+    },
+    {
+      "path": "packages/client-common/dist/client-common.esm.node.js",
+      "maxSize": "3.25KB"
+    },
+    {
+      "path": "packages/requester-browser-xhr/dist/requester-browser-xhr.esm.node.js",
+      "maxSize": "1.00KB"
+    },
+    {
+      "path": "packages/requester-node-http/dist/requester-node-http.esm.node.js",
+      "maxSize": "1.00KB"
+    }
+  ]
+}

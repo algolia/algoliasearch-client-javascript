@@ -1,4 +1,4 @@
-import type { EndRequest, Request, Response } from '../types';
+import type { EndRequest, Request, Response } from './types';
 
 export abstract class Requester {
   abstract send(

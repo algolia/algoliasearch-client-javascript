@@ -4,7 +4,7 @@ FROM node:$NODE_VERSION-alpine
 
 ENV DOCKER=true
 
-RUN apk -U add openjdk11 jq bash perl
+RUN apk -U add openjdk11 jq bash perl build-base python3
 ENV JAVA_HOME=/usr/lib/jvm/default-jvm
 
 # Java formatter

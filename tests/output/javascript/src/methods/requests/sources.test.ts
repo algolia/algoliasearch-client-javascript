@@ -1,13 +1,11 @@
-import { EchoRequester } from '@algolia/client-common';
 import type { EchoResponse } from '@algolia/client-common';
 import { sourcesApi } from '@algolia/client-sources';
+import { echoRequester } from '@algolia/requester-node-http';
 
 const appId = process.env.ALGOLIA_APPLICATION_ID || 'test_app_id';
 const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'test_api_key';
 
-const client = sourcesApi(appId, apiKey, 'us', {
-  requester: new EchoRequester(),
-});
+const client = sourcesApi(appId, apiKey, 'us', { requester: echoRequester() });
 
 describe('postIngestUrl', () => {
   test('post postIngestUrl with minimal parameters', async () => {

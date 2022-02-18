@@ -1,12 +1,12 @@
-import { EchoRequester } from '@algolia/client-common';
 import type { EchoResponse } from '@algolia/client-common';
 import { querySuggestionsApi } from '@algolia/client-query-suggestions';
+import { echoRequester } from '@algolia/requester-node-http';
 
 const appId = process.env.ALGOLIA_APPLICATION_ID || 'test_app_id';
 const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'test_api_key';
 
 const client = querySuggestionsApi(appId, apiKey, 'us', {
-  requester: new EchoRequester(),
+  requester: echoRequester(),
 });
 
 describe('createConfig', () => {

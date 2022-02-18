@@ -6,16 +6,14 @@
   "author": "Algolia",
   "private": true,
   "license": "MIT",
-  "main": "./dist/builds/node.js",
-  "types": "./dist/builds/node.d.ts",
-  "jsdelivr": "./dist/builds/browser.js",
-  "unpkg": "./dist/builds/browser.js",
-  "browser": {
-    "./index.js": "./dist/builds/browser.js"
-  },
+  "main": "index.js",
+  "module": "dist/{{buildFile}}.esm.node.js",
+  "types": "index.d.ts",
+  "jsdelivr": "dist/{{buildFile}}.umd.browser.js",
+  "unpkg": "dist/{{buildFile}}.umd.browser.js",
+  "browser": "dist/{{buildFile}}.cjs.browser.js",
   "scripts": {
-    "build": "tsc",
-    "clean": "rm -rf dist/"
+    "clean": "rm -rf ./dist"
   },
   "engines": {
     "node": "^14.0.0"
