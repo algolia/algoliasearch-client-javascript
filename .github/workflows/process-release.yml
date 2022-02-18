@@ -17,7 +17,7 @@ jobs:
         id: setup
         uses: ./.github/actions/setup
 
-      - run: ./scripts/release/process-release.js
+      - run: yarn workspace scripts processRelease
         env:
           EVENT_NUMBER: ${{ github.event.issue.number }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -28,7 +28,7 @@
     "specs:fix": "eslint --ext=yml specs/ --fix",
     "specs:lint": "eslint --ext=yml specs/$0",
     "github-actions:lint": "eslint --ext=yml .github/",
-    "release": "yarn workspace scripts release"
+    "release": "yarn workspace scripts createReleaseIssue"
   },
   "devDependencies": {
     "@openapitools/openapi-generator-cli": "2.4.26",
