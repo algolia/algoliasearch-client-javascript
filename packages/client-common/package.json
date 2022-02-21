@@ -10,7 +10,6 @@
   "module": "dist/client-common.esm.node.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc",
     "clean": "rm -rf dist/"
   },
   "engines": {

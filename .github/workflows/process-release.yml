@@ -1,8 +1,13 @@
 name: Process release
+
 on:
   issues:
     types:
       - closed
+
+env:
+  CACHE_VERSION: '5'
+
 jobs:
   build:
     name: Release
