@@ -8,17 +8,22 @@ export const MAIN_BRANCH = config.mainBranch;
 export const OWNER = config.owner;
 export const REPO = config.repo;
 
-type Run = (
+export type Run = (
   command: string,
-  options?: Partial<{
-    errorMessage: string;
-  }>
+  options?: Partial<
+    execa.SyncOptions & {
+      errorMessage: string;
+    }
+  >
 ) => execa.ExecaReturnBase<string>['stdout'];
 
-export const run: Run = (command, { errorMessage = undefined } = {}) => {
+export const run: Run = (
+  command,
+  { errorMessage = undefined, ...execaOptions } = {}
+) => {
   let result: execa.ExecaSyncReturnValue<string>;
   try {
-    result = execa.commandSync(command);
+    result = execa.commandSync(command, execaOptions);
   } catch (err) {
     if (errorMessage) {
       throw new Error(`[ERROR] ${errorMessage}`);

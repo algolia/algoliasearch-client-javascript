@@ -1,15 +1,29 @@
 /* eslint-disable no-console */
 import fs from 'fs';
+import path from 'path';
 
 import dotenv from 'dotenv';
 import execa from 'execa';
 
 import openapitools from '../../openapitools.json';
 
-import { MAIN_BRANCH, OWNER, REPO, run, getMarkdownSection } from './common';
+import type { Run } from './common';
+import {
+  MAIN_BRANCH,
+  OWNER,
+  REPO,
+  run as runOriginal,
+  getMarkdownSection,
+} from './common';
 import TEXT from './text';
 
+// This script is run by `yarn workspace ...`, which means the current working directory is `./script`
+const ROOT_DIR = path.resolve(process.cwd(), '..');
+
 dotenv.config();
+
+const run: Run = (command, options = {}) =>
+  runOriginal(command, { cwd: ROOT_DIR, ...options });
 
 if (!process.env.GITHUB_TOKEN) {
   throw new Error('Environment variable `GITHUB_TOKEN` does not exist.');
@@ -70,12 +84,15 @@ Object.keys(openapitools['generator-cli'].generators).forEach((client) => {
     ].additionalProperties.packageVersion = versionsToRelease[lang].next;
   }
 });
-fs.writeFileSync('openapitools.json', JSON.stringify(openapitools, null, 2));
+fs.writeFileSync(
+  path.resolve(ROOT_DIR, 'openapitools.json'),
+  JSON.stringify(openapitools, null, 2)
+);
 
 // update changelogs
 new Set([...Object.keys(versionsToRelease), ...langsToUpdateRepo]).forEach(
   (lang) => {
-    const filePath = `doc/changelogs/${lang}.md`;
+    const filePath = path.resolve(ROOT_DIR, `doc/changelogs/${lang}.md`);
     const header = versionsToRelease[lang!]
       ? `## ${versionsToRelease[lang!].next}`
       : `## ${new Date().toISOString().split('T')[0]}`;
