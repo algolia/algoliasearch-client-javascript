@@ -4,7 +4,6 @@
   "description": "JavaScript client for @algolia/client-predict",
   "repository": "algolia/algoliasearch-client-javascript",
   "author": "Algolia",
-  "private": true,
   "license": "MIT",
   "main": "index.js",
   "module": "dist/client-predict.esm.node.js",

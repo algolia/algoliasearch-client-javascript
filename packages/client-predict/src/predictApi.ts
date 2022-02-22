@@ -22,7 +22,7 @@ function getDefaultHosts(): Host[] {
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export const createPredictApi = (options: CreateClientOptions) => {
+export function createPredictApi(options: CreateClientOptions) {
   const auth = createAuth(options.appId, options.apiKey, options.authMode);
   const transporter = new Transporter({
     hosts: options?.hosts ?? getDefaultHosts(),
@@ -39,6 +39,10 @@ export const createPredictApi = (options: CreateClientOptions) => {
     timeouts: options.timeouts,
     requester: options.requester,
   });
+
+  function addUserAgent(segment: string, version?: string): void {
+    transporter.userAgent.add({ segment, version });
+  }
 
   /**
    * Get predictions, properties (raw, computed or custom) and segments (computed or custom) for a user profile.
@@ -83,8 +87,8 @@ export const createPredictApi = (options: CreateClientOptions) => {
     });
   }
 
-  return { fetchUserProfile };
-};
+  return { addUserAgent, fetchUserProfile };
+}
 
 export type PredictApi = ReturnType<typeof createPredictApi>;
 

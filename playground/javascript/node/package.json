@@ -24,12 +24,14 @@
   "dependencies": {
     "@algolia/client-abtesting": "5.0.0",
     "@algolia/client-analytics": "5.0.0",
+    "@algolia/client-common": "5.0.0",
     "@algolia/client-personalization": "5.0.0",
     "@algolia/client-predict": "0.0.1",
     "@algolia/client-query-suggestions": "5.0.0",
     "@algolia/client-search": "5.0.0",
     "@algolia/client-sources": "0.0.1",
-    "@algolia/recommend": "5.0.0"
+    "@algolia/recommend": "5.0.0",
+    "@algolia/requester-node-http": "5.0.0"
   },
   "devDependencies": {
     "dotenv": "10.0.0",

@@ -6,7 +6,9 @@
     "start": "parcel index.html"
   },
   "dependencies": {
-    "@algolia/client-search": "5.0.0"
+    "@algolia/client-common": "5.0.0",
+    "@algolia/client-search": "5.0.0",
+    "@algolia/requester-browser-xhr": "5.0.0"
   },
   "devDependencies": {
     "parcel": "2.3.1",

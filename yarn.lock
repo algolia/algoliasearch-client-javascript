@@ -6948,7 +6948,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "javascript-browser-playground@workspace:playground/javascript/browser"
   dependencies:
+    "@algolia/client-common": 5.0.0
     "@algolia/client-search": 5.0.0
+    "@algolia/requester-browser-xhr": 5.0.0
     parcel: 2.3.1
     typescript: 4.5.4
   languageName: unknown
@@ -6960,12 +6962,14 @@ __metadata:
   dependencies:
     "@algolia/client-abtesting": 5.0.0
     "@algolia/client-analytics": 5.0.0
+    "@algolia/client-common": 5.0.0
     "@algolia/client-personalization": 5.0.0
     "@algolia/client-predict": 0.0.1
     "@algolia/client-query-suggestions": 5.0.0
     "@algolia/client-search": 5.0.0
     "@algolia/client-sources": 0.0.1
     "@algolia/recommend": 5.0.0
+    "@algolia/requester-node-http": 5.0.0
     dotenv: 10.0.0
     typescript: 4.5.4
   languageName: unknown

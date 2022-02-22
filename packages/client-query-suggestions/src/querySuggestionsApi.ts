@@ -28,9 +28,9 @@ function getDefaultHosts(region: Region): Host[] {
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export const createQuerySuggestionsApi = (
+export function createQuerySuggestionsApi(
   options: CreateClientOptions & { region: Region }
-) => {
+) {
   const auth = createAuth(options.appId, options.apiKey, options.authMode);
   const transporter = new Transporter({
     hosts: options?.hosts ?? getDefaultHosts(options.region),
@@ -47,6 +47,10 @@ export const createQuerySuggestionsApi = (
     timeouts: options.timeouts,
     requester: options.requester,
   });
+
+  function addUserAgent(segment: string, version?: string): void {
+    transporter.userAgent.add({ segment, version });
+  }
 
   /**
    * Create a configuration of a Query Suggestions index. There\'s a limit of 100 configurations per application.
@@ -284,6 +288,7 @@ export const createQuerySuggestionsApi = (
   }
 
   return {
+    addUserAgent,
     createConfig,
     deleteConfig,
     getAllConfigs,
@@ -292,7 +297,7 @@ export const createQuerySuggestionsApi = (
     getLogFile,
     updateConfig,
   };
-};
+}
 
 export type QuerySuggestionsApi = ReturnType<typeof createQuerySuggestionsApi>;
 

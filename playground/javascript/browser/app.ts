@@ -7,6 +7,8 @@ const searchClient = searchApi(
   'b590ae1153bf574215ca1605c19eb1fe'
 );
 
+searchClient.addUserAgent('Browser playground', '0.0.1');
+
 const searchButton = document.querySelector('#search');
 
 searchButton?.addEventListener('click', async () => {
