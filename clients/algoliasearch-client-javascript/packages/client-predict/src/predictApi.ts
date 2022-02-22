@@ -1,4 +1,9 @@
-import { Transporter, createAuth, getUserAgent } from '@algolia/client-common';
+import {
+  createAuth,
+  createMemoryCache,
+  createTransporter,
+  getUserAgent,
+} from '@algolia/client-common';
 import type {
   CreateClientOptions,
   Headers,
@@ -24,8 +29,9 @@ function getDefaultHosts(): Host[] {
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function createPredictApi(options: CreateClientOptions) {
   const auth = createAuth(options.appId, options.apiKey, options.authMode);
-  const transporter = new Transporter({
+  const transporter = createTransporter({
     hosts: options?.hosts ?? getDefaultHosts(),
+    hostsCache: createMemoryCache(),
     baseHeaders: {
       'content-type': 'application/x-www-form-urlencoded',
       ...auth.headers(),

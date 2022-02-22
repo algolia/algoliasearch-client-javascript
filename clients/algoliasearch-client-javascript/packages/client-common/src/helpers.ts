@@ -112,6 +112,5 @@ export function deserializeFailure(
   } catch (e) {
     // ..
   }
-
   return new ApiError(message, status, stackFrame);
 }

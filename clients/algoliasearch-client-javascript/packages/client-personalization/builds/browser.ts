@@ -1,5 +1,5 @@
 import type { Host, Requester } from '@algolia/client-common';
-import { XhrRequester } from '@algolia/requester-browser-xhr';
+import { createXhrRequester } from '@algolia/requester-browser-xhr';
 
 import { createPersonalizationApi } from '../src/personalizationApi';
 import type { PersonalizationApi, Region } from '../src/personalizationApi';
@@ -33,7 +33,7 @@ export function personalizationApi(
       read: 2,
       write: 30,
     },
-    requester: options?.requester ?? new XhrRequester(),
+    requester: options?.requester ?? createXhrRequester(),
     userAgents: [{ segment: 'Browser' }],
     authMode: 'WithinQueryParameters',
     ...options,

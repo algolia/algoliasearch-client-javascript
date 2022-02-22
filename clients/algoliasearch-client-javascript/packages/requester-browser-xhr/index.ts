@@ -1,2 +1,2 @@
+export * from './src/createXhrRequester';
 export * from './src/echoRequester';
-export * from './src/XhrRequester';

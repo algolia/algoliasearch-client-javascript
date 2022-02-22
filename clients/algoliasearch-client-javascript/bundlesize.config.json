@@ -14,7 +14,7 @@
     },
     {
       "path": "packages/client-personalization/dist/client-personalization.umd.browser.js",
-      "maxSize": "3.25KB"
+      "maxSize": "3.00KB"
     },
     {
       "path": "packages/client-query-suggestions/dist/client-query-suggestions.umd.browser.js",
@@ -30,11 +30,11 @@
     },
     {
       "path": "packages/recommend/dist/recommend.umd.browser.js",
-      "maxSize": "3.25KB"
+      "maxSize": "3.00KB"
     },
     {
       "path": "packages/client-common/dist/client-common.esm.node.js",
-      "maxSize": "3.25KB"
+      "maxSize": "3.00KB"
     },
     {
       "path": "packages/requester-browser-xhr/dist/requester-browser-xhr.esm.node.js",

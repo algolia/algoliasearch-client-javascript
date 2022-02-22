@@ -1,4 +1,9 @@
-import { Transporter, createAuth, getUserAgent } from '@algolia/client-common';
+import {
+  createAuth,
+  createMemoryCache,
+  createTransporter,
+  getUserAgent,
+} from '@algolia/client-common';
 import type {
   CreateClientOptions,
   Headers,
@@ -30,8 +35,9 @@ export function createInsightsApi(
   options: CreateClientOptions & { region?: Region }
 ) {
   const auth = createAuth(options.appId, options.apiKey, options.authMode);
-  const transporter = new Transporter({
+  const transporter = createTransporter({
     hosts: options?.hosts ?? getDefaultHosts(options.region),
+    hostsCache: createMemoryCache(),
     baseHeaders: {
       'content-type': 'application/x-www-form-urlencoded',
       ...auth.headers(),
