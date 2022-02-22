@@ -19,13 +19,16 @@ if [[ $LANGUAGE == 'javascript' ]]; then
     # jsdoc/require-hyphen-before-param-description fails to lint more than
     # 6 parameters, we re-run the script if failed to lint the rest
     CMD="yarn eslint --ext=ts,js ${FOLDER} --fix || yarn eslint --ext=ts,js ${FOLDER} --fix"
-elif [[ $LANGUAGE == 'php' ]]; then  
+elif [[ $LANGUAGE == 'php' ]]; then
+    FIXER="clients/algoliasearch-client-php/vendor/bin/php-cs-fixer"
     if [[ $CI ]]; then
         PHP="php"
     else
         PHP="php8"
     fi
-    CMD="cd $FOLDER && composer update && composer dump-autoload && PHP_CS_FIXER_IGNORE_ENV=1 $PHP vendor/bin/php-cs-fixer fix lib/ --using-cache=no --allow-risky=yes"
+    CMD="composer update --working-dir=clients/algoliasearch-client-php \
+          && composer dump-autoload --working-dir=clients/algoliasearch-client-php \
+          && PHP_CS_FIXER_IGNORE_ENV=1 $PHP $FIXER fix $FOLDER --using-cache=no --allow-risky=yes"
 elif [[ $LANGUAGE == 'java' ]]; then
     CMD="find $FOLDER -type f -name \"*.java\" | xargs java --add-exports jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED \
                                                      --add-exports jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED \
