@@ -1,8 +1,9 @@
 import {
-  shuffle,
-  Transporter,
   createAuth,
+  createMemoryCache,
+  createTransporter,
   getUserAgent,
+  shuffle,
 } from '@algolia/client-common';
 import type {
   CreateClientOptions,
@@ -54,8 +55,9 @@ function getDefaultHosts(appId: string): Host[] {
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function createRecommendApi(options: CreateClientOptions) {
   const auth = createAuth(options.appId, options.apiKey, options.authMode);
-  const transporter = new Transporter({
+  const transporter = createTransporter({
     hosts: options?.hosts ?? getDefaultHosts(options.appId),
+    hostsCache: createMemoryCache(),
     baseHeaders: {
       'content-type': 'application/x-www-form-urlencoded',
       ...auth.headers(),

@@ -1,5 +1,5 @@
 import type { Host, Requester } from '@algolia/client-common';
-import { HttpRequester } from '@algolia/requester-node-http';
+import { createHttpRequester } from '@algolia/requester-node-http';
 
 import { createQuerySuggestionsApi } from '../src/querySuggestionsApi';
 import type { QuerySuggestionsApi, Region } from '../src/querySuggestionsApi';
@@ -33,7 +33,7 @@ export function querySuggestionsApi(
       read: 5,
       write: 30,
     },
-    requester: options?.requester ?? new HttpRequester(),
+    requester: options?.requester ?? createHttpRequester(),
     userAgents: [{ segment: 'Node.js', version: process.versions.node }],
     ...options,
   });

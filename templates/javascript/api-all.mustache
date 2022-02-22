@@ -1,7 +1,7 @@
 {{! This file will be renamed and moved to `builds/browser.ts` after generating the client }}
 
 import type { Host, Requester } from '@algolia/client-common';
-import { XhrRequester } from '@algolia/requester-browser-xhr';
+import { createXhrRequester } from '@algolia/requester-browser-xhr';
 
 import { create{{capitalizedApiName}}Api } from '../src/{{apiName}}Api';
 import type { {{capitalizedApiName}}Api } from '../src/{{apiName}}Api';
@@ -42,7 +42,7 @@ export function {{apiName}}Api(
       read: 2,
       write: 30,
     },
-    requester: options?.requester ?? new XhrRequester(),
+    requester: options?.requester ?? createXhrRequester(),
     userAgents: [{ segment: 'Browser' }],
     authMode: 'WithinQueryParameters',
     ...options,

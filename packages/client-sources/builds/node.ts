@@ -1,5 +1,5 @@
 import type { Host, Requester } from '@algolia/client-common';
-import { HttpRequester } from '@algolia/requester-node-http';
+import { createHttpRequester } from '@algolia/requester-node-http';
 
 import { createSourcesApi } from '../src/sourcesApi';
 import type { SourcesApi, Region } from '../src/sourcesApi';
@@ -33,7 +33,7 @@ export function sourcesApi(
       read: 5,
       write: 30,
     },
-    requester: options?.requester ?? new HttpRequester(),
+    requester: options?.requester ?? createHttpRequester(),
     userAgents: [{ segment: 'Node.js', version: process.versions.node }],
     ...options,
   });

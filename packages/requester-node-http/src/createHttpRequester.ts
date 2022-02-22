@@ -2,16 +2,15 @@ import http from 'http';
 import https from 'https';
 import { URL } from 'url';
 
-import { Requester } from '@algolia/client-common';
-import type { EndRequest, Response } from '@algolia/client-common';
+import type { EndRequest, Requester, Response } from '@algolia/client-common';
 
 // Global agents allow us to reuse the TCP protocol with multiple clients
 const agentOptions = { keepAlive: true };
 const httpAgent = new http.Agent(agentOptions);
 const httpsAgent = new https.Agent(agentOptions);
 
-export class HttpRequester extends Requester {
-  send(request: EndRequest): Promise<Response> {
+export function createHttpRequester(): Requester {
+  function send(request: EndRequest): Promise<Response> {
     return new Promise((resolve) => {
       let responseTimeout: NodeJS.Timeout | undefined;
       // eslint-disable-next-line prefer-const -- linter thinks this is not reassigned
@@ -91,4 +90,6 @@ export class HttpRequester extends Requester {
       req.end();
     });
   }
+
+  return { send };
 }

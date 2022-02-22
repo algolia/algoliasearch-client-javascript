@@ -1,8 +1,5 @@
-import type { Requester } from './Requester';
 import { isRetryable, isSuccess } from './Response';
-import { StatefulHost } from './StatefulHost';
-import { createMemoryCache } from './createMemoryCache';
-import type { Cache } from './createMemoryCache';
+import { createStatefulHost } from './createStatefulHost';
 import { RetryError } from './errors';
 import {
   deserializeFailure,
@@ -17,82 +14,49 @@ import {
 } from './stackTrace';
 import type {
   EndRequest,
-  Headers,
   Host,
-  QueryParameters,
   Request,
   RequestOptions,
   Response,
   StackFrame,
-  Timeouts,
-  UserAgent,
+  TransporterOptions,
+  Transporter,
 } from './types';
 
-export class Transporter {
-  private hosts: Host[];
-  private baseHeaders: Headers;
-  private baseQueryParameters: QueryParameters;
-  private hostsCache: Cache;
-  userAgent: UserAgent;
-  private timeouts: Timeouts;
-  private requester: Requester;
+type RetryableOptions = {
+  hosts: Host[];
+  getTimeout: (retryCount: number, timeout: number) => number;
+};
 
-  constructor({
-    hosts,
-    baseHeaders,
-    baseQueryParameters,
-    userAgent,
-    timeouts,
-    requester,
-  }: {
-    hosts: Host[];
-    baseHeaders: Headers;
-    baseQueryParameters: QueryParameters;
-    userAgent: UserAgent;
-    timeouts: Timeouts;
-    requester: Requester;
-  }) {
-    this.hosts = hosts;
-    this.hostsCache = createMemoryCache();
-    this.baseHeaders = baseHeaders;
-    this.baseQueryParameters = baseQueryParameters;
-    this.userAgent = userAgent;
-    this.timeouts = timeouts;
-    this.requester = requester;
-  }
-
-  setHosts(hosts: Host[]): void {
-    this.hosts = hosts;
-    this.hostsCache.clear();
-  }
-
-  setRequester(requester: Requester): void {
-    this.requester = requester;
-  }
-
-  async createRetryableOptions(compatibleHosts: Host[]): Promise<{
-    hosts: Host[];
-    getTimeout: (retryCount: number, timeout: number) => number;
-  }> {
+export function createTransporter({
+  hosts,
+  hostsCache,
+  baseHeaders,
+  baseQueryParameters,
+  userAgent,
+  timeouts,
+  requester,
+}: TransporterOptions): Transporter {
+  async function createRetryableOptions(
+    compatibleHosts: Host[]
+  ): Promise<RetryableOptions> {
     const statefulHosts = await Promise.all(
-      compatibleHosts.map((statelessHost) => {
-        return this.hostsCache.get(statelessHost, () => {
-          return Promise.resolve(new StatefulHost(statelessHost));
+      compatibleHosts.map((compatibleHost) => {
+        return hostsCache.get(compatibleHost, () => {
+          return Promise.resolve(createStatefulHost(compatibleHost));
         });
       })
     );
     const hostsUp = statefulHosts.filter((host) => host.isUp());
     const hostsTimeouted = statefulHosts.filter((host) => host.isTimedout());
 
-    /**
-     * Note, we put the hosts that previously timeouted on the end of the list.
-     */
+    // Note, we put the hosts that previously timeouted on the end of the list.
     const hostsAvailable = [...hostsUp, ...hostsTimeouted];
-
-    const hosts = hostsAvailable.length > 0 ? hostsAvailable : compatibleHosts;
+    const compatibleHostsAvailable =
+      hostsAvailable.length > 0 ? hostsAvailable : compatibleHosts;
 
     return {
-      hosts,
+      hosts: compatibleHostsAvailable,
       getTimeout(timeoutsCount: number, baseTimeout: number): number {
         /**
          * Imagine that you have 4 hosts, if timeouts will increase
@@ -115,19 +79,18 @@ export class Transporter {
     };
   }
 
-  async request<TResponse>(
+  async function retryableRequest<TResponse>(
     request: Request,
     requestOptions: RequestOptions
   ): Promise<TResponse> {
     const stackTrace: StackFrame[] = [];
-
     const isRead = request.method === 'GET';
 
     /**
      * First we prepare the payload that do not depend from hosts.
      */
     const data = serializeData(request, requestOptions);
-    const headers = serializeHeaders(this.baseHeaders, requestOptions);
+    const headers = serializeHeaders(baseHeaders, requestOptions);
     const method = request.method;
 
     // On `GET`, the data is proxied to query parameters.
@@ -139,8 +102,8 @@ export class Transporter {
       : {};
 
     const queryParameters = {
-      'x-algolia-agent': this.userAgent.value,
-      ...this.baseQueryParameters,
+      'x-algolia-agent': userAgent.value,
+      ...baseQueryParameters,
       ...dataQueryParameters,
       ...requestOptions.queryParameters,
     };
@@ -148,20 +111,20 @@ export class Transporter {
     let timeoutsCount = 0;
 
     const retry = async (
-      hosts: Host[],
+      retryableHosts: Host[],
       getTimeout: (timeoutsCount: number, timeout: number) => number
     ): Promise<TResponse> => {
       /**
        * We iterate on each host, until there is no host left.
        */
-      const host = hosts.pop();
+      const host = retryableHosts.pop();
       if (host === undefined) {
         throw new RetryError(stackTraceWithoutCredentials(stackTrace));
       }
 
       let responseTimeout = requestOptions.timeout;
       if (responseTimeout === undefined) {
-        responseTimeout = isRead ? this.timeouts.read : this.timeouts.write;
+        responseTimeout = isRead ? timeouts.read : timeouts.write;
       }
 
       const payload: EndRequest = {
@@ -169,7 +132,7 @@ export class Transporter {
         headers,
         method,
         url: serializeUrl(host, request.path, queryParameters),
-        connectTimeout: getTimeout(timeoutsCount, this.timeouts.connect),
+        connectTimeout: getTimeout(timeoutsCount, timeouts.connect),
         responseTimeout: getTimeout(timeoutsCount, responseTimeout),
       };
 
@@ -183,7 +146,7 @@ export class Transporter {
           request: payload,
           response,
           host,
-          triesLeft: hosts.length,
+          triesLeft: retryableHosts.length,
         };
 
         stackTrace.push(stackFrame);
@@ -191,7 +154,7 @@ export class Transporter {
         return stackFrame;
       };
 
-      const response = await this.requester.send(payload, request);
+      const response = await requester.send(payload, request);
 
       if (isRetryable(response)) {
         const stackFrame = pushToStackTrace(response);
@@ -205,7 +168,7 @@ export class Transporter {
          * the end user to debug / store stack frames even
          * when a retry error does not happen.
          */
-        // eslint-disable-next-line no-console -- this will be fixed with the new `Logger`
+        // eslint-disable-next-line no-console -- this will be fixed by exposing a `logger` to the transporter
         console.log(
           'Retryable failure',
           stackFrameWithoutCredentials(stackFrame)
@@ -216,12 +179,14 @@ export class Transporter {
          * down it will remain down for the next 2 minutes. In a timeout situation,
          * this host will be added end of the list of hosts on the next request.
          */
-        await this.hostsCache.set(
+        await hostsCache.set(
           host,
-          new StatefulHost(host, response.isTimedOut ? 'timedout' : 'down')
+          createStatefulHost(host, response.isTimedOut ? 'timedout' : 'down')
         );
-        return retry(hosts, getTimeout);
+
+        return retry(retryableHosts, getTimeout);
       }
+
       if (isSuccess(response)) {
         return deserializeSuccess(response);
       }
@@ -238,12 +203,24 @@ export class Transporter {
      * 2. We also get from the retryable options a timeout multiplier that is tailored
      * for the current context.
      */
-    const compatibleHosts = this.hosts.filter(
+    const compatibleHosts = hosts.filter(
       (host) =>
         host.accept === 'readWrite' ||
         (isRead ? host.accept === 'read' : host.accept === 'write')
     );
-    const options = await this.createRetryableOptions(compatibleHosts);
+    const options = await createRetryableOptions(compatibleHosts);
+
     return retry([...options.hosts].reverse(), options.getTimeout);
   }
+
+  return {
+    hostsCache,
+    requester,
+    timeouts,
+    userAgent,
+    baseHeaders,
+    baseQueryParameters,
+    hosts,
+    request: retryableRequest,
+  };
 }

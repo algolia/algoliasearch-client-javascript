@@ -1,8 +1,7 @@
-import { Requester } from '@algolia/client-common';
-import type { EndRequest, Response } from '@algolia/client-common';
+import type { EndRequest, Requester, Response } from '@algolia/client-common';
 
-export class XhrRequester extends Requester {
-  send(request: EndRequest): Promise<Response> {
+export function createXhrRequester(): Requester {
+  function send(request: EndRequest): Promise<Response> {
     return new Promise((resolve) => {
       const baseRequester = new XMLHttpRequest();
       baseRequester.open(request.method, request.url, true);
@@ -75,4 +74,6 @@ export class XhrRequester extends Requester {
       baseRequester.send(request.data);
     });
   }
+
+  return { send };
 }
