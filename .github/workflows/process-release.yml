@@ -25,4 +25,5 @@ jobs:
       - run: yarn workspace scripts processRelease
         env:
           EVENT_NUMBER: ${{ github.event.issue.number }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.TOKEN_RELEASE_BOT }}
+          RELEASE_TEST: ${{ secrets.RELEASE_TEST }}
