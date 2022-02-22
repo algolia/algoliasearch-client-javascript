@@ -70,7 +70,7 @@ function getDefaultHosts(region{{#fallbackToAliasHost}}?{{/fallbackToAliasHost}}
 {{/hasRegionalHost}}
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export const create{{capitalizedApiName}}Api = (options: CreateClientOptions{{#hasRegionalHost}} & {region{{#fallbackToAliasHost}}?{{/fallbackToAliasHost}}: Region }{{/hasRegionalHost}}) => {
+export function create{{capitalizedApiName}}Api(options: CreateClientOptions{{#hasRegionalHost}} & {region{{#fallbackToAliasHost}}?{{/fallbackToAliasHost}}: Region }{{/hasRegionalHost}}) {
   const auth = createAuth(options.appId, options.apiKey, options.authMode);
   const transporter = new Transporter({
     hosts: options?.hosts ?? getDefaultHosts({{^hasRegionalHost}}{{^experimentalHost}}options.appId{{/experimentalHost}}{{/hasRegionalHost}}{{#hasRegionalHost}}options.region{{/hasRegionalHost}}),
@@ -87,6 +87,10 @@ export const create{{capitalizedApiName}}Api = (options: CreateClientOptions{{#h
     timeouts: options.timeouts,
     requester: options.requester,
   });
+
+  function addUserAgent(segment: string, version?: string): void {
+    transporter.userAgent.add({ segment, version });
+  }
 
   {{#operation}}
   /**
@@ -230,7 +234,7 @@ export const create{{capitalizedApiName}}Api = (options: CreateClientOptions{{#h
 
   {{/operation}}
 
-  return { {{#operation}}{{nickname}},{{/operation}} };
+  return { addUserAgent, {{#operation}}{{nickname}},{{/operation}} };
 }
 
 export type {{capitalizedApiName}}Api = ReturnType<typeof create{{capitalizedApiName}}Api>;

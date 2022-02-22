@@ -13,6 +13,8 @@ const searchQuery = process.env.SEARCH_QUERY || 'test_query';
 // Init client with appId and apiKey
 const client = searchApi(appId, apiKey);
 
+client.addUserAgent('Node playground', '0.0.1');
+
 async function testSearch() {
   try {
     const res = await client.search({

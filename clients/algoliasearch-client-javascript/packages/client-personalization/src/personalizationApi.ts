@@ -26,9 +26,9 @@ function getDefaultHosts(region: Region): Host[] {
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export const createPersonalizationApi = (
+export function createPersonalizationApi(
   options: CreateClientOptions & { region: Region }
-) => {
+) {
   const auth = createAuth(options.appId, options.apiKey, options.authMode);
   const transporter = new Transporter({
     hosts: options?.hosts ?? getDefaultHosts(options.region),
@@ -45,6 +45,10 @@ export const createPersonalizationApi = (
     timeouts: options.timeouts,
     requester: options.requester,
   });
+
+  function addUserAgent(segment: string, version?: string): void {
+    transporter.userAgent.add({ segment, version });
+  }
 
   /**
    * Returns, as part of the response, a date until which the data can safely be considered as deleted for the given user. This means that if you send events for the given user before this date, they will be ignored. Any data received after the deletedUntil date will start building a new user profile. It might take a couple hours before for the deletion request to be fully processed.
@@ -183,12 +187,13 @@ export const createPersonalizationApi = (
   }
 
   return {
+    addUserAgent,
     deleteUserProfile,
     getPersonalizationStrategy,
     getUserTokenProfile,
     setPersonalizationStrategy,
   };
-};
+}
 
 export type PersonalizationApi = ReturnType<typeof createPersonalizationApi>;
 

@@ -4,7 +4,6 @@
   "description": "Promise-based request library for browser using xhr.",
   "repository": "algolia/algoliasearch-client-javascript",
   "author": "Algolia",
-  "private": true,
   "license": "MIT",
   "main": "dist/requester-browser-xhr.cjs.node.js",
   "module": "dist/requester-browser-xhr.esm.node.js",

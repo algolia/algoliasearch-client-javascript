@@ -4,7 +4,6 @@
   "description": "Promise-based request library for node using the native http module.",
   "repository": "algolia/algoliasearch-client-javascript",
   "author": "Algolia",
-  "private": true,
   "license": "MIT",
   "main": "dist/requester-node-http.cjs.node.js",
   "module": "dist/requester-node-http.esm.node.js",

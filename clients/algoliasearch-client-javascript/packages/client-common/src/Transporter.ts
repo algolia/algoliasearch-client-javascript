@@ -33,7 +33,7 @@ export class Transporter {
   private baseHeaders: Headers;
   private baseQueryParameters: QueryParameters;
   private hostsCache: Cache;
-  private userAgent: UserAgent;
+  userAgent: UserAgent;
   private timeouts: Timeouts;
   private requester: Requester;
 

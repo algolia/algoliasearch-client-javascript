@@ -52,7 +52,7 @@ function getDefaultHosts(appId: string): Host[] {
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export const createRecommendApi = (options: CreateClientOptions) => {
+export function createRecommendApi(options: CreateClientOptions) {
   const auth = createAuth(options.appId, options.apiKey, options.authMode);
   const transporter = new Transporter({
     hosts: options?.hosts ?? getDefaultHosts(options.appId),
@@ -69,6 +69,10 @@ export const createRecommendApi = (options: CreateClientOptions) => {
     timeouts: options.timeouts,
     requester: options.requester,
   });
+
+  function addUserAgent(segment: string, version?: string): void {
+    transporter.userAgent.add({ segment, version });
+  }
 
   /**
    * Returns recommendations for a specific model and objectID.
@@ -107,7 +111,7 @@ export const createRecommendApi = (options: CreateClientOptions) => {
     });
   }
 
-  return { getRecommendations };
-};
+  return { addUserAgent, getRecommendations };
+}
 
 export type RecommendApi = ReturnType<typeof createRecommendApi>;
