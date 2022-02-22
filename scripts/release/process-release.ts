@@ -109,12 +109,14 @@ new Set([...Object.keys(versionsToRelease), ...langsToUpdateRepo]).forEach(
 );
 
 // commit openapitools and changelogs
-run('git config user.name "api-clients-bot"');
-run('git config user.email "bot@algolia.com"');
-run('git add openapitools.json');
-run('git add doc/changelogs/*');
-execa.sync('git', ['commit', '-m', TEXT.commitMessage]);
-run(`git push origin ${MAIN_BRANCH}`);
+if (process.env.RELEASE_TEST !== 'true') {
+  run('git config user.name "api-clients-bot"');
+  run('git config user.email "bot@algolia.com"');
+  run('git add openapitools.json');
+  run('git add doc/changelogs/*');
+  execa.sync('git', ['commit', '-m', TEXT.commitMessage]);
+  run(`git push origin ${MAIN_BRANCH}`);
+}
 
 // generate clients to release
 Object.keys(versionsToRelease).forEach((lang) => {
