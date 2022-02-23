@@ -131,3 +131,23 @@ langsToUpdateRepo.forEach((lang) => {
   // @ts-expect-error the library `execa` is not typed correctly
   run(`yarn generate ${lang}`).pipe(process.stdout);
 });
+
+const clientPath = path.resolve(
+  ROOT_DIR,
+  'clients/dummy-algoliasearch-client-javascript'
+);
+const runInClient: Run = (command, options = {}) =>
+  runOriginal(command, {
+    cwd: clientPath,
+    ...options,
+  });
+
+runInClient(`git checkout next`);
+run(
+  `cp -r clients/algoliasearch-client-javascript/ clients/dummy-algoliasearch-client-javascript`
+);
+runInClient(`git add .`);
+execa.sync('git', ['commit', '-m', 'chore: release test'], {
+  cwd: clientPath,
+});
+runInClient(`git push origin next`);
