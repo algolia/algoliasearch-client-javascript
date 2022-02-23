@@ -359,5 +359,6 @@ export type Settings = {
   readonly reRankingApplyFilter?:
     | string
     | readonly string[]
-    | ReadonlyArray<readonly string[] | string>;
+    | ReadonlyArray<readonly string[] | string>
+    | null;
 };

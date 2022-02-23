@@ -43,6 +43,7 @@ export type RankingInfo = {
     readonly rankingScore: number;
     readonly score: number;
   };
+  readonly promotedByReRanking?: boolean;
 };
 
 export type Hit<THit> = THit & {

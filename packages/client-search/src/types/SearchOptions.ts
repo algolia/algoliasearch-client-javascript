@@ -366,5 +366,6 @@ export type SearchOptions = {
   readonly reRankingApplyFilter?:
     | string
     | readonly string[]
-    | ReadonlyArray<readonly string[] | string>;
+    | ReadonlyArray<readonly string[] | string>
+    | null;
 };
