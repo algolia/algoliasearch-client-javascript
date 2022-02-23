@@ -1,0 +1,3 @@
+[submodule "clients/dummy-algoliasearch-client-javascript"] 
+  path = path_to_submodule 
+  url = git@github.com:algolia/dummy-js-client.git
