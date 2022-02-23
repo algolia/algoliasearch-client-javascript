@@ -92,7 +92,7 @@ fs.writeFileSync(
 // update changelogs
 new Set([...Object.keys(versionsToRelease), ...langsToUpdateRepo]).forEach(
   (lang) => {
-    const filePath = path.resolve(ROOT_DIR, `doc/changelogs/${lang}.md`);
+    const filePath = path.resolve(ROOT_DIR, `docs/changelogs/${lang}.md`);
     const header = versionsToRelease[lang!]
       ? `## ${versionsToRelease[lang!].next}`
       : `## ${new Date().toISOString().split('T')[0]}`;
