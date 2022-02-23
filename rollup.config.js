@@ -45,7 +45,9 @@ function createBundlers({ output, clientPath }) {
 }
 
 function getAvailableClients() {
-  const availableClients = [];
+  // We default `algoliasearch` as it's not a generated client, but an aggregation of
+  // multiple clients.
+  const availableClients = ['algoliasearch'];
   const generators = Object.entries(
     generatorConfig['generator-cli'].generators
   );
@@ -112,15 +114,19 @@ function initPackagesConfig() {
   }
 
   return availableClients.flatMap((packageName) => {
+    const isAlgoliasearchClient = packageName.startsWith('algoliasearch');
     const commonConfig = {
       package: packageName,
-      name: `@algolia/${packageName}`,
+      name: isAlgoliasearchClient ? packageName : `@algolia/${packageName}`,
       output: packageName,
-      dependencies: [
-        '@algolia/client-common',
-        '@algolia/requester-browser-xhr',
-        '@algolia/requester-node-http',
-      ],
+      dependencies: isAlgoliasearchClient
+        ? [
+            '@algolia/client-analytics',
+            '@algolia/client-common',
+            '@algolia/client-personalization',
+            '@algolia/client-search',
+          ]
+        : ['@algolia/client-common'],
       external: [],
     };
     const browserFormats = ['umd-browser', 'esm-browser', 'cjs-browser'];
@@ -132,6 +138,10 @@ function initPackagesConfig() {
         input: 'builds/browser.ts',
         formats: browserFormats,
         external: ['dom'],
+        dependencies: [
+          ...commonConfig.dependencies,
+          '@algolia/requester-browser-xhr',
+        ],
         globals: {
           [packageName]: packageName,
         },
@@ -139,6 +149,10 @@ function initPackagesConfig() {
       {
         ...commonConfig,
         input: 'builds/node.ts',
+        dependencies: [
+          ...commonConfig.dependencies,
+          '@algolia/requester-node-http',
+        ],
         formats: nodeFormats,
       },
     ];

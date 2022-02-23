@@ -76,6 +76,7 @@ jobs:
           - client-common
           - requester-browser-xhr
           - requester-node-http
+          - algoliasearch
     steps:
       - uses: actions/checkout@v2
 

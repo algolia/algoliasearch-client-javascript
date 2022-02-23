@@ -1,6 +1,10 @@
 {
   "files": [
     {
+      "path": "packages/algoliasearch/dist/algoliasearch.umd.browser.js",
+      "maxSize": "6.25KB"
+    },
+    {
       "path": "packages/client-abtesting/dist/client-abtesting.umd.browser.js",
       "maxSize": "3.25KB"
     },
@@ -14,7 +18,7 @@
     },
     {
       "path": "packages/client-personalization/dist/client-personalization.umd.browser.js",
-      "maxSize": "3.00KB"
+      "maxSize": "3.25KB"
     },
     {
       "path": "packages/client-query-suggestions/dist/client-query-suggestions.umd.browser.js",
