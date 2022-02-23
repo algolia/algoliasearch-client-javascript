@@ -3514,6 +3514,21 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"algoliasearch@5.0.0, algoliasearch@workspace:clients/algoliasearch-client-javascript/packages/algoliasearch":
+  version: 0.0.0-use.local
+  resolution: "algoliasearch@workspace:clients/algoliasearch-client-javascript/packages/algoliasearch"
+  dependencies:
+    "@algolia/client-analytics": 5.0.0
+    "@algolia/client-common": 5.0.0
+    "@algolia/client-personalization": 5.0.0
+    "@algolia/client-search": 5.0.0
+    "@algolia/requester-browser-xhr": 5.0.0
+    "@algolia/requester-node-http": 5.0.0
+    "@types/node": 16.11.11
+    typescript: 4.5.4
+  languageName: unknown
+  linkType: soft
+
 "ansi-align@npm:^3.0.0":
   version: 3.0.1
   resolution: "ansi-align@npm:3.0.1"
@@ -6970,6 +6985,7 @@ __metadata:
     "@algolia/client-sources": 0.0.1
     "@algolia/recommend": 5.0.0
     "@algolia/requester-node-http": 5.0.0
+    algoliasearch: 5.0.0
     dotenv: 10.0.0
     typescript: 4.5.4
   languageName: unknown
