@@ -24,14 +24,14 @@ export type SearchOptions = {
   /**
    * Filter on numeric attributes.
    */
-  readonly numericFilters?: string | readonly string[] | ReadonlyArray<readonly string[]>;
+  readonly numericFilters?: string | readonly string[] | ReadonlyArray<readonly string[] | string>;
 
   /**
    * Filter hits by tags. tagFilters is a different way of filtering, which relies on the _tags
    * attribute. It uses a simpler syntax than filters. You can use it when you want to do
    * simple filtering based on tags.
    */
-  readonly tagFilters?: string | readonly string[] | ReadonlyArray<readonly string[]>;
+  readonly tagFilters?: string | readonly string[] | ReadonlyArray<readonly string[] | string>;
 
   /**
    * Determines how to calculate the total score for filtering.

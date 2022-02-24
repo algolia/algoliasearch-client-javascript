@@ -12,14 +12,14 @@ export type DeleteByFiltersOptions = {
   /**
    * Filter on numeric attributes.
    */
-  readonly numericFilters?: string | readonly string[] | ReadonlyArray<readonly string[]>;
+  readonly numericFilters?: string | readonly string[] | ReadonlyArray<readonly string[] | string>;
 
   /**
    * Filter hits by tags. tagFilters is a different way of filtering, which relies on the _tags
    * attribute. It uses a simpler syntax than filters. You can use it when you want to do
    * simple filtering based on tags.
    */
-  readonly tagFilters?: string | readonly string[] | ReadonlyArray<readonly string[]>;
+  readonly tagFilters?: string | readonly string[] | ReadonlyArray<readonly string[] | string>;
 
   /**
    * Search for entries around a central geolocation, enabling a geo search within a circular area.
