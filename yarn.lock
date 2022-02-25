@@ -3073,6 +3073,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/folder-hash@npm:4.0.1":
+  version: 4.0.1
+  resolution: "@types/folder-hash@npm:4.0.1"
+  checksum: df14059d4ba6bde347e078f3d00a2a93965d5e5eb9c9f9c3457b1505fb6bb6fca08083bab20cd7221d2b19c0bcf5a60dc7819720bd8f3ed226b75c3a08dae227
+  languageName: node
+  linkType: hard
+
 "@types/glob@npm:*":
   version: 7.2.0
   resolution: "@types/glob@npm:7.2.0"
@@ -3089,6 +3096,16 @@ __metadata:
   dependencies:
     "@types/node": "*"
   checksum: d076bb61f45d0fc42dee496ef8b1c2f8742e15d5e47e90e20d0243386e426c04d4efd408a48875ab432f7960b4ce3414db20ed0fbbfc7bcc89d84e574f6e045a
+  languageName: node
+  linkType: hard
+
+"@types/inquirer@npm:8.2.0":
+  version: 8.2.0
+  resolution: "@types/inquirer@npm:8.2.0"
+  dependencies:
+    "@types/through": "*"
+    rxjs: ^7.2.0
+  checksum: bb4b550ca01e892bab9483dfc8f8122dc4eb3291e8b9e1d038fbb6d883335f6ff61692331ae90af452e878c0335b119269ad9909c1ba4b6ec10da6fcf1568011
   languageName: node
   linkType: hard
 
@@ -3237,6 +3254,15 @@ __metadata:
   version: 2.0.1
   resolution: "@types/stack-utils@npm:2.0.1"
   checksum: 205fdbe3326b7046d7eaf5e494d8084f2659086a266f3f9cf00bccc549c8e36e407f88168ad4383c8b07099957ad669f75f2532ed4bc70be2b037330f7bae019
+  languageName: node
+  linkType: hard
+
+"@types/through@npm:*":
+  version: 0.0.30
+  resolution: "@types/through@npm:0.0.30"
+  dependencies:
+    "@types/node": "*"
+  checksum: 9578470db0b527c26e246a1220ae9bffc6bf47f20f89c54aac467c083ab1f7e16c00d9a7b4bb6cb4e2dfae465027270827e5908a6236063f6214625e50585d78
   languageName: node
   linkType: hard
 
@@ -4002,6 +4028,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"brace-expansion@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "brace-expansion@npm:2.0.1"
+  dependencies:
+    balanced-match: ^1.0.0
+  checksum: a61e7cd2e8a8505e9f0036b3b6108ba5e926b4b55089eeb5550cd04a471fe216c96d4fe7e4c7f995c728c554ae20ddfc4244cad10aef255e72b62930afd233d1
+  languageName: node
+  linkType: hard
+
 "braces@npm:^3.0.1, braces@npm:~3.0.2":
   version: 3.0.2
   resolution: "braces@npm:3.0.2"
@@ -4526,6 +4561,13 @@ __metadata:
   version: 8.3.0
   resolution: "commander@npm:8.3.0"
   checksum: 0f82321821fc27b83bd409510bb9deeebcfa799ff0bf5d102128b500b7af22872c0c92cb6a0ebc5a4cf19c6b550fba9cedfa7329d18c6442a625f851377bacf0
+  languageName: node
+  linkType: hard
+
+"commander@npm:9.0.0":
+  version: 9.0.0
+  resolution: "commander@npm:9.0.0"
+  checksum: 15066e433d528315ded8261d16bc600d1f3c5671c75021e685ae67e4d62f7551243ff28411b28dc0a6f8b23c2a0f033550ec6f3e66bdf9d11a4fdc2d33dd9802
   languageName: node
   linkType: hard
 
@@ -5897,6 +5939,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"folder-hash@npm:4.0.2":
+  version: 4.0.2
+  resolution: "folder-hash@npm:4.0.2"
+  dependencies:
+    debug: ^4.3.3
+    graceful-fs: ~4.2.9
+    minimatch: ~5.0.0
+  bin:
+    folder-hash: bin/folder-hash
+  checksum: c087a02f5c39e6869c72e40d196ee642a972e5219b83239ba61f2971c710b6fbee0e9bfbe834cdb59104a7a696596be75c4c3365fc1e7aae8bbe652a650c8092
+  languageName: node
+  linkType: hard
+
 "follow-redirects@npm:^1.14.0, follow-redirects@npm:^1.14.4":
   version: 1.14.9
   resolution: "follow-redirects@npm:1.14.9"
@@ -6204,7 +6259,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"graceful-fs@npm:^4.1.6, graceful-fs@npm:^4.2.0, graceful-fs@npm:^4.2.3, graceful-fs@npm:^4.2.6, graceful-fs@npm:^4.2.9":
+"graceful-fs@npm:^4.1.6, graceful-fs@npm:^4.2.0, graceful-fs@npm:^4.2.3, graceful-fs@npm:^4.2.6, graceful-fs@npm:^4.2.9, graceful-fs@npm:~4.2.9":
   version: 4.2.9
   resolution: "graceful-fs@npm:4.2.9"
   checksum: 68ea4e07ff2c041ada184f9278b830375f8e0b75154e3f080af6b70f66172fabb4108d19b3863a96b53fc068a310b9b6493d86d1291acc5f3861eb4b79d26ad6
@@ -8035,6 +8090,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"minimatch@npm:~5.0.0":
+  version: 5.0.0
+  resolution: "minimatch@npm:5.0.0"
+  dependencies:
+    brace-expansion: ^2.0.1
+  checksum: 810d4165fa2b16d0ffe8eb7586b8b7b7122ab77efa8f351686ffd1e8cbe63997ae9d5e7404fe611a676e59e1a47f7f5e8d9a004e0fe5bb6d5ac35457469116a4
+  languageName: node
+  linkType: hard
+
 "minimist@npm:^1.2.0, minimist@npm:^1.2.3, minimist@npm:^1.2.5":
   version: 1.2.5
   resolution: "minimist@npm:1.2.5"
@@ -8631,6 +8695,23 @@ __metadata:
     type-check: ^0.4.0
     word-wrap: ^1.2.3
   checksum: dbc6fa065604b24ea57d734261914e697bd73b69eff7f18e967e8912aa2a40a19a9f599a507fa805be6c13c24c4eae8c71306c239d517d42d4c041c942f508a0
+  languageName: node
+  linkType: hard
+
+"ora-classic@npm:5.4.2":
+  version: 5.4.2
+  resolution: "ora-classic@npm:5.4.2"
+  dependencies:
+    bl: ^4.1.0
+    chalk: ^4.1.0
+    cli-cursor: ^3.1.0
+    cli-spinners: ^2.5.0
+    is-interactive: ^1.0.0
+    is-unicode-supported: ^0.1.0
+    log-symbols: ^4.1.0
+    strip-ansi: ^6.0.0
+    wcwidth: ^1.0.1
+  checksum: f52ec97c8fbb051dd883d6bbb75a0b658a173f8230aba0d39b2cf5957b79dcaf7da53dda72d744d726ac8cb7e693fe6d7eb0c27a59298aa35f0ec06651c4626f
   languageName: node
   linkType: hard
 
@@ -10001,16 +10082,29 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "scripts@workspace:scripts"
   dependencies:
+    "@apidevtools/swagger-parser": 10.0.3
     "@octokit/rest": 18.12.0
+    "@types/folder-hash": 4.0.1
+    "@types/inquirer": 8.2.0
+    "@types/jest": 27.4.0
     "@types/js-yaml": 4.0.5
+    "@types/mustache": 4.1.2
     "@types/node": 16.11.11
     "@types/semver": 7.3.9
+    commander: 9.0.0
     dotenv: 16.0.0
+    eslint: 8.6.0
     execa: 5.1.1
+    folder-hash: 4.0.2
+    inquirer: 8.2.0
     jest: 27.4.7
     js-yaml: 4.1.0
+    mustache: 4.2.0
+    openapi-types: 10.0.0
+    ora-classic: 5.4.2
     semver: 7.3.5
     ts-jest: 27.1.3
+    ts-node: 10.5.0
     typescript: 4.5.4
   languageName: unknown
   linkType: soft
@@ -10587,23 +10681,6 @@ __metadata:
   checksum: 3b34a3d77165a2cb82b34014b3aba93b1c4637a5011807557dc2f3da826c59975a5ccad765721c4648b39817e3472789f9b0fa98fc854c5c1c7a1e632aacdc28
   languageName: node
   linkType: hard
-
-"tests@workspace:tests":
-  version: 0.0.0-use.local
-  resolution: "tests@workspace:tests"
-  dependencies:
-    "@apidevtools/swagger-parser": 10.0.3
-    "@types/jest": 27.4.0
-    "@types/mustache": 4.1.2
-    "@types/node": 16.11.11
-    eslint: 8.6.0
-    jest: 27.4.7
-    mustache: 4.2.0
-    openapi-types: 10.0.0
-    ts-jest: 27.1.3
-    typescript: 4.5.4
-  languageName: unknown
-  linkType: soft
 
 "text-table@npm:^0.2.0":
   version: 0.2.0

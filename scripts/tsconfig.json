@@ -5,6 +5,6 @@
     "types": ["node", "jest"],
     "outDir": "dist"
   },
-  "include": ["pre-gen/setHostsOptions.ts", "release/*"],
-  "exclude": ["dist", "*.json"]
+  "include": ["**/*.ts"],
+  "exclude": ["dist", "*.json", "node_modules"]
 }

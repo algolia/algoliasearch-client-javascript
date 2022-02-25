@@ -8,28 +8,28 @@ It is automaticaly generated for all languages, from a JSON entry point.
 > CTS requires all clients to be built
 
 ```bash
-yarn docker build:specs
-yarn docker build:clients
-yarn docker cts:generate
-yarn docker cts:test
+yarn docker build specs all
+yarn docker build clients all all
+yarn docker cts generate all all
+yarn docker cts run all
 ```
 
 If you only want to generate the tests for a language, you can run:
 
 ```bash
-yarn docker cts:generate javascript
+yarn docker cts generate javascript all
 ```
 
 Or for a specific client:
 
 ```bash
-yarn docker cts:generate all search
+yarn docker cts generate all search
 ```
 
 Or a specific language and client:
 
 ```bash
-yarn docker cts:generate javascript search
+yarn docker cts generate javascript search
 ```
 
 ## How to add test
