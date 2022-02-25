@@ -7,7 +7,14 @@ import { createNodeHttpRequester } from '@algolia/requester-node-http';
 import { createUserAgent } from '@algolia/transporter';
 
 import { createRecommendClient } from '../createRecommendClient';
-import { getFrequentlyBoughtTogether, getRecommendations, getRelatedProducts } from '../methods';
+import {
+  getFrequentlyBoughtTogether,
+  getRecommendations,
+  getRelatedProducts,
+  getTrendingFacets,
+  getTrendingGlobalItems,
+  getTrendingItemsForFacet,
+} from '../methods';
 import { BaseRecommendClient, RecommendOptions, WithRecommendMethods } from '../types';
 
 export default function recommend(
@@ -41,6 +48,9 @@ export default function recommend(
       getFrequentlyBoughtTogether,
       getRecommendations,
       getRelatedProducts,
+      getTrendingFacets,
+      getTrendingGlobalItems,
+      getTrendingItemsForFacet,
     },
   });
 }

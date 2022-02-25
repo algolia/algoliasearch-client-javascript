@@ -10,4 +10,7 @@ export * from './RecommendOptions';
 export * from './RecommendSearchOptions';
 export * from './RecommendationsQuery';
 export * from './RelatedProductsQuery';
+export * from './TrendingFacetsQuery';
+export * from './TrendingGlobalItemsQuery';
+export * from './TrendingItemsForFacetQuery';
 export * from './WithRecommendMethods';
