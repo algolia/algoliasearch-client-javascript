@@ -3,6 +3,10 @@
 # Break on non-zero code
 set -e
 
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null && pwd)"
+# Move to the root (easier to locate other scripts)
+cd ${DIR}/../..
+
 # Remove the oneOf in the spec until it's supported (https://github.com/OpenAPITools/openapi-generator/issues/10880).
 
 # Remove the oneOf and only keep the last $ref

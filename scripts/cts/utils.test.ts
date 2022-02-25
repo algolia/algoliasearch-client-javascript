@@ -1,6 +1,5 @@
 import {
   capitalize,
-  checkIfLanguageExists,
   createClientName,
   removeEnumType,
   removeObjectName,
@@ -114,16 +113,6 @@ describe('utils', () => {
         val: 'test',
         arr: ['addEntry', '$enumType'],
       });
-    });
-  });
-
-  describe('checkIfLanguageExists', () => {
-    it('returns `true` if the language is present in the config', () => {
-      expect(checkIfLanguageExists('javascript')).toBe(true);
-    });
-
-    it('returns `false` if the language is not present in the config', () => {
-      expect(checkIfLanguageExists('algo')).toBe(false);
     });
   });
 });

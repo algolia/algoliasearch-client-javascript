@@ -1,0 +1,19 @@
+{
+    "java": {
+        "folder": "clients/algoliasearch-client-java-2",
+        "tests": {
+            "extension": ".test.java",
+            "outputFolder": "src/test/java/com/algolia"
+        }
+    },
+    "javascript": {
+        "folder": "clients/algoliasearch-client-javascript",
+        "tests": {
+            "extension": ".test.ts",
+            "outputFolder": "src"
+        }
+    },
+    "php": {
+        "folder": "clients/algoliasearch-client-php"
+    }
+}

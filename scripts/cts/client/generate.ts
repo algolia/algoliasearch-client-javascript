@@ -2,12 +2,12 @@ import fsp from 'fs/promises';
 
 import Mustache from 'mustache';
 
-import openapitools from '../../../openapitools.json';
+import { exists, toAbsolutePath } from '../../common';
+import { createSpinner } from '../../oraLog';
+import type { Generator } from '../../types';
 import {
   walk,
-  packageNames,
   createClientName,
-  exists,
   createOutputDir,
   getOutputPath,
   loadTemplates,
@@ -19,7 +19,7 @@ const testPath = 'client';
 
 async function loadTests(client: string): Promise<TestsBlock[]> {
   const testsBlocks: TestsBlock[] = [];
-  const clientPath = `./CTS/client/${client}`;
+  const clientPath = toAbsolutePath(`tests/CTS/client/${client}`);
 
   if (!(await exists(clientPath))) {
     return [];
@@ -57,19 +57,29 @@ async function loadTests(client: string): Promise<TestsBlock[]> {
   return testsBlocks;
 }
 
-export async function generateTests(
-  language: string,
-  client: string
+export async function generateClientTests(
+  {
+    language,
+    client,
+    additionalProperties: { hasRegionalHost, packageName },
+  }: Generator,
+  verbose: boolean
 ): Promise<void> {
+  let spinner = createSpinner(
+    { text: 'generating client tests', indent: 4 },
+    verbose
+  ).start();
   const testsBlocks = await loadTests(client);
 
   if (testsBlocks.length === 0) {
-    // eslint-disable-next-line no-console
-    console.warn(
-      `Skipping because tests dont't exist for CTS > generate:client for ${language}-${client}`
-    );
+    spinner.warn("skipping because tests doesn't exist");
     return;
   }
+  spinner.info();
+  spinner = createSpinner(
+    { text: 'loading templates', indent: 8 },
+    verbose
+  ).start();
 
   await createOutputDir({ language, testPath });
 
@@ -79,28 +89,24 @@ export async function generateTests(
   });
 
   if (!template) {
-    // eslint-disable-next-line no-console
-    console.warn(
-      `Skipping because template doesn't exist for CTS > generate:client for ${language}-${client}`
-    );
+    spinner.warn("skipping because template doesn't exist");
     return;
   }
 
+  spinner.text = 'rendering templates';
   const code = Mustache.render(
     template,
     {
-      import: packageNames[language][client],
+      import: packageName,
       client: createClientName(client, language),
       blocks: modifyForMustache(testsBlocks),
-      hasRegionalHost: openapitools['generator-cli'].generators[
-        `${language}-${client}`
-      ].additionalProperties.hasRegionalHost
-        ? true
-        : undefined,
+      hasRegionalHost: hasRegionalHost ? true : undefined,
     },
     partialTemplates
   );
   await fsp.writeFile(getOutputPath({ language, client, testPath }), code);
+
+  spinner.succeed();
 }
 
 function serializeParameters(parameters: any): string {
