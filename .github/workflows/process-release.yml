@@ -21,6 +21,8 @@ jobs:
           token: ${{ secrets.TOKEN_RELEASE_BOT }}
 
       - run: git checkout chore/release
+      
+      - run: git submodule update
 
       - name: Setup
         id: setup
