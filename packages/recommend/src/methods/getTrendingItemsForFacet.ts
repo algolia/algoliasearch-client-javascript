@@ -1,5 +1,5 @@
 import { BaseRecommendClient, TrendingItemsForFacetQuery, WithRecommendMethods } from '../types';
-import { getRecommendations } from './getRecommendations';
+import { getTrendingGlobalItems } from '.';
 
 type GetTrendingItemsForFacet = (
   base: BaseRecommendClient
@@ -7,10 +7,9 @@ type GetTrendingItemsForFacet = (
 
 export const getTrendingItemsForFacet: GetTrendingItemsForFacet = base => {
   return (queries: readonly TrendingItemsForFacetQuery[], requestOptions) => {
-    return getRecommendations(base)(
+    return getTrendingGlobalItems(base)(
       queries.map(query => ({
         ...query,
-        model: 'trending-items',
       })),
       requestOptions
     );

@@ -1,6 +1,3 @@
-import { RecommendationsQuery } from './RecommendationsQuery';
+import { TrendingQuery } from './TrendingQuery';
 
-export type TrendingGlobalItemsQuery = Omit<
-  RecommendationsQuery,
-  'model' | 'objectID' | 'facetName' | 'facetValue'
->;
+export type TrendingGlobalItemsQuery = Omit<TrendingQuery, 'model' | 'facetName' | 'facetValue'>;

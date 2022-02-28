@@ -1,5 +1,2 @@
-export type RecommendModel =
-  | 'related-products'
-  | 'bought-together'
-  | 'trending-items'
-  | 'trending-facets';
+export type RecommendModel = 'related-products' | 'bought-together';
+export type TrendingModel = 'trending-items' | 'trending-facets';
