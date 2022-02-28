@@ -15,7 +15,14 @@ export const ROOT_DIR = path.resolve(process.cwd(), '..');
 
 export const GENERATORS = Object.fromEntries(
   Object.entries(openapitools['generator-cli'].generators).map(([key, gen]) => {
-    return [key, { ...gen, ...splitGeneratorKey(key) }];
+    return [
+      key,
+      {
+        ...gen,
+        output: gen.output.replace('#{cwd}/', ''),
+        ...splitGeneratorKey(key),
+      },
+    ];
   })
 );
 

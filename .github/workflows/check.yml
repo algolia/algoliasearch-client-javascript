@@ -63,7 +63,9 @@ jobs:
         run: yarn cli build specs ${{ matrix.client }}
 
       - name: Check diff with pushed spec
-        run: exit $(git status --porcelain specs/bundled/${{ matrix.client }}.yml | wc -l)
+        run: |
+          git status
+          exit $(git status --porcelain specs/bundled/${{ matrix.client }}.yml | wc -l)
 
   client_javascript_common:
     timeout-minutes: 10
@@ -127,7 +129,9 @@ jobs:
 
       - name: Check diff with pushed client
         if: steps.cache.outputs.cache-hit != 'true'
-        run: exit $(git status --porcelain ${{ matrix.client.folder }} | wc -l)
+        run: |
+          git status
+          exit $(git status --porcelain ${{ matrix.client.folder }} | wc -l)
 
       - name: Build ${{ matrix.client.name }} client
         if: steps.cache.outputs.cache-hit != 'true'
@@ -164,7 +168,9 @@ jobs:
 
       - name: Check diff with pushed client
         if: steps.cache.outputs.cache-hit != 'true'
-        run: exit $(git status --porcelain ${{ matrix.client.folder }} | wc -l)
+        run: |
+          git status
+          exit $(git status --porcelain ${{ matrix.client.folder }} | wc -l)
 
       - name: Build ${{ matrix.client.name }} client
         if: steps.cache.outputs.cache-hit != 'true'
@@ -194,7 +200,9 @@ jobs:
 
       - name: Check diff with pushed client
         if: steps.cache.outputs.cache-hit != 'true'
-        run: exit $(git status --porcelain ${{ matrix.client.folder }} | wc -l)
+        run: |
+          git status
+          exit $(git status --porcelain ${{ matrix.client.folder }} | wc -l)
 
       - name: Build ${{ matrix.client.name }} client
         if: steps.cache.outputs.cache-hit != 'true'
@@ -221,7 +229,9 @@ jobs:
         run: yarn cli cts generate
 
       - name: Check diff with pushed CTS
-        run: exit $(git status --porcelain ./tests/output | wc -l)
+        run: |
+          git status
+          exit $(git status --porcelain ./tests/output | wc -l)
 
       - name: Run CTS
         run: yarn cli cts run
