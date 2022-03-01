@@ -14,6 +14,25 @@ components:
       in: header
       name: X-Algolia-API-Key
   parameters:
+    PathInPath:
+      name: path
+      in: path
+      description: >-
+        The path of the API endpoint to target, anything after the /1 needs to
+        be specified.
+      required: true
+      schema:
+        type: string
+        example: /keys
+    Parameters:
+      name: parameters
+      in: query
+      description: >-
+        URL-encoded query string. Force some query parameters to be applied for
+        each query made with this API key.
+      schema:
+        type: string
+        example: '?query=mySearchQuery&hitsPerPage=10'
     userID:
       name: userID
       in: path
@@ -33,8 +52,14 @@ components:
           type: string
           example: Invalid Application-Id or API-Key
   responses:
-    UserNotFound:
-      description: User not found.
+    BadRequest:
+      description: Bad request or request arguments.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
+    FeatureNotEnabled:
+      description: This feature is not enabled on your Algolia account.
       content:
         application/json:
           schema:
@@ -45,16 +70,144 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorBase'
+    IndexNotFound:
+      description: Index not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
+    UserNotFound:
+      description: User not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
 servers:
   - url: https://predict-api-oslcbws3zq-ew.a.run.app
 security:
   - appId: []
     apiKey: []
+tags:
+  - name: predict
+    description: Predict API reference
 paths:
-  /1/users/{userID}/fetch:
-    post:
+  /1{path}:
+    get:
+      operationId: get
+      summary: Send requests to the Algolia REST API.
+      description: This method allow you to send requests to the Algolia REST API.
+      parameters:
+        - $ref: '#/components/parameters/PathInPath'
+        - $ref: '#/components/parameters/Parameters'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
       tags:
         - predict
+    post:
+      operationId: post
+      requestBody:
+        description: The parameters to send with the custom request.
+        content:
+          application/json:
+            schema:
+              type: object
+      summary: Send requests to the Algolia REST API.
+      description: This method allow you to send requests to the Algolia REST API.
+      parameters:
+        - $ref: '#/components/parameters/PathInPath'
+        - $ref: '#/components/parameters/Parameters'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+      tags:
+        - predict
+    put:
+      operationId: put
+      requestBody:
+        description: The parameters to send with the custom request.
+        content:
+          application/json:
+            schema:
+              type: object
+      summary: Send requests to the Algolia REST API.
+      description: This method allow you to send requests to the Algolia REST API.
+      parameters:
+        - $ref: '#/components/parameters/PathInPath'
+        - $ref: '#/components/parameters/Parameters'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+      tags:
+        - predict
+    delete:
+      operationId: del
+      requestBody:
+        description: The parameters to send with the custom request.
+        content:
+          application/json:
+            schema:
+              type: object
+      summary: Send requests to the Algolia REST API.
+      description: This method allow you to send requests to the Algolia REST API.
+      parameters:
+        - $ref: '#/components/parameters/PathInPath'
+        - $ref: '#/components/parameters/Parameters'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+      tags:
+        - predict
+  /1/users/{userID}/fetch:
+    post:
       operationId: fetchUserProfile
       description: >-
         Get predictions, properties (raw, computed or custom) and segments
@@ -193,3 +346,5 @@ paths:
           $ref: '#/components/responses/UserNotFound'
         '405':
           $ref: '#/components/responses/MethodNotAllowed'
+      tags:
+        - predict

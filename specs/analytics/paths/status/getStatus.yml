@@ -1,6 +1,4 @@
 get:
-  tags:
-    - analytics
   operationId: getStatus
   description: Returns the latest update time of the analytics API for a given index. If the index has been recently created and/or no search has been performed yet the updated time will be null.
   summary: Get latest update time of the analytics API.

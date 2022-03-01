@@ -1,6 +1,4 @@
 get:
-  tags:
-    - query-suggestions
   operationId: getLogFile
   description: Get the log file of the last build of a single Query Suggestion index.
   summary: Get the log file of the last build of a single Query Suggestion index.

@@ -7,7 +7,7 @@
         "$objectName": "BatchWriteParams",
         "requests": [
           {
-            "$objectName": "Operation",
+            "$objectName": "BatchOperation",
             "action": {
               "$enumType": "Action",
               "value": "delete"
@@ -15,8 +15,7 @@
             "body": {
               "$objectName": "Object",
               "key": "value"
-            },
-            "indexName": "otherIndexName"
+            }
           }
         ]
       }
@@ -30,8 +29,7 @@
             "action": "delete",
             "body": {
               "key": "value"
-            },
-            "indexName": "otherIndexName"
+            }
           }
         ]
       }

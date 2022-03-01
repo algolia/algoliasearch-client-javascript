@@ -1,6 +1,4 @@
 get:
-  tags:
-    - search
   operationId: hasPendingMappings
   summary: Has pending mappings
   description: >

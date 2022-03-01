@@ -1,6 +1,4 @@
 get:
-  tags:
-    - analytics
   operationId: getTopFilterAttributes
   description: Returns top filter attributes. Limited to the 1000 most used filters.
   summary: Returns top filter attributes.

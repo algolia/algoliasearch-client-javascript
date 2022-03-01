@@ -1,6 +1,4 @@
 post:
-  tags:
-    - search
   operationId: addApiKey
   summary: Create a new API key.
   description: Add a new API Key with specific permissions/restrictions.
@@ -27,8 +25,6 @@ post:
       $ref: ../../../common/responses/IndexNotFound.yml
 
 get:
-  tags:
-    - search
   operationId: listApiKeys
   summary: Get the full list of API Keys.
   description: List API keys, along with their associated rights.

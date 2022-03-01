@@ -20,6 +20,15 @@ servers:
 security:
   - appId: []
     apiKey: []
+tags:
+  - name: sources
+    description: Sources API reference
 paths:
+  # ######################
+  # ### Custom request ###
+  # ######################
+  /1{path}:
+    $ref: ../common/paths/customRequest.yml
+
   /1/ingest/url:
     $ref: paths/ingest/postUrl.yml

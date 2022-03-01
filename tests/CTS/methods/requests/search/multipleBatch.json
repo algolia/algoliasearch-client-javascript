@@ -5,7 +5,7 @@
       "$objectName": "BatchParams",
       "requests": [
         {
-          "$objectName": "Operation",
+          "$objectName": "MultipleBatchOperation",
           "action": {
             "$enumType": "Action",
             "value": "addObject"

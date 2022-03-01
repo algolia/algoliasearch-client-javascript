@@ -188,7 +188,7 @@ class SearchApiTests {
     {
       List requests2 = new ArrayList();
       {
-        Operation requestsParam03 = new Operation();
+        BatchOperation requestsParam03 = new BatchOperation();
         {
           Action action4 = Action.fromValue("delete");
 
@@ -201,9 +201,6 @@ class SearchApiTests {
             body4.put("key", key5);
           }
           requestsParam03.setBody(body4);
-          String indexName4 = "otherIndexName";
-
-          requestsParam03.setIndexName(indexName4);
         }
         requests2.add(requestsParam03);
       }
@@ -221,7 +218,7 @@ class SearchApiTests {
 
     assertDoesNotThrow(() -> {
       JSONAssert.assertEquals(
-        "{\"requests\":[{\"action\":\"delete\",\"body\":{\"key\":\"value\"},\"indexName\":\"otherIndexName\"}]}",
+        "{\"requests\":[{\"action\":\"delete\",\"body\":{\"key\":\"value\"}}]}",
         req.getBody(),
         JSONCompareMode.STRICT_ORDER
       );
@@ -1173,7 +1170,7 @@ class SearchApiTests {
     {
       List requests1 = new ArrayList();
       {
-        Operation requestsParam02 = new Operation();
+        MultipleBatchOperation requestsParam02 = new MultipleBatchOperation();
         {
           Action action3 = Action.fromValue("addObject");
 
@@ -1323,22 +1320,33 @@ class SearchApiTests {
     {
       HashMap stringBuiltInOperationParam02 = new HashMap<String, Object>();
       {
-        String id13 = "test";
-
-        stringBuiltInOperationParam02.put("id1", id13);
-
-        OneOfstringbuiltInOperation id23 = new OneOfstringbuiltInOperation();
+        HashMap id13 = new HashMap<String, Object>();
         {
           String _operation4 = "AddUnique";
 
-          id23.set_operation(_operation4);
-          String value4 = "test2";
+          id13.put("_operation", _operation4);
+          String value4 = "test1";
 
-          id23.setValue(value4);
+          id13.put("value", value4);
         }
-        stringBuiltInOperationParam02.put("id2", id23);
+        stringBuiltInOperationParam02.put("id1", id13);
       }
       stringBuiltInOperation1.add(stringBuiltInOperationParam02);
+
+      HashMap stringBuiltInOperationParam12 = new HashMap<String, Object>();
+      {
+        HashMap id23 = new HashMap<String, Object>();
+        {
+          String _operation4 = "AddUnique";
+
+          id23.put("_operation", _operation4);
+          String value4 = "test2";
+
+          id23.put("value", value4);
+        }
+        stringBuiltInOperationParam12.put("id2", id23);
+      }
+      stringBuiltInOperation1.add(stringBuiltInOperationParam12);
     }
 
     boolean createIfNotExists1 = true;
@@ -1358,7 +1366,7 @@ class SearchApiTests {
 
     assertDoesNotThrow(() -> {
       JSONAssert.assertEquals(
-        "[{\"id1\":\"test\",\"id2\":{\"_operation\":\"AddUnique\",\"value\":\"test2\"}}]",
+        "[{\"id1\":{\"_operation\":\"AddUnique\",\"value\":\"test1\"}},{\"id2\":{\"_operation\":\"AddUnique\",\"value\":\"test2\"}}]",
         req.getBody(),
         JSONCompareMode.STRICT_ORDER
       );

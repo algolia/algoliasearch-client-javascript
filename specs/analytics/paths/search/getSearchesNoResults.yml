@@ -1,6 +1,4 @@
 get:
-  tags:
-    - analytics
   operationId: getSearchesNoResults
   description: Returns top searches that didn't return any results. Limited to the 1000 most frequent ones.
   summary: Returns top searches that didn't return any results.

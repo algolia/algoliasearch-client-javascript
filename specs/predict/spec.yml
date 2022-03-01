@@ -14,6 +14,15 @@ servers:
 security:
   - appId: []
     apiKey: []
+tags:
+  - name: predict
+    description: Predict API reference
 paths:
+  # ######################
+  # ### Custom request ###
+  # ######################
+  /1{path}:
+    $ref: ../common/paths/customRequest.yml
+
   /1/users/{userID}/fetch:
     $ref: paths/fetchUserProfile.yml

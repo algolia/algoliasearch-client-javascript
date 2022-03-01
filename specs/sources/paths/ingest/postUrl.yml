@@ -1,6 +1,4 @@
 post:
-  tags:
-    - sources
   operationId: postIngestUrl
   summary: Create a new ingestion job via URL.
   description: Add an ingestion job that will fetch data from an URL.

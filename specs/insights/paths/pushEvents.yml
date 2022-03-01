@@ -1,6 +1,4 @@
 post:
-  tags:
-    - insights
   operationId: pushEvents
   description: This command pushes an array of events.
   summary: Pushes an array of events.

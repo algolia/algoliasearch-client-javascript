@@ -1,6 +1,4 @@
 get:
-  tags:
-    - analytics
   operationId: getTopHits
   description: Returns top hits. Limited to the 1000 most frequent ones.
   summary: Returns top hits.

@@ -21,6 +21,15 @@ servers:
 security:
   - appId: []
     apiKey: []
+tags:
+  - name: insights
+    description: Insights API reference
 paths:
+  # ######################
+  # ### Custom request ###
+  # ######################
+  /1{path}:
+    $ref: ../common/paths/customRequest.yml
+
   /1/events:
     $ref: paths/pushEvents.yml

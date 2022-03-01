@@ -1,9 +1,46 @@
 import fsp from 'fs/promises';
 
 import { hashElement } from 'folder-hash';
+import yaml from 'js-yaml';
 
 import { exists, run, toAbsolutePath } from './common';
 import { createSpinner } from './oraLog';
+import type { Spec } from './pre-gen/setHostsOptions';
+
+async function propagateTagsToOperations(
+  bundledPath: string
+): Promise<boolean> {
+  if (!(await exists(bundledPath))) {
+    throw new Error(`Bundled file not found ${bundledPath}.`);
+  }
+
+  const bundledSpec = yaml.load(
+    await fsp.readFile(bundledPath, 'utf8')
+  ) as Spec;
+
+  if (bundledSpec.tags.length === 0) {
+    throw new Error(
+      `No tags defined for ${bundledPath}, tags are required to properly generate a client.`
+    );
+  }
+
+  const tagsName = bundledSpec.tags.map((tag) => tag.name);
+
+  for (const pathMethods of Object.values(bundledSpec.paths)) {
+    for (const specMethod of Object.values(pathMethods)) {
+      specMethod.tags = tagsName;
+    }
+  }
+
+  await fsp.writeFile(
+    bundledPath,
+    yaml.dump(bundledSpec, {
+      noRefs: true,
+    })
+  );
+
+  return true;
+}
 
 async function buildSpec(
   client: string,
@@ -42,16 +79,26 @@ async function buildSpec(
     spinner.info(`cache not found for ${client}' spec`);
   }
 
-  const spinner = createSpinner(`linting '${client}' spec`, verbose).start();
-  await run(`yarn specs:lint ${client}`, { verbose });
-
-  spinner.text = `building '${client}' spec`;
+  const spinner = createSpinner(`building ${client} spec`, verbose).start();
+  const bundledPath = `specs/bundled/${client}.${outputFormat}`;
   await run(
-    `yarn openapi bundle specs/${client}/spec.yml -o specs/bundled/${client}.${outputFormat} --ext ${outputFormat}`,
+    `yarn openapi bundle specs/${client}/spec.yml -o ${bundledPath} --ext ${outputFormat}`,
     { verbose }
   );
 
-  spinner.text = `validating '${client}' bundled spec`;
+  if (
+    (await propagateTagsToOperations(toAbsolutePath(bundledPath))) === false
+  ) {
+    spinner.fail();
+    throw new Error(
+      `Unable to propage tags to operations for \`${client}\` spec.`
+    );
+  }
+
+  spinner.text = `linting ${client} spec`;
+  await run(`yarn specs:lint ${client}`, { verbose });
+
+  spinner.text = `validating ${client} spec`;
   await run(`yarn openapi lint specs/bundled/${client}.${outputFormat}`, {
     verbose,
   });

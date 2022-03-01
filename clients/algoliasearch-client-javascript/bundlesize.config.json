@@ -2,7 +2,7 @@
   "files": [
     {
       "path": "packages/algoliasearch/dist/algoliasearch.umd.browser.js",
-      "maxSize": "6.25KB"
+      "maxSize": "6.50KB"
     },
     {
       "path": "packages/client-abtesting/dist/client-abtesting.umd.browser.js",
@@ -10,11 +10,11 @@
     },
     {
       "path": "packages/client-analytics/dist/client-analytics.umd.browser.js",
-      "maxSize": "3.75KB"
+      "maxSize": "4.00KB"
     },
     {
       "path": "packages/client-insights/dist/client-insights.umd.browser.js",
-      "maxSize": "3.00KB"
+      "maxSize": "3.25KB"
     },
     {
       "path": "packages/client-personalization/dist/client-personalization.umd.browser.js",
@@ -30,11 +30,11 @@
     },
     {
       "path": "packages/client-sources/dist/client-sources.umd.browser.js",
-      "maxSize": "3.00KB"
+      "maxSize": "3.25KB"
     },
     {
       "path": "packages/recommend/dist/recommend.umd.browser.js",
-      "maxSize": "3.00KB"
+      "maxSize": "3.25KB"
     },
     {
       "path": "packages/client-common/dist/client-common.esm.node.js",

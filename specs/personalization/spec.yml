@@ -20,7 +20,16 @@ servers:
 security:
   - appId: []
     apiKey: []
+tags:
+  - name: personalization
+    description: Personalization API reference
 paths:
+  # ######################
+  # ### Custom request ###
+  # ######################
+  /1{path}:
+    $ref: ../common/paths/customRequest.yml
+
   /1/profiles/personalization/{userToken}:
     $ref: paths/getUserTokenProfile.yml
   /1/profiles/{userToken}:

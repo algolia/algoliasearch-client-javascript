@@ -1,8 +1,8 @@
-import type { Operation } from './operation';
+import type { MultipleBatchOperation } from './multipleBatchOperation';
 
 /**
  * The `multipleBatch` parameters.
  */
 export type BatchParams = {
-  requests?: Operation[];
+  requests?: MultipleBatchOperation[];
 };

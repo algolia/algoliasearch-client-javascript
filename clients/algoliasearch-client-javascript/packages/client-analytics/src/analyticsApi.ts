@@ -74,6 +74,82 @@ export function createAnalyticsApi(
   }
 
   /**
+   * This method allow you to send requests to the Algolia REST API.
+   *
+   * @summary Send requests to the Algolia REST API.
+   * @param del - The del object.
+   * @param del.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
+   * @param del.parameters - URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
+   * @param del.body - The parameters to send with the custom request.
+   */
+  function del({
+    path,
+    parameters,
+    body,
+  }: DelProps): Promise<Record<string, any>> {
+    const requestPath = '/1{path}'.replace(
+      '{path}',
+      encodeURIComponent(String(path))
+    );
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (!path) {
+      throw new Error('Parameter `path` is required when calling `del`.');
+    }
+
+    if (parameters !== undefined) {
+      queryParameters.parameters = parameters.toString();
+    }
+
+    const request: Request = {
+      method: 'DELETE',
+      path: requestPath,
+      data: body,
+    };
+
+    return transporter.request(request, {
+      queryParameters,
+      headers,
+    });
+  }
+
+  /**
+   * This method allow you to send requests to the Algolia REST API.
+   *
+   * @summary Send requests to the Algolia REST API.
+   * @param get - The get object.
+   * @param get.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
+   * @param get.parameters - URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
+   */
+  function get({ path, parameters }: GetProps): Promise<Record<string, any>> {
+    const requestPath = '/1{path}'.replace(
+      '{path}',
+      encodeURIComponent(String(path))
+    );
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (!path) {
+      throw new Error('Parameter `path` is required when calling `get`.');
+    }
+
+    if (parameters !== undefined) {
+      queryParameters.parameters = parameters.toString();
+    }
+
+    const request: Request = {
+      method: 'GET',
+      path: requestPath,
+    };
+
+    return transporter.request(request, {
+      queryParameters,
+      headers,
+    });
+  }
+
+  /**
    * Returns the average click position. The endpoint returns a value for the complete given time range, as well as a value per day.
    *
    * @summary Returns the average click position.
@@ -89,7 +165,7 @@ export function createAnalyticsApi(
     endDate,
     tags,
   }: GetAverageClickPositionProps): Promise<GetAverageClickPositionResponse> {
-    const path = '/2/clicks/averageClickPosition';
+    const requestPath = '/2/clicks/averageClickPosition';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
@@ -117,7 +193,7 @@ export function createAnalyticsApi(
 
     const request: Request = {
       method: 'GET',
-      path,
+      path: requestPath,
     };
 
     return transporter.request(request, {
@@ -142,7 +218,7 @@ export function createAnalyticsApi(
     endDate,
     tags,
   }: GetClickPositionsProps): Promise<GetClickPositionsResponse> {
-    const path = '/2/clicks/positions';
+    const requestPath = '/2/clicks/positions';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
@@ -170,7 +246,7 @@ export function createAnalyticsApi(
 
     const request: Request = {
       method: 'GET',
-      path,
+      path: requestPath,
     };
 
     return transporter.request(request, {
@@ -195,7 +271,7 @@ export function createAnalyticsApi(
     endDate,
     tags,
   }: GetClickThroughRateProps): Promise<GetClickThroughRateResponse> {
-    const path = '/2/clicks/clickThroughRate';
+    const requestPath = '/2/clicks/clickThroughRate';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
@@ -223,7 +299,7 @@ export function createAnalyticsApi(
 
     const request: Request = {
       method: 'GET',
-      path,
+      path: requestPath,
     };
 
     return transporter.request(request, {
@@ -248,7 +324,7 @@ export function createAnalyticsApi(
     endDate,
     tags,
   }: GetConversationRateProps): Promise<GetConversationRateResponse> {
-    const path = '/2/conversions/conversionRate';
+    const requestPath = '/2/conversions/conversionRate';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
@@ -276,7 +352,7 @@ export function createAnalyticsApi(
 
     const request: Request = {
       method: 'GET',
-      path,
+      path: requestPath,
     };
 
     return transporter.request(request, {
@@ -301,7 +377,7 @@ export function createAnalyticsApi(
     endDate,
     tags,
   }: GetNoClickRateProps): Promise<GetNoClickRateResponse> {
-    const path = '/2/searches/noClickRate';
+    const requestPath = '/2/searches/noClickRate';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
@@ -329,7 +405,7 @@ export function createAnalyticsApi(
 
     const request: Request = {
       method: 'GET',
-      path,
+      path: requestPath,
     };
 
     return transporter.request(request, {
@@ -354,7 +430,7 @@ export function createAnalyticsApi(
     endDate,
     tags,
   }: GetNoResultsRateProps): Promise<GetNoResultsRateResponse> {
-    const path = '/2/searches/noResultRate';
+    const requestPath = '/2/searches/noResultRate';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
@@ -382,7 +458,7 @@ export function createAnalyticsApi(
 
     const request: Request = {
       method: 'GET',
-      path,
+      path: requestPath,
     };
 
     return transporter.request(request, {
@@ -407,7 +483,7 @@ export function createAnalyticsApi(
     endDate,
     tags,
   }: GetSearchesCountProps): Promise<GetSearchesCountResponse> {
-    const path = '/2/searches/count';
+    const requestPath = '/2/searches/count';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
@@ -435,7 +511,7 @@ export function createAnalyticsApi(
 
     const request: Request = {
       method: 'GET',
-      path,
+      path: requestPath,
     };
 
     return transporter.request(request, {
@@ -464,7 +540,7 @@ export function createAnalyticsApi(
     offset,
     tags,
   }: GetSearchesNoClicksProps): Promise<GetSearchesNoClicksResponse> {
-    const path = '/2/searches/noClicks';
+    const requestPath = '/2/searches/noClicks';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
@@ -500,7 +576,7 @@ export function createAnalyticsApi(
 
     const request: Request = {
       method: 'GET',
-      path,
+      path: requestPath,
     };
 
     return transporter.request(request, {
@@ -529,7 +605,7 @@ export function createAnalyticsApi(
     offset,
     tags,
   }: GetSearchesNoResultsProps): Promise<GetSearchesNoResultsResponse> {
-    const path = '/2/searches/noResults';
+    const requestPath = '/2/searches/noResults';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
@@ -565,7 +641,7 @@ export function createAnalyticsApi(
 
     const request: Request = {
       method: 'GET',
-      path,
+      path: requestPath,
     };
 
     return transporter.request(request, {
@@ -582,7 +658,7 @@ export function createAnalyticsApi(
    * @param getStatus.index - The index name to target.
    */
   function getStatus({ index }: GetStatusProps): Promise<GetStatusResponse> {
-    const path = '/2/status';
+    const requestPath = '/2/status';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
@@ -598,7 +674,7 @@ export function createAnalyticsApi(
 
     const request: Request = {
       method: 'GET',
-      path,
+      path: requestPath,
     };
 
     return transporter.request(request, {
@@ -627,7 +703,7 @@ export function createAnalyticsApi(
     offset,
     tags,
   }: GetTopCountriesProps): Promise<GetTopCountriesResponse> {
-    const path = '/2/countries';
+    const requestPath = '/2/countries';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
@@ -663,7 +739,7 @@ export function createAnalyticsApi(
 
     const request: Request = {
       method: 'GET',
-      path,
+      path: requestPath,
     };
 
     return transporter.request(request, {
@@ -694,7 +770,7 @@ export function createAnalyticsApi(
     offset,
     tags,
   }: GetTopFilterAttributesProps): Promise<GetTopFilterAttributesResponse> {
-    const path = '/2/filters';
+    const requestPath = '/2/filters';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
@@ -734,7 +810,7 @@ export function createAnalyticsApi(
 
     const request: Request = {
       method: 'GET',
-      path,
+      path: requestPath,
     };
 
     return transporter.request(request, {
@@ -767,7 +843,7 @@ export function createAnalyticsApi(
     offset,
     tags,
   }: GetTopFilterForAttributeProps): Promise<GetTopFilterForAttributeResponse> {
-    const path = '/2/filters/{attribute}'.replace(
+    const requestPath = '/2/filters/{attribute}'.replace(
       '{attribute}',
       encodeURIComponent(String(attribute))
     );
@@ -816,7 +892,7 @@ export function createAnalyticsApi(
 
     const request: Request = {
       method: 'GET',
-      path,
+      path: requestPath,
     };
 
     return transporter.request(request, {
@@ -847,7 +923,7 @@ export function createAnalyticsApi(
     offset,
     tags,
   }: GetTopFiltersNoResultsProps): Promise<GetTopFiltersNoResultsResponse> {
-    const path = '/2/filters/noResults';
+    const requestPath = '/2/filters/noResults';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
@@ -887,7 +963,7 @@ export function createAnalyticsApi(
 
     const request: Request = {
       method: 'GET',
-      path,
+      path: requestPath,
     };
 
     return transporter.request(request, {
@@ -922,7 +998,7 @@ export function createAnalyticsApi(
   }: GetTopHitsProps): Promise<
     GetTopHitsResponse | GetTopHitsResponseWithAnalytics
   > {
-    const path = '/2/hits';
+    const requestPath = '/2/hits';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
@@ -966,7 +1042,7 @@ export function createAnalyticsApi(
 
     const request: Request = {
       method: 'GET',
-      path,
+      path: requestPath,
     };
 
     return transporter.request(request, {
@@ -1003,7 +1079,7 @@ export function createAnalyticsApi(
   }: GetTopSearchesProps): Promise<
     GetTopSearchesResponse | GetTopSearchesResponseWithAnalytics
   > {
-    const path = '/2/searches';
+    const requestPath = '/2/searches';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
@@ -1051,7 +1127,7 @@ export function createAnalyticsApi(
 
     const request: Request = {
       method: 'GET',
-      path,
+      path: requestPath,
     };
 
     return transporter.request(request, {
@@ -1076,7 +1152,7 @@ export function createAnalyticsApi(
     endDate,
     tags,
   }: GetUsersCountProps): Promise<GetUsersCountResponse> {
-    const path = '/2/users/count';
+    const requestPath = '/2/users/count';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
@@ -1104,7 +1180,89 @@ export function createAnalyticsApi(
 
     const request: Request = {
       method: 'GET',
-      path,
+      path: requestPath,
+    };
+
+    return transporter.request(request, {
+      queryParameters,
+      headers,
+    });
+  }
+
+  /**
+   * This method allow you to send requests to the Algolia REST API.
+   *
+   * @summary Send requests to the Algolia REST API.
+   * @param post - The post object.
+   * @param post.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
+   * @param post.parameters - URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
+   * @param post.body - The parameters to send with the custom request.
+   */
+  function post({
+    path,
+    parameters,
+    body,
+  }: PostProps): Promise<Record<string, any>> {
+    const requestPath = '/1{path}'.replace(
+      '{path}',
+      encodeURIComponent(String(path))
+    );
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (!path) {
+      throw new Error('Parameter `path` is required when calling `post`.');
+    }
+
+    if (parameters !== undefined) {
+      queryParameters.parameters = parameters.toString();
+    }
+
+    const request: Request = {
+      method: 'POST',
+      path: requestPath,
+      data: body,
+    };
+
+    return transporter.request(request, {
+      queryParameters,
+      headers,
+    });
+  }
+
+  /**
+   * This method allow you to send requests to the Algolia REST API.
+   *
+   * @summary Send requests to the Algolia REST API.
+   * @param put - The put object.
+   * @param put.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
+   * @param put.parameters - URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
+   * @param put.body - The parameters to send with the custom request.
+   */
+  function put({
+    path,
+    parameters,
+    body,
+  }: PutProps): Promise<Record<string, any>> {
+    const requestPath = '/1{path}'.replace(
+      '{path}',
+      encodeURIComponent(String(path))
+    );
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (!path) {
+      throw new Error('Parameter `path` is required when calling `put`.');
+    }
+
+    if (parameters !== undefined) {
+      queryParameters.parameters = parameters.toString();
+    }
+
+    const request: Request = {
+      method: 'PUT',
+      path: requestPath,
+      data: body,
     };
 
     return transporter.request(request, {
@@ -1115,6 +1273,8 @@ export function createAnalyticsApi(
 
   return {
     addUserAgent,
+    del,
+    get,
     getAverageClickPosition,
     getClickPositions,
     getClickThroughRate,
@@ -1132,10 +1292,38 @@ export function createAnalyticsApi(
     getTopHits,
     getTopSearches,
     getUsersCount,
+    post,
+    put,
   };
 }
 
 export type AnalyticsApi = ReturnType<typeof createAnalyticsApi>;
+
+export type DelProps = {
+  /**
+   * The path of the API endpoint to target, anything after the /1 needs to be specified.
+   */
+  path: string;
+  /**
+   * URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
+   */
+  parameters?: string;
+  /**
+   * The parameters to send with the custom request.
+   */
+  body?: Record<string, any>;
+};
+
+export type GetProps = {
+  /**
+   * The path of the API endpoint to target, anything after the /1 needs to be specified.
+   */
+  path: string;
+  /**
+   * URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
+   */
+  parameters?: string;
+};
 
 export type GetAverageClickPositionProps = {
   /**
@@ -1550,4 +1738,34 @@ export type GetUsersCountProps = {
    * Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
    */
   tags?: string;
+};
+
+export type PostProps = {
+  /**
+   * The path of the API endpoint to target, anything after the /1 needs to be specified.
+   */
+  path: string;
+  /**
+   * URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
+   */
+  parameters?: string;
+  /**
+   * The parameters to send with the custom request.
+   */
+  body?: Record<string, any>;
+};
+
+export type PutProps = {
+  /**
+   * The path of the API endpoint to target, anything after the /1 needs to be specified.
+   */
+  path: string;
+  /**
+   * URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
+   */
+  parameters?: string;
+  /**
+   * The parameters to send with the custom request.
+   */
+  body?: Record<string, any>;
 };

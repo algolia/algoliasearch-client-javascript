@@ -9,14 +9,14 @@ import java.util.Objects;
 public class BatchWriteParams {
 
   @SerializedName("requests")
-  private List<Operation> requests = null;
+  private List<BatchOperation> requests = null;
 
-  public BatchWriteParams requests(List<Operation> requests) {
+  public BatchWriteParams requests(List<BatchOperation> requests) {
     this.requests = requests;
     return this;
   }
 
-  public BatchWriteParams addRequestsItem(Operation requestsItem) {
+  public BatchWriteParams addRequestsItem(BatchOperation requestsItem) {
     if (this.requests == null) {
       this.requests = new ArrayList<>();
     }
@@ -30,11 +30,11 @@ public class BatchWriteParams {
    * @return requests
    */
   @javax.annotation.Nullable
-  public List<Operation> getRequests() {
+  public List<BatchOperation> getRequests() {
     return requests;
   }
 
-  public void setRequests(List<Operation> requests) {
+  public void setRequests(List<BatchOperation> requests) {
     this.requests = requests;
   }
 

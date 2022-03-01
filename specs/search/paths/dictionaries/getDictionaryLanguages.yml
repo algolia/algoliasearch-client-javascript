@@ -1,6 +1,4 @@
 get:
-  tags:
-    - search
   operationId: getDictionaryLanguages
   description: List dictionaries supported per language.
   summary: List dictionaries supported per language.

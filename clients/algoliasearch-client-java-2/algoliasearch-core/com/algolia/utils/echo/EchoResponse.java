@@ -358,6 +358,31 @@ public class EchoResponse {
     }
   }
 
+  public static class Del extends Object implements EchoResponseInterface {
+
+    private Request request;
+
+    public Del(Request request) {
+      this.request = request;
+    }
+
+    public String getPath() {
+      return request.url().encodedPath();
+    }
+
+    public String getMethod() {
+      return request.method();
+    }
+
+    public String getBody() {
+      return parseRequestBody(request);
+    }
+
+    public List<Pair> getQueryParams() {
+      return buildQueryParams(request);
+    }
+  }
+
   public static class DeleteApiKey
     extends DeleteApiKeyResponse
     implements EchoResponseInterface {
@@ -527,6 +552,31 @@ public class EchoResponse {
     private Request request;
 
     public DeleteSynonym(Request request) {
+      this.request = request;
+    }
+
+    public String getPath() {
+      return request.url().encodedPath();
+    }
+
+    public String getMethod() {
+      return request.method();
+    }
+
+    public String getBody() {
+      return parseRequestBody(request);
+    }
+
+    public List<Pair> getQueryParams() {
+      return buildQueryParams(request);
+    }
+  }
+
+  public static class Get extends Object implements EchoResponseInterface {
+
+    private Request request;
+
+    public Get(Request request) {
       this.request = request;
     }
 
@@ -1117,6 +1167,56 @@ public class EchoResponse {
     private Request request;
 
     public PartialUpdateObject(Request request) {
+      this.request = request;
+    }
+
+    public String getPath() {
+      return request.url().encodedPath();
+    }
+
+    public String getMethod() {
+      return request.method();
+    }
+
+    public String getBody() {
+      return parseRequestBody(request);
+    }
+
+    public List<Pair> getQueryParams() {
+      return buildQueryParams(request);
+    }
+  }
+
+  public static class Post extends Object implements EchoResponseInterface {
+
+    private Request request;
+
+    public Post(Request request) {
+      this.request = request;
+    }
+
+    public String getPath() {
+      return request.url().encodedPath();
+    }
+
+    public String getMethod() {
+      return request.method();
+    }
+
+    public String getBody() {
+      return parseRequestBody(request);
+    }
+
+    public List<Pair> getQueryParams() {
+      return buildQueryParams(request);
+    }
+  }
+
+  public static class Put extends Object implements EchoResponseInterface {
+
+    private Request request;
+
+    public Put(Request request) {
       this.request = request;
     }
 

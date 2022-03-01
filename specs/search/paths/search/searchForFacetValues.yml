@@ -1,6 +1,4 @@
 post:
-  tags:
-    - search
   operationId: searchForFacetValues
   summary: Search for values of a given facet
   description: Search for values of a given facet, optionally restricting the returned values to those contained in objects matching other search criteria.

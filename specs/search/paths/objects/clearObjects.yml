@@ -1,6 +1,4 @@
 post:
-  tags:
-    - search
   operationId: clearObjects
   summary: clear all objects from an index.
   description: Delete an index's content, but leave settings and index-specific API keys untouched.

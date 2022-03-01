@@ -1,6 +1,4 @@
 post:
-  tags:
-    - search
   operationId: saveObject
   description: Add an object to the index, automatically assigning it an object ID.
   summary: Add an object to the index.
@@ -37,10 +35,8 @@ post:
       $ref: ../../../common/responses/MethodNotAllowed.yml
     '404':
       $ref: ../../../common/responses/IndexNotFound.yml
-# delete index
+
 delete:
-  tags:
-    - search
   operationId: deleteIndex
   summary: Delete index.
   description: Delete an existing index.

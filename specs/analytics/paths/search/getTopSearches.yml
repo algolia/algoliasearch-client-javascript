@@ -1,6 +1,4 @@
 get:
-  tags:
-    - analytics
   operationId: getTopSearches
   description: Returns top searches. Limited to the 1000 most frequent ones. For each search, also returns the average number of hits returned.
   summary: Returns top searches.

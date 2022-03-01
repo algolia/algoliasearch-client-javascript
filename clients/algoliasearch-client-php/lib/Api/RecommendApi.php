@@ -4,6 +4,7 @@ namespace Algolia\AlgoliaSearch\Api;
 
 use Algolia\AlgoliaSearch\Algolia;
 use Algolia\AlgoliaSearch\Configuration\RecommendConfig;
+use Algolia\AlgoliaSearch\ObjectSerializer;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapper;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapperInterface;
 use Algolia\AlgoliaSearch\RetryStrategy\ClusterHosts;
@@ -87,6 +88,95 @@ class RecommendApi
     }
 
     /**
+     * Send requests to the Algolia REST API.
+     *
+     * @param string $path The path of the API endpoint to target, anything after the /1 needs to be specified. (required)
+     * @param string $parameters URL-encoded query string. Force some query parameters to be applied for each query made with this API key. (optional)
+     * @param array $body The parameters to send with the custom request. (optional)
+     *
+     * @return array<string, mixed>
+     */
+    public function del($path, $parameters = null, $body = null)
+    {
+        // verify the required parameter 'path' is set
+        if ($path === null || (is_array($path) && count($path) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $path when calling del'
+            );
+        }
+
+        $resourcePath = '/1{path}';
+        $queryParams = [];
+        $httpBody = [];
+
+        if ($parameters !== null) {
+            if ('form' === 'form' && is_array($parameters)) {
+                foreach ($parameters as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['parameters'] = $parameters;
+            }
+        }
+        // path params
+        if ($path !== null) {
+            $resourcePath = str_replace(
+                '{' . 'path' . '}',
+                ObjectSerializer::toPathValue($path),
+                $resourcePath
+            );
+        }
+
+        if (isset($body)) {
+            $httpBody = $body;
+        }
+
+        return $this->sendRequest('DELETE', $resourcePath, $queryParams, $httpBody);
+    }
+
+    /**
+     * Send requests to the Algolia REST API.
+     *
+     * @param string $path The path of the API endpoint to target, anything after the /1 needs to be specified. (required)
+     * @param string $parameters URL-encoded query string. Force some query parameters to be applied for each query made with this API key. (optional)
+     *
+     * @return array<string, mixed>
+     */
+    public function get($path, $parameters = null)
+    {
+        // verify the required parameter 'path' is set
+        if ($path === null || (is_array($path) && count($path) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $path when calling get'
+            );
+        }
+
+        $resourcePath = '/1{path}';
+        $queryParams = [];
+        $httpBody = [];
+
+        if ($parameters !== null) {
+            if ('form' === 'form' && is_array($parameters)) {
+                foreach ($parameters as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['parameters'] = $parameters;
+            }
+        }
+        // path params
+        if ($path !== null) {
+            $resourcePath = str_replace(
+                '{' . 'path' . '}',
+                ObjectSerializer::toPathValue($path),
+                $resourcePath
+            );
+        }
+
+        return $this->sendRequest('GET', $resourcePath, $queryParams, $httpBody);
+    }
+
+    /**
      * Returns recommendations for a specific model and objectID.
      *
      * @param array $getRecommendationsParams getRecommendationsParams (required)
@@ -111,6 +201,100 @@ class RecommendApi
         }
 
         return $this->sendRequest('POST', $resourcePath, $queryParams, $httpBody);
+    }
+
+    /**
+     * Send requests to the Algolia REST API.
+     *
+     * @param string $path The path of the API endpoint to target, anything after the /1 needs to be specified. (required)
+     * @param string $parameters URL-encoded query string. Force some query parameters to be applied for each query made with this API key. (optional)
+     * @param array $body The parameters to send with the custom request. (optional)
+     *
+     * @return array<string, mixed>
+     */
+    public function post($path, $parameters = null, $body = null)
+    {
+        // verify the required parameter 'path' is set
+        if ($path === null || (is_array($path) && count($path) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $path when calling post'
+            );
+        }
+
+        $resourcePath = '/1{path}';
+        $queryParams = [];
+        $httpBody = [];
+
+        if ($parameters !== null) {
+            if ('form' === 'form' && is_array($parameters)) {
+                foreach ($parameters as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['parameters'] = $parameters;
+            }
+        }
+        // path params
+        if ($path !== null) {
+            $resourcePath = str_replace(
+                '{' . 'path' . '}',
+                ObjectSerializer::toPathValue($path),
+                $resourcePath
+            );
+        }
+
+        if (isset($body)) {
+            $httpBody = $body;
+        }
+
+        return $this->sendRequest('POST', $resourcePath, $queryParams, $httpBody);
+    }
+
+    /**
+     * Send requests to the Algolia REST API.
+     *
+     * @param string $path The path of the API endpoint to target, anything after the /1 needs to be specified. (required)
+     * @param string $parameters URL-encoded query string. Force some query parameters to be applied for each query made with this API key. (optional)
+     * @param array $body The parameters to send with the custom request. (optional)
+     *
+     * @return array<string, mixed>
+     */
+    public function put($path, $parameters = null, $body = null)
+    {
+        // verify the required parameter 'path' is set
+        if ($path === null || (is_array($path) && count($path) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $path when calling put'
+            );
+        }
+
+        $resourcePath = '/1{path}';
+        $queryParams = [];
+        $httpBody = [];
+
+        if ($parameters !== null) {
+            if ('form' === 'form' && is_array($parameters)) {
+                foreach ($parameters as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            } else {
+                $queryParams['parameters'] = $parameters;
+            }
+        }
+        // path params
+        if ($path !== null) {
+            $resourcePath = str_replace(
+                '{' . 'path' . '}',
+                ObjectSerializer::toPathValue($path),
+                $resourcePath
+            );
+        }
+
+        if (isset($body)) {
+            $httpBody = $body;
+        }
+
+        return $this->sendRequest('PUT', $resourcePath, $queryParams, $httpBody);
     }
 
     private function sendRequest($method, $resourcePath, $queryParams, $httpBody)

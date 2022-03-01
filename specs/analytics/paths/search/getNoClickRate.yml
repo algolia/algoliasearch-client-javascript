@@ -1,6 +1,4 @@
 get:
-  tags:
-    - analytics
   operationId: getNoClickRate
   description: Returns the rate at which searches didn't lead to any clicks. The endpoint returns a value for the complete given time range, as well as a value per day. It also returns the count of searches and searches without clicks.
   summary: Returns the rate at which searches didn't lead to any clicks.

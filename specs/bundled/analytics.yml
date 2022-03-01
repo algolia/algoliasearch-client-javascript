@@ -14,6 +14,25 @@ components:
       in: header
       name: X-Algolia-API-Key
   parameters:
+    PathInPath:
+      name: path
+      in: path
+      description: >-
+        The path of the API endpoint to target, anything after the /1 needs to
+        be specified.
+      required: true
+      schema:
+        type: string
+        example: /keys
+    Parameters:
+      name: parameters
+      in: query
+      description: >-
+        URL-encoded query string. Force some query parameters to be applied for
+        each query made with this API key.
+      schema:
+        type: string
+        example: '?query=mySearchQuery&hitsPerPage=10'
     Index:
       in: query
       name: index
@@ -36,7 +55,7 @@ components:
         period to analyze.
       schema:
         type: string
-        example: 1999-09-19
+        example: 1999-09-19T00:00:00.000Z
         pattern: ^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$
     EndDate:
       in: query
@@ -46,7 +65,7 @@ components:
         period to analyze.
       schema:
         type: string
-        example: 2000-01-21
+        example: 2000-01-21T00:00:00.000Z
         pattern: ^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$
     OrderBy:
       in: query
@@ -108,6 +127,14 @@ components:
       schema:
         type: string
   schemas:
+    ErrorBase:
+      description: Error.
+      type: object
+      additionalProperties: true
+      properties:
+        message:
+          type: string
+          example: Invalid Application-Id or API-Key
     search:
       description: The search query.
       type: string
@@ -202,14 +229,6 @@ components:
                 $ref: '#/components/schemas/conversionCount'
               nbHits:
                 $ref: '#/components/schemas/nbHits'
-    ErrorBase:
-      description: Error.
-      type: object
-      additionalProperties: true
-      properties:
-        message:
-          type: string
-          example: Invalid Application-Id or API-Key
     date:
       type: string
       description: Date of the event.
@@ -413,11 +432,127 @@ servers:
 security:
   - appId: []
     apiKey: []
+tags:
+  - name: analytics
+    description: Analytics API reference
 paths:
-  /2/searches:
+  /1{path}:
     get:
+      operationId: get
+      summary: Send requests to the Algolia REST API.
+      description: This method allow you to send requests to the Algolia REST API.
+      parameters:
+        - $ref: '#/components/parameters/PathInPath'
+        - $ref: '#/components/parameters/Parameters'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
       tags:
         - analytics
+    post:
+      operationId: post
+      requestBody:
+        description: The parameters to send with the custom request.
+        content:
+          application/json:
+            schema:
+              type: object
+      summary: Send requests to the Algolia REST API.
+      description: This method allow you to send requests to the Algolia REST API.
+      parameters:
+        - $ref: '#/components/parameters/PathInPath'
+        - $ref: '#/components/parameters/Parameters'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+      tags:
+        - analytics
+    put:
+      operationId: put
+      requestBody:
+        description: The parameters to send with the custom request.
+        content:
+          application/json:
+            schema:
+              type: object
+      summary: Send requests to the Algolia REST API.
+      description: This method allow you to send requests to the Algolia REST API.
+      parameters:
+        - $ref: '#/components/parameters/PathInPath'
+        - $ref: '#/components/parameters/Parameters'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+      tags:
+        - analytics
+    delete:
+      operationId: del
+      requestBody:
+        description: The parameters to send with the custom request.
+        content:
+          application/json:
+            schema:
+              type: object
+      summary: Send requests to the Algolia REST API.
+      description: This method allow you to send requests to the Algolia REST API.
+      parameters:
+        - $ref: '#/components/parameters/PathInPath'
+        - $ref: '#/components/parameters/Parameters'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+      tags:
+        - analytics
+  /2/searches:
+    get:
       operationId: getTopSearches
       description: >-
         Returns top searches. Limited to the 1000 most frequent ones. For each
@@ -450,10 +585,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /2/searches/count:
-    get:
       tags:
         - analytics
+  /2/searches/count:
+    get:
       operationId: getSearchesCount
       description: >-
         Returns the number of searches across the given time range. The endpoint
@@ -502,10 +637,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /2/searches/noResults:
-    get:
       tags:
         - analytics
+  /2/searches/noResults:
+    get:
       operationId: getSearchesNoResults
       description: >-
         Returns top searches that didn't return any results. Limited to the 1000
@@ -555,10 +690,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /2/searches/noClicks:
-    get:
       tags:
         - analytics
+  /2/searches/noClicks:
+    get:
       operationId: getSearchesNoClicks
       description: >-
         Returns top searches that didn't lead to any clicks. Limited to the 1000
@@ -609,10 +744,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /2/searches/noResultRate:
-    get:
       tags:
         - analytics
+  /2/searches/noResultRate:
+    get:
       operationId: getNoResultsRate
       description: >-
         Returns the rate at which searches didn't return any results. The
@@ -676,10 +811,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /2/searches/noClickRate:
-    get:
       tags:
         - analytics
+  /2/searches/noClickRate:
+    get:
       operationId: getNoClickRate
       description: >-
         Returns the rate at which searches didn't lead to any clicks. The
@@ -743,10 +878,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /2/hits:
-    get:
       tags:
         - analytics
+  /2/hits:
+    get:
       operationId: getTopHits
       description: Returns top hits. Limited to the 1000 most frequent ones.
       summary: Returns top hits.
@@ -776,10 +911,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /2/users/count:
-    get:
       tags:
         - analytics
+  /2/users/count:
+    get:
       operationId: getUsersCount
       description: >-
         Returns the distinct count of users across the given time range. The
@@ -828,10 +963,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /2/filters:
-    get:
       tags:
         - analytics
+  /2/filters:
+    get:
       operationId: getTopFilterAttributes
       description: Returns top filter attributes. Limited to the 1000 most used filters.
       summary: Returns top filter attributes.
@@ -858,10 +993,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /2/filters/{attribute}:
-    get:
       tags:
         - analytics
+  /2/filters/{attribute}:
+    get:
       operationId: getTopFilterForAttribute
       description: >-
         Returns top filters for the given attribute. Limited to the 1000 most
@@ -891,10 +1026,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /2/filters/noResults:
-    get:
       tags:
         - analytics
+  /2/filters/noResults:
+    get:
       operationId: getTopFiltersNoResults
       description: >-
         Returns top filters with no results. Limited to the 1000 most used
@@ -923,10 +1058,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /2/countries:
-    get:
       tags:
         - analytics
+  /2/countries:
+    get:
       operationId: getTopCountries
       description: Returns top countries. Limited to the 1000 most frequent ones.
       summary: Returns top countries.
@@ -972,10 +1107,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /2/clicks/averageClickPosition:
-    get:
       tags:
         - analytics
+  /2/clicks/averageClickPosition:
+    get:
       operationId: getAverageClickPosition
       description: >-
         Returns the average click position. The endpoint returns a value for the
@@ -1029,10 +1164,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /2/clicks/positions:
-    get:
       tags:
         - analytics
+  /2/clicks/positions:
+    get:
       operationId: getClickPositions
       description: Returns the distribution of clicks per range of positions.
       summary: Returns the distribution of clicks per range of positions.
@@ -1086,10 +1221,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /2/clicks/clickThroughRate:
-    get:
       tags:
         - analytics
+  /2/clicks/clickThroughRate:
+    get:
       operationId: getClickThroughRate
       description: >-
         Returns a click-through rate (CTR). The endpoint returns a value for the
@@ -1150,10 +1285,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /2/conversions/conversionRate:
-    get:
       tags:
         - analytics
+  /2/conversions/conversionRate:
+    get:
       operationId: getConversationRate
       description: >-
         Returns a conversion rate (CR). The endpoint returns a value for the
@@ -1214,10 +1349,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /2/status:
-    get:
       tags:
         - analytics
+  /2/status:
+    get:
       operationId: getStatus
       description: >-
         Returns the latest update time of the analytics API for a given index.
@@ -1248,3 +1383,5 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      tags:
+        - analytics

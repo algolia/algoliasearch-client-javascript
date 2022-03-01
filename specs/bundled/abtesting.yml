@@ -14,6 +14,25 @@ components:
       in: header
       name: X-Algolia-API-Key
   parameters:
+    PathInPath:
+      name: path
+      in: path
+      description: >-
+        The path of the API endpoint to target, anything after the /1 needs to
+        be specified.
+      required: true
+      schema:
+        type: string
+        example: /keys
+    Parameters:
+      name: parameters
+      in: query
+      description: >-
+        URL-encoded query string. Force some query parameters to be applied for
+        each query made with this API key.
+      schema:
+        type: string
+        example: '?query=mySearchQuery&hitsPerPage=10'
     Offset:
       in: query
       name: offset
@@ -36,6 +55,14 @@ components:
       schema:
         type: integer
   schemas:
+    ErrorBase:
+      description: Error.
+      type: object
+      additionalProperties: true
+      properties:
+        message:
+          type: string
+          example: Invalid Application-Id or API-Key
     abTestID:
       type: integer
       description: The A/B test ID.
@@ -161,14 +188,6 @@ components:
       description: List of A/B tests.
       items:
         $ref: '#/components/schemas/ABTest'
-    ErrorBase:
-      description: Error.
-      type: object
-      additionalProperties: true
-      properties:
-        message:
-          type: string
-          example: Invalid Application-Id or API-Key
     abTestsVariant:
       type: object
       additionalProperties: false
@@ -252,11 +271,127 @@ servers:
 security:
   - appId: []
     apiKey: []
+tags:
+  - name: abtesting
+    description: abtesting API reference
 paths:
-  /2/abtests:
-    post:
+  /1{path}:
+    get:
+      operationId: get
+      summary: Send requests to the Algolia REST API.
+      description: This method allow you to send requests to the Algolia REST API.
+      parameters:
+        - $ref: '#/components/parameters/PathInPath'
+        - $ref: '#/components/parameters/Parameters'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
       tags:
         - abtesting
+    post:
+      operationId: post
+      requestBody:
+        description: The parameters to send with the custom request.
+        content:
+          application/json:
+            schema:
+              type: object
+      summary: Send requests to the Algolia REST API.
+      description: This method allow you to send requests to the Algolia REST API.
+      parameters:
+        - $ref: '#/components/parameters/PathInPath'
+        - $ref: '#/components/parameters/Parameters'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+      tags:
+        - abtesting
+    put:
+      operationId: put
+      requestBody:
+        description: The parameters to send with the custom request.
+        content:
+          application/json:
+            schema:
+              type: object
+      summary: Send requests to the Algolia REST API.
+      description: This method allow you to send requests to the Algolia REST API.
+      parameters:
+        - $ref: '#/components/parameters/PathInPath'
+        - $ref: '#/components/parameters/Parameters'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+      tags:
+        - abtesting
+    delete:
+      operationId: del
+      requestBody:
+        description: The parameters to send with the custom request.
+        content:
+          application/json:
+            schema:
+              type: object
+      summary: Send requests to the Algolia REST API.
+      description: This method allow you to send requests to the Algolia REST API.
+      parameters:
+        - $ref: '#/components/parameters/PathInPath'
+        - $ref: '#/components/parameters/Parameters'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+      tags:
+        - abtesting
+  /2/abtests:
+    post:
       operationId: addABTests
       description: >
         Creates a new A/B test with provided configuration.
@@ -304,9 +439,9 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-    get:
       tags:
         - abtesting
+    get:
       operationId: listABTests
       description: >
         Fetch all existing A/B tests for App that are available for the current
@@ -348,10 +483,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /2/abtests/{id}:
-    get:
       tags:
         - abtesting
+  /2/abtests/{id}:
+    get:
       operationId: getABTest
       description: >
         Returns metadata and metrics for A/B test id.
@@ -376,9 +511,9 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-    delete:
       tags:
         - abtesting
+    delete:
       operationId: deleteABTest
       description: Deletes the A/B Test and removes all associated metadata & metrics.
       summary: Deletes the A/B Test.
@@ -399,10 +534,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /2/abtests/{id}/stop:
-    post:
       tags:
         - abtesting
+  /2/abtests/{id}/stop:
+    post:
       operationId: stopABTest
       description: >
         Marks the A/B test as stopped.
@@ -429,3 +564,5 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      tags:
+        - abtesting

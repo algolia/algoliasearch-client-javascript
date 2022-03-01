@@ -1,6 +1,4 @@
 get:
-  tags:
-    - search
   operationId: getTopUserIds
   summary: Get top userID
   description: >

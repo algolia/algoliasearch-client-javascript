@@ -81,26 +81,14 @@ describe('batch', () => {
     const req = (await client.batch({
       indexName: 'theIndexName',
       batchWriteParams: {
-        requests: [
-          {
-            action: 'delete',
-            body: { key: 'value' },
-            indexName: 'otherIndexName',
-          },
-        ],
+        requests: [{ action: 'delete', body: { key: 'value' } }],
       },
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/indexes/theIndexName/batch');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({
-      requests: [
-        {
-          action: 'delete',
-          body: { key: 'value' },
-          indexName: 'otherIndexName',
-        },
-      ],
+      requests: [{ action: 'delete', body: { key: 'value' } }],
     });
     expect(req.searchParams).toEqual(undefined);
   });
@@ -760,7 +748,8 @@ describe('partialUpdateObject', () => {
       indexName: 'theIndexName',
       objectID: 'uniqueID',
       stringBuiltInOperation: [
-        { id1: 'test', id2: { _operation: 'AddUnique', value: 'test2' } },
+        { id1: { _operation: 'AddUnique', value: 'test1' } },
+        { id2: { _operation: 'AddUnique', value: 'test2' } },
       ],
       createIfNotExists: true,
     })) as unknown as EchoResponse;
@@ -768,7 +757,8 @@ describe('partialUpdateObject', () => {
     expect(req.path).toEqual('/1/indexes/theIndexName/uniqueID/partial');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual([
-      { id1: 'test', id2: { _operation: 'AddUnique', value: 'test2' } },
+      { id1: { _operation: 'AddUnique', value: 'test1' } },
+      { id2: { _operation: 'AddUnique', value: 'test2' } },
     ]);
     expect(req.searchParams).toEqual({ createIfNotExists: 'true' });
   });

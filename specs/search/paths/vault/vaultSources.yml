@@ -1,6 +1,4 @@
 get:
-  tags:
-    - search
   operationId: getSources
   description: List all allowed sources.
   summary: List all allowed sources.

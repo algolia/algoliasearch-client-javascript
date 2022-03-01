@@ -1,6 +1,4 @@
 delete:
-  tags:
-    - search
   operationId: deleteSource
   description: Remove a single source from the list of allowed sources.
   summary: Remove a single source.

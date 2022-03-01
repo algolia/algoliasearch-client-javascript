@@ -3,7 +3,7 @@ import { URL } from 'url';
 
 import yaml from 'js-yaml';
 
-import { toAbsolutePath } from '../common';
+import { exists, toAbsolutePath } from '../common';
 import type { Generator } from '../types';
 
 type Server = {
@@ -16,8 +16,17 @@ type Server = {
   };
 };
 
-type Spec = {
+type Tag = {
+  name: string;
+  description: string;
+};
+
+type Path = Record<string, Record<string, any>>;
+
+export type Spec = {
   servers: Server[];
+  tags: Tag[];
+  paths: Path[];
 };
 
 type AdditionalProperties = Partial<{
@@ -53,7 +62,7 @@ export async function setHostsOptions({
 
   const specPath = toAbsolutePath(`specs/bundled/${client}.yml`);
 
-  if (!(await stat(specPath))) {
+  if (!(await exists(specPath))) {
     throw new Error(
       `File not found ${specPath}.\nMake sure your run scripts from the root directory using yarn workspace.`
     );
