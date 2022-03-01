@@ -22,7 +22,7 @@ jobs:
 
       - run: git checkout chore/release
 
-      - run: git submodule update
+      - run: git submodule update --init --recursive
 
       - name: Setup
         id: setup
