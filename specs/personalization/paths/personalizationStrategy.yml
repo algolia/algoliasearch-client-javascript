@@ -1,6 +1,4 @@
 post:
-  tags:
-    - personalization
   operationId: setPersonalizationStrategy
   description: A strategy defines the events and facets that impact user profiles and personalized search results.
   summary: Set a new personalization strategy.

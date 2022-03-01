@@ -1,6 +1,4 @@
 get:
-  tags:
-    - analytics
   operationId: getTopCountries
   description: Returns top countries. Limited to the 1000 most frequent ones.
   summary: Returns top countries.

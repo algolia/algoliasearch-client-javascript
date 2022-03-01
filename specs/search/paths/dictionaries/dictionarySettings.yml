@@ -1,6 +1,4 @@
 put:
-  tags:
-    - search
   operationId: setDictionarySettings
   description: Set dictionary settings.
   summary: Set dictionary settings.
@@ -31,8 +29,6 @@ put:
       $ref: ../../../common/responses/IndexNotFound.yml
 
 get:
-  tags:
-    - search
   operationId: getDictionarySettings
   description: Retrieve dictionaries settings.
   summary: Retrieve dictionaries settings. The API stores languages whose standard entries are disabled. Fetch settings does not return false values.

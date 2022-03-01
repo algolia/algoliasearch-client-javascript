@@ -1,6 +1,4 @@
 delete:
-  tags:
-    - personalization
   operationId: deleteUserProfile
   description: Returns, as part of the response, a date until which the data can safely be considered as deleted for the given user. This means that if you send events for the given user before this date, they will be ignored. Any data received after the deletedUntil date will start building a new user profile. It might take a couple hours before for the deletion request to be fully processed.
   summary: Delete the user profile and all its associated data.

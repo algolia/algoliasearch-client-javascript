@@ -33,7 +33,16 @@ servers:
 security:
   - appId: []
     apiKey: []
+tags:
+  - name: search
+    description: Search API reference
 paths:
+  # ######################
+  # ### Custom request ###
+  # ######################
+  /1{path}:
+    $ref: ../common/paths/customRequest.yml
+
   # ########################
   # ### Search Endpoints ###
   # ########################

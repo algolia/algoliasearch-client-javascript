@@ -1,6 +1,4 @@
 post:
-  tags:
-    - search
   operationId: search
   description: Get search results.
   summary: Get search results.

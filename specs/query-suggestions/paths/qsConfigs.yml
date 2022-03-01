@@ -1,6 +1,4 @@
 post:
-  tags:
-    - query-suggestions
   operationId: createConfig
   description: Create a configuration of a Query Suggestions index. There's a limit of 100 configurations per application.
   summary: Create a configuration of a Query Suggestions index.

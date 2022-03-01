@@ -1,6 +1,4 @@
 get:
-  tags:
-    - abtesting
   operationId: getABTest
   description: >
     Returns metadata and metrics for A/B test id.
@@ -26,8 +24,6 @@ get:
       $ref: ../../common/responses/IndexNotFound.yml
 
 delete:
-  tags:
-    - abtesting
   operationId: deleteABTest
   description: Deletes the A/B Test and removes all associated metadata & metrics.
   summary: Deletes the A/B Test.

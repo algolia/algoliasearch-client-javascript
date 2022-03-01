@@ -1,6 +1,6 @@
 import type { Action } from './action';
 
-export type Operation = {
+export type MultipleBatchOperation = {
   action?: Action;
   /**
    * Arguments to the operation (depends on the type of the operation).

@@ -1,6 +1,4 @@
 put:
-  tags:
-    - search
   operationId: saveSynonym
   summary: Save synonym.
   description: Create a new synonym object or update the existing synonym object with the given object ID.
@@ -44,8 +42,6 @@ put:
       $ref: ../../../common/responses/IndexNotFound.yml
 
 get:
-  tags:
-    - search
   operationId: getSynonym
   summary: Get synonym.
   description: Fetch a synonym object identified by its objectID.
@@ -69,8 +65,6 @@ get:
       $ref: ../../../common/responses/IndexNotFound.yml
 
 delete:
-  tags:
-    - search
   operationId: deleteSynonym
   summary: Delete synonym.
   description: Delete a single synonyms set, identified by the given objectID.

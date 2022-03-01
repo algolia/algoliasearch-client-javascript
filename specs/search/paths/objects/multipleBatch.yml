@@ -1,6 +1,4 @@
 post:
-  tags:
-    - search
   operationId: multipleBatch
   description: Perform multiple write operations, potentially targeting multiple indices, in a single API call.
   summary: Perform multiple write operations.
@@ -17,7 +15,7 @@ post:
             requests:
               type: array
               items:
-                title: Operation.
+                title: multipleBatchOperation
                 type: object
                 additionalProperties: false
                 properties:

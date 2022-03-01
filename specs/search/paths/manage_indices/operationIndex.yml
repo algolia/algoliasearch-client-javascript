@@ -1,6 +1,4 @@
 post:
-  tags:
-    - search
   operationId: operationIndex
   summary: Copy/move index.
   description: Peforms a copy or a move operation on a index.

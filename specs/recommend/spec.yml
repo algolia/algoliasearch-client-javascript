@@ -33,6 +33,15 @@ servers:
 security:
   - appId: []
     apiKey: []
+tags:
+  - name: recommend
+    description: Recommend API reference
 paths:
+  # ######################
+  # ### Custom request ###
+  # ######################
+  /1{path}:
+    $ref: ../common/paths/customRequest.yml
+
   /1/indexes/*/recommendations:
     $ref: paths/getRecommendations.yml

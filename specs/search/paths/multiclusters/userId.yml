@@ -1,6 +1,4 @@
 get:
-  tags:
-    - search
   operationId: getUserId
   summary: Get userID
   description: >
@@ -28,8 +26,6 @@ get:
       $ref: ../../../common/responses/IndexNotFound.yml
 
 delete:
-  tags:
-    - search
   operationId: removeUserId
   summary: Remove userID
   description: >

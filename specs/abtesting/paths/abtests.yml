@@ -1,6 +1,4 @@
 post:
-  tags:
-    - abtesting
   operationId: addABTests
   description: >
     Creates a new A/B test with provided configuration.
@@ -48,8 +46,6 @@ post:
       $ref: ../../common/responses/IndexNotFound.yml
 
 get:
-  tags:
-    - abtesting
   operationId: listABTests
   description: >
     Fetch all existing A/B tests for App that are available for the current API Key. Returns an array of metadata and metrics. When no data has been processed, the metrics will be returned as null.

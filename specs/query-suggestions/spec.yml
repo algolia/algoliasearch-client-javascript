@@ -20,7 +20,16 @@ servers:
 security:
   - appId: []
     apiKey: []
+tags:
+  - name: query-suggestions
+    description: Query Suggestions API reference
 paths:
+  # ######################
+  # ### Custom request ###
+  # ######################
+  /1{path}:
+    $ref: ../common/paths/customRequest.yml
+
   /1/configs:
     $ref: paths/qsConfigs.yml
   /1/configs/{indexName}:

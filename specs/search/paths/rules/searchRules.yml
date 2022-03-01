@@ -1,6 +1,4 @@
 post:
-  tags:
-    - search
   operationId: searchRules
   summary: Search for rules.
   description: Search for rules matching various criteria.

@@ -7,9 +7,16 @@
       "stringBuiltInOperation": [
         {
           "$objectName": "Object",
-          "id1": "test",
+          "id1": {
+            "$objectName": "Object",
+            "_operation": "AddUnique",
+            "value": "test1"
+          }
+        },
+        {
+          "$objectName": "Object",
           "id2": {
-            "$objectName": "OneOfstringbuiltInOperation",
+            "$objectName": "Object",
             "_operation": "AddUnique",
             "value": "test2"
           }
@@ -22,7 +29,12 @@
       "method": "POST",
       "data": [
         {
-          "id1": "test",
+          "id1": {
+            "_operation": "AddUnique",
+            "value": "test1"
+          }
+        },
+        {
           "id2": {
             "_operation": "AddUnique",
             "value": "test2"

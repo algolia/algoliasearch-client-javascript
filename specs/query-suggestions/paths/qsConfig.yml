@@ -1,6 +1,4 @@
 put:
-  tags:
-    - query-suggestions
   operationId: updateConfig
   description: Update the configuration of a Query Suggestions index.
   summary: Update the configuration of a Query Suggestions index.

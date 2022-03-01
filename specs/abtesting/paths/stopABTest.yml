@@ -1,6 +1,4 @@
 post:
-  tags:
-    - abtesting
   operationId: stopABTest
   description: >
     Marks the A/B test as stopped.

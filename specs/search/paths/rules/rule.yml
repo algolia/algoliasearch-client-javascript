@@ -1,6 +1,4 @@
 put:
-  tags:
-    - search
   operationId: saveRule
   summary: Save/Update a rule.
   description: Create or update the Rule with the specified objectID.
@@ -31,8 +29,6 @@ put:
       $ref: ../../../common/responses/IndexNotFound.yml
 
 get:
-  tags:
-    - search
   operationId: getRule
   summary: Get a rule.
   description: Retrieve the Rule with the specified objectID.
@@ -56,8 +52,6 @@ get:
       $ref: ../../../common/responses/IndexNotFound.yml
 
 delete:
-  tags:
-    - search
   operationId: deleteRule
   summary: Delete a rule.
   description: Delete the Rule with the specified objectID.

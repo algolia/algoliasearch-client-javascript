@@ -1,6 +1,4 @@
 get:
-  tags:
-    - analytics
   operationId: getSearchesNoClicks
   description: Returns top searches that didn't lead to any clicks. Limited to the 1000 most frequent ones. For each search, also returns the average number of found hits.
   summary: Returns top searches that didn't lead to any clicks.

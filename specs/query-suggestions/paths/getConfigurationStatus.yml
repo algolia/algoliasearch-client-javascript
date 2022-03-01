@@ -1,6 +1,4 @@
 get:
-  tags:
-    - query-suggestions
   operationId: getConfigStatus
   description: >
     Get the status of a Query Suggestion's index.

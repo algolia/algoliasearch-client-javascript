@@ -1,6 +1,4 @@
 get:
-  tags:
-    - search
   operationId: getLogs
   description: Return the lastest log entries.
   summary: Return the lastest log entries.

@@ -13,7 +13,43 @@ components:
       type: apiKey
       in: header
       name: X-Algolia-API-Key
+  parameters:
+    PathInPath:
+      name: path
+      in: path
+      description: >-
+        The path of the API endpoint to target, anything after the /1 needs to
+        be specified.
+      required: true
+      schema:
+        type: string
+        example: /keys
+    Parameters:
+      name: parameters
+      in: query
+      description: >-
+        URL-encoded query string. Force some query parameters to be applied for
+        each query made with this API key.
+      schema:
+        type: string
+        example: '?query=mySearchQuery&hitsPerPage=10'
+    IndexName:
+      name: indexName
+      in: path
+      description: The index in which to perform the request.
+      required: true
+      schema:
+        type: string
+        example: myIndexName
   schemas:
+    ErrorBase:
+      description: Error.
+      type: object
+      additionalProperties: true
+      properties:
+        message:
+          type: string
+          example: Invalid Application-Id or API-Key
     indexName:
       type: string
       description: Source index name.
@@ -134,14 +170,6 @@ components:
           description: >-
             List of words and patterns to exclude from the Query Suggestions
             index.
-    ErrorBase:
-      description: Error.
-      type: object
-      additionalProperties: true
-      properties:
-        message:
-          type: string
-          example: Invalid Application-Id or API-Key
     SourceIndex:
       type: object
       additionalProperties: false
@@ -205,14 +233,32 @@ components:
               type: string
               description: Index name to target.
   responses:
-    Unauthorized:
-      description: Unauthorized
+    BadRequest:
+      description: Bad request or request arguments.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
+    FeatureNotEnabled:
+      description: This feature is not enabled on your Algolia account.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorBase'
     MethodNotAllowed:
       description: Method not allowed with this API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
+    IndexNotFound:
+      description: Index not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
+    Unauthorized:
+      description: Unauthorized
       content:
         application/json:
           schema:
@@ -249,27 +295,6 @@ components:
                 type: string
                 example: Success
                 description: Message of the response.
-    BadRequest:
-      description: Bad request or request arguments.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorBase'
-    IndexNotFound:
-      description: Index not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorBase'
-  parameters:
-    IndexName:
-      name: indexName
-      in: path
-      description: The index in which to perform the request.
-      required: true
-      schema:
-        type: string
-        example: myIndexName
 servers:
   - url: https://query-suggestions.{region}.algolia.com
     variables:
@@ -281,11 +306,127 @@ servers:
 security:
   - appId: []
     apiKey: []
+tags:
+  - name: query-suggestions
+    description: Query Suggestions API reference
 paths:
-  /1/configs:
-    post:
+  /1{path}:
+    get:
+      operationId: get
+      summary: Send requests to the Algolia REST API.
+      description: This method allow you to send requests to the Algolia REST API.
+      parameters:
+        - $ref: '#/components/parameters/PathInPath'
+        - $ref: '#/components/parameters/Parameters'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
       tags:
         - query-suggestions
+    post:
+      operationId: post
+      requestBody:
+        description: The parameters to send with the custom request.
+        content:
+          application/json:
+            schema:
+              type: object
+      summary: Send requests to the Algolia REST API.
+      description: This method allow you to send requests to the Algolia REST API.
+      parameters:
+        - $ref: '#/components/parameters/PathInPath'
+        - $ref: '#/components/parameters/Parameters'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+      tags:
+        - query-suggestions
+    put:
+      operationId: put
+      requestBody:
+        description: The parameters to send with the custom request.
+        content:
+          application/json:
+            schema:
+              type: object
+      summary: Send requests to the Algolia REST API.
+      description: This method allow you to send requests to the Algolia REST API.
+      parameters:
+        - $ref: '#/components/parameters/PathInPath'
+        - $ref: '#/components/parameters/Parameters'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+      tags:
+        - query-suggestions
+    delete:
+      operationId: del
+      requestBody:
+        description: The parameters to send with the custom request.
+        content:
+          application/json:
+            schema:
+              type: object
+      summary: Send requests to the Algolia REST API.
+      description: This method allow you to send requests to the Algolia REST API.
+      parameters:
+        - $ref: '#/components/parameters/PathInPath'
+        - $ref: '#/components/parameters/Parameters'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+      tags:
+        - query-suggestions
+  /1/configs:
+    post:
       operationId: createConfig
       description: >-
         Create a configuration of a Query Suggestions index. There's a limit of
@@ -310,6 +451,8 @@ paths:
           $ref: '#/components/responses/StatusUnprocessableEntity'
         '500':
           $ref: '#/components/responses/InternalError'
+      tags:
+        - query-suggestions
     get:
       tags:
         - query-suggestions
@@ -339,8 +482,6 @@ paths:
           $ref: '#/components/responses/InternalError'
   /1/configs/{indexName}:
     put:
-      tags:
-        - query-suggestions
       operationId: updateConfig
       description: Update the configuration of a Query Suggestions index.
       summary: Update the configuration of a Query Suggestions index.
@@ -359,6 +500,8 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '500':
           $ref: '#/components/responses/InternalError'
+      tags:
+        - query-suggestions
     delete:
       tags:
         - query-suggestions
@@ -410,8 +553,6 @@ paths:
           $ref: '#/components/responses/InternalError'
   /1/configs/{indexName}/status:
     get:
-      tags:
-        - query-suggestions
       operationId: getConfigStatus
       description: >
         Get the status of a Query Suggestion's index.
@@ -451,10 +592,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '500':
           $ref: '#/components/responses/InternalError'
-  /1/logs/{indexName}:
-    get:
       tags:
         - query-suggestions
+  /1/logs/{indexName}:
+    get:
       operationId: getLogFile
       description: Get the log file of the last build of a single Query Suggestion index.
       summary: Get the log file of the last build of a single Query Suggestion index.
@@ -506,3 +647,5 @@ paths:
           $ref: '#/components/responses/IndexNotFound'
         '500':
           $ref: '#/components/responses/InternalError'
+      tags:
+        - query-suggestions

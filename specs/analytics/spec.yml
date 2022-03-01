@@ -21,7 +21,16 @@ servers:
 security:
   - appId: []
     apiKey: []
+tags:
+  - name: analytics
+    description: Analytics API reference
 paths:
+  # ######################
+  # ### Custom request ###
+  # ######################
+  /1{path}:
+    $ref: ../common/paths/customRequest.yml
+
   # ##################################
   # ### Search Analytics Endpoints ###
   # ##################################

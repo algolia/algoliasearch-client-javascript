@@ -1,6 +1,4 @@
 get:
-  tags:
-    - personalization
   operationId: getUserTokenProfile
   description: The profile is structured by facet name used in the strategy. Each facet value is mapped to its score. Each score represents the user affinity for a specific facet value given the userToken past events and the Personalization strategy defined. Scores are bounded to 20. The last processed event timestamp is provided using the ISO 8601 format for debugging purposes.
   summary: Get the user profile built from Personalization strategy.

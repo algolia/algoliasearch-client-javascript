@@ -195,7 +195,7 @@ export function create{{capitalizedApiName}}Api(options: CreateClientOptions{{#h
       {{/bodyParams.0}}
     {{/allParams.0}}
       ) : Promise<{{{returnType}}}> {
-    const path = '{{{path}}}'{{#pathParams}}.replace(
+    const requestPath = '{{{path}}}'{{#pathParams}}.replace(
     {{=<% %>=}}
       '{<%baseName%>}',
     <%={{ }}=%>
@@ -232,7 +232,7 @@ export function create{{capitalizedApiName}}Api(options: CreateClientOptions{{#h
 
     const request: Request = {
       method: '{{httpMethod}}',
-      path,
+      path: requestPath,
       {{#bodyParam}}
       data: {{paramName}},
       {{/bodyParam}}

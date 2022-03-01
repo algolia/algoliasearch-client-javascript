@@ -14,6 +14,25 @@ components:
       in: header
       name: X-Algolia-API-Key
   parameters:
+    PathInPath:
+      name: path
+      in: path
+      description: >-
+        The path of the API endpoint to target, anything after the /1 needs to
+        be specified.
+      required: true
+      schema:
+        type: string
+        example: /keys
+    Parameters:
+      name: parameters
+      in: query
+      description: >-
+        URL-encoded query string. Force some query parameters to be applied for
+        each query made with this API key.
+      schema:
+        type: string
+        example: '?query=mySearchQuery&hitsPerPage=10'
     IndexName:
       name: indexName
       in: path
@@ -131,6 +150,14 @@ components:
         type: string
         pattern: ^[a-zA-Z0-9 \-*.]+$
   schemas:
+    ErrorBase:
+      description: Error.
+      type: object
+      additionalProperties: true
+      properties:
+        message:
+          type: string
+          example: Invalid Application-Id or API-Key
     paramsAsString:
       description: Search parameters as URL-encoded query string.
       type: string
@@ -930,14 +957,6 @@ components:
       allOf:
         - $ref: '#/components/schemas/baseSearchResponse'
         - $ref: '#/components/schemas/searchHits'
-    ErrorBase:
-      description: Error.
-      type: object
-      additionalProperties: true
-      properties:
-        message:
-          type: string
-          example: Invalid Application-Id or API-Key
     indexName:
       type: string
       example: products
@@ -1848,11 +1867,127 @@ servers:
 security:
   - appId: []
     apiKey: []
+tags:
+  - name: search
+    description: Search API reference
 paths:
-  /1/indexes/{indexName}/query:
-    post:
+  /1{path}:
+    get:
+      operationId: get
+      summary: Send requests to the Algolia REST API.
+      description: This method allow you to send requests to the Algolia REST API.
+      parameters:
+        - $ref: '#/components/parameters/PathInPath'
+        - $ref: '#/components/parameters/Parameters'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
       tags:
         - search
+    post:
+      operationId: post
+      requestBody:
+        description: The parameters to send with the custom request.
+        content:
+          application/json:
+            schema:
+              type: object
+      summary: Send requests to the Algolia REST API.
+      description: This method allow you to send requests to the Algolia REST API.
+      parameters:
+        - $ref: '#/components/parameters/PathInPath'
+        - $ref: '#/components/parameters/Parameters'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+      tags:
+        - search
+    put:
+      operationId: put
+      requestBody:
+        description: The parameters to send with the custom request.
+        content:
+          application/json:
+            schema:
+              type: object
+      summary: Send requests to the Algolia REST API.
+      description: This method allow you to send requests to the Algolia REST API.
+      parameters:
+        - $ref: '#/components/parameters/PathInPath'
+        - $ref: '#/components/parameters/Parameters'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+      tags:
+        - search
+    delete:
+      operationId: del
+      requestBody:
+        description: The parameters to send with the custom request.
+        content:
+          application/json:
+            schema:
+              type: object
+      summary: Send requests to the Algolia REST API.
+      description: This method allow you to send requests to the Algolia REST API.
+      parameters:
+        - $ref: '#/components/parameters/PathInPath'
+        - $ref: '#/components/parameters/Parameters'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+      tags:
+        - search
+  /1/indexes/{indexName}/query:
+    post:
       operationId: search
       description: Get search results.
       summary: Get search results.
@@ -1879,10 +2014,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /1/indexes/*/queries:
-    post:
       tags:
         - search
+  /1/indexes/*/queries:
+    post:
       operationId: multipleQueries
       description: Get search results for the given requests.
       summary: Get search results for the given requests.
@@ -1943,10 +2078,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /1/indexes/{indexName}/facets/{facetName}/query:
-    post:
       tags:
         - search
+  /1/indexes/{indexName}/facets/{facetName}/query:
+    post:
       operationId: searchForFacetValues
       summary: Search for values of a given facet
       description: >-
@@ -2018,10 +2153,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /1/indexes/{indexName}/browse:
-    post:
       tags:
         - search
+  /1/indexes/{indexName}/browse:
+    post:
       operationId: browse
       summary: Retrieve all index content.
       description: >
@@ -2064,10 +2199,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /1/indexes/{indexName}:
-    post:
       tags:
         - search
+  /1/indexes/{indexName}:
+    post:
       operationId: saveObject
       description: Add an object to the index, automatically assigning it an object ID.
       summary: Add an object to the index.
@@ -2104,9 +2239,9 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-    delete:
       tags:
         - search
+    delete:
       operationId: deleteIndex
       summary: Delete index.
       description: Delete an existing index.
@@ -2123,10 +2258,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /1/indexes/{indexName}/{objectID}:
-    put:
       tags:
         - search
+  /1/indexes/{indexName}/{objectID}:
+    put:
       operationId: addOrUpdateObject
       summary: Add or replace an object with a given object ID.
       description: >-
@@ -2153,9 +2288,9 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-    get:
       tags:
         - search
+    get:
       operationId: getObject
       summary: Retrieve one object from the index.
       description: Retrieve one object from the index.
@@ -2190,9 +2325,9 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-    delete:
       tags:
         - search
+    delete:
       operationId: deleteObject
       summary: Delete object.
       description: Delete an existing object.
@@ -2210,10 +2345,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /1/indexes/{indexName}/deleteByQuery:
-    post:
       tags:
         - search
+  /1/indexes/{indexName}/deleteByQuery:
+    post:
       operationId: deleteBy
       summary: Delete all records matching the query.
       description: >
@@ -2242,10 +2377,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /1/indexes/{indexName}/clear:
-    post:
       tags:
         - search
+  /1/indexes/{indexName}/clear:
+    post:
       operationId: clearObjects
       summary: clear all objects from an index.
       description: >-
@@ -2264,10 +2399,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /1/indexes/{indexName}/{objectID}/partial:
-    post:
       tags:
         - search
+  /1/indexes/{indexName}/{objectID}/partial:
+    post:
       operationId: partialUpdateObject
       summary: Partially update an object.
       description: >
@@ -2316,10 +2451,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /1/indexes/{indexName}/batch:
-    post:
       tags:
         - search
+  /1/indexes/{indexName}/batch:
+    post:
       operationId: batch
       description: Performs multiple write operations in a single API call.
       summary: Performs multiple write operations in a single API call.
@@ -2338,7 +2473,7 @@ paths:
                 requests:
                   type: array
                   items:
-                    title: operation
+                    title: batchOperation
                     type: object
                     additionalProperties: false
                     properties:
@@ -2371,10 +2506,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /1/indexes/*/batch:
-    post:
       tags:
         - search
+  /1/indexes/*/batch:
+    post:
       operationId: multipleBatch
       description: >-
         Perform multiple write operations, potentially targeting multiple
@@ -2393,7 +2528,7 @@ paths:
                 requests:
                   type: array
                   items:
-                    title: Operation.
+                    title: multipleBatchOperation
                     type: object
                     additionalProperties: false
                     properties:
@@ -2430,10 +2565,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /1/indexes/*/objects:
-    post:
       tags:
         - search
+  /1/indexes/*/objects:
+    post:
       operationId: getObjects
       summary: Retrieve one or more objects.
       description: >-
@@ -2498,10 +2633,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /1/indexes/{indexName}/settings:
-    get:
       tags:
         - search
+  /1/indexes/{indexName}/settings:
+    get:
       operationId: getSettings
       description: Retrieve settings of a given indexName.
       summary: Retrieve settings of a given indexName.
@@ -2522,9 +2657,9 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-    put:
       tags:
         - search
+    put:
       operationId: setSettings
       description: >-
         Update settings of a given indexName. Only specified settings are
@@ -2551,10 +2686,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /1/indexes/{indexName}/synonyms/{objectID}:
-    put:
       tags:
         - search
+  /1/indexes/{indexName}/synonyms/{objectID}:
+    put:
       operationId: saveSynonym
       summary: Save synonym.
       description: >-
@@ -2598,9 +2733,9 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-    get:
       tags:
         - search
+    get:
       operationId: getSynonym
       summary: Get synonym.
       description: Fetch a synonym object identified by its objectID.
@@ -2622,9 +2757,9 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-    delete:
       tags:
         - search
+    delete:
       operationId: deleteSynonym
       summary: Delete synonym.
       description: Delete a single synonyms set, identified by the given objectID.
@@ -2643,10 +2778,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /1/indexes/{indexName}/synonyms/batch:
-    post:
       tags:
         - search
+  /1/indexes/{indexName}/synonyms/batch:
+    post:
       operationId: saveSynonyms
       summary: Save a batch of synonyms.
       description: >-
@@ -2673,10 +2808,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /1/indexes/{indexName}/synonyms/clear:
-    post:
       tags:
         - search
+  /1/indexes/{indexName}/synonyms/clear:
+    post:
       operationId: clearAllSynonyms
       summary: Clear all synonyms.
       description: Remove all synonyms from an index.
@@ -2694,10 +2829,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /1/indexes/{indexName}/synonyms/search:
-    post:
       tags:
         - search
+  /1/indexes/{indexName}/synonyms/search:
+    post:
       operationId: searchSynonyms
       summary: Get all synonyms that match a query.
       description: Search or browse all synonyms, optionally filtering them by type.
@@ -2722,10 +2857,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /1/keys:
-    post:
       tags:
         - search
+  /1/keys:
+    post:
       operationId: addApiKey
       summary: Create a new API key.
       description: Add a new API Key with specific permissions/restrictions.
@@ -2750,9 +2885,9 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-    get:
       tags:
         - search
+    get:
       operationId: listApiKeys
       summary: Get the full list of API Keys.
       description: List API keys, along with their associated rights.
@@ -2781,10 +2916,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /1/keys/{key}:
-    put:
       tags:
         - search
+  /1/keys/{key}:
+    put:
       operationId: updateApiKey
       summary: Update an API key.
       description: Replace every permission of an existing API key.
@@ -2821,9 +2956,9 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-    get:
       tags:
         - search
+    get:
       operationId: getApiKey
       summary: Get an API key.
       description: Get the permissions of an API key.
@@ -2844,9 +2979,9 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-    delete:
       tags:
         - search
+    delete:
       operationId: deleteApiKey
       summary: Delete an API key.
       description: Delete an existing API Key.
@@ -2874,10 +3009,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /1/keys/{key}/restore:
-    post:
       tags:
         - search
+  /1/keys/{key}/restore:
+    post:
       operationId: restoreApiKey
       summary: Restore an API key.
       description: Restore a deleted API key, along with its associated rights.
@@ -2898,10 +3033,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /1/indexes/{indexName}/rules/{objectID}:
-    put:
       tags:
         - search
+  /1/indexes/{indexName}/rules/{objectID}:
+    put:
       operationId: saveRule
       summary: Save/Update a rule.
       description: Create or update the Rule with the specified objectID.
@@ -2930,9 +3065,9 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-    get:
       tags:
         - search
+    get:
       operationId: getRule
       summary: Get a rule.
       description: Retrieve the Rule with the specified objectID.
@@ -2954,9 +3089,9 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-    delete:
       tags:
         - search
+    delete:
       operationId: deleteRule
       summary: Delete a rule.
       description: Delete the Rule with the specified objectID.
@@ -2975,10 +3110,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /1/indexes/{indexName}/rules/batch:
-    post:
       tags:
         - search
+  /1/indexes/{indexName}/rules/batch:
+    post:
       operationId: batchRules
       summary: Batch Rules.
       description: Create or update a batch of Rules.
@@ -3006,10 +3141,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /1/indexes/{indexName}/rules/clear:
-    post:
       tags:
         - search
+  /1/indexes/{indexName}/rules/clear:
+    post:
       operationId: clearRules
       summary: Clear Rules.
       description: Delete all Rules in the index.
@@ -3027,10 +3162,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /1/indexes/{indexName}/rules/search:
-    post:
       tags:
         - search
+  /1/indexes/{indexName}/rules/search:
+    post:
       operationId: searchRules
       summary: Search for rules.
       description: Search for rules matching various criteria.
@@ -3109,10 +3244,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /1/dictionaries/{dictionaryName}/batch:
-    post:
       tags:
         - search
+  /1/dictionaries/{dictionaryName}/batch:
+    post:
       operationId: batchDictionaryEntries
       description: Send a batch of dictionary entries.
       summary: Send a batch of dictionary entries.
@@ -3164,10 +3299,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /1/dictionaries/{dictionaryName}/search:
-    post:
       tags:
         - search
+  /1/dictionaries/{dictionaryName}/search:
+    post:
       operationId: searchDictionaryEntries
       description: Search the dictionary entries.
       summary: Search the dictionary entries.
@@ -3204,10 +3339,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /1/dictionaries/*/settings:
-    put:
       tags:
         - search
+  /1/dictionaries/*/settings:
+    put:
       operationId: setDictionarySettings
       description: Set dictionary settings.
       summary: Set dictionary settings.
@@ -3238,9 +3373,9 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-    get:
       tags:
         - search
+    get:
       operationId: getDictionarySettings
       description: Retrieve dictionaries settings.
       summary: >-
@@ -3268,10 +3403,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /1/dictionaries/*/languages:
-    get:
       tags:
         - search
+  /1/dictionaries/*/languages:
+    get:
       operationId: getDictionaryLanguages
       description: List dictionaries supported per language.
       summary: List dictionaries supported per language.
@@ -3293,10 +3428,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /1/clusters/mapping:
-    post:
       tags:
         - search
+  /1/clusters/mapping:
+    post:
       operationId: assignUserId
       summary: Assign or Move userID
       description: >
@@ -3336,9 +3471,9 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-    get:
       tags:
         - search
+    get:
       operationId: listUserIds
       summary: List userIDs
       description: >
@@ -3378,10 +3513,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /1/clusters/mapping/batch:
-    post:
       tags:
         - search
+  /1/clusters/mapping/batch:
+    post:
       operationId: batchAssignUserIds
       summary: Batch assign userIDs
       description: >
@@ -3426,10 +3561,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /1/clusters/mapping/top:
-    get:
       tags:
         - search
+  /1/clusters/mapping/top:
+    get:
       operationId: getTopUserIds
       summary: Get top userID
       description: >
@@ -3470,10 +3605,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /1/clusters/mapping/{userID}:
-    get:
       tags:
         - search
+  /1/clusters/mapping/{userID}:
+    get:
       operationId: getUserId
       summary: Get userID
       description: >
@@ -3502,9 +3637,9 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-    delete:
       tags:
         - search
+    delete:
       operationId: removeUserId
       summary: Remove userID
       description: >
@@ -3536,10 +3671,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /1/clusters:
-    get:
       tags:
         - search
+  /1/clusters:
+    get:
       operationId: listClusters
       summary: List clusters
       description: >
@@ -3573,10 +3708,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /1/clusters/mapping/search:
-    post:
       tags:
         - search
+  /1/clusters/mapping/search:
+    post:
       operationId: searchUserIds
       summary: Search userID
       description: >
@@ -3684,10 +3819,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /1/clusters/mapping/pending:
-    get:
       tags:
         - search
+  /1/clusters/mapping/pending:
+    get:
       operationId: hasPendingMappings
       summary: Has pending mappings
       description: >
@@ -3718,10 +3853,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /1/security/sources:
-    get:
       tags:
         - search
+  /1/security/sources:
+    get:
       operationId: getSources
       description: List all allowed sources.
       summary: List all allowed sources.
@@ -3740,6 +3875,8 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      tags:
+        - search
     put:
       tags:
         - search
@@ -3777,8 +3914,6 @@ paths:
           $ref: '#/components/responses/IndexNotFound'
   /1/security/sources/append:
     post:
-      tags:
-        - search
       operationId: appendSource
       description: Add a single source to the list of allowed sources.
       summary: Add a single source.
@@ -3800,10 +3935,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /1/security/sources/{source}:
-    delete:
       tags:
         - search
+  /1/security/sources/{source}:
+    delete:
       operationId: deleteSource
       description: Remove a single source from the list of allowed sources.
       summary: Remove a single source.
@@ -3837,10 +3972,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /1/logs:
-    get:
       tags:
         - search
+  /1/logs:
+    get:
       operationId: getLogs
       description: Return the lastest log entries.
       summary: Return the lastest log entries.
@@ -3982,10 +4117,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /1/indexes/{indexName}/task/{taskID}:
-    get:
       tags:
         - search
+  /1/indexes/{indexName}/task/{taskID}:
+    get:
       operationId: getTask
       description: Check the current status of a given task.
       summary: Check the current status of a given task.
@@ -4023,10 +4158,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /1/indexes/{indexName}/operation:
-    post:
       tags:
         - search
+  /1/indexes/{indexName}/operation:
+    post:
       operationId: operationIndex
       summary: Copy/move index.
       description: Peforms a copy or a move operation on a index.
@@ -4067,10 +4202,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /1/indexes:
-    get:
       tags:
         - search
+  /1/indexes:
+    get:
       operationId: listIndices
       summary: List existing indexes.
       description: List existing indexes from an application.
@@ -4091,3 +4226,5 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      tags:
+        - search

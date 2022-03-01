@@ -137,7 +137,7 @@ export function createSearchApi(options: CreateClientOptions) {
    * @param apiKey - The apiKey object.
    */
   function addApiKey(apiKey: ApiKey): Promise<AddApiKeyResponse> {
-    const path = '/1/keys';
+    const requestPath = '/1/keys';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
@@ -155,7 +155,7 @@ export function createSearchApi(options: CreateClientOptions) {
 
     const request: Request = {
       method: 'POST',
-      path,
+      path: requestPath,
       data: apiKey,
     };
 
@@ -179,7 +179,7 @@ export function createSearchApi(options: CreateClientOptions) {
     objectID,
     body,
   }: AddOrUpdateObjectProps): Promise<UpdatedAtWithObjectIdResponse> {
-    const path = '/1/indexes/{indexName}/{objectID}'
+    const requestPath = '/1/indexes/{indexName}/{objectID}'
       .replace('{indexName}', encodeURIComponent(String(indexName)))
       .replace('{objectID}', encodeURIComponent(String(objectID)));
     const headers: Headers = { Accept: 'application/json' };
@@ -205,7 +205,7 @@ export function createSearchApi(options: CreateClientOptions) {
 
     const request: Request = {
       method: 'PUT',
-      path,
+      path: requestPath,
       data: body,
     };
 
@@ -222,7 +222,7 @@ export function createSearchApi(options: CreateClientOptions) {
    * @param source - The source to add.
    */
   function appendSource(source: Source): Promise<CreatedAtResponse> {
-    const path = '/1/security/sources/append';
+    const requestPath = '/1/security/sources/append';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
@@ -234,7 +234,7 @@ export function createSearchApi(options: CreateClientOptions) {
 
     const request: Request = {
       method: 'POST',
-      path,
+      path: requestPath,
       data: source,
     };
 
@@ -256,7 +256,7 @@ export function createSearchApi(options: CreateClientOptions) {
     xAlgoliaUserID,
     assignUserIdParams,
   }: AssignUserIdProps): Promise<CreatedAtResponse> {
-    const path = '/1/clusters/mapping';
+    const requestPath = '/1/clusters/mapping';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
@@ -284,7 +284,7 @@ export function createSearchApi(options: CreateClientOptions) {
 
     const request: Request = {
       method: 'POST',
-      path,
+      path: requestPath,
       data: assignUserIdParams,
     };
 
@@ -306,7 +306,7 @@ export function createSearchApi(options: CreateClientOptions) {
     indexName,
     batchWriteParams,
   }: BatchProps): Promise<BatchResponse> {
-    const path = '/1/indexes/{indexName}/batch'.replace(
+    const requestPath = '/1/indexes/{indexName}/batch'.replace(
       '{indexName}',
       encodeURIComponent(String(indexName))
     );
@@ -327,7 +327,7 @@ export function createSearchApi(options: CreateClientOptions) {
 
     const request: Request = {
       method: 'POST',
-      path,
+      path: requestPath,
       data: batchWriteParams,
     };
 
@@ -349,7 +349,7 @@ export function createSearchApi(options: CreateClientOptions) {
     xAlgoliaUserID,
     batchAssignUserIdsParams,
   }: BatchAssignUserIdsProps): Promise<CreatedAtResponse> {
-    const path = '/1/clusters/mapping/batch';
+    const requestPath = '/1/clusters/mapping/batch';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
@@ -382,7 +382,7 @@ export function createSearchApi(options: CreateClientOptions) {
 
     const request: Request = {
       method: 'POST',
-      path,
+      path: requestPath,
       data: batchAssignUserIdsParams,
     };
 
@@ -404,7 +404,7 @@ export function createSearchApi(options: CreateClientOptions) {
     dictionaryName,
     batchDictionaryEntriesParams,
   }: BatchDictionaryEntriesProps): Promise<UpdatedAtResponse> {
-    const path = '/1/dictionaries/{dictionaryName}/batch'.replace(
+    const requestPath = '/1/dictionaries/{dictionaryName}/batch'.replace(
       '{dictionaryName}',
       encodeURIComponent(String(dictionaryName))
     );
@@ -431,7 +431,7 @@ export function createSearchApi(options: CreateClientOptions) {
 
     const request: Request = {
       method: 'POST',
-      path,
+      path: requestPath,
       data: batchDictionaryEntriesParams,
     };
 
@@ -457,7 +457,7 @@ export function createSearchApi(options: CreateClientOptions) {
     forwardToReplicas,
     clearExistingRules,
   }: BatchRulesProps): Promise<UpdatedAtResponse> {
-    const path = '/1/indexes/{indexName}/rules/batch'.replace(
+    const requestPath = '/1/indexes/{indexName}/rules/batch'.replace(
       '{indexName}',
       encodeURIComponent(String(indexName))
     );
@@ -486,7 +486,7 @@ export function createSearchApi(options: CreateClientOptions) {
 
     const request: Request = {
       method: 'POST',
-      path,
+      path: requestPath,
       data: rule,
     };
 
@@ -508,7 +508,7 @@ export function createSearchApi(options: CreateClientOptions) {
     indexName,
     browseRequest,
   }: BrowseProps): Promise<BrowseResponse> {
-    const path = '/1/indexes/{indexName}/browse'.replace(
+    const requestPath = '/1/indexes/{indexName}/browse'.replace(
       '{indexName}',
       encodeURIComponent(String(indexName))
     );
@@ -523,7 +523,7 @@ export function createSearchApi(options: CreateClientOptions) {
 
     const request: Request = {
       method: 'POST',
-      path,
+      path: requestPath,
       data: browseRequest,
     };
 
@@ -545,7 +545,7 @@ export function createSearchApi(options: CreateClientOptions) {
     indexName,
     forwardToReplicas,
   }: ClearAllSynonymsProps): Promise<UpdatedAtResponse> {
-    const path = '/1/indexes/{indexName}/synonyms/clear'.replace(
+    const requestPath = '/1/indexes/{indexName}/synonyms/clear'.replace(
       '{indexName}',
       encodeURIComponent(String(indexName))
     );
@@ -564,7 +564,7 @@ export function createSearchApi(options: CreateClientOptions) {
 
     const request: Request = {
       method: 'POST',
-      path,
+      path: requestPath,
     };
 
     return transporter.request(request, {
@@ -583,7 +583,7 @@ export function createSearchApi(options: CreateClientOptions) {
   function clearObjects({
     indexName,
   }: ClearObjectsProps): Promise<UpdatedAtResponse> {
-    const path = '/1/indexes/{indexName}/clear'.replace(
+    const requestPath = '/1/indexes/{indexName}/clear'.replace(
       '{indexName}',
       encodeURIComponent(String(indexName))
     );
@@ -598,7 +598,7 @@ export function createSearchApi(options: CreateClientOptions) {
 
     const request: Request = {
       method: 'POST',
-      path,
+      path: requestPath,
     };
 
     return transporter.request(request, {
@@ -619,7 +619,7 @@ export function createSearchApi(options: CreateClientOptions) {
     indexName,
     forwardToReplicas,
   }: ClearRulesProps): Promise<UpdatedAtResponse> {
-    const path = '/1/indexes/{indexName}/rules/clear'.replace(
+    const requestPath = '/1/indexes/{indexName}/rules/clear'.replace(
       '{indexName}',
       encodeURIComponent(String(indexName))
     );
@@ -638,7 +638,48 @@ export function createSearchApi(options: CreateClientOptions) {
 
     const request: Request = {
       method: 'POST',
-      path,
+      path: requestPath,
+    };
+
+    return transporter.request(request, {
+      queryParameters,
+      headers,
+    });
+  }
+
+  /**
+   * This method allow you to send requests to the Algolia REST API.
+   *
+   * @summary Send requests to the Algolia REST API.
+   * @param del - The del object.
+   * @param del.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
+   * @param del.parameters - URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
+   * @param del.body - The parameters to send with the custom request.
+   */
+  function del({
+    path,
+    parameters,
+    body,
+  }: DelProps): Promise<Record<string, any>> {
+    const requestPath = '/1{path}'.replace(
+      '{path}',
+      encodeURIComponent(String(path))
+    );
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (!path) {
+      throw new Error('Parameter `path` is required when calling `del`.');
+    }
+
+    if (parameters !== undefined) {
+      queryParameters.parameters = parameters.toString();
+    }
+
+    const request: Request = {
+      method: 'DELETE',
+      path: requestPath,
+      data: body,
     };
 
     return transporter.request(request, {
@@ -657,7 +698,7 @@ export function createSearchApi(options: CreateClientOptions) {
   function deleteApiKey({
     key,
   }: DeleteApiKeyProps): Promise<DeleteApiKeyResponse> {
-    const path = '/1/keys/{key}'.replace(
+    const requestPath = '/1/keys/{key}'.replace(
       '{key}',
       encodeURIComponent(String(key))
     );
@@ -672,7 +713,7 @@ export function createSearchApi(options: CreateClientOptions) {
 
     const request: Request = {
       method: 'DELETE',
-      path,
+      path: requestPath,
     };
 
     return transporter.request(request, {
@@ -693,7 +734,7 @@ export function createSearchApi(options: CreateClientOptions) {
     indexName,
     searchParams,
   }: DeleteByProps): Promise<DeletedAtResponse> {
-    const path = '/1/indexes/{indexName}/deleteByQuery'.replace(
+    const requestPath = '/1/indexes/{indexName}/deleteByQuery'.replace(
       '{indexName}',
       encodeURIComponent(String(indexName))
     );
@@ -714,7 +755,7 @@ export function createSearchApi(options: CreateClientOptions) {
 
     const request: Request = {
       method: 'POST',
-      path,
+      path: requestPath,
       data: searchParams,
     };
 
@@ -734,7 +775,7 @@ export function createSearchApi(options: CreateClientOptions) {
   function deleteIndex({
     indexName,
   }: DeleteIndexProps): Promise<DeletedAtResponse> {
-    const path = '/1/indexes/{indexName}'.replace(
+    const requestPath = '/1/indexes/{indexName}'.replace(
       '{indexName}',
       encodeURIComponent(String(indexName))
     );
@@ -749,7 +790,7 @@ export function createSearchApi(options: CreateClientOptions) {
 
     const request: Request = {
       method: 'DELETE',
-      path,
+      path: requestPath,
     };
 
     return transporter.request(request, {
@@ -770,7 +811,7 @@ export function createSearchApi(options: CreateClientOptions) {
     indexName,
     objectID,
   }: DeleteObjectProps): Promise<DeletedAtResponse> {
-    const path = '/1/indexes/{indexName}/{objectID}'
+    const requestPath = '/1/indexes/{indexName}/{objectID}'
       .replace('{indexName}', encodeURIComponent(String(indexName)))
       .replace('{objectID}', encodeURIComponent(String(objectID)));
     const headers: Headers = { Accept: 'application/json' };
@@ -790,7 +831,7 @@ export function createSearchApi(options: CreateClientOptions) {
 
     const request: Request = {
       method: 'DELETE',
-      path,
+      path: requestPath,
     };
 
     return transporter.request(request, {
@@ -813,7 +854,7 @@ export function createSearchApi(options: CreateClientOptions) {
     objectID,
     forwardToReplicas,
   }: DeleteRuleProps): Promise<UpdatedAtResponse> {
-    const path = '/1/indexes/{indexName}/rules/{objectID}'
+    const requestPath = '/1/indexes/{indexName}/rules/{objectID}'
       .replace('{indexName}', encodeURIComponent(String(indexName)))
       .replace('{objectID}', encodeURIComponent(String(objectID)));
     const headers: Headers = { Accept: 'application/json' };
@@ -837,7 +878,7 @@ export function createSearchApi(options: CreateClientOptions) {
 
     const request: Request = {
       method: 'DELETE',
-      path,
+      path: requestPath,
     };
 
     return transporter.request(request, {
@@ -856,7 +897,7 @@ export function createSearchApi(options: CreateClientOptions) {
   function deleteSource({
     source,
   }: DeleteSourceProps): Promise<DeleteSourceResponse> {
-    const path = '/1/security/sources/{source}'.replace(
+    const requestPath = '/1/security/sources/{source}'.replace(
       '{source}',
       encodeURIComponent(String(source))
     );
@@ -871,7 +912,7 @@ export function createSearchApi(options: CreateClientOptions) {
 
     const request: Request = {
       method: 'DELETE',
-      path,
+      path: requestPath,
     };
 
     return transporter.request(request, {
@@ -894,7 +935,7 @@ export function createSearchApi(options: CreateClientOptions) {
     objectID,
     forwardToReplicas,
   }: DeleteSynonymProps): Promise<DeletedAtResponse> {
-    const path = '/1/indexes/{indexName}/synonyms/{objectID}'
+    const requestPath = '/1/indexes/{indexName}/synonyms/{objectID}'
       .replace('{indexName}', encodeURIComponent(String(indexName)))
       .replace('{objectID}', encodeURIComponent(String(objectID)));
     const headers: Headers = { Accept: 'application/json' };
@@ -918,7 +959,42 @@ export function createSearchApi(options: CreateClientOptions) {
 
     const request: Request = {
       method: 'DELETE',
-      path,
+      path: requestPath,
+    };
+
+    return transporter.request(request, {
+      queryParameters,
+      headers,
+    });
+  }
+
+  /**
+   * This method allow you to send requests to the Algolia REST API.
+   *
+   * @summary Send requests to the Algolia REST API.
+   * @param get - The get object.
+   * @param get.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
+   * @param get.parameters - URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
+   */
+  function get({ path, parameters }: GetProps): Promise<Record<string, any>> {
+    const requestPath = '/1{path}'.replace(
+      '{path}',
+      encodeURIComponent(String(path))
+    );
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (!path) {
+      throw new Error('Parameter `path` is required when calling `get`.');
+    }
+
+    if (parameters !== undefined) {
+      queryParameters.parameters = parameters.toString();
+    }
+
+    const request: Request = {
+      method: 'GET',
+      path: requestPath,
     };
 
     return transporter.request(request, {
@@ -935,7 +1011,7 @@ export function createSearchApi(options: CreateClientOptions) {
    * @param getApiKey.key - API Key string.
    */
   function getApiKey({ key }: GetApiKeyProps): Promise<Key> {
-    const path = '/1/keys/{key}'.replace(
+    const requestPath = '/1/keys/{key}'.replace(
       '{key}',
       encodeURIComponent(String(key))
     );
@@ -948,7 +1024,7 @@ export function createSearchApi(options: CreateClientOptions) {
 
     const request: Request = {
       method: 'GET',
-      path,
+      path: requestPath,
     };
 
     return transporter.request(request, {
@@ -963,13 +1039,13 @@ export function createSearchApi(options: CreateClientOptions) {
    * @summary List dictionaries supported per language.
    */
   function getDictionaryLanguages(): Promise<{ [key: string]: Languages }> {
-    const path = '/1/dictionaries/*/languages';
+    const requestPath = '/1/dictionaries/*/languages';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
     const request: Request = {
       method: 'GET',
-      path,
+      path: requestPath,
     };
 
     return transporter.request(request, {
@@ -984,13 +1060,13 @@ export function createSearchApi(options: CreateClientOptions) {
    * @summary Retrieve dictionaries settings. The API stores languages whose standard entries are disabled. Fetch settings does not return false values.
    */
   function getDictionarySettings(): Promise<GetDictionarySettingsResponse> {
-    const path = '/1/dictionaries/*/settings';
+    const requestPath = '/1/dictionaries/*/settings';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
     const request: Request = {
       method: 'GET',
-      path,
+      path: requestPath,
     };
 
     return transporter.request(request, {
@@ -1015,7 +1091,7 @@ export function createSearchApi(options: CreateClientOptions) {
     indexName,
     type,
   }: GetLogsProps): Promise<GetLogsResponse> {
-    const path = '/1/logs';
+    const requestPath = '/1/logs';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
@@ -1037,7 +1113,7 @@ export function createSearchApi(options: CreateClientOptions) {
 
     const request: Request = {
       method: 'GET',
-      path,
+      path: requestPath,
     };
 
     return transporter.request(request, {
@@ -1060,7 +1136,7 @@ export function createSearchApi(options: CreateClientOptions) {
     objectID,
     attributesToRetrieve,
   }: GetObjectProps): Promise<{ [key: string]: string }> {
-    const path = '/1/indexes/{indexName}/{objectID}'
+    const requestPath = '/1/indexes/{indexName}/{objectID}'
       .replace('{indexName}', encodeURIComponent(String(indexName)))
       .replace('{objectID}', encodeURIComponent(String(objectID)));
     const headers: Headers = { Accept: 'application/json' };
@@ -1084,7 +1160,7 @@ export function createSearchApi(options: CreateClientOptions) {
 
     const request: Request = {
       method: 'GET',
-      path,
+      path: requestPath,
     };
 
     return transporter.request(request, {
@@ -1102,7 +1178,7 @@ export function createSearchApi(options: CreateClientOptions) {
   function getObjects(
     getObjectsParams: GetObjectsParams
   ): Promise<GetObjectsResponse> {
-    const path = '/1/indexes/*/objects';
+    const requestPath = '/1/indexes/*/objects';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
@@ -1114,7 +1190,7 @@ export function createSearchApi(options: CreateClientOptions) {
 
     const request: Request = {
       method: 'POST',
-      path,
+      path: requestPath,
       data: getObjectsParams,
     };
 
@@ -1133,7 +1209,7 @@ export function createSearchApi(options: CreateClientOptions) {
    * @param getRule.objectID - Unique identifier of an object.
    */
   function getRule({ indexName, objectID }: GetRuleProps): Promise<Rule> {
-    const path = '/1/indexes/{indexName}/rules/{objectID}'
+    const requestPath = '/1/indexes/{indexName}/rules/{objectID}'
       .replace('{indexName}', encodeURIComponent(String(indexName)))
       .replace('{objectID}', encodeURIComponent(String(objectID)));
     const headers: Headers = { Accept: 'application/json' };
@@ -1153,7 +1229,7 @@ export function createSearchApi(options: CreateClientOptions) {
 
     const request: Request = {
       method: 'GET',
-      path,
+      path: requestPath,
     };
 
     return transporter.request(request, {
@@ -1172,7 +1248,7 @@ export function createSearchApi(options: CreateClientOptions) {
   function getSettings({
     indexName,
   }: GetSettingsProps): Promise<IndexSettings> {
-    const path = '/1/indexes/{indexName}/settings'.replace(
+    const requestPath = '/1/indexes/{indexName}/settings'.replace(
       '{indexName}',
       encodeURIComponent(String(indexName))
     );
@@ -1187,7 +1263,7 @@ export function createSearchApi(options: CreateClientOptions) {
 
     const request: Request = {
       method: 'GET',
-      path,
+      path: requestPath,
     };
 
     return transporter.request(request, {
@@ -1202,13 +1278,13 @@ export function createSearchApi(options: CreateClientOptions) {
    * @summary List all allowed sources.
    */
   function getSources(): Promise<Source[]> {
-    const path = '/1/security/sources';
+    const requestPath = '/1/security/sources';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
     const request: Request = {
       method: 'GET',
-      path,
+      path: requestPath,
     };
 
     return transporter.request(request, {
@@ -1229,7 +1305,7 @@ export function createSearchApi(options: CreateClientOptions) {
     indexName,
     objectID,
   }: GetSynonymProps): Promise<SynonymHit> {
-    const path = '/1/indexes/{indexName}/synonyms/{objectID}'
+    const requestPath = '/1/indexes/{indexName}/synonyms/{objectID}'
       .replace('{indexName}', encodeURIComponent(String(indexName)))
       .replace('{objectID}', encodeURIComponent(String(objectID)));
     const headers: Headers = { Accept: 'application/json' };
@@ -1249,7 +1325,7 @@ export function createSearchApi(options: CreateClientOptions) {
 
     const request: Request = {
       method: 'GET',
-      path,
+      path: requestPath,
     };
 
     return transporter.request(request, {
@@ -1270,7 +1346,7 @@ export function createSearchApi(options: CreateClientOptions) {
     indexName,
     taskID,
   }: GetTaskProps): Promise<GetTaskResponse> {
-    const path = '/1/indexes/{indexName}/task/{taskID}'
+    const requestPath = '/1/indexes/{indexName}/task/{taskID}'
       .replace('{indexName}', encodeURIComponent(String(indexName)))
       .replace('{taskID}', encodeURIComponent(String(taskID)));
     const headers: Headers = { Accept: 'application/json' };
@@ -1288,7 +1364,7 @@ export function createSearchApi(options: CreateClientOptions) {
 
     const request: Request = {
       method: 'GET',
-      path,
+      path: requestPath,
     };
 
     return transporter.request(request, {
@@ -1303,13 +1379,13 @@ export function createSearchApi(options: CreateClientOptions) {
    * @summary Get top userID.
    */
   function getTopUserIds(): Promise<GetTopUserIdsResponse> {
-    const path = '/1/clusters/mapping/top';
+    const requestPath = '/1/clusters/mapping/top';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
     const request: Request = {
       method: 'GET',
-      path,
+      path: requestPath,
     };
 
     return transporter.request(request, {
@@ -1326,7 +1402,7 @@ export function createSearchApi(options: CreateClientOptions) {
    * @param getUserId.userID - UserID to assign.
    */
   function getUserId({ userID }: GetUserIdProps): Promise<UserId> {
-    const path = '/1/clusters/mapping/{userID}'.replace(
+    const requestPath = '/1/clusters/mapping/{userID}'.replace(
       '{userID}',
       encodeURIComponent(String(userID))
     );
@@ -1341,7 +1417,7 @@ export function createSearchApi(options: CreateClientOptions) {
 
     const request: Request = {
       method: 'GET',
-      path,
+      path: requestPath,
     };
 
     return transporter.request(request, {
@@ -1360,7 +1436,7 @@ export function createSearchApi(options: CreateClientOptions) {
   function hasPendingMappings({
     getClusters,
   }: HasPendingMappingsProps): Promise<CreatedAtResponse> {
-    const path = '/1/clusters/mapping/pending';
+    const requestPath = '/1/clusters/mapping/pending';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
@@ -1370,7 +1446,7 @@ export function createSearchApi(options: CreateClientOptions) {
 
     const request: Request = {
       method: 'GET',
-      path,
+      path: requestPath,
     };
 
     return transporter.request(request, {
@@ -1385,13 +1461,13 @@ export function createSearchApi(options: CreateClientOptions) {
    * @summary Get the full list of API Keys.
    */
   function listApiKeys(): Promise<ListApiKeysResponse> {
-    const path = '/1/keys';
+    const requestPath = '/1/keys';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
     const request: Request = {
       method: 'GET',
-      path,
+      path: requestPath,
     };
 
     return transporter.request(request, {
@@ -1406,13 +1482,13 @@ export function createSearchApi(options: CreateClientOptions) {
    * @summary List clusters.
    */
   function listClusters(): Promise<ListClustersResponse> {
-    const path = '/1/clusters';
+    const requestPath = '/1/clusters';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
     const request: Request = {
       method: 'GET',
-      path,
+      path: requestPath,
     };
 
     return transporter.request(request, {
@@ -1431,7 +1507,7 @@ export function createSearchApi(options: CreateClientOptions) {
   function listIndices({
     page,
   }: ListIndicesProps): Promise<ListIndicesResponse> {
-    const path = '/1/indexes';
+    const requestPath = '/1/indexes';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
@@ -1441,7 +1517,7 @@ export function createSearchApi(options: CreateClientOptions) {
 
     const request: Request = {
       method: 'GET',
-      path,
+      path: requestPath,
     };
 
     return transporter.request(request, {
@@ -1462,7 +1538,7 @@ export function createSearchApi(options: CreateClientOptions) {
     page,
     hitsPerPage,
   }: ListUserIdsProps): Promise<ListUserIdsResponse> {
-    const path = '/1/clusters/mapping';
+    const requestPath = '/1/clusters/mapping';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
@@ -1476,7 +1552,7 @@ export function createSearchApi(options: CreateClientOptions) {
 
     const request: Request = {
       method: 'GET',
-      path,
+      path: requestPath,
     };
 
     return transporter.request(request, {
@@ -1494,7 +1570,7 @@ export function createSearchApi(options: CreateClientOptions) {
   function multipleBatch(
     batchParams: BatchParams
   ): Promise<MultipleBatchResponse> {
-    const path = '/1/indexes/*/batch';
+    const requestPath = '/1/indexes/*/batch';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
@@ -1506,7 +1582,7 @@ export function createSearchApi(options: CreateClientOptions) {
 
     const request: Request = {
       method: 'POST',
-      path,
+      path: requestPath,
       data: batchParams,
     };
 
@@ -1525,7 +1601,7 @@ export function createSearchApi(options: CreateClientOptions) {
   function multipleQueries(
     multipleQueriesParams: MultipleQueriesParams
   ): Promise<MultipleQueriesResponse> {
-    const path = '/1/indexes/*/queries';
+    const requestPath = '/1/indexes/*/queries';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
@@ -1543,7 +1619,7 @@ export function createSearchApi(options: CreateClientOptions) {
 
     const request: Request = {
       method: 'POST',
-      path,
+      path: requestPath,
       data: multipleQueriesParams,
     };
 
@@ -1565,7 +1641,7 @@ export function createSearchApi(options: CreateClientOptions) {
     indexName,
     operationIndexParams,
   }: OperationIndexProps): Promise<UpdatedAtResponse> {
-    const path = '/1/indexes/{indexName}/operation'.replace(
+    const requestPath = '/1/indexes/{indexName}/operation'.replace(
       '{indexName}',
       encodeURIComponent(String(indexName))
     );
@@ -1597,7 +1673,7 @@ export function createSearchApi(options: CreateClientOptions) {
 
     const request: Request = {
       method: 'POST',
-      path,
+      path: requestPath,
       data: operationIndexParams,
     };
 
@@ -1623,7 +1699,7 @@ export function createSearchApi(options: CreateClientOptions) {
     stringBuiltInOperation,
     createIfNotExists,
   }: PartialUpdateObjectProps): Promise<UpdatedAtWithObjectIdResponse> {
-    const path = '/1/indexes/{indexName}/{objectID}/partial'
+    const requestPath = '/1/indexes/{indexName}/{objectID}/partial'
       .replace('{indexName}', encodeURIComponent(String(indexName)))
       .replace('{objectID}', encodeURIComponent(String(objectID)));
     const headers: Headers = { Accept: 'application/json' };
@@ -1653,8 +1729,90 @@ export function createSearchApi(options: CreateClientOptions) {
 
     const request: Request = {
       method: 'POST',
-      path,
+      path: requestPath,
       data: stringBuiltInOperation,
+    };
+
+    return transporter.request(request, {
+      queryParameters,
+      headers,
+    });
+  }
+
+  /**
+   * This method allow you to send requests to the Algolia REST API.
+   *
+   * @summary Send requests to the Algolia REST API.
+   * @param post - The post object.
+   * @param post.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
+   * @param post.parameters - URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
+   * @param post.body - The parameters to send with the custom request.
+   */
+  function post({
+    path,
+    parameters,
+    body,
+  }: PostProps): Promise<Record<string, any>> {
+    const requestPath = '/1{path}'.replace(
+      '{path}',
+      encodeURIComponent(String(path))
+    );
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (!path) {
+      throw new Error('Parameter `path` is required when calling `post`.');
+    }
+
+    if (parameters !== undefined) {
+      queryParameters.parameters = parameters.toString();
+    }
+
+    const request: Request = {
+      method: 'POST',
+      path: requestPath,
+      data: body,
+    };
+
+    return transporter.request(request, {
+      queryParameters,
+      headers,
+    });
+  }
+
+  /**
+   * This method allow you to send requests to the Algolia REST API.
+   *
+   * @summary Send requests to the Algolia REST API.
+   * @param put - The put object.
+   * @param put.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
+   * @param put.parameters - URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
+   * @param put.body - The parameters to send with the custom request.
+   */
+  function put({
+    path,
+    parameters,
+    body,
+  }: PutProps): Promise<Record<string, any>> {
+    const requestPath = '/1{path}'.replace(
+      '{path}',
+      encodeURIComponent(String(path))
+    );
+    const headers: Headers = { Accept: 'application/json' };
+    const queryParameters: Record<string, string> = {};
+
+    if (!path) {
+      throw new Error('Parameter `path` is required when calling `put`.');
+    }
+
+    if (parameters !== undefined) {
+      queryParameters.parameters = parameters.toString();
+    }
+
+    const request: Request = {
+      method: 'PUT',
+      path: requestPath,
+      data: body,
     };
 
     return transporter.request(request, {
@@ -1673,7 +1831,7 @@ export function createSearchApi(options: CreateClientOptions) {
   function removeUserId({
     userID,
   }: RemoveUserIdProps): Promise<RemoveUserIdResponse> {
-    const path = '/1/clusters/mapping/{userID}'.replace(
+    const requestPath = '/1/clusters/mapping/{userID}'.replace(
       '{userID}',
       encodeURIComponent(String(userID))
     );
@@ -1688,7 +1846,7 @@ export function createSearchApi(options: CreateClientOptions) {
 
     const request: Request = {
       method: 'DELETE',
-      path,
+      path: requestPath,
     };
 
     return transporter.request(request, {
@@ -1707,7 +1865,7 @@ export function createSearchApi(options: CreateClientOptions) {
   function replaceSources({
     source,
   }: ReplaceSourcesProps): Promise<ReplaceSourceResponse> {
-    const path = '/1/security/sources';
+    const requestPath = '/1/security/sources';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
@@ -1719,7 +1877,7 @@ export function createSearchApi(options: CreateClientOptions) {
 
     const request: Request = {
       method: 'PUT',
-      path,
+      path: requestPath,
       data: source,
     };
 
@@ -1739,7 +1897,7 @@ export function createSearchApi(options: CreateClientOptions) {
   function restoreApiKey({
     key,
   }: RestoreApiKeyProps): Promise<AddApiKeyResponse> {
-    const path = '/1/keys/{key}/restore'.replace(
+    const requestPath = '/1/keys/{key}/restore'.replace(
       '{key}',
       encodeURIComponent(String(key))
     );
@@ -1754,7 +1912,7 @@ export function createSearchApi(options: CreateClientOptions) {
 
     const request: Request = {
       method: 'POST',
-      path,
+      path: requestPath,
     };
 
     return transporter.request(request, {
@@ -1775,7 +1933,7 @@ export function createSearchApi(options: CreateClientOptions) {
     indexName,
     body,
   }: SaveObjectProps): Promise<SaveObjectResponse> {
-    const path = '/1/indexes/{indexName}'.replace(
+    const requestPath = '/1/indexes/{indexName}'.replace(
       '{indexName}',
       encodeURIComponent(String(indexName))
     );
@@ -1796,7 +1954,7 @@ export function createSearchApi(options: CreateClientOptions) {
 
     const request: Request = {
       method: 'POST',
-      path,
+      path: requestPath,
       data: body,
     };
 
@@ -1822,7 +1980,7 @@ export function createSearchApi(options: CreateClientOptions) {
     rule,
     forwardToReplicas,
   }: SaveRuleProps): Promise<UpdatedRuleResponse> {
-    const path = '/1/indexes/{indexName}/rules/{objectID}'
+    const requestPath = '/1/indexes/{indexName}/rules/{objectID}'
       .replace('{indexName}', encodeURIComponent(String(indexName)))
       .replace('{objectID}', encodeURIComponent(String(objectID)));
     const headers: Headers = { Accept: 'application/json' };
@@ -1861,7 +2019,7 @@ export function createSearchApi(options: CreateClientOptions) {
 
     const request: Request = {
       method: 'PUT',
-      path,
+      path: requestPath,
       data: rule,
     };
 
@@ -1887,7 +2045,7 @@ export function createSearchApi(options: CreateClientOptions) {
     synonymHit,
     forwardToReplicas,
   }: SaveSynonymProps): Promise<SaveSynonymResponse> {
-    const path = '/1/indexes/{indexName}/synonyms/{objectID}'
+    const requestPath = '/1/indexes/{indexName}/synonyms/{objectID}'
       .replace('{indexName}', encodeURIComponent(String(indexName)))
       .replace('{objectID}', encodeURIComponent(String(objectID)));
     const headers: Headers = { Accept: 'application/json' };
@@ -1923,7 +2081,7 @@ export function createSearchApi(options: CreateClientOptions) {
 
     const request: Request = {
       method: 'PUT',
-      path,
+      path: requestPath,
       data: synonymHit,
     };
 
@@ -1949,7 +2107,7 @@ export function createSearchApi(options: CreateClientOptions) {
     forwardToReplicas,
     replaceExistingSynonyms,
   }: SaveSynonymsProps): Promise<UpdatedAtResponse> {
-    const path = '/1/indexes/{indexName}/synonyms/batch'.replace(
+    const requestPath = '/1/indexes/{indexName}/synonyms/batch'.replace(
       '{indexName}',
       encodeURIComponent(String(indexName))
     );
@@ -1979,7 +2137,7 @@ export function createSearchApi(options: CreateClientOptions) {
 
     const request: Request = {
       method: 'POST',
-      path,
+      path: requestPath,
       data: synonymHit,
     };
 
@@ -2001,7 +2159,7 @@ export function createSearchApi(options: CreateClientOptions) {
     indexName,
     searchParams,
   }: SearchProps): Promise<SearchResponse> {
-    const path = '/1/indexes/{indexName}/query'.replace(
+    const requestPath = '/1/indexes/{indexName}/query'.replace(
       '{indexName}',
       encodeURIComponent(String(indexName))
     );
@@ -2022,7 +2180,7 @@ export function createSearchApi(options: CreateClientOptions) {
 
     const request: Request = {
       method: 'POST',
-      path,
+      path: requestPath,
       data: searchParams,
     };
 
@@ -2044,7 +2202,7 @@ export function createSearchApi(options: CreateClientOptions) {
     dictionaryName,
     searchDictionaryEntriesParams,
   }: SearchDictionaryEntriesProps): Promise<UpdatedAtResponse> {
-    const path = '/1/dictionaries/{dictionaryName}/search'.replace(
+    const requestPath = '/1/dictionaries/{dictionaryName}/search'.replace(
       '{dictionaryName}',
       encodeURIComponent(String(dictionaryName))
     );
@@ -2071,7 +2229,7 @@ export function createSearchApi(options: CreateClientOptions) {
 
     const request: Request = {
       method: 'POST',
-      path,
+      path: requestPath,
       data: searchDictionaryEntriesParams,
     };
 
@@ -2095,7 +2253,7 @@ export function createSearchApi(options: CreateClientOptions) {
     facetName,
     searchForFacetValuesRequest,
   }: SearchForFacetValuesProps): Promise<SearchForFacetValuesResponse> {
-    const path = '/1/indexes/{indexName}/facets/{facetName}/query'
+    const requestPath = '/1/indexes/{indexName}/facets/{facetName}/query'
       .replace('{indexName}', encodeURIComponent(String(indexName)))
       .replace('{facetName}', encodeURIComponent(String(facetName)));
     const headers: Headers = { Accept: 'application/json' };
@@ -2115,7 +2273,7 @@ export function createSearchApi(options: CreateClientOptions) {
 
     const request: Request = {
       method: 'POST',
-      path,
+      path: requestPath,
       data: searchForFacetValuesRequest,
     };
 
@@ -2137,7 +2295,7 @@ export function createSearchApi(options: CreateClientOptions) {
     indexName,
     searchRulesParams,
   }: SearchRulesProps): Promise<SearchRulesResponse> {
-    const path = '/1/indexes/{indexName}/rules/search'.replace(
+    const requestPath = '/1/indexes/{indexName}/rules/search'.replace(
       '{indexName}',
       encodeURIComponent(String(indexName))
     );
@@ -2158,7 +2316,7 @@ export function createSearchApi(options: CreateClientOptions) {
 
     const request: Request = {
       method: 'POST',
-      path,
+      path: requestPath,
       data: searchRulesParams,
     };
 
@@ -2186,7 +2344,7 @@ export function createSearchApi(options: CreateClientOptions) {
     page,
     hitsPerPage,
   }: SearchSynonymsProps): Promise<SearchSynonymsResponse> {
-    const path = '/1/indexes/{indexName}/synonyms/search'.replace(
+    const requestPath = '/1/indexes/{indexName}/synonyms/search'.replace(
       '{indexName}',
       encodeURIComponent(String(indexName))
     );
@@ -2217,7 +2375,7 @@ export function createSearchApi(options: CreateClientOptions) {
 
     const request: Request = {
       method: 'POST',
-      path,
+      path: requestPath,
     };
 
     return transporter.request(request, {
@@ -2235,7 +2393,7 @@ export function createSearchApi(options: CreateClientOptions) {
   function searchUserIds(
     searchUserIdsParams: SearchUserIdsParams
   ): Promise<SearchUserIdsResponse> {
-    const path = '/1/clusters/mapping/search';
+    const requestPath = '/1/clusters/mapping/search';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
@@ -2253,7 +2411,7 @@ export function createSearchApi(options: CreateClientOptions) {
 
     const request: Request = {
       method: 'POST',
-      path,
+      path: requestPath,
       data: searchUserIdsParams,
     };
 
@@ -2272,7 +2430,7 @@ export function createSearchApi(options: CreateClientOptions) {
   function setDictionarySettings(
     dictionarySettingsParams: DictionarySettingsParams
   ): Promise<UpdatedAtResponse> {
-    const path = '/1/dictionaries/*/settings';
+    const requestPath = '/1/dictionaries/*/settings';
     const headers: Headers = { Accept: 'application/json' };
     const queryParameters: Record<string, string> = {};
 
@@ -2290,7 +2448,7 @@ export function createSearchApi(options: CreateClientOptions) {
 
     const request: Request = {
       method: 'PUT',
-      path,
+      path: requestPath,
       data: dictionarySettingsParams,
     };
 
@@ -2314,7 +2472,7 @@ export function createSearchApi(options: CreateClientOptions) {
     indexSettings,
     forwardToReplicas,
   }: SetSettingsProps): Promise<UpdatedAtResponse> {
-    const path = '/1/indexes/{indexName}/settings'.replace(
+    const requestPath = '/1/indexes/{indexName}/settings'.replace(
       '{indexName}',
       encodeURIComponent(String(indexName))
     );
@@ -2339,7 +2497,7 @@ export function createSearchApi(options: CreateClientOptions) {
 
     const request: Request = {
       method: 'PUT',
-      path,
+      path: requestPath,
       data: indexSettings,
     };
 
@@ -2361,7 +2519,7 @@ export function createSearchApi(options: CreateClientOptions) {
     key,
     apiKey,
   }: UpdateApiKeyProps): Promise<UpdateApiKeyResponse> {
-    const path = '/1/keys/{key}'.replace(
+    const requestPath = '/1/keys/{key}'.replace(
       '{key}',
       encodeURIComponent(String(key))
     );
@@ -2388,7 +2546,7 @@ export function createSearchApi(options: CreateClientOptions) {
 
     const request: Request = {
       method: 'PUT',
-      path,
+      path: requestPath,
       data: apiKey,
     };
 
@@ -2412,6 +2570,7 @@ export function createSearchApi(options: CreateClientOptions) {
     clearAllSynonyms,
     clearObjects,
     clearRules,
+    del,
     deleteApiKey,
     deleteBy,
     deleteIndex,
@@ -2419,6 +2578,7 @@ export function createSearchApi(options: CreateClientOptions) {
     deleteRule,
     deleteSource,
     deleteSynonym,
+    get,
     getApiKey,
     getDictionaryLanguages,
     getDictionarySettings,
@@ -2441,6 +2601,8 @@ export function createSearchApi(options: CreateClientOptions) {
     multipleQueries,
     operationIndex,
     partialUpdateObject,
+    post,
+    put,
     removeUserId,
     replaceSources,
     restoreApiKey,
@@ -2562,6 +2724,21 @@ export type ClearRulesProps = {
   forwardToReplicas?: boolean;
 };
 
+export type DelProps = {
+  /**
+   * The path of the API endpoint to target, anything after the /1 needs to be specified.
+   */
+  path: string;
+  /**
+   * URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
+   */
+  parameters?: string;
+  /**
+   * The parameters to send with the custom request.
+   */
+  body?: Record<string, any>;
+};
+
 export type DeleteApiKeyProps = {
   /**
    * API Key string.
@@ -2630,6 +2807,17 @@ export type DeleteSynonymProps = {
    * When true, changes are also propagated to replicas of the given indexName.
    */
   forwardToReplicas?: boolean;
+};
+
+export type GetProps = {
+  /**
+   * The path of the API endpoint to target, anything after the /1 needs to be specified.
+   */
+  path: string;
+  /**
+   * URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
+   */
+  parameters?: string;
 };
 
 export type GetApiKeyProps = {
@@ -2770,6 +2958,36 @@ export type PartialUpdateObjectProps = {
    * Creates the record if it does not exist yet.
    */
   createIfNotExists?: boolean;
+};
+
+export type PostProps = {
+  /**
+   * The path of the API endpoint to target, anything after the /1 needs to be specified.
+   */
+  path: string;
+  /**
+   * URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
+   */
+  parameters?: string;
+  /**
+   * The parameters to send with the custom request.
+   */
+  body?: Record<string, any>;
+};
+
+export type PutProps = {
+  /**
+   * The path of the API endpoint to target, anything after the /1 needs to be specified.
+   */
+  path: string;
+  /**
+   * URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
+   */
+  parameters?: string;
+  /**
+   * The parameters to send with the custom request.
+   */
+  body?: Record<string, any>;
 };
 
 export type RemoveUserIdProps = {
