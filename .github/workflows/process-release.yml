@@ -17,7 +17,7 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-          submodules: true
+          submodules: recursive
           token: ${{ secrets.TOKEN_RELEASE_BOT }}
 
       - run: git checkout chore/release
