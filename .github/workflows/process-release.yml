@@ -6,7 +6,7 @@ on:
       - closed
 
 env:
-  CACHE_VERSION: '5'
+  CACHE_VERSION: '6'
 
 jobs:
   build:
