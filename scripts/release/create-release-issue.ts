@@ -28,7 +28,7 @@ function readVersions(): Versions {
   Object.values(GENERATORS).forEach((gen) => {
     if (!versions[gen.language]) {
       versions[gen.language] = {
-        current: gen.additionalProperties.packageVersion,
+        current: gen.additionalProperties?.packageVersion,
         langName: gen.language,
         next: undefined,
       };

@@ -6,6 +6,39 @@ import type { Generator } from './types';
 const multiBuildLanguage = new Set(['javascript']);
 
 /**
+ * Build JavaScript utils packages used in generated clients.
+ */
+export async function buildJSClientUtils(
+  verbose: boolean,
+  client?: string
+): Promise<void> {
+  if (!client || client === 'all') {
+    const spinner = createSpinner('building JavaScript utils', verbose).start();
+    await run('yarn workspace algoliasearch-client-javascript clean:utils', {
+      verbose,
+    });
+    await run('yarn workspace algoliasearch-client-javascript build:utils', {
+      verbose,
+    });
+
+    spinner.succeed();
+    return;
+  }
+
+  const spinner = createSpinner(
+    `building JavaScript ${client} utils`,
+    verbose
+  ).start();
+
+  await run(`yarn workspace @algolia/${client} clean`, { verbose });
+  await run(`yarn workspace algoliasearch-client-javascript build ${client}`, {
+    verbose,
+  });
+
+  spinner.succeed();
+}
+
+/**
  * Build only a specific client for one language, used by javascript for example.
  */
 async function buildPerClient(

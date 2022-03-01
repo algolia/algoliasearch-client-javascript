@@ -13,28 +13,48 @@ export const DOCKER = Boolean(process.env.DOCKER);
 // This script is run by `yarn workspace ...`, which means the current working directory is `./script`
 export const ROOT_DIR = path.resolve(process.cwd(), '..');
 
-export const GENERATORS = Object.fromEntries(
-  Object.entries(openapitools['generator-cli'].generators).map(([key, gen]) => {
-    return [
-      key,
-      {
-        ...gen,
-        output: gen.output.replace('#{cwd}/', ''),
-        ...splitGeneratorKey(key),
-      },
-    ];
-  })
+export const GENERATORS: Record<string, Generator> = {
+  // Default `algoliasearch` package as it's built similarly to generated clients
+  'javascript-algoliasearch': {
+    language: 'javascript',
+    client: 'algoliasearch',
+    key: 'javascript-algoliasearch',
+    additionalProperties: {
+      packageName: 'algoliasearch',
+      packageVersion: '0',
+    },
+  },
+};
+
+// Build `GENERATORS` from the openapitools file
+Object.entries(openapitools['generator-cli'].generators).forEach(
+  ([key, gen]) => {
+    GENERATORS[key] = {
+      ...gen,
+      output: gen.output.replace('#{cwd}/', ''),
+      ...splitGeneratorKey(key),
+    };
+  }
 );
 
 export const LANGUAGES = [
   ...new Set(Object.values(GENERATORS).map((gen) => gen.language)),
 ];
 
-export const CLIENTS = [
+export const CLIENTS_JS_UTILS = [
+  'client-common',
+  'requester-browser-xhr',
+  'requester-node-http',
+];
+
+export const CLIENTS_JS = [
+  'algoliasearch',
   ...new Set(Object.values(GENERATORS).map((gen) => gen.client)),
 ];
 
-export const CLIENTS_JS = CLIENTS.concat([]);
+export const CLIENTS = CLIENTS_JS.filter(
+  (client) => client !== 'algoliasearch'
+);
 
 /**
  * Takes a generator key in the form 'language-client' and returns the Generator object.

@@ -6,7 +6,7 @@
   ],
   "private": true,
   "scripts": {
-    "build:utils": "UTILS=${0:-all} yarn rollup -c rollup.config.js",
+    "build:utils": "yarn build client-common && yarn build requester-browser-xhr && yarn build requester-node-http",
     "build": "CLIENT=${0:-all} yarn rollup -c rollup.config.js",
     "clean:utils": "yarn workspace @algolia/client-common clean && yarn workspace @algolia/requester-node-http clean && yarn workspace @algolia/requester-browser-xhr clean",
     "clean": "rm -rf packages/*/dist",
