@@ -615,7 +615,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/plugin-proposal-class-properties@npm:^7.16.7":
+"@babel/plugin-proposal-class-properties@npm:7.16.7, @babel/plugin-proposal-class-properties@npm:^7.16.7":
   version: 7.16.7
   resolution: "@babel/plugin-proposal-class-properties@npm:7.16.7"
   dependencies:
@@ -3524,6 +3524,7 @@ __metadata:
   resolution: "algoliasearch-client-javascript@workspace:clients/algoliasearch-client-javascript"
   dependencies:
     "@babel/core": 7.17.2
+    "@babel/plugin-proposal-class-properties": 7.16.7
     "@babel/plugin-transform-runtime": 7.17.0
     "@babel/preset-env": 7.16.11
     "@babel/runtime": 7.17.2
