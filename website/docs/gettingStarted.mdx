@@ -1,0 +1,97 @@
+---
+title: Getting started
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs
+  groupId="language"
+  defaultValue="js"
+  values={[
+    { label: 'JavaScript', value: 'js', }
+  ]
+}>
+<TabItem value="js">
+
+## Installation
+
+To get started, you first need to install `algoliasearch` (or any other available API client package)
+
+```bash
+yarn add @experimental-api-clients-automation/algoliasearch
+```
+
+Or use a specific package to reduce bundle size:
+
+```bash
+yarn add @experimental-api-clients-automation/client-search
+```
+
+You can find the full list of available packages [here](https://www.npmjs.com/org/experimental-api-clients-automation).
+
+### Without a package manager
+
+Add the JavaScript to your `<head>`
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/@experimental-api-clients-automation/algoliasearch@0.0.1/dist/algoliasearch.umd.browser.js"></script>
+```
+
+## Using the client
+
+Then you need to import the correct package, depending on your choice:
+
+```js
+import { algoliasearch } from 'algoliasearch';
+
+const client = algoliasearch(appId, apiKey);
+
+// And access analytics or personalization client
+const analyticsClient = client.initAnalytics(analyticsAppId, analyticsApiKey);
+const personalizationCilent = client.initPersonalization(personalizationAppId, personalizationApiKey, 'eu');
+```
+
+```js
+import { searchApi } from '@algolia/client-search';
+
+const client = searchApi(appId, apiKey);
+```
+
+It is possible to customize the client by passing optional parameters:
+
+```js
+const client = searchApi(appId, apiKey, {
+    requester: customRequester(),
+    hosts: [{
+        url: 'my.custom.host.net',
+        accept: 'read',
+        protocol: 'https',
+    }]
+})
+```
+
+Once the client is setup, you can enjoy all of Algolia API !
+
+```js
+const res = await client.search({
+    indexName: 'my-index',
+    searchParams: { query: 'words to query' },
+});
+
+console.log('Search result', res.hits);
+```
+
+
+Or with the `personalization` client
+
+```js
+const res = await personalizationCilent.getUserTokenProfile({
+    userToken: 'token',
+});
+
+console.log('User scores', res.scores);
+```
+
+</TabItem>
+</Tabs>

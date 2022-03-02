@@ -1,8 +1,12 @@
-# How to add support of a new language
+---
+title: Support a new language
+---
+
+# Support a new language
 
 This repository leverages [openapi-generator](https://openapi-generator.tech/) to generate API clients.
 
-> See [README](../README.md) to [`setup the repository tooling`](../README.md#setup-repository-tooling) and [`setup dev environment`](../README.md#setup-dev-environment).
+> See the [Setup repository guide](/docs/setupRepository) to [`setup the repository tooling`](/docs/setupRepository#setup-the-repository-tooling).
 
 > If not done already, [install openapi-generator](https://openapi-generator.tech/docs/installation/)
 
@@ -26,9 +30,9 @@ openapi-generator author template -g typescript-node -o templates/javascript/
 
 ## Update the generator config
 
-Add each client in the file [`openapitools.json`](../openapitools.json), following the others client structure.
+Add each client in the file [`openapitools.json`](https://github.com/algolia/api-clients-automation/blob/main/openapitools.json), following the others client structure.
 
-> See [How to add a new client](./addNewClient.md) for informations regarding this file
+> See [`add a new client`](/docs/addNewClient) for informations regarding this file
 
 ### Algolia requirements
 
@@ -62,7 +66,7 @@ The retry strategy cannot be generated and needs to be implemented outside of th
 
 Some Algolia clients (search and recommend) targets the default appId host (`${appId}-dsn.algolia.net`, `${appId}.algolia.net`, etc.), while clients like `personalization` have their own regional `host` (`eu` | `us` | `de`).
 
-As the generator does not support reading `servers` in a spec file, hosts methods and variables are extracted with a custom script and create variables for you to use in the mustache templates, [read more here](./addNewClient.md#generators).
+As the generator does not support reading `servers` in a spec file, hosts methods and variables are extracted with a custom script and create variables for you to use in the mustache templates, [read more here](/docs/addNewClient#generators).
 
 ### Requesters
 

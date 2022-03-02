@@ -1,0 +1,7 @@
+[build]
+  command="yarn website:build"
+  publish="website/build"
+  ignore="git diff --quiet $COMMIT_REF $CACHED_COMMIT_REF -- website/ specs/bundled/"
+
+[build.environment]
+  YARN_VERSION = "3.1.1"
