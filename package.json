@@ -6,7 +6,8 @@
     "playground/javascript/node/",
     "playground/javascript/browser/",
     "scripts/",
-    "tests/output/javascript"
+    "tests/output/javascript",
+    "website/"
   ],
   "scripts": {
     "cli": "yarn workspace scripts ts-node --transpile-only ./index.ts",
@@ -22,7 +23,9 @@
     "scripts:lint": "eslint --ext=ts scripts/",
     "scripts:test": "yarn workspace scripts test",
     "specs:fix": "eslint --ext=yml specs/ --fix",
-    "specs:lint": "eslint --ext=yml specs/$0"
+    "specs:lint": "eslint --ext=yml specs/$0",
+    "website:build": "yarn workspace website build",
+    "website": "yarn workspace website start --host 0.0.0.0"
   },
   "devDependencies": {
     "@openapitools/openapi-generator-cli": "2.4.26",

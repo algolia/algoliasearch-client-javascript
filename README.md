@@ -22,7 +22,7 @@ yarn docker:setup
 
 Build docker image from [Dockerfile](./Dockerfile)
 
-[How to add a new client](./docs/addNewClient.md) | [How to add a new language](./docs/addNewLanguage.md) | [Common Test Suite](./docs/CTS.md) | [Run the playground](./docs/playground.md)
+[How to add a new client](https://api-clients-automation.netlify.app/docs/addNewClient) | [How to add a new language](https://api-clients-automation.netlify.app/docs/addNewLanguage) | [Common Test Suite](https://api-clients-automation.netlify.app/docs/commonTestSuite) | [Run the playground](https://api-clients-automation.netlify.app/docs/playground)
 
 ```bash
 yarn docker:build
@@ -124,7 +124,7 @@ If you want to choose the language and client from a list you can add the `--int
 You can test our generated clients by running:
 
 - The playground [`playground`](./playground) ([Playground README](./docs/playground.md))
-- Tests with our [`Common Test Suite`](./tests/) ([CTS README](./docs/CTS.md)).
+- Tests with our [`Common Test Suite`](./tests/) ([CTS README](./docs/commonTestSuite.md)).
 
 # Troubleshooting
 

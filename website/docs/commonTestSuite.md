@@ -1,3 +1,7 @@
+---
+title: Common Test Suite
+---
+
 # Common Test Suite
 
 The CTS aims at ensuring minimal working operation for the API clients, by comparing the request formed by sample parameters.
