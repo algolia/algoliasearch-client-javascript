@@ -8,7 +8,7 @@ const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'test_api_key';
 const client = recommendApi(appId, apiKey, { requester: echoRequester() });
 
 describe('getRecommendations', () => {
-  test('get recommendations with minimal parameters', async () => {
+  test('get recommendations for recommend model with minimal parameters', async () => {
     const req = (await client.getRecommendations({
       requests: [
         {
@@ -35,7 +35,7 @@ describe('getRecommendations', () => {
     expect(req.searchParams).toEqual(undefined);
   });
 
-  test('get recommendations with all parameters', async () => {
+  test('get recommendations for recommend model with all parameters', async () => {
     const req = (await client.getRecommendations({
       requests: [
         {
@@ -43,6 +43,7 @@ describe('getRecommendations', () => {
           objectID: 'objectID',
           model: 'related-products',
           threshold: 42,
+          maxRecommendations: 10,
           queryParameters: { query: 'myQuery', facetFilters: ['query'] },
           fallbackParameters: { query: 'myQuery', facetFilters: ['fallback'] },
         },
@@ -58,6 +59,59 @@ describe('getRecommendations', () => {
           objectID: 'objectID',
           model: 'related-products',
           threshold: 42,
+          maxRecommendations: 10,
+          queryParameters: { query: 'myQuery', facetFilters: ['query'] },
+          fallbackParameters: { query: 'myQuery', facetFilters: ['fallback'] },
+        },
+      ],
+    });
+    expect(req.searchParams).toEqual(undefined);
+  });
+
+  test('get recommendations for trending model with minimal parameters', async () => {
+    const req = (await client.getRecommendations({
+      requests: [
+        { indexName: 'indexName', model: 'trending-items', threshold: 42 },
+      ],
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/*/recommendations');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      requests: [
+        { indexName: 'indexName', model: 'trending-items', threshold: 42 },
+      ],
+    });
+    expect(req.searchParams).toEqual(undefined);
+  });
+
+  test('get recommendations for trending model with all parameters', async () => {
+    const req = (await client.getRecommendations({
+      requests: [
+        {
+          indexName: 'indexName',
+          model: 'trending-items',
+          threshold: 42,
+          maxRecommendations: 10,
+          facetName: 'myFacetName',
+          facetValue: 'myFacetValue',
+          queryParameters: { query: 'myQuery', facetFilters: ['query'] },
+          fallbackParameters: { query: 'myQuery', facetFilters: ['fallback'] },
+        },
+      ],
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/*/recommendations');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      requests: [
+        {
+          indexName: 'indexName',
+          model: 'trending-items',
+          threshold: 42,
+          maxRecommendations: 10,
+          facetName: 'myFacetName',
+          facetValue: 'myFacetValue',
           queryParameters: { query: 'myQuery', facetFilters: ['query'] },
           fallbackParameters: { query: 'myQuery', facetFilters: ['fallback'] },
         },
@@ -113,6 +167,7 @@ describe('getRecommendations', () => {
           objectID: 'objectID1',
           model: 'related-products',
           threshold: 21,
+          maxRecommendations: 10,
           queryParameters: { query: 'myQuery', facetFilters: ['query1'] },
           fallbackParameters: { query: 'myQuery', facetFilters: ['fallback1'] },
         },
@@ -121,6 +176,7 @@ describe('getRecommendations', () => {
           objectID: 'objectID2',
           model: 'related-products',
           threshold: 21,
+          maxRecommendations: 10,
           queryParameters: { query: 'myQuery', facetFilters: ['query2'] },
           fallbackParameters: { query: 'myQuery', facetFilters: ['fallback2'] },
         },
@@ -136,6 +192,7 @@ describe('getRecommendations', () => {
           objectID: 'objectID1',
           model: 'related-products',
           threshold: 21,
+          maxRecommendations: 10,
           queryParameters: { query: 'myQuery', facetFilters: ['query1'] },
           fallbackParameters: { query: 'myQuery', facetFilters: ['fallback1'] },
         },
@@ -144,6 +201,7 @@ describe('getRecommendations', () => {
           objectID: 'objectID2',
           model: 'related-products',
           threshold: 21,
+          maxRecommendations: 10,
           queryParameters: { query: 'myQuery', facetFilters: ['query2'] },
           fallbackParameters: { query: 'myQuery', facetFilters: ['fallback2'] },
         },
