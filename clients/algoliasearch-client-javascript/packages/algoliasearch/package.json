@@ -10,10 +10,7 @@
   "types": "index.d.ts",
   "jsdelivr": "dist/algoliasearch.umd.browser.js",
   "unpkg": "dist/algoliasearch.umd.browser.js",
-  "browser": {
-    "./index.js": "./dist/algoliasearch.cjs.browser.js",
-    "./lite.js": "./dist/algoliasearch-lite.cjs.browser.js"
-  },
+  "browser": "dist/algoliasearch.cjs.browser.js",
   "scripts": {
     "clean": "rm -rf ./dist"
   },

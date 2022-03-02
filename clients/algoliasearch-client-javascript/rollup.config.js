@@ -203,6 +203,17 @@ packagesConfig.forEach((packageConfig) => {
           }),
         ]
       : [];
+    const clientCommonPlugins =
+      packageConfig.package === 'client-common'
+        ? [
+            babel({
+              babelrc: false,
+              extensions: ['.ts'],
+              exclude: 'node_modules/**',
+              plugins: ['@babel/plugin-proposal-class-properties'],
+            }),
+          ]
+        : [];
 
     if (isUmdBuild || isEsmBrowserBuild) {
       // eslint-disable-next-line no-param-reassign
@@ -227,6 +238,7 @@ packagesConfig.forEach((packageConfig) => {
             },
           },
         }),
+        ...clientCommonPlugins,
         ...transpilerPlugins,
         ...compressorPlugins,
         filesize({
