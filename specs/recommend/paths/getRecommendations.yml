@@ -16,36 +16,7 @@ post:
               type: array
               description: The `getRecommendations` requests.
               items:
-                title: recommendationRequest
-                type: object
-                additionalProperties: false
-                properties:
-                  indexName:
-                    $ref: '../../common/parameters.yml#/indexName'
-                  objectID:
-                    $ref: '../../common/parameters.yml#/objectID'
-                  model:
-                    description: The recommendation model to use.
-                    type: string
-                    enum: [related-products, bought-together]
-                  threshold:
-                    type: integer
-                    minimum: 0
-                    maximum: 100
-                    description: The threshold to use when filtering recommendations by their score.
-                  maxRecommendations:
-                    type: integer
-                    default: 0
-                    description: The max number of recommendations to retrieve. If it's set to 0, all the recommendations of the objectID may be returned.
-                  queryParameters:
-                    $ref: '../common/schemas/SearchParams.yml#/searchParams'
-                  fallbackParameters:
-                    $ref: '../common/schemas/SearchParams.yml#/searchParams'
-                required:
-                  - model
-                  - indexName
-                  - objectID
-                  - threshold
+                $ref: '../common/schemas/RecommendationsRequest.yml#/recommendationsRequest'
           required:
             - requests
   responses:

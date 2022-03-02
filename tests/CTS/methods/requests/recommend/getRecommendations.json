@@ -1,7 +1,7 @@
 [
   {
     "method": "getRecommendations",
-    "testName": "get recommendations with minimal parameters",
+    "testName": "get recommendations for recommend model with minimal parameters",
     "parameters": {
       "requests": [
         {
@@ -29,7 +29,7 @@
   },
   {
     "method": "getRecommendations",
-    "testName": "get recommendations with all parameters",
+    "testName": "get recommendations for recommend model with all parameters",
     "parameters": {
       "requests": [
         {
@@ -37,6 +37,7 @@
           "objectID": "objectID",
           "model": "related-products",
           "threshold": 42,
+          "maxRecommendations": 10,
           "queryParameters": {
             "query": "myQuery",
             "facetFilters": ["query"]
@@ -58,6 +59,81 @@
             "objectID": "objectID",
             "model": "related-products",
             "threshold": 42,
+            "maxRecommendations": 10,
+            "queryParameters": {
+              "query": "myQuery",
+              "facetFilters": ["query"]
+            },
+            "fallbackParameters": {
+              "query": "myQuery",
+              "facetFilters": ["fallback"]
+            }
+          }
+        ]
+      }
+    }
+  },
+  {
+    "method": "getRecommendations",
+    "testName": "get recommendations for trending model with minimal parameters",
+    "parameters": {
+      "requests": [
+        {
+          "indexName": "indexName",
+          "model": "trending-items",
+          "threshold": 42
+        }
+      ]
+    },
+    "request": {
+      "path": "/1/indexes/*/recommendations",
+      "method": "POST",
+      "data": {
+        "requests": [
+          {
+            "indexName": "indexName",
+            "model": "trending-items",
+            "threshold": 42
+          }
+        ]
+      }
+    }
+  },
+  {
+    "method": "getRecommendations",
+    "testName": "get recommendations for trending model with all parameters",
+    "parameters": {
+      "requests": [
+        {
+          "indexName": "indexName",
+          "model": "trending-items",
+          "threshold": 42,
+          "maxRecommendations": 10,
+          "facetName": "myFacetName",
+          "facetValue": "myFacetValue",
+          "queryParameters": {
+            "query": "myQuery",
+            "facetFilters": ["query"]
+          },
+          "fallbackParameters": {
+            "query": "myQuery",
+            "facetFilters": ["fallback"]
+          }
+        }
+      ]
+    },
+    "request": {
+      "path": "/1/indexes/*/recommendations",
+      "method": "POST",
+      "data": {
+        "requests": [
+          {
+            "indexName": "indexName",
+            "model": "trending-items",
+            "threshold": 42,
+            "maxRecommendations": 10,
+            "facetName": "myFacetName",
+            "facetValue": "myFacetValue",
             "queryParameters": {
               "query": "myQuery",
               "facetFilters": ["query"]
@@ -121,6 +197,7 @@
           "objectID": "objectID1",
           "model": "related-products",
           "threshold": 21,
+          "maxRecommendations": 10,
           "queryParameters": {
             "query": "myQuery",
             "facetFilters": ["query1"]
@@ -135,6 +212,7 @@
           "objectID": "objectID2",
           "model": "related-products",
           "threshold": 21,
+          "maxRecommendations": 10,
           "queryParameters": {
             "query": "myQuery",
             "facetFilters": ["query2"]
@@ -156,6 +234,7 @@
             "objectID": "objectID1",
             "model": "related-products",
             "threshold": 21,
+            "maxRecommendations": 10,
             "queryParameters": {
               "query": "myQuery",
               "facetFilters": ["query1"]
@@ -170,6 +249,7 @@
             "objectID": "objectID2",
             "model": "related-products",
             "threshold": 21,
+            "maxRecommendations": 10,
             "queryParameters": {
               "query": "myQuery",
               "facetFilters": ["query2"]

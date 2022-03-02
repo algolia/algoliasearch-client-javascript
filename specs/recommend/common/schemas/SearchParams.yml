@@ -1,5 +1,0 @@
-searchParams:
-  allOf:
-    - $ref: '../../../common/schemas/SearchParams.yml#/baseSearchParams'
-    - $ref: '../../../common/schemas/SearchParams.yml#/requiredSearchParams'
-    - $ref: '../../../common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams'
