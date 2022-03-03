@@ -1,137 +1,30 @@
-# api-clients-automation
+....
 
-**Make sure to have Docker installed so you don't have to install the tooling for every API clients.**
+<p align="center">
+  <a href="https://www.algolia.com">
+    <img alt="Algolia for JavaScript" src="https://raw.githubusercontent.com/algolia/algoliasearch-client-common/master/banners/javascript.png" >
+  </a>
 
-## Setup repository tooling
+  <h4 align="center">The perfect starting point to integrate <a href="https://algolia.com" target="_blank">Algolia</a> within your JavaScript project</h4>
 
-```bash
-nvm use && yarn
-```
+  <p align="center">
+    <a href="https://npmjs.org/package/algoliasearch"><img src="https://img.shields.io/npm/v/algoliasearch.svg?style=flat-square" alt="NPM version"></img></a>
+    <a href="http://npm-stat.com/charts.html?package=algoliasearch"><img src="https://img.shields.io/npm/dm/algoliasearch.svg?style=flat-square" alt="NPM downloads"></a>
+    <a href="https://www.jsdelivr.com/package/npm/algoliasearch"><img src="https://data.jsdelivr.com/v1/package/npm/algoliasearch/badge" alt="jsDelivr Downloads"></img></a>
+    <a href="LICENSE.md"><img src="https://img.shields.io/badge/license-MIT-green.svg?style=flat-square" alt="License"></a>
+  </p>
+</p>
 
-## Setup dev environment
+<p align="center">
+  <a href="https://www.algolia.com/doc/api-client/getting-started/install/javascript/" target="_blank">Documentation</a>  •
+  <a href="https://www.algolia.com/doc/guides/building-search-ui/what-is-instantsearch/js/" target="_blank">InstantSearch</a>  •
+  <a href="https://discourse.algolia.com" target="_blank">Community Forum</a>  •
+  <a href="http://stackoverflow.com/questions/tagged/algolia" target="_blank">Stack Overflow</a>  •
+  <a href="https://github.com/algolia/algoliasearch-client-javascript/issues" target="_blank">Report a bug</a>  •
+  <a href="https://www.algolia.com/doc/api-client/troubleshooting/faq/javascript/" target="_blank">FAQ</a>  •
+  <a href="https://www.algolia.com/support" target="_blank">Support</a>
+</p>
 
-You can also execute docker commands one by one, see [Docker commands](#docker)
+# Contributing to this repository
 
-```bash
-yarn docker:setup
-```
-
-### Docker
-
-#### Build
-
-Build docker image from [Dockerfile](./Dockerfile)
-
-[How to add a new client](https://api-clients-automation.netlify.app/docs/addNewClient) | [How to add a new language](https://api-clients-automation.netlify.app/docs/addNewLanguage) | [Common Test Suite](https://api-clients-automation.netlify.app/docs/commonTestSuite) | [Run the playground](https://api-clients-automation.netlify.app/docs/playground)
-
-```bash
-yarn docker:build
-```
-
-#### Mount
-
-Mount docker image on `dev` container
-
-```bash
-yarn docker:mount
-```
-
-#### Clean
-
-Stops `dev` container and clean the built image
-
-```bash
-yarn docker:clean
-```
-
-## Contributing
-
-You can make changes locally and run commands through the docker container.
-
-### Build and validate specs
-
-#### Usage
-
-```bash
-yarn docker build specs <client | all>
-```
-
-#### Build all specs
-
-```bash
-yarn docker build specs
-```
-
-#### Build specific spec
-
-```bash
-yarn docker build specs recommend
-```
-
-#### Fix the specs format
-
-This is used by the build script and should not need to be called manually but if you want to format all specs file do:
-
-```bash
-yarn specs:fix
-```
-
-If you just want to check the format (not override the files), run:
-
-```bash
-yarn specs:lint <client>
-yarn specs:lint search
-```
-
-### Generate clients based on the [`specs`](./specs/)
-
-#### Usage
-
-```bash
-yarn docker generate <language | all> <client | all>
-```
-
-#### Generate all clients
-
-```bash
-yarn docker generate
-```
-
-### Generate specific client for specific language
-
-#### Usage
-
-```bash
-yarn docker build clients <language | all> <client | all>
-```
-
-### Build specific client for specific language
-
-```bash
-yarn docker build clients java recommend
-```
-
-### Verbose command
-
-You can add `-v` to almost every command to have a more verbose output.
-
-### Interactive command
-
-If you want to choose the language and client from a list you can add the `--interactive` option, or `-i`.
-
-## Testing clients
-
-You can test our generated clients by running:
-
-- The playground [`playground`](./playground) ([Playground README](./docs/playground.md))
-- Tests with our [`Common Test Suite`](./tests/) ([CTS README](./docs/commonTestSuite.md)).
-
-# Troubleshooting
-
-> `Error: The operation couldn't be completed. Unable to locate a Java Runtime.`
-
-Java is not located in your PATH, either source the right `.bash_profile`, `.zshrc`, etc. file or do the following command in this repository:
-
-```bash
-echo 'export PATH="/usr/local/opt/openjdk/bin:$PATH"' > .bash_profile && source .bash_profile
-```
+The Algolia API clients are automatically generated, you can find everything here https://github.com/algolia/api-clients-automation

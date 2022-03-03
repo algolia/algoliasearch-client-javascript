@@ -1,6 +1,0 @@
-blank_issues_enabled: false
-
-contact_links:
-  - name: API client beta tester
-    url: https://algolia.slack.com/archives/C0341QDM3EG
-    about: Share with us issues about the generated clients.
