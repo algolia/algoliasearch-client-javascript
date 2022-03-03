@@ -4,18 +4,18 @@ import {
   createTransporter,
   getUserAgent,
   shuffle,
-} from '@algolia/client-common';
+} from '@experimental-api-clients-automation/client-common';
 import type {
   CreateClientOptions,
   Headers,
   Host,
   Request,
-} from '@algolia/client-common';
+} from '@experimental-api-clients-automation/client-common';
 
 import type { GetRecommendationsParams } from '../model/getRecommendationsParams';
 import type { GetRecommendationsResponse } from '../model/getRecommendationsResponse';
 
-export const apiClientVersion = '5.0.0';
+export const apiClientVersion = '0.0.4';
 
 function getDefaultHosts(appId: string): Host[] {
   return (

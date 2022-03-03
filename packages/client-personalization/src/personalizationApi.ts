@@ -3,20 +3,20 @@ import {
   createMemoryCache,
   createTransporter,
   getUserAgent,
-} from '@algolia/client-common';
+} from '@experimental-api-clients-automation/client-common';
 import type {
   CreateClientOptions,
   Headers,
   Host,
   Request,
-} from '@algolia/client-common';
+} from '@experimental-api-clients-automation/client-common';
 
 import type { DeleteUserProfileResponse } from '../model/deleteUserProfileResponse';
 import type { GetUserTokenResponse } from '../model/getUserTokenResponse';
 import type { PersonalizationStrategyParams } from '../model/personalizationStrategyParams';
 import type { SetPersonalizationStrategyResponse } from '../model/setPersonalizationStrategyResponse';
 
-export const apiClientVersion = '5.0.0';
+export const apiClientVersion = '0.0.4';
 
 export type Region = 'eu' | 'us';
 

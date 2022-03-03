@@ -3,18 +3,18 @@ import {
   createMemoryCache,
   createTransporter,
   getUserAgent,
-} from '@algolia/client-common';
+} from '@experimental-api-clients-automation/client-common';
 import type {
   CreateClientOptions,
   Headers,
   Host,
   Request,
-} from '@algolia/client-common';
+} from '@experimental-api-clients-automation/client-common';
 
 import type { PostIngestUrlResponse } from '../model/postIngestUrlResponse';
 import type { PostURLJob } from '../model/postURLJob';
 
-export const apiClientVersion = '0.0.1';
+export const apiClientVersion = '0.0.4';
 
 export type Region = 'de' | 'us';
 

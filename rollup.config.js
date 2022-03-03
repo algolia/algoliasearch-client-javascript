@@ -12,7 +12,10 @@ import generatorConfig from '../../openapitools.json';
 import { version } from './version';
 
 // Retrieve package to build
-const client = process.env.CLIENT?.replace('@algolia/', '');
+const client = process.env.CLIENT?.replace(
+  '@experimental-api-clients-automation/',
+  ''
+);
 const UTILS = ['client-common', 'requester-browser-xhr', 'requester-node-http'];
 
 function createLicence(name) {
@@ -78,25 +81,25 @@ function initPackagesConfig() {
         ...commonOptions,
         output: 'client-common',
         package: 'client-common',
-        name: '@algolia/client-common',
+        name: '@experimental-api-clients-automation/client-common',
       },
       // Browser requester
       {
         ...commonOptions,
         output: 'requester-browser-xhr',
         package: 'requester-browser-xhr',
-        name: '@algolia/requester-browser-xhr',
+        name: '@experimental-api-clients-automation/requester-browser-xhr',
         external: ['dom'],
-        dependencies: ['@algolia/client-common'],
+        dependencies: ['@experimental-api-clients-automation/client-common'],
       },
       // Node requester
       {
         ...commonOptions,
         output: 'requester-node-http',
         package: 'requester-node-http',
-        name: '@algolia/requester-node-http',
+        name: '@experimental-api-clients-automation/requester-node-http',
         external: ['https', 'http', 'url'],
-        dependencies: ['@algolia/client-common'],
+        dependencies: ['@experimental-api-clients-automation/client-common'],
       },
     ];
 
@@ -117,16 +120,18 @@ function initPackagesConfig() {
     const isAlgoliasearchClient = packageName.startsWith('algoliasearch');
     const commonConfig = {
       package: packageName,
-      name: isAlgoliasearchClient ? packageName : `@algolia/${packageName}`,
+      name: isAlgoliasearchClient
+        ? packageName
+        : `@experimental-api-clients-automation/${packageName}`,
       output: packageName,
       dependencies: isAlgoliasearchClient
         ? [
-            '@algolia/client-analytics',
-            '@algolia/client-common',
-            '@algolia/client-personalization',
-            '@algolia/client-search',
+            '@experimental-api-clients-automation/client-analytics',
+            '@experimental-api-clients-automation/client-common',
+            '@experimental-api-clients-automation/client-personalization',
+            '@experimental-api-clients-automation/client-search',
           ]
-        : ['@algolia/client-common'],
+        : ['@experimental-api-clients-automation/client-common'],
       external: [],
     };
     const browserFormats = ['umd-browser', 'esm-browser', 'cjs-browser'];
@@ -140,7 +145,7 @@ function initPackagesConfig() {
         external: ['dom'],
         dependencies: [
           ...commonConfig.dependencies,
-          '@algolia/requester-browser-xhr',
+          '@experimental-api-clients-automation/requester-browser-xhr',
         ],
         globals: {
           [packageName]: packageName,
@@ -151,7 +156,7 @@ function initPackagesConfig() {
         input: 'builds/node.ts',
         dependencies: [
           ...commonConfig.dependencies,
-          '@algolia/requester-node-http',
+          '@experimental-api-clients-automation/requester-node-http',
         ],
         formats: nodeFormats,
       },

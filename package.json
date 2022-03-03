@@ -8,7 +8,7 @@
   "scripts": {
     "build:utils": "yarn build client-common && yarn build requester-browser-xhr && yarn build requester-node-http",
     "build": "CLIENT=${0:-all} yarn rollup -c rollup.config.js",
-    "clean:utils": "yarn workspace @algolia/client-common clean && yarn workspace @algolia/requester-node-http clean && yarn workspace @algolia/requester-browser-xhr clean",
+    "clean:utils": "yarn workspace @experimental-api-clients-automation/client-common clean && yarn workspace @experimental-api-clients-automation/requester-node-http clean && yarn workspace @experimental-api-clients-automation/requester-browser-xhr clean",
     "clean": "rm -rf packages/*/dist",
     "release": "shipjs prepare",
     "test:size": "bundlesize",

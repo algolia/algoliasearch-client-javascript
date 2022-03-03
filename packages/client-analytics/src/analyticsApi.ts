@@ -3,13 +3,13 @@ import {
   createMemoryCache,
   createTransporter,
   getUserAgent,
-} from '@algolia/client-common';
+} from '@experimental-api-clients-automation/client-common';
 import type {
   CreateClientOptions,
   Headers,
   Host,
   Request,
-} from '@algolia/client-common';
+} from '@experimental-api-clients-automation/client-common';
 
 import type { GetAverageClickPositionResponse } from '../model/getAverageClickPositionResponse';
 import type { GetClickPositionsResponse } from '../model/getClickPositionsResponse';
@@ -31,7 +31,7 @@ import type { GetTopSearchesResponse } from '../model/getTopSearchesResponse';
 import type { GetTopSearchesResponseWithAnalytics } from '../model/getTopSearchesResponseWithAnalytics';
 import type { GetUsersCountResponse } from '../model/getUsersCountResponse';
 
-export const apiClientVersion = '5.0.0';
+export const apiClientVersion = '0.0.4';
 
 export type Region = 'de' | 'us';
 

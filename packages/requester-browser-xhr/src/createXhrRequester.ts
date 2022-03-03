@@ -1,4 +1,8 @@
-import type { EndRequest, Requester, Response } from '@algolia/client-common';
+import type {
+  EndRequest,
+  Requester,
+  Response,
+} from '@experimental-api-clients-automation/client-common';
 
 export function createXhrRequester(): Requester {
   function send(request: EndRequest): Promise<Response> {

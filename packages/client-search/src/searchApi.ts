@@ -4,13 +4,13 @@ import {
   createTransporter,
   getUserAgent,
   shuffle,
-} from '@algolia/client-common';
+} from '@experimental-api-clients-automation/client-common';
 import type {
   CreateClientOptions,
   Headers,
   Host,
   Request,
-} from '@algolia/client-common';
+} from '@experimental-api-clients-automation/client-common';
 
 import type { AddApiKeyResponse } from '../model/addApiKeyResponse';
 import type { ApiKey } from '../model/apiKey';
@@ -69,7 +69,7 @@ import type { UpdatedAtWithObjectIdResponse } from '../model/updatedAtWithObject
 import type { UpdatedRuleResponse } from '../model/updatedRuleResponse';
 import type { UserId } from '../model/userId';
 
-export const apiClientVersion = '5.0.0';
+export const apiClientVersion = '0.0.4';
 
 function getDefaultHosts(appId: string): Host[] {
   return (

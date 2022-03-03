@@ -1,5 +1,8 @@
-import type { Host, Requester } from '@algolia/client-common';
-import { createXhrRequester } from '@algolia/requester-browser-xhr';
+import type {
+  Host,
+  Requester,
+} from '@experimental-api-clients-automation/client-common';
+import { createXhrRequester } from '@experimental-api-clients-automation/requester-browser-xhr';
 
 import { createPersonalizationApi } from '../src/personalizationApi';
 import type { PersonalizationApi, Region } from '../src/personalizationApi';

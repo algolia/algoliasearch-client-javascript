@@ -3,18 +3,18 @@ import {
   createMemoryCache,
   createTransporter,
   getUserAgent,
-} from '@algolia/client-common';
+} from '@experimental-api-clients-automation/client-common';
 import type {
   CreateClientOptions,
   Headers,
   Host,
   Request,
-} from '@algolia/client-common';
+} from '@experimental-api-clients-automation/client-common';
 
 import type { InsightEvents } from '../model/insightEvents';
 import type { PushEventsResponse } from '../model/pushEventsResponse';
 
-export const apiClientVersion = '5.0.0';
+export const apiClientVersion = '0.0.4';
 
 export type Region = 'de' | 'us';
 

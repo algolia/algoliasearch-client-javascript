@@ -3,13 +3,13 @@ import {
   createMemoryCache,
   createTransporter,
   getUserAgent,
-} from '@algolia/client-common';
+} from '@experimental-api-clients-automation/client-common';
 import type {
   CreateClientOptions,
   Headers,
   Host,
   Request,
-} from '@algolia/client-common';
+} from '@experimental-api-clients-automation/client-common';
 
 import type { LogFile } from '../model/logFile';
 import type { QuerySuggestionsIndex } from '../model/querySuggestionsIndex';
@@ -18,7 +18,7 @@ import type { QuerySuggestionsIndexWithIndexParam } from '../model/querySuggesti
 import type { Status } from '../model/status';
 import type { SucessResponse } from '../model/sucessResponse';
 
-export const apiClientVersion = '5.0.0';
+export const apiClientVersion = '0.0.4';
 
 export type Region = 'eu' | 'us';
 

@@ -3,18 +3,18 @@ import {
   createMemoryCache,
   createTransporter,
   getUserAgent,
-} from '@algolia/client-common';
+} from '@experimental-api-clients-automation/client-common';
 import type {
   CreateClientOptions,
   Headers,
   Host,
   Request,
-} from '@algolia/client-common';
+} from '@experimental-api-clients-automation/client-common';
 
 import type { FetchUserProfileResponse } from '../model/fetchUserProfileResponse';
 import type { Params } from '../model/params';
 
-export const apiClientVersion = '0.0.1';
+export const apiClientVersion = '0.0.4';
 
 function getDefaultHosts(): Host[] {
   return [

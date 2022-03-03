@@ -1,6 +1,6 @@
 {
-  "name": "@algolia/requester-browser-xhr",
-  "version": "5.0.0",
+  "name": "@experimental-api-clients-automation/requester-browser-xhr",
+  "version": "0.0.4",
   "description": "Promise-based request library for browser using xhr.",
   "repository": "algolia/algoliasearch-client-javascript",
   "author": "Algolia",
@@ -15,8 +15,13 @@
   "engines": {
     "node": "^14.0.0"
   },
+  "files": [
+    "dist",
+    "src",
+    "index.ts"
+  ],
   "dependencies": {
-    "@algolia/client-common": "5.0.0"
+    "@experimental-api-clients-automation/client-common": "0.0.4"
   },
   "devDependencies": {
     "@types/node": "16.11.11",

@@ -1,7 +1,7 @@
 {
-  "name": "@algolia/client-insights",
-  "version": "5.0.0",
-  "description": "JavaScript client for @algolia/client-insights",
+  "name": "@experimental-api-clients-automation/client-insights",
+  "version": "0.0.4",
+  "description": "JavaScript client for @experimental-api-clients-automation/client-insights",
   "repository": "algolia/algoliasearch-client-javascript",
   "author": "Algolia",
   "license": "MIT",
@@ -14,13 +14,19 @@
   "scripts": {
     "clean": "rm -rf ./dist"
   },
+  "files": [
+    "dist",
+    "model",
+    "index.js",
+    "index.d.ts"
+  ],
   "engines": {
     "node": "^14.0.0"
   },
   "dependencies": {
-    "@algolia/client-common": "5.0.0",
-    "@algolia/requester-browser-xhr": "5.0.0",
-    "@algolia/requester-node-http": "5.0.0"
+    "@experimental-api-clients-automation/client-common": "0.0.4",
+    "@experimental-api-clients-automation/requester-browser-xhr": "0.0.4",
+    "@experimental-api-clients-automation/requester-node-http": "0.0.4"
   },
   "devDependencies": {
     "@types/node": "16.11.11",

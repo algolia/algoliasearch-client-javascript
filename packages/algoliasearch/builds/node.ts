@@ -1,20 +1,20 @@
 import type {
   AnalyticsApi,
   Region as AnalyticsRegion,
-} from '@algolia/client-analytics/src/analyticsApi';
-import { createAnalyticsApi } from '@algolia/client-analytics/src/analyticsApi';
+} from '@experimental-api-clients-automation/client-analytics/src/analyticsApi';
+import { createAnalyticsApi } from '@experimental-api-clients-automation/client-analytics/src/analyticsApi';
 import type {
   CreateClientOptions,
   Host,
   Requester,
-} from '@algolia/client-common';
+} from '@experimental-api-clients-automation/client-common';
 import type {
   PersonalizationApi,
   Region as PersonalizationRegion,
-} from '@algolia/client-personalization/src/personalizationApi';
-import { createPersonalizationApi } from '@algolia/client-personalization/src/personalizationApi';
-import { createSearchApi } from '@algolia/client-search/src/searchApi';
-import { createHttpRequester } from '@algolia/requester-node-http';
+} from '@experimental-api-clients-automation/client-personalization/src/personalizationApi';
+import { createPersonalizationApi } from '@experimental-api-clients-automation/client-personalization/src/personalizationApi';
+import { createSearchApi } from '@experimental-api-clients-automation/client-search/src/searchApi';
+import { createHttpRequester } from '@experimental-api-clients-automation/requester-node-http';
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function algoliasearch(

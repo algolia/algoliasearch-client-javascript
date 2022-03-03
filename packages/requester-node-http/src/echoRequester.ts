@@ -1,7 +1,7 @@
 import { URL } from 'url';
 
-import { createEchoRequester } from '@algolia/client-common';
-import type { UrlParams } from '@algolia/client-common';
+import { createEchoRequester } from '@experimental-api-clients-automation/client-common';
+import type { UrlParams } from '@experimental-api-clients-automation/client-common';
 
 function getUrlParams(url: string): UrlParams {
   const { host, searchParams: urlSearchParams } = new URL(url);

@@ -1,5 +1,8 @@
-import type { Host, Requester } from '@algolia/client-common';
-import { createHttpRequester } from '@algolia/requester-node-http';
+import type {
+  Host,
+  Requester,
+} from '@experimental-api-clients-automation/client-common';
+import { createHttpRequester } from '@experimental-api-clients-automation/requester-node-http';
 
 import { createInsightsApi } from '../src/insightsApi';
 import type { InsightsApi, Region } from '../src/insightsApi';
