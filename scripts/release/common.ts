@@ -5,6 +5,10 @@ export const MAIN_BRANCH = config.mainBranch;
 export const OWNER = config.owner;
 export const REPO = config.repo;
 
+export function getTargetBranch(language: string): string {
+  return config.targetBranch[language] || config.defaultTargetBranch;
+}
+
 export function getMarkdownSection(markdown: string, title: string): string {
   const levelIndicator = title.split(' ')[0]; // e.g. `##`
   const lines = markdown

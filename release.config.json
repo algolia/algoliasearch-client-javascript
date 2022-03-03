@@ -2,5 +2,15 @@
   "releasedTag": "released",
   "mainBranch": "main",
   "owner": "algolia",
-  "repo": "api-clients-automation"
+  "repo": "api-clients-automation",
+  "targetBranch": {
+    "javascript": "next",
+    "php": "next",
+    "java": "next"
+  },
+  "defaultTargetBranch": "next",
+  "gitAuthor": {
+    "name": "api-clients-bot",
+    "email": "bot@algolia.com"
+  }
 }

@@ -6,13 +6,12 @@ export default {
   versionChangeHeader: `## Version Changes`,
   noCommit: `no commit`,
   currentVersionNotFound: `current version not found`,
-  descriptionForSkippedLang: (langName: string): string =>
-    [
-      `  - No \`feat\` or \`fix\` commit, thus unchecked by default.`,
-      `  - **Checked** → Update version, update ${langName} repository, and release the library.`,
-      `  - **Unchecked** → Update ${langName} repository.`,
-      `  - **Line removed** → Do nothing.`,
-    ].join('\n'),
+  descriptionVersionChanges: [
+    `**Checked** → Update version, update repository, and release the library.`,
+    `**Un-checked** → Update repository.`,
+    `**Line removed** → Do nothing.`,
+  ].join('\n'),
+  descriptionForSkippedLang: `  - No \`feat\` or \`fix\` commit, thus unchecked by default.`,
 
   changelogHeader: `## CHANGELOG`,
   changelogDescription: `Update the following lines. Once merged, it will be reflected to \`changelogs/*.\``,
@@ -25,5 +24,5 @@ export default {
     `- [ ] ${APPROVED}`,
   ].join('\n'),
 
-  commitMessage: `chore: update versions and changelogs`,
+  commitMessage: `chore: update versions and submodules`,
 };

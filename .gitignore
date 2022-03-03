@@ -1,5 +1,8 @@
-**dist
-**.openapi-generator
+node_modules
+.bash_profile
+.env
+.pnp.cjs
+.parcel-cache
 
 yarn-error.log
 
@@ -7,4 +10,14 @@ yarn-error.log
 !.yarn/releases
 !.yarn/plugins
 
-node_modules
+.vscode/
+.idea/
+
+target
+**/.DS_Store
+.gradle
+build
+
+dist
+
+.openapi-generator

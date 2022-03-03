@@ -62,10 +62,10 @@ async function createReleaseIssue(): Promise<void> {
   const versions = readVersions();
 
   console.log('Pulling from origin...');
-  run(`git pull origin ${MAIN_BRANCH}`);
+  run(`git pull`);
 
   console.log('Pushing to origin...');
-  run(`git push origin ${MAIN_BRANCH}`);
+  run(`git push`);
 
   const commitsWithoutScope: string[] = [];
   const commitsWithNonLanguageScope: string[] = [];
@@ -169,7 +169,7 @@ async function createReleaseIssue(): Promise<void> {
     const checked = skipRelease ? ' ' : 'x';
     return [
       `- [${checked}] ${langName}: v${current} -> v${next}`,
-      skipRelease && TEXT.descriptionForSkippedLang(langName),
+      skipRelease && TEXT.descriptionForSkippedLang,
     ]
       .filter(Boolean)
       .join('\n');
@@ -196,6 +196,7 @@ async function createReleaseIssue(): Promise<void> {
     TEXT.header,
     TEXT.versionChangeHeader,
     versionChanges,
+    TEXT.descriptionVersionChanges,
     TEXT.changelogHeader,
     TEXT.changelogDescription,
     changelogs,
