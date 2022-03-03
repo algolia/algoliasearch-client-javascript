@@ -86,10 +86,20 @@ async function buildAllClients(
 }
 
 export async function buildClients(
-  generators: Generator[],
+  allGenerators: Generator[],
   verbose: boolean
 ): Promise<void> {
-  const langs = [...new Set(generators.map((gen) => gen.language))];
+  const langs = [...new Set(allGenerators.map((gen) => gen.language))];
+
+  // We exclude `javascript-algoliasearch` from the build batch because it
+  // is made of built generated clients and can cause race issue when executed
+  // together.
+  const jsAlgoliasearch = allGenerators.find(
+    (gen) => gen.key === 'javascript-algoliasearch'
+  );
+  const generators = allGenerators.filter(
+    (gen) => gen.key !== 'javascript-algoliasearch'
+  );
 
   await Promise.all([
     Promise.all(
@@ -103,4 +113,8 @@ export async function buildClients(
         .map((lang) => buildAllClients(lang, verbose))
     ),
   ]);
+
+  if (jsAlgoliasearch) {
+    await buildPerClient(jsAlgoliasearch, verbose);
+  }
 }
