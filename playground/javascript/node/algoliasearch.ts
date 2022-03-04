@@ -1,5 +1,5 @@
-import { algoliasearch } from 'algoliasearch';
-import { ApiError } from '@algolia/client-common';
+import { algoliasearch } from '@experimental-api-clients-automation/algoliasearch';
+import { ApiError } from '@experimental-api-clients-automation/client-common';
 import dotenv from 'dotenv';
 
 dotenv.config({ path: '../../.env' });

@@ -1,6 +1,6 @@
-import type { EchoResponse } from '@algolia/client-common';
-import { insightsApi } from '@algolia/client-insights';
-import { echoRequester } from '@algolia/requester-node-http';
+import type { EchoResponse } from '@experimental-api-clients-automation/client-common';
+import { insightsApi } from '@experimental-api-clients-automation/client-insights';
+import { echoRequester } from '@experimental-api-clients-automation/requester-node-http';
 
 const appId = process.env.ALGOLIA_APPLICATION_ID || 'test_app_id';
 const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'test_api_key';

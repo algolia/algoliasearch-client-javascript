@@ -1,5 +1,5 @@
-import { predictApi } from '@algolia/client-predict';
-import { ApiError } from '@algolia/client-common';
+import { predictApi } from '@experimental-api-clients-automation/client-predict';
+import { ApiError } from '@experimental-api-clients-automation/client-common';
 import dotenv from 'dotenv';
 
 dotenv.config({ path: '../../.env' });

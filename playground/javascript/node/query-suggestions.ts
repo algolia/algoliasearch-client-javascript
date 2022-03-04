@@ -1,5 +1,5 @@
-import { querySuggestionsApi } from '@algolia/client-query-suggestions';
-import { ApiError } from '@algolia/client-common';
+import { querySuggestionsApi } from '@experimental-api-clients-automation/client-query-suggestions';
+import { ApiError } from '@experimental-api-clients-automation/client-common';
 import dotenv from 'dotenv';
 
 dotenv.config({ path: '../../.env' });
@@ -12,7 +12,7 @@ const apiKey =
 // Init client with appId and apiKey
 const client = querySuggestionsApi(appId, apiKey, 'us');
 
-async function testABTesting() {
+async function testQuerySuggestions() {
   try {
     const res = await client.getAllConfigs();
 
@@ -26,4 +26,4 @@ async function testABTesting() {
   }
 }
 
-testABTesting();
+testQuerySuggestions();

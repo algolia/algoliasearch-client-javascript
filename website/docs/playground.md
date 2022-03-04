@@ -14,6 +14,8 @@ yarn docker playground <languageName> <clientName>
 
 ### JavaScript
 
+You can also find [sandboxes for all our clients](https://codesandbox.io/search?refinementList%5Btags%5D=&page=1&configure%5BhitsPerPage%5D=12&query=shortcuts%20generated%20api%20clients%20algolia%20javascript)
+
 ```bash
 yarn docker playground javascript search
 ```

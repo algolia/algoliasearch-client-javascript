@@ -1,7 +1,7 @@
 {{! This file will be renamed and moved to `builds/node.ts` after generating the client }}
 
-import type { Host, Requester } from '@algolia/client-common';
-import { createHttpRequester } from '@algolia/requester-node-http';
+import type { Host, Requester } from '@experimental-api-clients-automation/client-common';
+import { createHttpRequester } from '@experimental-api-clients-automation/requester-node-http';
 
 import { create{{capitalizedApiName}}Api } from '../src/{{apiName}}Api';
 import type { {{capitalizedApiName}}Api } from '../src/{{apiName}}Api';

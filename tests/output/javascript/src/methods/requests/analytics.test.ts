@@ -1,6 +1,6 @@
-import { analyticsApi } from '@algolia/client-analytics';
-import type { EchoResponse } from '@algolia/client-common';
-import { echoRequester } from '@algolia/requester-node-http';
+import { analyticsApi } from '@experimental-api-clients-automation/client-analytics';
+import type { EchoResponse } from '@experimental-api-clients-automation/client-common';
+import { echoRequester } from '@experimental-api-clients-automation/requester-node-http';
 
 const appId = process.env.ALGOLIA_APPLICATION_ID || 'test_app_id';
 const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'test_api_key';

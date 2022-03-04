@@ -1,5 +1,5 @@
-import { analyticsApi } from '@algolia/client-analytics';
-import { ApiError } from '@algolia/client-common';
+import { analyticsApi } from '@experimental-api-clients-automation/client-analytics';
+import { ApiError } from '@experimental-api-clients-automation/client-common';
 import dotenv from 'dotenv';
 
 dotenv.config({ path: '../../.env' });

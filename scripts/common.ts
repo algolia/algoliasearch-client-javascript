@@ -20,8 +20,8 @@ export const GENERATORS: Record<string, Generator> = {
     client: 'algoliasearch',
     key: 'javascript-algoliasearch',
     additionalProperties: {
-      packageName: 'algoliasearch',
-      packageVersion: '0',
+      packageName: '@experimental-api-clients-automation/algoliasearch',
+      packageVersion: '0.0.4',
     },
   },
 };

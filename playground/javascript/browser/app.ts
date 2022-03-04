@@ -1,4 +1,4 @@
-import { searchApi } from '@algolia/client-search';
+import { searchApi } from '@experimental-api-clients-automation/client-search';
 
 import './app.css';
 

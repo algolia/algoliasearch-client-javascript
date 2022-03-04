@@ -30,7 +30,10 @@ export async function buildJSClientUtils(
     verbose
   ).start();
 
-  await run(`yarn workspace @algolia/${client} clean`, { verbose });
+  await run(
+    `yarn workspace @experimental-api-clients-automation/${client} clean`,
+    { verbose }
+  );
   await run(`yarn workspace algoliasearch-client-javascript build ${client}`, {
     verbose,
   });

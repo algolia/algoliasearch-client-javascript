@@ -17,12 +17,12 @@
         "additionalProperties": {
           "modelPropertyNaming": "original",
           "supportsES6": true,
-          "npmName": "@algolia/client-search",
+          "npmName": "@experimental-api-clients-automation/client-search",
           "buildFile": "client-search",
           "apiName": "search",
           "capitalizedApiName": "Search",
-          "packageVersion": "5.0.0",
-          "packageName": "@algolia/client-search"
+          "packageVersion": "0.0.4",
+          "packageName": "@experimental-api-clients-automation/client-search"
         }
       },
       "javascript-recommend": {
@@ -39,12 +39,12 @@
         "additionalProperties": {
           "modelPropertyNaming": "original",
           "supportsES6": true,
-          "npmName": "@algolia/recommend",
+          "npmName": "@experimental-api-clients-automation/recommend",
           "buildFile": "recommend",
           "apiName": "recommend",
           "capitalizedApiName": "Recommend",
-          "packageVersion": "5.0.0",
-          "packageName": "@algolia/recommend"
+          "packageVersion": "0.0.4",
+          "packageName": "@experimental-api-clients-automation/recommend"
         }
       },
       "javascript-personalization": {
@@ -60,12 +60,12 @@
         "additionalProperties": {
           "modelPropertyNaming": "original",
           "supportsES6": true,
-          "npmName": "@algolia/client-personalization",
+          "npmName": "@experimental-api-clients-automation/client-personalization",
           "buildFile": "client-personalization",
           "apiName": "personalization",
           "capitalizedApiName": "Personalization",
-          "packageVersion": "5.0.0",
-          "packageName": "@algolia/client-personalization",
+          "packageVersion": "0.0.4",
+          "packageName": "@experimental-api-clients-automation/client-personalization",
           "hasRegionalHost": true,
           "isEuHost": true,
           "host": "personalization",
@@ -85,12 +85,12 @@
         "additionalProperties": {
           "modelPropertyNaming": "original",
           "supportsES6": true,
-          "npmName": "@algolia/client-analytics",
+          "npmName": "@experimental-api-clients-automation/client-analytics",
           "buildFile": "client-analytics",
           "apiName": "analytics",
           "capitalizedApiName": "Analytics",
-          "packageVersion": "5.0.0",
-          "packageName": "@algolia/client-analytics",
+          "packageVersion": "0.0.4",
+          "packageName": "@experimental-api-clients-automation/client-analytics",
           "fallbackToAliasHost": true,
           "hasRegionalHost": true,
           "isDeHost": true,
@@ -111,12 +111,12 @@
         "additionalProperties": {
           "modelPropertyNaming": "original",
           "supportsES6": true,
-          "npmName": "@algolia/client-insights",
+          "npmName": "@experimental-api-clients-automation/client-insights",
           "buildFile": "client-insights",
           "apiName": "insights",
           "capitalizedApiName": "Insights",
-          "packageVersion": "5.0.0",
-          "packageName": "@algolia/client-insights",
+          "packageVersion": "0.0.4",
+          "packageName": "@experimental-api-clients-automation/client-insights",
           "fallbackToAliasHost": true,
           "hasRegionalHost": true,
           "isDeHost": true,
@@ -137,12 +137,12 @@
         "additionalProperties": {
           "modelPropertyNaming": "original",
           "supportsES6": true,
-          "npmName": "@algolia/client-abtesting",
+          "npmName": "@experimental-api-clients-automation/client-abtesting",
           "buildFile": "client-abtesting",
           "apiName": "abtesting",
           "capitalizedApiName": "Abtesting",
-          "packageVersion": "5.0.0",
-          "packageName": "@algolia/client-abtesting",
+          "packageVersion": "0.0.4",
+          "packageName": "@experimental-api-clients-automation/client-abtesting",
           "hasRegionalHost": true,
           "fallbackToAliasHost": true,
           "isDeHost": true,
@@ -163,12 +163,12 @@
         "additionalProperties": {
           "modelPropertyNaming": "original",
           "supportsES6": true,
-          "npmName": "@algolia/client-query-suggestions",
+          "npmName": "@experimental-api-clients-automation/client-query-suggestions",
           "buildFile": "client-query-suggestions",
           "apiName": "querySuggestions",
           "capitalizedApiName": "QuerySuggestions",
-          "packageVersion": "5.0.0",
-          "packageName": "@algolia/client-query-suggestions",
+          "packageVersion": "0.0.4",
+          "packageName": "@experimental-api-clients-automation/client-query-suggestions",
           "hasRegionalHost": true,
           "isEuHost": true,
           "host": "query-suggestions",
@@ -188,12 +188,12 @@
         "additionalProperties": {
           "modelPropertyNaming": "original",
           "supportsES6": true,
-          "npmName": "@algolia/client-sources",
+          "npmName": "@experimental-api-clients-automation/client-sources",
           "buildFile": "client-sources",
           "apiName": "sources",
           "capitalizedApiName": "Sources",
-          "packageVersion": "0.0.1",
-          "packageName": "@algolia/client-sources",
+          "packageVersion": "0.0.4",
+          "packageName": "@experimental-api-clients-automation/client-sources",
           "hasRegionalHost": true,
           "isDeHost": true,
           "host": "data",
@@ -213,12 +213,12 @@
         "additionalProperties": {
           "modelPropertyNaming": "original",
           "supportsES6": true,
-          "npmName": "@algolia/client-predict",
+          "npmName": "@experimental-api-clients-automation/client-predict",
           "buildFile": "client-predict",
           "apiName": "predict",
           "capitalizedApiName": "Predict",
-          "packageVersion": "0.0.1",
-          "packageName": "@algolia/client-predict",
+          "packageVersion": "0.0.4",
+          "packageName": "@experimental-api-clients-automation/client-predict",
           "experimentalHost": "predict-api-oslcbws3zq-ew.a.run.app"
         }
       },
