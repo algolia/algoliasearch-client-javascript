@@ -1,0 +1,15 @@
+export type Acl =
+  | 'addObject'
+  | 'analytics'
+  | 'browse'
+  | 'deleteIndex'
+  | 'deleteObject'
+  | 'editSettings'
+  | 'listIndexes'
+  | 'logs'
+  | 'personalization'
+  | 'recommendation'
+  | 'search'
+  | 'seeUnretrievableAttributes'
+  | 'settings'
+  | 'usage';

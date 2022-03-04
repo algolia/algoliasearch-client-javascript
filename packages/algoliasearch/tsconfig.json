@@ -1,0 +1,8 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "dist"
+  },
+  "include": ["builds/node.ts", "builds/browser.ts"],
+  "exclude": ["dist", "node_modules"]
+}

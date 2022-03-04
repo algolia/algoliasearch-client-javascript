@@ -1,9 +1,0 @@
-[submodule "clients/algoliasearch-client-java-2"]
-	path = clients/algoliasearch-client-java-2
-	url = git@github.com:algolia/algoliasearch-client-java-2.git
-[submodule "clients/algoliasearch-client-javascript"]
-	path = clients/algoliasearch-client-javascript
-	url = git@github.com:algolia/algoliasearch-client-javascript.git
-[submodule "clients/algoliasearch-client-php"]
-	path = clients/algoliasearch-client-php
-	url = git@github.com:algolia/algoliasearch-client-php.git

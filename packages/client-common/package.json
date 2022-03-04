@@ -1,0 +1,21 @@
+{
+  "name": "@experimental-api-clients-automation/client-common",
+  "version": "0.0.4",
+  "description": "Common package for the Algolia JavaScript API client.",
+  "repository": "algolia/algoliasearch-client-javascript",
+  "author": "Algolia",
+  "license": "MIT",
+  "main": "dist/client-common.cjs.node.js",
+  "module": "dist/client-common.esm.node.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "clean": "rm -rf dist/"
+  },
+  "engines": {
+    "node": "^14.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "16.11.11",
+    "typescript": "4.5.4"
+  }
+}
