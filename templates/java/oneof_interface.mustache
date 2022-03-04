@@ -1,6 +1,54 @@
+import com.algolia.utils.CompoundType;
+import com.algolia.JSON;
+
+import com.google.gson.TypeAdapter;
+import com.google.gson.reflect.TypeToken;
+import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import java.io.IOException;
+
+@JsonAdapter({{classname}}.Adapter.class)
 {{>additionalModelTypeAnnotations}}
-public interface {{classname}} {{#vendorExtensions.x-implements}}{{#-first}}extends {{{.}}}{{/-first}}{{^-first}}, {{{.}}}{{/-first}}{{/vendorExtensions.x-implements}} {
-    {{#discriminator}}
-    public {{propertyType}} {{propertyGetter}}();
-    {{/discriminator}}
+public abstract class {{classname}} implements CompoundType {
+    {{#oneOf}}
+    public static {{classname}} of({{.}} inside) {
+        return new {{classname}}{{.}}(inside);
+    }
+
+    {{/oneOf}}
+    public abstract Object getInsideValue();
+
+    public static class Adapter extends TypeAdapter<{{classname}}> {
+        @Override
+        public void write(
+            final JsonWriter out,
+            final {{classname}} oneOf) throws IOException {
+        TypeAdapter runtimeTypeAdapter = (TypeAdapter) JSON.getGson()
+            .getAdapter(TypeToken.get(oneOf.getInsideValue().getClass()));
+        runtimeTypeAdapter.write(out, oneOf.getInsideValue());
+        }
+
+        @Override
+        public {{classname}} read(final JsonReader jsonReader)
+            throws IOException {
+        return null;
+        }
+    }
 }
+
+{{#oneOf}}
+@JsonAdapter({{classname}}.Adapter.class)
+class {{classname}}{{.}} extends {{classname}} {
+    private final {{.}} insideValue;
+
+    {{classname}}{{.}}({{.}} insideValue) {
+        this.insideValue = insideValue;
+    }
+
+    @Override
+    public {{.}} getInsideValue() {
+        return insideValue;
+    }
+}
+{{/oneOf}}

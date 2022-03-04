@@ -5,7 +5,6 @@
       "indexName": "indexName",
       "objectID": "uniqueID",
       "body": {
-        "$objectName": "Object",
         "key": "value"
       }
     },

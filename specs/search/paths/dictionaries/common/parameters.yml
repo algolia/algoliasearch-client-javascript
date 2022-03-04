@@ -5,8 +5,11 @@ DictionaryName:
   description: The dictionary to search in.
   required: true
   schema:
-    enum: [plurals, stopwords, compounds]
-    type: string
+    $ref: '#/dictionaryType'
+
+dictionaryType:
+  type: string
+  enum: [plurals, stopwords, compounds]
 
 # misc
 language:

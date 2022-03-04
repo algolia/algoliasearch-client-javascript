@@ -56,6 +56,14 @@ components:
       type: integer
       description: Specify the page to retrieve.
       default: 0
+    aroundRadius:
+      description: Define the maximum radius for a geo search (in meters).
+      oneOf:
+        - type: integer
+          minimum: 1
+        - type: string
+          enum:
+            - all
     baseSearchParams:
       type: object
       additionalProperties: false
@@ -146,13 +154,7 @@ components:
             from the requester's IP address.
           default: false
         aroundRadius:
-          description: Define the maximum radius for a geo search (in meters).
-          oneOf:
-            - type: integer
-              minimum: 1
-            - type: string
-              enum:
-                - all
+          $ref: '#/components/schemas/aroundRadius'
         aroundPrecision:
           type: integer
           description: >-

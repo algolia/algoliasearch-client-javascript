@@ -1,4 +1,4 @@
-import clientsConfig from '../clients.config.json';
+import clientsConfig from '../config/clients.config.json';
 
 export function getLanguageFolder(language: string): string {
   return clientsConfig[language].folder;

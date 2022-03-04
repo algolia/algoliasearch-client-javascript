@@ -231,7 +231,7 @@
         "groupId": "com.algolia",
         "apiPackage": "com.algolia.search",
         "invokerPackage": "com.algolia",
-        "modelPackage": "com.algolia.model",
+        "modelPackage": "com.algolia.model.search",
         "library": "okhttp-gson",
         "glob": "specs/bundled/search.yml",
         "gitHost": "algolia",

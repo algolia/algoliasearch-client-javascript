@@ -13,7 +13,7 @@ import okhttp3.Request;
 
 import com.algolia.utils.*;
 import com.algolia.utils.echo.*;
-import com.algolia.model.*;
+import com.algolia.model.search.*;
 
 import java.lang.reflect.Type;
 {{^fullJavaUtil}}
@@ -111,7 +111,7 @@ public class {{classname}} extends ApiClient {
     public {{#returnType}}{{{.}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{operationId}}({{#allParams}}{{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/allParams}}) throws ApiException {
         Call req = {{operationId}}ValidateBeforeCall({{#allParams}}{{paramName}}, {{/allParams}}null);
         if (req instanceof CallEcho) {
-            {{#returnType}}return new EchoResponse.{{#lambda.titlecase}}{{{operationId}}}{{/lambda.titlecase}}(((CallEcho)req).request());{{/returnType}}
+            {{#returnType}}return new EchoResponse.{{baseName}}Echo.{{#lambda.titlecase}}{{{operationId}}}{{/lambda.titlecase}}(((CallEcho)req).request());{{/returnType}}
         }
         Call call = (Call)req;
         {{#returnType}}Type returnType = new TypeToken<{{{.}}}>(){}.getType();
@@ -121,7 +121,7 @@ public class {{classname}} extends ApiClient {
 
     {{#optionalParams.0}}
     public {{#returnType}}{{{.}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{operationId}}({{#requiredParams}}{{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/requiredParams}}) throws ApiException {
-        {{#returnType}}return {{/returnType}}this.{{operationId}}({{#requiredParams}}{{paramName}}{{^-last}},{{/-last}}{{/requiredParams}}{{#requiredParams.0}},{{/requiredParams.0}}{{#optionalParams}}{{#defaultValue}}{{#isString}}"{{.}}"{{/isString}}{{^isString}}{{.}}{{/isString}}{{/defaultValue}}{{^defaultValue}}null{{/defaultValue}}{{^-last}},{{/-last}}{{/optionalParams}});
+        {{#returnType}}return {{/returnType}}this.{{operationId}}({{#requiredParams}}{{paramName}}{{^-last}},{{/-last}}{{/requiredParams}}{{#requiredParams.0}},{{/requiredParams.0}}{{#optionalParams}}{{#schema}}{{#defaultValue}}{{{.}}}{{/defaultValue}}{{^defaultValue}}null{{/defaultValue}}{{/schema}}{{^schema}}null{{/schema}}{{^-last}},{{/-last}}{{/optionalParams}});
     }
     {{/optionalParams.0}}
 

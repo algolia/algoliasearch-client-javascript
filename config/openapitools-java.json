@@ -1,0 +1,21 @@
+{
+  "generatorName": "algolia-java",
+  "templateDir": "templates/java/",
+  "outputDir": "clients/algoliasearch-client-java-2",
+  "artifactId": "algoliasearch-client-java-2",
+  "groupId": "com.algolia",
+  "apiPackage": "com.algolia.search",
+  "invokerPackage": "com.algolia",
+  "modelPackage": "com.algolia.model.search",
+  "library": "okhttp-gson",
+  "inputSpec": "specs/bundled/search.yml",
+  "gitHost": "algolia",
+  "gitUserId": "algolia",
+  "gitRepoId": "algoliasearch-client-java-2",
+  "additionalProperties": {
+    "sourceFolder": "algoliasearch-core",
+    "java8": true,
+    "dateLibrary": "java8",
+    "packageName": "algoliasearch-client-java-2"
+  }
+}

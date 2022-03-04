@@ -1,0 +1,9 @@
+{
+  "generatorName": "algolia-cts",
+  "templateDir": "tests/CTS/methods/requests/templates/java",
+  "outputDir": "tests/output/java",
+  "artifactId": "java-tests",
+  "groupId": "com.algolia",
+  "invokerPackage": "com.algolia",
+  "inputSpec": "specs/bundled/search.yml"
+}

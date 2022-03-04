@@ -2,7 +2,6 @@
   {
     "method": "appendSource",
     "parameters": {
-      "$objectName": "Source",
       "source": "theSource",
       "description": "theDescription"
     },

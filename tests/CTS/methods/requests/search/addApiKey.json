@@ -2,7 +2,6 @@
   {
     "method": "addApiKey",
     "parameters": {
-      "$objectName": "ApiKey",
       "acl": [
         "search",
         "addObject"

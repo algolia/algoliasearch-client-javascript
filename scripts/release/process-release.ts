@@ -4,10 +4,9 @@ import fsp from 'fs/promises';
 import dotenv from 'dotenv';
 import execa from 'execa';
 
-import clientsConfig from '../../clients.config.json';
 import openapitools from '../../openapitools.json';
-import releaseConfig from '../../release.config.json';
 import { toAbsolutePath, run, exists, getGitHubUrl } from '../common';
+import { getLanguageFolder } from '../config';
 
 import {
   RELEASED_TAG,
@@ -15,6 +14,7 @@ import {
   REPO,
   getMarkdownSection,
   getTargetBranch,
+  getGitAuthor,
 } from './common';
 import TEXT from './text';
 
@@ -92,8 +92,8 @@ async function updateOpenApiTools(
 }
 
 async function configureGitHubAuthor(cwd?: string): Promise<void> {
-  await run(`git config user.name "${releaseConfig.gitAuthor.name}"`, { cwd });
-  await run(`git config user.email "${releaseConfig.gitAuthor.email}"`, {
+  await run(`git config user.name "${getGitAuthor().name}"`, { cwd });
+  await run(`git config user.email "${getGitAuthor().email}"`, {
     cwd,
   });
 }
@@ -129,7 +129,7 @@ async function processRelease(): Promise<void> {
 
   for (const lang of langsToReleaseOrUpdate) {
     // prepare the submodule
-    const clientPath = toAbsolutePath(clientsConfig[lang].folder);
+    const clientPath = toAbsolutePath(getLanguageFolder(lang));
     const targetBranch = getTargetBranch(lang);
     await run(`git checkout ${targetBranch}`, { cwd: clientPath });
     await run(`git pull origin ${targetBranch}`, { cwd: clientPath });
@@ -143,7 +143,7 @@ async function processRelease(): Promise<void> {
 
     // update changelog
     const changelogPath = toAbsolutePath(
-      `${clientsConfig[lang].folder}/CHANGELOG.md`
+      `${getLanguageFolder(lang)}/CHANGELOG.md`
     );
     const existingContent = (await exists(changelogPath))
       ? (await fsp.readFile(changelogPath)).toString()
@@ -177,13 +177,13 @@ async function processRelease(): Promise<void> {
     }
 
     // add the new reference of the submodule in the monorepo
-    await run(`git add ${clientsConfig[lang].folder}`);
+    await run(`git add ${getLanguageFolder(lang)}`);
   }
 
   // We push commits from submodules AFTER all the generations are done.
   // Otherwise, we will end up having broken release.
   for (const lang of langsToReleaseOrUpdate) {
-    const clientPath = toAbsolutePath(clientsConfig[lang].folder);
+    const clientPath = toAbsolutePath(getLanguageFolder(lang));
     const targetBranch = getTargetBranch(lang);
 
     await run(`git push origin ${targetBranch}`, { cwd: clientPath });

@@ -1,4 +1,4 @@
-import config from '../../release.config.json';
+import config from '../../config/release.config.json';
 
 export const RELEASED_TAG = config.releasedTag;
 export const MAIN_BRANCH = config.mainBranch;
@@ -7,6 +7,10 @@ export const REPO = config.repo;
 
 export function getTargetBranch(language: string): string {
   return config.targetBranch[language] || config.defaultTargetBranch;
+}
+
+export function getGitAuthor(): { name: string; email: string } {
+  return config.gitAuthor;
 }
 
 export function getMarkdownSection(markdown: string, title: string): string {

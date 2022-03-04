@@ -22,14 +22,11 @@ get:
       schema:
         type: string
         nullable: true
-        default: null
     - name: type
       in: query
       description: Type of log entries to retrieve. When omitted, all log entries are retrieved.
       schema:
-        type: string
-        enum: [all, query, build, error]
-        default: all
+        $ref: ../../common/enums.yml#/logType
   responses:
     '200':
       description: OK

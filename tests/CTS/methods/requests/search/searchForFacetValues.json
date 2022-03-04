@@ -18,7 +18,6 @@
       "indexName": "indexName",
       "facetName": "facetName",
       "searchForFacetValuesRequest": {
-        "$objectName": "SearchForFacetValuesRequest",
         "params": "query=foo&facetFilters=['bar']",
         "facetQuery": "foo",
         "maxFacetHits": 42

@@ -2,10 +2,8 @@
   {
     "method": "getObjects",
     "parameters": {
-      "$objectName": "GetObjectsParams",
       "requests": [
         {
-          "$objectName": "MultipleGetObjectsParams",
           "attributesToRetrieve": [
             "attr1",
             "attr2"

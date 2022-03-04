@@ -5,12 +5,8 @@
       "indexName": "indexName",
       "synonymHit": [
         {
-          "$objectName": "SynonymHit",
           "objectID": "id1",
-          "type": {
-            "$enumType": "SynonymType",
-            "value": "synonym"
-          },
+          "type": "synonym",
           "synonyms": [
             "car",
             "vehicule",
@@ -18,12 +14,8 @@
           ]
         },
         {
-          "$objectName": "SynonymHit",
           "objectID": "id2",
-          "type": {
-            "$enumType": "SynonymType",
-            "value": "onewaysynonym"
-          },
+          "type": "onewaysynonym",
           "input": "iphone",
           "synonyms": [
             "ephone",

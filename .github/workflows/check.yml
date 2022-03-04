@@ -142,12 +142,6 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true' && matrix.client.name != 'algoliasearch'
         run: yarn cli generate javascript ${{ matrix.client.name }}
 
-      - name: Check diff with pushed client
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: |
-          git status
-          exit $(git status --porcelain ${{ matrix.client.folder }} | wc -l)
-
       - name: Build ${{ matrix.client.name }} client
         if: steps.cache.outputs.cache-hit != 'true'
         run: yarn cli build clients javascript ${{ matrix.client.name }}
@@ -178,18 +172,12 @@ jobs:
         id: cache
         uses: actions/cache@v2
         with:
-          path: '/home/runner/work/api-clients-automation/api-clients-automation/${{ matrix.client.folder }}/target'
-          key: ${{ runner.os }}-${{ env.CACHE_VERSION }}-java-client-${{ matrix.client.name }}-${{ hashFiles(format('{0}/**', matrix.client.folder)) }}-${{ hashFiles(format('specs/bundled/{0}.yml', matrix.client.name)) }}
+          path: '/home/runner/work/api-clients-automation/api-clients-automation/${{ matrix.client.folder }}'
+          key: ${{ runner.os }}-${{ env.CACHE_VERSION }}-java-client-${{ hashFiles(format('{0}/**', matrix.client.folder)) }}-${{ hashFiles(format('specs/bundled/{0}.yml', matrix.client.name)) }}
 
       - name: Generate ${{ matrix.client.name }} client
         if: steps.cache.outputs.cache-hit != 'true'
         run: yarn cli generate java ${{ matrix.client.name }}
-
-      - name: Check diff with pushed client
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: |
-          git status
-          exit $(git status --porcelain ${{ matrix.client.folder }} | wc -l)
 
       - name: Build ${{ matrix.client.name }} client
         if: steps.cache.outputs.cache-hit != 'true'
@@ -220,12 +208,6 @@ jobs:
       - name: Generate ${{ matrix.client.name }} client
         if: steps.cache.outputs.cache-hit != 'true'
         run: yarn cli generate php ${{ matrix.client.name }}
-
-      - name: Check diff with pushed client
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: |
-          git status
-          exit $(git status --porcelain ${{ matrix.client.folder }} | wc -l)
 
       - name: Build ${{ matrix.client.name }} client
         if: steps.cache.outputs.cache-hit != 'true'

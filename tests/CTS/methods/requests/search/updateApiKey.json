@@ -4,7 +4,6 @@
     "parameters": {
       "key": "myApiKey",
       "apiKey": {
-        "$objectName": "ApiKey",
         "acl": [
           "search",
           "addObject"

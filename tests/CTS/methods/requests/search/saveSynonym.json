@@ -5,12 +5,8 @@
       "indexName": "indexName",
       "objectID": "id1",
       "synonymHit": {
-        "$objectName": "SynonymHit",
         "objectID": "id1",
-        "type": {
-          "$enumType": "SynonymType",
-          "value": "synonym"
-        },
+        "type": "synonym",
         "synonyms": [
           "car",
           "vehicule",

@@ -4,7 +4,6 @@
     "parameters": {
       "xAlgoliaUserID": "userID",
       "assignUserIdParams": {
-        "$objectName": "AssignUserIdParams",
         "cluster": "theCluster"
       }
     },

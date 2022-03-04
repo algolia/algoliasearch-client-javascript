@@ -19,9 +19,19 @@ async function preGen(
 }
 
 async function generateClient(
-  { key }: Generator,
+  { language, key }: Generator,
   verbose?: boolean
 ): Promise<void> {
+  if (language === 'java') {
+    // eslint-disable-next-line no-warning-comments
+    // TODO: We can remove this once https://github.com/OpenAPITools/openapi-generator-cli/issues/439 is fixed
+    await run(
+      `./gradle/gradlew --no-daemon -p generators assemble && \
+       java -cp /tmp/openapi-generator-cli.jar:generators/build/libs/algolia-java-openapi-generator-1.0.0.jar -ea org.openapitools.codegen.OpenAPIGenerator generate -c config/openapitools-java.json`,
+      { verbose }
+    );
+    return;
+  }
   await run(`yarn openapi-generator-cli generate --generator-key ${key}`, {
     verbose,
   });

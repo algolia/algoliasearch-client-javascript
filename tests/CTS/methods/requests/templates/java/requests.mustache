@@ -13,7 +13,7 @@ import com.google.gson.reflect.TypeToken;
 
 import com.algolia.JSON;
 import com.algolia.Pair;
-import com.algolia.model.*;
+import com.algolia.model.search.*;
 import com.algolia.search.{{client}};
 import com.algolia.utils.echo.*;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -22,12 +22,10 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class {{client}}Tests {
     private {{client}} client;
-    private JSON json;
 
     @BeforeAll
     void init() {
         client = new {{client}}("appId", "apiKey", new EchoRequester());
-        json = new JSON();
     }
 
     {{#blocks}}
@@ -38,7 +36,7 @@ class {{client}}Tests {
         {{#parametersWithDataType}}{{> generateParams}}{{/parametersWithDataType}}
 
         EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-            return client.{{method}}({{#parametersWithDataType}}{{{key}}}{{suffix}}{{^-last}},{{/-last}}{{/parametersWithDataType}});
+            return client.{{method}}({{#parametersWithDataType}}{{#oneOfModel}}{{{.}}}.of({{{key}}}{{suffix}}){{/oneOfModel}}{{^oneOfModel}}{{{key}}}{{suffix}}{{/oneOfModel}}{{^-last}},{{/-last}}{{/parametersWithDataType}});
         });
 
         assertEquals(req.getPath(), "{{{request.path}}}");
@@ -46,12 +44,12 @@ class {{client}}Tests {
 
         {{#request.data}}
         assertDoesNotThrow(() -> {
-            JSONAssert.assertEquals("{{#escapeQuotes}}{{{request.data}}}{{/escapeQuotes}}", req.getBody(), JSONCompareMode.STRICT_ORDER);
+            JSONAssert.assertEquals("{{#lambda.escapequotes}}{{{request.data}}}{{/lambda.escapequotes}}", req.getBody(), JSONCompareMode.STRICT_ORDER);
         });
         {{/request.data}}
 
         {{#request.searchParams}}
-        HashMap<String, String> expectedQuery = json.deserialize("{{#escapeQuotes}}{{{request.searchParams}}}{{/escapeQuotes}}", new TypeToken<HashMap<String, String>>() {}.getType());
+        HashMap<String, String> expectedQuery = JSON.deserialize("{{#lambda.escapequotes}}{{{request.searchParams}}}{{/lambda.escapequotes}}", new TypeToken<HashMap<String, String>>() {}.getType());
         List<Pair> acutalQuery = req.getQueryParams();
         for (Pair p : acutalQuery) {
             assertEquals(expectedQuery.get(p.getName()), p.getValue());

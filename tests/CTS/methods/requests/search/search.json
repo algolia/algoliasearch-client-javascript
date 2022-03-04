@@ -4,7 +4,6 @@
     "parameters": {
       "indexName": "indexName",
       "searchParams": {
-        "$objectName": "SearchParams",
         "query": "myQuery"
       }
     },

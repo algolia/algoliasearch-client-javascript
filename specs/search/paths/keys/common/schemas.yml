@@ -8,22 +8,7 @@ apiKey:
       description: Set of permissions associated with the key.
       default: []
       items:
-        type: string
-        enum:
-          - addObject
-          - analytics
-          - browse
-          - deleteObject
-          - deleteIndex
-          - editSettings
-          - listIndexes
-          - logs
-          - personalization
-          - recommendation
-          - search
-          - seeUnretrievableAttributes
-          - settings
-          - usage
+        $ref: '#/acl'
 
     description:
       type: string
@@ -88,3 +73,21 @@ addApiKeyResponse:
   required:
     - key
     - createdAt
+
+acl:
+  type: string
+  enum:
+    - addObject
+    - analytics
+    - browse
+    - deleteObject
+    - deleteIndex
+    - editSettings
+    - listIndexes
+    - logs
+    - personalization
+    - recommendation
+    - search
+    - seeUnretrievableAttributes
+    - settings
+    - usage

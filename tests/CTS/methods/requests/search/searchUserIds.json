@@ -2,7 +2,6 @@
   {
     "method": "searchUserIds",
     "parameters": {
-      "$objectName": "SearchUserIdsParams",
       "query": "test",
       "clusterName": "theClusterName",
       "page": 5,

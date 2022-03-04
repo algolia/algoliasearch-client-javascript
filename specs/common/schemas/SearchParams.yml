@@ -96,12 +96,7 @@ baseSearchParams:
       description: Search for entries around a given location automatically computed from the requester's IP address.
       default: false
     aroundRadius:
-      description: Define the maximum radius for a geo search (in meters).
-      oneOf:
-        - type: integer
-          minimum: 1
-        - type: string
-          enum: [all]
+      $ref: '#/aroundRadius'
     aroundPrecision:
       type: integer
       description: Precision of geo search (in meters), to add grouping by geo location to the ranking formula.
@@ -196,3 +191,11 @@ cursor:
   type: string
   description: Cursor indicating the location to resume browsing from. Must match the value returned by the previous call.
   example: jMDY3M2MwM2QwMWUxMmQwYWI0ZTN
+
+aroundRadius:
+  description: Define the maximum radius for a geo search (in meters).
+  oneOf:
+    - type: integer
+      minimum: 1
+    - type: string
+      enum: [all]

@@ -110,7 +110,7 @@ runs:
       if: ${{ inputs.job == 'cts' }}
       uses: actions/cache@v2
       with:
-        path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-java-2/target
+        path: /home/runner/work/api-clients-automation/api-clients-automation/clients/algoliasearch-client-java-2
         key: ${{ runner.os }}-${{ env.CACHE_VERSION }}-java-client-${{ hashFiles('clients/algoliasearch-client-java-2/**') }}-${{ hashFiles('specs/bundled/search.yml') }}
 
     # setup yarn
@@ -134,3 +134,8 @@ runs:
       if: ${{ inputs.language == 'java' || inputs.job == 'cts' }}
       shell: bash
       run: curl -L "https://github.com/google/google-java-format/releases/download/v1.13.0/google-java-format-1.13.0-all-deps.jar" > /tmp/java-formatter.jar
+
+    - name: Download openapi generator jar for java (TODO REMOVE)
+      if: ${{ inputs.language == 'java' || inputs.job == 'cts' }}
+      shell: bash
+      run: curl -L "https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/5.4.0/openapi-generator-cli-5.4.0.jar" > /tmp/openapi-generator-cli.jar

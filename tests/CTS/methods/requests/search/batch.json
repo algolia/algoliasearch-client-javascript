@@ -4,16 +4,10 @@
     "parameters": {
       "indexName": "theIndexName",
       "batchWriteParams": {
-        "$objectName": "BatchWriteParams",
         "requests": [
           {
-            "$objectName": "BatchOperation",
-            "action": {
-              "$enumType": "Action",
-              "value": "delete"
-            },
+            "action": "delete",
             "body": {
-              "$objectName": "Object",
               "key": "value"
             }
           }

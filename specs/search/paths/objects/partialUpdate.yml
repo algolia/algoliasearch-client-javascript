@@ -25,15 +25,12 @@ post:
       application/json:
         schema:
           type: array
-          additionalProperties: false
           items:
             type: object
             title: attributeToUpdate
             description: Attribute to update.
             additionalProperties:
-              oneOf:
-                - $ref: 'common/schemas.yml#/attribute'
-                - $ref: 'common/schemas.yml#/builtInOperation'
+              $ref: 'common/schemas.yml#/attributeOrBuiltInOperation'
   responses:
     '200':
       $ref: ../../../common/responses/UpdatedAtWithObjectId.yml

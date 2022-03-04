@@ -117,11 +117,7 @@ components:
       description: The dictionary to search in.
       required: true
       schema:
-        enum:
-          - plurals
-          - stopwords
-          - compounds
-        type: string
+        $ref: '#/components/schemas/dictionaryType'
     Page:
       in: query
       name: page
@@ -172,6 +168,14 @@ components:
       type: integer
       description: Specify the page to retrieve.
       default: 0
+    aroundRadius:
+      description: Define the maximum radius for a geo search (in meters).
+      oneOf:
+        - type: integer
+          minimum: 1
+        - type: string
+          enum:
+            - all
     baseSearchParams:
       type: object
       additionalProperties: false
@@ -262,13 +266,7 @@ components:
             from the requester's IP address.
           default: false
         aroundRadius:
-          description: Define the maximum radius for a geo search (in meters).
-          oneOf:
-            - type: integer
-              minimum: 1
-            - type: string
-              enum:
-                - all
+          $ref: '#/components/schemas/aroundRadius'
         aroundPrecision:
           type: integer
           description: >-
@@ -1006,6 +1004,17 @@ components:
     updatedAt:
       type: string
       description: Date of last update (ISO-8601 format).
+    builtInOperationType:
+      type: string
+      enum:
+        - Increment
+        - Decrement
+        - Add
+        - Remove
+        - AddUnique
+        - IncrementFrom
+        - IncrementSet
+      description: The operation to apply on the attribute.
     builtInOperation:
       type: object
       description: >-
@@ -1014,16 +1023,7 @@ components:
       additionalProperties: false
       properties:
         _operation:
-          type: string
-          enum:
-            - Increment
-            - Decrement
-            - Add
-            - Remove
-            - AddUnique
-            - IncrementFrom
-            - IncrementSet
-          description: The operation to apply on the attribute.
+          $ref: '#/components/schemas/builtInOperationType'
         value:
           type: string
           description: >-
@@ -1032,6 +1032,10 @@ components:
       required:
         - _operation
         - value
+    attributeOrBuiltInOperation:
+      oneOf:
+        - $ref: '#/components/schemas/attribute'
+        - $ref: '#/components/schemas/builtInOperation'
     action:
       type: string
       enum:
@@ -1202,6 +1206,23 @@ components:
       required:
         - hits
         - nbHits
+    acl:
+      type: string
+      enum:
+        - addObject
+        - analytics
+        - browse
+        - deleteObject
+        - deleteIndex
+        - editSettings
+        - listIndexes
+        - logs
+        - personalization
+        - recommendation
+        - search
+        - seeUnretrievableAttributes
+        - settings
+        - usage
     apiKey:
       type: object
       description: Api Key object.
@@ -1212,22 +1233,7 @@ components:
           description: Set of permissions associated with the key.
           default: []
           items:
-            type: string
-            enum:
-              - addObject
-              - analytics
-              - browse
-              - deleteObject
-              - deleteIndex
-              - editSettings
-              - listIndexes
-              - logs
-              - personalization
-              - recommendation
-              - search
-              - seeUnretrievableAttributes
-              - settings
-              - usage
+            $ref: '#/components/schemas/acl'
         description:
           type: string
           description: >-
@@ -1520,6 +1526,12 @@ components:
       type: integer
       default: 20
       description: Maximum number of hits in a page. Minimum is 1, maximum is 1000.
+    dictionaryType:
+      type: string
+      enum:
+        - plurals
+        - stopwords
+        - compounds
     dictionaryAction:
       type: string
       enum:
@@ -1670,6 +1682,14 @@ components:
       type: array
       items:
         $ref: '#/components/schemas/source'
+    logType:
+      type: string
+      enum:
+        - all
+        - query
+        - build
+        - error
+      default: all
     operationType:
       type: string
       enum:
@@ -2431,15 +2451,12 @@ paths:
           application/json:
             schema:
               type: array
-              additionalProperties: false
               items:
                 type: object
                 title: attributeToUpdate
                 description: Attribute to update.
                 additionalProperties:
-                  oneOf:
-                    - $ref: '#/components/schemas/attribute'
-                    - $ref: '#/components/schemas/builtInOperation'
+                  $ref: '#/components/schemas/attributeOrBuiltInOperation'
       responses:
         '200':
           $ref: '#/components/responses/UpdatedAtWithObjectId'
@@ -4005,20 +4022,13 @@ paths:
           schema:
             type: string
             nullable: true
-            default: null
         - name: type
           in: query
           description: >-
             Type of log entries to retrieve. When omitted, all log entries are
             retrieved.
           schema:
-            type: string
-            enum:
-              - all
-              - query
-              - build
-              - error
-            default: all
+            $ref: '#/components/schemas/logType'
       responses:
         '200':
           description: OK

@@ -148,9 +148,9 @@ describe('batchDictionaryEntries', () => {
             body: {
               objectID: '1',
               language: 'en',
-              word: 'yo',
-              words: ['yo', 'algolia'],
-              decomposition: ['yo', 'algolia'],
+              word: 'fancy',
+              words: ['believe', 'algolia'],
+              decomposition: ['trust', 'algolia'],
               state: 'enabled',
             },
           },
@@ -159,9 +159,9 @@ describe('batchDictionaryEntries', () => {
             body: {
               objectID: '2',
               language: 'fr',
-              word: 'salut',
-              words: ['salut', 'algolia'],
-              decomposition: ['salut', 'algolia'],
+              word: 'humility',
+              words: ['candor', 'algolia'],
+              decomposition: ['grit', 'algolia'],
               state: 'enabled',
             },
           },
@@ -179,9 +179,9 @@ describe('batchDictionaryEntries', () => {
           body: {
             objectID: '1',
             language: 'en',
-            word: 'yo',
-            words: ['yo', 'algolia'],
-            decomposition: ['yo', 'algolia'],
+            word: 'fancy',
+            words: ['believe', 'algolia'],
+            decomposition: ['trust', 'algolia'],
             state: 'enabled',
           },
         },
@@ -190,9 +190,9 @@ describe('batchDictionaryEntries', () => {
           body: {
             objectID: '2',
             language: 'fr',
-            word: 'salut',
-            words: ['salut', 'algolia'],
-            decomposition: ['salut', 'algolia'],
+            word: 'humility',
+            words: ['candor', 'algolia'],
+            decomposition: ['grit', 'algolia'],
             state: 'enabled',
           },
         },
@@ -747,9 +747,8 @@ describe('partialUpdateObject', () => {
     const req = (await client.partialUpdateObject({
       indexName: 'theIndexName',
       objectID: 'uniqueID',
-      stringBuiltInOperation: [
-        { id1: { _operation: 'AddUnique', value: 'test1' } },
-        { id2: { _operation: 'AddUnique', value: 'test2' } },
+      attributeOrBuiltInOperation: [
+        { id1: 'test', id2: { _operation: 'AddUnique', value: 'test2' } },
       ],
       createIfNotExists: true,
     })) as unknown as EchoResponse;
@@ -757,8 +756,7 @@ describe('partialUpdateObject', () => {
     expect(req.path).toEqual('/1/indexes/theIndexName/uniqueID/partial');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual([
-      { id1: { _operation: 'AddUnique', value: 'test1' } },
-      { id2: { _operation: 'AddUnique', value: 'test2' } },
+      { id1: 'test', id2: { _operation: 'AddUnique', value: 'test2' } },
     ]);
     expect(req.searchParams).toEqual({ createIfNotExists: 'true' });
   });

@@ -145,7 +145,7 @@ components:
       type: integer
       description: Number of hits that the search query matched.
       example: 20
-    getTopSearchesResponse:
+    topSearchesResponse:
       type: object
       additionalProperties: false
       required:
@@ -188,7 +188,7 @@ components:
     conversionCount:
       type: integer
       description: The number of converted clicks.
-    getTopSearchesResponseWithAnalytics:
+    topSearchesResponseWithAnalytics:
       type: object
       additionalProperties: false
       required:
@@ -229,13 +229,17 @@ components:
                 $ref: '#/components/schemas/conversionCount'
               nbHits:
                 $ref: '#/components/schemas/nbHits'
+    getTopSearchesResponse:
+      oneOf:
+        - $ref: '#/components/schemas/topSearchesResponse'
+        - $ref: '#/components/schemas/topSearchesResponseWithAnalytics'
     date:
       type: string
       description: Date of the event.
     hit:
       description: The hit.
       type: string
-    getTopHitsResponse:
+    topHitsResponse:
       type: object
       additionalProperties: false
       required:
@@ -255,7 +259,7 @@ components:
                 $ref: '#/components/schemas/hit'
               count:
                 $ref: '#/components/schemas/count'
-    getTopHitsResponseWithAnalytics:
+    topHitsResponseWithAnalytics:
       type: object
       additionalProperties: false
       required:
@@ -290,6 +294,10 @@ components:
                 $ref: '#/components/schemas/clickCount'
               conversionCount:
                 $ref: '#/components/schemas/conversionCount'
+    getTopHitsResponse:
+      oneOf:
+        - $ref: '#/components/schemas/topHitsResponse'
+        - $ref: '#/components/schemas/topHitsResponseWithAnalytics'
     attribute:
       description: The attribute.
       type: string
@@ -574,9 +582,7 @@ paths:
           content:
             application/json:
               schema:
-                oneOf:
-                  - $ref: '#/components/schemas/getTopSearchesResponse'
-                  - $ref: '#/components/schemas/getTopSearchesResponseWithAnalytics'
+                $ref: '#/components/schemas/getTopSearchesResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -900,9 +906,7 @@ paths:
           content:
             application/json:
               schema:
-                oneOf:
-                  - $ref: '#/components/schemas/getTopHitsResponse'
-                  - $ref: '#/components/schemas/getTopHitsResponseWithAnalytics'
+                $ref: '#/components/schemas/getTopHitsResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':

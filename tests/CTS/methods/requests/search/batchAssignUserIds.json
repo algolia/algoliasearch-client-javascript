@@ -4,7 +4,6 @@
     "parameters": {
       "xAlgoliaUserID": "userID",
       "batchAssignUserIdsParams": {
-        "$objectName": "BatchAssignUserIdsParams",
         "cluster": "theCluster",
         "users": [
           "user1",

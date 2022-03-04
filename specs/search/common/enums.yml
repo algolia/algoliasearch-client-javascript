@@ -27,3 +27,8 @@ dictionaryEntryState:
   enum: [enabled, disabled]
   default: enabled
   description: The state of the dictionary entry.
+
+logType:
+  type: string
+  enum: [all, query, build, error]
+  default: all
