@@ -1,3 +1,4 @@
+import fs from 'fs';
 import path from 'path';
 
 import babel from '@rollup/plugin-babel';
@@ -9,8 +10,6 @@ import ts from 'rollup-plugin-typescript2';
 
 import generatorConfig from '../../openapitools.json';
 
-import { version } from './version';
-
 // Retrieve package to build
 const client = process.env.CLIENT?.replace(
   '@experimental-api-clients-automation/',
@@ -18,7 +17,7 @@ const client = process.env.CLIENT?.replace(
 );
 const UTILS = ['client-common', 'requester-browser-xhr', 'requester-node-http'];
 
-function createLicence(name) {
+function createLicence(name, version) {
   return `/*! ${name}.umd.js | ${version} | © Algolia, inc. | https://github.com/algolia/algoliasearch-client-javascript */`;
 }
 
@@ -113,7 +112,7 @@ function initPackagesConfig() {
   const availableClients = getAvailableClients();
 
   if (availableClients.length === 0) {
-    throw new Error(`No clients matching ${client}.`);
+    throw new Error(`No clients matches '${client}'.`);
   }
 
   return availableClients.flatMap((packageName) => {
@@ -169,6 +168,14 @@ const rollupConfig = [];
 
 packagesConfig.forEach((packageConfig) => {
   const clientPath = path.resolve('packages', packageConfig.package);
+  const clientPackage = JSON.parse(
+    fs.readFileSync(path.resolve(clientPath, 'package.json'))
+  );
+
+  if (!clientPackage) {
+    throw new Error(`No package.json found for '${packageConfig.name}'`);
+  }
+
   const bundlers = createBundlers({
     output: packageConfig.output,
     clientPath,
@@ -183,7 +190,10 @@ packagesConfig.forEach((packageConfig) => {
 
     if (isUmdBuild) {
       output.name = packageConfig.name;
-      output.banner = createLicence(packageConfig.package);
+      output.banner = createLicence(
+        packageConfig.package,
+        clientPackage.version
+      );
     }
 
     const compressorPlugins = isUmdBuild ? [terser()] : [];
