@@ -1,0 +1,35 @@
+{
+  "name": "@experimental-api-clients-automation/client-abtesting",
+  "version": "0.0.4",
+  "description": "JavaScript client for @experimental-api-clients-automation/client-abtesting",
+  "repository": "algolia/algoliasearch-client-javascript",
+  "author": "Algolia",
+  "license": "MIT",
+  "main": "index.js",
+  "module": "dist/client-abtesting.esm.node.js",
+  "types": "index.d.ts",
+  "jsdelivr": "dist/client-abtesting.umd.browser.js",
+  "unpkg": "dist/client-abtesting.umd.browser.js",
+  "browser": "dist/client-abtesting.cjs.browser.js",
+  "scripts": {
+    "clean": "rm -rf ./dist"
+  },
+  "files": [
+    "dist",
+    "model",
+    "index.js",
+    "index.d.ts"
+  ],
+  "engines": {
+    "node": "^14.0.0"
+  },
+  "dependencies": {
+    "@experimental-api-clients-automation/client-common": "0.0.4",
+    "@experimental-api-clients-automation/requester-browser-xhr": "0.0.4",
+    "@experimental-api-clients-automation/requester-node-http": "0.0.4"
+  },
+  "devDependencies": {
+    "@types/node": "16.11.11",
+    "typescript": "4.5.4"
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "name": "algoliasearch-client-javascript",
+  "version": "5.0.0",
+  "workspaces": [
+    "packages/*"
+  ],
+  "private": true,
+  "scripts": {
+    "build:utils": "yarn build client-common && yarn build requester-browser-xhr && yarn build requester-node-http",
+    "build": "CLIENT=${0:-all} yarn rollup -c rollup.config.js",
+    "clean:utils": "yarn workspace @experimental-api-clients-automation/client-common clean && yarn workspace @experimental-api-clients-automation/requester-node-http clean && yarn workspace @experimental-api-clients-automation/requester-browser-xhr clean",
+    "clean": "rm -rf packages/*/dist",
+    "release": "shipjs prepare",
+    "test:size": "bundlesize",
+    "test:lint": "eslint . --ext .js,.ts",
+    "test:types": "yarn tsc --noEmit"
+  },
+  "devDependencies": {
+    "@babel/core": "7.17.2",
+    "@babel/plugin-proposal-class-properties": "7.16.7",
+    "@babel/plugin-transform-runtime": "7.17.0",
+    "@babel/preset-env": "7.16.11",
+    "@babel/runtime": "7.17.2",
+    "@rollup/plugin-babel": "5.3.0",
+    "@rollup/plugin-node-resolve": "13.1.3",
+    "@types/rollup-plugin-node-globals": "1.4.1",
+    "bundlesize": "0.18.1",
+    "rollup": "2.67.1",
+    "rollup-plugin-filesize": "9.1.2",
+    "rollup-plugin-node-globals": "1.4.0",
+    "rollup-plugin-terser": "7.0.2",
+    "rollup-plugin-typescript2": "0.31.2",
+    "typescript": "4.5.4"
+  },
+  "engines": {
+    "node": "^14.0.0",
+    "yarn": "^3.0.0"
+  }
+}

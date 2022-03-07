@@ -1,0 +1,29 @@
+{
+  "name": "@experimental-api-clients-automation/requester-node-http",
+  "version": "0.0.4",
+  "description": "Promise-based request library for node using the native http module.",
+  "repository": "algolia/algoliasearch-client-javascript",
+  "author": "Algolia",
+  "license": "MIT",
+  "main": "dist/requester-node-http.cjs.node.js",
+  "module": "dist/requester-node-http.esm.node.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "clean": "rm -rf dist/"
+  },
+  "engines": {
+    "node": "^14.0.0"
+  },
+  "files": [
+    "dist",
+    "src",
+    "index.ts"
+  ],
+  "dependencies": {
+    "@experimental-api-clients-automation/client-common": "0.0.4"
+  },
+  "devDependencies": {
+    "@types/node": "16.11.11",
+    "typescript": "4.5.4"
+  }
+}
