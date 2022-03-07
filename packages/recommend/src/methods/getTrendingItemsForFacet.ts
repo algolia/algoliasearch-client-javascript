@@ -10,6 +10,11 @@ export const getTrendingItemsForFacet: GetTrendingItemsForFacet = base => {
     return getTrendingGlobalItems(base)(
       queries.map(query => ({
         ...query,
+        model: 'trending-items',
+        // The `threshold` param is required by the endpoint to make it easier
+        // to provide a default value later, so we default it in the client
+        // so that users don't have to provide a value.
+        threshold: query.threshold || 0,
       })),
       requestOptions
     );

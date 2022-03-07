@@ -1,3 +1,4 @@
-import { TrendingQuery } from './TrendingQuery';
+import { RecommendationsQuery } from './RecommendationsQuery';
 
-export type TrendingItemsForFacetQuery = Omit<TrendingQuery, 'model'>;
+export type TrendingItemsForFacetQuery = Omit<RecommendationsQuery, 'model' | 'objectID'> &
+  Required<Pick<RecommendationsQuery, 'facetName' | 'facetValue'>>;
