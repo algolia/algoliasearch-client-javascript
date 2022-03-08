@@ -1,14 +1,14 @@
 import { MethodEnum } from '@algolia/requester-common';
 
-import { BaseRecommendClient, TrendingGlobalItemsQuery, WithRecommendMethods } from '../types';
+import { BaseRecommendClient, TrendingItemsQuery, WithRecommendMethods } from '../types';
 
-type GetTrendingGlobalItems = (
+type GetTrendingItems = (
   base: BaseRecommendClient
-) => WithRecommendMethods<BaseRecommendClient>['getTrendingGlobalItems'];
+) => WithRecommendMethods<BaseRecommendClient>['getTrendingItems'];
 
-export const getTrendingGlobalItems: GetTrendingGlobalItems = base => {
-  return (queries: readonly TrendingGlobalItemsQuery[], requestOptions) => {
-    const requests: readonly TrendingGlobalItemsQuery[] = queries.map(query => ({
+export const getTrendingItems: GetTrendingItems = base => {
+  return (queries: readonly TrendingItemsQuery[], requestOptions) => {
+    const requests: readonly TrendingItemsQuery[] = queries.map(query => ({
       ...query,
       model: 'trending-items',
       // The `threshold` param is required by the endpoint to make it easier

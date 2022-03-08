@@ -5,8 +5,7 @@ import { FrequentlyBoughtTogetherQuery } from './FrequentlyBoughtTogetherQuery';
 import { RecommendationsQuery } from './RecommendationsQuery';
 import { RelatedProductsQuery } from './RelatedProductsQuery';
 import { TrendingFacetsQuery } from './TrendingFacetsQuery';
-import { TrendingGlobalItemsQuery } from './TrendingGlobalItemsQuery';
-import { TrendingItemsForFacetQuery } from './TrendingItemsForFacetQuery';
+import { TrendingItemsQuery } from './TrendingItemsQuery';
 
 export type WithRecommendMethods<TType> = TType & {
   /**
@@ -36,16 +35,8 @@ export type WithRecommendMethods<TType> = TType & {
   /**
    * Returns trending items
    */
-  readonly getTrendingGlobalItems: <TObject>(
-    queries: readonly TrendingGlobalItemsQuery[],
-    requestOptions?: RequestOptions & SearchOptions
-  ) => Readonly<Promise<MultipleQueriesResponse<TObject>>>;
-
-  /**
-   * Returns trending items per facet
-   */
-  readonly getTrendingItemsForFacet: <TObject>(
-    queries: readonly TrendingItemsForFacetQuery[],
+  readonly getTrendingItems: <TObject>(
+    queries: readonly TrendingItemsQuery[],
     requestOptions?: RequestOptions & SearchOptions
   ) => Readonly<Promise<MultipleQueriesResponse<TObject>>>;
 

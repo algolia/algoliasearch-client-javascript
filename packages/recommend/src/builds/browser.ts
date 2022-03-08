@@ -13,8 +13,7 @@ import {
   getRecommendations,
   getRelatedProducts,
   getTrendingFacets,
-  getTrendingGlobalItems,
-  getTrendingItemsForFacet,
+  getTrendingItems,
 } from '../methods';
 import { BaseRecommendClient, RecommendOptions, WithRecommendMethods } from '../types';
 
@@ -55,8 +54,7 @@ export default function recommend(
       getRecommendations,
       getRelatedProducts,
       getTrendingFacets,
-      getTrendingGlobalItems,
-      getTrendingItemsForFacet,
+      getTrendingItems,
     },
   });
 }

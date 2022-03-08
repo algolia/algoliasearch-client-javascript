@@ -9,16 +9,14 @@ function createMockedClient() {
   return client;
 }
 
-describe('getTrendingItemsForFacet', () => {
+describe('getTrendingItems', () => {
   test('builds the request', async () => {
     const client = createMockedClient();
 
-    await client.getTrendingItemsForFacet(
+    await client.getTrendingItems(
       [
         {
           indexName: 'products',
-          facetName: 'company',
-          facetValue: 'tesla',
         },
       ],
       {}
@@ -33,8 +31,6 @@ describe('getTrendingItemsForFacet', () => {
             {
               indexName: 'products',
               model: 'trending-items',
-              facetName: 'company',
-              facetValue: 'tesla',
               threshold: 0,
             },
           ],
