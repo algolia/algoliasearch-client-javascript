@@ -20,6 +20,7 @@ const sidebars = {
         'addNewClient',
         'addNewLanguage',
         'pullRequest',
+        'releaseProcess',
       ],
     },
     {

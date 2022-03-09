@@ -13,6 +13,8 @@ To contribute to the repository, make sure to take a look at our guidelines and 
 - [Setup the repository tooling](/docs/setupRepository): to install our tooling.
 - [Add a new client](/docs/addNewClient): to add a new client spec to generate.
 - [Support a new language](/docs/addNewLanguage): to add a new supported language to the API clients.
+- [Pull-request](/docs/pullRequest): to see how to send pull-requests.
+- [Release process](/docs/releaseProcess): to see how to release API clients.
 
 CLI commands can be found at [CLI > specs commands](/docs/specsCommands) and [CLI > generation commands](/docs/generationCommands)
 
