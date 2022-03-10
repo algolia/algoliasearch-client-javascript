@@ -26,3 +26,4 @@ jobs:
         env:
           EVENT_NUMBER: ${{ github.event.issue.number }}
           GITHUB_TOKEN: ${{ secrets.TOKEN_RELEASE_BOT }}
+          VERSION_TAG_ON_RELEASE: $${{ secrets.VERSION_TAG_ON_RELEASE }}

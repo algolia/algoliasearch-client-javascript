@@ -23,6 +23,4 @@ export default {
     `To skip this release, just close the issue.`,
     `- [ ] ${APPROVED}`,
   ].join('\n'),
-
-  commitMessage: `chore: update versions and submodules`,
 };

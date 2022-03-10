@@ -3,12 +3,12 @@ import { Octokit } from '@octokit/rest';
 import dotenv from 'dotenv';
 import semver from 'semver';
 
-import { GENERATORS, LANGUAGES, run } from '../common';
+import { GENERATORS, LANGUAGES, ROOT_ENV_PATH, run } from '../common';
 
 import { RELEASED_TAG, MAIN_BRANCH, OWNER, REPO } from './common';
 import TEXT from './text';
 
-dotenv.config();
+dotenv.config({ path: ROOT_ENV_PATH });
 
 type Version = {
   current: string;
