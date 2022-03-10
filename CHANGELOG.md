@@ -1,8 +1,11 @@
+## [v4.12.2](https://github.com/algolia/algoliasearch-client-javascript/compare/4.12.1...4.12.2)
+
+- fix(types): allow mixed arrays in numeric and tag filters (#1395) ([326c833](https://github.com/algolia/algoliasearch-client-javascript/commit/326c833)), closes [#1395](https://github.com/algolia/algoliasearch-client-javascript/issues/1395)
+- fix(types): updating reRankingApplyFilter type and adding new property to RankingInfo (#1394) ([e8f08ed](https://github.com/algolia/algoliasearch-client-javascript/commit/e8f08ed)), closes [#1394](https://github.com/algolia/algoliasearch-client-javascript/issues/1394)
+
 ## [v4.12.1](https://github.com/algolia/algoliasearch-client-javascript/compare/4.12.0...4.12.1)
 
-* fix(types): allow mix of strings and arrays in facetFilters (#1384) ([dfc2a09](https://github.com/algolia/algoliasearch-client-javascript/commit/dfc2a09)), closes [#1384](https://github.com/algolia/algoliasearch-client-javascript/issues/1384)
-
-
+- fix(types): allow mix of strings and arrays in facetFilters (#1384) ([dfc2a09](https://github.com/algolia/algoliasearch-client-javascript/commit/dfc2a09)), closes [#1384](https://github.com/algolia/algoliasearch-client-javascript/issues/1384)
 
 ## [v4.12.0](https://github.com/algolia/algoliasearch-client-javascript/compare/4.11.0...4.12.0)
 
