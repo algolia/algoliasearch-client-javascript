@@ -13,7 +13,8 @@
     "release": "shipjs prepare",
     "test:size": "bundlesize",
     "test:lint": "eslint . --ext .js,.ts",
-    "test:types": "yarn tsc --noEmit"
+    "test:types": "yarn tsc --noEmit",
+    "version": "lerna version ${0:-patch} --no-changelog --no-git-tag-version --no-push"
   },
   "devDependencies": {
     "@babel/core": "7.17.2",
