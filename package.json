@@ -10,11 +10,11 @@
     "build": "CLIENT=${0:-all} yarn rollup -c rollup.config.js",
     "clean:utils": "yarn workspace @experimental-api-clients-automation/client-common clean && yarn workspace @experimental-api-clients-automation/requester-node-http clean && yarn workspace @experimental-api-clients-automation/requester-browser-xhr clean",
     "clean": "rm -rf packages/*/dist",
-    "release": "shipjs prepare",
     "test:size": "bundlesize",
     "test:lint": "eslint . --ext .js,.ts",
     "test:types": "yarn tsc --noEmit",
-    "version": "lerna version ${0:-patch} --no-changelog --no-git-tag-version --no-push"
+    "release:bump": "lerna version ${0:-patch} --no-changelog --no-git-tag-version --no-push",
+    "release:publish": "lerna exec --no-bail npm publish --access public"
   },
   "devDependencies": {
     "@babel/core": "7.17.2",
