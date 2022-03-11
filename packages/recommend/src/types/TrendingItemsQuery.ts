@@ -1,3 +1,3 @@
-import { RecommendationsQuery } from './RecommendationsQuery';
+import { TrendingQuery } from './TrendingQuery';
 
-export type TrendingItemsQuery = Omit<RecommendationsQuery, 'model' | 'objectID'>;
+export type TrendingItemsQuery = Omit<TrendingQuery, 'model' | 'objectID'>;

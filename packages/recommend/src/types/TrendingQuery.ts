@@ -1,7 +1,7 @@
-import { RecommendModel } from './RecommendModel';
+import { TrendingModel } from './RecommendModel';
 import { RecommendSearchOptions } from './RecommendSearchOptions';
 
-export type RecommendationsQuery = {
+export type TrendingQuery = {
   /**
    * The name of the target index.
    */
@@ -10,12 +10,7 @@ export type RecommendationsQuery = {
   /**
    * The name of the Recommendation model to use.
    */
-  readonly model: RecommendModel;
-
-  /**
-   * The `objectID` of the item to get recommendations for.
-   */
-  readonly objectID: string;
+  readonly model: TrendingModel;
 
   /**
    * Threshold for the recommendations confidence score (between 0 and 100). Only recommendations with a greater score are returned.
@@ -38,4 +33,14 @@ export type RecommendationsQuery = {
    * Additional filters to use as fallback when there aren’t enough recommendations.
    */
   readonly fallbackParameters?: RecommendSearchOptions;
+
+  /**
+   * Used for trending model
+   */
+  readonly facetName?: string;
+
+  /**
+   * Used for trending model
+   */
+  readonly facetValue?: string;
 };
