@@ -1,0 +1,30 @@
+name: Process release
+
+on:
+  push:
+    branches:
+      - next
+
+jobs:
+  build:
+    name: Release
+    runs-on: ubuntu-20.04
+    if: "startsWith(github.event.issue.title, 'chore: release')"
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Install Node
+        uses: actions/setup-node@v2
+        with:
+          node-version-file: .nvmrc
+          cache: yarn
+
+      - name: Install JavaScript dependencies
+        shell: bash
+        run: yarn install
+
+      - name: Build clients
+        shell: bash
+        run: yarn build
