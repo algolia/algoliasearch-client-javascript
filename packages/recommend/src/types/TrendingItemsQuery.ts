@@ -1,3 +1,3 @@
 import { TrendingQuery } from './TrendingQuery';
 
-export type TrendingItemsQuery = Omit<TrendingQuery, 'model' | 'objectID'>;
+export type TrendingItemsQuery = Omit<TrendingQuery, 'model'>;
