@@ -5,6 +5,10 @@ description: Setup CI environment.
 runs:
   using: composite
   steps:
+    - name: Read current GitHub Actions cache version
+      shell: bash
+      run: echo "CACHE_VERSION=$(< .github/.cache_version)" >> $GITHUB_ENV
+
     - name: Install Java
       uses: actions/setup-java@v2
       with:
@@ -29,8 +33,10 @@ runs:
       shell: bash
       run: |
         previousCommit=${{ github.event.before }}
-        baseRef=${{ steps.diff.outputs.ORIGIN_BRANCH }}
+        baseRef=${{ github.base_ref }}
         origin=$( [[ -z $baseRef ]] && echo $previousCommit || echo "origin/$baseRef" )
+
+        echo "Checking diff with branch: $origin"
 
         echo "::set-output name=GITHUB_ACTIONS_CHANGED::$(git diff --shortstat $origin..HEAD -- .github/actions .github/workflows | wc -l)"
 
@@ -87,9 +93,9 @@ runs:
           algoliasearch_client='{"name": "algoliasearch","folder": "clients/algoliasearch-client-javascript/packages/algoliasearch"}'
 
           if [[ $matrix == '{"client":["no-run"]}' ]]; then
-            matrix="{'client': [$algoliasearch_client]}"
+            matrix="{\"client\": [$algoliasearch_client]}"
           else
-            matrix="{'client': $(echo $matrix | jq ".client + [$algoliasearch_client]" -c)}"
+            matrix="{\"client\": $(echo $matrix | jq ".client + [$algoliasearch_client]" -c)}"
           fi
         fi
 
@@ -152,15 +158,19 @@ runs:
 
 outputs:
   RUN_SPECS:
-    description: Whether to run specs or not
+    description: Determine if the `specs` job should run
     value: ${{ steps.spec-matrix.outputs.RUN_SPECS }}
 
+  RUN_SCRIPTS:
+    description: Determine if the `scripts` job should run
+    value: ${{ steps.diff.outputs.GITHUB_ACTIONS_CHANGED > 0 || steps.diff.outputs.SCRIPTS_CHANGED > 0 }}
+
   SPECS_MATRIX:
-    description: Generate the matrix for specs
+    description: The generated `specs` matrix
     value: ${{ steps.spec-matrix.outputs.MATRIX }}
 
   RUN_JS:
-    description: Whether to run js client or not
+    description: Determine if the `client-javascript` job should run
     value: ${{ steps.js-matrix.outputs.RUN_CLIENT }}
 
   RUN_JS_COMMON:
@@ -168,25 +178,41 @@ outputs:
     value: ${{ steps.js-matrix.outputs.RUN_COMMON }}
 
   JS_MATRIX:
-    description: Generate the matrix for the Javascript client
+    description: The generated `client-javascript` matrix
     value: ${{ steps.js-matrix.outputs.MATRIX }}
 
   RUN_JAVA:
-    description: Whether to run java client or not
+    description: Determine if the `client-java` job should run
     value: ${{ steps.java-matrix.outputs.RUN_CLIENT }}
 
   JAVA_MATRIX:
-    description: Generate the matrix for the Java client
+    description: The generated `client-java` matrix
     value: ${{ steps.java-matrix.outputs.MATRIX }}
 
   RUN_PHP:
-    description: Whether to run php client or not
+    description: Determine if the `client-php` job should run
     value: ${{ steps.php-matrix.outputs.RUN_CLIENT }}
 
   PHP_MATRIX:
-    description: Generate the matrix for the PHP client
+    description: The generated `client-php` matrix
     value: ${{ steps.php-matrix.outputs.MATRIX }}
 
   RUN_CTS:
     description: Determine if the `cts` job should run
-    value: ${{ github.ref_name == 'main' || steps.diff.outputs.GITHUB_ACTIONS_CHANGED > 0 || steps.diff.outputs.SCRIPTS_CHANGED > 0 || steps.diff.outputs.SPECS_CHANGED > 0 || steps.diff.outputs.TESTS_CHANGED > 0 || steps.diff.outputs.JS_CLIENT_CHANGED > 0 || steps.diff.outputs.JS_TEMPLATE_CHANGED > 0 || steps.diff.outputs.JAVA_CLIENT_CHANGED > 0 || steps.diff.outputs.JAVA_TEMPLATE_CHANGED > 0 }}
+    value: ${{
+      steps.diff.outputs.GITHUB_ACTIONS_CHANGED > 0 ||
+      steps.diff.outputs.SCRIPTS_CHANGED > 0 ||
+      steps.diff.outputs.SPECS_CHANGED > 0 ||
+      steps.diff.outputs.TESTS_CHANGED > 0 ||
+      steps.diff.outputs.JS_CLIENT_CHANGED > 0 ||
+      steps.diff.outputs.JS_TEMPLATE_CHANGED > 0 ||
+      steps.diff.outputs.JAVA_CLIENT_CHANGED > 0 ||
+      steps.diff.outputs.JAVA_TEMPLATE_CHANGED > 0 }}
+
+  RUN_CODEGEN:
+    description: Determine if the `codegen` job should run
+    value: ${{
+      steps.spec-matrix.outputs.RUN_SPECS == 'true' ||
+      steps.js-matrix.outputs.RUN_CLIENT == 'true' ||
+      steps.java-matrix.outputs.RUN_CLIENT == 'true' ||
+      steps.php-matrix.outputs.RUN_CLIENT == 'true' }}

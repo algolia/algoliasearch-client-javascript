@@ -7,9 +7,6 @@ on:
     branches:
       - main
 
-env:
-  CACHE_VERSION: '9'
-
 concurrency:
   group: ${{ github.ref }}
   cancel-in-progress: true
@@ -31,6 +28,8 @@ jobs:
         run: yarn github-actions:lint
 
     outputs:
+      RUN_SCRIPTS: ${{ steps.setup.outputs.RUN_SCRIPTS }}
+
       RUN_SPECS: ${{ steps.setup.outputs.RUN_SPECS }}
       SPECS_MATRIX: ${{ steps.setup.outputs.SPECS_MATRIX }}
 
@@ -46,10 +45,13 @@ jobs:
 
       RUN_CTS: ${{ steps.setup.outputs.RUN_CTS }}
 
+      RUN_CODEGEN: ${{ steps.setup.outputs.RUN_CODEGEN }}
+
   scripts:
     runs-on: ubuntu-20.04
-    needs: setup
     timeout-minutes: 20
+    needs: setup
+    if: ${{ needs.setup.outputs.RUN_SCRIPTS == 'true' }}
     steps:
       - uses: actions/checkout@v2
 
@@ -66,7 +68,7 @@ jobs:
     runs-on: ubuntu-20.04
     timeout-minutes: 10
     needs: setup
-    if: ${{ always() && needs.setup.outputs.RUN_SPECS == 'true' }}
+    if: ${{ needs.setup.outputs.RUN_SPECS == 'true' }}
     strategy:
       matrix: ${{ fromJSON(needs.setup.outputs.SPECS_MATRIX) }}
     steps:
@@ -95,7 +97,7 @@ jobs:
     timeout-minutes: 10
     runs-on: ubuntu-20.04
     needs: setup
-    if: ${{ always() && needs.setup.outputs.RUN_JS_COMMON == 'true' }}
+    if: ${{ needs.setup.outputs.RUN_JS_COMMON == 'true' }}
     strategy:
       matrix:
         client:
@@ -131,7 +133,7 @@ jobs:
       - setup
       - specs
       - client_javascript_common
-    if: ${{ always() && needs.setup.outputs.RUN_JS == 'true' }}
+    if: ${{ needs.setup.outputs.RUN_JS == 'true' }}
     strategy:
       matrix: ${{ fromJSON(needs.setup.outputs.JS_MATRIX) }}
     steps:
@@ -170,7 +172,7 @@ jobs:
     needs:
       - setup
       - specs
-    if: ${{ always() && needs.setup.outputs.RUN_JAVA == 'true' }}
+    if: ${{ needs.setup.outputs.RUN_JAVA == 'true' }}
     strategy:
       matrix: ${{ fromJSON(needs.setup.outputs.JAVA_MATRIX) }}
     steps:
@@ -209,7 +211,7 @@ jobs:
     needs:
       - setup
       - specs
-    if: ${{ always() && needs.setup.outputs.RUN_PHP == 'true' }}
+    if: ${{ needs.setup.outputs.RUN_PHP == 'true' }}
     strategy:
       matrix: ${{ fromJSON(needs.setup.outputs.PHP_MATRIX) }}
     steps:
@@ -248,7 +250,11 @@ jobs:
       - client_javascript
       - client_java
       - client_php
-    if: ${{ always() && needs.setup.outputs.RUN_CTS == 'true' }}
+    if: |
+      always() &&
+      needs.setup.outputs.RUN_CTS == 'true' &&
+      contains(needs.*.result, 'success') &&
+      !contains(needs.*.result, 'failure')
     steps:
       - uses: actions/checkout@v2
 
@@ -271,8 +277,11 @@ jobs:
   codegen:
     runs-on: ubuntu-20.04
     timeout-minutes: 10
-    if: ${{ always() }}
     needs: cts
+    if: |
+      always() &&
+      needs.setup.outputs.RUN_CODEGEN == 'true' &&
+      needs.cts.result == 'success'
     steps:
       - uses: actions/checkout@v2
         with:

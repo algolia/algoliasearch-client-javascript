@@ -4,9 +4,6 @@ on:
   pull_request:
     types: [closed]
 
-env:
-  CACHE_VERSION: '9'
-
 jobs:
   codegen:
     runs-on: ubuntu-20.04
@@ -18,7 +15,6 @@ jobs:
           ref: main
 
       - name: Setup
-        id: setup
         uses: ./.github/actions/setup
 
       - name: Clean previously generated branch
