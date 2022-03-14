@@ -1,3 +1,7 @@
+## [v4.13.0](https://github.com/algolia/algoliasearch-client-javascript/compare/4.12.2...4.13.0)
+
+- feat(recommend): Add trending types and methods (#1396) ([6882ec8](https://github.com/algolia/algoliasearch-client-javascript/commit/6882ec8)), closes [#1396](https://github.com/algolia/algoliasearch-client-javascript/issues/1396)
+
 ## [v4.12.2](https://github.com/algolia/algoliasearch-client-javascript/compare/4.12.1...4.12.2)
 
 - fix(types): allow mixed arrays in numeric and tag filters (#1395) ([326c833](https://github.com/algolia/algoliasearch-client-javascript/commit/326c833)), closes [#1395](https://github.com/algolia/algoliasearch-client-javascript/issues/1395)
