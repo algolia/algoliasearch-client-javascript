@@ -1,6 +1,5 @@
 ## [v4.13.0](https://github.com/algolia/algoliasearch-client-javascript/compare/4.12.2...4.13.0)
 
-- fix(recommend): declare type before usage (#1399) ([a91cc5b](https://github.com/algolia/algoliasearch-client-javascript/commit/a91cc5b)), closes [#1399](https://github.com/algolia/algoliasearch-client-javascript/issues/1399)
 - feat(recommend): Add trending types and methods (#1396) ([6882ec8](https://github.com/algolia/algoliasearch-client-javascript/commit/6882ec8)), closes [#1396](https://github.com/algolia/algoliasearch-client-javascript/issues/1396)
 
 ## [v4.12.2](https://github.com/algolia/algoliasearch-client-javascript/compare/4.12.1...4.12.2)
