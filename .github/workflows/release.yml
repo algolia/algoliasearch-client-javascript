@@ -28,3 +28,9 @@ jobs:
       - name: Build clients
         shell: bash
         run: yarn build
+
+      - name: Publish to NPM
+        shell: bash
+        run: yarn release:publish
+
+TODO: --tag + TOKEN
