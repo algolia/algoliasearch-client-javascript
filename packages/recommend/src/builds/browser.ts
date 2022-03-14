@@ -8,7 +8,13 @@ import { createBrowserXhrRequester } from '@algolia/requester-browser-xhr';
 import { createUserAgent } from '@algolia/transporter';
 
 import { createRecommendClient } from '../createRecommendClient';
-import { getFrequentlyBoughtTogether, getRecommendations, getRelatedProducts } from '../methods';
+import {
+  getFrequentlyBoughtTogether,
+  getRecommendations,
+  getRelatedProducts,
+  getTrendingFacets,
+  getTrendingItems,
+} from '../methods';
 import { BaseRecommendClient, RecommendOptions, WithRecommendMethods } from '../types';
 
 export default function recommend(
@@ -47,6 +53,8 @@ export default function recommend(
       getFrequentlyBoughtTogether,
       getRecommendations,
       getRelatedProducts,
+      getTrendingFacets,
+      getTrendingItems,
     },
   });
 }

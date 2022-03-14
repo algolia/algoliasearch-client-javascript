@@ -1,20 +1,16 @@
 import { MethodEnum } from '@algolia/requester-common';
 
-import {
-  BaseRecommendClient,
-  RecommendationsQuery,
-  TrendingQuery,
-  WithRecommendMethods,
-} from '../types';
+import { BaseRecommendClient, TrendingFacetsQuery, WithRecommendMethods } from '../types';
 
-type GetRecommendations = (
+type GetTrendingFacets = (
   base: BaseRecommendClient
-) => WithRecommendMethods<BaseRecommendClient>['getRecommendations'];
+) => WithRecommendMethods<BaseRecommendClient>['getTrendingFacets'];
 
-export const getRecommendations: GetRecommendations = base => {
-  return (queries: ReadonlyArray<RecommendationsQuery | TrendingQuery>, requestOptions) => {
-    const requests: ReadonlyArray<RecommendationsQuery | TrendingQuery> = queries.map(query => ({
+export const getTrendingFacets: GetTrendingFacets = base => {
+  return (queries: readonly TrendingFacetsQuery[], requestOptions) => {
+    const requests: readonly TrendingFacetsQuery[] = queries.map(query => ({
       ...query,
+      model: 'trending-facets',
       // The `threshold` param is required by the endpoint to make it easier
       // to provide a default value later, so we default it in the client
       // so that users don't have to provide a value.
