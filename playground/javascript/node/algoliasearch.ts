@@ -2,6 +2,8 @@ import { algoliasearch } from '@experimental-api-clients-automation/algoliasearc
 import { ApiError } from '@experimental-api-clients-automation/client-common';
 import dotenv from 'dotenv';
 
+import type { SearchResponse } from '@experimental-api-clients-automation/client-search';
+
 dotenv.config({ path: '../../.env' });
 
 const appId = process.env.ALGOLIA_APPLICATION_ID || '**** APP_ID *****';
@@ -29,7 +31,7 @@ client.addUserAgent('algoliasearch node playground', '0.0.1');
 
 async function testAlgoliasearch() {
   try {
-    const res = await client.search({
+    const res: SearchResponse = await client.search({
       indexName: searchIndex,
       searchParams: { query: searchQuery },
     });
