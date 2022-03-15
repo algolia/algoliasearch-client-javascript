@@ -11302,6 +11302,7 @@ __metadata:
     "@experimental-api-clients-automation/recommend": 0.0.4
     "@experimental-api-clients-automation/requester-node-http": 0.0.4
     dotenv: 10.0.0
+    ts-node: 10.5.0
     typescript: 4.5.4
   languageName: unknown
   linkType: soft

@@ -3,27 +3,16 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "build": "tsc",
-    "start:algoliasearch": "yarn build && yarn test:algoliasearch",
-    "start:abtesting": "yarn build && yarn test:abtesting",
-    "start:analytics": "yarn build && yarn test:analytics",
-    "start:insights": "yarn build && yarn test:insights",
-    "start:personalization": "yarn build && yarn test:personalization",
-    "start:query-suggestions": "yarn build && yarn test:query-suggestions",
-    "start:recommend": "yarn build && yarn test:recommend",
-    "start:search": "yarn build && yarn test:search",
-    "start:sources": "yarn build && yarn test:sources",
-    "start:predict": "yarn build && yarn test:predict",
-    "test:algoliasearch": "node dist/algoliasearch.js",
-    "test:abtesting": "node dist/analytics.js",
-    "test:analytics": "node dist/analytics.js",
-    "test:insights": "node dist/insights.js",
-    "test:personalization": "node dist/personalization.js",
-    "test:query-suggestions": "node dist/query-suggestions.js",
-    "test:recommend": "node dist/recommend.js",
-    "test:search": "node dist/search.js",
-    "test:sources": "node dist/sources.js",
-    "test:predict": "node dist/predict.js"
+    "start:algoliasearch": "ts-node algoliasearch.ts",
+    "start:abtesting": "ts-node analytics.ts",
+    "start:analytics": "ts-node analytics.ts",
+    "start:insights": "ts-node insights.ts",
+    "start:personalization": "ts-node personalization.ts",
+    "start:query-suggestions": "ts-node query-suggestions.ts",
+    "start:recommend": "ts-node recommend.ts",
+    "start:search": "ts-node search.ts",
+    "start:sources": "ts-node sources.ts",
+    "start:predict": "ts-node predict.ts"
   },
   "dependencies": {
     "@experimental-api-clients-automation/algoliasearch": "0.0.4",
@@ -41,6 +30,7 @@
   },
   "devDependencies": {
     "dotenv": "10.0.0",
+    "ts-node": "10.5.0",
     "typescript": "4.5.4"
   },
   "engines": {

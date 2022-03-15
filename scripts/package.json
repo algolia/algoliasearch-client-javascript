@@ -2,11 +2,10 @@
   "name": "scripts",
   "version": "1.0.0",
   "scripts": {
-    "build": "tsc",
-    "createReleaseIssue": "yarn build && node dist/scripts/release/create-release-issue.js",
-    "processRelease": "yarn build && node dist/scripts/release/process-release.js",
-    "pushGeneratedCode": "yarn build && node dist/scripts/ci/codegen/pushGeneratedCode.js",
-    "cleanGeneratedBranch": "yarn build && node dist/scripts/ci/codegen/cleanGeneratedBranch.js",
+    "createReleaseIssue": "ts-node release/create-release-issue.ts",
+    "processRelease": "ts-node release/process-release.ts",
+    "pushGeneratedCode": "ts-node ci/codegen/pushGeneratedCode.ts",
+    "cleanGeneratedBranch": "ts-node ci/codegen/cleanGeneratedBranch.ts",
     "test": "jest"
   },
   "devDependencies": {
