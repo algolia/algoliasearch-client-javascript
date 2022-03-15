@@ -133,7 +133,11 @@ jobs:
       - setup
       - specs
       - client_javascript_common
-    if: ${{ needs.setup.outputs.RUN_JS == 'true' }}
+    if: |
+      always() &&
+      needs.setup.outputs.RUN_JS == 'true' &&
+      contains(needs.*.result, 'success') &&
+      !contains(needs.*.result, 'failure')
     strategy:
       matrix: ${{ fromJSON(needs.setup.outputs.JS_MATRIX) }}
     steps:
@@ -172,7 +176,11 @@ jobs:
     needs:
       - setup
       - specs
-    if: ${{ needs.setup.outputs.RUN_JAVA == 'true' }}
+    if: |
+      always() &&
+      needs.setup.outputs.RUN_JAVA == 'true' &&
+      contains(needs.*.result, 'success') &&
+      !contains(needs.*.result, 'failure')
     strategy:
       matrix: ${{ fromJSON(needs.setup.outputs.JAVA_MATRIX) }}
     steps:
@@ -211,7 +219,11 @@ jobs:
     needs:
       - setup
       - specs
-    if: ${{ needs.setup.outputs.RUN_PHP == 'true' }}
+    if: |
+      always() &&
+      needs.setup.outputs.RUN_PHP == 'true' &&
+      contains(needs.*.result, 'success') &&
+      !contains(needs.*.result, 'failure')
     strategy:
       matrix: ${{ fromJSON(needs.setup.outputs.PHP_MATRIX) }}
     steps:
