@@ -29,6 +29,7 @@ import type { GetTopHitsResponse } from '../model/getTopHitsResponse';
 import type { GetTopSearchesResponse } from '../model/getTopSearchesResponse';
 import type { GetUsersCountResponse } from '../model/getUsersCountResponse';
 
+export * from '../model/models';
 export const apiClientVersion = '0.0.4';
 
 export type Region = 'de' | 'us';

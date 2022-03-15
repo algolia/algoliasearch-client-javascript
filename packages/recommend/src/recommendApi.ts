@@ -15,6 +15,7 @@ import type {
 import type { GetRecommendationsParams } from '../model/getRecommendationsParams';
 import type { GetRecommendationsResponse } from '../model/getRecommendationsResponse';
 
+export * from '../model/models';
 export const apiClientVersion = '0.0.4';
 
 function getDefaultHosts(appId: string): Host[] {

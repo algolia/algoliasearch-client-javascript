@@ -14,6 +14,7 @@ import type {
 import type { InsightEvents } from '../model/insightEvents';
 import type { PushEventsResponse } from '../model/pushEventsResponse';
 
+export * from '../model/models';
 export const apiClientVersion = '0.0.4';
 
 export type Region = 'de' | 'us';

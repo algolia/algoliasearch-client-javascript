@@ -14,6 +14,7 @@ import type {
 import type { PostIngestUrlResponse } from '../model/postIngestUrlResponse';
 import type { PostURLJob } from '../model/postURLJob';
 
+export * from '../model/models';
 export const apiClientVersion = '0.0.4';
 
 export type Region = 'de' | 'us';
