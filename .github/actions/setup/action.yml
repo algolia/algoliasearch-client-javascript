@@ -2,6 +2,11 @@ name: Setup
 
 description: Setup CI environment.
 
+inputs:
+  type:
+    description: Type of setup, `minimal` will only run the JavaScript installation.
+    required: false
+
 runs:
   using: composite
   steps:
@@ -10,6 +15,7 @@ runs:
       run: echo "CACHE_VERSION=$(< .github/.cache_version)" >> $GITHUB_ENV
 
     - name: Install Java
+      if: inputs.type != 'minimal'
       uses: actions/setup-java@v2
       with:
         distribution: zulu
@@ -17,6 +23,7 @@ runs:
         cache: gradle
 
     - name: Validate gradle wrapper
+      if: inputs.type != 'minimal'
       uses: gradle/wrapper-validation-action@v1
 
     - name: Install Node
@@ -29,6 +36,7 @@ runs:
       uses: ./.github/actions/cache
 
     - name: Setting diff outputs variables
+      if: inputs.type != 'minimal'
       id: diff
       shell: bash
       run: |
@@ -61,6 +69,7 @@ runs:
         echo "::set-output name=ORIGIN_BRANCH::$origin"
 
     - name: Compute specs matrix
+      if: inputs.type != 'minimal'
       id: spec-matrix
       shell: bash
       run: |
@@ -81,6 +90,7 @@ runs:
         echo "::set-output name=RUN_SPECS::$run"
 
     - name: Compute the JS client build matrix
+      if: inputs.type != 'minimal'
       id: js-matrix
       shell: bash
       run: |
@@ -117,6 +127,7 @@ runs:
         fi
 
     - name: Compute the Java client build matrix
+      if: inputs.type != 'minimal'
       id: java-matrix
       shell: bash
       run: |
@@ -137,6 +148,7 @@ runs:
         echo "::set-output name=RUN_CLIENT::$run"
 
     - name: Compute the PHP client build matrix
+      if: inputs.type != 'minimal'
       id: php-matrix
       shell: bash
       run: |

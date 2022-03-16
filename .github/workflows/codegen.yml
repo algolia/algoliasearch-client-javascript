@@ -1,0 +1,51 @@
+name: Codegen
+
+on:
+  pull_request:
+    types: [opened, synchronize, closed]
+
+jobs:
+  notification:
+    runs-on: ubuntu-20.04
+    timeout-minutes: 10
+    if: (github.event.action == 'opened' || github.event.action == 'synchronize') && github.event.number
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.ref }}
+
+      - name: Setup
+        uses: ./.github/actions/setup
+        with:
+          type: minimal
+
+      - name: Add notification comment
+        run: yarn workspace scripts upsertGenerationComment notification
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN_GENERATE_BOT }}
+          PR_NUMBER: ${{ github.event.number }}
+
+  cleanup:
+    runs-on: ubuntu-20.04
+    timeout-minutes: 10
+    if: github.event.action == 'closed'
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          ref: main
+
+      - name: Setup
+        uses: ./.github/actions/setup
+        with:
+          type: minimal
+
+      - name: Clean previously generated branch
+        run: yarn workspace scripts cleanGeneratedBranch ${{ github.head_ref }}
+
+      - name: Add cleanup comment
+        run: yarn workspace scripts upsertGenerationComment cleanup
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN_GENERATE_BOT }}
+          PR_NUMBER: ${{ github.event.number }}

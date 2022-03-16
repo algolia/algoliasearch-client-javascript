@@ -4,7 +4,13 @@ import { run } from '../../common';
 /**
  * Deletes a branch for its `generated/${headRef}` name on origin.
  */
-async function cleanGeneratedBranch(headRef: string): Promise<void> {
+export async function cleanGeneratedBranch(headRef: string): Promise<void> {
+  if (!headRef) {
+    throw new Error(
+      'The base branch should be passed as a cli parameter of the `cleanGeneratedBranch` script.'
+    );
+  }
+
   const generatedCodeBranch = `generated/${headRef}`;
 
   if (!(await run(`git ls-remote --heads origin ${generatedCodeBranch}`))) {
@@ -22,10 +28,6 @@ async function cleanGeneratedBranch(headRef: string): Promise<void> {
 
 const args = process.argv.slice(2);
 
-if (!args || args.length === 0) {
-  throw new Error(
-    'The base branch should be passed as a cli parameter of the `cleanGeneratedBranch` script.'
-  );
+if (require.main === module) {
+  cleanGeneratedBranch(args[0]);
 }
-
-cleanGeneratedBranch(args[0]);
