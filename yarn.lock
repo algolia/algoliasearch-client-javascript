@@ -9,7 +9,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@algolia/api-client-automation@workspace:."
   dependencies:
-    "@openapitools/openapi-generator-cli": 2.4.26
+    "@experimental-api-clients-automation/openapi-generator-cli": 0.0.1
     "@redocly/openapi-cli": 1.0.0-beta.79
     "@typescript-eslint/eslint-plugin": 5.5.0
     "@typescript-eslint/parser": 5.5.0
@@ -2486,6 +2486,30 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@experimental-api-clients-automation/openapi-generator-cli@npm:0.0.1":
+  version: 0.0.1
+  resolution: "@experimental-api-clients-automation/openapi-generator-cli@npm:0.0.1"
+  dependencies:
+    "@nestjs/common": 8.2.6
+    "@nestjs/core": 8.2.6
+    chalk: 4.1.2
+    commander: 8.3.0
+    compare-versions: 3.6.0
+    concurrently: 6.5.1
+    console.table: 0.10.0
+    fs-extra: 10.0.0
+    glob: 7.1.6
+    inquirer: 8.2.0
+    lodash: 4.17.21
+    reflect-metadata: 0.1.13
+    rxjs: 7.5.2
+    tslib: 2.0.3
+  bin:
+    openapi-generator-cli: main.js
+  checksum: 4d0073d5520b0beec0dd08a20d11d0201727d28fd7d1a720add0ca8fae67557c2df61d7def1da4358856c7901d89fd701857c1354a1b6633a76b4885d54bf630
+  languageName: node
+  linkType: hard
+
 "@experimental-api-clients-automation/recommend@0.0.4, @experimental-api-clients-automation/recommend@workspace:clients/algoliasearch-client-javascript/packages/recommend":
   version: 0.0.0-use.local
   resolution: "@experimental-api-clients-automation/recommend@workspace:clients/algoliasearch-client-javascript/packages/recommend"
@@ -3165,31 +3189,6 @@ __metadata:
   dependencies:
     "@octokit/openapi-types": ^11.2.0
   checksum: f122b9aee8f6baddd515e34a0913e73b21d4bc82d6ee59d77a8aaf01b4a02c10867dd013003d087a83dc96db23511893669015af6d30c27cece185e21cf1df89
-  languageName: node
-  linkType: hard
-
-"@openapitools/openapi-generator-cli@npm:2.4.26":
-  version: 2.4.26
-  resolution: "@openapitools/openapi-generator-cli@npm:2.4.26"
-  dependencies:
-    "@nestjs/common": 8.2.6
-    "@nestjs/core": 8.2.6
-    "@nuxtjs/opencollective": 0.3.2
-    chalk: 4.1.2
-    commander: 8.3.0
-    compare-versions: 3.6.0
-    concurrently: 6.5.1
-    console.table: 0.10.0
-    fs-extra: 10.0.0
-    glob: 7.1.6
-    inquirer: 8.2.0
-    lodash: 4.17.21
-    reflect-metadata: 0.1.13
-    rxjs: 7.5.2
-    tslib: 2.0.3
-  bin:
-    openapi-generator-cli: main.js
-  checksum: ff6f75e194c0df492c4f6951a922a1da5472e7c3ca09b7b8e02f9b910e1fcc49832ca19e18ee7fdd87fcf43ef1ed6443ef5d1954932137c759d87f8a51e276eb
   languageName: node
   linkType: hard
 

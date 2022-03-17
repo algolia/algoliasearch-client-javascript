@@ -286,7 +286,6 @@ program
       await playground({
         language,
         client,
-        key: createGeneratorKey({ language, client }),
       });
     }
   );

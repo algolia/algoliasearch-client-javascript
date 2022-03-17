@@ -1,9 +1,4 @@
-import {
-  capitalize,
-  createClientName,
-  removeEnumType,
-  removeObjectName,
-} from './utils';
+import { capitalize, createClientName } from './utils';
 
 describe('utils', () => {
   describe('capitalize', () => {
@@ -42,77 +37,6 @@ describe('utils', () => {
       expect(createClientName('search-cli!nt-complex', 'java')).toEqual(
         'SearchCli!ntComplexApi'
       );
-    });
-  });
-
-  describe('removeObjectName', () => {
-    it('should remove simple $objectName from root', () => {
-      expect(removeObjectName({ $objectName: 'test', key: 'val' })).toEqual({
-        key: 'val',
-      });
-    });
-
-    it('should remove $objectName in nested objects', () => {
-      expect(
-        removeObjectName({
-          $objectName: 'test',
-          key: { $objectName: 'other', otherKey: 'val2' },
-        })
-      ).toEqual({
-        key: { otherKey: 'val2' },
-      });
-    });
-
-    it('should remove $objectName in arrays', () => {
-      expect(
-        removeObjectName({
-          $objectName: 'test',
-          arr: [{ $objectName: 'other', otherKey: 'val2' }, '$objectName'],
-        })
-      ).toEqual({
-        arr: [{ otherKey: 'val2' }, '$objectName'],
-      });
-    });
-  });
-
-  describe('removeEnumType', () => {
-    it('should replace $enumType with the value', () => {
-      expect(
-        removeEnumType({
-          val: 'test',
-          key: { $enumType: 'Action', value: 'addEntry' },
-        })
-      ).toEqual({
-        val: 'test',
-        key: 'addEntry',
-      });
-    });
-
-    it('should replace $enumType in nested objects', () => {
-      expect(
-        removeEnumType({
-          val: 'test',
-          key: {
-            first: 'basic',
-            second: { $enumType: 'Action', value: 'addEntry' },
-          },
-        })
-      ).toEqual({
-        val: 'test',
-        key: { first: 'basic', second: 'addEntry' },
-      });
-    });
-
-    it('should replace $enumType in arrays', () => {
-      expect(
-        removeEnumType({
-          val: 'test',
-          arr: [{ $enumType: 'Action', value: 'addEntry' }, '$enumType'],
-        })
-      ).toEqual({
-        val: 'test',
-        arr: ['addEntry', '$enumType'],
-      });
     });
   });
 });

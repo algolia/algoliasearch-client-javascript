@@ -4,7 +4,7 @@ import type { Generator } from './types';
 export async function playground({
   language,
   client,
-}: Generator): Promise<void> {
+}: Pick<Generator, 'client' | 'language'>): Promise<void> {
   const verbose = true;
   switch (language) {
     case 'javascript':

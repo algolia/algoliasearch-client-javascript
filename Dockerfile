@@ -10,9 +10,6 @@ ENV JAVA_HOME=/usr/lib/jvm/default-jvm
 # Java formatter
 ADD https://github.com/google/google-java-format/releases/download/v1.13.0/google-java-format-1.13.0-all-deps.jar /tmp/java-formatter.jar
 
-# openapi generator jar (TODO: REMOVE)
-ADD https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/5.4.0/openapi-generator-cli-5.4.0.jar /tmp/openapi-generator-cli.jar
-
 # PHP dependencies
 RUN apk add -U composer php8 php8-tokenizer php8-dom php8-xml php8-xmlwriter
 

@@ -7,9 +7,9 @@ import com.samskivert.mustache.Mustache;
 import com.samskivert.mustache.Template;
 
 public class EscapeQuotesLambda implements Mustache.Lambda {
-    @Override
-    public void execute(Template.Fragment fragment, Writer writer) throws IOException {
-        String text = fragment.execute();
-        writer.write(text.replace("\"", "\\\""));
-    }
+  @Override
+  public void execute(Template.Fragment fragment, Writer writer) throws IOException {
+    String text = fragment.execute();
+    writer.write(text.replace("\"", "\\\""));
+  }
 }

@@ -32,42 +32,6 @@ export function createClientName(client: string, language: string): string {
 
   return `${clientName}Api`;
 }
-
-export function removeObjectName(obj: any): any {
-  if (typeof obj === 'object') {
-    if (Array.isArray(obj)) {
-      return obj.map((k) => removeObjectName(k));
-    }
-    const copy = {};
-    for (const prop in obj) {
-      if (!Object.prototype.hasOwnProperty.call(obj, prop)) {
-        continue;
-      }
-      if (prop === '$objectName') {
-        continue;
-      }
-      copy[prop] = removeObjectName(obj[prop]);
-    }
-    return copy;
-  }
-  return obj;
-}
-
-export function removeEnumType(obj: any): any {
-  if (typeof obj === 'object') {
-    if (Array.isArray(obj)) {
-      return obj.map((k) => removeEnumType(k));
-    }
-    if ('$enumType' in obj) {
-      return obj.value;
-    }
-    return Object.fromEntries(
-      Object.entries(obj).map(([k, v]) => [k, removeEnumType(v)])
-    );
-  }
-  return obj;
-}
-
 export async function createOutputDir({
   language,
   testPath,

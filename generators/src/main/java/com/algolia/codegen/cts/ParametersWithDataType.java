@@ -3,6 +3,10 @@ package com.algolia.codegen.cts;
 import java.util.*;
 import java.util.Map.Entry;
 
+import com.algolia.codegen.Utils;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+
 import org.openapitools.codegen.CodegenModel;
 import org.openapitools.codegen.CodegenOperation;
 import org.openapitools.codegen.CodegenParameter;
@@ -10,7 +14,7 @@ import org.openapitools.codegen.CodegenProperty;
 import org.openapitools.codegen.CodegenResponse;
 import org.openapitools.codegen.IJsonSchemaValidationProperties;
 
-import io.swagger.v3.core.util.Json;
+import io.swagger.util.Json;
 
 @SuppressWarnings("unchecked")
 public class ParametersWithDataType {
@@ -21,12 +25,20 @@ public class ParametersWithDataType {
   }
 
   public Map<String, Object> buildJSONForRequest(Request req, CodegenOperation ope, int testIndex)
-      throws CTSException {
+      throws CTSException, JsonMappingException, JsonProcessingException {
     Map<String, Object> test = new HashMap<>();
     test.put("method", req.method);
     test.put("testName", req.testName == null ? req.method : req.testName);
     test.put("testIndex", testIndex);
     test.put("request", req.request);
+
+    test.put("hasParameters", req.parameters.size() != 0);
+
+    if (req.parameters.size() == 0) {
+      return test;
+    }
+    // Give the stringified version to mustache
+    test.put("parameters", Json.mapper().writeValueAsString(req.parameters));
 
     List<Object> parametersWithDataType = new ArrayList<>();
 
@@ -86,7 +98,7 @@ public class ParametersWithDataType {
     testOutput.put("parentSuffix", suffix - 1);
     testOutput.put("suffix", suffix);
     testOutput.put("parent", parent);
-    testOutput.put("objectName", baseType.substring(0, 1).toUpperCase() + baseType.substring(1));
+    testOutput.put("objectName", Utils.capitalize(baseType));
 
     if (spec.getIsArray()) {
       handleArray(paramName, param, testOutput, spec, suffix);
@@ -260,6 +272,12 @@ public class ParametersWithDataType {
         if (output != null)
           output.put("isInteger", true);
         return "Integer";
+      case "Long":
+        if (spec != null)
+          spec.setIsNumber(true);
+        if (output != null)
+          output.put("isInteger", true);
+        return "Long";
       case "Double":
         if (spec != null)
           spec.setIsNumber(true);

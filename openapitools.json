@@ -1,5 +1,5 @@
 {
-  "$schema": "./node_modules/@openapitools/openapi-generator-cli/config.schema.json",
+  "$schema": "./node_modules/@experimental-api-clients-automation/openapi-generator-cli/config.schema.json",
   "generator-cli": {
     "version": "5.4.0",
     "generators": {
@@ -223,7 +223,7 @@
         }
       },
       "java-search": {
-        "generatorName": "java",
+        "generatorName": "algolia-java",
         "templateDir": "#{cwd}/templates/java/",
         "config": "#{cwd}/openapitools.json",
         "output": "#{cwd}/clients/algoliasearch-client-java-2",

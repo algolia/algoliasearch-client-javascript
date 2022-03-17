@@ -1,7 +1,7 @@
 import { buildJSClientUtils } from './buildClients';
 import { buildSpecs } from './buildSpecs';
-import { CI, run, runIfExists } from './common';
-import { getLanguageFolder } from './config';
+import { buildCustomGenerators, CI, run, runIfExists } from './common';
+import { getCustomGenerator, getLanguageFolder } from './config';
 import { formatter } from './formatter';
 import { createSpinner } from './oraLog';
 import { setHostsOptions } from './pre-gen/setHostsOptions';
@@ -22,19 +22,17 @@ async function generateClient(
   { language, key }: Generator,
   verbose?: boolean
 ): Promise<void> {
-  if (language === 'java') {
-    // eslint-disable-next-line no-warning-comments
-    // TODO: We can remove this once https://github.com/OpenAPITools/openapi-generator-cli/issues/439 is fixed
-    await run(
-      `./gradle/gradlew --no-daemon -p generators assemble && \
-       java -cp /tmp/openapi-generator-cli.jar:generators/build/libs/algolia-java-openapi-generator-1.0.0.jar -ea org.openapitools.codegen.OpenAPIGenerator generate -c config/openapitools-java.json`,
-      { verbose }
-    );
-    return;
-  }
-  await run(`yarn openapi-generator-cli generate --generator-key ${key}`, {
-    verbose,
-  });
+  const customGenerator = getCustomGenerator(language);
+  await run(
+    `yarn openapi-generator-cli ${
+      customGenerator
+        ? '--custom-generator=generators/build/libs/algolia-java-openapi-generator-1.0.0.jar'
+        : ''
+    } generate --generator-key ${key}`,
+    {
+      verbose,
+    }
+  );
 }
 
 async function postGen(
@@ -55,6 +53,14 @@ export async function generate(
     await buildSpecs(clients, 'yml', verbose, true);
   }
 
+  const langs = [...new Set(generators.map((gen) => gen.language))];
+  const useCustomGenerator = langs
+    .map((lang) => getCustomGenerator(lang))
+    .some(Boolean);
+  if (useCustomGenerator) {
+    await buildCustomGenerators(verbose);
+  }
+
   for (const gen of generators) {
     const spinner = createSpinner(`pre-gen ${gen.key}`, verbose).start();
     await preGen(gen, verbose);
@@ -73,7 +79,6 @@ export async function generate(
     spinner.succeed();
   }
 
-  const langs = [...new Set(generators.map((gen) => gen.language))];
   for (const lang of langs) {
     if (!(CI && lang === 'javascript')) {
       await formatter(lang, getLanguageFolder(lang), verbose);
@@ -84,11 +89,5 @@ export async function generate(
     if (!CI && lang === 'javascript') {
       await buildJSClientUtils(verbose, 'all');
     }
-  }
-
-  if (!CI) {
-    const spinner = createSpinner('formatting specs', verbose).start();
-    await run(`yarn specs:fix`, { verbose });
-    spinner.succeed();
   }
 }

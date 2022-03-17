@@ -11,3 +11,7 @@ export function getTestExtension(language: string): string | undefined {
 export function getTestOutputFolder(language: string): string | undefined {
   return clientsConfig[language]?.tests?.outputFolder;
 }
+
+export function getCustomGenerator(language: string): string | undefined {
+  return clientsConfig[language]?.customGenerator;
+}
