@@ -30,13 +30,21 @@ ${commentText[trigger].body}`;
   }
 
   const baseBranch = await run('git branch --show-current');
-  const commit = await run(`git show ${baseBranch} -s --format=%H`);
-  const generatedCommit = await run('git show -s --format=%H');
-  const branch = `generated/${baseBranch}`;
+  const baseCommit = await run(`git show ${baseBranch} -s --format=%H`);
+
+  const generatedBranch = `generated/${baseBranch}`;
+  const generatedCommit = await run(
+    `git show ${generatedBranch} -s --format=%H`
+  );
 
   return `${commentText.codegen.header}
 
-${commentText.codegen.body(branch, commit, PR_NUMBER, generatedCommit)}`;
+${commentText.codegen.body(
+  generatedBranch,
+  baseCommit,
+  PR_NUMBER,
+  generatedCommit
+)}`;
 }
 
 /**
