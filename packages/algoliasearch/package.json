@@ -15,7 +15,7 @@
     "clean": "rm -rf ./dist"
   },
   "engines": {
-    "node": "^14.0.0"
+    "node": ">= 14.0.0"
   },
   "dependencies": {
     "@experimental-api-clients-automation/client-analytics": "0.0.4",
