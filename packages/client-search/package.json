@@ -21,7 +21,7 @@
     "index.d.ts"
   ],
   "engines": {
-    "node": "^14.0.0"
+    "node": ">= 14.0.0"
   },
   "dependencies": {
     "@experimental-api-clients-automation/client-common": "0.0.4",
