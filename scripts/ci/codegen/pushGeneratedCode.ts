@@ -3,7 +3,7 @@ import { run } from '../../common';
 import { configureGitHubAuthor } from '../../release/common';
 
 const PR_NUMBER = parseInt(process.env.PR_NUMBER || '0', 10);
-const FOLDERS_TO_CHECK = 'openapitools.json clients specs/bundled';
+const FOLDERS_TO_CHECK = 'yarn.lock openapitools.json clients specs/bundled';
 
 /**
  * Push generated code for the current `JOB` and `CLIENT` on a `generated/` branch.
