@@ -1,0 +1,36 @@
+name: Release packages
+
+on:
+  push:
+    branches:
+      - next
+
+jobs:
+  release:
+    name: Publish
+    runs-on: ubuntu-20.04
+    if: "startsWith(github.event.issue.title, 'chore: release v')"
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Install Node
+        uses: actions/setup-node@v2
+        with:
+          node-version-file: .nvmrc
+          cache: yarn
+
+      - name: Install JavaScript dependencies
+        shell: bash
+        run: yarn install
+
+      - name: Build clients
+        shell: bash
+        run: yarn build
+
+      - name: Publish to NPM
+        shell: bash
+        run: yarn release:publish
+        env:
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}

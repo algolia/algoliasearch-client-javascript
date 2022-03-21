@@ -1,6 +1,5 @@
 {
   "name": "algoliasearch-client-javascript",
-  "version": "5.0.0",
   "workspaces": [
     "packages/*"
   ],
@@ -13,7 +12,9 @@
     "release": "shipjs prepare",
     "test:size": "bundlesize",
     "test:lint": "eslint . --ext .js,.ts",
-    "test:types": "yarn tsc --noEmit"
+    "test:types": "yarn tsc --noEmit",
+    "release:bump": "lerna version ${0:-patch} --no-changelog --no-git-tag-version --no-push --yes",
+    "release:publish": "ts-node scripts/publish.ts"
   },
   "devDependencies": {
     "@babel/core": "7.17.2",
@@ -25,11 +26,15 @@
     "@rollup/plugin-node-resolve": "13.1.3",
     "@types/rollup-plugin-node-globals": "1.4.1",
     "bundlesize2": "0.0.31",
+    "execa": "6.1.0",
+    "lerna": "4.0.0",
     "rollup": "2.67.1",
     "rollup-plugin-filesize": "9.1.2",
     "rollup-plugin-node-globals": "1.4.0",
     "rollup-plugin-terser": "7.0.2",
     "rollup-plugin-typescript2": "0.31.2",
+    "semver": "7.3.5",
+    "ts-node": "10.7.0",
     "typescript": "4.5.4"
   },
   "engines": {
