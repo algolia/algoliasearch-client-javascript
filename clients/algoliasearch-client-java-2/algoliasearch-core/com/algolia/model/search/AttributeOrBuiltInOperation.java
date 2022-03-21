@@ -12,11 +12,13 @@ import java.io.IOException;
 @JsonAdapter(AttributeOrBuiltInOperation.Adapter.class)
 public abstract class AttributeOrBuiltInOperation implements CompoundType {
 
-  public static AttributeOrBuiltInOperation of(BuiltInOperation inside) {
+  public static AttributeOrBuiltInOperation ofBuiltInOperation(
+    BuiltInOperation inside
+  ) {
     return new AttributeOrBuiltInOperationBuiltInOperation(inside);
   }
 
-  public static AttributeOrBuiltInOperation of(String inside) {
+  public static AttributeOrBuiltInOperation ofString(String inside) {
     return new AttributeOrBuiltInOperationString(inside);
   }
 

@@ -12,11 +12,11 @@ import java.io.IOException;
 @JsonAdapter(SearchParams.Adapter.class)
 public abstract class SearchParams implements CompoundType {
 
-  public static SearchParams of(SearchParamsObject inside) {
+  public static SearchParams ofSearchParamsObject(SearchParamsObject inside) {
     return new SearchParamsSearchParamsObject(inside);
   }
 
-  public static SearchParams of(SearchParamsString inside) {
+  public static SearchParams ofSearchParamsString(SearchParamsString inside) {
     return new SearchParamsSearchParamsString(inside);
   }
 

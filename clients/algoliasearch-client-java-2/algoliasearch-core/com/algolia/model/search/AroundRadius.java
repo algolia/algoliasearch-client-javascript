@@ -12,11 +12,11 @@ import java.io.IOException;
 @JsonAdapter(AroundRadius.Adapter.class)
 public abstract class AroundRadius implements CompoundType {
 
-  public static AroundRadius of(AroundRadiusOneOf inside) {
+  public static AroundRadius ofAroundRadiusOneOf(AroundRadiusOneOf inside) {
     return new AroundRadiusAroundRadiusOneOf(inside);
   }
 
-  public static AroundRadius of(Integer inside) {
+  public static AroundRadius ofInteger(Integer inside) {
     return new AroundRadiusInteger(inside);
   }
 
