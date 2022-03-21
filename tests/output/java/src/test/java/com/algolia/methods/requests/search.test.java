@@ -723,7 +723,10 @@ class SearchApiTests {
     }
 
     EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.deleteBy(indexName0, SearchParams.of(searchParams0));
+        return client.deleteBy(
+          indexName0,
+          SearchParams.ofSearchParamsObject(searchParams0)
+        );
       }
     );
 
@@ -1722,7 +1725,10 @@ class SearchApiTests {
     }
 
     EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-        return client.search(indexName0, SearchParams.of(searchParams0));
+        return client.search(
+          indexName0,
+          SearchParams.ofSearchParamsObject(searchParams0)
+        );
       }
     );
 

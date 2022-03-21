@@ -165,7 +165,14 @@ public class ParametersWithDataType {
       IJsonSchemaValidationProperties match = findMatchingOneOf(param, model);
       testOutput.clear();
       testOutput.putAll(traverseParams(paramName, param, match, parent, suffix));
-      testOutput.put("oneOfModel", baseType);
+
+      HashMap<String, String> hashMapOneOfModel = new HashMap();
+
+      hashMapOneOfModel.put("classname", baseType);
+      hashMapOneOfModel.put("name", getTypeName(match).replace("<", "").replace(">", ""));
+
+      testOutput.put("oneOfModel", hashMapOneOfModel);
+
       return;
     }
 

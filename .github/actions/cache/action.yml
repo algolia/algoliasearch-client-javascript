@@ -326,6 +326,7 @@ runs:
           hashFiles(
             'clients/algoliasearch-client-java-2/**',
             '!clients/algoliasearch-client-java-2/target',
+            'templates/java/**',
             'specs/bundled/search.yml'
           )}}
 

@@ -202,6 +202,7 @@ jobs:
             hashFiles(
               format('{0}/**', matrix.client.folder),
               format('!{0}/target', matrix.client.folder),
+              'templates/java/**',
               format('specs/bundled/{0}.yml', matrix.client.name)
             )}}
 

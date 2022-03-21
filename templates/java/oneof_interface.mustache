@@ -11,12 +11,12 @@ import java.io.IOException;
 @JsonAdapter({{classname}}.Adapter.class)
 {{>additionalModelTypeAnnotations}}
 public abstract class {{classname}} implements CompoundType {
-    {{#oneOf}}
-    public static {{classname}} of({{.}} inside) {
-        return new {{classname}}{{.}}(inside);
+    {{#vendorExtensions.x-is-one-of-list}}
+    public static {{classname}} of{{name}}({{{type}}} inside) {
+        return new {{classname}}{{name}}(inside);
     }
 
-    {{/oneOf}}
+    {{/vendorExtensions.x-is-one-of-list}}
     public abstract Object getInsideValue();
 
     public static class Adapter extends TypeAdapter<{{classname}}> {
@@ -37,18 +37,18 @@ public abstract class {{classname}} implements CompoundType {
     }
 }
 
-{{#oneOf}}
+{{#vendorExtensions.x-is-one-of-list}}
 @JsonAdapter({{classname}}.Adapter.class)
-class {{classname}}{{.}} extends {{classname}} {
-    private final {{.}} insideValue;
+class {{classname}}{{name}} extends {{classname}} {
+    private final {{{type}}} insideValue;
 
-    {{classname}}{{.}}({{.}} insideValue) {
+    {{classname}}{{name}}({{{type}}} insideValue) {
         this.insideValue = insideValue;
     }
 
     @Override
-    public {{.}} getInsideValue() {
+    public {{{type}}} getInsideValue() {
         return insideValue;
     }
 }
-{{/oneOf}}
+{{/vendorExtensions.x-is-one-of-list}}

@@ -36,7 +36,7 @@ class {{client}}Tests {
         {{#parametersWithDataType}}{{> generateParams}}{{/parametersWithDataType}}
 
         EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-            return client.{{method}}({{#parametersWithDataType}}{{#oneOfModel}}{{{.}}}.of({{{key}}}{{suffix}}){{/oneOfModel}}{{^oneOfModel}}{{{key}}}{{suffix}}{{/oneOfModel}}{{^-last}},{{/-last}}{{/parametersWithDataType}});
+            return client.{{method}}({{#parametersWithDataType}}{{#oneOfModel}}{{{classname}}}.of{{{name}}}({{{key}}}{{suffix}}){{/oneOfModel}}{{^oneOfModel}}{{{key}}}{{suffix}}{{/oneOfModel}}{{^-last}},{{/-last}}{{/parametersWithDataType}});
         });
 
         assertEquals(req.getPath(), "{{{request.path}}}");
