@@ -5,16 +5,16 @@
     "test": "jest"
   },
   "dependencies": {
-    "@experimental-api-clients-automation/client-abtesting": "0.0.4",
-    "@experimental-api-clients-automation/client-analytics": "0.0.4",
-    "@experimental-api-clients-automation/client-common": "0.0.4",
-    "@experimental-api-clients-automation/client-insights": "0.0.4",
-    "@experimental-api-clients-automation/client-personalization": "0.0.4",
-    "@experimental-api-clients-automation/client-query-suggestions": "0.0.4",
-    "@experimental-api-clients-automation/client-search": "0.0.4",
-    "@experimental-api-clients-automation/client-sources": "0.0.4",
-    "@experimental-api-clients-automation/recommend": "0.0.4",
-    "@experimental-api-clients-automation/requester-node-http": "0.0.4"
+    "@experimental-api-clients-automation/client-abtesting": "0.0.5",
+    "@experimental-api-clients-automation/client-analytics": "0.0.5",
+    "@experimental-api-clients-automation/client-common": "0.0.5",
+    "@experimental-api-clients-automation/client-insights": "0.0.5",
+    "@experimental-api-clients-automation/client-personalization": "0.0.5",
+    "@experimental-api-clients-automation/client-query-suggestions": "0.0.5",
+    "@experimental-api-clients-automation/client-search": "0.0.5",
+    "@experimental-api-clients-automation/client-sources": "0.0.5",
+    "@experimental-api-clients-automation/recommend": "0.0.5",
+    "@experimental-api-clients-automation/requester-node-http": "0.0.5"
   },
   "devDependencies": {
     "@types/jest": "27.0.3",

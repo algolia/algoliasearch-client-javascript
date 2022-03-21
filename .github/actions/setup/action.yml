@@ -100,13 +100,8 @@ runs:
         matrix=$(./scripts/ci/create-client-matrix.sh javascript $base_changed ${{ steps.diff.outputs.ORIGIN_BRANCH }})
 
         if [[ $algoliasearch_changed == 'true' || $base_changed == 'true' ]]; then
-          algoliasearch_client='{"name": "algoliasearch","folder": "clients/algoliasearch-client-javascript/packages/algoliasearch"}'
-
-          if [[ $matrix == '{"client":["no-run"]}' ]]; then
-            matrix="{\"client\": [$algoliasearch_client]}"
-          else
-            matrix="{\"client\": $(echo $matrix | jq ".client + [$algoliasearch_client]" -c)}"
-          fi
+          echo "Running algoliasearch: true"
+          echo "::set-output name=RUN_ALGOLIASEARCH::true"
         fi
 
         if [[ $matrix == '{"client":["no-run"]}' ]]; then
@@ -184,6 +179,10 @@ outputs:
   RUN_JS:
     description: Determine if the `client-javascript` job should run
     value: ${{ steps.js-matrix.outputs.RUN_CLIENT }}
+
+  RUN_JS_ALGOLIASEARCH:
+    description: Determine if the `client-javascript-algoliasearch` job should run
+    value: ${{ steps.js-matrix.outputs.RUN_ALGOLIASEARCH }}
 
   RUN_JS_COMMON:
     description: Whether to build JS client common folders when RUN_JS is false

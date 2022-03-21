@@ -24,7 +24,7 @@ export const GENERATORS: Record<string, Generator> = {
     key: 'javascript-algoliasearch',
     additionalProperties: {
       packageName: '@experimental-api-clients-automation/algoliasearch',
-      packageVersion: '0.0.4',
+      packageVersion: '0.0.5',
     },
   },
 };
@@ -51,7 +51,6 @@ export const CLIENTS_JS_UTILS = [
 ];
 
 export const CLIENTS_JS = [
-  'algoliasearch',
   ...new Set(Object.values(GENERATORS).map((gen) => gen.client)),
 ];
 

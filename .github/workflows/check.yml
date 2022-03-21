@@ -34,6 +34,7 @@ jobs:
       SPECS_MATRIX: ${{ steps.setup.outputs.SPECS_MATRIX }}
 
       RUN_JS: ${{ steps.setup.outputs.RUN_JS }}
+      RUN_JS_ALGOLIASEARCH: ${{ steps.setup.outputs.RUN_JS_ALGOLIASEARCH }}
       RUN_JS_COMMON: ${{ steps.setup.outputs.RUN_JS_COMMON }}
       JS_MATRIX: ${{ steps.setup.outputs.JS_MATRIX }}
 
@@ -118,8 +119,7 @@ jobs:
           key: |
             ${{ env.CACHE_VERSION }}-${{
             hashFiles(
-              format('clients/algoliasearch-client-javascript/packages/{0}/**', matrix.client),
-              format('!clients/algoliasearch-client-javascript/packages/{0}/dist', matrix.client)
+              format('clients/algoliasearch-client-javascript/packages/{0}/**', matrix.client)
             )}}
 
       - name: Build '${{ matrix.client }}' client
@@ -157,18 +157,62 @@ jobs:
           key: |
             ${{ env.CACHE_VERSION }}-${{
             hashFiles(
-              format('{0}/**', matrix.client.folder),
-              format('!{0}/dist', matrix.client.folder),
-              format('specs/bundled/{0}.yml', matrix.client.name)
+              format('{0}/src/**', matrix.client.folder),
+              format('{0}/model/**', matrix.client.folder),
+              format('{0}/builds/**', matrix.client.folder),
+              format('{0}/package.json', matrix.client.folder),
+              format('specs/bundled/{0}.yml', matrix.client.name),
+              'templates/javascript/**'
             )}}
 
       - name: Generate '${{ matrix.client.name }}' client
-        if: steps.cache.outputs.cache-hit != 'true' && matrix.client.name != 'algoliasearch'
+        if: steps.cache.outputs.cache-hit != 'true'
         run: yarn cli generate javascript ${{ matrix.client.name }}
 
       - name: Build '${{ matrix.client.name }}' client
         if: steps.cache.outputs.cache-hit != 'true'
         run: yarn cli build clients javascript ${{ matrix.client.name }}
+
+      - name: Show diff for '${{ matrix.client.name }}' client
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: git --no-pager diff
+
+  client_javascript_algoliasearch:
+    timeout-minutes: 10
+    runs-on: ubuntu-20.04
+    needs: client_javascript
+    if: |
+      always() &&
+      needs.setup.outputs.RUN_JS_ALGOLIASEARCH == 'true' &&
+      contains(needs.client_javascript.result, 'success') &&
+      !contains(needs.client_javascript.result, 'failure')
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Restore cache
+        uses: ./.github/actions/cache
+        with:
+          job: codegen
+          language: javascript
+
+      - name: Cache 'algoliasearch' client
+        id: cache
+        uses: actions/cache@v2
+        with:
+          path: clients/algoliasearch-client-javascript/packages/algoliasearch
+          key: |
+            ${{ env.CACHE_VERSION }}-${{
+            hashFiles(
+              'clients/algoliasearch-client-javascript/packages/algoliasearch/**',
+              'clients/algoliasearch-client-javascript/packages/client-search/**',
+              'clients/algoliasearch-client-javascript/packages/client-analytics/**',
+              'clients/algoliasearch-client-javascript/packages/client-personalization/**',
+              'templates/javascript/**'
+            )}}
+
+      - name: Build 'algoliasearch' client
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: yarn cli build clients javascript algoliasearch
 
   client_java:
     runs-on: ubuntu-20.04
@@ -201,7 +245,6 @@ jobs:
             ${{ env.CACHE_VERSION }}-${{
             hashFiles(
               format('{0}/**', matrix.client.folder),
-              format('!{0}/target', matrix.client.folder),
               'templates/java/**',
               format('specs/bundled/{0}.yml', matrix.client.name)
             )}}
@@ -261,6 +304,7 @@ jobs:
     timeout-minutes: 20
     needs:
       - client_javascript
+      - client_javascript_algoliasearch
       - client_java
       - client_php
     if: |

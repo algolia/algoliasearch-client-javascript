@@ -1,6 +1,6 @@
 {
   "name": "@experimental-api-clients-automation/requester-node-http",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Promise-based request library for node using the native http module.",
   "repository": "algolia/algoliasearch-client-javascript",
   "author": "Algolia",
@@ -20,7 +20,7 @@
     "index.ts"
   ],
   "dependencies": {
-    "@experimental-api-clients-automation/client-common": "0.0.4"
+    "@experimental-api-clients-automation/client-common": "0.0.5"
   },
   "devDependencies": {
     "@types/node": "16.11.11",

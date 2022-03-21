@@ -6,9 +6,9 @@
     "start": "parcel index.html"
   },
   "dependencies": {
-    "@experimental-api-clients-automation/client-common": "0.0.4",
-    "@experimental-api-clients-automation/client-search": "0.0.4",
-    "@experimental-api-clients-automation/requester-browser-xhr": "0.0.4"
+    "@experimental-api-clients-automation/client-common": "0.0.5",
+    "@experimental-api-clients-automation/client-search": "0.0.5",
+    "@experimental-api-clients-automation/requester-browser-xhr": "0.0.5"
   },
   "devDependencies": {
     "parcel": "2.3.1",
