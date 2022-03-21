@@ -1,21 +1,66 @@
+import path from 'path';
+
 import { buildJSClientUtils } from './buildClients';
 import { buildSpecs } from './buildSpecs';
-import { buildCustomGenerators, CI, run, runIfExists } from './common';
-import { getCustomGenerator, getLanguageFolder } from './config';
+import {
+  buildCustomGenerators,
+  CI,
+  run,
+  runIfExists,
+  toAbsolutePath,
+} from './common';
+import {
+  getCustomGenerator,
+  getLanguageFolder,
+  getLanguageModelFolder,
+} from './config';
 import { formatter } from './formatter';
 import { createSpinner } from './oraLog';
 import { setHostsOptions } from './pre-gen/setHostsOptions';
 import type { Generator } from './types';
 
-async function preGen(
-  { language, client, key, output }: Generator,
+/**
+ * Remove `model` folder for the current language and client.
+ */
+async function removeExistingModel(
+  { language, client, output }: Generator,
   verbose?: boolean
 ): Promise<void> {
-  await runIfExists(`./scripts/pre-gen/${language}.sh`, `${output} ${key}`, {
-    verbose,
-  });
+  const baseModelFolder = getLanguageModelFolder(language);
 
-  await setHostsOptions({ client, key });
+  let clientModel = '';
+  switch (language) {
+    case 'java':
+      clientModel = client;
+      break;
+    default:
+      break;
+  }
+
+  await run(
+    `rm -rf ${toAbsolutePath(
+      path.resolve('..', output, baseModelFolder, clientModel)
+    )}`,
+    {
+      verbose,
+    }
+  );
+}
+
+async function preGen(gen: Generator, verbose?: boolean): Promise<void> {
+  // Run bash pre-gen script
+  await runIfExists(
+    `./scripts/pre-gen/${gen.language}.sh`,
+    `${gen.output} ${gen.key}`,
+    {
+      verbose,
+    }
+  );
+
+  await removeExistingModel(gen);
+
+  // Updates `openapitools.json` file based on the spec `servers`
+  await setHostsOptions({ client: gen.client, key: gen.key });
 }
 
 async function generateClient(

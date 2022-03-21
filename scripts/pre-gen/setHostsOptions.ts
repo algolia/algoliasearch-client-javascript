@@ -122,7 +122,10 @@ export async function setHostsOptions({
       ...additionalProperties,
     };
 
-    await writeFile(openapitoolsPath, JSON.stringify(openapitools, null, 2));
+    await writeFile(
+      openapitoolsPath,
+      JSON.stringify(openapitools, null, 2).concat('\n')
+    );
   } catch (e) {
     throw new Error(`Error reading yaml file ${generator}: ${e}`);
   }

@@ -4,6 +4,10 @@ export function getLanguageFolder(language: string): string {
   return clientsConfig[language].folder;
 }
 
+export function getLanguageModelFolder(language: string): string {
+  return clientsConfig[language].modelFolder;
+}
+
 export function getTestExtension(language: string): string | undefined {
   return clientsConfig[language]?.tests?.extension;
 }
