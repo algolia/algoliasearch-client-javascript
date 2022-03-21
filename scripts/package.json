@@ -6,6 +6,7 @@
     "processRelease": "ts-node release/process-release.ts",
     "pushGeneratedCode": "ts-node ci/codegen/pushGeneratedCode.ts",
     "cleanGeneratedBranch": "ts-node ci/codegen/cleanGeneratedBranch.ts",
+    "spreadGeneration": "ts-node ci/codegen/spreadGeneration.ts",
     "upsertGenerationComment": "ts-node ci/codegen/upsertGenerationComment.ts",
     "test": "jest"
   },

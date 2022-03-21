@@ -11,6 +11,7 @@ import {
   run,
   exists,
   getGitHubUrl,
+  gitCommit,
 } from '../common';
 import { getLanguageFolder } from '../config';
 
@@ -19,8 +20,8 @@ import {
   OWNER,
   REPO,
   getMarkdownSection,
-  getTargetBranch,
   configureGitHubAuthor,
+  cloneRepository,
 } from './common';
 import TEXT from './text';
 
@@ -163,27 +164,26 @@ async function processRelease(): Promise<void> {
     await run(`git add ${changelogPath}`);
   }
 
-  // We push commits from submodules AFTER all the generations are done.
+  // We push commits to each repository AFTER all the generations are done.
   // Otherwise, we will end up having broken release.
   for (const lang of langsToReleaseOrUpdate) {
+    const { tempGitDir } = await cloneRepository({
+      lang,
+      githubToken: process.env.GITHUB_TOKEN,
+      tempDir: process.env.RUNNER_TEMP!,
+    });
+
     const clientPath = toAbsolutePath(getLanguageFolder(lang));
-    const targetBranch = getTargetBranch(lang);
-
-    const gitHubUrl = getGitHubUrl(lang, { token: process.env.GITHUB_TOKEN });
-    const tempGitDir = `${process.env.RUNNER_TEMP}/${lang}`;
-    await run(`rm -rf ${tempGitDir}`);
-    await run(
-      `git clone --depth 1 --branch ${targetBranch} ${gitHubUrl} ${tempGitDir}`
-    );
-
     await run(`cp -r ${clientPath}/ ${tempGitDir}`);
+
     await configureGitHubAuthor(tempGitDir);
     await run(`git add .`, { cwd: tempGitDir });
 
     const { next, dateStamp } = versionsToRelease[lang];
 
     if (willReleaseLibrary(lang)) {
-      await execa('git', ['commit', '-m', `chore: release ${next}`], {
+      await gitCommit({
+        message: `chore: release ${next}`,
         cwd: tempGitDir,
       });
       if (process.env.VERSION_TAG_ON_RELEASE === 'true') {
@@ -191,7 +191,8 @@ async function processRelease(): Promise<void> {
         await run(`git push --tags`, { cwd: tempGitDir });
       }
     } else {
-      await execa('git', ['commit', '-m', `chore: update repo ${dateStamp}`], {
+      await gitCommit({
+        message: `chore: update repo ${dateStamp}`,
         cwd: tempGitDir,
       });
     }
@@ -199,7 +200,9 @@ async function processRelease(): Promise<void> {
   }
 
   // Commit and push from the monorepo level.
-  await execa('git', ['commit', '-m', `chore: release ${getDateStamp()}`]);
+  await gitCommit({
+    message: `chore: release ${getDateStamp()}`,
+  });
   await run(`git push`);
 
   // remove old `released` tag

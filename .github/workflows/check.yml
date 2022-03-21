@@ -351,7 +351,16 @@ jobs:
           job: codegen
 
       - name: Push generated code
+        id: pushGeneratedCode
         run: yarn workspace scripts pushGeneratedCode
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN_GENERATE_BOT }}
           PR_NUMBER: ${{ github.event.number }}
+
+      - name: Spread generation to each repository
+        if: |
+          steps.pushGeneratedCode.exitcode == 0 &&
+          github.ref == 'refs/heads/main'
+        run: yarn workspace scripts spreadGeneration
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN_RELEASE_BOT }}
