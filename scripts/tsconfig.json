@@ -6,5 +6,5 @@
     "outDir": "dist"
   },
   "include": ["**/*.ts"],
-  "exclude": ["dist", "*.json", "node_modules"]
+  "exclude": ["dist", "*.json", "node_modules", "**/*.test.ts"]
 }

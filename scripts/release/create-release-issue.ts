@@ -3,41 +3,40 @@ import { Octokit } from '@octokit/rest';
 import dotenv from 'dotenv';
 import semver from 'semver';
 
-import { GENERATORS, LANGUAGES, ROOT_ENV_PATH, run } from '../common';
+import { LANGUAGES, ROOT_ENV_PATH, run, getPackageVersion } from '../common';
+import type { Language } from '../types';
 
-import { RELEASED_TAG, MAIN_BRANCH, OWNER, REPO } from './common';
+import {
+  RELEASED_TAG,
+  MAIN_BRANCH,
+  OWNER,
+  REPO,
+  MAIN_GENERATOR,
+} from './common';
 import TEXT from './text';
+import type {
+  Versions,
+  VersionsWithoutReleaseType,
+  PassedCommit,
+  Commit,
+} from './types';
 
 dotenv.config({ path: ROOT_ENV_PATH });
 
-type Version = {
-  current: string;
-  next?: string | null;
-  noCommit?: boolean;
-  skipRelease?: boolean;
-};
-
-type Versions = {
-  [lang: string]: Version;
-};
-
-function readVersions(): Versions {
-  const versions = {};
-
-  Object.values(GENERATORS).forEach((gen) => {
-    if (!versions[gen.language]) {
-      versions[gen.language] = {
-        current: gen.additionalProperties?.packageVersion,
-        next: undefined,
-      };
-    }
-  });
-  return versions;
+function readVersions(): VersionsWithoutReleaseType {
+  return Object.keys(MAIN_GENERATOR).reduce((acc, lang) => {
+    return {
+      ...acc,
+      [lang]: {
+        current: getPackageVersion(lang),
+      },
+    };
+  }, {});
 }
 
 export function getVersionChangesText(versions: Versions): string {
   return LANGUAGES.map((lang) => {
-    const { current, next, noCommit, skipRelease } = versions[lang];
+    const { current, releaseType, noCommit, skipRelease } = versions[lang];
 
     if (noCommit) {
       return `- ~${lang}: v${current} (${TEXT.noCommit})~`;
@@ -47,28 +46,16 @@ export function getVersionChangesText(versions: Versions): string {
       return `- ~${lang}: (${TEXT.currentVersionNotFound})~`;
     }
 
+    const next = semver.inc(current, releaseType!);
     const checked = skipRelease ? ' ' : 'x';
     return [
-      `- [${checked}] ${lang}: v${current} -> v${next}`,
+      `- [${checked}] ${lang}: v${current} -> \`${releaseType}\` _(e.g. v${next})_`,
       skipRelease && TEXT.descriptionForSkippedLang,
     ]
       .filter(Boolean)
       .join('\n');
   }).join('\n');
 }
-
-type PassedCommit = {
-  hash: string;
-  type: string;
-  lang: string;
-  message: string;
-  raw: string;
-};
-
-type Commit =
-  | PassedCommit
-  | { error: 'missing-language-scope' }
-  | { error: 'unknown-language-scope' };
 
 export function parseCommit(commit: string): Commit {
   const hash = commit.slice(0, 7);
@@ -82,7 +69,7 @@ export function parseCommit(commit: string): Commit {
   }
   message = message.slice(message.indexOf(':') + 1).trim();
   type = matchResult[1];
-  const lang = matchResult[2];
+  const lang = matchResult[2] as Language;
 
   if (!LANGUAGES.includes(lang)) {
     return { error: 'unknown-language-scope' };
@@ -97,54 +84,69 @@ export function parseCommit(commit: string): Commit {
   };
 }
 
+/* eslint-disable no-param-reassign */
 export function decideReleaseStrategy({
   versions,
   commits,
 }: {
-  versions: Versions;
+  versions: VersionsWithoutReleaseType;
   commits: PassedCommit[];
 }): Versions {
-  const ret: Versions = { ...versions };
+  return Object.entries(versions).reduce(
+    (versionsWithReleaseType: Versions, [lang, version]) => {
+      const commitsPerLang = commits.filter((commit) => commit.lang === lang);
+      const currentVersion = versions[lang].current;
 
-  LANGUAGES.forEach((lang) => {
-    const commitsPerLang = commits.filter((commit) => commit.lang === lang);
-    const currentVersion = versions[lang].current;
+      if (commitsPerLang.length === 0) {
+        versionsWithReleaseType[lang] = {
+          ...version,
+          noCommit: true,
+          releaseType: null,
+        };
+        return versionsWithReleaseType;
+      }
 
-    if (commitsPerLang.length === 0) {
-      ret[lang].next = currentVersion;
-      ret[lang].noCommit = true;
-      return;
-    }
+      if (semver.prerelease(currentVersion)) {
+        // if version is like 0.1.2-beta.1, it increases to 0.1.2-beta.2, even if there's a breaking change.
+        versionsWithReleaseType[lang] = {
+          ...version,
+          releaseType: 'prerelease',
+        };
+        return versionsWithReleaseType;
+      }
 
-    if (semver.prerelease(currentVersion)) {
-      // if version is like 0.1.2-beta.1, it increases to 0.1.2-beta.2, even if there's a breaking change.
-      ret[lang].next = semver.inc(currentVersion, 'prerelease');
-      return;
-    }
+      if (
+        commitsPerLang.some((commit) =>
+          commit.message.includes('BREAKING CHANGE')
+        )
+      ) {
+        versionsWithReleaseType[lang] = {
+          ...version,
+          releaseType: 'major',
+        };
+        return versionsWithReleaseType;
+      }
 
-    if (
-      commitsPerLang.some((commit) =>
-        commit.message.includes('BREAKING CHANGE')
-      )
-    ) {
-      ret[lang].next = semver.inc(currentVersion, 'major');
-      return;
-    }
+      const commitTypes = new Set(commitsPerLang.map(({ type }) => type));
+      if (commitTypes.has('feat')) {
+        versionsWithReleaseType[lang] = {
+          ...version,
+          releaseType: 'minor',
+        };
+        return versionsWithReleaseType;
+      }
 
-    const commitTypes = new Set(commitsPerLang.map(({ type }) => type));
-    if (commitTypes.has('feat')) {
-      ret[lang].next = semver.inc(currentVersion, 'minor');
-      return;
-    }
-
-    ret[lang].next = semver.inc(currentVersion, 'patch');
-    if (!commitTypes.has('fix')) {
-      ret[lang].skipRelease = true;
-    }
-  });
-
-  return ret;
+      versionsWithReleaseType[lang] = {
+        ...version,
+        releaseType: 'patch',
+        ...(commitTypes.has('fix') ? undefined : { skipRelease: true }),
+      };
+      return versionsWithReleaseType;
+    },
+    {}
+  );
 }
+/* eslint-enable no-param-reassign */
 
 async function createReleaseIssue(): Promise<void> {
   if (!process.env.GITHUB_TOKEN) {
@@ -241,6 +243,7 @@ async function createReleaseIssue(): Promise<void> {
     TEXT.versionChangeHeader,
     versionChanges,
     TEXT.descriptionVersionChanges,
+    TEXT.indenpendentVersioning,
     TEXT.changelogHeader,
     TEXT.changelogDescription,
     changelogs,
@@ -270,6 +273,7 @@ async function createReleaseIssue(): Promise<void> {
     });
 }
 
+// JS version of `if __name__ == '__main__'`
 if (require.main === module) {
   createReleaseIssue();
 }

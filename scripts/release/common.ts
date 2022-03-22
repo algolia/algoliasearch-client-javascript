@@ -1,3 +1,4 @@
+import clientsConfig from '../../config/clients.config.json';
 import config from '../../config/release.config.json';
 import { getGitHubUrl, run } from '../common';
 
@@ -5,6 +6,15 @@ export const RELEASED_TAG = config.releasedTag;
 export const MAIN_BRANCH = config.mainBranch;
 export const OWNER = config.owner;
 export const REPO = config.repo;
+export const MAIN_GENERATOR = Object.keys(clientsConfig).reduce(
+  (mainGenerator: { [lang: string]: string }, lang: string) => {
+    return {
+      ...mainGenerator,
+      [lang]: clientsConfig[lang].mainGenerator,
+    };
+  },
+  {}
+);
 
 export function getTargetBranch(language: string): string {
   return config.targetBranch[language] || config.defaultTargetBranch;

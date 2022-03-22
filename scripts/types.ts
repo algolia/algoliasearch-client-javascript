@@ -1,3 +1,5 @@
+import type config from '../config/clients.config.json';
+
 export type Generator = Record<string, any> & {
   language: string;
   client: string;
@@ -13,3 +15,5 @@ export type RunOptions = {
   verbose?: boolean;
   cwd?: string;
 };
+
+export type Language = keyof typeof config;

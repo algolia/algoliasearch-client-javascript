@@ -3,6 +3,8 @@ import fsp from 'fs/promises';
 
 import dotenv from 'dotenv';
 import execa from 'execa';
+import semver from 'semver';
+import type { ReleaseType } from 'semver';
 
 import openapitools from '../../openapitools.json';
 import {
@@ -24,8 +26,22 @@ import {
   cloneRepository,
 } from './common';
 import TEXT from './text';
+import type { VersionsToRelease } from './types';
 
 dotenv.config({ path: ROOT_ENV_PATH });
+
+type BeforeClientGenerationCommand = (params: {
+  releaseType: ReleaseType;
+  dir: string;
+}) => Promise<void>;
+
+const BEFORE_CLIENT_GENERATION: {
+  [lang: string]: BeforeClientGenerationCommand;
+} = {
+  javascript: async ({ releaseType, dir }) => {
+    await run(`yarn release:bump ${releaseType}`, { cwd: dir });
+  },
+};
 
 function getIssueBody(): string {
   return JSON.parse(
@@ -36,14 +52,6 @@ function getIssueBody(): string {
     ]).stdout
   ).body;
 }
-
-type VersionsToRelease = {
-  [lang: string]: {
-    current: string;
-    next: string;
-    dateStamp: string;
-  };
-};
 
 function getDateStamp(): string {
   return new Date().toISOString().split('T')[0];
@@ -56,14 +64,19 @@ export function getVersionsToRelease(issueBody: string): VersionsToRelease {
   getMarkdownSection(issueBody, TEXT.versionChangeHeader)
     .split('\n')
     .forEach((line) => {
-      const result = line.match(/- \[x\] (.+): v(.+) -> v(.+)/);
+      const result = line.match(/- \[x\] (.+): v(.+) -> `(.+)`/);
       if (!result) {
         return;
       }
-      const [, lang, current, next] = result;
+      const [, lang, current, releaseType] = result;
+      if (!['major', 'minor', 'patch', 'prerelease'].includes(releaseType)) {
+        throw new Error(
+          `\`${releaseType}\` is unknown release type. Allowed: major, minor, patch, prerelease`
+        );
+      }
       versionsToRelease[lang] = {
         current,
-        next,
+        releaseType: releaseType as ReleaseType,
         dateStamp,
       };
     });
@@ -75,7 +88,7 @@ export function getLangsToUpdateRepo(issueBody: string): string[] {
   return getMarkdownSection(issueBody, TEXT.versionChangeHeader)
     .split('\n')
     .map((line) => {
-      const result = line.match(/- \[ \] (.+): v(.+) -> v(.+)/);
+      const result = line.match(/- \[ \] (.+): v(.+) -> `(.+)`/);
       return result?.[1];
     })
     .filter(Boolean) as string[];
@@ -87,14 +100,58 @@ async function updateOpenApiTools(
   Object.keys(openapitools['generator-cli'].generators).forEach((client) => {
     const lang = client.split('-')[0];
     if (versionsToRelease[lang]) {
-      openapitools['generator-cli'].generators[
-        client
-      ].additionalProperties.packageVersion = versionsToRelease[lang].next;
+      const additionalProperties =
+        openapitools['generator-cli'].generators[client].additionalProperties;
+
+      const newVersion = semver.inc(
+        additionalProperties.packageVersion,
+        versionsToRelease[lang].releaseType
+      );
+      if (!newVersion) {
+        throw new Error(
+          `Failed to bump version ${additionalProperties.packageVersion} by ${versionsToRelease[lang].releaseType}.`
+        );
+      }
+      additionalProperties.packageVersion = newVersion;
     }
   });
   await fsp.writeFile(
     toAbsolutePath('openapitools.json'),
     JSON.stringify(openapitools, null, 2)
+  );
+}
+
+async function updateChangelog({
+  lang,
+  issueBody,
+  current,
+  next,
+  dateStamp,
+  willReleaseLibrary,
+}: {
+  lang: string;
+  issueBody: string;
+  current: string;
+  next: string;
+  dateStamp: string;
+  willReleaseLibrary: boolean;
+}): Promise<void> {
+  const changelogPath = toAbsolutePath(
+    `${getLanguageFolder(lang)}/CHANGELOG.md`
+  );
+  const existingContent = (await exists(changelogPath))
+    ? (await fsp.readFile(changelogPath)).toString()
+    : '';
+  const changelogHeader = willReleaseLibrary
+    ? `## [v${next}](${getGitHubUrl(lang)}/compare/v${current}...v${next})`
+    : `## ${dateStamp}`;
+  const newChangelog = getMarkdownSection(
+    getMarkdownSection(issueBody, TEXT.changelogHeader),
+    `### ${lang}`
+  );
+  await fsp.writeFile(
+    changelogPath,
+    [changelogHeader, newChangelog, existingContent].join('\n\n')
   );
 }
 
@@ -122,11 +179,6 @@ async function processRelease(): Promise<void> {
 
   await updateOpenApiTools(versionsToRelease);
 
-  await configureGitHubAuthor();
-
-  // commit openapitools and changelogs
-  await run('git add openapitools.json');
-
   const langsToReleaseOrUpdate = [
     ...Object.keys(versionsToRelease),
     ...langsToUpdateRepo,
@@ -136,32 +188,36 @@ async function processRelease(): Promise<void> {
     Boolean(versionsToRelease[lang]);
 
   for (const lang of langsToReleaseOrUpdate) {
-    // prepare the submodule
+    const { current, releaseType, dateStamp } = versionsToRelease[lang];
+    /*
+    About bumping versions of JS clients:
+
+    There are generated clients in JS repo, and non-generated clients like `algoliasearch`, `client-common`, etc.
+    Now that the versions of generated clients are updated in `openapitools.json`,
+    the generation output will have correct new versions.
+    
+    However, we need to manually update versions of the non-generated (a.k.a. manually written) clients.
+    In order to do that, we run `yarn release:bump <releaseType>` in this monorepo first.
+    It will update the versions of the non-generated clients which exists in this monorepo.
+    After that, we generate clients with new versions. And then, we copy all of them over to JS repository.
+    */
+    await BEFORE_CLIENT_GENERATION[lang]?.({
+      releaseType,
+      dir: toAbsolutePath(getLanguageFolder(lang)),
+    });
+
     console.log(`Generating ${lang} client(s)...`);
     console.log(await run(`yarn cli generate ${lang}`));
 
-    const { current, next, dateStamp } = versionsToRelease[lang];
-
-    // update changelog
-    const changelogPath = toAbsolutePath(
-      `${getLanguageFolder(lang)}/CHANGELOG.md`
-    );
-    const existingContent = (await exists(changelogPath))
-      ? (await fsp.readFile(changelogPath)).toString()
-      : '';
-    const changelogHeader = willReleaseLibrary(lang)
-      ? `## [v${next}](${getGitHubUrl(lang)}/compare/v${current}...v${next})`
-      : `## ${dateStamp}`;
-    const newChangelog = getMarkdownSection(
-      getMarkdownSection(issueBody, TEXT.changelogHeader),
-      `### ${lang}`
-    );
-    await fsp.writeFile(
-      changelogPath,
-      [changelogHeader, newChangelog, existingContent].join('\n\n')
-    );
-
-    await run(`git add ${changelogPath}`);
+    const next = semver.inc(current, releaseType);
+    await updateChangelog({
+      lang,
+      issueBody,
+      current,
+      next: next!,
+      dateStamp,
+      willReleaseLibrary: willReleaseLibrary(lang),
+    });
   }
 
   // We push commits to each repository AFTER all the generations are done.
@@ -179,7 +235,8 @@ async function processRelease(): Promise<void> {
     await configureGitHubAuthor(tempGitDir);
     await run(`git add .`, { cwd: tempGitDir });
 
-    const { next, dateStamp } = versionsToRelease[lang];
+    const { current, dateStamp, releaseType } = versionsToRelease[lang];
+    const next = semver.inc(current, releaseType);
 
     if (willReleaseLibrary(lang)) {
       await gitCommit({
@@ -200,6 +257,9 @@ async function processRelease(): Promise<void> {
   }
 
   // Commit and push from the monorepo level.
+  await configureGitHubAuthor();
+  await run(`git add .`);
+  await execa('git', ['commit', '-m', `chore: release ${getDateStamp()}`]);
   await gitCommit({
     message: `chore: release ${getDateStamp()}`,
   });
@@ -215,6 +275,7 @@ async function processRelease(): Promise<void> {
   await run(`git push --tags`);
 }
 
+// JS version of `if __name__ == '__main__'`
 if (require.main === module) {
   processRelease();
 }
