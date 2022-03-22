@@ -23,12 +23,12 @@ import type {
 
 dotenv.config({ path: ROOT_ENV_PATH });
 
-function readVersions(): VersionsWithoutReleaseType {
+export function readVersions(): VersionsWithoutReleaseType {
   return Object.keys(MAIN_GENERATOR).reduce((acc, lang) => {
     return {
       ...acc,
       [lang]: {
-        current: getPackageVersion(lang),
+        current: getPackageVersion(MAIN_GENERATOR[lang]),
       },
     };
   }, {});

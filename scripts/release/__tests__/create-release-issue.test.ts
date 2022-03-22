@@ -2,9 +2,20 @@ import {
   parseCommit,
   getVersionChangesText,
   decideReleaseStrategy,
+  readVersions,
 } from '../create-release-issue';
 
 describe('create release issue', () => {
+  it('reads versions openapitools.json', () => {
+    expect(readVersions()).toEqual({
+      java: {
+        current: expect.any(String),
+      },
+      javascript: { current: expect.any(String) },
+      php: { current: expect.any(String) },
+    });
+  });
+
   it('parses commit', () => {
     expect(parseCommit(`abcdefg fix(javascript): fix the thing`)).toEqual({
       hash: 'abcdefg',
