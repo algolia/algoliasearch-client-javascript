@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { run } from '../../common';
+import { gitBranchExists, run } from '../../common';
 
 /**
  * Deletes a branch for its `generated/${headRef}` name on origin.
@@ -13,7 +13,7 @@ export async function cleanGeneratedBranch(headRef: string): Promise<void> {
 
   const generatedCodeBranch = `generated/${headRef}`;
 
-  if (!(await run(`git ls-remote --heads origin ${generatedCodeBranch}`))) {
+  if (!(await gitBranchExists(generatedCodeBranch))) {
     console.log(`No branch named '${generatedCodeBranch}' was found.`);
 
     return;

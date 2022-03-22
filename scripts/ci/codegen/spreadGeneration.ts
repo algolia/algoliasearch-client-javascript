@@ -1,4 +1,11 @@
-import { gitCommit, LANGUAGES, run, toAbsolutePath } from '../../common';
+/* eslint-disable no-console */
+import {
+  gitBranchExists,
+  gitCommit,
+  LANGUAGES,
+  run,
+  toAbsolutePath,
+} from '../../common';
 import { getLanguageFolder } from '../../config';
 import {
   cloneRepository,
@@ -39,6 +46,13 @@ export function cleanUpCommitMessage(commitMessage: string): string {
 async function spreadGeneration(): Promise<void> {
   if (!process.env.GITHUB_TOKEN) {
     throw new Error('Environment variable `GITHUB_TOKEN` does not exist.');
+  }
+
+  if (!(await gitBranchExists(GENERATED_MAIN_BRANCH))) {
+    console.log(
+      `Skiping because the branch \`${GENERATED_MAIN_BRANCH}\` does not exist.`
+    );
+    return;
   }
 
   const lastCommitMessage = await run(`git log -1 --format="%s"`);
