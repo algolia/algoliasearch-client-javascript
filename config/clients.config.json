@@ -1,7 +1,7 @@
 {
   "java": {
     "folder": "clients/algoliasearch-client-java-2",
-    "mainGenerator": "javascript-search",
+    "mainGenerator": "java-search",
     "modelFolder": "algoliasearch-core/com/algolia/model",
     "customGenerator": "algolia-java",
     "tests": {
@@ -11,7 +11,7 @@
   },
   "javascript": {
     "folder": "clients/algoliasearch-client-javascript",
-    "mainGenerator": "java-search",
+    "mainGenerator": "javascript-search",
     "modelFolder": "model",
     "tests": {
       "extension": ".test.ts",
