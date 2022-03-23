@@ -36,6 +36,7 @@ jobs:
       RUN_JS: ${{ steps.setup.outputs.RUN_JS }}
       RUN_JS_ALGOLIASEARCH: ${{ steps.setup.outputs.RUN_JS_ALGOLIASEARCH }}
       RUN_JS_COMMON: ${{ steps.setup.outputs.RUN_JS_COMMON }}
+      RUN_JS_TESTS: ${{ steps.setup.outputs.RUN_JS_TESTS }}
       JS_MATRIX: ${{ steps.setup.outputs.JS_MATRIX }}
 
       RUN_JAVA: ${{ steps.setup.outputs.RUN_JAVA }}
@@ -119,7 +120,7 @@ jobs:
           key: |
             ${{ env.CACHE_VERSION }}-${{
             hashFiles(
-              format('clients/algoliasearch-client-javascript/packages/{0}/**', matrix.client)
+              format('clients/algoliasearch-client-javascript/packages/{0}/src/**', matrix.client)
             )}}
 
       - name: Build '${{ matrix.client }}' client
@@ -299,6 +300,28 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         run: yarn cli build clients php ${{ matrix.client.name }}
 
+  client_javascript_tests:
+    runs-on: ubuntu-20.04
+    timeout-minutes: 10
+    needs:
+      - client_javascript
+      - client_javascript_algoliasearch
+    if: |
+      always() &&
+      needs.setup.outputs.RUN_JS_TESTS == 'true' &&
+      contains(needs.*.result, 'success') &&
+      !contains(needs.*.result, 'failure')
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Restore cache
+        uses: ./.github/actions/cache
+        with:
+          job: cts
+
+      - name: Run client-common tests
+        run: yarn workspace @experimental-api-clients-automation/client-common test
+
   cts:
     runs-on: ubuntu-20.04
     timeout-minutes: 20
@@ -320,6 +343,9 @@ jobs:
         with:
           job: cts
 
+      - name: Check JavaScript client size
+        run: exit $(yarn workspace algoliasearch-client-javascript test:size | echo $?)
+
       - name: Generate
         run: yarn cli cts generate
 
@@ -334,7 +360,9 @@ jobs:
   codegen:
     runs-on: ubuntu-20.04
     timeout-minutes: 10
-    needs: cts
+    needs:
+      - cts
+      - client_javascript_tests
     if: |
       always() &&
       needs.setup.outputs.RUN_CODEGEN == 'true' &&

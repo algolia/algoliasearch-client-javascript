@@ -1,6 +1,6 @@
 export * from './src/createAuth';
 export * from './src/createEchoRequester';
-export * from './src/createMemoryCache';
+export * from './src/cache';
 export * from './src/createStatefulHost';
 export * from './src/createTransporter';
 export * from './src/createUserAgent';

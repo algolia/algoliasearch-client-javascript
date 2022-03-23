@@ -153,7 +153,7 @@ runs:
         key: |
           ${{ env.CACHE_VERSION }}-${{
           hashFiles(
-            'clients/algoliasearch-client-javascript/packages/client-common/**'
+            'clients/algoliasearch-client-javascript/packages/client-common/src/**'
           )}}
 
     - name: Restore built JavaScript node requester
@@ -164,7 +164,7 @@ runs:
         key: |
           ${{ env.CACHE_VERSION }}-${{
           hashFiles(
-            'clients/algoliasearch-client-javascript/packages/requester-node-http/**'
+            'clients/algoliasearch-client-javascript/packages/requester-node-http/src/**'
           )}}
 
     - name: Restore built JavaScript browser requester
@@ -175,7 +175,7 @@ runs:
         key: |
           ${{ env.CACHE_VERSION }}-${{
           hashFiles(
-            'clients/algoliasearch-client-javascript/packages/requester-browser-xhr/**'
+            'clients/algoliasearch-client-javascript/packages/requester-browser-xhr/src/**'
           )}}
 
     # Restore JavaScript clients: used during 'cts' or 'codegen'

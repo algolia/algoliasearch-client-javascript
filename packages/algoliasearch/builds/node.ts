@@ -8,6 +8,10 @@ import type {
   Host,
   Requester,
 } from '@experimental-api-clients-automation/client-common';
+import {
+  createMemoryCache,
+  createNullCache,
+} from '@experimental-api-clients-automation/client-common';
 import type {
   PersonalizationApi,
   Region as PersonalizationRegion,
@@ -38,6 +42,9 @@ export function algoliasearch(
     },
     requester: options?.requester ?? createHttpRequester(),
     userAgents: [{ segment: 'Node.js', version: process.versions.node }],
+    responsesCache: createNullCache(),
+    requestsCache: createNullCache(),
+    hostsCache: createMemoryCache(),
     ...options,
   };
 

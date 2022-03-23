@@ -80,6 +80,21 @@ export type TransporterOptions = {
   requester: Requester;
 
   /**
+   * The cache of the requests. When requests are
+   * `cacheable`, the returned promised persists
+   * in this cache to shared in similar resquests
+   * before being resolved.
+   */
+  requestsCache: Cache;
+
+  /**
+   * The cache of the responses. When requests are
+   * `cacheable`, the returned responses persists
+   * in this cache to shared in similar resquests.
+   */
+  responsesCache: Cache;
+
+  /**
    * The timeouts used by the requester. The transporter
    * layer may increase this timeouts as defined on the
    * retry strategy.

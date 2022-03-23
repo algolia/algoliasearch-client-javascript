@@ -1,9 +1,10 @@
 {{! This file will be renamed and moved to `builds/browser.ts` after generating the client }}
 
 import type { Host, Requester } from '@experimental-api-clients-automation/client-common';
+import { createMemoryCache, createFallbackableCache, createBrowserLocalStorageCache } from '@experimental-api-clients-automation/client-common';
 import { createXhrRequester } from '@experimental-api-clients-automation/requester-browser-xhr';
 
-import { create{{capitalizedApiName}}Api } from '../src/{{apiName}}Api';
+import { create{{capitalizedApiName}}Api, apiClientVersion } from '../src/{{apiName}}Api';
 import type { {{capitalizedApiName}}Api } from '../src/{{apiName}}Api';
 
 {{#hasRegionalHost}}
@@ -45,6 +46,14 @@ export function {{apiName}}Api(
     requester: options?.requester ?? createXhrRequester(),
     userAgents: [{ segment: 'Browser' }],
     authMode: 'WithinQueryParameters',
+    responsesCache: createMemoryCache(),
+    requestsCache: createMemoryCache({ serializable: false }),
+    hostsCache: createFallbackableCache({
+      caches: [
+        createBrowserLocalStorageCache({ key: `${apiClientVersion}-${appId}` }),
+        createMemoryCache(),
+      ],
+    }),
     ...options,
   });
 }
