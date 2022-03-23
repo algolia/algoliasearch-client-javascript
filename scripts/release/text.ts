@@ -8,8 +8,7 @@ export default {
   currentVersionNotFound: `current version not found`,
   descriptionVersionChanges: [
     `**Checked** → Update version, update repository, and release the library.`,
-    `**Un-checked** → Update repository.`,
-    `**Line removed** → Do nothing.`,
+    `**Un-checked** → Do nothing`,
   ].join('\n'),
   indenpendentVersioning: `
   <details>

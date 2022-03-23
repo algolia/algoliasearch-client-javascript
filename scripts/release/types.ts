@@ -34,6 +34,5 @@ export type VersionsToRelease = {
   [lang: string]: {
     current: string;
     releaseType: ReleaseType;
-    dateStamp: string;
   };
 };

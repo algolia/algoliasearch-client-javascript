@@ -59,7 +59,6 @@ function getDateStamp(): string {
 
 export function getVersionsToRelease(issueBody: string): VersionsToRelease {
   const versionsToRelease: VersionsToRelease = {};
-  const dateStamp = getDateStamp();
 
   getMarkdownSection(issueBody, TEXT.versionChangeHeader)
     .split('\n')
@@ -77,21 +76,10 @@ export function getVersionsToRelease(issueBody: string): VersionsToRelease {
       versionsToRelease[lang] = {
         current,
         releaseType: releaseType as ReleaseType,
-        dateStamp,
       };
     });
 
   return versionsToRelease;
-}
-
-export function getLangsToUpdateRepo(issueBody: string): string[] {
-  return getMarkdownSection(issueBody, TEXT.versionChangeHeader)
-    .split('\n')
-    .map((line) => {
-      const result = line.match(/- \[ \] (.+): v(.+) -> `(.+)`/);
-      return result?.[1];
-    })
-    .filter(Boolean) as string[];
 }
 
 async function updateOpenApiTools(
@@ -126,15 +114,11 @@ async function updateChangelog({
   issueBody,
   current,
   next,
-  dateStamp,
-  willReleaseLibrary,
 }: {
   lang: string;
   issueBody: string;
   current: string;
   next: string;
-  dateStamp: string;
-  willReleaseLibrary: boolean;
 }): Promise<void> {
   const changelogPath = toAbsolutePath(
     `${getLanguageFolder(lang)}/CHANGELOG.md`
@@ -142,9 +126,9 @@ async function updateChangelog({
   const existingContent = (await exists(changelogPath))
     ? (await fsp.readFile(changelogPath)).toString()
     : '';
-  const changelogHeader = willReleaseLibrary
-    ? `## [v${next}](${getGitHubUrl(lang)}/compare/v${current}...v${next})`
-    : `## ${dateStamp}`;
+  const changelogHeader = `## [v${next}](${getGitHubUrl(
+    lang
+  )}/compare/v${current}...v${next})`;
   const newChangelog = getMarkdownSection(
     getMarkdownSection(issueBody, TEXT.changelogHeader),
     `### ${lang}`
@@ -175,20 +159,13 @@ async function processRelease(): Promise<void> {
   }
 
   const versionsToRelease = getVersionsToRelease(issueBody);
-  const langsToUpdateRepo = getLangsToUpdateRepo(issueBody); // e.g. ['javascript', 'php']
 
   await updateOpenApiTools(versionsToRelease);
 
-  const langsToReleaseOrUpdate = [
-    ...Object.keys(versionsToRelease),
-    ...langsToUpdateRepo,
-  ];
+  const langsToRelease = Object.keys(versionsToRelease);
 
-  const willReleaseLibrary = (lang: string): boolean =>
-    Boolean(versionsToRelease[lang]);
-
-  for (const lang of langsToReleaseOrUpdate) {
-    const { current, releaseType, dateStamp } = versionsToRelease[lang];
+  for (const lang of langsToRelease) {
+    const { current, releaseType } = versionsToRelease[lang];
     /*
     About bumping versions of JS clients:
 
@@ -215,14 +192,12 @@ async function processRelease(): Promise<void> {
       issueBody,
       current,
       next: next!,
-      dateStamp,
-      willReleaseLibrary: willReleaseLibrary(lang),
     });
   }
 
   // We push commits to each repository AFTER all the generations are done.
   // Otherwise, we will end up having broken release.
-  for (const lang of langsToReleaseOrUpdate) {
+  for (const lang of langsToRelease) {
     const { tempGitDir } = await cloneRepository({
       lang,
       githubToken: process.env.GITHUB_TOKEN,
@@ -235,33 +210,24 @@ async function processRelease(): Promise<void> {
     await configureGitHubAuthor(tempGitDir);
     await run(`git add .`, { cwd: tempGitDir });
 
-    const { current, dateStamp, releaseType } = versionsToRelease[lang];
+    const { current, releaseType } = versionsToRelease[lang];
     const next = semver.inc(current, releaseType);
 
-    if (willReleaseLibrary(lang)) {
-      await gitCommit({
-        message: `chore: release ${next}`,
-        cwd: tempGitDir,
-      });
-      if (process.env.VERSION_TAG_ON_RELEASE === 'true') {
-        await execa('git', ['tag', `v${next}`], { cwd: tempGitDir });
-        await run(`git push --tags`, { cwd: tempGitDir });
-      }
-    } else {
-      await gitCommit({
-        message: `chore: update repo ${dateStamp}`,
-        cwd: tempGitDir,
-      });
-    }
-    await run(`git push`, { cwd: tempGitDir });
+    await gitCommit({
+      message: `chore: release ${next}`,
+      cwd: tempGitDir,
+    });
+    await execa('git', ['tag', `v${next}`], { cwd: tempGitDir });
+    await run(`git push --follow-tags`, { cwd: tempGitDir });
   }
 
   // Commit and push from the monorepo level.
   await configureGitHubAuthor();
   await run(`git add .`);
-  await execa('git', ['commit', '-m', `chore: release ${getDateStamp()}`]);
+  const dateStamp = getDateStamp();
+  await execa('git', ['commit', '-m', `chore: release ${dateStamp}`]);
   await gitCommit({
-    message: `chore: release ${getDateStamp()}`,
+    message: `chore: release ${dateStamp}`,
   });
   await run(`git push`);
 
