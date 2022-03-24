@@ -48,7 +48,7 @@ describe('codegen', () => {
   describe('getCommentBody', () => {
     it('returns the right comment for a `notification` trigger', async () => {
       expect(await getCommentBody('notification')).toMatchInlineSnapshot(`
-        "🔨 The codegen job will run at the end of the CI.
+        "### 🔨 The codegen job will run at the end of the CI.
 
         _Make sure your last commit does not contains generated code, it will be automatically pushed by our CI._"
       `);
@@ -56,7 +56,7 @@ describe('codegen', () => {
 
     it('returns the right comment for a `noGen` trigger', async () => {
       expect(await getCommentBody('noGen')).toMatchInlineSnapshot(`
-        "✗ No code generated.
+        "### ✗ No code generated.
 
         _If you believe this is an issue on our side, please [open an issue](https://github.com/algolia/api-clients-automation/issues/new?template=Bug_report.md)._"
       `);
@@ -64,7 +64,7 @@ describe('codegen', () => {
 
     it('returns the right comment for a `cleanup` trigger', async () => {
       expect(await getCommentBody('cleanup')).toMatchInlineSnapshot(`
-        "✗ The generated branch has been deleted.
+        "### ✗ The generated branch has been deleted.
 
         If the PR has been merged, you can check the generated code on the [\`generated/main\` branch](https://github.com/algolia/api-clients-automation/tree/generated/main)."
       `);
@@ -80,8 +80,13 @@ describe('codegen', () => {
             'theGeneratedCommit'
           )
         ).toMatchInlineSnapshot(`
-          "🔨 Triggered by commit [myCommit](https://github.com/algolia/api-clients-automation/pull/42/commits/myCommit).
-          🔍 Browse the generated code on branch [myBranch](https://github.com/algolia/api-clients-automation/tree/myBranch): [theGeneratedCommit](https://github.com/algolia/api-clients-automation/commit/theGeneratedCommit)."
+          "
+          |  Name | Link |
+          |---------------------------------|------------------------|
+          | 🔨 Triggered by | [\`myCommit\`](https://github.com/algolia/api-clients-automation/pull/42/commits/myCommit) |
+          | 🔍 Generated code | [\`theGeneratedCommit\`](https://github.com/algolia/api-clients-automation/commit/theGeneratedCommit) |
+          | 🌲 Generated branch | [\`myBranch\`](https://github.com/algolia/api-clients-automation/tree/myBranch) |
+          "
         `);
       });
     });
