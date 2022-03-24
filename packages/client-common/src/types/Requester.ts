@@ -5,7 +5,7 @@ export type Method = 'DELETE' | 'GET' | 'PATCH' | 'POST' | 'PUT';
 export type Request = {
   method: Method;
   path: string;
-  data?: Record<string, any>;
+  data?: Array<Record<string, any>> | Record<string, any>;
   cacheable?: boolean;
 };
 

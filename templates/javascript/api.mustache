@@ -1,6 +1,5 @@
 {{! This file will be renamed and moved to `builds/node.ts` after generating the client }}
-
-import type { Host, Requester } from '@experimental-api-clients-automation/client-common';
+import type { InitClientOptions } from '@experimental-api-clients-automation/client-common';
 import { createMemoryCache, createNullCache } from '@experimental-api-clients-automation/client-common';
 import { createHttpRequester } from '@experimental-api-clients-automation/requester-node-http';
 
@@ -16,7 +15,7 @@ export * from '../src/{{apiName}}Api';
 export function {{apiName}}Api(
   appId: string,
   apiKey: string,{{#hasRegionalHost}}region{{#fallbackToAliasHost}}?{{/fallbackToAliasHost}}: Region,{{/hasRegionalHost}}
-  options?: { requester?: Requester; hosts?: Host[] }
+  options?: InitClientOptions
 ): {{capitalizedApiName}}Api {
   if (!appId) {
     throw new Error("`appId` is missing.");
@@ -44,9 +43,9 @@ export function {{apiName}}Api(
     },
     requester: options?.requester ?? createHttpRequester(),
     userAgents: [{ segment: 'Node.js', version: process.versions.node }],
-    responsesCache: createNullCache(),
-    requestsCache: createNullCache(),
-    hostsCache: createMemoryCache(),
+    responsesCache: options?.responsesCache ?? createNullCache(),
+    requestsCache: options?.requestsCache ?? createNullCache(),
+    hostsCache: options?.hostsCache ?? createMemoryCache(),
     ...options,
   });
 }

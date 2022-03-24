@@ -1,3 +1,4 @@
+import type { Cache } from './Cache';
 import type { Host } from './Host';
 import type { Requester } from './Requester';
 import type {
@@ -20,3 +21,11 @@ export type CreateClientOptions = Pick<
   hosts?: Host[];
   authMode?: AuthMode;
 };
+
+export type InitClientOptions = Partial<{
+  requester: Requester;
+  hosts: Host[];
+  responsesCache: Cache;
+  requestsCache: Cache;
+  hostsCache: Cache;
+}>;

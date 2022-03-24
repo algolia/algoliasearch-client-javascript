@@ -30,7 +30,7 @@ export type RequestOptions = {
    * Custom data for the request. This data are
    * going to be merged the transporter data.
    */
-  data?: Record<string, any>;
+  data?: Array<Record<string, any>> | Record<string, any>;
 
   /**
    * If the given request should persist on the cache. Keep in mind,
@@ -194,10 +194,15 @@ export type Transporter = {
   hosts: Host[];
 
   /**
-   * Performs a read request using read hosts.
+   * Performs a request.
+   * The `baseRequest` and `baseRequestOptions` will be merged accordignly.
    */
   request: <TResponse>(
-    request: Request,
-    requestOptions: RequestOptions
+    baseRequest: Request,
+    methodOptions: {
+      headers: Headers;
+      queryParameters: QueryParameters;
+    },
+    baseRequestOptions?: RequestOptions
   ) => Promise<TResponse>;
 };

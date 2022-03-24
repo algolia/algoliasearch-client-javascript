@@ -7,6 +7,8 @@ import type {
   StackFrame,
   TransporterOptions,
   Transporter,
+  Headers,
+  QueryParameters,
 } from '../types';
 
 import { createStatefulHost } from './createStatefulHost';
@@ -217,9 +219,37 @@ export function createTransporter({
   }
 
   function createRequest<TResponse>(
-    request: Request,
-    requestOptions: RequestOptions
+    baseRequest: Request,
+    methodOptions: {
+      headers: Headers;
+      queryParameters: QueryParameters;
+    },
+    baseRequestOptions?: RequestOptions
   ): Promise<TResponse> {
+    const mergedData: Request['data'] = Array.isArray(baseRequest.data)
+      ? baseRequest.data
+      : {
+          ...baseRequest.data,
+          ...baseRequestOptions?.data,
+        };
+    const request: Request = {
+      ...baseRequest,
+      data: mergedData,
+    };
+    const requestOptions: RequestOptions = {
+      cacheable: baseRequestOptions?.cacheable,
+      timeout: baseRequestOptions?.timeout,
+      queryParameters: {
+        ...baseRequestOptions?.queryParameters,
+        ...methodOptions.queryParameters,
+      },
+      headers: {
+        Accept: 'application/json',
+        ...baseRequestOptions?.headers,
+        ...methodOptions.headers,
+      },
+    };
+
     if (request.method !== 'GET') {
       /**
        * On write requests, no cache mechanisms are applied, and we

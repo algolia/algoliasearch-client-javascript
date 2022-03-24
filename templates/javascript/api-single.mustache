@@ -9,6 +9,8 @@ import type {
   Headers,
   Host,
   Request,
+  RequestOptions,
+  QueryParameters,
 } from '@experimental-api-clients-automation/client-common';
 
 {{#imports}}
@@ -159,7 +161,7 @@ export function create{{capitalizedApiName}}Api(options: CreateClientOptions{{#h
           {{#allParams}}
             {{paramName}},
           {{/allParams}}
-        }: {{#lambda.titlecase}}{{nickname}}{{/lambda.titlecase}}Props
+        }: {{#lambda.titlecase}}{{nickname}}{{/lambda.titlecase}}Props,
       {{/bodyParams.0}}
       {{#bodyParams.0}}
         {{^queryParams.0}}
@@ -170,7 +172,7 @@ export function create{{capitalizedApiName}}Api(options: CreateClientOptions{{#h
                 {{#allParams}}
                   {{paramName}},
                 {{/allParams}}
-              }: {{#lambda.titlecase}}{{nickname}}{{/lambda.titlecase}}Props
+              }: {{#lambda.titlecase}}{{nickname}}{{/lambda.titlecase}}Props,
               {{/bodyParams.1}}
             {{/bodyParams.0.isArray}}
             {{^bodyParams.0.isArray}}
@@ -184,7 +186,7 @@ export function create{{capitalizedApiName}}Api(options: CreateClientOptions{{#h
               {{#allParams}}
                 {{paramName}},
               {{/allParams}}
-            }: {{#lambda.titlecase}}{{nickname}}{{/lambda.titlecase}}Props
+            }: {{#lambda.titlecase}}{{nickname}}{{/lambda.titlecase}}Props,
           {{/pathParams.0}}
         {{/queryParams.0}}
         {{#queryParams.0}}
@@ -192,10 +194,11 @@ export function create{{capitalizedApiName}}Api(options: CreateClientOptions{{#h
             {{#allParams}}
               {{paramName}},
             {{/allParams}}
-          }: {{#lambda.titlecase}}{{nickname}}{{/lambda.titlecase}}Props
+          }: {{#lambda.titlecase}}{{nickname}}{{/lambda.titlecase}}Props,
         {{/queryParams.0}}
       {{/bodyParams.0}}
     {{/allParams.0}}
+    requestOptions?: RequestOptions
       ) : Promise<{{{returnType}}}> {
     const requestPath = '{{{path}}}'{{#pathParams}}.replace(
     {{=<% %>=}}
@@ -203,8 +206,8 @@ export function create{{capitalizedApiName}}Api(options: CreateClientOptions{{#h
     <%={{ }}=%>
       encodeURIComponent(String({{paramName}}))
     ){{/pathParams}};
-    let headers: Headers = { Accept: 'application/json' };
-    let queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     {{#allParams}}
     {{#required}}
@@ -243,7 +246,7 @@ export function create{{capitalizedApiName}}Api(options: CreateClientOptions{{#h
     return transporter.request(request, {
       queryParameters,
       headers,
-    });
+    }, requestOptions);
   }
 
   {{/operation}}
