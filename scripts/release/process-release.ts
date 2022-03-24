@@ -214,7 +214,7 @@ async function processRelease(): Promise<void> {
     const next = semver.inc(current, releaseType);
 
     await gitCommit({
-      message: `chore: release ${next}`,
+      message: `chore: release v${next}`,
       cwd: tempGitDir,
     });
     await execa('git', ['tag', `v${next}`], { cwd: tempGitDir });
