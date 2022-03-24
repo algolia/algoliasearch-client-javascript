@@ -225,7 +225,6 @@ async function processRelease(): Promise<void> {
   await configureGitHubAuthor();
   await run(`git add .`);
   const dateStamp = getDateStamp();
-  await execa('git', ['commit', '-m', `chore: release ${dateStamp}`]);
   await gitCommit({
     message: `chore: release ${dateStamp}`,
   });
