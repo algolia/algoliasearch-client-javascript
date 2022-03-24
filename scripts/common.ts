@@ -117,14 +117,22 @@ export async function run(
   try {
     if (verbose) {
       return (
-        await execa.command(command, {
-          stdout: 'inherit',
-          shell: 'bash',
-          cwd,
-        })
-      ).stdout;
+        (
+          await execa.command(command, {
+            stdout: 'inherit',
+            stderr: 'inherit',
+            stdin: 'inherit',
+            all: true,
+            shell: 'bash',
+            cwd,
+          })
+        ).all ?? ''
+      );
     }
-    return (await execa.command(command, { shell: 'bash', cwd })).stdout;
+    return (
+      (await execa.command(command, { shell: 'bash', all: true, cwd })).all ??
+      ''
+    );
   } catch (err) {
     if (errorMessage) {
       throw new Error(`[ERROR] ${errorMessage}`);
