@@ -6,6 +6,7 @@ export type Request = {
   method: Method;
   path: string;
   data?: Record<string, any>;
+  cacheable?: boolean;
 };
 
 export type EndRequest = {

@@ -1,4 +1,4 @@
-import type { Host, StatefulHost } from './types';
+import type { Host, StatefulHost } from '../types';
 
 // By default, API Clients at Algolia have expiration delay of 5 mins.
 // In the JavaScript client, we have 2 mins.

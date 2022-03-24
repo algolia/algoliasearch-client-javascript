@@ -24,8 +24,19 @@ export type RequestOptions = {
    * Custom query parameters for the request. This query parameters are
    * going to be merged the transporter query parameters.
    */
-  queryParameters: QueryParameters;
+  queryParameters?: QueryParameters;
+
+  /**
+   * Custom data for the request. This data are
+   * going to be merged the transporter data.
+   */
   data?: Record<string, any>;
+
+  /**
+   * If the given request should persist on the cache. Keep in mind,
+   * that some methods may have this option enabled by default.
+   */
+  cacheable?: boolean;
 };
 
 export type StackFrame = {
@@ -39,12 +50,12 @@ export type UserAgentOptions = {
   /**
    * The segment. Usually the integration name.
    */
-  readonly segment: string;
+  segment: string;
 
   /**
    * The version. Usually the integration version.
    */
-  readonly version?: string;
+  version?: string;
 };
 
 export type UserAgent = {
@@ -56,7 +67,7 @@ export type UserAgent = {
   /**
    * Mutates the current user agent ading the given user agent options.
    */
-  readonly add: (options: UserAgentOptions) => UserAgent;
+  add: (options: UserAgentOptions) => UserAgent;
 };
 
 export type Timeouts = {
@@ -139,6 +150,21 @@ export type Transporter = {
    * will be used.
    */
   requester: Requester;
+
+  /**
+   * The cache of the requests. When requests are
+   * `cacheable`, the returned promised persists
+   * in this cache to shared in similar resquests
+   * before being resolved.
+   */
+  requestsCache: Cache;
+
+  /**
+   * The cache of the responses. When requests are
+   * `cacheable`, the returned responses persists
+   * in this cache to shared in similar resquests.
+   */
+  responsesCache: Cache;
 
   /**
    * The timeouts used by the requester. The transporter

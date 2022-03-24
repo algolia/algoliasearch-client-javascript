@@ -1,4 +1,3 @@
-import { ApiError, DeserializationError } from './errors';
 import type {
   Headers,
   Host,
@@ -6,7 +5,9 @@ import type {
   RequestOptions,
   Response,
   StackFrame,
-} from './types';
+} from '../types';
+
+import { ApiError, DeserializationError } from './errors';
 
 export function shuffle<TData>(array: TData[]): TData[] {
   const shuffledArray = array;

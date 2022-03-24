@@ -1,4 +1,4 @@
-import type { StackFrame } from './types';
+import type { StackFrame } from '../types';
 
 export function stackTraceWithoutCredentials(
   stackTrace: StackFrame[]

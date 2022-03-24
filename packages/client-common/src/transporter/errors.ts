@@ -1,4 +1,4 @@
-import type { Response, StackFrame } from './types';
+import type { Response, StackFrame } from '../types';
 
 class ErrorWithStackTrace extends Error {
   stackTrace: StackFrame[];

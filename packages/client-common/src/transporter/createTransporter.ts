@@ -1,17 +1,3 @@
-import { isRetryable, isSuccess } from './Response';
-import { createStatefulHost } from './createStatefulHost';
-import { RetryError } from './errors';
-import {
-  deserializeFailure,
-  deserializeSuccess,
-  serializeData,
-  serializeHeaders,
-  serializeUrl,
-} from './helpers';
-import {
-  stackTraceWithoutCredentials,
-  stackFrameWithoutCredentials,
-} from './stackTrace';
 import type {
   EndRequest,
   Host,
@@ -21,7 +7,22 @@ import type {
   StackFrame,
   TransporterOptions,
   Transporter,
-} from './types';
+} from '../types';
+
+import { createStatefulHost } from './createStatefulHost';
+import { RetryError } from './errors';
+import {
+  deserializeFailure,
+  deserializeSuccess,
+  serializeData,
+  serializeHeaders,
+  serializeUrl,
+} from './helpers';
+import { isRetryable, isSuccess } from './responses';
+import {
+  stackTraceWithoutCredentials,
+  stackFrameWithoutCredentials,
+} from './stackTrace';
 
 type RetryableOptions = {
   hosts: Host[];
@@ -36,6 +37,8 @@ export function createTransporter({
   userAgent,
   timeouts,
   requester,
+  requestsCache,
+  responsesCache,
 }: TransporterOptions): Transporter {
   async function createRetryableOptions(
     compatibleHosts: Host[]
@@ -213,6 +216,94 @@ export function createTransporter({
     return retry([...options.hosts].reverse(), options.getTimeout);
   }
 
+  function createRequest<TResponse>(
+    request: Request,
+    requestOptions: RequestOptions
+  ): Promise<TResponse> {
+    if (request.method !== 'GET') {
+      /**
+       * On write requests, no cache mechanisms are applied, and we
+       * proxy the request immediately to the requester.
+       */
+      return retryableRequest<TResponse>(request, requestOptions);
+    }
+
+    const createRetryableRequest = (): Promise<TResponse> => {
+      /**
+       * Then, we prepare a function factory that contains the construction of
+       * the retryable request. At this point, we may *not* perform the actual
+       * request. But we want to have the function factory ready.
+       */
+      return retryableRequest<TResponse>(request, requestOptions);
+    };
+
+    /**
+     * Once we have the function factory ready, we need to determine of the
+     * request is "cacheable" - should be cached. Note that, once again,
+     * the user can force this option.
+     */
+    const cacheable = Boolean(requestOptions.cacheable || request.cacheable);
+
+    /**
+     * If is not "cacheable", we immediatly trigger the retryable request, no
+     * need to check cache implementations.
+     */
+    if (cacheable !== true) {
+      return createRetryableRequest();
+    }
+
+    /**
+     * If the request is "cacheable", we need to first compute the key to ask
+     * the cache implementations if this request is on progress or if the
+     * response already exists on the cache.
+     */
+    const key = {
+      request,
+      requestOptions,
+      transporter: {
+        queryParameters: requestOptions.queryParameters,
+        headers: requestOptions.headers,
+      },
+    };
+
+    /**
+     * With the computed key, we first ask the responses cache
+     * implemention if this request was been resolved before.
+     */
+    return responsesCache.get(
+      key,
+      () => {
+        /**
+         * If the request has never resolved before, we actually ask if there
+         * is a current request with the same key on progress.
+         */
+        return requestsCache.get(key, () =>
+          /**
+           * Finally, if there is no request in progress with the same key,
+           * this `createRetryableRequest()` will actually trigger the
+           * retryable request.
+           */
+          requestsCache
+            .set(key, createRetryableRequest())
+            .then(
+              (response) => Promise.all([requestsCache.delete(key), response]),
+              (err) =>
+                Promise.all([requestsCache.delete(key), Promise.reject(err)])
+            )
+            .then(([_, response]) => response)
+        );
+      },
+      {
+        /**
+         * Of course, once we get this response back from the server, we
+         * tell response cache to actually store the received response
+         * to be used later.
+         */
+        miss: (response) => responsesCache.set(key, response),
+      }
+    );
+  }
+
   return {
     hostsCache,
     requester,
@@ -221,6 +312,8 @@ export function createTransporter({
     baseHeaders,
     baseQueryParameters,
     hosts,
-    request: retryableRequest,
+    request: createRequest,
+    requestsCache,
+    responsesCache,
   };
 }
