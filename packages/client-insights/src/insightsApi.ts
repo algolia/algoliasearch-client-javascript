@@ -8,6 +8,8 @@ import type {
   Headers,
   Host,
   Request,
+  RequestOptions,
+  QueryParameters,
 } from '@experimental-api-clients-automation/client-common';
 
 import type { InsightEvents } from '../model/insightEvents';
@@ -67,17 +69,16 @@ export function createInsightsApi(
    * @param del.parameters - URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
    * @param del.body - The parameters to send with the custom request.
    */
-  function del({
-    path,
-    parameters,
-    body,
-  }: DelProps): Promise<Record<string, any>> {
+  function del(
+    { path, parameters, body }: DelProps,
+    requestOptions?: RequestOptions
+  ): Promise<Record<string, any>> {
     const requestPath = '/1{path}'.replace(
       '{path}',
       encodeURIComponent(String(path))
     );
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!path) {
       throw new Error('Parameter `path` is required when calling `del`.');
@@ -93,10 +94,14 @@ export function createInsightsApi(
       data: body,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -107,13 +112,16 @@ export function createInsightsApi(
    * @param get.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
    * @param get.parameters - URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
    */
-  function get({ path, parameters }: GetProps): Promise<Record<string, any>> {
+  function get(
+    { path, parameters }: GetProps,
+    requestOptions?: RequestOptions
+  ): Promise<Record<string, any>> {
     const requestPath = '/1{path}'.replace(
       '{path}',
       encodeURIComponent(String(path))
     );
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!path) {
       throw new Error('Parameter `path` is required when calling `get`.');
@@ -128,10 +136,14 @@ export function createInsightsApi(
       path: requestPath,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -143,17 +155,16 @@ export function createInsightsApi(
    * @param post.parameters - URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
    * @param post.body - The parameters to send with the custom request.
    */
-  function post({
-    path,
-    parameters,
-    body,
-  }: PostProps): Promise<Record<string, any>> {
+  function post(
+    { path, parameters, body }: PostProps,
+    requestOptions?: RequestOptions
+  ): Promise<Record<string, any>> {
     const requestPath = '/1{path}'.replace(
       '{path}',
       encodeURIComponent(String(path))
     );
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!path) {
       throw new Error('Parameter `path` is required when calling `post`.');
@@ -169,10 +180,14 @@ export function createInsightsApi(
       data: body,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -182,11 +197,12 @@ export function createInsightsApi(
    * @param insightEvents - The insightEvents object.
    */
   function pushEvents(
-    insightEvents: InsightEvents
+    insightEvents: InsightEvents,
+    requestOptions?: RequestOptions
   ): Promise<PushEventsResponse> {
     const requestPath = '/1/events';
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!insightEvents) {
       throw new Error(
@@ -206,10 +222,14 @@ export function createInsightsApi(
       data: insightEvents,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -221,17 +241,16 @@ export function createInsightsApi(
    * @param put.parameters - URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
    * @param put.body - The parameters to send with the custom request.
    */
-  function put({
-    path,
-    parameters,
-    body,
-  }: PutProps): Promise<Record<string, any>> {
+  function put(
+    { path, parameters, body }: PutProps,
+    requestOptions?: RequestOptions
+  ): Promise<Record<string, any>> {
     const requestPath = '/1{path}'.replace(
       '{path}',
       encodeURIComponent(String(path))
     );
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!path) {
       throw new Error('Parameter `path` is required when calling `put`.');
@@ -247,10 +266,14 @@ export function createInsightsApi(
       data: body,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   return { addUserAgent, del, get, post, pushEvents, put };

@@ -1,7 +1,4 @@
-import type {
-  Host,
-  Requester,
-} from '@experimental-api-clients-automation/client-common';
+import type { InitClientOptions } from '@experimental-api-clients-automation/client-common';
 import {
   createMemoryCache,
   createNullCache,
@@ -16,7 +13,7 @@ export * from '../src/predictApi';
 export function predictApi(
   appId: string,
   apiKey: string,
-  options?: { requester?: Requester; hosts?: Host[] }
+  options?: InitClientOptions
 ): PredictApi {
   if (!appId) {
     throw new Error('`appId` is missing.');
@@ -36,9 +33,9 @@ export function predictApi(
     },
     requester: options?.requester ?? createHttpRequester(),
     userAgents: [{ segment: 'Node.js', version: process.versions.node }],
-    responsesCache: createNullCache(),
-    requestsCache: createNullCache(),
-    hostsCache: createMemoryCache(),
+    responsesCache: options?.responsesCache ?? createNullCache(),
+    requestsCache: options?.requestsCache ?? createNullCache(),
+    hostsCache: options?.hostsCache ?? createMemoryCache(),
     ...options,
   });
 }

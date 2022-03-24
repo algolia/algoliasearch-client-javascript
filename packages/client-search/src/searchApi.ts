@@ -9,6 +9,8 @@ import type {
   Headers,
   Host,
   Request,
+  RequestOptions,
+  QueryParameters,
 } from '@experimental-api-clients-automation/client-common';
 
 import type { AddApiKeyResponse } from '../model/addApiKeyResponse';
@@ -140,10 +142,13 @@ export function createSearchApi(options: CreateClientOptions) {
    * @summary Create a new API key.
    * @param apiKey - The apiKey object.
    */
-  function addApiKey(apiKey: ApiKey): Promise<AddApiKeyResponse> {
+  function addApiKey(
+    apiKey: ApiKey,
+    requestOptions?: RequestOptions
+  ): Promise<AddApiKeyResponse> {
     const requestPath = '/1/keys';
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!apiKey) {
       throw new Error(
@@ -163,10 +168,14 @@ export function createSearchApi(options: CreateClientOptions) {
       data: apiKey,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -178,16 +187,15 @@ export function createSearchApi(options: CreateClientOptions) {
    * @param addOrUpdateObject.objectID - Unique identifier of an object.
    * @param addOrUpdateObject.body - The Algolia object.
    */
-  function addOrUpdateObject({
-    indexName,
-    objectID,
-    body,
-  }: AddOrUpdateObjectProps): Promise<UpdatedAtWithObjectIdResponse> {
+  function addOrUpdateObject(
+    { indexName, objectID, body }: AddOrUpdateObjectProps,
+    requestOptions?: RequestOptions
+  ): Promise<UpdatedAtWithObjectIdResponse> {
     const requestPath = '/1/indexes/{indexName}/{objectID}'
       .replace('{indexName}', encodeURIComponent(String(indexName)))
       .replace('{objectID}', encodeURIComponent(String(objectID)));
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!indexName) {
       throw new Error(
@@ -213,10 +221,14 @@ export function createSearchApi(options: CreateClientOptions) {
       data: body,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -225,10 +237,13 @@ export function createSearchApi(options: CreateClientOptions) {
    * @summary Add a single source.
    * @param source - The source to add.
    */
-  function appendSource(source: Source): Promise<CreatedAtResponse> {
+  function appendSource(
+    source: Source,
+    requestOptions?: RequestOptions
+  ): Promise<CreatedAtResponse> {
     const requestPath = '/1/security/sources/append';
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!source) {
       throw new Error(
@@ -242,10 +257,14 @@ export function createSearchApi(options: CreateClientOptions) {
       data: source,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -256,13 +275,13 @@ export function createSearchApi(options: CreateClientOptions) {
    * @param assignUserId.xAlgoliaUserID - UserID to assign.
    * @param assignUserId.assignUserIdParams - The assignUserIdParams object.
    */
-  function assignUserId({
-    xAlgoliaUserID,
-    assignUserIdParams,
-  }: AssignUserIdProps): Promise<CreatedAtResponse> {
+  function assignUserId(
+    { xAlgoliaUserID, assignUserIdParams }: AssignUserIdProps,
+    requestOptions?: RequestOptions
+  ): Promise<CreatedAtResponse> {
     const requestPath = '/1/clusters/mapping';
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!xAlgoliaUserID) {
       throw new Error(
@@ -292,10 +311,14 @@ export function createSearchApi(options: CreateClientOptions) {
       data: assignUserIdParams,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -306,16 +329,16 @@ export function createSearchApi(options: CreateClientOptions) {
    * @param batch.indexName - The index in which to perform the request.
    * @param batch.batchWriteParams - The batchWriteParams object.
    */
-  function batch({
-    indexName,
-    batchWriteParams,
-  }: BatchProps): Promise<BatchResponse> {
+  function batch(
+    { indexName, batchWriteParams }: BatchProps,
+    requestOptions?: RequestOptions
+  ): Promise<BatchResponse> {
     const requestPath = '/1/indexes/{indexName}/batch'.replace(
       '{indexName}',
       encodeURIComponent(String(indexName))
     );
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!indexName) {
       throw new Error(
@@ -335,10 +358,14 @@ export function createSearchApi(options: CreateClientOptions) {
       data: batchWriteParams,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -349,13 +376,13 @@ export function createSearchApi(options: CreateClientOptions) {
    * @param batchAssignUserIds.xAlgoliaUserID - UserID to assign.
    * @param batchAssignUserIds.batchAssignUserIdsParams - The batchAssignUserIdsParams object.
    */
-  function batchAssignUserIds({
-    xAlgoliaUserID,
-    batchAssignUserIdsParams,
-  }: BatchAssignUserIdsProps): Promise<CreatedAtResponse> {
+  function batchAssignUserIds(
+    { xAlgoliaUserID, batchAssignUserIdsParams }: BatchAssignUserIdsProps,
+    requestOptions?: RequestOptions
+  ): Promise<CreatedAtResponse> {
     const requestPath = '/1/clusters/mapping/batch';
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!xAlgoliaUserID) {
       throw new Error(
@@ -390,10 +417,14 @@ export function createSearchApi(options: CreateClientOptions) {
       data: batchAssignUserIdsParams,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -404,16 +435,19 @@ export function createSearchApi(options: CreateClientOptions) {
    * @param batchDictionaryEntries.dictionaryName - The dictionary to search in.
    * @param batchDictionaryEntries.batchDictionaryEntriesParams - The batchDictionaryEntriesParams object.
    */
-  function batchDictionaryEntries({
-    dictionaryName,
-    batchDictionaryEntriesParams,
-  }: BatchDictionaryEntriesProps): Promise<UpdatedAtResponse> {
+  function batchDictionaryEntries(
+    {
+      dictionaryName,
+      batchDictionaryEntriesParams,
+    }: BatchDictionaryEntriesProps,
+    requestOptions?: RequestOptions
+  ): Promise<UpdatedAtResponse> {
     const requestPath = '/1/dictionaries/{dictionaryName}/batch'.replace(
       '{dictionaryName}',
       encodeURIComponent(String(dictionaryName))
     );
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!dictionaryName) {
       throw new Error(
@@ -439,10 +473,14 @@ export function createSearchApi(options: CreateClientOptions) {
       data: batchDictionaryEntriesParams,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -455,18 +493,16 @@ export function createSearchApi(options: CreateClientOptions) {
    * @param batchRules.forwardToReplicas - When true, changes are also propagated to replicas of the given indexName.
    * @param batchRules.clearExistingRules - When true, existing Rules are cleared before adding this batch. When false, existing Rules are kept.
    */
-  function batchRules({
-    indexName,
-    rule,
-    forwardToReplicas,
-    clearExistingRules,
-  }: BatchRulesProps): Promise<UpdatedAtResponse> {
+  function batchRules(
+    { indexName, rule, forwardToReplicas, clearExistingRules }: BatchRulesProps,
+    requestOptions?: RequestOptions
+  ): Promise<UpdatedAtResponse> {
     const requestPath = '/1/indexes/{indexName}/rules/batch'.replace(
       '{indexName}',
       encodeURIComponent(String(indexName))
     );
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!indexName) {
       throw new Error(
@@ -494,10 +530,14 @@ export function createSearchApi(options: CreateClientOptions) {
       data: rule,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -508,16 +548,16 @@ export function createSearchApi(options: CreateClientOptions) {
    * @param browse.indexName - The index in which to perform the request.
    * @param browse.browseRequest - The browseRequest object.
    */
-  function browse({
-    indexName,
-    browseRequest,
-  }: BrowseProps): Promise<BrowseResponse> {
+  function browse(
+    { indexName, browseRequest }: BrowseProps,
+    requestOptions?: RequestOptions
+  ): Promise<BrowseResponse> {
     const requestPath = '/1/indexes/{indexName}/browse'.replace(
       '{indexName}',
       encodeURIComponent(String(indexName))
     );
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!indexName) {
       throw new Error(
@@ -531,10 +571,14 @@ export function createSearchApi(options: CreateClientOptions) {
       data: browseRequest,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -545,16 +589,16 @@ export function createSearchApi(options: CreateClientOptions) {
    * @param clearAllSynonyms.indexName - The index in which to perform the request.
    * @param clearAllSynonyms.forwardToReplicas - When true, changes are also propagated to replicas of the given indexName.
    */
-  function clearAllSynonyms({
-    indexName,
-    forwardToReplicas,
-  }: ClearAllSynonymsProps): Promise<UpdatedAtResponse> {
+  function clearAllSynonyms(
+    { indexName, forwardToReplicas }: ClearAllSynonymsProps,
+    requestOptions?: RequestOptions
+  ): Promise<UpdatedAtResponse> {
     const requestPath = '/1/indexes/{indexName}/synonyms/clear'.replace(
       '{indexName}',
       encodeURIComponent(String(indexName))
     );
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!indexName) {
       throw new Error(
@@ -571,10 +615,14 @@ export function createSearchApi(options: CreateClientOptions) {
       path: requestPath,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -584,15 +632,16 @@ export function createSearchApi(options: CreateClientOptions) {
    * @param clearObjects - The clearObjects object.
    * @param clearObjects.indexName - The index in which to perform the request.
    */
-  function clearObjects({
-    indexName,
-  }: ClearObjectsProps): Promise<UpdatedAtResponse> {
+  function clearObjects(
+    { indexName }: ClearObjectsProps,
+    requestOptions?: RequestOptions
+  ): Promise<UpdatedAtResponse> {
     const requestPath = '/1/indexes/{indexName}/clear'.replace(
       '{indexName}',
       encodeURIComponent(String(indexName))
     );
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!indexName) {
       throw new Error(
@@ -605,10 +654,14 @@ export function createSearchApi(options: CreateClientOptions) {
       path: requestPath,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -619,16 +672,16 @@ export function createSearchApi(options: CreateClientOptions) {
    * @param clearRules.indexName - The index in which to perform the request.
    * @param clearRules.forwardToReplicas - When true, changes are also propagated to replicas of the given indexName.
    */
-  function clearRules({
-    indexName,
-    forwardToReplicas,
-  }: ClearRulesProps): Promise<UpdatedAtResponse> {
+  function clearRules(
+    { indexName, forwardToReplicas }: ClearRulesProps,
+    requestOptions?: RequestOptions
+  ): Promise<UpdatedAtResponse> {
     const requestPath = '/1/indexes/{indexName}/rules/clear'.replace(
       '{indexName}',
       encodeURIComponent(String(indexName))
     );
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!indexName) {
       throw new Error(
@@ -645,10 +698,14 @@ export function createSearchApi(options: CreateClientOptions) {
       path: requestPath,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -660,17 +717,16 @@ export function createSearchApi(options: CreateClientOptions) {
    * @param del.parameters - URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
    * @param del.body - The parameters to send with the custom request.
    */
-  function del({
-    path,
-    parameters,
-    body,
-  }: DelProps): Promise<Record<string, any>> {
+  function del(
+    { path, parameters, body }: DelProps,
+    requestOptions?: RequestOptions
+  ): Promise<Record<string, any>> {
     const requestPath = '/1{path}'.replace(
       '{path}',
       encodeURIComponent(String(path))
     );
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!path) {
       throw new Error('Parameter `path` is required when calling `del`.');
@@ -686,10 +742,14 @@ export function createSearchApi(options: CreateClientOptions) {
       data: body,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -699,15 +759,16 @@ export function createSearchApi(options: CreateClientOptions) {
    * @param deleteApiKey - The deleteApiKey object.
    * @param deleteApiKey.key - API Key string.
    */
-  function deleteApiKey({
-    key,
-  }: DeleteApiKeyProps): Promise<DeleteApiKeyResponse> {
+  function deleteApiKey(
+    { key }: DeleteApiKeyProps,
+    requestOptions?: RequestOptions
+  ): Promise<DeleteApiKeyResponse> {
     const requestPath = '/1/keys/{key}'.replace(
       '{key}',
       encodeURIComponent(String(key))
     );
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!key) {
       throw new Error(
@@ -720,10 +781,14 @@ export function createSearchApi(options: CreateClientOptions) {
       path: requestPath,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -734,16 +799,16 @@ export function createSearchApi(options: CreateClientOptions) {
    * @param deleteBy.indexName - The index in which to perform the request.
    * @param deleteBy.searchParams - The searchParams object.
    */
-  function deleteBy({
-    indexName,
-    searchParams,
-  }: DeleteByProps): Promise<DeletedAtResponse> {
+  function deleteBy(
+    { indexName, searchParams }: DeleteByProps,
+    requestOptions?: RequestOptions
+  ): Promise<DeletedAtResponse> {
     const requestPath = '/1/indexes/{indexName}/deleteByQuery'.replace(
       '{indexName}',
       encodeURIComponent(String(indexName))
     );
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!indexName) {
       throw new Error(
@@ -763,10 +828,14 @@ export function createSearchApi(options: CreateClientOptions) {
       data: searchParams,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -776,15 +845,16 @@ export function createSearchApi(options: CreateClientOptions) {
    * @param deleteIndex - The deleteIndex object.
    * @param deleteIndex.indexName - The index in which to perform the request.
    */
-  function deleteIndex({
-    indexName,
-  }: DeleteIndexProps): Promise<DeletedAtResponse> {
+  function deleteIndex(
+    { indexName }: DeleteIndexProps,
+    requestOptions?: RequestOptions
+  ): Promise<DeletedAtResponse> {
     const requestPath = '/1/indexes/{indexName}'.replace(
       '{indexName}',
       encodeURIComponent(String(indexName))
     );
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!indexName) {
       throw new Error(
@@ -797,10 +867,14 @@ export function createSearchApi(options: CreateClientOptions) {
       path: requestPath,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -811,15 +885,15 @@ export function createSearchApi(options: CreateClientOptions) {
    * @param deleteObject.indexName - The index in which to perform the request.
    * @param deleteObject.objectID - Unique identifier of an object.
    */
-  function deleteObject({
-    indexName,
-    objectID,
-  }: DeleteObjectProps): Promise<DeletedAtResponse> {
+  function deleteObject(
+    { indexName, objectID }: DeleteObjectProps,
+    requestOptions?: RequestOptions
+  ): Promise<DeletedAtResponse> {
     const requestPath = '/1/indexes/{indexName}/{objectID}'
       .replace('{indexName}', encodeURIComponent(String(indexName)))
       .replace('{objectID}', encodeURIComponent(String(objectID)));
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!indexName) {
       throw new Error(
@@ -838,10 +912,14 @@ export function createSearchApi(options: CreateClientOptions) {
       path: requestPath,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -853,16 +931,15 @@ export function createSearchApi(options: CreateClientOptions) {
    * @param deleteRule.objectID - Unique identifier of an object.
    * @param deleteRule.forwardToReplicas - When true, changes are also propagated to replicas of the given indexName.
    */
-  function deleteRule({
-    indexName,
-    objectID,
-    forwardToReplicas,
-  }: DeleteRuleProps): Promise<UpdatedAtResponse> {
+  function deleteRule(
+    { indexName, objectID, forwardToReplicas }: DeleteRuleProps,
+    requestOptions?: RequestOptions
+  ): Promise<UpdatedAtResponse> {
     const requestPath = '/1/indexes/{indexName}/rules/{objectID}'
       .replace('{indexName}', encodeURIComponent(String(indexName)))
       .replace('{objectID}', encodeURIComponent(String(objectID)));
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!indexName) {
       throw new Error(
@@ -885,10 +962,14 @@ export function createSearchApi(options: CreateClientOptions) {
       path: requestPath,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -898,15 +979,16 @@ export function createSearchApi(options: CreateClientOptions) {
    * @param deleteSource - The deleteSource object.
    * @param deleteSource.source - The IP range of the source.
    */
-  function deleteSource({
-    source,
-  }: DeleteSourceProps): Promise<DeleteSourceResponse> {
+  function deleteSource(
+    { source }: DeleteSourceProps,
+    requestOptions?: RequestOptions
+  ): Promise<DeleteSourceResponse> {
     const requestPath = '/1/security/sources/{source}'.replace(
       '{source}',
       encodeURIComponent(String(source))
     );
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!source) {
       throw new Error(
@@ -919,10 +1001,14 @@ export function createSearchApi(options: CreateClientOptions) {
       path: requestPath,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -934,16 +1020,15 @@ export function createSearchApi(options: CreateClientOptions) {
    * @param deleteSynonym.objectID - Unique identifier of an object.
    * @param deleteSynonym.forwardToReplicas - When true, changes are also propagated to replicas of the given indexName.
    */
-  function deleteSynonym({
-    indexName,
-    objectID,
-    forwardToReplicas,
-  }: DeleteSynonymProps): Promise<DeletedAtResponse> {
+  function deleteSynonym(
+    { indexName, objectID, forwardToReplicas }: DeleteSynonymProps,
+    requestOptions?: RequestOptions
+  ): Promise<DeletedAtResponse> {
     const requestPath = '/1/indexes/{indexName}/synonyms/{objectID}'
       .replace('{indexName}', encodeURIComponent(String(indexName)))
       .replace('{objectID}', encodeURIComponent(String(objectID)));
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!indexName) {
       throw new Error(
@@ -966,10 +1051,14 @@ export function createSearchApi(options: CreateClientOptions) {
       path: requestPath,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -980,13 +1069,16 @@ export function createSearchApi(options: CreateClientOptions) {
    * @param get.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
    * @param get.parameters - URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
    */
-  function get({ path, parameters }: GetProps): Promise<Record<string, any>> {
+  function get(
+    { path, parameters }: GetProps,
+    requestOptions?: RequestOptions
+  ): Promise<Record<string, any>> {
     const requestPath = '/1{path}'.replace(
       '{path}',
       encodeURIComponent(String(path))
     );
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!path) {
       throw new Error('Parameter `path` is required when calling `get`.');
@@ -1001,10 +1093,14 @@ export function createSearchApi(options: CreateClientOptions) {
       path: requestPath,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -1014,13 +1110,16 @@ export function createSearchApi(options: CreateClientOptions) {
    * @param getApiKey - The getApiKey object.
    * @param getApiKey.key - API Key string.
    */
-  function getApiKey({ key }: GetApiKeyProps): Promise<Key> {
+  function getApiKey(
+    { key }: GetApiKeyProps,
+    requestOptions?: RequestOptions
+  ): Promise<Key> {
     const requestPath = '/1/keys/{key}'.replace(
       '{key}',
       encodeURIComponent(String(key))
     );
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!key) {
       throw new Error('Parameter `key` is required when calling `getApiKey`.');
@@ -1031,10 +1130,14 @@ export function createSearchApi(options: CreateClientOptions) {
       path: requestPath,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -1042,20 +1145,26 @@ export function createSearchApi(options: CreateClientOptions) {
    *
    * @summary List dictionaries supported per language.
    */
-  function getDictionaryLanguages(): Promise<{ [key: string]: Languages }> {
+  function getDictionaryLanguages(
+    requestOptions?: RequestOptions
+  ): Promise<{ [key: string]: Languages }> {
     const requestPath = '/1/dictionaries/*/languages';
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     const request: Request = {
       method: 'GET',
       path: requestPath,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -1063,20 +1172,26 @@ export function createSearchApi(options: CreateClientOptions) {
    *
    * @summary Retrieve dictionaries settings. The API stores languages whose standard entries are disabled. Fetch settings does not return false values.
    */
-  function getDictionarySettings(): Promise<GetDictionarySettingsResponse> {
+  function getDictionarySettings(
+    requestOptions?: RequestOptions
+  ): Promise<GetDictionarySettingsResponse> {
     const requestPath = '/1/dictionaries/*/settings';
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     const request: Request = {
       method: 'GET',
       path: requestPath,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -1089,15 +1204,13 @@ export function createSearchApi(options: CreateClientOptions) {
    * @param getLogs.indexName - Index for which log entries should be retrieved. When omitted, log entries are retrieved across all indices.
    * @param getLogs.type - Type of log entries to retrieve. When omitted, all log entries are retrieved.
    */
-  function getLogs({
-    offset,
-    length,
-    indexName,
-    type,
-  }: GetLogsProps): Promise<GetLogsResponse> {
+  function getLogs(
+    { offset, length, indexName, type }: GetLogsProps,
+    requestOptions?: RequestOptions
+  ): Promise<GetLogsResponse> {
     const requestPath = '/1/logs';
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (offset !== undefined) {
       queryParameters.offset = offset.toString();
@@ -1120,10 +1233,14 @@ export function createSearchApi(options: CreateClientOptions) {
       path: requestPath,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -1135,16 +1252,15 @@ export function createSearchApi(options: CreateClientOptions) {
    * @param getObject.objectID - Unique identifier of an object.
    * @param getObject.attributesToRetrieve - List of attributes to retrieve. If not specified, all retrievable attributes are returned.
    */
-  function getObject({
-    indexName,
-    objectID,
-    attributesToRetrieve,
-  }: GetObjectProps): Promise<{ [key: string]: string }> {
+  function getObject(
+    { indexName, objectID, attributesToRetrieve }: GetObjectProps,
+    requestOptions?: RequestOptions
+  ): Promise<{ [key: string]: string }> {
     const requestPath = '/1/indexes/{indexName}/{objectID}'
       .replace('{indexName}', encodeURIComponent(String(indexName)))
       .replace('{objectID}', encodeURIComponent(String(objectID)));
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!indexName) {
       throw new Error(
@@ -1167,10 +1283,14 @@ export function createSearchApi(options: CreateClientOptions) {
       path: requestPath,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -1180,11 +1300,12 @@ export function createSearchApi(options: CreateClientOptions) {
    * @param getObjectsParams - The getObjectsParams object.
    */
   function getObjects(
-    getObjectsParams: GetObjectsParams
+    getObjectsParams: GetObjectsParams,
+    requestOptions?: RequestOptions
   ): Promise<GetObjectsResponse> {
     const requestPath = '/1/indexes/*/objects';
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!getObjectsParams) {
       throw new Error(
@@ -1198,10 +1319,14 @@ export function createSearchApi(options: CreateClientOptions) {
       data: getObjectsParams,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -1212,12 +1337,15 @@ export function createSearchApi(options: CreateClientOptions) {
    * @param getRule.indexName - The index in which to perform the request.
    * @param getRule.objectID - Unique identifier of an object.
    */
-  function getRule({ indexName, objectID }: GetRuleProps): Promise<Rule> {
+  function getRule(
+    { indexName, objectID }: GetRuleProps,
+    requestOptions?: RequestOptions
+  ): Promise<Rule> {
     const requestPath = '/1/indexes/{indexName}/rules/{objectID}'
       .replace('{indexName}', encodeURIComponent(String(indexName)))
       .replace('{objectID}', encodeURIComponent(String(objectID)));
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!indexName) {
       throw new Error(
@@ -1236,10 +1364,14 @@ export function createSearchApi(options: CreateClientOptions) {
       path: requestPath,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -1249,15 +1381,16 @@ export function createSearchApi(options: CreateClientOptions) {
    * @param getSettings - The getSettings object.
    * @param getSettings.indexName - The index in which to perform the request.
    */
-  function getSettings({
-    indexName,
-  }: GetSettingsProps): Promise<IndexSettings> {
+  function getSettings(
+    { indexName }: GetSettingsProps,
+    requestOptions?: RequestOptions
+  ): Promise<IndexSettings> {
     const requestPath = '/1/indexes/{indexName}/settings'.replace(
       '{indexName}',
       encodeURIComponent(String(indexName))
     );
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!indexName) {
       throw new Error(
@@ -1270,10 +1403,14 @@ export function createSearchApi(options: CreateClientOptions) {
       path: requestPath,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -1281,20 +1418,24 @@ export function createSearchApi(options: CreateClientOptions) {
    *
    * @summary List all allowed sources.
    */
-  function getSources(): Promise<Source[]> {
+  function getSources(requestOptions?: RequestOptions): Promise<Source[]> {
     const requestPath = '/1/security/sources';
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     const request: Request = {
       method: 'GET',
       path: requestPath,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -1305,15 +1446,15 @@ export function createSearchApi(options: CreateClientOptions) {
    * @param getSynonym.indexName - The index in which to perform the request.
    * @param getSynonym.objectID - Unique identifier of an object.
    */
-  function getSynonym({
-    indexName,
-    objectID,
-  }: GetSynonymProps): Promise<SynonymHit> {
+  function getSynonym(
+    { indexName, objectID }: GetSynonymProps,
+    requestOptions?: RequestOptions
+  ): Promise<SynonymHit> {
     const requestPath = '/1/indexes/{indexName}/synonyms/{objectID}'
       .replace('{indexName}', encodeURIComponent(String(indexName)))
       .replace('{objectID}', encodeURIComponent(String(objectID)));
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!indexName) {
       throw new Error(
@@ -1332,10 +1473,14 @@ export function createSearchApi(options: CreateClientOptions) {
       path: requestPath,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -1346,15 +1491,15 @@ export function createSearchApi(options: CreateClientOptions) {
    * @param getTask.indexName - The index in which to perform the request.
    * @param getTask.taskID - Unique identifier of an task. Numeric value (up to 64bits).
    */
-  function getTask({
-    indexName,
-    taskID,
-  }: GetTaskProps): Promise<GetTaskResponse> {
+  function getTask(
+    { indexName, taskID }: GetTaskProps,
+    requestOptions?: RequestOptions
+  ): Promise<GetTaskResponse> {
     const requestPath = '/1/indexes/{indexName}/task/{taskID}'
       .replace('{indexName}', encodeURIComponent(String(indexName)))
       .replace('{taskID}', encodeURIComponent(String(taskID)));
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!indexName) {
       throw new Error(
@@ -1371,10 +1516,14 @@ export function createSearchApi(options: CreateClientOptions) {
       path: requestPath,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -1382,20 +1531,26 @@ export function createSearchApi(options: CreateClientOptions) {
    *
    * @summary Get top userID.
    */
-  function getTopUserIds(): Promise<GetTopUserIdsResponse> {
+  function getTopUserIds(
+    requestOptions?: RequestOptions
+  ): Promise<GetTopUserIdsResponse> {
     const requestPath = '/1/clusters/mapping/top';
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     const request: Request = {
       method: 'GET',
       path: requestPath,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -1405,13 +1560,16 @@ export function createSearchApi(options: CreateClientOptions) {
    * @param getUserId - The getUserId object.
    * @param getUserId.userID - UserID to assign.
    */
-  function getUserId({ userID }: GetUserIdProps): Promise<UserId> {
+  function getUserId(
+    { userID }: GetUserIdProps,
+    requestOptions?: RequestOptions
+  ): Promise<UserId> {
     const requestPath = '/1/clusters/mapping/{userID}'.replace(
       '{userID}',
       encodeURIComponent(String(userID))
     );
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!userID) {
       throw new Error(
@@ -1424,10 +1582,14 @@ export function createSearchApi(options: CreateClientOptions) {
       path: requestPath,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -1437,12 +1599,13 @@ export function createSearchApi(options: CreateClientOptions) {
    * @param hasPendingMappings - The hasPendingMappings object.
    * @param hasPendingMappings.getClusters - Whether to get clusters or not.
    */
-  function hasPendingMappings({
-    getClusters,
-  }: HasPendingMappingsProps): Promise<CreatedAtResponse> {
+  function hasPendingMappings(
+    { getClusters }: HasPendingMappingsProps,
+    requestOptions?: RequestOptions
+  ): Promise<CreatedAtResponse> {
     const requestPath = '/1/clusters/mapping/pending';
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (getClusters !== undefined) {
       queryParameters.getClusters = getClusters.toString();
@@ -1453,10 +1616,14 @@ export function createSearchApi(options: CreateClientOptions) {
       path: requestPath,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -1464,20 +1631,26 @@ export function createSearchApi(options: CreateClientOptions) {
    *
    * @summary Get the full list of API Keys.
    */
-  function listApiKeys(): Promise<ListApiKeysResponse> {
+  function listApiKeys(
+    requestOptions?: RequestOptions
+  ): Promise<ListApiKeysResponse> {
     const requestPath = '/1/keys';
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     const request: Request = {
       method: 'GET',
       path: requestPath,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -1485,20 +1658,26 @@ export function createSearchApi(options: CreateClientOptions) {
    *
    * @summary List clusters.
    */
-  function listClusters(): Promise<ListClustersResponse> {
+  function listClusters(
+    requestOptions?: RequestOptions
+  ): Promise<ListClustersResponse> {
     const requestPath = '/1/clusters';
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     const request: Request = {
       method: 'GET',
       path: requestPath,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -1508,12 +1687,13 @@ export function createSearchApi(options: CreateClientOptions) {
    * @param listIndices - The listIndices object.
    * @param listIndices.page - Requested page (zero-based). When specified, will retrieve a specific page; the page size is implicitly set to 100. When null, will retrieve all indices (no pagination).
    */
-  function listIndices({
-    page,
-  }: ListIndicesProps): Promise<ListIndicesResponse> {
+  function listIndices(
+    { page }: ListIndicesProps,
+    requestOptions?: RequestOptions
+  ): Promise<ListIndicesResponse> {
     const requestPath = '/1/indexes';
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (page !== undefined) {
       queryParameters.page = page.toString();
@@ -1524,10 +1704,14 @@ export function createSearchApi(options: CreateClientOptions) {
       path: requestPath,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -1538,13 +1722,13 @@ export function createSearchApi(options: CreateClientOptions) {
    * @param listUserIds.page - Requested page (zero-based). When specified, will retrieve a specific page; the page size is implicitly set to 100. When null, will retrieve all indices (no pagination).
    * @param listUserIds.hitsPerPage - Maximum number of objects to retrieve.
    */
-  function listUserIds({
-    page,
-    hitsPerPage,
-  }: ListUserIdsProps): Promise<ListUserIdsResponse> {
+  function listUserIds(
+    { page, hitsPerPage }: ListUserIdsProps,
+    requestOptions?: RequestOptions
+  ): Promise<ListUserIdsResponse> {
     const requestPath = '/1/clusters/mapping';
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (page !== undefined) {
       queryParameters.page = page.toString();
@@ -1559,10 +1743,14 @@ export function createSearchApi(options: CreateClientOptions) {
       path: requestPath,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -1572,11 +1760,12 @@ export function createSearchApi(options: CreateClientOptions) {
    * @param batchParams - The batchParams object.
    */
   function multipleBatch(
-    batchParams: BatchParams
+    batchParams: BatchParams,
+    requestOptions?: RequestOptions
   ): Promise<MultipleBatchResponse> {
     const requestPath = '/1/indexes/*/batch';
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!batchParams) {
       throw new Error(
@@ -1590,10 +1779,14 @@ export function createSearchApi(options: CreateClientOptions) {
       data: batchParams,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -1603,11 +1796,12 @@ export function createSearchApi(options: CreateClientOptions) {
    * @param multipleQueriesParams - The multipleQueriesParams object.
    */
   function multipleQueries(
-    multipleQueriesParams: MultipleQueriesParams
+    multipleQueriesParams: MultipleQueriesParams,
+    requestOptions?: RequestOptions
   ): Promise<MultipleQueriesResponse> {
     const requestPath = '/1/indexes/*/queries';
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!multipleQueriesParams) {
       throw new Error(
@@ -1627,10 +1821,14 @@ export function createSearchApi(options: CreateClientOptions) {
       data: multipleQueriesParams,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -1641,16 +1839,16 @@ export function createSearchApi(options: CreateClientOptions) {
    * @param operationIndex.indexName - The index in which to perform the request.
    * @param operationIndex.operationIndexParams - The operationIndexParams object.
    */
-  function operationIndex({
-    indexName,
-    operationIndexParams,
-  }: OperationIndexProps): Promise<UpdatedAtResponse> {
+  function operationIndex(
+    { indexName, operationIndexParams }: OperationIndexProps,
+    requestOptions?: RequestOptions
+  ): Promise<UpdatedAtResponse> {
     const requestPath = '/1/indexes/{indexName}/operation'.replace(
       '{indexName}',
       encodeURIComponent(String(indexName))
     );
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!indexName) {
       throw new Error(
@@ -1681,10 +1879,14 @@ export function createSearchApi(options: CreateClientOptions) {
       data: operationIndexParams,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -1697,17 +1899,20 @@ export function createSearchApi(options: CreateClientOptions) {
    * @param partialUpdateObject.attributeOrBuiltInOperation - List of attributes to update.
    * @param partialUpdateObject.createIfNotExists - Creates the record if it does not exist yet.
    */
-  function partialUpdateObject({
-    indexName,
-    objectID,
-    attributeOrBuiltInOperation,
-    createIfNotExists,
-  }: PartialUpdateObjectProps): Promise<UpdatedAtWithObjectIdResponse> {
+  function partialUpdateObject(
+    {
+      indexName,
+      objectID,
+      attributeOrBuiltInOperation,
+      createIfNotExists,
+    }: PartialUpdateObjectProps,
+    requestOptions?: RequestOptions
+  ): Promise<UpdatedAtWithObjectIdResponse> {
     const requestPath = '/1/indexes/{indexName}/{objectID}/partial'
       .replace('{indexName}', encodeURIComponent(String(indexName)))
       .replace('{objectID}', encodeURIComponent(String(objectID)));
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!indexName) {
       throw new Error(
@@ -1737,10 +1942,14 @@ export function createSearchApi(options: CreateClientOptions) {
       data: attributeOrBuiltInOperation,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -1752,17 +1961,16 @@ export function createSearchApi(options: CreateClientOptions) {
    * @param post.parameters - URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
    * @param post.body - The parameters to send with the custom request.
    */
-  function post({
-    path,
-    parameters,
-    body,
-  }: PostProps): Promise<Record<string, any>> {
+  function post(
+    { path, parameters, body }: PostProps,
+    requestOptions?: RequestOptions
+  ): Promise<Record<string, any>> {
     const requestPath = '/1{path}'.replace(
       '{path}',
       encodeURIComponent(String(path))
     );
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!path) {
       throw new Error('Parameter `path` is required when calling `post`.');
@@ -1778,10 +1986,14 @@ export function createSearchApi(options: CreateClientOptions) {
       data: body,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -1793,17 +2005,16 @@ export function createSearchApi(options: CreateClientOptions) {
    * @param put.parameters - URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
    * @param put.body - The parameters to send with the custom request.
    */
-  function put({
-    path,
-    parameters,
-    body,
-  }: PutProps): Promise<Record<string, any>> {
+  function put(
+    { path, parameters, body }: PutProps,
+    requestOptions?: RequestOptions
+  ): Promise<Record<string, any>> {
     const requestPath = '/1{path}'.replace(
       '{path}',
       encodeURIComponent(String(path))
     );
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!path) {
       throw new Error('Parameter `path` is required when calling `put`.');
@@ -1819,10 +2030,14 @@ export function createSearchApi(options: CreateClientOptions) {
       data: body,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -1832,15 +2047,16 @@ export function createSearchApi(options: CreateClientOptions) {
    * @param removeUserId - The removeUserId object.
    * @param removeUserId.userID - UserID to assign.
    */
-  function removeUserId({
-    userID,
-  }: RemoveUserIdProps): Promise<RemoveUserIdResponse> {
+  function removeUserId(
+    { userID }: RemoveUserIdProps,
+    requestOptions?: RequestOptions
+  ): Promise<RemoveUserIdResponse> {
     const requestPath = '/1/clusters/mapping/{userID}'.replace(
       '{userID}',
       encodeURIComponent(String(userID))
     );
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!userID) {
       throw new Error(
@@ -1853,10 +2069,14 @@ export function createSearchApi(options: CreateClientOptions) {
       path: requestPath,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -1866,12 +2086,13 @@ export function createSearchApi(options: CreateClientOptions) {
    * @param replaceSources - The replaceSources object.
    * @param replaceSources.source - The sources to allow.
    */
-  function replaceSources({
-    source,
-  }: ReplaceSourcesProps): Promise<ReplaceSourceResponse> {
+  function replaceSources(
+    { source }: ReplaceSourcesProps,
+    requestOptions?: RequestOptions
+  ): Promise<ReplaceSourceResponse> {
     const requestPath = '/1/security/sources';
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!source) {
       throw new Error(
@@ -1885,10 +2106,14 @@ export function createSearchApi(options: CreateClientOptions) {
       data: source,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -1898,15 +2123,16 @@ export function createSearchApi(options: CreateClientOptions) {
    * @param restoreApiKey - The restoreApiKey object.
    * @param restoreApiKey.key - API Key string.
    */
-  function restoreApiKey({
-    key,
-  }: RestoreApiKeyProps): Promise<AddApiKeyResponse> {
+  function restoreApiKey(
+    { key }: RestoreApiKeyProps,
+    requestOptions?: RequestOptions
+  ): Promise<AddApiKeyResponse> {
     const requestPath = '/1/keys/{key}/restore'.replace(
       '{key}',
       encodeURIComponent(String(key))
     );
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!key) {
       throw new Error(
@@ -1919,10 +2145,14 @@ export function createSearchApi(options: CreateClientOptions) {
       path: requestPath,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -1933,16 +2163,16 @@ export function createSearchApi(options: CreateClientOptions) {
    * @param saveObject.indexName - The index in which to perform the request.
    * @param saveObject.body - The Algolia record.
    */
-  function saveObject({
-    indexName,
-    body,
-  }: SaveObjectProps): Promise<SaveObjectResponse> {
+  function saveObject(
+    { indexName, body }: SaveObjectProps,
+    requestOptions?: RequestOptions
+  ): Promise<SaveObjectResponse> {
     const requestPath = '/1/indexes/{indexName}'.replace(
       '{indexName}',
       encodeURIComponent(String(indexName))
     );
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!indexName) {
       throw new Error(
@@ -1962,10 +2192,14 @@ export function createSearchApi(options: CreateClientOptions) {
       data: body,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -1978,17 +2212,15 @@ export function createSearchApi(options: CreateClientOptions) {
    * @param saveRule.rule - The rule object.
    * @param saveRule.forwardToReplicas - When true, changes are also propagated to replicas of the given indexName.
    */
-  function saveRule({
-    indexName,
-    objectID,
-    rule,
-    forwardToReplicas,
-  }: SaveRuleProps): Promise<UpdatedRuleResponse> {
+  function saveRule(
+    { indexName, objectID, rule, forwardToReplicas }: SaveRuleProps,
+    requestOptions?: RequestOptions
+  ): Promise<UpdatedRuleResponse> {
     const requestPath = '/1/indexes/{indexName}/rules/{objectID}'
       .replace('{indexName}', encodeURIComponent(String(indexName)))
       .replace('{objectID}', encodeURIComponent(String(objectID)));
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!indexName) {
       throw new Error(
@@ -2027,10 +2259,14 @@ export function createSearchApi(options: CreateClientOptions) {
       data: rule,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -2043,17 +2279,15 @@ export function createSearchApi(options: CreateClientOptions) {
    * @param saveSynonym.synonymHit - The synonymHit object.
    * @param saveSynonym.forwardToReplicas - When true, changes are also propagated to replicas of the given indexName.
    */
-  function saveSynonym({
-    indexName,
-    objectID,
-    synonymHit,
-    forwardToReplicas,
-  }: SaveSynonymProps): Promise<SaveSynonymResponse> {
+  function saveSynonym(
+    { indexName, objectID, synonymHit, forwardToReplicas }: SaveSynonymProps,
+    requestOptions?: RequestOptions
+  ): Promise<SaveSynonymResponse> {
     const requestPath = '/1/indexes/{indexName}/synonyms/{objectID}'
       .replace('{indexName}', encodeURIComponent(String(indexName)))
       .replace('{objectID}', encodeURIComponent(String(objectID)));
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!indexName) {
       throw new Error(
@@ -2089,10 +2323,14 @@ export function createSearchApi(options: CreateClientOptions) {
       data: synonymHit,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -2105,18 +2343,21 @@ export function createSearchApi(options: CreateClientOptions) {
    * @param saveSynonyms.forwardToReplicas - When true, changes are also propagated to replicas of the given indexName.
    * @param saveSynonyms.replaceExistingSynonyms - Replace all synonyms of the index with the ones sent with this request.
    */
-  function saveSynonyms({
-    indexName,
-    synonymHit,
-    forwardToReplicas,
-    replaceExistingSynonyms,
-  }: SaveSynonymsProps): Promise<UpdatedAtResponse> {
+  function saveSynonyms(
+    {
+      indexName,
+      synonymHit,
+      forwardToReplicas,
+      replaceExistingSynonyms,
+    }: SaveSynonymsProps,
+    requestOptions?: RequestOptions
+  ): Promise<UpdatedAtResponse> {
     const requestPath = '/1/indexes/{indexName}/synonyms/batch'.replace(
       '{indexName}',
       encodeURIComponent(String(indexName))
     );
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!indexName) {
       throw new Error(
@@ -2145,10 +2386,14 @@ export function createSearchApi(options: CreateClientOptions) {
       data: synonymHit,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -2159,16 +2404,16 @@ export function createSearchApi(options: CreateClientOptions) {
    * @param search.indexName - The index in which to perform the request.
    * @param search.searchParams - The searchParams object.
    */
-  function search({
-    indexName,
-    searchParams,
-  }: SearchProps): Promise<SearchResponse> {
+  function search(
+    { indexName, searchParams }: SearchProps,
+    requestOptions?: RequestOptions
+  ): Promise<SearchResponse> {
     const requestPath = '/1/indexes/{indexName}/query'.replace(
       '{indexName}',
       encodeURIComponent(String(indexName))
     );
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!indexName) {
       throw new Error(
@@ -2188,10 +2433,14 @@ export function createSearchApi(options: CreateClientOptions) {
       data: searchParams,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -2202,16 +2451,19 @@ export function createSearchApi(options: CreateClientOptions) {
    * @param searchDictionaryEntries.dictionaryName - The dictionary to search in.
    * @param searchDictionaryEntries.searchDictionaryEntriesParams - The searchDictionaryEntriesParams object.
    */
-  function searchDictionaryEntries({
-    dictionaryName,
-    searchDictionaryEntriesParams,
-  }: SearchDictionaryEntriesProps): Promise<UpdatedAtResponse> {
+  function searchDictionaryEntries(
+    {
+      dictionaryName,
+      searchDictionaryEntriesParams,
+    }: SearchDictionaryEntriesProps,
+    requestOptions?: RequestOptions
+  ): Promise<UpdatedAtResponse> {
     const requestPath = '/1/dictionaries/{dictionaryName}/search'.replace(
       '{dictionaryName}',
       encodeURIComponent(String(dictionaryName))
     );
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!dictionaryName) {
       throw new Error(
@@ -2237,10 +2489,14 @@ export function createSearchApi(options: CreateClientOptions) {
       data: searchDictionaryEntriesParams,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -2252,16 +2508,19 @@ export function createSearchApi(options: CreateClientOptions) {
    * @param searchForFacetValues.facetName - The facet name.
    * @param searchForFacetValues.searchForFacetValuesRequest - The searchForFacetValuesRequest object.
    */
-  function searchForFacetValues({
-    indexName,
-    facetName,
-    searchForFacetValuesRequest,
-  }: SearchForFacetValuesProps): Promise<SearchForFacetValuesResponse> {
+  function searchForFacetValues(
+    {
+      indexName,
+      facetName,
+      searchForFacetValuesRequest,
+    }: SearchForFacetValuesProps,
+    requestOptions?: RequestOptions
+  ): Promise<SearchForFacetValuesResponse> {
     const requestPath = '/1/indexes/{indexName}/facets/{facetName}/query'
       .replace('{indexName}', encodeURIComponent(String(indexName)))
       .replace('{facetName}', encodeURIComponent(String(facetName)));
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!indexName) {
       throw new Error(
@@ -2281,10 +2540,14 @@ export function createSearchApi(options: CreateClientOptions) {
       data: searchForFacetValuesRequest,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -2295,16 +2558,16 @@ export function createSearchApi(options: CreateClientOptions) {
    * @param searchRules.indexName - The index in which to perform the request.
    * @param searchRules.searchRulesParams - The searchRulesParams object.
    */
-  function searchRules({
-    indexName,
-    searchRulesParams,
-  }: SearchRulesProps): Promise<SearchRulesResponse> {
+  function searchRules(
+    { indexName, searchRulesParams }: SearchRulesProps,
+    requestOptions?: RequestOptions
+  ): Promise<SearchRulesResponse> {
     const requestPath = '/1/indexes/{indexName}/rules/search'.replace(
       '{indexName}',
       encodeURIComponent(String(indexName))
     );
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!indexName) {
       throw new Error(
@@ -2324,10 +2587,14 @@ export function createSearchApi(options: CreateClientOptions) {
       data: searchRulesParams,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -2341,19 +2608,16 @@ export function createSearchApi(options: CreateClientOptions) {
    * @param searchSynonyms.page - Requested page (zero-based). When specified, will retrieve a specific page; the page size is implicitly set to 100. When null, will retrieve all indices (no pagination).
    * @param searchSynonyms.hitsPerPage - Maximum number of objects to retrieve.
    */
-  function searchSynonyms({
-    indexName,
-    query,
-    type,
-    page,
-    hitsPerPage,
-  }: SearchSynonymsProps): Promise<SearchSynonymsResponse> {
+  function searchSynonyms(
+    { indexName, query, type, page, hitsPerPage }: SearchSynonymsProps,
+    requestOptions?: RequestOptions
+  ): Promise<SearchSynonymsResponse> {
     const requestPath = '/1/indexes/{indexName}/synonyms/search'.replace(
       '{indexName}',
       encodeURIComponent(String(indexName))
     );
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!indexName) {
       throw new Error(
@@ -2382,10 +2646,14 @@ export function createSearchApi(options: CreateClientOptions) {
       path: requestPath,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -2395,11 +2663,12 @@ export function createSearchApi(options: CreateClientOptions) {
    * @param searchUserIdsParams - The searchUserIdsParams object.
    */
   function searchUserIds(
-    searchUserIdsParams: SearchUserIdsParams
+    searchUserIdsParams: SearchUserIdsParams,
+    requestOptions?: RequestOptions
   ): Promise<SearchUserIdsResponse> {
     const requestPath = '/1/clusters/mapping/search';
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!searchUserIdsParams) {
       throw new Error(
@@ -2419,10 +2688,14 @@ export function createSearchApi(options: CreateClientOptions) {
       data: searchUserIdsParams,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -2432,11 +2705,12 @@ export function createSearchApi(options: CreateClientOptions) {
    * @param dictionarySettingsParams - The dictionarySettingsParams object.
    */
   function setDictionarySettings(
-    dictionarySettingsParams: DictionarySettingsParams
+    dictionarySettingsParams: DictionarySettingsParams,
+    requestOptions?: RequestOptions
   ): Promise<UpdatedAtResponse> {
     const requestPath = '/1/dictionaries/*/settings';
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!dictionarySettingsParams) {
       throw new Error(
@@ -2456,10 +2730,14 @@ export function createSearchApi(options: CreateClientOptions) {
       data: dictionarySettingsParams,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -2471,17 +2749,16 @@ export function createSearchApi(options: CreateClientOptions) {
    * @param setSettings.indexSettings - The indexSettings object.
    * @param setSettings.forwardToReplicas - When true, changes are also propagated to replicas of the given indexName.
    */
-  function setSettings({
-    indexName,
-    indexSettings,
-    forwardToReplicas,
-  }: SetSettingsProps): Promise<UpdatedAtResponse> {
+  function setSettings(
+    { indexName, indexSettings, forwardToReplicas }: SetSettingsProps,
+    requestOptions?: RequestOptions
+  ): Promise<UpdatedAtResponse> {
     const requestPath = '/1/indexes/{indexName}/settings'.replace(
       '{indexName}',
       encodeURIComponent(String(indexName))
     );
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!indexName) {
       throw new Error(
@@ -2505,10 +2782,14 @@ export function createSearchApi(options: CreateClientOptions) {
       data: indexSettings,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -2519,16 +2800,16 @@ export function createSearchApi(options: CreateClientOptions) {
    * @param updateApiKey.key - API Key string.
    * @param updateApiKey.apiKey - The apiKey object.
    */
-  function updateApiKey({
-    key,
-    apiKey,
-  }: UpdateApiKeyProps): Promise<UpdateApiKeyResponse> {
+  function updateApiKey(
+    { key, apiKey }: UpdateApiKeyProps,
+    requestOptions?: RequestOptions
+  ): Promise<UpdateApiKeyResponse> {
     const requestPath = '/1/keys/{key}'.replace(
       '{key}',
       encodeURIComponent(String(key))
     );
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!key) {
       throw new Error(
@@ -2554,10 +2835,14 @@ export function createSearchApi(options: CreateClientOptions) {
       data: apiKey,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   return {

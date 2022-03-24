@@ -8,6 +8,8 @@ import type {
   Headers,
   Host,
   Request,
+  RequestOptions,
+  QueryParameters,
 } from '@experimental-api-clients-automation/client-common';
 
 import type { ABTest } from '../model/aBTest';
@@ -67,11 +69,12 @@ export function createAbtestingApi(
    * @param addABTestsRequest - The addABTestsRequest object.
    */
   function addABTests(
-    addABTestsRequest: AddABTestsRequest
+    addABTestsRequest: AddABTestsRequest,
+    requestOptions?: RequestOptions
   ): Promise<ABTestResponse> {
     const requestPath = '/2/abtests';
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!addABTestsRequest) {
       throw new Error(
@@ -101,10 +104,14 @@ export function createAbtestingApi(
       data: addABTestsRequest,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -116,17 +123,16 @@ export function createAbtestingApi(
    * @param del.parameters - URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
    * @param del.body - The parameters to send with the custom request.
    */
-  function del({
-    path,
-    parameters,
-    body,
-  }: DelProps): Promise<Record<string, any>> {
+  function del(
+    { path, parameters, body }: DelProps,
+    requestOptions?: RequestOptions
+  ): Promise<Record<string, any>> {
     const requestPath = '/1{path}'.replace(
       '{path}',
       encodeURIComponent(String(path))
     );
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!path) {
       throw new Error('Parameter `path` is required when calling `del`.');
@@ -142,10 +148,14 @@ export function createAbtestingApi(
       data: body,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -155,13 +165,16 @@ export function createAbtestingApi(
    * @param deleteABTest - The deleteABTest object.
    * @param deleteABTest.id - The A/B test ID.
    */
-  function deleteABTest({ id }: DeleteABTestProps): Promise<ABTestResponse> {
+  function deleteABTest(
+    { id }: DeleteABTestProps,
+    requestOptions?: RequestOptions
+  ): Promise<ABTestResponse> {
     const requestPath = '/2/abtests/{id}'.replace(
       '{id}',
       encodeURIComponent(String(id))
     );
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!id) {
       throw new Error(
@@ -174,10 +187,14 @@ export function createAbtestingApi(
       path: requestPath,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -188,13 +205,16 @@ export function createAbtestingApi(
    * @param get.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
    * @param get.parameters - URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
    */
-  function get({ path, parameters }: GetProps): Promise<Record<string, any>> {
+  function get(
+    { path, parameters }: GetProps,
+    requestOptions?: RequestOptions
+  ): Promise<Record<string, any>> {
     const requestPath = '/1{path}'.replace(
       '{path}',
       encodeURIComponent(String(path))
     );
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!path) {
       throw new Error('Parameter `path` is required when calling `get`.');
@@ -209,10 +229,14 @@ export function createAbtestingApi(
       path: requestPath,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -222,13 +246,16 @@ export function createAbtestingApi(
    * @param getABTest - The getABTest object.
    * @param getABTest.id - The A/B test ID.
    */
-  function getABTest({ id }: GetABTestProps): Promise<ABTest> {
+  function getABTest(
+    { id }: GetABTestProps,
+    requestOptions?: RequestOptions
+  ): Promise<ABTest> {
     const requestPath = '/2/abtests/{id}'.replace(
       '{id}',
       encodeURIComponent(String(id))
     );
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!id) {
       throw new Error('Parameter `id` is required when calling `getABTest`.');
@@ -239,10 +266,14 @@ export function createAbtestingApi(
       path: requestPath,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -253,13 +284,13 @@ export function createAbtestingApi(
    * @param listABTests.offset - Position of the starting record. Used for paging. 0 is the first record.
    * @param listABTests.limit - Number of records to return. Limit is the size of the page.
    */
-  function listABTests({
-    offset,
-    limit,
-  }: ListABTestsProps): Promise<ListABTestsResponse> {
+  function listABTests(
+    { offset, limit }: ListABTestsProps,
+    requestOptions?: RequestOptions
+  ): Promise<ListABTestsResponse> {
     const requestPath = '/2/abtests';
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (offset !== undefined) {
       queryParameters.offset = offset.toString();
@@ -274,10 +305,14 @@ export function createAbtestingApi(
       path: requestPath,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -289,17 +324,16 @@ export function createAbtestingApi(
    * @param post.parameters - URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
    * @param post.body - The parameters to send with the custom request.
    */
-  function post({
-    path,
-    parameters,
-    body,
-  }: PostProps): Promise<Record<string, any>> {
+  function post(
+    { path, parameters, body }: PostProps,
+    requestOptions?: RequestOptions
+  ): Promise<Record<string, any>> {
     const requestPath = '/1{path}'.replace(
       '{path}',
       encodeURIComponent(String(path))
     );
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!path) {
       throw new Error('Parameter `path` is required when calling `post`.');
@@ -315,10 +349,14 @@ export function createAbtestingApi(
       data: body,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -330,17 +368,16 @@ export function createAbtestingApi(
    * @param put.parameters - URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
    * @param put.body - The parameters to send with the custom request.
    */
-  function put({
-    path,
-    parameters,
-    body,
-  }: PutProps): Promise<Record<string, any>> {
+  function put(
+    { path, parameters, body }: PutProps,
+    requestOptions?: RequestOptions
+  ): Promise<Record<string, any>> {
     const requestPath = '/1{path}'.replace(
       '{path}',
       encodeURIComponent(String(path))
     );
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!path) {
       throw new Error('Parameter `path` is required when calling `put`.');
@@ -356,10 +393,14 @@ export function createAbtestingApi(
       data: body,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -369,13 +410,16 @@ export function createAbtestingApi(
    * @param stopABTest - The stopABTest object.
    * @param stopABTest.id - The A/B test ID.
    */
-  function stopABTest({ id }: StopABTestProps): Promise<ABTestResponse> {
+  function stopABTest(
+    { id }: StopABTestProps,
+    requestOptions?: RequestOptions
+  ): Promise<ABTestResponse> {
     const requestPath = '/2/abtests/{id}/stop'.replace(
       '{id}',
       encodeURIComponent(String(id))
     );
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!id) {
       throw new Error('Parameter `id` is required when calling `stopABTest`.');
@@ -386,10 +430,14 @@ export function createAbtestingApi(
       path: requestPath,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   return {

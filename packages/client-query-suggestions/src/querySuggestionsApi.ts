@@ -8,6 +8,8 @@ import type {
   Headers,
   Host,
   Request,
+  RequestOptions,
+  QueryParameters,
 } from '@experimental-api-clients-automation/client-common';
 
 import type { LogFile } from '../model/logFile';
@@ -67,11 +69,12 @@ export function createQuerySuggestionsApi(
    * @param querySuggestionsIndexWithIndexParam - The querySuggestionsIndexWithIndexParam object.
    */
   function createConfig(
-    querySuggestionsIndexWithIndexParam: QuerySuggestionsIndexWithIndexParam
+    querySuggestionsIndexWithIndexParam: QuerySuggestionsIndexWithIndexParam,
+    requestOptions?: RequestOptions
   ): Promise<SucessResponse> {
     const requestPath = '/1/configs';
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!querySuggestionsIndexWithIndexParam) {
       throw new Error(
@@ -85,10 +88,14 @@ export function createQuerySuggestionsApi(
       data: querySuggestionsIndexWithIndexParam,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -100,17 +107,16 @@ export function createQuerySuggestionsApi(
    * @param del.parameters - URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
    * @param del.body - The parameters to send with the custom request.
    */
-  function del({
-    path,
-    parameters,
-    body,
-  }: DelProps): Promise<Record<string, any>> {
+  function del(
+    { path, parameters, body }: DelProps,
+    requestOptions?: RequestOptions
+  ): Promise<Record<string, any>> {
     const requestPath = '/1{path}'.replace(
       '{path}',
       encodeURIComponent(String(path))
     );
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!path) {
       throw new Error('Parameter `path` is required when calling `del`.');
@@ -126,10 +132,14 @@ export function createQuerySuggestionsApi(
       data: body,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -139,15 +149,16 @@ export function createQuerySuggestionsApi(
    * @param deleteConfig - The deleteConfig object.
    * @param deleteConfig.indexName - The index in which to perform the request.
    */
-  function deleteConfig({
-    indexName,
-  }: DeleteConfigProps): Promise<SucessResponse> {
+  function deleteConfig(
+    { indexName }: DeleteConfigProps,
+    requestOptions?: RequestOptions
+  ): Promise<SucessResponse> {
     const requestPath = '/1/configs/{indexName}'.replace(
       '{indexName}',
       encodeURIComponent(String(indexName))
     );
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!indexName) {
       throw new Error(
@@ -160,10 +171,14 @@ export function createQuerySuggestionsApi(
       path: requestPath,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -174,13 +189,16 @@ export function createQuerySuggestionsApi(
    * @param get.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
    * @param get.parameters - URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
    */
-  function get({ path, parameters }: GetProps): Promise<Record<string, any>> {
+  function get(
+    { path, parameters }: GetProps,
+    requestOptions?: RequestOptions
+  ): Promise<Record<string, any>> {
     const requestPath = '/1{path}'.replace(
       '{path}',
       encodeURIComponent(String(path))
     );
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!path) {
       throw new Error('Parameter `path` is required when calling `get`.');
@@ -195,10 +213,14 @@ export function createQuerySuggestionsApi(
       path: requestPath,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -206,20 +228,26 @@ export function createQuerySuggestionsApi(
    *
    * @summary Get all the configurations of Query Suggestions.
    */
-  function getAllConfigs(): Promise<QuerySuggestionsIndex[]> {
+  function getAllConfigs(
+    requestOptions?: RequestOptions
+  ): Promise<QuerySuggestionsIndex[]> {
     const requestPath = '/1/configs';
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     const request: Request = {
       method: 'GET',
       path: requestPath,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -229,15 +257,16 @@ export function createQuerySuggestionsApi(
    * @param getConfig - The getConfig object.
    * @param getConfig.indexName - The index in which to perform the request.
    */
-  function getConfig({
-    indexName,
-  }: GetConfigProps): Promise<QuerySuggestionsIndex> {
+  function getConfig(
+    { indexName }: GetConfigProps,
+    requestOptions?: RequestOptions
+  ): Promise<QuerySuggestionsIndex> {
     const requestPath = '/1/configs/{indexName}'.replace(
       '{indexName}',
       encodeURIComponent(String(indexName))
     );
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!indexName) {
       throw new Error(
@@ -250,10 +279,14 @@ export function createQuerySuggestionsApi(
       path: requestPath,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -263,15 +296,16 @@ export function createQuerySuggestionsApi(
    * @param getConfigStatus - The getConfigStatus object.
    * @param getConfigStatus.indexName - The index in which to perform the request.
    */
-  function getConfigStatus({
-    indexName,
-  }: GetConfigStatusProps): Promise<Status> {
+  function getConfigStatus(
+    { indexName }: GetConfigStatusProps,
+    requestOptions?: RequestOptions
+  ): Promise<Status> {
     const requestPath = '/1/configs/{indexName}/status'.replace(
       '{indexName}',
       encodeURIComponent(String(indexName))
     );
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!indexName) {
       throw new Error(
@@ -284,10 +318,14 @@ export function createQuerySuggestionsApi(
       path: requestPath,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -297,13 +335,16 @@ export function createQuerySuggestionsApi(
    * @param getLogFile - The getLogFile object.
    * @param getLogFile.indexName - The index in which to perform the request.
    */
-  function getLogFile({ indexName }: GetLogFileProps): Promise<LogFile[]> {
+  function getLogFile(
+    { indexName }: GetLogFileProps,
+    requestOptions?: RequestOptions
+  ): Promise<LogFile[]> {
     const requestPath = '/1/logs/{indexName}'.replace(
       '{indexName}',
       encodeURIComponent(String(indexName))
     );
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!indexName) {
       throw new Error(
@@ -316,10 +357,14 @@ export function createQuerySuggestionsApi(
       path: requestPath,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -331,17 +376,16 @@ export function createQuerySuggestionsApi(
    * @param post.parameters - URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
    * @param post.body - The parameters to send with the custom request.
    */
-  function post({
-    path,
-    parameters,
-    body,
-  }: PostProps): Promise<Record<string, any>> {
+  function post(
+    { path, parameters, body }: PostProps,
+    requestOptions?: RequestOptions
+  ): Promise<Record<string, any>> {
     const requestPath = '/1{path}'.replace(
       '{path}',
       encodeURIComponent(String(path))
     );
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!path) {
       throw new Error('Parameter `path` is required when calling `post`.');
@@ -357,10 +401,14 @@ export function createQuerySuggestionsApi(
       data: body,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -372,17 +420,16 @@ export function createQuerySuggestionsApi(
    * @param put.parameters - URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
    * @param put.body - The parameters to send with the custom request.
    */
-  function put({
-    path,
-    parameters,
-    body,
-  }: PutProps): Promise<Record<string, any>> {
+  function put(
+    { path, parameters, body }: PutProps,
+    requestOptions?: RequestOptions
+  ): Promise<Record<string, any>> {
     const requestPath = '/1{path}'.replace(
       '{path}',
       encodeURIComponent(String(path))
     );
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!path) {
       throw new Error('Parameter `path` is required when calling `put`.');
@@ -398,10 +445,14 @@ export function createQuerySuggestionsApi(
       data: body,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -412,16 +463,16 @@ export function createQuerySuggestionsApi(
    * @param updateConfig.indexName - The index in which to perform the request.
    * @param updateConfig.querySuggestionsIndexParam - The querySuggestionsIndexParam object.
    */
-  function updateConfig({
-    indexName,
-    querySuggestionsIndexParam,
-  }: UpdateConfigProps): Promise<SucessResponse> {
+  function updateConfig(
+    { indexName, querySuggestionsIndexParam }: UpdateConfigProps,
+    requestOptions?: RequestOptions
+  ): Promise<SucessResponse> {
     const requestPath = '/1/configs/{indexName}'.replace(
       '{indexName}',
       encodeURIComponent(String(indexName))
     );
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!indexName) {
       throw new Error(
@@ -447,10 +498,14 @@ export function createQuerySuggestionsApi(
       data: querySuggestionsIndexParam,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   return {

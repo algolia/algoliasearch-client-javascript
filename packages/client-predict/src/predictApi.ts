@@ -8,6 +8,8 @@ import type {
   Headers,
   Host,
   Request,
+  RequestOptions,
+  QueryParameters,
 } from '@experimental-api-clients-automation/client-common';
 
 import type { FetchUserProfileResponse } from '../model/fetchUserProfileResponse';
@@ -61,17 +63,16 @@ export function createPredictApi(options: CreateClientOptions) {
    * @param del.parameters - URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
    * @param del.body - The parameters to send with the custom request.
    */
-  function del({
-    path,
-    parameters,
-    body,
-  }: DelProps): Promise<Record<string, any>> {
+  function del(
+    { path, parameters, body }: DelProps,
+    requestOptions?: RequestOptions
+  ): Promise<Record<string, any>> {
     const requestPath = '/1{path}'.replace(
       '{path}',
       encodeURIComponent(String(path))
     );
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!path) {
       throw new Error('Parameter `path` is required when calling `del`.');
@@ -87,10 +88,14 @@ export function createPredictApi(options: CreateClientOptions) {
       data: body,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -101,16 +106,16 @@ export function createPredictApi(options: CreateClientOptions) {
    * @param fetchUserProfile.userID - User ID for authenticated users or cookie ID for non-authenticated repeated users (visitors).
    * @param fetchUserProfile.params - The params object.
    */
-  function fetchUserProfile({
-    userID,
-    params,
-  }: FetchUserProfileProps): Promise<FetchUserProfileResponse> {
+  function fetchUserProfile(
+    { userID, params }: FetchUserProfileProps,
+    requestOptions?: RequestOptions
+  ): Promise<FetchUserProfileResponse> {
     const requestPath = '/1/users/{userID}/fetch'.replace(
       '{userID}',
       encodeURIComponent(String(userID))
     );
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!userID) {
       throw new Error(
@@ -130,10 +135,14 @@ export function createPredictApi(options: CreateClientOptions) {
       data: params,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -144,13 +153,16 @@ export function createPredictApi(options: CreateClientOptions) {
    * @param get.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
    * @param get.parameters - URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
    */
-  function get({ path, parameters }: GetProps): Promise<Record<string, any>> {
+  function get(
+    { path, parameters }: GetProps,
+    requestOptions?: RequestOptions
+  ): Promise<Record<string, any>> {
     const requestPath = '/1{path}'.replace(
       '{path}',
       encodeURIComponent(String(path))
     );
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!path) {
       throw new Error('Parameter `path` is required when calling `get`.');
@@ -165,10 +177,14 @@ export function createPredictApi(options: CreateClientOptions) {
       path: requestPath,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -180,17 +196,16 @@ export function createPredictApi(options: CreateClientOptions) {
    * @param post.parameters - URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
    * @param post.body - The parameters to send with the custom request.
    */
-  function post({
-    path,
-    parameters,
-    body,
-  }: PostProps): Promise<Record<string, any>> {
+  function post(
+    { path, parameters, body }: PostProps,
+    requestOptions?: RequestOptions
+  ): Promise<Record<string, any>> {
     const requestPath = '/1{path}'.replace(
       '{path}',
       encodeURIComponent(String(path))
     );
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!path) {
       throw new Error('Parameter `path` is required when calling `post`.');
@@ -206,10 +221,14 @@ export function createPredictApi(options: CreateClientOptions) {
       data: body,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -221,17 +240,16 @@ export function createPredictApi(options: CreateClientOptions) {
    * @param put.parameters - URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
    * @param put.body - The parameters to send with the custom request.
    */
-  function put({
-    path,
-    parameters,
-    body,
-  }: PutProps): Promise<Record<string, any>> {
+  function put(
+    { path, parameters, body }: PutProps,
+    requestOptions?: RequestOptions
+  ): Promise<Record<string, any>> {
     const requestPath = '/1{path}'.replace(
       '{path}',
       encodeURIComponent(String(path))
     );
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!path) {
       throw new Error('Parameter `path` is required when calling `put`.');
@@ -247,10 +265,14 @@ export function createPredictApi(options: CreateClientOptions) {
       data: body,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   return { addUserAgent, del, fetchUserProfile, get, post, put };

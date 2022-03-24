@@ -1,7 +1,4 @@
-import type {
-  Host,
-  Requester,
-} from '@experimental-api-clients-automation/client-common';
+import type { InitClientOptions } from '@experimental-api-clients-automation/client-common';
 import {
   createMemoryCache,
   createFallbackableCache,
@@ -17,7 +14,7 @@ export * from '../src/predictApi';
 export function predictApi(
   appId: string,
   apiKey: string,
-  options?: { requester?: Requester; hosts?: Host[] }
+  options?: InitClientOptions
 ): PredictApi {
   if (!appId) {
     throw new Error('`appId` is missing.');
@@ -38,14 +35,19 @@ export function predictApi(
     requester: options?.requester ?? createXhrRequester(),
     userAgents: [{ segment: 'Browser' }],
     authMode: 'WithinQueryParameters',
-    responsesCache: createMemoryCache(),
-    requestsCache: createMemoryCache({ serializable: false }),
-    hostsCache: createFallbackableCache({
-      caches: [
-        createBrowserLocalStorageCache({ key: `${apiClientVersion}-${appId}` }),
-        createMemoryCache(),
-      ],
-    }),
+    responsesCache: options?.responsesCache ?? createMemoryCache(),
+    requestsCache:
+      options?.requestsCache ?? createMemoryCache({ serializable: false }),
+    hostsCache:
+      options?.hostsCache ??
+      createFallbackableCache({
+        caches: [
+          createBrowserLocalStorageCache({
+            key: `${apiClientVersion}-${appId}`,
+          }),
+          createMemoryCache(),
+        ],
+      }),
     ...options,
   });
 }

@@ -1,7 +1,4 @@
-import type {
-  Host,
-  Requester,
-} from '@experimental-api-clients-automation/client-common';
+import type { InitClientOptions } from '@experimental-api-clients-automation/client-common';
 import {
   createMemoryCache,
   createNullCache,
@@ -17,7 +14,7 @@ export function querySuggestionsApi(
   appId: string,
   apiKey: string,
   region: Region,
-  options?: { requester?: Requester; hosts?: Host[] }
+  options?: InitClientOptions
 ): QuerySuggestionsApi {
   if (!appId) {
     throw new Error('`appId` is missing.');
@@ -42,9 +39,9 @@ export function querySuggestionsApi(
     },
     requester: options?.requester ?? createHttpRequester(),
     userAgents: [{ segment: 'Node.js', version: process.versions.node }],
-    responsesCache: createNullCache(),
-    requestsCache: createNullCache(),
-    hostsCache: createMemoryCache(),
+    responsesCache: options?.responsesCache ?? createNullCache(),
+    requestsCache: options?.requestsCache ?? createNullCache(),
+    hostsCache: options?.hostsCache ?? createMemoryCache(),
     ...options,
   });
 }

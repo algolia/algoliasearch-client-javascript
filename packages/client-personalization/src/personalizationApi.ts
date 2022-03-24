@@ -8,6 +8,8 @@ import type {
   Headers,
   Host,
   Request,
+  RequestOptions,
+  QueryParameters,
 } from '@experimental-api-clients-automation/client-common';
 
 import type { DeleteUserProfileResponse } from '../model/deleteUserProfileResponse';
@@ -67,17 +69,16 @@ export function createPersonalizationApi(
    * @param del.parameters - URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
    * @param del.body - The parameters to send with the custom request.
    */
-  function del({
-    path,
-    parameters,
-    body,
-  }: DelProps): Promise<Record<string, any>> {
+  function del(
+    { path, parameters, body }: DelProps,
+    requestOptions?: RequestOptions
+  ): Promise<Record<string, any>> {
     const requestPath = '/1{path}'.replace(
       '{path}',
       encodeURIComponent(String(path))
     );
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!path) {
       throw new Error('Parameter `path` is required when calling `del`.');
@@ -93,10 +94,14 @@ export function createPersonalizationApi(
       data: body,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -106,15 +111,16 @@ export function createPersonalizationApi(
    * @param deleteUserProfile - The deleteUserProfile object.
    * @param deleteUserProfile.userToken - UserToken representing the user for which to fetch the Personalization profile.
    */
-  function deleteUserProfile({
-    userToken,
-  }: DeleteUserProfileProps): Promise<DeleteUserProfileResponse> {
+  function deleteUserProfile(
+    { userToken }: DeleteUserProfileProps,
+    requestOptions?: RequestOptions
+  ): Promise<DeleteUserProfileResponse> {
     const requestPath = '/1/profiles/{userToken}'.replace(
       '{userToken}',
       encodeURIComponent(String(userToken))
     );
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!userToken) {
       throw new Error(
@@ -127,10 +133,14 @@ export function createPersonalizationApi(
       path: requestPath,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -141,13 +151,16 @@ export function createPersonalizationApi(
    * @param get.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
    * @param get.parameters - URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
    */
-  function get({ path, parameters }: GetProps): Promise<Record<string, any>> {
+  function get(
+    { path, parameters }: GetProps,
+    requestOptions?: RequestOptions
+  ): Promise<Record<string, any>> {
     const requestPath = '/1{path}'.replace(
       '{path}',
       encodeURIComponent(String(path))
     );
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!path) {
       throw new Error('Parameter `path` is required when calling `get`.');
@@ -162,10 +175,14 @@ export function createPersonalizationApi(
       path: requestPath,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -173,20 +190,26 @@ export function createPersonalizationApi(
    *
    * @summary Get the current personalization strategy.
    */
-  function getPersonalizationStrategy(): Promise<PersonalizationStrategyParams> {
+  function getPersonalizationStrategy(
+    requestOptions?: RequestOptions
+  ): Promise<PersonalizationStrategyParams> {
     const requestPath = '/1/strategies/personalization';
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     const request: Request = {
       method: 'GET',
       path: requestPath,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -196,15 +219,16 @@ export function createPersonalizationApi(
    * @param getUserTokenProfile - The getUserTokenProfile object.
    * @param getUserTokenProfile.userToken - UserToken representing the user for which to fetch the Personalization profile.
    */
-  function getUserTokenProfile({
-    userToken,
-  }: GetUserTokenProfileProps): Promise<GetUserTokenResponse> {
+  function getUserTokenProfile(
+    { userToken }: GetUserTokenProfileProps,
+    requestOptions?: RequestOptions
+  ): Promise<GetUserTokenResponse> {
     const requestPath = '/1/profiles/personalization/{userToken}'.replace(
       '{userToken}',
       encodeURIComponent(String(userToken))
     );
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!userToken) {
       throw new Error(
@@ -217,10 +241,14 @@ export function createPersonalizationApi(
       path: requestPath,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -232,17 +260,16 @@ export function createPersonalizationApi(
    * @param post.parameters - URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
    * @param post.body - The parameters to send with the custom request.
    */
-  function post({
-    path,
-    parameters,
-    body,
-  }: PostProps): Promise<Record<string, any>> {
+  function post(
+    { path, parameters, body }: PostProps,
+    requestOptions?: RequestOptions
+  ): Promise<Record<string, any>> {
     const requestPath = '/1{path}'.replace(
       '{path}',
       encodeURIComponent(String(path))
     );
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!path) {
       throw new Error('Parameter `path` is required when calling `post`.');
@@ -258,10 +285,14 @@ export function createPersonalizationApi(
       data: body,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -273,17 +304,16 @@ export function createPersonalizationApi(
    * @param put.parameters - URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
    * @param put.body - The parameters to send with the custom request.
    */
-  function put({
-    path,
-    parameters,
-    body,
-  }: PutProps): Promise<Record<string, any>> {
+  function put(
+    { path, parameters, body }: PutProps,
+    requestOptions?: RequestOptions
+  ): Promise<Record<string, any>> {
     const requestPath = '/1{path}'.replace(
       '{path}',
       encodeURIComponent(String(path))
     );
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!path) {
       throw new Error('Parameter `path` is required when calling `put`.');
@@ -299,10 +329,14 @@ export function createPersonalizationApi(
       data: body,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   /**
@@ -312,11 +346,12 @@ export function createPersonalizationApi(
    * @param personalizationStrategyParams - The personalizationStrategyParams object.
    */
   function setPersonalizationStrategy(
-    personalizationStrategyParams: PersonalizationStrategyParams
+    personalizationStrategyParams: PersonalizationStrategyParams,
+    requestOptions?: RequestOptions
   ): Promise<SetPersonalizationStrategyResponse> {
     const requestPath = '/1/strategies/personalization';
-    const headers: Headers = { Accept: 'application/json' };
-    const queryParameters: Record<string, string> = {};
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {};
 
     if (!personalizationStrategyParams) {
       throw new Error(
@@ -346,10 +381,14 @@ export function createPersonalizationApi(
       data: personalizationStrategyParams,
     };
 
-    return transporter.request(request, {
-      queryParameters,
-      headers,
-    });
+    return transporter.request(
+      request,
+      {
+        queryParameters,
+        headers,
+      },
+      requestOptions
+    );
   }
 
   return {
