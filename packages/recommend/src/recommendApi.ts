@@ -1,6 +1,5 @@
 import {
   createAuth,
-  createMemoryCache,
   createTransporter,
   getUserAgent,
   shuffle,
@@ -58,7 +57,9 @@ export function createRecommendApi(options: CreateClientOptions) {
   const auth = createAuth(options.appId, options.apiKey, options.authMode);
   const transporter = createTransporter({
     hosts: options?.hosts ?? getDefaultHosts(options.appId),
-    hostsCache: createMemoryCache(),
+    hostsCache: options.hostsCache,
+    requestsCache: options.requestsCache,
+    responsesCache: options.responsesCache,
     baseHeaders: {
       'content-type': 'application/x-www-form-urlencoded',
       ...auth.headers(),

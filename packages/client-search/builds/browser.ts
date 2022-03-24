@@ -2,9 +2,14 @@ import type {
   Host,
   Requester,
 } from '@experimental-api-clients-automation/client-common';
+import {
+  createMemoryCache,
+  createFallbackableCache,
+  createBrowserLocalStorageCache,
+} from '@experimental-api-clients-automation/client-common';
 import { createXhrRequester } from '@experimental-api-clients-automation/requester-browser-xhr';
 
-import { createSearchApi } from '../src/searchApi';
+import { createSearchApi, apiClientVersion } from '../src/searchApi';
 import type { SearchApi } from '../src/searchApi';
 
 export * from '../src/searchApi';
@@ -33,6 +38,14 @@ export function searchApi(
     requester: options?.requester ?? createXhrRequester(),
     userAgents: [{ segment: 'Browser' }],
     authMode: 'WithinQueryParameters',
+    responsesCache: createMemoryCache(),
+    requestsCache: createMemoryCache({ serializable: false }),
+    hostsCache: createFallbackableCache({
+      caches: [
+        createBrowserLocalStorageCache({ key: `${apiClientVersion}-${appId}` }),
+        createMemoryCache(),
+      ],
+    }),
     ...options,
   });
 }

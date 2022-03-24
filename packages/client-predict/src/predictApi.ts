@@ -1,6 +1,5 @@
 import {
   createAuth,
-  createMemoryCache,
   createTransporter,
   getUserAgent,
 } from '@experimental-api-clients-automation/client-common';
@@ -32,7 +31,9 @@ export function createPredictApi(options: CreateClientOptions) {
   const auth = createAuth(options.appId, options.apiKey, options.authMode);
   const transporter = createTransporter({
     hosts: options?.hosts ?? getDefaultHosts(),
-    hostsCache: createMemoryCache(),
+    hostsCache: options.hostsCache,
+    requestsCache: options.requestsCache,
+    responsesCache: options.responsesCache,
     baseHeaders: {
       'content-type': 'application/x-www-form-urlencoded',
       ...auth.headers(),

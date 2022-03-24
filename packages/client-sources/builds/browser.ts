@@ -2,9 +2,14 @@ import type {
   Host,
   Requester,
 } from '@experimental-api-clients-automation/client-common';
+import {
+  createMemoryCache,
+  createFallbackableCache,
+  createBrowserLocalStorageCache,
+} from '@experimental-api-clients-automation/client-common';
 import { createXhrRequester } from '@experimental-api-clients-automation/requester-browser-xhr';
 
-import { createSourcesApi } from '../src/sourcesApi';
+import { createSourcesApi, apiClientVersion } from '../src/sourcesApi';
 import type { SourcesApi, Region } from '../src/sourcesApi';
 
 export * from '../src/sourcesApi';
@@ -39,6 +44,14 @@ export function sourcesApi(
     requester: options?.requester ?? createXhrRequester(),
     userAgents: [{ segment: 'Browser' }],
     authMode: 'WithinQueryParameters',
+    responsesCache: createMemoryCache(),
+    requestsCache: createMemoryCache({ serializable: false }),
+    hostsCache: createFallbackableCache({
+      caches: [
+        createBrowserLocalStorageCache({ key: `${apiClientVersion}-${appId}` }),
+        createMemoryCache(),
+      ],
+    }),
     ...options,
   });
 }

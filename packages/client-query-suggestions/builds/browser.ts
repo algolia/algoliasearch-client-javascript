@@ -2,9 +2,17 @@ import type {
   Host,
   Requester,
 } from '@experimental-api-clients-automation/client-common';
+import {
+  createMemoryCache,
+  createFallbackableCache,
+  createBrowserLocalStorageCache,
+} from '@experimental-api-clients-automation/client-common';
 import { createXhrRequester } from '@experimental-api-clients-automation/requester-browser-xhr';
 
-import { createQuerySuggestionsApi } from '../src/querySuggestionsApi';
+import {
+  createQuerySuggestionsApi,
+  apiClientVersion,
+} from '../src/querySuggestionsApi';
 import type { QuerySuggestionsApi, Region } from '../src/querySuggestionsApi';
 
 export * from '../src/querySuggestionsApi';
@@ -39,6 +47,14 @@ export function querySuggestionsApi(
     requester: options?.requester ?? createXhrRequester(),
     userAgents: [{ segment: 'Browser' }],
     authMode: 'WithinQueryParameters',
+    responsesCache: createMemoryCache(),
+    requestsCache: createMemoryCache({ serializable: false }),
+    hostsCache: createFallbackableCache({
+      caches: [
+        createBrowserLocalStorageCache({ key: `${apiClientVersion}-${appId}` }),
+        createMemoryCache(),
+      ],
+    }),
     ...options,
   });
 }
