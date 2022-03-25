@@ -58,8 +58,9 @@ export function getVersionChangesText(versions: Versions): string {
 }
 
 export function parseCommit(commit: string): Commit {
-  const hash = commit.slice(0, 7);
-  let message = commit.slice(8);
+  const LENGTH_SHA1 = 8;
+  const hash = commit.slice(0, LENGTH_SHA1);
+  let message = commit.slice(LENGTH_SHA1 + 1);
   let type = message.slice(0, message.indexOf(':'));
   const matchResult = type.match(/(.+)\((.+)\)/);
   if (!matchResult) {
