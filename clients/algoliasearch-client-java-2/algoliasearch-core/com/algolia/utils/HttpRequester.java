@@ -1,9 +1,11 @@
 package com.algolia.utils;
 
 import com.algolia.ApiCallback;
-import com.algolia.ApiException;
 import com.algolia.ProgressResponseBody;
+import com.algolia.utils.retry.RetryStrategy;
+import com.algolia.utils.retry.StatefulHost;
 import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import okhttp3.Call;
 import okhttp3.Interceptor;
@@ -15,18 +17,23 @@ import okhttp3.logging.HttpLoggingInterceptor.Level;
 
 public class HttpRequester implements Requester {
 
+  private RetryStrategy retryStrategy;
   private OkHttpClient httpClient;
   private HttpLoggingInterceptor loggingInterceptor;
   private boolean debugging;
 
-  public HttpRequester() {
+  public HttpRequester(List<StatefulHost> hosts) {
+    this.retryStrategy = new RetryStrategy(hosts);
+
     OkHttpClient.Builder builder = new OkHttpClient.Builder();
+    builder.addInterceptor(retryStrategy.getRetryInterceptor());
     builder.addNetworkInterceptor(getProgressInterceptor());
+    builder.retryOnConnectionFailure(false);
 
     httpClient = builder.build();
   }
 
-  public Call newCall(Request request) throws ApiException {
+  public Call newCall(Request request) {
     return httpClient.newCall(request);
   }
 

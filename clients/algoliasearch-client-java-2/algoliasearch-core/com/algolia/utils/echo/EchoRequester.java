@@ -1,34 +1,46 @@
 package com.algolia.utils.echo;
 
-import com.algolia.ApiException;
 import com.algolia.utils.Requester;
 import okhttp3.Request;
 
 public class EchoRequester implements Requester {
 
-  public CallEcho newCall(Request request) throws ApiException {
+  private int connectionTimeout, readTimeout, writeTimeout;
+
+  public EchoRequester() {
+    this.connectionTimeout = 100;
+    this.readTimeout = 100;
+    this.writeTimeout = 100;
+  }
+
+  public CallEcho newCall(Request request) {
     return new CallEcho(request);
   }
 
   // NO-OP for now
-
   public void setDebugging(boolean debugging) {}
 
   public int getConnectTimeout() {
-    return 100;
+    return this.connectionTimeout;
   }
 
-  public void setConnectTimeout(int connectionTimeout) {}
+  public void setConnectTimeout(int connectionTimeout) {
+    this.connectionTimeout = connectionTimeout;
+  }
 
   public int getReadTimeout() {
-    return 100;
+    return this.readTimeout;
   }
 
-  public void setReadTimeout(int readTimeout) {}
+  public void setReadTimeout(int readTimeout) {
+    this.readTimeout = readTimeout;
+  }
 
   public int getWriteTimeout() {
-    return 100;
+    return this.writeTimeout;
   }
 
-  public void setWriteTimeout(int writeTimeout) {}
+  public void setWriteTimeout(int writeTimeout) {
+    this.writeTimeout = writeTimeout;
+  }
 }

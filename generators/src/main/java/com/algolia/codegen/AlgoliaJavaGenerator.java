@@ -160,8 +160,9 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
     return "Generates an algolia-java client library.";
   }
 
-  public AlgoliaJavaGenerator() {
-    super();
+  @Override
+  public void processOpts() {
+    super.processOpts();
 
     supportingFiles.add(new SupportingFile("EchoResponse.mustache",
         "algoliasearch-core/com/algolia/utils/echo",
