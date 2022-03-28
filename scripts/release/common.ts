@@ -1,3 +1,5 @@
+import path from 'path';
+
 import clientsConfig from '../../config/clients.config.json';
 import config from '../../config/release.config.json';
 import { getGitHubUrl, run } from '../common';
@@ -59,7 +61,7 @@ export async function cloneRepository({
   const targetBranch = getTargetBranch(lang);
 
   const gitHubUrl = getGitHubUrl(lang, { token: githubToken });
-  const tempGitDir = `${tempDir}/${lang}`;
+  const tempGitDir = path.resolve(tempDir, lang);
   await run(`rm -rf ${tempGitDir}`);
   await run(
     `git clone --depth 1 --branch ${targetBranch} ${gitHubUrl} ${tempGitDir}`

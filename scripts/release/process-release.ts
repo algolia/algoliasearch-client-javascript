@@ -3,6 +3,7 @@ import fsp from 'fs/promises';
 
 import dotenv from 'dotenv';
 import execa from 'execa';
+import { emptyDir, copy } from 'fs-extra';
 import semver from 'semver';
 import type { ReleaseType } from 'semver';
 
@@ -205,7 +206,8 @@ async function processRelease(): Promise<void> {
     });
 
     const clientPath = toAbsolutePath(getLanguageFolder(lang));
-    await run(`cp -r ${clientPath}/ ${tempGitDir}`);
+    await emptyDir(tempGitDir);
+    await copy(clientPath, tempGitDir, { preserveTimestamps: true });
 
     await configureGitHubAuthor(tempGitDir);
     await run(`git add .`, { cwd: tempGitDir });
